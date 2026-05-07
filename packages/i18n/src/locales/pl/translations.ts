@@ -179,6 +179,12 @@ export default {
   cancel: "Anuluj",
   loading: "Ładowanie",
   error: "Błąd",
+  work_item_templates: {
+    dropdown_placeholder: "Szablon",
+    none: "Bez szablonu",
+    loading: "Ładowanie szablonów…",
+    apply_failed_toast: "Nie udało się zastosować szablonu elementu roboczego.",
+  },
   success: "Sukces",
   warning: "Ostrzeżenie",
   info: "Informacja",
@@ -1665,6 +1671,51 @@ export default {
             },
           },
         },
+      },
+      work_item_templates: {
+        title: "Szablony elementów roboczych",
+        description:
+          "Twórz wielokrotnego użycia konfiguracje nowych elementów (tytuł, opis, osoby przypisane, priorytet itd.). Szablon może obowiązywać w całej przestrzeni roboczej albo tylko w jednym projekcie.",
+        heading: "Szablony elementów roboczych",
+        add_template: "Dodaj szablon",
+        table: {
+          name: "Szablon",
+          scope: "Zakres",
+          project: "Projekt",
+          workspace_wide: "Wszystkie projekty",
+        },
+        form: {
+          name_required: "Nazwa szablonu jest wymagana",
+          scope_project: "Ogranicz do jednego projektu (opcjonalnie)",
+          scope_hint:
+            "Pozostaw projekt pusty, aby szablon był dostępny w każdym projekcie. Pola zależne od projektu (stan, etykiety, cykl, moduły) zapiszesz tylko po wybraniu projektu.",
+          scope_hint_short:
+            "Opcjonalnie. Pusty = szablon we wszystkich projektach. Gdy wybierzesz projekt, sugestie osób do przypisania ograniczają się do niego; bez projektu — do członków przestrzeni roboczej.",
+          modal_intro:
+            "Nadaj szablonowi nazwę i krótką notatkę dla zespołu. Poniżej ustaw domyślne wartości zadania — taki tytuł, opis, przypisania i priorytet, jak przy zwykłym tworzeniu zadania.",
+          template_name_label: "Nazwa szablonu",
+          template_name_placeholder: "np. Zgłoszenie błędu",
+          template_note_label: "Opis (dla zespołu)",
+          template_note_placeholder: "Do czego służy ten szablon (opcjonalnie; to nie jest opis zadania).",
+          default_values_section_title: "Domyślne wartości zadania",
+          default_values_section_hint:
+            "Gdy ktoś wybierze ten szablon przy tworzeniu zadania, wypełnią się te pola. Wszystko może pozostać puste.",
+          default_work_item_name: "Tytuł",
+          default_work_item_name_placeholder: "np. [Błąd] …",
+          default_work_item_description: "Opis",
+          default_work_item_description_hint:
+            "Zwykły tekst; zapiszemy go jako opis zadania. Złamania linii są zachowane.",
+          default_work_item_description_placeholder: "Treść, która ma wpłynąć do nowego zadania",
+          project_required_for_scoped_fields:
+            "Wybierz projekt, aby ustawić stan, etykiety, cykl, moduły, estymację i typ zadania. Szablon obejmujący całą przestrzeń nadal może ustawiać tytuł, opis, osoby przypisane, priorytet i daty.",
+        },
+        toasts: {
+          created: { title: "Szablon utworzony", message: "Zapisano szablon elementu roboczego." },
+          create_failed: { title: "Nie udało się utworzyć", message: "Sprawdź formularz i spróbuj ponownie." },
+          deleted: { title: "Szablon usunięty", message: "Szablon został usunięty." },
+          delete_failed: { title: "Nie udało się usunąć", message: "Spróbuj ponownie." },
+        },
+        delete_confirm: "Czy na pewno chcesz usunąć ten szablon elementu roboczego?",
       },
       webhooks: {
         title: "Webhooki",
