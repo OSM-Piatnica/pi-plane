@@ -9,6 +9,12 @@ export default {
   cancel: "Cancel",
   loading: "Loading",
   error: "Error",
+  work_item_templates: {
+    dropdown_placeholder: "Template",
+    none: "No template",
+    loading: "Loading templates…",
+    apply_failed_toast: "Could not apply the work item template.",
+  },
   success: "Success",
   warning: "Warning",
   info: "Info",
@@ -1522,6 +1528,51 @@ export default {
             },
           },
         },
+      },
+      work_item_templates: {
+        heading: "Work item templates",
+        description:
+          "Create reusable starter sets for new work items (title, description, assignees, priority, and more). A template can cover the whole workspace or one project only.",
+        title: "Work item templates",
+        add_template: "Add template",
+        table: {
+          name: "Template",
+          scope: "Scope",
+          project: "Project",
+          workspace_wide: "All projects",
+        },
+        form: {
+          name_required: "Template name is required",
+          scope_project: "Limit to one project (optional)",
+          scope_hint:
+            "Leave project empty to make this template available in every project. Project-specific fields (state, labels, cycle, modules) can only be saved when a project is selected.",
+          scope_hint_short:
+            "Optional. If empty, the template is available in all projects. When set, assignee suggestions are limited to that project; otherwise, workspace members are used.",
+          modal_intro:
+            "Name the template and add a short note for the team. Then set default work item values—the same kind of title, description, assignees, and priority you use when creating a work item.",
+          template_name_label: "Template name",
+          template_name_placeholder: "e.g. Bug report",
+          template_note_label: "Description (for your team)",
+          template_note_placeholder: "What this template is for (optional; this is not the work item description).",
+          default_values_section_title: "Default work item values",
+          default_values_section_hint:
+            "When someone applies this template while creating a work item, these fields are filled in. Everything here is optional.",
+          default_work_item_name: "Title",
+          default_work_item_name_placeholder: "e.g. [Bug] …",
+          default_work_item_description: "Description",
+          default_work_item_description_hint:
+            "Plain text; it is saved as the work item description. Line breaks are kept.",
+          default_work_item_description_placeholder: "Text that should appear in the new work item by default",
+          project_required_for_scoped_fields:
+            "Choose a project to set state, labels, cycle, modules, estimates, and work item type. Workspace-wide templates can still set title, description, assignees, priority, and dates.",
+        },
+        toasts: {
+          created: { title: "Template created", message: "The work item template was saved." },
+          create_failed: { title: "Could not create template", message: "Please check the form and try again." },
+          deleted: { title: "Template removed", message: "The work item template was deleted." },
+          delete_failed: { title: "Could not delete", message: "Please try again." },
+        },
+        delete_confirm: "Are you sure you want to remove this work item template?",
       },
       webhooks: {
         heading: "Webhooks",

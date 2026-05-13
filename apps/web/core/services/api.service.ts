@@ -27,8 +27,14 @@ export abstract class APIService {
       (response) => response,
       (error) => {
         if (error.response && error.response.status === 401) {
-          const currentPath = window.location.pathname;
-          window.location.replace(`/${currentPath ? `?next_path=${currentPath}` : ``}`);
+          const url = String(error.config?.url ?? "");
+          const method = String(error.config?.method ?? "get").toLowerCase();
+          // GET /api/users/me/ przy braku sesji zwraca 401 — to nie jest wygaśnięcie sesji, tylko „niezalogowany”.
+          const isSessionProbe = method === "get" && url.includes("/api/users/me");
+          if (!isSessionProbe) {
+            const currentPath = window.location.pathname;
+            window.location.replace(`/${currentPath ? `?next_path=${currentPath}` : ``}`);
+          }
         }
         return Promise.reject(error);
       }

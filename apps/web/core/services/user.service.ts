@@ -53,8 +53,9 @@ export class UserService extends APIService {
   }
 
   async currentUser(): Promise<IUser> {
-    // Using validateStatus: null to bypass interceptors for unauthorized errors.
-    return this.get("/api/users/me/", { validateStatus: null })
+    // Axios domyślnie odrzuca 401; musimy uznać 401 za „sukces”, żeby interceptor
+    // w api.service.ts nie robił przekierowania przy sprawdzaniu sesji (np. rejestracja).
+    return this.get("/api/users/me/", { validateStatus: () => true })
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response;
