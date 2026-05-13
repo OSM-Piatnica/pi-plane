@@ -235,7 +235,6 @@ export default {
   time_tracking_description: "Log time spent on work items and projects.",
   work_management_description: "Manage your work and projects with ease.",
   documentation: "Documentation",
-  message_support: "Message support",
   contact_sales: "Contact sales",
   hyper_mode: "Hyper Mode",
   keyboard_shortcuts: "Keyboard shortcuts",
@@ -2748,7 +2747,6 @@ export default {
       open_plane_documentation: "Open Plane documentation",
       join_forum: "Join our Forum",
       report_bug: "Report a bug",
-      chat_with_us: "Chat with us",
     },
     page_placeholders: {
       default: "Type a command or search",
