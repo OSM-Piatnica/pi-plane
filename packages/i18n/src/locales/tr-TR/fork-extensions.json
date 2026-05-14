@@ -1,0 +1,54 @@
+{
+  "appearance": "Görünüm",
+  "auth": {
+    "common": {
+      "password": {
+        "current_password": {
+          "placeholder": "Mevcut şifreyi girin"
+        }
+      }
+    }
+  },
+  "duration": "Süre",
+  "duration_days": "{count, plural, other {# gün}}",
+  "epic": {
+    "all": "Tüm Epikler"
+  },
+  "importer": {
+    "github": {
+      "description": "GitHub depolarından iş öğelerini içe aktarın ve senkronize edin.",
+      "title": "Github"
+    },
+    "jira": {
+      "description": "Jira projelerinden ve epiklerinden iş öğelerini içe aktarın.",
+      "title": "Jira"
+    }
+  },
+  "issue": {
+    "add": {
+      "duration": "Süre ekle"
+    }
+  },
+  "profile": {
+    "actions": {
+      "appearance": "Görünüm"
+    }
+  },
+  "project_views": {
+    "empty_state": {
+      "filter": {
+        "description": "Arama kriterleriyle eşleşen görünüm yok. \n Bunun yerine yeni bir görünüm oluşturun.",
+        "title": "Eşleşen görünüm yok"
+      }
+    }
+  },
+  "workspace": "Çalışma Alanı",
+  "workspace_analytics": {
+    "total_admins": "Toplam Yönetici",
+    "total_guests": "Toplam Misafir",
+    "total_intake": "Toplam Gelir",
+    "total_projects": "Toplam Proje",
+    "total_users": "Toplam Kullanıcı",
+    "total_work_items": "Toplam {entity}"
+  }
+}

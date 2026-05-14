@@ -1,0 +1,46 @@
+{
+  "appearance": "Tampilan",
+  "duration": "Durasi",
+  "duration_days": "{count, plural, other {# hari}}",
+  "epic": {
+    "all": "Semua Epik"
+  },
+  "importer": {
+    "github": {
+      "description": "Impor item kerja dari repositori GitHub dan sinkronkan.",
+      "title": "Github"
+    },
+    "jira": {
+      "description": "Impor item kerja dan epik dari proyek dan epik Jira.",
+      "title": "Jira"
+    }
+  },
+  "issue": {
+    "add": {
+      "duration": "Tambah durasi"
+    }
+  },
+  "no_of": "Jumlah {entity}",
+  "profile": {
+    "actions": {
+      "appearance": "Tampilan"
+    }
+  },
+  "project_views": {
+    "empty_state": {
+      "filter": {
+        "description": "Tidak ada tampilan yang cocok dengan kriteria pencarian. \n Buat tampilan baru sebagai gantinya.",
+        "title": "Tidak ada tampilan yang cocok"
+      }
+    }
+  },
+  "workspace": "Ruang kerja",
+  "workspace_analytics": {
+    "total_admins": "Total Admin",
+    "total_guests": "Total Tamu",
+    "total_intake": "Total Pemasukan",
+    "total_projects": "Total Proyek",
+    "total_users": "Total Pengguna",
+    "total_work_items": "Total {entity}"
+  }
+}

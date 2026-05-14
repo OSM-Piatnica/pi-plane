@@ -1,0 +1,45 @@
+{
+  "appearance": "外観",
+  "duration": "期間",
+  "duration_days": "{count, plural, other {#日}}",
+  "epic": {
+    "all": "すべてのエピック"
+  },
+  "importer": {
+    "github": {
+      "description": "GitHubリポジトリから作業項目をインポートして同期します。",
+      "title": "GitHub"
+    },
+    "jira": {
+      "description": "Jiraプロジェクトとエピックから作業項目とエピックをインポートします。",
+      "title": "Jira"
+    }
+  },
+  "issue": {
+    "add": {
+      "duration": "期間を追加"
+    }
+  },
+  "profile": {
+    "actions": {
+      "appearance": "外観"
+    }
+  },
+  "project_views": {
+    "empty_state": {
+      "filter": {
+        "description": "検索条件に一致するビューがありません。\n代わりに新しいビューを作成してください。",
+        "title": "一致するビューがありません"
+      }
+    }
+  },
+  "workspace": "ワークスペース",
+  "workspace_analytics": {
+    "total_admins": "管理者の合計",
+    "total_guests": "ゲストの合計",
+    "total_intake": "総収入",
+    "total_projects": "プロジェクト合計",
+    "total_users": "ユーザー総数",
+    "total_work_items": "{entity}の合計"
+  }
+}
