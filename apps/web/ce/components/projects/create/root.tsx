@@ -4,13 +4,14 @@
  * See the LICENSE file for details.
  */
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react";
 import { FormProvider, useForm } from "react-hook-form";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { EFileAssetType } from "@plane/types";
+import type { TProjectTemplate, TProjectTemplatePayload } from "@plane/types";
 // components
 import ProjectCommonAttributes from "@/components/project/create/common-attributes";
 import ProjectCreateHeader from "@/components/project/create/header";
@@ -19,10 +20,13 @@ import ProjectCreateButtons from "@/components/project/create/project-create-but
 import { getCoverImageType, uploadCoverImage } from "@/helpers/cover-image.helper";
 import { useProject } from "@/hooks/store/use-project";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { ProjectTemplateService } from "@/services/project-template.service";
 // plane web types
 import type { TProject } from "@/plane-web/types/projects";
 import { ProjectAttributes } from "./attributes";
 import { getProjectFormValues } from "./utils";
+
+const projectTemplateService = new ProjectTemplateService();
 
 export type TCreateProjectFormProps = {
   setToFavorite?: boolean;
@@ -35,19 +39,133 @@ export type TCreateProjectFormProps = {
 };
 
 export const CreateProjectForm = observer(function CreateProjectForm(props: TCreateProjectFormProps) {
-  const { setToFavorite, workspaceSlug, data, onClose, handleNextStep, updateCoverImageStatus } = props;
-  // store
+  const { setToFavorite, workspaceSlug, data, onClose, handleNextStep, updateCoverImageStatus, templateId } = props;
   const { t } = useTranslation();
   const { addProjectToFavorites, createProject, updateProject } = useProject();
-  // states
   const [shouldAutoSyncIdentifier, setShouldAutoSyncIdentifier] = useState(true);
-  // form info
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(templateId ?? null);
+  const [isTemplateApplying, setIsTemplateApplying] = useState(false);
   const methods = useForm<TProject>({
     defaultValues: { ...getProjectFormValues(), ...data },
     reValidateMode: "onChange",
   });
   const { handleSubmit, reset, setValue } = methods;
   const { isMobile } = usePlatformOS();
+  const applyProjectTemplatePayload = useCallback(
+    (payload: TProjectTemplatePayload) => {
+      if (payload.name !== undefined) setValue("name", payload.name, { shouldDirty: true });
+      if (payload.identifier !== undefined) {
+        setValue("identifier", payload.identifier, { shouldDirty: true });
+        setShouldAutoSyncIdentifier(false);
+      }
+      if (payload.description !== undefined) setValue("description", payload.description, { shouldDirty: true });
+      if (payload.start_date !== undefined) setValue("start_date", payload.start_date, { shouldDirty: true });
+      if (payload.target_date !== undefined) setValue("target_date", payload.target_date, { shouldDirty: true });
+      if (payload.network !== undefined) setValue("network", payload.network, { shouldDirty: true });
+      if (payload.project_lead !== undefined) setValue("project_lead", payload.project_lead, { shouldDirty: true });
+      if (payload.default_assignee !== undefined) {
+        setValue("default_assignee", payload.default_assignee, { shouldDirty: true });
+      }
+      if (payload.logo_props !== undefined)
+        setValue("logo_props", payload.logo_props ?? undefined, { shouldDirty: true });
+      if (payload.cover_image_url !== undefined) {
+        setValue("cover_image_url", payload.cover_image_url ?? undefined, { shouldDirty: true });
+      }
+      if (payload.cycle_view !== undefined) setValue("cycle_view", payload.cycle_view, { shouldDirty: true });
+      if (payload.module_view !== undefined) setValue("module_view", payload.module_view, { shouldDirty: true });
+      if (payload.issue_views_view !== undefined) {
+        setValue("issue_views_view", payload.issue_views_view, { shouldDirty: true });
+      }
+      if (payload.page_view !== undefined) setValue("page_view", payload.page_view, { shouldDirty: true });
+      if (payload.intake_view !== undefined) setValue("intake_view", payload.intake_view, { shouldDirty: true });
+      if (payload.is_time_tracking_enabled !== undefined) {
+        setValue("is_time_tracking_enabled", payload.is_time_tracking_enabled, { shouldDirty: true });
+      }
+      if (payload.is_issue_type_enabled !== undefined) {
+        setValue("is_issue_type_enabled", payload.is_issue_type_enabled, { shouldDirty: true });
+      }
+      if (payload.guest_view_all_features !== undefined) {
+        setValue("guest_view_all_features", payload.guest_view_all_features, { shouldDirty: true });
+      }
+    },
+    [setValue]
+  );
+
+  const tRef = useRef(t);
+  tRef.current = t;
+
+  const fetchingTemplateKeyRef = useRef<string | null>(null);
+  const appliedInitialTemplateKeyRef = useRef<string | null>(null);
+  const cachedTemplateRef = useRef<TProjectTemplate | null>(null);
+
+  const getTemplateCacheKey = useCallback((id: string) => `${workspaceSlug}:${id}`, [workspaceSlug]);
+
+  const showApplyTemplateError = useCallback(() => {
+    setToast({
+      type: TOAST_TYPE.ERROR,
+      title: tRef.current("error"),
+      message: tRef.current("workspace_settings.settings.project_templates.toasts.apply_failed.message"),
+    });
+  }, []);
+
+  const loadProjectTemplate = useCallback(
+    async (id: string) => {
+      const cacheKey = getTemplateCacheKey(id);
+      if (fetchingTemplateKeyRef.current === cacheKey) return;
+
+      const cached = cachedTemplateRef.current;
+      if (cached?.id === id) {
+        applyProjectTemplatePayload(cached.payload ?? {});
+        return;
+      }
+
+      fetchingTemplateKeyRef.current = cacheKey;
+      setIsTemplateApplying(true);
+      try {
+        const template = await projectTemplateService.retrieve(workspaceSlug.toString(), id);
+        cachedTemplateRef.current = template;
+        applyProjectTemplatePayload(template.payload ?? {});
+      } catch (error) {
+        console.error(error);
+        showApplyTemplateError();
+        throw error;
+      } finally {
+        if (fetchingTemplateKeyRef.current === cacheKey) {
+          fetchingTemplateKeyRef.current = null;
+        }
+        setIsTemplateApplying(false);
+      }
+    },
+    [applyProjectTemplatePayload, getTemplateCacheKey, showApplyTemplateError, workspaceSlug]
+  );
+
+  const handleTemplateSelect = useCallback(
+    async (nextTemplateId: string | null) => {
+      setSelectedTemplateId(nextTemplateId);
+      if (!nextTemplateId) {
+        cachedTemplateRef.current = null;
+        return;
+      }
+      await loadProjectTemplate(nextTemplateId);
+    },
+    [loadProjectTemplate]
+  );
+
+  useEffect(() => {
+    setSelectedTemplateId(templateId ?? null);
+    if (!templateId) {
+      appliedInitialTemplateKeyRef.current = null;
+      cachedTemplateRef.current = null;
+      return;
+    }
+
+    const templateKey = getTemplateCacheKey(templateId);
+    if (appliedInitialTemplateKeyRef.current === templateKey) return;
+    appliedInitialTemplateKeyRef.current = templateKey;
+
+    void loadProjectTemplate(templateId);
+  }, [getTemplateCacheKey, loadProjectTemplate, templateId]);
+
   const handleAddToFavorites = (projectId: string) => {
     if (!workspaceSlug) return;
 
@@ -61,7 +179,6 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
   };
 
   const onSubmit = async (formData: Partial<TProject>) => {
-    // Upper case identifier
     formData.identifier = formData.identifier?.toUpperCase();
     const coverImage = formData.cover_image_url;
     let uploadedAssetUrl: string | null = null;
@@ -92,72 +209,110 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
       }
     }
 
-    return createProject(workspaceSlug.toString(), formData)
-      .then(async (res) => {
-        if (uploadedAssetUrl) {
-          await updateCoverImageStatus(res.id, uploadedAssetUrl);
-          await updateProject(workspaceSlug.toString(), res.id, { cover_image_url: uploadedAssetUrl });
-        } else if (coverImage && coverImage.startsWith("http")) {
-          await updateCoverImageStatus(res.id, coverImage);
-          await updateProject(workspaceSlug.toString(), res.id, { cover_image_url: coverImage });
-        }
-        setToast({
-          type: TOAST_TYPE.SUCCESS,
-          title: t("success"),
-          message: t("project_created_successfully"),
-        });
+    try {
+      const res = await createProject(workspaceSlug.toString(), formData);
+      if (uploadedAssetUrl) {
+        await updateCoverImageStatus(res.id, uploadedAssetUrl);
+        await updateProject(workspaceSlug.toString(), res.id, { cover_image_url: uploadedAssetUrl });
+      } else if (coverImage && coverImage.startsWith("http")) {
+        await updateCoverImageStatus(res.id, coverImage);
+        await updateProject(workspaceSlug.toString(), res.id, { cover_image_url: coverImage });
+      }
+      setToast({
+        type: TOAST_TYPE.SUCCESS,
+        title: t("success"),
+        message: t("project_created_successfully"),
+      });
 
-        if (setToFavorite) {
-          handleAddToFavorites(res.id);
-        }
-        handleNextStep(res.id);
-      })
-      .catch((err) => {
+      if (setToFavorite) {
+        handleAddToFavorites(res.id);
+      }
+
+      if (selectedTemplateId) {
         try {
-          // Handle the new error format where codes are nested in arrays under field names
-          const errorData = err?.data ?? {};
+          const template =
+            cachedTemplateRef.current?.id === selectedTemplateId
+              ? cachedTemplateRef.current
+              : await projectTemplateService.retrieve(workspaceSlug.toString(), selectedTemplateId);
+          if (template.payload?.state_templates?.length) {
+            await projectTemplateService.createProjectStatesFromTemplate(
+              workspaceSlug.toString(),
+              res.id,
+              template.payload.state_templates
+            );
+          }
+          if (template.payload?.label_templates?.length) {
+            await projectTemplateService.createProjectLabelsFromTemplate(
+              workspaceSlug.toString(),
+              res.id,
+              template.payload.label_templates
+            );
+          }
+          if (template.payload?.is_issue_type_enabled) {
+            await projectTemplateService.seedIssueTypesFromProjectTemplate(
+              workspaceSlug.toString(),
+              res.id,
+              selectedTemplateId
+            );
+          }
+        } catch (seedError) {
+          console.error(seedError);
+          setToast({
+            type: TOAST_TYPE.WARNING,
+            title: t("warning"),
+            message: t("workspace_settings.settings.project_templates.toasts.apply_followup_failed.message"),
+          });
+        }
+      }
+      handleNextStep(res.id);
+    } catch (err) {
+      try {
+        const errorData = (err as { data?: Record<string, string[]> })?.data ?? {};
 
-          const nameError = errorData.name?.includes("PROJECT_NAME_ALREADY_EXIST");
-          const identifierError = errorData?.identifier?.includes("PROJECT_IDENTIFIER_ALREADY_EXIST");
+        const nameError = errorData.name?.includes("PROJECT_NAME_ALREADY_EXIST");
+        const identifierError = errorData.identifier?.includes("PROJECT_IDENTIFIER_ALREADY_EXIST");
 
-          if (nameError || identifierError) {
-            if (nameError) {
-              setToast({
-                type: TOAST_TYPE.ERROR,
-                title: t("toast.error"),
-                message: t("project_name_already_taken"),
-              });
-            }
-
-            if (identifierError) {
-              setToast({
-                type: TOAST_TYPE.ERROR,
-                title: t("toast.error"),
-                message: t("project_identifier_already_taken"),
-              });
-            }
-          } else {
+        if (nameError || identifierError) {
+          if (nameError) {
             setToast({
               type: TOAST_TYPE.ERROR,
               title: t("toast.error"),
-              message: t("something_went_wrong"),
+              message: t("project_name_already_taken"),
             });
           }
-        } catch (error) {
-          // Fallback error handling if the error processing fails
-          console.error("Error processing API error:", error);
+
+          if (identifierError) {
+            setToast({
+              type: TOAST_TYPE.ERROR,
+              title: t("toast.error"),
+              message: t("project_identifier_already_taken"),
+            });
+          }
+        } else {
           setToast({
             type: TOAST_TYPE.ERROR,
             title: t("toast.error"),
             message: t("something_went_wrong"),
           });
         }
-      });
+      } catch (error) {
+        console.error("Error processing API error:", error);
+        setToast({
+          type: TOAST_TYPE.ERROR,
+          title: t("toast.error"),
+          message: t("something_went_wrong"),
+        });
+      }
+    }
   };
 
   const handleClose = () => {
     onClose();
     setShouldAutoSyncIdentifier(true);
+    setSelectedTemplateId(null);
+    appliedInitialTemplateKeyRef.current = null;
+    fetchingTemplateKeyRef.current = null;
+    cachedTemplateRef.current = null;
     setTimeout(() => {
       reset();
     }, 300);
@@ -165,7 +320,13 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
 
   return (
     <FormProvider {...methods}>
-      <ProjectCreateHeader handleClose={handleClose} isMobile={isMobile} />
+      <ProjectCreateHeader
+        handleClose={handleClose}
+        isMobile={isMobile}
+        selectedTemplateId={selectedTemplateId}
+        handleTemplateSelect={handleTemplateSelect}
+        isTemplateApplying={isTemplateApplying}
+      />
 
       <form onSubmit={handleSubmit(onSubmit)} className="px-3">
         <div className="mt-9 space-y-6 pb-5">

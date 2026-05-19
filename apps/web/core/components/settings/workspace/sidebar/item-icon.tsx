@@ -15,6 +15,7 @@ export const WORKSPACE_SETTINGS_ICONS: Record<TWorkspaceSettingsTabs, LucideIcon
   members: Users,
   export: ArrowUpToLine,
   "billing-and-plans": CreditCard,
+  "project-templates": LayoutTemplate,
   "work-item-templates": LayoutTemplate,
   webhooks: Webhook,
 };

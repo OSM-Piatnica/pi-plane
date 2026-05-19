@@ -135,3 +135,4 @@ from .draft import (
 )
 
 from .work_item_template import WorkItemTemplateSerializer
+from .project_template import ProjectTemplateSerializer

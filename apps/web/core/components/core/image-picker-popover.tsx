@@ -43,13 +43,24 @@ type Props = {
   tabIndex?: number;
   isProfileCover?: boolean;
   projectId?: string | null;
+  workspaceSlug?: string;
 };
 
 // services
 const fileService = new FileService();
 
 export const ImagePickerPopover = observer(function ImagePickerPopover(props: Props) {
-  const { label, value, control, onChange, disabled = false, tabIndex, isProfileCover = false, projectId } = props;
+  const {
+    label,
+    value,
+    control,
+    onChange,
+    disabled = false,
+    tabIndex,
+    isProfileCover = false,
+    projectId,
+    workspaceSlug: workspaceSlugProp,
+  } = props;
   // states
   const [image, setImage] = useState<File | null>(null);
   const [isImageUploading, setIsImageUploading] = useState(false);
@@ -61,7 +72,8 @@ export const ImagePickerPopover = observer(function ImagePickerPopover(props: Pr
   // refs
   const ref = useRef<HTMLDivElement>(null);
   // router params
-  const { workspaceSlug } = useParams();
+  const { workspaceSlug: workspaceSlugFromParams } = useParams();
+  const workspaceSlug = workspaceSlugProp ?? workspaceSlugFromParams;
   // store hooks
   const { config } = useInstance();
   // derived values
@@ -188,14 +200,14 @@ export const ImagePickerPopover = observer(function ImagePickerPopover(props: Pr
   useOutsideClickDetector(ref, handleClose);
 
   return (
-    <Popover className="relative z-19" ref={ref} tabIndex={tabIndex} onKeyDown={handleKeyDown}>
+    <Popover className="relative z-[60]" ref={ref} tabIndex={tabIndex} onKeyDown={handleKeyDown}>
       <Popover.Button className={getButtonStyling("secondary", "sm")} onClick={handleOnClick} disabled={disabled}>
         {label}
       </Popover.Button>
 
       {isOpen && (
         <Popover.Panel
-          className="absolute right-0 z-20 mt-2 rounded-md border border-subtle bg-surface-1 shadow-raised-200"
+          className="absolute right-0 z-[70] mt-2 rounded-md border border-subtle bg-surface-1 shadow-raised-200"
           static
         >
           <div
@@ -219,7 +231,7 @@ export const ImagePickerPopover = observer(function ImagePickerPopover(props: Pr
                         <Controller
                           control={control}
                           name="search"
-                          render={({ field: { value, ref } }) => (
+                          render={({ field: { value: searchValue, ref: searchInputRef } }) => (
                             <Input
                               id="search"
                               name="search"
@@ -230,9 +242,9 @@ export const ImagePickerPopover = observer(function ImagePickerPopover(props: Pr
                                   setSearchParams(formData.search);
                                 }
                               }}
-                              value={value}
+                              value={searchValue}
                               onChange={(e) => setFormData({ ...formData, search: e.target.value })}
-                              ref={ref}
+                              ref={searchInputRef}
                               placeholder="Search for images"
                               className="w-full text-13"
                             />
@@ -245,21 +257,22 @@ export const ImagePickerPopover = observer(function ImagePickerPopover(props: Pr
                       {unsplashImages ? (
                         unsplashImages.length > 0 ? (
                           <div className="grid grid-cols-4 gap-4">
-                            {unsplashImages.map((image) => (
-                              <div
-                                key={image.id}
-                                className="relative col-span-2 aspect-video md:col-span-1"
+                            {unsplashImages.map((unsplashImage) => (
+                              <button
+                                key={unsplashImage.id}
+                                type="button"
+                                className="relative col-span-2 aspect-video border-0 bg-transparent p-0 md:col-span-1"
                                 onClick={() => {
                                   setIsOpen(false);
-                                  onChange(image.urls.regular);
+                                  onChange(unsplashImage.urls.regular);
                                 }}
                               >
                                 <img
-                                  src={image.urls.small}
-                                  alt={image.alt_description}
+                                  src={unsplashImage.urls.small}
+                                  alt={unsplashImage.alt_description ?? ""}
                                   className="absolute top-0 left-0 h-full w-full cursor-pointer rounded-sm object-cover"
                                 />
-                              </div>
+                              </button>
                             ))}
                           </div>
                         ) : (
@@ -283,17 +296,18 @@ export const ImagePickerPopover = observer(function ImagePickerPopover(props: Pr
                 <Tabs.Content value="images" className="h-full w-full space-y-4">
                   <div className="grid grid-cols-4 gap-4">
                     {Object.values(STATIC_COVER_IMAGES).map((imageUrl, index) => (
-                      <div
+                      <button
                         key={imageUrl}
-                        className="relative col-span-2 aspect-video md:col-span-1"
+                        type="button"
+                        className="relative col-span-2 aspect-video border-0 bg-transparent p-0 md:col-span-1"
                         onClick={() => handleStaticImageSelect(imageUrl)}
                       >
                         <img
                           src={imageUrl}
-                          alt={`Cover image ${index + 1}`}
+                          alt={`Cover ${index + 1}`}
                           className="absolute top-0 left-0 h-full w-full cursor-pointer rounded-sm object-cover transition-opacity hover:opacity-80"
                         />
-                      </div>
+                      </button>
                     ))}
                   </div>
                 </Tabs.Content>
@@ -318,7 +332,7 @@ export const ImagePickerPopover = observer(function ImagePickerPopover(props: Pr
                           <>
                             <img
                               src={image ? URL.createObjectURL(image) : getCoverImageDisplayURL(value, "")}
-                              alt="image"
+                              alt=""
                               className="h-full w-full rounded-lg object-cover"
                             />
                           </>
