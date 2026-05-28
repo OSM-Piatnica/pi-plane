@@ -6,12 +6,13 @@
 # Python imports
 import os
 import logging
+from datetime import timedelta
 
 # Third party imports
 from celery import Celery
 from pythonjsonlogger.json import JsonFormatter
 from celery.signals import after_setup_logger, after_setup_task_logger
-from celery.schedules import crontab
+from celery.schedules import crontab, schedule
 
 # Module imports
 from plane.settings.redis import redis_instance
@@ -20,6 +21,20 @@ from plane.settings.redis import redis_instance
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "plane.settings.production")
 
 ri = redis_instance()
+
+# Configurable metrics push interval (in minutes)
+# Default: 360 (6 hours), set to 5 for development/testing
+def _get_metrics_push_interval_minutes() -> int:
+    raw = os.environ.get("METRICS_PUSH_INTERVAL_MINUTES", "360")
+    try:
+        value = int(raw)
+        # Cap at 10,000,000 minutes to prevent timedelta(minutes=...) OverflowError
+        # on arbitrarily large inputs while still allowing multi-year intervals.
+        return value if 0 < value <= 10_000_000 else 360
+    except (ValueError, OverflowError):
+        return 360
+
+METRICS_PUSH_INTERVAL_MINUTES = _get_metrics_push_interval_minutes()
 
 app = Celery("plane")
 
@@ -33,9 +48,9 @@ app.conf.beat_schedule = {
         "task": "plane.bgtasks.email_notification_task.stack_email_notification",
         "schedule": crontab(minute="*/5"),  # Every 5 minutes
     },
-    "run-every-6-hours-for-instance-trace": {
-        "task": "plane.license.bgtasks.tracer.instance_traces",
-        "schedule": crontab(hour="*/6", minute=0),  # Every 6 hours
+    "push-instance-metrics": {
+        "task": "plane.license.bgtasks.telemetry_metrics.push_instance_metrics",
+        "schedule": schedule(run_every=timedelta(minutes=METRICS_PUSH_INTERVAL_MINUTES)),
     },
     # Ticks hourly, the task itself sends only at WORK_ITEM_DUE_REMINDER_HOUR in its own timezone
     "check-every-hour-to-send-due-reminders": {
