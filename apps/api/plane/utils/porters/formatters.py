@@ -149,7 +149,7 @@ class CSVFormatter(BaseFormatter):
 
             # Write pretty headers manually, then write data rows
             writer = csv.writer(output, delimiter=self.delimiter, lineterminator="\r\n")
-            writer.writerow(pretty_headers)
+            writer.writerow(sanitize_csv_row(pretty_headers))
 
             # Write data rows in the same field order
             for row in data:
@@ -158,7 +158,7 @@ class CSVFormatter(BaseFormatter):
             writer = csv.DictWriter(
                 output, fieldnames=fieldnames, delimiter=self.delimiter, lineterminator="\r\n"
             )
-            writer.writeheader()
+            writer.writerow({k: sanitize_csv_value(k) for k in fieldnames})
             for row in data:
                 writer.writerow({k: sanitize_csv_value(row.get(k, "")) for k in fieldnames})
 
@@ -248,11 +248,11 @@ class XLSXFormatter(BaseFormatter):
             headers = [self._prettify_header(key) for key in fieldnames]
         else:
             headers = fieldnames
-        ws.append(headers)
+        ws.append(sanitize_csv_row(headers))
 
         # Write data rows
         for row in data:
-            ws.append([self._format_value(row.get(key, "")) for key in fieldnames])
+            ws.append(sanitize_csv_row([self._format_value(row.get(key, "")) for key in fieldnames]))
 
         output = BytesIO()
         wb.save(output)
