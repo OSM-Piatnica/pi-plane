@@ -23,10 +23,14 @@ import { usePlatformOS } from "@/hooks/use-platform-os";
 import { ProjectTemplateService } from "@/services/project-template.service";
 // plane web types
 import type { TProject } from "@/plane-web/types/projects";
+import { IssueTypeService } from "@/services/issue-type.service";
 import { ProjectAttributes } from "./attributes";
+import { ProjectCreateFeatureToggles } from "./feature-toggles";
+import { ProjectCreateIssueTypesAssign } from "./issue-types-assign";
 import { getProjectFormValues } from "./utils";
 
 const projectTemplateService = new ProjectTemplateService();
+const issueTypeService = new IssueTypeService();
 
 export type TCreateProjectFormProps = {
   setToFavorite?: boolean;
@@ -45,12 +49,14 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
   const [shouldAutoSyncIdentifier, setShouldAutoSyncIdentifier] = useState(true);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(templateId ?? null);
   const [isTemplateApplying, setIsTemplateApplying] = useState(false);
+  const [selectedIssueTypeIds, setSelectedIssueTypeIds] = useState<string[]>([]);
   const methods = useForm<TProject>({
     defaultValues: { ...getProjectFormValues(), ...data },
     reValidateMode: "onChange",
   });
-  const { handleSubmit, reset, setValue } = methods;
+  const { handleSubmit, reset, setValue, watch } = methods;
   const { isMobile } = usePlatformOS();
+  const isIssueTypeEnabled = Boolean(watch("is_issue_type_enabled"));
   const applyProjectTemplatePayload = useCallback(
     (payload: TProjectTemplatePayload) => {
       if (payload.name !== undefined) setValue("name", payload.name, { shouldDirty: true });
@@ -142,6 +148,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
   const handleTemplateSelect = useCallback(
     async (nextTemplateId: string | null) => {
       setSelectedTemplateId(nextTemplateId);
+      setSelectedIssueTypeIds([]);
       if (!nextTemplateId) {
         cachedTemplateRef.current = null;
         return;
@@ -263,6 +270,20 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
             message: t("workspace_settings.settings.project_templates.toasts.apply_followup_failed.message"),
           });
         }
+      } else if (formData.is_issue_type_enabled && selectedIssueTypeIds.length > 0) {
+        try {
+          await issueTypeService.bulkAssignProjectTypes(workspaceSlug.toString(), res.id, {
+            issue_type_ids: selectedIssueTypeIds,
+            default_type_id: selectedIssueTypeIds[0],
+          });
+        } catch (assignError) {
+          console.error(assignError);
+          setToast({
+            type: TOAST_TYPE.WARNING,
+            title: t("warning"),
+            message: t("project_create.features.work_item_types.assign_failed"),
+          });
+        }
       }
       handleNextStep(res.id);
     } catch (err) {
@@ -310,6 +331,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
     onClose();
     setShouldAutoSyncIdentifier(true);
     setSelectedTemplateId(null);
+    setSelectedIssueTypeIds([]);
     appliedInitialTemplateKeyRef.current = null;
     fetchingTemplateKeyRef.current = null;
     cachedTemplateRef.current = null;
@@ -337,6 +359,19 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
             setShouldAutoSyncIdentifier={setShouldAutoSyncIdentifier}
           />
           <ProjectAttributes isMobile={isMobile} />
+          <ProjectCreateFeatureToggles />
+          {isIssueTypeEnabled && !selectedTemplateId ? (
+            <div className="rounded-md border border-subtle bg-surface-1 p-3">
+              <p className="pb-2 text-13 font-medium text-primary">
+                {t("project_create.features.work_item_types.assign_label")}
+              </p>
+              <ProjectCreateIssueTypesAssign
+                workspaceSlug={workspaceSlug.toString()}
+                value={selectedIssueTypeIds}
+                onChange={setSelectedIssueTypeIds}
+              />
+            </div>
+          ) : null}
         </div>
         <ProjectCreateButtons handleClose={handleClose} />
       </form>

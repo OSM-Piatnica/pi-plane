@@ -15,8 +15,9 @@ export type TWorkspaceSettingsTabs =
   | "members"
   | "billing-and-plans"
   | "export"
-  | "project-templates"
   | "work-item-templates"
+  | "work-item-types"
+  | "project-templates"
   | "webhooks";
 export type TWorkspaceSettingsItem = {
   key: TWorkspaceSettingsTabs;

@@ -1,13 +1,22 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * See the LICENSE file for details.
+ */
+
 import React, { useState, useRef, useEffect } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
+// editor
 import { ETabIndices, DEFAULT_WORK_ITEM_FORM_VALUES } from "@plane/constants";
 import type { EditorRefApi } from "@plane/editor";
+// i18n
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { TIssue, TWorkspaceDraftIssue } from "@plane/types";
+// hooks
 import { ToggleSwitch } from "@plane/ui";
 import {
   convertWorkItemDataToSearchResponse,
@@ -17,6 +26,7 @@ import {
   getChangedIssuefields,
   getTabIndex,
 } from "@plane/utils";
+// components
 import {
   IssueDefaultProperties,
   IssueDescriptionEditor,
@@ -24,6 +34,8 @@ import {
   IssueProjectSelect,
   IssueTitleInput,
 } from "@/components/issues/issue-modal/components";
+// helpers
+// hooks
 import { useIssueModal } from "@/hooks/context/use-issue-modal";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
@@ -31,6 +43,7 @@ import { useProjectState } from "@/hooks/store/use-project-state";
 import { useWorkspaceDraftIssues } from "@/hooks/store/workspace-draft";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { useProjectIssueProperties } from "@/hooks/use-project-issue-properties";
+// plane web imports
 import { DeDupeButtonRoot } from "@/plane-web/components/de-dupe/de-dupe-button";
 import { DuplicateModalRoot } from "@/plane-web/components/de-dupe/duplicate-modal";
 import { IssueTypeSelect, WorkItemTemplateSelect } from "@/plane-web/components/issues/issue-modal";
@@ -89,16 +102,20 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     dataResetProperties = [],
   } = props;
 
+  // states
   const [gptAssistantModal, setGptAssistantModal] = useState(false);
   const [isMoving, setIsMoving] = useState<boolean>(false);
 
+  // refs
   const editorRef = useRef<EditorRefApi>(null);
   const submitBtnRef = useRef<HTMLButtonElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
   const modalContainerRef = useRef<HTMLDivElement | null>(null);
 
+  // router
   const { workspaceSlug, projectId: routeProjectId } = useParams();
 
+  // store hooks
   const { getProjectById } = useProject();
   const {
     workItemTemplateId,
@@ -121,6 +138,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
   const { fetchCycles } = useProjectIssueProperties();
   const { getStateById } = useProjectState();
 
+  // form info
   const methods = useForm<TIssue>({
     defaultValues: { ...DEFAULT_WORK_ITEM_FORM_VALUES, project_id: defaultProjectId, ...data },
     reValidateMode: "onChange",
@@ -137,6 +155,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
   } = methods;
 
   const projectId = watch("project_id");
+  /** Wartość z RHF, żeby `value` w RichText odpowiadała resetowi i szablonowi (przy create `data` nie ma `description_html`). */
   const descriptionHtmlForEditor = watch("description_html");
   const activeAdditionalPropertiesLength = getActiveAdditionalPropertiesLength({
     projectId: projectId,
@@ -144,14 +163,17 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     watch: watch,
   });
 
+  // derived values
   const projectDetails = projectId ? getProjectById(projectId) : undefined;
   const isDisabled = isSubmitting || isApplyingTemplate;
 
   const { getIndex } = getTabIndex(ETabIndices.ISSUE_FORM, isMobile);
 
+  //reset few fields on projectId change
   useEffect(() => {
     if (isDirty) {
       if (workItemTemplateId) {
+        // reset work item template id
         setWorkItemTemplateId(null);
         reset({ ...DEFAULT_WORK_ITEM_FORM_VALUES, project_id: projectId });
         editorRef.current?.clearEditor();
@@ -164,6 +186,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
+  // Reset form when data prop changes
   useEffect(() => {
     if (data) {
       reset({ ...DEFAULT_WORK_ITEM_FORM_VALUES, project_id: projectId, ...data });
@@ -171,11 +194,14 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...dataResetProperties]);
 
+  // Update the issue type id when the project id changes
   useEffect(() => {
     const issueTypeId = watch("type_id");
 
+    // if issue type id is present or project not available, return
     if (issueTypeId || !projectId) return;
 
+    // get issue type id on project change
     const issueTypeIdOnProjectChange = getIssueTypeIdOnProjectChange(projectId);
     if (issueTypeIdOnProjectChange) setValue("type_id", issueTypeIdOnProjectChange, { shouldValidate: true });
 
@@ -196,6 +222,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
   }, [workItemTemplateId, projectId]);
 
   const handleFormSubmit = async (formData: Partial<TIssue>, is_draft_issue = false) => {
+    // Check if the editor is ready to discard
     if (!editorRef.current?.isEditorReadyToDiscard()) {
       setToast({
         type: TOAST_TYPE.ERROR,
@@ -205,6 +232,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
       return;
     }
 
+    // check for required properties validation
     if (
       !handlePropertyValuesValidation({
         projectId: projectId,
@@ -215,7 +243,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
       return;
 
     const submitData = !data?.id
-      ? formData
+      ? { ...formData, type_id: formData.type_id ?? getValues("type_id") }
       : {
           ...getChangedIssuefields(formData, dirtyFields as { [key: string]: boolean | undefined }),
           project_id: getValues<"project_id">("project_id"),
@@ -224,32 +252,35 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
           type_id: getValues<"type_id">("type_id"),
         };
 
+    // this condition helps to move the issues from draft to project issues
     if (formData.hasOwnProperty("is_draft")) submitData.is_draft = formData.is_draft;
 
-    try {
-      await onSubmit(submitData, is_draft_issue);
-      setGptAssistantModal(false);
-      if (isCreateMoreToggleEnabled && workItemTemplateId && projectId) {
-        handleTemplateChange({
-          workspaceSlug: workspaceSlug?.toString() ?? "",
-          projectId,
-          templateId: workItemTemplateId,
-          reset,
-          editorRef,
-        });
-      } else {
-        reset({
-          ...DEFAULT_WORK_ITEM_FORM_VALUES,
-          ...(isCreateMoreToggleEnabled ? { ...data } : {}),
-          project_id: getValues<"project_id">("project_id"),
-          type_id: getValues<"type_id">("type_id"),
-          description_html: data?.description_html ?? "<p></p>",
-        });
-        editorRef?.current?.clearEditor();
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    await onSubmit(submitData, is_draft_issue)
+      .then(() => {
+        setGptAssistantModal(false);
+        if (isCreateMoreToggleEnabled && workItemTemplateId && projectId) {
+          handleTemplateChange({
+            workspaceSlug: workspaceSlug?.toString() ?? "",
+            projectId,
+            templateId: workItemTemplateId,
+            reset,
+            editorRef,
+          });
+        } else {
+          reset({
+            ...DEFAULT_WORK_ITEM_FORM_VALUES,
+            ...(isCreateMoreToggleEnabled ? { ...data } : {}),
+            project_id: getValues<"project_id">("project_id"),
+            type_id: getValues<"type_id">("type_id"),
+            description_html: data?.description_html ?? "<p></p>",
+          });
+          editorRef?.current?.clearEditor();
+        }
+        return undefined;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const handleMoveToProjects = async () => {
@@ -289,6 +320,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     else onChange(null);
   };
 
+  // debounced duplicate issues swr
   const { duplicateIssues } = useDebouncedDuplicateIssues(
     workspaceSlug?.toString(),
     projectDetails?.workspace.toString(),
@@ -300,6 +332,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     }
   );
 
+  // executing this useEffect when the parent_id coming from the component prop
   useEffect(() => {
     const parentId = watch("parent_id") || undefined;
     if (!parentId) return;
@@ -316,8 +349,10 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     setSelectedParentIssue(
       convertWorkItemDataToSearchResponse(workspaceSlug?.toString(), issue, parentProjectDetails, stateDetails)
     );
-  }, [watch, getIssueById, getProjectById, selectedParentIssue, getStateById, setSelectedParentIssue, workspaceSlug]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch, getIssueById, getProjectById, selectedParentIssue, getStateById]);
 
+  // executing this useEffect when isDirty changes
   useEffect(() => {
     if (!onChange) return;
 
@@ -342,6 +377,8 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
       resizeObserver.disconnect();
     };
   }, [formRef, modalContainerRef]);
+
+  // TODO: Remove this after the de-dupe feature is implemented
 
   const shouldRenderDuplicateModal = isDuplicateModalOpen && duplicateIssues?.length > 0;
 
@@ -486,7 +523,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
                   {!data?.id && (
                     <button
                       type="button"
-                      className="inline-flex cursor-pointer items-center gap-1.5"
+                      className="inline-flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0"
                       onClick={() => onCreateMoreToggleChange(!isCreateMoreToggleEnabled)}
                     >
                       <ToggleSwitch value={isCreateMoreToggleEnabled} onChange={() => {}} size="sm" />

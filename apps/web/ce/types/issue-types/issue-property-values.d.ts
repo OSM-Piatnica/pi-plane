@@ -1,2 +1,3 @@
-export type TIssuePropertyValues = object;
-export type TIssuePropertyValueErrors = object;
+export type TIssuePropertyValues = Record<string, unknown>;
+
+export type TIssuePropertyValueErrors = Record<string, string>;
