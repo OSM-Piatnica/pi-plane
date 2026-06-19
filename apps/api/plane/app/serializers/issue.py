@@ -42,6 +42,8 @@ from plane.db.models import (
     IssueDescriptionVersion,
     ProjectMember,
     EstimatePoint,
+    IssueType,
+    ProjectIssueType,
 )
 from plane.utils.content_validator import (
     validate_html_content,
@@ -81,6 +83,9 @@ class IssueProjectLiteSerializer(BaseSerializer):
 ## Find a better approach to save manytomany?
 class IssueCreateSerializer(BaseSerializer):
     # ids
+    type_id = serializers.PrimaryKeyRelatedField(
+        source="type", queryset=IssueType.objects.all(), required=False, allow_null=True
+    )
     state_id = serializers.PrimaryKeyRelatedField(
         source="state", queryset=State.all_state_objects.all(), required=False, allow_null=True
     )
@@ -118,6 +123,7 @@ class IssueCreateSerializer(BaseSerializer):
         data["assignee_ids"] = assignee_ids if assignee_ids else []
         label_ids = self.initial_data.get("label_ids")
         data["label_ids"] = label_ids if label_ids else []
+        data["type_id"] = instance.type_id
         return data
 
     def validate(self, attrs):
@@ -192,6 +198,18 @@ class IssueCreateSerializer(BaseSerializer):
             ).exists()
         ):
             raise serializers.ValidationError("Estimate point is not valid please pass a valid estimate_point_id")
+
+        issue_type = attrs.get("type")
+        project_id = self.context.get("project_id")
+        if issue_type is not None and project_id:
+            if not ProjectIssueType.objects.filter(
+                project_id=project_id,
+                issue_type_id=issue_type.id,
+                deleted_at__isnull=True,
+                issue_type__is_active=True,
+                issue_type__deleted_at__isnull=True,
+            ).exists():
+                raise serializers.ValidationError("Issue type is not enabled for this project")
 
         return attrs
 
@@ -759,6 +777,7 @@ class IssueIntakeSerializer(DynamicBaseSerializer):
 
 class IssueSerializer(DynamicBaseSerializer):
     # ids
+    type_id = serializers.UUIDField(read_only=True, allow_null=True)
     cycle_id = serializers.PrimaryKeyRelatedField(read_only=True)
     module_ids = serializers.ListField(child=serializers.UUIDField(), required=False)
 
@@ -799,6 +818,7 @@ class IssueSerializer(DynamicBaseSerializer):
             "link_count",
             "is_draft",
             "archived_at",
+            "type_id",
         ]
         read_only_fields = fields
 
@@ -849,6 +869,7 @@ class IssueListDetailSerializer(serializers.Serializer):
             "updated_by": instance.updated_by_id,
             "is_draft": instance.is_draft,
             "archived_at": instance.archived_at,
+            "type_id": instance.type_id,
             # Computed fields
             "cycle_id": instance.cycle_id,
             "module_ids": self.get_module_ids(instance),

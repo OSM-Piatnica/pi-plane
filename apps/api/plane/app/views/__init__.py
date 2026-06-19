@@ -24,6 +24,8 @@ from .project.member import (
     ProjectMemberPreferenceEndpoint,
 )
 
+from .project.issue_type import ProjectIssueTypeViewSet, ProjectIssueTypeBulkAssignEndpoint
+
 from .user.base import (
     UserEndpoint,
     UpdateUserOnBoardedEndpoint,
@@ -83,6 +85,7 @@ from .workspace.cycle import WorkspaceCyclesEndpoint
 from .workspace.quick_link import QuickLinkViewSet
 from .workspace.sticky import WorkspaceStickyViewSet
 from .workspace.work_item_template import WorkspaceWorkItemTemplateViewSet
+from .workspace.issue_type import WorkspaceIssueTypeViewSet
 from .workspace.project_template import WorkspaceProjectTemplateViewSet
 from .workspace.project_issue_type_seed import WorkspaceProjectIssueTypeSeedEndpoint
 
@@ -156,6 +159,8 @@ from .issue.sub_issue import SubIssuesEndpoint
 from .issue.subscriber import IssueSubscriberViewSet
 
 from .issue.version import IssueVersionEndpoint, WorkItemDescriptionVersionEndpoint
+
+from .issue.property_value import IssuePropertyValueEndpoint, ProjectIssueTypePropertiesEndpoint
 
 from .module.base import (
     ModuleViewSet,

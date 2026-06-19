@@ -5,7 +5,16 @@
  */
 
 import type { LucideIcon } from "lucide-react";
-import { ArrowUpToLine, Building, CreditCard, LayoutTemplate, Users, Webhook } from "lucide-react";
+import {
+  ArrowUpToLine,
+  Building,
+  CreditCard,
+  FolderKanban,
+  Layers,
+  LayoutTemplate,
+  Users,
+  Webhook,
+} from "lucide-react";
 // plane imports
 import type { ISvgIcons } from "@plane/propel/icons";
 import type { TWorkspaceSettingsTabs } from "@plane/types";
@@ -15,7 +24,8 @@ export const WORKSPACE_SETTINGS_ICONS: Record<TWorkspaceSettingsTabs, LucideIcon
   members: Users,
   export: ArrowUpToLine,
   "billing-and-plans": CreditCard,
-  "project-templates": LayoutTemplate,
   "work-item-templates": LayoutTemplate,
+  "work-item-types": Layers,
+  "project-templates": FolderKanban,
   webhooks: Webhook,
 };

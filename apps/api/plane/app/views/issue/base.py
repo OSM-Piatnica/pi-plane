@@ -452,6 +452,7 @@ class IssueViewSet(BaseViewSet):
                     "is_draft",
                     "archived_at",
                     "deleted_at",
+                    "type_id",
                 )
                 .first()
             )

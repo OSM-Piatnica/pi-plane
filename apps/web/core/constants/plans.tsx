@@ -205,8 +205,8 @@ export const PLANS_COMPARISON_LIST: TPlansComparisonDetails[] = [
         title: "Work item Types",
         description: "Create your own work item types with your own\nproperties.",
         cloud: {
-          free: false,
-          one: false,
+          free: true,
+          one: true,
           pro: true,
           business: true,
           enterprise: true,

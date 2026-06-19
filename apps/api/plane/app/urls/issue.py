@@ -31,6 +31,7 @@ from plane.app.views import (
     WorkItemDescriptionVersionEndpoint,
     IssueMetaEndpoint,
     IssueDetailIdentifierEndpoint,
+    IssuePropertyValueEndpoint,
 )
 
 urlpatterns = [
@@ -200,6 +201,11 @@ urlpatterns = [
         name="project-issue-reactions",
     ),
     ## End Issue Reactions
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issues/<uuid:issue_id>/type-property-values/",
+        IssuePropertyValueEndpoint.as_view(),
+        name="project-issue-type-property-values",
+    ),
     # Comment Reactions
     path(
         "workspaces/<str:slug>/projects/<uuid:project_id>/comments/<uuid:comment_id>/reactions/",

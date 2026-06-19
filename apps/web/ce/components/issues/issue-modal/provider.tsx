@@ -1,14 +1,20 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
+import { normalizeIssuePropertyValuesForApi } from "@/plane-web/helpers/issue-type-property-values";
 import { observer } from "mobx-react";
+import type { UseFormWatch } from "react-hook-form";
 import { DEFAULT_WORK_ITEM_FORM_VALUES } from "@plane/constants";
 import type { ISearchIssueResponse, TIssue } from "@plane/types";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { useTranslation } from "@plane/i18n";
 import { IssueModalContext } from "@/components/issues/issue-modal/context";
+import type { TIssueFields } from "@/plane-web/components/issues/issue-modal/issue-type-select";
+import type { TIssuePropertyValueErrors, TIssuePropertyValues } from "@/plane-web/types/issue-types";
 import { useUser } from "@/hooks/store/user/user-user";
 import { WorkItemTemplateService } from "@/services/work-item-template.service";
+import { IssueTypeService } from "@/services/issue-type.service";
 
 const workItemTemplateService = new WorkItemTemplateService();
+const issueTypeService = new IssueTypeService();
 
 export type TIssueModalProviderProps = {
   templateId?: string;
@@ -23,6 +29,12 @@ export const IssueModalProvider = observer(function IssueModalProvider(props: TI
   const [workItemTemplateId, setWorkItemTemplateId] = useState<string | null>(null);
   const [isApplyingTemplate, setIsApplyingTemplate] = useState(false);
   const [selectedParentIssue, setSelectedParentIssue] = useState<ISearchIssueResponse | null>(null);
+  const [issuePropertyValues, setIssuePropertyValues] = useState<TIssuePropertyValues>({});
+  const [issuePropertyValueErrors, setIssuePropertyValueErrors] = useState<TIssuePropertyValueErrors>({});
+  const [mandatoryPropertyIds, setMandatoryPropertyIds] = useState<string[]>([]);
+  const issuePropertyValuesRef = useRef<TIssuePropertyValues>(issuePropertyValues);
+  issuePropertyValuesRef.current = issuePropertyValues;
+  const projectDefaultTypeRef = useRef<Record<string, string | null>>({});
   const { projectsWithCreatePermissions } = useUser();
   const projectIdsWithCreatePermissions = Object.keys(projectsWithCreatePermissions ?? {});
 
@@ -35,8 +47,7 @@ export const IssueModalProvider = observer(function IssueModalProvider(props: TI
       editorRef: React.MutableRefObject<import("@plane/editor").EditorRefApi | null>;
     }) => {
       const { workspaceSlug: slug, projectId, templateId, reset, editorRef } = propsArg;
-      if (!templateId) return;
-      if (!projectId) return;
+      if (!templateId || !projectId) return;
       setIsApplyingTemplate(true);
       try {
         const data = await workItemTemplateService.retrieve(slug, templateId, projectId);
@@ -79,6 +90,74 @@ export const IssueModalProvider = observer(function IssueModalProvider(props: TI
     [t]
   );
 
+  const getIssueTypeIdOnProjectChange = useCallback((projectId: string) => {
+    return projectDefaultTypeRef.current[projectId] ?? null;
+  }, []);
+
+  const handleProjectEntitiesFetch = useCallback(
+    async (propsArg: { workItemProjectId?: string | null; workItemTypeId?: string; workspaceSlug: string }) => {
+      const { workItemProjectId, workspaceSlug } = propsArg;
+      if (!workItemProjectId || !workspaceSlug) return;
+      try {
+        const rows = await issueTypeService.listProjectTypes(workspaceSlug, workItemProjectId);
+        const defaultRow = rows.find((row) => row.is_default) ?? rows[0];
+        projectDefaultTypeRef.current[workItemProjectId] = defaultRow?.issue_type_id ?? null;
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    []
+  );
+
+  const getActiveAdditionalPropertiesLength = useCallback(
+    (propsArg: { projectId: string | null; workspaceSlug: string; watch: UseFormWatch<TIssueFields> }) => {
+      const typeId = propsArg.watch("type_id");
+      if (!propsArg.projectId || !typeId) return 0;
+      return Object.keys(issuePropertyValues).length;
+    },
+    [issuePropertyValues]
+  );
+
+  const handlePropertyValuesValidation = useCallback(
+    (propsArg: { projectId: string | null; workspaceSlug: string; watch: UseFormWatch<TIssueFields> }) => {
+      const typeId = propsArg.watch("type_id");
+      if (!typeId || !propsArg.projectId || mandatoryPropertyIds.length === 0) {
+        setIssuePropertyValueErrors({});
+        return true;
+      }
+      const errors: TIssuePropertyValueErrors = {};
+      for (const propertyId of mandatoryPropertyIds) {
+        const value = issuePropertyValues[propertyId];
+        if (value === null || value === undefined || value === "" || (Array.isArray(value) && value.length === 0)) {
+          errors[propertyId] = t("workspace_settings.settings.work_item_types.form.property.mandatory");
+        }
+      }
+      setIssuePropertyValueErrors(errors);
+      return Object.keys(errors).length === 0;
+    },
+    [issuePropertyValues, mandatoryPropertyIds, t]
+  );
+
+  const handleCreateUpdatePropertyValues = useCallback(
+    async (propsArg: {
+      issueId: string;
+      projectId: string;
+      workspaceSlug: string;
+      issueTypeId?: string | null | undefined;
+      values?: TIssuePropertyValues;
+      isDraft?: boolean;
+    }) => {
+      const { issueId, projectId, workspaceSlug } = propsArg;
+      const rawValues = propsArg.values ?? issuePropertyValuesRef.current;
+      const values = normalizeIssuePropertyValuesForApi(rawValues).filter(
+        (row) => row.value !== null && row.value !== undefined && row.value !== ""
+      );
+      if (!values.length) return;
+      await issueTypeService.saveIssuePropertyValues(workspaceSlug, projectId, issueId, values);
+    },
+    []
+  );
+
   const contextValue = useMemo(
     () => ({
       allowedProjectIds: allowedProjectIds ?? projectIdsWithCreatePermissions,
@@ -88,26 +167,36 @@ export const IssueModalProvider = observer(function IssueModalProvider(props: TI
       setIsApplyingTemplate,
       selectedParentIssue,
       setSelectedParentIssue,
-      issuePropertyValues: {},
-      setIssuePropertyValues: () => {},
-      issuePropertyValueErrors: {},
-      setIssuePropertyValueErrors: () => {},
-      getIssueTypeIdOnProjectChange: () => null,
-      getActiveAdditionalPropertiesLength: () => 0,
-      handlePropertyValuesValidation: () => true,
-      handleCreateUpdatePropertyValues: () => Promise.resolve(),
-      handleProjectEntitiesFetch: () => Promise.resolve(),
+      issuePropertyValues,
+      setIssuePropertyValues,
+      issuePropertyValueErrors,
+      setIssuePropertyValueErrors,
+      mandatoryPropertyIds,
+      setMandatoryPropertyIds,
+      getIssueTypeIdOnProjectChange,
+      getActiveAdditionalPropertiesLength,
+      handlePropertyValuesValidation,
+      handleCreateUpdatePropertyValues,
+      handleProjectEntitiesFetch,
       handleTemplateChange,
       handleConvert: () => Promise.resolve(),
       handleCreateSubWorkItem: () => Promise.resolve(),
     }),
     [
       allowedProjectIds,
-      handleTemplateChange,
-      isApplyingTemplate,
       projectIdsWithCreatePermissions,
-      selectedParentIssue,
       workItemTemplateId,
+      isApplyingTemplate,
+      selectedParentIssue,
+      issuePropertyValues,
+      issuePropertyValueErrors,
+      mandatoryPropertyIds,
+      getIssueTypeIdOnProjectChange,
+      getActiveAdditionalPropertiesLength,
+      handlePropertyValuesValidation,
+      handleCreateUpdatePropertyValues,
+      handleProjectEntitiesFetch,
+      handleTemplateChange,
     ]
   );
 
