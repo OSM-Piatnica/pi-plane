@@ -36,6 +36,7 @@ from .project import (
     ProjectDetailSerializer,
     ProjectMemberSerializer,
     ProjectMemberInviteSerializer,
+    ProjectMemberInvitePublicSerializer,
     ProjectIdentifierSerializer,
     ProjectLiteSerializer,
     ProjectMemberLiteSerializer,
