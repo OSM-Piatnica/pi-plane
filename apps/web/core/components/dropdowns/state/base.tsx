@@ -4,6 +4,8 @@
  * See the LICENSE file for details.
  */
 
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+
 import type { ReactNode } from "react";
 import { useRef, useState } from "react";
 import { observer } from "mobx-react";
@@ -30,6 +32,7 @@ export type TWorkItemStateDropdownBaseProps = TDropdownProps & {
   dropdownArrow?: boolean;
   dropdownArrowClassName?: string;
   filterAvailableStateIds?: boolean;
+  issueId?: string;
   getStateById: (stateId: string | null | undefined) => IState | undefined;
   iconSize?: string;
   isForWorkItemCreation?: boolean;

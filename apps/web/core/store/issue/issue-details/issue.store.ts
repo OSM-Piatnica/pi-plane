@@ -103,6 +103,7 @@ export class IssueStore implements IIssueStore {
     if (issue && issue?.parent && issue?.parent?.id && issue?.parent?.project_id) {
       this.issueService.retrieve(workspaceSlug, issue.parent.project_id, issue?.parent?.id).then((res) => {
         this.rootIssueDetailStore.rootIssueStore.issues.addIssue([res]);
+        return res;
       });
     }
     // assignees
@@ -135,6 +136,10 @@ export class IssueStore implements IIssueStore {
     // fetching states
     // TODO: check if this function is required
     this.rootIssueDetailStore.rootIssueStore.rootStore.state.fetchProjectStates(workspaceSlug, projectId);
+
+    this.rootIssueDetailStore.rootIssueStore.rootStore.workflow
+      .fetchIssueWorkflowStatus(workspaceSlug, projectId, issueId)
+      .catch(() => undefined);
 
     return issue;
   };
@@ -288,6 +293,7 @@ export class IssueStore implements IIssueStore {
     if (issue?.parent && issue?.parent?.id && issue?.parent?.project_id) {
       this.issueService.retrieve(workspaceSlug, issue.parent.project_id, issue.parent.id).then((res) => {
         this.rootIssueDetailStore.rootIssueStore.issues.addIssue([res]);
+        return res;
       });
     }
 
@@ -327,6 +333,10 @@ export class IssueStore implements IIssueStore {
     // fetching states
     // TODO: check if this function is required
     rootWorkItemDetailStore.rootIssueStore.rootStore.state.fetchProjectStates(workspaceSlug, projectId);
+
+    rootWorkItemDetailStore.rootIssueStore.rootStore.workflow
+      .fetchIssueWorkflowStatus(workspaceSlug, projectId, issueId)
+      .catch(() => undefined);
 
     return issue;
   };

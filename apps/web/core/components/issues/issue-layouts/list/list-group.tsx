@@ -4,6 +4,8 @@
  * See the LICENSE file for details.
  */
 
+/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, react/no-array-index-key */
+
 import type { MutableRefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
@@ -114,8 +116,14 @@ export const ListGroup = observer(function ListGroup(props: Props) {
 
   const [intersectionElement, setIntersectionElement] = useState<HTMLDivElement | null>(null);
 
-  const { workflowDisabledSource, isWorkflowDropDisabled, handleWorkFlowState, getIsWorkflowWorkItemCreationDisabled } =
-    useWorkFlowFDragNDrop(group_by);
+  const {
+    workflowDisabledSource,
+    isWorkflowDropDisabled,
+    dropErrorMessage: workflowDropErrorMessage,
+    handleWorkFlowState,
+    getIsWorkflowWorkItemCreationDisabled,
+  } = useWorkFlowFDragNDrop(group_by);
+  const effectiveDropErrorMessage = workflowDropErrorMessage ?? group.dropErrorMessage;
   const isWorkflowIssueCreationDisabled = getIsWorkflowWorkItemCreationDisabled(group.id);
 
   const groupIssueCount = getGroupIssueCount(group.id, undefined, false) ?? 0;
@@ -198,7 +206,9 @@ export const ListGroup = observer(function ListGroup(props: Props) {
           const sourceGroupId = source?.data?.groupId as string | undefined;
           const currentGroupId = group.id;
 
-          sourceGroupId && handleWorkFlowState(sourceGroupId, currentGroupId);
+          if (sourceGroupId) {
+            handleWorkFlowState(sourceGroupId, currentGroupId);
+          }
 
           const sourceIndex = getGroupIndex(sourceGroupId);
           const currentIndex = getGroupIndex(currentGroupId);
@@ -217,11 +227,11 @@ export const ListGroup = observer(function ListGroup(props: Props) {
           if (!source || !destination) return;
 
           if (isWorkflowDropDisabled || group.isDropDisabled) {
-            if (group.dropErrorMessage)
+            if (effectiveDropErrorMessage)
               setToast({
                 type: TOAST_TYPE.WARNING,
                 title: t("common.warning"),
-                message: group.dropErrorMessage,
+                message: effectiveDropErrorMessage,
               });
             return;
           }
@@ -236,14 +246,16 @@ export const ListGroup = observer(function ListGroup(props: Props) {
         },
       })
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    groupRef?.current,
+    group.id,
     group,
     orderBy,
     getGroupIndex,
     setDragColumnOrientation,
     setIsDraggingOverColumn,
     isWorkflowDropDisabled,
+    effectiveDropErrorMessage,
   ]);
 
   const isDragAllowed = group_by ? DRAG_ALLOWED_GROUPS.includes(group_by) : true;

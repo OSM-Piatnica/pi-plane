@@ -20,6 +20,7 @@ import usePeekOverviewOutsideClickDetector from "@/hooks/use-peek-overview-outsi
 import type { TIssueOperations } from "../issue-detail";
 import { IssueActivity } from "../issue-detail/issue-activity";
 import { IssueDetailWidgets } from "../issue-detail-widgets";
+import { WorkflowApprovalBanner } from "@/plane-web/components/workflow";
 import { IssuePeekOverviewError } from "./error";
 import type { TPeekModes } from "./header";
 import { IssuePeekOverviewHeader } from "./header";
@@ -175,6 +176,7 @@ export const IssueView = observer(function IssueView(props: IIssueView) {
               <div className="vertical-scrollbar relative scrollbar-md h-full w-full overflow-hidden overflow-y-auto">
                 {["side-peek", "modal"].includes(peekMode) ? (
                   <div className="relative flex flex-col gap-3 space-y-3 px-8 py-5">
+                    <WorkflowApprovalBanner workspaceSlug={workspaceSlug} projectId={projectId} issueId={issueId} />
                     <PeekOverviewIssueDetails
                       editorRef={editorRef}
                       workspaceSlug={workspaceSlug}
@@ -216,6 +218,7 @@ export const IssueView = observer(function IssueView(props: IIssueView) {
                   <div className="vertical-scrollbar flex h-full w-full overflow-auto">
                     <div className="relative h-full w-full space-y-6 overflow-auto p-4 py-5">
                       <div className="space-y-3">
+                        <WorkflowApprovalBanner workspaceSlug={workspaceSlug} projectId={projectId} issueId={issueId} />
                         <PeekOverviewIssueDetails
                           editorRef={editorRef}
                           workspaceSlug={workspaceSlug}
