@@ -5,6 +5,8 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
+import { cn } from "@plane/utils";
 
 export type TWorkflowDisabledOverlayProps = {
   messageContainerRef: React.RefObject<HTMLDivElement>;
@@ -12,7 +14,22 @@ export type TWorkflowDisabledOverlayProps = {
   shouldOverlayBeVisible: boolean;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const WorkFlowDisabledOverlay = observer(function WorkFlowDisabledOverlay(props: TWorkflowDisabledOverlayProps) {
-  return <></>;
+  const { messageContainerRef, workflowDisabledSource: _workflowDisabledSource, shouldOverlayBeVisible } = props;
+  const { t } = useTranslation();
+
+  if (!shouldOverlayBeVisible) return null;
+
+  return (
+    <div
+      ref={messageContainerRef}
+      className={cn(
+        "pointer-events-none absolute inset-0 z-20 flex items-center justify-center rounded-sm bg-danger-subtle/80 p-2"
+      )}
+    >
+      <p className="text-center text-11 font-medium text-danger-primary">
+        {t("project_settings.workflows.blocker_message")}
+      </p>
+    </div>
+  );
 });

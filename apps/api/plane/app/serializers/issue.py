@@ -180,6 +180,36 @@ class IssueCreateSerializer(BaseSerializer):
         ):
             raise serializers.ValidationError("State is not valid please pass a valid state_id")
 
+        from crum import get_current_user
+        from plane.utils.workflow import (
+            is_work_item_creation_allowed,
+            request_approval,
+            validate_state_transition,
+        )
+
+        request = self.context.get("request")
+        user = request.user if request and hasattr(request, "user") else get_current_user()
+        new_state = attrs.get("state")
+        instance = getattr(self, "instance", None)
+
+        if user and not user.is_anonymous and new_state:
+            if instance:
+                if instance.state_id != new_state.id:
+                    result = validate_state_transition(instance, instance.state_id, new_state.id, user.id)
+                    if not result.allowed:
+                        if result.needs_approval and result.flow:
+                            request_approval(instance, result.flow, user.id)
+                            attrs.pop("state", None)
+                        else:
+                            raise serializers.ValidationError({"state_id": result.error_message})
+            else:
+                issue_type = attrs.get("type")
+                issue_type_id = issue_type.id if issue_type else None
+                if not is_work_item_creation_allowed(self.context.get("project_id"), str(new_state.id), issue_type_id):
+                    raise serializers.ValidationError(
+                        {"state_id": "New work items cannot be created in this state according to the workflow."}
+                    )
+
         # Check parent issue is from workspace as it can be cross workspace
         if (
             attrs.get("parent")
@@ -828,6 +858,24 @@ class IssueSerializer(DynamicBaseSerializer):
             and not State.objects.filter(project_id=self.context.get("project_id"), pk=data.get("state_id")).exists()
         ):
             raise serializers.ValidationError("State is not valid please pass a valid state_id")
+
+        from crum import get_current_user
+        from plane.utils.workflow import request_approval, validate_state_transition
+
+        request = self.context.get("request")
+        user = request.user if request and hasattr(request, "user") else get_current_user()
+        new_state_id = data.get("state_id")
+        instance = getattr(self, "instance", None)
+
+        if user and not user.is_anonymous and new_state_id and instance and instance.state_id != new_state_id:
+            result = validate_state_transition(instance, instance.state_id, new_state_id, user.id)
+            if not result.allowed:
+                if result.needs_approval and result.flow:
+                    request_approval(instance, result.flow, user.id)
+                    data.pop("state_id", None)
+                else:
+                    raise serializers.ValidationError({"state_id": result.error_message})
+
         return data
 
 

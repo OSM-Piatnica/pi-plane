@@ -584,6 +584,24 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       // call API to update the issue
       await this.issueService.patchIssue(workspaceSlug, projectId, issueId, data);
 
+      // State changes return 204 with no body; re-sync when workflow may have intercepted the transition.
+      if (data.state_id !== undefined) {
+        const workflowStore = this.rootIssueStore.rootStore?.workflow;
+        const statusPromise = workflowStore
+          ?.fetchIssueWorkflowStatus(workspaceSlug, projectId, issueId)
+          .catch(() => undefined);
+
+        const issue = await this.issueService.retrieve(workspaceSlug, projectId, issueId);
+        if (issue?.state_id && issue.state_id !== data.state_id) {
+          const syncedIssue = { ...issueBeforeUpdate, ...issue } as TIssue;
+          this.rootIssueStore.issues.updateIssue(issueId, { state_id: issue.state_id });
+          this.updateIssueList(syncedIssue, { ...issueBeforeUpdate, ...data } as TIssue);
+          this.updateParentStats({ ...issueBeforeUpdate, ...data } as TIssue, syncedIssue);
+        }
+
+        await statusPromise;
+      }
+
       // call fetch Parent Stats
       this.fetchParentStats(workspaceSlug, projectId);
     } catch (error) {

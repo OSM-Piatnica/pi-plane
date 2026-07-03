@@ -89,6 +89,16 @@ from .label import Label
 
 from .work_item_template import WorkItemTemplate
 
+from .workflow import (
+    Workflow,
+    WorkflowApproval,
+    WorkflowApprovalStatus,
+    WorkflowFlow,
+    WorkflowFlowType,
+    WorkflowHistory,
+    WorkflowStateConfig,
+)
+
 from .device import Device, DeviceSession
 
 from .sticky import Sticky

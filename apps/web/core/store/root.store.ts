@@ -19,6 +19,8 @@ import type { IPowerKStore } from "@/plane-web/store/power-k.store";
 import type { RootStore } from "@/plane-web/store/root.store";
 import type { IStateStore } from "@/plane-web/store/state.store";
 import { StateStore } from "@/plane-web/store/state.store";
+import type { IWorkflowStore } from "@/plane-web/store/workflow.store";
+import { WorkflowStore } from "@/plane-web/store/workflow.store";
 import { WorkspaceRootStore } from "@/plane-web/store/workspace";
 // stores
 import type { ICycleStore } from "./cycle.store";
@@ -83,6 +85,7 @@ export class CoreRootStore {
   globalView: IGlobalViewStore;
   issue: IIssueRootStore;
   state: IStateStore;
+  workflow: IWorkflowStore;
   label: ILabelStore;
   dashboard: IDashboardStore;
   analytics: IAnalyticsStore;
@@ -119,6 +122,7 @@ export class CoreRootStore {
     this.globalView = new GlobalViewStore(this);
     this.issue = new IssueRootStore(this as unknown as RootStore);
     this.state = new StateStore(this as unknown as RootStore);
+    this.workflow = new WorkflowStore(this as unknown as RootStore);
     this.label = new LabelStore(this);
     this.dashboard = new DashboardStore(this);
     this.multipleSelect = new MultipleSelectStore();
@@ -153,6 +157,7 @@ export class CoreRootStore {
     this.globalView = new GlobalViewStore(this);
     this.issue = new IssueRootStore(this as unknown as RootStore);
     this.state = new StateStore(this as unknown as RootStore);
+    this.workflow = new WorkflowStore(this as unknown as RootStore);
     this.label = new LabelStore(this);
     this.dashboard = new DashboardStore(this);
     this.projectInbox = new ProjectInboxStore(this);

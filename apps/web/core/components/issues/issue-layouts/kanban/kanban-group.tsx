@@ -4,6 +4,8 @@
  * See the LICENSE file for details.
  */
 
+/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, react/no-array-index-key */
+
 import type { MutableRefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
@@ -123,8 +125,14 @@ export const KanbanGroup = observer(function KanbanGroup(props: IKanbanGroup) {
   );
   const [isDraggingOverColumn, setIsDraggingOverColumn] = useState(false);
 
-  const { workflowDisabledSource, isWorkflowDropDisabled, handleWorkFlowState, getIsWorkflowWorkItemCreationDisabled } =
-    useWorkFlowFDragNDrop(group_by, sub_group_by);
+  const {
+    workflowDisabledSource,
+    isWorkflowDropDisabled,
+    dropErrorMessage: workflowDropErrorMessage,
+    handleWorkFlowState,
+    getIsWorkflowWorkItemCreationDisabled,
+  } = useWorkFlowFDragNDrop(group_by, sub_group_by);
+  const effectiveDropErrorMessage = workflowDropErrorMessage ?? dropErrorMessage;
 
   // Enable Kanban Columns as Drop Targets
   useEffect(() => {
@@ -162,11 +170,11 @@ export const KanbanGroup = observer(function KanbanGroup(props: IKanbanGroup) {
 
           if (!source || !destination) return;
 
-          if ((isWorkflowDropDisabled || isDropDisabled) && dropErrorMessage) {
+          if ((isWorkflowDropDisabled || isDropDisabled) && effectiveDropErrorMessage) {
             setToast({
               type: TOAST_TYPE.WARNING,
               title: t("common.warning"),
-              message: dropErrorMessage,
+              message: effectiveDropErrorMessage,
             });
             return;
           }
@@ -183,6 +191,7 @@ export const KanbanGroup = observer(function KanbanGroup(props: IKanbanGroup) {
         element,
       })
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     columnRef,
     groupId,
@@ -191,7 +200,7 @@ export const KanbanGroup = observer(function KanbanGroup(props: IKanbanGroup) {
     orderBy,
     isDropDisabled,
     isWorkflowDropDisabled,
-    dropErrorMessage,
+    effectiveDropErrorMessage,
     handleOnDrop,
   ]);
 
