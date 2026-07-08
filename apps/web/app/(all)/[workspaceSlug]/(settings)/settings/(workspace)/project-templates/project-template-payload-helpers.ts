@@ -1,5 +1,13 @@
-import type { TProjectTemplateCustomProperty, TProjectTemplatePayload } from "@plane/types";
+import type { TProjectTemplate, TProjectTemplateCustomProperty, TProjectTemplatePayload } from "@plane/types";
 import type { TCustomPropertyTemplateField, TProjectTemplateFormFields } from "./project-template-form.types";
+import {
+  DEFAULT_FEATURE_TOGGLES,
+  STATE_GROUP_DEFAULT_COLOR,
+  TEMPLATE_COLOR_PALETTE,
+} from "./project-template-form.types";
+
+const generateId = () =>
+  typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : Math.random().toString(36).slice(2);
 
 const isHexColor = (value: string) => /^#[0-9A-Fa-f]{6}$/.test(value);
 
@@ -19,6 +27,70 @@ const mapCustomPropertyToPayload = (row: TCustomPropertyTemplateField): TProject
     }
   }
   return base;
+};
+
+const mapCustomPropertyFromPayload = (property: TProjectTemplateCustomProperty): TCustomPropertyTemplateField => ({
+  id: generateId(),
+  title: property.title,
+  description: property.description ?? "",
+  isMandatory: property.is_mandatory,
+  isActive: property.is_active,
+  propertyType: property.property_type,
+  options: property.options ?? [],
+  selectMode: property.select_mode ?? "single",
+  defaultOption: property.default_option ?? null,
+});
+
+export const mapProjectTemplateToFormValues = (template: TProjectTemplate): TProjectTemplateFormFields => {
+  const payload = template.payload ?? {};
+  const defaultGroup = "unstarted" as const;
+
+  return {
+    templateName: template.name,
+    templateNote: template.description ?? "",
+    projectName: payload.name ?? "",
+    projectIdentifier: payload.identifier ?? "",
+    projectDescription: payload.description ?? "",
+    projectLeadId: payload.project_lead ?? null,
+    defaultAssigneeId: payload.default_assignee ?? null,
+    coverImageUrl: payload.cover_image_url ?? "",
+    startDate: payload.start_date ?? null,
+    targetDate: payload.target_date ?? null,
+    network: payload.network ?? 2,
+    features: {
+      cycle_view: payload.cycle_view ?? DEFAULT_FEATURE_TOGGLES.cycle_view,
+      module_view: payload.module_view ?? DEFAULT_FEATURE_TOGGLES.module_view,
+      issue_views_view: payload.issue_views_view ?? DEFAULT_FEATURE_TOGGLES.issue_views_view,
+      page_view: payload.page_view ?? DEFAULT_FEATURE_TOGGLES.page_view,
+      intake_view: payload.intake_view ?? DEFAULT_FEATURE_TOGGLES.intake_view,
+      is_time_tracking_enabled: payload.is_time_tracking_enabled ?? DEFAULT_FEATURE_TOGGLES.is_time_tracking_enabled,
+      is_issue_type_enabled: payload.is_issue_type_enabled ?? DEFAULT_FEATURE_TOGGLES.is_issue_type_enabled,
+    },
+    epicEnabled: payload.epic_enabled ?? false,
+    stateTemplates: (payload.state_templates ?? []).map((state) => {
+      const group = state.group ?? defaultGroup;
+      return {
+        id: generateId(),
+        name: state.name,
+        group,
+        color: state.color ?? STATE_GROUP_DEFAULT_COLOR[group],
+        default: Boolean(state.default),
+      };
+    }),
+    labelTemplates: (payload.label_templates ?? []).map((label) => ({
+      id: generateId(),
+      name: label.name,
+      color: label.color ?? TEMPLATE_COLOR_PALETTE[0],
+    })),
+    taskCustomProperties: (payload.task_custom_properties ?? []).map(mapCustomPropertyFromPayload),
+    epicCustomProperties: (payload.epic_custom_properties ?? []).map(mapCustomPropertyFromPayload),
+    additionalWorkItemTypes: (payload.additional_work_item_types ?? []).map((workItemType) => ({
+      id: generateId(),
+      name: workItemType.name,
+      description: workItemType.description ?? "",
+      customProperties: (workItemType.custom_properties ?? []).map(mapCustomPropertyFromPayload),
+    })),
+  };
 };
 
 export const buildProjectTemplatePayloadFromFormValues = (

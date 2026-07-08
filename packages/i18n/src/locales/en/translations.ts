@@ -1581,6 +1581,7 @@ export default {
           "Create reusable starter sets for new work items (title, description, assignees, priority, and more). A template can cover the whole workspace or one project only.",
         title: "Work item templates",
         add_template: "Add template",
+        edit_template: "Edit template",
         table: {
           name: "Template",
           scope: "Scope",
@@ -1613,6 +1614,8 @@ export default {
         toasts: {
           created: { title: "Template created", message: "The work item template was saved." },
           create_failed: { title: "Could not create template", message: "Please check the form and try again." },
+          saved: { title: "Template saved", message: "The work item template was updated." },
+          save_failed: { title: "Could not save template", message: "Please check the form and try again." },
           deleted: { title: "Template removed", message: "The work item template was deleted." },
           delete_failed: { title: "Could not delete", message: "Please try again." },
         },
@@ -1676,6 +1679,7 @@ export default {
         description:
           "Create reusable project setups with default properties, enabled features, states, labels, and work item types.",
         add_template: "Add template",
+        edit_template: "Edit template",
         loading: "Loading templates…",
         select_placeholder: "Select a template",
         none: "No template",
@@ -1816,6 +1820,8 @@ export default {
         toasts: {
           created: { title: "Template created", message: "The project template was saved." },
           create_failed: { title: "Could not create template", message: "Please check the form and try again." },
+          saved: { title: "Template saved", message: "The project template was updated." },
+          save_failed: { title: "Could not save template", message: "Please check the form and try again." },
           deleted: { title: "Template removed", message: "The project template was deleted." },
           delete_failed: { title: "Could not delete", message: "Please try again." },
           apply_failed: { message: "Could not apply the project template." },

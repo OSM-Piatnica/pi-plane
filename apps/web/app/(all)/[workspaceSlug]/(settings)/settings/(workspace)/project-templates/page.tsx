@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, FormProvider, useForm, useWatch } from "react-hook-form";
 import { observer } from "mobx-react";
 import useSWR, { useSWRConfig } from "swr";
@@ -25,7 +25,10 @@ import { ProjectTemplatesSettingsHeader } from "./header";
 import { LabelTemplatesEditor } from "./label-templates-editor";
 import { DEFAULT_FEATURE_TOGGLES } from "./project-template-form.types";
 import type { TProjectTemplateFormFields } from "./project-template-form.types";
-import { buildProjectTemplatePayloadFromFormValues } from "./project-template-payload-helpers";
+import {
+  buildProjectTemplatePayloadFromFormValues,
+  mapProjectTemplateToFormValues,
+} from "./project-template-payload-helpers";
 import { ProjectTemplateCoverField } from "./project-template-cover-field";
 import { StateTemplatesEditor } from "./state-templates-editor";
 import { WorkItemTypesTemplateEditor } from "./work-item-types-template-editor";
@@ -69,6 +72,7 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
   );
 
   const [createTemplateModalOpen, setCreateTemplateModalOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [createProjectModalOpen, setCreateProjectModalOpen] = useState(false);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -87,6 +91,25 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
     name: "features.is_issue_type_enabled",
     defaultValue: DEFAULT_FEATURE_TOGGLES.is_issue_type_enabled,
   });
+
+  useEffect(() => {
+    if (!createTemplateModalOpen) {
+      reset(TEMPLATE_FORM_DEFAULTS);
+      setEditingId(null);
+    }
+  }, [createTemplateModalOpen, reset]);
+
+  const openCreate = () => {
+    reset(TEMPLATE_FORM_DEFAULTS);
+    setEditingId(null);
+    setCreateTemplateModalOpen(true);
+  };
+
+  const openEdit = (template: TProjectTemplate) => {
+    reset(mapProjectTemplateToFormValues(template));
+    setEditingId(template.id);
+    setCreateTemplateModalOpen(true);
+  };
 
   const pageTitle = currentWorkspace?.name
     ? `${currentWorkspace.name} - ${t("workspace_settings.settings.project_templates.title")}`
@@ -108,25 +131,29 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
     }
     setSaving(true);
     try {
-      await service.create(workspaceSlug, {
+      const body = {
         name: values.templateName.trim(),
         description: values.templateNote,
         payload: buildProjectTemplatePayloadFromFormValues(values),
-      });
+      };
+      if (editingId) {
+        await service.update(workspaceSlug, editingId, body);
+      } else {
+        await service.create(workspaceSlug, body);
+      }
       await mutate(`PROJECT_TEMPLATE_LIST_${workspaceSlug}`);
       setCreateTemplateModalOpen(false);
-      reset(TEMPLATE_FORM_DEFAULTS);
       setToast({
         type: TOAST_TYPE.SUCCESS,
-        title: t("workspace_settings.settings.project_templates.toasts.created.title"),
-        message: t("workspace_settings.settings.project_templates.toasts.created.message"),
+        title: t("workspace_settings.settings.project_templates.toasts.saved.title"),
+        message: t("workspace_settings.settings.project_templates.toasts.saved.message"),
       });
     } catch (e) {
       console.error(e);
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: t("workspace_settings.settings.project_templates.toasts.create_failed.title"),
-        message: t("workspace_settings.settings.project_templates.toasts.create_failed.message"),
+        title: t("workspace_settings.settings.project_templates.toasts.save_failed.title"),
+        message: t("workspace_settings.settings.project_templates.toasts.save_failed.message"),
       });
     } finally {
       setSaving(false);
@@ -170,7 +197,9 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
           <form onSubmit={onSubmit} className="flex max-h-[min(90vh,860px)] flex-col" id="project-template-create-form">
             <div className="flex-shrink-0 px-5 pt-5">
               <h3 className="text-h3-medium text-primary">
-                {t("workspace_settings.settings.project_templates.add_template")}
+                {editingId
+                  ? t("workspace_settings.settings.project_templates.edit_template")
+                  : t("workspace_settings.settings.project_templates.add_template")}
               </h3>
               <p className="pt-1 pb-4 text-13 text-tertiary">
                 {t("workspace_settings.settings.project_templates.form.modal_intro")}
@@ -519,7 +548,7 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
                 {t("cancel")}
               </Button>
               <Button type="submit" variant="primary" disabled={saving || isSubmitting} loading={saving}>
-                {t("add")}
+                {editingId ? t("save_changes") : t("add")}
               </Button>
             </div>
           </form>
@@ -540,7 +569,7 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
             title={t("workspace_settings.settings.project_templates.title")}
             description={t("workspace_settings.settings.project_templates.description")}
             control={
-              <Button variant="primary" size="lg" onClick={() => setCreateTemplateModalOpen(true)}>
+              <Button variant="primary" size="lg" onClick={openCreate}>
                 {t("workspace_settings.settings.project_templates.add_template")}
               </Button>
             }
@@ -564,6 +593,9 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
+                      <Button variant="secondary" size="sm" onClick={() => openEdit(template)}>
+                        {t("edit")}
+                      </Button>
                       <Button variant="secondary" size="sm" onClick={() => handleUseTemplate(template.id)}>
                         {t("workspace_settings.settings.project_templates.table.use_template")}
                       </Button>

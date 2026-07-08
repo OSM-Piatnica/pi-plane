@@ -92,16 +92,21 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
   const projectId = data?.project_id ?? routerProjectId?.toString() ?? projectIdFromRouter;
 
   const fetchIssueDetail = async (issueId: string | undefined) => {
-    setDescription(undefined);
+    const fallbackDescription = data?.description_html || "<p></p>";
+    setDescription(fallbackDescription);
     if (!workspaceSlug) return;
 
     if (!projectId || issueId === undefined || !fetchIssueDetails) {
-      // Set description to the issue description from the props if available
-      setDescription(data?.description_html || "<p></p>");
       return;
     }
-    const response = await fetchIssue(workspaceSlug.toString(), projectId.toString(), issueId);
-    if (response) setDescription(response?.description_html || "<p></p>");
+
+    try {
+      const response = await fetchIssue(workspaceSlug.toString(), projectId.toString(), issueId);
+      if (response) setDescription(response?.description_html || "<p></p>");
+    } catch (error) {
+      console.error(error);
+      setDescription(fallbackDescription);
+    }
   };
 
   useEffect(() => {
