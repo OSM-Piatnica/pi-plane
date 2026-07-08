@@ -186,13 +186,13 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
-  // Reset form when data prop changes
+  // Reset form when issue data loads (e.g. description_html after fetchIssueDetail)
   useEffect(() => {
     if (data) {
       reset({ ...DEFAULT_WORK_ITEM_FORM_VALUES, project_id: projectId, ...data });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...dataResetProperties]);
+  }, [data?.id, data?.description_html, projectId, ...dataResetProperties]);
 
   // Update the issue type id when the project id changes
   useEffect(() => {

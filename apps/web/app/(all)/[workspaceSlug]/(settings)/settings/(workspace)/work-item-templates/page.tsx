@@ -23,7 +23,10 @@ import type { Route } from "./+types/page";
 import { WorkItemTemplatesSettingsHeader } from "./header";
 import { WorkItemTemplateDefaultValueFields } from "./work-item-template-form-fields";
 import type { TWorkItemTemplateFormFields } from "./work-item-template-form.types";
-import { buildWorkItemTemplatePayloadFromFormValues } from "./work-item-template-payload-helpers";
+import {
+  buildWorkItemTemplatePayloadFromFormValues,
+  mapWorkItemTemplateToFormValues,
+} from "./work-item-template-payload-helpers";
 
 const service = new WorkItemTemplateService();
 
@@ -65,6 +68,7 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
   );
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
   const form = useForm<TWorkItemTemplateFormFields>({
@@ -75,9 +79,27 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
   const projectId = watch("projectId");
 
   useEffect(() => {
-    reset(TEMPLATE_FORM_DEFAULTS);
-    lastProjectInModal.current = undefined;
+    if (!modalOpen) {
+      reset(TEMPLATE_FORM_DEFAULTS);
+      setEditingId(null);
+      lastProjectInModal.current = undefined;
+    }
   }, [modalOpen, reset]);
+
+  const openCreate = () => {
+    reset(TEMPLATE_FORM_DEFAULTS);
+    setEditingId(null);
+    lastProjectInModal.current = undefined;
+    setModalOpen(true);
+  };
+
+  const openEdit = (row: TWorkItemTemplate) => {
+    const values = mapWorkItemTemplateToFormValues(row);
+    lastProjectInModal.current = values.projectId;
+    reset(values);
+    setEditingId(row.id);
+    setModalOpen(true);
+  };
 
   useEffect(() => {
     if (!modalOpen || !workspaceSlug || !projectId) return;
@@ -118,25 +140,30 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
     const payload = buildWorkItemTemplatePayloadFromFormValues(values);
     setSaving(true);
     try {
-      await service.create(workspaceSlug, {
+      const body = {
         name: values.templateName.trim(),
         description: values.templateNote,
         project_id: values.projectId,
         payload,
-      });
+      };
+      if (editingId) {
+        await service.update(workspaceSlug, editingId, body);
+      } else {
+        await service.create(workspaceSlug, body);
+      }
       await mutate(`WIT_LIST_${workspaceSlug}`);
       setModalOpen(false);
       setToast({
         type: TOAST_TYPE.SUCCESS,
-        title: t("workspace_settings.settings.work_item_templates.toasts.created.title"),
-        message: t("workspace_settings.settings.work_item_templates.toasts.created.message"),
+        title: t("workspace_settings.settings.work_item_templates.toasts.saved.title"),
+        message: t("workspace_settings.settings.work_item_templates.toasts.saved.message"),
       });
     } catch (e) {
       console.error(e);
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: t("workspace_settings.settings.work_item_templates.toasts.create_failed.title"),
-        message: t("workspace_settings.settings.work_item_templates.toasts.create_failed.message"),
+        title: t("workspace_settings.settings.work_item_templates.toasts.save_failed.title"),
+        message: t("workspace_settings.settings.work_item_templates.toasts.save_failed.message"),
       });
     } finally {
       setSaving(false);
@@ -183,7 +210,9 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
             id="work-item-template-create-form"
           >
             <h3 className="text-h3-medium text-primary">
-              {t("workspace_settings.settings.work_item_templates.add_template")}
+              {editingId
+                ? t("workspace_settings.settings.work_item_templates.edit_template")
+                : t("workspace_settings.settings.work_item_templates.add_template")}
             </h3>
             <p className="pt-1 pb-4 text-13 text-tertiary">
               {t("workspace_settings.settings.work_item_templates.form.modal_intro")}
@@ -258,7 +287,7 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
                   {t("cancel")}
                 </Button>
                 <Button type="submit" variant="primary" disabled={saving || formState.isSubmitting} loading={saving}>
-                  {t("add")}
+                  {editingId ? t("save_changes") : t("add")}
                 </Button>
               </div>
             </div>
@@ -269,7 +298,7 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
             title={t("workspace_settings.settings.work_item_templates.title")}
             description={t("workspace_settings.settings.work_item_templates.description")}
             control={
-              <Button variant="primary" size="lg" onClick={() => setModalOpen(true)}>
+              <Button variant="primary" size="lg" onClick={openCreate}>
                 {t("workspace_settings.settings.work_item_templates.add_template")}
               </Button>
             }
@@ -291,7 +320,7 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
                     <th className="p-2 font-medium">
                       {t("workspace_settings.settings.work_item_templates.table.scope")}
                     </th>
-                    <th className="w-24 p-2" />
+                    <th className="w-40 p-2" />
                   </tr>
                 </thead>
                 <tbody>
@@ -304,9 +333,14 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
                           : t("workspace_settings.settings.work_item_templates.table.workspace_wide")}
                       </td>
                       <td className="p-2 text-right">
-                        <Button variant="error-outline" size="sm" onClick={() => onDelete(row.id)}>
-                          {t("remove")}
-                        </Button>
+                        <div className="flex justify-end gap-2">
+                          <Button variant="secondary" size="sm" onClick={() => openEdit(row)}>
+                            {t("edit")}
+                          </Button>
+                          <Button variant="error-outline" size="sm" onClick={() => onDelete(row.id)}>
+                            {t("remove")}
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   ))}

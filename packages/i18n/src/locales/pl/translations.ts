@@ -1723,6 +1723,7 @@ export default {
           "Twórz wielokrotnego użycia konfiguracje nowych elementów (tytuł, opis, osoby przypisane, priorytet itd.). Szablon może obowiązywać w całej przestrzeni roboczej albo tylko w jednym projekcie.",
         heading: "Szablony elementów roboczych",
         add_template: "Dodaj szablon",
+        edit_template: "Edytuj szablon",
         table: {
           name: "Szablon",
           scope: "Zakres",
@@ -1755,6 +1756,8 @@ export default {
         toasts: {
           created: { title: "Szablon utworzony", message: "Zapisano szablon elementu roboczego." },
           create_failed: { title: "Nie udało się utworzyć", message: "Sprawdź formularz i spróbuj ponownie." },
+          saved: { title: "Szablon zapisany", message: "Zaktualizowano szablon elementu roboczego." },
+          save_failed: { title: "Nie udało się zapisać", message: "Sprawdź formularz i spróbuj ponownie." },
           deleted: { title: "Szablon usunięty", message: "Szablon został usunięty." },
           delete_failed: { title: "Nie udało się usunąć", message: "Spróbuj ponownie." },
         },
@@ -1818,6 +1821,7 @@ export default {
         description:
           "Twórz wielokrotnego użycia konfiguracje projektów z domyślnymi właściwościami, funkcjami, stanami, etykietami i typami elementów roboczych.",
         add_template: "Dodaj szablon",
+        edit_template: "Edytuj szablon",
         loading: "Ładowanie szablonów…",
         select_placeholder: "Wybierz szablon",
         none: "Bez szablonu",
@@ -1958,6 +1962,8 @@ export default {
         toasts: {
           created: { title: "Szablon utworzony", message: "Szablon projektu został zapisany." },
           create_failed: { title: "Nie udało się utworzyć szablonu", message: "Sprawdź formularz i spróbuj ponownie." },
+          saved: { title: "Szablon zapisany", message: "Zaktualizowano szablon projektu." },
+          save_failed: { title: "Nie udało się zapisać szablonu", message: "Sprawdź formularz i spróbuj ponownie." },
           deleted: { title: "Szablon usunięty", message: "Szablon projektu został usunięty." },
           delete_failed: { title: "Nie udało się usunąć", message: "Spróbuj ponownie." },
           apply_failed: { message: "Nie udało się zastosować szablonu projektu." },
