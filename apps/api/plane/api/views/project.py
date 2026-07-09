@@ -40,6 +40,7 @@ from plane.db.models import (
 from plane.bgtasks.webhook_task import model_activity, webhook_activity
 from .base import BaseAPIView
 from plane.utils.host import base_host
+from plane.utils.order_queryset import PROJECT_ORDER_BY_ALLOWLIST, sanitize_order_by
 from plane.api.serializers import (
     ProjectSerializer,
     ProjectCreateSerializer,
@@ -183,7 +184,13 @@ class ProjectListCreateAPIEndpoint(BaseAPIView):
                     ),
                 )
             )
-            .order_by(request.GET.get("order_by", "sort_order"))
+            .order_by(
+                sanitize_order_by(
+                    request.GET.get("order_by", "sort_order"),
+                    PROJECT_ORDER_BY_ALLOWLIST,
+                    default="sort_order",
+                )
+            )
         )
         return self.paginate(
             request=request,
