@@ -148,10 +148,16 @@ class UserProjectInvitationsViewset(BaseViewSet):
         workspace_role = workspace_member.role
         workspace = workspace_member.workspace
 
+        # Use the workspace-scoped, network-validated project IDs only.
+        # Raw project_ids may contain UUIDs from other workspaces; those are
+        # absent from the `projects` queryset and therefore bypass the SECRET
+        # network check above (GHSA-45hc-q4mw-jhxm).
+        validated_project_ids = [str(p.id) for p in projects]
+
         # If the user was already part of workspace
-        _ = ProjectMember.objects.filter(workspace__slug=slug, project_id__in=project_ids, member=request.user).update(
-            is_active=True
-        )
+        _ = ProjectMember.objects.filter(
+            workspace__slug=slug, project_id__in=validated_project_ids, member=request.user
+        ).update(is_active=True)
 
         ProjectMember.objects.bulk_create(
             [
@@ -162,7 +168,7 @@ class UserProjectInvitationsViewset(BaseViewSet):
                     workspace=workspace,
                     created_by=request.user,
                 )
-                for project_id in project_ids
+                for project_id in validated_project_ids
             ],
             ignore_conflicts=True,
         )
@@ -175,7 +181,7 @@ class UserProjectInvitationsViewset(BaseViewSet):
                     workspace=workspace,
                     created_by=request.user,
                 )
-                for project_id in project_ids
+                for project_id in validated_project_ids
             ],
             ignore_conflicts=True,
         )
