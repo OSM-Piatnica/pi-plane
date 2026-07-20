@@ -49,6 +49,13 @@ export const WORKSPACE_SETTINGS: Record<TWorkspaceSettingsTabs, TWorkspaceSettin
     access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER],
     highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/exports/`,
   },
+  import: {
+    key: "import",
+    i18n_label: "workspace_settings.settings.imports.title",
+    href: `/settings/imports`,
+    access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER],
+    highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/imports/`,
+  },
   "work-item-templates": {
     key: "work-item-templates",
     i18n_label: "workspace_settings.settings.work_item_templates.title",

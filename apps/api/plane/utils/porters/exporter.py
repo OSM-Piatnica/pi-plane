@@ -27,18 +27,20 @@ class DataExporter:
         "xlsx": XLSXFormatter,
     }
 
-    def __init__(self, serializer_class, format_type: str = None, **serializer_kwargs):
+    def __init__(self, serializer_class, format_type: str = None, csv_delimiter: str = ",", **serializer_kwargs):
         """
         Initialize exporter with serializer and optional format type.
 
         Args:
             serializer_class: DRF serializer class to use for data serialization
             format_type: Optional format type (csv, json, xlsx). If provided, enables export() method.
+            csv_delimiter: Delimiter for CSV exports ("," or ";").
             **serializer_kwargs: Additional kwargs to pass to serializer
         """
         self.serializer_class = serializer_class
         self.serializer_kwargs = serializer_kwargs
         self.format_type = format_type
+        self.csv_delimiter = csv_delimiter if csv_delimiter in {",", ";"} else ","
         self.formatter = None
 
         if format_type:
@@ -54,8 +56,9 @@ class DataExporter:
         # Apply format-specific options
         if format_type == "xlsx":
             return formatter_class(list_joiner=", ")
-        else:
-            return formatter_class()
+        if format_type == "csv":
+            return formatter_class(delimiter=self.csv_delimiter)
+        return formatter_class()
 
     def serialize(self, queryset) -> List[Dict]:
         """QuerySet → list of dicts"""

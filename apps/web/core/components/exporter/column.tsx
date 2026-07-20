@@ -6,7 +6,7 @@
 
 import { Download } from "lucide-react";
 import type { IExportData } from "@plane/types";
-import { getDate, getFileURL, renderFormattedDate } from "@plane/utils";
+import { getDate, getFileURL, renderFormattedDate, renderFormattedTime } from "@plane/utils";
 
 type RowData = IExportData;
 const checkExpiry = (inputDateString: string) => {
@@ -48,7 +48,11 @@ export const useExportColumns = () => {
     {
       key: "Exported On",
       content: "Exported On",
-      tdRender: (rowData: RowData) => <span>{renderFormattedDate(rowData.created_at)}</span>,
+      tdRender: (rowData: RowData) => (
+        <span>
+          {renderFormattedDate(rowData.created_at)} {renderFormattedTime(rowData.created_at)}
+        </span>
+      ),
     },
 
     {

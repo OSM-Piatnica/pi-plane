@@ -15,6 +15,11 @@ export default {
     loading: "Loading templates…",
     apply_failed_toast: "Could not apply the work item template.",
   },
+  project_templates: {
+    select_placeholder: "Select a template",
+    none: "No template",
+    loading: "Loading templates…",
+  },
   work_item_types: {
     select_placeholder: "Type",
     loading: "Loading types…",
@@ -1552,13 +1557,35 @@ export default {
         view_plans: "View plans",
       },
       exports: {
-        heading: "Exports",
-        description: "Export your project data in various formats and access your export history with download links.",
-        title: "Exports",
+        heading: "Imports & exports",
+        description:
+          "Import project configuration from CSV or export project settings, states, labels, and work item types. Work items are not included.",
+        title: "Imports & exports",
         exporting: "Exporting",
         previous_exports: "Previous exports",
         export_separate_files: "Export the data into separate files",
-        exporting_projects: "Exporting project",
+        exporting_projects: "Exporting work items",
+        work_items_export: {
+          heading: "Export work items",
+          description: "Export work items from selected projects to CSV, Excel, or JSON.",
+        },
+        project_csv: {
+          heading: "Export project configuration",
+          description: "Download project settings, states, labels, and work item types. Work items are not included.",
+          select_project: "Project",
+          select_format: "Format",
+          export_button: "Export project",
+          toasts: {
+            success: {
+              title: "Export successful",
+              message: "Project configuration CSV has been downloaded.",
+            },
+            error: {
+              title: "Export failed",
+              message: "Could not export project configuration. Please try again.",
+            },
+          },
+        },
         format: "Format",
         filters_info: "Apply filters to export specific work items based on your criteria.",
         modal: {
@@ -1572,6 +1599,32 @@ export default {
               title: "Export failed",
               message: "Export was unsuccessful. Please try again.",
             },
+          },
+        },
+      },
+      imports: {
+        heading: "Imports",
+        description:
+          "Import project configuration from a CSV file exported from Plane. Work items are not included. Do not re-save the file in Excel before importing.",
+        title: "Imports",
+        select_file: "Select CSV file",
+        import_button: "Import project",
+        invalid_file_type: "Please upload a CSV file.",
+        file_too_large: "File must be smaller than {size} MB.",
+        previous_imports: "Previous imports",
+        history: {
+          imported_by: "Imported by",
+          imported_on: "Imported on",
+          file: "File",
+          projects: "Projects",
+          status: "Status",
+        },
+        toasts: {
+          success: {
+            message: 'Project "{name}" was imported successfully.',
+          },
+          error: {
+            message: "Project import failed. Please check the CSV file and try again.",
           },
         },
       },
@@ -2761,6 +2814,16 @@ export default {
       description: "Export work items to a CSV file.",
       short_description: "Export as csv",
     },
+    csv_comma: {
+      title: "CSV (comma)",
+      description: "Export to CSV with comma delimiter.",
+      short_description: "CSV comma",
+    },
+    csv_semicolon: {
+      title: "CSV (semicolon, Excel)",
+      description: "Export to CSV with semicolon delimiter for Excel.",
+      short_description: "CSV semicolon",
+    },
     excel: {
       title: "Excel",
       description: "Export work items to a Excel file.",
@@ -2775,6 +2838,11 @@ export default {
       title: "JSON",
       description: "Export work items to a JSON file.",
       short_description: "Export as json",
+    },
+    project_csv: {
+      title: "Project CSV",
+      description: "Export project configuration to a CSV file.",
+      short_description: "Export project as csv",
     },
   },
   default_global_view: {

@@ -23,6 +23,8 @@ import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { TWorkItemFilterExpression } from "@plane/types";
 import { CustomSearchSelect, CustomSelect } from "@plane/ui";
 // import { WorkspaceLevelWorkItemFiltersHOC } from "@/components/work-item-filters/filters-hoc/workspace-level";
+import { buildIssueExportPayload } from "@/helpers/export-payload-helpers";
+import { getApiErrorMessage } from "@/helpers/api-error";
 // import { WorkItemFiltersRow } from "@/components/work-item-filters/filters-row";
 import { useProject } from "@/hooks/store/use-project";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
@@ -100,12 +102,7 @@ export const ExportForm = observer(function ExportForm(props: Props) {
   async function ExportCSVToMail(formData: FormData) {
     setExportLoading(true);
     if (workspaceSlug && user) {
-      const payload = {
-        provider: formData.provider.provider,
-        project: formData.project,
-        multiple: formData.project.length > 1,
-        rich_filters: formData.filters,
-      };
+      const payload = buildIssueExportPayload(formData);
       try {
         await projectExportService.csvExport(workspaceSlug, payload);
         mutateServices();
@@ -124,12 +121,15 @@ export const ExportForm = observer(function ExportForm(props: Props) {
                     : "",
           }),
         });
-      } catch (_error) {
+      } catch (error) {
         setExportLoading(false);
         setToast({
           type: TOAST_TYPE.ERROR,
           title: t("error"),
-          message: t("workspace_settings.settings.exports.modal.toasts.error.message"),
+          message: getApiErrorMessage(
+            error as unknown,
+            t("workspace_settings.settings.exports.modal.toasts.error.message")
+          ),
         });
       }
     } else {
@@ -144,6 +144,10 @@ export const ExportForm = observer(function ExportForm(props: Props) {
       }}
       className="flex flex-col gap-5"
     >
+      <SettingsBoxedControlItem
+        title={t("workspace_settings.settings.exports.work_items_export.heading")}
+        description={t("workspace_settings.settings.exports.work_items_export.description")}
+      />
       <div className="rounded-lg border border-subtle bg-layer-2">
         {/* Project Selector */}
         <SettingsBoxedControlItem
@@ -198,7 +202,11 @@ export const ExportForm = observer(function ExportForm(props: Props) {
                   buttonClassName="py-2 text-13"
                 >
                   {EXPORTERS_LIST.map((service) => (
-                    <CustomSelect.Option key={service.provider} className="flex items-center gap-2" value={service}>
+                    <CustomSelect.Option
+                      key={`${service.provider}-${service.delimiter ?? "default"}`}
+                      className="flex items-center gap-2"
+                      value={service}
+                    >
                       <span className="truncate">{t(service.i18n_title)}</span>
                     </CustomSelect.Option>
                   ))}

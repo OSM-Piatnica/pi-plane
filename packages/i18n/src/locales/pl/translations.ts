@@ -185,6 +185,11 @@ export default {
     loading: "Ładowanie szablonów…",
     apply_failed_toast: "Nie udało się zastosować szablonu elementu roboczego.",
   },
+  project_templates: {
+    select_placeholder: "Wybierz szablon",
+    none: "Bez szablonu",
+    loading: "Ładowanie szablonów…",
+  },
   work_item_types: {
     select_placeholder: "Typ",
     loading: "Ładowanie typów…",
@@ -1698,10 +1703,35 @@ export default {
         view_plans: "Wyświetl plany",
       },
       exports: {
-        title: "Eksporty",
+        title: "Import i eksport",
+        heading: "Import i eksport",
+        description:
+          "Importuj konfigurację projektu z CSV lub eksportuj ustawienia projektu, stany, etykiety i typy elementów roboczych. Elementy robocze nie są uwzględniane.",
         exporting: "Eksportowanie",
         previous_exports: "Poprzednie eksporty",
         export_separate_files: "Eksportuj dane do oddzielnych plików",
+        work_items_export: {
+          heading: "Eksport elementów roboczych",
+          description: "Eksportuj elementy robocze z wybranych projektów do CSV, Excel lub JSON.",
+        },
+        project_csv: {
+          heading: "Eksport konfiguracji projektu",
+          description:
+            "Pobierz ustawienia projektu, stany, etykiety i typy elementów roboczych. Elementy robocze nie są uwzględniane.",
+          select_project: "Projekt",
+          select_format: "Format",
+          export_button: "Eksportuj projekt",
+          toasts: {
+            success: {
+              title: "Eksport zakończony",
+              message: "Plik CSV z konfiguracją projektu został pobrany.",
+            },
+            error: {
+              title: "Eksport nie powiódł się",
+              message: "Nie udało się wyeksportować konfiguracji projektu. Spróbuj ponownie.",
+            },
+          },
+        },
         filters_info: "Zastosuj filtry, aby wyeksportować określone elementy robocze według Twoich kryteriów.",
         modal: {
           title: "Eksport do",
@@ -1714,6 +1744,32 @@ export default {
               title: "Eksport nie powiódł się",
               message: "Spróbuj ponownie.",
             },
+          },
+        },
+      },
+      imports: {
+        heading: "Importy",
+        description:
+          "Importuj konfigurację projektu z pliku CSV wyeksportowanego z Plane. Elementy robocze nie są uwzględniane. Nie zapisuj ponownie pliku w Excelu przed importem.",
+        title: "Importy",
+        select_file: "Wybierz plik CSV",
+        import_button: "Importuj projekt",
+        invalid_file_type: "Prześlij plik CSV.",
+        file_too_large: "Plik musi być mniejszy niż {size} MB.",
+        previous_imports: "Poprzednie importy",
+        history: {
+          imported_by: "Zaimportował",
+          imported_on: "Data importu",
+          file: "Plik",
+          projects: "Projekty",
+          status: "Status",
+        },
+        toasts: {
+          success: {
+            message: "Projekt „{name}” został zaimportowany.",
+          },
+          error: {
+            message: "Import projektu nie powiódł się. Sprawdź plik CSV i spróbuj ponownie.",
           },
         },
       },
@@ -2871,6 +2927,16 @@ export default {
       description: "Eksportuj elementy do pliku CSV.",
       short_description: "Eksportuj jako CSV",
     },
+    csv_comma: {
+      title: "CSV (przecinek)",
+      description: "Eksport do CSV z separatorem przecinek.",
+      short_description: "CSV przecinek",
+    },
+    csv_semicolon: {
+      title: "CSV (średnik, Excel)",
+      description: "Eksport do CSV z separatorem średnik — dla Excela.",
+      short_description: "CSV średnik",
+    },
     excel: {
       title: "Excel",
       description: "Eksportuj elementy do pliku Excel.",
@@ -2885,6 +2951,11 @@ export default {
       title: "JSON",
       description: "Eksportuj elementy do pliku JSON.",
       short_description: "Eksportuj jako JSON",
+    },
+    project_csv: {
+      title: "CSV projektu",
+      description: "Eksportuj konfigurację projektu do pliku CSV.",
+      short_description: "Eksportuj projekt jako CSV",
     },
   },
   default_global_view: {
