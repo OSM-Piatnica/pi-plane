@@ -4,7 +4,7 @@
 
 from django.urls import path
 
-from plane.app.views import ExportIssuesEndpoint
+from plane.app.views import ExportIssuesEndpoint, ExportProjectsEndpoint
 
 
 urlpatterns = [
@@ -12,5 +12,10 @@ urlpatterns = [
         "workspaces/<str:slug>/export-issues/",
         ExportIssuesEndpoint.as_view(),
         name="export-issues",
+    ),
+    path(
+        "workspaces/<str:slug>/export-projects/",
+        ExportProjectsEndpoint.as_view(),
+        name="export-projects",
     ),
 ]

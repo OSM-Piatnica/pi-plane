@@ -150,9 +150,17 @@ export const IMPORTERS_LIST = [
 export const EXPORTERS_LIST = [
   {
     provider: "csv",
+    delimiter: ",",
     type: "export",
-    i18n_title: "exporter.csv.title",
-    i18n_description: "exporter.csv.description",
+    i18n_title: "exporter.csv_comma.title",
+    i18n_description: "exporter.csv_comma.description",
+  },
+  {
+    provider: "csv",
+    delimiter: ";",
+    type: "export",
+    i18n_title: "exporter.csv_semicolon.title",
+    i18n_description: "exporter.csv_semicolon.description",
   },
   {
     provider: "xlsx",
@@ -167,6 +175,21 @@ export const EXPORTERS_LIST = [
     i18n_description: "exporter.csv.description",
   },
 ];
+
+export const PROJECT_EXPORT_FORMATS = [
+  {
+    provider: "csv",
+    delimiter: ",",
+    extension: "csv",
+    i18n_title: "exporter.csv_comma.title",
+  },
+  {
+    provider: "csv",
+    delimiter: ";",
+    extension: "csv",
+    i18n_title: "exporter.csv_semicolon.title",
+  },
+] as const;
 
 export const DEFAULT_GLOBAL_VIEWS_LIST: {
   key: TStaticViewTypes;

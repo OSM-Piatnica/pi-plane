@@ -21,6 +21,7 @@ import { useUser } from "@/hooks/store/user";
 import { useAppRouter } from "@/hooks/use-app-router";
 // services
 import { ProjectExportService } from "@/services/project";
+import { getApiErrorMessage } from "@/helpers/api-error";
 type Props = {
   isOpen: boolean;
   handleClose: () => void;
@@ -91,13 +92,17 @@ export const Exporter = observer(function Exporter(props: Props) {
               entity: provider === "csv" ? "CSV" : provider === "xlsx" ? "Excel" : provider === "json" ? "JSON" : "",
             }),
           });
+          return undefined;
         })
-        .catch(() => {
+        .catch((error) => {
           setExportLoading(false);
           setToast({
             type: TOAST_TYPE.ERROR,
             title: t("error"),
-            message: t("workspace_settings.settings.exports.modal.toasts.error.message"),
+            message: getApiErrorMessage(
+              error?.response?.data,
+              t("workspace_settings.settings.exports.modal.toasts.error.message")
+            ),
           });
         });
     }

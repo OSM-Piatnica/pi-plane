@@ -48,6 +48,7 @@ export interface IExportData {
   status: string;
   url: string;
   token: string;
+  name?: string | null;
   created_by: string;
   updated_by: string;
   initiated_by_detail: IUserLite;

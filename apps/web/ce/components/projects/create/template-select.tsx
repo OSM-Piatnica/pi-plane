@@ -30,8 +30,8 @@ export function ProjectTemplateSelect(props: TProjectTemplateSelect) {
 
   const selectedTemplate = (templates as TProjectTemplate[] | undefined)?.find((template) => template.id === value);
   const label = isLoading
-    ? t("workspace_settings.settings.project_templates.loading")
-    : (selectedTemplate?.name ?? t("workspace_settings.settings.project_templates.select_placeholder"));
+    ? t("project_templates.loading")
+    : (selectedTemplate?.name ?? t("project_templates.select_placeholder"));
 
   return (
     <div className="h-7 min-w-[11rem]">
@@ -44,7 +44,7 @@ export function ProjectTemplateSelect(props: TProjectTemplateSelect) {
         label={label}
         noChevron
       >
-        <CustomSelect.Option value="">{t("workspace_settings.settings.project_templates.none")}</CustomSelect.Option>
+        <CustomSelect.Option value="">{t("project_templates.none")}</CustomSelect.Option>
         {(templates as TProjectTemplate[] | undefined)?.map((template) => (
           <CustomSelect.Option key={template.id} value={template.id}>
             {template.name}

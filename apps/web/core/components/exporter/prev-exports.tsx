@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import useSWR, { mutate } from "swr";
 import { MoveLeft, MoveRight, RefreshCw } from "lucide-react";
@@ -46,10 +46,10 @@ export const PrevExports = observer(function PrevExports(props: Props) {
     workspaceSlug && cursor ? () => integrationService.getExportsServicesList(workspaceSlug, cursor, per_page) : null
   );
 
-  const handleRefresh = () => {
+  const handleRefresh = useCallback(() => {
     setRefreshing(true);
     mutate(EXPORT_SERVICES_LIST(workspaceSlug, `${cursor}`, `${per_page}`)).then(() => setRefreshing(false));
-  };
+  }, [workspaceSlug, cursor, per_page]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -61,7 +61,7 @@ export const PrevExports = observer(function PrevExports(props: Props) {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [exporterServices]);
+  }, [exporterServices, handleRefresh]);
 
   return (
     <div>

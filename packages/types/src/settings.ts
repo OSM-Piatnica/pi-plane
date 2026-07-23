@@ -15,6 +15,7 @@ export type TWorkspaceSettingsTabs =
   | "members"
   | "billing-and-plans"
   | "export"
+  | "import"
   | "work-item-templates"
   | "work-item-types"
   | "project-templates"

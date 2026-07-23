@@ -6,6 +6,7 @@
 
 import type { LucideIcon } from "lucide-react";
 import {
+  ArrowDownToLine,
   ArrowUpToLine,
   Building,
   CreditCard,
@@ -23,6 +24,7 @@ export const WORKSPACE_SETTINGS_ICONS: Record<TWorkspaceSettingsTabs, LucideIcon
   general: Building,
   members: Users,
   export: ArrowUpToLine,
+  import: ArrowDownToLine,
   "billing-and-plans": CreditCard,
   "work-item-templates": LayoutTemplate,
   "work-item-types": Layers,

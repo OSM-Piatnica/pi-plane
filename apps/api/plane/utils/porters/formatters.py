@@ -21,6 +21,12 @@ from openpyxl import Workbook, load_workbook
 # Module imports
 from plane.utils.csv_utils import sanitize_csv_row, sanitize_csv_value
 
+UTF8_SIG_BOM = "\ufeff"
+
+
+def strip_utf8_bom(content: str) -> str:
+    return content.lstrip(UTF8_SIG_BOM) if content else content
+
 
 class BaseFormatter(ABC):
     @abstractmethod
@@ -65,6 +71,20 @@ class CSVFormatter(BaseFormatter):
         self.flatten = flatten
         self.delimiter = delimiter
         self.prettify_headers = prettify_headers
+
+    def _detect_delimiter(self, content: str) -> str:
+        first_line = content.splitlines()[0] if content else ""
+        if not first_line:
+            return self.delimiter
+
+        semicolon_count = first_line.count(";")
+        comma_count = first_line.count(",")
+
+        if semicolon_count > comma_count:
+            return ";"
+        if comma_count > 0:
+            return ","
+        return self.delimiter
 
     def _prettify_header(self, header: str) -> str:
         """Transform 'created_by_name' → 'Created By Name'"""
@@ -127,19 +147,21 @@ class CSVFormatter(BaseFormatter):
             pretty_headers = [header_map[key] for key in fieldnames]
 
             # Write pretty headers manually, then write data rows
-            writer = csv.writer(output, delimiter=self.delimiter)
+            writer = csv.writer(output, delimiter=self.delimiter, lineterminator="\r\n")
             writer.writerow(pretty_headers)
 
             # Write data rows in the same field order
             for row in data:
                 writer.writerow(sanitize_csv_row([row.get(key, "") for key in fieldnames]))
         else:
-            writer = csv.DictWriter(output, fieldnames=fieldnames, delimiter=self.delimiter)
+            writer = csv.DictWriter(
+                output, fieldnames=fieldnames, delimiter=self.delimiter, lineterminator="\r\n"
+            )
             writer.writeheader()
             for row in data:
                 writer.writerow({k: sanitize_csv_value(row.get(k, "")) for k in fieldnames})
 
-        return output.getvalue()
+        return UTF8_SIG_BOM + output.getvalue()
 
     def decode(self, content: str, normalize_headers: bool = True) -> List[Dict]:
         """
@@ -149,7 +171,9 @@ class CSVFormatter(BaseFormatter):
             content: CSV string
             normalize_headers: If True, converts 'Display Name' → 'display_name'
         """
-        rows = list(csv.DictReader(StringIO(content), delimiter=self.delimiter))
+        content = strip_utf8_bom(content)
+        delimiter = self._detect_delimiter(content)
+        rows = list(csv.DictReader(StringIO(content), delimiter=delimiter))
 
         # Normalize headers: 'Email' → 'email', 'Display Name' → 'display_name'
         if normalize_headers:
