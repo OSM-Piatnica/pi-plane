@@ -19,6 +19,7 @@ import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useIssues } from "@/hooks/store/use-issues";
 import { useUserPermissions } from "@/hooks/store/user";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 import { useWorkItemProperties } from "@/plane-web/hooks/use-issue-properties";
 // local imports
 import type { TIssueOperations } from "../issue-detail";
@@ -57,7 +58,7 @@ export const IssuePeekOverview = observer(function IssuePeekOverview(props: IWor
     storeType === EIssuesStoreType.EPIC ? EIssueServiceType.EPICS : EIssueServiceType.ISSUES
   );
   // state
-  const [error, setError] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const removeRoutePeekId = useCallback(() => {
     setPeekIssue(undefined);
@@ -68,10 +69,10 @@ export const IssuePeekOverview = observer(function IssuePeekOverview(props: IWor
     () => ({
       fetch: async (workspaceSlug: string, projectId: string, issueId: string) => {
         try {
-          setError(false);
+          setIsError(false);
           await fetchIssue(workspaceSlug, projectId, issueId);
         } catch (error) {
-          setError(true);
+          setIsError(true);
           console.error("Error fetching the parent issue", error);
         }
       },
@@ -83,11 +84,14 @@ export const IssuePeekOverview = observer(function IssuePeekOverview(props: IWor
               fetchActivities(workspaceSlug, projectId, issueId);
               return;
             })
-            .catch((_error) => {
+            .catch((error) => {
               setToast({
                 title: t("toast.error"),
                 type: TOAST_TYPE.ERROR,
-                message: t("entity.update.failed", { entity: t("issue.label", { count: 1 }) }),
+                message: getIssueApiErrorMessage(
+                  error,
+                  t("entity.update.failed", { entity: t("issue.label", { count: 1 }) })
+                ),
               });
             });
         }
@@ -241,7 +245,7 @@ export const IssuePeekOverview = observer(function IssuePeekOverview(props: IWor
       projectId={peekIssue.projectId}
       issueId={peekIssue.issueId}
       isLoading={isLoading}
-      isError={error}
+      isError={isError}
       is_archived={!!peekIssue.isArchived}
       disabled={!isEditable}
       embedIssue={embedIssue}

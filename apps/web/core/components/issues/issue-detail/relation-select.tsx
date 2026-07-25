@@ -16,6 +16,7 @@ import type { ISearchIssueResponse } from "@plane/types";
 import { cn, generateWorkItemLink } from "@plane/utils";
 // components
 import { ExistingIssuesListModal } from "@/components/core/modals/existing-issues-list-modal";
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useIssues } from "@/hooks/store/use-issues";
@@ -67,9 +68,18 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
       issueId,
       relationKey,
       data.map((i) => i.id)
-    );
-
-    toggleRelationModal(null, null);
+    )
+      .then(() => {
+        toggleRelationModal(null, null);
+        return null;
+      })
+      .catch((error) => {
+        setToast({
+          type: TOAST_TYPE.ERROR,
+          title: "Error!",
+          message: getIssueApiErrorMessage(error, "Could not create relation."),
+        });
+      });
   };
 
   if (!relationIssueIds) return null;
@@ -138,7 +148,9 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
                     </Tooltip>
                     {!disabled && (
                       <Tooltip tooltipContent="Remove" position="bottom" isMobile={isMobile}>
-                        <span
+                        <button
+                          type="button"
+                          className="inline-flex"
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
@@ -146,7 +158,7 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
                           }}
                         >
                           <CloseIcon className="h-2.5 w-2.5 text-tertiary hover:text-danger-primary" />
-                        </span>
+                        </button>
                       </Tooltip>
                     )}
                   </div>

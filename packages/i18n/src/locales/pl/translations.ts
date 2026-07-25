@@ -1119,6 +1119,10 @@ export default {
       duplicate: "Duplikat",
       blocked_by: "Zablokowany przez",
       blocking: "Blokuje",
+      start_before: "Zaczyna się przed",
+      start_after: "Zaczyna się po",
+      finish_before: "Kończy się przed",
+      finish_after: "Kończy się po",
     },
     copy_link: "Kopiuj link do elementu pracy",
     delete: {

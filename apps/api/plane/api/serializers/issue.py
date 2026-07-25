@@ -146,6 +146,13 @@ class IssueSerializer(BaseSerializer):
         ):
             raise serializers.ValidationError("Estimate point is not valid please pass a valid estimate_point_id")
 
+        if self.instance is not None:
+            from plane.utils.issue_timeline_relation_validation import validate_issue_update_payload
+
+            timeline_error = validate_issue_update_payload(self.instance, data)
+            if timeline_error:
+                raise serializers.ValidationError({"error": timeline_error})
+
         return data
 
     def create(self, validated_data):
@@ -534,10 +541,10 @@ class IssueRelationCreateSerializer(serializers.Serializer):
         ("blocked_by", "Blocked By"),
         ("duplicate", "Duplicate"),
         ("relates_to", "Relates To"),
-        ("start_before", "Start Before"),
-        ("start_after", "Start After"),
-        ("finish_before", "Finish Before"),
-        ("finish_after", "Finish After"),
+        ("start_before", "Starts Before"),
+        ("start_after", "Starts After"),
+        ("finish_before", "Finishes Before"),
+        ("finish_after", "Finishes After"),
     ]
 
     relation_type = serializers.ChoiceField(

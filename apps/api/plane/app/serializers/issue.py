@@ -193,6 +193,13 @@ class IssueCreateSerializer(BaseSerializer):
         ):
             raise serializers.ValidationError("Estimate point is not valid please pass a valid estimate_point_id")
 
+        if self.instance is not None:
+            from plane.utils.issue_timeline_relation_validation import validate_issue_update_payload
+
+            timeline_error = validate_issue_update_payload(self.instance, attrs)
+            if timeline_error:
+                raise serializers.ValidationError({"error": timeline_error})
+
         return attrs
 
     def create(self, validated_data):

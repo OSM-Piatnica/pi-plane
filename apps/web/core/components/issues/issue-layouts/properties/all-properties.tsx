@@ -14,6 +14,7 @@ import { Paperclip } from "lucide-react";
 // i18n
 import { useTranslation } from "@plane/i18n";
 import { LinkIcon, StartDatePropertyIcon, ViewsIcon, DueDatePropertyIcon } from "@plane/propel/icons";
+import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { Tooltip } from "@plane/propel/tooltip";
 import type { TIssue, IIssueDisplayProperties, TIssuePriorities } from "@plane/types";
 // ui
@@ -33,6 +34,7 @@ import { MemberDropdown } from "@/components/dropdowns/member/dropdown";
 import { ModuleDropdown } from "@/components/dropdowns/module/dropdown";
 import { PriorityDropdown } from "@/components/dropdowns/priority";
 import { StateDropdown } from "@/components/dropdowns/state/dropdown";
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useIssues } from "@/hooks/store/use-issues";
@@ -47,6 +49,11 @@ import { WorkItemLayoutAdditionalProperties } from "@/plane-web/components/issue
 // local components
 import { IssuePropertyLabels } from "./labels";
 import { WithDisplayPropertiesHOC } from "./with-display-properties-HOC";
+
+const handleEventPropagation = (e: SyntheticEvent<HTMLDivElement>) => {
+  e.stopPropagation();
+  e.preventDefault();
+};
 
 export interface IIssueProperties {
   issue: TIssue;
@@ -108,7 +115,16 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
   );
 
   const handleState = async (stateId: string) => {
-    if (updateIssue) await updateIssue(issue.project_id, issue.id, { state_id: stateId });
+    if (!updateIssue) return;
+    try {
+      await updateIssue(issue.project_id, issue.id, { state_id: stateId });
+    } catch (error) {
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: t("common.error.label"),
+        message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") })),
+      });
+    }
   };
 
   const handlePriority = async (value: TIssuePriorities) => {
@@ -149,13 +165,29 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
   );
 
   const handleStartDate = async (date: Date | null) => {
-    if (updateIssue)
+    if (!updateIssue) return;
+    try {
       await updateIssue(issue.project_id, issue.id, { start_date: date ? renderFormattedPayloadDate(date) : null });
+    } catch (error) {
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: t("common.error.label"),
+        message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") })),
+      });
+    }
   };
 
   const handleTargetDate = async (date: Date | null) => {
-    if (updateIssue)
+    if (!updateIssue) return;
+    try {
       await updateIssue(issue.project_id, issue.id, { target_date: date ? renderFormattedPayloadDate(date) : null });
+    } catch (error) {
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: t("common.error.label"),
+        message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") })),
+      });
+    }
   };
 
   const handleEstimate = async (value: string | undefined) => {
@@ -186,17 +218,18 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
   const minDate = getDate(issue.start_date);
   const maxDate = getDate(issue.target_date);
 
-  const handleEventPropagation = (e: SyntheticEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    e.preventDefault();
-  };
-
   return (
     <div className={className}>
       {/* basic properties */}
       {/* state */}
       <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="state">
-        <div className="h-5" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
+        <div
+          className="h-5"
+          role="presentation"
+          onFocus={handleEventPropagation}
+          onClick={handleEventPropagation}
+          onKeyDown={handleEventPropagation}
+        >
           <StateDropdown
             buttonContainerClassName="truncate max-w-40"
             value={issue.state_id}
@@ -212,7 +245,13 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
 
       {/* priority */}
       <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="priority">
-        <div className="h-5" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
+        <div
+          className="h-5"
+          role="presentation"
+          onFocus={handleEventPropagation}
+          onClick={handleEventPropagation}
+          onKeyDown={handleEventPropagation}
+        >
           <PriorityDropdown
             value={issue?.priority}
             onChange={handlePriority}
@@ -230,7 +269,13 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
         displayPropertyKey={["start_date", "due_date"]}
         shouldRenderProperty={() => isDateRangeEnabled}
       >
-        <div className="h-5" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
+        <div
+          className="h-5"
+          role="presentation"
+          onFocus={handleEventPropagation}
+          onClick={handleEventPropagation}
+          onKeyDown={handleEventPropagation}
+        >
           <DateRangeDropdown
             value={{
               from: getDate(issue.start_date) || undefined,
@@ -265,7 +310,13 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
         displayPropertyKey="start_date"
         shouldRenderProperty={() => !isDateRangeEnabled}
       >
-        <div className="h-5" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
+        <div
+          className="h-5"
+          role="presentation"
+          onFocus={handleEventPropagation}
+          onClick={handleEventPropagation}
+          onKeyDown={handleEventPropagation}
+        >
           <DateDropdown
             value={issue.start_date ?? null}
             onChange={handleStartDate}
@@ -288,7 +339,13 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
         displayPropertyKey="due_date"
         shouldRenderProperty={() => !isDateRangeEnabled}
       >
-        <div className="h-5" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
+        <div
+          className="h-5"
+          role="presentation"
+          onFocus={handleEventPropagation}
+          onClick={handleEventPropagation}
+          onKeyDown={handleEventPropagation}
+        >
           <DateDropdown
             value={issue?.target_date ?? null}
             onChange={handleTargetDate}
@@ -311,7 +368,13 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
 
       {/* assignee */}
       <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="assignee">
-        <div className="h-5" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
+        <div
+          className="h-5"
+          role="presentation"
+          onFocus={handleEventPropagation}
+          onClick={handleEventPropagation}
+          onKeyDown={handleEventPropagation}
+        >
           <MemberDropdown
             projectId={issue?.project_id}
             value={issue?.assignee_ids}
@@ -335,7 +398,13 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
             {/* modules */}
             {projectDetails?.module_view && (
               <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="modules">
-                <div className="h-5" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
+                <div
+                  className="h-5"
+                  role="presentation"
+                  onFocus={handleEventPropagation}
+                  onClick={handleEventPropagation}
+                  onKeyDown={handleEventPropagation}
+                >
                   <ModuleDropdown
                     buttonContainerClassName="truncate max-w-40"
                     projectId={issue?.project_id}
@@ -355,7 +424,13 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
             {/* cycles */}
             {projectDetails?.cycle_view && (
               <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="cycle">
-                <div className="h-5" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
+                <div
+                  className="h-5"
+                  role="presentation"
+                  onFocus={handleEventPropagation}
+                  onClick={handleEventPropagation}
+                  onKeyDown={handleEventPropagation}
+                >
                   <CycleDropdown
                     buttonContainerClassName="truncate max-w-40"
                     projectId={issue?.project_id}
@@ -376,7 +451,13 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
       {/* estimates */}
       {projectId && areEstimateEnabledByProjectId(projectId?.toString()) && (
         <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="estimate">
-          <div className="h-5" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
+          <div
+            className="h-5"
+            role="presentation"
+            onFocus={handleEventPropagation}
+            onClick={handleEventPropagation}
+            onKeyDown={handleEventPropagation}
+          >
             <EstimateDropdown
               value={issue.estimate_point ?? undefined}
               onChange={handleEstimate}
@@ -404,7 +485,8 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
             isMobile={isMobile}
             renderByDefault={false}
           >
-            <div
+            <button
+              type="button"
               onFocus={handleEventPropagation}
               onClick={(e) => {
                 e.stopPropagation();
@@ -420,7 +502,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
             >
               <ViewsIcon className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
               <div className="text-caption-sm-regular">{subIssueCount}</div>
-            </div>
+            </button>
           </Tooltip>
         </WithDisplayPropertiesHOC>
       )}
@@ -438,9 +520,11 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
           renderByDefault={false}
         >
           <div
+            role="presentation"
             className="flex h-5 flex-shrink-0 items-center justify-center gap-2 overflow-hidden rounded-sm border-[0.5px] border-strong px-2.5 py-1"
             onFocus={handleEventPropagation}
             onClick={handleEventPropagation}
+            onKeyDown={handleEventPropagation}
           >
             <Paperclip className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
             <div className="text-caption-sm-regular">{issue.attachment_count}</div>
@@ -461,9 +545,11 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
           renderByDefault={false}
         >
           <div
+            role="presentation"
             className="flex h-5 flex-shrink-0 items-center justify-center gap-2 overflow-hidden rounded-sm border-[0.5px] border-strong px-2.5 py-1"
             onFocus={handleEventPropagation}
             onClick={handleEventPropagation}
+            onKeyDown={handleEventPropagation}
           >
             <LinkIcon className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
             <div className="text-caption-sm-regular">{issue.link_count}</div>

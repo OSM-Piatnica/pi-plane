@@ -264,8 +264,8 @@ class IssueRelationChoices(models.TextChoices):
     DUPLICATE = "duplicate", "Duplicate"
     RELATES_TO = "relates_to", "Relates To"
     BLOCKED_BY = "blocked_by", "Blocked By"
-    START_BEFORE = "start_before", "Start Before"
-    FINISH_BEFORE = "finish_before", "Finish Before"
+    START_BEFORE = "start_before", "Starts Before"
+    FINISH_BEFORE = "finish_before", "Finishes Before"
     IMPLEMENTED_BY = "implemented_by", "Implemented By"
 
 

@@ -1118,7 +1118,11 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
         epoch = int(timezone.now().timestamp())
 
         # Fetch all relevant issues in a single query
-        issues = list(Issue.objects.filter(id__in=issue_ids, workspace__slug=slug, project_id=project_id))
+        issues = list(
+            Issue.objects.filter(id__in=issue_ids, workspace__slug=slug, project_id=project_id).select_related(
+                "state", "project"
+            )
+        )
         issues_dict = {str(issue.id): issue for issue in issues}
         issues_to_update = []
 
@@ -1137,6 +1141,21 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
                     {"message": "Start date cannot exceed target date"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
+
+            from plane.utils.issue_timeline_relation_validation import validate_issue_timeline_relations
+
+            proposed_start = start_date if start_date is not None else issue.start_date
+            proposed_target = target_date if target_date is not None else issue.target_date
+            if start_date is not None or target_date is not None:
+                timeline_error = validate_issue_timeline_relations(
+                    issue,
+                    start_date=proposed_start,
+                    target_date=proposed_target,
+                    check_dates=True,
+                    check_status=False,
+                )
+                if timeline_error:
+                    return Response({"error": timeline_error, "message": timeline_error}, status=status.HTTP_400_BAD_REQUEST)
 
             if start_date:
                 issue_activity.delay(
