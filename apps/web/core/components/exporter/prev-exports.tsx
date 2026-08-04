@@ -1,7 +1,6 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
- * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -18,7 +17,7 @@ import { Table } from "@plane/ui";
 // components
 import { ImportExportSettingsLoader } from "@/components/ui/loader/settings/import-and-export";
 // constants
-import { EXPORT_SERVICES_LIST } from "@/constants/fetch-keys";
+import { EXPORT_SERVICES_LIST } from "@plane/constants";
 // services
 import { IntegrationService } from "@/services/integrations";
 // local imports
@@ -47,14 +46,24 @@ export const PrevExports = observer(function PrevExports(props: Props) {
     workspaceSlug && cursor ? () => integrationService.getExportsServicesList(workspaceSlug, cursor, per_page) : null
   );
 
-  const handleRefresh = useCallback(() => {
+  const handleRefresh = useCallback(async () => {
     setRefreshing(true);
-    mutate(EXPORT_SERVICES_LIST(workspaceSlug, `${cursor}`, `${per_page}`)).then(() => setRefreshing(false));
+    try {
+      await mutate(EXPORT_SERVICES_LIST(workspaceSlug, `${cursor}`, `${per_page}`));
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Failed to refresh export services list", error);
+    } finally {
+      setRefreshing(false);
+    }
   }, [workspaceSlug, cursor, per_page]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (exporterServices?.results?.some((service) => service.status === "processing")) {
+      if (
+        Array.isArray(exporterServices?.results) &&
+        exporterServices.results.some((service) => service.status === "processing")
+      ) {
         handleRefresh();
       } else {
         clearInterval(interval);
@@ -74,7 +83,7 @@ export const PrevExports = observer(function PrevExports(props: Props) {
             {refreshing ? t("refreshing") : t("refresh_status")}
           </Button>
         </div>
-        {!!exporterServices?.results?.length && (
+        {Array.isArray(exporterServices?.results) && exporterServices.results.length > 0 && (
           <div className="flex items-center gap-2 text-11">
             <Button
               variant="secondary"
@@ -98,35 +107,33 @@ export const PrevExports = observer(function PrevExports(props: Props) {
         )}
       </div>
       <div className="flex flex-col">
-        {exporterServices && exporterServices?.results ? (
-          exporterServices?.results?.length > 0 ? (
-            <div>
-              <div className="divide-y divide-subtle-1">
-                <Table
-                  columns={columns}
-                  data={exporterServices?.results ?? []}
-                  keyExtractor={(rowData: RowData) => rowData?.id ?? ""}
-                  tHeadClassName="border-b border-subtle"
-                  thClassName="text-left font-medium divide-x-0 text-placeholder"
-                  tBodyClassName="divide-y-0"
-                  tBodyTrClassName="divide-x-0 p-4 h-[40px] text-secondary"
-                  tHeadTrClassName="divide-x-0"
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              <EmptyStateCompact
-                assetKey="export"
-                title={t("settings_empty_state.exports.title")}
-                description={t("settings_empty_state.exports.description")}
-                align="start"
-                rootClassName="py-20"
+        {!exporterServices ? (
+          <ImportExportSettingsLoader />
+        ) : Array.isArray(exporterServices.results) && exporterServices.results.length > 0 ? (
+          <div>
+            <div className="divide-y divide-subtle-1">
+              <Table
+                columns={columns}
+                data={exporterServices.results}
+                keyExtractor={(rowData: RowData) => rowData?.id ?? ""}
+                tHeadClassName="border-b border-subtle"
+                thClassName="text-left font-medium divide-x-0 text-placeholder"
+                tBodyClassName="divide-y-0"
+                tBodyTrClassName="divide-x-0 p-4 h-[40px] text-secondary"
+                tHeadTrClassName="divide-x-0"
               />
             </div>
-          )
+          </div>
         ) : (
-          <ImportExportSettingsLoader />
+          <div className="flex h-full w-full items-center justify-center">
+            <EmptyStateCompact
+              assetKey="export"
+              title={t("settings_empty_state.exports.title")}
+              description={t("settings_empty_state.exports.description")}
+              align="start"
+              rootClassName="py-20"
+            />
+          </div>
         )}
       </div>
     </div>
