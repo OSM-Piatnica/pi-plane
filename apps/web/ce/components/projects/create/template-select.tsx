@@ -4,12 +4,53 @@
  * See the LICENSE file for details.
  */
 
+import { useParams } from "next/navigation";
+import useSWR from "swr";
+import { useTranslation } from "@plane/i18n";
+import { CustomSelect } from "@plane/ui";
+import type { TProjectTemplate } from "@plane/types";
+import { ProjectTemplateService } from "@/services/project-template.service";
+
+const projectTemplateService = new ProjectTemplateService();
+
 export type TProjectTemplateSelect = {
   disabled?: boolean;
-  onClick?: () => void;
+  value?: string | null;
+  onSelect?: (templateId: string | null) => void;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function ProjectTemplateSelect(props: TProjectTemplateSelect) {
-  return <></>;
+  const { disabled = false, value, onSelect } = props;
+  const { workspaceSlug } = useParams();
+  const { t } = useTranslation();
+  const { data: templates, isLoading } = useSWR(
+    workspaceSlug ? `PROJECT_TEMPLATE_LIST_CREATE_${String(workspaceSlug)}` : null,
+    () => projectTemplateService.list(String(workspaceSlug))
+  );
+
+  const selectedTemplate = (templates as TProjectTemplate[] | undefined)?.find((template) => template.id === value);
+  const label = isLoading
+    ? t("project_templates.loading")
+    : (selectedTemplate?.name ?? t("project_templates.select_placeholder"));
+
+  return (
+    <div className="h-7 min-w-[11rem]">
+      <CustomSelect
+        value={value ?? ""}
+        onChange={(next: string) => onSelect?.(next ? String(next) : null)}
+        disabled={disabled || isLoading}
+        buttonClassName="h-7 border border-subtle bg-custom-background-100 text-xs"
+        className="h-7"
+        label={label}
+        noChevron
+      >
+        <CustomSelect.Option value="">{t("project_templates.none")}</CustomSelect.Option>
+        {(templates as TProjectTemplate[] | undefined)?.map((template) => (
+          <CustomSelect.Option key={template.id} value={template.id}>
+            {template.name}
+          </CustomSelect.Option>
+        ))}
+      </CustomSelect>
+    </div>
+  );
 }

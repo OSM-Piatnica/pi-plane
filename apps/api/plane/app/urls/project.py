@@ -18,6 +18,10 @@ from plane.app.views import (
     UserProjectRolesEndpoint,
     ProjectArchiveUnarchiveEndpoint,
     ProjectMemberPreferenceEndpoint,
+    WorkspaceProjectIssueTypeSeedEndpoint,
+    ProjectIssueTypeViewSet,
+    ProjectIssueTypeBulkAssignEndpoint,
+    ProjectIssueTypePropertiesEndpoint,
 )
 
 
@@ -128,5 +132,30 @@ urlpatterns = [
         "workspaces/<str:slug>/projects/<uuid:project_id>/preferences/member/<uuid:member_id>/",
         ProjectMemberPreferenceEndpoint.as_view(),
         name="project-member-preference",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issue-setup/from-project-template/",
+        WorkspaceProjectIssueTypeSeedEndpoint.as_view(),
+        name="project-issue-setup-from-template",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issue-types/",
+        ProjectIssueTypeViewSet.as_view({"get": "list", "post": "create"}),
+        name="project-issue-types",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issue-types/bulk/",
+        ProjectIssueTypeBulkAssignEndpoint.as_view(),
+        name="project-issue-types-bulk",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issue-types/<uuid:pk>/",
+        ProjectIssueTypeViewSet.as_view({"patch": "partial_update", "delete": "destroy"}),
+        name="project-issue-types-detail",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issue-type-properties/",
+        ProjectIssueTypePropertiesEndpoint.as_view(),
+        name="project-issue-type-properties",
     ),
 ]

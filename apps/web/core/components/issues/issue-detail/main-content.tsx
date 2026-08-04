@@ -24,6 +24,7 @@ import useSize from "@/hooks/use-window-size";
 // plane web components
 import { DeDupeIssuePopoverRoot } from "@/plane-web/components/de-dupe/duplicate-popover";
 import { IssueTypeSwitcher } from "@/plane-web/components/issues/issue-details/issue-type-switcher";
+import { WorkflowApprovalBanner } from "@/plane-web/components/workflow";
 import { useDebouncedDuplicateIssues } from "@/plane-web/hooks/use-debounced-duplicate-issues";
 // services
 import { WorkItemVersionService } from "@/services/issue";
@@ -103,6 +104,8 @@ export const IssueMainContent = observer(function IssueMainContent(props: Props)
           />
         )}
 
+        <WorkflowApprovalBanner workspaceSlug={workspaceSlug} projectId={projectId} issueId={issueId} />
+
         <div className="mb-2.5 flex items-center justify-between gap-4">
           <IssueTypeSwitcher issueId={issueId} disabled={isArchived || !isEditable} />
           <div className="flex items-center gap-3">
@@ -174,10 +177,10 @@ export const IssueMainContent = observer(function IssueMainContent(props: Props)
                 isRestoreDisabled: !isEditable || isArchived,
               }}
               fetchHandlers={{
-                listDescriptionVersions: (issueId) =>
-                  workItemVersionService.listDescriptionVersions(workspaceSlug, projectId, issueId),
-                retrieveDescriptionVersion: (issueId, versionId) =>
-                  workItemVersionService.retrieveDescriptionVersion(workspaceSlug, projectId, issueId, versionId),
+                listDescriptionVersions: (targetIssueId) =>
+                  workItemVersionService.listDescriptionVersions(workspaceSlug, projectId, targetIssueId),
+                retrieveDescriptionVersion: (targetIssueId, versionId) =>
+                  workItemVersionService.retrieveDescriptionVersion(workspaceSlug, projectId, targetIssueId, versionId),
               }}
               handleRestore={(descriptionHTML) => editorRef.current?.setEditorValue(descriptionHTML, true)}
               projectId={projectId}

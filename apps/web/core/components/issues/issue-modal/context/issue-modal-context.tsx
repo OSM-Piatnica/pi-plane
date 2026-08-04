@@ -30,7 +30,8 @@ export type TCreateUpdatePropertyValuesProps = {
   issueId: string;
   projectId: string;
   workspaceSlug: string;
-  issueTypeId: string | null | undefined;
+  issueTypeId?: string | null | undefined;
+  values?: TIssuePropertyValues;
   isDraft?: boolean;
 };
 
@@ -42,6 +43,8 @@ export type TCreateSubWorkItemProps = {
 
 export type THandleTemplateChangeProps = {
   workspaceSlug: string;
+  projectId: string;
+  templateId: string | null;
   reset: UseFormReset<TIssue>;
   editorRef: React.MutableRefObject<EditorRefApi | null>;
 };
@@ -71,6 +74,8 @@ export type TIssueModalContext = {
   setIssuePropertyValues: React.Dispatch<React.SetStateAction<TIssuePropertyValues>>;
   issuePropertyValueErrors: TIssuePropertyValueErrors;
   setIssuePropertyValueErrors: React.Dispatch<React.SetStateAction<TIssuePropertyValueErrors>>;
+  mandatoryPropertyIds: string[];
+  setMandatoryPropertyIds: React.Dispatch<React.SetStateAction<string[]>>;
   getIssueTypeIdOnProjectChange: (projectId: string) => string | null;
   getActiveAdditionalPropertiesLength: (props: TActiveAdditionalPropertiesProps) => number;
   handlePropertyValuesValidation: (props: TPropertyValuesValidationProps) => boolean;

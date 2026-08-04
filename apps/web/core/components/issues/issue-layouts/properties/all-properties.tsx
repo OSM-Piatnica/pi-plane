@@ -4,6 +4,8 @@
  * See the LICENSE file for details.
  */
 
+/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, unicorn/consistent-function-scoping */
+
 import type { SyntheticEvent } from "react";
 import { useCallback, useMemo } from "react";
 import { xor } from "lodash-es";
@@ -235,6 +237,8 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
             value={issue.state_id}
             onChange={handleState}
             projectId={issue.project_id}
+            issueId={issue.id}
+            filterAvailableStateIds
             disabled={isReadOnly}
             buttonVariant="border-with-text"
             renderByDefault={isMobile}

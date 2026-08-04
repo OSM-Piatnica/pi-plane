@@ -36,6 +36,9 @@ from plane.app.views import (
     WorkspaceHomePreferenceViewSet,
     WorkspaceStickyViewSet,
     WorkspaceUserPreferenceViewSet,
+    WorkspaceWorkItemTemplateViewSet,
+    WorkspaceIssueTypeViewSet,
+    WorkspaceProjectTemplateViewSet,
 )
 
 
@@ -250,6 +253,42 @@ urlpatterns = [
         "workspaces/<str:slug>/stickies/<uuid:pk>/",
         WorkspaceStickyViewSet.as_view({"get": "retrieve", "patch": "partial_update", "delete": "destroy"}),
         name="workspace-sticky",
+    ),
+    path(
+        "workspaces/<str:slug>/work-item-templates/",
+        WorkspaceWorkItemTemplateViewSet.as_view({"get": "list", "post": "create"}),
+        name="workspace-work-item-templates",
+    ),
+    path(
+        "workspaces/<str:slug>/work-item-templates/<uuid:pk>/",
+        WorkspaceWorkItemTemplateViewSet.as_view(
+            {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
+        ),
+        name="workspace-work-item-templates-detail",
+    ),
+    path(
+        "workspaces/<str:slug>/issue-types/",
+        WorkspaceIssueTypeViewSet.as_view({"get": "list", "post": "create"}),
+        name="workspace-issue-types",
+    ),
+    path(
+        "workspaces/<str:slug>/issue-types/<uuid:pk>/",
+        WorkspaceIssueTypeViewSet.as_view(
+            {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
+        ),
+        name="workspace-issue-types-detail",
+    ),
+    path(
+        "workspaces/<str:slug>/project-templates/",
+        WorkspaceProjectTemplateViewSet.as_view({"get": "list", "post": "create"}),
+        name="workspace-project-templates",
+    ),
+    path(
+        "workspaces/<str:slug>/project-templates/<uuid:pk>/",
+        WorkspaceProjectTemplateViewSet.as_view(
+            {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
+        ),
+        name="workspace-project-templates-detail",
     ),
     # User Preference
     path(

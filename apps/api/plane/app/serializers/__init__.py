@@ -133,3 +133,17 @@ from .draft import (
     DraftIssueSerializer,
     DraftIssueDetailSerializer,
 )
+
+from .work_item_template import WorkItemTemplateSerializer
+from .project_template import ProjectTemplateSerializer
+from .issue_type import IssueTypeSerializer, IssueTypePropertySerializer, ProjectIssueTypeSerializer
+from .workflow import (
+    IssueWorkflowStatusSerializer,
+    WorkflowApprovalSerializer,
+    WorkflowBulkUpdateSerializer,
+    WorkflowFlowSerializer,
+    WorkflowHistorySerializer,
+    WorkflowLiteSerializer,
+    WorkflowSerializer,
+    WorkflowStateConfigSerializer,
+)

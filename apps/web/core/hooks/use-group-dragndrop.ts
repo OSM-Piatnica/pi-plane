@@ -96,11 +96,10 @@ export const useGroupIssuesDragNDrop = (
     }
 
     if (updateIssue) {
-      void updateIssue(projectId, issueId, data).catch((error) =>
+      updateIssue(projectId, issueId, data).catch((err) =>
         setToast({
-          type: TOAST_TYPE.ERROR,
-          title: "Error!",
-          message: getIssueApiErrorMessage(error, "Error while updating work item"),
+          ...errorToastProps,
+          message: err?.state_id?.[0] ?? err?.detail ?? errorToastProps.message,
         })
       );
     }

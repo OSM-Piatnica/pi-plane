@@ -9,3 +9,4 @@ export * from "./use-workflow-drag-n-drop";
 export * from "./workflow-disabled-message";
 export * from "./workflow-group-tree";
 export * from "./workflow-disabled-overlay";
+export * from "./workflow-approval-banner";

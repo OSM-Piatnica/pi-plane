@@ -59,6 +59,7 @@ from .project import (
     ProjectPublicMember,
     ProjectUserProperty,
 )
+from .project_template import ProjectTemplate
 from .session import Session
 from .social_connection import SocialLoginConnection
 from .state import State, StateGroup, DEFAULT_STATES
@@ -79,11 +80,24 @@ from .workspace import (
 
 from .favorite import UserFavorite
 
-from .issue_type import IssueType
+from .issue_type import IssueType, ProjectIssueType
+from .issue_type_property import IssueTypeProperty, IssuePropertyValue
 
 from .recent_visit import UserRecentVisit
 
 from .label import Label
+
+from .work_item_template import WorkItemTemplate
+
+from .workflow import (
+    Workflow,
+    WorkflowApproval,
+    WorkflowApprovalStatus,
+    WorkflowFlow,
+    WorkflowFlowType,
+    WorkflowHistory,
+    WorkflowStateConfig,
+)
 
 from .device import Device, DeviceSession
 

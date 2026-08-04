@@ -24,6 +24,8 @@ from .project.member import (
     ProjectMemberPreferenceEndpoint,
 )
 
+from .project.issue_type import ProjectIssueTypeViewSet, ProjectIssueTypeBulkAssignEndpoint
+
 from .user.base import (
     UserEndpoint,
     UpdateUserOnBoardedEndpoint,
@@ -82,6 +84,10 @@ from .workspace.module import WorkspaceModulesEndpoint
 from .workspace.cycle import WorkspaceCyclesEndpoint
 from .workspace.quick_link import QuickLinkViewSet
 from .workspace.sticky import WorkspaceStickyViewSet
+from .workspace.work_item_template import WorkspaceWorkItemTemplateViewSet
+from .workspace.issue_type import WorkspaceIssueTypeViewSet
+from .workspace.project_template import WorkspaceProjectTemplateViewSet
+from .workspace.project_issue_type_seed import WorkspaceProjectIssueTypeSeedEndpoint
 
 from .state.base import StateViewSet, IntakeStateEndpoint
 from .view.base import (
@@ -154,6 +160,8 @@ from .issue.subscriber import IssueSubscriberViewSet
 
 from .issue.version import IssueVersionEndpoint, WorkItemDescriptionVersionEndpoint
 
+from .issue.property_value import IssuePropertyValueEndpoint, ProjectIssueTypePropertiesEndpoint
+
 from .module.base import (
     ModuleViewSet,
     ModuleLinkViewSet,
@@ -224,6 +232,8 @@ from .notification.base import (
 )
 
 from .exporter.base import ExportIssuesEndpoint
+from .exporter.project import ExportProjectsEndpoint
+from .importer.base import ImportProjectsEndpoint
 
 
 from .webhook.base import (
@@ -238,3 +248,14 @@ from .notification.base import MarkAllReadNotificationViewSet
 from .user.base import AccountEndpoint, ProfileEndpoint, UserSessionEndpoint
 
 from .timezone.base import TimezoneEndpoint
+
+from .workflow import (
+    IssueWorkflowStatusEndpoint,
+    IssueWorkflowTransitionEndpoint,
+    ProjectWorkflowEnableEndpoint,
+    ProjectWorkflowStatesEndpoint,
+    WorkflowApprovalActionEndpoint,
+    WorkflowBulkConfigEndpoint,
+    WorkflowHistoryEndpoint,
+    WorkflowViewSet,
+)

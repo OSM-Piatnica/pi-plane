@@ -49,6 +49,34 @@ export const WORKSPACE_SETTINGS: Record<TWorkspaceSettingsTabs, TWorkspaceSettin
     access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER],
     highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/exports/`,
   },
+  import: {
+    key: "import",
+    i18n_label: "workspace_settings.settings.imports.title",
+    href: `/settings/imports`,
+    access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER],
+    highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/imports/`,
+  },
+  "work-item-templates": {
+    key: "work-item-templates",
+    i18n_label: "workspace_settings.settings.work_item_templates.title",
+    href: `/settings/work-item-templates`,
+    access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER],
+    highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/work-item-templates/`,
+  },
+  "work-item-types": {
+    key: "work-item-types",
+    i18n_label: "workspace_settings.settings.work_item_types.title",
+    href: `/settings/work-item-types`,
+    access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER],
+    highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/work-item-types/`,
+  },
+  "project-templates": {
+    key: "project-templates",
+    i18n_label: "workspace_settings.settings.project_templates.title",
+    href: `/settings/project-templates`,
+    access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER],
+    highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/project-templates/`,
+  },
   webhooks: {
     key: "webhooks",
     i18n_label: "workspace_settings.settings.webhooks.title",
@@ -69,6 +97,10 @@ export const GROUPED_WORKSPACE_SETTINGS: Record<WORKSPACE_SETTINGS_CATEGORY, TWo
     WORKSPACE_SETTINGS["billing-and-plans"],
     WORKSPACE_SETTINGS["export"],
   ],
-  [WORKSPACE_SETTINGS_CATEGORY.FEATURES]: [],
+  [WORKSPACE_SETTINGS_CATEGORY.FEATURES]: [
+    WORKSPACE_SETTINGS["work-item-types"],
+    WORKSPACE_SETTINGS["work-item-templates"],
+    WORKSPACE_SETTINGS["project-templates"],
+  ],
   [WORKSPACE_SETTINGS_CATEGORY.DEVELOPER]: [WORKSPACE_SETTINGS["webhooks"]],
 };

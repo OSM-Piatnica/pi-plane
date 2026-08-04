@@ -38,7 +38,42 @@ def create_zip_file(files: List[tuple[str, str | bytes]]) -> io.BytesIO:
     return zip_buffer
 
 
-# TODO: Change the upload_to_s3 function to use the new storage method with entry in file asset table
+def _get_s3_client(*, presign: bool = False):
+    if settings.USE_MINIO:
+        endpoint_url = (
+            f"{settings.AWS_S3_URL_PROTOCOL}//{str(settings.AWS_S3_CUSTOM_DOMAIN).replace('/uploads', '')}/"
+            if presign
+            else settings.AWS_S3_ENDPOINT_URL
+        )
+    elif settings.AWS_S3_ENDPOINT_URL:
+        endpoint_url = settings.AWS_S3_ENDPOINT_URL
+    else:
+        endpoint_url = None
+
+    client_kwargs = {
+        "aws_access_key_id": settings.AWS_ACCESS_KEY_ID,
+        "aws_secret_access_key": settings.AWS_SECRET_ACCESS_KEY,
+        "config": Config(signature_version="s3v4"),
+    }
+    if endpoint_url:
+        client_kwargs["endpoint_url"] = endpoint_url
+    elif not presign:
+        client_kwargs["region_name"] = settings.AWS_REGION
+
+    return boto3.client("s3", **client_kwargs)
+
+
+def _finalize_exporter_upload(*, token_id: str, file_name: str, presigned_url: str | None) -> None:
+    exporter_instance = ExporterHistory.objects.get(token=token_id)
+    if presigned_url:
+        exporter_instance.url = presigned_url
+        exporter_instance.status = "completed"
+        exporter_instance.key = file_name
+    else:
+        exporter_instance.status = "failed"
+    exporter_instance.save(update_fields=["status", "url", "key"])
+
+
 def upload_to_s3(zip_file: io.BytesIO, workspace_id: UUID, token_id: str, slug: str) -> None:
     """
     Upload a ZIP file to S3 and generate a presigned URL.
@@ -46,82 +81,48 @@ def upload_to_s3(zip_file: io.BytesIO, workspace_id: UUID, token_id: str, slug: 
     file_name = f"{workspace_id}/export-{slug}-{token_id[:6]}-{str(timezone.now().date())}.zip"
     expires_in = 7 * 24 * 60 * 60
 
+    upload_s3 = _get_s3_client()
+    extra_args = {"ContentType": "application/zip"}
     if settings.USE_MINIO:
-        upload_s3 = boto3.client(
-            "s3",
-            endpoint_url=settings.AWS_S3_ENDPOINT_URL,
-            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            config=Config(signature_version="s3v4"),
-        )
-        upload_s3.upload_fileobj(
-            zip_file,
-            settings.AWS_STORAGE_BUCKET_NAME,
-            file_name,
-            ExtraArgs={"ACL": "public-read", "ContentType": "application/zip"},
-        )
+        extra_args["ACL"] = "public-read"
 
-        # Generate presigned url for the uploaded file with different base
-        presign_s3 = boto3.client(
-            "s3",
-            endpoint_url=(
-                f"{settings.AWS_S3_URL_PROTOCOL}//{str(settings.AWS_S3_CUSTOM_DOMAIN).replace('/uploads', '')}/"
-            ),
-            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            config=Config(signature_version="s3v4"),
-        )
+    upload_s3.upload_fileobj(zip_file, settings.AWS_STORAGE_BUCKET_NAME, file_name, ExtraArgs=extra_args)
 
-        presigned_url = presign_s3.generate_presigned_url(
-            "get_object",
-            Params={"Bucket": settings.AWS_STORAGE_BUCKET_NAME, "Key": file_name},
-            ExpiresIn=expires_in,
-        )
-    else:
-        # If endpoint url is present, use it
-        if settings.AWS_S3_ENDPOINT_URL:
-            s3 = boto3.client(
-                "s3",
-                endpoint_url=settings.AWS_S3_ENDPOINT_URL,
-                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                config=Config(signature_version="s3v4"),
-            )
-        else:
-            s3 = boto3.client(
-                "s3",
-                region_name=settings.AWS_REGION,
-                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                config=Config(signature_version="s3v4"),
-            )
+    presign_s3 = _get_s3_client(presign=settings.USE_MINIO)
+    presigned_url = presign_s3.generate_presigned_url(
+        "get_object",
+        Params={"Bucket": settings.AWS_STORAGE_BUCKET_NAME, "Key": file_name},
+        ExpiresIn=expires_in,
+    )
+    _finalize_exporter_upload(token_id=token_id, file_name=file_name, presigned_url=presigned_url)
 
-        # Upload the file to S3
-        s3.upload_fileobj(
-            zip_file,
-            settings.AWS_STORAGE_BUCKET_NAME,
-            file_name,
-            ExtraArgs={"ContentType": "application/zip"},
-        )
 
-        # Generate presigned url for the uploaded file
-        presigned_url = s3.generate_presigned_url(
-            "get_object",
-            Params={"Bucket": settings.AWS_STORAGE_BUCKET_NAME, "Key": file_name},
-            ExpiresIn=expires_in,
-        )
+def upload_export_file_to_s3(
+    file_buffer: io.BytesIO,
+    *,
+    workspace_id: UUID,
+    token_id: str,
+    slug: str,
+    export_filename: str,
+    content_type: str,
+) -> None:
+    file_name = f"{workspace_id}/{export_filename}"
+    expires_in = 7 * 24 * 60 * 60
 
-    exporter_instance = ExporterHistory.objects.get(token=token_id)
+    upload_s3 = _get_s3_client()
+    extra_args = {"ContentType": content_type}
+    if settings.USE_MINIO:
+        extra_args["ACL"] = "public-read"
 
-    # Update the exporter instance with the presigned url
-    if presigned_url:
-        exporter_instance.url = presigned_url
-        exporter_instance.status = "completed"
-        exporter_instance.key = file_name
-    else:
-        exporter_instance.status = "failed"
+    upload_s3.upload_fileobj(file_buffer, settings.AWS_STORAGE_BUCKET_NAME, file_name, ExtraArgs=extra_args)
 
-    exporter_instance.save(update_fields=["status", "url", "key"])
+    presign_s3 = _get_s3_client(presign=settings.USE_MINIO)
+    presigned_url = presign_s3.generate_presigned_url(
+        "get_object",
+        Params={"Bucket": settings.AWS_STORAGE_BUCKET_NAME, "Key": file_name},
+        ExpiresIn=expires_in,
+    )
+    _finalize_exporter_upload(token_id=token_id, file_name=file_name, presigned_url=presigned_url)
 
 
 @shared_task
@@ -132,6 +133,7 @@ def issue_export_task(
     token_id: str,
     multiple: bool,
     slug: str,
+    csv_delimiter: str = ",",
 ):
     """
     Export issues from the workspace.
@@ -191,7 +193,11 @@ def issue_export_task(
 
         # Create exporter for the specified format
         try:
-            exporter = DataExporter(IssueExportSerializer, format_type=provider)
+            exporter = DataExporter(
+                IssueExportSerializer,
+                format_type=provider,
+                csv_delimiter=csv_delimiter,
+            )
         except ValueError as e:
             # Invalid format type
             exporter_instance = ExporterHistory.objects.get(token=token_id)
@@ -214,8 +220,25 @@ def issue_export_task(
             filename, content = exporter.export(export_filename, workspace_issues)
             files.append((filename, content))
 
-        zip_buffer = create_zip_file(files)
-        upload_to_s3(zip_buffer, workspace_id, token_id, slug)
+        if len(files) == 1 and provider == "csv":
+            filename, content = files[0]
+            csv_buffer = io.BytesIO()
+            if isinstance(content, bytes):
+                csv_buffer.write(content)
+            else:
+                csv_buffer.write(str(content).encode("utf-8"))
+            csv_buffer.seek(0)
+            upload_export_file_to_s3(
+                csv_buffer,
+                workspace_id=workspace_id,
+                token_id=token_id,
+                slug=slug,
+                export_filename=filename,
+                content_type="text/csv; charset=utf-8",
+            )
+        else:
+            zip_buffer = create_zip_file(files)
+            upload_to_s3(zip_buffer, workspace_id, token_id, slug)
 
     except Exception as e:
         exporter_instance = ExporterHistory.objects.get(token=token_id)

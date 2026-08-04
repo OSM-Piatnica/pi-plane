@@ -29,6 +29,8 @@ class ExporterHistory(BaseModel):
         choices=(
             ("issue_exports", "Issue Exports"),
             ("issue_worklogs", "Issue Worklogs"),
+            ("project_exports", "Project Exports"),
+            ("project_imports", "Project Imports"),
         ),
     )
     workspace = models.ForeignKey("db.WorkSpace", on_delete=models.CASCADE, related_name="workspace_exporters")

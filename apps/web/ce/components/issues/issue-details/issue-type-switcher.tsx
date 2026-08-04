@@ -1,14 +1,12 @@
-/**
- * Copyright (c) 2023-present Plane Software, Inc. and contributors
- * SPDX-License-Identifier: AGPL-3.0-only
- * See the LICENSE file for details.
- */
-
+import { useParams } from "next/navigation";
 import { observer } from "mobx-react";
-// store hooks
+import { Layers } from "lucide-react";
+import { useTranslation } from "@plane/i18n";
+import { CustomSelect } from "@plane/ui";
+import { SwitcherIcon } from "@/components/common/switcher-label";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
-// plane web components
-import { IssueIdentifier } from "@/plane-web/components/issues/issue-details/issue-identifier";
+import { useProject } from "@/hooks/store/use-project";
+import { useProjectIssueTypes } from "@/plane-web/hooks/use-project-issue-types";
 
 export type TIssueTypeSwitcherProps = {
   issueId: string;
@@ -16,15 +14,65 @@ export type TIssueTypeSwitcherProps = {
 };
 
 export const IssueTypeSwitcher = observer(function IssueTypeSwitcher(props: TIssueTypeSwitcherProps) {
-  const { issueId } = props;
-  // store hooks
+  const { issueId, disabled } = props;
+  const { t } = useTranslation();
+  const { workspaceSlug } = useParams();
+  const slug = workspaceSlug?.toString();
   const {
     issue: { getIssueById },
+    updateIssue,
   } = useIssueDetail();
-  // derived values
+  const { getProjectById } = useProject();
+
   const issue = getIssueById(issueId);
+  if (!issue?.project_id || !slug) return null;
 
-  if (!issue || !issue.project_id) return <></>;
+  const project = getProjectById(issue.project_id);
+  const issueTypesEnabled = Boolean(project?.is_issue_type_enabled);
+  const { types, isLoading } = useProjectIssueTypes(slug, issueTypesEnabled ? issue.project_id : null);
 
-  return <IssueIdentifier issueId={issueId} projectId={issue.project_id} size="md" enableClickToCopyIdentifier />;
+  if (!issueTypesEnabled || types.length === 0) return null;
+
+  const selected = types.find((row) => row.issue_type_id === issue.type_id)?.issue_type_detail;
+
+  const onChange = async (value: string) => {
+    if (!value || value === issue.type_id) return;
+    await updateIssue(slug, issue.project_id, issueId, { type_id: value });
+  };
+
+  return (
+    <div className="h-7 max-w-xs min-w-0">
+      <CustomSelect
+        value={issue.type_id ?? ""}
+        onChange={onChange}
+        disabled={disabled || isLoading}
+        buttonClassName="h-7 border border-subtle bg-layer-1 text-xs"
+        label={
+          selected ? (
+            <span className="flex items-center gap-1.5 truncate">
+              <SwitcherIcon logo_props={selected.logo_props} LabelIcon={Layers} size={12} />
+              <span className="truncate">{selected.name}</span>
+            </span>
+          ) : (
+            t("work_item_types.select_placeholder")
+          )
+        }
+        className="w-full"
+        input
+      >
+        {types.map((row) => {
+          const detail = row.issue_type_detail;
+          if (!detail) return null;
+          return (
+            <CustomSelect.Option key={row.id} value={row.issue_type_id}>
+              <span className="flex items-center gap-1.5">
+                <SwitcherIcon logo_props={detail.logo_props} LabelIcon={Layers} size={12} />
+                {detail.name}
+              </span>
+            </CustomSelect.Option>
+          );
+        })}
+      </CustomSelect>
+    </div>
+  );
 });

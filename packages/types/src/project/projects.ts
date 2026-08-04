@@ -31,6 +31,8 @@ export interface IPartialProject {
   page_view: boolean;
   inbox_view: boolean;
   guest_view_all_features?: boolean;
+  is_issue_type_enabled?: boolean;
+  is_workflow_enabled?: boolean;
   project_lead?: IUserLite | string | null;
   network?: number;
   // Timestamps
@@ -58,6 +60,8 @@ export interface IProject extends IPartialProject {
   is_favorite?: boolean;
   members?: string[];
   timezone?: string;
+  start_date?: string | null;
+  target_date?: string | null;
   next_work_item_sequence?: number;
 }
 

@@ -155,6 +155,8 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
   } = methods;
 
   const projectId = watch("project_id");
+  /** Wartość z RHF, żeby `value` w RichText odpowiadała resetowi i szablonowi (przy create `data` nie ma `description_html`). */
+  const descriptionHtmlForEditor = watch("description_html");
   const activeAdditionalPropertiesLength = getActiveAdditionalPropertiesLength({
     projectId: projectId,
     workspaceSlug: workspaceSlug?.toString(),
@@ -184,13 +186,13 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
-  // Reset form when data prop changes
+  // Reset form when issue data loads (e.g. description_html after fetchIssueDetail)
   useEffect(() => {
     if (data) {
       reset({ ...DEFAULT_WORK_ITEM_FORM_VALUES, project_id: projectId, ...data });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...dataResetProperties]);
+  }, [data?.id, data?.description_html, projectId, ...dataResetProperties]);
 
   // Update the issue type id when the project id changes
   useEffect(() => {
@@ -207,15 +209,17 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
   }, [data, projectId]);
 
   useEffect(() => {
-    if (workItemTemplateId && editorRef.current) {
+    if (workItemTemplateId && projectId) {
       handleTemplateChange({
-        workspaceSlug: workspaceSlug?.toString(),
+        workspaceSlug: workspaceSlug?.toString() ?? "",
+        projectId,
+        templateId: workItemTemplateId,
         reset,
         editorRef,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [workItemTemplateId]);
+  }, [workItemTemplateId, projectId]);
 
   const handleFormSubmit = async (formData: Partial<TIssue>, is_draft_issue = false) => {
     // Check if the editor is ready to discard
@@ -239,7 +243,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
       return;
 
     const submitData = !data?.id
-      ? formData
+      ? { ...formData, type_id: formData.type_id ?? getValues("type_id") }
       : {
           ...getChangedIssuefields(formData, dirtyFields as { [key: string]: boolean | undefined }),
           project_id: getValues<"project_id">("project_id"),
@@ -254,9 +258,11 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     await onSubmit(submitData, is_draft_issue)
       .then(() => {
         setGptAssistantModal(false);
-        if (isCreateMoreToggleEnabled && workItemTemplateId) {
+        if (isCreateMoreToggleEnabled && workItemTemplateId && projectId) {
           handleTemplateChange({
-            workspaceSlug: workspaceSlug?.toString(),
+            workspaceSlug: workspaceSlug?.toString() ?? "",
+            projectId,
+            templateId: workItemTemplateId,
             reset,
             editorRef,
           });
@@ -270,6 +276,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
           });
           editorRef?.current?.clearEditor();
         }
+        return undefined;
       })
       .catch((error) => {
         console.error(error);
@@ -334,14 +341,15 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     const issue = getIssueById(parentId);
     if (!issue) return;
 
-    const projectDetails = getProjectById(issue.project_id);
-    if (!projectDetails) return;
+    const parentProjectDetails = getProjectById(issue.project_id);
+    if (!parentProjectDetails) return;
 
     const stateDetails = getStateById(issue.state_id);
 
     setSelectedParentIssue(
-      convertWorkItemDataToSearchResponse(workspaceSlug?.toString(), issue, projectDetails, stateDetails)
+      convertWorkItemDataToSearchResponse(workspaceSlug?.toString(), issue, parentProjectDetails, stateDetails)
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch, getIssueById, getProjectById, selectedParentIssue, getStateById]);
 
   // executing this useEffect when isDirty changes
@@ -380,7 +388,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
         <div className="w-full rounded-lg">
           <form
             ref={formRef}
-            onSubmit={handleSubmit((data) => handleFormSubmit(data))}
+            onSubmit={handleSubmit((formValues) => handleFormSubmit(formValues))}
             className="flex w-full flex-col"
           >
             <div className="rounded-t-lg bg-surface-1 p-5">
@@ -463,7 +471,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
                   isDraft={isDraft}
                   issueName={watch("name")}
                   issueId={data?.id}
-                  descriptionHtmlData={data?.description_html}
+                  descriptionHtmlData={descriptionHtmlForEditor}
                   editorRef={editorRef}
                   submitBtnRef={submitBtnRef}
                   gptAssistantModal={gptAssistantModal}
@@ -513,17 +521,14 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
                   tabIndex={getIndex("create_more")}
                 >
                   {!data?.id && (
-                    <div
-                      className="inline-flex cursor-pointer items-center gap-1.5"
+                    <button
+                      type="button"
+                      className="inline-flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0"
                       onClick={() => onCreateMoreToggleChange(!isCreateMoreToggleEnabled)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") onCreateMoreToggleChange(!isCreateMoreToggleEnabled);
-                      }}
-                      role="button"
                     >
                       <ToggleSwitch value={isCreateMoreToggleEnabled} onChange={() => {}} size="sm" />
                       <span className="text-caption-sm-regular">{t("create_more")}</span>
-                    </div>
+                    </button>
                   )}
                   <div className="flex items-center gap-2">
                     <div tabIndex={getIndex("discard_button")}>

@@ -27,6 +27,9 @@ class ExportIssuesEndpoint(BaseAPIView):
         provider = request.data.get("provider", False)
         multiple = request.data.get("multiple", False)
         project_ids = request.data.get("project", [])
+        csv_delimiter = request.data.get("delimiter", ",")
+        if csv_delimiter not in [",", ";"]:
+            csv_delimiter = ","
 
         if provider in ["csv", "xlsx", "json"]:
             if not project_ids:
@@ -53,6 +56,7 @@ class ExportIssuesEndpoint(BaseAPIView):
                 token_id=exporter.token,
                 multiple=multiple,
                 slug=slug,
+                csv_delimiter=csv_delimiter,
             )
             return Response(
                 {"message": "Once the export is ready you will be able to download it"},
