@@ -1,9 +1,3 @@
-/**
- * Copyright (c) 2023-present Plane Software, Inc. and contributors
- * SPDX-License-Identifier: AGPL-3.0-only
- * See the LICENSE file for details.
- */
-
 import type { TIssueActivity } from "@plane/types";
 
 export const getRelationActivityContent = (activity: TIssueActivity | undefined): string | undefined => {
@@ -24,6 +18,22 @@ export const getRelationActivityContent = (activity: TIssueActivity | undefined)
         : `removed this work item as a duplicate of `;
     case "relates_to":
       return activity.old_value === "" ? `marked that this work item relates to ` : `removed the relation from `;
+    case "start_before":
+      return activity.old_value === ""
+        ? `marked this work item starts before `
+        : `removed the starts before relation to `;
+    case "start_after":
+      return activity.old_value === ""
+        ? `marked this work item starts after `
+        : `removed the starts after relation to `;
+    case "finish_before":
+      return activity.old_value === ""
+        ? `marked this work item finishes before `
+        : `removed the finishes before relation to `;
+    case "finish_after":
+      return activity.old_value === ""
+        ? `marked this work item finishes after `
+        : `removed the finishes after relation to `;
   }
 
   return;

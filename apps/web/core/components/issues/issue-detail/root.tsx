@@ -16,6 +16,7 @@ import { EIssuesStoreType } from "@plane/types";
 import emptyIssue from "@/app/assets/empty-state/issue.svg?url";
 // components
 import { EmptyState } from "@/components/common/empty-state";
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
 import { useAppTheme } from "@/hooks/store/use-app-theme";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -60,7 +61,12 @@ export type TIssueDetailRoot = {
 
 export const IssueDetailRoot = observer(function IssueDetailRoot(props: TIssueDetailRoot) {
   const { t } = useTranslation();
-  const { workspaceSlug, projectId, issueId, is_archived = false } = props;
+  const {
+    workspaceSlug: currentWorkspaceSlug,
+    projectId: currentProjectId,
+    issueId: currentIssueId,
+    is_archived = false,
+  } = props;
   // router
   const router = useAppRouter();
   // hooks
@@ -99,7 +105,7 @@ export const IssueDetailRoot = observer(function IssueDetailRoot(props: TIssueDe
           setToast({
             title: t("common.error.label"),
             type: TOAST_TYPE.ERROR,
-            message: t("entity.update.failed", { entity: t("issue.label") }),
+            message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") })),
           });
         }
       },
@@ -216,13 +222,13 @@ export const IssueDetailRoot = observer(function IssueDetailRoot(props: TIssueDe
   );
 
   // issue details
-  const issue = getIssueById(issueId);
+  const issue = getIssueById(currentIssueId);
   // checking if issue is editable, based on user role
   const isEditable = allowPermissions(
     [EUserPermissions.ADMIN, EUserPermissions.MEMBER],
     EUserPermissionsLevel.PROJECT,
-    workspaceSlug,
-    projectId
+    currentWorkspaceSlug,
+    currentProjectId
   );
 
   return (
@@ -234,16 +240,16 @@ export const IssueDetailRoot = observer(function IssueDetailRoot(props: TIssueDe
           description={t("issue.empty_state.issue_detail.description")}
           primaryButton={{
             text: t("issue.empty_state.issue_detail.primary_button.text"),
-            onClick: () => router.push(`/${workspaceSlug}/projects/${projectId}/issues`),
+            onClick: () => router.push(`/${currentWorkspaceSlug}/projects/${currentProjectId}/issues`),
           }}
         />
       ) : (
         <div className="flex h-full w-full overflow-hidden">
           <div className="h-full w-full space-y-6 overflow-y-auto px-9 py-5">
             <IssueMainContent
-              workspaceSlug={workspaceSlug}
-              projectId={projectId}
-              issueId={issueId}
+              workspaceSlug={currentWorkspaceSlug}
+              projectId={currentProjectId}
+              issueId={currentIssueId}
               issueOperations={issueOperations}
               isEditable={isEditable}
               isArchived={is_archived}
@@ -254,9 +260,9 @@ export const IssueDetailRoot = observer(function IssueDetailRoot(props: TIssueDe
             style={issueDetailSidebarCollapsed ? { right: `-${window?.innerWidth || 0}px` } : {}}
           >
             <IssueDetailsSidebar
-              workspaceSlug={workspaceSlug}
-              projectId={projectId}
-              issueId={issueId}
+              workspaceSlug={currentWorkspaceSlug}
+              projectId={currentProjectId}
+              issueId={currentIssueId}
               issueOperations={issueOperations}
               isEditable={!is_archived && isEditable}
             />

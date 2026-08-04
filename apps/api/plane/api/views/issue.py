@@ -2482,6 +2482,28 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
         actual_relation = get_actual_relation(relation_type)
         is_reverse = relation_type in ["blocking", "start_after", "finish_after"]
 
+        if relation_type in ["start_before", "start_after", "finish_before", "finish_after"]:
+            from plane.utils.issue_timeline_relation_validation import validate_new_timeline_relation
+
+            current_issue = (
+                Issue.objects.select_related("state", "project").filter(pk=issue_id, project_id=project_id).first()
+            )
+            if current_issue is None:
+                return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
+
+            related_issues = Issue.objects.select_related("state", "project").filter(pk__in=issues)
+            related_by_id = {str(item.id): item for item in related_issues}
+            for related_id in issues:
+                related_issue = related_by_id.get(str(related_id))
+                if related_issue is None:
+                    return Response(
+                        {"error": f"Related work item {related_id} not found"},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                timeline_error = validate_new_timeline_relation(current_issue, related_issue, relation_type)
+                if timeline_error:
+                    return Response({"error": timeline_error}, status=status.HTTP_400_BAD_REQUEST)
+
         IssueRelation.objects.bulk_create(
             [
                 IssueRelation(
