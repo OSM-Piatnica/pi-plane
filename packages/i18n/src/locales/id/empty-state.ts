@@ -192,6 +192,11 @@ export default {
       description:
         "Anda tidak memiliki catatan ekspor saat ini. Setelah Anda mengekspor data, semua catatan akan muncul di sini.",
     },
+    imports: {
+      title: "Belum ada impor",
+      description:
+        "Anda tidak memiliki catatan impor saat ini. Setelah Anda mengimpor proyek, semua catatan akan muncul di sini.",
+    },
     tokens: {
       title: "Belum ada token Pribadi",
       description:

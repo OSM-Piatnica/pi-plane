@@ -5,7 +5,7 @@ import { EUserPermissions, EUserPermissionsLevel, PROJECT_EXPORT_FORMATS } from 
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { CustomSelect } from "@plane/ui";
+import { CustomSelect, ToggleSwitch } from "@plane/ui";
 import { ProjectDropdown } from "@/components/dropdowns/project/dropdown";
 import { getApiErrorMessage } from "@/helpers/api-error";
 import { downloadBlob } from "@/helpers/project-csv-helpers";
@@ -21,6 +21,7 @@ type Props = {
 type FormData = {
   projectId: string;
   format: (typeof PROJECT_EXPORT_FORMATS)[number];
+  includeWorkItems: boolean;
 };
 
 const projectExportService = new ProjectExportService();
@@ -32,13 +33,15 @@ export const ProjectExportForm = observer(function ProjectExportForm(props: Prop
   const { projectsWithCreatePermissions } = useUser();
   const { joinedProjectIds, getProjectById } = useProject();
   const { t } = useTranslation();
-  const { handleSubmit, control } = useForm<FormData>({
+  const { handleSubmit, control, watch } = useForm<FormData>({
     defaultValues: {
       projectId: "",
       format: PROJECT_EXPORT_FORMATS[0],
+      includeWorkItems: false,
     },
   });
 
+  const includeWorkItems = watch("includeWorkItems");
   const hasProjects = joinedProjectIds.length > 0;
   const isMember = allowPermissions([EUserPermissions.ADMIN, EUserPermissions.MEMBER], EUserPermissionsLevel.WORKSPACE);
 
@@ -57,14 +60,19 @@ export const ProjectExportForm = observer(function ProjectExportForm(props: Prop
       const blob = await projectExportService.exportProject(workspaceSlug, [formData.projectId], {
         provider: formData.format.provider,
         delimiter: "delimiter" in formData.format ? formData.format.delimiter : undefined,
+        includeWorkItems: formData.includeWorkItems,
       });
       const project = getProjectById(formData.projectId);
-      const filename = `${project?.identifier ?? "project"}-config.${formData.format.extension}`;
+      const extension = formData.includeWorkItems ? "csv" : formData.format.extension;
+      const suffix = formData.includeWorkItems ? "full" : "config";
+      const filename = `${project?.identifier ?? "project"}-${suffix}.${extension}`;
       downloadBlob(blob, filename);
       setToast({
         type: TOAST_TYPE.SUCCESS,
         title: t("workspace_settings.settings.exports.project_csv.toasts.success.title"),
-        message: t("workspace_settings.settings.exports.project_csv.toasts.success.message"),
+        message: formData.includeWorkItems
+          ? t("workspace_settings.settings.exports.project_csv.toasts.success_full.message")
+          : t("workspace_settings.settings.exports.project_csv.toasts.success.message"),
       });
     } catch (error) {
       setToast({
@@ -128,7 +136,7 @@ export const ProjectExportForm = observer(function ProjectExportForm(props: Prop
                   optionsClassName="w-48"
                   placement="bottom-end"
                   buttonClassName="py-2 text-13"
-                  disabled={!isMember}
+                  disabled={!isMember || includeWorkItems}
                 >
                   {PROJECT_EXPORT_FORMATS.map((format) => (
                     <CustomSelect.Option
@@ -143,13 +151,32 @@ export const ProjectExportForm = observer(function ProjectExportForm(props: Prop
               )}
             />
           </div>
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex flex-col gap-0.5">
+              <p className="text-13 text-secondary">
+                {t("workspace_settings.settings.exports.project_csv.include_work_items")}
+              </p>
+              <p className="text-11 text-tertiary">
+                {t("workspace_settings.settings.exports.project_csv.include_work_items_hint")}
+              </p>
+            </div>
+            <Controller
+              control={control}
+              name="includeWorkItems"
+              render={({ field: { value, onChange } }) => (
+                <ToggleSwitch value={value} onChange={onChange} disabled={!isMember} />
+              )}
+            />
+          </div>
           <Button
             type="submit"
             variant="primary"
             disabled={!hasProjects || !isMember || exportLoading}
             loading={exportLoading}
           >
-            {t("workspace_settings.settings.exports.project_csv.export_button")}
+            {includeWorkItems
+              ? t("workspace_settings.settings.exports.project_csv.export_full_button")
+              : t("workspace_settings.settings.exports.project_csv.export_button")}
           </Button>
         </form>
       }

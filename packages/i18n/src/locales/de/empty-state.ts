@@ -198,6 +198,11 @@ export default {
       description:
         "Sie haben derzeit keine Exportaufzeichnungen. Sobald Sie Daten exportieren, werden alle Aufzeichnungen hier angezeigt.",
     },
+    imports: {
+      title: "Noch keine Importe",
+      description:
+        "Sie haben derzeit keine Importaufzeichnungen. Sobald Sie ein Projekt importieren, werden alle Aufzeichnungen hier angezeigt.",
+    },
     tokens: {
       title: "Noch kein persönliches Token",
       description:

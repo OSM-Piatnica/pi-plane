@@ -1,4 +1,4 @@
-export const MAX_PROJECT_CSV_SIZE_BYTES = 5 * 1024 * 1024;
+export const MAX_PROJECT_CSV_SIZE_BYTES = 15 * 1024 * 1024;
 
 export type TProjectCsvImportResult = {
   message: string;
@@ -8,25 +8,26 @@ export type TProjectCsvImportResult = {
     project_name: string;
     created_states: number;
     created_labels: number;
+    created_work_items?: number;
     warnings: string[];
   }[];
   warnings: string[];
   history_id: string;
 };
 
-export function isValidProjectCsvFile(file: File): boolean {
+export function isValidProjectImportFile(file: File): boolean {
   return file.name.toLowerCase().endsWith(".csv");
 }
 
-export function isValidProjectCsvSize(file: File, maxBytes = MAX_PROJECT_CSV_SIZE_BYTES): boolean {
+export function isValidProjectImportSize(file: File, maxBytes = MAX_PROJECT_CSV_SIZE_BYTES): boolean {
   return file.size <= maxBytes;
 }
 
 export function downloadBlob(blob: Blob, filename: string): void {
-  const typedBlob =
-    filename.toLowerCase().endsWith(".csv") && blob.type !== "text/csv"
-      ? new Blob([blob], { type: "text/csv;charset=utf-8" })
-      : blob;
+  let typedBlob = blob;
+  if (filename.toLowerCase().endsWith(".csv") && blob.type !== "text/csv") {
+    typedBlob = new Blob([blob], { type: "text/csv;charset=utf-8" });
+  }
   const url = window.URL.createObjectURL(typedBlob);
   const anchor = document.createElement("a");
   anchor.href = url;

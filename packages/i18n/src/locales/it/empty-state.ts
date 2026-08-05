@@ -193,6 +193,11 @@ export default {
       description:
         "Al momento non hai record di esportazione. Una volta esportati i dati, tutti i record appariranno qui.",
     },
+    imports: {
+      title: "Nessuna importazione ancora",
+      description:
+        "Al momento non hai record di importazione. Una volta importato un progetto, tutti i record appariranno qui.",
+    },
     tokens: {
       title: "Nessun token personale ancora",
       description: "Genera token API sicuri per connettere il tuo workspace con sistemi e applicazioni esterne.",

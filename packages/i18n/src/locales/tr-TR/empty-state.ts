@@ -190,6 +190,10 @@ export default {
       title: "Henüz dışa aktarma yok",
       description: "Şu anda hiç dışa aktarma kaydınız yok. Verileri dışa aktardığınızda tüm kayıtlar burada görünecek.",
     },
+    imports: {
+      title: "Henüz içe aktarma yok",
+      description: "Şu anda hiç içe aktarma kaydınız yok. Bir proje içe aktardığınızda tüm kayıtlar burada görünecek.",
+    },
     tokens: {
       title: "Henüz Kişisel token yok",
       description:

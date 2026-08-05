@@ -178,6 +178,10 @@ export default {
       title: "暫無匯出",
       description: "您目前沒有任何匯出記錄。匯出資料後,所有記錄將顯示在此處。",
     },
+    imports: {
+      title: "暫無匯入",
+      description: "您目前沒有任何匯入記錄。匯入專案後，所有記錄將顯示在此處。",
+    },
     tokens: {
       title: "暫無個人權杖",
       description: "產生安全的 API 權杖以將工作區與外部系統和應用程式連線。",

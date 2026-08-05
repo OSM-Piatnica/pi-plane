@@ -1721,14 +1721,21 @@ export default {
         project_csv: {
           heading: "Eksport konfiguracji projektu",
           description:
-            "Pobierz ustawienia projektu, stany, etykiety i typy elementów roboczych. Elementy robocze nie są uwzględniane.",
+            "Pobierz ustawienia projektu, stany, etykiety i typy elementów roboczych. Opcjonalnie dołącz elementy robocze w tym samym pliku CSV.",
           select_project: "Projekt",
           select_format: "Format",
+          include_work_items: "Dołącz elementy robocze",
+          include_work_items_hint:
+            "Eksportuje jeden plik CSV z konfiguracją projektu i elementami roboczymi (max 500 elementów).",
           export_button: "Eksportuj projekt",
+          export_full_button: "Eksportuj cały projekt",
           toasts: {
             success: {
               title: "Eksport zakończony",
               message: "Plik CSV z konfiguracją projektu został pobrany.",
+            },
+            success_full: {
+              message: "Pełny plik CSV projektu (konfiguracja + elementy robocze) został pobrany.",
             },
             error: {
               title: "Eksport nie powiódł się",
@@ -1754,7 +1761,7 @@ export default {
       imports: {
         heading: "Importy",
         description:
-          "Importuj konfigurację projektu z pliku CSV wyeksportowanego z Plane. Elementy robocze nie są uwzględniane. Nie zapisuj ponownie pliku w Excelu przed importem.",
+          "Importuj konfigurację projektu z pliku CSV albo pełny projekt (konfiguracja + elementy robocze) w jednym CSV. Nie zapisuj ponownie pliku w Excelu przed importem.",
         title: "Importy",
         select_file: "Wybierz plik CSV",
         import_button: "Importuj projekt",
@@ -1772,8 +1779,11 @@ export default {
           success: {
             message: "Projekt „{name}” został zaimportowany.",
           },
+          success_full: {
+            message: "Projekt „{name}” został zaimportowany wraz z {count} elementami roboczymi.",
+          },
           error: {
-            message: "Import projektu nie powiódł się. Sprawdź plik CSV i spróbuj ponownie.",
+            message: "Import projektu nie powiódł się. Sprawdź plik i spróbuj ponownie.",
           },
         },
       },

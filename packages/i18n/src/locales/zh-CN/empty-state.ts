@@ -178,6 +178,10 @@ export default {
       title: "暂无导出",
       description: "您目前没有任何导出记录。导出数据后,所有记录将显示在此处。",
     },
+    imports: {
+      title: "暂无导入",
+      description: "您目前没有任何导入记录。导入项目后，所有记录将显示在此处。",
+    },
     tokens: {
       title: "暂无个人令牌",
       description: "生成安全的 API 令牌以将工作空间与外部系统和应用程序连接。",

@@ -8,8 +8,8 @@ import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import {
   getProjectImportLink,
-  isValidProjectCsvFile,
-  isValidProjectCsvSize,
+  isValidProjectImportFile,
+  isValidProjectImportSize,
   MAX_PROJECT_CSV_SIZE_BYTES,
 } from "@/helpers/project-csv-helpers";
 import { getApiErrorMessage } from "@/helpers/api-error";
@@ -45,7 +45,7 @@ export const ImportForm = observer(function ImportForm(props: Props) {
   const handleImport = async () => {
     if (!workspaceSlug || !selectedFile) return;
 
-    if (!isValidProjectCsvFile(selectedFile)) {
+    if (!isValidProjectImportFile(selectedFile)) {
       setToast({
         type: TOAST_TYPE.ERROR,
         title: t("toast.error"),
@@ -54,13 +54,12 @@ export const ImportForm = observer(function ImportForm(props: Props) {
       return;
     }
 
-    if (!isValidProjectCsvSize(selectedFile)) {
+    if (!isValidProjectImportSize(selectedFile)) {
+      const maxMb = Math.round(MAX_PROJECT_CSV_SIZE_BYTES / (1024 * 1024));
       setToast({
         type: TOAST_TYPE.ERROR,
         title: t("toast.error"),
-        message: t("workspace_settings.settings.imports.file_too_large", {
-          size: Math.round(MAX_PROJECT_CSV_SIZE_BYTES / (1024 * 1024)),
-        }),
+        message: t("workspace_settings.settings.imports.file_too_large", { size: maxMb }),
       });
       return;
     }
@@ -73,13 +72,19 @@ export const ImportForm = observer(function ImportForm(props: Props) {
       setSelectedFile(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
 
+      const workItemsCount = firstProject?.created_work_items ?? 0;
       setToast({
         type: TOAST_TYPE.SUCCESS,
         title: t("success"),
         message: firstProject
-          ? t("workspace_settings.settings.imports.toasts.success.message", {
-              name: firstProject.project_name,
-            })
+          ? workItemsCount > 0
+            ? t("workspace_settings.settings.imports.toasts.success_full.message", {
+                name: firstProject.project_name,
+                count: workItemsCount,
+              })
+            : t("workspace_settings.settings.imports.toasts.success.message", {
+                name: firstProject.project_name,
+              })
           : result.message,
       });
 
