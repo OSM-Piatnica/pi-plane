@@ -1571,14 +1571,21 @@ export default {
         },
         project_csv: {
           heading: "Export project configuration",
-          description: "Download project settings, states, labels, and work item types. Work items are not included.",
+          description:
+            "Download project settings, states, labels, and work item types. Optionally include work items in the same CSV file.",
           select_project: "Project",
           select_format: "Format",
+          include_work_items: "Include work items",
+          include_work_items_hint: "Exports one CSV with project configuration and work items (max 500 work items).",
           export_button: "Export project",
+          export_full_button: "Export full project",
           toasts: {
             success: {
               title: "Export successful",
               message: "Project configuration CSV has been downloaded.",
+            },
+            success_full: {
+              message: "Full project CSV (configuration + work items) has been downloaded.",
             },
             error: {
               title: "Export failed",
@@ -1605,7 +1612,7 @@ export default {
       imports: {
         heading: "Imports",
         description:
-          "Import project configuration from a CSV file exported from Plane. Work items are not included. Do not re-save the file in Excel before importing.",
+          "Import project configuration from a CSV file, or a full project CSV (configuration + work items). Do not re-save files in Excel before importing.",
         title: "Imports",
         select_file: "Select CSV file",
         import_button: "Import project",
@@ -1623,8 +1630,11 @@ export default {
           success: {
             message: 'Project "{name}" was imported successfully.',
           },
+          success_full: {
+            message: 'Project "{name}" was imported with {count} work items.',
+          },
           error: {
-            message: "Project import failed. Please check the CSV file and try again.",
+            message: "Project import failed. Please check the file and try again.",
           },
         },
       },

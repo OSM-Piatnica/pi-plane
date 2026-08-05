@@ -216,3 +216,112 @@ class TestProjectCsvExportAPI:
         )
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.contract
+class TestProjectFullZipImportExportAPI:
+    @pytest.mark.django_db
+    def test_export_and_import_full_project_csv(self, session_client, workspace, project, create_user):
+        from plane.db.models import Issue, IssueSequence, State
+
+        state = State.objects.filter(project=project, deleted_at__isnull=True).first()
+        if state is None:
+            state = State.objects.create(
+                name="Todo",
+                color="#3B82F6",
+                project=project,
+                workspace=workspace,
+                group="unstarted",
+                sequence=10000,
+                created_by=create_user,
+            )
+
+        parent = Issue.objects.create(
+            name="Parent epic ticket",
+            project=project,
+            workspace=workspace,
+            state=state,
+            sequence_id=1,
+            sort_order=10000,
+            priority="high",
+            description_html="<p>Parent</p>",
+            created_by=create_user,
+        )
+        child = Issue.objects.create(
+            name="Child task",
+            project=project,
+            workspace=workspace,
+            state=state,
+            sequence_id=2,
+            sort_order=20000,
+            priority="medium",
+            description_html="<p>Child</p>",
+            parent=parent,
+            created_by=create_user,
+        )
+        IssueSequence.objects.bulk_create(
+            [
+                IssueSequence(issue=parent, sequence=1, project=project, workspace=workspace),
+                IssueSequence(issue=child, sequence=2, project=project, workspace=workspace),
+            ]
+        )
+
+        export_url = reverse("export-projects", kwargs={"slug": workspace.slug})
+        export_response = session_client.post(
+            export_url,
+            {
+                "provider": "csv",
+                "project": [str(project.id)],
+                "include_work_items": True,
+            },
+            format="json",
+        )
+
+        assert export_response.status_code == status.HTTP_200_OK
+        assert "text/csv" in export_response["Content-Type"]
+        export_body = export_response.content.decode("utf-8-sig")
+        assert "row_type" in export_body.lower() or "Row Type" in export_body
+
+        import_url = reverse("import-projects", kwargs={"slug": workspace.slug})
+        import_response = session_client.post(
+            import_url,
+            {
+                "file": SimpleUploadedFile(
+                    "project-full.csv",
+                    export_response.content,
+                    content_type="text/csv",
+                ),
+                "provider": "csv",
+            },
+            format="multipart",
+        )
+
+        assert import_response.status_code == status.HTTP_201_CREATED
+        assert import_response.data["projects"][0]["created_work_items"] == 2
+        cloned = Project.objects.get(id=import_response.data["projects"][0]["project_id"])
+        assert Issue.objects.filter(project=cloned, deleted_at__isnull=True).count() == 2
+        cloned_child = Issue.objects.get(project=cloned, name="Child task")
+        assert cloned_child.parent_id is not None
+        assert cloned_child.parent.name == "Parent epic ticket"
+
+    @pytest.mark.django_db
+    def test_full_export_requires_single_project(self, session_client, workspace, project, create_user):
+        second = Project.objects.create(
+            name="Second",
+            identifier="SEC",
+            workspace=workspace,
+            created_by=create_user,
+        )
+        ProjectMember.objects.create(project=second, member=create_user, role=20, is_active=True)
+
+        url = reverse("export-projects", kwargs={"slug": workspace.slug})
+        response = session_client.post(
+            url,
+            {
+                "provider": "csv",
+                "project": [str(project.id), str(second.id)],
+                "include_work_items": True,
+            },
+            format="json",
+        )
+        assert response.status_code == status.HTTP_400_BAD_REQUEST

@@ -184,6 +184,11 @@ export default {
       title: "No exports yet",
       description: "You don't have any export records right now. Once you export data, all records will appear here.",
     },
+    imports: {
+      title: "No imports yet",
+      description:
+        "You don't have any import records right now. Once you import a project, all records will appear here.",
+    },
     tokens: {
       title: "No Personal token yet",
       description: "Generate secure API tokens to connect your workspace with external systems and applications.",

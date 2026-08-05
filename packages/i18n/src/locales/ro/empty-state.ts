@@ -191,6 +191,11 @@ export default {
       description:
         "Nu aveți nicio înregistrare de export în acest moment. Odată ce exportați date, toate înregistrările vor apărea aici.",
     },
+    imports: {
+      title: "Încă nu există importuri",
+      description:
+        "Nu aveți nicio înregistrare de import în acest moment. Odată ce importați un proiect, toate înregistrările vor apărea aici.",
+    },
     tokens: {
       title: "Încă nu există token Personal",
       description:

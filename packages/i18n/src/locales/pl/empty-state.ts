@@ -193,6 +193,11 @@ export default {
       description:
         "Obecnie nie masz żadnych rekordów eksportu. Po wyeksportowaniu danych wszystkie rekordy pojawią się tutaj.",
     },
+    imports: {
+      title: "Jeszcze brak importów",
+      description:
+        "Obecnie nie masz żadnych rekordów importu. Po zaimportowaniu projektu wszystkie rekordy pojawią się tutaj.",
+    },
     tokens: {
       title: "Jeszcze brak Tokenu osobistego",
       description:

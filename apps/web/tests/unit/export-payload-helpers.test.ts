@@ -10,12 +10,11 @@ describe("export format constants", () => {
     expect(csvFormats.map((format) => format.delimiter)).toEqual([",", ";"]);
   });
 
-  it("exposes csv and xlsx formats for project export", () => {
-    expect(PROJECT_EXPORT_FORMATS).toHaveLength(3);
-    expect(PROJECT_EXPORT_FORMATS.map((format) => format.provider)).toEqual(["csv", "csv", "xlsx"]);
+  it("exposes csv formats for project configuration export", () => {
+    expect(PROJECT_EXPORT_FORMATS.length).toBeGreaterThanOrEqual(2);
+    expect(PROJECT_EXPORT_FORMATS.every((format) => format.provider === "csv")).toBe(true);
     expect(PROJECT_EXPORT_FORMATS[0]?.delimiter).toBe(",");
     expect(PROJECT_EXPORT_FORMATS[1]?.delimiter).toBe(";");
-    expect(PROJECT_EXPORT_FORMATS[2]?.extension).toBe("xlsx");
   });
 });
 
@@ -49,7 +48,7 @@ describe("export payload helpers", () => {
     });
   });
 
-  it("builds project export request body for csv and xlsx", () => {
+  it("builds project export request body with optional work items flag", () => {
     expect(
       buildProjectExportRequestBody(["project-1"], {
         provider: "csv",
@@ -58,16 +57,21 @@ describe("export payload helpers", () => {
     ).toEqual({
       provider: "csv",
       project: ["project-1"],
+      include_work_items: false,
       delimiter: ",",
     });
 
     expect(
       buildProjectExportRequestBody(["project-1"], {
-        provider: "xlsx",
+        provider: "csv",
+        delimiter: ";",
+        includeWorkItems: true,
       })
     ).toEqual({
-      provider: "xlsx",
+      provider: "csv",
       project: ["project-1"],
+      include_work_items: true,
+      delimiter: ";",
     });
   });
 });

@@ -26,12 +26,14 @@ export function buildIssueExportPayload(formData: IssueExportFormPayload) {
 export type ProjectExportRequestOptions = {
   provider: string;
   delimiter?: "," | ";";
+  includeWorkItems?: boolean;
 };
 
 export function buildProjectExportRequestBody(projectIds: string[], options: ProjectExportRequestOptions) {
   return {
     provider: options.provider,
     project: projectIds,
+    include_work_items: Boolean(options.includeWorkItems),
     ...(options.provider === "csv" && options.delimiter ? { delimiter: options.delimiter } : {}),
   };
 }

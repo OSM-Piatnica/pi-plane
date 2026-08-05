@@ -52,8 +52,6 @@ def serialize_project_export_payload(project: Project) -> dict:
         payload["project_lead"] = str(project.project_lead_id)
     if project.default_assignee_id:
         payload["default_assignee"] = str(project.default_assignee_id)
-    # Intentionally skip logo_props / cover_image_url — asset URLs and nested logo
-    # objects do not round-trip cleanly through CSV and are not needed to recreate a project.
 
     states = State.objects.filter(project_id=project.id, deleted_at__isnull=True, is_triage=False).order_by("sequence")
     payload["state_templates"] = [
