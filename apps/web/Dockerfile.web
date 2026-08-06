@@ -15,6 +15,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 ARG TURBO_VERSION=2.9.4
+ENV PATH="/pnpm/bin:$PATH"
 RUN corepack enable pnpm && pnpm add -g turbo@${TURBO_VERSION}
 COPY . .
 
