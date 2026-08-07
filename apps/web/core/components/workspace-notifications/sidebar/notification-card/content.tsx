@@ -67,6 +67,11 @@ export const BASE_NOTIFICATION_CONTENT_MAP: TNotificationContentMap = {
     value: renderFormattedDate(newValue),
     showConnector: false,
   }),
+  duration: ({ newValue }) => ({
+    action: newValue !== "" ? "set duration" : "removed the duration",
+    value: newValue,
+    showConnector: false,
+  }),
   labels: ({ newValue, oldValue }) => ({
     action: newValue !== "" ? "added label" : "removed label",
     value: newValue !== "" ? newValue : oldValue,

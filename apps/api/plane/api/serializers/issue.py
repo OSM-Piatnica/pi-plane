@@ -31,6 +31,11 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
+from plane.utils.work_item_duration import (
+    DURATION_DATE_FIELDS,
+    reconcile_work_item_duration,
+    to_work_item_date,
+)
 
 from .base import BaseSerializer
 from .cycle import CycleLiteSerializer, CycleSerializer
@@ -73,6 +78,12 @@ class IssueSerializer(BaseSerializer):
         exclude = ["description_json", "description_stripped"]
 
     def validate(self, data):
+        # Keep duration and the two dates consistent before anything else looks at them, so API
+        # clients get the same synchronization the web app performs locally.
+        derived = reconcile_work_item_duration(self.instance, data)
+        for field, value in derived.items():
+            data[field] = to_work_item_date(value) if field in DURATION_DATE_FIELDS else value
+
         if (
             data.get("start_date", None) is not None
             and data.get("target_date", None) is not None

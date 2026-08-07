@@ -5,6 +5,7 @@
  */
 
 import { observer } from "mobx-react";
+import { Timer } from "lucide-react";
 // i18n
 import { useTranslation } from "@plane/i18n";
 // ui
@@ -21,9 +22,11 @@ import {
   EstimatePropertyIcon,
   ParentPropertyIcon,
 } from "@plane/propel/icons";
-import { cn, getDate, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
+import type { TIssue } from "@plane/types";
+import { cn, reconcileWorkItemDuration, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
 // components
 import { DateDropdown } from "@/components/dropdowns/date";
+import { DurationDropdown } from "@/components/dropdowns/duration";
 import { EstimateDropdown } from "@/components/dropdowns/estimate";
 import { ButtonAvatars } from "@/components/dropdowns/member/avatar";
 import { MemberDropdown } from "@/components/dropdowns/member/dropdown";
@@ -76,11 +79,8 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
   const projectDetails = getProjectById(issue.project_id);
   const stateDetails = getStateById(issue.state_id);
 
-  const minDate = issue.start_date ? getDate(issue.start_date) : null;
-  minDate?.setDate(minDate.getDate());
-
-  const maxDate = issue.target_date ? getDate(issue.target_date) : null;
-  maxDate?.setDate(maxDate.getDate());
+  const updateDurationFields = (change: Partial<Pick<TIssue, "start_date" | "target_date" | "duration">>) =>
+    issueOperations.update(workspaceSlug, projectId, issueId, reconcileWorkItemDuration(issue, change));
 
   return (
     <>
@@ -149,11 +149,8 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                 placeholder={t("issue.add.start_date")}
                 value={issue.start_date}
                 onChange={(val) =>
-                  issueOperations.update(workspaceSlug, projectId, issueId, {
-                    start_date: val ? renderFormattedPayloadDate(val) : null,
-                  })
+                  updateDurationFields({ start_date: val ? (renderFormattedPayloadDate(val) ?? null) : null })
                 }
-                maxDate={maxDate ?? undefined}
                 disabled={!isEditable}
                 buttonVariant="transparent-with-text"
                 className="group w-full grow"
@@ -170,11 +167,8 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                   placeholder={t("issue.add.due_date")}
                   value={issue.target_date}
                   onChange={(val) =>
-                    issueOperations.update(workspaceSlug, projectId, issueId, {
-                      target_date: val ? renderFormattedPayloadDate(val) : null,
-                    })
+                    updateDurationFields({ target_date: val ? (renderFormattedPayloadDate(val) ?? null) : null })
                   }
-                  minDate={minDate ?? undefined}
                   disabled={!isEditable}
                   buttonVariant="transparent-with-text"
                   className="group w-full grow"
@@ -188,6 +182,21 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                 />
                 {issue.target_date && <DateAlert date={issue.target_date} workItem={issue} projectId={projectId} />}
               </div>
+            </SidebarPropertyListItem>
+
+            <SidebarPropertyListItem icon={Timer} label={t("duration")}>
+              <DurationDropdown
+                placeholder={t("issue.add.duration")}
+                value={issue.duration}
+                onChange={(val) => updateDurationFields({ duration: val })}
+                disabled={!isEditable}
+                buttonVariant="transparent-with-text"
+                className="group w-full grow"
+                buttonContainerClassName="w-full text-left h-7.5"
+                buttonClassName={`text-body-xs-regular ${issue?.duration ? "" : "text-placeholder"}`}
+                hideIcon
+                clearIconClassName="h-3 w-3 hidden group-hover:inline"
+              />
             </SidebarPropertyListItem>
 
             {projectId && areEstimateEnabledByProjectId(projectId) && (

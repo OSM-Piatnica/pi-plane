@@ -5,6 +5,7 @@
  */
 
 import { observer } from "mobx-react";
+import { Timer } from "lucide-react";
 // i18n
 import { useTranslation } from "@plane/i18n";
 // ui icons
@@ -21,9 +22,11 @@ import {
   EstimatePropertyIcon,
   ParentPropertyIcon,
 } from "@plane/propel/icons";
-import { cn, getDate, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
+import type { TIssue } from "@plane/types";
+import { cn, reconcileWorkItemDuration, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
 // components
 import { DateDropdown } from "@/components/dropdowns/date";
+import { DurationDropdown } from "@/components/dropdowns/duration";
 import { EstimateDropdown } from "@/components/dropdowns/estimate";
 import { ButtonAvatars } from "@/components/dropdowns/member/avatar";
 import { MemberDropdown } from "@/components/dropdowns/member/dropdown";
@@ -72,11 +75,8 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
   const isEstimateEnabled = projectDetails?.estimate;
   const stateDetails = getStateById(issue.state_id);
 
-  const minDate = getDate(issue.start_date);
-  minDate?.setDate(minDate.getDate());
-
-  const maxDate = getDate(issue.target_date);
-  maxDate?.setDate(maxDate.getDate());
+  const updateDurationFields = (change: Partial<Pick<TIssue, "start_date" | "target_date" | "duration">>) =>
+    issueOperations.update(workspaceSlug, projectId, issueId, reconcileWorkItemDuration(issue, change));
 
   return (
     <div>
@@ -149,13 +149,10 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
           <DateDropdown
             value={issue.start_date}
             onChange={(val) =>
-              issueOperations.update(workspaceSlug, projectId, issueId, {
-                start_date: val ? renderFormattedPayloadDate(val) : null,
-              })
+              updateDurationFields({ start_date: val ? (renderFormattedPayloadDate(val) ?? null) : null })
             }
             placeholder={t("issue.add.start_date")}
             buttonVariant="transparent-with-text"
-            maxDate={maxDate ?? undefined}
             disabled={disabled}
             className="group w-full grow"
             buttonContainerClassName="w-full text-left h-7.5"
@@ -170,13 +167,10 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
             <DateDropdown
               value={issue.target_date}
               onChange={(val) =>
-                issueOperations.update(workspaceSlug, projectId, issueId, {
-                  target_date: val ? renderFormattedPayloadDate(val) : null,
-                })
+                updateDurationFields({ target_date: val ? (renderFormattedPayloadDate(val) ?? null) : null })
               }
               placeholder={t("issue.add.due_date")}
               buttonVariant="transparent-with-text"
-              minDate={minDate ?? undefined}
               disabled={disabled}
               className="group w-full grow"
               buttonContainerClassName="w-full text-left h-7.5"
@@ -189,6 +183,21 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
             />
             {issue.target_date && <DateAlert date={issue.target_date} workItem={issue} projectId={projectId} />}
           </div>
+        </SidebarPropertyListItem>
+
+        <SidebarPropertyListItem icon={Timer} label={t("duration")}>
+          <DurationDropdown
+            value={issue.duration}
+            onChange={(val) => updateDurationFields({ duration: val })}
+            placeholder={t("issue.add.duration")}
+            buttonVariant="transparent-with-text"
+            disabled={disabled}
+            className="group w-full grow"
+            buttonContainerClassName="w-full text-left h-7.5"
+            buttonClassName={`text-body-xs-medium ${issue?.duration ? "" : "text-placeholder"}`}
+            hideIcon
+            clearIconClassName="h-3 w-3 hidden group-hover:inline"
+          />
         </SidebarPropertyListItem>
 
         {isEstimateEnabled && (

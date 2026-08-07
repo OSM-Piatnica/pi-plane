@@ -24,6 +24,7 @@ export type TWorkspaceDraftIssue = {
 
   start_date: string | undefined;
   target_date: string | undefined;
+  duration: number | undefined;
   completed_at: string | undefined;
 
   created_at: string;

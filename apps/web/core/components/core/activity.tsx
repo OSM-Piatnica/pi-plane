@@ -22,6 +22,7 @@ import {
   SignalMediumIcon,
   MessageSquareIcon,
   UsersIcon,
+  Timer,
 } from "lucide-react";
 import {
   BlockedIcon,
@@ -731,6 +732,38 @@ const activityDetails: {
         );
     },
     icon: <Calendar size={12} className="text-secondary" aria-hidden="true" />,
+  },
+  duration: {
+    message: (activity, showIssue) => {
+      if (!activity.new_value)
+        return (
+          <>
+            removed the duration
+            {showIssue && (
+              <>
+                {" "}
+                from <IssueLink activity={activity} />
+              </>
+            )}
+          </>
+        );
+      else
+        return (
+          <>
+            set the duration to{" "}
+            <span className="font-medium whitespace-nowrap text-primary">
+              {activity.new_value} {activity.new_value === "1" ? "day" : "days"}
+            </span>
+            {showIssue && (
+              <>
+                {" "}
+                for <IssueLink activity={activity} />
+              </>
+            )}
+          </>
+        );
+    },
+    icon: <Timer size={12} className="text-secondary" aria-hidden="true" />,
   },
   inbox: {
     message: (activity, showIssue) => (
