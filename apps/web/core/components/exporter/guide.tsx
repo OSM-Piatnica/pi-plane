@@ -6,21 +6,41 @@
 
 import { useState } from "react";
 import { observer } from "mobx-react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { mutate } from "swr";
 // constants
-import { PROJECT_IMPORT_SERVICES_LIST } from "@/constants/fetch-keys";
+import { EXPORT_SERVICES_LIST, PROJECT_IMPORT_SERVICES_LIST } from "@/constants/fetch-keys";
 import { ImportForm } from "@/components/importer/import-form";
 import { PrevImports } from "@/components/importer/prev-imports";
+import { ExportForm } from "./export-form";
+import { PrevExports } from "./prev-exports";
 import { ProjectExportForm } from "./project-export-form";
 
 export const ExportGuide = observer(function ExportGuide() {
   const { workspaceSlug } = useParams();
+  const searchParams = useSearchParams();
+  const provider = searchParams.get("provider");
   const per_page = 10;
+  const [exportCursor, setExportCursor] = useState<string | undefined>(`10:0:0`);
   const [importCursor, setImportCursor] = useState<string | undefined>(`10:0:0`);
 
   return (
     <div className="flex size-full flex-col gap-y-13">
+      <div id="export">
+        <ExportForm
+          workspaceSlug={workspaceSlug as string}
+          provider={provider}
+          mutateServices={() =>
+            mutate(EXPORT_SERVICES_LIST(workspaceSlug as string, `${exportCursor}`, `${per_page}`))
+          }
+        />
+      </div>
+      <PrevExports
+        workspaceSlug={workspaceSlug as string}
+        cursor={exportCursor}
+        per_page={per_page}
+        setCursor={setExportCursor}
+      />
       <div id="import">
         <ImportForm
           mutateServices={() =>
