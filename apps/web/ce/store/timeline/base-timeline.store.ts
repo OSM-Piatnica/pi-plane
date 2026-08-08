@@ -65,6 +65,26 @@ export interface IBaseTimelineStore {
   getNumberOfDaysFromPosition: (position: number | undefined) => number | undefined;
   setIsDragging: (isDragging: boolean) => void;
   initGantt: () => void;
+  setDependencyDrag: (
+    drag: {
+      sourceBlockId: string;
+      fromSide: "left" | "right";
+      startX: number;
+      startY: number;
+      currentX: number;
+      currentY: number;
+    } | null
+  ) => void;
+  refreshBlockPositions: () => void;
+
+  dependencyDrag: {
+    sourceBlockId: string;
+    fromSide: "left" | "right";
+    startX: number;
+    startY: number;
+    currentX: number;
+    currentY: number;
+  } | null;
 
   getDateFromPositionOnGantt: (position: number, offsetDays: number) => Date | undefined;
   getPositionFromDateOnGantt: (date: string | Date, offSetWidth: number) => number | undefined;
@@ -84,6 +104,15 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
 
   isDependencyEnabled = false;
 
+  dependencyDrag: {
+    sourceBlockId: string;
+    fromSide: "left" | "right";
+    startX: number;
+    startY: number;
+    currentX: number;
+    currentY: number;
+  } | null = null;
+
   constructor(_rootStore: RootStore) {
     makeObservable(this, {
       // observables
@@ -94,6 +123,7 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
       currentViewData: observable,
       activeBlockId: observable.ref,
       renderView: observable,
+      dependencyDrag: observable,
       // actions
       setIsDragging: action,
       setBlockIds: action.bound,
@@ -102,6 +132,8 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
       updateCurrentViewData: action.bound,
       updateActiveBlockId: action.bound,
       updateRenderView: action.bound,
+      setDependencyDrag: action.bound,
+      refreshBlockPositions: action.bound,
     });
 
     this.initGantt();
@@ -341,6 +373,31 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
     });
   });
 
-  // Dummy method to return if the current Block's dependency is being dragged
-  getIsCurrentDependencyDragging = computedFn((_blockId: string) => false);
+  getIsCurrentDependencyDragging = computedFn((blockId: string) => this.dependencyDrag?.sourceBlockId === blockId);
+
+  setDependencyDrag = (
+    drag: {
+      sourceBlockId: string;
+      fromSide: "left" | "right";
+      startX: number;
+      startY: number;
+      currentX: number;
+      currentY: number;
+    } | null
+  ) => {
+    runInAction(() => {
+      this.dependencyDrag = drag;
+    });
+  };
+
+  refreshBlockPositions = () => {
+    if (!this.currentViewData || !this.blockIds) return;
+    runInAction(() => {
+      for (const blockId of this.blockIds ?? []) {
+        const block = this.blocksMap[blockId];
+        if (!block) continue;
+        block.position = getItemPositionWidth(this.currentViewData!, block);
+      }
+    });
+  };
 }

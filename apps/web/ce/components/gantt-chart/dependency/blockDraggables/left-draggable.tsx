@@ -5,13 +5,15 @@
  */
 
 import type { RefObject } from "react";
+import { observer } from "mobx-react";
 import type { IGanttBlock } from "@plane/types";
+import { DependencySideDraggable } from "./dependency-side-draggable";
 
-type LeftDependencyDraggableProps = {
+type Props = {
   block: IGanttBlock;
   ganttContainerRef: RefObject<HTMLDivElement>;
 };
 
-export function LeftDependencyDraggable(_props: LeftDependencyDraggableProps) {
-  return <></>;
-}
+export const LeftDependencyDraggable = observer(function LeftDependencyDraggable(props: Props) {
+  return <DependencySideDraggable {...props} side="left" />;
+});

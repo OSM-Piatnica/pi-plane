@@ -123,6 +123,16 @@ def import_work_items_into_project(
         ).select_related("member")
         if member.member and member.member.email
     }
+    members_by_name = {
+        (member.member.display_name or member.member.full_name or "").strip().lower(): member.member
+        for member in ProjectMember.objects.filter(
+            project_id=project.id,
+            is_active=True,
+            deleted_at__isnull=True,
+        ).select_related("member")
+        if member.member
+        and (member.member.display_name or member.member.full_name)
+    }
     # Fallback: workspace members (may not be project members yet)
     for wm in WorkspaceMember.objects.filter(
         workspace_id=project.workspace_id,
@@ -131,6 +141,9 @@ def import_work_items_into_project(
         email = (wm.member.email or "").strip().lower()
         if email and email not in members_by_email:
             members_by_email[email] = wm.member
+        display = (wm.member.display_name or wm.member.full_name or "").strip().lower()
+        if display and display not in members_by_name:
+            members_by_name[display] = wm.member
 
     type_properties_by_type: dict = {}
     for issue_type in types_by_name.values():
@@ -184,10 +197,14 @@ def import_work_items_into_project(
                 warnings.append(f'Row {index + 1}: unknown label "{label_name}", skipped')
 
         assignee_emails = _coerce_list(row.get("assignee_emails"))
+        assignee_names = _coerce_list(row.get("assignee_names") or row.get("assignees"))
         assignee_ids = []
         for email in assignee_emails:
             normalized_email = str(email).strip().lower()
             if not normalized_email:
+                continue
+            if "@" not in normalized_email:
+                assignee_names.append(email)
                 continue
             user_obj = members_by_email.get(normalized_email)
             if user_obj:
@@ -196,6 +213,20 @@ def import_work_items_into_project(
                 warnings.append(
                     f'Row {index + 1}: assignee "{email}" not found in workspace; '
                     "work item left unassigned for that email"
+                )
+        for name_value in assignee_names:
+            normalized_name = str(name_value).strip().lower()
+            if not normalized_name:
+                continue
+            if "@" in normalized_name:
+                continue
+            user_obj = members_by_name.get(normalized_name)
+            if user_obj and user_obj.id not in assignee_ids:
+                assignee_ids.append(user_obj.id)
+            elif user_obj is None:
+                warnings.append(
+                    f'Row {index + 1}: assignee "{name_value}" not found by name; '
+                    "work item left unassigned for that person"
                 )
 
         description_html = _normalize_description_html(row.get("description_html") or row.get("description"))
