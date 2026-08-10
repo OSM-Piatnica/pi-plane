@@ -1,22 +1,23 @@
 import { describe, expect, it } from "vitest";
 import {
   getProjectImportLink,
-  isValidProjectCsvFile,
-  isValidProjectCsvSize,
+  isValidProjectImportFile,
+  isValidProjectImportSize,
   MAX_PROJECT_CSV_SIZE_BYTES,
 } from "../../core/helpers/project-csv-helpers";
 
 describe("project-csv-helpers", () => {
   it("accepts csv files by extension", () => {
-    expect(isValidProjectCsvFile(new File(["a"], "project.csv", { type: "text/csv" }))).toBe(true);
-    expect(isValidProjectCsvFile(new File(["a"], "project.txt", { type: "text/plain" }))).toBe(false);
+    expect(isValidProjectImportFile(new File(["a"], "project.csv", { type: "text/csv" }))).toBe(true);
+    expect(isValidProjectImportFile(new File(["a"], "project.zip", { type: "application/zip" }))).toBe(false);
+    expect(isValidProjectImportFile(new File(["a"], "project.txt", { type: "text/plain" }))).toBe(false);
   });
 
-  it("validates file size", () => {
-    const small = new File(["a"], "project.csv", { type: "text/csv" });
-    expect(isValidProjectCsvSize(small)).toBe(true);
-    expect(isValidProjectCsvSize(small, 0)).toBe(false);
-    expect(MAX_PROJECT_CSV_SIZE_BYTES).toBeGreaterThan(0);
+  it("validates file size for csv", () => {
+    const smallCsv = new File(["a"], "project.csv", { type: "text/csv" });
+    expect(isValidProjectImportSize(smallCsv)).toBe(true);
+    expect(isValidProjectImportSize(smallCsv, 0)).toBe(false);
+    expect(MAX_PROJECT_CSV_SIZE_BYTES).toBe(15 * 1024 * 1024);
   });
 
   it("builds project link after import", () => {

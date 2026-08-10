@@ -191,6 +191,11 @@ export default {
       description:
         "Momentálne nemáte žiadne záznamy exportu. Akonáhle exportujete údaje, všetky záznamy sa zobrazia tu.",
     },
+    imports: {
+      title: "Zatiaľ žiadne importy",
+      description:
+        "Momentálne nemáte žiadne záznamy importu. Akonáhle importujete projekt, všetky záznamy sa zobrazia tu.",
+    },
     tokens: {
       title: "Zatiaľ žiadny osobný token",
       description:

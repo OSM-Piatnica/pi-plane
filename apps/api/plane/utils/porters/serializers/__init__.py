@@ -4,8 +4,10 @@
 
 from .issue import IssueExportSerializer
 from .project import serialize_project_export_payload
+from .work_item import serialize_work_item_export_rows
 
 __all__ = [
     "IssueExportSerializer",
     "serialize_project_export_payload",
+    "serialize_work_item_export_rows",
 ]

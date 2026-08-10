@@ -15,6 +15,8 @@ export interface IIssuesTimeLineStore extends IBaseTimelineStore {
 }
 
 export class IssuesTimeLineStore extends BaseTimeLineStore implements IIssuesTimeLineStore {
+  isDependencyEnabled = true;
+
   constructor(_rootStore: RootStore) {
     super(_rootStore);
 

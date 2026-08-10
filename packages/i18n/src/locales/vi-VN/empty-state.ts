@@ -191,6 +191,11 @@ export default {
       description:
         "Bạn chưa có bản ghi xuất khẩu nào ngay bây giờ. Sau khi bạn xuất dữ liệu, tất cả các bản ghi sẽ xuất hiện ở đây.",
     },
+    imports: {
+      title: "Chưa có nhập khẩu",
+      description:
+        "Bạn chưa có bản ghi nhập khẩu nào ngay bây giờ. Sau khi bạn nhập một dự án, tất cả các bản ghi sẽ xuất hiện ở đây.",
+    },
     tokens: {
       title: "Chưa có token Cá nhân",
       description:

@@ -1182,6 +1182,10 @@ export default {
       start_after: "Zaczyna się po",
       finish_before: "Kończy się przed",
       finish_after: "Kończy się po",
+      dependency_created: "Zależność między elementami pracy została utworzona.",
+      dependency_create_failed: "Nie udało się utworzyć zależności. Spróbuj ponownie.",
+      date_conflict:
+        "Te daty kolidują z istniejącymi zależnościami. Dostosuj powiązane elementy pracy albo najpierw usuń zależność.",
     },
     copy_link: "Kopiuj link do elementu pracy",
     delete: {
@@ -1713,25 +1717,33 @@ export default {
         title: "Import i eksport",
         heading: "Import i eksport",
         description:
-          "Importuj konfigurację projektu z CSV lub eksportuj ustawienia projektu, stany, etykiety i typy elementów roboczych. Elementy robocze nie są uwzględniane.",
+          "Trzy osobne ścieżki: (1) eksport listy elementów roboczych, (2) import tej listy do istniejącego projektu, (3–4) import/eksport CSV konfiguracji projektu (ustawienia, stany, etykiety — opcjonalnie z elementami w formacie pełnego projektu Plane).",
         exporting: "Eksportowanie",
         previous_exports: "Poprzednie eksporty",
         export_separate_files: "Eksportuj dane do oddzielnych plików",
         work_items_export: {
-          heading: "Eksport elementów roboczych",
-          description: "Eksportuj elementy robocze z wybranych projektów do CSV, Excel lub JSON.",
+          heading: "1. Eksport elementów roboczych",
+          description:
+            "Eksport listy zadań z jednego lub wielu projektów do CSV, Excel lub JSON (jak w Community). Ten plik możesz potem wczytać w „Import elementów roboczych”.",
         },
         project_csv: {
-          heading: "Eksport konfiguracji projektu",
+          heading: "4. Eksport konfiguracji projektu",
           description:
-            "Pobierz ustawienia projektu, stany, etykiety i typy elementów roboczych. Elementy robocze nie są uwzględniane.",
+            "Pobierz ustawienia projektu (stany, etykiety, typy itd.). Opcjonalnie dołącz elementy robocze w formacie pełnego projektu Plane — to inny plik niż „Eksport elementów roboczych”.",
           select_project: "Projekt",
           select_format: "Format",
+          include_work_items: "Dołącz elementy robocze",
+          include_work_items_hint:
+            "Eksportuje jeden plik CSV z konfiguracją projektu i elementami roboczymi (max 500 elementów).",
           export_button: "Eksportuj projekt",
+          export_full_button: "Eksportuj cały projekt",
           toasts: {
             success: {
               title: "Eksport zakończony",
               message: "Plik CSV z konfiguracją projektu został pobrany.",
+            },
+            success_full: {
+              message: "Pełny plik CSV projektu (konfiguracja + elementy robocze) został pobrany.",
             },
             error: {
               title: "Eksport nie powiódł się",
@@ -1755,9 +1767,9 @@ export default {
         },
       },
       imports: {
-        heading: "Importy",
+        heading: "3. Import konfiguracji projektu",
         description:
-          "Importuj konfigurację projektu z pliku CSV wyeksportowanego z Plane. Elementy robocze nie są uwzględniane. Nie zapisuj ponownie pliku w Excelu przed importem.",
+          "Utwórz nowy projekt z CSV konfiguracji (albo pełnego projektu: konfiguracja + elementy robocze). To nie jest import pliku z „Eksportu elementów roboczych” — do tego użyj sekcji powyżej.",
         title: "Importy",
         select_file: "Wybierz plik CSV",
         import_button: "Importuj projekt",
@@ -1775,8 +1787,32 @@ export default {
           success: {
             message: "Projekt „{name}” został zaimportowany.",
           },
+          success_full: {
+            message: "Projekt „{name}” został zaimportowany wraz z {count} elementami roboczymi.",
+          },
           error: {
-            message: "Import projektu nie powiódł się. Sprawdź plik CSV i spróbuj ponownie.",
+            message: "Import projektu nie powiódł się. Sprawdź plik i spróbuj ponownie.",
+          },
+        },
+        work_items: {
+          heading: "2. Import elementów roboczych",
+          description:
+            "Wczytaj plik z „Eksportu elementów roboczych” (CSV, Excel lub JSON) do istniejącego projektu. Stany i etykiety są dopasowywane po nazwie; brakujących osób przypisanych pomijamy z ostrzeżeniem.",
+          select_project: "Projekt docelowy",
+          select_project_placeholder: "Wybierz projekt",
+          no_projects: "Brak dostępnych projektów",
+          select_file_label: "Plik eksportu",
+          select_file: "Wybierz plik",
+          import_button: "Importuj elementy robocze",
+          invalid_file_type: "Prześlij plik CSV, Excel (.xlsx) lub JSON.",
+          toasts: {
+            success: {
+              message: "Zaimportowano {count} elementów roboczych do „{name}”.",
+            },
+            error: {
+              message:
+                "Import elementów roboczych nie powiódł się. Użyj pliku z „Eksportu elementów roboczych” i spróbuj ponownie.",
+            },
           },
         },
       },

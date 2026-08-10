@@ -192,6 +192,11 @@ export default {
       description:
         "No tienes ningún registro de exportación en este momento. Una vez que exportes datos, todos los registros aparecerán aquí.",
     },
+    imports: {
+      title: "Aún no hay importaciones",
+      description:
+        "No tienes ningún registro de importación en este momento. Una vez que importes un proyecto, todos los registros aparecerán aquí.",
+    },
     tokens: {
       title: "Aún no hay tokens Personales",
       description:

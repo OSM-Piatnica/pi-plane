@@ -195,6 +195,11 @@ export default {
       description:
         "Vous n’avez aucun enregistrement d’exportation pour le moment. Une fois que vous exportez des données, tous les enregistrements apparaîtront ici.",
     },
+    imports: {
+      title: "Aucune importation pour le moment",
+      description:
+        "Vous n'avez aucun enregistrement d'importation pour le moment. Une fois que vous importez un projet, tous les enregistrements apparaîtront ici.",
+    },
     tokens: {
       title: "Aucun jeton personnel pour le moment",
       description:

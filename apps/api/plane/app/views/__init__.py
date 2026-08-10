@@ -234,6 +234,7 @@ from .notification.base import (
 from .exporter.base import ExportIssuesEndpoint
 from .exporter.project import ExportProjectsEndpoint
 from .importer.base import ImportProjectsEndpoint
+from .importer.work_items import ImportWorkItemsEndpoint
 
 
 from .webhook.base import (

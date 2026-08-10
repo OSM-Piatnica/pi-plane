@@ -6,3 +6,4 @@
 
 export * from "./left-draggable";
 export * from "./right-draggable";
+export * from "./dependency-side-draggable";

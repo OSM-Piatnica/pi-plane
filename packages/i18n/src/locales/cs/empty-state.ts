@@ -188,6 +188,11 @@ export default {
       title: "Zatím žádné exporty",
       description: "Momentálně nemáte žádné záznamy exportu. Jakmile exportujete data, všechny záznamy se zobrazí zde.",
     },
+    imports: {
+      title: "Zatím žádné importy",
+      description:
+        "Momentálně nemáte žádné záznamy importu. Jakmile importujete projekt, všechny záznamy se zobrazí zde.",
+    },
     tokens: {
       title: "Zatím žádný osobní token",
       description:

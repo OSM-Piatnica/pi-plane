@@ -1021,6 +1021,10 @@ export default {
       start_after: "Starts after",
       finish_before: "Finishes before",
       finish_after: "Finishes after",
+      dependency_created: "Work item dependency was created successfully.",
+      dependency_create_failed: "Could not create dependency. Please try again.",
+      date_conflict:
+        "These dates conflict with existing dependencies. Adjust related work items or remove the dependency first.",
     },
     copy_link: "Copy work item link",
     delete: {
@@ -1566,26 +1570,34 @@ export default {
       exports: {
         heading: "Imports & exports",
         description:
-          "Import project configuration from CSV or export project settings, states, labels, and work item types. Work items are not included.",
+          "Three separate flows: (1) export work-item lists, (2) import those lists into an existing project, (3–4) import/export project configuration CSV (settings, states, labels — optionally with work items in Plane’s full-project format).",
         title: "Imports & exports",
         exporting: "Exporting",
         previous_exports: "Previous exports",
         export_separate_files: "Export the data into separate files",
         exporting_projects: "Exporting work items",
         work_items_export: {
-          heading: "Export work items",
-          description: "Export work items from selected projects to CSV, Excel, or JSON.",
+          heading: "1. Export work items",
+          description:
+            "Community-style export of work item lists from one or more projects to CSV, Excel, or JSON. Use this file later with “Import work items” below.",
         },
         project_csv: {
-          heading: "Export project configuration",
-          description: "Download project settings, states, labels, and work item types. Work items are not included.",
+          heading: "4. Export project configuration",
+          description:
+            "Download project settings (states, labels, work item types, etc.). Optionally include work items in Plane’s full-project CSV format — this is not the same file as “Export work items”.",
           select_project: "Project",
           select_format: "Format",
+          include_work_items: "Include work items",
+          include_work_items_hint: "Exports one CSV with project configuration and work items (max 500 work items).",
           export_button: "Export project",
+          export_full_button: "Export full project",
           toasts: {
             success: {
               title: "Export successful",
               message: "Project configuration CSV has been downloaded.",
+            },
+            success_full: {
+              message: "Full project CSV (configuration + work items) has been downloaded.",
             },
             error: {
               title: "Export failed",
@@ -1610,9 +1622,9 @@ export default {
         },
       },
       imports: {
-        heading: "Imports",
+        heading: "3. Import project configuration",
         description:
-          "Import project configuration from a CSV file exported from Plane. Work items are not included. Do not re-save the file in Excel before importing.",
+          "Create a new project from a configuration CSV (or a full-project CSV with configuration + work items). This is not for Community work-item export files — use “Import work items” above for those.",
         title: "Imports",
         select_file: "Select CSV file",
         import_button: "Import project",
@@ -1630,8 +1642,31 @@ export default {
           success: {
             message: 'Project "{name}" was imported successfully.',
           },
+          success_full: {
+            message: 'Project "{name}" was imported with {count} work items.',
+          },
           error: {
-            message: "Project import failed. Please check the CSV file and try again.",
+            message: "Project import failed. Please check the file and try again.",
+          },
+        },
+        work_items: {
+          heading: "2. Import work items",
+          description:
+            "Import work items from a file created by “Export work items” (CSV, Excel, or JSON) into an existing project. States and labels are matched by name; missing assignees are left empty with a warning.",
+          select_project: "Target project",
+          select_project_placeholder: "Select a project",
+          no_projects: "No projects available",
+          select_file_label: "Export file",
+          select_file: "Select file",
+          import_button: "Import work items",
+          invalid_file_type: "Please upload a CSV, Excel (.xlsx), or JSON file.",
+          toasts: {
+            success: {
+              message: 'Imported {count} work items into "{name}".',
+            },
+            error: {
+              message: "Work item import failed. Use a file from “Export work items” and try again.",
+            },
           },
         },
       },

@@ -1,0 +1,5 @@
+Project Name,Project Identifier,Parent,Identifier,Sequence Id,Name,State Name,Priority,Assignees,Subscribers,Created By Name,Start Date,Target Date,Completed At,Created At,Updated At,Archived At,Estimate,Labels,Cycles,Modules,Links,Relations,Comments,Sub Issues Count,Link Count,Attachment Count,Is Draft
+Demo Import,DEMO,,DEMO-1,1,Kickoff projektu,Todo,high,"[""Anna Kowalska""]",[],Anna Kowalska,2026-08-01,2026-08-15,,2026-08-01T10:00:00Z,2026-08-01T10:00:00Z,,,"[""setup""]",[],[],[],[],[],0,0,0,False
+Demo Import,DEMO,DEMO-1,DEMO-2,2,Przygotowanie środowiska,In Progress,medium,"[""Jan Nowak"", ""dev@example.com""]",[],Anna Kowalska,2026-08-02,2026-08-20,,2026-08-02T09:00:00Z,2026-08-02T09:00:00Z,,,"[""setup"", ""infra""]",[],[],[],[],[],0,0,0,False
+Demo Import,DEMO,DEMO-1,DEMO-3,3,Pierwsza wersja README,Backlog,low,[],[],Anna Kowalska,,,,2026-08-03T11:00:00Z,2026-08-03T11:00:00Z,,,"[""docs""]",[],[],[],[],[],0,0,0,False
+Demo Import,DEMO,,DEMO-4,4,Zadanie ukończone (przykład),Done,none,[],[],Anna Kowalska,2026-07-01,2026-07-10,2026-07-10T16:00:00Z,2026-07-01T08:00:00Z,2026-07-10T16:00:00Z,,,"[""docs""]",[],[],[],[],[],0,0,0,False

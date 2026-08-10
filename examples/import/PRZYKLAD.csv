@@ -1,0 +1,83 @@
+Project Name;Project Identifier;Parent;Identifier;Name;State Name;Priority;Assignees;Description;Subscribers;Created By Name;Start Date;Due Date;p;Created At;Updated At;Archived At;Estimate;Labels;Cycle Name;Cycle Start Date;Cycle End Date;Module Name;Links;Relations;Comments;Issue Type;Total Time Logged;Worklogs;Custom Properties;Customers;Initiatives
+Test szablon;T2;;T2-2;kickoff;Todo;none;[];;"[""Pawe\u0142 Kranzberg""]";Pawe?‚ Kranzberg;;;;2026-07-03T12:10:06.945660Z;2026-07-03T12:10:06.945674Z;;;[];;;;;[];[];[];Task;0h 0m;[];;[];[]
+Test szablon;T2;;T2-1;Pierwsze zadanie;Todo;none;[];;[];Pawe?‚ Kranzberg;;;;2026-07-03T12:10:06.845377Z;2026-07-03T12:10:06.845390Z;;;[];;;;;[];"[{""type"": ""start_before"", ""related_issue"": ""T2-2""}]";[];Task;0h 0m;[];;[];[]
+osm-pia-06;OSMPI;;OSMPI-7;6. Customize your settings âš™?¸?;Backlog;none;[];"Now that you're getting familiar with Plane, let's explore how you can customize settings to make it work just right for you and your team!
+Workspace settings
+Remember those workspace settings we mentioned when inviting team members? There's a lot more you can do there:
+Invite and manage workspace members
+Upgrade plans and manage billing
+Import data from other tools
+Export your data
+Manage integrations
+Project Settings
+Each project has its own settings where you can:
+Change project details and visibility
+Invite specific members to just this project
+Customize your workflow States (like adding a ""Testing"" state)
+Create and organize Labels
+Enable or disable features you need (or don't need)
+Your Profile Settings
+You can also customize your own personal experience! Click on your profile icon in the top-right corner to find:
+Profile settings (update your name, photo, etc.)
+Choose your timezone and preferred language for the interface
+Email notification preferences (what you want to be alerted about)
+Appearance settings (light/dark mode)
+Taking a few minutes to set things up just the way you like will make your everyday Plane experience much smoother!
+Note: Some settings are only available to workspace or project admins. If you don't see certain options, you might need admin access.";[];Plane;;;;2026-07-03T11:10:33.563737Z;2026-07-03T11:10:33.563752Z;;;[];Cycle 2: Collaboration & Customization;18.07.2026;01.08.2026;Workspace Setup (Area);[];[];[];;0h 0m;[];;[];[]
+osm-pia-06;OSMPI;;OSMPI-6;5. Use Cycles to time box tasks ??—“?¸?;Backlog;low;[];"A Cycle in Plane is like a sprint - a dedicated timeframe where your team focuses on completing specific work items. It helps you break down your project into manageable chunks with clear start and end dates so everyone knows what to work on and when it needs to be done.
+Setup Cycles
+Go to the Cycles section in your project (you can find it in the left sidebar)
+Click the Add cycle button in the top-right corner
+Enter details and set the start and end dates for your cycle.
+Click Create cycle and you're ready to go!
+Add existing work items to the Cycle or create new ones.
+Tip: To create a new Cycle quickly, just press Q from anywhere in your project!
+Want to learn more?
+Starting and stopping cycles
+Transferring work items between cycles
+Tracking progress with charts
+Check out our detailed documentation for everything you need to know!";[];Plane;;;;2026-07-03T11:10:33.330099Z;2026-07-03T11:10:33.330111Z;;;"[""concepts""]";Cycle 2: Collaboration & Customization;18.07.2026;01.08.2026;Workspace Setup (Area);[];[];[];;0h 0m;[];;[];[]
+osm-pia-06;OSMPI;;OSMPI-5;4. Visualize your work ??”®;In Progress;none;[];"Plane offers multiple ways to look at your work items depending on what you need to see. Let's explore how to change views and customize them!
+Switch between layouts
+Look at the top toolbar in your project. You'll see several layout icons.
+Click any of these icons to instantly switch between layouts.
+Tip: Different layouts work best for different needs. Try Board view for tracking progress, Calendar for deadline management, and Gantt for timeline planning! See Layouts for more info.
+Filter and display options
+Need to focus on specific work?
+Click the Filters dropdown in the toolbar. Select criteria and choose which items to show.
+Click the Display dropdown to tailor how the information appears in your layout
+Created the perfect setup? Save it for later by clicking the the Save View button.
+Access saved views anytime from the Views section in your sidebar.";[];Plane;;;;2026-07-03T11:10:33.143465Z;2026-07-03T11:10:33.143477Z;;;[];Cycle 2: Collaboration & Customization;18.07.2026;01.08.2026;Onboarding Flow (Feature);[];[];[];;0h 0m;[];;[];[]
+osm-pia-06;OSMPI;;OSMPI-4;3. Create and assign Work Items â???¸?;In Progress;high;[];"A work item is the fundamental building block of your project. Think of these as the actionable tasks that move your project forward.
+Ready to add something to your project's to-do list? Here's how:
+Click the Add work item button in the top-right corner of the Work Items page.
+Give your task a clear title and add any details in the description.
+Set up the essentials:
+Assign it to a team member (or yourself!)
+Choose a priority level
+Add start and due dates if there's a timeline
+Tip: Save time by using the keyboard shortcut C from anywhere in your project to quickly create a new work item!
+Want to dive deeper into all the things you can do with work items? Check out our documentation.";[];Plane;;;;2026-07-03T11:10:32.945445Z;2026-07-03T11:10:32.945456Z;;;"[""concepts""]";Cycle 1: Getting Started with Plane;03.07.2026;17.07.2026;Onboarding Flow (Feature);[];[];[];;0h 0m;[];;[];[]
+osm-pia-06;OSMPI;;OSMPI-3;2. Invite your team ??¤???¤›;Backlog;high;[];"Let's get your teammates on board!
+First, you'll need to invite them to your workspace before they can join specific projects:
+Click on your workspace name in the top-left corner, then select Settings from the dropdown.
+Head over to the Members tab - this is your user management hub. Click Add member on the top right.
+Enter your teammate's email address. Select a role for them (Admin, Member or Guest) that determines what they can do in the workspace.
+Your team member will get an email invite. Once they've joined your workspace, you can add them to specific projects.
+To do this, go to your project's Settings page.
+Find the Members section, select your teammate, and assign them a project role - this controls what they can do within just this project.
+That's it!
+To learn more about user management, see Manage users and roles.";[];Plane;;;;2026-07-03T11:10:32.798203Z;2026-07-03T11:10:32.798216Z;;;[];Cycle 1: Getting Started with Plane;03.07.2026;17.07.2026;Onboarding Flow (Feature);[];[];[];;0h 0m;[];;[];[]
+osm-pia-06;OSMPI;;OSMPI-2;1. Create Projects ??Ž?;Todo;high;[];"A Project in Plane is where all your work comes together. Think of it as a base that organizes your work items and everything else your team needs to get things done.
+Note: This tutorial is already set up as a Project, and these cards you're reading are work items within it!
+We're showing you how to create a new project just so you'll know exactly what to do when you're ready to start your own real one.
+Look over at the left sidebar and find where it says Projects.
+Hover your mouse there and you'll see a little + icon pop up - go ahead and click it!
+A modal opens where you can give your project a name and other details.
+Notice the Access type options? Public means anyone (except Guest users) can see and join it, while Private keeps it just for those you invite.
+Tip: You can also quickly create a new project by using the keyboard shortcut P from anywhere in Plane!";[];Plane;;;;2026-07-03T11:10:32.635822Z;2026-07-03T11:10:32.635834Z;;;"[""concepts""]";Cycle 1: Getting Started with Plane;03.07.2026;17.07.2026;Core Workflow (System);[];[];[];;0h 0m;[];;[];[]
+osm-pia-06;OSMPI;;OSMPI-1;Welcome to Plane ??‘‹;Done;urgent;[];"Hey there! This demo project is your playground to get hands-on with Plane. We've set this up so you can click around and see how everything works without worrying about breaking anything.
+Each work item is designed to make you familiar with the basics of using Plane. Just follow along card by card at your own pace.
+First thing to try
+Look in the Properties section below where it says State: Todo.
+Click on it and change it to Done from the dropdown. Alternatively, you can drag and drop the card to the Done column.";[];Plane;;;2026-07-03T11:10:32.463368Z;2026-07-03T11:10:32.486718Z;2026-07-03T11:10:32.486728Z;;;[];Cycle 1: Getting Started with Plane;03.07.2026;17.07.2026;Core Workflow (System);[];[];[];;0h 0m;[];;[];[]

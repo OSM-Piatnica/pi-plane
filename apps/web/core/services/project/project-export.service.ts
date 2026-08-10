@@ -35,7 +35,7 @@ export class ProjectExportService extends APIService {
   async exportProject(
     workspaceSlug: string,
     projectIds: string[],
-    options: { provider: string; delimiter?: "," | ";" }
+    options: { provider: string; delimiter?: "," | ";"; includeWorkItems?: boolean }
   ): Promise<Blob> {
     return this.post(
       `/api/workspaces/${workspaceSlug}/export-projects/`,
