@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -1182,6 +1183,10 @@ export default {
       start_after: "Zaczyna się po",
       finish_before: "Kończy się przed",
       finish_after: "Kończy się po",
+      dependency_created: "Zależność między elementami pracy została utworzona.",
+      dependency_create_failed: "Nie udało się utworzyć zależności. Spróbuj ponownie.",
+      date_conflict:
+        "Te daty kolidują z istniejącymi zależnościami. Dostosuj powiązane elementy pracy albo najpierw usuń zależność.",
     },
     copy_link: "Kopiuj link do elementu pracy",
     delete: {

@@ -1,18 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { TIssue } from "./issue";
-
-export type TIssueRelation = Record<TIssueRelationTypes, TIssue[]>;
-
-export type TIssueRelationMap = {
-  [issue_id: string]: Record<TIssueRelationTypes, string[]>;
-};
-
-export type TIssueRelationIdMap = Record<TIssueRelationTypes, string[]>;
 
 export type TIssueRelationTypes =
   | "blocking"
@@ -23,3 +16,11 @@ export type TIssueRelationTypes =
   | "start_after"
   | "finish_before"
   | "finish_after";
+
+export type TIssueRelation = Record<TIssueRelationTypes, TIssue[]>;
+
+export type TIssueRelationMap = {
+  [issue_id: string]: Record<TIssueRelationTypes, string[]>;
+};
+
+export type TIssueRelationIdMap = Record<TIssueRelationTypes, string[]>;
