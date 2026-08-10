@@ -297,6 +297,7 @@ export const getComputedDisplayProperties = (
   assignee: displayProperties?.assignee ?? true,
   start_date: displayProperties?.start_date ?? true,
   due_date: displayProperties?.due_date ?? true,
+  duration: displayProperties?.duration ?? true,
   labels: displayProperties?.labels ?? true,
   priority: displayProperties?.priority ?? true,
   state: displayProperties?.state ?? true,

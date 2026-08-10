@@ -25,6 +25,7 @@ import {
   IssueRelationActivity,
   IssueStartDateActivity,
   IssueTargetDateActivity,
+  IssueDurationActivity,
   IssueCycleActivity,
   IssueModuleActivity,
   IssueLabelActivity,
@@ -77,6 +78,8 @@ export const IssueActivityItem = observer(function IssueActivityItem(props: TIss
       return <IssueStartDateActivity {...componentDefaultProps} showIssue={false} />;
     case "target_date":
       return <IssueTargetDateActivity {...componentDefaultProps} showIssue={false} />;
+    case "duration":
+      return <IssueDurationActivity {...componentDefaultProps} showIssue={false} />;
     case "cycles":
       return <IssueCycleActivity {...componentDefaultProps} />;
     case "modules":

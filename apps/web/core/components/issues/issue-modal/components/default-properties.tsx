@@ -6,7 +6,7 @@
 
 import { useState } from "react";
 import { observer } from "mobx-react";
-import type { Control } from "react-hook-form";
+import type { Control, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { ETabIndices, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
@@ -15,10 +15,11 @@ import { ParentPropertyIcon } from "@plane/propel/icons";
 import type { ISearchIssueResponse, TIssue } from "@plane/types";
 // ui
 import { CustomMenu } from "@plane/ui";
-import { getDate, renderFormattedPayloadDate, getTabIndex } from "@plane/utils";
+import { reconcileWorkItemDuration, renderFormattedPayloadDate, getTabIndex } from "@plane/utils";
 // components
 import { CycleDropdown } from "@/components/dropdowns/cycle";
 import { DateDropdown } from "@/components/dropdowns/date";
+import { DurationDropdown } from "@/components/dropdowns/duration";
 import { EstimateDropdown } from "@/components/dropdowns/estimate";
 import { MemberDropdown } from "@/components/dropdowns/member/dropdown";
 import { ModuleDropdown } from "@/components/dropdowns/module/dropdown";
@@ -41,8 +42,8 @@ type TIssueDefaultPropertiesProps = {
   projectId: string | null;
   workspaceSlug: string;
   selectedParentIssue: ISearchIssueResponse | null;
-  startDate: string | null;
-  targetDate: string | null;
+  getValues: UseFormGetValues<TIssue>;
+  setValue: UseFormSetValue<TIssue>;
   parentId: string | null;
   isDraft: boolean;
   handleFormChange: () => void;
@@ -56,8 +57,8 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
     projectId,
     workspaceSlug,
     selectedParentIssue,
-    startDate,
-    targetDate,
+    getValues,
+    setValue,
     parentId,
     isDraft,
     handleFormChange,
@@ -79,11 +80,15 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
   const canCreateLabel =
     projectId && allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.PROJECT, workspaceSlug, projectId);
 
-  const minDate = getDate(startDate);
-  minDate?.setDate(minDate.getDate());
-
-  const maxDate = getDate(targetDate);
-  maxDate?.setDate(maxDate.getDate());
+  // Writing the derived fields with setValue rather than the field's own onChange keeps them in
+  // dirtyFields, which is what getChangedIssuefields uses to build the update payload.
+  const applyDurationChange = (change: Partial<Pick<TIssue, "start_date" | "target_date" | "duration">>) => {
+    const derived = reconcileWorkItemDuration(getValues(), change);
+    if (derived.start_date !== undefined) setValue("start_date", derived.start_date, { shouldDirty: true });
+    if (derived.target_date !== undefined) setValue("target_date", derived.target_date, { shouldDirty: true });
+    if (derived.duration !== undefined) setValue("duration", derived.duration, { shouldDirty: true });
+    handleFormChange();
+  };
 
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -165,16 +170,14 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
       <Controller
         control={control}
         name="start_date"
-        render={({ field: { value, onChange } }) => (
+        render={({ field: { value } }) => (
           <div className="h-7">
             <DateDropdown
               value={value}
-              onChange={(date) => {
-                onChange(date ? renderFormattedPayloadDate(date) : null);
-                handleFormChange();
-              }}
+              onChange={(date) =>
+                applyDurationChange({ start_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
+              }
               buttonVariant="border-with-text"
-              maxDate={maxDate ?? undefined}
               placeholder={t("start_date")}
               tabIndex={getIndex("start_date")}
             />
@@ -184,18 +187,31 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
       <Controller
         control={control}
         name="target_date"
-        render={({ field: { value, onChange } }) => (
+        render={({ field: { value } }) => (
           <div className="h-7">
             <DateDropdown
               value={value}
-              onChange={(date) => {
-                onChange(date ? renderFormattedPayloadDate(date) : null);
-                handleFormChange();
-              }}
+              onChange={(date) =>
+                applyDurationChange({ target_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
+              }
               buttonVariant="border-with-text"
-              minDate={minDate ?? undefined}
               placeholder={t("due_date")}
               tabIndex={getIndex("target_date")}
+            />
+          </div>
+        )}
+      />
+      <Controller
+        control={control}
+        name="duration"
+        render={({ field: { value } }) => (
+          <div className="h-7">
+            <DurationDropdown
+              value={value}
+              onChange={(duration) => applyDurationChange({ duration })}
+              buttonVariant="border-with-text"
+              placeholder={t("duration")}
+              tabIndex={getIndex("duration")}
             />
           </div>
         )}

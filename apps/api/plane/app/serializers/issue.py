@@ -49,6 +49,11 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
+from plane.utils.work_item_duration import (
+    DURATION_DATE_FIELDS,
+    reconcile_work_item_duration,
+    to_work_item_date,
+)
 
 
 class IssueFlatSerializer(BaseSerializer):
@@ -64,6 +69,7 @@ class IssueFlatSerializer(BaseSerializer):
             "priority",
             "start_date",
             "target_date",
+            "duration",
             "sequence_id",
             "sort_order",
             "is_draft",
@@ -129,6 +135,12 @@ class IssueCreateSerializer(BaseSerializer):
     def validate(self, attrs):
         allow_triage = self.context.get("allow_triage_state", False)
         state_manager = State.triage_objects if allow_triage else State.objects
+
+        # Keep duration and the two dates consistent before anything else looks at them. The web app
+        # already derives the same values locally, so this normally just confirms what it sent.
+        derived = reconcile_work_item_duration(self.instance, attrs)
+        for field, value in derived.items():
+            attrs[field] = to_work_item_date(value) if field in DURATION_DATE_FIELDS else value
 
         if (
             attrs.get("start_date", None) is not None
@@ -832,6 +844,7 @@ class IssueSerializer(DynamicBaseSerializer):
             "priority",
             "start_date",
             "target_date",
+            "duration",
             "sequence_id",
             "project_id",
             "parent_id",
@@ -908,6 +921,7 @@ class IssueListDetailSerializer(serializers.Serializer):
             "priority": instance.priority,
             "start_date": instance.start_date,
             "target_date": instance.target_date,
+            "duration": instance.duration,
             "sequence_id": instance.sequence_id,
             "project_id": instance.project_id,
             "parent_id": instance.parent_id,
@@ -1052,6 +1066,7 @@ class IssueVersionDetailSerializer(BaseSerializer):
             "priority",
             "start_date",
             "target_date",
+            "duration",
             "assignees",
             "sequence_id",
             "labels",

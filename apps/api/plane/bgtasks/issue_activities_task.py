@@ -326,6 +326,34 @@ def track_start_date(
         )
 
 
+# Track changes in issue duration
+def track_duration(
+    requested_data,
+    current_instance,
+    issue_id,
+    project_id,
+    workspace_id,
+    actor_id,
+    issue_activities,
+    epoch,
+):
+    if current_instance.get("duration") != requested_data.get("duration"):
+        issue_activities.append(
+            IssueActivity(
+                issue_id=issue_id,
+                actor_id=actor_id,
+                verb="updated",
+                old_value=(current_instance.get("duration") if current_instance.get("duration") is not None else ""),
+                new_value=(requested_data.get("duration") if requested_data.get("duration") is not None else ""),
+                field="duration",
+                project_id=project_id,
+                workspace_id=workspace_id,
+                comment="updated the duration to ",
+                epoch=epoch,
+            )
+        )
+
+
 # Track changes in issue labels
 def track_labels(
     requested_data,
@@ -649,6 +677,7 @@ def update_issue_activity(
         "description_html": track_description,
         "target_date": track_target_date,
         "start_date": track_start_date,
+        "duration": track_duration,
         "label_ids": track_labels,
         "assignee_ids": track_assignees,
         "estimate_point": track_estimate_points,

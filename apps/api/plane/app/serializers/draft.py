@@ -27,6 +27,11 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
+from plane.utils.work_item_duration import (
+    DURATION_DATE_FIELDS,
+    reconcile_work_item_duration,
+    to_work_item_date,
+)
 from plane.app.permissions import ROLE
 
 
@@ -69,6 +74,11 @@ class DraftIssueCreateSerializer(BaseSerializer):
         return data
 
     def validate(self, attrs):
+        # Keep duration and the two dates consistent before anything else looks at them.
+        derived = reconcile_work_item_duration(self.instance, attrs)
+        for field, value in derived.items():
+            attrs[field] = to_work_item_date(value) if field in DURATION_DATE_FIELDS else value
+
         if (
             attrs.get("start_date", None) is not None
             and attrs.get("target_date", None) is not None
@@ -318,6 +328,7 @@ class DraftIssueSerializer(BaseSerializer):
             "priority",
             "start_date",
             "target_date",
+            "duration",
             "project_id",
             "parent_id",
             "cycle_id",

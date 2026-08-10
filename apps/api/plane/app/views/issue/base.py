@@ -73,6 +73,11 @@ from plane.utils.issue_filters import issue_filters
 from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
 from plane.utils.timezone_converter import user_timezone_converter
+from plane.utils.work_item_duration import (
+    WORK_ITEM_DURATION_MIN,
+    calculate_work_item_duration,
+    reconcile_work_item_duration,
+)
 
 from .. import BaseAPIView, BaseViewSet
 
@@ -170,6 +175,7 @@ class IssueListEndpoint(BaseAPIView):
                 "priority",
                 "start_date",
                 "target_date",
+                "duration",
                 "sequence_id",
                 "project_id",
                 "parent_id",
@@ -393,6 +399,11 @@ class IssueViewSet(BaseViewSet):
     def create(self, request, slug, project_id):
         project = Project.objects.get(pk=project_id)
 
+        # The serializer derives the missing duration / start date / target date on save. Mirror
+        # that here so the activity feed reports the derived values too, since it is built from the
+        # raw request payload rather than from what was saved.
+        logged_data = {**request.data, **reconcile_work_item_duration(None, request.data)}
+
         serializer = IssueCreateSerializer(
             data=request.data,
             context={
@@ -408,7 +419,7 @@ class IssueViewSet(BaseViewSet):
             # Track the issue
             issue_activity.delay(
                 type="issue.activity.created",
-                requested_data=json.dumps(self.request.data, cls=DjangoJSONEncoder),
+                requested_data=json.dumps(logged_data, cls=DjangoJSONEncoder),
                 actor_id=str(request.user.id),
                 issue_id=str(serializer.data.get("id", None)),
                 project_id=str(project_id),
@@ -435,6 +446,7 @@ class IssueViewSet(BaseViewSet):
                     "priority",
                     "start_date",
                     "target_date",
+                    "duration",
                     "sequence_id",
                     "project_id",
                     "parent_id",
@@ -665,7 +677,13 @@ class IssueViewSet(BaseViewSet):
 
         current_instance = json.dumps(IssueDetailSerializer(issue).data, cls=DjangoJSONEncoder)
 
-        requested_data = json.dumps(self.request.data, cls=DjangoJSONEncoder)
+        # The serializer derives the missing duration / start date / target date on save. Mirror
+        # that here so the activity feed reports the derived values too, since it is built from the
+        # raw request payload rather than from what was saved.
+        requested_data = json.dumps(
+            {**request.data, **reconcile_work_item_duration(issue, request.data)},
+            cls=DjangoJSONEncoder,
+        )
         serializer = IssueCreateSerializer(issue, data=request.data, partial=True, context={"project_id": project_id, "request": request})
         if serializer.is_valid():
             serializer.save()
@@ -868,6 +886,7 @@ class IssuePaginatedViewSet(BaseViewSet):
             "priority",
             "start_date",
             "target_date",
+            "duration",
             "sequence_id",
             "project_id",
             "parent_id",
@@ -1159,6 +1178,8 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
                 if timeline_error:
                     return Response({"error": timeline_error, "message": timeline_error}, status=status.HTTP_400_BAD_REQUEST)
 
+            dates_changed = False
+
             if start_date:
                 issue_activity.delay(
                     type="issue.activity.updated",
@@ -1171,6 +1192,7 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
                 )
                 issue.start_date = start_date
                 issues_to_update.append(issue)
+                dates_changed = True
 
             if target_date:
                 issue_activity.delay(
@@ -1184,9 +1206,32 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
                 )
                 issue.target_date = target_date
                 issues_to_update.append(issue)
+                dates_changed = True
+
+            # Dates drive the duration, so recalculate it whenever a date actually moved. This
+            # endpoint bypasses the serializer, so without this a timeline drag would leave a
+            # stale duration behind.
+            if dates_changed:
+                new_duration = calculate_work_item_duration(issue.start_date, issue.target_date)
+                if (
+                    new_duration is not None
+                    and new_duration >= WORK_ITEM_DURATION_MIN
+                    and new_duration != issue.duration
+                ):
+                    issue_activity.delay(
+                        type="issue.activity.updated",
+                        requested_data=json.dumps({"duration": new_duration}),
+                        current_instance=json.dumps({"duration": issue.duration}),
+                        issue_id=str(issue_id),
+                        actor_id=str(request.user.id),
+                        project_id=str(project_id),
+                        epoch=epoch,
+                    )
+                    issue.duration = new_duration
+                    issues_to_update.append(issue)
 
         # Bulk update issues
-        Issue.objects.bulk_update(issues_to_update, ["start_date", "target_date"])
+        Issue.objects.bulk_update(issues_to_update, ["start_date", "target_date", "duration"])
 
         return Response({"message": "Issues updated successfully"}, status=status.HTTP_200_OK)
 
