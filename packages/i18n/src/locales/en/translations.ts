@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -1021,6 +1022,10 @@ export default {
       start_after: "Starts after",
       finish_before: "Finishes before",
       finish_after: "Finishes after",
+      dependency_created: "Work item dependency was created successfully.",
+      dependency_create_failed: "Could not create dependency. Please try again.",
+      date_conflict:
+        "These dates conflict with existing dependencies. Adjust related work items or remove the dependency first.",
     },
     copy_link: "Copy work item link",
     delete: {

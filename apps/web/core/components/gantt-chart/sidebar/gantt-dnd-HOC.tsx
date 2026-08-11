@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -50,13 +51,13 @@ export const GanttDnDHOC = observer(function GanttDnDHOC(props: Props) {
       dropTargetForElements({
         element,
         canDrop: ({ source }) => source?.data?.id !== id && source?.data?.dragInstanceId === "GANTT_REORDER",
-        getData: ({ input, element }) => {
+        getData: ({ input, element: dropElement }) => {
           const data = { id };
 
           // attach instruction for last in list
           return attachInstruction(data, {
             input,
-            element,
+            element: dropElement,
             currentLevel: 0,
             indentPerLevel: 0,
             mode: isLastChild ? "last-in-group" : "standard",
@@ -94,7 +95,7 @@ export const GanttDnDHOC = observer(function GanttDnDHOC(props: Props) {
         },
       })
     );
-  }, [blockRef?.current, isLastChild, onDrop]);
+  }, [id, isDragEnabled, isLastChild, onDrop]);
 
   useOutsideClickDetector(blockRef, () => blockRef?.current?.classList?.remove(HIGHLIGHT_WITH_LINE));
 
