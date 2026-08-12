@@ -1,6 +1,8 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -137,12 +139,14 @@ export const ISSUE_ORDER_BY_OPTIONS: {
   { key: "start_date", titleTranslationKey: "common.order_by.start_date" },
   { key: "target_date", titleTranslationKey: "common.order_by.due_date" },
   { key: "-priority", titleTranslationKey: "common.priority" },
+  { key: "duration", titleTranslationKey: "duration" },
 ];
 
 export const ISSUE_DISPLAY_PROPERTIES_KEYS: (keyof IIssueDisplayProperties)[] = [
   "assignee",
   "start_date",
   "due_date",
+  "duration",
   "labels",
   "key",
   "priority",
@@ -187,6 +191,10 @@ export const ISSUE_DISPLAY_PROPERTIES: {
     key: "due_date",
     titleTranslationKey: "common.order_by.due_date",
   },
+  {
+    key: "duration",
+    titleTranslationKey: "duration",
+  },
   { key: "labels", titleTranslationKey: "common.labels" },
   {
     key: "priority",
@@ -219,6 +227,7 @@ export const SPREADSHEET_PROPERTY_LIST: (keyof IIssueDisplayProperties)[] = [
   "cycle",
   "start_date",
   "due_date",
+  "duration",
   "estimate",
   "created_on",
   "updated_on",
@@ -260,6 +269,14 @@ export const SPREADSHEET_PROPERTY_DETAILS: {
     descendingOrderKey: "target_date",
     descendingOrderTitle: "Old",
     icon: "DueDatePropertyIcon",
+  },
+  duration: {
+    i18n_title: "duration",
+    ascendingOrderKey: "duration",
+    ascendingOrderTitle: "Short",
+    descendingOrderKey: "-duration",
+    descendingOrderTitle: "Long",
+    icon: "Timer",
   },
   estimate: {
     i18n_title: "common.estimate",

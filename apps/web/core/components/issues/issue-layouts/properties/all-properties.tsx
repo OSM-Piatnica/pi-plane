@@ -1,6 +1,8 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,7 +14,7 @@ import { xor } from "lodash-es";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // icons
-import { Paperclip } from "lucide-react";
+import { Paperclip, Timer } from "lucide-react";
 // i18n
 import { useTranslation } from "@plane/i18n";
 import { LinkIcon, StartDatePropertyIcon, ViewsIcon, DueDatePropertyIcon } from "@plane/propel/icons";
@@ -93,6 +95,8 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
   // derived values
   const stateDetails = getStateById(issue.state_id);
   const subIssueCount = issue?.sub_issues_count ?? 0;
+  const durationLabel =
+    issue.duration === null || issue.duration === undefined ? null : t("duration_days", { count: issue.duration });
 
   const issueOperations = useMemo(
     () => ({
@@ -368,6 +372,31 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
             labelClassName="text-caption-sm-regular"
           />
         </div>
+      </WithDisplayPropertiesHOC>
+
+      {/* duration */}
+      <WithDisplayPropertiesHOC
+        displayProperties={displayProperties}
+        displayPropertyKey="duration"
+        shouldRenderProperty={(properties) => !!properties.duration && !!durationLabel}
+      >
+        <Tooltip
+          tooltipHeading={t("duration")}
+          tooltipContent={durationLabel}
+          isMobile={isMobile}
+          renderByDefault={false}
+        >
+          <div
+            role="presentation"
+            className="flex h-5 flex-shrink-0 items-center justify-center gap-2 overflow-hidden rounded-sm border-[0.5px] border-strong px-2.5 py-1"
+            onFocus={handleEventPropagation}
+            onClick={handleEventPropagation}
+            onKeyDown={handleEventPropagation}
+          >
+            <Timer className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
+            <div className="text-caption-sm-regular">{durationLabel}</div>
+          </div>
+        </Tooltip>
       </WithDisplayPropertiesHOC>
 
       {/* assignee */}
