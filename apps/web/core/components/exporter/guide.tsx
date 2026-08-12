@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,6 +13,7 @@ import { mutate } from "swr";
 import { EXPORT_SERVICES_LIST, PROJECT_IMPORT_SERVICES_LIST } from "@/constants/fetch-keys";
 import { ImportForm } from "@/components/importer/import-form";
 import { PrevImports } from "@/components/importer/prev-imports";
+import { WorkItemImportForm } from "@/components/importer/work-item-import-form";
 import { ExportForm } from "./export-form";
 import { PrevExports } from "./prev-exports";
 import { ProjectExportForm } from "./project-export-form";
@@ -41,6 +43,13 @@ export const ExportGuide = observer(function ExportGuide() {
         per_page={per_page}
         setCursor={setExportCursor}
       />
+      <div id="import-work-items">
+        <WorkItemImportForm
+          mutateServices={() =>
+            mutate(PROJECT_IMPORT_SERVICES_LIST(workspaceSlug as string, `${importCursor}`, `${per_page}`))
+          }
+        />
+      </div>
       <div id="import">
         <ImportForm
           mutateServices={() =>

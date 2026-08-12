@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { FC } from "react";
-import { CalendarDays, LayersIcon, Paperclip } from "lucide-react";
+import { CalendarDays, LayersIcon, Paperclip, Timer } from "lucide-react";
 // types
 import { ISSUE_GROUP_BY_OPTIONS } from "@plane/constants";
 import type { ISvgIcons } from "@plane/propel/icons";
@@ -34,6 +35,7 @@ import {
   SpreadsheetAttachmentColumn,
   SpreadsheetCreatedOnColumn,
   SpreadsheetDueDateColumn,
+  SpreadsheetDurationColumn,
   SpreadsheetEstimateColumn,
   SpreadsheetLabelColumn,
   SpreadsheetModuleColumn,
@@ -92,12 +94,14 @@ export const SpreadSheetPropertyIconMap: Record<string, FC<ISvgIcons>> = {
   Link2: LinkIcon,
   Paperclip: Paperclip,
   LayersIcon: LayersIcon,
+  Timer: Timer,
 };
 
 export const SPREADSHEET_COLUMNS: { [key in keyof IIssueDisplayProperties]: TSpreadsheetColumn } = {
   assignee: SpreadsheetAssigneeColumn,
   created_on: SpreadsheetCreatedOnColumn,
   due_date: SpreadsheetDueDateColumn,
+  duration: SpreadsheetDurationColumn,
   estimate: SpreadsheetEstimateColumn,
   labels: SpreadsheetLabelColumn,
   modules: SpreadsheetModuleColumn,

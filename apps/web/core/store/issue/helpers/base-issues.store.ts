@@ -1,6 +1,8 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -166,6 +168,8 @@ const ISSUE_ORDERBY_KEY: Record<TIssueOrderByOptions, keyof TIssue> = {
   "-estimate_point__key": "estimate_point",
   start_date: "start_date",
   "-start_date": "start_date",
+  duration: "duration",
+  "-duration": "duration",
   link_count: "link_count",
   "-link_count": "link_count",
   attachment_count: "attachment_count",
@@ -1848,6 +1852,17 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       }
 
       // number
+      case "duration":
+        return getIssueIds(orderBy(array, [getSortOrderToFilterEmptyValues.bind(null, "duration"), "duration"])); //preferring sorting based on empty values to always keep the empty values below
+      case "-duration":
+        return getIssueIds(
+          orderBy(
+            array,
+            [getSortOrderToFilterEmptyValues.bind(null, "duration"), "duration"], //preferring sorting based on empty values to always keep the empty values below
+            ["asc", "desc"]
+          )
+        );
+
       case "attachment_count":
         return getIssueIds(orderBy(array, "attachment_count"));
       case "-attachment_count":
