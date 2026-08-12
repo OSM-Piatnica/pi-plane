@@ -1639,6 +1639,26 @@ export default {
             message: "Project import failed. Please check the CSV file and try again.",
           },
         },
+        work_items: {
+          heading: "Import work items",
+          description:
+            "Import work items from a file created by “Export work items” (CSV, Excel, or JSON) into an existing project. States and labels are matched by name; missing assignees are left empty with a warning.",
+          select_project: "Target project",
+          select_project_placeholder: "Select a project",
+          no_projects: "No projects available",
+          select_file_label: "Export file",
+          select_file: "Select file",
+          import_button: "Import work items",
+          invalid_file_type: "Please upload a CSV, Excel (.xlsx), or JSON file.",
+          toasts: {
+            success: {
+              message: 'Imported {count} work items into "{name}".',
+            },
+            error: {
+              message: "Work item import failed. Use a file from “Export work items” and try again.",
+            },
+          },
+        },
       },
       work_item_templates: {
         heading: "Work item templates",

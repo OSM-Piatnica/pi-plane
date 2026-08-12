@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from .project.base import (
@@ -234,6 +235,7 @@ from .notification.base import (
 from .exporter.base import ExportIssuesEndpoint
 from .exporter.project import ExportProjectsEndpoint
 from .importer.base import ImportProjectsEndpoint
+from .importer.work_items import ImportWorkItemsEndpoint
 
 
 from .webhook.base import (

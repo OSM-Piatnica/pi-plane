@@ -1784,6 +1784,27 @@ export default {
             message: "Import projektu nie powiódł się. Sprawdź plik CSV i spróbuj ponownie.",
           },
         },
+        work_items: {
+          heading: "Import elementów roboczych",
+          description:
+            "Wczytaj plik z „Eksportu elementów roboczych” (CSV, Excel lub JSON) do istniejącego projektu. Stany i etykiety są dopasowywane po nazwie; brakujących osób przypisanych pomijamy z ostrzeżeniem.",
+          select_project: "Projekt docelowy",
+          select_project_placeholder: "Wybierz projekt",
+          no_projects: "Brak dostępnych projektów",
+          select_file_label: "Plik eksportu",
+          select_file: "Wybierz plik",
+          import_button: "Importuj elementy robocze",
+          invalid_file_type: "Prześlij plik CSV, Excel (.xlsx) lub JSON.",
+          toasts: {
+            success: {
+              message: "Zaimportowano {count} elementów roboczych do „{name}”.",
+            },
+            error: {
+              message:
+                "Import elementów roboczych nie powiódł się. Użyj pliku z „Eksportu elementów roboczych” i spróbuj ponownie.",
+            },
+          },
+        },
       },
       work_item_templates: {
         title: "Szablony elementów roboczych",
