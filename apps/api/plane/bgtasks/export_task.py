@@ -1,10 +1,13 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
+# Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
 import io
 import zipfile
+from datetime import date
 from typing import List
 import boto3
 from botocore.client import Config
@@ -19,7 +22,7 @@ from django.utils import timezone
 from django.db.models import Prefetch
 
 # Module imports
-from plane.db.models import ExporterHistory, Issue, IssueComment, IssueRelation, IssueSubscriber
+from plane.db.models import ExporterHistory, Issue, IssueComment, IssueRelation, IssueSubscriber, Project
 from plane.utils.exception_logger import log_exception
 from plane.utils.porters.exporter import DataExporter
 from plane.utils.porters.serializers.issue import IssueExportSerializer
@@ -36,6 +39,25 @@ def create_zip_file(files: List[tuple[str, str | bytes]]) -> io.BytesIO:
 
     zip_buffer.seek(0)
     return zip_buffer
+
+
+def _export_basename(
+    *,
+    slug: str,
+    token_id: str,
+    export_date: date,
+    project_identifier: str | None = None,
+) -> str:
+    """
+    Build the base filename shared by an export and its archive.
+
+    The export token keeps the name unique, so a new export never overwrites a previous one in S3.
+    """
+    parts = ["export", slug]
+    if project_identifier:
+        parts.append(project_identifier)
+    parts.extend([token_id[:6], str(export_date)])
+    return "-".join(parts)
 
 
 def _get_s3_client(*, presign: bool = False):
@@ -74,11 +96,11 @@ def _finalize_exporter_upload(*, token_id: str, file_name: str, presigned_url: s
     exporter_instance.save(update_fields=["status", "url", "key"])
 
 
-def upload_to_s3(zip_file: io.BytesIO, workspace_id: UUID, token_id: str, slug: str) -> None:
+def upload_to_s3(zip_file: io.BytesIO, workspace_id: UUID, token_id: str, export_filename: str) -> None:
     """
     Upload a ZIP file to S3 and generate a presigned URL.
     """
-    file_name = f"{workspace_id}/export-{slug}-{token_id[:6]}-{str(timezone.now().date())}.zip"
+    file_name = f"{workspace_id}/{export_filename}"
     expires_in = 7 * 24 * 60 * 60
 
     upload_s3 = _get_s3_client()
@@ -206,18 +228,32 @@ def issue_export_task(
             exporter_instance.save(update_fields=["status", "reason"])
             return
 
+        # Resolved once so every file of this export carries the same date
+        export_date = timezone.now().date()
+        base_filename = _export_basename(slug=slug, token_id=token_id, export_date=export_date)
+
         files = []
         if multiple:
+            project_identifiers = {
+                str(project_id): identifier
+                for project_id, identifier in Project.objects.filter(id__in=project_ids).values_list(
+                    "id", "identifier"
+                )
+            }
             # Export each project separately with its own queryset
             for project_id in project_ids:
                 project_issues = workspace_issues.filter(project_id=project_id)
-                export_filename = f"{slug}-{project_id}"
+                export_filename = _export_basename(
+                    slug=slug,
+                    token_id=token_id,
+                    export_date=export_date,
+                    project_identifier=project_identifiers.get(str(project_id), str(project_id)),
+                )
                 filename, content = exporter.export(export_filename, project_issues)
                 files.append((filename, content))
         else:
             # Export all issues in a single file
-            export_filename = f"{slug}-{workspace_id}"
-            filename, content = exporter.export(export_filename, workspace_issues)
+            filename, content = exporter.export(base_filename, workspace_issues)
             files.append((filename, content))
 
         if len(files) == 1 and provider == "csv":
@@ -238,7 +274,7 @@ def issue_export_task(
             )
         else:
             zip_buffer = create_zip_file(files)
-            upload_to_s3(zip_buffer, workspace_id, token_id, slug)
+            upload_to_s3(zip_buffer, workspace_id, token_id, f"{base_filename}.zip")
 
     except Exception as e:
         exporter_instance = ExporterHistory.objects.get(token=token_id)
