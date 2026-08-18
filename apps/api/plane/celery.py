@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -35,6 +36,11 @@ app.conf.beat_schedule = {
     "run-every-6-hours-for-instance-trace": {
         "task": "plane.license.bgtasks.tracer.instance_traces",
         "schedule": crontab(hour="*/6", minute=0),  # Every 6 hours
+    },
+    # Ticks hourly, the task itself sends only at WORK_ITEM_DUE_REMINDER_HOUR in its own timezone
+    "check-every-hour-to-send-due-reminders": {
+        "task": "plane.bgtasks.work_item_due_reminder_task.stack_due_reminders",
+        "schedule": crontab(minute=0),  # Every hour
     },
     # Occurs once every day
     "check-every-day-to-delete-hard-delete": {
