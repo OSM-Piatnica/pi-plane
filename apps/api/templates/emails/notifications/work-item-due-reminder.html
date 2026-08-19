@@ -1,0 +1,82 @@
+{% comment %}
+Copyright (c) 2023-present Plane Software, Inc. and contributors
+Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
+SPDX-License-Identifier: AGPL-3.0-only
+Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+See the LICENSE file for details.
+{% endcomment %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Przypomnienie o zadaniach</title>
+    <style type="text/css" emogrify="no"> html { font-family: system-ui; } p, h1, h2, h3, h4, ol, ul { margin: 0; } h-full { height: 100%; } a:hover { color: #3358d4 !important; } </style>
+    <style> *[class="gmail-fix"] { display: none !important; } </style>
+  </head>
+  <body bgcolor="#ffffff" text="#3b3f44" link="#006399" yahoo="fix" style="background-color: #f7f9ff; margin: 20px">
+    <div style="width: 600px; table-layout: fixed; height: 100%; margin-left: auto; margin-right: auto">
+      <!-- Header -->
+      <div>
+        <table style="width: 600px" cellspacing="0">
+          <tr>
+            <td>
+              <div style="margin-left: 30px; margin-bottom: 20px; margin-top: 20px"> <img src="https://media.docs.plane.so/logo/new-logo-white.png" width="150" border="0" /> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!-- Body -->
+      <div style="color: #1f2d5c; padding: 30px; border-radius: 4px; background-color: #fcfcfd; max-width: 100%">
+        <table style="width: 100%">
+          <tr>
+            <td>
+              <p style="font-size: 1rem; color: #1f2d5c; font-weight: 600"> Przypomnienie o zadaniach </p>
+              <p style="font-size: 1rem; color: #1f2d5c; line-height: 28px"> {% if receiver_first_name %}Cześć {{ receiver_first_name }}, masz{% else %}Masz{% endif %} {{ summary_text }} </p>
+            </td>
+          </tr>
+        </table>
+        <hr style="background-color: #f0f0f3; height: 1px; border: 0; margin-top: 15px; margin-bottom: 15px" />
+        {% for section in sections %}
+        <!-- Section heading -->
+        <div style="margin-top: 20px; margin-bottom: 10px">
+          <p style="font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: {{ section.accent }}"> {{ section.title }} ({{ section.count }}) </p>
+        </div>
+        {% for group in section.groups %}
+        <div style="background-color: #f7f9ff; border-radius: 8px; border-style: solid; border-width: 1px; border-color: #c1d0ff; padding: 20px; margin-bottom: 15px; max-width: 100%">
+          <!-- Project breadcrumb -->
+          <div style="padding-bottom: 15px">
+            <p style="font-size: 0.8rem; font-weight: 600; color: #121a26"> {{ group.workspace_name }}/<a target="_blank" style="color: #121a26; text-decoration: none" href="{{ group.project_url }}">{{ group.project_name }}</a> </p>
+          </div>
+          <!-- Work items -->
+          <table role="presentation" cellspacing="0" cellpadding="0" style="width: 100%; background-color: white; border-radius: 8px">
+            {% for item in group.issues %}
+            <tr>
+              <td style="padding: 12px 15px; border-bottom: 1px solid #f0f0f3">
+                <p style="font-size: 0.9rem; line-height: 22px; color: #1f2d5c">
+                  <a target="_blank" style="color: #3358d4; text-decoration: none; font-weight: 600" href="{{ item.url }}">{{ item.identifier }}</a>
+                  <span style="color: #1f2d5c"> {{ item.name }}</span>
+                </p>
+                <p style="font-size: 0.75rem; line-height: 20px; color: #60646c; margin-top: 4px">
+                  <span style="color: {{ item.state_color }}">&#9679;</span> {{ item.state_name }}
+                  {% if item.priority_label %} <span style="color: #c1c8cd">|</span> <span style="color: {{ item.priority_color }}; font-weight: 600">{{ item.priority_label }}</span> {% endif %}
+                  {% if item.days_overdue_label %} <span style="color: #c1c8cd">|</span> <span style="color: {{ section.accent }}; font-weight: 600">{{ item.days_overdue_label }}</span> <span style="color: #60646c">({{ item.due_date_label }})</span> {% endif %}
+                </p>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        <!-- Call to action -->
+        <div style="margin-top: 20px">
+          <a href="{{ assigned_url }}" target="_blank" style="display: inline-block; background-color: #3358d4; color: white; font-size: 0.9rem; font-weight: 500; text-decoration: none; padding: 10px 20px; border-radius: 6px"> Zobacz moje zadania </a>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div style="padding: 20px 30px">
+        <p style="font-size: 0.75rem; color: #60646c; line-height: 20px"> To jest automatyczne przypomnienie wysyłane codziennie rano o zadaniach z terminem na dzisiaj oraz o zadaniach, których termin już minął. </p>
+      </div>
+    </div>
+  </body>
+</html>

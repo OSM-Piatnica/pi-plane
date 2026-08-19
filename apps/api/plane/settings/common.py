@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """Global Settings"""
@@ -305,7 +306,14 @@ CELERY_IMPORTS = (
     # issue version tasks
     "plane.bgtasks.issue_version_sync",
     "plane.bgtasks.issue_description_version_sync",
+    # work item reminders
+    "plane.bgtasks.work_item_due_reminder_task",
 )
+
+# Work item due date reminders
+# Celery runs on UTC, so the reminder task ticks hourly and sends when it is this hour in this timezone.
+WORK_ITEM_DUE_REMINDER_TIMEZONE = os.environ.get("WORK_ITEM_DUE_REMINDER_TIMEZONE", "Europe/Warsaw")
+WORK_ITEM_DUE_REMINDER_HOUR = int(os.environ.get("WORK_ITEM_DUE_REMINDER_HOUR", 7))
 
 FILE_SIZE_LIMIT = int(os.environ.get("FILE_SIZE_LIMIT", 5242880))
 
