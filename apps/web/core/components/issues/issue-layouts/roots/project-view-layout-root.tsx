@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
 // plane constants
-import { ISSUE_DISPLAY_FILTERS_BY_PAGE, PROJECT_VIEW_TRACKER_ELEMENTS } from "@plane/constants";
+import { ISSUE_DISPLAY_FILTERS_BY_PAGE } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { EIssuesStoreType, EIssueLayoutTypes } from "@plane/types";
 // hooks
@@ -107,9 +107,6 @@ export const ProjectViewLayoutRoot = observer(function ProjectViewLayoutRoot() {
             {projectViewWorkItemsFilter && (
               <WorkItemFiltersRow
                 filter={projectViewWorkItemsFilter}
-                trackerElements={{
-                  saveView: PROJECT_VIEW_TRACKER_ELEMENTS.HEADER_SAVE_VIEW_BUTTON,
-                }}
               />
             )}
             <div className="relative h-full w-full overflow-auto">

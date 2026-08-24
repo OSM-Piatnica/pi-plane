@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import { useParams, useSearchParams } from "next/navigation";
 import useSWR from "swr";
 // plane imports
-import { GLOBAL_VIEW_TRACKER_ELEMENTS, ISSUE_DISPLAY_FILTERS_BY_PAGE } from "@plane/constants";
+import { ISSUE_DISPLAY_FILTERS_BY_PAGE } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { EmptyStateDetailed } from "@plane/propel/empty-state";
 import type { EIssueLayoutTypes } from "@plane/types";
@@ -154,9 +154,6 @@ export const AllIssueLayoutRoot = observer(function AllIssueLayoutRoot(props: Pr
               {globalWorkItemsFilter && (
                 <WorkItemFiltersRow
                   filter={globalWorkItemsFilter}
-                  trackerElements={{
-                    saveView: GLOBAL_VIEW_TRACKER_ELEMENTS.HEADER_SAVE_VIEW_BUTTON,
-                  }}
                 />
               )}
               <WorkspaceActiveLayout

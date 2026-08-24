@@ -9,7 +9,6 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "react-router";
 // plane imports
-import { PROJECT_TRACKER_ELEMENTS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 // components
@@ -74,11 +73,7 @@ export const GeneralProjectSettingsControlSection = observer(function GeneralPro
           title={t("delete")}
           description={t("project_components.control_section.delete_description")}
           control={
-            <Button
-              variant="error-outline"
-              onClick={() => setSelectedProject(currentProjectDetails.id ?? null)}
-              data-ph-element={PROJECT_TRACKER_ELEMENTS.DELETE_PROJECT_BUTTON}
-            >
+            <Button variant="error-outline" onClick={() => setSelectedProject(currentProjectDetails.id ?? null)}>
               {t("delete")}
             </Button>
           }

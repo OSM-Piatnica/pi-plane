@@ -13,7 +13,6 @@ export * from "./dashboard";
 export * from "./emoji";
 export * from "./endpoints";
 export * from "./estimates";
-export * from "./event-tracker";
 export * from "./file";
 export * from "./filter";
 export * from "./graph";

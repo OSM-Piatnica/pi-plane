@@ -16,7 +16,6 @@ import {
   getRoleI18nKey,
   EUserPermissions,
   EUserPermissionsLevel,
-  MEMBER_TRACKER_ELEMENTS,
 } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { TrashIcon, SuspendedUserIcon } from "@plane/propel/icons";
@@ -106,7 +105,6 @@ export function NameColumn(props: NameProps) {
                         setRemoveMemberModal(rowData);
                       }
                     }}
-                    data-ph-element={MEMBER_TRACKER_ELEMENTS.WORKSPACE_MEMBER_TABLE_CONTEXT_MENU}
                   >
                     <TrashIcon className="size-3.5 align-middle" /> {id === currentUser?.id ? "Leave " : "Remove "}
                   </div>

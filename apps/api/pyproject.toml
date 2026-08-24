@@ -49,8 +49,6 @@ dependencies = [
     "python-json-logger==4.2.0",
     # html parser
     "beautifulsoup4==4.15.0",
-    # analytics
-    "posthog==7.70.0",
     # crypto
     "cryptography==50.0.2",
     # html validator
