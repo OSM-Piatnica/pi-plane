@@ -20,7 +20,7 @@ import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
 
 type Props = {
   block: IGanttBlock;
-  ganttContainerRef: RefObject<HTMLDivElement>;
+  ganttContainerRef: RefObject<HTMLDivElement | null>;
   side: "left" | "right";
 };
 

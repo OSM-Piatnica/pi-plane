@@ -120,7 +120,7 @@ function CustomSelect(props: ICustomSelectProps) {
         </>
         {isOpen &&
           createPortal(
-            <Combobox.Options data-prevent-outside-click>
+            <Combobox.Options as="ul" data-prevent-outside-click>
               <div
                 className={cn(
                   "z-30 my-1 min-w-48 overflow-y-scroll rounded-md border-[0.5px] border-subtle-1 bg-surface-1 py-2.5 text-11 whitespace-nowrap focus:outline-none",
@@ -164,6 +164,7 @@ function Option(props: ICustomSelectItemProps) {
 
   return (
     <Combobox.Option
+      as="li"
       value={value}
       className={({ active }) =>
         cn(
