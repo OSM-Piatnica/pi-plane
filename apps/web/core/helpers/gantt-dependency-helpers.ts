@@ -1,76 +1,32 @@
-import type { IGanttBlock, TIssueRelationTypes } from "@plane/types";
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
 
-const GANTT_DEPENDENCY_RELATION_TYPES: TIssueRelationTypes[] = [
-  "blocked_by",
-  "blocking",
-  "start_before",
-  "start_after",
-  "finish_before",
-  "finish_after",
-];
+import type { IGanttBlock, TIssueRelationTypes } from "@plane/types";
+import type { TTimelineRelationType, TWorkItemTimelineDates } from "@plane/utils";
+import { TIMELINE_RELATION_TYPES, isTimelineRelationSatisfied } from "@plane/utils";
 
 export type TGanttDependencyEdge = {
   id: string;
   sourceId: string;
   targetId: string;
-  relationType: TIssueRelationTypes;
+  relationType: TTimelineRelationType;
   isInvalid: boolean;
 };
 
-type TIssueDates = {
-  start_date?: string | null;
-  target_date?: string | null;
-};
+type TIssueDates = TWorkItemTimelineDates;
 
 type TRelationMap = Record<string, Partial<Record<TIssueRelationTypes, string[]>> | undefined>;
 
-const parseDateKey = (value?: string | null): string | null => {
-  if (!value) return null;
-  const isoDay = /^(\d{4}-\d{2}-\d{2})/.exec(value);
-  if (isoDay) return isoDay[1];
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return null;
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
-};
-
-const isStrictlyBefore = (left: string, right: string) => left < right;
-
 export const isDependencyRelationInvalid = (
-  relationType: TIssueRelationTypes,
+  relationType: TTimelineRelationType,
   sourceDates: TIssueDates,
   relatedDates: TIssueDates
-): boolean => {
-  const sourceStart = parseDateKey(sourceDates.start_date);
-  const sourceTarget = parseDateKey(sourceDates.target_date);
-  const relatedStart = parseDateKey(relatedDates.start_date);
-  const relatedTarget = parseDateKey(relatedDates.target_date);
-
-  switch (relationType) {
-    case "blocked_by":
-      if (!relatedTarget || !sourceStart) return false;
-      return !isStrictlyBefore(relatedTarget, sourceStart);
-    case "blocking":
-      if (!sourceTarget || !relatedStart) return false;
-      return !isStrictlyBefore(sourceTarget, relatedStart);
-    case "finish_before":
-      if (!sourceTarget || !relatedStart) return false;
-      return !isStrictlyBefore(sourceTarget, relatedStart);
-    case "finish_after":
-      if (!relatedTarget || !sourceStart) return false;
-      return !isStrictlyBefore(relatedTarget, sourceStart);
-    case "start_before":
-      if (!sourceStart || !relatedStart) return false;
-      return !isStrictlyBefore(sourceStart, relatedStart);
-    case "start_after":
-      if (!relatedStart || !sourceStart) return false;
-      return !isStrictlyBefore(relatedStart, sourceStart);
-    default:
-      return false;
-  }
-};
+): boolean => !isTimelineRelationSatisfied(relationType, sourceDates, relatedDates);
 
 export const getDependencyArrowEndpoints = (
   relationType: TIssueRelationTypes,
@@ -103,7 +59,7 @@ export const buildGanttDependencyEdges = (
     const relations = relationMap[sourceId];
     if (!relations) continue;
 
-    for (const relationType of GANTT_DEPENDENCY_RELATION_TYPES) {
+    for (const relationType of TIMELINE_RELATION_TYPES) {
       const relatedIds = relations[relationType] ?? [];
       for (const relatedId of relatedIds) {
         if (!visible.has(relatedId)) continue;
@@ -153,7 +109,7 @@ export const wouldUpdatesViolateDependencies = (
     const sourceDates = getMergedDates(update.id);
     if (!sourceDates) continue;
 
-    for (const relationType of GANTT_DEPENDENCY_RELATION_TYPES) {
+    for (const relationType of TIMELINE_RELATION_TYPES) {
       for (const relatedId of relations[relationType] ?? []) {
         const relatedDates = getMergedDates(relatedId);
         if (!relatedDates) continue;
@@ -165,7 +121,7 @@ export const wouldUpdatesViolateDependencies = (
 
     for (const [otherId, otherRelations] of Object.entries(relationMap)) {
       if (!otherRelations || otherId === update.id) continue;
-      for (const relationType of GANTT_DEPENDENCY_RELATION_TYPES) {
+      for (const relationType of TIMELINE_RELATION_TYPES) {
         if (!(otherRelations[relationType] ?? []).includes(update.id)) continue;
         const otherDates = getMergedDates(otherId);
         const thisDates = getMergedDates(update.id);

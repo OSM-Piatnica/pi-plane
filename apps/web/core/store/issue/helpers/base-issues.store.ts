@@ -787,7 +787,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     projectId?: string
   ) {
     if (!projectId) return;
-    const issueDatesBeforeChange: { id: string; start_date?: string; target_date?: string }[] = [];
+    const rollbacks: { id: string; dates: Partial<TIssue> }[] = [];
     try {
       const getIssueById = this.rootIssueStore.issues.getIssueById;
       runInAction(() => {
@@ -799,11 +799,12 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
           const currIssue = getIssueById(dateUpdate.id);
 
           if (currIssue) {
-            issueDatesBeforeChange.push({
-              id: dateUpdate.id,
-              start_date: currIssue.start_date ?? undefined,
-              target_date: currIssue.target_date ?? undefined,
-            });
+            // Record exactly the fields about to be overwritten. A date that was empty has to
+            // roll back to empty, which a truthiness check would silently skip.
+            const previousDates: Partial<TIssue> = {};
+            if ("start_date" in dates) previousDates.start_date = currIssue.start_date ?? null;
+            if ("target_date" in dates) previousDates.target_date = currIssue.target_date ?? null;
+            rollbacks.push({ id: dateUpdate.id, dates: previousDates });
           }
 
           this.issueUpdate(workspaceSlug, projectId, dateUpdate.id, dates, false);
@@ -813,12 +814,8 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       await this.issueService.updateIssueDates(workspaceSlug, projectId, updates);
     } catch (e) {
       runInAction(() => {
-        for (const dateUpdate of issueDatesBeforeChange) {
-          const dates: Partial<TIssue> = {};
-          if (dateUpdate.start_date) dates.start_date = dateUpdate.start_date;
-          if (dateUpdate.target_date) dates.target_date = dateUpdate.target_date;
-
-          this.issueUpdate(workspaceSlug, projectId, dateUpdate.id, dates, false);
+        for (const rollback of rollbacks) {
+          this.issueUpdate(workspaceSlug, projectId, rollback.id, rollback.dates, false);
         }
       });
       console.error("error while updating Timeline dependencies");

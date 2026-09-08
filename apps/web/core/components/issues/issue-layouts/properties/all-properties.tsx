@@ -128,7 +128,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
       setToast({
         type: TOAST_TYPE.ERROR,
         title: t("common.error.label"),
-        message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") })),
+        message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") }), t),
       });
     }
   };
@@ -178,7 +178,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
       setToast({
         type: TOAST_TYPE.ERROR,
         title: t("common.error.label"),
-        message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") })),
+        message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") }), t),
       });
     }
   };
@@ -191,7 +191,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
       setToast({
         type: TOAST_TYPE.ERROR,
         title: t("common.error.label"),
-        message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") })),
+        message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") }), t),
       });
     }
   };

@@ -1187,6 +1187,22 @@ export default {
       dependency_create_failed: "Nie udało się utworzyć zależności. Spróbuj ponownie.",
       date_conflict:
         "Te daty kolidują z istniejącymi zależnościami. Dostosuj powiązane elementy pracy albo najpierw usuń zależność.",
+      conflict: {
+        date: {
+          blocked_by: "{issue} nie może się rozpocząć, dopóki {related} się nie zakończy (relacja: zablokowany przez).",
+          blocking: "{issue} musi się zakończyć przed rozpoczęciem {related} (relacja: blokuje).",
+          start_before: "{issue} musi się rozpocząć nie później niż {related} (relacja: zaczyna się przed).",
+          start_after: "{issue} nie może się rozpocząć wcześniej niż {related} (relacja: zaczyna się po).",
+          finish_before: "{issue} musi się zakończyć nie później niż {related} (relacja: kończy się przed).",
+          finish_after: "{issue} nie może się zakończyć wcześniej niż {related} (relacja: kończy się po).",
+        },
+        status: {
+          start_after:
+            "{issue} nie może się rozpocząć, dopóki {related} nie zostanie rozpoczęte (relacja: zaczyna się po).",
+          finish_after:
+            "{issue} nie może zostać ukończone, dopóki {related} nie zostanie ukończone (relacja: kończy się po).",
+        },
+      },
     },
     copy_link: "Kopiuj link do elementu pracy",
     delete: {

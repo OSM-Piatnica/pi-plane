@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -83,6 +84,7 @@ from plane.utils.path_validator import sanitize_filename
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
 from .base import BaseAPIView
 from plane.utils.host import base_host
+from plane.utils.issue_relation_constraints import TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
 from plane.bgtasks.webhook_task import model_activity
 from plane.app.permissions import ROLE
@@ -2482,7 +2484,7 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
         actual_relation = get_actual_relation(relation_type)
         is_reverse = relation_type in ["blocking", "start_after", "finish_after"]
 
-        if relation_type in ["start_before", "start_after", "finish_before", "finish_after"]:
+        if relation_type in TIMELINE_RELATION_TYPES:
             from plane.utils.issue_timeline_relation_validation import validate_new_timeline_relation
 
             current_issue = (
@@ -2502,7 +2504,7 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
                     )
                 timeline_error = validate_new_timeline_relation(current_issue, related_issue, relation_type)
                 if timeline_error:
-                    return Response({"error": timeline_error}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(timeline_error, status=status.HTTP_400_BAD_REQUEST)
 
         IssueRelation.objects.bulk_create(
             [

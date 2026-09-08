@@ -1,15 +1,19 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useRef } from "react";
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
+import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 // types
 import type { IIssueDisplayProperties, TIssue } from "@plane/types";
 // components
 import { SPREADSHEET_COLUMNS } from "@/plane-web/components/issues/issue-layouts/utils";
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 import { shouldRenderColumn } from "@/helpers/issue-filter.helper";
 import { WithDisplayPropertiesHOC } from "../properties/with-display-properties-HOC";
 
@@ -24,6 +28,7 @@ type Props = {
 
 export const IssueColumn = observer(function IssueColumn(props: Props) {
   const { displayProperties, issueDetail, disableUserActions, property, updateIssue } = props;
+  const { t } = useTranslation();
   // router
   const tableCellRef = useRef<HTMLTableCellElement | null>(null);
 
@@ -34,7 +39,16 @@ export const IssueColumn = observer(function IssueColumn(props: Props) {
   if (!Column) return null;
 
   const handleUpdateIssue = async (issue: TIssue, data: Partial<TIssue>) => {
-    if (updateIssue) await updateIssue(issue.project_id, issue.id, data);
+    if (!updateIssue) return;
+    try {
+      await updateIssue(issue.project_id, issue.id, data);
+    } catch (error) {
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: t("common.error.label"),
+        message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") }), t),
+      });
+    }
   };
 
   return (

@@ -255,6 +255,15 @@ class IssueCreateSerializer(BaseSerializer):
             ).exists():
                 raise serializers.ValidationError("Issue type is not enabled for this project")
 
+        # Checked last on purpose: the dates are the ones `reconcile_work_item_duration` derived
+        # above, and a state the workflow just pulled out of attrs no longer counts as a change.
+        if self.instance is not None:
+            from plane.utils.issue_timeline_relation_validation import validate_issue_update_payload
+
+            timeline_error = validate_issue_update_payload(self.instance, attrs)
+            if timeline_error:
+                raise serializers.ValidationError(timeline_error)
+
         return attrs
 
     def create(self, validated_data):

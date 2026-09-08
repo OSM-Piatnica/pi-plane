@@ -90,7 +90,8 @@ export const IssuePeekOverview = observer(function IssuePeekOverview(props: IWor
                 type: TOAST_TYPE.ERROR,
                 message: getIssueApiErrorMessage(
                   error,
-                  t("entity.update.failed", { entity: t("issue.label", { count: 1 }) })
+                  t("entity.update.failed", { entity: t("issue.label", { count: 1 }) }),
+                  t
                 ),
               });
             });

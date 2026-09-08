@@ -1,3 +1,11 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
 import type { RefObject } from "react";
 import { useCallback } from "react";
 import { observer } from "mobx-react";
@@ -8,6 +16,7 @@ import type { IGanttBlock, TIssueRelationTypes } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 import { cn } from "@plane/utils";
 import { BLOCK_HEIGHT, HEADER_HEIGHT, SIDEBAR_WIDTH } from "@/components/gantt-chart/constants";
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
 
@@ -120,11 +129,11 @@ export const DependencySideDraggable = observer(function DependencySideDraggable
           title: t("common.success"),
           message: t("issue.relation.dependency_created"),
         });
-      } catch {
+      } catch (error) {
         setToast({
           type: TOAST_TYPE.ERROR,
           title: t("toast.error"),
-          message: t("issue.relation.dependency_create_failed"),
+          message: getIssueApiErrorMessage(error, t("issue.relation.dependency_create_failed"), t),
         });
       }
     };

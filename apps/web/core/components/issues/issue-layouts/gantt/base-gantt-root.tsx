@@ -22,6 +22,7 @@ import { GanttChartRoot } from "@/components/gantt-chart/root";
 import { IssueGanttSidebar } from "@/components/gantt-chart/sidebar/issues/sidebar";
 // helpers
 import { wouldUpdatesViolateDependencies } from "@/helpers/gantt-dependency-helpers";
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
 import { useIssues } from "@/hooks/store/use-issues";
 import { useUserPermissions } from "@/hooks/store/user";
@@ -125,11 +126,14 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
         return;
       }
 
-      return issues.updateIssueDates(workspaceSlug.toString(), updates, projectId.toString()).catch(() => {
+      return issues.updateIssueDates(workspaceSlug.toString(), updates, projectId.toString()).catch((error) => {
+        // The pre-check above only sees relations of the blocks currently on screen, so a
+        // conflict with a work item outside the view reaches us as a rejection from the server.
+        refreshBlockPositions();
         setToast({
           type: TOAST_TYPE.ERROR,
           title: t("toast.error"),
-          message: "Error while updating work item dates, Please try again Later",
+          message: getIssueApiErrorMessage(error, t("issue.relation.date_conflict"), t),
         });
       });
     },
