@@ -164,7 +164,7 @@ class IssueSerializer(BaseSerializer):
 
             timeline_error = validate_issue_update_payload(self.instance, data)
             if timeline_error:
-                raise serializers.ValidationError({"error": timeline_error})
+                raise serializers.ValidationError(timeline_error)
 
         return data
 

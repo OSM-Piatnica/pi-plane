@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,6 +12,8 @@ import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { TIssue, TIssueServiceType } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 import { copyUrlToClipboard } from "@plane/utils";
+// helpers
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 
@@ -46,11 +49,11 @@ export const useRelationOperations = (
             type: TOAST_TYPE.SUCCESS,
             message: t("entity.update.success", { entity: entityName }),
           });
-        } catch (_error) {
+        } catch (error) {
           setToast({
             title: t("toast.error"),
             type: TOAST_TYPE.ERROR,
-            message: t("entity.update.failed", { entity: entityName }),
+            message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: entityName }), t),
           });
         }
       },

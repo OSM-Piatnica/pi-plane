@@ -1026,6 +1026,20 @@ export default {
       dependency_create_failed: "Could not create dependency. Please try again.",
       date_conflict:
         "These dates conflict with existing dependencies. Adjust related work items or remove the dependency first.",
+      conflict: {
+        date: {
+          blocked_by: "{issue} cannot start until {related} is finished (blocked by relation).",
+          blocking: "{issue} has to finish before {related} starts (blocking relation).",
+          start_before: "{issue} has to start on or before {related} (starts before relation).",
+          start_after: "{issue} cannot start before {related} (starts after relation).",
+          finish_before: "{issue} has to finish on or before {related} (finishes before relation).",
+          finish_after: "{issue} cannot finish before {related} (finishes after relation).",
+        },
+        status: {
+          start_after: "{issue} cannot start until {related} has started (starts after relation).",
+          finish_after: "{issue} cannot be completed until {related} is completed (finishes after relation).",
+        },
+      },
     },
     copy_link: "Copy work item link",
     delete: {

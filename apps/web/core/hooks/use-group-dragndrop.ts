@@ -1,10 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useParams } from "next/navigation";
+import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { EIssuesStoreType, TIssue, TIssueGroupByOptions, TIssueOrderByOptions } from "@plane/types";
 import type { GroupDropLocation } from "@/components/issues/issue-layouts/utils";
@@ -35,6 +37,7 @@ export const useGroupIssuesDragNDrop = (
   subGroupBy?: TIssueGroupByOptions
 ) => {
   const { workspaceSlug } = useParams();
+  const { t } = useTranslation();
 
   const {
     issue: { getIssueById },
@@ -99,7 +102,7 @@ export const useGroupIssuesDragNDrop = (
       updateIssue(projectId, issueId, data).catch((err) =>
         setToast({
           ...errorToastProps,
-          message: err?.state_id?.[0] ?? err?.detail ?? errorToastProps.message,
+          message: getIssueApiErrorMessage(err, errorToastProps.message, t),
         })
       );
     }
@@ -127,7 +130,7 @@ export const useGroupIssuesDragNDrop = (
       setToast({
         title: "Error!",
         type: TOAST_TYPE.ERROR,
-        message: err?.detail ?? "Failed to perform this action",
+        message: getIssueApiErrorMessage(err, "Failed to perform this action", t),
       });
     });
   };

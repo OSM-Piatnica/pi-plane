@@ -1,4 +1,32 @@
-export type TTimelineRelationType = "start_before" | "start_after" | "finish_before" | "finish_after";
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+/**
+ * Mirror of `plane/utils/issue_relation_constraints.py`. Both sides have to answer the same
+ * question the same way, so any rule changed here has to be changed there too.
+ */
+
+export type TTimelineRelationType =
+  | "blocked_by"
+  | "blocking"
+  | "start_before"
+  | "start_after"
+  | "finish_before"
+  | "finish_after";
+
+export const TIMELINE_RELATION_TYPES: TTimelineRelationType[] = [
+  "blocked_by",
+  "blocking",
+  "start_before",
+  "start_after",
+  "finish_before",
+  "finish_after",
+];
 
 export type TWorkItemTimelineDates = {
   start_date?: string | Date | null;
@@ -18,6 +46,11 @@ const toDate = (value: string | Date | null | undefined): Date | null => {
 const isOnOrBefore = (left: Date | null, right: Date | null): boolean => {
   if (!left || !right) return true;
   return left.getTime() <= right.getTime();
+};
+
+const isStrictlyBefore = (left: Date | null, right: Date | null): boolean => {
+  if (!left || !right) return true;
+  return left.getTime() < right.getTime();
 };
 
 export const isStartBeforeSatisfied = (
@@ -40,12 +73,27 @@ export const isFinishAfterSatisfied = (
   relatedFinish: string | Date | null | undefined
 ): boolean => isFinishBeforeSatisfied(relatedFinish, issueFinish);
 
+/**
+ * Finish-to-start: the blocker has to be done before the blocked work item starts.
+ *
+ * Both dates are inclusive calendar days, so a blocker finishing on the day the blocked item
+ * starts still overlaps it. Hence the strict comparison, unlike the start/finish pairs above.
+ */
+export const isBlockedBySatisfied = (
+  issueStart: string | Date | null | undefined,
+  blockerFinish: string | Date | null | undefined
+): boolean => isStrictlyBefore(toDate(blockerFinish), toDate(issueStart));
+
 export const isTimelineRelationSatisfied = (
   relationType: TTimelineRelationType,
   issueDates: TWorkItemTimelineDates,
   relatedDates: TWorkItemTimelineDates
 ): boolean => {
   switch (relationType) {
+    case "blocked_by":
+      return isBlockedBySatisfied(issueDates.start_date, relatedDates.target_date);
+    case "blocking":
+      return isBlockedBySatisfied(relatedDates.start_date, issueDates.target_date);
     case "start_before":
       return isStartBeforeSatisfied(issueDates.start_date, relatedDates.start_date);
     case "start_after":

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -30,6 +31,7 @@ from plane.db.models import (
     CycleIssue,
 )
 from plane.bgtasks.issue_activities_task import issue_activity
+from plane.utils.issue_relation_constraints import TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
 from plane.utils.host import base_host
 
@@ -217,7 +219,7 @@ class IssueRelationViewSet(BaseViewSet):
         issues = request.data.get("issues", [])
         project = Project.objects.get(pk=project_id)
 
-        if relation_type in ["start_before", "start_after", "finish_before", "finish_after"]:
+        if relation_type in TIMELINE_RELATION_TYPES:
             from plane.utils.issue_timeline_relation_validation import validate_new_timeline_relation
 
             current_issue = (
@@ -237,7 +239,7 @@ class IssueRelationViewSet(BaseViewSet):
                     )
                 timeline_error = validate_new_timeline_relation(current_issue, related_issue, relation_type)
                 if timeline_error:
-                    return Response({"error": timeline_error}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(timeline_error, status=status.HTTP_400_BAD_REQUEST)
 
         issue_relation = IssueRelation.objects.bulk_create(
             [

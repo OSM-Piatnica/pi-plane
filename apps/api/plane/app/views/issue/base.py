@@ -72,6 +72,7 @@ from plane.utils.grouper import (
 )
 from plane.utils.host import base_host
 from plane.utils.issue_filters import issue_filters
+from plane.utils.issue_timeline_relation_validation import validate_issue_dates_batch
 from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
 from plane.utils.timezone_converter import user_timezone_converter
@@ -1114,14 +1115,17 @@ class IssueDetailEndpoint(BaseAPIView):
 
 
 class IssueBulkUpdateDateEndpoint(BaseAPIView):
-    def validate_dates(self, current_start, current_target, new_start, new_target):
+    def validate_dates(self, current_start, current_target, update):
         """
         Validate that start date is before target date.
+
+        A key missing from `update` means the caller left that date alone, while a key holding
+        None means the caller cleared it. Both differ from "no date at all".
         """
         from datetime import datetime
 
-        start = new_start or current_start
-        target = new_target or current_target
+        start = update["start_date"] if "start_date" in update else current_start
+        target = update["target_date"] if "target_date" in update else current_target
 
         # Convert string dates to datetime objects if they're strings
         if isinstance(start, str):
@@ -1137,7 +1141,7 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
     def post(self, request, slug, project_id):
         updates = request.data.get("updates", [])
 
-        issue_ids = [update["id"] for update in updates]
+        issue_ids = [update["id"] for update in updates if update.get("id")]
         epoch = int(timezone.now().timestamp())
 
         # Fetch all relevant issues in a single query
@@ -1150,87 +1154,81 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
         issues_to_update = []
 
         for update in updates:
-            issue_id = update["id"]
-            issue = issues_dict.get(issue_id)
-
+            issue = issues_dict.get(str(update.get("id")))
             if not issue:
                 continue
 
-            start_date = update.get("start_date")
-            target_date = update.get("target_date")
-            validate_dates = self.validate_dates(issue.start_date, issue.target_date, start_date, target_date)
-            if not validate_dates:
+            if not self.validate_dates(issue.start_date, issue.target_date, update):
                 return Response(
                     {"message": "Start date cannot exceed target date"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            from plane.utils.issue_timeline_relation_validation import validate_issue_timeline_relations
+        # The whole batch is validated against its own proposed state, so dragging two linked
+        # work items at once is not rejected because one of them still sees a stale neighbour.
+        timeline_error = validate_issue_dates_batch(updates, issues_dict)
+        if timeline_error:
+            return Response(timeline_error, status=status.HTTP_400_BAD_REQUEST)
 
-            proposed_start = start_date if start_date is not None else issue.start_date
-            proposed_target = target_date if target_date is not None else issue.target_date
-            if start_date is not None or target_date is not None:
-                timeline_error = validate_issue_timeline_relations(
-                    issue,
-                    start_date=proposed_start,
-                    target_date=proposed_target,
-                    check_dates=True,
-                    check_status=False,
-                )
-                if timeline_error:
-                    return Response({"error": timeline_error, "message": timeline_error}, status=status.HTTP_400_BAD_REQUEST)
+        for update in updates:
+            issue_id = str(update.get("id"))
+            issue = issues_dict.get(issue_id)
+
+            if not issue:
+                continue
 
             dates_changed = False
 
-            if start_date:
+            if "start_date" in update:
                 issue_activity.delay(
                     type="issue.activity.updated",
                     requested_data=json.dumps({"start_date": update.get("start_date")}),
-                    current_instance=json.dumps({"start_date": str(issue.start_date)}),
-                    issue_id=str(issue_id),
+                    current_instance=json.dumps(
+                        {"start_date": str(issue.start_date) if issue.start_date else None}
+                    ),
+                    issue_id=issue_id,
                     actor_id=str(request.user.id),
                     project_id=str(project_id),
                     epoch=epoch,
                 )
-                issue.start_date = start_date
-                issues_to_update.append(issue)
+                issue.start_date = update["start_date"]
                 dates_changed = True
 
-            if target_date:
+            if "target_date" in update:
                 issue_activity.delay(
                     type="issue.activity.updated",
                     requested_data=json.dumps({"target_date": update.get("target_date")}),
-                    current_instance=json.dumps({"target_date": str(issue.target_date)}),
-                    issue_id=str(issue_id),
+                    current_instance=json.dumps(
+                        {"target_date": str(issue.target_date) if issue.target_date else None}
+                    ),
+                    issue_id=issue_id,
                     actor_id=str(request.user.id),
                     project_id=str(project_id),
                     epoch=epoch,
                 )
-                issue.target_date = target_date
-                issues_to_update.append(issue)
+                issue.target_date = update["target_date"]
                 dates_changed = True
+
+            if not dates_changed:
+                continue
 
             # Dates drive the duration, so recalculate it whenever a date actually moved. This
             # endpoint bypasses the serializer, so without this a timeline drag would leave a
             # stale duration behind.
-            if dates_changed:
-                new_duration = calculate_work_item_duration(issue.start_date, issue.target_date)
-                if (
-                    new_duration is not None
-                    and new_duration >= WORK_ITEM_DURATION_MIN
-                    and new_duration != issue.duration
-                ):
-                    issue_activity.delay(
-                        type="issue.activity.updated",
-                        requested_data=json.dumps({"duration": new_duration}),
-                        current_instance=json.dumps({"duration": issue.duration}),
-                        issue_id=str(issue_id),
-                        actor_id=str(request.user.id),
-                        project_id=str(project_id),
-                        epoch=epoch,
-                    )
-                    issue.duration = new_duration
-                    issues_to_update.append(issue)
+            new_duration = calculate_work_item_duration(issue.start_date, issue.target_date)
+            if new_duration is not None and new_duration >= WORK_ITEM_DURATION_MIN and new_duration != issue.duration:
+                issue_activity.delay(
+                    type="issue.activity.updated",
+                    requested_data=json.dumps({"duration": new_duration}),
+                    current_instance=json.dumps({"duration": issue.duration}),
+                    issue_id=issue_id,
+                    actor_id=str(request.user.id),
+                    project_id=str(project_id),
+                    epoch=epoch,
+                )
+                issue.duration = new_duration
+
+            issues_to_update.append(issue)
 
         # Bulk update issues
         Issue.objects.bulk_update(issues_to_update, ["start_date", "target_date", "duration"])

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,6 +10,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { observer } from "mobx-react";
 // plane imports
 import type { EditorRefApi } from "@plane/editor";
+import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { TIssue, TNameDescriptionLoader } from "@plane/types";
 import { EFileAssetType, EInboxIssueSource, EInboxIssueStatus } from "@plane/types";
@@ -22,6 +24,8 @@ import type { TIssueOperations } from "@/components/issues/issue-detail";
 import { IssueActivity } from "@/components/issues/issue-detail/issue-activity";
 import { IssueReaction } from "@/components/issues/issue-detail/reactions";
 import { IssueTitleInput } from "@/components/issues/title-input";
+// helpers
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useMember } from "@/hooks/store/use-member";
@@ -52,6 +56,7 @@ type Props = {
 
 export const InboxIssueMainContent = observer(function InboxIssueMainContent(props: Props) {
   const { workspaceSlug, projectId, inboxIssue, isEditable, isSubmitting, setIsSubmitting } = props;
+  const { t } = useTranslation();
   // refs
   const editorRef = useRef<EditorRefApi>(null);
   // store hooks
@@ -117,11 +122,11 @@ export const InboxIssueMainContent = observer(function InboxIssueMainContent(pro
       update: async (_workspaceSlug: string, _projectId: string, _issueId: string, data: Partial<TIssue>) => {
         try {
           await inboxIssue.updateIssue(data);
-        } catch (_error) {
+        } catch (error) {
           setToast({
             title: "Work item update failed",
             type: TOAST_TYPE.ERROR,
-            message: "Work item update failed",
+            message: getIssueApiErrorMessage(error, "Work item update failed", t),
           });
         }
       },
@@ -133,7 +138,7 @@ export const InboxIssueMainContent = observer(function InboxIssueMainContent(pro
         }
       },
     }),
-    [inboxIssue]
+    [inboxIssue, t]
   );
 
   if (!issue) return <></>;

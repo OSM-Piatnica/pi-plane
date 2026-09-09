@@ -1,15 +1,19 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { ISearchIssueResponse, TIssue, TIssueServiceType, TWorkItemWidgets } from "@plane/types";
 // components
 import { ExistingIssuesListModal } from "@/components/core/modals/existing-issues-list-modal";
+// helpers
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 // plane web imports
@@ -31,6 +35,7 @@ type Props = {
 
 export const IssueDetailWidgetModals = observer(function IssueDetailWidgetModals(props: Props) {
   const { workspaceSlug, projectId, issueId, issueServiceType, hideWidgets } = props;
+  const { t } = useTranslation();
   // store hooks
   const {
     isIssueLinkModalOpen,
@@ -119,13 +124,22 @@ export const IssueDetailWidgetModals = observer(function IssueDetailWidgetModals
       return;
     }
 
-    await createRelation(
-      workspaceSlug,
-      projectId,
-      issueId,
-      relationKey,
-      data.map((i) => i.id)
-    );
+    try {
+      await createRelation(
+        workspaceSlug,
+        projectId,
+        issueId,
+        relationKey,
+        data.map((i) => i.id)
+      );
+    } catch (error) {
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: t("toast.error"),
+        message: getIssueApiErrorMessage(error, t("issue.relation.dependency_create_failed"), t),
+      });
+      return;
+    }
 
     toggleRelationModal(null, null);
   };

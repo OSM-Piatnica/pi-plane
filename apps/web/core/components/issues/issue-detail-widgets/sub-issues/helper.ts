@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,6 +12,8 @@ import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { TIssueServiceType, TSubIssueOperations } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 import { copyUrlToClipboard } from "@plane/utils";
+// helpers
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 
@@ -102,11 +105,11 @@ export const useSubIssueOperations = (issueServiceType: TIssueServiceType): TSub
             message: t("sub_work_item.update.success"),
           });
           setSubIssueHelpers(parentIssueId, "issue_loader", issueId);
-        } catch (_error) {
+        } catch (error) {
           setToast({
             type: TOAST_TYPE.ERROR,
             title: t("toast.error"),
-            message: t("sub_work_item.update.error"),
+            message: getIssueApiErrorMessage(error, t("sub_work_item.update.error"), t),
           });
         }
       },

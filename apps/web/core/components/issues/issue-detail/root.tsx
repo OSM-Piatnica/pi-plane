@@ -105,7 +105,7 @@ export const IssueDetailRoot = observer(function IssueDetailRoot(props: TIssueDe
           setToast({
             title: t("common.error.label"),
             type: TOAST_TYPE.ERROR,
-            message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") })),
+            message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") }), t),
           });
         }
       },
