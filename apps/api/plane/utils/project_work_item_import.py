@@ -5,19 +5,29 @@
 # See the LICENSE file for details.
 
 import json
+import re
+import uuid
+from datetime import date, datetime, time, timezone as dt_timezone
 
 from django.db import transaction
-from django.db.models import Max
+from django.db.models import Max, Q
 
 from plane.db.models import (
+    Cycle,
+    CycleIssue,
+    EstimatePoint,
     Issue,
     IssueActivity,
     IssueAssignee,
     IssueLabel,
     IssuePropertyValue,
+    IssueRelation,
     IssueSequence,
+    IssueSubscriber,
     IssueType,
     Label,
+    Module,
+    ModuleIssue,
     Project,
     ProjectIssueType,
     ProjectMember,
@@ -25,6 +35,7 @@ from plane.db.models import (
     WorkspaceMember,
 )
 from plane.utils.html_processor import strip_tags
+from plane.utils.issue_relation_mapper import get_actual_relation
 from plane.utils.issue_type_property import validate_property_value
 from plane.utils.work_item_duration import (
     normalize_work_item_duration,
@@ -34,6 +45,16 @@ from plane.utils.work_item_duration import (
 
 MAX_WORK_ITEMS_IMPORT = 500
 ALLOWED_PRIORITIES = frozenset({"urgent", "high", "medium", "low", "none"})
+DEFAULT_LABEL_COLOR = "#858585"
+ISO_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+# Relation types whose canonical database row points the other way round
+_MIRRORED_RELATIONS = frozenset({"blocking", "start_after", "finish_after", "implements"})
+_ALLOWED_RELATIONS = frozenset(
+    {"blocked_by", "blocking", "relates_to", "duplicate", "start_before", "start_after",
+     "finish_before", "finish_after", "implemented_by", "implements"}
+)
+_IDENTIFIER_PATTERN = re.compile(r"^([A-Za-z0-9]+)-(\d+)$")
 
 
 def _coerce_list(value) -> list:
@@ -69,6 +90,214 @@ def _coerce_dict(value) -> dict:
     return {}
 
 
+def _parse_import_date(value):
+    """Return an ISO date string, or None when the cell cannot be read as a date."""
+    if value in [None, ""]:
+        return None
+    if isinstance(value, datetime):
+        return value.date().isoformat()
+    if isinstance(value, date):
+        return value.isoformat()
+    text = str(value).strip()
+    if not text:
+        return None
+    if ISO_DATE_PATTERN.match(text):
+        try:
+            return date.fromisoformat(text).isoformat()
+        except ValueError:
+            return None
+    # Exports always write ISO dates; a spreadsheet may hand back a timestamp instead
+    try:
+        return datetime.fromisoformat(text.replace("Z", "+00:00")).date().isoformat()
+    except ValueError:
+        return None
+
+
+def _coerce_relations(value) -> list[dict]:
+    """Accept the export shape [{"type": ..., "issue": ...}] and tolerate bare identifiers."""
+    entries = []
+    raw = value
+    if isinstance(raw, str):
+        text = raw.strip()
+        if not text:
+            return []
+        try:
+            raw = json.loads(text)
+        except (json.JSONDecodeError, TypeError):
+            raw = [part.strip() for part in text.split(",") if part.strip()]
+    if isinstance(raw, dict):
+        raw = [raw]
+    if not isinstance(raw, list):
+        return []
+
+    for item in raw:
+        if isinstance(item, dict):
+            target = str(item.get("issue") or item.get("identifier") or "").strip()
+            relation_type = str(item.get("type") or "relates_to").strip().lower()
+        else:
+            target = str(item).strip()
+            relation_type = "relates_to"
+        if not target:
+            continue
+        entries.append({"type": relation_type, "issue": target})
+    return entries
+
+
+def _resolve_people(
+    *,
+    emails,
+    names,
+    members_by_email: dict,
+    members_by_name: dict,
+    project_member_ids: set,
+    warnings: list[str],
+    row_number: int,
+    role: str,
+) -> list:
+    """Resolve a people column to user ids, preferring e-mail over name."""
+    resolved = []
+    pending_names = _coerce_list(names)
+
+    for entry in _coerce_list(emails):
+        text = str(entry).strip()
+        if not text:
+            continue
+        if "@" not in text:
+            pending_names.append(text)
+            continue
+        member = members_by_email.get(text.lower())
+        if member is None:
+            warnings.append(f'Row {row_number}: {role} "{text}" is not a member of this workspace, skipped')
+            continue
+        if member.id not in resolved:
+            resolved.append(member.id)
+
+    for entry in pending_names:
+        text = str(entry).strip()
+        if not text or "@" in text:
+            continue
+        member = members_by_name.get(text.lower())
+        if member is None:
+            warnings.append(f'Row {row_number}: {role} "{text}" was not matched to a person, skipped')
+            continue
+        if member.id not in resolved:
+            resolved.append(member.id)
+
+    outsiders = [member_id for member_id in resolved if member_id not in project_member_ids]
+    if outsiders:
+        warnings.append(
+            f"Row {row_number}: {len(outsiders)} {role}(s) belong to the workspace but not to this project"
+        )
+    return resolved
+
+
+def _member_values_to_ids(value, members_by_email: dict, members_by_name: dict) -> tuple[list[str], list[str]]:
+    """Turn member picker values written as e-mails back into user ids."""
+    entries = value if isinstance(value, list) else [value]
+    resolved: list[str] = []
+    unknown: list[str] = []
+    for entry in entries:
+        text = str(entry).strip()
+        if not text:
+            continue
+        member = members_by_email.get(text.lower()) if "@" in text else members_by_name.get(text.lower())
+        if member:
+            resolved.append(str(member.id))
+        elif _is_uuid_like(text):
+            resolved.append(text)
+        else:
+            unknown.append(text)
+    return resolved, unknown
+
+
+def _is_uuid_like(text: str) -> bool:
+    try:
+        uuid.UUID(str(text))
+    except (ValueError, AttributeError, TypeError):
+        return False
+    return True
+
+
+def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycles_by_name: dict) -> dict:
+    """
+    Create the cycles named in the file but absent from the project.
+
+    A cycle stores a period, which the work item export does not carry, so the period is
+    derived from the work items assigned to it. Plane treats a cycle without dates as a
+    draft, which is what an undated cycle becomes.
+    """
+    spans: dict[str, dict] = {}
+    for item in prepared:
+        name = item.get("cycle_name")
+        if not name:
+            continue
+        key = name.lower()
+        if key in cycles_by_name:
+            continue
+        span = spans.setdefault(key, {"name": name, "start": None, "end": None})
+        for field, bound, pick in (("start_date", "start", min), ("target_date", "end", max)):
+            value = item.get(field)
+            if not value:
+                continue
+            span[bound] = value if span[bound] is None else pick(span[bound], value)
+
+    created = {}
+    for key, span in spans.items():
+        created[key] = Cycle.objects.create(
+            name=span["name"][:255],
+            project=project,
+            workspace=project.workspace,
+            owned_by=user,
+            created_by=user,
+            start_date=_to_cycle_datetime(span["start"]),
+            end_date=_to_cycle_datetime(span["end"]),
+        )
+    return created
+
+
+def _to_cycle_datetime(value):
+    """Cycles store timestamps while work items store plain dates."""
+    parsed = to_work_item_date(value)
+    if parsed is None:
+        return None
+    return datetime.combine(parsed, time.min, tzinfo=dt_timezone.utc)
+
+
+def _lookup_existing_targets(project: Project, prepared: list[dict], key_to_issue: dict) -> dict:
+    """Resolve PROJ-123 references that the file itself does not contain."""
+    wanted: set[str] = set()
+    for item in prepared:
+        parent_key = item.get("parent_external_key") or ""
+        if parent_key and parent_key.lower() not in key_to_issue:
+            wanted.add(parent_key)
+        for relation in item.get("relations") or []:
+            target = relation.get("issue") or ""
+            if target and target.lower() not in key_to_issue:
+                wanted.add(target)
+
+    sequences_by_identifier: dict[str, set[int]] = {}
+    for text in wanted:
+        match = _IDENTIFIER_PATTERN.match(str(text).strip())
+        if match:
+            sequences_by_identifier.setdefault(match.group(1).upper(), set()).add(int(match.group(2)))
+
+    if not sequences_by_identifier:
+        return {}
+
+    lookup = Q()
+    for identifier, sequences in sequences_by_identifier.items():
+        lookup |= Q(project__identifier=identifier, sequence_id__in=sequences)
+
+    found = {}
+    for issue in (
+        Issue.objects.filter(workspace_id=project.workspace_id, deleted_at__isnull=True)
+        .filter(lookup)
+        .select_related("project")
+    ):
+        found[f"{issue.project.identifier}-{issue.sequence_id}".lower()] = issue
+    return found
+
+
 def _normalize_description_html(raw) -> str:
     if raw in [None, ""]:
         return "<p></p>"
@@ -80,6 +309,7 @@ def _normalize_description_html(raw) -> str:
     return f"<p>{text}</p>"
 
 
+@transaction.atomic
 def import_work_items_into_project(
     *,
     project: Project,
@@ -87,7 +317,12 @@ def import_work_items_into_project(
     rows: list[dict],
     warnings: list[str] | None = None,
 ) -> dict:
-    """Create work items from export rows (two-pass for parent links)."""
+    """
+    Create work items from export rows.
+
+    Runs in one transaction so labels and modules created along the way are rolled back
+    together with the work items if anything fails.
+    """
     warnings = warnings if warnings is not None else []
 
     if not rows:
@@ -125,36 +360,55 @@ def import_work_items_into_project(
         for issue_type in IssueType.objects.filter(id__in=issue_type_ids, deleted_at__isnull=True)
     }
 
-    members_by_email = {
-        (member.member.email or "").strip().lower(): member.member
-        for member in ProjectMember.objects.filter(
-            project_id=project.id,
-            is_active=True,
-            deleted_at__isnull=True,
-        ).select_related("member")
-        if member.member and member.member.email
+    modules_by_name = {
+        module.name.strip().lower(): module
+        for module in Module.objects.filter(project_id=project.id, deleted_at__isnull=True)
     }
-    members_by_name = {
-        (member.member.display_name or member.member.full_name or "").strip().lower(): member.member
-        for member in ProjectMember.objects.filter(
-            project_id=project.id,
-            is_active=True,
-            deleted_at__isnull=True,
-        ).select_related("member")
-        if member.member
-        and (member.member.display_name or member.member.full_name)
+    cycles_by_name = {
+        cycle.name.strip().lower(): cycle
+        for cycle in Cycle.objects.filter(project_id=project.id, deleted_at__isnull=True)
     }
+    estimate_points_by_value = {}
+    if project.estimate_id:
+        estimate_points_by_value = {
+            str(point.value).strip().lower(): point
+            for point in EstimatePoint.objects.filter(
+                estimate_id=project.estimate_id,
+                deleted_at__isnull=True,
+            )
+        }
+
+    members_by_email = {}
+    members_by_name = {}
+    project_member_ids = set()
+
+    def _index_member(member, *, in_project: bool) -> None:
+        if not member:
+            return
+        if in_project:
+            project_member_ids.add(member.id)
+        email = (member.email or "").strip().lower()
+        if email:
+            members_by_email.setdefault(email, member)
+        # Exports write full names, the UI shows display names; index both so either matches
+        for candidate in (member.display_name, member.full_name):
+            key = (candidate or "").strip().lower()
+            if key:
+                members_by_name.setdefault(key, member)
+
+    for project_member in ProjectMember.objects.filter(
+        project_id=project.id,
+        is_active=True,
+        deleted_at__isnull=True,
+    ).select_related("member"):
+        _index_member(project_member.member, in_project=True)
+
     # Fallback: workspace members (may not be project members yet)
     for wm in WorkspaceMember.objects.filter(
         workspace_id=project.workspace_id,
         is_active=True,
     ).select_related("member"):
-        email = (wm.member.email or "").strip().lower()
-        if email and email not in members_by_email:
-            members_by_email[email] = wm.member
-        display = (wm.member.display_name or wm.member.full_name or "").strip().lower()
-        if display and display not in members_by_name:
-            members_by_name[display] = wm.member
+        _index_member(wm.member, in_project=False)
 
     type_properties_by_type: dict = {}
     for issue_type in types_by_name.values():
@@ -166,6 +420,9 @@ def import_work_items_into_project(
 
     prepared: list[dict] = []
     seen_keys: set[str] = set()
+    created_labels: list[str] = []
+    created_modules: list[str] = []
+    created_cycles: list[str] = []
 
     for index, row in enumerate(rows):
         if not isinstance(row, dict):
@@ -189,8 +446,10 @@ def import_work_items_into_project(
         if state is None:
             raise ValueError({"error": "Project has no states to attach work items to."})
 
-        priority = str(row.get("priority", "none") or "none").strip().lower()
+        raw_priority = row.get("priority")
+        priority = str(raw_priority if raw_priority not in [None, ""] else "none").strip().lower()
         if priority not in ALLOWED_PRIORITIES:
+            warnings.append(f'Row {index + 1}: unknown priority "{raw_priority}", set to none')
             priority = "none"
 
         issue_type_name = str(row.get("issue_type", "")).strip().lower()
@@ -198,57 +457,101 @@ def import_work_items_into_project(
         if issue_type_name and issue_type is None:
             warnings.append(f'Row {index + 1}: unknown issue type "{row.get("issue_type")}", left empty')
 
-        label_names = _coerce_list(row.get("labels"))
+        # Labels missing from the project are created, so a file imports the same way into
+        # a fresh project as into one that was prepared by hand.
         label_ids = []
-        for label_name in label_names:
-            label = labels_by_name.get(str(label_name).strip().lower())
-            if label:
-                label_ids.append(label.id)
-            else:
-                warnings.append(f'Row {index + 1}: unknown label "{label_name}", skipped')
-
-        assignee_emails = _coerce_list(row.get("assignee_emails"))
-        assignee_names = _coerce_list(row.get("assignee_names") or row.get("assignees"))
-        assignee_ids = []
-        for email in assignee_emails:
-            normalized_email = str(email).strip().lower()
-            if not normalized_email:
+        for label_name in _coerce_list(row.get("labels")):
+            clean_name = str(label_name).strip()
+            if not clean_name:
                 continue
-            if "@" not in normalized_email:
-                assignee_names.append(email)
-                continue
-            user_obj = members_by_email.get(normalized_email)
-            if user_obj:
-                assignee_ids.append(user_obj.id)
-            else:
-                warnings.append(
-                    f'Row {index + 1}: assignee "{email}" not found in workspace; '
-                    "work item left unassigned for that email"
+            label = labels_by_name.get(clean_name.lower())
+            if label is None:
+                label = Label.objects.create(
+                    name=clean_name[:255],
+                    color=DEFAULT_LABEL_COLOR,
+                    project=project,
+                    workspace=project.workspace,
+                    created_by=user,
                 )
-        for name_value in assignee_names:
-            normalized_name = str(name_value).strip().lower()
-            if not normalized_name:
+                labels_by_name[clean_name.lower()] = label
+                created_labels.append(clean_name)
+            if label.id not in label_ids:
+                label_ids.append(label.id)
+
+        # Modules only need a name, so missing ones are created alongside labels
+        module_ids = []
+        for module_name in _coerce_list(row.get("modules")):
+            clean_name = str(module_name).strip()
+            if not clean_name:
                 continue
-            if "@" in normalized_name:
+            module = modules_by_name.get(clean_name.lower())
+            if module is None:
+                module = Module.objects.create(
+                    name=clean_name[:255],
+                    project=project,
+                    workspace=project.workspace,
+                    created_by=user,
+                )
+                modules_by_name[clean_name.lower()] = module
+                created_modules.append(clean_name)
+            if module.id not in module_ids:
+                module_ids.append(module.id)
+
+        # A work item belongs to at most one cycle; the cycle itself is created after the
+        # loop, once the dates of all its work items are known.
+        cycle_name = None
+        for raw_cycle_name in _coerce_list(row.get("cycles")):
+            clean_name = str(raw_cycle_name).strip()
+            if not clean_name:
                 continue
-            user_obj = members_by_name.get(normalized_name)
-            if user_obj and user_obj.id not in assignee_ids:
-                assignee_ids.append(user_obj.id)
-            elif user_obj is None:
+            if cycle_name is None:
+                cycle_name = clean_name
+            elif clean_name.lower() != cycle_name.lower():
+                warnings.append(f'Row {index + 1}: a work item can belong to one cycle, "{clean_name}" skipped')
+
+        assignee_ids = _resolve_people(
+            emails=row.get("assignee_emails"),
+            names=row.get("assignee_names") or row.get("assignees"),
+            members_by_email=members_by_email,
+            members_by_name=members_by_name,
+            project_member_ids=project_member_ids,
+            warnings=warnings,
+            row_number=index + 1,
+            role="assignee",
+        )
+        subscriber_ids = _resolve_people(
+            emails=row.get("subscriber_emails"),
+            names=row.get("subscriber_names") or row.get("subscribers"),
+            members_by_email=members_by_email,
+            members_by_name=members_by_name,
+            project_member_ids=project_member_ids,
+            warnings=warnings,
+            row_number=index + 1,
+            role="subscriber",
+        )
+
+        estimate_point_id = None
+        raw_estimate = row.get("estimate")
+        if raw_estimate not in [None, ""]:
+            point = estimate_points_by_value.get(str(raw_estimate).strip().lower())
+            if point:
+                estimate_point_id = point.id
+            else:
                 warnings.append(
-                    f'Row {index + 1}: assignee "{name_value}" not found by name; '
-                    "work item left unassigned for that person"
+                    f'Row {index + 1}: estimate "{raw_estimate}" is not part of this project\'s estimate, skipped'
                 )
 
         description_html = _normalize_description_html(row.get("description_html") or row.get("description"))
         custom_properties = _coerce_dict(row.get("custom_properties"))
 
-        start_date = row.get("start_date") or None
-        target_date = row.get("target_date") or None
-        if start_date == "":
-            start_date = None
-        if target_date == "":
-            target_date = None
+        raw_start_date = row.get("start_date")
+        raw_target_date = row.get("target_date")
+        start_date = _parse_import_date(raw_start_date)
+        target_date = _parse_import_date(raw_target_date)
+        if raw_start_date not in [None, ""] and start_date is None:
+            warnings.append(f'Row {index + 1}: could not read start date "{raw_start_date}", left empty')
+        if raw_target_date not in [None, ""] and target_date is None:
+            warnings.append(f'Row {index + 1}: could not read target date "{raw_target_date}", left empty')
 
         raw_duration = row.get("duration")
         duration = normalize_work_item_duration(raw_duration)
@@ -263,9 +566,13 @@ def import_work_items_into_project(
         derived = reconcile_work_item_duration(None, duration_payload)
         duration = derived.get("duration", duration)
         if "start_date" in derived:
-            start_date = to_work_item_date(derived["start_date"])
+            start_date = derived["start_date"]
         if "target_date" in derived:
-            target_date = to_work_item_date(derived["target_date"])
+            target_date = derived["target_date"]
+        # Reconciliation may hand back ISO strings; keep one type so the values can be
+        # compared when a cycle derives its period from them.
+        start_date = to_work_item_date(start_date)
+        target_date = to_work_item_date(target_date)
 
         is_draft = row.get("is_draft")
         if isinstance(is_draft, str):
@@ -287,14 +594,30 @@ def import_work_items_into_project(
                 "is_draft": is_draft,
                 "parent_external_key": str(row.get("parent_external_key", "") or "").strip(),
                 "issue_type": issue_type,
+                "estimate_point_id": estimate_point_id,
                 "label_ids": label_ids,
+                "module_ids": module_ids,
+                "cycle_name": cycle_name,
                 "assignee_ids": assignee_ids,
+                "subscriber_ids": subscriber_ids,
+                "relations": _coerce_relations(row.get("relations")),
                 "custom_properties": custom_properties,
             }
         )
 
     if not prepared:
         return {"created_work_items": 0, "warnings": warnings}
+
+    # Cycles are created once the whole file is read, so a new cycle can take its period
+    # from the work items that land in it. Without any dated work item it stays a draft.
+    for name, cycle in _create_missing_cycles(
+        project=project,
+        user=user,
+        prepared=prepared,
+        cycles_by_name=cycles_by_name,
+    ).items():
+        cycles_by_name[name] = cycle
+        created_cycles.append(cycle.name)
 
     last_id = IssueSequence.objects.filter(project=project).aggregate(largest=Max("sequence"))["largest"]
     next_sequence = 1 if last_id is None else int(last_id) + 1
@@ -323,6 +646,7 @@ def import_work_items_into_project(
                     duration=item["duration"],
                     is_draft=item["is_draft"],
                     type=item["issue_type"],
+                    estimate_point_id=item["estimate_point_id"],
                     sequence_id=next_sequence,
                     sort_order=next_sort,
                     created_by=user,
@@ -364,16 +688,24 @@ def import_work_items_into_project(
             batch_size=200,
         )
 
+        # Targets that the file references but does not contain are looked up in the workspace,
+        # so a partial import can still hang off work items that already exist.
+        existing_by_identifier = _lookup_existing_targets(project, prepared, key_to_issue)
+
+        def _resolve_target(text: str):
+            key = str(text).strip().lower()
+            return key_to_issue.get(key) or existing_by_identifier.get(key)
+
         # Pass 2: parent links
         parent_updates = []
         for item, issue in zip(prepared, created_issues):
             parent_key = item["parent_external_key"]
             if not parent_key:
                 continue
-            parent = key_to_issue.get(parent_key.lower())
+            parent = _resolve_target(parent_key)
             if parent is None:
                 warnings.append(
-                    f'Work item "{item["external_key"]}": parent "{parent_key}" not found in file, skipped'
+                    f'Work item "{item["external_key"]}": parent "{parent_key}" was not found, skipped'
                 )
                 continue
             if parent.id == issue.id:
@@ -385,7 +717,12 @@ def import_work_items_into_project(
 
         label_rows = []
         assignee_rows = []
+        subscriber_rows = []
+        module_rows = []
+        cycle_rows = []
+        relation_rows = []
         property_rows = []
+        seen_relations: set[tuple] = set()
 
         for item, issue in zip(prepared, created_issues):
             for label_id in item["label_ids"]:
@@ -406,6 +743,74 @@ def import_work_items_into_project(
                         workspace=project.workspace,
                     )
                 )
+            for subscriber_id in item["subscriber_ids"]:
+                subscriber_rows.append(
+                    IssueSubscriber(
+                        issue=issue,
+                        subscriber_id=subscriber_id,
+                        project=project,
+                        workspace=project.workspace,
+                    )
+                )
+            for module_id in item["module_ids"]:
+                module_rows.append(
+                    ModuleIssue(
+                        issue=issue,
+                        module_id=module_id,
+                        project=project,
+                        workspace=project.workspace,
+                    )
+                )
+            if item["cycle_name"]:
+                cycle = cycles_by_name.get(item["cycle_name"].lower())
+                if cycle:
+                    cycle_rows.append(
+                        CycleIssue(
+                            issue=issue,
+                            cycle_id=cycle.id,
+                            project=project,
+                            workspace=project.workspace,
+                        )
+                    )
+
+            for relation in item["relations"]:
+                relation_type = relation["type"]
+                if relation_type not in _ALLOWED_RELATIONS:
+                    warnings.append(
+                        f'Work item "{item["external_key"]}": unknown relation "{relation_type}", skipped'
+                    )
+                    continue
+                target = _resolve_target(relation["issue"])
+                if target is None:
+                    warnings.append(
+                        f'Work item "{item["external_key"]}": related item "{relation["issue"]}" '
+                        "was not found, skipped"
+                    )
+                    continue
+                if target.id == issue.id:
+                    continue
+
+                # The database keeps one row per relation, on the canonical side; a mirrored
+                # type such as "blocking" is stored as the opposite row with the sides swapped.
+                canonical_type = get_actual_relation(relation_type)
+                source, related = (target, issue) if relation_type in _MIRRORED_RELATIONS else (issue, target)
+                if canonical_type in {"relates_to", "duplicate"}:
+                    dedupe_key = (canonical_type, *sorted([str(source.id), str(related.id)]))
+                else:
+                    dedupe_key = (canonical_type, str(source.id), str(related.id))
+                if dedupe_key in seen_relations:
+                    continue
+                seen_relations.add(dedupe_key)
+                relation_rows.append(
+                    IssueRelation(
+                        issue=source,
+                        related_issue=related,
+                        relation_type=canonical_type,
+                        project=project,
+                        workspace=project.workspace,
+                        created_by=user,
+                    )
+                )
 
             if item["issue_type"] and item["custom_properties"]:
                 props = type_properties_by_type.get(str(item["issue_type"].id), {})
@@ -416,6 +821,13 @@ def import_work_items_into_project(
                             f'Work item "{item["external_key"]}": unknown custom property "{title}", skipped'
                         )
                         continue
+                    if prop.property_type == "member_picker":
+                        raw_value, unknown = _member_values_to_ids(raw_value, members_by_email, members_by_name)
+                        for missing in unknown:
+                            warnings.append(
+                                f'Work item "{item["external_key"]}": property "{title}" '
+                                f'refers to unknown person "{missing}", skipped'
+                            )
                     try:
                         cleaned_value = validate_property_value(
                             property_type=prop.property_type,
@@ -442,7 +854,22 @@ def import_work_items_into_project(
             IssueLabel.objects.bulk_create(label_rows, batch_size=500, ignore_conflicts=True)
         if assignee_rows:
             IssueAssignee.objects.bulk_create(assignee_rows, batch_size=500, ignore_conflicts=True)
+        if subscriber_rows:
+            IssueSubscriber.objects.bulk_create(subscriber_rows, batch_size=500, ignore_conflicts=True)
+        if module_rows:
+            ModuleIssue.objects.bulk_create(module_rows, batch_size=500, ignore_conflicts=True)
+        if cycle_rows:
+            CycleIssue.objects.bulk_create(cycle_rows, batch_size=500, ignore_conflicts=True)
+        if relation_rows:
+            IssueRelation.objects.bulk_create(relation_rows, batch_size=500, ignore_conflicts=True)
         if property_rows:
             IssuePropertyValue.objects.bulk_create(property_rows, batch_size=500, ignore_conflicts=True)
+
+    if created_labels:
+        warnings.append(f"Created {len(created_labels)} new label(s): {', '.join(sorted(set(created_labels)))}")
+    if created_modules:
+        warnings.append(f"Created {len(created_modules)} new module(s): {', '.join(sorted(set(created_modules)))}")
+    if created_cycles:
+        warnings.append(f"Created {len(created_cycles)} new cycle(s): {', '.join(sorted(set(created_cycles)))}")
 
     return {"created_work_items": len(created_issues), "warnings": warnings}

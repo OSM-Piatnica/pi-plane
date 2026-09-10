@@ -62,3 +62,25 @@ def test_maps_community_columns_to_internal_rows():
     assert mapped[0]["duration"] == 3
     assert mapped[0]["assignee_names"] == ["Ada Lovelace"]
     assert mapped[0]["assignee_emails"] == ["bob@example.com"]
+
+
+def test_maps_modules_cycles_subscribers_and_relations():
+    rows = [
+        {
+            "identifier": "DEM-3",
+            "name": "Full row",
+            "state_name": "Todo",
+            "modules": '["Kampania"]',
+            "cycles": '["Sprint 1"]',
+            "subscribers": '["watcher@example.com"]',
+            "relations": '[{"type": "blocking", "issue": "DEM-1"}]',
+            "estimate": "5",
+        }
+    ]
+    mapped = map_community_export_rows(rows)
+
+    assert mapped[0]["modules"] == '["Kampania"]'
+    assert mapped[0]["cycles"] == '["Sprint 1"]'
+    assert mapped[0]["subscriber_emails"] == ["watcher@example.com"]
+    assert mapped[0]["relations"] == '[{"type": "blocking", "issue": "DEM-1"}]'
+    assert mapped[0]["estimate"] == "5"

@@ -1,4 +1,12 @@
-import { useEffect, useState } from "react";
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useEffect, useRef, useState } from "react";
 import { Controller, FormProvider, useForm, useWatch } from "react-hook-form";
 import { observer } from "mobx-react";
 import useSWR, { useSWRConfig } from "swr";
@@ -29,6 +37,14 @@ import {
   buildProjectTemplatePayloadFromFormValues,
   mapProjectTemplateToFormValues,
 } from "./project-template-payload-helpers";
+import {
+  buildUniqueTemplateName,
+  downloadTemplateAsJson,
+  isValidTemplateFile,
+  MAX_TEMPLATE_FILE_SIZE_BYTES,
+  ProjectTemplateFileError,
+  readTemplateFromJson,
+} from "./project-template-file-helpers";
 import { ProjectTemplateCoverField } from "./project-template-cover-field";
 import { StateTemplatesEditor } from "./state-templates-editor";
 import { WorkItemTypesTemplateEditor } from "./work-item-types-template-editor";
@@ -76,6 +92,8 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
   const [createProjectModalOpen, setCreateProjectModalOpen] = useState(false);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const uploadInputRef = useRef<HTMLInputElement>(null);
   const form = useForm<TProjectTemplateFormFields>({
     defaultValues: TEMPLATE_FORM_DEFAULTS,
   });
@@ -118,6 +136,77 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
   const handleUseTemplate = (templateId: string) => {
     setSelectedTemplateId(templateId);
     setCreateProjectModalOpen(true);
+  };
+
+  const handleDownloadTemplate = (template: TProjectTemplate) => {
+    try {
+      downloadTemplateAsJson(template);
+    } catch (e) {
+      console.error(e);
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: t("error"),
+        message: t("workspace_settings.settings.project_templates.toasts.download_failed.message"),
+      });
+    }
+  };
+
+  const handleUploadTemplate = async (file: File) => {
+    if (!isValidTemplateFile(file)) {
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: t("error"),
+        message: t("workspace_settings.settings.project_templates.upload_invalid_file"),
+      });
+      return;
+    }
+    if (file.size > MAX_TEMPLATE_FILE_SIZE_BYTES) {
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: t("error"),
+        message: t("workspace_settings.settings.project_templates.upload_too_large", {
+          size: Math.round(MAX_TEMPLATE_FILE_SIZE_BYTES / (1024 * 1024)),
+        }),
+      });
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const parsed = await readTemplateFromJson(file);
+      const existingNames = ((templates as TProjectTemplate[] | undefined) ?? []).map((item) => item.name);
+      const desired = parsed.name || file.name.replace(/\.json$/i, "");
+      const name = buildUniqueTemplateName(desired, existingNames);
+      const renamed = name !== desired.trim();
+
+      await service.create(workspaceSlug, {
+        name,
+        description: parsed.description,
+        payload: parsed.payload,
+      });
+      await mutate(`PROJECT_TEMPLATE_LIST_${workspaceSlug}`);
+
+      setToast({
+        type: renamed ? TOAST_TYPE.WARNING : TOAST_TYPE.SUCCESS,
+        title: renamed ? t("warning") : t("success"),
+        message: renamed
+          ? t("workspace_settings.settings.project_templates.toasts.uploaded_renamed.message", { name })
+          : t("workspace_settings.settings.project_templates.toasts.uploaded.message", { name }),
+      });
+    } catch (e) {
+      console.error(e);
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: t("error"),
+        message:
+          e instanceof ProjectTemplateFileError
+            ? t("workspace_settings.settings.project_templates.upload_invalid_file")
+            : t("workspace_settings.settings.project_templates.toasts.upload_failed.message"),
+      });
+    } finally {
+      setUploading(false);
+      if (uploadInputRef.current) uploadInputRef.current.value = "";
+    }
   };
 
   const onSubmit = handleSubmit(async (values) => {
@@ -569,9 +658,30 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
             title={t("workspace_settings.settings.project_templates.title")}
             description={t("workspace_settings.settings.project_templates.description")}
             control={
-              <Button variant="primary" size="lg" onClick={openCreate}>
-                {t("workspace_settings.settings.project_templates.add_template")}
-              </Button>
+              <div className="flex items-center gap-2">
+                <input
+                  ref={uploadInputRef}
+                  type="file"
+                  accept=".json,application/json"
+                  className="hidden"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) void handleUploadTemplate(file);
+                  }}
+                />
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  onClick={() => uploadInputRef.current?.click()}
+                  disabled={uploading}
+                  loading={uploading}
+                >
+                  {t("workspace_settings.settings.project_templates.upload_template")}
+                </Button>
+                <Button variant="primary" size="lg" onClick={openCreate}>
+                  {t("workspace_settings.settings.project_templates.add_template")}
+                </Button>
+              </div>
             }
           />
           {isLoading || !templates ? (
@@ -598,6 +708,9 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
                       </Button>
                       <Button variant="secondary" size="sm" onClick={() => handleUseTemplate(template.id)}>
                         {t("workspace_settings.settings.project_templates.table.use_template")}
+                      </Button>
+                      <Button variant="secondary" size="sm" onClick={() => handleDownloadTemplate(template)}>
+                        {t("workspace_settings.settings.project_templates.table.download_template")}
                       </Button>
                       <Button variant="error-outline" size="sm" onClick={() => onDelete(template.id)}>
                         {t("remove")}

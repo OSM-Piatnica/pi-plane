@@ -10,7 +10,7 @@ import { useRef, useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-import { Upload } from "lucide-react";
+import { ChevronDown, ChevronRight, ExternalLink, Upload } from "lucide-react";
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
@@ -33,6 +33,13 @@ type FormData = {
   projectId: string;
 };
 
+type ImportOutcome = {
+  createdWorkItems: number;
+  projectId: string;
+  projectName: string;
+  warnings: string[];
+};
+
 const ACCEPTED_EXTENSIONS = [".csv", ".xlsx", ".json"];
 
 function isValidWorkItemImportFile(file: File): boolean {
@@ -49,6 +56,8 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [importLoading, setImportLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [outcome, setOutcome] = useState<ImportOutcome | null>(null);
+  const [warningsOpen, setWarningsOpen] = useState(true);
   const { control, handleSubmit, watch, reset } = useForm<FormData>({
     defaultValues: { projectId: "" },
   });
@@ -94,6 +103,15 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
       reset({ projectId: formData.projectId });
       if (fileInputRef.current) fileInputRef.current.value = "";
 
+      // Kept on screen instead of navigating away, so the warnings can be read
+      setOutcome({
+        createdWorkItems: result.created_work_items,
+        projectId: result.project_id,
+        projectName: result.project_name,
+        warnings: result.warnings ?? [],
+      });
+      setWarningsOpen(true);
+
       setToast({
         type: TOAST_TYPE.SUCCESS,
         title: t("success"),
@@ -102,8 +120,6 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
           name: result.project_name,
         }),
       });
-
-      window.location.href = getProjectImportLink(workspaceSlug.toString(), result.project_id);
     } catch (error) {
       setToast({
         type: TOAST_TYPE.ERROR,
@@ -192,6 +208,54 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
           }
         />
       </div>
+
+      {outcome && (
+        <div className="rounded-lg border border-subtle bg-layer-2 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="text-13 text-primary">
+              {t("workspace_settings.settings.imports.work_items.result_summary", {
+                count: outcome.createdWorkItems,
+                name: outcome.projectName,
+              })}
+            </p>
+            <a
+              href={getProjectImportLink(workspaceSlug.toString(), outcome.projectId)}
+              className="flex items-center gap-1 text-13 text-accent-primary hover:underline"
+            >
+              {t("workspace_settings.settings.imports.work_items.open_project")}
+              <ExternalLink className="size-3.5" />
+            </a>
+          </div>
+
+          {outcome.warnings.length > 0 ? (
+            <div className="mt-3 border-t border-subtle pt-3">
+              <button
+                type="button"
+                onClick={() => setWarningsOpen((open) => !open)}
+                className="flex items-center gap-1.5 text-13 font-medium text-secondary"
+              >
+                {warningsOpen ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
+                {t("workspace_settings.settings.imports.work_items.warnings_heading", {
+                  count: outcome.warnings.length,
+                })}
+              </button>
+              {warningsOpen && (
+                <ul className="mt-2 max-h-64 space-y-1 overflow-y-auto pl-6">
+                  {outcome.warnings.map((warning, position) => (
+                    <li key={`${position}-${warning}`} className="list-disc text-12 text-secondary">
+                      {warning}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ) : (
+            <p className="mt-3 border-t border-subtle pt-3 text-12 text-secondary">
+              {t("workspace_settings.settings.imports.work_items.warnings_none")}
+            </p>
+          )}
+        </div>
+      )}
     </form>
   );
 });

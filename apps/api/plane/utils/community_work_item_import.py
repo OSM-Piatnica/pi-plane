@@ -4,7 +4,7 @@
 # Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
-from plane.utils.project_template_payload import _WORK_ITEM_EXPORT_HINT_KEYS
+from plane.utils.project_template_payload import WORK_ITEM_EXPORT_HINT_KEYS
 from plane.utils.project_work_item_import import _coerce_list, import_work_items_into_project
 
 COMMUNITY_EXPORT_REQUIRED_KEYS = frozenset({"name"})
@@ -24,7 +24,7 @@ def is_community_work_item_export(rows: list[dict]) -> bool:
     keys = {_normalize_key(key) for key in sample.keys()}
     if "external_key" in keys and "state" in keys and "state_name" not in keys:
         return False
-    if keys.intersection(_WORK_ITEM_EXPORT_HINT_KEYS):
+    if keys.intersection(WORK_ITEM_EXPORT_HINT_KEYS):
         return True
     return bool(keys.intersection(COMMUNITY_EXPORT_STRONG_HINTS) and "name" in keys)
 
@@ -38,6 +38,21 @@ def _pick(row: dict, *keys: str):
             if _normalize_key(existing) == wanted and value not in [None, ""]:
                 return value
     return None
+
+
+def _split_people(value) -> tuple[list[str], list[str]]:
+    """Split a people column into e-mails and plain names; exports carry e-mails, older files names."""
+    emails: list[str] = []
+    names: list[str] = []
+    for entry in _coerce_list(value):
+        text = str(entry).strip()
+        if not text:
+            continue
+        if "@" in text:
+            emails.append(text)
+        else:
+            names.append(text)
+    return emails, names
 
 
 def map_community_export_rows(rows: list[dict]) -> list[dict]:
@@ -55,24 +70,15 @@ def map_community_export_rows(rows: list[dict]) -> list[dict]:
 
         parent = str(_pick(row, "parent") or "").strip()
         state = _pick(row, "state_name", "state")
-        description = _pick(row, "description", "description_html")
+        description_html = _pick(row, "description_html")
+        description = _pick(row, "description") or description_html
         target_date = _pick(row, "target_date", "due_date")
         start_date = _pick(row, "start_date")
         duration = _pick(row, "duration")
         issue_type = _pick(row, "issue_type")
         labels = _pick(row, "labels")
-        assignees = _coerce_list(_pick(row, "assignees", "assignee_emails"))
-
-        assignee_emails: list[str] = []
-        assignee_names: list[str] = []
-        for assignee in assignees:
-            text = str(assignee).strip()
-            if not text:
-                continue
-            if "@" in text:
-                assignee_emails.append(text)
-            else:
-                assignee_names.append(text)
+        assignee_emails, assignee_names = _split_people(_pick(row, "assignees", "assignee_emails"))
+        subscriber_emails, subscriber_names = _split_people(_pick(row, "subscribers", "subscriber_emails"))
 
         mapped.append(
             {
@@ -81,13 +87,19 @@ def map_community_export_rows(rows: list[dict]) -> list[dict]:
                 "state": state,
                 "priority": _pick(row, "priority") or "none",
                 "description": description,
-                "description_html": description,
+                "description_html": description_html or description,
                 "start_date": start_date,
                 "target_date": target_date,
                 "duration": duration,
+                "estimate": _pick(row, "estimate", "estimate_point"),
                 "labels": labels,
+                "modules": _pick(row, "modules"),
+                "cycles": _pick(row, "cycles", "cycle"),
+                "relations": _pick(row, "relations"),
                 "assignee_emails": assignee_emails,
                 "assignee_names": assignee_names,
+                "subscriber_emails": subscriber_emails,
+                "subscriber_names": subscriber_names,
                 "parent_external_key": parent,
                 "issue_type": issue_type,
                 "is_draft": _pick(row, "is_draft"),

@@ -1584,8 +1584,7 @@ export default {
       },
       exports: {
         heading: "Imports & exports",
-        description:
-          "Import project configuration from CSV or export project settings, states, labels, and work item types. Work items are not included.",
+        description: "Export work items to a file, or import them from a file into an existing project.",
         title: "Imports & exports",
         exporting: "Exporting",
         previous_exports: "Previous exports",
@@ -1594,23 +1593,6 @@ export default {
         work_items_export: {
           heading: "Export work items",
           description: "Export work items from selected projects to CSV, Excel, or JSON.",
-        },
-        project_csv: {
-          heading: "Export project configuration",
-          description: "Download project settings, states, labels, and work item types. Work items are not included.",
-          select_project: "Project",
-          select_format: "Format",
-          export_button: "Export project",
-          toasts: {
-            success: {
-              title: "Export successful",
-              message: "Project configuration CSV has been downloaded.",
-            },
-            error: {
-              title: "Export failed",
-              message: "Could not export project configuration. Please try again.",
-            },
-          },
         },
         format: "Format",
         filters_info: "Apply filters to export specific work items based on your criteria.",
@@ -1630,12 +1612,7 @@ export default {
       },
       imports: {
         heading: "Imports",
-        description:
-          "Import project configuration from a CSV file exported from Plane. Work items are not included. Do not re-save the file in Excel before importing.",
         title: "Imports",
-        select_file: "Select CSV file",
-        import_button: "Import project",
-        invalid_file_type: "Please upload a CSV file.",
         file_too_large: "File must be smaller than {size} MB.",
         previous_imports: "Previous imports",
         history: {
@@ -1644,19 +1621,12 @@ export default {
           file: "File",
           projects: "Projects",
           status: "Status",
-        },
-        toasts: {
-          success: {
-            message: 'Project "{name}" was imported successfully.',
-          },
-          error: {
-            message: "Project import failed. Please check the CSV file and try again.",
-          },
+          reason: "Reason",
         },
         work_items: {
           heading: "Import work items",
           description:
-            "Import work items from a file created by “Export work items” (CSV, Excel, or JSON) into an existing project. States and labels are matched by name; missing assignees are left empty with a warning.",
+            "Import work items from a file created by “Export work items” (CSV, Excel, or JSON) into an existing project. Missing labels, modules, and cycles are created automatically. States and people are matched; anything that cannot be matched is listed as a warning.",
           select_project: "Target project",
           select_project_placeholder: "Select a project",
           no_projects: "No projects available",
@@ -1664,6 +1634,10 @@ export default {
           select_file: "Select file",
           import_button: "Import work items",
           invalid_file_type: "Please upload a CSV, Excel (.xlsx), or JSON file.",
+          result_summary: "Imported {count, plural, one {# work item} other {# work items}} into “{name}”.",
+          open_project: "Open project",
+          warnings_heading: "{count, plural, one {# warning} other {# warnings}} during import",
+          warnings_none: "Everything was imported without warnings.",
           toasts: {
             success: {
               message: 'Imported {count} work items into "{name}".',
@@ -1779,6 +1753,9 @@ export default {
           "Create reusable project setups with default properties, enabled features, states, labels, and work item types.",
         add_template: "Add template",
         edit_template: "Edit template",
+        upload_template: "Upload from file",
+        upload_invalid_file: "Please upload a JSON file downloaded with the “Download” button.",
+        upload_too_large: "File must be smaller than {size} MB.",
         loading: "Loading templates…",
         select_placeholder: "Select a template",
         none: "No template",
@@ -1786,6 +1763,7 @@ export default {
         table: {
           no_description: "No description",
           use_template: "Use template",
+          download_template: "Download",
         },
         form: {
           name_required: "Template name is required",
@@ -1925,6 +1903,10 @@ export default {
           delete_failed: { title: "Could not delete", message: "Please try again." },
           apply_failed: { message: "Could not apply the project template." },
           apply_followup_failed: { message: "Project was created but some template settings could not be applied." },
+          uploaded: { message: 'Template "{name}" was uploaded from the file.' },
+          uploaded_renamed: { message: 'That name was already taken, so the template was saved as "{name}".' },
+          upload_failed: { message: "Could not upload the template. Please check the file and try again." },
+          download_failed: { message: "Could not download the template file." },
         },
       },
       webhooks: {
@@ -2884,11 +2866,6 @@ export default {
       title: "JSON",
       description: "Export work items to a JSON file.",
       short_description: "Export as json",
-    },
-    project_csv: {
-      title: "Project CSV",
-      description: "Export project configuration to a CSV file.",
-      short_description: "Export project as csv",
     },
   },
   default_global_view: {

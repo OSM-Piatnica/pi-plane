@@ -1734,31 +1734,13 @@ export default {
         title: "Import i eksport",
         heading: "Import i eksport",
         description:
-          "Importuj konfigurację projektu z CSV lub eksportuj ustawienia projektu, stany, etykiety i typy elementów roboczych. Elementy robocze nie są uwzględniane.",
+          "Eksportuj elementy robocze do pliku lub wczytaj je z pliku do istniejącego projektu.",
         exporting: "Eksportowanie",
         previous_exports: "Poprzednie eksporty",
         export_separate_files: "Eksportuj dane do oddzielnych plików",
         work_items_export: {
           heading: "Eksport elementów roboczych",
           description: "Eksportuj elementy robocze z wybranych projektów do CSV, Excel lub JSON.",
-        },
-        project_csv: {
-          heading: "Eksport konfiguracji projektu",
-          description:
-            "Pobierz ustawienia projektu, stany, etykiety i typy elementów roboczych. Elementy robocze nie są uwzględniane.",
-          select_project: "Projekt",
-          select_format: "Format",
-          export_button: "Eksportuj projekt",
-          toasts: {
-            success: {
-              title: "Eksport zakończony",
-              message: "Plik CSV z konfiguracją projektu został pobrany.",
-            },
-            error: {
-              title: "Eksport nie powiódł się",
-              message: "Nie udało się wyeksportować konfiguracji projektu. Spróbuj ponownie.",
-            },
-          },
         },
         filters_info: "Zastosuj filtry, aby wyeksportować określone elementy robocze według Twoich kryteriów.",
         modal: {
@@ -1777,12 +1759,7 @@ export default {
       },
       imports: {
         heading: "Importy",
-        description:
-          "Importuj konfigurację projektu z pliku CSV wyeksportowanego z Plane. Elementy robocze nie są uwzględniane. Nie zapisuj ponownie pliku w Excelu przed importem.",
         title: "Importy",
-        select_file: "Wybierz plik CSV",
-        import_button: "Importuj projekt",
-        invalid_file_type: "Prześlij plik CSV.",
         file_too_large: "Plik musi być mniejszy niż {size} MB.",
         previous_imports: "Poprzednie importy",
         history: {
@@ -1791,19 +1768,12 @@ export default {
           file: "Plik",
           projects: "Projekty",
           status: "Status",
-        },
-        toasts: {
-          success: {
-            message: "Projekt „{name}” został zaimportowany.",
-          },
-          error: {
-            message: "Import projektu nie powiódł się. Sprawdź plik CSV i spróbuj ponownie.",
-          },
+          reason: "Powód",
         },
         work_items: {
           heading: "Import elementów roboczych",
           description:
-            "Wczytaj plik z „Eksportu elementów roboczych” (CSV, Excel lub JSON) do istniejącego projektu. Stany i etykiety są dopasowywane po nazwie; brakujących osób przypisanych pomijamy z ostrzeżeniem.",
+            "Wczytaj plik z „Eksportu elementów roboczych” (CSV, Excel lub JSON) do istniejącego projektu. Brakujące etykiety, moduły i cykle są tworzone automatycznie. Stany i osoby są dopasowywane; czego nie da się dopasować, trafia do ostrzeżeń.",
           select_project: "Projekt docelowy",
           select_project_placeholder: "Wybierz projekt",
           no_projects: "Brak dostępnych projektów",
@@ -1811,6 +1781,12 @@ export default {
           select_file: "Wybierz plik",
           import_button: "Importuj elementy robocze",
           invalid_file_type: "Prześlij plik CSV, Excel (.xlsx) lub JSON.",
+          result_summary:
+            "Zaimportowano {count, plural, one {# element roboczy} few {# elementy robocze} other {# elementów roboczych}} do „{name}”.",
+          open_project: "Otwórz projekt",
+          warnings_heading:
+            "{count, plural, one {# ostrzeżenie} few {# ostrzeżenia} other {# ostrzeżeń}} podczas importu",
+          warnings_none: "Wszystko wczytało się bez ostrzeżeń.",
           toasts: {
             success: {
               message: "Zaimportowano {count} elementów roboczych do „{name}”.",
@@ -1927,6 +1903,9 @@ export default {
           "Twórz wielokrotnego użycia konfiguracje projektów z domyślnymi właściwościami, funkcjami, stanami, etykietami i typami elementów roboczych.",
         add_template: "Dodaj szablon",
         edit_template: "Edytuj szablon",
+        upload_template: "Wczytaj z pliku",
+        upload_invalid_file: "Prześlij plik JSON pobrany przyciskiem „Pobierz”.",
+        upload_too_large: "Plik musi być mniejszy niż {size} MB.",
         loading: "Ładowanie szablonów…",
         select_placeholder: "Wybierz szablon",
         none: "Bez szablonu",
@@ -1934,6 +1913,7 @@ export default {
         table: {
           no_description: "Brak opisu",
           use_template: "Użyj szablonu",
+          download_template: "Pobierz",
         },
         form: {
           name_required: "Nazwa szablonu jest wymagana",
@@ -2075,6 +2055,12 @@ export default {
           apply_followup_failed: {
             message: "Projekt utworzono, ale część ustawień szablonu nie została zastosowana.",
           },
+          uploaded: { message: "Szablon „{name}” został wczytany z pliku." },
+          uploaded_renamed: {
+            message: "Nazwa była już zajęta, więc szablon zapisano jako „{name}”.",
+          },
+          upload_failed: { message: "Nie udało się wczytać szablonu z pliku. Sprawdź plik i spróbuj ponownie." },
+          download_failed: { message: "Nie udało się pobrać szablonu do pliku." },
         },
       },
       webhooks: {
@@ -3000,11 +2986,6 @@ export default {
       title: "JSON",
       description: "Eksportuj elementy do pliku JSON.",
       short_description: "Eksportuj jako JSON",
-    },
-    project_csv: {
-      title: "CSV projektu",
-      description: "Eksportuj konfigurację projektu do pliku CSV.",
-      short_description: "Eksportuj projekt jako CSV",
     },
   },
   default_global_view: {

@@ -1,3 +1,8 @@
+# Copyright (c) 2023-present Plane Software, Inc. and contributors
+# SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+# See the LICENSE file for details.
+
 import re
 import uuid
 
@@ -32,7 +37,9 @@ ALLOWED_PAYLOAD_KEYS = {
     "additional_work_item_types",
 }
 
-_WORK_ITEM_EXPORT_HINT_KEYS = {
+# Columns that only a work item export carries. Shared with the work item importer, which
+# uses them to recognise its own files; kept here to avoid an import cycle between the two.
+WORK_ITEM_EXPORT_HINT_KEYS = {
     "project_name",
     "project_identifier",
     "state_name",
@@ -157,14 +164,14 @@ def validate_and_clean_project_payload(payload: dict, workspace: Workspace, *, r
 
     unknown_keys = set(payload.keys()) - ALLOWED_PAYLOAD_KEYS
     if unknown_keys:
-        hint_overlap = unknown_keys.intersection(_WORK_ITEM_EXPORT_HINT_KEYS)
+        hint_overlap = unknown_keys.intersection(WORK_ITEM_EXPORT_HINT_KEYS)
         if len(hint_overlap) >= 3:
             raise serializers.ValidationError(
                 {
                     "payload": (
-                        "Ten plik CSV wygląda na eksport elementów roboczych (work items), "
-                        "a nie eksport konfiguracji projektu. "
-                        "Aby zaimportować projekt, użyj pliku z sekcji „Eksport konfiguracji projektu”."
+                        "Ten plik wygląda na eksport elementów roboczych (work items), "
+                        "a nie na szablon projektu. "
+                        "Aby wczytać szablon, użyj pliku pobranego przyciskiem „Pobierz szablon”."
                     )
                 }
             )
@@ -301,25 +308,3 @@ def validate_and_clean_project_payload(payload: dict, workspace: Workspace, *, r
             raise serializers.ValidationError({"payload": "identifier is required"})
 
     return cleaned
-
-
-def strip_member_references_for_import(payload: dict, workspace: Workspace) -> tuple[dict, list[str]]:
-    warnings: list[str] = []
-    result = dict(payload)
-    for key in ("project_lead", "default_assignee"):
-        value = result.get(key)
-        if value in [None, ""]:
-            continue
-        if not _is_valid_uuid(str(value)):
-            result[key] = None
-            warnings.append(f"{key} was removed because it is not a valid UUID")
-            continue
-        is_member = WorkspaceMember.objects.filter(
-            workspace_id=workspace.id,
-            member_id=value,
-            is_active=True,
-        ).exists()
-        if not is_member:
-            result[key] = None
-            warnings.append(f"{key} was removed because the member is not in this workspace")
-    return result, warnings

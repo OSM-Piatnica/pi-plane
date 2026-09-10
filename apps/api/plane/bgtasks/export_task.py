@@ -22,7 +22,16 @@ from django.utils import timezone
 from django.db.models import Prefetch
 
 # Module imports
-from plane.db.models import ExporterHistory, Issue, IssueComment, IssueRelation, IssueSubscriber, Project
+from plane.db.models import (
+    ExporterHistory,
+    Issue,
+    IssueComment,
+    IssuePropertyValue,
+    IssueRelation,
+    IssueSubscriber,
+    Project,
+    WorkspaceMember,
+)
 from plane.utils.exception_logger import log_exception
 from plane.utils.porters.exporter import DataExporter
 from plane.utils.porters.serializers.issue import IssueExportSerializer
@@ -183,13 +192,20 @@ def issue_export_task(
                 "state",
                 "created_by",
                 "estimate_point",
+                "type",
             )
             .prefetch_related(
-                "labels",
+                # The serializer reads labels through the join model, so prefetching the
+                # plain m2m would not be used and every row would hit the database again.
+                "label_issue__label",
                 "issue_cycle__cycle",
                 "issue_module__module",
                 "assignees",
                 "issue_link",
+                Prefetch(
+                    "type_property_values",
+                    queryset=IssuePropertyValue.objects.select_related("property"),
+                ),
                 Prefetch(
                     "issue_subscribers",
                     queryset=IssueSubscriber.objects.select_related("subscriber"),
@@ -213,12 +229,23 @@ def issue_export_task(
             )
         )
 
+        # Member picker properties store user ids, resolved to e-mails while serializing
+        member_emails = {
+            str(member_id): email
+            for member_id, email in WorkspaceMember.objects.filter(
+                workspace_id=workspace_id,
+                is_active=True,
+            ).values_list("member_id", "member__email")
+            if email
+        }
+
         # Create exporter for the specified format
         try:
             exporter = DataExporter(
                 IssueExportSerializer,
                 format_type=provider,
                 csv_delimiter=csv_delimiter,
+                context={"member_emails": member_emails},
             )
         except ValueError as e:
             # Invalid format type

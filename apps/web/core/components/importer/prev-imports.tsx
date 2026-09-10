@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
 import { useState } from "react";
 import { observer } from "mobx-react";
 import useSWR, { mutate } from "swr";
@@ -83,6 +90,18 @@ export const PrevImports = observer(function PrevImports(props: Props) {
           {rowData.status}
         </span>
       ),
+    },
+    {
+      key: "Reason",
+      content: t("workspace_settings.settings.imports.history.reason"),
+      tdRender: (rowData: RowData) =>
+        rowData.status === "failed" && rowData.reason ? (
+          <span className="line-clamp-2 max-w-xs text-11 text-danger-primary" title={rowData.reason}>
+            {rowData.reason}
+          </span>
+        ) : (
+          <span className="text-13 text-placeholder">-</span>
+        ),
     },
   ];
 
