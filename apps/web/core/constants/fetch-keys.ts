@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -128,9 +129,6 @@ export const IMPORTER_SERVICES_LIST = (workspaceSlug: string) =>
 //export
 export const EXPORT_SERVICES_LIST = (workspaceSlug: string, cursor: string, per_page: string) =>
   `EXPORTER_SERVICES_LIST_${workspaceSlug.toUpperCase()}_${cursor.toUpperCase()}_${per_page.toUpperCase()}`;
-
-export const PROJECT_EXPORT_SERVICES_LIST = (workspaceSlug: string, cursor: string, per_page: string) =>
-  `PROJECT_EXPORTER_SERVICES_LIST_${workspaceSlug.toUpperCase()}_${cursor.toUpperCase()}_${per_page.toUpperCase()}`;
 
 export const PROJECT_IMPORT_SERVICES_LIST = (workspaceSlug: string, cursor: string, per_page: string) =>
   `PROJECT_IMPORTER_SERVICES_LIST_${workspaceSlug.toUpperCase()}_${cursor.toUpperCase()}_${per_page.toUpperCase()}`;

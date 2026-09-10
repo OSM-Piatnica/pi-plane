@@ -1,3 +1,8 @@
+# Copyright (c) 2023-present Plane Software, Inc. and contributors
+# SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+# See the LICENSE file for details.
+
 import re
 
 from rest_framework import serializers
@@ -28,6 +33,18 @@ class ProjectTemplateSerializer(BaseSerializer):
         name = attrs.get("name", getattr(self.instance, "name", ""))
         if not str(name).strip():
             raise serializers.ValidationError({"name": "Name is required"})
+
+        # The database enforces one template name per workspace; check it here so a clash
+        # surfaces as a validation error instead of an integrity error.
+        taken = ProjectTemplate.objects.filter(
+            workspace_id=workspace.id,
+            name=str(name).strip()[:255],
+            deleted_at__isnull=True,
+        )
+        if self.instance:
+            taken = taken.exclude(pk=self.instance.pk)
+        if taken.exists():
+            raise serializers.ValidationError({"name": "A project template with this name already exists."})
 
         if "payload" in attrs:
             payload = attrs.get("payload") or {}

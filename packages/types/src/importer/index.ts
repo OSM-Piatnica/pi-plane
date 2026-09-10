@@ -46,6 +46,7 @@ export interface IExportData {
   project: string[];
   provider: string;
   status: string;
+  reason?: string | null;
   url: string;
   token: string;
   name?: string | null;

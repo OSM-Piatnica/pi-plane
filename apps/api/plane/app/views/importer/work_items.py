@@ -20,6 +20,7 @@ from plane.utils.project_work_item_import import MAX_WORK_ITEMS_IMPORT
 
 from .. import BaseAPIView
 
+# Matches MAX_PROJECT_CSV_SIZE_BYTES in the web app so the browser and the server agree
 MAX_UPLOAD_BYTES = 15 * 1024 * 1024
 
 
@@ -166,3 +167,23 @@ class ImportWorkItemsEndpoint(BaseAPIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+    @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER], level="WORKSPACE")
+    def get(self, request, slug):
+        importer_history = ExporterHistory.objects.filter(
+            workspace__slug=slug,
+            type="project_imports",
+        ).select_related("workspace", "initiated_by")
+
+        if request.GET.get("per_page", False) and request.GET.get("cursor", False):
+            return self.paginate(
+                order_by=request.GET.get("order_by", "-created_at"),
+                request=request,
+                queryset=importer_history,
+                on_results=lambda rows: ExporterHistorySerializer(rows, many=True).data,
+            )
+
+        return Response(
+            {"error": "per_page and cursor are required"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )

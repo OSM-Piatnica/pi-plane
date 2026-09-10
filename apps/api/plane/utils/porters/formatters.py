@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """
@@ -214,9 +215,13 @@ class XLSXFormatter(BaseFormatter):
         if value is None:
             return ""
         if isinstance(value, list):
+            # Lists of objects (relations, links, comments) stay JSON so they can be read back;
+            # joining them would write Python reprs that nothing can parse.
+            if any(isinstance(item, (dict, list)) for item in value):
+                return json.dumps(value, default=str)
             return self.list_joiner.join(str(v) for v in value)
         if isinstance(value, dict):
-            return json.dumps(value)
+            return json.dumps(value, default=str)
         return value
 
     def encode(self, data: List[Dict]) -> bytes:

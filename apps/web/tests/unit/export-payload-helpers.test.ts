@@ -1,6 +1,13 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
 import { describe, expect, it } from "vitest";
-import { EXPORTERS_LIST, PROJECT_EXPORT_FORMATS } from "@plane/constants";
-import { buildIssueExportPayload, buildProjectExportRequestBody } from "../../core/helpers/export-payload-helpers";
+import { EXPORTERS_LIST } from "@plane/constants";
+import { buildIssueExportPayload } from "../../core/helpers/export-payload-helpers";
 
 describe("export format constants", () => {
   it("exposes csv comma and semicolon variants for work item export", () => {
@@ -8,14 +15,6 @@ describe("export format constants", () => {
 
     expect(csvFormats).toHaveLength(2);
     expect(csvFormats.map((format) => format.delimiter)).toEqual([",", ";"]);
-  });
-
-  it("exposes csv and xlsx formats for project export", () => {
-    expect(PROJECT_EXPORT_FORMATS).toHaveLength(3);
-    expect(PROJECT_EXPORT_FORMATS.map((format) => format.provider)).toEqual(["csv", "csv", "xlsx"]);
-    expect(PROJECT_EXPORT_FORMATS[0]?.delimiter).toBe(",");
-    expect(PROJECT_EXPORT_FORMATS[1]?.delimiter).toBe(";");
-    expect(PROJECT_EXPORT_FORMATS[2]?.extension).toBe("xlsx");
   });
 });
 
@@ -46,28 +45,6 @@ describe("export payload helpers", () => {
       project: ["project-1", "project-2"],
       multiple: true,
       rich_filters: { priority: "high" },
-    });
-  });
-
-  it("builds project export request body for csv and xlsx", () => {
-    expect(
-      buildProjectExportRequestBody(["project-1"], {
-        provider: "csv",
-        delimiter: ",",
-      })
-    ).toEqual({
-      provider: "csv",
-      project: ["project-1"],
-      delimiter: ",",
-    });
-
-    expect(
-      buildProjectExportRequestBody(["project-1"], {
-        provider: "xlsx",
-      })
-    ).toEqual({
-      provider: "xlsx",
-      project: ["project-1"],
     });
   });
 });

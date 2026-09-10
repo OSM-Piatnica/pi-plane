@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
 import type { TWorkItemFilterExpression } from "@plane/types";
 
 export type IssueExportProviderOption = {
@@ -20,18 +27,5 @@ export function buildIssueExportPayload(formData: IssueExportFormPayload) {
     ...(formData.provider.provider === "csv" && formData.provider.delimiter
       ? { delimiter: formData.provider.delimiter }
       : {}),
-  };
-}
-
-export type ProjectExportRequestOptions = {
-  provider: string;
-  delimiter?: "," | ";";
-};
-
-export function buildProjectExportRequestBody(projectIds: string[], options: ProjectExportRequestOptions) {
-  return {
-    provider: options.provider,
-    project: projectIds,
-    ...(options.provider === "csv" && options.delimiter ? { delimiter: options.delimiter } : {}),
   };
 }

@@ -1,26 +1,12 @@
-export const MAX_PROJECT_CSV_SIZE_BYTES = 5 * 1024 * 1024;
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
 
-export type TProjectCsvImportResult = {
-  message: string;
-  projects: {
-    project_id: string;
-    project_identifier: string;
-    project_name: string;
-    created_states: number;
-    created_labels: number;
-    warnings: string[];
-  }[];
-  warnings: string[];
-  history_id: string;
-};
-
-export function isValidProjectCsvFile(file: File): boolean {
-  return file.name.toLowerCase().endsWith(".csv");
-}
-
-export function isValidProjectCsvSize(file: File, maxBytes = MAX_PROJECT_CSV_SIZE_BYTES): boolean {
-  return file.size <= maxBytes;
-}
+// Matches MAX_UPLOAD_BYTES on the import endpoint so the browser and the server agree
+export const MAX_PROJECT_CSV_SIZE_BYTES = 15 * 1024 * 1024;
 
 export function downloadBlob(blob: Blob, filename: string): void {
   const typedBlob =

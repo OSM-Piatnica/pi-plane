@@ -1,21 +1,15 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
 import { describe, expect, it } from "vitest";
-import {
-  getProjectImportLink,
-  isValidProjectCsvFile,
-  isValidProjectCsvSize,
-  MAX_PROJECT_CSV_SIZE_BYTES,
-} from "../../core/helpers/project-csv-helpers";
+import { getProjectImportLink, MAX_PROJECT_CSV_SIZE_BYTES } from "../../core/helpers/project-csv-helpers";
 
 describe("project-csv-helpers", () => {
-  it("accepts csv files by extension", () => {
-    expect(isValidProjectCsvFile(new File(["a"], "project.csv", { type: "text/csv" }))).toBe(true);
-    expect(isValidProjectCsvFile(new File(["a"], "project.txt", { type: "text/plain" }))).toBe(false);
-  });
-
-  it("validates file size", () => {
-    const small = new File(["a"], "project.csv", { type: "text/csv" });
-    expect(isValidProjectCsvSize(small)).toBe(true);
-    expect(isValidProjectCsvSize(small, 0)).toBe(false);
+  it("exposes a positive upload size limit", () => {
     expect(MAX_PROJECT_CSV_SIZE_BYTES).toBeGreaterThan(0);
   });
 
