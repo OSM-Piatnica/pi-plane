@@ -1758,8 +1758,7 @@ export default {
       exports: {
         title: "Import i eksport",
         heading: "Import i eksport",
-        description:
-          "Eksportuj elementy robocze do pliku lub wczytaj je z pliku do istniejącego projektu.",
+        description: "Eksportuj elementy robocze do pliku lub wczytaj je z pliku do istniejącego projektu.",
         exporting: "Eksportowanie",
         previous_exports: "Poprzednie eksporty",
         export_separate_files: "Eksportuj dane do oddzielnych plików",
