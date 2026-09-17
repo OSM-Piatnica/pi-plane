@@ -1667,7 +1667,8 @@ export default {
       heading: "Tokeny API",
     },
     notifications: {
-      description: "Bądź na bieżąco z elementami pracy, które subskrybujesz. Włącz tę opcję, aby otrzymywać powiadomienia.",
+      description:
+        "Bądź na bieżąco z elementami pracy, które subskrybujesz. Włącz tę opcję, aby otrzymywać powiadomienia.",
       heading: "Powiadomienia e-mail",
     },
     preferences: {
@@ -3337,7 +3338,8 @@ export default {
     role: "Rola",
   },
   reject: "Odrzuć",
-  settings_description: "Zarządzaj ustawieniami konta, przestrzeni roboczej i projektów w jednym miejscu. Przełączaj się między kartami, aby łatwo je skonfigurować.",
+  settings_description:
+    "Zarządzaj ustawieniami konta, przestrzeni roboczej i projektów w jednym miejscu. Przełączaj się między kartami, aby łatwo je skonfigurować.",
   settings_moved_to_preferences: "Ustawienia strefy czasowej i języka zostały przeniesione do preferencji.",
   show_limited_projects_on_sidebar: "Pokaż ograniczoną liczbę projektów na pasku bocznym",
   timezone_setting: "Bieżące ustawienie strefy czasowej.",
