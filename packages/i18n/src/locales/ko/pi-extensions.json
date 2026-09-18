@@ -1,5 +1,5 @@
 {
-  "fork_extensions": {
+  "pi_extensions": {
     "appearance": "외관",
     "duration": "기간",
     "duration_days": "{count, plural, other {#일}}",

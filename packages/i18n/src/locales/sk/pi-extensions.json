@@ -1,5 +1,5 @@
 {
-  "fork_extensions": {
+  "pi_extensions": {
     "appearance": "Vzhľad",
     "duration": "Trvanie",
     "duration_days": "{count, plural, one {# deň} few {# dni} other {# dní}}",

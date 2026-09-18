@@ -1,5 +1,5 @@
 {
-  "fork_extensions": {
+  "pi_extensions": {
     "appearance": "Tampilan",
     "duration": "Durasi",
     "duration_days": "{count, plural, other {# hari}}",

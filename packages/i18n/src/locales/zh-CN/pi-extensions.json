@@ -1,5 +1,5 @@
 {
-  "fork_extensions": {
+  "pi_extensions": {
     "appearance": "外观",
     "duration": "持续时间",
     "duration_days": "{count, plural, other {# 天}}",

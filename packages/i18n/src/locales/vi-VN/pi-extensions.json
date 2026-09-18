@@ -1,5 +1,5 @@
 {
-  "fork_extensions": {
+  "pi_extensions": {
     "appearance": "Giao diện",
     "duration": "Thời lượng",
     "duration_days": "{count, plural, other {# ngày}}",

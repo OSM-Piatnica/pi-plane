@@ -1,5 +1,5 @@
 {
-  "fork_extensions": {
+  "pi_extensions": {
     "appearance": "Aparência",
     "duration": "Duração",
     "duration_days": "{count, plural, one {# dia} other {# dias}}",

@@ -1,5 +1,5 @@
 {
-  "fork_extensions": {
+  "pi_extensions": {
     "account_settings": {
       "api_tokens": {
         "heading": "Персональні токени доступу"
