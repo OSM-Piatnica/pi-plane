@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -33,6 +34,7 @@ export interface IPartialProject {
   guest_view_all_features?: boolean;
   is_issue_type_enabled?: boolean;
   is_workflow_enabled?: boolean;
+  is_time_tracking_enabled?: boolean;
   project_lead?: IUserLite | string | null;
   network?: number;
   // Timestamps

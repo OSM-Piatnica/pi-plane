@@ -6,7 +6,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { getProjectImportLink, MAX_PROJECT_CSV_SIZE_BYTES } from "../../core/helpers/project-csv-helpers";
+import { getProjectImportLink, MAX_PROJECT_CSV_SIZE_BYTES } from "../../helpers/project-csv-helpers";
 
 describe("project-csv-helpers", () => {
   it("exposes a positive upload size limit", () => {

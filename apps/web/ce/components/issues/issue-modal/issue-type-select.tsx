@@ -8,7 +8,7 @@
 
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
-import { useController, type Control } from "react-hook-form";
+import { useController, type Control, type Path } from "react-hook-form";
 import { observer } from "mobx-react";
 import { Layers } from "lucide-react";
 import type { EditorRefApi } from "@plane/editor";
@@ -50,7 +50,7 @@ export const IssueTypeSelect = observer(function IssueTypeSelect<T extends Parti
 
   const { field } = useController({
     control,
-    name: "type_id" as const,
+    name: "type_id" as Path<T>,
   });
 
   const { types, defaultTypeId, isLoading } = useProjectIssueTypes(slug, issueTypesEnabled ? projectId : null);
