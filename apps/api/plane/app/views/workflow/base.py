@@ -15,7 +15,16 @@ from plane.app.serializers import (
     WorkflowSerializer,
     WorkflowStateConfigSerializer,
 )
-from plane.db.models import Issue, Project, State, Workflow, WorkflowApproval, WorkflowFlow, WorkflowHistory, WorkflowStateConfig
+from plane.db.models import (
+    Issue,
+    Project,
+    State,
+    Workflow,
+    WorkflowApproval,
+    WorkflowFlow,
+    WorkflowHistory,
+    WorkflowStateConfig,
+)
 from plane.utils.workflow import (
     create_default_workflow,
     get_allowed_target_state_ids,
@@ -53,7 +62,9 @@ class WorkflowViewSet(BaseViewSet):
                 project__project_projectmember__is_active=True,
             )
             .select_related("issue_type")
-            .prefetch_related("state_configs__state", "flows__source_state", "flows__target_state", "flows__reject_state")
+            .prefetch_related(
+                "state_configs__state", "flows__source_state", "flows__target_state", "flows__reject_state"
+            )
             .distinct()
         )
 
@@ -64,7 +75,9 @@ class WorkflowViewSet(BaseViewSet):
 
     @allow_permission([ROLE.ADMIN])
     def create(self, request, slug, project_id):
-        serializer = WorkflowSerializer(data=request.data, context={**self.get_serializer_context(), "request": request})
+        serializer = WorkflowSerializer(
+            data=request.data, context={**self.get_serializer_context(), "request": request}
+        )
         if serializer.is_valid():
             serializer.save(project_id=project_id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -120,7 +133,9 @@ class WorkflowViewSet(BaseViewSet):
             {"is_paused": workflow.is_paused},
             request.user.id,
         )
-        return Response(WorkflowSerializer(workflow, context={**self.get_serializer_context(), "request": request}).data)
+        return Response(
+            WorkflowSerializer(workflow, context={**self.get_serializer_context(), "request": request}).data
+        )
 
 
 class WorkflowBulkConfigEndpoint(BaseAPIView):
@@ -206,9 +221,13 @@ class ProjectWorkflowStatesEndpoint(BaseAPIView):
         workflows = Workflow.objects.filter(
             project_id=project_id,
             deleted_at__isnull=True,
-        ).prefetch_related("state_configs__state", "flows__source_state", "flows__target_state", "flows__reject_state")
+        ).prefetch_related(
+            "state_configs__state", "flows__source_state", "flows__target_state", "flows__reject_state"
+        )
 
-        states = State.objects.filter(project_id=project_id, deleted_at__isnull=True, is_triage=False).order_by("sequence")
+        states = State.objects.filter(
+            project_id=project_id, deleted_at__isnull=True, is_triage=False
+        ).order_by("sequence")
 
         return Response(
             {
@@ -241,7 +260,11 @@ class ProjectWorkflowStatesEndpoint(BaseAPIView):
 class IssueWorkflowStatusEndpoint(BaseAPIView):
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def get(self, request, slug, project_id, issue_id):
-        issue = Issue.objects.filter(pk=issue_id, project_id=project_id, workspace__slug=slug).select_related("project").first()
+        issue = (
+            Issue.objects.filter(pk=issue_id, project_id=project_id, workspace__slug=slug)
+            .select_related("project")
+            .first()
+        )
         if not issue:
             return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -262,7 +285,11 @@ class IssueWorkflowStatusEndpoint(BaseAPIView):
 class IssueWorkflowTransitionEndpoint(BaseAPIView):
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     def post(self, request, slug, project_id, issue_id):
-        issue = Issue.objects.filter(pk=issue_id, project_id=project_id, workspace__slug=slug).select_related("project").first()
+        issue = (
+            Issue.objects.filter(pk=issue_id, project_id=project_id, workspace__slug=slug)
+            .select_related("project")
+            .first()
+        )
         if not issue:
             return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
 
