@@ -25,7 +25,7 @@ import type { TWorkItemFilterExpression } from "@plane/types";
 import { CustomSearchSelect, CustomSelect } from "@plane/ui";
 // import { WorkspaceLevelWorkItemFiltersHOC } from "@/components/work-item-filters/filters-hoc/workspace-level";
 import { buildIssueExportPayload } from "@/helpers/export-payload-helpers";
-import { getApiErrorMessage } from "@/helpers/api-error";
+import { getApiErrorMessage, type ApiErrorLike } from "@/helpers/api-error";
 // import { WorkItemFiltersRow } from "@/components/work-item-filters/filters-row";
 import { useProject } from "@/hooks/store/use-project";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
@@ -128,7 +128,7 @@ export const ExportForm = observer(function ExportForm(props: Props) {
           type: TOAST_TYPE.ERROR,
           title: t("error"),
           message: getApiErrorMessage(
-            error as unknown,
+            error as ApiErrorLike,
             t("workspace_settings.settings.exports.modal.toasts.error.message")
           ),
         });

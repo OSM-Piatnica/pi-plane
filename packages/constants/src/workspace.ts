@@ -175,7 +175,7 @@ export const EXPORTERS_LIST = [
     i18n_title: "exporter.json.title",
     i18n_description: "exporter.csv.description",
   },
-];
+] as const;
 
 export const DEFAULT_GLOBAL_VIEWS_LIST: {
   key: TStaticViewTypes;
