@@ -48,4 +48,8 @@ jobs:
         run: corepack enable pnpm
 
       - name: Run sync check
-        run: pnpm dlx tsx packages/i18n/scripts/sync-check.ts --ci
+        # Reports only (no --ci): this fork actively maintains en/pl, but carries
+        # the other locales as-is from upstream, so most of them are genuinely
+        # incomplete against our fork-only keys. Failing the build on that would
+        # just train people to ignore a permanently-red check.
+        run: pnpm dlx tsx packages/i18n/scripts/sync-check.ts

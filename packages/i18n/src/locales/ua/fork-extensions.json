@@ -1,50 +1,54 @@
 {
-  "account_settings": {
-    "api_tokens": {
-      "heading": "Персональні токени доступу"
-    }
-  },
-  "appearance": "Зовнішній вигляд",
-  "duration": "Тривалість",
-  "duration_days": "{count, plural, one {# день} few {# дні} many {# днів} other {# дня}}",
-  "epic": {
-    "all": "Усі епіки"
-  },
-  "importer": {
-    "github": {
-      "description": "Імпортуйте одиниці з репозиторіїв GitHub.",
-      "title": "GitHub"
-    },
-    "jira": {
-      "description": "Імпортуйте одиниці та епіки з Jira.",
-      "title": "Jira"
-    }
-  },
-  "issue": {
-    "add": {
-      "duration": "Додати тривалість"
-    }
-  },
-  "profile": {
-    "actions": {
-      "appearance": "Зовнішній вигляд"
-    }
-  },
-  "project_views": {
-    "empty_state": {
-      "filter": {
-        "description": "Створіть нове подання.",
-        "title": "Немає подань за цим фільтром"
+  "fork_extensions": {
+    "account_settings": {
+      "api_tokens": {
+        "heading": "Персональні токени доступу"
       }
+    },
+    "appearance": "Зовнішній вигляд",
+    "duration": "Тривалість",
+    "duration_days": "{count, plural, one {# день} few {# дні} many {# днів} other {# дня}}",
+    "epic": {
+      "all": "Усі епіки"
+    },
+    "importer": {
+      "github": {
+        "description": "Імпортуйте одиниці з репозиторіїв GitHub.",
+        "title": "GitHub"
+      },
+      "jira": {
+        "description": "Імпортуйте одиниці та епіки з Jira.",
+        "title": "Jira"
+      }
+    },
+    "issue": {
+      "add": {
+        "duration": "Додати тривалість"
+      }
+    },
+    "profile": {
+      "actions": {
+        "appearance": "Зовнішній вигляд"
+      }
+    },
+    "project_views": {
+      "empty_state": {
+        "filter": {
+          "description": "Створіть нове подання.",
+          "title": "Немає подань за цим фільтром"
+        }
+      }
+    },
+    "workspace_analytics": {
+      "total_admins": "Усього адміністраторів",
+      "total_guests": "Усього гостей",
+      "total_intake": "Загальний дохід",
+      "total_projects": "Усього проєктів",
+      "total_users": "Усього користувачів",
+      "total_work_items": "Усього {entity}"
+    },
+    "labels": {
+      "workspace": "Робочий простір"
     }
-  },
-  "workspace": "Робочий простір",
-  "workspace_analytics": {
-    "total_admins": "Усього адміністраторів",
-    "total_guests": "Усього гостей",
-    "total_intake": "Загальний дохід",
-    "total_projects": "Усього проєктів",
-    "total_users": "Усього користувачів",
-    "total_work_items": "Усього {entity}"
   }
 }

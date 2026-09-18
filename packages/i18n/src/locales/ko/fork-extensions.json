@@ -1,45 +1,49 @@
 {
-  "appearance": "외관",
-  "duration": "기간",
-  "duration_days": "{count, plural, other {#일}}",
-  "epic": {
-    "all": "모든 에픽"
-  },
-  "importer": {
-    "github": {
-      "description": "GitHub 저장소에서 작업 항목을 가져오고 동기화합니다.",
-      "title": "Github"
+  "fork_extensions": {
+    "appearance": "외관",
+    "duration": "기간",
+    "duration_days": "{count, plural, other {#일}}",
+    "epic": {
+      "all": "모든 에픽"
     },
-    "jira": {
-      "description": "Jira 프로젝트 및 에픽에서 작업 항목과 에픽을 가져옵니다.",
-      "title": "Jira"
-    }
-  },
-  "issue": {
-    "add": {
-      "duration": "기간 추가"
-    }
-  },
-  "profile": {
-    "actions": {
-      "appearance": "외관"
-    }
-  },
-  "project_views": {
-    "empty_state": {
-      "filter": {
-        "description": "검색 기준과 일치하는 뷰가 없습니다. 대신 새 뷰를 생성하세요.",
-        "title": "일치하는 뷰 없음"
+    "importer": {
+      "github": {
+        "description": "GitHub 저장소에서 작업 항목을 가져오고 동기화합니다.",
+        "title": "Github"
+      },
+      "jira": {
+        "description": "Jira 프로젝트 및 에픽에서 작업 항목과 에픽을 가져옵니다.",
+        "title": "Jira"
       }
+    },
+    "issue": {
+      "add": {
+        "duration": "기간 추가"
+      }
+    },
+    "profile": {
+      "actions": {
+        "appearance": "외관"
+      }
+    },
+    "project_views": {
+      "empty_state": {
+        "filter": {
+          "description": "검색 기준과 일치하는 뷰가 없습니다. 대신 새 뷰를 생성하세요.",
+          "title": "일치하는 뷰 없음"
+        }
+      }
+    },
+    "workspace_analytics": {
+      "total_admins": "총 관리자 수",
+      "total_guests": "총 게스트 수",
+      "total_intake": "총 수입",
+      "total_projects": "총 프로젝트 수",
+      "total_users": "총 사용자 수",
+      "total_work_items": "총 {entity}"
+    },
+    "labels": {
+      "workspace": "작업 공간"
     }
-  },
-  "workspace": "작업 공간",
-  "workspace_analytics": {
-    "total_admins": "총 관리자 수",
-    "total_guests": "총 게스트 수",
-    "total_intake": "총 수입",
-    "total_projects": "총 프로젝트 수",
-    "total_users": "총 사용자 수",
-    "total_work_items": "총 {entity}"
   }
 }

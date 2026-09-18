@@ -1,46 +1,50 @@
 {
-  "appearance": "Apariencia",
-  "connections": "Conexiones",
-  "duration": "Duración",
-  "duration_days": "{count, plural, one {# día} other {# días}}",
-  "epic": {
-    "all": "Todos los Epics"
-  },
-  "importer": {
-    "github": {
-      "description": "Importa elementos de trabajo desde repositorios de GitHub y sincronízalos.",
-      "title": "GitHub"
+  "fork_extensions": {
+    "appearance": "Apariencia",
+    "connections": "Conexiones",
+    "duration": "Duración",
+    "duration_days": "{count, plural, one {# día} other {# días}}",
+    "epic": {
+      "all": "Todos los Epics"
     },
-    "jira": {
-      "description": "Importa elementos de trabajo y epics desde proyectos y epics de Jira.",
-      "title": "Jira"
-    }
-  },
-  "issue": {
-    "add": {
-      "duration": "Agregar duración"
-    }
-  },
-  "profile": {
-    "actions": {
-      "appearance": "Apariencia"
-    }
-  },
-  "project_views": {
-    "empty_state": {
-      "filter": {
-        "description": "Ninguna vista coincide con los criterios de búsqueda. \n Crea una nueva vista en su lugar.",
-        "title": "No hay vistas coincidentes"
+    "importer": {
+      "github": {
+        "description": "Importa elementos de trabajo desde repositorios de GitHub y sincronízalos.",
+        "title": "GitHub"
+      },
+      "jira": {
+        "description": "Importa elementos de trabajo y epics desde proyectos y epics de Jira.",
+        "title": "Jira"
       }
+    },
+    "issue": {
+      "add": {
+        "duration": "Agregar duración"
+      }
+    },
+    "profile": {
+      "actions": {
+        "appearance": "Apariencia"
+      }
+    },
+    "project_views": {
+      "empty_state": {
+        "filter": {
+          "description": "Ninguna vista coincide con los criterios de búsqueda. \n Crea una nueva vista en su lugar.",
+          "title": "No hay vistas coincidentes"
+        }
+      }
+    },
+    "workspace_analytics": {
+      "total_admins": "Total de administradores",
+      "total_guests": "Total de invitados",
+      "total_intake": "Ingreso total",
+      "total_projects": "Total de proyectos",
+      "total_users": "Total de usuarios",
+      "total_work_items": "Total de {entity}"
+    },
+    "labels": {
+      "workspace": "Espacio de trabajo"
     }
-  },
-  "workspace": "Espacio de trabajo",
-  "workspace_analytics": {
-    "total_admins": "Total de administradores",
-    "total_guests": "Total de invitados",
-    "total_intake": "Ingreso total",
-    "total_projects": "Total de proyectos",
-    "total_users": "Total de usuarios",
-    "total_work_items": "Total de {entity}"
   }
 }

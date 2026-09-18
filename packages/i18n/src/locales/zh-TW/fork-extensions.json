@@ -1,45 +1,49 @@
 {
-  "appearance": "外觀",
-  "duration": "持續時間",
-  "duration_days": "{count, plural, other {# 天}}",
-  "epic": {
-    "all": "所有 Epic"
-  },
-  "importer": {
-    "github": {
-      "description": "從 GitHub 儲存庫匯入工作事項並同步。",
-      "title": "GitHub"
+  "fork_extensions": {
+    "appearance": "外觀",
+    "duration": "持續時間",
+    "duration_days": "{count, plural, other {# 天}}",
+    "epic": {
+      "all": "所有 Epic"
     },
-    "jira": {
-      "description": "從 Jira 專案和 Epic 匯入工作事項和 Epic。",
-      "title": "Jira"
-    }
-  },
-  "issue": {
-    "add": {
-      "duration": "新增持續時間"
-    }
-  },
-  "profile": {
-    "actions": {
-      "appearance": "外觀"
-    }
-  },
-  "project_views": {
-    "empty_state": {
-      "filter": {
-        "description": "沒有檢視符合搜尋條件。\n改為建立新檢視。",
-        "title": "沒有符合的檢視"
+    "importer": {
+      "github": {
+        "description": "從 GitHub 儲存庫匯入工作事項並同步。",
+        "title": "GitHub"
+      },
+      "jira": {
+        "description": "從 Jira 專案和 Epic 匯入工作事項和 Epic。",
+        "title": "Jira"
       }
+    },
+    "issue": {
+      "add": {
+        "duration": "新增持續時間"
+      }
+    },
+    "profile": {
+      "actions": {
+        "appearance": "外觀"
+      }
+    },
+    "project_views": {
+      "empty_state": {
+        "filter": {
+          "description": "沒有檢視符合搜尋條件。\n改為建立新檢視。",
+          "title": "沒有符合的檢視"
+        }
+      }
+    },
+    "workspace_analytics": {
+      "total_admins": "管理員總數",
+      "total_guests": "訪客總數",
+      "total_intake": "總收入",
+      "total_projects": "專案總數",
+      "total_users": "使用者總數",
+      "total_work_items": "{entity}總數"
+    },
+    "labels": {
+      "workspace": "工作區"
     }
-  },
-  "workspace": "工作區",
-  "workspace_analytics": {
-    "total_admins": "管理員總數",
-    "total_guests": "訪客總數",
-    "total_intake": "總收入",
-    "total_projects": "專案總數",
-    "total_users": "使用者總數",
-    "total_work_items": "{entity}總數"
   }
 }
