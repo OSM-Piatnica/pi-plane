@@ -57,6 +57,8 @@ export enum EIssueGroupedAction {
   REORDER = "REORDER",
 }
 export interface IBaseIssuesStore {
+  // store reference
+  rootIssueStore: IIssueRootStore;
   // observable
   loader: Record<string, TLoader>;
 
