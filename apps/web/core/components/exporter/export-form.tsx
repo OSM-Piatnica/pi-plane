@@ -204,7 +204,7 @@ export const ExportForm = observer(function ExportForm(props: Props) {
                 >
                   {EXPORTERS_LIST.map((service) => (
                     <CustomSelect.Option
-                      key={`${service.provider}-${service.delimiter ?? "default"}`}
+                      key={`${service.provider}-${"delimiter" in service ? service.delimiter : "default"}`}
                       className="flex items-center gap-2"
                       value={service}
                     >
