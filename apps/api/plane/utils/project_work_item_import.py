@@ -7,6 +7,7 @@
 import json
 import re
 import uuid
+from dataclasses import asdict, dataclass, fields
 from datetime import date, datetime, time, timezone as dt_timezone
 
 from django.db import transaction
@@ -34,6 +35,7 @@ from plane.db.models import (
     State,
     WorkspaceMember,
 )
+from plane.db.models.project import ROLE
 from plane.utils.html_processor import strip_tags
 from plane.utils.issue_relation_mapper import get_actual_relation
 from plane.utils.issue_type_property import validate_property_value
@@ -55,6 +57,50 @@ _ALLOWED_RELATIONS = frozenset(
      "finish_before", "finish_after", "implemented_by", "implements"}
 )
 _IDENTIFIER_PATTERN = re.compile(r"^([A-Za-z0-9]+)-(\d+)$")
+
+_TRUE_TOKENS = frozenset({"1", "true", "yes", "on"})
+_FALSE_TOKENS = frozenset({"0", "false", "no", "off"})
+
+
+def _coerce_optional_bool(value, *, default: bool = True) -> bool:
+    """Read a form field that is allowed to be missing; anything unreadable keeps the default."""
+    if value is None:
+        return default
+    if isinstance(value, bool):
+        return value
+    text = str(value).strip().lower()
+    if text in _TRUE_TOKENS:
+        return True
+    if text in _FALSE_TOKENS:
+        return False
+    return default
+
+
+@dataclass(frozen=True)
+class WorkItemImportOptions:
+    """
+    What an import is allowed to bring in.
+
+    Everything is on unless the caller opts out, so a file imports in full by default and a
+    client that knows nothing about these options keeps working.
+    """
+
+    assignees: bool = True
+    subscribers: bool = True
+    relations: bool = True
+    parents: bool = True
+    dates: bool = True
+    labels: bool = True
+    modules: bool = True
+    cycles: bool = True
+
+    @classmethod
+    def from_request_data(cls, data) -> "WorkItemImportOptions":
+        """Multipart fields arrive as strings; an absent field means the option stays on."""
+        return cls(**{field.name: _coerce_optional_bool(data.get(field.name)) for field in fields(cls)})
+
+    def as_dict(self) -> dict:
+        return asdict(self)
 
 
 def _coerce_list(value) -> list:
@@ -153,9 +199,17 @@ def _resolve_people(
     warnings: list[str],
     row_number: int,
     role: str,
+    assignable_member_ids: set | None = None,
 ) -> list:
-    """Resolve a people column to user ids, preferring e-mail over name."""
+    """Resolve a people column to user ids, preferring e-mail over name.
+
+    Only members of the target project are returned; anyone else is reported as a warning.
+    When assignable_member_ids is given, guests are dropped on top of that: the work item API
+    refuses to assign them, so an import must not create what the rest of Plane would reject.
+    """
     resolved = []
+    # The value each id came from, so a skipped person can be named in the warning
+    source_text: dict = {}
     pending_names = _coerce_list(names)
 
     for entry in _coerce_list(emails):
@@ -171,6 +225,7 @@ def _resolve_people(
             continue
         if member.id not in resolved:
             resolved.append(member.id)
+        source_text.setdefault(member.id, text)
 
     for entry in pending_names:
         text = str(entry).strip()
@@ -182,32 +237,73 @@ def _resolve_people(
             continue
         if member.id not in resolved:
             resolved.append(member.id)
+        source_text.setdefault(member.id, text)
 
-    outsiders = [member_id for member_id in resolved if member_id not in project_member_ids]
+    # Someone who only belongs to the workspace cannot open the project, so assigning them would
+    # leave the work item pointing at a person the project does not know.
+    kept = [member_id for member_id in resolved if member_id in project_member_ids]
+    outsiders = sorted(
+        source_text.get(member_id, str(member_id))
+        for member_id in resolved
+        if member_id not in project_member_ids
+    )
     if outsiders:
         warnings.append(
-            f"Row {row_number}: {len(outsiders)} {role}(s) belong to the workspace but not to this project"
+            f'Row {row_number}: {role}(s) {", ".join(outsiders)} belong to the workspace '
+            "but not to this project, skipped"
         )
-    return resolved
+
+    if assignable_member_ids is not None:
+        guests = sorted(
+            source_text.get(member_id, str(member_id))
+            for member_id in kept
+            if member_id not in assignable_member_ids
+        )
+        kept = [member_id for member_id in kept if member_id in assignable_member_ids]
+        if guests:
+            warnings.append(
+                f'Row {row_number}: {role}(s) {", ".join(guests)} are guests in this project '
+                "and cannot be assigned, skipped"
+            )
+    return kept
 
 
-def _member_values_to_ids(value, members_by_email: dict, members_by_name: dict) -> tuple[list[str], list[str]]:
-    """Turn member picker values written as e-mails back into user ids."""
+def _member_values_to_ids(
+    value,
+    members_by_email: dict,
+    members_by_name: dict,
+    project_member_ids: set,
+) -> tuple[list[str], list[str], list[str]]:
+    """
+    Turn member picker values written as e-mails back into user ids.
+
+    Returns the ids to store, the values that matched nobody, and the people who belong to the
+    workspace but not to this project. The last group is reported rather than stored, for the
+    same reason assignees are.
+    """
     entries = value if isinstance(value, list) else [value]
+    # _index_member keys on UUID objects, the ids here are strings
+    allowed = {str(member_id) for member_id in project_member_ids}
     resolved: list[str] = []
     unknown: list[str] = []
+    outsiders: list[str] = []
     for entry in entries:
         text = str(entry).strip()
         if not text:
             continue
         member = members_by_email.get(text.lower()) if "@" in text else members_by_name.get(text.lower())
         if member:
-            resolved.append(str(member.id))
+            candidate = str(member.id)
         elif _is_uuid_like(text):
-            resolved.append(text)
+            candidate = text
         else:
             unknown.append(text)
-    return resolved, unknown
+            continue
+        if candidate not in allowed:
+            outsiders.append(text)
+            continue
+        resolved.append(candidate)
+    return resolved, unknown, outsiders
 
 
 def _is_uuid_like(text: str) -> bool:
@@ -316,14 +412,19 @@ def import_work_items_into_project(
     user,
     rows: list[dict],
     warnings: list[str] | None = None,
+    options: WorkItemImportOptions | None = None,
 ) -> dict:
     """
     Create work items from export rows.
 
     Runs in one transaction so labels and modules created along the way are rolled back
     together with the work items if anything fails.
+
+    Every option is applied while the rows are prepared, so the prepared payload never holds
+    data the caller asked to leave out and the writing phase needs no knowledge of the options.
     """
     warnings = warnings if warnings is not None else []
+    options = options or WorkItemImportOptions()
 
     if not rows:
         return {"created_work_items": 0, "warnings": warnings}
@@ -381,12 +482,16 @@ def import_work_items_into_project(
     members_by_email = {}
     members_by_name = {}
     project_member_ids = set()
+    # Guests belong to the project but Plane never lets them hold a work item
+    assignable_member_ids = set()
 
-    def _index_member(member, *, in_project: bool) -> None:
+    def _index_member(member, *, in_project: bool, can_be_assigned: bool = False) -> None:
         if not member:
             return
         if in_project:
             project_member_ids.add(member.id)
+            if can_be_assigned:
+                assignable_member_ids.add(member.id)
         email = (member.email or "").strip().lower()
         if email:
             members_by_email.setdefault(email, member)
@@ -401,7 +506,11 @@ def import_work_items_into_project(
         is_active=True,
         deleted_at__isnull=True,
     ).select_related("member"):
-        _index_member(project_member.member, in_project=True)
+        _index_member(
+            project_member.member,
+            in_project=True,
+            can_be_assigned=project_member.role >= ROLE.MEMBER.value,
+        )
 
     # Fallback: workspace members (may not be project members yet)
     for wm in WorkspaceMember.objects.filter(
@@ -423,6 +532,12 @@ def import_work_items_into_project(
     created_labels: list[str] = []
     created_modules: list[str] = []
     created_cycles: list[str] = []
+    # Counted per kind instead of per row, so turning an option off cannot flood the response
+    skipped_by_option: dict[str, int] = {}
+
+    def _note_skipped(kind: str, present) -> None:
+        if present not in [None, "", [], {}]:
+            skipped_by_option[kind] = skipped_by_option.get(kind, 0) + 1
 
     for index, row in enumerate(rows):
         if not isinstance(row, dict):
@@ -460,75 +575,94 @@ def import_work_items_into_project(
         # Labels missing from the project are created, so a file imports the same way into
         # a fresh project as into one that was prepared by hand.
         label_ids = []
-        for label_name in _coerce_list(row.get("labels")):
-            clean_name = str(label_name).strip()
-            if not clean_name:
-                continue
-            label = labels_by_name.get(clean_name.lower())
-            if label is None:
-                label = Label.objects.create(
-                    name=clean_name[:255],
-                    color=DEFAULT_LABEL_COLOR,
-                    project=project,
-                    workspace=project.workspace,
-                    created_by=user,
-                )
-                labels_by_name[clean_name.lower()] = label
-                created_labels.append(clean_name)
-            if label.id not in label_ids:
-                label_ids.append(label.id)
+        if options.labels:
+            for label_name in _coerce_list(row.get("labels")):
+                clean_name = str(label_name).strip()
+                if not clean_name:
+                    continue
+                label = labels_by_name.get(clean_name.lower())
+                if label is None:
+                    label = Label.objects.create(
+                        name=clean_name[:255],
+                        color=DEFAULT_LABEL_COLOR,
+                        project=project,
+                        workspace=project.workspace,
+                        created_by=user,
+                    )
+                    labels_by_name[clean_name.lower()] = label
+                    created_labels.append(clean_name)
+                if label.id not in label_ids:
+                    label_ids.append(label.id)
+        else:
+            _note_skipped("label", row.get("labels"))
 
         # Modules only need a name, so missing ones are created alongside labels
         module_ids = []
-        for module_name in _coerce_list(row.get("modules")):
-            clean_name = str(module_name).strip()
-            if not clean_name:
-                continue
-            module = modules_by_name.get(clean_name.lower())
-            if module is None:
-                module = Module.objects.create(
-                    name=clean_name[:255],
-                    project=project,
-                    workspace=project.workspace,
-                    created_by=user,
-                )
-                modules_by_name[clean_name.lower()] = module
-                created_modules.append(clean_name)
-            if module.id not in module_ids:
-                module_ids.append(module.id)
+        if options.modules:
+            for module_name in _coerce_list(row.get("modules")):
+                clean_name = str(module_name).strip()
+                if not clean_name:
+                    continue
+                module = modules_by_name.get(clean_name.lower())
+                if module is None:
+                    module = Module.objects.create(
+                        name=clean_name[:255],
+                        project=project,
+                        workspace=project.workspace,
+                        created_by=user,
+                    )
+                    modules_by_name[clean_name.lower()] = module
+                    created_modules.append(clean_name)
+                if module.id not in module_ids:
+                    module_ids.append(module.id)
+        else:
+            _note_skipped("module", row.get("modules"))
 
         # A work item belongs to at most one cycle; the cycle itself is created after the
         # loop, once the dates of all its work items are known.
         cycle_name = None
-        for raw_cycle_name in _coerce_list(row.get("cycles")):
-            clean_name = str(raw_cycle_name).strip()
-            if not clean_name:
-                continue
-            if cycle_name is None:
-                cycle_name = clean_name
-            elif clean_name.lower() != cycle_name.lower():
-                warnings.append(f'Row {index + 1}: a work item can belong to one cycle, "{clean_name}" skipped')
+        if options.cycles:
+            for raw_cycle_name in _coerce_list(row.get("cycles")):
+                clean_name = str(raw_cycle_name).strip()
+                if not clean_name:
+                    continue
+                if cycle_name is None:
+                    cycle_name = clean_name
+                elif clean_name.lower() != cycle_name.lower():
+                    warnings.append(f'Row {index + 1}: a work item can belong to one cycle, "{clean_name}" skipped')
+        else:
+            _note_skipped("cycle", row.get("cycles"))
 
-        assignee_ids = _resolve_people(
-            emails=row.get("assignee_emails"),
-            names=row.get("assignee_names") or row.get("assignees"),
-            members_by_email=members_by_email,
-            members_by_name=members_by_name,
-            project_member_ids=project_member_ids,
-            warnings=warnings,
-            row_number=index + 1,
-            role="assignee",
-        )
-        subscriber_ids = _resolve_people(
-            emails=row.get("subscriber_emails"),
-            names=row.get("subscriber_names") or row.get("subscribers"),
-            members_by_email=members_by_email,
-            members_by_name=members_by_name,
-            project_member_ids=project_member_ids,
-            warnings=warnings,
-            row_number=index + 1,
-            role="subscriber",
-        )
+        assignee_ids = []
+        if options.assignees:
+            assignee_ids = _resolve_people(
+                emails=row.get("assignee_emails"),
+                names=row.get("assignee_names") or row.get("assignees"),
+                members_by_email=members_by_email,
+                members_by_name=members_by_name,
+                project_member_ids=project_member_ids,
+                assignable_member_ids=assignable_member_ids,
+                warnings=warnings,
+                row_number=index + 1,
+                role="assignee",
+            )
+        else:
+            _note_skipped("assignee", row.get("assignee_emails") or row.get("assignees"))
+
+        subscriber_ids = []
+        if options.subscribers:
+            subscriber_ids = _resolve_people(
+                emails=row.get("subscriber_emails"),
+                names=row.get("subscriber_names") or row.get("subscribers"),
+                members_by_email=members_by_email,
+                members_by_name=members_by_name,
+                project_member_ids=project_member_ids,
+                warnings=warnings,
+                row_number=index + 1,
+                role="subscriber",
+            )
+        else:
+            _note_skipped("subscriber", row.get("subscriber_emails") or row.get("subscribers"))
 
         estimate_point_id = None
         raw_estimate = row.get("estimate")
@@ -546,39 +680,54 @@ def import_work_items_into_project(
 
         raw_start_date = row.get("start_date")
         raw_target_date = row.get("target_date")
-        start_date = _parse_import_date(raw_start_date)
-        target_date = _parse_import_date(raw_target_date)
-        if raw_start_date not in [None, ""] and start_date is None:
-            warnings.append(f'Row {index + 1}: could not read start date "{raw_start_date}", left empty')
-        if raw_target_date not in [None, ""] and target_date is None:
-            warnings.append(f'Row {index + 1}: could not read target date "{raw_target_date}", left empty')
+        start_date = None
+        target_date = None
+        duration = None
+        if options.dates:
+            start_date = _parse_import_date(raw_start_date)
+            target_date = _parse_import_date(raw_target_date)
+            if raw_start_date not in [None, ""] and start_date is None:
+                warnings.append(f'Row {index + 1}: could not read start date "{raw_start_date}", left empty')
+            if raw_target_date not in [None, ""] and target_date is None:
+                warnings.append(f'Row {index + 1}: could not read target date "{raw_target_date}", left empty')
 
-        raw_duration = row.get("duration")
-        duration = normalize_work_item_duration(raw_duration)
-        if raw_duration not in [None, ""] and duration is None:
-            warnings.append(f'Row {index + 1}: invalid duration "{raw_duration}", derived from the dates instead')
+            raw_duration = row.get("duration")
+            duration = normalize_work_item_duration(raw_duration)
+            if raw_duration not in [None, ""] and duration is None:
+                warnings.append(f'Row {index + 1}: invalid duration "{raw_duration}", derived from the dates instead')
 
-        # Run the same reconciliation the work item API runs on create, so an imported item keeps
-        # duration, start date and target date consistent with one another.
-        duration_payload = {"start_date": start_date, "target_date": target_date}
-        if duration is not None:
-            duration_payload["duration"] = duration
-        derived = reconcile_work_item_duration(None, duration_payload)
-        duration = derived.get("duration", duration)
-        if "start_date" in derived:
-            start_date = derived["start_date"]
-        if "target_date" in derived:
-            target_date = derived["target_date"]
-        # Reconciliation may hand back ISO strings; keep one type so the values can be
-        # compared when a cycle derives its period from them.
-        start_date = to_work_item_date(start_date)
-        target_date = to_work_item_date(target_date)
+            # Run the same reconciliation the work item API runs on create, so an imported item keeps
+            # duration, start date and target date consistent with one another.
+            duration_payload = {"start_date": start_date, "target_date": target_date}
+            if duration is not None:
+                duration_payload["duration"] = duration
+            derived = reconcile_work_item_duration(None, duration_payload)
+            duration = derived.get("duration", duration)
+            if "start_date" in derived:
+                start_date = derived["start_date"]
+            if "target_date" in derived:
+                target_date = derived["target_date"]
+            # Reconciliation may hand back ISO strings; keep one type so the values can be
+            # compared when a cycle derives its period from them.
+            start_date = to_work_item_date(start_date)
+            target_date = to_work_item_date(target_date)
+        else:
+            _note_skipped("date", raw_start_date or raw_target_date or row.get("duration"))
 
         is_draft = row.get("is_draft")
         if isinstance(is_draft, str):
             is_draft = is_draft.strip().lower() in {"1", "true", "yes", "on"}
         else:
             is_draft = bool(is_draft)
+
+        raw_parent_key = str(row.get("parent_external_key", "") or "").strip()
+        if not options.parents:
+            _note_skipped("parent", raw_parent_key)
+            raw_parent_key = ""
+
+        raw_relations = _coerce_relations(row.get("relations")) if options.relations else []
+        if not options.relations:
+            _note_skipped("relation", row.get("relations"))
 
         prepared.append(
             {
@@ -592,7 +741,7 @@ def import_work_items_into_project(
                 "target_date": target_date,
                 "duration": duration,
                 "is_draft": is_draft,
-                "parent_external_key": str(row.get("parent_external_key", "") or "").strip(),
+                "parent_external_key": raw_parent_key,
                 "issue_type": issue_type,
                 "estimate_point_id": estimate_point_id,
                 "label_ids": label_ids,
@@ -600,7 +749,7 @@ def import_work_items_into_project(
                 "cycle_name": cycle_name,
                 "assignee_ids": assignee_ids,
                 "subscriber_ids": subscriber_ids,
-                "relations": _coerce_relations(row.get("relations")),
+                "relations": raw_relations,
                 "custom_properties": custom_properties,
             }
         )
@@ -610,14 +759,15 @@ def import_work_items_into_project(
 
     # Cycles are created once the whole file is read, so a new cycle can take its period
     # from the work items that land in it. Without any dated work item it stays a draft.
-    for name, cycle in _create_missing_cycles(
-        project=project,
-        user=user,
-        prepared=prepared,
-        cycles_by_name=cycles_by_name,
-    ).items():
-        cycles_by_name[name] = cycle
-        created_cycles.append(cycle.name)
+    if options.cycles:
+        for name, cycle in _create_missing_cycles(
+            project=project,
+            user=user,
+            prepared=prepared,
+            cycles_by_name=cycles_by_name,
+        ).items():
+            cycles_by_name[name] = cycle
+            created_cycles.append(cycle.name)
 
     last_id = IssueSequence.objects.filter(project=project).aggregate(largest=Max("sequence"))["largest"]
     next_sequence = 1 if last_id is None else int(last_id) + 1
@@ -822,11 +972,18 @@ def import_work_items_into_project(
                         )
                         continue
                     if prop.property_type == "member_picker":
-                        raw_value, unknown = _member_values_to_ids(raw_value, members_by_email, members_by_name)
+                        raw_value, unknown, outsiders = _member_values_to_ids(
+                            raw_value, members_by_email, members_by_name, project_member_ids
+                        )
                         for missing in unknown:
                             warnings.append(
                                 f'Work item "{item["external_key"]}": property "{title}" '
                                 f'refers to unknown person "{missing}", skipped'
+                            )
+                        for outsider in outsiders:
+                            warnings.append(
+                                f'Work item "{item["external_key"]}": property "{title}" refers to '
+                                f'"{outsider}", who is not a member of this project, skipped'
                             )
                     try:
                         cleaned_value = validate_property_value(
@@ -871,5 +1028,10 @@ def import_work_items_into_project(
         warnings.append(f"Created {len(created_modules)} new module(s): {', '.join(sorted(set(created_modules)))}")
     if created_cycles:
         warnings.append(f"Created {len(created_cycles)} new cycle(s): {', '.join(sorted(set(created_cycles)))}")
+        if not options.dates:
+            warnings.append("New cycles were created without a period because dates were not imported.")
+
+    for kind, count in sorted(skipped_by_option.items()):
+        warnings.append(f"{count} work item(s) carried {kind} data that this import was asked to leave out")
 
     return {"created_work_items": len(created_issues), "warnings": warnings}

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -192,6 +193,11 @@ export default {
       title: "Jeszcze brak eksportów",
       description:
         "Obecnie nie masz żadnych rekordów eksportu. Po wyeksportowaniu danych wszystkie rekordy pojawią się tutaj.",
+    },
+    imports: {
+      title: "Jeszcze brak importów",
+      description:
+        "Obecnie nie masz żadnych rekordów importu. Po wczytaniu pliku do projektu wszystkie rekordy pojawią się tutaj.",
     },
     tokens: {
       title: "Jeszcze brak Tokenu osobistego",

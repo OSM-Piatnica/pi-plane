@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -31,6 +32,7 @@ import { useUser, useUserPermissions } from "@/hooks/store/user";
 import { ProjectExportService } from "@/services/project/project-export.service";
 // local imports
 import { SettingsBoxedControlItem } from "../settings/boxed-control-item";
+import { SettingsBoxedSection } from "../settings/boxed-section";
 
 type Props = {
   workspaceSlug: string;
@@ -144,14 +146,18 @@ export const ExportForm = observer(function ExportForm(props: Props) {
       }}
       className="flex flex-col gap-5"
     >
-      <SettingsBoxedControlItem
+      <SettingsBoxedSection
         title={t("workspace_settings.settings.exports.work_items_export.heading")}
         description={t("workspace_settings.settings.exports.work_items_export.description")}
-      />
-      <div className="rounded-lg border border-subtle bg-layer-2">
+        footer={
+          <Button variant="primary" size="lg" type="submit" loading={exportLoading}>
+            {exportLoading ? `${t("workspace_settings.settings.exports.exporting")}...` : t("export")}
+          </Button>
+        }
+      >
         {/* Project Selector */}
         <SettingsBoxedControlItem
-          className="rounded-none border-0 border-b"
+          className="rounded-none border-0"
           title={t("workspace_settings.settings.exports.exporting_projects")}
           control={
             <Controller
@@ -173,7 +179,7 @@ export const ExportForm = observer(function ExportForm(props: Props) {
                             return projectDetails?.identifier;
                           })
                           .join(", ")
-                      : "All projects"
+                      : t("workspace_settings.settings.exports.all_projects")
                   }
                   optionsClassName="max-w-48 sm:max-w-[532px]"
                   placement="bottom-end"
@@ -185,7 +191,7 @@ export const ExportForm = observer(function ExportForm(props: Props) {
         />
         {/* Format Selector */}
         <SettingsBoxedControlItem
-          className="rounded-none border-0 border-b"
+          className="rounded-none border-0"
           title={t("workspace_settings.settings.exports.format")}
           control={
             <Controller
@@ -215,12 +221,7 @@ export const ExportForm = observer(function ExportForm(props: Props) {
             />
           }
         />
-        <div className="px-4 py-3">
-          <Button variant="primary" size="lg" type="submit" loading={exportLoading}>
-            {exportLoading ? `${t("workspace_settings.settings.exports.exporting")}...` : t("export")}
-          </Button>
-        </div>
-      </div>
+      </SettingsBoxedSection>
       {/* Rich Filters */}
       {/* <div className="w-full">
         <div className="flex items-center gap-2 mb-2">

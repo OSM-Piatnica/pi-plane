@@ -23,6 +23,7 @@ class ExporterHistorySerializer(BaseSerializer):
             "provider",
             "status",
             "reason",
+            "filters",
             "url",
             "initiated_by",
             "initiated_by_detail",

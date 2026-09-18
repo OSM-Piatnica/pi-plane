@@ -5,7 +5,11 @@
 # See the LICENSE file for details.
 
 from plane.utils.project_template_payload import WORK_ITEM_EXPORT_HINT_KEYS
-from plane.utils.project_work_item_import import _coerce_list, import_work_items_into_project
+from plane.utils.project_work_item_import import (
+    WorkItemImportOptions,
+    _coerce_list,
+    import_work_items_into_project,
+)
 
 COMMUNITY_EXPORT_REQUIRED_KEYS = frozenset({"name"})
 COMMUNITY_EXPORT_STRONG_HINTS = frozenset({"state_name", "project_name", "project_identifier", "identifier"})
@@ -109,7 +113,14 @@ def map_community_export_rows(rows: list[dict]) -> list[dict]:
     return mapped
 
 
-def import_community_work_items_into_project(*, project, user, rows: list[dict], warnings: list[str] | None = None):
+def import_community_work_items_into_project(
+    *,
+    project,
+    user,
+    rows: list[dict],
+    warnings: list[str] | None = None,
+    options: WorkItemImportOptions | None = None,
+):
     if not is_community_work_item_export(rows):
         raise ValueError(
             {
@@ -129,4 +140,5 @@ def import_community_work_items_into_project(*, project, user, rows: list[dict],
         user=user,
         rows=mapped,
         warnings=warnings,
+        options=options,
     )

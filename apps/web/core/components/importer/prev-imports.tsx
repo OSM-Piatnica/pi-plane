@@ -14,6 +14,7 @@ import { Button } from "@plane/propel/button";
 import { EmptyStateCompact } from "@plane/propel/empty-state";
 import type { IExportData } from "@plane/types";
 import { Table } from "@plane/ui";
+import { ImportExportStatusPill } from "@/components/exporter/status-pill";
 import { ImportExportSettingsLoader } from "@/components/ui/loader/settings/import-and-export";
 import { PROJECT_IMPORT_SERVICES_LIST } from "@/constants/fetch-keys";
 import { ProjectImportService } from "@/services/project/project-import.service";
@@ -70,26 +71,16 @@ export const PrevImports = observer(function PrevImports(props: Props) {
     {
       key: "Projects",
       content: t("workspace_settings.settings.imports.history.projects"),
-      tdRender: (rowData: RowData) => <div className="text-13">{rowData.project?.length ?? 0} project(s)</div>,
+      tdRender: (rowData: RowData) => (
+        <div className="text-13">
+          {t("workspace_settings.settings.imports.history.project_count", { count: rowData.project?.length ?? 0 })}
+        </div>
+      ),
     },
     {
       key: "Status",
       content: t("workspace_settings.settings.imports.history.status"),
-      tdRender: (rowData: RowData) => (
-        <span
-          className={`rounded-sm px-2 py-1 text-11 capitalize ${
-            rowData.status === "completed"
-              ? "bg-success-subtle text-success-primary"
-              : rowData.status === "processing"
-                ? "bg-yellow-500/20 text-yellow-500"
-                : rowData.status === "failed"
-                  ? "bg-danger-subtle text-danger-primary"
-                  : "bg-gray-500/20 text-gray-500"
-          }`}
-        >
-          {rowData.status}
-        </span>
-      ),
+      tdRender: (rowData: RowData) => <ImportExportStatusPill status={rowData.status} />,
     },
     {
       key: "Reason",
@@ -154,7 +145,7 @@ export const PrevImports = observer(function PrevImports(props: Props) {
           ) : (
             <div className="flex h-full w-full items-center justify-center">
               <EmptyStateCompact
-                assetKey="import"
+                assetKey="export"
                 title={t("settings_empty_state.imports.title")}
                 description={t("settings_empty_state.imports.description")}
                 align="start"

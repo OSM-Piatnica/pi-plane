@@ -25,6 +25,7 @@ from django.db.models import Prefetch
 from plane.db.models import (
     ExporterHistory,
     Issue,
+    IssueAssignee,
     IssueComment,
     IssuePropertyValue,
     IssueRelation,
@@ -200,7 +201,11 @@ def issue_export_task(
                 "label_issue__label",
                 "issue_cycle__cycle",
                 "issue_module__module",
-                "assignees",
+                # Assignments are read through the join model so that soft deleted ones stay out
+                Prefetch(
+                    "issue_assignee",
+                    queryset=IssueAssignee.objects.select_related("assignee"),
+                ),
                 "issue_link",
                 Prefetch(
                     "type_property_values",

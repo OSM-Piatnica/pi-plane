@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -183,6 +184,11 @@ export default {
     exports: {
       title: "No exports yet",
       description: "You don't have any export records right now. Once you export data, all records will appear here.",
+    },
+    imports: {
+      title: "No imports yet",
+      description:
+        "You don't have any import records right now. Once you import a file into a project, all records will appear here.",
     },
     tokens: {
       title: "No Personal token yet",
