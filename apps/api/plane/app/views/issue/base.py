@@ -687,7 +687,9 @@ class IssueViewSet(BaseViewSet):
             {**request.data, **reconcile_work_item_duration(issue, request.data)},
             cls=DjangoJSONEncoder,
         )
-        serializer = IssueCreateSerializer(issue, data=request.data, partial=True, context={"project_id": project_id, "request": request})
+        serializer = IssueCreateSerializer(
+            issue, data=request.data, partial=True, context={"project_id": project_id, "request": request}
+        )
         if serializer.is_valid():
             serializer.save()
             # Check if the update is a migration description update

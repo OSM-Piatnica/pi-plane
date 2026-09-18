@@ -110,3 +110,12 @@ build/
 .react-router/
 temp/
 scripts/
+!packages/i18n/scripts/
+
+# i18n auto-generated types (regenerated on every build)
+packages/i18n/src/types/keys.generated.ts
+
+# i18n locales dir alias (regenerated from src/locales by sync-locales-dir.ts;
+# no longer a git-tracked symlink, since git only creates a real symlink on
+# checkout when the client has symlink support enabled)
+packages/i18n/locales

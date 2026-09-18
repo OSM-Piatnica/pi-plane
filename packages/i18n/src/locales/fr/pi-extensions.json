@@ -1,0 +1,49 @@
+{
+  "pi_extensions": {
+    "appearance": "Apparence",
+    "duration": "Durée",
+    "duration_days": "{count, plural, one {# jour} other {# jours}}",
+    "epic": {
+      "all": "Tous les Epics"
+    },
+    "importer": {
+      "github": {
+        "description": "Importez des éléments de travail depuis les dépôts GitHub et synchronisez-les.",
+        "title": "GitHub"
+      },
+      "jira": {
+        "description": "Importez des éléments de travail et des epics depuis les projets et epics Jira.",
+        "title": "Jira"
+      }
+    },
+    "issue": {
+      "add": {
+        "duration": "Ajouter une durée"
+      }
+    },
+    "profile": {
+      "actions": {
+        "appearance": "Apparence"
+      }
+    },
+    "project_views": {
+      "empty_state": {
+        "filter": {
+          "description": "Aucune vue ne correspond aux critères de recherche. \n Créez plutôt une nouvelle vue.",
+          "title": "Aucune vue correspondante"
+        }
+      }
+    },
+    "workspace_analytics": {
+      "total_admins": "Total des administrateurs",
+      "total_guests": "Nombre total d’invités",
+      "total_intake": "Revenu total",
+      "total_projects": "Total des projets",
+      "total_users": "Nombre total d’utilisateurs",
+      "total_work_items": "Total des {entity}"
+    },
+    "labels": {
+      "workspace": "Espace de travail"
+    }
+  }
+}

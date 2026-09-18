@@ -31,9 +31,7 @@ export const ExportGuide = observer(function ExportGuide() {
         <ExportForm
           workspaceSlug={workspaceSlug as string}
           provider={provider}
-          mutateServices={() =>
-            mutate(EXPORT_SERVICES_LIST(workspaceSlug as string, `${exportCursor}`, `${per_page}`))
-          }
+          mutateServices={() => mutate(EXPORT_SERVICES_LIST(workspaceSlug as string, `${exportCursor}`, `${per_page}`))}
         />
       </div>
       <PrevExports

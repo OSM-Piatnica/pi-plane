@@ -28,17 +28,7 @@ export const SUPPORTED_LANGUAGES: ILanguageOption[] = [
   { label: "Română", value: "ro" },
   { label: "Tiếng việt", value: "vi-VN" },
   { label: "Türkçe", value: "tr-TR" },
+  { label: "ქართული", value: "ka-ge" },
 ];
-
-/**
- * Enum for translation file names
- * These are the JSON files that contain translations each category
- */
-export enum ETranslationFiles {
-  TRANSLATIONS = "translations",
-  ACCESSIBILITY = "accessibility",
-  EDITOR = "editor",
-  EMPTY_STATE = "empty-state",
-}
 
 export const LANGUAGE_STORAGE_KEY = "userLanguage";

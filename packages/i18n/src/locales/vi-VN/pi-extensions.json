@@ -1,0 +1,49 @@
+{
+  "pi_extensions": {
+    "appearance": "Giao diện",
+    "duration": "Thời lượng",
+    "duration_days": "{count, plural, other {# ngày}}",
+    "epic": {
+      "all": "Tất cả sử thi"
+    },
+    "importer": {
+      "github": {
+        "description": "Nhập và đồng bộ mục công việc từ kho lưu trữ GitHub.",
+        "title": "GitHub"
+      },
+      "jira": {
+        "description": "Nhập mục công việc và sử thi từ dự án và sử thi Jira.",
+        "title": "Jira"
+      }
+    },
+    "issue": {
+      "add": {
+        "duration": "Thêm thời lượng"
+      }
+    },
+    "profile": {
+      "actions": {
+        "appearance": "Giao diện"
+      }
+    },
+    "project_views": {
+      "empty_state": {
+        "filter": {
+          "description": "Không có chế độ xem phù hợp với tiêu chí tìm kiếm.\nTạo chế độ xem mới.",
+          "title": "Không có chế độ xem phù hợp"
+        }
+      }
+    },
+    "workspace_analytics": {
+      "total_admins": "Tổng số quản trị viên",
+      "total_guests": "Tổng số khách",
+      "total_intake": "Tổng thu",
+      "total_projects": "Tổng số dự án",
+      "total_users": "Tổng số người dùng",
+      "total_work_items": "Tổng số {entity}"
+    },
+    "labels": {
+      "workspace": "Không gian làm việc"
+    }
+  }
+}
