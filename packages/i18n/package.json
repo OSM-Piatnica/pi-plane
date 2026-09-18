@@ -13,8 +13,9 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "tsdown --watch --no-clean",
-    "build": "pnpm run generate:types && tsdown",
+    "dev": "pnpm run sync:locales-dir && tsdown --watch --no-clean",
+    "build": "pnpm run sync:locales-dir && pnpm run generate:types && tsdown",
+    "sync:locales-dir": "tsx scripts/sync-locales-dir.ts",
     "generate:types": "tsx scripts/generate-types.ts",
     "sync:check": "tsx scripts/sync-check.ts",
     "check:sync": "tsx scripts/sync-check.ts --ci",
