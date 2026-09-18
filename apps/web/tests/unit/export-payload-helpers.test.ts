@@ -6,7 +6,7 @@
 
 import { describe, expect, it } from "vitest";
 import { EXPORTERS_LIST } from "@plane/constants";
-import { buildIssueExportPayload } from "../../core/helpers/export-payload-helpers";
+import { buildIssueExportPayload } from "../../helpers/export-payload-helpers";
 
 describe("export format constants", () => {
   it("exposes csv comma and semicolon variants for work item export", () => {
