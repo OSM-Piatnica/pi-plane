@@ -71,8 +71,8 @@ export const WorkflowApprovalBanner = observer(function WorkflowApprovalBanner(p
         <p className="text-13 font-medium text-primary">{t("project_settings.workflows.pending_approval_title")}</p>
         <p className="mt-0.5 text-11 text-secondary">
           {t("project_settings.workflows.pending_approval_description", {
-            from: pendingApproval.source_state_detail?.name ?? "",
-            to: pendingApproval.approve_state_detail?.name ?? "",
+            from: pendingApproval?.source_state_detail?.name ?? "",
+            to: pendingApproval?.approve_state_detail?.name ?? "",
           })}
         </p>
       </div>
