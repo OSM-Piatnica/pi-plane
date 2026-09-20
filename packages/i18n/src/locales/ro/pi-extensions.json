@@ -1,49 +1,44 @@
 {
-  "pi_extensions": {
-    "appearance": "Aspect",
-    "duration": "Durată",
-    "duration_days": "{count, plural, one {# zi} few {# zile} other {# de zile}}",
-    "epic": {
-      "all": "Toate Sarcinile majore"
+  "appearance": "Aspect",
+  "duration": "Durată",
+  "duration_days": "{count, plural, one {# zi} few {# zile} other {# de zile}}",
+  "epic": {
+    "all": "Toate Sarcinile majore"
+  },
+  "importer": {
+    "github": {
+      "description": "Importă activități din arhivele de cod GitHub și sincronizează-le.",
+      "title": "Github"
     },
-    "importer": {
-      "github": {
-        "description": "Importă activități din arhivele de cod GitHub și sincronizează-le.",
-        "title": "Github"
-      },
-      "jira": {
-        "description": "Importă activități și episoade din proiectele și episoadele Jira.",
-        "title": "Jira"
-      }
-    },
-    "issue": {
-      "add": {
-        "duration": "Adaugă durata"
-      }
-    },
-    "profile": {
-      "actions": {
-        "appearance": "Aspect"
-      }
-    },
-    "project_views": {
-      "empty_state": {
-        "filter": {
-          "description": "Nicio perspectivă nu se potrivește criteriilor de căutare.\n Creează o nouă perspectivă în schimb.",
-          "title": "Nicio perspectivă potrivită"
-        }
-      }
-    },
-    "workspace_analytics": {
-      "total_admins": "Total administratori",
-      "total_guests": "Total invitați",
-      "total_intake": "Venit total",
-      "total_projects": "Total proiecte",
-      "total_users": "Total utilizatori",
-      "total_work_items": "Totalul {entity}"
-    },
-    "labels": {
-      "workspace": "Spațiu de lucru"
+    "jira": {
+      "description": "Importă activități și episoade din proiectele și episoadele Jira.",
+      "title": "Jira"
     }
+  },
+  "issue": {
+    "add": {
+      "duration": "Adaugă durata"
+    }
+  },
+  "profile": {
+    "actions": {
+      "appearance": "Aspect"
+    }
+  },
+  "project_views": {
+    "empty_state": {
+      "filter": {
+        "description": "Nicio perspectivă nu se potrivește criteriilor de căutare.\n Creează o nouă perspectivă în schimb.",
+        "title": "Nicio perspectivă potrivită"
+      }
+    }
+  },
+  "workspace_analytics": {
+    "total_admins": "Total administratori",
+    "total_guests": "Total invitați",
+    "total_intake": "Venit total",
+    "total_projects": "Total proiecte",
+    "total_users": "Total utilizatori",
+    "total_work_items": "Totalul {entity}"
   }
 }

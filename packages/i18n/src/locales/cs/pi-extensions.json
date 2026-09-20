@@ -1,49 +1,44 @@
 {
-  "pi_extensions": {
-    "appearance": "Vzhled",
-    "duration": "Doba trvání",
-    "duration_days": "{count, plural, one {# den} few {# dny} other {# dní}}",
-    "epic": {
-      "all": "Všechny epiky"
+  "appearance": "Vzhled",
+  "duration": "Doba trvání",
+  "duration_days": "{count, plural, one {# den} few {# dny} other {# dní}}",
+  "epic": {
+    "all": "Všechny epiky"
+  },
+  "importer": {
+    "github": {
+      "description": "Importujte položky z repozitářů GitHub.",
+      "title": "GitHub"
     },
-    "importer": {
-      "github": {
-        "description": "Importujte položky z repozitářů GitHub.",
-        "title": "GitHub"
-      },
-      "jira": {
-        "description": "Importujte položky a epiky z Jira.",
-        "title": "Jira"
-      }
-    },
-    "issue": {
-      "add": {
-        "duration": "Přidat dobu trvání"
-      }
-    },
-    "profile": {
-      "actions": {
-        "appearance": "Vzhled"
-      }
-    },
-    "project_views": {
-      "empty_state": {
-        "filter": {
-          "description": "Vytvořte nový pohled.",
-          "title": "Žádné odpovídající pohledy"
-        }
-      }
-    },
-    "workspace_analytics": {
-      "total_admins": "Celkový počet administrátorů",
-      "total_guests": "Celkový počet hostů",
-      "total_intake": "Celkový příjem",
-      "total_projects": "Celkový počet projektů",
-      "total_users": "Celkový počet uživatelů",
-      "total_work_items": "Celkový počet {entity}"
-    },
-    "labels": {
-      "workspace": "Pracovní prostor"
+    "jira": {
+      "description": "Importujte položky a epiky z Jira.",
+      "title": "Jira"
     }
+  },
+  "issue": {
+    "add": {
+      "duration": "Přidat dobu trvání"
+    }
+  },
+  "profile": {
+    "actions": {
+      "appearance": "Vzhled"
+    }
+  },
+  "project_views": {
+    "empty_state": {
+      "filter": {
+        "description": "Vytvořte nový pohled.",
+        "title": "Žádné odpovídající pohledy"
+      }
+    }
+  },
+  "workspace_analytics": {
+    "total_admins": "Celkový počet administrátorů",
+    "total_guests": "Celkový počet hostů",
+    "total_intake": "Celkový příjem",
+    "total_projects": "Celkový počet projektů",
+    "total_users": "Celkový počet uživatelů",
+    "total_work_items": "Celkový počet {entity}"
   }
 }
