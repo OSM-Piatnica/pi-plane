@@ -1,49 +1,44 @@
 {
-  "pi_extensions": {
-    "appearance": "外观",
-    "duration": "持续时间",
-    "duration_days": "{count, plural, other {# 天}}",
-    "epic": {
-      "all": "所有史诗"
+  "appearance": "外观",
+  "duration": "持续时间",
+  "duration_days": "{count, plural, other {# 天}}",
+  "epic": {
+    "all": "所有史诗"
+  },
+  "importer": {
+    "github": {
+      "description": "从 GitHub 仓库导入工作项并同步。",
+      "title": "GitHub"
     },
-    "importer": {
-      "github": {
-        "description": "从 GitHub 仓库导入工作项并同步。",
-        "title": "GitHub"
-      },
-      "jira": {
-        "description": "从 Jira 项目和史诗导入工作项和史诗。",
-        "title": "Jira"
-      }
-    },
-    "issue": {
-      "add": {
-        "duration": "添加持续时间"
-      }
-    },
-    "profile": {
-      "actions": {
-        "appearance": "外观"
-      }
-    },
-    "project_views": {
-      "empty_state": {
-        "filter": {
-          "description": "没有符合搜索条件的视图。\n创建一个新视图。",
-          "title": "没有匹配的视图"
-        }
-      }
-    },
-    "workspace_analytics": {
-      "total_admins": "管理员总数",
-      "total_guests": "访客总数",
-      "total_intake": "总收入",
-      "total_projects": "项目总数",
-      "total_users": "用户总数",
-      "total_work_items": "{entity}总数"
-    },
-    "labels": {
-      "workspace": "工作区"
+    "jira": {
+      "description": "从 Jira 项目和史诗导入工作项和史诗。",
+      "title": "Jira"
     }
+  },
+  "issue": {
+    "add": {
+      "duration": "添加持续时间"
+    }
+  },
+  "profile": {
+    "actions": {
+      "appearance": "外观"
+    }
+  },
+  "project_views": {
+    "empty_state": {
+      "filter": {
+        "description": "没有符合搜索条件的视图。\n创建一个新视图。",
+        "title": "没有匹配的视图"
+      }
+    }
+  },
+  "workspace_analytics": {
+    "total_admins": "管理员总数",
+    "total_guests": "访客总数",
+    "total_intake": "总收入",
+    "total_projects": "项目总数",
+    "total_users": "用户总数",
+    "total_work_items": "{entity}总数"
   }
 }

@@ -1,49 +1,44 @@
 {
-  "pi_extensions": {
-    "appearance": "Aussehen",
-    "duration": "Dauer",
-    "duration_days": "{count, plural, one {# Tag} other {# Tage}}",
-    "epic": {
-      "all": "Alle Epiks"
+  "appearance": "Aussehen",
+  "duration": "Dauer",
+  "duration_days": "{count, plural, one {# Tag} other {# Tage}}",
+  "epic": {
+    "all": "Alle Epiks"
+  },
+  "importer": {
+    "github": {
+      "description": "Arbeitselemente aus GitHub-Repositories importieren.",
+      "title": "GitHub"
     },
-    "importer": {
-      "github": {
-        "description": "Arbeitselemente aus GitHub-Repositories importieren.",
-        "title": "GitHub"
-      },
-      "jira": {
-        "description": "Arbeitselemente und Epiks aus Jira importieren.",
-        "title": "Jira"
-      }
-    },
-    "issue": {
-      "add": {
-        "duration": "Dauer hinzufügen"
-      }
-    },
-    "profile": {
-      "actions": {
-        "appearance": "Aussehen"
-      }
-    },
-    "project_views": {
-      "empty_state": {
-        "filter": {
-          "description": "Erstellen Sie eine neue Ansicht.",
-          "title": "Keine passenden Ansichten"
-        }
-      }
-    },
-    "workspace_analytics": {
-      "total_admins": "Gesamtanzahl der Admins",
-      "total_guests": "Gesamtanzahl der Gäste",
-      "total_intake": "Gesamteinnahmen",
-      "total_projects": "Gesamtprojekte",
-      "total_users": "Gesamtanzahl der Benutzer",
-      "total_work_items": "Gesamte {entity}"
-    },
-    "labels": {
-      "workspace": "Arbeitsbereich"
+    "jira": {
+      "description": "Arbeitselemente und Epiks aus Jira importieren.",
+      "title": "Jira"
     }
+  },
+  "issue": {
+    "add": {
+      "duration": "Dauer hinzufügen"
+    }
+  },
+  "profile": {
+    "actions": {
+      "appearance": "Aussehen"
+    }
+  },
+  "project_views": {
+    "empty_state": {
+      "filter": {
+        "description": "Erstellen Sie eine neue Ansicht.",
+        "title": "Keine passenden Ansichten"
+      }
+    }
+  },
+  "workspace_analytics": {
+    "total_admins": "Gesamtanzahl der Admins",
+    "total_guests": "Gesamtanzahl der Gäste",
+    "total_intake": "Gesamteinnahmen",
+    "total_projects": "Gesamtprojekte",
+    "total_users": "Gesamtanzahl der Benutzer",
+    "total_work_items": "Gesamte {entity}"
   }
 }
