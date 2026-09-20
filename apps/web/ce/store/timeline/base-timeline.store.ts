@@ -46,6 +46,7 @@ export interface IBaseTimelineStore {
   renderView: any;
   isDragging: boolean;
   isDependencyEnabled: boolean;
+  blockIds: string[] | undefined;
   //
   setBlockIds: (ids: string[]) => void;
   getBlockById: (blockId: string) => IGanttBlock;

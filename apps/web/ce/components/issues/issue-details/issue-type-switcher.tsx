@@ -34,10 +34,11 @@ export const IssueTypeSwitcher = observer(function IssueTypeSwitcher(props: TIss
 
   const issue = getIssueById(issueId);
   if (!issue?.project_id || !slug) return null;
+  const projectId = issue.project_id;
 
-  const project = getProjectById(issue.project_id);
+  const project = getProjectById(projectId);
   const issueTypesEnabled = Boolean(project?.is_issue_type_enabled);
-  const { types, isLoading } = useProjectIssueTypes(slug, issueTypesEnabled ? issue.project_id : null);
+  const { types, isLoading } = useProjectIssueTypes(slug, issueTypesEnabled ? projectId : null);
 
   if (!issueTypesEnabled || types.length === 0) return null;
 
@@ -45,7 +46,7 @@ export const IssueTypeSwitcher = observer(function IssueTypeSwitcher(props: TIss
 
   const onChange = async (value: string) => {
     if (!value || value === issue.type_id) return;
-    await updateIssue(slug, issue.project_id, issueId, { type_id: value });
+    await updateIssue(slug, projectId, issueId, { type_id: value });
   };
 
   return (

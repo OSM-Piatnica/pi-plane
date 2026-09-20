@@ -6,7 +6,7 @@
 
 import { describe, expect, it } from "vitest";
 import { EXPORTERS_LIST } from "@plane/constants";
-import { buildIssueExportPayload } from "../../core/helpers/export-payload-helpers";
+import { buildIssueExportPayload } from "../../helpers/export-payload-helpers";
 
 describe("export format constants", () => {
   it("exposes csv comma and semicolon variants for work item export", () => {
@@ -37,13 +37,13 @@ describe("export payload helpers", () => {
       buildIssueExportPayload({
         provider: { provider: "xlsx" },
         project: ["project-1", "project-2"],
-        filters: { priority: "high" },
+        filters: { priority__exact: "high" },
       })
     ).toEqual({
       provider: "xlsx",
       project: ["project-1", "project-2"],
       multiple: true,
-      rich_filters: { priority: "high" },
+      rich_filters: { priority__exact: "high" },
     });
   });
 });

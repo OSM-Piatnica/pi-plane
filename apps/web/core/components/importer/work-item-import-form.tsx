@@ -14,7 +14,7 @@ import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { ProjectDropdown } from "@/components/dropdowns/project/dropdown";
-import { getApiErrorMessage } from "@/helpers/api-error";
+import { getApiErrorMessage, type ApiErrorLike } from "@/helpers/api-error";
 import { getProjectImportLink, MAX_PROJECT_CSV_SIZE_BYTES } from "@/helpers/project-csv-helpers";
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
@@ -123,7 +123,7 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
         type: TOAST_TYPE.ERROR,
         title: t("toast.error"),
         message: getApiErrorMessage(
-          error as unknown,
+          error as ApiErrorLike,
           t("workspace_settings.settings.imports.work_items.toasts.error.message")
         ),
       });

@@ -7,8 +7,8 @@
 import type { TIssueType, TIssueTypeProperty } from "@plane/types";
 import type { TWorkItemTypeFormFields, TWorkItemTypeFormProperty } from "./work-item-type-form.types";
 
-function mapPropertyToApi(row: TWorkItemTypeFormProperty): Partial<TIssueTypeProperty> {
-  const payload: Partial<TIssueTypeProperty> = {
+function mapPropertyToApi(row: TWorkItemTypeFormProperty): TIssueTypeProperty {
+  const payload: TIssueTypeProperty = {
     id: row.id,
     title: row.title.trim(),
     description: row.description.trim(),

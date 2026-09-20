@@ -153,7 +153,7 @@ export const PrevImports = observer(function PrevImports(props: Props) {
           ) : (
             <div className="flex h-full w-full items-center justify-center">
               <EmptyStateCompact
-                assetKey="import"
+                assetKey="unknown"
                 title={t("settings_empty_state.imports.title")}
                 description={t("settings_empty_state.imports.description")}
                 align="start"

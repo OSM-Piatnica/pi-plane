@@ -9,7 +9,7 @@ import {
   buildGanttDependencyEdges,
   isDependencyRelationInvalid,
   wouldUpdatesViolateDependencies,
-} from "../../core/helpers/gantt-dependency-helpers";
+} from "../../helpers/gantt-dependency-helpers";
 
 describe("gantt-dependency-helpers", () => {
   it("flags blocking when predecessor finishes after successor starts", () => {

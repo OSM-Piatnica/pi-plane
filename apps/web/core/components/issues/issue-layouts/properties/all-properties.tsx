@@ -54,7 +54,7 @@ import { WorkItemLayoutAdditionalProperties } from "@/plane-web/components/issue
 import { IssuePropertyLabels } from "./labels";
 import { WithDisplayPropertiesHOC } from "./with-display-properties-HOC";
 
-const handleEventPropagation = (e: SyntheticEvent<HTMLDivElement>) => {
+const handleEventPropagation = (e: SyntheticEvent<Element>) => {
   e.stopPropagation();
   e.preventDefault();
 };
