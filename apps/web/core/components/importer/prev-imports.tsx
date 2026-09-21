@@ -1,7 +1,6 @@
 /**
- * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
- * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -145,7 +144,7 @@ export const PrevImports = observer(function PrevImports(props: Props) {
           ) : (
             <div className="flex h-full w-full items-center justify-center">
               <EmptyStateCompact
-                assetKey="export"
+                assetKey="unknown"
                 title={t("settings_empty_state.imports.title")}
                 description={t("settings_empty_state.imports.description")}
                 align="start"

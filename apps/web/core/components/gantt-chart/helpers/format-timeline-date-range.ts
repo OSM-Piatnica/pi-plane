@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * See the LICENSE file for details.
+ */
+
 import { format, isSameDay } from "date-fns";
 import { getDate } from "@plane/utils";
 

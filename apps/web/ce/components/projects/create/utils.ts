@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -25,7 +26,7 @@ export const getProjectFormValues = (): Partial<IProject> => ({
   module_view: false,
   issue_views_view: false,
   page_view: true,
-  intake_view: false,
+  inbox_view: false,
   is_time_tracking_enabled: false,
   is_issue_type_enabled: false,
 });

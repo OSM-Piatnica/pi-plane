@@ -1,8 +1,6 @@
 /**
- * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
- * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -17,7 +15,7 @@ import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { Checkbox, Collapsible } from "@plane/ui";
 import { ProjectDropdown } from "@/components/dropdowns/project/dropdown";
-import { getApiErrorMessage } from "@/helpers/api-error";
+import { getApiErrorMessage, type ApiErrorLike } from "@/helpers/api-error";
 import { getProjectImportLink, MAX_PROJECT_CSV_SIZE_BYTES } from "@/helpers/project-csv-helpers";
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
@@ -163,7 +161,7 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
         type: TOAST_TYPE.ERROR,
         title: t("toast.error"),
         message: getApiErrorMessage(
-          error as unknown,
+          error as ApiErrorLike,
           t("workspace_settings.settings.imports.work_items.toasts.error.message")
         ),
       });

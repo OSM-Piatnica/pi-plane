@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -72,8 +73,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
       if (payload.default_assignee !== undefined) {
         setValue("default_assignee", payload.default_assignee, { shouldDirty: true });
       }
-      if (payload.logo_props !== undefined)
-        setValue("logo_props", payload.logo_props ?? undefined, { shouldDirty: true });
+      if (payload.logo_props) setValue("logo_props", payload.logo_props, { shouldDirty: true });
       if (payload.cover_image_url !== undefined) {
         setValue("cover_image_url", payload.cover_image_url ?? undefined, { shouldDirty: true });
       }
@@ -83,7 +83,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
         setValue("issue_views_view", payload.issue_views_view, { shouldDirty: true });
       }
       if (payload.page_view !== undefined) setValue("page_view", payload.page_view, { shouldDirty: true });
-      if (payload.intake_view !== undefined) setValue("intake_view", payload.intake_view, { shouldDirty: true });
+      if (payload.intake_view !== undefined) setValue("inbox_view", payload.intake_view, { shouldDirty: true });
       if (payload.is_time_tracking_enabled !== undefined) {
         setValue("is_time_tracking_enabled", payload.is_time_tracking_enabled, { shouldDirty: true });
       }

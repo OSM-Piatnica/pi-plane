@@ -1,3 +1,7 @@
+# Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+
 import pytest
 from plane.utils.issue_relation_mapper import get_actual_relation, get_inverse_relation
 

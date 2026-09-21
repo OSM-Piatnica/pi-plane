@@ -1,4 +1,10 @@
 /**
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * See the LICENSE file for details.
+ */
+
+/**
  * Normalizes custom property values before sending them to the API.
  */
 export function normalizeIssuePropertyValueForApi(value: unknown): unknown {

@@ -78,7 +78,7 @@ class TestProjectWorkItemImport:
             created_by=create_user,
         )
         ProjectMember.objects.create(project=project, member=create_user, role=20, is_active=True)
-        state = State.objects.create(
+        State.objects.create(
             name="Todo",
             color="#3B82F6",
             project=project,

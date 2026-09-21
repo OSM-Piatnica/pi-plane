@@ -1,0 +1,545 @@
+{
+  "account_settings": {
+    "api_tokens": {
+      "heading": "Personal Access Tokens"
+    }
+  },
+  "approve": "Approve",
+  "duration": "Duration",
+  "duration_days": "{count, plural, one {# day} other {# days}}",
+  "epic": {
+    "all": "All Epics"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "Export to CSV with comma delimiter.",
+      "short_description": "CSV comma",
+      "title": "CSV (comma)"
+    },
+    "csv_semicolon": {
+      "description": "Export to CSV with semicolon delimiter for Excel.",
+      "short_description": "CSV semicolon",
+      "title": "CSV (semicolon, Excel)"
+    }
+  },
+  "importer": {
+    "github": {
+      "description": "Import work items from GitHub repositories and sync them.",
+      "title": "Github"
+    },
+    "jira": {
+      "description": "Import work items and epics from Jira projects and epics.",
+      "title": "Jira"
+    }
+  },
+  "issue": {
+    "add": {
+      "duration": "Add duration"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue} cannot start until {related} is finished (blocked by relation).",
+          "blocking": "{issue} has to finish before {related} starts (blocking relation).",
+          "finish_after": "{issue} cannot finish before {related} (finishes after relation).",
+          "finish_before": "{issue} has to finish on or before {related} (finishes before relation).",
+          "start_after": "{issue} cannot start before {related} (starts after relation).",
+          "start_before": "{issue} has to start on or before {related} (starts before relation)."
+        },
+        "status": {
+          "finish_after": "{issue} cannot be completed until {related} is completed (finishes after relation).",
+          "start_after": "{issue} cannot start until {related} has started (starts after relation)."
+        }
+      },
+      "date_conflict": "These dates conflict with existing dependencies. Adjust related work items or remove the dependency first.",
+      "dependency_create_failed": "Could not create dependency. Please try again.",
+      "dependency_created": "Work item dependency was created successfully."
+    }
+  },
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "Timebox work in recurring periods.",
+        "label": "Cycles"
+      },
+      "description": "Choose which capabilities are enabled for this project.",
+      "intake": {
+        "description": "Triage incoming work before adding it to the project.",
+        "label": "Intake"
+      },
+      "modules": {
+        "description": "Group work into sub-project-like setups.",
+        "label": "Modules"
+      },
+      "pages": {
+        "description": "Create project documentation pages.",
+        "label": "Pages"
+      },
+      "time_tracking": {
+        "description": "Track time spent on work items.",
+        "label": "Time tracking"
+      },
+      "title": "Project features",
+      "views": {
+        "description": "Save and share sorts, filters, and layouts.",
+        "label": "Views"
+      },
+      "work_item_types": {
+        "assign_failed": "Project was created, but work item types could not be assigned.",
+        "assign_hint": "Select which workspace types should be available in this project.",
+        "assign_label": "Assign work item types",
+        "description": "Use custom types with their own properties on work items.",
+        "label": "Work item types",
+        "no_types_hint": "No active work item types in this workspace. Create them in workspace settings first."
+      }
+    }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "Add approval gate",
+      "add_transition": "Add transition",
+      "allow_creation": "Allow new work items in this state",
+      "approval": "Approval",
+      "approval_error": "Could not process approval.",
+      "approved_success": "Transition approved.",
+      "blocker_message": "This transition is not allowed by the workflow.",
+      "builder_description": "Expand a state to configure allowed transitions and approval gates.",
+      "builder_title": "Workflow builder",
+      "disabled_success": "Workflows disabled for this project.",
+      "enable_description": "When enabled, work items follow configured state transitions and approval rules.",
+      "enable_title": "Enable workflows",
+      "enabled_success": "Workflows enabled for this project.",
+      "enabling": "Updating workflow settings...",
+      "paused": "Paused",
+      "pending_approval_description": "Move from {from} to {to} is awaiting approval.",
+      "pending_approval_title": "Approval required",
+      "rejected_success": "Transition rejected.",
+      "resolving_approval": "Processing approval...",
+      "save_error": "Could not save workflow configuration.",
+      "save_success": "Workflow configuration saved.",
+      "toggle_error": "Could not update workflow settings.",
+      "transition": "Transition",
+      "transitions_configured": "transitions configured"
+    }
+  },
+  "project_templates": {
+    "loading": "Loading templates…",
+    "none": "No template",
+    "select_placeholder": "Select a template"
+  },
+  "project_views": {
+    "empty_state": {
+      "filter": {
+        "description": "No views match the search criteria. \n Create a new view instead.",
+        "title": "No matching views"
+      }
+    }
+  },
+  "reject": "Reject",
+  "settings_empty_state": {
+    "imports": {
+      "description": "You don't have any import records right now. Once you import a file into a project, all records will appear here.",
+      "title": "No imports yet"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "Could not apply the work item template.",
+    "dropdown_placeholder": "Template",
+    "loading": "Loading templates…",
+    "none": "No template"
+  },
+  "work_item_types": {
+    "loading": "Loading types…",
+    "property_values_save_failed": "The work item was created, but additional properties could not be saved. Fill them in from the work item details.",
+    "select_placeholder": "Type"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "All projects",
+        "history": {
+          "download": "Download",
+          "expired": "Expired",
+          "exported_by": "Exported by",
+          "exported_on": "Exported on",
+          "project_count": "{count, plural, one {# project} other {# projects}}",
+          "projects": "Exported projects",
+          "status": "Status"
+        },
+        "statuses": {
+          "completed": "Completed",
+          "expired": "Expired",
+          "failed": "Failed",
+          "processing": "Processing"
+        },
+        "tabs": {
+          "export": "Export",
+          "import": "Import"
+        },
+        "work_items_export": {
+          "description": "Export work items from selected projects to CSV, Excel, or JSON.",
+          "heading": "Export work items"
+        }
+      },
+      "imports": {
+        "file_too_large": "File must be smaller than {size} MB.",
+        "history": {
+          "file": "File",
+          "imported_by": "Imported by",
+          "imported_on": "Imported on",
+          "project_count": "{count, plural, one {# project} other {# projects}}",
+          "projects": "Projects",
+          "reason": "Reason",
+          "status": "Status"
+        },
+        "previous_imports": "Previous imports",
+        "work_items": {
+          "description": "Import work items from a file created by “Export work items” (CSV, Excel, or JSON) into an existing project.",
+          "heading": "Import work items",
+          "import_button": "Import work items",
+          "invalid_file_type": "Please upload a CSV, Excel (.xlsx), or JSON file.",
+          "no_projects": "No projects available",
+          "open_project": "Open project",
+          "options": {
+            "assignees": "Assignees",
+            "clear_all": "Clear all",
+            "cycles": "Cycles",
+            "dates": "Dates and duration",
+            "heading": "What to import",
+            "labels": "Labels",
+            "modules": "Modules",
+            "parents": "Parent work items",
+            "relations": "Relations between work items",
+            "select_all": "Select all",
+            "subscribers": "Subscribers"
+          },
+          "result_summary": "Imported {count, plural, one {# work item} other {# work items}} into “{name}”.",
+          "select_file": "Select file",
+          "select_file_label": "Export file",
+          "select_project": "Target project",
+          "select_project_placeholder": "Select a project",
+          "toasts": {
+            "error": {
+              "message": "Work item import failed. Use a file from “Export work items” and try again."
+            },
+            "success": {
+              "message": "Imported {count} work items into \"{name}\"."
+            }
+          },
+          "warnings_heading": "{count, plural, one {# warning} other {# warnings}} during import",
+          "warnings_none": "Everything was imported without warnings."
+        }
+      },
+      "project_templates": {
+        "add_template": "Add template",
+        "delete_confirm": "Remove this project template? Existing projects are not affected.",
+        "description": "Create reusable project setups with default properties, enabled features, states, labels, and work item types.",
+        "edit_template": "Edit template",
+        "form": {
+          "add_label": "Add label",
+          "add_state": "Add state",
+          "custom_property": {
+            "active_checkbox": "Active",
+            "add_property": "Add property",
+            "default_option_label": "Default option",
+            "description_label": "Description",
+            "description_placeholder": "Help text for this property (optional)",
+            "dropdown_options_heading": "Dropdown options",
+            "inactive": "Inactive",
+            "mandatory": "Required",
+            "mandatory_checkbox": "Required when creating work items",
+            "no_default": "No default",
+            "option_placeholder": "Option name",
+            "select_mode_label": "Selection mode",
+            "select_multi": "Multi select",
+            "select_single": "Single select",
+            "title_label": "Title",
+            "title_placeholder": "Property name",
+            "type_label": "Type",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Date",
+              "dropdown": "Dropdown",
+              "member_picker": "Member",
+              "number": "Number",
+              "text": "Text"
+            }
+          },
+          "default_assignee": "Default assignee",
+          "default_cover_image": "Cover image",
+          "default_labels": "Default labels",
+          "default_lead": "Project lead",
+          "default_project_description": "Project description",
+          "default_project_description_placeholder": "Default description for new projects",
+          "default_project_identifier": "Project identifier",
+          "default_project_identifier_placeholder": "e.g. PROD",
+          "default_project_name": "Project name",
+          "default_project_name_placeholder": "e.g. Product launch",
+          "default_start_date": "Start date",
+          "default_target_date": "Target date",
+          "default_visibility": "Visibility",
+          "features": {
+            "cycles": {
+              "description": "Time-boxed iterations for planning and delivery.",
+              "label": "Cycles"
+            },
+            "intake": {
+              "description": "Triage incoming requests before they become work items.",
+              "label": "Intake"
+            },
+            "modules": {
+              "description": "Group work into focused areas or milestones.",
+              "label": "Modules"
+            },
+            "pages": {
+              "description": "Project wiki and documentation.",
+              "label": "Pages"
+            },
+            "time_tracking": {
+              "description": "Log time spent on work items.",
+              "label": "Time tracking"
+            },
+            "views": {
+              "description": "Saved filters and layouts for the team.",
+              "label": "Views"
+            },
+            "work_item_types": {
+              "description": "Different types of work with custom properties.",
+              "label": "Work item types"
+            }
+          },
+          "identifier_invalid": "Use only letters and numbers",
+          "identifier_max_char": "Identifier must be 5 characters or fewer",
+          "label_name_placeholder": "Label name",
+          "labels_empty": "No labels yet.",
+          "mark_default_state": "Mark as default state",
+          "modal_intro": "Name the template and add a short note for your team. Then configure default project values—the same kind of settings you use when creating a project.",
+          "name_required": "Template name is required",
+          "section_features": "Features",
+          "section_features_hint": "Choose which optional project features are enabled when this template is applied.",
+          "section_labels": "Labels",
+          "section_labels_hint": "Define default labels for new projects.",
+          "section_properties": "Default project properties",
+          "section_states": "States",
+          "section_states_hint": "Define default workflow states for new projects.",
+          "section_template": "Template",
+          "section_work_item_types": "Work item types",
+          "section_work_item_types_hint": "Configure default work item types and custom properties for projects created from this template.",
+          "state_groups": {
+            "backlog": "Backlog",
+            "cancelled": "Cancelled",
+            "completed": "Completed",
+            "started": "Started",
+            "unstarted": "Unstarted"
+          },
+          "state_name_placeholder": "State name",
+          "states_group_empty": "No states in this group yet.",
+          "template_name_label": "Template name",
+          "template_name_placeholder": "e.g. Software delivery",
+          "template_note_label": "Description (for your team)",
+          "template_note_placeholder": "What this template is for (optional).",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "Add work item type",
+              "description": "Add more work item types available in projects from this template.",
+              "empty": "No additional types yet.",
+              "title": "Additional types"
+            },
+            "default_badge": "Default",
+            "disabled_hint": "Enable work item types in Features above to configure types here.",
+            "epic": {
+              "description": "Large body of work that can be broken into tasks.",
+              "disabled": "Epics are disabled for this template.",
+              "title": "Epic"
+            },
+            "optional_badge": "Optional",
+            "properties_empty": "No custom properties for this type.",
+            "task": {
+              "description": "Standard work item type for everyday tasks.",
+              "title": "Task"
+            },
+            "type_description_placeholder": "Short description (optional)",
+            "type_name_placeholder": "Type name"
+          }
+        },
+        "loading": "Loading templates…",
+        "none": "No template",
+        "select_placeholder": "Select a template",
+        "table": {
+          "download_template": "Download",
+          "no_description": "No description",
+          "use_template": "Use template"
+        },
+        "title": "Project templates",
+        "toasts": {
+          "apply_failed": {
+            "message": "Could not apply the project template."
+          },
+          "apply_followup_failed": {
+            "message": "Project was created but some template settings could not be applied."
+          },
+          "create_failed": {
+            "message": "Please check the form and try again.",
+            "title": "Could not create template"
+          },
+          "created": {
+            "message": "The project template was saved.",
+            "title": "Template created"
+          },
+          "delete_failed": {
+            "message": "Please try again.",
+            "title": "Could not delete"
+          },
+          "deleted": {
+            "message": "The project template was deleted.",
+            "title": "Template removed"
+          },
+          "download_failed": {
+            "message": "Could not download the template file."
+          },
+          "save_failed": {
+            "message": "Please check the form and try again.",
+            "title": "Could not save template"
+          },
+          "saved": {
+            "message": "The project template was updated.",
+            "title": "Template saved"
+          },
+          "upload_failed": {
+            "message": "Could not upload the template. Please check the file and try again."
+          },
+          "uploaded_renamed": {
+            "message": "That name was already taken, so the template was saved as \"{name}\"."
+          },
+          "uploaded": {
+            "message": "Template \"{name}\" was uploaded from the file."
+          }
+        },
+        "upload_invalid_file": "Please upload a JSON file downloaded with the “Download” button.",
+        "upload_template": "Upload from file",
+        "upload_too_large": "File must be smaller than {size} MB."
+      },
+      "work_item_templates": {
+        "add_template": "Add template",
+        "delete_confirm": "Are you sure you want to remove this work item template?",
+        "description": "Create reusable starter sets for new work items (title, description, assignees, priority, and more). A template can cover the whole workspace or one project only.",
+        "edit_template": "Edit template",
+        "form": {
+          "default_values_section_hint": "When someone applies this template while creating a work item, these fields are filled in. Everything here is optional.",
+          "default_values_section_title": "Default work item values",
+          "default_work_item_description": "Description",
+          "default_work_item_description_hint": "Plain text; it is saved as the work item description. Line breaks are kept.",
+          "default_work_item_description_placeholder": "Text that should appear in the new work item by default",
+          "default_work_item_name": "Title",
+          "default_work_item_name_placeholder": "e.g. [Bug] …",
+          "modal_intro": "Name the template and add a short note for the team. Then set default work item values—the same kind of title, description, assignees, and priority you use when creating a work item.",
+          "name_required": "Template name is required",
+          "scope_hint": "Leave project empty to make this template available in every project. Project-specific fields (state, labels, cycle, modules) can only be saved when a project is selected.",
+          "scope_hint_short": "Optional. If empty, the template is available in all projects. When set, assignee suggestions are limited to that project; otherwise, workspace members are used.",
+          "scope_project": "Limit to one project (optional)",
+          "template_name_label": "Template name",
+          "template_name_placeholder": "e.g. Bug report",
+          "template_note_label": "Description (for your team)",
+          "template_note_placeholder": "What this template is for (optional; this is not the work item description)."
+        },
+        "heading": "Work item templates",
+        "table": {
+          "name": "Template",
+          "project": "Project",
+          "scope": "Scope",
+          "workspace_wide": "All projects"
+        },
+        "title": "Work item templates",
+        "toasts": {
+          "create_failed": {
+            "message": "Please check the form and try again.",
+            "title": "Could not create template"
+          },
+          "created": {
+            "message": "The work item template was saved.",
+            "title": "Template created"
+          },
+          "delete_failed": {
+            "message": "Please try again.",
+            "title": "Could not delete"
+          },
+          "deleted": {
+            "message": "The work item template was deleted.",
+            "title": "Template removed"
+          },
+          "save_failed": {
+            "message": "Please check the form and try again.",
+            "title": "Could not save template"
+          },
+          "saved": {
+            "message": "The work item template was updated.",
+            "title": "Template saved"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "Add type",
+        "delete_confirm": "Remove this work item type? Existing work items keep their data.",
+        "description": "Define work item types with their own identity, custom properties, and project scope. Toggle types on or off without affecting existing items.",
+        "edit_type": "Edit type",
+        "epic_badge": "Epic",
+        "form": {
+          "description_label": "Description",
+          "is_active": "Active",
+          "is_epic": "Epic type",
+          "modal_intro": "Name the type, pick an icon, and attach only the properties this kind of work needs. Assign it to projects where it should be available.",
+          "name_label": "Name",
+          "name_required": "Type name is required",
+          "projects_hint": "Leave empty to keep the type in the library without assigning it to any project yet.",
+          "projects_label": "Projects",
+          "properties_heading": "Custom properties",
+          "property": {
+            "active_checkbox": "Active",
+            "add": "Add property",
+            "description_label": "Description",
+            "empty": "No custom properties yet.",
+            "inactive": "Inactive",
+            "mandatory": "Required",
+            "mandatory_checkbox": "Required when creating work items",
+            "title_label": "Title",
+            "type_label": "Type",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Date",
+              "dropdown": "Dropdown",
+              "member_picker": "Member",
+              "number": "Number",
+              "text": "Text"
+            }
+          }
+        },
+        "table": {
+          "name": "Type",
+          "no_projects": "Not assigned",
+          "projects": "Projects",
+          "properties": "Properties",
+          "status": "Active"
+        },
+        "title": "Work item types",
+        "toasts": {
+          "delete_failed": {
+            "message": "Please try again.",
+            "title": "Could not delete"
+          },
+          "deleted": {
+            "message": "The work item type was deleted.",
+            "title": "Type removed"
+          },
+          "save_failed": {
+            "message": "Please check the form and try again.",
+            "title": "Could not save type"
+          },
+          "saved": {
+            "message": "The work item type was saved.",
+            "title": "Type saved"
+          }
+        }
+      }
+    }
+  }
+}

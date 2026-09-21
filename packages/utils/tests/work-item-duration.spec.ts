@@ -96,7 +96,10 @@ describe("reconcileWorkItemDuration - editing the duration", () => {
 
   it("leaves the dates untouched when the duration is cleared", () => {
     expect(
-      reconcileWorkItemDuration({ start_date: "2026-01-01", target_date: "2026-01-05", duration: 5 }, { duration: null })
+      reconcileWorkItemDuration(
+        { start_date: "2026-01-01", target_date: "2026-01-05", duration: 5 },
+        { duration: null }
+      )
     ).toEqual({ duration: null });
   });
 

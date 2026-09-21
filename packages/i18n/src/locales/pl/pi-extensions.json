@@ -1,0 +1,559 @@
+{
+  "account_settings": {
+    "api_tokens": {
+      "heading": "Tokeny API"
+    }
+  },
+  "appearance": "Wygląd",
+  "approve": "Zatwierdź",
+  "duration": "Czas trwania",
+  "duration_days": "{count, plural, one {# dzień} few {# dni} other {# dni}}",
+  "epic": {
+    "all": "Wszystkie epiki"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "Eksport do CSV z separatorem przecinek.",
+      "short_description": "CSV przecinek",
+      "title": "CSV (przecinek)"
+    },
+    "csv_semicolon": {
+      "description": "Eksport do CSV z separatorem średnik — dla Excela.",
+      "short_description": "CSV średnik",
+      "title": "CSV (średnik, Excel)"
+    }
+  },
+  "importer": {
+    "github": {
+      "description": "Importuj elementy z repozytoriów GitHub.",
+      "title": "GitHub"
+    },
+    "jira": {
+      "description": "Importuj elementy i epiki z Jiry.",
+      "title": "Jira"
+    }
+  },
+  "issue": {
+    "add": {
+      "duration": "Dodaj czas trwania"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue} nie może się rozpocząć, dopóki {related} się nie zakończy (relacja: zablokowany przez).",
+          "blocking": "{issue} musi się zakończyć przed rozpoczęciem {related} (relacja: blokuje).",
+          "finish_after": "{issue} nie może się zakończyć wcześniej niż {related} (relacja: kończy się po).",
+          "finish_before": "{issue} musi się zakończyć nie później niż {related} (relacja: kończy się przed).",
+          "start_after": "{issue} nie może się rozpocząć wcześniej niż {related} (relacja: zaczyna się po).",
+          "start_before": "{issue} musi się rozpocząć nie później niż {related} (relacja: zaczyna się przed)."
+        },
+        "status": {
+          "finish_after": "{issue} nie może zostać ukończone, dopóki {related} nie zostanie ukończone (relacja: kończy się po).",
+          "start_after": "{issue} nie może się rozpocząć, dopóki {related} nie zostanie rozpoczęte (relacja: zaczyna się po)."
+        }
+      },
+      "date_conflict": "Te daty kolidują z istniejącymi zależnościami. Dostosuj powiązane elementy pracy albo najpierw usuń zależność.",
+      "dependency_create_failed": "Nie udało się utworzyć zależności. Spróbuj ponownie.",
+      "dependency_created": "Zależność między elementami pracy została utworzona."
+    }
+  },
+  "profile": {
+    "actions": {
+      "appearance": "Wygląd"
+    }
+  },
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "Grupuj pracę w powtarzalnych okresach czasu.",
+        "label": "Cykle"
+      },
+      "description": "Wybierz, które możliwości mają być włączone w tym projekcie.",
+      "intake": {
+        "description": "Wstępnie rozpatruj zgłoszenia przed dodaniem do projektu.",
+        "label": "Intake"
+      },
+      "modules": {
+        "description": "Grupuj pracę w podprojektach z własnymi osobami odpowiedzialnymi.",
+        "label": "Moduły"
+      },
+      "pages": {
+        "description": "Twórz strony dokumentacji projektu.",
+        "label": "Strony"
+      },
+      "time_tracking": {
+        "description": "Rejestruj czas spędzony na elementach roboczych.",
+        "label": "Śledzenie czasu"
+      },
+      "title": "Funkcje projektu",
+      "views": {
+        "description": "Zapisuj i udostępniaj sortowanie, filtry i układy.",
+        "label": "Widoki"
+      },
+      "work_item_types": {
+        "assign_failed": "Projekt utworzono, ale nie udało się przypisać typów elementów roboczych.",
+        "assign_hint": "Wybierz typy z workspace, które mają być dostępne w tym projekcie.",
+        "assign_label": "Przypisz typy elementów roboczych",
+        "description": "Używaj niestandardowych typów z własnymi właściwościami na elementach roboczych.",
+        "label": "Typy elementów roboczych",
+        "no_types_hint": "Brak aktywnych typów w workspace. Najpierw utwórz je w ustawieniach workspace → Typy elementów roboczych."
+      }
+    }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "Dodaj bramkę akceptacji",
+      "add_transition": "Dodaj przejście",
+      "allow_creation": "Zezwalaj na nowe elementy robocze w tym stanie",
+      "approval": "Akceptacja",
+      "approval_error": "Nie udało się przetworzyć akceptacji.",
+      "approved_success": "Przejście zaakceptowane.",
+      "blocker_message": "To przejście nie jest dozwolone przez workflow.",
+      "builder_description": "Rozwiń stan, aby skonfigurować dozwolone przejścia i bramki akceptacji.",
+      "builder_title": "Konstruktor workflow",
+      "disabled_success": "Workflow wyłączony dla tego projektu.",
+      "enable_description": "Po włączeniu elementy robocze podlegają skonfigurowanym przejściom i regułom akceptacji.",
+      "enable_title": "Włącz workflow",
+      "enabled_success": "Workflow włączony dla tego projektu.",
+      "enabling": "Aktualizowanie ustawień workflow…",
+      "paused": "Wstrzymany",
+      "pending_approval_description": "Przejście z {from} do {to} oczekuje na akceptację.",
+      "pending_approval_title": "Wymagana akceptacja",
+      "rejected_success": "Przejście odrzucone.",
+      "resolving_approval": "Przetwarzanie akceptacji…",
+      "save_error": "Nie udało się zapisać konfiguracji workflow.",
+      "save_success": "Konfiguracja workflow zapisana.",
+      "toggle_error": "Nie udało się zaktualizować ustawień workflow.",
+      "transition": "Przejście",
+      "transitions_configured": "skonfigurowanych przejść"
+    }
+  },
+  "project_templates": {
+    "loading": "Ładowanie szablonów…",
+    "none": "Bez szablonu",
+    "select_placeholder": "Wybierz szablon"
+  },
+  "project_views": {
+    "empty_state": {
+      "filter": {
+        "description": "Utwórz nowy widok.",
+        "title": "Brak pasujących widoków"
+      }
+    }
+  },
+  "reject": "Odrzuć",
+  "settings_empty_state": {
+    "imports": {
+      "description": "Obecnie nie masz żadnych rekordów importu. Po wczytaniu pliku do projektu wszystkie rekordy pojawią się tutaj.",
+      "title": "Jeszcze brak importów"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "Nie udało się zastosować szablonu elementu roboczego.",
+    "dropdown_placeholder": "Szablon",
+    "loading": "Ładowanie szablonów…",
+    "none": "Bez szablonu"
+  },
+  "work_item_types": {
+    "loading": "Ładowanie typów…",
+    "property_values_save_failed": "Zadanie zostało utworzone, ale dodatkowe właściwości nie zostały zapisane. Uzupełnij je w szczegółach zadania.",
+    "select_placeholder": "Typ"
+  },
+  "workspace_analytics": {
+    "total_admins": "Łączna liczba administratorów",
+    "total_guests": "Łączna liczba gości",
+    "total_intake": "Całkowity dochód",
+    "total_projects": "Łączna liczba projektów",
+    "total_users": "Łączna liczba użytkowników",
+    "total_work_items": "Łączna liczba {entity}"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "Wszystkie projekty",
+        "history": {
+          "download": "Pobierz",
+          "expired": "Wygasł",
+          "exported_by": "Wyeksportował",
+          "exported_on": "Data eksportu",
+          "project_count": "{count, plural, one {# projekt} few {# projekty} other {# projektów}}",
+          "projects": "Wyeksportowane projekty",
+          "status": "Status"
+        },
+        "statuses": {
+          "completed": "Zakończony",
+          "expired": "Wygasł",
+          "failed": "Nie powiódł się",
+          "processing": "W trakcie"
+        },
+        "tabs": {
+          "export": "Eksport",
+          "import": "Import"
+        },
+        "work_items_export": {
+          "description": "Eksportuj elementy robocze z wybranych projektów do CSV, Excel lub JSON.",
+          "heading": "Eksport elementów roboczych"
+        }
+      },
+      "imports": {
+        "file_too_large": "Plik musi być mniejszy niż {size} MB.",
+        "history": {
+          "file": "Plik",
+          "imported_by": "Zaimportował",
+          "imported_on": "Data importu",
+          "project_count": "{count, plural, one {# projekt} few {# projekty} other {# projektów}}",
+          "projects": "Projekty",
+          "reason": "Powód",
+          "status": "Status"
+        },
+        "previous_imports": "Poprzednie importy",
+        "work_items": {
+          "description": "Wczytaj plik z „Eksportu elementów roboczych” (CSV, Excel lub JSON) do istniejącego projektu.",
+          "heading": "Import elementów roboczych",
+          "import_button": "Importuj elementy robocze",
+          "invalid_file_type": "Prześlij plik CSV, Excel (.xlsx) lub JSON.",
+          "no_projects": "Brak dostępnych projektów",
+          "open_project": "Otwórz projekt",
+          "options": {
+            "assignees": "Osoby przypisane",
+            "clear_all": "Odznacz wszystko",
+            "cycles": "Cykle",
+            "dates": "Daty i czas trwania",
+            "heading": "Co importować",
+            "labels": "Etykiety",
+            "modules": "Moduły",
+            "parents": "Elementy nadrzędne",
+            "relations": "Relacje między elementami",
+            "select_all": "Zaznacz wszystko",
+            "subscribers": "Obserwujący"
+          },
+          "result_summary": "Zaimportowano {count, plural, one {# element roboczy} few {# elementy robocze} other {# elementów roboczych}} do „{name}”.",
+          "select_file": "Wybierz plik",
+          "select_file_label": "Plik eksportu",
+          "select_project": "Projekt docelowy",
+          "select_project_placeholder": "Wybierz projekt",
+          "toasts": {
+            "error": {
+              "message": "Import elementów roboczych nie powiódł się. Użyj pliku z „Eksportu elementów roboczych” i spróbuj ponownie."
+            },
+            "success": {
+              "message": "Zaimportowano {count} elementów roboczych do „{name}”."
+            }
+          },
+          "warnings_heading": "{count, plural, one {# ostrzeżenie} few {# ostrzeżenia} other {# ostrzeżeń}} podczas importu",
+          "warnings_none": "Wszystko wczytało się bez ostrzeżeń."
+        }
+      },
+      "project_templates": {
+        "add_template": "Dodaj szablon",
+        "delete_confirm": "Usunąć ten szablon projektu? Istniejące projekty pozostaną bez zmian.",
+        "description": "Twórz wielokrotnego użycia konfiguracje projektów z domyślnymi właściwościami, funkcjami, stanami, etykietami i typami elementów roboczych.",
+        "edit_template": "Edytuj szablon",
+        "form": {
+          "add_label": "Dodaj etykietę",
+          "add_state": "Dodaj stan",
+          "custom_property": {
+            "active_checkbox": "Aktywne",
+            "add_property": "Dodaj właściwość",
+            "default_option_label": "Domyślna opcja",
+            "description_label": "Opis",
+            "description_placeholder": "Tekst pomocy dla tej właściwości (opcjonalnie)",
+            "dropdown_options_heading": "Opcje listy rozwijanej",
+            "inactive": "Nieaktywne",
+            "mandatory": "Wymagane",
+            "mandatory_checkbox": "Wymagane przy tworzeniu elementów roboczych",
+            "no_default": "Bez domyślnej",
+            "option_placeholder": "Nazwa opcji",
+            "select_mode_label": "Tryb wyboru",
+            "select_multi": "Wielokrotny wybór",
+            "select_single": "Pojedynczy wybór",
+            "title_label": "Tytuł",
+            "title_placeholder": "Nazwa właściwości",
+            "type_label": "Typ",
+            "types": {
+              "boolean": "Logiczne",
+              "date": "Data",
+              "dropdown": "Lista rozwijana",
+              "member_picker": "Członek",
+              "number": "Liczba",
+              "text": "Tekst"
+            }
+          },
+          "default_assignee": "Domyślnie przypisany",
+          "default_cover_image": "Obraz okładki",
+          "default_labels": "Domyślne etykiety",
+          "default_lead": "Lider projektu",
+          "default_project_description": "Opis projektu",
+          "default_project_description_placeholder": "Domyślny opis dla nowych projektów",
+          "default_project_identifier": "Identyfikator projektu",
+          "default_project_identifier_placeholder": "np. PROD",
+          "default_project_name": "Nazwa projektu",
+          "default_project_name_placeholder": "np. Wprowadzenie produktu",
+          "default_start_date": "Data rozpoczęcia",
+          "default_target_date": "Termin",
+          "default_visibility": "Widoczność",
+          "features": {
+            "cycles": {
+              "description": "Okresy planowania i realizacji pracy.",
+              "label": "Cykle"
+            },
+            "intake": {
+              "description": "Sortuj zgłoszenia przed utworzeniem elementów roboczych.",
+              "label": "Intake"
+            },
+            "modules": {
+              "description": "Grupuj pracę w obszary lub kamienie milowe.",
+              "label": "Moduły"
+            },
+            "pages": {
+              "description": "Wiki i dokumentacja projektu.",
+              "label": "Strony"
+            },
+            "time_tracking": {
+              "description": "Loguj czas spędzony na elementach roboczych.",
+              "label": "Rejestrowanie czasu"
+            },
+            "views": {
+              "description": "Zapisane filtry i układy dla zespołu.",
+              "label": "Widoki"
+            },
+            "work_item_types": {
+              "description": "Różne rodzaje pracy z właściwościami niestandardowymi.",
+              "label": "Typy elementów roboczych"
+            }
+          },
+          "identifier_invalid": "Używaj tylko liter i cyfr",
+          "identifier_max_char": "Identyfikator może mieć maksymalnie 5 znaków",
+          "label_name_placeholder": "Nazwa etykiety",
+          "labels_empty": "Brak etykiet.",
+          "mark_default_state": "Oznacz jako domyślny stan",
+          "modal_intro": "Nadaj szablonowi nazwę i krótką notatkę dla zespołu. Następnie skonfiguruj domyślne wartości projektu — takie same ustawienia, jak przy tworzeniu projektu.",
+          "name_required": "Nazwa szablonu jest wymagana",
+          "section_features": "Funkcje",
+          "section_features_hint": "Wybierz, które opcjonalne funkcje projektu są włączone po zastosowaniu szablonu.",
+          "section_labels": "Etykiety",
+          "section_labels_hint": "Zdefiniuj domyślne etykiety dla nowych projektów.",
+          "section_properties": "Domyślne właściwości projektu",
+          "section_states": "Stany",
+          "section_states_hint": "Zdefiniuj domyślne stany workflow dla nowych projektów.",
+          "section_template": "Szablon",
+          "section_work_item_types": "Typy elementów roboczych",
+          "section_work_item_types_hint": "Skonfiguruj domyślne typy elementów roboczych i właściwości niestandardowe dla projektów utworzonych z tego szablonu.",
+          "state_groups": {
+            "backlog": "Backlog",
+            "cancelled": "Anulowane",
+            "completed": "Ukończone",
+            "started": "W toku",
+            "unstarted": "Nierozpoczęte"
+          },
+          "state_name_placeholder": "Nazwa stanu",
+          "states_group_empty": "Brak stanów w tej grupie.",
+          "template_name_label": "Nazwa szablonu",
+          "template_name_placeholder": "np. Dostarczanie oprogramowania",
+          "template_note_label": "Opis (dla zespołu)",
+          "template_note_placeholder": "Do czego służy ten szablon (opcjonalnie).",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "Dodaj typ elementu roboczego",
+              "description": "Dodaj więcej typów elementów roboczych dostępnych w projektach z tego szablonu.",
+              "empty": "Brak dodatkowych typów.",
+              "title": "Dodatkowe typy"
+            },
+            "default_badge": "Domyślny",
+            "disabled_hint": "Włącz typy elementów roboczych w sekcji Funkcje powyżej, aby je skonfigurować.",
+            "epic": {
+              "description": "Duży zakres pracy, który można podzielić na zadania.",
+              "disabled": "Epiki są wyłączone w tym szablonie.",
+              "title": "Epik"
+            },
+            "optional_badge": "Opcjonalny",
+            "properties_empty": "Brak właściwości niestandardowych dla tego typu.",
+            "task": {
+              "description": "Standardowy typ elementu roboczego na co dzień.",
+              "title": "Zadanie"
+            },
+            "type_description_placeholder": "Krótki opis (opcjonalnie)",
+            "type_name_placeholder": "Nazwa typu"
+          }
+        },
+        "loading": "Ładowanie szablonów…",
+        "none": "Bez szablonu",
+        "select_placeholder": "Wybierz szablon",
+        "table": {
+          "download_template": "Pobierz",
+          "no_description": "Brak opisu",
+          "use_template": "Użyj szablonu"
+        },
+        "title": "Szablony projektów",
+        "toasts": {
+          "apply_failed": {
+            "message": "Nie udało się zastosować szablonu projektu."
+          },
+          "apply_followup_failed": {
+            "message": "Projekt utworzono, ale część ustawień szablonu nie została zastosowana."
+          },
+          "create_failed": {
+            "message": "Sprawdź formularz i spróbuj ponownie.",
+            "title": "Nie udało się utworzyć szablonu"
+          },
+          "created": {
+            "message": "Szablon projektu został zapisany.",
+            "title": "Szablon utworzony"
+          },
+          "delete_failed": {
+            "message": "Spróbuj ponownie.",
+            "title": "Nie udało się usunąć"
+          },
+          "deleted": {
+            "message": "Szablon projektu został usunięty.",
+            "title": "Szablon usunięty"
+          },
+          "download_failed": {
+            "message": "Nie udało się pobrać szablonu do pliku."
+          },
+          "save_failed": {
+            "message": "Sprawdź formularz i spróbuj ponownie.",
+            "title": "Nie udało się zapisać szablonu"
+          },
+          "saved": {
+            "message": "Zaktualizowano szablon projektu.",
+            "title": "Szablon zapisany"
+          },
+          "upload_failed": {
+            "message": "Nie udało się wczytać szablonu z pliku. Sprawdź plik i spróbuj ponownie."
+          },
+          "uploaded_renamed": {
+            "message": "Nazwa była już zajęta, więc szablon zapisano jako „{name}”."
+          },
+          "uploaded": {
+            "message": "Szablon „{name}” został wczytany z pliku."
+          }
+        },
+        "upload_invalid_file": "Prześlij plik JSON pobrany przyciskiem „Pobierz”.",
+        "upload_template": "Wczytaj z pliku",
+        "upload_too_large": "Plik musi być mniejszy niż {size} MB."
+      },
+      "work_item_templates": {
+        "add_template": "Dodaj szablon",
+        "delete_confirm": "Czy na pewno chcesz usunąć ten szablon elementu roboczego?",
+        "description": "Twórz wielokrotnego użycia konfiguracje nowych elementów (tytuł, opis, osoby przypisane, priorytet itd.). Szablon może obowiązywać w całej przestrzeni roboczej albo tylko w jednym projekcie.",
+        "edit_template": "Edytuj szablon",
+        "form": {
+          "default_values_section_hint": "Gdy ktoś wybierze ten szablon przy tworzeniu zadania, wypełnią się te pola. Wszystko może pozostać puste.",
+          "default_values_section_title": "Domyślne wartości zadania",
+          "default_work_item_description": "Opis",
+          "default_work_item_description_hint": "Zwykły tekst; zapiszemy go jako opis zadania. Złamania linii są zachowane.",
+          "default_work_item_description_placeholder": "Treść, która ma wpłynąć do nowego zadania",
+          "default_work_item_name": "Tytuł",
+          "default_work_item_name_placeholder": "np. [Błąd] …",
+          "modal_intro": "Nadaj szablonowi nazwę i krótką notatkę dla zespołu. Poniżej ustaw domyślne wartości zadania — taki tytuł, opis, przypisania i priorytet, jak przy zwykłym tworzeniu zadania.",
+          "name_required": "Nazwa szablonu jest wymagana",
+          "scope_hint": "Pozostaw projekt pusty, aby szablon był dostępny w każdym projekcie. Pola zależne od projektu (stan, etykiety, cykl, moduły) zapiszesz tylko po wybraniu projektu.",
+          "scope_hint_short": "Opcjonalnie. Pusty = szablon we wszystkich projektach. Gdy wybierzesz projekt, sugestie osób do przypisania ograniczają się do niego; bez projektu — do członków przestrzeni roboczej.",
+          "scope_project": "Ogranicz do jednego projektu (opcjonalnie)",
+          "template_name_label": "Nazwa szablonu",
+          "template_name_placeholder": "np. Zgłoszenie błędu",
+          "template_note_label": "Opis (dla zespołu)",
+          "template_note_placeholder": "Do czego służy ten szablon (opcjonalnie; to nie jest opis zadania)."
+        },
+        "heading": "Szablony elementów roboczych",
+        "table": {
+          "name": "Szablon",
+          "project": "Projekt",
+          "scope": "Zakres",
+          "workspace_wide": "Wszystkie projekty"
+        },
+        "title": "Szablony elementów roboczych",
+        "toasts": {
+          "create_failed": {
+            "message": "Sprawdź formularz i spróbuj ponownie.",
+            "title": "Nie udało się utworzyć"
+          },
+          "created": {
+            "message": "Zapisano szablon elementu roboczego.",
+            "title": "Szablon utworzony"
+          },
+          "delete_failed": {
+            "message": "Spróbuj ponownie.",
+            "title": "Nie udało się usunąć"
+          },
+          "deleted": {
+            "message": "Szablon został usunięty.",
+            "title": "Szablon usunięty"
+          },
+          "save_failed": {
+            "message": "Sprawdź formularz i spróbuj ponownie.",
+            "title": "Nie udało się zapisać"
+          },
+          "saved": {
+            "message": "Zaktualizowano szablon elementu roboczego.",
+            "title": "Szablon zapisany"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "Dodaj typ",
+        "delete_confirm": "Usunąć ten typ elementu roboczego? Istniejące elementy zachowają swoje dane.",
+        "description": "Definiuj typy elementów roboczych z własną tożsamością, właściwościami niestandardowymi i zakresem projektów. Włączaj i wyłączaj typy bez wpływu na istniejące elementy.",
+        "edit_type": "Edytuj typ",
+        "epic_badge": "Epik",
+        "form": {
+          "description_label": "Opis",
+          "is_active": "Aktywny",
+          "is_epic": "Typ epika",
+          "modal_intro": "Nazwij typ, wybierz ikonę i dodaj tylko te właściwości, których wymaga ten rodzaj pracy. Przypisz typ do projektów, w których ma być dostępny.",
+          "name_label": "Nazwa",
+          "name_required": "Nazwa typu jest wymagana",
+          "projects_hint": "Pozostaw puste, aby zachować typ w bibliotece bez przypisania do projektu.",
+          "projects_label": "Projekty",
+          "properties_heading": "Właściwości niestandardowe",
+          "property": {
+            "active_checkbox": "Aktywne",
+            "add": "Dodaj właściwość",
+            "description_label": "Opis",
+            "empty": "Brak właściwości niestandardowych.",
+            "inactive": "Nieaktywne",
+            "mandatory": "Wymagane",
+            "mandatory_checkbox": "Wymagane przy tworzeniu elementu",
+            "title_label": "Tytuł",
+            "type_label": "Typ",
+            "types": {
+              "boolean": "Logiczne",
+              "date": "Data",
+              "dropdown": "Lista rozwijana",
+              "member_picker": "Członek",
+              "number": "Liczba",
+              "text": "Tekst"
+            }
+          }
+        },
+        "table": {
+          "name": "Typ",
+          "no_projects": "Nie przypisano",
+          "projects": "Projekty",
+          "properties": "Właściwości",
+          "status": "Aktywny"
+        },
+        "title": "Typy elementów roboczych",
+        "toasts": {
+          "delete_failed": {
+            "message": "Spróbuj ponownie.",
+            "title": "Nie udało się usunąć"
+          },
+          "deleted": {
+            "message": "Typ elementu roboczego został usunięty.",
+            "title": "Typ usunięty"
+          },
+          "save_failed": {
+            "message": "Sprawdź formularz i spróbuj ponownie.",
+            "title": "Nie udało się zapisać typu"
+          },
+          "saved": {
+            "message": "Typ elementu roboczego został zapisany.",
+            "title": "Typ zapisany"
+          }
+        }
+      }
+    }
+  }
+}

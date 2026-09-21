@@ -1,9 +1,16 @@
+/**
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * See the LICENSE file for details.
+ */
+
 import { useEffect, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { observer } from "mobx-react";
 import useSWR, { useSWRConfig } from "swr";
 import { Layers } from "lucide-react";
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
+import type { TChangeHandlerProps } from "@plane/propel/emoji-icon-picker";
 import { EmojiIconPickerTypes, EmojiPicker, Logo } from "@plane/propel/emoji-icon-picker";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
@@ -187,13 +194,13 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
                       className="flex shrink-0 items-center justify-center"
                       buttonClassName="flex h-10 w-10 items-center justify-center rounded-md border border-subtle bg-surface-2"
                       label={<Logo logo={value} size={20} />}
-                      onChange={(val: { type?: string; value?: unknown }) => {
+                      onChange={(val: TChangeHandlerProps) => {
                         let logoValue = {};
                         if (val?.type === "emoji") logoValue = { value: val.value };
                         else if (val?.type === "icon") logoValue = val.value;
                         onChange({
                           in_use: val?.type,
-                          [String(val?.type)]: logoValue,
+                          [val?.type]: logoValue,
                         });
                         setLogoPickerOpen(false);
                       }}

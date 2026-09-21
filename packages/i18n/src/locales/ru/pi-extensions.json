@@ -1,0 +1,44 @@
+{
+  "account_settings": {
+    "api_tokens": {
+      "heading": "Персональные токены доступа"
+    }
+  },
+  "appearance": "Внешний вид",
+  "duration": "Длительность",
+  "duration_days": "{count, plural, one {# день} few {# дня} many {# дней} other {# дня}}",
+  "epic": {
+    "all": "Все эпики"
+  },
+  "importer": {
+    "github": {
+      "description": "Импорт рабочих элементов из репозиториев GitHub с синхронизацией.",
+      "title": "GitHub"
+    },
+    "jira": {
+      "description": "Импорт рабочих элементов и эпиков из проектов Jira.",
+      "title": "Jira"
+    }
+  },
+  "issue": {
+    "add": {
+      "duration": "Добавить длительность"
+    }
+  },
+  "project_views": {
+    "empty_state": {
+      "filter": {
+        "description": "Нет представлений, соответствующих критериям поиска. \n Создайте новое представление.",
+        "title": "Подходящих представлений не найдено"
+      }
+    }
+  },
+  "workspace_analytics": {
+    "total_admins": "Всего администраторов",
+    "total_guests": "Всего гостей",
+    "total_intake": "Общий доход",
+    "total_projects": "Всего проектов",
+    "total_users": "Всего пользователей",
+    "total_work_items": "Общее количество {entity}"
+  }
+}

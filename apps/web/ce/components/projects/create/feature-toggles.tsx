@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * See the LICENSE file for details.
  */
@@ -16,7 +16,7 @@ type TFeatureKey = keyof Pick<
   | "module_view"
   | "issue_views_view"
   | "page_view"
-  | "intake_view"
+  | "inbox_view"
   | "is_time_tracking_enabled"
   | "is_issue_type_enabled"
 >;
@@ -54,7 +54,7 @@ const FEATURES: TFeatureItem[] = [
     descriptionKey: "project_create.features.pages.description",
   },
   {
-    key: "intake_view",
+    key: "inbox_view",
     icon: Inbox,
     labelKey: "project_create.features.intake.label",
     descriptionKey: "project_create.features.intake.description",

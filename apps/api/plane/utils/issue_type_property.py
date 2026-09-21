@@ -1,3 +1,7 @@
+# Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+
 ALLOWED_PROPERTY_TYPES = frozenset({"text", "number", "dropdown", "boolean", "date", "member_picker"})
 ALLOWED_SELECT_MODES = frozenset({"single", "multi"})
 PROPERTY_LIMIT = 50

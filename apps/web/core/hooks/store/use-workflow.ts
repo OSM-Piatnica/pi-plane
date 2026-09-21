@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * See the LICENSE file for details.
+ */
+
 import { useContext } from "react";
 import { StoreContext } from "@/lib/store-context";
 import type { IWorkflowStore } from "@/plane-web/store/workflow.store";

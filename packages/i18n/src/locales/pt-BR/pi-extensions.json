@@ -1,0 +1,44 @@
+{
+  "appearance": "Aparência",
+  "duration": "Duração",
+  "duration_days": "{count, plural, one {# dia} other {# dias}}",
+  "epic": {
+    "all": "Todos os Épicos"
+  },
+  "importer": {
+    "github": {
+      "description": "Importe itens de trabalho de repositórios do GitHub e sincronize-os.",
+      "title": "Github"
+    },
+    "jira": {
+      "description": "Importe itens de trabalho e épicos de projetos e épicos do Jira.",
+      "title": "Jira"
+    }
+  },
+  "issue": {
+    "add": {
+      "duration": "Adicionar duração"
+    }
+  },
+  "profile": {
+    "actions": {
+      "appearance": "Aparência"
+    }
+  },
+  "project_views": {
+    "empty_state": {
+      "filter": {
+        "description": "Nenhuma visualização corresponde aos critérios de pesquisa.\nCrie uma nova visualização em vez disso.",
+        "title": "Nenhuma visualização correspondente"
+      }
+    }
+  },
+  "workspace_analytics": {
+    "total_admins": "Total de administradores",
+    "total_guests": "Total de convidados",
+    "total_intake": "Receita total",
+    "total_projects": "Total de projetos",
+    "total_users": "Total de usuários",
+    "total_work_items": "Total de {entity}"
+  }
+}
