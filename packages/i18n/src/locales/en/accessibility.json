@@ -7,6 +7,8 @@
       "open_command_palette": "Open command palette",
       "open_extended_sidebar": "Open extended sidebar",
       "close_extended_sidebar": "Close extended sidebar",
+      "open_workspace_menu": "Open workspace menu",
+      "close_workspace_menu": "Close workspace menu",
       "create_favorites_folder": "Create favorites folder",
       "open_folder": "Open folder",
       "close_folder": "Close folder",

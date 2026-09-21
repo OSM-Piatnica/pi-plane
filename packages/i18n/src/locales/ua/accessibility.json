@@ -7,6 +7,8 @@
       "open_command_palette": "Відкрити палітру команд",
       "open_extended_sidebar": "Відкрити розширену бічну панель",
       "close_extended_sidebar": "Закрити розширену бічну панель",
+      "open_workspace_menu": "Відкрити меню робочого простору",
+      "close_workspace_menu": "Закрити меню робочого простору",
       "create_favorites_folder": "Створити папку улюблених",
       "open_folder": "Відкрити папку",
       "close_folder": "Закрити папку",

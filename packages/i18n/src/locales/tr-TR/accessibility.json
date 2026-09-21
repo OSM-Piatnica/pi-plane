@@ -7,6 +7,8 @@
       "open_command_palette": "Komut paletini aç",
       "open_extended_sidebar": "Genişletilmiş kenar çubuğunu aç",
       "close_extended_sidebar": "Genişletilmiş kenar çubuğunu kapat",
+      "open_workspace_menu": "Çalışma alanı menüsünü aç",
+      "close_workspace_menu": "Çalışma alanı menüsünü kapat",
       "create_favorites_folder": "Favoriler klasörü oluştur",
       "open_folder": "Klasörü aç",
       "close_folder": "Klasörü kapat",

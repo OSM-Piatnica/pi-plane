@@ -7,6 +7,8 @@
       "open_command_palette": "コマンドパレットを開く",
       "open_extended_sidebar": "拡張サイドバーを開く",
       "close_extended_sidebar": "拡張サイドバーを閉じる",
+      "open_workspace_menu": "ワークスペースメニューを開く",
+      "close_workspace_menu": "ワークスペースメニューを閉じる",
       "create_favorites_folder": "お気に入りフォルダを作成",
       "open_folder": "フォルダを開く",
       "close_folder": "フォルダを閉じる",

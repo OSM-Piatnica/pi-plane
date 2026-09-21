@@ -7,6 +7,8 @@
       "open_command_palette": "Ouvrir la palette de commandes",
       "open_extended_sidebar": "Ouvrir la barre latérale étendue",
       "close_extended_sidebar": "Fermer la barre latérale étendue",
+      "open_workspace_menu": "Ouvrir le menu de l’espace de travail",
+      "close_workspace_menu": "Fermer le menu de l’espace de travail",
       "create_favorites_folder": "Créer un dossier de favoris",
       "open_folder": "Ouvrir le dossier",
       "close_folder": "Fermer le dossier",

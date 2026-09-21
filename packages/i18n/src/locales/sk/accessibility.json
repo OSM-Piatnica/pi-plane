@@ -7,6 +7,8 @@
       "open_command_palette": "Otvoriť paletu príkazov",
       "open_extended_sidebar": "Otvoriť rozšírený bočný panel",
       "close_extended_sidebar": "Zavrieť rozšírený bočný panel",
+      "open_workspace_menu": "Otvoriť menu pracovného priestoru",
+      "close_workspace_menu": "Zavrieť menu pracovného priestoru",
       "create_favorites_folder": "Vytvoriť priečinok obľúbených",
       "open_folder": "Otvoriť priečinok",
       "close_folder": "Zavrieť priečinok",

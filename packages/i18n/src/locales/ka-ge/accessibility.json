@@ -7,6 +7,8 @@
       "open_command_palette": "ბრძანებების პანელის გახსნა",
       "open_extended_sidebar": "გაფართოებული გვერდითი მენიუს გახსნა",
       "close_extended_sidebar": "გაფართოებული გვერდითი მენიუს დახურვა",
+      "open_workspace_menu": "სამუშაო სივრცის მენიუს გახსნა",
+      "close_workspace_menu": "სამუშაო სივრცის მენიუს დახურვა",
       "create_favorites_folder": "ფავორიტების საქაღალდის შექმნა",
       "open_folder": "საქაღალდის გახსნა",
       "close_folder": "საქაღალდის დახურვა",

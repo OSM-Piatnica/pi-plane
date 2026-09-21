@@ -7,6 +7,8 @@
       "open_command_palette": "Buka palet perintah",
       "open_extended_sidebar": "Buka sidebar diperluas",
       "close_extended_sidebar": "Tutup sidebar diperluas",
+      "open_workspace_menu": "Buka menu ruang kerja",
+      "close_workspace_menu": "Tutup menu ruang kerja",
       "create_favorites_folder": "Buat folder favorit",
       "open_folder": "Buka folder",
       "close_folder": "Tutup folder",

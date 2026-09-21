@@ -7,6 +7,8 @@
       "open_command_palette": "打開命令面板",
       "open_extended_sidebar": "打開擴展側邊欄",
       "close_extended_sidebar": "關閉擴展側邊欄",
+      "open_workspace_menu": "打開工作區選單",
+      "close_workspace_menu": "關閉工作區選單",
       "create_favorites_folder": "創建收藏夾文件夾",
       "open_folder": "打開文件夾",
       "close_folder": "關閉文件夾",

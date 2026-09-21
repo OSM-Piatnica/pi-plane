@@ -110,8 +110,8 @@ export const SidebarMenuItems = observer(function SidebarMenuItems() {
             onClick={() => toggleListDisclosure(!isWorkspaceMenuOpen)}
             aria-label={t(
               isWorkspaceMenuOpen
-                ? "aria_labels.app_sidebar.close_workspace_menu"
-                : "aria_labels.app_sidebar.open_workspace_menu"
+                ? "aria_labels.projects_sidebar.close_workspace_menu"
+                : "aria_labels.projects_sidebar.open_workspace_menu"
             )}
           >
             <span className="text-13 font-semibold">{t("common.workspace")}</span>
@@ -124,8 +124,8 @@ export const SidebarMenuItems = observer(function SidebarMenuItems() {
               onClick={() => toggleListDisclosure(!isWorkspaceMenuOpen)}
               aria-label={t(
                 isWorkspaceMenuOpen
-                  ? "aria_labels.app_sidebar.close_workspace_menu"
-                  : "aria_labels.app_sidebar.open_workspace_menu"
+                  ? "aria_labels.projects_sidebar.close_workspace_menu"
+                  : "aria_labels.projects_sidebar.open_workspace_menu"
               )}
             >
               <ChevronRightIcon
@@ -162,12 +162,12 @@ export const SidebarMenuItems = observer(function SidebarMenuItems() {
                     id="extended-sidebar-toggle"
                     aria-label={t(
                       isExtendedSidebarOpened
-                        ? "aria_labels.app_sidebar.close_extended_sidebar"
-                        : "aria_labels.app_sidebar.open_extended_sidebar"
+                        ? "aria_labels.projects_sidebar.close_extended_sidebar"
+                        : "aria_labels.projects_sidebar.open_extended_sidebar"
                     )}
                   >
                     <Ellipsis className="size-4 flex-shrink-0" />
-                    <span>{isExtendedSidebarOpened ? "Hide" : "More"}</span>
+                    <span>{isExtendedSidebarOpened ? t("hide") : t("more")}</span>
                   </button>
                 </SidebarNavItem>
               </>
