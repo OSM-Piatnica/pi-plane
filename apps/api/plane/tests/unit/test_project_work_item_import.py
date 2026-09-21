@@ -13,17 +13,24 @@ from plane.db.models import (
     CycleIssue,
     Issue,
     IssueAssignee,
+    IssueLabel,
+    IssuePropertyValue,
     IssueRelation,
     IssueSequence,
     IssueSubscriber,
+    IssueType,
+    IssueTypeProperty,
     Label,
     Module,
     ModuleIssue,
     Project,
+    ProjectIssueType,
     ProjectMember,
     State,
+    User,
+    WorkspaceMember,
 )
-from plane.utils.project_work_item_import import import_work_items_into_project
+from plane.utils.project_work_item_import import WorkItemImportOptions, import_work_items_into_project
 
 
 def _project_with_state(workspace, user, name, identifier):
@@ -45,6 +52,39 @@ def _project_with_state(workspace, user, name, identifier):
         created_by=user,
     )
     return project
+
+
+def _workspace_only_member(workspace, email, display_name):
+    """A person the workspace knows but the project does not."""
+    user = User.objects.create(email=email, username=email, display_name=display_name)
+    WorkspaceMember.objects.create(workspace=workspace, member=user, role=15, is_active=True)
+    return user
+
+
+def _project_guest(workspace, project, email, display_name):
+    """A person who belongs to the project, but only as a guest."""
+    user = _workspace_only_member(workspace, email, display_name)
+    ProjectMember.objects.create(project=project, member=user, role=5, is_active=True)
+    return user
+
+
+def _member_picker_property(workspace, project, user, title="Owner"):
+    """A work item type with one member picker property, attached to the project."""
+    issue_type = IssueType.objects.create(workspace=workspace, name="Task", created_by=user)
+    ProjectIssueType.objects.create(
+        project=project,
+        workspace=workspace,
+        issue_type=issue_type,
+        created_by=user,
+    )
+    return IssueTypeProperty.objects.create(
+        workspace=workspace,
+        issue_type=issue_type,
+        title=title,
+        property_type="member_picker",
+        select_mode="multi",
+        created_by=user,
+    )
 
 
 @pytest.mark.django_db
@@ -364,6 +404,221 @@ class TestWorkItemImportPeople:
         issue = Issue.objects.get(project=project, name="Watched")
         assert IssueSubscriber.objects.filter(issue=issue, subscriber=create_user).exists()
 
+    def test_assignee_outside_the_project_is_skipped_and_reported(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Outsiders", "OUT")
+        outsider = _workspace_only_member(workspace, "outsider@example.com", "outsider")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "O1",
+                    "name": "Mixed assignees",
+                    "state": "Todo",
+                    "assignee_emails": [create_user.email, outsider.email],
+                }
+            ],
+        )
+
+        issue = Issue.objects.get(project=project, name="Mixed assignees")
+        # The person who is a project member stays, the other one is dropped
+        assert IssueAssignee.objects.filter(issue=issue, assignee=create_user).exists()
+        assert not IssueAssignee.objects.filter(issue=issue, assignee=outsider).exists()
+        assert any(outsider.email in w and "not to this project" in w for w in result["warnings"])
+
+    def test_subscriber_outside_the_project_is_skipped(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Outsider subs", "OUS")
+        outsider = _workspace_only_member(workspace, "watcher@example.com", "watcher")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "O2",
+                    "name": "Watched by an outsider",
+                    "state": "Todo",
+                    "subscriber_emails": [outsider.email],
+                }
+            ],
+        )
+
+        issue = Issue.objects.get(project=project, name="Watched by an outsider")
+        assert not IssueSubscriber.objects.filter(issue=issue).exists()
+        assert any(outsider.email in w and "not to this project" in w for w in result["warnings"])
+
+    def test_assignee_outside_the_project_is_skipped_when_matched_by_name(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Outsider names", "OUN")
+        outsider = _workspace_only_member(workspace, "byname@example.com", "Anna Nowak")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[{"external_key": "O3", "name": "By name", "state": "Todo", "assignees": ["Anna Nowak"]}],
+        )
+
+        issue = Issue.objects.get(project=project, name="By name")
+        assert not IssueAssignee.objects.filter(issue=issue, assignee=outsider).exists()
+        assert any("Anna Nowak" in w and "not to this project" in w for w in result["warnings"])
+
+    def test_assignee_who_left_the_project_is_skipped(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Left", "LFT")
+        former = _workspace_only_member(workspace, "former@example.com", "former")
+        ProjectMember.objects.create(project=project, member=former, role=15, is_active=False)
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[{"external_key": "O4", "name": "Old owner", "state": "Todo", "assignee_emails": [former.email]}],
+        )
+
+        issue = Issue.objects.get(project=project, name="Old owner")
+        assert not IssueAssignee.objects.filter(issue=issue).exists()
+        assert any(former.email in w and "not to this project" in w for w in result["warnings"])
+
+    def test_guest_is_not_assigned_and_is_reported(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Guests", "GST")
+        guest = _project_guest(workspace, project, "guest@example.com", "guest")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[{"external_key": "G1", "name": "For a guest", "state": "Todo", "assignee_emails": [guest.email]}],
+        )
+
+        issue = Issue.objects.get(project=project, name="For a guest")
+        assert not IssueAssignee.objects.filter(issue=issue).exists()
+        assert any(guest.email in w and "guest" in w for w in result["warnings"])
+
+    def test_guest_is_dropped_but_a_member_on_the_same_row_is_kept(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Mixed", "MIX")
+        guest = _project_guest(workspace, project, "mixedguest@example.com", "mixed guest")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "M1",
+                    "name": "Two people",
+                    "state": "Todo",
+                    "assignee_emails": [guest.email, create_user.email],
+                }
+            ],
+        )
+
+        issue = Issue.objects.get(project=project, name="Two people")
+        assigned = list(IssueAssignee.objects.filter(issue=issue).values_list("assignee_id", flat=True))
+        assert assigned == [create_user.id]
+
+    def test_guest_can_still_be_a_subscriber(self, workspace, create_user):
+        """Plane lets guests follow a work item, it only refuses to assign them."""
+        project = _project_with_state(workspace, create_user, "Watching", "WCH")
+        guest = _project_guest(workspace, project, "watcher-guest@example.com", "watching guest")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "W1",
+                    "name": "Followed by a guest",
+                    "state": "Todo",
+                    "subscriber_emails": [guest.email],
+                }
+            ],
+        )
+
+        issue = Issue.objects.get(project=project, name="Followed by a guest")
+        assert IssueSubscriber.objects.filter(issue=issue, subscriber=guest).exists()
+
+    def test_member_picker_property_drops_people_outside_the_project(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Picker", "PCK")
+        outsider = _workspace_only_member(workspace, "picked@example.com", "picked")
+        issue_type = IssueType.objects.create(workspace=workspace, name="Task", created_by=create_user)
+        ProjectIssueType.objects.create(
+            project=project,
+            workspace=workspace,
+            issue_type=issue_type,
+            created_by=create_user,
+        )
+        prop = IssueTypeProperty.objects.create(
+            workspace=workspace,
+            issue_type=issue_type,
+            title="Owner",
+            property_type="member_picker",
+            select_mode="multi",
+            created_by=create_user,
+        )
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "P1",
+                    "name": "With owner",
+                    "state": "Todo",
+                    "issue_type": "Task",
+                    "custom_properties": {"Owner": [create_user.email, outsider.email]},
+                }
+            ],
+        )
+
+        issue = Issue.objects.get(project=project, name="With owner")
+        value = IssuePropertyValue.objects.get(issue=issue, property=prop)
+        assert value.value == [str(create_user.id)]
+        assert any(outsider.email in w and "not a member of this project" in w for w in result["warnings"])
+
+    def test_member_picker_property_drops_guests(self, workspace, create_user):
+        """The member dropdown never offers a guest, so an import must not write one either."""
+        project = _project_with_state(workspace, create_user, "Picker guests", "PKG")
+        guest = _project_guest(workspace, project, "picked-guest@example.com", "picked guest")
+        prop = _member_picker_property(workspace, project, create_user)
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "PG1",
+                    "name": "Owned by a guest",
+                    "state": "Todo",
+                    "issue_type": "Task",
+                    "custom_properties": {"Owner": [guest.email, create_user.email]},
+                }
+            ],
+        )
+
+        issue = Issue.objects.get(project=project, name="Owned by a guest")
+        value = IssuePropertyValue.objects.get(issue=issue, property=prop)
+        assert value.value == [str(create_user.id)]
+        assert any(guest.email in w and "cannot be picked" in w for w in result["warnings"])
+
+    def test_member_picker_property_accepts_an_id_in_any_case(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Picker ids", "PKI")
+        prop = _member_picker_property(workspace, project, create_user)
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "PI1",
+                    "name": "Owned by id",
+                    "state": "Todo",
+                    "issue_type": "Task",
+                    "custom_properties": {"Owner": [str(create_user.id).upper()]},
+                }
+            ],
+        )
+
+        issue = Issue.objects.get(project=project, name="Owned by id")
+        value = IssuePropertyValue.objects.get(issue=issue, property=prop)
+        assert value.value == [str(create_user.id)]
+        assert not any("not a member of this project" in w for w in result["warnings"])
+
 
 @pytest.mark.django_db
 class TestWorkItemImportRelations:
@@ -486,3 +741,243 @@ class TestWorkItemImportDates:
         assert result["created_work_items"] == 1
         assert Issue.objects.get(project=project, name="Bad date").start_date is None
         assert any("01.03.2026" in w for w in result["warnings"])
+
+
+class TestWorkItemImportOptionsParsing:
+    def test_missing_fields_leave_everything_on(self):
+        options = WorkItemImportOptions.from_request_data({})
+
+        assert options == WorkItemImportOptions()
+        assert all(options.as_dict().values())
+
+    def test_form_strings_are_read(self):
+        options = WorkItemImportOptions.from_request_data(
+            {"assignees": "false", "relations": "0", "labels": "no", "cycles": "off"}
+        )
+
+        assert not options.assignees
+        assert not options.relations
+        assert not options.labels
+        assert not options.cycles
+        assert options.subscribers
+        assert options.dates
+
+    def test_unreadable_values_keep_the_option_on(self):
+        options = WorkItemImportOptions.from_request_data({"assignees": "", "relations": "maybe", "dates": None})
+
+        assert options.assignees
+        assert options.relations
+        assert options.dates
+
+
+@pytest.mark.django_db
+class TestWorkItemImportOptions:
+    def test_assignees_and_subscribers_can_be_left_out(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "No people", "NOP")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "N1",
+                    "name": "Nobody",
+                    "state": "Todo",
+                    "assignee_emails": [create_user.email],
+                    "subscriber_emails": [create_user.email],
+                }
+            ],
+            options=WorkItemImportOptions(assignees=False, subscribers=False),
+        )
+
+        issue = Issue.objects.get(project=project, name="Nobody")
+        assert not IssueAssignee.objects.filter(issue=issue).exists()
+        assert not IssueSubscriber.objects.filter(issue=issue).exists()
+        assert any("assignee data" in w for w in result["warnings"])
+        assert any("subscriber data" in w for w in result["warnings"])
+
+    def test_people_written_as_names_are_counted_as_left_out(self, workspace, create_user):
+        """A file may name people instead of listing e-mails; the summary must still see them."""
+        project = _project_with_state(workspace, create_user, "Named people", "NMP")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "NM1",
+                    "name": "Named",
+                    "state": "Todo",
+                    "assignee_names": [create_user.display_name],
+                    "subscriber_names": [create_user.display_name],
+                }
+            ],
+            options=WorkItemImportOptions(assignees=False, subscribers=False),
+        )
+
+        assert any("assignee data" in w for w in result["warnings"])
+        assert any("subscriber data" in w for w in result["warnings"])
+
+    def test_relations_can_be_left_out(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "No relations", "NOR")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "NOR-1",
+                    "name": "Blocker",
+                    "state": "Todo",
+                    "relations": [{"type": "blocking", "issue": "NOR-2"}],
+                },
+                {"external_key": "NOR-2", "name": "Blocked", "state": "Todo"},
+            ],
+            options=WorkItemImportOptions(relations=False),
+        )
+
+        assert Issue.objects.filter(project=project).count() == 2
+        assert not IssueRelation.objects.filter(project=project).exists()
+
+    def test_parents_can_be_left_out(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "No parents", "NPA")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {"external_key": "P1", "name": "Parent", "state": "Todo"},
+                {"external_key": "C1", "name": "Child", "state": "Todo", "parent_external_key": "P1"},
+            ],
+            options=WorkItemImportOptions(parents=False),
+        )
+
+        assert Issue.objects.get(project=project, name="Child").parent is None
+
+    def test_dates_can_be_left_out(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "No dates", "NDA")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "D1",
+                    "name": "Dated",
+                    "state": "Todo",
+                    "start_date": "2026-03-02",
+                    "target_date": "2026-03-06",
+                    "duration": 5,
+                }
+            ],
+            options=WorkItemImportOptions(dates=False),
+        )
+
+        issue = Issue.objects.get(project=project, name="Dated")
+        assert issue.start_date is None
+        assert issue.target_date is None
+        assert issue.duration is None
+
+    def test_labels_are_neither_attached_nor_created_when_left_out(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "No labels", "NLA")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[{"external_key": "L1", "name": "Plain", "state": "Todo", "labels": ["Nawozy"]}],
+            options=WorkItemImportOptions(labels=False),
+        )
+
+        issue = Issue.objects.get(project=project, name="Plain")
+        assert not Label.objects.filter(project=project).exists()
+        assert not IssueLabel.objects.filter(issue=issue).exists()
+
+    def test_modules_are_neither_attached_nor_created_when_left_out(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "No modules", "NMO")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[{"external_key": "M1", "name": "Plain", "state": "Todo", "modules": ["Kampania wiosenna"]}],
+            options=WorkItemImportOptions(modules=False),
+        )
+
+        issue = Issue.objects.get(project=project, name="Plain")
+        assert not Module.objects.filter(project=project).exists()
+        assert not ModuleIssue.objects.filter(issue=issue).exists()
+
+    def test_cycles_are_neither_attached_nor_created_when_left_out(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "No cycles", "NCY")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "C1",
+                    "name": "Plain",
+                    "state": "Todo",
+                    "cycles": ["Sprint 1"],
+                    "start_date": "2026-03-02",
+                }
+            ],
+            options=WorkItemImportOptions(cycles=False),
+        )
+
+        issue = Issue.objects.get(project=project, name="Plain")
+        assert not Cycle.objects.filter(project=project).exists()
+        assert not CycleIssue.objects.filter(issue=issue).exists()
+
+    def test_cycle_is_created_as_a_draft_when_dates_are_left_out(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Draft only", "DFO")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "C1",
+                    "name": "Dated but cycled",
+                    "state": "Todo",
+                    "cycles": ["Sprint 1"],
+                    "start_date": "2026-03-02",
+                    "target_date": "2026-03-06",
+                }
+            ],
+            options=WorkItemImportOptions(dates=False),
+        )
+
+        cycle = Cycle.objects.get(project=project, name="Sprint 1")
+        assert cycle.start_date is None
+        assert cycle.end_date is None
+        assert CycleIssue.objects.filter(cycle=cycle).count() == 1
+        assert any("without a period" in w for w in result["warnings"])
+
+    def test_left_out_data_is_reported_once_per_kind(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Counted", "CNT")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {"external_key": f"K{index}", "name": f"Item {index}", "state": "Todo", "labels": ["Nawozy"]}
+                for index in range(3)
+            ],
+            options=WorkItemImportOptions(labels=False),
+        )
+
+        label_warnings = [w for w in result["warnings"] if "label data" in w]
+        assert len(label_warnings) == 1
+        assert label_warnings[0].startswith("3 work item(s)")
+
+    def test_rows_without_the_left_out_data_are_not_counted(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Uncounted", "UNC")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[{"external_key": "U1", "name": "Nothing to drop", "state": "Todo"}],
+            options=WorkItemImportOptions(labels=False, relations=False, dates=False),
+        )
+
+        assert not [w for w in result["warnings"] if "asked to leave out" in w]

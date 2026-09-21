@@ -136,6 +136,12 @@
     }
   },
   "reject": "Reject",
+  "settings_empty_state": {
+    "imports": {
+      "description": "You don't have any import records right now. Once you import a file into a project, all records will appear here.",
+      "title": "No imports yet"
+    }
+  },
   "work_item_templates": {
     "apply_failed_toast": "Could not apply the work item template.",
     "dropdown_placeholder": "Template",
@@ -150,6 +156,26 @@
   "workspace_settings": {
     "settings": {
       "exports": {
+        "all_projects": "All projects",
+        "history": {
+          "download": "Download",
+          "expired": "Expired",
+          "exported_by": "Exported by",
+          "exported_on": "Exported on",
+          "project_count": "{count, plural, one {# project} other {# projects}}",
+          "projects": "Exported projects",
+          "status": "Status"
+        },
+        "statuses": {
+          "completed": "Completed",
+          "expired": "Expired",
+          "failed": "Failed",
+          "processing": "Processing"
+        },
+        "tabs": {
+          "export": "Export",
+          "import": "Import"
+        },
         "work_items_export": {
           "description": "Export work items from selected projects to CSV, Excel, or JSON.",
           "heading": "Export work items"
@@ -161,18 +187,32 @@
           "file": "File",
           "imported_by": "Imported by",
           "imported_on": "Imported on",
+          "project_count": "{count, plural, one {# project} other {# projects}}",
           "projects": "Projects",
           "reason": "Reason",
           "status": "Status"
         },
         "previous_imports": "Previous imports",
         "work_items": {
-          "description": "Import work items from a file created by “Export work items” (CSV, Excel, or JSON) into an existing project. Missing labels, modules, and cycles are created automatically. States and people are matched; anything that cannot be matched is listed as a warning.",
+          "description": "Import work items from a file created by “Export work items” (CSV, Excel, or JSON) into an existing project.",
           "heading": "Import work items",
           "import_button": "Import work items",
           "invalid_file_type": "Please upload a CSV, Excel (.xlsx), or JSON file.",
           "no_projects": "No projects available",
           "open_project": "Open project",
+          "options": {
+            "assignees": "Assignees",
+            "clear_all": "Clear all",
+            "cycles": "Cycles",
+            "dates": "Dates and duration",
+            "heading": "What to import",
+            "labels": "Labels",
+            "modules": "Modules",
+            "parents": "Parent work items",
+            "relations": "Relations between work items",
+            "select_all": "Select all",
+            "subscribers": "Subscribers"
+          },
           "result_summary": "Imported {count, plural, one {# work item} other {# work items}} into “{name}”.",
           "select_file": "Select file",
           "select_file_label": "Export file",

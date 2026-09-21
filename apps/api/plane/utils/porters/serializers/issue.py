@@ -79,7 +79,14 @@ class IssueExportSerializer(IssueSerializer):
         return obj.type.name if obj.type else ""
 
     def get_assignees(self, obj):
-        return [u.email for u in obj.assignees.all() if u.is_active and u.email]
+        # Read through the join model like labels below. Assignments are soft deleted, and the
+        # plain m2m joins that table without honouring the flag, so it lists everyone who was
+        # ever assigned to the work item rather than who is assigned now.
+        return [
+            ia.assignee.email
+            for ia in obj.issue_assignee.all()
+            if ia.deleted_at is None and ia.assignee and ia.assignee.is_active and ia.assignee.email
+        ]
 
     def get_subscribers(self, obj):
         """Return list of subscriber e-mails."""

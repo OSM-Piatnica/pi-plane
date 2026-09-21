@@ -13,13 +13,16 @@ import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { Checkbox, Collapsible } from "@plane/ui";
 import { ProjectDropdown } from "@/components/dropdowns/project/dropdown";
 import { getApiErrorMessage, type ApiErrorLike } from "@/helpers/api-error";
 import { getProjectImportLink, MAX_PROJECT_CSV_SIZE_BYTES } from "@/helpers/project-csv-helpers";
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
+import type { TWorkItemImportOptions } from "@/services/project/project-import.service";
 import { ProjectImportService } from "@/services/project/project-import.service";
 import { SettingsBoxedControlItem } from "../settings/boxed-control-item";
+import { SettingsBoxedSection } from "../settings/boxed-section";
 
 const projectImportService = new ProjectImportService();
 
@@ -29,6 +32,28 @@ type Props = {
 
 type FormData = {
   projectId: string;
+} & TWorkItemImportOptions;
+
+const IMPORT_OPTION_FIELDS: (keyof TWorkItemImportOptions)[] = [
+  "assignees",
+  "subscribers",
+  "relations",
+  "parents",
+  "dates",
+  "labels",
+  "modules",
+  "cycles",
+];
+
+const DEFAULT_IMPORT_OPTIONS: TWorkItemImportOptions = {
+  assignees: true,
+  subscribers: true,
+  relations: true,
+  parents: true,
+  dates: true,
+  labels: true,
+  modules: true,
+  cycles: true,
 };
 
 type ImportOutcome = {
@@ -56,16 +81,22 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [outcome, setOutcome] = useState<ImportOutcome | null>(null);
   const [warningsOpen, setWarningsOpen] = useState(true);
-  const { control, handleSubmit, watch, reset } = useForm<FormData>({
-    defaultValues: { projectId: "" },
+  const { control, handleSubmit, watch, reset, setValue } = useForm<FormData>({
+    defaultValues: { projectId: "", ...DEFAULT_IMPORT_OPTIONS },
   });
 
-  const projectId = watch("projectId");
+  const formValues = watch();
+  const projectId = formValues.projectId;
   const canImport = allowPermissions(
     [EUserPermissions.ADMIN, EUserPermissions.MEMBER],
     EUserPermissionsLevel.WORKSPACE
   );
   const hasProjects = joinedProjectIds.length > 0;
+  const allOptionsSelected = IMPORT_OPTION_FIELDS.every((name) => formValues[name]);
+
+  const handleToggleAllOptions = () => {
+    IMPORT_OPTION_FIELDS.forEach((name) => setValue(name, !allOptionsSelected));
+  };
 
   const onSubmit = async (formData: FormData) => {
     if (!workspaceSlug || !selectedFile || !formData.projectId) return;
@@ -89,16 +120,23 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
       return;
     }
 
+    const options = IMPORT_OPTION_FIELDS.reduce(
+      (picked, name) => ({ ...picked, [name]: formData[name] }),
+      {} as TWorkItemImportOptions
+    );
+
     setImportLoading(true);
     try {
       const result = await projectImportService.importWorkItems(
         workspaceSlug.toString(),
         formData.projectId,
-        selectedFile
+        selectedFile,
+        options
       );
       mutateServices();
       setSelectedFile(null);
-      reset({ projectId: formData.projectId });
+      // The chosen project and options are kept, so a second file can be sent right away
+      reset({ projectId: formData.projectId, ...options });
       if (fileInputRef.current) fileInputRef.current.value = "";
 
       // Kept on screen instead of navigating away, so the warnings can be read
@@ -139,13 +177,23 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
       }}
       className="flex flex-col gap-5"
     >
-      <SettingsBoxedControlItem
+      <SettingsBoxedSection
         title={t("workspace_settings.settings.imports.work_items.heading")}
         description={t("workspace_settings.settings.imports.work_items.description")}
-      />
-      <div className="rounded-lg border border-subtle bg-layer-2">
+        footer={
+          <Button
+            variant="primary"
+            size="lg"
+            type="submit"
+            disabled={!canImport || !selectedFile || !projectId || importLoading}
+            loading={importLoading}
+          >
+            {t("workspace_settings.settings.imports.work_items.import_button")}
+          </Button>
+        }
+      >
         <SettingsBoxedControlItem
-          className="rounded-none border-0 border-b"
+          className="rounded-none border-0"
           title={t("workspace_settings.settings.imports.work_items.select_project")}
           control={
             <Controller
@@ -174,7 +222,7 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
           className="rounded-none border-0"
           title={t("workspace_settings.settings.imports.work_items.select_file_label")}
           control={
-            <div className="flex w-full flex-col gap-4">
+            <div className="flex flex-wrap items-center gap-3">
               <input
                 ref={fileInputRef}
                 type="file"
@@ -182,30 +230,60 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
                 className="hidden"
                 onChange={(event) => setSelectedFile(event.target.files?.[0] ?? null)}
               />
-              <div className="flex flex-wrap items-center gap-3">
-                <Button
-                  variant="secondary"
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={!canImport || importLoading}
-                  prependIcon={<Upload className="size-4" />}
-                >
-                  {t("workspace_settings.settings.imports.work_items.select_file")}
-                </Button>
-                {selectedFile && <span className="max-w-md truncate text-13 text-secondary">{selectedFile.name}</span>}
-              </div>
               <Button
-                variant="primary"
-                type="submit"
-                disabled={!canImport || !selectedFile || !projectId || importLoading}
-                loading={importLoading}
+                variant="secondary"
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={!canImport || importLoading}
+                prependIcon={<Upload className="size-4" />}
               >
-                {t("workspace_settings.settings.imports.work_items.import_button")}
+                {t("workspace_settings.settings.imports.work_items.select_file")}
               </Button>
+              {selectedFile && <span className="max-w-md truncate text-13 text-secondary">{selectedFile.name}</span>}
             </div>
           }
         />
-      </div>
+        <div className="flex w-full flex-col gap-3 px-4 py-3">
+          <div className="flex items-center justify-between gap-4">
+            <h4 className="text-body-sm-medium text-primary">
+              {t("workspace_settings.settings.imports.work_items.options.heading")}
+            </h4>
+            <button
+              type="button"
+              onClick={handleToggleAllOptions}
+              disabled={!canImport || importLoading}
+              className="text-13 text-accent-primary hover:underline disabled:text-placeholder disabled:no-underline"
+            >
+              {allOptionsSelected
+                ? t("workspace_settings.settings.imports.work_items.options.clear_all")
+                : t("workspace_settings.settings.imports.work_items.options.select_all")}
+            </button>
+          </div>
+          <div className="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
+            {IMPORT_OPTION_FIELDS.map((name) => (
+              <Controller
+                key={name}
+                control={control}
+                name={name}
+                render={({ field: { value, onChange } }) => (
+                  <label
+                    htmlFor={`work-item-import-${name}`}
+                    className="flex w-fit cursor-pointer items-center gap-2 text-13 text-secondary"
+                  >
+                    <Checkbox
+                      id={`work-item-import-${name}`}
+                      checked={!!value}
+                      onChange={(event) => onChange(event.target.checked)}
+                      disabled={!canImport || importLoading}
+                    />
+                    {t(`workspace_settings.settings.imports.work_items.options.${name}`)}
+                  </label>
+                )}
+              />
+            ))}
+          </div>
+        </div>
+      </SettingsBoxedSection>
 
       {outcome && (
         <div className="rounded-lg border border-subtle bg-layer-2 p-4">
@@ -226,27 +304,28 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
           </div>
 
           {outcome.warnings.length > 0 ? (
-            <div className="mt-3 border-t border-subtle pt-3">
-              <button
-                type="button"
-                onClick={() => setWarningsOpen((open) => !open)}
-                className="flex items-center gap-1.5 text-13 font-medium text-secondary"
-              >
-                {warningsOpen ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
-                {t("workspace_settings.settings.imports.work_items.warnings_heading", {
-                  count: outcome.warnings.length,
-                })}
-              </button>
-              {warningsOpen && (
-                <ul className="mt-2 max-h-64 space-y-1 overflow-y-auto pl-6">
-                  {outcome.warnings.map((warning, position) => (
-                    <li key={`${position}-${warning}`} className="list-disc text-12 text-secondary">
-                      {warning}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+            <Collapsible
+              className="mt-3 border-t border-subtle pt-3"
+              isOpen={warningsOpen}
+              onToggle={() => setWarningsOpen((open) => !open)}
+              buttonClassName="flex items-center gap-1.5 text-13 font-medium text-secondary"
+              title={
+                <>
+                  {warningsOpen ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
+                  {t("workspace_settings.settings.imports.work_items.warnings_heading", {
+                    count: outcome.warnings.length,
+                  })}
+                </>
+              }
+            >
+              <ul className="mt-2 max-h-64 space-y-1 overflow-y-auto pl-6">
+                {outcome.warnings.map((warning, position) => (
+                  <li key={`${position}-${warning}`} className="list-disc text-12 text-secondary">
+                    {warning}
+                  </li>
+                ))}
+              </ul>
+            </Collapsible>
           ) : (
             <p className="mt-3 border-t border-subtle pt-3 text-12 text-secondary">
               {t("workspace_settings.settings.imports.work_items.warnings_none")}

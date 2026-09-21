@@ -16,7 +16,7 @@ from plane.app.serializers import ExporterHistorySerializer
 from plane.db.models import ExporterHistory, Project, ProjectMember, Workspace
 from plane.utils.community_work_item_import import import_community_work_items_into_project
 from plane.utils.porters.importer import DataImporter
-from plane.utils.project_work_item_import import MAX_WORK_ITEMS_IMPORT
+from plane.utils.project_work_item_import import MAX_WORK_ITEMS_IMPORT, WorkItemImportOptions
 
 from .. import BaseAPIView
 
@@ -51,6 +51,7 @@ class ImportWorkItemsEndpoint(BaseAPIView):
         upload = request.FILES.get("file")
         project_id = request.data.get("project_id") or request.data.get("project")
         provider = (request.data.get("provider") or "").strip().lower()
+        options = WorkItemImportOptions.from_request_data(request.data)
 
         if not upload:
             return Response({"error": "file is required"}, status=status.HTTP_400_BAD_REQUEST)
@@ -89,6 +90,9 @@ class ImportWorkItemsEndpoint(BaseAPIView):
             type="project_imports",
             status="processing",
             name=f"Work items → {project.identifier} ({upload.name})",
+            # An import is bulk and cannot be undone; the history row is the only record of
+            # which parts of the file the run was allowed to bring in
+            filters=options.as_dict(),
         )
 
         try:
@@ -128,6 +132,7 @@ class ImportWorkItemsEndpoint(BaseAPIView):
                 user=request.user,
                 rows=rows,
                 warnings=warnings,
+                options=options,
             )
 
             history.status = "completed"

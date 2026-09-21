@@ -142,6 +142,12 @@
     }
   },
   "reject": "Odrzuć",
+  "settings_empty_state": {
+    "imports": {
+      "description": "Obecnie nie masz żadnych rekordów importu. Po wczytaniu pliku do projektu wszystkie rekordy pojawią się tutaj.",
+      "title": "Jeszcze brak importów"
+    }
+  },
   "work_item_templates": {
     "apply_failed_toast": "Nie udało się zastosować szablonu elementu roboczego.",
     "dropdown_placeholder": "Szablon",
@@ -164,6 +170,26 @@
   "workspace_settings": {
     "settings": {
       "exports": {
+        "all_projects": "Wszystkie projekty",
+        "history": {
+          "download": "Pobierz",
+          "expired": "Wygasł",
+          "exported_by": "Wyeksportował",
+          "exported_on": "Data eksportu",
+          "project_count": "{count, plural, one {# projekt} few {# projekty} other {# projektów}}",
+          "projects": "Wyeksportowane projekty",
+          "status": "Status"
+        },
+        "statuses": {
+          "completed": "Zakończony",
+          "expired": "Wygasł",
+          "failed": "Nie powiódł się",
+          "processing": "W trakcie"
+        },
+        "tabs": {
+          "export": "Eksport",
+          "import": "Import"
+        },
         "work_items_export": {
           "description": "Eksportuj elementy robocze z wybranych projektów do CSV, Excel lub JSON.",
           "heading": "Eksport elementów roboczych"
@@ -175,18 +201,32 @@
           "file": "Plik",
           "imported_by": "Zaimportował",
           "imported_on": "Data importu",
+          "project_count": "{count, plural, one {# projekt} few {# projekty} other {# projektów}}",
           "projects": "Projekty",
           "reason": "Powód",
           "status": "Status"
         },
         "previous_imports": "Poprzednie importy",
         "work_items": {
-          "description": "Wczytaj plik z „Eksportu elementów roboczych” (CSV, Excel lub JSON) do istniejącego projektu. Brakujące etykiety, moduły i cykle są tworzone automatycznie. Stany i osoby są dopasowywane; czego nie da się dopasować, trafia do ostrzeżeń.",
+          "description": "Wczytaj plik z „Eksportu elementów roboczych” (CSV, Excel lub JSON) do istniejącego projektu.",
           "heading": "Import elementów roboczych",
           "import_button": "Importuj elementy robocze",
           "invalid_file_type": "Prześlij plik CSV, Excel (.xlsx) lub JSON.",
           "no_projects": "Brak dostępnych projektów",
           "open_project": "Otwórz projekt",
+          "options": {
+            "assignees": "Osoby przypisane",
+            "clear_all": "Odznacz wszystko",
+            "cycles": "Cykle",
+            "dates": "Daty i czas trwania",
+            "heading": "Co importować",
+            "labels": "Etykiety",
+            "modules": "Moduły",
+            "parents": "Elementy nadrzędne",
+            "relations": "Relacje między elementami",
+            "select_all": "Zaznacz wszystko",
+            "subscribers": "Obserwujący"
+          },
           "result_summary": "Zaimportowano {count, plural, one {# element roboczy} few {# elementy robocze} other {# elementów roboczych}} do „{name}”.",
           "select_file": "Wybierz plik",
           "select_file_label": "Plik eksportu",

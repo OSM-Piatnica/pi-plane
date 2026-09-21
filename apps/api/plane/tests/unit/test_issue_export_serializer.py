@@ -10,11 +10,13 @@ import pytest
 
 from plane.db.models import (
     Issue,
+    IssueAssignee,
     IssueRelation,
     IssueSubscriber,
     Project,
     ProjectMember,
     State,
+    User,
 )
 from plane.utils.porters.formatters import XLSXFormatter
 from plane.utils.porters.serializers.issue import IssueExportSerializer
@@ -68,6 +70,36 @@ class TestIssueExportSerializerPeople:
 
         assert data["assignees"] == [create_user.email]
         assert data["subscribers"] == [create_user.email]
+
+    @pytest.mark.django_db
+    def test_someone_who_was_unassigned_is_not_exported(self, export_project, create_user):
+        """Unassigning soft deletes the row, and the export must not resurrect it."""
+        issue = _make_issue(export_project, create_user, "Assigned once", 2)
+        former = User.objects.create(
+            email="former@example.com",
+            username="former@example.com",
+            display_name="former",
+        )
+        ProjectMember.objects.create(project=export_project, member=former, role=15, is_active=True)
+        IssueAssignee.objects.create(
+            issue=issue,
+            assignee=former,
+            project=export_project,
+            workspace=export_project.workspace,
+        )
+        IssueAssignee.objects.create(
+            issue=issue,
+            assignee=create_user,
+            project=export_project,
+            workspace=export_project.workspace,
+        )
+
+        # The same soft delete the work item API performs when assignees are edited
+        IssueAssignee.objects.filter(issue=issue, assignee=former).delete()
+
+        data = IssueExportSerializer(issue).data
+
+        assert data["assignees"] == [create_user.email]
 
 
 @pytest.mark.unit
