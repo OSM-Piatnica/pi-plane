@@ -30,6 +30,7 @@ export const SUPPORTED_LANGUAGES: ILanguageOption[] = [
   { label: "Tiếng việt", value: "vi-VN" },
   { label: "Türkçe", value: "tr-TR" },
   { label: "ქართული", value: "ka-ge" },
+  { label: "Nederlands", value: "nl" },
 ];
 
 export const LANGUAGE_STORAGE_KEY = "userLanguage";
