@@ -272,21 +272,24 @@ def _member_values_to_ids(
     value,
     members_by_email: dict,
     members_by_name: dict,
-    project_member_ids: set,
-) -> tuple[list[str], list[str], list[str]]:
+    project_member_keys: set[str],
+    assignable_member_keys: set[str],
+) -> tuple[list[str], list[str], list[str], list[str]]:
     """
     Turn member picker values written as e-mails back into user ids.
 
-    Returns the ids to store, the values that matched nobody, and the people who belong to the
-    workspace but not to this project. The last group is reported rather than stored, for the
-    same reason assignees are.
+    Returns the ids to store, the values that matched nobody, the people who belong to the
+    workspace but not to this project, and the guests. The last two groups are reported rather
+    than stored: the member dropdown offers neither, so an import must not write a value the
+    rest of Plane would never produce.
+
+    Both id sets hold strings, because a picker value is stored and compared as text.
     """
     entries = value if isinstance(value, list) else [value]
-    # _index_member keys on UUID objects, the ids here are strings
-    allowed = {str(member_id) for member_id in project_member_ids}
     resolved: list[str] = []
     unknown: list[str] = []
     outsiders: list[str] = []
+    guests: list[str] = []
     for entry in entries:
         text = str(entry).strip()
         if not text:
@@ -294,24 +297,27 @@ def _member_values_to_ids(
         member = members_by_email.get(text.lower()) if "@" in text else members_by_name.get(text.lower())
         if member:
             candidate = str(member.id)
-        elif _is_uuid_like(text):
-            candidate = text
         else:
-            unknown.append(text)
-            continue
-        if candidate not in allowed:
+            candidate = _canonical_uuid(text)
+            if candidate is None:
+                unknown.append(text)
+                continue
+        if candidate not in project_member_keys:
             outsiders.append(text)
             continue
+        if candidate not in assignable_member_keys:
+            guests.append(text)
+            continue
         resolved.append(candidate)
-    return resolved, unknown, outsiders
+    return resolved, unknown, outsiders, guests
 
 
-def _is_uuid_like(text: str) -> bool:
+def _canonical_uuid(text: str) -> str | None:
+    """Rewrite an id the way str(UUID) writes it, so a hand-typed value still matches."""
     try:
-        uuid.UUID(str(text))
+        return str(uuid.UUID(str(text)))
     except (ValueError, AttributeError, TypeError):
-        return False
-    return True
+        return None
 
 
 def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycles_by_name: dict) -> dict:
@@ -519,6 +525,11 @@ def import_work_items_into_project(
     ).select_related("member"):
         _index_member(wm.member, in_project=False)
 
+    # _index_member keys on UUID objects while member picker values are text, so both sets are
+    # written out once here instead of once per property per row.
+    project_member_keys = {str(member_id) for member_id in project_member_ids}
+    assignable_member_keys = {str(member_id) for member_id in assignable_member_ids}
+
     type_properties_by_type: dict = {}
     for issue_type in types_by_name.values():
         props = {
@@ -647,7 +658,10 @@ def import_work_items_into_project(
                 role="assignee",
             )
         else:
-            _note_skipped("assignee", row.get("assignee_emails") or row.get("assignees"))
+            _note_skipped(
+                "assignee",
+                row.get("assignee_emails") or row.get("assignee_names") or row.get("assignees"),
+            )
 
         subscriber_ids = []
         if options.subscribers:
@@ -662,7 +676,10 @@ def import_work_items_into_project(
                 role="subscriber",
             )
         else:
-            _note_skipped("subscriber", row.get("subscriber_emails") or row.get("subscribers"))
+            _note_skipped(
+                "subscriber",
+                row.get("subscriber_emails") or row.get("subscriber_names") or row.get("subscribers"),
+            )
 
         estimate_point_id = None
         raw_estimate = row.get("estimate")
@@ -972,8 +989,12 @@ def import_work_items_into_project(
                         )
                         continue
                     if prop.property_type == "member_picker":
-                        raw_value, unknown, outsiders = _member_values_to_ids(
-                            raw_value, members_by_email, members_by_name, project_member_ids
+                        raw_value, unknown, outsiders, guests = _member_values_to_ids(
+                            raw_value,
+                            members_by_email,
+                            members_by_name,
+                            project_member_keys,
+                            assignable_member_keys,
                         )
                         for missing in unknown:
                             warnings.append(
@@ -984,6 +1005,11 @@ def import_work_items_into_project(
                             warnings.append(
                                 f'Work item "{item["external_key"]}": property "{title}" refers to '
                                 f'"{outsider}", who is not a member of this project, skipped'
+                            )
+                        for guest in guests:
+                            warnings.append(
+                                f'Work item "{item["external_key"]}": property "{title}" refers to '
+                                f'"{guest}", who is a guest in this project and cannot be picked, skipped'
                             )
                     try:
                         cleaned_value = validate_property_value(

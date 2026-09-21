@@ -68,6 +68,25 @@ def _project_guest(workspace, project, email, display_name):
     return user
 
 
+def _member_picker_property(workspace, project, user, title="Owner"):
+    """A work item type with one member picker property, attached to the project."""
+    issue_type = IssueType.objects.create(workspace=workspace, name="Task", created_by=user)
+    ProjectIssueType.objects.create(
+        project=project,
+        workspace=workspace,
+        issue_type=issue_type,
+        created_by=user,
+    )
+    return IssueTypeProperty.objects.create(
+        workspace=workspace,
+        issue_type=issue_type,
+        title=title,
+        property_type="member_picker",
+        select_mode="multi",
+        created_by=user,
+    )
+
+
 @pytest.mark.django_db
 class TestProjectWorkItemImport:
     def test_import_creates_issues_with_parent_links(self, workspace, create_user):
@@ -552,6 +571,54 @@ class TestWorkItemImportPeople:
         assert value.value == [str(create_user.id)]
         assert any(outsider.email in w and "not a member of this project" in w for w in result["warnings"])
 
+    def test_member_picker_property_drops_guests(self, workspace, create_user):
+        """The member dropdown never offers a guest, so an import must not write one either."""
+        project = _project_with_state(workspace, create_user, "Picker guests", "PKG")
+        guest = _project_guest(workspace, project, "picked-guest@example.com", "picked guest")
+        prop = _member_picker_property(workspace, project, create_user)
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "PG1",
+                    "name": "Owned by a guest",
+                    "state": "Todo",
+                    "issue_type": "Task",
+                    "custom_properties": {"Owner": [guest.email, create_user.email]},
+                }
+            ],
+        )
+
+        issue = Issue.objects.get(project=project, name="Owned by a guest")
+        value = IssuePropertyValue.objects.get(issue=issue, property=prop)
+        assert value.value == [str(create_user.id)]
+        assert any(guest.email in w and "cannot be picked" in w for w in result["warnings"])
+
+    def test_member_picker_property_accepts_an_id_in_any_case(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Picker ids", "PKI")
+        prop = _member_picker_property(workspace, project, create_user)
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "PI1",
+                    "name": "Owned by id",
+                    "state": "Todo",
+                    "issue_type": "Task",
+                    "custom_properties": {"Owner": [str(create_user.id).upper()]},
+                }
+            ],
+        )
+
+        issue = Issue.objects.get(project=project, name="Owned by id")
+        value = IssuePropertyValue.objects.get(issue=issue, property=prop)
+        assert value.value == [str(create_user.id)]
+        assert not any("not a member of this project" in w for w in result["warnings"])
+
 
 @pytest.mark.django_db
 class TestWorkItemImportRelations:
@@ -726,6 +793,28 @@ class TestWorkItemImportOptions:
         issue = Issue.objects.get(project=project, name="Nobody")
         assert not IssueAssignee.objects.filter(issue=issue).exists()
         assert not IssueSubscriber.objects.filter(issue=issue).exists()
+        assert any("assignee data" in w for w in result["warnings"])
+        assert any("subscriber data" in w for w in result["warnings"])
+
+    def test_people_written_as_names_are_counted_as_left_out(self, workspace, create_user):
+        """A file may name people instead of listing e-mails; the summary must still see them."""
+        project = _project_with_state(workspace, create_user, "Named people", "NMP")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "NM1",
+                    "name": "Named",
+                    "state": "Todo",
+                    "assignee_names": [create_user.display_name],
+                    "subscriber_names": [create_user.display_name],
+                }
+            ],
+            options=WorkItemImportOptions(assignees=False, subscribers=False),
+        )
+
         assert any("assignee data" in w for w in result["warnings"])
         assert any("subscriber data" in w for w in result["warnings"])
 
