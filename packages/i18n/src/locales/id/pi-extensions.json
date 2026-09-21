@@ -1,9 +1,26 @@
 {
-  "appearance": "Tampilan",
+  "account_settings": {
+    "api_tokens": {
+      "heading": "Token Akses Pribadi"
+    }
+  },
+  "approve": "Setujui",
   "duration": "Durasi",
   "duration_days": "{count, plural, other {# hari}}",
   "epic": {
     "all": "Semua Epik"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "Ekspor ke CSV dengan delimiter koma.",
+      "short_description": "CSV koma",
+      "title": "CSV (koma)"
+    },
+    "csv_semicolon": {
+      "description": "Ekspor ke CSV dengan delimiter titik koma untuk Excel.",
+      "short_description": "CSV titik koma",
+      "title": "CSV (titik koma, Excel)"
+    }
   },
   "importer": {
     "github": {
@@ -18,13 +35,97 @@
   "issue": {
     "add": {
       "duration": "Tambah durasi"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue} tidak dapat dimulai sampai {related} selesai (diblokir oleh relasi).",
+          "blocking": "{issue} harus selesai sebelum {related} dimulai (relasi pemblokiran).",
+          "finish_after": "{issue} tidak dapat selesai sebelum {related} (selesai setelah relasi).",
+          "finish_before": "{issue} harus selesai pada atau sebelum {related} (selesai sebelum relasi).",
+          "start_after": "{issue} tidak dapat dimulai sebelum {related} (dimulai setelah relasi).",
+          "start_before": "{issue} harus dimulai pada atau sebelum {related} (dimulai sebelum relasi)."
+        },
+        "status": {
+          "finish_after": "{issue} tidak dapat diselesaikan sampai {related} selesai (selesai setelah relasi).",
+          "start_after": "{issue} tidak dapat dimulai sampai {related} telah dimulai (dimulai setelah relasi)."
+        }
+      },
+      "date_conflict": "Tanggal ini bertentangan dengan dependensi yang sudah ada. Sesuaikan item kerja terkait atau hapus dependensi terlebih dahulu.",
+      "dependency_create_failed": "Tidak dapat membuat dependensi. Silakan coba lagi.",
+      "dependency_created": "Dependensi item kerja berhasil dibuat."
     }
   },
-  "no_of": "Jumlah {entity}",
-  "profile": {
-    "actions": {
-      "appearance": "Tampilan"
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "Batasi waktu pekerjaan dalam periode berulang.",
+        "label": "Siklus"
+      },
+      "description": "Pilih kemampuan yang diaktifkan untuk proyek ini.",
+      "intake": {
+        "description": "Triase pekerjaan masuk sebelum menambahkannya ke proyek.",
+        "label": "Penerimaan"
+      },
+      "modules": {
+        "description": "Kelompokkan pekerjaan ke dalam pengaturan mirip sub-proyek.",
+        "label": "Modul"
+      },
+      "pages": {
+        "description": "Buat halaman dokumentasi proyek.",
+        "label": "Halaman"
+      },
+      "time_tracking": {
+        "description": "Lacak waktu yang dihabiskan untuk item kerja.",
+        "label": "Pelacakan waktu"
+      },
+      "title": "Fitur proyek",
+      "views": {
+        "description": "Simpan dan bagikan urutan, filter, dan tata letak.",
+        "label": "Tampilan"
+      },
+      "work_item_types": {
+        "assign_failed": "Proyek berhasil dibuat, tetapi tipe item kerja tidak dapat ditetapkan.",
+        "assign_hint": "Pilih tipe ruang kerja mana yang harus tersedia di proyek ini.",
+        "assign_label": "Tetapkan tipe item kerja",
+        "description": "Gunakan tipe kustom dengan properti tersendiri pada item kerja.",
+        "label": "Tipe item kerja",
+        "no_types_hint": "Tidak ada tipe item kerja aktif di ruang kerja ini. Buat terlebih dahulu di pengaturan ruang kerja."
+      }
     }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "Tambah gerbang persetujuan",
+      "add_transition": "Tambah transisi",
+      "allow_creation": "Izinkan item kerja baru dalam status ini",
+      "approval": "Persetujuan",
+      "approval_error": "Tidak dapat memproses persetujuan.",
+      "approved_success": "Transisi disetujui.",
+      "blocker_message": "Transisi ini tidak diizinkan oleh workflow.",
+      "builder_description": "Perluas status untuk mengonfigurasi transisi yang diizinkan dan gerbang persetujuan.",
+      "builder_title": "Pembuat workflow",
+      "disabled_success": "Workflow dinonaktifkan untuk proyek ini.",
+      "enable_description": "Jika diaktifkan, item kerja mengikuti transisi status dan aturan persetujuan yang dikonfigurasi.",
+      "enable_title": "Aktifkan workflow",
+      "enabled_success": "Workflow diaktifkan untuk proyek ini.",
+      "enabling": "Memperbarui pengaturan workflow...",
+      "paused": "Dijeda",
+      "pending_approval_description": "Perpindahan dari {from} ke {to} sedang menunggu persetujuan.",
+      "pending_approval_title": "Persetujuan diperlukan",
+      "rejected_success": "Transisi ditolak.",
+      "resolving_approval": "Memproses persetujuan...",
+      "save_error": "Tidak dapat menyimpan konfigurasi workflow.",
+      "save_success": "Konfigurasi workflow disimpan.",
+      "toggle_error": "Tidak dapat memperbarui pengaturan workflow.",
+      "transition": "Transisi",
+      "transitions_configured": "transisi dikonfigurasi"
+    }
+  },
+  "project_templates": {
+    "loading": "Memuat template…",
+    "none": "Tidak ada template",
+    "select_placeholder": "Pilih template"
   },
   "project_views": {
     "empty_state": {
@@ -34,12 +135,411 @@
       }
     }
   },
-  "workspace_analytics": {
-    "total_admins": "Total Admin",
-    "total_guests": "Total Tamu",
-    "total_intake": "Total Pemasukan",
-    "total_projects": "Total Proyek",
-    "total_users": "Total Pengguna",
-    "total_work_items": "Total {entity}"
+  "reject": "Tolak",
+  "settings_empty_state": {
+    "imports": {
+      "description": "Anda belum memiliki catatan impor saat ini. Setelah Anda mengimpor file ke dalam proyek, semua catatan akan muncul di sini.",
+      "title": "Belum ada impor"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "Tidak dapat menerapkan template item kerja.",
+    "dropdown_placeholder": "Template",
+    "loading": "Memuat template…",
+    "none": "Tidak ada template"
+  },
+  "work_item_types": {
+    "loading": "Memuat tipe…",
+    "property_values_save_failed": "Item kerja berhasil dibuat, tetapi properti tambahan tidak dapat disimpan. Isi properti tersebut dari detail item kerja.",
+    "select_placeholder": "Tipe"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "Semua proyek",
+        "history": {
+          "download": "Unduh",
+          "expired": "Kedaluwarsa",
+          "exported_by": "Diekspor oleh",
+          "exported_on": "Diekspor pada",
+          "project_count": "{count, plural, other {# proyek}}",
+          "projects": "Proyek yang diekspor",
+          "status": "Status"
+        },
+        "statuses": {
+          "completed": "Selesai",
+          "expired": "Kedaluwarsa",
+          "failed": "Gagal",
+          "processing": "Memproses"
+        },
+        "tabs": {
+          "export": "Ekspor",
+          "import": "Impor"
+        },
+        "work_items_export": {
+          "description": "Ekspor item kerja dari proyek yang dipilih ke CSV, Excel, atau JSON.",
+          "heading": "Ekspor item kerja"
+        }
+      },
+      "imports": {
+        "file_too_large": "File harus lebih kecil dari {size} MB.",
+        "history": {
+          "file": "File",
+          "imported_by": "Diimpor oleh",
+          "imported_on": "Diimpor pada",
+          "project_count": "{count, plural, other {# proyek}}",
+          "projects": "Proyek",
+          "reason": "Alasan",
+          "status": "Status"
+        },
+        "previous_imports": "Impor sebelumnya",
+        "work_items": {
+          "description": "Impor item kerja dari file yang dibuat oleh “Ekspor item kerja” (CSV, Excel, atau JSON) ke dalam proyek yang sudah ada.",
+          "heading": "Impor item kerja",
+          "import_button": "Impor item kerja",
+          "invalid_file_type": "Silakan unggah file CSV, Excel (.xlsx), atau JSON.",
+          "no_projects": "Tidak ada proyek yang tersedia",
+          "open_project": "Buka proyek",
+          "options": {
+            "assignees": "Penugas",
+            "clear_all": "Hapus semua",
+            "cycles": "Siklus",
+            "dates": "Tanggal dan durasi",
+            "heading": "Apa yang akan diimpor",
+            "labels": "Label",
+            "modules": "Modul",
+            "parents": "Item kerja induk",
+            "relations": "Relasi antar item kerja",
+            "select_all": "Pilih semua",
+            "subscribers": "Pelanggan"
+          },
+          "result_summary": "Mengimpor {count, plural, other {# item kerja}} ke dalam “{name}”.",
+          "select_file": "Pilih file",
+          "select_file_label": "File ekspor",
+          "select_project": "Proyek tujuan",
+          "select_project_placeholder": "Pilih proyek",
+          "toasts": {
+            "error": {
+              "message": "Impor item kerja gagal. Gunakan file dari “Ekspor item kerja” dan coba lagi."
+            },
+            "success": {
+              "message": "Berhasil mengimpor {count} item kerja ke dalam \"{name}\"."
+            }
+          },
+          "warnings_heading": "{count, plural, other {# peringatan}} selama impor",
+          "warnings_none": "Semua berhasil diimpor tanpa peringatan."
+        }
+      },
+      "project_templates": {
+        "add_template": "Tambah template",
+        "delete_confirm": "Hapus template proyek ini? Proyek yang sudah ada tidak akan terpengaruh.",
+        "description": "Buat pengaturan proyek yang dapat digunakan kembali dengan properti default, fitur yang diaktifkan, status, label, dan tipe item kerja.",
+        "edit_template": "Edit template",
+        "form": {
+          "add_label": "Tambah label",
+          "add_state": "Tambah status",
+          "custom_property": {
+            "active_checkbox": "Aktif",
+            "add_property": "Tambah properti",
+            "default_option_label": "Opsi default",
+            "description_label": "Deskripsi",
+            "description_placeholder": "Teks bantuan untuk properti ini (opsional)",
+            "dropdown_options_heading": "Opsi dropdown",
+            "inactive": "Tidak aktif",
+            "mandatory": "Wajib",
+            "mandatory_checkbox": "Wajib diisi saat membuat item kerja",
+            "no_default": "Tidak ada default",
+            "option_placeholder": "Nama opsi",
+            "select_mode_label": "Mode pilihan",
+            "select_multi": "Pilihan ganda",
+            "select_single": "Pilihan tunggal",
+            "title_label": "Judul",
+            "title_placeholder": "Nama properti",
+            "type_label": "Tipe",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Tanggal",
+              "dropdown": "Dropdown",
+              "member_picker": "Anggota",
+              "number": "Angka",
+              "text": "Teks"
+            }
+          },
+          "default_assignee": "Penugas default",
+          "default_cover_image": "Gambar sampul",
+          "default_labels": "Label default",
+          "default_lead": "Pemimpin proyek",
+          "default_project_description": "Deskripsi proyek",
+          "default_project_description_placeholder": "Deskripsi default untuk proyek baru",
+          "default_project_identifier": "Pengidentifikasi proyek",
+          "default_project_identifier_placeholder": "mis. PROD",
+          "default_project_name": "Nama proyek",
+          "default_project_name_placeholder": "mis. Peluncuran produk",
+          "default_start_date": "Tanggal mulai",
+          "default_target_date": "Tanggal target",
+          "default_visibility": "Visibilitas",
+          "features": {
+            "cycles": {
+              "description": "Iterasi berbatas waktu untuk perencanaan dan pengiriman.",
+              "label": "Siklus"
+            },
+            "intake": {
+              "description": "Triase permintaan masuk sebelum menjadi item kerja.",
+              "label": "Penerimaan"
+            },
+            "modules": {
+              "description": "Kelompokkan pekerjaan ke dalam area fokus atau milestone.",
+              "label": "Modul"
+            },
+            "pages": {
+              "description": "Wiki dan dokumentasi proyek.",
+              "label": "Halaman"
+            },
+            "time_tracking": {
+              "description": "Catat waktu yang dihabiskan untuk item kerja.",
+              "label": "Pelacakan waktu"
+            },
+            "views": {
+              "description": "Filter dan tata letak tersimpan untuk tim.",
+              "label": "Tampilan"
+            },
+            "work_item_types": {
+              "description": "Berbagai tipe pekerjaan dengan properti kustom.",
+              "label": "Tipe item kerja"
+            }
+          },
+          "identifier_invalid": "Hanya gunakan huruf dan angka",
+          "identifier_max_char": "Pengidentifikasi harus 5 karakter atau kurang",
+          "label_name_placeholder": "Nama label",
+          "labels_empty": "Belum ada label.",
+          "mark_default_state": "Tandai sebagai status default",
+          "modal_intro": "Beri nama template dan tambahkan catatan singkat untuk tim Anda. Kemudian konfigurasikan nilai default proyek—jenis pengaturan yang sama seperti saat Anda membuat proyek.",
+          "name_required": "Nama template diperlukan",
+          "section_features": "Fitur",
+          "section_features_hint": "Pilih fitur proyek opsional mana yang diaktifkan saat template ini diterapkan.",
+          "section_labels": "Label",
+          "section_labels_hint": "Tentukan label default untuk proyek baru.",
+          "section_properties": "Properti default proyek",
+          "section_states": "Status",
+          "section_states_hint": "Tentukan status workflow default untuk proyek baru.",
+          "section_template": "Template",
+          "section_work_item_types": "Tipe item kerja",
+          "section_work_item_types_hint": "Konfigurasikan tipe item kerja default dan properti kustom untuk proyek yang dibuat dari template ini.",
+          "state_groups": {
+            "backlog": "Backlog",
+            "cancelled": "Dibatalkan",
+            "completed": "Selesai",
+            "started": "Dimulai",
+            "unstarted": "Belum dimulai"
+          },
+          "state_name_placeholder": "Nama status",
+          "states_group_empty": "Belum ada status dalam grup ini.",
+          "template_name_label": "Nama template",
+          "template_name_placeholder": "mis. Pengiriman perangkat lunak",
+          "template_note_label": "Deskripsi (untuk tim Anda)",
+          "template_note_placeholder": "Kegunaan template ini (opsional).",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "Tambah tipe item kerja",
+              "description": "Tambahkan lebih banyak tipe item kerja yang tersedia di proyek dari template ini.",
+              "empty": "Belum ada tipe tambahan.",
+              "title": "Tipe tambahan"
+            },
+            "default_badge": "Default",
+            "disabled_hint": "Aktifkan tipe item kerja di Fitur di atas untuk mengonfigurasi tipe di sini.",
+            "epic": {
+              "description": "Kumpulan besar pekerjaan yang dapat dipecah menjadi tugas.",
+              "disabled": "Epik dinonaktifkan untuk template ini.",
+              "title": "Epik"
+            },
+            "optional_badge": "Opsional",
+            "properties_empty": "Tidak ada properti kustom untuk tipe ini.",
+            "task": {
+              "description": "Tipe item kerja standar untuk tugas sehari-hari.",
+              "title": "Tugas"
+            },
+            "type_description_placeholder": "Deskripsi singkat (opsional)",
+            "type_name_placeholder": "Nama tipe"
+          }
+        },
+        "loading": "Memuat template…",
+        "none": "Tidak ada template",
+        "select_placeholder": "Pilih template",
+        "table": {
+          "download_template": "Unduh",
+          "no_description": "Tidak ada deskripsi",
+          "use_template": "Gunakan template"
+        },
+        "title": "Template proyek",
+        "toasts": {
+          "apply_failed": {
+            "message": "Tidak dapat menerapkan template proyek."
+          },
+          "apply_followup_failed": {
+            "message": "Proyek berhasil dibuat tetapi beberapa pengaturan template tidak dapat diterapkan."
+          },
+          "create_failed": {
+            "message": "Silakan periksa formulir dan coba lagi.",
+            "title": "Tidak dapat membuat template"
+          },
+          "created": {
+            "message": "Template proyek berhasil disimpan.",
+            "title": "Template dibuat"
+          },
+          "delete_failed": {
+            "message": "Silakan coba lagi.",
+            "title": "Tidak dapat menghapus"
+          },
+          "deleted": {
+            "message": "Template proyek berhasil dihapus.",
+            "title": "Template dihapus"
+          },
+          "download_failed": {
+            "message": "Tidak dapat mengunduh file template."
+          },
+          "save_failed": {
+            "message": "Silakan periksa formulir dan coba lagi.",
+            "title": "Tidak dapat menyimpan template"
+          },
+          "saved": {
+            "message": "Template proyek berhasil diperbarui.",
+            "title": "Template disimpan"
+          },
+          "upload_failed": {
+            "message": "Tidak dapat mengunggah template. Silakan periksa file dan coba lagi."
+          },
+          "uploaded_renamed": {
+            "message": "Nama tersebut sudah digunakan, sehingga template disimpan sebagai \"{name}\"."
+          },
+          "uploaded": {
+            "message": "Template \"{name}\" berhasil diunggah dari file."
+          }
+        },
+        "upload_invalid_file": "Silakan unggah file JSON yang diunduh dengan tombol “Unduh”.",
+        "upload_template": "Unggah dari file",
+        "upload_too_large": "File harus lebih kecil dari {size} MB."
+      },
+      "work_item_templates": {
+        "add_template": "Tambah template",
+        "delete_confirm": "Apakah Anda yakin ingin menghapus template item kerja ini?",
+        "description": "Buat set awal yang dapat digunakan kembali untuk item kerja baru (judul, deskripsi, penugas, prioritas, dan lainnya). Template dapat mencakup seluruh ruang kerja atau hanya satu proyek.",
+        "edit_template": "Edit template",
+        "form": {
+          "default_values_section_hint": "Saat seseorang menerapkan template ini ketika membuat item kerja, bidang-bidang ini akan terisi otomatis. Semua di sini bersifat opsional.",
+          "default_values_section_title": "Nilai default item kerja",
+          "default_work_item_description": "Deskripsi",
+          "default_work_item_description_hint": "Teks biasa; disimpan sebagai deskripsi item kerja. Baris baru akan tetap dipertahankan.",
+          "default_work_item_description_placeholder": "Teks yang akan muncul secara default pada item kerja baru",
+          "default_work_item_name": "Judul",
+          "default_work_item_name_placeholder": "mis. [Bug] …",
+          "modal_intro": "Beri nama template dan tambahkan catatan singkat untuk tim. Kemudian atur nilai default item kerja—jenis judul, deskripsi, penugas, dan prioritas yang sama seperti saat Anda membuat item kerja.",
+          "name_required": "Nama template diperlukan",
+          "scope_hint": "Biarkan proyek kosong agar template ini tersedia di semua proyek. Bidang khusus proyek (status, label, siklus, modul) hanya dapat disimpan ketika proyek dipilih.",
+          "scope_hint_short": "Opsional. Jika kosong, template tersedia di semua proyek. Jika diatur, saran penugas dibatasi pada proyek tersebut; jika tidak, anggota ruang kerja akan digunakan.",
+          "scope_project": "Batasi ke satu proyek (opsional)",
+          "template_name_label": "Nama template",
+          "template_name_placeholder": "mis. Laporan bug",
+          "template_note_label": "Deskripsi (untuk tim Anda)",
+          "template_note_placeholder": "Kegunaan template ini (opsional; ini bukan deskripsi item kerja)."
+        },
+        "heading": "Template item kerja",
+        "table": {
+          "name": "Template",
+          "project": "Proyek",
+          "scope": "Cakupan",
+          "workspace_wide": "Semua proyek"
+        },
+        "title": "Template item kerja",
+        "toasts": {
+          "create_failed": {
+            "message": "Silakan periksa formulir dan coba lagi.",
+            "title": "Tidak dapat membuat template"
+          },
+          "created": {
+            "message": "Template item kerja berhasil disimpan.",
+            "title": "Template dibuat"
+          },
+          "delete_failed": {
+            "message": "Silakan coba lagi.",
+            "title": "Tidak dapat menghapus"
+          },
+          "deleted": {
+            "message": "Template item kerja berhasil dihapus.",
+            "title": "Template dihapus"
+          },
+          "save_failed": {
+            "message": "Silakan periksa formulir dan coba lagi.",
+            "title": "Tidak dapat menyimpan template"
+          },
+          "saved": {
+            "message": "Template item kerja berhasil diperbarui.",
+            "title": "Template disimpan"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "Tambah tipe",
+        "delete_confirm": "Hapus tipe item kerja ini? Item kerja yang sudah ada akan tetap mempertahankan datanya.",
+        "description": "Tentukan tipe item kerja dengan identitas, properti kustom, dan cakupan proyek masing-masing. Aktifkan atau nonaktifkan tipe tanpa memengaruhi item yang sudah ada.",
+        "edit_type": "Edit tipe",
+        "epic_badge": "Epik",
+        "form": {
+          "description_label": "Deskripsi",
+          "is_active": "Aktif",
+          "is_epic": "Tipe epik",
+          "modal_intro": "Beri nama tipe, pilih ikon, dan lampirkan hanya properti yang dibutuhkan oleh jenis pekerjaan ini. Tetapkan ke proyek tempat tipe ini harus tersedia.",
+          "name_label": "Nama",
+          "name_required": "Nama tipe diperlukan",
+          "projects_hint": "Biarkan kosong untuk menyimpan tipe ini di pustaka tanpa menetapkannya ke proyek mana pun untuk saat ini.",
+          "projects_label": "Proyek",
+          "properties_heading": "Properti kustom",
+          "property": {
+            "active_checkbox": "Aktif",
+            "add": "Tambah properti",
+            "description_label": "Deskripsi",
+            "empty": "Belum ada properti kustom.",
+            "inactive": "Tidak aktif",
+            "mandatory": "Wajib",
+            "mandatory_checkbox": "Wajib diisi saat membuat item kerja",
+            "title_label": "Judul",
+            "type_label": "Tipe",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Tanggal",
+              "dropdown": "Dropdown",
+              "member_picker": "Anggota",
+              "number": "Angka",
+              "text": "Teks"
+            }
+          }
+        },
+        "table": {
+          "name": "Tipe",
+          "no_projects": "Belum ditetapkan",
+          "projects": "Proyek",
+          "properties": "Properti",
+          "status": "Aktif"
+        },
+        "title": "Tipe item kerja",
+        "toasts": {
+          "delete_failed": {
+            "message": "Silakan coba lagi.",
+            "title": "Tidak dapat menghapus"
+          },
+          "deleted": {
+            "message": "Tipe item kerja berhasil dihapus.",
+            "title": "Tipe dihapus"
+          },
+          "save_failed": {
+            "message": "Silakan periksa formulir dan coba lagi.",
+            "title": "Tidak dapat menyimpan tipe"
+          },
+          "saved": {
+            "message": "Tipe item kerja berhasil disimpan.",
+            "title": "Tipe disimpan"
+          }
+        }
+      }
+    }
   }
 }

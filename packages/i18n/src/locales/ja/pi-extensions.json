@@ -1,9 +1,26 @@
 {
-  "appearance": "外観",
+  "account_settings": {
+    "api_tokens": {
+      "heading": "個人アクセストークン"
+    }
+  },
+  "approve": "承認",
   "duration": "期間",
   "duration_days": "{count, plural, other {#日}}",
   "epic": {
     "all": "すべてのエピック"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "カンマ区切りでCSVにエクスポートします。",
+      "short_description": "CSVカンマ区切り",
+      "title": "CSV（カンマ区切り）"
+    },
+    "csv_semicolon": {
+      "description": "Excel用にセミコロン区切りでCSVにエクスポートします。",
+      "short_description": "CSVセミコロン区切り",
+      "title": "CSV（セミコロン区切り、Excel）"
+    }
   },
   "importer": {
     "github": {
@@ -18,12 +35,97 @@
   "issue": {
     "add": {
       "duration": "期間を追加"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue}は{related}が完了するまで開始できません（ブロックされている関係）。",
+          "blocking": "{issue}は{related}が開始する前に完了しなければなりません（ブロックしている関係）。",
+          "finish_after": "{issue}は{related}より前に完了できません（後に完了する関係）。",
+          "finish_before": "{issue}は{related}以前に完了しなければなりません（前に完了する関係）。",
+          "start_after": "{issue}は{related}より前に開始できません（後に開始する関係）。",
+          "start_before": "{issue}は{related}以前に開始しなければなりません（前に開始する関係）。"
+        },
+        "status": {
+          "finish_after": "{related}が完了するまで{issue}を完了できません（後に完了する関係）。",
+          "start_after": "{related}が開始するまで{issue}を開始できません（後に開始する関係）。"
+        }
+      },
+      "date_conflict": "これらの日付は既存の依存関係と競合しています。関連する作業項目を調整するか、先に依存関係を削除してください。",
+      "dependency_create_failed": "依存関係を作成できませんでした。もう一度お試しください。",
+      "dependency_created": "作業項目の依存関係が正常に作成されました。"
     }
   },
-  "profile": {
-    "actions": {
-      "appearance": "外観"
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "定期的な期間で作業をタイムボックス化します。",
+        "label": "サイクル"
+      },
+      "description": "このプロジェクトで有効にする機能を選択してください。",
+      "intake": {
+        "description": "プロジェクトに追加する前に、受信した作業をトリアージします。",
+        "label": "インテーク"
+      },
+      "modules": {
+        "description": "作業をサブプロジェクトのようなまとまりにグループ化します。",
+        "label": "モジュール"
+      },
+      "pages": {
+        "description": "プロジェクトのドキュメントページを作成します。",
+        "label": "ページ"
+      },
+      "time_tracking": {
+        "description": "作業項目に費やした時間を記録します。",
+        "label": "時間トラッキング"
+      },
+      "title": "プロジェクト機能",
+      "views": {
+        "description": "並び替え、フィルター、レイアウトを保存して共有します。",
+        "label": "ビュー"
+      },
+      "work_item_types": {
+        "assign_failed": "プロジェクトは作成されましたが、作業項目タイプを割り当てられませんでした。",
+        "assign_hint": "このプロジェクトで使用できるワークスペースのタイプを選択してください。",
+        "assign_label": "作業項目タイプを割り当てる",
+        "description": "作業項目に独自のプロパティを持つカスタムタイプを使用します。",
+        "label": "作業項目タイプ",
+        "no_types_hint": "このワークスペースには有効な作業項目タイプがありません。まずワークスペース設定で作成してください。"
+      }
     }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "承認ゲートを追加",
+      "add_transition": "遷移を追加",
+      "allow_creation": "この状態で新しい作業項目を許可する",
+      "approval": "承認",
+      "approval_error": "承認を処理できませんでした。",
+      "approved_success": "遷移が承認されました。",
+      "blocker_message": "この遷移はワークフローで許可されていません。",
+      "builder_description": "状態を展開して、許可される遷移と承認ゲートを設定します。",
+      "builder_title": "ワークフロービルダー",
+      "disabled_success": "このプロジェクトのワークフローが無効になりました。",
+      "enable_description": "有効にすると、作業項目は設定された状態遷移と承認ルールに従います。",
+      "enable_title": "ワークフローを有効にする",
+      "enabled_success": "このプロジェクトのワークフローが有効になりました。",
+      "enabling": "ワークフロー設定を更新中…",
+      "paused": "一時停止中",
+      "pending_approval_description": "{from}から{to}への移動は承認待ちです。",
+      "pending_approval_title": "承認が必要です",
+      "rejected_success": "遷移が却下されました。",
+      "resolving_approval": "承認を処理中…",
+      "save_error": "ワークフロー設定を保存できませんでした。",
+      "save_success": "ワークフロー設定を保存しました。",
+      "toggle_error": "ワークフロー設定を更新できませんでした。",
+      "transition": "遷移",
+      "transitions_configured": "個の遷移が設定されています"
+    }
+  },
+  "project_templates": {
+    "loading": "テンプレートを読み込み中…",
+    "none": "テンプレートなし",
+    "select_placeholder": "テンプレートを選択"
   },
   "project_views": {
     "empty_state": {
@@ -33,12 +135,411 @@
       }
     }
   },
-  "workspace_analytics": {
-    "total_admins": "管理者の合計",
-    "total_guests": "ゲストの合計",
-    "total_intake": "総収入",
-    "total_projects": "プロジェクト合計",
-    "total_users": "ユーザー総数",
-    "total_work_items": "{entity}の合計"
+  "reject": "却下",
+  "settings_empty_state": {
+    "imports": {
+      "description": "インポート履歴はまだありません。ファイルをプロジェクトにインポートすると、ここにすべての記録が表示されます。",
+      "title": "インポートはまだありません"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "作業項目テンプレートを適用できませんでした。",
+    "dropdown_placeholder": "テンプレート",
+    "loading": "テンプレートを読み込み中…",
+    "none": "テンプレートなし"
+  },
+  "work_item_types": {
+    "loading": "タイプを読み込み中…",
+    "property_values_save_failed": "作業項目は作成されましたが、追加のプロパティを保存できませんでした。作業項目の詳細画面から入力してください。",
+    "select_placeholder": "タイプ"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "すべてのプロジェクト",
+        "history": {
+          "download": "ダウンロード",
+          "expired": "期限切れ",
+          "exported_by": "エクスポート実行者",
+          "exported_on": "エクスポート日時",
+          "project_count": "{count, plural, other {#件のプロジェクト}}",
+          "projects": "エクスポートしたプロジェクト",
+          "status": "ステータス"
+        },
+        "statuses": {
+          "completed": "完了",
+          "expired": "期限切れ",
+          "failed": "失敗",
+          "processing": "処理中"
+        },
+        "tabs": {
+          "export": "エクスポート",
+          "import": "インポート"
+        },
+        "work_items_export": {
+          "description": "選択したプロジェクトの作業項目をCSV、Excel、またはJSONにエクスポートします。",
+          "heading": "作業項目をエクスポート"
+        }
+      },
+      "imports": {
+        "file_too_large": "ファイルサイズは{size}MB未満にしてください。",
+        "history": {
+          "file": "ファイル",
+          "imported_by": "インポート実行者",
+          "imported_on": "インポート日時",
+          "project_count": "{count, plural, other {#件のプロジェクト}}",
+          "projects": "プロジェクト",
+          "reason": "理由",
+          "status": "ステータス"
+        },
+        "previous_imports": "過去のインポート",
+        "work_items": {
+          "description": "「作業項目をエクスポート」で作成したファイル（CSV、Excel、またはJSON）から、既存のプロジェクトに作業項目をインポートします。",
+          "heading": "作業項目をインポート",
+          "import_button": "作業項目をインポート",
+          "invalid_file_type": "CSV、Excel（.xlsx）、またはJSONファイルをアップロードしてください。",
+          "no_projects": "利用可能なプロジェクトがありません",
+          "open_project": "プロジェクトを開く",
+          "options": {
+            "assignees": "担当者",
+            "clear_all": "すべてクリア",
+            "cycles": "サイクル",
+            "dates": "日付と期間",
+            "heading": "インポートする項目",
+            "labels": "ラベル",
+            "modules": "モジュール",
+            "parents": "親作業項目",
+            "relations": "作業項目間の関連",
+            "select_all": "すべて選択",
+            "subscribers": "購読者"
+          },
+          "result_summary": "「{name}」に{count, plural, one {# work item} other {# work items}}をインポートしました。",
+          "select_file": "ファイルを選択",
+          "select_file_label": "エクスポートファイル",
+          "select_project": "対象プロジェクト",
+          "select_project_placeholder": "プロジェクトを選択",
+          "toasts": {
+            "error": {
+              "message": "作業項目のインポートに失敗しました。「作業項目をエクスポート」で作成したファイルを使用して、もう一度お試しください。"
+            },
+            "success": {
+              "message": "「{name}」に{count}件の作業項目をインポートしました。"
+            }
+          },
+          "warnings_heading": "インポート中の警告：{count, plural, other {#件}}",
+          "warnings_none": "警告なしですべてインポートされました。"
+        }
+      },
+      "project_templates": {
+        "add_template": "テンプレートを追加",
+        "delete_confirm": "このプロジェクトテンプレートを削除しますか？既存のプロジェクトには影響しません。",
+        "description": "デフォルトのプロパティ、有効な機能、状態、ラベル、作業項目タイプを備えた再利用可能なプロジェクト設定を作成します。",
+        "edit_template": "テンプレートを編集",
+        "form": {
+          "add_label": "ラベルを追加",
+          "add_state": "状態を追加",
+          "custom_property": {
+            "active_checkbox": "アクティブ",
+            "add_property": "プロパティを追加",
+            "default_option_label": "デフォルトオプション",
+            "description_label": "説明",
+            "description_placeholder": "このプロパティのヘルプテキスト（任意）",
+            "dropdown_options_heading": "ドロップダウンの選択肢",
+            "inactive": "非アクティブ",
+            "mandatory": "必須",
+            "mandatory_checkbox": "作業項目の作成時に必須にする",
+            "no_default": "デフォルト値なし",
+            "option_placeholder": "オプション名",
+            "select_mode_label": "選択モード",
+            "select_multi": "複数選択",
+            "select_single": "単一選択",
+            "title_label": "タイトル",
+            "title_placeholder": "プロパティ名",
+            "type_label": "タイプ",
+            "types": {
+              "boolean": "ブール値",
+              "date": "日付",
+              "dropdown": "ドロップダウン",
+              "member_picker": "メンバー",
+              "number": "数値",
+              "text": "テキスト"
+            }
+          },
+          "default_assignee": "デフォルトの担当者",
+          "default_cover_image": "カバー画像",
+          "default_labels": "デフォルトのラベル",
+          "default_lead": "プロジェクトリーダー",
+          "default_project_description": "プロジェクトの説明",
+          "default_project_description_placeholder": "新しいプロジェクトのデフォルトの説明",
+          "default_project_identifier": "プロジェクト識別子",
+          "default_project_identifier_placeholder": "例：PROD",
+          "default_project_name": "プロジェクト名",
+          "default_project_name_placeholder": "例：Product launch",
+          "default_start_date": "開始日",
+          "default_target_date": "目標日",
+          "default_visibility": "公開範囲",
+          "features": {
+            "cycles": {
+              "description": "計画と実行のためのタイムボックス化されたイテレーション。",
+              "label": "サイクル"
+            },
+            "intake": {
+              "description": "作業項目になる前に、受信したリクエストをトリアージします。",
+              "label": "インテーク"
+            },
+            "modules": {
+              "description": "作業をフォーカスエリアやマイルストーンにグループ化します。",
+              "label": "モジュール"
+            },
+            "pages": {
+              "description": "プロジェクトのWikiとドキュメント。",
+              "label": "ページ"
+            },
+            "time_tracking": {
+              "description": "作業項目に費やした時間を記録します。",
+              "label": "時間トラッキング"
+            },
+            "views": {
+              "description": "チーム向けの保存済みフィルターとレイアウト。",
+              "label": "ビュー"
+            },
+            "work_item_types": {
+              "description": "カスタムプロパティを持つさまざまな種類の作業。",
+              "label": "作業項目タイプ"
+            }
+          },
+          "identifier_invalid": "英字と数字のみを使用してください",
+          "identifier_max_char": "識別子は5文字以内にしてください",
+          "label_name_placeholder": "ラベル名",
+          "labels_empty": "ラベルはまだありません。",
+          "mark_default_state": "デフォルトの状態としてマークする",
+          "modal_intro": "テンプレート名を付け、チーム向けに簡単なメモを追加してください。その後、プロジェクト作成時と同じようなデフォルトのプロジェクト値を設定します。",
+          "name_required": "テンプレート名は必須です",
+          "section_features": "機能",
+          "section_features_hint": "このテンプレートを適用したときに有効にするオプション機能を選択してください。",
+          "section_labels": "ラベル",
+          "section_labels_hint": "新しいプロジェクトのデフォルトラベルを定義します。",
+          "section_properties": "デフォルトのプロジェクトプロパティ",
+          "section_states": "状態",
+          "section_states_hint": "新しいプロジェクトのデフォルトのワークフロー状態を定義します。",
+          "section_template": "テンプレート",
+          "section_work_item_types": "作業項目タイプ",
+          "section_work_item_types_hint": "このテンプレートから作成されるプロジェクトのデフォルトの作業項目タイプとカスタムプロパティを設定します。",
+          "state_groups": {
+            "backlog": "バックログ",
+            "cancelled": "キャンセル",
+            "completed": "完了",
+            "started": "開始済み",
+            "unstarted": "未開始"
+          },
+          "state_name_placeholder": "状態名",
+          "states_group_empty": "このグループにはまだ状態がありません。",
+          "template_name_label": "テンプレート名",
+          "template_name_placeholder": "例：Software delivery",
+          "template_note_label": "説明（チーム向け）",
+          "template_note_placeholder": "このテンプレートの用途（任意）。",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "作業項目タイプを追加",
+              "description": "このテンプレートから作成されるプロジェクトで使用できる作業項目タイプを追加します。",
+              "empty": "追加のタイプはまだありません。",
+              "title": "追加のタイプ"
+            },
+            "default_badge": "デフォルト",
+            "disabled_hint": "ここでタイプを設定するには、上の「機能」で作業項目タイプを有効にしてください。",
+            "epic": {
+              "description": "タスクに分割できる大きな作業のまとまり。",
+              "disabled": "このテンプレートではエピックは無効になっています。",
+              "title": "エピック"
+            },
+            "optional_badge": "任意",
+            "properties_empty": "このタイプにはカスタムプロパティがありません。",
+            "task": {
+              "description": "日常的なタスクのための標準的な作業項目タイプ。",
+              "title": "タスク"
+            },
+            "type_description_placeholder": "簡単な説明（任意）",
+            "type_name_placeholder": "タイプ名"
+          }
+        },
+        "loading": "テンプレートを読み込み中…",
+        "none": "テンプレートなし",
+        "select_placeholder": "テンプレートを選択",
+        "table": {
+          "download_template": "ダウンロード",
+          "no_description": "説明なし",
+          "use_template": "テンプレートを使用"
+        },
+        "title": "プロジェクトテンプレート",
+        "toasts": {
+          "apply_failed": {
+            "message": "プロジェクトテンプレートを適用できませんでした。"
+          },
+          "apply_followup_failed": {
+            "message": "プロジェクトは作成されましたが、一部のテンプレート設定を適用できませんでした。"
+          },
+          "create_failed": {
+            "message": "フォームを確認して、もう一度お試しください。",
+            "title": "テンプレートを作成できませんでした"
+          },
+          "created": {
+            "message": "プロジェクトテンプレートを保存しました。",
+            "title": "テンプレートを作成しました"
+          },
+          "delete_failed": {
+            "message": "もう一度お試しください。",
+            "title": "削除できませんでした"
+          },
+          "deleted": {
+            "message": "プロジェクトテンプレートを削除しました。",
+            "title": "テンプレートを削除しました"
+          },
+          "download_failed": {
+            "message": "テンプレートファイルをダウンロードできませんでした。"
+          },
+          "save_failed": {
+            "message": "フォームを確認して、もう一度お試しください。",
+            "title": "テンプレートを保存できませんでした"
+          },
+          "saved": {
+            "message": "プロジェクトテンプレートを更新しました。",
+            "title": "テンプレートを保存しました"
+          },
+          "upload_failed": {
+            "message": "テンプレートをアップロードできませんでした。ファイルを確認して、もう一度お試しください。"
+          },
+          "uploaded_renamed": {
+            "message": "その名前はすでに使用されているため、テンプレートは「{name}」として保存されました。"
+          },
+          "uploaded": {
+            "message": "ファイルからテンプレート「{name}」をアップロードしました。"
+          }
+        },
+        "upload_invalid_file": "「ダウンロード」ボタンでダウンロードしたJSONファイルをアップロードしてください。",
+        "upload_template": "ファイルからアップロード",
+        "upload_too_large": "ファイルサイズは{size}MB未満にしてください。"
+      },
+      "work_item_templates": {
+        "add_template": "テンプレートを追加",
+        "delete_confirm": "この作業項目テンプレートを削除してもよろしいですか？",
+        "description": "新しい作業項目用の再利用可能な初期設定（タイトル、説明、担当者、優先度など）を作成します。テンプレートはワークスペース全体、または特定のプロジェクトのみに適用できます。",
+        "edit_template": "テンプレートを編集",
+        "form": {
+          "default_values_section_hint": "誰かが作業項目の作成時にこのテンプレートを適用すると、これらのフィールドが自動的に入力されます。すべて任意です。",
+          "default_values_section_title": "デフォルトの作業項目の値",
+          "default_work_item_description": "説明",
+          "default_work_item_description_hint": "プレーンテキストで、作業項目の説明として保存されます。改行はそのまま保持されます。",
+          "default_work_item_description_placeholder": "新しい作業項目にデフォルトで表示させたいテキスト",
+          "default_work_item_name": "タイトル",
+          "default_work_item_name_placeholder": "例：[Bug] …",
+          "modal_intro": "テンプレート名を付け、チーム向けに簡単なメモを追加してください。その後、作業項目作成時と同じようなタイトル、説明、担当者、優先度などのデフォルト値を設定します。",
+          "name_required": "テンプレート名は必須です",
+          "scope_hint": "プロジェクトを空欄のままにすると、このテンプレートはすべてのプロジェクトで使用できます。プロジェクト固有のフィールド（状態、ラベル、サイクル、モジュール）は、プロジェクトを選択した場合のみ保存できます。",
+          "scope_hint_short": "任意。空欄の場合、このテンプレートはすべてのプロジェクトで使用できます。設定すると、担当者の候補はそのプロジェクトに限定されます。それ以外の場合はワークスペースメンバーが使用されます。",
+          "scope_project": "1つのプロジェクトに限定（任意）",
+          "template_name_label": "テンプレート名",
+          "template_name_placeholder": "例：Bug report",
+          "template_note_label": "説明（チーム向け）",
+          "template_note_placeholder": "このテンプレートの用途（任意。作業項目の説明ではありません）。"
+        },
+        "heading": "作業項目テンプレート",
+        "table": {
+          "name": "テンプレート",
+          "project": "プロジェクト",
+          "scope": "範囲",
+          "workspace_wide": "すべてのプロジェクト"
+        },
+        "title": "作業項目テンプレート",
+        "toasts": {
+          "create_failed": {
+            "message": "フォームを確認して、もう一度お試しください。",
+            "title": "テンプレートを作成できませんでした"
+          },
+          "created": {
+            "message": "作業項目テンプレートを保存しました。",
+            "title": "テンプレートを作成しました"
+          },
+          "delete_failed": {
+            "message": "もう一度お試しください。",
+            "title": "削除できませんでした"
+          },
+          "deleted": {
+            "message": "作業項目テンプレートを削除しました。",
+            "title": "テンプレートを削除しました"
+          },
+          "save_failed": {
+            "message": "フォームを確認して、もう一度お試しください。",
+            "title": "テンプレートを保存できませんでした"
+          },
+          "saved": {
+            "message": "作業項目テンプレートを更新しました。",
+            "title": "テンプレートを保存しました"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "タイプを追加",
+        "delete_confirm": "この作業項目タイプを削除しますか？既存の作業項目のデータは保持されます。",
+        "description": "独自の識別情報、カスタムプロパティ、プロジェクトの適用範囲を持つ作業項目タイプを定義します。既存の項目に影響を与えずにタイプのオン/オフを切り替えられます。",
+        "edit_type": "タイプを編集",
+        "epic_badge": "エピック",
+        "form": {
+          "description_label": "説明",
+          "is_active": "アクティブ",
+          "is_epic": "エピックタイプ",
+          "modal_intro": "タイプの名前を付け、アイコンを選び、この種類の作業に必要なプロパティのみを追加してください。利用可能にするプロジェクトに割り当てます。",
+          "name_label": "名前",
+          "name_required": "タイプ名は必須です",
+          "projects_hint": "空欄のままにすると、どのプロジェクトにも割り当てずにライブラリにタイプを残しておけます。",
+          "projects_label": "プロジェクト",
+          "properties_heading": "カスタムプロパティ",
+          "property": {
+            "active_checkbox": "アクティブ",
+            "add": "プロパティを追加",
+            "description_label": "説明",
+            "empty": "カスタムプロパティはまだありません。",
+            "inactive": "非アクティブ",
+            "mandatory": "必須",
+            "mandatory_checkbox": "作業項目の作成時に必須にする",
+            "title_label": "タイトル",
+            "type_label": "タイプ",
+            "types": {
+              "boolean": "ブール値",
+              "date": "日付",
+              "dropdown": "ドロップダウン",
+              "member_picker": "メンバー",
+              "number": "数値",
+              "text": "テキスト"
+            }
+          }
+        },
+        "table": {
+          "name": "タイプ",
+          "no_projects": "未割り当て",
+          "projects": "プロジェクト",
+          "properties": "プロパティ",
+          "status": "アクティブ"
+        },
+        "title": "作業項目タイプ",
+        "toasts": {
+          "delete_failed": {
+            "message": "もう一度お試しください。",
+            "title": "削除できませんでした"
+          },
+          "deleted": {
+            "message": "作業項目タイプを削除しました。",
+            "title": "タイプを削除しました"
+          },
+          "save_failed": {
+            "message": "フォームを確認して、もう一度お試しください。",
+            "title": "タイプを保存できませんでした"
+          },
+          "saved": {
+            "message": "作業項目タイプを保存しました。",
+            "title": "タイプを保存しました"
+          }
+        }
+      }
+    }
   }
 }

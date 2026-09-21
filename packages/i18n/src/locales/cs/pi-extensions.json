@@ -1,44 +1,545 @@
 {
-  "appearance": "Vzhled",
+  "account_settings": {
+    "api_tokens": {
+      "heading": "Osobní přístupové tokeny"
+    }
+  },
+  "approve": "Schválit",
   "duration": "Doba trvání",
   "duration_days": "{count, plural, one {# den} few {# dny} other {# dní}}",
   "epic": {
     "all": "Všechny epiky"
   },
+  "exporter": {
+    "csv_comma": {
+      "description": "Export do CSV s čárkou jako oddělovačem.",
+      "short_description": "CSV čárka",
+      "title": "CSV (čárka)"
+    },
+    "csv_semicolon": {
+      "description": "Export do CSV se středníkem jako oddělovačem pro Excel.",
+      "short_description": "CSV středník",
+      "title": "CSV (středník, Excel)"
+    }
+  },
   "importer": {
     "github": {
-      "description": "Importujte položky z repozitářů GitHub.",
+      "description": "Importujte pracovní položky z repozitářů GitHub a synchronizujte je.",
       "title": "GitHub"
     },
     "jira": {
-      "description": "Importujte položky a epiky z Jira.",
+      "description": "Importujte pracovní položky a epiky z projektů a epik Jira.",
       "title": "Jira"
     }
   },
   "issue": {
     "add": {
       "duration": "Přidat dobu trvání"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue} nemůže začít, dokud není dokončena {related} (vztah Blokováno).",
+          "blocking": "{issue} musí skončit dříve, než začne {related} (vztah Blokující).",
+          "finish_after": "{issue} nemůže skončit dříve než {related} (vztah Končí po).",
+          "finish_before": "{issue} musí skončit nejpozději v den, kdy končí {related} (vztah Končí před).",
+          "start_after": "{issue} nemůže začít dříve než {related} (vztah Začíná po).",
+          "start_before": "{issue} musí začít nejpozději v den, kdy začíná {related} (vztah Začíná před)."
+        },
+        "status": {
+          "finish_after": "{issue} nemůže být dokončena, dokud není dokončena {related} (vztah Končí po).",
+          "start_after": "{issue} nemůže začít, dokud nezačala {related} (vztah Začíná po)."
+        }
+      },
+      "date_conflict": "Tato data jsou v konfliktu se stávajícími závislostmi. Nejprve upravte související pracovní položky nebo závislost odstraňte.",
+      "dependency_create_failed": "Závislost se nepodařilo vytvořit. Zkuste to prosím znovu.",
+      "dependency_created": "Závislost mezi pracovními položkami byla úspěšně vytvořena."
     }
   },
-  "profile": {
-    "actions": {
-      "appearance": "Vzhled"
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "Rozdělte práci do opakujících se časových úseků.",
+        "label": "Cykly"
+      },
+      "description": "Vyberte, které funkce budou pro tento projekt povoleny.",
+      "intake": {
+        "description": "Před přidáním do projektu roztřiďte příchozí práci.",
+        "label": "Příjem"
+      },
+      "modules": {
+        "description": "Seskupte práci do dílčích projektů.",
+        "label": "Moduly"
+      },
+      "pages": {
+        "description": "Vytvářejte stránky s dokumentací projektu.",
+        "label": "Stránky"
+      },
+      "time_tracking": {
+        "description": "Sledujte čas strávený na pracovních položkách.",
+        "label": "Sledování času"
+      },
+      "title": "Funkce projektu",
+      "views": {
+        "description": "Ukládejte a sdílejte řazení, filtry a rozvržení.",
+        "label": "Zobrazení"
+      },
+      "work_item_types": {
+        "assign_failed": "Projekt byl vytvořen, ale typy pracovních položek se nepodařilo přiřadit.",
+        "assign_hint": "Vyberte, které typy z pracovního prostoru budou v tomto projektu dostupné.",
+        "assign_label": "Přiřadit typy pracovních položek",
+        "description": "Používejte vlastní typy s vlastními vlastnostmi pro pracovní položky.",
+        "label": "Typy pracovních položek",
+        "no_types_hint": "V tomto pracovním prostoru nejsou žádné aktivní typy pracovních položek. Nejprve je vytvořte v nastavení pracovního prostoru."
+      }
     }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "Přidat schvalovací bránu",
+      "add_transition": "Přidat přechod",
+      "allow_creation": "Povolit nové pracovní položky v tomto stavu",
+      "approval": "Schválení",
+      "approval_error": "Schválení se nepodařilo zpracovat.",
+      "approved_success": "Přechod byl schválen.",
+      "blocker_message": "Tento přechod není workflow povolen.",
+      "builder_description": "Rozbalte stav a nastavte povolené přechody a schvalovací brány.",
+      "builder_title": "Tvůrce workflow",
+      "disabled_success": "Workflow pro tento projekt bylo vypnuto.",
+      "enable_description": "Po zapnutí budou pracovní položky procházet nastavenými přechody mezi stavy a schvalovacími pravidly.",
+      "enable_title": "Zapnout workflow",
+      "enabled_success": "Workflow pro tento projekt bylo zapnuto.",
+      "enabling": "Aktualizace nastavení workflow...",
+      "paused": "Pozastaveno",
+      "pending_approval_description": "Přechod z {from} do {to} čeká na schválení.",
+      "pending_approval_title": "Vyžadováno schválení",
+      "rejected_success": "Přechod byl zamítnut.",
+      "resolving_approval": "Zpracování schválení...",
+      "save_error": "Nastavení workflow se nepodařilo uložit.",
+      "save_success": "Nastavení workflow bylo uloženo.",
+      "toggle_error": "Nastavení workflow se nepodařilo aktualizovat.",
+      "transition": "Přechod",
+      "transitions_configured": "nastavených přechodů"
+    }
+  },
+  "project_templates": {
+    "loading": "Načítání šablon…",
+    "none": "Bez šablony",
+    "select_placeholder": "Vyberte šablonu"
   },
   "project_views": {
     "empty_state": {
       "filter": {
-        "description": "Vytvořte nový pohled.",
+        "description": "Žádné pohledy neodpovídají kritériím vyhledávání. \n Místo toho vytvořte nový pohled.",
         "title": "Žádné odpovídající pohledy"
       }
     }
   },
-  "workspace_analytics": {
-    "total_admins": "Celkový počet administrátorů",
-    "total_guests": "Celkový počet hostů",
-    "total_intake": "Celkový příjem",
-    "total_projects": "Celkový počet projektů",
-    "total_users": "Celkový počet uživatelů",
-    "total_work_items": "Celkový počet {entity}"
+  "reject": "Zamítnout",
+  "settings_empty_state": {
+    "imports": {
+      "description": "Zatím nemáte žádné záznamy o importu. Jakmile do projektu importujete soubor, všechny záznamy se zobrazí zde.",
+      "title": "Zatím žádné importy"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "Šablonu pracovní položky se nepodařilo použít.",
+    "dropdown_placeholder": "Šablona",
+    "loading": "Načítání šablon…",
+    "none": "Bez šablony"
+  },
+  "work_item_types": {
+    "loading": "Načítání typů…",
+    "property_values_save_failed": "Pracovní položka byla vytvořena, ale další vlastnosti se nepodařilo uložit. Vyplňte je v detailu pracovní položky.",
+    "select_placeholder": "Typ"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "Všechny projekty",
+        "history": {
+          "download": "Stáhnout",
+          "expired": "Vypršelo",
+          "exported_by": "Exportoval",
+          "exported_on": "Exportováno",
+          "project_count": "{count, plural, one {# projekt} few {# projekty} other {# projektů}}",
+          "projects": "Exportované projekty",
+          "status": "Stav"
+        },
+        "statuses": {
+          "completed": "Dokončeno",
+          "expired": "Vypršelo",
+          "failed": "Selhalo",
+          "processing": "Zpracovává se"
+        },
+        "tabs": {
+          "export": "Export",
+          "import": "Import"
+        },
+        "work_items_export": {
+          "description": "Exportujte pracovní položky z vybraných projektů do formátu CSV, Excel nebo JSON.",
+          "heading": "Export pracovních položek"
+        }
+      },
+      "imports": {
+        "file_too_large": "Soubor musí být menší než {size} MB.",
+        "history": {
+          "file": "Soubor",
+          "imported_by": "Importoval",
+          "imported_on": "Importováno",
+          "project_count": "{count, plural, one {# projekt} few {# projekty} other {# projektů}}",
+          "projects": "Projekty",
+          "reason": "Důvod",
+          "status": "Stav"
+        },
+        "previous_imports": "Předchozí importy",
+        "work_items": {
+          "description": "Importujte pracovní položky ze souboru vytvořeného funkcí „Export pracovních položek“ (CSV, Excel nebo JSON) do existujícího projektu.",
+          "heading": "Import pracovních položek",
+          "import_button": "Importovat pracovní položky",
+          "invalid_file_type": "Nahrajte prosím soubor CSV, Excel (.xlsx) nebo JSON.",
+          "no_projects": "Nejsou k dispozici žádné projekty",
+          "open_project": "Otevřít projekt",
+          "options": {
+            "assignees": "Přiřazení",
+            "clear_all": "Vymazat vše",
+            "cycles": "Cykly",
+            "dates": "Data a doba trvání",
+            "heading": "Co importovat",
+            "labels": "Štítky",
+            "modules": "Moduly",
+            "parents": "Nadřazené pracovní položky",
+            "relations": "Vztahy mezi pracovními položkami",
+            "select_all": "Vybrat vše",
+            "subscribers": "Odběratelé"
+          },
+          "result_summary": "Importováno {count, plural, one {# pracovní položka} few {# pracovní položky} other {# pracovních položek}} do „{name}“.",
+          "select_file": "Vybrat soubor",
+          "select_file_label": "Exportní soubor",
+          "select_project": "Cílový projekt",
+          "select_project_placeholder": "Vyberte projekt",
+          "toasts": {
+            "error": {
+              "message": "Import pracovních položek selhal. Použijte soubor z funkce „Export pracovních položek“ a zkuste to znovu."
+            },
+            "success": {
+              "message": "Importováno {count} pracovních položek do \"{name}\"."
+            }
+          },
+          "warnings_heading": "{count, plural, one {# varování} few {# varování} other {# varování}} při importu",
+          "warnings_none": "Vše bylo importováno bez varování."
+        }
+      },
+      "project_templates": {
+        "add_template": "Přidat šablonu",
+        "delete_confirm": "Odstranit tuto šablonu projektu? Stávající projekty tím nebudou ovlivněny.",
+        "description": "Vytvářejte opakovaně použitelná nastavení projektu s výchozími vlastnostmi, povolenými funkcemi, stavy, štítky a typy pracovních položek.",
+        "edit_template": "Upravit šablonu",
+        "form": {
+          "add_label": "Přidat štítek",
+          "add_state": "Přidat stav",
+          "custom_property": {
+            "active_checkbox": "Aktivní",
+            "add_property": "Přidat vlastnost",
+            "default_option_label": "Výchozí možnost",
+            "description_label": "Popis",
+            "description_placeholder": "Nápověda k této vlastnosti (volitelné)",
+            "dropdown_options_heading": "Možnosti rozbalovacího seznamu",
+            "inactive": "Neaktivní",
+            "mandatory": "Povinné",
+            "mandatory_checkbox": "Povinné při vytváření pracovních položek",
+            "no_default": "Žádná výchozí hodnota",
+            "option_placeholder": "Název možnosti",
+            "select_mode_label": "Režim výběru",
+            "select_multi": "Vícenásobný výběr",
+            "select_single": "Jednoduchý výběr",
+            "title_label": "Název",
+            "title_placeholder": "Název vlastnosti",
+            "type_label": "Typ",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Datum",
+              "dropdown": "Rozbalovací seznam",
+              "member_picker": "Člen",
+              "number": "Číslo",
+              "text": "Text"
+            }
+          },
+          "default_assignee": "Výchozí přiřazení",
+          "default_cover_image": "Úvodní obrázek",
+          "default_labels": "Výchozí štítky",
+          "default_lead": "Vedoucí projektu",
+          "default_project_description": "Popis projektu",
+          "default_project_description_placeholder": "Výchozí popis pro nové projekty",
+          "default_project_identifier": "Identifikátor projektu",
+          "default_project_identifier_placeholder": "např. PROD",
+          "default_project_name": "Název projektu",
+          "default_project_name_placeholder": "např. Uvedení produktu na trh",
+          "default_start_date": "Datum začátku",
+          "default_target_date": "Cílové datum",
+          "default_visibility": "Viditelnost",
+          "features": {
+            "cycles": {
+              "description": "Časově ohraničené iterace pro plánování a dodávky.",
+              "label": "Cykly"
+            },
+            "intake": {
+              "description": "Roztřiďte příchozí požadavky, než se stanou pracovními položkami.",
+              "label": "Příjem"
+            },
+            "modules": {
+              "description": "Seskupte práci do tematických celků nebo milníků.",
+              "label": "Moduly"
+            },
+            "pages": {
+              "description": "Wiki a dokumentace projektu.",
+              "label": "Stránky"
+            },
+            "time_tracking": {
+              "description": "Zaznamenávejte čas strávený na pracovních položkách.",
+              "label": "Sledování času"
+            },
+            "views": {
+              "description": "Uložené filtry a rozvržení pro tým.",
+              "label": "Zobrazení"
+            },
+            "work_item_types": {
+              "description": "Různé typy práce s vlastními vlastnostmi.",
+              "label": "Typy pracovních položek"
+            }
+          },
+          "identifier_invalid": "Použijte pouze písmena a číslice",
+          "identifier_max_char": "Identifikátor může mít nejvýše 5 znaků",
+          "label_name_placeholder": "Název štítku",
+          "labels_empty": "Zatím žádné štítky.",
+          "mark_default_state": "Označit jako výchozí stav",
+          "modal_intro": "Pojmenujte šablonu a přidejte krátkou poznámku pro svůj tým. Poté nastavte výchozí hodnoty projektu — stejný druh nastavení, jaký používáte při vytváření projektu.",
+          "name_required": "Název šablony je povinný",
+          "section_features": "Funkce",
+          "section_features_hint": "Vyberte, které volitelné funkce projektu budou povoleny při použití této šablony.",
+          "section_labels": "Štítky",
+          "section_labels_hint": "Definujte výchozí štítky pro nové projekty.",
+          "section_properties": "Výchozí vlastnosti projektu",
+          "section_states": "Stavy",
+          "section_states_hint": "Definujte výchozí stavy workflow pro nové projekty.",
+          "section_template": "Šablona",
+          "section_work_item_types": "Typy pracovních položek",
+          "section_work_item_types_hint": "Nastavte výchozí typy pracovních položek a vlastní vlastnosti pro projekty vytvořené z této šablony.",
+          "state_groups": {
+            "backlog": "Backlog",
+            "cancelled": "Zrušeno",
+            "completed": "Dokončeno",
+            "started": "Zahájeno",
+            "unstarted": "Nezahájeno"
+          },
+          "state_name_placeholder": "Název stavu",
+          "states_group_empty": "V této skupině zatím nejsou žádné stavy.",
+          "template_name_label": "Název šablony",
+          "template_name_placeholder": "např. Dodávka softwaru",
+          "template_note_label": "Popis (pro váš tým)",
+          "template_note_placeholder": "K čemu tato šablona slouží (volitelné).",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "Přidat typ pracovní položky",
+              "description": "Přidejte další typy pracovních položek dostupné v projektech vytvořených z této šablony.",
+              "empty": "Zatím žádné další typy.",
+              "title": "Další typy"
+            },
+            "default_badge": "Výchozí",
+            "disabled_hint": "Chcete-li zde nastavit typy, povolte nejprve typy pracovních položek v sekci Funkce výše.",
+            "epic": {
+              "description": "Rozsáhlý celek práce, který lze rozdělit na úkoly.",
+              "disabled": "Epiky jsou pro tuto šablonu vypnuté.",
+              "title": "Epika"
+            },
+            "optional_badge": "Volitelné",
+            "properties_empty": "Tento typ nemá žádné vlastní vlastnosti.",
+            "task": {
+              "description": "Standardní typ pracovní položky pro běžné úkoly.",
+              "title": "Úkol"
+            },
+            "type_description_placeholder": "Krátký popis (volitelné)",
+            "type_name_placeholder": "Název typu"
+          }
+        },
+        "loading": "Načítání šablon…",
+        "none": "Bez šablony",
+        "select_placeholder": "Vyberte šablonu",
+        "table": {
+          "download_template": "Stáhnout",
+          "no_description": "Bez popisu",
+          "use_template": "Použít šablonu"
+        },
+        "title": "Šablony projektů",
+        "toasts": {
+          "apply_failed": {
+            "message": "Šablonu projektu se nepodařilo použít."
+          },
+          "apply_followup_failed": {
+            "message": "Projekt byl vytvořen, ale některá nastavení šablony se nepodařilo použít."
+          },
+          "create_failed": {
+            "message": "Zkontrolujte prosím formulář a zkuste to znovu.",
+            "title": "Šablonu se nepodařilo vytvořit"
+          },
+          "created": {
+            "message": "Šablona projektu byla uložena.",
+            "title": "Šablona vytvořena"
+          },
+          "delete_failed": {
+            "message": "Zkuste to prosím znovu.",
+            "title": "Nepodařilo se odstranit"
+          },
+          "deleted": {
+            "message": "Šablona projektu byla odstraněna.",
+            "title": "Šablona odstraněna"
+          },
+          "download_failed": {
+            "message": "Soubor šablony se nepodařilo stáhnout."
+          },
+          "save_failed": {
+            "message": "Zkontrolujte prosím formulář a zkuste to znovu.",
+            "title": "Šablonu se nepodařilo uložit"
+          },
+          "saved": {
+            "message": "Šablona projektu byla aktualizována.",
+            "title": "Šablona uložena"
+          },
+          "upload_failed": {
+            "message": "Šablonu se nepodařilo nahrát. Zkontrolujte soubor a zkuste to znovu."
+          },
+          "uploaded_renamed": {
+            "message": "Tento název byl již použit, proto byla šablona uložena jako \"{name}\"."
+          },
+          "uploaded": {
+            "message": "Šablona \"{name}\" byla nahrána ze souboru."
+          }
+        },
+        "upload_invalid_file": "Nahrajte prosím soubor JSON stažený pomocí tlačítka „Stáhnout“.",
+        "upload_template": "Nahrát ze souboru",
+        "upload_too_large": "Soubor musí být menší než {size} MB."
+      },
+      "work_item_templates": {
+        "add_template": "Přidat šablonu",
+        "delete_confirm": "Opravdu chcete odstranit tuto šablonu pracovní položky?",
+        "description": "Vytvářejte opakovaně použitelné výchozí sady pro nové pracovní položky (název, popis, přiřazení, priorita a další). Šablona může platit pro celý pracovní prostor nebo jen pro jeden projekt.",
+        "edit_template": "Upravit šablonu",
+        "form": {
+          "default_values_section_hint": "Když někdo tuto šablonu použije při vytváření pracovní položky, tato pole se vyplní automaticky. Vše je zde volitelné.",
+          "default_values_section_title": "Výchozí hodnoty pracovní položky",
+          "default_work_item_description": "Popis",
+          "default_work_item_description_hint": "Prostý text; uloží se jako popis pracovní položky. Zalomení řádků se zachovají.",
+          "default_work_item_description_placeholder": "Text, který se má ve výchozím stavu zobrazit v nové pracovní položce",
+          "default_work_item_name": "Název",
+          "default_work_item_name_placeholder": "např. [Chyba] …",
+          "modal_intro": "Pojmenujte šablonu a přidejte krátkou poznámku pro tým. Poté nastavte výchozí hodnoty pracovní položky — stejný druh názvu, popisu, přiřazení a priority, jaký používáte při vytváření pracovní položky.",
+          "name_required": "Název šablony je povinný",
+          "scope_hint": "Ponechte pole projekt prázdné, aby byla šablona dostupná ve všech projektech. Pole specifická pro projekt (stav, štítky, cyklus, moduly) lze uložit pouze tehdy, je-li vybrán projekt.",
+          "scope_hint_short": "Volitelné. Pokud je pole prázdné, je šablona dostupná ve všech projektech. Je-li nastaveno, návrhy přiřazených osob se omezí na daný projekt; jinak se použijí členové pracovního prostoru.",
+          "scope_project": "Omezit na jeden projekt (volitelné)",
+          "template_name_label": "Název šablony",
+          "template_name_placeholder": "např. Hlášení chyby",
+          "template_note_label": "Popis (pro váš tým)",
+          "template_note_placeholder": "K čemu tato šablona slouží (volitelné; nejedná se o popis pracovní položky)."
+        },
+        "heading": "Šablony pracovních položek",
+        "table": {
+          "name": "Šablona",
+          "project": "Projekt",
+          "scope": "Rozsah",
+          "workspace_wide": "Všechny projekty"
+        },
+        "title": "Šablony pracovních položek",
+        "toasts": {
+          "create_failed": {
+            "message": "Zkontrolujte prosím formulář a zkuste to znovu.",
+            "title": "Šablonu se nepodařilo vytvořit"
+          },
+          "created": {
+            "message": "Šablona pracovní položky byla uložena.",
+            "title": "Šablona vytvořena"
+          },
+          "delete_failed": {
+            "message": "Zkuste to prosím znovu.",
+            "title": "Nepodařilo se odstranit"
+          },
+          "deleted": {
+            "message": "Šablona pracovní položky byla odstraněna.",
+            "title": "Šablona odstraněna"
+          },
+          "save_failed": {
+            "message": "Zkontrolujte prosím formulář a zkuste to znovu.",
+            "title": "Šablonu se nepodařilo uložit"
+          },
+          "saved": {
+            "message": "Šablona pracovní položky byla aktualizována.",
+            "title": "Šablona uložena"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "Přidat typ",
+        "delete_confirm": "Odstranit tento typ pracovní položky? Stávající pracovní položky si zachovají svá data.",
+        "description": "Definujte typy pracovních položek s vlastní identitou, vlastními vlastnostmi a rozsahem projektů. Typy můžete zapínat a vypínat, aniž by to ovlivnilo stávající položky.",
+        "edit_type": "Upravit typ",
+        "epic_badge": "Epika",
+        "form": {
+          "description_label": "Popis",
+          "is_active": "Aktivní",
+          "is_epic": "Typ epika",
+          "modal_intro": "Pojmenujte typ, vyberte ikonu a přiřaďte pouze vlastnosti, které tento druh práce potřebuje. Přiřaďte jej k projektům, ve kterých má být dostupný.",
+          "name_label": "Název",
+          "name_required": "Název typu je povinný",
+          "projects_hint": "Ponechte prázdné, chcete-li typ zatím ponechat v knihovně bez přiřazení k projektu.",
+          "projects_label": "Projekty",
+          "properties_heading": "Vlastní vlastnosti",
+          "property": {
+            "active_checkbox": "Aktivní",
+            "add": "Přidat vlastnost",
+            "description_label": "Popis",
+            "empty": "Zatím žádné vlastní vlastnosti.",
+            "inactive": "Neaktivní",
+            "mandatory": "Povinné",
+            "mandatory_checkbox": "Povinné při vytváření pracovních položek",
+            "title_label": "Název",
+            "type_label": "Typ",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Datum",
+              "dropdown": "Rozbalovací seznam",
+              "member_picker": "Člen",
+              "number": "Číslo",
+              "text": "Text"
+            }
+          }
+        },
+        "table": {
+          "name": "Typ",
+          "no_projects": "Nepřiřazeno",
+          "projects": "Projekty",
+          "properties": "Vlastnosti",
+          "status": "Aktivní"
+        },
+        "title": "Typy pracovních položek",
+        "toasts": {
+          "delete_failed": {
+            "message": "Zkuste to prosím znovu.",
+            "title": "Nepodařilo se odstranit"
+          },
+          "deleted": {
+            "message": "Typ pracovní položky byl odstraněn.",
+            "title": "Typ odstraněn"
+          },
+          "save_failed": {
+            "message": "Zkontrolujte prosím formulář a zkuste to znovu.",
+            "title": "Typ se nepodařilo uložit"
+          },
+          "saved": {
+            "message": "Typ pracovní položky byl uložen.",
+            "title": "Typ uložen"
+          }
+        }
+      }
+    }
   }
 }

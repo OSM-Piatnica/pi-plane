@@ -1,18 +1,26 @@
 {
-  "appearance": "Görünüm",
-  "auth": {
-    "common": {
-      "password": {
-        "current_password": {
-          "placeholder": "Mevcut şifreyi girin"
-        }
-      }
+  "account_settings": {
+    "api_tokens": {
+      "heading": "Kişisel Erişim Tokenları"
     }
   },
+  "approve": "Onayla",
   "duration": "Süre",
   "duration_days": "{count, plural, other {# gün}}",
   "epic": {
     "all": "Tüm Epikler"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "Virgülle ayrılmış CSV olarak dışa aktarın.",
+      "short_description": "CSV virgül",
+      "title": "CSV (virgül)"
+    },
+    "csv_semicolon": {
+      "description": "Excel için noktalı virgülle ayrılmış CSV olarak dışa aktarın.",
+      "short_description": "CSV noktalı virgül",
+      "title": "CSV (noktalı virgül, Excel)"
+    }
   },
   "importer": {
     "github": {
@@ -27,12 +35,97 @@
   "issue": {
     "add": {
       "duration": "Süre ekle"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue}, {related} tamamlanana kadar başlayamaz (engellendi ilişkisi).",
+          "blocking": "{issue}, {related} başlamadan önce tamamlanmalıdır (engelliyor ilişkisi).",
+          "finish_after": "{issue}, {related}'dan önce tamamlanamaz (sonra biter ilişkisi).",
+          "finish_before": "{issue}, {related} tarihinde veya öncesinde tamamlanmalıdır (önce biter ilişkisi).",
+          "start_after": "{issue}, {related}'dan önce başlayamaz (sonra başlar ilişkisi).",
+          "start_before": "{issue}, {related} tarihinde veya öncesinde başlamalıdır (önce başlar ilişkisi)."
+        },
+        "status": {
+          "finish_after": "{issue}, {related} tamamlanana kadar tamamlanamaz (sonra biter ilişkisi).",
+          "start_after": "{issue}, {related} başlayana kadar başlayamaz (sonra başlar ilişkisi)."
+        }
+      },
+      "date_conflict": "Bu tarihler mevcut bağımlılıklarla çelişiyor. İlgili iş öğelerini düzenleyin veya önce bağımlılığı kaldırın.",
+      "dependency_create_failed": "Bağımlılık oluşturulamadı. Lütfen tekrar deneyin.",
+      "dependency_created": "İş öğesi bağımlılığı başarıyla oluşturuldu."
     }
   },
-  "profile": {
-    "actions": {
-      "appearance": "Görünüm"
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "Çalışmayı tekrarlayan dönemlerde zamana bağlayın.",
+        "label": "Döngüler"
+      },
+      "description": "Bu proje için hangi özelliklerin etkinleştirileceğini seçin.",
+      "intake": {
+        "description": "Gelen işi projeye eklemeden önce değerlendirin.",
+        "label": "Talep"
+      },
+      "modules": {
+        "description": "İşi alt-proje benzeri yapılar halinde gruplandırın.",
+        "label": "Modüller"
+      },
+      "pages": {
+        "description": "Proje dokümantasyon sayfaları oluşturun.",
+        "label": "Sayfalar"
+      },
+      "time_tracking": {
+        "description": "İş öğelerinde harcanan zamanı takip edin.",
+        "label": "Zaman takibi"
+      },
+      "title": "Proje özellikleri",
+      "views": {
+        "description": "Sıralamaları, filtreleri ve düzenleri kaydedin ve paylaşın.",
+        "label": "Görünümler"
+      },
+      "work_item_types": {
+        "assign_failed": "Proje oluşturuldu, ancak iş öğesi türleri atanamadı.",
+        "assign_hint": "Bu projede hangi çalışma alanı türlerinin kullanılabilir olacağını seçin.",
+        "assign_label": "İş öğesi türlerini ata",
+        "description": "İş öğelerinde kendi özelliklerine sahip özel türler kullanın.",
+        "label": "İş öğesi türleri",
+        "no_types_hint": "Bu çalışma alanında aktif iş öğesi türü yok. Önce çalışma alanı ayarlarından oluşturun."
+      }
     }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "Onay kapısı ekle",
+      "add_transition": "Geçiş ekle",
+      "allow_creation": "Bu durumda yeni iş öğelerine izin ver",
+      "approval": "Onay",
+      "approval_error": "Onay işlenemedi.",
+      "approved_success": "Geçiş onaylandı.",
+      "blocker_message": "Bu geçişe iş akışı tarafından izin verilmiyor.",
+      "builder_description": "İzin verilen geçişleri ve onay kapılarını yapılandırmak için bir durumu genişletin.",
+      "builder_title": "İş akışı oluşturucu",
+      "disabled_success": "Bu proje için iş akışları devre dışı bırakıldı.",
+      "enable_description": "Etkinleştirildiğinde, iş öğeleri yapılandırılmış durum geçişlerini ve onay kurallarını izler.",
+      "enable_title": "İş akışlarını etkinleştir",
+      "enabled_success": "Bu proje için iş akışları etkinleştirildi.",
+      "enabling": "İş akışı ayarları güncelleniyor...",
+      "paused": "Duraklatıldı",
+      "pending_approval_description": "{from} durumundan {to} durumuna geçiş onay bekliyor.",
+      "pending_approval_title": "Onay gerekli",
+      "rejected_success": "Geçiş reddedildi.",
+      "resolving_approval": "Onay işleniyor...",
+      "save_error": "İş akışı yapılandırması kaydedilemedi.",
+      "save_success": "İş akışı yapılandırması kaydedildi.",
+      "toggle_error": "İş akışı ayarları güncellenemedi.",
+      "transition": "Geçiş",
+      "transitions_configured": "geçiş yapılandırıldı"
+    }
+  },
+  "project_templates": {
+    "loading": "Şablonlar yükleniyor…",
+    "none": "Şablon yok",
+    "select_placeholder": "Bir şablon seçin"
   },
   "project_views": {
     "empty_state": {
@@ -42,12 +135,411 @@
       }
     }
   },
-  "workspace_analytics": {
-    "total_admins": "Toplam Yönetici",
-    "total_guests": "Toplam Misafir",
-    "total_intake": "Toplam Gelir",
-    "total_projects": "Toplam Proje",
-    "total_users": "Toplam Kullanıcı",
-    "total_work_items": "Toplam {entity}"
+  "reject": "Reddet",
+  "settings_empty_state": {
+    "imports": {
+      "description": "Şu anda hiç içe aktarma kaydınız yok. Bir projeye dosya içe aktardığınızda, tüm kayıtlar burada görünecek.",
+      "title": "Henüz içe aktarma yok"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "İş öğesi şablonu uygulanamadı.",
+    "dropdown_placeholder": "Şablon",
+    "loading": "Şablonlar yükleniyor…",
+    "none": "Şablon yok"
+  },
+  "work_item_types": {
+    "loading": "Türler yükleniyor…",
+    "property_values_save_failed": "İş öğesi oluşturuldu, ancak ek özellikler kaydedilemedi. Bunları iş öğesi ayrıntılarından doldurun.",
+    "select_placeholder": "Tür"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "Tüm projeler",
+        "history": {
+          "download": "İndir",
+          "expired": "Süresi Doldu",
+          "exported_by": "Dışa aktaran",
+          "exported_on": "Dışa aktarılma tarihi",
+          "project_count": "{count, plural, other {# proje}}",
+          "projects": "Dışa aktarılan projeler",
+          "status": "Durum"
+        },
+        "statuses": {
+          "completed": "Tamamlandı",
+          "expired": "Süresi Doldu",
+          "failed": "Başarısız",
+          "processing": "İşleniyor"
+        },
+        "tabs": {
+          "export": "Dışa Aktar",
+          "import": "İçe Aktar"
+        },
+        "work_items_export": {
+          "description": "Seçili projelerdeki iş öğelerini CSV, Excel veya JSON olarak dışa aktarın.",
+          "heading": "İş öğelerini dışa aktar"
+        }
+      },
+      "imports": {
+        "file_too_large": "Dosya {size} MB'den küçük olmalıdır.",
+        "history": {
+          "file": "Dosya",
+          "imported_by": "İçe aktaran",
+          "imported_on": "İçe aktarılma tarihi",
+          "project_count": "{count, plural, other {# proje}}",
+          "projects": "Projeler",
+          "reason": "Neden",
+          "status": "Durum"
+        },
+        "previous_imports": "Önceki içe aktarmalar",
+        "work_items": {
+          "description": "“İş öğelerini dışa aktar” ile oluşturulan bir dosyadan (CSV, Excel veya JSON) iş öğelerini mevcut bir projeye içe aktarın.",
+          "heading": "İş öğelerini içe aktar",
+          "import_button": "İş öğelerini içe aktar",
+          "invalid_file_type": "Lütfen bir CSV, Excel (.xlsx) veya JSON dosyası yükleyin.",
+          "no_projects": "Kullanılabilir proje yok",
+          "open_project": "Projeyi aç",
+          "options": {
+            "assignees": "Atananlar",
+            "clear_all": "Tümünü temizle",
+            "cycles": "Döngüler",
+            "dates": "Tarihler ve süre",
+            "heading": "Neler içe aktarılabilir",
+            "labels": "Etiketler",
+            "modules": "Modüller",
+            "parents": "Üst iş öğeleri",
+            "relations": "İş öğeleri arasındaki ilişkiler",
+            "select_all": "Tümünü seç",
+            "subscribers": "Aboneler"
+          },
+          "result_summary": "{count, plural, other {# iş öğesi}} “{name}” içine içe aktarıldı.",
+          "select_file": "Dosya seç",
+          "select_file_label": "Dışa aktarma dosyası",
+          "select_project": "Hedef proje",
+          "select_project_placeholder": "Bir proje seçin",
+          "toasts": {
+            "error": {
+              "message": "İş öğesi içe aktarma başarısız oldu. “İş öğelerini dışa aktar” ile oluşturulan bir dosya kullanın ve tekrar deneyin."
+            },
+            "success": {
+              "message": "\"{name}\" içine {count} iş öğesi içe aktarıldı."
+            }
+          },
+          "warnings_heading": "İçe aktarma sırasında {count, plural, other {# uyarı}}",
+          "warnings_none": "Her şey uyarı olmadan içe aktarıldı."
+        }
+      },
+      "project_templates": {
+        "add_template": "Şablon ekle",
+        "delete_confirm": "Bu proje şablonu kaldırılsın mı? Mevcut projeler etkilenmez.",
+        "description": "Varsayılan özellikler, etkin özellikler, durumlar, etiketler ve iş öğesi türleriyle yeniden kullanılabilir proje kurulumları oluşturun.",
+        "edit_template": "Şablonu düzenle",
+        "form": {
+          "add_label": "Etiket ekle",
+          "add_state": "Durum ekle",
+          "custom_property": {
+            "active_checkbox": "Aktif",
+            "add_property": "Özellik ekle",
+            "default_option_label": "Varsayılan seçenek",
+            "description_label": "Açıklama",
+            "description_placeholder": "Bu özellik için yardım metni (isteğe bağlı)",
+            "dropdown_options_heading": "Açılır liste seçenekleri",
+            "inactive": "Pasif",
+            "mandatory": "Gerekli",
+            "mandatory_checkbox": "İş öğesi oluştururken gerekli",
+            "no_default": "Varsayılan yok",
+            "option_placeholder": "Seçenek adı",
+            "select_mode_label": "Seçim modu",
+            "select_multi": "Çoklu seçim",
+            "select_single": "Tek seçim",
+            "title_label": "Başlık",
+            "title_placeholder": "Özellik adı",
+            "type_label": "Tür",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Tarih",
+              "dropdown": "Açılır liste",
+              "member_picker": "Üye",
+              "number": "Sayı",
+              "text": "Metin"
+            }
+          },
+          "default_assignee": "Varsayılan atanan",
+          "default_cover_image": "Kapak resmi",
+          "default_labels": "Varsayılan etiketler",
+          "default_lead": "Proje lideri",
+          "default_project_description": "Proje açıklaması",
+          "default_project_description_placeholder": "Yeni projeler için varsayılan açıklama",
+          "default_project_identifier": "Proje tanımlayıcısı",
+          "default_project_identifier_placeholder": "örn. PROD",
+          "default_project_name": "Proje adı",
+          "default_project_name_placeholder": "örn. Ürün lansmanı",
+          "default_start_date": "Başlangıç tarihi",
+          "default_target_date": "Hedef tarih",
+          "default_visibility": "Görünürlük",
+          "features": {
+            "cycles": {
+              "description": "Planlama ve teslimat için zamana bağlı yinelemeler.",
+              "label": "Döngüler"
+            },
+            "intake": {
+              "description": "İş öğesi haline gelmeden önce gelen talepleri değerlendirin.",
+              "label": "Talep"
+            },
+            "modules": {
+              "description": "İşi odaklanmış alanlara veya kilometre taşlarına göre gruplandırın.",
+              "label": "Modüller"
+            },
+            "pages": {
+              "description": "Proje wiki'si ve dokümantasyonu.",
+              "label": "Sayfalar"
+            },
+            "time_tracking": {
+              "description": "İş öğelerinde harcanan zamanı kaydedin.",
+              "label": "Zaman takibi"
+            },
+            "views": {
+              "description": "Takım için kaydedilmiş filtreler ve düzenler.",
+              "label": "Görünümler"
+            },
+            "work_item_types": {
+              "description": "Özel özelliklere sahip farklı iş türleri.",
+              "label": "İş öğesi türleri"
+            }
+          },
+          "identifier_invalid": "Yalnızca harf ve rakam kullanın",
+          "identifier_max_char": "Tanımlayıcı en fazla 5 karakter olmalıdır",
+          "label_name_placeholder": "Etiket adı",
+          "labels_empty": "Henüz etiket yok.",
+          "mark_default_state": "Varsayılan durum olarak işaretle",
+          "modal_intro": "Şablonu adlandırın ve ekibiniz için kısa bir not ekleyin. Ardından varsayılan proje değerlerini yapılandırın—bir proje oluştururken kullandığınız türden ayarlar.",
+          "name_required": "Şablon adı gereklidir",
+          "section_features": "Özellikler",
+          "section_features_hint": "Bu şablon uygulandığında hangi isteğe bağlı proje özelliklerinin etkinleştirileceğini seçin.",
+          "section_labels": "Etiketler",
+          "section_labels_hint": "Yeni projeler için varsayılan etiketleri tanımlayın.",
+          "section_properties": "Varsayılan proje özellikleri",
+          "section_states": "Durumlar",
+          "section_states_hint": "Yeni projeler için varsayılan iş akışı durumlarını tanımlayın.",
+          "section_template": "Şablon",
+          "section_work_item_types": "İş öğesi türleri",
+          "section_work_item_types_hint": "Bu şablondan oluşturulan projeler için varsayılan iş öğesi türlerini ve özel özellikleri yapılandırın.",
+          "state_groups": {
+            "backlog": "Bekleme Listesi",
+            "cancelled": "İptal Edildi",
+            "completed": "Tamamlandı",
+            "started": "Başlatıldı",
+            "unstarted": "Başlatılmadı"
+          },
+          "state_name_placeholder": "Durum adı",
+          "states_group_empty": "Bu grupta henüz durum yok.",
+          "template_name_label": "Şablon adı",
+          "template_name_placeholder": "örn. Yazılım teslimatı",
+          "template_note_label": "Açıklama (ekibiniz için)",
+          "template_note_placeholder": "Bu şablonun ne için olduğu (isteğe bağlı).",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "İş öğesi türü ekle",
+              "description": "Bu şablondan oluşturulan projelerde kullanılabilecek ek iş öğesi türleri ekleyin.",
+              "empty": "Henüz ek tür yok.",
+              "title": "Ek türler"
+            },
+            "default_badge": "Varsayılan",
+            "disabled_hint": "Burada türleri yapılandırmak için yukarıdaki Özellikler bölümünden iş öğesi türlerini etkinleştirin.",
+            "epic": {
+              "description": "Görevlere bölünebilen büyük bir iş bütünü.",
+              "disabled": "Bu şablon için epikler devre dışı.",
+              "title": "Epik"
+            },
+            "optional_badge": "İsteğe Bağlı",
+            "properties_empty": "Bu tür için özel özellik yok.",
+            "task": {
+              "description": "Günlük görevler için standart iş öğesi türü.",
+              "title": "Görev"
+            },
+            "type_description_placeholder": "Kısa açıklama (isteğe bağlı)",
+            "type_name_placeholder": "Tür adı"
+          }
+        },
+        "loading": "Şablonlar yükleniyor…",
+        "none": "Şablon yok",
+        "select_placeholder": "Bir şablon seçin",
+        "table": {
+          "download_template": "İndir",
+          "no_description": "Açıklama yok",
+          "use_template": "Şablonu kullan"
+        },
+        "title": "Proje şablonları",
+        "toasts": {
+          "apply_failed": {
+            "message": "Proje şablonu uygulanamadı."
+          },
+          "apply_followup_failed": {
+            "message": "Proje oluşturuldu ancak bazı şablon ayarları uygulanamadı."
+          },
+          "create_failed": {
+            "message": "Lütfen formu kontrol edin ve tekrar deneyin.",
+            "title": "Şablon oluşturulamadı"
+          },
+          "created": {
+            "message": "Proje şablonu kaydedildi.",
+            "title": "Şablon oluşturuldu"
+          },
+          "delete_failed": {
+            "message": "Lütfen tekrar deneyin.",
+            "title": "Silinemedi"
+          },
+          "deleted": {
+            "message": "Proje şablonu silindi.",
+            "title": "Şablon kaldırıldı"
+          },
+          "download_failed": {
+            "message": "Şablon dosyası indirilemedi."
+          },
+          "save_failed": {
+            "message": "Lütfen formu kontrol edin ve tekrar deneyin.",
+            "title": "Şablon kaydedilemedi"
+          },
+          "saved": {
+            "message": "Proje şablonu güncellendi.",
+            "title": "Şablon kaydedildi"
+          },
+          "upload_failed": {
+            "message": "Şablon yüklenemedi. Lütfen dosyayı kontrol edin ve tekrar deneyin."
+          },
+          "uploaded_renamed": {
+            "message": "Bu ad zaten kullanılıyordu, bu yüzden şablon \"{name}\" olarak kaydedildi."
+          },
+          "uploaded": {
+            "message": "\"{name}\" şablonu dosyadan yüklendi."
+          }
+        },
+        "upload_invalid_file": "Lütfen “İndir” düğmesiyle indirilen bir JSON dosyası yükleyin.",
+        "upload_template": "Dosyadan yükle",
+        "upload_too_large": "Dosya {size} MB'den küçük olmalıdır."
+      },
+      "work_item_templates": {
+        "add_template": "Şablon ekle",
+        "delete_confirm": "Bu iş öğesi şablonunu kaldırmak istediğinizden emin misiniz?",
+        "description": "Yeni iş öğeleri için yeniden kullanılabilir başlangıç setleri oluşturun (başlık, açıklama, atananlar, öncelik ve daha fazlası). Bir şablon tüm çalışma alanını veya yalnızca bir projeyi kapsayabilir.",
+        "edit_template": "Şablonu düzenle",
+        "form": {
+          "default_values_section_hint": "Biri bir iş öğesi oluştururken bu şablonu uyguladığında, bu alanlar doldurulur. Buradaki her şey isteğe bağlıdır.",
+          "default_values_section_title": "Varsayılan iş öğesi değerleri",
+          "default_work_item_description": "Açıklama",
+          "default_work_item_description_hint": "Düz metin; iş öğesi açıklaması olarak kaydedilir. Satır sonları korunur.",
+          "default_work_item_description_placeholder": "Yeni iş öğesinde varsayılan olarak görünmesi gereken metin",
+          "default_work_item_name": "Başlık",
+          "default_work_item_name_placeholder": "örn. [Hata] …",
+          "modal_intro": "Şablonu adlandırın ve takım için kısa bir not ekleyin. Ardından varsayılan iş öğesi değerlerini belirleyin—bir iş öğesi oluştururken kullandığınız türden başlık, açıklama, atananlar ve öncelik.",
+          "name_required": "Şablon adı gereklidir",
+          "scope_hint": "Bu şablonu her projede kullanılabilir yapmak için projeyi boş bırakın. Projeye özel alanlar (durum, etiketler, döngü, modüller) yalnızca bir proje seçildiğinde kaydedilebilir.",
+          "scope_hint_short": "İsteğe bağlı. Boşsa, şablon tüm projelerde kullanılabilir. Ayarlandığında, atanan önerileri o projeyle sınırlıdır; aksi takdirde çalışma alanı üyeleri kullanılır.",
+          "scope_project": "Bir projeyle sınırla (isteğe bağlı)",
+          "template_name_label": "Şablon adı",
+          "template_name_placeholder": "örn. Hata bildirimi",
+          "template_note_label": "Açıklama (ekibiniz için)",
+          "template_note_placeholder": "Bu şablonun ne için olduğu (isteğe bağlı; bu iş öğesi açıklaması değildir)."
+        },
+        "heading": "İş öğesi şablonları",
+        "table": {
+          "name": "Şablon",
+          "project": "Proje",
+          "scope": "Kapsam",
+          "workspace_wide": "Tüm projeler"
+        },
+        "title": "İş öğesi şablonları",
+        "toasts": {
+          "create_failed": {
+            "message": "Lütfen formu kontrol edin ve tekrar deneyin.",
+            "title": "Şablon oluşturulamadı"
+          },
+          "created": {
+            "message": "İş öğesi şablonu kaydedildi.",
+            "title": "Şablon oluşturuldu"
+          },
+          "delete_failed": {
+            "message": "Lütfen tekrar deneyin.",
+            "title": "Silinemedi"
+          },
+          "deleted": {
+            "message": "İş öğesi şablonu silindi.",
+            "title": "Şablon kaldırıldı"
+          },
+          "save_failed": {
+            "message": "Lütfen formu kontrol edin ve tekrar deneyin.",
+            "title": "Şablon kaydedilemedi"
+          },
+          "saved": {
+            "message": "İş öğesi şablonu güncellendi.",
+            "title": "Şablon kaydedildi"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "Tür ekle",
+        "delete_confirm": "Bu iş öğesi türü kaldırılsın mı? Mevcut iş öğeleri verilerini korur.",
+        "description": "Kendi kimliğine, özel özelliklerine ve proje kapsamına sahip iş öğesi türleri tanımlayın. Mevcut öğeleri etkilemeden türleri açıp kapatın.",
+        "edit_type": "Türü düzenle",
+        "epic_badge": "Epik",
+        "form": {
+          "description_label": "Açıklama",
+          "is_active": "Aktif",
+          "is_epic": "Epik türü",
+          "modal_intro": "Türü adlandırın, bir simge seçin ve bu tür işin ihtiyaç duyduğu özellikleri ekleyin. Kullanılabilir olması gereken projelere atayın.",
+          "name_label": "Ad",
+          "name_required": "Tür adı gereklidir",
+          "projects_hint": "Türü herhangi bir projeye atamadan kütüphanede tutmak için boş bırakın.",
+          "projects_label": "Projeler",
+          "properties_heading": "Özel özellikler",
+          "property": {
+            "active_checkbox": "Aktif",
+            "add": "Özellik ekle",
+            "description_label": "Açıklama",
+            "empty": "Henüz özel özellik yok.",
+            "inactive": "Pasif",
+            "mandatory": "Gerekli",
+            "mandatory_checkbox": "İş öğesi oluştururken gerekli",
+            "title_label": "Başlık",
+            "type_label": "Tür",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Tarih",
+              "dropdown": "Açılır liste",
+              "member_picker": "Üye",
+              "number": "Sayı",
+              "text": "Metin"
+            }
+          }
+        },
+        "table": {
+          "name": "Tür",
+          "no_projects": "Atanmadı",
+          "projects": "Projeler",
+          "properties": "Özellikler",
+          "status": "Aktif"
+        },
+        "title": "İş öğesi türleri",
+        "toasts": {
+          "delete_failed": {
+            "message": "Lütfen tekrar deneyin.",
+            "title": "Silinemedi"
+          },
+          "deleted": {
+            "message": "İş öğesi türü silindi.",
+            "title": "Tür kaldırıldı"
+          },
+          "save_failed": {
+            "message": "Lütfen formu kontrol edin ve tekrar deneyin.",
+            "title": "Tür kaydedilemedi"
+          },
+          "saved": {
+            "message": "İş öğesi türü kaydedildi.",
+            "title": "Tür kaydedildi"
+          }
+        }
+      }
+    }
   }
 }

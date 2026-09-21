@@ -1,44 +1,545 @@
 {
-  "appearance": "Aussehen",
+  "account_settings": {
+    "api_tokens": {
+      "heading": "Persönliche Zugriffstoken"
+    }
+  },
+  "approve": "Genehmigen",
   "duration": "Dauer",
   "duration_days": "{count, plural, one {# Tag} other {# Tage}}",
   "epic": {
-    "all": "Alle Epiks"
+    "all": "Alle Epics"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "Export als CSV mit Komma als Trennzeichen.",
+      "short_description": "CSV Komma",
+      "title": "CSV (Komma)"
+    },
+    "csv_semicolon": {
+      "description": "Export als CSV mit Semikolon als Trennzeichen für Excel.",
+      "short_description": "CSV Semikolon",
+      "title": "CSV (Semikolon, Excel)"
+    }
   },
   "importer": {
     "github": {
-      "description": "Arbeitselemente aus GitHub-Repositories importieren.",
+      "description": "Arbeitselemente aus GitHub-Repositories importieren und synchronisieren.",
       "title": "GitHub"
     },
     "jira": {
-      "description": "Arbeitselemente und Epiks aus Jira importieren.",
+      "description": "Arbeitselemente und Epics aus Jira-Projekten und Epics importieren.",
       "title": "Jira"
     }
   },
   "issue": {
     "add": {
       "duration": "Dauer hinzufügen"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue} kann erst beginnen, wenn {related} abgeschlossen ist (blockiert durch Beziehung).",
+          "blocking": "{issue} muss abgeschlossen sein, bevor {related} beginnt (blockierende Beziehung).",
+          "finish_after": "{issue} kann nicht vor {related} abgeschlossen werden (endet nach Beziehung).",
+          "finish_before": "{issue} muss spätestens mit {related} abgeschlossen werden (endet vor Beziehung).",
+          "start_after": "{issue} kann nicht vor {related} beginnen (beginnt nach Beziehung).",
+          "start_before": "{issue} muss spätestens mit {related} beginnen (beginnt vor Beziehung)."
+        },
+        "status": {
+          "finish_after": "{issue} kann erst abgeschlossen werden, wenn {related} abgeschlossen ist (endet nach Beziehung).",
+          "start_after": "{issue} kann erst beginnen, wenn {related} begonnen hat (beginnt nach Beziehung)."
+        }
+      },
+      "date_conflict": "Diese Termine stehen im Konflikt mit bestehenden Abhängigkeiten. Passen Sie die verknüpften Arbeitselemente an oder entfernen Sie zuerst die Abhängigkeit.",
+      "dependency_create_failed": "Abhängigkeit konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
+      "dependency_created": "Die Abhängigkeit des Arbeitselements wurde erfolgreich erstellt."
     }
   },
-  "profile": {
-    "actions": {
-      "appearance": "Aussehen"
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "Zeitlich begrenzte Arbeit in wiederkehrenden Perioden.",
+        "label": "Zyklen"
+      },
+      "description": "Wählen Sie aus, welche Funktionen für dieses Projekt aktiviert sind.",
+      "intake": {
+        "description": "Eingehende Arbeit sichten, bevor sie dem Projekt hinzugefügt wird.",
+        "label": "Eingang"
+      },
+      "modules": {
+        "description": "Arbeit in projektähnlichen Untergruppen zusammenfassen.",
+        "label": "Module"
+      },
+      "pages": {
+        "description": "Dokumentationsseiten für das Projekt erstellen.",
+        "label": "Seiten"
+      },
+      "time_tracking": {
+        "description": "Für Arbeitselemente aufgewendete Zeit erfassen.",
+        "label": "Zeiterfassung"
+      },
+      "title": "Projektfunktionen",
+      "views": {
+        "description": "Sortierungen, Filter und Layouts speichern und teilen.",
+        "label": "Ansichten"
+      },
+      "work_item_types": {
+        "assign_failed": "Das Projekt wurde erstellt, aber die Arbeitselementtypen konnten nicht zugewiesen werden.",
+        "assign_hint": "Wählen Sie aus, welche Arbeitsbereichstypen in diesem Projekt verfügbar sein sollen.",
+        "assign_label": "Arbeitselementtypen zuweisen",
+        "description": "Verwenden Sie benutzerdefinierte Typen mit eigenen Eigenschaften für Arbeitselemente.",
+        "label": "Arbeitselementtypen",
+        "no_types_hint": "Keine aktiven Arbeitselementtypen in diesem Arbeitsbereich. Erstellen Sie sie zuerst in den Arbeitsbereichseinstellungen."
+      }
     }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "Genehmigungsschritt hinzufügen",
+      "add_transition": "Übergang hinzufügen",
+      "allow_creation": "Neue Arbeitselemente in diesem Status zulassen",
+      "approval": "Genehmigung",
+      "approval_error": "Genehmigung konnte nicht verarbeitet werden.",
+      "approved_success": "Übergang genehmigt.",
+      "blocker_message": "Dieser Übergang ist laut Workflow nicht zulässig.",
+      "builder_description": "Erweitern Sie einen Status, um zulässige Übergänge und Genehmigungsschritte zu konfigurieren.",
+      "builder_title": "Workflow-Builder",
+      "disabled_success": "Workflows für dieses Projekt deaktiviert.",
+      "enable_description": "Wenn aktiviert, folgen Arbeitselemente den konfigurierten Statusübergängen und Genehmigungsregeln.",
+      "enable_title": "Workflows aktivieren",
+      "enabled_success": "Workflows für dieses Projekt aktiviert.",
+      "enabling": "Workflow-Einstellungen werden aktualisiert...",
+      "paused": "Pausiert",
+      "pending_approval_description": "Der Wechsel von {from} zu {to} wartet auf Genehmigung.",
+      "pending_approval_title": "Genehmigung erforderlich",
+      "rejected_success": "Übergang abgelehnt.",
+      "resolving_approval": "Genehmigung wird verarbeitet...",
+      "save_error": "Workflow-Konfiguration konnte nicht gespeichert werden.",
+      "save_success": "Workflow-Konfiguration gespeichert.",
+      "toggle_error": "Workflow-Einstellungen konnten nicht aktualisiert werden.",
+      "transition": "Übergang",
+      "transitions_configured": "Übergänge konfiguriert"
+    }
+  },
+  "project_templates": {
+    "loading": "Vorlagen werden geladen…",
+    "none": "Keine Vorlage",
+    "select_placeholder": "Vorlage auswählen"
   },
   "project_views": {
     "empty_state": {
       "filter": {
-        "description": "Erstellen Sie eine neue Ansicht.",
+        "description": "Keine Ansichten entsprechen den Suchkriterien. \n Erstellen Sie stattdessen eine neue Ansicht.",
         "title": "Keine passenden Ansichten"
       }
     }
   },
-  "workspace_analytics": {
-    "total_admins": "Gesamtanzahl der Admins",
-    "total_guests": "Gesamtanzahl der Gäste",
-    "total_intake": "Gesamteinnahmen",
-    "total_projects": "Gesamtprojekte",
-    "total_users": "Gesamtanzahl der Benutzer",
-    "total_work_items": "Gesamte {entity}"
+  "reject": "Ablehnen",
+  "settings_empty_state": {
+    "imports": {
+      "description": "Sie haben derzeit keine Importe. Sobald Sie eine Datei in ein Projekt importieren, werden alle Importe hier angezeigt.",
+      "title": "Noch keine Importe"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "Die Arbeitselement-Vorlage konnte nicht angewendet werden.",
+    "dropdown_placeholder": "Vorlage",
+    "loading": "Vorlagen werden geladen…",
+    "none": "Keine Vorlage"
+  },
+  "work_item_types": {
+    "loading": "Typen werden geladen…",
+    "property_values_save_failed": "Das Arbeitselement wurde erstellt, aber die zusätzlichen Eigenschaften konnten nicht gespeichert werden. Füllen Sie sie in den Arbeitselementdetails aus.",
+    "select_placeholder": "Typ"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "Alle Projekte",
+        "history": {
+          "download": "Herunterladen",
+          "expired": "Abgelaufen",
+          "exported_by": "Exportiert von",
+          "exported_on": "Exportiert am",
+          "project_count": "{count, plural, one {# Projekt} other {# Projekte}}",
+          "projects": "Exportierte Projekte",
+          "status": "Status"
+        },
+        "statuses": {
+          "completed": "Abgeschlossen",
+          "expired": "Abgelaufen",
+          "failed": "Fehlgeschlagen",
+          "processing": "Wird verarbeitet"
+        },
+        "tabs": {
+          "export": "Export",
+          "import": "Import"
+        },
+        "work_items_export": {
+          "description": "Exportieren Sie Arbeitselemente aus ausgewählten Projekten als CSV, Excel oder JSON.",
+          "heading": "Arbeitselemente exportieren"
+        }
+      },
+      "imports": {
+        "file_too_large": "Die Datei muss kleiner als {size} MB sein.",
+        "history": {
+          "file": "Datei",
+          "imported_by": "Importiert von",
+          "imported_on": "Importiert am",
+          "project_count": "{count, plural, one {# Projekt} other {# Projekte}}",
+          "projects": "Projekte",
+          "reason": "Grund",
+          "status": "Status"
+        },
+        "previous_imports": "Frühere Importe",
+        "work_items": {
+          "description": "Importieren Sie Arbeitselemente aus einer mit „Arbeitselemente exportieren“ erstellten Datei (CSV, Excel oder JSON) in ein bestehendes Projekt.",
+          "heading": "Arbeitselemente importieren",
+          "import_button": "Arbeitselemente importieren",
+          "invalid_file_type": "Bitte laden Sie eine CSV-, Excel- (.xlsx) oder JSON-Datei hoch.",
+          "no_projects": "Keine Projekte verfügbar",
+          "open_project": "Projekt öffnen",
+          "options": {
+            "assignees": "Zugewiesene",
+            "clear_all": "Alles löschen",
+            "cycles": "Zyklen",
+            "dates": "Termine und Dauer",
+            "heading": "Was importiert werden soll",
+            "labels": "Labels",
+            "modules": "Module",
+            "parents": "Übergeordnete Arbeitselemente",
+            "relations": "Beziehungen zwischen Arbeitselementen",
+            "select_all": "Alle auswählen",
+            "subscribers": "Abonnenten"
+          },
+          "result_summary": "{count, plural, one {# Arbeitselement} other {# Arbeitselemente}} in „{name}“ importiert.",
+          "select_file": "Datei auswählen",
+          "select_file_label": "Exportdatei",
+          "select_project": "Zielprojekt",
+          "select_project_placeholder": "Projekt auswählen",
+          "toasts": {
+            "error": {
+              "message": "Der Import der Arbeitselemente ist fehlgeschlagen. Verwenden Sie eine Datei aus „Arbeitselemente exportieren“ und versuchen Sie es erneut."
+            },
+            "success": {
+              "message": "{count} Arbeitselemente wurden in „{name}“ importiert."
+            }
+          },
+          "warnings_heading": "{count, plural, one {# Warnung} other {# Warnungen}} beim Import",
+          "warnings_none": "Alles wurde ohne Warnungen importiert."
+        }
+      },
+      "project_templates": {
+        "add_template": "Vorlage hinzufügen",
+        "delete_confirm": "Diese Projektvorlage entfernen? Bestehende Projekte sind davon nicht betroffen.",
+        "description": "Erstellen Sie wiederverwendbare Projektkonfigurationen mit Standardeigenschaften, aktivierten Funktionen, Status, Labels und Arbeitselementtypen.",
+        "edit_template": "Vorlage bearbeiten",
+        "form": {
+          "add_label": "Label hinzufügen",
+          "add_state": "Status hinzufügen",
+          "custom_property": {
+            "active_checkbox": "Aktiv",
+            "add_property": "Eigenschaft hinzufügen",
+            "default_option_label": "Standardoption",
+            "description_label": "Beschreibung",
+            "description_placeholder": "Hilfetext für diese Eigenschaft (optional)",
+            "dropdown_options_heading": "Dropdown-Optionen",
+            "inactive": "Inaktiv",
+            "mandatory": "Erforderlich",
+            "mandatory_checkbox": "Erforderlich beim Erstellen von Arbeitselementen",
+            "no_default": "Kein Standardwert",
+            "option_placeholder": "Optionsname",
+            "select_mode_label": "Auswahlmodus",
+            "select_multi": "Mehrfachauswahl",
+            "select_single": "Einzelauswahl",
+            "title_label": "Titel",
+            "title_placeholder": "Name der Eigenschaft",
+            "type_label": "Typ",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Datum",
+              "dropdown": "Dropdown",
+              "member_picker": "Mitglied",
+              "number": "Zahl",
+              "text": "Text"
+            }
+          },
+          "default_assignee": "Standardzuweisung",
+          "default_cover_image": "Titelbild",
+          "default_labels": "Standard-Labels",
+          "default_lead": "Projektleitung",
+          "default_project_description": "Projektbeschreibung",
+          "default_project_description_placeholder": "Standardbeschreibung für neue Projekte",
+          "default_project_identifier": "Projekt-ID",
+          "default_project_identifier_placeholder": "z.B. PROD",
+          "default_project_name": "Projektname",
+          "default_project_name_placeholder": "z.B. Produkteinführung",
+          "default_start_date": "Startdatum",
+          "default_target_date": "Zieldatum",
+          "default_visibility": "Sichtbarkeit",
+          "features": {
+            "cycles": {
+              "description": "Zeitlich begrenzte Iterationen für Planung und Lieferung.",
+              "label": "Zyklen"
+            },
+            "intake": {
+              "description": "Eingehende Anfragen sichten, bevor sie zu Arbeitselementen werden.",
+              "label": "Eingang"
+            },
+            "modules": {
+              "description": "Arbeit in fokussierten Bereichen oder Meilensteinen zusammenfassen.",
+              "label": "Module"
+            },
+            "pages": {
+              "description": "Projekt-Wiki und Dokumentation.",
+              "label": "Seiten"
+            },
+            "time_tracking": {
+              "description": "Für Arbeitselemente aufgewendete Zeit protokollieren.",
+              "label": "Zeiterfassung"
+            },
+            "views": {
+              "description": "Gespeicherte Filter und Layouts für das Team.",
+              "label": "Ansichten"
+            },
+            "work_item_types": {
+              "description": "Unterschiedliche Arbeitstypen mit benutzerdefinierten Eigenschaften.",
+              "label": "Arbeitselementtypen"
+            }
+          },
+          "identifier_invalid": "Verwenden Sie nur Buchstaben und Zahlen",
+          "identifier_max_char": "Die Kennung darf höchstens 5 Zeichen lang sein",
+          "label_name_placeholder": "Labelname",
+          "labels_empty": "Noch keine Labels.",
+          "mark_default_state": "Als Standardstatus markieren",
+          "modal_intro": "Benennen Sie die Vorlage und fügen Sie eine kurze Notiz für Ihr Team hinzu. Konfigurieren Sie anschließend die Standardwerte des Projekts – dieselben Einstellungen, die Sie beim Erstellen eines Projekts verwenden.",
+          "name_required": "Der Vorlagenname ist erforderlich",
+          "section_features": "Funktionen",
+          "section_features_hint": "Wählen Sie aus, welche optionalen Projektfunktionen aktiviert werden, wenn diese Vorlage angewendet wird.",
+          "section_labels": "Labels",
+          "section_labels_hint": "Legen Sie Standard-Labels für neue Projekte fest.",
+          "section_properties": "Standard-Projekteigenschaften",
+          "section_states": "Status",
+          "section_states_hint": "Legen Sie Standard-Workflow-Status für neue Projekte fest.",
+          "section_template": "Vorlage",
+          "section_work_item_types": "Arbeitselementtypen",
+          "section_work_item_types_hint": "Konfigurieren Sie Standard-Arbeitselementtypen und benutzerdefinierte Eigenschaften für Projekte, die aus dieser Vorlage erstellt werden.",
+          "state_groups": {
+            "backlog": "Backlog",
+            "cancelled": "Abgebrochen",
+            "completed": "Abgeschlossen",
+            "started": "Gestartet",
+            "unstarted": "Nicht begonnen"
+          },
+          "state_name_placeholder": "Statusname",
+          "states_group_empty": "Noch keine Status in dieser Gruppe.",
+          "template_name_label": "Vorlagenname",
+          "template_name_placeholder": "z.B. Softwarebereitstellung",
+          "template_note_label": "Beschreibung (für Ihr Team)",
+          "template_note_placeholder": "Wofür diese Vorlage gedacht ist (optional).",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "Arbeitselementtyp hinzufügen",
+              "description": "Fügen Sie weitere Arbeitselementtypen hinzu, die in Projekten aus dieser Vorlage verfügbar sind.",
+              "empty": "Noch keine weiteren Typen.",
+              "title": "Weitere Typen"
+            },
+            "default_badge": "Standard",
+            "disabled_hint": "Aktivieren Sie Arbeitselementtypen oben unter „Funktionen“, um hier Typen zu konfigurieren.",
+            "epic": {
+              "description": "Größere Arbeitseinheit, die sich in Aufgaben aufteilen lässt.",
+              "disabled": "Epics sind für diese Vorlage deaktiviert.",
+              "title": "Epic"
+            },
+            "optional_badge": "Optional",
+            "properties_empty": "Keine benutzerdefinierten Eigenschaften für diesen Typ.",
+            "task": {
+              "description": "Standard-Arbeitselementtyp für alltägliche Aufgaben.",
+              "title": "Aufgabe"
+            },
+            "type_description_placeholder": "Kurzbeschreibung (optional)",
+            "type_name_placeholder": "Typname"
+          }
+        },
+        "loading": "Vorlagen werden geladen…",
+        "none": "Keine Vorlage",
+        "select_placeholder": "Vorlage auswählen",
+        "table": {
+          "download_template": "Herunterladen",
+          "no_description": "Keine Beschreibung",
+          "use_template": "Vorlage verwenden"
+        },
+        "title": "Projektvorlagen",
+        "toasts": {
+          "apply_failed": {
+            "message": "Die Projektvorlage konnte nicht angewendet werden."
+          },
+          "apply_followup_failed": {
+            "message": "Das Projekt wurde erstellt, aber einige Vorlageneinstellungen konnten nicht angewendet werden."
+          },
+          "create_failed": {
+            "message": "Bitte überprüfen Sie das Formular und versuchen Sie es erneut.",
+            "title": "Vorlage konnte nicht erstellt werden"
+          },
+          "created": {
+            "message": "Die Projektvorlage wurde gespeichert.",
+            "title": "Vorlage erstellt"
+          },
+          "delete_failed": {
+            "message": "Bitte versuchen Sie es erneut.",
+            "title": "Löschen fehlgeschlagen"
+          },
+          "deleted": {
+            "message": "Die Projektvorlage wurde gelöscht.",
+            "title": "Vorlage entfernt"
+          },
+          "download_failed": {
+            "message": "Die Vorlagendatei konnte nicht heruntergeladen werden."
+          },
+          "save_failed": {
+            "message": "Bitte überprüfen Sie das Formular und versuchen Sie es erneut.",
+            "title": "Vorlage konnte nicht gespeichert werden"
+          },
+          "saved": {
+            "message": "Die Projektvorlage wurde aktualisiert.",
+            "title": "Vorlage gespeichert"
+          },
+          "upload_failed": {
+            "message": "Die Vorlage konnte nicht hochgeladen werden. Bitte überprüfen Sie die Datei und versuchen Sie es erneut."
+          },
+          "uploaded_renamed": {
+            "message": "Dieser Name war bereits vergeben, daher wurde die Vorlage als „{name}“ gespeichert."
+          },
+          "uploaded": {
+            "message": "Die Vorlage „{name}“ wurde aus der Datei hochgeladen."
+          }
+        },
+        "upload_invalid_file": "Bitte laden Sie eine JSON-Datei hoch, die Sie über die Schaltfläche „Herunterladen“ heruntergeladen haben.",
+        "upload_template": "Aus Datei hochladen",
+        "upload_too_large": "Die Datei muss kleiner als {size} MB sein."
+      },
+      "work_item_templates": {
+        "add_template": "Vorlage hinzufügen",
+        "delete_confirm": "Möchten Sie diese Arbeitselement-Vorlage wirklich entfernen?",
+        "description": "Erstellen Sie wiederverwendbare Startpakete für neue Arbeitselemente (Titel, Beschreibung, Zugewiesene, Priorität und mehr). Eine Vorlage kann für den gesamten Arbeitsbereich oder nur ein Projekt gelten.",
+        "edit_template": "Vorlage bearbeiten",
+        "form": {
+          "default_values_section_hint": "Wenn jemand diese Vorlage beim Erstellen eines Arbeitselements anwendet, werden diese Felder ausgefüllt. Alles hier ist optional.",
+          "default_values_section_title": "Standardwerte für Arbeitselemente",
+          "default_work_item_description": "Beschreibung",
+          "default_work_item_description_hint": "Reiner Text; wird als Beschreibung des Arbeitselements gespeichert. Zeilenumbrüche bleiben erhalten.",
+          "default_work_item_description_placeholder": "Text, der standardmäßig im neuen Arbeitselement erscheinen soll",
+          "default_work_item_name": "Titel",
+          "default_work_item_name_placeholder": "z.B. [Bug] …",
+          "modal_intro": "Benennen Sie die Vorlage und fügen Sie eine kurze Notiz für das Team hinzu. Legen Sie anschließend Standardwerte für Arbeitselemente fest – dieselben Angaben zu Titel, Beschreibung, Zugewiesenen und Priorität, die Sie beim Erstellen eines Arbeitselements verwenden.",
+          "name_required": "Der Vorlagenname ist erforderlich",
+          "scope_hint": "Lassen Sie das Projekt leer, damit diese Vorlage in jedem Projekt verfügbar ist. Projektspezifische Felder (Status, Labels, Zyklus, Module) können nur gespeichert werden, wenn ein Projekt ausgewählt ist.",
+          "scope_hint_short": "Optional. Wenn leer, ist die Vorlage in allen Projekten verfügbar. Wenn festgelegt, werden Vorschläge für Zugewiesene auf dieses Projekt beschränkt; andernfalls werden Mitglieder des Arbeitsbereichs verwendet.",
+          "scope_project": "Auf ein Projekt beschränken (optional)",
+          "template_name_label": "Vorlagenname",
+          "template_name_placeholder": "z.B. Fehlerbericht",
+          "template_note_label": "Beschreibung (für Ihr Team)",
+          "template_note_placeholder": "Wofür diese Vorlage gedacht ist (optional; dies ist nicht die Beschreibung des Arbeitselements)."
+        },
+        "heading": "Arbeitselement-Vorlagen",
+        "table": {
+          "name": "Vorlage",
+          "project": "Projekt",
+          "scope": "Geltungsbereich",
+          "workspace_wide": "Alle Projekte"
+        },
+        "title": "Arbeitselement-Vorlagen",
+        "toasts": {
+          "create_failed": {
+            "message": "Bitte überprüfen Sie das Formular und versuchen Sie es erneut.",
+            "title": "Vorlage konnte nicht erstellt werden"
+          },
+          "created": {
+            "message": "Die Arbeitselement-Vorlage wurde gespeichert.",
+            "title": "Vorlage erstellt"
+          },
+          "delete_failed": {
+            "message": "Bitte versuchen Sie es erneut.",
+            "title": "Löschen fehlgeschlagen"
+          },
+          "deleted": {
+            "message": "Die Arbeitselement-Vorlage wurde gelöscht.",
+            "title": "Vorlage entfernt"
+          },
+          "save_failed": {
+            "message": "Bitte überprüfen Sie das Formular und versuchen Sie es erneut.",
+            "title": "Vorlage konnte nicht gespeichert werden"
+          },
+          "saved": {
+            "message": "Die Arbeitselement-Vorlage wurde aktualisiert.",
+            "title": "Vorlage gespeichert"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "Typ hinzufügen",
+        "delete_confirm": "Diesen Arbeitselementtyp entfernen? Bestehende Arbeitselemente behalten ihre Daten.",
+        "description": "Definieren Sie Arbeitselementtypen mit eigener Identität, benutzerdefinierten Eigenschaften und Projektbereich. Aktivieren oder deaktivieren Sie Typen, ohne bestehende Elemente zu beeinflussen.",
+        "edit_type": "Typ bearbeiten",
+        "epic_badge": "Epic",
+        "form": {
+          "description_label": "Beschreibung",
+          "is_active": "Aktiv",
+          "is_epic": "Epic-Typ",
+          "modal_intro": "Benennen Sie den Typ, wählen Sie ein Symbol und fügen Sie nur die Eigenschaften hinzu, die diese Art von Arbeit benötigt. Weisen Sie ihn den Projekten zu, in denen er verfügbar sein soll.",
+          "name_label": "Name",
+          "name_required": "Der Typname ist erforderlich",
+          "projects_hint": "Leer lassen, um den Typ in der Bibliothek zu behalten, ohne ihn bereits einem Projekt zuzuweisen.",
+          "projects_label": "Projekte",
+          "properties_heading": "Benutzerdefinierte Eigenschaften",
+          "property": {
+            "active_checkbox": "Aktiv",
+            "add": "Eigenschaft hinzufügen",
+            "description_label": "Beschreibung",
+            "empty": "Noch keine benutzerdefinierten Eigenschaften.",
+            "inactive": "Inaktiv",
+            "mandatory": "Erforderlich",
+            "mandatory_checkbox": "Erforderlich beim Erstellen von Arbeitselementen",
+            "title_label": "Titel",
+            "type_label": "Typ",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Datum",
+              "dropdown": "Dropdown",
+              "member_picker": "Mitglied",
+              "number": "Zahl",
+              "text": "Text"
+            }
+          }
+        },
+        "table": {
+          "name": "Typ",
+          "no_projects": "Nicht zugewiesen",
+          "projects": "Projekte",
+          "properties": "Eigenschaften",
+          "status": "Aktiv"
+        },
+        "title": "Arbeitselementtypen",
+        "toasts": {
+          "delete_failed": {
+            "message": "Bitte versuchen Sie es erneut.",
+            "title": "Löschen fehlgeschlagen"
+          },
+          "deleted": {
+            "message": "Der Arbeitselementtyp wurde gelöscht.",
+            "title": "Typ entfernt"
+          },
+          "save_failed": {
+            "message": "Bitte überprüfen Sie das Formular und versuchen Sie es erneut.",
+            "title": "Typ konnte nicht gespeichert werden"
+          },
+          "saved": {
+            "message": "Der Arbeitselementtyp wurde gespeichert.",
+            "title": "Typ gespeichert"
+          }
+        }
+      }
+    }
   }
 }
