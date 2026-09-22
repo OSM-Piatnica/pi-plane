@@ -264,7 +264,7 @@ const InviteMemberInput = observer(function InviteMemberInput(props: InviteMembe
 export function InviteMembers(props: Props) {
   const { finishOnboarding, workspace } = props;
 
-  const { t } = useTranslation();
+  const { t, currentLocale } = useTranslation();
   const [isInvitationDisabled, setIsInvitationDisabled] = useState(true);
 
   const {
@@ -296,6 +296,7 @@ export function InviteMembers(props: Props) {
         emails: payload.emails.map((email) => ({
           email: email.email,
           role: email.role,
+          language: currentLocale,
         })),
       })
       .then(async () => {
