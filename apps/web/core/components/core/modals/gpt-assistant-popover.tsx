@@ -13,6 +13,7 @@ import { AlertCircle } from "lucide-react";
 import { Popover, Transition } from "@headlessui/react";
 // plane imports
 import type { EditorRefApi } from "@plane/editor";
+import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { Input } from "@plane/ui";
@@ -60,6 +61,7 @@ export function GptAssistantPopover(props: Props) {
   const [invalidResponse, setInvalidResponse] = useState(false);
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
+  const { t } = useTranslation();
   // refs
   const editorRef = useRef<EditorRefApi>(null);
   const responseRef = useRef<EditorRefApi>(null);
@@ -97,7 +99,7 @@ export function GptAssistantPopover(props: Props) {
 
     setToast({
       type: TOAST_TYPE.ERROR,
-      title: "Error!",
+      title: t("toast.error"),
       message: errorMessage,
     });
 
@@ -123,7 +125,7 @@ export function GptAssistantPopover(props: Props) {
   const handleInvalidTask = () => {
     setToast({
       type: TOAST_TYPE.ERROR,
-      title: "Error!",
+      title: t("toast.error"),
       message: "Please enter some task to get AI assistance.",
     });
   };

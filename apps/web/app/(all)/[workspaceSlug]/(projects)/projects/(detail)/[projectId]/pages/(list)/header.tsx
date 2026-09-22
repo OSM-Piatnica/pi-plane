@@ -16,6 +16,7 @@ import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { TPage } from "@plane/types";
 // plane ui
 import { Breadcrumbs, Header } from "@plane/ui";
+import { useTranslation } from "@plane/i18n";
 // helpers
 import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
 // hooks
@@ -27,6 +28,8 @@ import { EPageStoreType, usePageStore } from "@/plane-web/hooks/store";
 export const PagesListHeader = observer(function PagesListHeader() {
   // states
   const [isCreatingPage, setIsCreatingPage] = useState(false);
+  // translation
+  const { t } = useTranslation();
   // router
   const router = useRouter();
   const { workspaceSlug, projectId } = useParams();
@@ -51,7 +54,7 @@ export const PagesListHeader = observer(function PagesListHeader() {
       .catch((err) => {
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
+          title: t("toast.error"),
           message: err?.data?.error || "Page could not be created. Please try again.",
         });
       })

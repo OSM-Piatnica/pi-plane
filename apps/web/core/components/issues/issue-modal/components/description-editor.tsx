@@ -98,7 +98,7 @@ export const IssueDescriptionEditor = observer(function IssueDescriptionEditor(p
     } else {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
+        title: t("toast.error"),
         message: "Editor is still processing changes. Please wait before proceeding.",
       });
       event.preventDefault(); // Prevent default action if editor is not ready to discard
@@ -128,7 +128,7 @@ export const IssueDescriptionEditor = observer(function IssueDescriptionEditor(p
         if (res.response === "")
           setToast({
             type: TOAST_TYPE.ERROR,
-            title: "Error!",
+            title: t("toast.error"),
             message:
               "Work item title isn't informative enough to generate the description. Please try with a different title.",
           });
@@ -140,13 +140,13 @@ export const IssueDescriptionEditor = observer(function IssueDescriptionEditor(p
         if (err.status === 429)
           setToast({
             type: TOAST_TYPE.ERROR,
-            title: "Error!",
+            title: t("toast.error"),
             message: error || "You have reached the maximum number of requests of 50 requests per month per user.",
           });
         else
           setToast({
             type: TOAST_TYPE.ERROR,
-            title: "Error!",
+            title: t("toast.error"),
             message: error || "Some error occurred. Please try again.",
           });
       })

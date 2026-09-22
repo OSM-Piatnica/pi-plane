@@ -597,6 +597,8 @@
       "no_matching_results": "Nicio potrivire găsită",
       "min_chars": "Tastează cel puțin {count} caractere pentru a căuta",
       "error": "Eroare la preluarea rezultatelor căutării",
+      "view_less": "Arată mai puțin",
+      "view_all": "Arată tot",
       "no_results": {
         "title": "Nicio potrivire găsită",
         "description": "Elimină criteriile de căutare pentru a vedea toate rezultatele"

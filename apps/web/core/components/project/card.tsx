@@ -12,6 +12,7 @@ import { ArchiveRestoreIcon, Settings, UserPlus } from "lucide-react";
 // plane imports
 import { EUserPermissions, EUserPermissionsLevel, IS_FAVORITE_MENU_OPEN } from "@plane/constants";
 import { useLocalStorage } from "@plane/hooks";
+import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { Logo } from "@plane/propel/emoji-icon-picker";
 import { LinkIcon, LockIcon, NewTabIcon, TrashIcon, CheckIcon } from "@plane/propel/icons";
@@ -40,6 +41,8 @@ type Props = {
 
 export const ProjectCard = observer(function ProjectCard(props: Props) {
   const { project } = props;
+  // translation
+  const { t } = useTranslation();
   // states
   const [deleteProjectModalOpen, setDeleteProjectModal] = useState(false);
   const [joinProjectModalOpen, setJoinProjectModal] = useState(false);
@@ -80,7 +83,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
     setPromiseToast(addToFavoritePromise, {
       loading: "Adding project to favorites...",
       success: {
-        title: "Success!",
+        title: t("toast.success"),
         message: () => "Project added to favorites.",
         actionItems: () => {
           if (!isFavoriteMenuOpen) toggleFavoriteMenu(true);
@@ -88,7 +91,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
         },
       },
       error: {
-        title: "Error!",
+        title: t("toast.error"),
         message: () => "Couldn't add the project to favorites. Please try again.",
       },
     });
@@ -101,11 +104,11 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
     setPromiseToast(removeFromFavoritePromise, {
       loading: "Removing project from favorites...",
       success: {
-        title: "Success!",
+        title: t("toast.success"),
         message: () => "Project removed from favorites.",
       },
       error: {
-        title: "Error!",
+        title: t("toast.error"),
         message: () => "Couldn't remove the project from favorites. Please try again.",
       },
     });

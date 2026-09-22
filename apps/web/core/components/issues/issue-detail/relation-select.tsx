@@ -8,6 +8,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
 
+import { useTranslation } from "@plane/i18n";
 import { EditIcon, CloseIcon } from "@plane/propel/icons";
 // Plane
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
@@ -38,6 +39,8 @@ type TIssueRelationSelect = {
 
 export const IssueRelationSelect = observer(function IssueRelationSelect(props: TIssueRelationSelect) {
   const { className = "", workspaceSlug, projectId, issueId, relationKey, disabled = false } = props;
+  // i18n
+  const { t } = useTranslation();
   // hooks
   const { getProjectById } = useProject();
   const {
@@ -56,7 +59,7 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
     if (data.length === 0) {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
+        title: t("toast.error"),
         message: "Please select at least one work item.",
       });
       return;
@@ -76,7 +79,7 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
       .catch((error) => {
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
+          title: t("toast.error"),
           message: getIssueApiErrorMessage(error, "Could not create relation."),
         });
       });

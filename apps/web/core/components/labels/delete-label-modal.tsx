@@ -8,6 +8,7 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // types
+import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { IIssueLabel } from "@plane/types";
 // ui
@@ -29,6 +30,7 @@ export const DeleteLabelModal = observer(function DeleteLabelModal(props: Props)
   const { deleteLabel } = useLabel();
   // states
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const { t } = useTranslation();
 
   const handleClose = () => {
     onClose();
@@ -49,7 +51,7 @@ export const DeleteLabelModal = observer(function DeleteLabelModal(props: Props)
         const error = err?.error || "Label could not be deleted. Please try again.";
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
+          title: t("toast.error"),
           message: error,
         });
       });

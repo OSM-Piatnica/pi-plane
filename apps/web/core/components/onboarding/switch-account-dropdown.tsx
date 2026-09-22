@@ -7,6 +7,7 @@
 import { useState } from "react";
 import { observer } from "mobx-react";
 import { Menu, Transition } from "@headlessui/react";
+import { useTranslation } from "@plane/i18n";
 // ui
 import { cn, getFileURL } from "@plane/utils";
 // helpers
@@ -21,6 +22,8 @@ type TSwitchAccountDropdownProps = {
 
 export const SwitchAccountDropdown = observer(function SwitchAccountDropdown(props: TSwitchAccountDropdownProps) {
   const { fullName } = props;
+  // plane hooks
+  const { t } = useTranslation();
   // states
   const [showSwitchAccountModal, setShowSwitchAccountModal] = useState(false);
   // store hooks
@@ -71,7 +74,7 @@ export const SwitchAccountDropdown = observer(function SwitchAccountDropdown(pro
               }
               onClick={() => setShowSwitchAccountModal(true)}
             >
-              Wrong e-mail address?
+              {t("onboarding.switch_account.wrong_email")}
             </Menu.Item>
           </Menu.Items>
         </Transition>

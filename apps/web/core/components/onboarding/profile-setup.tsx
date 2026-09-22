@@ -57,19 +57,26 @@ enum EProfileSetupSteps {
   USER_PERSONALIZATION = "USER_PERSONALIZATION",
 }
 
-const USER_ROLE = ["Individual contributor", "Senior Leader", "Manager", "Executive", "Freelancer", "Student"];
+const USER_ROLE = [
+  { value: "Individual contributor", labelKey: "onboarding.profile.seniority_levels.individual_contributor" },
+  { value: "Senior Leader", labelKey: "onboarding.profile.seniority_levels.senior_leader" },
+  { value: "Manager", labelKey: "onboarding.profile.seniority_levels.manager" },
+  { value: "Executive", labelKey: "onboarding.profile.seniority_levels.executive" },
+  { value: "Freelancer", labelKey: "onboarding.profile.seniority_levels.freelancer" },
+  { value: "Student", labelKey: "onboarding.profile.seniority_levels.student" },
+];
 
 const USER_DOMAIN = [
-  "Engineering",
-  "Product",
-  "Marketing",
-  "Sales",
-  "Operations",
-  "Legal",
-  "Finance",
-  "Human Resources",
-  "Project",
-  "Other",
+  { value: "Engineering", labelKey: "onboarding.profile.domains.engineering" },
+  { value: "Product", labelKey: "onboarding.profile.domains.product" },
+  { value: "Marketing", labelKey: "onboarding.profile.domains.marketing" },
+  { value: "Sales", labelKey: "onboarding.profile.domains.sales" },
+  { value: "Operations", labelKey: "onboarding.profile.domains.operations" },
+  { value: "Legal", labelKey: "onboarding.profile.domains.legal" },
+  { value: "Finance", labelKey: "onboarding.profile.domains.finance" },
+  { value: "Human Resources", labelKey: "onboarding.profile.domains.human_resources" },
+  { value: "Project", labelKey: "onboarding.profile.domains.project" },
+  { value: "Other", labelKey: "onboarding.profile.domains.other" },
 ];
 
 const authService = new AuthService();
@@ -137,8 +144,8 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
       ]);
       setToast({
         type: TOAST_TYPE.SUCCESS,
-        title: "Success",
-        message: "Profile setup completed!",
+        title: t("toast.success"),
+        message: t("onboarding.profile.toast.profile_setup_completed"),
       });
       // For Invited Users, they will skip all other steps and finish onboarding.
       if (totalSteps <= 2) {
@@ -147,8 +154,8 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
     } catch {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error",
-        message: "Profile setup failed. Please try again!",
+        title: t("toast.error"),
+        message: t("onboarding.profile.toast.profile_setup_failed"),
       });
     }
   };
@@ -172,8 +179,8 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
     } catch {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error",
-        message: "User details update failed. Please try again!",
+        title: t("toast.error"),
+        message: t("onboarding.profile.toast.user_details_update_failed"),
       });
     }
   };
@@ -190,8 +197,8 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
       ]);
       setToast({
         type: TOAST_TYPE.SUCCESS,
-        title: "Success",
-        message: "Profile setup completed!",
+        title: t("toast.success"),
+        message: t("onboarding.profile.toast.profile_setup_completed"),
       });
       // For Invited Users, they will skip all other steps and finish onboarding.
       if (totalSteps <= 2) {
@@ -200,8 +207,8 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
     } catch {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error",
-        message: "Profile setup failed. Please try again!",
+        title: t("toast.error"),
+        message: t("onboarding.profile.toast.profile_setup_failed"),
       });
     }
   };
@@ -275,7 +282,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                         </div>
                       </div>
                       <div className="pt-1 text-13 font-medium text-accent-secondary hover:text-tertiary">
-                        Choose image
+                        {t("onboarding.profile.choose_image")}
                       </div>
                     </div>
                   ) : (
@@ -296,17 +303,17 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                     className="text-13 font-medium text-tertiary after:ml-0.5 after:text-danger-primary after:content-['*']"
                     htmlFor="first_name"
                   >
-                    First name
+                    {t("first_name")}
                   </label>
                   <Controller
                     control={control}
                     name="first_name"
                     rules={{
-                      required: "First name is required",
+                      required: t("onboarding.profile.first_name_required"),
                       validate: validatePersonName,
                       maxLength: {
                         value: 50,
-                        message: "First name must be within 50 characters.",
+                        message: t("onboarding.profile.first_name_max_length"),
                       },
                     }}
                     render={({ field: { value, onChange, ref } }) => (
@@ -319,7 +326,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                         onChange={onChange}
                         ref={ref}
                         hasError={Boolean(errors.first_name)}
-                        placeholder="Wilbur"
+                        placeholder={t("onboarding.profile.first_name_placeholder")}
                         className="w-full border-strong"
                         autoComplete="on"
                       />
@@ -334,17 +341,17 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                     className="text-13 font-medium text-tertiary after:ml-0.5 after:text-danger-primary after:content-['*']"
                     htmlFor="last_name"
                   >
-                    Last name
+                    {t("last_name")}
                   </label>
                   <Controller
                     control={control}
                     name="last_name"
                     rules={{
-                      required: "Last name is required",
+                      required: t("onboarding.profile.last_name_required"),
                       validate: validatePersonName,
                       maxLength: {
                         value: 50,
-                        message: "Last name must be within 50 characters.",
+                        message: t("onboarding.profile.last_name_max_length"),
                       },
                     }}
                     render={({ field: { value, onChange, ref } }) => (
@@ -356,7 +363,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                         onChange={onChange}
                         ref={ref}
                         hasError={Boolean(errors.last_name)}
-                        placeholder="Wright"
+                        placeholder={t("onboarding.profile.last_name_placeholder")}
                         className="w-full border-strong"
                         autoComplete="on"
                       />
@@ -371,7 +378,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                 <>
                   <div className="space-y-1">
                     <label className="text-13 font-medium text-tertiary" htmlFor="password">
-                      Set a password ({t("common.optional")})
+                      {t("auth.common.password.set_password")} ({t("common.optional")})
                     </label>
                     <Controller
                       control={control}
@@ -388,7 +395,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                             onChange={onChange}
                             ref={ref}
                             hasError={Boolean(errors.password)}
-                            placeholder="New password..."
+                            placeholder={t("onboarding.profile.new_password_placeholder")}
                             className="w-full border-[0.5px] border-subtle pr-12 placeholder:text-placeholder"
                             onFocus={() => setIsPasswordInputFocused(true)}
                             onBlur={() => setIsPasswordInputFocused(false)}
@@ -420,7 +427,11 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                       rules={{
                         required: watch("password") ? true : false,
                         validate: (value) =>
-                          watch("password") ? (value === watch("password") ? true : "Passwords don't match") : true,
+                          watch("password")
+                            ? value === watch("password")
+                              ? true
+                              : t("auth.common.password.errors.match")
+                            : true,
                       }}
                       render={({ field: { value, onChange, ref } }) => (
                         <div className="relative flex items-center rounded-md">
@@ -466,29 +477,29 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                   className="text-13 font-medium text-tertiary after:ml-0.5 after:text-danger-primary after:content-['*']"
                   htmlFor="role"
                 >
-                  What role are you working on? Choose one.
+                  {t("onboarding.profile.role_question")}
                 </label>
                 <Controller
                   control={control}
                   name="role"
                   rules={{
-                    required: "This field is required",
+                    required: t("common.errors.required"),
                   }}
                   render={({ field: { value, onChange } }) => (
                     <div className="flex flex-wrap gap-2 overflow-auto py-2 break-all">
                       {USER_ROLE.map((userRole) => (
                         <div
-                          key={userRole}
+                          key={userRole.value}
                           className={cn(
                             "shrink-0 rounded border-[0.5px] px-3 py-1.5 text-13 font-medium hover:cursor-pointer hover:bg-surface-2",
                             {
-                              "border-accent-strong": value === userRole,
-                              "border-strong": value !== userRole,
+                              "border-accent-strong": value === userRole.value,
+                              "border-strong": value !== userRole.value,
                             }
                           )}
-                          onClick={() => onChange(userRole)}
+                          onClick={() => onChange(userRole.value)}
                         >
-                          {userRole}
+                          {t(userRole.labelKey)}
                         </div>
                       ))}
                     </div>
@@ -501,35 +512,35 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                   className="text-13 font-medium text-tertiary after:ml-0.5 after:text-danger-primary after:content-['*']"
                   htmlFor="use_case"
                 >
-                  What is your domain expertise? Choose one or more.
+                  {t("onboarding.profile.domain_question")}
                 </label>
                 <Controller
                   control={control}
                   name="use_case"
                   rules={{
-                    required: "Please select at least one option",
-                    validate: (value) => (value && value.length > 0) || "Please select at least one option",
+                    required: t("onboarding.usecase.select_at_least_one"),
+                    validate: (value) => (value && value.length > 0) || t("onboarding.usecase.select_at_least_one"),
                   }}
                   render={({ field: { value, onChange } }) => (
                     <div className="flex flex-wrap gap-2 overflow-auto py-2 break-all">
                       {USER_DOMAIN.map((userDomain) => {
-                        const isSelected = value?.includes(userDomain) || false;
+                        const isSelected = value?.includes(userDomain.value) || false;
                         return (
                           <div
-                            key={userDomain}
+                            key={userDomain.value}
                             className={`flex-shrink-0 border-[0.5px] hover:cursor-pointer hover:bg-surface-2 ${
                               isSelected ? "border-accent-strong" : "border-strong"
                             } rounded px-3 py-1.5 text-13 font-medium`}
                             onClick={() => {
                               const currentValue = value || [];
                               if (isSelected) {
-                                onChange(currentValue.filter((item) => item !== userDomain));
+                                onChange(currentValue.filter((item) => item !== userDomain.value));
                               } else {
-                                onChange([...currentValue, userDomain]);
+                                onChange([...currentValue, userDomain.value]);
                               }
                             }}
                           >
-                            {userDomain}
+                            {t(userDomain.labelKey)}
                           </div>
                         );
                       })}
@@ -541,7 +552,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
             </>
           )}
           <Button variant="primary" type="submit" size="xl" className="w-full" disabled={isButtonDisabled}>
-            {isSubmitting ? <Spinner height="20px" width="20px" /> : "Continue"}
+            {isSubmitting ? <Spinner height="20px" width="20px" /> : t("common.continue")}
           </Button>
         </form>
       </div>

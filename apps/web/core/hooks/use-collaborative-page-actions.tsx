@@ -8,6 +8,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import type { TDocumentEventsServer } from "@plane/editor";
 import type { TDocumentEventsClient } from "@plane/editor/lib";
 import { DocumentCollaborativeEvents, getServerEventName } from "@plane/editor/lib";
+import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 // store
 import type { TPageInstance } from "@/store/pages/base-page";
@@ -31,6 +32,8 @@ export const useCollaborativePageActions = (props: Props) => {
   // currentUserAction local state to track if the current action is being processed, a
   // local action is basically the action performed by the current user to avoid double operations
   const [currentActionBeingProcessed, setCurrentActionBeingProcessed] = useState<TDocumentEventsClient | null>(null);
+  // translation
+  const { t } = useTranslation();
 
   // @ts-expect-error - TODO: fix this
   const actionHandlerMap: Record<TDocumentEventsClient, CollaborativeAction> = useMemo(
@@ -80,7 +83,7 @@ export const useCollaborativePageActions = (props: Props) => {
         if (actionDetails?.errorMessage) {
           setToast({
             type: TOAST_TYPE.ERROR,
-            title: "Error!",
+            title: t("toast.error"),
             message: actionDetails.errorMessage,
           });
         }

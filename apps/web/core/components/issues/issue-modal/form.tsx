@@ -303,7 +303,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     } catch {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
+        title: t("toast.error"),
         message: "Failed to move work item to project. Please try again.",
       });
     } finally {
@@ -542,7 +542,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
                           } else {
                             setToast({
                               type: TOAST_TYPE.ERROR,
-                              title: "Error!",
+                              title: t("toast.error"),
                               message: "Editor is still processing changes. Please wait before proceeding.",
                             });
                           }

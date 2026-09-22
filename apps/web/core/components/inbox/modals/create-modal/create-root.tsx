@@ -110,7 +110,7 @@ export const InboxIssueCreateRoot = observer(function InboxIssueCreateRoot(props
     } else {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
+        title: t("toast.error"),
         message: "Editor is still processing changes. Please wait before proceeding.",
       });
       event.preventDefault(); // Prevent default action if editor is not ready to discard
@@ -142,7 +142,7 @@ export const InboxIssueCreateRoot = observer(function InboxIssueCreateRoot(props
     if (!descriptionEditorRef.current?.isEditorReadyToDiscard()) {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
+        title: t("toast.error"),
         message: "Editor is still processing changes. Please wait before proceeding.",
       });
       return;
@@ -253,7 +253,7 @@ export const InboxIssueCreateRoot = observer(function InboxIssueCreateRoot(props
                   } else {
                     setToast({
                       type: TOAST_TYPE.ERROR,
-                      title: "Error!",
+                      title: t("toast.error"),
                       message: "Editor is still processing changes. Please wait before proceeding.",
                     });
                   }

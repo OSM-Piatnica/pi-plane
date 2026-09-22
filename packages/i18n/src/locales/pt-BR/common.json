@@ -597,6 +597,8 @@
       "no_matching_results": "Nenhum resultado correspondente",
       "min_chars": "Digite pelo menos {count} caracteres para buscar",
       "error": "Erro ao buscar resultados",
+      "view_less": "Mostrar menos",
+      "view_all": "Mostrar tudo",
       "no_results": {
         "title": "Nenhum resultado correspondente",
         "description": "Remova os critérios de busca para ver todos os resultados"

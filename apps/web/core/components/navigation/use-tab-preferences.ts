@@ -5,6 +5,7 @@
  */
 
 import { useMemo } from "react";
+import { useTranslation } from "@plane/i18n";
 import { setToast, TOAST_TYPE } from "@plane/propel/toast";
 import { useMember } from "@/hooks/store/use-member";
 import { useUser } from "@/hooks/store/user";
@@ -28,6 +29,7 @@ export type TTabPreferencesHook = {
  * @returns Tab preferences state and handlers
  */
 export const useTabPreferences = (workspaceSlug: string, projectId: string): TTabPreferencesHook => {
+  const { t } = useTranslation();
   const {
     project: { getProjectUserProperties, updateProjectUserProperties },
   } = useMember();
@@ -79,7 +81,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
       .then(() => {
         setToast({
           type: TOAST_TYPE.SUCCESS,
-          title: "Success!",
+          title: t("toast.success"),
           message: "Default tab updated successfully.",
         });
         return;
@@ -87,7 +89,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
       .catch(() => {
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
+          title: t("toast.error"),
           message: "Failed to update default tab. Please try again later.",
         });
       });
@@ -107,7 +109,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
       console.error("Error hiding tab:", error);
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
+        title: t("toast.error"),
         message: "Failed to hide tab. Please try again later.",
       });
     }
@@ -127,7 +129,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
       console.error("Error showing tab:", error);
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
+        title: t("toast.error"),
         message: "Something went wrong. Please try again later.",
       });
     }

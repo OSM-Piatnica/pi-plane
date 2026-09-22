@@ -103,7 +103,7 @@ export const BulkDeleteIssuesModal = observer(function BulkDeleteIssuesModal(pro
     if (!data.delete_issue_ids || data.delete_issue_ids.length === 0) {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
+        title: t("toast.error"),
         message: "Please select at least one work item.",
       });
       return;
@@ -115,7 +115,7 @@ export const BulkDeleteIssuesModal = observer(function BulkDeleteIssuesModal(pro
       .then(() => {
         setToast({
           type: TOAST_TYPE.SUCCESS,
-          title: "Success!",
+          title: t("toast.success"),
           message: "Work items deleted successfully!",
         });
         handleClose();
@@ -123,7 +123,7 @@ export const BulkDeleteIssuesModal = observer(function BulkDeleteIssuesModal(pro
       .catch(() =>
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
+          title: t("toast.error"),
           message: "Something went wrong. Please try again.",
         })
       );

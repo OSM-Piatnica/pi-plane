@@ -597,6 +597,8 @@
       "no_matching_results": "Žádné odpovídající výsledky",
       "min_chars": "Pro hledání zadejte alespoň {count} znaků",
       "error": "Chyba při načítání výsledků hledání",
+      "view_less": "Zobrazit méně",
+      "view_all": "Zobrazit vše",
       "no_results": {
         "title": "Žádné odpovídající výsledky",
         "description": "Odstraňte kritéria hledání pro zobrazení všech výsledků"

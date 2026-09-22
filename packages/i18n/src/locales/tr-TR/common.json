@@ -597,6 +597,8 @@
       "no_matching_results": "Eşleşen sonuç yok",
       "min_chars": "Arama için en az {count} karakter yazın",
       "error": "Arama sonuçları alınırken hata oluştu",
+      "view_less": "Daha az göster",
+      "view_all": "Tümünü göster",
       "no_results": {
         "title": "Eşleşen sonuç yok",
         "description": "Tüm sonuçları görmek için arama kriterlerini kaldırın"

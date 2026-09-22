@@ -95,11 +95,11 @@ export const ProjectFeaturesList = observer(function ProjectFeaturesList(props: 
     setPromiseToast(updateProjectPromise, {
       loading: "Updating project feature...",
       success: {
-        title: "Success!",
+        title: t("toast.success"),
         message: () => "Project feature updated successfully.",
       },
       error: {
-        title: "Error!",
+        title: t("toast.error"),
         message: () => "Something went wrong while updating project feature. Please try again.",
       },
     });

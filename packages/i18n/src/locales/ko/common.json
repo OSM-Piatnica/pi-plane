@@ -597,6 +597,8 @@
       "no_matching_results": "일치하는 결과 없음",
       "min_chars": "검색하려면 최소 {count}자를 입력하세요",
       "error": "검색 결과를 가져오는 중 오류 발생",
+      "view_less": "간략히 보기",
+      "view_all": "모두 보기",
       "no_results": {
         "title": "일치하는 결과 없음",
         "description": "모든 결과를 보려면 검색 조건을 제거하세요"

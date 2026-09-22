@@ -597,6 +597,8 @@
       "no_matching_results": "没有匹配的结果",
       "min_chars": "至少输入 {count} 个字符进行搜索",
       "error": "获取搜索结果时出错",
+      "view_less": "显示更少",
+      "view_all": "显示全部",
       "no_results": {
         "title": "没有匹配的结果",
         "description": "移除搜索条件以查看所有结果"

@@ -8,8 +8,9 @@ import React, { useCallback, useState } from "react";
 import { observer } from "mobx-react";
 import type { FileRejection } from "react-dropzone";
 import { useDropzone } from "react-dropzone";
-import { PlusIcon } from "@plane/propel/icons";
 // plane imports
+import { useTranslation } from "@plane/i18n";
+import { PlusIcon } from "@plane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { TIssueServiceType } from "@plane/types";
 // hooks
@@ -30,6 +31,8 @@ type Props = {
 
 export const IssueAttachmentActionButton = observer(function IssueAttachmentActionButton(props: Props) {
   const { workspaceSlug, projectId, issueId, customButton, disabled = false, issueServiceType } = props;
+  // i18n
+  const { t } = useTranslation();
   // state
   const [isLoading, setIsLoading] = useState(false);
   // store hooks
@@ -62,7 +65,7 @@ export const IssueAttachmentActionButton = observer(function IssueAttachmentActi
           .catch(() => {
             setToast({
               type: TOAST_TYPE.ERROR,
-              title: "Error!",
+              title: t("toast.error"),
               message: "File could not be attached. Try uploading again.",
             });
           })
@@ -76,7 +79,7 @@ export const IssueAttachmentActionButton = observer(function IssueAttachmentActi
 
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
+        title: t("toast.error"),
         message:
           totalAttachedFiles > 1
             ? "Only one file can be uploaded at a time."

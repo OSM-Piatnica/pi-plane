@@ -597,6 +597,8 @@
       "no_matching_results": "Tidak ada hasil yang cocok",
       "min_chars": "Ketik setidaknya {count} karakter untuk mencari",
       "error": "Terjadi kesalahan saat mengambil hasil pencarian",
+      "view_less": "Tampilkan lebih sedikit",
+      "view_all": "Tampilkan semua",
       "no_results": {
         "title": "Tidak ada hasil yang cocok",
         "description": "Hapus kriteria pencarian untuk melihat semua hasil"

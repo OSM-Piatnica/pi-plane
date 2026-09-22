@@ -8,6 +8,7 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // Plane imports
+import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { IState } from "@plane/types";
 // ui
@@ -28,6 +29,7 @@ export const StateDeleteModal = observer(function StateDeleteModal(props: TState
   // router
   const { workspaceSlug } = useParams();
   const { deleteState } = useProjectState();
+  const { t } = useTranslation();
 
   const handleClose = () => {
     onClose();
@@ -47,14 +49,14 @@ export const StateDeleteModal = observer(function StateDeleteModal(props: TState
         if (err.status === 400)
           setToast({
             type: TOAST_TYPE.ERROR,
-            title: "Error!",
+            title: t("toast.error"),
             message:
               "This state contains some work items within it, please move them to some other state to delete this state.",
           });
         else
           setToast({
             type: TOAST_TYPE.ERROR,
-            title: "Error!",
+            title: t("toast.error"),
             message: "State could not be deleted. Please try again.",
           });
       })

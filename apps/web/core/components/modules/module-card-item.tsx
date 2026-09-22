@@ -19,6 +19,7 @@ import {
   IS_FAVORITE_MENU_OPEN,
 } from "@plane/constants";
 import { useLocalStorage } from "@plane/hooks";
+import { useTranslation } from "@plane/i18n";
 import { WorkItemsIcon } from "@plane/propel/icons";
 import { TOAST_TYPE, setPromiseToast, setToast } from "@plane/propel/toast";
 import { Tooltip } from "@plane/propel/tooltip";
@@ -66,6 +67,7 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
   const renderIcon = Boolean(moduleDetails?.start_date) || Boolean(moduleDetails?.target_date);
 
   const { isMobile } = usePlatformOS();
+  const { t } = useTranslation();
   const handleAddToFavorites = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     e.preventDefault();
@@ -80,11 +82,11 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
     setPromiseToast(addToFavoritePromise, {
       loading: "Adding module to favorites...",
       success: {
-        title: "Success!",
+        title: t("toast.success"),
         message: () => "Module added to favorites.",
       },
       error: {
-        title: "Error!",
+        title: t("toast.error"),
         message: () => "Couldn't add the module to favorites. Please try again.",
       },
     });
@@ -104,11 +106,11 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
     setPromiseToast(removeFromFavoritePromise, {
       loading: "Removing module from favorites...",
       success: {
-        title: "Success!",
+        title: t("toast.success"),
         message: () => "Module removed from favorites.",
       },
       error: {
-        title: "Error!",
+        title: t("toast.error"),
         message: () => "Couldn't remove the module from favorites. Please try again.",
       },
     });
@@ -126,14 +128,14 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
       .then(() => {
         setToast({
           type: TOAST_TYPE.SUCCESS,
-          title: "Success!",
+          title: t("toast.success"),
           message: "Module updated successfully.",
         });
       })
       .catch((err) => {
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
+          title: t("toast.error"),
           message: err?.detail ?? "Module could not be updated. Please try again.",
         });
       });

@@ -597,6 +597,8 @@
       "no_matching_results": "No matching results",
       "min_chars": "Type at least {count} characters to search",
       "error": "Error fetching search results",
+      "view_less": "View less",
+      "view_all": "View all",
       "no_results": {
         "title": "No matching results",
         "description": "Remove the search criteria to see all results"
@@ -866,6 +868,117 @@
       "title": "JSON",
       "description": "Export work items to a JSON file.",
       "short_description": "Export as json"
+    }
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "profile": {
+      "title": "Create your profile.",
+      "description": "This is how you will appear in Plane.",
+      "choose_image": "Choose image",
+      "upload_image": "Upload image",
+      "change_image": "Change image",
+      "name_placeholder": "Enter your full name",
+      "first_name_required": "First name is required",
+      "last_name_required": "Last name is required",
+      "first_name_max_length": "First name must be within 50 characters.",
+      "last_name_max_length": "Last name must be within 50 characters.",
+      "name_max_length": "Name must be within 50 characters.",
+      "first_name_placeholder": "Wilbur",
+      "last_name_placeholder": "Wright",
+      "new_password_placeholder": "New password...",
+      "role_question": "What role are you working on? Choose one.",
+      "domain_question": "What is your domain expertise? Choose one or more.",
+      "marketing_consent": "I agree to Plane marketing communications",
+      "passwords_do_not_match": "Passwords do not match",
+      "passwords_match": "Passwords match",
+      "seniority_levels": {
+        "individual_contributor": "Individual contributor",
+        "senior_leader": "Senior Leader",
+        "manager": "Manager",
+        "executive": "Executive",
+        "freelancer": "Freelancer",
+        "student": "Student"
+      },
+      "domains": {
+        "engineering": "Engineering",
+        "product": "Product",
+        "marketing": "Marketing",
+        "sales": "Sales",
+        "operations": "Operations",
+        "legal": "Legal",
+        "finance": "Finance",
+        "human_resources": "Human Resources",
+        "project": "Project",
+        "other": "Other"
+      },
+      "toast": {
+        "profile_setup_completed": "Profile setup completed!",
+        "profile_setup_failed": "Profile setup failed. Please try again!",
+        "user_details_update_failed": "User details update failed. Please try again!"
+      }
+    },
+    "role": {
+      "title": "What's your role?",
+      "description": "Let's set up Plane for how you work.",
+      "select_one": "Select one",
+      "options": {
+        "product_manager": "Product Manager",
+        "engineering_manager": "Engineering Manager",
+        "designer": "Designer",
+        "developer": "Developer",
+        "founder_executive": "Founder/Executive",
+        "operations_manager": "Operations Manager",
+        "others": "Others"
+      }
+    },
+    "usecase": {
+      "title": "What brings you to Plane?",
+      "description": "Tell us your goals and team size.",
+      "select_multiple": "Select one or more",
+      "select_at_least_one": "Please select at least one option"
+    },
+    "workspace": {
+      "invited_title": "You are invited!",
+      "invited_description": "Accept the invites to collaborate with your team.",
+      "continue_to_workspace": "Continue to workspace",
+      "create_own": "Create your own workspace",
+      "no_invitations_found": "No Invitations found",
+      "join_or_create_title": "Join invites or create a workspace",
+      "all_work_unified": "All your work — unified.",
+      "name_placeholder": "Enter workspace name",
+      "create_new": "Create new workspace",
+      "join_existing": "Join existing workspace",
+      "join_invited_workspaces": "I want to join invited workspaces",
+      "creation_restricted_message": "You don't seem to have any invites to a workspace and your instance admin has restricted creation of new workspaces. Please ask a workspace owner or admin to invite you to a workspace first and come back to this screen to join."
+    },
+    "team": {
+      "invite_teammates": "Invite your teammates",
+      "invite_teammates_description": "Work in plane happens best with your team. Invite them now to use Plane to its potential.",
+      "add_another": "Add another",
+      "do_it_later": "I'll do it later",
+      "invalid_email": "Invalid Email ID",
+      "invalid_email_hint": "That doesn't look like an email address.",
+      "toast": {
+        "invite_success_message": "Invitations sent successfully."
+      }
+    },
+    "switch_account": {
+      "title": "Switch account",
+      "switching": "Switching...",
+      "description_prefix": "If you have signed up via",
+      "description_suffix": "un-intentionally, you can switch your account to a different one from here.",
+      "wrong_email": "Wrong e-mail address?",
+      "toast": {
+        "sign_out_failed": "Failed to sign out. Please try again."
+      }
+    },
+    "step_indicator": "{{current}} of {{total}} steps",
+    "finish": {
+      "toast": {
+        "title": "Failed",
+        "message": "Failed to finish onboarding, Please try again later."
+      }
     }
   }
 }

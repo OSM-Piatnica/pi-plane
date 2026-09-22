@@ -10,6 +10,7 @@ import { useParams } from "next/navigation";
 import { useDropzone } from "react-dropzone";
 // plane imports
 import { ACCEPTED_AVATAR_IMAGE_MIME_TYPES_FOR_REACT_DROPZONE, MAX_FILE_SIZE } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { UserCirclePropertyIcon } from "@plane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
@@ -42,6 +43,7 @@ export const WorkspaceImageUploadModal = observer(function WorkspaceImageUploadM
   const { workspaceSlug } = useParams();
   // store hooks
   const { currentWorkspace, updateWorkspaceLogo } = useWorkspace();
+  const { t } = useTranslation();
 
   const onDrop = (acceptedFiles: File[]) => setImage(acceptedFiles[0]);
 
@@ -79,7 +81,7 @@ export const WorkspaceImageUploadModal = observer(function WorkspaceImageUploadM
       console.log("error", error);
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error",
+        title: t("toast.error"),
         message: error.error || "Something went wrong",
       });
     } finally {

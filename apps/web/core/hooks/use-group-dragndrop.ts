@@ -67,7 +67,7 @@ export const useGroupIssuesDragNDrop = (
   ) => {
     const errorToastProps = {
       type: TOAST_TYPE.ERROR,
-      title: "Error!",
+      title: t("toast.error"),
       message: "Error while updating work item",
     };
     const moduleKey = ISSUE_FILTER_DEFAULT_DATA["module"];
@@ -128,7 +128,7 @@ export const useGroupIssuesDragNDrop = (
       orderBy !== "sort_order"
     ).catch((err) => {
       setToast({
-        title: "Error!",
+        title: t("toast.error"),
         type: TOAST_TYPE.ERROR,
         message: getIssueApiErrorMessage(err, "Failed to perform this action", t),
       });

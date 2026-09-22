@@ -83,6 +83,7 @@ export interface MenuItemFactoryProps {
 // Common action handlers hook
 export const useIssueActionHandlers = (props: MenuItemFactoryProps) => {
   const { issue, workspaceSlug, projectIdentifier, handleRestore } = props;
+  const { t } = useTranslation();
 
   const workItemLink = useMemo(
     () =>
@@ -123,7 +124,7 @@ export const useIssueActionHandlers = (props: MenuItemFactoryProps) => {
       .catch(() => {
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
+          title: t("toast.error"),
           message: "Work item could not be restored. Please try again.",
         });
       });

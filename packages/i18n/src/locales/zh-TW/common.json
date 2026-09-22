@@ -597,6 +597,8 @@
       "no_matching_results": "沒有符合的結果",
       "min_chars": "請至少輸入 {count} 個字元以進行搜尋",
       "error": "取得搜尋結果時發生錯誤",
+      "view_less": "顯示較少",
+      "view_all": "顯示全部",
       "no_results": {
         "title": "沒有符合的結果",
         "description": "移除搜尋條件以檢視所有結果"

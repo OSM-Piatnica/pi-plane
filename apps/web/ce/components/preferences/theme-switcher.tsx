@@ -66,7 +66,7 @@ export const ThemeSwitcher = observer(function ThemeSwitcher(props: {
             message: () => "Reloading to apply changes...",
           },
           error: {
-            title: "Error!",
+            title: t("toast.error"),
             message: () => "Failed to update theme. Please try again.",
           },
         });

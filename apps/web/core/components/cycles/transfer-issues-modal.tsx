@@ -8,6 +8,7 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { AlertCircle } from "lucide-react";
+import { useTranslation } from "@plane/i18n";
 import { SearchIcon, CycleIcon, TransferIcon, CloseIcon } from "@plane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { EIssuesStoreType } from "@plane/types";
@@ -33,6 +34,7 @@ export const TransferIssuesModal = observer(function TransferIssuesModal(props: 
   } = useIssues(EIssuesStoreType.CYCLE);
 
   const { workspaceSlug, projectId } = useParams();
+  const { t } = useTranslation();
 
   const transferIssue = async (payload: { new_cycle_id: string }) => {
     if (!workspaceSlug || !projectId || !cycleId) return;
@@ -41,7 +43,7 @@ export const TransferIssuesModal = observer(function TransferIssuesModal(props: 
       .then(async () => {
         setToast({
           type: TOAST_TYPE.SUCCESS,
-          title: "Success!",
+          title: t("toast.success"),
           message: "Work items have been transferred successfully",
         });
         await getCycleDetails(payload.new_cycle_id);
@@ -49,7 +51,7 @@ export const TransferIssuesModal = observer(function TransferIssuesModal(props: 
       .catch(() => {
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
+          title: t("toast.error"),
           message: "Unable to transfer work items. Please try again.",
         });
       });
@@ -64,7 +66,7 @@ export const TransferIssuesModal = observer(function TransferIssuesModal(props: 
     await Promise.all(cyclesFetch).catch((error) => {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error",
+        title: t("toast.error"),
         message: error.error || "Unable to fetch cycle details",
       });
     });
