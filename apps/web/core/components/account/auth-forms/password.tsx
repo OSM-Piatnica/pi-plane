@@ -49,7 +49,7 @@ const authService = new AuthService();
 export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props) {
   const { email, isSMTPConfigured, handleAuthStep, handleEmailClear, mode, nextPath } = props;
   // plane imports
-  const { t } = useTranslation();
+  const { t, currentLocale } = useTranslation();
   // ref
   const formRef = useRef<HTMLFormElement>(null);
   // states
@@ -169,6 +169,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
       >
         <input type="hidden" name="csrfmiddlewaretoken" />
         <input type="hidden" value={passwordFormData.email} name="email" />
+        {mode === EAuthModes.SIGN_UP && <input type="hidden" value={currentLocale} name="language" />}
         {nextPath && <input type="hidden" value={nextPath} name="next_path" />}
         <div className="space-y-1">
           <label htmlFor="email" className="text-13 font-medium text-tertiary">

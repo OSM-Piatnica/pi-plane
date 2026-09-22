@@ -13,6 +13,7 @@ import { PlaneLockup } from "@plane/propel/icons";
 import { PageHead } from "@/components/core/page-title";
 import { EAuthModes } from "@/helpers/authentication.helper";
 import { useInstance } from "@/hooks/store/use-instance";
+import { AuthLanguageSelect } from "./language-select";
 
 const authContentMap = {
   [EAuthModes.SIGN_IN]: {
@@ -75,7 +76,10 @@ export function AuthHeaderBase(props: TAuthHeaderBase) {
         <Link href="/">
           <PlaneLockup height={20} width={95} className="text-primary" />
         </Link>
-        {additionalAction}
+        <div className="flex items-center gap-3">
+          <AuthLanguageSelect />
+          {additionalAction}
+        </div>
       </div>
     </>
   );

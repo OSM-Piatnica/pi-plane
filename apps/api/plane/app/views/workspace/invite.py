@@ -99,6 +99,7 @@ class WorkspaceInvitationsViewset(BaseViewSet):
                             algorithm="HS256",
                         ),
                         role=email.get("role", 5),
+                        language=email.get("language") or "en",
                         created_by=request.user,
                     )
                 )

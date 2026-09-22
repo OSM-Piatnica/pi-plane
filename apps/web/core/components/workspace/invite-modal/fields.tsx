@@ -9,7 +9,7 @@ import type { Control, FieldArrayWithId, FormState } from "react-hook-form";
 import { Controller } from "react-hook-form";
 // plane imports
 import { ROLE } from "@plane/constants";
-import { useTranslation } from "@plane/i18n";
+import { SUPPORTED_LANGUAGES, useTranslation } from "@plane/i18n";
 import { CloseIcon } from "@plane/propel/icons";
 import { CustomSelect, Input } from "@plane/ui";
 import { cn } from "@plane/utils";
@@ -83,6 +83,31 @@ export const InvitationFields = observer(function InvitationFields(props: TInvit
             />
           </div>
           <div className="flex shrink-0 items-center justify-between gap-2">
+            <div className="flex flex-col gap-1">
+              <Controller
+                control={control}
+                name={`emails.${index}.language`}
+                render={({ field: { value, onChange } }) => (
+                  <CustomSelect
+                    value={value}
+                    label={
+                      <span className="text-caption-sm-regular sm:text-body-xs-regular">
+                        {SUPPORTED_LANGUAGES.find((language) => language.value === value)?.label ?? value}
+                      </span>
+                    }
+                    onChange={onChange}
+                    className="w-24 flex-grow"
+                    input
+                  >
+                    {SUPPORTED_LANGUAGES.map((language) => (
+                      <CustomSelect.Option key={language.value} value={language.value}>
+                        {language.label}
+                      </CustomSelect.Option>
+                    ))}
+                  </CustomSelect>
+                )}
+              />
+            </div>
             <div className="flex flex-col gap-1">
               <Controller
                 control={control}

@@ -60,7 +60,7 @@ export interface IWorkspaceMemberInvitation {
 }
 
 export interface IWorkspaceBulkInviteFormData {
-  emails: { email: string; role: TUserPermissions }[];
+  emails: { email: string; role: TUserPermissions; language: string }[];
 }
 
 export type Properties = {
