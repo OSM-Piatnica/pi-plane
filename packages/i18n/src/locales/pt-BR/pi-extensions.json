@@ -1,9 +1,26 @@
 {
-  "appearance": "Aparência",
+  "account_settings": {
+    "api_tokens": {
+      "heading": "Tokens de Acesso Pessoal"
+    }
+  },
+  "approve": "Aprovar",
   "duration": "Duração",
   "duration_days": "{count, plural, one {# dia} other {# dias}}",
   "epic": {
     "all": "Todos os Épicos"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "Exportar para CSV com delimitador de vírgula.",
+      "short_description": "CSV vírgula",
+      "title": "CSV (vírgula)"
+    },
+    "csv_semicolon": {
+      "description": "Exportar para CSV com delimitador de ponto e vírgula para o Excel.",
+      "short_description": "CSV ponto e vírgula",
+      "title": "CSV (ponto e vírgula, Excel)"
+    }
   },
   "importer": {
     "github": {
@@ -18,27 +35,511 @@
   "issue": {
     "add": {
       "duration": "Adicionar duração"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue} não pode começar até que {related} seja concluído (relação de bloqueio).",
+          "blocking": "{issue} precisa terminar antes que {related} comece (relação de bloqueio).",
+          "finish_after": "{issue} não pode terminar antes de {related} (relação de término após).",
+          "finish_before": "{issue} precisa terminar em ou antes de {related} (relação de término antes).",
+          "start_after": "{issue} não pode começar antes de {related} (relação de início após).",
+          "start_before": "{issue} precisa começar em ou antes de {related} (relação de início antes)."
+        },
+        "status": {
+          "finish_after": "{issue} não pode ser concluído até que {related} seja concluído (relação de término após).",
+          "start_after": "{issue} não pode começar até que {related} tenha começado (relação de início após)."
+        }
+      },
+      "date_conflict": "Essas datas entram em conflito com dependências existentes. Ajuste os itens de trabalho relacionados ou remova a dependência primeiro.",
+      "dependency_create_failed": "Não foi possível criar a dependência. Tente novamente.",
+      "dependency_created": "A dependência do item de trabalho foi criada com sucesso."
     }
   },
-  "profile": {
-    "actions": {
-      "appearance": "Aparência"
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "Delimite o trabalho em períodos recorrentes.",
+        "label": "Ciclos"
+      },
+      "description": "Escolha quais recursos estão habilitados para este projeto.",
+      "intake": {
+        "description": "Faça a triagem do trabalho recebido antes de adicioná-lo ao projeto.",
+        "label": "Intake"
+      },
+      "modules": {
+        "description": "Agrupe o trabalho em configurações semelhantes a subprojetos.",
+        "label": "Módulos"
+      },
+      "pages": {
+        "description": "Crie páginas de documentação do projeto.",
+        "label": "Páginas"
+      },
+      "time_tracking": {
+        "description": "Acompanhe o tempo gasto em itens de trabalho.",
+        "label": "Controle de tempo"
+      },
+      "title": "Recursos do projeto",
+      "views": {
+        "description": "Salve e compartilhe ordenações, filtros e layouts.",
+        "label": "Visualizações"
+      },
+      "work_item_types": {
+        "assign_failed": "O projeto foi criado, mas não foi possível atribuir os tipos de item de trabalho.",
+        "assign_hint": "Selecione quais tipos do espaço de trabalho devem estar disponíveis neste projeto.",
+        "assign_label": "Atribuir tipos de item de trabalho",
+        "description": "Use tipos personalizados com propriedades próprias nos itens de trabalho.",
+        "label": "Tipos de item de trabalho",
+        "no_types_hint": "Nenhum tipo de item de trabalho ativo neste espaço de trabalho. Crie-os primeiro nas configurações do espaço de trabalho."
+      }
     }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "Adicionar etapa de aprovação",
+      "add_transition": "Adicionar transição",
+      "allow_creation": "Permitir novos itens de trabalho neste estado",
+      "approval": "Aprovação",
+      "approval_error": "Não foi possível processar a aprovação.",
+      "approved_success": "Transição aprovada.",
+      "blocker_message": "Esta transição não é permitida pelo fluxo de trabalho.",
+      "builder_description": "Expanda um estado para configurar as transições permitidas e as etapas de aprovação.",
+      "builder_title": "Construtor de fluxo de trabalho",
+      "disabled_success": "Fluxos de trabalho desativados para este projeto.",
+      "enable_description": "Quando ativado, os itens de trabalho seguem as transições de estado e as regras de aprovação configuradas.",
+      "enable_title": "Ativar fluxos de trabalho",
+      "enabled_success": "Fluxos de trabalho ativados para este projeto.",
+      "enabling": "Atualizando as configurações do fluxo de trabalho...",
+      "paused": "Pausado",
+      "pending_approval_description": "A mudança de {from} para {to} está aguardando aprovação.",
+      "pending_approval_title": "Aprovação necessária",
+      "rejected_success": "Transição rejeitada.",
+      "resolving_approval": "Processando aprovação...",
+      "save_error": "Não foi possível salvar a configuração do fluxo de trabalho.",
+      "save_success": "Configuração do fluxo de trabalho salva.",
+      "toggle_error": "Não foi possível atualizar as configurações do fluxo de trabalho.",
+      "transition": "Transição",
+      "transitions_configured": "transições configuradas"
+    }
+  },
+  "project_templates": {
+    "loading": "Carregando modelos…",
+    "none": "Nenhum modelo",
+    "select_placeholder": "Selecione um modelo"
   },
   "project_views": {
     "empty_state": {
       "filter": {
-        "description": "Nenhuma visualização corresponde aos critérios de pesquisa.\nCrie uma nova visualização em vez disso.",
+        "description": "Nenhuma visualização corresponde aos critérios de pesquisa. \n Crie uma nova visualização em vez disso.",
         "title": "Nenhuma visualização correspondente"
       }
     }
   },
-  "workspace_analytics": {
-    "total_admins": "Total de administradores",
-    "total_guests": "Total de convidados",
-    "total_intake": "Receita total",
-    "total_projects": "Total de projetos",
-    "total_users": "Total de usuários",
-    "total_work_items": "Total de {entity}"
+  "reject": "Rejeitar",
+  "settings_empty_state": {
+    "imports": {
+      "description": "Você ainda não tem nenhum registro de importação. Assim que importar um arquivo para um projeto, todos os registros aparecerão aqui.",
+      "title": "Nenhuma importação ainda"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "Não foi possível aplicar o modelo de item de trabalho.",
+    "dropdown_placeholder": "Modelo",
+    "loading": "Carregando modelos…",
+    "none": "Nenhum modelo"
+  },
+  "work_item_types": {
+    "loading": "Carregando tipos…",
+    "property_values_save_failed": "O item de trabalho foi criado, mas não foi possível salvar as propriedades adicionais. Preencha-as a partir dos detalhes do item de trabalho.",
+    "select_placeholder": "Tipo"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "Todos os projetos",
+        "history": {
+          "download": "Baixar",
+          "expired": "Expirado",
+          "exported_by": "Exportado por",
+          "exported_on": "Exportado em",
+          "project_count": "{count, plural, one {# projeto} other {# projetos}}",
+          "projects": "Projetos exportados",
+          "status": "Status"
+        },
+        "statuses": {
+          "completed": "Concluído",
+          "expired": "Expirado",
+          "failed": "Falhou",
+          "processing": "Processando"
+        },
+        "tabs": {
+          "export": "Exportar",
+          "import": "Importar"
+        },
+        "work_items_export": {
+          "description": "Exporte itens de trabalho dos projetos selecionados para CSV, Excel ou JSON.",
+          "heading": "Exportar itens de trabalho"
+        }
+      },
+      "imports": {
+        "file_too_large": "O arquivo deve ter menos de {size} MB.",
+        "history": {
+          "file": "Arquivo",
+          "imported_by": "Importado por",
+          "imported_on": "Importado em",
+          "project_count": "{count, plural, one {# projeto} other {# projetos}}",
+          "projects": "Projetos",
+          "reason": "Motivo",
+          "status": "Status"
+        },
+        "previous_imports": "Importações anteriores",
+        "work_items": {
+          "description": "Importe itens de trabalho de um arquivo criado por “Exportar itens de trabalho” (CSV, Excel ou JSON) para um projeto existente.",
+          "heading": "Importar itens de trabalho",
+          "import_button": "Importar itens de trabalho",
+          "invalid_file_type": "Envie um arquivo CSV, Excel (.xlsx) ou JSON.",
+          "no_projects": "Nenhum projeto disponível",
+          "open_project": "Abrir projeto",
+          "options": {
+            "assignees": "Responsáveis",
+            "clear_all": "Limpar tudo",
+            "cycles": "Ciclos",
+            "dates": "Datas e duração",
+            "heading": "O que importar",
+            "labels": "Etiquetas",
+            "modules": "Módulos",
+            "parents": "Itens de trabalho pai",
+            "relations": "Relações entre itens de trabalho",
+            "select_all": "Selecionar tudo",
+            "subscribers": "Inscritos"
+          },
+          "result_summary": "Importado(s) {count, plural, one {# item de trabalho} other {# itens de trabalho}} para “{name}”.",
+          "select_file": "Selecionar arquivo",
+          "select_file_label": "Arquivo de exportação",
+          "select_project": "Projeto de destino",
+          "select_project_placeholder": "Selecione um projeto",
+          "toasts": {
+            "error": {
+              "message": "Falha ao importar itens de trabalho. Use um arquivo de “Exportar itens de trabalho” e tente novamente."
+            },
+            "success": {
+              "message": "Foram importados {count} itens de trabalho para \"{name}\"."
+            }
+          },
+          "warnings_heading": "{count, plural, one {# aviso} other {# avisos}} durante a importação",
+          "warnings_none": "Tudo foi importado sem avisos."
+        }
+      },
+      "project_templates": {
+        "add_template": "Adicionar modelo",
+        "delete_confirm": "Remover este modelo de projeto? Os projetos existentes não serão afetados.",
+        "description": "Crie configurações de projeto reutilizáveis com propriedades padrão, recursos habilitados, estados, etiquetas e tipos de item de trabalho.",
+        "edit_template": "Editar modelo",
+        "form": {
+          "add_label": "Adicionar etiqueta",
+          "add_state": "Adicionar estado",
+          "custom_property": {
+            "active_checkbox": "Ativo",
+            "add_property": "Adicionar propriedade",
+            "default_option_label": "Opção padrão",
+            "description_label": "Descrição",
+            "description_placeholder": "Texto de ajuda para esta propriedade (opcional)",
+            "dropdown_options_heading": "Opções do menu suspenso",
+            "inactive": "Inativo",
+            "mandatory": "Obrigatório",
+            "mandatory_checkbox": "Obrigatório ao criar itens de trabalho",
+            "no_default": "Sem padrão",
+            "option_placeholder": "Nome da opção",
+            "select_mode_label": "Modo de seleção",
+            "select_multi": "Seleção múltipla",
+            "select_single": "Seleção única",
+            "title_label": "Título",
+            "title_placeholder": "Nome da propriedade",
+            "type_label": "Tipo",
+            "types": {
+              "boolean": "Booleano",
+              "date": "Data",
+              "dropdown": "Menu suspenso",
+              "member_picker": "Membro",
+              "number": "Número",
+              "text": "Texto"
+            }
+          },
+          "default_assignee": "Responsável padrão",
+          "default_cover_image": "Imagem de capa",
+          "default_labels": "Etiquetas padrão",
+          "default_lead": "Líder do projeto",
+          "default_project_description": "Descrição do projeto",
+          "default_project_description_placeholder": "Descrição padrão para novos projetos",
+          "default_project_identifier": "Identificador do projeto",
+          "default_project_identifier_placeholder": "ex.: PROD",
+          "default_project_name": "Nome do projeto",
+          "default_project_name_placeholder": "ex.: Lançamento do produto",
+          "default_start_date": "Data de início",
+          "default_target_date": "Data alvo",
+          "default_visibility": "Visibilidade",
+          "features": {
+            "cycles": {
+              "description": "Iterações com tempo delimitado para planejamento e entrega.",
+              "label": "Ciclos"
+            },
+            "intake": {
+              "description": "Faça a triagem das solicitações recebidas antes que se tornem itens de trabalho.",
+              "label": "Intake"
+            },
+            "modules": {
+              "description": "Agrupe o trabalho em áreas de foco ou marcos.",
+              "label": "Módulos"
+            },
+            "pages": {
+              "description": "Wiki e documentação do projeto.",
+              "label": "Páginas"
+            },
+            "time_tracking": {
+              "description": "Registre o tempo gasto em itens de trabalho.",
+              "label": "Controle de tempo"
+            },
+            "views": {
+              "description": "Filtros e layouts salvos para a equipe.",
+              "label": "Visualizações"
+            },
+            "work_item_types": {
+              "description": "Diferentes tipos de trabalho com propriedades personalizadas.",
+              "label": "Tipos de item de trabalho"
+            }
+          },
+          "identifier_invalid": "Use apenas letras e números",
+          "identifier_max_char": "O identificador deve ter no máximo 5 caracteres",
+          "label_name_placeholder": "Nome da etiqueta",
+          "labels_empty": "Nenhuma etiqueta ainda.",
+          "mark_default_state": "Marcar como estado padrão",
+          "modal_intro": "Dê um nome ao modelo e adicione uma breve observação para sua equipe. Em seguida, configure os valores padrão do projeto—o mesmo tipo de configuração que você usa ao criar um projeto.",
+          "name_required": "O nome do modelo é obrigatório",
+          "section_features": "Recursos",
+          "section_features_hint": "Escolha quais recursos opcionais do projeto ficam habilitados quando este modelo é aplicado.",
+          "section_labels": "Etiquetas",
+          "section_labels_hint": "Defina etiquetas padrão para novos projetos.",
+          "section_properties": "Propriedades padrão do projeto",
+          "section_states": "Estados",
+          "section_states_hint": "Defina os estados padrão do fluxo de trabalho para novos projetos.",
+          "section_template": "Modelo",
+          "section_work_item_types": "Tipos de item de trabalho",
+          "section_work_item_types_hint": "Configure os tipos de item de trabalho padrão e as propriedades personalizadas para projetos criados a partir deste modelo.",
+          "state_groups": {
+            "backlog": "Backlog",
+            "cancelled": "Cancelado",
+            "completed": "Concluído",
+            "started": "Iniciado",
+            "unstarted": "Não iniciado"
+          },
+          "state_name_placeholder": "Nome do estado",
+          "states_group_empty": "Nenhum estado neste grupo ainda.",
+          "template_name_label": "Nome do modelo",
+          "template_name_placeholder": "ex.: Entrega de software",
+          "template_note_label": "Descrição (para sua equipe)",
+          "template_note_placeholder": "Para que serve este modelo (opcional).",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "Adicionar tipo de item de trabalho",
+              "description": "Adicione mais tipos de item de trabalho disponíveis nos projetos deste modelo.",
+              "empty": "Nenhum tipo adicional ainda.",
+              "title": "Tipos adicionais"
+            },
+            "default_badge": "Padrão",
+            "disabled_hint": "Habilite os tipos de item de trabalho em Recursos acima para configurar tipos aqui.",
+            "epic": {
+              "description": "Grande volume de trabalho que pode ser dividido em tarefas.",
+              "disabled": "Épicos estão desabilitados para este modelo.",
+              "title": "Épico"
+            },
+            "optional_badge": "Opcional",
+            "properties_empty": "Nenhuma propriedade personalizada para este tipo.",
+            "task": {
+              "description": "Tipo de item de trabalho padrão para tarefas do dia a dia.",
+              "title": "Tarefa"
+            },
+            "type_description_placeholder": "Descrição breve (opcional)",
+            "type_name_placeholder": "Nome do tipo"
+          }
+        },
+        "loading": "Carregando modelos…",
+        "none": "Nenhum modelo",
+        "select_placeholder": "Selecione um modelo",
+        "table": {
+          "download_template": "Baixar",
+          "no_description": "Sem descrição",
+          "use_template": "Usar modelo"
+        },
+        "title": "Modelos de projeto",
+        "toasts": {
+          "apply_failed": {
+            "message": "Não foi possível aplicar o modelo de projeto."
+          },
+          "apply_followup_failed": {
+            "message": "O projeto foi criado, mas algumas configurações do modelo não puderam ser aplicadas."
+          },
+          "create_failed": {
+            "message": "Verifique o formulário e tente novamente.",
+            "title": "Não foi possível criar o modelo"
+          },
+          "created": {
+            "message": "O modelo de projeto foi salvo.",
+            "title": "Modelo criado"
+          },
+          "delete_failed": {
+            "message": "Tente novamente.",
+            "title": "Não foi possível excluir"
+          },
+          "deleted": {
+            "message": "O modelo de projeto foi excluído.",
+            "title": "Modelo removido"
+          },
+          "download_failed": {
+            "message": "Não foi possível baixar o arquivo do modelo."
+          },
+          "save_failed": {
+            "message": "Verifique o formulário e tente novamente.",
+            "title": "Não foi possível salvar o modelo"
+          },
+          "saved": {
+            "message": "O modelo de projeto foi atualizado.",
+            "title": "Modelo salvo"
+          },
+          "upload_failed": {
+            "message": "Não foi possível enviar o modelo. Verifique o arquivo e tente novamente."
+          },
+          "uploaded_renamed": {
+            "message": "Esse nome já estava em uso, então o modelo foi salvo como \"{name}\"."
+          },
+          "uploaded": {
+            "message": "O modelo \"{name}\" foi enviado a partir do arquivo."
+          }
+        },
+        "upload_invalid_file": "Envie um arquivo JSON baixado com o botão “Baixar”.",
+        "upload_template": "Enviar a partir de arquivo",
+        "upload_too_large": "O arquivo deve ter menos de {size} MB."
+      },
+      "work_item_templates": {
+        "add_template": "Adicionar modelo",
+        "delete_confirm": "Tem certeza de que deseja remover este modelo de item de trabalho?",
+        "description": "Crie conjuntos iniciais reutilizáveis para novos itens de trabalho (título, descrição, responsáveis, prioridade e muito mais). Um modelo pode abranger todo o espaço de trabalho ou apenas um projeto.",
+        "edit_template": "Editar modelo",
+        "form": {
+          "default_values_section_hint": "Quando alguém aplica este modelo ao criar um item de trabalho, estes campos são preenchidos. Tudo aqui é opcional.",
+          "default_values_section_title": "Valores padrão do item de trabalho",
+          "default_work_item_description": "Descrição",
+          "default_work_item_description_hint": "Texto simples; é salvo como a descrição do item de trabalho. As quebras de linha são mantidas.",
+          "default_work_item_description_placeholder": "Texto que deve aparecer por padrão no novo item de trabalho",
+          "default_work_item_name": "Título",
+          "default_work_item_name_placeholder": "ex.: [Bug] …",
+          "modal_intro": "Dê um nome ao modelo e adicione uma breve observação para a equipe. Em seguida, defina os valores padrão do item de trabalho—o mesmo tipo de título, descrição, responsáveis e prioridade que você usa ao criar um item de trabalho.",
+          "name_required": "O nome do modelo é obrigatório",
+          "scope_hint": "Deixe o projeto em branco para disponibilizar este modelo em todos os projetos. Os campos específicos do projeto (estado, etiquetas, ciclo, módulos) só podem ser salvos quando um projeto é selecionado.",
+          "scope_hint_short": "Opcional. Se vazio, o modelo fica disponível em todos os projetos. Quando definido, as sugestões de responsável ficam limitadas a esse projeto; caso contrário, são usados os membros do espaço de trabalho.",
+          "scope_project": "Limitar a um projeto (opcional)",
+          "template_name_label": "Nome do modelo",
+          "template_name_placeholder": "ex.: Relatório de bug",
+          "template_note_label": "Descrição (para sua equipe)",
+          "template_note_placeholder": "Para que serve este modelo (opcional; não é a descrição do item de trabalho)."
+        },
+        "heading": "Modelos de item de trabalho",
+        "table": {
+          "name": "Modelo",
+          "project": "Projeto",
+          "scope": "Escopo",
+          "workspace_wide": "Todos os projetos"
+        },
+        "title": "Modelos de item de trabalho",
+        "toasts": {
+          "create_failed": {
+            "message": "Verifique o formulário e tente novamente.",
+            "title": "Não foi possível criar o modelo"
+          },
+          "created": {
+            "message": "O modelo de item de trabalho foi salvo.",
+            "title": "Modelo criado"
+          },
+          "delete_failed": {
+            "message": "Tente novamente.",
+            "title": "Não foi possível excluir"
+          },
+          "deleted": {
+            "message": "O modelo de item de trabalho foi excluído.",
+            "title": "Modelo removido"
+          },
+          "save_failed": {
+            "message": "Verifique o formulário e tente novamente.",
+            "title": "Não foi possível salvar o modelo"
+          },
+          "saved": {
+            "message": "O modelo de item de trabalho foi atualizado.",
+            "title": "Modelo salvo"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "Adicionar tipo",
+        "delete_confirm": "Remover este tipo de item de trabalho? Os itens de trabalho existentes mantêm seus dados.",
+        "description": "Defina tipos de item de trabalho com identidade própria, propriedades personalizadas e escopo de projeto. Ative ou desative tipos sem afetar os itens existentes.",
+        "edit_type": "Editar tipo",
+        "epic_badge": "Épico",
+        "form": {
+          "description_label": "Descrição",
+          "is_active": "Ativo",
+          "is_epic": "Tipo Épico",
+          "modal_intro": "Dê um nome ao tipo, escolha um ícone e anexe apenas as propriedades que esse tipo de trabalho precisa. Atribua-o aos projetos onde deve estar disponível.",
+          "name_label": "Nome",
+          "name_required": "O nome do tipo é obrigatório",
+          "projects_hint": "Deixe em branco para manter o tipo na biblioteca sem atribuí-lo a nenhum projeto por enquanto.",
+          "projects_label": "Projetos",
+          "properties_heading": "Propriedades personalizadas",
+          "property": {
+            "active_checkbox": "Ativo",
+            "add": "Adicionar propriedade",
+            "description_label": "Descrição",
+            "empty": "Nenhuma propriedade personalizada ainda.",
+            "inactive": "Inativo",
+            "mandatory": "Obrigatório",
+            "mandatory_checkbox": "Obrigatório ao criar itens de trabalho",
+            "title_label": "Título",
+            "type_label": "Tipo",
+            "types": {
+              "boolean": "Booleano",
+              "date": "Data",
+              "dropdown": "Menu suspenso",
+              "member_picker": "Membro",
+              "number": "Número",
+              "text": "Texto"
+            }
+          }
+        },
+        "table": {
+          "name": "Tipo",
+          "no_projects": "Não atribuído",
+          "projects": "Projetos",
+          "properties": "Propriedades",
+          "status": "Ativo"
+        },
+        "title": "Tipos de item de trabalho",
+        "toasts": {
+          "delete_failed": {
+            "message": "Tente novamente.",
+            "title": "Não foi possível excluir"
+          },
+          "deleted": {
+            "message": "O tipo de item de trabalho foi excluído.",
+            "title": "Tipo removido"
+          },
+          "save_failed": {
+            "message": "Verifique o formulário e tente novamente.",
+            "title": "Não foi possível salvar o tipo"
+          },
+          "saved": {
+            "message": "O tipo de item de trabalho foi salvo.",
+            "title": "Tipo salvo"
+          }
+        }
+      }
+    }
   }
 }

@@ -1,9 +1,26 @@
 {
-  "appearance": "Aspect",
+  "account_settings": {
+    "api_tokens": {
+      "heading": "Token-uri de acces personal"
+    }
+  },
+  "approve": "Aprobă",
   "duration": "Durată",
   "duration_days": "{count, plural, one {# zi} few {# zile} other {# de zile}}",
   "epic": {
-    "all": "Toate Sarcinile majore"
+    "all": "Toate epicele"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "Exportă în format CSV cu delimitator virgulă.",
+      "short_description": "CSV virgulă",
+      "title": "CSV (virgulă)"
+    },
+    "csv_semicolon": {
+      "description": "Exportă în format CSV cu delimitator punct și virgulă, pentru Excel.",
+      "short_description": "CSV punct și virgulă",
+      "title": "CSV (punct și virgulă, Excel)"
+    }
   },
   "importer": {
     "github": {
@@ -11,34 +28,518 @@
       "title": "Github"
     },
     "jira": {
-      "description": "Importă activități și episoade din proiectele și episoadele Jira.",
+      "description": "Importă activități și epice din proiectele și epicele Jira.",
       "title": "Jira"
     }
   },
   "issue": {
     "add": {
       "duration": "Adaugă durata"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue} nu poate începe până când {related} nu este finalizată (relație de blocare de către).",
+          "blocking": "{issue} trebuie să se finalizeze înainte ca {related} să înceapă (relație de blocare).",
+          "finish_after": "{issue} nu se poate finaliza înainte de {related} (relație de finalizare după).",
+          "finish_before": "{issue} trebuie să se finalizeze cel târziu la {related} (relație de finalizare înainte).",
+          "start_after": "{issue} nu poate începe înainte de {related} (relație de începere după).",
+          "start_before": "{issue} trebuie să înceapă cel târziu la {related} (relație de începere înainte)."
+        },
+        "status": {
+          "finish_after": "{issue} nu poate fi finalizată până când {related} nu este finalizată (relație de finalizare după).",
+          "start_after": "{issue} nu poate începe până când {related} nu a început (relație de începere după)."
+        }
+      },
+      "date_conflict": "Aceste date intră în conflict cu dependențele existente. Ajustează activitățile înrudite sau elimină mai întâi dependența.",
+      "dependency_create_failed": "Nu s-a putut crea dependența. Te rugăm să încerci din nou.",
+      "dependency_created": "Dependența dintre activități a fost creată cu succes."
     }
   },
-  "profile": {
-    "actions": {
-      "appearance": "Aspect"
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "Planifică activitatea în perioade recurente delimitate în timp.",
+        "label": "Cicluri"
+      },
+      "description": "Alege ce funcționalități sunt activate pentru acest proiect.",
+      "intake": {
+        "description": "Triază cererile primite înainte de a le adăuga în proiect.",
+        "label": "Cereri"
+      },
+      "modules": {
+        "description": "Grupează activitatea în structuri de tip sub-proiect.",
+        "label": "Module"
+      },
+      "pages": {
+        "description": "Creează pagini de documentație pentru proiect.",
+        "label": "Documentație"
+      },
+      "time_tracking": {
+        "description": "Urmărește timpul petrecut pe activități.",
+        "label": "Monitorizare timp"
+      },
+      "title": "Funcționalități proiect",
+      "views": {
+        "description": "Salvează și distribuie sortări, filtre și aspecte.",
+        "label": "Perspective"
+      },
+      "work_item_types": {
+        "assign_failed": "Proiectul a fost creat, dar tipurile de activități nu au putut fi asignate.",
+        "assign_hint": "Selectează ce tipuri din spațiul de lucru vor fi disponibile în acest proiect.",
+        "assign_label": "Asignează tipuri de activități",
+        "description": "Folosește tipuri personalizate cu proprietăți proprii pentru activități.",
+        "label": "Tipuri de activități",
+        "no_types_hint": "Nu există tipuri de activități active în acest spațiu de lucru. Creează-le mai întâi în setările spațiului de lucru."
+      }
     }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "Adaugă poartă de aprobare",
+      "add_transition": "Adaugă tranziție",
+      "allow_creation": "Permite activități noi în această stare",
+      "approval": "Aprobare",
+      "approval_error": "Nu s-a putut procesa aprobarea.",
+      "approved_success": "Tranziție aprobată.",
+      "blocker_message": "Această tranziție nu este permisă de fluxul de lucru.",
+      "builder_description": "Extinde o stare pentru a configura tranzițiile permise și porțile de aprobare.",
+      "builder_title": "Constructor de flux de lucru",
+      "disabled_success": "Fluxurile de lucru au fost dezactivate pentru acest proiect.",
+      "enable_description": "Când este activată, activitățile urmează tranzițiile de stare și regulile de aprobare configurate.",
+      "enable_title": "Activează fluxurile de lucru",
+      "enabled_success": "Fluxurile de lucru au fost activate pentru acest proiect.",
+      "enabling": "Se actualizează setările fluxului de lucru...",
+      "paused": "În pauză",
+      "pending_approval_description": "Mutarea din {from} în {to} așteaptă aprobare.",
+      "pending_approval_title": "Este necesară aprobarea",
+      "rejected_success": "Tranziție respinsă.",
+      "resolving_approval": "Se procesează aprobarea...",
+      "save_error": "Nu s-a putut salva configurația fluxului de lucru.",
+      "save_success": "Configurația fluxului de lucru a fost salvată.",
+      "toggle_error": "Nu s-au putut actualiza setările fluxului de lucru.",
+      "transition": "Tranziție",
+      "transitions_configured": "tranziții configurate"
+    }
+  },
+  "project_templates": {
+    "loading": "Se încarcă șabloanele…",
+    "none": "Niciun șablon",
+    "select_placeholder": "Selectează un șablon"
   },
   "project_views": {
     "empty_state": {
       "filter": {
-        "description": "Nicio perspectivă nu se potrivește criteriilor de căutare.\n Creează o nouă perspectivă în schimb.",
+        "description": "Nicio perspectivă nu se potrivește criteriilor de căutare. \n Creează o nouă perspectivă în schimb.",
         "title": "Nicio perspectivă potrivită"
       }
     }
   },
-  "workspace_analytics": {
-    "total_admins": "Total administratori",
-    "total_guests": "Total invitați",
-    "total_intake": "Venit total",
-    "total_projects": "Total proiecte",
-    "total_users": "Total utilizatori",
-    "total_work_items": "Totalul {entity}"
+  "reject": "Respinge",
+  "settings_empty_state": {
+    "imports": {
+      "description": "Nu ai nicio înregistrare de import momentan. După ce imporți un fișier într-un proiect, toate înregistrările vor apărea aici.",
+      "title": "Niciun import încă"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "Nu s-a putut aplica șablonul de activitate.",
+    "dropdown_placeholder": "Șablon",
+    "loading": "Se încarcă șabloanele…",
+    "none": "Niciun șablon"
+  },
+  "work_item_types": {
+    "loading": "Se încarcă tipurile…",
+    "property_values_save_failed": "Activitatea a fost creată, dar proprietățile suplimentare nu au putut fi salvate. Completează-le din detaliile activității.",
+    "select_placeholder": "Tip"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "Toate proiectele",
+        "history": {
+          "download": "Descarcă",
+          "expired": "Expirat",
+          "exported_by": "Exportat de",
+          "exported_on": "Exportat la",
+          "project_count": "{count, plural, one {# proiect} few {# proiecte} other {# de proiecte}}",
+          "projects": "Proiecte exportate",
+          "status": "Stare"
+        },
+        "statuses": {
+          "completed": "Finalizat",
+          "expired": "Expirat",
+          "failed": "Eșuat",
+          "processing": "Se procesează"
+        },
+        "tabs": {
+          "export": "Export",
+          "import": "Import"
+        },
+        "work_items_export": {
+          "description": "Exportă activități din proiectele selectate în CSV, Excel sau JSON.",
+          "heading": "Exportă activități"
+        }
+      },
+      "imports": {
+        "file_too_large": "Fișierul trebuie să fie mai mic de {size} MB.",
+        "history": {
+          "file": "Fișier",
+          "imported_by": "Importat de",
+          "imported_on": "Importat la",
+          "project_count": "{count, plural, one {# proiect} few {# proiecte} other {# de proiecte}}",
+          "projects": "Proiecte",
+          "reason": "Motiv",
+          "status": "Stare"
+        },
+        "previous_imports": "Importuri anterioare",
+        "work_items": {
+          "description": "Importă activități dintr-un fișier creat cu „Exportă activități” (CSV, Excel sau JSON) într-un proiect existent.",
+          "heading": "Importă activități",
+          "import_button": "Importă activități",
+          "invalid_file_type": "Te rugăm să încarci un fișier CSV, Excel (.xlsx) sau JSON.",
+          "no_projects": "Niciun proiect disponibil",
+          "open_project": "Deschide proiectul",
+          "options": {
+            "assignees": "Responsabili",
+            "clear_all": "Deselectează tot",
+            "cycles": "Cicluri",
+            "dates": "Date și durată",
+            "heading": "Ce se importă",
+            "labels": "Etichete",
+            "modules": "Module",
+            "parents": "Activități părinte",
+            "relations": "Relații între activități",
+            "select_all": "Selectează tot",
+            "subscribers": "Abonați"
+          },
+          "result_summary": "{count, plural, one {# activitate} few {# activități} other {# de activități}} importată(e) în „{name}”.",
+          "select_file": "Selectează fișierul",
+          "select_file_label": "Fișier de export",
+          "select_project": "Proiect destinație",
+          "select_project_placeholder": "Selectează un proiect",
+          "toasts": {
+            "error": {
+              "message": "Importul activităților a eșuat. Folosește un fișier de la „Exportă activități” și încearcă din nou."
+            },
+            "success": {
+              "message": "{count} activități importate în \"{name}\"."
+            }
+          },
+          "warnings_heading": "{count, plural, one {# avertisment} few {# avertismente} other {# de avertismente}} în timpul importului",
+          "warnings_none": "Totul a fost importat fără avertismente."
+        }
+      },
+      "project_templates": {
+        "add_template": "Adaugă șablon",
+        "delete_confirm": "Elimini acest șablon de proiect? Proiectele existente nu sunt afectate.",
+        "description": "Creează configurații de proiect reutilizabile cu proprietăți implicite, funcționalități activate, stări, etichete și tipuri de activități.",
+        "edit_template": "Editează șablonul",
+        "form": {
+          "add_label": "Adaugă etichetă",
+          "add_state": "Adaugă stare",
+          "custom_property": {
+            "active_checkbox": "Activ",
+            "add_property": "Adaugă proprietate",
+            "default_option_label": "Opțiune implicită",
+            "description_label": "Descriere",
+            "description_placeholder": "Text de ajutor pentru această proprietate (opțional)",
+            "dropdown_options_heading": "Opțiuni dropdown",
+            "inactive": "Inactiv",
+            "mandatory": "Obligatoriu",
+            "mandatory_checkbox": "Obligatoriu la crearea activităților",
+            "no_default": "Nicio valoare implicită",
+            "option_placeholder": "Numele opțiunii",
+            "select_mode_label": "Mod de selecție",
+            "select_multi": "Selecție multiplă",
+            "select_single": "Selecție unică",
+            "title_label": "Titlu",
+            "title_placeholder": "Numele proprietății",
+            "type_label": "Tip",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Dată",
+              "dropdown": "Dropdown",
+              "member_picker": "Membru",
+              "number": "Număr",
+              "text": "Text"
+            }
+          },
+          "default_assignee": "Responsabil implicit",
+          "default_cover_image": "Copertă",
+          "default_labels": "Etichete implicite",
+          "default_lead": "Lider de proiect",
+          "default_project_description": "Descriere proiect",
+          "default_project_description_placeholder": "Descriere implicită pentru proiectele noi",
+          "default_project_identifier": "Identificator proiect",
+          "default_project_identifier_placeholder": "de ex. PROD",
+          "default_project_name": "Nume proiect",
+          "default_project_name_placeholder": "de ex. Lansare produs",
+          "default_start_date": "Data de început",
+          "default_target_date": "Data scadentă",
+          "default_visibility": "Vizibilitate",
+          "features": {
+            "cycles": {
+              "description": "Iterații delimitate în timp pentru planificare și livrare.",
+              "label": "Cicluri"
+            },
+            "intake": {
+              "description": "Triază cererile primite înainte ca acestea să devină activități.",
+              "label": "Cereri"
+            },
+            "modules": {
+              "description": "Grupează activitatea în zone de interes sau obiective intermediare.",
+              "label": "Module"
+            },
+            "pages": {
+              "description": "Wiki și documentație de proiect.",
+              "label": "Documentație"
+            },
+            "time_tracking": {
+              "description": "Înregistrează timpul petrecut pe activități.",
+              "label": "Monitorizare timp"
+            },
+            "views": {
+              "description": "Filtre și aspecte salvate pentru echipă.",
+              "label": "Perspective"
+            },
+            "work_item_types": {
+              "description": "Tipuri diferite de activitate cu proprietăți personalizate.",
+              "label": "Tipuri de activități"
+            }
+          },
+          "identifier_invalid": "Folosește doar litere și cifre",
+          "identifier_max_char": "Identificatorul trebuie să aibă cel mult 5 caractere",
+          "label_name_placeholder": "Numele etichetei",
+          "labels_empty": "Nicio etichetă încă.",
+          "mark_default_state": "Marchează ca stare implicită",
+          "modal_intro": "Denumește șablonul și adaugă o notă scurtă pentru echipa ta. Apoi configurează valorile implicite ale proiectului — aceleași setări pe care le folosești la crearea unui proiect.",
+          "name_required": "Numele șablonului este obligatoriu",
+          "section_features": "Funcționalități",
+          "section_features_hint": "Alege ce funcționalități opționale ale proiectului sunt activate când se aplică acest șablon.",
+          "section_labels": "Etichete",
+          "section_labels_hint": "Definește etichetele implicite pentru proiectele noi.",
+          "section_properties": "Proprietăți implicite ale proiectului",
+          "section_states": "Stări",
+          "section_states_hint": "Definește stările implicite ale fluxului de lucru pentru proiectele noi.",
+          "section_template": "Șablon",
+          "section_work_item_types": "Tipuri de activități",
+          "section_work_item_types_hint": "Configurează tipurile de activități implicite și proprietățile personalizate pentru proiectele create din acest șablon.",
+          "state_groups": {
+            "backlog": "Restante",
+            "cancelled": "Anulat",
+            "completed": "Finalizat",
+            "started": "În desfășurare",
+            "unstarted": "Neînceput"
+          },
+          "state_name_placeholder": "Numele stării",
+          "states_group_empty": "Niciun grup de stări încă în acest grup.",
+          "template_name_label": "Numele șablonului",
+          "template_name_placeholder": "de ex. Livrare software",
+          "template_note_label": "Descriere (pentru echipa ta)",
+          "template_note_placeholder": "Pentru ce este acest șablon (opțional).",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "Adaugă tip de activitate",
+              "description": "Adaugă alte tipuri de activități disponibile în proiectele create din acest șablon.",
+              "empty": "Niciun tip suplimentar încă.",
+              "title": "Tipuri suplimentare"
+            },
+            "default_badge": "Implicit",
+            "disabled_hint": "Activează tipurile de activități în secțiunea Funcționalități de mai sus pentru a le configura aici.",
+            "epic": {
+              "description": "Bloc mare de activitate ce poate fi împărțit în sarcini.",
+              "disabled": "Epicele sunt dezactivate pentru acest șablon.",
+              "title": "Epic"
+            },
+            "optional_badge": "Opțional",
+            "properties_empty": "Nicio proprietate personalizată pentru acest tip.",
+            "task": {
+              "description": "Tip de activitate standard pentru sarcinile curente.",
+              "title": "Sarcină"
+            },
+            "type_description_placeholder": "Descriere scurtă (opțional)",
+            "type_name_placeholder": "Numele tipului"
+          }
+        },
+        "loading": "Se încarcă șabloanele…",
+        "none": "Niciun șablon",
+        "select_placeholder": "Selectează un șablon",
+        "table": {
+          "download_template": "Descarcă",
+          "no_description": "Nicio descriere",
+          "use_template": "Folosește șablon"
+        },
+        "title": "Șabloane de proiect",
+        "toasts": {
+          "apply_failed": {
+            "message": "Nu s-a putut aplica șablonul de proiect."
+          },
+          "apply_followup_failed": {
+            "message": "Proiectul a fost creat, dar unele setări din șablon nu au putut fi aplicate."
+          },
+          "create_failed": {
+            "message": "Te rugăm să verifici formularul și să încerci din nou.",
+            "title": "Nu s-a putut crea șablonul"
+          },
+          "created": {
+            "message": "Șablonul de proiect a fost salvat.",
+            "title": "Șablon creat"
+          },
+          "delete_failed": {
+            "message": "Te rugăm să încerci din nou.",
+            "title": "Nu s-a putut șterge"
+          },
+          "deleted": {
+            "message": "Șablonul de proiect a fost șters.",
+            "title": "Șablon eliminat"
+          },
+          "download_failed": {
+            "message": "Nu s-a putut descărca fișierul șablonului."
+          },
+          "save_failed": {
+            "message": "Te rugăm să verifici formularul și să încerci din nou.",
+            "title": "Nu s-a putut salva șablonul"
+          },
+          "saved": {
+            "message": "Șablonul de proiect a fost actualizat.",
+            "title": "Șablon salvat"
+          },
+          "upload_failed": {
+            "message": "Nu s-a putut încărca șablonul. Te rugăm să verifici fișierul și să încerci din nou."
+          },
+          "uploaded_renamed": {
+            "message": "Acest nume era deja folosit, așa că șablonul a fost salvat ca „{name}”."
+          },
+          "uploaded": {
+            "message": "Șablonul „{name}” a fost încărcat din fișier."
+          }
+        },
+        "upload_invalid_file": "Te rugăm să încarci un fișier JSON descărcat cu butonul „Descarcă”.",
+        "upload_template": "Încarcă din fișier",
+        "upload_too_large": "Fișierul trebuie să fie mai mic de {size} MB."
+      },
+      "work_item_templates": {
+        "add_template": "Adaugă șablon",
+        "delete_confirm": "Ești sigur că vrei să elimini acest șablon de activitate?",
+        "description": "Creează seturi implicite reutilizabile pentru activități noi (titlu, descriere, responsabili, prioritate și altele). Un șablon poate acoperi întregul spațiu de lucru sau un singur proiect.",
+        "edit_template": "Editează șablonul",
+        "form": {
+          "default_values_section_hint": "Când cineva aplică acest șablon la crearea unei activități, aceste câmpuri sunt completate automat. Totul aici este opțional.",
+          "default_values_section_title": "Valori implicite ale activității",
+          "default_work_item_description": "Descriere",
+          "default_work_item_description_hint": "Text simplu; este salvat ca descriere a activității. Salturile de rând sunt păstrate.",
+          "default_work_item_description_placeholder": "Text care trebuie să apară implicit în noua activitate",
+          "default_work_item_name": "Titlu",
+          "default_work_item_name_placeholder": "de ex. [Eroare] …",
+          "modal_intro": "Denumește șablonul și adaugă o notă scurtă pentru echipă. Apoi setează valorile implicite ale activității — același gen de titlu, descriere, responsabili și prioritate pe care le folosești la crearea unei activități.",
+          "name_required": "Numele șablonului este obligatoriu",
+          "scope_hint": "Lasă proiectul necompletat pentru a face acest șablon disponibil în toate proiectele. Câmpurile specifice proiectului (stare, etichete, ciclu, module) pot fi salvate doar când este selectat un proiect.",
+          "scope_hint_short": "Opțional. Dacă este necompletat, șablonul este disponibil în toate proiectele. Când este setat, sugestiile de responsabili sunt limitate la acel proiect; altfel, sunt folosiți membrii spațiului de lucru.",
+          "scope_project": "Limitează la un proiect (opțional)",
+          "template_name_label": "Numele șablonului",
+          "template_name_placeholder": "de ex. Raport de eroare",
+          "template_note_label": "Descriere (pentru echipa ta)",
+          "template_note_placeholder": "Pentru ce este acest șablon (opțional; aceasta nu este descrierea activității)."
+        },
+        "heading": "Șabloane de activitate",
+        "table": {
+          "name": "Șablon",
+          "project": "Proiect",
+          "scope": "Domeniu",
+          "workspace_wide": "Toate proiectele"
+        },
+        "title": "Șabloane de activitate",
+        "toasts": {
+          "create_failed": {
+            "message": "Te rugăm să verifici formularul și să încerci din nou.",
+            "title": "Nu s-a putut crea șablonul"
+          },
+          "created": {
+            "message": "Șablonul de activitate a fost salvat.",
+            "title": "Șablon creat"
+          },
+          "delete_failed": {
+            "message": "Te rugăm să încerci din nou.",
+            "title": "Nu s-a putut șterge"
+          },
+          "deleted": {
+            "message": "Șablonul de activitate a fost șters.",
+            "title": "Șablon eliminat"
+          },
+          "save_failed": {
+            "message": "Te rugăm să verifici formularul și să încerci din nou.",
+            "title": "Nu s-a putut salva șablonul"
+          },
+          "saved": {
+            "message": "Șablonul de activitate a fost actualizat.",
+            "title": "Șablon salvat"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "Adaugă tip",
+        "delete_confirm": "Elimini acest tip de activitate? Activitățile existente își păstrează datele.",
+        "description": "Definește tipuri de activități cu identitate proprie, proprietăți personalizate și domeniu de aplicare la nivel de proiect. Activează sau dezactivează tipurile fără a afecta activitățile existente.",
+        "edit_type": "Editează tipul",
+        "epic_badge": "Epic",
+        "form": {
+          "description_label": "Descriere",
+          "is_active": "Activ",
+          "is_epic": "Tip epic",
+          "modal_intro": "Denumește tipul, alege o pictogramă și atașează doar proprietățile de care are nevoie acest tip de activitate. Asignează-l proiectelor în care trebuie să fie disponibil.",
+          "name_label": "Nume",
+          "name_required": "Numele tipului este obligatoriu",
+          "projects_hint": "Lasă necompletat pentru a păstra tipul în bibliotecă fără a-l asigna încă niciunui proiect.",
+          "projects_label": "Proiecte",
+          "properties_heading": "Proprietăți personalizate",
+          "property": {
+            "active_checkbox": "Activ",
+            "add": "Adaugă proprietate",
+            "description_label": "Descriere",
+            "empty": "Nicio proprietate personalizată încă.",
+            "inactive": "Inactiv",
+            "mandatory": "Obligatoriu",
+            "mandatory_checkbox": "Obligatoriu la crearea activităților",
+            "title_label": "Titlu",
+            "type_label": "Tip",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Dată",
+              "dropdown": "Dropdown",
+              "member_picker": "Membru",
+              "number": "Număr",
+              "text": "Text"
+            }
+          }
+        },
+        "table": {
+          "name": "Tip",
+          "no_projects": "Neasignat",
+          "projects": "Proiecte",
+          "properties": "Proprietăți",
+          "status": "Activ"
+        },
+        "title": "Tipuri de activități",
+        "toasts": {
+          "delete_failed": {
+            "message": "Te rugăm să încerci din nou.",
+            "title": "Nu s-a putut șterge"
+          },
+          "deleted": {
+            "message": "Tipul de activitate a fost șters.",
+            "title": "Tip eliminat"
+          },
+          "save_failed": {
+            "message": "Te rugăm să verifici formularul și să încerci din nou.",
+            "title": "Nu s-a putut salva tipul"
+          },
+          "saved": {
+            "message": "Tipul de activitate a fost salvat.",
+            "title": "Tip salvat"
+          }
+        }
+      }
+    }
   }
 }

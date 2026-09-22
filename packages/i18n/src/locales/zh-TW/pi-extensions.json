@@ -1,9 +1,26 @@
 {
-  "appearance": "外觀",
+  "account_settings": {
+    "api_tokens": {
+      "heading": "個人存取權杖"
+    }
+  },
+  "approve": "核准",
   "duration": "持續時間",
   "duration_days": "{count, plural, other {# 天}}",
   "epic": {
     "all": "所有 Epic"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "以逗號分隔符匯出為 CSV。",
+      "short_description": "CSV 逗號",
+      "title": "CSV (逗號)"
+    },
+    "csv_semicolon": {
+      "description": "以分號分隔符匯出為 CSV，適用於 Excel。",
+      "short_description": "CSV 分號",
+      "title": "CSV (分號，Excel)"
+    }
   },
   "importer": {
     "github": {
@@ -18,27 +35,511 @@
   "issue": {
     "add": {
       "duration": "新增持續時間"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue} 必須等到 {related} 完成後才能開始（受阻擋關聯限制）。",
+          "blocking": "{issue} 必須在 {related} 開始前完成（阻擋關聯）。",
+          "finish_after": "{issue} 不能在 {related} 之前完成（須晚於完成關聯）。",
+          "finish_before": "{issue} 必須在 {related} 當天或之前完成（須早於完成關聯）。",
+          "start_after": "{issue} 不能在 {related} 之前開始（須晚於開始關聯）。",
+          "start_before": "{issue} 必須在 {related} 當天或之前開始（須早於開始關聯）。"
+        },
+        "status": {
+          "finish_after": "{issue} 必須等到 {related} 完成後才能完成（須晚於完成關聯）。",
+          "start_after": "{issue} 必須等到 {related} 開始後才能開始（須晚於開始關聯）。"
+        }
+      },
+      "date_conflict": "這些日期與現有的相依關係衝突。請先調整相關工作項目或移除相依關係。",
+      "dependency_create_failed": "無法建立相依關係，請再試一次。",
+      "dependency_created": "工作項目相依關係已成功建立。"
     }
   },
-  "profile": {
-    "actions": {
-      "appearance": "外觀"
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "在週期性的時間段內安排工作。",
+        "label": "週期"
+      },
+      "description": "選擇此專案要啟用哪些功能。",
+      "intake": {
+        "description": "在將工作加入專案前先進行分級處理。",
+        "label": "接收"
+      },
+      "modules": {
+        "description": "將工作分組為類似子專案的架構。",
+        "label": "模組"
+      },
+      "pages": {
+        "description": "建立專案文件頁面。",
+        "label": "頁面"
+      },
+      "time_tracking": {
+        "description": "追蹤工作項目所花費的時間。",
+        "label": "時間追蹤"
+      },
+      "title": "專案功能",
+      "views": {
+        "description": "儲存並分享排序、篩選器和版面配置。",
+        "label": "檢視"
+      },
+      "work_item_types": {
+        "assign_failed": "專案已建立，但無法指派工作項目類型。",
+        "assign_hint": "選擇此專案可使用哪些工作區類型。",
+        "assign_label": "指派工作項目類型",
+        "description": "為工作項目使用具有自訂屬性的自訂類型。",
+        "label": "工作項目類型",
+        "no_types_hint": "此工作區目前沒有啟用中的工作項目類型。請先在工作區設定中建立。"
+      }
     }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "新增核准關卡",
+      "add_transition": "新增轉換",
+      "allow_creation": "允許在此狀態下新增工作項目",
+      "approval": "核准",
+      "approval_error": "無法處理核准。",
+      "approved_success": "轉換已核准。",
+      "blocker_message": "工作流程不允許此轉換。",
+      "builder_description": "展開狀態以設定允許的轉換與核准關卡。",
+      "builder_title": "工作流程建構器",
+      "disabled_success": "此專案的工作流程已停用。",
+      "enable_description": "啟用後，工作項目將依照設定的狀態轉換與核准規則進行。",
+      "enable_title": "啟用工作流程",
+      "enabled_success": "此專案的工作流程已啟用。",
+      "enabling": "正在更新工作流程設定…",
+      "paused": "已暫停",
+      "pending_approval_description": "從 {from} 移動到 {to} 正在等待核准。",
+      "pending_approval_title": "需要核准",
+      "rejected_success": "轉換已拒絕。",
+      "resolving_approval": "正在處理核准…",
+      "save_error": "無法儲存工作流程設定。",
+      "save_success": "工作流程設定已儲存。",
+      "toggle_error": "無法更新工作流程設定。",
+      "transition": "轉換",
+      "transitions_configured": "項轉換已設定"
+    }
+  },
+  "project_templates": {
+    "loading": "正在載入範本…",
+    "none": "無範本",
+    "select_placeholder": "選擇範本"
   },
   "project_views": {
     "empty_state": {
       "filter": {
-        "description": "沒有檢視符合搜尋條件。\n改為建立新檢視。",
+        "description": "沒有檢視符合搜尋條件。 \n 改為建立新檢視。",
         "title": "沒有符合的檢視"
       }
     }
   },
-  "workspace_analytics": {
-    "total_admins": "管理員總數",
-    "total_guests": "訪客總數",
-    "total_intake": "總收入",
-    "total_projects": "專案總數",
-    "total_users": "使用者總數",
-    "total_work_items": "{entity}總數"
+  "reject": "拒絕",
+  "settings_empty_state": {
+    "imports": {
+      "description": "您目前沒有任何匯入紀錄。將檔案匯入專案後，所有紀錄都會顯示在這裡。",
+      "title": "尚無匯入紀錄"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "無法套用工作項目範本。",
+    "dropdown_placeholder": "範本",
+    "loading": "正在載入範本…",
+    "none": "無範本"
+  },
+  "work_item_types": {
+    "loading": "正在載入類型…",
+    "property_values_save_failed": "工作項目已建立，但無法儲存額外的屬性。請至工作項目詳細資料中填寫。",
+    "select_placeholder": "類型"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "所有專案",
+        "history": {
+          "download": "下載",
+          "expired": "已過期",
+          "exported_by": "匯出者",
+          "exported_on": "匯出日期",
+          "project_count": "{count, plural, other {# 個專案}}",
+          "projects": "已匯出的專案",
+          "status": "狀態"
+        },
+        "statuses": {
+          "completed": "已完成",
+          "expired": "已過期",
+          "failed": "失敗",
+          "processing": "處理中"
+        },
+        "tabs": {
+          "export": "匯出",
+          "import": "匯入"
+        },
+        "work_items_export": {
+          "description": "將所選專案中的工作項目匯出為 CSV、Excel 或 JSON。",
+          "heading": "匯出工作項目"
+        }
+      },
+      "imports": {
+        "file_too_large": "檔案大小必須小於 {size} MB。",
+        "history": {
+          "file": "檔案",
+          "imported_by": "匯入者",
+          "imported_on": "匯入日期",
+          "project_count": "{count, plural, other {# 個專案}}",
+          "projects": "專案",
+          "reason": "原因",
+          "status": "狀態"
+        },
+        "previous_imports": "先前的匯入紀錄",
+        "work_items": {
+          "description": "將透過「匯出工作項目」建立的檔案（CSV、Excel 或 JSON）中的工作項目匯入現有專案。",
+          "heading": "匯入工作項目",
+          "import_button": "匯入工作項目",
+          "invalid_file_type": "請上傳 CSV、Excel (.xlsx) 或 JSON 檔案。",
+          "no_projects": "無可用專案",
+          "open_project": "開啟專案",
+          "options": {
+            "assignees": "指派對象",
+            "clear_all": "全部清除",
+            "cycles": "週期",
+            "dates": "日期與持續時間",
+            "heading": "要匯入的內容",
+            "labels": "標籤",
+            "modules": "模組",
+            "parents": "上層工作項目",
+            "relations": "工作項目之間的關聯",
+            "select_all": "全選",
+            "subscribers": "訂閱者"
+          },
+          "result_summary": "已將 {count, plural, other {# 個工作項目}} 匯入「{name}」。",
+          "select_file": "選擇檔案",
+          "select_file_label": "匯出檔案",
+          "select_project": "目標專案",
+          "select_project_placeholder": "選擇專案",
+          "toasts": {
+            "error": {
+              "message": "工作項目匯入失敗。請使用「匯出工作項目」產生的檔案後再試一次。"
+            },
+            "success": {
+              "message": "已將 {count} 個工作項目匯入「{name}」。"
+            }
+          },
+          "warnings_heading": "匯入時發生 {count, plural, other {# 個警告}}",
+          "warnings_none": "匯入完成，沒有任何警告。"
+        }
+      },
+      "project_templates": {
+        "add_template": "新增模板",
+        "delete_confirm": "要移除此專案模板嗎？現有專案不會受到影響。",
+        "description": "建立可重複使用的專案設定，包含預設屬性、啟用的功能、狀態、標籤和工作項目類型。",
+        "edit_template": "編輯模板",
+        "form": {
+          "add_label": "新增標籤",
+          "add_state": "新增狀態",
+          "custom_property": {
+            "active_checkbox": "啟用",
+            "add_property": "新增屬性",
+            "default_option_label": "預設選項",
+            "description_label": "描述",
+            "description_placeholder": "此屬性的說明文字（選填）",
+            "dropdown_options_heading": "下拉選單選項",
+            "inactive": "未啟用",
+            "mandatory": "必填",
+            "mandatory_checkbox": "建立工作項目時為必填",
+            "no_default": "無預設值",
+            "option_placeholder": "選項名稱",
+            "select_mode_label": "選取模式",
+            "select_multi": "多選",
+            "select_single": "單選",
+            "title_label": "標題",
+            "title_placeholder": "屬性名稱",
+            "type_label": "類型",
+            "types": {
+              "boolean": "布林值",
+              "date": "日期",
+              "dropdown": "下拉選單",
+              "member_picker": "成員",
+              "number": "數字",
+              "text": "文字"
+            }
+          },
+          "default_assignee": "預設指派對象",
+          "default_cover_image": "封面圖片",
+          "default_labels": "預設標籤",
+          "default_lead": "專案負責人",
+          "default_project_description": "專案描述",
+          "default_project_description_placeholder": "新專案的預設描述",
+          "default_project_identifier": "專案識別碼",
+          "default_project_identifier_placeholder": "例如 PROD",
+          "default_project_name": "專案名稱",
+          "default_project_name_placeholder": "例如 產品發布",
+          "default_start_date": "開始日期",
+          "default_target_date": "目標日期",
+          "default_visibility": "可見度",
+          "features": {
+            "cycles": {
+              "description": "用於規劃與交付的定時迭代週期。",
+              "label": "週期"
+            },
+            "intake": {
+              "description": "在轉為工作項目前先分級處理傳入的請求。",
+              "label": "接收"
+            },
+            "modules": {
+              "description": "將工作分組為聚焦領域或里程碑。",
+              "label": "模組"
+            },
+            "pages": {
+              "description": "專案 Wiki 與文件。",
+              "label": "頁面"
+            },
+            "time_tracking": {
+              "description": "記錄工作項目所花費的時間。",
+              "label": "時間追蹤"
+            },
+            "views": {
+              "description": "為團隊儲存的篩選器與版面配置。",
+              "label": "檢視"
+            },
+            "work_item_types": {
+              "description": "具有自訂屬性的不同工作類型。",
+              "label": "工作項目類型"
+            }
+          },
+          "identifier_invalid": "僅能使用英文字母與數字",
+          "identifier_max_char": "識別碼最多 5 個字元",
+          "label_name_placeholder": "標籤名稱",
+          "labels_empty": "尚無標籤。",
+          "mark_default_state": "標記為預設狀態",
+          "modal_intro": "為模板命名並為團隊加上簡短說明，接著設定預設專案值——與您建立專案時所使用的設定相同。",
+          "name_required": "模板名稱為必填",
+          "section_features": "功能",
+          "section_features_hint": "選擇套用此模板時要啟用的選用專案功能。",
+          "section_labels": "標籤",
+          "section_labels_hint": "定義新專案的預設標籤。",
+          "section_properties": "預設專案屬性",
+          "section_states": "狀態",
+          "section_states_hint": "定義新專案的預設工作流程狀態。",
+          "section_template": "模板",
+          "section_work_item_types": "工作項目類型",
+          "section_work_item_types_hint": "為透過此模板建立的專案設定預設工作項目類型與自訂屬性。",
+          "state_groups": {
+            "backlog": "待辦事項",
+            "cancelled": "已取消",
+            "completed": "已完成",
+            "started": "已開始",
+            "unstarted": "未開始"
+          },
+          "state_name_placeholder": "狀態名稱",
+          "states_group_empty": "此群組尚無狀態。",
+          "template_name_label": "模板名稱",
+          "template_name_placeholder": "例如 軟體交付",
+          "template_note_label": "描述（給您的團隊）",
+          "template_note_placeholder": "此模板的用途（選填）。",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "新增工作項目類型",
+              "description": "為透過此模板建立的專案新增更多可用的工作項目類型。",
+              "empty": "尚無其他類型。",
+              "title": "其他類型"
+            },
+            "default_badge": "預設",
+            "disabled_hint": "請先在上方的「功能」中啟用工作項目類型，才能在此設定類型。",
+            "epic": {
+              "description": "可拆分為多個任務的大型工作。",
+              "disabled": "此模板已停用 Epic。",
+              "title": "Epic"
+            },
+            "optional_badge": "選用",
+            "properties_empty": "此類型尚無自訂屬性。",
+            "task": {
+              "description": "用於日常任務的標準工作項目類型。",
+              "title": "任務"
+            },
+            "type_description_placeholder": "簡短描述（選填）",
+            "type_name_placeholder": "類型名稱"
+          }
+        },
+        "loading": "正在載入模板…",
+        "none": "無模板",
+        "select_placeholder": "選擇模板",
+        "table": {
+          "download_template": "下載",
+          "no_description": "無描述",
+          "use_template": "使用模板"
+        },
+        "title": "專案模板",
+        "toasts": {
+          "apply_failed": {
+            "message": "無法套用專案模板。"
+          },
+          "apply_followup_failed": {
+            "message": "專案已建立，但部分模板設定無法套用。"
+          },
+          "create_failed": {
+            "message": "請檢查表單內容並再試一次。",
+            "title": "無法建立模板"
+          },
+          "created": {
+            "message": "專案模板已儲存。",
+            "title": "模板已建立"
+          },
+          "delete_failed": {
+            "message": "請再試一次。",
+            "title": "無法刪除"
+          },
+          "deleted": {
+            "message": "專案模板已刪除。",
+            "title": "模板已移除"
+          },
+          "download_failed": {
+            "message": "無法下載模板檔案。"
+          },
+          "save_failed": {
+            "message": "請檢查表單內容並再試一次。",
+            "title": "無法儲存模板"
+          },
+          "saved": {
+            "message": "專案模板已更新。",
+            "title": "模板已儲存"
+          },
+          "upload_failed": {
+            "message": "無法上傳模板。請檢查檔案並再試一次。"
+          },
+          "uploaded_renamed": {
+            "message": "該名稱已被使用，因此模板已另存為「{name}」。"
+          },
+          "uploaded": {
+            "message": "已從檔案上傳模板「{name}」。"
+          }
+        },
+        "upload_invalid_file": "請上傳透過「下載」按鈕取得的 JSON 檔案。",
+        "upload_template": "從檔案上傳",
+        "upload_too_large": "檔案大小必須小於 {size} MB。"
+      },
+      "work_item_templates": {
+        "add_template": "新增模板",
+        "delete_confirm": "您確定要移除此工作項目模板嗎？",
+        "description": "為新工作項目建立可重複使用的起始設定（標題、描述、指派對象、優先順序等）。模板可套用於整個工作區，或僅限單一專案。",
+        "edit_template": "編輯模板",
+        "form": {
+          "default_values_section_hint": "當有人在建立工作項目時套用此模板，這些欄位會自動填入。以下欄位皆為選填。",
+          "default_values_section_title": "預設工作項目值",
+          "default_work_item_description": "描述",
+          "default_work_item_description_hint": "純文字；將儲存為工作項目描述，並保留換行。",
+          "default_work_item_description_placeholder": "新工作項目預設顯示的文字",
+          "default_work_item_name": "標題",
+          "default_work_item_name_placeholder": "例如 [Bug] …",
+          "modal_intro": "為模板命名並為團隊加上簡短說明，接著設定預設工作項目值——與您建立工作項目時所使用的標題、描述、指派對象和優先順序相同。",
+          "name_required": "模板名稱為必填",
+          "scope_hint": "將專案欄位留空，即可讓此模板在所有專案中使用。僅在選取專案後，才能儲存專案專屬欄位（狀態、標籤、週期、模組）。",
+          "scope_hint_short": "選填。若留空，此模板將可在所有專案中使用；設定後，指派對象建議將限定於該專案，否則將使用工作區成員。",
+          "scope_project": "限定於單一專案（選填）",
+          "template_name_label": "模板名稱",
+          "template_name_placeholder": "例如 錯誤回報",
+          "template_note_label": "描述（給您的團隊）",
+          "template_note_placeholder": "此模板的用途（選填；並非工作項目描述）。"
+        },
+        "heading": "工作項目模板",
+        "table": {
+          "name": "模板",
+          "project": "專案",
+          "scope": "範圍",
+          "workspace_wide": "所有專案"
+        },
+        "title": "工作項目模板",
+        "toasts": {
+          "create_failed": {
+            "message": "請檢查表單內容並再試一次。",
+            "title": "無法建立模板"
+          },
+          "created": {
+            "message": "工作項目模板已儲存。",
+            "title": "模板已建立"
+          },
+          "delete_failed": {
+            "message": "請再試一次。",
+            "title": "無法刪除"
+          },
+          "deleted": {
+            "message": "工作項目模板已刪除。",
+            "title": "模板已移除"
+          },
+          "save_failed": {
+            "message": "請檢查表單內容並再試一次。",
+            "title": "無法儲存模板"
+          },
+          "saved": {
+            "message": "工作項目模板已更新。",
+            "title": "模板已儲存"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "新增類型",
+        "delete_confirm": "要移除此工作項目類型嗎？現有工作項目的資料將會保留。",
+        "description": "定義具有獨立識別、自訂屬性與專案範圍的工作項目類型。可切換類型的啟用狀態，而不影響現有項目。",
+        "edit_type": "編輯類型",
+        "epic_badge": "Epic",
+        "form": {
+          "description_label": "描述",
+          "is_active": "啟用",
+          "is_epic": "Epic 類型",
+          "modal_intro": "為類型命名、選擇圖示，並僅附加此類工作所需的屬性，接著將其指派給應該可使用它的專案。",
+          "name_label": "名稱",
+          "name_required": "類型名稱為必填",
+          "projects_hint": "留空即可將類型保留在資料庫中，暫不指派給任何專案。",
+          "projects_label": "專案",
+          "properties_heading": "自訂屬性",
+          "property": {
+            "active_checkbox": "啟用",
+            "add": "新增屬性",
+            "description_label": "描述",
+            "empty": "尚無自訂屬性。",
+            "inactive": "未啟用",
+            "mandatory": "必填",
+            "mandatory_checkbox": "建立工作項目時為必填",
+            "title_label": "標題",
+            "type_label": "類型",
+            "types": {
+              "boolean": "布林值",
+              "date": "日期",
+              "dropdown": "下拉選單",
+              "member_picker": "成員",
+              "number": "數字",
+              "text": "文字"
+            }
+          }
+        },
+        "table": {
+          "name": "類型",
+          "no_projects": "未指派",
+          "projects": "專案",
+          "properties": "屬性",
+          "status": "啟用中"
+        },
+        "title": "工作項目類型",
+        "toasts": {
+          "delete_failed": {
+            "message": "請再試一次。",
+            "title": "無法刪除"
+          },
+          "deleted": {
+            "message": "工作項目類型已刪除。",
+            "title": "類型已移除"
+          },
+          "save_failed": {
+            "message": "請檢查表單內容並再試一次。",
+            "title": "無法儲存類型"
+          },
+          "saved": {
+            "message": "工作項目類型已儲存。",
+            "title": "類型已儲存"
+          }
+        }
+      }
+    }
   }
 }

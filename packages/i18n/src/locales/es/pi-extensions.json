@@ -1,10 +1,26 @@
 {
-  "appearance": "Apariencia",
-  "connections": "Conexiones",
+  "account_settings": {
+    "api_tokens": {
+      "heading": "Tokens de acceso personal"
+    }
+  },
+  "approve": "Aprobar",
   "duration": "Duración",
   "duration_days": "{count, plural, one {# día} other {# días}}",
   "epic": {
     "all": "Todos los Epics"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "Exporta a CSV con delimitador de coma.",
+      "short_description": "CSV coma",
+      "title": "CSV (coma)"
+    },
+    "csv_semicolon": {
+      "description": "Exporta a CSV con delimitador de punto y coma para Excel.",
+      "short_description": "CSV punto y coma",
+      "title": "CSV (punto y coma, Excel)"
+    }
   },
   "importer": {
     "github": {
@@ -19,12 +35,97 @@
   "issue": {
     "add": {
       "duration": "Agregar duración"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue} no puede comenzar hasta que {related} finalice (relación de bloqueo).",
+          "blocking": "{issue} debe finalizar antes de que {related} comience (relación de bloqueo).",
+          "finish_after": "{issue} no puede finalizar antes que {related} (relación de finaliza después).",
+          "finish_before": "{issue} debe finalizar en la fecha de {related} o antes (relación de finaliza antes).",
+          "start_after": "{issue} no puede comenzar antes que {related} (relación de comienza después).",
+          "start_before": "{issue} debe comenzar en la fecha de {related} o antes (relación de comienza antes)."
+        },
+        "status": {
+          "finish_after": "{issue} no puede completarse hasta que {related} se complete (relación de finaliza después).",
+          "start_after": "{issue} no puede comenzar hasta que {related} haya comenzado (relación de comienza después)."
+        }
+      },
+      "date_conflict": "Estas fechas entran en conflicto con dependencias existentes. Ajusta los elementos de trabajo relacionados o elimina primero la dependencia.",
+      "dependency_create_failed": "No se pudo crear la dependencia. Por favor, inténtalo de nuevo.",
+      "dependency_created": "La dependencia del elemento de trabajo se creó correctamente."
     }
   },
-  "profile": {
-    "actions": {
-      "appearance": "Apariencia"
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "Delimita el trabajo en periodos recurrentes.",
+        "label": "Ciclos"
+      },
+      "description": "Elige qué funciones están habilitadas para este proyecto.",
+      "intake": {
+        "description": "Clasifica el trabajo entrante antes de añadirlo al proyecto.",
+        "label": "Entrada"
+      },
+      "modules": {
+        "description": "Agrupa el trabajo en configuraciones similares a subproyectos.",
+        "label": "Módulos"
+      },
+      "pages": {
+        "description": "Crea páginas de documentación del proyecto.",
+        "label": "Páginas"
+      },
+      "time_tracking": {
+        "description": "Registra el tiempo dedicado a los elementos de trabajo.",
+        "label": "Seguimiento de tiempo"
+      },
+      "title": "Funciones del proyecto",
+      "views": {
+        "description": "Guarda y comparte ordenamientos, filtros y diseños.",
+        "label": "Vistas"
+      },
+      "work_item_types": {
+        "assign_failed": "El proyecto se creó, pero no se pudieron asignar los tipos de elementos de trabajo.",
+        "assign_hint": "Selecciona qué tipos del espacio de trabajo deben estar disponibles en este proyecto.",
+        "assign_label": "Asignar tipos de elementos de trabajo",
+        "description": "Usa tipos personalizados con sus propias propiedades en los elementos de trabajo.",
+        "label": "Tipos de elementos de trabajo",
+        "no_types_hint": "No hay tipos de elementos de trabajo activos en este espacio de trabajo. Créalos primero en la configuración del espacio de trabajo."
+      }
     }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "Agregar punto de aprobación",
+      "add_transition": "Agregar transición",
+      "allow_creation": "Permitir nuevos elementos de trabajo en este estado",
+      "approval": "Aprobación",
+      "approval_error": "No se pudo procesar la aprobación.",
+      "approved_success": "Transición aprobada.",
+      "blocker_message": "El flujo de trabajo no permite esta transición.",
+      "builder_description": "Expande un estado para configurar las transiciones permitidas y los puntos de aprobación.",
+      "builder_title": "Constructor de flujos de trabajo",
+      "disabled_success": "Los flujos de trabajo se deshabilitaron para este proyecto.",
+      "enable_description": "Cuando está habilitado, los elementos de trabajo siguen las transiciones de estado y reglas de aprobación configuradas.",
+      "enable_title": "Habilitar flujos de trabajo",
+      "enabled_success": "Los flujos de trabajo se habilitaron para este proyecto.",
+      "enabling": "Actualizando configuración del flujo de trabajo...",
+      "paused": "Pausado",
+      "pending_approval_description": "El movimiento de {from} a {to} está pendiente de aprobación.",
+      "pending_approval_title": "Aprobación requerida",
+      "rejected_success": "Transición rechazada.",
+      "resolving_approval": "Procesando aprobación...",
+      "save_error": "No se pudo guardar la configuración del flujo de trabajo.",
+      "save_success": "Configuración del flujo de trabajo guardada.",
+      "toggle_error": "No se pudo actualizar la configuración del flujo de trabajo.",
+      "transition": "Transición",
+      "transitions_configured": "transiciones configuradas"
+    }
+  },
+  "project_templates": {
+    "loading": "Cargando plantillas…",
+    "none": "Sin plantilla",
+    "select_placeholder": "Selecciona una plantilla"
   },
   "project_views": {
     "empty_state": {
@@ -34,12 +135,411 @@
       }
     }
   },
-  "workspace_analytics": {
-    "total_admins": "Total de administradores",
-    "total_guests": "Total de invitados",
-    "total_intake": "Ingreso total",
-    "total_projects": "Total de proyectos",
-    "total_users": "Total de usuarios",
-    "total_work_items": "Total de {entity}"
+  "reject": "Rechazar",
+  "settings_empty_state": {
+    "imports": {
+      "description": "Aún no tienes registros de importación. Una vez que importes un archivo a un proyecto, todos los registros aparecerán aquí.",
+      "title": "Aún no hay importaciones"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "No se pudo aplicar la plantilla del elemento de trabajo.",
+    "dropdown_placeholder": "Plantilla",
+    "loading": "Cargando plantillas…",
+    "none": "Sin plantilla"
+  },
+  "work_item_types": {
+    "loading": "Cargando tipos…",
+    "property_values_save_failed": "El elemento de trabajo se creó, pero no se pudieron guardar las propiedades adicionales. Complétalas desde los detalles del elemento de trabajo.",
+    "select_placeholder": "Tipo"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "Todos los proyectos",
+        "history": {
+          "download": "Descargar",
+          "expired": "Expirado",
+          "exported_by": "Exportado por",
+          "exported_on": "Exportado el",
+          "project_count": "{count, plural, one {# proyecto} other {# proyectos}}",
+          "projects": "Proyectos exportados",
+          "status": "Estado"
+        },
+        "statuses": {
+          "completed": "Completado",
+          "expired": "Expirado",
+          "failed": "Fallido",
+          "processing": "Procesando"
+        },
+        "tabs": {
+          "export": "Exportar",
+          "import": "Importar"
+        },
+        "work_items_export": {
+          "description": "Exporta elementos de trabajo de los proyectos seleccionados a CSV, Excel o JSON.",
+          "heading": "Exportar elementos de trabajo"
+        }
+      },
+      "imports": {
+        "file_too_large": "El archivo debe ser menor de {size} MB.",
+        "history": {
+          "file": "Archivo",
+          "imported_by": "Importado por",
+          "imported_on": "Importado el",
+          "project_count": "{count, plural, one {# proyecto} other {# proyectos}}",
+          "projects": "Proyectos",
+          "reason": "Motivo",
+          "status": "Estado"
+        },
+        "previous_imports": "Importaciones anteriores",
+        "work_items": {
+          "description": "Importa elementos de trabajo desde un archivo creado por “Exportar elementos de trabajo” (CSV, Excel o JSON) a un proyecto existente.",
+          "heading": "Importar elementos de trabajo",
+          "import_button": "Importar elementos de trabajo",
+          "invalid_file_type": "Sube un archivo CSV, Excel (.xlsx) o JSON.",
+          "no_projects": "No hay proyectos disponibles",
+          "open_project": "Abrir proyecto",
+          "options": {
+            "assignees": "Asignados",
+            "clear_all": "Borrar todo",
+            "cycles": "Ciclos",
+            "dates": "Fechas y duración",
+            "heading": "Qué importar",
+            "labels": "Etiquetas",
+            "modules": "Módulos",
+            "parents": "Elementos de trabajo padre",
+            "relations": "Relaciones entre elementos de trabajo",
+            "select_all": "Seleccionar todo",
+            "subscribers": "Suscriptores"
+          },
+          "result_summary": "Se importaron {count, plural, one {# elemento de trabajo} other {# elementos de trabajo}} a “{name}”.",
+          "select_file": "Seleccionar archivo",
+          "select_file_label": "Archivo de exportación",
+          "select_project": "Proyecto de destino",
+          "select_project_placeholder": "Selecciona un proyecto",
+          "toasts": {
+            "error": {
+              "message": "No se pudo importar los elementos de trabajo. Usa un archivo de “Exportar elementos de trabajo” e inténtalo de nuevo."
+            },
+            "success": {
+              "message": "Se importaron {count} elementos de trabajo a \"{name}\"."
+            }
+          },
+          "warnings_heading": "{count, plural, one {# advertencia} other {# advertencias}} durante la importación",
+          "warnings_none": "Todo se importó sin advertencias."
+        }
+      },
+      "project_templates": {
+        "add_template": "Agregar plantilla",
+        "delete_confirm": "¿Eliminar esta plantilla de proyecto? Los proyectos existentes no se ven afectados.",
+        "description": "Crea configuraciones de proyecto reutilizables con propiedades predeterminadas, funciones habilitadas, estados, etiquetas y tipos de elementos de trabajo.",
+        "edit_template": "Editar plantilla",
+        "form": {
+          "add_label": "Agregar etiqueta",
+          "add_state": "Agregar estado",
+          "custom_property": {
+            "active_checkbox": "Activo",
+            "add_property": "Agregar propiedad",
+            "default_option_label": "Opción predeterminada",
+            "description_label": "Descripción",
+            "description_placeholder": "Texto de ayuda para esta propiedad (opcional)",
+            "dropdown_options_heading": "Opciones del desplegable",
+            "inactive": "Inactivo",
+            "mandatory": "Requerido",
+            "mandatory_checkbox": "Requerido al crear elementos de trabajo",
+            "no_default": "Sin valor predeterminado",
+            "option_placeholder": "Nombre de la opción",
+            "select_mode_label": "Modo de selección",
+            "select_multi": "Selección múltiple",
+            "select_single": "Selección única",
+            "title_label": "Título",
+            "title_placeholder": "Nombre de la propiedad",
+            "type_label": "Tipo",
+            "types": {
+              "boolean": "Booleano",
+              "date": "Fecha",
+              "dropdown": "Desplegable",
+              "member_picker": "Miembro",
+              "number": "Número",
+              "text": "Texto"
+            }
+          },
+          "default_assignee": "Asignado por defecto",
+          "default_cover_image": "Imagen de portada",
+          "default_labels": "Etiquetas predeterminadas",
+          "default_lead": "Líder del proyecto",
+          "default_project_description": "Descripción del proyecto",
+          "default_project_description_placeholder": "Descripción predeterminada para nuevos proyectos",
+          "default_project_identifier": "Identificador del proyecto",
+          "default_project_identifier_placeholder": "p. ej. PROD",
+          "default_project_name": "Nombre del proyecto",
+          "default_project_name_placeholder": "p. ej. Lanzamiento de producto",
+          "default_start_date": "Fecha de inicio",
+          "default_target_date": "Fecha objetivo",
+          "default_visibility": "Visibilidad",
+          "features": {
+            "cycles": {
+              "description": "Iteraciones delimitadas en el tiempo para la planificación y entrega.",
+              "label": "Ciclos"
+            },
+            "intake": {
+              "description": "Clasifica las solicitudes entrantes antes de que se conviertan en elementos de trabajo.",
+              "label": "Entrada"
+            },
+            "modules": {
+              "description": "Agrupa el trabajo en áreas de enfoque o hitos.",
+              "label": "Módulos"
+            },
+            "pages": {
+              "description": "Wiki y documentación del proyecto.",
+              "label": "Páginas"
+            },
+            "time_tracking": {
+              "description": "Registra el tiempo dedicado a los elementos de trabajo.",
+              "label": "Seguimiento de tiempo"
+            },
+            "views": {
+              "description": "Filtros y diseños guardados para el equipo.",
+              "label": "Vistas"
+            },
+            "work_item_types": {
+              "description": "Distintos tipos de trabajo con propiedades personalizadas.",
+              "label": "Tipos de elementos de trabajo"
+            }
+          },
+          "identifier_invalid": "Usa solo letras y números",
+          "identifier_max_char": "El identificador debe tener 5 caracteres o menos",
+          "label_name_placeholder": "Nombre de la etiqueta",
+          "labels_empty": "Aún no hay etiquetas.",
+          "mark_default_state": "Marcar como estado predeterminado",
+          "modal_intro": "Nombra la plantilla y añade una breve nota para tu equipo. Luego configura los valores predeterminados del proyecto, el mismo tipo de configuración que usas al crear un proyecto.",
+          "name_required": "El nombre de la plantilla es obligatorio",
+          "section_features": "Funciones",
+          "section_features_hint": "Elige qué funciones opcionales del proyecto están habilitadas al aplicar esta plantilla.",
+          "section_labels": "Etiquetas",
+          "section_labels_hint": "Define las etiquetas predeterminadas para los nuevos proyectos.",
+          "section_properties": "Propiedades predeterminadas del proyecto",
+          "section_states": "Estados",
+          "section_states_hint": "Define los estados de flujo de trabajo predeterminados para los nuevos proyectos.",
+          "section_template": "Plantilla",
+          "section_work_item_types": "Tipos de elementos de trabajo",
+          "section_work_item_types_hint": "Configura los tipos de elementos de trabajo predeterminados y las propiedades personalizadas para los proyectos creados a partir de esta plantilla.",
+          "state_groups": {
+            "backlog": "Pendientes",
+            "cancelled": "Cancelado",
+            "completed": "Completado",
+            "started": "Iniciado",
+            "unstarted": "Sin iniciar"
+          },
+          "state_name_placeholder": "Nombre del estado",
+          "states_group_empty": "Aún no hay estados en este grupo.",
+          "template_name_label": "Nombre de la plantilla",
+          "template_name_placeholder": "p. ej. Entrega de software",
+          "template_note_label": "Descripción (para tu equipo)",
+          "template_note_placeholder": "Para qué sirve esta plantilla (opcional).",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "Agregar tipo de elemento de trabajo",
+              "description": "Agrega más tipos de elementos de trabajo disponibles en los proyectos de esta plantilla.",
+              "empty": "Aún no hay tipos adicionales.",
+              "title": "Tipos adicionales"
+            },
+            "default_badge": "Predeterminado",
+            "disabled_hint": "Habilita los tipos de elementos de trabajo en Funciones arriba para configurar los tipos aquí.",
+            "epic": {
+              "description": "Cuerpo de trabajo grande que se puede dividir en tareas.",
+              "disabled": "Los Epics están deshabilitados para esta plantilla.",
+              "title": "Epic"
+            },
+            "optional_badge": "Opcional",
+            "properties_empty": "No hay propiedades personalizadas para este tipo.",
+            "task": {
+              "description": "Tipo de elemento de trabajo estándar para tareas cotidianas.",
+              "title": "Tarea"
+            },
+            "type_description_placeholder": "Breve descripción (opcional)",
+            "type_name_placeholder": "Nombre del tipo"
+          }
+        },
+        "loading": "Cargando plantillas…",
+        "none": "Sin plantilla",
+        "select_placeholder": "Selecciona una plantilla",
+        "table": {
+          "download_template": "Descargar",
+          "no_description": "Sin descripción",
+          "use_template": "Usar plantilla"
+        },
+        "title": "Plantillas de proyecto",
+        "toasts": {
+          "apply_failed": {
+            "message": "No se pudo aplicar la plantilla del proyecto."
+          },
+          "apply_followup_failed": {
+            "message": "El proyecto se creó, pero algunas configuraciones de la plantilla no se pudieron aplicar."
+          },
+          "create_failed": {
+            "message": "Revisa el formulario e inténtalo de nuevo.",
+            "title": "No se pudo crear la plantilla"
+          },
+          "created": {
+            "message": "La plantilla de proyecto se guardó.",
+            "title": "Plantilla creada"
+          },
+          "delete_failed": {
+            "message": "Inténtalo de nuevo.",
+            "title": "No se pudo eliminar"
+          },
+          "deleted": {
+            "message": "La plantilla de proyecto se eliminó.",
+            "title": "Plantilla eliminada"
+          },
+          "download_failed": {
+            "message": "No se pudo descargar el archivo de la plantilla."
+          },
+          "save_failed": {
+            "message": "Revisa el formulario e inténtalo de nuevo.",
+            "title": "No se pudo guardar la plantilla"
+          },
+          "saved": {
+            "message": "La plantilla de proyecto se actualizó.",
+            "title": "Plantilla guardada"
+          },
+          "upload_failed": {
+            "message": "No se pudo subir la plantilla. Revisa el archivo e inténtalo de nuevo."
+          },
+          "uploaded_renamed": {
+            "message": "Ese nombre ya estaba en uso, así que la plantilla se guardó como \"{name}\"."
+          },
+          "uploaded": {
+            "message": "La plantilla \"{name}\" se subió desde el archivo."
+          }
+        },
+        "upload_invalid_file": "Sube un archivo JSON descargado con el botón “Descargar”.",
+        "upload_template": "Subir desde archivo",
+        "upload_too_large": "El archivo debe ser menor de {size} MB."
+      },
+      "work_item_templates": {
+        "add_template": "Agregar plantilla",
+        "delete_confirm": "¿Seguro que quieres eliminar esta plantilla de elemento de trabajo?",
+        "description": "Crea conjuntos iniciales reutilizables para nuevos elementos de trabajo (título, descripción, asignados, prioridad y más). Una plantilla puede abarcar todo el espacio de trabajo o solo un proyecto.",
+        "edit_template": "Editar plantilla",
+        "form": {
+          "default_values_section_hint": "Cuando alguien aplica esta plantilla al crear un elemento de trabajo, estos campos se completan automáticamente. Todo aquí es opcional.",
+          "default_values_section_title": "Valores predeterminados del elemento de trabajo",
+          "default_work_item_description": "Descripción",
+          "default_work_item_description_hint": "Texto sin formato; se guarda como la descripción del elemento de trabajo. Se conservan los saltos de línea.",
+          "default_work_item_description_placeholder": "Texto que debe aparecer de forma predeterminada en el nuevo elemento de trabajo",
+          "default_work_item_name": "Título",
+          "default_work_item_name_placeholder": "p. ej. [Error] …",
+          "modal_intro": "Nombra la plantilla y añade una breve nota para el equipo. Luego establece los valores predeterminados del elemento de trabajo: el mismo tipo de título, descripción, asignados y prioridad que usas al crear un elemento de trabajo.",
+          "name_required": "El nombre de la plantilla es obligatorio",
+          "scope_hint": "Deja el proyecto vacío para que esta plantilla esté disponible en todos los proyectos. Los campos específicos del proyecto (estado, etiquetas, ciclo, módulos) solo se pueden guardar cuando hay un proyecto seleccionado.",
+          "scope_hint_short": "Opcional. Si está vacío, la plantilla está disponible en todos los proyectos. Cuando se define, las sugerencias de asignados se limitan a ese proyecto; de lo contrario, se usan los miembros del espacio de trabajo.",
+          "scope_project": "Limitar a un proyecto (opcional)",
+          "template_name_label": "Nombre de la plantilla",
+          "template_name_placeholder": "p. ej. Reporte de error",
+          "template_note_label": "Descripción (para tu equipo)",
+          "template_note_placeholder": "Para qué sirve esta plantilla (opcional; esta no es la descripción del elemento de trabajo)."
+        },
+        "heading": "Plantillas de elementos de trabajo",
+        "table": {
+          "name": "Plantilla",
+          "project": "Proyecto",
+          "scope": "Alcance",
+          "workspace_wide": "Todos los proyectos"
+        },
+        "title": "Plantillas de elementos de trabajo",
+        "toasts": {
+          "create_failed": {
+            "message": "Revisa el formulario e inténtalo de nuevo.",
+            "title": "No se pudo crear la plantilla"
+          },
+          "created": {
+            "message": "La plantilla de elemento de trabajo se guardó.",
+            "title": "Plantilla creada"
+          },
+          "delete_failed": {
+            "message": "Inténtalo de nuevo.",
+            "title": "No se pudo eliminar"
+          },
+          "deleted": {
+            "message": "La plantilla de elemento de trabajo se eliminó.",
+            "title": "Plantilla eliminada"
+          },
+          "save_failed": {
+            "message": "Revisa el formulario e inténtalo de nuevo.",
+            "title": "No se pudo guardar la plantilla"
+          },
+          "saved": {
+            "message": "La plantilla de elemento de trabajo se actualizó.",
+            "title": "Plantilla guardada"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "Agregar tipo",
+        "delete_confirm": "¿Eliminar este tipo de elemento de trabajo? Los elementos de trabajo existentes conservan sus datos.",
+        "description": "Define tipos de elementos de trabajo con su propia identidad, propiedades personalizadas y alcance de proyecto. Activa o desactiva tipos sin afectar los elementos existentes.",
+        "edit_type": "Editar tipo",
+        "epic_badge": "Epic",
+        "form": {
+          "description_label": "Descripción",
+          "is_active": "Activo",
+          "is_epic": "Tipo Epic",
+          "modal_intro": "Nombra el tipo, elige un icono y adjunta solo las propiedades que este tipo de trabajo necesita. Asígnalo a los proyectos donde debe estar disponible.",
+          "name_label": "Nombre",
+          "name_required": "El nombre del tipo es obligatorio",
+          "projects_hint": "Déjalo vacío para mantener el tipo en la biblioteca sin asignarlo aún a ningún proyecto.",
+          "projects_label": "Proyectos",
+          "properties_heading": "Propiedades personalizadas",
+          "property": {
+            "active_checkbox": "Activo",
+            "add": "Agregar propiedad",
+            "description_label": "Descripción",
+            "empty": "Aún no hay propiedades personalizadas.",
+            "inactive": "Inactivo",
+            "mandatory": "Requerido",
+            "mandatory_checkbox": "Requerido al crear elementos de trabajo",
+            "title_label": "Título",
+            "type_label": "Tipo",
+            "types": {
+              "boolean": "Booleano",
+              "date": "Fecha",
+              "dropdown": "Desplegable",
+              "member_picker": "Miembro",
+              "number": "Número",
+              "text": "Texto"
+            }
+          }
+        },
+        "table": {
+          "name": "Tipo",
+          "no_projects": "Sin asignar",
+          "projects": "Proyectos",
+          "properties": "Propiedades",
+          "status": "Activo"
+        },
+        "title": "Tipos de elementos de trabajo",
+        "toasts": {
+          "delete_failed": {
+            "message": "Inténtalo de nuevo.",
+            "title": "No se pudo eliminar"
+          },
+          "deleted": {
+            "message": "El tipo de elemento de trabajo se eliminó.",
+            "title": "Tipo eliminado"
+          },
+          "save_failed": {
+            "message": "Revisa el formulario e inténtalo de nuevo.",
+            "title": "No se pudo guardar el tipo"
+          },
+          "saved": {
+            "message": "El tipo de elemento de trabajo se guardó.",
+            "title": "Tipo guardado"
+          }
+        }
+      }
+    }
   }
 }

@@ -71,7 +71,7 @@
       "description": "Wybierz, które możliwości mają być włączone w tym projekcie.",
       "intake": {
         "description": "Wstępnie rozpatruj zgłoszenia przed dodaniem do projektu.",
-        "label": "Intake"
+        "label": "Zgłoszenia"
       },
       "modules": {
         "description": "Grupuj pracę w podprojektach z własnymi osobami odpowiedzialnymi.",
@@ -299,7 +299,7 @@
             },
             "intake": {
               "description": "Sortuj zgłoszenia przed utworzeniem elementów roboczych.",
-              "label": "Intake"
+              "label": "Zgłoszenia"
             },
             "modules": {
               "description": "Grupuj pracę w obszary lub kamienie milowe.",

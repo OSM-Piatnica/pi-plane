@@ -7,6 +7,8 @@
       "open_command_palette": "Otevřít paletu příkazů",
       "open_extended_sidebar": "Otevřít rozšířený postranní panel",
       "close_extended_sidebar": "Zavřít rozšířený postranní panel",
+      "open_workspace_menu": "Otevřít menu pracovního prostoru",
+      "close_workspace_menu": "Zavřít menu pracovního prostoru",
       "create_favorites_folder": "Vytvořit složku oblíbených",
       "open_folder": "Otevřít složku",
       "close_folder": "Zavřít složku",

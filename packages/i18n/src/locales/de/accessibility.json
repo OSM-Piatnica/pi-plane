@@ -7,6 +7,8 @@
       "open_command_palette": "Befehlspalette öffnen",
       "open_extended_sidebar": "Erweiterte Seitenleiste öffnen",
       "close_extended_sidebar": "Erweiterte Seitenleiste schließen",
+      "open_workspace_menu": "Arbeitsbereich-Menü öffnen",
+      "close_workspace_menu": "Arbeitsbereich-Menü schließen",
       "create_favorites_folder": "Favoriten-Ordner erstellen",
       "open_folder": "Ordner öffnen",
       "close_folder": "Ordner schließen",

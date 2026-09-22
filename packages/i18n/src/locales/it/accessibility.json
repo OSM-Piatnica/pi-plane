@@ -7,6 +7,8 @@
       "open_command_palette": "Apri tavolozza comandi",
       "open_extended_sidebar": "Apri barra laterale estesa",
       "close_extended_sidebar": "Chiudi barra laterale estesa",
+      "open_workspace_menu": "Apri menu area di lavoro",
+      "close_workspace_menu": "Chiudi menu area di lavoro",
       "create_favorites_folder": "Crea cartella preferiti",
       "open_folder": "Apri cartella",
       "close_folder": "Chiudi cartella",

@@ -1,9 +1,26 @@
 {
-  "appearance": "외관",
+  "account_settings": {
+    "api_tokens": {
+      "heading": "개인 액세스 토큰"
+    }
+  },
+  "approve": "승인",
   "duration": "기간",
   "duration_days": "{count, plural, other {#일}}",
   "epic": {
     "all": "모든 에픽"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "쉼표로 구분된 CSV로 내보냅니다.",
+      "short_description": "CSV 쉼표",
+      "title": "CSV (쉼표)"
+    },
+    "csv_semicolon": {
+      "description": "Excel용 세미콜론으로 구분된 CSV로 내보냅니다.",
+      "short_description": "CSV 세미콜론",
+      "title": "CSV (세미콜론, Excel)"
+    }
   },
   "importer": {
     "github": {
@@ -18,27 +35,511 @@
   "issue": {
     "add": {
       "duration": "기간 추가"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue}은(는) {related}가 완료되어야 시작할 수 있습니다(차단됨 관계).",
+          "blocking": "{issue}은(는) {related}가 시작되기 전에 완료되어야 합니다(차단 중 관계).",
+          "finish_after": "{issue}은(는) {related}보다 먼저 완료될 수 없습니다(완료 이후 관계).",
+          "finish_before": "{issue}은(는) {related} 이전 또는 그와 동시에 완료되어야 합니다(완료 이전 관계).",
+          "start_after": "{issue}은(는) {related}보다 먼저 시작할 수 없습니다(시작 이후 관계).",
+          "start_before": "{issue}은(는) {related} 이전 또는 그와 동시에 시작해야 합니다(시작 이전 관계)."
+        },
+        "status": {
+          "finish_after": "{related}가 완료되어야 {issue}을(를) 완료할 수 있습니다(완료 이후 관계).",
+          "start_after": "{related}가 시작되어야 {issue}을(를) 시작할 수 있습니다(시작 이후 관계)."
+        }
+      },
+      "date_conflict": "이 날짜는 기존 종속성과 충돌합니다. 관련 작업 항목을 조정하거나 먼저 종속성을 제거하세요.",
+      "dependency_create_failed": "종속성을 생성할 수 없습니다. 다시 시도해 주세요.",
+      "dependency_created": "작업 항목 종속성이 성공적으로 생성되었습니다."
     }
   },
-  "profile": {
-    "actions": {
-      "appearance": "외관"
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "반복되는 기간 동안 작업을 타임박스로 관리합니다.",
+        "label": "사이클"
+      },
+      "description": "이 프로젝트에서 활성화할 기능을 선택하세요.",
+      "intake": {
+        "description": "프로젝트에 추가하기 전에 들어오는 작업을 선별합니다.",
+        "label": "접수"
+      },
+      "modules": {
+        "description": "작업을 하위 프로젝트와 같은 구성으로 그룹화합니다.",
+        "label": "모듈"
+      },
+      "pages": {
+        "description": "프로젝트 문서 페이지를 생성합니다.",
+        "label": "페이지"
+      },
+      "time_tracking": {
+        "description": "작업 항목에 소요된 시간을 추적합니다.",
+        "label": "시간 추적"
+      },
+      "title": "프로젝트 기능",
+      "views": {
+        "description": "정렬, 필터, 레이아웃을 저장하고 공유합니다.",
+        "label": "보기"
+      },
+      "work_item_types": {
+        "assign_failed": "프로젝트가 생성되었지만 작업 항목 유형을 할당할 수 없습니다.",
+        "assign_hint": "이 프로젝트에서 사용할 수 있는 워크스페이스 유형을 선택하세요.",
+        "assign_label": "작업 항목 유형 할당",
+        "description": "작업 항목에 고유한 속성을 가진 커스텀 유형을 사용하세요.",
+        "label": "작업 항목 유형",
+        "no_types_hint": "이 워크스페이스에 활성화된 작업 항목 유형이 없습니다. 먼저 워크스페이스 설정에서 생성하세요."
+      }
     }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "승인 게이트 추가",
+      "add_transition": "전환 추가",
+      "allow_creation": "이 상태에서 새 작업 항목 허용",
+      "approval": "승인",
+      "approval_error": "승인을 처리할 수 없습니다.",
+      "approved_success": "전환이 승인되었습니다.",
+      "blocker_message": "이 전환은 워크플로우에서 허용되지 않습니다.",
+      "builder_description": "상태를 확장하여 허용된 전환과 승인 게이트를 구성하세요.",
+      "builder_title": "워크플로우 빌더",
+      "disabled_success": "이 프로젝트에서 워크플로우가 비활성화되었습니다.",
+      "enable_description": "활성화하면 작업 항목이 구성된 상태 전환 및 승인 규칙을 따릅니다.",
+      "enable_title": "워크플로우 활성화",
+      "enabled_success": "이 프로젝트에서 워크플로우가 활성화되었습니다.",
+      "enabling": "워크플로우 설정 업데이트 중...",
+      "paused": "일시 중지됨",
+      "pending_approval_description": "{from}에서 {to}(으)로 이동이 승인 대기 중입니다.",
+      "pending_approval_title": "승인 필요",
+      "rejected_success": "전환이 거부되었습니다.",
+      "resolving_approval": "승인 처리 중...",
+      "save_error": "워크플로우 구성을 저장할 수 없습니다.",
+      "save_success": "워크플로우 구성이 저장되었습니다.",
+      "toggle_error": "워크플로우 설정을 업데이트할 수 없습니다.",
+      "transition": "전환",
+      "transitions_configured": "전환 구성됨"
+    }
+  },
+  "project_templates": {
+    "loading": "템플릿 로딩 중…",
+    "none": "템플릿 없음",
+    "select_placeholder": "템플릿 선택"
   },
   "project_views": {
     "empty_state": {
       "filter": {
-        "description": "검색 기준과 일치하는 뷰가 없습니다. 대신 새 뷰를 생성하세요.",
+        "description": "검색 기준과 일치하는 뷰가 없습니다.\n 대신 새 뷰를 생성하세요.",
         "title": "일치하는 뷰 없음"
       }
     }
   },
-  "workspace_analytics": {
-    "total_admins": "총 관리자 수",
-    "total_guests": "총 게스트 수",
-    "total_intake": "총 수입",
-    "total_projects": "총 프로젝트 수",
-    "total_users": "총 사용자 수",
-    "total_work_items": "총 {entity}"
+  "reject": "거부",
+  "settings_empty_state": {
+    "imports": {
+      "description": "지금은 가져오기 기록이 없습니다. 파일을 프로젝트로 가져오면 모든 기록이 여기에 표시됩니다.",
+      "title": "아직 가져오기 없음"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "작업 항목 템플릿을 적용할 수 없습니다.",
+    "dropdown_placeholder": "템플릿",
+    "loading": "템플릿 로딩 중…",
+    "none": "템플릿 없음"
+  },
+  "work_item_types": {
+    "loading": "유형 로딩 중…",
+    "property_values_save_failed": "작업 항목이 생성되었지만 추가 속성을 저장할 수 없습니다. 작업 항목 세부 정보에서 입력하세요.",
+    "select_placeholder": "유형"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "모든 프로젝트",
+        "history": {
+          "download": "다운로드",
+          "expired": "만료됨",
+          "exported_by": "내보낸 사람",
+          "exported_on": "내보낸 날짜",
+          "project_count": "{count, plural, other {프로젝트 #개}}",
+          "projects": "내보낸 프로젝트",
+          "status": "상태"
+        },
+        "statuses": {
+          "completed": "완료됨",
+          "expired": "만료됨",
+          "failed": "실패",
+          "processing": "처리 중"
+        },
+        "tabs": {
+          "export": "내보내기",
+          "import": "가져오기"
+        },
+        "work_items_export": {
+          "description": "선택한 프로젝트의 작업 항목을 CSV, Excel 또는 JSON으로 내보냅니다.",
+          "heading": "작업 항목 내보내기"
+        }
+      },
+      "imports": {
+        "file_too_large": "파일 크기는 {size}MB 이하이어야 합니다.",
+        "history": {
+          "file": "파일",
+          "imported_by": "가져온 사람",
+          "imported_on": "가져온 날짜",
+          "project_count": "{count, plural, other {프로젝트 #개}}",
+          "projects": "프로젝트",
+          "reason": "사유",
+          "status": "상태"
+        },
+        "previous_imports": "이전 가져오기",
+        "work_items": {
+          "description": "기존 프로젝트로 \"작업 항목 내보내기\"(CSV, Excel 또는 JSON)로 생성된 파일에서 작업 항목을 가져옵니다.",
+          "heading": "작업 항목 가져오기",
+          "import_button": "작업 항목 가져오기",
+          "invalid_file_type": "CSV, Excel(.xlsx) 또는 JSON 파일을 업로드하세요.",
+          "no_projects": "사용 가능한 프로젝트 없음",
+          "open_project": "프로젝트 열기",
+          "options": {
+            "assignees": "담당자",
+            "clear_all": "모두 지우기",
+            "cycles": "사이클",
+            "dates": "날짜 및 기간",
+            "heading": "가져올 항목",
+            "labels": "레이블",
+            "modules": "모듈",
+            "parents": "상위 작업 항목",
+            "relations": "작업 항목 간 관계",
+            "select_all": "모두 선택",
+            "subscribers": "구독자"
+          },
+          "result_summary": "\"{name}\"(으)로 {count, plural, other {작업 항목 #개}}를 가져왔습니다.",
+          "select_file": "파일 선택",
+          "select_file_label": "내보내기 파일",
+          "select_project": "대상 프로젝트",
+          "select_project_placeholder": "프로젝트 선택",
+          "toasts": {
+            "error": {
+              "message": "작업 항목 가져오기에 실패했습니다. \"작업 항목 내보내기\"에서 생성한 파일을 사용하여 다시 시도하세요."
+            },
+            "success": {
+              "message": "\"{name}\"(으)로 작업 항목 {count}개를 가져왔습니다."
+            }
+          },
+          "warnings_heading": "가져오는 동안 {count, plural, other {경고 #개}} 발생",
+          "warnings_none": "경고 없이 모두 가져왔습니다."
+        }
+      },
+      "project_templates": {
+        "add_template": "템플릿 추가",
+        "delete_confirm": "이 프로젝트 템플릿을 제거하시겠습니까? 기존 프로젝트에는 영향을 미치지 않습니다.",
+        "description": "기본 속성, 활성화된 기능, 상태, 레이블, 작업 항목 유형을 포함한 재사용 가능한 프로젝트 설정을 만드세요.",
+        "edit_template": "템플릿 편집",
+        "form": {
+          "add_label": "레이블 추가",
+          "add_state": "상태 추가",
+          "custom_property": {
+            "active_checkbox": "활성",
+            "add_property": "프로퍼티 추가",
+            "default_option_label": "기본 옵션",
+            "description_label": "설명",
+            "description_placeholder": "이 프로퍼티에 대한 도움말 텍스트(선택 사항)",
+            "dropdown_options_heading": "드롭다운 옵션",
+            "inactive": "비활성",
+            "mandatory": "필수",
+            "mandatory_checkbox": "작업 항목 생성 시 필수",
+            "no_default": "기본값 없음",
+            "option_placeholder": "옵션 이름",
+            "select_mode_label": "선택 모드",
+            "select_multi": "다중 선택",
+            "select_single": "단일 선택",
+            "title_label": "제목",
+            "title_placeholder": "프로퍼티 이름",
+            "type_label": "타입",
+            "types": {
+              "boolean": "불리언",
+              "date": "데이트",
+              "dropdown": "드롭다운",
+              "member_picker": "멤버",
+              "number": "넘버",
+              "text": "텍스트"
+            }
+          },
+          "default_assignee": "기본 담당자",
+          "default_cover_image": "커버 이미지",
+          "default_labels": "기본 레이블",
+          "default_lead": "프로젝트 리드",
+          "default_project_description": "프로젝트 설명",
+          "default_project_description_placeholder": "새 프로젝트의 기본 설명",
+          "default_project_identifier": "프로젝트 ID",
+          "default_project_identifier_placeholder": "예: PROD",
+          "default_project_name": "프로젝트 이름",
+          "default_project_name_placeholder": "예: 제품 출시",
+          "default_start_date": "시작 날짜",
+          "default_target_date": "목표일",
+          "default_visibility": "공개 범위",
+          "features": {
+            "cycles": {
+              "description": "계획과 전달을 위한 시간 제한이 있는 반복 주기입니다.",
+              "label": "사이클"
+            },
+            "intake": {
+              "description": "요청이 작업 항목이 되기 전에 선별합니다.",
+              "label": "접수"
+            },
+            "modules": {
+              "description": "작업을 집중 영역이나 마일스톤으로 그룹화합니다.",
+              "label": "모듈"
+            },
+            "pages": {
+              "description": "프로젝트 위키 및 문서입니다.",
+              "label": "페이지"
+            },
+            "time_tracking": {
+              "description": "작업 항목에 소요된 시간을 기록합니다.",
+              "label": "시간 추적"
+            },
+            "views": {
+              "description": "팀을 위한 저장된 필터와 레이아웃입니다.",
+              "label": "보기"
+            },
+            "work_item_types": {
+              "description": "커스텀 프로퍼티가 있는 다양한 작업 유형입니다.",
+              "label": "작업 항목 유형"
+            }
+          },
+          "identifier_invalid": "영문자와 숫자만 사용하세요",
+          "identifier_max_char": "식별자는 5자 이하여야 합니다",
+          "label_name_placeholder": "레이블 이름",
+          "labels_empty": "아직 레이블이 없습니다.",
+          "mark_default_state": "기본 상태로 지정",
+          "modal_intro": "템플릿 이름을 지정하고 팀을 위한 짧은 메모를 추가하세요. 그런 다음 프로젝트를 생성할 때 사용하는 것과 동일한 종류의 설정인 기본 프로젝트 값을 구성하세요.",
+          "name_required": "템플릿 이름이 필요합니다",
+          "section_features": "기능",
+          "section_features_hint": "이 템플릿을 적용할 때 활성화할 선택적 프로젝트 기능을 선택하세요.",
+          "section_labels": "레이블",
+          "section_labels_hint": "새 프로젝트의 기본 레이블을 정의하세요.",
+          "section_properties": "기본 프로젝트 속성",
+          "section_states": "상태",
+          "section_states_hint": "새 프로젝트의 기본 워크플로우 상태를 정의하세요.",
+          "section_template": "템플릿",
+          "section_work_item_types": "작업 항목 유형",
+          "section_work_item_types_hint": "이 템플릿으로 생성된 프로젝트의 기본 작업 항목 유형과 커스텀 프로퍼티를 구성하세요.",
+          "state_groups": {
+            "backlog": "백로그",
+            "cancelled": "취소됨",
+            "completed": "완료됨",
+            "started": "진행 중",
+            "unstarted": "시작 전"
+          },
+          "state_name_placeholder": "상태 이름",
+          "states_group_empty": "이 그룹에 아직 상태가 없습니다.",
+          "template_name_label": "템플릿 이름",
+          "template_name_placeholder": "예: 소프트웨어 배포",
+          "template_note_label": "설명(팀을 위한)",
+          "template_note_placeholder": "이 템플릿의 용도(선택 사항).",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "작업 항목 유형 추가",
+              "description": "이 템플릿의 프로젝트에서 사용할 수 있는 작업 항목 유형을 추가하세요.",
+              "empty": "아직 추가 유형이 없습니다.",
+              "title": "추가 유형"
+            },
+            "default_badge": "기본값",
+            "disabled_hint": "여기에서 유형을 구성하려면 위 기능에서 작업 항목 유형을 활성화하세요.",
+            "epic": {
+              "description": "작업으로 나눌 수 있는 대규모 작업 단위입니다.",
+              "disabled": "이 템플릿에서는 에픽이 비활성화되어 있습니다.",
+              "title": "에픽"
+            },
+            "optional_badge": "선택",
+            "properties_empty": "이 유형에 대한 커스텀 프로퍼티가 없습니다.",
+            "task": {
+              "description": "일상적인 작업을 위한 표준 작업 항목 유형입니다.",
+              "title": "작업"
+            },
+            "type_description_placeholder": "간단한 설명(선택 사항)",
+            "type_name_placeholder": "유형 이름"
+          }
+        },
+        "loading": "템플릿 로딩 중…",
+        "none": "템플릿 없음",
+        "select_placeholder": "템플릿 선택",
+        "table": {
+          "download_template": "다운로드",
+          "no_description": "설명 없음",
+          "use_template": "템플릿 사용"
+        },
+        "title": "프로젝트 템플릿",
+        "toasts": {
+          "apply_failed": {
+            "message": "프로젝트 템플릿을 적용할 수 없습니다."
+          },
+          "apply_followup_failed": {
+            "message": "프로젝트가 생성되었지만 일부 템플릿 설정을 적용할 수 없습니다."
+          },
+          "create_failed": {
+            "message": "양식을 확인하고 다시 시도해 주세요.",
+            "title": "템플릿을 생성할 수 없습니다"
+          },
+          "created": {
+            "message": "프로젝트 템플릿이 저장되었습니다.",
+            "title": "템플릿 생성됨"
+          },
+          "delete_failed": {
+            "message": "다시 시도해 주세요.",
+            "title": "삭제할 수 없습니다"
+          },
+          "deleted": {
+            "message": "프로젝트 템플릿이 삭제되었습니다.",
+            "title": "템플릿 제거됨"
+          },
+          "download_failed": {
+            "message": "템플릿 파일을 다운로드할 수 없습니다."
+          },
+          "save_failed": {
+            "message": "양식을 확인하고 다시 시도해 주세요.",
+            "title": "템플릿을 저장할 수 없습니다"
+          },
+          "saved": {
+            "message": "프로젝트 템플릿이 업데이트되었습니다.",
+            "title": "템플릿 저장됨"
+          },
+          "upload_failed": {
+            "message": "템플릿을 업로드할 수 없습니다. 파일을 확인하고 다시 시도해 주세요."
+          },
+          "uploaded_renamed": {
+            "message": "해당 이름은 이미 사용 중이어서 템플릿이 \"{name}\"(으)로 저장되었습니다."
+          },
+          "uploaded": {
+            "message": "파일에서 템플릿 \"{name}\"이(가) 업로드되었습니다."
+          }
+        },
+        "upload_invalid_file": "\"다운로드\" 버튼으로 내려받은 JSON 파일을 업로드하세요.",
+        "upload_template": "파일에서 업로드",
+        "upload_too_large": "파일 크기는 {size}MB 이하이어야 합니다."
+      },
+      "work_item_templates": {
+        "add_template": "템플릿 추가",
+        "delete_confirm": "이 작업 항목 템플릿을 제거하시겠습니까?",
+        "description": "새 작업 항목을 위한 재사용 가능한 시작 세트(제목, 설명, 담당자, 우선순위 등)를 만드세요. 템플릿은 전체 워크스페이스 또는 하나의 프로젝트에만 적용할 수 있습니다.",
+        "edit_template": "템플릿 편집",
+        "form": {
+          "default_values_section_hint": "작업 항목을 생성하면서 누군가 이 템플릿을 적용하면 이 필드가 채워집니다. 여기의 모든 항목은 선택 사항입니다.",
+          "default_values_section_title": "기본 작업 항목 값",
+          "default_work_item_description": "설명",
+          "default_work_item_description_hint": "일반 텍스트이며 작업 항목 설명으로 저장됩니다. 줄 바꿈은 유지됩니다.",
+          "default_work_item_description_placeholder": "새 작업 항목에 기본으로 표시할 텍스트",
+          "default_work_item_name": "제목",
+          "default_work_item_name_placeholder": "예: [Bug] …",
+          "modal_intro": "템플릿 이름을 지정하고 팀을 위한 짧은 메모를 추가하세요. 그런 다음 작업 항목을 생성할 때 사용하는 것과 동일한 종류의 제목, 설명, 담당자, 우선순위인 기본 작업 항목 값을 설정하세요.",
+          "name_required": "템플릿 이름이 필요합니다",
+          "scope_hint": "이 템플릿을 모든 프로젝트에서 사용할 수 있게 하려면 프로젝트를 비워두세요. 프로젝트별 필드(상태, 레이블, 사이클, 모듈)는 프로젝트를 선택한 경우에만 저장할 수 있습니다.",
+          "scope_hint_short": "선택 사항입니다. 비워두면 템플릿을 모든 프로젝트에서 사용할 수 있습니다. 설정하면 담당자 추천이 해당 프로젝트로 제한되며, 그렇지 않으면 워크스페이스 멤버가 사용됩니다.",
+          "scope_project": "하나의 프로젝트로 제한(선택 사항)",
+          "template_name_label": "템플릿 이름",
+          "template_name_placeholder": "예: 버그 신고",
+          "template_note_label": "설명(팀을 위한)",
+          "template_note_placeholder": "이 템플릿의 용도(선택 사항이며 작업 항목 설명이 아닙니다)."
+        },
+        "heading": "작업 항목 템플릿",
+        "table": {
+          "name": "템플릿",
+          "project": "프로젝트",
+          "scope": "범위",
+          "workspace_wide": "모든 프로젝트"
+        },
+        "title": "작업 항목 템플릿",
+        "toasts": {
+          "create_failed": {
+            "message": "양식을 확인하고 다시 시도해 주세요.",
+            "title": "템플릿을 생성할 수 없습니다"
+          },
+          "created": {
+            "message": "작업 항목 템플릿이 저장되었습니다.",
+            "title": "템플릿 생성됨"
+          },
+          "delete_failed": {
+            "message": "다시 시도해 주세요.",
+            "title": "삭제할 수 없습니다"
+          },
+          "deleted": {
+            "message": "작업 항목 템플릿이 삭제되었습니다.",
+            "title": "템플릿 제거됨"
+          },
+          "save_failed": {
+            "message": "양식을 확인하고 다시 시도해 주세요.",
+            "title": "템플릿을 저장할 수 없습니다"
+          },
+          "saved": {
+            "message": "작업 항목 템플릿이 업데이트되었습니다.",
+            "title": "템플릿 저장됨"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "유형 추가",
+        "delete_confirm": "이 작업 항목 유형을 제거하시겠습니까? 기존 작업 항목은 데이터를 유지합니다.",
+        "description": "고유한 정체성, 커스텀 프로퍼티, 프로젝트 범위를 가진 작업 항목 유형을 정의하세요. 기존 항목에 영향을 주지 않고 유형을 켜거나 끌 수 있습니다.",
+        "edit_type": "유형 편집",
+        "epic_badge": "에픽",
+        "form": {
+          "description_label": "설명",
+          "is_active": "활성",
+          "is_epic": "에픽 유형",
+          "modal_intro": "유형의 이름을 지정하고 아이콘을 선택한 다음, 이 작업 종류에 필요한 프로퍼티만 연결하세요. 사용할 수 있어야 하는 프로젝트에 할당하세요.",
+          "name_label": "이름",
+          "name_required": "유형 이름이 필요합니다",
+          "projects_hint": "아직 어떤 프로젝트에도 할당하지 않고 라이브러리에 유형을 유지하려면 비워두세요.",
+          "projects_label": "프로젝트",
+          "properties_heading": "커스텀 프로퍼티",
+          "property": {
+            "active_checkbox": "활성",
+            "add": "프로퍼티 추가",
+            "description_label": "설명",
+            "empty": "아직 커스텀 프로퍼티가 없습니다.",
+            "inactive": "비활성",
+            "mandatory": "필수",
+            "mandatory_checkbox": "작업 항목 생성 시 필수",
+            "title_label": "제목",
+            "type_label": "타입",
+            "types": {
+              "boolean": "불리언",
+              "date": "데이트",
+              "dropdown": "드롭다운",
+              "member_picker": "멤버",
+              "number": "넘버",
+              "text": "텍스트"
+            }
+          }
+        },
+        "table": {
+          "name": "유형",
+          "no_projects": "할당되지 않음",
+          "projects": "프로젝트",
+          "properties": "프로퍼티",
+          "status": "활성"
+        },
+        "title": "작업 항목 유형",
+        "toasts": {
+          "delete_failed": {
+            "message": "다시 시도해 주세요.",
+            "title": "삭제할 수 없습니다"
+          },
+          "deleted": {
+            "message": "작업 항목 유형이 삭제되었습니다.",
+            "title": "유형 제거됨"
+          },
+          "save_failed": {
+            "message": "양식을 확인하고 다시 시도해 주세요.",
+            "title": "유형을 저장할 수 없습니다"
+          },
+          "saved": {
+            "message": "작업 항목 유형이 저장되었습니다.",
+            "title": "유형 저장됨"
+          }
+        }
+      }
+    }
   }
 }

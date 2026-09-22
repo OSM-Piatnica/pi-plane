@@ -7,6 +7,8 @@
       "open_command_palette": "Mở bảng lệnh",
       "open_extended_sidebar": "Mở thanh bên mở rộng",
       "close_extended_sidebar": "Đóng thanh bên mở rộng",
+      "open_workspace_menu": "Mở menu không gian làm việc",
+      "close_workspace_menu": "Đóng menu không gian làm việc",
       "create_favorites_folder": "Tạo thư mục yêu thích",
       "open_folder": "Mở thư mục",
       "close_folder": "Đóng thư mục",

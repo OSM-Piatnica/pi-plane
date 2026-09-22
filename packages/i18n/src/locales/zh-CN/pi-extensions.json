@@ -1,9 +1,26 @@
 {
-  "appearance": "外观",
+  "account_settings": {
+    "api_tokens": {
+      "heading": "个人访问令牌"
+    }
+  },
+  "approve": "批准",
   "duration": "持续时间",
   "duration_days": "{count, plural, other {# 天}}",
   "epic": {
     "all": "所有史诗"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "以逗号分隔符导出为 CSV。",
+      "short_description": "CSV 逗号",
+      "title": "CSV（逗号）"
+    },
+    "csv_semicolon": {
+      "description": "以分号分隔符导出为 CSV，适用于 Excel。",
+      "short_description": "CSV 分号",
+      "title": "CSV（分号，Excel）"
+    }
   },
   "importer": {
     "github": {
@@ -18,27 +35,511 @@
   "issue": {
     "add": {
       "duration": "添加持续时间"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue} 在 {related} 完成之前无法开始（受阻关系）。",
+          "blocking": "{issue} 必须在 {related} 开始之前完成（阻塞关系）。",
+          "finish_after": "{issue} 不能在 {related} 之前完成（晚于完成关系）。",
+          "finish_before": "{issue} 必须在 {related} 当天或之前完成（早于完成关系）。",
+          "start_after": "{issue} 不能在 {related} 之前开始（晚于开始关系）。",
+          "start_before": "{issue} 必须在 {related} 当天或之前开始（早于开始关系）。"
+        },
+        "status": {
+          "finish_after": "{issue} 在 {related} 完成之前无法完成（晚于完成关系）。",
+          "start_after": "{issue} 在 {related} 开始之前无法开始（晚于开始关系）。"
+        }
+      },
+      "date_conflict": "这些日期与现有依赖关系冲突。请调整相关工作项，或先移除该依赖关系。",
+      "dependency_create_failed": "无法创建依赖关系。请重试。",
+      "dependency_created": "工作项依赖关系创建成功。"
     }
   },
-  "profile": {
-    "actions": {
-      "appearance": "外观"
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "以循环周期对工作进行限时管理。",
+        "label": "周期"
+      },
+      "description": "选择为此项目启用哪些功能。",
+      "intake": {
+        "description": "在将工作添加到项目之前对传入工作进行分流。",
+        "label": "收集"
+      },
+      "modules": {
+        "description": "将工作分组为类似子项目的结构。",
+        "label": "模块"
+      },
+      "pages": {
+        "description": "创建项目文档页面。",
+        "label": "页面"
+      },
+      "time_tracking": {
+        "description": "跟踪在工作项上花费的时间。",
+        "label": "时间跟踪"
+      },
+      "title": "项目功能",
+      "views": {
+        "description": "保存并分享排序、筛选和布局。",
+        "label": "视图"
+      },
+      "work_item_types": {
+        "assign_failed": "项目已创建，但无法分配工作项类型。",
+        "assign_hint": "选择应在此项目中可用的工作区类型。",
+        "assign_label": "分配工作项类型",
+        "description": "为工作项使用具有自定义属性的自定义类型。",
+        "label": "工作项类型",
+        "no_types_hint": "此工作区中没有已启用的工作项类型。请先在工作区设置中创建。"
+      }
     }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "添加审批关卡",
+      "add_transition": "添加流转",
+      "allow_creation": "允许在此状态下创建新工作项",
+      "approval": "审批",
+      "approval_error": "无法处理审批。",
+      "approved_success": "流转已批准。",
+      "blocker_message": "工作流不允许此流转。",
+      "builder_description": "展开某个状态以配置允许的流转和审批关卡。",
+      "builder_title": "工作流构建器",
+      "disabled_success": "已为此项目禁用工作流。",
+      "enable_description": "启用后，工作项将遵循已配置的状态流转和审批规则。",
+      "enable_title": "启用工作流",
+      "enabled_success": "已为此项目启用工作流。",
+      "enabling": "正在更新工作流设置...",
+      "paused": "已暂停",
+      "pending_approval_description": "从 {from} 移动到 {to} 正在等待审批。",
+      "pending_approval_title": "需要审批",
+      "rejected_success": "流转已拒绝。",
+      "resolving_approval": "正在处理审批...",
+      "save_error": "无法保存工作流配置。",
+      "save_success": "工作流配置已保存。",
+      "toggle_error": "无法更新工作流设置。",
+      "transition": "流转",
+      "transitions_configured": "个已配置的流转"
+    }
+  },
+  "project_templates": {
+    "loading": "正在加载模板…",
+    "none": "无模板",
+    "select_placeholder": "选择模板"
   },
   "project_views": {
     "empty_state": {
       "filter": {
-        "description": "没有符合搜索条件的视图。\n创建一个新视图。",
+        "description": "没有符合搜索条件的视图。 \n 创建一个新视图。",
         "title": "没有匹配的视图"
       }
     }
   },
-  "workspace_analytics": {
-    "total_admins": "管理员总数",
-    "total_guests": "访客总数",
-    "total_intake": "总收入",
-    "total_projects": "项目总数",
-    "total_users": "用户总数",
-    "total_work_items": "{entity}总数"
+  "reject": "拒绝",
+  "settings_empty_state": {
+    "imports": {
+      "description": "您目前还没有任何导入记录。将文件导入项目后，所有记录都会显示在这里。",
+      "title": "暂无导入记录"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "无法应用工作项模板。",
+    "dropdown_placeholder": "模板",
+    "loading": "正在加载模板…",
+    "none": "无模板"
+  },
+  "work_item_types": {
+    "loading": "正在加载类型…",
+    "property_values_save_failed": "工作项已创建，但无法保存附加属性。请从工作项详情中填写。",
+    "select_placeholder": "类型"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "所有项目",
+        "history": {
+          "download": "下载",
+          "expired": "已过期",
+          "exported_by": "导出者",
+          "exported_on": "导出时间",
+          "project_count": "{count, plural, other {# 个项目}}",
+          "projects": "已导出的项目",
+          "status": "状态"
+        },
+        "statuses": {
+          "completed": "已完成",
+          "expired": "已过期",
+          "failed": "失败",
+          "processing": "处理中"
+        },
+        "tabs": {
+          "export": "导出",
+          "import": "导入"
+        },
+        "work_items_export": {
+          "description": "将所选项目中的工作项导出为 CSV、Excel 或 JSON。",
+          "heading": "导出工作项"
+        }
+      },
+      "imports": {
+        "file_too_large": "文件大小不能超过 {size} MB。",
+        "history": {
+          "file": "文件",
+          "imported_by": "导入者",
+          "imported_on": "导入时间",
+          "project_count": "{count, plural, other {# 个项目}}",
+          "projects": "项目",
+          "reason": "原因",
+          "status": "状态"
+        },
+        "previous_imports": "以往的导入记录",
+        "work_items": {
+          "description": "将由“导出工作项”（CSV、Excel 或 JSON）生成的文件中的工作项导入到现有项目。",
+          "heading": "导入工作项",
+          "import_button": "导入工作项",
+          "invalid_file_type": "请上传 CSV、Excel（.xlsx）或 JSON 文件。",
+          "no_projects": "没有可用的项目",
+          "open_project": "打开项目",
+          "options": {
+            "assignees": "负责人",
+            "clear_all": "清除全部",
+            "cycles": "周期",
+            "dates": "日期和持续时间",
+            "heading": "要导入的内容",
+            "labels": "标签",
+            "modules": "模块",
+            "parents": "父工作项",
+            "relations": "工作项之间的关联",
+            "select_all": "全选",
+            "subscribers": "订阅者"
+          },
+          "result_summary": "已将{count, plural, other {# 个工作项}}导入到“{name}”。",
+          "select_file": "选择文件",
+          "select_file_label": "导出文件",
+          "select_project": "目标项目",
+          "select_project_placeholder": "选择项目",
+          "toasts": {
+            "error": {
+              "message": "工作项导入失败。请使用来自“导出工作项”的文件后重试。"
+            },
+            "success": {
+              "message": "已将 {count} 个工作项导入到“{name}”。"
+            }
+          },
+          "warnings_heading": "导入过程中有{count, plural, other {# 个警告}}",
+          "warnings_none": "全部导入成功，没有警告。"
+        }
+      },
+      "project_templates": {
+        "add_template": "添加模板",
+        "delete_confirm": "移除此项目模板？现有项目不受影响。",
+        "description": "创建可复用的项目配置，包括默认属性、已启用功能、状态、标签和工作项类型。",
+        "edit_template": "编辑模板",
+        "form": {
+          "add_label": "添加标签",
+          "add_state": "添加状态",
+          "custom_property": {
+            "active_checkbox": "活动",
+            "add_property": "添加属性",
+            "default_option_label": "默认选项",
+            "description_label": "描述",
+            "description_placeholder": "此属性的帮助文本（可选）",
+            "dropdown_options_heading": "下拉选项",
+            "inactive": "不活动",
+            "mandatory": "必填",
+            "mandatory_checkbox": "创建工作项时为必填项",
+            "no_default": "无默认值",
+            "option_placeholder": "选项名称",
+            "select_mode_label": "选择模式",
+            "select_multi": "多选",
+            "select_single": "单选",
+            "title_label": "标题",
+            "title_placeholder": "属性名称",
+            "type_label": "类型",
+            "types": {
+              "boolean": "布尔值",
+              "date": "日期",
+              "dropdown": "下拉菜单",
+              "member_picker": "成员",
+              "number": "数字",
+              "text": "文本"
+            }
+          },
+          "default_assignee": "默认受理人",
+          "default_cover_image": "封面图片",
+          "default_labels": "默认标签",
+          "default_lead": "项目负责人",
+          "default_project_description": "项目描述",
+          "default_project_description_placeholder": "新项目的默认描述",
+          "default_project_identifier": "项目标识符",
+          "default_project_identifier_placeholder": "例如 PROD",
+          "default_project_name": "项目名称",
+          "default_project_name_placeholder": "例如 产品发布",
+          "default_start_date": "开始日期",
+          "default_target_date": "目标日期",
+          "default_visibility": "可见性",
+          "features": {
+            "cycles": {
+              "description": "用于规划和交付的限时迭代。",
+              "label": "周期"
+            },
+            "intake": {
+              "description": "在传入请求成为工作项之前对其进行分流。",
+              "label": "收集"
+            },
+            "modules": {
+              "description": "将工作分组为专注领域或里程碑。",
+              "label": "模块"
+            },
+            "pages": {
+              "description": "项目 Wiki 和文档。",
+              "label": "页面"
+            },
+            "time_tracking": {
+              "description": "记录在工作项上花费的时间。",
+              "label": "时间跟踪"
+            },
+            "views": {
+              "description": "为团队保存的筛选条件和布局。",
+              "label": "视图"
+            },
+            "work_item_types": {
+              "description": "具有自定义属性的不同工作类型。",
+              "label": "工作项类型"
+            }
+          },
+          "identifier_invalid": "仅可使用字母和数字",
+          "identifier_max_char": "标识符不能超过 5 个字符",
+          "label_name_placeholder": "标签名称",
+          "labels_empty": "暂无标签。",
+          "mark_default_state": "标记为默认状态",
+          "modal_intro": "为模板命名，并为团队添加简短说明。然后配置默认项目值——与创建项目时使用的设置相同。",
+          "name_required": "模板名称为必填项",
+          "section_features": "功能",
+          "section_features_hint": "选择应用此模板时启用哪些可选的项目功能。",
+          "section_labels": "标签",
+          "section_labels_hint": "为新项目定义默认标签。",
+          "section_properties": "默认项目属性",
+          "section_states": "状态",
+          "section_states_hint": "为新项目定义默认工作流状态。",
+          "section_template": "模板",
+          "section_work_item_types": "工作项类型",
+          "section_work_item_types_hint": "为通过此模板创建的项目配置默认工作项类型和自定义属性。",
+          "state_groups": {
+            "backlog": "待办",
+            "cancelled": "已取消",
+            "completed": "已完成",
+            "started": "进行中",
+            "unstarted": "未开始"
+          },
+          "state_name_placeholder": "状态名称",
+          "states_group_empty": "此分组中暂无状态。",
+          "template_name_label": "模板名称",
+          "template_name_placeholder": "例如 软件交付",
+          "template_note_label": "描述（供团队参考）",
+          "template_note_placeholder": "此模板的用途说明（可选）。",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "添加工作项类型",
+              "description": "为通过此模板创建的项目添加更多可用的工作项类型。",
+              "empty": "暂无附加类型。",
+              "title": "附加类型"
+            },
+            "default_badge": "默认",
+            "disabled_hint": "请在上方的“功能”中启用工作项类型，以在此处配置类型。",
+            "epic": {
+              "description": "可拆分为任务的大型工作。",
+              "disabled": "此模板已禁用史诗。",
+              "title": "史诗"
+            },
+            "optional_badge": "可选",
+            "properties_empty": "此类型暂无自定义属性。",
+            "task": {
+              "description": "用于日常任务的标准工作项类型。",
+              "title": "任务"
+            },
+            "type_description_placeholder": "简短描述（可选）",
+            "type_name_placeholder": "类型名称"
+          }
+        },
+        "loading": "正在加载模板…",
+        "none": "无模板",
+        "select_placeholder": "选择模板",
+        "table": {
+          "download_template": "下载",
+          "no_description": "暂无描述",
+          "use_template": "使用模板"
+        },
+        "title": "项目模板",
+        "toasts": {
+          "apply_failed": {
+            "message": "无法应用项目模板。"
+          },
+          "apply_followup_failed": {
+            "message": "项目已创建，但部分模板设置无法应用。"
+          },
+          "create_failed": {
+            "message": "请检查表单后重试。",
+            "title": "无法创建模板"
+          },
+          "created": {
+            "message": "项目模板已保存。",
+            "title": "模板已创建"
+          },
+          "delete_failed": {
+            "message": "请重试。",
+            "title": "无法删除"
+          },
+          "deleted": {
+            "message": "项目模板已删除。",
+            "title": "模板已移除"
+          },
+          "download_failed": {
+            "message": "无法下载模板文件。"
+          },
+          "save_failed": {
+            "message": "请检查表单后重试。",
+            "title": "无法保存模板"
+          },
+          "saved": {
+            "message": "项目模板已更新。",
+            "title": "模板已保存"
+          },
+          "upload_failed": {
+            "message": "无法上传模板。请检查文件后重试。"
+          },
+          "uploaded_renamed": {
+            "message": "该名称已被占用，因此模板已保存为“{name}”。"
+          },
+          "uploaded": {
+            "message": "已从文件上传模板“{name}”。"
+          }
+        },
+        "upload_invalid_file": "请上传通过“下载”按钮下载的 JSON 文件。",
+        "upload_template": "从文件上传",
+        "upload_too_large": "文件大小不能超过 {size} MB。"
+      },
+      "work_item_templates": {
+        "add_template": "添加模板",
+        "delete_confirm": "确定要移除此工作项模板吗？",
+        "description": "为新工作项创建可复用的起始设置（标题、描述、负责人、优先级等）。模板可以适用于整个工作区，也可以仅适用于单个项目。",
+        "edit_template": "编辑模板",
+        "form": {
+          "default_values_section_hint": "当有人在创建工作项时应用此模板，这些字段将被自动填写。此处所有内容均为可选。",
+          "default_values_section_title": "默认工作项值",
+          "default_work_item_description": "描述",
+          "default_work_item_description_hint": "纯文本；将保存为工作项描述。换行会被保留。",
+          "default_work_item_description_placeholder": "新工作项中默认显示的文本",
+          "default_work_item_name": "标题",
+          "default_work_item_name_placeholder": "例如 [Bug] …",
+          "modal_intro": "为模板命名，并为团队添加简短说明。然后设置默认工作项值——与创建工作项时使用的标题、描述、负责人和优先级相同。",
+          "name_required": "模板名称为必填项",
+          "scope_hint": "将项目留空可使此模板适用于所有项目。仅当选择了项目后，才能保存特定于项目的字段（状态、标签、周期、模块）。",
+          "scope_hint_short": "可选。留空时，模板适用于所有项目。设置后，负责人建议将仅限于该项目；否则将使用工作区成员。",
+          "scope_project": "限定为单个项目（可选）",
+          "template_name_label": "模板名称",
+          "template_name_placeholder": "例如 缺陷报告",
+          "template_note_label": "描述（供团队参考）",
+          "template_note_placeholder": "此模板的用途说明（可选；这不是工作项描述）。"
+        },
+        "heading": "工作项模板",
+        "table": {
+          "name": "模板",
+          "project": "项目",
+          "scope": "范围",
+          "workspace_wide": "所有项目"
+        },
+        "title": "工作项模板",
+        "toasts": {
+          "create_failed": {
+            "message": "请检查表单后重试。",
+            "title": "无法创建模板"
+          },
+          "created": {
+            "message": "工作项模板已保存。",
+            "title": "模板已创建"
+          },
+          "delete_failed": {
+            "message": "请重试。",
+            "title": "无法删除"
+          },
+          "deleted": {
+            "message": "工作项模板已删除。",
+            "title": "模板已移除"
+          },
+          "save_failed": {
+            "message": "请检查表单后重试。",
+            "title": "无法保存模板"
+          },
+          "saved": {
+            "message": "工作项模板已更新。",
+            "title": "模板已保存"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "添加类型",
+        "delete_confirm": "移除此工作项类型？现有工作项将保留其数据。",
+        "description": "定义具有各自标识、自定义属性和项目范围的工作项类型。启用或禁用类型不会影响现有工作项。",
+        "edit_type": "编辑类型",
+        "epic_badge": "史诗",
+        "form": {
+          "description_label": "描述",
+          "is_active": "活动",
+          "is_epic": "史诗类型",
+          "modal_intro": "为类型命名，选择图标，并仅添加此类工作所需的属性。将其分配给应可使用该类型的项目。",
+          "name_label": "名称",
+          "name_required": "类型名称为必填项",
+          "projects_hint": "留空可将类型保留在库中，暂不分配给任何项目。",
+          "projects_label": "项目",
+          "properties_heading": "自定义属性",
+          "property": {
+            "active_checkbox": "活动",
+            "add": "添加属性",
+            "description_label": "描述",
+            "empty": "暂无自定义属性。",
+            "inactive": "不活动",
+            "mandatory": "必填",
+            "mandatory_checkbox": "创建工作项时为必填项",
+            "title_label": "标题",
+            "type_label": "类型",
+            "types": {
+              "boolean": "布尔值",
+              "date": "日期",
+              "dropdown": "下拉菜单",
+              "member_picker": "成员",
+              "number": "数字",
+              "text": "文本"
+            }
+          }
+        },
+        "table": {
+          "name": "类型",
+          "no_projects": "未分配",
+          "projects": "项目",
+          "properties": "属性",
+          "status": "活动"
+        },
+        "title": "工作项类型",
+        "toasts": {
+          "delete_failed": {
+            "message": "请重试。",
+            "title": "无法删除"
+          },
+          "deleted": {
+            "message": "工作项类型已删除。",
+            "title": "类型已移除"
+          },
+          "save_failed": {
+            "message": "请检查表单后重试。",
+            "title": "无法保存类型"
+          },
+          "saved": {
+            "message": "工作项类型已保存。",
+            "title": "类型已保存"
+          }
+        }
+      }
+    }
   }
 }

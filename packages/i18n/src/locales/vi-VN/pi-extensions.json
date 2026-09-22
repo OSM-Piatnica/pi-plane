@@ -1,9 +1,26 @@
 {
-  "appearance": "Giao diện",
+  "account_settings": {
+    "api_tokens": {
+      "heading": "Token truy cập cá nhân"
+    }
+  },
+  "approve": "Phê duyệt",
   "duration": "Thời lượng",
   "duration_days": "{count, plural, other {# ngày}}",
   "epic": {
     "all": "Tất cả sử thi"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "Xuất ra CSV với dấu phân cách là dấu phẩy.",
+      "short_description": "CSV dấu phẩy",
+      "title": "CSV (dấu phẩy)"
+    },
+    "csv_semicolon": {
+      "description": "Xuất ra CSV với dấu phân cách là dấu chấm phẩy, dùng cho Excel.",
+      "short_description": "CSV dấu chấm phẩy",
+      "title": "CSV (dấu chấm phẩy, Excel)"
+    }
   },
   "importer": {
     "github": {
@@ -18,27 +35,511 @@
   "issue": {
     "add": {
       "duration": "Thêm thời lượng"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue} không thể bắt đầu cho đến khi {related} hoàn thành (bị chặn bởi quan hệ).",
+          "blocking": "{issue} phải hoàn thành trước khi {related} bắt đầu (quan hệ chặn).",
+          "finish_after": "{issue} không thể hoàn thành trước {related} (hoàn thành sau quan hệ).",
+          "finish_before": "{issue} phải hoàn thành vào hoặc trước {related} (hoàn thành trước quan hệ).",
+          "start_after": "{issue} không thể bắt đầu trước {related} (bắt đầu sau quan hệ).",
+          "start_before": "{issue} phải bắt đầu vào hoặc trước {related} (bắt đầu trước quan hệ)."
+        },
+        "status": {
+          "finish_after": "{issue} không thể hoàn thành cho đến khi {related} đã hoàn thành (hoàn thành sau quan hệ).",
+          "start_after": "{issue} không thể bắt đầu cho đến khi {related} đã bắt đầu (bắt đầu sau quan hệ)."
+        }
+      },
+      "date_conflict": "Các ngày này xung đột với các phụ thuộc hiện có. Hãy điều chỉnh các mục công việc liên quan hoặc xóa phụ thuộc trước.",
+      "dependency_create_failed": "Không thể tạo phụ thuộc. Vui lòng thử lại.",
+      "dependency_created": "Đã tạo phụ thuộc mục công việc thành công."
     }
   },
-  "profile": {
-    "actions": {
-      "appearance": "Giao diện"
+  "project_create": {
+    "features": {
+      "cycles": {
+        "description": "Đóng khung thời gian công việc theo các chu kỳ lặp lại.",
+        "label": "Chu kỳ"
+      },
+      "description": "Chọn những tính năng được bật cho dự án này.",
+      "intake": {
+        "description": "Phân loại công việc mới trước khi thêm vào dự án.",
+        "label": "Thu thập"
+      },
+      "modules": {
+        "description": "Nhóm công việc thành các thiết lập giống như dự án con.",
+        "label": "Mô-đun"
+      },
+      "pages": {
+        "description": "Tạo các trang tài liệu cho dự án.",
+        "label": "Trang"
+      },
+      "time_tracking": {
+        "description": "Theo dõi thời gian dành cho các mục công việc.",
+        "label": "Theo dõi thời gian"
+      },
+      "title": "Tính năng dự án",
+      "views": {
+        "description": "Lưu và chia sẻ cách sắp xếp, bộ lọc và bố cục.",
+        "label": "Chế độ xem"
+      },
+      "work_item_types": {
+        "assign_failed": "Dự án đã được tạo, nhưng không thể gán loại mục công việc.",
+        "assign_hint": "Chọn những loại nào trong không gian làm việc sẽ khả dụng trong dự án này.",
+        "assign_label": "Gán loại mục công việc",
+        "description": "Sử dụng các loại tùy chỉnh với thuộc tính riêng cho mục công việc.",
+        "label": "Loại mục công việc",
+        "no_types_hint": "Không có loại mục công việc nào đang hoạt động trong không gian làm việc này. Hãy tạo chúng trong cài đặt không gian làm việc trước."
+      }
     }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "Thêm cổng phê duyệt",
+      "add_transition": "Thêm chuyển tiếp",
+      "allow_creation": "Cho phép tạo mục công việc mới ở trạng thái này",
+      "approval": "Phê duyệt",
+      "approval_error": "Không thể xử lý phê duyệt.",
+      "approved_success": "Đã phê duyệt chuyển tiếp.",
+      "blocker_message": "Quy trình làm việc không cho phép chuyển tiếp này.",
+      "builder_description": "Mở rộng một trạng thái để cấu hình các chuyển tiếp được phép và cổng phê duyệt.",
+      "builder_title": "Trình xây dựng quy trình làm việc",
+      "disabled_success": "Đã tắt quy trình làm việc cho dự án này.",
+      "enable_description": "Khi được bật, các mục công việc sẽ tuân theo các chuyển tiếp trạng thái và quy tắc phê duyệt đã cấu hình.",
+      "enable_title": "Bật quy trình làm việc",
+      "enabled_success": "Đã bật quy trình làm việc cho dự án này.",
+      "enabling": "Đang cập nhật cài đặt quy trình làm việc...",
+      "paused": "Tạm dừng",
+      "pending_approval_description": "Việc chuyển từ {from} sang {to} đang chờ phê duyệt.",
+      "pending_approval_title": "Cần phê duyệt",
+      "rejected_success": "Đã từ chối chuyển tiếp.",
+      "resolving_approval": "Đang xử lý phê duyệt...",
+      "save_error": "Không thể lưu cấu hình quy trình làm việc.",
+      "save_success": "Đã lưu cấu hình quy trình làm việc.",
+      "toggle_error": "Không thể cập nhật cài đặt quy trình làm việc.",
+      "transition": "Chuyển tiếp",
+      "transitions_configured": "chuyển tiếp đã cấu hình"
+    }
+  },
+  "project_templates": {
+    "loading": "Đang tải mẫu…",
+    "none": "Không có mẫu",
+    "select_placeholder": "Chọn một mẫu"
   },
   "project_views": {
     "empty_state": {
       "filter": {
-        "description": "Không có chế độ xem phù hợp với tiêu chí tìm kiếm.\nTạo chế độ xem mới.",
+        "description": "Không có chế độ xem phù hợp với tiêu chí tìm kiếm. \n Tạo chế độ xem mới.",
         "title": "Không có chế độ xem phù hợp"
       }
     }
   },
-  "workspace_analytics": {
-    "total_admins": "Tổng số quản trị viên",
-    "total_guests": "Tổng số khách",
-    "total_intake": "Tổng thu",
-    "total_projects": "Tổng số dự án",
-    "total_users": "Tổng số người dùng",
-    "total_work_items": "Tổng số {entity}"
+  "reject": "Từ chối",
+  "settings_empty_state": {
+    "imports": {
+      "description": "Bạn hiện chưa có bản ghi nhập nào. Sau khi bạn nhập một tệp vào dự án, tất cả các bản ghi sẽ xuất hiện tại đây.",
+      "title": "Chưa có lượt nhập nào"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "Không thể áp dụng mẫu mục công việc.",
+    "dropdown_placeholder": "Mẫu",
+    "loading": "Đang tải mẫu…",
+    "none": "Không có mẫu"
+  },
+  "work_item_types": {
+    "loading": "Đang tải loại…",
+    "property_values_save_failed": "Mục công việc đã được tạo, nhưng không thể lưu các thuộc tính bổ sung. Hãy điền chúng từ trang chi tiết mục công việc.",
+    "select_placeholder": "Loại"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "Tất cả dự án",
+        "history": {
+          "download": "Tải xuống",
+          "expired": "Đã hết hạn",
+          "exported_by": "Được xuất bởi",
+          "exported_on": "Ngày xuất",
+          "project_count": "{count, plural, other {# dự án}}",
+          "projects": "Dự án đã xuất",
+          "status": "Trạng thái"
+        },
+        "statuses": {
+          "completed": "Đã hoàn thành",
+          "expired": "Đã hết hạn",
+          "failed": "Thất bại",
+          "processing": "Đang xử lý"
+        },
+        "tabs": {
+          "export": "Xuất",
+          "import": "Nhập"
+        },
+        "work_items_export": {
+          "description": "Xuất mục công việc từ các dự án đã chọn sang CSV, Excel hoặc JSON.",
+          "heading": "Xuất mục công việc"
+        }
+      },
+      "imports": {
+        "file_too_large": "Tệp phải nhỏ hơn {size} MB.",
+        "history": {
+          "file": "Tệp",
+          "imported_by": "Được nhập bởi",
+          "imported_on": "Ngày nhập",
+          "project_count": "{count, plural, other {# dự án}}",
+          "projects": "Dự án",
+          "reason": "Lý do",
+          "status": "Trạng thái"
+        },
+        "previous_imports": "Các lượt nhập trước đây",
+        "work_items": {
+          "description": "Nhập mục công việc từ một tệp được tạo bởi “Xuất mục công việc” (CSV, Excel hoặc JSON) vào một dự án hiện có.",
+          "heading": "Nhập mục công việc",
+          "import_button": "Nhập mục công việc",
+          "invalid_file_type": "Vui lòng tải lên tệp CSV, Excel (.xlsx) hoặc JSON.",
+          "no_projects": "Không có dự án khả dụng",
+          "open_project": "Mở dự án",
+          "options": {
+            "assignees": "Người phụ trách",
+            "clear_all": "Xóa tất cả",
+            "cycles": "Chu kỳ",
+            "dates": "Ngày tháng và thời lượng",
+            "heading": "Nội dung cần nhập",
+            "labels": "Nhãn",
+            "modules": "Mô-đun",
+            "parents": "Mục công việc cha",
+            "relations": "Mối quan hệ giữa các mục công việc",
+            "select_all": "Chọn tất cả",
+            "subscribers": "Người theo dõi"
+          },
+          "result_summary": "Đã nhập {count, plural, other {# mục công việc}} vào “{name}”.",
+          "select_file": "Chọn tệp",
+          "select_file_label": "Tệp xuất",
+          "select_project": "Dự án đích",
+          "select_project_placeholder": "Chọn một dự án",
+          "toasts": {
+            "error": {
+              "message": "Nhập mục công việc thất bại. Hãy dùng tệp từ “Xuất mục công việc” và thử lại."
+            },
+            "success": {
+              "message": "Đã nhập {count} mục công việc vào \"{name}\"."
+            }
+          },
+          "warnings_heading": "{count, plural, other {# cảnh báo}} trong quá trình nhập",
+          "warnings_none": "Mọi thứ đã được nhập mà không có cảnh báo nào."
+        }
+      },
+      "project_templates": {
+        "add_template": "Thêm mẫu",
+        "delete_confirm": "Xóa mẫu dự án này? Các dự án hiện có sẽ không bị ảnh hưởng.",
+        "description": "Tạo các thiết lập dự án có thể tái sử dụng với thuộc tính mặc định, tính năng được bật, trạng thái, nhãn và loại mục công việc.",
+        "edit_template": "Chỉnh sửa mẫu",
+        "form": {
+          "add_label": "Thêm nhãn",
+          "add_state": "Thêm trạng thái",
+          "custom_property": {
+            "active_checkbox": "Hoạt động",
+            "add_property": "Thêm thuộc tính",
+            "default_option_label": "Tùy chọn mặc định",
+            "description_label": "Mô tả",
+            "description_placeholder": "Văn bản trợ giúp cho thuộc tính này (không bắt buộc)",
+            "dropdown_options_heading": "Các tùy chọn dropdown",
+            "inactive": "Không hoạt động",
+            "mandatory": "Bắt buộc",
+            "mandatory_checkbox": "Bắt buộc khi tạo mục công việc",
+            "no_default": "Không có mặc định",
+            "option_placeholder": "Tên tùy chọn",
+            "select_mode_label": "Chế độ chọn",
+            "select_multi": "Chọn nhiều",
+            "select_single": "Chọn một",
+            "title_label": "Tiêu đề",
+            "title_placeholder": "Tên thuộc tính",
+            "type_label": "Loại",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Ngày",
+              "dropdown": "Dropdown",
+              "member_picker": "Thành viên",
+              "number": "Số",
+              "text": "Văn bản"
+            }
+          },
+          "default_assignee": "Người phụ trách mặc định",
+          "default_cover_image": "Ảnh bìa",
+          "default_labels": "Nhãn mặc định",
+          "default_lead": "Người phụ trách dự án",
+          "default_project_description": "Mô tả dự án",
+          "default_project_description_placeholder": "Mô tả mặc định cho dự án mới",
+          "default_project_identifier": "Mã định danh dự án",
+          "default_project_identifier_placeholder": "ví dụ: PROD",
+          "default_project_name": "Tên dự án",
+          "default_project_name_placeholder": "ví dụ: Ra mắt sản phẩm",
+          "default_start_date": "Ngày bắt đầu",
+          "default_target_date": "Ngày đích",
+          "default_visibility": "Chế độ hiển thị",
+          "features": {
+            "cycles": {
+              "description": "Các vòng lặp đóng khung thời gian để lập kế hoạch và triển khai.",
+              "label": "Chu kỳ"
+            },
+            "intake": {
+              "description": "Phân loại các yêu cầu mới trước khi chúng trở thành mục công việc.",
+              "label": "Thu thập"
+            },
+            "modules": {
+              "description": "Nhóm công việc thành các khu vực trọng tâm hoặc các mốc quan trọng.",
+              "label": "Mô-đun"
+            },
+            "pages": {
+              "description": "Wiki và tài liệu dự án.",
+              "label": "Trang"
+            },
+            "time_tracking": {
+              "description": "Ghi lại thời gian dành cho mục công việc.",
+              "label": "Theo dõi thời gian"
+            },
+            "views": {
+              "description": "Các bộ lọc và bố cục đã lưu cho nhóm.",
+              "label": "Chế độ xem"
+            },
+            "work_item_types": {
+              "description": "Các loại công việc khác nhau với thuộc tính tùy chỉnh.",
+              "label": "Loại mục công việc"
+            }
+          },
+          "identifier_invalid": "Chỉ sử dụng chữ cái và số",
+          "identifier_max_char": "Mã định danh phải có tối đa 5 ký tự",
+          "label_name_placeholder": "Tên nhãn",
+          "labels_empty": "Chưa có nhãn nào.",
+          "mark_default_state": "Đánh dấu là trạng thái mặc định",
+          "modal_intro": "Đặt tên cho mẫu và thêm một ghi chú ngắn cho nhóm của bạn. Sau đó cấu hình các giá trị mặc định của dự án—cùng loại cài đặt bạn sử dụng khi tạo một dự án.",
+          "name_required": "Tên mẫu là bắt buộc",
+          "section_features": "Tính năng",
+          "section_features_hint": "Chọn những tính năng tùy chọn của dự án sẽ được bật khi áp dụng mẫu này.",
+          "section_labels": "Nhãn",
+          "section_labels_hint": "Xác định các nhãn mặc định cho dự án mới.",
+          "section_properties": "Thuộc tính mặc định của dự án",
+          "section_states": "Trạng thái",
+          "section_states_hint": "Xác định các trạng thái quy trình làm việc mặc định cho dự án mới.",
+          "section_template": "Mẫu",
+          "section_work_item_types": "Loại mục công việc",
+          "section_work_item_types_hint": "Cấu hình các loại mục công việc mặc định và thuộc tính tùy chỉnh cho các dự án được tạo từ mẫu này.",
+          "state_groups": {
+            "backlog": "Tồn đọng",
+            "cancelled": "Đã hủy",
+            "completed": "Đã hoàn thành",
+            "started": "Đang tiến hành",
+            "unstarted": "Chưa bắt đầu"
+          },
+          "state_name_placeholder": "Tên trạng thái",
+          "states_group_empty": "Chưa có trạng thái nào trong nhóm này.",
+          "template_name_label": "Tên mẫu",
+          "template_name_placeholder": "ví dụ: Triển khai phần mềm",
+          "template_note_label": "Mô tả (dành cho nhóm của bạn)",
+          "template_note_placeholder": "Mẫu này dùng để làm gì (không bắt buộc).",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "Thêm loại mục công việc",
+              "description": "Thêm các loại mục công việc khác khả dụng trong dự án tạo từ mẫu này.",
+              "empty": "Chưa có loại bổ sung nào.",
+              "title": "Loại bổ sung"
+            },
+            "default_badge": "Mặc định",
+            "disabled_hint": "Bật loại mục công việc trong mục Tính năng ở trên để cấu hình các loại tại đây.",
+            "epic": {
+              "description": "Khối lượng công việc lớn có thể được chia nhỏ thành các nhiệm vụ.",
+              "disabled": "Sử thi đã bị tắt cho mẫu này.",
+              "title": "Sử thi"
+            },
+            "optional_badge": "Không bắt buộc",
+            "properties_empty": "Không có thuộc tính tùy chỉnh cho loại này.",
+            "task": {
+              "description": "Loại mục công việc tiêu chuẩn cho các công việc hằng ngày.",
+              "title": "Nhiệm vụ"
+            },
+            "type_description_placeholder": "Mô tả ngắn (không bắt buộc)",
+            "type_name_placeholder": "Tên loại"
+          }
+        },
+        "loading": "Đang tải mẫu…",
+        "none": "Không có mẫu",
+        "select_placeholder": "Chọn một mẫu",
+        "table": {
+          "download_template": "Tải xuống",
+          "no_description": "Không có mô tả",
+          "use_template": "Sử dụng mẫu"
+        },
+        "title": "Mẫu dự án",
+        "toasts": {
+          "apply_failed": {
+            "message": "Không thể áp dụng mẫu dự án."
+          },
+          "apply_followup_failed": {
+            "message": "Dự án đã được tạo nhưng một số cài đặt của mẫu không thể áp dụng."
+          },
+          "create_failed": {
+            "message": "Vui lòng kiểm tra biểu mẫu và thử lại.",
+            "title": "Không thể tạo mẫu"
+          },
+          "created": {
+            "message": "Mẫu dự án đã được lưu.",
+            "title": "Đã tạo mẫu"
+          },
+          "delete_failed": {
+            "message": "Vui lòng thử lại.",
+            "title": "Không thể xóa"
+          },
+          "deleted": {
+            "message": "Mẫu dự án đã được xóa.",
+            "title": "Đã xóa mẫu"
+          },
+          "download_failed": {
+            "message": "Không thể tải xuống tệp mẫu."
+          },
+          "save_failed": {
+            "message": "Vui lòng kiểm tra biểu mẫu và thử lại.",
+            "title": "Không thể lưu mẫu"
+          },
+          "saved": {
+            "message": "Mẫu dự án đã được cập nhật.",
+            "title": "Đã lưu mẫu"
+          },
+          "upload_failed": {
+            "message": "Không thể tải lên mẫu. Vui lòng kiểm tra tệp và thử lại."
+          },
+          "uploaded_renamed": {
+            "message": "Tên đó đã được sử dụng, vì vậy mẫu đã được lưu với tên \"{name}\"."
+          },
+          "uploaded": {
+            "message": "Mẫu \"{name}\" đã được tải lên từ tệp."
+          }
+        },
+        "upload_invalid_file": "Vui lòng tải lên tệp JSON đã được tải xuống bằng nút “Tải xuống”.",
+        "upload_template": "Tải lên từ tệp",
+        "upload_too_large": "Tệp phải nhỏ hơn {size} MB."
+      },
+      "work_item_templates": {
+        "add_template": "Thêm mẫu",
+        "delete_confirm": "Bạn có chắc chắn muốn xóa mẫu mục công việc này không?",
+        "description": "Tạo các bộ khởi đầu có thể tái sử dụng cho mục công việc mới (tiêu đề, mô tả, người phụ trách, độ ưu tiên, v.v.). Một mẫu có thể áp dụng cho toàn bộ không gian làm việc hoặc chỉ một dự án.",
+        "edit_template": "Chỉnh sửa mẫu",
+        "form": {
+          "default_values_section_hint": "Khi ai đó áp dụng mẫu này lúc tạo mục công việc, các trường này sẽ được điền sẵn. Mọi thứ ở đây đều không bắt buộc.",
+          "default_values_section_title": "Giá trị mặc định của mục công việc",
+          "default_work_item_description": "Mô tả",
+          "default_work_item_description_hint": "Văn bản thuần túy; được lưu làm mô tả mục công việc. Các dấu xuống dòng sẽ được giữ nguyên.",
+          "default_work_item_description_placeholder": "Văn bản sẽ xuất hiện mặc định trong mục công việc mới",
+          "default_work_item_name": "Tiêu đề",
+          "default_work_item_name_placeholder": "ví dụ: [Bug] …",
+          "modal_intro": "Đặt tên cho mẫu và thêm một ghi chú ngắn cho nhóm. Sau đó thiết lập các giá trị mặc định cho mục công việc—cùng loại tiêu đề, mô tả, người phụ trách và độ ưu tiên bạn sử dụng khi tạo một mục công việc.",
+          "name_required": "Tên mẫu là bắt buộc",
+          "scope_hint": "Để trống dự án để mẫu này khả dụng trong mọi dự án. Các trường riêng của dự án (trạng thái, nhãn, chu kỳ, mô-đun) chỉ có thể được lưu khi đã chọn một dự án.",
+          "scope_hint_short": "Không bắt buộc. Nếu để trống, mẫu sẽ khả dụng trong tất cả dự án. Khi được thiết lập, gợi ý người phụ trách sẽ giới hạn trong dự án đó; nếu không, thành viên không gian làm việc sẽ được sử dụng.",
+          "scope_project": "Giới hạn trong một dự án (không bắt buộc)",
+          "template_name_label": "Tên mẫu",
+          "template_name_placeholder": "ví dụ: Báo cáo lỗi",
+          "template_note_label": "Mô tả (dành cho nhóm của bạn)",
+          "template_note_placeholder": "Mẫu này dùng để làm gì (không bắt buộc; đây không phải là mô tả mục công việc)."
+        },
+        "heading": "Mẫu mục công việc",
+        "table": {
+          "name": "Mẫu",
+          "project": "Dự án",
+          "scope": "Phạm vi",
+          "workspace_wide": "Tất cả dự án"
+        },
+        "title": "Mẫu mục công việc",
+        "toasts": {
+          "create_failed": {
+            "message": "Vui lòng kiểm tra biểu mẫu và thử lại.",
+            "title": "Không thể tạo mẫu"
+          },
+          "created": {
+            "message": "Mẫu mục công việc đã được lưu.",
+            "title": "Đã tạo mẫu"
+          },
+          "delete_failed": {
+            "message": "Vui lòng thử lại.",
+            "title": "Không thể xóa"
+          },
+          "deleted": {
+            "message": "Mẫu mục công việc đã được xóa.",
+            "title": "Đã xóa mẫu"
+          },
+          "save_failed": {
+            "message": "Vui lòng kiểm tra biểu mẫu và thử lại.",
+            "title": "Không thể lưu mẫu"
+          },
+          "saved": {
+            "message": "Mẫu mục công việc đã được cập nhật.",
+            "title": "Đã lưu mẫu"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "Thêm loại",
+        "delete_confirm": "Xóa loại mục công việc này? Các mục công việc hiện có sẽ vẫn giữ nguyên dữ liệu.",
+        "description": "Định nghĩa các loại mục công việc với danh tính riêng, thuộc tính tùy chỉnh và phạm vi dự án. Bật hoặc tắt các loại mà không ảnh hưởng đến các mục hiện có.",
+        "edit_type": "Chỉnh sửa loại",
+        "epic_badge": "Sử thi",
+        "form": {
+          "description_label": "Mô tả",
+          "is_active": "Hoạt động",
+          "is_epic": "Loại sử thi",
+          "modal_intro": "Đặt tên cho loại, chọn một biểu tượng và chỉ đính kèm các thuộc tính mà loại công việc này cần. Gán nó cho các dự án mà nó nên khả dụng.",
+          "name_label": "Tên",
+          "name_required": "Tên loại là bắt buộc",
+          "projects_hint": "Để trống để giữ loại này trong thư viện mà chưa gán cho dự án nào.",
+          "projects_label": "Dự án",
+          "properties_heading": "Thuộc tính tùy chỉnh",
+          "property": {
+            "active_checkbox": "Hoạt động",
+            "add": "Thêm thuộc tính",
+            "description_label": "Mô tả",
+            "empty": "Chưa có thuộc tính tùy chỉnh nào.",
+            "inactive": "Không hoạt động",
+            "mandatory": "Bắt buộc",
+            "mandatory_checkbox": "Bắt buộc khi tạo mục công việc",
+            "title_label": "Tiêu đề",
+            "type_label": "Loại",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Ngày",
+              "dropdown": "Dropdown",
+              "member_picker": "Thành viên",
+              "number": "Số",
+              "text": "Văn bản"
+            }
+          }
+        },
+        "table": {
+          "name": "Loại",
+          "no_projects": "Chưa được gán",
+          "projects": "Dự án",
+          "properties": "Thuộc tính",
+          "status": "Hoạt động"
+        },
+        "title": "Loại mục công việc",
+        "toasts": {
+          "delete_failed": {
+            "message": "Vui lòng thử lại.",
+            "title": "Không thể xóa"
+          },
+          "deleted": {
+            "message": "Loại mục công việc đã được xóa.",
+            "title": "Đã xóa loại"
+          },
+          "save_failed": {
+            "message": "Vui lòng kiểm tra biểu mẫu và thử lại.",
+            "title": "Không thể lưu loại"
+          },
+          "saved": {
+            "message": "Loại mục công việc đã được lưu.",
+            "title": "Đã lưu loại"
+          }
+        }
+      }
+    }
   }
 }
