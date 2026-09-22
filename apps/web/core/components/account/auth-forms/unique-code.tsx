@@ -52,7 +52,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
   // timer
   const { timer: resendTimerCode, setTimer: setResendCodeTimer } = useTimer(0);
   // plane hooks
-  const { t } = useTranslation();
+  const { t, currentLocale } = useTranslation();
 
   const handleFormChange = (key: keyof TUniqueCodeFormValues, value: string) =>
     setUniqueCodeFormData((prev) => ({ ...prev, [key]: value }));
@@ -93,6 +93,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
     >
       <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken} />
       <input type="hidden" value={uniqueCodeFormData.email} name="email" />
+      {mode === EAuthModes.SIGN_UP && <input type="hidden" value={currentLocale} name="language" />}
       {nextPath && <input type="hidden" value={nextPath} name="next_path" />}
       <div className="space-y-1">
         <label htmlFor="email" className="text-13 font-medium text-tertiary">

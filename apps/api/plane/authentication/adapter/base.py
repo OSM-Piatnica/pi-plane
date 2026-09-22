@@ -122,6 +122,27 @@ class Adapter:
     def get_avatar_download_headers(self):
         return {}
 
+    def resolve_initial_language(self, email):
+        """
+        Determine the language a brand-new user's profile should start with.
+
+        Prefers the language explicitly picked on the sign-up form (if any), falling
+        back to the language set on a pending workspace invite for this email, and
+        finally to the Profile model's own "en" default.
+        """
+        requested = getattr(self.request, "data", None)
+        requested = requested.get("language") if requested else None
+        if not requested:
+            requested = self.request.POST.get("language") if hasattr(self.request, "POST") else None
+        if isinstance(requested, str) and 0 < len(requested) <= 10:
+            return requested
+
+        invite = WorkspaceMemberInvite.objects.filter(email=email).order_by("-created_at").first()
+        if invite:
+            return invite.language
+
+        return "en"
+
     def check_sync_enabled(self):
         """Check if sync is enabled for the provider"""
         provider_config_map = {
@@ -338,8 +359,9 @@ class Adapter:
                 else:
                     user.avatar = avatar
 
-            # Create profile
-            Profile.objects.create(user=user)
+            # Create profile, seeded with whatever language was picked at sign-up
+            # (or, failing that, whatever language they were invited in)
+            Profile.objects.create(user=user, language=self.resolve_initial_language(email))
 
         # Check if IDP sync is enabled and user is not signing up
         if self.check_sync_enabled() and not is_signup:

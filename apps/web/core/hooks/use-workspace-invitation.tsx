@@ -9,24 +9,23 @@ import type { Control, FieldArrayWithId, FormState, UseFormWatch } from "react-h
 import { useFieldArray, useForm } from "react-hook-form";
 // plane imports
 import { EUserPermissions } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 
 type EmailRole = {
   email: string;
   role: EUserPermissions;
+  language: string;
 };
 
 export type InvitationFormValues = {
   emails: EmailRole[];
 };
 
-const SEND_WORKSPACE_INVITATION_MODAL_DEFAULT_VALUES: InvitationFormValues = {
-  emails: [
-    {
-      email: "",
-      role: EUserPermissions.MEMBER,
-    },
-  ],
-};
+const emptyInvitationRow = (language: string): EmailRole => ({
+  email: "",
+  role: EUserPermissions.MEMBER,
+  language,
+});
 
 type TUseWorkspaceInvitationProps = {
   onSubmit: (data: InvitationFormValues) => Promise<void> | undefined;
@@ -46,9 +45,11 @@ type TUseWorkspaceInvitationReturn = {
 
 export const useWorkspaceInvitationActions = (props: TUseWorkspaceInvitationProps): TUseWorkspaceInvitationReturn => {
   const { onSubmit, onClose } = props;
+  // plane hooks
+  const { currentLocale } = useTranslation();
   // form info
   const { control, reset, watch, handleSubmit, formState } = useForm<InvitationFormValues>({
-    defaultValues: SEND_WORKSPACE_INVITATION_MODAL_DEFAULT_VALUES,
+    defaultValues: { emails: [emptyInvitationRow(currentLocale)] },
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -59,24 +60,24 @@ export const useWorkspaceInvitationActions = (props: TUseWorkspaceInvitationProp
   const handleClose = () => {
     onClose();
     const timeout = setTimeout(() => {
-      reset(SEND_WORKSPACE_INVITATION_MODAL_DEFAULT_VALUES);
+      reset({ emails: [emptyInvitationRow(currentLocale)] });
       clearTimeout(timeout);
     }, 350);
   };
 
   const appendField = () => {
-    append({ email: "", role: EUserPermissions.MEMBER });
+    append(emptyInvitationRow(currentLocale));
   };
 
   const onSubmitForm = async (data: InvitationFormValues) => {
     await onSubmit(data)?.then(() => {
-      reset(SEND_WORKSPACE_INVITATION_MODAL_DEFAULT_VALUES);
+      reset({ emails: [emptyInvitationRow(currentLocale)] });
     });
   };
 
   useEffect(() => {
-    if (fields.length === 0) append([{ email: "", role: EUserPermissions.MEMBER }]);
-  }, [fields, append]);
+    if (fields.length === 0) append(emptyInvitationRow(currentLocale));
+  }, [fields, append, currentLocale]);
 
   return {
     control,

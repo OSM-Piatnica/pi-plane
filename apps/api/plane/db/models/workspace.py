@@ -239,6 +239,8 @@ class WorkspaceMemberInvite(BaseModel):
     message = models.TextField(null=True)
     responded_at = models.DateTimeField(null=True)
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, default=5)
+    # language the invitee's account should default to once they accept and create it
+    language = models.CharField(max_length=10, default="en")
 
     class Meta:
         unique_together = ["email", "workspace", "deleted_at"]
