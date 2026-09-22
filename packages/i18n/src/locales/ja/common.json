@@ -600,6 +600,8 @@
       "no_matching_results": "一致する結果がありません",
       "min_chars": "検索するには{count}文字以上入力してください",
       "error": "検索結果の取得中にエラーが発生しました",
+      "view_less": "表示を減らす",
+      "view_all": "すべて表示",
       "no_results": {
         "title": "一致する結果がありません",
         "description": "検索条件を削除してすべての結果を表示"

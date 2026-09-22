@@ -600,6 +600,8 @@
       "no_matching_results": "Brak pasujących wyników",
       "min_chars": "Wpisz co najmniej {count} znaków, aby wyszukać",
       "error": "Błąd pobierania wyników wyszukiwania",
+      "view_less": "Pokaż mniej",
+      "view_all": "Pokaż wszystko",
       "no_results": {
         "title": "Brak pasujących wyników",
         "description": "Usuń kryteria wyszukiwania, aby zobaczyć wszystkie wyniki"
@@ -869,6 +871,117 @@
       "title": "JSON",
       "description": "Eksportuj elementy do pliku JSON.",
       "short_description": "Eksportuj jako JSON"
+    }
+  },
+  "onboarding": {
+    "skip": "Pomiń",
+    "profile": {
+      "title": "Utwórz swój profil.",
+      "description": "Tak będziesz wyświetlany w Plane.",
+      "choose_image": "Wybierz zdjęcie",
+      "upload_image": "Prześlij zdjęcie",
+      "change_image": "Zmień zdjęcie",
+      "name_placeholder": "Wpisz swoje imię i nazwisko",
+      "first_name_required": "Imię jest wymagane",
+      "last_name_required": "Nazwisko jest wymagane",
+      "first_name_max_length": "Imię może mieć maksymalnie 50 znaków.",
+      "last_name_max_length": "Nazwisko może mieć maksymalnie 50 znaków.",
+      "name_max_length": "Imię i nazwisko może mieć maksymalnie 50 znaków.",
+      "first_name_placeholder": "Jan",
+      "last_name_placeholder": "Kowalski",
+      "new_password_placeholder": "Nowe hasło...",
+      "role_question": "Nad jaką rolą pracujesz? Wybierz jedną.",
+      "domain_question": "Jaka jest Twoja dziedzina specjalizacji? Wybierz jedną lub więcej.",
+      "marketing_consent": "Zgadzam się na otrzymywanie komunikacji marketingowej od Plane",
+      "passwords_do_not_match": "Hasła nie są zgodne",
+      "passwords_match": "Hasła są zgodne",
+      "seniority_levels": {
+        "individual_contributor": "Specjalista",
+        "senior_leader": "Starszy lider",
+        "manager": "Menedżer",
+        "executive": "Członek zarządu",
+        "freelancer": "Freelancer",
+        "student": "Student"
+      },
+      "domains": {
+        "engineering": "Inżynieria",
+        "product": "Produkt",
+        "marketing": "Marketing",
+        "sales": "Sprzedaż",
+        "operations": "Operacje",
+        "legal": "Prawo",
+        "finance": "Finanse",
+        "human_resources": "Kadry",
+        "project": "Projekt",
+        "other": "Inne"
+      },
+      "toast": {
+        "profile_setup_completed": "Konfiguracja profilu zakończona!",
+        "profile_setup_failed": "Konfiguracja profilu nie powiodła się. Spróbuj ponownie!",
+        "user_details_update_failed": "Aktualizacja danych użytkownika nie powiodła się. Spróbuj ponownie!"
+      }
+    },
+    "role": {
+      "title": "Jaka jest Twoja rola?",
+      "description": "Skonfigurujmy Plane pod Twój sposób pracy.",
+      "select_one": "Wybierz jedną",
+      "options": {
+        "product_manager": "Product Manager",
+        "engineering_manager": "Engineering Manager",
+        "designer": "Projektant",
+        "developer": "Programista",
+        "founder_executive": "Założyciel/Zarząd",
+        "operations_manager": "Kierownik ds. operacyjnych",
+        "others": "Inne"
+      }
+    },
+    "usecase": {
+      "title": "Co sprowadza Cię do Plane?",
+      "description": "Powiedz nam o swoich celach i wielkości zespołu.",
+      "select_multiple": "Wybierz jedną lub więcej",
+      "select_at_least_one": "Wybierz co najmniej jedną opcję"
+    },
+    "workspace": {
+      "invited_title": "Zostałeś zaproszony!",
+      "invited_description": "Zaakceptuj zaproszenia, aby współpracować ze swoim zespołem.",
+      "continue_to_workspace": "Przejdź do przestrzeni roboczej",
+      "create_own": "Utwórz własną przestrzeń roboczą",
+      "no_invitations_found": "Nie znaleziono zaproszeń",
+      "join_or_create_title": "Dołącz do zaproszeń lub utwórz przestrzeń roboczą",
+      "all_work_unified": "Cała Twoja praca — w jednym miejscu.",
+      "name_placeholder": "Wpisz nazwę przestrzeni roboczej",
+      "create_new": "Utwórz nową przestrzeń roboczą",
+      "join_existing": "Dołącz do istniejącej przestrzeni roboczej",
+      "join_invited_workspaces": "Chcę dołączyć do przestrzeni, do których zostałem zaproszony",
+      "creation_restricted_message": "Nie masz żadnych zaproszeń do przestrzeni roboczej, a administrator Twojej instancji ograniczył tworzenie nowych przestrzeni. Poproś właściciela lub administratora przestrzeni roboczej o zaproszenie, a następnie wróć na ten ekran, aby dołączyć."
+    },
+    "team": {
+      "invite_teammates": "Zaproś członków zespołu",
+      "invite_teammates_description": "Praca w Plane działa najlepiej z zespołem. Zaproś ich teraz, aby w pełni wykorzystać możliwości Plane.",
+      "add_another": "Dodaj kolejny",
+      "do_it_later": "Zrobię to później",
+      "invalid_email": "Nieprawidłowy adres e-mail",
+      "invalid_email_hint": "To nie wygląda na adres e-mail.",
+      "toast": {
+        "invite_success_message": "Zaproszenia zostały wysłane pomyślnie."
+      }
+    },
+    "switch_account": {
+      "title": "Zmień konto",
+      "switching": "Przełączanie...",
+      "description_prefix": "Jeśli przypadkowo zarejestrowałeś się za pomocą adresu",
+      "description_suffix": "możesz stąd przełączyć się na inne konto.",
+      "wrong_email": "Nieprawidłowy adres e-mail?",
+      "toast": {
+        "sign_out_failed": "Nie udało się wylogować. Spróbuj ponownie."
+      }
+    },
+    "step_indicator": "{current} z {total} kroków",
+    "finish": {
+      "toast": {
+        "title": "Niepowodzenie",
+        "message": "Nie udało się zakończyć onboardingu. Spróbuj ponownie później."
+      }
     }
   }
 }

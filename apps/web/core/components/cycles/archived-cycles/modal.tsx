@@ -6,6 +6,7 @@
 
 import { useState } from "react";
 // ui
+import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
@@ -30,6 +31,7 @@ export function ArchiveCycleModal(props: Props) {
   const [isArchiving, setIsArchiving] = useState(false);
   // store hooks
   const { getCycleNameById, archiveCycle } = useCycle();
+  const { t } = useTranslation();
 
   const cycleName = getCycleNameById(cycleId);
 
@@ -54,7 +56,7 @@ export function ArchiveCycleModal(props: Props) {
       .catch(() => {
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
+          title: t("toast.error"),
           message: "Cycle could not be archived. Please try again.",
         });
       })

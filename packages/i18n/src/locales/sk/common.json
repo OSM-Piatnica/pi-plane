@@ -600,6 +600,8 @@
       "no_matching_results": "Žiadne zodpovedajúce výsledky",
       "min_chars": "Pre vyhľadávanie zadajte aspoň {count} znakov",
       "error": "Chyba pri načítavaní výsledkov vyhľadávania",
+      "view_less": "Zobraziť menej",
+      "view_all": "Zobraziť všetko",
       "no_results": {
         "title": "Žiadne zodpovedajúce výsledky",
         "description": "Odstráňte kritériá vyhľadávania, aby ste videli všetky výsledky"

@@ -9,6 +9,7 @@ import { observer } from "mobx-react";
 import { useForm, Controller } from "react-hook-form";
 // plane imports
 import type { EditorRefApi } from "@plane/editor";
+import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { SitesFileService } from "@plane/services";
 import type { TIssuePublicComment } from "@plane/types";
@@ -40,6 +41,8 @@ export const AddComment = observer(function AddComment(props: Props) {
   const { peekId: issueId, addIssueComment, uploadCommentAsset } = useIssueDetails();
   const { data: currentUser } = useUser();
   const { workspace: workspaceID } = usePublish(anchor);
+  // translation
+  const { t } = useTranslation();
   // form info
   const {
     handleSubmit,
@@ -66,7 +69,7 @@ export const AddComment = observer(function AddComment(props: Props) {
       .catch(() =>
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
+          title: t("toast.error"),
           message: "Comment could not be posted. Please try again.",
         })
       );

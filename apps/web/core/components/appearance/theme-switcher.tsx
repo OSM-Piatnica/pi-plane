@@ -46,11 +46,11 @@ export const ThemeSwitcher = observer(function ThemeSwitcher(props: {
         setPromiseToast(updatePromise, {
           loading: "Updating theme...",
           success: {
-            title: "Success!",
+            title: t("toast.success"),
             message: () => "Theme updated successfully!",
           },
           error: {
-            title: "Error!",
+            title: t("toast.error"),
             message: () => "Failed to update the theme",
           },
         });

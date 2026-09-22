@@ -600,6 +600,8 @@
       "no_matching_results": "შესაბამისი შედეგები არ მოიძებნა",
       "min_chars": "Type at least {count} characters to search",
       "error": "Error fetching search results",
+      "view_less": "ნაკლების ჩვენება",
+      "view_all": "ყველას ჩვენება",
       "no_results": {
         "title": "No matching results",
         "description": "Remove the search criteria to see all results"

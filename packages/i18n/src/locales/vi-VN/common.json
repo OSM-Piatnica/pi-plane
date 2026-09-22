@@ -600,6 +600,8 @@
       "no_matching_results": "Không có kết quả phù hợp",
       "min_chars": "Nhập ít nhất {count} ký tự để tìm kiếm",
       "error": "Lỗi khi tải kết quả tìm kiếm",
+      "view_less": "Hiển thị ít hơn",
+      "view_all": "Hiển thị tất cả",
       "no_results": {
         "title": "Không có kết quả phù hợp",
         "description": "Xóa tiêu chí tìm kiếm để xem tất cả kết quả"

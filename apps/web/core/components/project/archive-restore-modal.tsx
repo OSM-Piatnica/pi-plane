@@ -5,6 +5,8 @@
  */
 
 import { useState } from "react";
+// plane imports
+import { useTranslation } from "@plane/i18n";
 // ui
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
@@ -24,6 +26,8 @@ type Props = {
 
 export function ArchiveRestoreProjectModal(props: Props) {
   const { workspaceSlug, projectId, isOpen, onClose, archive } = props;
+  // translation
+  const { t } = useTranslation();
   // router
   const router = useAppRouter();
   // states
@@ -55,7 +59,7 @@ export function ArchiveRestoreProjectModal(props: Props) {
       .catch(() =>
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
+          title: t("toast.error"),
           message: "Project could not be archived. Please try again.",
         })
       )
@@ -78,7 +82,7 @@ export function ArchiveRestoreProjectModal(props: Props) {
       .catch(() =>
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
+          title: t("toast.error"),
           message: "Project could not be restored. Please try again.",
         })
       )

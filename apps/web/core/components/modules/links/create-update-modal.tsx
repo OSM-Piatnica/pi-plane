@@ -7,6 +7,7 @@
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 // plane types
+import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { ILinkDetails, ModuleLink } from "@plane/types";
@@ -28,6 +29,7 @@ const defaultValues: ModuleLink = {
 
 export function CreateUpdateModuleLinkModal(props: Props) {
   const { isOpen, handleClose, createLink, updateLink, data } = props;
+  const { t } = useTranslation();
   // form info
   const {
     formState: { errors, isSubmitting },
@@ -54,14 +56,14 @@ export function CreateUpdateModuleLinkModal(props: Props) {
         await createLink(payload);
         setToast({
           type: TOAST_TYPE.SUCCESS,
-          title: "Success!",
+          title: t("toast.success"),
           message: "Module link created successfully.",
         });
       } else {
         await updateLink(payload, data.id);
         setToast({
           type: TOAST_TYPE.SUCCESS,
-          title: "Success!",
+          title: t("toast.success"),
           message: "Module link updated successfully.",
         });
       }
@@ -69,7 +71,7 @@ export function CreateUpdateModuleLinkModal(props: Props) {
     } catch (error: any) {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
+        title: t("toast.error"),
         message: error?.data?.error ?? "Some error occurred. Please try again.",
       });
     }
