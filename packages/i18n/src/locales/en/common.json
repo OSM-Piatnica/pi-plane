@@ -973,7 +973,7 @@
         "sign_out_failed": "Failed to sign out. Please try again."
       }
     },
-    "step_indicator": "{{current}} of {{total}} steps",
+    "step_indicator": "{current} of {total} steps",
     "finish": {
       "toast": {
         "title": "Failed",

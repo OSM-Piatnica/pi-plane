@@ -973,7 +973,7 @@
         "sign_out_failed": "Nie udało się wylogować. Spróbuj ponownie."
       }
     },
-    "step_indicator": "{{current}} z {{total}} kroków",
+    "step_indicator": "{current} z {total} kroków",
     "finish": {
       "toast": {
         "title": "Niepowodzenie",
