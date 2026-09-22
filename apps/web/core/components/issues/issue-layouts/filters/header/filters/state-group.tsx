@@ -64,7 +64,9 @@ export const FilterStateGroup = observer(function FilterStateGroup(props: Props)
                   className="ml-8 text-11 font-medium text-accent-primary"
                   onClick={handleViewToggle}
                 >
-                  {itemsToRender === filteredOptions.length ? t("common.search.view_less") : t("common.search.view_all")}
+                  {itemsToRender === filteredOptions.length
+                    ? t("common.search.view_less")
+                    : t("common.search.view_all")}
                 </button>
               )}
             </>

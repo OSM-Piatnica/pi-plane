@@ -98,7 +98,9 @@ export const FilterLead = observer(function FilterLead(props: Props) {
                     className="ml-8 text-11 font-medium text-accent-primary"
                     onClick={handleViewToggle}
                   >
-                    {itemsToRender === sortedOptions.length ? t("common.search.view_less") : t("common.search.view_all")}
+                    {itemsToRender === sortedOptions.length
+                      ? t("common.search.view_less")
+                      : t("common.search.view_all")}
                   </button>
                 )}
               </>
