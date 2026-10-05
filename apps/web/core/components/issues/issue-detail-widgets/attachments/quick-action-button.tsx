@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -66,7 +67,7 @@ export const IssueAttachmentActionButton = observer(function IssueAttachmentActi
             setToast({
               type: TOAST_TYPE.ERROR,
               title: t("toast.error"),
-              message: "File could not be attached. Try uploading again.",
+              message: t("attachment.error"),
             });
           })
           .finally(() => {
@@ -82,12 +83,12 @@ export const IssueAttachmentActionButton = observer(function IssueAttachmentActi
         title: t("toast.error"),
         message:
           totalAttachedFiles > 1
-            ? "Only one file can be uploaded at a time."
-            : `File must be of ${maxFileSize / 1024 / 1024}MB or less in size.`,
+            ? t("attachment.only_one_file_allowed")
+            : t("attachment.file_size_limit", { size: maxFileSize / 1024 / 1024 }),
       });
       return;
     },
-    [attachmentOperations, maxFileSize, workspaceSlug, handleFetchPropertyActivities, setLastWidgetAction]
+    [attachmentOperations, maxFileSize, workspaceSlug, handleFetchPropertyActivities, setLastWidgetAction, t]
   );
 
   const { getRootProps, getInputProps } = useDropzone({

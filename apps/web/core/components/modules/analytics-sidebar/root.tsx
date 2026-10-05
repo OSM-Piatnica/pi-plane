@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -101,13 +102,13 @@ export const ModuleAnalyticsSidebar = observer(function ModuleAnalyticsSidebar(p
       setToast({
         type: TOAST_TYPE.SUCCESS,
         title: t("toast.success"),
-        message: "Module link deleted successfully.",
+        message: t("links.toasts.removed.message"),
       });
     } catch (_error) {
       setToast({
         type: TOAST_TYPE.ERROR,
         title: t("toast.error"),
-        message: "Some error occurred",
+        message: t("common.error.message"),
       });
     }
   };
@@ -120,7 +121,7 @@ export const ModuleAnalyticsSidebar = observer(function ModuleAnalyticsSidebar(p
     setToast({
       type: TOAST_TYPE.SUCCESS,
       title: t("toast.success"),
-      message: "Module updated successfully.",
+      message: t("entity.update.success", { entity: t("common.module") }),
     });
   };
 

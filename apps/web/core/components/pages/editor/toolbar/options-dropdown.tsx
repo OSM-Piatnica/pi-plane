@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -57,7 +58,7 @@ export const PageOptionsDropdown = observer(function PageOptionsDropdown(props: 
           action: () => handleFullWidth(!isFullWidth),
           customContent: (
             <>
-              Full width
+              {t("page_ui.editor.full_width")}
               <ToggleSwitch value={isFullWidth} onChange={() => {}} />
             </>
           ),
@@ -68,7 +69,7 @@ export const PageOptionsDropdown = observer(function PageOptionsDropdown(props: 
           action: () => handleStickyToolbar(!isStickyToolbarEnabled),
           customContent: (
             <>
-              Sticky toolbar
+              {t("page_ui.editor.sticky_toolbar")}
               <ToggleSwitch value={isStickyToolbarEnabled} onChange={() => {}} />
             </>
           ),
@@ -83,10 +84,10 @@ export const PageOptionsDropdown = observer(function PageOptionsDropdown(props: 
             setToast({
               type: TOAST_TYPE.SUCCESS,
               title: t("toast.success"),
-              message: "Markdown copied to clipboard.",
+              message: t("page_ui.editor.markdown_copied"),
             });
           },
-          title: "Copy markdown",
+          title: t("common.actions.copy_markdown"),
           icon: Clipboard,
           shouldRender: true,
         },
@@ -101,14 +102,14 @@ export const PageOptionsDropdown = observer(function PageOptionsDropdown(props: 
             });
             router.push(updatedRoute);
           },
-          title: "Version history",
+          title: t("page_navigation_pane.tabs.info.version_history.label"),
           icon: History,
           shouldRender: true,
         },
         {
           key: "export",
           action: () => setIsExportModalOpen(true),
-          title: "Export",
+          title: t("export"),
           icon: ArrowUpToLine,
           shouldRender: true,
         },
@@ -124,6 +125,7 @@ export const PageOptionsDropdown = observer(function PageOptionsDropdown(props: 
       updateQueryParams,
       router,
       setIsExportModalOpen,
+      t,
     ]
   );
 

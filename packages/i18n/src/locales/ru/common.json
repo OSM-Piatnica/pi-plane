@@ -169,7 +169,7 @@
   "project_created_successfully": "Проект успешно создан",
   "project_created_successfully_description": "Проект успешно создан. Теперь вы можете добавлять рабочие элементы.",
   "project_name_already_taken": "Имя проекта уже используется.",
-  "project_name_cannot_contain_special_characters": "Название проекта не может содержать специальные символы.",
+  "project_name_cannot_contain_special_characters": "Название проекта не может содержать ни один из этих символов: ; $ ^ { } * = | ' < > %",
   "project_identifier_already_taken": "Идентификатор проекта уже используется.",
   "project_cover_image_alt": "Обложка проекта",
   "name_is_required": "Требуется имя",
@@ -489,7 +489,7 @@
     "project_timezone": "Часовой пояс проекта",
     "created_on": "Создано",
     "updated_on": "Обновлено",
-    "completed_on": "Completed on",
+    "completed_on": "Завершено",
     "update_project": "Обновить проект",
     "identifier_already_exists": "Идентификатор уже существует",
     "add_more": "Добавить еще",
@@ -710,7 +710,7 @@
     "project_updates": "Обновления проекта",
     "workflows": "Рабочие процессы",
     "templates": "Шаблоны",
-    "business": "Business",
+    "business": "Бизнес",
     "members_and_teamspaces": "Участники и командные пространства",
     "recurring_work_items": "Повторяющиеся рабочие элементы",
     "milestones": "Вехи",
@@ -718,11 +718,11 @@
     "details": "Подробности",
     "project_structure": "Структура проекта",
     "custom_properties": "Пользовательские свойства",
-    "your_profile": "Your profile",
-    "developer": "Developer",
-    "work_structure": "Work structure",
-    "execution": "Execution",
-    "administration": "Administration"
+    "your_profile": "Ваш профиль",
+    "developer": "Разработчик",
+    "work_structure": "Структура работ",
+    "execution": "Выполнение",
+    "administration": "Администрирование"
   },
   "chart": {
     "x_axis": "Ось X",
@@ -871,6 +871,117 @@
       "title": "JSON",
       "description": "Экспорт рабочих элементов в JSON-файл.",
       "short_description": "Экспорт в json"
+    }
+  },
+  "onboarding": {
+    "skip": "Пропустить",
+    "profile": {
+      "title": "Создайте профиль.",
+      "description": "Так вы будете отображаться в Plane.",
+      "choose_image": "Выбрать изображение",
+      "upload_image": "Загрузить изображение",
+      "change_image": "Изменить изображение",
+      "name_placeholder": "Введите полное имя",
+      "first_name_required": "Укажите имя",
+      "last_name_required": "Укажите фамилию",
+      "first_name_max_length": "Имя должно содержать не более 50 символов.",
+      "last_name_max_length": "Фамилия должна содержать не более 50 символов.",
+      "name_max_length": "Имя должно содержать не более 50 символов.",
+      "first_name_placeholder": "Wilbur",
+      "last_name_placeholder": "Wright",
+      "new_password_placeholder": "Новый пароль...",
+      "role_question": "Какую роль вы выполняете? Выберите одну.",
+      "domain_question": "В какой области вы специализируетесь? Выберите одну или несколько.",
+      "marketing_consent": "Я согласен получать маркетинговые рассылки Plane",
+      "passwords_do_not_match": "Пароли не совпадают",
+      "passwords_match": "Пароли совпадают",
+      "seniority_levels": {
+        "individual_contributor": "Индивидуальный участник",
+        "senior_leader": "Старший руководитель",
+        "manager": "Менеджер",
+        "executive": "Топ-менеджер",
+        "freelancer": "Фрилансер",
+        "student": "Студент"
+      },
+      "domains": {
+        "engineering": "Разработка",
+        "product": "Продукт",
+        "marketing": "Маркетинг",
+        "sales": "Продажи",
+        "operations": "Операции",
+        "legal": "Юриспруденция",
+        "finance": "Финансы",
+        "human_resources": "HR",
+        "project": "Проект",
+        "other": "Другое"
+      },
+      "toast": {
+        "profile_setup_completed": "Настройка профиля завершена!",
+        "profile_setup_failed": "Не удалось настроить профиль. Попробуйте снова!",
+        "user_details_update_failed": "Не удалось обновить данные пользователя. Попробуйте снова!"
+      }
+    },
+    "role": {
+      "title": "Какая у вас роль?",
+      "description": "Давайте настроим Plane под ваш стиль работы.",
+      "select_one": "Выберите одно",
+      "options": {
+        "product_manager": "Продакт-менеджер",
+        "engineering_manager": "Руководитель разработки",
+        "designer": "Дизайнер",
+        "developer": "Разработчик",
+        "founder_executive": "Основатель/руководитель",
+        "operations_manager": "Операционный менеджер",
+        "others": "Другое"
+      }
+    },
+    "usecase": {
+      "title": "Что привело вас в Plane?",
+      "description": "Расскажите о своих целях и размере команды.",
+      "select_multiple": "Выберите одно или несколько",
+      "select_at_least_one": "Выберите хотя бы один вариант"
+    },
+    "workspace": {
+      "invited_title": "Вас пригласили!",
+      "invited_description": "Примите приглашения, чтобы работать вместе с командой.",
+      "continue_to_workspace": "Перейти в рабочее пространство",
+      "create_own": "Создать своё рабочее пространство",
+      "no_invitations_found": "Приглашения не найдены",
+      "join_or_create_title": "Присоединитесь по приглашению или создайте рабочее пространство",
+      "all_work_unified": "Вся ваша работа — в одном месте.",
+      "name_placeholder": "Введите название рабочего пространства",
+      "create_new": "Создать новое рабочее пространство",
+      "join_existing": "Присоединиться к существующему рабочему пространству",
+      "join_invited_workspaces": "Я хочу присоединиться к рабочим пространствам, в которые меня пригласили",
+      "creation_restricted_message": "У вас нет приглашений в рабочие пространства, а администратор экземпляра ограничил создание новых. Попросите владельца или администратора рабочего пространства пригласить вас, а затем вернитесь на этот экран, чтобы присоединиться."
+    },
+    "team": {
+      "invite_teammates": "Пригласите коллег",
+      "invite_teammates_description": "В Plane лучше всего работать вместе с командой. Пригласите коллег сейчас, чтобы раскрыть весь потенциал Plane.",
+      "add_another": "Добавить ещё",
+      "do_it_later": "Сделаю это позже",
+      "invalid_email": "Недопустимый адрес эл. почты",
+      "invalid_email_hint": "Это не похоже на адрес электронной почты.",
+      "toast": {
+        "invite_success_message": "Приглашения успешно отправлены."
+      }
+    },
+    "switch_account": {
+      "title": "Сменить аккаунт",
+      "switching": "Переключение...",
+      "description_prefix": "Если вы по ошибке зарегистрировались с адресом",
+      "description_suffix": ", вы можете переключиться здесь на другой аккаунт.",
+      "wrong_email": "Неверный адрес эл. почты?",
+      "toast": {
+        "sign_out_failed": "Не удалось выйти. Попробуйте снова."
+      }
+    },
+    "step_indicator": "Шаг {current} из {total}",
+    "finish": {
+      "toast": {
+        "title": "Ошибка",
+        "message": "Не удалось завершить onboarding. Попробуйте позже."
+      }
     }
   }
 }

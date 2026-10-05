@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -66,14 +67,14 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
         setToast({
           type: TOAST_TYPE.SUCCESS,
           title: t("toast.success"),
-          message: "Cycle created successfully.",
+          message: t("cycle_ui.create_success"),
         });
       })
       .catch((err) => {
         setToast({
           type: TOAST_TYPE.ERROR,
           title: t("toast.error"),
-          message: err?.detail ?? "Error in creating cycle. Please try again.",
+          message: err?.detail ?? t("cycle_ui.create_error"),
         });
       });
   };
@@ -87,14 +88,14 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
         setToast({
           type: TOAST_TYPE.SUCCESS,
           title: t("toast.success"),
-          message: "Cycle updated successfully.",
+          message: t("project_cycles.action.update.success.description"),
         });
       })
       .catch((err) => {
         setToast({
           type: TOAST_TYPE.ERROR,
           title: t("toast.error"),
-          message: err?.detail ?? "Error in updating cycle. Please try again.",
+          message: err?.detail ?? t("project_cycles.action.update.failed.description"),
         });
       });
   };
@@ -155,7 +156,7 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
       setToast({
         type: TOAST_TYPE.ERROR,
         title: t("toast.error"),
-        message: "You already have a cycle on the given dates, if you want to create a draft cycle, remove the dates.",
+        message: t("project_cycles.action.update.error.already_exists"),
       });
   };
 

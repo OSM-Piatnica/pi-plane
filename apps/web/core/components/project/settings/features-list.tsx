@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -93,14 +94,14 @@ export const ProjectFeaturesList = observer(function ProjectFeaturesList(props: 
     const updateProjectPromise = updateProject(workspaceSlug, projectId, settingsPayload);
 
     setPromiseToast(updateProjectPromise, {
-      loading: "Updating project feature...",
+      loading: t("project_components.features.updating"),
       success: {
         title: t("toast.success"),
-        message: () => "Project feature updated successfully.",
+        message: () => t("project_components.features.updated"),
       },
       error: {
         title: t("toast.error"),
-        message: () => "Something went wrong while updating project feature. Please try again.",
+        message: () => t("project_components.features.update_error"),
       },
     });
     void updateProjectPromise.then(() => {
@@ -120,7 +121,7 @@ export const ProjectFeaturesList = observer(function ProjectFeaturesList(props: 
                   <span className="flex items-center gap-2">
                     {t(featureItem.key)}
                     {featureItem.isPro && (
-                      <Tooltip tooltipContent="Pro feature" position="top">
+                      <Tooltip tooltipContent={t("project_components.features.pro_feature")} position="top">
                         <UpgradeBadge className="rounded-sm" />
                       </Tooltip>
                     )}

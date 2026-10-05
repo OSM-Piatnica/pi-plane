@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -126,7 +127,7 @@ export function GptAssistantPopover(props: Props) {
     setToast({
       type: TOAST_TYPE.ERROR,
       title: t("toast.error"),
-      message: "Please enter some task to get AI assistance.",
+      message: t("core_ui.gpt_enter_task"),
     });
   };
 

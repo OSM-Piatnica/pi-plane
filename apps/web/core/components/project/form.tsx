@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -105,8 +106,9 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
 
           const nameError = errorData.name?.includes("PROJECT_NAME_ALREADY_EXIST");
           const identifierError = errorData?.identifier?.includes("PROJECT_IDENTIFIER_ALREADY_EXIST");
+          const nameCharsError = errorData.name?.includes("PROJECT_NAME_CANNOT_CONTAIN_SPECIAL_CHARACTERS");
 
-          if (nameError || identifierError) {
+          if (nameError || identifierError || nameCharsError) {
             if (nameError) {
               setToast({
                 type: TOAST_TYPE.ERROR,
@@ -120,6 +122,14 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
                 type: TOAST_TYPE.ERROR,
                 title: t("toast.error"),
                 message: t("project_identifier_already_taken"),
+              });
+            }
+
+            if (nameCharsError) {
+              setToast({
+                type: TOAST_TYPE.ERROR,
+                title: t("toast.error"),
+                message: t("project_name_cannot_contain_special_characters"),
               });
             }
           } else {
@@ -171,7 +181,7 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
       setToast({
         type: TOAST_TYPE.ERROR,
         title: t("toast.error"),
-        message: error instanceof Error ? error.message : "Failed to process cover image",
+        message: error instanceof Error ? error.message : t("project_components.form.cover_image_error"),
       });
       setIsLoading(false);
       return;
@@ -194,7 +204,7 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="relative h-44 w-full">
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        <CoverImage src={coverImage} alt="Project cover image" className="h-44 w-full rounded-md" />
+        <CoverImage src={coverImage} alt={t("project_cover_image_alt")} className="h-44 w-full rounded-md" />
         <div className="absolute bottom-4 z-5 flex w-full items-end justify-between gap-3 px-4">
           <div className="flex flex-grow gap-3 truncate">
             <Controller
@@ -274,7 +284,7 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
               required: t("name_is_required"),
               maxLength: {
                 value: 255,
-                message: "Project name should be less than 255 characters",
+                message: t("project_components.form.name_max_length"),
               },
             }}
             render={({ field: { value, onChange, ref } }) => (

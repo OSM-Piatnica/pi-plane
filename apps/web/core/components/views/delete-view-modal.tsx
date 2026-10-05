@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -47,13 +48,13 @@ export const DeleteProjectViewModal = observer(function DeleteProjectViewModal(p
       setToast({
         type: TOAST_TYPE.SUCCESS,
         title: t("toast.success"),
-        message: "View deleted successfully.",
+        message: t("project_components.views.deleted"),
       });
     } catch (_error) {
       setToast({
         type: TOAST_TYPE.ERROR,
         title: t("toast.error"),
-        message: "View could not be deleted. Please try again.",
+        message: t("project_components.views.delete_error"),
       });
     }
     setIsDeleteLoading(false);

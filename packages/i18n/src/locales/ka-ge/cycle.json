@@ -25,17 +25,48 @@
   "active_cycle_analytics": {
     "empty_state": {
       "progress": {
-        "title": "Add work items to the cycle to view it's\n progress"
+        "title": "ციკლს დაამატეთ სამუშაო ელემენტები მისი\n პროგრესის სანახავად"
       },
       "priority": {
-        "title": "Observe high priority work items tackled in\n the cycle at a glance."
+        "title": "ერთი შეხედვით ნახეთ ციკლში შესრულებული\n მაღალი პრიორიტეტის სამუშაო ელემენტები."
       },
       "assignee": {
-        "title": "Add assignees to work items to see a\n breakdown of work by assignees."
+        "title": "სამუშაო ელემენტებს მიუთითეთ პასუხისმგებელი პირები, რათა\n ნახოთ სამუშაოს განაწილება მათ მიხედვით."
       },
       "label": {
-        "title": "Add labels to work items to see the\n breakdown of work by labels."
+        "title": "სამუშაო ელემენტებს დაამატეთ ჭდეები, რათა\n ნახოთ სამუშაოს განაწილება ჭდეების მიხედვით."
       }
     }
+  },
+  "cycle_ui": {
+    "user_avatar_alt": "მომხმარებელი",
+    "no_labels": "იარლიყების გარეშე",
+    "pending_points": "მოლოდინში მყოფი ქულები - {count}",
+    "pending_work_items": "მოლოდინში მყოფი სამუშაო ელემენტები - {count}",
+    "closed_progress": "{closed}/{total} {label} დახურულია",
+    "burn_down": "დარჩენილი სამუშაოს დიაგრამა",
+    "burn_up": "შესრულებული სამუშაოს დიაგრამა",
+    "status_filter_title": "ციკლის სტატუსი",
+    "custom": "მორგებული",
+    "archive_success_title": "დაარქივება წარმატებულია",
+    "archive_success_message": "თქვენი არქივები იხილეთ პროექტის არქივებში.",
+    "archive_error": "ციკლი ვერ დაარქივდა. გთხოვთ, სცადოთ ხელახლა.",
+    "archive_modal_title": "ციკლის დაარქივება: {name}",
+    "archive_modal_description": "დარწმუნებული ხართ, რომ გსურთ ციკლის დაარქივება? ყველა თქვენი არქივი მოგვიანებით აღდგენადია.",
+    "delete_modal_title": "ციკლის წაშლა",
+    "delete_modal_description": "დარწმუნებული ხართ, რომ გსურთ ციკლის „{name}“ წაშლა? ყველა დაკავშირებული მონაცემი სამუდამოდ წაიშლება. ეს მოქმედება ვერ გაუქმდება.",
+    "create_success": "ციკლი წარმატებით შეიქმნა.",
+    "create_error": "ციკლი ვერ შეიქმნა. გთხოვთ, სცადოთ ხელახლა.",
+    "transfer_title": "სამუშაო ელემენტების გადატანა",
+    "transfer_search_placeholder": "ციკლის ძიება...",
+    "transfer_success": "სამუშაო ელემენტები წარმატებით გადატანილია",
+    "transfer_error": "სამუშაო ელემენტების გადატანა ვერ მოხერხდა. გთხოვთ, სცადოთ ხელახლა.",
+    "transfer_fetch_error": "ციკლის დეტალების მიღება ვერ მოხერხდა",
+    "no_current_cycle": "თქვენ არ გაქვთ მიმდინარე ციკლი. შექმენით ერთი სამუშაო ელემენტების გადასატანად.",
+    "completed_not_editable": "დასრულებული ციკლები არ რედაქტირდება.",
+    "work_items_in_cycle": "სამუშაო ელემენტები ამ ციკლის ფარგლებში: {count}",
+    "not_found_title": "ციკლი არ არსებობს",
+    "not_found_description": "ციკლი, რომელსაც ეძებთ, არ არსებობს ან წაშლილია.",
+    "view_other_cycles": "სხვა ციკლების ნახვა"
   }
 }

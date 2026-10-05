@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -60,8 +61,8 @@ export const ModuleQuickActions = observer(function ModuleQuickActions(props: Pr
     copyUrlToClipboard(moduleLink).then(() => {
       setToast({
         type: TOAST_TYPE.SUCCESS,
-        title: "Link Copied!",
-        message: "Module link copied to clipboard.",
+        title: t("common.link_copied"),
+        message: t("entity.link_copied_to_clipboard", { entity: t("common.module") }),
       });
     });
   const handleOpenInNewTab = () => window.open(`/${moduleLink}`, "_blank");
@@ -71,15 +72,15 @@ export const ModuleQuickActions = observer(function ModuleQuickActions(props: Pr
       await restoreModule(workspaceSlug, projectId, moduleId);
       setToast({
         type: TOAST_TYPE.SUCCESS,
-        title: "Restore success",
-        message: "Your module can be found in project modules.",
+        title: t("issue.restore.success.title"),
+        message: t("module_ui.restore_success_message"),
       });
       router.push(`/${workspaceSlug}/projects/${projectId}/archives/modules`);
     } catch (_error) {
       setToast({
         type: TOAST_TYPE.ERROR,
         title: t("toast.error"),
-        message: "Module could not be restored. Please try again.",
+        message: t("module_ui.restore_error"),
       });
     }
   };

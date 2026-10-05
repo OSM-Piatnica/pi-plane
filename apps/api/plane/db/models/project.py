@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -144,6 +145,10 @@ class Project(BaseModel):
         return f"{self.name} <{self.workspace.name}>"
 
     FORBIDDEN_IDENTIFIER_CHARS_PATTERN = r"^.*[&+,:;$^}{*=?@#|'<>.()%!-].*$"
+    # Project names may contain "+", "-", "&", ",", ".", parentheses, "@", "#", "!", "?" and ":" (unlike identifiers)
+    FORBIDDEN_NAME_CHARS_PATTERN = r"^.*[;$^}{*=|'<>%].*$"
+    # Human-readable list of the characters blocked by FORBIDDEN_NAME_CHARS_PATTERN, used in error messages
+    FORBIDDEN_NAME_CHARS_DISPLAY = "; $ ^ { } * = | ' < > %"
 
     class Meta:
         unique_together = [

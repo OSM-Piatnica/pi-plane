@@ -23,7 +23,7 @@
         "version_history": {
           "label": "ვერსიის ისტორია",
           "current_version": "მიმდინარე ვერსია",
-          "highlight_changes": "Highlight changes"
+          "highlight_changes": "ცვლილებების გამოკვეთა"
         }
       },
       "assets": {
@@ -35,41 +35,41 @@
         }
       },
       "comments": {
-        "label": "Comments",
+        "label": "კომენტარები",
         "empty_state": {
-          "title": "No comments",
-          "description": "Add comments to see them here."
+          "title": "კომენტარები არ არის",
+          "description": "დაამატეთ კომენტარები, რათა აქ გამოჩნდეს."
         }
       }
     },
     "toasts": {
       "errors": {
-        "wrong_name": "The sticky name cannot be longer than 100 characters.",
-        "already_exists": "There already exists a sticky with no description"
+        "wrong_name": "ჩანიშვნის სახელი არ შეიძლება 100 სიმბოლოზე გრძელი იყოს.",
+        "already_exists": "უკვე არსებობს ჩანიშვნა აღწერის გარეშე"
       },
       "created": {
-        "title": "Sticky created",
-        "message": "The sticky has been successfully created"
+        "title": "ჩანიშვნა შეიქმნა",
+        "message": "ჩანიშვნა წარმატებით შეიქმნა"
       },
       "not_created": {
-        "title": "Sticky not created",
-        "message": "The sticky could not be created"
+        "title": "ჩანიშვნა არ შეიქმნა",
+        "message": "ჩანიშვნის შექმნა ვერ მოხერხდა"
       },
       "updated": {
-        "title": "Sticky updated",
-        "message": "The sticky has been successfully updated"
+        "title": "ჩანიშვნა განახლდა",
+        "message": "ჩანიშვნა წარმატებით განახლდა"
       },
       "not_updated": {
-        "title": "Sticky not updated",
-        "message": "The sticky could not be updated"
+        "title": "ჩანიშვნა არ განახლდა",
+        "message": "ჩანიშვნის განახლება ვერ მოხერხდა"
       },
       "removed": {
-        "title": "Sticky removed",
-        "message": "The sticky has been successfully removed"
+        "title": "ჩანიშვნა წაიშალა",
+        "message": "ჩანიშვნა წარმატებით წაიშალა"
       },
       "not_removed": {
-        "title": "Sticky not removed",
-        "message": "The sticky could not be removed"
+        "title": "ჩანიშვნა არ წაიშალა",
+        "message": "ჩანიშვნის წაშლა ვერ მოხერხდა"
       }
     },
     "open_button": "ნავიგაციის პანელის გახსნა",
@@ -79,37 +79,133 @@
   "page_actions": {
     "move_page": {
       "submit_button": {
-        "default": "Move",
-        "loading": "Moving"
+        "default": "გადატანა",
+        "loading": "გადადის"
       },
-      "cannot_move_to_teamspace": "Private and shared pages cannot be moved to a teamspace.",
+      "cannot_move_to_teamspace": "პირადი და გაზიარებული გვერდების გუნდის სივრცეში გადატანა შეუძლებელია.",
       "placeholders": {
-        "workspace_to_all": "Search for projects and teamspaces",
-        "workspace_to_project": "Search for projects",
-        "project_to_all": "Search for projects and teamspaces",
-        "project_to_project": "Search for projects",
-        "project_to_all_with_wiki": "Search for wiki collections, projects, and teamspaces",
-        "project_to_project_with_wiki": "Search for wiki collections and projects"
+        "workspace_to_all": "პროექტებისა და გუნდის სივრცეების ძიება",
+        "workspace_to_project": "პროექტების ძიება",
+        "project_to_all": "პროექტებისა და გუნდის სივრცეების ძიება",
+        "project_to_project": "პროექტების ძიება",
+        "project_to_all_with_wiki": "ვიკის კოლექციების, პროექტებისა და გუნდის სივრცეების ძიება",
+        "project_to_project_with_wiki": "ვიკის კოლექციებისა და პროექტების ძიება"
       },
       "toasts": {
         "success": {
-          "title": "Success!",
-          "message": "Page moved successfully."
+          "title": "წარმატებით შესრულდა!",
+          "message": "გვერდი წარმატებით გადავიდა."
         },
         "error": {
-          "title": "Error!",
-          "message": "Page could not be moved. Please try again later."
+          "title": "შეცდომა!",
+          "message": "გვერდის გადატანა ვერ მოხერხდა. სცადეთ მოგვიანებით."
         },
         "collection_error": {
-          "title": "Moved to wiki",
-          "message": "Page was moved to wiki, but could not be added to the selected collection. It remains in General."
+          "title": "გადავიდა ვიკიში",
+          "message": "გვერდი ვიკიში გადავიდა, თუმცა არჩეულ კოლექციაში მისი დამატება ვერ მოხერხდა. იგი რჩება ზოგად განყოფილებაში."
         }
       }
     },
     "remove_from_collection": {
-      "label": "Remove from collection",
-      "success_message": "Page removed from collection.",
-      "error_message": "Page could not be removed from the collection. Please try again."
+      "label": "კოლექციიდან ამოღება",
+      "success_message": "გვერდი ამოღებულია კოლექციიდან.",
+      "error_message": "გვერდის კოლექციიდან ამოღება ვერ მოხერხდა. სცადეთ ხელახლა."
+    }
+  },
+  "page_ui": {
+    "add_page": "გვერდის დამატება",
+    "ai": {
+      "add_to_next_line": "შემდეგ ხაზზე დამატება",
+      "answering": "AI პასუხობს...",
+      "prompt_placeholder": "უთხარით AI-ს, რა გააკეთოს...",
+      "regenerate_response": "პასუხის ხელახლა გენერირება",
+      "replace_selection": "მონიშნულის ჩანაცვლება"
+    },
+    "content_limit_banner": {
+      "dismiss": "შინაარსის ლიმიტის გაფრთხილების დახურვა",
+      "message": "შინაარსის ლიმიტი მიღწეულია და ცოცხალი სინქრონიზაცია გამორთულია. სინქრონიზაციის გასაგრძელებლად შექმენით ახალი გვერდი ან გამოიყენეთ ჩადგმული გვერდები."
+    },
+    "create_modal": {
+      "creating": "იქმნება",
+      "submit": "გვერდის შექმნა",
+      "title": "გვერდის შექმნა"
+    },
+    "delete_modal": {
+      "content_prefix": "დარწმუნებული ხართ, რომ გსურთ გვერდის წაშლა",
+      "content_suffix": "? გვერდი სამუდამოდ წაიშლება. ამ მოქმედების გაუქმება შეუძლებელია.",
+      "error": "გვერდის წაშლა ვერ მოხერხდა. გთხოვთ, სცადოთ ხელახლა.",
+      "success": "გვერდი წარმატებით წაიშალა.",
+      "title": "გვერდის წაშლა"
+    },
+    "editor": {
+      "background_colors": "ფონის ფერები",
+      "full_width": "სრული სიგანე",
+      "markdown_copied": "Markdown დაკოპირდა ბუფერში.",
+      "sticky_toolbar": "მუდმივი ხელსაწყოთა პანელი",
+      "text_colors": "ტექსტის ფერები"
+    },
+    "export_modal": {
+      "content_everything": "ყველაფერი",
+      "content_no_images": "სურათების გარეშე",
+      "error": "გვერდის ექსპორტი ვერ მოხერხდა. გთხოვთ, სცადოთ მოგვიანებით.",
+      "export_format": "ექსპორტის ფორმატი",
+      "exporting": "ექსპორტირდება",
+      "include_content": "შინაარსის ჩართვა",
+      "page_format": "გვერდის ფორმატი",
+      "success": "გვერდი წარმატებით ექსპორტირდა.",
+      "title": "გვერდის ექსპორტი"
+    },
+    "hooks": {
+      "work_item_update_error": "სამუშაო ერთეულის განახლებისას მოხდა შეცდომა"
+    },
+    "lock": {
+      "locked": "დაბლოკილია",
+      "unlocked": "განბლოკილია"
+    },
+    "not_found": {
+      "description": "გვერდი, რომელზეც წვდომას ცდილობთ, არ არსებობს ან მისი ნახვის უფლება არ გაქვთ.",
+      "title": "გვერდი ვერ მოიძებნა",
+      "view_other_pages": "სხვა გვერდების ნახვა"
+    },
+    "offline": {
+      "description": "შეგიძლიათ ცვლილებების გაგრძელება. ისინი სინქრონიზდება, როცა ისევ ონლაინ იქნებით.",
+      "heading": "თქვენ ოფლაინში ხართ.",
+      "label": "ოფლაინი"
+    },
+    "operations": {
+      "add_favorite_error": "გვერდის რჩეულებში დამატება ვერ მოხერხდა. გთხოვთ, სცადოთ მოგვიანებით.",
+      "add_favorite_success": "გვერდი დაემატა რჩეულებს.",
+      "archive_error": "გვერდის დაარქივება ვერ მოხერხდა. გთხოვთ, სცადოთ მოგვიანებით.",
+      "archive_success": "გვერდი წარმატებით დაარქივდა.",
+      "duplicate_error": "გვერდის დუბლირება ვერ მოხერხდა. გთხოვთ, სცადოთ მოგვიანებით.",
+      "duplicate_success": "გვერდი წარმატებით დუბლირდა.",
+      "link_copied": "ბმული დაკოპირდა!",
+      "link_copied_message": "გვერდის ბმული დაკოპირდა ბუფერში.",
+      "lock_error": "გვერდის დაბლოკვა ვერ მოხერხდა. გთხოვთ, სცადოთ მოგვიანებით.",
+      "lock_success": "გვერდი წარმატებით დაიბლოკა.",
+      "remove_favorite_error": "გვერდის რჩეულებიდან ამოშლა ვერ მოხერხდა. გთხოვთ, სცადოთ მოგვიანებით.",
+      "remove_favorite_success": "გვერდი ამოიშალა რჩეულებიდან.",
+      "restore_error": "გვერდის აღდგენა ვერ მოხერხდა. გთხოვთ, სცადოთ მოგვიანებით.",
+      "restore_success": "გვერდი წარმატებით აღდგა.",
+      "unlock_error": "გვერდის განბლოკვა ვერ მოხერხდა. გთხოვთ, სცადოთ მოგვიანებით.",
+      "unlock_success": "გვერდი წარმატებით განიბლოკა."
+    },
+    "realtime": {
+      "deleted": "გვერდი წაიშალა",
+      "deleted_by": "გვერდი წაშალა {name}-მა",
+      "load_failed": "გვერდის ჩატვირთვა ვერ მოხერხდა",
+      "save_failed": "გვერდის შენახვა ვერ მოხერხდა"
+    },
+    "search_pages": "გვერდების ძიება",
+    "version": {
+      "error_description": "ვერსიის ჩატვირთვა ვერ მოხერხდა, გთხოვთ, სცადოთ ხელახლა.",
+      "error_title": "რაღაც შეცდომა მოხდა!",
+      "loading_details": "იტვირთება ვერსიის დეტალები",
+      "restore_failed": "გვერდის ვერსიის აღდგენა ვერ მოხერხდა.",
+      "restored": "გვერდის ვერსია აღდგა.",
+      "restoring": "აღდგება",
+      "try_again": "ხელახლა ცდა",
+      "view_only": "მხოლოდ ნახვა"
     }
   }
 }

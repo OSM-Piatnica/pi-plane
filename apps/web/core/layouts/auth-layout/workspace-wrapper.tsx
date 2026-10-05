@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -135,7 +136,7 @@ export const WorkspaceAuthWrapper = observer(function WorkspaceAuthWrapper(props
       setToast({
         type: TOAST_TYPE.ERROR,
         title: t("toast.error"),
-        message: "Failed to sign out. Please try again.",
+        message: t("core_ui.sign_out_failed"),
       })
     );
   };

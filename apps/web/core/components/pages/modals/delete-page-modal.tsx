@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -56,7 +57,7 @@ export const DeletePageModal = observer(function DeletePageModal(props: TConfirm
         setToast({
           type: TOAST_TYPE.SUCCESS,
           title: t("toast.success"),
-          message: "Page deleted successfully.",
+          message: t("page_ui.delete_modal.success"),
         });
 
         if (routePageId) {
@@ -67,7 +68,7 @@ export const DeletePageModal = observer(function DeletePageModal(props: TConfirm
         setToast({
           type: TOAST_TYPE.ERROR,
           title: t("toast.error"),
-          message: "Page could not be deleted. Please try again.",
+          message: t("page_ui.delete_modal.error"),
         });
       });
 
@@ -82,12 +83,12 @@ export const DeletePageModal = observer(function DeletePageModal(props: TConfirm
       handleSubmit={handleDelete}
       isSubmitting={isDeleting}
       isOpen={isOpen}
-      title="Delete page"
+      title={t("page_ui.delete_modal.title")}
       content={
         <>
-          Are you sure you want to delete page-{" "}
-          <span className="font-medium break-words break-all text-primary">{getPageName(name)}</span> ? The Page will be
-          deleted permanently. This action cannot be undone.
+          {t("page_ui.delete_modal.content_prefix")}{" "}
+          <span className="font-medium break-words break-all text-primary">{getPageName(name)}</span>
+          {t("page_ui.delete_modal.content_suffix")}
         </>
       }
     />

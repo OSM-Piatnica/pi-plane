@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -43,14 +44,14 @@ export const ProjectSettingsFeatureControlItem = observer(function ProjectSettin
     const updateProjectPromise = updateProject(workspaceSlug, projectId, settingsPayload);
 
     setPromiseToast(updateProjectPromise, {
-      loading: "Updating project feature...",
+      loading: t("project_components.features.updating"),
       success: {
         title: t("toast.success"),
-        message: () => "Project feature updated successfully.",
+        message: () => t("project_components.features.updated"),
       },
       error: {
         title: t("toast.error"),
-        message: () => "Something went wrong while updating project feature. Please try again.",
+        message: () => t("project_components.features.update_error"),
       },
     });
     void updateProjectPromise.then(() => {

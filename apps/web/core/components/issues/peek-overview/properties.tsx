@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
- * Copyright (c) 2026 Okręgowa Spółdzielnia Mleczarska w Piątnicy
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
@@ -213,7 +213,7 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
               className="group w-full grow"
               buttonContainerClassName="w-full text-left h-7.5"
               buttonClassName={`text-body-xs-medium ${issue?.estimate_point !== undefined ? "" : "text-placeholder"}`}
-              placeholder="None"
+              placeholder={t("none")}
               hideIcon
               dropdownArrow
               dropdownArrowClassName="h-3.5 w-3.5 hidden group-hover:inline"

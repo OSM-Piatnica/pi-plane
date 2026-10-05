@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -44,13 +45,13 @@ export function DeleteWebhookModal(props: IDeleteWebhook) {
       setToast({
         type: TOAST_TYPE.SUCCESS,
         title: t("toast.success"),
-        message: "Webhook deleted successfully.",
+        message: t("project_components.webhooks.deleted"),
       });
     } catch (_error) {
       setToast({
         type: TOAST_TYPE.ERROR,
         title: t("toast.error"),
-        message: "Webhook could not be deleted. Please try again.",
+        message: t("project_components.webhooks.delete_error"),
       });
     }
     setIsDeleting(false);
@@ -62,13 +63,8 @@ export function DeleteWebhookModal(props: IDeleteWebhook) {
       handleSubmit={handleDelete}
       isSubmitting={isDeleting}
       isOpen={isOpen}
-      title="Delete webhook"
-      content={
-        <>
-          Are you sure you want to delete this webhook? Future events will not be delivered to this webhook. This action
-          cannot be undone.
-        </>
-      }
+      title={t("project_components.webhooks.delete_title")}
+      content={<>{t("project_components.webhooks.delete_description")}</>}
     />
   );
 }

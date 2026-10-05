@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -60,14 +61,14 @@ export const ThemeSwitcher = observer(function ThemeSwitcher(props: {
 
         const updatePromise = updateUserTheme({ theme: themeOption.value });
         setPromiseToast(updatePromise, {
-          loading: "Updating theme...",
+          loading: t("core_ui.theme.updating"),
           success: {
-            title: "Theme updated",
-            message: () => "Reloading to apply changes...",
+            title: t("core_ui.theme.updated"),
+            message: () => t("core_ui.theme.reloading"),
           },
           error: {
             title: t("toast.error"),
-            message: () => "Failed to update theme. Please try again.",
+            message: () => t("core_ui.theme.update_failed"),
           },
         });
         // Wait for the promise to resolve, then reload after showing toast

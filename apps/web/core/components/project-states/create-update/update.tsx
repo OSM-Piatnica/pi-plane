@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -38,7 +39,7 @@ export const StateUpdate = observer(function StateUpdate(props: TStateUpdate) {
       setToast({
         type: TOAST_TYPE.SUCCESS,
         title: t("toast.success"),
-        message: "State updated successfully.",
+        message: t("project_components.states.updated"),
       });
       handleClose();
       return { status: "success" };
@@ -48,14 +49,14 @@ export const StateUpdate = observer(function StateUpdate(props: TStateUpdate) {
         setToast({
           type: TOAST_TYPE.ERROR,
           title: t("toast.error"),
-          message: "Another state exists with the same name. Please try again with another name.",
+          message: t("project_components.states.update_name_exists"),
         });
         return { status: "already_exists" };
       } else {
         setToast({
           type: TOAST_TYPE.ERROR,
           title: t("toast.error"),
-          message: "State could not be updated. Please try again.",
+          message: t("project_components.states.update_error"),
         });
         return { status: "error" };
       }

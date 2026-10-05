@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -143,8 +144,8 @@ export const ProjectLevelWorkItemFiltersHOC = observer(function ProjectLevelWork
       if (!viewDetails) {
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "We couldn't find the view",
-          message: "The view you're trying to update doesn't exist.",
+          title: t("project_components.view_filters.view_not_found_title"),
+          message: t("project_components.view_filters.view_not_found_message"),
         });
 
         return;
@@ -157,18 +158,18 @@ export const ProjectLevelWorkItemFiltersHOC = observer(function ProjectLevelWork
           setToast({
             type: TOAST_TYPE.SUCCESS,
             title: t("toast.success"),
-            message: "Your view has been updated successfully.",
+            message: t("project_components.view_filters.view_updated"),
           });
         })
         .catch(() => {
           setToast({
             type: TOAST_TYPE.ERROR,
             title: t("toast.error"),
-            message: "Your view could not be updated. Please try again.",
+            message: t("project_components.view_filters.view_update_error"),
           });
         });
     },
-    [viewDetails, updateView, workspaceSlug, projectId, getViewFilterPayload]
+    [viewDetails, updateView, workspaceSlug, projectId, getViewFilterPayload, t]
   );
 
   const saveViewOptions = useMemo(

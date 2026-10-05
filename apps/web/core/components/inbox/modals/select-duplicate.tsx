@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -141,7 +142,7 @@ export function SelectDuplicateInboxIssueModal(props: Props) {
           <input
             type="text"
             className="h-12 w-full border-0 bg-transparent pr-4 pl-11 text-primary outline-none focus:ring-0 sm:text-13"
-            placeholder="Search..."
+            placeholder={t("inbox_ui.search_placeholder")}
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
