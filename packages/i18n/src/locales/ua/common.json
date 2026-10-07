@@ -515,7 +515,8 @@
     "workspace_level": "Рівень робочого простору",
     "order_by": {
       "label": "Сортувати за",
-      "manual": "Вручну — Ранг",
+      "direction": "Напрямок",
+      "manual": "Вручну",
       "last_created": "Останні створені",
       "last_updated": "Останні оновлені",
       "start_date": "Дата початку",

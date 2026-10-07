@@ -515,7 +515,8 @@
     "workspace_level": "Tingkat ruang kerja",
     "order_by": {
       "label": "Urutkan berdasarkan",
-      "manual": "Manual - Peringkat",
+      "direction": "Arah",
+      "manual": "Manual",
       "last_created": "Terakhir dibuat",
       "last_updated": "Terakhir diperbarui",
       "start_date": "Tanggal mulai",

@@ -515,7 +515,8 @@
     "workspace_level": "Niveau espace de travail",
     "order_by": {
       "label": "Trier par",
-      "manual": "Manuel - Classement",
+      "direction": "Direction",
+      "manual": "Manuel",
       "last_created": "Dernier créé",
       "last_updated": "Dernière mise à jour",
       "start_date": "Date de début",

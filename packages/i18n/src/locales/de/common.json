@@ -515,7 +515,8 @@
     "workspace_level": "Arbeitsbereichsebene",
     "order_by": {
       "label": "Sortieren nach",
-      "manual": "Manuell - Rang",
+      "direction": "Richtung",
+      "manual": "Manuell",
       "last_created": "Zuletzt erstellt",
       "last_updated": "Zuletzt aktualisiert",
       "start_date": "Startdatum",
