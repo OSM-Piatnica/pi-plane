@@ -984,5 +984,17 @@
         "message": "Falha ao concluir a integração. Tente novamente mais tarde."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Os itens selecionados sempre permanecerão visíveis na barra lateral. Você ainda pode encontrar os outros a qualquer momento no menu Mais. Essas alterações são pessoais e não afetarão mais ninguém no seu espaço de trabalho.",
+    "accordion_description": "As abas de recursos aparecerão como itens aninhados sob o projeto e funcionarão como um acordeão.",
+    "tabbed_description": "As abas de recursos aparecerão como abas horizontais dentro de um projeto."
+  },
+  "calendar_ui": {
+    "week_view": "Visualização semanal",
+    "month_layout": "Layout mensal",
+    "week_layout": "Layout semanal",
+    "after": "Depois",
+    "before": "Antes"
   }
 }

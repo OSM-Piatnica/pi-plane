@@ -984,5 +984,17 @@
         "message": "無法完成新手引導，請稍後再試。"
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "所選項目將一律顯示在側邊欄中。您仍可隨時從「更多」選單找到其他項目。這些變更僅限您個人，不會影響工作區中的其他人。",
+    "accordion_description": "功能分頁會以專案下的巢狀項目顯示，並以手風琴方式運作。",
+    "tabbed_description": "功能分頁會以水平分頁顯示在專案內。"
+  },
+  "calendar_ui": {
+    "week_view": "週檢視",
+    "month_layout": "月份版面",
+    "week_layout": "週版面",
+    "after": "之後",
+    "before": "之前"
   }
 }

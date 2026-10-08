@@ -984,5 +984,17 @@
         "message": "Không thể hoàn tất quá trình làm quen. Vui lòng thử lại sau."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Các mục đã chọn sẽ luôn hiển thị trên thanh bên của bạn. Bạn vẫn có thể tìm các mục còn lại bất cứ lúc nào từ menu Thêm. Những thay đổi này là cá nhân và sẽ không ảnh hưởng đến bất kỳ ai khác trong không gian làm việc của bạn.",
+    "accordion_description": "Các tab tính năng sẽ hiển thị dưới dạng mục lồng nhau bên dưới dự án và hoạt động như một accordion.",
+    "tabbed_description": "Các tab tính năng sẽ hiển thị dưới dạng tab ngang bên trong dự án."
+  },
+  "calendar_ui": {
+    "week_view": "Chế độ xem tuần",
+    "month_layout": "Bố cục tháng",
+    "week_layout": "Bố cục tuần",
+    "after": "Sau",
+    "before": "Trước"
   }
 }

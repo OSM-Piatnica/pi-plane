@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -22,6 +23,7 @@ import { cn, renderFormattedDate } from "@plane/utils";
 // helpers
 // hooks
 import { useUserProfile } from "@/hooks/store/user";
+import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 import { useDropdown } from "@/hooks/use-dropdown";
 // components
 import { DropdownButton } from "./buttons";
@@ -111,6 +113,7 @@ export const DateRangeDropdown = observer(function DateRangeDropdown(props: Prop
   // hooks
   const { data } = useUserProfile();
   const startOfWeek = data?.start_of_the_week;
+  const { dateFnsLocale } = useCalendarLocale();
   // refs
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   // popper-js refs
@@ -280,6 +283,7 @@ export const DateRangeDropdown = observer(function DateRangeDropdown(props: Prop
           showOutsideDays
           fixedWeeks
           weekStartsOn={startOfWeek}
+          locale={dateFnsLocale}
           initialFocus
         />
       </div>

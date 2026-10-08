@@ -984,5 +984,17 @@
         "message": "Nie udało się zakończyć onboardingu. Spróbuj ponownie później."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Wybrane elementy zawsze pozostaną widoczne na pasku bocznym. Pozostałe możesz w każdej chwili znaleźć w menu Więcej. Te zmiany dotyczą tylko Ciebie i nie wpłyną na nikogo innego w Twojej przestrzeni roboczej.",
+    "accordion_description": "Karty funkcji będą wyświetlane jako zagnieżdżone elementy pod projektem i działają jak akordeon.",
+    "tabbed_description": "Karty funkcji będą wyświetlane jako poziome zakładki wewnątrz projektu."
+  },
+  "calendar_ui": {
+    "week_view": "Widok tygodnia",
+    "month_layout": "Układ miesięczny",
+    "week_layout": "Układ tygodniowy",
+    "after": "Po",
+    "before": "Przed"
   }
 }

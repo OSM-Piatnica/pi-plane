@@ -11,7 +11,13 @@ import { Controller, useForm } from "react-hook-form";
 
 import { Disclosure } from "@headlessui/react";
 // plane imports
-import { ROLE, EUserPermissions, EUserPermissionsLevel, MEMBER_TRACKER_ELEMENTS } from "@plane/constants";
+import {
+  ROLE,
+  getRoleI18nKey,
+  EUserPermissions,
+  EUserPermissionsLevel,
+  MEMBER_TRACKER_ELEMENTS,
+} from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { TrashIcon, SuspendedUserIcon } from "@plane/propel/icons";
 import { Pill, EPillVariant, EPillSize } from "@plane/propel/pill";
@@ -147,7 +153,7 @@ export const AccountTypeColumn = observer(function AccountTypeColumn(props: Acco
         </div>
       ) : isRoleNonEditable ? (
         <div className="flex w-32">
-          <span>{ROLE[rowData.role]}</span>
+          <span>{t(getRoleI18nKey(rowData.role))}</span>
         </div>
       ) : (
         <Controller
@@ -176,7 +182,7 @@ export const AccountTypeColumn = observer(function AccountTypeColumn(props: Acco
               }}
               label={
                 <div className="flex">
-                  <span>{ROLE[rowData.role]}</span>
+                  <span>{t(getRoleI18nKey(rowData.role))}</span>
                 </div>
               }
               buttonClassName={`!px-0 !justify-start hover:bg-surface-1 ${errors.role ? "border-danger-strong" : "border-none"}`}
@@ -185,7 +191,7 @@ export const AccountTypeColumn = observer(function AccountTypeColumn(props: Acco
             >
               {Object.keys(ROLE).map((item) => (
                 <CustomSelect.Option key={item} value={item as unknown as EUserPermissions}>
-                  {ROLE[item as unknown as keyof typeof ROLE]}
+                  {t(getRoleI18nKey(item))}
                 </CustomSelect.Option>
               ))}
             </CustomSelect>

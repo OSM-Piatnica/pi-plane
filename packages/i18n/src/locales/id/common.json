@@ -984,5 +984,17 @@
         "message": "Gagal menyelesaikan onboarding. Silakan coba lagi nanti."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Item yang dipilih akan selalu terlihat di bilah sisi Anda. Anda tetap dapat menemukan item lainnya kapan saja dari menu Lainnya. Perubahan ini bersifat pribadi dan tidak akan memengaruhi siapa pun di ruang kerja Anda.",
+    "accordion_description": "Tab fitur akan muncul sebagai item bersarang di bawah proyek dan berfungsi sebagai akordeon.",
+    "tabbed_description": "Tab fitur akan muncul sebagai tab horizontal di dalam proyek."
+  },
+  "calendar_ui": {
+    "week_view": "Tampilan minggu",
+    "month_layout": "Tata letak bulan",
+    "week_layout": "Tata letak minggu",
+    "after": "Setelah",
+    "before": "Sebelum"
   }
 }

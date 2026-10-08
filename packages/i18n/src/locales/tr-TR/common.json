@@ -984,5 +984,17 @@
         "message": "Onboarding tamamlanamadı. Lütfen daha sonra tekrar dene."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Seçilen öğeler kenar çubuğunuzda her zaman görünür kalır. Diğerlerini istediğiniz zaman Daha Fazla menüsünden bulabilirsiniz. Bu değişiklikler size özeldir ve çalışma alanınızdaki başka kimseyi etkilemez.",
+    "accordion_description": "Özellik sekmeleri projenin altında iç içe öğeler olarak görünür ve akordeon gibi çalışır.",
+    "tabbed_description": "Özellik sekmeleri bir projenin içinde yatay sekmeler olarak görünür."
+  },
+  "calendar_ui": {
+    "week_view": "Hafta görünümü",
+    "month_layout": "Aylık düzen",
+    "week_layout": "Haftalık düzen",
+    "after": "Sonra",
+    "before": "Önce"
   }
 }

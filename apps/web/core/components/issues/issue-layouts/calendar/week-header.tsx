@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,6 +12,7 @@ import { DAYS_LIST } from "@/constants/calendar";
 // helpers
 // hooks
 import { useUserProfile } from "@/hooks/store/user";
+import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 
 type Props = {
   isLoading: boolean;
@@ -21,10 +23,11 @@ export const CalendarWeekHeader = observer(function CalendarWeekHeader(props: Pr
   const { isLoading, showWeekends } = props;
   // hooks
   const { data } = useUserProfile();
+  const { getWeekdayName } = useCalendarLocale();
   const startOfWeek = data?.start_of_the_week;
 
   // derived
-  const orderedDays = getOrderedDays(Object.values(DAYS_LIST), (item) => item.value, startOfWeek);
+  const orderedDays = getOrderedDays(DAYS_LIST, (item) => item.value, startOfWeek);
 
   return (
     <div
@@ -40,8 +43,8 @@ export const CalendarWeekHeader = observer(function CalendarWeekHeader(props: Pr
           return null;
 
         return (
-          <div key={day.shortTitle} className="flex h-11 items-center justify-center bg-layer-1 px-4 md:justify-end">
-            {day.shortTitle}
+          <div key={day.value} className="flex h-11 items-center justify-center bg-layer-1 px-4 md:justify-end">
+            {getWeekdayName(day.value, "short")}
           </div>
         );
       })}

@@ -984,5 +984,17 @@
         "message": "Error al finalizar la incorporación. Inténtalo de nuevo más tarde."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Los elementos seleccionados siempre permanecerán visibles en tu barra lateral. Puedes encontrar los demás en cualquier momento en el menú Más. Estos cambios son personales y no afectarán a nadie más en tu espacio de trabajo.",
+    "accordion_description": "Las pestañas de funciones aparecerán como elementos anidados bajo el proyecto y funcionarán como un acordeón.",
+    "tabbed_description": "Las pestañas de funciones aparecerán como pestañas horizontales dentro de un proyecto."
+  },
+  "calendar_ui": {
+    "week_view": "Vista semanal",
+    "month_layout": "Diseño mensual",
+    "week_layout": "Diseño semanal",
+    "after": "Después",
+    "before": "Antes"
   }
 }
