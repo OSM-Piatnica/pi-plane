@@ -39,7 +39,8 @@ class TestWorkspaceInvitationsExistingMember:
     def test_new_email_is_stored_normalised(self, mock_send, mock_track, session_client, workspace):
         url = reverse("workspace-invitations", kwargs={"slug": workspace.slug})
 
-        response = session_client.post(url, {"emails": [{"email": "  New.Person@Example.com ", "role": 15}]}, format="json")
+        payload = {"emails": [{"email": "  New.Person@Example.com ", "role": 15}]}
+        response = session_client.post(url, payload, format="json")
 
         assert response.status_code == status.HTTP_200_OK
         assert WorkspaceMemberInvite.objects.get().email == "new.person@example.com"
@@ -61,7 +62,9 @@ class TestWorkspaceInviteSerializer:
     def test_email_is_normalised_and_duplicate_invite_is_case_insensitive(self, workspace, create_user):
         WorkspaceMemberInvite.objects.create(workspace=workspace, email="a@example.com", token="t", role=15)
 
-        serializer = WorkspaceInviteSerializer(data={"email": "A@Example.com", "role": 15}, context={"slug": workspace.slug})
+        serializer = WorkspaceInviteSerializer(
+            data={"email": "A@Example.com", "role": 15}, context={"slug": workspace.slug}
+        )
 
         assert not serializer.is_valid()
         assert serializer.errors["non_field_errors"][0].code == "EMAIL_ALREADY_INVITED"
