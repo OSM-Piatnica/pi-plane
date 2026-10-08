@@ -35,6 +35,7 @@ const defaultValues: TFormValues = {
 
 export function DateFilterModal({ title, handleClose, isOpen, onSelect }: Props) {
   const { t } = useTranslation();
+  const { dateFnsLocale } = useCalendarLocale();
   const { handleSubmit, watch, control } = useForm<TFormValues>({
     defaultValues,
   });

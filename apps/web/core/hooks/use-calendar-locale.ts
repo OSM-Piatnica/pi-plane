@@ -6,7 +6,28 @@
 
 import { useCallback, useMemo } from "react";
 import type { Locale } from "date-fns";
-import { cs, de, enUS, es, fr, id, it, ja, ka, ko, pl, ptBR, ro, ru, sk, tr, uk, vi, zhCN, zhTW } from "date-fns/locale";
+import {
+  cs,
+  de,
+  enUS,
+  es,
+  fr,
+  id,
+  it,
+  ja,
+  ka,
+  ko,
+  pl,
+  ptBR,
+  ro,
+  ru,
+  sk,
+  tr,
+  uk,
+  vi,
+  zhCN,
+  zhTW,
+} from "date-fns/locale";
 // plane imports
 import type { TLanguage } from "@plane/i18n";
 import { useTranslation } from "@plane/i18n";
@@ -60,8 +81,7 @@ const DATE_FNS_LOCALES: Record<TLanguage, Locale> = {
   "ka-ge": ka,
 };
 
-const capitalize = (value: string, locale: string) =>
-  value.charAt(0).toLocaleUpperCase(locale) + value.slice(1);
+const capitalize = (value: string, locale: string) => value.charAt(0).toLocaleUpperCase(locale) + value.slice(1);
 
 /**
  * Localized calendar helpers (month names, weekday names, date picker locale) for the user's current language.
