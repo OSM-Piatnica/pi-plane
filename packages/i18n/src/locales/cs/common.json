@@ -996,5 +996,11 @@
     "week_layout": "Týdenní rozvržení",
     "after": "Po",
     "before": "Před"
+  },
+  "page_sync_ui": {
+    "syncing": "Synchronizace...",
+    "syncing_description": "Vaše změny se synchronizují se serverem. Můžete pokračovat v úpravách.",
+    "connection_lost": "Spojení ztraceno",
+    "connection_lost_description": "Máme potíže s připojením k serveru websocket. Vaše změny budou synchronizovány a ukládány každých 10 sekund."
   }
 }

@@ -996,5 +996,11 @@
     "week_layout": "Układ tygodniowy",
     "after": "Po",
     "before": "Przed"
+  },
+  "page_sync_ui": {
+    "syncing": "Synchronizacja...",
+    "syncing_description": "Twoje zmiany są synchronizowane z serwerem. Możesz kontynuować edycję.",
+    "connection_lost": "Utracono połączenie",
+    "connection_lost_description": "Mamy problem z połączeniem z serwerem websocket. Twoje zmiany będą synchronizowane i zapisywane co 10 sekund."
   }
 }

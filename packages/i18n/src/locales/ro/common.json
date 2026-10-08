@@ -996,5 +996,11 @@
     "week_layout": "Aspect săptămânal",
     "after": "După",
     "before": "Înainte de"
+  },
+  "page_sync_ui": {
+    "syncing": "Se sincronizează...",
+    "syncing_description": "Modificările dvs. se sincronizează cu serverul. Puteți continua să faceți modificări.",
+    "connection_lost": "Conexiune pierdută",
+    "connection_lost_description": "Întâmpinăm probleme la conectarea la serverul websocket. Modificările dvs. vor fi sincronizate și salvate la fiecare 10 secunde."
   }
 }

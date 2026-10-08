@@ -996,5 +996,11 @@
     "week_layout": "週版面",
     "after": "之後",
     "before": "之前"
+  },
+  "page_sync_ui": {
+    "syncing": "同步中...",
+    "syncing_description": "您的變更正在與伺服器同步。您可以繼續進行變更。",
+    "connection_lost": "連線中斷",
+    "connection_lost_description": "我們在連線到 websocket 伺服器時遇到問題。您的變更將每 10 秒同步並儲存一次。"
   }
 }

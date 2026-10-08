@@ -996,5 +996,11 @@
     "week_layout": "Haftalık düzen",
     "after": "Sonra",
     "before": "Önce"
+  },
+  "page_sync_ui": {
+    "syncing": "Senkronize ediliyor...",
+    "syncing_description": "Değişiklikleriniz sunucuyla senkronize ediliyor. Değişiklik yapmaya devam edebilirsiniz.",
+    "connection_lost": "Bağlantı kesildi",
+    "connection_lost_description": "Websocket sunucusuna bağlanmakta sorun yaşıyoruz. Değişiklikleriniz her 10 saniyede bir senkronize edilip kaydedilecek."
   }
 }

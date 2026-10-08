@@ -996,5 +996,11 @@
     "week_layout": "週レイアウト",
     "after": "以降",
     "before": "以前"
+  },
+  "page_sync_ui": {
+    "syncing": "同期中...",
+    "syncing_description": "変更内容をサーバーと同期しています。引き続き編集できます。",
+    "connection_lost": "接続が切断されました",
+    "connection_lost_description": "WebSocketサーバーへの接続に問題が発生しています。変更内容は10秒ごとに同期・保存されます。"
   }
 }

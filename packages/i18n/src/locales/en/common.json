@@ -996,5 +996,11 @@
     "week_layout": "Week layout",
     "after": "After",
     "before": "Before"
+  },
+  "page_sync_ui": {
+    "syncing": "Syncing...",
+    "syncing_description": "Your changes are being synced with the server. You can continue making changes.",
+    "connection_lost": "Connection lost",
+    "connection_lost_description": "We're having trouble connecting to the websocket server. Your changes will be synced and saved every 10 seconds."
   }
 }

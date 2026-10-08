@@ -996,5 +996,11 @@
     "week_layout": "Bố cục tuần",
     "after": "Sau",
     "before": "Trước"
+  },
+  "page_sync_ui": {
+    "syncing": "Đang đồng bộ...",
+    "syncing_description": "Các thay đổi của bạn đang được đồng bộ với máy chủ. Bạn có thể tiếp tục chỉnh sửa.",
+    "connection_lost": "Mất kết nối",
+    "connection_lost_description": "Chúng tôi đang gặp sự cố khi kết nối với máy chủ websocket. Các thay đổi của bạn sẽ được đồng bộ và lưu mỗi 10 giây."
   }
 }

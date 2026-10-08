@@ -1,11 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useState, useEffect } from "react";
 import { CloudOff, Dot } from "lucide-react";
+import { useTranslation } from "@plane/i18n";
 import { Tooltip } from "@plane/propel/tooltip";
 import { Badge } from "@plane/propel/badge";
 
@@ -14,6 +16,7 @@ type Props = {
 };
 
 export function PageSyncingBadge({ syncStatus }: Props) {
+  const { t } = useTranslation();
   const [prevSyncStatus, setPrevSyncStatus] = useState<"syncing" | "synced" | "error" | null>(null);
   const [isVisible, setIsVisible] = useState(syncStatus !== "synced");
 
@@ -36,15 +39,14 @@ export function PageSyncingBadge({ syncStatus }: Props) {
 
   const badgeContent = {
     syncing: {
-      label: "Syncing...",
-      tooltipHeading: "Syncing...",
-      tooltipContent: "Your changes are being synced with the server. You can continue making changes.",
+      label: t("page_sync_ui.syncing"),
+      tooltipHeading: t("page_sync_ui.syncing"),
+      tooltipContent: t("page_sync_ui.syncing_description"),
     },
     error: {
-      label: "Connection lost",
-      tooltipHeading: "Connection lost",
-      tooltipContent:
-        "We're having trouble connecting to the websocket server. Your changes will be synced and saved every 10 seconds.",
+      label: t("page_sync_ui.connection_lost"),
+      tooltipHeading: t("page_sync_ui.connection_lost"),
+      tooltipContent: t("page_sync_ui.connection_lost_description"),
     },
   };
 
