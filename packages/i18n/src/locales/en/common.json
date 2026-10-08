@@ -984,5 +984,23 @@
         "message": "Failed to finish onboarding, Please try again later."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Selected items will always stay visible in your sidebar. You can still find the others anytime from the More menu. These changes are personal to you and won't affect anyone else on your workspace.",
+    "accordion_description": "Feature tabs will appear as nested items under project and acts as accordion.",
+    "tabbed_description": "Feature tabs will appear as horizontal tabs inside a project."
+  },
+  "calendar_ui": {
+    "week_view": "Week view",
+    "month_layout": "Month layout",
+    "week_layout": "Week layout",
+    "after": "After",
+    "before": "Before"
+  },
+  "page_sync_ui": {
+    "syncing": "Syncing...",
+    "syncing_description": "Your changes are being synced with the server. You can continue making changes.",
+    "connection_lost": "Connection lost",
+    "connection_lost_description": "We're having trouble connecting to the websocket server. Your changes will be synced and saved every 10 seconds."
   }
 }

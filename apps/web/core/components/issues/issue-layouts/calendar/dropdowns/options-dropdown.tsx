@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -144,7 +145,7 @@ export const CalendarOptionsDropdown = observer(function CalendarOptionsDropdown
                       className="flex w-full items-center justify-between gap-2 rounded-sm px-1 py-1.5 text-left text-11 hover:bg-layer-1"
                       onClick={() => handleLayoutChange(layoutDetails.key, closePopover)}
                     >
-                      {layoutDetails.title}
+                      {t(layoutDetails.i18n_title)}
                       {calendarLayout === layout && <CheckIcon width={12} height={12} strokeWidth={2} />}
                     </button>
                   ))}

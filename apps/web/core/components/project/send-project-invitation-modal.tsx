@@ -9,7 +9,7 @@ import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 // plane imports
-import { ROLE, EUserPermissions } from "@plane/constants";
+import { ROLE, getRoleI18nKey, EUserPermissions } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { PlusIcon, CloseIcon, ChevronDownIcon } from "@plane/propel/icons";
@@ -247,19 +247,23 @@ export const SendProjectInvitationModal = observer(function SendProjectInvitatio
                           {...field}
                           customButton={
                             <div className="shadow-sm flex w-24 items-center justify-between gap-1 rounded-md border border-subtle px-3 py-2.5 text-left text-13 text-secondary duration-300 hover:bg-layer-1 hover:text-primary focus:outline-none">
-                              <span className="capitalize">{field.value ? ROLE[field.value] : "Select role"}</span>
+                              <span className="capitalize">
+                                {field.value
+                                  ? t(getRoleI18nKey(field.value))
+                                  : t("project_components.invitation_modal.select_role_required")}
+                              </span>
                               <ChevronDownIcon className="h-3 w-3" aria-hidden="true" />
                             </div>
                           }
                           input
                         >
                           {Object.entries(checkCurrentOptionWorkspaceRole(watch(`members.${index}.member_id`))).map(
-                            ([key, label]) => {
+                            ([key]) => {
                               if (parseInt(key) > (currentProjectRole ?? EUserPermissions.GUEST)) return null;
 
                               return (
                                 <CustomSelect.Option key={key} value={key}>
-                                  {label}
+                                  {t(getRoleI18nKey(key))}
                                 </CustomSelect.Option>
                               );
                             }

@@ -984,5 +984,23 @@
         "message": "Falha ao concluir a integração. Tente novamente mais tarde."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Os itens selecionados sempre permanecerão visíveis na barra lateral. Você ainda pode encontrar os outros a qualquer momento no menu Mais. Essas alterações são pessoais e não afetarão mais ninguém no seu espaço de trabalho.",
+    "accordion_description": "As abas de recursos aparecerão como itens aninhados sob o projeto e funcionarão como um acordeão.",
+    "tabbed_description": "As abas de recursos aparecerão como abas horizontais dentro de um projeto."
+  },
+  "calendar_ui": {
+    "week_view": "Visualização semanal",
+    "month_layout": "Layout mensal",
+    "week_layout": "Layout semanal",
+    "after": "Depois",
+    "before": "Antes"
+  },
+  "page_sync_ui": {
+    "syncing": "Sincronizando...",
+    "syncing_description": "Suas alterações estão sendo sincronizadas com o servidor. Você pode continuar fazendo alterações.",
+    "connection_lost": "Conexão perdida",
+    "connection_lost_description": "Estamos com problemas para conectar ao servidor websocket. Suas alterações serão sincronizadas e salvas a cada 10 segundos."
   }
 }

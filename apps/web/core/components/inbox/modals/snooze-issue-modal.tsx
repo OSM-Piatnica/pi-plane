@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,6 +11,7 @@ import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { Calendar } from "@plane/propel/calendar";
 import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
+import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 
 export type InboxIssueSnoozeModalProps = {
   isOpen: boolean;
@@ -24,6 +26,7 @@ export function InboxIssueSnoozeModal(props: InboxIssueSnoozeModalProps) {
   const [date, setDate] = useState(value || new Date());
   //hooks
   const { t } = useTranslation();
+  const { dateFnsLocale } = useCalendarLocale();
 
   return (
     <ModalCore
@@ -44,6 +47,7 @@ export function InboxIssueSnoozeModal(props: InboxIssueSnoozeModalProps) {
             setDate(date);
           }}
           mode="single"
+          locale={dateFnsLocale}
           disabled={[
             {
               before: new Date(),

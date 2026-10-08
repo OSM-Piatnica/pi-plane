@@ -984,5 +984,23 @@
         "message": "完成引导失败，请稍后重试。"
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "所选项目将始终显示在侧边栏中。您仍可随时从“更多”菜单中找到其他项目。这些更改仅对您个人生效，不会影响工作区中的其他人。",
+    "accordion_description": "功能标签页将作为项目下的嵌套项显示，并以手风琴方式工作。",
+    "tabbed_description": "功能标签页将作为水平标签页显示在项目内部。"
+  },
+  "calendar_ui": {
+    "week_view": "周视图",
+    "month_layout": "月布局",
+    "week_layout": "周布局",
+    "after": "之后",
+    "before": "之前"
+  },
+  "page_sync_ui": {
+    "syncing": "正在同步...",
+    "syncing_description": "您的更改正在与服务器同步。您可以继续进行更改。",
+    "connection_lost": "连接已断开",
+    "connection_lost_description": "我们在连接 websocket 服务器时遇到问题。您的更改将每 10 秒同步并保存一次。"
   }
 }

@@ -1,124 +1,40 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { TCalendarLayouts } from "@plane/types";
 import { EStartOfTheWeek } from "@plane/types";
 
-export const MONTHS_LIST: {
-  [monthNumber: number]: {
-    shortTitle: string;
-    title: string;
-  };
-} = {
-  1: {
-    shortTitle: "Jan",
-    title: "January",
-  },
-  2: {
-    shortTitle: "Feb",
-    title: "February",
-  },
-  3: {
-    shortTitle: "Mar",
-    title: "March",
-  },
-  4: {
-    shortTitle: "Apr",
-    title: "April",
-  },
-  5: {
-    shortTitle: "May",
-    title: "May",
-  },
-  6: {
-    shortTitle: "Jun",
-    title: "June",
-  },
-  7: {
-    shortTitle: "Jul",
-    title: "July",
-  },
-  8: {
-    shortTitle: "Aug",
-    title: "August",
-  },
-  9: {
-    shortTitle: "Sep",
-    title: "September",
-  },
-  10: {
-    shortTitle: "Oct",
-    title: "October",
-  },
-  11: {
-    shortTitle: "Nov",
-    title: "November",
-  },
-  12: {
-    shortTitle: "Dec",
-    title: "December",
-  },
-};
+// month numbers (1-12), names are localized via `useCalendarLocale`
+export const MONTHS_LIST: number[] = Array.from({ length: 12 }, (_, index) => index + 1);
 
-export const DAYS_LIST: {
-  [dayIndex: number]: {
-    shortTitle: string;
-    title: string;
-    value: EStartOfTheWeek;
-  };
-} = {
-  1: {
-    shortTitle: "Sun",
-    title: "Sunday",
-    value: EStartOfTheWeek.SUNDAY,
-  },
-  2: {
-    shortTitle: "Mon",
-    title: "Monday",
-    value: EStartOfTheWeek.MONDAY,
-  },
-  3: {
-    shortTitle: "Tue",
-    title: "Tuesday",
-    value: EStartOfTheWeek.TUESDAY,
-  },
-  4: {
-    shortTitle: "Wed",
-    title: "Wednesday",
-    value: EStartOfTheWeek.WEDNESDAY,
-  },
-  5: {
-    shortTitle: "Thu",
-    title: "Thursday",
-    value: EStartOfTheWeek.THURSDAY,
-  },
-  6: {
-    shortTitle: "Fri",
-    title: "Friday",
-    value: EStartOfTheWeek.FRIDAY,
-  },
-  7: {
-    shortTitle: "Sat",
-    title: "Saturday",
-    value: EStartOfTheWeek.SATURDAY,
-  },
-};
+// days of the week, names are localized via `useCalendarLocale`
+export const DAYS_LIST: { value: EStartOfTheWeek }[] = [
+  { value: EStartOfTheWeek.SUNDAY },
+  { value: EStartOfTheWeek.MONDAY },
+  { value: EStartOfTheWeek.TUESDAY },
+  { value: EStartOfTheWeek.WEDNESDAY },
+  { value: EStartOfTheWeek.THURSDAY },
+  { value: EStartOfTheWeek.FRIDAY },
+  { value: EStartOfTheWeek.SATURDAY },
+];
 
 export const CALENDAR_LAYOUTS: {
   [layout in TCalendarLayouts]: {
     key: TCalendarLayouts;
-    title: string;
+    i18n_title: string;
   };
 } = {
   month: {
     key: "month",
-    title: "Month layout",
+    i18n_title: "calendar_ui.month_layout",
   },
   week: {
     key: "week",
-    title: "Week layout",
+    i18n_title: "calendar_ui.week_layout",
   },
 };

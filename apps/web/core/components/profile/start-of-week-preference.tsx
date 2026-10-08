@@ -10,15 +10,12 @@ import { observer } from "mobx-react";
 import { START_OF_THE_WEEK_OPTIONS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import type { EStartOfTheWeek } from "@plane/types";
 import { CustomSelect } from "@plane/ui";
 // components
 import { SettingsControlItem } from "@/components/settings/control-item";
 // hooks
 import { useUserProfile } from "@/hooks/store/user";
-
-const getStartOfWeekLabel = (startOfWeek: EStartOfTheWeek) =>
-  START_OF_THE_WEEK_OPTIONS.find((option) => option.value === startOfWeek)?.label;
+import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 
 export const StartOfWeekPreference = observer(function StartOfWeekPreference(props: {
   option: { title: string; description: string };
@@ -26,6 +23,7 @@ export const StartOfWeekPreference = observer(function StartOfWeekPreference(pro
   // hooks
   const { t } = useTranslation();
   const { data: userProfile, updateUserProfile } = useUserProfile();
+  const { getWeekdayName } = useCalendarLocale();
 
   const handleStartOfWeekChange = async (val: number) => {
     try {
@@ -51,7 +49,7 @@ export const StartOfWeekPreference = observer(function StartOfWeekPreference(pro
       control={
         <CustomSelect
           value={userProfile.start_of_the_week}
-          label={getStartOfWeekLabel(userProfile.start_of_the_week)}
+          label={getWeekdayName(userProfile.start_of_the_week)}
           onChange={handleStartOfWeekChange}
           buttonClassName="border border-subtle-1"
           input
@@ -61,7 +59,7 @@ export const StartOfWeekPreference = observer(function StartOfWeekPreference(pro
           <>
             {START_OF_THE_WEEK_OPTIONS.map((day) => (
               <CustomSelect.Option key={day.value} value={day.value}>
-                {day.label}
+                {getWeekdayName(day.value)}
               </CustomSelect.Option>
             ))}
           </>

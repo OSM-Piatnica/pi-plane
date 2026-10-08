@@ -984,5 +984,23 @@
         "message": "Finalizarea onboarding-ului a eșuat. Încearcă din nou mai târziu."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Elementele selectate vor rămâne mereu vizibile în bara laterală. Le puteți găsi oricând pe celelalte din meniul Mai mult. Aceste modificări sunt personale și nu îi vor afecta pe ceilalți din spațiul dvs. de lucru.",
+    "accordion_description": "Filele de funcționalități vor apărea ca elemente imbricate sub proiect și funcționează ca un acordeon.",
+    "tabbed_description": "Filele de funcționalități vor apărea ca file orizontale în interiorul unui proiect."
+  },
+  "calendar_ui": {
+    "week_view": "Vizualizare săptămânală",
+    "month_layout": "Aspect lunar",
+    "week_layout": "Aspect săptămânal",
+    "after": "După",
+    "before": "Înainte de"
+  },
+  "page_sync_ui": {
+    "syncing": "Se sincronizează...",
+    "syncing_description": "Modificările dvs. se sincronizează cu serverul. Puteți continua să faceți modificări.",
+    "connection_lost": "Conexiune pierdută",
+    "connection_lost_description": "Întâmpinăm probleme la conectarea la serverul websocket. Modificările dvs. vor fi sincronizate și salvate la fiecare 10 secunde."
   }
 }

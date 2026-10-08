@@ -984,5 +984,23 @@
         "message": "Impossibile completare l'onboarding. Riprova più tardi."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Gli elementi selezionati rimarranno sempre visibili nella barra laterale. Puoi comunque trovare gli altri in qualsiasi momento dal menu Altro. Queste modifiche sono personali e non influiranno su nessun altro nel tuo spazio di lavoro.",
+    "accordion_description": "Le schede delle funzionalità appariranno come elementi annidati sotto il progetto e funzioneranno come una fisarmonica.",
+    "tabbed_description": "Le schede delle funzionalità appariranno come schede orizzontali all'interno di un progetto."
+  },
+  "calendar_ui": {
+    "week_view": "Vista settimanale",
+    "month_layout": "Layout mensile",
+    "week_layout": "Layout settimanale",
+    "after": "Dopo",
+    "before": "Prima"
+  },
+  "page_sync_ui": {
+    "syncing": "Sincronizzazione...",
+    "syncing_description": "Le tue modifiche vengono sincronizzate con il server. Puoi continuare a modificare.",
+    "connection_lost": "Connessione persa",
+    "connection_lost_description": "Stiamo avendo problemi a connetterci al server websocket. Le tue modifiche verranno sincronizzate e salvate ogni 10 secondi."
   }
 }

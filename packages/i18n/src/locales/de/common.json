@@ -984,5 +984,23 @@
         "message": "Das Abschließen des Onboardings ist fehlgeschlagen. Bitte versuchen Sie es später erneut."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Ausgewählte Elemente bleiben immer in Ihrer Seitenleiste sichtbar. Die übrigen finden Sie jederzeit im Menü „Mehr“. Diese Änderungen gelten nur für Sie und wirken sich nicht auf andere in Ihrem Arbeitsbereich aus.",
+    "accordion_description": "Funktions-Tabs werden als verschachtelte Elemente unter dem Projekt angezeigt und funktionieren wie ein Akkordeon.",
+    "tabbed_description": "Funktions-Tabs werden als horizontale Tabs innerhalb eines Projekts angezeigt."
+  },
+  "calendar_ui": {
+    "week_view": "Wochenansicht",
+    "month_layout": "Monatslayout",
+    "week_layout": "Wochenlayout",
+    "after": "Nach",
+    "before": "Vor"
+  },
+  "page_sync_ui": {
+    "syncing": "Synchronisierung...",
+    "syncing_description": "Ihre Änderungen werden mit dem Server synchronisiert. Sie können weiter Änderungen vornehmen.",
+    "connection_lost": "Verbindung verloren",
+    "connection_lost_description": "Die Verbindung zum Websocket-Server ist gestört. Ihre Änderungen werden alle 10 Sekunden synchronisiert und gespeichert."
   }
 }
