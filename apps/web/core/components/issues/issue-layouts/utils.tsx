@@ -189,7 +189,9 @@ const getModuleColumns = (): IGroupByColumn[] | undefined => {
   // get project module ids and module details
   const { getOrderedProjectModuleDetails } = store.module;
   // get module details
-  const moduleDetails = currentProjectDetails?.id ? getOrderedProjectModuleDetails(currentProjectDetails?.id) : undefined;
+  const moduleDetails = currentProjectDetails?.id
+    ? getOrderedProjectModuleDetails(currentProjectDetails?.id)
+    : undefined;
   // map module details to group by columns
   const modules: IGroupByColumn[] = [];
   moduleDetails?.map((module) => {
