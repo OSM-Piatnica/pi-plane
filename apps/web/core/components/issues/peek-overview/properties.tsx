@@ -70,7 +70,6 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
   const isEstimateEnabled = projectDetails?.estimate;
   const stateDetails = getStateById(issue.state_id);
 
-
   return (
     <div>
       <h6 className="text-body-xs-medium">{t("common.properties")}</h6>
@@ -139,19 +138,12 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
         )}
 
         <WorkItemPlanningDates
-
           issue={issue}
-
           projectId={projectId}
-
           stateGroup={stateDetails?.group}
-
           disabled={disabled}
-
           textClassName="text-body-xs-medium"
-
           onUpdate={(data) => issueOperations.update(workspaceSlug, projectId, issueId, data)}
-
         />
 
         {isEstimateEnabled && (

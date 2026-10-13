@@ -63,7 +63,11 @@ export const useWorkItemDateEdit = (
     async (change: Partial<TWorkItemPlanningDates>, options?: { initialize?: boolean }) => {
       const { patch, error } = planWorkItemDateChange(issue, change, options?.initialize ?? true);
       if (error) {
-        setToast({ type: TOAST_TYPE.ERROR, title: t("common.error.label"), message: t("issue.dates.finish_before_start") });
+        setToast({
+          type: TOAST_TYPE.ERROR,
+          title: t("common.error.label"),
+          message: t("issue.dates.finish_before_start"),
+        });
         return;
       }
       await update(patch as Partial<TIssue>);

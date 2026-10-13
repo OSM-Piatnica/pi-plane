@@ -23,7 +23,6 @@ Initial equality rule
 """
 
 from dataclasses import dataclass, field
-from datetime import date
 
 from plane.utils.work_item_duration import (
     DURATION_DATE_FIELDS,
@@ -230,8 +229,10 @@ def apply_date_rules(instance, attrs):
 
     try:
         resolution = resolve_work_item_dates(instance, attrs)
-    except WorkItemDateError as exc:
-        raise serializers.ValidationError({"finish_date": [str(exc)]})
+    except WorkItemDateError:
+        # The only failure is the finish-before-start invariant, so report the fixed message rather
+        # than anything derived from the exception.
+        raise serializers.ValidationError({"finish_date": [FINISH_BEFORE_START_MESSAGE]})
 
     attrs.update(resolution.to_model_values())
     attrs.pop(INITIALIZE_PAIRED_DATE_KEY, None)
