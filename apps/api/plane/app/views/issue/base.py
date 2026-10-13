@@ -690,9 +690,10 @@ class IssueViewSet(BaseViewSet):
 
         # Mirror the serializer's derived values (duration, defaulted paired date) so the activity
         # feed reports them too, since it is built from the raw request payload.
+        request_only_keys = ("initialize_paired_date", "paired_date_defaulted")
         requested_data = json.dumps(
             {
-                **{k: v for k, v in request.data.items() if k not in ("initialize_paired_date", "paired_date_defaulted")},
+                **{k: v for k, v in request.data.items() if k not in request_only_keys},
                 **resolve_for_logging(issue, request.data),
             },
             cls=DjangoJSONEncoder,

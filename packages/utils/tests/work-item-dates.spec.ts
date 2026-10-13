@@ -45,7 +45,10 @@ describe("planWorkItemDateChange", () => {
   });
 
   it("a first due before start is saved alone with an explanation", () => {
-    const { patch, notice, error } = planWorkItemDateChange({ start_date: "2026-10-19" }, { target_date: "2026-10-12" });
+    const { patch, notice, error } = planWorkItemDateChange(
+      { start_date: "2026-10-19" },
+      { target_date: "2026-10-12" }
+    );
     expect(patch.finish_date).toBeUndefined();
     expect(notice).toEqual({ code: "finish_date_not_defaulted", date: "2026-10-12" });
     expect(error).toBeUndefined();
@@ -86,7 +89,10 @@ describe("planWorkItemDateChange", () => {
   });
 
   it("allows finish after due and due before start", () => {
-    expect(planWorkItemDateChange({ target_date: "2026-10-20", dates_initialized: true }, { finish_date: "2026-10-22" }).error).toBeUndefined();
+    expect(
+      planWorkItemDateChange({ target_date: "2026-10-20", dates_initialized: true }, { finish_date: "2026-10-22" })
+        .error
+    ).toBeUndefined();
     expect(validateWorkItemSchedule("2026-10-20", "2026-10-20")).toBeUndefined();
   });
 });

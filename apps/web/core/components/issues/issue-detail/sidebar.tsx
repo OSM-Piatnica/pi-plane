@@ -74,7 +74,6 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
   const projectDetails = getProjectById(issue.project_id);
   const stateDetails = getStateById(issue.state_id);
 
-
   return (
     <>
       <div className="flex h-full w-full flex-col items-center divide-y-2 divide-subtle-1 overflow-hidden">
@@ -138,19 +137,12 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
             )}
 
             <WorkItemPlanningDates
-
               issue={issue}
-
               projectId={projectId}
-
               stateGroup={stateDetails?.group}
-
               disabled={!isEditable}
-
               textClassName="text-body-xs-regular"
-
               onUpdate={(data) => issueOperations.update(workspaceSlug, projectId, issueId, data)}
-
             />
 
             {projectId && areEstimateEnabledByProjectId(projectId) && (

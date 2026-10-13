@@ -100,7 +100,11 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
       true
     );
     if (error) {
-      setToast({ type: TOAST_TYPE.ERROR, title: t("common.error.label"), message: t("issue.dates.finish_before_start") });
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: t("common.error.label"),
+        message: t("issue.dates.finish_before_start"),
+      });
       return;
     }
     (["start_date", "finish_date", "target_date", "duration"] as const).forEach((key) => {
@@ -114,7 +118,11 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
           ? "finish_date"
           : undefined;
     // Editing the copied date yourself turns it into a deliberate value.
-    const stillCopied = copied ?? (current.paired_date_defaulted && !(current.paired_date_defaulted in change) ? current.paired_date_defaulted : undefined);
+    const stillCopied =
+      copied ??
+      (current.paired_date_defaulted && !(current.paired_date_defaulted in change)
+        ? current.paired_date_defaulted
+        : undefined);
     setValue("paired_date_defaulted", stillCopied, { shouldDirty: true });
     setDateNotice(notice && notice.code !== "finish_date_not_defaulted" ? notice : null);
     handleFormChange();
