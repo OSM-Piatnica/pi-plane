@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import re
@@ -274,6 +275,21 @@ def filter_target_date(params, issue_filter, method, prefix=""):
     return issue_filter
 
 
+def filter_finish_date(params, issue_filter, method, prefix=""):
+    if method == "GET":
+        finish_dates = params.get("finish_date").split(",")
+        if len(finish_dates) and "" not in finish_dates:
+            date_filter(
+                issue_filter=issue_filter,
+                date_term=f"{prefix}finish_date",
+                queries=finish_dates,
+            )
+    else:
+        if params.get("finish_date", None) and len(params.get("finish_date")):
+            issue_filter[f"{prefix}finish_date"] = params.get("finish_date")
+    return issue_filter
+
+
 def filter_completed_at(params, issue_filter, method, prefix=""):
     if method == "GET":
         completed_ats = params.get("completed_at").split(",")
@@ -444,6 +460,7 @@ def issue_filters(query_params, method, prefix=""):
         "updated_at": filter_updated_at,
         "start_date": filter_start_date,
         "target_date": filter_target_date,
+        "finish_date": filter_finish_date,
         "completed_at": filter_completed_at,
         "type": filter_issue_state_type,
         "project": filter_project,

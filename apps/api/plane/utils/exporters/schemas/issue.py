@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from collections import defaultdict
@@ -97,6 +98,7 @@ class IssueExportSchema(ExportSchema):
     description = StringField(source="description_stripped", label="Description")
     priority = StringField(source="priority", label="Priority")
     start_date = DateField(source="start_date", label="Start Date")
+    finish_date = DateField(source="finish_date", label="Finish Date")
     target_date = DateField(source="target_date", label="Target Date")
     state_name = StringField(label="State")
     created_at = DateTimeField(source="created_at", label="Created At")

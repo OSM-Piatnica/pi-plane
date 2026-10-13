@@ -704,6 +704,37 @@ const activityDetails: {
     },
     icon: <Calendar size={12} className="text-secondary" aria-hidden="true" />,
   },
+  finish_date: {
+    message: (activity, showIssue) => {
+      if (!activity.new_value)
+        return (
+          <>
+            removed the finish date
+            {showIssue && (
+              <>
+                {" "}
+                from <IssueLink activity={activity} />
+              </>
+            )}
+          </>
+        );
+      else
+        return (
+          <>
+            set the finish date to{" "}
+            <span className="font-medium whitespace-nowrap text-primary">
+              {renderFormattedDate(activity.new_value)}
+            </span>
+            {showIssue && (
+              <>
+                <IssueLink activity={activity} />
+              </>
+            )}
+          </>
+        );
+    },
+    icon: <Calendar size={12} className="text-secondary" aria-hidden="true" />,
+  },
   target_date: {
     message: (activity, showIssue) => {
       if (!activity.new_value)

@@ -10,13 +10,8 @@ import { isEqual, set } from "lodash-es";
 import { action, makeObservable, observable, runInAction } from "mobx";
 import { computedFn } from "mobx-utils";
 // components
-import type {
-  ChartDataType,
-  IBlockUpdateDependencyData,
-  IGanttBlock,
-  TGanttViews,
-  EGanttBlockType,
-} from "@plane/types";
+import { EGanttBlockType } from "@plane/types";
+import type { ChartDataType, IBlockUpdateDependencyData, IGanttBlock, TGanttViews } from "@plane/types";
 import { renderFormattedPayloadDate } from "@plane/utils";
 import { currentViewDataWithView } from "@/components/gantt-chart/data";
 import {
@@ -35,6 +30,8 @@ type BlockData = {
   sort_order: number | null;
   start_date?: string | undefined | null;
   target_date?: string | undefined | null;
+  /** Work items only: the schedule end. For them `target_date` is the due date. */
+  finish_date?: string | undefined | null;
   project_id?: string | undefined | null;
 };
 
@@ -234,13 +231,17 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
       const blockData = getDataById(blockId);
       if (!blockData) continue;
 
+      const isWorkItem = type === EGanttBlockType.ISSUE;
       const block: IGanttBlock = {
         data: blockData,
         id: blockData?.id,
         name: blockData.name,
         sort_order: blockData?.sort_order ?? undefined,
         start_date: blockData?.start_date ?? undefined,
-        target_date: blockData?.target_date ?? undefined,
+        // the generic block's `target_date` is the bar end: a work item's finish date, but the end date
+        // of modules and cycles. A work item's due date is carried separately and never moves the bar.
+        target_date: (isWorkItem ? blockData?.finish_date : blockData?.target_date) ?? undefined,
+        due_date: isWorkItem ? (blockData?.target_date ?? undefined) : undefined,
         meta: {
           type,
           index,

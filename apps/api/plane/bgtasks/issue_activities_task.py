@@ -292,7 +292,46 @@ def track_target_date(
                 field="target_date",
                 project_id=project_id,
                 workspace_id=workspace_id,
-                comment="updated the target date to",
+                # Audit cause: a copied initial value is distinguishable from a deliberate edit.
+                comment=(
+                    "set the due date by default (copied from the finish date) to"
+                    if requested_data.get("target_date_origin") == "defaulted"
+                    else "updated the target date to"
+                ),
+                epoch=epoch,
+            )
+        )
+
+
+# Track changes in issue finish date (the planned end of the work, distinct from the due date)
+def track_finish_date(
+    requested_data,
+    current_instance,
+    issue_id,
+    project_id,
+    workspace_id,
+    actor_id,
+    issue_activities,
+    epoch,
+):
+    if current_instance.get("finish_date") != requested_data.get("finish_date"):
+        issue_activities.append(
+            IssueActivity(
+                issue_id=issue_id,
+                actor_id=actor_id,
+                verb="updated",
+                old_value=(
+                    current_instance.get("finish_date") if current_instance.get("finish_date") is not None else ""
+                ),
+                new_value=(requested_data.get("finish_date") if requested_data.get("finish_date") is not None else ""),
+                field="finish_date",
+                project_id=project_id,
+                workspace_id=workspace_id,
+                comment=(
+                    "set the finish date by default (copied from the due date) to"
+                    if requested_data.get("finish_date_origin") == "defaulted"
+                    else "updated the finish date to"
+                ),
                 epoch=epoch,
             )
         )
@@ -679,6 +718,7 @@ def update_issue_activity(
         "description_html": track_description,
         "target_date": track_target_date,
         "start_date": track_start_date,
+        "finish_date": track_finish_date,
         "duration": track_duration,
         "label_ids": track_labels,
         "assignee_ids": track_assignees,

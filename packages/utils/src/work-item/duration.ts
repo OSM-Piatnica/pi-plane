@@ -8,9 +8,14 @@
 import { addDaysToDate, findTotalDaysInRange, renderFormattedPayloadDate } from "../datetime";
 
 /**
- * Work item duration is measured in whole days, inclusive of both the start and the target date.
- * A work item that starts and ends on the same day lasts 1 day, so the shortest valid duration is 1.
+ * Work item duration is measured in whole days, inclusive of both the start and the finish date.
+ * A work item that starts and finishes on the same day lasts 1 day, so the shortest valid duration is 1.
  * Non-working days (weekends, holidays) are intentionally not excluded.
+ *
+ * Only the schedule endpoints (start and finish) take part. The due date (`target_date`) is a
+ * deadline and is never read or written here.
+ *
+ * Mirrors `apps/api/plane/utils/work_item_duration.py`. Keep both in sync.
  */
 export const WORK_ITEM_DURATION_MIN = 1;
 
@@ -20,7 +25,7 @@ export const WORK_ITEM_DURATION_MIN = 1;
  */
 export type TWorkItemDurationFields = {
   start_date?: string | null;
-  target_date?: string | null;
+  finish_date?: string | null;
   duration?: number | null;
 };
 
@@ -46,18 +51,18 @@ export const normalizeWorkItemDuration = (value: number | null | undefined): num
  */
 export const calculateWorkItemDuration = (
   startDate: string | Date | null | undefined,
-  targetDate: string | Date | null | undefined
+  finishDate: string | Date | null | undefined
 ): number | undefined => {
-  if (!startDate || !targetDate) return undefined;
-  return findTotalDaysInRange(startDate, targetDate, true);
+  if (!startDate || !finishDate) return undefined;
+  return findTotalDaysInRange(startDate, finishDate, true);
 };
 
 /**
- * @description Derives the target date by treating the start date as the anchor
+ * @description Derives the finish date by treating the start date as the anchor
  * @returns {string | undefined} date in `yyyy-mm-dd` payload format
- * @example calculateTargetDateFromDuration("2026-01-01", 5) // "2026-01-05"
+ * @example calculateFinishDateFromDuration("2026-01-01", 5) // "2026-01-05"
  */
-export const calculateTargetDateFromDuration = (
+export const calculateFinishDateFromDuration = (
   startDate: string | Date | null | undefined,
   duration: number | null | undefined
 ): string | undefined => {
@@ -67,32 +72,32 @@ export const calculateTargetDateFromDuration = (
 };
 
 /**
- * @description Derives the start date by treating the target date as the anchor
+ * @description Derives the start date by treating the finish date as the anchor
  * @returns {string | undefined} date in `yyyy-mm-dd` payload format
  * @example calculateStartDateFromDuration("2026-01-10", 3) // "2026-01-08"
  */
 export const calculateStartDateFromDuration = (
-  targetDate: string | Date | null | undefined,
+  finishDate: string | Date | null | undefined,
   duration: number | null | undefined
 ): string | undefined => {
   const normalizedDuration = normalizeWorkItemDuration(duration);
-  if (!targetDate || normalizedDuration === null) return undefined;
-  return renderFormattedPayloadDate(addDaysToDate(targetDate, -(normalizedDuration - 1)));
+  if (!finishDate || normalizedDuration === null) return undefined;
+  return renderFormattedPayloadDate(addDaysToDate(finishDate, -(normalizedDuration - 1)));
 };
 
 /**
- * @description Keeps `duration`, `start_date` and `target_date` consistent after a single user edit.
+ * @description Keeps `duration`, `start_date` and `finish_date` consistent after a single user edit.
  *
  * Rules, in the order they are applied:
  * - Editing `duration`
  *   - cleared            -> dates are left untouched
- *   - start date present -> start date is the anchor, target date is recalculated
- *   - only target date   -> target date is the anchor, start date is recalculated
+ *   - start date present -> start date is the anchor, finish date is recalculated
+ *   - only finish date   -> finish date is the anchor, start date is recalculated
  *   - no dates at all    -> duration is stored on its own
- * - Editing `start_date` / `target_date`
- *   - both dates present -> duration is recalculated from the range
- *   - both dates present but ordered backwards -> the existing length is preserved and the date the
- *     user did not touch is shifted, so the payload stays valid instead of failing validation
+ * - Editing `start_date` / `finish_date`
+ *   - both dates present and ordered -> duration is recalculated from the range
+ *   - both dates present but ordered backwards -> nothing is derived. The caller must reject the
+ *     edit (see `validateWorkItemSchedule`); no date is moved or cleared
  *   - only one date left and a duration exists -> the still empty date is derived from the duration,
  *     but a date the user explicitly cleared is never resurrected
  *   - both dates cleared -> duration survives as a standalone estimate
@@ -108,10 +113,10 @@ export const reconcileWorkItemDuration = (
   const result: Partial<TWorkItemDurationFields> = { ...change };
 
   const startDateChanged = "start_date" in change;
-  const targetDateChanged = "target_date" in change;
+  const finishDateChanged = "finish_date" in change;
 
   const startDate = (startDateChanged ? change.start_date : current.start_date) ?? null;
-  const targetDate = (targetDateChanged ? change.target_date : current.target_date) ?? null;
+  const finishDate = (finishDateChanged ? change.finish_date : current.finish_date) ?? null;
 
   // Duration driven: the user typed a duration, so the dates follow it.
   if ("duration" in change) {
@@ -120,37 +125,19 @@ export const reconcileWorkItemDuration = (
     if (duration === null) return result;
 
     if (startDate) {
-      result.target_date = calculateTargetDateFromDuration(startDate, duration) ?? null;
-    } else if (targetDate) {
-      result.start_date = calculateStartDateFromDuration(targetDate, duration) ?? null;
+      result.finish_date = calculateFinishDateFromDuration(startDate, duration) ?? null;
+    } else if (finishDate) {
+      result.start_date = calculateStartDateFromDuration(finishDate, duration) ?? null;
     }
     return result;
   }
 
-  if (!startDateChanged && !targetDateChanged) return result;
+  if (!startDateChanged && !finishDateChanged) return result;
 
   // Date driven: the user picked a date, so the duration follows the dates.
-  if (startDate && targetDate) {
-    const nextDuration = calculateWorkItemDuration(startDate, targetDate);
-
-    if (nextDuration !== undefined && nextDuration >= WORK_ITEM_DURATION_MIN) {
-      result.duration = nextDuration;
-      return result;
-    }
-
-    // The new range is ordered backwards. Keep the length the work item already had and move the
-    // opposite end instead, so a slipped start date drags the target date along with it.
-    const previousDuration =
-      normalizeWorkItemDuration(current.duration) ??
-      normalizeWorkItemDuration(calculateWorkItemDuration(current.start_date, current.target_date)) ??
-      WORK_ITEM_DURATION_MIN;
-
-    result.duration = previousDuration;
-    if (startDateChanged) {
-      result.target_date = calculateTargetDateFromDuration(startDate, previousDuration) ?? null;
-    } else {
-      result.start_date = calculateStartDateFromDuration(targetDate, previousDuration) ?? null;
-    }
+  if (startDate && finishDate) {
+    const nextDuration = calculateWorkItemDuration(startDate, finishDate);
+    if (nextDuration !== undefined && nextDuration >= WORK_ITEM_DURATION_MIN) result.duration = nextDuration;
     return result;
   }
 
@@ -158,10 +145,10 @@ export const reconcileWorkItemDuration = (
   if (duration === null) return result;
 
   // Only fill in a date that is still empty and that the user did not just clear.
-  if (startDate && !targetDate && !targetDateChanged) {
-    result.target_date = calculateTargetDateFromDuration(startDate, duration) ?? null;
-  } else if (targetDate && !startDate && !startDateChanged) {
-    result.start_date = calculateStartDateFromDuration(targetDate, duration) ?? null;
+  if (startDate && !finishDate && !finishDateChanged) {
+    result.finish_date = calculateFinishDateFromDuration(startDate, duration) ?? null;
+  } else if (finishDate && !startDate && !startDateChanged) {
+    result.start_date = calculateStartDateFromDuration(finishDate, duration) ?? null;
   }
 
   return result;

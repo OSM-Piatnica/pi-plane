@@ -31,7 +31,7 @@ export const SpreadsheetStartDateColumn = observer(function SpreadsheetStartDate
     <div className="h-11 border-b-[0.5px] border-subtle">
       <DateDropdown
         value={issue.start_date}
-        maxDate={getDate(issue.target_date)}
+        maxDate={getDate(issue.finish_date)}
         onChange={(data) => {
           const startDate = data ? renderFormattedPayloadDate(data) : null;
           onChange(

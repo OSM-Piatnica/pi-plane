@@ -51,11 +51,7 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
-from plane.utils.work_item_duration import (
-    DURATION_DATE_FIELDS,
-    reconcile_work_item_duration,
-    to_work_item_date,
-)
+from plane.utils.work_item_dates import apply_date_rules
 
 
 class IssueFlatSerializer(BaseSerializer):
@@ -71,6 +67,9 @@ class IssueFlatSerializer(BaseSerializer):
             "priority",
             "start_date",
             "target_date",
+            "finish_date",
+            "dates_initialized",
+            "due_date_at_completion",
             "duration",
             "sequence_id",
             "sort_order",
@@ -110,6 +109,11 @@ class IssueCreateSerializer(BaseSerializer):
         write_only=True,
         required=False,
     )
+    # Write-only: the interactive client asks for the one-time "first finish/due fills both" default.
+    initialize_paired_date = serializers.BooleanField(write_only=True, required=False)
+    paired_date_defaulted = serializers.ChoiceField(
+        choices=["finish_date", "target_date"], write_only=True, required=False
+    )
     project_id = serializers.UUIDField(source="project.id", read_only=True)
     workspace_id = serializers.UUIDField(source="workspace.id", read_only=True)
 
@@ -117,6 +121,10 @@ class IssueCreateSerializer(BaseSerializer):
         model = Issue
         fields = "__all__"
         read_only_fields = [
+            "dates_initialized",
+            "finish_date_origin",
+            "target_date_origin",
+            "due_date_at_completion",
             "workspace",
             "project",
             "created_by",
@@ -138,18 +146,9 @@ class IssueCreateSerializer(BaseSerializer):
         allow_triage = self.context.get("allow_triage_state", False)
         state_manager = State.triage_objects if allow_triage else State.objects
 
-        # Keep duration and the two dates consistent before anything else looks at them. The web app
-        # already derives the same values locally, so this normally just confirms what it sent.
-        derived = reconcile_work_item_duration(self.instance, attrs)
-        for field, value in derived.items():
-            attrs[field] = to_work_item_date(value) if field in DURATION_DATE_FIELDS else value
-
-        if (
-            attrs.get("start_date", None) is not None
-            and attrs.get("target_date", None) is not None
-            and attrs.get("start_date", None) > attrs.get("target_date", None)
-        ):
-            raise serializers.ValidationError("Start date cannot exceed target date")
+        # One shared rule for start/finish/due: duration, the finish >= start invariant and the
+        # one-time "first finish or due fills both" default. Due is never compared with start.
+        self.date_notices = apply_date_rules(self.instance, attrs)
 
         # Validate description content for security
         if "description_html" in attrs and attrs["description_html"]:
@@ -255,7 +254,7 @@ class IssueCreateSerializer(BaseSerializer):
             ).exists():
                 raise serializers.ValidationError("Issue type is not enabled for this project")
 
-        # Checked last on purpose: the dates are the ones `reconcile_work_item_duration` derived
+        # Checked last on purpose: the dates are the ones `apply_date_rules` derived
         # above, and a state the workflow just pulled out of attrs no longer counts as a change.
         if self.instance is not None:
             from plane.utils.issue_timeline_relation_validation import validate_issue_update_payload
@@ -855,6 +854,9 @@ class IssueSerializer(DynamicBaseSerializer):
             "priority",
             "start_date",
             "target_date",
+            "finish_date",
+            "dates_initialized",
+            "due_date_at_completion",
             "duration",
             "sequence_id",
             "project_id",
@@ -932,6 +934,9 @@ class IssueListDetailSerializer(serializers.Serializer):
             "priority": instance.priority,
             "start_date": instance.start_date,
             "target_date": instance.target_date,
+            "finish_date": instance.finish_date,
+            "dates_initialized": instance.dates_initialized,
+            "due_date_at_completion": instance.due_date_at_completion,
             "duration": instance.duration,
             "sequence_id": instance.sequence_id,
             "project_id": instance.project_id,
@@ -1049,6 +1054,9 @@ class IssuePublicSerializer(BaseSerializer):
             "workspace",
             "priority",
             "target_date",
+            "finish_date",
+            "dates_initialized",
+            "due_date_at_completion",
             "reactions",
             "votes",
         ]
@@ -1077,6 +1085,9 @@ class IssueVersionDetailSerializer(BaseSerializer):
             "priority",
             "start_date",
             "target_date",
+            "finish_date",
+            "dates_initialized",
+            "due_date_at_completion",
             "duration",
             "assignees",
             "sequence_id",

@@ -18,6 +18,7 @@
       "assignee": "新增指派對象",
       "start_date": "新增開始日期",
       "due_date": "新增截止日期",
+      "finish_date": "Add finish date",
       "parent": "新增父工作事項",
       "sub_issue": "新增子工作事項",
       "dependency": "新增相依性",
@@ -266,6 +267,49 @@
       "click_to_downvote": "點擊反對",
       "click_to_view_upvotes": "點擊查看贊成票",
       "click_to_view_downvotes": "點擊查看反對票"
+    },
+    "dates": {
+      "help": {
+        "finish": "When we currently expect the work to finish.",
+        "due": "When the work must be completed."
+      },
+      "notice": {
+        "due_defaulted": "Due date also set to {date}",
+        "finish_defaulted": "Finish date also set to {date}",
+        "finish_not_defaulted": "Due date saved. Finish date left empty because the due date is before the start date."
+      },
+      "only_finish": "Set only finish",
+      "only_due": "Set only due",
+      "undo": "Undo",
+      "finish_before_start": "Finish must be on or after start.",
+      "status": {
+        "overdue": "Overdue",
+        "forecast_misses_deadline": "Finish is after the due date",
+        "forecast_unknown": "No finish forecast",
+        "planned_finish_passed": "Planned finish has passed",
+        "completed_late": "Completed late"
+      },
+      "timeline": {
+        "start": "Start",
+        "finish": "Finish",
+        "due": "Due",
+        "start_only": "Start",
+        "finish_only": "Finish",
+        "due_marker": "Due date",
+        "due_marker_hint": "Drag or use the left and right arrow keys to change only the due date.",
+        "variance_on_due": "Finish is on the due date",
+        "variance_late": "{days, plural, one {Finish is # day after due} other {Finish is # days after due}}",
+        "variance_early": "{days, plural, one {Finish is # day before due} other {Finish is # days before due}}"
+      },
+      "calendar": {
+        "layer_label": "Calendar layer",
+        "scheduled": "Scheduled work",
+        "deadlines": "Deadlines",
+        "scheduled_help": "Work placed from start date to finish date",
+        "deadlines_help": "Work placed on its due date",
+        "due_marker": "Due",
+        "finish_marker": "Finish"
+      }
     }
   },
   "sub_work_item": {

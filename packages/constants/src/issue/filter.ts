@@ -29,6 +29,7 @@ export enum EServerGroupByToFilterOptions {
   "cycle_id" = "cycle",
   "issue_module__module_id" = "module",
   "target_date" = "target_date",
+  "finish_date" = "finish_date",
   "project_id" = "project",
   "created_by" = "created_by",
 }
@@ -113,7 +114,7 @@ export type TIssueFiltersToDisplayByPageType = {
 
 export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
   profile_issues: {
-    filters: ["priority", "state_group", "label_id", "start_date", "target_date"],
+    filters: ["priority", "state_group", "label_id", "start_date", "finish_date", "target_date"],
     layoutOptions: {
       list: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
@@ -170,6 +171,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       "created_by_id",
       "label_id",
       "start_date",
+      "finish_date",
       "target_date",
     ],
     layoutOptions: {
@@ -206,6 +208,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       "subscriber_id",
       "project_id",
       "start_date",
+      "finish_date",
       "target_date",
     ],
     layoutOptions: {
@@ -244,6 +247,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       "created_by_id",
       "label_id",
       "start_date",
+      "finish_date",
       "target_date",
     ],
     layoutOptions: {
@@ -259,6 +263,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
             "-updated_at",
             "start_date",
             "-priority",
+            "finish_date",
             "target_date",
             "duration",
           ],
@@ -282,6 +287,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
             "-updated_at",
             "start_date",
             "-priority",
+            "finish_date",
             "target_date",
             "duration",
           ],
@@ -336,7 +342,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
     },
   },
   sub_work_items: {
-    filters: ["priority", "state_id", "assignee_id", "start_date", "target_date"],
+    filters: ["priority", "state_id", "assignee_id", "start_date", "finish_date", "target_date"],
     layoutOptions: {
       list: {
         display_properties: SUB_ISSUES_DISPLAY_PROPERTIES_KEYS,
@@ -363,6 +369,7 @@ export const SUB_WORK_ITEM_AVAILABLE_FILTERS_FOR_WORK_ITEM_PAGE: (keyof IIssueFi
   "issue_type",
   "assignees",
   "start_date",
+  "finish_date",
   "target_date",
 ];
 

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -24,8 +25,16 @@ export const renderAdditionalValue = (
 ) => newValue;
 
 export const shouldShowConnector = (notificationField: string | undefined) =>
-  !["comment", "archived_at", "None", "assignees", "labels", "start_date", "target_date", "parent"].includes(
-    notificationField || ""
-  );
+  ![
+    "comment",
+    "archived_at",
+    "None",
+    "assignees",
+    "labels",
+    "start_date",
+    "finish_date",
+    "target_date",
+    "parent",
+  ].includes(notificationField || "");
 
 export const shouldRender = (notificationField: string | undefined, verb: string | undefined) => verb !== "deleted";

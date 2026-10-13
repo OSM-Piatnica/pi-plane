@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -108,6 +109,23 @@ export const PeekOverviewIssueProperties = observer(function PeekOverviewIssuePr
               {priority && <PriorityIcon priority={priority?.key} size={12} className="flex-shrink-0" />}
               <span>{t(priority?.titleTranslationKey || "common.none")}</span>
             </div>
+          </div>
+        </div>
+
+        <div className="flex h-8 items-center gap-3">
+          <div className="flex w-1/4 flex-shrink-0 items-center gap-1 text-13 text-tertiary">
+            <DueDatePropertyIcon className="size-4 flex-shrink-0" />
+            <span>Finish date</span>
+          </div>
+          <div>
+            {issueDetails.finish_date ? (
+              <div className="flex items-center gap-1.5 rounded-sm py-0.5 text-11 text-primary">
+                <DueDatePropertyIcon className="size-3" />
+                {renderFormattedDate(issueDetails.finish_date)}
+              </div>
+            ) : (
+              <span className="text-13 text-secondary">Empty</span>
+            )}
           </div>
         </div>
 

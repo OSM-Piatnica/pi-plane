@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import copy
@@ -162,6 +163,7 @@ class IssueFilterSet(BaseFilterSet):
         fields = {
             "start_date": ["exact", "range"],
             "target_date": ["exact", "range"],
+            "finish_date": ["exact", "range"],
             "created_at": ["exact", "range"],
             "updated_at": ["exact", "range"],
             "is_draft": ["exact"],

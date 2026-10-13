@@ -6,6 +6,7 @@
  */
 
 import { autorun } from "mobx";
+import { EGanttBlockType } from "@plane/types";
 // Plane-web
 import type { RootStore } from "@/plane-web/store/root.store";
 import type { IBaseTimelineStore } from "@/plane-web/store/timeline/base-timeline.store";
@@ -23,7 +24,7 @@ export class IssuesTimeLineStore extends BaseTimeLineStore implements IIssuesTim
 
     autorun(() => {
       const getIssueById = this.rootStore.issue.issues.getIssueById;
-      this.updateBlocks(getIssueById);
+      this.updateBlocks(getIssueById, EGanttBlockType.ISSUE);
     });
   }
 }

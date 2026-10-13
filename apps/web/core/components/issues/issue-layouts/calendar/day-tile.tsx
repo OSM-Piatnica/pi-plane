@@ -8,10 +8,7 @@
 import { useEffect, useRef, useState } from "react";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
 import { observer } from "mobx-react";
-import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { TGroupedIssues, TIssue, TIssueMap, TPaginationData, ICalendarDate } from "@plane/types";
 // types
 // ui
@@ -76,9 +73,6 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
     canEditProperties,
     isEpic = false,
   } = props;
-  // i18n
-  const { t } = useTranslation();
-
   const [isDraggingOver, setIsDraggingOver] = useState(false);
 
   const calendarLayout = issuesFilterStore?.issueFilters?.displayFilters?.calendar?.layout ?? "month";
@@ -109,20 +103,6 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
           if (!sourceData || !destinationData) return;
 
           const issueDetails = issues?.[sourceData?.id];
-          if (issueDetails?.start_date) {
-            const issueStartDate = new Date(issueDetails.start_date);
-            const targetDate = new Date(destinationData?.date);
-            const diffInDays = differenceInCalendarDays(targetDate, issueStartDate);
-            if (diffInDays < 0) {
-              setToast({
-                type: TOAST_TYPE.ERROR,
-                title: t("toast.error"),
-                message: t("issue_ui.due_before_start"),
-              });
-              return;
-            }
-          }
-
           handleDragAndDrop(
             sourceData?.id,
             issueDetails?.project_id ?? undefined,

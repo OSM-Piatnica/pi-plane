@@ -210,6 +210,21 @@ export const WorkItemTemplateDefaultValueFields = observer(function WorkItemTemp
         />
         <Controller
           control={control}
+          name="finish_date"
+          render={({ field: { value, onChange } }) => (
+            <div className="h-7">
+              <DateDropdown
+                value={value}
+                onChange={(date) => onChange(date ? renderFormattedPayloadDate(date) : null)}
+                buttonVariant="border-with-text"
+                minDate={minDate ?? undefined}
+                placeholder={t("finish_date")}
+              />
+            </div>
+          )}
+        />
+        <Controller
+          control={control}
           name="target_date"
           render={({ field: { value, onChange } }) => (
             <div className="h-7">

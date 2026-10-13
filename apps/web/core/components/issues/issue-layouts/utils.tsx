@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -30,7 +31,8 @@ import type {
 import { EIssuesStoreType } from "@plane/types";
 // plane ui
 import { Avatar } from "@plane/ui";
-import { renderFormattedDate, getFileURL } from "@plane/utils";
+import { renderFormattedDate, getFileURL, getTodayInTimeZone, getWorkItemDateStatuses } from "@plane/utils";
+import type { TWorkItemDateStatuses } from "@plane/utils";
 // helpers
 // store
 import { store } from "@/lib/store-context";
@@ -769,3 +771,20 @@ export const calculateIdentifierWidth = (projectIdentifierLength: number, maxSeq
   const sequenceDigits = Math.max(1, Math.floor(Math.log10(maxSequenceId)) + 1);
   return projectIdentifierLength * 7 + 7 + sequenceDigits * 7; // project identifier chars + dash + sequence digits
 };
+
+/**
+ * @description Date statuses of a work item for list/board/calendar badges. Overdue only concerns the due
+ * date and only active (not completed/cancelled) items; the due day itself is not overdue. "Today" is the
+ * calendar day in the project time zone (the runtime zone when unknown).
+ */
+export const getIssueDateStatuses = (
+  issue: Pick<TIssue, "finish_date" | "target_date">,
+  stateGroup: string | undefined,
+  timeZone?: string | null
+): TWorkItemDateStatuses =>
+  getWorkItemDateStatuses({
+    finishDate: issue.finish_date,
+    dueDate: issue.target_date,
+    today: getTodayInTimeZone(timeZone),
+    isActive: !!stateGroup && ![STATE_GROUPS.completed.key, STATE_GROUPS.cancelled.key].includes(stateGroup as never),
+  });

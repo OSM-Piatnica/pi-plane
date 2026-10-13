@@ -37,6 +37,7 @@ export enum EIssueGroupByToServerOptions {
   "cycle" = "cycle_id",
   "module" = "issue_module__module_id",
   "target_date" = "target_date",
+  "finish_date" = "finish_date",
   "project" = "project_id",
   "created_by" = "created_by",
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
@@ -52,6 +53,7 @@ export enum EIssueGroupBYServerToProperty {
   "cycle_id" = "cycle_id",
   "issue_module__module_id" = "module_ids",
   "target_date" = "target_date",
+  "finish_date" = "finish_date",
   "project_id" = "project_id",
   "created_by" = "created_by",
 }
@@ -177,6 +179,12 @@ export const ISSUE_ORDER_BY_OPTIONS: {
     defaultDirection: "asc",
   },
   {
+    key: "finish_date",
+    titleTranslationKey: "common.order_by.finish_date",
+    isDirectional: true,
+    defaultDirection: "asc",
+  },
+  {
     key: "target_date",
     titleTranslationKey: "common.order_by.due_date",
     isDirectional: true,
@@ -205,6 +213,7 @@ export const ISSUE_DISPLAY_PROPERTIES_KEYS: (keyof IIssueDisplayProperties)[] = 
   "assignee",
   "start_date",
   "due_date",
+  "finish_date",
   "duration",
   "labels",
   "key",
@@ -247,6 +256,10 @@ export const ISSUE_DISPLAY_PROPERTIES: {
     titleTranslationKey: "common.order_by.start_date",
   },
   {
+    key: "finish_date",
+    titleTranslationKey: "common.order_by.finish_date",
+  },
+  {
     key: "due_date",
     titleTranslationKey: "common.order_by.due_date",
   },
@@ -286,6 +299,7 @@ export const SPREADSHEET_PROPERTY_LIST: (keyof IIssueDisplayProperties)[] = [
   "cycle",
   "start_date",
   "due_date",
+  "finish_date",
   "duration",
   "estimate",
   "created_on",
@@ -320,6 +334,14 @@ export const SPREADSHEET_PROPERTY_DETAILS: {
     descendingOrderKey: "created_at",
     descendingOrderTitle: "Old",
     icon: "CalendarDays",
+  },
+  finish_date: {
+    i18n_title: "common.order_by.finish_date",
+    ascendingOrderKey: "-finish_date",
+    ascendingOrderTitle: "New",
+    descendingOrderKey: "finish_date",
+    descendingOrderTitle: "Old",
+    icon: "DueDatePropertyIcon",
   },
   due_date: {
     i18n_title: "common.order_by.due_date",

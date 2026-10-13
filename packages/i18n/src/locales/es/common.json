@@ -307,6 +307,7 @@
   "start_date": "Fecha de inicio",
   "end_date": "Fecha de fin",
   "due_date": "Fecha de vencimiento",
+  "finish_date": "Finish date",
   "target_date": "Fecha objetivo",
   "estimate": "Estimación",
   "change_parent_issue": "Cambiar elemento de trabajo padre",
@@ -521,6 +522,7 @@
       "last_updated": "Última actualización",
       "start_date": "Fecha de inicio",
       "due_date": "Fecha de vencimiento",
+      "finish_date": "Finish date",
       "asc": "Ascendente",
       "desc": "Descendente",
       "updated_on": "Actualizado el"

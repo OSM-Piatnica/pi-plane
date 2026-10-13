@@ -16,6 +16,7 @@ import type {
   IGanttBlock,
   TGanttViews,
 } from "@plane/types";
+import { EGanttBlockType } from "@plane/types";
 import { cn, getDate } from "@plane/utils";
 // components
 import { MultipleSelectGroup } from "@/components/core/multiple-select";
@@ -131,7 +132,8 @@ export const GanttChartMainContent = observer(function GanttChartMainContent(pro
 
   const handleScrollToBlock = (block: IGanttBlock) => {
     const scrollContainer = ganttContainerRef.current as HTMLDivElement;
-    const scrollToEndDate = !block.start_date && block.target_date;
+    // a work item with only a finish is a one day marker, not a default-width bar
+    const scrollToEndDate = !block.start_date && block.target_date && block.meta?.type !== EGanttBlockType.ISSUE;
     const scrollToDate = block.start_date ? getDate(block.start_date) : getDate(block.target_date);
     let chartData;
 

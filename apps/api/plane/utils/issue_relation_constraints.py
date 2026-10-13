@@ -80,9 +80,9 @@ def is_blocked_by_satisfied(issue_start, blocker_finish) -> bool:
 
 def is_timeline_relation_satisfied(relation_type, issue_dates, related_dates) -> bool:
     issue_start = (issue_dates or {}).get("start_date")
-    issue_finish = (issue_dates or {}).get("target_date")
+    issue_finish = (issue_dates or {}).get("finish_date")
     related_start = (related_dates or {}).get("start_date")
-    related_finish = (related_dates or {}).get("target_date")
+    related_finish = (related_dates or {}).get("finish_date")
 
     if relation_type == "blocked_by":
         return is_blocked_by_satisfied(issue_start, related_finish)

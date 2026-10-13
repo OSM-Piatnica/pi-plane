@@ -307,6 +307,7 @@
   "start_date": "Дата начала",
   "end_date": "Дата окончания",
   "due_date": "Срок выполнения",
+  "finish_date": "Finish date",
   "target_date": "Целевая дата",
   "estimate": "Оценка",
   "change_parent_issue": "Изменить родительский рабочий элемент",
@@ -521,6 +522,7 @@
       "last_updated": "Последние обновленные",
       "start_date": "Дата начала",
       "due_date": "Срок выполнения",
+      "finish_date": "Finish date",
       "asc": "По возрастанию",
       "desc": "По убыванию",
       "updated_on": "Дата обновления"

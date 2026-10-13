@@ -55,6 +55,7 @@ class IssueExportSerializer(IssueSerializer):
             "subscribers",
             "created_by_name",
             "start_date",
+            "finish_date",
             "target_date",
             "duration",
             "completed_at",
