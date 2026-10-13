@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -36,6 +37,7 @@ export interface IModuleStore {
   getModuleById: (moduleId: string) => IModule | null;
   getModuleNameById: (moduleId: string) => string;
   getProjectModuleDetails: (projectId: string) => IModule[] | null;
+  getOrderedProjectModuleDetails: (projectId: string) => IModule[] | null;
   getProjectModuleIds: (projectId: string) => string[] | null;
   getPlotTypeByModuleId: (moduleId: string) => TModulePlotType;
   // actions
@@ -220,6 +222,19 @@ export class ModulesStore implements IModuleStore {
    * @returns IModule | null
    */
   getModuleNameById = computedFn((moduleId: string) => this.moduleMap?.[moduleId]?.name);
+
+  /**
+   * @description returns list of module details of the project id passed as argument,
+   * ordered by the order_by display filter of the modules view (used for work item grouping)
+   * @param projectId
+   */
+  getOrderedProjectModuleDetails = computedFn((projectId: string) => {
+    if (!this.fetchedMap[projectId]) return null;
+    const displayFilters = this.rootStore.moduleFilter.getDisplayFiltersByProjectId(projectId);
+    const projectModules = Object.values(this.moduleMap).filter((m) => m.project_id === projectId && !m.archived_at);
+    // same ordering as the modules view; orderModules returns [] without a key, so fall back to manual order
+    return orderModules(projectModules, displayFilters?.order_by ?? "sort_order");
+  });
 
   /**
    * @description returns list of module details of the project id passed as argument

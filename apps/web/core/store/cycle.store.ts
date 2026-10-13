@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -18,7 +19,7 @@ import type {
   TCycleEstimateType,
 } from "@plane/types";
 import type { DistributionUpdates } from "@plane/utils";
-import { orderCycles, shouldFilterCycle, getDate, updateDistribution } from "@plane/utils";
+import { orderCycles, orderCyclesWithCompleted, shouldFilterCycle, getDate, updateDistribution } from "@plane/utils";
 // helpers
 // services
 import { CycleService } from "@/services/cycle.service";
@@ -54,6 +55,7 @@ export interface ICycleStore {
   getCycleById: (cycleId: string) => ICycle | null;
   getCycleNameById: (cycleId: string) => string | undefined;
   getProjectCycleDetails: (projectId: string) => ICycle[] | null;
+  getOrderedProjectCycleDetails: (projectId: string) => ICycle[] | null;
   getProjectCycleIds: (projectId: string) => string[] | null;
   getPlotTypeByCycleId: (cycleId: string) => TCyclePlotType;
   getEstimateTypeByCycleId: (cycleId: string) => TCycleEstimateType;
@@ -342,6 +344,17 @@ export class CycleStore implements ICycleStore {
     let cycles = Object.values(this.cycleMap ?? {}).filter((c) => c.project_id === projectId && !c?.archived_at);
     cycles = sortBy(cycles, [(c) => c.sort_order]);
     return cycles || null;
+  });
+
+  /**
+   * @description returns list of cycle details of the project id passed as argument, ordered like the
+   * cycles view (used for work item grouping)
+   * @param projectId
+   */
+  getOrderedProjectCycleDetails = computedFn((projectId: string): ICycle[] | null => {
+    if (!this.fetchedMap[projectId]) return null;
+    const cycles = Object.values(this.cycleMap ?? {}).filter((c) => c.project_id === projectId && !c?.archived_at);
+    return orderCyclesWithCompleted(cycles);
   });
 
   /**

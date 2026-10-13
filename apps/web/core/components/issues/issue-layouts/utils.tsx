@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -155,9 +156,9 @@ const getCycleColumns = (): IGroupByColumn[] | undefined => {
   const { currentProjectDetails } = store.projectRoot.project;
   // Check for the current project details
   if (!currentProjectDetails || !currentProjectDetails?.id) return;
-  const { getProjectCycleDetails } = store.cycle;
+  const { getOrderedProjectCycleDetails } = store.cycle;
   // Get the cycle details for the current project
-  const cycleDetails = currentProjectDetails?.id ? getProjectCycleDetails(currentProjectDetails?.id) : undefined;
+  const cycleDetails = currentProjectDetails?.id ? getOrderedProjectCycleDetails(currentProjectDetails?.id) : undefined;
   // Map the cycle details to the group by columns
   const cycles: IGroupByColumn[] = [];
   cycleDetails?.map((cycle) => {
@@ -186,9 +187,9 @@ const getModuleColumns = (): IGroupByColumn[] | undefined => {
   const { currentProjectDetails } = store.projectRoot.project;
   if (!currentProjectDetails || !currentProjectDetails?.id) return;
   // get project module ids and module details
-  const { getProjectModuleDetails } = store.module;
+  const { getOrderedProjectModuleDetails } = store.module;
   // get module details
-  const moduleDetails = currentProjectDetails?.id ? getProjectModuleDetails(currentProjectDetails?.id) : undefined;
+  const moduleDetails = currentProjectDetails?.id ? getOrderedProjectModuleDetails(currentProjectDetails?.id) : undefined;
   // map module details to group by columns
   const modules: IGroupByColumn[] = [];
   moduleDetails?.map((module) => {

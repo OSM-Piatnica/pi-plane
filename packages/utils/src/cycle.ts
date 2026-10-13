@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -39,6 +40,26 @@ export const orderCycles = (cycles: ICycle[], sortByManual: boolean): ICycle[] =
     ]);
 
   return filteredCycles;
+};
+
+/**
+ * Orders cycles the same way the cycles view does (current, upcoming, draft), followed by
+ * completed cycles by start date. Unlike orderCycles, completed cycles are kept, so the result
+ * can be used wherever every cycle of a project must be listed (e.g. work item grouping).
+ * @param {ICycle[]} cycles - Array of cycles to be ordered
+ * @returns {ICycle[]} Ordered array of cycles
+ */
+export const orderCyclesWithCompleted = (cycles: ICycle[]): ICycle[] => {
+  const isCompleted = (c: ICycle) => c.status?.toLowerCase() === "completed";
+  const completed = sortBy(
+    cycles.filter((c) => isCompleted(c)),
+    [(c) => !c.start_date, (c) => c.start_date]
+  );
+  const rest = cycles.filter((c) => !isCompleted(c));
+  // cycles with an unknown status are not listed by orderCycles; keep them at the end instead of dropping them
+  const ordered = orderCycles(rest, false);
+  const unlisted = rest.filter((c) => !ordered.includes(c));
+  return [...ordered, ...completed, ...unlisted];
 };
 
 /**
