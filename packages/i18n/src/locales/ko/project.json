@@ -334,6 +334,12 @@
           "text": "기능 관리"
         }
       }
+    },
+    "order_by": {
+      "status": "기본값(상태)",
+      "name": "이름",
+      "start_date": "시작 날짜",
+      "manual": "수동"
     }
   },
   "project_modules": {

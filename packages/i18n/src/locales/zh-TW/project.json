@@ -334,6 +334,12 @@
           "text": "管理功能"
         }
       }
+    },
+    "order_by": {
+      "status": "預設（狀態）",
+      "name": "名稱",
+      "start_date": "開始日期",
+      "manual": "手動"
     }
   },
   "project_modules": {

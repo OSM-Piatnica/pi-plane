@@ -334,6 +334,12 @@
           "text": "Gestionar funciones"
         }
       }
+    },
+    "order_by": {
+      "status": "Predeterminado (estado)",
+      "name": "Nombre",
+      "start_date": "Fecha de inicio",
+      "manual": "Manual"
     }
   },
   "project_modules": {

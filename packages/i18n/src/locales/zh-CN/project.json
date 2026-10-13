@@ -334,6 +334,12 @@
           "text": "管理功能"
         }
       }
+    },
+    "order_by": {
+      "status": "默认（状态）",
+      "name": "名称",
+      "start_date": "开始日期",
+      "manual": "手动"
     }
   },
   "project_modules": {

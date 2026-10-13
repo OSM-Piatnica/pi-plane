@@ -19,7 +19,14 @@ import type {
   TCycleEstimateType,
 } from "@plane/types";
 import type { DistributionUpdates } from "@plane/utils";
-import { orderCycles, orderCyclesWithCompleted, shouldFilterCycle, getDate, updateDistribution } from "@plane/utils";
+import {
+  orderCycles,
+  orderCyclesWithCompleted,
+  sortCyclesByOrderBy,
+  shouldFilterCycle,
+  getDate,
+  updateDistribution,
+} from "@plane/utils";
 // helpers
 // services
 import { CycleService } from "@/services/cycle.service";
@@ -49,7 +56,7 @@ export interface ICycleStore {
   currentProjectActiveCycle: ICycle | null;
 
   // computed actions
-  getFilteredCycleIds: (projectId: string, sortByManual: boolean) => string[] | null;
+  getFilteredCycleIds: (projectId: string) => string[] | null;
   getFilteredCompletedCycleIds: (projectId: string) => string[] | null;
   getFilteredArchivedCycleIds: (projectId: string) => string[] | null;
   getCycleById: (cycleId: string) => ICycle | null;
@@ -260,7 +267,8 @@ export class CycleStore implements ICycleStore {
    * @param {TCycleFilters} filters
    * @returns {string[] | null}
    */
-  getFilteredCycleIds = computedFn((projectId: string, sortByManual: boolean) => {
+  getFilteredCycleIds = computedFn((projectId: string) => {
+    const displayFilters = this.rootStore.cycleFilter.getDisplayFiltersByProjectId(projectId);
     const filters = this.rootStore.cycleFilter.getFiltersByProjectId(projectId);
     const searchQuery = this.rootStore.cycleFilter.searchQuery;
     if (!this.fetchedMap[projectId]) return null;
@@ -271,7 +279,7 @@ export class CycleStore implements ICycleStore {
         c.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
         shouldFilterCycle(c, filters ?? {})
     );
-    cycles = orderCycles(cycles, sortByManual);
+    cycles = orderCycles(cycles, displayFilters?.order_by);
     const cycleIds = cycles.map((c) => c.id);
     return cycleIds;
   });
@@ -283,6 +291,8 @@ export class CycleStore implements ICycleStore {
    * @returns {string[] | null}
    */
   getFilteredCompletedCycleIds = computedFn((projectId: string) => {
+    const displayFilters = this.rootStore.cycleFilter.getDisplayFiltersByProjectId(projectId);
+    const orderByKey = displayFilters?.order_by ?? "status";
     const filters = this.rootStore.cycleFilter.getFiltersByProjectId(projectId);
     const searchQuery = this.rootStore.cycleFilter.searchQuery;
     if (!this.fetchedMap[projectId]) return null;
@@ -294,7 +304,8 @@ export class CycleStore implements ICycleStore {
         c.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
         shouldFilterCycle(c, filters ?? {})
     );
-    cycles = sortBy(cycles, [(c) => !c.start_date]);
+    cycles =
+      orderByKey === "status" ? sortBy(cycles, [(c) => !c.start_date]) : sortCyclesByOrderBy(cycles, orderByKey);
     const cycleIds = cycles.map((c) => c.id);
     return cycleIds;
   });
@@ -348,13 +359,14 @@ export class CycleStore implements ICycleStore {
 
   /**
    * @description returns list of cycle details of the project id passed as argument, ordered like the
-   * cycles view (used for work item grouping)
+   * cycles view, including its order_by setting (used for work item grouping)
    * @param projectId
    */
   getOrderedProjectCycleDetails = computedFn((projectId: string): ICycle[] | null => {
     if (!this.fetchedMap[projectId]) return null;
     const cycles = Object.values(this.cycleMap ?? {}).filter((c) => c.project_id === projectId && !c?.archived_at);
-    return orderCyclesWithCompleted(cycles);
+    const displayFilters = this.rootStore.cycleFilter.getDisplayFiltersByProjectId(projectId);
+    return orderCyclesWithCompleted(cycles, displayFilters?.order_by);
   });
 
   /**

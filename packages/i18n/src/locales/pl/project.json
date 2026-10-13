@@ -334,6 +334,12 @@
           "text": "Zarządzaj funkcjami"
         }
       }
+    },
+    "order_by": {
+      "status": "Domyślnie (status)",
+      "name": "Nazwa",
+      "start_date": "Data rozpoczęcia",
+      "manual": "Ręcznie"
     }
   },
   "project_modules": {

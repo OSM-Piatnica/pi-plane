@@ -8,18 +8,42 @@
 import { startOfToday, format } from "date-fns";
 import { isEmpty, orderBy, sortBy, uniqBy } from "lodash-es";
 // plane imports
-import type { ICycle, TCycleFilters, TProgressSnapshot } from "@plane/types";
+import type { ICycle, TCycleFilters, TCycleOrderByOptions, TProgressSnapshot } from "@plane/types";
 // local imports
 import { findTotalDaysInRange, generateDateArray, getDate } from "./datetime";
 import { satisfiesDateFilter } from "./filter";
 
+const collator = new Intl.Collator("en-US", { numeric: true, sensitivity: "base" });
+
 /**
- * Orders cycles based on their status
+ * Sorts cycles by a user selected order. "status" is not handled here as it needs the status grouping
+ * of orderCycles; it falls back to the manual order.
+ * Cycles without a start date are always kept at the end.
+ * @param {ICycle[]} cycles - Array of cycles to be sorted
+ * @param {TCycleOrderByOptions} orderByKey - Order to apply
+ * @returns {ICycle[]} Sorted array of cycles
+ */
+export const sortCyclesByOrderBy = (cycles: ICycle[], orderByKey: TCycleOrderByOptions): ICycle[] => {
+  const isDescending = orderByKey.startsWith("-");
+  const key = isDescending ? orderByKey.slice(1) : orderByKey;
+  const direction = isDescending ? -1 : 1;
+
+  if (key === "name") return [...cycles].sort((a, b) => direction * collator.compare(a.name, b.name));
+  if (key === "start_date")
+    return [...cycles].sort((a, b) => {
+      if (!a.start_date || !b.start_date) return Number(!a.start_date) - Number(!b.start_date);
+      return direction * (a.start_date < b.start_date ? -1 : a.start_date > b.start_date ? 1 : 0);
+    });
+  return sortBy(cycles, [(c) => c.sort_order]);
+};
+
+/**
+ * Orders cycles based on their status or on the selected order
  * @param {ICycle[]} cycles - Array of cycles to be ordered
- * @param {boolean} sortByManual - Whether to sort by manual order
+ * @param {TCycleOrderByOptions} orderByKey - Order to apply, "status" groups by current, upcoming and draft
  * @returns {ICycle[]} Ordered array of cycles
  */
-export const orderCycles = (cycles: ICycle[], sortByManual: boolean): ICycle[] => {
+export const orderCycles = (cycles: ICycle[], orderByKey: TCycleOrderByOptions = "status"): ICycle[] => {
   if (cycles.length === 0) return [];
 
   const acceptedStatuses = ["current", "upcoming", "draft"];
@@ -32,7 +56,7 @@ export const orderCycles = (cycles: ICycle[], sortByManual: boolean): ICycle[] =
   };
 
   let filteredCycles = cycles.filter((c) => acceptedStatuses.includes(c.status?.toLowerCase() ?? ""));
-  if (sortByManual) filteredCycles = sortBy(filteredCycles, [(c) => c.sort_order]);
+  if (orderByKey !== "status") filteredCycles = sortCyclesByOrderBy(filteredCycles, orderByKey);
   else
     filteredCycles = sortBy(filteredCycles, [
       (c) => STATUS_ORDER[c.status?.toLowerCase() ?? ""],
@@ -43,13 +67,15 @@ export const orderCycles = (cycles: ICycle[], sortByManual: boolean): ICycle[] =
 };
 
 /**
- * Orders cycles the same way the cycles view does (current, upcoming, draft), followed by
- * completed cycles by start date. Unlike orderCycles, completed cycles are kept, so the result
- * can be used wherever every cycle of a project must be listed (e.g. work item grouping).
+ * Orders cycles the same way the cycles view does, but keeps completed cycles, so the result can be
+ * used wherever every cycle of a project must be listed (e.g. work item grouping).
+ * With the "status" order that is current, upcoming, draft, followed by completed cycles by start date.
  * @param {ICycle[]} cycles - Array of cycles to be ordered
+ * @param {TCycleOrderByOptions} orderByKey - Order to apply
  * @returns {ICycle[]} Ordered array of cycles
  */
-export const orderCyclesWithCompleted = (cycles: ICycle[]): ICycle[] => {
+export const orderCyclesWithCompleted = (cycles: ICycle[], orderByKey: TCycleOrderByOptions = "status"): ICycle[] => {
+  if (orderByKey !== "status") return sortCyclesByOrderBy(cycles, orderByKey);
   const isCompleted = (c: ICycle) => c.status?.toLowerCase() === "completed";
   const completed = sortBy(
     cycles.filter((c) => isCompleted(c)),
@@ -57,7 +83,7 @@ export const orderCyclesWithCompleted = (cycles: ICycle[]): ICycle[] => {
   );
   const rest = cycles.filter((c) => !isCompleted(c));
   // cycles with an unknown status are not listed by orderCycles; keep them at the end instead of dropping them
-  const ordered = orderCycles(rest, false);
+  const ordered = orderCycles(rest, "status");
   const unlisted = rest.filter((c) => !ordered.includes(c));
   return [...ordered, ...completed, ...unlisted];
 };

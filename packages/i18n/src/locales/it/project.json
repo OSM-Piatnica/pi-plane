@@ -334,6 +334,12 @@
           "text": "Gestisci funzionalità"
         }
       }
+    },
+    "order_by": {
+      "status": "Predefinito (stato)",
+      "name": "Nome",
+      "start_date": "Data di inizio",
+      "manual": "Manuale"
     }
   },
   "project_modules": {
