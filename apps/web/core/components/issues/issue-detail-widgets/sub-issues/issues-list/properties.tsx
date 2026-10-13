@@ -7,7 +7,6 @@
  */
 
 // plane imports
-import type { SyntheticEvent } from "react";
 import { useMemo } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
@@ -44,11 +43,6 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
   const { workspaceSlug, parentIssueId, issueId, canEdit, updateSubIssue, displayProperties, issue } = props;
   const { t } = useTranslation();
   const { getStateById } = useProjectState();
-
-  const handleEventPropagation = (e: SyntheticEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    e.preventDefault();
-  };
 
   const handleStartDate = (date: Date | null) => {
     if (issue.project_id) {
@@ -124,10 +118,7 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
       </WithDisplayPropertiesHOC>
 
       {/* start date */}
-      <WithDisplayPropertiesHOC
-        displayProperties={displayProperties}
-        displayPropertyKey="start_date"
-      >
+      <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="start_date">
         <div className="h-5">
           <DateDropdown
             value={issue.start_date ?? null}
@@ -144,10 +135,7 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
       </WithDisplayPropertiesHOC>
 
       {/* target/due date */}
-      <WithDisplayPropertiesHOC
-        displayProperties={displayProperties}
-        displayPropertyKey="due_date"
-      >
+      <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="due_date">
         <div className="h-5">
           <DateDropdown
             value={issue?.target_date ?? null}

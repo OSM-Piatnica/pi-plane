@@ -89,8 +89,7 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
         <div
           id={`issue-${issueId}`}
           className="relative flex h-full w-full cursor-pointer items-center justify-center"
-          role="button"
-          tabIndex={0}
+          role="presentation"
           onClick={handleIssuePeekOverview}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") handleIssuePeekOverview();
@@ -121,7 +120,11 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
             id={`issue-${issueId}`}
             className="space-between relative flex h-full w-full cursor-pointer items-center rounded-sm"
             style={blockStyle}
+            role="presentation"
             onClick={handleIssuePeekOverview}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") handleIssuePeekOverview();
+            }}
           >
             <div className="absolute top-0 left-0 h-full w-full bg-surface-1/50" />
             <div

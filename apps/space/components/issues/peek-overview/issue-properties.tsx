@@ -49,15 +49,14 @@ export const PeekOverviewIssueProperties = observer(function PeekOverviewIssuePr
 
   const priority = issueDetails.priority ? getIssuePriorityFilters(issueDetails.priority) : null;
 
-  const handleCopyLink = () => {
+  const handleCopyLink = async () => {
     const urlToCopy = window.location.href;
 
-    copyTextToClipboard(urlToCopy).then(() => {
-      setToast({
-        type: TOAST_TYPE.INFO,
-        title: "Link copied!",
-        message: "Work item link copied to clipboard",
-      });
+    await copyTextToClipboard(urlToCopy);
+    setToast({
+      type: TOAST_TYPE.INFO,
+      title: "Link copied!",
+      message: "Work item link copied to clipboard",
     });
   };
 

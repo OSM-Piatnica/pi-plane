@@ -333,14 +333,14 @@ export const getGroupedWorkItemIds = (
   }
 
   // Get the default key for the group by key
-  const getDefaultGroupKey = (groupByKey: TIssueGroupByOptions) => {
-    switch (groupByKey) {
+  const getDefaultGroupKey = (key: TIssueGroupByOptions) => {
+    switch (key) {
       case "state_detail.group":
         return "state__group";
       case null:
         return null;
       default:
-        return ISSUE_GROUP_BY_KEY[groupByKey];
+        return ISSUE_GROUP_BY_KEY[key];
     }
   };
 
@@ -351,7 +351,8 @@ export const getGroupedWorkItemIds = (
     if (Array.isArray(value)) {
       if (value.length === 0) return "None";
       // Sort & join to build deterministic set-like key
-      return value.slice().sort().join(",");
+      // eslint-disable-next-line unicorn/no-array-sort -- the web tsconfig targets ES2022, which has no toSorted
+      return [...value].sort().join(",");
     }
     return value ?? "None";
   });
