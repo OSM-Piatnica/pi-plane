@@ -1,3 +1,7 @@
+# Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+
 name: Publish Images
 
 # Publishes the Pi-Plane container images to GHCR when a version tag is pushed.
@@ -267,7 +271,6 @@ jobs:
           files: |
             deployments/cli/community/setup.sh
             deployments/cli/community/restore.sh
-            deployments/cli/community/restore-airgapped.sh
             deployments/cli/community/docker-compose.yml
             deployments/cli/community/variables.env
             deployments/swarm/community/swarm.sh
