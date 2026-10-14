@@ -1879,8 +1879,10 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       case "-sequence_id":
         return getIssueIds(orderBy(array, "sequence_id", ["desc"]));
       case "name":
+        // eslint-disable-next-line unicorn/no-array-sort -- the web tsconfig targets ES2022, which has no toSorted
         return getIssueIds([...array].sort(compareIssuesByName));
       case "-name":
+        // eslint-disable-next-line unicorn/no-array-sort -- the web tsconfig targets ES2022, which has no toSorted
         return getIssueIds([...array].sort((a, b) => compareIssuesByName(b, a)));
       case "state__name":
         return getIssueIds(

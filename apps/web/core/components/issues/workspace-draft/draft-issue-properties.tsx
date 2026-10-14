@@ -42,6 +42,13 @@ export interface IIssueProperties {
   className: string;
 }
 
+const handleEventPropagation = (e: React.MouseEvent) => {
+  e.stopPropagation();
+  e.preventDefault();
+};
+
+const stopKeyPropagation = (e: React.KeyboardEvent) => e.stopPropagation();
+
 export const DraftIssueProperties = observer(function DraftIssueProperties(props: IIssueProperties) {
   const { issue, updateIssue, className } = props;
   const { t } = useTranslation();
@@ -142,16 +149,11 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
   const maxDate = getDate(issue.finish_date);
   maxDate?.setDate(maxDate.getDate());
 
-  const handleEventPropagation = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-  };
-
   return (
     <div className={className}>
       {/* basic properties */}
       {/* state */}
-      <div className="h-5" onClick={handleEventPropagation}>
+      <div className="h-5" role="presentation" onClick={handleEventPropagation} onKeyDown={stopKeyPropagation}>
         <StateDropdown
           buttonContainerClassName="truncate max-w-40"
           value={issue.state_id}
@@ -164,7 +166,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
       </div>
 
       {/* priority */}
-      <div className="h-5" onClick={handleEventPropagation}>
+      <div className="h-5" role="presentation" onClick={handleEventPropagation} onKeyDown={stopKeyPropagation}>
         <PriorityDropdown
           value={issue?.priority}
           onChange={handlePriority}
@@ -187,7 +189,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
       />
 
       {/* start date */}
-      <div className="h-5" onClick={handleEventPropagation}>
+      <div className="h-5" role="presentation" onClick={handleEventPropagation} onKeyDown={stopKeyPropagation}>
         <DateDropdown
           value={issue.start_date ?? null}
           onChange={handleStartDate}
@@ -206,7 +208,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
         className="h-5"
         role="presentation"
         onClick={handleEventPropagation}
-        onKeyDown={(e) => e.stopPropagation()}
+        onKeyDown={stopKeyPropagation}
         title={t("issue.dates.help.finish")}
       >
         <DateDropdown
@@ -223,7 +225,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
       </div>
 
       {/* target/due date */}
-      <div className="h-5" onClick={handleEventPropagation}>
+      <div className="h-5" role="presentation" onClick={handleEventPropagation} onKeyDown={stopKeyPropagation}>
         <DateDropdown
           value={issue?.target_date ?? null}
           onChange={handleTargetDate}
@@ -241,7 +243,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
       </div>
 
       {/* assignee */}
-      <div className="h-5" onClick={handleEventPropagation}>
+      <div className="h-5" role="presentation" onClick={handleEventPropagation} onKeyDown={stopKeyPropagation}>
         <MemberDropdown
           projectId={issue?.project_id}
           value={issue?.assignee_ids}
@@ -259,7 +261,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
 
       {/* modules */}
       {projectDetails?.module_view && (
-        <div className="h-5" onClick={handleEventPropagation}>
+        <div className="h-5" role="presentation" onClick={handleEventPropagation} onKeyDown={stopKeyPropagation}>
           <ModuleDropdown
             buttonContainerClassName="truncate max-w-40"
             projectId={issue?.project_id}
@@ -276,7 +278,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
 
       {/* cycles */}
       {projectDetails?.cycle_view && (
-        <div className="h-5" onClick={handleEventPropagation}>
+        <div className="h-5" role="presentation" onClick={handleEventPropagation} onKeyDown={stopKeyPropagation}>
           <CycleDropdown
             buttonContainerClassName="truncate max-w-40"
             projectId={issue?.project_id}
@@ -291,7 +293,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
 
       {/* estimates */}
       {issue.project_id && areEstimateEnabledByProjectId(issue.project_id?.toString()) && (
-        <div className="h-5" onClick={handleEventPropagation}>
+        <div className="h-5" role="presentation" onClick={handleEventPropagation} onKeyDown={stopKeyPropagation}>
           <EstimateDropdown
             value={issue.estimate_point ?? undefined}
             onChange={handleEstimate}

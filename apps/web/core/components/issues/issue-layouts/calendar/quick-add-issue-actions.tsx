@@ -98,7 +98,7 @@ export const CalendarQuickAddIssueActions = observer(function CalendarQuickAddIs
       )}
       <QuickAddIssueRoot
         isQuickAddOpen={isOpen}
-        setIsQuickAddOpen={(isOpen) => setIsOpen(isOpen)}
+        setIsQuickAddOpen={(open) => setIsOpen(open)}
         layout={EIssueLayoutTypes.CALENDAR}
         prePopulatedData={prePopulatedData}
         quickAddCallback={quickAddCallback}
