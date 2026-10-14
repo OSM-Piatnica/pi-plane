@@ -334,6 +334,12 @@
           "text": "Spravovat funkce"
         }
       }
+    },
+    "order_by": {
+      "status": "Výchozí (stav)",
+      "name": "Název",
+      "start_date": "Datum začátku",
+      "manual": "Ručně"
     }
   },
   "project_modules": {

@@ -30,7 +30,7 @@ export const CyclesView = observer(function CyclesView(props: ICyclesView) {
   const { searchQuery } = useCycleFilter();
   const { t } = useTranslation();
   // derived values
-  const filteredCycleIds = getFilteredCycleIds(projectId, false);
+  const filteredCycleIds = getFilteredCycleIds(projectId);
   const filteredCompletedCycleIds = getFilteredCompletedCycleIds(projectId);
   const filteredUpcomingCycleIds = (filteredCycleIds ?? []).filter(
     (cycleId) => cycleId !== currentProjectActiveCycleId

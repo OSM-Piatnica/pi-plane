@@ -334,6 +334,12 @@
           "text": "Gérer les fonctionnalités"
         }
       }
+    },
+    "order_by": {
+      "status": "Par défaut (statut)",
+      "name": "Nom",
+      "start_date": "Date de début",
+      "manual": "Manuel"
     }
   },
   "project_modules": {
