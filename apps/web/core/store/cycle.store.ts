@@ -304,8 +304,7 @@ export class CycleStore implements ICycleStore {
         c.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
         shouldFilterCycle(c, filters ?? {})
     );
-    cycles =
-      orderByKey === "status" ? sortBy(cycles, [(c) => !c.start_date]) : sortCyclesByOrderBy(cycles, orderByKey);
+    cycles = orderByKey === "status" ? sortBy(cycles, [(c) => !c.start_date]) : sortCyclesByOrderBy(cycles, orderByKey);
     const cycleIds = cycles.map((c) => c.id);
     return cycleIds;
   });
@@ -643,13 +642,13 @@ export class CycleStore implements ICycleStore {
    * @param cycleId
    */
   deleteCycle = async (workspaceSlug: string, projectId: string, cycleId: string) =>
-    await this.cycleService.deleteCycle(workspaceSlug, projectId, cycleId).then(() => {
+    await this.cycleService.deleteCycle(workspaceSlug, projectId, cycleId).then(() =>
       runInAction(() => {
         delete this.cycleMap[cycleId];
         delete this.activeCycleIdMap[cycleId];
         if (this.rootStore.favorite.entityMap[cycleId]) this.rootStore.favorite.removeFavoriteFromStore(cycleId);
-      });
-    });
+      })
+    );
 
   /**
    * @description adds a cycle to favorites
@@ -715,12 +714,12 @@ export class CycleStore implements ICycleStore {
     if (cycleDetails?.archived_at) return;
     await this.cycleArchiveService
       .archiveCycle(workspaceSlug, projectId, cycleId)
-      .then((response) => {
+      .then((response) =>
         runInAction(() => {
           set(this.cycleMap, [cycleId, "archived_at"], response.archived_at);
           if (this.rootStore.favorite.entityMap[cycleId]) this.rootStore.favorite.removeFavoriteFromStore(cycleId);
-        });
-      })
+        })
+      )
       .catch((error) => {
         console.error("Failed to archive cycle in cycle store", error);
       });
@@ -738,11 +737,11 @@ export class CycleStore implements ICycleStore {
     if (!cycleDetails?.archived_at) return;
     await this.cycleArchiveService
       .restoreCycle(workspaceSlug, projectId, cycleId)
-      .then(() => {
+      .then(() =>
         runInAction(() => {
           set(this.cycleMap, [cycleId, "archived_at"], null);
-        });
-      })
+        })
+      )
       .catch((error) => {
         console.error("Failed to restore cycle in cycle store", error);
       });

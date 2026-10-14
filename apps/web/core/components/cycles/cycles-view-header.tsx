@@ -31,11 +31,17 @@ export const CyclesViewHeader = observer(function CyclesViewHeader(props: Props)
   // refs
   const inputRef = useRef<HTMLInputElement>(null);
   // hooks
-  const { currentProjectFilters, currentProjectDisplayFilters, searchQuery, updateFilters, updateDisplayFilters, updateSearchQuery } =
-    useCycleFilter();
+  const {
+    currentProjectFilters,
+    currentProjectDisplayFilters,
+    searchQuery,
+    updateFilters,
+    updateDisplayFilters,
+    updateSearchQuery,
+  } = useCycleFilter();
   const { t } = useTranslation();
   // states
-  const [isSearchOpen, setIsSearchOpen] = useState(searchQuery !== "" ? true : false);
+  const [isSearchOpen, setIsSearchOpen] = useState(searchQuery !== "");
   // outside click detector hook
   useOutsideClickDetector(inputRef, () => {
     if (isSearchOpen && searchQuery.trim() === "") setIsSearchOpen(false);

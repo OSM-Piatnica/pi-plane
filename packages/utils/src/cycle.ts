@@ -29,9 +29,9 @@ export const sortCyclesByOrderBy = (cycles: ICycle[], orderByKey: TCycleOrderByO
   const key = isDescending ? orderByKey.slice(1) : orderByKey;
   const direction = isDescending ? -1 : 1;
 
-  if (key === "name") return [...cycles].sort((a, b) => direction * collator.compare(a.name, b.name));
+  if (key === "name") return cycles.toSorted((a, b) => direction * collator.compare(a.name, b.name));
   if (key === "start_date")
-    return [...cycles].sort((a, b) => {
+    return cycles.toSorted((a, b) => {
       if (!a.start_date || !b.start_date) return Number(!a.start_date) - Number(!b.start_date);
       return direction * (a.start_date < b.start_date ? -1 : a.start_date > b.start_date ? 1 : 0);
     });
@@ -47,7 +47,7 @@ export const sortCyclesByOrderBy = (cycles: ICycle[], orderByKey: TCycleOrderByO
 export const orderCycles = (cycles: ICycle[], orderByKey: TCycleOrderByOptions = "status"): ICycle[] => {
   if (cycles.length === 0) return [];
 
-  const acceptedStatuses = ["current", "upcoming", "draft"];
+  const acceptedStatuses = new Set(["current", "upcoming", "draft"]);
   const STATUS_ORDER: {
     [key: string]: number;
   } = {
@@ -56,7 +56,7 @@ export const orderCycles = (cycles: ICycle[], orderByKey: TCycleOrderByOptions =
     draft: 3,
   };
 
-  let filteredCycles = cycles.filter((c) => acceptedStatuses.includes(c.status?.toLowerCase() ?? ""));
+  let filteredCycles = cycles.filter((c) => acceptedStatuses.has(c.status?.toLowerCase() ?? ""));
   if (orderByKey !== "status") filteredCycles = sortCyclesByOrderBy(filteredCycles, orderByKey);
   else
     filteredCycles = sortBy(filteredCycles, [
@@ -66,6 +66,8 @@ export const orderCycles = (cycles: ICycle[], orderByKey: TCycleOrderByOptions =
 
   return filteredCycles;
 };
+
+const isCompleted = (c: ICycle) => c.status?.toLowerCase() === "completed";
 
 /**
  * Orders cycles the same way the cycles view does, but keeps completed cycles, so the result can be
@@ -77,7 +79,6 @@ export const orderCycles = (cycles: ICycle[], orderByKey: TCycleOrderByOptions =
  */
 export const orderCyclesWithCompleted = (cycles: ICycle[], orderByKey: TCycleOrderByOptions = "status"): ICycle[] => {
   if (orderByKey !== "status") return sortCyclesByOrderBy(cycles, orderByKey);
-  const isCompleted = (c: ICycle) => c.status?.toLowerCase() === "completed";
   const completed = sortBy(
     cycles.filter((c) => isCompleted(c)),
     [(c) => !c.start_date, (c) => c.start_date]
@@ -129,15 +130,15 @@ const scope = (p: any, isTypeIssue: boolean) => (isTypeIssue ? p.total_issues : 
 /**
  * Calculates the ideal progress value
  * @param {string} date - Current date
- * @param {number} scope - Total scope
+ * @param {number} totalScope - Total scope
  * @param {ICycle} cycle - Cycle data
  * @returns {number} Ideal progress value
  */
-const ideal = (date: string, scope: number, cycle: ICycle) =>
+const ideal = (date: string, totalScope: number, cycle: ICycle) =>
   Math.floor(
     ((findTotalDaysInRange(date, cycle.end_date) || 0) /
       (findTotalDaysInRange(cycle.start_date, cycle.end_date) || 0)) *
-      scope
+      totalScope
   );
 
 /**
