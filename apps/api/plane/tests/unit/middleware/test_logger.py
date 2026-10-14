@@ -56,6 +56,10 @@ class TestAPITokenLogMiddleware:
     def test_token_identifier_is_hashed_not_plaintext(self, middleware, request_factory):
         log_data = self._captured_log_data(middleware, request_factory)
 
+        # Mirrors the middleware's HMAC. CodeQL (py/weak-sensitive-data-hashing)
+        # false positive: the API key is a high-entropy token, not a password, and
+        # this is a keyed HMAC used only to correlate log lines.
+        # codeql[py/weak-sensitive-data-hashing]
         expected_hash = hmac.new(
             settings.SECRET_KEY.encode(), self.API_KEY.encode(), hashlib.sha256
         ).hexdigest()
