@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,7 +9,8 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { Link } from "react-router";
 // plane imports
-import { ROLE } from "@plane/constants";
+import { getRoleI18nKey } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 import { Popover } from "@plane/propel/popover";
 import { Avatar } from "@plane/ui";
 import { cn, getFileURL } from "@plane/utils";
@@ -27,6 +29,7 @@ export const EditorUserMention = observer(function EditorUserMention(props: Prop
   // params
   const { workspaceSlug } = useParams();
   // store hooks
+  const { t } = useTranslation();
   const { data: currentUser } = useUser();
   const {
     getUserDetails,
@@ -74,7 +77,7 @@ export const EditorUserMention = observer(function EditorUserMention(props: Prop
                 <Link to={profileLink} className="not-prose text-13 font-medium text-primary hover:underline">
                   {userDetails?.first_name} {userDetails?.last_name}
                 </Link>
-                {roleDetails && <p className="text-11 text-secondary">{ROLE[roleDetails]}</p>}
+                {roleDetails && <p className="text-11 text-secondary">{t(getRoleI18nKey(roleDetails))}</p>}
               </div>
             </div>
           </div>

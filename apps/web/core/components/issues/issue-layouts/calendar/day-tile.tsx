@@ -19,8 +19,7 @@ import type { TGroupedIssues, TIssue, TIssueMap, TPaginationData, ICalendarDate 
 import { cn, renderFormattedPayloadDate } from "@plane/utils";
 import { highlightIssueOnDrop } from "@/components/issues/issue-layouts/utils";
 // helpers
-import { MONTHS_LIST } from "@/constants/calendar";
-// helpers
+import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 // types
 import type { ICycleIssuesFilter } from "@/store/issue/cycle";
 import type { IModuleIssuesFilter } from "@/store/issue/module";
@@ -78,6 +77,7 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
   } = props;
   // i18n
   const { t } = useTranslation();
+  const { getMonthName } = useCalendarLocale();
 
   const [isDraggingOver, setIsDraggingOver] = useState(false);
 
@@ -160,7 +160,7 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
               : "font-medium" // if week layout, highlight all days
           } ${isWeekend ? "bg-layer-1" : "bg-layer-transparent"} `}
         >
-          {date.date.getDate() === 1 && MONTHS_LIST[date.date.getMonth() + 1].shortTitle + " "}
+          {date.date.getDate() === 1 && getMonthName(date.date.getMonth() + 1, "short") + " "}
           {isToday ? (
             <span className="flex h-5 w-5 items-center justify-center rounded-full bg-accent-primary text-on-color">
               {date.date.getDate()}

@@ -334,6 +334,12 @@
           "text": "Kelola fitur"
         }
       }
+    },
+    "order_by": {
+      "status": "Default (status)",
+      "name": "Nama",
+      "start_date": "Tanggal mulai",
+      "manual": "Manual"
     }
   },
   "project_modules": {

@@ -34,12 +34,12 @@ jobs:
               run: |
                   set -e
                   echo "Running copyright check..."
-                  addlicense -check -f COPYRIGHT.txt -ignore "**/migrations/**" $(git ls-files '*.py')
+                  addlicense -check -ignore "**/migrations/**" $(git ls-files '*.py')
                   echo "Copyright check passed."
 
             - name: Check Copyright For TypeScript Files
               run: |
                   set -e
                   echo "Running copyright check..."
-                  addlicense -check -f COPYRIGHT.txt -ignore "**/*.config.ts" -ignore "**/*.d.ts" $(git ls-files '*.ts' '*.tsx')
+                  addlicense -check -ignore "**/*.config.ts" -ignore "**/*.d.ts" $(git ls-files '*.ts' '*.tsx')
                   echo "Copyright check passed."

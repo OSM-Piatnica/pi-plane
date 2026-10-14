@@ -984,5 +984,23 @@
         "message": "Dokončenie zaškolenia zlyhalo. Skúste to znova neskôr."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Vybrané položky zostanú vždy viditeľné v bočnom paneli. Ostatné nájdete kedykoľvek v ponuke Viac. Tieto zmeny sú osobné a neovplyvnia nikoho iného vo vašom pracovnom priestore.",
+    "accordion_description": "Karty funkcií sa zobrazia ako vnorené položky pod projektom a fungujú ako akordeón.",
+    "tabbed_description": "Karty funkcií sa zobrazia ako vodorovné karty vnútri projektu."
+  },
+  "calendar_ui": {
+    "week_view": "Zobrazenie týždňa",
+    "month_layout": "Mesačné rozloženie",
+    "week_layout": "Týždenné rozloženie",
+    "after": "Po",
+    "before": "Pred"
+  },
+  "page_sync_ui": {
+    "syncing": "Synchronizácia...",
+    "syncing_description": "Vaše zmeny sa synchronizujú so serverom. Môžete pokračovať v úpravách.",
+    "connection_lost": "Spojenie stratené",
+    "connection_lost_description": "Máme problémy s pripojením k serveru websocket. Vaše zmeny budú synchronizované a ukladané každých 10 sekúnd."
   }
 }

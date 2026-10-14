@@ -334,6 +334,12 @@
           "text": "Manage features"
         }
       }
+    },
+    "order_by": {
+      "status": "Default (status)",
+      "name": "Name",
+      "start_date": "Start date",
+      "manual": "Manual"
     }
   },
   "project_modules": {

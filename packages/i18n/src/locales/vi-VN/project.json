@@ -334,6 +334,12 @@
           "text": "Quản lý tính năng"
         }
       }
+    },
+    "order_by": {
+      "status": "Mặc định (trạng thái)",
+      "name": "Tên",
+      "start_date": "Ngày bắt đầu",
+      "manual": "Thủ công"
     }
   },
   "project_modules": {
