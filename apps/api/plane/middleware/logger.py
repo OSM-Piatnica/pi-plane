@@ -141,6 +141,12 @@ class APITokenLogMiddleware:
                 # identifier so logs can be correlated to a token without ever
                 # persisting the raw key. A keyed HMAC is used rather than a bare
                 # hash so the digest cannot be precomputed from a known key value.
+                # CodeQL (py/weak-sensitive-data-hashing) flags this because it treats
+                # the key as a password. That is a false positive: the input is a
+                # high-entropy random token (not a guessable password, so a slow KDF
+                # such as bcrypt adds nothing) and the digest is a keyed HMAC used
+                # only for log correlation, not for credential storage or verification.
+                # codeql[py/weak-sensitive-data-hashing]
                 "token_identifier": hmac.new(
                     settings.SECRET_KEY.encode(), api_key.encode(), hashlib.sha256
                 ).hexdigest(),
