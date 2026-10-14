@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import csv
@@ -7,11 +8,12 @@ from io import StringIO
 
 import pytest
 
-from plane.utils.porters.formatters import CSVFormatter
+from plane.utils.porters.formatters import CSVFormatter, strip_utf8_bom
 
 
 def _read_rows(content):
-    return list(csv.reader(StringIO(content)))
+    # The fork's CSVFormatter prepends a UTF-8 BOM; strip it so it isn't read as part of the first cell.
+    return list(csv.reader(StringIO(strip_utf8_bom(content))))
 
 
 @pytest.mark.unit
