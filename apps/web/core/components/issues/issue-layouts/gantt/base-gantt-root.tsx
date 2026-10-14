@@ -13,9 +13,9 @@ import { useParams } from "next/navigation";
 import { ALL_ISSUES, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import type { EIssuesStoreType, IBlockUpdateData, TIssue } from "@plane/types";
+import type { EIssuesStoreType, IBlockUpdateData, IBlockUpdateDependencyData, TIssue } from "@plane/types";
 import { EIssueLayoutTypes, GANTT_TIMELINE_TYPE } from "@plane/types";
-import { renderFormattedPayloadDate } from "@plane/utils";
+import { renderFormattedPayloadDate, validateWorkItemSchedule } from "@plane/utils";
 // components
 import { TimeLineTypeContext } from "@/components/gantt-chart/contexts";
 import { GanttChartRoot } from "@/components/gantt-chart/root";
@@ -41,6 +41,8 @@ interface IBaseGanttRoot {
   isCompletedCycle?: boolean;
   isEpic?: boolean;
 }
+
+type TWorkItemDatesUpdate = { id: string; start_date?: string; finish_date?: string; target_date?: string };
 
 export type GanttStoreType =
   | EIssuesStoreType.PROJECT
@@ -89,8 +91,12 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
   const updateIssueBlockStructure = async (issue: TIssue, data: IBlockUpdateData) => {
     if (!workspaceSlug) return;
 
-    const payload: any = { ...data };
+    const { target_date: barEnd, ...rest } = data;
+    const payload: any = { ...rest };
     if (data.sort_order) payload.sort_order = data.sort_order.newSortOrder;
+    // the generic gantt block's `target_date` is the bar end, which for a work item is its finish date.
+    // The work item's own `target_date` (due date) is never written from the bar.
+    if (barEnd !== undefined) payload.finish_date = barEnd;
 
     if (updateIssue) {
       await updateIssue(issue.project_id, issue.id, payload);
@@ -99,21 +105,49 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
 
   const isAllowed = allowPermissions([EUserPermissions.ADMIN, EUserPermissions.MEMBER], EUserPermissionsLevel.PROJECT);
   const updateBlockDates = useCallback(
-    async (
-      updates: {
-        id: string;
-        start_date?: string;
-        target_date?: string;
-      }[]
-    ) => {
+    async (blockUpdates: IBlockUpdateDependencyData[]) => {
       const {
         relation,
         issue: { getIssueById },
       } = issues.rootIssueStore.issueDetail;
 
-      const violatesDependencies = wouldUpdatesViolateDependencies(updates, relation.relationMap, (issueId) => {
+      // Translate the generic bar (`start_date`, `target_date` = bar end) into a work item's own dates:
+      // the bar end is the finish date, and only the deadline marker (`due_date`) writes the due date.
+      const updates: TWorkItemDatesUpdate[] = blockUpdates.map((update) => ({
+        id: update.id,
+        ...(update.start_date !== undefined && { start_date: update.start_date }),
+        ...(update.target_date !== undefined && { finish_date: update.target_date }),
+        ...(update.due_date !== undefined && { target_date: update.due_date }),
+      }));
+
+      const hasScheduleChange = (update: TWorkItemDatesUpdate) =>
+        update.start_date !== undefined || update.finish_date !== undefined;
+
+      // finish must never precede start; due is not part of this check
+      const endsBeforeStart = updates.some((update) => {
+        if (!hasScheduleChange(update)) return false;
+        const issue = getIssueById(update.id);
+        return !!validateWorkItemSchedule(
+          update.start_date ?? issue?.start_date,
+          update.finish_date ?? issue?.finish_date
+        );
+      });
+
+      if (endsBeforeStart) {
+        refreshBlockPositions();
+        setToast({
+          type: TOAST_TYPE.ERROR,
+          title: t("toast.error"),
+          message: t("issue.dates.finish_before_start"),
+        });
+        return;
+      }
+
+      // a due-only change never touches dependencies
+      const scheduleUpdates = updates.filter(hasScheduleChange);
+      const violatesDependencies = wouldUpdatesViolateDependencies(scheduleUpdates, relation.relationMap, (issueId) => {
         const issue = getIssueById(issueId);
-        return issue ? { start_date: issue.start_date, target_date: issue.target_date } : undefined;
+        return issue ? { start_date: issue.start_date, finish_date: issue.finish_date } : undefined;
       });
 
       if (violatesDependencies) {
@@ -148,7 +182,7 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
         containerClassName="sticky bottom-0 z-[1]"
         prePopulatedData={{
           start_date: renderFormattedPayloadDate(new Date()),
-          target_date: renderFormattedPayloadDate(targetDate),
+          finish_date: renderFormattedPayloadDate(targetDate),
         }}
         quickAddCallback={quickAddIssue}
         isEpic={isEpic}

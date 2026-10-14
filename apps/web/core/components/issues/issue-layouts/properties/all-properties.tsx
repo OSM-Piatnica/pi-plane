@@ -14,7 +14,7 @@ import { xor } from "lodash-es";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // icons
-import { Paperclip, Timer } from "lucide-react";
+import { AlertTriangle, Paperclip, Timer } from "lucide-react";
 // i18n
 import { useTranslation } from "@plane/i18n";
 import { LinkIcon, StartDatePropertyIcon, ViewsIcon, DueDatePropertyIcon } from "@plane/propel/icons";
@@ -22,13 +22,7 @@ import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { Tooltip } from "@plane/propel/tooltip";
 import type { TIssue, IIssueDisplayProperties, TIssuePriorities } from "@plane/types";
 // ui
-import {
-  cn,
-  getDate,
-  renderFormattedPayloadDate,
-  generateWorkItemLink,
-  shouldHighlightIssueDueDate,
-} from "@plane/utils";
+import { cn, getDate, renderFormattedPayloadDate, generateWorkItemLink, validateWorkItemSchedule } from "@plane/utils";
 // components
 import { CycleDropdown } from "@/components/dropdowns/cycle";
 import { DateDropdown } from "@/components/dropdowns/date";
@@ -52,6 +46,7 @@ import { usePlatformOS } from "@/hooks/use-platform-os";
 import { WorkItemLayoutAdditionalProperties } from "@/plane-web/components/issues/issue-layouts/additional-properties";
 // local components
 import { IssuePropertyLabels } from "./labels";
+import { getIssueDateStatuses } from "../utils";
 import { WithDisplayPropertiesHOC } from "./with-display-properties-HOC";
 
 const handleEventPropagation = (e: SyntheticEvent<Element>) => {
@@ -94,6 +89,8 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
 
   // derived values
   const stateDetails = getStateById(issue.state_id);
+  // overdue concerns the due date only (and only active items); finish and due are independent
+  const dateStatuses = getIssueDateStatuses(issue, stateDetails?.group, projectDetails?.timezone);
   const subIssueCount = issue?.sub_issues_count ?? 0;
   const durationLabel =
     issue.duration === null || issue.duration === undefined ? null : t("duration_days", { count: issue.duration });
@@ -170,10 +167,22 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
     [issue, issueOperations]
   );
 
+  const rejectInvalidSchedule = (startDate: string | null | undefined, finishDate: string | null | undefined) => {
+    if (!validateWorkItemSchedule(startDate, finishDate)) return false;
+    setToast({
+      type: TOAST_TYPE.ERROR,
+      title: t("common.error.label"),
+      message: t("issue.dates.finish_before_start"),
+    });
+    return true;
+  };
+
   const handleStartDate = async (date: Date | null) => {
     if (!updateIssue) return;
+    const startDate = date ? renderFormattedPayloadDate(date) : null;
+    if (rejectInvalidSchedule(startDate, issue.finish_date)) return;
     try {
-      await updateIssue(issue.project_id, issue.id, { start_date: date ? renderFormattedPayloadDate(date) : null });
+      await updateIssue(issue.project_id, issue.id, { start_date: startDate });
     } catch (error) {
       setToast({
         type: TOAST_TYPE.ERROR,
@@ -187,6 +196,38 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
     if (!updateIssue) return;
     try {
       await updateIssue(issue.project_id, issue.id, { target_date: date ? renderFormattedPayloadDate(date) : null });
+    } catch (error) {
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: t("common.error.label"),
+        message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") }), t),
+      });
+    }
+  };
+
+  const handleFinishDate = async (date: Date | null) => {
+    if (!updateIssue) return;
+    const finishDate = date ? renderFormattedPayloadDate(date) : null;
+    if (rejectInvalidSchedule(issue.start_date, finishDate)) return;
+    try {
+      await updateIssue(issue.project_id, issue.id, { finish_date: finishDate });
+    } catch (error) {
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: t("common.error.label"),
+        message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") }), t),
+      });
+    }
+  };
+
+  const handleDateRange = async (from: Date | null, to: Date | null) => {
+    if (!updateIssue) return;
+    const startDate = from ? renderFormattedPayloadDate(from) : null;
+    const finishDate = to ? renderFormattedPayloadDate(to) : null;
+    if (rejectInvalidSchedule(startDate, finishDate)) return;
+    try {
+      // a single request so the schedule is validated and the duration reconciled together
+      await updateIssue(issue.project_id, issue.id, { start_date: startDate, finish_date: finishDate });
     } catch (error) {
       setToast({
         type: TOAST_TYPE.ERROR,
@@ -214,15 +255,17 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
 
   if (!displayProperties || !issue.project_id) return null;
 
-  // date range is enabled only when both dates are available and both dates are enabled
+  // the merged range is the planned work span (start..finish); due is a separate deadline and never part of it
   const isDateRangeEnabled: boolean = Boolean(
-    issue.start_date && issue.target_date && displayProperties.start_date && displayProperties.due_date
+    issue.start_date && issue.finish_date && displayProperties.start_date && displayProperties.finish_date
   );
+  // label finish and due when both are visible so they can be told apart
+  const showDateLabels = Boolean(displayProperties.finish_date && displayProperties.due_date);
 
   const defaultLabelOptions = issue?.label_ids?.map((id) => labelMap[id]) || [];
 
   const minDate = getDate(issue.start_date);
-  const maxDate = getDate(issue.target_date);
+  const maxDate = getDate(issue.finish_date);
 
   return (
     <div className={className}>
@@ -274,7 +317,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
       {/* merged dates */}
       <WithDisplayPropertiesHOC
         displayProperties={displayProperties}
-        displayPropertyKey={["start_date", "due_date"]}
+        displayPropertyKey={["start_date", "finish_date"]}
         shouldRenderProperty={() => isDateRangeEnabled}
       >
         <div
@@ -290,24 +333,20 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
               to: getDate(issue.target_date) || undefined,
             }}
             onSelect={(range) => {
-              handleStartDate(range?.from ?? null);
-              handleTargetDate(range?.to ?? null);
+              handleDateRange(range?.from ?? null, range?.to ?? null);
             }}
             hideIcon={{
               from: false,
             }}
             isClearable
             mergeDates
-            buttonVariant={issue.start_date || issue.target_date ? "border-with-text" : "border-without-text"}
-            buttonClassName={
-              shouldHighlightIssueDueDate(issue.target_date, stateDetails?.group) ? "text-danger-primary" : ""
-            }
+            buttonVariant={issue.start_date || issue.finish_date ? "border-with-text" : "border-without-text"}
             clearIconClassName="text-primary!"
             disabled={isReadOnly}
             renderByDefault={isMobile}
             showTooltip
             renderPlaceholder={false}
-            customTooltipHeading="Date Range"
+            customTooltipHeading={t("issue.dates.calendar.scheduled")}
           />
         </div>
       </WithDisplayPropertiesHOC>
@@ -341,29 +380,27 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
         </div>
       </WithDisplayPropertiesHOC>
 
-      {/* target/due date */}
+      {/* finish date (planned / forecast last day of work) */}
       <WithDisplayPropertiesHOC
         displayProperties={displayProperties}
-        displayPropertyKey="due_date"
+        displayPropertyKey="finish_date"
         shouldRenderProperty={() => !isDateRangeEnabled}
       >
         <div
-          className="h-5"
+          className="flex h-5 items-center gap-1"
           role="presentation"
           onFocus={handleEventPropagation}
           onClick={handleEventPropagation}
           onKeyDown={handleEventPropagation}
         >
+          {showDateLabels && <span className="text-10 text-tertiary">{t("issue.dates.calendar.finish_marker")}</span>}
           <DateDropdown
-            value={issue?.target_date ?? null}
-            onChange={handleTargetDate}
+            value={issue.finish_date ?? null}
+            onChange={handleFinishDate}
             minDate={minDate}
-            placeholder={t("common.order_by.due_date")}
+            placeholder={t("common.order_by.finish_date")}
             icon={<DueDatePropertyIcon className="h-3 w-3 shrink-0" />}
-            buttonVariant={issue.target_date ? "border-with-text" : "border-without-text"}
-            buttonClassName={
-              shouldHighlightIssueDueDate(issue.target_date, stateDetails?.group) ? "text-danger-primary" : ""
-            }
+            buttonVariant={issue.finish_date ? "border-with-text" : "border-without-text"}
             clearIconClassName="text-primary!"
             optionsClassName="z-10"
             disabled={isReadOnly}
@@ -371,6 +408,48 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
             showTooltip
             labelClassName="text-caption-sm-regular"
           />
+          {/* when the due chip is hidden the finish chip carries the warning */}
+          {dateStatuses.forecastMissesDeadline && !displayProperties.due_date && (
+            <Tooltip tooltipContent={t("issue.dates.status.forecast_misses_deadline")} isMobile={isMobile}>
+              <span className="flex flex-shrink-0 items-center text-danger-primary">
+                <AlertTriangle className="h-3 w-3" aria-label={t("issue.dates.status.forecast_misses_deadline")} />
+              </span>
+            </Tooltip>
+          )}
+        </div>
+      </WithDisplayPropertiesHOC>
+
+      {/* target/due date (deadline) */}
+      <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="due_date">
+        <div
+          className="flex h-5 items-center gap-1"
+          role="presentation"
+          onFocus={handleEventPropagation}
+          onClick={handleEventPropagation}
+          onKeyDown={handleEventPropagation}
+        >
+          {showDateLabels && <span className="text-10 text-tertiary">{t("issue.dates.calendar.due_marker")}</span>}
+          <DateDropdown
+            value={issue?.target_date ?? null}
+            onChange={handleTargetDate}
+            placeholder={t("common.order_by.due_date")}
+            icon={<DueDatePropertyIcon className="h-3 w-3 shrink-0" />}
+            buttonVariant={issue.target_date ? "border-with-text" : "border-without-text"}
+            buttonClassName={dateStatuses.overdue ? "text-danger-primary" : ""}
+            clearIconClassName="text-primary!"
+            optionsClassName="z-10"
+            disabled={isReadOnly}
+            renderByDefault={isMobile}
+            showTooltip
+            labelClassName="text-caption-sm-regular"
+          />
+          {dateStatuses.forecastMissesDeadline && (
+            <Tooltip tooltipContent={t("issue.dates.status.forecast_misses_deadline")} isMobile={isMobile}>
+              <span className="flex flex-shrink-0 items-center text-danger-primary">
+                <AlertTriangle className="h-3 w-3" aria-label={t("issue.dates.status.forecast_misses_deadline")} />
+              </span>
+            </Tooltip>
+          )}
         </div>
       </WithDisplayPropertiesHOC>
 

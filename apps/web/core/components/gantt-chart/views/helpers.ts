@@ -1,10 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { ChartDataType, IGanttBlock } from "@plane/types";
+import { EGanttBlockType } from "@plane/types";
 import { addDaysToDate, findTotalDaysInRange, getDate } from "@plane/utils";
 import { DEFAULT_BLOCK_WIDTH } from "../constants";
 
@@ -101,6 +103,14 @@ export const getItemPositionWidth = (chartData: ChartDataType, itemData: IGanttB
   itemTargetDate?.setHours(0, 0, 0, 0);
 
   if (!itemStartDate && !itemTargetDate) return;
+
+  // A work item with only a start or only a finish is a one day marker, never a bar with an invented end.
+  if (itemData.meta?.type === EGanttBlockType.ISSUE && !(itemStartDate && itemTargetDate)) {
+    return {
+      marginLeft: getPositionFromDate(chartData, (itemStartDate ?? itemTargetDate)!, 0),
+      width: chartData.data.dayWidth,
+    };
+  }
 
   // get scroll position from the number of days and width of each day
   scrollPosition = itemStartDate

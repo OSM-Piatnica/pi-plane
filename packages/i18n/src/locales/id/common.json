@@ -307,6 +307,7 @@
   "start_date": "Tanggal mulai",
   "end_date": "Tanggal akhir",
   "due_date": "Tanggal jatuh tempo",
+  "finish_date": "Finish date",
   "target_date": "Tanggal target",
   "estimate": "Perkiraan",
   "change_parent_issue": "Ubah item kerja induk",
@@ -521,6 +522,7 @@
       "last_updated": "Terakhir diperbarui",
       "start_date": "Tanggal mulai",
       "due_date": "Tanggal jatuh tempo",
+      "finish_date": "Finish date",
       "asc": "Menaik",
       "desc": "Menurun",
       "updated_on": "Diperbarui pada"

@@ -63,6 +63,11 @@ export const BASE_NOTIFICATION_CONTENT_MAP: TNotificationContentMap = {
     value: renderFormattedDate(newValue),
     showConnector: false,
   }),
+  finish_date: ({ newValue }) => ({
+    action: newValue !== "" ? "set finish date" : "removed the finish date",
+    value: renderFormattedDate(newValue),
+    showConnector: false,
+  }),
   target_date: ({ newValue }) => ({
     action: newValue !== "" ? "set due date" : "removed the due date",
     value: renderFormattedDate(newValue),

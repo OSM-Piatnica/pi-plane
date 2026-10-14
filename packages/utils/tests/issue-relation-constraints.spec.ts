@@ -44,8 +44,8 @@ describe("issue relation timeline constraints", () => {
   });
 
   it("dispatches timeline relation checks", () => {
-    const issue = { start_date: "2026-01-01", target_date: "2026-01-10" };
-    const related = { start_date: "2026-01-02", target_date: "2026-01-12" };
+    const issue = { start_date: "2026-01-01", finish_date: "2026-01-10" };
+    const related = { start_date: "2026-01-02", finish_date: "2026-01-12" };
 
     expect(isTimelineRelationSatisfied("start_before", issue, related)).toBe(true);
     expect(isTimelineRelationSatisfied("start_after", issue, related)).toBe(false);

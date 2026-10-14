@@ -114,6 +114,9 @@ def issue_on_results(
         "priority",
         "start_date",
         "target_date",
+        "finish_date",
+        "dates_initialized",
+        "due_date_at_completion",
         "duration",
         "sequence_id",
         "project_id",
@@ -198,6 +201,13 @@ def issue_group_values(
 
     if field == "target_date":
         queryset = queryset.values_list("target_date", flat=True).distinct()
+        if project_id:
+            return list(queryset.filter(project_id=project_id))
+        else:
+            return list(queryset)
+
+    if field == "finish_date":
+        queryset = queryset.values_list("finish_date", flat=True).distinct()
         if project_id:
             return list(queryset.filter(project_id=project_id))
         else:

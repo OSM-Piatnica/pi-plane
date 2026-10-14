@@ -60,7 +60,7 @@ def validate_issue_timeline_relations(
     issue,
     *,
     start_date=_UNSET,
-    target_date=_UNSET,
+    finish_date=_UNSET,
     state_group=None,
     check_dates=True,
     check_status=True,
@@ -74,7 +74,7 @@ def validate_issue_timeline_relations(
 
     issue_dates = {
         "start_date": issue.start_date if start_date is _UNSET else start_date,
-        "target_date": issue.target_date if target_date is _UNSET else target_date,
+        "finish_date": issue.finish_date if finish_date is _UNSET else finish_date,
     }
     if state_group is None:
         state_group = getattr(getattr(issue, "state", None), "group", None)
@@ -85,7 +85,7 @@ def validate_issue_timeline_relations(
         related_ref = issue_display_ref(related)
         related_dates = {
             "start_date": related.start_date,
-            "target_date": related.target_date,
+            "finish_date": related.finish_date,
         }
         related_group = getattr(getattr(related, "state", None), "group", None)
 
@@ -107,14 +107,14 @@ def validate_issue_update_payload(issue, attrs):
     if issue is None:
         return None
 
-    check_dates = "start_date" in attrs or "target_date" in attrs
+    check_dates = "start_date" in attrs or "finish_date" in attrs
     check_status = "state" in attrs
 
     if not check_dates and not check_status:
         return None
 
     start_date = attrs["start_date"] if "start_date" in attrs else issue.start_date
-    target_date = attrs["target_date"] if "target_date" in attrs else issue.target_date
+    finish_date = attrs["finish_date"] if "finish_date" in attrs else issue.finish_date
 
     state_group = None
     if check_status:
@@ -124,7 +124,7 @@ def validate_issue_update_payload(issue, attrs):
     return validate_issue_timeline_relations(
         issue,
         start_date=start_date,
-        target_date=target_date,
+        finish_date=finish_date,
         state_group=state_group if check_status else None,
         check_dates=check_dates,
         check_status=check_status,
@@ -139,10 +139,10 @@ def validate_new_timeline_relation(issue, related_issue, relation_type):
     if relation_type not in TIMELINE_RELATION_TYPES:
         return None
 
-    issue_dates = {"start_date": issue.start_date, "target_date": issue.target_date}
+    issue_dates = {"start_date": issue.start_date, "finish_date": issue.finish_date}
     related_dates = {
         "start_date": related_issue.start_date,
-        "target_date": related_issue.target_date,
+        "finish_date": related_issue.finish_date,
     }
     issue_group = getattr(getattr(issue, "state", None), "group", None)
     related_group = getattr(getattr(related_issue, "state", None), "group", None)
@@ -191,7 +191,7 @@ def validate_issue_dates_batch(updates, issues_by_id):
     stored one, so moving two linked work items in a single drag is not rejected because one of
     them is still compared against its pre-drag neighbour.
 
-    :param updates: list of dicts with an ``id`` and optional ``start_date`` / ``target_date``;
+    :param updates: list of dicts with an ``id`` and optional ``start_date`` / ``finish_date``;
         a key that is absent means "leave this date alone"
     :param issues_by_id: the issues of the batch, keyed by their string id
     :return: an error payload dict, or None when the whole batch is valid
@@ -203,7 +203,7 @@ def validate_issue_dates_batch(updates, issues_by_id):
             continue
         proposed[str(issue.id)] = {
             "start_date": update["start_date"] if "start_date" in update else issue.start_date,
-            "target_date": update["target_date"] if "target_date" in update else issue.target_date,
+            "finish_date": update["finish_date"] if "finish_date" in update else issue.finish_date,
         }
 
     if not proposed:
@@ -217,7 +217,7 @@ def validate_issue_dates_batch(updates, issues_by_id):
         for relation_type, related in constraints.get(issue_id, []):
             related_dates = proposed.get(
                 str(related.id),
-                {"start_date": related.start_date, "target_date": related.target_date},
+                {"start_date": related.start_date, "finish_date": related.finish_date},
             )
             if not is_timeline_relation_satisfied(relation_type, issue_dates, related_dates):
                 return date_violation_error(relation_type, issue_ref, issue_display_ref(related))

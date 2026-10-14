@@ -23,5 +23,6 @@ export type TWorkItemTemplateFormFields = {
   | "module_ids"
   | "estimate_point"
   | "start_date"
+  | "finish_date"
   | "target_date"
 >;

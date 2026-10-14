@@ -51,6 +51,7 @@ const TEMPLATE_FORM_DEFAULTS: TWorkItemTemplateFormFields = {
   module_ids: null,
   estimate_point: null,
   start_date: null,
+  finish_date: null,
   target_date: null,
 };
 

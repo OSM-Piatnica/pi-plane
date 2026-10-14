@@ -29,11 +29,7 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
-from plane.utils.work_item_duration import (
-    DURATION_DATE_FIELDS,
-    reconcile_work_item_duration,
-    to_work_item_date,
-)
+from plane.utils.work_item_dates import apply_date_rules
 from plane.app.permissions import ROLE
 
 
@@ -56,10 +52,20 @@ class DraftIssueCreateSerializer(BaseSerializer):
         required=False,
     )
 
+    # Write-only: the interactive client asks for the one-time "first finish/due fills both" default.
+    initialize_paired_date = serializers.BooleanField(write_only=True, required=False)
+    paired_date_defaulted = serializers.ChoiceField(
+        choices=["finish_date", "target_date"], write_only=True, required=False
+    )
+
     class Meta:
         model = DraftIssue
         fields = "__all__"
         read_only_fields = [
+            "dates_initialized",
+            "finish_date_origin",
+            "target_date_origin",
+            "due_date_at_completion",
             "workspace",
             "created_by",
             "updated_by",
@@ -76,17 +82,9 @@ class DraftIssueCreateSerializer(BaseSerializer):
         return data
 
     def validate(self, attrs):
-        # Keep duration and the two dates consistent before anything else looks at them.
-        derived = reconcile_work_item_duration(self.instance, attrs)
-        for field, value in derived.items():
-            attrs[field] = to_work_item_date(value) if field in DURATION_DATE_FIELDS else value
-
-        if (
-            attrs.get("start_date", None) is not None
-            and attrs.get("target_date", None) is not None
-            and attrs.get("start_date", None) > attrs.get("target_date", None)
-        ):
-            raise serializers.ValidationError("Start date cannot exceed target date")
+        # One shared rule for start/finish/due: duration, the finish >= start invariant and the
+        # one-time "first finish or due fills both" default. Due is never compared with start.
+        self.date_notices = apply_date_rules(self.instance, attrs)
 
         # Validate description content for security
         if "description_html" in attrs and attrs["description_html"]:
@@ -330,6 +328,7 @@ class DraftIssueSerializer(BaseSerializer):
             "priority",
             "start_date",
             "target_date",
+            "finish_date",
             "duration",
             "project_id",
             "parent_id",

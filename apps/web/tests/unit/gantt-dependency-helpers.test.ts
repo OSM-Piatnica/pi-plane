@@ -16,8 +16,8 @@ describe("gantt-dependency-helpers", () => {
     expect(
       isDependencyRelationInvalid(
         "blocking",
-        { start_date: "2026-01-01", target_date: "2026-01-10" },
-        { start_date: "2026-01-05", target_date: "2026-01-20" }
+        { start_date: "2026-01-01", finish_date: "2026-01-10" },
+        { start_date: "2026-01-05", finish_date: "2026-01-20" }
       )
     ).toBe(true);
   });
@@ -26,8 +26,8 @@ describe("gantt-dependency-helpers", () => {
     expect(
       isDependencyRelationInvalid(
         "finish_before",
-        { start_date: "2026-01-01", target_date: "2026-01-04" },
-        { start_date: "2026-01-05", target_date: "2026-01-20" }
+        { start_date: "2026-01-01", finish_date: "2026-01-04" },
+        { start_date: "2026-01-05", finish_date: "2026-01-20" }
       )
     ).toBe(false);
   });
@@ -36,8 +36,8 @@ describe("gantt-dependency-helpers", () => {
     expect(
       isDependencyRelationInvalid(
         "blocking",
-        { start_date: "2026-01-01", target_date: "2026-01-05" },
-        { start_date: "2026-01-05", target_date: "2026-01-20" }
+        { start_date: "2026-01-01", finish_date: "2026-01-05" },
+        { start_date: "2026-01-05", finish_date: "2026-01-20" }
       )
     ).toBe(true);
   });
@@ -46,8 +46,8 @@ describe("gantt-dependency-helpers", () => {
     expect(
       isDependencyRelationInvalid(
         "blocking",
-        { start_date: "2026-01-01", target_date: "2026-01-10T00:00:00Z" },
-        { start_date: "2026-01-05T12:00:00Z", target_date: "2026-01-20" }
+        { start_date: "2026-01-01", finish_date: "2026-01-10T00:00:00Z" },
+        { start_date: "2026-01-05T12:00:00Z", finish_date: "2026-01-20" }
       )
     ).toBe(true);
   });
@@ -60,8 +60,8 @@ describe("gantt-dependency-helpers", () => {
       },
       (id) =>
         id === "a"
-          ? { start_date: "2026-01-01", target_date: "2026-01-10" }
-          : { start_date: "2026-01-05", target_date: "2026-01-20" }
+          ? { start_date: "2026-01-01", finish_date: "2026-01-10" }
+          : { start_date: "2026-01-05", finish_date: "2026-01-20" }
     );
     expect(edges).toHaveLength(1);
     expect(edges[0].sourceId).toBe("a");
@@ -71,15 +71,47 @@ describe("gantt-dependency-helpers", () => {
 
   it("detects date updates that violate dependencies", () => {
     const violated = wouldUpdatesViolateDependencies(
-      [{ id: "a", target_date: "2026-01-12" }],
+      [{ id: "a", finish_date: "2026-01-12" }],
       {
         a: { blocking: ["b"] },
       },
       (id) =>
         id === "a"
-          ? { start_date: "2026-01-01", target_date: "2026-01-04" }
-          : { start_date: "2026-01-05", target_date: "2026-01-20" }
+          ? { start_date: "2026-01-01", finish_date: "2026-01-04" }
+          : { start_date: "2026-01-05", finish_date: "2026-01-20" }
     );
     expect(violated).toBe(true);
+  });
+
+  describe("due date never participates", () => {
+    const relationMap = { a: { blocking: ["b"] } };
+    const successor = { start_date: "2026-01-11", finish_date: "2026-01-20" };
+
+    it("requires the successor to start the day after the predecessor's finish, whatever the due date", () => {
+      // the predecessor is due long before or long after its finish: the result must not change
+      for (const target_date of ["2026-01-02", "2026-01-10", "2026-02-28", null]) {
+        const predecessor = { start_date: "2026-01-01", finish_date: "2026-01-10", target_date };
+        expect(isDependencyRelationInvalid("blocking", predecessor, successor)).toBe(false);
+        expect(isDependencyRelationInvalid("blocking", { ...predecessor, finish_date: "2026-01-11" }, successor)).toBe(
+          true
+        );
+      }
+    });
+
+    it("ignores a successor start on the predecessor's due date", () => {
+      const predecessor = { start_date: "2026-01-01", finish_date: "2026-01-05", target_date: "2026-01-12" };
+      expect(isDependencyRelationInvalid("blocking", predecessor, successor)).toBe(false);
+    });
+
+    it("does not treat a finish update that lands before the successor's start as a violation", () => {
+      const getDates = (id: string) =>
+        id === "a" ? { start_date: "2026-01-01", finish_date: "2026-01-04" } : successor;
+      expect(wouldUpdatesViolateDependencies([{ id: "a", finish_date: "2026-01-10" }], relationMap, getDates)).toBe(
+        false
+      );
+      expect(wouldUpdatesViolateDependencies([{ id: "a", finish_date: "2026-01-11" }], relationMap, getDates)).toBe(
+        true
+      );
+    });
   });
 });

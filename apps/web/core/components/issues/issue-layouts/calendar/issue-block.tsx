@@ -1,6 +1,8 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,6 +12,7 @@ import { useParams } from "next/navigation";
 import { MoreHorizontal } from "lucide-react";
 // plane imports
 import { useOutsideClickDetector } from "@plane/hooks";
+import { useTranslation } from "@plane/i18n";
 import { Popover } from "@plane/propel/popover";
 import type { TIssue } from "@plane/types";
 import { ControlLink } from "@plane/ui";
@@ -23,14 +26,18 @@ import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import useIssuePeekOverviewRedirection from "@/hooks/use-issue-peek-overview-redirection";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // plane web components
+import { calendarLayerState } from "@/store/issue/helpers/calendar-layers";
 import { IssueIdentifier } from "@/plane-web/components/issues/issue-details/issue-identifier";
 // local components
 import { WorkItemPreviewCard } from "../../preview-card";
+import { getIssueDateStatuses } from "../utils";
 import type { TRenderQuickActions } from "../list/list-view-types";
 import type { CalendarStoreType } from "./base-calendar-root";
 
 type Props = {
   issue: TIssue;
+  /** The day tile this block is rendered in (yyyy-mm-dd). */
+  date?: string;
   quickActions: TRenderQuickActions;
   isDragging?: boolean;
   isEpic?: boolean;
@@ -38,7 +45,9 @@ type Props = {
 
 export const CalendarIssueBlock = observer(
   forwardRef(function CalendarIssueBlock(props: Props, ref: React.ForwardedRef<HTMLAnchorElement>) {
-    const { issue, quickActions, isDragging = false, isEpic = false } = props;
+    const { issue, date, quickActions, isDragging = false, isEpic = false } = props;
+    const { t } = useTranslation();
+    const calendarLayer = calendarLayerState.layer;
     // states
     const [isMenuActive, setIsMenuActive] = useState(false);
     // refs
@@ -52,7 +61,7 @@ export const CalendarIssueBlock = observer(
     const { isMobile } = usePlatformOS();
     const storeType = useIssueStoreType() as CalendarStoreType;
     const { issuesFilter } = useIssues(storeType);
-    const { getProjectIdentifierById } = useProject();
+    const { getProjectIdentifierById, getProjectById } = useProject();
 
     const stateColor = getProjectStates(issue?.project_id)?.find((state) => state?.id == issue?.state_id)?.color || "";
     const projectIdentifier = getProjectIdentifierById(issue?.project_id);
@@ -88,6 +97,19 @@ export const CalendarIssueBlock = observer(
       isEpic,
       isArchived: !!issue?.archived_at,
     });
+
+    // distinct labelling per layer: a deadline is a "Due" chip, a scheduled item marks its finish day
+    const stateGroup = getProjectStates(issue?.project_id)?.find((state) => state?.id == issue?.state_id)?.group;
+    const isOverdue = getIssueDateStatuses(issue, stateGroup, getProjectById(issue?.project_id)?.timezone).overdue;
+    const layerMarker =
+      calendarLayer === "deadlines"
+        ? {
+            label: t("issue.dates.calendar.due_marker"),
+            className: isOverdue ? "bg-danger-subtle text-danger-primary" : "bg-layer-2 text-secondary",
+          }
+        : date && issue.finish_date && issue.finish_date.slice(0, 10) === date
+          ? { label: t("issue.dates.calendar.finish_marker"), className: "bg-accent-primary/10 text-accent-primary" }
+          : null;
 
     return (
       <Popover delay={100} openOnHover>
@@ -136,6 +158,16 @@ export const CalendarIssueBlock = observer(
                     )}
                     <div className="truncate text-13 font-medium md:text-11 md:font-regular">{issue.name}</div>
                   </div>
+                  {layerMarker && (
+                    <span
+                      className={cn(
+                        "flex-shrink-0 rounded-sm px-1 text-10 font-medium group-hover/calendar-block:hidden",
+                        layerMarker.className
+                      )}
+                    >
+                      {layerMarker.label}
+                    </span>
+                  )}
                   <div
                     className={cn("size-5 flex-shrink-0", {
                       "hidden group-hover/calendar-block:block": !isMobile,

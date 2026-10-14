@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -51,6 +52,7 @@ export const iconsMap: ActivityIconMap = {
   restored: RotateCcw,
   link: LinkIcon,
   start_date: StartDatePropertyIcon,
+  finish_date: DueDatePropertyIcon,
   target_date: DueDatePropertyIcon,
   label: LabelPropertyIcon,
   inbox: Inbox,
@@ -132,16 +134,30 @@ export const messages = (activity: TProjectActivity): { message: string | ReactN
           </>
         ),
       };
+    case "finish_date":
+      return {
+        message: (
+          <>
+            {newValue ? (
+              <>
+                set the finish date to <span className="font-medium text-primary">{newValue}</span>
+              </>
+            ) : (
+              "removed the finish date"
+            )}
+          </>
+        ),
+      };
     case "target_date":
       return {
         message: (
           <>
             {newValue ? (
               <>
-                set the target date to <span className="font-medium text-primary">{newValue}</span>
+                set the due date to <span className="font-medium text-primary">{newValue}</span>
               </>
             ) : (
-              "removed the target date"
+              "removed the due date"
             )}
           </>
         ),

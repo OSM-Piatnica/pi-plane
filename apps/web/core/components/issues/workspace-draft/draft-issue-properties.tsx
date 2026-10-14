@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
@@ -113,6 +114,13 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
       start_date: date ? (renderFormattedPayloadDate(date) ?? undefined) : undefined,
     });
 
+  const handleFinishDate = (date: Date | null) =>
+    issue?.project_id &&
+    updateIssue &&
+    updateIssue(issue.project_id, issue.id, {
+      finish_date: date ? (renderFormattedPayloadDate(date) ?? undefined) : undefined,
+    });
+
   const handleTargetDate = (date: Date | null) =>
     issue?.project_id &&
     updateIssue &&
@@ -130,7 +138,8 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
   const minDate = getDate(issue.start_date);
   minDate?.setDate(minDate.getDate());
 
-  const maxDate = getDate(issue.target_date);
+  // Start may not pass the planned finish. The due date is a deadline and is not bounded by the schedule.
+  const maxDate = getDate(issue.finish_date);
   maxDate?.setDate(maxDate.getDate());
 
   const handleEventPropagation = (e: React.MouseEvent) => {
@@ -192,12 +201,32 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
         />
       </div>
 
+      {/* finish date */}
+      <div
+        className="h-5"
+        role="presentation"
+        onClick={handleEventPropagation}
+        onKeyDown={(e) => e.stopPropagation()}
+        title={t("issue.dates.help.finish")}
+      >
+        <DateDropdown
+          value={issue?.finish_date ?? null}
+          onChange={handleFinishDate}
+          minDate={minDate}
+          placeholder={t("common.order_by.finish_date")}
+          icon={<DueDatePropertyIcon className="h-3 w-3 flex-shrink-0" />}
+          buttonVariant={issue.finish_date ? "border-with-text" : "border-without-text"}
+          optionsClassName="z-10"
+          renderByDefault={isMobile}
+          showTooltip
+        />
+      </div>
+
       {/* target/due date */}
       <div className="h-5" onClick={handleEventPropagation}>
         <DateDropdown
           value={issue?.target_date ?? null}
           onChange={handleTargetDate}
-          minDate={minDate}
           placeholder={t("due_date")}
           icon={<DueDatePropertyIcon className="h-3 w-3 flex-shrink-0" />}
           buttonVariant={issue.target_date ? "border-with-text" : "border-without-text"}

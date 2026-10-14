@@ -307,6 +307,7 @@
   "start_date": "Startdatum",
   "end_date": "Enddatum",
   "due_date": "Fälligkeitsdatum",
+  "finish_date": "Finish date",
   "target_date": "Zieldatum",
   "estimate": "Schätzung",
   "change_parent_issue": "Übergeordnetes Arbeitselement ändern",
@@ -521,6 +522,7 @@
       "last_updated": "Zuletzt aktualisiert",
       "start_date": "Startdatum",
       "due_date": "Fälligkeitsdatum",
+      "finish_date": "Finish date",
       "asc": "Aufsteigend",
       "desc": "Absteigend",
       "updated_on": "Aktualisiert am"

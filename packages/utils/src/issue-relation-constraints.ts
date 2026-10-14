@@ -28,7 +28,7 @@ export const TIMELINE_RELATION_TYPES: TTimelineRelationType[] = [
 
 export type TWorkItemTimelineDates = {
   start_date?: string | Date | null;
-  target_date?: string | Date | null;
+  finish_date?: string | Date | null;
 };
 
 const toDate = (value: string | Date | null | undefined): Date | null => {
@@ -89,17 +89,17 @@ export const isTimelineRelationSatisfied = (
 ): boolean => {
   switch (relationType) {
     case "blocked_by":
-      return isBlockedBySatisfied(issueDates.start_date, relatedDates.target_date);
+      return isBlockedBySatisfied(issueDates.start_date, relatedDates.finish_date);
     case "blocking":
-      return isBlockedBySatisfied(relatedDates.start_date, issueDates.target_date);
+      return isBlockedBySatisfied(relatedDates.start_date, issueDates.finish_date);
     case "start_before":
       return isStartBeforeSatisfied(issueDates.start_date, relatedDates.start_date);
     case "start_after":
       return isStartAfterSatisfied(issueDates.start_date, relatedDates.start_date);
     case "finish_before":
-      return isFinishBeforeSatisfied(issueDates.target_date, relatedDates.target_date);
+      return isFinishBeforeSatisfied(issueDates.finish_date, relatedDates.finish_date);
     case "finish_after":
-      return isFinishAfterSatisfied(issueDates.target_date, relatedDates.target_date);
+      return isFinishAfterSatisfied(issueDates.finish_date, relatedDates.finish_date);
     default: {
       const _exhaustive: never = relationType;
       return _exhaustive;

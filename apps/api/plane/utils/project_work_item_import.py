@@ -335,7 +335,7 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
         if key in cycles_by_name:
             continue
         span = spans.setdefault(key, {"name": name, "start": None, "end": None})
-        for field, bound, pick in (("start_date", "start", min), ("target_date", "end", max)):
+        for field, bound, pick in (("start_date", "start", min), ("finish_date", "end", max)):
             value = item.get(field)
             if not value:
                 continue
@@ -695,16 +695,24 @@ def import_work_items_into_project(
 
         raw_start_date = row.get("start_date")
         raw_target_date = row.get("target_date")
+        raw_finish_date = row.get("finish_date")
         start_date = None
         target_date = None
+        finish_date = None
         duration = None
         if options.dates:
             start_date = _parse_import_date(raw_start_date)
             target_date = _parse_import_date(raw_target_date)
+            finish_date = _parse_import_date(raw_finish_date)
             if raw_start_date not in [None, ""] and start_date is None:
                 warnings.append(f'Row {index + 1}: could not read start date "{raw_start_date}", left empty')
             if raw_target_date not in [None, ""] and target_date is None:
-                warnings.append(f'Row {index + 1}: could not read target date "{raw_target_date}", left empty')
+                warnings.append(f'Row {index + 1}: could not read due date "{raw_target_date}", left empty')
+            if raw_finish_date not in [None, ""] and finish_date is None:
+                warnings.append(f'Row {index + 1}: could not read finish date "{raw_finish_date}", left empty')
+            if start_date and finish_date and finish_date < start_date:
+                warnings.append(f"Row {index + 1}: finish date is before the start date, finish date left empty")
+                finish_date = None
 
             raw_duration = row.get("duration")
             duration = normalize_work_item_duration(raw_duration)
@@ -712,22 +720,24 @@ def import_work_items_into_project(
                 warnings.append(f'Row {index + 1}: invalid duration "{raw_duration}", derived from the dates instead')
 
             # Run the same reconciliation the work item API runs on create, so an imported item keeps
-            # duration, start date and target date consistent with one another.
-            duration_payload = {"start_date": start_date, "target_date": target_date}
+            # duration, start date and finish date consistent with one another. The due date is a
+            # deadline: it is imported as given and never copied into or derived from the finish.
+            duration_payload = {"start_date": start_date, "finish_date": finish_date}
             if duration is not None:
                 duration_payload["duration"] = duration
             derived = reconcile_work_item_duration(None, duration_payload)
             duration = derived.get("duration", duration)
             if "start_date" in derived:
                 start_date = derived["start_date"]
-            if "target_date" in derived:
-                target_date = derived["target_date"]
+            if "finish_date" in derived:
+                finish_date = derived["finish_date"]
             # Reconciliation may hand back ISO strings; keep one type so the values can be
             # compared when a cycle derives its period from them.
             start_date = to_work_item_date(start_date)
+            finish_date = to_work_item_date(finish_date)
             target_date = to_work_item_date(target_date)
         else:
-            _note_skipped("date", raw_start_date or raw_target_date or row.get("duration"))
+            _note_skipped("date", raw_start_date or raw_target_date or raw_finish_date or row.get("duration"))
 
         is_draft = row.get("is_draft")
         if isinstance(is_draft, str):
@@ -754,6 +764,7 @@ def import_work_items_into_project(
                 "priority": priority,
                 "start_date": start_date,
                 "target_date": target_date,
+                "finish_date": finish_date,
                 "duration": duration,
                 "is_draft": is_draft,
                 "parent_external_key": raw_parent_key,
@@ -808,6 +819,10 @@ def import_work_items_into_project(
                     priority=item["priority"],
                     start_date=item["start_date"],
                     target_date=item["target_date"],
+                    finish_date=item["finish_date"],
+                    # An import never defaults one planning date from the other, and later manual
+                    # edits must not either once dates came in.
+                    dates_initialized=bool(item["finish_date"] or item["target_date"]),
                     duration=item["duration"],
                     is_draft=item["is_draft"],
                     type=item["issue_type"],

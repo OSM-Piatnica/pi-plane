@@ -76,6 +76,7 @@ export const IssueModalProvider = observer(function IssueModalProvider(props: TI
           cycle_id: payload.cycle_id ?? null,
           module_ids: Array.isArray(payload.module_ids) && payload.module_ids.length > 0 ? payload.module_ids : null,
           start_date: payload.start_date ?? null,
+          finish_date: payload.finish_date ?? null,
           target_date: payload.target_date ?? null,
           parent_id: null,
         });

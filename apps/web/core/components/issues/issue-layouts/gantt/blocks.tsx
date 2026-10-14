@@ -1,17 +1,21 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import { Popover } from "@plane/propel/popover";
 import { Tooltip } from "@plane/propel/tooltip";
 import { ControlLink } from "@plane/ui";
 import { findTotalDaysInRange, generateWorkItemLink } from "@plane/utils";
 // components
+import { TimelineDatesSummary } from "@/components/gantt-chart/blocks/due-marker";
 import { SIDEBAR_WIDTH } from "@/components/gantt-chart/constants";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -46,6 +50,7 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
   } = useIssueDetail();
   // hooks
   const { isMobile } = usePlatformOS();
+  const { t } = useTranslation();
   const { handleRedirection } = useIssuePeekOverviewRedirection(isEpic);
 
   // derived values
@@ -53,11 +58,59 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
   const stateDetails =
     issueDetails && getProjectStates(issueDetails?.project_id)?.find((state) => state?.id == issueDetails?.state_id);
 
-  const { blockStyle } = getBlockViewDetails(issueDetails, stateDetails?.color ?? "");
+  // the bar spans start to finish; the due date is a separate deadline marker and never part of the bar
+  const { blockStyle } = getBlockViewDetails(
+    { start_date: issueDetails?.start_date, target_date: issueDetails?.finish_date },
+    stateDetails?.color ?? ""
+  );
 
   const handleIssuePeekOverview = () => handleRedirection(workspaceSlug, issueDetails, isMobile);
 
-  const duration = findTotalDaysInRange(issueDetails?.start_date, issueDetails?.target_date) || 0;
+  const duration = findTotalDaysInRange(issueDetails?.start_date, issueDetails?.finish_date) || 0;
+
+  const hasStart = !!issueDetails?.start_date;
+  const hasFinish = !!issueDetails?.finish_date;
+
+  // only a start or only a finish: a labeled marker, never a bar with an invented end
+  if (hasStart !== hasFinish) {
+    return (
+      <Tooltip
+        isMobile={isMobile}
+        tooltipContent={
+          <TimelineDatesSummary
+            dates={{
+              start: issueDetails?.start_date,
+              finish: issueDetails?.finish_date,
+              due: issueDetails?.target_date,
+            }}
+          />
+        }
+      >
+        <div
+          id={`issue-${issueId}`}
+          className="relative flex h-full w-full cursor-pointer items-center justify-center"
+          role="button"
+          tabIndex={0}
+          onClick={handleIssuePeekOverview}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") handleIssuePeekOverview();
+          }}
+        >
+          <div className="h-3.5 w-3.5 rotate-45 rounded-xs" style={{ backgroundColor: stateDetails?.color }} />
+          <div
+            className={`absolute flex max-w-[260px] items-center gap-1 truncate text-13 whitespace-nowrap text-primary ${
+              hasStart ? "left-full pl-2" : "right-full pr-2"
+            }`}
+          >
+            <span className="rounded-sm bg-layer-1 px-1 text-11 font-medium text-secondary">
+              {hasStart ? t("issue.dates.timeline.start_only") : t("issue.dates.timeline.finish_only")}
+            </span>
+            <span className="truncate">{issueDetails?.name}</span>
+          </div>
+        </div>
+      </Tooltip>
+    );
+  }
 
   return (
     <Popover delay={100} openOnHover>

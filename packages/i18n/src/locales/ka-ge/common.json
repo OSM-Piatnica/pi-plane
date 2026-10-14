@@ -307,6 +307,7 @@
   "start_date": "დაწყების თარიღი",
   "end_date": "დასრულების თარიღი",
   "due_date": "ვადის თარიღი",
+  "finish_date": "Finish date",
   "target_date": "სამიზნე თარიღი",
   "estimate": "შეფასება",
   "change_parent_issue": "მშობელი სამუშაო ელემენტის შეცვლა",
@@ -521,6 +522,7 @@
       "last_updated": "ბოლო განახლებული",
       "start_date": "დაწყების თარიღი",
       "due_date": "ვადის თარიღი",
+      "finish_date": "Finish date",
       "asc": "აღმავალი",
       "desc": "დაღმავალი",
       "updated_on": "განახლებულია"

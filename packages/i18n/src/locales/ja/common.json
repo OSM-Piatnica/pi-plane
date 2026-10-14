@@ -307,6 +307,7 @@
   "start_date": "開始日",
   "end_date": "終了日",
   "due_date": "期限",
+  "finish_date": "Finish date",
   "target_date": "目標日",
   "estimate": "見積もり",
   "change_parent_issue": "親作業項目を変更",
@@ -521,6 +522,7 @@
       "last_updated": "最終更新日",
       "start_date": "開始日",
       "due_date": "期限日",
+      "finish_date": "Finish date",
       "asc": "昇順",
       "desc": "降順",
       "updated_on": "更新日"

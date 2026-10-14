@@ -18,6 +18,7 @@
       "assignee": "Dodaj przypisanego",
       "start_date": "Dodaj datę rozpoczęcia",
       "due_date": "Dodaj termin",
+      "finish_date": "Dodaj datę zakończenia",
       "parent": "Dodaj element nadrzędny",
       "sub_issue": "Dodaj podrzędny element pracy",
       "dependency": "Dodaj zależność",
@@ -266,6 +267,49 @@
       "click_to_downvote": "Kliknij, aby zagłosować przeciw",
       "click_to_view_upvotes": "Kliknij, aby zobaczyć głosy za",
       "click_to_view_downvotes": "Kliknij, aby zobaczyć głosy przeciw"
+    },
+    "dates": {
+      "help": {
+        "finish": "Kiedy obecnie spodziewamy się zakończyć pracę.",
+        "due": "Do kiedy praca musi zostać ukończona."
+      },
+      "notice": {
+        "due_defaulted": "Termin również ustawiono na {date}",
+        "finish_defaulted": "Datę zakończenia również ustawiono na {date}",
+        "finish_not_defaulted": "Termin zapisano. Data zakończenia pozostaje pusta, ponieważ termin jest wcześniejszy niż data rozpoczęcia."
+      },
+      "only_finish": "Ustaw tylko datę zakończenia",
+      "only_due": "Ustaw tylko termin",
+      "undo": "Cofnij",
+      "finish_before_start": "Data zakończenia nie może być wcześniejsza niż data rozpoczęcia.",
+      "status": {
+        "overdue": "Po terminie",
+        "forecast_misses_deadline": "Zakończenie po terminie",
+        "forecast_unknown": "Brak prognozy zakończenia",
+        "planned_finish_passed": "Planowane zakończenie minęło",
+        "completed_late": "Ukończono po terminie"
+      },
+      "timeline": {
+        "start": "Start",
+        "finish": "Zakończenie",
+        "due": "Termin",
+        "start_only": "Start",
+        "finish_only": "Zakończenie",
+        "due_marker": "Termin",
+        "due_marker_hint": "Przeciągnij lub użyj strzałek w lewo i w prawo, aby zmienić tylko termin.",
+        "variance_on_due": "Zakończenie w dniu terminu",
+        "variance_late": "{days, plural, one {Zakończenie # dzień po terminie} few {Zakończenie # dni po terminie} many {Zakończenie # dni po terminie} other {Zakończenie # dni po terminie}}",
+        "variance_early": "{days, plural, one {Zakończenie # dzień przed terminem} few {Zakończenie # dni przed terminem} many {Zakończenie # dni przed terminem} other {Zakończenie # dni przed terminem}}"
+      },
+      "calendar": {
+        "layer_label": "Warstwa kalendarza",
+        "scheduled": "Zaplanowana praca",
+        "deadlines": "Terminy",
+        "scheduled_help": "Praca od daty rozpoczęcia do daty zakończenia",
+        "deadlines_help": "Praca umieszczona w dniu terminu",
+        "due_marker": "Termin",
+        "finish_marker": "Zakończenie"
+      }
     }
   },
   "sub_work_item": {

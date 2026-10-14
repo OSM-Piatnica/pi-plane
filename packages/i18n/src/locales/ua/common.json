@@ -307,6 +307,7 @@
   "start_date": "Дата початку",
   "end_date": "Дата завершення",
   "due_date": "Крайній термін",
+  "finish_date": "Finish date",
   "target_date": "Цільова дата",
   "estimate": "Оцінка",
   "change_parent_issue": "Змінити батьківську робочу одиницю",
@@ -521,6 +522,7 @@
       "last_updated": "Останні оновлені",
       "start_date": "Дата початку",
       "due_date": "Крайній термін",
+      "finish_date": "Finish date",
       "asc": "За зростанням",
       "desc": "За спаданням",
       "updated_on": "Оновлено"

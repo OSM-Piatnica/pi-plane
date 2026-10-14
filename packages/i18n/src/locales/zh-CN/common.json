@@ -307,6 +307,7 @@
   "start_date": "开始日期",
   "end_date": "结束日期",
   "due_date": "截止日期",
+  "finish_date": "Finish date",
   "target_date": "目标日期",
   "estimate": "估算",
   "change_parent_issue": "更改父工作项",
@@ -521,6 +522,7 @@
       "last_updated": "最近更新",
       "start_date": "开始日期",
       "due_date": "截止日期",
+      "finish_date": "Finish date",
       "asc": "升序",
       "desc": "降序",
       "updated_on": "更新时间"

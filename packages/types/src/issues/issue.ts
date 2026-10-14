@@ -68,8 +68,20 @@ export type TBaseIssue = {
   created_at: string;
   updated_at: string;
   start_date: string | null;
+  /** Planned/forecast last day of work. Schedule endpoint, distinct from the due date. */
+  finish_date: string | null;
+  /** The due date: a deadline or commitment (name kept for API compatibility). */
   target_date: string | null;
   duration: number | null;
+  /** The one-time "first finish/due entry fills both" default has been used. Server managed. */
+  dates_initialized?: boolean;
+  /** Where the dates came from, so a copied value is distinguishable from a deliberate one. Server managed. */
+  finish_date_origin?: "manual" | "defaulted" | "migrated" | null;
+  target_date_origin?: "manual" | "defaulted" | null;
+  /** The due date that applied when the item was completed. Server managed. */
+  due_date_at_completion?: string | null;
+  /** Request only: names the date a form copied from the other one, so the server records the provenance. */
+  paired_date_defaulted?: "finish_date" | "target_date";
   completed_at: string | null;
   archived_at: string | null;
 
@@ -146,6 +158,7 @@ export type TBulkIssueProperties = Pick<
   | "label_ids"
   | "assignee_ids"
   | "start_date"
+  | "finish_date"
   | "target_date"
   | "duration"
   | "module_ids"
@@ -176,6 +189,7 @@ export interface IPublicIssue extends Pick<
   | "sequence_id"
   | "sort_order"
   | "start_date"
+  | "finish_date"
   | "target_date"
   | "cycle_id"
   | "module_ids"

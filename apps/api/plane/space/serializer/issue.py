@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -202,6 +203,7 @@ class IssueFlatSerializer(BaseSerializer):
             "priority",
             "start_date",
             "target_date",
+            "finish_date",
             "sequence_id",
             "sort_order",
             "is_draft",
@@ -279,10 +281,10 @@ class IssueCreateSerializer(BaseSerializer):
     def validate(self, data):
         if (
             data.get("start_date", None) is not None
-            and data.get("target_date", None) is not None
-            and data.get("start_date", None) > data.get("target_date", None)
+            and data.get("finish_date", None) is not None
+            and data.get("start_date", None) > data.get("finish_date", None)
         ):
-            raise serializers.ValidationError("Start date cannot exceed target date")
+            raise serializers.ValidationError("Finish must be on or after start.")
 
         # Validate description content for security
         if "description_html" in data and data["description_html"]:
@@ -440,6 +442,7 @@ class IssuePublicSerializer(BaseSerializer):
             "workspace",
             "priority",
             "target_date",
+            "finish_date",
             "reactions",
             "votes",
             "module_ids",

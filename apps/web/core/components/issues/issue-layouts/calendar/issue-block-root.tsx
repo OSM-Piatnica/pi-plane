@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -19,6 +20,8 @@ import { CalendarIssueBlock } from "./issue-block";
 
 type Props = {
   issueId: string;
+  /** The day tile this block is rendered in (yyyy-mm-dd); the drag source day. */
+  date: string;
   quickActions: TRenderQuickActions;
   isDragDisabled: boolean;
   isEpic?: boolean;
@@ -26,7 +29,7 @@ type Props = {
 };
 
 export const CalendarIssueBlockRoot = observer(function CalendarIssueBlockRoot(props: Props) {
-  const { issueId, quickActions, isDragDisabled, isEpic = false, canEditProperties } = props;
+  const { issueId, date, quickActions, isDragDisabled, isEpic = false, canEditProperties } = props;
 
   const issueRef = useRef<HTMLAnchorElement | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -48,7 +51,7 @@ export const CalendarIssueBlockRoot = observer(function CalendarIssueBlockRoot(p
       draggable({
         element,
         canDrag: () => canDrag,
-        getInitialData: () => ({ id: issue?.id, date: issue?.target_date }),
+        getInitialData: () => ({ id: issue?.id, date }),
         onDragStart: () => {
           setIsDragging(true);
         },
@@ -57,7 +60,7 @@ export const CalendarIssueBlockRoot = observer(function CalendarIssueBlockRoot(p
         },
       })
     );
-  }, [issueRef?.current, issue, canDrag]);
+  }, [issueRef?.current, issue, canDrag, date]);
 
   useOutsideClickDetector(issueRef, () => {
     issueRef?.current?.classList?.remove(HIGHLIGHT_CLASS);
@@ -72,6 +75,7 @@ export const CalendarIssueBlockRoot = observer(function CalendarIssueBlockRoot(p
       quickActions={quickActions}
       ref={issueRef}
       isEpic={isEpic}
+      date={date}
     />
   );
 });

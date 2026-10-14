@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -15,6 +16,7 @@ import { Toast } from "@plane/propel/toast";
 import { resolveGeneralTheme } from "@plane/utils";
 // mobx store provider
 import { StoreProvider } from "@/lib/store-context";
+import { WorkItemDateNoticeToaster } from "@/lib/work-item-date-notices";
 
 // lazy imports
 const AppProgressBar = lazy(function AppProgressBar() {
@@ -44,6 +46,7 @@ export function AppProvider(props: IAppProvider) {
         <AppProgressBar />
         <TranslationProvider>
           <Toast theme={resolveGeneralTheme(resolvedTheme)} />
+          <WorkItemDateNoticeToaster />
           <StoreWrapper>
             <InstanceWrapper>
               <Suspense>

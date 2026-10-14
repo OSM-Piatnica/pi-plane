@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -242,7 +243,7 @@ export class IssueService extends APIService {
   async updateIssueDates(
     workspaceSlug: string,
     projectId: string,
-    updates: { id: string; start_date?: string; target_date?: string }[]
+    updates: { id: string; start_date?: string; finish_date?: string; target_date?: string }[]
   ): Promise<void> {
     return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issue-dates/`, { updates })
       .then((response) => response?.data)

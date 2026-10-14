@@ -1,12 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useCallback, useMemo } from "react";
 import { AtSign, Briefcase } from "lucide-react";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import { Logo } from "@plane/propel/emoji-icon-picker";
 import {
   CalendarLayoutIcon,
@@ -91,6 +93,8 @@ export type TWorkItemFiltersConfig = {
 export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps): TWorkItemFiltersConfig => {
   const { allowedFilters, cycleIds, labelIds, memberIds, moduleIds, projectId, projectIds, stateIds, workspaceSlug } =
     props;
+  // i18n
+  const { t } = useTranslation();
   // store hooks
   const { loader: projectLoader, getProjectById } = useProject();
   const { getCycleById } = useCycle();
@@ -316,7 +320,20 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
     [operatorConfigs]
   );
 
-  // target date filter config
+  // finish date filter config (planned / forecast last day of work; independent from the due date)
+  const finishDateFilterConfig = useMemo(
+    () => ({
+      ...getTargetDateFilterConfig<TWorkItemFilterProperty>("finish_date")({
+        isEnabled: true,
+        filterIcon: DueDatePropertyIcon,
+        ...operatorConfigs,
+      }),
+      label: t("common.order_by.finish_date"),
+    }),
+    [operatorConfigs, t]
+  );
+
+  // target date (due date) filter config
   const targetDateFilterConfig = useMemo(
     () =>
       getTargetDateFilterConfig<TWorkItemFilterProperty>("target_date")({
@@ -394,6 +411,7 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
       subscriber_id: subscriberFilterConfig,
       priority: priorityFilterConfig,
       start_date: startDateFilterConfig,
+      finish_date: finishDateFilterConfig,
       target_date: targetDateFilterConfig,
       created_at: createdAtFilterConfig,
       updated_at: updatedAtFilterConfig,

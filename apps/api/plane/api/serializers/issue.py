@@ -33,11 +33,7 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
-from plane.utils.work_item_duration import (
-    DURATION_DATE_FIELDS,
-    reconcile_work_item_duration,
-    to_work_item_date,
-)
+from plane.utils.work_item_dates import apply_date_rules
 
 from .base import BaseSerializer
 from .cycle import CycleLiteSerializer, CycleSerializer
@@ -74,24 +70,31 @@ class IssueSerializer(BaseSerializer):
         source="type", queryset=IssueType.objects.all(), required=False, allow_null=True
     )
 
+    # Write-only: the interactive client asks for the one-time "first finish/due fills both" default.
+    initialize_paired_date = serializers.BooleanField(write_only=True, required=False)
+    paired_date_defaulted = serializers.ChoiceField(
+        choices=["finish_date", "target_date"], write_only=True, required=False
+    )
+
     class Meta:
         model = Issue
-        read_only_fields = ["id", "workspace", "project", "updated_by", "updated_at"]
+        read_only_fields = [
+            "id",
+            "workspace",
+            "project",
+            "updated_by",
+            "updated_at",
+            "dates_initialized",
+            "finish_date_origin",
+            "target_date_origin",
+            "due_date_at_completion",
+        ]
         exclude = ["description_json", "description_stripped"]
 
     def validate(self, data):
-        # Keep duration and the two dates consistent before anything else looks at them, so API
-        # clients get the same synchronization the web app performs locally.
-        derived = reconcile_work_item_duration(self.instance, data)
-        for field, value in derived.items():
-            data[field] = to_work_item_date(value) if field in DURATION_DATE_FIELDS else value
-
-        if (
-            data.get("start_date", None) is not None
-            and data.get("target_date", None) is not None
-            and data.get("start_date", None) > data.get("target_date", None)
-        ):
-            raise serializers.ValidationError("Start date cannot exceed target date")
+        # One shared rule for start/finish/due: duration, the finish >= start invariant and the
+        # one-time "first finish or due fills both" default. Due is never compared with start.
+        self.date_notices = apply_date_rules(self.instance, data)
 
         try:
             if data.get("description_html", None) is not None:
