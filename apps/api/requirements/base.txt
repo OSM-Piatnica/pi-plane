@@ -40,7 +40,7 @@ uvicorn==0.54.0
 # sockets
 channels==4.3.2
 # ai
-openai==1.63.2
+openai==3.31.0
 # slack
 slack-sdk==3.45.0
 # apm
@@ -52,7 +52,7 @@ python-json-logger==4.2.0
 # html parser
 beautifulsoup4==4.15.0
 # analytics
-posthog==3.5.0
+posthog==7.70.0
 # crypto
 cryptography==50.0.0
 # html validator
