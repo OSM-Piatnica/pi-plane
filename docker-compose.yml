@@ -104,6 +104,18 @@ services:
       args:
         DOCKER_BUILDKIT: 1
     restart: always
+    env_file:
+      - ./apps/live/.env
+    environment:
+      # apps/live/.env.example holds host-local values; inside the compose network
+      # the service must listen on the port the proxy targets and reach its peers by name.
+      PORT: 3000
+      API_BASE_URL: http://api:8000
+      REDIS_HOST: plane-redis
+      REDIS_URL: redis://plane-redis:6379/
+    depends_on:
+      - api
+      - plane-redis
 
   plane-db:
     container_name: plane-db
