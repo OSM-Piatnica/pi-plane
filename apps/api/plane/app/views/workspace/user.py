@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -59,7 +60,7 @@ from plane.utils.grouper import (
     issue_queryset_grouper,
 )
 from plane.utils.issue_filters import issue_filters
-from plane.utils.order_queryset import order_issue_queryset
+from plane.utils.order_queryset import ACTIVITY_ORDER_BY_ALLOWLIST, order_issue_queryset, sanitize_order_by
 from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
 from plane.utils.filters import ComplexFilterBackend
 from plane.utils.filters import IssueFilterSet
@@ -391,7 +392,11 @@ class WorkspaceUserActivityEndpoint(BaseAPIView):
             queryset = queryset.filter(project__in=projects)
 
         return self.paginate(
-            order_by=request.GET.get("order_by", "-created_at"),
+            order_by=sanitize_order_by(
+                request.GET.get("order_by", "-created_at"),
+                ACTIVITY_ORDER_BY_ALLOWLIST,
+                "-created_at",
+            ),
             request=request,
             queryset=queryset,
             on_results=lambda issue_activities: IssueActivitySerializer(issue_activities, many=True).data,

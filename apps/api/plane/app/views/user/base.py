@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -45,6 +46,7 @@ from plane.db.models import (
 )
 from plane.license.models import Instance, InstanceAdmin
 from plane.utils.paginator import BasePaginator
+from plane.utils.order_queryset import ACTIVITY_ORDER_BY_ALLOWLIST, sanitize_order_by
 from plane.authentication.utils.host import user_ip
 from plane.bgtasks.user_deactivation_email_task import user_deactivation_email
 from plane.utils.host import base_host
@@ -384,7 +386,11 @@ class UserActivityEndpoint(BaseAPIView, BasePaginator):
         )
 
         return self.paginate(
-            order_by=request.GET.get("order_by", "-created_at"),
+            order_by=sanitize_order_by(
+                request.GET.get("order_by", "-created_at"),
+                ACTIVITY_ORDER_BY_ALLOWLIST,
+                "-created_at",
+            ),
             request=request,
             queryset=queryset,
             on_results=lambda issue_activities: IssueActivitySerializer(issue_activities, many=True).data,

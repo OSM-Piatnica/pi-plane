@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import copy
@@ -41,7 +42,7 @@ from plane.db.models import (
     ModuleIssue,
 )
 from plane.utils.issue_filters import issue_filters
-from plane.utils.order_queryset import order_issue_queryset
+from plane.utils.order_queryset import VIEW_ORDER_BY_ALLOWLIST, order_issue_queryset, sanitize_order_by
 from plane.bgtasks.recent_visited_task import recent_visited_task
 from .. import BaseViewSet
 from plane.db.models import UserFavorite
@@ -64,7 +65,13 @@ class WorkspaceViewViewSet(BaseViewSet):
             .filter(workspace__slug=self.kwargs.get("slug"))
             .filter(project__isnull=True)
             .filter(Q(owned_by=self.request.user) | Q(access=1))
-            .order_by(self.request.GET.get("order_by", "-created_at"))
+            .order_by(
+                sanitize_order_by(
+                    self.request.GET.get("order_by", "-created_at"),
+                    VIEW_ORDER_BY_ALLOWLIST,
+                    "-created_at",
+                )
+            )
             .distinct()
         )
 
