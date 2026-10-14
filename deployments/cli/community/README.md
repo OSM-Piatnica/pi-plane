@@ -81,6 +81,28 @@ chmod +x setup.sh
 
 ---
 
+### Container images and versions
+
+Pi-Plane publishes multi-architecture (`linux/amd64`, `linux/arm64`) images to the GitHub Container Registry:
+
+| Component    | Image                                 |
+| ------------ | ------------------------------------- |
+| Web          | `ghcr.io/osm-piatnica/pi-plane-web`   |
+| Space        | `ghcr.io/osm-piatnica/pi-plane-space` |
+| Admin        | `ghcr.io/osm-piatnica/pi-plane-admin` |
+| Live         | `ghcr.io/osm-piatnica/pi-plane-live`  |
+| API / worker | `ghcr.io/osm-piatnica/pi-plane-api`   |
+| Proxy        | `ghcr.io/osm-piatnica/pi-plane-proxy` |
+| All-in-one   | `ghcr.io/osm-piatnica/pi-plane`       |
+
+Versions follow `<upstream Plane version>-pi.<n>`. For example, `1.3.1-pi.1` is the first Pi-Plane release based on Plane 1.3.1.
+
+- Each release is published under its exact version tag (e.g. `1.3.1-pi.1`, without the `v` used by the GitHub release tag) and `latest`. Pre-releases (`-rc`, `-alpha`, `-beta`) get only their version tag.
+- `./setup.sh` installs the latest release. To pin a version, set `APP_RELEASE` in `plane.env`.
+- To use a different registry or a local build, set `IMAGE_REPO` in `plane.env` (default `ghcr.io/osm-piatnica/pi-plane`).
+
+---
+
 ### Proceed with setup
 
 Above steps will set you ready to install and start plane services.
@@ -530,106 +552,3 @@ When you want to restore the previously backed-up data, follow the instructions 
    ```
 
 1. Start the Plane instance using `./setup.sh start`.
-
----
-
-### Restore for Commercial Air-Gapped (Docker Compose)
-
-When you want to restore the previously backed-up data on Plane Commercial Air-Gapped version, follow the instructions below.
-
-1. Download the restore script using the command below
-
-   ```bash
-   curl -fsSL -o restore-airgapped.sh https://github.com/OSM-Piatnica/pi-plane/releases/latest/download/restore-airgapped.sh
-   chmod +x restore-airgapped.sh
-   ```
-
-1. Copy the backup folder and the `restore-airgapped.sh` to `Commercial Airgapped Edition` server
-
-1. Make sure that Plane Commercial (Airgapped) is extracted and ready to get started. In case it is running, you would need to stop that.
-
-1. Execute the command below to restore your data.
-
-   ```bash
-   ./restore-airgapped.sh <path to backup folder containing *.tar.gz files>
-   ```
-
-1. After restoration, you are ready to start Plane Commercial (Airgapped) will all your previously saved data.
-
----
-
-<details>
-   <summary><h2>Upgrading from v0.13.2 to v0.14.x</h2></summary>
-
-This is one time activity for users who are upgrading from v0.13.2 to v0.14.0
-
-As there has been significant changes to Self Hosting process, this step mainly covers the data migration from current (v0.13.2) docker volumes from newly created volumes
-
-> Before we begin with migration, make sure your v0.14.0 was started and then stopped. This is required to know the newly created docker volume names.
-
-Begin with downloading the migration script using below command
-
-```
-
-curl -fsSL -o migrate.sh https://raw.githubusercontent.com/OSM-Piatnica/pi-plane/main/deployments/cli/community/migration-0.13-0.14.sh
-
-chmod +x migrate.sh
-
-```
-
-Now run the `./migrate.sh` command and expect the instructions as below
-
-```
-******************************************************************
-
-This script is solely for the migration purpose only.
-This is a 1 time migration of volume data from v0.13.2 => v0.14.x
-
-Assumption:
-1. Postgres data volume name ends with _pgdata
-2. Minio data volume name ends with _uploads
-3. Redis data volume name ends with _redisdata
-
-Any changes to this script can break the migration.
-
-Before you proceed, make sure you run the below command
-to know the docker volumes
-
-docker volume ls -q | grep -i "_pgdata"
-docker volume ls -q | grep -i "_uploads"
-docker volume ls -q | grep -i "_redisdata"
-
-*******************************************************
-
-Given below list of REDIS volumes, identify the prefix of source and destination volumes leaving "_redisdata"
----------------------
-plane-app_redisdata
-v0132_redisdata
-
-Provide the Source Volume Prefix :
-```
-
-**Open another terminal window**, and run the mentioned 3 command. This may be different for users who have changed the volume names in their previous setup (v0.13.2)
-
-For every command you must see 2 records something like shown in above example of `redisdata`
-
-To move forward, you would need PREFIX of old setup and new setup. As per above example, `v0132` is the prefix of v0.13.2 and `plane-app` is the prefix of v0.14.0 setup
-
-**Back to original terminal window**, _Provide the Source Volume Prefix_ and hit ENTER.
-
-Now you will be prompted to _Provide Destination Volume Prefix_. Provide the value and hit ENTER
-
-```
-Provide the Source Volume Prefix : v0132
-Provide the Destination Volume Prefix : plane-app
-```
-
-In case the suffixes are wrong or the mentioned volumes are not found, you will receive the error shown below. The image below displays an error for source volumes.
-
-![Migrate Error](images/migrate-error.png)
-
-In case of successful migration, it will be a silent exit without error.
-
-Now its time to restart v0.14.0 setup.
-
-</details>
