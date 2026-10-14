@@ -4,7 +4,7 @@ urllib3>=2.7.0
 
 # requests — used directly for webhook delivery & link unfurling; the
 # get_connection_with_tls_context adapter hook (SSRF IP pinning) needs >=2.32
-requests>=2.33.0
+requests==2.34.2
 # django
 Django==5.2.18
 # rest framework
