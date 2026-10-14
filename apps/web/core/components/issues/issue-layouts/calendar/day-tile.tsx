@@ -72,6 +72,7 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
     canEditProperties,
     isEpic = false,
   } = props;
+  // i18n
   const { getMonthName } = useCalendarLocale();
 
   const [isDraggingOver, setIsDraggingOver] = useState(false);
