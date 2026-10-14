@@ -1,13 +1,13 @@
 #!/bin/bash
 
-BRANCH=${BRANCH:-master}
+BRANCH=${BRANCH:-main}
 SCRIPT_DIR=$PWD
 SERVICE_FOLDER=plane-app
 PLANE_INSTALL_DIR=$PWD/$SERVICE_FOLDER
 export APP_RELEASE=stable
-export DOCKERHUB_USER=makeplane
+export IMAGE_REPO=ghcr.io/osm-piatnica/pi-plane
 export PULL_POLICY=${PULL_POLICY:-if_not_present}
-export GH_REPO=makeplane/plane
+export GH_REPO=OSM-Piatnica/pi-plane
 export RELEASE_DOWNLOAD_URL="https://github.com/$GH_REPO/releases/download"
 export FALLBACK_DOWNLOAD_URL="https://raw.githubusercontent.com/$GH_REPO/$BRANCH/deployments/cli/community"
 
@@ -57,7 +57,7 @@ function spinner() {
 
 function checkLatestRelease(){
     echo "Checking for the latest release..." >&2
-    local latest_release=$(curl -sSL https://api.github.com/repos/$GH_REPO/releases/latest |  grep -o '"tag_name": "[^"]*"' | sed 's/"tag_name": "//;s/"//g')
+    local latest_release=$(curl -sSL https://api.github.com/repos/$GH_REPO/releases/latest |  grep -o '"tag_name": "[^"]*"' | sed 's/"tag_name": "//;s/"//g;s/^v//')
     if [ -z "$latest_release" ]; then
         echo "Failed to check for the latest release. Exiting..." >&2
         exit 1
@@ -77,7 +77,7 @@ function initialize(){
         return 1
     fi
 
-    local IMAGE_NAME=makeplane/plane-proxy
+    local IMAGE_NAME=${IMAGE_REPO}-proxy
     local IMAGE_TAG=${APP_RELEASE}
     docker manifest inspect "${IMAGE_NAME}:${IMAGE_TAG}" | grep -q "\"architecture\": \"${CPU_ARCH}\"" &
     local pid=$!
@@ -153,7 +153,7 @@ function updateEnvFile() {
 
 function updateCustomVariables(){
     echo "Updating custom variables..." >&2
-    updateEnvFile "DOCKERHUB_USER" "$DOCKERHUB_USER" "$DOCKER_ENV_PATH"
+    updateEnvFile "IMAGE_REPO" "$IMAGE_REPO" "$DOCKER_ENV_PATH"
     updateEnvFile "APP_RELEASE" "$APP_RELEASE" "$DOCKER_ENV_PATH"
     updateEnvFile "PULL_POLICY" "$PULL_POLICY" "$DOCKER_ENV_PATH"
     updateEnvFile "CUSTOM_BUILD" "$CUSTOM_BUILD" "$DOCKER_ENV_PATH"
@@ -185,7 +185,7 @@ function syncEnvFile(){
 function buildYourOwnImage(){
     echo "Building images locally..."
 
-    export DOCKERHUB_USER="myplane"
+    export IMAGE_REPO="local/pi-plane"
     export APP_RELEASE="local"
     export PULL_POLICY="never"
     CUSTOM_BUILD="true"
@@ -248,7 +248,7 @@ function download() {
         mv $PLANE_INSTALL_DIR/docker-compose.yaml $PLANE_INSTALL_DIR/archive/$TS.docker-compose.yaml
     fi
 
-    RESPONSE=$(curl -sSL -H 'Cache-Control: no-cache, no-store' -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/$APP_RELEASE/docker-compose.yml?$(date +%s)")
+    RESPONSE=$(curl -sSL -H 'Cache-Control: no-cache, no-store' -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/docker-compose.yml?$(date +%s)")
     BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
     STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
@@ -264,13 +264,13 @@ function download() {
             echo "$BODY" > $PLANE_INSTALL_DIR/docker-compose.yaml
         else
             echo "Failed to download docker-compose.yml. HTTP Status: $STATUS"
-            echo "URL: $RELEASE_DOWNLOAD_URL/$APP_RELEASE/docker-compose.yml"
+            echo "URL: $RELEASE_DOWNLOAD_URL/v$APP_RELEASE/docker-compose.yml"
             mv $PLANE_INSTALL_DIR/archive/$TS.docker-compose.yaml $PLANE_INSTALL_DIR/docker-compose.yaml
             exit 1
         fi
     fi
 
-    RESPONSE=$(curl -sSL -H 'Cache-Control: no-cache, no-store' -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/$APP_RELEASE/variables.env?$(date +%s)")
+    RESPONSE=$(curl -sSL -H 'Cache-Control: no-cache, no-store' -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/variables.env?$(date +%s)")
     BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
     STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
@@ -286,7 +286,7 @@ function download() {
             echo "$BODY" > $PLANE_INSTALL_DIR/variables-upgrade.env
         else
             echo "Failed to download variables.env. HTTP Status: $STATUS"
-            echo "URL: $RELEASE_DOWNLOAD_URL/$APP_RELEASE/variables.env"
+            echo "URL: $RELEASE_DOWNLOAD_URL/v$APP_RELEASE/variables.env"
             mv $PLANE_INSTALL_DIR/archive/$TS.docker-compose.yaml $PLANE_INSTALL_DIR/docker-compose.yaml
             exit 1
         fi
@@ -303,7 +303,7 @@ function download() {
     syncEnvFile
 
     if [ "$LOCAL_BUILD" == "true" ]; then
-        export DOCKERHUB_USER="myplane"
+        export IMAGE_REPO="local/pi-plane"
         export APP_RELEASE="local"
         export PULL_POLICY="never"
         CUSTOM_BUILD="true"
@@ -684,14 +684,14 @@ elif [ "$CPU_ARCH" == "aarch64" ] || [ "$CPU_ARCH" == "arm64" ]; then
 fi
 
 if [ -f "$DOCKER_ENV_PATH" ]; then
-    DOCKERHUB_USER=$(getEnvValue "DOCKERHUB_USER" "$DOCKER_ENV_PATH")
+    IMAGE_REPO=$(getEnvValue "IMAGE_REPO" "$DOCKER_ENV_PATH")
     APP_RELEASE=$(getEnvValue "APP_RELEASE" "$DOCKER_ENV_PATH")
     PULL_POLICY=$(getEnvValue "PULL_POLICY" "$DOCKER_ENV_PATH")
     CUSTOM_BUILD=$(getEnvValue "CUSTOM_BUILD" "$DOCKER_ENV_PATH")
 
-    if [ -z "$DOCKERHUB_USER" ]; then
-        DOCKERHUB_USER=makeplane
-        updateEnvFile "DOCKERHUB_USER" "$DOCKERHUB_USER" "$DOCKER_ENV_PATH"
+    if [ -z "$IMAGE_REPO" ]; then
+        IMAGE_REPO=ghcr.io/osm-piatnica/pi-plane
+        updateEnvFile "IMAGE_REPO" "$IMAGE_REPO" "$DOCKER_ENV_PATH"
     fi
 
     if [ -z "$APP_RELEASE" ]; then

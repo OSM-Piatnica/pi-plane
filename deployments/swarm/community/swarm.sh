@@ -1,13 +1,13 @@
 #!/bin/bash
 
-BRANCH=${BRANCH:-master}
+BRANCH=${BRANCH:-main}
 SERVICE_FOLDER=plane-app
 SCRIPT_DIR=$PWD
 PLANE_INSTALL_DIR=$PWD/$SERVICE_FOLDER
 export APP_RELEASE="stable"
-export DOCKERHUB_USER=makeplane
+export IMAGE_REPO=ghcr.io/osm-piatnica/pi-plane
 
-export GH_REPO=makeplane/plane
+export GH_REPO=OSM-Piatnica/pi-plane
 export RELEASE_DOWNLOAD_URL="https://github.com/$GH_REPO/releases/download"
 export FALLBACK_DOWNLOAD_URL="https://raw.githubusercontent.com/$GH_REPO/$BRANCH/deployments/cli/community"
 
@@ -38,7 +38,7 @@ EOF
 
 function checkLatestRelease(){
     echo "Checking for the latest release..." >&2
-    local latest_release=$(curl -s https://api.github.com/repos/$GH_REPO/releases/latest |  grep -o '"tag_name": "[^"]*"' | sed 's/"tag_name": "//;s/"//g')
+    local latest_release=$(curl -s https://api.github.com/repos/$GH_REPO/releases/latest |  grep -o '"tag_name": "[^"]*"' | sed 's/"tag_name": "//;s/"//g;s/^v//')
     if [ -z "$latest_release" ]; then
         echo "Failed to check for the latest release. Exiting..." >&2
         exit 1
@@ -158,7 +158,7 @@ function download() {
     echo $FALLBACK_DOWNLOAD_URL
     echo $APP_RELEASE
 
-    RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/$APP_RELEASE/docker-compose.yml?$(date +%s)")
+    RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/docker-compose.yml?$(date +%s)")
     BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
     STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
@@ -174,13 +174,13 @@ function download() {
             echo "$BODY" > $PLANE_INSTALL_DIR/docker-compose.yml
         else
             echo "Failed to download docker-compose.yml. HTTP Status: $STATUS"
-            echo "URL: $RELEASE_DOWNLOAD_URL/$APP_RELEASE/docker-compose.yml"
+            echo "URL: $RELEASE_DOWNLOAD_URL/v$APP_RELEASE/docker-compose.yml"
             mv $PLANE_INSTALL_DIR/archive/$TS.docker-compose.yml $PLANE_INSTALL_DIR/docker-compose.yml
             exit 1
         fi
     fi
 
-    RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/$APP_RELEASE/variables.env?$(date +%s)")
+    RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/variables.env?$(date +%s)")
     BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
     STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
@@ -196,7 +196,7 @@ function download() {
             echo "$BODY" > $PLANE_INSTALL_DIR/variables-upgrade.env
         else
             echo "Failed to download variables.env. HTTP Status: $STATUS"
-            echo "URL: $RELEASE_DOWNLOAD_URL/$APP_RELEASE/variables.env"
+            echo "URL: $RELEASE_DOWNLOAD_URL/v$APP_RELEASE/variables.env"
             mv $PLANE_INSTALL_DIR/archive/$TS.docker-compose.yml $PLANE_INSTALL_DIR/docker-compose.yml
             exit 1
         fi
@@ -591,12 +591,12 @@ fi
 
 # Sync environment variables
 if [ -f "$DOCKER_ENV_PATH" ]; then
-    DOCKERHUB_USER=$(getEnvValue "DOCKERHUB_USER" "$DOCKER_ENV_PATH")
+    IMAGE_REPO=$(getEnvValue "IMAGE_REPO" "$DOCKER_ENV_PATH")
     APP_RELEASE=$(getEnvValue "APP_RELEASE" "$DOCKER_ENV_PATH")
 
-    if [ -z "$DOCKERHUB_USER" ]; then
-        DOCKERHUB_USER=makeplane
-        updateEnvFile "DOCKERHUB_USER" "$DOCKERHUB_USER" "$DOCKER_ENV_PATH"
+    if [ -z "$IMAGE_REPO" ]; then
+        IMAGE_REPO=ghcr.io/osm-piatnica/pi-plane
+        updateEnvFile "IMAGE_REPO" "$IMAGE_REPO" "$DOCKER_ENV_PATH"
     fi
 
     if [ -z "$APP_RELEASE" ]; then
