@@ -334,6 +334,12 @@
           "text": "Gerenciar funcionalidades"
         }
       }
+    },
+    "order_by": {
+      "status": "Padrão (status)",
+      "name": "Nome",
+      "start_date": "Data de início",
+      "manual": "Manual"
     }
   },
   "project_modules": {

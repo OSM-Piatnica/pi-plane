@@ -334,6 +334,12 @@
           "text": "Gestionează funcțiile"
         }
       }
+    },
+    "order_by": {
+      "status": "Implicit (stare)",
+      "name": "Nume",
+      "start_date": "Data de început",
+      "manual": "Manual"
     }
   },
   "project_modules": {

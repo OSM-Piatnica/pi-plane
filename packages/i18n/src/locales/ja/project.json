@@ -334,6 +334,12 @@
           "text": "機能を管理"
         }
       }
+    },
+    "order_by": {
+      "status": "デフォルト（ステータス）",
+      "name": "名前",
+      "start_date": "開始日",
+      "manual": "手動"
     }
   },
   "project_modules": {

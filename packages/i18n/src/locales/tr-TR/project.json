@@ -334,6 +334,12 @@
           "text": "Özellikleri yönet"
         }
       }
+    },
+    "order_by": {
+      "status": "Varsayılan (durum)",
+      "name": "Ad",
+      "start_date": "Başlangıç tarihi",
+      "manual": "Manuel"
     }
   },
   "project_modules": {

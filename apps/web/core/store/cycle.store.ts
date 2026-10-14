@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -18,7 +19,14 @@ import type {
   TCycleEstimateType,
 } from "@plane/types";
 import type { DistributionUpdates } from "@plane/utils";
-import { orderCycles, shouldFilterCycle, getDate, updateDistribution } from "@plane/utils";
+import {
+  orderCycles,
+  orderCyclesWithCompleted,
+  sortCyclesByOrderBy,
+  shouldFilterCycle,
+  getDate,
+  updateDistribution,
+} from "@plane/utils";
 // helpers
 // services
 import { CycleService } from "@/services/cycle.service";
@@ -48,12 +56,13 @@ export interface ICycleStore {
   currentProjectActiveCycle: ICycle | null;
 
   // computed actions
-  getFilteredCycleIds: (projectId: string, sortByManual: boolean) => string[] | null;
+  getFilteredCycleIds: (projectId: string) => string[] | null;
   getFilteredCompletedCycleIds: (projectId: string) => string[] | null;
   getFilteredArchivedCycleIds: (projectId: string) => string[] | null;
   getCycleById: (cycleId: string) => ICycle | null;
   getCycleNameById: (cycleId: string) => string | undefined;
   getProjectCycleDetails: (projectId: string) => ICycle[] | null;
+  getOrderedProjectCycleDetails: (projectId: string) => ICycle[] | null;
   getProjectCycleIds: (projectId: string) => string[] | null;
   getPlotTypeByCycleId: (cycleId: string) => TCyclePlotType;
   getEstimateTypeByCycleId: (cycleId: string) => TCycleEstimateType;
@@ -258,7 +267,8 @@ export class CycleStore implements ICycleStore {
    * @param {TCycleFilters} filters
    * @returns {string[] | null}
    */
-  getFilteredCycleIds = computedFn((projectId: string, sortByManual: boolean) => {
+  getFilteredCycleIds = computedFn((projectId: string) => {
+    const displayFilters = this.rootStore.cycleFilter.getDisplayFiltersByProjectId(projectId);
     const filters = this.rootStore.cycleFilter.getFiltersByProjectId(projectId);
     const searchQuery = this.rootStore.cycleFilter.searchQuery;
     if (!this.fetchedMap[projectId]) return null;
@@ -269,7 +279,7 @@ export class CycleStore implements ICycleStore {
         c.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
         shouldFilterCycle(c, filters ?? {})
     );
-    cycles = orderCycles(cycles, sortByManual);
+    cycles = orderCycles(cycles, displayFilters?.order_by);
     const cycleIds = cycles.map((c) => c.id);
     return cycleIds;
   });
@@ -281,6 +291,8 @@ export class CycleStore implements ICycleStore {
    * @returns {string[] | null}
    */
   getFilteredCompletedCycleIds = computedFn((projectId: string) => {
+    const displayFilters = this.rootStore.cycleFilter.getDisplayFiltersByProjectId(projectId);
+    const orderByKey = displayFilters?.order_by ?? "status";
     const filters = this.rootStore.cycleFilter.getFiltersByProjectId(projectId);
     const searchQuery = this.rootStore.cycleFilter.searchQuery;
     if (!this.fetchedMap[projectId]) return null;
@@ -292,7 +304,7 @@ export class CycleStore implements ICycleStore {
         c.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
         shouldFilterCycle(c, filters ?? {})
     );
-    cycles = sortBy(cycles, [(c) => !c.start_date]);
+    cycles = orderByKey === "status" ? sortBy(cycles, [(c) => !c.start_date]) : sortCyclesByOrderBy(cycles, orderByKey);
     const cycleIds = cycles.map((c) => c.id);
     return cycleIds;
   });
@@ -342,6 +354,18 @@ export class CycleStore implements ICycleStore {
     let cycles = Object.values(this.cycleMap ?? {}).filter((c) => c.project_id === projectId && !c?.archived_at);
     cycles = sortBy(cycles, [(c) => c.sort_order]);
     return cycles || null;
+  });
+
+  /**
+   * @description returns list of cycle details of the project id passed as argument, ordered like the
+   * cycles view, including its order_by setting (used for work item grouping)
+   * @param projectId
+   */
+  getOrderedProjectCycleDetails = computedFn((projectId: string): ICycle[] | null => {
+    if (!this.fetchedMap[projectId]) return null;
+    const cycles = Object.values(this.cycleMap ?? {}).filter((c) => c.project_id === projectId && !c?.archived_at);
+    const displayFilters = this.rootStore.cycleFilter.getDisplayFiltersByProjectId(projectId);
+    return orderCyclesWithCompleted(cycles, displayFilters?.order_by);
   });
 
   /**
@@ -618,13 +642,13 @@ export class CycleStore implements ICycleStore {
    * @param cycleId
    */
   deleteCycle = async (workspaceSlug: string, projectId: string, cycleId: string) =>
-    await this.cycleService.deleteCycle(workspaceSlug, projectId, cycleId).then(() => {
+    await this.cycleService.deleteCycle(workspaceSlug, projectId, cycleId).then(() =>
       runInAction(() => {
         delete this.cycleMap[cycleId];
         delete this.activeCycleIdMap[cycleId];
         if (this.rootStore.favorite.entityMap[cycleId]) this.rootStore.favorite.removeFavoriteFromStore(cycleId);
-      });
-    });
+      })
+    );
 
   /**
    * @description adds a cycle to favorites
@@ -690,12 +714,12 @@ export class CycleStore implements ICycleStore {
     if (cycleDetails?.archived_at) return;
     await this.cycleArchiveService
       .archiveCycle(workspaceSlug, projectId, cycleId)
-      .then((response) => {
+      .then((response) =>
         runInAction(() => {
           set(this.cycleMap, [cycleId, "archived_at"], response.archived_at);
           if (this.rootStore.favorite.entityMap[cycleId]) this.rootStore.favorite.removeFavoriteFromStore(cycleId);
-        });
-      })
+        })
+      )
       .catch((error) => {
         console.error("Failed to archive cycle in cycle store", error);
       });
@@ -713,11 +737,11 @@ export class CycleStore implements ICycleStore {
     if (!cycleDetails?.archived_at) return;
     await this.cycleArchiveService
       .restoreCycle(workspaceSlug, projectId, cycleId)
-      .then(() => {
+      .then(() =>
         runInAction(() => {
           set(this.cycleMap, [cycleId, "archived_at"], null);
-        });
-      })
+        })
+      )
       .catch((error) => {
         console.error("Failed to restore cycle in cycle store", error);
       });
