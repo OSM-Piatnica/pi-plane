@@ -1,8 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
+
+import type { TCycleOrderByOptions } from "@plane/types";
 
 // types
 export const CYCLE_STATUS: {
@@ -44,5 +47,27 @@ export const CYCLE_STATUS: {
     color: "#525252",
     textColor: "text-tertiary",
     bgColor: "bg-surface-2",
+  },
+];
+
+export const CYCLE_ORDER_BY_OPTIONS: {
+  key: TCycleOrderByOptions;
+  i18n_label: string;
+}[] = [
+  {
+    key: "status",
+    i18n_label: "project_cycles.order_by.status",
+  },
+  {
+    key: "name",
+    i18n_label: "project_cycles.order_by.name",
+  },
+  {
+    key: "start_date",
+    i18n_label: "project_cycles.order_by.start_date",
+  },
+  {
+    key: "sort_order",
+    i18n_label: "project_cycles.order_by.manual",
   },
 ];

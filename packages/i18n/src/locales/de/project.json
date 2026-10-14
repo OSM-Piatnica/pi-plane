@@ -334,6 +334,12 @@
           "text": "Funktionen verwalten"
         }
       }
+    },
+    "order_by": {
+      "status": "Standard (Status)",
+      "name": "Name",
+      "start_date": "Startdatum",
+      "manual": "Manuell"
     }
   },
   "project_modules": {

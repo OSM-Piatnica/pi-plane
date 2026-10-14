@@ -13,14 +13,14 @@ import { useOutsideClickDetector } from "@plane/hooks";
 import { IconButton } from "@plane/propel/icon-button";
 import { useTranslation } from "@plane/i18n";
 import { SearchIcon, CloseIcon } from "@plane/propel/icons";
-import type { TCycleFilters } from "@plane/types";
+import type { TCycleFilters, TCycleOrderByOptions } from "@plane/types";
 import { cn, calculateTotalFilters } from "@plane/utils";
 // components
 import { FiltersDropdown } from "@/components/issues/issue-layouts/filters";
 // hooks
 import { useCycleFilter } from "@/hooks/store/use-cycle-filter";
 // local imports
-import { CycleFiltersSelection } from "./dropdowns";
+import { CycleFiltersSelection, CycleOrderByDropdown } from "./dropdowns";
 
 type Props = {
   projectId: string;
@@ -31,10 +31,17 @@ export const CyclesViewHeader = observer(function CyclesViewHeader(props: Props)
   // refs
   const inputRef = useRef<HTMLInputElement>(null);
   // hooks
-  const { currentProjectFilters, searchQuery, updateFilters, updateSearchQuery } = useCycleFilter();
+  const {
+    currentProjectFilters,
+    currentProjectDisplayFilters,
+    searchQuery,
+    updateFilters,
+    updateDisplayFilters,
+    updateSearchQuery,
+  } = useCycleFilter();
   const { t } = useTranslation();
   // states
-  const [isSearchOpen, setIsSearchOpen] = useState(searchQuery !== "" ? true : false);
+  const [isSearchOpen, setIsSearchOpen] = useState(searchQuery !== "");
   // outside click detector hook
   useOutsideClickDetector(inputRef, () => {
     if (isSearchOpen && searchQuery.trim() === "") setIsSearchOpen(false);
@@ -121,6 +128,13 @@ export const CyclesViewHeader = observer(function CyclesViewHeader(props: Props)
         </div>
       )}
 
+      <CycleOrderByDropdown
+        value={currentProjectDisplayFilters?.order_by}
+        onChange={(val: TCycleOrderByOptions) => {
+          if (!projectId || val === currentProjectDisplayFilters?.order_by) return;
+          updateDisplayFilters(projectId, { order_by: val });
+        }}
+      />
       <FiltersDropdown
         icon={<ListFilter className="h-3 w-3" />}
         title={t("common.filters")}

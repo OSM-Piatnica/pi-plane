@@ -1,13 +1,16 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
-// plane utils
+// plane imports
+import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 // hooks
+import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
 //
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../constants";
@@ -15,6 +18,8 @@ import type { IMonthBlock, IQuarterMonthBlock } from "../../views";
 import { groupMonthsToQuarters } from "../../views";
 
 export const QuarterChartView = observer(function QuarterChartView(_props: any) {
+  const { t } = useTranslation();
+  const { getMonthName } = useCalendarLocale();
   const { currentViewData, renderView } = useTimeLineChartStore();
   const monthBlocks: IMonthBlock[] = renderView;
 
@@ -43,10 +48,11 @@ export const QuarterChartView = observer(function QuarterChartView(_props: any) 
                     left: `${SIDEBAR_WIDTH}px`,
                   }}
                 >
-                  {quarterBlock?.title}
+                  {getMonthName(quarterBlock.quarterNumber * 3 + 1, "short")} -{" "}
+                  {getMonthName(quarterBlock.quarterNumber * 3 + 3, "short")} {quarterBlock.year}
                   {quarterBlock.today && (
                     <span className={cn("ml-2 rounded-sm bg-accent-primary px-1 text-9 font-medium text-on-color")}>
-                      Current
+                      {t("current")}
                     </span>
                   )}
                 </div>
@@ -73,7 +79,7 @@ export const QuarterChartView = observer(function QuarterChartView(_props: any) 
                           "rounded-lg bg-accent-primary px-2 text-on-color": monthBlock.today,
                         })}
                       >
-                        {monthBlock.monthData.shortTitle}
+                        {getMonthName(monthBlock.month + 1, "short")}
                       </span>
                     </div>
                   </div>

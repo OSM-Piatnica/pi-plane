@@ -1,21 +1,26 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 // components
+import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "@/components/gantt-chart/constants";
 // helpers
 // hooks
+import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
 // types
 import type { IMonthView } from "../../views";
 import { getNumberOfDaysBetweenTwoDates } from "../../views/helpers";
 
 export const MonthChartView = observer(function MonthChartView(_props: any) {
+  const { t } = useTranslation();
+  const { getMonthName } = useCalendarLocale();
   // chart hook
   const { currentViewData, renderView } = useTimeLineChartStore();
   const monthView: IMonthView = renderView;
@@ -54,10 +59,10 @@ export const MonthChartView = observer(function MonthChartView(_props: any) {
                       left: `${SIDEBAR_WIDTH}px`,
                     }}
                   >
-                    {monthBlock?.title}
+                    {`${getMonthName(monthBlock.month + 1)} ${monthBlock.year}`}
                     {monthBlock.today && (
                       <span className={cn("ml-2 rounded-sm bg-accent-primary px-1 text-9 font-medium text-on-color")}>
-                        Current
+                        {t("current")}
                       </span>
                     )}
                   </div>

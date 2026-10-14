@@ -334,6 +334,12 @@
           "text": "Spravovať funkcie"
         }
       }
+    },
+    "order_by": {
+      "status": "Predvolené (stav)",
+      "name": "Názov",
+      "start_date": "Dátum začiatku",
+      "manual": "Manuálne"
     }
   },
   "project_modules": {

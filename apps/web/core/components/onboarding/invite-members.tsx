@@ -22,7 +22,7 @@ import { XCircle } from "lucide-react";
 import { Listbox } from "@headlessui/react";
 // plane imports
 import type { EUserPermissions } from "@plane/constants";
-import { ROLE, ROLE_DETAILS } from "@plane/constants";
+import { getRoleI18nKey, ROLE_DETAILS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 // types
 import { Button } from "@plane/propel/button";
@@ -197,7 +197,7 @@ const InviteMemberInput = observer(function InviteMemberInput(props: InviteMembe
                       !getValues(`emails.${index}.role_active`) ? "text-placeholder" : "text-primary"
                     } sm:text-13`}
                   >
-                    {ROLE[value]}
+                    {t(getRoleI18nKey(value))}
                   </span>
 
                   <ChevronDownIcon

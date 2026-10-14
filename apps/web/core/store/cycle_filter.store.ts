@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -129,6 +130,7 @@ export class CycleFilterStore implements ICycleFilterStore {
       this.displayFilters[projectId] = {
         active_tab: displayFilters?.active_tab || "active",
         layout: displayFilters?.layout || "list",
+        order_by: displayFilters?.order_by || "status",
       };
       this.filters[projectId] = this.filters[projectId] ?? {
         default: {},

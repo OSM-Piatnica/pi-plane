@@ -119,3 +119,6 @@ packages/i18n/src/types/keys.generated.ts
 # no longer a git-tracked symlink, since git only creates a real symlink on
 # checkout when the client has symlink support enabled)
 packages/i18n/locales
+
+# Local security advisory notes (not for version control)
+/advisories.md

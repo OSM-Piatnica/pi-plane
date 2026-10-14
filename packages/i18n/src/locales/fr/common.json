@@ -984,5 +984,23 @@
         "message": "Échec de la finalisation de l’intégration. Veuillez réessayer plus tard."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Les éléments sélectionnés resteront toujours visibles dans votre barre latérale. Vous pouvez retrouver les autres à tout moment depuis le menu Plus. Ces modifications sont personnelles et n'affecteront personne d'autre dans votre espace de travail.",
+    "accordion_description": "Les onglets de fonctionnalités apparaîtront comme des éléments imbriqués sous le projet et fonctionneront comme un accordéon.",
+    "tabbed_description": "Les onglets de fonctionnalités apparaîtront sous forme d'onglets horizontaux dans un projet."
+  },
+  "calendar_ui": {
+    "week_view": "Vue semaine",
+    "month_layout": "Disposition mensuelle",
+    "week_layout": "Disposition hebdomadaire",
+    "after": "Après",
+    "before": "Avant"
+  },
+  "page_sync_ui": {
+    "syncing": "Synchronisation...",
+    "syncing_description": "Vos modifications sont en cours de synchronisation avec le serveur. Vous pouvez continuer à modifier.",
+    "connection_lost": "Connexion perdue",
+    "connection_lost_description": "Nous avons du mal à nous connecter au serveur websocket. Vos modifications seront synchronisées et enregistrées toutes les 10 secondes."
   }
 }
