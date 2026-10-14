@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
+import pytest
+
+from plane.utils.porters.importer import DataImporter
 from plane.utils.porters.formatters import CSVFormatter, UTF8_SIG_BOM
 
 
@@ -47,3 +50,17 @@ class TestCSVFormatterEncoding:
     def test_encode_uses_crlf_line_endings(self):
         csv_content = CSVFormatter().encode([{"name": "Test"}])
         assert "\r\n" in csv_content
+
+    def test_decode_accepts_semicolon_content_without_bom(self):
+        rows = CSVFormatter().decode("Name;Identifier\r\nTest;ABC\r\n")
+        assert rows[0]["name"] == "Test"
+        assert rows[0]["identifier"] == "ABC"
+
+    @pytest.mark.parametrize("with_bom", [True, False])
+    def test_importer_decodes_uploaded_bytes_with_or_without_bom(self, with_bom):
+        raw = "Name,Identifier\r\nŚrodki,ABC\r\n".encode("utf-8")
+        if with_bom:
+            raw = UTF8_SIG_BOM.encode("utf-8") + raw
+        rows = DataImporter("csv").decode(raw)
+        assert rows[0]["name"] == "Środki"
+        assert rows[0]["identifier"] == "ABC"
