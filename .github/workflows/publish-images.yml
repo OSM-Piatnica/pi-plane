@@ -1,0 +1,268 @@
+name: Publish Images
+
+# Publishes the Pi-Plane container images to GHCR when a version tag is pushed.
+# Tags are `<upstream version>-pi.<n>` (e.g. v1.3.1-pi.1); `-rc`, `-alpha` and `-beta`
+# suffixes mark a pre-release, which is published under its version tag only (no `latest`).
+
+on:
+  push:
+    tags:
+      - "v*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE_PREFIX: ghcr.io/osm-piatnica/pi-plane
+
+jobs:
+  setup:
+    name: Setup
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.vars.outputs.version }}
+      is_prerelease: ${{ steps.vars.outputs.is_prerelease }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - id: vars
+        name: Validate tag
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#v}"
+          semver_regex='^v[0-9]+\.[0-9]+\.[0-9]+-pi\.[0-9]+(-(rc|alpha|beta)(\.[0-9]+)?)?$'
+          if [[ ! $TAG =~ $semver_regex ]]; then
+            echo "Invalid tag '$TAG'. Expected v<upstream version>-pi.<n>[-rc.<n>], e.g. v1.3.1-pi.1"
+            exit 1
+          fi
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if [[ "$VERSION" != "$PKG_VERSION" && "$VERSION" != "$PKG_VERSION"-* ]]; then
+            echo "Tag '$TAG' does not match the root package.json version '$PKG_VERSION'"
+            exit 1
+          fi
+          IS_PRERELEASE=false
+          if [[ $TAG =~ -(rc|alpha|beta) ]]; then IS_PRERELEASE=true; fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "is_prerelease=$IS_PRERELEASE" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build ${{ matrix.component }} (${{ matrix.platform }})
+    needs: setup
+    runs-on: ${{ matrix.platform == 'linux/arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        component: [web, space, admin, live, api, proxy]
+        platform: [linux/amd64, linux/arm64]
+        include:
+          - component: web
+            context: .
+            dockerfile: ./apps/web/Dockerfile.web
+            title: Pi-Plane Web
+          - component: space
+            context: .
+            dockerfile: ./apps/space/Dockerfile.space
+            title: Pi-Plane Space
+          - component: admin
+            context: .
+            dockerfile: ./apps/admin/Dockerfile.admin
+            title: Pi-Plane Admin
+          - component: live
+            context: .
+            dockerfile: ./apps/live/Dockerfile.live
+            title: Pi-Plane Live
+          - component: api
+            context: ./apps/api
+            dockerfile: ./apps/api/Dockerfile.api
+            title: Pi-Plane API
+          - component: proxy
+            context: ./apps/proxy
+            dockerfile: ./apps/proxy/Dockerfile.ce
+            title: Pi-Plane Proxy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Prepare
+        run: echo "PLATFORM_PAIR=${PLATFORM//\//-}" >> "$GITHUB_ENV"
+        env:
+          PLATFORM: ${{ matrix.platform }}
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE_PREFIX }}-${{ matrix.component }}
+          labels: |
+            org.opencontainers.image.title=${{ matrix.title }}
+            org.opencontainers.image.description=${{ matrix.title }}, part of Pi-Plane, a fork of Plane
+            org.opencontainers.image.licenses=AGPL-3.0-only
+            org.opencontainers.image.vendor=Okręgowa Spółdzielnia Mleczarska w Piątnicy
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push by digest
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          platforms: ${{ matrix.platform }}
+          labels: ${{ steps.meta.outputs.labels }}
+          outputs: type=image,name=${{ env.IMAGE_PREFIX }}-${{ matrix.component }},push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=gha,scope=${{ matrix.component }}-${{ env.PLATFORM_PAIR }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.component }}-${{ env.PLATFORM_PAIR }}
+
+      - name: Export digest
+        run: |
+          mkdir -p "${{ runner.temp }}/digests"
+          digest="${{ steps.build.outputs.digest }}"
+          touch "${{ runner.temp }}/digests/${digest#sha256:}"
+
+      - name: Upload digest
+        uses: actions/upload-artifact@v7
+        with:
+          name: digests-${{ matrix.component }}-${{ env.PLATFORM_PAIR }}
+          path: ${{ runner.temp }}/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+  merge:
+    name: Publish ${{ matrix.component }}
+    needs: [setup, build]
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        component: [web, space, admin, live, api, proxy]
+    steps:
+      - name: Download digests
+        uses: actions/download-artifact@v8
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-${{ matrix.component }}-*
+          merge-multiple: true
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE_PREFIX }}-${{ matrix.component }}
+          flavor: latest=false
+          tags: |
+            type=raw,value=${{ needs.setup.outputs.version }}
+            type=raw,value=latest,enable=${{ needs.setup.outputs.is_prerelease != 'true' }}
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Create multi-arch manifest
+        working-directory: ${{ runner.temp }}/digests
+        run: |
+          docker buildx imagetools create \
+            $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(printf '${{ env.IMAGE_PREFIX }}-${{ matrix.component }}@sha256:%s ' *)
+
+      - name: Inspect image
+        run: docker buildx imagetools inspect ${{ env.IMAGE_PREFIX }}-${{ matrix.component }}:${{ needs.setup.outputs.version }}
+
+  aio:
+    name: Publish all-in-one
+    needs: [setup, merge]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Prepare AIO assets
+        run: |
+          cd deployments/aio/community
+          bash ./build.sh --release "${{ needs.setup.outputs.version }}"
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE_PREFIX }}
+          flavor: latest=false
+          tags: |
+            type=raw,value=${{ needs.setup.outputs.version }}
+            type=raw,value=latest,enable=${{ needs.setup.outputs.is_prerelease != 'true' }}
+          labels: |
+            org.opencontainers.image.title=Pi-Plane
+            org.opencontainers.image.description=Pi-Plane all-in-one image, a fork of Plane
+            org.opencontainers.image.licenses=AGPL-3.0-only
+            org.opencontainers.image.vendor=Okręgowa Spółdzielnia Mleczarska w Piątnicy
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./deployments/aio/community
+          file: ./deployments/aio/community/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            PLANE_VERSION=${{ needs.setup.outputs.version }}
+            IMAGE_REPO=${{ env.IMAGE_PREFIX }}
+
+  release:
+    name: Create GitHub release
+    needs: [setup, aio]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Update assets
+        run: |
+          sed -i 's/${APP_RELEASE:-latest}/${APP_RELEASE:-${{ needs.setup.outputs.version }}}/g' deployments/cli/community/docker-compose.yml
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2.6.1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          draft: false
+          prerelease: ${{ needs.setup.outputs.is_prerelease == 'true' }}
+          generate_release_notes: true
+          files: |
+            deployments/cli/community/docker-compose.yml
+            deployments/cli/community/variables.env
