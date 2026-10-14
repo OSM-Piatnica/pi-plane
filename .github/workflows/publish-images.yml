@@ -103,6 +103,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.IMAGE_PREFIX }}-${{ matrix.component }}
+          flavor: latest=false
+          # tags are not pushed here (push-by-digest); this sets the version label without the leading v
+          tags: |
+            type=raw,value=${{ needs.setup.outputs.version }}
           labels: |
             org.opencontainers.image.title=${{ matrix.title }}
             org.opencontainers.image.description=${{ matrix.title }}, part of Pi-Plane, a fork of Plane
