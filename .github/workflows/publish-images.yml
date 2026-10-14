@@ -253,6 +253,7 @@ jobs:
 
       - name: Update assets
         run: |
+          cp deployments/cli/community/install.sh deployments/cli/community/setup.sh
           sed -i 's/${APP_RELEASE:-latest}/${APP_RELEASE:-${{ needs.setup.outputs.version }}}/g' deployments/cli/community/docker-compose.yml
 
       - name: Create release
@@ -264,5 +265,9 @@ jobs:
           prerelease: ${{ needs.setup.outputs.is_prerelease == 'true' }}
           generate_release_notes: true
           files: |
+            deployments/cli/community/setup.sh
+            deployments/cli/community/restore.sh
+            deployments/cli/community/restore-airgapped.sh
             deployments/cli/community/docker-compose.yml
             deployments/cli/community/variables.env
+            deployments/swarm/community/swarm.sh
