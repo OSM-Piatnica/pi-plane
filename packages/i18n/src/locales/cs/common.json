@@ -984,5 +984,23 @@
         "message": "Dokončení úvodního nastavení se nezdařilo. Zkuste to prosím později."
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "Vybrané položky zůstanou vždy viditelné v postranním panelu. Ostatní najdete kdykoli v nabídce Více. Tyto změny jsou osobní a neovlivní nikoho jiného ve vašem pracovním prostoru.",
+    "accordion_description": "Karty funkcí se zobrazí jako vnořené položky pod projektem a fungují jako akordeon.",
+    "tabbed_description": "Karty funkcí se zobrazí jako vodorovné karty uvnitř projektu."
+  },
+  "calendar_ui": {
+    "week_view": "Zobrazení týdne",
+    "month_layout": "Měsíční rozvržení",
+    "week_layout": "Týdenní rozvržení",
+    "after": "Po",
+    "before": "Před"
+  },
+  "page_sync_ui": {
+    "syncing": "Synchronizace...",
+    "syncing_description": "Vaše změny se synchronizují se serverem. Můžete pokračovat v úpravách.",
+    "connection_lost": "Spojení ztraceno",
+    "connection_lost_description": "Máme potíže s připojením k serveru websocket. Vaše změny budou synchronizovány a ukládány každých 10 sekund."
   }
 }

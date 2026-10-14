@@ -99,6 +99,13 @@ export const ROLE_DETAILS = {
   },
 };
 
+/**
+ * @description Returns the translation key for the title of a role (Admin, Member, Guest).
+ * @param {number | string} role - numeric role value
+ */
+export const getRoleI18nKey = (role: number | string): string =>
+  ROLE_DETAILS[Number(role) as keyof typeof ROLE_DETAILS]?.i18n_title ?? "";
+
 export const USER_ROLES = [
   {
     value: "Product / Project Manager",

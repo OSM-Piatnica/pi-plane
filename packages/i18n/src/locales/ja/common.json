@@ -984,5 +984,23 @@
         "message": "オンボーディングを完了できませんでした。しばらくしてからもう一度お試しください。"
       }
     }
+  },
+  "customize_navigation_ui": {
+    "description": "選択した項目は常にサイドバーに表示されます。その他の項目は、いつでも「その他」メニューから見つけられます。これらの変更は個人設定であり、ワークスペース内の他のユーザーには影響しません。",
+    "accordion_description": "機能タブはプロジェクトの下にネストされた項目として表示され、アコーディオンとして動作します。",
+    "tabbed_description": "機能タブはプロジェクト内に横向きのタブとして表示されます。"
+  },
+  "calendar_ui": {
+    "week_view": "週表示",
+    "month_layout": "月レイアウト",
+    "week_layout": "週レイアウト",
+    "after": "以降",
+    "before": "以前"
+  },
+  "page_sync_ui": {
+    "syncing": "同期中...",
+    "syncing_description": "変更内容をサーバーと同期しています。引き続き編集できます。",
+    "connection_lost": "接続が切断されました",
+    "connection_lost_description": "WebSocketサーバーへの接続に問題が発生しています。変更内容は10秒ごとに同期・保存されます。"
   }
 }
