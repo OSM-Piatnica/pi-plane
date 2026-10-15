@@ -22,6 +22,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "plane.settings.production")
 
 ri = redis_instance()
 
+
 # Configurable metrics push interval (in minutes)
 # Default: 360 (6 hours), set to 5 for development/testing
 def _get_metrics_push_interval_minutes() -> int:
@@ -33,6 +34,7 @@ def _get_metrics_push_interval_minutes() -> int:
         return value if 0 < value <= 10_000_000 else 360
     except (ValueError, OverflowError):
         return 360
+
 
 METRICS_PUSH_INTERVAL_MINUTES = _get_metrics_push_interval_minutes()
 

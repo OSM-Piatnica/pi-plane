@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -126,7 +127,7 @@ class InstanceAdminSignUpEndpoint(View):
         first_name = request.POST.get("first_name", False)
         last_name = request.POST.get("last_name", "")
         company_name = request.POST.get("company_name", "")
-        is_telemetry_enabled = request.POST.get("is_telemetry_enabled", True)
+        is_telemetry_enabled = request.POST.get("is_telemetry_enabled", False)
 
         # return error if the email and password is not present
         if not email or not password or not first_name:
