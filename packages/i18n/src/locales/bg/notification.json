@@ -54,5 +54,18 @@
       "2_weeks": "2 седмици",
       "custom": "Персонализирано"
     }
+  },
+  "notification_ui": {
+    "snooze_modal": {
+      "date_required": "Моля, изберете дата",
+      "no_time_available": "Няма налично време за тази дата.",
+      "pick_date": "Изберете дата",
+      "pick_time": "Изберете час",
+      "select_date": "Избор на дата",
+      "select_time": "Изберете час",
+      "submitting": "Изпращане...",
+      "time_required": "Моля, изберете час",
+      "title": "Персонализиране на времето за отлагане"
+    }
   }
 }

@@ -176,11 +176,6 @@
     "footer": {
       "workspace_level": "Ниво работно пространство"
     },
-    "shortcuts_modal": {
-      "search_placeholder": "Търсене на клавишни комбинации",
-      "no_results": "Няма намерени клавишни комбинации за „{query}“",
-      "sequence_separator": "след това"
-    },
     "group_titles": {
       "actions": "Действия",
       "contextual": "Контекстни",
@@ -192,6 +187,29 @@
       "miscellaneous": "Други",
       "preferences": "Предпочитания",
       "help": "Помощ"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Търсене на клавишни комбинации",
+      "no_results": "Няма намерени клавишни комбинации за „{query}“",
+      "sequence_separator": "след това"
     }
+  },
+  "power_k_ui": {
+    "clear_context": "Изчисти контекста (Backspace)",
+    "empty_menu": {
+      "cycles": "Не са намерени цикли",
+      "labels": "Не са намерени етикети",
+      "modules": "Не са намерени модули",
+      "projects": "Не са намерени проекти",
+      "settings": "Не са намерени настройки",
+      "views": "Не са намерени изгледи",
+      "workspaces": "Не са намерени работни пространства"
+    },
+    "epic_update_error": "Епикът не можа да бъде обновен. Опитайте отново.",
+    "module_update_error": "Модулът не можа да бъде обновен. Опитайте отново.",
+    "no_estimate_found": "Не е намерена оценка",
+    "reloading_to_apply": "Презареждане за прилагане на промените...",
+    "some_error_occurred": "Възникна грешка",
+    "work_item_update_error": "Работният елемент не можа да бъде обновен. Опитайте отново."
   }
 }

@@ -152,5 +152,20 @@
         "label": "Персонализирана тема"
       }
     }
+  },
+  "analytics_ui": {
+    "add_metric": "Добави метрика",
+    "add_property": "Добави свойство",
+    "count": "Брой",
+    "no_value": "Няма стойност",
+    "projects_more": "3+ проекта"
+  },
+  "profile_ui": {
+    "completion_percentage": "Процент на завършеност",
+    "first_day_updated": "Първият ден от седмицата е обновен успешно",
+    "try_again_later": "Опитайте отново по-късно.",
+    "update_failed": "Обновяването не бе успешно",
+    "workload_not_started": "Не е започнато",
+    "workload_working_on": "В работа"
   }
 }
