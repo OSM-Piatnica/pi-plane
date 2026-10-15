@@ -57,6 +57,7 @@ export const SidebarWorkspaceMenuHeader = observer(function SidebarWorkspaceMenu
       <CustomMenu
         customButton={
           <span
+            role="presentation"
             ref={actionSectionRef}
             className="my-auto grid place-items-center rounded-sm p-0.5 text-placeholder hover:bg-layer-1"
             onClick={() => {

@@ -189,6 +189,7 @@ export const ChangeEmailModal = observer(function ChangeEmailModal(props: Props)
                   placeholder={changeEmailT("form.code.placeholder")}
                   className={cn({ "border-danger-strong": errors.code })}
                   autoComplete="off"
+                  // eslint-disable-next-line jsx-a11y/no-autofocus
                   autoFocus
                 />
               )}

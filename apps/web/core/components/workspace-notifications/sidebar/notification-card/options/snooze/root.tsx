@@ -16,7 +16,6 @@ import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { Tooltip } from "@plane/propel/tooltip";
 import { cn } from "@plane/utils";
 // hooks
-import { useWorkspaceNotifications } from "@/hooks/store/notifications";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // store
 import type { INotification } from "@/store/notifications/notification";
@@ -37,7 +36,6 @@ export const NotificationItemSnoozeOption = observer(function NotificationItemSn
   const { workspaceSlug, notification, setIsSnoozeStateModalOpen, customSnoozeModal, setCustomSnoozeModal } = props;
   // hooks
   const { isMobile } = usePlatformOS();
-  const {} = useWorkspaceNotifications();
   const { t } = useTranslation();
   const { asJson: data, snoozeNotification, unSnoozeNotification } = notification;
 
