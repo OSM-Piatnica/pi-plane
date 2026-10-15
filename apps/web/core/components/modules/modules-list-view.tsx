@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 import { useParams, useSearchParams } from "next/navigation";
 // components
-import { EUserPermissionsLevel, MODULE_TRACKER_ELEMENTS } from "@plane/constants";
+import { EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { EmptyStateDetailed } from "@plane/propel/empty-state";
 import { EUserProjectRoles } from "@plane/types";
@@ -65,7 +66,6 @@ export const ModulesListView = observer(function ModulesListView() {
             onClick: () => toggleCreateModuleModal(true),
             disabled: !canPerformEmptyStateActions,
             variant: "primary",
-            "data-ph-element": MODULE_TRACKER_ELEMENTS.EMPTY_STATE_ADD_BUTTON,
           },
         ]}
       />

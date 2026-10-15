@@ -1,13 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useState } from "react";
 import { observer } from "mobx-react";
 // plane imports
-import { WORKSPACE_TRACKER_ELEMENTS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import type { IWorkspace } from "@plane/types";
@@ -38,11 +38,7 @@ export const DeleteWorkspaceSection = observer(function DeleteWorkspaceSection(p
         title={t("workspace_settings.settings.general.delete_workspace")}
         description={t("workspace_settings.settings.general.delete_workspace_description")}
         control={
-          <Button
-            variant="error-outline"
-            onClick={() => setDeleteWorkspaceModal(true)}
-            data-ph-element={WORKSPACE_TRACKER_ELEMENTS.DELETE_WORKSPACE_BUTTON}
-          >
+          <Button variant="error-outline" onClick={() => setDeleteWorkspaceModal(true)}>
             {t("delete")}
           </Button>
         }

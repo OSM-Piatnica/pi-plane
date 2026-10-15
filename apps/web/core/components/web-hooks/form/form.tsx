@@ -1,13 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { Controller, useForm } from "react-hook-form";
-import { WORKSPACE_SETTINGS_TRACKER_ELEMENTS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import type { IWebhook, TWebhookEventTypes } from "@plane/types";
@@ -98,12 +98,7 @@ export const WebhookForm = observer(function WebhookForm(props: Props) {
       {data ? (
         <div className="space-y-5 pt-0">
           <WebhookSecretKey data={data} />
-          <Button
-            size="lg"
-            type="submit"
-            loading={isSubmitting}
-            data-ph-element={WORKSPACE_SETTINGS_TRACKER_ELEMENTS.WEBHOOK_UPDATE_BUTTON}
-          >
+          <Button size="lg" type="submit" loading={isSubmitting}>
             {isSubmitting ? t("updating") : t("update")}
           </Button>
         </div>

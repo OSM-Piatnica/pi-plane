@@ -1,10 +1,10 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { USER_TRACKER_ELEMENTS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 // ui
 import { getButtonStyling } from "@plane/propel/button";
@@ -29,7 +29,6 @@ export function ProductUpdatesFooter() {
           <circle cx={1} cy={1} r={1} />
         </svg>
         <a
-          data-ph-element={USER_TRACKER_ELEMENTS.CHANGELOG_REDIRECTED}
           href="https://go.plane.so/p-changelog"
           target="_blank"
           className="text-13 text-secondary underline-offset-1 outline-none hover:text-primary hover:underline"

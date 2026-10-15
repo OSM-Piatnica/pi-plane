@@ -8,7 +8,7 @@
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // ui
-import { EUserPermissions, EUserPermissionsLevel, CYCLE_TRACKER_ELEMENTS } from "@plane/constants";
+import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { CycleIcon } from "@plane/propel/icons";
@@ -64,7 +64,6 @@ export const CyclesListHeader = observer(function CyclesListHeader() {
           <Button
             variant="primary"
             size="lg"
-            data-ph-element={CYCLE_TRACKER_ELEMENTS.RIGHT_HEADER_ADD_BUTTON}
             onClick={() => {
               toggleCreateCycleModal(true);
             }}

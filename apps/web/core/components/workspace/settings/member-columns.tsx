@@ -11,13 +11,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import { Disclosure } from "@headlessui/react";
 // plane imports
-import {
-  ROLE,
-  getRoleI18nKey,
-  EUserPermissions,
-  EUserPermissionsLevel,
-  MEMBER_TRACKER_ELEMENTS,
-} from "@plane/constants";
+import { ROLE, getRoleI18nKey, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { TrashIcon, SuspendedUserIcon } from "@plane/propel/icons";
 import { Pill, EPillVariant, EPillSize } from "@plane/propel/pill";
@@ -106,7 +100,6 @@ export function NameColumn(props: NameProps) {
                         setRemoveMemberModal(rowData);
                       }
                     }}
-                    data-ph-element={MEMBER_TRACKER_ELEMENTS.WORKSPACE_MEMBER_TABLE_CONTEXT_MENU}
                   >
                     <TrashIcon className="size-3.5 align-middle" /> {id === currentUser?.id ? "Leave " : "Remove "}
                   </div>

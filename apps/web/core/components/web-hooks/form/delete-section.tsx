@@ -6,7 +6,7 @@
  */
 
 import { Disclosure, Transition } from "@headlessui/react";
-import { WORKSPACE_SETTINGS_TRACKER_ELEMENTS } from "@plane/constants";
+
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { ChevronDownIcon, ChevronUpIcon } from "@plane/propel/icons";
@@ -44,12 +44,7 @@ export function WebhookDeleteSection(props: Props) {
                   {t("project_components.webhooks.danger_zone_description")}
                 </span>
                 <div>
-                  <Button
-                    variant="error-fill"
-                    size="lg"
-                    onClick={openDeleteModal}
-                    data-ph-element={WORKSPACE_SETTINGS_TRACKER_ELEMENTS.WEBHOOK_DELETE_BUTTON}
-                  >
+                  <Button variant="error-fill" size="lg" onClick={openDeleteModal}>
                     {t("project_components.webhooks.delete_title")}
                   </Button>
                 </div>

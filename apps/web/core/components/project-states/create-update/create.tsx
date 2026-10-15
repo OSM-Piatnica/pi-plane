@@ -16,7 +16,6 @@ import { StateForm } from "@/components/project-states";
 
 type TStateCreate = {
   groupKey: TStateGroups;
-  shouldTrackEvents?: boolean;
   createStateCallback: TStateOperationsCallbacks["createState"];
   handleClose: () => void;
 };

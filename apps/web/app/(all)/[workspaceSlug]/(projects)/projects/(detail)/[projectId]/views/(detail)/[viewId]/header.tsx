@@ -16,7 +16,6 @@ import {
   ISSUE_DISPLAY_FILTERS_BY_PAGE,
   EUserPermissions,
   EUserPermissionsLevel,
-  WORK_ITEM_TRACKER_ELEMENTS,
 } from "@plane/constants";
 import { Button } from "@plane/propel/button";
 import { LockIcon, ViewsIcon } from "@plane/propel/icons";
@@ -207,7 +206,6 @@ export const ProjectViewIssuesHeader = observer(function ProjectViewIssuesHeader
             onClick={() => {
               toggleCreateIssueModal(true, EIssuesStoreType.PROJECT_VIEW);
             }}
-            data-ph-element={WORK_ITEM_TRACKER_ELEMENTS.HEADER_ADD_BUTTON.PROJECT_VIEW}
           >
             {t("add_work_item")}
           </Button>

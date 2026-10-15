@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,7 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
 // plane imports
-import { ISSUE_DISPLAY_FILTERS_BY_PAGE, PROJECT_VIEW_TRACKER_ELEMENTS } from "@plane/constants";
+import { ISSUE_DISPLAY_FILTERS_BY_PAGE } from "@plane/constants";
 import { EIssuesStoreType, EIssueLayoutTypes } from "@plane/types";
 import { Row, ERowVariant } from "@plane/ui";
 // hooks
@@ -81,14 +82,7 @@ export const ModuleLayoutRoot = observer(function ModuleLayoutRoot() {
       >
         {({ filter: moduleWorkItemsFilter }) => (
           <div className="relative flex h-full w-full flex-col overflow-hidden">
-            {moduleWorkItemsFilter && (
-              <WorkItemFiltersRow
-                filter={moduleWorkItemsFilter}
-                trackerElements={{
-                  saveView: PROJECT_VIEW_TRACKER_ELEMENTS.MODULE_HEADER_SAVE_AS_VIEW_BUTTON,
-                }}
-              />
-            )}
+            {moduleWorkItemsFilter && <WorkItemFiltersRow filter={moduleWorkItemsFilter} />}
             <Row variant={ERowVariant.HUGGING} className="h-full w-full overflow-auto">
               <ModuleIssueLayout activeLayout={activeLayout} moduleId={moduleId} />
             </Row>

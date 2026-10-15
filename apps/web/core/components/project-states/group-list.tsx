@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -16,7 +17,6 @@ type TGroupList = {
   groupedStates: Record<string, IState[]>;
   stateOperationsCallbacks: TStateOperationsCallbacks;
   isEditable: boolean;
-  shouldTrackEvents: boolean;
   groupListClassName?: string;
   groupItemClassName?: string;
   stateItemClassName?: string;
@@ -27,7 +27,6 @@ export const GroupList = observer(function GroupList(props: TGroupList) {
     groupedStates,
     stateOperationsCallbacks,
     isEditable,
-    shouldTrackEvents,
     groupListClassName,
     groupItemClassName,
     stateItemClassName,
@@ -72,7 +71,6 @@ export const GroupList = observer(function GroupList(props: TGroupList) {
             groupsExpanded={groupsExpanded}
             stateOperationsCallbacks={stateOperationsCallbacks}
             isEditable={isEditable}
-            shouldTrackEvents={shouldTrackEvents}
             handleGroupCollapse={handleGroupCollapse}
             handleExpand={handleExpand}
             groupItemClassName={groupItemClassName}

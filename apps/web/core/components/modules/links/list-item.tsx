@@ -7,7 +7,6 @@
 
 import { observer } from "mobx-react";
 
-import { MODULE_TRACKER_ELEMENTS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { CopyIcon, EditIcon, TrashIcon } from "@plane/propel/icons";
 // plane types
@@ -70,7 +69,6 @@ export const ModulesLinksListItem = observer(function ModulesLinksListItem(props
             <button
               type="button"
               className="grid place-items-center rounded-sm p-1 text-secondary hover:bg-layer-transparent-hover"
-              data-ph-element={MODULE_TRACKER_ELEMENTS.LIST_ITEM}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -91,7 +89,6 @@ export const ModulesLinksListItem = observer(function ModulesLinksListItem(props
             <button
               type="button"
               className="grid place-items-center rounded-sm p-1 text-secondary hover:bg-layer-transparent-hover"
-              data-ph-element={MODULE_TRACKER_ELEMENTS.LIST_ITEM}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();

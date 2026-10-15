@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,7 +9,6 @@ import type { MutableRefObject } from "react";
 import { useRef, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 // plane helpers
-import { PROJECT_SETTINGS_TRACKER_ELEMENTS } from "@plane/constants";
 import { useOutsideClickDetector } from "@plane/hooks";
 import type { ISvgIcons } from "@plane/propel/icons";
 import { CloseIcon } from "@plane/propel/icons";
@@ -101,7 +101,6 @@ export function LabelItemBlock(props: ILabelItemBlock) {
                 onClick={() => {
                   handleLabelDelete(label);
                 }}
-                data-ph-element={PROJECT_SETTINGS_TRACKER_ELEMENTS.LABELS_DELETE_BUTTON}
               >
                 <CloseIcon className="size-3.5 flex-shrink-0 text-tertiary" />
               </button>

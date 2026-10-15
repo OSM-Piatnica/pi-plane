@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,21 +15,12 @@ type TStateList = {
   groupedStates: Record<string, IState[]>;
   states: IState[];
   stateOperationsCallbacks: TStateOperationsCallbacks;
-  shouldTrackEvents: boolean;
   disabled?: boolean;
   stateItemClassName?: string;
 };
 
 export const StateList = observer(function StateList(props: TStateList) {
-  const {
-    groupKey,
-    groupedStates,
-    states,
-    stateOperationsCallbacks,
-    shouldTrackEvents,
-    disabled = false,
-    stateItemClassName,
-  } = props;
+  const { groupKey, groupedStates, states, stateOperationsCallbacks, disabled = false, stateItemClassName } = props;
 
   return (
     <>
@@ -41,7 +33,6 @@ export const StateList = observer(function StateList(props: TStateList) {
           state={state}
           disabled={disabled}
           stateOperationsCallbacks={stateOperationsCallbacks}
-          shouldTrackEvents={shouldTrackEvents}
           stateItemClassName={stateItemClassName}
         />
       ))}
