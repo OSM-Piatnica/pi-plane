@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -68,7 +69,8 @@ export const useDropdown = (args: TArguments) => {
   };
 
   // close the dropdown when the user clicks outside of the dropdown
-  useOutsideClickDetector(dropdownRef, handleClose);
+  // skip binding the document listener entirely while the dropdown is closed
+  useOutsideClickDetector(dropdownRef, handleClose, false, isOpen);
 
   // focus the search input when the dropdown is open
   useEffect(() => {
