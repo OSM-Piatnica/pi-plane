@@ -184,9 +184,7 @@ class TestIssueLinkDetailPatch:
     @patch("plane.api.views.issue.crawl_work_item_link_title")
     @patch("plane.api.views.issue.IssueLinkSerializer")
     @patch("plane.api.views.issue.IssueLink.objects.get")
-    def test_patch_triggers_crawl_when_url_changed(
-        self, mock_get_link, mock_serializer_cls, mock_crawl, mock_activity
-    ):
+    def test_patch_triggers_crawl_when_url_changed(self, mock_get_link, mock_serializer_cls, mock_crawl, mock_activity):
         initial_url = "https://github.com/makeplane/plane"
         new_url = "https://github.com/makeplane/plane/pull/123"
         mock_instance = MagicMock()
