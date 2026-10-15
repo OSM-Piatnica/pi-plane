@@ -5,16 +5,16 @@
       "please_select_a_timezone": "Selecteer een tijdzone",
       "archive_project": {
         "title": "Project archiveren",
-        "description": "Als je een project archiveert, verdwijnt het uit je zijnavigatie, maar je hebt er nog wel toegang toe via je projectenpagina. Je kunt het project op elk moment herstellen of verwijderen.",
+        "description": "Als je een project archiveert, verdwijnt het uit je zijnavigatie, maar blijft het toegankelijk via je projectenpagina. Je kunt het project op elk moment herstellen of verwijderen.",
         "button": "Project archiveren"
       },
       "delete_project": {
         "title": "Project verwijderen",
-        "description": "Als je een project verwijdert, worden alle gegevens en bronnen binnen dat project permanent verwijderd en kunnen ze niet worden hersteld.",
+        "description": "Als je een project verwijdert, worden alle gegevens en bronnen in dat project permanent verwijderd en kunnen ze niet worden hersteld.",
         "button": "Mijn project verwijderen"
       },
       "toast": {
-        "success": "Project succesvol bijgewerkt",
+        "success": "Project bijgewerkt",
         "error": "Project kon niet worden bijgewerkt. Probeer het opnieuw."
       }
     },
@@ -27,8 +27,8 @@
       "project_subscribers": "Projectabonnees",
       "project_subscribers_description": "Selecteer leden die meldingen voor dit project ontvangen.",
       "guest_super_permissions": {
-        "title": "Geef gastgebruikers weergavetoegang tot alle werkitems:",
-        "sub_heading": "Hiermee krijgen gasten weergavetoegang tot alle werkitems van het project."
+        "title": "Geef gasten leestoegang tot alle werkitems:",
+        "sub_heading": "Hiermee krijgen gasten leestoegang tot alle werkitems van het project."
       },
       "invite_members": {
         "title": "Leden uitnodigen",
@@ -38,7 +38,7 @@
     },
     "states": {
       "heading": "Statussen",
-      "description": "Definieer en pas workflowstatussen aan om de voortgang van je werkitems te volgen.",
+      "description": "Definieer en pas workflowstatussen aan om de voortgang van je werkitems bij te houden.",
       "describe_this_state_for_your_members": "Beschrijf deze status voor je leden.",
       "empty_state": {
         "title": "Geen statussen beschikbaar voor de groep {groupKey}",
@@ -47,82 +47,82 @@
     },
     "labels": {
       "heading": "Labels",
-      "description": "Maak eigen labels om je werkitems te categoriseren en te ordenen",
+      "description": "Maak aangepaste labels om je werkitems te categoriseren en te organiseren",
       "label_title": "Labeltitel",
       "label_title_is_required": "Labeltitel is verplicht",
-      "label_max_char": "Labelnaam mag niet langer zijn dan 255 tekens",
+      "label_max_char": "De labelnaam mag niet langer zijn dan 255 tekens",
       "toast": {
         "error": "Fout bij het bijwerken van het label"
       }
     },
     "estimates": {
-      "heading": "Inschattingen",
-      "description": "Stel inschattingssystemen in om de benodigde inspanning voor elk werkitem te volgen en te communiceren.",
-      "label": "Inschattingen",
-      "title": "Inschattingen inschakelen voor mijn project",
+      "heading": "Schattingen",
+      "description": "Stel schattingssystemen in om de benodigde inspanning per werkitem bij te houden en te communiceren.",
+      "label": "Schattingen",
+      "title": "Schattingen inschakelen voor mijn project",
       "enable_description": "Ze helpen je om de complexiteit en werklast van het team te communiceren.",
-      "no_estimate": "Geen inschatting",
-      "new": "Nieuw inschattingssysteem",
+      "no_estimate": "Geen schatting",
+      "new": "Nieuw schattingssysteem",
       "create": {
         "custom": "Aangepast",
-        "start_from_scratch": "Begin vanaf nul",
+        "start_from_scratch": "Helemaal opnieuw beginnen",
         "choose_template": "Kies een sjabloon",
-        "choose_estimate_system": "Kies een inschattingssysteem",
-        "enter_estimate_point": "Voer inschatting in",
+        "choose_estimate_system": "Kies een schattingssysteem",
+        "enter_estimate_point": "Voer schatting in",
         "step": "Stap {step} van {total}",
-        "label": "Inschatting aanmaken"
+        "label": "Schatting maken"
       },
       "toasts": {
         "created": {
           "success": {
-            "title": "Inschatting aangemaakt",
-            "message": "De inschatting is succesvol aangemaakt"
+            "title": "Schatting gemaakt",
+            "message": "De schatting is succesvol gemaakt"
           },
           "error": {
-            "title": "Aanmaken inschatting mislukt",
-            "message": "We konden de nieuwe inschatting niet aanmaken, probeer het opnieuw."
+            "title": "Schatting maken mislukt",
+            "message": "We konden de nieuwe schatting niet maken, probeer het opnieuw."
           }
         },
         "updated": {
           "success": {
-            "title": "Inschatting gewijzigd",
-            "message": "De inschatting is bijgewerkt in je project."
+            "title": "Schatting gewijzigd",
+            "message": "De schatting is bijgewerkt in je project."
           },
           "error": {
-            "title": "Wijzigen inschatting mislukt",
-            "message": "We konden de inschatting niet wijzigen, probeer het opnieuw"
+            "title": "Schatting wijzigen mislukt",
+            "message": "We konden de schatting niet wijzigen, probeer het opnieuw"
           }
         },
         "enabled": {
           "success": {
             "title": "Gelukt!",
-            "message": "Inschattingen zijn ingeschakeld."
+            "message": "Schattingen zijn ingeschakeld."
           }
         },
         "disabled": {
           "success": {
             "title": "Gelukt!",
-            "message": "Inschattingen zijn uitgeschakeld."
+            "message": "Schattingen zijn uitgeschakeld."
           },
           "error": {
             "title": "Fout!",
-            "message": "Inschatting kon niet worden uitgeschakeld. Probeer het opnieuw"
+            "message": "Schatting kon niet worden uitgeschakeld. Probeer het opnieuw"
           }
         },
         "reorder": {
           "success": {
-            "title": "Inschattingen opnieuw geordend",
-            "message": "Inschattingen zijn opnieuw geordend in je project."
+            "title": "Schattingen herschikt",
+            "message": "De schattingen zijn herschikt in je project."
           },
           "error": {
-            "title": "Opnieuw ordenen inschattingen mislukt",
-            "message": "We konden de inschattingen niet opnieuw ordenen, probeer het opnieuw"
+            "title": "Schattingen herschikken mislukt",
+            "message": "We konden de schattingen niet herschikken, probeer het opnieuw"
           }
         },
         "switch": {
           "success": {
-            "title": "Inschattingssysteem aangemaakt",
-            "message": "Succesvol aangemaakt en ingeschakeld"
+            "title": "Schattingssysteem gemaakt",
+            "message": "Succesvol gemaakt en ingeschakeld"
           },
           "error": {
             "title": "Fout",
@@ -131,16 +131,16 @@
         }
       },
       "validation": {
-        "min_length": "Inschatting moet groter zijn dan 0.",
+        "min_length": "Schatting moet groter zijn dan 0.",
         "unable_to_process": "We kunnen je verzoek niet verwerken, probeer het opnieuw.",
-        "numeric": "Inschatting moet een numerieke waarde zijn.",
-        "character": "Inschatting moet een tekstwaarde zijn.",
-        "empty": "Inschattingswaarde mag niet leeg zijn.",
-        "already_exists": "Inschattingswaarde bestaat al.",
-        "unsaved_changes": "Je hebt niet-opgeslagen wijzigingen. Sla ze op voordat je op Klaar klikt",
-        "remove_empty": "Inschatting mag niet leeg zijn. Voer in elk veld een waarde in of verwijder de velden waar je geen waarde voor hebt.",
-        "fill": "Vul dit inschattingsveld in",
-        "repeat": "Inschattingswaarde mag niet worden herhaald"
+        "numeric": "Schatting moet een numerieke waarde zijn.",
+        "character": "Schatting moet een tekstwaarde zijn.",
+        "empty": "Schattingswaarde mag niet leeg zijn.",
+        "already_exists": "Schattingswaarde bestaat al.",
+        "unsaved_changes": "Je hebt niet-opgeslagen wijzigingen. Sla ze op voordat je op gereed klikt",
+        "remove_empty": "Schatting mag niet leeg zijn. Voer in elk veld een waarde in of verwijder de velden waarvoor je geen waarden hebt.",
+        "fill": "Vul dit schattingsveld in",
+        "repeat": "Schattingswaarde mag niet worden herhaald"
       },
       "systems": {
         "points": {
@@ -162,50 +162,50 @@
         }
       },
       "edit": {
-        "title": "Inschattingssysteem bewerken",
+        "title": "Schattingssysteem bewerken",
         "add_or_update": {
-          "title": "Inschattingen toevoegen, bijwerken of verwijderen",
+          "title": "Schattingen toevoegen, bijwerken of verwijderen",
           "description": "Beheer het huidige systeem door punten of categorieën toe te voegen, bij te werken of te verwijderen."
         },
         "switch": {
-          "title": "Inschattingstype wijzigen",
-          "description": "Zet je puntensysteem om naar een categorieënsysteem en andersom."
+          "title": "Schattingstype wijzigen",
+          "description": "Zet je puntensysteem om naar een categoriesysteem en omgekeerd."
         }
       },
-      "switch": "Inschattingssysteem wisselen",
-      "current": "Huidig inschattingssysteem",
-      "select": "Selecteer een inschattingssysteem"
+      "switch": "Schattingssysteem wisselen",
+      "current": "Huidig schattingssysteem",
+      "select": "Selecteer een schattingssysteem"
     },
     "automations": {
       "label": "Automatiseringen",
       "heading": "Automatiseringen",
-      "description": "Configureer geautomatiseerde acties om je projectbeheerworkflow te stroomlijnen en handmatige taken te verminderen.",
+      "description": "Configureer geautomatiseerde acties om je projectbeheer te stroomlijnen en handmatige taken te verminderen.",
       "auto-archive": {
         "title": "Gesloten werkitems automatisch archiveren",
         "description": "Plane archiveert automatisch werkitems die zijn voltooid of geannuleerd.",
-        "duration": "Archiveer automatisch werkitems die gesloten zijn gedurende"
+        "duration": "Werkitems automatisch archiveren die gesloten zijn gedurende"
       },
       "auto-close": {
         "title": "Werkitems automatisch sluiten",
         "description": "Plane sluit automatisch werkitems die niet zijn voltooid of geannuleerd.",
-        "duration": "Sluit automatisch werkitems die inactief zijn gedurende",
-        "auto_close_status": "Status bij automatisch sluiten"
+        "duration": "Werkitems automatisch sluiten die inactief zijn gedurende",
+        "auto_close_status": "Status voor automatisch sluiten"
       },
       "auto-remind": {
         "title": "Automatische herinneringen",
-        "description": "Plane stuurt automatisch herinneringen via e-mail en in-app meldingen om je team op koers te houden met deadlines.",
-        "duration": "Stuur herinnering voor"
+        "description": "Plane stuurt automatisch herinneringen via e-mail en in-app-meldingen om je team op koers te houden met deadlines.",
+        "duration": "Herinnering sturen vóór"
       }
     },
     "empty_state": {
       "labels": {
         "title": "Nog geen labels",
-        "description": "Maak labels om werkitems in je project te ordenen en te filteren."
+        "description": "Maak labels om werkitems in je project te organiseren en te filteren."
       },
       "estimates": {
-        "title": "Nog geen inschattingssystemen",
-        "description": "Maak een set inschattingen om de hoeveelheid werk per werkitem te communiceren.",
-        "primary_button": "Inschattingssysteem toevoegen"
+        "title": "Nog geen schattingssystemen",
+        "description": "Maak een set schattingen om de hoeveelheid werk per werkitem te communiceren.",
+        "primary_button": "Schattingssysteem toevoegen"
       },
       "integrations": {
         "title": "Geen integraties geconfigureerd",
@@ -215,7 +215,7 @@
     "workflows": {
       "toggle": {
         "title": "Workflows inschakelen",
-        "description": "Stel workflows in om de verplaatsing van werkitems te sturen",
+        "description": "Stel workflows in om te bepalen hoe werkitems zich verplaatsen",
         "no_states_tooltip": "Er zijn geen statussen toegevoegd aan de workflow.",
         "no_work_item_types_tooltip": "Er zijn geen werkitemtypen toegevoegd aan de workflow.",
         "no_states_or_work_item_types_tooltip": "Er zijn geen statussen of werkitemtypen toegevoegd aan de workflow.",
@@ -226,7 +226,7 @@
           },
           "success": {
             "title": "Gelukt!",
-            "message": "Workflows succesvol ingeschakeld."
+            "message": "Workflows zijn ingeschakeld."
           },
           "error": {
             "title": "Fout!",
@@ -235,31 +235,31 @@
         }
       },
       "heading": "Workflows",
-      "description": "Automatiseer overgangen van werkitems en stel regels in om te bepalen hoe taken door je projectpijplijn bewegen.",
+      "description": "Automatiseer overgangen van werkitems en stel regels in om te bepalen hoe taken door de pijplijn van je project bewegen.",
       "add_button": "Nieuwe workflow toevoegen",
       "search": "Workflows zoeken",
       "detail": {
-        "define": "Workflow definieren",
+        "define": "Workflow definiëren",
         "add_states": "Statussen toevoegen",
         "unmapped_states": {
-          "title": "Niet-toegewezen statussen gedetecteerd",
+          "title": "Niet-gekoppelde statussen gevonden",
           "description": "Sommige werkitems van de geselecteerde typen hebben momenteel een status die niet in deze workflow bestaat.",
-          "note": "Als je deze workflow inschakelt, gaan deze items automatisch naar de beginstatus van deze workflow.",
+          "note": "Als je deze workflow inschakelt, worden deze items automatisch verplaatst naar de beginstatus van deze workflow.",
           "label": "Ontbrekende statussen",
-          "tooltip": "Sommige werkitems hebben een status die niet aan deze workflow is toegewezen. Open de workflow om ze te bekijken."
+          "tooltip": "Sommige werkitems hebben een status die niet aan deze workflow is gekoppeld. Open de workflow om dit te controleren."
         }
       },
       "select_states": {
         "empty_state": {
           "title": "Alle statussen zijn in gebruik",
-          "description": "Alle gedefinieerde statussen voor dit project zitten al in je huidige workflow."
+          "description": "Alle gedefinieerde statussen voor dit project zijn al aanwezig in je huidige workflow."
         }
       },
       "default_footer": {
         "fallback_message": "Deze workflow geldt voor elk werkitemtype dat niet aan een workflow is toegewezen."
       },
       "create": {
-        "heading": "Nieuwe workflow aanmaken",
+        "heading": "Nieuwe workflow maken",
         "name": {
           "placeholder": "Voeg een unieke naam toe",
           "validation": {
@@ -269,9 +269,9 @@
           }
         },
         "description": {
-          "placeholder": "Voeg een korte omschrijving toe",
+          "placeholder": "Voeg een korte beschrijving toe",
           "validation": {
-            "invalid": "Omschrijving mag alleen letters, cijfers, spaties, koppeltekens en apostrofs bevatten"
+            "invalid": "Beschrijving mag alleen letters, cijfers, spaties, koppeltekens en apostrofs bevatten"
           }
         },
         "work_item_type": {
@@ -279,17 +279,17 @@
         },
         "success": {
           "title": "Gelukt!",
-          "message": "Workflow succesvol aangemaakt."
+          "message": "Workflow gemaakt."
         },
         "error": {
           "title": "Fout!",
-          "message": "Workflow aanmaken mislukt. Probeer het opnieuw."
+          "message": "Workflow maken mislukt. Probeer het opnieuw."
         }
       },
       "update": {
         "success": {
           "title": "Gelukt!",
-          "message": "Workflow succesvol bijgewerkt."
+          "message": "Workflow bijgewerkt."
         },
         "error": {
           "title": "Fout!",
@@ -300,7 +300,7 @@
         "loading": "Workflow verwijderen",
         "success": {
           "title": "Gelukt!",
-          "message": "Workflow succesvol verwijderd."
+          "message": "Workflow verwijderd."
         },
         "error": {
           "title": "Fout!",
@@ -310,7 +310,7 @@
       "add_states": {
         "success": {
           "title": "Gelukt!",
-          "message": "Statussen succesvol toegevoegd."
+          "message": "Statussen toegevoegd."
         },
         "error": {
           "title": "Fout!",
@@ -328,28 +328,28 @@
         "short_title": "Cycli",
         "description": "Plan werk in flexibele periodes die zich aanpassen aan het unieke ritme en tempo van dit project.",
         "toggle_title": "Cycli inschakelen",
-        "toggle_description": "Plan werk in gerichte tijdvakken."
+        "toggle_description": "Plan werk in gefocuste tijdsperiodes."
       },
       "modules": {
         "title": "Modules",
         "short_title": "Modules",
-        "description": "Organiseer werk in subprojecten met eigen leiders en toegewezenen.",
+        "description": "Organiseer werk in deelprojecten met eigen leiders en toegewezenen.",
         "toggle_title": "Modules inschakelen",
-        "toggle_description": "Projectleden kunnen modules aanmaken en bewerken."
+        "toggle_description": "Projectleden kunnen modules maken en bewerken."
       },
       "views": {
         "title": "Weergaven",
         "short_title": "Weergaven",
-        "description": "Sla eigen sorteringen, filters en weergaveopties op of deel ze met je team.",
+        "description": "Sla aangepaste sorteringen, filters en weergaveopties op of deel ze met je team.",
         "toggle_title": "Weergaven inschakelen",
-        "toggle_description": "Projectleden kunnen weergaven aanmaken en bewerken."
+        "toggle_description": "Projectleden kunnen weergaven maken en bewerken."
       },
       "pages": {
         "title": "Pagina's",
         "short_title": "Pagina's",
-        "description": "Maak en bewerk vrije inhoud; notities, documenten, van alles.",
+        "description": "Maak en bewerk vrije inhoud: notities, documenten, alles wat je wilt.",
         "toggle_title": "Pagina's inschakelen",
-        "toggle_description": "Projectleden kunnen pagina's aanmaken en bewerken."
+        "toggle_description": "Projectleden kunnen pagina's maken en bewerken."
       },
       "intake": {
         "intake_responsibility": "Intakeverantwoordelijkheid",
@@ -358,11 +358,11 @@
         "short_title": "Intake",
         "description": "Laat niet-leden bugs, feedback en suggesties delen zonder je workflow te verstoren.",
         "toggle_title": "Intake inschakelen",
-        "toggle_description": "Laat projectleden in-app intakeverzoeken aanmaken.",
-        "toggle_tooltip_on": "Vraag je projectbeheerder om dit aan te zetten.",
-        "toggle_tooltip_off": "Vraag je projectbeheerder om dit uit te zetten.",
+        "toggle_description": "Laat projectleden intakeverzoeken in de app maken.",
+        "toggle_tooltip_on": "Vraag je projectbeheerder om dit in te schakelen.",
+        "toggle_tooltip_off": "Vraag je projectbeheerder om dit uit te schakelen.",
         "notify_assignee": {
-          "title": "Toegewezenen op de hoogte stellen",
+          "title": "Toegewezenen op de hoogte brengen",
           "description": "Bij een nieuw intakeverzoek worden de standaard toegewezenen via meldingen gewaarschuwd"
         },
         "in_app": {
@@ -376,12 +376,12 @@
         },
         "form": {
           "title": "Formulieren",
-          "description": "Laat mensen buiten je werkruimte via een speciaal en beveiligd formulier mogelijke nieuwe werkitems voor je aanmaken.",
-          "fieldName": "Standaard formulier-URL",
-          "create_forms": "Maak formulieren met werkitemtypen",
+          "description": "Laat mensen buiten je werkruimte via een speciaal en beveiligd formulier potentiële nieuwe werkitems voor je maken.",
+          "fieldName": "Standaardformulier-URL",
+          "create_forms": "Formulieren maken met werkitemtypen",
           "manage_forms": "Formulieren beheren",
           "manage_forms_tooltip": "Vraag je werkruimtebeheerder om dit te beheren.",
-          "create_form": "Formulier aanmaken",
+          "create_form": "Formulier maken",
           "edit_form": "Formuliergegevens bewerken",
           "form_title": "Formuliertitel",
           "form_title_required": "Formuliertitel is verplicht",
@@ -390,10 +390,10 @@
           "select_properties": "Eigenschappen selecteren",
           "search_placeholder": "Zoek naar eigenschappen",
           "toasts": {
-            "success_create": "Intakeformulier succesvol aangemaakt",
-            "success_update": "Intakeformulier succesvol bijgewerkt",
-            "error_create": "Aanmaken intakeformulier mislukt",
-            "error_update": "Bijwerken intakeformulier mislukt"
+            "success_create": "Intakeformulier gemaakt",
+            "success_update": "Intakeformulier bijgewerkt",
+            "error_create": "Intakeformulier maken mislukt",
+            "error_update": "Intakeformulier bijwerken mislukt"
           }
         },
         "toasts": {
@@ -401,11 +401,11 @@
             "loading": "Toegewezenen instellen...",
             "success": {
               "title": "Gelukt!",
-              "message": "Toegewezenen succesvol ingesteld."
+              "message": "Toegewezenen ingesteld."
             },
             "error": {
               "title": "Fout!",
-              "message": "Er is iets misgegaan bij het instellen van de toegewezenen. Probeer het opnieuw."
+              "message": "Er is iets misgegaan bij het instellen van toegewezenen. Probeer het opnieuw."
             }
           }
         }
@@ -413,7 +413,7 @@
       "time_tracking": {
         "title": "Tijdregistratie",
         "short_title": "Tijdregistratie",
-        "description": "Registreer de tijd die je aan werkitems en projecten besteedt.",
+        "description": "Registreer de tijd die aan werkitems en projecten is besteed.",
         "toggle_title": "Tijdregistratie inschakelen",
         "toggle_description": "Projectleden kunnen gewerkte tijd registreren."
       },
@@ -422,33 +422,33 @@
         "short_title": "Mijlpalen",
         "description": "Mijlpalen bieden een laag om werkitems af te stemmen op gedeelde einddatums.",
         "toggle_title": "Mijlpalen inschakelen",
-        "toggle_description": "Organiseer werkitems op mijlpaaldeadlines."
+        "toggle_description": "Organiseer werkitems op basis van deadlines van mijlpalen."
       },
       "toasts": {
         "loading": "Projectfunctie bijwerken...",
-        "success": "Projectfunctie succesvol bijgewerkt.",
+        "success": "Projectfunctie bijgewerkt.",
         "error": "Er is iets misgegaan bij het bijwerken van de projectfunctie. Probeer het opnieuw."
       }
     },
     "project_updates": {
       "heading": "Projectupdates",
-      "description": "Samengevoegde tracking en voortgangsbewaking voor dit project"
+      "description": "Gebundelde tracking en voortgangsbewaking voor dit project"
     },
     "templates": {
       "heading": "Sjablonen",
-      "description": "Bespaar 80% van de tijd die je besteedt aan het aanmaken van projecten, werkitems en pagina's als je sjablonen gebruikt."
+      "description": "Bespaar 80% van de tijd die je besteedt aan het maken van projecten, werkitems en pagina's door sjablonen te gebruiken."
     },
     "cycles": {
       "auto_schedule": {
-        "heading": "Cycli automatisch inplannen",
-        "description": "Houd cycli in beweging zonder handmatige instelling.",
-        "tooltip": "Maak automatisch nieuwe cycli aan op basis van het door jou gekozen schema.",
+        "heading": "Cycli automatisch plannen",
+        "description": "Houd cycli draaiende zonder handmatige instelling.",
+        "tooltip": "Maak automatisch nieuwe cycli aan op basis van je gekozen schema.",
         "edit_button": "Bewerken",
         "form": {
           "cycle_title": {
             "label": "Cyclustitel",
             "placeholder": "Titel",
-            "tooltip": "Aan de titel worden cijfers toegevoegd voor volgende cycli. Bijvoorbeeld: Design - 1/2/3",
+            "tooltip": "Aan de titel worden nummers toegevoegd voor volgende cycli. Bijvoorbeeld: Ontwerp - 1/2/3",
             "validation": {
               "required": "Cyclustitel is verplicht",
               "max_length": "Titel mag niet langer zijn dan 255 tekens"
@@ -459,22 +459,22 @@
             "unit": "Weken",
             "validation": {
               "required": "Cyclusduur is verplicht",
-              "min": "Cyclusduur moet minstens 1 week zijn",
-              "max": "Cyclusduur mag niet langer zijn dan 30 weken",
+              "min": "Cyclusduur moet minimaal 1 week zijn",
+              "max": "Cyclusduur mag niet meer dan 30 weken zijn",
               "positive": "Cyclusduur moet positief zijn"
             }
           },
           "cooldown_period": {
-            "label": "Rustperiode",
+            "label": "Afkoelperiode",
             "unit": "dagen",
             "tooltip": "Pauze tussen cycli voordat de volgende begint.",
             "validation": {
-              "required": "Rustperiode is verplicht",
-              "negative": "Rustperiode mag niet negatief zijn"
+              "required": "Afkoelperiode is verplicht",
+              "negative": "Afkoelperiode mag niet negatief zijn"
             }
           },
           "start_date": {
-            "label": "Startdag cyclus",
+            "label": "Startdag van cyclus",
             "validation": {
               "required": "Startdatum is verplicht",
               "past": "Startdatum mag niet in het verleden liggen"
@@ -484,39 +484,39 @@
             "label": "Aantal toekomstige cycli",
             "validation": {
               "required": "Aantal cycli is verplicht",
-              "min": "Er is minstens 1 cyclus vereist",
-              "max": "Je kunt niet meer dan 3 cycli inplannen"
+              "min": "Er is minimaal 1 cyclus vereist",
+              "max": "Je kunt niet meer dan 3 cycli plannen"
             }
           },
           "auto_rollover": {
             "label": "Werkitems automatisch doorschuiven",
-            "tooltip": "Verplaats op de dag dat een cyclus eindigt alle onvoltooide werkitems naar de volgende cyclus."
+            "tooltip": "Op de dag dat een cyclus eindigt, worden alle onvoltooide werkitems naar de volgende cyclus verplaatst."
           }
         },
         "toast": {
           "toggle": {
-            "loading_enable": "Automatisch inplannen van cycli inschakelen",
-            "loading_disable": "Automatisch inplannen van cycli uitschakelen",
+            "loading_enable": "Automatisch plannen van cycli inschakelen",
+            "loading_disable": "Automatisch plannen van cycli uitschakelen",
             "success": {
               "title": "Gelukt!",
-              "message": "Automatisch inplannen van cycli succesvol geschakeld."
+              "message": "Automatisch plannen van cycli is gewijzigd."
             },
             "error": {
               "title": "Fout!",
-              "message": "Schakelen van automatisch inplannen van cycli mislukt."
+              "message": "Automatisch plannen van cycli wijzigen mislukt."
             }
           },
           "save": {
-            "loading": "Configuratie voor automatisch inplannen van cycli opslaan",
+            "loading": "Configuratie voor automatisch plannen van cycli opslaan",
             "success": {
               "title": "Gelukt!",
-              "message_create": "Configuratie voor automatisch inplannen van cycli succesvol opgeslagen.",
-              "message_update": "Configuratie voor automatisch inplannen van cycli succesvol bijgewerkt."
+              "message_create": "Configuratie voor automatisch plannen van cycli opgeslagen.",
+              "message_update": "Configuratie voor automatisch plannen van cycli bijgewerkt."
             },
             "error": {
               "title": "Fout!",
-              "message_create": "Opslaan van configuratie voor automatisch inplannen van cycli mislukt.",
-              "message_update": "Bijwerken van configuratie voor automatisch inplannen van cycli mislukt."
+              "message_create": "Configuratie voor automatisch plannen van cycli opslaan mislukt.",
+              "message_update": "Configuratie voor automatisch plannen van cycli bijwerken mislukt."
             }
           }
         }

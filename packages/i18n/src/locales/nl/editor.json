@@ -6,11 +6,11 @@
     "errors": {
       "file_too_large": {
         "title": "Bestand te groot.",
-        "description": "Maximale grootte per bestand is {maxFileSize} MB"
+        "description": "Maximale grootte per bestand is {maxFileSize}MB"
       },
       "unsupported_file_type": {
         "title": "Niet-ondersteund bestandstype.",
-        "description": "Bekijk ondersteunde formaten"
+        "description": "Bekijk ondersteunde indelingen"
       },
       "default": {
         "title": "Uploaden mislukt.",
@@ -26,16 +26,16 @@
   },
   "externalEmbedComponent": {
     "block_menu": {
-      "convert_to_embed": "Omzetten naar embed",
-      "convert_to_link": "Omzetten naar koppeling",
-      "convert_to_richcard": "Omzetten naar rich card"
+      "convert_to_embed": "Omzetten naar insluiting",
+      "convert_to_link": "Omzetten naar link",
+      "convert_to_richcard": "Omzetten naar rijke kaart"
     },
     "placeholder": {
-      "insert_embed": "Voeg hier je gewenste embed-koppeling toe, zoals een YouTube-video, Figma-ontwerp, enz.",
-      "link": "Voer een koppeling in of plak deze"
+      "insert_embed": "Voeg hier je gewenste insluitlink in, zoals een YouTube-video, Figma-ontwerp, enz.",
+      "link": "Voer een link in of plak deze"
     },
     "input_modal": {
-      "embed": "Embed",
+      "embed": "Insluiten",
       "works_with_links": "Werkt met YouTube, Figma, Google Docs en meer"
     },
     "error": {
@@ -45,7 +45,7 @@
   "ai_block": {
     "content": {
       "placeholder": "Beschrijf de inhoud van dit blok",
-      "generated_here": "Je AI-inhoud wordt hier gegenereerd"
+      "generated_here": "Je AI-content wordt hier gegenereerd"
     },
     "block_types": {
       "placeholder": "Selecteer bloktype",
@@ -58,7 +58,7 @@
       "generating": "Genereren",
       "rewriting": "Herschrijven",
       "rewrite": "Herschrijven",
-      "use_this": "Deze gebruiken",
+      "use_this": "Gebruik dit",
       "refine": "Verfijnen"
     }
   }

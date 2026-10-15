@@ -2,20 +2,20 @@
   "updates": {
     "progress": {
       "title": "Voortgang",
-      "since_last_update": "Sinds de laatste update",
-      "comments": "{count, plural, one{# Reactie} other{# Reacties}}"
+      "since_last_update": "Sinds laatste update",
+      "comments": "{count, plural, one{# reactie} other{# reacties}}"
     },
     "add_update": "Update toevoegen",
     "add_update_placeholder": "Voeg hier je update toe",
     "empty": {
       "title": "Nog geen updates",
-      "description": "Je kunt de updates hier bekijken."
+      "description": "Hier zie je de updates."
     },
     "reaction": {
       "create": {
         "success": {
           "title": "Reactie aangemaakt",
-          "message": "De reactie is succesvol aangemaakt"
+          "message": "De reactie is aangemaakt"
         },
         "error": {
           "title": "Reactie niet aangemaakt",
@@ -25,7 +25,7 @@
       "remove": {
         "success": {
           "title": "Reactie verwijderd",
-          "message": "De reactie is succesvol verwijderd"
+          "message": "De reactie is verwijderd"
         },
         "error": {
           "title": "Reactie niet verwijderd",
@@ -36,7 +36,7 @@
     "create": {
       "success": {
         "title": "Update aangemaakt",
-        "message": "De update is succesvol aangemaakt"
+        "message": "De update is aangemaakt"
       },
       "error": {
         "title": "Update niet aangemaakt",
@@ -45,10 +45,10 @@
     },
     "delete": {
       "title": "Update verwijderen",
-      "confirmation": "Weet je zeker dat je deze update wilt verwijderen? Dit is een onomkeerbare actie.",
+      "confirmation": "Weet je zeker dat je deze update wilt verwijderen? Dit kan niet ongedaan worden gemaakt.",
       "success": {
         "title": "Update verwijderd",
-        "message": "De update is succesvol verwijderd"
+        "message": "De update is verwijderd"
       },
       "error": {
         "title": "Update niet verwijderd",
@@ -58,7 +58,7 @@
     "update": {
       "success": {
         "title": "Bijgewerkt",
-        "message": "De update is succesvol bijgewerkt"
+        "message": "De update is bijgewerkt"
       },
       "error": {
         "title": "Update niet bijgewerkt",

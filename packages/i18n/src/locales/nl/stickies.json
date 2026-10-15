@@ -1,58 +1,58 @@
 {
   "stickies": {
-    "title": "Jouw stickies",
+    "title": "Jouw notities",
     "placeholder": "klik om hier te typen",
-    "all": "Alle stickies",
-    "no-data": "Noteer een idee, leg een aha-moment vast of bewaar een ingeving. Voeg een sticky toe om te beginnen.",
-    "add": "Sticky toevoegen",
+    "all": "Alle notities",
+    "no-data": "Noteer een idee, leg een aha-moment vast of schrijf een ingeving op. Voeg een notitie toe om te beginnen.",
+    "add": "Notitie toevoegen",
     "search_placeholder": "Zoeken op titel",
-    "delete": "Sticky verwijderen",
-    "delete_confirmation": "Weet je zeker dat je deze sticky wilt verwijderen?",
+    "delete": "Notitie verwijderen",
+    "delete_confirmation": "Weet je zeker dat je deze notitie wilt verwijderen?",
     "empty_state": {
-      "simple": "Noteer een idee, leg een aha-moment vast of bewaar een ingeving. Voeg een sticky toe om te beginnen.",
+      "simple": "Noteer een idee, leg een aha-moment vast of schrijf een ingeving op. Voeg een notitie toe om te beginnen.",
       "general": {
-        "title": "Stickies zijn snelle notities en to-do's die je onderweg vastlegt.",
-        "description": "Leg je gedachten en ideeën moeiteloos vast met stickies die je altijd en overal kunt raadplegen.",
+        "title": "Notities zijn snelle aantekeningen en to-do's die je razendsnel opschrijft.",
+        "description": "Leg moeiteloos je gedachten en ideeën vast met notities die je altijd en overal kunt openen.",
         "primary_button": {
-          "text": "Sticky toevoegen"
+          "text": "Notitie toevoegen"
         }
       },
       "search": {
-        "title": "Dat komt niet overeen met een van je stickies.",
-        "description": "Probeer een andere zoekterm of laat het ons weten\nals je zeker weet dat je zoekopdracht klopt. ",
+        "title": "Dit komt met geen van je notities overeen.",
+        "description": "Probeer een andere term of laat het ons weten\nals je zeker weet dat je zoekopdracht klopt. ",
         "primary_button": {
-          "text": "Sticky toevoegen"
+          "text": "Notitie toevoegen"
         }
       }
     },
     "toasts": {
       "errors": {
-        "wrong_name": "De naam van de sticky mag niet langer zijn dan 100 tekens.",
-        "already_exists": "Er bestaat al een sticky zonder omschrijving"
+        "wrong_name": "De naam van de notitie mag niet langer zijn dan 100 tekens.",
+        "already_exists": "Er bestaat al een notitie zonder beschrijving"
       },
       "created": {
-        "title": "Sticky aangemaakt",
-        "message": "De sticky is aangemaakt"
+        "title": "Notitie aangemaakt",
+        "message": "De notitie is aangemaakt"
       },
       "not_created": {
-        "title": "Sticky niet aangemaakt",
-        "message": "De sticky kon niet worden aangemaakt"
+        "title": "Notitie niet aangemaakt",
+        "message": "De notitie kon niet worden aangemaakt"
       },
       "updated": {
-        "title": "Sticky bijgewerkt",
-        "message": "De sticky is bijgewerkt"
+        "title": "Notitie bijgewerkt",
+        "message": "De notitie is bijgewerkt"
       },
       "not_updated": {
-        "title": "Sticky niet bijgewerkt",
-        "message": "De sticky kon niet worden bijgewerkt"
+        "title": "Notitie niet bijgewerkt",
+        "message": "De notitie kon niet worden bijgewerkt"
       },
       "removed": {
-        "title": "Sticky verwijderd",
-        "message": "De sticky is verwijderd"
+        "title": "Notitie verwijderd",
+        "message": "De notitie is verwijderd"
       },
       "not_removed": {
-        "title": "Sticky niet verwijderd",
-        "message": "De sticky kon niet worden verwijderd"
+        "title": "Notitie niet verwijderd",
+        "message": "De notitie kon niet worden verwijderd"
       }
     }
   }

@@ -11,7 +11,7 @@
       },
       "snoozed": {
         "title": "Uitgesteld",
-        "description": "Nog {days, plural, one{# dag} other{# dagen}} te gaan"
+        "description": "Nog {days, plural, one{# dag} other{# dagen}}"
       },
       "accepted": {
         "title": "Geaccepteerd",
@@ -30,24 +30,24 @@
       "delete": {
         "title": "Werkitem verwijderen",
         "content": "Weet je zeker dat je werkitem {value} wilt verwijderen?",
-        "success": "Werkitem succesvol verwijderd"
+        "success": "Werkitem verwijderd"
       }
     },
     "errors": {
       "snooze_permission": "Alleen projectbeheerders kunnen werkitems uitstellen of het uitstel opheffen",
       "accept_permission": "Alleen projectbeheerders kunnen werkitems accepteren",
-      "decline_permission": "Alleen projectbeheerders kunnen werkitems weigeren"
+      "decline_permission": "Alleen projectbeheerders kunnen werkitems afwijzen"
     },
     "actions": {
       "accept": "Accepteren",
       "decline": "Afwijzen",
       "snooze": "Uitstellen",
       "unsnooze": "Uitstel opheffen",
-      "copy": "Koppeling naar werkitem kopiëren",
+      "copy": "Werkitemlink kopiëren",
       "delete": "Verwijderen",
       "open": "Werkitem openen",
-      "mark_as_duplicate": "Als duplicaat markeren",
-      "move": "{value} verplaatsen naar projectwerkitems"
+      "mark_as_duplicate": "Markeren als duplicaat",
+      "move": "{value} verplaatsen naar werkitems van het project"
     },
     "source": {
       "in-app": "in-app"
@@ -69,19 +69,40 @@
     "empty_state": {
       "sidebar_open_tab": {
         "title": "Geen open werkitems",
-        "description": "Vind hier open werkitems. Maak een nieuw werkitem aan."
+        "description": "Hier vind je open werkitems. Maak een nieuw werkitem aan."
       },
       "sidebar_closed_tab": {
         "title": "Geen gesloten werkitems",
-        "description": "Alle werkitems, of ze nu geaccepteerd of afgewezen zijn, vind je hier."
+        "description": "Alle werkitems, geaccepteerd of afgewezen, vind je hier."
       },
       "sidebar_filter": {
         "title": "Geen overeenkomende werkitems",
-        "description": "Geen werkitem komt overeen met het filter dat is toegepast in de intake. Maak een nieuw werkitem aan."
+        "description": "Geen werkitem komt overeen met het toegepaste filter in intake. Maak een nieuw werkitem aan."
       },
       "detail": {
         "title": "Selecteer een werkitem om de details te bekijken."
       }
     }
+  },
+  "inbox_ui": {
+    "create_error": "Er is een fout opgetreden. Probeer het opnieuw.",
+    "create_success": "Werkitem aangemaakt.",
+    "created_date": "Aanmaakdatum",
+    "delete_failed": "Verwijderen van werkitem mislukt",
+    "editor_processing": "De editor verwerkt nog wijzigingen. Wacht even voordat je doorgaat.",
+    "empty_closed": {
+      "description": "Alle werkitems, geaccepteerd of afgewezen, vind je hier.",
+      "title": "Nog geen verzoek gesloten"
+    },
+    "errors": {
+      "duplicate_permission": "Alleen projectbeheerders kunnen werkitems als duplicaat markeren"
+    },
+    "last_updated_date": "Laatst bijgewerkt op",
+    "next_work_item": "Volgend werkitem",
+    "permission_denied": "Toegang geweigerd",
+    "previous_work_item": "Vorig werkitem",
+    "search_placeholder": "Zoeken...",
+    "update_failed": "Bijwerken van werkitem mislukt",
+    "updated_date": "Bijwerkdatum"
   }
 }

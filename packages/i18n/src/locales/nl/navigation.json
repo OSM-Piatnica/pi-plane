@@ -7,13 +7,13 @@
     }
   },
   "sidebar": {
-    "stickies": "Stickies",
+    "stickies": "Notities",
     "your_work": "Jouw werk",
     "projects": "Projecten",
     "pages": "Pagina's",
     "new_work_item": "Nieuw werkitem",
     "home": "Home",
-    "inbox": "Postvak IN",
+    "inbox": "Inbox",
     "workspace": "Werkruimte",
     "views": "Weergaven",
     "analytics": "Analyses",

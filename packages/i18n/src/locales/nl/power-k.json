@@ -12,7 +12,7 @@
         "change_assignees": "Toewijzen aan",
         "assign_to_me": "Aan mij toewijzen",
         "unassign_from_me": "Toewijzing aan mij opheffen",
-        "change_estimate": "Inschatting wijzigen",
+        "change_estimate": "Schatting wijzigen",
         "add_to_cycle": "Toevoegen aan cyclus",
         "add_to_modules": "Toevoegen aan modules",
         "add_labels": "Labels toevoegen",
@@ -21,7 +21,7 @@
         "delete": "Verwijderen",
         "copy_id": "ID kopiëren",
         "copy_id_toast_success": "Werkitem-ID gekopieerd naar klembord.",
-        "copy_id_toast_error": "Er is een fout opgetreden bij het kopiëren van de werkitem-ID naar het klembord.",
+        "copy_id_toast_error": "Er is een fout opgetreden bij het kopiëren van het werkitem-ID naar het klembord.",
         "copy_title": "Titel kopiëren",
         "copy_title_toast_success": "Werkitemtitel gekopieerd naar klembord.",
         "copy_title_toast_error": "Er is een fout opgetreden bij het kopiëren van de werkitemtitel naar het klembord.",
@@ -39,7 +39,7 @@
         "copy_url_toast_error": "Er is een fout opgetreden bij het kopiëren van de cyclus-URL naar het klembord."
       },
       "module": {
-        "title": "Moduleacties",
+        "title": "Module-acties",
         "indicator": "Module",
         "add_remove_members": "Leden toevoegen/verwijderen",
         "change_status": "Status wijzigen",
@@ -77,8 +77,8 @@
     },
     "navigation_actions": {
       "open_workspace": "Een werkruimte openen",
-      "nav_home": "Ga naar home",
-      "nav_inbox": "Ga naar postvak IN",
+      "nav_home": "Ga naar start",
+      "nav_inbox": "Ga naar inbox",
       "nav_your_work": "Ga naar jouw werk",
       "nav_account_settings": "Ga naar accountinstellingen",
       "open_project": "Een project openen",
@@ -86,12 +86,12 @@
       "nav_all_workspace_work_items": "Ga naar alle werkitems",
       "nav_assigned_workspace_work_items": "Ga naar toegewezen werkitems",
       "nav_created_workspace_work_items": "Ga naar aangemaakte werkitems",
-      "nav_subscribed_workspace_work_items": "Ga naar geabonneerde werkitems",
-      "nav_workspace_analytics": "Ga naar de analyses van de werkruimte",
-      "nav_workspace_drafts": "Ga naar concepten van werkruimte",
-      "nav_workspace_archives": "Ga naar archieven van werkruimte",
-      "open_workspace_setting": "Een instelling van de werkruimte openen",
-      "nav_workspace_settings": "Ga naar instellingen van werkruimte",
+      "nav_subscribed_workspace_work_items": "Ga naar werkitems met abonnement",
+      "nav_workspace_analytics": "Ga naar werkruimte-analyses",
+      "nav_workspace_drafts": "Ga naar werkruimteconcepten",
+      "nav_workspace_archives": "Ga naar werkruimtearchieven",
+      "open_workspace_setting": "Een werkruimte-instelling openen",
+      "nav_workspace_settings": "Ga naar werkruimte-instellingen",
       "nav_project_work_items": "Ga naar werkitems",
       "open_project_cycle": "Een cyclus openen",
       "nav_project_cycles": "Ga naar cycli",
@@ -109,10 +109,10 @@
     },
     "account_actions": {
       "sign_out": "Uitloggen",
-      "workspace_invites": "Uitnodigingen voor werkruimte"
+      "workspace_invites": "Werkruimte-uitnodigingen"
     },
     "miscellaneous_actions": {
-      "toggle_app_sidebar": "App-zijbalk in-/uitschakelen",
+      "toggle_app_sidebar": "Zijbalk van de app in-/uitschakelen",
       "copy_current_page_url": "URL van huidige pagina kopiëren",
       "copy_current_page_url_toast_success": "URL van huidige pagina gekopieerd naar klembord.",
       "copy_current_page_url_toast_error": "Er is een fout opgetreden bij het kopiëren van de URL van de huidige pagina naar het klembord.",
@@ -125,23 +125,23 @@
       "update_language": "Interfacetaal wijzigen",
       "toast": {
         "theme": {
-          "success": "Thema bijgewerkt.",
-          "error": "Bijwerken van thema mislukt. Probeer het opnieuw."
+          "success": "Thema succesvol bijgewerkt.",
+          "error": "Thema bijwerken mislukt. Probeer het opnieuw."
         },
         "timezone": {
-          "success": "Tijdzone bijgewerkt.",
-          "error": "Bijwerken van tijdzone mislukt. Probeer het opnieuw."
+          "success": "Tijdzone succesvol bijgewerkt.",
+          "error": "Tijdzone bijwerken mislukt. Probeer het opnieuw."
         },
         "generic": {
-          "success": "Voorkeuren bijgewerkt.",
-          "error": "Bijwerken van voorkeuren mislukt. Probeer het opnieuw."
+          "success": "Voorkeuren succesvol bijgewerkt.",
+          "error": "Voorkeuren bijwerken mislukt. Probeer het opnieuw."
         }
       }
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Sneltoetsen openen",
       "open_plane_documentation": "Plane-documentatie openen",
-      "join_forum": "Word lid van ons Forum",
+      "join_forum": "Word lid van ons forum",
       "report_bug": "Een bug melden",
       "chat_with_us": "Chat met ons"
     },
@@ -149,7 +149,7 @@
       "default": "Typ een opdracht of zoek",
       "open_workspace": "Een werkruimte openen",
       "open_project": "Een project openen",
-      "open_workspace_setting": "Een instelling van de werkruimte openen",
+      "open_workspace_setting": "Een werkruimte-instelling openen",
       "open_project_cycle": "Een cyclus openen",
       "open_project_module": "Een module openen",
       "open_project_view": "Een projectweergave openen",
@@ -157,7 +157,7 @@
       "update_work_item_state": "Status wijzigen",
       "update_work_item_priority": "Prioriteit wijzigen",
       "update_work_item_assignee": "Toewijzen aan",
-      "update_work_item_estimate": "Inschatting wijzigen",
+      "update_work_item_estimate": "Schatting wijzigen",
       "update_work_item_cycle": "Toevoegen aan cyclus",
       "update_work_item_module": "Toevoegen aan modules",
       "update_work_item_labels": "Labels toevoegen",
@@ -180,13 +180,31 @@
       "actions": "Acties",
       "contextual": "Contextueel",
       "navigation": "Navigeren",
-      "create": "Aanmaken",
+      "create": "Maken",
       "general": "Algemeen",
       "settings": "Instellingen",
       "account": "Account",
-      "miscellaneous": "Diversen",
+      "miscellaneous": "Overig",
       "preferences": "Voorkeuren",
       "help": "Help"
     }
+  },
+  "power_k_ui": {
+    "clear_context": "Context wissen (Backspace)",
+    "empty_menu": {
+      "cycles": "Geen cycli gevonden",
+      "labels": "Geen labels gevonden",
+      "modules": "Geen modules gevonden",
+      "projects": "Geen projecten gevonden",
+      "settings": "Geen instellingen gevonden",
+      "views": "Geen weergaven gevonden",
+      "workspaces": "Geen werkruimtes gevonden"
+    },
+    "epic_update_error": "Epic kon niet worden bijgewerkt. Probeer het opnieuw.",
+    "module_update_error": "Module kon niet worden bijgewerkt. Probeer het opnieuw.",
+    "no_estimate_found": "Geen schatting gevonden",
+    "reloading_to_apply": "Opnieuw laden om wijzigingen toe te passen...",
+    "some_error_occurred": "Er is een fout opgetreden",
+    "work_item_update_error": "Werkitem kon niet worden bijgewerkt. Probeer het opnieuw."
   }
 }

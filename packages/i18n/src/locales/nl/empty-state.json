@@ -10,16 +10,16 @@
     },
     "search": {
       "title": "Geen overeenkomende resultaten.",
-      "description": "Geen resultaten gevonden. Pas je zoektermen aan."
+      "description": "Geen resultaten gevonden. Probeer je zoektermen aan te passen."
     },
     "not_found": {
       "title": "Oeps! Er lijkt iets mis te zijn",
-      "description": "We kunnen je Plane-account momenteel niet ophalen. Dit is mogelijk een netwerkfout.",
+      "description": "We kunnen je Plane-account momenteel niet ophalen. Dit kan een netwerkfout zijn.",
       "cta_primary": "Opnieuw laden"
     },
     "server_error": {
       "title": "Serverfout",
-      "description": "We kunnen geen verbinding maken en geen gegevens ophalen van onze server. Geen zorgen, we werken eraan.",
+      "description": "We kunnen geen verbinding maken met onze server en geen gegevens ophalen. Geen zorgen, we werken eraan.",
       "cta_primary": "Opnieuw laden"
     }
   },
@@ -28,7 +28,7 @@
       "title": "Het lijkt erop dat je geen toegang hebt tot dit project",
       "restricted_description": "Neem contact op met de beheerder om toegang aan te vragen, dan kun je hier verder.",
       "join_description": "Klik op de knop hieronder om deel te nemen.",
-      "cta_primary": "Deelnemen aan project",
+      "cta_primary": "Project deelnemen",
       "cta_loading": "Deelnemen aan project"
     },
     "invalid_project": {
@@ -37,98 +37,98 @@
     },
     "work_items": {
       "title": "Begin met je eerste werkitem.",
-      "description": "Werkitems zijn de bouwstenen van je project. Wijs eigenaren toe, stel prioriteiten in en volg de voortgang moeiteloos.",
-      "cta_primary": "Maak je eerste werkitem aan"
+      "description": "Werkitems zijn de bouwstenen van je project — wijs eigenaren toe, stel prioriteiten in en volg de voortgang eenvoudig.",
+      "cta_primary": "Maak je eerste werkitem"
     },
     "cycles": {
-      "title": "Groepeer en timebox je werk in cycli.",
-      "description": "Deel werk op in getimeboxte stukken, werk terug vanaf je projectdeadline om datums in te stellen en boek als team tastbare voortgang.",
+      "title": "Groepeer en plan je werk in tijdvakken met cycli.",
+      "description": "Verdeel werk in tijdgebonden blokken, werk terug vanaf de deadline van je project om data te bepalen en boek tastbare vooruitgang als team.",
       "cta_primary": "Stel je eerste cyclus in"
     },
     "cycle_work_items": {
       "title": "Geen werkitems om te tonen in deze cyclus",
-      "description": "Maak werkitems aan om de voortgang van je team deze cyclus te volgen en je doelen op tijd te behalen.",
-      "cta_primary": "Werkitem aanmaken",
+      "description": "Maak werkitems aan om de voortgang van je team in deze cyclus te volgen en je doelen op tijd te halen.",
+      "cta_primary": "Werkitem maken",
       "cta_secondary": "Bestaand werkitem toevoegen"
     },
     "modules": {
-      "title": "Koppel je projectdoelen aan modules en volg ze moeiteloos.",
-      "description": "Modules bestaan uit onderling verbonden werkitems. Ze helpen de voortgang door projectfasen te bewaken, elk met specifieke deadlines en analytics die aangeven hoe dicht je bij het behalen van die fasen bent.",
+      "title": "Koppel je projectdoelen aan modules en volg ze eenvoudig.",
+      "description": "Modules bestaan uit onderling verbonden werkitems. Ze helpen bij het bewaken van de voortgang door projectfasen, elk met specifieke deadlines en analyses die laten zien hoe dicht je bij het bereiken van die fasen bent.",
       "cta_primary": "Stel je eerste module in"
     },
     "module_work_items": {
       "title": "Geen werkitems om te tonen in deze module",
-      "description": "Maak werkitems aan om deze module te gaan bewaken.",
-      "cta_primary": "Werkitem aanmaken",
+      "description": "Maak werkitems aan om deze module te gaan volgen.",
+      "cta_primary": "Werkitem maken",
       "cta_secondary": "Bestaand werkitem toevoegen"
     },
     "views": {
-      "title": "Bewaar aangepaste weergaven voor je project",
-      "description": "Weergaven zijn opgeslagen filters waarmee je snel toegang krijgt tot de informatie die je het vaakst gebruikt. Werk moeiteloos samen doordat teamgenoten weergaven delen en aanpassen aan hun specifieke behoeften.",
-      "cta_primary": "Weergave aanmaken"
+      "title": "Sla aangepaste weergaven op voor je project",
+      "description": "Weergaven zijn opgeslagen filters waarmee je snel toegang krijgt tot de informatie die je het meest gebruikt. Werk moeiteloos samen terwijl teamgenoten weergaven delen en aanpassen aan hun behoeften.",
+      "cta_primary": "Weergave maken"
     },
     "no_work_items_in_project": {
       "title": "Nog geen werkitems in het project",
-      "description": "Voeg werkitems toe aan je project en verdeel je werk met weergaven in volgbare stukken.",
+      "description": "Voeg werkitems toe aan je project en verdeel je werk in volgbare stukken met weergaven.",
       "cta_primary": "Werkitem toevoegen"
     },
     "work_item_filter": {
       "title": "Geen werkitems gevonden",
-      "description": "Je huidige filter leverde geen resultaten op. Probeer de filters te wijzigen.",
+      "description": "Je huidige filter gaf geen resultaten. Probeer de filters te wijzigen.",
       "cta_primary": "Werkitem toevoegen"
     },
     "pages": {
-      "title": "Documenteer alles, van notities tot PRD's",
-      "description": "Met pagina's leg je informatie op een plek vast en organiseer je die. Schrijf vergadernotities, projectdocumentatie en PRD's, embed werkitems en structureer ze met kant-en-klare componenten.",
-      "cta_primary": "Maak je eerste pagina aan"
+      "title": "Documenteer alles — van notities tot PRD's",
+      "description": "Met pagina's leg je informatie vast en organiseer je die op één plek. Schrijf vergadernotities, projectdocumentatie en PRD's, sluit werkitems in en structureer ze met kant-en-klare componenten.",
+      "cta_primary": "Maak je eerste pagina"
     },
     "archive_pages": {
       "title": "Nog geen gearchiveerde pagina's",
-      "description": "Archiveer pagina's die niet op je radar staan. Raadpleeg ze hier wanneer nodig."
+      "description": "Archiveer pagina's die je niet meer nodig hebt. Je vindt ze hier terug wanneer nodig."
     },
     "intake_sidebar": {
-      "title": "Log intakeverzoeken",
-      "description": "Dien nieuwe verzoeken in om ze binnen de workflow van je project te laten beoordelen, prioriteren en volgen.",
-      "cta_primary": "Intakeverzoek aanmaken"
+      "title": "Registreer intakeverzoeken",
+      "description": "Dien nieuwe verzoeken in om ze te laten beoordelen, prioriteren en volgen binnen de workflow van je project.",
+      "cta_primary": "Intakeverzoek maken"
     },
     "intake_main": {
-      "title": "Selecteer een intakewerkitem om de details te bekijken"
+      "title": "Selecteer een intake-werkitem om de details te bekijken"
     },
     "epics": {
-      "title": "Zet complexe projecten om in gestructureerde epics.",
-      "description": "Met een epic organiseer je grote doelen in kleinere, volgbare taken.",
-      "cta_primary": "Een epic aanmaken",
+      "title": "Maak van complexe projecten gestructureerde epics.",
+      "description": "Een epic helpt je grote doelen te organiseren in kleinere, volgbare taken.",
+      "cta_primary": "Epic maken",
       "cta_secondary": "Documentatie"
     },
     "epic_work_items": {
       "title": "Je hebt nog geen werkitems aan deze epic toegevoegd.",
-      "description": "Begin met het toevoegen van enkele werkitems aan deze epic en volg ze hier.",
+      "description": "Begin met het toevoegen van werkitems aan deze epic en volg ze hier.",
       "cta_secondary": "Werkitems toevoegen"
     }
   },
   "workspace_empty_state": {
     "archive_epics": {
       "title": "Nog geen gearchiveerde epics",
-      "description": "Je kunt epics archiveren die zijn voltooid of geannuleerd. Vind ze hier zodra ze gearchiveerd zijn."
+      "description": "Je kunt epics archiveren die zijn voltooid of geannuleerd. Je vindt ze hier zodra ze zijn gearchiveerd."
     },
     "archive_work_items": {
       "title": "Nog geen gearchiveerde werkitems",
-      "description": "Handmatig of via automatisering kun je werkitems archiveren die zijn voltooid of geannuleerd. Vind ze hier zodra ze gearchiveerd zijn.",
+      "description": "Handmatig of via automatisering kun je werkitems archiveren die zijn voltooid of geannuleerd. Je vindt ze hier zodra ze zijn gearchiveerd.",
       "cta_primary": "Automatisering instellen"
     },
     "archive_cycles": {
       "title": "Nog geen gearchiveerde cycli",
-      "description": "Om je project op te ruimen, archiveer je voltooide cycli. Vind ze hier zodra ze gearchiveerd zijn."
+      "description": "Archiveer voltooide cycli om je project op te ruimen. Je vindt ze hier zodra ze zijn gearchiveerd."
     },
     "archive_modules": {
       "title": "Nog geen gearchiveerde modules",
-      "description": "Om je project op te ruimen, archiveer je voltooide of geannuleerde modules. Vind ze hier zodra ze gearchiveerd zijn."
+      "description": "Archiveer voltooide of geannuleerde modules om je project op te ruimen. Je vindt ze hier zodra ze zijn gearchiveerd."
     },
     "home_widget_quick_links": {
-      "title": "Houd belangrijke referenties, bronnen of documenten bij de hand voor je werk"
+      "title": "Houd belangrijke verwijzingen, bronnen of documenten bij de hand voor je werk"
     },
     "inbox_sidebar_all": {
-      "title": "Updates voor je geabonneerde werkitems verschijnen hier"
+      "title": "Updates voor werkitems waarop je bent geabonneerd verschijnen hier"
     },
     "inbox_sidebar_mentions": {
       "title": "Vermeldingen voor je werkitems verschijnen hier"
@@ -141,129 +141,129 @@
     },
     "views": {
       "title": "Nog geen weergaven",
-      "description": "Voeg werkitems toe aan je project en gebruik weergaven om moeiteloos te filteren, sorteren en de voortgang te bewaken.",
+      "description": "Voeg werkitems toe aan je project en gebruik weergaven om moeiteloos te filteren, sorteren en de voortgang te volgen.",
       "cta_primary": "Werkitem toevoegen"
     },
     "drafts": {
       "title": "Half geschreven werkitems",
-      "description": "Om dit uit te proberen, begin je met het toevoegen van een werkitem en laat je het halverwege staan, of maak je hieronder je eerste concept aan. 😉",
-      "cta_primary": "Conceptwerkitem aanmaken"
+      "description": "Probeer het uit: begin met het toevoegen van een werkitem en laat het halverwege liggen, of maak hieronder je eerste concept. 😉",
+      "cta_primary": "Concept-werkitem maken"
     },
     "projects_archived": {
       "title": "Geen projecten gearchiveerd",
-      "description": "Het lijkt erop dat al je projecten nog actief zijn, goed bezig!"
+      "description": "Het lijkt erop dat al je projecten nog actief zijn — goed bezig!"
     },
     "analytics_projects": {
       "title": "Maak projecten aan om hier projectstatistieken te visualiseren."
     },
     "analytics_work_items": {
-      "title": "Maak projecten aan met werkitems en toegewezenen om hier prestaties, voortgang en teamimpact te gaan volgen."
+      "title": "Maak projecten met werkitems en toegewezenen aan om hier prestaties, voortgang en teamimpact te volgen."
     },
     "analytics_no_cycle": {
-      "title": "Maak cycli aan om werk in tijdgebonden fasen te organiseren en de voortgang over sprints te volgen."
+      "title": "Maak cycli aan om werk te organiseren in tijdgebonden fasen en de voortgang over sprints te volgen."
     },
     "analytics_no_module": {
       "title": "Maak modules aan om je werk te organiseren en de voortgang over verschillende fasen te volgen."
     },
     "analytics_no_intake": {
-      "title": "Stel intake in om inkomende verzoeken te beheren en te volgen hoe ze worden geaccepteerd en afgewezen"
+      "title": "Stel intake in om binnenkomende verzoeken te beheren en te volgen hoe ze worden geaccepteerd en afgewezen"
     },
     "home_widget_stickies": {
-      "title": "Noteer een idee, leg een aha-moment vast of bewaar een ingeving. Voeg een sticky toe om te beginnen."
+      "title": "Noteer een idee, leg een inzicht vast of schrijf een ingeving op. Voeg een notitie toe om te beginnen."
     },
     "stickies": {
       "title": "Leg ideeën direct vast",
-      "description": "Maak stickies voor snelle notities en to-do's en houd ze bij je waar je ook gaat.",
-      "cta_primary": "Eerste sticky aanmaken",
+      "description": "Maak notities voor snelle aantekeningen en to-do's en houd ze bij je, waar je ook gaat.",
+      "cta_primary": "Eerste notitie maken",
       "cta_secondary": "Documentatie"
     },
     "active_cycles": {
       "title": "Geen actieve cycli",
-      "description": "Je hebt op dit moment geen lopende cycli. Actieve cycli verschijnen hier wanneer ze de datum van vandaag bevatten."
+      "description": "Je hebt momenteel geen lopende cycli. Actieve cycli verschijnen hier wanneer ze de datum van vandaag omvatten."
     },
     "dashboard": {
       "title": "Visualiseer je voortgang met dashboards",
       "description": "Bouw aanpasbare dashboards om statistieken te volgen, resultaten te meten en inzichten effectief te presenteren.",
-      "cta_primary": "Nieuw dashboard aanmaken"
+      "cta_primary": "Nieuw dashboard maken"
     },
     "wiki": {
-      "title": "Schrijf een notitie, een document of een volledige kennisbank.",
-      "description": "Pagina's zijn de ruimte om gedachten vast te leggen in Plane. Noteer vergadernotities, maak ze eenvoudig op, embed werkitems, orden ze met een bibliotheek aan componenten en bewaar ze allemaal in de context van je project.",
-      "cta_primary": "Maak je pagina aan"
+      "title": "Schrijf een notitie, een document of een complete kennisbank.",
+      "description": "Pagina's zijn de plek in Plane om gedachten vast te leggen. Noteer vergadernotities, maak ze eenvoudig op, sluit werkitems in, geef ze vorm met een bibliotheek van componenten en houd alles in de context van je project.",
+      "cta_primary": "Maak je pagina"
     },
     "project_overview_state_sidebar": {
       "title": "Projectstatussen inschakelen",
-      "description": "Schakel projectstatussen in om eigenschappen zoals status, prioriteit, vervaldatums en meer te bekijken en te beheren."
+      "description": "Schakel projectstatussen in om eigenschappen zoals status, prioriteit, einddatum en meer te bekijken en te beheren."
     }
   },
   "settings_empty_state": {
     "estimates": {
-      "title": "Nog geen inschattingen",
-      "description": "Bepaal hoe je team inspanning meet en volg dit consistent over alle werkitems.",
-      "cta_primary": "Inschattingssysteem toevoegen"
+      "title": "Nog geen schattingen",
+      "description": "Bepaal hoe je team inspanning meet en volg dit consistent in alle werkitems.",
+      "cta_primary": "Schattingssysteem toevoegen"
     },
     "labels": {
       "title": "Nog geen labels",
-      "description": "Maak persoonlijke labels om je werkitems effectief te categoriseren en te beheren.",
-      "cta_primary": "Maak je eerste label aan"
+      "description": "Maak persoonlijke labels aan om je werkitems effectief te categoriseren en te beheren.",
+      "cta_primary": "Maak je eerste label"
     },
     "exports": {
       "title": "Nog geen exports",
-      "description": "Je hebt op dit moment geen exportrecords. Zodra je gegevens exporteert, verschijnen alle records hier."
+      "description": "Je hebt momenteel geen exportrecords. Zodra je gegevens exporteert, verschijnen alle records hier."
     },
     "tokens": {
       "title": "Nog geen persoonlijk token",
-      "description": "Genereer veilige API-tokens om je werkruimte te verbinden met externe systemen en applicaties.",
+      "description": "Genereer beveiligde API-tokens om je werkruimte te koppelen aan externe systemen en toepassingen.",
       "cta_primary": "Toegangstoken toevoegen"
     },
     "workspace_tokens": {
       "title": "Nog geen toegangstokens",
-      "description": "Genereer veilige API-tokens om je werkruimte te verbinden met externe systemen en applicaties.",
+      "description": "Genereer beveiligde API-tokens om je werkruimte te koppelen aan externe systemen en toepassingen.",
       "cta_primary": "Toegangstoken toevoegen"
     },
     "webhooks": {
       "title": "Nog geen webhook toegevoegd",
-      "description": "Automatiseer meldingen naar externe services wanneer projectgebeurtenissen plaatsvinden.",
+      "description": "Automatiseer meldingen naar externe diensten wanneer projectgebeurtenissen plaatsvinden.",
       "cta_primary": "Webhook toevoegen"
     },
     "work_item_types": {
-      "title": "Werkitemtypen aanmaken en aanpassen",
-      "description": "Definieer unieke werkitemtypen voor je project. Elk type kan zijn eigen eigenschappen, workflows en velden hebben, afgestemd op de behoeften van je project en team.",
+      "title": "Maak en pas werkitemtypen aan",
+      "description": "Definieer unieke werkitemtypen voor je project. Elk type kan zijn eigen eigenschappen, workflows en velden hebben - afgestemd op je project en team.",
       "cta_primary": "Inschakelen"
     },
     "work_item_type_properties": {
-      "title": "Bepaal de eigenschap en details die je voor dit werkitemtype wilt vastleggen. Pas het aan op de workflow van je project.",
+      "title": "Definieer de eigenschap en details die je voor dit werkitemtype wilt vastleggen. Pas het aan zodat het past bij de workflow van je project.",
       "cta_secondary": "Eigenschap toevoegen"
     },
     "templates": {
       "title": "Nog geen sjablonen",
-      "description": "Verkort de installatietijd door sjablonen aan te maken voor werkitems en pagina's, en start nieuw werk in seconden.",
-      "cta_primary": "Maak je eerste sjabloon aan"
+      "description": "Verkort de insteltijd door sjablonen te maken voor werkitems en pagina's — en begin in enkele seconden aan nieuw werk.",
+      "cta_primary": "Maak je eerste sjabloon"
     },
     "recurring_work_items": {
       "title": "Nog geen terugkerend werkitem",
-      "description": "Stel terugkerende werkitems in om herhaaltaken te automatiseren en moeiteloos op schema te blijven.",
-      "cta_primary": "Terugkerend werkitem aanmaken"
+      "description": "Stel terugkerende werkitems in om herhaalde taken te automatiseren en moeiteloos op schema te blijven.",
+      "cta_primary": "Terugkerend werkitem maken"
     },
     "worklogs": {
-      "title": "Volg urenregistraties voor alle leden",
-      "description": "Registreer tijd op werkitems om gedetailleerde urenregistraties te bekijken voor elk teamlid over projecten heen."
+      "title": "Volg urenstaten van alle leden",
+      "description": "Registreer tijd op werkitems om gedetailleerde urenstaten van elk teamlid over projecten heen te bekijken."
     },
     "group_syncing": {
-      "title": "Nog geen groepstoewijzingen"
+      "title": "Nog geen groepskoppelingen"
     },
     "template_setting": {
       "title": "Nog geen sjablonen",
-      "description": "Verkort de installatietijd door sjablonen aan te maken voor projecten, werkitems en pagina's, en start nieuw werk in seconden.",
-      "cta_primary": "Sjabloon aanmaken"
+      "description": "Verkort de insteltijd door sjablonen te maken voor projecten, werkitems en pagina's — en begin in enkele seconden aan nieuw werk.",
+      "cta_primary": "Sjabloon maken"
     },
     "workflows": {
       "title": "Nog geen workflows",
-      "description": "Maak workflows aan om de voortgang van je werkitems te beheren.",
+      "description": "Maak workflows om de voortgang van je werkitems te beheren.",
       "cta_primary": "Nieuwe workflow toevoegen",
       "states": {
         "title": "Statussen toevoegen",
-        "description": "Selecteer de statussen die het werkitem doorloopt."
+        "description": "Selecteer de statussen waar het werkitem doorheen loopt."
       }
     }
   }

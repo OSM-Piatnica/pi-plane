@@ -1,11 +1,11 @@
 {
   "workspace_creation": {
-    "heading": "Maak je werkruimte aan",
-    "subheading": "Om Plane te gebruiken moet je een werkruimte aanmaken of aan een werkruimte deelnemen.",
+    "heading": "Maak je werkruimte",
+    "subheading": "Om Plane te gebruiken, moet je een werkruimte maken of eraan deelnemen.",
     "form": {
       "name": {
         "label": "Geef je werkruimte een naam",
-        "placeholder": "Iets vertrouwds en herkenbaars werkt altijd het beste."
+        "placeholder": "Iets vertrouwds en herkenbaars werkt altijd het best."
       },
       "url": {
         "label": "Stel de URL van je werkruimte in",
@@ -14,13 +14,13 @@
       },
       "organization_size": {
         "label": "Hoeveel mensen gaan deze werkruimte gebruiken?",
-        "placeholder": "Kies een bereik"
+        "placeholder": "Selecteer een bereik"
       }
     },
     "errors": {
       "creation_disabled": {
-        "title": "Alleen je instantiebeheerder kan werkruimtes aanmaken",
-        "description": "Als je het e-mailadres van je instantiebeheerder kent, klik dan op de knop hieronder om contact met hen op te nemen.",
+        "title": "Alleen je instantiebeheerder kan werkruimtes maken",
+        "description": "Als je het e-mailadres van je instantiebeheerder kent, klik dan op de knop hieronder om contact met hem of haar op te nemen.",
         "request_button": "Instantiebeheerder aanvragen"
       },
       "validation": {
@@ -32,21 +32,21 @@
       }
     },
     "request_email": {
-      "subject": "Aanvraag voor een nieuwe werkruimte",
-      "body": "Hoi instantiebeheerder(s),\n\nMaak alsjeblieft een nieuwe werkruimte aan met de URL [/werkruimte-naam] voor [doel van de werkruimte].\n\nBedankt,\n{firstName} {lastName}\n{email}"
+      "subject": "Verzoek om een nieuwe werkruimte",
+      "body": "Hallo instantiebeheerder(s),\n\nMaak alsjeblieft een nieuwe werkruimte aan met de URL [/werkruimte-naam] voor [doel van het maken van de werkruimte].\n\nBedankt,\n{firstName} {lastName}\n{email}"
     },
     "button": {
-      "default": "Werkruimte aanmaken",
-      "loading": "Werkruimte aanmaken"
+      "default": "Werkruimte maken",
+      "loading": "Werkruimte maken"
     },
     "toast": {
       "success": {
         "title": "Gelukt",
-        "message": "Werkruimte succesvol aangemaakt"
+        "message": "Werkruimte gemaakt"
       },
       "error": {
         "title": "Fout",
-        "message": "Werkruimte kon niet worden aangemaakt. Probeer het opnieuw."
+        "message": "Werkruimte kon niet worden gemaakt. Probeer het opnieuw."
       }
     }
   },
@@ -54,22 +54,22 @@
     "empty_state": {
       "general": {
         "title": "Overzicht van je projecten, activiteit en statistieken",
-        "description": "Welkom bij Plane, we zijn blij dat je er bent. Maak je eerste project aan en volg je werkitems, en deze pagina verandert in een plek die je helpt vooruit te komen. Beheerders zien ook items die hun team helpen vooruit te komen.",
+        "description": "Welkom bij Plane, we zijn blij dat je er bent. Maak je eerste project en volg je werkitems, en deze pagina verandert in een ruimte die je helpt vooruitgang te boeken. Beheerders zien ook items die hun team helpen vooruit te komen.",
         "primary_button": {
           "text": "Bouw je eerste project",
           "comic": {
-            "title": "Alles begint met een project in Plane",
-            "description": "Een project kan een productroadmap zijn, een marketingcampagne of de lancering van een nieuwe auto."
+            "title": "In Plane begint alles met een project",
+            "description": "Een project kan de roadmap van een product zijn, een marketingcampagne of de lancering van een nieuwe auto."
           }
         }
       }
     }
   },
   "workspace_analytics": {
-    "label": "Analyses",
-    "page_label": "{workspace} - Analyses",
-    "open_tasks": "Totaal aantal openstaande taken",
-    "error": "Er ging iets mis bij het ophalen van de gegevens.",
+    "label": "Analyse",
+    "page_label": "{workspace} - Analyse",
+    "open_tasks": "Totaal aantal open taken",
+    "error": "Er is een fout opgetreden bij het ophalen van de gegevens.",
     "work_items_closed_in": "Werkitems gesloten in",
     "selected_projects": "Geselecteerde projecten",
     "total_members": "Totaal aantal leden",
@@ -77,76 +77,76 @@
     "total_modules": "Totaal aantal modules",
     "pending_work_items": {
       "title": "Openstaande werkitems",
-      "empty_state": "Analyse van openstaande werkitems per collega verschijnt hier."
+      "empty_state": "Hier verschijnt een analyse van openstaande werkitems per collega."
     },
     "work_items_closed_in_a_year": {
       "title": "Werkitems gesloten in een jaar",
-      "empty_state": "Sluit werkitems om hiervan een analyse in de vorm van een grafiek te zien."
+      "empty_state": "Sluit werkitems om de analyse ervan als grafiek te bekijken."
     },
     "most_work_items_created": {
-      "title": "Meeste werkitems aangemaakt",
-      "empty_state": "Collega's en het aantal werkitems dat zij hebben aangemaakt verschijnt hier."
+      "title": "Meeste werkitems gemaakt",
+      "empty_state": "Hier verschijnen collega's en het aantal werkitems dat zij hebben gemaakt."
     },
     "most_work_items_closed": {
       "title": "Meeste werkitems gesloten",
-      "empty_state": "Collega's en het aantal werkitems dat zij hebben gesloten verschijnt hier."
+      "empty_state": "Hier verschijnen collega's en het aantal werkitems dat zij hebben gesloten."
     },
     "tabs": {
-      "scope_and_demand": "Omvang en vraag",
-      "custom": "Aangepaste analytics"
+      "scope_and_demand": "Scope en vraag",
+      "custom": "Aangepaste analyse"
     },
     "total": "Totaal {entity}",
-    "started_work_items": "Gestart {entity}",
+    "started_work_items": "Gestarte {entity}",
     "backlog_work_items": "Backlog {entity}",
-    "un_started_work_items": "Niet-gestart {entity}",
-    "completed_work_items": "Voltooid {entity}",
+    "un_started_work_items": "Niet-gestarte {entity}",
+    "completed_work_items": "Voltooide {entity}",
     "project_insights": "Projectinzichten",
-    "summary_of_projects": "Samenvatting van projecten",
+    "summary_of_projects": "Overzicht van projecten",
     "all_projects": "Alle projecten",
     "trend_on_charts": "Trend in grafieken",
     "active_projects": "Actieve projecten",
     "customized_insights": "Aangepaste inzichten",
-    "created_vs_resolved": "Aangemaakt versus opgelost",
+    "created_vs_resolved": "Gemaakt vs opgelost",
     "empty_state": {
       "project_insights": {
         "title": "Nog geen gegevens",
-        "description": "Werkitems die aan jou zijn toegewezen, uitgesplitst per status, verschijnen hier."
+        "description": "Aan jou toegewezen werkitems, uitgesplitst per status, verschijnen hier."
       },
       "created_vs_resolved": {
         "title": "Nog geen gegevens",
-        "description": "Werkitems die in de loop van de tijd zijn aangemaakt en opgelost verschijnen hier."
+        "description": "Gemaakte en opgeloste werkitems in de tijd verschijnen hier."
       },
       "customized_insights": {
         "title": "Nog geen gegevens",
-        "description": "Werkitems die aan jou zijn toegewezen, uitgesplitst per status, verschijnen hier."
+        "description": "Aan jou toegewezen werkitems, uitgesplitst per status, verschijnen hier."
       },
       "general": {
-        "title": "Volg voortgang, werklast en toewijzingen. Spot trends, verwijder blokkades en laat werk sneller vorderen",
-        "description": "Bekijk omvang versus vraag, inschattingen en scope creep. Zie de prestaties per teamlid en team, en zorg ervoor dat je project op tijd loopt.",
+        "title": "Volg voortgang, werklast en toewijzingen. Ontdek trends, ruim blokkades op en werk sneller",
+        "description": "Bekijk scope versus vraag, schattingen en scope creep. Zie de prestaties per teamlid en team, en zorg dat je project op tijd loopt.",
         "primary_button": {
           "text": "Start je eerste project",
           "comic": {
-            "title": "Analyses werken het beste met cycli en modules",
-            "description": "Plaats je werkitems eerst in cycli met een vaste tijdsduur en groepeer, als je kunt, werkitems die meer dan een cyclus beslaan in modules. Bekijk beide in de linkernavigatie."
+            "title": "Analyse werkt het best met cycli + modules",
+            "description": "Plan eerst je werkitems in cycli en groepeer, indien mogelijk, werkitems die langer dan een cyclus duren in modules. Je vindt beide in de linkernavigatie."
           }
         }
       },
       "cycle_progress": {
         "title": "Nog geen gegevens",
-        "description": "Analyses over cyclusvoortgang verschijnen hier. Voeg werkitems toe aan cycli om de voortgang te gaan volgen."
+        "description": "Analyse van de cyclusvoortgang verschijnt hier. Voeg werkitems toe aan cycli om de voortgang te volgen."
       },
       "module_progress": {
         "title": "Nog geen gegevens",
-        "description": "Analyses over modulevoortgang verschijnen hier. Voeg werkitems toe aan modules om de voortgang te gaan volgen."
+        "description": "Analyse van de modulevoortgang verschijnt hier. Voeg werkitems toe aan modules om de voortgang te volgen."
       },
       "intake_trends": {
         "title": "Nog geen gegevens",
-        "description": "Analyses over intaketrends verschijnen hier. Voeg werkitems toe aan de intake om trends te gaan volgen."
+        "description": "Analyse van intaketrends verschijnt hier. Voeg werkitems toe aan intake om trends te volgen."
       }
     },
     "upgrade_to_plan": "Upgrade naar {plan} om {tab} te ontgrendelen",
-    "workitem_resolved_vs_pending": "Werkitems opgelost versus openstaand",
-    "projects_by_status": "Projecten op status",
+    "workitem_resolved_vs_pending": "Opgeloste vs openstaande werkitems",
+    "projects_by_status": "Projecten per status",
     "active_users": "Actieve gebruikers",
     "intake_trends": "Intaketrends"
   },
@@ -168,9 +168,9 @@
     },
     "error": {
       "permission": "Je hebt geen toestemming om deze actie uit te voeren.",
-      "cycle_delete": "Verwijderen van cyclus mislukt",
-      "module_delete": "Verwijderen van module mislukt",
-      "issue_delete": "Verwijderen van werkitem mislukt"
+      "cycle_delete": "Cyclus verwijderen mislukt",
+      "module_delete": "Module verwijderen mislukt",
+      "issue_delete": "Werkitem verwijderen mislukt"
     },
     "state": {
       "backlog": "Backlog",
@@ -196,32 +196,32 @@
     "empty_state": {
       "general": {
         "title": "Geen actieve projecten",
-        "description": "Zie elk project als het bovenliggende geheel voor doelgericht werk. Projecten zijn de plek waar jobs, cycli en modules leven en helpen je, samen met je collega's, dat doel te bereiken. Maak een nieuw project aan of filter op gearchiveerde projecten.",
+        "description": "Zie elk project als de basis voor doelgericht werk. In projecten leven werkitems, cycli en modules, en samen met je collega's help je daarmee je doel te bereiken. Maak een nieuw project of filter op gearchiveerde projecten.",
         "primary_button": {
           "text": "Start je eerste project",
           "comic": {
-            "title": "Alles begint met een project in Plane",
-            "description": "Een project kan een productroadmap zijn, een marketingcampagne of de lancering van een nieuwe auto."
+            "title": "In Plane begint alles met een project",
+            "description": "Een project kan de roadmap van een product zijn, een marketingcampagne of de lancering van een nieuwe auto."
           }
         }
       },
       "no_projects": {
         "title": "Geen project",
-        "description": "Om werkitems aan te maken of je werk te beheren moet je een project aanmaken of deel uitmaken van een project.",
+        "description": "Om werkitems te maken of je werk te beheren, moet je een project maken of deel uitmaken van een project.",
         "primary_button": {
           "text": "Start je eerste project",
           "comic": {
-            "title": "Alles begint met een project in Plane",
-            "description": "Een project kan een productroadmap zijn, een marketingcampagne of de lancering van een nieuwe auto."
+            "title": "In Plane begint alles met een project",
+            "description": "Een project kan de roadmap van een product zijn, een marketingcampagne of de lancering van een nieuwe auto."
           }
         }
       },
       "filter": {
         "title": "Geen overeenkomende projecten",
-        "description": "Geen projecten gevonden die aan de criteria voldoen.\nMaak in plaats daarvan een nieuw project aan."
+        "description": "Geen projecten gevonden die aan de criteria voldoen.\n Maak in plaats daarvan een nieuw project."
       },
       "search": {
-        "description": "Geen projecten gevonden die aan de criteria voldoen.\nMaak in plaats daarvan een nieuw project aan"
+        "description": "Geen projecten gevonden die aan de criteria voldoen.\nMaak in plaats daarvan een nieuw project"
       }
     }
   },
@@ -230,23 +230,23 @@
     "empty_state": {
       "all-issues": {
         "title": "Geen werkitems in het project",
-        "description": "Eerste project klaar! Verdeel je werk nu in traceerbare stukken met werkitems. We gaan aan de slag!",
+        "description": "Eerste project klaar! Verdeel je werk nu in traceerbare delen met werkitems. Laten we beginnen!",
         "primary_button": {
-          "text": "Nieuw werkitem aanmaken"
+          "text": "Nieuw werkitem maken"
         }
       },
       "assigned": {
         "title": "Nog geen werkitems",
-        "description": "Werkitems die aan jou zijn toegewezen kun je hier volgen.",
+        "description": "Aan jou toegewezen werkitems kun je hier volgen.",
         "primary_button": {
-          "text": "Nieuw werkitem aanmaken"
+          "text": "Nieuw werkitem maken"
         }
       },
       "created": {
         "title": "Nog geen werkitems",
-        "description": "Alle werkitems die je hebt aangemaakt komen hier, volg ze hier direct.",
+        "description": "Alle werkitems die je hebt gemaakt komen hier terecht, volg ze hier direct.",
         "primary_button": {
-          "text": "Nieuw werkitem aanmaken"
+          "text": "Nieuw werkitem maken"
         }
       },
       "subscribed": {
@@ -255,21 +255,21 @@
       },
       "custom-view": {
         "title": "Nog geen werkitems",
-        "description": "Werkitems die aan de filters voldoen, volg ze hier allemaal."
+        "description": "Werkitems die aan de filters voldoen, volg je hier allemaal."
       }
     },
     "delete_view": {
       "title": "Weet je zeker dat je deze weergave wilt verwijderen?",
-      "content": "Als je bevestigt, worden alle sorteer-, filter- en weergaveopties plus de gekozen lay-out voor deze weergave permanent verwijderd zonder dat ze kunnen worden hersteld."
+      "content": "Als je bevestigt, worden alle sorteer-, filter- en weergaveopties + de lay-out die je voor deze weergave hebt gekozen permanent verwijderd, zonder mogelijkheid tot herstel."
     }
   },
   "workspace_draft_issues": {
-    "draft_an_issue": "Werkitem als concept opstellen",
+    "draft_an_issue": "Werkitem opstellen als concept",
     "empty_state": {
-      "title": "Half geschreven werkitems, en binnenkort reacties, verschijnen hier.",
-      "description": "Om dit uit te proberen, begin met het toevoegen van een werkitem en laat het halverwege staan of maak hieronder je eerste concept aan. 😉",
+      "title": "Half geschreven werkitems en binnenkort ook opmerkingen verschijnen hier.",
+      "description": "Probeer het uit door een werkitem toe te voegen en het halverwege te laten staan, of maak hieronder je eerste concept. 😉",
       "primary_button": {
-        "text": "Maak je eerste concept aan"
+        "text": "Maak je eerste concept"
       }
     },
     "delete_modal": {
@@ -278,8 +278,8 @@
     },
     "toasts": {
       "created": {
-        "success": "Concept aangemaakt",
-        "error": "Werkitem kon niet worden aangemaakt. Probeer het opnieuw."
+        "success": "Concept gemaakt",
+        "error": "Werkitem kon niet worden gemaakt. Probeer het opnieuw."
       },
       "deleted": {
         "success": "Concept verwijderd"
@@ -289,33 +289,33 @@
   "workspace_pages": {
     "empty_state": {
       "general": {
-        "title": "Schrijf een notitie, een document of een volledige kennisbank. Laat Galileo, de AI-assistent van Plane, je op weg helpen",
-        "description": "Pagina's zijn de plek om je gedachten in Plane vast te leggen. Maak vergadernotities, geef ze eenvoudig opmaak, sluit werkitems in, deel ze in met een bibliotheek aan componenten en houd ze allemaal binnen de context van je project. Roep Galileo, de AI van Plane, aan met een sneltoets of een klik op de knop om elk document snel af te ronden.",
+        "title": "Schrijf een notitie, een document of een complete kennisbank. Laat Galileo, de AI-assistent van Plane, je op weg helpen",
+        "description": "Pagina's zijn de plek in Plane waar je gedachten kunnen groeien. Noteer vergadernotities, maak ze eenvoudig op, sluit werkitems in, werk ze uit met een bibliotheek van componenten en bewaar alles in de context van je project. Roep Galileo, de AI van Plane, aan met een sneltoets of een klik op een knop om elk document snel af te maken.",
         "primary_button": {
-          "text": "Maak je eerste pagina aan"
+          "text": "Maak je eerste pagina"
         }
       },
       "private": {
         "title": "Nog geen privépagina's",
-        "description": "Bewaar je privégedachten hier. Wanneer je klaar bent om te delen, is het team maar een klik verwijderd.",
+        "description": "Bewaar hier je privégedachten. Als je klaar bent om te delen, is het team maar een klik verwijderd.",
         "primary_button": {
-          "text": "Maak je eerste pagina aan"
+          "text": "Maak je eerste pagina"
         }
       },
       "public": {
         "title": "Nog geen werkruimtepagina's",
-        "description": "Bekijk hier pagina's die met iedereen in je werkruimte worden gedeeld.",
+        "description": "Pagina's die met iedereen in je werkruimte zijn gedeeld, zie je hier.",
         "primary_button": {
-          "text": "Maak je eerste pagina aan"
+          "text": "Maak je eerste pagina"
         }
       },
       "archived": {
         "title": "Nog geen gearchiveerde pagina's",
-        "description": "Archiveer pagina's die niet op je radar staan. Open ze hier wanneer nodig."
+        "description": "Archiveer pagina's die je niet meer nodig hebt. Je kunt ze hier openen wanneer dat nodig is."
       },
       "shared": {
         "title": "Nog geen gedeelde pagina's",
-        "description": "Pagina's die anderen met je hebben gedeeld verschijnen hier."
+        "description": "Pagina's die anderen met je hebben gedeeld, verschijnen hier."
       }
     }
   },
@@ -323,7 +323,7 @@
     "empty_state": {
       "active": {
         "title": "Geen actieve cycli",
-        "description": "Cycli van je projecten die een periode omvatten waarbinnen de datum van vandaag valt. Vind hier de voortgang en details van al je actieve cycli."
+        "description": "Cycli van je projecten waarvan de periode de datum van vandaag omvat. Hier vind je de voortgang en details van al je actieve cycli."
       }
     }
   },
@@ -332,8 +332,8 @@
       "title": "Leden importeren uit CSV",
       "description": "Upload een CSV met de kolommen: Email, Display Name, First Name, Last Name, Role (5, 15 of 20)",
       "dropzone": {
-        "active": "Sleep het CSV-bestand hierheen",
-        "inactive": "Sleep en zet neer of klik om te uploaden",
+        "active": "Zet het CSV-bestand hier neer",
+        "inactive": "Sleep hierheen of klik om te uploaden",
         "file_type": "Alleen .csv-bestanden worden ondersteund"
       },
       "buttons": {
@@ -341,7 +341,7 @@
         "import": "Importeren",
         "try_again": "Opnieuw proberen",
         "close": "Sluiten",
-        "done": "Klaar"
+        "done": "Gereed"
       },
       "progress": {
         "uploading": "Uploaden...",
@@ -349,13 +349,13 @@
       },
       "summary": {
         "title": {
-          "failed": "Importeren mislukt",
-          "complete": "Importeren voltooid"
+          "failed": "Import mislukt",
+          "complete": "Import voltooid"
         },
         "message": {
-          "seat_limit": "Kan geen leden importeren vanwege beperkingen op het aantal plekken.",
-          "success": "{count} lid{plural} succesvol toegevoegd aan de werkruimte.",
-          "no_imports": "Er zijn geen leden geïmporteerd uit het CSV-bestand."
+          "seat_limit": "Leden kunnen niet worden geïmporteerd vanwege beperkingen van het aantal licenties.",
+          "success": "{count, plural, one {# lid} other {# leden}} toegevoegd aan de werkruimte.",
+          "no_imports": "Er zijn geen leden uit het CSV-bestand geïmporteerd."
         },
         "stats": {
           "successful": "Geslaagd",
@@ -369,10 +369,80 @@
           "message": "Alleen CSV-bestanden worden ondersteund."
         },
         "import_failed": {
-          "title": "Importeren mislukt",
-          "message": "Er ging iets mis."
+          "title": "Import mislukt",
+          "message": "Er is iets misgegaan."
         }
       }
+    }
+  },
+  "core_ui": {
+    "select_work_item": "Selecteer minimaal één werkitem.",
+    "work_items_deleted": "Werkitems verwijderd!",
+    "try_again_error": "Er is iets misgegaan. Probeer het opnieuw.",
+    "search_ellipsis": "Zoeken...",
+    "gpt_enter_task": "Voer een taak in om AI-hulp te krijgen.",
+    "theme": {
+      "neutral_color": "Neutrale kleur",
+      "neutral_color_required": "Neutrale kleur is verplicht",
+      "brand_color": "Merkkleur",
+      "brand_color_required": "Merkkleur is verplicht",
+      "invalid_hex": "Voer een geldige hexcode in",
+      "reloading": "Opnieuw laden om wijzigingen toe te passen...",
+      "download_success": "Themaconfiguratie gedownload.",
+      "download_failed": "Themaconfiguratie downloaden mislukt.",
+      "import_success": "Themaconfiguratie geïmporteerd",
+      "updated": "Thema bijgewerkt",
+      "updating": "Thema bijwerken...",
+      "update_failed": "Thema bijwerken mislukt. Probeer het opnieuw."
+    },
+    "markdown_copied": "Markdown gekopieerd naar klembord.",
+    "account_deactivated": "Account gedeactiveerd.",
+    "estimate": {
+      "deleted_title": "Schatting verwijderd",
+      "deleted_message": "De schatting is verwijderd uit je project.",
+      "delete_failed_title": "Schatting verwijderen mislukt",
+      "delete_failed_message": "We konden de schatting niet verwijderen, probeer het opnieuw."
+    },
+    "drag_drop_manual_only": "Slepen en neerzetten is alleen ingeschakeld bij handmatige sortering",
+    "image_picker": {
+      "images": "Afbeeldingen",
+      "upload": "Uploaden",
+      "search_images": "Zoek naar afbeeldingen",
+      "not_uploaded": "Afbeelding niet geüpload",
+      "could_not_upload": "De afbeelding kon niet worden geüpload"
+    },
+    "sidebar": {
+      "main": "Hoofdzijbalk",
+      "resize": "Formaat van zijbalk wijzigen",
+      "peek": "Voorbeeldweergave van zijbalk"
+    },
+    "search_commands": "Zoek opdrachten...",
+    "delete_label": "Label verwijderen",
+    "select_expiration_date": "Selecteer een vervaldatum.",
+    "sign_out_failed": "Uitloggen mislukt. Probeer het opnieuw.",
+    "set_date": "Datum instellen",
+    "enter_months": "Voer maanden in",
+    "months": "Maanden",
+    "select_month_range": "Selecteer een maand tussen 1 en 12.",
+    "auth": {
+      "reset_password": "Wachtwoord resetten",
+      "regain_access": "Krijg weer toegang tot je account.",
+      "create_new_password": "Maak een nieuw wachtwoord.",
+      "set_password": "Wachtwoord instellen"
+    },
+    "invitation": {
+      "not_found": "Uitnodiging niet gevonden",
+      "invited_to": "Je bent uitgenodigd voor {workspace}",
+      "already_member": "Je bent al lid van {workspace}",
+      "description": "In je werkruimte maak je projecten, werk je samen aan je werkitems en organiseer je verschillende werkstromen in je Plane-account.",
+      "accept": "Accepteren",
+      "ignore": "Negeren",
+      "continue_home": "Doorgaan naar home",
+      "link_inactive": "Deze uitnodigingslink is niet meer actief.",
+      "start_empty_project": "Of begin met een leeg project",
+      "sign_in_continue": "Log in om door te gaan",
+      "star_github": "Geef ons een ster op GitHub",
+      "join_community": "Word lid van onze community van actieve makers"
     }
   }
 }
