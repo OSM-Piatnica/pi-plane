@@ -17,7 +17,7 @@ on:
       - "package.json"
       - "pnpm-lock.yaml"
       - "turbo.json"
-      - ".github/workflows/pull-request-test-web-apps.yml"
+      - ".github/workflows/pull-request-test-web-apps.yaml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

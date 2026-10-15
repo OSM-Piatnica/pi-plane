@@ -25,6 +25,7 @@ export const SUPPORTED_LANGUAGES: ILanguageOption[] = [
   { label: "Polski", value: "pl" },
   { label: "한국어", value: "ko" },
   { label: "Português Brasil", value: "pt-BR" },
+  { label: "Português (Portugal)", value: "pt-PT" },
   { label: "Indonesian", value: "id" },
   { label: "Română", value: "ro" },
   { label: "Tiếng việt", value: "vi-VN" },

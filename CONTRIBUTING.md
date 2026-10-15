@@ -67,7 +67,7 @@ chmod +x setup.sh
 3. Start the containers
 
 ```bash
-docker compose -f docker-compose-local.yml up
+docker compose -f compose-local.yaml up
 ```
 
 4. Start web apps:

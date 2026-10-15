@@ -1,0 +1,77 @@
+{
+  "home": {
+    "empty": {
+      "quickstart_guide": "O seu guia de início rápido",
+      "not_right_now": "Agora não",
+      "create_project": {
+        "title": "Criar um projeto",
+        "description": "A maioria das coisas começa com um projeto no Plane.",
+        "cta": "Começar"
+      },
+      "invite_team": {
+        "title": "Convide a sua equipa",
+        "description": "Construa, entregue e giva com colegas de trabalho.",
+        "cta": "Convidar"
+      },
+      "configure_workspace": {
+        "title": "Configure o seu espaço de trabalho.",
+        "description": "Ative ou desative recursos ou vá além disso.",
+        "cta": "Configurar este espaço de trabalho"
+      },
+      "personalize_account": {
+        "title": "Personalize o Plane.",
+        "description": "Escolha a sua foto, cores e muito mais.",
+        "cta": "Personalizar agora"
+      },
+      "widgets": {
+        "title": "Está quieto sem widgets, ative-os",
+        "description": "Parece que todos os seus widgets estão desativados. Ative-os\nagora para melhorar a sua experiência!",
+        "primary_button": {
+          "text": "Gerir widgets"
+        }
+      }
+    },
+    "quick_links": {
+      "empty": "Guarde links para os itens de trabalho que gostaria de ter à mão.",
+      "add": "Adicionar link rápido",
+      "title": "Link rápido",
+      "title_plural": "Links rápidos"
+    },
+    "recents": {
+      "title": "Recentes",
+      "empty": {
+        "project": "Os seus projetos recentes aparecerão aqui quando visitar um.",
+        "page": "As suas páginas recentes aparecerão aqui quando visitar uma.",
+        "issue": "Os seus itens de trabalho recentes aparecerão aqui quando visitar um.",
+        "default": "Não tem nenhum item recente ainda."
+      },
+      "filters": {
+        "all": "Todos",
+        "projects": "Projetos",
+        "pages": "Páginas",
+        "issues": "Itens de trabalho"
+      }
+    },
+    "new_at_plane": {
+      "title": "Novidades no Plane"
+    },
+    "quick_tutorial": {
+      "title": "Tutorial rápido"
+    },
+    "widget": {
+      "reordered_successfully": "Widget reordenado com sucesso.",
+      "reordering_failed": "Ocorreu um erro ao reordenar o widget."
+    },
+    "manage_widgets": "Gerir widgets",
+    "title": "Página inicial",
+    "star_us_on_github": "Nos dê uma estrela no GitHub",
+    "business_trial_banner": {
+      "title": "O seu teste de 14 dias do plano Business está ativo!",
+      "description": "Explore todos os recursos Business. Quando estiver pronto, escolha assinar. Não será cobrado automaticamente.",
+      "trial_ends_today": "O teste termina hoje",
+      "trial_ends_in_days": "O teste termina em {days, plural, one {# dia} other {# dias}}",
+      "start_subscription": "Iniciar subscrição",
+      "explore_business_features": "Explorar recursos Business"
+    }
+  }
+}

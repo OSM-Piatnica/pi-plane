@@ -12,8 +12,8 @@ on:
       - "reopened"
     paths:
       - "apps/api/**"
-      - "docker-compose-test.yml"
-      - ".github/workflows/pull-request-test-api.yml"
+      - "compose-test.yaml"
+      - ".github/workflows/pull-request-test-api.yaml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -32,7 +32,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      # docker-compose-test.yml loads apps/api/.env; the example values are enough because the
+      # compose-test.yaml loads apps/api/.env; the example values are enough because the
       # compose file overrides every service host and sets EMAIL_HOST for the magic-link tests.
       # (openssl rather than `tr | head`: GitHub runs bash with pipefail, so SIGPIPE would fail it.)
       - name: Prepare API environment
@@ -43,9 +43,9 @@ jobs:
       # Boots Postgres, Valkey, RabbitMQ and object storage, runs pytest and exits with its status.
       - name: Run API tests
         run: >
-          docker compose -f docker-compose-test.yml up --build
+          docker compose -f compose-test.yaml up --build
           --abort-on-container-exit --exit-code-from api-tests
 
       - name: Tear down test stack
         if: always()
-        run: docker compose -f docker-compose-test.yml down -v
+        run: docker compose -f compose-test.yaml down -v

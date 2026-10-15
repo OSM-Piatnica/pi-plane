@@ -25,12 +25,12 @@
 
 ## Backend tests (Docker)
 
-The Django/pytest suite for `apps/api` runs in an isolated stack defined by `docker-compose-test.yml` at the repo root.
+The Django/pytest suite for `apps/api` runs in an isolated stack defined by `compose-test.yaml` at the repo root.
 
 Prereq (once): `./setup.sh` — generates `apps/api/.env` from `.env.example`.
 
-- Full suite: `docker compose -f docker-compose-test.yml up --build --abort-on-container-exit --exit-code-from api-tests`
-- Subset: `docker compose -f docker-compose-test.yml run --rm api-tests pytest -m unit`
-- Teardown: `docker compose -f docker-compose-test.yml down -v`
+- Full suite: `docker compose -f compose-test.yaml up --build --abort-on-container-exit --exit-code-from api-tests`
+- Subset: `docker compose -f compose-test.yaml run --rm api-tests pytest -m unit`
+- Teardown: `docker compose -f compose-test.yaml down -v`
 
 See `apps/api/tests/RUNNING_TESTS.md` for the full walkthrough and troubleshooting; see `apps/api/tests/TESTING_GUIDE.md` for test conventions and fixtures.

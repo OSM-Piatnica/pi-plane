@@ -1,0 +1,448 @@
+{
+  "workspace_creation": {
+    "heading": "Crie o seu espaço de trabalho",
+    "subheading": "Para começar a usar o Plane, precisa criar ou entrar em um espaço de trabalho.",
+    "form": {
+      "name": {
+        "label": "Nomeie o seu espaço de trabalho",
+        "placeholder": "Algo familiar e reconhecível é sempre melhor."
+      },
+      "url": {
+        "label": "Defina o URL do seu espaço de trabalho",
+        "placeholder": "Digite ou cole um URL",
+        "edit_slug": "Só pode editar o slug do URL"
+      },
+      "organization_size": {
+        "label": "Quantas pessoas usarão este espaço de trabalho?",
+        "placeholder": "Selecione um intervalo"
+      }
+    },
+    "errors": {
+      "creation_disabled": {
+        "title": "Apenas o administrador da sua instância pode criar espaços de trabalho",
+        "description": "Se souber o endereço de e-mail do administrador da sua instância, clique no botão abaixo para entrar em contacto com ele.",
+        "request_button": "Solicitar administrador da instância"
+      },
+      "validation": {
+        "name_alphanumeric": "Os nomes dos espaços de trabalho podem conter apenas (' '), ('-'), ('_') e caracteres alfanuméricos.",
+        "name_length": "Limite o seu nome a 80 caracteres.",
+        "url_alphanumeric": "Os URLs podem conter apenas ('-') e caracteres alfanuméricos.",
+        "url_length": "Limite o seu URL a 48 caracteres.",
+        "url_already_taken": "O URL do espaço de trabalho já está em uso!"
+      }
+    },
+    "request_email": {
+      "subject": "Solicitando um novo espaço de trabalho",
+      "body": "Olá, administrador(es) da instância,\n\nPor favor, crie um novo espaço de trabalho com o URL [/nome-do-espaço-de-trabalho] para [finalidade de criar o espaço de trabalho].\n\nObrigado,\n{firstName} {lastName}\n{email}"
+    },
+    "button": {
+      "default": "Criar espaço de trabalho",
+      "loading": "Criando espaço de trabalho"
+    },
+    "toast": {
+      "success": {
+        "title": "Sucesso",
+        "message": "Espaço de trabalho criado com sucesso"
+      },
+      "error": {
+        "title": "Erro",
+        "message": "Não foi possível criar o espaço de trabalho. Por favor, tente novamente."
+      }
+    }
+  },
+  "workspace_dashboard": {
+    "empty_state": {
+      "general": {
+        "title": "Visão geral dos seus projetos, atividades e métricas",
+        "description": "Bem-vindo ao Plane, estamos animados por tê-lo aqui. Crie o seu primeiro projeto e rastreie os seus itens de trabalho, e esta página se transformará em um espaço que ajuda a progredir. Os administradores também verão itens que ajudam a sua equipa a progredir.",
+        "primary_button": {
+          "text": "Construa o seu primeiro projeto",
+          "comic": {
+            "title": "Tudo começa com um projeto no Plane",
+            "description": "Um projeto pode ser o planejamento de um produto, uma campanha de marketing ou o lançamento de um novo carro."
+          }
+        }
+      }
+    }
+  },
+  "workspace_analytics": {
+    "label": "Análises",
+    "page_label": "{workspace} - Análises",
+    "open_tasks": "Total de tarefas abertas",
+    "error": "Ocorreu algum erro ao buscar os dados.",
+    "work_items_closed_in": "Itens de trabalho fechados em",
+    "selected_projects": "Projetos selecionados",
+    "total_members": "Total de membros",
+    "total_cycles": "Total de ciclos",
+    "total_modules": "Total de módulos",
+    "pending_work_items": {
+      "title": "Itens de trabalho pendentes",
+      "empty_state": "A análise de itens de trabalho pendentes por colegas de trabalho aparece aqui."
+    },
+    "work_items_closed_in_a_year": {
+      "title": "Itens de trabalho fechados em um ano",
+      "empty_state": "Feche os itens de trabalho para visualizar a análise dos mesmos na forma de um gráfico."
+    },
+    "most_work_items_created": {
+      "title": "Itens de trabalho mais criados",
+      "empty_state": "Colegas de trabalho e o número de itens de trabalho criados por eles aparecem aqui."
+    },
+    "most_work_items_closed": {
+      "title": "Itens de trabalho mais fechados",
+      "empty_state": "Colegas de trabalho e o número de itens de trabalho fechados por eles aparecem aqui."
+    },
+    "tabs": {
+      "scope_and_demand": "Escopo e Demanda",
+      "custom": "Análises Personalizadas"
+    },
+    "total": "Total de {entity}",
+    "started_work_items": "{entity} iniciados",
+    "backlog_work_items": "{entity} no backlog",
+    "un_started_work_items": "{entity} não iniciados",
+    "completed_work_items": "{entity} concluídos",
+    "project_insights": "Insights do projeto",
+    "summary_of_projects": "Resumo dos projetos",
+    "all_projects": "Todos os projetos",
+    "trend_on_charts": "Tendência nos gráficos",
+    "active_projects": "Projetos ativos",
+    "customized_insights": "Insights personalizados",
+    "created_vs_resolved": "Criado vs Resolvido",
+    "empty_state": {
+      "project_insights": {
+        "title": "Ainda não há dados",
+        "description": "Os itens de trabalho atribuídos a si, divididos por estado, aparecerão aqui."
+      },
+      "created_vs_resolved": {
+        "title": "Ainda não há dados",
+        "description": "Os itens de trabalho criados e resolvidos ao longo do tempo aparecerão aqui."
+      },
+      "customized_insights": {
+        "title": "Ainda não há dados",
+        "description": "Os itens de trabalho atribuídos a si, divididos por estado, aparecerão aqui."
+      },
+      "general": {
+        "title": "Acompanhe progresso, cargas de trabalho e alocações. Identifique tendências, remova bloqueios e trabalhe mais rápido",
+        "description": "Veja escopo versus demanda, estimativas e expansão de escopo. Obtenha desempenho por membros da equipa e equipas, garantindo que o seu projeto seja executado no prazo.",
+        "primary_button": {
+          "text": "Comece o seu primeiro projeto",
+          "comic": {
+            "title": "Analytics funciona melhor com Ciclos + Módulos",
+            "description": "Primeiro, defina um tempo limite para os seus itens de trabalho em Ciclos e, se possível, agrupe itens que abrangem mais de um ciclo em Módulos. Confira ambos na navegação esquerda."
+          }
+        }
+      },
+      "cycle_progress": {
+        "title": "Ainda não há dados",
+        "description": "A análise de progresso do ciclo aparecerá aqui. Adicione itens de trabalho aos ciclos para começar a acompanhar o progresso."
+      },
+      "module_progress": {
+        "title": "Ainda não há dados",
+        "description": "A análise de progresso do módulo aparecerá aqui. Adicione itens de trabalho aos módulos para começar a acompanhar o progresso."
+      },
+      "intake_trends": {
+        "title": "Ainda não há dados",
+        "description": "A análise de tendências de intake aparecerá aqui. Adicione itens de trabalho ao intake para começar a acompanhar as tendências."
+      }
+    },
+    "upgrade_to_plan": "Faça upgrade para {plan} para desbloquear {tab}",
+    "workitem_resolved_vs_pending": "Itens de trabalho resolvidos vs pendentes",
+    "projects_by_status": "Projetos por status",
+    "active_users": "Utilizadores ativos",
+    "intake_trends": "Tendências de entrada"
+  },
+  "workspace_projects": {
+    "label": "{count, plural, one {Projeto} other {Projetos}}",
+    "create": {
+      "label": "Adicionar Projeto"
+    },
+    "network": {
+      "label": "Rede",
+      "private": {
+        "title": "Privado",
+        "description": "Acessível apenas por convite"
+      },
+      "public": {
+        "title": "Público",
+        "description": "Qualquer pessoa no espaço de trabalho, exceto convidados, pode participar"
+      }
+    },
+    "error": {
+      "permission": "Não tem permissão para realizar esta ação.",
+      "cycle_delete": "Falha ao eliminar o ciclo",
+      "module_delete": "Falha ao eliminar o módulo",
+      "issue_delete": "Falha ao eliminar o item de trabalho"
+    },
+    "state": {
+      "backlog": "Backlog",
+      "unstarted": "Não iniciado",
+      "started": "Iniciado",
+      "completed": "Concluído",
+      "cancelled": "Cancelado"
+    },
+    "sort": {
+      "manual": "Manual",
+      "name": "Nome",
+      "created_at": "Data de criação",
+      "members_length": "Número de membros"
+    },
+    "scope": {
+      "my_projects": "Meus projetos",
+      "archived_projects": "Arquivados"
+    },
+    "common": {
+      "months_count": "{months, plural, one{# mês} other{# meses}}",
+      "days_count": "{days, plural, one{# dia} other{# dias}}"
+    },
+    "empty_state": {
+      "general": {
+        "title": "Nenhum projeto ativo",
+        "description": "Pense em cada projeto como o pai do trabalho orientado a objetivos. Os projetos são onde os Trabalhos, Ciclos e Módulos vivem e, junto com os seus colegas, ajudam a atingir esse objetivo. Crie um novo projeto ou filtre os projetos arquivados.",
+        "primary_button": {
+          "text": "Comece o seu primeiro projeto",
+          "comic": {
+            "title": "Tudo começa com um projeto no Plane",
+            "description": "Um projeto pode ser o roteiro de um produto, uma campanha de marketing ou o lançamento de um novo carro."
+          }
+        }
+      },
+      "no_projects": {
+        "title": "Nenhum projeto",
+        "description": "Para criar itens de trabalho ou gerir o seu trabalho, precisa criar um projeto ou fazer parte de um.",
+        "primary_button": {
+          "text": "Comece o seu primeiro projeto",
+          "comic": {
+            "title": "Tudo começa com um projeto no Plane",
+            "description": "Um projeto pode ser o roteiro de um produto, uma campanha de marketing ou o lançamento de um novo carro."
+          }
+        }
+      },
+      "filter": {
+        "title": "Nenhum projeto correspondente",
+        "description": "Nenhum projeto detectado com os critérios correspondentes.\n Crie um novo projeto em vez disso."
+      },
+      "search": {
+        "description": "Nenhum projeto detectado com os critérios correspondentes.\nCrie um novo projeto em vez disso"
+      }
+    }
+  },
+  "workspace_views": {
+    "add_view": "Adicionar visualização",
+    "empty_state": {
+      "all-issues": {
+        "title": "Nenhum item de trabalho no projeto",
+        "description": "Primeiro projeto concluído! Agora, divida o seu trabalho em partes rastreáveis com itens de trabalho. Vamos lá!",
+        "primary_button": {
+          "text": "Criar novo item de trabalho"
+        }
+      },
+      "assigned": {
+        "title": "Nenhum item de trabalho ainda",
+        "description": "Os itens de trabalho atribuídos a si podem ser rastreados aqui.",
+        "primary_button": {
+          "text": "Criar novo item de trabalho"
+        }
+      },
+      "created": {
+        "title": "Nenhum item de trabalho ainda",
+        "description": "Todos os itens de trabalho criados por si vêm aqui, rastreie-os aqui diretamente.",
+        "primary_button": {
+          "text": "Criar novo item de trabalho"
+        }
+      },
+      "subscribed": {
+        "title": "Nenhum item de trabalho ainda",
+        "description": "Inscreva-se nos itens de trabalho nos quais está interessado, rastreie todos eles aqui."
+      },
+      "custom-view": {
+        "title": "Nenhum item de trabalho ainda",
+        "description": "Itens de trabalho que se aplicam aos filtros, rastreie todos eles aqui."
+      }
+    },
+    "delete_view": {
+      "title": "Tem a certeza de que deseja eliminar esta visualização?",
+      "content": "Se confirmar, todas as opções de classificação, filtro e visualização + o layout que escolheu para esta visualização serão eliminados permanentemente sem nenhuma forma de restaurá-los."
+    }
+  },
+  "workspace_draft_issues": {
+    "draft_an_issue": "Rascunhar um item de trabalho",
+    "empty_state": {
+      "title": "Itens de trabalho semi-escritos e, em breve, os comentários aparecerão aqui.",
+      "description": "Para experimentar, comece a adicionar um item de trabalho e deixe-o no meio do caminho ou crie o seu primeiro rascunho abaixo. 😉",
+      "primary_button": {
+        "text": "Criar o seu primeiro rascunho"
+      }
+    },
+    "delete_modal": {
+      "title": "Eliminar rascunho",
+      "description": "Tem a certeza de que deseja eliminar este rascunho? Isso não pode ser desfeito."
+    },
+    "toasts": {
+      "created": {
+        "success": "Rascunho criado",
+        "error": "Não foi possível criar o item de trabalho. Por favor, tente novamente."
+      },
+      "deleted": {
+        "success": "Rascunho eliminado"
+      }
+    }
+  },
+  "workspace_pages": {
+    "empty_state": {
+      "general": {
+        "title": "Escreva uma nota, um documento ou uma base de conhecimento completa. Obtenha ajuda do Galileo, o assistente de IA do Plane, para começar",
+        "description": "Páginas são espaços para desenvolver pensamentos no Plane. Anote notas de reunião, formate-as facilmente, incorpore itens de trabalho, organize-os usando uma biblioteca de componentes e mantenha tudo no contexto do seu projeto. Para facilitar qualquer documento, invoque o Galileo, a IA do Plane, com um atalho ou clique de um botão.",
+        "primary_button": {
+          "text": "Crie a sua primeira página"
+        }
+      },
+      "private": {
+        "title": "Ainda não há páginas privadas",
+        "description": "Mantenha os seus pensamentos privados aqui. Quando estiver pronto para partilhar, a equipa está a apenas um clique de distância.",
+        "primary_button": {
+          "text": "Crie a sua primeira página"
+        }
+      },
+      "public": {
+        "title": "Ainda não há páginas do espaço de trabalho",
+        "description": "Veja páginas partilhadas com todos no seu espaço de trabalho aqui mesmo.",
+        "primary_button": {
+          "text": "Crie a sua primeira página"
+        }
+      },
+      "archived": {
+        "title": "Ainda não há páginas arquivadas",
+        "description": "Arquive páginas fora do seu radar. Acesse-as aqui quando necessário."
+      },
+      "shared": {
+        "title": "Ainda não há páginas partilhadas",
+        "description": "As páginas que outros partilharam consigo aparecerão aqui."
+      }
+    }
+  },
+  "workspace_cycles": {
+    "empty_state": {
+      "active": {
+        "title": "Nenhum ciclo ativo",
+        "description": "Ciclos dos seus projetos que incluem qualquer período que engloba a data de hoje dentro do seu intervalo. Encontre o progresso e detalhes de todos os seus ciclos ativos aqui."
+      }
+    }
+  },
+  "workspace": {
+    "members_import": {
+      "title": "Importar membros do CSV",
+      "description": "Carregue um CSV com colunas: Email, Display Name, First Name, Last Name, Role (5, 15 ou 20)",
+      "dropzone": {
+        "active": "Solte o ficheiro CSV aqui",
+        "inactive": "Arraste e solte ou clique para fazer upload",
+        "file_type": "Apenas ficheiros .csv são suportados"
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "import": "Importar",
+        "try_again": "Tentar novamente",
+        "close": "Fechar",
+        "done": "Concluído"
+      },
+      "progress": {
+        "uploading": "A enviar...",
+        "importing": "A importar..."
+      },
+      "summary": {
+        "title": {
+          "failed": "Importação falhou",
+          "complete": "Importação concluída"
+        },
+        "message": {
+          "seat_limit": "Não foi possível importar membros devido a restrições de limite de assentos.",
+          "success": "{count} membr{plural} adicionad{plural} com sucesso ao espaço de trabalho.",
+          "no_imports": "Nenhum membro foi importado do ficheiro CSV."
+        },
+        "stats": {
+          "successful": "Bem-sucedido",
+          "failed": "Falhou"
+        },
+        "download_errors": "Transferir erros"
+      },
+      "toast": {
+        "invalid_file": {
+          "title": "Ficheiro inválido",
+          "message": "Apenas ficheiros CSV são suportados."
+        },
+        "import_failed": {
+          "title": "Importação falhou",
+          "message": "Algo deu errado."
+        }
+      }
+    }
+  },
+  "core_ui": {
+    "select_work_item": "Selecione pelo menos um item de trabalho.",
+    "work_items_deleted": "Itens de trabalho eliminados com sucesso!",
+    "try_again_error": "Algo deu errado. Tente novamente.",
+    "search_ellipsis": "Pesquisar...",
+    "gpt_enter_task": "Insira uma tarefa para obter ajuda da IA.",
+    "theme": {
+      "neutral_color": "Cor neutra",
+      "neutral_color_required": "A cor neutra é obrigatória",
+      "brand_color": "Cor da marca",
+      "brand_color_required": "A cor da marca é obrigatória",
+      "invalid_hex": "Insira um código hexadecimal válido",
+      "reloading": "Recarregando para aplicar as alterações...",
+      "download_success": "Configuração do tema baixada com sucesso.",
+      "download_failed": "Falha ao transferir a configuração do tema.",
+      "import_success": "Configuração do tema importada com sucesso",
+      "updated": "Tema atualizado",
+      "updating": "Atualizando tema...",
+      "update_failed": "Falha ao atualizar o tema. Tente novamente."
+    },
+    "markdown_copied": "Markdown copiado para a área de transferência.",
+    "account_deactivated": "Conta desativada com sucesso.",
+    "estimate": {
+      "deleted_title": "Estimativa eliminada",
+      "deleted_message": "A estimativa foi removida do seu projeto.",
+      "delete_failed_title": "Falha ao eliminar a estimativa",
+      "delete_failed_message": "Não foi possível eliminar a estimativa. Tente novamente."
+    },
+    "drag_drop_manual_only": "Arrastar e soltar só está ativado na ordenação manual",
+    "image_picker": {
+      "images": "Imagens",
+      "upload": "Enviar",
+      "search_images": "Pesquisar imagens",
+      "not_uploaded": "Imagem não enviada",
+      "could_not_upload": "Não foi possível enviar a imagem"
+    },
+    "sidebar": {
+      "main": "Barra lateral principal",
+      "resize": "Redimensionar barra lateral",
+      "peek": "Visualização rápida da barra lateral"
+    },
+    "search_commands": "Pesquisar comandos...",
+    "delete_label": "Eliminar rótulo",
+    "select_expiration_date": "Selecione uma data de expiração.",
+    "sign_out_failed": "Falha ao sair. Tente novamente.",
+    "set_date": "Definir data",
+    "enter_months": "Insira os meses",
+    "months": "Meses",
+    "select_month_range": "Selecione um mês entre 1 e 12.",
+    "auth": {
+      "reset_password": "Redefinir palavra-passe",
+      "regain_access": "Recupere o acesso à sua conta.",
+      "create_new_password": "Crie uma nova palavra-passe.",
+      "set_password": "Definir palavra-passe"
+    },
+    "invitation": {
+      "not_found": "Convite não encontrado",
+      "invited_to": "Foi convidado para {workspace}",
+      "already_member": "Já é membro de {workspace}",
+      "description": "O seu espaço de trabalho é onde criará projetos, colaborará em itens de trabalho e organizará diferentes fluxos de trabalho na sua conta do Plane.",
+      "accept": "Aceitar",
+      "ignore": "Ignorar",
+      "continue_home": "Continuar para o início",
+      "link_inactive": "Este link de convite não está mais ativo.",
+      "start_empty_project": "Ou comece com um projeto vazio",
+      "sign_in_continue": "Entre para continuar",
+      "star_github": "Dê uma estrela no GitHub",
+      "join_community": "Junte-se à nossa comunidade de criadores ativos"
+    }
+  }
+}
