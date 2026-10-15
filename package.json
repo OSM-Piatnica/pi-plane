@@ -32,6 +32,9 @@
     ],
     "*.{js,jsx,ts,tsx,cjs,mjs,cts,mts}": [
       "pnpm exec oxlint --fix --deny-warnings"
+    ],
+    "apps/api/**/*.py": [
+      ".husky/ruff-staged.sh"
     ]
   },
   "engines": {
