@@ -93,6 +93,7 @@ class TestProjectListCreateAPIEndpoint:
         response = api_key_client.get(self.get_url(workspace.slug), {"order_by": "created_by__password"})
 
         assert response.status_code == status.HTTP_200_OK, f"Got {response.status_code}: {response.data!r}"
+
     @pytest.mark.django_db
     def test_create_project_with_lead_as_creator(self, api_key_client, workspace, create_user):
         """Regression for the ghost-create bug.
