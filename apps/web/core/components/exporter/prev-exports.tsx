@@ -18,7 +18,7 @@ import { Table } from "@plane/ui";
 // components
 import { ImportExportSettingsLoader } from "@/components/ui/loader/settings/import-and-export";
 // constants
-import { EXPORT_SERVICES_LIST } from "@plane/constants";
+import { EXPORT_SERVICES_LIST } from "@/constants/fetch-keys";
 // services
 import { IntegrationService } from "@/services/integrations";
 // local imports
