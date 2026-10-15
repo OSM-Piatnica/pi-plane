@@ -95,6 +95,16 @@ class WorkSpaceMemberSerializer(DynamicBaseSerializer):
     class Meta:
         model = WorkspaceMember
         fields = "__all__"
+        read_only_fields = [
+            "id",
+            "workspace",
+            "is_active",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+        ]
 
 
 class WorkspaceMemberMeSerializer(BaseSerializer):
@@ -105,12 +115,8 @@ class WorkspaceMemberMeSerializer(BaseSerializer):
         fields = "__all__"
 
 
-class WorkspaceMemberAdminSerializer(DynamicBaseSerializer):
+class WorkspaceMemberAdminSerializer(WorkSpaceMemberSerializer):
     member = UserAdminLiteSerializer(read_only=True)
-
-    class Meta:
-        model = WorkspaceMember
-        fields = "__all__"
 
 
 class WorkSpaceMemberInviteSerializer(BaseSerializer):
