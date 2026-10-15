@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -73,10 +74,14 @@ class IssueLinkViewSet(BaseViewSet):
         requested_data = json.dumps(request.data, cls=DjangoJSONEncoder)
         current_instance = json.dumps(IssueLinkSerializer(issue_link).data, cls=DjangoJSONEncoder)
 
+        previous_url = issue_link.url
+
         serializer = IssueLinkSerializer(issue_link, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            crawl_work_item_link_title.delay(serializer.data.get("id"), serializer.data.get("url"))
+            updated_url = serializer.data.get("url")
+            if updated_url and updated_url != previous_url:
+                crawl_work_item_link_title.delay(serializer.data.get("id"), updated_url)
 
             issue_activity.delay(
                 type="link.activity.updated",
