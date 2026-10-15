@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import ipaddress
@@ -196,9 +197,7 @@ class TestSafeGet:
             ValueError("Access to private/internal networks is not allowed"),
         ]
         session = mock_session_cls.return_value
-        session.request.return_value = _make_response(
-            status_code=302, headers={"Location": "http://192.168.1.1:8080"}
-        )
+        session.request.return_value = _make_response(status_code=302, headers={"Location": "http://192.168.1.1:8080"})
 
         with pytest.raises(ValueError, match="private/internal"):
             safe_get("https://evil.com/redirect")
@@ -208,9 +207,7 @@ class TestSafeGet:
     def test_raises_on_too_many_redirects(self, mock_resolve, mock_session_cls):
         mock_resolve.return_value = ["93.184.216.34"]
         session = mock_session_cls.return_value
-        session.request.return_value = _make_response(
-            status_code=302, headers={"Location": "https://example.com/loop"}
-        )
+        session.request.return_value = _make_response(status_code=302, headers={"Location": "https://example.com/loop"})
 
         with pytest.raises(requests.TooManyRedirects):
             safe_get("https://example.com/start")

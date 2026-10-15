@@ -262,9 +262,7 @@ urlpatterns = [
     ),
     path(
         "workspaces/<str:slug>/work-item-templates/<uuid:pk>/",
-        WorkspaceWorkItemTemplateViewSet.as_view(
-            {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
-        ),
+        WorkspaceWorkItemTemplateViewSet.as_view({"get": "retrieve", "patch": "partial_update", "delete": "destroy"}),
         name="workspace-work-item-templates-detail",
     ),
     path(
@@ -274,9 +272,7 @@ urlpatterns = [
     ),
     path(
         "workspaces/<str:slug>/issue-types/<uuid:pk>/",
-        WorkspaceIssueTypeViewSet.as_view(
-            {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
-        ),
+        WorkspaceIssueTypeViewSet.as_view({"get": "retrieve", "patch": "partial_update", "delete": "destroy"}),
         name="workspace-issue-types-detail",
     ),
     path(
@@ -286,9 +282,7 @@ urlpatterns = [
     ),
     path(
         "workspaces/<str:slug>/project-templates/<uuid:pk>/",
-        WorkspaceProjectTemplateViewSet.as_view(
-            {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
-        ),
+        WorkspaceProjectTemplateViewSet.as_view({"get": "retrieve", "patch": "partial_update", "delete": "destroy"}),
         name="workspace-project-templates-detail",
     ),
     # User Preference

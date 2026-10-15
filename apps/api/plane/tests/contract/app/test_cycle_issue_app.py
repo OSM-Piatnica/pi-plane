@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """Regression test for GHSA-4w5x-wc9w-f47x.
@@ -132,9 +133,7 @@ class TestCycleIssueCrossTenantBOLA:
             "Cross-tenant reassignment: victim's CycleIssue was moved to the attacker's cycle"
         )
         # No CycleIssue for the victim's issue should exist under the attacker's cycle.
-        assert not CycleIssue.objects.filter(
-            cycle_id=attacker_cycle.id, issue_id=victim_issue.id
-        ).exists()
+        assert not CycleIssue.objects.filter(cycle_id=attacker_cycle.id, issue_id=victim_issue.id).exists()
 
     @pytest.mark.django_db
     def test_same_tenant_reassignment_still_works(

@@ -22,12 +22,7 @@ class WorkspaceIssueTypeViewSet(BaseViewSet):
         return context
 
     def get_queryset(self):
-        return (
-            super()
-            .get_queryset()
-            .filter(workspace__slug=self.kwargs.get("slug"))
-            .select_related("workspace")
-        )
+        return super().get_queryset().filter(workspace__slug=self.kwargs.get("slug")).select_related("workspace")
 
     @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST], level="WORKSPACE")
     def list(self, request, slug):
@@ -38,11 +33,13 @@ class WorkspaceIssueTypeViewSet(BaseViewSet):
         return self.paginate(
             request=request,
             queryset=qs.order_by("level", "name"),
-            on_results=lambda rows: IssueTypeSerializer(
-                rows,
-                many=True,
-                context={**self.get_serializer_context()},
-            ).data,
+            on_results=lambda rows: (
+                IssueTypeSerializer(
+                    rows,
+                    many=True,
+                    context={**self.get_serializer_context()},
+                ).data
+            ),
             default_per_page=100,
         )
 

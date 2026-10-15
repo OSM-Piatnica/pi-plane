@@ -30,11 +30,13 @@ class WorkspaceProjectTemplateViewSet(BaseViewSet):
         return self.paginate(
             request=request,
             queryset=qs.order_by("-sort_order", "-created_at"),
-            on_results=lambda rows: ProjectTemplateSerializer(
-                rows,
-                many=True,
-                context={**self.get_serializer_context()},
-            ).data,
+            on_results=lambda rows: (
+                ProjectTemplateSerializer(
+                    rows,
+                    many=True,
+                    context={**self.get_serializer_context()},
+                ).data
+            ),
             default_per_page=50,
         )
 

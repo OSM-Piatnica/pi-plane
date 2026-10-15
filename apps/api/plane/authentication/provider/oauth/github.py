@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -31,20 +32,22 @@ class GitHubOAuthProvider(OauthAdapter):
     organization_scope = "read:org"
 
     def __init__(self, request, code=None, state=None, callback=None):
-        GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_ORGANIZATION_ID = get_configuration_value([
-            {
-                "key": "GITHUB_CLIENT_ID",
-                "default": os.environ.get("GITHUB_CLIENT_ID"),
-            },
-            {
-                "key": "GITHUB_CLIENT_SECRET",
-                "default": os.environ.get("GITHUB_CLIENT_SECRET"),
-            },
-            {
-                "key": "GITHUB_ORGANIZATION_ID",
-                "default": os.environ.get("GITHUB_ORGANIZATION_ID"),
-            },
-        ])
+        GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_ORGANIZATION_ID = get_configuration_value(
+            [
+                {
+                    "key": "GITHUB_CLIENT_ID",
+                    "default": os.environ.get("GITHUB_CLIENT_ID"),
+                },
+                {
+                    "key": "GITHUB_CLIENT_SECRET",
+                    "default": os.environ.get("GITHUB_CLIENT_SECRET"),
+                },
+                {
+                    "key": "GITHUB_ORGANIZATION_ID",
+                    "default": os.environ.get("GITHUB_ORGANIZATION_ID"),
+                },
+            ]
+        )
 
         if not (GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET):
             raise AuthenticationException(
@@ -89,21 +92,23 @@ class GitHubOAuthProvider(OauthAdapter):
             "redirect_uri": self.redirect_uri,
         }
         token_response = self.get_user_token(data=data, headers={"Accept": "application/json"})
-        super().set_token_data({
-            "access_token": token_response.get("access_token"),
-            "refresh_token": token_response.get("refresh_token", None),
-            "access_token_expired_at": (
-                datetime.fromtimestamp(token_response.get("expires_in"), tz=pytz.utc)
-                if token_response.get("expires_in")
-                else None
-            ),
-            "refresh_token_expired_at": (
-                datetime.fromtimestamp(token_response.get("refresh_token_expired_at"), tz=pytz.utc)
-                if token_response.get("refresh_token_expired_at")
-                else None
-            ),
-            "id_token": token_response.get("id_token", ""),
-        })
+        super().set_token_data(
+            {
+                "access_token": token_response.get("access_token"),
+                "refresh_token": token_response.get("refresh_token", None),
+                "access_token_expired_at": (
+                    datetime.fromtimestamp(token_response.get("expires_in"), tz=pytz.utc)
+                    if token_response.get("expires_in")
+                    else None
+                ),
+                "refresh_token_expired_at": (
+                    datetime.fromtimestamp(token_response.get("refresh_token_expired_at"), tz=pytz.utc)
+                    if token_response.get("refresh_token_expired_at")
+                    else None
+                ),
+                "id_token": token_response.get("id_token", ""),
+            }
+        )
 
     def __get_email(self, headers):
         try:
@@ -171,14 +176,16 @@ class GitHubOAuthProvider(OauthAdapter):
                 "email": email,
             },
         )
-        super().set_user_data({
-            "email": email,
-            "user": {
-                "provider_id": user_info_response.get("id"),
+        super().set_user_data(
+            {
                 "email": email,
-                "avatar": user_info_response.get("avatar_url"),
-                "first_name": user_info_response.get("name"),
-                "last_name": user_info_response.get("family_name"),
-                "is_password_autoset": True,
-            },
-        })
+                "user": {
+                    "provider_id": user_info_response.get("id"),
+                    "email": email,
+                    "avatar": user_info_response.get("avatar_url"),
+                    "first_name": user_info_response.get("name"),
+                    "last_name": user_info_response.get("family_name"),
+                    "is_password_autoset": True,
+                },
+            }
+        )

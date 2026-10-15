@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """
@@ -23,9 +24,7 @@ from plane.db.models import APIToken
 class TestAPIKeyAuthentication:
     @pytest.mark.django_db
     def test_validate_api_token_authenticates_active_user(self, create_user):
-        token = APIToken.objects.create(
-            user=create_user, label="Active Token", token="active-user-token"
-        )
+        token = APIToken.objects.create(user=create_user, label="Active Token", token="active-user-token")
 
         user, returned_token = APIKeyAuthentication().validate_api_token(token.token)
 
@@ -34,9 +33,7 @@ class TestAPIKeyAuthentication:
 
     @pytest.mark.django_db
     def test_validate_api_token_rejects_deactivated_user(self, create_user):
-        token = APIToken.objects.create(
-            user=create_user, label="Stale Token", token="deactivated-user-token"
-        )
+        token = APIToken.objects.create(user=create_user, label="Stale Token", token="deactivated-user-token")
 
         # Account is deactivated by an administrator after the token was issued.
         create_user.is_active = False

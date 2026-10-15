@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """
@@ -298,6 +299,7 @@ def sticky_docs(**kwargs):
 
     return extend_schema(**_merge_schema_options(defaults, kwargs))
 
+
 def estimate_docs(**kwargs):
     """Decorator for estimate-related endpoints"""
     defaults = {
@@ -310,6 +312,7 @@ def estimate_docs(**kwargs):
         },
     }
     return extend_schema(**_merge_schema_options(defaults, kwargs))
+
 
 def estimate_point_docs(**kwargs):
     """Decorator for estimate point-related endpoints"""

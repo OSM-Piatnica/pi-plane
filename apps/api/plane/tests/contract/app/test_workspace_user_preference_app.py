@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from datetime import timedelta
@@ -48,9 +49,7 @@ class TestWorkspaceUserPreferencePatch:
         WorkspaceUserPreference.objects.filter(pk=other_pref.pk).update(created_at=now + timedelta(minutes=1))
 
         url = reverse("workspace-user-preference", kwargs={"slug": workspace.slug})
-        response = session_client.patch(
-            url, [{"key": self.KEY, "is_pinned": True, "sort_order": 999}], format="json"
-        )
+        response = session_client.patch(url, [{"key": self.KEY, "is_pinned": True, "sort_order": 999}], format="json")
 
         assert response.status_code == status.HTTP_200_OK
 
@@ -72,9 +71,7 @@ class TestWorkspaceUserPreferencePatch:
         )
 
         url = reverse("workspace-user-preference", kwargs={"slug": workspace.slug})
-        response = session_client.patch(
-            url, [{"key": self.KEY, "is_pinned": True, "sort_order": 42}], format="json"
-        )
+        response = session_client.patch(url, [{"key": self.KEY, "is_pinned": True, "sort_order": 42}], format="json")
 
         assert response.status_code == status.HTTP_200_OK
 

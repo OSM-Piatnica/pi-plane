@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -114,9 +115,9 @@ class IntakeIssueListCreateAPIEndpoint(BaseAPIView):
         return self.paginate(
             request=request,
             queryset=(issue_queryset),
-            on_results=lambda intake_issues: IntakeIssueSerializer(
-                intake_issues, many=True, fields=self.fields, expand=self.expand
-            ).data,
+            on_results=lambda intake_issues: (
+                IntakeIssueSerializer(intake_issues, many=True, fields=self.fields, expand=self.expand).data
+            ),
         )
 
     @intake_docs(

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """
@@ -26,9 +27,7 @@ class TestAPIKeyAuthenticationContract:
         assert response.status_code == status.HTTP_200_OK
 
     @pytest.mark.django_db
-    def test_deactivated_user_cannot_access_with_api_key(
-        self, api_key_client, create_user
-    ):
+    def test_deactivated_user_cannot_access_with_api_key(self, api_key_client, create_user):
         # The account is disabled after the API key was generated.
         create_user.is_active = False
         create_user.save()

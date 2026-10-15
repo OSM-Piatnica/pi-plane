@@ -10,9 +10,7 @@ from plane.utils.porters.formatters import CSVFormatter, UTF8_SIG_BOM
 
 class TestCSVFormatterEncoding:
     def test_encode_includes_utf8_bom_for_excel(self):
-        csv_content = CSVFormatter(delimiter=";").encode(
-            [{"name": "Marketing produktów", "identifier": "AGRO"}]
-        )
+        csv_content = CSVFormatter(delimiter=";").encode([{"name": "Marketing produktów", "identifier": "AGRO"}])
         assert csv_content.startswith(UTF8_SIG_BOM)
         assert "produktów" in csv_content
         assert "Marketing produktów;AGRO" in csv_content.replace("\r\n", "\n")
