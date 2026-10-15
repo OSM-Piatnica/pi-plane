@@ -19,7 +19,7 @@ export type TLanguage =
   | "de"
   | "ua"
   | "pl"
-  | "nl"
+  | "pl-x-podlaski"
   | "ko"
   | "pt-BR"
   | "pt-PT"
@@ -27,7 +27,9 @@ export type TLanguage =
   | "ro"
   | "vi-VN"
   | "tr-TR"
-  | "ka-ge";
+  | "ka-ge"
+  | "nl"
+  | "bg";
 
 export interface ILanguageOption {
   label: string;

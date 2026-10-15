@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -42,7 +43,7 @@ export class WorkspaceNotificationService extends APIService {
     workspaceSlug: string,
     params: TNotificationPaginatedInfoQueryParams
   ): Promise<TNotificationPaginatedInfo | undefined> {
-    return this.get(`/api/workspaces/${workspaceSlug}/users/notifications`, { params })
+    return this.get(`/api/workspaces/${workspaceSlug}/users/notifications/`, { params })
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;

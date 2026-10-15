@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -37,6 +38,12 @@ workspace_management_config_variables = [
 
 google_config_variables = [
     {
+        "key": "IS_GOOGLE_ENABLED",
+        "value": os.environ.get("IS_GOOGLE_ENABLED", "0"),
+        "category": "GOOGLE",
+        "is_encrypted": False,
+    },
+    {
         "key": "GOOGLE_CLIENT_ID",
         "value": os.environ.get("GOOGLE_CLIENT_ID"),
         "category": "GOOGLE",
@@ -57,6 +64,12 @@ google_config_variables = [
 ]
 
 github_config_variables = [
+    {
+        "key": "IS_GITHUB_ENABLED",
+        "value": os.environ.get("IS_GITHUB_ENABLED", "0"),
+        "category": "GITHUB",
+        "is_encrypted": False,
+    },
     {
         "key": "GITHUB_CLIENT_ID",
         "value": os.environ.get("GITHUB_CLIENT_ID"),
@@ -85,6 +98,12 @@ github_config_variables = [
 
 
 gitlab_config_variables = [
+    {
+        "key": "IS_GITLAB_ENABLED",
+        "value": os.environ.get("IS_GITLAB_ENABLED", "0"),
+        "category": "GITLAB",
+        "is_encrypted": False,
+    },
     {
         "key": "GITLAB_HOST",
         "value": os.environ.get("GITLAB_HOST"),

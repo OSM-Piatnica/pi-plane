@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import factory
@@ -18,6 +19,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     id = factory.LazyFunction(uuid4)
     email = factory.Sequence(lambda n: f"user{n}@plane.so")
+    username = factory.LazyFunction(lambda: uuid4().hex)  # unique; the conftest user has ""
     password = factory.PostGenerationMethodCall("set_password", "password")
     first_name = factory.Sequence(lambda n: f"First{n}")
     last_name = factory.Sequence(lambda n: f"Last{n}")

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """
@@ -480,13 +481,28 @@ EXPAND_PARAMETER = OpenApiParameter(
     name="expand",
     type=OpenApiTypes.STR,
     location=OpenApiParameter.QUERY,
-    description="Comma-separated list of related fields to expand in response",
+    description=(
+        "Comma-separated list of related fields to expand in response. An expanded "
+        "single-valued relation is returned as a nested object instead of an id, and "
+        "stays `null` when it is not set. Which values apply depends on the resource: "
+        "`created_by` and `updated_by` on most resources; `project`, `workspace`, "
+        "`project_lead`, `default_assignee`, `owned_by`, `actor`, `state`, "
+        "`estimate_point`, `issue`, `user`; and on work items `parent`, `assignees` "
+        "and `labels`. Only pass names from this list -- a value that is a plain "
+        "field on the resource rather than a relation is not expandable, and passing "
+        "it clears that field in the response."
+    ),
     required=False,
     examples=[
         OpenApiExample(
+            name="Expand audit users",
+            value="created_by,updated_by",
+            description="Include full user details for who created and last updated the record",
+        ),
+        OpenApiExample(
             name="Expand assignees",
             value="assignees",
-            description="Include full assignee details",
+            description="Include full assignee details (work items)",
         ),
         OpenApiExample(
             name="Multiple expansions",

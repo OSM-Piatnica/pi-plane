@@ -1,6 +1,5 @@
 ARG IMAGE_REPO=ghcr.io/osm-piatnica/pi-plane
 ARG PLANE_VERSION=v0.27.1
-FROM --platform=$BUILDPLATFORM tonistiigi/binfmt AS binfmt
 
 # **************************************************
 #  STAGE 0: Image Loading
@@ -60,7 +59,7 @@ RUN mkdir -p /app/logs/access && \
     mkdir -p /app/data && \
     chmod +x /app/start.sh
 
-VOLUME ['/app/data', '/app/logs']
+VOLUME ["/app/data", "/app/logs"]
 
 EXPOSE 80 443
 

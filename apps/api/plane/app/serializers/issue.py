@@ -123,6 +123,7 @@ class IssueCreateSerializer(BaseSerializer):
             "updated_by",
             "created_at",
             "updated_at",
+            "completed_at",
         ]
 
     def to_representation(self, instance):

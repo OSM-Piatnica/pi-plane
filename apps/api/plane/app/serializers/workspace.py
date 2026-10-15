@@ -32,6 +32,7 @@ from plane.utils.url import contains_url
 from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
+    has_alphanumeric,
 )
 
 # Django imports
@@ -49,6 +50,11 @@ class WorkSpaceSerializer(DynamicBaseSerializer):
         # Check if the name contains a URL
         if contains_url(value):
             raise serializers.ValidationError("Name must not contain URLs")
+        # Reject symbol-only names like "-_________-" that have no letter or
+        # digit. Mirrors the frontend HAS_ALPHANUMERIC_REGEX check so the rule
+        # cannot be bypassed via a direct API call.
+        if not has_alphanumeric(value):
+            raise serializers.ValidationError("Name must contain at least one letter or number")
         return value
 
     def validate_slug(self, value):
@@ -89,6 +95,16 @@ class WorkSpaceMemberSerializer(DynamicBaseSerializer):
     class Meta:
         model = WorkspaceMember
         fields = "__all__"
+        read_only_fields = [
+            "id",
+            "workspace",
+            "is_active",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+        ]
 
 
 class WorkspaceMemberMeSerializer(BaseSerializer):
@@ -99,12 +115,8 @@ class WorkspaceMemberMeSerializer(BaseSerializer):
         fields = "__all__"
 
 
-class WorkspaceMemberAdminSerializer(DynamicBaseSerializer):
+class WorkspaceMemberAdminSerializer(WorkSpaceMemberSerializer):
     member = UserAdminLiteSerializer(read_only=True)
-
-    class Meta:
-        model = WorkspaceMember
-        fields = "__all__"
 
 
 class WorkSpaceMemberInviteSerializer(BaseSerializer):

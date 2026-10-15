@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Module imports
@@ -26,7 +27,8 @@ class StateSerializer(BaseSerializer):
             "sequence",
             "order",
         ]
-        read_only_fields = ["workspace", "project"]
+        # Defaults only change through mark_as_default, which also clears the old one
+        read_only_fields = ["workspace", "project", "default"]
 
     def validate(self, attrs):
         if attrs.get("group") == StateGroup.TRIAGE.value:

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -84,16 +85,28 @@ export const SubIssuesCollapsibleContent = observer(function SubIssuesCollapsibl
   );
 
   const handleFetchSubIssues = useCallback(async () => {
-    const currentSubIssueHelpers = subIssueHelpersByIssueId(`${parentIssueId}_root`);
-    if (!currentSubIssueHelpers.issue_visibility.includes(parentIssueId)) {
-      try {
-        setSubIssueHelpers(`${parentIssueId}_root`, "preview_loader", parentIssueId);
-        await subIssueOperations.fetchSubIssues(workspaceSlug, projectId, parentIssueId);
-        setSubIssueHelpers(`${parentIssueId}_root`, "issue_visibility", parentIssueId);
-      } catch (error) {
-        console.error("Error fetching sub-work items:", error);
-      } finally {
-        setSubIssueHelpers(`${parentIssueId}_root`, "preview_loader", "");
+    const helperId = `${parentIssueId}_root`;
+    const currentSubIssueHelpers = subIssueHelpersByIssueId(helperId);
+    // setSubIssueHelpers toggles membership. Skip if visible or a fetch is already in flight
+    // so React Strict Mode's double effect does not add then remove visibility.
+    if (
+      currentSubIssueHelpers.issue_visibility.includes(parentIssueId) ||
+      currentSubIssueHelpers.preview_loader.includes(parentIssueId)
+    ) {
+      return;
+    }
+
+    try {
+      setSubIssueHelpers(helperId, "preview_loader", parentIssueId);
+      await subIssueOperations.fetchSubIssues(workspaceSlug, projectId, parentIssueId);
+      if (!subIssueHelpersByIssueId(helperId).issue_visibility.includes(parentIssueId)) {
+        setSubIssueHelpers(helperId, "issue_visibility", parentIssueId);
+      }
+    } catch (error) {
+      console.error("Error fetching sub-work items:", error);
+    } finally {
+      if (subIssueHelpersByIssueId(helperId).preview_loader.includes(parentIssueId)) {
+        setSubIssueHelpers(helperId, "preview_loader", parentIssueId);
       }
     }
   }, [parentIssueId, projectId, setSubIssueHelpers, subIssueHelpersByIssueId, subIssueOperations, workspaceSlug]);

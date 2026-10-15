@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from .user import UserLiteSerializer
@@ -62,5 +63,9 @@ from .asset import (
     FileAssetSerializer,
 )
 from .invite import WorkspaceInviteSerializer
-from .member import ProjectMemberSerializer
+from .member import (
+    ProjectMemberSerializer,
+    WorkspaceMemberLiteAPISerializer,
+    ProjectMemberLiteAPISerializer,
+)
 from .sticky import StickySerializer

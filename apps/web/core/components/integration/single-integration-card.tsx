@@ -77,7 +77,9 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
   const handleRemoveIntegration = async () => {
     if (!workspaceSlug || !integration || !workspaceIntegrations) return;
 
-    const workspaceIntegrationId = workspaceIntegrations?.find((i) => i.integration === integration.id)?.id;
+    const workspaceIntegrationId = Array.isArray(workspaceIntegrations)
+      ? workspaceIntegrations.find((i) => i.integration === integration.id)?.id
+      : undefined;
 
     setDeletingIntegration(true);
 
@@ -108,7 +110,9 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
       });
   };
 
-  const isInstalled = workspaceIntegrations?.find((i: any) => i.integration_detail.id === integration.id);
+  const isInstalled = Array.isArray(workspaceIntegrations)
+    ? workspaceIntegrations.find((i: IWorkspaceIntegration) => i.integration_detail.id === integration.id)
+    : undefined;
 
   return (
     <div className="flex items-center justify-between gap-2 border-b border-subtle bg-surface-1 px-4 py-6">

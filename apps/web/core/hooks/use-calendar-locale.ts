@@ -7,6 +7,7 @@
 import { useCallback, useMemo } from "react";
 import type { Locale } from "date-fns";
 import {
+  bg,
   cs,
   de,
   enUS,
@@ -50,7 +51,7 @@ const INTL_LOCALES: Record<TLanguage, string> = {
   de: "de",
   ua: "uk",
   pl: "pl",
-  nl: "nl",
+  "pl-x-podlaski": "pl",
   ko: "ko",
   "pt-BR": "pt-BR",
   "pt-PT": "pt-PT",
@@ -59,6 +60,8 @@ const INTL_LOCALES: Record<TLanguage, string> = {
   "vi-VN": "vi",
   "tr-TR": "tr",
   "ka-ge": "ka",
+  nl: "nl",
+  bg: "bg",
 };
 
 // date-fns locales, used by the date pickers (react-day-picker)
@@ -76,7 +79,7 @@ const DATE_FNS_LOCALES: Record<TLanguage, Locale> = {
   de,
   ua: uk,
   pl,
-  nl,
+  "pl-x-podlaski": pl,
   ko,
   "pt-BR": ptBR,
   "pt-PT": pt,
@@ -85,6 +88,8 @@ const DATE_FNS_LOCALES: Record<TLanguage, Locale> = {
   "vi-VN": vi,
   "tr-TR": tr,
   "ka-ge": ka,
+  nl,
+  bg,
 };
 
 const capitalize = (value: string, locale: string) => value.charAt(0).toLocaleUpperCase(locale) + value.slice(1);

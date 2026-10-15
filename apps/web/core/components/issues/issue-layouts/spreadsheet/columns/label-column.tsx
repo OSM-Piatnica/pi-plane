@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -25,7 +26,11 @@ export const SpreadsheetLabelColumn = observer(function SpreadsheetLabelColumn(p
   // hooks
   const { labelMap } = useLabel();
 
-  const defaultLabelOptions = issue?.label_ids?.map((id) => labelMap[id]) || [];
+  const defaultLabelOptions =
+    issue?.label_ids?.flatMap((id) => {
+      const label = labelMap[id];
+      return label ? [label] : [];
+    }) || [];
 
   return (
     <div className="h-11 w-full border-b-[0.5px] border-subtle">

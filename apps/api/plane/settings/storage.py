@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -144,7 +145,9 @@ class S3Storage(S3Boto3Storage):
         try:
             response = self.s3_client.head_object(Bucket=self.aws_storage_bucket_name, Key=object_name)
         except ClientError as e:
-            log_exception(e)
+            # A missing object (upload never completed) is expected, not an error
+            if e.response.get("Error", {}).get("Code") not in ("404", "NoSuchKey"):
+                log_exception(e)
             return None
 
         return {

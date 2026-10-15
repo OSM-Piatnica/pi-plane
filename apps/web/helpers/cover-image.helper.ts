@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -272,11 +273,13 @@ export const handleCoverImageChange = async (
   }
 
   if (analysis.needsUpload) {
-    await uploadCoverImage(newImage, uploadConfig);
-    return;
+    const assetUrl = await uploadCoverImage(newImage, uploadConfig);
+    // cover_image requires an absolute URL; cover_image_url is relative (matches GET /api/users/me/ format)
+    return { cover_image: getFileURL(assetUrl) || assetUrl, cover_image_url: assetUrl };
   }
 
-  return { cover_image: newImage };
+  // cover_image requires an absolute URL; getFileURL converts relative paths from the Upload tab
+  return { cover_image: getFileURL(newImage) || newImage, cover_image_url: newImage };
 };
 
 /**
