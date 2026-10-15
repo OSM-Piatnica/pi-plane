@@ -14,7 +14,7 @@ on:
       - "ready_for_review"
     paths:
       - "apps/api/**"
-      - ".github/workflows/migration-check.yml"
+      - ".github/workflows/migration-check.yaml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
