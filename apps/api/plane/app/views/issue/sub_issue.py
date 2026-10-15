@@ -8,7 +8,7 @@ import json
 
 # Django imports
 from django.utils import timezone
-from django.db.models import OuterRef, Func, F, Q, Value, UUIDField, Subquery, Count, IntegerField
+from django.db.models import OuterRef, F, Value, UUIDField, Subquery, Count, IntegerField
 from django.utils.decorators import method_decorator
 from django.views.decorators.gzip import gzip_page
 from django.contrib.postgres.aggregates import ArrayAgg
@@ -213,7 +213,8 @@ class SubIssuesEndpoint(BaseAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        sub_issues = Issue.issue_objects.filter(id__in=sub_issue_ids)
+        # Scope to workspace to prevent cross-tenant IDOR
+        sub_issues = Issue.issue_objects.filter(id__in=sub_issue_ids, workspace__slug=slug)
 
         for sub_issue in sub_issues:
             sub_issue.parent = parent_issue

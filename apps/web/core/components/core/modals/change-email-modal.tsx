@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -189,6 +190,7 @@ export const ChangeEmailModal = observer(function ChangeEmailModal(props: Props)
                   placeholder={changeEmailT("form.code.placeholder")}
                   className={cn({ "border-danger-strong": errors.code })}
                   autoComplete="off"
+                  // eslint-disable-next-line jsx-a11y/no-autofocus
                   autoFocus
                 />
               )}

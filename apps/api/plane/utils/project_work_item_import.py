@@ -51,8 +51,18 @@ ISO_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 # Relation types whose canonical database row points the other way round
 _MIRRORED_RELATIONS = frozenset({"blocking", "start_after", "finish_after", "implements"})
 _ALLOWED_RELATIONS = frozenset(
-    {"blocked_by", "blocking", "relates_to", "duplicate", "start_before", "start_after",
-     "finish_before", "finish_after", "implemented_by", "implements"}
+    {
+        "blocked_by",
+        "blocking",
+        "relates_to",
+        "duplicate",
+        "start_before",
+        "start_after",
+        "finish_before",
+        "finish_after",
+        "implemented_by",
+        "implements",
+    }
 )
 _IDENTIFIER_PATTERN = re.compile(r"^([A-Za-z0-9]+)-(\d+)$")
 
@@ -241,26 +251,22 @@ def _resolve_people(
     # leave the work item pointing at a person the project does not know.
     kept = [member_id for member_id in resolved if member_id in project_member_ids]
     outsiders = sorted(
-        source_text.get(member_id, str(member_id))
-        for member_id in resolved
-        if member_id not in project_member_ids
+        source_text.get(member_id, str(member_id)) for member_id in resolved if member_id not in project_member_ids
     )
     if outsiders:
         warnings.append(
-            f'Row {row_number}: {role}(s) {", ".join(outsiders)} belong to the workspace '
+            f"Row {row_number}: {role}(s) {', '.join(outsiders)} belong to the workspace "
             "but not to this project, skipped"
         )
 
     if assignable_member_ids is not None:
         guests = sorted(
-            source_text.get(member_id, str(member_id))
-            for member_id in kept
-            if member_id not in assignable_member_ids
+            source_text.get(member_id, str(member_id)) for member_id in kept if member_id not in assignable_member_ids
         )
         kept = [member_id for member_id in kept if member_id in assignable_member_ids]
         if guests:
             warnings.append(
-                f'Row {row_number}: {role}(s) {", ".join(guests)} are guests in this project '
+                f"Row {row_number}: {role}(s) {', '.join(guests)} are guests in this project "
                 "and cannot be assigned, skipped"
             )
     return kept
@@ -452,8 +458,7 @@ def import_work_items_into_project(
         default_state = next(iter(states_by_name.values()))
 
     labels_by_name = {
-        label.name.lower(): label
-        for label in Label.objects.filter(project_id=project.id, deleted_at__isnull=True)
+        label.name.lower(): label for label in Label.objects.filter(project_id=project.id, deleted_at__isnull=True)
     }
 
     issue_type_ids = ProjectIssueType.objects.filter(
@@ -531,8 +536,7 @@ def import_work_items_into_project(
     type_properties_by_type: dict = {}
     for issue_type in types_by_name.values():
         props = {
-            prop.title.lower(): prop
-            for prop in issue_type.properties.filter(deleted_at__isnull=True, is_active=True)
+            prop.title.lower(): prop for prop in issue_type.properties.filter(deleted_at__isnull=True, is_active=True)
         }
         type_properties_by_type[str(issue_type.id)] = props
 
@@ -787,9 +791,9 @@ def import_work_items_into_project(
     last_id = IssueSequence.objects.filter(project=project).aggregate(largest=Max("sequence"))["largest"]
     next_sequence = 1 if last_id is None else int(last_id) + 1
 
-    largest_sort = (
-        Issue.objects.filter(project=project, deleted_at__isnull=True).aggregate(largest=Max("sort_order"))["largest"]
-    )
+    largest_sort = Issue.objects.filter(project=project, deleted_at__isnull=True).aggregate(largest=Max("sort_order"))[
+        "largest"
+    ]
     next_sort = 65535 if largest_sort is None else float(largest_sort) + 10000
 
     key_to_issue: dict[str, Issue] = {}
@@ -869,9 +873,7 @@ def import_work_items_into_project(
                 continue
             parent = _resolve_target(parent_key)
             if parent is None:
-                warnings.append(
-                    f'Work item "{item["external_key"]}": parent "{parent_key}" was not found, skipped'
-                )
+                warnings.append(f'Work item "{item["external_key"]}": parent "{parent_key}" was not found, skipped')
                 continue
             if parent.id == issue.id:
                 continue
@@ -941,15 +943,12 @@ def import_work_items_into_project(
             for relation in item["relations"]:
                 relation_type = relation["type"]
                 if relation_type not in _ALLOWED_RELATIONS:
-                    warnings.append(
-                        f'Work item "{item["external_key"]}": unknown relation "{relation_type}", skipped'
-                    )
+                    warnings.append(f'Work item "{item["external_key"]}": unknown relation "{relation_type}", skipped')
                     continue
                 target = _resolve_target(relation["issue"])
                 if target is None:
                     warnings.append(
-                        f'Work item "{item["external_key"]}": related item "{relation["issue"]}" '
-                        "was not found, skipped"
+                        f'Work item "{item["external_key"]}": related item "{relation["issue"]}" was not found, skipped'
                     )
                     continue
                 if target.id == issue.id:

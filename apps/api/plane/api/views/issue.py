@@ -81,6 +81,11 @@ from plane.db.models import (
 )
 from plane.settings.storage import S3Storage
 from plane.utils.path_validator import sanitize_filename
+from plane.utils.order_queryset import (
+    ACTIVITY_ORDER_BY_ALLOWLIST,
+    ISSUE_ORDER_BY_ALLOWLIST,
+    sanitize_order_by,
+)
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
 from .base import BaseAPIView
 from plane.utils.host import base_host
@@ -330,7 +335,14 @@ class IssueListCreateAPIEndpoint(BaseAPIView):
         priority_order = ["urgent", "high", "medium", "low", "none"]
         state_order = ["backlog", "unstarted", "started", "completed", "cancelled"]
 
-        order_by_param = request.GET.get("order_by", "-created_at")
+        # Reject any field not in the allowlist before it reaches .order_by().
+        # An unrecognised value is replaced with the safe default, preventing
+        # ORM order_by injection via relational traversal (GHSA-p885-6jpg-cr2p).
+        order_by_param = sanitize_order_by(
+            request.GET.get("order_by", "-created_at"),
+            ISSUE_ORDER_BY_ALLOWLIST,
+            default="-created_at",
+        )
 
         issue_queryset = (
             self.get_queryset()
@@ -1694,7 +1706,9 @@ class IssueActivityListAPIEndpoint(BaseAPIView):
             )
             .filter(project__archived_at__isnull=True)
             .select_related("actor", "workspace", "issue", "project")
-        ).order_by(request.GET.get("order_by", "created_at"))
+        ).order_by(
+            sanitize_order_by(request.GET.get("order_by", "created_at"), ACTIVITY_ORDER_BY_ALLOWLIST, "created_at")
+        )
 
         return self.paginate(
             request=request,
@@ -1751,7 +1765,9 @@ class IssueActivityDetailAPIEndpoint(BaseAPIView):
                 .filter(project__archived_at__isnull=True)
                 .select_related("actor", "workspace", "issue", "project")
             )
-            .order_by(request.GET.get("order_by", "created_at"))
+            .order_by(
+                sanitize_order_by(request.GET.get("order_by", "created_at"), ACTIVITY_ORDER_BY_ALLOWLIST, "created_at")
+            )
             .first()
         )
 
@@ -2483,6 +2499,15 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
 
         actual_relation = get_actual_relation(relation_type)
         is_reverse = relation_type in ["blocking", "start_after", "finish_after"]
+
+        # Scope to workspace to prevent cross-tenant IDOR
+        # Relations can cross projects so only workspace scope is enforced
+        issues = list(
+            Issue.issue_objects.filter(
+                workspace__slug=slug,
+                pk__in=issues,
+            ).values_list("id", flat=True)
+        )
 
         if relation_type in TIMELINE_RELATION_TYPES:
             from plane.utils.issue_timeline_relation_validation import validate_new_timeline_relation

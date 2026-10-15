@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
-import axios from "axios";
+import { create } from "axios";
 
 /**
  * Abstract base class for making HTTP requests using axios
@@ -21,7 +22,7 @@ export abstract class APIService {
    */
   constructor(baseURL: string) {
     this.baseURL = baseURL;
-    this.axiosInstance = axios.create({
+    this.axiosInstance = create({
       baseURL,
       withCredentials: true,
     });

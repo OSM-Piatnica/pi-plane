@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -57,6 +58,7 @@ export const SidebarWorkspaceMenuHeader = observer(function SidebarWorkspaceMenu
       <CustomMenu
         customButton={
           <span
+            role="presentation"
             ref={actionSectionRef}
             className="my-auto grid place-items-center rounded-sm p-0.5 text-placeholder hover:bg-layer-1"
             onClick={() => {

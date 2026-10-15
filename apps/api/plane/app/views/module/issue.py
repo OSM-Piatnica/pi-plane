@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -213,6 +214,14 @@ class ModuleIssueViewSet(BaseViewSet):
         if not issues:
             return Response({"error": "Issues are required"}, status=status.HTTP_400_BAD_REQUEST)
         project = Project.objects.get(pk=project_id)
+        # Scope to workspace+project to prevent cross-tenant IDOR
+        issues = list(
+            Issue.issue_objects.filter(
+                workspace__slug=slug,
+                project_id=project_id,
+                pk__in=issues,
+            ).values_list("id", flat=True)
+        )
         _ = ModuleIssue.objects.bulk_create(
             [
                 ModuleIssue(

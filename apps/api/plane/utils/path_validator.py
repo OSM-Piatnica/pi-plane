@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -90,20 +91,15 @@ def _contains_suspicious_patterns(path: str) -> bool:
 
 def get_allowed_hosts() -> list[str]:
     """Get the allowed hosts from the settings."""
-    base_origin = settings.WEB_URL or settings.APP_BASE_URL
-
     allowed_hosts = []
-    if base_origin:
-        host = urlparse(base_origin).netloc
-        allowed_hosts.append(host)
-    if settings.ADMIN_BASE_URL:
-        # Get only the host
-        host = urlparse(settings.ADMIN_BASE_URL).netloc
-        allowed_hosts.append(host)
-    if settings.SPACE_BASE_URL:
-        # Get only the host
-        host = urlparse(settings.SPACE_BASE_URL).netloc
-        allowed_hosts.append(host)
+    # Include every configured base URL; WEB_URL and APP_BASE_URL may differ
+    # (e.g. WEB_URL points at the API host, APP_BASE_URL at the web app), and
+    # both need to be allowed for redirects to either origin to pass safety checks.
+    for setting in (settings.WEB_URL, settings.APP_BASE_URL, settings.ADMIN_BASE_URL, settings.SPACE_BASE_URL):
+        if setting:
+            host = urlparse(setting).netloc
+            if host and host not in allowed_hosts:
+                allowed_hosts.append(host)
     return allowed_hosts
 
 

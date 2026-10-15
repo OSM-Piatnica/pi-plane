@@ -50,6 +50,25 @@ for _cidr in _webhook_allowed_ips_raw.split(","):
     except ValueError:
         _logger.warning("WEBHOOK_ALLOWED_IPS: skipping invalid entry %r", _cidr)
 
+# Webhook hostname allowlist — comma-separated hostnames that bypass the
+# private-IP SSRF check. Useful for trusted internal services whose IPs are
+# dynamic in containerised deployments (e.g. docker-compose service DNS,
+# kubernetes service hostnames).
+# Example: "silo,silo.namespace.svc.cluster.local,internal-api.lan"
+_webhook_allowed_hosts_raw = os.environ.get("WEBHOOK_ALLOWED_HOSTS", "")
+WEBHOOK_ALLOWED_HOSTS = [
+    _host.strip().rstrip(".").lower() for _host in _webhook_allowed_hosts_raw.split(",") if _host.strip()
+]
+
+# Webhook disallowed domains — comma-separated hostnames. Webhooks targeting
+# these domains or any of their subdomains are rejected (the request host is
+# always appended at validation time as a loop-back guard). Empty by default
+# for self-hosted deployments; set to e.g. "plane.so" to block specific domains.
+_webhook_disallowed_domains_raw = os.environ.get("WEBHOOK_DISALLOWED_DOMAINS", "")
+WEBHOOK_DISALLOWED_DOMAINS = [
+    _d.strip().rstrip(".").lower() for _d in _webhook_disallowed_domains_raw.split(",") if _d.strip()
+]
+
 # Allowed Hosts
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
 
@@ -242,7 +261,6 @@ MEDIA_URL = "/media/"
 # Internationalization
 LANGUAGE_CODE = "en-us"
 USE_I18N = True
-USE_L10N = True
 
 # Timezones
 USE_TZ = True
@@ -388,6 +406,34 @@ WEB_URL = os.environ.get("WEB_URL")
 
 HARD_DELETE_AFTER_DAYS = int(os.environ.get("HARD_DELETE_AFTER_DAYS", 60))
 
+
+def _retention_days(env_var, default):
+    """
+    Read a retention window (in days) from the environment, falling back to the
+    default when the variable is unset, unparseable, or negative — a negative
+    window would otherwise select rows with a future cutoff and delete everything.
+    """
+    raw = os.environ.get(env_var)
+    if raw is None:
+        return default
+    try:
+        days = int(raw)
+    except ValueError:
+        return default
+    return days if days >= 0 else default
+
+
+# API activity logs hold request/response payloads, so they are retained for a
+# shorter window than other logs.
+API_ACTIVITY_LOG_RETENTION_DAYS = _retention_days("API_ACTIVITY_LOG_RETENTION_DAYS", 14)
+
+# Webhook delivery logs are retained on their own window, independent of the
+# generic HARD_DELETE_AFTER_DAYS.
+WEBHOOK_LOG_RETENTION_DAYS = _retention_days("WEBHOOK_LOG_RETENTION_DAYS", 14)
+
+# Email notification logs are retained on their own window.
+EMAIL_LOG_RETENTION_DAYS = _retention_days("EMAIL_LOG_RETENTION_DAYS", 7)
+
 # Instance Changelog URL
 INSTANCE_CHANGELOG_URL = os.environ.get("INSTANCE_CHANGELOG_URL", "")
 
@@ -481,6 +527,21 @@ ATTACHMENT_MIME_TYPES = [
     "text/markdown",
 ]
 
+# MIME types that browsers can execute as scripts when served inline.
+# These must always be served with Content-Disposition: attachment, even if they
+# somehow end up stored (e.g. uploaded before this restriction was added).
+SCRIPT_CAPABLE_MIME_TYPES: frozenset[str] = frozenset(
+    [
+        "image/svg+xml",  # SVG with onload / embedded <script> tags
+        "text/javascript",
+        "application/javascript",
+        "text/html",
+        "application/xhtml+xml",
+        "text/xml",
+        "application/xml",
+    ]
+)
+
 # Seed directory path
 SEED_DIR = os.path.join(BASE_DIR, "seeds")
 
@@ -490,7 +551,3 @@ if ENABLE_DRF_SPECTACULAR:
     REST_FRAMEWORK["DEFAULT_SCHEMA_CLASS"] = "drf_spectacular.openapi.AutoSchema"
     INSTALLED_APPS.append("drf_spectacular")
     from .openapi import SPECTACULAR_SETTINGS  # noqa: F401
-
-# MongoDB Settings
-MONGO_DB_URL = os.environ.get("MONGO_DB_URL", False)
-MONGO_DB_DATABASE = os.environ.get("MONGO_DB_DATABASE", False)

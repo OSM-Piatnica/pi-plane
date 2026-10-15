@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -15,6 +16,7 @@ import { isValidHttpUrl } from "@/helpers/common";
 // local imports
 import { autolink } from "./helpers/autolink";
 import { clickHandler } from "./helpers/clickHandler";
+import { isDangerousHref } from "./helpers/isDangerousHref";
 import { pasteHandler } from "./helpers/pasteHandler";
 
 type LinkProtocolOptions = {
@@ -161,8 +163,8 @@ export const CustomLinkExtension = Mark.create<LinkOptions, CustomLinkStorage>({
           if (typeof node === "string") {
             return null;
           }
-          const href = node.getAttribute("href")?.toLowerCase() || "";
-          if (href.startsWith("javascript:") || href.startsWith("data:") || href.startsWith("vbscript:")) {
+          const href = node.getAttribute("href") || "";
+          if (isDangerousHref(href)) {
             return false;
           }
           return {};
@@ -172,8 +174,8 @@ export const CustomLinkExtension = Mark.create<LinkOptions, CustomLinkStorage>({
   },
 
   renderHTML({ HTMLAttributes }) {
-    const href = HTMLAttributes.href?.toLowerCase() || "";
-    if (href.startsWith("javascript:") || href.startsWith("data:") || href.startsWith("vbscript:")) {
+    const href = (HTMLAttributes.href as string) || "";
+    if (isDangerousHref(href)) {
       return ["a", mergeAttributes(this.options.HTMLAttributes, { ...HTMLAttributes, href: "" }), 0];
     }
     return ["a", mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0];

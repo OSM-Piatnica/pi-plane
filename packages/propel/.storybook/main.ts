@@ -1,12 +1,16 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { StorybookConfig } from "@storybook/react-vite";
 
+import { createRequire } from "module";
 import { join, dirname } from "path";
+
+const require = createRequire(import.meta.url);
 
 /*
  * This function is used to resolve the absolute path of a package.

@@ -39,9 +39,7 @@ class WorkItemTemplateSerializer(BaseSerializer):
         super().__init__(*args, **kwargs)
         slug = self.context.get("slug")
         if slug is not None:
-            self.fields["project"].queryset = Project.objects.filter(
-                workspace__slug=slug, archived_at__isnull=True
-            )
+            self.fields["project"].queryset = Project.objects.filter(workspace__slug=slug, archived_at__isnull=True)
 
     def to_internal_value(self, data):
         if isinstance(data, dict) and "project_id" in data and "project" not in data:

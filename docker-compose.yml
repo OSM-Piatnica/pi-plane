@@ -1,3 +1,10 @@
+# apps/api/.env.example points at a host-local MinIO (localhost:9000, USE_MINIO=0).
+# Inside the compose network the bundled plane-minio is reached by service name, and
+# presigned upload URLs must go through the proxy's /<bucket> route.
+x-s3-env: &s3-env
+  USE_MINIO: 1
+  AWS_S3_ENDPOINT_URL: http://plane-minio:9000
+
 services:
   web:
     container_name: web
@@ -45,6 +52,7 @@ services:
     command: ./bin/docker-entrypoint-api.sh
     env_file:
       - ./apps/api/.env
+    environment: *s3-env
     depends_on:
       - plane-db
       - plane-redis
@@ -60,6 +68,7 @@ services:
     command: ./bin/docker-entrypoint-worker.sh
     env_file:
       - ./apps/api/.env
+    environment: *s3-env
     depends_on:
       - api
       - plane-db
@@ -76,6 +85,7 @@ services:
     command: ./bin/docker-entrypoint-beat.sh
     env_file:
       - ./apps/api/.env
+    environment: *s3-env
     depends_on:
       - api
       - plane-db
@@ -104,6 +114,18 @@ services:
       args:
         DOCKER_BUILDKIT: 1
     restart: always
+    env_file:
+      - ./apps/live/.env
+    environment:
+      # apps/live/.env.example holds host-local values; inside the compose network
+      # the service must listen on the port the proxy targets and reach its peers by name.
+      PORT: 3000
+      API_BASE_URL: http://api:8000
+      REDIS_HOST: plane-redis
+      REDIS_URL: redis://plane-redis:6379/
+    depends_on:
+      - api
+      - plane-redis
 
   plane-db:
     container_name: plane-db
@@ -142,7 +164,7 @@ services:
 
   plane-minio:
     container_name: plane-minio
-    image: minio/minio
+    image: docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z
     restart: always
     command: server /export --console-address ":9090"
     volumes:
@@ -164,6 +186,7 @@ services:
     environment:
       FILE_SIZE_LIMIT: ${FILE_SIZE_LIMIT:-5242880}
       BUCKET_NAME: ${AWS_S3_BUCKET_NAME:-uploads}
+      SITE_ADDRESS: ${SITE_ADDRESS:-:80}
     depends_on:
       - web
       - api

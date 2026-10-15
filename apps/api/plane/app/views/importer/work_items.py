@@ -164,8 +164,7 @@ class ImportWorkItemsEndpoint(BaseAPIView):
             return Response(
                 {
                     "error": (
-                        "Could not read the file. Upload a CSV, Excel, or JSON file "
-                        "produced by “Export work items”."
+                        "Could not read the file. Upload a CSV, Excel, or JSON file produced by “Export work items”."
                     )
                 },
                 status=status.HTTP_400_BAD_REQUEST,

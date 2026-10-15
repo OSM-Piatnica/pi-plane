@@ -1,0 +1,51 @@
+name: Test API
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - "preview"
+    types:
+      - "opened"
+      - "synchronize"
+      - "ready_for_review"
+      - "reopened"
+    paths:
+      - "apps/api/**"
+      - "docker-compose-test.yml"
+      - ".github/workflows/pull-request-test-api.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test-api:
+    name: Test API
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      # docker-compose-test.yml loads apps/api/.env; the example values are enough because the
+      # compose file overrides every service host and sets EMAIL_HOST for the magic-link tests.
+      # (openssl rather than `tr | head`: GitHub runs bash with pipefail, so SIGPIPE would fail it.)
+      - name: Prepare API environment
+        run: |
+          cp apps/api/.env.example apps/api/.env
+          echo "SECRET_KEY=\"$(openssl rand -hex 25)\"" >> apps/api/.env
+
+      # Boots Postgres, Valkey, RabbitMQ and object storage, runs pytest and exits with its status.
+      - name: Run API tests
+        run: >
+          docker compose -f docker-compose-test.yml up --build
+          --abort-on-container-exit --exit-code-from api-tests
+
+      - name: Tear down test stack
+        if: always()
+        run: docker compose -f docker-compose-test.yml down -v

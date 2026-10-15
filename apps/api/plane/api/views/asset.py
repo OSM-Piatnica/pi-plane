@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python Imports
@@ -437,10 +438,17 @@ class GenericAssetEndpoint(BaseAPIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            # Generate presigned URL for GET
+            # Generate presigned URL for GET.
+            # Force attachment disposition for script-capable MIME types (e.g. SVG)
+            # to prevent same-origin XSS when the asset URL shares the app's origin
+            # (default MinIO self-hosted setup).
             storage = S3Storage(request=request, is_server=True)
+            asset_mime_type = (asset.attributes.get("type") or "").split(";")[0].strip().lower()
+            disposition = "attachment" if asset_mime_type in settings.SCRIPT_CAPABLE_MIME_TYPES else "inline"
             presigned_url = storage.generate_presigned_url(
-                object_name=asset.asset.name, filename=asset.attributes.get("name")
+                object_name=asset.asset.name,
+                filename=asset.attributes.get("name"),
+                disposition=disposition,
             )
 
             return Response(
