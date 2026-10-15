@@ -1,5 +1,6 @@
 ARG IMAGE_REPO=ghcr.io/osm-piatnica/pi-plane
 ARG PLANE_VERSION=v0.27.1
+
 # **************************************************
 #  STAGE 0: Image Loading
 # **************************************************
