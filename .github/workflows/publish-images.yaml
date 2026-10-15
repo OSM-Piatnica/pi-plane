@@ -324,7 +324,9 @@ jobs:
       - name: Update assets
         run: |
           cp deployments/cli/community/install.sh deployments/cli/community/setup.sh
-          sed -i 's/${APP_RELEASE:-latest}/${APP_RELEASE:-${{ needs.setup.outputs.version }}}/g' deployments/cli/community/docker-compose.yml
+          sed -i 's/${APP_RELEASE:-latest}/${APP_RELEASE:-${{ needs.setup.outputs.version }}}/g' deployments/cli/community/compose.yaml
+          # Keep the legacy asset name so setup scripts from earlier releases still work
+          cp deployments/cli/community/compose.yaml deployments/cli/community/docker-compose.yml
 
       - name: Create release
         uses: softprops/action-gh-release@v2.6.1
@@ -337,6 +339,7 @@ jobs:
           files: |
             deployments/cli/community/setup.sh
             deployments/cli/community/restore.sh
+            deployments/cli/community/compose.yaml
             deployments/cli/community/docker-compose.yml
             deployments/cli/community/variables.env
             deployments/swarm/community/swarm.sh
