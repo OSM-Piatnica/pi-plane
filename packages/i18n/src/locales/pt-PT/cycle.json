@@ -1,0 +1,72 @@
+{
+  "active_cycle": {
+    "empty_state": {
+      "progress": {
+        "title": "Adicione itens de trabalho ao ciclo para visualizar o seu progresso"
+      },
+      "chart": {
+        "title": "Adicione itens de trabalho ao ciclo para visualizar o gráfico de burndown."
+      },
+      "priority_issue": {
+        "title": "Observe os itens de trabalho de alta prioridade abordados no ciclo rapidamente."
+      },
+      "assignee": {
+        "title": "Adicione responsáveis aos itens de trabalho para ver uma divisão do trabalho por responsáveis."
+      },
+      "label": {
+        "title": "Adicione etiquetas aos itens de trabalho para ver a divisão do trabalho por etiquetas."
+      }
+    }
+  },
+  "cycle": {
+    "label": "{count, plural, one {Ciclo} other {Ciclos}}",
+    "no_cycle": "Nenhum ciclo"
+  },
+  "active_cycle_analytics": {
+    "empty_state": {
+      "progress": {
+        "title": "Adicione itens de trabalho ao ciclo para visualizar o seu\n progresso"
+      },
+      "priority": {
+        "title": "Observe itens de trabalho de alta prioridade abordados no\n ciclo rapidamente."
+      },
+      "assignee": {
+        "title": "Adicione responsáveis aos itens de trabalho para ver uma\n divisão do trabalho por responsáveis."
+      },
+      "label": {
+        "title": "Adicione etiquetas aos itens de trabalho para ver a\n divisão do trabalho por etiquetas."
+      }
+    }
+  },
+  "cycle_ui": {
+    "user_avatar_alt": "Utilizador",
+    "no_labels": "Sem etiquetas",
+    "pending_points": "Pontos pendentes - {count}",
+    "pending_work_items": "Itens de trabalho pendentes - {count}",
+    "closed_progress": "{closed}/{total} {label} concluídos",
+    "burn_down": "Burn-down",
+    "burn_up": "Burn-up",
+    "status_filter_title": "Status do ciclo",
+    "custom": "Personalizado",
+    "archive_success_title": "Sucesso ao arquivar",
+    "archive_success_message": "Os seus arquivos podem ser encontrados nos arquivos do projeto.",
+    "archive_error": "O ciclo não pôde ser arquivado. Por favor, tente novamente.",
+    "archive_modal_title": "Arquivar o ciclo {name}",
+    "archive_modal_description": "Tem a certeza de que deseja arquivar o ciclo? Todos os seus arquivos poderão ser restaurados depois.",
+    "delete_modal_title": "Eliminar o ciclo",
+    "delete_modal_description": "Tem a certeza de que deseja eliminar o ciclo “{name}”? Todos os dados relacionados serão removidos permanentemente. Esta ação não pode ser desfeita.",
+    "create_success": "O ciclo foi criado com sucesso.",
+    "create_error": "Não foi possível criar o ciclo. Por favor, tente novamente.",
+    "transfer_title": "Transferir itens de trabalho",
+    "transfer_search_placeholder": "Buscar um ciclo...",
+    "transfer_success": "Os itens de trabalho foram transferidos com sucesso",
+    "transfer_error": "Não foi possível transferir os itens de trabalho. Por favor, tente novamente.",
+    "transfer_fetch_error": "Não foi possível obter os detalhes do ciclo",
+    "no_current_cycle": "Não tem nenhum ciclo atual. Crie um para transferir os itens de trabalho.",
+    "completed_not_editable": "Ciclos concluídos não podem ser editados.",
+    "work_items_in_cycle": "Itens de trabalho neste ciclo: {count}",
+    "not_found_title": "O ciclo não existe",
+    "not_found_description": "O ciclo que procura não existe ou foi eliminado.",
+    "view_other_cycles": "Ver outros ciclos"
+  }
+}
