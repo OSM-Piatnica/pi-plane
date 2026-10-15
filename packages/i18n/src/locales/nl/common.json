@@ -767,7 +767,7 @@
     "error": "Bestand kon niet worden bijgevoegd. Probeer opnieuw te uploaden.",
     "only_one_file_allowed": "Er kan maar één bestand tegelijk worden geüpload.",
     "file_size_limit": "Het bestand mag maximaal {size} MB groot zijn.",
-    "drag_and_drop": "Sleep ergens naartoe om te uploaden",
+    "drag_and_drop": "Sleep en zet ergens neer om te uploaden",
     "delete": "Bijlage verwijderen"
   },
   "label": {

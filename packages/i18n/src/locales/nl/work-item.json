@@ -160,7 +160,7 @@
       }
     },
     "sibling": {
-      "label": "Gelijkwaardige werkitems"
+      "label": "Werkitems op hetzelfde niveau"
     },
     "archive": {
       "description": "Alleen voltooide of geannuleerde werkitems kunnen worden gearchiveerd",
@@ -203,7 +203,7 @@
     "subscription": {
       "actions": {
         "subscribed": "Succesvol geabonneerd op werkitem",
-        "unsubscribed": "Succesvol afgemeld voor werkitem"
+        "unsubscribed": "Abonnement op werkitem succesvol opgezegd"
       }
     },
     "select": {
@@ -262,10 +262,10 @@
       }
     },
     "vote": {
-      "click_to_upvote": "Klik om te upvoten",
-      "click_to_downvote": "Klik om te downvoten",
-      "click_to_view_upvotes": "Klik om upvotes te bekijken",
-      "click_to_view_downvotes": "Klik om downvotes te bekijken"
+      "click_to_upvote": "Klik om omhoog te stemmen",
+      "click_to_downvote": "Klik om omlaag te stemmen",
+      "click_to_view_upvotes": "Klik om positieve stemmen te bekijken",
+      "click_to_view_downvotes": "Klik om negatieve stemmen te bekijken"
     }
   },
   "sub_work_item": {

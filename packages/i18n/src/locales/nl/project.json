@@ -21,7 +21,7 @@
     "in_your_timezone": "In jouw tijdzone",
     "transfer_work_items": "{count} werkitems overdragen",
     "transfer": {
-      "no_cycles_available": "Geen andere cycli beschikbaar om werkitems naar over te dragen."
+      "no_cycles_available": "Geen andere cycli beschikbaar om werkitems naartoe over te dragen."
     },
     "date_range": "Datumbereik",
     "add_date": "Datum toevoegen",
@@ -230,7 +230,7 @@
           "text": "Bouw je eerste module",
           "comic": {
             "title": "Modules helpen werk te groeperen op hiërarchie.",
-            "description": "Een wagenmodule, een chassismodule en een magazijnmodule zijn allemaal goede voorbeelden van deze groepering."
+            "description": "Een winkelwagenmodule, een chassismodule en een magazijnmodule zijn allemaal goede voorbeelden van deze groepering."
           }
         }
       },

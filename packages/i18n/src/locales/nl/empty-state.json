@@ -28,7 +28,7 @@
       "title": "Het lijkt erop dat je geen toegang hebt tot dit project",
       "restricted_description": "Neem contact op met de beheerder om toegang aan te vragen, dan kun je hier verder.",
       "join_description": "Klik op de knop hieronder om deel te nemen.",
-      "cta_primary": "Project deelnemen",
+      "cta_primary": "Deelnemen aan project",
       "cta_loading": "Deelnemen aan project"
     },
     "invalid_project": {
@@ -92,7 +92,7 @@
       "cta_primary": "Intakeverzoek maken"
     },
     "intake_main": {
-      "title": "Selecteer een intake-werkitem om de details te bekijken"
+      "title": "Selecteer een intakewerkitem om de details te bekijken"
     },
     "epics": {
       "title": "Maak van complexe projecten gestructureerde epics.",
@@ -147,7 +147,7 @@
     "drafts": {
       "title": "Half geschreven werkitems",
       "description": "Probeer het uit: begin met het toevoegen van een werkitem en laat het halverwege liggen, of maak hieronder je eerste concept. 😉",
-      "cta_primary": "Concept-werkitem maken"
+      "cta_primary": "Conceptwerkitem maken"
     },
     "projects_archived": {
       "title": "Geen projecten gearchiveerd",

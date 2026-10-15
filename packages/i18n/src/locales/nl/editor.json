@@ -26,12 +26,12 @@
   },
   "externalEmbedComponent": {
     "block_menu": {
-      "convert_to_embed": "Omzetten naar insluiting",
+      "convert_to_embed": "Omzetten naar embed",
       "convert_to_link": "Omzetten naar link",
-      "convert_to_richcard": "Omzetten naar rijke kaart"
+      "convert_to_richcard": "Omzetten naar rich card"
     },
     "placeholder": {
-      "insert_embed": "Voeg hier je gewenste insluitlink in, zoals een YouTube-video, Figma-ontwerp, enz.",
+      "insert_embed": "Voeg hier je gewenste embed-link in, zoals een YouTube-video, Figma-ontwerp, enz.",
       "link": "Voer een link in of plak deze"
     },
     "input_modal": {
