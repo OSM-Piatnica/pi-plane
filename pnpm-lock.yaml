@@ -28,8 +28,8 @@ catalogs:
       specifier: 7.18.4
       version: 7.18.4
     '@tiptap/core':
-      specifier: ^2.22.3
-      version: 2.26.3
+      specifier: ^2.27.3
+      version: 2.27.3
     '@tiptap/html':
       specifier: ^2.22.3
       version: 2.26.2
@@ -144,8 +144,7 @@ overrides:
   '@babel/core': 7.29.7
   browserslist: 4.29.3
   baseline-browser-mapping: 2.11.28
-  postcss-selector-parser@7: 7.1.6
-  postcss-selector-parser@6: 6.1.4
+  postcss-selector-parser: 7.1.6
   tinypool: 2.2.0
   webpack-dev-middleware@6: 7.4.6
   webpack-dev-middleware@7: 7.4.6
@@ -321,7 +320,7 @@ importers:
         version: 2.15.2(y-protocols@1.0.6(yjs@13.6.27))(yjs@13.6.27)
       '@hocuspocus/transformer':
         specifier: 2.15.2
-        version: 2.15.2(@tiptap/core@2.26.3(@tiptap/pm@3.6.6))(@tiptap/pm@3.6.6)(y-prosemirror@1.3.7(prosemirror-model@1.25.12)(prosemirror-state@1.4.3)(prosemirror-view@1.42.6)(y-protocols@1.0.6(yjs@13.6.27))(yjs@13.6.27))(yjs@13.6.27)
+        version: 2.15.2(@tiptap/core@2.27.3(@tiptap/pm@3.6.6))(@tiptap/pm@3.6.6)(y-prosemirror@1.3.7(prosemirror-model@1.25.12)(prosemirror-state@1.4.3)(prosemirror-view@1.42.6)(y-protocols@1.0.6(yjs@13.6.27))(yjs@13.6.27))(yjs@13.6.27)
       '@plane/decorators':
         specifier: workspace:*
         version: link:../../packages/decorators
@@ -342,10 +341,10 @@ importers:
         version: 2.9.2
       '@tiptap/core':
         specifier: 'catalog:'
-        version: 2.26.3(@tiptap/pm@3.6.6)
+        version: 2.27.3(@tiptap/pm@3.6.6)
       '@tiptap/html':
         specifier: 'catalog:'
-        version: 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@3.6.6))(@tiptap/pm@3.6.6)
+        version: 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@3.6.6))(@tiptap/pm@3.6.6)
       axios:
         specifier: 1.20.0
         version: 1.20.0
@@ -889,70 +888,70 @@ importers:
         version: link:../utils
       '@tiptap/core':
         specifier: 'catalog:'
-        version: 2.26.3(@tiptap/pm@2.26.1)
+        version: 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/extension-blockquote':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
       '@tiptap/extension-character-count':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
       '@tiptap/extension-collaboration':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(y-prosemirror@1.3.7(prosemirror-model@1.25.12)(prosemirror-state@1.4.3)(prosemirror-view@1.42.6)(y-protocols@1.0.6(yjs@13.6.27))(yjs@13.6.27))
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(y-prosemirror@1.3.7(prosemirror-model@1.25.12)(prosemirror-state@1.4.3)(prosemirror-view@1.42.6)(y-protocols@1.0.6(yjs@13.6.27))(yjs@13.6.27))
       '@tiptap/extension-document':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
       '@tiptap/extension-emoji':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(@tiptap/suggestion@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1))(emojibase@16.0.0)
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(@tiptap/suggestion@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1))(emojibase@16.0.0)
       '@tiptap/extension-heading':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
       '@tiptap/extension-image':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
       '@tiptap/extension-list-item':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
       '@tiptap/extension-mention':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(@tiptap/suggestion@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1))
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(@tiptap/suggestion@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1))
       '@tiptap/extension-placeholder':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
       '@tiptap/extension-task-item':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
       '@tiptap/extension-task-list':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
       '@tiptap/extension-text':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
       '@tiptap/extension-text-align':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
       '@tiptap/extension-text-style':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
       '@tiptap/extension-underline':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
       '@tiptap/html':
         specifier: 'catalog:'
-        version: 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+        version: 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
       '@tiptap/pm':
         specifier: ^2.22.3
         version: 2.26.1
       '@tiptap/react':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tiptap/starter-kit':
         specifier: ^2.22.3
         version: 2.26.1
       '@tiptap/suggestion':
         specifier: ^2.22.3
-        version: 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+        version: 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
       buffer:
         specifier: ^6.0.3
         version: 6.0.3
@@ -994,7 +993,7 @@ importers:
         version: 6.3.7
       tiptap-markdown:
         specifier: ^0.8.10
-        version: 0.8.10(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
+        version: 0.8.10(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
       uuid:
         specifier: 14.0.0
         version: 14.0.0
@@ -4452,8 +4451,8 @@ packages:
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
 
-  '@tiptap/core@2.26.3':
-    resolution: {integrity: sha512-TaOJzu2v5ufsOx+yu94NqXE504zmupVdFCxH1g3hk5fzZ3gT57Lh9R/27OjwM4e6o+Z3DXDl8yfFMHIcR3zUkg==}
+  '@tiptap/core@2.27.3':
+    resolution: {integrity: sha512-a5LfRbLpfaGI3hbL/LPHUYHI0I+FQHdSHsy8L4YnVIuu3hXcm3QZgkWbpEGf8hCz8krk6zEiu0+iFOjTySU2FA==}
     peerDependencies:
       '@tiptap/pm': ^2.7.0
 
@@ -7828,10 +7827,6 @@ packages:
     peerDependencies:
       postcss: 8.5.30
 
-  postcss-selector-parser@6.1.4:
-    resolution: {integrity: sha512-bIoJLOmjCO1S9XdY/DcnR5hJxvrDir1PbGChrzXG3vw0/FOliy/fA3dmdhQ441kah4gKv+TwckGzex6wNS5cnQ==}
-    engines: {node: '>=4'}
-
   postcss-selector-parser@7.1.6:
     resolution: {integrity: sha512-7qASPzhKF2l2KLboRZux8CCTRMdGiV08vWmyKzPz22qZ7ZjQBOeY7rNzNoCLSUiftJ7HUq0GERHmxw/t0dCdMw==}
     engines: {node: '>=4'}
@@ -10186,9 +10181,9 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@hocuspocus/transformer@2.15.2(@tiptap/core@2.26.3(@tiptap/pm@3.6.6))(@tiptap/pm@3.6.6)(y-prosemirror@1.3.7(prosemirror-model@1.25.12)(prosemirror-state@1.4.3)(prosemirror-view@1.42.6)(y-protocols@1.0.6(yjs@13.6.27))(yjs@13.6.27))(yjs@13.6.27)':
+  '@hocuspocus/transformer@2.15.2(@tiptap/core@2.27.3(@tiptap/pm@3.6.6))(@tiptap/pm@3.6.6)(y-prosemirror@1.3.7(prosemirror-model@1.25.12)(prosemirror-state@1.4.3)(prosemirror-view@1.42.6)(y-protocols@1.0.6(yjs@13.6.27))(yjs@13.6.27))(yjs@13.6.27)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@3.6.6)
+      '@tiptap/core': 2.27.3(@tiptap/pm@3.6.6)
       '@tiptap/pm': 3.6.6
       '@tiptap/starter-kit': 2.26.1
       y-prosemirror: 1.3.7(prosemirror-model@1.25.12)(prosemirror-state@1.4.3)(prosemirror-view@1.42.6)(y-protocols@1.0.6(yjs@13.6.27))(yjs@13.6.27)
@@ -11976,7 +11971,7 @@ snapshots:
 
   '@tailwindcss/typography@0.5.19':
     dependencies:
-      postcss-selector-parser: 6.1.4
+      postcss-selector-parser: 7.1.6
 
   '@tanstack/react-table@8.21.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -12018,170 +12013,170 @@ snapshots:
     dependencies:
       '@testing-library/dom': 10.4.2
 
-  '@tiptap/core@2.26.3(@tiptap/pm@2.26.1)':
+  '@tiptap/core@2.27.3(@tiptap/pm@2.26.1)':
     dependencies:
       '@tiptap/pm': 2.26.1
 
-  '@tiptap/core@2.26.3(@tiptap/pm@3.6.6)':
+  '@tiptap/core@2.27.3(@tiptap/pm@3.6.6)':
     dependencies:
       '@tiptap/pm': 3.6.6
 
-  '@tiptap/extension-blockquote@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-blockquote@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-bold@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-bold@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-bubble-menu@2.26.3(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
+  '@tiptap/extension-bubble-menu@2.26.3(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
       tippy.js: 6.3.7
 
-  '@tiptap/extension-bullet-list@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-bullet-list@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-character-count@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
+  '@tiptap/extension-character-count@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
 
-  '@tiptap/extension-code-block@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
+  '@tiptap/extension-code-block@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
 
-  '@tiptap/extension-code@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-code@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-collaboration@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(y-prosemirror@1.3.7(prosemirror-model@1.25.12)(prosemirror-state@1.4.3)(prosemirror-view@1.42.6)(y-protocols@1.0.6(yjs@13.6.27))(yjs@13.6.27))':
+  '@tiptap/extension-collaboration@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(y-prosemirror@1.3.7(prosemirror-model@1.25.12)(prosemirror-state@1.4.3)(prosemirror-view@1.42.6)(y-protocols@1.0.6(yjs@13.6.27))(yjs@13.6.27))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
       y-prosemirror: 1.3.7(prosemirror-model@1.25.12)(prosemirror-state@1.4.3)(prosemirror-view@1.42.6)(y-protocols@1.0.6(yjs@13.6.27))(yjs@13.6.27)
 
-  '@tiptap/extension-document@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-document@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-dropcursor@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
+  '@tiptap/extension-dropcursor@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
 
-  '@tiptap/extension-emoji@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(@tiptap/suggestion@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1))(emojibase@16.0.0)':
+  '@tiptap/extension-emoji@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(@tiptap/suggestion@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1))(emojibase@16.0.0)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
-      '@tiptap/suggestion': 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+      '@tiptap/suggestion': 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
       emoji-regex: 10.5.0
       emojibase-data: 15.3.2(emojibase@16.0.0)
       is-emoji-supported: 0.0.5
     transitivePeerDependencies:
       - emojibase
 
-  '@tiptap/extension-floating-menu@2.26.3(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
+  '@tiptap/extension-floating-menu@2.26.3(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
       tippy.js: 6.3.7
 
-  '@tiptap/extension-gapcursor@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
+  '@tiptap/extension-gapcursor@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
 
-  '@tiptap/extension-hard-break@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-hard-break@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-heading@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-heading@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-history@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
+  '@tiptap/extension-history@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
 
-  '@tiptap/extension-horizontal-rule@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
+  '@tiptap/extension-horizontal-rule@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
 
-  '@tiptap/extension-image@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-image@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-italic@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-italic@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-list-item@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-list-item@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-mention@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(@tiptap/suggestion@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-mention@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(@tiptap/suggestion@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
-      '@tiptap/suggestion': 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+      '@tiptap/suggestion': 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-ordered-list@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-ordered-list@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-paragraph@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-paragraph@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-placeholder@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
+  '@tiptap/extension-placeholder@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
-      '@tiptap/pm': 2.26.1
-
-  '@tiptap/extension-strike@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
-    dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
-
-  '@tiptap/extension-task-item@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
-    dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
 
-  '@tiptap/extension-task-list@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-strike@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-text-align@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-task-item@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
+      '@tiptap/pm': 2.26.1
 
-  '@tiptap/extension-text-style@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-task-list@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-text@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-text-align@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/extension-underline@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))':
+  '@tiptap/extension-text-style@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
 
-  '@tiptap/html@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
+  '@tiptap/extension-text@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
+
+  '@tiptap/extension-underline@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))':
+    dependencies:
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
+
+  '@tiptap/html@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
+    dependencies:
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
       zeed-dom: 0.15.1
 
-  '@tiptap/html@2.26.2(@tiptap/core@2.26.3(@tiptap/pm@3.6.6))(@tiptap/pm@3.6.6)':
+  '@tiptap/html@2.26.2(@tiptap/core@2.27.3(@tiptap/pm@3.6.6))(@tiptap/pm@3.6.6)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@3.6.6)
+      '@tiptap/core': 2.27.3(@tiptap/pm@3.6.6)
       '@tiptap/pm': 3.6.6
       zeed-dom: 0.15.1
 
@@ -12227,11 +12222,11 @@ snapshots:
       prosemirror-transform: 1.10.4
       prosemirror-view: 1.42.6
 
-  '@tiptap/react@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@tiptap/react@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
-      '@tiptap/extension-bubble-menu': 2.26.3(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
-      '@tiptap/extension-floating-menu': 2.26.3(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
+      '@tiptap/extension-bubble-menu': 2.26.3(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+      '@tiptap/extension-floating-menu': 2.26.3(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
       '@types/use-sync-external-store': 0.0.6
       fast-deep-equal: 3.1.3
@@ -12241,31 +12236,31 @@ snapshots:
 
   '@tiptap/starter-kit@2.26.1':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
-      '@tiptap/extension-blockquote': 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-bold': 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-bullet-list': 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-code': 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-code-block': 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
-      '@tiptap/extension-document': 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-dropcursor': 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
-      '@tiptap/extension-gapcursor': 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
-      '@tiptap/extension-hard-break': 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-heading': 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-history': 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
-      '@tiptap/extension-horizontal-rule': 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
-      '@tiptap/extension-italic': 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-list-item': 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-ordered-list': 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-paragraph': 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-strike': 2.26.2(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-text': 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
-      '@tiptap/extension-text-style': 2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
+      '@tiptap/extension-blockquote': 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-bold': 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-bullet-list': 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-code': 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-code-block': 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+      '@tiptap/extension-document': 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-dropcursor': 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+      '@tiptap/extension-gapcursor': 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+      '@tiptap/extension-hard-break': 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-heading': 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-history': 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+      '@tiptap/extension-horizontal-rule': 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)
+      '@tiptap/extension-italic': 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-list-item': 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-ordered-list': 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-paragraph': 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-strike': 2.26.2(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-text': 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
+      '@tiptap/extension-text-style': 2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))
       '@tiptap/pm': 2.26.1
 
-  '@tiptap/suggestion@2.26.1(@tiptap/core@2.26.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
+  '@tiptap/suggestion@2.26.1(@tiptap/core@2.27.3(@tiptap/pm@2.26.1))(@tiptap/pm@2.26.1)':
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@tiptap/pm': 2.26.1
 
   '@tokenizer/inflate@0.4.1':
@@ -15824,18 +15819,13 @@ snapshots:
   postcss-nested@6.2.0(postcss@8.5.30):
     dependencies:
       postcss: 8.5.30
-      postcss-selector-parser: 6.1.4
+      postcss-selector-parser: 7.1.6
 
   postcss-reporter@7.1.0(postcss@8.5.30):
     dependencies:
       picocolors: 1.1.1
       postcss: 8.5.30
       thenby: 1.3.4
-
-  postcss-selector-parser@6.1.4:
-    dependencies:
-      cssesc: 3.0.0
-      util-deprecate: 1.0.2
 
   postcss-selector-parser@7.1.6:
     dependencies:
@@ -16993,9 +16983,9 @@ snapshots:
     dependencies:
       '@popperjs/core': 2.11.8
 
-  tiptap-markdown@0.8.10(@tiptap/core@2.26.3(@tiptap/pm@2.26.1)):
+  tiptap-markdown@0.8.10(@tiptap/core@2.27.3(@tiptap/pm@2.26.1)):
     dependencies:
-      '@tiptap/core': 2.26.3(@tiptap/pm@2.26.1)
+      '@tiptap/core': 2.27.3(@tiptap/pm@2.26.1)
       '@types/markdown-it': 13.0.9
       markdown-it: 14.3.2
       markdown-it-task-lists: 2.1.1

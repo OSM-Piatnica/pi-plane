@@ -13,7 +13,7 @@ catalog:
   "@react-router/dev": 7.18.4
   "@react-router/node": 7.18.4
   "@react-router/serve": 7.18.4
-  "@tiptap/core": ^2.22.3
+  "@tiptap/core": ^2.27.3
   "@tiptap/html": ^2.22.3
   "@types/lodash-es": 4.17.12
   "@types/node": 22.12.0
@@ -93,8 +93,9 @@ overrides:
   "@babel/core": 7.29.7
   browserslist: 4.29.3
   "baseline-browser-mapping": 2.11.28
-  "postcss-selector-parser@7": 7.1.6
-  "postcss-selector-parser@6": 6.1.4
+  # No 6.x fix for the postcss-selector-parser advisory (fixed in 7.1.6). @tailwindcss/typography
+  # (space app) pins 6.0.10 but only uses parser()/selector(); 7.x is compatible with that use.
+  postcss-selector-parser: 7.1.6
   tinypool: 2.2.0
   "webpack-dev-middleware@6": 7.4.6
   "webpack-dev-middleware@7": 7.4.6
