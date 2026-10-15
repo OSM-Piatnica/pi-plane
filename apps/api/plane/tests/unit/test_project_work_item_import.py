@@ -396,7 +396,7 @@ class TestWorkItemImportPeople:
         import_work_items_into_project(
             project=project,
             user=create_user,
-            rows=[{"external_key": "S1", "name": "Watched", "state": "Todo", "subscribers": [create_user.email]}],
+            rows=[{"external_key": "S1", "name": "Watched", "state": "Todo", "subscriber_emails": [create_user.email]}],
         )
 
         issue = Issue.objects.get(project=project, name="Watched")

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -27,7 +28,7 @@ from plane.authentication.adapter.error import (
 )
 from plane.authentication.rate_limit import (
     AuthenticationThrottle,
-    authentication_throttle_allows,
+    throttle_auth_redirect,
 )
 from plane.utils.path_validator import get_safe_redirect_url, validate_next_path, get_allowed_hosts
 
@@ -60,23 +61,12 @@ class MagicGenerateSpaceEndpoint(APIView):
 
 
 class MagicSignInSpaceEndpoint(View):
+    @throttle_auth_redirect(is_space=True)
     def post(self, request):
         # set the referer as session to redirect after login
         code = request.POST.get("code", "").strip()
         email = request.POST.get("email", "").strip().lower()
         next_path = request.POST.get("next_path")
-
-        if not authentication_throttle_allows(request):
-            exc = AuthenticationException(
-                error_code=AUTHENTICATION_ERROR_CODES["RATE_LIMIT_EXCEEDED"],
-                error_message="RATE_LIMIT_EXCEEDED",
-            )
-            url = get_safe_redirect_url(
-                base_url=base_host(request=request, is_space=True),
-                next_path=next_path,
-                params=exc.get_error_dict(),
-            )
-            return HttpResponseRedirect(url)
 
         if code == "" or email == "":
             exc = AuthenticationException(
@@ -131,23 +121,12 @@ class MagicSignInSpaceEndpoint(View):
 
 
 class MagicSignUpSpaceEndpoint(View):
+    @throttle_auth_redirect(is_space=True)
     def post(self, request):
         # set the referer as session to redirect after login
         code = request.POST.get("code", "").strip()
         email = request.POST.get("email", "").strip().lower()
         next_path = request.POST.get("next_path")
-
-        if not authentication_throttle_allows(request):
-            exc = AuthenticationException(
-                error_code=AUTHENTICATION_ERROR_CODES["RATE_LIMIT_EXCEEDED"],
-                error_message="RATE_LIMIT_EXCEEDED",
-            )
-            url = get_safe_redirect_url(
-                base_url=base_host(request=request, is_space=True),
-                next_path=next_path,
-                params=exc.get_error_dict(),
-            )
-            return HttpResponseRedirect(url)
 
         if code == "" or email == "":
             exc = AuthenticationException(

@@ -56,7 +56,13 @@ class TestIssueExportSerializerPeople:
     @pytest.mark.django_db
     def test_assignees_and_subscribers_are_exported_as_emails(self, export_project, create_user):
         issue = _make_issue(export_project, create_user, "With people", 1)
-        issue.assignees.add(create_user)
+        # .add() bypasses IssueAssignee.save(), which is what fills in project_id
+        IssueAssignee.objects.create(
+            issue=issue,
+            assignee=create_user,
+            project=export_project,
+            workspace=export_project.workspace,
+        )
         IssueSubscriber.objects.create(
             issue=issue,
             subscriber=create_user,

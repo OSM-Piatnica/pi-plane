@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -38,14 +39,14 @@ def validate_url_ip(url: str) -> None:
         ValueError: If the URL points to a private/internal IP
     """
     parsed = urlparse(url)
-    hostname = parsed.hostname
-
-    if not hostname:
-        raise ValueError("Invalid URL: No hostname found")
 
     # Only allow HTTP and HTTPS to prevent file://, gopher://, etc.
     if parsed.scheme not in ("http", "https"):
         raise ValueError("Invalid URL scheme. Only HTTP and HTTPS are allowed")
+
+    hostname = parsed.hostname
+    if not hostname:
+        raise ValueError("Invalid URL: No hostname found")
 
     # Resolve hostname to IP addresses — this catches domain names that
     # point to internal IPs (e.g. attacker.com -> 169.254.169.254)
