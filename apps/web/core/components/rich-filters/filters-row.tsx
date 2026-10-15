@@ -30,12 +30,7 @@ export type TFiltersRowProps<K extends TFilterProperty, E extends TExternalFilte
 export const FiltersRow = observer(function FiltersRow<K extends TFilterProperty, E extends TExternalFilter>(
   props: TFiltersRowProps<K, E>
 ) {
-  const {
-    buttonConfig,
-    disabledAllOperations: disabledAllOperationsProp = false,
-    filter,
-    variant = "header",
-  } = props;
+  const { buttonConfig, disabledAllOperations: disabledAllOperationsProp = false, filter, variant = "header" } = props;
   // translation
   const { t } = useTranslation();
   // states
@@ -88,20 +83,12 @@ export const FiltersRow = observer(function FiltersRow<K extends TFilterProperty
   const rightContent = !disabledAllOperations && (
     <>
       <ElementTransition show={filter.canClearFilters}>
-        <Button
-          variant="secondary"
-          className={COMMON_OPERATION_BUTTON_CLASSNAME}
-          onClick={filter.clearFilters}
-        >
+        <Button variant="secondary" className={COMMON_OPERATION_BUTTON_CLASSNAME} onClick={filter.clearFilters}>
           {filter.clearFilterOptions?.label ?? t("common.clear_all")}
         </Button>
       </ElementTransition>
       <ElementTransition show={filter.canSaveView}>
-        <Button
-          variant="secondary"
-          className={COMMON_OPERATION_BUTTON_CLASSNAME}
-          onClick={filter.saveView}
-        >
+        <Button variant="secondary" className={COMMON_OPERATION_BUTTON_CLASSNAME} onClick={filter.saveView}>
           {filter.saveViewOptions?.label ?? t("project_components.rich_filters.save_view")}
         </Button>
       </ElementTransition>

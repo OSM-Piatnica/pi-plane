@@ -151,11 +151,7 @@ export const AllIssueLayoutRoot = observer(function AllIssueLayoutRoot(props: Pr
         {({ filter: globalWorkItemsFilter }) => (
           <div className="h-full overflow-hidden bg-surface-1">
             <div className="flex h-full w-full flex-col border-b border-strong">
-              {globalWorkItemsFilter && (
-                <WorkItemFiltersRow
-                  filter={globalWorkItemsFilter}
-                />
-              )}
+              {globalWorkItemsFilter && <WorkItemFiltersRow filter={globalWorkItemsFilter} />}
               <WorkspaceActiveLayout
                 activeLayout={activeLayout}
                 isDefaultView={isDefaultView}

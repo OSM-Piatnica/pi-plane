@@ -44,11 +44,7 @@ export function WebhookDeleteSection(props: Props) {
                   {t("project_components.webhooks.danger_zone_description")}
                 </span>
                 <div>
-                  <Button
-                    variant="error-fill"
-                    size="lg"
-                    onClick={openDeleteModal}
-                  >
+                  <Button variant="error-fill" size="lg" onClick={openDeleteModal}>
                     {t("project_components.webhooks.delete_title")}
                   </Button>
                 </div>

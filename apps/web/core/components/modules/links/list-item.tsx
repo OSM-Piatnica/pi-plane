@@ -7,7 +7,6 @@
 
 import { observer } from "mobx-react";
 
-
 import { useTranslation } from "@plane/i18n";
 import { CopyIcon, EditIcon, TrashIcon } from "@plane/propel/icons";
 // plane types
