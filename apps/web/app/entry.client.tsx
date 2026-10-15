@@ -1,6 +1,5 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
- * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
@@ -10,29 +9,26 @@ import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { HydratedRouter } from "react-router/dom";
 
-// Safari / iOS WebKit still lack requestIdleCallback; Plane layout loaders call it.
-function requestIdleCallbackPolyfill(callback: IdleRequestCallback, options?: IdleRequestOptions): number {
-  const start = Date.now();
-  return window.setTimeout(() => {
-    callback({
-      didTimeout: false,
-      timeRemaining() {
-        return Math.max(0, 50 - (Date.now() - start));
-      },
-    });
-  }, options?.timeout ?? 1);
-}
+import polyfills from "@/lib/polyfills";
+import { isStaleAssetErrorMessage, recoverFromStaleAsset } from "@/lib/stale-asset-error";
 
-function cancelIdleCallbackPolyfill(id: number) {
-  clearTimeout(id);
-}
+void polyfills;
 
-if (typeof window !== "undefined" && typeof window.requestIdleCallback !== "function") {
-  window.requestIdleCallback = requestIdleCallbackPolyfill;
-}
+// Production-only: in dev these errors come from the dev server itself (restarts,
+// stale optimized deps) and auto-reloading would mask them.
+if (import.meta.env.PROD) {
+  window.addEventListener("vite:preloadError", (event) => {
+    if (recoverFromStaleAsset()) event.preventDefault();
+  });
 
-if (typeof window !== "undefined" && typeof window.cancelIdleCallback !== "function") {
-  window.cancelIdleCallback = cancelIdleCallbackPolyfill;
+  window.addEventListener("error", (event) => {
+    if (isStaleAssetErrorMessage(event.message || "")) recoverFromStaleAsset();
+  });
+
+  window.addEventListener("unhandledrejection", (event) => {
+    const reason = event.reason instanceof Error ? event.reason.message : String(event.reason ?? "");
+    if (isStaleAssetErrorMessage(reason)) recoverFromStaleAsset();
+  });
 }
 
 startTransition(() => {

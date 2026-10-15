@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -204,7 +205,7 @@ export const KanBan = observer(function KanBan(props: IKanBan) {
                     />
                   }
                   defaultValue={groupIndex < 5 && subGroupIndex < 2}
-                  useIdletime
+                  useIdleTime
                 >
                   <KanbanGroup
                     groupId={subList.id}

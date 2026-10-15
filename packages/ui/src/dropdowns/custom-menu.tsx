@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -189,6 +190,11 @@ function CustomMenu(props: ICustomMenuDropdownProps) {
     }
   }, [isOpen, closeDropdown, useCaptureForOutsideClick]);
 
+  const menuContextValue = React.useMemo(
+    () => ({ closeAllSubmenus, registerSubmenu }),
+    [closeAllSubmenus, registerSubmenu]
+  );
+
   let menuItems = (
     <Menu.Items
       data-prevent-outside-click={!!portalElement}
@@ -200,7 +206,7 @@ function CustomMenu(props: ICustomMenuDropdownProps) {
     >
       <div
         className={cn(
-          "my-1 min-w-[12rem] overflow-y-scroll rounded-md border-[0.5px] border-subtle-1 bg-surface-1 px-2 py-2.5 text-11 whitespace-nowrap focus:outline-none",
+          "shadow-md my-1 min-w-[12rem] overflow-y-scroll rounded-md border border-strong-1 bg-surface-1 px-2 py-2.5 text-11 whitespace-nowrap ring-1 ring-strong-1/15 outline-none focus:outline-none",
           {
             "max-h-60": maxHeight === "lg",
             "max-h-48": maxHeight === "md",
@@ -213,7 +219,7 @@ function CustomMenu(props: ICustomMenuDropdownProps) {
         style={styles.popper}
         {...attributes.popper}
       >
-        <MenuContext.Provider value={{ closeAllSubmenus, registerSubmenu }}>{children}</MenuContext.Provider>
+        <MenuContext.Provider value={menuContextValue}>{children}</MenuContext.Provider>
       </div>
     </Menu.Items>
   );
@@ -228,7 +234,8 @@ function CustomMenu(props: ICustomMenuDropdownProps) {
       ref={dropdownRef}
       tabIndex={tabIndex}
       className={cn("relative w-min text-left", className)}
-      onKeyDownCapture={handleKeyDown}
+      onKeyDown={handleKeyDown}
+      role="presentation"
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();
@@ -377,6 +384,8 @@ function SubMenu(props: ICustomSubMenuProps) {
     toggleSubmenu();
   };
 
+  const subMenuContextValue = React.useMemo(() => ({ closeSubmenu }), [closeSubmenu]);
+
   // Close submenu when clicking on other menu items
   React.useEffect(() => {
     const handleMenuItemClick = (e: Event) => {
@@ -398,9 +407,10 @@ function SubMenu(props: ICustomSubMenuProps) {
       <span ref={setReferenceElement} className="w-full">
         <Menu.Item as="div" disabled={disabled}>
           {({ active }) => (
-            <div
+            <button
+              type="button"
               className={cn(
-                "flex w-full cursor-pointer items-center justify-between rounded-sm px-1 py-1.5 text-left text-secondary select-none",
+                "font-inherit flex w-full cursor-pointer items-center justify-between rounded-sm border-0 bg-transparent px-1 py-1.5 text-left text-secondary outline-none select-none",
                 {
                   "bg-layer-transparent-hover": active && !disabled,
                   "text-placeholder": disabled,
@@ -408,10 +418,11 @@ function SubMenu(props: ICustomSubMenuProps) {
                 }
               )}
               onClick={handleClick}
+              disabled={disabled}
             >
               <span className="flex-1">{trigger}</span>
               <ChevronRightIcon className="h-3.5 w-3.5 flex-shrink-0" />
-            </div>
+            </button>
           )}
         </Menu.Item>
       </span>
@@ -423,7 +434,7 @@ function SubMenu(props: ICustomSubMenuProps) {
             style={styles.popper}
             {...attributes.popper}
             className={cn(
-              "fixed z-30 min-w-[12rem] overflow-hidden rounded-md border-[0.5px] border-subtle-1 bg-surface-1 p-1 text-11",
+              "shadow-md fixed z-30 min-w-[12rem] overflow-hidden rounded-md border border-strong-1 bg-surface-1 p-1 text-11 ring-1 ring-strong-1/15",
               contentClassName
             )}
             data-prevent-outside-click="true"
@@ -444,7 +455,7 @@ function SubMenu(props: ICustomSubMenuProps) {
               }
             }}
           >
-            <SubMenuContext.Provider value={{ closeSubmenu }}>{children}</SubMenuContext.Provider>
+            <SubMenuContext.Provider value={subMenuContextValue}>{children}</SubMenuContext.Provider>
           </div>
         </Portal>
       )}
@@ -516,7 +527,7 @@ function SubMenuContent(props: ICustomSubMenuContentProps) {
   return (
     <div
       className={cn(
-        "z-[15] min-w-[12rem] overflow-hidden rounded-md border border-subtle-1 bg-surface-1 p-1 text-11",
+        "shadow-md z-[15] min-w-[12rem] overflow-hidden rounded-md border border-strong-1 bg-surface-1 p-1 text-11 ring-1 ring-strong-1/15",
         className
       )}
     >

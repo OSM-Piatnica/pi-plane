@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -28,7 +29,7 @@ export const User = observer(function User(props: TUser) {
 
   return (
     <>
-      {customUserName || actorDetail?.display_name.includes("-intake") ? (
+      {customUserName || actorDetail?.display_name?.includes("-intake") ? (
         <span className="font-medium text-primary">{customUserName || "Plane"}</span>
       ) : (
         <Link
