@@ -59,10 +59,9 @@ class TestAPITokenLogMiddleware:
         # Mirrors the middleware's HMAC. CodeQL (py/weak-sensitive-data-hashing)
         # false positive: the API key is a high-entropy token, not a password, and
         # this is a keyed HMAC used only to correlate log lines.
+        key, msg = settings.SECRET_KEY.encode(), self.API_KEY.encode()
         # codeql[py/weak-sensitive-data-hashing]
-        expected_hash = hmac.new(
-            settings.SECRET_KEY.encode(), self.API_KEY.encode(), hashlib.sha256
-        ).hexdigest()
+        expected_hash = hmac.new(key, msg, hashlib.sha256).hexdigest()
         assert log_data["token_identifier"] == expected_hash
         assert self.API_KEY not in log_data["token_identifier"]
 
