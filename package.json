@@ -34,7 +34,7 @@
       "pnpm exec oxlint --fix --deny-warnings"
     ],
     "apps/api/**/*.py": [
-      "scripts/ruff-staged.sh"
+      ".husky/ruff-staged.sh"
     ]
   },
   "engines": {
