@@ -23,6 +23,7 @@ export const SUPPORTED_LANGUAGES: ILanguageOption[] = [
   { label: "Deutsch", value: "de" },
   { label: "Українська", value: "ua" },
   { label: "Polski", value: "pl" },
+  { label: "Podlaski", value: "pl-x-podlaski" },
   { label: "한국어", value: "ko" },
   { label: "Português Brasil", value: "pt-BR" },
   { label: "Português (Portugal)", value: "pt-PT" },
