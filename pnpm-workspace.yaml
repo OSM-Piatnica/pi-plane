@@ -96,6 +96,7 @@ overrides:
   "postcss-selector-parser@7": 7.1.6
   "postcss-selector-parser@6": 6.1.4
   tinypool: 2.2.0
+  "webpack-dev-middleware@6": 7.4.6
   "webpack-dev-middleware@7": 7.4.6
   "fast-uri@3": 3.1.8
   "prosemirror-model": 1.25.12
