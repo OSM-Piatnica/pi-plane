@@ -113,6 +113,31 @@ ISSUE_GROUP_BY_ALLOWLIST = frozenset(
     }
 )
 
+# Cycle list queryset.
+CYCLE_ORDER_BY_ALLOWLIST = frozenset(
+    {
+        "created_at",
+        "updated_at",
+        "name",
+        "start_date",
+        "end_date",
+        "sort_order",
+    }
+)
+
+# Module list queryset.
+MODULE_ORDER_BY_ALLOWLIST = frozenset(
+    {
+        "created_at",
+        "updated_at",
+        "name",
+        "start_date",
+        "target_date",
+        "status",
+        "sort_order",
+    }
+)
+
 
 def sanitize_order_by(value, allowed_fields, default="-created_at"):
     """Return a safe ordering string derived from *value*.

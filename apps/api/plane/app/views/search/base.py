@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -19,7 +20,7 @@ from django.db.models import (
 )
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.contrib.postgres.fields import ArrayField
-from django.db.models.functions import Coalesce, Concat
+from django.db.models.functions import Cast, Coalesce, Concat
 from django.utils import timezone
 
 # Third party imports
@@ -28,6 +29,7 @@ from rest_framework.response import Response
 
 # Module imports
 from plane.app.views.base import BaseAPIView
+from plane.app.permissions import WorkspaceUserPermission
 from plane.db.models import (
     Workspace,
     Project,
@@ -302,6 +304,8 @@ class GlobalSearchEndpoint(BaseAPIView):
 
 
 class SearchEndpoint(BaseAPIView):
+    permission_classes = (WorkspaceUserPermission,)
+
     def get(self, request, slug):
         query = request.query_params.get("query", False)
         query_types = request.query_params.get("query_type", "user_mention").split(",")
@@ -339,7 +343,7 @@ class SearchEndpoint(BaseAPIView):
                                     member__avatar_asset__isnull=False,
                                     then=Concat(
                                         Value("/api/assets/v2/static/"),
-                                        "member__avatar_asset",
+                                        Cast("member__avatar_asset", CharField()),
                                         Value("/"),
                                     ),
                                 ),
@@ -550,7 +554,7 @@ class SearchEndpoint(BaseAPIView):
                                     member__avatar_asset__isnull=False,
                                     then=Concat(
                                         Value("/api/assets/v2/static/"),
-                                        "member__avatar_asset",
+                                        Cast("member__avatar_asset", models.CharField()),
                                         Value("/"),
                                     ),
                                 ),

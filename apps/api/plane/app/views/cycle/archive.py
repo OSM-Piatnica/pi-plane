@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -380,7 +381,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
                                 assignees__avatar_asset__isnull=False,
                                 then=Concat(
                                     Value("/api/assets/v2/static/"),
-                                    "assignees__avatar_asset",  # Assuming avatar_asset has an id or relevant field
+                                    Cast("assignees__avatar_asset", models.CharField()),
                                     Value("/"),
                                 ),
                             ),
@@ -485,7 +486,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
                             assignees__avatar_asset__isnull=False,
                             then=Concat(
                                 Value("/api/assets/v2/static/"),
-                                "assignees__avatar_asset",  # Assuming avatar_asset has an id or relevant field
+                                Cast("assignees__avatar_asset", models.CharField()),
                                 Value("/"),
                             ),
                         ),

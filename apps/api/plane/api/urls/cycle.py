@@ -1,11 +1,13 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from django.urls import path
 
 from plane.api.views.cycle import (
     CycleListCreateAPIEndpoint,
+    CycleListLiteAPIEndpoint,
     CycleDetailAPIEndpoint,
     CycleIssueListCreateAPIEndpoint,
     CycleIssueDetailAPIEndpoint,
@@ -18,6 +20,11 @@ urlpatterns = [
         "workspaces/<str:slug>/projects/<uuid:project_id>/cycles/",
         CycleListCreateAPIEndpoint.as_view(http_method_names=["get", "post"]),
         name="cycles",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/cycles-lite/",
+        CycleListLiteAPIEndpoint.as_view(http_method_names=["get"]),
+        name="cycles-lite",
     ),
     path(
         "workspaces/<str:slug>/projects/<uuid:project_id>/cycles/<uuid:pk>/",

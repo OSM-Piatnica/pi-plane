@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from rest_framework.response import Response
@@ -22,7 +23,7 @@ from plane.db.models import (
 )
 from django.db import models
 from django.db.models import F, Case, When, Value
-from django.db.models.functions import Concat
+from django.db.models.functions import Cast, Concat
 from plane.utils.build_chart import build_analytics_chart
 from plane.utils.date_utils import (
     get_analytics_filters,
@@ -141,7 +142,7 @@ class ProjectAdvanceAnalyticsStatsEndpoint(ProjectAdvanceAnalyticsBaseView):
                         assignees__avatar_asset__isnull=False,
                         then=Concat(
                             Value("/api/assets/v2/static/"),
-                            "assignees__avatar_asset",  # Assuming avatar_asset has an id or relevant field
+                            Cast("assignees__avatar_asset", models.CharField()),
                             Value("/"),
                         ),
                     ),

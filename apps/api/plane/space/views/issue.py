@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -26,7 +27,7 @@ from django.db.models import (
     CharField,
     Subquery,
 )
-from django.db.models.functions import Concat
+from django.db.models.functions import Cast, Concat
 
 # Third Party imports
 from rest_framework.response import Response
@@ -667,7 +668,7 @@ class IssueRetrievePublicEndpoint(BaseAPIView):
                                             votes__actor__avatar_asset__isnull=False,
                                             then=Concat(
                                                 Value("/api/assets/v2/static/"),
-                                                F("votes__actor__avatar_asset"),
+                                                Cast("votes__actor__avatar_asset", CharField()),
                                                 Value("/"),
                                             ),
                                         ),
@@ -713,7 +714,7 @@ class IssueRetrievePublicEndpoint(BaseAPIView):
                                             votes__actor__avatar_asset__isnull=False,
                                             then=Concat(
                                                 Value("/api/assets/v2/static/"),
-                                                F("votes__actor__avatar_asset"),
+                                                Cast("votes__actor__avatar_asset", CharField()),
                                                 Value("/"),
                                             ),
                                         ),
