@@ -4,13 +4,13 @@
 # See the LICENSE file for details.
 #
 # Run ruff check + format on the given Python files (used by lint-staged).
-# Uses the version pinned in apps/api/requirements/local.txt.
+# Uses the ruff version pinned in apps/api/pyproject.toml (dev group).
 set -euo pipefail
 
 [ "$#" -eq 0 ] && exit 0
 
 root="$(git rev-parse --show-toplevel)"
-spec="$(grep '^ruff==' "$root/apps/api/requirements/local.txt")"
+spec="$(grep -o '"ruff==[^"]*"' "$root/apps/api/pyproject.toml" | tr -d '"')"
 version="${spec#ruff==}"
 
 if command -v uvx >/dev/null 2>&1; then
