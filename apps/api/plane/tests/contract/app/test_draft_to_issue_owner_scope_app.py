@@ -58,9 +58,7 @@ def owned_draft(db, workspace, create_user):
     # fixtures' ownership is real rather than silently nulled.
     project = Project(name="Draft Project", identifier="DRP", workspace=workspace)
     project.save(created_by_id=create_user.id)
-    ProjectMember.objects.create(
-        project=project, member=create_user, workspace=workspace, role=20, is_active=True
-    )
+    ProjectMember.objects.create(project=project, member=create_user, workspace=workspace, role=20, is_active=True)
     draft = DraftIssue(name="Private draft", workspace=workspace, project=project)
     draft.save(created_by_id=create_user.id)
     asset = FileAsset(

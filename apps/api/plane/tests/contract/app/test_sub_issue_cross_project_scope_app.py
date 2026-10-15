@@ -30,9 +30,7 @@ from plane.db.models import (
     ProjectMember,
 )
 
-SUB_ISSUES_URL = (
-    "/api/workspaces/{slug}/projects/{project_id}/issues/{issue_id}/sub-issues/"
-)
+SUB_ISSUES_URL = "/api/workspaces/{slug}/projects/{project_id}/issues/{issue_id}/sub-issues/"
 
 
 def _make_issue(name, project, workspace, author, parent=None):
@@ -56,9 +54,7 @@ def project_a(db, workspace, create_user):
         workspace=workspace,
         created_by=create_user,
     )
-    ProjectMember.objects.create(
-        project=project, member=create_user, workspace=workspace, role=20
-    )
+    ProjectMember.objects.create(project=project, member=create_user, workspace=workspace, role=20)
     return project
 
 
@@ -115,41 +111,31 @@ class TestSubIssuesCrossProjectScope:
     """A project member must not read or write another project's sub-issue graph."""
 
     @pytest.mark.django_db
-    def test_read_cross_project_sub_issues_hidden(
-        self, session_client, workspace, project_a, parent_b, sub_b
-    ):
+    def test_read_cross_project_sub_issues_hidden(self, session_client, workspace, project_a, parent_b, sub_b):
         """GET with a parent that lives in a project the caller isn't in leaks nothing.
 
         The URL project is A (caller is a member); the parent issue lives in B.
         Before the fix the endpoint returned B's sub-issues; now the project scope
         excludes them.
         """
-        url = SUB_ISSUES_URL.format(
-            slug=workspace.slug, project_id=project_a.id, issue_id=parent_b.id
-        )
+        url = SUB_ISSUES_URL.format(slug=workspace.slug, project_id=project_a.id, issue_id=parent_b.id)
         response = session_client.get(url)
 
         assert response.status_code == status.HTTP_200_OK, (
             f"Got {response.status_code}: {getattr(response, 'data', None)!r}"
         )
         returned_ids = {str(row["id"]) for row in response.data["sub_issues"]}
-        assert str(sub_b.id) not in returned_ids, (
-            f"Leaked cross-project sub-issue: {response.data!r}"
-        )
+        assert str(sub_b.id) not in returned_ids, f"Leaked cross-project sub-issue: {response.data!r}"
 
     @pytest.mark.django_db
-    def test_write_cross_project_reparent_blocked(
-        self, session_client, workspace, project_a, parent_b, orphan_b
-    ):
+    def test_write_cross_project_reparent_blocked(self, session_client, workspace, project_a, parent_b, orphan_b):
         """POST cannot re-parent an issue onto a parent outside the URL project.
 
         Parent B is not in project A, so the scoped lookup 404s and no issue is
         moved. Before the fix the parent resolved by bare pk and the orphan was
         re-parented.
         """
-        url = SUB_ISSUES_URL.format(
-            slug=workspace.slug, project_id=project_a.id, issue_id=parent_b.id
-        )
+        url = SUB_ISSUES_URL.format(slug=workspace.slug, project_id=project_a.id, issue_id=parent_b.id)
         response = session_client.post(url, {"sub_issue_ids": [str(orphan_b.id)]}, format="json")
 
         assert response.status_code == status.HTTP_404_NOT_FOUND, (
@@ -169,12 +155,8 @@ class TestSubIssuesCrossProjectScope:
         parent untouched — and no activity event may be enqueued for it (the activity
         task does an unscoped lookup + updated_at bump on whatever id it receives).
         """
-        mock_activity = mocker.patch(
-            "plane.app.views.issue.sub_issue.issue_activity.delay"
-        )
-        url = SUB_ISSUES_URL.format(
-            slug=workspace.slug, project_id=project_a.id, issue_id=parent_a.id
-        )
+        mock_activity = mocker.patch("plane.app.views.issue.sub_issue.issue_activity.delay")
+        url = SUB_ISSUES_URL.format(slug=workspace.slug, project_id=project_a.id, issue_id=parent_a.id)
         response = session_client.post(url, {"sub_issue_ids": [str(orphan_b.id)]}, format="json")
 
         assert response.status_code == status.HTTP_200_OK, (
@@ -194,27 +176,17 @@ class TestSubIssuesCrossProjectScope:
     # --- Positive controls: legitimate same-project use still works -----------
 
     @pytest.mark.django_db
-    def test_read_same_project_sub_issues_visible(
-        self, session_client, workspace, project_a, parent_a, sub_a
-    ):
-        url = SUB_ISSUES_URL.format(
-            slug=workspace.slug, project_id=project_a.id, issue_id=parent_a.id
-        )
+    def test_read_same_project_sub_issues_visible(self, session_client, workspace, project_a, parent_a, sub_a):
+        url = SUB_ISSUES_URL.format(slug=workspace.slug, project_id=project_a.id, issue_id=parent_a.id)
         response = session_client.get(url)
 
         assert response.status_code == status.HTTP_200_OK
         returned_ids = {str(row["id"]) for row in response.data["sub_issues"]}
-        assert str(sub_a.id) in returned_ids, (
-            f"Expected sub-issue {sub_a.id} in {response.data!r}"
-        )
+        assert str(sub_a.id) in returned_ids, f"Expected sub-issue {sub_a.id} in {response.data!r}"
 
     @pytest.mark.django_db
-    def test_write_same_project_reparent_allowed(
-        self, session_client, workspace, project_a, parent_a, orphan_a
-    ):
-        url = SUB_ISSUES_URL.format(
-            slug=workspace.slug, project_id=project_a.id, issue_id=parent_a.id
-        )
+    def test_write_same_project_reparent_allowed(self, session_client, workspace, project_a, parent_a, orphan_a):
+        url = SUB_ISSUES_URL.format(slug=workspace.slug, project_id=project_a.id, issue_id=parent_a.id)
         response = session_client.post(url, {"sub_issue_ids": [str(orphan_a.id)]}, format="json")
 
         assert response.status_code == status.HTTP_200_OK, (

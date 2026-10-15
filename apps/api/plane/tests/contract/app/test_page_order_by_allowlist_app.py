@@ -20,9 +20,7 @@ from plane.db.models import Page, Project, ProjectMember, ProjectPage
 @pytest.fixture
 def project_with_page(db, workspace, create_user):
     project = Project.objects.create(name="P", identifier="PRD", workspace=workspace)
-    ProjectMember.objects.create(
-        workspace=workspace, project=project, member=create_user, role=20, is_active=True
-    )
+    ProjectMember.objects.create(workspace=workspace, project=project, member=create_user, role=20, is_active=True)
     page = Page.objects.create(workspace=workspace, owned_by=create_user, access=Page.PUBLIC_ACCESS, name="pg")
     ProjectPage.objects.create(workspace=workspace, project=project, page=page)
     return project, page
@@ -38,8 +36,8 @@ class TestPageOrderByAllowlist:
     @pytest.mark.parametrize(
         "order_by",
         [
-            "password",            # invalid field → FieldError (500) pre-fix
-            "bogus__field__x",     # invalid relation path → FieldError (500) pre-fix
+            "password",  # invalid field → FieldError (500) pre-fix
+            "bogus__field__x",  # invalid relation path → FieldError (500) pre-fix
             "owned_by__password",  # valid relation path → ORM traversal pre-fix
         ],
     )
@@ -74,15 +72,11 @@ class TestPageOrderByAllowlist:
         guards against the param being silently overridden by a later
         .order_by() call."""
         project = Project.objects.create(name="P2", identifier="ORD", workspace=workspace)
-        ProjectMember.objects.create(
-            workspace=workspace, project=project, member=create_user, role=20, is_active=True
-        )
+        ProjectMember.objects.create(workspace=workspace, project=project, member=create_user, role=20, is_active=True)
         # Non-favorite public pages so the favourite-first primary sort is a
         # no-op and the secondary (name) ordering is observable.
         for name in ("Gamma", "Alpha", "Beta"):
-            page = Page.objects.create(
-                workspace=workspace, owned_by=create_user, access=Page.PUBLIC_ACCESS, name=name
-            )
+            page = Page.objects.create(workspace=workspace, owned_by=create_user, access=Page.PUBLIC_ACCESS, name=name)
             ProjectPage.objects.create(workspace=workspace, project=project, page=page)
 
         asc = session_client.get(_pages_url(workspace.slug, project.id), {"order_by": "name"})
