@@ -4,7 +4,7 @@
 
 from typing import Dict, List, Union
 
-from .formatters import BaseFormatter, CSVFormatter, JSONFormatter, XLSXFormatter
+from .formatters import CSVFormatter, JSONFormatter, XLSXFormatter
 
 
 class DataImporter:

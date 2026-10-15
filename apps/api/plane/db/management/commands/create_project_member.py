@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -51,12 +52,9 @@ class Command(BaseCommand):
             if not WorkspaceMember.objects.filter(workspace=project.workspace, member=user, is_active=True).exists():
                 raise CommandError("User not member in workspace")
 
-
             if ProjectMember.objects.filter(project=project, member=user).exists():
                 # Update the project member
-                ProjectMember.objects.filter(project=project, member=user).update(
-                    is_active=True, role=role
-                )
+                ProjectMember.objects.filter(project=project, member=user).update(is_active=True, role=role)
             else:
                 # Create the project member
                 ProjectMember.objects.create(project=project, member=user, role=role)

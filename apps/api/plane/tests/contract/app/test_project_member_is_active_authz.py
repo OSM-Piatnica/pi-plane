@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """
@@ -57,9 +58,7 @@ def project(db, workspace, create_user):
     )
     # create_user is the workspace owner (role=20 via the workspace fixture);
     # make them a project ADMIN too — this is the takeover victim.
-    ProjectMember.objects.create(
-        workspace=workspace, project=project, member=create_user, role=20, is_active=True
-    )
+    ProjectMember.objects.create(workspace=workspace, project=project, member=create_user, role=20, is_active=True)
     return project
 
 

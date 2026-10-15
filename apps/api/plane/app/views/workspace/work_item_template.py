@@ -58,11 +58,13 @@ class WorkspaceWorkItemTemplateViewSet(BaseViewSet):
         return self.paginate(
             request=request,
             queryset=qs.order_by("-sort_order", "-created_at"),
-            on_results=lambda rows: WorkItemTemplateSerializer(
-                rows,
-                many=True,
-                context={**self.get_serializer_context(), "for_project": fp},
-            ).data,
+            on_results=lambda rows: (
+                WorkItemTemplateSerializer(
+                    rows,
+                    many=True,
+                    context={**self.get_serializer_context(), "for_project": fp},
+                ).data
+            ),
             default_per_page=50,
         )
 
@@ -87,9 +89,7 @@ class WorkspaceWorkItemTemplateViewSet(BaseViewSet):
         if serializer.is_valid():
             serializer.save()
             return Response(
-                WorkItemTemplateSerializer(
-                    serializer.instance, context={**self.get_serializer_context()}
-                ).data,
+                WorkItemTemplateSerializer(serializer.instance, context={**self.get_serializer_context()}).data,
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -268,9 +268,7 @@ def issue_export_task(
         if multiple:
             project_identifiers = {
                 str(project_id): identifier
-                for project_id, identifier in Project.objects.filter(id__in=project_ids).values_list(
-                    "id", "identifier"
-                )
+                for project_id, identifier in Project.objects.filter(id__in=project_ids).values_list("id", "identifier")
             }
             # Export each project separately with its own queryset
             for project_id in project_ids:

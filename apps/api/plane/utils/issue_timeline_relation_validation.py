@@ -226,8 +226,4 @@ def validate_issue_dates_batch(updates, issues_by_id):
 
 
 def get_issue_with_timeline_prefetch(issue_id):
-    return (
-        Issue.objects.select_related("state", "project")
-        .filter(pk=issue_id)
-        .first()
-    )
+    return Issue.objects.select_related("state", "project").filter(pk=issue_id).first()

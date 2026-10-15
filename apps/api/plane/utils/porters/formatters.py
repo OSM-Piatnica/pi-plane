@@ -155,9 +155,7 @@ class CSVFormatter(BaseFormatter):
             for row in data:
                 writer.writerow(sanitize_csv_row([row.get(key, "") for key in fieldnames]))
         else:
-            writer = csv.DictWriter(
-                output, fieldnames=fieldnames, delimiter=self.delimiter, lineterminator="\r\n"
-            )
+            writer = csv.DictWriter(output, fieldnames=fieldnames, delimiter=self.delimiter, lineterminator="\r\n")
             writer.writerow({k: sanitize_csv_value(k) for k in fieldnames})
             for row in data:
                 writer.writerow({k: sanitize_csv_value(row.get(k, "")) for k in fieldnames})

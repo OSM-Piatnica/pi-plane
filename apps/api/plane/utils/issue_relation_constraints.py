@@ -125,28 +125,18 @@ def is_status_transition_allowed(relation_type, issue_group, related_group) -> b
 def date_violation_message(relation_type, issue_ref: str, related_ref: str) -> str:
     messages = {
         "blocked_by": (
-            f"Cannot update dates: {issue_ref} cannot start before {related_ref} finishes "
-            f"(blocked by relation)."
+            f"Cannot update dates: {issue_ref} cannot start before {related_ref} finishes (blocked by relation)."
         ),
-        "blocking": (
-            f"Cannot update dates: {issue_ref} must finish before {related_ref} starts "
-            f"(blocking relation)."
-        ),
+        "blocking": (f"Cannot update dates: {issue_ref} must finish before {related_ref} starts (blocking relation)."),
         "start_before": (
-            f"Cannot update dates: {issue_ref} must start on or before {related_ref} "
-            f"(starts before relation)."
+            f"Cannot update dates: {issue_ref} must start on or before {related_ref} (starts before relation)."
         ),
-        "start_after": (
-            f"Cannot update dates: {issue_ref} cannot start before {related_ref} "
-            f"(starts after relation)."
-        ),
+        "start_after": (f"Cannot update dates: {issue_ref} cannot start before {related_ref} (starts after relation)."),
         "finish_before": (
-            f"Cannot update dates: {issue_ref} must finish on or before {related_ref} "
-            f"(finishes before relation)."
+            f"Cannot update dates: {issue_ref} must finish on or before {related_ref} (finishes before relation)."
         ),
         "finish_after": (
-            f"Cannot update dates: {issue_ref} cannot finish before {related_ref} "
-            f"(finishes after relation)."
+            f"Cannot update dates: {issue_ref} cannot finish before {related_ref} (finishes after relation)."
         ),
     }
     return messages[relation_type]
@@ -155,8 +145,7 @@ def date_violation_message(relation_type, issue_ref: str, related_ref: str) -> s
 def status_violation_message(relation_type, issue_ref: str, related_ref: str) -> str:
     if relation_type == "start_after":
         return (
-            f"Cannot change status: {issue_ref} cannot start until {related_ref} has started "
-            f"(starts after relation)."
+            f"Cannot change status: {issue_ref} cannot start until {related_ref} has started (starts after relation)."
         )
     if relation_type == "finish_after":
         return (

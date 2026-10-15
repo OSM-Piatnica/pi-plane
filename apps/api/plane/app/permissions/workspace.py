@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Third Party imports
@@ -130,8 +131,6 @@ class WorkspaceMemberPermission(BasePermission):
 
         slug = view.kwargs.get("slug")
         if slug:
-            return WorkspaceMember.objects.filter(
-                workspace__slug=slug, member=request.user, is_active=True
-            ).exists()
+            return WorkspaceMember.objects.filter(workspace__slug=slug, member=request.user, is_active=True).exists()
 
         return False

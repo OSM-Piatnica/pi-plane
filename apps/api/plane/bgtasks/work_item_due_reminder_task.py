@@ -143,9 +143,7 @@ def build_groups(issue_ids, web_url, today, overdue=False):
 
     groups = []
     for issue in (
-        Issue.issue_objects.filter(pk__in=issue_ids)
-        .select_related("project", "workspace", "state")
-        .order_by(*ordering)
+        Issue.issue_objects.filter(pk__in=issue_ids).select_related("project", "workspace", "state").order_by(*ordering)
     ):
         project_url = f"{web_url}/{issue.workspace.slug}/projects/{issue.project_id}/issues/"
         if not groups or groups[-1]["project_id"] != str(issue.project_id):

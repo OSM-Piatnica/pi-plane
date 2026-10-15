@@ -220,13 +220,11 @@ class ProjectWorkflowStatesEndpoint(BaseAPIView):
         workflows = Workflow.objects.filter(
             project_id=project_id,
             deleted_at__isnull=True,
-        ).prefetch_related(
-            "state_configs__state", "flows__source_state", "flows__target_state", "flows__reject_state"
-        )
+        ).prefetch_related("state_configs__state", "flows__source_state", "flows__target_state", "flows__reject_state")
 
-        states = State.objects.filter(
-            project_id=project_id, deleted_at__isnull=True, is_triage=False
-        ).order_by("sequence")
+        states = State.objects.filter(project_id=project_id, deleted_at__isnull=True, is_triage=False).order_by(
+            "sequence"
+        )
 
         return Response(
             {
@@ -325,13 +323,17 @@ class IssueWorkflowTransitionEndpoint(BaseAPIView):
 class WorkflowApprovalActionEndpoint(BaseAPIView):
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     def post(self, request, slug, project_id, issue_id, approval_id, action):
-        approval = WorkflowApproval.objects.filter(
-            pk=approval_id,
-            issue_id=issue_id,
-            project_id=project_id,
-            workspace__slug=slug,
-            deleted_at__isnull=True,
-        ).select_related("flow", "issue", "issue__project").first()
+        approval = (
+            WorkflowApproval.objects.filter(
+                pk=approval_id,
+                issue_id=issue_id,
+                project_id=project_id,
+                workspace__slug=slug,
+                deleted_at__isnull=True,
+            )
+            .select_related("flow", "issue", "issue__project")
+            .first()
+        )
 
         if not approval:
             return Response({"error": "Approval not found"}, status=status.HTTP_404_NOT_FOUND)
