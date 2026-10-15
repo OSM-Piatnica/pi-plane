@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -26,7 +27,7 @@ type Props = {
   enableBlockRightResize: boolean;
   enableBlockMove: boolean;
   enableDependency: boolean | ((blockId: string) => boolean);
-  ganttContainerRef: RefObject<HTMLDivElement>;
+  ganttContainerRef: RefObject<HTMLDivElement | null>;
 };
 
 export const ChartDraggable = observer(function ChartDraggable(props: Props) {

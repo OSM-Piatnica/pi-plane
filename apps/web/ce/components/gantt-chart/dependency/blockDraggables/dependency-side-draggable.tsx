@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -20,7 +21,7 @@ import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
 
 type Props = {
   block: IGanttBlock;
-  ganttContainerRef: RefObject<HTMLDivElement>;
+  ganttContainerRef: RefObject<HTMLDivElement | null>;
   side: "left" | "right";
 };
 

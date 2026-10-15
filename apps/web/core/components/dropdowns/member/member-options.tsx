@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -126,7 +127,7 @@ export const MemberOptions = observer(function MemberOptions(props: Props) {
   );
 
   return createPortal(
-    <Combobox.Options data-prevent-outside-click static>
+    <Combobox.Options as="ul" data-prevent-outside-click static>
       <div
         className={cn(
           "z-30 my-1 w-48 rounded-sm border-[0.5px] border-strong bg-surface-1 px-2 py-2.5 text-11 shadow-raised-200 focus:outline-none",
@@ -158,6 +159,7 @@ export const MemberOptions = observer(function MemberOptions(props: Props) {
                 (option) =>
                   option && (
                     <Combobox.Option
+                      as="li"
                       key={option.value}
                       value={option.value}
                       className={({ active, selected }) =>

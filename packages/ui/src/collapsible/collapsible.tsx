@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,7 +11,7 @@ import React, { useState, useEffect, useCallback } from "react";
 export type TCollapsibleProps = {
   title: string | React.ReactNode;
   children: React.ReactNode;
-  buttonRef?: React.RefObject<HTMLButtonElement>;
+  buttonRef?: React.RefObject<HTMLButtonElement | null>;
   className?: string;
   buttonClassName?: string;
   isOpen?: boolean;
@@ -44,6 +45,7 @@ export function Collapsible(props: TCollapsibleProps) {
         {title}
       </Disclosure.Button>
       <Transition
+        as="div"
         show={localIsOpen}
         enter="transition-all duration-300 ease-in-out"
         enterFrom="grid-rows-[0fr] opacity-0"

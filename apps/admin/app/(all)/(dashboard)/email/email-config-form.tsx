@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -59,7 +60,7 @@ export function InstanceEmailForm(props: IInstanceEmailForm) {
       ENABLE_SMTP: config["ENABLE_SMTP"],
     },
   });
-  const emailFormFields: TControllerInputFormField[] = [
+  const emailFormFields: TControllerInputFormField<EmailFormValues>[] = [
     {
       key: "EMAIL_HOST",
       type: "text",
@@ -88,7 +89,7 @@ export function InstanceEmailForm(props: IInstanceEmailForm) {
     },
   ];
 
-  const OptionalEmailFormFields: TControllerInputFormField[] = [
+  const OptionalEmailFormFields: TControllerInputFormField<EmailFormValues>[] = [
     {
       key: "EMAIL_HOST_USER",
       type: "text",

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -114,7 +115,11 @@ export function ParentIssuesListModal({
             tabIndex={baseTabIndex}
           />
         </div>
-        <Combobox.Options static className="vertical-scrollbar scrollbar-md max-h-80 scroll-py-2 overflow-y-auto">
+        <Combobox.Options
+          as="ul"
+          static
+          className="vertical-scrollbar scrollbar-md max-h-80 scroll-py-2 overflow-y-auto"
+        >
           {searchTerm !== "" && (
             <h5 className="mx-2 text-13 text-secondary">
               Search results for{" "}
@@ -147,6 +152,7 @@ export function ParentIssuesListModal({
                 <ul className={`text-13 ${issues.length > 0 ? "p-2" : ""}`}>
                   {issues.map((issue) => (
                     <Combobox.Option
+                      as="li"
                       key={issue.id}
                       value={issue}
                       className={({ active, selected }) =>

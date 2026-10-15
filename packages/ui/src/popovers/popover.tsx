@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -29,7 +30,8 @@ export function Popover(props: TPopover) {
   } = props;
   // states
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
+  // Headless UI v2 types Panel's ref as Ref<HTMLElement> rather than the concrete tag.
+  const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
 
   // react-popper derived values
   const { styles, attributes } = usePopper(referenceElement, popperElement, {

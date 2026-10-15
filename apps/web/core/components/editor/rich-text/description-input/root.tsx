@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -48,7 +49,7 @@ type Props = {
   /**
    * @description Editor ref, this will be used to imperatively attach editor related helper functions
    */
-  editorRef?: React.RefObject<EditorRefApi>;
+  editorRef?: React.RefObject<EditorRefApi | null>;
   /**
    * @description Entity ID, this will be used for file uploads and as the unique identifier for the entity
    */

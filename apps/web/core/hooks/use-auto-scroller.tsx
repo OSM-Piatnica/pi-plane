@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -13,12 +14,12 @@ const AUTO_SCROLL_THRESHOLD = 15;
 const MAX_SPEED_THRESHOLD = 5;
 
 export const useAutoScroller = (
-  containerRef: RefObject<HTMLDivElement>,
+  containerRef: RefObject<HTMLDivElement | null>,
   shouldScroll = false,
   leftOffset = 0,
   topOffset = 0
 ) => {
-  const containerDimensions = useRef<DOMRect | undefined>();
+  const containerDimensions = useRef<DOMRect | undefined>(undefined);
   const intervalId = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
   const mousePosition = useRef<{ clientX: number; clientY: number } | undefined>(undefined);
 

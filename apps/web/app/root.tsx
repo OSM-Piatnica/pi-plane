@@ -11,7 +11,6 @@ import type { LinksFunction } from "react-router";
 import { ThemeProvider } from "next-themes";
 // plane imports
 import { SITE_DESCRIPTION, SITE_NAME } from "@plane/constants";
-import { cn } from "@plane/utils";
 // types
 // assets
 import favicon16 from "@/app/assets/favicon/favicon-16x16.png?url";
@@ -28,7 +27,6 @@ import { LogoSpinner } from "@/components/common/logo-spinner";
 import { isStaleAssetError, recoverFromStaleAsset } from "@/lib/stale-asset-error";
 // local
 import { CustomErrorComponent } from "./error";
-import { AppProvider } from "./provider";
 // fonts
 // oxlint-disable-next-line eslint(import/no-unassigned-import) -- side-effect font CSS
 import "@fontsource-variable/inter";
@@ -114,16 +112,11 @@ export const meta: Route.MetaFunction = () => [
   { name: "twitter:image:alt", content: "Plane - Modern project management" },
 ];
 
+// Root stays shell-thin: in SPA mode React Router server-builds only the root route, so
+// everything imported here is evaluated in Node just to prerender the fallback index.html.
+// Providers, the store layer, and app chrome belong in app/layout.tsx — never import them here.
 export default function Root() {
-  return (
-    <AppProvider>
-      <div className={cn("relative flex h-screen w-full flex-col overflow-hidden bg-canvas", "desktop-app-container")}>
-        <main className="relative h-full w-full overflow-hidden">
-          <Outlet />
-        </main>
-      </div>
-    </AppProvider>
-  );
+  return <Outlet />;
 }
 
 export function HydrateFallback() {

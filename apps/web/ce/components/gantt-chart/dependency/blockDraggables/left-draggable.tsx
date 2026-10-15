@@ -13,7 +13,7 @@ import { DependencySideDraggable } from "./dependency-side-draggable";
 
 type Props = {
   block: IGanttBlock;
-  ganttContainerRef: RefObject<HTMLDivElement>;
+  ganttContainerRef: RefObject<HTMLDivElement | null>;
 };
 
 export const LeftDependencyDraggable = observer(function LeftDependencyDraggable(props: Props) {

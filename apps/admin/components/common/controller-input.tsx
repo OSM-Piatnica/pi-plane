@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React, { useState } from "react";
-import type { Control } from "react-hook-form";
+import type { Control, FieldPath, FieldValues } from "react-hook-form";
 import { Controller } from "react-hook-form";
 // icons
 import { Eye, EyeOff } from "lucide-react";
@@ -13,10 +14,13 @@ import { Eye, EyeOff } from "lucide-react";
 import { Input } from "@plane/ui";
 import { cn } from "@plane/utils";
 
-type Props = {
-  control: Control<any>;
+// Generic over the form's values because react-hook-form's Control is invariant: its
+// `_options.validate` narrows `name` to a keyof union, so `Control<any>` no longer
+// accepts a typed form's control. Inferring from `control` keeps call sites unchanged.
+type Props<TFieldValues extends FieldValues = FieldValues> = {
+  control: Control<TFieldValues>;
   type: "text" | "password";
-  name: string;
+  name: FieldPath<TFieldValues>;
   label: string;
   description?: string | React.ReactNode;
   placeholder: string;
@@ -24,8 +28,8 @@ type Props = {
   required: boolean;
 };
 
-export type TControllerInputFormField = {
-  key: string;
+export type TControllerInputFormField<TFieldValues extends FieldValues = FieldValues> = {
+  key: FieldPath<TFieldValues>;
   type: "text" | "password";
   label: string;
   description?: string | React.ReactNode;
@@ -34,7 +38,7 @@ export type TControllerInputFormField = {
   required: boolean;
 };
 
-export function ControllerInput(props: Props) {
+export function ControllerInput<TFieldValues extends FieldValues = FieldValues>(props: Props<TFieldValues>) {
   const { name, control, type, label, description, placeholder, error, required } = props;
   // states
   const [showPassword, setShowPassword] = useState(false);

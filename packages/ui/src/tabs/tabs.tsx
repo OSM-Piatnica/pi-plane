@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -69,7 +70,7 @@ export function Tabs(props: TTabsProps) {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <Tab.Group defaultIndex={currentTabIndex(selectedTab)}>
+      <Tab.Group as={Fragment} defaultIndex={currentTabIndex(selectedTab)}>
         <div className={cn("flex h-full w-full flex-col gap-2", containerClassName)}>
           <div className={cn("flex w-full items-center gap-4", tabListContainerClassName)}>
             <TabList

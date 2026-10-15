@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 
 const useIntegrationPopup = ({
@@ -30,19 +31,34 @@ const useIntegrationPopup = ({
     }`,
   };
 
-  const popup = useRef<any>();
+  const popup = useRef<Window | null>(null);
+  const popupCheckIntervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
+
+  // release the polling interval if the component unmounts mid-auth
+  useEffect(
+    () => () => {
+      if (popupCheckIntervalRef.current) clearInterval(popupCheckIntervalRef.current);
+    },
+    []
+  );
 
   const checkPopup = () => {
-    const check = setInterval(() => {
-      if (!popup || popup.current.closed || popup.current.closed === undefined) {
-        clearInterval(check);
+    // a repeated click restarts the flow, so retire the previous poller before
+    // replacing the ref — otherwise it outlives its popup and clears its successor
+    if (popupCheckIntervalRef.current) clearInterval(popupCheckIntervalRef.current);
+
+    const intervalId = setInterval(() => {
+      if (!popup.current || popup.current.closed) {
+        clearInterval(intervalId);
+        popupCheckIntervalRef.current = undefined;
         setAuthLoader(false);
       }
     }, 1000);
+    popupCheckIntervalRef.current = intervalId;
   };
 
-  const openPopup = () => {
-    if (!provider) return;
+  const openPopup = (): Window | null => {
+    if (!provider) return null;
 
     const width = 600,
       height = 600;
@@ -55,6 +71,7 @@ const useIntegrationPopup = ({
 
   const startAuth = () => {
     popup.current = openPopup();
+    if (!popup.current) return;
     checkPopup();
     setAuthLoader(true);
   };

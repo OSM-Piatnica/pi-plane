@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -18,7 +19,7 @@ import useExtendedSidebarOutsideClickDetector from "@/hooks/use-extended-sidebar
 type Props = {
   className?: string;
   children: React.ReactNode;
-  extendedSidebarRef: React.RefObject<HTMLDivElement>;
+  extendedSidebarRef: React.RefObject<HTMLDivElement | null>;
   isExtendedSidebarOpened: boolean;
   handleClose: () => void;
   excludedElementId: string;

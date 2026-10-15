@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -22,7 +23,7 @@ type Props<T extends IBaseLayoutsBaseItem> = {
   blockUpdateHandler: (block: T, payload: IBlockUpdateData) => void;
   canLoadMoreBlocks?: boolean;
   loadMoreItems?: (groupId: string) => void;
-  ganttContainerRef: RefObject<HTMLDivElement>;
+  ganttContainerRef: RefObject<HTMLDivElement | null>;
   blockIds: string[];
   enableReorder: boolean;
   showAllBlocks?: boolean;

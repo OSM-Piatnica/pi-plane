@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -238,6 +239,7 @@ export const SidebarFavoritesMenu = observer(function SidebarFavoritesMenu() {
           </div>
         </div>
         <Transition
+          as="div"
           show={isFavoriteMenuOpen}
           enter="transition duration-100 ease-out"
           enterFrom="transform scale-95 opacity-0"

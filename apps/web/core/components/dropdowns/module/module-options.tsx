@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -113,7 +114,7 @@ export const ModuleOptions = observer(function ModuleOptions(props: Props) {
   );
 
   return (
-    <Combobox.Options className="fixed z-10" static>
+    <Combobox.Options as="ul" className="fixed z-10" static>
       <div
         className="my-1 w-48 rounded-sm border-[0.5px] border-strong bg-surface-1 px-2 py-2.5 text-11 shadow-raised-200 focus:outline-none"
         ref={setPopperElement}
@@ -138,6 +139,7 @@ export const ModuleOptions = observer(function ModuleOptions(props: Props) {
             filteredOptions.length > 0 ? (
               filteredOptions.map((option) => (
                 <Combobox.Option
+                  as="li"
                   key={option.value}
                   value={option.value}
                   className={({ active, selected }) =>

@@ -1,15 +1,16 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { Tab } from "@headlessui/react";
 import type { LucideProps } from "lucide-react";
 import type { FC } from "react";
-import React from "react";
+import React, { Fragment } from "react";
 // helpers
-import { cn } from "../utils";
+import { cn } from "../utils/classname";
 
 export type TabListItem = {
   key: string;
@@ -31,7 +32,7 @@ type TTabListProps = {
 
 export function TabList({ autoWrap = true, ...props }: TTabListProps) {
   return autoWrap ? (
-    <Tab.Group>
+    <Tab.Group as={Fragment}>
       <TabListInner {...props} />
     </Tab.Group>
   ) : (

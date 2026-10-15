@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -42,9 +43,12 @@ export const buttonVariants = cva(
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants> & {
-    appendIcon?: React.ReactElement;
+    // React 19 defaults ReactElement's props to `unknown`, which would force every
+    // caller to redeclare the icon's props. `any` keeps the React 18 behaviour these
+    // props already had, so cloneElement below still injects className/strokeWidth.
+    appendIcon?: React.ReactElement<any>;
     loading?: boolean;
-    prependIcon?: React.ReactElement;
+    prependIcon?: React.ReactElement<any>;
   };
 
 export type TButtonVariant = NonNullable<ButtonProps["variant"]>;
