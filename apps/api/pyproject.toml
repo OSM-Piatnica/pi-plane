@@ -7,7 +7,7 @@ dependencies = [
     # django
     "Django==5.2.18",
     # rest framework
-    "djangorestframework==3.17.1",
+    "djangorestframework==3.17.2",
     # postgres (the psycopg implementation comes from a group: psycopg-c in
     # production, psycopg-binary in dev/test)
     "psycopg==3.3.6",
@@ -58,7 +58,7 @@ dependencies = [
     # s3
     "boto3==1.43.113",
     # http client (pinned to address CVE-2026-44431 and CVE-2026-44432)
-    "urllib3>=2.7.0",
+    "urllib3>=2.8.0",
     # requests — used directly for webhook delivery & link unfurling; pinned to
     # >=2.32 for the get_connection_with_tls_context adapter hook (SSRF IP pinning)
     "requests==2.34.2",
