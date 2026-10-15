@@ -1,7 +1,5 @@
 ARG IMAGE_REPO=ghcr.io/osm-piatnica/pi-plane
 ARG PLANE_VERSION=v0.27.1
-FROM --platform=$BUILDPLATFORM tonistiigi/binfmt AS binfmt
-
 # **************************************************
 #  STAGE 0: Image Loading
 # **************************************************
