@@ -263,7 +263,7 @@
           "message": "{templateName}, het sjabloon van het type {templateType}, is nu beschikbaar voor je werkruimte."
         },
         "error": {
-          "title": "We konden dat sjabloon dit keer niet maken.",
+          "title": "We konden dat sjabloon deze keer niet aanmaken.",
           "message": "Probeer je gegevens opnieuw op te slaan of kopieer ze naar een nieuw sjabloon, bij voorkeur in een ander tabblad."
         }
       },
@@ -283,7 +283,7 @@
           "message": "{templateName}, het sjabloon van het type {templateType}, is verwijderd uit je werkruimte."
         },
         "error": {
-          "title": "We konden dat sjabloon dit keer niet verwijderen.",
+          "title": "We konden dat sjabloon deze keer niet verwijderen.",
           "message": "Probeer het opnieuw te verwijderen of kom er later op terug. Lukt verwijderen dan nog niet, neem dan contact met ons op."
         }
       },
@@ -293,7 +293,7 @@
           "message": "Van {templateName}, het sjabloon van het type {templateType}, is de publicatie ongedaan gemaakt."
         },
         "error": {
-          "title": "We konden de publicatie van dat sjabloon dit keer niet ongedaan maken.",
+          "title": "We konden de publicatie van dat sjabloon deze keer niet ongedaan maken.",
           "message": "Probeer de publicatie opnieuw ongedaan te maken of kom er later op terug. Lukt het dan nog niet, neem dan contact met ons op."
         }
       }

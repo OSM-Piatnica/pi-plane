@@ -80,7 +80,7 @@
       "overview": "Overzicht",
       "created": "Aangemaakte werkitems",
       "assigned": "Toegewezen werkitems",
-      "subscribed": "Werkitems met abonnement",
+      "subscribed": "Geabonneerde werkitems",
       "state_distribution": {
         "title": "Werkitems per status",
         "empty": "Maak werkitems aan om ze per status in de grafiek te bekijken voor een betere analyse."

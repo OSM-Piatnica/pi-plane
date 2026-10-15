@@ -137,7 +137,7 @@
         "character": "Schatting moet een tekstwaarde zijn.",
         "empty": "Schattingswaarde mag niet leeg zijn.",
         "already_exists": "Schattingswaarde bestaat al.",
-        "unsaved_changes": "Je hebt niet-opgeslagen wijzigingen. Sla ze op voordat je op gereed klikt",
+        "unsaved_changes": "Je hebt niet-opgeslagen wijzigingen. Sla ze op voordat je op Klaar klikt",
         "remove_empty": "Schatting mag niet leeg zijn. Voer in elk veld een waarde in of verwijder de velden waarvoor je geen waarden hebt.",
         "fill": "Vul dit schattingsveld in",
         "repeat": "Schattingswaarde mag niet worden herhaald"
@@ -328,7 +328,7 @@
         "short_title": "Cycli",
         "description": "Plan werk in flexibele periodes die zich aanpassen aan het unieke ritme en tempo van dit project.",
         "toggle_title": "Cycli inschakelen",
-        "toggle_description": "Plan werk in gefocuste tijdsperiodes."
+        "toggle_description": "Plan werk in gerichte tijdvakken."
       },
       "modules": {
         "title": "Modules",
@@ -441,7 +441,7 @@
     "cycles": {
       "auto_schedule": {
         "heading": "Cycli automatisch plannen",
-        "description": "Houd cycli draaiende zonder handmatige instelling.",
+        "description": "Houd cycli in beweging zonder handmatige instelling.",
         "tooltip": "Maak automatisch nieuwe cycli aan op basis van je gekozen schema.",
         "edit_button": "Bewerken",
         "form": {

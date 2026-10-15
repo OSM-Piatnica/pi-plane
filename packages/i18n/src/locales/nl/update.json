@@ -3,7 +3,7 @@
     "progress": {
       "title": "Voortgang",
       "since_last_update": "Sinds laatste update",
-      "comments": "{count, plural, one{# reactie} other{# reacties}}"
+      "comments": "{count, plural, one{# opmerking} other{# opmerkingen}}"
     },
     "add_update": "Update toevoegen",
     "add_update_placeholder": "Voeg hier je update toe",

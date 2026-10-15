@@ -154,7 +154,7 @@
     },
     "activity": {
       "filters": {
-        "show_fails": "Mislukte tonen",
+        "show_fails": "Mislukkingen tonen",
         "all": "Alles",
         "only_activity": "Alleen activiteit",
         "only_run_history": "Alleen uitvoeringsgeschiedenis"
