@@ -140,7 +140,7 @@ services:
       - |
         set -e
         if ! command -v uv >/dev/null 2>&1; then
-          echo "api-tests image predates the uv migration; rebuild it: docker compose -f docker-compose-test.yml build api-tests" >&2
+          echo "api-tests image predates the uv migration; rebuild it: docker compose -f compose-test.yaml build api-tests" >&2
           exit 1
         fi
         uv sync --locked --inexact
