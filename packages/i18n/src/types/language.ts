@@ -19,6 +19,7 @@ export type TLanguage =
   | "de"
   | "ua"
   | "pl"
+  | "nl"
   | "ko"
   | "pt-BR"
   | "pt-PT"

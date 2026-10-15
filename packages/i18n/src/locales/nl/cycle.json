@@ -1,0 +1,72 @@
+{
+  "active_cycle": {
+    "empty_state": {
+      "progress": {
+        "title": "Voeg werkitems toe aan de cyclus om de voortgang te bekijken"
+      },
+      "chart": {
+        "title": "Voeg werkitems toe aan de cyclus om de burndown-grafiek te bekijken."
+      },
+      "priority_issue": {
+        "title": "Zie in één oogopslag welke werkitems met hoge prioriteit in de cyclus worden aangepakt."
+      },
+      "assignee": {
+        "title": "Wijs werkitems toe aan mensen om een overzicht van het werk per toegewezene te zien."
+      },
+      "label": {
+        "title": "Voeg labels toe aan werkitems om een overzicht van het werk per label te zien."
+      }
+    }
+  },
+  "cycle": {
+    "label": "{count, plural, one {Cyclus} other {Cycli}}",
+    "no_cycle": "Geen cyclus"
+  },
+  "active_cycle_analytics": {
+    "empty_state": {
+      "progress": {
+        "title": "Voeg werkitems toe aan de cyclus om de\n voortgang te bekijken"
+      },
+      "priority": {
+        "title": "Zie in één oogopslag welke werkitems met hoge\n prioriteit in de cyclus worden aangepakt."
+      },
+      "assignee": {
+        "title": "Wijs werkitems toe aan mensen om een\n overzicht van het werk per toegewezene te zien."
+      },
+      "label": {
+        "title": "Voeg labels toe aan werkitems om een\n overzicht van het werk per label te zien."
+      }
+    }
+  },
+  "cycle_ui": {
+    "user_avatar_alt": "Gebruiker",
+    "no_labels": "Geen labels",
+    "pending_points": "Openstaande punten - {count}",
+    "pending_work_items": "Openstaande werkitems - {count}",
+    "closed_progress": "{closed}/{total} {label} gesloten",
+    "burn_down": "Burn-down",
+    "burn_up": "Burn-up",
+    "status_filter_title": "Status van de cyclus",
+    "custom": "Aangepast",
+    "archive_success_title": "Archiveren geslaagd",
+    "archive_success_message": "Je archieven vind je in de projectarchieven.",
+    "archive_error": "Cyclus kon niet worden gearchiveerd. Probeer het opnieuw.",
+    "archive_modal_title": "Cyclus {name} archiveren",
+    "archive_modal_description": "Weet je zeker dat je de cyclus wilt archiveren? Al je archieven kunnen later worden hersteld.",
+    "delete_modal_title": "Cyclus verwijderen",
+    "delete_modal_description": "Weet je zeker dat je cyclus \"{name}\" wilt verwijderen? Alle gegevens van de cyclus worden definitief verwijderd. Deze actie kan niet ongedaan worden gemaakt.",
+    "create_success": "Cyclus succesvol aangemaakt.",
+    "create_error": "Fout bij het aanmaken van de cyclus. Probeer het opnieuw.",
+    "transfer_title": "Werkitems overdragen",
+    "transfer_search_placeholder": "Zoek een cyclus...",
+    "transfer_success": "Werkitems zijn succesvol overgedragen",
+    "transfer_error": "Werkitems kunnen niet worden overgedragen. Probeer het opnieuw.",
+    "transfer_fetch_error": "Cyclusdetails kunnen niet worden opgehaald",
+    "no_current_cycle": "Je hebt geen huidige cyclus. Maak er een aan om de werkitems over te dragen.",
+    "completed_not_editable": "Voltooide cycli kunnen niet worden bewerkt.",
+    "work_items_in_cycle": "Werkitems in deze cyclus: {count}",
+    "not_found_title": "Cyclus bestaat niet",
+    "not_found_description": "De cyclus die je zoekt bestaat niet of is verwijderd.",
+    "view_other_cycles": "Andere cycli bekijken"
+  }
+}

@@ -1,0 +1,333 @@
+{
+  "templates": {
+    "settings": {
+      "title": "Sjablonen",
+      "description": "Bespaar 80% van de tijd die je besteedt aan het maken van projecten, werkitems en pagina's door sjablonen te gebruiken.",
+      "new_project_template": "Nieuw projectsjabloon",
+      "new_work_item_template": "Nieuw werkitemsjabloon",
+      "new_page_template": "Nieuw paginasjabloon",
+      "options": {
+        "project": {
+          "label": "Projectsjablonen"
+        },
+        "work_item": {
+          "label": "Werkitemsjablonen"
+        },
+        "page": {
+          "label": "Paginasjablonen"
+        }
+      },
+      "create_template": {
+        "label": "Sjabloon maken",
+        "no_permission": {
+          "project": "Neem contact op met je projectbeheerder om sjablonen te maken",
+          "workspace": "Neem contact op met je werkruimtebeheerder om sjablonen te maken"
+        }
+      },
+      "use_template": {
+        "button": {
+          "default": "Sjabloon gebruiken",
+          "loading": "Toepassen"
+        }
+      },
+      "template_source": {
+        "workspace": {
+          "info": "Afgeleid van werkruimte"
+        },
+        "project": {
+          "info": "Afgeleid van project"
+        }
+      },
+      "form": {
+        "project": {
+          "template": {
+            "name": {
+              "placeholder": "Geef je projectsjabloon een naam.",
+              "validation": {
+                "required": "Sjabloonnaam is verplicht",
+                "maxLength": "Sjabloonnaam moet korter zijn dan 255 tekens"
+              }
+            },
+            "description": {
+              "placeholder": "Beschrijf wanneer en hoe dit sjabloon wordt gebruikt."
+            }
+          },
+          "name": {
+            "placeholder": "Geef je project een naam.",
+            "validation": {
+              "required": "Projecttitel is verplicht",
+              "maxLength": "Projecttitel moet korter zijn dan 255 tekens"
+            }
+          },
+          "description": {
+            "placeholder": "Beschrijf het doel en de doelstellingen van dit project."
+          },
+          "button": {
+            "create": "Projectsjabloon maken",
+            "update": "Projectsjabloon bijwerken"
+          }
+        },
+        "work_item": {
+          "template": {
+            "name": {
+              "placeholder": "Geef je werkitemsjabloon een naam.",
+              "validation": {
+                "required": "Sjabloonnaam is verplicht",
+                "maxLength": "Sjabloonnaam moet korter zijn dan 255 tekens"
+              }
+            },
+            "description": {
+              "placeholder": "Beschrijf wanneer en hoe dit sjabloon wordt gebruikt."
+            }
+          },
+          "name": {
+            "placeholder": "Geef dit werkitem een titel.",
+            "validation": {
+              "required": "Werkitemtitel is verplicht",
+              "maxLength": "Werkitemtitel moet korter zijn dan 255 tekens"
+            }
+          },
+          "description": {
+            "placeholder": "Beschrijf dit werkitem zodat duidelijk is wat je bereikt als je het voltooit."
+          },
+          "button": {
+            "create": "Werkitemsjabloon maken",
+            "update": "Werkitemsjabloon bijwerken"
+          }
+        },
+        "page": {
+          "template": {
+            "name": {
+              "placeholder": "Geef je paginasjabloon een naam.",
+              "validation": {
+                "required": "Sjabloonnaam is verplicht",
+                "maxLength": "Sjabloonnaam moet korter zijn dan 255 tekens"
+              }
+            },
+            "description": {
+              "placeholder": "Beschrijf wanneer en hoe dit sjabloon wordt gebruikt."
+            }
+          },
+          "name": {
+            "placeholder": "Naamloze pagina",
+            "validation": {
+              "maxLength": "Paginanaam moet korter zijn dan 255 tekens"
+            }
+          },
+          "button": {
+            "create": "Paginasjabloon maken",
+            "update": "Paginasjabloon bijwerken"
+          }
+        },
+        "publish": {
+          "action": "{isPublished, select, true {Publicatie-instellingen} other {Publiceren op Marketplace}}",
+          "unpublish_action": "Publicatie op Marketplace ongedaan maken",
+          "title": "Maak je sjabloon vindbaar en herkenbaar.",
+          "name": {
+            "label": "Naam van sjabloon",
+            "placeholder": "Geef je sjabloon een naam",
+            "validation": {
+              "required": "Sjabloonnaam is verplicht",
+              "maxLength": "Sjabloonnaam moet korter zijn dan 255 tekens"
+            }
+          },
+          "short_description": {
+            "label": "Korte beschrijving",
+            "placeholder": "Dit sjabloon is ideaal voor projectmanagers die meerdere projecten tegelijk beheren.",
+            "validation": {
+              "required": "Korte beschrijving is verplicht"
+            }
+          },
+          "description": {
+            "label": "Beschrijving",
+            "placeholder": "Verhoog de productiviteit en stroomlijn de communicatie met onze spraak-naar-tekst-integratie.\n• Realtime transcriptie: zet gesproken woorden direct om in nauwkeurige tekst.\n• Taken en opmerkingen maken: voeg taken, beschrijvingen en opmerkingen toe met spraakopdrachten.",
+            "validation": {
+              "required": "Beschrijving is verplicht"
+            }
+          },
+          "category": {
+            "label": "Categorie",
+            "placeholder": "Kies waar dit volgens jou het beste past. Je kunt er meerdere kiezen.",
+            "validation": {
+              "required": "Minimaal één categorie is verplicht"
+            }
+          },
+          "keywords": {
+            "label": "Trefwoorden",
+            "placeholder": "Gebruik termen waarvan je denkt dat gebruikers ze zoeken wanneer ze dit sjabloon willen vinden.",
+            "helperText": "Voer door komma's gescheiden trefwoorden in die mensen helpen dit via zoeken te vinden.",
+            "validation": {
+              "required": "Minimaal één trefwoord is verplicht"
+            }
+          },
+          "website": {
+            "label": "Website-URL",
+            "placeholder": "https://plane.so",
+            "validation": {
+              "invalid": "Ongeldige URL",
+              "maxLength": "URL moet korter zijn dan 800 tekens"
+            }
+          },
+          "company_name": {
+            "label": "Bedrijfsnaam",
+            "placeholder": "Plane",
+            "validation": {
+              "required": "Bedrijfsnaam is verplicht",
+              "maxLength": "Bedrijfsnaam moet korter zijn dan 255 tekens"
+            }
+          },
+          "contact_email": {
+            "label": "Contact-e-mail",
+            "placeholder": "help@plane.so",
+            "validation": {
+              "invalid": "Ongeldig e-mailadres",
+              "maxLength": "Contact-e-mail moet korter zijn dan 255 tekens"
+            }
+          },
+          "privacy_policy_url": {
+            "label": "Link naar je privacybeleid",
+            "placeholder": "https://planes.so/privacy-policy",
+            "validation": {
+              "invalid": "Ongeldige URL",
+              "maxLength": "URL moet korter zijn dan 800 tekens"
+            }
+          },
+          "terms_of_service_url": {
+            "label": "Link naar je gebruiksvoorwaarden",
+            "placeholder": "https://planes.so/terms-of-use",
+            "validation": {
+              "invalid": "Ongeldige URL",
+              "maxLength": "URL moet korter zijn dan 800 tekens"
+            }
+          },
+          "cover_image": {
+            "label": "Voeg een omslagafbeelding toe die in de marketplace wordt getoond",
+            "upload_title": "Omslagafbeelding uploaden",
+            "upload_placeholder": "Klik om te uploaden of sleep een omslagafbeelding hierheen",
+            "drop_here": "Hier neerzetten",
+            "click_to_upload": "Klik om te uploaden",
+            "invalid_file_or_exceeds_size_limit": "Ongeldig bestand of te groot. Probeer het opnieuw.",
+            "upload_and_save": "Uploaden en opslaan",
+            "uploading": "Uploaden",
+            "remove": "Verwijderen",
+            "removing": "Verwijderen",
+            "validation": {
+              "required": "Omslagafbeelding is verplicht"
+            }
+          },
+          "attach_screenshots": {
+            "label": "Voeg afbeeldingen toe waarvan je denkt dat ze kijkers van dit sjabloon aanspreken.",
+            "validation": {
+              "required": "Minimaal één screenshot is verplicht"
+            }
+          }
+        }
+      }
+    },
+    "empty_state": {
+      "upgrade": {
+        "title": "Sjablonen",
+        "description": "Met project-, werkitem- en paginasjablonen in Plane hoef je een project niet van nul te beginnen of werkitemeigenschappen niet handmatig in te stellen.",
+        "sub_description": "Krijg 80% van je beheertijd terug met sjablonen."
+      },
+      "no_templates": {
+        "button": "Maak je eerste sjabloon"
+      },
+      "no_labels": {
+        "description": "Nog geen labels. Maak labels om werkitems in je project te organiseren en te filteren."
+      },
+      "no_modules": {
+        "description": "Nog geen modules. Organiseer werk in deelprojecten met eigen leiders en toegewezenen."
+      },
+      "no_work_items": {
+        "description": "Nog geen werkitems. Voeg er een toe om je werk beter te structureren."
+      },
+      "no_sub_work_items": {
+        "description": "Nog geen subwerkitems. Voeg er een toe om je werk beter te structureren."
+      },
+      "page": {
+        "no_templates": {
+          "title": "Er zijn geen sjablonen waartoe je toegang hebt.",
+          "description": "Maak een sjabloon aan"
+        },
+        "no_results": {
+          "title": "Dat kwam met geen enkel sjabloon overeen.",
+          "description": "Probeer te zoeken met andere termen."
+        }
+      }
+    },
+    "toasts": {
+      "create": {
+        "success": {
+          "title": "Sjabloon gemaakt",
+          "message": "{templateName}, het sjabloon van het type {templateType}, is nu beschikbaar voor je werkruimte."
+        },
+        "error": {
+          "title": "We konden dat sjabloon dit keer niet maken.",
+          "message": "Probeer je gegevens opnieuw op te slaan of kopieer ze naar een nieuw sjabloon, bij voorkeur in een ander tabblad."
+        }
+      },
+      "update": {
+        "success": {
+          "title": "Sjabloon gewijzigd",
+          "message": "{templateName}, het sjabloon van het type {templateType}, is gewijzigd."
+        },
+        "error": {
+          "title": "We konden de wijzigingen aan dit sjabloon niet opslaan.",
+          "message": "Probeer je gegevens opnieuw op te slaan of kom later terug op dit sjabloon. Blijft het problemen geven, neem dan contact met ons op."
+        }
+      },
+      "delete": {
+        "success": {
+          "title": "Sjabloon verwijderd",
+          "message": "{templateName}, het sjabloon van het type {templateType}, is verwijderd uit je werkruimte."
+        },
+        "error": {
+          "title": "We konden dat sjabloon dit keer niet verwijderen.",
+          "message": "Probeer het opnieuw te verwijderen of kom er later op terug. Lukt verwijderen dan nog niet, neem dan contact met ons op."
+        }
+      },
+      "unpublish": {
+        "success": {
+          "title": "Publicatie van sjabloon ongedaan gemaakt",
+          "message": "Van {templateName}, het sjabloon van het type {templateType}, is de publicatie ongedaan gemaakt."
+        },
+        "error": {
+          "title": "We konden de publicatie van dat sjabloon dit keer niet ongedaan maken.",
+          "message": "Probeer de publicatie opnieuw ongedaan te maken of kom er later op terug. Lukt het dan nog niet, neem dan contact met ons op."
+        }
+      }
+    },
+    "delete_confirmation": {
+      "title": "Sjabloon verwijderen",
+      "description": {
+        "prefix": "Weet je zeker dat je sjabloon ",
+        "suffix": " wilt verwijderen? Alle gegevens die bij het sjabloon horen, worden permanent verwijderd. Deze actie kan niet ongedaan worden gemaakt."
+      }
+    },
+    "unpublish_confirmation": {
+      "title": "Publicatie van sjabloon ongedaan maken",
+      "description": {
+        "prefix": "Weet je zeker dat je de publicatie van sjabloon ",
+        "suffix": " ongedaan wilt maken? Dit sjabloon is dan niet meer beschikbaar voor gebruikers op de marketplace."
+      }
+    },
+    "dropdown": {
+      "add": {
+        "work_item": "Nieuw sjabloon toevoegen",
+        "project": "Nieuw sjabloon toevoegen"
+      },
+      "label": {
+        "project": "Kies een projectsjabloon",
+        "page": "Kies uit sjabloon"
+      },
+      "tooltip": {
+        "work_item": "Kies een werkitemsjabloon"
+      },
+      "no_results": {
+        "work_item": "Geen sjablonen gevonden.",
+        "project": "Geen sjablonen gevonden."
+      }
+    }
+  }
+}
