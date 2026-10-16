@@ -268,6 +268,9 @@ importers:
       '@react-router/dev':
         specifier: 'catalog:'
         version: 8.3.0(@react-router/serve@8.3.0(react-router@8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.8.3))(babel-plugin-macros@3.1.0)(react-router@8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.8.3)(vite@8.3.4(@types/node@22.12.0)(esbuild@0.28.2)(jiti@2.6.1)(terser@5.43.1)(tsx@4.20.6)(yaml@2.8.3))
+      '@tailwindcss/postcss':
+        specifier: 4.1.17
+        version: 4.1.17
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
@@ -552,6 +555,9 @@ importers:
       '@react-router/dev':
         specifier: 'catalog:'
         version: 8.3.0(@react-router/serve@8.3.0(react-router@8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.8.3))(babel-plugin-macros@3.1.0)(react-router@8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.8.3)(vite@8.3.4(@types/node@22.12.0)(esbuild@0.28.2)(jiti@2.6.1)(terser@5.43.1)(tsx@4.20.6)(yaml@2.8.3))
+      '@tailwindcss/postcss':
+        specifier: 4.1.17
+        version: 4.1.17
       '@tailwindcss/typography':
         specifier: 0.5.19
         version: 0.5.19
@@ -754,6 +760,9 @@ importers:
       '@react-router/dev':
         specifier: 'catalog:'
         version: 8.3.0(@react-router/serve@8.3.0(react-router@8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.8.3))(babel-plugin-macros@3.1.0)(react-router@8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.8.3)(vite@8.3.4(@types/node@22.12.0)(esbuild@0.28.2)(jiti@2.6.1)(terser@5.43.1)(tsx@4.20.6)(yaml@2.8.3))
+      '@tailwindcss/postcss':
+        specifier: 4.1.17
+        version: 4.1.17
       '@tailwindcss/typography':
         specifier: 0.5.19
         version: 0.5.19
@@ -14439,7 +14448,7 @@ snapshots:
 
   lightningcss@1.30.2:
     dependencies:
-      detect-libc: 2.0.4
+      detect-libc: 2.1.2
     optionalDependencies:
       lightningcss-android-arm64: 1.30.2
       lightningcss-darwin-arm64: 1.30.2
@@ -15145,7 +15154,7 @@ snapshots:
 
   node-gyp-build-optional-packages@5.2.2:
     dependencies:
-      detect-libc: 2.0.4
+      detect-libc: 2.1.2
     optional: true
 
   node-html-parser@6.1.13:
@@ -17097,7 +17106,7 @@ snapshots:
       browserslist: 4.29.3
       chrome-trace-event: 1.0.4
       enhanced-resolve: 5.18.3
-      es-module-lexer: 2.0.0
+      es-module-lexer: 2.3.2
       eslint-scope: 5.1.1
       events: 3.3.0
       glob-to-regexp: 0.4.1
