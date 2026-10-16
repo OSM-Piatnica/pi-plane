@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,6 +15,7 @@ import type {
   TInboxDuplicateIssueDetails,
 } from "@plane/types";
 import { EInboxIssueStatus } from "@plane/types";
+import { renderFormattedPayloadDate } from "@plane/utils";
 // helpers
 // services
 import { InboxIssueService } from "@/services/inbox";
@@ -190,7 +192,7 @@ export class InboxIssueStore implements IInboxIssueStore {
       if (!this.issue.id) return;
       const inboxIssue = await this.inboxIssueService.update(this.workspaceSlug, this.projectId, this.issue.id, {
         status: inboxStatus,
-        snoozed_till: date ? new Date(date) : null,
+        snoozed_till: date ? (renderFormattedPayloadDate(date) ?? null) : null,
       });
       runInAction(() => {
         set(this, "status", inboxIssue?.status);

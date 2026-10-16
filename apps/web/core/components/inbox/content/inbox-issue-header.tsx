@@ -283,6 +283,7 @@ export const InboxIssueActionsHeader = observer(function InboxIssueActionsHeader
           isOpen={isSnoozeDateModalOpen}
           handleClose={() => setIsSnoozeDateModalOpen(false)}
           value={inboxIssue?.snoozed_till}
+          projectTimezone={getProjectById(projectId)?.timezone}
           onConfirm={handleInboxIssueSnooze}
         />
       </>

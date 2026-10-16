@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -52,7 +53,8 @@ export class InboxIssueService extends APIService {
     workspaceSlug: string,
     projectId: string,
     inboxIssueId: string,
-    data: Partial<TInboxIssue>
+    // snoozed_till as "YYYY-MM-DD" is read as a day in the project timezone
+    data: Omit<Partial<TInboxIssue>, "snoozed_till"> & { snoozed_till?: string | null }
   ): Promise<TInboxIssue> {
     return this.patch(`/api/workspaces/${workspaceSlug}/projects/${projectId}/inbox-issues/${inboxIssueId}/`, data)
       .then((response) => response?.data)

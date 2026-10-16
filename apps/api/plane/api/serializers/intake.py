@@ -1,11 +1,13 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Module imports
 from .base import BaseSerializer
 from .issue import IssueExpandSerializer
 from plane.db.models import IntakeIssue, Issue, State, StateGroup
+from plane.utils.timezone_converter import snooze_day_start
 from rest_framework import serializers
 
 
@@ -115,6 +117,12 @@ class IntakeIssueUpdateSerializer(BaseSerializer):
         Validate that if status is being changed to accepted (1),
         the project has a default state to transition to.
         """
+
+        if attrs.get("snoozed_till"):
+            attrs["snoozed_till"] = (
+                snooze_day_start(self.initial_data.get("snoozed_till"), self.instance.project_id)
+                or attrs["snoozed_till"]
+            )
 
         # Check if status is being updated to accepted
         if attrs.get("status") == 1:
