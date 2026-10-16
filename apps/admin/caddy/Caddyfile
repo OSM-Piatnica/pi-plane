@@ -9,17 +9,21 @@
 :3000 {
 	root * /usr/share/caddy/html
 
-	# Per-client-IP rate limiting for static asset requests
+	# Per-client-IP rate limit for static asset requests, as a flood guard. The previous
+	# nginx config applied none, so the default is deliberately generous: many users can
+	# share one client IP behind a corporate NAT or proxy. Override without rebuilding by
+	# setting STATIC_RATE_LIMIT_EVENTS (requests per minute, per client IP) on the container.
 	rate_limit {
 		zone static {
 			key {client_ip}
-			events 300
+			events {$STATIC_RATE_LIMIT_EVENTS:3000}
 			window 1m
 		}
 	}
 
-	# Security headers (HSTS is set at the TLS terminator)
+	# Security headers (same set the previous nginx config sent)
 	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
 		X-Frame-Options "DENY"
 		X-Content-Type-Options "nosniff"
 		X-XSS-Protection "1; mode=block"
