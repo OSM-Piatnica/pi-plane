@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     atomic = False
 
     dependencies = [
-        ("db", "0123_remove_apitoken_is_service_and_allowed_rate_limit"),
+        ("db", "0132_remove_apitoken_is_service_and_allowed_rate_limit"),
     ]
 
     operations = [
