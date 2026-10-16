@@ -17,12 +17,18 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
-from plane.db.models import DeployBoard, FileAsset
+from plane.db.models import DeployBoard, FileAsset, IssueComment
 from plane.settings.storage import S3Storage
 from plane.utils.path_validator import sanitize_filename
 
 # Module imports
 from .base import BaseAPIView
+
+
+PUBLIC_UPLOAD_ENTITY_TYPES = (
+    FileAsset.EntityTypeContext.COMMENT_DESCRIPTION,
+    FileAsset.EntityTypeContext.ISSUE_DESCRIPTION,
+)
 
 
 class EntityAssetEndpoint(BaseAPIView):
@@ -93,19 +99,45 @@ class EntityAssetEndpoint(BaseAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         entity_type = request.data.get("entity_type", "")
-        entity_identifier = request.data.get("entity_identifier")
+        entity_identifier = request.data.get("entity_identifier") or None
 
         # Clamp the client-provided size to [1, FILE_SIZE_LIMIT] so the signed
         # upload policy cannot exceed the instance limit and always carries a
         # valid content-length-range bound
         size_limit = max(1, min(size, settings.FILE_SIZE_LIMIT))
 
-        # Check if the entity type is allowed
-        if entity_type not in FileAsset.EntityTypeContext.values:
+        # Public visitors may only upload the assets the Spaces client produces
+        if entity_type not in PUBLIC_UPLOAD_ENTITY_TYPES:
             return Response(
                 {"error": "Invalid entity type.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+        # Uploads here exist to support public comments, so the board must accept them
+        if not deploy_board.is_comments_enabled:
+            return Response(
+                {"error": "Uploads are not enabled for this board.", "status": False},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        # Bind a caller-supplied comment id to the board's project and workspace
+        if entity_identifier is not None:
+            try:
+                entity_identifier = uuid.UUID(str(entity_identifier))
+            except ValueError:
+                return Response(
+                    {"error": "Invalid entity identifier.", "status": False},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            if not IssueComment.objects.filter(
+                pk=entity_identifier,
+                workspace_id=deploy_board.workspace_id,
+                project_id=deploy_board.project_id,
+            ).exists():
+                return Response(
+                    {"error": "Invalid entity identifier.", "status": False},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
 
         # Check if the file type is allowed
         allowed_types = [

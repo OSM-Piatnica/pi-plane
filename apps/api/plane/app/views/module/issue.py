@@ -25,6 +25,7 @@ from plane.db.models import (
     Issue,
     FileAsset,
     IssueLink,
+    Module,
     ModuleIssue,
     Project,
     CycleIssue,
@@ -260,6 +261,16 @@ class ModuleIssueViewSet(BaseViewSet):
         modules = request.data.get("modules", [])
         removed_modules = request.data.get("removed_modules", [])
         project = Project.objects.get(pk=project_id)
+
+        # Scope the URL issue and the body module ids to the URL workspace+project to prevent cross-tenant IDOR
+        if not Issue.issue_objects.filter(pk=issue_id, workspace__slug=slug, project_id=project_id).exists():
+            return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
+        modules = [
+            str(module_id)
+            for module_id in Module.objects.filter(
+                workspace__slug=slug, project_id=project_id, pk__in=modules
+            ).values_list("id", flat=True)
+        ]
 
         if modules:
             _ = ModuleIssue.objects.bulk_create(
