@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 BRANCH=${BRANCH:-main}
 SERVICE_FOLDER=plane-app
