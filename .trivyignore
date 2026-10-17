@@ -2,9 +2,10 @@
 # Document the rationale for each suppressed finding.
 
 # CVE-2026-30242: SSRF in Plane webhook URL serializer.
-# False positive: Trivy matches our backend's distribution name "Plane" +
-# version 0.24.0 against the makeplane/plane CVE. The "fixed in 1.2.3" refers
-# to the upstream public release version scheme, not this distribution's
-# pyproject.toml version - the SSRF mitigation has been in place for the
-# applicable webhook validation code path.
+# Was a false positive: Trivy matched our backend's distribution name "Plane" +
+# its old pyproject.toml version (0.24.0) against the makeplane/plane CVE
+# ("fixed in 1.2.3"). pyproject.toml now tracks the repo release version, so the
+# match should no longer trigger; the entry is kept as a safeguard until a scan
+# confirms it. The SSRF mitigation itself is in plane/utils/url_security.py and
+# plane/utils/ip_address.py.
 CVE-2026-30242
