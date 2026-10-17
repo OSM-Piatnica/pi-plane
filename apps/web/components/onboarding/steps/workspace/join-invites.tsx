@@ -11,7 +11,8 @@ import { getRoleI18nKey } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import type { IWorkspaceMemberInvitation } from "@plane/types";
-import { Checkbox, Spinner } from "@plane/ui";
+import { Checkbox } from "@makeplane/propel/components/checkbox";
+import { Spinner } from "@plane/ui";
 import { truncateText } from "@plane/utils";
 // constants
 import { WorkspaceLogo } from "@/components/workspace/logo";
@@ -99,8 +100,8 @@ export function WorkspaceJoinInvitesStep(props: Props) {
                   <div className="text-13 font-medium">{truncateText(invitedWorkspace?.name, 30)}</div>
                   <p className="text-11 text-secondary">{t(getRoleI18nKey(invitation.role))}</p>
                 </div>
-                <span className={`flex-shrink-0`}>
-                  <Checkbox checked={isSelected} />
+                <span className="pointer-events-none flex-shrink-0">
+                  <Checkbox checked={isSelected} aria-label={invitedWorkspace?.name ?? "Select workspace invitation"} />
                 </span>
               </div>
             );

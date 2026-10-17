@@ -1,13 +1,15 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { Command } from "cmdk";
 import { observer } from "mobx-react";
 // plane imports
-import { Avatar } from "@plane/ui";
+
+import { Avatar } from "@makeplane/propel/components/avatar";
 import { getFileURL } from "@plane/utils";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
@@ -37,10 +39,10 @@ export const PowerKMembersMenu = observer(function PowerKMembersMenu(props: Prop
             key={memberId}
             iconNode={
               <Avatar
-                name={memberDetails?.display_name}
+                alt={memberDetails?.display_name}
+                fallback={memberDetails?.display_name?.[0]?.toUpperCase()}
                 src={getFileURL(memberDetails?.avatar_url ?? "")}
-                showTooltip={false}
-                className="shrink-0"
+                size="xs"
               />
             }
             isSelected={value.includes(memberId)}

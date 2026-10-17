@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -13,7 +14,8 @@ import { PROJECT_AUTOMATION_MONTHS, EUserPermissions, EUserPermissionsLevel, EIc
 import { useTranslation } from "@plane/i18n";
 import { StateGroupIcon, StatePropertyIcon } from "@plane/propel/icons";
 import type { IProject } from "@plane/types";
-import { CustomSelect, CustomSearchSelect, ToggleSwitch, Loader } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
+import { CustomSelect, CustomSearchSelect, Loader } from "@plane/ui";
 import { SelectMonthModal } from "@/components/automation";
 import { SettingsControlItem } from "@/components/settings/control-item";
 // hooks
@@ -94,17 +96,18 @@ export const AutoCloseAutomation = observer(function AutoCloseAutomation(props: 
             title={t("project_settings.automations.auto-close.title")}
             description={t("project_settings.automations.auto-close.description")}
             control={
-              <ToggleSwitch
-                value={autoCloseStatus}
-                onChange={() => {
+              <Switch
+                size="sm"
+                checked={autoCloseStatus}
+                onCheckedChange={() => {
                   if (currentProjectDetails?.close_in === 0) {
                     void handleChange({ close_in: 1, default_state: defaultState });
                   } else {
                     void handleChange({ close_in: 0, default_state: null });
                   }
                 }}
-                size="sm"
                 disabled={!isAdmin}
+                aria-label={t("project_settings.automations.auto-close.title")}
               />
             }
           />

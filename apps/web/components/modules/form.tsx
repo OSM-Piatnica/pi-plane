@@ -8,12 +8,14 @@
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 // plane imports
+import { Field } from "@makeplane/propel/components/field";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { ETabIndices } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import type { IModule } from "@plane/types";
 // ui
-import { Input, TextArea } from "@plane/ui";
+import { TextArea } from "@plane/ui";
 import { getDate, renderFormattedPayloadDate, getTabIndex } from "@plane/utils";
 // components
 import { DateRangeDropdown } from "@/components/dropdowns/date-range";
@@ -125,19 +127,22 @@ export function ModuleForm(props: Props) {
                 },
               }}
               render={({ field: { value, onChange } }) => (
-                <Input
-                  id="name"
-                  name="name"
-                  type="text"
-                  value={value}
-                  onChange={onChange}
-                  hasError={Boolean(errors?.name)}
-                  placeholder={t("title")}
-                  className="w-full text-14"
-                  tabIndex={getIndex("name")}
-                  // oxlint-disable-next-line no-autofocus -- existing behaviour; lint cleanup only
-                  autoFocus
-                />
+                <Field name="name" invalid={Boolean(errors?.name)}>
+                  <InputGroup size="2xl">
+                    <Input
+                      size="2xl"
+                      id="name"
+                      name="name"
+                      type="text"
+                      value={value}
+                      onChange={onChange}
+                      placeholder={t("title")}
+                      tabIndex={getIndex("name")}
+                      // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; a11y handled separately
+                      autoFocus
+                    />
+                  </InputGroup>
+                </Field>
               )}
             />
             <span className="text-11 text-danger-primary">{errors?.name?.message}</span>

@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import { setPromiseToast } from "@plane/propel/toast";
-import { Button } from "@plane/ui";
+import { Button } from "@plane/propel/button";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useWorkflow } from "@/hooks/store/use-workflow";
 
@@ -77,7 +77,7 @@ export const WorkflowApprovalBanner = observer(function WorkflowApprovalBanner(p
         </p>
       </div>
       <div className="flex items-center gap-2">
-        <Button variant="neutral-primary" size="sm" onClick={() => handleResolve("reject")} disabled={!canResolve}>
+        <Button variant="secondary" size="sm" onClick={() => handleResolve("reject")} disabled={!canResolve}>
           {t("reject")}
         </Button>
         <Button variant="primary" size="sm" onClick={() => handleResolve("approve")} disabled={!canResolve}>

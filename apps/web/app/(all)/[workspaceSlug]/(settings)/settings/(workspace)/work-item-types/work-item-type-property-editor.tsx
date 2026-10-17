@@ -8,7 +8,8 @@ import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
-import { CustomSelect, Input, TextArea, ToggleSwitch } from "@plane/ui";
+import { CustomSelect, Input, TextArea } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
 import type { TIssueTypePropertyType } from "@plane/types";
 import {
   CUSTOM_PROPERTY_TYPES,
@@ -193,7 +194,7 @@ export const WorkItemTypePropertyEditor = ({ properties, onChange }: TProps) => 
               {t("workspace_settings.settings.work_item_types.form.property.mandatory_checkbox")}
             </label>
             <label className="flex items-center gap-2 text-13 text-secondary">
-              <ToggleSwitch value={draft.isActive} onChange={(v) => patchDraft({ isActive: v })} size="sm" />
+              <Switch checked={draft.isActive} onCheckedChange={(v) => patchDraft({ isActive: v })} size="sm" />
               {t("workspace_settings.settings.work_item_types.form.property.active_checkbox")}
             </label>
           </div>

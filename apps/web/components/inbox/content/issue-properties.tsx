@@ -15,7 +15,7 @@ import {
   DuplicatePropertyIcon,
 } from "@plane/propel/icons";
 import { useTranslation } from "@plane/i18n";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TInboxDuplicateIssueDetails, TIssue } from "@plane/types";
 import { ControlLink } from "@plane/ui";
 import { getDate, renderFormattedPayloadDate, generateWorkItemLink } from "@plane/utils";
@@ -203,7 +203,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
                   }}
                   target="_self"
                 >
-                  <Tooltip tooltipContent={`${duplicateIssueDetails?.name}`}>
+                  <Tooltip label={duplicateIssueDetails?.name ?? ""} layout="stacked">
                     <span className="flex cursor-pointer items-center gap-1 rounded-sm bg-layer-1 px-1.5 py-1 pb-0.5 text-11 text-secondary">
                       {`${currentProjectDetails?.identifier}-${duplicateIssueDetails?.sequence_id}`}
                     </span>

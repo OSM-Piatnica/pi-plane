@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useTranslation } from "@plane/i18n";
 import { EditIcon, CloseIcon } from "@plane/propel/icons";
 // plane imports
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { cn } from "@plane/utils";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -91,7 +91,7 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
       >
         {issue.parent_id && parentIssue ? (
           <div className="flex items-center gap-1.5">
-            <Tooltip tooltipHeading={t("common.title")} tooltipContent={parentIssue.name} isMobile={isMobile}>
+            <Tooltip label={`${t("common.title")}: ${parentIssue.name}`} disabled={isMobile}>
               <Link href={workItemLink} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
                 {parentIssue?.project_id && parentIssueProjectDetails && (
                   <IssueIdentifier
@@ -107,7 +107,7 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
             </Tooltip>
 
             {!disabled && (
-              <Tooltip tooltipContent={t("common.remove")} position="bottom" isMobile={isMobile}>
+              <Tooltip label={t("common.remove")} side="bottom" disabled={isMobile}>
                 {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
                 <span
                   onClick={(e) => {

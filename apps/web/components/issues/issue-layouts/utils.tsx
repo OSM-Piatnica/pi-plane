@@ -11,7 +11,8 @@ import { CalendarDays, LayersIcon, Paperclip, Timer } from "lucide-react";
 import { clone, isNil, pull, uniq, concat } from "lodash-es";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
 // plane types
-import { EIconSize, ISSUE_GROUP_BY_OPTIONS, ISSUE_PRIORITIES, STATE_GROUPS } from "@plane/constants";
+import { Avatar } from "@makeplane/propel/components/avatar";
+import { EIconSize, ISSUE_PRIORITIES, STATE_GROUPS, ISSUE_GROUP_BY_OPTIONS } from "@plane/constants";
 import { Logo } from "@plane/propel/emoji-icon-picker";
 import type { ISvgIcons } from "@plane/propel/icons";
 import {
@@ -46,7 +47,7 @@ import type {
 } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 // plane ui
-import { Avatar } from "@plane/ui";
+
 import { renderFormattedDate, getFileURL } from "@plane/utils";
 // helpers
 // store
@@ -315,12 +316,19 @@ const getAssigneeColumns = ({
     assigneeColumns.push({
       id: memberId,
       name: member?.display_name || "",
-      icon: <Avatar name={member?.display_name} src={getFileURL(member?.avatar_url ?? "")} size="md" />,
+      icon: (
+        <Avatar
+          alt={member?.display_name}
+          fallback={member?.display_name?.[0]?.toUpperCase()}
+          src={getFileURL(member?.avatar_url ?? "")}
+          size="xs"
+        />
+      ),
       payload: { assignee_ids: [memberId] },
     });
   });
   if (includeNone) {
-    assigneeColumns.push({ id: "None", name: "None", icon: <Avatar size="md" />, payload: {} });
+    assigneeColumns.push({ id: "None", name: "None", icon: <Avatar size="xs" />, payload: {} });
   }
 
   return assigneeColumns;
@@ -338,7 +346,14 @@ const getCreatedByColumns = (): IGroupByColumn[] | undefined => {
     return {
       id: memberId,
       name: member?.display_name || "",
-      icon: <Avatar name={member?.display_name} src={getFileURL(member?.avatar_url ?? "")} size="md" />,
+      icon: (
+        <Avatar
+          alt={member?.display_name}
+          fallback={member?.display_name?.[0]?.toUpperCase()}
+          src={getFileURL(member?.avatar_url ?? "")}
+          size="xs"
+        />
+      ),
       payload: {},
     };
   });

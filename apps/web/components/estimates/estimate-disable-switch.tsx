@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { ToggleSwitch } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useProject } from "@/hooks/store/use-project";
@@ -54,11 +55,14 @@ export const EstimateDisableSwitch = observer(function EstimateDisableSwitch(pro
   };
 
   return (
-    <ToggleSwitch
-      value={Boolean(currentProjectActiveEstimate)}
-      onChange={disableEstimate}
-      disabled={!isAdmin}
+    <Switch
       size="sm"
+      checked={Boolean(currentProjectActiveEstimate)}
+      onCheckedChange={() => {
+        void disableEstimate();
+      }}
+      disabled={!isAdmin}
+      aria-label="Toggle estimates"
     />
   );
 });

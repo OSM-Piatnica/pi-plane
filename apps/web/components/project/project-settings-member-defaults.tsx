@@ -15,7 +15,8 @@ import { EUserPermissions, EUserPermissionsLevel, PROJECT_DETAILS } from "@plane
 import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { IProject, IUserLite, IWorkspace } from "@plane/types";
-import { Loader, ToggleSwitch } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
+import { Loader } from "@plane/ui";
 // constants
 // hooks
 import { useProject } from "@/hooks/store/use-project";
@@ -195,11 +196,12 @@ export const ProjectSettingsMemberDefaults = observer(function ProjectSettingsMe
           description={t("project_settings.members.guest_super_permissions.sub_heading")}
         >
           <div className="flex items-center justify-end">
-            <ToggleSwitch
-              value={!!currentProjectDetails?.guest_view_all_features}
-              onChange={() => toggleGuestViewAllIssues(!currentProjectDetails?.guest_view_all_features)}
-              disabled={!isAdmin}
+            <Switch
               size="sm"
+              checked={!!currentProjectDetails?.guest_view_all_features}
+              onCheckedChange={toggleGuestViewAllIssues}
+              disabled={!isAdmin}
+              aria-label="Guest access"
             />
           </div>
         </DefaultSettingItem>

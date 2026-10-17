@@ -7,11 +7,12 @@
 
 import { useEffect, useState } from "react";
 import { TwitterPicker } from "react-color";
-import { useTranslation } from "@plane/i18n";
+import { Field } from "@makeplane/propel/components/field";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { Button } from "@plane/propel/button";
 import type { IState } from "@plane/types";
-import { Popover, Input, TextArea } from "@plane/ui";
-
+import { Popover, TextArea } from "@plane/ui";
+import { useTranslation } from "@plane/i18n";
 type TStateForm = {
   data: Partial<IState>;
   onSubmit: (formData: Partial<IState>) => Promise<{ status: string }>;
@@ -77,19 +78,22 @@ export function StateForm(props: TStateForm) {
 
       <div className="w-full space-y-2">
         {/* title */}
-        <Input
-          id="name"
-          type="text"
-          name="name"
-          placeholder={t("name")}
-          value={formData?.name}
-          onChange={(e) => handleFormData("name", e.target.value)}
-          hasError={(errors && Boolean(errors.name)) || false}
-          className="w-full"
-          maxLength={100}
-          // oxlint-disable-next-line no-autofocus -- existing behaviour; lint cleanup only
-          autoFocus
-        />
+        <Field name="name" invalid={(errors && Boolean(errors.name)) || false}>
+          <InputGroup size="2xl">
+            <Input
+              size="2xl"
+              id="name"
+              type="text"
+              name="name"
+              placeholder={t("name")}
+              value={formData?.name}
+              onChange={(e) => handleFormData("name", e.target.value)}
+              maxLength={100}
+              // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; a11y handled separately
+              autoFocus
+            />
+          </InputGroup>
+        </Field>
 
         {/* description */}
         <TextArea

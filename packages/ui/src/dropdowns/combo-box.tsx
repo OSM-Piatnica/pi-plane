@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -64,10 +65,6 @@ const ComboDropDown = forwardRef(function ComboDropDown(props: Props, ref) {
   );
 });
 
-const ComboOptions = Combobox.Options;
-const ComboOption = Combobox.Option;
-const ComboInput = Combobox.Input;
-
 ComboDropDown.displayName = "ComboDropDown";
 
-export { ComboDropDown, ComboOptions, ComboOption, ComboInput };
+export { ComboDropDown };

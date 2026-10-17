@@ -6,7 +6,8 @@
 
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { CustomSelect, Input, ToggleSwitch } from "@plane/ui";
+import { CustomSelect, Input } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
 import type { TIssueTypePropertyValueEntry } from "@plane/types";
 import { DateDropdown } from "@/components/dropdowns/date";
 import { MemberDropdown } from "@/components/dropdowns/member/dropdown";
@@ -39,7 +40,9 @@ export const IssueTypePropertyField = observer(function IssueTypePropertyField(p
 
   const field = (() => {
     if (type === "boolean") {
-      return <ToggleSwitch value={Boolean(value)} onChange={(next) => onChange(next)} disabled={disabled} size="sm" />;
+      return (
+        <Switch checked={Boolean(value)} onCheckedChange={(next) => onChange(next)} disabled={disabled} size="sm" />
+      );
     }
     if (type === "number") {
       return (

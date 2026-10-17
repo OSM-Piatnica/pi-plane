@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,7 +11,7 @@ import * as ColorPicker from "react-color";
 import type { ColorResult } from "react-color";
 import { usePopper } from "react-popper";
 // helpers
-import { Button } from "../button";
+import { Button } from "../button/button";
 import { cn } from "../utils";
 // components
 import { Input } from "./input";

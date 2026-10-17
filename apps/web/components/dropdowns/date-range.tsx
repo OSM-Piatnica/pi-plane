@@ -66,7 +66,7 @@ type Props = {
   };
   renderByDefault?: boolean;
   renderPlaceholder?: boolean;
-  customTooltipContent?: React.ReactNode;
+  customTooltipContent?: string;
   customTooltipHeading?: string;
   defaultOpen?: boolean;
   renderInPortal?: boolean;
@@ -179,15 +179,10 @@ export const DateRangeDropdown = observer(function DateRangeDropdown(props: Prop
         isActive={isOpen}
         tooltipHeading={customTooltipHeading ?? t("project_cycles.date_range")}
         tooltipContent={
-          <>
-            {customTooltipContent ?? (
-              <>
-                {dateRange.from ? renderFormattedDate(dateRange.from) : ""}
-                {dateRange.from && dateRange.to ? " - " : ""}
-                {dateRange.to ? renderFormattedDate(dateRange.to) : ""}
-              </>
-            )}
-          </>
+          customTooltipContent ??
+          `${dateRange.from ? renderFormattedDate(dateRange.from) : ""}${
+            dateRange.from && dateRange.to ? " - " : ""
+          }${dateRange.to ? renderFormattedDate(dateRange.to) : ""}`
         }
         showTooltip={showTooltip}
         variant={buttonVariant}

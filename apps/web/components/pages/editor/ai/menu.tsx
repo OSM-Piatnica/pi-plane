@@ -13,7 +13,7 @@ import type { EditorRefApi } from "@plane/editor";
 import { useTranslation } from "@plane/i18n";
 import { ChevronRightIcon } from "@plane/propel/icons";
 // plane ui
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 // components
 import { cn } from "@plane/utils";
 import { RichTextEditor } from "@/components/editor/rich-text";
@@ -236,7 +236,7 @@ export function EditorAIMenu(props: Props) {
                       >
                         {t("page_ui.ai.replace_selection")}
                       </button>
-                      <Tooltip tooltipContent={t("page_ui.ai.add_to_next_line")}>
+                      <Tooltip label={t("page_ui.ai.add_to_next_line")}>
                         <button
                           type="button"
                           className="grid size-6 flex-shrink-0 place-items-center rounded-sm outline-none hover:bg-layer-1"
@@ -245,7 +245,7 @@ export function EditorAIMenu(props: Props) {
                           <CornerDownRight className="size-4 text-tertiary" />
                         </button>
                       </Tooltip>
-                      <Tooltip tooltipContent={t("page_ui.ai.regenerate_response")}>
+                      <Tooltip label={t("page_ui.ai.regenerate_response")}>
                         <button
                           type="button"
                           className="grid size-6 flex-shrink-0 place-items-center rounded-sm outline-none hover:bg-layer-1"

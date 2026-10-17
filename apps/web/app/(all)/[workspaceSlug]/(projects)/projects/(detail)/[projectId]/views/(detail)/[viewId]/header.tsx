@@ -19,7 +19,7 @@ import {
 } from "@plane/constants";
 import { Button } from "@plane/propel/button";
 import { LockIcon, ViewsIcon } from "@plane/propel/icons";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { ICustomSearchSelectOption, IIssueDisplayFilterOptions, IIssueDisplayProperties } from "@plane/types";
 import { EIssuesStoreType, EViewAccess, EIssueLayoutTypes } from "@plane/types";
 import { Breadcrumbs, Header, BreadcrumbNavigationSearchDropdown } from "@plane/ui";
@@ -158,7 +158,7 @@ export const ProjectViewIssuesHeader = observer(function ProjectViewIssuesHeader
 
         {viewDetails?.access === EViewAccess.PRIVATE ? (
           <div className="cursor-default text-tertiary">
-            <Tooltip tooltipContent={"Private"}>
+            <Tooltip label={"Private"}>
               <LockIcon className="h-4 w-4" />
             </Tooltip>
           </div>

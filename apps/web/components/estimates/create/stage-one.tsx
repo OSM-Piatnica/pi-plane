@@ -9,7 +9,7 @@ import { Info } from "lucide-react";
 // plane imports
 import { EEstimateSystem, ESTIMATE_SYSTEMS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TEstimateSystemKeys } from "@plane/types";
 // components
 import { convertMinutesToHoursMinutesString } from "@plane/utils";
@@ -46,7 +46,7 @@ export function EstimateCreateStageOne(props: TEstimateCreateStageOne) {
                 label: !ESTIMATE_SYSTEMS[currentSystem]?.is_available ? (
                   <div className="relative flex cursor-no-drop items-center gap-2 text-tertiary">
                     {t(ESTIMATE_SYSTEMS[currentSystem]?.i18n_name)}
-                    <Tooltip tooltipContent={t("common.coming_soon")}>
+                    <Tooltip label={t("common.coming_soon")}>
                       <Info size={12} />
                     </Tooltip>
                   </div>

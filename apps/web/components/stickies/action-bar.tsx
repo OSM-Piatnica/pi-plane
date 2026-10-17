@@ -15,7 +15,8 @@ import { useOutsideClickDetector } from "@plane/hooks";
 import { useTranslation } from "@plane/i18n";
 // plane ui
 import { RecentStickyIcon, StickyNoteIcon, PlusIcon, CloseIcon } from "@plane/propel/icons";
-import { Tooltip } from "@plane/propel/tooltip";
+import { PreviewCard, PreviewCardContent, PreviewCardTrigger } from "@makeplane/propel/components/preview-card";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 // plane utils
 import { cn } from "@plane/utils";
 // hooks
@@ -56,6 +57,16 @@ export const StickyActionBar = observer(function StickyActionBar() {
     setIsExpanded(false);
   });
 
+  const recentStickyButton = (
+    <button
+      className="btn btn--icon shadow-sm flex h-10 w-10 items-center justify-center rounded-full bg-surface-1"
+      onClick={() => setShowRecentSticky(true)}
+      style={{ color: recentStickyBackgroundColor }}
+    >
+      <StickyNoteIcon className={cn("size-5 rotate-90")} color={recentStickyBackgroundColor} />
+    </button>
+  );
+
   return (
     <div
       ref={ref}
@@ -64,7 +75,7 @@ export const StickyActionBar = observer(function StickyActionBar() {
       <div
         className={`flex origin-bottom flex-col gap-2 transition-all duration-300 ease-in-out ${isExpanded ? "mb-2 scale-y-100 opacity-100 " : "h-0 scale-y-0 opacity-0"}`}
       >
-        <Tooltip tooltipContent={t("stickies.all")} isMobile={false} position="right">
+        <Tooltip label={t("stickies.all")} side="right">
           <button
             className="btn btn--icon shadow-sm flex h-10 w-10 items-center justify-center rounded-full bg-surface-1"
             onClick={() => toggleAllStickiesModal(true)}
@@ -72,38 +83,30 @@ export const StickyActionBar = observer(function StickyActionBar() {
             <RecentStickyIcon className="size-5 rotate-90 text-tertiary" />
           </button>
         </Tooltip>
-        {recentStickyId && (
-          <Tooltip
-            className="-ml-30 -translate-x-10 scale-75"
-            tooltipContent={
-              <div className="-m-2 max-h-[150px]">
-                <StickyNote
-                  className={"w-[290px]"}
-                  workspaceSlug={workspaceSlug.toString()}
-                  stickyId={newSticky ? activeStickyId : recentStickyId || ""}
-                />
-                <div
-                  className="absolute top-0 right-0 h-full w-full"
-                  style={{
-                    background: `linear-gradient(to top, ${recentStickyBackgroundColor}, transparent)`,
-                  }}
-                />
-              </div>
-            }
-            isMobile={false}
-            position="right"
-            disabled={showRecentSticky}
-          >
-            <button
-              className="btn btn--icon shadow-sm flex h-10 w-10 items-center justify-center rounded-full bg-surface-1"
-              onClick={() => setShowRecentSticky(true)}
-              style={{ color: recentStickyBackgroundColor }}
-            >
-              <StickyNoteIcon className={cn("size-5 rotate-90")} color={recentStickyBackgroundColor} />
-            </button>
-          </Tooltip>
-        )}
-        <Tooltip tooltipContent={t("stickies.add")} isMobile={false} position="right">
+        {recentStickyId &&
+          (showRecentSticky ? (
+            recentStickyButton
+          ) : (
+            <PreviewCard>
+              <PreviewCardTrigger render={recentStickyButton} />
+              <PreviewCardContent side="right">
+                <div className="relative max-h-[150px] overflow-hidden rounded-lg">
+                  <StickyNote
+                    className="w-full"
+                    workspaceSlug={workspaceSlug.toString()}
+                    stickyId={newSticky ? activeStickyId : recentStickyId}
+                  />
+                  <div
+                    className="absolute top-0 right-0 h-full w-full"
+                    style={{
+                      background: `linear-gradient(to top, ${recentStickyBackgroundColor}, transparent)`,
+                    }}
+                  />
+                </div>
+              </PreviewCardContent>
+            </PreviewCard>
+          ))}
+        <Tooltip label={t("stickies.add")} side="right">
           <button
             className="btn btn--icon shadow-sm flex h-10 w-10 items-center justify-center rounded-full bg-surface-1"
             onClick={() => {
@@ -140,7 +143,7 @@ export const StickyActionBar = observer(function StickyActionBar() {
             className={"w-[290px]"}
             onClose={() => (newSticky ? setNewSticky(false) : setShowRecentSticky(false))}
             workspaceSlug={workspaceSlug.toString()}
-            stickyId={newSticky ? activeStickyId : recentStickyId || ""}
+            stickyId={newSticky ? activeStickyId : recentStickyId}
           />
         )}
       </div>

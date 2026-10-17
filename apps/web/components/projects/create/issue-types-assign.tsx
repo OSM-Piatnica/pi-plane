@@ -6,7 +6,7 @@
 
 import useSWR from "swr";
 import { useTranslation } from "@plane/i18n";
-import { Checkbox } from "@plane/ui";
+import { Checkbox } from "@makeplane/propel/components/checkbox";
 import type { TIssueType } from "@plane/types";
 import { IssueTypeService } from "@/services/issue-type.service";
 import { SwitcherIcon } from "@/components/common/switcher-label";
@@ -54,7 +54,11 @@ export function ProjectCreateIssueTypesAssign(props: TProps) {
         {rows.map((row) => (
           <li key={row.id}>
             <label className="flex cursor-pointer items-center gap-2 rounded px-1 py-1.5 hover:bg-surface-1">
-              <Checkbox checked={value.includes(row.id)} onChange={() => toggleType(row.id)} disabled={disabled} />
+              <Checkbox
+                checked={value.includes(row.id)}
+                onCheckedChange={() => toggleType(row.id)}
+                disabled={disabled}
+              />
               <SwitcherIcon logo_props={row.logo_props} LabelIcon={Layers} size={14} />
               <span className="text-13 text-primary">{row.name}</span>
               {row.is_epic ? (

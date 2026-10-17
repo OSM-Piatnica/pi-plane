@@ -7,7 +7,7 @@
 
 import { MoveRight } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 // assets
 import emptyIssue from "@/app/assets/empty-state/issue.svg?url";
 // components
@@ -28,7 +28,7 @@ export function IssuePeekOverviewError(props: TIssuePeekOverviewError) {
   return (
     <div className="relative flex h-full w-full flex-col overflow-hidden">
       <div className="flex flex-shrink-0 justify-start">
-        <Tooltip tooltipContent={t("issue_ui.close_peek")} isMobile={isMobile}>
+        <Tooltip label={t("issue_ui.close_peek")} disabled={isMobile}>
           <button onClick={removeRoutePeekId} className="m-5 h-5 w-5">
             <MoveRight className="h-4 w-4 text-tertiary hover:text-secondary" />
           </button>

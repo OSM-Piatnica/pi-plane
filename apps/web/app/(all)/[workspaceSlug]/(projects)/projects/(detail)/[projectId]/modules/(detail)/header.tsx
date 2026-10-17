@@ -20,7 +20,7 @@ import {
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { ModuleIcon } from "@plane/propel/icons";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { ICustomSearchSelectOption, IIssueDisplayFilterOptions, IIssueDisplayProperties } from "@plane/types";
 import { EIssuesStoreType, EIssueLayoutTypes } from "@plane/types";
 import { Breadcrumbs, Header, BreadcrumbNavigationSearchDropdown } from "@plane/ui";
@@ -165,9 +165,9 @@ export const ModuleIssuesHeader = observer(function ModuleIssuesHeader() {
             </Breadcrumbs>
             {workItemsCount && workItemsCount > 0 ? (
               <Tooltip
-                isMobile={isMobile}
-                tooltipContent={t("module_ui.work_items_in_module", { count: workItemsCount })}
-                position="bottom"
+                disabled={isMobile}
+                label={t("module_ui.work_items_in_module", { count: workItemsCount })}
+                side="bottom"
               >
                 <span className="flex flex-shrink-0 cursor-default items-center justify-center rounded-xl bg-accent-primary/20 px-2 text-center text-11 font-semibold text-accent-primary">
                   {workItemsCount}

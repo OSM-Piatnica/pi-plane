@@ -1,13 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
-// ui
-import { Checkbox } from "@plane/ui";
-// helpers
+import { Checkbox } from "@makeplane/propel/components/checkbox";
 import { cn } from "@plane/utils";
 // hooks
 import type { TSelectionHelper } from "@/hooks/use-multiple-select";
@@ -28,18 +27,16 @@ export const MultipleSelectEntityAction = observer(function MultipleSelectEntity
   if (selectionHelpers.isSelectionDisabled) return null;
 
   return (
-    <Checkbox
-      className={cn("size-3.5 !outline-none", className)}
-      iconClassName="size-3"
-      onClick={(e) => {
-        e.stopPropagation();
-        selectionHelpers.handleEntityClick(e, id, groupId);
-      }}
-      checked={isSelected}
-      data-entity-group-id={groupId}
-      data-entity-id={id}
-      disabled={disabled}
-      readOnly
-    />
+    <span className={cn("inline-flex", className)} data-entity-group-id={groupId} data-entity-id={id}>
+      <Checkbox
+        checked={isSelected}
+        disabled={disabled}
+        aria-label="Select work item"
+        onClick={(e) => {
+          e.stopPropagation();
+          selectionHelpers.handleEntityClick(e, id, groupId);
+        }}
+      />
+    </span>
   );
 });

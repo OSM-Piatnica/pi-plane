@@ -15,7 +15,8 @@ import { EmojiIconPickerTypes, EmojiPicker, Logo } from "@plane/propel/emoji-ico
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { EModalPosition, EModalWidth, Input, ModalCore, TextArea, ToggleSwitch } from "@plane/ui";
+import { EModalPosition, EModalWidth, Input, ModalCore, TextArea } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
 import type { TIssueType } from "@plane/types";
 import { PageHead } from "@/components/core/page-title";
 import { NotAuthorizedView } from "@/components/auth-screens/not-authorized-view";
@@ -252,7 +253,7 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
                   <Controller
                     name="isEpic"
                     control={control}
-                    render={({ field }) => <ToggleSwitch value={field.value} onChange={field.onChange} size="sm" />}
+                    render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} size="sm" />}
                   />
                   {t("workspace_settings.settings.work_item_types.form.is_epic")}
                 </label>
@@ -260,7 +261,7 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
                   <Controller
                     name="isActive"
                     control={control}
-                    render={({ field }) => <ToggleSwitch value={field.value} onChange={field.onChange} size="sm" />}
+                    render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} size="sm" />}
                   />
                   {t("workspace_settings.settings.work_item_types.form.is_active")}
                 </label>
@@ -360,7 +361,7 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
                           : (row.project_ids ?? []).map((id) => getProjectById(id)?.name ?? id).join(", ")}
                       </td>
                       <td className="p-2">
-                        <ToggleSwitch value={row.is_active} onChange={() => onToggleActive(row)} size="sm" />
+                        <Switch checked={row.is_active} onCheckedChange={() => onToggleActive(row)} size="sm" />
                       </td>
                       <td className="p-2 text-right">
                         <div className="flex justify-end gap-1">
