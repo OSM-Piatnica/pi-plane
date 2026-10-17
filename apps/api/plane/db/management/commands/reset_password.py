@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -8,10 +9,8 @@ import getpass
 # Django imports
 from django.core.management import BaseCommand, CommandError
 
-# Third party imports
-from zxcvbn import zxcvbn
-
 # Module imports
+from plane.authentication.utils.password import is_password_strong
 from plane.db.models import User
 
 
@@ -53,9 +52,7 @@ class Command(BaseCommand):
             self.stderr.write("Error: Blank passwords aren't allowed.")
             return
 
-        results = zxcvbn(password)
-
-        if results["score"] < 3:
+        if not is_password_strong(password):
             raise CommandError("Password is too common please set a complex password")
 
         # Set user password

@@ -35,7 +35,7 @@ class WorkSpaceBasePermission(BasePermission):
             return WorkspaceMember.objects.filter(
                 member=request.user,
                 workspace__slug=view.workspace_slug,
-                role__in=[Admin, Member],
+                role=Admin,
                 is_active=True,
             ).exists()
 
