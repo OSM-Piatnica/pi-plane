@@ -107,6 +107,8 @@ In v1.4.0 to v1.4.2 a container started without `SECRET_KEY` received a generate
 #### API Configuration
 
 - `API_KEY_RATE_LIMIT`: API key rate limit (default: `60/minute`)
+- `AUTHENTICATION_RATE_LIMIT`: per-IP throttle for sign-in and magic-link endpoints (default: `1000/minute`, sized for many users behind one IP)
+- `RATE_LIMIT_PER_IP_PER_MIN`: per-client-IP request limit enforced by the Caddy proxy (default: `50000`)
 
 ## Port Mapping
 

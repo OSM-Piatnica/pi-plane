@@ -200,6 +200,8 @@ update_env_file(){
     update_env_value "LIVE_SERVER_SECRET_KEY" "$LIVE_SERVER_SECRET_KEY"
 
     update_env_value "API_KEY_RATE_LIMIT" "${API_KEY_RATE_LIMIT:-60/minute}"
+    update_env_value "AUTHENTICATION_RATE_LIMIT" "${AUTHENTICATION_RATE_LIMIT:-1000/minute}"
+    update_env_value "RATE_LIMIT_PER_IP_PER_MIN" "${RATE_LIMIT_PER_IP_PER_MIN:-50000}"
 
     echo "✅ Environment file updated"
     echo ""

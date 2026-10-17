@@ -1,4 +1,14 @@
 (plane_proxy) {
+	# Per-client-IP flood guard. Everyone behind one office IP shares this bucket,
+	# so keep it well above the whole office's traffic. Needs the caddy-ratelimit plugin.
+	rate_limit {
+		zone per_ip {
+			key {client_ip}
+			events {$RATE_LIMIT_PER_IP_PER_MIN:50000}
+			window 1m
+		}
+	}
+
 	request_body {
 		max_size {$FILE_SIZE_LIMIT}
 	}
@@ -24,6 +34,7 @@
 }
 
 {
+	order rate_limit before basicauth
 	{$CERT_EMAIL}
 	acme_ca {$CERT_ACME_CA:https://acme-v02.api.letsencrypt.org/directory} 
 	{$CERT_ACME_DNS}
