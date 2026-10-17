@@ -90,6 +90,7 @@ export function ParentIssuesListModal({
         setIsSearching(false);
         setIsLoading(false);
       });
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
   }, [debouncedSearchTerm, isOpen, issueId, projectId, workspaceSlug]);
 
   return (

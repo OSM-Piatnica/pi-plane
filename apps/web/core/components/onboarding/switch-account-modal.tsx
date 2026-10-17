@@ -49,6 +49,7 @@ export function SwitchAccountModal(props: Props) {
         setTheme("system");
         router.push("/");
         handleClose();
+        return;
       })
       .catch(() =>
         setToast({

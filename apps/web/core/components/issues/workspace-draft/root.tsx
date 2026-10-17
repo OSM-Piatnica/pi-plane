@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -99,6 +100,7 @@ export const WorkspaceDraftIssuesRoot = observer(function WorkspaceDraftIssuesRo
           {loader === "pagination" && issueIds.length >= 0 ? (
             <WorkspaceDraftIssuesLoader items={1} />
           ) : (
+            // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup
             <div
               className={cn("h-11 border-b border-subtle bg-surface-1 p-3 pl-6 text-13 font-medium transition-all", {
                 "cursor-pointer text-accent-primary underline-offset-2 hover:text-accent-secondary hover:underline":

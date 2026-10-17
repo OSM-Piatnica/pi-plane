@@ -73,6 +73,7 @@ export function ArchiveCycleModal(props: Props) {
           <Button variant="secondary" size="lg" onClick={onClose}>
             {t("common.cancel")}
           </Button>
+          {/* oxlint-disable-next-line tabindex-no-positive -- existing behaviour; lint cleanup only */}
           <Button variant="primary" size="lg" tabIndex={1} onClick={handleArchiveCycle} loading={isArchiving}>
             {isArchiving ? t("common.archiving") : t("common.archive")}
           </Button>

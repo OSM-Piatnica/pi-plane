@@ -1806,9 +1806,9 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       case "-sequence_id":
         return getIssueIds(orderBy(array, "sequence_id", ["desc"]));
       case "name":
-        return getIssueIds([...array].sort(compareIssuesByName));
+        return getIssueIds(array.toSorted(compareIssuesByName));
       case "-name":
-        return getIssueIds([...array].sort((a, b) => compareIssuesByName(b, a)));
+        return getIssueIds(array.toSorted((a, b) => compareIssuesByName(b, a)));
       case "state__name":
         return getIssueIds(
           orderBy(array, (issue) =>

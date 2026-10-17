@@ -52,6 +52,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
       defaultTab,
       hiddenTabs: hideInMoreMenu,
     };
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- dependencies intentionally limited
   }, [defaultTab, hideInMoreMenu]);
 
   const isLoading = !storePreferences && memberId !== null;

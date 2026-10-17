@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -21,7 +22,7 @@ type TDiscountInfoProps = {
   subscriptionType: EProductSubscriptionEnum;
 };
 
-const PLANS_WITH_DISCOUNT = [EProductSubscriptionEnum.PRO];
+const PLANS_WITH_DISCOUNT = new Set([EProductSubscriptionEnum.PRO]);
 
 const getActualPrice = (frequency: TBillingFrequency, subscriptionType: EProductSubscriptionEnum): number | null => {
   switch (subscriptionType) {
@@ -37,7 +38,7 @@ export function DiscountInfo({ className, currency, frequency, price, subscripti
   // derived values
   const actualPrice = getActualPrice(frequency, subscriptionType);
 
-  if (!PLANS_WITH_DISCOUNT.includes(subscriptionType)) {
+  if (!PLANS_WITH_DISCOUNT.has(subscriptionType)) {
     return (
       <>
         {currency}

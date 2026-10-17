@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -73,6 +74,7 @@ export const LabelDndHOC = observer(function LabelDndHOC(props: Props) {
     const element = labelRef.current;
     const dragHandleElement = dragHandleRef.current;
 
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- dependencies intentionally limited
     if (!element || !isEditable) return;
 
     return combine(
@@ -101,7 +103,7 @@ export const LabelDndHOC = observer(function LabelDndHOC(props: Props) {
       dropTargetForElements({
         element,
         canDrop: ({ source }) => getCanDrop(source, label, isChild),
-        getData: ({ input, element }) => {
+        getData: ({ input, element: targetElement }) => {
           const data = { id: label?.id, parentId: label?.parent, isGroup, isChild };
 
           const blockedStates: InstructionType[] = [];
@@ -113,7 +115,7 @@ export const LabelDndHOC = observer(function LabelDndHOC(props: Props) {
 
           return attachInstruction(data, {
             input,
-            element,
+            element: targetElement,
             currentLevel: isChild ? 1 : 0,
             indentPerLevel: 0,
             mode: isLastChild ? "last-in-group" : "standard",
@@ -121,8 +123,8 @@ export const LabelDndHOC = observer(function LabelDndHOC(props: Props) {
           });
         },
         onDrag: ({ self, source, location }) => {
-          const instruction = getInstructionFromPayload(self, source, location);
-          setInstruction(instruction);
+          const nextInstruction = getInstructionFromPayload(self, source, location);
+          setInstruction(nextInstruction);
         },
         onDragLeave: () => {
           setInstruction(undefined);
@@ -146,20 +148,21 @@ export const LabelDndHOC = observer(function LabelDndHOC(props: Props) {
           if (!dropTarget || !dropTargetData) return;
 
           // get possible instructions for the dropTarget
-          const instruction = getInstructionFromPayload(dropTarget, source, location);
+          const dropInstruction = getInstructionFromPayload(dropTarget, source, location);
 
           // if instruction is make child the set parentId as current dropTarget Id or else set it as dropTarget's parentId
-          parentId = instruction === "make-child" ? dropTargetData.id : dropTargetData.parentId;
+          parentId = dropInstruction === "make-child" ? dropTargetData.id : dropTargetData.parentId;
           // if instruction is any other than make-child, i.e., reorder-above and reorder-below then set the droppedId as dropTarget's id
-          const droppedLabelId = instruction !== "make-child" ? dropTargetData.id : undefined;
+          const droppedLabelId = dropInstruction !== "make-child" ? dropTargetData.id : undefined;
           // if instruction is to reorder-below that is enabled only for end of the last items in the list then dropAtEndOfList as true
-          if (instruction === "reorder-below") dropAtEndOfList = true;
+          if (dropInstruction === "reorder-below") dropAtEndOfList = true;
 
           const sourceData = source.data as TargetData;
           if (sourceData.id) onDrop(sourceData.id, parentId, droppedLabelId, dropAtEndOfList);
         },
       })
     );
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- dependencies intentionally limited
   }, [labelRef?.current, dragHandleRef?.current, label, isChild, isGroup, isLastChild, onDrop]);
 
   const isMakeChild = instruction == "make-child";

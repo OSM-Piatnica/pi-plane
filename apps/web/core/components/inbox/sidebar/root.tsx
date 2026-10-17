@@ -88,6 +88,7 @@ export const InboxSidebar = observer(function InboxSidebar(props: IInboxSidebarP
       <div className="relative flex h-full w-full flex-col overflow-hidden">
         <Header variant={EHeaderVariant.SECONDARY}>
           {tabNavigationOptions.map((option) => (
+            // oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only
             <div
               key={option?.key}
               className={cn(

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -91,6 +92,7 @@ export const ConfirmWorkspaceMemberRemove = observer(function ConfirmWorkspaceMe
                   <Button variant="secondary" onClick={handleClose}>
                     Cancel
                   </Button>
+                  {/* oxlint-disable-next-line jsx-a11y/tabindex-no-positive -- existing tab order preserved */}
                   <Button variant="error-fill" tabIndex={1} onClick={handleDeletion} loading={isRemoving}>
                     {currentUser?.id === userDetails.id
                       ? isRemoving

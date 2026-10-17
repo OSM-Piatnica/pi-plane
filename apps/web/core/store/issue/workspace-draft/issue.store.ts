@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -237,7 +238,7 @@ export class WorkspaceDraftIssues implements IWorkspaceDraftIssues {
           const newIssueIds = issueIds.filter((issueId) => !existingIssueIds.includes(issueId));
           this.addIssue(results);
           // issue map update
-          update(this.issueMapIds, [workspaceSlug], (existingIssueIds = []) => [...newIssueIds, ...existingIssueIds]);
+          update(this.issueMapIds, [workspaceSlug], (currentIssueIds = []) => [...newIssueIds, ...currentIssueIds]);
           this.loader = undefined;
         } else {
           this.loader = "empty-state";
@@ -292,7 +293,7 @@ export class WorkspaceDraftIssues implements IWorkspaceDraftIssues {
         set(this.issuesMap, [issueId], {
           ...issueBeforeUpdate,
           ...payload,
-          ...{ updated_at: getCurrentDateTimeInISO() },
+          updated_at: getCurrentDateTimeInISO(),
         });
       });
       const response = await workspaceDraftService.updateIssue(workspaceSlug, issueId, payload);

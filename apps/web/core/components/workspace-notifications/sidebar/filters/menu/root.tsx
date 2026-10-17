@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -23,6 +24,7 @@ export const NotificationFilter = observer(function NotificationFilter() {
   const { isMobile } = usePlatformOS();
   const { t } = useTranslation();
 
+  // oxlint-disable-next-line oxc/no-map-spread -- small static option list; spread keeps the original shape
   const translatedFilterTypeOptions = FILTER_TYPE_OPTIONS.map((filter) => ({
     ...filter,
     label: t(filter.i18n_label),

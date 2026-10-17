@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,6 +12,7 @@ export function StickiesLoader() {
   return (
     <div className="grid grid-cols-4 gap-4 overflow-scroll pb-2">
       {Array.from({ length: 4 }).map((_, index) => (
+        // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
         <Loader key={index} className="space-y-5 rounded-sm border border-subtle p-3">
           <div className="space-y-2">
             <Loader.Item height="20px" />

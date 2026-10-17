@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -18,7 +19,7 @@ export function IssueDetailWidgetButton(props: Props) {
   const { icon, title, disabled = false } = props;
   return (
     <Button variant={"secondary"} disabled={disabled} size="lg">
-      {icon && icon}
+      {icon}
       <span className="text-body-xs-medium">{title}</span>
     </Button>
   );

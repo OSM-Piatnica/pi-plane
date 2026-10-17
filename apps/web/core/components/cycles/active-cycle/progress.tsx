@@ -73,7 +73,8 @@ export const ActiveCycleProgress = observer(function ActiveCycleProgress(props: 
           {Object.keys(groupedIssues).map((group, index) => (
             <>
               {groupedIssues[group] > 0 && (
-                <div key={index}>
+                <div key={group}>
+                  {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
                   <div
                     className="flex cursor-pointer items-center justify-between gap-2 text-13"
                     onClick={() => {

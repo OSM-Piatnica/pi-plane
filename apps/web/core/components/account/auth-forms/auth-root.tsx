@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -137,10 +138,10 @@ export const AuthRoot = observer(function AuthRoot(props: TAuthRoot) {
           authStep={authStep}
           authMode={authMode}
           email={email}
-          setEmail={(email) => setEmail(email)}
-          setAuthMode={(authMode) => setAuthMode(authMode)}
-          setAuthStep={(authStep) => setAuthStep(authStep)}
-          setErrorInfo={(errorInfo) => setErrorInfo(errorInfo)}
+          setEmail={(newEmail) => setEmail(newEmail)}
+          setAuthMode={(newAuthMode) => setAuthMode(newAuthMode)}
+          setAuthStep={(newAuthStep) => setAuthStep(newAuthStep)}
+          setErrorInfo={(newErrorInfo) => setErrorInfo(newErrorInfo)}
           currentAuthMode={currentAuthMode}
         />
       )}

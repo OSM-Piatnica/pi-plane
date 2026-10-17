@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -127,14 +128,14 @@ export const useStickyOperations = (props: TProps) => {
         }
       },
       updatePosition: async (
-        workspaceSlug: string,
+        stickyWorkspaceSlug: string,
         sourceId: string,
         droppedId: string,
         instruction: InstructionType
       ) => {
         try {
-          if (!workspaceSlug) throw new Error("Missing required fields");
-          await updateStickyPosition(workspaceSlug, sourceId, droppedId, instruction);
+          if (!stickyWorkspaceSlug) throw new Error("Missing required fields");
+          await updateStickyPosition(stickyWorkspaceSlug, sourceId, droppedId, instruction);
         } catch (error) {
           console.error("Error in updating sticky position:", error);
           setToast({
@@ -145,6 +146,7 @@ export const useStickyOperations = (props: TProps) => {
         }
       },
     }),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- dependencies intentionally limited
     [createSticky, deleteSticky, getWorkspaceStickyIds, stickies, updateSticky, updateStickyPosition, workspaceSlug]
   );
 

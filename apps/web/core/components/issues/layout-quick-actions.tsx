@@ -34,6 +34,7 @@ export const LayoutQuickActions = observer(function LayoutQuickActions(props: Pr
         title: t("link_copied"),
         message: storeType === "EPIC" ? t("issue_ui.epics_link_copied") : t("issue_ui.work_items_link_copied"),
       });
+      return;
     });
 
   const handleOpenInNewTab = () => window.open(`/${layoutLink}`, "_blank");

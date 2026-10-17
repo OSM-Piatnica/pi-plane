@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -22,6 +23,7 @@ export function EstimateTextInput(props: TEstimateTextInputProps) {
       onChange={(e) => handleEstimateInputValue(e.target.value)}
       className="w-full border-none bg-transparent px-3 py-2 text-13 focus:border-0 focus:ring-0 focus:outline-none"
       placeholder={t("project_settings.estimates.create.enter_estimate_point")}
+      // oxlint-disable-next-line jsx-a11y/no-autofocus -- autofocus is intentional UX here
       autoFocus
       type="text"
     />

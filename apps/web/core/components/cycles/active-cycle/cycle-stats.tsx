@@ -53,6 +53,19 @@ export type ActiveCycleStatsProps = {
   cycleIssueDetails?: ActiveCycleIssueDetails | { nextPageResults: boolean };
 };
 
+const getCurrentTabIndex = (tab: string | null) => {
+  switch (tab) {
+    case "Priority-Issues":
+      return 0;
+    case "Assignees":
+      return 1;
+    case "Labels":
+      return 2;
+    default:
+      return 0;
+  }
+};
+
 export const ActiveCycleStats = observer(function ActiveCycleStats(props: ActiveCycleStatsProps) {
   const { workspaceSlug, projectId, cycle, cycleId, handleFiltersUpdate, cycleIssueDetails } = props;
   // local storage
@@ -70,18 +83,6 @@ export const ActiveCycleStats = observer(function ActiveCycleStats(props: Active
   const assigneesResolvedPath = resolvedTheme === "light" ? lightAssigneeAsset : darkAssigneeAsset;
   const labelsResolvedPath = resolvedTheme === "light" ? lightLabelAsset : darkLabelAsset;
 
-  const currentValue = (tab: string | null) => {
-    switch (tab) {
-      case "Priority-Issues":
-        return 0;
-      case "Assignees":
-        return 1;
-      case "Labels":
-        return 2;
-      default:
-        return 0;
-    }
-  };
   const {
     issues: { fetchNextActiveCycleIssues },
   } = useIssues(EIssuesStoreType.CYCLE);
@@ -109,7 +110,7 @@ export const ActiveCycleStats = observer(function ActiveCycleStats(props: Active
     <div className="col-span-1 flex min-h-[17rem] flex-col gap-4 overflow-hidden rounded-lg border border-subtle bg-surface-1 p-4 lg:col-span-2 xl:col-span-1">
       <Tab.Group
         as={Fragment}
-        defaultIndex={currentValue(tab)}
+        defaultIndex={getCurrentTabIndex(tab)}
         onChange={(i) => {
           switch (i) {
             case 0:
@@ -190,6 +191,7 @@ export const ActiveCycleStats = observer(function ActiveCycleStats(props: Active
                       if (!issue) return null;
 
                       return (
+                        // oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only
                         <div
                           key={issue.id}
                           className="group flex cursor-pointer items-center justify-between gap-2 rounded-md p-1 hover:bg-surface-2"
@@ -299,6 +301,7 @@ export const ActiveCycleStats = observer(function ActiveCycleStats(props: Active
                   else
                     return (
                       <SingleProgressStats
+                        // oxlint-disable-next-line react/no-array-index-key -- no stable id for the unassigned entry
                         key={`unassigned-${index}`}
                         title={
                           <div className="flex items-center gap-2">
@@ -340,6 +343,7 @@ export const ActiveCycleStats = observer(function ActiveCycleStats(props: Active
               cycle?.distribution?.labels && cycle.distribution.labels.length > 0 ? (
                 cycle.distribution.labels?.map((label, index) => (
                   <SingleProgressStats
+                    // oxlint-disable-next-line react/no-array-index-key -- fallback key for labels without an id
                     key={label.label_id ?? `no-label-${index}`}
                     title={
                       <div className="flex items-center gap-2 truncate">

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -50,6 +51,7 @@ export const FilterDisplayProperties = observer(function FilterDisplayProperties
       default:
         return true;
     }
+    // oxlint-disable-next-line oxc/no-map-spread -- not trivially equivalent rewrite
   }).map((property) => {
     if (isEpic && property.key === "sub_issue_count") {
       return { ...property, titleTranslationKey: "issue.display.properties.work_item_count" };

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -71,9 +72,11 @@ export const BaseSpreadsheetRoot = observer(function BaseSpreadsheetRoot(props: 
   }, [fetchIssues, storeType, viewId]);
 
   const canEditProperties = useCallback(
-    (projectId: string | undefined) => {
+    (issueProjectId: string | undefined) => {
       const isEditingAllowedBasedOnProject =
-        canEditPropertiesBasedOnProject && projectId ? canEditPropertiesBasedOnProject(projectId) : isEditingAllowed;
+        canEditPropertiesBasedOnProject && issueProjectId
+          ? canEditPropertiesBasedOnProject(issueProjectId)
+          : isEditingAllowed;
 
       return enableInlineEditing && isEditingAllowedBasedOnProject;
     },
@@ -108,6 +111,7 @@ export const BaseSpreadsheetRoot = observer(function BaseSpreadsheetRoot(props: 
         placements={placement}
       />
     ),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
     [isCompletedCycle, canEditProperties, removeIssue, updateIssue, removeIssueFromView, archiveIssue, restoreIssue]
   );
 

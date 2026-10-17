@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -109,7 +110,7 @@ export const sortMembers = <T>(
 
   const { field, direction } = parseOrderKey(orderBy);
 
-  return [...members].sort((a, b) => {
+  return members.toSorted((a, b) => {
     const aKey = getMemberKey(a);
     const bKey = getMemberKey(b);
     const aMemberDetails = memberDetailsMap[aKey];

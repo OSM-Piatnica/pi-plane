@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -40,7 +41,7 @@ export const PaidPlanUpgradeModal = observer(function PaidPlanUpgradeModal(props
   const handleRedirection = ({ planVariant, priceId }: TCheckoutParams) => {
     // Get the product and price using plane community constants
     const product = PLANE_COMMUNITY_PRODUCTS[planVariant];
-    const price = product.prices.find((price) => price.id === priceId);
+    const price = product.prices.find((p) => p.id === priceId);
     const frequency = price?.recurring ?? "year";
     // Redirect to the appropriate URL
     const redirectUrl = SUBSCRIPTION_REDIRECTION_URLS[planVariant][frequency] ?? TALK_TO_SALES_URL;

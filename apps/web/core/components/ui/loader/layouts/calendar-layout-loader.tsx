@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -35,8 +36,8 @@ export function CalendarLayoutLoader() {
         <div className="grid h-full w-full grid-cols-1 divide-y-[0.5px] divide-subtle-1 overflow-y-auto">
           {range(6).map((index) => (
             <div key={index} className="grid grid-cols-5 divide-x-[0.5px] divide-subtle-1">
-              {range(5).map((index) => (
-                <CalendarDay key={index} />
+              {range(5).map((dayIndex) => (
+                <CalendarDay key={dayIndex} />
               ))}
             </div>
           ))}

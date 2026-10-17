@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -286,6 +287,7 @@ export class WorkspaceMemberStore implements IWorkspaceMemberStore {
       runInAction(() => {
         set(this.workspaceMemberMap, [workspaceSlug, userId, "is_active"], false);
       });
+      return;
     });
   };
 
@@ -323,6 +325,7 @@ export class WorkspaceMemberStore implements IWorkspaceMemberStore {
     invitationId: string,
     data: Partial<IWorkspaceMemberInvitation>
   ) => {
+    // oxlint-disable-next-line no-unsafe-optional-chaining -- preserves existing behaviour (throws if invitations are not loaded)
     const originalMemberInvitations = [...this.workspaceMemberInvitations?.[workspaceSlug]]; // in case of error, we will revert back to original members
     try {
       const memberInvitations = originalMemberInvitations?.map((invitation) => ({
@@ -355,6 +358,7 @@ export class WorkspaceMemberStore implements IWorkspaceMemberStore {
           (inv) => inv.id !== invitationId
         );
       });
+      return;
     });
 
   isUserSuspended = computedFn((userId: string, workspaceSlug: string) => {

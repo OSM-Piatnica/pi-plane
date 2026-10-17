@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -83,13 +84,13 @@ export const RelationIssueListItem = observer(function RelationIssueListItem(pro
   });
 
   // handlers
-  const handleIssuePeekOverview = (issue: TIssue) => {
-    if (issue.is_epic) {
+  const handleIssuePeekOverview = (peekIssue: TIssue) => {
+    if (peekIssue.is_epic) {
       // open epics in new tab
       window.open(workItemLink, "_blank");
       return;
     }
-    handleRedirection(workspaceSlug, issue, isMobile);
+    handleRedirection(workspaceSlug, peekIssue, isMobile);
   };
 
   const handleEditIssue = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -148,6 +149,7 @@ export const RelationIssueListItem = observer(function RelationIssueListItem(pro
                 <span className="w-0 flex-1 truncate text-13 text-primary">{issue.name}</span>
               </Tooltip>
             </div>
+            {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
             <div
               className="flex-shrink-0 text-13"
               onClick={(e) => {

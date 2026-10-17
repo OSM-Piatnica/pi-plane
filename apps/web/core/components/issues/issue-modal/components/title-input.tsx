@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -73,6 +74,7 @@ export const IssueTitleInput = observer(function IssueTitleInput(props: TIssueTi
             hasError={Boolean(errors.name)}
             placeholder={t("title")}
             className="w-full text-body-sm-regular"
+            // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing markup; a11y behaviour change out of scope for lint cleanup
             autoFocus
             tabIndex={getIndex("name")}
           />

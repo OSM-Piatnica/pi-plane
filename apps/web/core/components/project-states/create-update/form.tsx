@@ -87,6 +87,7 @@ export function StateForm(props: TStateForm) {
           hasError={(errors && Boolean(errors.name)) || false}
           className="w-full"
           maxLength={100}
+          // oxlint-disable-next-line no-autofocus -- existing behaviour; lint cleanup only
           autoFocus
         />
 

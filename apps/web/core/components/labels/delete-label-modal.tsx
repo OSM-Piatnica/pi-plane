@@ -46,6 +46,7 @@ export const DeleteLabelModal = observer(function DeleteLabelModal(props: Props)
     await deleteLabel(workspaceSlug.toString(), projectId.toString(), data.id)
       .then(() => {
         handleClose();
+        return;
       })
       .catch((err) => {
         setIsDeleteLoading(false);

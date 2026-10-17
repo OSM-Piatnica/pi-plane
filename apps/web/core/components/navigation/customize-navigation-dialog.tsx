@@ -44,6 +44,14 @@ const PERSONAL_ITEMS: Array<{ key: TPersonalNavigationItemKey; labelTranslationK
   { key: "drafts", labelTranslationKey: "drafts" },
 ];
 
+// Prevent typing invalid characters in number input
+const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  // Block: e, E, +, -, .
+  if (["e", "E", "+", "-", "."].includes(e.key)) {
+    e.preventDefault();
+  }
+};
+
 export const CustomizeNavigationDialog = observer(function CustomizeNavigationDialog(
   props: TCustomizeNavigationDialogProps
 ) {
@@ -102,7 +110,7 @@ export const CustomizeNavigationDialog = observer(function CustomizeNavigationDi
       };
     });
 
-    return items.sort((a, b) => a.sortOrder - b.sortOrder);
+    return items.toSorted((a, b) => a.sortOrder - b.sortOrder);
   }, [workspaceSlug, allowPermissions, workspacePreferences]);
 
   // Handle checkbox toggle
@@ -151,16 +159,8 @@ export const CustomizeNavigationDialog = observer(function CustomizeNavigationDi
       };
     });
 
-    return items.sort((a, b) => a.sortOrder - b.sortOrder);
+    return items.toSorted((a, b) => a.sortOrder - b.sortOrder);
   }, [personalPreferences, filteredPersonalItems]);
-
-  // Prevent typing invalid characters in number input
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // Block: e, E, +, -, .
-    if (["e", "E", "+", "-", "."].includes(e.key)) {
-      e.preventDefault();
-    }
-  };
 
   // Handle project count input change
   const handleProjectCountChange = (value: string) => {
@@ -264,6 +264,7 @@ export const CustomizeNavigationDialog = observer(function CustomizeNavigationDi
               <div className="space-y-3">
                 {/* Navigation Mode Radio Buttons */}
                 <div className="space-y-2">
+                  {/* oxlint-disable-next-line jsx-a11y/label-has-associated-control -- label association handled by wrapper markup */}
                   <label className="flex cursor-pointer gap-2 rounded-md px-2 py-1.5 hover:bg-surface-2">
                     <input
                       type="radio"
@@ -279,6 +280,7 @@ export const CustomizeNavigationDialog = observer(function CustomizeNavigationDi
                     </div>
                   </label>
 
+                  {/* oxlint-disable-next-line jsx-a11y/label-has-associated-control -- label association handled by wrapper markup */}
                   <label className="flex cursor-pointer gap-2 rounded-md px-2 py-1.5 hover:bg-surface-2">
                     <input
                       type="radio"

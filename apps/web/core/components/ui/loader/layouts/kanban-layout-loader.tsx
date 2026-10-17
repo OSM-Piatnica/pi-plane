@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -58,6 +59,7 @@ export function KanbanLayoutLoader({ cardsInEachColumn = [2, 3, 2, 4, 3] }: { ca
   return (
     <ContentWrapper className="flex-row gap-5 overflow-x-auto py-1.5">
       {cardsInEachColumn.map((cardsInColumn, columnIndex) => (
+        // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
         <KanbanColumnLoader key={columnIndex} cardsInColumn={cardsInColumn} />
       ))}
     </ContentWrapper>

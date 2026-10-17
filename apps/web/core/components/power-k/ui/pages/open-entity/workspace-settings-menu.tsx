@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -32,6 +33,7 @@ export const PowerKOpenWorkspaceSettingsMenu = observer(function PowerKOpenWorks
       context.params.workspaceSlug &&
       allowPermissions(setting.access, EUserPermissionsLevel.WORKSPACE, context.params.workspaceSlug?.toString())
   );
+  // oxlint-disable-next-line oxc/no-map-spread -- small list; behaviour preserved
   const settingsListWithIcons = settingsList.map((setting) => ({
     ...setting,
     label: t(setting.i18n_label),

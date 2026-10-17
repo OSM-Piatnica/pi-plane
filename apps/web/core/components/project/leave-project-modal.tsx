@@ -67,6 +67,7 @@ export const LeaveProjectModal = observer(function LeaveProjectModal(props: ILea
           return leaveProject(workspaceSlug.toString(), project.id)
             .then(() => {
               handleClose();
+              return;
             })
             .catch((_err) => {
               setToast({

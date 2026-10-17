@@ -43,6 +43,7 @@ export const CycleFiltersSelection = observer(function CycleFiltersSelection(pro
             placeholder={t("search")}
             value={filtersSearchQuery}
             onChange={(e) => setFiltersSearchQuery(e.target.value)}
+            // oxlint-disable-next-line no-autofocus -- existing behaviour; lint cleanup only
             autoFocus={!isMobile}
           />
           {filtersSearchQuery !== "" && (

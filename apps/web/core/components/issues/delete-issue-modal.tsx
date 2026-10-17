@@ -94,6 +94,7 @@ export const DeleteIssueModal = observer(function DeleteIssueModal(props: Props)
             }),
           });
           onClose();
+          return;
         })
         .catch((errors) => {
           const isPermissionError =

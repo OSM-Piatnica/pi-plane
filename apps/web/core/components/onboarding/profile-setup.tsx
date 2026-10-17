@@ -176,6 +176,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
         } else {
           setProfileSetupStep(EProfileSetupSteps.USER_PERSONALIZATION);
         }
+        return;
       });
     } catch {
       setToast({
@@ -248,8 +249,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
 
   // Check for all available fields validation and if password field is available, then checks for password validation (strength + confirmation).
   // Also handles the condition for optional password i.e if password field is optional it only checks for above validation if it's not empty.
-  const isButtonDisabled =
-    !isSubmitting && isValid ? (isPasswordAlreadySetup ? false : isValidPassword ? false : true) : true;
+  const isButtonDisabled = !(!isSubmitting && isValid && (isPasswordAlreadySetup || isValidPassword));
 
   return (
     <div className="flex h-full w-full">
@@ -288,6 +288,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                     </div>
                   ) : (
                     <div className="relative mr-3 h-16 w-16 overflow-hidden">
+                      {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- behaviour-preserving lint cleanup; a11y handled separately */}
                       <img
                         src={getFileURL(userAvatar ?? "")}
                         className="absolute top-0 left-0 h-full w-full rounded-full object-cover"
@@ -323,6 +324,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                         name="first_name"
                         type="text"
                         value={value}
+                        // oxlint-disable-next-line jsx-a11y/no-autofocus -- intentional autofocus; behaviour preserved
                         autoFocus
                         onChange={onChange}
                         ref={ref}
@@ -426,7 +428,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                       control={control}
                       name="confirm_password"
                       rules={{
-                        required: watch("password") ? true : false,
+                        required: !!watch("password"),
                         validate: (value) =>
                           watch("password")
                             ? value === watch("password")
@@ -489,6 +491,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                   render={({ field: { value, onChange } }) => (
                     <div className="flex flex-wrap gap-2 overflow-auto py-2 break-all">
                       {USER_ROLE.map((userRole) => (
+                        // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- behaviour-preserving lint cleanup; a11y handled separately
                         <div
                           key={userRole.value}
                           className={cn(
@@ -527,6 +530,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                       {USER_DOMAIN.map((userDomain) => {
                         const isSelected = value?.includes(userDomain.value) || false;
                         return (
+                          // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- behaviour-preserving lint cleanup; a11y handled separately
                           <div
                             key={userDomain.value}
                             className={`flex-shrink-0 border-[0.5px] hover:cursor-pointer hover:bg-surface-2 ${

@@ -173,17 +173,17 @@ export const PeekOverviewIssueDetails = observer(function PeekOverviewIssueDetai
               isRestoreDisabled: disabled || isArchived,
             }}
             fetchHandlers={{
-              listDescriptionVersions: (issueId) =>
+              listDescriptionVersions: (versionIssueId) =>
                 workItemVersionService.listDescriptionVersions(
                   workspaceSlug,
                   issue.project_id?.toString() ?? "",
-                  issueId
+                  versionIssueId
                 ),
-              retrieveDescriptionVersion: (issueId, versionId) =>
+              retrieveDescriptionVersion: (versionIssueId, versionId) =>
                 workItemVersionService.retrieveDescriptionVersion(
                   workspaceSlug,
                   issue.project_id?.toString() ?? "",
-                  issueId,
+                  versionIssueId,
                   versionId
                 ),
             }}

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -52,6 +53,7 @@ export const ModuleGanttBlock = observer(function ModuleGanttBlock(props: Props)
       }
       position="top-start"
     >
+      {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
       <div
         className="relative flex h-full w-full cursor-pointer items-center rounded-sm"
         style={blockStyle}

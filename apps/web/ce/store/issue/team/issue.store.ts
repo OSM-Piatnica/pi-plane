@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,6 +15,7 @@ export type ITeamIssues = IProjectIssues;
 
 // @ts-nocheck - This class will never be used, extending similar class to avoid type errors
 export class TeamIssues extends ProjectIssues implements IProjectIssues {
+  // oxlint-disable-next-line no-useless-constructor -- deliberate extension-point constructor kept for subclass/override parity
   constructor(_rootStore: IIssueRootStore, teamIssueFilterStore: ITeamIssuesFilter) {
     super(_rootStore, teamIssueFilterStore);
   }

@@ -110,8 +110,8 @@ export const IssueLabelSelect = observer(function IssueLabelSelect(props: IIssue
 
   const handleAddLabel = async (labelName: string) => {
     setSubmitting(true);
-    const label = await onAddLabel(workspaceSlug, projectId, { name: labelName, color: getRandomLabelColor() });
-    onSelect([...values, label.id]);
+    const newLabel = await onAddLabel(workspaceSlug, projectId, { name: labelName, color: getRandomLabelColor() });
+    onSelect([...values, newLabel.id]);
     setQuery("");
     setSubmitting(false);
   };
@@ -194,6 +194,7 @@ export const IssueLabelSelect = observer(function IssueLabelSelect(props: IIssue
                 <Loader className="spin h-3.5 w-3.5" />
               ) : canCreateLabel ? (
                 <ul className="space-y-1">
+                  {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- existing markup; a11y behaviour change out of scope for lint cleanup */}
                   <Combobox.Option
                     as="li"
                     value={query}

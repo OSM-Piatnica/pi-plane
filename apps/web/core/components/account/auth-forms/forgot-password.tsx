@@ -69,6 +69,7 @@ export const ForgotPasswordForm = observer(function ForgotPasswordForm() {
           message: t("auth.forgot_password.toast.success.message"),
         });
         setResendCodeTimer(30);
+        return;
       })
       .catch((err) => {
         setToast({

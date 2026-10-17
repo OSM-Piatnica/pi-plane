@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -15,6 +16,8 @@ import { AccountTypeColumn, NameColumn } from "@/components/workspace/settings/m
 import { useMember } from "@/hooks/store/use-member";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
 import type { IMemberFilters } from "@/store/member/utils";
+
+const isSuspended = (rowData: RowData) => rowData.is_active === false;
 
 export const useMemberColumns = () => {
   // states
@@ -33,8 +36,6 @@ export const useMemberColumns = () => {
 
   // derived values
   const isAdmin = allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.WORKSPACE);
-
-  const isSuspended = (rowData: RowData) => rowData.is_active === false;
 
   // handlers
   const handleDisplayFilterUpdate = (filterUpdates: Partial<IMemberFilters>) => {

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -133,7 +134,7 @@ export const ProjectSettingsLabelList = observer(function ProjectSettingsLabelLi
                     key={label.id}
                     label={label}
                     labelChildren={label.children || []}
-                    handleLabelDelete={(label: IIssueLabel) => setSelectDeleteLabel(label)}
+                    handleLabelDelete={(labelToDelete: IIssueLabel) => setSelectDeleteLabel(labelToDelete)}
                     isUpdating={isUpdating}
                     setIsUpdating={setIsUpdating}
                     isLastChild={index === projectLabelsTree.length - 1}
@@ -148,7 +149,7 @@ export const ProjectSettingsLabelList = observer(function ProjectSettingsLabelLi
                   label={label}
                   key={label.id}
                   setIsUpdating={setIsUpdating}
-                  handleLabelDelete={(label) => setSelectDeleteLabel(label)}
+                  handleLabelDelete={(labelToDelete) => setSelectDeleteLabel(labelToDelete)}
                   isChild={false}
                   isLastChild={index === projectLabelsTree.length - 1}
                   onDrop={onDrop}

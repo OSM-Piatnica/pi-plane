@@ -62,6 +62,7 @@ export const useWorkItemCommentOperations = (
               type: TOAST_TYPE.SUCCESS,
               message: t("issue.comments.copy_link.success"),
             });
+            return;
           });
         } catch (error) {
           console.error("Error in copying comment link:", error);
@@ -140,7 +141,7 @@ export const useWorkItemCommentOperations = (
           return res;
         } catch (error) {
           console.log("Error in uploading comment asset:", error);
-          throw new Error(t("issue.comments.upload.error"));
+          throw new Error(t("issue.comments.upload.error"), { cause: error });
         }
       },
       duplicateCommentAsset: async (assetId, commentId) => {
@@ -211,6 +212,7 @@ export const useWorkItemCommentOperations = (
       },
     };
     return ops;
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
   }, [workspaceSlug, projectId, issueId, createComment, updateComment, uploadEditorAsset, removeComment]);
 
   return operations;

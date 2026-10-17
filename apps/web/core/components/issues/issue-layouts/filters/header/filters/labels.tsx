@@ -72,7 +72,7 @@ export const FilterLabels = observer(function FilterLabels(props: Props) {
                 {sortedOptions.slice(0, itemsToRender).map((label) => (
                   <FilterOption
                     key={label?.id}
-                    isChecked={appliedFilters?.includes(label?.id) ? true : false}
+                    isChecked={Boolean(appliedFilters?.includes(label?.id))}
                     onClick={() => handleUpdate(label?.id)}
                     icon={<LabelIcons color={label.color} />}
                     title={label.name}

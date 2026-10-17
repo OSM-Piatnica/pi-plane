@@ -115,6 +115,7 @@ export function CreateApiTokenForm(props: Props) {
     await onSubmit(payload).then(() => {
       reset(defaultValues);
       setCustomDate(null);
+      return;
     });
   };
 
@@ -239,6 +240,7 @@ export function CreateApiTokenForm(props: Props) {
         </div>
       </div>
       <div className="flex items-center justify-between gap-2 border-t-[0.5px] border-subtle px-5 py-4">
+        {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged */}
         <div className="flex cursor-pointer items-center gap-1.5" onClick={toggleNeverExpires}>
           <div className="flex cursor-pointer items-center justify-center">
             <ToggleSwitch value={neverExpires} onChange={() => {}} size="sm" />

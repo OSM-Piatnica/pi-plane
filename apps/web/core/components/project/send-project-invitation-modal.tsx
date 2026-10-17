@@ -92,6 +92,7 @@ export const SendProjectInvitationModal = observer(function SendProjectInvitatio
           type: TOAST_TYPE.SUCCESS,
           message: t("project_components.invitation_modal.members_added"),
         });
+        return;
       })
       .catch((error) => {
         console.error(error);
@@ -242,14 +243,14 @@ export const SendProjectInvitationModal = observer(function SendProjectInvitatio
                       name={`members.${index}.role`}
                       control={control}
                       rules={{ required: t("project_components.invitation_modal.select_role_required") }}
-                      render={({ field }) => (
+                      render={({ field: roleField }) => (
                         <CustomSelect
-                          {...field}
+                          {...roleField}
                           customButton={
                             <div className="shadow-sm flex w-24 items-center justify-between gap-1 rounded-md border border-subtle px-3 py-2.5 text-left text-13 text-secondary duration-300 hover:bg-layer-1 hover:text-primary focus:outline-none">
                               <span className="capitalize">
-                                {field.value
-                                  ? t(getRoleI18nKey(field.value))
+                                {roleField.value
+                                  ? t(getRoleI18nKey(roleField.value))
                                   : t("project_components.invitation_modal.select_role_required")}
                               </span>
                               <ChevronDownIcon className="h-3 w-3" aria-hidden="true" />

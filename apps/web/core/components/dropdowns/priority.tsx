@@ -442,6 +442,7 @@ export function PriorityDropdown(props: Props) {
   );
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- behaviour-preserving lint cleanup; a11y handled separately
     <ComboDropDown
       as="div"
       ref={dropdownRef}

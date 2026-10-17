@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -74,6 +75,7 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
           }
         }
         setIsExistingEmail(response.existing);
+        return;
       })
       .catch((error) => {
         const errorhandler = authErrorHandler(error?.error_code?.toString(), data?.email || undefined);
@@ -90,9 +92,9 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
   };
 
   // generating the unique code
-  const generateEmailUniqueCode = async (email: string): Promise<{ code: string } | undefined> => {
+  const generateEmailUniqueCode = async (emailAddress: string): Promise<{ code: string } | undefined> => {
     if (!isSMTPConfigured) return;
-    const payload = { email: email };
+    const payload = { email: emailAddress };
     return await authService
       .generateUniqueCode(payload)
       .then(() => ({ code: "" }))

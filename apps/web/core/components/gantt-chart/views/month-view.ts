@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -138,6 +139,7 @@ export const getMonthsBetweenTwoDates = (startDate: Date, endDate: Date): IMonth
 
   const currentDate = new Date(startYear, startMonth);
 
+  // oxlint-disable-next-line no-unmodified-loop-condition -- currentDate is mutated via setMonth below
   while (currentDate <= endDate) {
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();

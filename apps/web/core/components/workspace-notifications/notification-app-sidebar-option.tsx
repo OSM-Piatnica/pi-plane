@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -30,7 +31,7 @@ export const NotificationAppSidebarOption = observer(function NotificationAppSid
   );
 
   // derived values
-  const isMentionsEnabled = unreadNotificationsCount.mention_unread_notifications_count > 0 ? true : false;
+  const isMentionsEnabled = unreadNotificationsCount.mention_unread_notifications_count > 0;
   const totalNotifications = isMentionsEnabled
     ? unreadNotificationsCount.mention_unread_notifications_count
     : unreadNotificationsCount.total_unread_notifications_count;

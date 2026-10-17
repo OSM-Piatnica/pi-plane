@@ -64,6 +64,7 @@ export const QuarterChartView = observer(function QuarterChartView(_props: any) 
               <div className="flex h-5 w-full">
                 {quarterBlock?.children?.map((monthBlock, index) => (
                   <div
+                    // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
                     key={`sub-title-${rootIndex}-${index}`}
                     className={cn(
                       "flex flex-shrink-0 justify-center text-center capitalize outline-[0.25px] outline-subtle-1",
@@ -90,6 +91,7 @@ export const QuarterChartView = observer(function QuarterChartView(_props: any) 
             <div className="flex h-full w-full flex-grow">
               {quarterBlock?.children?.map((monthBlock, index) => (
                 <div
+                  // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
                   key={`column-${rootIndex}-${index}`}
                   className={cn("h-full overflow-hidden outline-[0.25px] outline-subtle", {
                     "bg-accent-primary/20": monthBlock.today,

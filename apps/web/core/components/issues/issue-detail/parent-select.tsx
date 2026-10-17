@@ -74,7 +74,7 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
         issueId={issueId}
         isOpen={isParentIssueModalOpen === issueId}
         handleClose={() => toggleParentIssueModal(null)}
-        onChange={(issue: any) => handleParentIssue(issue?.id)}
+        onChange={(selectedIssue: any) => handleParentIssue(selectedIssue?.id)}
       />
       <button
         type="button"
@@ -109,6 +109,7 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
 
             {!disabled && (
               <Tooltip tooltipContent={t("common.remove")} position="bottom" isMobile={isMobile}>
+                {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
                 <span
                   onClick={(e) => {
                     e.preventDefault();

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -22,6 +23,13 @@ type TProjectBreadcrumbProps = {
   handleOnClick?: () => void;
 };
 
+// helpers
+const renderIcon = (projectDetails: TProject) => (
+  <span className="grid size-4 flex-shrink-0 place-items-center">
+    <Logo logo={projectDetails.logo_props} size={14} />
+  </span>
+);
+
 export const ProjectBreadcrumb = observer(function ProjectBreadcrumb(props: TProjectBreadcrumbProps) {
   const { workspaceSlug, projectId, handleOnClick } = props;
   // router
@@ -36,10 +44,10 @@ export const ProjectBreadcrumb = observer(function ProjectBreadcrumb(props: TPro
 
   // derived values
   const switcherOptions = joinedProjectIds
-    .map((projectId) => {
-      const project = getPartialProjectById(projectId);
+    .map((id) => {
+      const project = getPartialProjectById(id);
       return {
-        value: projectId,
+        value: id,
         query: project?.name,
         content: (
           <SwitcherLabel
@@ -52,13 +60,6 @@ export const ProjectBreadcrumb = observer(function ProjectBreadcrumb(props: TPro
       };
     })
     .filter((option) => option !== undefined) as ICustomSearchSelectOption[];
-
-  // helpers
-  const renderIcon = (projectDetails: TProject) => (
-    <span className="grid size-4 flex-shrink-0 place-items-center">
-      <Logo logo={projectDetails.logo_props} size={14} />
-    </span>
-  );
 
   return (
     <>

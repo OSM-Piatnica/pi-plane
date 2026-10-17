@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -47,7 +48,7 @@ export function SelectRepository(props: Props) {
 
   const { data: paginatedData, size, setSize, isValidating } = useSWRInfinite(getKey, fetchGithubRepos);
 
-  let userRepositories = (paginatedData ?? []).map((data) => data.repositories).flat();
+  let userRepositories = (paginatedData ?? []).flatMap((data) => data.repositories);
   userRepositories = userRepositories.filter((data) => data?.id);
 
   const totalCount = paginatedData && paginatedData.length > 0 ? paginatedData[0].total_count : 0;
@@ -66,7 +67,7 @@ export function SelectRepository(props: Props) {
       value={value}
       options={options}
       onChange={(val: string) => {
-        const repo = userRepositories.find((repo) => repo.id === val);
+        const repo = userRepositories.find((repository) => repository.id === val);
 
         onChange(repo);
       }}

@@ -54,10 +54,8 @@ export const UseCaseSetupStep = observer(function UseCaseSetupStep({ handleStepC
       use_case: formData.use_case && formData.use_case.length > 0 ? formData.use_case.join(". ") : undefined,
     };
     try {
-      await Promise.all([
-        updateUserProfile(profileUpdatePayload),
-        // totalSteps > 2 && stepChange({ profile_complete: true }),
-      ]);
+      await updateUserProfile(profileUpdatePayload);
+      // totalSteps > 2 && stepChange({ profile_complete: true }),
       setToast({
         type: TOAST_TYPE.SUCCESS,
         title: t("toast.success"),
@@ -85,7 +83,7 @@ export const UseCaseSetupStep = observer(function UseCaseSetupStep({ handleStepC
   };
 
   // derived values
-  const isButtonDisabled = !isSubmitting && isValid ? false : true;
+  const isButtonDisabled = !(!isSubmitting && isValid);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -53,16 +54,16 @@ export const IssueParentSelectRoot = observer(function IssueParentSelectRoot(pro
   };
 
   const handleRemoveSubIssue = async (
-    workspaceSlug: string,
-    projectId: string,
+    targetWorkspaceSlug: string,
+    targetProjectId: string,
     parentIssueId: string,
-    issueId: string
+    subIssueId: string
   ) => {
     try {
-      setSubIssueHelpers(parentIssueId, "issue_loader", issueId);
-      await removeSubIssue(workspaceSlug, projectId, parentIssueId, issueId);
-      await fetchSubIssues(workspaceSlug, projectId, parentIssueId);
-      setSubIssueHelpers(parentIssueId, "issue_loader", issueId);
+      setSubIssueHelpers(parentIssueId, "issue_loader", subIssueId);
+      await removeSubIssue(targetWorkspaceSlug, targetProjectId, parentIssueId, subIssueId);
+      await fetchSubIssues(targetWorkspaceSlug, targetProjectId, parentIssueId);
+      setSubIssueHelpers(parentIssueId, "issue_loader", subIssueId);
     } catch (_error) {
       setToast({
         type: TOAST_TYPE.ERROR,

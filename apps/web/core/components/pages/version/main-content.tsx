@@ -67,6 +67,7 @@ export const PageVersionsMainContent = observer(function PageVersionsMainContent
           title: t("page_ui.version.restored"),
         });
         handleClose();
+        return;
       })
       .catch(() =>
         setToast({

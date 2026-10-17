@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -145,6 +146,7 @@ export const SpreadsheetTable = observer(function SpreadsheetTable(props: Props)
       {canLoadMoreIssues && (
         <tfoot ref={setIntersectionElement}>
           {Array.from({ length: 3 }).map((_, index) => (
+            // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
             <SpreadsheetIssueRowLoader key={index} columnCount={displayPropertiesCount} />
           ))}
         </tfoot>

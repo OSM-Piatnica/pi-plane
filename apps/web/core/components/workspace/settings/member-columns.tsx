@@ -90,6 +90,7 @@ export function NameColumn(props: NameProps) {
                 buttonClassName="outline-none	origin-center rotate-90 size-8 aspect-square flex-shrink-0 grid place-items-center opacity-0 group-hover:opacity-100 transition-opacity"
                 render={() => (
                   <div
+                    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- markup preserved
                     role="button"
                     tabIndex={0}
                     className="flex cursor-pointer items-center gap-x-3"
@@ -156,11 +157,11 @@ export const AccountTypeColumn = observer(function AccountTypeColumn(props: Acco
           render={({ field: { value } }) => (
             <CustomSelect
               value={value as EUserPermissions}
-              onChange={async (value: EUserPermissions) => {
+              onChange={async (newRole: EUserPermissions) => {
                 if (!workspaceSlug) return;
                 try {
                   await updateMember(workspaceSlug.toString(), rowData.member.id, {
-                    role: value as unknown as EUserPermissions,
+                    role: newRole as unknown as EUserPermissions,
                   });
                 } catch (err: unknown) {
                   const error = err as { error?: string | string[] };

@@ -72,7 +72,7 @@ export const UserImageUploadModal = observer(function UserImageUploadModal(props
         title: t("toast.error"),
         message: error?.toString() ?? "Something went wrong. Please try again.",
       });
-      throw new Error("Error in uploading file.");
+      throw new Error("Error in uploading file.", { cause: error });
     } finally {
       setIsImageUploading(false);
     }
@@ -120,6 +120,7 @@ export const UserImageUploadModal = observer(function UserImageUploadModal(props
                   </button>
                   <img
                     src={image ? URL.createObjectURL(image) : value ? getFileURL(value) : ""}
+                    // oxlint-disable-next-line jsx-a11y/img-redundant-alt -- alt text kept as-is
                     alt="image"
                     className="absolute top-0 left-0 h-full w-full rounded-md object-cover"
                   />

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -49,6 +50,7 @@ export function PowerKModalHeader(props: Props) {
           onValueChange={onSearchChange}
           placeholder={placeholder}
           className="flex-1 bg-transparent text-13 text-primary placeholder-(--text-color-placeholder) outline-none"
+          // oxlint-disable-next-line jsx-a11y/no-autofocus -- intentional autofocus; behaviour preserved
           autoFocus
         />
         {searchTerm && (

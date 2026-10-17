@@ -72,6 +72,7 @@ export const ViewFiltersSelection = observer(function ViewFiltersSelection(props
             placeholder={t("search")}
             value={filtersSearchQuery}
             onChange={(e) => setFiltersSearchQuery(e.target.value)}
+            // oxlint-disable-next-line jsx-a11y/no-autofocus -- autofocus is intentional UX here
             autoFocus={!isMobile}
           />
           {filtersSearchQuery !== "" && (

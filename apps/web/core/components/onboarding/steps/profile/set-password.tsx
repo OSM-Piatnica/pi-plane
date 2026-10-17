@@ -80,6 +80,7 @@ export function SetPasswordRoot({ onPasswordChange, onConfirmPasswordChange, dis
 
   return (
     <div className={`flex flex-col overflow-hidden rounded-lg bg-surface-2 transition-all duration-300 ease-in-out`}>
+      {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- behaviour-preserving lint cleanup; a11y handled separately */}
       <div
         className={cn(
           "flex items-center justify-between px-3 py-2 text-13 transition-colors duration-200",

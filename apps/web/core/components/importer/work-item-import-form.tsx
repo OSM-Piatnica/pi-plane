@@ -120,10 +120,9 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
       return;
     }
 
-    const options = IMPORT_OPTION_FIELDS.reduce(
-      (picked, name) => ({ ...picked, [name]: formData[name] }),
-      {} as TWorkItemImportOptions
-    );
+    const options = Object.fromEntries(
+      IMPORT_OPTION_FIELDS.map((name) => [name, formData[name]])
+    ) as TWorkItemImportOptions;
 
     setImportLoading(true);
     try {
@@ -320,6 +319,7 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
             >
               <ul className="mt-2 max-h-64 space-y-1 overflow-y-auto pl-6">
                 {outcome.warnings.map((warning, position) => (
+                  // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
                   <li key={`${position}-${warning}`} className="list-disc text-12 text-secondary">
                     {warning}
                   </li>

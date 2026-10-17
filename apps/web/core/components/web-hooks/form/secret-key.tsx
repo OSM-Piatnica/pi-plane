@@ -81,6 +81,7 @@ export const WebhookSecretKey = observer(function WebhookSecretKey(props: Props)
           const csvData = getCurrentHookAsCSV(currentWorkspace, currentWebhook, webhookSecretKey);
           csvDownload(csvData, `webhook-secret-key-${Date.now()}`);
         }
+        return;
       })
       .catch((err) =>
         setToast({

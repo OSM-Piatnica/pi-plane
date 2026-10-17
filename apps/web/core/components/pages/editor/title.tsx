@@ -68,6 +68,7 @@ export const PageEditorTitle = observer(function PageEditorTitle(props: Props) {
             maxLength={255}
             onFocus={() => setIsLengthVisible(true)}
             onBlur={() => setIsLengthVisible(false)}
+            // oxlint-disable-next-line jsx-a11y/no-autofocus -- autofocus is intentional UX here
             autoFocus
           />
           <div

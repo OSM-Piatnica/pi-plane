@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -75,6 +76,7 @@ export const CommentCardEditForm = observer(function CommentCardEditForm(props: 
 
   return (
     <form className="flex flex-col gap-2">
+      {/* oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged */}
       <div
         onKeyDown={(e) => {
           if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey && !e.metaKey && !isEmpty) handleSubmit(onEnter)(e);

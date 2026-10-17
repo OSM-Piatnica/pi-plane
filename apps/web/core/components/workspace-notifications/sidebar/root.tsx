@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -69,6 +70,7 @@ export const NotificationsSidebarRoot = observer(function NotificationsSidebarRo
 
         <Header variant={EHeaderVariant.SECONDARY} className="justify-start">
           {NOTIFICATION_TABS.map((tab) => (
+            // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged
             <div
               key={tab.value}
               className="relative h-full cursor-pointer px-3"

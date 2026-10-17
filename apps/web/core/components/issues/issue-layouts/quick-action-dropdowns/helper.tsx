@@ -126,6 +126,7 @@ export const useIssueActionHandlers = (props: MenuItemFactoryProps) => {
           title: t("issue_ui.quick_actions.restore_success_title"),
           message: t("issue_ui.quick_actions.restore_success_message"),
         });
+        return;
       })
       .catch(() => {
         setToast({
@@ -300,6 +301,7 @@ export const useWorkItemDetailMenuItems = (props: MenuItemFactoryProps): TContex
       factory.createRestoreMenuItem(),
       factory.createDeleteMenuItem(),
     ],
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
     [factory]
   );
 };
@@ -333,6 +335,7 @@ export const useCycleIssueMenuItems = (props: MenuItemFactoryProps): TContextMen
 
   return useMemo(
     () => [
+      // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
       factory.createEditMenuItem(customEditAction),
       factory.createCopyMenuItem(),
       factory.createOpenInNewTabMenuItem(),
@@ -341,6 +344,7 @@ export const useCycleIssueMenuItems = (props: MenuItemFactoryProps): TContextMen
       factory.createArchiveMenuItem(),
       factory.createDeleteMenuItem(),
     ],
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
     [factory, props.cycleId]
   );
 };
@@ -358,6 +362,7 @@ export const useModuleIssueMenuItems = (props: MenuItemFactoryProps): TContextMe
 
   return useMemo(
     () => [
+      // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
       factory.createEditMenuItem(customEditAction),
       factory.createCopyMenuItem(),
       factory.createOpenInNewTabMenuItem(),
@@ -366,6 +371,7 @@ export const useModuleIssueMenuItems = (props: MenuItemFactoryProps): TContextMe
       factory.createArchiveMenuItem(),
       factory.createDeleteMenuItem(),
     ],
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
     [factory, props.moduleId]
   );
 };

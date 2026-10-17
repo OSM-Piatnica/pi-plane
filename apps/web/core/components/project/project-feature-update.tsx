@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -45,6 +46,7 @@ export const ProjectFeatureUpdate = observer(function ProjectFeatureUpdate(props
           {t("created").toLowerCase()}.
         </div>
         <div className="flex gap-2">
+          {/* oxlint-disable-next-line tabindex-no-positive -- existing behaviour; lint cleanup only */}
           <Button variant="secondary" size="lg" onClick={onClose} tabIndex={1}>
             {t("close")}
           </Button>
@@ -52,6 +54,7 @@ export const ProjectFeatureUpdate = observer(function ProjectFeatureUpdate(props
             href={`/${workspaceSlug}/projects/${projectId}/issues`}
             onClick={onClose}
             className={getButtonStyling("primary", "lg")}
+            // oxlint-disable-next-line tabindex-no-positive -- existing behaviour; lint cleanup only
             tabIndex={2}
           >
             {t("open_project")}

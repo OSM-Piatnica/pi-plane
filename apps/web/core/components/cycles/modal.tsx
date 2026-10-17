@@ -69,6 +69,7 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
           title: t("toast.success"),
           message: t("cycle_ui.create_success"),
         });
+        return;
       })
       .catch((err) => {
         setToast({
@@ -90,6 +91,7 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
           title: t("toast.success"),
           message: t("project_cycles.action.update.success.description"),
         });
+        return;
       })
       .catch((err) => {
         setToast({
@@ -100,11 +102,12 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
       });
   };
 
-  const dateChecker = async (projectId: string, payload: CycleDateCheckData) => {
+  const dateChecker = async (checkProjectId: string, payload: CycleDateCheckData) => {
     let status = false;
 
-    await cycleService.cycleDateCheck(workspaceSlug, projectId, payload).then((res) => {
+    await cycleService.cycleDateCheck(workspaceSlug, checkProjectId, payload).then((res) => {
       status = res.status;
+      return;
     });
 
     return status;
@@ -149,6 +152,7 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
       else {
         await handleCreateCycle(payload).then(() => {
           setCycleTab("all");
+          return;
         });
       }
       handleClose();

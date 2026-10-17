@@ -133,6 +133,7 @@ export function ExistingIssuesListModal(props: Props) {
 
   useEffect(() => {
     handleSearch();
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- dependencies intentionally limited
   }, [debouncedSearchTerm, isOpen, isWorkspaceLevel, projectId, workspaceSlug]);
 
   const filteredIssues = issues.filter((issue) => !shouldHideIssue?.(issue));

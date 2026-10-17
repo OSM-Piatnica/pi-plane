@@ -123,6 +123,7 @@ export const CalendarChart = observer(function CalendarChart(props: Props) {
         element,
       })
     );
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
   }, [scrollableContainerRef?.current]);
 
   if (!calendarPayload || !formattedDatePayload)
@@ -161,6 +162,7 @@ export const CalendarChart = observer(function CalendarChart(props: Props) {
                         setSelectedDate={setSelectedDate}
                         handleDragAndDrop={handleDragAndDrop}
                         issuesFilterStore={issuesFilterStore}
+                        // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
                         key={weekIndex}
                         week={week}
                         issues={issues}

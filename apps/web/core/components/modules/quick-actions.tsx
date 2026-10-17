@@ -64,6 +64,7 @@ export const ModuleQuickActions = observer(function ModuleQuickActions(props: Pr
         title: t("common.link_copied"),
         message: t("entity.link_copied_to_clipboard", { entity: t("common.module") }),
       });
+      return;
     });
   const handleOpenInNewTab = () => window.open(`/${moduleLink}`, "_blank");
 

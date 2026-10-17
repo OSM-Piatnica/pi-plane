@@ -178,13 +178,13 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
         element,
         canDrop: ({ source }) =>
           !disableDrop && source?.data?.id !== projectId && source?.data?.dragInstanceId === "PROJECTS",
-        getData: ({ input, element }) => {
+        getData: ({ input, element: targetElement }) => {
           const data = { id: projectId };
 
           // attach instruction for last in list
           return attachInstruction(data, {
             input,
-            element,
+            element: targetElement,
             currentLevel: 0,
             indentPerLevel: 0,
             mode: isLastChild ? "last-in-group" : "standard",
@@ -223,6 +223,7 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
         },
       })
     );
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency list
   }, [projectId, isLastChild, projectListType, handleOnProjectDrop]);
 
   useEffect(() => {

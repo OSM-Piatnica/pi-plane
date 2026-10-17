@@ -46,6 +46,7 @@ export function ProjectActionsMenu({
   return (
     <CustomMenu
       customButton={
+        // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged
         <span
           ref={actionSectionRef}
           className="grid place-items-center rounded-sm p-0.5 text-placeholder hover:bg-layer-1"

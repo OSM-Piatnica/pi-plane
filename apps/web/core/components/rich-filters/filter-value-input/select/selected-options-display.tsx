@@ -42,6 +42,7 @@ export function SelectedOptionsDisplay<V extends TFilterValue>(props: TSelectedO
   return (
     <div className="flex h-full items-center overflow-hidden">
       {selectedOptions.slice(0, displayCount).map((option, index) => (
+        // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
         <React.Fragment key={index}>
           <div className="flex items-center whitespace-nowrap">
             {option?.icon && <span className={cn("mr-1", option.iconClassName)}>{option.icon}</span>}

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -88,7 +89,7 @@ export const SubIssuesListItem = observer(function SubIssuesListItem(props: Prop
   const displayProperties = subIssueFilters?.displayProperties ?? {};
 
   //
-  const handleIssuePeekOverview = (issue: TIssue) => handleRedirection(workspaceSlug, issue, isMobile);
+  const handleIssuePeekOverview = (peekIssue: TIssue) => handleRedirection(workspaceSlug, peekIssue, isMobile);
 
   if (!issue) return <></>;
 
@@ -125,6 +126,7 @@ export const SubIssuesListItem = observer(function SubIssuesListItem(props: Prop
                       <Loader width={14} strokeWidth={2} className="animate-spin" />
                     </div>
                   ) : (
+                    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup
                     <div
                       className="flex h-full w-full cursor-pointer items-center justify-center text-placeholder hover:text-tertiary"
                       onClick={async (e) => {
@@ -170,6 +172,7 @@ export const SubIssuesListItem = observer(function SubIssuesListItem(props: Prop
               </Tooltip>
             </div>
 
+            {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
             <div
               className="flex-shrink-0 text-13"
               onClick={(e) => {

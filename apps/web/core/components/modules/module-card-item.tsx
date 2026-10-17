@@ -43,6 +43,11 @@ type Props = {
   moduleId: string;
 };
 
+const handleEventPropagation = (e: SyntheticEvent<HTMLDivElement>) => {
+  e.stopPropagation();
+  e.preventDefault();
+};
+
 export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
   const { moduleId } = props;
   // refs
@@ -77,6 +82,7 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
     const addToFavoritePromise = addModuleToFavorites(workspaceSlug.toString(), projectId.toString(), moduleId).then(
       () => {
         if (!storedValue) toggleFavoriteMenu(true);
+        return;
       }
     );
 
@@ -117,11 +123,6 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
     });
   };
 
-  const handleEventPropagation = (e: SyntheticEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    e.preventDefault();
-  };
-
   const handleModuleDetailsChange = async (payload: Partial<IModule>) => {
     if (!workspaceSlug || !projectId) return;
 
@@ -132,6 +133,7 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
           title: t("toast.success"),
           message: t("entity.update.success", { entity: t("common.module") }),
         });
+        return;
       })
       .catch((err) => {
         setToast({
@@ -195,6 +197,7 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
               <Tooltip tooltipContent={moduleDetails.name} position="top" isMobile={isMobile}>
                 <span className="truncate text-14 font-medium">{moduleDetails.name}</span>
               </Tooltip>
+              {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
               <div className="flex items-center gap-2" onClick={handleEventPropagation}>
                 {moduleStatus && (
                   <ModuleStatusDropdown
@@ -226,6 +229,7 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
               )}
             </div>
             <LinearProgressIndicator size="lg" data={progressIndicatorData} />
+            {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
             <div className="flex items-center justify-between py-0.5" onClick={handleEventPropagation}>
               <DateRangeDropdown
                 buttonContainerClassName={`h-6 w-full flex ${isDisabled ? "cursor-not-allowed" : "cursor-pointer"} items-center gap-1.5 text-tertiary border-[0.5px] border-strong rounded-sm text-11`}

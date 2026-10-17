@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -48,6 +49,7 @@ export const NotificationCardListRoot = observer(function NotificationCardListRo
               <div className="text-accent-secondary">{t("loading")}...</div>
             </div>
           ) : (
+            // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; behaviour unchanged
             <div className="flex items-center justify-center py-4 text-13 font-medium" onClick={getNextNotifications}>
               <div className="cursor-pointer text-accent-secondary transition-all hover:text-accent-primary">
                 {t("load_more")}

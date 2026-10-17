@@ -78,7 +78,7 @@ export const FilterAssignees = observer(function FilterAssignees(props: Props) {
                   return (
                     <FilterOption
                       key={`assignees-${member.id}`}
-                      isChecked={appliedFilters?.includes(member.id) ? true : false}
+                      isChecked={Boolean(appliedFilters?.includes(member.id))}
                       onClick={() => handleUpdate(member.id)}
                       icon={
                         <Avatar

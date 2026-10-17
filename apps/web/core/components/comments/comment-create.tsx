@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -91,6 +92,7 @@ export const CommentCreate = observer(function CommentCreate(props: TCommentCrea
   const isEmpty = isCommentEmpty(commentHTML ?? undefined);
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged
     <div
       className={cn("sticky bottom-0 z-[4] bg-surface-1 sm:static")}
       onKeyDown={(e) => {

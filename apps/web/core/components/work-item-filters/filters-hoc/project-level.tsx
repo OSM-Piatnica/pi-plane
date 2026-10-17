@@ -160,6 +160,7 @@ export const ProjectLevelWorkItemFiltersHOC = observer(function ProjectLevelWork
             title: t("toast.success"),
             message: t("project_components.view_filters.view_updated"),
           });
+          return;
         })
         .catch(() => {
           setToast({

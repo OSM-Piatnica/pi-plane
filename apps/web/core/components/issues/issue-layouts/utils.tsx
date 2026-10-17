@@ -71,9 +71,7 @@ export const isWorkspaceLevel = (type: EIssuesStoreType) =>
     EIssuesStoreType.TEAM_VIEW,
     EIssuesStoreType.TEAM_PROJECT_WORK_ITEMS,
     EIssuesStoreType.WORKSPACE_DRAFT,
-  ].includes(type)
-    ? true
-    : false;
+  ].includes(type);
 
 type TGetGroupByColumns = {
   groupBy: GroupByColumnTypes | null;
@@ -89,7 +87,7 @@ type TGetGroupByColumns = {
 export const getGroupByColumns = ({
   groupBy,
   includeNone,
-  isWorkspaceLevel,
+  isWorkspaceLevel: isWorkspaceLevelGroup,
   isEpic = false,
   projectId,
 }: TGetGroupByColumns): IGroupByColumn[] | undefined => {
@@ -126,7 +124,7 @@ export const getGroupByColumns = ({
   };
 
   // Get and return the columns for the specified group by option
-  return groupByColumnMap[groupBy]?.({ isWorkspaceLevel, projectId });
+  return groupByColumnMap[groupBy]?.({ isWorkspaceLevel: isWorkspaceLevelGroup, projectId });
 };
 
 const getProjectColumns = (): IGroupByColumn[] | undefined => {
@@ -254,11 +252,11 @@ const getPriorityColumns = (): IGroupByColumn[] => {
   }));
 };
 
-const getLabelsColumns = ({ isWorkspaceLevel }: TGetColumns): IGroupByColumn[] => {
+const getLabelsColumns = ({ isWorkspaceLevel: isWorkspaceLevelColumn }: TGetColumns): IGroupByColumn[] => {
   const { workspaceLabels, projectLabels } = store.label;
   // map labels to group by columns
   const labels = [
-    ...(isWorkspaceLevel ? workspaceLabels || [] : projectLabels || []),
+    ...(isWorkspaceLevelColumn ? workspaceLabels || [] : projectLabels || []),
     { id: "None", name: "None", color: "#666" },
   ];
   // map labels to group by columns
@@ -272,11 +270,14 @@ const getLabelsColumns = ({ isWorkspaceLevel }: TGetColumns): IGroupByColumn[] =
   }));
 };
 
-const getAssigneeColumns = ({ isWorkspaceLevel, projectId }: TGetColumns): IGroupByColumn[] | undefined => {
+const getAssigneeColumns = ({
+  isWorkspaceLevel: isWorkspaceLevelColumn,
+  projectId,
+}: TGetColumns): IGroupByColumn[] | undefined => {
   // store values
   const { getUserDetails } = store.memberRoot;
   // derived values
-  const { memberIds, includeNone } = getScopeMemberIds({ isWorkspaceLevel, projectId });
+  const { memberIds, includeNone } = getScopeMemberIds({ isWorkspaceLevel: isWorkspaceLevelColumn, projectId });
   const assigneeColumns: IGroupByColumn[] = [];
 
   if (!memberIds) return [];
@@ -455,8 +456,8 @@ const handleSortOrder = (
 
   if (destinationIssues && destinationIssues.length > 0) {
     if (destinationIndex === 0) {
-      const destinationIssueId = destinationIssues[0];
-      const destinationIssue = getIssueById(destinationIssueId);
+      const firstIssueId = destinationIssues[0];
+      const destinationIssue = getIssueById(firstIssueId);
       if (!destinationIssue) return currentIssueState;
 
       currentIssueState = {
@@ -464,8 +465,8 @@ const handleSortOrder = (
         sort_order: destinationIssue.sort_order - sortOrderDefaultValue,
       };
     } else if (destinationIndex === destinationIssues.length) {
-      const destinationIssueId = destinationIssues[destinationIssues.length - 1];
-      const destinationIssue = getIssueById(destinationIssueId);
+      const lastIssueId = destinationIssues[destinationIssues.length - 1];
+      const destinationIssue = getIssueById(lastIssueId);
       if (!destinationIssue) return currentIssueState;
 
       currentIssueState = {
@@ -734,7 +735,7 @@ export const isDisplayFiltersApplied = (filters: Partial<IIssueFilters>): boolea
     (key) => !filters.displayProperties?.[key as keyof IIssueDisplayProperties]
   );
 
-  const isDisplayFiltersApplied = Object.keys(filters.displayFilters ?? {}).some((key) => {
+  const isDisplayFilterOptionsApplied = Object.keys(filters.displayFilters ?? {}).some((key) => {
     const value = filters.displayFilters?.[key as keyof IIssueDisplayFilterOptions];
     if (!value) return false;
     // -create_at is the default order
@@ -744,7 +745,7 @@ export const isDisplayFiltersApplied = (filters: Partial<IIssueFilters>): boolea
     return true;
   });
 
-  return isDisplayPropertiesApplied || isDisplayFiltersApplied;
+  return isDisplayPropertiesApplied || isDisplayFilterOptionsApplied;
 };
 
 /**

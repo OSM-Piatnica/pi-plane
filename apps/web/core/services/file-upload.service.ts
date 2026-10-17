@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -21,6 +22,7 @@ export class FileUploadService extends APIService {
     data: FormData,
     uploadProgressHandler?: AxiosRequestConfig["onUploadProgress"]
   ): Promise<void> {
+    // oxlint-disable-next-line import/no-named-as-default-member -- axios types declare CancelToken as a type-only export
     this.cancelSource = axios.CancelToken.source();
     return this.post(url, data, {
       headers: {
@@ -32,6 +34,7 @@ export class FileUploadService extends APIService {
     })
       .then((response) => response?.data)
       .catch((error) => {
+        // oxlint-disable-next-line import/no-named-as-default-member -- axios types declare isCancel on the default export only
         if (axios.isCancel(error)) {
           console.log(error.message);
         } else {

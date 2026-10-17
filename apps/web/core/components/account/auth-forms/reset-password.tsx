@@ -77,11 +77,11 @@ export const ResetPasswordForm = observer(function ResetPasswordForm() {
 
   const isButtonDisabled = useMemo(
     () =>
-      !!resetFormData.password &&
-      getPasswordStrength(resetFormData.password) === E_PASSWORD_STRENGTH.STRENGTH_VALID &&
-      resetFormData.password === resetFormData.confirm_password
-        ? false
-        : true,
+      !(
+        !!resetFormData.password &&
+        getPasswordStrength(resetFormData.password) === E_PASSWORD_STRENGTH.STRENGTH_VALID &&
+        resetFormData.password === resetFormData.confirm_password
+      ),
     [resetFormData]
   );
 
@@ -146,6 +146,7 @@ export const ResetPasswordForm = observer(function ResetPasswordForm() {
               onFocus={() => setIsPasswordInputFocused(true)}
               onBlur={() => setIsPasswordInputFocused(false)}
               autoComplete="new-password"
+              // oxlint-disable-next-line jsx-a11y/no-autofocus -- intentional autofocus; behaviour preserved
               autoFocus
             />
             {showPassword.password ? (

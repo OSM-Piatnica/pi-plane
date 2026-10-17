@@ -83,6 +83,7 @@ export const IssueCommentReaction = observer(function IssueCommentReaction(props
         else await issueCommentReactionOperations.create(reaction);
       },
     }),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
     [workspaceSlug, projectId, commentId, currentUser, createCommentReaction, removeCommentReaction, userReactions]
   );
 
@@ -110,6 +111,7 @@ export const IssueCommentReaction = observer(function IssueCommentReaction(props
         reacted: userReactions.includes(reaction),
         users: getReactionUsers(reaction),
       }));
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
   }, [reactionIds, userReactions]);
 
   const handleReactionClick = (emoji: string) => {

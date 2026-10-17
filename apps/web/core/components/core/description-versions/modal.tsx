@@ -161,6 +161,7 @@ export const DescriptionVersionsModal = observer(function DescriptionVersionsMod
             <IconButton type="button" variant="ghost" size="base" onClick={handleCopyMarkdown} icon={CopyIcon} />
           </Tooltip>
           <div className="flex items-center gap-2">
+            {/* oxlint-disable-next-line jsx-a11y/tabindex-no-positive -- tab order is intentional */}
             <Button variant="secondary" size="lg" onClick={handleClose} tabIndex={1}>
               {t("common.cancel")}
             </Button>

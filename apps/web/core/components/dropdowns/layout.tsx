@@ -51,10 +51,11 @@ export const LayoutDropDown = observer(function LayoutDropDown(props: TLayoutDro
         <span className="text-11 font-medium">{t(dropdownValue.i18n_label)}</span>
       </div>
     );
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency list
   }, []);
 
-  const itemContent = useCallback((props: { value: string; selected: boolean }) => {
-    const dropdownValue = ISSUE_LAYOUT_MAP[props.value as EIssueLayoutTypes];
+  const itemContent = useCallback((itemProps: { value: string; selected: boolean }) => {
+    const dropdownValue = ISSUE_LAYOUT_MAP[itemProps.value as EIssueLayoutTypes];
 
     return (
       <div className={cn("flex w-full items-center justify-between gap-2 text-secondary")}>
@@ -62,9 +63,10 @@ export const LayoutDropDown = observer(function LayoutDropDown(props: TLayoutDro
           <IssueLayoutIcon layout={dropdownValue.key} strokeWidth={2} className={`size-3 text-secondary`} />
           <span className="text-11 font-medium">{t(dropdownValue.i18n_label)}</span>
         </div>
-        {props.selected && <CheckIcon className="h-3.5 w-3.5 flex-shrink-0" />}
+        {itemProps.selected && <CheckIcon className="h-3.5 w-3.5 flex-shrink-0" />}
       </div>
     );
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency list
   }, []);
 
   const keyExtractor = useCallback((option: any) => option.value, []);

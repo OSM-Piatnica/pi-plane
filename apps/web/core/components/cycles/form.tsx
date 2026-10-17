@@ -90,7 +90,7 @@ export function CycleForm(props: Props) {
                     }}
                     multiple={false}
                     buttonVariant="border-with-text"
-                    renderCondition={(projectId) => !!projectsWithCreatePermissions?.[projectId]}
+                    renderCondition={(id) => !!projectsWithCreatePermissions?.[id]}
                     tabIndex={getIndex("cover_image")}
                   />
                 </div>
@@ -124,6 +124,7 @@ export function CycleForm(props: Props) {
                   onChange={onChange}
                   hasError={Boolean(errors?.name)}
                   tabIndex={getIndex("description")}
+                  // oxlint-disable-next-line no-autofocus -- existing behaviour; lint cleanup only
                   autoFocus
                 />
               )}

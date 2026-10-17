@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -47,6 +48,10 @@ export type TPowerKNavigationCommandKeys =
   | "open_project_setting"
   | "nav_project_settings";
 
+const baseWorkspaceConditions = (ctx: TPowerKContext) => Boolean(ctx.params.workspaceSlug?.toString());
+const baseProjectConditions = (ctx: TPowerKContext) =>
+  Boolean(ctx.params.workspaceSlug?.toString() && ctx.params.projectId?.toString());
+
 /**
  * Navigation commands - Navigate to all pages in the app
  */
@@ -71,9 +76,6 @@ export const usePowerKNavigationCommandsRecord = (): Record<TPowerKNavigationCom
       ctx.params.workspaceSlug?.toString(),
       ctx.params.projectId?.toString()
     );
-  const baseWorkspaceConditions = (ctx: TPowerKContext) => Boolean(ctx.params.workspaceSlug?.toString());
-  const baseProjectConditions = (ctx: TPowerKContext) =>
-    Boolean(ctx.params.workspaceSlug?.toString() && ctx.params.projectId?.toString());
   const getContextProject = (ctx: TPowerKContext) => getPartialProjectById(ctx.params.projectId?.toString());
 
   return {
