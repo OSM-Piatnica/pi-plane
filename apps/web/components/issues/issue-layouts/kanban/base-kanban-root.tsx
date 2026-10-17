@@ -8,18 +8,15 @@
 import type { FC } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
-import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { autoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/element";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { EIssueFilterType, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
-import { useTranslation } from "@plane/i18n";
 import type { EIssuesStoreType } from "@plane/types";
 import { EIssueServiceType, EIssueLayoutTypes } from "@plane/types";
 //hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useIssues } from "@/hooks/store/use-issues";
-import { useKanbanView } from "@/hooks/store/use-kanban-view";
 import { useUserPermissions } from "@/hooks/store/user";
 import { useGroupIssuesDragNDrop } from "@/hooks/use-group-dragndrop";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
@@ -31,8 +28,8 @@ import { DeleteIssueModal } from "../../delete-issue-modal";
 import { IssueLayoutHOC } from "../issue-layout-HOC";
 import type { IQuickActionProps, TRenderQuickActions } from "../list/list-view-types";
 //components
-import { getSourceFromDropPayload } from "../utils";
 import { KanBan } from "./default";
+import { KanbanDeleteDropZone } from "./kanban-delete-drop-zone";
 import { KanBanSwimLanes } from "./swimlanes";
 
 export type KanbanStoreType =
@@ -54,6 +51,9 @@ export interface IBaseKanBanLayout {
   isEpic?: boolean;
 }
 
+// Stable identity so an empty kanban-filter value doesn't churn the per-column cache's sharedDeps.
+const EMPTY_KANBAN_FILTERS = { group_by: [], sub_group_by: [] };
+
 export const BaseKanBanRoot = observer(function BaseKanBanRoot(props: IBaseKanBanLayout) {
   const {
     QuickActions,
@@ -65,7 +65,6 @@ export const BaseKanBanRoot = observer(function BaseKanBanRoot(props: IBaseKanBa
   } = props;
   // router
   const { workspaceSlug, projectId } = useParams();
-  const { t } = useTranslation();
   // store hooks
   const storeType = useIssueStoreType() as KanbanStoreType;
   const { allowPermissions } = useUserPermissions();
@@ -84,11 +83,6 @@ export const BaseKanBanRoot = observer(function BaseKanBanRoot(props: IBaseKanBa
     restoreIssue,
     updateFilters,
   } = useIssuesActions(storeType);
-
-  const deleteAreaRef = useRef<HTMLDivElement | null>(null);
-  const [isDragOverDelete, setIsDragOverDelete] = useState(false);
-
-  const { isDragging } = useKanbanView();
 
   const displayFilters = issuesFilter?.issueFilters?.displayFilters;
   const displayProperties = issuesFilter?.issueFilters?.displayProperties;
@@ -109,7 +103,7 @@ export const BaseKanBanRoot = observer(function BaseKanBanRoot(props: IBaseKanBa
       }
     },
     // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
-    [fetchNextIssues]
+    [fetchNextIssues, issues]
   );
 
   const groupedIssueIds = issues?.groupedIssueIds;
@@ -132,6 +126,11 @@ export const BaseKanBanRoot = observer(function BaseKanBanRoot(props: IBaseKanBa
   );
 
   const handleOnDrop = useGroupIssuesDragNDrop(storeType, orderBy, group_by, sub_group_by);
+
+  const handleRequestDelete = useCallback((workItemId: string | undefined) => {
+    setDraggedIssueId(workItemId);
+    setDeleteIssueModal(true);
+  }, []);
 
   const canEditProperties = useCallback(
     (issueProjectId: string | undefined) => {
@@ -157,35 +156,6 @@ export const BaseKanBanRoot = observer(function BaseKanBanRoot(props: IBaseKanBa
       })
     );
   }, []);
-
-  // Make the Issue Delete Box a Drop Target
-  useEffect(() => {
-    const element = deleteAreaRef.current;
-
-    if (!element) return;
-
-    return combine(
-      dropTargetForElements({
-        element,
-        getData: () => ({ columnId: "issue-trash-box", groupId: "issue-trash-box", type: "DELETE" }),
-        onDragEnter: () => {
-          setIsDragOverDelete(true);
-        },
-        onDragLeave: () => {
-          setIsDragOverDelete(false);
-        },
-        onDrop: (payload) => {
-          setIsDragOverDelete(false);
-          const source = getSourceFromDropPayload(payload);
-
-          if (!source) return;
-
-          setDraggedIssueId(source.id);
-          setDeleteIssueModal(true);
-        },
-      })
-    );
-  }, [setIsDragOverDelete, setDraggedIssueId, setDeleteIssueModal]);
 
   const renderQuickActions: TRenderQuickActions = useCallback(
     ({ issue, parentRef, customActionButton }) => (
@@ -237,7 +207,7 @@ export const BaseKanBanRoot = observer(function BaseKanBanRoot(props: IBaseKanBa
     [workspaceSlug, issuesFilter, projectId, updateFilters]
   );
 
-  const collapsedGroups = issuesFilter?.issueFilters?.kanbanFilters || { group_by: [], sub_group_by: [] };
+  const collapsedGroups = issuesFilter?.issueFilters?.kanbanFilters || EMPTY_KANBAN_FILTERS;
 
   return (
     <>
@@ -248,23 +218,7 @@ export const BaseKanBanRoot = observer(function BaseKanBanRoot(props: IBaseKanBa
         onSubmit={handleDeleteIssue}
         isEpic={isEpic}
       />
-      {/* drag and delete component */}
-      <div
-        className={`fixed left-1/2 -translate-x-1/2 ${
-          isDragging ? "z-40" : ""
-        } top-3 mx-3 flex w-72 items-center justify-center`}
-        ref={deleteAreaRef}
-      >
-        <div
-          className={`${
-            isDragging ? `opacity-100` : `opacity-0`
-          } flex w-full items-center justify-center rounded-sm border-2 border-danger-strong/20 bg-surface-1 px-3 py-5 text-11 font-medium text-danger-primary italic ${
-            isDragOverDelete ? "bg-danger-primary blur-2xl" : ""
-          } transition duration-300`}
-        >
-          {t("issue_ui.drop_to_delete")}
-        </div>
-      </div>
+      <KanbanDeleteDropZone onRequestDelete={handleRequestDelete} />
       <IssueLayoutHOC layout={EIssueLayoutTypes.KANBAN}>
         <div
           className={`horizontal-scrollbar relative scrollbar-lg flex h-full w-full bg-surface-2 ${sub_group_by ? "vertical-scrollbar overflow-y-auto" : "overflow-x-auto overflow-y-hidden"}`}
