@@ -118,20 +118,17 @@ export const AccountTypeColumn = observer(function AccountTypeColumn(props: Acco
   const roleLabel = t(getRoleI18nKey(rowData.original_role ?? EUserPermissions.GUEST));
   const isCurrentUser = currentUser?.id === rowData.member.id;
   const isRowDataWorkspaceAdmin = [EUserPermissions.ADMIN].includes(
-    // oxlint-disable-next-line no-constant-binary-expression -- existing behaviour (Number() is never nullish); lint cleanup only
-    Number(getWorkspaceMemberDetails(rowData.member.id)?.role) ?? EUserPermissions.GUEST
+    Number(getWorkspaceMemberDetails(rowData.member.id)?.role ?? EUserPermissions.GUEST)
   );
   const isCurrentUserWorkspaceAdmin = currentUser
     ? [EUserPermissions.ADMIN].includes(
-        // oxlint-disable-next-line no-constant-binary-expression -- existing behaviour (Number() is never nullish); lint cleanup only
-        Number(getWorkspaceMemberDetails(currentUser.id)?.role) ?? EUserPermissions.GUEST
+        Number(getWorkspaceMemberDetails(currentUser.id)?.role ?? EUserPermissions.GUEST)
       )
     : false;
   const currentProjectRole = getProjectRoleByWorkspaceSlugAndProjectId(workspaceSlug, projectId);
 
   const isCurrentUserProjectAdmin = currentProjectRole
-    ? // oxlint-disable-next-line no-constant-binary-expression -- existing behaviour (Number() is never nullish); lint cleanup only
-      ![EUserPermissions.MEMBER, EUserPermissions.GUEST].includes(Number(currentProjectRole) ?? EUserPermissions.GUEST)
+    ? ![EUserPermissions.MEMBER, EUserPermissions.GUEST].includes(Number(currentProjectRole ?? EUserPermissions.GUEST))
     : false;
 
   // logic

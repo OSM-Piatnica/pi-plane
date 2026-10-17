@@ -325,23 +325,28 @@ export class WorkspaceMemberStore implements IWorkspaceMemberStore {
     invitationId: string,
     data: Partial<IWorkspaceMemberInvitation>
   ) => {
-    // oxlint-disable-next-line no-unsafe-optional-chaining -- preserves existing behaviour (throws if invitations are not loaded)
-    const originalMemberInvitations = [...this.workspaceMemberInvitations?.[workspaceSlug]]; // in case of error, we will revert back to original members
+    // invitations may not have been fetched yet; in that case there is nothing to update optimistically
+    const loadedMemberInvitations = this.workspaceMemberInvitations?.[workspaceSlug];
+    const originalMemberInvitations = loadedMemberInvitations ? [...loadedMemberInvitations] : undefined; // in case of error, we will revert back to original members
     try {
-      const memberInvitations = originalMemberInvitations?.map((invitation) => ({
-        ...invitation,
-        ...(invitation.id === invitationId && data),
-      }));
-      // optimistic update
-      runInAction(() => {
-        set(this.workspaceMemberInvitations, workspaceSlug, memberInvitations);
-      });
+      if (originalMemberInvitations) {
+        const memberInvitations = originalMemberInvitations.map((invitation) => ({
+          ...invitation,
+          ...(invitation.id === invitationId && data),
+        }));
+        // optimistic update
+        runInAction(() => {
+          set(this.workspaceMemberInvitations, workspaceSlug, memberInvitations);
+        });
+      }
       await this.workspaceService.updateWorkspaceInvitation(workspaceSlug, invitationId, data);
     } catch (error) {
       // revert back to original members in case of error
-      runInAction(() => {
-        set(this.workspaceMemberInvitations, workspaceSlug, originalMemberInvitations);
-      });
+      if (originalMemberInvitations) {
+        runInAction(() => {
+          set(this.workspaceMemberInvitations, workspaceSlug, originalMemberInvitations);
+        });
+      }
       throw error;
     }
   };
