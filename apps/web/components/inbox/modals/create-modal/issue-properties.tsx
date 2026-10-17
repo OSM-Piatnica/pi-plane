@@ -11,7 +11,7 @@ import { ETabIndices } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
 import { CalendarOutline, ParentOutline } from "@makeplane/propel/icons";
-import { DateSelect } from "@plane/blocks/property-select";
+import { DateSelect } from "@/components/dropdowns/date-select";
 import type { ISearchIssueResponse, TIssue } from "@plane/types";
 import { renderFormattedPayloadDate, getDate, getTabIndex } from "@plane/utils";
 // components

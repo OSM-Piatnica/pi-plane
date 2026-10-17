@@ -32,6 +32,7 @@ export function DateSelect(props: DateSelectProps) {
     minDate,
     maxDate,
     weekStartsOn,
+    locale,
     defaultMonth,
     placeholder = "",
     clearable = false,
@@ -40,7 +41,7 @@ export function DateSelect(props: DateSelectProps) {
   // states
   const [isOpen, setIsOpen] = useState(props.defaultOpen ?? false);
   // derived values
-  const formatted = value ? format(value, formatToken) : "";
+  const formatted = value ? format(value, formatToken, { locale }) : "";
   const disabledMatchers = buildDisabledMatchers(minDate, maxDate);
 
   const handleOpenChange = (open: boolean) => {
@@ -68,6 +69,7 @@ export function DateSelect(props: DateSelectProps) {
         defaultMonth={value ?? defaultMonth}
         disabled={disabledMatchers}
         weekStartsOn={weekStartsOn}
+        locale={locale}
         onSelect={(date) => {
           // A repeat click on the selected day deselects it in react-day-picker; treat that as a
           // clear only when the caller allows one, otherwise keep the current value.

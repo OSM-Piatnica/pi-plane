@@ -20,7 +20,7 @@ import { useTranslation } from "@plane/i18n";
 // types
 import type { ISearchIssueResponse, TIssue } from "@plane/types";
 // ui
-import { DateSelect } from "@plane/blocks/property-select";
+import { DateSelect } from "@/components/dropdowns/date-select";
 import { getDate, reconcileWorkItemDuration, renderFormattedPayloadDate, getTabIndex } from "@plane/utils";
 // components
 import { CycleSelect } from "@/components/dropdowns/cycle/cycle-select";

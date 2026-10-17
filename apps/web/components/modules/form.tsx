@@ -13,7 +13,7 @@ import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
 import { ETabIndices } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { DateRangeSelect } from "@plane/blocks/property-select";
+import { DateRangeSelect } from "@/components/dropdowns/date-select";
 import { Button } from "@makeplane/propel/components/button";
 import { CalendarOutline } from "@makeplane/propel/icons";
 import type { IModule } from "@plane/types";

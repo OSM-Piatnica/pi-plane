@@ -16,7 +16,7 @@ import {
 } from "@makeplane/propel/icons";
 import { useTranslation } from "@plane/i18n";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
-import { DateSelect } from "@plane/blocks/property-select";
+import { DateSelect } from "@/components/dropdowns/date-select";
 import type { TInboxDuplicateIssueDetails, TIssue } from "@plane/types";
 import { ControlLink } from "@plane/blocks/layout";
 import { getDate, renderFormattedPayloadDate, generateWorkItemLink } from "@plane/utils";

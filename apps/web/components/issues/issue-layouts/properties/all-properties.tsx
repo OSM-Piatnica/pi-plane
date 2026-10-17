@@ -19,7 +19,7 @@ import { AttachOutline, DueDateOutline, LinkOutline, StartDateOutline, ViewsOutl
 import { useTranslation } from "@plane/i18n";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { DateRangeValue } from "@plane/blocks/property-select";
-import { DateRangeSelect, DateSelect } from "@plane/blocks/property-select";
+import { DateRangeSelect, DateSelect } from "@/components/dropdowns/date-select";
 import type { TIssue, IIssueDisplayProperties, TIssuePriorities } from "@plane/types";
 // ui
 import {

@@ -26,7 +26,7 @@ import { ModuleStatusIcon } from "@plane/blocks/icons";
 import { setToast } from "@plane/blocks/toast";
 import type { ILinkDetails, IModule, ModuleLink } from "@plane/types";
 // plane ui
-import { DateRangeSelect } from "@plane/blocks/property-select";
+import { DateRangeSelect } from "@/components/dropdowns/date-select";
 import { Select } from "@plane/blocks/select";
 import { Loader } from "@plane/blocks/skeleton";
 import { TextArea } from "@makeplane/propel/components/text-area";

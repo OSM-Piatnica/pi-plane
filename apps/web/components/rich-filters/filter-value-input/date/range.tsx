@@ -8,7 +8,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 // plane imports
-import { DateRangeSelect } from "@plane/blocks/property-select";
+import { DateRangeSelect } from "@/components/dropdowns/date-select";
 import type { DateRangeValue } from "@plane/blocks/property-select";
 import type { TDateRangeFilterFieldConfig, TFilterConditionNodeForDisplay, TFilterProperty } from "@plane/types";
 import { cn, isValidDate, renderFormattedPayloadDate, toFilterArray } from "@plane/utils";

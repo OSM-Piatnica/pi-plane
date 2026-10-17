@@ -24,7 +24,7 @@ import {
   StateOutline,
   UserOutline,
 } from "@makeplane/propel/icons";
-import { DateSelect } from "@plane/blocks/property-select";
+import { DateSelect } from "@/components/dropdowns/date-select";
 import {
   cn,
   getDate,

@@ -17,7 +17,7 @@ import { setPromiseToast, setToast } from "@plane/blocks/toast";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IModule } from "@plane/types";
 import { FavoriteStar } from "@plane/blocks/common";
-import { DateRangeSelect } from "@plane/blocks/property-select";
+import { DateRangeSelect } from "@/components/dropdowns/date-select";
 import { renderFormattedPayloadDate, getDate } from "@plane/utils";
 // components
 import { ModuleQuickActions } from "@/components/modules";
