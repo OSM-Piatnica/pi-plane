@@ -1,15 +1,16 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 import { usePathname } from "next/navigation";
-import { Menu, Settings } from "lucide-react";
 // icons
-import { Breadcrumbs } from "@plane/ui";
+import { Menu, Settings } from "lucide-react";
 // components
+import { Breadcrumbs } from "@/components/common/breadcrumbs";
 import { BreadcrumbLink } from "../breadcrumb-link";
 // hooks
 import { useTheme } from "@/hooks/store";

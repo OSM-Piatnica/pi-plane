@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,9 +10,10 @@ import { Controller, useForm } from "react-hook-form";
 import { Telescope } from "lucide-react";
 // plane imports
 import { Button } from "@plane/propel/button";
+import { Input } from "@plane/propel/input";
+import { Switch } from "@plane/propel/switch";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { IInstance, IInstanceAdmin } from "@plane/types";
-import { Input, ToggleSwitch } from "@plane/ui";
 // components
 import { ControllerInput } from "@/components/common/controller-input";
 // hooks
@@ -127,7 +129,7 @@ export const GeneralConfigurationForm = observer(function GeneralConfigurationFo
               control={control}
               name="is_telemetry_enabled"
               render={({ field: { value, onChange } }) => (
-                <ToggleSwitch value={value ?? false} onChange={onChange} size="sm" disabled={isSubmitting} />
+                <Switch value={value ?? false} onChange={onChange} size="sm" disabled={isSubmitting} />
               )}
             />
           </div>

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,8 +10,9 @@ import { observer } from "mobx-react";
 import { useTheme } from "next-themes";
 import useSWR from "swr";
 // plane internal packages
+import { Skeleton } from "@plane/propel/skeleton";
+import { Switch } from "@plane/propel/switch";
 import { setPromiseToast } from "@plane/propel/toast";
-import { Loader, ToggleSwitch } from "@plane/ui";
 import { resolveGeneralTheme } from "@plane/utils";
 // assets
 import githubLightModeImage from "@/app/assets/logos/github-black.png?url";
@@ -63,6 +65,7 @@ const InstanceGithubAuthenticationPage = observer(function InstanceGithubAuthent
     await updateConfigPromise
       .then(() => {
         setIsSubmitting(false);
+        return;
       })
       .catch((err) => {
         console.error(err);
@@ -87,7 +90,7 @@ const InstanceGithubAuthenticationPage = observer(function InstanceGithubAuthent
             />
           }
           config={
-            <ToggleSwitch
+            <Switch
               value={isGithubEnabled}
               onChange={() => {
                 updateConfig("IS_GITHUB_ENABLED", isGithubEnabled ? "0" : "1");
@@ -104,13 +107,13 @@ const InstanceGithubAuthenticationPage = observer(function InstanceGithubAuthent
       {formattedConfig ? (
         <InstanceGithubConfigForm config={formattedConfig} />
       ) : (
-        <Loader className="space-y-8">
-          <Loader.Item height="50px" width="25%" />
-          <Loader.Item height="50px" />
-          <Loader.Item height="50px" />
-          <Loader.Item height="50px" />
-          <Loader.Item height="50px" width="50%" />
-        </Loader>
+        <Skeleton className="space-y-8">
+          <Skeleton.Item height="50px" width="25%" />
+          <Skeleton.Item height="50px" />
+          <Skeleton.Item height="50px" />
+          <Skeleton.Item height="50px" />
+          <Skeleton.Item height="50px" width="50%" />
+        </Skeleton>
       )}
     </PageWrapper>
   );

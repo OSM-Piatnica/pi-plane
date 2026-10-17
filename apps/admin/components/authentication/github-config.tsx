@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,8 +11,8 @@ import Link from "next/link";
 import { Settings2 } from "lucide-react";
 // plane internal packages
 import { getButtonStyling } from "@plane/propel/button";
+import { Switch } from "@plane/propel/switch";
 import type { TInstanceAuthenticationMethodKeys } from "@plane/types";
-import { ToggleSwitch } from "@plane/ui";
 import { cn } from "@plane/utils";
 // hooks
 import { useInstance } from "@/hooks/store";
@@ -36,7 +37,7 @@ export const GithubConfiguration = observer(function GithubConfiguration(props: 
           <Link href="/authentication/github" className={cn(getButtonStyling("link", "base"), "font-medium")}>
             Edit
           </Link>
-          <ToggleSwitch
+          <Switch
             value={Boolean(parseInt(enableGithubConfig))}
             onChange={() => {
               const newEnableGithubConfig = Boolean(parseInt(enableGithubConfig)) === true ? "0" : "1";

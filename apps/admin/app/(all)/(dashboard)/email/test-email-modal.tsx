@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,9 +9,8 @@ import { useEffect, useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 // plane imports
 import { Button } from "@plane/propel/button";
+import { Input } from "@plane/propel/input";
 import { InstanceService } from "@plane/services";
-// ui
-import { Input } from "@plane/ui";
 
 type Props = {
   isOpen: boolean;

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,9 +12,10 @@ import useSWR from "swr";
 import { Loader as LoaderIcon } from "lucide-react";
 // types
 import { Button, getButtonStyling } from "@plane/propel/button";
+import { Skeleton } from "@plane/propel/skeleton";
+import { Switch } from "@plane/propel/switch";
 import { setPromiseToast } from "@plane/propel/toast";
 import type { TInstanceConfigurationKeys } from "@plane/types";
-import { Loader, ToggleSwitch } from "@plane/ui";
 import { cn } from "@plane/utils";
 // components
 import { PageWrapper } from "@/components/common/page-wrapper";
@@ -67,6 +69,7 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
     await updateConfigPromise
       .then(() => {
         setIsSubmitting(false);
+        return;
       })
       .catch((err) => {
         console.error(err);
@@ -94,7 +97,7 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
             </div>
             <div className={`shrink-0 pr-4 ${isSubmitting && "opacity-70"}`}>
               <div className="flex items-center gap-4">
-                <ToggleSwitch
+                <Switch
                   value={Boolean(parseInt(disableWorkspaceCreation))}
                   onChange={() => {
                     if (Boolean(parseInt(disableWorkspaceCreation)) === true) {
@@ -110,9 +113,9 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
             </div>
           </div>
         ) : (
-          <Loader>
-            <Loader.Item height="50px" width="100%" />
-          </Loader>
+          <Skeleton>
+            <Skeleton.Item height="50px" width="100%" />
+          </Skeleton>
         )}
         {workspaceLoader !== "init-loader" ? (
           <>
@@ -155,12 +158,12 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
             )}
           </>
         ) : (
-          <Loader className="space-y-10 py-8">
-            <Loader.Item height="24px" width="20%" />
-            <Loader.Item height="92px" width="100%" />
-            <Loader.Item height="92px" width="100%" />
-            <Loader.Item height="92px" width="100%" />
-          </Loader>
+          <Skeleton className="space-y-10 py-8">
+            <Skeleton.Item height="24px" width="20%" />
+            <Skeleton.Item height="92px" width="100%" />
+            <Skeleton.Item height="92px" width="100%" />
+            <Skeleton.Item height="92px" width="100%" />
+          </Skeleton>
         )}
       </div>
     </PageWrapper>
