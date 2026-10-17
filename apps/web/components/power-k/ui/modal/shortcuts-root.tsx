@@ -6,6 +6,7 @@
  */
 
 import { useState } from "react";
+import { observer } from "mobx-react";
 // plane imports
 import {
   Dialog,
@@ -33,7 +34,7 @@ type Props = {
   onClose: () => void;
 };
 
-export function ShortcutsModal(props: Props) {
+export const ShortcutsModal = observer(function ShortcutsModal(props: Props) {
   const { isOpen, onClose } = props;
   // states
   const [query, setQuery] = useState("");
@@ -87,8 +88,8 @@ export function ShortcutsModal(props: Props) {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search for shortcuts"
-                aria-label="Search for shortcuts"
+                placeholder={t("power_k.shortcuts_modal.search_placeholder")}
+                aria-label={t("power_k.shortcuts_modal.search_placeholder")}
                 // oxlint-disable-next-line jsx-a11y/no-autofocus -- the shortcut sheet opens on the search field
                 autoFocus
               />
@@ -101,4 +102,4 @@ export function ShortcutsModal(props: Props) {
       </DialogContent>
     </Dialog>
   );
-}
+});

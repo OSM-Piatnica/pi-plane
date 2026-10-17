@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -13,11 +14,6 @@ import type { TProfileSettingsTabs } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 // lib
 import { store } from "@/lib/store-context";
-
-export interface ModalData {
-  store: EIssuesStoreType;
-  viewId: string;
-}
 
 export interface IBaseCommandPaletteStore {
   // observables
