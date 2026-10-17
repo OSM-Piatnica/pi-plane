@@ -8,6 +8,7 @@
 import { useCallback, useMemo } from "react";
 import { AtSign, Briefcase } from "lucide-react";
 // plane imports
+import { Avatar } from "@makeplane/propel/components/avatar";
 import { Logo } from "@plane/propel/emoji-icon-picker";
 import {
   CalendarLayoutIcon,
@@ -34,7 +35,7 @@ import type {
   IProject,
   TWorkItemFilterProperty,
 } from "@plane/types";
-import { Avatar } from "@plane/ui";
+
 import {
   getAssigneeFilterConfig,
   getCreatedAtFilterConfig,
@@ -219,10 +220,10 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
         members: members ?? [],
         getOptionIcon: (memberDetails) => (
           <Avatar
-            name={memberDetails.display_name}
+            alt={memberDetails.display_name}
+            fallback={memberDetails.display_name?.[0]?.toUpperCase()}
             src={getFileURL(memberDetails.avatar_url)}
-            showTooltip={false}
-            size="sm"
+            size="2xs"
           />
         ),
         ...operatorConfigs,
@@ -239,10 +240,10 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
         members: members ?? [],
         getOptionIcon: (memberDetails) => (
           <Avatar
-            name={memberDetails.display_name}
+            alt={memberDetails.display_name}
+            fallback={memberDetails.display_name?.[0]?.toUpperCase()}
             src={getFileURL(memberDetails.avatar_url)}
-            showTooltip={false}
-            size="sm"
+            size="2xs"
           />
         ),
         ...operatorConfigs,
@@ -259,10 +260,10 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
         members: members ?? [],
         getOptionIcon: (memberDetails) => (
           <Avatar
-            name={memberDetails.display_name}
+            alt={memberDetails.display_name}
+            fallback={memberDetails.display_name?.[0]?.toUpperCase()}
             src={getFileURL(memberDetails.avatar_url)}
-            showTooltip={false}
-            size="sm"
+            size="2xs"
           />
         ),
         ...operatorConfigs,
@@ -279,10 +280,10 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
         members: members ?? [],
         getOptionIcon: (memberDetails) => (
           <Avatar
-            name={memberDetails.display_name}
+            alt={memberDetails.display_name}
+            fallback={memberDetails.display_name?.[0]?.toUpperCase()}
             src={getFileURL(memberDetails.avatar_url)}
-            showTooltip={false}
-            size="sm"
+            size="2xs"
           />
         ),
         ...operatorConfigs,

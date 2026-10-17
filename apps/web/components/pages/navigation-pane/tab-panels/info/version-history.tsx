@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,9 +11,9 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
 // plane imports
+import { Avatar } from "@makeplane/propel/components/avatar";
 import { useTranslation } from "@plane/i18n";
 import type { TPageVersion } from "@plane/types";
-import { Avatar } from "@plane/ui";
 import { cn, getFileURL, renderFormattedDate, renderFormattedTime } from "@plane/utils";
 // components
 import type { TPageRootHandlers } from "@/components/pages/editor/page-root";
@@ -62,10 +63,10 @@ const VersionHistoryItem = observer(function VersionHistoryItem(props: VersionHi
         </p>
         <p className="mt-1 flex items-center gap-1">
           <Avatar
-            size="sm"
+            alt={versionCreator?.display_name}
+            fallback={versionCreator?.display_name?.[0]?.toUpperCase()}
+            size="2xs"
             src={getFileURL(versionCreator?.avatar_url ?? "")}
-            name={versionCreator?.display_name}
-            className="shrink-0"
           />
           <span>{versionCreator?.display_name ?? t("common.deactivated_user")}</span>
         </p>

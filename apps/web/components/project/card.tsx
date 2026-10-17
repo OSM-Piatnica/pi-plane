@@ -13,6 +13,7 @@ import { ArchiveRestoreIcon, Settings, UserPlus } from "lucide-react";
 // plane imports
 import { EUserPermissions, EUserPermissionsLevel, IS_FAVORITE_MENU_OPEN } from "@plane/constants";
 import { useLocalStorage } from "@plane/hooks";
+import { Avatar } from "@makeplane/propel/components/avatar";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { Logo } from "@plane/propel/emoji-icon-picker";
@@ -21,7 +22,7 @@ import { setPromiseToast, setToast, TOAST_TYPE } from "@plane/propel/toast";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IProject } from "@plane/types";
 import type { TContextMenuItem } from "@plane/ui";
-import { Avatar, AvatarGroup, ContextMenu, FavoriteStar } from "@plane/ui";
+import { ContextMenu, FavoriteStar } from "@plane/ui";
 import { copyUrlToClipboard, cn, getFileURL, renderFormattedDate } from "@plane/utils";
 // components
 // hooks
@@ -31,6 +32,7 @@ import { useUserPermissions } from "@/hooks/store/user";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // local imports
+import { AvatarGroupOverflow } from "@/components/common/avatar-group-overflow";
 import { CoverImage } from "@/components/common/cover-image";
 import { DeleteProjectModal } from "./delete-project-modal";
 import { JoinProjectModal } from "./join-project-modal";
@@ -293,15 +295,20 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
               >
                 {projectMembersIds && projectMembersIds.length > 0 ? (
                   <div className="flex cursor-pointer items-center gap-2 text-secondary">
-                    <AvatarGroup showTooltip={false}>
+                    <AvatarGroupOverflow size="xs">
                       {projectMembersIds.map((memberId) => {
                         const member = getUserDetails(memberId);
                         if (!member) return null;
                         return (
-                          <Avatar key={member.id} name={member.display_name} src={getFileURL(member.avatar_url)} />
+                          <Avatar
+                            key={member.id}
+                            alt={member.display_name}
+                            fallback={member.display_name?.[0]?.toUpperCase()}
+                            src={getFileURL(member.avatar_url)}
+                          />
                         );
                       })}
-                    </AvatarGroup>
+                    </AvatarGroupOverflow>
                   </div>
                 ) : (
                   <span className="text-13 text-placeholder italic">{t("project_components.card.no_member_yet")}</span>

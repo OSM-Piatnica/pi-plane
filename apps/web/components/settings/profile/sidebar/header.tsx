@@ -1,15 +1,16 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 // plane imports
-import { Avatar } from "@plane/ui";
+import { Avatar } from "@makeplane/propel/components/avatar";
+import { getFileURL } from "@plane/utils";
 // hooks
 import { useUser } from "@/hooks/store/user";
-import { getFileURL } from "@plane/utils";
 
 export const ProfileSettingsSidebarHeader = observer(function ProfileSettingsSidebarHeader() {
   // store hooks
@@ -19,11 +20,10 @@ export const ProfileSettingsSidebarHeader = observer(function ProfileSettingsSid
     <div className="flex shrink-0 items-center gap-2">
       <div className="shrink-0">
         <Avatar
+          alt={currentUser?.display_name}
+          fallback={currentUser?.display_name?.[0]?.toUpperCase()}
           src={getFileURL(currentUser?.avatar_url ?? "")}
-          name={currentUser?.display_name}
-          size={32}
-          shape="circle"
-          className="text-16"
+          size="lg"
         />
       </div>
       <div className="truncate">

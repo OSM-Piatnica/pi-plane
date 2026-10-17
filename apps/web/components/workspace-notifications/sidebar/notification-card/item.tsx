@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,7 +9,8 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import { Clock } from "lucide-react";
 // plane imports
-import { Avatar, Row } from "@plane/ui";
+import { Avatar } from "@makeplane/propel/components/avatar";
+import { Row } from "@plane/ui";
 import { cn, calculateTimeAgo, renderFormattedDate, renderFormattedTime, getFileURL } from "@plane/utils";
 // hooks
 import { useWorkspaceNotifications } from "@/hooks/store/notifications";
@@ -87,11 +89,11 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
         <div className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-layer-1">
           {notificationTriggeredBy && (
             <Avatar
-              name={notificationTriggeredBy.display_name || notificationTriggeredBy?.first_name}
+              alt={notificationTriggeredBy.display_name || notificationTriggeredBy?.first_name}
+              fallback={(notificationTriggeredBy.display_name ||
+                notificationTriggeredBy?.first_name)?.[0]?.toUpperCase()}
               src={getFileURL(notificationTriggeredBy.avatar_url)}
-              size={42}
-              shape="circle"
-              className="bg-layer-1 text-body-sm-medium"
+              size="xl"
             />
           )}
         </div>
