@@ -1,0 +1,76 @@
+# React Doctor — finds security, performance, correctness, accessibility,
+# bundle-size, and architecture issues in React codebases.
+#
+# Docs: https://www.react.doctor/ci
+# Source: https://github.com/millionco/react-doctor
+#
+# Ported from upstream makeplane/plane (#9223) with these fork changes:
+# - runs for pull requests into `preview` only, and on pushes to `preview`
+# - the third-party action is pinned to a commit SHA (it runs with write access to
+#   pull requests), and the scanner version matches the `react-doctor` devDependency (0.9.18)
+# - advisory by default (`blocking: none`): the fork still carries many existing
+#   findings, so the scan reports a health score and PR comments without failing the
+#   build. Switch to `blocking: error` once the baseline is clean.
+
+name: React Doctor
+
+on:
+  pull_request:
+    branches:
+      - "preview"
+    types: [opened, synchronize, reopened, ready_for_review]
+  # Scans `preview` on every push so there is a health-score trend on the default
+  # branch. PR-specific steps (the sticky summary comment) are skipped automatically
+  # on `push` events.
+  push:
+    branches: [preview]
+
+permissions:
+  # `actions/checkout` needs this to read the repo source.
+  contents: read
+  # Reads the PR's changed-file list (the scan only checks what the PR touched) and
+  # posts/updates the sticky React Doctor summary comment. Downgrade to `read` to keep
+  # the changed-file scan but disable comment posting.
+  pull-requests: write
+  # The sticky-comment step uses GitHub's `issues.createComment` / `issues.updateComment`
+  # endpoints (PRs are issues under the hood). Not exercised on `push` events.
+  issues: write
+  # Publishes a commit status with the score and error/warning counts. This is how a
+  # `push` to `preview` surfaces its result, since the PR comment is skipped off pull
+  # requests.
+  statuses: write
+
+# Cancels any in-flight scan for the same PR (or branch, on push) as soon as a new
+# commit arrives, so reviewers only ever see the latest run.
+concurrency:
+  group: react-doctor-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  react-doctor:
+    name: react-doctor
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # React Doctor diffs the changed files against the merge base so it only
+          # reports what the PR introduces. A shallow checkout has no merge base and
+          # would list every pre-existing issue in every changed file.
+          fetch-depth: 0
+          # Don't leave the workflow token in .git/config for the third-party action
+          # that runs next.
+          persist-credentials: false
+
+      # millionco/react-doctor@v2 (pinned to a commit; bump deliberately)
+      - uses: millionco/react-doctor@695e46eee203a5d1855020191aa7e9c010a1250e
+        with:
+          version: "0.9.18"
+          # Gate level: "error" | "warning" | "none" (advisory). See the header comment.
+          blocking: none
+          # Other knobs (full reference: https://www.react.doctor/ci):
+          #   scope: full              # On PRs, scan the whole project instead of the diff
+          #   comment: false           # Disable the sticky PR summary comment
+          #   review-comments: false   # Disable inline review comments on changed lines
+          #   commit-status: false     # Disable the commit status
+          #   project: "web,admin"     # In a monorepo, scan specific workspace project(s)
