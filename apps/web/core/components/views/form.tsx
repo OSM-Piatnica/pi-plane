@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -130,17 +131,17 @@ export const ProjectViewForm = observer(function ProjectViewForm(props: Props) {
               }
               // TODO: fix types
               onChange={(val: any) => {
-                let logoValue = {};
+                let selectedLogoValue = {};
 
                 if (val?.type === "emoji")
-                  logoValue = {
+                  selectedLogoValue = {
                     value: val.value,
                   };
-                else if (val?.type === "icon") logoValue = val.value;
+                else if (val?.type === "icon") selectedLogoValue = val.value;
 
                 setValue("logo_props", {
                   in_use: val?.type,
-                  [val?.type]: logoValue,
+                  [val?.type]: selectedLogoValue,
                 });
                 setIsOpen(false);
               }}
@@ -173,6 +174,7 @@ export const ProjectViewForm = observer(function ProjectViewForm(props: Props) {
                     placeholder={t("common.title")}
                     className="w-full text-14"
                     tabIndex={getIndex("name")}
+                    // oxlint-disable-next-line jsx-a11y/no-autofocus -- autofocus is intentional UX here
                     autoFocus
                   />
                 )}

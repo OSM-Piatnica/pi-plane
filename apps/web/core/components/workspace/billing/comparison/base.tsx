@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -67,6 +68,7 @@ export const PlansComparisonBase = observer(function PlansComparisonBase(props: 
                     <div key={planKey} className="col-span-1 p-3">
                       <ul className="list-disc space-y-1 text-body-xs-regular">
                         {highlights.map((highlight, index) => (
+                          // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
                           <li key={index}>{highlight}</li>
                         ))}
                       </ul>
@@ -80,6 +82,7 @@ export const PlansComparisonBase = observer(function PlansComparisonBase(props: 
           {isCompareAllFeaturesSectionOpen && (
             <>
               {planComparison.map((section, sectionIdx) => (
+                // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
                 <section key={sectionIdx} className="flex-shrink-0">
                   <h2 className="mb-2 flex items-start gap-2 pl-2 text-h5-semibold text-secondary">
                     {section.title} {section.comingSoon && <ComingSoonBadge />}
@@ -87,6 +90,7 @@ export const PlansComparisonBase = observer(function PlansComparisonBase(props: 
                   <div className="border-t border-subtle">
                     {section.features.map((feature, featureIdx) => (
                       <div
+                        // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
                         key={featureIdx}
                         className="text-caption-md grid gap-3 rounded-xs bg-layer-transparent text-secondary even:bg-layer-1"
                         style={{ gridTemplateColumns: `repeat(${numberOfPlansToRender + 1}, minmax(0, 1fr))` }}

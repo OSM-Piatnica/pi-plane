@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -55,7 +56,9 @@ export function RadioInput({
       {inputLabel && <div className={cn(`mb-2`, inputLabelClassName)}>{inputLabel}</div>}
       <div className={cn(`${wrapperClass}`, inputWrapperClassName)}>
         {options.map(({ value, label, disabled }, index) => (
+          // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged
           <div
+            // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
             key={index}
             onClick={() => !disabled && setSelected(value)}
             className={cn(

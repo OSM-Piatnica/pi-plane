@@ -99,6 +99,7 @@ export const IssueAttachmentActionButton = observer(function IssueAttachmentActi
   });
 
   return (
+    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup
     <div
       onClick={(e) => {
         // TODO: Remove extra div and move event propagation to button

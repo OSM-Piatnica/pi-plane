@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -20,7 +21,6 @@ export const VIEW_ACCESS_SPECIFIERS: {
   key: EViewAccess;
   i18n_label: string;
   icon: LucideIcon | React.FC<ISvgIcons>;
-}[] = VIEW_ACCESS_SPECIFIERS_CONSTANTS.map((option) => ({
-  ...option,
-  icon: VIEW_ACCESS_ICONS[option.key as keyof typeof VIEW_ACCESS_ICONS],
-}));
+}[] = VIEW_ACCESS_SPECIFIERS_CONSTANTS.map((option) =>
+  Object.assign({}, option, { icon: VIEW_ACCESS_ICONS[option.key as keyof typeof VIEW_ACCESS_ICONS] })
+);

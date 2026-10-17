@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -138,14 +139,14 @@ export const EstimateRoot = observer(function EstimateRoot(props: TEstimateRoot)
         workspaceSlug={workspaceSlug}
         projectId={projectId}
         estimateId={estimateToUpdate ? estimateToUpdate : undefined}
-        isOpen={estimateToUpdate ? true : false}
+        isOpen={!!estimateToUpdate}
         handleClose={() => setEstimateToUpdate(undefined)}
       />
       <DeleteEstimateModal
         workspaceSlug={workspaceSlug}
         projectId={projectId}
         estimateId={estimateToDelete ? estimateToDelete : undefined}
-        isOpen={estimateToDelete ? true : false}
+        isOpen={!!estimateToDelete}
         handleClose={() => setEstimateToDelete(undefined)}
       />
     </>

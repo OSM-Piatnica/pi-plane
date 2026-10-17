@@ -56,6 +56,7 @@ export const DeleteModuleModal = observer(function DeleteModuleModal(props: Prop
           title: t("toast.success"),
           message: t("entity.delete.success", { entity: t("common.module") }),
         });
+        return;
       })
       .catch((errors) => {
         const isPermissionError = errors?.error === "You don't have the required permissions.";

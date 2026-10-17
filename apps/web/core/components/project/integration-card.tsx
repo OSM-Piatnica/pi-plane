@@ -75,6 +75,7 @@ export function IntegrationCard({ integration }: Props) {
           title: t("toast.success"),
           message: `${login}/${name} repository synced with the project successfully.`,
         });
+        return;
       })
       .catch((err) => {
         console.error(err);

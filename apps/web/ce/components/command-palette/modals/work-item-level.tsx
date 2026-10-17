@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -54,11 +55,11 @@ export const WorkItemLevelModals = observer(function WorkItemLevelModals(props: 
   const { fetchSubIssues: fetchSubWorkItems } = useIssueDetail();
   const { fetchSubIssues: fetchEpicSubWorkItems } = useIssueDetail(EIssueServiceType.EPICS);
 
-  const handleDeleteIssue = async (workspaceSlug: string, projectId: string, issueId: string) => {
+  const handleDeleteIssue = async (slug: string, projectId: string, issueId: string) => {
     try {
       const isEpic = workItemDetails?.is_epic;
       const deleteAction = isEpic ? removeEpic : removeWorkItem;
-      const redirectPath = `/${workspaceSlug}/projects/${projectId}/${isEpic ? "epics" : "issues"}`;
+      const redirectPath = `/${slug}/projects/${projectId}/${isEpic ? "epics" : "issues"}`;
 
       await deleteAction(projectId, issueId);
       router.push(redirectPath);

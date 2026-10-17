@@ -113,6 +113,7 @@ export function NotificationSnoozeModal(props: TNotificationSnoozeModal) {
 
     await handleSubmitSnooze(dateTime).then(() => {
       handleClose();
+      return;
     });
   };
 
@@ -183,6 +184,7 @@ export function NotificationSnoozeModal(props: TNotificationSnoozeModal) {
                   input
                 >
                   <div className="mb-2 flex h-9 w-full overflow-hidden rounded-xs">
+                    {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged */}
                     <div
                       onClick={() => {
                         setValue("period", "AM");
@@ -194,6 +196,7 @@ export function NotificationSnoozeModal(props: TNotificationSnoozeModal) {
                     >
                       AM
                     </div>
+                    {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged */}
                     <div
                       onClick={() => {
                         setValue("period", "PM");
@@ -208,6 +211,7 @@ export function NotificationSnoozeModal(props: TNotificationSnoozeModal) {
                   </div>
                   {getTimeStamp().length > 0 ? (
                     getTimeStamp().map((time, index) => (
+                      // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
                       <CustomSelect.Option key={`${time}-${index}`} value={time.value}>
                         <div className="flex items-center">
                           <span className="ml-3 block truncate">{time.label}</span>

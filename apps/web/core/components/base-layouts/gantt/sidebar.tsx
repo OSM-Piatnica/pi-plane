@@ -95,9 +95,11 @@ export const BaseGanttSidebar = observer(function BaseGanttSidebar<T extends IBa
                   onDrop={handleOnDrop}
                 >
                   {(isDragging: boolean) => {
-                    const block = getBlockById(blockId);
-                    const isBlockComplete = !!block?.start_date && !!block?.target_date;
-                    const duration = isBlockComplete ? getNumberOfDaysFromPosition(block?.position?.width) : undefined;
+                    const currentBlock = getBlockById(blockId);
+                    const isBlockComplete = !!currentBlock?.start_date && !!currentBlock?.target_date;
+                    const duration = isBlockComplete
+                      ? getNumberOfDaysFromPosition(currentBlock?.position?.width)
+                      : undefined;
                     const isBlockHoveredOn = isBlockActive(blockId);
 
                     return (

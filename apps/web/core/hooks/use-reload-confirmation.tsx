@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -38,12 +39,13 @@ const useReloadConfirmations = (isActive = true, message?: string, defaultShowAl
       // show confirm dialog
       const isLeaving = confirm(alertMessage);
       if (isLeaving) {
-        onLeave && onLeave();
+        if (onLeave) onLeave();
       } else {
         event.preventDefault();
         event.stopPropagation();
       }
     },
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentionally limited deps; behaviour unchanged
     [isActive, showAlert]
   );
 

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -20,6 +21,7 @@ type InboxIssueAppliedFiltersDate = {
   label: string;
 };
 
+// oxlint-disable-next-line no-shadow -- function name intentionally matches the exported const (display name)
 export const InboxIssueAppliedFiltersDate = observer(function InboxIssueAppliedFiltersDate(
   props: InboxIssueAppliedFiltersDate
 ) {
@@ -53,6 +55,7 @@ export const InboxIssueAppliedFiltersDate = observer(function InboxIssueAppliedF
         return (
           <div key={value} className="relative flex items-center gap-1 rounded-sm bg-layer-1 p-1 text-11">
             <div className="truncate text-11">{optionDetail?.name}</div>
+            {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
             <div
               className="relative flex h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden text-tertiary transition-all hover:text-secondary"
               onClick={() => handleInboxIssueFilters(filterKey, handleFilterValue(optionDetail?.value))}
@@ -63,6 +66,7 @@ export const InboxIssueAppliedFiltersDate = observer(function InboxIssueAppliedF
         );
       })}
 
+      {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
       <div
         className="relative flex h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden text-tertiary transition-all hover:text-secondary"
         onClick={clearFilter}

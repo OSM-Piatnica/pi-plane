@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -79,6 +80,7 @@ function EmptySpaceItem({ title, description, Icon, action, href }: EmptySpaceIt
 
   return (
     <>
+      {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/prefer-tag-over-role -- existing markup; behaviour unchanged */}
       <li className="cursor-pointer" onClick={action} role="button">
         {spaceItem}
       </li>

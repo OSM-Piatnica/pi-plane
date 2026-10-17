@@ -48,6 +48,7 @@ export const TransferIssuesModal = observer(function TransferIssuesModal(props: 
           message: t("cycle_ui.transfer_success"),
         });
         await getCycleDetails(payload.new_cycle_id);
+        return;
       })
       .catch(() => {
         setToast({

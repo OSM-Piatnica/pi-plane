@@ -113,7 +113,7 @@ export function EditorAIMenu(props: Props) {
   };
   // handle re-generate response
   const handleToneChange = async (key: string) => {
-    const selectedTone = TONES_LIST.find((t) => t.key === key);
+    const selectedTone = TONES_LIST.find((tone) => tone.key === key);
     const selection = editorRef?.getSelectedText();
     if (!selectedTone || !selection || !activeTask) return;
     setResponse(undefined);

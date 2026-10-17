@@ -74,6 +74,7 @@ export const useWorkspaceInvitationActions = (props: TUseWorkspaceInvitationProp
   const onSubmitForm = async (data: InvitationFormValues) => {
     await onSubmit(data)?.then(() => {
       reset({ emails: [emptyInvitationRow(currentLocale)] });
+      return;
     });
   };
 

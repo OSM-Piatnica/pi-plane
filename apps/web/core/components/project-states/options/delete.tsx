@@ -34,7 +34,7 @@ export const StateDelete = observer(function StateDelete(props: TStateDelete) {
   const [isDelete, setIsDelete] = useState(false);
   const { t } = useTranslation();
   // derived values
-  const isDeleteDisabled = state.default ? true : totalStates === 1 ? true : false;
+  const isDeleteDisabled = Boolean(state.default) || totalStates === 1;
 
   const handleDeleteState = async () => {
     if (isDeleteDisabled) return;

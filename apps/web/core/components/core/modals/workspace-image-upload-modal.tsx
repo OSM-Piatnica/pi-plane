@@ -133,6 +133,7 @@ export const WorkspaceImageUploadModal = observer(function WorkspaceImageUploadM
                   </button>
                   <img
                     src={image ? URL.createObjectURL(image) : value ? getFileURL(value) : ""}
+                    // oxlint-disable-next-line jsx-a11y/img-redundant-alt -- alt text kept as-is
                     alt="image"
                     className="absolute top-0 left-0 h-full w-full rounded-md object-cover"
                   />

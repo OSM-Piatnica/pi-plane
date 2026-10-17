@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -42,6 +43,10 @@ interface StickyEditorWrapperProps extends Omit<
   handleDelete: () => void;
 }
 
+function isMutableRefObject<T>(candidate: React.ForwardedRef<T>): candidate is React.MutableRefObject<T | null> {
+  return !!candidate && typeof candidate === "object" && "current" in candidate;
+}
+
 export const StickyEditor = React.forwardRef(function StickyEditor(
   props: StickyEditorWrapperProps,
   ref: React.ForwardedRef<EditorRefApi>
@@ -74,9 +79,6 @@ export const StickyEditor = React.forwardRef(function StickyEditor(
   });
   // editor config
   const { getEditorFileHandlers } = useEditorConfig();
-  function isMutableRefObject<T>(ref: React.ForwardedRef<T>): ref is React.MutableRefObject<T | null> {
-    return !!ref && typeof ref === "object" && "current" in ref;
-  }
   // derived values
   const editorRef = isMutableRefObject<EditorRefApi>(ref) ? ref.current : null;
 

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -96,12 +97,15 @@ export class WebhookStore implements IWebhookStore {
    */
   fetchWebhooks = async (workspaceSlug: string) =>
     await this.webhookService.fetchWebhooksList(workspaceSlug).then((response) => {
-      const webHookObject: { [webhookId: string]: IWebhook } = response.reduce((accumulator, currentWebhook) => {
-        if (currentWebhook && currentWebhook.id) {
-          return { ...accumulator, [currentWebhook.id]: currentWebhook };
-        }
-        return accumulator;
-      }, {});
+      const webHookObject: { [webhookId: string]: IWebhook } = response.reduce(
+        (accumulator, currentWebhook) => {
+          if (currentWebhook && currentWebhook.id) {
+            accumulator[currentWebhook.id] = currentWebhook;
+          }
+          return accumulator;
+        },
+        {} as { [webhookId: string]: IWebhook }
+      );
       runInAction(() => {
         this.webhooks = webHookObject;
       });
@@ -171,6 +175,7 @@ export class WebhookStore implements IWebhookStore {
       runInAction(() => {
         this.webhooks = _webhooks;
       });
+      return;
     });
 
   /**

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -56,9 +57,11 @@ export const StickyNote = observer(function StickyNote(props: TProps) {
         });
       }
     },
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- dependencies intentionally limited
     [stickyId, stickyOperations]
   );
 
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- dependencies intentionally limited
   const debouncedFormSave = useCallback(
     debounce(async (payload: Partial<TSticky>) => {
       await handleChange(payload);

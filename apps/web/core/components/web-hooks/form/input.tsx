@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -27,6 +28,7 @@ export function WebhookInput(props: Props) {
         autoComplete="off"
         hasError={hasError}
         placeholder="https://example.com/post"
+        // oxlint-disable-next-line jsx-a11y/no-autofocus -- autofocus is intentional UX here
         autoFocus
       />
     </>

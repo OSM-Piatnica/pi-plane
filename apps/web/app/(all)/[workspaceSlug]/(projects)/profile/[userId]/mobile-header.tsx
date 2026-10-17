@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -102,6 +103,7 @@ export const ProfileIssuesMobileHeader = observer(function ProfileIssuesMobileHe
           if (layout.key === "spreadsheet" || layout.key === "gantt_chart" || layout.key === "calendar") return;
           return (
             <CustomMenu.MenuItem
+              // oxlint-disable-next-line react/no-array-index-key -- static list, index used to pick layout
               key={index}
               onClick={() => {
                 handleLayoutChange(ISSUE_LAYOUTS[index].key);

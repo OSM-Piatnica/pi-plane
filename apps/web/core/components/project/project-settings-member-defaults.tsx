@@ -114,6 +114,7 @@ export const ProjectSettingsMemberDefaults = observer(function ProjectSettingsMe
           type: TOAST_TYPE.SUCCESS,
           message: t("project_settings.general.toast.success"),
         });
+        return;
       })
       .catch((err) => {
         console.error(err);
@@ -132,6 +133,7 @@ export const ProjectSettingsMemberDefaults = observer(function ProjectSettingsMe
           type: TOAST_TYPE.SUCCESS,
           message: t("project_settings.general.toast.success"),
         });
+        return;
       })
       .catch((err) => {
         console.error(err);

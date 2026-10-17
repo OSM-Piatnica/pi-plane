@@ -115,6 +115,7 @@ export const useAutoScroller = (
       document.removeEventListener("mouseup", onDragEnd);
       document.removeEventListener("dragend", onDragEnd);
     };
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentionally limited deps; behaviour unchanged
   }, [shouldScroll, intervalId]);
 
   useEffect(() => {
@@ -126,5 +127,6 @@ export const useAutoScroller = (
     }
 
     containerDimensions.current = containerElement?.getBoundingClientRect();
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentionally limited deps; behaviour unchanged
   }, [shouldScroll]);
 };

@@ -228,11 +228,13 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
                       </div>
                     ) : (
                       <div className="relative h-16 w-16 overflow-hidden">
+                        {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- existing interactive wrapper; behaviour unchanged */}
                         <img
                           src={getFileURL(userAvatar)}
                           className="absolute top-0 left-0 h-full w-full rounded-lg object-cover"
                           onClick={() => setIsImageUploadModalOpen(true)}
                           alt={currentUser?.display_name}
+                          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- existing markup; behaviour unchanged
                           role="button"
                         />
                       </div>

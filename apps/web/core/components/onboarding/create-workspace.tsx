@@ -164,6 +164,7 @@ export const CreateWorkspace = observer(function CreateWorkspace(props: Props) {
                   ref={ref}
                   hasError={Boolean(errors.name)}
                   className="w-full border-strong placeholder:text-placeholder"
+                  // oxlint-disable-next-line jsx-a11y/no-autofocus -- intentional autofocus; behaviour preserved
                   autoFocus
                 />
               </div>

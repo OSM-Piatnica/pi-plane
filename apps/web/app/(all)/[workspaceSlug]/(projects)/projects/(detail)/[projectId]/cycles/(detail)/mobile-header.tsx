@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -109,6 +110,7 @@ export const CycleIssuesMobileHeader = observer(function CycleIssuesMobileHeader
         >
           {SUPPORTED_LAYOUTS.map((layout, index) => (
             <CustomMenu.MenuItem
+              // oxlint-disable-next-line react/no-array-index-key -- index pairs SUPPORTED_LAYOUTS with ISSUE_LAYOUTS; stable static list
               key={ISSUE_LAYOUTS[index].key}
               onClick={() => {
                 handleLayoutChange(ISSUE_LAYOUTS[index].key);
@@ -146,6 +148,7 @@ export const CycleIssuesMobileHeader = observer(function CycleIssuesMobileHeader
           </FiltersDropdown>
         </div>
 
+        {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; behaviour unchanged */}
         <span
           onClick={() => setAnalyticsModal(true)}
           className="flex flex-grow justify-center border-l border-subtle text-13 text-secondary"

@@ -67,6 +67,7 @@ export const usePowerKPageContextBasedActions = (): TPowerKCommandConfig[] => {
           type: TOAST_TYPE.SUCCESS,
           title: t("power_k.contextual_actions.page.copy_url_toast_success"),
         });
+        return;
       })
       .catch(() => {
         setToast({

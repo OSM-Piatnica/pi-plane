@@ -51,6 +51,7 @@ export const PagesListHeader = observer(function PagesListHeader() {
       .then((res) => {
         const pageId = `/${workspaceSlug}/projects/${currentProjectDetails?.id}/pages/${res?.id}`;
         router.push(pageId);
+        return;
       })
       .catch((err) => {
         setToast({

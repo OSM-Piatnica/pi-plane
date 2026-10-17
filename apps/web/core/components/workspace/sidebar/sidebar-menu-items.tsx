@@ -85,6 +85,7 @@ export const SidebarMenuItems = observer(function SidebarMenuItems() {
 
   const sortedNavigationItems = useMemo(
     () =>
+      // oxlint-disable-next-line oxc/no-map-spread -- small list; behaviour preserved
       WORKSPACE_SIDEBAR_DYNAMIC_NAVIGATION_ITEMS_LINKS.map((item) => {
         const preference = workspacePreferences.items[item.key];
         return {
@@ -99,6 +100,7 @@ export const SidebarMenuItems = observer(function SidebarMenuItems() {
     <>
       <div className="flex flex-col gap-0.5">
         {filteredStaticNavigationItems.map((item, _index) => (
+          // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
           <SidebarItem key={`static_${_index}`} item={item} />
         ))}
       </div>
@@ -151,9 +153,11 @@ export const SidebarMenuItems = observer(function SidebarMenuItems() {
             <Disclosure.Panel as="div" className="flex flex-col gap-0.5" static>
               <>
                 {WORKSPACE_SIDEBAR_STATIC_PINNED_NAVIGATION_ITEMS_LINKS.map((item, _index) => (
+                  // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
                   <SidebarItem key={`static_${_index}`} item={item} />
                 ))}
                 {sortedNavigationItems.map((item, _index) => (
+                  // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
                   <SidebarItem key={`dynamic_${_index}`} item={item} />
                 ))}
                 <SidebarNavItem>

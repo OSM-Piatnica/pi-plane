@@ -104,6 +104,7 @@ export const TopNavPowerK = observer(() => {
     return () => {
       setTopNavInputRef(null);
     };
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- dependencies intentionally limited
   }, [setTopNavInputRef]);
 
   const handleClear = () => {
@@ -206,6 +207,7 @@ export const TopNavPowerK = observer(() => {
         return;
       }
     },
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- dependencies intentionally limited
     [searchTerm, activePage, context, shouldShowContextBasedActions, setActivePage, closePanel]
   );
 
@@ -216,6 +218,7 @@ export const TopNavPowerK = observer(() => {
           "w-[554px]": isOpen,
         })}
       >
+        {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- existing interactive wrapper; behaviour unchanged */}
         <div
           className={cn(
             "flex h-7 w-full items-center rounded-lg border border-subtle-1 bg-layer-2 p-2 transition-colors duration-200",
@@ -224,6 +227,7 @@ export const TopNavPowerK = observer(() => {
             }
           )}
           onClick={() => inputRef.current?.focus()}
+          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- existing markup; behaviour unchanged
           role="button"
         >
           <SearchIcon className="mr-2 size-3.5 shrink-0 text-placeholder" />

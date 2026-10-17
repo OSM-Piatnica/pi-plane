@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -57,13 +58,13 @@ export const EstimatePointCreate = observer(function EstimatePointCreate(props: 
   const [loader, setLoader] = useState(false);
 
   const handleSuccess = (value: string) => {
-    handleEstimatePointValue && handleEstimatePointValue(value);
+    if (handleEstimatePointValue) handleEstimatePointValue(value);
     setEstimateInputValue("");
     closeCallBack();
   };
 
   const handleClose = () => {
-    handleEstimatePointError && handleEstimatePointError(estimateInputValue, undefined, "delete");
+    if (handleEstimatePointError) handleEstimatePointError(estimateInputValue, undefined, "delete");
     setEstimateInputValue("");
     closeCallBack();
   };
@@ -122,7 +123,7 @@ export const EstimatePointCreate = observer(function EstimatePointCreate(props: 
               await creteEstimatePoint(workspaceSlug, projectId, payload);
 
               setLoader(false);
-              handleEstimatePointError && handleEstimatePointError(estimateInputValue, undefined, "delete");
+              if (handleEstimatePointError) handleEstimatePointError(estimateInputValue, undefined, "delete");
               setToast({
                 type: TOAST_TYPE.SUCCESS,
                 title: t("project_settings.estimates.toasts.created.success.title"),
@@ -131,7 +132,7 @@ export const EstimatePointCreate = observer(function EstimatePointCreate(props: 
               handleClose();
             } catch {
               setLoader(false);
-              handleEstimatePointError &&
+              if (handleEstimatePointError)
                 handleEstimatePointError(
                   estimateInputValue,
                   t("project_settings.estimates.validation.unable_to_process")
@@ -150,7 +151,7 @@ export const EstimatePointCreate = observer(function EstimatePointCreate(props: 
           }
         } else {
           setLoader(false);
-          handleEstimatePointError &&
+          if (handleEstimatePointError)
             handleEstimatePointError(
               estimateInputValue,
               [EEstimateSystem.POINTS, EEstimateSystem.TIME].includes(estimateType)
@@ -158,12 +159,10 @@ export const EstimatePointCreate = observer(function EstimatePointCreate(props: 
                 : t("project_settings.estimates.validation.character")
             );
         }
-      } else
-        handleEstimatePointError &&
-          handleEstimatePointError(estimateInputValue, t("project_settings.estimates.validation.already_exists"));
-    } else
-      handleEstimatePointError &&
-        handleEstimatePointError(estimateInputValue, t("project_settings.estimates.validation.empty"));
+      } else if (handleEstimatePointError)
+        handleEstimatePointError(estimateInputValue, t("project_settings.estimates.validation.already_exists"));
+    } else if (handleEstimatePointError)
+      handleEstimatePointError(estimateInputValue, t("project_settings.estimates.validation.empty"));
   };
 
   return (

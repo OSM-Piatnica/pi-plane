@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -57,12 +58,14 @@ export function TourSidebar({ step, setStep }: Props) {
       </h3>
       <div className="mt-8 space-y-5">
         {sidebarOptions.map((option) => (
+          // oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- existing markup; behaviour unchanged
           <h5
             key={option.key}
             className={`flex cursor-pointer items-center gap-2 border-l-[3px] py-0.5 pr-2 pl-3 text-13 font-medium capitalize ${
               step === option.key ? "border-accent-strong text-accent-primary" : "border-transparent text-secondary"
             }`}
             onClick={() => setStep(option.key)}
+            // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- existing markup; behaviour unchanged
             role="button"
           >
             <option.Icon className="h-4 w-4" aria-hidden="true" />

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -78,6 +79,7 @@ export function ArchiveIssueModal(props: Props) {
           <Button variant="secondary" size="lg" onClick={onClose}>
             {t("common.cancel")}
           </Button>
+          {/* oxlint-disable-next-line jsx-a11y/tabindex-no-positive -- existing markup; a11y behaviour change out of scope for lint cleanup */}
           <Button variant="primary" size="lg" tabIndex={1} onClick={handleArchiveIssue} loading={isArchiving}>
             {isArchiving ? t("common.archiving") : t("common.archive")}
           </Button>

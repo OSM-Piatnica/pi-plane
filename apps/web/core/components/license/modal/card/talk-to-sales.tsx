@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -29,6 +30,13 @@ export type TalkToSalesCardProps = {
   renderTrialButton?: (props: { productId: string | undefined; priceId: string | undefined }) => React.ReactNode;
 };
 
+const renderPriceContent = (price: TSubscriptionPrice) => (
+  <>
+    {price.recurring === "month" && "Monthly"}
+    {price.recurring === "year" && "Yearly"}
+  </>
+);
+
 export const TalkToSalesCard = observer(function TalkToSalesCard(props: TalkToSalesCardProps) {
   const {
     planVariant,
@@ -44,13 +52,6 @@ export const TalkToSalesCard = observer(function TalkToSalesCard(props: TalkToSa
     isTrialAllowed,
     renderTrialButton,
   } = props;
-
-  const renderPriceContent = (price: TSubscriptionPrice) => (
-    <>
-      {price.recurring === "month" && "Monthly"}
-      {price.recurring === "year" && "Yearly"}
-    </>
-  );
 
   const renderActionButton = (price: TSubscriptionPrice) => (
     <>

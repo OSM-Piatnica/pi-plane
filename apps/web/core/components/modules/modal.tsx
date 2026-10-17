@@ -68,6 +68,7 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
           title: t("toast.success"),
           message: t("module_ui.create_success"),
         });
+        return;
       })
       .catch((err) => {
         setToast({
@@ -91,6 +92,7 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
           title: t("toast.success"),
           message: t("entity.update.success", { entity: t("common.module") }),
         });
+        return;
       })
       .catch((err) => {
         setToast({
@@ -141,7 +143,7 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
       <ModuleForm
         handleFormSubmit={handleFormSubmit}
         handleClose={handleClose}
-        status={data ? true : false}
+        status={Boolean(data)}
         projectId={activeProject ?? ""}
         setActiveProject={setActiveProject}
         data={data}

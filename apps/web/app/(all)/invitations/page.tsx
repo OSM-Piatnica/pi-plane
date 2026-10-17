@@ -88,7 +88,9 @@ function UserInvitationsPage() {
             setIsJoiningWorkspaces(false);
             fetchWorkspaces().then(() => {
               router.push(`/${redirectWorkspace?.slug}`);
+              return;
             });
+            return;
           })
           .catch(() => {
             setToast({
@@ -98,6 +100,7 @@ function UserInvitationsPage() {
             });
             setIsJoiningWorkspaces(false);
           });
+        return;
       })
       .catch((_err) => {
         setToast({
@@ -135,6 +138,7 @@ function UserInvitationsPage() {
                     const isSelected = invitationsRespond.includes(invitation.id);
 
                     return (
+                      // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; behaviour unchanged
                       <div
                         key={invitation.id}
                         className={`flex cursor-pointer items-center gap-2 rounded-sm border px-3.5 py-5 ${

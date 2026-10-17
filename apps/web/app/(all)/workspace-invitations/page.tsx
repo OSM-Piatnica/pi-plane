@@ -61,6 +61,7 @@ function WorkspaceInvitationPage() {
         } else {
           router.push("/");
         }
+        return;
       })
       .catch((err: unknown) => console.error(err));
   };
@@ -74,6 +75,7 @@ function WorkspaceInvitationPage() {
       })
       .then(() => {
         router.push("/");
+        return;
       })
       .catch((err: unknown) => console.error(err));
   };

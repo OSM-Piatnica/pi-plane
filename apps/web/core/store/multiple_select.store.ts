@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -138,10 +139,10 @@ export class MultipleSelectStore implements IMultipleSelectStore {
   /**
    * @description add or remove entities
    * @param {TEntityDetails} entityDetails
-   * @param {"add" | "remove"} action
+   * @param {"add" | "remove"} updateType
    */
-  updateSelectedEntityDetails = (entityDetails: TEntityDetails, action: "add" | "remove") => {
-    if (action === "add") {
+  updateSelectedEntityDetails = (entityDetails: TEntityDetails, updateType: "add" | "remove") => {
+    if (updateType === "add") {
       runInAction(() => {
         if (this.getIsEntitySelected(entityDetails.entityID)) {
           remove(this.selectedEntityDetails, (en) => en.entityID === entityDetails.entityID);
@@ -162,10 +163,10 @@ export class MultipleSelectStore implements IMultipleSelectStore {
   /**
    * @description add or remove multiple entities
    * @param {TEntityDetails[]} entitiesList
-   * @param {"add" | "remove"} action
+   * @param {"add" | "remove"} updateType
    */
-  bulkUpdateSelectedEntityDetails = (entitiesList: TEntityDetails[], action: "add" | "remove") => {
-    if (action === "add") {
+  bulkUpdateSelectedEntityDetails = (entitiesList: TEntityDetails[], updateType: "add" | "remove") => {
+    if (updateType === "add") {
       runInAction(() => {
         let newEntities: TEntityDetails[] = [];
         newEntities = differenceWith(this.selectedEntityDetails, entitiesList, isEqual);

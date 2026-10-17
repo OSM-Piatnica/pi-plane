@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -75,6 +76,7 @@ export function ShortcutBadge({ shortcut }: { shortcut: string | undefined }) {
   return (
     <div className="pointer-events-none inline-flex shrink-0 items-center gap-1 font-medium select-none">
       {formatted?.split("").map((char, index) => (
+        // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
         <React.Fragment key={index}>
           <kbd className="inline-flex h-5 items-center justify-center rounded-sm border border-strong bg-surface-1 px-1.5 font-code text-10 font-medium text-tertiary">
             {char.toUpperCase()}
@@ -103,6 +105,7 @@ export function KeySequenceBadge({ sequence }: { sequence: string | undefined })
   return (
     <div className="pointer-events-none inline-flex shrink-0 items-center gap-1 font-medium select-none">
       {chars.map((char, index) => (
+        // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
         <React.Fragment key={index}>
           <kbd className="inline-flex h-5 items-center justify-center rounded-sm border border-strong bg-surface-1 px-1.5 font-code text-10 font-medium text-tertiary">
             {char.toUpperCase()}

@@ -46,7 +46,6 @@ export const IssueActivityItem = observer(function IssueActivityItem(props: TIss
   // hooks
   const {
     activity: { getActivityById },
-    comment: {},
   } = useIssueDetail();
   const ISSUE_RELATION_OPTIONS = useTimeLineRelationOptions();
   const activityRelations = getValidKeysFromObject(ISSUE_RELATION_OPTIONS);

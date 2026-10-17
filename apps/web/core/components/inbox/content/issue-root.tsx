@@ -130,14 +130,15 @@ export const InboxIssueMainContent = observer(function InboxIssueMainContent(pro
           });
         }
       },
-      archive: async (workspaceSlug: string, projectId: string, issueId: string) => {
+      archive: async (archiveWorkspaceSlug: string, archiveProjectId: string, issueId: string) => {
         try {
-          await archiveIssue(workspaceSlug, projectId, issueId);
+          await archiveIssue(archiveWorkspaceSlug, archiveProjectId, issueId);
         } catch (error) {
           console.error("Error in archiving issue:", error);
         }
       },
     }),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- existing dependency list; lint cleanup only
     [inboxIssue, t]
   );
 

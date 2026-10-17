@@ -110,6 +110,7 @@ export function ArchiveRestoreProjectModal(props: Props) {
           <Button
             variant="primary"
             size="lg"
+            // oxlint-disable-next-line tabindex-no-positive -- existing behaviour; lint cleanup only
             tabIndex={1}
             onClick={archive ? handleArchiveProject : handleRestoreProject}
             loading={isLoading}

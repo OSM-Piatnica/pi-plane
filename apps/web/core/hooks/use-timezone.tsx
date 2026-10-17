@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -32,6 +33,16 @@ const groupTimezones = (timezones: TTimezoneObject[]): TTimezoneObject[] => {
   return Array.from(groupedMap.values());
 };
 
+const getTimeZoneLabel = (timezone: TTimezoneObject | undefined) => {
+  if (!timezone) return undefined;
+  return (
+    <div className="flex gap-1.5">
+      <span className="text-placeholder">{timezone.utc_offset}</span>
+      <span className="text-secondary">{timezone.label}</span>
+    </div>
+  );
+};
+
 const useTimezone = () => {
   // fetching the timezone from the server
   const {
@@ -45,17 +56,8 @@ const useTimezone = () => {
   // derived values
   const isDisabled = timezoneIsLoading || timezonesError || !timezones;
 
-  const getTimeZoneLabel = (timezone: TTimezoneObject | undefined) => {
-    if (!timezone) return undefined;
-    return (
-      <div className="flex gap-1.5">
-        <span className="text-placeholder">{timezone.utc_offset}</span>
-        <span className="text-secondary">{timezone.label}</span>
-      </div>
-    );
-  };
   const options = [
-    ...groupTimezones(timezones?.timezones || [])?.map((timezone) => ({
+    ...groupTimezones(timezones?.timezones || []).map((timezone) => ({
       value: timezone.value,
       query: `${timezone.value} ${timezone.label}, ${timezone.gmt_offset}, ${timezone.utc_offset}`,
       content: getTimeZoneLabel(timezone),

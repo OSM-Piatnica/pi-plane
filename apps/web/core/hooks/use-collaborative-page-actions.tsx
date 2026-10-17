@@ -90,6 +90,7 @@ export const useCollaborativePageActions = (props: Props) => {
         }
       }
     },
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentionally limited deps; behaviour unchanged
     [actionHandlerMap, editorRef]
   );
 

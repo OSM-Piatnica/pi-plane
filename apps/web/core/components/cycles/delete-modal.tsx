@@ -53,6 +53,7 @@ export const CycleDeleteModal = observer(function CycleDeleteModal(props: ICycle
             title: t("toast.success"),
             message: t("entity.delete.success", { entity: t("common.cycle") }),
           });
+          return;
         })
         .catch((errors) => {
           const isPermissionError = errors?.error === "You don't have the required permissions.";

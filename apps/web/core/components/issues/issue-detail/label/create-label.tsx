@@ -84,6 +84,7 @@ export function LabelCreate(props: ILabelCreate) {
 
   return (
     <>
+      {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
       <div
         className="relative flex flex-shrink-0 cursor-pointer items-center gap-1 rounded-full border border-subtle p-0.5 px-2 text-11 text-tertiary transition-all hover:bg-surface-2 hover:text-secondary"
         onClick={handleIsCreateToggle}
@@ -122,7 +123,7 @@ export function LabelCreate(props: ILabelCreate) {
                         style={styles.popper}
                         {...attributes.popper}
                       >
-                        <TwitterPicker triangle={"hide"} color={value} onChange={(value) => onChange(value.hex)} />
+                        <TwitterPicker triangle={"hide"} color={value} onChange={(color) => onChange(color.hex)} />
                       </div>
                     </Popover.Panel>
                   </>

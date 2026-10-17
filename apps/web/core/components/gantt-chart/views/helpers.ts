@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -74,8 +75,6 @@ export const getDateFromPositionOnGantt = (position: number, chartData: ChartDat
   const numberOfDaysSinceStart = Math.round(position / chartData.data.dayWidth) + offsetDays;
 
   const newDate = addDaysToDate(chartData.data.startDate, numberOfDaysSinceStart);
-
-  if (!newDate) undefined;
 
   return newDate;
 };

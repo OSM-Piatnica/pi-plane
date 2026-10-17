@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -32,8 +33,8 @@ export const IssueAttachmentsList = observer(function IssueAttachmentsList(props
 
   return (
     <>
-      {uploadStatus?.map((uploadStatus) => (
-        <IssueAttachmentsUploadDetails key={uploadStatus.id} uploadStatus={uploadStatus} />
+      {uploadStatus?.map((uploadItem) => (
+        <IssueAttachmentsUploadDetails key={uploadItem.id} uploadStatus={uploadItem} />
       ))}
       {issueAttachments?.map((attachmentId) => (
         <IssueAttachmentsDetail

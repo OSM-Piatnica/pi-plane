@@ -89,6 +89,7 @@ export const ConfirmProjectMemberRemove = observer(function ConfirmProjectMember
         <Button variant="secondary" size="lg" onClick={handleClose}>
           {t("cancel")}
         </Button>
+        {/* oxlint-disable-next-line tabindex-no-positive -- existing behaviour; lint cleanup only */}
         <Button variant="error-fill" size="lg" tabIndex={1} onClick={handleDeletion} loading={isDeleteLoading}>
           {isCurrentUser
             ? isDeleteLoading

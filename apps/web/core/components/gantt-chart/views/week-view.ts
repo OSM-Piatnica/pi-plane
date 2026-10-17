@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -145,6 +146,7 @@ export const getWeeksBetweenTwoDates = (
   const diff = (day + 7 - startOfWeek) % 7; // Calculate days to subtract to get to startOfWeek
   currentDate.setDate(currentDate.getDate() - diff);
 
+  // oxlint-disable-next-line no-unmodified-loop-condition -- currentDate is mutated via setDate below
   while (currentDate <= endDate) {
     const weekStartDate = new Date(currentDate.getTime());
     const weekEndDate = new Date(currentDate.getTime() + 6 * 24 * 60 * 60 * 1000);
@@ -173,7 +175,7 @@ export const getWeeksBetweenTwoDates = (
       endYear: yearAtEndOfTheWeek,
       startDate: weekStartDate,
       endDate: weekEndDate,
-      today: today >= weekStartDate && today <= weekEndDate ? true : false,
+      today: today >= weekStartDate && today <= weekEndDate,
     });
 
     currentDate.setDate(currentDate.getDate() + 7);

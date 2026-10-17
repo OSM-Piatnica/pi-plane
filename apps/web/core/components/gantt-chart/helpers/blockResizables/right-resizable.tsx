@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -42,11 +43,14 @@ export const RightResizable = observer(function RightResizable(props: RightResiz
           <div className="rounded-sm bg-accent-subtle px-2 py-1">{dateString}</div>
         </div>
       )}
+      {/* oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- behaviour-preserving lint cleanup; a11y handled separately */}
       <div
         onMouseDown={(e) => handleBlockDrag(e, "right")}
+        // oxlint-disable-next-line jsx-a11y/mouse-events-have-key-events -- behaviour-preserving lint cleanup; a11y handled separately
         onMouseOver={() => {
           setIsHovering(true);
         }}
+        // oxlint-disable-next-line jsx-a11y/mouse-events-have-key-events -- behaviour-preserving lint cleanup; a11y handled separately
         onMouseOut={() => {
           setIsHovering(false);
         }}

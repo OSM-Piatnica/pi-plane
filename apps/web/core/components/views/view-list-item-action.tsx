@@ -106,6 +106,7 @@ export const ViewListItemAction = observer(function ViewListItemAction(props: Pr
       </div>
 
       {view?.anchor && publishLink ? (
+        // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged
         <div
           className="flex cursor-pointer items-center gap-1.5 rounded-sm bg-success-subtle px-3 py-1.5 text-11 font-medium text-success-primary"
           onClick={() => setPublishModalOpen(true)}

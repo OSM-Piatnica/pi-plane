@@ -124,6 +124,7 @@ export function PageForm(props: Props) {
               className="w-full resize-none text-14"
               tabIndex={getIndex("name")}
               required
+              // oxlint-disable-next-line jsx-a11y/no-autofocus -- autofocus is intentional UX here
               autoFocus
             />
             {isTitleLengthMoreThan255Character && (

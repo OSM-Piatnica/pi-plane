@@ -141,12 +141,16 @@ export const BaseCalendarRoot = observer(function BaseCalendarRoot(props: IBaseC
   );
 
   const getPaginationData = useCallback(
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
     (groupId: string | undefined) => issues?.getPaginationData(groupId, undefined),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
     [issues?.getPaginationData]
   );
 
   const getGroupIssueCount = useCallback(
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
     (groupId: string | undefined) => issues?.getGroupIssueCount(groupId, undefined, false),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
     [issues?.getGroupIssueCount]
   );
 

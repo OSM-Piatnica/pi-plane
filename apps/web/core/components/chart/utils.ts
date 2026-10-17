@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -87,10 +88,8 @@ export const parseChartData = (
       }
     }
 
-    return {
-      ...datum,
-      ...missingValues,
-    };
+    // datum is a clone owned by this function, so it is safe to extend in place
+    return Object.assign(datum, missingValues);
   });
 
   // capitalize first letter if groupByProperty is in TO_CAPITALIZE_PROPERTIES
@@ -131,7 +130,7 @@ export const generateExtendedColors = (baseColorSet: string[], targetCount: numb
   const avgLight = baseHSL.reduce((sum, hsl) => sum + hsl.l, 0) / baseHSL.length;
 
   // Sort base colors by hue for better distribution
-  const sortedBaseHSL = [...baseHSL].sort((a, b) => a.h - b.h);
+  const sortedBaseHSL = baseHSL.toSorted((a, b) => a.h - b.h);
 
   // Generate additional colors for each base color
   const colorsNeeded = targetCount - baseCount;

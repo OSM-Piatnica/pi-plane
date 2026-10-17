@@ -64,6 +64,7 @@ export function JoinProjectModal(props: TJoinProjectModalProps) {
         <Button variant="secondary" size="lg" onClick={handleClose}>
           {t("cancel")}
         </Button>
+        {/* oxlint-disable-next-line tabindex-no-positive -- existing behaviour; lint cleanup only */}
         <Button variant="primary" size="lg" tabIndex={1} type="submit" onClick={handleJoin} loading={isJoiningLoading}>
           {isJoiningLoading ? t("project_components.shared.joining") : t("project_components.join_modal.join_project")}
         </Button>

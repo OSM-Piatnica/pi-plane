@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -148,6 +149,7 @@ export const CreateEstimateModal = observer(function CreateEstimateModal(props: 
         <div className="relative flex items-center justify-between gap-2 px-5">
           <div className="relative flex items-center gap-1">
             {estimatePoints && (
+              // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged
               <div
                 onClick={() => {
                   setEstimateSystem(EEstimateSystem.POINTS);

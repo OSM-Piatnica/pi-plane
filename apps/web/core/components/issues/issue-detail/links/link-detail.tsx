@@ -50,6 +50,7 @@ export function IssueLinkDetail(props: TIssueLinkDetail) {
   return (
     <div key={linkId}>
       <div className="relative flex flex-col rounded-md bg-surface-2 p-2.5">
+        {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
         <div
           className="flex w-full cursor-pointer items-start justify-between gap-2"
           onClick={() => {

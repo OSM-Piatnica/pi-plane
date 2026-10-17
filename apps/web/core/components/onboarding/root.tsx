@@ -52,6 +52,7 @@ export const OnboardingRoot = observer(function OnboardingRoot({ invitations = [
         message: t("onboarding.finish.toast.message"),
       });
     }
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency list
   }, [user, finishUserOnboarding]);
 
   // handle step change

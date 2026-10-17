@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -80,7 +81,9 @@ export function ShortcutsModal(props: Props) {
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Search for shortcuts"
                         className="w-full border-none bg-transparent py-1 text-11 text-secondary outline-none"
+                        // oxlint-disable-next-line jsx-a11y/no-autofocus -- intentional autofocus; behaviour preserved
                         autoFocus
+                        // oxlint-disable-next-line jsx-a11y/tabindex-no-positive -- existing tab order preserved
                         tabIndex={1}
                       />
                     </div>

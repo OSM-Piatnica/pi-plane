@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -125,10 +126,10 @@ export class StateStore implements IStateStore {
 
     // Ensure all STATE_GROUPS are present
     const allGroups = Object.keys(STATE_GROUPS).reduce(
-      (acc, group) => ({
-        ...acc,
-        [group]: groupedStates[group] || [],
-      }),
+      (acc, group) => {
+        acc[group] = groupedStates[group] || [];
+        return acc;
+      },
       {} as Record<string, IState[]>
     );
 
@@ -311,6 +312,7 @@ export class StateStore implements IStateStore {
       runInAction(() => {
         delete this.stateMap[stateId];
       });
+      return;
     });
   };
 

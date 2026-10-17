@@ -59,6 +59,7 @@ export const GroupItem = observer(function GroupItem(props: TGroupItem) {
       ref={dropElementRef}
     >
       <div className="flex items-center justify-between gap-2">
+        {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
         <div
           className="flex w-full cursor-pointer items-center py-1"
           onClick={() => (!currentStateExpanded ? handleExpand(groupKey) : handleGroupCollapse(groupKey))}

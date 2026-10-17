@@ -72,6 +72,7 @@ export function CreateApiTokenModal(props: Props) {
           },
           false
         );
+        return;
       })
       .catch((err) => {
         setToast({
