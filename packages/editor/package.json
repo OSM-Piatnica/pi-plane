@@ -35,8 +35,8 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.1",
-    "@floating-ui/react": "^0.26.4",
-    "@headlessui/react": "^1.7.3",
+    "@floating-ui/react": "^0.27.20",
+    "@headlessui/react": "catalog:",
     "@hocuspocus/provider": "2.15.2",
     "@plane/constants": "workspace:*",
     "@plane/hooks": "workspace:*",
@@ -97,7 +97,7 @@
     "vitest": "^4.0.8"
   },
   "peerDependencies": {
-    "react": "catalog:",
-    "react-dom": "catalog:"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

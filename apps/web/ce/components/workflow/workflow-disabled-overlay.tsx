@@ -10,7 +10,7 @@ import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 
 export type TWorkflowDisabledOverlayProps = {
-  messageContainerRef: React.RefObject<HTMLDivElement>;
+  messageContainerRef: React.RefObject<HTMLDivElement | null>;
   workflowDisabledSource: string;
   shouldOverlayBeVisible: boolean;
 };
