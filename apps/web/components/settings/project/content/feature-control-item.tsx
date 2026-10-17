@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import { setPromiseToast } from "@plane/propel/toast";
 import type { IProject } from "@plane/types";
-import { ToggleSwitch } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
 // components
 import { SettingsBoxedControlItem } from "@/components/settings/boxed-control-item";
 // hooks
@@ -63,7 +63,15 @@ export const ProjectSettingsFeatureControlItem = observer(function ProjectSettin
     <SettingsBoxedControlItem
       title={title}
       description={description}
-      control={<ToggleSwitch value={value} onChange={handleSubmit} disabled={disabled} size="sm" />}
+      control={
+        <Switch
+          size="sm"
+          checked={value}
+          onCheckedChange={handleSubmit}
+          disabled={disabled}
+          aria-label={typeof title === "string" ? title : "Toggle project feature"}
+        />
+      }
     />
   );
 });

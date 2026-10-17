@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useTranslation } from "@plane/i18n";
 import { ChevronRightIcon } from "@plane/propel/icons";
 import { EPillVariant, Pill, EPillSize } from "@plane/propel/pill";
-import { ToggleSwitch } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
 import { joinUrlPath } from "@plane/utils";
 
 type Props = {
@@ -40,11 +40,12 @@ export function ProjectFeatureToggle(props: Props) {
       </div>
     </Link>
   ) : (
-    <ToggleSwitch
-      value={value}
-      onChange={() => handleSubmit(featureItem?.key, featureItem?.property)}
-      disabled={disabled}
+    <Switch
       size="sm"
+      checked={value}
+      onCheckedChange={() => handleSubmit(featureItem?.key, featureItem?.property)}
+      disabled={disabled}
+      aria-label="Toggle project feature"
     />
   );
 }

@@ -11,7 +11,7 @@ import { ArrowUpToLine, Clipboard, History } from "lucide-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { ToggleSwitch } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
 // hooks
 import { useAppRouter } from "@/hooks/use-app-router";
 import { usePageFilters } from "@/hooks/use-page-filters";
@@ -58,7 +58,12 @@ export const PageOptionsDropdown = observer(function PageOptionsDropdown(props: 
           customContent: (
             <>
               {t("page_ui.editor.full_width")}
-              <ToggleSwitch value={isFullWidth} onChange={() => {}} />
+              <Switch
+                size="sm"
+                checked={isFullWidth}
+                onCheckedChange={() => {}}
+                aria-label={t("page_ui.editor.full_width")}
+              />
             </>
           ),
           className: "flex items-center justify-between gap-2",
@@ -69,7 +74,12 @@ export const PageOptionsDropdown = observer(function PageOptionsDropdown(props: 
           customContent: (
             <>
               {t("page_ui.editor.sticky_toolbar")}
-              <ToggleSwitch value={isStickyToolbarEnabled} onChange={() => {}} />
+              <Switch
+                size="sm"
+                checked={isStickyToolbarEnabled}
+                onCheckedChange={() => {}}
+                aria-label={t("page_ui.editor.sticky_toolbar")}
+              />
             </>
           ),
           className: "flex items-center justify-between gap-2",
