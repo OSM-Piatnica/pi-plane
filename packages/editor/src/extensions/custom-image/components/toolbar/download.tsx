@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { Download } from "lucide-react";
+import { DownloadOutline } from "@makeplane/propel/icons";
 // plane imports
 import { Tooltip } from "@plane/propel/tooltip";
 
@@ -23,7 +24,7 @@ export function ImageDownloadAction(props: Props) {
         className="grid h-full flex-shrink-0 place-items-center text-white/60 transition-colors hover:text-white"
         aria-label="Download image"
       >
-        <Download className="size-3" />
+        <DownloadOutline className="size-3" />
       </button>
     </Tooltip>
   );

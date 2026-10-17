@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { Ban } from "lucide-react";
-import { ChevronDownIcon } from "@plane/propel/icons";
+import { ChevronDownOutline } from "@makeplane/propel/icons";
 // plane utils
 import { cn } from "@plane/utils";
 // constants
@@ -50,7 +51,7 @@ export function CalloutBlockColorSelector(props: Props) {
           disabled={disabled}
         >
           <span className="text-12">Color</span>
-          <ChevronDownIcon className="size-3 flex-shrink-0" />
+          <ChevronDownOutline className="size-3 flex-shrink-0" />
         </button>
         {isOpen && (
           <section className="animate-in fade-in slide-in-from-top-1 absolute top-full right-0 z-10 mt-1 rounded-md border-[0.5px] border-strong bg-surface-1 p-2 shadow-raised-200">

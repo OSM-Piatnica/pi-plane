@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useArgs } from "storybook/preview-api";
-import { CloseIcon } from "../icons/actions/close-icon";
+import { CloseOutline } from "@makeplane/propel/icons";
 import { Dialog, EDialogWidth } from "./root";
 
 const meta = {
@@ -208,7 +209,7 @@ export const WithCloseButton: Story = {
                 <div className="flex items-start justify-between">
                   <Dialog.Title>Dialog with Close Button</Dialog.Title>
                   <button onClick={() => setOpen(false)} className="hover:bg-gray-100 rounded-full p-1">
-                    <CloseIcon className="h-4 w-4" />
+                    <CloseOutline className="h-4 w-4" />
                   </button>
                 </div>
                 <div className="mt-4">

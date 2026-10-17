@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { Editor } from "@tiptap/react";
 
-import { CheckIcon, ChevronDownIcon } from "@plane/propel/icons";
+import { ChevronDownOutline, TickOutline } from "@makeplane/propel/icons";
 // plane utils
 import { cn } from "@plane/utils";
 // components
@@ -55,7 +56,7 @@ export function BubbleMenuNodeSelector(props: Props) {
     CodeItem(editor),
   ] as EditorMenuItem<TEditorCommands>[];
 
-  const activeItem = items.filter((item) => item.isActive()).pop() ?? {
+  const activeItem = items.findLast((item) => item.isActive()) ?? {
     name: "Multiple",
   };
 
@@ -73,7 +74,7 @@ export function BubbleMenuNodeSelector(props: Props) {
       menuButton={
         <>
           <span>{activeItem?.name}</span>
-          <ChevronDownIcon className="size-3 shrink-0" />
+          <ChevronDownOutline className="size-3 shrink-0" />
         </>
       }
       options={options}
@@ -101,7 +102,7 @@ export function BubbleMenuNodeSelector(props: Props) {
               <item.icon className="size-3 flex-shrink-0" />
               <span>{item.name}</span>
             </div>
-            {activeItem.name === item.name && <CheckIcon className="size-3 flex-shrink-0 text-tertiary" />}
+            {activeItem.name === item.name && <TickOutline className="size-3 flex-shrink-0 text-tertiary" />}
           </button>
         ))}
       </section>

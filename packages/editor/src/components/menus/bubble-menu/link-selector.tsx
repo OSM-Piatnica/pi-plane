@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { Editor } from "@tiptap/core";
 
 import { useCallback, useRef, useState } from "react";
-import { LinkIcon, TrashIcon, CheckIcon } from "@plane/propel/icons";
+import { DeleteOutline, LinkOutline, TickOutline } from "@makeplane/propel/icons";
 // plane imports
 import { cn } from "@plane/utils";
 // constants
@@ -64,7 +65,7 @@ export function BubbleMenuLinkSelector(props: Props) {
       menuButton={
         <>
           Link
-          <LinkIcon className="size-3 shrink-0" />
+          <LinkOutline className="size-3 shrink-0" />
         </>
       }
       options={options}
@@ -90,6 +91,7 @@ export function BubbleMenuLinkSelector(props: Props) {
               }
             }}
             onFocus={() => setError(false)}
+            // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; lint cleanup only
             autoFocus
           />
           {editor.getAttributes("link").href ? (
@@ -102,7 +104,7 @@ export function BubbleMenuLinkSelector(props: Props) {
                 context.onOpenChange(false);
               }}
             >
-              <TrashIcon className="size-4" />
+              <DeleteOutline className="size-4" />
             </button>
           ) : (
             <button
@@ -113,7 +115,7 @@ export function BubbleMenuLinkSelector(props: Props) {
                 handleLinkSubmit();
               }}
             >
-              <CheckIcon className="size-4" />
+              <TickOutline className="size-4" />
             </button>
           )}
         </div>

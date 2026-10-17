@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { Eye, EyeClosed } from "lucide-react";
+import { HideOutline, ShowOutline } from "@makeplane/propel/icons";
 import { useState } from "react";
 import { Tooltip } from "@plane/propel/tooltip";
 import { cn } from "@plane/utils";
@@ -57,13 +58,13 @@ export function PasswordInput({
             className="absolute inset-y-0 right-0 flex items-center pr-3 text-secondary transition-colors duration-200 hover:text-primary"
           >
             <div className="relative h-4 w-4">
-              <Eye
+              <ShowOutline
                 className={cn(
                   "absolute inset-0 h-4 w-4 transition-all duration-300 ease-in-out",
                   showPassword ? "scale-75 rotate-12 opacity-0" : "scale-100 rotate-0 opacity-100"
                 )}
               />
-              <EyeClosed
+              <HideOutline
                 className={cn(
                   "absolute inset-0 h-4 w-4 transition-all duration-300 ease-in-out",
                   showPassword ? "scale-100 rotate-0 opacity-100" : "scale-75 -rotate-12 opacity-0"

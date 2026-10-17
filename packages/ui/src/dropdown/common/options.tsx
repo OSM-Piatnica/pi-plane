@@ -8,7 +8,7 @@
 import { Combobox } from "@headlessui/react";
 
 import React from "react";
-import { CheckIcon } from "@plane/propel/icons";
+import { TickOutline } from "@makeplane/propel/icons";
 // helpers
 import { cn } from "../../utils";
 // types
@@ -39,7 +39,7 @@ export function DropdownOptions(props: IMultiSelectDropdownOptions | ISingleSele
         <InputSearch
           isOpen={isOpen}
           query={query}
-          updateQuery={(query) => setQuery(query)}
+          updateQuery={(newQuery) => setQuery(newQuery)}
           inputIcon={inputIcon}
           inputPlaceholder={inputPlaceholder}
           inputClassName={inputClassName}
@@ -53,6 +53,7 @@ export function DropdownOptions(props: IMultiSelectDropdownOptions | ISingleSele
             options.length > 0 ? (
               <ul className="space-y-1">
                 {options?.map((option) => (
+                  // oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- existing behaviour; lint cleanup only
                   <Combobox.Option
                     as="li"
                     key={keyExtractor(option)}
@@ -78,7 +79,7 @@ export function DropdownOptions(props: IMultiSelectDropdownOptions | ISingleSele
                         ) : (
                           <>
                             <span className="flex-grow truncate">{option.value}</span>
-                            {selected && <CheckIcon className="h-3.5 w-3.5 flex-shrink-0" />}
+                            {selected && <TickOutline className="h-3.5 w-3.5 flex-shrink-0" />}
                           </>
                         )}
                       </>

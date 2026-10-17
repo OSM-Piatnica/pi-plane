@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { Node } from "@tiptap/pm/model";
-import { Link2Off } from "lucide-react";
+import { UnlinkOutline } from "@makeplane/propel/icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 // components
 import type { LinkViewProps, LinkViews } from "@/components/links";
@@ -30,6 +31,7 @@ function InputView({ label, value, placeholder, onChange, autoFocus }: InputView
         className="w-[280px] rounded-md border border-strong bg-layer-1 p-2 text-13 text-primary outline-none"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; lint cleanup only
         autoFocus={autoFocus}
       />
     </div>
@@ -136,6 +138,7 @@ export function LinkEditView({ viewProps }: LinkEditViewProps) {
   );
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- existing behaviour; lint cleanup only
     <div
       onKeyDown={handleKeyDown}
       className="shadow-md animate-in fade-in flex translate-y-1 flex-col gap-3 rounded-sm border-2 border-subtle bg-layer-1 p-2"
@@ -144,11 +147,12 @@ export function LinkEditView({ viewProps }: LinkEditViewProps) {
       }}
       tabIndex={0}
     >
+      {/* oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; lint cleanup only */}
       <InputView label="URL" placeholder="Enter or paste URL" value={localUrl} onChange={setLocalUrl} autoFocus />
       <InputView label="Text" placeholder="Enter Text to display" value={localText} onChange={handleTextChange} />
       <div className="bg-strong mb-1 h-[1px] w-full gap-2" />
       <div className="flex items-center gap-2 text-13 text-secondary">
-        <Link2Off size={14} className="inline-block" />
+        <UnlinkOutline width={14} height={14} className="inline-block" />
         <button onClick={removeLink} className="cursor-pointer transition-colors hover:text-placeholder">
           Remove Link
         </button>
