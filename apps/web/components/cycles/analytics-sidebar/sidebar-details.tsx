@@ -21,7 +21,6 @@ import { getFileURL } from "@plane/utils";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useMember } from "@/hooks/store/use-member";
-// plane web constants
 
 type Props = {
   projectId: string;

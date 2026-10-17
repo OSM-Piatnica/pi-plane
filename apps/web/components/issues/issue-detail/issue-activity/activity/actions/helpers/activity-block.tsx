@@ -12,7 +12,6 @@ import { Tooltip } from "@plane/propel/tooltip";
 import { renderFormattedTime, renderFormattedDate, calculateTimeAgo } from "@plane/utils";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { usePlatformOS } from "@/hooks/use-platform-os";
-// plane web imports
 import { IssueCreatorDisplay } from "@/components/issues/issue-details/issue-creator";
 // local imports
 import { IssueUser } from "../";

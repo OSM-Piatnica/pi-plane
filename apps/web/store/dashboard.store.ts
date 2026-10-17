@@ -19,7 +19,6 @@ import type {
 } from "@plane/types";
 // services
 import { DashboardService } from "@/services/dashboard.service";
-// plane web store
 import type { RootStore } from "./root.store";
 
 export interface IDashboardStore {

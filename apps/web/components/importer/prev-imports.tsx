@@ -15,7 +15,7 @@ import type { IExportData } from "@plane/types";
 import { Table } from "@plane/ui";
 import { ImportExportStatusPill } from "@/components/exporter/status-pill";
 import { ImportExportSettingsLoader } from "@/components/ui/loader/settings/import-and-export";
-import { PROJECT_IMPORT_SERVICES_LIST } from "@/constants/fetch-keys";
+import { PROJECT_IMPORT_SERVICES_LIST } from "@plane/constants";
 import { ProjectImportService } from "@/services/project/project-import.service";
 import { renderFormattedDate, renderFormattedTime } from "@plane/utils";
 

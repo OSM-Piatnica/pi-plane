@@ -22,7 +22,6 @@ import { useProject } from "@/hooks/store/use-project";
 import { useUser } from "@/hooks/store/user";
 import useReloadConfirmations from "@/hooks/use-reload-confirmation";
 import useSize from "@/hooks/use-window-size";
-// plane web components
 import { DeDupeIssuePopoverRoot } from "@/components/de-dupe/duplicate-popover";
 import { IssueTypeSwitcher } from "@/components/issues/issue-details/issue-type-switcher";
 import { WorkflowApprovalBanner } from "@/components/workflow";

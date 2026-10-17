@@ -12,10 +12,8 @@ import { getAssetIdFromUrl, checkURLValidity } from "@plane/utils";
 // helpers
 // hooks
 import useKeypress from "@/hooks/use-keypress";
-// plane web components
 import { CreateProjectForm } from "@/components/projects/create/root";
-// plane web types
-import type { TProject } from "@/types/projects";
+import type { TProject } from "@plane/types";
 // services
 import { FileService } from "@/services/file.service";
 const fileService = new FileService();

@@ -23,12 +23,10 @@ import { GanttChartSidebar, MonthChartView, QuarterChartView, WeekChartView } fr
 // helpers
 // hooks
 import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
-// plane web components
 import { TimelineDependencyPaths, TimelineDraggablePath, GanttAdditionalLayers } from "@/components/gantt-chart";
 import { GanttChartRowList } from "@/components/gantt-chart/blocks/block-row-list";
 import { GanttChartBlocksList } from "@/components/gantt-chart/blocks/blocks-list";
 import { IssueBulkOperationsRoot } from "@/components/issues/bulk-operations";
-// plane web hooks
 import { useBulkOperationStatus } from "@/hooks/use-bulk-operation-status";
 //
 import { DEFAULT_BLOCK_WIDTH, GANTT_SELECT_GROUP, HEADER_HEIGHT } from "../constants";
@@ -91,7 +89,6 @@ export const GanttChartMainContent = observer(function GanttChartMainContent(pro
   const ganttContainerRef = useRef<HTMLDivElement>(null);
   // chart hook
   const { currentView, currentViewData } = useTimeLineChartStore();
-  // plane web hooks
   const isBulkOperationsEnabled = useBulkOperationStatus();
 
   // Enable Auto Scroll for Ganttlist

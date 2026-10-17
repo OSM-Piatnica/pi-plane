@@ -9,7 +9,6 @@
 import type { TEmbedConfig } from "@plane/editor";
 // plane types
 import type { TSearchEntityRequestPayload, TSearchResponse } from "@plane/types";
-// plane web components
 import { IssueEmbedUpgradeCard } from "@/components/pages";
 
 export type TIssueEmbedHookProps = {

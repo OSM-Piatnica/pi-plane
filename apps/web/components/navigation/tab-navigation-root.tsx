@@ -16,7 +16,6 @@ import type { EUserProjectRoles } from "@plane/types";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
-// plane web imports
 import { useNavigationItems } from "@/components/navigations";
 // local imports
 import { LeaveProjectModal } from "../project/leave-project-modal";

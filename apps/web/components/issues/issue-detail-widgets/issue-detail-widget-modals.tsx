@@ -16,7 +16,6 @@ import { ExistingIssuesListModal } from "@/components/core/modals/existing-issue
 import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
-// plane web imports
 import { WorkItemAdditionalWidgetModals } from "@/components/issues/issue-detail-widgets/modals";
 // local imports
 import { IssueLinkCreateUpdateModal } from "../issue-detail/links/create-update-link-modal";

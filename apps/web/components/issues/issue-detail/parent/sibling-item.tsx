@@ -13,7 +13,6 @@ import { generateWorkItemLink } from "@plane/utils";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
-// plane web components
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 
 type TIssueParentSiblingItem = {

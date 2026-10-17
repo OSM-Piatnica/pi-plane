@@ -14,7 +14,6 @@ import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { AlertModalCore } from "@plane/ui";
 import { getPageName } from "@plane/utils";
 // constants
-// plane web hooks
 import { useAppRouter } from "@/hooks/use-app-router";
 import type { EPageStoreType } from "@/hooks/store";
 import { usePageStore } from "@/hooks/store";

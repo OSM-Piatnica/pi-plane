@@ -11,7 +11,6 @@ import type { TFileHandler } from "@plane/editor";
 import { getEditorAssetDownloadSrc, getEditorAssetSrc } from "@plane/utils";
 // hooks
 import { useEditorAsset } from "@/hooks/store/use-editor-asset";
-// plane web hooks
 import { useExtendedEditorConfig } from "@/hooks/editor/use-extended-editor-config";
 import { useFileSize } from "@/hooks/use-file-size";
 // services

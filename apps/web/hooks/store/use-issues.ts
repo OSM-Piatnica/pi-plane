@@ -10,7 +10,6 @@ import { merge } from "lodash-es";
 import type { TIssueMap } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 import { StoreContext } from "@/lib/store-context";
-// plane web types
 import type { IProjectEpics, IProjectEpicsFilter } from "@/store/issue/epic";
 // types
 import type { ITeamIssues, ITeamIssuesFilter } from "@/store/issue/team";

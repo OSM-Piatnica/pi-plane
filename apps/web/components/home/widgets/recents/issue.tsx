@@ -22,7 +22,6 @@ import { MemberDropdown } from "@/components/dropdowns/member/dropdown";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
-// plane web components
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 
 type BlockProps = {

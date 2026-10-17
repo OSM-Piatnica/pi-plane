@@ -13,7 +13,6 @@ import type { TPage } from "@plane/types";
 import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
 // hooks
 import { useAppRouter } from "@/hooks/use-app-router";
-// plane web hooks
 import type { EPageStoreType } from "@/hooks/store";
 import { usePageStore } from "@/hooks/store";
 // local imports

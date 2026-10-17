@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,7 +13,6 @@ import type { ICycle, IModule, IProject } from "@plane/types";
 import { Spinner } from "@plane/ui";
 // hooks
 import { useAnalytics } from "@/hooks/store/use-analytics";
-// plane web components
 import TotalInsights from "../../total-insights";
 import CreatedVsResolved from "../created-vs-resolved";
 import CustomizedInsights from "../customized-insights";

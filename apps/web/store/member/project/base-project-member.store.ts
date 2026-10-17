@@ -17,7 +17,6 @@ import type {
   IUserLite,
   TProjectMembership,
 } from "@plane/types";
-// plane web imports
 import type { RootStore } from "@/store/root.store";
 // services
 import { ProjectMemberService, ProjectService } from "@/services/project";

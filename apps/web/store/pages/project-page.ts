@@ -10,7 +10,6 @@ import { computedFn } from "mobx-utils";
 // constants
 import { EPageAccess, EUserPermissions } from "@plane/constants";
 import type { TPage } from "@plane/types";
-// plane web store
 import type { RootStore } from "@/store/root.store";
 // services
 import { ProjectPageService } from "@/services/page";

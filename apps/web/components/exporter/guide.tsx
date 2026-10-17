@@ -14,7 +14,7 @@ import { ArrowDownToLine, ArrowUpToLine } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
 import { Tabs } from "@plane/propel/tabs";
 // constants
-import { EXPORT_SERVICES_LIST, PROJECT_IMPORT_SERVICES_LIST } from "@/constants/fetch-keys";
+import { EXPORT_SERVICES_LIST, PROJECT_IMPORT_SERVICES_LIST } from "@plane/constants";
 import { PrevImports } from "@/components/importer/prev-imports";
 import { WorkItemImportForm } from "@/components/importer/work-item-import-form";
 import { ExportForm } from "./export-form";

@@ -13,7 +13,6 @@ import { Tooltip } from "@plane/propel/tooltip";
 import type { TEstimateSystemKeys } from "@plane/types";
 // components
 import { convertMinutesToHoursMinutesString } from "@plane/utils";
-// plane web imports
 import { isEstimateSystemEnabled } from "@/components/estimates/helper";
 import { UpgradeBadge } from "@/components/workspace/upgrade-badge";
 import { RadioInput } from "../radio-select";

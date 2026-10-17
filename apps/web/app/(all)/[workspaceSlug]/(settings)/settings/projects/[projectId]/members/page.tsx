@@ -19,7 +19,6 @@ import { SettingsHeading } from "@/components/settings/heading";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
-// plane web imports
 import { ProjectTeamspaceList } from "@/components/projects/teamspaces/teamspace-list";
 // local imports
 import type { Route } from "./+types/page";

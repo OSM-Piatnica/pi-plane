@@ -35,7 +35,6 @@ import { useProjectState } from "@/hooks/store/use-project-state";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { useIssuesStore } from "@/hooks/use-issue-layout-store";
 import type { TSelectionHelper } from "@/hooks/use-multiple-select";
-// Plane-web
 import { useWorkFlowFDragNDrop } from "@/components/workflow";
 //
 import { GroupDragOverlay } from "../group-drag-overlay";

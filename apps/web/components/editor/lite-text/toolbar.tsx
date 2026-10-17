@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,7 @@ import type { LucideIcon } from "lucide-react";
 
 import { EIssueCommentAccessSpecifier } from "@plane/constants";
 // editor
-import type { EditorRefApi } from "@plane/editor";
+import type { EditorRefApi, ToolbarMenuItem } from "@plane/editor";
 // i18n
 import { useTranslation } from "@plane/i18n";
 // ui
@@ -19,8 +20,7 @@ import type { ISvgIcons } from "@plane/propel/icons";
 import { Tooltip } from "@plane/propel/tooltip";
 // constants
 import { cn } from "@plane/utils";
-import type { ToolbarMenuItem } from "@/constants/editor";
-import { TOOLBAR_ITEMS } from "@/constants/editor";
+import { TOOLBAR_ITEMS } from "@plane/editor";
 // helpers
 
 type Props = {

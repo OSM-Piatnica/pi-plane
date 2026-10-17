@@ -11,7 +11,6 @@ import { Circle } from "lucide-react";
 import { ChevronDownIcon, ChevronUpIcon } from "@plane/propel/icons";
 // Plane
 import type { TIssueGroupByOptions, TIssueKanbanFilters } from "@plane/types";
-// Plane-web
 import { WorkFlowGroupTree } from "@/components/workflow";
 // mobx
 

@@ -15,7 +15,6 @@ import type { ChartYAxisMetric } from "@plane/types";
 import { CustomSelect } from "@plane/ui";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
-// plane web constants
 type Props = {
   value: ChartYAxisMetric;
   onChange: (val: ChartYAxisMetric | null) => void;

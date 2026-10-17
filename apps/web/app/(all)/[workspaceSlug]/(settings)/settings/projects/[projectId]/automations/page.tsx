@@ -19,7 +19,6 @@ import { SettingsHeading } from "@/components/settings/heading";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
-// plane web imports
 import { CustomAutomationsRoot } from "@/components/automations/root";
 // local imports
 import type { Route } from "./+types/page";

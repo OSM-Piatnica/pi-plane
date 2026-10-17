@@ -17,7 +17,6 @@ import { WorkspaceLogo } from "@/components/workspace/logo";
 import { useUserPermissions } from "@/hooks/store/user";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { useWorkspace } from "@/hooks/store/use-workspace";
-// plane web imports
 import { SubscriptionPill } from "@/components/common/subscription/subscription-pill";
 
 export const WorkspaceSettingsSidebarHeader = observer(function WorkspaceSettingsSidebarHeader() {

@@ -21,7 +21,6 @@ import { useMember } from "@/hooks/store/use-member";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 import { useUser, useUserPermissions, useUserSettings } from "@/hooks/store/user";
 import { useAppRouter } from "@/hooks/use-app-router";
-// plane web imports
 import { useMemberColumns } from "@/components/workspace/settings/useMemberColumns";
 
 type Props = {

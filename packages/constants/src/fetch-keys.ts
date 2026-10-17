@@ -164,10 +164,10 @@ export const APPLICATION_BY_CLIENT_ID = (clientId: string) => `APPLICATION_BY_CL
 export const APPLICATION_CATEGORIES_LIST = () => `APPLICATION_CATEGORIES_LIST`;
 
 // project level keys
-export const PROJECT_DETAILS = (workspaceSlug: string, projectId: string) =>
+export const PROJECT_DETAILS = (_workspaceSlug: string, projectId: string) =>
   `PROJECT_DETAILS_${projectId.toString().toUpperCase()}`;
 
-export const PROJECT_ME_INFORMATION = (workspaceSlug: string, projectId: string) =>
+export const PROJECT_ME_INFORMATION = (_workspaceSlug: string, projectId: string) =>
   `PROJECT_ME_INFORMATION_${projectId.toString().toUpperCase()}`;
 
 export const PROJECT_LABELS = (projectId: string, projectRole: EUserPermissions | undefined) =>

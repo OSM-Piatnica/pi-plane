@@ -17,7 +17,6 @@ import { DocumentEditor } from "@/components/editor/document/editor";
 // hooks
 import { useWorkspace } from "@/hooks/store/use-workspace";
 import { usePageFilters } from "@/hooks/use-page-filters";
-// plane web hooks
 import type { EPageStoreType } from "@/hooks/store";
 
 export type TVersionEditorProps = {

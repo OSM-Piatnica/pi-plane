@@ -143,7 +143,7 @@ const getNotificationContentDetails = (
     return baseHandler(fieldData);
   }
 
-  // Check additional map from plane-web (EE extensions)
+  // Check additional map (EE extensions)
   const additionalHandler = ADDITIONAL_NOTIFICATION_CONTENT_MAP[field];
   if (additionalHandler) {
     return additionalHandler(fieldData);

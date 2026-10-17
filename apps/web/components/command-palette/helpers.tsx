@@ -16,7 +16,6 @@ import type {
   IWorkspaceSearchResult,
 } from "@plane/types";
 import { generateWorkItemLink } from "@plane/utils";
-// plane web components
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 
 export type TCommandGroups = {

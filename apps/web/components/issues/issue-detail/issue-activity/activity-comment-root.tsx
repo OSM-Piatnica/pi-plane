@@ -14,7 +14,6 @@ import type { TCommentsOperations } from "@plane/types";
 import { CommentCard } from "@/components/comments/card/root";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
-// plane web components
 import { IssueAdditionalPropertiesActivity } from "@/components/issues/issue-details/issue-properties-activity";
 import { IssueActivityWorklog } from "@/components/issues/worklog/activity/root";
 // local imports

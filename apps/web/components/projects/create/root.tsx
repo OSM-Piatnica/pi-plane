@@ -13,7 +13,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { EFileAssetType } from "@plane/types";
-import type { TProjectTemplate, TProjectTemplatePayload } from "@plane/types";
+import type { TProjectTemplate, TProjectTemplatePayload, TProject } from "@plane/types";
 // components
 import ProjectCommonAttributes from "@/components/project/create/common-attributes";
 import ProjectCreateHeader from "@/components/project/create/header";
@@ -23,8 +23,6 @@ import { getCoverImageType, uploadCoverImage } from "@/helpers/cover-image.helpe
 import { useProject } from "@/hooks/store/use-project";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { ProjectTemplateService } from "@/services/project-template.service";
-// plane web types
-import type { TProject } from "@/types/projects";
 import { IssueTypeService } from "@/services/issue-type.service";
 import { ProjectAttributes } from "./attributes";
 import { ProjectCreateFeatureToggles } from "./feature-toggles";

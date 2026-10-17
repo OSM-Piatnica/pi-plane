@@ -17,9 +17,7 @@ import { Tooltip } from "@plane/propel/tooltip";
 // components
 import { cn } from "@plane/utils";
 import { RichTextEditor } from "@/components/editor/rich-text";
-// plane web constants
-import { AI_EDITOR_TASKS, LOADING_TEXTS } from "@/constants/ai";
-// plane web services
+import { AI_EDITOR_TASKS, LOADING_TEXTS } from "@plane/constants";
 import type { TTaskPayload } from "@/services/ai.service";
 import { AIService } from "@/services/ai.service";
 import { AskPiMenu } from "./ask-pi-menu";

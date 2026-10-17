@@ -10,7 +10,6 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
 import type { EIssuesStoreType, TIssue } from "@plane/types";
-// plane web imports
 import { IssueModalProvider } from "@/components/issues/issue-modal/provider";
 import { CreateUpdateIssueModalBase } from "./base";
 

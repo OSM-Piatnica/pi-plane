@@ -19,7 +19,6 @@ import { getTabIndex } from "@plane/utils";
 // components
 import { CoverImage } from "@/components/common/cover-image";
 import { ImagePickerPopover } from "@/components/core/image-picker-popover";
-// plane web imports
 import { ProjectTemplateSelect } from "@/components/projects/create/template-select";
 
 type Props = {

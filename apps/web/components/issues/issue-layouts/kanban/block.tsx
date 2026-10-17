@@ -33,7 +33,6 @@ import { useKanbanView } from "@/hooks/store/use-kanban-view";
 import { useProject } from "@/hooks/store/use-project";
 import useIssuePeekOverviewRedirection from "@/hooks/use-issue-peek-overview-redirection";
 import { usePlatformOS } from "@/hooks/use-platform-os";
-// plane web components
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 // local components
 import { IssueStats } from "@/components/issues/issue-layouts/issue-stats";

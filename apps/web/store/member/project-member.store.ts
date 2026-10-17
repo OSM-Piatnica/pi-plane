@@ -8,7 +8,6 @@
 import { computedFn } from "mobx-utils";
 import type { EUserProjectRoles } from "@plane/types";
 // plane imports
-// plane web imports
 import type { RootStore } from "@/store/root.store";
 // store
 import type { IMemberRootStore } from "@/store/member";

@@ -19,7 +19,6 @@ import { SimpleEmptyState } from "@/components/empty-state/simple-empty-state-ro
 // hooks
 import { useHome } from "@/hooks/store/use-home";
 import { useProject } from "@/hooks/store/use-project";
-// plane web components
 import { HomePageHeader } from "@/components/home/header";
 // local imports
 import { StickiesWidget } from "../stickies/widget";

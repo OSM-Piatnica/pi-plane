@@ -8,7 +8,6 @@
 import { observer } from "mobx-react";
 import useSWR from "swr";
 import type { TPageNavigationTabs } from "@plane/types";
-// plane web hooks
 import type { EPageStoreType } from "@/hooks/store";
 import { usePageStore } from "@/hooks/store";
 // local imports

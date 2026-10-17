@@ -24,7 +24,6 @@ import { useWorkspace } from "@/hooks/store/use-workspace";
 import { useAppRouter } from "@/hooks/use-app-router";
 import useKeypress from "@/hooks/use-keypress";
 import { usePlatformOS } from "@/hooks/use-platform-os";
-// plane web imports
 import { DeDupeButtonRoot } from "@/components/de-dupe/de-dupe-button";
 import { DuplicateModalRoot } from "@/components/de-dupe/duplicate-modal";
 import { useDebouncedDuplicateIssues } from "@/hooks/use-debounced-duplicate-issues";

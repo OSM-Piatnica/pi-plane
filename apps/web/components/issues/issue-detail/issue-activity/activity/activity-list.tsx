@@ -10,7 +10,6 @@ import { observer } from "mobx-react";
 import { getValidKeysFromObject } from "@plane/utils";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
-// plane web components
 import { IssueTypeActivity, AdditionalActivityRoot } from "@/components/issues/issue-details";
 import { useTimeLineRelationOptions } from "@/components/relations";
 // local components
