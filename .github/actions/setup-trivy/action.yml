@@ -1,0 +1,33 @@
+# Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+
+name: Set up Trivy
+description: Installs a pinned Trivy release binary after verifying its SHA-256 checksum.
+
+# Deliberately not `aquasecurity/trivy-action` or `setup-trivy`: the Trivy ecosystem, the Action
+# included, had a supply-chain compromise (GHSA-69fq-xp46-6x23) and the Action a script-injection
+# advisory. This downloads the release tarball over HTTPS and refuses to run it unless its hash
+# matches the one pinned below.
+#
+# To bump: pick the release, download `trivy_<version>_Linux-64bit.tar.gz` and
+# `trivy_<version>_checksums.txt`, check the tarball against the checksums file (and its
+# `.sigstore.json` bundle if you want the signature too), then update both values here.
+
+runs:
+  using: composite
+  steps:
+    - name: Install Trivy
+      shell: bash
+      env:
+        TRIVY_VERSION: "0.76.0"
+        TRIVY_SHA256: "e24b1c51293c1b15e4ba8d45bbc7891ba053f90278ec2698f3562c993e145fe7"
+      run: |
+        set -euo pipefail
+        archive="trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz"
+        curl -fsSL --retry 3 -o "${RUNNER_TEMP}/${archive}" \
+          "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${archive}"
+        echo "${TRIVY_SHA256}  ${RUNNER_TEMP}/${archive}" | sha256sum --check --strict
+        mkdir -p "${RUNNER_TEMP}/trivy"
+        tar -xzf "${RUNNER_TEMP}/${archive}" -C "${RUNNER_TEMP}/trivy" trivy
+        echo "${RUNNER_TEMP}/trivy" >> "$GITHUB_PATH"

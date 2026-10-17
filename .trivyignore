@@ -1,5 +1,9 @@
 # Trivy ignore file
 # Document the rationale for each suppressed finding.
+#
+# Read by the image scans in .github/workflows/trivy-images.yaml (weekly) and the release gate in
+# .github/workflows/publish-images.yaml. They only report fixable HIGH and CRITICAL findings, so
+# add an ID only for one of those that does not apply to us, with the reason and a review date.
 
 # CVE-2026-30242: SSRF in Plane webhook URL serializer.
 # Was a false positive: Trivy matched our backend's distribution name "Plane" +

@@ -165,6 +165,35 @@ jobs:
           pattern: digests-${{ matrix.component }}-*
           merge-multiple: true
 
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Trivy
+        uses: ./.github/actions/setup-trivy
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Release gate: nothing is tagged (and so nothing reaches `latest`) while an image has a
+      # fixable HIGH or CRITICAL vulnerability. The digests were pushed untagged by the build jobs.
+      # A finding that does not apply to us goes in .trivyignore, with a reason.
+      - name: Scan image for vulnerabilities
+        working-directory: ${{ runner.temp }}/digests
+        run: |
+          for digest in *; do
+            trivy image \
+              --scanners vuln \
+              --severity HIGH,CRITICAL \
+              --ignore-unfixed \
+              --ignorefile "${GITHUB_WORKSPACE}/.trivyignore" \
+              --exit-code 1 \
+              "${{ env.IMAGE_PREFIX }}-${{ matrix.component }}@sha256:${digest}"
+          done
+
       - name: Docker metadata
         id: meta
         uses: docker/metadata-action@v5
@@ -280,6 +309,35 @@ jobs:
           path: ${{ runner.temp }}/digests
           pattern: digests-aio-*
           merge-multiple: true
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Trivy
+        uses: ./.github/actions/setup-trivy
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Release gate: nothing is tagged (and so nothing reaches `latest`) while an image has a
+      # fixable HIGH or CRITICAL vulnerability. The digests were pushed untagged by the build jobs.
+      # A finding that does not apply to us goes in .trivyignore, with a reason.
+      - name: Scan image for vulnerabilities
+        working-directory: ${{ runner.temp }}/digests
+        run: |
+          for digest in *; do
+            trivy image \
+              --scanners vuln \
+              --severity HIGH,CRITICAL \
+              --ignore-unfixed \
+              --ignorefile "${GITHUB_WORKSPACE}/.trivyignore" \
+              --exit-code 1 \
+              "${{ env.IMAGE_PREFIX }}@sha256:${digest}"
+          done
 
       - name: Docker metadata
         id: meta
