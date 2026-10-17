@@ -8,12 +8,18 @@
 import { useState, useRef } from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
-import { HelpCircle, MessageSquare, MoveLeft } from "lucide-react";
 import { Transition } from "@headlessui/react";
 import { WEB_BASE_URL } from "@plane/constants";
 // plane internal packages
 import { Tooltip } from "@makeplane/propel/components/tooltip";
-import { Github, NewTabOutline, PagesOutline } from "@makeplane/propel/icons";
+import {
+  ArrowNarrowLeftOutline,
+  ChatOutline,
+  Github,
+  HelpOutline,
+  NewTabOutline,
+  PagesOutline,
+} from "@makeplane/propel/icons";
 import { cn } from "@plane/utils";
 // hooks
 import { useInstance, useTheme } from "@/hooks/store";
@@ -28,7 +34,7 @@ const helpOptions = [
   {
     name: "Join our Forum",
     href: "https://forum.plane.so",
-    Icon: MessageSquare,
+    Icon: ChatOutline,
   },
   {
     name: "Report a bug",
@@ -88,7 +94,7 @@ export const AdminSidebarHelpSection = observer(function AdminSidebarHelpSection
             }`}
             onClick={() => setIsNeedHelpOpen((prev) => !prev)}
           >
-            <HelpCircle className="size-4" />
+            <HelpOutline className="size-4" />
           </button>
         </Tooltip>
         <Tooltip label="Toggle sidebar" side={isSidebarCollapsed ? "right" : "top"}>
@@ -100,7 +106,7 @@ export const AdminSidebarHelpSection = observer(function AdminSidebarHelpSection
             }`}
             onClick={() => toggleSidebar(!isSidebarCollapsed)}
           >
-            <MoveLeft className={`size-4 duration-300 ${isSidebarCollapsed ? "rotate-180" : ""}`} />
+            <ArrowNarrowLeftOutline className={`size-4 duration-300 ${isSidebarCollapsed ? "rotate-180" : ""}`} />
           </button>
         </Tooltip>
       </div>
