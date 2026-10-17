@@ -55,8 +55,15 @@ export const EstimatePointItemPreview = observer(function EstimatePointItemPrevi
   const EstimatePointValueRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!estimatePointEditToggle && !estimatePointDeleteToggle)
-      EstimatePointValueRef?.current?.addEventListener("dblclick", () => setEstimatePointEditToggle(true));
+    const estimatePointValueElement = EstimatePointValueRef.current;
+    if (!estimatePointValueElement || estimatePointEditToggle || estimatePointDeleteToggle) return;
+
+    const handleDoubleClick = () => setEstimatePointEditToggle(true);
+    estimatePointValueElement.addEventListener("dblclick", handleDoubleClick);
+
+    return () => {
+      estimatePointValueElement.removeEventListener("dblclick", handleDoubleClick);
+    };
   }, [estimatePointDeleteToggle, estimatePointEditToggle]);
 
   return (
@@ -73,14 +80,16 @@ export const EstimatePointItemPreview = observer(function EstimatePointItemPrevi
               <span className="text-placeholder">{t("project_settings.estimates.create.enter_estimate_point")}</span>
             )}
           </div>
-          <div
+          <button
+            type="button"
             className="relative flex h-6 w-6 flex-shrink-0 cursor-pointer items-center justify-center rounded-xs transition-colors hover:bg-layer-1"
             onClick={() => setEstimatePointEditToggle(true)}
           >
             <EditIcon width={14} height={14} className="text-secondary" />
-          </div>
+          </button>
           {estimatePoints.length > estimateCount.min && (
-            <div
+            <button
+              type="button"
               className="relative flex h-6 w-6 flex-shrink-0 cursor-pointer items-center justify-center rounded-xs transition-colors hover:bg-layer-1"
               onClick={() =>
                 estimateId && estimatePointId
@@ -89,7 +98,7 @@ export const EstimatePointItemPreview = observer(function EstimatePointItemPrevi
               }
             >
               <TrashIcon width={14} height={14} className="text-secondary" />
-            </div>
+            </button>
           )}
         </div>
       )}
