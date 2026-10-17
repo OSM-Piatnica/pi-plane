@@ -9,9 +9,10 @@ import { useEffect, useState } from "react";
 import { TwitterPicker } from "react-color";
 import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
+import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
 import { Button } from "@plane/propel/button";
 import type { IState } from "@plane/types";
-import { Popover, TextArea } from "@plane/ui";
+import { Popover } from "@plane/ui";
 import { useTranslation } from "@plane/i18n";
 type TStateForm = {
   data: Partial<IState>;
@@ -96,15 +97,21 @@ export function StateForm(props: TStateForm) {
         </Field>
 
         {/* description */}
-        <TextArea
-          id="description"
-          name="description"
-          placeholder={t("project_components.states.description_placeholder")}
-          value={formData?.description}
-          onChange={(e) => handleFormData("description", e.target.value)}
-          hasError={(errors && Boolean(errors.description)) || false}
-          className="min-h-14 w-full resize-none text-13"
-        />
+        <Field name="description" invalid={(errors && Boolean(errors.description)) || false}>
+          <TextAreaGroup resize="none">
+            <TextArea
+              size="lg"
+              surface="field"
+              autoResize
+              maxRows={8}
+              id="description"
+              name="description"
+              placeholder={t("project_components.states.description_placeholder")}
+              value={formData?.description ?? ""}
+              onChange={(e) => handleFormData("description", e.target.value)}
+            />
+          </TextAreaGroup>
+        </Field>
 
         <div className="flex items-center space-x-2">
           <Button onClick={formSubmit} variant="primary" size="lg" disabled={buttonDisabled}>
