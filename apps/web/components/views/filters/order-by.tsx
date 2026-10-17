@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { ArrowDownWideNarrow, ArrowUpWideNarrow } from "lucide-react";
+import { SortAscendingOutline, SortDescendingOutline, TickOutline } from "@makeplane/propel/icons";
 // plane imports
 import { VIEW_SORT_BY_OPTIONS, VIEW_SORTING_KEY_OPTIONS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { getButtonStyling } from "@plane/propel/button";
-import { CheckIcon } from "@plane/propel/icons";
 import type { TViewFiltersSortBy, TViewFiltersSortKey } from "@plane/types";
 import { CustomMenu } from "@plane/ui";
 
@@ -32,7 +32,7 @@ export function ViewOrderByDropdown(props: Props) {
     : getButtonStyling("secondary", "lg");
 
   const icon = (
-    <>{!isDescending ? <ArrowUpWideNarrow className="size-3" /> : <ArrowDownWideNarrow className="size-3" />}</>
+    <>{!isDescending ? <SortAscendingOutline className="size-3" /> : <SortDescendingOutline className="size-3" />}</>
   );
   return (
     <CustomMenu
@@ -58,7 +58,7 @@ export function ViewOrderByDropdown(props: Props) {
           }
         >
           {t(option.i18n_label)}
-          {sortKey === option.key && <CheckIcon className="h-3 w-3" />}
+          {sortKey === option.key && <TickOutline className="h-3 w-3" />}
         </CustomMenu.MenuItem>
       ))}
       <hr className="my-2 border-subtle" />
@@ -76,7 +76,7 @@ export function ViewOrderByDropdown(props: Props) {
             }}
           >
             {t(option.i18n_label)}
-            {isSelected && <CheckIcon className="h-3 w-3" />}
+            {isSelected && <TickOutline className="h-3 w-3" />}
           </CustomMenu.MenuItem>
         );
       })}

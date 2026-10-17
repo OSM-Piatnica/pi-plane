@@ -7,7 +7,7 @@
 
 import React, { useState, useCallback, useMemo } from "react";
 import { useTranslation } from "@plane/i18n";
-import { LockIcon, ChevronDownIcon } from "@plane/propel/icons";
+import { ChevronDownOutline, LockOutline } from "@makeplane/propel/icons";
 import { PasswordInput, PasswordStrengthIndicator } from "@plane/ui";
 import { cn } from "@plane/utils";
 
@@ -90,12 +90,12 @@ export function SetPasswordRoot({ onPasswordChange, onConfirmPasswordChange, dis
         onClick={handleToggleExpand}
       >
         <div className="flex items-center gap-1 text-tertiary">
-          <LockIcon className="size-3" />
+          <LockOutline className="size-3" />
           <span className="font-medium">{t("auth.common.password.set_password")}</span>
           <span>({t("common.optional")})</span>
         </div>
         <div className="flex items-center gap-2 text-placeholder">
-          <ChevronDownIcon className={chevronIconClasses} />
+          <ChevronDownOutline className={chevronIconClasses} />
         </div>
       </div>
 

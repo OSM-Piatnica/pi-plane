@@ -9,7 +9,7 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import { ETabIndices } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { ParentPropertyIcon } from "@plane/propel/icons";
+import { ParentOutline } from "@makeplane/propel/icons";
 import type { ISearchIssueResponse, TIssue } from "@plane/types";
 import { CustomMenu } from "@plane/ui";
 import { renderFormattedPayloadDate, getDate, getTabIndex } from "@plane/utils";
@@ -185,7 +185,7 @@ export const InboxIssueProperties = observer(function InboxIssueProperties(props
                   type="button"
                   className="flex h-full cursor-pointer items-center justify-between gap-1 rounded-sm border-[0.5px] border-strong px-2 py-0.5 text-11 hover:bg-layer-1"
                 >
-                  <ParentPropertyIcon className="h-3 w-3 flex-shrink-0" />
+                  <ParentOutline className="h-3 w-3 flex-shrink-0" />
                   <span className="whitespace-nowrap">
                     {selectedParentIssue
                       ? `${selectedParentIssue.project__identifier}-${selectedParentIssue.sequence_id}`
@@ -219,7 +219,7 @@ export const InboxIssueProperties = observer(function InboxIssueProperties(props
               className="flex h-full cursor-pointer items-center justify-between gap-1 rounded-sm border-[0.5px] border-strong px-2 py-0.5 text-11 hover:bg-layer-1"
               onClick={() => setParentIssueModalOpen(true)}
             >
-              <ParentPropertyIcon className="h-3 w-3 flex-shrink-0" />
+              <ParentOutline className="h-3 w-3 flex-shrink-0" />
               <span className="whitespace-nowrap">{t("add_parent")}</span>
             </button>
           )}

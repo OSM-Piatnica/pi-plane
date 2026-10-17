@@ -6,7 +6,7 @@
  */
 
 import { observer } from "mobx-react";
-import { PanelRight } from "lucide-react";
+import { RightSidePaneOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
@@ -65,7 +65,7 @@ export const PageEditorToolbarRoot = observer(function PageEditorToolbarRoot(pro
                   className="grid size-6 shrink-0 place-items-center rounded-sm text-secondary transition-colors hover:bg-layer-transparent-hover hover:text-primary"
                   onClick={handleOpenNavigationPane}
                 >
-                  <PanelRight className="size-3.5" />
+                  <RightSidePaneOutline className="size-3.5" />
                 </button>
               )}
             </div>
@@ -82,7 +82,7 @@ export const PageEditorToolbarRoot = observer(function PageEditorToolbarRoot(pro
                 onClick={handleOpenNavigationPane}
                 aria-label={t("page_navigation_pane.open_button")}
               >
-                <PanelRight className="size-3.5" />
+                <RightSidePaneOutline className="size-3.5" />
               </button>
             </Tooltip>
           )}

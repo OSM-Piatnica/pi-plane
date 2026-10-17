@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import { ENotificationFilterType, FILTER_TYPE_OPTIONS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { PillButton } from "@makeplane/propel/components/pill";
-import { CloseIcon } from "@plane/propel/icons";
+import { CloseOutline } from "@makeplane/propel/icons";
 import { Header, EHeaderVariant } from "@plane/ui";
 // hooks
 import { useWorkspaceNotifications } from "@/hooks/store/notifications";
@@ -55,7 +55,7 @@ export const AppliedFilters = observer(function AppliedFilters(props: TAppliedFi
               size="md"
               variant="outline"
               label={t(filter.i18n_label)}
-              endIcon={<CloseIcon className="h-3 w-3" />}
+              endIcon={<CloseOutline className="h-3 w-3" />}
               onClick={() => handleFilterTypeChange(filter?.value, !isSelected)}
             />
           );
@@ -65,7 +65,7 @@ export const AppliedFilters = observer(function AppliedFilters(props: TAppliedFi
           size="md"
           variant="outline"
           label={t("common.clear_all")}
-          endIcon={<CloseIcon height={12} width={12} strokeWidth={2} />}
+          endIcon={<CloseOutline height={12} width={12} />}
           onClick={handleClearFilters}
         />
       </Header.LeftItem>

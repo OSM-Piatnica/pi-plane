@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
-import { Star } from "lucide-react";
+import { StarOutline } from "@makeplane/propel/icons";
 // ui
 import { IconButton } from "@plane/propel/icon-button";
 // hooks
@@ -31,7 +32,7 @@ export const PageFavoriteControl = observer(function PageFavoriteControl({ page 
     <IconButton
       variant="ghost"
       size="lg"
-      icon={Star}
+      icon={StarOutline}
       onClick={() => {
         pageOperations.toggleFavorite();
       }}

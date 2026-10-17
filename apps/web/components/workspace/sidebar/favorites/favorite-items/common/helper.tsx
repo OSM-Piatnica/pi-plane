@@ -8,22 +8,23 @@
 import type { LucideIcon } from "lucide-react";
 import { Logo } from "@plane/propel/emoji-icon-picker";
 import type { ISvgIcons } from "@plane/propel/icons";
-import { CycleIcon, FavoriteFolderIcon, ModuleIcon, PageIcon, ProjectIcon, ViewsIcon } from "@plane/propel/icons";
+import { CyclesOutline, ModuleOutline, PagesOutline, ProjectsOutline, ViewsOutline } from "@makeplane/propel/icons";
+import { FavoriteFolderIcon } from "@plane/propel/icons";
 // plane imports
 import type { IFavorite, TLogoProps } from "@plane/types";
 import { FAVORITE_ITEM_LINKS } from "@plane/constants";
 
 const FAVORITE_ITEM_ICONS: Record<string, React.FC<ISvgIcons> | LucideIcon> = {
-  page: PageIcon,
-  project: ProjectIcon,
-  view: ViewsIcon,
-  module: ModuleIcon,
-  cycle: CycleIcon,
+  page: PagesOutline,
+  project: ProjectsOutline,
+  view: ViewsOutline,
+  module: ModuleOutline,
+  cycle: CyclesOutline,
   folder: FavoriteFolderIcon,
 };
 
 export const getFavoriteItemIcon = (type: string, logo?: TLogoProps) => {
-  const Icon = FAVORITE_ITEM_ICONS[type] || PageIcon;
+  const Icon = FAVORITE_ITEM_ICONS[type] || PagesOutline;
 
   return (
     <>

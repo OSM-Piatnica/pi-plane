@@ -11,7 +11,7 @@ import { useForm, Controller } from "react-hook-form";
 import { allTimeIn30MinutesInterval12HoursFormat } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
-import { CloseIcon } from "@plane/propel/icons";
+import { CloseOutline } from "@makeplane/propel/icons";
 import { CustomSelect, EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
 // components
 import { getDate, cn } from "@plane/utils";
@@ -125,7 +125,7 @@ export function NotificationSnoozeModal(props: TNotificationSnoozeModal) {
 
           <div>
             <button type="button" onClick={handleClose}>
-              <CloseIcon className="h-5 w-5 text-primary" />
+              <CloseOutline className="h-5 w-5 text-primary" />
             </button>
           </div>
         </div>

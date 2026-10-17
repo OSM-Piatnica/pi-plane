@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,7 @@ import { useParams } from "next/navigation";
 
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { PlusIcon } from "@plane/propel/icons";
+import { AddOutline } from "@makeplane/propel/icons";
 // hooks
 import { useSticky } from "@/hooks/use-stickies";
 // local imports
@@ -43,7 +44,7 @@ export const StickiesWidget = observer(function StickiesWidget() {
             className="my-auto flex gap-1 text-13 font-medium text-accent-primary"
             disabled={creatingSticky}
           >
-            <PlusIcon className="my-auto size-4" />
+            <AddOutline className="my-auto size-4" />
             <span>{t("stickies.add")}</span>
             {creatingSticky && (
               <div

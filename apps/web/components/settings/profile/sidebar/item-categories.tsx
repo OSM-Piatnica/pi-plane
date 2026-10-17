@@ -7,7 +7,8 @@
 
 import type React from "react";
 import type { LucideIcon } from "lucide-react";
-import { Activity, Bell, CircleUser, KeyRound, LockIcon, Settings2 } from "lucide-react";
+import { Activity } from "lucide-react";
+import { KeyOutline, LockOutline, SettingsOutline, SubscribeOutline, UserOutline } from "@makeplane/propel/icons";
 import { observer } from "mobx-react";
 import { useParams } from "react-router";
 // plane imports
@@ -24,12 +25,12 @@ import { SettingsSidebarItem } from "../../sidebar/item";
 import { ProfileSettingsSidebarWorkspaceOptions } from "./workspace-options";
 
 const ICONS: Record<TProfileSettingsTabs, LucideIcon | React.FC<ISvgIcons>> = {
-  general: CircleUser,
-  security: LockIcon,
+  general: UserOutline,
+  security: LockOutline,
   activity: Activity,
-  preferences: Settings2,
-  notifications: Bell,
-  "api-tokens": KeyRound,
+  preferences: SettingsOutline,
+  notifications: SubscribeOutline,
+  "api-tokens": KeyOutline,
 };
 
 type Props = {

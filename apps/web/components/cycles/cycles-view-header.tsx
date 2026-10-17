@@ -7,12 +7,11 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react";
-import { ListFilter } from "lucide-react";
+import { CloseOutline, FilterOutline, SearchOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useOutsideClickDetector } from "@plane/hooks";
 import { IconButton } from "@plane/propel/icon-button";
 import { useTranslation } from "@plane/i18n";
-import { SearchIcon, CloseIcon } from "@plane/propel/icons";
 import type { TCycleFilters, TCycleOrderByOptions } from "@plane/types";
 import { cn, calculateTotalFilters } from "@plane/utils";
 // components
@@ -93,7 +92,7 @@ export const CyclesViewHeader = observer(function CyclesViewHeader(props: Props)
             setIsSearchOpen(true);
             inputRef.current?.focus();
           }}
-          icon={SearchIcon}
+          icon={SearchOutline}
         />
       ) : (
         <div
@@ -104,7 +103,7 @@ export const CyclesViewHeader = observer(function CyclesViewHeader(props: Props)
             }
           )}
         >
-          <SearchIcon className="h-3.5 w-3.5" />
+          <SearchOutline className="h-3.5 w-3.5" />
           <input
             ref={inputRef}
             className="w-full max-w-[234px] border-none bg-transparent text-13 text-primary placeholder:text-placeholder focus:outline-none"
@@ -122,7 +121,7 @@ export const CyclesViewHeader = observer(function CyclesViewHeader(props: Props)
                 setIsSearchOpen(false);
               }}
             >
-              <CloseIcon className="h-3 w-3" />
+              <CloseOutline className="h-3 w-3" />
             </button>
           )}
         </div>
@@ -136,7 +135,7 @@ export const CyclesViewHeader = observer(function CyclesViewHeader(props: Props)
         }}
       />
       <FiltersDropdown
-        icon={<ListFilter className="h-3 w-3" />}
+        icon={<FilterOutline className="h-3 w-3" />}
         title={t("common.filters")}
         placement="bottom-end"
         isFiltersApplied={isFiltersApplied}

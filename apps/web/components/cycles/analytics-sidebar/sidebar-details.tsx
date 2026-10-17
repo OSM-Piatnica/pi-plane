@@ -8,12 +8,11 @@
 import React from "react";
 import { isEmpty } from "lodash-es";
 import { observer } from "mobx-react";
-import { SquareUser } from "lucide-react";
+import { MembersOutline, UserAltOutline, WorkItemsOutline } from "@makeplane/propel/icons";
 // plane types
 import { EEstimateSystem } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Avatar } from "@makeplane/propel/components/avatar";
-import { MembersPropertyIcon, WorkItemsIcon } from "@plane/propel/icons";
 import type { ICycle } from "@plane/types";
 // plane ui
 import { TextArea } from "@plane/ui";
@@ -76,7 +75,7 @@ export const CycleSidebarDetails = observer(function CycleSidebarDetails(props: 
       <div className="flex flex-col gap-5 pt-2.5 pb-6">
         <div className="flex items-center justify-start gap-1">
           <div className="flex w-2/5 items-center justify-start gap-2 text-tertiary">
-            <SquareUser className="h-4 w-4" />
+            <UserAltOutline className="h-4 w-4" />
             <span className="text-14">{t("lead")}</span>
           </div>
           <div className="flex w-3/5 items-center rounded-xs">
@@ -94,7 +93,7 @@ export const CycleSidebarDetails = observer(function CycleSidebarDetails(props: 
 
         <div className="flex items-center justify-start gap-1">
           <div className="flex w-2/5 items-center justify-start gap-2 text-tertiary">
-            <MembersPropertyIcon className="h-4 w-4" />
+            <MembersOutline className="h-4 w-4" />
             <span className="text-14">{t("members")}</span>
           </div>
           <div className="flex w-3/5 items-center rounded-xs">
@@ -124,7 +123,7 @@ export const CycleSidebarDetails = observer(function CycleSidebarDetails(props: 
 
         <div className="flex items-center justify-start gap-1">
           <div className="flex w-2/5 items-center justify-start gap-2 text-tertiary">
-            <WorkItemsIcon className="h-4 w-4" />
+            <WorkItemsOutline className="h-4 w-4" />
             <span className="text-14">{t("work_items")}</span>
           </div>
           <div className="flex w-3/5 items-center">
@@ -138,7 +137,7 @@ export const CycleSidebarDetails = observer(function CycleSidebarDetails(props: 
         {isEstimatePointValid && !isCompleted && (
           <div className="flex items-center justify-start gap-1">
             <div className="flex w-2/5 items-center justify-start gap-2 text-tertiary">
-              <WorkItemsIcon className="h-4 w-4" />
+              <WorkItemsOutline className="h-4 w-4" />
               <span className="text-14">{t("points")}</span>
             </div>
             <div className="flex w-3/5 items-center">

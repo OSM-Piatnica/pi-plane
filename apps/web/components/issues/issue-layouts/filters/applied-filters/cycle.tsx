@@ -1,11 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
-import { CloseIcon, CycleGroupIcon } from "@plane/propel/icons";
+import { CycleGroupIcon } from "@plane/propel/icons";
+import { CloseOutline } from "@makeplane/propel/icons";
 import type { TCycleGroups } from "@plane/types";
 // hooks
 import { useCycle } from "@/hooks/store/use-cycle";
@@ -42,7 +44,7 @@ export const AppliedCycleFilters = observer(function AppliedCycleFilters(props: 
                 className="grid place-items-center text-tertiary hover:text-secondary"
                 onClick={() => handleRemove(cycleId)}
               >
-                <CloseIcon height={10} width={10} strokeWidth={2} />
+                <CloseOutline height={10} width={10} />
               </button>
             )}
           </div>

@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import * as React from "react";
-import { TimelineLayoutIcon, GridLayoutIcon, ListLayoutIcon } from "@plane/propel/icons";
+import { GridOutline, ListOutline, TimelineOutline } from "@makeplane/propel/icons";
 import type { TModuleLayoutOptions } from "@plane/types";
 import { cn } from "@plane/utils";
 
@@ -22,9 +23,9 @@ export function ModuleLayoutIcon(props: ILayoutIcon) {
 
   // get Layout icon
   const icons = {
-    list: ListLayoutIcon,
-    board: GridLayoutIcon,
-    gantt: TimelineLayoutIcon,
+    list: ListOutline,
+    board: GridOutline,
+    gantt: TimelineOutline,
   };
   const Icon = icons[layoutType ?? "list"];
 

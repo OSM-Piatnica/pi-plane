@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { Component } from "lucide-react";
+import { GroupOutline } from "@makeplane/propel/icons";
 
 interface ILabelName {
   name: string;
@@ -18,7 +19,7 @@ export function LabelName(props: ILabelName) {
   return (
     <div className="flex items-center gap-3 pr-20">
       {isGroup ? (
-        <Component className="h-3.5 w-3.5" color={color} />
+        <GroupOutline className="h-3.5 w-3.5" color={color} />
       ) : (
         <span
           className="h-3.5 w-3.5 flex-shrink-0 rounded-full"

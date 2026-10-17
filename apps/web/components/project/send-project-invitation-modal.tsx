@@ -13,7 +13,7 @@ import { Avatar } from "@makeplane/propel/components/avatar";
 import { ROLE, EUserPermissions, getRoleI18nKey } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
-import { PlusIcon, CloseIcon, ChevronDownIcon } from "@plane/propel/icons";
+import { AddOutline, ChevronDownOutline, CloseOutline } from "@makeplane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { CustomSelect, CustomSearchSelect, EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
 // helpers
@@ -218,7 +218,7 @@ export const SendProjectInvitationModal = observer(function SendProjectInvitatio
                               ) : (
                                 <div className="flex items-center gap-2 py-0.5">Select co-worker</div>
                               )}
-                              <ChevronDownIcon className="h-3 w-3" aria-hidden="true" />
+                              <ChevronDownOutline className="h-3 w-3" aria-hidden="true" />
                             </button>
                           }
                           onChange={(val: string) => {
@@ -261,7 +261,7 @@ export const SendProjectInvitationModal = observer(function SendProjectInvitatio
                                   ? t(getRoleI18nKey(roleField.value))
                                   : t("project_components.invitation_modal.select_role_required")}
                               </span>
-                              <ChevronDownIcon className="h-3 w-3" aria-hidden="true" />
+                              <ChevronDownOutline className="h-3 w-3" aria-hidden="true" />
                             </div>
                           }
                           input
@@ -292,7 +292,7 @@ export const SendProjectInvitationModal = observer(function SendProjectInvitatio
                         className="place-items-center self-center rounded-sm"
                         onClick={() => remove(index)}
                       >
-                        <CloseIcon className="h-4 w-4 text-secondary" />
+                        <CloseOutline className="h-4 w-4 text-secondary" />
                       </button>
                     </div>
                   )}
@@ -307,7 +307,7 @@ export const SendProjectInvitationModal = observer(function SendProjectInvitatio
             className="flex items-center gap-2 bg-transparent py-2 pr-3 text-13 font-medium text-accent-primary outline-accent-strong"
             onClick={appendField}
           >
-            <PlusIcon className="h-4 w-4" />
+            <AddOutline className="h-4 w-4" />
             {t("common.add_more")}
           </button>
           <div className="flex items-center gap-2">

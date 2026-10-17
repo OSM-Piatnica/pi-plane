@@ -10,12 +10,11 @@ import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { autoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-scroll/element";
 import { observer } from "mobx-react";
 import { useParams, usePathname } from "next/navigation";
-import { Ellipsis } from "lucide-react";
+import { AddOutline, ChevronRightOutline, MoreHorizontalOutline } from "@makeplane/propel/icons";
 import { Disclosure, Transition } from "@headlessui/react";
 // plane imports
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { PlusIcon, ChevronRightIcon } from "@plane/propel/icons";
 import { IconButton } from "@plane/propel/icon-button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
@@ -192,7 +191,7 @@ export const SidebarProjectsList = observer(function SidebarProjectsList() {
                     <IconButton
                       variant="ghost"
                       size="sm"
-                      icon={PlusIcon}
+                      icon={AddOutline}
                       onClick={() => {
                         setIsProjectModalOpen(true);
                       }}
@@ -204,7 +203,7 @@ export const SidebarProjectsList = observer(function SidebarProjectsList() {
                 <IconButton
                   variant="ghost"
                   size="sm"
-                  icon={ChevronRightIcon}
+                  icon={ChevronRightOutline}
                   onClick={() => toggleListDisclosure(!isAllProjectsListOpen)}
                   className="text-placeholder"
                   iconClassName={cn("transition-transform", {
@@ -264,7 +263,7 @@ export const SidebarProjectsList = observer(function SidebarProjectsList() {
                               : "aria_labels.projects_sidebar.open_extended_sidebar"
                           )}
                         >
-                          <Ellipsis className="size-4 flex-shrink-0" />
+                          <MoreHorizontalOutline className="size-4 flex-shrink-0" />
                           <span>{isExtendedProjectSidebarOpened ? t("hide") : t("more")}</span>
                         </button>
                       </SidebarNavItem>

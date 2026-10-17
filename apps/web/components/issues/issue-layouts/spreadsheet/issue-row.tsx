@@ -9,12 +9,10 @@ import type { Dispatch, MouseEvent, MutableRefObject, SetStateAction } from "rea
 import { useRef, useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
-import { MoreHorizontal } from "lucide-react";
+import { ChevronRightOutline, MoreHorizontalOutline } from "@makeplane/propel/icons";
 import { SPREADSHEET_SELECT_GROUP } from "@plane/constants";
 // plane helpers
 import { useOutsideClickDetector } from "@plane/hooks";
-import { useTranslation } from "@plane/i18n";
-import { ChevronRightIcon } from "@plane/propel/icons";
 // types
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IIssueDisplayProperties, TIssue } from "@plane/types";
@@ -38,6 +36,7 @@ import { IssueIdentifier } from "@/components/issues/issue-details/issue-identif
 import type { TRenderQuickActions } from "../list/list-view-types";
 import { isIssueNew } from "../utils";
 import { IssueColumn } from "./issue-column";
+import { useTranslation } from "@plane/i18n";
 
 interface Props {
   displayProperties: IIssueDisplayProperties;
@@ -225,7 +224,7 @@ const IssueRowDetails = observer(function IssueRowDetails(props: IssueRowDetails
       }`}
       onClick={() => setIsMenuActive(!isMenuActive)}
     >
-      <MoreHorizontal className="h-3.5 w-3.5" />
+      <MoreHorizontalOutline className="h-3.5 w-3.5" />
     </div>
   );
   if (!issueDetail) return null;
@@ -341,11 +340,10 @@ const IssueRowDetails = observer(function IssueRowDetails(props: IssueRowDetails
                     className="grid size-4 place-items-center rounded-xs text-placeholder hover:text-tertiary"
                     onClick={handleToggleExpand}
                   >
-                    <ChevronRightIcon
+                    <ChevronRightOutline
                       className={cn("size-4", {
                         "rotate-90": isExpanded,
                       })}
-                      strokeWidth={2.5}
                     />
                   </button>
                 )}

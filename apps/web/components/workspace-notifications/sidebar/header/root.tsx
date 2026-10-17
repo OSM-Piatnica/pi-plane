@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { InboxIcon } from "@plane/propel/icons";
+import { InboxOutline } from "@makeplane/propel/icons";
 import { Breadcrumbs, Header } from "@plane/ui";
 // components
 import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
@@ -33,7 +34,7 @@ export const NotificationSidebarHeader = observer(function NotificationSidebarHe
             component={
               <BreadcrumbLink
                 label={t("notification.label")}
-                icon={<InboxIcon className="h-4 w-4 text-primary" />}
+                icon={<InboxOutline className="h-4 w-4 text-primary" />}
                 disableTooltip
               />
             }

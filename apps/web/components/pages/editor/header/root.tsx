@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useState } from "react";
 import { observer } from "mobx-react";
-import { SmilePlus } from "lucide-react";
+import { ReactionOutline } from "@makeplane/propel/icons";
 // plane imports
 import { EmojiPicker, EmojiIconPickerTypes } from "@plane/propel/emoji-icon-picker";
 import { cn } from "@plane/utils";
@@ -53,7 +54,7 @@ export const PageEditorHeaderRoot = observer(function PageEditorHeaderRoot(props
                     }
                   )}
                 >
-                  <SmilePlus className="size-4 flex-shrink-0" />
+                  <ReactionOutline className="size-4 flex-shrink-0" />
                   Icon
                 </button>
               }

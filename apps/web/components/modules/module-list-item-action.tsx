@@ -8,7 +8,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
-import { SquareUser } from "lucide-react";
+import { UserAltOutline } from "@makeplane/propel/icons";
 // Plane imports
 import { MODULE_STATUS, EUserPermissions, EUserPermissionsLevel, IS_FAVORITE_MENU_OPEN } from "@plane/constants";
 import { useLocalStorage } from "@plane/hooks";
@@ -170,7 +170,7 @@ export const ModuleListItemAction = observer(function ModuleListItemAction(props
         </span>
       ) : (
         <Tooltip label={t("module_ui.no_lead")}>
-          <SquareUser className="h-4 w-4 text-tertiary" />
+          <UserAltOutline className="h-4 w-4 text-tertiary" />
         </Tooltip>
       )}
 

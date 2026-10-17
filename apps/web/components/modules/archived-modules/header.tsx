@@ -9,10 +9,8 @@ import { useCallback, useRef, useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // icons
-import { ListFilter } from "lucide-react";
+import { CloseOutline, FilterOutline, SearchOutline } from "@makeplane/propel/icons";
 import { useOutsideClickDetector } from "@plane/hooks";
-import { useTranslation } from "@plane/i18n";
-import { SearchIcon, CloseIcon } from "@plane/propel/icons";
 // plane helpers
 // types
 import type { TModuleFilters } from "@plane/types";
@@ -25,6 +23,7 @@ import { ModuleFiltersSelection, ModuleOrderByDropdown } from "@/components/modu
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 import { useModuleFilter } from "@/hooks/store/use-module-filter";
+import { useTranslation } from "@plane/i18n";
 
 export const ArchivedModulesHeader = observer(function ArchivedModulesHeader() {
   const { t } = useTranslation();
@@ -99,7 +98,7 @@ export const ArchivedModulesHeader = observer(function ArchivedModulesHeader() {
               inputRef.current?.focus();
             }}
           >
-            <SearchIcon className="h-3.5 w-3.5" />
+            <SearchOutline className="h-3.5 w-3.5" />
           </button>
         )}
         <div
@@ -110,7 +109,7 @@ export const ArchivedModulesHeader = observer(function ArchivedModulesHeader() {
             }
           )}
         >
-          <SearchIcon className="h-3.5 w-3.5" />
+          <SearchOutline className="h-3.5 w-3.5" />
           <input
             ref={inputRef}
             className="w-full max-w-[234px] border-none bg-transparent text-13 text-primary placeholder:text-placeholder focus:outline-none"
@@ -128,7 +127,7 @@ export const ArchivedModulesHeader = observer(function ArchivedModulesHeader() {
                 setIsSearchOpen(false);
               }}
             >
-              <CloseIcon className="h-3 w-3" />
+              <CloseOutline className="h-3 w-3" />
             </button>
           )}
         </div>
@@ -142,7 +141,7 @@ export const ArchivedModulesHeader = observer(function ArchivedModulesHeader() {
           }}
         />
         <FiltersDropdown
-          icon={<ListFilter className="h-3 w-3" />}
+          icon={<FilterOutline className="h-3 w-3" />}
           title={t("common.filters")}
           placement="bottom-end"
           isFiltersApplied={isFiltersApplied}

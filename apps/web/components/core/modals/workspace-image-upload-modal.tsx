@@ -13,7 +13,7 @@ import { useDropzone } from "react-dropzone";
 import { ACCEPTED_AVATAR_IMAGE_MIME_TYPES_FOR_REACT_DROPZONE, MAX_FILE_SIZE } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
-import { UserCirclePropertyIcon } from "@plane/propel/icons";
+import { UserOutline } from "@makeplane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { EFileAssetType } from "@plane/types";
 import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
@@ -140,7 +140,7 @@ export const WorkspaceImageUploadModal = observer(function WorkspaceImageUploadM
                 </>
               ) : (
                 <div>
-                  <UserCirclePropertyIcon className="mx-auto h-16 w-16 text-secondary" />
+                  <UserOutline className="mx-auto h-16 w-16 text-secondary" />
                   <span className="mt-2 block text-13 font-medium text-secondary">
                     {isDragActive ? "Drop image here to upload" : "Drag & drop image here"}
                   </span>

@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
-import { Shapes } from "lucide-react";
+import { HomeOutline, WidgetOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
-import { HomeIcon } from "@plane/propel/icons";
 import { Breadcrumbs, Header } from "@plane/ui";
 // components
 import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
@@ -30,7 +30,7 @@ export const WorkspaceDashboardHeader = observer(function WorkspaceDashboardHead
             <Breadcrumbs>
               <Breadcrumbs.Item
                 component={
-                  <BreadcrumbLink label={t("home.title")} icon={<HomeIcon className="h-4 w-4 text-tertiary" />} />
+                  <BreadcrumbLink label={t("home.title")} icon={<HomeOutline className="h-4 w-4 text-tertiary" />} />
                 }
               />
             </Breadcrumbs>
@@ -42,7 +42,7 @@ export const WorkspaceDashboardHeader = observer(function WorkspaceDashboardHead
             size="lg"
             onClick={() => toggleWidgetSettings(true)}
             className="my-auto mb-0"
-            prependIcon={<Shapes />}
+            prependIcon={<WidgetOutline />}
           >
             <div className="hidden sm:hidden md:block">{t("home.manage_widgets")}</div>
           </Button>

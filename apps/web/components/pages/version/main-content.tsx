@@ -8,7 +8,7 @@
 import { useState } from "react";
 import { observer } from "mobx-react";
 import useSWR from "swr";
-import { EyeIcon, TriangleAlert } from "lucide-react";
+import { ShowOutline, WarningTriangleOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
@@ -92,7 +92,7 @@ export const PageVersionsMainContent = observer(function PageVersionsMainContent
         <div className="grid flex-grow place-items-center">
           <div className="flex flex-col items-center gap-4 text-center">
             <span className="grid size-11 flex-shrink-0 place-items-center text-tertiary">
-              <TriangleAlert className="size-10" />
+              <WarningTriangleOutline className="size-10" />
             </span>
             <div>
               <h6 className="text-16 font-semibold">{t("page_ui.version.error_title")}</h6>
@@ -113,7 +113,7 @@ export const PageVersionsMainContent = observer(function PageVersionsMainContent
                   : t("page_ui.version.loading_details")}
               </h6>
               <span className="flex flex-shrink-0 items-center gap-1 rounded-sm bg-accent-primary/20 px-1.5 py-1 text-11 font-medium text-accent-primary">
-                <EyeIcon className="size-3 flex-shrink-0" />
+                <ShowOutline className="size-3 flex-shrink-0" />
                 {t("page_ui.version.view_only")}
               </span>
             </div>

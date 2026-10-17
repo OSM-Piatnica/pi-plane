@@ -9,7 +9,7 @@ import React from "react";
 import { observer } from "mobx-react";
 
 import { useTranslation } from "@plane/i18n";
-import { PlusIcon } from "@plane/propel/icons";
+import { AddOutline } from "@makeplane/propel/icons";
 // plane imports
 import type { TIssueServiceType, TIssueRelationTypes } from "@plane/types";
 import { CustomMenu } from "@plane/ui";
@@ -39,7 +39,7 @@ export const RelationActionButton = observer(function RelationActionButton(props
   };
 
   // button element
-  const customButtonElement = customButton ? <>{customButton}</> : <PlusIcon className="h-4 w-4" />;
+  const customButtonElement = customButton ? <>{customButton}</> : <AddOutline className="h-4 w-4" />;
 
   return (
     <CustomMenu

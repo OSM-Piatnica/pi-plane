@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // icons
 import { useTranslation } from "@plane/i18n";
-import { DueDatePropertyIcon, StartDatePropertyIcon } from "@plane/propel/icons";
+import { DueDateOutline, StartDateOutline } from "@makeplane/propel/icons";
 // types
 import type { TIssuePriorities, TWorkspaceDraftIssue } from "@plane/types";
 import { getDate, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
@@ -191,7 +191,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
           onChange={handleStartDate}
           maxDate={maxDate}
           placeholder={t("start_date")}
-          icon={<StartDatePropertyIcon className="h-3 w-3 flex-shrink-0" />}
+          icon={<StartDateOutline className="h-3 w-3 flex-shrink-0" />}
           buttonVariant={issue.start_date ? "border-with-text" : "border-without-text"}
           optionsClassName="z-10"
           renderByDefault={isMobile}
@@ -207,7 +207,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
           onChange={handleTargetDate}
           minDate={minDate}
           placeholder={t("due_date")}
-          icon={<DueDatePropertyIcon className="h-3 w-3 flex-shrink-0" />}
+          icon={<DueDateOutline className="h-3 w-3 flex-shrink-0" />}
           buttonVariant={issue.target_date ? "border-with-text" : "border-without-text"}
           buttonClassName={
             shouldHighlightIssueDueDate(issue?.target_date || null, stateDetails?.group) ? "text-danger-primary" : ""

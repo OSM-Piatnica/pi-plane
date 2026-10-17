@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 // plane imports
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { AddWorkItemIcon } from "@plane/propel/icons";
+import { AddWorkItemOutline } from "@makeplane/propel/icons";
 import type { TIssue } from "@plane/types";
 // components
 import { CreateUpdateIssueModal } from "@/components/issues/issue-modal/modal";
@@ -82,7 +82,7 @@ export const SidebarQuickActions = observer(function SidebarQuickActions() {
         <SidebarAddButton
           label={
             <>
-              <AddWorkItemIcon className="size-4" />
+              <AddWorkItemOutline className="size-4" />
               <span className="max-w-[145px] truncate text-13 font-medium">{t("sidebar.new_work_item")}</span>
             </>
           }

@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
-import { History } from "lucide-react";
+import { HistoryOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import type { TDescriptionVersion } from "@plane/types";
@@ -42,7 +43,7 @@ export const DescriptionVersionsDropdown = observer(function DescriptionVersions
       label={
         <div className="flex items-center gap-1 text-tertiary">
           <span className="grid size-4 flex-shrink-0 place-items-center">
-            <History className="size-3.5" />
+            <HistoryOutline className="size-3.5" />
           </span>
           <p className="text-11">
             {t("description_versions.last_edited_by")}{" "}

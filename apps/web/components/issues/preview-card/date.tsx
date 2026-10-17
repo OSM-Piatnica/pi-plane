@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { CalendarDays } from "lucide-react";
+import { CalendarOutline, DueDateOutline, StartDateOutline } from "@makeplane/propel/icons";
 // plane imports
-import { DueDatePropertyIcon, StartDatePropertyIcon } from "@plane/propel/icons";
 import type { TStateGroups } from "@plane/types";
 import { cn, renderFormattedDate, shouldHighlightIssueDueDate } from "@plane/utils";
 
@@ -32,14 +32,14 @@ export function WorkItemPreviewCardDate(props: Props) {
             "text-danger-primary": shouldHighlightDate,
           })}
         >
-          <CalendarDays className="size-3 shrink-0" />
+          <CalendarOutline className="size-3 shrink-0" />
           <span>
             {renderFormattedDate(startDate)} - {renderFormattedDate(targetDate)}
           </span>
         </div>
       ) : startDate ? (
         <div className="flex h-full items-center gap-1">
-          <StartDatePropertyIcon className="size-3 shrink-0" />
+          <StartDateOutline className="size-3 shrink-0" />
           <span>{renderFormattedDate(startDate)}</span>
         </div>
       ) : (
@@ -48,7 +48,7 @@ export function WorkItemPreviewCardDate(props: Props) {
             "text-danger-primary": shouldHighlightDate,
           })}
         >
-          <DueDatePropertyIcon className="size-3 shrink-0" />
+          <DueDateOutline className="size-3 shrink-0" />
           <span>{renderFormattedDate(targetDate)}</span>
         </div>
       )}

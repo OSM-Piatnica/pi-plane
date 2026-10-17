@@ -10,7 +10,7 @@ import { useEffect, useMemo, useState } from "react";
 import { observer } from "mobx-react";
 import { useSearchParams } from "next/navigation";
 // icons
-import { Eye, EyeOff } from "lucide-react";
+import { HideOutline, ShowOutline } from "@makeplane/propel/icons";
 // plane imports
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { E_PASSWORD_STRENGTH } from "@plane/constants";
@@ -158,9 +158,9 @@ export const SetPasswordForm = observer(function SetPasswordForm() {
               className="grid size-5 place-items-center"
             >
               {showPassword.password ? (
-                <EyeOff className="size-5 stroke-placeholder" />
+                <HideOutline className="size-5 text-placeholder" />
               ) : (
-                <Eye className="size-5 stroke-placeholder" />
+                <ShowOutline className="size-5 text-placeholder" />
               )}
             </button>
           </InputGroup>
@@ -189,9 +189,9 @@ export const SetPasswordForm = observer(function SetPasswordForm() {
               className="grid size-5 place-items-center"
             >
               {showPassword.retypePassword ? (
-                <EyeOff className="size-5 stroke-placeholder" />
+                <HideOutline className="size-5 text-placeholder" />
               ) : (
-                <Eye className="size-5 stroke-placeholder" />
+                <ShowOutline className="size-5 text-placeholder" />
               )}
             </button>
           </InputGroup>

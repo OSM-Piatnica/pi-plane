@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import { usePopper } from "react-popper";
 import { Popover, Transition } from "@headlessui/react";
 import { useTranslation } from "@plane/i18n";
-import { ChevronLeftIcon, ChevronRightIcon } from "@plane/propel/icons";
+import { ChevronLeftOutline, ChevronRightOutline } from "@makeplane/propel/icons";
 //hooks
 // icons
 // constants
@@ -125,7 +125,7 @@ export const CalendarMonthsDropdown = observer(function CalendarMonthsDropdown(p
                   handleDateChange(previousYear);
                 }}
               >
-                <ChevronLeftIcon height={14} width={14} />
+                <ChevronLeftOutline height={14} width={14} />
               </button>
               <span className="text-11">{activeMonthDate.getFullYear()}</span>
               <button
@@ -136,7 +136,7 @@ export const CalendarMonthsDropdown = observer(function CalendarMonthsDropdown(p
                   handleDateChange(nextYear);
                 }}
               >
-                <ChevronRightIcon height={14} width={14} />
+                <ChevronRightOutline height={14} width={14} />
               </button>
             </div>
             <div className="grid grid-cols-4 items-stretch justify-items-stretch gap-4 pt-3">

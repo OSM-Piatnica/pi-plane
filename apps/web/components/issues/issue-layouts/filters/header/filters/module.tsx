@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // components
 import { useTranslation } from "@plane/i18n";
-import { ModuleIcon } from "@plane/propel/icons";
+import { ModuleOutline } from "@makeplane/propel/icons";
 import { Loader } from "@plane/ui";
 import { FilterHeader, FilterOption } from "@/components/issues/issue-layouts/filters";
 import { useModule } from "@/hooks/store/use-module";
@@ -74,7 +74,7 @@ export const FilterModule = observer(function FilterModule(props: Props) {
                     key={cycle.id}
                     isChecked={Boolean(appliedFilters?.includes(cycle.id))}
                     onClick={() => handleUpdate(cycle.id)}
-                    icon={<ModuleIcon className="h-3 w-3 flex-shrink-0" />}
+                    icon={<ModuleOutline className="h-3 w-3 flex-shrink-0" />}
                     title={cycle.name}
                   />
                 ))}

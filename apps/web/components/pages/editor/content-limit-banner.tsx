@@ -5,7 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { TriangleAlert } from "lucide-react";
+import { WarningTriangleOutline } from "@makeplane/propel/icons";
 import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 
@@ -20,7 +20,7 @@ export function ContentLimitBanner({ className, onDismiss }: Props) {
     <div className={cn("text-sm flex items-center gap-2 border-b border-subtle-1 bg-layer-2 px-4 py-2.5", className)}>
       <div className="mx-auto flex items-center gap-2 text-secondary">
         <span className="text-amber-500">
-          <TriangleAlert />
+          <WarningTriangleOutline />
         </span>
         <span className="font-medium">{t("page_ui.content_limit_banner.message")}</span>
       </div>

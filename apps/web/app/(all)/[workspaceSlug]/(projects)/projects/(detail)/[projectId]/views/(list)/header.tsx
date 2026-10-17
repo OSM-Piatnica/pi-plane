@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
-import { ViewsIcon } from "@plane/propel/icons";
+import { ViewsOutline } from "@makeplane/propel/icons";
 import { Breadcrumbs, Header } from "@plane/ui";
 // components
 import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
@@ -40,7 +40,7 @@ export const ProjectViewsHeader = observer(function ProjectViewsHeader() {
                 <BreadcrumbLink
                   label={t("views")}
                   href={`/${workspaceSlug}/projects/${projectId}/views/`}
-                  icon={<ViewsIcon className="h-4 w-4 text-tertiary" />}
+                  icon={<ViewsOutline className="h-4 w-4 text-tertiary" />}
                   isLast
                 />
               }

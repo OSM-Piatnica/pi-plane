@@ -5,7 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { X } from "lucide-react";
+import { CloseOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 // local imports
@@ -45,7 +45,7 @@ export function PowerKModalContextIndicator(props: Props) {
           aria-label={t("power_k_ui.clear_context")}
           tabIndex={-1}
         >
-          <X className="size-2.5" />
+          <CloseOutline className="size-2.5" />
         </button>
       </div>
     </div>

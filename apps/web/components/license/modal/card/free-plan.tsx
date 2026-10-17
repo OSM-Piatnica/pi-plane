@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
-import { CircleX } from "lucide-react";
+import { CloseCircleOutline } from "@makeplane/propel/icons";
 // plane constants
 import { FREE_PLAN_UPGRADE_FEATURES } from "@plane/constants";
 // helpers
@@ -35,7 +36,7 @@ export const FreePlanCard = observer(function FreePlanCard(props: FreePlanCardPr
           {FREE_PLAN_UPGRADE_FEATURES.map((feature) => (
             <li key={feature} className={cn("relative col-span-12 flex rounded-md p-2")}>
               <p className="flex w-full items-center text-caption-md-medium leading-5">
-                <CircleX className="mr-2 size-4 flex-shrink-0 text-danger-secondary" />
+                <CloseCircleOutline className="mr-2 size-4 flex-shrink-0 text-danger-secondary" />
                 <span className="truncate text-secondary">{feature}</span>
               </p>
             </li>

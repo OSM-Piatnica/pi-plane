@@ -12,7 +12,7 @@ import useSWR from "swr";
 import { useTranslation } from "@plane/i18n";
 import { Banner } from "@plane/propel/banner";
 import { Button } from "@plane/propel/button";
-import { ArchiveIcon } from "@plane/propel/icons";
+import { ArchiveOutline } from "@makeplane/propel/icons";
 import { Loader } from "@plane/ui";
 // components
 import { PageHead } from "@/components/core/page-title";
@@ -73,7 +73,7 @@ function ArchivedIssueDetailsPage({ params }: Route.ComponentProps) {
           <Banner
             variant="warning"
             title={t("issue_ui.archived_banner")}
-            icon={<ArchiveIcon className="size-4" />}
+            icon={<ArchiveOutline className="size-4" />}
             action={
               <Button
                 variant="secondary"
