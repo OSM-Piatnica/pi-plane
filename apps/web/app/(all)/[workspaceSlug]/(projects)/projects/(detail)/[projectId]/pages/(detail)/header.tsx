@@ -22,7 +22,6 @@ import { PageSyncingBadge } from "@/components/pages/header/syncing-badge";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useAppRouter } from "@/hooks/use-app-router";
-// plane web imports
 import { CommonProjectBreadcrumbs } from "@/components/breadcrumbs/common";
 import { PageDetailsHeaderExtraActions } from "@/components/pages";
 import { EPageStoreType, usePage, usePageStore } from "@/hooks/store";

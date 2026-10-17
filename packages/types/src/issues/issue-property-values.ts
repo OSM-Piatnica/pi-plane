@@ -5,12 +5,6 @@
  * See the LICENSE file for details.
  */
 
-export type TIssueRelationTypes =
-  | "blocking"
-  | "blocked_by"
-  | "duplicate"
-  | "relates_to"
-  | "start_before"
-  | "start_after"
-  | "finish_before"
-  | "finish_after";
+export type TIssuePropertyValues = Record<string, unknown>;
+
+export type TIssuePropertyValueErrors = Record<string, string>;

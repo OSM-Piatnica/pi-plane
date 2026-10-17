@@ -11,13 +11,11 @@ import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import { PlusIcon } from "@plane/propel/icons";
 // plane imports
-import type { TIssueServiceType } from "@plane/types";
+import type { TIssueServiceType, TIssueRelationTypes } from "@plane/types";
 import { CustomMenu } from "@plane/ui";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
-// Plane-web
 import { useTimeLineRelationOptions } from "@/components/relations";
-import type { TIssueRelationTypes } from "@/types";
 
 type Props = {
   issueId: string;

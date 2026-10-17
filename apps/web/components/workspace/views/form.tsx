@@ -18,7 +18,6 @@ import { getComputedDisplayFilters, getComputedDisplayProperties } from "@plane/
 // components
 import { DisplayFiltersSelection, FiltersDropdown } from "@/components/issues/issue-layouts/filters";
 import { WorkspaceLevelWorkItemFiltersHOC } from "@/components/work-item-filters/filters-hoc/workspace-level";
-// plane web imports
 import { WorkItemFiltersRow } from "@/components/work-item-filters/filters-row";
 import { AccessController } from "@/components/views/access-controller";
 

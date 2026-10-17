@@ -1,14 +1,15 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
 import { ArrowUp, Paperclip } from "lucide-react";
 // constants
-import type { ToolbarMenuItem } from "@/constants/editor";
-import { IMAGE_ITEM } from "@/constants/editor";
+import type { ToolbarMenuItem } from "@plane/editor";
+import { IMAGE_ITEM } from "@plane/editor";
 
 type LiteToolbarProps = {
   onSubmit: (e: React.KeyboardEvent<HTMLDivElement> | React.MouseEvent<HTMLButtonElement>) => void;

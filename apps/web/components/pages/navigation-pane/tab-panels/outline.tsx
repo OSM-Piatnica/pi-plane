@@ -7,7 +7,6 @@
 
 // plane imports
 import { ScrollArea } from "@plane/propel/scrollarea";
-// plane web imports
 import { PageNavigationPaneOutlineTabEmptyState } from "@/components/pages/navigation-pane/tab-panels/empty-states/outline";
 // store
 import type { TPageInstance } from "@/store/pages/base-page";

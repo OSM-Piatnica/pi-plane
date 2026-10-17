@@ -10,7 +10,6 @@ import { action, makeObservable, observable, runInAction, computed } from "mobx"
 // plane imports
 import { EUserPermissions, API_BASE_URL } from "@plane/constants";
 import type { IUser, TUserPermissions } from "@plane/types";
-// plane web imports
 import type { RootStore } from "@/store/root.store";
 import type { IUserPermissionStore } from "@/store/user/permission.store";
 import { UserPermissionStore } from "@/store/user/permission.store";

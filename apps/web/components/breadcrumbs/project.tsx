@@ -9,13 +9,12 @@ import { observer } from "mobx-react";
 import { Logo } from "@plane/propel/emoji-icon-picker";
 import { ProjectIcon } from "@plane/propel/icons";
 // plane imports
-import type { ICustomSearchSelectOption } from "@plane/types";
+import type { ICustomSearchSelectOption, TProject } from "@plane/types";
 import { BreadcrumbNavigationSearchDropdown, Breadcrumbs } from "@plane/ui";
 import { SwitcherLabel } from "@/components/common/switcher-label";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useAppRouter } from "@/hooks/use-app-router";
-import type { TProject } from "@/types";
 
 type TProjectBreadcrumbProps = {
   workspaceSlug: string;

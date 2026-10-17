@@ -7,7 +7,6 @@
 
 // components
 import type { TPageRootHandlers } from "@/components/pages/editor/page-root";
-// plane web imports
 import { ORDERED_PAGE_NAVIGATION_TABS_LIST } from "@/components/pages/navigation-pane";
 // store
 import type { TPageInstance } from "@/store/pages/base-page";

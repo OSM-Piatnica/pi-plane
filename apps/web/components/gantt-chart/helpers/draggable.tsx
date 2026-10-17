@@ -12,7 +12,6 @@ import { observer } from "mobx-react";
 import type { IGanttBlock } from "@plane/types";
 // helpers
 import { cn } from "@plane/utils";
-//  Plane-web
 import { LeftDependencyDraggable, RightDependencyDraggable } from "@/components/gantt-chart";
 //
 import { LeftResizable } from "./blockResizables/left-resizable";

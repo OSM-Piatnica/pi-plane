@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -28,9 +29,11 @@ import {
   TextQuote,
   Underline,
 } from "lucide-react";
+import { MonospaceIcon, SansSerifIcon, SerifIcon } from "@plane/propel/icons";
+import type { TEditorFontStyle } from "@/types/config";
 import type { TCommandExtraProps, TEditorCommands } from "@/types/editor";
 
-export type TEditorTypes = "lite" | "document";
+export type TEditorTypes = "lite" | "document" | "sticky";
 
 // Utility type to enforce the necessary extra props or make extraProps optional
 export type ExtraPropsForCommand<T extends TEditorCommands> = T extends keyof TCommandExtraProps
@@ -160,9 +163,18 @@ export const USER_ACTION_ITEMS: ToolbarMenuItem<"quote" | "code">[] = [
   { itemKey: "code", renderKey: "code", name: "Code", icon: Code2, editors: ["lite", "document"] },
 ];
 
+export const IMAGE_ITEM = {
+  itemKey: "image",
+  renderKey: "image",
+  name: "Image",
+  icon: Image,
+  editors: ["lite", "document"],
+  extraProps: {},
+} as ToolbarMenuItem<"image">;
+
 export const COMPLEX_ITEMS: ToolbarMenuItem<"table" | "image">[] = [
   { itemKey: "table", renderKey: "table", name: "Table", icon: Table, editors: ["document"] },
-  { itemKey: "image", renderKey: "image", name: "Image", icon: Image, editors: ["lite", "document"] },
+  IMAGE_ITEM,
 ];
 
 export const TOOLBAR_ITEMS: {
@@ -183,6 +195,10 @@ export const TOOLBAR_ITEMS: {
     list: LIST_ITEMS.filter((item) => item.editors.includes("document")),
     userAction: USER_ACTION_ITEMS.filter((item) => item.editors.includes("document")),
     complex: COMPLEX_ITEMS.filter((item) => item.editors.includes("document")),
+  },
+  sticky: {
+    basic: BASIC_MARK_ITEMS.filter((item) => ["Bold", "Italic"].includes(item.name)),
+    list: LIST_ITEMS.filter((item) => ["To-do list"].includes(item.name)),
   },
 };
 
@@ -246,4 +262,26 @@ export const COLORS_LIST: {
   //   textColor: "var(--editor-colors-pink-blue-gradient-text)",
   //   backgroundColor: "var(--editor-colors-pink-blue-gradient-background)",
   // },
+];
+
+export const EDITOR_FONT_STYLES: {
+  key: TEditorFontStyle;
+  label: string;
+  icon: any;
+}[] = [
+  {
+    key: "sans-serif",
+    label: "Sans serif",
+    icon: SansSerifIcon,
+  },
+  {
+    key: "serif",
+    label: "Serif",
+    icon: SerifIcon,
+  },
+  {
+    key: "monospace",
+    label: "Mono",
+    icon: MonospaceIcon,
+  },
 ];

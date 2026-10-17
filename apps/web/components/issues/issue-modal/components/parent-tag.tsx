@@ -18,7 +18,6 @@ import type { ISearchIssueResponse, TIssue } from "@plane/types";
 import { getTabIndex } from "@plane/utils";
 // hooks
 import { usePlatformOS } from "@/hooks/use-platform-os";
-// plane web components
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 
 type TIssueParentTagProps = {

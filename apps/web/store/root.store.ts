@@ -10,7 +10,6 @@ import { enableStaticRendering } from "mobx-react";
 import { FALLBACK_LANGUAGE, setLanguage } from "@plane/i18n";
 import type { IWorkItemFilterStore } from "@plane/shared-state";
 import { WorkItemFilterStore } from "@plane/shared-state";
-// plane web store
 import type { IAnalyticsStore } from "@/store/analytics.store";
 import { AnalyticsStore } from "@/store/analytics.store";
 import type { ICommandPaletteStore } from "@/store/command-palette.store";

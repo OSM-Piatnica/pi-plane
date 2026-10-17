@@ -11,7 +11,6 @@ import { getPageName } from "@plane/utils";
 // hooks
 import { useCycle } from "@/hooks/store/use-cycle";
 import { useModule } from "@/hooks/store/use-module";
-// plane web imports
 import { useExtendedContextIndicator } from "@/components/command-palette/power-k/hooks/use-extended-context-indicator";
 import { EPageStoreType, usePageStore } from "@/hooks/store";
 // local imports

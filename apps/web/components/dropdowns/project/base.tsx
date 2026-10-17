@@ -19,8 +19,7 @@ import { cn, sortBySelectedFirst } from "@plane/utils";
 // components
 // hooks
 import { useDropdown } from "@/hooks/use-dropdown";
-// plane web imports
-import type { TProject } from "@/types";
+import type { TProject } from "@plane/types";
 // local imports
 import { DropdownButton } from "../buttons";
 import { BUTTON_VARIANTS_WITH_TEXT } from "../constants";

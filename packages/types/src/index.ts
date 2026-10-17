@@ -30,6 +30,7 @@ export * from "./inbox";
 export * from "./instance";
 export * from "./integration";
 export * from "./issues";
+export * from "./issues/issue-property-values";
 export * from "./issues/base"; // TODO: Remove this after development and the refactor/mobx-store-issue branch is stable
 export * from "./issues/issue-identifier";
 export * from "./layout";
@@ -57,6 +58,7 @@ export * from "./webhook";
 export * from "./work-item-template";
 export * from "./workflow";
 export * from "./issue-type";
+export * from "./navigation-preferences";
 export * from "./workspace";
 export * from "./workspace-draft-issues/base";
 export * from "./workspace-notifications";

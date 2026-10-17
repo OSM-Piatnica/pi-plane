@@ -5,7 +5,6 @@
  * See the LICENSE file for details.
  */
 
-// plane web components
 import { EIssuesStoreType } from "@plane/types";
 import { TeamEmptyState } from "@/components/issues/issue-layouts/empty-states/team-issues";
 import { TeamProjectWorkItemEmptyState } from "@/components/issues/issue-layouts/empty-states/team-project";

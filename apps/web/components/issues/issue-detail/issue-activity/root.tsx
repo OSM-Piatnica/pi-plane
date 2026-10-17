@@ -22,7 +22,6 @@ import { CommentCreate } from "@/components/comments/comment-create";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
-// plane web components
 import { ActivityFilterRoot } from "@/components/issues/worklog/activity/filter-root";
 import { IssueActivityWorklogCreateButton } from "@/components/issues/worklog/activity/worklog-create-button";
 import { IssueActivityCommentRoot } from "./activity-comment-root";

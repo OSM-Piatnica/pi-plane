@@ -1,23 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import type { LucideIcon } from "lucide-react";
-// plane imports
-import type { ISvgIcons } from "@plane/propel/icons";
-import { CycleIcon, FavoriteFolderIcon, ModuleIcon, PageIcon, ProjectIcon, ViewsIcon } from "@plane/propel/icons";
 import type { IFavorite } from "@plane/types";
-
-export const FAVORITE_ITEM_ICONS: Record<string, React.FC<ISvgIcons> | LucideIcon> = {
-  page: PageIcon,
-  project: ProjectIcon,
-  view: ViewsIcon,
-  module: ModuleIcon,
-  cycle: CycleIcon,
-  folder: FavoriteFolderIcon,
-};
 
 export const FAVORITE_ITEM_LINKS: {
   [key: string]: {

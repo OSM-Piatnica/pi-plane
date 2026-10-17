@@ -8,7 +8,6 @@
 import { useContext } from "react";
 // mobx store
 import { StoreContext } from "@/lib/store-context";
-// plane web imports
 import type { IUserPermissionStore } from "@/store/user/permission.store";
 
 export const useUserPermissions = (): IUserPermissionStore => {

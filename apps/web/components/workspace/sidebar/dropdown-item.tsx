@@ -16,7 +16,6 @@ import { useTranslation } from "@plane/i18n";
 import { CheckIcon } from "@plane/propel/icons";
 import type { IWorkspace } from "@plane/types";
 import { cn, getFileURL, getUserRole } from "@plane/utils";
-// plane web imports
 import { SubscriptionPill } from "@/components/common/subscription/subscription-pill";
 
 type TProps = {

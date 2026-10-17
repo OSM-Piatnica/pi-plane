@@ -15,7 +15,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@plane/propel/icons";
 // icons
 // constants
 import { getDate } from "@plane/utils";
-import { MONTHS_LIST } from "@/constants/calendar";
+import { MONTHS_LIST } from "@plane/constants";
 import { useCalendarView } from "@/hooks/store/use-calendar-view";
 import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 import type { ICycleIssuesFilter } from "@/store/issue/cycle";

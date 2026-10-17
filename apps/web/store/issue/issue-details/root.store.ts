@@ -16,15 +16,14 @@ import type {
   TIssueReaction,
   TIssueServiceType,
   TWorkItemWidgets,
+  TIssueRelationTypes,
 } from "@plane/types";
-// plane web store
 import { IssueActivityStore } from "@/store/issue/issue-details/activity.store";
 import type {
   IIssueActivityStore,
   IIssueActivityStoreActions,
   TActivityLoader,
 } from "@/store/issue/issue-details/activity.store";
-import type { TIssueRelationTypes } from "@/types";
 import type { IIssueRootStore } from "../root.store";
 import { IssueAttachmentStore } from "./attachment.store";
 import type { IIssueAttachmentStore, IIssueAttachmentStoreActions } from "./attachment.store";

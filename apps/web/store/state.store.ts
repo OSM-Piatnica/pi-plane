@@ -13,7 +13,6 @@ import { STATE_GROUPS } from "@plane/constants";
 import type { IIntakeState, IState } from "@plane/types";
 // helpers
 import { sortStates } from "@plane/utils";
-// plane web
 import { ProjectStateService } from "@/services/project/project-state.service";
 import type { RootStore } from "@/store/root.store";
 

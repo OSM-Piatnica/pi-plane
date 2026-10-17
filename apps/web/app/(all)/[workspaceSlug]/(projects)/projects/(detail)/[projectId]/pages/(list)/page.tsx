@@ -25,7 +25,6 @@ import { PagesListView } from "@/components/pages/pages-list-view";
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
 import { useAppRouter } from "@/hooks/use-app-router";
-// plane web hooks
 import { EPageStoreType } from "@/hooks/store";
 import type { Route } from "./+types/page";
 

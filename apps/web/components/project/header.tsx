@@ -19,7 +19,6 @@ import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
 // hooks
 import { useCommandPalette } from "@/hooks/store/use-command-palette";
 import { useUserPermissions } from "@/hooks/store/user";
-// plane web constants
 // components
 import HeaderFilters from "./filters";
 import { ProjectSearch } from "./search-projects";

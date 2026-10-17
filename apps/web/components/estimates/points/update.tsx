@@ -21,7 +21,6 @@ import { EstimateInputRoot } from "@/components/estimates/inputs/root";
 // helpers
 // hooks
 import { useEstimatePoint } from "@/hooks/store/estimates/use-estimate-point";
-// plane web constants
 
 type TEstimatePointUpdate = {
   workspaceSlug: string;

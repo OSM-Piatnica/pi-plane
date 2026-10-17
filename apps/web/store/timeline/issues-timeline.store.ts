@@ -6,7 +6,6 @@
  */
 
 import { autorun } from "mobx";
-// Plane-web
 import type { RootStore } from "@/store/root.store";
 import type { IBaseTimelineStore } from "@/store/timeline/base-timeline.store";
 import { BaseTimeLineStore } from "@/store/timeline/base-timeline.store";

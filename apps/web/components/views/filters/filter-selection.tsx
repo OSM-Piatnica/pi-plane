@@ -19,7 +19,6 @@ import { FilterOption } from "@/components/issues/issue-layouts/filters";
 // constants
 // hooks
 import { usePlatformOS } from "@/hooks/use-platform-os";
-// plane web components
 import { FilterByAccess } from "@/components/views/filters/access-filter";
 
 type Props = {

@@ -1,16 +1,26 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
+import type { LucideIcon } from "lucide-react";
 import { Logo } from "@plane/propel/emoji-icon-picker";
-import { PageIcon } from "@plane/propel/icons";
+import type { ISvgIcons } from "@plane/propel/icons";
+import { CycleIcon, FavoriteFolderIcon, ModuleIcon, PageIcon, ProjectIcon, ViewsIcon } from "@plane/propel/icons";
 // plane imports
 import type { IFavorite, TLogoProps } from "@plane/types";
-// components
-// plane web constants
-import { FAVORITE_ITEM_ICONS, FAVORITE_ITEM_LINKS } from "@/constants/sidebar-favorites";
+import { FAVORITE_ITEM_LINKS } from "@plane/constants";
+
+const FAVORITE_ITEM_ICONS: Record<string, React.FC<ISvgIcons> | LucideIcon> = {
+  page: PageIcon,
+  project: ProjectIcon,
+  view: ViewsIcon,
+  module: ModuleIcon,
+  cycle: CycleIcon,
+  folder: FavoriteFolderIcon,
+};
 
 export const getFavoriteItemIcon = (type: string, logo?: TLogoProps) => {
   const Icon = FAVORITE_ITEM_ICONS[type] || PageIcon;

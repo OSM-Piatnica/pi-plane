@@ -11,12 +11,11 @@ import { normalizeIssuePropertyValuesForApi } from "@/helpers/issue-type-propert
 import { observer } from "mobx-react";
 import type { UseFormWatch } from "react-hook-form";
 import { DEFAULT_WORK_ITEM_FORM_VALUES } from "@plane/constants";
-import type { ISearchIssueResponse, TIssue } from "@plane/types";
+import type { ISearchIssueResponse, TIssue, TIssuePropertyValueErrors, TIssuePropertyValues } from "@plane/types";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { useTranslation } from "@plane/i18n";
 import { IssueModalContext } from "@/components/issues/issue-modal/context";
 import type { TIssueFields } from "@/components/issues/issue-modal/issue-type-select";
-import type { TIssuePropertyValueErrors, TIssuePropertyValues } from "@/types/issue-types";
 import { useUser } from "@/hooks/store/user/user-user";
 import { WorkItemTemplateService } from "@/services/work-item-template.service";
 import { IssueTypeService } from "@/services/issue-type.service";

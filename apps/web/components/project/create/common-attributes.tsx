@@ -18,8 +18,7 @@ import { Input, TextArea } from "@plane/ui";
 import { cn, projectIdentifierSanitizer, getTabIndex } from "@plane/utils";
 // plane utils
 // helpers
-// plane-web types
-import type { TProject } from "@/types/projects";
+import type { TProject } from "@plane/types";
 
 type Props = {
   setValue: UseFormSetValue<TProject>;

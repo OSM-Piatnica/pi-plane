@@ -23,7 +23,6 @@ import { TimezoneSelect } from "@/components/global/timezone-select";
 // hooks
 import { useWorkspace } from "@/hooks/store/use-workspace";
 import { useUserPermissions } from "@/hooks/store/user";
-// plane web components
 import { DeleteWorkspaceSection } from "@/components/workspace/delete-workspace-section";
 
 const defaultValues: Partial<IWorkspace> = {

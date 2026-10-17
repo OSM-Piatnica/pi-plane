@@ -10,7 +10,6 @@ import { autorun, makeObservable, observable } from "mobx";
 // types
 import type { ICycle, IIssueLabel, IModule, IProject, IState, IUserLite, TIssueServiceType } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
-// plane web store
 import type { IProjectEpics, IProjectEpicsFilter } from "@/store/issue/epic";
 import { ProjectEpics, ProjectEpicsFilter } from "@/store/issue/epic";
 import type { IIssueDetail } from "@/store/issue/issue-details/root.store";

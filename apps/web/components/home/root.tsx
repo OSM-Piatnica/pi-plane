@@ -13,7 +13,6 @@ import { ContentWrapper } from "@plane/ui";
 // hooks
 import { useHome } from "@/hooks/store/use-home";
 import { useUserProfile, useUser } from "@/hooks/store/user";
-// plane web imports
 import { HomePeekOverviewsRoot } from "@/components/home";
 import { TourRoot } from "@/components/onboarding/tour/root";
 // local imports

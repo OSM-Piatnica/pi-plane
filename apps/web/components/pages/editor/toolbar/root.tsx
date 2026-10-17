@@ -15,7 +15,6 @@ import { cn } from "@plane/utils";
 import { PageToolbar } from "@/components/pages/editor/toolbar";
 // hooks
 import { usePageFilters } from "@/hooks/use-page-filters";
-// plane web components
 import { PageCollaboratorsList } from "@/components/pages/header/collaborators-list";
 // store
 import type { TPageInstance } from "@/store/pages/base-page";

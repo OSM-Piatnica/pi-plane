@@ -42,7 +42,6 @@ import { KanbanIssueBlockLoader } from "@/components/ui/loader/layouts/kanban-la
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { useIssuesStore } from "@/hooks/use-issue-layout-store";
-// Plane-web
 import { useWorkFlowFDragNDrop } from "@/components/workflow";
 //
 import { GroupDragOverlay } from "../group-drag-overlay";

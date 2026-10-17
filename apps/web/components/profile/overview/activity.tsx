@@ -17,7 +17,7 @@ import { calculateTimeAgo, getFileURL } from "@plane/utils";
 // components
 import { ActivityMessage, IssueLink } from "@/components/core/activity";
 // constants
-import { USER_PROFILE_ACTIVITY } from "@/constants/fetch-keys";
+import { USER_PROFILE_ACTIVITY } from "@plane/constants";
 // helpers
 // hooks
 import { useUser } from "@/hooks/store/user";

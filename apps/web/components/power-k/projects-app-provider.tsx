@@ -13,7 +13,6 @@ import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { usePowerK } from "@/hooks/store/use-power-k";
 import { useUser } from "@/hooks/store/user";
 import { useAppRouter } from "@/hooks/use-app-router";
-// plane web imports
 import { ProjectLevelModals } from "@/components/command-palette/modals/project-level";
 import { WorkItemLevelModals } from "@/components/command-palette/modals/work-item-level";
 import { WorkspaceLevelModals } from "@/components/command-palette/modals/workspace-level";

@@ -19,7 +19,6 @@ import type {
   TIssueServiceType,
 } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
-// plane web constants
 // services
 import { IssueActivityService } from "@/services/issue";
 // store

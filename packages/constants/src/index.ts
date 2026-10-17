@@ -7,6 +7,7 @@
 
 export * from "./ai";
 export * from "./analytics";
+export * from "./calendar";
 export * from "./auth";
 export * from "./chart";
 export * from "./cycle";
@@ -14,8 +15,10 @@ export * from "./dashboard";
 export * from "./emoji";
 export * from "./endpoints";
 export * from "./estimates";
+export * from "./fetch-keys";
 export * from "./file";
 export * from "./filter";
+export * from "./gantt-chart";
 export * from "./graph";
 export * from "./icon";
 export * from "./instance";
@@ -33,6 +36,7 @@ export * from "./project";
 export * from "./rich-filters";
 export * from "./settings";
 export * from "./sidebar";
+export * from "./sidebar-favorites";
 export * from "./spreadsheet";
 export * from "./state";
 export * from "./stickies";

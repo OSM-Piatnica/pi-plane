@@ -15,7 +15,6 @@ import type { TSearchEntities, TSearchEntityRequestPayload, TSearchResponse, TUs
 import { Avatar } from "@plane/ui";
 // helpers
 import { getFileURL } from "@plane/utils";
-// plane web hooks
 import { useAdditionalEditorMention } from "@/hooks/use-additional-editor-mention";
 
 type TArgs = {

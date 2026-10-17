@@ -12,7 +12,18 @@ import { useParams } from "next/navigation";
 import useSWR from "swr";
 // ui
 import { LogOut } from "lucide-react";
-import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
+import {
+  EUserPermissions,
+  EUserPermissionsLevel,
+  WORKSPACE_MEMBERS,
+  WORKSPACE_PARTIAL_PROJECTS,
+  WORKSPACE_MEMBER_ME_INFORMATION,
+  WORKSPACE_PROJECTS_ROLES_INFORMATION,
+  WORKSPACE_FAVORITE,
+  WORKSPACE_STATES,
+  WORKSPACE_SIDEBAR_PREFERENCES,
+  WORKSPACE_PROJECT_NAVIGATION_PREFERENCES,
+} from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button, getButtonStyling } from "@plane/propel/button";
 import { PlaneLogo } from "@plane/propel/icons";
@@ -24,16 +35,6 @@ import WorkSpaceNotAvailable from "@/app/assets/workspace/workspace-not-availabl
 // components
 import { LogoSpinner } from "@/components/common/logo-spinner";
 // constants
-import {
-  WORKSPACE_MEMBERS,
-  WORKSPACE_PARTIAL_PROJECTS,
-  WORKSPACE_MEMBER_ME_INFORMATION,
-  WORKSPACE_PROJECTS_ROLES_INFORMATION,
-  WORKSPACE_FAVORITE,
-  WORKSPACE_STATES,
-  WORKSPACE_SIDEBAR_PREFERENCES,
-  WORKSPACE_PROJECT_NAVIGATION_PREFERENCES,
-} from "@/constants/fetch-keys";
 // hooks
 import { useFavorite } from "@/hooks/store/use-favorite";
 import { useMember } from "@/hooks/store/use-member";

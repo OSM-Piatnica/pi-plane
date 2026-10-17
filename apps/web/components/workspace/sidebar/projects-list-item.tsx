@@ -39,7 +39,6 @@ import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
 import { useProjectNavigationPreferences } from "@/hooks/use-navigation-preferences";
 import { usePlatformOS } from "@/hooks/use-platform-os";
-// plane web imports
 import { useNavigationItems } from "@/components/navigations";
 import { ProjectNavigationRoot } from "@/components/sidebar";
 // local imports

@@ -16,7 +16,6 @@ import { ListItem } from "@/components/core/list";
 import { BlockItemAction } from "@/components/pages/list/block-item-action";
 // hooks
 import { usePlatformOS } from "@/hooks/use-platform-os";
-// plane web hooks
 import type { EPageStoreType } from "@/hooks/store";
 import { usePage } from "@/hooks/store";
 

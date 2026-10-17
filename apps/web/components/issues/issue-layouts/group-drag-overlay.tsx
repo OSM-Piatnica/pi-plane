@@ -13,7 +13,6 @@ import { useTranslation } from "@plane/i18n";
 import type { TIssueOrderByOptions } from "@plane/types";
 // helpers
 import { cn, getIssueOrderByField } from "@plane/utils";
-// plane web imports
 import { WorkFlowDisabledOverlay } from "@/components/workflow";
 
 type Props = {

@@ -5,7 +5,6 @@
  * See the LICENSE file for details.
  */
 
-// plane web imports
 // local imports
 import { EditorUserMention } from "./user";
 import type { TCallbackMentionComponentProps } from "@plane/editor";

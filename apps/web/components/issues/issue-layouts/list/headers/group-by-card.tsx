@@ -24,9 +24,7 @@ import { CreateUpdateIssueModal } from "@/components/issues/issue-modal/modal";
 // constants
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import type { TSelectionHelper } from "@/hooks/use-multiple-select";
-// plane-web
 import { CreateUpdateEpicModal } from "@/components/epics/epic-modal";
-// Plane-web
 import { WorkFlowGroupTree } from "@/components/workflow";
 
 interface IHeaderGroupByCard {

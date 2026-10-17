@@ -8,7 +8,6 @@
 import { useCallback, useState } from "react";
 import { observer } from "mobx-react";
 import { useDropzone } from "react-dropzone";
-// plane web hooks
 import { useTranslation } from "@plane/i18n";
 import { useFileSize } from "@/hooks/use-file-size";
 // types

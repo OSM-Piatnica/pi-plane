@@ -18,7 +18,6 @@ import { EIssuesStoreType } from "@plane/types";
 import { getDate } from "@plane/utils";
 // hooks
 import { useCycle } from "@/hooks/store/use-cycle";
-// plane web components
 import { useWorkItemFilters } from "@/hooks/store/work-item-filters/use-work-item-filters";
 import { SidebarChartRoot } from "@/components/cycles";
 // local imports

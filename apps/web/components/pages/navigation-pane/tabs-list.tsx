@@ -8,7 +8,6 @@
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { Tabs } from "@plane/propel/tabs";
-// plane web components
 import { ORDERED_PAGE_NAVIGATION_TABS_LIST } from "@/components/pages/navigation-pane";
 
 export function PageNavigationPaneTabsList() {

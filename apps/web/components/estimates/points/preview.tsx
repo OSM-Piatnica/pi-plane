@@ -14,7 +14,6 @@ import { useTranslation } from "@plane/i18n";
 import { EditIcon, TrashIcon } from "@plane/propel/icons";
 import type { TEstimatePointsObject, TEstimateSystemKeys, TEstimateTypeErrorObject } from "@plane/types";
 import { convertMinutesToHoursMinutesString } from "@plane/utils";
-// plane web imports
 import { EstimatePointDelete } from "@/components/estimates";
 // local imports
 import { EstimatePointUpdate } from "./update";

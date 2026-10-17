@@ -24,7 +24,7 @@ import {
 // helpers
 import { getSidebarNavigationItemIcon } from "@/components/workspace/sidebar/helper";
 // types
-import type { TPersonalNavigationItemKey } from "@/types/navigation-preferences";
+import type { TPersonalNavigationItemKey } from "@plane/types";
 
 type TCustomizeNavigationDialogProps = {
   isOpen: boolean;

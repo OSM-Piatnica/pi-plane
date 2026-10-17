@@ -31,7 +31,6 @@ import type {
 import { EIssueServiceType, EIssueLayoutTypes } from "@plane/types";
 // helpers
 import { convertToISODateString } from "@plane/utils";
-// plane web imports
 import { workItemSortWithOrderByExtended } from "@/store/issue/helpers/base-issue.store";
 // services
 import { CycleService } from "@/services/cycle.service";
