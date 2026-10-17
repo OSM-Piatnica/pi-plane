@@ -7,9 +7,9 @@
 
 import type { Control } from "react-hook-form";
 import { Controller } from "react-hook-form";
+import { CheckboxField } from "@makeplane/propel/components/checkbox-field";
 import { useTranslation } from "@plane/i18n";
 import type { IWebhook } from "@plane/types";
-import { Checkbox } from "@plane/ui";
 
 export const INDIVIDUAL_WEBHOOK_OPTIONS: {
   key: keyof IWebhook;
@@ -59,15 +59,15 @@ export function WebhookIndividualEventOptions({ control }: Props) {
           control={control}
           name={option.key}
           render={({ field: { onChange, value } }) => (
-            <div>
-              <div className="flex items-center gap-2">
-                <Checkbox id={option.key} onChange={() => onChange(!value)} checked={value === true} />
-                <label className="text-13" htmlFor={option.key}>
-                  {t(option.label)}
-                </label>
-              </div>
-              <p className="mt-0.5 ml-6 text-11 text-tertiary">{t(option.description)}</p>
-            </div>
+            <CheckboxField
+              name={option.key}
+              label={t(option.label)}
+              size="lg"
+              description={t(option.description)}
+              stretch="full"
+              checked={value === true}
+              onCheckedChange={onChange}
+            />
           )}
         />
       ))}
