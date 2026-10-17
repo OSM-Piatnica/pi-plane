@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 // ui
+import { CircularProgress } from "@makeplane/propel/components/circular-progress";
 import { Tooltip } from "@plane/propel/tooltip";
-import { CircularProgressIndicator } from "@plane/ui";
 // components
 import { getFileExtension } from "@plane/utils";
 import { getFileIcon } from "@/components/icons";
@@ -41,7 +42,7 @@ export const IssueAttachmentsUploadItem = observer(function IssueAttachmentsUplo
       </div>
       <div className="flex flex-shrink-0 items-center gap-2">
         <span className="flex-shrink-0">
-          <CircularProgressIndicator size={20} strokeWidth={3} percentage={uploadStatus.progress} />
+          <CircularProgress value={uploadStatus.progress} size="md" variant="brand" aria-label="Upload progress" />
         </span>
         <div className="flex-shrink-0 text-13 font-medium">{uploadStatus.progress}% done</div>
       </div>
