@@ -8,6 +8,7 @@
 - `pnpm check:lint` - OxLint across all packages
 - `pnpm check:types` - TypeScript type checking
 - `pnpm fix` - Auto-fix format and lint issues
+- `pnpm doctor` - Run React Doctor (lint, a11y, performance and architecture diagnostics with a health score; also runs on PRs in CI, see `.claude/skills/react-doctor`)
 - `pnpm turbo run <command> --filter=<package>` - Target specific package/app
 
 ## Code Style
