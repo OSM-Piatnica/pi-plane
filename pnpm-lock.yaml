@@ -210,15 +210,6 @@ importers:
       '@react-router/node':
         specifier: 'catalog:'
         version: 8.3.0(react-router@8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.8.3)
-      '@tanstack/react-virtual':
-        specifier: ^3.13.12
-        version: 3.13.12(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      '@tanstack/virtual-core':
-        specifier: ^3.13.12
-        version: 3.13.12
-      axios:
-        specifier: 1.20.0
-        version: 1.20.0
       isbot:
         specifier: ^5.1.31
         version: 5.1.31
