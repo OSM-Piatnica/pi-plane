@@ -6,7 +6,6 @@
  */
 
 import { useTranslation } from "@plane/i18n";
-import { PillButton } from "@makeplane/propel/components/pill";
 import { CloseOutline } from "@makeplane/propel/icons";
 // plane imports
 import type { EViewAccess, TViewFilterProps } from "@plane/types";
@@ -23,6 +22,11 @@ type Props = {
   handleRemoveFilter: (key: keyof TViewFilterProps, value: string | EViewAccess | null) => void;
   alwaysAllowEditing?: boolean;
 };
+
+/** The retired `Tag` chrome: a bordered container for one filter's label, its chips and its
+ *  remove button. Not a `Pill`: that takes a label string and cannot hold nested interactive children. */
+const FILTER_GROUP_CLASSNAME =
+  "my-auto flex min-h-9 cursor-pointer flex-wrap items-center gap-1.5 rounded-md border border-subtle p-1.5 text-11 text-tertiary capitalize hover:text-secondary";
 
 const MEMBERS_FILTERS = new Set(["owned_by"]);
 const DATE_FILTERS = new Set(["created_at"]);
@@ -46,10 +50,7 @@ export function ViewAppliedFiltersList(props: Props) {
         if (Array.isArray(value) && value.length === 0) return;
 
         return (
-          <div
-            key={filterKey}
-            className="my-auto flex min-h-9 cursor-pointer flex-wrap items-center gap-1.5 rounded-md border border-subtle p-1.5 text-11 text-tertiary capitalize hover:text-secondary"
-          >
+          <div key={filterKey} className={FILTER_GROUP_CLASSNAME}>
             <span className="text-11 text-tertiary">{replaceUnderscoreIfSnakeCase(filterKey)}</span>
             {VIEW_ACCESS_FILTERS.has(filterKey) && (
               <AppliedAccessFilters
@@ -85,14 +86,10 @@ export function ViewAppliedFiltersList(props: Props) {
         );
       })}
       {isEditingAllowed && (
-        <PillButton
-          type="button"
-          size="md"
-          variant="outline"
-          label={t("common.clear_all")}
-          endIcon={<CloseOutline height={12} width={12} />}
-          onClick={handleClearAllFilters}
-        />
+        <button type="button" className={FILTER_GROUP_CLASSNAME} onClick={handleClearAllFilters}>
+          {t("common.clear_all")}
+          <CloseOutline height={12} width={12} />
+        </button>
       )}
     </div>
   );

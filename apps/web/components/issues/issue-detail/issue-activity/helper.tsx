@@ -7,7 +7,7 @@
 
 import { useMemo } from "react";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import { EFileAssetType } from "@plane/types";
 import type { TCommentsOperations } from "@plane/types";
 import { copyUrlToClipboard, formatTextList, generateWorkItemLink } from "@plane/utils";
@@ -59,7 +59,7 @@ export const useWorkItemCommentOperations = (
           copyUrlToClipboard(commentLink).then(() => {
             setToast({
               title: t("common.success"),
-              type: TOAST_TYPE.SUCCESS,
+              type: "success",
               message: t("issue.comments.copy_link.success"),
             });
             return;
@@ -68,7 +68,7 @@ export const useWorkItemCommentOperations = (
           console.error("Error in copying comment link:", error);
           setToast({
             title: t("common.error.label"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             message: t("issue.comments.copy_link.error"),
           });
         }
@@ -79,14 +79,14 @@ export const useWorkItemCommentOperations = (
           const comment = await createComment(workspaceSlug, projectId, issueId, data);
           setToast({
             title: t("common.success"),
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             message: t("issue.comments.create.success"),
           });
           return comment;
         } catch {
           setToast({
             title: t("common.error.label"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             message: t("issue.comments.create.error"),
           });
         }
@@ -97,13 +97,13 @@ export const useWorkItemCommentOperations = (
           await updateComment(workspaceSlug, projectId, issueId, commentId, data);
           setToast({
             title: t("common.success"),
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             message: t("issue.comments.update.success"),
           });
         } catch {
           setToast({
             title: t("common.error.label"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             message: t("issue.comments.update.error"),
           });
         }
@@ -114,13 +114,13 @@ export const useWorkItemCommentOperations = (
           await removeComment(workspaceSlug, projectId, issueId, commentId);
           setToast({
             title: t("common.success"),
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             message: t("issue.comments.remove.success"),
           });
         } catch {
           setToast({
             title: t("common.error.label"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             message: t("issue.comments.remove.error"),
           });
         }
@@ -165,13 +165,13 @@ export const useWorkItemCommentOperations = (
           await createCommentReaction(workspaceSlug, projectId, commentId, reaction);
           setToast({
             title: t("toast.success"),
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             message: t("updates.reaction.create.success.message"),
           });
         } catch {
           setToast({
             title: t("toast.error"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             message: t("updates.reaction.create.error.message"),
           });
         }
@@ -182,13 +182,13 @@ export const useWorkItemCommentOperations = (
           removeCommentReaction(workspaceSlug, projectId, commentId, reaction, currentUser.id);
           setToast({
             title: t("toast.success"),
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             message: t("updates.reaction.remove.success.message"),
           });
         } catch {
           setToast({
             title: t("toast.error"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             message: t("updates.reaction.remove.error.message"),
           });
         }

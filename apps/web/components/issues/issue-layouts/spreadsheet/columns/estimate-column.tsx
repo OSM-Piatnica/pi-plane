@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import type { TIssue } from "@plane/types";
 // components
-import { EstimateDropdown } from "@/components/dropdowns/estimate";
+import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select";
 
 type Props = {
   issue: TIssue;
@@ -25,7 +25,7 @@ export const SpreadsheetEstimateColumn = observer(function SpreadsheetEstimateCo
 
   return (
     <div className="h-11 border-b-[0.5px] border-subtle">
-      <EstimateDropdown
+      <EstimateSelect
         value={issue.estimate_point || undefined}
         onChange={(data) =>
           onChange(issue, { estimate_point: data }, { changed_property: "estimate_point", change_details: data })
@@ -33,10 +33,10 @@ export const SpreadsheetEstimateColumn = observer(function SpreadsheetEstimateCo
         placeholder={t("estimate")}
         projectId={issue.project_id ?? undefined}
         disabled={disabled}
-        buttonVariant="transparent-with-text"
-        buttonClassName="text-left rounded-none group-[.selected-issue-row]:bg-accent-primary/5 group-[.selected-issue-row]:hover:bg-accent-primary/10 px-page-x"
-        buttonContainerClassName="w-full"
         onClose={onClose}
+        // `.clickable` is what the table's keyboard navigation clicks on Enter / Space in a focused cell.
+        className="clickable"
+        variant="table-cell"
       />
     </div>
   );

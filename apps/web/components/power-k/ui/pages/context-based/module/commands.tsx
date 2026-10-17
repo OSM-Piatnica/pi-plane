@@ -12,8 +12,8 @@ import { LinkOutline, MembersOutline, StarOutline } from "@makeplane/propel/icon
 // plane imports
 import { EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { ModuleStatusIcon } from "@plane/propel/icons";
-import { setToast, TOAST_TYPE } from "@plane/propel/toast";
+import { ModuleStatusIcon } from "@plane/blocks/icons";
+import { setToast } from "@plane/blocks/toast";
 import type { IModule, TModuleStatus } from "@plane/types";
 import { EUserPermissions } from "@plane/types";
 import { copyTextToClipboard } from "@plane/utils";
@@ -47,7 +47,7 @@ export const usePowerKModuleContextBasedActions = (): TPowerKCommandConfig[] => 
       await updateModuleDetails(workspaceSlug.toString(), projectId.toString(), moduleDetails.id, formData).catch(
         () => {
           setToast({
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("toast.error"),
             message: t("power_k_ui.module_update_error"),
           });
@@ -77,7 +77,7 @@ export const usePowerKModuleContextBasedActions = (): TPowerKCommandConfig[] => 
       else addModuleToFavorites(workspaceSlug.toString(), moduleDetails.project_id, moduleDetails.id);
     } catch {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("power_k_ui.some_error_occurred"),
       });
     }
@@ -88,14 +88,14 @@ export const usePowerKModuleContextBasedActions = (): TPowerKCommandConfig[] => 
     copyTextToClipboard(url.href)
       .then(() => {
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("power_k.contextual_actions.module.copy_url_toast_success"),
         });
         return;
       })
       .catch(() => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("power_k.contextual_actions.module.copy_url_toast_error"),
         });
       });

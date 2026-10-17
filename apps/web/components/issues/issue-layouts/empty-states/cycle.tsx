@@ -12,8 +12,8 @@ import { useParams } from "next/navigation";
 // plane imports
 import { EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { EmptyStateDetailed } from "@plane/propel/empty-state";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { EmptyStateDetailed } from "@plane/blocks/empty-state";
+import { setToast } from "@plane/blocks/toast";
 import type { ISearchIssueResponse } from "@plane/types";
 import { EIssuesStoreType, EUserProjectRoles } from "@plane/types";
 // components
@@ -58,14 +58,14 @@ export const CycleEmptyState = observer(function CycleEmptyState() {
       .addIssueToCycle(workspaceSlug.toString(), projectId.toString(), cycleId.toString(), issueIds)
       .then(() =>
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("toast.success"),
           message: t("issue_ui.add_to_cycle_success"),
         })
       )
       .catch(() =>
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: t("issue_ui.add_to_cycle_failed"),
         })

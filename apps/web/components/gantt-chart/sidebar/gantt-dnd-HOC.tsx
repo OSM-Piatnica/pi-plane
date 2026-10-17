@@ -12,8 +12,8 @@ import { attachInstruction, extractInstruction } from "@atlaskit/pragmatic-drag-
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import { useOutsideClickDetector } from "@plane/hooks";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { DropIndicator } from "@plane/ui";
+import { setToast } from "@plane/blocks/toast";
+import { DropIndicator } from "@plane/blocks/common";
 import { HIGHLIGHT_WITH_LINE, highlightIssueOnDrop } from "@/components/issues/issue-layouts/utils";
 
 type Props = {
@@ -53,13 +53,13 @@ export const GanttDnDHOC = observer(function GanttDnDHOC(props: Props) {
       dropTargetForElements({
         element,
         canDrop: ({ source }) => source?.data?.id !== id && source?.data?.dragInstanceId === "GANTT_REORDER",
-        getData: ({ input, element: dropElement }) => {
+        getData: ({ input, element: targetElement }) => {
           const data = { id };
 
           // attach instruction for last in list
           return attachInstruction(data, {
             input,
-            element: dropElement,
+            element: targetElement,
             currentLevel: 0,
             indentPerLevel: 0,
             mode: isLastChild ? "last-in-group" : "standard",
@@ -110,7 +110,7 @@ export const GanttDnDHOC = observer(function GanttDnDHOC(props: Props) {
         if (!isDragEnabled) {
           setToast({
             title: t("warning"),
-            type: TOAST_TYPE.WARNING,
+            type: "warning",
             message: t("core_ui.drag_drop_manual_only"),
           });
         }

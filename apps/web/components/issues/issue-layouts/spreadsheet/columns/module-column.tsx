@@ -13,7 +13,7 @@ import { useParams } from "next/navigation";
 import { useTranslation } from "@plane/i18n";
 import type { TIssue } from "@plane/types";
 // components
-import { ModuleDropdown } from "@/components/dropdowns/module/dropdown";
+import { ModuleSelect } from "@/components/dropdowns/module/module-select";
 // hooks
 import { useIssuesStore } from "@/hooks/use-issue-layout-store";
 
@@ -51,19 +51,18 @@ export const SpreadsheetModuleColumn = observer(function SpreadsheetModuleColumn
 
   return (
     <div className="h-11 border-b-[0.5px] border-subtle">
-      <ModuleDropdown
+      <ModuleSelect
+        multiple
         projectId={issue?.project_id ?? undefined}
         value={issue?.module_ids ?? []}
         onChange={handleModule}
         disabled={disabled}
         placeholder={t("issue_ui.columns.select_modules")}
-        buttonVariant="transparent-with-text"
-        buttonContainerClassName="w-full relative flex items-center p-2 group-[.selected-issue-row]:bg-accent-primary/5 group-[.selected-issue-row]:hover:bg-accent-primary/10 px-page-x"
-        buttonClassName="relative leading-4 h-4.5 bg-transparent hover:bg-transparent !px-0"
+        // `.clickable` is what the table's keyboard navigation clicks on Enter / Space in a focused cell.
+        className="clickable"
+        variant="table-cell"
         onClose={onClose}
-        multiple
-        showCount
-        showTooltip
+        tooltip
       />
     </div>
   );

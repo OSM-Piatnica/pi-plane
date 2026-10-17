@@ -12,7 +12,7 @@ import { useParams } from "next/navigation";
 // plane imports
 import { EIssueGroupByToServerOptions, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { TGroupedIssues } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 // helpers
@@ -127,7 +127,7 @@ export const BaseCalendarRoot = observer(function BaseCalendarRoot(props: IBaseC
     ).catch((err) => {
       setToast({
         title: t("common.error.label"),
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         message: getIssueApiErrorMessage(err, t("entity.update.failed", { entity: t("issue.label") }), t),
       });
     });

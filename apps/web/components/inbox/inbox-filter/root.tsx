@@ -7,9 +7,8 @@
 
 import { ChevronDownOutline, FilterOutline } from "@makeplane/propel/icons";
 import { useTranslation } from "@plane/i18n";
-import { getButtonStyling } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/elements/button";
 // plane imports
-import { cn } from "@plane/utils";
 // components
 import { FiltersDropdown } from "@/components/issues/issue-layouts/filters";
 // hooks
@@ -21,11 +20,11 @@ import { InboxIssueOrderByDropdown } from "./sorting/order-by";
 function LargeButton() {
   const { t } = useTranslation();
   return (
-    <div className={cn(getButtonStyling("secondary", "base"), "px-2 text-tertiary")}>
+    <Button variant="secondary" size="sm" stretch="auto" render={<span />}>
       <FilterOutline className="size-3" />
       <span>{t("common.filters")}</span>
       <ChevronDownOutline className="size-3" />
-    </div>
+    </Button>
   );
 }
 

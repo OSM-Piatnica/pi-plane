@@ -6,7 +6,7 @@
  */
 
 // plane imports
-import { ScrollArea } from "@plane/propel/scrollarea";
+import { ScrollArea } from "@makeplane/propel/components/scroll-area";
 import { PageNavigationPaneOutlineTabEmptyState } from "@/components/pages/navigation-pane/tab-panels/empty-states/outline";
 // store
 import type { TPageInstance } from "@/store/pages/base-page";
@@ -25,18 +25,16 @@ export function PageNavigationPaneOutlineTabPanel(props: Props) {
   } = page;
 
   return (
-    <ScrollArea
-      orientation="vertical"
-      size="sm"
-      scrollType="hover"
-      className="hide-scrollbar size-full overflow-y-auto"
-      viewportClassName="px-4"
-    >
-      <PageContentBrowser
-        className="mt-0"
-        editorRef={editorRef}
-        emptyState={<PageNavigationPaneOutlineTabEmptyState />}
-      />
-    </ScrollArea>
+    <div className="flex size-full flex-col overflow-hidden">
+      <ScrollArea orientation="vertical">
+        <div className="px-4">
+          <PageContentBrowser
+            className="mt-0"
+            editorRef={editorRef}
+            emptyState={<PageNavigationPaneOutlineTabEmptyState />}
+          />
+        </div>
+      </ScrollArea>
+    </div>
   );
 }

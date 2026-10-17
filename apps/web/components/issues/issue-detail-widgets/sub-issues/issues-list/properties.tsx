@@ -11,17 +11,18 @@ import { useMemo } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import { DueDateOutline, StartDateOutline } from "@makeplane/propel/icons";
+import type { DateRangeValue } from "@plane/blocks/property-select";
+import { DateRangeSelect, DateSelect } from "@plane/blocks/property-select";
 import type { IIssueDisplayProperties, TIssue } from "@plane/types";
-import { getDate, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
+import { cn, getDate, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
 // components
-import { DateDropdown } from "@/components/dropdowns/date";
-import { DateRangeDropdown } from "@/components/dropdowns/date-range";
-import { MemberDropdown } from "@/components/dropdowns/member/dropdown";
-import { PriorityDropdown } from "@/components/dropdowns/priority";
-import { StateDropdown } from "@/components/dropdowns/state/dropdown";
+import { MemberSelect } from "@/components/dropdowns/member/member-select";
+import { PrioritySelect } from "@/components/dropdowns/priority/priority-select";
+import { StateSelect } from "@/components/dropdowns/state/state-select";
 // hooks
 import { WithDisplayPropertiesHOC } from "@/components/issues/issue-layouts/properties/with-display-properties-HOC";
 import { useProjectState } from "@/hooks/store/use-project-state";
+import { useUserProfile } from "@/hooks/store/user";
 
 type Props = {
   workspaceSlug: string;
@@ -49,6 +50,7 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
   const { workspaceSlug, parentIssueId, issueId, canEdit, updateSubIssue, displayProperties, issue } = props;
   const { t } = useTranslation();
   const { getStateById } = useProjectState();
+  const { data: userProfile } = useUserProfile();
 
   const handleStartDate = (date: Date | null) => {
     if (issue.project_id) {
@@ -62,6 +64,15 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
     if (issue.project_id) {
       updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, {
         target_date: date ? renderFormattedPayloadDate(date) : null,
+      });
+    }
+  };
+
+  const handleDateRangeUpdate = (range: DateRangeValue) => {
+    if (issue.project_id) {
+      updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, {
+        start_date: range.from ? renderFormattedPayloadDate(range.from) : null,
+        target_date: range.to ? renderFormattedPayloadDate(range.to) : null,
       });
     }
   };
@@ -85,47 +96,41 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
   return (
     <div className="relative flex items-center gap-2">
       <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="state">
-        <div className="h-5 flex-shrink-0">
-          <StateDropdown
-            value={issue.state_id}
-            projectId={issue.project_id ?? undefined}
-            onChange={(val) =>
-              issue.project_id &&
-              updateSubIssue(
-                workspaceSlug,
-                issue.project_id,
-                parentIssueId,
-                issueId,
-                {
-                  state_id: val,
-                },
-                { ...issue }
-              )
-            }
-            disabled={!canEdit}
-            buttonVariant="transparent-without-text"
-            buttonClassName="hover:bg-transparent px-0"
-            iconSize="size-5"
-            showTooltip
-          />
-        </div>
+        <StateSelect
+          value={issue.state_id}
+          projectId={issue.project_id ?? undefined}
+          onChange={(val) =>
+            issue.project_id &&
+            updateSubIssue(
+              workspaceSlug,
+              issue.project_id,
+              parentIssueId,
+              issueId,
+              {
+                state_id: val,
+              },
+              { ...issue }
+            )
+          }
+          disabled={!canEdit}
+          variant="pill-sm"
+          tooltip
+        />
       </WithDisplayPropertiesHOC>
 
       <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="priority">
-        <div className="h-5 flex-shrink-0">
-          <PriorityDropdown
-            value={issue.priority}
-            onChange={(val) =>
-              issue.project_id &&
-              updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, {
-                priority: val,
-              })
-            }
-            disabled={!canEdit}
-            buttonVariant="border-without-text"
-            showTooltip
-          />
-        </div>
+        <PrioritySelect
+          value={issue.priority}
+          onChange={(val) =>
+            issue.project_id &&
+            updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, {
+              priority: val,
+            })
+          }
+          disabled={!canEdit}
+          variant="pill-sm"
+          tooltip
+        />
       </WithDisplayPropertiesHOC>
 
       {/* merged dates */}
@@ -135,29 +140,24 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
         shouldRenderProperty={() => isDateRangeEnabled}
       >
         {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
-        <div className="h-5" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
-          <DateRangeDropdown
+        <div role="presentation" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
+          <DateRangeSelect
             value={{
-              from: getDate(issue.start_date) || undefined,
-              to: getDate(issue.target_date) || undefined,
+              from: getDate(issue.start_date) ?? null,
+              to: getDate(issue.target_date) ?? null,
             }}
-            placement="top-end"
-            onSelect={(range) => {
-              handleStartDate(range?.from ?? null);
-              handleTargetDate(range?.to ?? null);
-            }}
-            hideIcon={{
-              from: false,
-            }}
-            isClearable
-            mergeDates
-            buttonVariant={issue.start_date || issue.target_date ? "border-with-text" : "border-without-text"}
-            buttonClassName={shouldHighlight ? "text-danger-primary" : ""}
+            onChange={handleDateRangeUpdate}
+            icon={<StartDateOutline />}
+            clearable
+            className={cn({ "text-danger-primary": shouldHighlight })}
             disabled={!canEdit}
             showTooltip
-            customTooltipHeading="Date Range"
-            renderPlaceholder={false}
-            renderInPortal
+            tooltipHeading={t("project_cycles.date_range")}
+            weekStartsOn={userProfile?.start_of_the_week}
+            mergeDates
+            side="top"
+            align="end"
+            variant="pill-sm"
           />
         </div>
       </WithDisplayPropertiesHOC>
@@ -168,19 +168,21 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
         displayPropertyKey="start_date"
         shouldRenderProperty={() => !isDateRangeEnabled}
       >
-        <div className="h-5">
-          <DateDropdown
-            value={issue.start_date ?? null}
-            onChange={handleStartDate}
-            maxDate={maxDate}
-            placeholder={t("common.order_by.start_date")}
-            icon={<StartDateOutline className="h-3 w-3 flex-shrink-0" />}
-            buttonVariant={issue.start_date ? "border-with-text" : "border-without-text"}
-            optionsClassName="z-30"
-            disabled={!canEdit}
-            showTooltip
-          />
-        </div>
+        <DateSelect
+          value={getDate(issue.start_date) ?? null}
+          onChange={handleStartDate}
+          maxDate={maxDate}
+          placeholder={t("common.order_by.start_date")}
+          icon={<StartDateOutline />}
+          clearable
+          disabled={!canEdit}
+          showTooltip
+          tooltipHeading={t("common.order_by.start_date")}
+          weekStartsOn={userProfile?.start_of_the_week}
+          side="top"
+          align="end"
+          variant="pill-sm"
+        />
       </WithDisplayPropertiesHOC>
 
       {/* target/due date */}
@@ -189,40 +191,39 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
         displayPropertyKey="due_date"
         shouldRenderProperty={() => !isDateRangeEnabled}
       >
-        <div className="h-5">
-          <DateDropdown
-            value={issue?.target_date ?? null}
-            onChange={handleTargetDate}
-            minDate={minDate}
-            placeholder={t("common.order_by.due_date")}
-            icon={<DueDateOutline className="h-3 w-3 flex-shrink-0" />}
-            buttonVariant={issue.target_date ? "border-with-text" : "border-without-text"}
-            buttonClassName={shouldHighlight ? "text-danger-primary" : ""}
-            clearIconClassName="text-primary"
-            optionsClassName="z-30"
-            disabled={!canEdit}
-            showTooltip
-          />
-        </div>
+        <DateSelect
+          value={getDate(issue?.target_date) ?? null}
+          onChange={handleTargetDate}
+          minDate={minDate}
+          placeholder={t("common.order_by.due_date")}
+          icon={<DueDateOutline />}
+          className={cn({ "text-danger-primary": shouldHighlight })}
+          clearable
+          disabled={!canEdit}
+          showTooltip
+          tooltipHeading={t("common.order_by.due_date")}
+          weekStartsOn={userProfile?.start_of_the_week}
+          side="top"
+          align="end"
+          variant="pill-sm"
+        />
       </WithDisplayPropertiesHOC>
 
       <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="assignee">
-        <div className="h-5 flex-shrink-0">
-          <MemberDropdown
-            value={issue.assignee_ids}
-            projectId={issue.project_id ?? undefined}
-            onChange={(val) =>
-              issue.project_id &&
-              updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, {
-                assignee_ids: val,
-              })
-            }
-            disabled={!canEdit}
-            multiple
-            buttonVariant={(issue?.assignee_ids || []).length > 0 ? "transparent-without-text" : "border-without-text"}
-            buttonClassName={(issue?.assignee_ids || []).length > 0 ? "hover:bg-transparent px-0" : ""}
-          />
-        </div>
+        <MemberSelect
+          value={issue.assignee_ids ?? []}
+          projectId={issue.project_id ?? undefined}
+          onChange={(val) =>
+            issue.project_id &&
+            updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, {
+              assignee_ids: val,
+            })
+          }
+          disabled={!canEdit}
+          multiple
+          variant={issue.assignee_ids?.length ? "avatar-group-sm" : "pill-sm"}
+          tooltip={{ heading: t("common.assignees") }}
+        />
       </WithDisplayPropertiesHOC>
     </div>
   );

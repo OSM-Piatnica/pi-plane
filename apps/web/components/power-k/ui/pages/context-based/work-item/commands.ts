@@ -25,7 +25,7 @@ import {
 // plane imports
 import { EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { setToast, TOAST_TYPE } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { ICycle, IIssueLabel, IModule, TIssue, TIssuePriorities } from "@plane/types";
 import { EIssueServiceType, EUserPermissions } from "@plane/types";
 import { copyTextToClipboard } from "@plane/utils";
@@ -93,7 +93,7 @@ export const usePowerKWorkItemContextBasedCommands = (): TPowerKCommandConfig[] 
       if (!workspaceSlug || !entityDetails || !entityDetails.project_id) return;
       await updateEntity(workspaceSlug.toString(), entityDetails.project_id, entityDetails.id, formData).catch(() => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: isEpic ? t("power_k_ui.epic_update_error") : t("power_k_ui.work_item_update_error"),
         });
@@ -125,7 +125,7 @@ export const usePowerKWorkItemContextBasedCommands = (): TPowerKCommandConfig[] 
         await createEntitySubscription(workspaceSlug.toString(), entityDetails.project_id, entityDetails.id);
       }
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("toast.success"),
         message: isSubscribed
           ? t("issue.subscription.actions.unsubscribed")
@@ -133,7 +133,7 @@ export const usePowerKWorkItemContextBasedCommands = (): TPowerKCommandConfig[] 
       });
     } catch {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("common.error.message"),
       });
@@ -150,14 +150,14 @@ export const usePowerKWorkItemContextBasedCommands = (): TPowerKCommandConfig[] 
     copyTextToClipboard(id)
       .then(() => {
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("power_k.contextual_actions.work_item.copy_id_toast_success"),
         });
         return;
       })
       .catch(() => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("power_k.contextual_actions.work_item.copy_id_toast_error"),
         });
       });
@@ -168,14 +168,14 @@ export const usePowerKWorkItemContextBasedCommands = (): TPowerKCommandConfig[] 
     copyTextToClipboard(entityDetails?.name ?? "")
       .then(() => {
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("power_k.contextual_actions.work_item.copy_title_toast_success"),
         });
         return;
       })
       .catch(() => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("power_k.contextual_actions.work_item.copy_title_toast_error"),
         });
       });
@@ -187,14 +187,14 @@ export const usePowerKWorkItemContextBasedCommands = (): TPowerKCommandConfig[] 
     copyTextToClipboard(url.href)
       .then(() => {
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("power_k.contextual_actions.work_item.copy_url_toast_success"),
         });
         return;
       })
       .catch(() => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("power_k.contextual_actions.work_item.copy_url_toast_error"),
         });
       });
@@ -326,7 +326,7 @@ export const usePowerKWorkItemContextBasedCommands = (): TPowerKCommandConfig[] 
           }
         } catch {
           setToast({
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("toast.error"),
             message: entityDetails.is_epic ? t("power_k_ui.epic_update_error") : t("power_k_ui.work_item_update_error"),
           });
@@ -358,7 +358,7 @@ export const usePowerKWorkItemContextBasedCommands = (): TPowerKCommandConfig[] 
           }
         } catch {
           setToast({
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("toast.error"),
             message: entityDetails.is_epic ? t("power_k_ui.epic_update_error") : t("power_k_ui.work_item_update_error"),
           });

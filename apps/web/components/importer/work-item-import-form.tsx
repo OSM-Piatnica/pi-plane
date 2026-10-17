@@ -8,14 +8,14 @@ import { useRef, useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-import { ChevronDown, ChevronRight, ExternalLink, Upload } from "lucide-react";
+import { ExternalLink, Upload } from "lucide-react";
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { Collapsible } from "@plane/ui";
+import { setToast } from "@plane/blocks/toast";
+import { Button } from "@makeplane/propel/components/button";
 import { Checkbox } from "@makeplane/propel/components/checkbox";
-import { ProjectDropdown } from "@/components/dropdowns/project/dropdown";
+import { Collapsible } from "@makeplane/propel/components/collapsible";
+import { ProjectSelect } from "@/components/dropdowns/project/project-select";
 import { getApiErrorMessage, type ApiErrorLike } from "@/helpers/api-error";
 import { getProjectImportLink, MAX_PROJECT_CSV_SIZE_BYTES } from "@/helpers/project-csv-helpers";
 import { useProject } from "@/hooks/store/use-project";
@@ -104,7 +104,7 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
 
     if (!isValidWorkItemImportFile(selectedFile)) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("workspace_settings.settings.imports.work_items.invalid_file_type"),
       });
@@ -114,7 +114,7 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
     if (selectedFile.size > MAX_PROJECT_CSV_SIZE_BYTES) {
       const maxMb = Math.round(MAX_PROJECT_CSV_SIZE_BYTES / (1024 * 1024));
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("workspace_settings.settings.imports.file_too_large", { size: maxMb }),
       });
@@ -149,7 +149,7 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
       setWarningsOpen(true);
 
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("success"),
         message: t("workspace_settings.settings.imports.work_items.toasts.success.message", {
           count: result.created_work_items,
@@ -158,7 +158,7 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
       });
     } catch (error) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: getApiErrorMessage(
           error as ApiErrorLike,
@@ -184,12 +184,12 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
           <Button
             variant="primary"
             size="lg"
+            stretch="auto"
             type="submit"
             disabled={!canImport || !selectedFile || !projectId || importLoading}
             loading={importLoading}
-          >
-            {t("workspace_settings.settings.imports.work_items.import_button")}
-          </Button>
+            label={t("workspace_settings.settings.imports.work_items.import_button")}
+          />
         }
       >
         <SettingsBoxedControlItem
@@ -200,12 +200,13 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
               control={control}
               name="projectId"
               render={({ field: { value, onChange } }) => (
-                <div className="h-7 w-full max-w-72">
-                  <ProjectDropdown
+                <div className="w-full max-w-72">
+                  <ProjectSelect
                     value={value || null}
-                    onChange={(val: string) => onChange(val)}
+                    onChange={(val) => onChange(val ?? "")}
                     multiple={false}
-                    buttonVariant="border-with-text"
+                    variant="select-md"
+                    className="w-full"
                     placeholder={
                       hasProjects
                         ? t("workspace_settings.settings.imports.work_items.select_project_placeholder")
@@ -232,13 +233,14 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
               />
               <Button
                 variant="secondary"
+                size="lg"
+                stretch="auto"
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={!canImport || importLoading}
-                prependIcon={<Upload className="size-4" />}
-              >
-                {t("workspace_settings.settings.imports.work_items.select_file")}
-              </Button>
+                icon={<Upload className="size-4" />}
+                label={t("workspace_settings.settings.imports.work_items.select_file")}
+              />
               {selectedFile && <span className="max-w-md truncate text-13 text-secondary">{selectedFile.name}</span>}
             </div>
           }
@@ -305,17 +307,14 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
 
           {outcome.warnings.length > 0 ? (
             <Collapsible
-              className="mt-3 border-t border-subtle pt-3"
-              isOpen={warningsOpen}
-              onToggle={() => setWarningsOpen((open) => !open)}
-              buttonClassName="flex items-center gap-1.5 text-13 font-medium text-secondary"
-              title={
-                <>
-                  {warningsOpen ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
+              open={warningsOpen}
+              onOpenChange={setWarningsOpen}
+              trigger={
+                <span className="text-13 font-medium text-secondary">
                   {t("workspace_settings.settings.imports.work_items.warnings_heading", {
                     count: outcome.warnings.length,
                   })}
-                </>
+                </span>
               }
             >
               <ul className="mt-2 max-h-64 space-y-1 overflow-y-auto pl-6">

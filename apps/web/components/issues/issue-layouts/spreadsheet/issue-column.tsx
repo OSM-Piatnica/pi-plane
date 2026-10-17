@@ -8,7 +8,7 @@
 import { useRef } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 // types
 import type { IIssueDisplayProperties, TIssue } from "@plane/types";
 // components
@@ -44,7 +44,7 @@ export const IssueColumn = observer(function IssueColumn(props: Props) {
       await updateIssue(issue.project_id, issue.id, data);
     } catch (error) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("common.error.label"),
         message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: t("issue.label") }), t),
       });

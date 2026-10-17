@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 // plane ui
 import { Avatar } from "@makeplane/propel/components/avatar";
-import { Loader } from "@plane/ui";
+import { Loader } from "@plane/blocks/skeleton";
 // components
 import { getFileURL } from "@plane/utils";
 import { FilterHeader, FilterOption } from "@/components/issues/issue-layouts/filters";

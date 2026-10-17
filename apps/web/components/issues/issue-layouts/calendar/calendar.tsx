@@ -22,7 +22,7 @@ import type {
 } from "@plane/types";
 import { EIssuesStoreType, EIssueLayoutTypes } from "@plane/types";
 // ui
-import { Spinner } from "@plane/ui";
+import { Spinner } from "@plane/blocks/spinner";
 import { renderFormattedPayloadDate, cn } from "@plane/utils";
 // constants
 // hooks
@@ -124,7 +124,7 @@ export const CalendarChart = observer(function CalendarChart(props: Props) {
       })
     );
     // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
-  }, [scrollableContainerRef?.current]);
+  }, []);
 
   if (!calendarPayload || !formattedDatePayload)
     return (

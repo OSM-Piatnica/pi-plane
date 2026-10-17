@@ -198,4 +198,3 @@ volumes:
   redisdata:
   uploads:
   rabbitmq_data:
-  

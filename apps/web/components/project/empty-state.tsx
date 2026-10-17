@@ -1,19 +1,20 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
 // ui
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 
 type Props = {
   title: string;
   description?: React.ReactNode;
   image: any;
   primaryButton?: {
-    icon?: any;
+    icon?: React.ReactNode;
     text: string;
     onClick: () => void;
   };
@@ -33,14 +34,15 @@ export function EmptyState({ title, description, image, primaryButton, secondary
         <div className="flex items-center gap-4">
           {primaryButton && (
             <Button
-              size="xl"
               variant="primary"
-              prependIcon={primaryButton.icon}
+              size="lg"
+              stretch="auto"
+              label={primaryButton.text}
+              icon={primaryButton.icon}
+              iconPosition="start"
               onClick={primaryButton.onClick}
               disabled={disabled}
-            >
-              {primaryButton.text}
-            </Button>
+            />
           )}
           {secondaryButton}
         </div>

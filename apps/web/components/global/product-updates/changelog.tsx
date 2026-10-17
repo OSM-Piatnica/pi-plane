@@ -7,12 +7,16 @@
 
 import { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
+// plane imports
+import { Loader } from "@plane/blocks/skeleton";
+import { useTranslation } from "@plane/i18n";
 // hooks
-import { Loader } from "@plane/ui";
 import { ProductUpdatesFallback } from "@/components/global/product-updates/fallback";
 import { useInstance } from "@/hooks/store/use-instance";
 
 export const ProductUpdatesChangelog = observer(function ProductUpdatesChangelog() {
+  // plane hooks
+  const { t } = useTranslation();
   // refs
   const isLoadingRef = useRef(true);
   // states
@@ -73,16 +77,17 @@ export const ProductUpdatesChangelog = observer(function ProductUpdatesChangelog
   }
 
   return (
-    <div className="vertical-scrollbar relative mx-0.5 flex scrollbar-xs h-[550px] flex-col overflow-hidden overflow-y-scroll px-6">
+    <div className="relative flex h-[550px] flex-col overflow-hidden">
       {isLoading && (
         <Loader className="absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-3">
           <Loader.Item height="95%" width="95%" />
         </Loader>
       )}
-      {/* oxlint-disable-next-line react/iframe-missing-sandbox, jsx-a11y/iframe-has-title -- existing markup; behaviour unchanged */}
+      {/* oxlint-disable-next-line react/iframe-missing-sandbox */}
       <iframe
         src={changeLogUrl}
         className={`h-full w-full ${isLoading ? "opacity-0" : "opacity-100"} transition-opacity duration-200`}
+        title={t("whats_new")}
         onLoad={handleIframeLoad}
         onError={handleIframeError}
       />

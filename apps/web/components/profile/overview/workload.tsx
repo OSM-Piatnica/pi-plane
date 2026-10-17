@@ -10,7 +10,7 @@ import { STATE_GROUPS } from "@plane/constants";
 // types
 import { useTranslation } from "@plane/i18n";
 import type { IUserStateDistribution } from "@plane/types";
-import { Card, ECardDirection, ECardSpacing } from "@plane/ui";
+import { Card } from "@plane/blocks/card";
 // constants
 
 type Props = {
@@ -28,7 +28,7 @@ export function ProfileWorkload({ stateDistribution }: Props) {
           <div key={group.state_group}>
             {/* oxlint-disable-next-line jsx-a11y/anchor-is-valid -- anchor kept as-is */}
             <a>
-              <Card direction={ECardDirection.ROW} spacing={ECardSpacing.SM}>
+              <Card direction="row" spacing="sm">
                 <div
                   className="my-2 h-3 w-3 rounded-xs"
                   style={{

@@ -12,7 +12,7 @@ import type {
 } from "@atlaskit/pragmatic-drag-and-drop/dist/types/internal-types";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import { useHome } from "@/hooks/store/use-home";
 import { WidgetItem } from "./widget-item";
 import type { TargetData } from "./widget.helpers";
@@ -40,7 +40,7 @@ export const WidgetList = observer(function WidgetList({ workspaceSlug }: { work
       reorderWidget(workspaceSlug, sourceData.id, droppedId, instruction)
         .then(() => {
           setToast({
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             title: t("toast.success"),
             message: t("home.widget.reordered_successfully"),
           });
@@ -48,7 +48,7 @@ export const WidgetList = observer(function WidgetList({ workspaceSlug }: { work
         })
         .catch(() => {
           setToast({
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("toast.error"),
             message: t("home.widget.reordering_failed"),
           });

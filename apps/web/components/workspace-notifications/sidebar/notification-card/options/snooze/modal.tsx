@@ -10,12 +10,28 @@ import { useForm, Controller } from "react-hook-form";
 // plane imports
 import { allTimeIn30MinutesInterval12HoursFormat } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
+import {
+  Dialog,
+  DialogActions,
+  DialogBody,
+  DialogClose,
+  DialogCloseGroup,
+  DialogContent,
+  DialogHeader,
+  DialogHeading,
+  DialogMain,
+  DialogTitle,
+} from "@makeplane/propel/components/dialog";
+import { Icon } from "@makeplane/propel/components/icon";
+import { IconButton } from "@makeplane/propel/components/icon-button";
 import { CloseOutline } from "@makeplane/propel/icons";
-import { CustomSelect, EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
+import { DateSelect } from "@plane/blocks/property-select";
+import { Select } from "@plane/blocks/select";
 // components
 import { getDate, cn } from "@plane/utils";
-import { DateDropdown } from "@/components/dropdowns/date";
+// hooks
+import { useUserProfile } from "@/hooks/store/user";
 
 type TNotificationSnoozeModal = {
   isOpen: boolean;
@@ -37,12 +53,16 @@ const defaultValues: FormValues = {
 
 const timeStamps = allTimeIn30MinutesInterval12HoursFormat;
 
+type TTimeOption = (typeof allTimeIn30MinutesInterval12HoursFormat)[number];
+
 export function NotificationSnoozeModal(props: TNotificationSnoozeModal) {
   const { isOpen, onClose, onSubmit: handleSubmitSnooze } = props;
   // translation
   const { t } = useTranslation();
 
   const { workspaceSlug } = useParams();
+  // store hooks
+  const { data: userProfile } = useUserProfile();
 
   const {
     formState: { isSubmitting },
@@ -118,128 +138,142 @@ export function NotificationSnoozeModal(props: TNotificationSnoozeModal) {
   };
 
   return (
-    <ModalCore isOpen={isOpen} handleClose={handleClose} position={EModalPosition.CENTER} width={EModalWidth.XXL}>
-      <form onSubmit={handleSubmit(onSubmit)} className="p-5">
-        <div className="flex items-center justify-between">
-          <h3 className="text-h5-medium leading-6 text-primary">{t("notification_ui.snooze_modal.title")}</h3>
-
-          <div>
-            <button type="button" onClick={handleClose}>
-              <CloseOutline className="h-5 w-5 text-primary" />
-            </button>
-          </div>
-        </div>
-
-        <div className="mt-5 flex flex-col gap-3 md:!flex-row md:items-center">
-          <div className="flex-1 pb-3 md:pb-0">
-            <h6 className="mb-2 block text-body-xs-medium text-placeholder">
-              {t("notification_ui.snooze_modal.pick_date")}
-            </h6>
-            <Controller
-              name="date"
-              control={control}
-              rules={{ required: t("notification_ui.snooze_modal.date_required") }}
-              render={({ field: { value, onChange } }) => (
-                <DateDropdown
-                  value={value || null}
-                  placeholder={t("notification_ui.snooze_modal.select_date")}
-                  onChange={(val) => {
-                    setValue("time", undefined);
-                    onChange(val);
-                  }}
-                  minDate={new Date()}
-                  buttonVariant="border-with-text"
-                  buttonContainerClassName="w-full text-left"
-                  buttonClassName="border-strong px-3 py-2.5"
-                  hideIcon
-                />
-              )}
+    <Dialog
+      open={isOpen}
+      // The legacy ModalCore closed on Escape and outside click via `handleClose`, so default dismissal stays.
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+    >
+      <DialogContent size="md">
+        <DialogCloseGroup>
+          <IconButton
+            variant="ghost"
+            size="xs"
+            aria-label={t("close")}
+            icon={<Icon icon={CloseOutline} />}
+            render={<DialogClose />}
+          />
+        </DialogCloseGroup>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex min-h-0 flex-1 flex-col">
+          <DialogMain>
+            <DialogHeader>
+              <DialogHeading>
+                <DialogTitle>{t("notification_ui.snooze_modal.title")}</DialogTitle>
+              </DialogHeading>
+            </DialogHeader>
+            <DialogBody tabIndex={0}>
+              <div className="flex flex-col gap-3 md:!flex-row md:items-center">
+                <div className="flex-1 pb-3 md:pb-0">
+                  <h6 className="mb-2 block text-body-xs-medium text-placeholder">
+                    {t("notification_ui.snooze_modal.pick_date")}
+                  </h6>
+                  <Controller
+                    name="date"
+                    control={control}
+                    rules={{ required: t("notification_ui.snooze_modal.date_required") }}
+                    render={({ field: { value, onChange } }) => (
+                      <DateSelect
+                        value={value ?? null}
+                        placeholder={t("notification_ui.snooze_modal.select_date")}
+                        onChange={(val) => {
+                          setValue("time", undefined);
+                          onChange(val ?? undefined);
+                        }}
+                        minDate={new Date()}
+                        clearable
+                        weekStartsOn={userProfile?.start_of_the_week}
+                        variant="select-lg"
+                      />
+                    )}
+                  />
+                </div>
+                <div className="flex-1">
+                  <h6 className="mb-2 block text-body-xs-medium text-placeholder">
+                    {t("notification_ui.snooze_modal.pick_time")}
+                  </h6>
+                  <Controller
+                    control={control}
+                    name="time"
+                    rules={{ required: t("notification_ui.snooze_modal.time_required") }}
+                    render={({ field: { value, onChange } }) => (
+                      <Select<TTimeOption>
+                        value={timeStamps.find((option) => option.value === value) ?? null}
+                        onChange={onChange}
+                        getValues={getTimeStamp}
+                        getOptionValue={(option) => option.value}
+                        getOptionLabel={(option) => option.label}
+                        showSearch={false}
+                        pinSelected={false}
+                        emptyMessage={t("notification_ui.snooze_modal.no_time_available")}
+                        header={
+                          <div className="mb-2 flex h-9 w-full overflow-hidden rounded-xs">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setValue("period", "AM");
+                              }}
+                              className={cn(
+                                "flex h-full w-1/2 cursor-pointer items-center justify-center text-center",
+                                {
+                                  "bg-accent-primary/90 text-on-color": watch("period") === "AM",
+                                  "bg-layer-1": watch("period") !== "AM",
+                                }
+                              )}
+                            >
+                              AM
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setValue("period", "PM");
+                              }}
+                              className={cn(
+                                "flex h-full w-1/2 cursor-pointer items-center justify-center text-center",
+                                {
+                                  "bg-accent-primary/90 text-on-color": watch("period") === "PM",
+                                  "bg-layer-1": watch("period") !== "PM",
+                                }
+                              )}
+                            >
+                              PM
+                            </button>
+                          </div>
+                        }
+                      >
+                        <Select.Trigger<TTimeOption> variant="select-lg">
+                          <span className="min-w-0 grow truncate text-left">
+                            {value ? (
+                              <span>
+                                {value} {watch("period").toLowerCase()}
+                              </span>
+                            ) : (
+                              <span className="text-body-xs-medium text-placeholder">
+                                {t("notification_ui.snooze_modal.select_time")}
+                              </span>
+                            )}
+                          </span>
+                        </Select.Trigger>
+                      </Select>
+                    )}
+                  />
+                </div>
+              </div>
+            </DialogBody>
+          </DialogMain>
+          <DialogActions>
+            <Button variant="secondary" size="md" stretch="auto" label={t("cancel")} onClick={handleClose} />
+            <Button
+              variant="primary"
+              size="md"
+              stretch="auto"
+              type="submit"
+              label={isSubmitting ? t("notification_ui.snooze_modal.submitting") : t("submit")}
+              loading={isSubmitting}
             />
-          </div>
-          <div className="flex-1">
-            <h6 className="mb-2 block text-body-xs-medium text-placeholder">
-              {t("notification_ui.snooze_modal.pick_time")}
-            </h6>
-            <Controller
-              control={control}
-              name="time"
-              rules={{ required: t("notification_ui.snooze_modal.time_required") }}
-              render={({ field: { value, onChange } }) => (
-                <CustomSelect
-                  value={value}
-                  onChange={onChange}
-                  label={
-                    <div className="truncate">
-                      {value ? (
-                        <span>
-                          {value} {watch("period").toLowerCase()}
-                        </span>
-                      ) : (
-                        <span className="text-body-xs-medium text-placeholder">
-                          {t("notification_ui.snooze_modal.select_time")}
-                        </span>
-                      )}
-                    </div>
-                  }
-                  input
-                >
-                  <div className="mb-2 flex h-9 w-full overflow-hidden rounded-xs">
-                    {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged */}
-                    <div
-                      onClick={() => {
-                        setValue("period", "AM");
-                      }}
-                      className={cn("flex h-full w-1/2 cursor-pointer items-center justify-center text-center", {
-                        "bg-accent-primary/90 text-on-color": watch("period") === "AM",
-                        "bg-layer-1": watch("period") !== "AM",
-                      })}
-                    >
-                      AM
-                    </div>
-                    {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged */}
-                    <div
-                      onClick={() => {
-                        setValue("period", "PM");
-                      }}
-                      className={cn("flex h-full w-1/2 cursor-pointer items-center justify-center text-center", {
-                        "bg-accent-primary/90 text-on-color": watch("period") === "PM",
-                        "bg-layer-1": watch("period") !== "PM",
-                      })}
-                    >
-                      PM
-                    </div>
-                  </div>
-                  {getTimeStamp().length > 0 ? (
-                    getTimeStamp().map((time, index) => (
-                      // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
-                      <CustomSelect.Option key={`${time}-${index}`} value={time.value}>
-                        <div className="flex items-center">
-                          <span className="ml-3 block truncate">{time.label}</span>
-                        </div>
-                      </CustomSelect.Option>
-                    ))
-                  ) : (
-                    <p className="p-3 text-center text-secondary">
-                      {t("notification_ui.snooze_modal.no_time_available")}
-                    </p>
-                  )}
-                </CustomSelect>
-              )}
-            />
-          </div>
-        </div>
-
-        <div className="mt-5 flex items-center justify-between gap-2">
-          <div className="flex w-full items-center justify-end gap-2">
-            <Button variant="secondary" size="lg" onClick={handleClose}>
-              {t("cancel")}
-            </Button>
-            <Button variant="primary" size="lg" type="submit" loading={isSubmitting}>
-              {isSubmitting ? t("notification_ui.snooze_modal.submitting") : t("submit")}
-            </Button>
-          </div>
-        </div>
-      </form>
-    </ModalCore>
+          </DialogActions>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -8,13 +8,15 @@
 import { observer } from "mobx-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { Table } from "@plane/ui";
+import { setToast } from "@plane/blocks/toast";
+// components
+import { DataTable } from "@/components/common/data-table";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { useProjectColumns } from "@/components/projects/settings/useProjectColumns";
+import type { RowData } from "@/components/projects/settings/useProjectColumns";
 // store
 import type { IProjectMemberDetails } from "@/store/member/project/base-project-member.store";
 // local imports
@@ -55,7 +57,7 @@ export const ProjectMemberListItem = observer(function ProjectMemberListItem(pro
         })
         .catch((err) => {
           setToast({
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("project_components.member_list_item.leave_error_title"),
             message: err?.error || t("something_went_wrong_please_try_again"),
           });
@@ -63,7 +65,7 @@ export const ProjectMemberListItem = observer(function ProjectMemberListItem(pro
     } else
       await removeMemberFromProject(workspaceSlug.toString(), projectId.toString(), memberId).catch((err) =>
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("project_components.member_list_item.remove_error_title"),
           message: err?.error || t("something_went_wrong_please_try_again"),
         })
@@ -81,15 +83,15 @@ export const ProjectMemberListItem = observer(function ProjectMemberListItem(pro
           onSubmit={() => handleRemove(removeMemberModal.member.id)}
         />
       )}
-      <Table
+      <DataTable<RowData>
         columns={columns}
-        data={(memberDetails?.filter((member): member is IProjectMemberDetails => member !== null) ?? []) as any}
+        // The store rows carry an `IUserLite` member while the columns read the `IWorkspaceMember`
+        // fields they share; the legacy table erased this with `any`.
+        data={
+          (memberDetails?.filter((member): member is IProjectMemberDetails => member !== null) ??
+            []) as unknown as RowData[]
+        }
         keyExtractor={(rowData) => rowData?.member.id ?? ""}
-        tHeadClassName="border-b border-subtle"
-        thClassName="text-left font-medium divide-x-0 text-placeholder"
-        tBodyClassName="divide-y-0"
-        tBodyTrClassName="divide-x-0 p-4 h-[40px] text-secondary"
-        tHeadTrClassName="divide-x-0"
       />
     </>
   );

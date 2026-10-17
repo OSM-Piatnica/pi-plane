@@ -7,7 +7,7 @@
 
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import { Switch } from "@makeplane/propel/components/switch";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
@@ -37,7 +37,7 @@ export const EstimateDisableSwitch = observer(function EstimateDisableSwitch(pro
         estimate: currentProjectActiveEstimate ? null : currentActiveEstimateId,
       });
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: currentProjectActiveEstimate
           ? t("project_settings.estimates.toasts.disabled.success.title")
           : t("project_settings.estimates.toasts.enabled.success.title"),
@@ -47,7 +47,7 @@ export const EstimateDisableSwitch = observer(function EstimateDisableSwitch(pro
       });
     } catch (_err) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("project_settings.estimates.toasts.disabled.error.title"),
         message: t("project_settings.estimates.toasts.disabled.error.message"),
       });

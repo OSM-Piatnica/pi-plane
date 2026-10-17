@@ -42,8 +42,9 @@ catalog:
   vite: 8.3.4
 
 overrides:
-  # @makeplane/propel 0.2.0 was built against @base-ui/react 1.6; the 1.9 line changes the
-  # toast manager types, which breaks createToastManager()/ToastProvider typing.
+  # @makeplane/propel and @plane/blocks must share one Base UI copy: two copies mean two
+  # React contexts, so a blocks part rendered inside a propel root cannot see it. 1.6 is also
+  # what propel was built against; the 1.9 line changes the toast manager types.
   "@base-ui/react": 1.6.0
   # Force a single React across the whole graph. With node-linker=isolated,
   # auto-install-peers and resolution-mode=highest, a dependency still declaring a
@@ -164,13 +165,9 @@ minimumReleaseAgeExclude:
   - "rolldown@1.2.14"
   - "sanitize-html@2.18.1"
 
-patchedDependencies:
-  react-color@2.19.3: patches/react-color@2.19.3.patch
-
 peerDependencyRules:
   allowedVersions:
     # Peer ranges predate React 19, but none of these use anything React 19 removed
     # (findDOMNode, string refs, element.ref reads, defaultProps on function components).
-    "react-popper>react": "19"
     "react-masonry-component>react": "19"
     "use-font-face-observer>react": "19"

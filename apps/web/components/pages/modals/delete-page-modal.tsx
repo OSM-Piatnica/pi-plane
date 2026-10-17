@@ -10,8 +10,8 @@ import { observer } from "mobx-react";
 // ui
 import { useParams } from "next/navigation";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { AlertModalCore } from "@plane/ui";
+import { setToast } from "@plane/blocks/toast";
+import { ConfirmDialog } from "@plane/blocks/dialog";
 import { getPageName } from "@plane/utils";
 // constants
 import { useAppRouter } from "@/hooks/use-app-router";
@@ -50,35 +50,33 @@ export const DeletePageModal = observer(function DeletePageModal(props: TConfirm
   const handleDelete = async () => {
     if (!pageId) return;
     setIsDeleting(true);
-    await removePage({ pageId })
-      .then(() => {
-        handleClose();
-        setToast({
-          type: TOAST_TYPE.SUCCESS,
-          title: t("toast.success"),
-          message: t("page_ui.delete_modal.success"),
-        });
-
-        if (routePageId) {
-          router.back();
-        }
-        return;
-      })
-      .catch(() => {
-        setToast({
-          type: TOAST_TYPE.ERROR,
-          title: t("toast.error"),
-          message: t("page_ui.delete_modal.error"),
-        });
+    try {
+      await removePage({ pageId });
+      handleClose();
+      setToast({
+        type: "success",
+        title: t("toast.success"),
+        message: t("page_ui.delete_modal.success"),
       });
 
-    setIsDeleting(false);
+      if (routePageId) {
+        router.back();
+      }
+    } catch {
+      setToast({
+        type: "error",
+        title: t("toast.error"),
+        message: t("page_ui.delete_modal.error"),
+      });
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   if (!page || !page.id) return null;
 
   return (
-    <AlertModalCore
+    <ConfirmDialog
       handleClose={handleClose}
       handleSubmit={handleDelete}
       isSubmitting={isDeleting}

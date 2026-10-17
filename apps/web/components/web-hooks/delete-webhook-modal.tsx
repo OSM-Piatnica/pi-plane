@@ -9,8 +9,8 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 // ui
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { AlertModalCore } from "@plane/ui";
+import { ConfirmDialog } from "@plane/blocks/dialog";
+import { setToast } from "@plane/blocks/toast";
 // hooks
 import { useWebhook } from "@/hooks/store/use-webhook";
 import { useAppRouter } from "@/hooks/use-app-router";
@@ -43,13 +43,13 @@ export function DeleteWebhookModal(props: IDeleteWebhook) {
       await removeWebhook(workspaceSlug.toString(), webhookId.toString());
       router.replace(`/${workspaceSlug}/settings/webhooks/`);
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("toast.success"),
         message: t("project_components.webhooks.deleted"),
       });
     } catch (_error) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("project_components.webhooks.delete_error"),
       });
@@ -58,7 +58,7 @@ export function DeleteWebhookModal(props: IDeleteWebhook) {
   };
 
   return (
-    <AlertModalCore
+    <ConfirmDialog
       handleClose={handleClose}
       handleSubmit={handleDelete}
       isSubmitting={isDeleting}

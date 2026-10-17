@@ -1,17 +1,18 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 // ui
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
+
+const handleRetry = () => {
+  window.location.reload();
+};
 
 function ErrorPage() {
-  const handleRetry = () => {
-    window.location.reload();
-  };
-
   return (
     <div className="grid h-screen place-items-center bg-surface-1 p-4">
       <div className="space-y-8 text-center">
@@ -31,9 +32,7 @@ function ErrorPage() {
           </p>
         </div>
         <div className="flex items-center justify-center gap-2">
-          <Button variant="primary" size="lg" onClick={handleRetry}>
-            Refresh
-          </Button>
+          <Button variant="primary" size="md" stretch="auto" label="Refresh" onClick={handleRetry} />
           {/* <Button variant="secondary" size="lg" onClick={() => {}}>
             Sign out
           </Button> */}

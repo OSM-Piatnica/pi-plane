@@ -12,7 +12,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import { mutate } from "swr";
 import { ArrowDownToLine, ArrowUpToLine } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
-import { Tabs } from "@plane/propel/tabs";
+import { Tab, Tabs, TabsList, TabsPanel } from "@makeplane/propel/components/tabs";
 // constants
 import { EXPORT_SERVICES_LIST, PROJECT_IMPORT_SERVICES_LIST } from "@plane/constants";
 import { PrevImports } from "@/components/importer/prev-imports";
@@ -39,45 +39,53 @@ export const ExportGuide = observer(function ExportGuide() {
   );
 
   return (
-    <Tabs defaultValue={defaultTab} className="gap-y-6">
-      <Tabs.List className="h-8 w-fit min-w-64">
-        <Tabs.Trigger value={EXPORT_TAB} className="gap-1.5 px-4">
-          <ArrowUpToLine className="size-4" />
-          {t("workspace_settings.settings.exports.tabs.export")}
-        </Tabs.Trigger>
-        <Tabs.Trigger value={IMPORT_TAB} className="gap-1.5 px-4">
-          <ArrowDownToLine className="size-4" />
-          {t("workspace_settings.settings.exports.tabs.import")}
-        </Tabs.Trigger>
-      </Tabs.List>
+    <Tabs variant="contained" defaultValue={defaultTab}>
+      <TabsList>
+        <Tab
+          value={EXPORT_TAB}
+          icon={<ArrowUpToLine className="size-4" />}
+          label={t("workspace_settings.settings.exports.tabs.export")}
+        />
+        <Tab
+          value={IMPORT_TAB}
+          icon={<ArrowDownToLine className="size-4" />}
+          label={t("workspace_settings.settings.exports.tabs.import")}
+        />
+      </TabsList>
 
-      <Tabs.Content value={EXPORT_TAB} className="flex w-full flex-col gap-y-13">
-        <ExportForm
-          workspaceSlug={workspaceSlug as string}
-          provider={provider}
-          mutateServices={() => mutate(EXPORT_SERVICES_LIST(workspaceSlug as string, `${exportCursor}`, `${per_page}`))}
-        />
-        <PrevExports
-          workspaceSlug={workspaceSlug as string}
-          cursor={exportCursor}
-          per_page={per_page}
-          setCursor={setExportCursor}
-        />
-      </Tabs.Content>
+      <TabsPanel value={EXPORT_TAB}>
+        <div className="mt-6 flex w-full flex-col gap-y-13">
+          <ExportForm
+            workspaceSlug={workspaceSlug as string}
+            provider={provider}
+            mutateServices={() =>
+              mutate(EXPORT_SERVICES_LIST(workspaceSlug as string, `${exportCursor}`, `${per_page}`))
+            }
+          />
+          <PrevExports
+            workspaceSlug={workspaceSlug as string}
+            cursor={exportCursor}
+            per_page={per_page}
+            setCursor={setExportCursor}
+          />
+        </div>
+      </TabsPanel>
 
-      <Tabs.Content value={IMPORT_TAB} className="flex w-full flex-col gap-y-13">
-        <WorkItemImportForm
-          mutateServices={() =>
-            mutate(PROJECT_IMPORT_SERVICES_LIST(workspaceSlug as string, `${importCursor}`, `${per_page}`))
-          }
-        />
-        <PrevImports
-          workspaceSlug={workspaceSlug as string}
-          cursor={importCursor}
-          per_page={per_page}
-          setCursor={setImportCursor}
-        />
-      </Tabs.Content>
+      <TabsPanel value={IMPORT_TAB}>
+        <div className="mt-6 flex w-full flex-col gap-y-13">
+          <WorkItemImportForm
+            mutateServices={() =>
+              mutate(PROJECT_IMPORT_SERVICES_LIST(workspaceSlug as string, `${importCursor}`, `${per_page}`))
+            }
+          />
+          <PrevImports
+            workspaceSlug={workspaceSlug as string}
+            cursor={importCursor}
+            per_page={per_page}
+            setCursor={setImportCursor}
+          />
+        </div>
+      </TabsPanel>
     </Tabs>
   );
 });

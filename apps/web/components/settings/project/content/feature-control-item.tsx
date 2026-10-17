@@ -8,7 +8,7 @@
 import { observer } from "mobx-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { setPromiseToast } from "@plane/propel/toast";
+import { setPromiseToast } from "@plane/blocks/toast";
 import type { IProject } from "@plane/types";
 import { Switch } from "@makeplane/propel/components/switch";
 // components

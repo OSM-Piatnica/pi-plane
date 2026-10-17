@@ -9,10 +9,10 @@ import { useState } from "react";
 import { mutate } from "swr";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { Dialog, DialogContent } from "@makeplane/propel/components/dialog";
+import { setToast } from "@plane/blocks/toast";
 import { APITokenService } from "@plane/services";
 import type { IApiToken } from "@plane/types";
-import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
 import { renderFormattedDate, csvDownload } from "@plane/utils";
 // constants
 import { API_TOKENS_LIST } from "@plane/constants";
@@ -76,7 +76,7 @@ export function CreateApiTokenModal(props: Props) {
       })
       .catch((err) => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: err.message || err.detail,
         });
@@ -86,17 +86,21 @@ export function CreateApiTokenModal(props: Props) {
   };
 
   return (
-    <ModalCore isOpen={isOpen} handleClose={() => {}} position={EModalPosition.TOP} width={EModalWidth.XXL}>
-      {generatedToken ? (
-        <GeneratedTokenDetails handleClose={handleClose} tokenDetails={generatedToken} />
-      ) : (
-        <CreateApiTokenForm
-          handleClose={handleClose}
-          neverExpires={neverExpires}
-          toggleNeverExpires={() => setNeverExpires((prevData) => !prevData)}
-          onSubmit={handleCreateToken}
-        />
-      )}
-    </ModalCore>
+    /* Dismissed only through its own buttons, matching the modal it replaces, whose `handleClose`
+       was a no-op. */
+    <Dialog open={isOpen} disablePointerDismissal onOpenChange={() => {}}>
+      <DialogContent size="md">
+        {generatedToken ? (
+          <GeneratedTokenDetails handleClose={handleClose} tokenDetails={generatedToken} />
+        ) : (
+          <CreateApiTokenForm
+            handleClose={handleClose}
+            neverExpires={neverExpires}
+            toggleNeverExpires={() => setNeverExpires((prevData) => !prevData)}
+            onSubmit={handleCreateToken}
+          />
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }

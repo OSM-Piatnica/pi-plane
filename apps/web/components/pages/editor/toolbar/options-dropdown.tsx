@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import { ClipboardOutline, ExportOutline, HistoryOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import { Switch } from "@makeplane/propel/components/switch";
 // hooks
 import { useAppRouter } from "@/hooks/use-app-router";
@@ -55,34 +55,23 @@ export const PageOptionsDropdown = observer(function PageOptionsDropdown(props: 
         {
           key: "full-screen",
           action: () => handleFullWidth(!isFullWidth),
+          title: t("page_ui.editor.full_width"),
+          // The row itself does the toggling; the switch is the state readout at the row's end.
           customContent: (
-            <>
-              {t("page_ui.editor.full_width")}
-              <Switch
-                size="sm"
-                checked={isFullWidth}
-                onCheckedChange={() => {}}
-                aria-label={t("page_ui.editor.full_width")}
-              />
-            </>
+            <span className="pointer-events-none">
+              <Switch size="sm" checked={isFullWidth} aria-hidden tabIndex={-1} />
+            </span>
           ),
-          className: "flex items-center justify-between gap-2",
         },
         {
           key: "sticky-toolbar",
           action: () => handleStickyToolbar(!isStickyToolbarEnabled),
+          title: t("page_ui.editor.sticky_toolbar"),
           customContent: (
-            <>
-              {t("page_ui.editor.sticky_toolbar")}
-              <Switch
-                size="sm"
-                checked={isStickyToolbarEnabled}
-                onCheckedChange={() => {}}
-                aria-label={t("page_ui.editor.sticky_toolbar")}
-              />
-            </>
+            <span className="pointer-events-none">
+              <Switch size="sm" checked={isStickyToolbarEnabled} aria-hidden tabIndex={-1} />
+            </span>
           ),
-          className: "flex items-center justify-between gap-2",
           shouldRender: isContentEditable,
         },
         {
@@ -91,7 +80,7 @@ export const PageOptionsDropdown = observer(function PageOptionsDropdown(props: 
             if (!editorRef) return;
             editorRef.copyMarkdownToClipboard();
             setToast({
-              type: TOAST_TYPE.SUCCESS,
+              type: "success",
               title: t("toast.success"),
               message: t("page_ui.editor.markdown_copied"),
             });

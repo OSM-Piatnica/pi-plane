@@ -10,7 +10,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { useTranslation } from "@plane/i18n";
-import { PlaneNewIcon } from "@plane/propel/icons";
+import { Projects } from "@makeplane/propel/icons";
 import type { AppSidebarItemData } from "@/components/sidebar/sidebar-item";
 import { useWorkspacePaths } from "@/hooks/use-workspace-paths";
 
@@ -27,7 +27,7 @@ export function withDockItems<P extends WithDockItemsProps>(WrappedComponent: Re
     const dockItems: (AppSidebarItemData & { shouldRender: boolean })[] = [
       {
         label: t("projects"),
-        icon: <PlaneNewIcon className="size-5" />,
+        icon: <Projects className="size-5" />,
         href: `/${workspaceSlug}/`,
         isActive: isProjectsPath && !isNotificationsPath,
         shouldRender: true,

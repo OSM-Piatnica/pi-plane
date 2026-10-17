@@ -6,14 +6,15 @@
  */
 
 import { useEffect, useState } from "react";
-import { TwitterPicker } from "react-color";
 import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@makeplane/propel/components/popover";
 import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
-import { Button } from "@plane/propel/button";
-import type { IState } from "@plane/types";
-import { Popover } from "@plane/ui";
+import { Button } from "@makeplane/propel/components/button";
+import { ColorSwatchPicker } from "@plane/blocks/common";
 import { useTranslation } from "@plane/i18n";
+import type { IState } from "@plane/types";
+
 type TStateForm = {
   data: Partial<IState>;
   onSubmit: (formData: Partial<IState>) => Promise<{ status: string }>;
@@ -24,8 +25,8 @@ type TStateForm = {
 
 function PopoverButton({ color }: { color?: string }) {
   return (
-    <div
-      className="group inline-flex h-5 w-5 items-center rounded-sm text-14 font-medium transition-all focus:outline-none"
+    <span
+      className="group inline-flex h-5 w-5 items-center rounded-sm text-14 font-medium transition-all"
       style={{
         backgroundColor: color ?? "black",
       }}
@@ -35,7 +36,7 @@ function PopoverButton({ color }: { color?: string }) {
 
 export function StateForm(props: TStateForm) {
   const { data, onSubmit, onCancel, buttonDisabled, buttonTitle } = props;
-  // translation
+  // plane hooks
   const { t } = useTranslation();
   // states
   const [formData, setFromData] = useState<Partial<IState> | undefined>(undefined);
@@ -72,8 +73,21 @@ export function StateForm(props: TStateForm) {
     <div className="relative flex space-x-2 rounded-sm bg-surface-1 p-3">
       {/* color */}
       <div className="mt-2 h-full flex-shrink-0">
-        <Popover button={<PopoverButton color={formData?.color} />} panelClassName="mt-4 -ml-3">
-          <TwitterPicker color={formData?.color} onChange={(value) => handleFormData("color", value.hex)} />
+        <Popover>
+          <PopoverTrigger
+            render={
+              <button
+                type="button"
+                className="flex items-center justify-center rounded-sm focus:outline-none"
+                aria-label={t("aria_labels.color_picker.open")}
+              >
+                <PopoverButton color={formData?.color} />
+              </button>
+            }
+          />
+          <PopoverContent variant="rich" side="bottom" align="start">
+            <ColorSwatchPicker value={formData?.color} onChange={(hex) => handleFormData("color", hex)} />
+          </PopoverContent>
         </Popover>
       </div>
 
@@ -114,12 +128,23 @@ export function StateForm(props: TStateForm) {
         </Field>
 
         <div className="flex items-center space-x-2">
-          <Button onClick={formSubmit} variant="primary" size="lg" disabled={buttonDisabled}>
-            {buttonTitle}
-          </Button>
-          <Button type="button" variant="secondary" size="lg" disabled={buttonDisabled} onClick={onCancel}>
-            {t("cancel")}
-          </Button>
+          <Button
+            variant="primary"
+            size="md"
+            stretch="auto"
+            label={buttonTitle}
+            onClick={formSubmit}
+            disabled={buttonDisabled}
+          />
+          <Button
+            type="button"
+            variant="secondary"
+            size="md"
+            stretch="auto"
+            label={t("cancel")}
+            disabled={buttonDisabled}
+            onClick={onCancel}
+          />
         </div>
       </div>
     </div>

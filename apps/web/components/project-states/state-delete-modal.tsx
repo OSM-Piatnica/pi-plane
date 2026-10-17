@@ -10,10 +10,9 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // Plane imports
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { ConfirmDialog } from "@plane/blocks/dialog";
+import { setToast } from "@plane/blocks/toast";
 import type { IState } from "@plane/types";
-// ui
-import { AlertModalCore } from "@plane/ui";
 // hooks
 import { useProjectState } from "@/hooks/store/use-project-state";
 
@@ -42,32 +41,29 @@ export const StateDeleteModal = observer(function StateDeleteModal(props: TState
 
     setIsDeleteLoading(true);
 
-    await deleteState(workspaceSlug.toString(), data.project_id, data.id)
-      .then(() => {
-        handleClose();
-        return;
-      })
-      .catch((err) => {
-        if (err.status === 400)
-          setToast({
-            type: TOAST_TYPE.ERROR,
-            title: t("toast.error"),
-            message: t("project_components.states.delete_has_work_items"),
-          });
-        else
-          setToast({
-            type: TOAST_TYPE.ERROR,
-            title: t("toast.error"),
-            message: t("project_components.states.delete_error"),
-          });
-      })
-      .finally(() => {
-        setIsDeleteLoading(false);
-      });
+    try {
+      await deleteState(workspaceSlug.toString(), data.project_id, data.id);
+      handleClose();
+    } catch (err) {
+      if ((err as { status?: number })?.status === 400)
+        setToast({
+          type: "error",
+          title: t("toast.error"),
+          message: t("project_components.states.delete_has_work_items"),
+        });
+      else
+        setToast({
+          type: "error",
+          title: t("toast.error"),
+          message: t("project_components.states.delete_error"),
+        });
+    } finally {
+      setIsDeleteLoading(false);
+    }
   };
 
   return (
-    <AlertModalCore
+    <ConfirmDialog
       handleClose={handleClose}
       handleSubmit={handleDeletion}
       isSubmitting={isDeleteLoading}

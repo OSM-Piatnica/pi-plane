@@ -8,7 +8,7 @@
 import { useParams } from "next/navigation";
 import useSWR, { mutate } from "swr";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { IWorkspaceIntegration } from "@plane/types";
 // assets
 import GithubLogo from "@/app/assets/logos/github-square.png?url";
@@ -71,7 +71,7 @@ export function IntegrationCard({ integration }: Props) {
         mutate(PROJECT_GITHUB_REPOSITORY(projectId));
 
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("toast.success"),
           message: `${login}/${name} repository synced with the project successfully.`,
         });
@@ -80,7 +80,7 @@ export function IntegrationCard({ integration }: Props) {
       .catch((err) => {
         console.error(err);
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: t("project_components.integration_card.sync_error"),
         });

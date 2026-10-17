@@ -14,10 +14,10 @@ import { AiStar1Outline } from "@makeplane/propel/icons";
 import { ETabIndices } from "@plane/constants";
 import type { EditorRefApi } from "@plane/editor";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { TIssue } from "@plane/types";
 import { EFileAssetType } from "@plane/types";
-import { Loader } from "@plane/ui";
+import { Loader } from "@plane/blocks/skeleton";
 import { getDescriptionPlaceholderI18n, getTabIndex } from "@plane/utils";
 // components
 import { GptAssistantPopover } from "@/components/core/modals/gpt-assistant-popover";
@@ -97,7 +97,7 @@ export const IssueDescriptionEditor = observer(function IssueDescriptionEditor(p
       onClose();
     } else {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("issue_ui.editor_processing"),
       });
@@ -127,7 +127,7 @@ export const IssueDescriptionEditor = observer(function IssueDescriptionEditor(p
       .then((res) => {
         if (res.response === "")
           setToast({
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("toast.error"),
             message: t("issue_ui.ai_title_not_informative"),
           });
@@ -139,13 +139,13 @@ export const IssueDescriptionEditor = observer(function IssueDescriptionEditor(p
 
         if (err.status === 429)
           setToast({
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("toast.error"),
             message: error || t("issue_ui.ai_rate_limit"),
           });
         else
           setToast({
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("toast.error"),
             message: error || t("issue_ui.generic_error"),
           });

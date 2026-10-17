@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 // plane imports
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 import { SearchOutline } from "@makeplane/propel/icons";
 // components
 import { MembersSettingsLoader } from "@/components/ui/loader/settings/members";
@@ -104,12 +104,13 @@ export const ProjectMemberList = observer(function ProjectMemberList(props: TPro
           {isAdmin && (
             <Button
               variant="primary"
+              size="sm"
+              stretch="auto"
+              label={t("add_member")}
               onClick={() => {
                 setInviteModal(true);
               }}
-            >
-              {t("add_member")}
-            </Button>
+            />
           )}
         </div>
       </div>

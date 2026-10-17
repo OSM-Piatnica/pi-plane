@@ -11,8 +11,9 @@ import useSWR from "swr";
 // ui
 import { useTranslation } from "@plane/i18n";
 import { Avatar } from "@makeplane/propel/components/avatar";
-import { EmptyStateCompact } from "@plane/propel/empty-state";
-import { Loader, Card } from "@plane/ui";
+import { EmptyStateCompact } from "@plane/blocks/empty-state";
+import { Card } from "@plane/blocks/card";
+import { Loader } from "@plane/blocks/skeleton";
 import { calculateTimeAgo, getFileURL } from "@plane/utils";
 // components
 import { ActivityMessage, IssueLink } from "@/components/core/activity";
@@ -60,7 +61,7 @@ export const ProfileActivity = observer(function ProfileActivity() {
               <div key={activity.id} className="flex gap-3">
                 <Avatar
                   alt={activity.actor_detail?.display_name}
-                  fallback={activity.actor_detail?.display_name?.[0]?.toUpperCase()}
+                  tooltip={activity.actor_detail?.display_name}
                   src={getFileURL(activity.actor_detail?.avatar_url)}
                   size="sm"
                 />

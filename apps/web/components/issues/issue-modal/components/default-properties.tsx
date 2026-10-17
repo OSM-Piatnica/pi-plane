@@ -10,32 +10,35 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import type { Control, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { Controller } from "react-hook-form";
-import { ETabIndices, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
+import { Icon as PropelIcon } from "@makeplane/propel/components/icon";
+import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
+import { Pill } from "@makeplane/propel/components/pill";
+import { Pill as PillChrome } from "@makeplane/propel/elements/pill";
+import { CalendarOutline, ParentOutline } from "@makeplane/propel/icons";
+import { ETabIndices } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { ParentOutline } from "@makeplane/propel/icons";
 // types
 import type { ISearchIssueResponse, TIssue } from "@plane/types";
 // ui
-import { CustomMenu } from "@plane/ui";
-import { reconcileWorkItemDuration, renderFormattedPayloadDate, getTabIndex } from "@plane/utils";
+import { DateSelect } from "@plane/blocks/property-select";
+import { getDate, reconcileWorkItemDuration, renderFormattedPayloadDate, getTabIndex } from "@plane/utils";
 // components
-import { CycleDropdown } from "@/components/dropdowns/cycle";
-import { DateDropdown } from "@/components/dropdowns/date";
-import { DurationDropdown } from "@/components/dropdowns/duration";
-import { EstimateDropdown } from "@/components/dropdowns/estimate";
-import { MemberDropdown } from "@/components/dropdowns/member/dropdown";
-import { ModuleDropdown } from "@/components/dropdowns/module/dropdown";
-import { PriorityDropdown } from "@/components/dropdowns/priority";
-import { StateDropdown } from "@/components/dropdowns/state/dropdown";
+import { CycleSelect } from "@/components/dropdowns/cycle/cycle-select";
+import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select";
+import { LabelSelect } from "@/components/dropdowns/label/label-select";
+import { MemberSelect } from "@/components/dropdowns/member/member-select";
+import { ModuleSelect } from "@/components/dropdowns/module/module-select";
+import { PrioritySelect } from "@/components/dropdowns/priority/priority-select";
+import { StateSelect } from "@/components/dropdowns/state/state-select";
 import { ParentIssuesListModal } from "@/components/issues/parent-issues-list-modal";
-import { IssueLabelSelect } from "@/components/issues/select";
-// helpers
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useProject } from "@/hooks/store/use-project";
-import { useUserPermissions } from "@/hooks/store/user";
+import { useProjectState } from "@/hooks/store/use-project-state";
+import { useUserProfile } from "@/hooks/store/user";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
+import { DurationDropdown } from "@/components/dropdowns/duration";
 
 type TIssueDefaultPropertiesProps = {
   control: Control<TIssue>;
@@ -71,15 +74,13 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
   const { t } = useTranslation();
   const { areEstimateEnabledByProjectId } = useProjectEstimates();
   const { getProjectById } = useProject();
+  const { getProjectDefaultStateId } = useProjectState();
   const { isMobile } = usePlatformOS();
-  const { allowPermissions } = useUserPermissions();
+  const { data: userProfile } = useUserProfile();
   // derived values
   const projectDetails = getProjectById(projectId);
 
   const { getIndex } = getTabIndex(ETabIndices.ISSUE_FORM, isMobile);
-
-  const canCreateLabel =
-    projectId && allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.PROJECT, workspaceSlug, projectId);
 
   // Writing the derived fields with setValue rather than the field's own onChange keeps them in
   // dirtyFields, which is what getChangedIssuefields uses to build the update payload.
@@ -97,109 +98,109 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
         control={control}
         name="state_id"
         render={({ field: { value, onChange } }) => (
-          <div className="h-7">
-            <StateDropdown
-              value={value}
-              onChange={(stateId) => {
-                onChange(stateId);
-                handleFormChange();
-              }}
-              projectId={projectId ?? undefined}
-              buttonVariant="border-with-text"
-              tabIndex={getIndex("state_id")}
-              isForWorkItemCreation={!id}
-            />
-          </div>
+          <StateSelect
+            testId="create-work-item-state-select"
+            // an empty state shows the project's default state, as the legacy dropdown did
+            value={value || getProjectDefaultStateId(projectId)}
+            onChange={(stateId) => {
+              onChange(stateId);
+              handleFormChange();
+            }}
+            projectId={projectId ?? undefined}
+            variant="pill-md"
+            tabIndex={getIndex("state_id")}
+          />
         )}
       />
       <Controller
         control={control}
         name="priority"
         render={({ field: { value, onChange } }) => (
-          <div className="h-7">
-            <PriorityDropdown
-              value={value}
-              onChange={(priority) => {
-                onChange(priority);
-                handleFormChange();
-              }}
-              buttonVariant="border-with-text"
-              tabIndex={getIndex("priority")}
-            />
-          </div>
+          <PrioritySelect
+            testId="create-work-item-priority-select"
+            value={value}
+            onChange={(priority) => {
+              onChange(priority);
+              handleFormChange();
+            }}
+            variant="pill-md"
+            tabIndex={getIndex("priority")}
+          />
         )}
       />
       <Controller
         control={control}
         name="assignee_ids"
         render={({ field: { value, onChange } }) => (
-          <div className="h-7">
-            <MemberDropdown
-              projectId={projectId ?? undefined}
-              value={value}
-              onChange={(assigneeIds) => {
-                onChange(assigneeIds);
-                handleFormChange();
-              }}
-              buttonVariant={value?.length > 0 ? "transparent-without-text" : "border-with-text"}
-              buttonClassName={value?.length > 0 ? "hover:bg-transparent" : ""}
-              placeholder={t("assignees")}
-              multiple
-              tabIndex={getIndex("assignee_ids")}
-            />
-          </div>
+          <MemberSelect
+            testId="create-work-item-assignee-select"
+            projectId={projectId ?? undefined}
+            value={value}
+            onChange={(assigneeIds) => {
+              onChange(assigneeIds);
+              handleFormChange();
+            }}
+            placeholder={t("assignees")}
+            multiple
+            variant={value?.length ? "avatar-group-md" : "pill-md"}
+            tabIndex={getIndex("assignee_ids")}
+          />
         )}
       />
       <Controller
         control={control}
         name="label_ids"
         render={({ field: { value, onChange } }) => (
-          <div className="h-7">
-            <IssueLabelSelect
-              value={value}
-              onChange={(labelIds) => {
-                onChange(labelIds);
-                handleFormChange();
-              }}
-              projectId={projectId ?? undefined}
-              tabIndex={getIndex("label_ids")}
-              createLabelEnabled={!!canCreateLabel}
-            />
-          </div>
+          <LabelSelect
+            testId="create-work-item-label-select"
+            projectId={projectId ?? undefined}
+            value={value ?? []}
+            onChange={(labelIds) => {
+              onChange(labelIds);
+              handleFormChange();
+            }}
+            variant="pill-md"
+            placeholder={t("labels")}
+            tabIndex={getIndex("label_ids")}
+          />
         )}
       />
       <Controller
         control={control}
         name="start_date"
         render={({ field: { value } }) => (
-          <div className="h-7">
-            <DateDropdown
-              value={value}
-              onChange={(date) =>
-                applyDurationChange({ start_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
-              }
-              buttonVariant="border-with-text"
-              placeholder={t("start_date")}
-              tabIndex={getIndex("start_date")}
-            />
-          </div>
+          <DateSelect
+            value={getDate(value) ?? null}
+            onChange={(date) =>
+              applyDurationChange({ start_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
+            }
+            placeholder={t("start_date")}
+            icon={<CalendarOutline />}
+            weekStartsOn={userProfile?.start_of_the_week}
+            clearable
+            tabIndex={getIndex("start_date")}
+            variant="pill-md"
+            testId="create-work-item-start-date-select"
+          />
         )}
       />
       <Controller
         control={control}
         name="target_date"
         render={({ field: { value } }) => (
-          <div className="h-7">
-            <DateDropdown
-              value={value}
-              onChange={(date) =>
-                applyDurationChange({ target_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
-              }
-              buttonVariant="border-with-text"
-              placeholder={t("due_date")}
-              tabIndex={getIndex("target_date")}
-            />
-          </div>
+          <DateSelect
+            value={getDate(value) ?? null}
+            onChange={(date) =>
+              applyDurationChange({ target_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
+            }
+            placeholder={t("due_date")}
+            icon={<CalendarOutline />}
+            weekStartsOn={userProfile?.start_of_the_week}
+            clearable
+            tabIndex={getIndex("target_date")}
+            variant="pill-md"
+            testId="create-work-item-due-date-select"
+          />
         )}
       />
       <Controller
@@ -210,54 +211,50 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
             <DurationDropdown
               value={value}
               onChange={(duration) => applyDurationChange({ duration })}
-              buttonVariant="border-with-text"
+              variant="pill-md"
               placeholder={t("duration")}
               tabIndex={getIndex("duration")}
             />
           </div>
         )}
       />
-      {projectDetails?.cycle_view && (
+      {projectDetails?.cycle_view && projectId && (
         <Controller
           control={control}
           name="cycle_id"
           render={({ field: { value, onChange } }) => (
-            <div className="h-7">
-              <CycleDropdown
-                projectId={projectId ?? undefined}
-                onChange={(cycleId) => {
-                  onChange(cycleId);
-                  handleFormChange();
-                }}
-                placeholder={t("cycle.label", { count: 1 })}
-                value={value}
-                buttonVariant="border-with-text"
-                tabIndex={getIndex("cycle_id")}
-              />
-            </div>
+            <CycleSelect
+              projectId={projectId}
+              onChange={(cycleId) => {
+                onChange(cycleId);
+                handleFormChange();
+              }}
+              placeholder={t("cycle.label", { count: 1 })}
+              value={value ?? null}
+              variant="pill-md"
+              clearable
+              tabIndex={getIndex("cycle_id")}
+            />
           )}
         />
       )}
-      {projectDetails?.module_view && workspaceSlug && (
+      {projectDetails?.module_view && workspaceSlug && projectId && (
         <Controller
           control={control}
           name="module_ids"
           render={({ field: { value, onChange } }) => (
-            <div className="h-7">
-              <ModuleDropdown
-                projectId={projectId ?? undefined}
-                value={value ?? []}
-                onChange={(moduleIds) => {
-                  onChange(moduleIds);
-                  handleFormChange();
-                }}
-                placeholder={t("modules")}
-                buttonVariant="border-with-text"
-                tabIndex={getIndex("module_ids")}
-                multiple
-                showCount
-              />
-            </div>
+            <ModuleSelect
+              multiple
+              projectId={projectId}
+              value={value ?? []}
+              onChange={(moduleIds) => {
+                onChange(moduleIds);
+                handleFormChange();
+              }}
+              placeholder={t("modules")}
+              variant="pill-md"
+              tabIndex={getIndex("module_ids")}
+            />
           )}
         />
       )}
@@ -266,30 +263,27 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
           control={control}
           name="estimate_point"
           render={({ field: { value, onChange } }) => (
-            <div className="h-7">
-              <EstimateDropdown
-                value={value || undefined}
-                onChange={(estimatePoint) => {
-                  onChange(estimatePoint);
-                  handleFormChange();
-                }}
-                projectId={projectId}
-                buttonVariant="border-with-text"
-                tabIndex={getIndex("estimate_point")}
-                placeholder={t("estimate")}
-              />
-            </div>
+            <EstimateSelect
+              value={value || undefined}
+              onChange={(estimatePoint) => {
+                onChange(estimatePoint);
+                handleFormChange();
+              }}
+              projectId={projectId}
+              variant="pill-md"
+              placeholder={t("estimate")}
+              tabIndex={getIndex("estimate_point")}
+            />
           )}
         />
       )}
-      <div className="h-7">
-        {parentId ? (
-          <CustomMenu
-            customButton={
-              <button
-                type="button"
-                className="flex h-full cursor-pointer items-center justify-between gap-1 rounded-sm border-[0.5px] border-strong px-2 py-0.5 text-caption-sm-regular hover:bg-layer-1"
-              >
+      {parentId ? (
+        <Menu>
+          <MenuTrigger
+            tabIndex={getIndex("parent_id")}
+            render={
+              // `PillChrome` renders its own `<button type="button">`, which becomes the menu trigger.
+              <PillChrome size="sm" variant="outline">
                 {selectedParentIssue?.project_id && (
                   <IssueIdentifier
                     projectId={selectedParentIssue.project_id}
@@ -299,45 +293,35 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
                     size="xs"
                   />
                 )}
-              </button>
+              </PillChrome>
             }
-            placement="bottom-start"
-            className="h-full w-full"
-            customButtonClassName="h-full"
-            tabIndex={getIndex("parent_id")}
-          >
-            <>
-              <CustomMenu.MenuItem className="!p-1" onClick={() => setParentIssueListModalOpen(true)}>
-                {t("change_parent_issue")}
-              </CustomMenu.MenuItem>
-              <Controller
-                control={control}
-                name="parent_id"
-                render={({ field: { onChange } }) => (
-                  <CustomMenu.MenuItem
-                    className="!p-1"
-                    onClick={() => {
-                      onChange(null);
-                      handleFormChange();
-                    }}
-                  >
-                    {t("remove_parent_issue")}
-                  </CustomMenu.MenuItem>
-                )}
-              />
-            </>
-          </CustomMenu>
-        ) : (
-          <button
-            type="button"
-            className="flex h-full cursor-pointer items-center justify-between gap-1 rounded-sm border-[0.5px] border-strong px-2 py-0.5 text-caption-sm-regular hover:bg-layer-1"
-            onClick={() => setParentIssueListModalOpen(true)}
-          >
-            <ParentOutline className="h-3 w-3 flex-shrink-0" />
-            <span className="whitespace-nowrap">{t("add_parent")}</span>
-          </button>
-        )}
-      </div>
+          />
+          <MenuContent side="bottom" align="start">
+            <MenuItem label={t("change_parent_issue")} onClick={() => setParentIssueListModalOpen(true)} />
+            <Controller
+              control={control}
+              name="parent_id"
+              render={({ field: { onChange } }) => (
+                <MenuItem
+                  label={t("remove_parent_issue")}
+                  onClick={() => {
+                    onChange(null);
+                    handleFormChange();
+                  }}
+                />
+              )}
+            />
+          </MenuContent>
+        </Menu>
+      ) : (
+        <Pill
+          size="sm"
+          variant="outline"
+          startIcon={<PropelIcon icon={<ParentOutline className="size-3.5" />} />}
+          onClick={() => setParentIssueListModalOpen(true)}
+          label={t("add_parent")}
+        />
+      )}
       <Controller
         control={control}
         name="parent_id"

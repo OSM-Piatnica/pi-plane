@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { FC } from "react";
-import { Logo } from "@plane/propel/emoji-icon-picker";
-import type { ISvgIcons } from "@plane/propel/icons";
+import { Logo } from "@plane/blocks/emoji-icon-picker";
+import type { ISvgIcons } from "@plane/blocks/icons";
 import type { TLogoProps } from "@plane/types";
 import { getFileURL, truncateText } from "@plane/utils";
 

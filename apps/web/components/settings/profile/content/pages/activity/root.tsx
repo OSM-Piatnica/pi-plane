@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 import { useTheme } from "next-themes";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 // assets
 import darkActivityAsset from "@/app/assets/empty-state/profile/activity-dark.webp?url";
 import lightActivityAsset from "@/app/assets/empty-state/profile/activity-light.webp?url";
@@ -86,9 +86,15 @@ export const ActivityProfileSettings = observer(function ActivityProfileSettings
       <div className="mt-7 w-full">{activityPages}</div>
       {isLoadMoreVisible && (
         <div className="mt-4 flex w-full items-center justify-center">
-          <Button variant="ghost" onClick={handleLoadMore} appendIcon={<ChevronDown />}>
-            {t("load_more")}
-          </Button>
+          <Button
+            stretch="auto"
+            size="md"
+            variant="ghost"
+            onClick={handleLoadMore}
+            icon={<ChevronDown />}
+            iconPosition="end"
+            label={t("load_more")}
+          />
         </div>
       )}
     </div>

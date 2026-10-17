@@ -5,50 +5,52 @@
  */
 
 import React, { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import { observer } from "mobx-react";
 import { Timer } from "lucide-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { CloseIcon } from "@plane/propel/icons";
-import { Input } from "@plane/ui";
+import { SelectTriggerChrome } from "@plane/blocks/select";
+import type { SelectVariant } from "@plane/blocks/select";
+import { Icon } from "@makeplane/propel/components/icon";
+import { IconButton } from "@makeplane/propel/components/icon-button";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+import { CloseOutline } from "@makeplane/propel/icons";
 import { cn, normalizeWorkItemDuration } from "@plane/utils";
-// components
-import { DropdownButton } from "./buttons";
-// constants
-import { BUTTON_VARIANTS_WITH_TEXT } from "./constants";
-// types
-import type { TDropdownProps } from "./types";
 
-type Props = TDropdownProps & {
-  clearIconClassName?: string;
-  icon?: React.ReactNode;
+type Props = {
+  /** Trigger chrome, the same `SelectVariant` scale the property selects use. */
+  variant: SelectVariant;
+  className?: string;
+  disabled?: boolean;
+  /** Hides the leading icon. */
+  hideIcon?: boolean;
+  icon?: ReactNode;
   isClearable?: boolean;
-  labelClassName?: string;
   onChange: (val: number | null) => void;
   onClose?: () => void;
-  renderByDefault?: boolean;
+  placeholder?: string;
+  /** Opt-in hover tooltip on the trigger: heading + the current value. */
+  showTooltip?: boolean;
+  tabIndex?: number;
   value: number | null | undefined;
 };
 
 export const DurationDropdown = observer(function DurationDropdown(props: Props) {
   const {
-    buttonClassName = "",
-    buttonContainerClassName,
-    buttonVariant,
-    className = "",
-    clearIconClassName = "",
+    variant,
+    className,
     disabled = false,
     hideIcon = false,
-    icon = <Timer className="h-3 w-3 flex-shrink-0" />,
+    icon = <Timer />,
     isClearable = true,
-    labelClassName = "",
     onChange,
     onClose,
     placeholder = "Duration",
     showTooltip = false,
     tabIndex,
     value,
-    renderByDefault = true,
   } = props;
   // states
   const [isEditing, setIsEditing] = useState(false);
@@ -86,74 +88,67 @@ export const DurationDropdown = observer(function DurationDropdown(props: Props)
   if (isEditing) {
     return (
       <div className={cn("h-full", className)}>
-        <Input
-          ref={inputRef}
-          type="number"
-          min={1}
-          step={1}
-          mode="transparent"
-          inputSize="xs"
-          value={draft}
-          placeholder={placeholder}
-          onChange={(e) => setDraft(e.target.value)}
-          onBlur={commit}
-          onKeyDown={(e) => {
-            // A duration is a whole number of days, so the exponent, sign and decimal keys that
-            // a number input would otherwise accept have no meaning here.
-            if (["e", "E", "+", "-", "."].includes(e.key)) {
-              e.preventDefault();
-              return;
-            }
-            if (e.key === "Enter") commit();
-            if (e.key === "Escape") stopEditing();
-          }}
-          className={cn("text-body-xs-medium", buttonContainerClassName)}
-        />
+        <InputGroup size="md">
+          <Input
+            ref={inputRef}
+            size="md"
+            type="number"
+            min={1}
+            step={1}
+            value={draft}
+            placeholder={placeholder}
+            onChange={(e) => setDraft(e.target.value)}
+            onBlur={commit}
+            onKeyDown={(e) => {
+              // A duration is a whole number of days, so the exponent, sign and decimal keys that
+              // a number input would otherwise accept have no meaning here.
+              if (["e", "E", "+", "-", "."].includes(e.key)) {
+                e.preventDefault();
+                return;
+              }
+              if (e.key === "Enter") commit();
+              if (e.key === "Escape") stopEditing();
+            }}
+          />
+        </InputGroup>
       </div>
     );
   }
 
+  const trigger = (
+    <SelectTriggerChrome
+      variant={variant}
+      isActive={false}
+      className={cn("clickable", { "cursor-not-allowed text-secondary": disabled })}
+      prependIcon={hideIcon ? undefined : (icon as React.ReactElement<{ className?: string }>)}
+      label={label}
+      isEmpty={!hasValue}
+      tabIndex={tabIndex}
+      disabled={disabled}
+      onClick={startEditing}
+    >
+      <span className="min-w-0 grow truncate text-left">{label}</span>
+    </SelectTriggerChrome>
+  );
+
   return (
-    <div className={cn("h-full", className)}>
-      <button
-        type="button"
-        tabIndex={tabIndex}
-        className={cn(
-          "clickable block h-full max-w-full outline-none",
-          {
-            "cursor-not-allowed text-secondary": disabled,
-            "cursor-pointer": !disabled,
-          },
-          buttonContainerClassName
-        )}
-        onClick={startEditing}
-        disabled={disabled}
-      >
-        <DropdownButton
-          className={buttonClassName}
-          isActive={false}
-          tooltipHeading={placeholder}
-          tooltipContent={hasValue ? label : "None"}
-          showTooltip={showTooltip}
-          variant={buttonVariant}
-          renderToolTipByDefault={renderByDefault}
-        >
-          {!hideIcon && icon}
-          {BUTTON_VARIANTS_WITH_TEXT.includes(buttonVariant) && (
-            <span className={cn("flex-grow truncate text-left text-body-xs-medium", labelClassName)}>{label}</span>
-          )}
-          {isClearable && !disabled && hasValue && (
-            <CloseIcon
-              className={cn("h-2.5 w-2.5 flex-shrink-0", clearIconClassName)}
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                onChange(null);
-              }}
-            />
-          )}
-        </DropdownButton>
-      </button>
+    <div className={cn("flex h-full max-w-full items-center gap-1", className)}>
+      {showTooltip ? (
+        <Tooltip label={`${placeholder}: ${hasValue ? label : "None"}`} layout="stacked">
+          <span className="flex h-full max-w-full min-w-0 items-center">{trigger}</span>
+        </Tooltip>
+      ) : (
+        trigger
+      )}
+      {isClearable && !disabled && hasValue && (
+        <IconButton
+          variant="ghost"
+          size="xs"
+          aria-label={t("common.clear")}
+          icon={<Icon icon={CloseOutline} />}
+          onClick={() => onChange(null)}
+        />
+      )}
     </div>
   );
 });

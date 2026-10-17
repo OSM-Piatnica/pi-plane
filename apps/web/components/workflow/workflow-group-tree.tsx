@@ -9,7 +9,7 @@
 import { useParams } from "next/navigation";
 import { observer } from "mobx-react";
 import type { TIssueGroupByOptions } from "@plane/types";
-import { ChevronRightIcon } from "@plane/propel/icons";
+import { ChevronRightOutline } from "@makeplane/propel/icons";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useWorkflow } from "@/hooks/store/use-workflow";
 
@@ -42,7 +42,7 @@ export const WorkFlowGroupTree = observer(function WorkFlowGroupTree(props: Prop
             key={flow.id}
             className="inline-flex items-center gap-0.5 rounded-sm bg-layer-1 px-1 py-0.5 text-10 text-tertiary"
           >
-            <ChevronRightIcon className="size-2.5" />
+            <ChevronRightOutline className="size-2.5" />
             <span className="truncate">{targetState?.name ?? flow.flow_type}</span>
           </span>
         );

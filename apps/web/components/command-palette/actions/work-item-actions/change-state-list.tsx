@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,8 +9,9 @@ import { Command } from "cmdk";
 import { observer } from "mobx-react";
 import { EIconSize } from "@plane/constants";
 // plane imports
-import { CheckIcon, StateGroupIcon } from "@plane/propel/icons";
-import { Spinner } from "@plane/ui";
+import { TickOutline } from "@makeplane/propel/icons";
+import { StateGroupIcon } from "@plane/blocks/icons";
+import { Spinner } from "@plane/blocks/spinner";
 // store hooks
 import { useProjectState } from "@/hooks/store/use-project-state";
 
@@ -41,7 +43,7 @@ export const ChangeWorkItemStateList = observer(function ChangeWorkItemStateList
                 />
                 <p>{state.name}</p>
               </div>
-              <div>{state.id === currentStateId && <CheckIcon className="h-3 w-3" />}</div>
+              <div>{state.id === currentStateId && <TickOutline className="h-3 w-3" />}</div>
             </Command.Item>
           ))
         ) : (

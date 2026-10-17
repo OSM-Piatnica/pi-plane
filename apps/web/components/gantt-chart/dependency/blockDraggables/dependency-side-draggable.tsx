@@ -10,7 +10,7 @@ import { useCallback } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { IGanttBlock, TIssueRelationTypes } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 import { cn } from "@plane/utils";
@@ -124,13 +124,13 @@ export const DependencySideDraggable = observer(function DependencySideDraggable
           targetId,
         ]);
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("common.success"),
           message: t("issue.relation.dependency_created"),
         });
       } catch (error) {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: getIssueApiErrorMessage(error, t("issue.relation.dependency_create_failed"), t),
         });

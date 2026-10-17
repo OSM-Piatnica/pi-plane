@@ -10,25 +10,27 @@ import React, { useRef } from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
-import { InfoOutline, UserAltOutline, WorkItemsOutline } from "@makeplane/propel/icons";
+import { CalendarOutline, InfoOutline, UserAltOutline, WorkItemsOutline } from "@makeplane/propel/icons";
 // plane package imports
 import { MODULE_STATUS, EUserPermissions, EUserPermissionsLevel, IS_FAVORITE_MENU_OPEN } from "@plane/constants";
 import { useLocalStorage } from "@plane/hooks";
 import { LinearProgress } from "@makeplane/propel/components/linear-progress";
-import { TOAST_TYPE, setPromiseToast, setToast } from "@plane/propel/toast";
+import { setPromiseToast, setToast } from "@plane/blocks/toast";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IModule } from "@plane/types";
-import { Card, FavoriteStar } from "@plane/ui";
+import { Card } from "@plane/blocks/card";
+import { FavoriteStar } from "@plane/blocks/common";
+import { DateRangeSelect } from "@plane/blocks/property-select";
 import { getDate, renderFormattedPayloadDate, generateQueryParams } from "@plane/utils";
 // components
-import { DateRangeDropdown } from "@/components/dropdowns/date-range";
+import { handleTriggerKeyDown } from "@/components/common/trigger-guard";
 import { ButtonAvatars } from "@/components/dropdowns/member/avatar";
 import { ModuleQuickActions } from "@/components/modules";
 import { ModuleStatusDropdown } from "@/components/modules/module-status-dropdown";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 import { useModule } from "@/hooks/store/use-module";
-import { useUserPermissions } from "@/hooks/store/user";
+import { useUserPermissions, useUserProfile } from "@/hooks/store/user";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { useTranslation } from "@plane/i18n";
@@ -55,6 +57,7 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
   const { allowPermissions } = useUserPermissions();
   const { getModuleById, addModuleToFavorites, removeModuleFromFavorites, updateModuleDetails } = useModule();
   const { getUserDetails } = useMember();
+  const { data: userProfile } = useUserProfile();
   // local storage
   const { setValue: toggleFavoriteMenu, storedValue } = useLocalStorage<boolean>(IS_FAVORITE_MENU_OPEN, false);
   // derived values
@@ -123,7 +126,7 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
     await updateModuleDetails(workspaceSlug.toString(), projectId.toString(), moduleId, payload)
       .then(() => {
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("toast.success"),
           message: t("entity.update.success", { entity: t("common.module") }),
         });
@@ -131,7 +134,7 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
       })
       .catch((err) => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: err?.detail ?? t("module_ui.update_error"),
         });
@@ -185,8 +188,13 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
               <Tooltip label={moduleDetails.name} layout="stacked" disabled={isMobile}>
                 <span className="truncate text-14 font-medium">{moduleDetails.name}</span>
               </Tooltip>
-              {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
-              <div className="flex items-center gap-2" onClick={handleEventPropagation}>
+              {/* Ruling 38: guard both halves — the card root is a `Link`. */}
+              <div
+                className="flex items-center gap-2"
+                role="presentation"
+                onClick={handleEventPropagation}
+                onKeyDown={handleTriggerKeyDown}
+              >
                 {moduleStatus && (
                   <ModuleStatusDropdown
                     isDisabled={isDisabled}
@@ -223,28 +231,33 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
               showValue={false}
               aria-label="Module progress"
             />
-            {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
-            <div className="flex items-center justify-between py-0.5" onClick={handleEventPropagation}>
-              <DateRangeDropdown
-                buttonContainerClassName={`h-6 w-full flex ${isDisabled ? "cursor-not-allowed" : "cursor-pointer"} items-center gap-1.5 text-tertiary border-[0.5px] border-strong rounded-sm text-11`}
-                buttonVariant="transparent-with-text"
-                className="h-7"
+            {/* Ruling 38: the whole card is a `Link`, so the trigger's click and keyboard
+                activation must not reach it. */}
+            <div
+              className="flex items-center justify-between py-0.5"
+              role="presentation"
+              onClick={handleEventPropagation}
+              onKeyDown={handleTriggerKeyDown}
+            >
+              <DateRangeSelect
+                variant="select-ghost-md"
+                className={`h-6 w-full gap-1.5 rounded-sm border-[0.5px] border-strong text-11 text-tertiary ${
+                  isDisabled ? "cursor-not-allowed" : "cursor-pointer"
+                }`}
                 value={{
-                  from: getDate(moduleDetails.start_date),
-                  to: getDate(moduleDetails.target_date),
+                  from: getDate(moduleDetails.start_date) ?? null,
+                  to: getDate(moduleDetails.target_date) ?? null,
                 }}
-                onSelect={(val) => {
-                  handleModuleDetailsChange({
-                    start_date: val?.from ? renderFormattedPayloadDate(val.from) : null,
-                    target_date: val?.to ? renderFormattedPayloadDate(val.to) : null,
+                onChange={(range) => {
+                  void handleModuleDetailsChange({
+                    start_date: range.from ? renderFormattedPayloadDate(range.from) : null,
+                    target_date: range.to ? renderFormattedPayloadDate(range.to) : null,
                   });
                 }}
-                placeholder={{
-                  from: t("start_date"),
-                  to: t("end_date"),
-                }}
+                placeholder={`${t("start_date")} - ${t("end_date")}`}
+                weekStartsOn={userProfile?.start_of_the_week}
                 disabled={isDisabled}
-                hideIcon={{ from: renderIcon ?? true, to: renderIcon }}
+                icon={renderIcon ? undefined : <CalendarOutline aria-hidden="true" />}
               />
             </div>
           </div>

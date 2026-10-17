@@ -5,6 +5,7 @@
  * See the LICENSE file for details.
  */
 
+import { useMemo } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { EEstimateSystem } from "@plane/constants";
@@ -12,9 +13,12 @@ import { useTranslation } from "@plane/i18n";
 import { ProjectsOutline } from "@makeplane/propel/icons";
 import type { ChartYAxisMetric } from "@plane/types";
 // plane package imports
-import { CustomSelect } from "@plane/ui";
+import { Select } from "@plane/blocks/select";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
+// plane web constants
+type YAxisOption = { value: ChartYAxisMetric; label: string };
+
 type Props = {
   value: ChartYAxisMetric;
   onChange: (val: ChartYAxisMetric | null) => void;
@@ -46,28 +50,30 @@ export const SelectYAxis = observer(function SelectYAxis({ value, onChange, hidd
     return true;
   };
 
+  // derived values
+  // computed on every render (not memoised): `isEstimateEnabled` reads observable estimate state
+  const hiddenSet = new Set(hiddenOptions);
+  const selectOptions: YAxisOption[] = options.filter(
+    (item) => !hiddenSet.has(item.value) && isEstimateEnabled(item.value)
+  );
+  const selected = useMemo(() => options.find((option) => option.value === value) ?? null, [options, value]);
+
   return (
-    <CustomSelect
-      value={value}
-      label={
+    <Select<YAxisOption>
+      getValues={() => selectOptions}
+      value={selected}
+      onChange={(val) => onChange(options.find((option) => option.value === val)?.value ?? null)}
+      getOptionValue={(option) => option.value}
+      getOptionLabel={(option) => option.label}
+      showSearch={false}
+      pinSelected={false}
+    >
+      <Select.Trigger variant="select-md" className="w-auto">
         <div className="flex items-center gap-2">
           <ProjectsOutline className="h-3 w-3" />
-          <span>{options.find((v) => v.value === value)?.label ?? t("analytics_ui.add_metric")}</span>
+          <span>{selected?.label ?? t("analytics_ui.add_metric")}</span>
         </div>
-      }
-      onChange={onChange}
-      maxHeight="lg"
-    >
-      {options.map((item) => {
-        if (hiddenOptions?.includes(item.value)) return null;
-        return (
-          isEstimateEnabled(item.value) && (
-            <CustomSelect.Option key={item.value} value={item.value}>
-              {item.label}
-            </CustomSelect.Option>
-          )
-        );
-      })}
-    </CustomSelect>
+      </Select.Trigger>
+    </Select>
   );
 });

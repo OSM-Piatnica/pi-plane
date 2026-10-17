@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/elements/button";
 
 type Props = React.ComponentProps<"button"> & {
   label: React.ReactNode;
@@ -14,15 +15,8 @@ type Props = React.ComponentProps<"button"> & {
 export function SidebarAddButton(props: Props) {
   const { label, onClick, disabled, ...rest } = props;
   return (
-    <Button
-      variant={"secondary"}
-      size={"xl"}
-      className="w-full justify-start"
-      onClick={onClick}
-      disabled={disabled}
-      {...rest}
-    >
-      {label}
+    <Button type="button" variant="secondary" size="lg" stretch="full" onClick={onClick} disabled={disabled} {...rest}>
+      <span className="flex w-full items-center justify-start gap-2">{label}</span>
     </Button>
   );
 }

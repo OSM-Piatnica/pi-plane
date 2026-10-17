@@ -10,10 +10,10 @@ import { sortBy } from "lodash-es";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { useTranslation } from "@plane/i18n";
-import { CycleGroupIcon } from "@plane/propel/icons";
+import { CycleGroupIcon } from "@plane/blocks/icons";
 import type { TCycleGroups } from "@plane/types";
 // components
-import { Loader } from "@plane/ui";
+import { Loader } from "@plane/blocks/skeleton";
 import { FilterHeader, FilterOption } from "@/components/issues/issue-layouts/filters";
 import { useCycle } from "@/hooks/store/use-cycle";
 // ui

@@ -10,7 +10,7 @@ import useSWR from "swr";
 import { GROUP_CHOICES, USER_PROFILE_DATA } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import type { IUserStateDistribution, TStateGroups } from "@plane/types";
-import { ContentWrapper } from "@plane/ui";
+import { ContentWrapper } from "@plane/blocks/layout";
 // components
 import { PageHead } from "@/components/core/page-title";
 import { ProfileActivity } from "@/components/profile/overview/activity";

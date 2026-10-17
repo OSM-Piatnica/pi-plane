@@ -7,7 +7,7 @@
 
 import { useMemo } from "react";
 import { useTranslation } from "@plane/i18n";
-import { setToast, TOAST_TYPE } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import { useMember } from "@/hooks/store/use-member";
 import { useUser } from "@/hooks/store/user";
 import { DEFAULT_TAB_KEY } from "./tab-navigation-utils";
@@ -82,7 +82,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
     updatePreferences(newPreferences)
       .then(() => {
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("toast.success"),
           message: "Default tab updated successfully.",
         });
@@ -90,7 +90,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
       })
       .catch(() => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: "Failed to update default tab. Please try again later.",
         });
@@ -110,7 +110,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
     } catch (error) {
       console.error("Error hiding tab:", error);
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: "Failed to hide tab. Please try again later.",
       });
@@ -130,7 +130,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
     } catch (error) {
       console.error("Error showing tab:", error);
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: "Something went wrong. Please try again later.",
       });

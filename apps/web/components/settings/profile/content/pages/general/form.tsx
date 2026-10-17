@@ -13,8 +13,8 @@ import { UserOutline } from "@makeplane/propel/icons";
 import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { TOAST_TYPE, setPromiseToast, setToast } from "@plane/propel/toast";
+import { Button } from "@makeplane/propel/components/button";
+import { setPromiseToast, setToast } from "@plane/blocks/toast";
 import { EFileAssetType } from "@plane/types";
 import type { IUser, TUserProfile } from "@plane/types";
 
@@ -100,7 +100,7 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
     })
       .then(() => {
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("toast.success"),
           message: t("project_components.profile.picture_deleted"),
         });
@@ -109,7 +109,7 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
       })
       .catch(() => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: t("project_components.profile.picture_delete_error"),
         });
@@ -141,7 +141,7 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
     } catch (error) {
       console.error("Error handling cover image:", error);
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: error instanceof Error ? error.message : t("project_components.form.cover_image_error"),
       });
@@ -409,9 +409,14 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
             </div>
           </div>
           <div>
-            <Button variant="primary" type="submit" loading={isLoading}>
-              {isLoading ? t("saving") : t("save_changes")}
-            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              stretch="auto"
+              type="submit"
+              label={isLoading ? t("saving") : t("save_changes")}
+              loading={isLoading}
+            />
           </div>
         </div>
       </form>
@@ -420,9 +425,13 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
           title={t("deactivate_account")}
           description={t("deactivate_account_description")}
           control={
-            <Button variant="error-outline" onClick={() => setDeactivateAccountModal(true)}>
-              {t("deactivate_account")}
-            </Button>
+            <Button
+              variant="danger-outline"
+              size="sm"
+              stretch="auto"
+              label={t("deactivate_account")}
+              onClick={() => setDeactivateAccountModal(true)}
+            />
           }
         />
       </div>

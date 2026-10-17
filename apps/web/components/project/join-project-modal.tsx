@@ -9,10 +9,19 @@ import { useState } from "react";
 // types
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 import type { IProject } from "@plane/types";
 // ui
-import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
+import {
+  Dialog,
+  DialogActions,
+  DialogBody,
+  DialogContent,
+  DialogHeader,
+  DialogHeading,
+  DialogMain,
+  DialogTitle,
+} from "@makeplane/propel/components/dialog";
 // hooks
 import { useUserPermissions } from "@/hooks/store/user";
 import { useAppRouter } from "@/hooks/use-app-router";
@@ -54,21 +63,39 @@ export function JoinProjectModal(props: TJoinProjectModalProps) {
   };
 
   return (
-    <ModalCore isOpen={isOpen} handleClose={handleClose} position={EModalPosition.CENTER} width={EModalWidth.XL}>
-      <div className="space-y-5 px-5 py-8 sm:p-6">
-        <h3 className="text-16 leading-6 font-medium text-primary">{t("project_components.join_modal.title")}</h3>
-        <p>{t("project_components.join_modal.description", { name: project?.name })}</p>
-        <div className="space-y-3" />
-      </div>
-      <div className="mt-5 flex justify-end gap-2 px-5 pb-8 sm:px-6 sm:pb-6">
-        <Button variant="secondary" size="lg" onClick={handleClose}>
-          {t("cancel")}
-        </Button>
-        {/* oxlint-disable-next-line tabindex-no-positive -- existing behaviour; lint cleanup only */}
-        <Button variant="primary" size="lg" tabIndex={1} type="submit" onClick={handleJoin} loading={isJoiningLoading}>
-          {isJoiningLoading ? t("project_components.shared.joining") : t("project_components.join_modal.join_project")}
-        </Button>
-      </div>
-    </ModalCore>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+    >
+      <DialogContent size="sm">
+        <DialogMain>
+          <DialogHeader>
+            <DialogHeading>
+              <DialogTitle>{t("project_components.join_modal.title")}</DialogTitle>
+            </DialogHeading>
+          </DialogHeader>
+          <DialogBody>
+            <p>{t("project_components.join_modal.description", { name: project?.name })}</p>
+          </DialogBody>
+        </DialogMain>
+        <DialogActions>
+          <Button variant="secondary" size="md" stretch="auto" label={t("cancel")} onClick={handleClose} />
+          <Button
+            variant="primary"
+            size="md"
+            stretch="auto"
+            label={
+              isJoiningLoading
+                ? t("project_components.shared.joining")
+                : t("project_components.join_modal.join_project")
+            }
+            onClick={handleJoin}
+            loading={isJoiningLoading}
+          />
+        </DialogActions>
+      </DialogContent>
+    </Dialog>
   );
 }

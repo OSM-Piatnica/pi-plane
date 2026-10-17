@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,7 +15,7 @@ import { ETabIndices } from "@plane/constants";
 import type { TIssue } from "@plane/types";
 import { getTabIndex } from "@plane/utils";
 // components
-import { ProjectDropdown } from "@/components/dropdowns/project/dropdown";
+import { ProjectSelect } from "@/components/dropdowns/project/project-select";
 // hooks
 import { useIssueModal } from "@/hooks/context/use-issue-modal";
 import { usePlatformOS } from "@/hooks/use-platform-os";
@@ -42,20 +43,19 @@ export const IssueProjectSelect = observer(function IssueProjectSelect(props: TI
         required: true,
       }}
       render={({ field: { value, onChange } }) => (
-        <div className="h-7">
-          <ProjectDropdown
-            value={value}
-            onChange={(projectId) => {
-              onChange(projectId);
-              handleFormChange();
-            }}
-            multiple={false}
-            buttonVariant="border-with-text"
-            renderCondition={(projectId) => allowedProjectIds.includes(projectId)}
-            tabIndex={getIndex("project_id")}
-            disabled={disabled}
-          />
-        </div>
+        <ProjectSelect
+          value={value}
+          onChange={(projectId) => {
+            if (!projectId) return;
+            onChange(projectId);
+            handleFormChange();
+          }}
+          multiple={false}
+          variant="pill-md"
+          filterOption={(id) => allowedProjectIds.includes(id)}
+          tabIndex={getIndex("project_id")}
+          disabled={disabled}
+        />
       )}
     />
   );

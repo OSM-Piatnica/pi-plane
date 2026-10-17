@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 // plane imports
-import { ScrollArea } from "@plane/propel/scrollarea";
+import { ScrollArea } from "@makeplane/propel/components/scroll-area";
 import type { TProfileSettingsTabs } from "@plane/types";
 import { cn } from "@plane/utils";
 // local imports
@@ -22,14 +23,16 @@ export function ProfileSettingsSidebarRoot(props: Props) {
   const { activeTab, className, updateActiveTab } = props;
 
   return (
-    <ScrollArea
-      scrollType="hover"
-      orientation="vertical"
-      size="sm"
-      rootClassName={cn("shrink-0 overflow-y-scroll border-r border-r-subtle bg-surface-2 px-3 py-4", className)}
+    <div
+      className={cn(
+        "flex shrink-0 flex-col overflow-hidden border-r border-r-subtle bg-surface-2 px-3 py-4",
+        className
+      )}
     >
-      <ProfileSettingsSidebarHeader />
-      <ProfileSettingsSidebarItemCategories activeTab={activeTab} updateActiveTab={updateActiveTab} />
-    </ScrollArea>
+      <ScrollArea orientation="vertical">
+        <ProfileSettingsSidebarHeader />
+        <ProfileSettingsSidebarItemCategories activeTab={activeTab} updateActiveTab={updateActiveTab} />
+      </ScrollArea>
+    </div>
   );
 }

@@ -4,110 +4,110 @@ version = "0.24.0"
 description = "Open-source project management that unlocks customer value"
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    # django
-    "Django==5.2.18",
-    # rest framework
-    "djangorestframework==3.17.2",
-    # postgres (the psycopg implementation comes from a group: psycopg-c in
-    # production, psycopg-binary in dev/test)
-    "psycopg==3.3.6",
-    "dj-database-url==3.1.2",
-    # redis
-    "redis==8.1.0",
-    "django-redis==7.0.0",
-    # cors
-    "django-cors-headers==4.9.0",
-    # celery
-    "celery==5.6.3",
-    "django_celery_beat==2.9.0",
-    "django-celery-results==2.6.0",
-    # file serve
-    "whitenoise==6.12.0",
-    # fake data
-    "faker==40.43.0",
-    # filters
-    "django-filter==25.2",
-    # json model
-    "jsonmodels==2.8.0",
-    # storage
-    "django-storages==1.14.6",
-    # user management
-    "django-crum==0.7.9",
-    # web server
-    "uvicorn==0.54.0",
-    # sockets
-    "channels==4.3.2",
-    # ai
-    "openai==3.31.0",
-    # slack
-    "slack-sdk==3.45.0",
-    # apm
-    "scout-apm==4.0.0",
-    # xlsx generation
-    "openpyxl==3.1.5",
-    # logging
-    "python-json-logger==4.2.0",
-    # html parser
-    "beautifulsoup4==4.15.0",
-    # crypto
-    "cryptography==50.0.2",
-    # html validator
-    "lxml==6.1.3",
-    # s3
-    "boto3==1.43.113",
-    # http client (pinned to address CVE-2026-44431 and CVE-2026-44432)
-    "urllib3>=2.8.0",
-    # requests — used directly for webhook delivery & link unfurling; pinned to
-    # >=2.32 for the get_connection_with_tls_context adapter hook (SSRF IP pinning)
-    "requests==2.34.2",
-    # password validator
-    "zxcvbn==4.5.0",
-    # timezone
-    "pytz==2026.5",
-    # jwt
-    "PyJWT==2.15.1",
-    # OpenTelemetry
-    "opentelemetry-api==1.45.1",
-    "opentelemetry-sdk==1.45.1",
-    "opentelemetry-instrumentation-django==0.66b1",
-    "opentelemetry-exporter-otlp==1.45.1",
-    "opentelemetry-exporter-otlp-proto-grpc==1.45.1",
-    # OpenAPI Specification
-    "drf-spectacular==0.29.0",
-    # html sanitizer
-    "nh3==0.3.7",
+  # django
+  "Django==5.2.18",
+  # rest framework
+  "djangorestframework==3.17.2",
+  # postgres (the psycopg implementation comes from a group: psycopg-c in
+  # production, psycopg-binary in dev/test)
+  "psycopg==3.3.6",
+  "dj-database-url==3.1.2",
+  # redis
+  "redis==8.1.0",
+  "django-redis==7.0.0",
+  # cors
+  "django-cors-headers==4.9.0",
+  # celery
+  "celery==5.6.3",
+  "django_celery_beat==2.9.0",
+  "django-celery-results==2.6.0",
+  # file serve
+  "whitenoise==6.12.0",
+  # fake data
+  "faker==40.43.0",
+  # filters
+  "django-filter==25.2",
+  # json model
+  "jsonmodels==2.8.0",
+  # storage
+  "django-storages==1.14.6",
+  # user management
+  "django-crum==0.7.9",
+  # web server
+  "uvicorn==0.54.0",
+  # sockets
+  "channels==4.3.2",
+  # ai
+  "openai==3.31.0",
+  # slack
+  "slack-sdk==3.45.0",
+  # apm
+  "scout-apm==4.0.0",
+  # xlsx generation
+  "openpyxl==3.1.5",
+  # logging
+  "python-json-logger==4.2.0",
+  # html parser
+  "beautifulsoup4==4.15.0",
+  # crypto
+  "cryptography==50.0.2",
+  # html validator
+  "lxml==6.1.3",
+  # s3
+  "boto3==1.43.113",
+  # http client (pinned to address CVE-2026-44431 and CVE-2026-44432)
+  "urllib3>=2.8.0",
+  # requests — used directly for webhook delivery & link unfurling; pinned to
+  # >=2.32 for the get_connection_with_tls_context adapter hook (SSRF IP pinning)
+  "requests==2.34.2",
+  # password validator
+  "zxcvbn==4.5.0",
+  # timezone
+  "pytz==2026.5",
+  # jwt
+  "PyJWT==2.15.1",
+  # OpenTelemetry
+  "opentelemetry-api==1.45.1",
+  "opentelemetry-sdk==1.45.1",
+  "opentelemetry-instrumentation-django==0.66b1",
+  "opentelemetry-exporter-otlp==1.45.1",
+  "opentelemetry-exporter-otlp-proto-grpc==1.45.1",
+  # OpenAPI Specification
+  "drf-spectacular==0.29.0",
+  # html sanitizer
+  "nh3==0.3.7",
 ]
 
 [dependency-groups]
 # Installed only by the production image (Dockerfile.api) and migration-check:
 #   uv sync --no-default-groups --group production
 production = [
-    # server
-    "gunicorn==26.2.0",
-    # postgres C implementation, built from source (needs pg_config and a compiler)
-    "psycopg-c==3.3.6",
+  # server
+  "gunicorn==26.2.0",
+  # postgres C implementation, built from source (needs pg_config and a compiler)
+  "psycopg-c==3.3.6",
 ]
 dev = [
-    # postgres prebuilt wheel, so local setups never compile psycopg-c
-    "psycopg-binary==3.3.6",
-    # debug toolbar
-    "django-debug-toolbar==8.0.0",
-    # formatter
-    "ruff==0.17.0",
+  # postgres prebuilt wheel, so local setups never compile psycopg-c
+  "psycopg-binary==3.3.6",
+  # debug toolbar
+  "django-debug-toolbar==8.0.0",
+  # formatter
+  "ruff==0.17.0",
 ]
 test = [
-    # postgres prebuilt wheel (also in dev, so either group works on its own)
-    "psycopg-binary==3.3.6",
-    # test framework
-    "pytest==9.1.1",
-    "pytest-django==4.14.0",
-    "pytest-cov==7.1.0",
-    "pytest-xdist==3.8.0",
-    "pytest-mock==3.16.0",
-    "factory-boy==3.3.3",
-    "freezegun==1.5.5",
-    "coverage==7.16.2",
-    "httpx==0.28.1",
+  # postgres prebuilt wheel (also in dev, so either group works on its own)
+  "psycopg-binary==3.3.6",
+  # test framework
+  "pytest==9.1.1",
+  "pytest-django==4.14.0",
+  "pytest-cov==7.1.0",
+  "pytest-xdist==3.8.0",
+  "pytest-mock==3.16.0",
+  "factory-boy==3.3.3",
+  "freezegun==1.5.5",
+  "coverage==7.16.2",
+  "httpx==0.28.1",
 ]
 
 [tool.uv]

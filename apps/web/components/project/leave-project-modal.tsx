@@ -12,10 +12,19 @@ import { WarningTriangleOutline } from "@makeplane/propel/icons";
 // Plane imports
 import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
-import { Button } from "@plane/propel/button";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { Button } from "@makeplane/propel/components/button";
+import { setToast } from "@plane/blocks/toast";
 import type { IProject } from "@plane/types";
-import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
+import {
+  Dialog,
+  DialogActions,
+  DialogBody,
+  DialogContent,
+  DialogHeader,
+  DialogHeading,
+  DialogMain,
+  DialogTitle,
+} from "@makeplane/propel/components/dialog";
 // hooks
 import { useUserPermissions } from "@/hooks/store/user";
 import { useAppRouter } from "@/hooks/use-app-router";
@@ -73,28 +82,28 @@ export const LeaveProjectModal = observer(function LeaveProjectModal(props: ILea
             })
             .catch((_err) => {
               setToast({
-                type: TOAST_TYPE.ERROR,
+                type: "error",
                 title: t("toast.error"),
                 message: t("something_went_wrong_please_try_again"),
               });
             });
         } else {
           setToast({
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("toast.error"),
             message: t("project_components.leave_modal.confirm_phrase_error", { phrase: "Leave Project" }),
           });
         }
       } else {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: t("project_components.leave_modal.project_name_error"),
         });
       }
     } else {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("project_components.leave_modal.fill_all_fields"),
       });
@@ -102,84 +111,101 @@ export const LeaveProjectModal = observer(function LeaveProjectModal(props: ILea
   };
 
   return (
-    <ModalCore isOpen={isOpen} handleClose={handleClose} position={EModalPosition.CENTER} width={EModalWidth.XXL}>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 p-6">
-        <div className="flex w-full items-center justify-start gap-6">
-          <span className="place-items-center rounded-full bg-danger-subtle p-4">
-            <WarningTriangleOutline className="h-6 w-6 text-danger-primary" aria-hidden="true" />
-          </span>
-          <span className="flex items-center justify-start">
-            <h3 className="text-18 font-medium 2xl:text-20">{t("project_components.leave_modal.title")}</h3>
-          </span>
-        </div>
-
-        <span>
-          <p className="text-13 leading-7 text-secondary">
-            {t("project_components.leave_modal.description", { name: project?.name })}
-          </p>
-        </span>
-
-        <div className="text-secondary">
-          <p className="text-13 break-words">
-            {t("project_components.delete_modal.enter_project_name", { name: project?.name })}
-          </p>
-          <Controller
-            control={control}
-            name="projectName"
-            rules={{
-              required: t("project_components.leave_modal.project_name_required"),
-            }}
-            render={({ field: { value, onChange, ref } }) => (
-              <Field name="projectName" invalid={Boolean(errors.projectName)}>
-                <InputGroup size="2xl">
-                  <Input
-                    size="2xl"
-                    id="projectName"
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+    >
+      <DialogContent size="md">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex min-h-0 flex-1 flex-col">
+          <DialogMain>
+            <DialogHeader>
+              <div className="flex w-full items-center justify-start gap-6">
+                <span className="place-items-center rounded-full bg-danger-subtle p-4">
+                  <WarningTriangleOutline className="h-6 w-6 text-danger-primary" aria-hidden="true" />
+                </span>
+                <DialogHeading>
+                  <DialogTitle>{t("project_components.leave_modal.title")}</DialogTitle>
+                </DialogHeading>
+              </div>
+            </DialogHeader>
+            <DialogBody>
+              <div className="flex flex-col gap-6">
+                <p className="text-13 leading-7 text-secondary">
+                  {t("project_components.leave_modal.description", { name: project?.name })}
+                </p>
+                <div className="text-secondary">
+                  <p className="text-13 break-words">
+                    {t("project_components.delete_modal.enter_project_name", { name: project?.name })}
+                  </p>
+                  <Controller
+                    control={control}
                     name="projectName"
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    ref={ref}
-                    placeholder={t("project_components.leave_modal.project_name_placeholder")}
+                    rules={{
+                      required: t("project_components.leave_modal.project_name_required"),
+                    }}
+                    render={({ field: { value, onChange, ref } }) => (
+                      <Field name="projectName" invalid={Boolean(errors.projectName)}>
+                        <InputGroup size="2xl">
+                          <Input
+                            size="2xl"
+                            id="projectName"
+                            name="projectName"
+                            type="text"
+                            value={value}
+                            onChange={onChange}
+                            ref={ref}
+                            placeholder={t("project_components.leave_modal.project_name_placeholder")}
+                          />
+                        </InputGroup>
+                      </Field>
+                    )}
                   />
-                </InputGroup>
-              </Field>
-            )}
-          />
-        </div>
-
-        <div className="text-secondary">
-          <p className="text-13">{t("project_components.delete_modal.confirm_type", { phrase: "Leave Project" })}</p>
-          <Controller
-            control={control}
-            name="confirmLeave"
-            render={({ field: { value, onChange, ref } }) => (
-              <Field name="confirmLeave" invalid={Boolean(errors.confirmLeave)}>
-                <InputGroup size="2xl">
-                  <Input
-                    size="2xl"
-                    id="confirmLeave"
+                </div>
+                <div className="text-secondary">
+                  <p className="text-13">
+                    {t("project_components.delete_modal.confirm_type", { phrase: "Leave Project" })}
+                  </p>
+                  <Controller
+                    control={control}
                     name="confirmLeave"
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    ref={ref}
-                    placeholder={t("project_components.delete_modal.confirm_placeholder", { phrase: "leave project" })}
+                    render={({ field: { value, onChange, ref } }) => (
+                      <Field name="confirmLeave" invalid={Boolean(errors.confirmLeave)}>
+                        <InputGroup size="2xl">
+                          <Input
+                            size="2xl"
+                            id="confirmLeave"
+                            name="confirmLeave"
+                            type="text"
+                            value={value}
+                            onChange={onChange}
+                            ref={ref}
+                            placeholder={t("project_components.delete_modal.confirm_placeholder", {
+                              phrase: "leave project",
+                            })}
+                          />
+                        </InputGroup>
+                      </Field>
+                    )}
                   />
-                </InputGroup>
-              </Field>
-            )}
-          />
-        </div>
-        <div className="flex justify-end gap-2">
-          <Button variant="secondary" size="lg" onClick={handleClose}>
-            {t("cancel")}
-          </Button>
-          <Button variant="error-fill" size="lg" type="submit" loading={isSubmitting}>
-            {isSubmitting ? t("project_components.shared.leaving") : t("project_components.leave_modal.title")}
-          </Button>
-        </div>
-      </form>
-    </ModalCore>
+                </div>
+              </div>
+            </DialogBody>
+          </DialogMain>
+          <DialogActions>
+            <Button variant="secondary" size="md" stretch="auto" label={t("cancel")} onClick={handleClose} />
+            <Button
+              variant="danger"
+              size="md"
+              stretch="auto"
+              type="submit"
+              label={isSubmitting ? t("project_components.shared.leaving") : t("project_components.leave_modal.title")}
+              loading={isSubmitting}
+            />
+          </DialogActions>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 });

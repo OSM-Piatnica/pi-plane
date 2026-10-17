@@ -7,8 +7,9 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp, Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
-import { EPillVariant, Pill, EPillSize } from "@plane/propel/pill";
-import { Input, TextArea } from "@plane/ui";
+import { Badge } from "@makeplane/propel/components/badge";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
+import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
 import { Switch } from "@makeplane/propel/components/switch";
 import { CustomPropertiesTemplateEditor } from "./custom-properties-template-editor";
 import type { TAdditionalWorkItemTypeTemplate, TCustomPropertyTemplateField } from "./project-template-form.types";
@@ -78,9 +79,11 @@ export const WorkItemTypesTemplateEditor = ({
           <span className="text-13 font-medium text-primary">
             {t("workspace_settings.settings.project_templates.form.work_item_types.task.title")}
           </span>
-          <Pill variant={EPillVariant.PRIMARY} size={EPillSize.SM} className="rounded-md border-none">
-            {t("workspace_settings.settings.project_templates.form.work_item_types.default_badge")}
-          </Pill>
+          <Badge
+            variant="brand"
+            size="sm"
+            label={t("workspace_settings.settings.project_templates.form.work_item_types.default_badge")}
+          />
         </div>
         <div className="space-y-2 px-3 py-3">
           <p className="text-12 text-secondary">
@@ -100,9 +103,11 @@ export const WorkItemTypesTemplateEditor = ({
             <span className="text-13 font-medium text-primary">
               {t("workspace_settings.settings.project_templates.form.work_item_types.epic.title")}
             </span>
-            <Pill variant={EPillVariant.DEFAULT} size={EPillSize.SM} className="rounded-md border-none">
-              {t("workspace_settings.settings.project_templates.form.work_item_types.optional_badge")}
-            </Pill>
+            <Badge
+              variant="neutral"
+              size="sm"
+              label={t("workspace_settings.settings.project_templates.form.work_item_types.optional_badge")}
+            />
           </div>
           <Switch checked={epicEnabled} onCheckedChange={onEpicEnabledChange} size="sm" />
         </div>
@@ -129,9 +134,11 @@ export const WorkItemTypesTemplateEditor = ({
           <span className="text-13 font-medium text-primary">
             {t("workspace_settings.settings.project_templates.form.work_item_types.additional_section.title")}
           </span>
-          <Pill variant={EPillVariant.DEFAULT} size={EPillSize.SM} className="rounded-md border-none">
-            {t("workspace_settings.settings.project_templates.form.work_item_types.optional_badge")}
-          </Pill>
+          <Badge
+            variant="neutral"
+            size="sm"
+            label={t("workspace_settings.settings.project_templates.form.work_item_types.optional_badge")}
+          />
         </div>
         <div className="space-y-3 px-3 py-3">
           <p className="text-12 text-secondary">
@@ -185,22 +192,29 @@ function AdditionalWorkItemTypeCard(props: {
           {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
         <div className="min-w-0 flex-1 space-y-2">
-          <Input
-            className="h-8 w-full"
-            value={row.name}
-            onChange={(e) => onPatch({ name: e.target.value })}
-            placeholder={t("workspace_settings.settings.project_templates.form.work_item_types.type_name_placeholder")}
-          />
-          {expanded ? (
-            <TextArea
-              className="min-h-[56px] w-full resize-y text-13"
-              rows={2}
-              value={row.description}
-              onChange={(e) => onPatch({ description: e.target.value })}
+          <InputGroup size="lg">
+            <Input
+              size="lg"
+              value={row.name}
+              onChange={(e) => onPatch({ name: e.target.value })}
               placeholder={t(
-                "workspace_settings.settings.project_templates.form.work_item_types.type_description_placeholder"
+                "workspace_settings.settings.project_templates.form.work_item_types.type_name_placeholder"
               )}
             />
+          </InputGroup>
+          {expanded ? (
+            <TextAreaGroup resize="vertical">
+              <TextArea
+                size="md"
+                surface="field"
+                rows={2}
+                value={row.description}
+                onChange={(e) => onPatch({ description: e.target.value })}
+                placeholder={t(
+                  "workspace_settings.settings.project_templates.form.work_item_types.type_description_placeholder"
+                )}
+              />
+            </TextAreaGroup>
           ) : null}
         </div>
         <button

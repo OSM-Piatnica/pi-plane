@@ -8,7 +8,7 @@
 
 import { observer } from "mobx-react";
 // ui
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 // hooks
 import { usePlatformOS } from "@/hooks/use-platform-os";
@@ -25,10 +25,10 @@ export const WorkspaceEditionBadge = observer(function WorkspaceEditionBadge() {
       <Button
         variant="tertiary"
         size="lg"
+        stretch="auto"
+        label="Pi-Plane"
         onClick={() => window.open(PI_PLANE_REPO_URL, "_blank", "noopener,noreferrer")}
-      >
-        Pi-Plane
-      </Button>
+      />
     </Tooltip>
   );
 });

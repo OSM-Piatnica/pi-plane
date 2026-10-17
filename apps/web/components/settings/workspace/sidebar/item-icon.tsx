@@ -14,7 +14,7 @@ import {
   WebhooksOutline,
 } from "@makeplane/propel/icons";
 // plane imports
-import type { ISvgIcons } from "@plane/propel/icons";
+import type { ISvgIcons } from "@plane/blocks/icons";
 import type { TWorkspaceSettingsTabs } from "@plane/types";
 import { ArrowDownToLine, FolderKanban, Layers, LayoutTemplate } from "lucide-react";
 

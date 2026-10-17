@@ -16,12 +16,13 @@ import { MoreHorizontalOutline } from "@makeplane/propel/icons";
 import { useOutsideClickDetector } from "@plane/hooks";
 // types
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TIssue, IIssueDisplayProperties, IIssueMap } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // ui
-import { ControlLink, DropIndicator } from "@plane/ui";
+import { ControlLink } from "@plane/blocks/layout";
+import { DropIndicator } from "@plane/blocks/common";
 import { cn, generateWorkItemLink } from "@plane/utils";
 // components
 import RenderIfVisible from "@/components/core/render-if-visible-HOC";
@@ -75,15 +76,17 @@ const handleEventPropagation = (e: React.MouseEvent) => {
 const KanbanIssueDetailsBlock = observer(function KanbanIssueDetailsBlock(props: IssueDetailsBlockProps) {
   const { cardRef, issue, updateIssue, quickActions, isReadOnly, displayProperties, isEpic = false } = props;
   // refs
-  const menuActionRef = useRef<HTMLDivElement | null>(null);
+  const menuActionRef = useRef<HTMLButtonElement | null>(null);
   // states
   const [isMenuActive, setIsMenuActive] = useState(false);
   // hooks
   const { isMobile } = usePlatformOS();
 
   const customActionButton = (
-    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup
-    <div
+    // The quick-action menu grafts its trigger behaviour (and accessible name) onto this element via
+    // MenuTrigger render, so it has to be a real button.
+    <button
+      type="button"
       ref={menuActionRef}
       className={`flex h-full w-full cursor-pointer items-center rounded-sm p-1 text-placeholder hover:bg-layer-1 ${
         isMenuActive ? "bg-layer-1 text-primary" : "text-secondary"
@@ -91,7 +94,7 @@ const KanbanIssueDetailsBlock = observer(function KanbanIssueDetailsBlock(props:
       onClick={() => setIsMenuActive(!isMenuActive)}
     >
       <MoreHorizontalOutline className="h-3.5 w-3.5" />
-    </div>
+    </button>
   );
 
   // derived values
@@ -267,7 +270,7 @@ export const KanbanIssueBlock = observer(function KanbanIssueBlock(props: IssueB
           if (isDragAllowed) setIsCurrentBlockDragging(true);
           else {
             setToast({
-              type: TOAST_TYPE.WARNING,
+              type: "warning",
               title: t("issue_ui.cannot_move.title"),
               message: !canEditIssueProperties
                 ? t("issue_ui.cannot_move.not_allowed")

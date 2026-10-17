@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 // plane imports
 import type { EditorRefApi } from "@plane/editor";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { TIssue, TNameDescriptionLoader } from "@plane/types";
 import { EFileAssetType, EInboxIssueSource, EInboxIssueStatus } from "@plane/types";
 import { getTextContent } from "@plane/utils";
@@ -107,14 +107,14 @@ export const InboxIssueMainContent = observer(function InboxIssueMainContent(pro
           await removeIssue(workspaceSlug, projectId, _issueId);
           setToast({
             title: t("toast.success"),
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             message: t("inbox_issue.modals.delete.success"),
           });
         } catch (error) {
           console.log("Error in deleting work item:", error);
           setToast({
             title: t("toast.error"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             message: t("inbox_ui.delete_failed"),
           });
         }
@@ -125,7 +125,7 @@ export const InboxIssueMainContent = observer(function InboxIssueMainContent(pro
         } catch (error) {
           setToast({
             title: t("inbox_ui.update_failed"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             message: getIssueApiErrorMessage(error, t("inbox_ui.update_failed"), t),
           });
         }

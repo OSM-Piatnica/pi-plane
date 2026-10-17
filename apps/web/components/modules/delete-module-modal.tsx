@@ -11,10 +11,10 @@ import { useParams } from "next/navigation";
 // types
 import { PROJECT_ERROR_MESSAGES } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { IModule } from "@plane/types";
 // ui
-import { AlertModalCore } from "@plane/ui";
+import { ConfirmDialog } from "@plane/blocks/dialog";
 // constants
 // hooks
 import { useModule } from "@/hooks/store/use-module";
@@ -47,33 +47,34 @@ export const DeleteModuleModal = observer(function DeleteModuleModal(props: Prop
 
     setIsDeleteLoading(true);
 
-    await deleteModule(workspaceSlug.toString(), projectId.toString(), data.id)
-      .then(() => {
-        if (moduleId || peekModule) router.push(`/${workspaceSlug}/projects/${data.project_id}/modules`);
-        handleClose();
-        setToast({
-          type: TOAST_TYPE.SUCCESS,
-          title: t("toast.success"),
-          message: t("entity.delete.success", { entity: t("common.module") }),
-        });
-        return;
-      })
-      .catch((errors) => {
-        const isPermissionError = errors?.error === "You don't have the required permissions.";
-        const currentError = isPermissionError
-          ? PROJECT_ERROR_MESSAGES.permissionError
-          : PROJECT_ERROR_MESSAGES.moduleDeleteError;
-        setToast({
-          title: t(currentError.i18n_title),
-          type: TOAST_TYPE.ERROR,
-          message: currentError.i18n_message && t(currentError.i18n_message),
-        });
-      })
-      .finally(() => handleClose());
+    try {
+      await deleteModule(workspaceSlug.toString(), projectId.toString(), data.id);
+      if (moduleId || peekModule) router.push(`/${workspaceSlug}/projects/${data.project_id}/modules`);
+      setToast({
+        type: "success",
+        title: t("toast.success"),
+        message: t("entity.delete.success", { entity: t("common.module") }),
+      });
+      return;
+    } catch (errors) {
+      const isPermissionError =
+        (errors as { error?: string } | undefined)?.error === "You don't have the required permissions.";
+      const currentError = isPermissionError
+        ? PROJECT_ERROR_MESSAGES.permissionError
+        : PROJECT_ERROR_MESSAGES.moduleDeleteError;
+      setToast({
+        title: t(currentError.i18n_title),
+        type: "error",
+        message: currentError.i18n_message && t(currentError.i18n_message),
+      });
+    } finally {
+      setIsDeleteLoading(false);
+      onClose();
+    }
   };
 
   return (
-    <AlertModalCore
+    <ConfirmDialog
       handleClose={handleClose}
       handleSubmit={handleDeletion}
       isSubmitting={isDeleteLoading}

@@ -12,9 +12,9 @@ import { useController, type Control, type Path } from "react-hook-form";
 import { observer } from "mobx-react";
 import { Layers } from "lucide-react";
 import type { EditorRefApi } from "@plane/editor";
+import { Select } from "@plane/blocks/select";
 import { useTranslation } from "@plane/i18n";
-import { CustomSelect } from "@plane/ui";
-import type { TBulkIssueProperties, TIssue } from "@plane/types";
+import type { TBulkIssueProperties, TIssue, TProjectIssueType } from "@plane/types";
 import { SwitcherIcon } from "@/components/common/switcher-label";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectIssueTypes } from "@/hooks/use-project-issue-types";
@@ -64,49 +64,47 @@ export const IssueTypeSelect = observer(function IssueTypeSelect<T extends Parti
     return null;
   }
 
-  const selected = types.find((row) => row.issue_type_id === field.value)?.issue_type_detail;
+  const options = types.filter((row) => row.issue_type_detail);
+  const selectedOption = options.find((row) => row.issue_type_id === field.value) ?? null;
+  const selected = selectedOption?.issue_type_detail;
   const buttonLabel = isLoading
     ? t("work_item_types.loading")
     : (selected?.name ?? placeholder ?? t("work_item_types.select_placeholder"));
 
   return (
-    <div className="h-7 min-w-0 sm:max-w-[12rem]">
-      <CustomSelect
-        value={field.value ?? ""}
-        onChange={(value: string) => {
+    <div className="min-w-0 sm:max-w-[12rem]">
+      <Select<TProjectIssueType>
+        getValues={() => options}
+        value={selectedOption}
+        onChange={(value) => {
           field.onChange(value || null);
           handleFormChange?.();
         }}
         disabled={disabled || isLoading}
-        buttonClassName="w-full h-7 border border-subtle bg-layer-1 text-xs max-w-full truncate"
-        label={
-          selected ? (
+        getOptionValue={(row) => row.issue_type_id}
+        getOptionLabel={(row) => row.issue_type_detail?.name ?? ""}
+        getOptionIcon={(row) => (
+          <SwitcherIcon logo_props={row.issue_type_detail?.logo_props} LabelIcon={Layers} size={12} />
+        )}
+        showSearch={false}
+        pinSelected={false}
+      >
+        <Select.Trigger
+          variant="select-md"
+          className="w-full max-w-full truncate"
+          appendIcon={renderChevron ? undefined : null}
+          tabIndex={0}
+        >
+          {selected ? (
             <span className="flex items-center gap-1.5 truncate">
               <SwitcherIcon logo_props={selected.logo_props} LabelIcon={Layers} size={12} />
               <span className="truncate">{selected.name}</span>
             </span>
           ) : (
             buttonLabel
-          )
-        }
-        className="w-full"
-        noChevron={!renderChevron}
-        tabIndex={0}
-        input
-      >
-        {types.map((row) => {
-          const detail = row.issue_type_detail;
-          if (!detail) return null;
-          return (
-            <CustomSelect.Option key={row.id} value={row.issue_type_id}>
-              <span className="flex items-center gap-1.5">
-                <SwitcherIcon logo_props={detail.logo_props} LabelIcon={Layers} size={12} />
-                {detail.name}
-              </span>
-            </CustomSelect.Option>
-          );
-        })}
-      </CustomSelect>
+          )}
+        </Select.Trigger>
+      </Select>
     </div>
   );
 });

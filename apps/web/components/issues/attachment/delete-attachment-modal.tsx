@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,7 +13,7 @@ import { useTranslation } from "@plane/i18n";
 import type { TIssueServiceType } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // ui
-import { AlertModalCore } from "@plane/ui";
+import { ConfirmDialog } from "@plane/blocks/dialog";
 // helper
 import { getFileName } from "@plane/utils";
 // hooks
@@ -52,12 +53,19 @@ export const IssueAttachmentDeleteModal = observer(function IssueAttachmentDelet
 
   const handleDeletion = async (assetId: string) => {
     setLoader(true);
-    attachmentOperations.remove(assetId).finally(() => handleClose());
+    try {
+      await attachmentOperations.remove(assetId);
+    } catch (error) {
+      // the operation reports its own failures; never leave the rejection unhandled
+      console.error(error);
+    } finally {
+      handleClose();
+    }
   };
 
   if (!attachment) return <></>;
   return (
-    <AlertModalCore
+    <ConfirmDialog
       handleClose={handleClose}
       handleSubmit={() => handleDeletion(attachment.id)}
       isSubmitting={loader}

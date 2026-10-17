@@ -6,11 +6,14 @@
 
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { CustomSelect, Input } from "@plane/ui";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { Switch } from "@makeplane/propel/components/switch";
+import { DateSelect } from "@plane/blocks/property-select";
+import { Select } from "@plane/blocks/select";
 import type { TIssueTypePropertyValueEntry } from "@plane/types";
-import { DateDropdown } from "@/components/dropdowns/date";
-import { MemberDropdown } from "@/components/dropdowns/member/dropdown";
+import { getDate, renderFormattedPayloadDate } from "@plane/utils";
+import { MemberSelect } from "@/components/dropdowns/member/member-select";
+import { useUserProfile } from "@/hooks/store/user";
 
 type TProps = {
   property: TIssueTypePropertyValueEntry;
@@ -26,6 +29,7 @@ type TProps = {
 export const IssueTypePropertyField = observer(function IssueTypePropertyField(props: TProps) {
   const { property, value, error, disabled, projectId, onChange, compact } = props;
   const { t } = useTranslation();
+  const { data: userProfile } = useUserProfile();
   const type = property.property_type ?? "text";
 
   const label = (
@@ -46,29 +50,28 @@ export const IssueTypePropertyField = observer(function IssueTypePropertyField(p
     }
     if (type === "number") {
       return (
-        <Input
-          type="number"
-          className="h-8 w-full"
-          value={value === null || value === undefined ? "" : String(value)}
-          onChange={(e) => onChange(e.target.value === "" ? null : Number(e.target.value))}
-          disabled={disabled}
-        />
+        <InputGroup size="lg">
+          <Input
+            size="lg"
+            type="number"
+            value={value === null || value === undefined ? "" : String(value)}
+            onChange={(e) => onChange(e.target.value === "" ? null : Number(e.target.value))}
+            disabled={disabled}
+          />
+        </InputGroup>
       );
     }
     if (type === "date") {
       const dateValue =
         value instanceof Date ? value.toISOString().slice(0, 10) : typeof value === "string" ? value : null;
       return (
-        <DateDropdown
-          value={dateValue}
-          onChange={(next) => {
-            if (next instanceof Date) onChange(next.toISOString().slice(0, 10));
-            else onChange(next);
-          }}
+        <DateSelect
+          value={getDate(dateValue) ?? null}
+          onChange={(next) => onChange(next ? (renderFormattedPayloadDate(next) ?? null) : null)}
           placeholder={t("start_date")}
-          buttonVariant="border-with-text"
+          weekStartsOn={userProfile?.start_of_the_week}
+          variant="select-lg"
           disabled={disabled}
-          hideIcon
         />
       );
     }
@@ -101,43 +104,43 @@ export const IssueTypePropertyField = observer(function IssueTypePropertyField(p
         );
       }
       return (
-        <CustomSelect
-          value={typeof value === "string" ? value : ""}
-          onChange={(next: string) => onChange(next || null)}
+        <Select<string>
+          getValues={() => options}
+          value={typeof value === "string" && value ? value : null}
+          onChange={(next) => onChange(next || null)}
+          getOptionValue={(option) => option}
+          getOptionLabel={(option) => option}
           disabled={disabled}
-          buttonClassName="h-8 w-full border border-subtle"
-          label={typeof value === "string" && value ? value : t("select")}
-          className="w-full"
-          input
+          showSearch={false}
+          pinSelected={false}
         >
-          {options.map((opt) => (
-            <CustomSelect.Option key={opt} value={opt}>
-              {opt}
-            </CustomSelect.Option>
-          ))}
-        </CustomSelect>
+          <Select.Trigger<string> variant="select-lg" className="w-full">
+            <Select.Value placeholder={t("select")} />
+          </Select.Trigger>
+        </Select>
       );
     }
     if (type === "member_picker") {
       const memberValue = Array.isArray(value) ? value[0] : typeof value === "string" ? value : null;
       return (
-        <MemberDropdown
+        <MemberSelect
           projectId={projectId}
           value={memberValue}
           onChange={(memberId) => onChange(memberId ? [memberId] : [])}
-          multiple={false}
-          buttonVariant="border-with-text"
+          variant="select-lg"
           disabled={disabled}
         />
       );
     }
     return (
-      <Input
-        className="h-8 w-full"
-        value={value === null || value === undefined ? "" : String(value)}
-        onChange={(e) => onChange(e.target.value)}
-        disabled={disabled}
-      />
+      <InputGroup size="lg">
+        <Input
+          size="lg"
+          value={value === null || value === undefined ? "" : String(value)}
+          onChange={(e) => onChange(e.target.value)}
+          disabled={disabled}
+        />
+      </InputGroup>
     );
   })();
 

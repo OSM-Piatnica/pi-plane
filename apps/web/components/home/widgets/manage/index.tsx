@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,7 +9,15 @@ import { observer } from "mobx-react";
 // plane types
 // plane ui
 import { useTranslation } from "@plane/i18n";
-import { EModalWidth, ModalCore } from "@plane/ui";
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogHeader,
+  DialogHeading,
+  DialogMain,
+  DialogTitle,
+} from "@makeplane/propel/components/dialog";
 import { WidgetList } from "./widget-list";
 
 export type TProps = {
@@ -23,11 +32,24 @@ export const ManageWidgetsModal = observer(function ManageWidgetsModal(props: TP
   const { t } = useTranslation();
 
   return (
-    <ModalCore isOpen={isModalOpen} handleClose={handleOnClose} width={EModalWidth.MD}>
-      <div className="p-4">
-        <div className="text-18 font-medium"> {t("home.manage_widgets")}</div>
-        <WidgetList workspaceSlug={workspaceSlug} />
-      </div>
-    </ModalCore>
+    <Dialog
+      open={isModalOpen}
+      onOpenChange={(open) => {
+        if (!open) handleOnClose?.();
+      }}
+    >
+      <DialogContent size="xs">
+        <DialogMain>
+          <DialogHeader>
+            <DialogHeading>
+              <DialogTitle>{t("home.manage_widgets")}</DialogTitle>
+            </DialogHeading>
+          </DialogHeader>
+          <DialogBody tabIndex={0}>
+            <WidgetList workspaceSlug={workspaceSlug} />
+          </DialogBody>
+        </DialogMain>
+      </DialogContent>
+    </Dialog>
   );
 });

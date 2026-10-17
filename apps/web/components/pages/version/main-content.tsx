@@ -11,8 +11,8 @@ import useSWR from "swr";
 import { ShowOutline, WarningTriangleOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { Button } from "@makeplane/propel/components/button";
+import { setToast } from "@plane/blocks/toast";
 import type { TPageVersion } from "@plane/types";
 import { renderFormattedDate, renderFormattedTime } from "@plane/utils";
 // helpers
@@ -63,7 +63,7 @@ export const PageVersionsMainContent = observer(function PageVersionsMainContent
     await handleRestore(versionDetails?.description_html ?? "<p></p>")
       .then(() => {
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("page_ui.version.restored"),
         });
         handleClose();
@@ -71,7 +71,7 @@ export const PageVersionsMainContent = observer(function PageVersionsMainContent
       })
       .catch(() =>
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("page_ui.version.restore_failed"),
         })
       )
@@ -98,9 +98,14 @@ export const PageVersionsMainContent = observer(function PageVersionsMainContent
               <h6 className="text-16 font-semibold">{t("page_ui.version.error_title")}</h6>
               <p className="text-13 text-tertiary">{t("page_ui.version.error_description")}</p>
             </div>
-            <Button variant="link" onClick={handleRetry} loading={isRetrying}>
-              {t("page_ui.version.try_again")}
-            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              stretch="auto"
+              label={t("page_ui.version.try_again")}
+              onClick={() => void handleRetry()}
+              loading={isRetrying}
+            />
           </div>
         </div>
       ) : (
@@ -118,9 +123,14 @@ export const PageVersionsMainContent = observer(function PageVersionsMainContent
               </span>
             </div>
             {restoreEnabled && (
-              <Button variant="primary" className="flex-shrink-0" onClick={handleRestoreVersion} loading={isRestoring}>
-                {isRestoring ? t("page_ui.version.restoring") : t("restore")}
-              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                stretch="auto"
+                label={isRestoring ? t("page_ui.version.restoring") : t("restore")}
+                onClick={() => void handleRestoreVersion()}
+                loading={isRestoring}
+              />
             )}
           </div>
           <div className="vertical-scrollbar scrollbar-sm h-full overflow-y-scroll pt-8">

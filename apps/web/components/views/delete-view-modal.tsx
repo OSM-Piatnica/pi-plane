@@ -10,10 +10,10 @@ import { observer } from "mobx-react";
 import { useParams, useRouter } from "next/navigation";
 // types
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { IProjectView } from "@plane/types";
 // ui
-import { AlertModalCore } from "@plane/ui";
+import { ConfirmDialog } from "@plane/blocks/dialog";
 // hooks
 import { useProjectView } from "@/hooks/store/use-project-view";
 
@@ -46,13 +46,13 @@ export const DeleteProjectViewModal = observer(function DeleteProjectViewModal(p
       handleClose();
       router.push(`/${workspaceSlug}/projects/${projectId}/views`);
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("toast.success"),
         message: t("project_components.views.deleted"),
       });
     } catch (_error) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("project_components.views.delete_error"),
       });
@@ -61,7 +61,7 @@ export const DeleteProjectViewModal = observer(function DeleteProjectViewModal(p
   };
 
   return (
-    <AlertModalCore
+    <ConfirmDialog
       handleClose={handleClose}
       handleSubmit={handleDeleteView}
       isSubmitting={isDeleteLoading}

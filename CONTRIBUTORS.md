@@ -2,13 +2,13 @@
 
 The people who build and maintain **pi-plane**, OSM Piatnica's fork of [Plane](https://github.com/makeplane/plane).
 
-| Name | GitHub |
-| --- | --- |
-| Paweł Kranzberg | [@Pawel-Kranzberg](https://github.com/Pawel-Kranzberg) |
-| Piotr Jacak | [@piotrjacak](https://github.com/piotrjacak) |
-| Tomasz Chojnowski | [@TomaszChojnowski885](https://github.com/TomaszChojnowski885) |
+| Name                  | GitHub                                                                   |
+| --------------------- | ------------------------------------------------------------------------ |
+| Paweł Kranzberg       | [@Pawel-Kranzberg](https://github.com/Pawel-Kranzberg)                   |
+| Piotr Jacak           | [@piotrjacak](https://github.com/piotrjacak)                             |
+| Tomasz Chojnowski     | [@TomaszChojnowski885](https://github.com/TomaszChojnowski885)           |
 | Wojciech Klimaszewski | [@wojciechklimaszewskiwork](https://github.com/wojciechklimaszewskiwork) |
-| klazwi | [@klazwi](https://github.com/klazwi) |
+| klazwi                | [@klazwi](https://github.com/klazwi)                                     |
 
 ## Upstream
 

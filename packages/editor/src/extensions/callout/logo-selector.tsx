@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 // plane imports
-import { EmojiPicker, EmojiIconPickerTypes, Logo } from "@plane/propel/emoji-icon-picker";
+import { EmojiPicker, Logo } from "@plane/blocks/emoji-icon-picker";
 import type { TLogoProps } from "@plane/types";
 import { cn } from "@plane/utils";
 // types
@@ -95,7 +96,7 @@ export function CalloutBlockLogoSelector(props: Props) {
           handleOpen(false);
         }}
         defaultIconColor={logoValue?.in_use && logoValue.in_use === "icon" ? logoValue?.icon?.color : undefined}
-        defaultOpen={logoValue.in_use === "emoji" ? EmojiIconPickerTypes.EMOJI : EmojiIconPickerTypes.ICON}
+        defaultOpen={logoValue.in_use === "emoji" ? "emoji" : "icon"}
         disabled={disabled}
         searchDisabled
       />

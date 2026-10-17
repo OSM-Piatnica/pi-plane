@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,7 @@ import { observer } from "mobx-react";
 import { Link } from "react-router";
 import { useParams, useSearchParams } from "next/navigation";
 // plane types
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IIssueDisplayProperties } from "@plane/types";
 // plane ui
 // plane utils
@@ -79,7 +80,7 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
             onClick={handleIssuePeekOverview}
             className="w-full cursor-pointer truncate text-13 text-primary"
           >
-            <Tooltip tooltipContent={issue.name} position="top-start">
+            <Tooltip label={issue.name} side="top" align="start">
               <p className="truncate">{issue.name}</p>
             </Tooltip>
           </Link>

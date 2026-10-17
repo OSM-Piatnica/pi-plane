@@ -8,7 +8,7 @@
 import { observer } from "mobx-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { Header, EHeaderVariant } from "@plane/ui";
+import { Header, EHeaderVariant } from "@plane/blocks/layout";
 // hooks
 import { useProjectInbox } from "@/hooks/store/use-project-inbox";
 // local imports

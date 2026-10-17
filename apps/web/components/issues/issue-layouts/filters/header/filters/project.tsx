@@ -10,8 +10,8 @@ import { sortBy } from "lodash-es";
 import { observer } from "mobx-react";
 // ui
 import { useTranslation } from "@plane/i18n";
-import { Logo } from "@plane/propel/emoji-icon-picker";
-import { Loader } from "@plane/ui";
+import { Logo } from "@plane/blocks/emoji-icon-picker";
+import { Loader } from "@plane/blocks/skeleton";
 // components
 import { FilterHeader, FilterOption } from "@/components/issues/issue-layouts/filters";
 // hooks

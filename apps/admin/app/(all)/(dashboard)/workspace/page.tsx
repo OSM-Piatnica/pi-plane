@@ -11,7 +11,6 @@ import Link from "next/link";
 import useSWR from "swr";
 import { LoadingOutline as LoaderIcon } from "@makeplane/propel/icons";
 // types
-import { AnchorButton } from "@makeplane/propel/components/anchor-button";
 import { Button } from "@makeplane/propel/components/button";
 import { Switch } from "@makeplane/propel/components/switch";
 import type { TInstanceConfigurationKeys } from "@plane/types";
@@ -20,7 +19,7 @@ import { cn } from "@plane/utils";
 import { PageWrapper } from "@/components/common/page-wrapper";
 import { Skeleton } from "@/components/common/skeleton";
 import { WorkspaceListItem } from "@/components/workspace/list-item";
-import { setPromiseToast } from "@/providers/toast";
+import { setPromiseToast } from "@plane/blocks/toast";
 // hooks
 import { useInstance, useWorkspace } from "@/hooks/store";
 // types
@@ -108,6 +107,7 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
                     }
                   }}
                   size="sm"
+                  aria-label="Prevent anyone else from creating a workspace"
                   disabled={isSubmitting}
                 />
               </div>
@@ -151,9 +151,10 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
             </div>
             {hasNextPage && (
               <div className="flex justify-center">
-                <AnchorButton
-                  variant="primary"
+                <Button
+                  variant="ghost"
                   size="md"
+                  stretch="auto"
                   onClick={() => fetchNextWorkspaces()}
                   loading={workspaceLoader === "pagination"}
                   label="Load more"

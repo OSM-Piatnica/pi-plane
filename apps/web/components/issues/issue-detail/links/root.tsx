@@ -10,7 +10,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "@plane/i18n";
 import { AddOutline } from "@makeplane/propel/icons";
 // plane imports
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { TIssueLink } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // hooks
@@ -56,14 +56,14 @@ export function IssueLinkRoot(props: TIssueLinkRoot) {
           await createLink(workspaceSlug, projectId, issueId, data);
           setToast({
             message: t("links.toasts.created.message"),
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             title: t("links.toasts.created.title"),
           });
           toggleIssueLinkModal(false);
         } catch (error: any) {
           setToast({
             message: error?.data?.error ?? t("links.toasts.not_created.message"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("links.toasts.not_created.title"),
           });
           throw error;
@@ -75,14 +75,14 @@ export function IssueLinkRoot(props: TIssueLinkRoot) {
           await updateLink(workspaceSlug, projectId, issueId, linkId, data);
           setToast({
             message: t("links.toasts.updated.message"),
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             title: t("links.toasts.updated.title"),
           });
           toggleIssueLinkModal(false);
         } catch (error) {
           setToast({
             message: t("links.toasts.not_updated.message"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("links.toasts.not_updated.title"),
           });
           throw error;
@@ -94,14 +94,14 @@ export function IssueLinkRoot(props: TIssueLinkRoot) {
           await removeLink(workspaceSlug, projectId, issueId, linkId);
           setToast({
             message: t("links.toasts.removed.message"),
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             title: t("links.toasts.removed.title"),
           });
           toggleIssueLinkModal(false);
         } catch {
           setToast({
             message: t("links.toasts.not_removed.message"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("links.toasts.not_removed.title"),
           });
         }

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,7 +11,7 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // Plane imports
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { TIssue } from "@plane/types";
 import { isEmptyHtmlString } from "@plane/utils";
 // hooks
@@ -87,7 +88,7 @@ export const DraftIssueLayout = observer(function DraftIssueLayout(props: DraftI
     const response = await createIssue(workspaceSlug.toString(), payload)
       .then((res) => {
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: `${t("success")}!`,
           message: t("workspace_draft_issues.toasts.created.success"),
         });
@@ -98,7 +99,7 @@ export const DraftIssueLayout = observer(function DraftIssueLayout(props: DraftI
       })
       .catch((_error) => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: `${t("error")}!`,
           message: t("workspace_draft_issues.toasts.created.error"),
         });
