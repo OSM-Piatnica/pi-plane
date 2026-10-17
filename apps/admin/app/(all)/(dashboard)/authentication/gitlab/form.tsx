@@ -32,6 +32,11 @@ type Props = {
 
 type GitlabConfigFormValues = Record<TInstanceGitlabAuthenticationConfigurationKeys, string>;
 
+const GITLAB_FORM_SWITCH_FIELD: TControllerSwitchFormField<GitlabConfigFormValues> = {
+  name: "ENABLE_GITLAB_SYNC",
+  label: "GitLab",
+};
+
 export function InstanceGitlabConfigForm(props: Props) {
   const { config } = props;
   // states
@@ -77,7 +82,6 @@ export function InstanceGitlabConfigForm(props: Props) {
         <>
           Get this from your{" "}
           <a
-            tabIndex={-1}
             href="https://docs.gitlab.com/ee/integration/oauth_provider.html"
             target="_blank"
             className="text-accent-primary hover:underline"
@@ -100,7 +104,6 @@ export function InstanceGitlabConfigForm(props: Props) {
         <>
           The client secret is also found in your{" "}
           <a
-            tabIndex={-1}
             href="https://docs.gitlab.com/ee/integration/oauth_provider.html"
             target="_blank"
             className="text-accent-primary hover:underline"
@@ -117,11 +120,6 @@ export function InstanceGitlabConfigForm(props: Props) {
     },
   ];
 
-  const GITLAB_FORM_SWITCH_FIELD: TControllerSwitchFormField<GitlabConfigFormValues> = {
-    name: "ENABLE_GITLAB_SYNC",
-    label: "GitLab",
-  };
-
   const GITLAB_SERVICE_FIELD: TCopyField[] = [
     {
       key: "Callback_URL",
@@ -131,7 +129,6 @@ export function InstanceGitlabConfigForm(props: Props) {
         <>
           We will auto-generate this. Paste this into the <CodeBlock darkerShade>Redirect URI</CodeBlock> field of your{" "}
           <a
-            tabIndex={-1}
             href="https://docs.gitlab.com/ee/integration/oauth_provider.html"
             target="_blank"
             className="text-accent-primary hover:underline"

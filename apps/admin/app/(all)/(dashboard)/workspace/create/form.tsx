@@ -44,39 +44,42 @@ export function WorkspaceCreateForm() {
     formState: { errors, isSubmitting, isValid },
   } = useForm<IWorkspace>({ defaultValues, mode: "onChange" });
   // derived values
-  const workspaceBaseURL = encodeURI(WEB_BASE_URL || window.location.origin + "/");
+  const [workspaceBaseURL, setWorkspaceBaseURL] = useState(() => encodeURI(WEB_BASE_URL || ""));
+
+  useEffect(() => {
+    if (!WEB_BASE_URL) {
+      setWorkspaceBaseURL(encodeURI(window.location.origin + "/"));
+    }
+  }, []);
 
   const handleCreateWorkspace = async (formData: IWorkspace) => {
-    await instanceWorkspaceService
-      .slugCheck(formData.slug)
-      .then(async (res) => {
-        if (res.status === true && !RESTRICTED_URLS.includes(formData.slug)) {
-          setSlugError(false);
-          await createWorkspace(formData)
-            .then(async () => {
-              setToast({
-                type: TOAST_TYPE.SUCCESS,
-                title: "Success!",
-                message: "Workspace created successfully.",
-              });
-              router.push(`/workspace`);
-            })
-            .catch(() => {
-              setToast({
-                type: TOAST_TYPE.ERROR,
-                title: "Error!",
-                message: "Workspace could not be created. Please try again.",
-              });
-            });
-        } else setSlugError(true);
-      })
-      .catch(() => {
-        setToast({
-          type: TOAST_TYPE.ERROR,
-          title: "Error!",
-          message: "Some error occurred while creating workspace. Please try again.",
-        });
+    try {
+      const res = await instanceWorkspaceService.slugCheck(formData.slug);
+      if (res.status === true && !RESTRICTED_URLS.includes(formData.slug)) {
+        setSlugError(false);
+        try {
+          await createWorkspace(formData);
+          setToast({
+            type: TOAST_TYPE.SUCCESS,
+            title: "Success!",
+            message: "Workspace created successfully.",
+          });
+          router.push(`/workspace`);
+        } catch {
+          setToast({
+            type: TOAST_TYPE.ERROR,
+            title: "Error!",
+            message: "Workspace could not be created. Please try again.",
+          });
+        }
+      } else setSlugError(true);
+    } catch {
+      setToast({
+        type: TOAST_TYPE.ERROR,
+        title: "Error!",
+        message: "Some error occurred while creating workspace. Please try again.",
       });
+    }
   };
 
   useEffect(
