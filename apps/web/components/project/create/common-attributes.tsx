@@ -8,14 +8,16 @@
 import type { ChangeEvent } from "react";
 import type { UseFormSetValue } from "react-hook-form";
 import { Controller, useFormContext } from "react-hook-form";
+import { Field } from "@makeplane/propel/components/field";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { InfoIcon } from "@plane/propel/icons";
 // plane imports
 import { ETabIndices } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 // ui
 import { Tooltip } from "@plane/propel/tooltip";
-import { Input, TextArea } from "@plane/ui";
-import { cn, projectIdentifierSanitizer, getTabIndex } from "@plane/utils";
+import { TextArea } from "@plane/ui";
+import { projectIdentifierSanitizer, getTabIndex } from "@plane/utils";
 // plane utils
 // helpers
 import type { TProject } from "@plane/types";
@@ -71,17 +73,20 @@ function ProjectCommonAttributes(props: Props) {
             },
           }}
           render={({ field: { value, onChange } }) => (
-            <Input
-              id="name"
-              name="name"
-              type="text"
-              value={value}
-              onChange={handleNameChange(onChange)}
-              hasError={Boolean(errors.name)}
-              placeholder={t("project_name")}
-              className="focus:border-blue-400 w-full"
-              tabIndex={getIndex("name")}
-            />
+            <Field name="name" invalid={Boolean(errors.name)}>
+              <InputGroup size="2xl">
+                <Input
+                  size="2xl"
+                  id="name"
+                  name="name"
+                  type="text"
+                  value={value}
+                  onChange={handleNameChange(onChange)}
+                  placeholder={t("project_name")}
+                  tabIndex={getIndex("name")}
+                />
+              </InputGroup>
+            </Field>
           )}
         />
         <span className="text-11 text-danger-primary">{errors?.name?.message}</span>
@@ -105,19 +110,20 @@ function ProjectCommonAttributes(props: Props) {
             },
           }}
           render={({ field: { value, onChange } }) => (
-            <Input
-              id="identifier"
-              name="identifier"
-              type="text"
-              value={value}
-              onChange={handleIdentifierChange(onChange)}
-              hasError={Boolean(errors.identifier)}
-              placeholder={t("project_id")}
-              className={cn("focus:border-blue-400 w-full pr-7 text-11", {
-                uppercase: value,
-              })}
-              tabIndex={getIndex("identifier")}
-            />
+            <Field name="identifier" invalid={Boolean(errors.identifier)}>
+              <InputGroup size="2xl">
+                <Input
+                  size="2xl"
+                  id="identifier"
+                  name="identifier"
+                  type="text"
+                  value={value}
+                  onChange={handleIdentifierChange(onChange)}
+                  placeholder={t("project_id")}
+                  tabIndex={getIndex("identifier")}
+                />
+              </InputGroup>
+            </Field>
           )}
         />
         <Tooltip

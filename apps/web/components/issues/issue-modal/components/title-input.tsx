@@ -10,12 +10,14 @@ import { observer } from "mobx-react";
 import type { Control, FormState } from "react-hook-form";
 import { Controller } from "react-hook-form";
 // plane imports
+import { Field } from "@makeplane/propel/components/field";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { ETabIndices } from "@plane/constants";
 // types
 import { useTranslation } from "@plane/i18n";
 import type { TIssue } from "@plane/types";
 // ui
-import { Input } from "@plane/ui";
+
 // helpers
 import { getTabIndex } from "@plane/utils";
 // hooks
@@ -61,23 +63,26 @@ export const IssueTitleInput = observer(function IssueTitleInput(props: TIssueTi
           },
         }}
         render={({ field: { value, onChange, ref } }) => (
-          <Input
-            id="name"
-            name="name"
-            type="text"
-            value={value}
-            onChange={(e) => {
-              onChange(e.target.value);
-              handleFormChange();
-            }}
-            ref={issueTitleRef || ref}
-            hasError={Boolean(errors.name)}
-            placeholder={t("title")}
-            className="w-full text-body-sm-regular"
-            // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing markup; a11y behaviour change out of scope for lint cleanup
-            autoFocus
-            tabIndex={getIndex("name")}
-          />
+          <Field name="name" invalid={Boolean(errors.name)}>
+            <InputGroup size="2xl">
+              <Input
+                size="2xl"
+                id="name"
+                name="name"
+                type="text"
+                value={value}
+                onChange={(e) => {
+                  onChange(e.target.value);
+                  handleFormChange();
+                }}
+                ref={issueTitleRef || ref}
+                placeholder={t("title")}
+                // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; a11y handled separately
+                autoFocus
+                tabIndex={getIndex("name")}
+              />
+            </InputGroup>
+          </Field>
         )}
       />
       <span className="text-caption-sm-medium text-danger-primary">{errors?.name?.message}</span>

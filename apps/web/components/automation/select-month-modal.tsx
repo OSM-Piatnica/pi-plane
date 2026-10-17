@@ -8,12 +8,13 @@
 import { useParams } from "next/navigation";
 // react-hook-form
 import { Controller, useForm } from "react-hook-form";
-import { useTranslation } from "@plane/i18n";
+import { Field } from "@makeplane/propel/components/field";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { Button } from "@plane/propel/button";
 import type { IProject } from "@plane/types";
 // ui
-import { Input, EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
-
+import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
+import { useTranslation } from "@plane/i18n";
 // types
 type Props = {
   isOpen: boolean;
@@ -66,19 +67,22 @@ export function SelectMonthModal({ type, initialValues, isOpen, handleClose, han
                     }}
                     render={({ field: { value, onChange, ref } }) => (
                       <div className="relative flex w-full flex-col justify-center gap-1">
-                        <Input
-                          id="close_in"
-                          name="close_in"
-                          type="number"
-                          value={value?.toString()}
-                          onChange={onChange}
-                          ref={ref}
-                          hasError={Boolean(errors.close_in)}
-                          placeholder={t("core_ui.enter_months")}
-                          className="w-full border-subtle"
-                          min={1}
-                          max={12}
-                        />
+                        <Field name="close_in" invalid={Boolean(errors.close_in)}>
+                          <InputGroup size="2xl">
+                            <Input
+                              size="2xl"
+                              id="close_in"
+                              name="close_in"
+                              type="number"
+                              value={value?.toString()}
+                              onChange={onChange}
+                              ref={ref}
+                              placeholder={t("core_ui.enter_months")}
+                              min={1}
+                              max={12}
+                            />
+                          </InputGroup>
+                        </Field>
                         <span className="absolute top-2.5 right-8 text-13 text-secondary">{t("core_ui.months")}</span>
                       </div>
                     )}
@@ -100,19 +104,22 @@ export function SelectMonthModal({ type, initialValues, isOpen, handleClose, han
                     }}
                     render={({ field: { value, onChange, ref } }) => (
                       <div className="relative flex w-full flex-col justify-center gap-1">
-                        <Input
-                          id="archive_in"
-                          name="archive_in"
-                          type="number"
-                          value={value?.toString()}
-                          onChange={onChange}
-                          ref={ref}
-                          hasError={Boolean(errors.archive_in)}
-                          placeholder={t("core_ui.enter_months")}
-                          className="w-full border-subtle"
-                          min={1}
-                          max={12}
-                        />
+                        <Field name="archive_in" invalid={Boolean(errors.archive_in)}>
+                          <InputGroup size="2xl">
+                            <Input
+                              size="2xl"
+                              id="archive_in"
+                              name="archive_in"
+                              type="number"
+                              value={value?.toString()}
+                              onChange={onChange}
+                              ref={ref}
+                              placeholder={t("core_ui.enter_months")}
+                              min={1}
+                              max={12}
+                            />
+                          </InputGroup>
+                        </Field>
                         <span className="absolute top-2.5 right-8 text-13 text-secondary">{t("core_ui.months")}</span>
                       </div>
                     )}

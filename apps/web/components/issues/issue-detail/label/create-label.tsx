@@ -11,14 +11,16 @@ import { Controller, useForm } from "react-hook-form";
 import { usePopper } from "react-popper";
 import { Loader } from "lucide-react";
 import { Popover } from "@headlessui/react";
-import { useTranslation } from "@plane/i18n";
+import { Field } from "@makeplane/propel/components/field";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { PlusIcon, CloseIcon } from "@plane/propel/icons";
 import type { IIssueLabel } from "@plane/types";
 // hooks
-import { Input } from "@plane/ui";
+
 // ui
 // types
 import type { TLabelOperations } from "./root";
+import { useTranslation } from "@plane/i18n";
 
 type ILabelCreate = {
   workspaceSlug: string;
@@ -138,18 +140,21 @@ export function LabelCreate(props: ILabelCreate) {
               required: t("issue_ui.required"),
             }}
             render={({ field: { value, onChange, ref } }) => (
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                value={value ?? ""}
-                onChange={onChange}
-                ref={ref}
-                hasError={Boolean(errors.name)}
-                placeholder={t("common.title")}
-                className="w-full px-1.5 py-1 text-11"
-                disabled={isSubmitting}
-              />
+              <Field name="name" invalid={Boolean(errors.name)}>
+                <InputGroup size="2xl">
+                  <Input
+                    size="2xl"
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={value ?? ""}
+                    onChange={onChange}
+                    ref={ref}
+                    placeholder={t("common.title")}
+                    disabled={isSubmitting}
+                  />
+                </InputGroup>
+              </Field>
             )}
           />
           <button

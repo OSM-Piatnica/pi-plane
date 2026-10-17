@@ -9,6 +9,8 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import { Controller, useForm } from "react-hook-form";
 // constants
+import { Field } from "@makeplane/propel/components/field";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { ORGANIZATION_SIZE, RESTRICTED_URLS } from "@plane/constants";
 // types
 import { useTranslation } from "@plane/i18n";
@@ -16,7 +18,7 @@ import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { IUser, IWorkspace, TOnboardingSteps } from "@plane/types";
 // ui
-import { CustomSelect, Input, Spinner } from "@plane/ui";
+import { CustomSelect, Spinner } from "@plane/ui";
 import { validateWorkspaceName, validateSlug } from "@plane/utils";
 // hooks
 import { useWorkspace } from "@/hooks/store/use-workspace";
@@ -148,25 +150,28 @@ export const CreateWorkspace = observer(function CreateWorkspace(props: Props) {
             }}
             render={({ field: { value, ref, onChange } }) => (
               <div className="relative flex items-center rounded-md">
-                <Input
-                  id="name"
-                  name="name"
-                  type="text"
-                  value={value}
-                  onChange={(event) => {
-                    onChange(event.target.value);
-                    setValue("name", event.target.value);
-                    setValue("slug", event.target.value.toLocaleLowerCase().trim().replace(/ /g, "-"), {
-                      shouldValidate: true,
-                    });
-                  }}
-                  placeholder={t("workspace_creation.form.name.placeholder")}
-                  ref={ref}
-                  hasError={Boolean(errors.name)}
-                  className="w-full border-strong placeholder:text-placeholder"
-                  // oxlint-disable-next-line jsx-a11y/no-autofocus -- intentional autofocus; behaviour preserved
-                  autoFocus
-                />
+                <Field name="name" invalid={Boolean(errors.name)}>
+                  <InputGroup size="2xl">
+                    <Input
+                      size="2xl"
+                      id="name"
+                      name="name"
+                      type="text"
+                      value={value}
+                      onChange={(event) => {
+                        onChange(event.target.value);
+                        setValue("name", event.target.value);
+                        setValue("slug", event.target.value.toLocaleLowerCase().trim().replace(/ /g, "-"), {
+                          shouldValidate: true,
+                        });
+                      }}
+                      placeholder={t("workspace_creation.form.name.placeholder")}
+                      ref={ref}
+                      // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; a11y handled separately
+                      autoFocus
+                    />
+                  </InputGroup>
+                </Field>
               </div>
             )}
           />
@@ -190,29 +195,26 @@ export const CreateWorkspace = observer(function CreateWorkspace(props: Props) {
               },
             }}
             render={({ field: { value, ref, onChange } }) => (
-              <div
-                className={`relative flex items-center rounded-md border-[0.5px] px-3 ${
-                  invalidSlug ? "border-danger-strong" : "border-strong"
-                }`}
-              >
-                <span className="text-13 whitespace-nowrap">{window && window.location.host}/</span>
-                <Input
-                  id="slug"
-                  name="slug"
-                  type="text"
-                  value={value.toLocaleLowerCase().trim().replace(/ /g, "-")}
-                  onChange={(e) => {
-                    const validation = validateSlug(e.target.value);
-                    if (validation === true) setInvalidSlug(false);
-                    else setInvalidSlug(true);
-                    onChange(e.target.value.toLowerCase());
-                  }}
-                  ref={ref}
-                  hasError={Boolean(errors.slug)}
-                  placeholder={t("workspace_creation.form.url.placeholder")}
-                  className="w-full border-none !px-0"
-                />
-              </div>
+              <Field name="slug" invalid={invalidSlug || Boolean(errors.slug)}>
+                <InputGroup size="2xl">
+                  <span className="text-13 whitespace-nowrap">{window && window.location.host}/</span>
+                  <Input
+                    size="2xl"
+                    id="slug"
+                    name="slug"
+                    type="text"
+                    value={value.toLocaleLowerCase().trim().replace(/ /g, "-")}
+                    onChange={(e) => {
+                      const validation = validateSlug(e.target.value);
+                      if (validation === true) setInvalidSlug(false);
+                      else setInvalidSlug(true);
+                      onChange(e.target.value.toLowerCase());
+                    }}
+                    ref={ref}
+                    placeholder={t("workspace_creation.form.url.placeholder")}
+                  />
+                </InputGroup>
+              </Field>
             )}
           />
           <p className="text-13 text-tertiary">{t("workspace_creation.form.url.edit_slug")}</p>

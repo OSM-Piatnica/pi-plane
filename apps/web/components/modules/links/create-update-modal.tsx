@@ -8,13 +8,14 @@
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 // plane types
-import { useTranslation } from "@plane/i18n";
+import { Field } from "@makeplane/propel/components/field";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { ILinkDetails, ModuleLink } from "@plane/types";
 // plane ui
-import { Input, ModalCore } from "@plane/ui";
-
+import { ModalCore } from "@plane/ui";
+import { useTranslation } from "@plane/i18n";
 type Props = {
   createLink: (formData: ModuleLink) => Promise<void>;
   data?: ILinkDetails | null;
@@ -104,16 +105,19 @@ export function CreateUpdateModuleLinkModal(props: Props) {
                   required: "URL is required",
                 }}
                 render={({ field: { value, onChange, ref } }) => (
-                  <Input
-                    id="url"
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    ref={ref}
-                    hasError={Boolean(errors.url)}
-                    placeholder={t("module_ui.url_placeholder")}
-                    className="w-full"
-                  />
+                  <Field name="url" invalid={Boolean(errors.url)}>
+                    <InputGroup size="2xl">
+                      <Input
+                        size="2xl"
+                        id="url"
+                        type="text"
+                        value={value}
+                        onChange={onChange}
+                        ref={ref}
+                        placeholder={t("module_ui.url_placeholder")}
+                      />
+                    </InputGroup>
+                  </Field>
                 )}
               />
             </div>
@@ -126,16 +130,19 @@ export function CreateUpdateModuleLinkModal(props: Props) {
                 control={control}
                 name="title"
                 render={({ field: { value, onChange, ref } }) => (
-                  <Input
-                    id="title"
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    ref={ref}
-                    hasError={Boolean(errors.title)}
-                    placeholder={t("module_ui.link_title_placeholder")}
-                    className="w-full"
-                  />
+                  <Field name="title" invalid={Boolean(errors.title)}>
+                    <InputGroup size="2xl">
+                      <Input
+                        size="2xl"
+                        id="title"
+                        type="text"
+                        value={value}
+                        onChange={onChange}
+                        ref={ref}
+                        placeholder={t("module_ui.link_title_placeholder")}
+                      />
+                    </InputGroup>
+                  </Field>
                 )}
               />
             </div>

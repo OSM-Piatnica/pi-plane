@@ -1,18 +1,21 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useEffect } from "react";
 import { observer } from "mobx-react";
 import { Controller, useForm } from "react-hook-form";
+import { Field } from "@makeplane/propel/components/field";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { useTranslation } from "@plane/i18n";
 // plane types
 import { Button } from "@plane/propel/button";
 import type { TIssueLinkEditableFields, TIssueServiceType } from "@plane/types";
 // plane ui
-import { Input, ModalCore } from "@plane/ui";
+import { ModalCore } from "@plane/ui";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 // types
@@ -93,16 +96,19 @@ export const IssueLinkCreateUpdateModal = observer(function IssueLinkCreateUpdat
                   required: "URL is required",
                 }}
                 render={({ field: { value, onChange, ref } }) => (
-                  <Input
-                    id="url"
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    ref={ref}
-                    hasError={Boolean(errors.url)}
-                    placeholder={t("common.type_or_paste_a_url")}
-                    className="w-full"
-                  />
+                  <Field name="url" invalid={Boolean(errors.url)}>
+                    <InputGroup size="2xl">
+                      <Input
+                        size="2xl"
+                        id="url"
+                        type="text"
+                        value={value}
+                        onChange={onChange}
+                        ref={ref}
+                        placeholder={t("common.type_or_paste_a_url")}
+                      />
+                    </InputGroup>
+                  </Field>
                 )}
               />
               {errors.url && (
@@ -118,16 +124,19 @@ export const IssueLinkCreateUpdateModal = observer(function IssueLinkCreateUpdat
                 control={control}
                 name="title"
                 render={({ field: { value, onChange, ref } }) => (
-                  <Input
-                    id="title"
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    ref={ref}
-                    hasError={Boolean(errors.title)}
-                    placeholder={t("common.link_title_placeholder")}
-                    className="w-full"
-                  />
+                  <Field name="title" invalid={Boolean(errors.title)}>
+                    <InputGroup size="2xl">
+                      <Input
+                        size="2xl"
+                        id="title"
+                        type="text"
+                        value={value}
+                        onChange={onChange}
+                        ref={ref}
+                        placeholder={t("common.link_title_placeholder")}
+                      />
+                    </InputGroup>
+                  </Field>
                 )}
               />
             </div>
