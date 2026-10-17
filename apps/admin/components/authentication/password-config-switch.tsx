@@ -8,7 +8,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 // hooks
-import { Switch } from "@plane/propel/switch";
+import { Switch } from "@makeplane/propel/components/switch";
 import type { TInstanceAuthenticationMethodKeys } from "@plane/types";
 import { useInstance } from "@/hooks/store";
 // ui
@@ -28,8 +28,8 @@ export const PasswordLoginConfiguration = observer(function PasswordLoginConfigu
 
   return (
     <Switch
-      value={Boolean(parseInt(enableEmailPassword))}
-      onChange={() => {
+      checked={Boolean(parseInt(enableEmailPassword))}
+      onCheckedChange={() => {
         const newEnableEmailPassword = Boolean(parseInt(enableEmailPassword)) === true ? "0" : "1";
         updateConfig("ENABLE_EMAIL_PASSWORD", newEnableEmailPassword);
       }}

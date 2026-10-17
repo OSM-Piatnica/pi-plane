@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
 import { Link } from "react-router";
 // ui
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 // images
 import Image404 from "@/app/assets/images/404.svg?url";
 
@@ -28,9 +29,7 @@ function PageNotFound() {
           </div>
           <Link to="/general/">
             <span className="flex justify-center py-4">
-              <Button variant="secondary" size="lg">
-                Go to general settings
-              </Button>
+              <Button variant="secondary" size="md" stretch="auto" label="Go to general settings" />
             </span>
           </Link>
         </div>

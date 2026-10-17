@@ -42,6 +42,9 @@ catalog:
   vite: 8.3.4
 
 overrides:
+  # @makeplane/propel 0.2.0 was built against @base-ui/react 1.6; the 1.9 line changes the
+  # toast manager types, which breaks createToastManager()/ToastProvider typing.
+  "@base-ui/react": 1.6.0
   # Force a single React across the whole graph. With node-linker=isolated,
   # auto-install-peers and resolution-mode=highest, a dependency still declaring a
   # React 18 peer can otherwise pull in a second copy, which surfaces as an invalid
