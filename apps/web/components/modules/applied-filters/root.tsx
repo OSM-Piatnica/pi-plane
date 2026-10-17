@@ -6,10 +6,11 @@
  */
 
 import { useTranslation } from "@plane/i18n";
+import { PillButton } from "@makeplane/propel/components/pill";
 import { CloseIcon } from "@plane/propel/icons";
 import type { TModuleDisplayFilters, TModuleFilters } from "@plane/types";
 // components
-import { Header, EHeaderVariant, Tag } from "@plane/ui";
+import { Header, EHeaderVariant } from "@plane/ui";
 import { replaceUnderscoreIfSnakeCase } from "@plane/utils";
 import { AppliedDateFilters, AppliedMembersFilters, AppliedStatusFilters } from "@/components/modules";
 // helpers
@@ -55,7 +56,10 @@ export function ModuleAppliedFiltersList(props: Props) {
           if (Array.isArray(value) && value.length === 0) return;
 
           return (
-            <Tag key={filterKey}>
+            <div
+              key={filterKey}
+              className="my-auto flex min-h-9 cursor-pointer flex-wrap items-center gap-1.5 rounded-md border border-subtle p-1.5 text-11 text-tertiary capitalize hover:text-secondary"
+            >
               <div className="flex flex-wrap items-center gap-1.5">
                 <span className="text-11 text-tertiary">{replaceUnderscoreIfSnakeCase(filterKey)}</span>
                 {filterKey === "status" && (
@@ -89,7 +93,7 @@ export function ModuleAppliedFiltersList(props: Props) {
                   </button>
                 )}
               </div>
-            </Tag>
+            </div>
           );
         })}
         {!isArchived && isFavoriteFilterApplied && (
@@ -120,12 +124,14 @@ export function ModuleAppliedFiltersList(props: Props) {
           </div>
         )}
         {isEditingAllowed && (
-          <button type="button" onClick={handleClearAllFilters}>
-            <Tag>
-              {t("common.clear_all")}
-              <CloseIcon height={12} width={12} strokeWidth={2} />
-            </Tag>
-          </button>
+          <PillButton
+            type="button"
+            size="md"
+            variant="outline"
+            label={t("common.clear_all")}
+            endIcon={<CloseIcon height={12} width={12} strokeWidth={2} />}
+            onClick={handleClearAllFilters}
+          />
         )}
       </div>
     </Header>
