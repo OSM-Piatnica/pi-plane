@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,8 +12,8 @@ import { LogOut, UserCog2, Palette } from "lucide-react";
 import { Menu, Transition } from "@headlessui/react";
 // plane internal packages
 import { API_BASE_URL } from "@plane/constants";
+import { WorkspaceAvatar } from "@makeplane/propel/components/workspace-avatar";
 import { AuthService } from "@plane/services";
-import { Avatar } from "@plane/ui";
 import { getFileURL, cn } from "@plane/utils";
 // hooks
 import { useTheme, useUser } from "@/hooks/store";
@@ -124,12 +125,11 @@ export const AdminSidebarDropdown = observer(function AdminSidebarDropdown() {
       {!isSidebarCollapsed && currentUser && (
         <Menu as="div" className="relative flex-shrink-0">
           <Menu.Button className="grid place-items-center outline-none">
-            <Avatar
-              name={currentUser.display_name}
+            <WorkspaceAvatar
+              alt={currentUser.display_name ?? "Admin user"}
+              fallback={currentUser.display_name?.[0]?.toUpperCase()}
               src={getFileURL(currentUser.avatar_url)}
-              size={24}
-              shape="square"
-              className="!text-body-sm-medium"
+              size="sm"
             />
           </Menu.Button>
 

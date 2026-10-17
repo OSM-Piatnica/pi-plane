@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -40,7 +41,7 @@ function WorkspaceViewsPage() {
             mode="true-transparent"
           />
         </div>
-        <div className="vertical-scrollbar flex scrollbar-lg h-full w-full flex-col">
+        <div className="vertical-scrollbar scrollbar-lg flex h-full w-full flex-col">
           {DEFAULT_GLOBAL_VIEWS_LIST.filter((v) => t(v.i18n_label).toLowerCase().includes(query.toLowerCase())).map(
             (option) => (
               <GlobalDefaultViewListItem key={option.key} view={option} />

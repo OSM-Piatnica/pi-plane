@@ -1,15 +1,16 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useForm } from "react-hook-form";
-import { Button } from "@plane/propel/button";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { Button } from "@makeplane/propel/components/button";
 import type { IFormattedInstanceConfiguration, TInstanceImageConfigurationKeys } from "@plane/types";
 // components
 import { ControllerInput } from "@/components/common/controller-input";
+import { TOAST_TYPE, setToast } from "@/providers/toast";
 // hooks
 import { useInstance } from "@/hooks/store";
 
@@ -77,9 +78,14 @@ export function InstanceImageConfigForm(props: IInstanceImageConfigForm) {
       </div>
 
       <div>
-        <Button variant="primary" size="lg" onClick={handleSubmit(onSubmit)} loading={isSubmitting}>
-          {isSubmitting ? "Saving" : "Save changes"}
-        </Button>
+        <Button
+          variant="primary"
+          size="md"
+          stretch="auto"
+          onClick={handleSubmit(onSubmit)}
+          loading={isSubmitting}
+          label={isSubmitting ? "Saving" : "Save changes"}
+        />
       </div>
     </div>
   );

@@ -1,15 +1,16 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 
 // plane internal packages
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+import { NewTabOutline } from "@makeplane/propel/icons";
 import { WEB_BASE_URL } from "@plane/constants";
-import { NewTabIcon } from "@plane/propel/icons";
-import { Tooltip } from "@plane/propel/tooltip";
 import { getFileURL } from "@plane/utils";
 // hooks
 import { useWorkspace } from "@/hooks/store";
@@ -52,7 +53,7 @@ export const WorkspaceListItem = observer(function WorkspaceListItem({ workspace
         <div className="flex flex-col items-start gap-1">
           <div className="flex w-full flex-wrap items-center gap-2.5">
             <h3 className={`text-14 font-medium capitalize`}>{workspace.name}</h3>/
-            <Tooltip tooltipContent="The unique URL of your workspace">
+            <Tooltip label="The unique URL of your workspace">
               <h4 className="text-13 text-tertiary">[{workspace.slug}]</h4>
             </Tooltip>
           </div>
@@ -82,7 +83,7 @@ export const WorkspaceListItem = observer(function WorkspaceListItem({ workspace
         </div>
       </div>
       <div className="flex-shrink-0">
-        <NewTabIcon width={14} height={16} className="text-placeholder group-hover:text-secondary" />
+        <NewTabOutline width={14} height={16} className="text-placeholder group-hover:text-secondary" />
       </div>
     </a>
   );

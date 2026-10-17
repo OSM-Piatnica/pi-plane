@@ -1,16 +1,24 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
+import { Fragment } from "react";
 import { observer } from "mobx-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Settings } from "lucide-react";
 // icons
-import { Breadcrumbs } from "@plane/ui";
-// components
-import { BreadcrumbLink } from "../breadcrumb-link";
+import { Menu, Settings } from "lucide-react";
+// plane internal packages
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@makeplane/propel/components/breadcrumb";
 // hooks
 import { useTheme } from "@/hooks/store";
 // local imports
@@ -62,26 +70,28 @@ export const AdminHeader = observer(function AdminHeader() {
       <div className="flex w-full flex-grow items-center gap-2 overflow-ellipsis whitespace-nowrap">
         <HamburgerToggle />
         <div>
-          <Breadcrumbs>
-            <Breadcrumbs.Item
-              component={
+          <Breadcrumb aria-label="Breadcrumb">
+            <BreadcrumbList>
+              <BreadcrumbItem>
                 <BreadcrumbLink
-                  href="/general/"
                   label="Settings"
                   icon={<Settings className="h-4 w-4 text-tertiary" />}
+                  render={<Link href="/general/" />}
                 />
-              }
-            />
-            {breadcrumbItems.map(
-              (item) =>
-                item.title && (
-                  <Breadcrumbs.Item
-                    key={item.title}
-                    component={<BreadcrumbLink href={item.href} label={item.title} />}
-                  />
-                )
-            )}
-          </Breadcrumbs>
+              </BreadcrumbItem>
+              {breadcrumbItems.map(
+                (item) =>
+                  item.title && (
+                    <Fragment key={item.title}>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbLink label={item.title} render={<Link href={item.href} />} />
+                      </BreadcrumbItem>
+                    </Fragment>
+                  )
+              )}
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
       </div>
     </div>

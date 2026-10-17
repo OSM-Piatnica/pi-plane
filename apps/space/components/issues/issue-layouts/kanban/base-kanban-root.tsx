@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -55,7 +56,7 @@ export const IssueKanbanLayoutRoot = observer(function IssueKanbanLayoutRoot(pro
   return (
     <IssueLayoutHOC getGroupIssueCount={getGroupIssueCount} getIssueLoader={getIssueLoader}>
       <div
-        className="horizontal-scrollbar relative flex scrollbar-lg size-full overflow-x-auto overflow-y-hidden"
+        className="horizontal-scrollbar relative scrollbar-lg flex size-full overflow-x-auto overflow-y-hidden"
         ref={scrollableContainerRef}
       >
         <div className="relative h-full w-max min-w-full">

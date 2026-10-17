@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -16,7 +17,7 @@ export function ListLayout(props: IListContainer) {
   return (
     <Row
       variant={ERowVariant.HUGGING}
-      className="vertical-scrollbar flex scrollbar-lg h-full w-full flex-col overflow-y-auto"
+      className="vertical-scrollbar scrollbar-lg flex h-full w-full flex-col overflow-y-auto"
     >
       {children}
     </Row>

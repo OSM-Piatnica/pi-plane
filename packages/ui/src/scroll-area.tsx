@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -47,7 +48,7 @@ export function ScrollArea(props: TScrollAreaProps) {
       >
         <RadixScrollArea.Thumb
           className={cn(
-            "relative flex-1 rounded-[10px] bg-scrollbar-thumb group-hover:bg-scrollbar-thumb-surface-hover group-hover/track:bg-scrollbar-thumb-hover group-active/track:bg-scrollbar-thumb-active",
+            "relative flex-1 rounded-[10px] bg-scrollbar-thumb group-hover:bg-scrollbar-thumb-hover group-hover/track:bg-scrollbar-thumb-hover group-active/track:bg-scrollbar-thumb-active",
             thumbSizeStyles[size]
           )}
         />
@@ -61,7 +62,7 @@ export function ScrollArea(props: TScrollAreaProps) {
       >
         <RadixScrollArea.Thumb
           className={cn(
-            "relative flex-1 rounded-[10px] bg-scrollbar-thumb group-hover:bg-scrollbar-thumb-surface-hover group-hover/track:bg-scrollbar-thumb-hover group-active/track:bg-scrollbar-thumb-active",
+            "relative flex-1 rounded-[10px] bg-scrollbar-thumb group-hover:bg-scrollbar-thumb-hover group-hover/track:bg-scrollbar-thumb-hover group-active/track:bg-scrollbar-thumb-active",
             thumbSizeStyles[size]
           )}
         />

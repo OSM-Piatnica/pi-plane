@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,10 +10,10 @@ import Link from "next/link";
 // icons
 import { Settings2 } from "lucide-react";
 // plane internal packages
-import { getButtonStyling } from "@plane/propel/button";
+import { AnchorButton } from "@makeplane/propel/components/anchor-button";
+import { Button } from "@makeplane/propel/components/button";
+import { Switch } from "@makeplane/propel/components/switch";
 import type { TInstanceAuthenticationMethodKeys } from "@plane/types";
-import { ToggleSwitch } from "@plane/ui";
-import { cn } from "@plane/utils";
 // hooks
 import { useInstance } from "@/hooks/store";
 
@@ -33,12 +34,16 @@ export const GithubConfiguration = observer(function GithubConfiguration(props: 
     <>
       {isGithubConfigured ? (
         <div className="flex items-center gap-4">
-          <Link href="/authentication/github" className={cn(getButtonStyling("link", "base"), "font-medium")}>
-            Edit
-          </Link>
-          <ToggleSwitch
-            value={Boolean(parseInt(enableGithubConfig))}
-            onChange={() => {
+          <AnchorButton
+            variant="primary"
+            size="sm"
+            nativeButton={false}
+            render={<Link href="/authentication/github" />}
+            label="Edit"
+          />
+          <Switch
+            checked={Boolean(parseInt(enableGithubConfig))}
+            onCheckedChange={() => {
               const newEnableGithubConfig = Boolean(parseInt(enableGithubConfig)) === true ? "0" : "1";
               updateConfig("IS_GITHUB_ENABLED", newEnableGithubConfig);
             }}
@@ -47,10 +52,15 @@ export const GithubConfiguration = observer(function GithubConfiguration(props: 
           />
         </div>
       ) : (
-        <Link href="/authentication/github" className={cn(getButtonStyling("secondary", "base"), "text-tertiary")}>
-          <Settings2 className="h-4 w-4 p-0.5 text-tertiary" />
-          Configure
-        </Link>
+        <Button
+          variant="secondary"
+          size="sm"
+          stretch="auto"
+          nativeButton={false}
+          render={<Link href="/authentication/github" />}
+          icon={<Settings2 className="h-4 w-4 p-0.5 text-tertiary" />}
+          label="Configure"
+        />
       )}
     </>
   );

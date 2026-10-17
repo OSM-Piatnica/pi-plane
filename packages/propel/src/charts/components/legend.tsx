@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -50,11 +51,12 @@ const CustomLegend = React.forwardRef(function CustomLegend(
   return (
     <div
       ref={ref}
-      className={cn("vertical-scrollbar flex scrollbar-sm items-center overflow-scroll px-4", {
+      className={cn("vertical-scrollbar scrollbar-sm flex items-center overflow-scroll px-4", {
         "max-h-full flex-col items-start py-4": layout === "vertical",
       })}
     >
       {payload.map((item, index) => (
+        // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing behaviour; a11y handled separately
         <div
           key={item.value}
           className={cn("flex items-center gap-1.5 text-13 font-medium whitespace-nowrap text-tertiary", {

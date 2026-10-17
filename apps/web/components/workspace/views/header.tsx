@@ -95,7 +95,7 @@ export const GlobalViewsHeader = observer(function GlobalViewsHeader() {
       <CreateUpdateWorkspaceViewModal isOpen={createViewModal} onClose={() => setCreateViewModal(false)} />
       <div
         ref={containerRef}
-        className="horizontal-scrollbar flex scrollbar-sm h-full w-full items-center overflow-x-auto overflow-y-hidden"
+        className="horizontal-scrollbar scrollbar-sm flex h-full w-full items-center overflow-x-auto overflow-y-hidden"
       >
         {DEFAULT_GLOBAL_VIEWS_LIST.map((tab, index) => (
           // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
