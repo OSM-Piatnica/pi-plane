@@ -3,7 +3,7 @@
 # Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
-"""The per-asset duplicate throttle is configurable and defaults to 60/minute."""
+"""The anon and per-asset duplicate throttles are configurable, defaulting to 180 and 60 per minute."""
 
 import os
 
@@ -32,3 +32,9 @@ def test_throttle_is_keyed_per_asset_not_per_user():
         kwargs = {"asset_id": "abc"}
 
     assert AssetRateThrottle().get_cache_key(request=None, view=View()) == "throttle_asset_abc"
+
+
+@pytest.mark.unit
+def test_anon_setting_follows_env_or_defaults_to_180_per_minute():
+    expected = os.environ.get("ANON_RATE_LIMIT", "180/minute")
+    assert settings.REST_FRAMEWORK["DEFAULT_THROTTLE_RATES"]["anon"] == expected

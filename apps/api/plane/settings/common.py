@@ -137,7 +137,7 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_CLASSES": ("rest_framework.throttling.AnonRateThrottle",),
     "DEFAULT_THROTTLE_RATES": {
         # Logged-out requests only, counted per client IP (AnonRateThrottle). Signed-in users are not throttled here.
-        "anon": "30/minute",
+        "anon": os.environ.get("ANON_RATE_LIMIT", "180/minute"),
         # Per-asset-ID cap on duplicating an asset (editor paste/copy). Counted across all users.
         "asset_id": os.environ.get("ASSET_DUPLICATE_RATE_LIMIT", "60/minute"),
     },

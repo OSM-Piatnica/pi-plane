@@ -203,6 +203,7 @@ update_env_file(){
     update_env_value "AUTHENTICATION_RATE_LIMIT" "${AUTHENTICATION_RATE_LIMIT:-1000/minute}"
     update_env_value "RATE_LIMIT_PER_IP_PER_MIN" "${RATE_LIMIT_PER_IP_PER_MIN:-50000}"
     update_env_value "ASSET_DUPLICATE_RATE_LIMIT" "${ASSET_DUPLICATE_RATE_LIMIT:-60/minute}"
+    update_env_value "ANON_RATE_LIMIT" "${ANON_RATE_LIMIT:-180/minute}"
 
     echo "✅ Environment file updated"
     echo ""
