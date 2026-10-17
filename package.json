@@ -25,7 +25,7 @@
     "lint-staged": "16.2.7",
     "oxfmt": "0.35.0",
     "oxlint": "1.51.0",
-    "react-doctor": "0.4.2",
+    "react-doctor": "0.9.18",
     "turbo": "2.9.18"
   },
   "lint-staged": {

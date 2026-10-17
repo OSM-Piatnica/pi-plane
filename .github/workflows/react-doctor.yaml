@@ -7,7 +7,7 @@
 # Ported from upstream makeplane/plane (#9223) with these fork changes:
 # - runs for pull requests into `preview` only, and on pushes to `preview`
 # - the third-party action is pinned to a commit SHA (it runs with write access to
-#   pull requests), and the scanner version matches the `react-doctor` devDependency
+#   pull requests), and the scanner version matches the `react-doctor` devDependency (0.9.18)
 # - advisory by default (`blocking: none`): the fork still carries many existing
 #   findings, so the scan reports a health score and PR comments without failing the
 #   build. Switch to `blocking: error` once the baseline is clean.
@@ -65,7 +65,7 @@ jobs:
       # millionco/react-doctor@v2 (pinned to a commit; bump deliberately)
       - uses: millionco/react-doctor@695e46eee203a5d1855020191aa7e9c010a1250e
         with:
-          version: "0.4.2"
+          version: "0.9.18"
           # Gate level: "error" | "warning" | "none" (advisory). See the header comment.
           blocking: none
           # Other knobs (full reference: https://www.react.doctor/ci):
