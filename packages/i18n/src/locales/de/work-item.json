@@ -513,6 +513,13 @@
     "move_to_project_failed": "Das Arbeitselement konnte nicht in das Projekt verschoben werden. Bitte versuchen Sie es erneut.",
     "project_work_items_count": "{count, plural, one {In diesem Projekt gibt es # Arbeitselement} other {In diesem Projekt gibt es # Arbeitselemente}}",
     "archived_banner": "Dieses Arbeitselement wurde archiviert. Besuchen Sie den Bereich Archive, um es wiederherzustellen.",
-    "go_to_archives": "Zu den Archiven"
+    "go_to_archives": "Zu den Archiven",
+    "select_work_item": "Arbeitselement auswählen",
+    "select_work_items_to_delete": "Zu löschende Arbeitselemente auswählen",
+    "delete_selected_work_items": "Ausgewählte Arbeitselemente löschen",
+    "sub_work_item_progress": "Fortschritt der untergeordneten Arbeitselemente",
+    "archived_work_items_count": "{count, plural, one {Im Archiv des Projekts befindet sich # Arbeitselement} other {Im Archiv des Projekts befinden sich # Arbeitselemente}}",
+    "add_related_work_items": "Verknüpfte Arbeitselemente hinzufügen",
+    "toggle_workspace_level_search": "Suche auf Arbeitsbereichsebene umschalten"
   }
 }

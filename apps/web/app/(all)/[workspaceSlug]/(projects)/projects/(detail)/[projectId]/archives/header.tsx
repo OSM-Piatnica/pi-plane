@@ -21,6 +21,7 @@ import { useProject } from "@/hooks/store/use-project";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { CommonProjectBreadcrumbs } from "@/components/breadcrumbs/common";
 import { useProjectCrumbProps } from "@/components/breadcrumbs/use-project-crumb-props";
+import { useTranslation } from "@plane/i18n";
 
 type TProps = {
   activeTab: "issues" | "cycles" | "modules";
@@ -28,23 +29,23 @@ type TProps = {
 
 const PROJECT_ARCHIVES_BREADCRUMB_LIST: {
   [key: string]: {
-    label: string;
+    i18n_label: string;
     href: string;
     icon: React.FC<React.SVGAttributes<SVGElement> & { className?: string }>;
   };
 } = {
   issues: {
-    label: "Work items",
+    i18n_label: "common.work_items",
     href: "/issues",
     icon: WorkItemsOutline,
   },
   cycles: {
-    label: "Cycles",
+    i18n_label: "common.cycles",
     href: "/cycles",
     icon: CyclesOutline,
   },
   modules: {
-    label: "Modules",
+    i18n_label: "common.modules",
     href: "/modules",
     icon: ModuleOutline,
   },
@@ -52,6 +53,8 @@ const PROJECT_ARCHIVES_BREADCRUMB_LIST: {
 
 export const ProjectArchivesHeader = observer(function ProjectArchivesHeader(props: TProps) {
   const { activeTab } = props;
+  // translation
+  const { t } = useTranslation();
   // router
   const { workspaceSlug, projectId } = useParams();
   const projectCrumb = useProjectCrumbProps(workspaceSlug?.toString(), projectId?.toString());
@@ -91,7 +94,7 @@ export const ProjectArchivesHeader = observer(function ProjectArchivesHeader(pro
               <Breadcrumbs.Item
                 component={
                   <BreadcrumbLink
-                    label={activeTabBreadcrumbDetail.label}
+                    label={t(activeTabBreadcrumbDetail.i18n_label)}
                     icon={<activeTabBreadcrumbDetail.icon className="h-4 w-4 text-tertiary" />}
                   />
                 }
@@ -100,7 +103,7 @@ export const ProjectArchivesHeader = observer(function ProjectArchivesHeader(pro
           </Breadcrumbs>
           {activeTab === "issues" && issueCount && issueCount > 0 ? (
             <Tooltip
-              label={`There are ${issueCount} ${issueCount > 1 ? "work items" : "work item"} in project's archived`}
+              label={t("issue_ui.archived_work_items_count", { count: issueCount })}
               layout="stacked"
               side="bottom"
               disabled={isMobile}

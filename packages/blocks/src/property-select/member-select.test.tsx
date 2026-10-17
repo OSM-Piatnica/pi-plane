@@ -41,6 +41,14 @@ describe("MemberSelect suspended members", () => {
     }
   });
 
+  it("names the search box from the locale when the caller sets no placeholder", async () => {
+    const user = userEvent.setup();
+    render(<MemberSelect multiple getValues={getValues} value={[]} onChange={vi.fn()} variant="select-md" />);
+
+    await user.click(screen.getByRole("button"));
+    expect(await popup().findByRole("combobox", { name: "Search members..." })).toBeDefined();
+  });
+
   it("lists a suspended member as a disabled row with the Suspended badge", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();

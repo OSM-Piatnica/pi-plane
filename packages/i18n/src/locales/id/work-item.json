@@ -513,6 +513,13 @@
     "move_to_project_failed": "Gagal memindahkan item kerja ke proyek. Silakan coba lagi.",
     "project_work_items_count": "{count, plural, other {Ada # item kerja di proyek ini}}",
     "archived_banner": "Item kerja ini telah diarsipkan. Kunjungi bagian Arsip untuk memulihkannya.",
-    "go_to_archives": "Buka arsip"
+    "go_to_archives": "Buka arsip",
+    "select_work_item": "Pilih item kerja",
+    "select_work_items_to_delete": "Pilih item kerja yang akan dihapus",
+    "delete_selected_work_items": "Hapus item kerja yang dipilih",
+    "sub_work_item_progress": "Kemajuan sub-item kerja",
+    "archived_work_items_count": "{count, plural, one {Ada # item kerja di arsip proyek} other {Ada # item kerja di arsip proyek}}",
+    "add_related_work_items": "Tambahkan item kerja terkait",
+    "toggle_workspace_level_search": "Alihkan pencarian tingkat ruang kerja"
   }
 }

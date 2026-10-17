@@ -38,7 +38,7 @@ export type TRelationObject = {
   i18n_label: string;
   className: string;
   icon: (size: number) => React.ReactElement;
-  placeholder: string;
+  i18n_placeholder: string;
 };
 
 export const RelationsCollapsibleContent = observer(function RelationsCollapsibleContent(props: Props) {

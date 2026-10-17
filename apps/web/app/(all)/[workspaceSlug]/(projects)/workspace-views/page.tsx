@@ -39,8 +39,8 @@ function WorkspaceViewsPage() {
               size="2xl"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search"
-              aria-label="Search"
+              placeholder={t("common.search.label")}
+              aria-label={t("common.search.label")}
             />
           </InputGroup>
         </div>

@@ -513,6 +513,13 @@
     "move_to_project_failed": "Werkitem verplaatsen naar project mislukt. Probeer het opnieuw.",
     "project_work_items_count": "{count, plural, one {Er is # werkitem in dit project} other {Er zijn # werkitems in dit project}}",
     "archived_banner": "Dit werkitem is gearchiveerd. Ga naar het gedeelte Archieven om het te herstellen.",
-    "go_to_archives": "Ga naar archieven"
+    "go_to_archives": "Ga naar archieven",
+    "select_work_item": "Werkitem selecteren",
+    "select_work_items_to_delete": "Selecteer werkitems om te verwijderen",
+    "delete_selected_work_items": "Geselecteerde werkitems verwijderen",
+    "sub_work_item_progress": "Voortgang van subwerkitems",
+    "archived_work_items_count": "{count, plural, one {Er is # werkitem in het archief van het project} other {Er zijn # werkitems in het archief van het project}}",
+    "add_related_work_items": "Gerelateerde werkitems toevoegen",
+    "toggle_workspace_level_search": "Zoeken op werkruimteniveau in- of uitschakelen"
   }
 }

@@ -513,6 +513,13 @@
     "move_to_project_failed": "작업 항목을 프로젝트로 이동하지 못했습니다. 다시 시도해 주세요.",
     "project_work_items_count": "{count, plural, other {이 프로젝트에는 작업 항목이 #개 있습니다}}",
     "archived_banner": "이 작업 항목은 보관되었습니다. 복원하려면 아카이브 섹션을 방문하세요.",
-    "go_to_archives": "아카이브로 이동"
+    "go_to_archives": "아카이브로 이동",
+    "select_work_item": "작업 항목 선택",
+    "select_work_items_to_delete": "삭제할 작업 항목 선택",
+    "delete_selected_work_items": "선택한 작업 항목 삭제",
+    "sub_work_item_progress": "하위 작업 항목 진행률",
+    "archived_work_items_count": "{count, plural, one {프로젝트 아카이브에 작업 항목이 #개 있습니다} other {프로젝트 아카이브에 작업 항목이 #개 있습니다}}",
+    "add_related_work_items": "관련 작업 항목 추가",
+    "toggle_workspace_level_search": "작업 공간 수준 검색 전환"
   }
 }

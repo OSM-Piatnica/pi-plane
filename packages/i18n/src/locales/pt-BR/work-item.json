@@ -513,6 +513,13 @@
     "move_to_project_failed": "Falha ao mover o item de trabalho para o projeto. Tente novamente.",
     "project_work_items_count": "{count, plural, one {Há # item de trabalho neste projeto} other {Há # itens de trabalho neste projeto}}",
     "archived_banner": "Este item de trabalho foi arquivado. Acesse a seção Arquivos para restaurá-lo.",
-    "go_to_archives": "Ir para arquivos"
+    "go_to_archives": "Ir para arquivos",
+    "select_work_item": "Selecionar item de trabalho",
+    "select_work_items_to_delete": "Selecione os itens de trabalho para excluir",
+    "delete_selected_work_items": "Excluir itens de trabalho selecionados",
+    "sub_work_item_progress": "Progresso dos sub-itens de trabalho",
+    "archived_work_items_count": "{count, plural, one {Há # item de trabalho no arquivo do projeto} many {Há # de itens de trabalho no arquivo do projeto} other {Há # itens de trabalho no arquivo do projeto}}",
+    "add_related_work_items": "Adicionar itens de trabalho relacionados",
+    "toggle_workspace_level_search": "Alternar busca no nível do espaço de trabalho"
   }
 }

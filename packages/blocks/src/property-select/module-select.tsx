@@ -6,6 +6,7 @@
  */
 
 import { ModuleOutline } from "@makeplane/propel/icons";
+import { useTranslation } from "@plane/i18n";
 import type { TPaginatedResponse } from "@plane/types";
 import { Select } from "../select/select";
 import type { SelectPaginationParams, SelectTooltip, SelectVariant } from "../select/types";
@@ -62,6 +63,8 @@ function triggerLabel(selected: ModuleOption[], showCountOnMultiple: boolean, pl
  * single-select (breadcrumb navigation, inline picker).
  */
 export function ModuleSelect(props: ModuleSelectProps) {
+  // translation
+  const { t } = useTranslation();
   if (!props.multiple) {
     const {
       getValues,
@@ -70,7 +73,7 @@ export function ModuleSelect(props: ModuleSelectProps) {
       variant,
       disabled = false,
       placeholder = "",
-      searchPlaceholder = "Search modules...",
+      searchPlaceholder = t("common.search.modules"),
       onClose,
       className,
       showIdentifier = false,
@@ -124,7 +127,7 @@ export function ModuleSelect(props: ModuleSelectProps) {
     variant,
     disabled = false,
     placeholder = "",
-    searchPlaceholder = "Search modules...",
+    searchPlaceholder = t("common.search.modules"),
     onClose,
     className,
     showIdentifier = false,

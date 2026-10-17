@@ -513,6 +513,13 @@
     "move_to_project_failed": "Di chuyển mục công việc sang dự án thất bại. Vui lòng thử lại.",
     "project_work_items_count": "{count, plural, other {Dự án này có # mục công việc}}",
     "archived_banner": "Mục công việc này đã được lưu trữ. Truy cập phần Lưu trữ để khôi phục.",
-    "go_to_archives": "Đi tới lưu trữ"
+    "go_to_archives": "Đi tới lưu trữ",
+    "select_work_item": "Chọn mục công việc",
+    "select_work_items_to_delete": "Chọn các mục công việc cần xóa",
+    "delete_selected_work_items": "Xóa các mục công việc đã chọn",
+    "sub_work_item_progress": "Tiến độ các mục công việc con",
+    "archived_work_items_count": "{count, plural, one {Có # mục công việc trong kho lưu trữ của dự án} other {Có # mục công việc trong kho lưu trữ của dự án}}",
+    "add_related_work_items": "Thêm mục công việc liên quan",
+    "toggle_workspace_level_search": "Bật/tắt tìm kiếm cấp không gian làm việc"
   }
 }

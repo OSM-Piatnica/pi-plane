@@ -513,6 +513,13 @@
     "move_to_project_failed": "İş öğesi projeye taşınamadı. Lütfen tekrar deneyin.",
     "project_work_items_count": "{count, plural, one {Bu projede # iş öğesi var} other {Bu projede # iş öğesi var}}",
     "archived_banner": "Bu iş öğesi arşivlendi. Geri yüklemek için Arşivler bölümünü ziyaret edin.",
-    "go_to_archives": "Arşivlere git"
+    "go_to_archives": "Arşivlere git",
+    "select_work_item": "İş öğesi seç",
+    "select_work_items_to_delete": "Silinecek iş öğelerini seçin",
+    "delete_selected_work_items": "Seçilen iş öğelerini sil",
+    "sub_work_item_progress": "Alt iş öğelerinin ilerlemesi",
+    "archived_work_items_count": "{count, plural, one {Proje arşivinde # iş öğesi var} other {Proje arşivinde # iş öğesi var}}",
+    "add_related_work_items": "İlgili iş öğeleri ekle",
+    "toggle_workspace_level_search": "Çalışma alanı düzeyinde aramayı aç/kapat"
   }
 }

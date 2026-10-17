@@ -513,6 +513,13 @@
     "move_to_project_failed": "Mutarea activității în proiect a eșuat. Vă rugăm să încercați din nou.",
     "project_work_items_count": "{count, plural, one {În acest proiect există # activitate} few {În acest proiect există # activități} other {În acest proiect există # de activități}}",
     "archived_banner": "Această activitate a fost arhivată. Vizitați secțiunea Arhive pentru a o restaura.",
-    "go_to_archives": "Mergi la arhive"
+    "go_to_archives": "Mergi la arhive",
+    "select_work_item": "Selectează activitatea",
+    "select_work_items_to_delete": "Selectează activitățile de șters",
+    "delete_selected_work_items": "Șterge activitățile selectate",
+    "sub_work_item_progress": "Progresul sub-activităților",
+    "archived_work_items_count": "{count, plural, one {Există # activitate în arhiva proiectului} few {Există # activități în arhiva proiectului} other {Există # de activități în arhiva proiectului}}",
+    "add_related_work_items": "Adaugă activități conexe",
+    "toggle_workspace_level_search": "Comută căutarea la nivel de spațiu de lucru"
   }
 }

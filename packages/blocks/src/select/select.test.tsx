@@ -108,6 +108,15 @@ describe("Select on Propel combobox", () => {
     expect(popup().queryAllByRole("option")).toHaveLength(0);
   });
 
+  it("falls back to the localized empty message when the caller sets none", async () => {
+    const user = userEvent.setup();
+    renderSelect({ emptyMessage: undefined });
+
+    await openSelect(user);
+    await user.type(search(), "zzzz");
+    expect(await popup().findByText("No matches found")).toBeDefined();
+  });
+
   it("selects a row the keyboard walked past the rendered window", async () => {
     const user = userEvent.setup();
     const { onChange } = renderSelect();

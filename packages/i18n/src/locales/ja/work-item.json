@@ -513,6 +513,13 @@
     "move_to_project_failed": "作業項目をプロジェクトに移動できませんでした。もう一度お試しください。",
     "project_work_items_count": "{count, plural, other {このプロジェクトには作業項目が # 件あります}}",
     "archived_banner": "この作業項目はアーカイブされました。復元するにはアーカイブセクションを開いてください。",
-    "go_to_archives": "アーカイブへ移動"
+    "go_to_archives": "アーカイブへ移動",
+    "select_work_item": "作業項目を選択",
+    "select_work_items_to_delete": "削除する作業項目を選択",
+    "delete_selected_work_items": "選択した作業項目を削除",
+    "sub_work_item_progress": "サブ作業項目の進捗",
+    "archived_work_items_count": "{count, plural, one {プロジェクトのアーカイブに#件の作業項目があります} other {プロジェクトのアーカイブに#件の作業項目があります}}",
+    "add_related_work_items": "関連する作業項目を追加",
+    "toggle_workspace_level_search": "ワークスペース全体の検索を切り替え"
   }
 }

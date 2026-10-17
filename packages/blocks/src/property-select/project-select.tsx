@@ -9,6 +9,7 @@ import type { ReactNode } from "react";
 import { Logo } from "../emoji-icon-picker/logo";
 import { ChevronDownOutline, ProjectsOutline } from "@makeplane/propel/icons";
 import { cn } from "@plane/utils";
+import { useTranslation } from "@plane/i18n";
 import type { TLogoProps, TPaginatedResponse } from "@plane/types";
 import { Select } from "../select/select";
 import { splitSelectVariant } from "../select/utils";
@@ -105,6 +106,8 @@ function TriggerLogos({ selected }: { selected: ProjectOption[] }) {
  * Pass `multiple={true}` for multi-select; omit or pass `multiple={false}` for single-select.
  */
 export function ProjectSelect(props: ProjectSelectProps) {
+  // translation
+  const { t } = useTranslation();
   const { variant } = props;
   const splitVariant = splitSelectVariant(variant);
   const isSelect = splitVariant.variant === "select";
@@ -120,7 +123,7 @@ export function ProjectSelect(props: ProjectSelectProps) {
       onChange,
       disabled = false,
       placeholder = "",
-      searchPlaceholder = "Search projects...",
+      searchPlaceholder = t("common.search.projects"),
       onClose,
       className,
       tooltip,
@@ -198,7 +201,7 @@ export function ProjectSelect(props: ProjectSelectProps) {
     onChange,
     disabled = false,
     placeholder = "",
-    searchPlaceholder = "Search projects...",
+    searchPlaceholder = t("common.search.projects"),
     onClose,
     className,
     tooltip,

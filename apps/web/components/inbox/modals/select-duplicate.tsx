@@ -88,7 +88,7 @@ export function SelectDuplicateInboxIssueModal(props: Props) {
   const issueList =
     filteredIssues.length > 0 ? (
       <div>
-        {query === "" && <h2 className="mb-2 text-11 font-semibold text-primary">Select work item</h2>}
+        {query === "" && <h2 className="mb-2 text-11 font-semibold text-primary">{t("issue_ui.select_work_item")}</h2>}
         <ComboboxList aria-label={t("inbox_issue.actions.mark_as_duplicate")}>
           {filteredIssues.map((issue) => (
             <ComboboxItem
