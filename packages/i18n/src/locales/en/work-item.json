@@ -513,6 +513,13 @@
     "move_to_project_failed": "Failed to move work item to project. Please try again.",
     "project_work_items_count": "{count, plural, one {There is # work item in this project} other {There are # work items in this project}}",
     "archived_banner": "This work item has been archived. Visit the Archives section to restore it.",
-    "go_to_archives": "Go to archives"
+    "go_to_archives": "Go to archives",
+    "select_work_item": "Select work item",
+    "select_work_items_to_delete": "Select work items to delete",
+    "delete_selected_work_items": "Delete selected work items",
+    "sub_work_item_progress": "Sub-work-item progress",
+    "archived_work_items_count": "{count, plural, one {There is # work item in this project's archive} other {There are # work items in this project's archive}}",
+    "add_related_work_items": "Add related work items",
+    "toggle_workspace_level_search": "Toggle workspace level search"
   }
 }

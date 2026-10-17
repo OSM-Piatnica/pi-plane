@@ -260,7 +260,7 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                                   variant="primary"
                                   size="lg"
                                   stretch="auto"
-                                  label="Search"
+                                  label={t("common.search.label")}
                                   onClick={() => setSearchParams(formData.search)}
                                 />
                               </div>

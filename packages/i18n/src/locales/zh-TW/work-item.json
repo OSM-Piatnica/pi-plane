@@ -513,6 +513,13 @@
     "move_to_project_failed": "無法將工作事項移動到專案。請再試一次。",
     "project_work_items_count": "{count, plural, other {此專案中有 # 個工作事項}}",
     "archived_banner": "此工作事項已封存。請前往封存區段進行還原。",
-    "go_to_archives": "前往封存"
+    "go_to_archives": "前往封存",
+    "select_work_item": "選取工作事項",
+    "select_work_items_to_delete": "選取要刪除的工作事項",
+    "delete_selected_work_items": "刪除已選取的工作事項",
+    "sub_work_item_progress": "子工作事項進度",
+    "archived_work_items_count": "{count, plural, one {專案封存中有 # 個工作事項} other {專案封存中有 # 個工作事項}}",
+    "add_related_work_items": "新增相關工作事項",
+    "toggle_workspace_level_search": "切換工作區層級搜尋"
   }
 }

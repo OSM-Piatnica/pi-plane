@@ -513,6 +513,13 @@
     "move_to_project_failed": "Impossibile spostare l'elemento di lavoro nel progetto. Riprova.",
     "project_work_items_count": "{count, plural, one {C'è # elemento di lavoro in questo progetto} other {Ci sono # elementi di lavoro in questo progetto}}",
     "archived_banner": "Questo elemento di lavoro è stato archiviato. Visita la sezione Archivi per ripristinarlo.",
-    "go_to_archives": "Vai agli archivi"
+    "go_to_archives": "Vai agli archivi",
+    "select_work_item": "Seleziona elemento di lavoro",
+    "select_work_items_to_delete": "Seleziona gli elementi di lavoro da eliminare",
+    "delete_selected_work_items": "Elimina gli elementi di lavoro selezionati",
+    "sub_work_item_progress": "Progresso dei sotto-elementi di lavoro",
+    "archived_work_items_count": "{count, plural, one {C’è # elemento di lavoro nell’archivio del progetto} many {Ci sono # di elementi di lavoro nell’archivio del progetto} other {Ci sono # elementi di lavoro nell’archivio del progetto}}",
+    "add_related_work_items": "Aggiungi elementi di lavoro correlati",
+    "toggle_workspace_level_search": "Attiva o disattiva la ricerca a livello di spazio di lavoro"
   }
 }

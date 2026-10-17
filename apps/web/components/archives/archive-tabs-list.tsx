@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,30 +12,33 @@ import { useParams, usePathname } from "next/navigation";
 import type { IProject } from "@plane/types";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
+import { useTranslation } from "@plane/i18n";
 
 const ARCHIVES_TAB_LIST: {
   key: string;
-  label: string;
+  i18n_label: string;
   shouldRender: (projectDetails: IProject) => boolean;
 }[] = [
   {
     key: "issues",
-    label: "Work items",
+    i18n_label: "common.work_items",
     shouldRender: () => true,
   },
   {
     key: "cycles",
-    label: "Cycles",
+    i18n_label: "common.cycles",
     shouldRender: (projectDetails) => projectDetails.cycle_view,
   },
   {
     key: "modules",
-    label: "Modules",
+    i18n_label: "common.modules",
     shouldRender: (projectDetails) => projectDetails.module_view,
   },
 ];
 
 export const ArchiveTabsList = observer(function ArchiveTabsList() {
+  // translation
+  const { t } = useTranslation();
   // router
   const { workspaceSlug, projectId } = useParams();
   const pathname = usePathname();
@@ -59,7 +63,7 @@ export const ArchiveTabsList = observer(function ArchiveTabsList() {
                     : "border-transparent text-tertiary hover:border-subtle hover:text-placeholder"
                 }`}
               >
-                {tab.label}
+                {t(tab.i18n_label)}
               </span>
             </Link>
           )

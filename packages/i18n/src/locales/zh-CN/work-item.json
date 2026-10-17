@@ -513,6 +513,13 @@
     "move_to_project_failed": "无法将工作项移动到项目。请重试。",
     "project_work_items_count": "{count, plural, other {此项目中有 # 个工作项}}",
     "archived_banner": "此工作项已归档。请前往归档部分进行恢复。",
-    "go_to_archives": "前往归档"
+    "go_to_archives": "前往归档",
+    "select_work_item": "选择工作项",
+    "select_work_items_to_delete": "选择要删除的工作项",
+    "delete_selected_work_items": "删除所选工作项",
+    "sub_work_item_progress": "子工作项进度",
+    "archived_work_items_count": "{count, plural, one {项目归档中有 # 个工作项} other {项目归档中有 # 个工作项}}",
+    "add_related_work_items": "添加相关工作项",
+    "toggle_workspace_level_search": "切换工作区级别搜索"
   }
 }

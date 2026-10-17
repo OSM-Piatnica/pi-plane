@@ -85,7 +85,7 @@ export function SelectRoot<T>(props: SelectProps<T>) {
     placeholder,
     searchPlaceholder,
     showSearch = true,
-    emptyMessage = "No results found",
+    emptyMessage,
     onClose,
     children,
     // The standard row is a fixed single line; hand-drawn and two-line rows are taller.
@@ -440,7 +440,8 @@ export function SelectRoot<T>(props: SelectProps<T>) {
 
   const searchLabel = t("common.search.label");
   const popupLabel = searchPlaceholder ?? placeholder ?? t("common.options");
-  const resolvedEmptyMessage = typeof emptyMessage === "function" ? emptyMessage(query) : emptyMessage;
+  const resolvedEmptyMessage =
+    typeof emptyMessage === "function" ? emptyMessage(query) : (emptyMessage ?? t("common.search.no_matches_found"));
   const isPlainEmptyMessage = typeof resolvedEmptyMessage === "string" || typeof resolvedEmptyMessage === "number";
   const isLoading = isInfinite && infinite.isLoading;
   const loadError = isInfinite ? infinite.error : null;

@@ -513,6 +513,13 @@
     "move_to_project_failed": "Presun pracovnej položky do projektu zlyhal. Skúste to prosím znova.",
     "project_work_items_count": "{count, plural, one {V tomto projekte je # pracovná položka} few {V tomto projekte sú # pracovné položky} many {V tomto projekte je # pracovnej položky} other {V tomto projekte je # pracovných položiek}}",
     "archived_banner": "Táto pracovná položka bola archivovaná. Ak ju chcete obnoviť, prejdite do sekcie Archívy.",
-    "go_to_archives": "Prejsť do archívov"
+    "go_to_archives": "Prejsť do archívov",
+    "select_work_item": "Vybrať pracovnú položku",
+    "select_work_items_to_delete": "Vyberte pracovné položky na odstránenie",
+    "delete_selected_work_items": "Odstrániť vybrané pracovné položky",
+    "sub_work_item_progress": "Pokrok podriadených pracovných položiek",
+    "archived_work_items_count": "{count, plural, one {V archíve projektu je # pracovná položka} few {V archíve projektu sú # pracovné položky} many {V archíve projektu je # pracovnej položky} other {V archíve projektu je # pracovných položiek}}",
+    "add_related_work_items": "Pridať súvisiace pracovné položky",
+    "toggle_workspace_level_search": "Prepnúť vyhľadávanie na úrovni pracovného priestoru"
   }
 }

@@ -11,6 +11,7 @@ import { AvatarGroup } from "@makeplane/propel/components/avatar-group";
 import type { AvatarGroupSize } from "@makeplane/propel/components/avatar-group";
 import { Badge } from "@makeplane/propel/components/badge";
 import { AssigneeOutline, DeactivatedUserOutline, UserAltOutline } from "@makeplane/propel/icons";
+import { useTranslation } from "@plane/i18n";
 import type { TPaginatedResponse } from "@plane/types";
 import { Select } from "../select/select";
 import type { SelectPaginationParams, SelectTooltip, SelectTriggerSize, SelectVariant } from "../select/types";
@@ -155,6 +156,8 @@ function triggerLabel(selected: MemberOption[], showCountOnMultiple: boolean, pl
  * selection never materialises hundreds of avatar nodes.
  */
 export function MemberSelect(props: MemberSelectProps) {
+  // translation
+  const { t } = useTranslation();
   const {
     getValues,
     disabled = false,
@@ -167,7 +170,7 @@ export function MemberSelect(props: MemberSelectProps) {
     filterOption,
     testId,
     tabIndex,
-    suspendedLabel = "Suspended",
+    suspendedLabel = t("project_components.shared.suspended"),
   } = props;
   const clearable = !props.multiple && !!props.clearable;
 
@@ -181,7 +184,8 @@ export function MemberSelect(props: MemberSelectProps) {
   const isSearchInput = kind === "search-input";
   // `search-input`'s box IS the trigger (no separate label), so `placeholder` doubles as its empty
   // text unless the caller sets a distinct `searchPlaceholder`.
-  const searchPlaceholder = searchPlaceholderProp ?? (isSearchInput ? placeholder : undefined) ?? "Search members...";
+  const searchPlaceholder =
+    searchPlaceholderProp ?? (isSearchInput ? placeholder : undefined) ?? t("common.search.members");
 
   // Only `avatar-group-*` maps its size onto the face — every other variant keeps the `xs` trigger face it
   // always had, so this fix doesn't reflow `pill-lg`/`select-lg`'s existing chrome. It's also not a Select
@@ -207,7 +211,7 @@ export function MemberSelect(props: MemberSelectProps) {
   const selectedList = props.multiple ? props.value : props.value ? [props.value] : [];
   const selectedIds = new Set(selectedList.map((member) => member.id));
 
-  const clearLabel = !props.multiple ? (props.clearLabel ?? (placeholder || "No assignee")) : "No assignee";
+  const clearLabel = !props.multiple ? (props.clearLabel ?? (placeholder || t("no_assignee"))) : t("no_assignee");
   const clearOption = useMemo<MemberOption>(
     () => ({ id: CLEAR_OPTION_ID, display_name: clearLabel, avatar_url: null }),
     [clearLabel]

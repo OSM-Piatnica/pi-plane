@@ -5,6 +5,7 @@
  * See the LICENSE file for details.
  */
 
+import { useTranslation } from "@plane/i18n";
 import { useMemo } from "react";
 // plane imports
 import { EstimateOutline } from "@makeplane/propel/icons";
@@ -53,13 +54,15 @@ export type EstimateSelectProps = {
  * estimate-specific markup (formatting, e.g. time-based estimates, is resolved by the client).
  */
 export function EstimateSelect(props: EstimateSelectProps) {
+  // translation
+  const { t } = useTranslation();
   const {
     getValues,
     value,
     onChange,
     disabled = false,
     placeholder = "",
-    searchPlaceholder = "Search estimates...",
+    searchPlaceholder = t("common.search.estimates"),
     onClose,
     variant,
     className,
