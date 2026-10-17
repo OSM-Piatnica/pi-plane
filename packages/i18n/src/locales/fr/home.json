@@ -69,6 +69,7 @@
       "title": "Votre essai de 14 jours du plan Business est actif !",
       "description": "Explorez toutes les fonctionnalités Business. Quand vous êtes prêt, choisissez de vous abonner. Vous ne serez pas facturé automatiquement.",
       "trial_ends_today": "L'essai se termine aujourd'hui",
+      "trial_ends_in_days": "L'essai se termine dans {days, plural, one {# jour} other {# jours}}",
       "start_subscription": "Démarrer l'abonnement",
       "explore_business_features": "Explorer les fonctionnalités Business"
     }

@@ -190,7 +190,8 @@
       "archived_projects": "Archivés"
     },
     "common": {
-      "months_count": "{months, plural, one{# mois} other{# mois}}"
+      "months_count": "{months, plural, one{# mois} other{# mois}}",
+      "days_count": "{days, plural, one{# jour} other{# jours}}"
     },
     "empty_state": {
       "general": {

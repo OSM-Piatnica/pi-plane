@@ -190,7 +190,8 @@
       "archived_projects": "Заархівовані"
     },
     "common": {
-      "months_count": "{months, plural, one{# місяць} few{# місяці} other{# місяців}}"
+      "months_count": "{months, plural, one{# місяць} few{# місяці} other{# місяців}}",
+      "days_count": "{days, plural, one{# день} few{# дні} other{# днів}}"
     },
     "empty_state": {
       "general": {

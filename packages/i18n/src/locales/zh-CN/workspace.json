@@ -190,7 +190,8 @@
       "archived_projects": "已归档"
     },
     "common": {
-      "months_count": "{months, plural, one{# 个月} other{# 个月}}"
+      "months_count": "{months, plural, one{# 个月} other{# 个月}}",
+      "days_count": "{days, plural, one{# 天} other{# 天}}"
     },
     "empty_state": {
       "general": {

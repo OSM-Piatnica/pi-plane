@@ -190,7 +190,8 @@
       "archived_projects": "Arşivlenmiş"
     },
     "common": {
-      "months_count": "{months, plural, one{# ay} other{# ay}}"
+      "months_count": "{months, plural, one{# ay} other{# ay}}",
+      "days_count": "{days, plural, one{# gün} other{# gün}}"
     },
     "empty_state": {
       "general": {

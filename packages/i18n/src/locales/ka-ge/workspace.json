@@ -190,7 +190,8 @@
       "archived_projects": "დაარქივებული პროექტები"
     },
     "common": {
-      "months_count": "{months, plural, one{# თვე} other{# თვე}}"
+      "months_count": "{months, plural, one{# თვე} other{# თვე}}",
+      "days_count": "{days, plural, one{# დღე} other{# დღე}}"
     },
     "empty_state": {
       "general": {

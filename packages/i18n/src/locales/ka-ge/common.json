@@ -299,6 +299,7 @@
   "members": "წევრები",
   "assignee": "მინიჭებული",
   "assignees": "მინიჭებულები",
+  "subscriber": "{count, plural, one{# გამომწერი} other{# გამომწერი}}",
   "you": "თქვენ",
   "labels": "იარლიყები",
   "create_new_label": "ახალი იარლიყის შექმნა",

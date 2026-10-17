@@ -69,6 +69,7 @@
       "title": "Business ტარიფის თქვენი 14-დღიანი საცდელი პერიოდი დაიწყო!",
       "description": "გაეცანით Business-ის ყველა ფუნქციას. როცა მზად იქნებით, გამოიწერეთ ტარიფი. თანხა ავტომატურად არ ჩამოგეჭრებათ.",
       "trial_ends_today": "საცდელი პერიოდი დღეს სრულდება",
+      "trial_ends_in_days": "საცდელი პერიოდი სრულდება {days, plural, one {# დღეში} other {# დღეში}}",
       "start_subscription": "გამოწერის დაწყება",
       "explore_business_features": "Business-ის ფუნქციების გაცნობა"
     }

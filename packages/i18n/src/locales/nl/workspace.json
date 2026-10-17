@@ -190,7 +190,8 @@
       "archived_projects": "Gearchiveerd"
     },
     "common": {
-      "months_count": "{months, plural, one{# maand} other{# maanden}}"
+      "months_count": "{months, plural, one{# maand} other{# maanden}}",
+      "days_count": "{days, plural, one{# dag} other{# dagen}}"
     },
     "empty_state": {
       "general": {

@@ -69,6 +69,7 @@
       "title": "Je 14-daagse proefperiode van het Business-abonnement is gestart!",
       "description": "Ontdek alle Business-functies. Kies voor een abonnement wanneer je er klaar voor bent. Je wordt niet automatisch gefactureerd.",
       "trial_ends_today": "Proefperiode eindigt vandaag",
+      "trial_ends_in_days": "Proefperiode eindigt over {days, plural, one {# dag} other {# dagen}}",
       "start_subscription": "Abonnement starten",
       "explore_business_features": "Business-functies ontdekken"
     }

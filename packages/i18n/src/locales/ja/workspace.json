@@ -190,7 +190,8 @@
       "archived_projects": "アーカイブ済み"
     },
     "common": {
-      "months_count": "{months, plural, one{# ヶ月} other{# ヶ月}}"
+      "months_count": "{months, plural, one{# ヶ月} other{# ヶ月}}",
+      "days_count": "{days, plural, one{# 日} other{# 日}}"
     },
     "empty_state": {
       "general": {
