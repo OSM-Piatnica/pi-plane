@@ -20,13 +20,24 @@ FROM python:3.12.10-alpine AS runner
 
 WORKDIR /app
 
+# All apk work happens before the node copies below. The node binary only links libstdc++ and
+# libgcc_s from /usr/lib, so install those from apk instead of copying node:22-alpine's whole
+# /usr/lib: that copy overwrote this image's libraries (libcrypto, libssl, libz, libapk) with node's
+# copies from a different Alpine release and left /sbin/apk unable to run ("Error relocating
+# /sbin/apk"), so any later apk call failed. Ported from upstream makeplane/plane#9925.
 RUN apk add --no-cache \
+    "libstdc++" \
+    "libgcc" \
     "libpq" \
     "libxslt" \
-    "xmlsec"
+    "xmlsec" \
+    "nss-tools" \
+    "bash" \
+    "curl" \
+    "uuidgen" \
+    "ncdu" \
+    "vim"
 
-
-COPY --from=node /usr/lib /usr/lib
 COPY --from=node /usr/local/lib /usr/local/lib
 COPY --from=node /usr/local/include /usr/local/include
 COPY --from=node /usr/local/bin /usr/local/bin
@@ -44,8 +55,6 @@ COPY dist/Caddyfile /app/proxy/Caddyfile
 COPY --from=backend-img /code /app/backend
 COPY --from=backend-img /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
 COPY --from=backend-img /usr/local/bin/ /usr/local/bin/
-
-RUN apk add --no-cache nss-tools bash curl uuidgen ncdu vim
 
 RUN pip install supervisor
 RUN mkdir -p /etc/supervisor/conf.d
