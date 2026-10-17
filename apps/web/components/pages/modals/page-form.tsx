@@ -134,11 +134,7 @@ export function PageForm(props: Props) {
                 value={formData.name}
                 onChange={(e) => handleFormData("name", e.target.value)}
                 placeholder={t("title")}
-                error={
-                  isTitleLengthMoreThan255Character
-                    ? "Max length of the name should be less than 255 characters"
-                    : undefined
-                }
+                error={isTitleLengthMoreThan255Character ? t("title_should_be_less_than_255_characters") : undefined}
                 tabIndex={getIndex("name")}
                 required
                 // the title is the dialog's only field; focus it on open as the legacy form did
