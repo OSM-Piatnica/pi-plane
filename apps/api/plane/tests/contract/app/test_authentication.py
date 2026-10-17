@@ -580,9 +580,7 @@ class TestMagicSignInVerifyAttempts:
 
     @pytest.mark.django_db
     @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
-    def test_issued_code_limit_persists(
-        self, mock_magic_link, django_client, api_client, setup_user, setup_instance
-    ):
+    def test_issued_code_limit_persists(self, mock_magic_link, django_client, api_client, setup_user, setup_instance):
         """Codes issued per email stay capped per window when earlier codes hit the verify cap."""
         url = reverse("magic-sign-in")
         gen_url = reverse("magic-generate")
