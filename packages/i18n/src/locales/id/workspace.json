@@ -190,8 +190,7 @@
       "archived_projects": "Diarsipkan"
     },
     "common": {
-      "months_count": "{months, plural, one{# bulan} other{# bulan}}",
-      "days_count": "{days, plural, one{# hari} other{# hari}}"
+      "months_count": "{months, plural, one{# bulan} other{# bulan}}"
     },
     "empty_state": {
       "general": {

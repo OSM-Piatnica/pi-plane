@@ -299,7 +299,6 @@
   "members": "Leden",
   "assignee": "Toegewezene",
   "assignees": "Toegewezenen",
-  "subscriber": "{count, plural, one{# abonnee} other{# abonnees}}",
   "you": "Jij",
   "labels": "Labels",
   "create_new_label": "Nieuw label aanmaken",

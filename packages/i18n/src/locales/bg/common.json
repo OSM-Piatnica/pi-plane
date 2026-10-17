@@ -298,7 +298,6 @@
   "members": "Членове",
   "assignee": "Изпълнител",
   "assignees": "Изпълнители",
-  "subscriber": "{count, plural, one{# абонат} other{# абоната}}",
   "you": "Вие",
   "labels": "Етикети",
   "create_new_label": "Създай нов етикет",

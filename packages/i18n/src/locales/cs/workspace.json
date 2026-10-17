@@ -190,8 +190,7 @@
       "archived_projects": "Archivované"
     },
     "common": {
-      "months_count": "{months, plural, one{# měsíc} few{# měsíce} other{# měsíců}}",
-      "days_count": "{days, plural, one{# den} few{# dny} other{# dní}}"
+      "months_count": "{months, plural, one{# měsíc} few{# měsíce} other{# měsíců}}"
     },
     "empty_state": {
       "general": {

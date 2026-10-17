@@ -190,8 +190,7 @@
       "archived_projects": "아카이브"
     },
     "common": {
-      "months_count": "{months, plural, one{# 개월} other{# 개월}}",
-      "days_count": "{days, plural, one{# 일} other{# 일}}"
+      "months_count": "{months, plural, one{# 개월} other{# 개월}}"
     },
     "empty_state": {
       "general": {

@@ -190,8 +190,7 @@
       "archived_projects": "Архивные"
     },
     "common": {
-      "months_count": "{months, plural, one{# месяц} few{# месяца} other{# месяцев}}",
-      "days_count": "{days, plural, one{# день} few{# дня} other{# дней}}"
+      "months_count": "{months, plural, one{# месяц} few{# месяца} other{# месяцев}}"
     },
     "empty_state": {
       "general": {

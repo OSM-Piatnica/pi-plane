@@ -190,8 +190,7 @@
       "archived_projects": "Đã lưu trữ"
     },
     "common": {
-      "months_count": "{months, plural, one{# tháng} other{# tháng}}",
-      "days_count": "{days, plural, one{# ngày} other{# ngày}}"
+      "months_count": "{months, plural, one{# tháng} other{# tháng}}"
     },
     "empty_state": {
       "general": {

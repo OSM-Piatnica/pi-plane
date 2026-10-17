@@ -190,8 +190,7 @@
       "archived_projects": "Архивирани"
     },
     "common": {
-      "months_count": "{months, plural, one{# месец} other{# месеца}}",
-      "days_count": "{days, plural, one{# ден} other{# дни}}"
+      "months_count": "{months, plural, one{# месец} other{# месеца}}"
     },
     "empty_state": {
       "general": {
