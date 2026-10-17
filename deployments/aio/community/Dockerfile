@@ -16,9 +16,15 @@ FROM ${IMAGE_REPO}-proxy:${PLANE_VERSION} AS proxy-img
 # **************************************************
 #  STAGE 1: Runner
 # **************************************************
-FROM python:3.12.10-alpine AS runner
+FROM python:3.12.12-alpine AS runner
 
 WORKDIR /app
+
+# OS security updates. --available forces reinstall from the current repos; bump
+# APK_SECURITY_PATCH to bust buildx's cached layer (keyed on this command string),
+# otherwise a rebuild silently re-ships the old packages.
+ARG APK_SECURITY_PATCH=2026-10-17
+RUN echo "apk-security-patch ${APK_SECURITY_PATCH}" && apk update && apk upgrade --no-cache --available
 
 # All apk work happens before the node copies below. The node binary only links libstdc++ and
 # libgcc_s from /usr/lib, so install those from apk instead of copying node:22-alpine's whole
@@ -41,6 +47,12 @@ RUN apk add --no-cache \
 COPY --from=node /usr/local/lib /usr/local/lib
 COPY --from=node /usr/local/include /usr/local/include
 COPY --from=node /usr/local/bin /usr/local/bin
+
+# The copy above re-introduces node:22-alpine's npm, whose bundled dependencies carry known
+# vulnerabilities (pacote, ip-address, brace-expansion, tar, sigstore). npm is not needed at
+# runtime: the space program in supervisor.conf execs its react-router-serve bin shim directly
+# rather than going through npx. Ported from upstream makeplane/plane#9773.
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
 
 COPY --from=web-img /usr/share/caddy/html /app/web
 COPY --from=space-img /app /app/space
