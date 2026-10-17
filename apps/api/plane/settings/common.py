@@ -136,6 +136,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework.authentication.SessionAuthentication",),
     "DEFAULT_THROTTLE_CLASSES": ("rest_framework.throttling.AnonRateThrottle",),
     "DEFAULT_THROTTLE_RATES": {
+        # Logged-out requests only, counted per client IP (AnonRateThrottle). Signed-in users are not throttled here.
         "anon": "30/minute",
         # Per-asset-ID cap on duplicating an asset (editor paste/copy). Counted across all users.
         "asset_id": os.environ.get("ASSET_DUPLICATE_RATE_LIMIT", "60/minute"),
@@ -148,7 +149,7 @@ REST_FRAMEWORK = {
     "SCHEMA_COERCE_PATH_PK": False,
 }
 
-# API key throttle rate (DRF SimpleRateThrottle format, e.g. "60/minute")
+# API key throttle rate (DRF SimpleRateThrottle format, e.g. "60/minute"). Counted per API key, not per IP.
 API_KEY_RATE_LIMIT = os.environ.get("API_KEY_RATE_LIMIT", "60/minute")
 
 # Django Auth Backend

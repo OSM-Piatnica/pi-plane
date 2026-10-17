@@ -41,6 +41,9 @@
 	servers {
 		max_header_size 25MB
 		client_ip_headers X-Forwarded-For X-Real-IP
+		# Only peers in this range may set X-Forwarded-For/X-Real-IP; for anyone else Caddy uses the
+		# connecting address. The default trusts every peer, so the client IP (and the per-IP rate
+		# limit) can be spoofed. Set TRUSTED_PROXIES to your real proxy/CDN range.
 		trusted_proxies static {$TRUSTED_PROXIES:0.0.0.0/0}
 	}
 }
