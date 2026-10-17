@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import type { LucideIcon } from "lucide-react";
-import { AlertTriangle, Info } from "lucide-react";
+import { InfoOutline, WarningTriangleOutline } from "@makeplane/propel/icons";
 import React from "react";
 // components
 import type { TButtonVariant } from "@plane/propel/button";
@@ -37,9 +37,9 @@ type Props = {
   customIcon?: React.ReactNode;
 };
 
-const VARIANT_ICONS: Record<TModalVariant, LucideIcon> = {
-  danger: AlertTriangle,
-  primary: Info,
+const VARIANT_ICONS: Record<TModalVariant, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+  danger: WarningTriangleOutline,
+  primary: InfoOutline,
 };
 
 const BUTTON_VARIANTS: Record<TModalVariant, TButtonVariant> = {
@@ -96,6 +96,7 @@ export function AlertModalCore(props: Props) {
         <Button variant="secondary" onClick={handleClose}>
           {secondaryButtonText}
         </Button>
+        {/* oxlint-disable-next-line jsx-a11y/tabindex-no-positive -- existing behaviour; lint cleanup only */}
         <Button variant={BUTTON_VARIANTS[variant]} tabIndex={1} onClick={handleSubmit} loading={isSubmitting}>
           {isSubmitting ? primaryButtonText.loading : primaryButtonText.default}
         </Button>

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,7 +9,7 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
 import { Button } from "@plane/propel/button";
-import { RecentStickyIcon } from "@plane/propel/icons";
+import { MultipleStickyOutline } from "@makeplane/propel/icons";
 import { Breadcrumbs, Header } from "@plane/ui";
 // components
 import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
@@ -33,7 +34,7 @@ export const WorkspaceStickyHeader = observer(function WorkspaceStickyHeader() {
                 component={
                   <BreadcrumbLink
                     label={`Stickies`}
-                    icon={<RecentStickyIcon className="size-5 rotate-90 text-secondary" />}
+                    icon={<MultipleStickyOutline className="size-5 rotate-90 text-secondary" />}
                   />
                 }
               />

@@ -7,7 +7,7 @@
 
 import { useMemo, useState } from "react";
 import { observer } from "mobx-react";
-import { ArrowUpToLine, Clipboard, History } from "lucide-react";
+import { ClipboardOutline, ExportOutline, HistoryOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
@@ -97,7 +97,7 @@ export const PageOptionsDropdown = observer(function PageOptionsDropdown(props: 
             });
           },
           title: t("common.actions.copy_markdown"),
-          icon: Clipboard,
+          icon: ClipboardOutline,
           shouldRender: true,
         },
         {
@@ -112,14 +112,14 @@ export const PageOptionsDropdown = observer(function PageOptionsDropdown(props: 
             router.push(updatedRoute);
           },
           title: t("page_navigation_pane.tabs.info.version_history.label"),
-          icon: History,
+          icon: HistoryOutline,
           shouldRender: true,
         },
         {
           key: "export",
           action: () => setIsExportModalOpen(true),
           title: t("export"),
-          icon: ArrowUpToLine,
+          icon: ExportOutline,
           shouldRender: true,
         },
       ];

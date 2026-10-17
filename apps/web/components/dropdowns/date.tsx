@@ -9,12 +9,11 @@ import React, { useRef, useState } from "react";
 import { observer } from "mobx-react";
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
-import { CalendarDays } from "lucide-react";
+import { CalendarOutline, CloseOutline } from "@makeplane/propel/icons";
 import { Combobox } from "@headlessui/react";
 // ui
 import type { Matcher } from "@plane/propel/calendar";
 import { Calendar } from "@plane/propel/calendar";
-import { CloseIcon } from "@plane/propel/icons";
 import { ComboDropDown } from "@plane/ui";
 import { cn, renderFormattedDate, getDate } from "@plane/utils";
 // helpers
@@ -58,7 +57,7 @@ export const DateDropdown = observer(function DateDropdown(props: Props) {
     closeOnSelect = true,
     disabled = false,
     hideIcon = false,
-    icon = <CalendarDays className="h-3 w-3 flex-shrink-0" />,
+    icon = <CalendarOutline className="h-3 w-3 flex-shrink-0" />,
     isClearable = true,
     minDate,
     maxDate,
@@ -154,7 +153,7 @@ export const DateDropdown = observer(function DateDropdown(props: Props) {
           </span>
         )}
         {isClearable && !disabled && isDateSelected && (
-          <CloseIcon
+          <CloseOutline
             className={cn("h-2.5 w-2.5 flex-shrink-0", clearIconClassName)}
             onClick={(e) => {
               e.stopPropagation();

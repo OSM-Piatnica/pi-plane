@@ -7,28 +7,25 @@
 
 import type { LucideIcon } from "lucide-react";
 import {
-  ArrowDownToLine,
-  ArrowUpToLine,
-  Building,
-  CreditCard,
-  FolderKanban,
-  Layers,
-  LayoutTemplate,
-  Users,
-  Webhook,
-} from "lucide-react";
+  BillingsOutline,
+  BuildingOutline,
+  ExportOutline,
+  MembersOutline,
+  WebhooksOutline,
+} from "@makeplane/propel/icons";
 // plane imports
 import type { ISvgIcons } from "@plane/propel/icons";
 import type { TWorkspaceSettingsTabs } from "@plane/types";
+import { ArrowDownToLine, FolderKanban, Layers, LayoutTemplate } from "lucide-react";
 
 export const WORKSPACE_SETTINGS_ICONS: Record<TWorkspaceSettingsTabs, LucideIcon | React.FC<ISvgIcons>> = {
-  general: Building,
-  members: Users,
-  export: ArrowUpToLine,
+  general: BuildingOutline,
+  members: MembersOutline,
+  export: ExportOutline,
   import: ArrowDownToLine,
-  "billing-and-plans": CreditCard,
+  "billing-and-plans": BillingsOutline,
   "work-item-templates": LayoutTemplate,
   "work-item-types": Layers,
   "project-templates": FolderKanban,
-  webhooks: Webhook,
+  webhooks: WebhooksOutline,
 };

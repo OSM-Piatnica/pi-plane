@@ -8,7 +8,7 @@
 import { observer } from "mobx-react";
 
 import { useTranslation } from "@plane/i18n";
-import { LinkIcon, CopyIcon, EditIcon, TrashIcon } from "@plane/propel/icons";
+import { CopyOutline, DeleteOutline, EditOutline, LinkOutline } from "@makeplane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TIssueServiceType } from "@plane/types";
@@ -61,7 +61,7 @@ export const IssueLinkItem = observer(function IssueLinkItem(props: TIssueLinkIt
           {faviconUrl ? (
             <img src={faviconUrl} alt="favicon" className="size-4 flex-shrink-0" />
           ) : (
-            <LinkIcon className="size-4 flex-shrink-0 text-tertiary group-hover:text-primary" />
+            <LinkOutline className="size-4 flex-shrink-0 text-tertiary group-hover:text-primary" />
           )}
           <Tooltip label={linkDetail.url} layout="stacked" disabled={isMobile}>
             <a
@@ -95,7 +95,7 @@ export const IssueLinkItem = observer(function IssueLinkItem(props: TIssueLinkIt
             }}
             className="relative grid cursor-pointer place-items-center rounded-sm p-1 text-placeholder outline-none group-hover:text-secondary hover:bg-layer-1"
           >
-            <CopyIcon className="h-3.5 w-3.5 stroke-[1.5]" />
+            <CopyOutline className="h-3.5 w-3.5 stroke-[1.5]" />
           </span>
           <CustomMenu
             ellipsis
@@ -110,7 +110,7 @@ export const IssueLinkItem = observer(function IssueLinkItem(props: TIssueLinkIt
                 toggleIssueLinkModal(true);
               }}
             >
-              <EditIcon className="h-3 w-3 stroke-[1.5] text-secondary" />
+              <EditOutline className="h-3 w-3 stroke-[1.5] text-secondary" />
               {t("common.actions.edit")}
             </CustomMenu.MenuItem>
             <CustomMenu.MenuItem
@@ -119,7 +119,7 @@ export const IssueLinkItem = observer(function IssueLinkItem(props: TIssueLinkIt
                 linkOperations.remove(linkDetail.id);
               }}
             >
-              <TrashIcon className="h-3 w-3" />
+              <DeleteOutline className="h-3 w-3" />
               {t("common.actions.delete")}
             </CustomMenu.MenuItem>
           </CustomMenu>

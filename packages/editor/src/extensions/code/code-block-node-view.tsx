@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,9 +9,8 @@ import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
 import { NodeViewWrapper, NodeViewContent } from "@tiptap/react";
 import ts from "highlight.js/lib/languages/typescript";
 import { common, createLowlight } from "lowlight";
-import { CheckIcon } from "lucide-react";
+import { CopyOutline, TickOutline } from "@makeplane/propel/icons";
 import { useState } from "react";
-import { CopyIcon } from "@plane/propel/icons";
 // ui
 import { Tooltip } from "@plane/propel/tooltip";
 // plane utils
@@ -58,9 +58,9 @@ export function CodeBlockComponent({ node }: Props) {
           onClick={(e) => void copyToClipboard(e)}
         >
           {copied ? (
-            <CheckIcon className="h-3 w-3 text-success-primary" strokeWidth={3} />
+            <TickOutline className="h-3 w-3 text-success-primary" />
           ) : (
-            <CopyIcon className="h-3 w-3 text-tertiary group-hover/button:text-primary" />
+            <CopyOutline className="h-3 w-3 text-tertiary group-hover/button:text-primary" />
           )}
         </button>
       </Tooltip>

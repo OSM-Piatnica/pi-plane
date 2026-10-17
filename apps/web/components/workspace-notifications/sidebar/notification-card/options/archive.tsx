@@ -1,14 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
-import { ArchiveRestore } from "lucide-react";
+import { ArchiveOutline, RestoreOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { ArchiveIcon } from "@plane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 // store
 import type { INotification } from "@/store/notifications/notification";
@@ -49,9 +49,9 @@ export const NotificationItemArchiveOption = observer(function NotificationItemA
       callBack={handleNotificationUpdate}
     >
       {data.archived_at ? (
-        <ArchiveRestore className="h-3 w-3 text-tertiary" />
+        <RestoreOutline className="h-3 w-3 text-tertiary" />
       ) : (
-        <ArchiveIcon className="h-3 w-3 text-tertiary" />
+        <ArchiveOutline className="h-3 w-3 text-tertiary" />
       )}
     </NotificationItemOptionButton>
   );

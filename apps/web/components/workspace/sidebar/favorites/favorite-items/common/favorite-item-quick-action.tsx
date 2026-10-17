@@ -7,7 +7,7 @@
 
 import React from "react";
 import { observer } from "mobx-react";
-import { MoreHorizontal, Star } from "lucide-react";
+import { MoreHorizontalOutline, StarFilled } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import type { IFavorite } from "@plane/types";
@@ -32,7 +32,7 @@ export const FavoriteItemQuickAction = observer(function FavoriteItemQuickAction
     <CustomMenu
       customButton={
         <span ref={ref} className="grid place-items-center rounded-sm p-0.5 text-placeholder hover:bg-layer-1">
-          <MoreHorizontal className="size-4" />
+          <MoreHorizontalOutline className="size-4" />
         </span>
       }
       menuButtonOnClick={() => onChange(!isMenuActive)}
@@ -48,7 +48,7 @@ export const FavoriteItemQuickAction = observer(function FavoriteItemQuickAction
     >
       <CustomMenu.MenuItem onClick={() => handleRemoveFromFavorites(favorite)}>
         <span className="flex items-center justify-start gap-2">
-          <Star className="fill-yellow-500 stroke-yellow-500 h-3.5 w-3.5 flex-shrink-0" />
+          <StarFilled className="text-yellow-500 h-3.5 w-3.5 flex-shrink-0" />
           <span>{t("remove_from_favorites")}</span>
         </span>
       </CustomMenu.MenuItem>

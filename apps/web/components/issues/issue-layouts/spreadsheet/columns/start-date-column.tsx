@@ -8,7 +8,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { StartDatePropertyIcon } from "@plane/propel/icons";
+import { StartDateOutline } from "@makeplane/propel/icons";
 // types
 import type { TIssue } from "@plane/types";
 // components
@@ -45,7 +45,7 @@ export const SpreadsheetStartDateColumn = observer(function SpreadsheetStartDate
         }}
         disabled={disabled}
         placeholder={t("start_date")}
-        icon={<StartDatePropertyIcon className="h-3 w-3 flex-shrink-0" />}
+        icon={<StartDateOutline className="h-3 w-3 flex-shrink-0" />}
         buttonVariant="transparent-with-text"
         buttonClassName="text-left rounded-none group-[.selected-issue-row]:bg-accent-primary/5 group-[.selected-issue-row]:hover:bg-accent-primary/10 px-page-x"
         buttonContainerClassName="w-full"

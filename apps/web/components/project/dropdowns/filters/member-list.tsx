@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
-import { ChevronDownIcon } from "@plane/propel/icons";
+import { ChevronDownOutline } from "@makeplane/propel/icons";
 import { EUserProjectRoles, EUserWorkspaceRoles } from "@plane/types";
 // plane ui
 import { CustomMenu } from "@plane/ui";
@@ -109,7 +109,7 @@ export const MemberListFiltersDropdown = observer(function MemberListFiltersDrop
         <div className="relative">
           <Button variant="secondary" size="lg" className="flex items-center gap-2">
             <span>{t("common.filters")}</span>
-            <ChevronDownIcon className="h-3 w-3" />
+            <ChevronDownOutline className="h-3 w-3" />
           </Button>
           {appliedFiltersCount > 0 && (
             <div className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-accent-primary" />

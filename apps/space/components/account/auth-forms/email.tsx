@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,7 +9,7 @@ import type { FormEvent } from "react";
 import { useMemo, useRef, useState } from "react";
 import { observer } from "mobx-react";
 // icons
-import { CircleAlert, XCircle } from "lucide-react";
+import { CloseCircleOutline, WarningCircleOutline } from "@makeplane/propel/icons";
 // types
 import { Button } from "@plane/propel/button";
 import type { IEmailCheckData } from "@plane/types";
@@ -76,6 +77,7 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
             placeholder="name@company.com"
             className={`h-10 w-full border-0 disable-autofill-style placeholder:text-placeholder autofill:bg-danger-subtle focus:bg-none active:bg-transparent`}
             autoComplete="off"
+            // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; a11y handled separately
             autoFocus
             ref={inputRef}
           />
@@ -89,13 +91,13 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
               }}
               tabIndex={-1}
             >
-              <XCircle className="h-10 w-11 stroke-placeholder px-3 text-11 hover:cursor-pointer" />
+              <CloseCircleOutline className="h-10 w-11 px-3 text-11 text-placeholder hover:cursor-pointer" />
             </button>
           )}
         </div>
         {emailError?.email && !isFocused && (
           <p className="flex items-center gap-1 px-0.5 text-11 text-danger-primary">
-            <CircleAlert height={12} width={12} />
+            <WarningCircleOutline height={12} width={12} />
             {emailError.email}
           </p>
         )}

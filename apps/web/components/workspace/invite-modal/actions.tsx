@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,7 @@ import { observer } from "mobx-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
-import { PlusIcon } from "@plane/propel/icons";
+import { AddOutline } from "@makeplane/propel/icons";
 import { cn } from "@plane/utils";
 
 type TInvitationModalActionsProps = {
@@ -53,7 +54,7 @@ export const InvitationModalActions = observer(function InvitationModalActions(p
         onClick={appendField}
         disabled={isInviteDisabled}
       >
-        <PlusIcon className="h-3.5 w-3.5" />
+        <AddOutline className="h-3.5 w-3.5" />
         {addMoreButtonText || t("common.add_more")}
       </button>
       <div className="flex items-center gap-2">

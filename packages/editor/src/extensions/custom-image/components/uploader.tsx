@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { ImageIcon, RotateCcw } from "lucide-react";
+import { ImageOutline, RefreshOutline } from "@makeplane/propel/icons";
 import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 // plane imports
@@ -209,6 +210,7 @@ export function CustomImageUploader(props: CustomImageUploaderProps) {
   );
 
   return (
+    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing behaviour; lint cleanup only
     <div
       className={cn(
         "image-upload-component flex cursor-default items-center justify-start gap-2 rounded-lg border border-dashed bg-layer-3 px-2 py-3 text-tertiary transition-all duration-200 ease-in-out",
@@ -235,7 +237,7 @@ export function CustomImageUploader(props: CustomImageUploaderProps) {
         }
       }}
     >
-      <ImageIcon className="size-4" />
+      <ImageOutline className="size-4" />
       <div className="flex-1 text-14 font-medium">{getDisplayMessage()}</div>
       {hasDuplicationFailed && editor.isEditable && (
         <button
@@ -249,7 +251,7 @@ export function CustomImageUploader(props: CustomImageUploaderProps) {
           )}
           title="Retry duplication"
         >
-          <RotateCcw className="size-3" />
+          <RefreshOutline className="size-3" />
           <span className="text-11">Retry</span>
         </button>
       )}

@@ -11,7 +11,7 @@ import React, { createContext, useCallback, useContext, useRef, useState } from 
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
 import { useOutsideClickDetector } from "@plane/hooks";
-import { CheckIcon, ChevronDownIcon } from "@plane/propel/icons";
+import { ChevronDownOutline, TickOutline } from "@makeplane/propel/icons";
 // plane helpers
 // hooks
 import { useDropdownKeyDown } from "../hooks/use-dropdown-key-down";
@@ -68,6 +68,7 @@ function CustomSelect(props: ICustomSelectProps) {
 
   return (
     <DropdownContext.Provider value={closeDropdown}>
+      {/* oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- existing behaviour; lint cleanup only */}
       <Combobox
         as="div"
         ref={dropdownRef}
@@ -113,7 +114,7 @@ function CustomSelect(props: ICustomSelectProps) {
                 onClick={toggleDropdown}
               >
                 {label}
-                {!noChevron && !disabled && <ChevronDownIcon className="h-3 w-3" aria-hidden="true" />}
+                {!noChevron && !disabled && <ChevronDownOutline className="h-3 w-3" aria-hidden="true" />}
               </button>
             </Combobox.Button>
           )}
@@ -163,6 +164,7 @@ function Option(props: ICustomSelectItemProps) {
   }, [closeDropdown]);
 
   return (
+    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- existing behaviour; lint cleanup only
     <Combobox.Option
       as="li"
       value={value}
@@ -180,7 +182,7 @@ function Option(props: ICustomSelectItemProps) {
       {({ selected }) => (
         <div className="flex w-full items-center justify-between gap-2">
           {children}
-          {selected && <CheckIcon className="h-3.5 w-3.5 flex-shrink-0" />}
+          {selected && <TickOutline className="h-3.5 w-3.5 flex-shrink-0" />}
         </div>
       )}
     </Combobox.Option>

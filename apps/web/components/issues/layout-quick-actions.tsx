@@ -12,7 +12,7 @@ import type { TContextMenuItem } from "@plane/ui";
 import { CustomMenu } from "@plane/ui";
 import { copyUrlToClipboard, cn } from "@plane/utils";
 import { useLayoutMenuItems } from "@/components/common/quick-actions-helper";
-import { Ellipsis } from "lucide-react";
+import { MoreHorizontalOutline } from "@makeplane/propel/icons";
 import { IconButton } from "@plane/propel/icon-button";
 
 type Props = {
@@ -59,7 +59,7 @@ export const LayoutQuickActions = observer(function LayoutQuickActions(props: Pr
         closeOnSelect
         maxHeight="lg"
         className="flex size-[26px] flex-shrink-0 items-center justify-center rounded"
-        customButton={<IconButton size="lg" variant="tertiary" icon={Ellipsis} />}
+        customButton={<IconButton size="lg" variant="tertiary" icon={MoreHorizontalOutline} />}
       >
         {MENU_ITEMS.map((item) => {
           if (item.shouldRender === false) return null;

@@ -7,13 +7,13 @@
 
 import { observer } from "mobx-react";
 import {
-  StatePropertyIcon,
-  MembersPropertyIcon,
-  PriorityPropertyIcon,
-  DueDatePropertyIcon,
-  LabelPropertyIcon,
-  DuplicatePropertyIcon,
-} from "@plane/propel/icons";
+  DueDateOutline,
+  DuplicateOfOutline,
+  LabelsOutline,
+  MembersOutline,
+  PriorityOutline,
+  StateOutline,
+} from "@makeplane/propel/icons";
 import { useTranslation } from "@plane/i18n";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TInboxDuplicateIssueDetails, TIssue } from "@plane/types";
@@ -73,7 +73,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
             {/* Intake State */}
             <div className="flex h-8 items-center gap-2">
               <div className="flex w-2/5 flex-shrink-0 items-center gap-1 text-13 text-tertiary">
-                <StatePropertyIcon className="h-4 w-4 flex-shrink-0" />
+                <StateOutline className="h-4 w-4 flex-shrink-0" />
                 <span>{t("state")}</span>
               </div>
               {issue?.state_id && (
@@ -94,7 +94,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
             {/* Assignee */}
             <div className="flex h-8 items-center gap-2">
               <div className="flex w-2/5 flex-shrink-0 items-center gap-1 text-13 text-tertiary">
-                <MembersPropertyIcon className="h-4 w-4 flex-shrink-0" />
+                <MembersOutline className="h-4 w-4 flex-shrink-0" />
                 <span>{t("assignees")}</span>
               </div>
               <MemberDropdown
@@ -122,7 +122,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
             {/* Priority */}
             <div className="flex h-8 items-center gap-2">
               <div className="flex w-2/5 flex-shrink-0 items-center gap-1 text-13 text-tertiary">
-                <PriorityPropertyIcon className="h-4 w-4 flex-shrink-0" />
+                <PriorityOutline className="h-4 w-4 flex-shrink-0" />
                 <span>{t("priority")}</span>
               </div>
               <PriorityDropdown
@@ -144,7 +144,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
             {/* Due Date */}
             <div className="flex h-8 items-center gap-2">
               <div className="flex w-2/5 flex-shrink-0 items-center gap-1 text-13 text-tertiary">
-                <DueDatePropertyIcon className="h-4 w-4 flex-shrink-0" />
+                <DueDateOutline className="h-4 w-4 flex-shrink-0" />
                 <span>{t("due_date")}</span>
               </div>
               <DateDropdown
@@ -169,7 +169,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
             {/* Labels */}
             <div className="flex min-h-8 items-center gap-2">
               <div className="flex w-2/5 flex-shrink-0 items-center gap-1 text-13 text-tertiary">
-                <LabelPropertyIcon className="h-4 w-4 flex-shrink-0" />
+                <LabelsOutline className="h-4 w-4 flex-shrink-0" />
                 <span>{t("labels")}</span>
               </div>
               <div className="h-full min-h-8 w-3/5 flex-grow pt-1">
@@ -192,7 +192,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
             {duplicateIssueDetails && (
               <div className="flex min-h-8 gap-2">
                 <div className="flex w-2/5 flex-shrink-0 gap-1 pt-2 text-13 text-tertiary">
-                  <DuplicatePropertyIcon className="h-4 w-4 flex-shrink-0" />
+                  <DuplicateOfOutline className="h-4 w-4 flex-shrink-0" />
                   <span>{t("issue.relation.duplicate")}</span>
                 </div>
 

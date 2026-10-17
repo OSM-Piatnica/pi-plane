@@ -13,7 +13,7 @@ import { usePopper } from "react-popper";
 import { Combobox } from "@headlessui/react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { CheckIcon, SearchIcon, EstimatePropertyIcon, ChevronDownIcon } from "@plane/propel/icons";
+import { ChevronDownOutline, EstimateOutline, SearchOutline, TickOutline } from "@makeplane/propel/icons";
 import { EEstimateSystem } from "@plane/types";
 import { ComboDropDown } from "@plane/ui";
 import { convertMinutesToHoursMinutesString, cn } from "@plane/utils";
@@ -111,7 +111,7 @@ export const EstimateDropdown = observer(function EstimateDropdown(props: Props)
           query: `${currentEstimatePoint?.value}`,
           content: (
             <div className="flex items-center gap-2">
-              <EstimatePropertyIcon className="h-3 w-3 flex-shrink-0" />
+              <EstimateOutline className="h-3 w-3 flex-shrink-0" />
               <span className="flex-grow truncate">
                 {currentActiveEstimate?.type === EEstimateSystem.TIME
                   ? convertMinutesToHoursMinutesString(Number(currentEstimatePoint.value))
@@ -128,7 +128,7 @@ export const EstimateDropdown = observer(function EstimateDropdown(props: Props)
     query: t("project_settings.estimates.no_estimate"),
     content: (
       <div className="flex items-center gap-2">
-        <EstimatePropertyIcon className="h-3 w-3 flex-shrink-0" />
+        <EstimateOutline className="h-3 w-3 flex-shrink-0" />
         <span className="flex-grow truncate">{t("project_settings.estimates.no_estimate")}</span>
       </div>
     ),
@@ -194,7 +194,7 @@ export const EstimateDropdown = observer(function EstimateDropdown(props: Props)
         variant={buttonVariant}
         renderToolTipByDefault={renderByDefault}
       >
-        {!hideIcon && <EstimatePropertyIcon className="h-3 w-3 flex-shrink-0" />}
+        {!hideIcon && <EstimateOutline className="h-3 w-3 flex-shrink-0" />}
         {(selectedEstimate || placeholder) && BUTTON_VARIANTS_WITH_TEXT.includes(buttonVariant) && (
           <span className="truncate">
             {selectedEstimate ? (
@@ -209,7 +209,7 @@ export const EstimateDropdown = observer(function EstimateDropdown(props: Props)
           </span>
         )}
         {dropdownArrow && (
-          <ChevronDownIcon className={cn("h-2.5 w-2.5 flex-shrink-0", dropdownArrowClassName)} aria-hidden="true" />
+          <ChevronDownOutline className={cn("h-2.5 w-2.5 flex-shrink-0", dropdownArrowClassName)} aria-hidden="true" />
         )}
       </DropdownButton>
     </button>
@@ -238,7 +238,7 @@ export const EstimateDropdown = observer(function EstimateDropdown(props: Props)
             {...attributes.popper}
           >
             <div className="flex items-center gap-1.5 rounded-sm border border-subtle bg-surface-2 px-2">
-              <SearchIcon className="h-3.5 w-3.5 text-placeholder" strokeWidth={1.5} />
+              <SearchOutline className="h-3.5 w-3.5 text-placeholder" />
               <Combobox.Input
                 as="input"
                 ref={inputRef}
@@ -257,7 +257,7 @@ export const EstimateDropdown = observer(function EstimateDropdown(props: Props)
                 >
                   {/* NOTE: This condition renders when estimates are not enabled for the project */}
                   <div className="flex flex-grow items-center gap-2">
-                    <EstimatePropertyIcon className="h-3 w-3 flex-shrink-0" />
+                    <EstimateOutline className="h-3 w-3 flex-shrink-0" />
                     <span className="flex-grow truncate">{t("project_settings.estimates.no_estimate")}</span>
                   </div>
                 </div>
@@ -279,7 +279,7 @@ export const EstimateDropdown = observer(function EstimateDropdown(props: Props)
                               )}
                             >
                               <span className="flex-grow truncate">{option.content}</span>
-                              {selected && <CheckIcon className="h-3.5 w-3.5 flex-shrink-0" />}
+                              {selected && <TickOutline className="h-3.5 w-3.5 flex-shrink-0" />}
                             </div>
                           )}
                         </Combobox.Option>

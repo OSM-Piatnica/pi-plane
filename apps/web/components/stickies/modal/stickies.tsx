@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,7 +9,7 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 
 // plane ui
-import { RecentStickyIcon, PlusIcon, CloseIcon } from "@plane/propel/icons";
+import { AddOutline, CloseOutline, MultipleStickyOutline } from "@makeplane/propel/icons";
 // hooks
 import { useSticky } from "@/hooks/use-stickies";
 // components
@@ -35,7 +36,7 @@ export const Stickies = observer(function Stickies(props: TProps) {
       <div className="mb-6 flex items-center justify-between">
         {/* Title */}
         <div className="flex items-center gap-2 text-secondary">
-          <RecentStickyIcon className="size-5 flex-shrink-0 rotate-90" />
+          <MultipleStickyOutline className="size-5 flex-shrink-0 rotate-90" />
           <p className="text-18 font-medium">Your stickies</p>
         </div>
         {/* actions */}
@@ -49,7 +50,7 @@ export const Stickies = observer(function Stickies(props: TProps) {
             className="my-auto flex gap-1 text-13 font-medium text-accent-primary"
             disabled={creatingSticky}
           >
-            <PlusIcon className="my-auto size-4" /> <span>Add sticky</span>
+            <AddOutline className="my-auto size-4" /> <span>Add sticky</span>
             {creatingSticky && (
               <div className="ml-2 flex items-center justify-center">
                 <div
@@ -66,7 +67,7 @@ export const Stickies = observer(function Stickies(props: TProps) {
               onClick={handleClose}
               className="my-auto grid flex-shrink-0 place-items-center rounded-sm p-1 text-tertiary transition-colors hover:bg-layer-1 hover:text-primary"
             >
-              <CloseIcon className="size-4 text-placeholder" />
+              <CloseOutline className="size-4 text-placeholder" />
             </button>
           )}
         </div>

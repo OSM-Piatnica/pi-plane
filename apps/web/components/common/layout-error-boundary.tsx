@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { Component, Fragment } from "react";
 import type { ErrorInfo, ReactNode } from "react";
-import { AlertTriangle } from "lucide-react";
+import { WarningTriangleOutline } from "@makeplane/propel/icons";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 
@@ -24,7 +25,7 @@ function LayoutErrorFallback({ onRetry }: { onRetry: () => void }) {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-3 text-center">
-      <AlertTriangle className="size-8 text-tertiary" />
+      <WarningTriangleOutline className="size-8 text-tertiary" />
       <p className="text-14 text-secondary">{t("something_went_wrong")}</p>
       <Button variant="secondary" size="sm" onClick={onRetry}>
         {t("common.retry")}

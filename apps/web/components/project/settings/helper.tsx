@@ -8,7 +8,7 @@
 import Link from "next/link";
 
 import { useTranslation } from "@plane/i18n";
-import { ChevronRightIcon } from "@plane/propel/icons";
+import { ChevronRightOutline } from "@makeplane/propel/icons";
 import { EPillVariant, Pill, EPillSize } from "@plane/propel/pill";
 import { Switch } from "@makeplane/propel/components/switch";
 import { joinUrlPath } from "@plane/utils";
@@ -36,7 +36,7 @@ export function ProjectFeatureToggle(props: Props) {
         >
           {value ? t("common.enabled") : t("common.disabled")}
         </Pill>
-        <ChevronRightIcon className="h-4 w-4 text-tertiary" />
+        <ChevronRightOutline className="h-4 w-4 text-tertiary" />
       </div>
     </Link>
   ) : (

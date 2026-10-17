@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -17,7 +18,7 @@ import {
   useRole,
 } from "@floating-ui/react";
 import type { Editor } from "@tiptap/core";
-import { Ellipsis } from "lucide-react";
+import { MoreHorizontalOutline } from "@makeplane/propel/icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 // plane imports
 import { cn } from "@plane/utils";
@@ -161,9 +162,9 @@ export function RowDragHandle(props: RowDragHandleProps) {
           let tr = editor.state.tr;
           const selection = editor.state.selection;
           if (isCellSelection(selection)) {
-            const table = findTable(selection);
-            if (table) {
-              tr = moveSelectedRows(editor, table, selection, dropIndex, tr);
+            const selectedTable = findTable(selection);
+            if (selectedTable) {
+              tr = moveSelectedRows(editor, selectedTable, selection, dropIndex, tr);
             }
           }
           editor.view.dispatch(tr);
@@ -234,7 +235,7 @@ export function RowDragHandle(props: RowDragHandleProps) {
             "hover:bg-layer-1-hover": !isDropdownOpen,
           })}
         >
-          <Ellipsis className="size-4 rotate-90 text-primary" />
+          <MoreHorizontalOutline className="size-4 rotate-90 text-primary" />
         </button>
       </div>
       {isDropdownOpen && (

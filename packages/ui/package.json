@@ -30,6 +30,7 @@
     "@atlaskit/pragmatic-drag-and-drop": "catalog:",
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "catalog:",
     "@headlessui/react": "^2.2.10",
+    "@makeplane/propel": "0.3.0",
     "@plane/constants": "workspace:*",
     "@plane/hooks": "workspace:*",
     "@plane/propel": "workspace:*",

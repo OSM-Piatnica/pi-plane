@@ -10,7 +10,7 @@ import React, { useEffect, useState, useRef, Fragment } from "react";
 import type { Placement } from "@popperjs/core";
 import { Controller, useForm } from "react-hook-form"; // services
 import { usePopper } from "react-popper";
-import { AlertCircle } from "lucide-react";
+import { WarningCircleOutline } from "@makeplane/propel/icons";
 import { Popover, Transition } from "@headlessui/react";
 // plane imports
 import { Input, InputGroup } from "@makeplane/propel/components/input";
@@ -288,7 +288,7 @@ export function GptAssistantPopover(props: Props) {
             ) : (
               <>
                 <div className="flex items-start justify-center gap-2 text-13 text-accent-primary">
-                  <AlertCircle className="h-4 w-4" />
+                  <WarningCircleOutline className="h-4 w-4" />
                   <p>By using this feature, you consent to sharing the message with a 3rd party service. </p>
                 </div>
               </>

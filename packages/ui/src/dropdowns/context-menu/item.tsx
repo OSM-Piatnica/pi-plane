@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React, { useState, useRef, useContext } from "react";
 import { usePopper } from "react-popper";
-import { ChevronRightIcon } from "@plane/propel/icons";
+import { ChevronRightOutline } from "@makeplane/propel/icons";
 // helpers
 import { cn } from "../../utils";
 // types
@@ -129,6 +130,7 @@ export function ContextMenuItem(props: ContextMenuItemProps) {
         e.preventDefault();
         const nestedItem = renderedNestedItems[activeNestedIndex];
         if (!nestedItem.disabled) {
+          // oxlint-disable-next-line react-hooks/exhaustive-deps -- existing behaviour; lint cleanup only
           handleNestedItemClick(nestedItem);
         }
       }
@@ -148,6 +150,7 @@ export function ContextMenuItem(props: ContextMenuItemProps) {
         menuElement.removeEventListener("keydown", handleKeyDown);
       };
     }
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- existing behaviour; lint cleanup only
   }, [isNestedOpen, activeNestedIndex, renderedNestedItems, hasNestedItems, closeNestedMenu]);
 
   if (item.shouldRender === false) return null;
@@ -184,7 +187,7 @@ export function ContextMenuItem(props: ContextMenuItemProps) {
                 </p>
               )}
             </div>
-            {hasNestedItems && <ChevronRightIcon className="h-3 w-3 flex-shrink-0" />}
+            {hasNestedItems && <ChevronRightOutline className="h-3 w-3 flex-shrink-0" />}
           </>
         )}
       </button>

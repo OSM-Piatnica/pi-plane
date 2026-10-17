@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { Editor } from "@tiptap/core";
-import { AlignCenter, AlignLeft, AlignRight } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { AlignCenterOutline, AlignLeftOutline, AlignRightOutline } from "@makeplane/propel/icons";
+import type { ComponentType, SVGProps } from "react";
 // local imports
 import { ECustomImageAttributeNames, ECustomImageStatus } from "./types";
 import type { TCustomImageAlignment, Pixel, TCustomImageAttributes } from "./types";
@@ -41,22 +42,22 @@ export const ensurePixelString = <TDefault>(
 export const IMAGE_ALIGNMENT_OPTIONS: {
   label: string;
   value: TCustomImageAlignment;
-  icon: LucideIcon;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
 }[] = [
   {
     label: "Left",
     value: "left",
-    icon: AlignLeft,
+    icon: AlignLeftOutline,
   },
   {
     label: "Center",
     value: "center",
-    icon: AlignCenter,
+    icon: AlignCenterOutline,
   },
   {
     label: "Right",
     value: "right",
-    icon: AlignRight,
+    icon: AlignRightOutline,
   },
 ];
 export const getImageBlockId = (id: string) => `editor-image-block-${id}`;

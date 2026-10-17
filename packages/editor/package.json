@@ -38,6 +38,7 @@
     "@floating-ui/react": "^0.27.20",
     "@headlessui/react": "^2.2.10",
     "@hocuspocus/provider": "2.15.2",
+    "@makeplane/propel": "0.3.0",
     "@plane/constants": "workspace:*",
     "@plane/hooks": "workspace:*",
     "@plane/propel": "workspace:*",

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,7 +11,7 @@ import { useParams } from "next/navigation";
 // plane imports
 import { EIssueFilterType, ISSUE_DISPLAY_FILTERS_BY_PAGE } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { ChevronDownIcon } from "@plane/propel/icons";
+import { ChevronDownOutline } from "@makeplane/propel/icons";
 import type { IIssueDisplayFilterOptions, IIssueDisplayProperties } from "@plane/types";
 import { EIssuesStoreType, EIssueLayoutTypes } from "@plane/types";
 // components
@@ -80,7 +81,7 @@ export const ProjectIssuesMobileHeader = observer(function ProjectIssuesMobileHe
             menuButton={
               <span className="flex items-center text-13 text-secondary">
                 {t("common.display")}
-                <ChevronDownIcon className="ml-2 h-4 w-4 text-secondary" />
+                <ChevronDownOutline className="ml-2 h-4 w-4 text-secondary" />
               </span>
             }
           >

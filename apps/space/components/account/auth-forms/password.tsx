@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { observer } from "mobx-react";
-import { Eye, EyeOff, XCircle } from "lucide-react";
+import { CloseCircleOutline, HideOutline, ShowOutline } from "@makeplane/propel/icons";
 // plane imports
 import { API_BASE_URL, E_PASSWORD_STRENGTH } from "@plane/constants";
 import { Button } from "@plane/propel/button";
@@ -79,14 +80,14 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
 
   const isButtonDisabled = useMemo(
     () =>
-      !isSubmitting &&
-      !!passwordFormData.password &&
-      (mode === EAuthModes.SIGN_UP
-        ? getPasswordStrength(passwordFormData.password) === E_PASSWORD_STRENGTH.STRENGTH_VALID &&
-          passwordFormData.password === passwordFormData.confirm_password
-        : true)
-        ? false
-        : true,
+      !(
+        !isSubmitting &&
+        !!passwordFormData.password &&
+        (mode === EAuthModes.SIGN_UP
+          ? getPasswordStrength(passwordFormData.password) === E_PASSWORD_STRENGTH.STRENGTH_VALID &&
+            passwordFormData.password === passwordFormData.confirm_password
+          : true)
+      ),
     [isSubmitting, mode, passwordFormData.confirm_password, passwordFormData.password]
   );
 
@@ -137,10 +138,15 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             disabled
           />
           {passwordFormData.email.length > 0 && (
-            <XCircle
-              className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+            <button
+              type="button"
+              aria-label="Clear email"
+              className="absolute right-3 hover:cursor-pointer"
               onClick={handleEmailClear}
-            />
+              tabIndex={-1}
+            >
+              <CloseCircleOutline className="h-5 w-5 text-placeholder" />
+            </button>
           )}
         </div>
       </div>
@@ -160,18 +166,27 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             onFocus={() => setIsPasswordInputFocused(true)}
             onBlur={() => setIsPasswordInputFocused(false)}
             autoComplete="off"
+            // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; a11y handled separately
             autoFocus
           />
           {showPassword?.password ? (
-            <EyeOff
-              className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+            <button
+              type="button"
+              aria-label="Hide password"
+              className="absolute right-3 hover:cursor-pointer"
               onClick={() => handleShowPassword("password")}
-            />
+            >
+              <HideOutline className="h-5 w-5 text-placeholder" />
+            </button>
           ) : (
-            <Eye
-              className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+            <button
+              type="button"
+              aria-label="Show password"
+              className="absolute right-3 hover:cursor-pointer"
               onClick={() => handleShowPassword("password")}
-            />
+            >
+              <ShowOutline className="h-5 w-5 text-placeholder" />
+            </button>
           )}
         </div>
         {passwordSupport}
@@ -195,15 +210,23 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               autoComplete="off"
             />
             {showPassword?.retypePassword ? (
-              <EyeOff
-                className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+              <button
+                type="button"
+                aria-label="Hide password"
+                className="absolute right-3 hover:cursor-pointer"
                 onClick={() => handleShowPassword("retypePassword")}
-              />
+              >
+                <HideOutline className="h-5 w-5 text-placeholder" />
+              </button>
             ) : (
-              <Eye
-                className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+              <button
+                type="button"
+                aria-label="Show password"
+                className="absolute right-3 hover:cursor-pointer"
                 onClick={() => handleShowPassword("retypePassword")}
-              />
+              >
+                <ShowOutline className="h-5 w-5 text-placeholder" />
+              </button>
             )}
           </div>
           {!!passwordFormData.confirm_password &&

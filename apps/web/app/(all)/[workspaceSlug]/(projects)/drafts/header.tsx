@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,7 +11,7 @@ import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 // ui
 import { Button } from "@plane/propel/button";
-import { DraftIcon } from "@plane/propel/icons";
+import { DraftsOutline } from "@makeplane/propel/icons";
 import { EIssuesStoreType } from "@plane/types";
 import { Breadcrumbs, Header } from "@plane/ui";
 // components
@@ -52,7 +53,7 @@ export const WorkspaceDraftHeader = observer(function WorkspaceDraftHeader() {
             <Breadcrumbs>
               <Breadcrumbs.Item
                 component={
-                  <BreadcrumbLink label={t("drafts")} icon={<DraftIcon className="h-4 w-4 text-tertiary" />} />
+                  <BreadcrumbLink label={t("drafts")} icon={<DraftsOutline className="h-4 w-4 text-tertiary" />} />
                 }
               />
             </Breadcrumbs>

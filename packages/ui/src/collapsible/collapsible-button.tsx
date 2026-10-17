@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
 import type { ISvgIcons } from "@plane/propel/icons";
-import { DropdownIcon } from "@plane/propel/icons";
+import { DropdownOutline } from "@makeplane/propel/icons";
 import { cn } from "../utils";
 
 type Props = {
@@ -29,7 +30,7 @@ export function CollapsibleButton(props: Props) {
     actionItemElement,
     className = "",
     titleClassName = "",
-    ChevronIcon = DropdownIcon,
+    ChevronIcon = DropdownOutline,
   } = props;
   return (
     <div className={cn("flex h-12 items-center justify-between gap-3 border-b border-subtle px-2.5 py-3", className)}>
@@ -44,7 +45,7 @@ export function CollapsibleButton(props: Props) {
           )}
           <span className={cn("text-14 font-medium text-primary", titleClassName)}>{title}</span>
         </div>
-        {indicatorElement && indicatorElement}
+        {indicatorElement}
       </div>
       {actionItemElement && isOpen && actionItemElement}
     </div>

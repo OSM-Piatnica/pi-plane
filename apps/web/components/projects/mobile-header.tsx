@@ -1,16 +1,16 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useCallback } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
-import { ListFilter } from "lucide-react";
+import { ChevronDownOutline, FilterOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { ChevronDownIcon } from "@plane/propel/icons";
 import type { TProjectFilters } from "@plane/types";
 import { calculateTotalFilters } from "@plane/utils";
 // components
@@ -71,14 +71,14 @@ export const ProjectsListMobileHeader = observer(function ProjectsListMobileHead
       />
       <div className="flex w-full justify-around border-l border-subtle">
         <FiltersDropdown
-          icon={<ListFilter className="h-3 w-3" />}
+          icon={<FilterOutline className="h-3 w-3" />}
           title={t("common.filters")}
           placement="bottom-end"
           menuButton={
             <div className="flex items-center gap-2 text-13 text-secondary">
-              <ListFilter className="h-3 w-3" />
+              <FilterOutline className="h-3 w-3" />
               {t("common.filters")}
-              <ChevronDownIcon className="h-3 w-3" strokeWidth={2} />
+              <ChevronDownOutline className="h-3 w-3" />
             </div>
           }
           isFiltersApplied={isFiltersApplied}

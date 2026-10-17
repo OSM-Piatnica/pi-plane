@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // hooks
 import { useTranslation } from "@plane/i18n";
-import { CloseIcon, SearchIcon } from "@plane/propel/icons";
+import { CloseOutline, SearchOutline } from "@makeplane/propel/icons";
 import { cn } from "@plane/utils";
 // power-k
 import type { TPowerKCommandConfig, TPowerKContext } from "@/components/power-k/core/types";
@@ -230,7 +230,7 @@ export const TopNavPowerK = observer(() => {
           // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- existing markup; behaviour unchanged
           role="button"
         >
-          <SearchIcon className="mr-2 size-3.5 shrink-0 text-placeholder" />
+          <SearchOutline className="mr-2 size-3.5 shrink-0 text-placeholder" />
           <input
             ref={inputRef}
             type="text"
@@ -247,7 +247,7 @@ export const TopNavPowerK = observer(() => {
           />
           {searchTerm && (
             <button type="button" onClick={handleClear} className="ml-2 shrink-0">
-              <CloseIcon className="size-3.5 text-placeholder hover:text-primary" />
+              <CloseOutline className="size-3.5 text-placeholder hover:text-primary" />
             </button>
           )}
         </div>

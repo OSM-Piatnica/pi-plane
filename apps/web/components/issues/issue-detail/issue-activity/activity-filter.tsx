@@ -6,12 +6,11 @@
  */
 
 import { observer } from "mobx-react";
-import { ListFilter } from "lucide-react";
+import { FilterOutline, TickOutline } from "@makeplane/propel/icons";
 // plane imports
 import type { TActivityFilters, TActivityFilterOption } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { IconButton } from "@plane/propel/icon-button";
-import { CheckIcon } from "@plane/propel/icons";
 import { PopoverMenu } from "@plane/ui";
 // helper
 import { cn } from "@plane/utils";
@@ -33,7 +32,7 @@ export const ActivityFilter = observer(function ActivityFilter(props: TActivityF
       buttonClassName="outline-none"
       button={
         <>
-          <IconButton variant="tertiary" icon={ListFilter} />
+          <IconButton variant="tertiary" icon={FilterOutline} />
           {selectedFilters.length < filterOptions.length && (
             <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-accent-primary" />
           )}
@@ -59,7 +58,7 @@ export const ActivityFilter = observer(function ActivityFilter(props: TActivityF
               }
             )}
           >
-            {item.isSelected && <CheckIcon className="h-2.5 w-2.5" />}
+            {item.isSelected && <TickOutline className="h-2.5 w-2.5" />}
           </div>
           <div className={cn("whitespace-nowrap", item.isSelected ? "text-primary" : "text-secondary")}>
             {t(item.labelTranslationKey)}

@@ -9,7 +9,7 @@ import { Disclosure, Transition } from "@headlessui/react";
 
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
-import { ChevronDownIcon, ChevronUpIcon } from "@plane/propel/icons";
+import { ChevronDownOutline, ChevronUpOutline } from "@makeplane/propel/icons";
 
 type Props = {
   openDeleteModal: () => void;
@@ -26,7 +26,7 @@ export function WebhookDeleteSection(props: Props) {
         <div className="w-full">
           <Disclosure.Button as="button" type="button" className="flex w-full items-center justify-between py-4">
             <span className="text-16 tracking-tight">{t("project_components.webhooks.danger_zone")}</span>
-            {open ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
+            {open ? <ChevronUpOutline className="h-5 w-5" /> : <ChevronDownOutline className="h-5 w-5" />}
           </Disclosure.Button>
 
           <Transition

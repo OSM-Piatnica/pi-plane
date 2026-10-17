@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { Link } from "react-router";
-import { PinOff } from "lucide-react";
+import { DefaultTabOutline, UnpinOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { ContextMenu } from "@plane/propel/context-menu";
-import { SetAsDefaultIcon } from "@plane/propel/icons";
 import { TabNavigationItem } from "@plane/propel/tab-navigation";
 // local imports
 import type { TNavigationItem } from "./tab-navigation-root";
@@ -62,7 +62,7 @@ export function TabNavigationVisibleItem({
                 }}
                 className="flex cursor-pointer items-center gap-2 text-secondary transition-colors"
               >
-                <SetAsDefaultIcon className="size-3 shrink-0" />
+                <DefaultTabOutline className="size-3 shrink-0" />
                 <span className="text-11">{isDefault ? "Clear default" : "Set as default"}</span>
               </ContextMenu.Item>
               <ContextMenu.Item
@@ -72,7 +72,7 @@ export function TabNavigationVisibleItem({
                 }}
                 className="flex cursor-pointer items-center gap-2 text-secondary transition-colors"
               >
-                <PinOff className="size-3 shrink-0" />
+                <UnpinOutline className="size-3 shrink-0" />
                 <span className="text-11">Hide in more menu</span>
               </ContextMenu.Item>
             </ContextMenu.Content>

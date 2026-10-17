@@ -6,7 +6,7 @@
  */
 
 import * as React from "react";
-import { ChevronRightIcon } from "@plane/propel/icons";
+import { ChevronRightOutline } from "@makeplane/propel/icons";
 import { Tooltip } from "@plane/propel/tooltip";
 import { cn } from "../utils";
 
@@ -69,11 +69,12 @@ function Breadcrumbs({ className, children, onBack, isLoading = false }: Breadcr
         <>
           <div className="flex items-center gap-2.5 p-1">
             {onBack && (
+              // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing behaviour; lint cleanup only
               <span onClick={onBack} className="text-secondary">
                 ...
               </span>
             )}
-            <ChevronRightIcon className="h-3.5 w-3.5 flex-shrink-0 text-placeholder" aria-hidden="true" />
+            <ChevronRightOutline className="h-3.5 w-3.5 flex-shrink-0 text-placeholder" aria-hidden="true" />
           </div>
           <div className="flex items-center gap-2.5 p-1">
             {isLoading ? (
@@ -155,7 +156,7 @@ function BreadcrumbSeparator(props: BreadcrumbSeparatorProps) {
           containerClassName
         )}
       >
-        <ChevronRightIcon className={cn("h-3.5 w-3.5 flex-shrink-0", iconClassName)} />
+        <ChevronRightOutline className={cn("h-3.5 w-3.5 flex-shrink-0", iconClassName)} />
       </div>
     </div>
   );

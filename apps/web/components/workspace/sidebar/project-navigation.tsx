@@ -11,7 +11,14 @@ import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { EUserPermissionsLevel, EUserPermissions } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { CycleIcon, IntakeIcon, ModuleIcon, PageIcon, ViewsIcon, WorkItemsIcon } from "@plane/propel/icons";
+import {
+  CyclesOutline,
+  IntakeOutline,
+  ModuleOutline,
+  PagesOutline,
+  ViewsOutline,
+  WorkItemsOutline,
+} from "@makeplane/propel/icons";
 import type { EUserProjectRoles } from "@plane/types";
 // plane ui
 // components
@@ -76,7 +83,7 @@ export const ProjectNavigation = observer(function ProjectNavigation(props: TPro
         key: "work_items",
         name: "Work items",
         href: `/${slug}/projects/${id}/issues`,
-        icon: WorkItemsIcon,
+        icon: WorkItemsOutline,
         access: [EUserPermissions.ADMIN, EUserPermissions.MEMBER, EUserPermissions.GUEST],
         shouldRender: true,
         sortOrder: 1,
@@ -86,7 +93,7 @@ export const ProjectNavigation = observer(function ProjectNavigation(props: TPro
         key: "cycles",
         name: "Cycles",
         href: `/${slug}/projects/${id}/cycles`,
-        icon: CycleIcon,
+        icon: CyclesOutline,
         access: [EUserPermissions.ADMIN, EUserPermissions.MEMBER],
         shouldRender: project?.cycle_view ?? false,
         sortOrder: 2,
@@ -96,7 +103,7 @@ export const ProjectNavigation = observer(function ProjectNavigation(props: TPro
         key: "modules",
         name: "Modules",
         href: `/${slug}/projects/${id}/modules`,
-        icon: ModuleIcon,
+        icon: ModuleOutline,
         access: [EUserPermissions.ADMIN, EUserPermissions.MEMBER],
         shouldRender: project?.module_view ?? false,
         sortOrder: 3,
@@ -106,7 +113,7 @@ export const ProjectNavigation = observer(function ProjectNavigation(props: TPro
         key: "views",
         name: "Views",
         href: `/${slug}/projects/${id}/views`,
-        icon: ViewsIcon,
+        icon: ViewsOutline,
         access: [EUserPermissions.ADMIN, EUserPermissions.MEMBER, EUserPermissions.GUEST],
         shouldRender: project?.issue_views_view ?? false,
         sortOrder: 4,
@@ -116,7 +123,7 @@ export const ProjectNavigation = observer(function ProjectNavigation(props: TPro
         key: "pages",
         name: "Pages",
         href: `/${slug}/projects/${id}/pages`,
-        icon: PageIcon,
+        icon: PagesOutline,
         access: [EUserPermissions.ADMIN, EUserPermissions.MEMBER, EUserPermissions.GUEST],
         shouldRender: project?.page_view ?? false,
         sortOrder: 5,
@@ -126,7 +133,7 @@ export const ProjectNavigation = observer(function ProjectNavigation(props: TPro
         key: "intake",
         name: "Intake",
         href: `/${slug}/projects/${id}/intake`,
-        icon: IntakeIcon,
+        icon: IntakeOutline,
         access: [EUserPermissions.ADMIN, EUserPermissions.MEMBER, EUserPermissions.GUEST],
         shouldRender: project?.inbox_view ?? false,
         sortOrder: 6,

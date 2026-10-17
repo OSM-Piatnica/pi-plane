@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
 import { Command } from "cmdk";
 
-import { CheckIcon } from "@plane/propel/icons";
+import { TickOutline } from "@makeplane/propel/icons";
 // plane imports
 import { cn } from "@plane/utils";
 // local imports
@@ -40,7 +41,7 @@ export function PowerKModalCommandItem(props: Props) {
         {label}
       </div>
       <div className="flex shrink-0 items-center gap-2">
-        {isSelected && <CheckIcon className="size-3 shrink-0 text-secondary" />}
+        {isSelected && <TickOutline className="size-3 shrink-0 text-secondary" />}
         {keySequence && <KeySequenceBadge sequence={keySequence} />}
         {shortcut && <ShortcutBadge shortcut={shortcut} />}
       </div>

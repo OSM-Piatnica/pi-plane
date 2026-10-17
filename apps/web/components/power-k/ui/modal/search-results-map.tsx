@@ -5,9 +5,15 @@
  * See the LICENSE file for details.
  */
 
-import { Briefcase, FileText, Layers, LayoutGrid } from "lucide-react";
+import {
+  CyclesOutline,
+  DocumentationOutline,
+  GridOutline,
+  ModuleOutline,
+  ProjectsOutline,
+  WorkItemsOutline,
+} from "@makeplane/propel/icons";
 // plane imports
-import { ContrastIcon, DiceIcon } from "@plane/propel/icons";
 import type {
   IWorkspaceDefaultSearchResult,
   IWorkspaceIssueSearchResult,
@@ -31,7 +37,7 @@ export type TPowerKSearchResultGroupDetails = {
 
 export const POWER_K_SEARCH_RESULTS_GROUPS_MAP: Record<TPowerKSearchResultsKeys, TPowerKSearchResultGroupDetails> = {
   cycle: {
-    icon: ContrastIcon,
+    icon: CyclesOutline,
     itemName: (cycle: IWorkspaceDefaultSearchResult) => (
       <p>
         <span className="text-11 text-tertiary">{cycle.project__identifier}</span> {cycle.name}
@@ -65,7 +71,7 @@ export const POWER_K_SEARCH_RESULTS_GROUPS_MAP: Record<TPowerKSearchResultsKeys,
     title: "common.work_items",
   },
   issue_view: {
-    icon: Layers,
+    icon: WorkItemsOutline,
     itemName: (view: IWorkspaceDefaultSearchResult) => (
       <p>
         <span className="text-11 text-tertiary">{view.project__identifier}</span> {view.name}
@@ -76,7 +82,7 @@ export const POWER_K_SEARCH_RESULTS_GROUPS_MAP: Record<TPowerKSearchResultsKeys,
     title: "common.views",
   },
   module: {
-    icon: DiceIcon,
+    icon: ModuleOutline,
     itemName: (module: IWorkspaceDefaultSearchResult) => (
       <p>
         <span className="text-11 text-tertiary">{module.project__identifier}</span> {module.name}
@@ -87,7 +93,7 @@ export const POWER_K_SEARCH_RESULTS_GROUPS_MAP: Record<TPowerKSearchResultsKeys,
     title: "common.modules",
   },
   page: {
-    icon: FileText,
+    icon: DocumentationOutline,
     itemName: (page: IWorkspacePageSearchResult) => (
       <p>
         <span className="text-11 text-tertiary">{page.project__identifiers?.[0]}</span> {page.name}
@@ -103,13 +109,13 @@ export const POWER_K_SEARCH_RESULTS_GROUPS_MAP: Record<TPowerKSearchResultsKeys,
     title: "common.pages",
   },
   project: {
-    icon: Briefcase,
+    icon: ProjectsOutline,
     itemName: (project: IWorkspaceProjectSearchResult) => project?.name,
     path: (project: IWorkspaceProjectSearchResult) => `/${project?.workspace__slug}/projects/${project?.id}/issues/`,
     title: "common.projects",
   },
   workspace: {
-    icon: LayoutGrid,
+    icon: GridOutline,
     itemName: (workspace: IWorkspaceSearchResult) => workspace?.name,
     path: (workspace: IWorkspaceSearchResult) => `/${workspace?.slug}/`,
     title: "common.workspaces",

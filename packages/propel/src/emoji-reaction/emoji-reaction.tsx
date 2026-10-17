@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import * as React from "react";
 import { AnimatedCounter } from "../animated-counter";
 import { stringToEmoji } from "../emoji-icon-picker";
-import { AddReactionIcon } from "../icons";
+import { ReactionOutline } from "@makeplane/propel/icons";
 import { Tooltip } from "../tooltip";
 import { cn } from "../utils";
 import { IconButton } from "../icon-button";
@@ -110,7 +111,7 @@ const EmojiReactionButton = React.forwardRef(function EmojiReactionButton(
     <Tooltip tooltipContent="Add reaction">
       <IconButton
         ref={ref}
-        icon={AddReactionIcon}
+        icon={ReactionOutline}
         variant="ghost"
         size="sm"
         onClick={onAddReaction}
@@ -137,6 +138,7 @@ const EmojiReactionGroup = React.forwardRef(function EmojiReactionGroup(
     <div ref={ref} className={cn("flex flex-wrap items-center gap-2", className)} {...props}>
       {reactions.map((reaction, index) => (
         <EmojiReaction
+          // oxlint-disable-next-line react/no-array-index-key -- existing behaviour; lint cleanup only
           key={`${reaction.emoji}-${index}`}
           emoji={reaction.emoji}
           count={reaction.count}

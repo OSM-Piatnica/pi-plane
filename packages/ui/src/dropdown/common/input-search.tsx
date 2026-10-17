@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { Combobox } from "@headlessui/react";
 import React, { useEffect, useRef } from "react";
-import { SearchIcon } from "@plane/propel/icons";
+import { SearchOutline } from "@makeplane/propel/icons";
 // helpers
 import { cn } from "../../utils";
 
@@ -48,7 +49,7 @@ export function InputSearch(props: IInputSearch) {
         inputContainerClassName
       )}
     >
-      {inputIcon ? <>{inputIcon}</> : <SearchIcon className="h-4 w-4 text-tertiary" aria-hidden="true" />}
+      {inputIcon ? <>{inputIcon}</> : <SearchOutline className="h-4 w-4 text-tertiary" aria-hidden="true" />}
       <Combobox.Input
         as="input"
         ref={inputRef}

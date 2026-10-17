@@ -1,11 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { Editor } from "@tiptap/react";
-import { ALargeSmall, Ban } from "lucide-react";
+import { Ban } from "lucide-react";
+import { TextOutline } from "@makeplane/propel/icons";
 import { useMemo } from "react";
 // plane utils
 import { cn } from "@plane/utils";
@@ -48,7 +50,7 @@ export function BubbleMenuColorSelector(props: Props) {
               backgroundColor: activeBackgroundColor ? activeBackgroundColor.backgroundColor : "transparent",
             }}
           >
-            <ALargeSmall
+            <TextOutline
               className={cn("size-3.5", {
                 "text-primary": !activeTextColor,
               })}

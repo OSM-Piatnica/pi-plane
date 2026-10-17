@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useArgs } from "storybook/preview-api";
-import { ChevronDownIcon } from "../icons/arrows/chevron-down";
+import { ChevronDownOutline } from "@makeplane/propel/icons";
 import { Collapsible } from "./collapsible";
 
 const meta = {
@@ -34,7 +35,7 @@ const meta = {
       <Collapsible.CollapsibleRoot {...args} isOpen={isOpen} onToggle={toggleOpen} className="w-96">
         <Collapsible.CollapsibleTrigger className="bg-gray-100 hover:bg-gray-200 flex w-full items-center justify-between rounded-md px-4 py-2">
           <span className="font-semibold">Click to toggle</span>
-          <ChevronDownIcon className="h-4 w-4 transition-transform group-data-[panel-open]:rotate-180" />
+          <ChevronDownOutline className="h-4 w-4 transition-transform group-data-[panel-open]:rotate-180" />
         </Collapsible.CollapsibleTrigger>
         <Collapsible.CollapsibleContent className="mt-2">
           <div className="border-gray-200 rounded-md border p-4">
@@ -78,7 +79,7 @@ export const Controlled: Story = {
         <Collapsible.CollapsibleRoot isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} className="w-96">
           <Collapsible.CollapsibleTrigger className="bg-gray-100 hover:bg-gray-200 flex w-full items-center justify-between rounded-md px-4 py-2">
             <span className="font-semibold">Controlled Collapsible</span>
-            <ChevronDownIcon className="h-4 w-4 transition-transform group-data-[panel-open]:rotate-180" />
+            <ChevronDownOutline className="h-4 w-4 transition-transform group-data-[panel-open]:rotate-180" />
           </Collapsible.CollapsibleTrigger>
           <Collapsible.CollapsibleContent className="mt-2">
             <div className="border-gray-200 rounded-md border p-4">
@@ -99,7 +100,7 @@ export const NestedContent: Story = {
       <Collapsible.CollapsibleRoot {...args} isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} className="w-96">
         <Collapsible.CollapsibleTrigger className="bg-gray-100 hover:bg-gray-200 flex w-full items-center justify-between rounded-md px-4 py-2">
           <span className="font-semibold">Collapsible with Nested Content</span>
-          <ChevronDownIcon className="h-4 w-4 transition-transform group-data-[panel-open]:rotate-180" />
+          <ChevronDownOutline className="h-4 w-4 transition-transform group-data-[panel-open]:rotate-180" />
         </Collapsible.CollapsibleTrigger>
         <Collapsible.CollapsibleContent className="mt-2">
           <div className="border-gray-200 space-y-2 rounded-md border p-4">
@@ -126,7 +127,7 @@ export const CustomStyling: Story = {
       <Collapsible.CollapsibleRoot {...args} isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} className="w-96">
         <Collapsible.CollapsibleTrigger className="from-purple-500 to-pink-500 shadow-lg hover:shadow-xl flex w-full items-center justify-between rounded-lg bg-gradient-to-r px-6 py-3 text-on-color transition-all">
           <span className="text-16 font-bold">Custom Styled Trigger</span>
-          <ChevronDownIcon className="h-5 w-5 transition-transform group-data-[panel-open]:rotate-180" />
+          <ChevronDownOutline className="h-5 w-5 transition-transform group-data-[panel-open]:rotate-180" />
         </Collapsible.CollapsibleTrigger>
         <Collapsible.CollapsibleContent className="mt-4">
           <div className="from-purple-100 to-pink-100 shadow-md rounded-lg bg-gradient-to-br p-6">
@@ -145,7 +146,7 @@ export const MultipleCollapsibles: Story = {
         <Collapsible.CollapsibleRoot>
           <Collapsible.CollapsibleTrigger className="bg-gray-100 hover:bg-gray-200 flex w-full items-center justify-between rounded-md px-4 py-2">
             <span className="font-semibold">First Item</span>
-            <ChevronDownIcon className="h-4 w-4 transition-transform group-data-[panel-open]:rotate-180" />
+            <ChevronDownOutline className="h-4 w-4 transition-transform group-data-[panel-open]:rotate-180" />
           </Collapsible.CollapsibleTrigger>
           <Collapsible.CollapsibleContent className="mt-2">
             <div className="border-gray-200 rounded-md border p-4">
@@ -157,7 +158,7 @@ export const MultipleCollapsibles: Story = {
         <Collapsible.CollapsibleRoot>
           <Collapsible.CollapsibleTrigger className="bg-gray-100 hover:bg-gray-200 flex w-full items-center justify-between rounded-md px-4 py-2">
             <span className="font-semibold">Second Item</span>
-            <ChevronDownIcon className="h-4 w-4 transition-transform group-data-[panel-open]:rotate-180" />
+            <ChevronDownOutline className="h-4 w-4 transition-transform group-data-[panel-open]:rotate-180" />
           </Collapsible.CollapsibleTrigger>
           <Collapsible.CollapsibleContent className="mt-2">
             <div className="border-gray-200 rounded-md border p-4">
@@ -169,7 +170,7 @@ export const MultipleCollapsibles: Story = {
         <Collapsible.CollapsibleRoot>
           <Collapsible.CollapsibleTrigger className="bg-gray-100 hover:bg-gray-200 flex w-full items-center justify-between rounded-md px-4 py-2">
             <span className="font-semibold">Third Item</span>
-            <ChevronDownIcon className="h-4 w-4 transition-transform group-data-[panel-open]:rotate-180" />
+            <ChevronDownOutline className="h-4 w-4 transition-transform group-data-[panel-open]:rotate-180" />
           </Collapsible.CollapsibleTrigger>
           <Collapsible.CollapsibleContent className="mt-2">
             <div className="border-gray-200 rounded-md border p-4">

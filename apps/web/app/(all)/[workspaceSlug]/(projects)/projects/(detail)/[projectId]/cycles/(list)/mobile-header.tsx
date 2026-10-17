@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 // ui
 import { useTranslation } from "@plane/i18n";
 import type { ISvgIcons } from "@plane/propel/icons";
-import { TimelineLayoutIcon, GridLayoutIcon, ListLayoutIcon } from "@plane/propel/icons";
+import { GridOutline, ListOutline, TimelineOutline } from "@makeplane/propel/icons";
 // plane package imports
 import type { TCycleLayoutOptions } from "@plane/types";
 import { CustomMenu } from "@plane/ui";
@@ -25,17 +25,17 @@ const CYCLE_VIEW_LAYOUTS: {
 }[] = [
   {
     key: "list",
-    icon: ListLayoutIcon,
+    icon: ListOutline,
     i18nKey: "project_modules.layout.list",
   },
   {
     key: "board",
-    icon: GridLayoutIcon,
+    icon: GridOutline,
     i18nKey: "project_modules.layout.board",
   },
   {
     key: "gantt",
-    icon: TimelineLayoutIcon,
+    icon: TimelineOutline,
     i18nKey: "project_modules.layout.timeline",
   },
 ];
@@ -53,7 +53,7 @@ export const CyclesListMobileHeader = observer(function CyclesListMobileHeader()
         // placement="bottom-start"
         customButton={
           <span className="flex items-center gap-2">
-            <ListLayoutIcon className="h-4 w-4" />
+            <ListOutline className="h-4 w-4" />
             <span className="flex flex-grow justify-center text-13 text-secondary">{t("common.layout")}</span>
           </span>
         }

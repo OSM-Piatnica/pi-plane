@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
-import { LabelPropertyIcon } from "@plane/propel/icons";
+import { LabelsOutline } from "@makeplane/propel/icons";
 // plane imports
 import { Tooltip } from "@plane/propel/tooltip";
 // hooks
@@ -29,7 +30,7 @@ export const IssueBlockLabels = observer(function IssueBlockLabels({ labelIds, s
         <div
           className={`flex h-full items-center justify-center gap-2 rounded-sm border-[0.5px] border-strong px-2.5 py-1 text-11`}
         >
-          <LabelPropertyIcon className="h-3.5 w-3.5" strokeWidth={2} />
+          <LabelsOutline className="h-3.5 w-3.5" />
           {shouldShowLabel && <span>No Labels</span>}
         </div>
       </Tooltip>

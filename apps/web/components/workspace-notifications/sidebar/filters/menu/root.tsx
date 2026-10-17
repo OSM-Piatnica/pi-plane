@@ -6,7 +6,7 @@
  */
 
 import { observer } from "mobx-react";
-import { ListFilter } from "lucide-react";
+import { FilterOutline } from "@makeplane/propel/icons";
 // plane imports
 import type { ENotificationFilterType } from "@plane/constants";
 import { FILTER_TYPE_OPTIONS } from "@plane/constants";
@@ -35,7 +35,7 @@ export const NotificationFilter = observer(function NotificationFilter() {
       data={translatedFilterTypeOptions}
       button={
         <Tooltip label={t("notification.options.filters")} side="bottom" disabled={isMobile}>
-          <IconButton size="base" variant="ghost" icon={ListFilter} />
+          <IconButton size="base" variant="ghost" icon={FilterOutline} />
         </Tooltip>
       }
       keyExtractor={(item: { label: string; value: ENotificationFilterType }) => item.value}

@@ -7,29 +7,30 @@
 
 import type { CSSProperties, FC } from "react";
 import { extractInstruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
-import { CalendarDays, LayersIcon, Paperclip, Timer } from "lucide-react";
+import { Timer } from "lucide-react";
 import { clone, isNil, pull, uniq, concat } from "lodash-es";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
+import {
+  AttachOutline,
+  CalendarOutline,
+  CyclesOutline,
+  DueDateOutline,
+  EstimateOutline,
+  LabelsOutline,
+  LinkOutline,
+  MembersOutline,
+  ModuleOutline,
+  PriorityOutline,
+  StartDateOutline,
+  StateOutline,
+  WorkItemsOutline,
+} from "@makeplane/propel/icons";
 // plane types
 import { Avatar } from "@makeplane/propel/components/avatar";
 import { EIconSize, ISSUE_PRIORITIES, STATE_GROUPS, ISSUE_GROUP_BY_OPTIONS } from "@plane/constants";
 import { Logo } from "@plane/propel/emoji-icon-picker";
 import type { ISvgIcons } from "@plane/propel/icons";
-import {
-  CycleGroupIcon,
-  CycleIcon,
-  DueDatePropertyIcon,
-  EstimatePropertyIcon,
-  LabelPropertyIcon,
-  LinkIcon,
-  MembersPropertyIcon,
-  ModuleIcon,
-  PriorityIcon,
-  PriorityPropertyIcon,
-  StartDatePropertyIcon,
-  StateGroupIcon,
-  StatePropertyIcon,
-} from "@plane/propel/icons";
+import { CycleGroupIcon, PriorityIcon, StateGroupIcon } from "@plane/propel/icons";
 import type {
   GroupByColumnTypes,
   IGroupByColumn,
@@ -202,7 +203,7 @@ const getCycleColumns = (): IGroupByColumn[] | undefined => {
   cycles.push({
     id: "None",
     name: "None",
-    icon: <CycleIcon className="h-3.5 w-3.5" />,
+    icon: <CyclesOutline className="h-3.5 w-3.5" />,
     payload: {},
   });
   return cycles;
@@ -224,14 +225,14 @@ const getModuleColumns = (): IGroupByColumn[] | undefined => {
     modules.push({
       id: module.id,
       name: module.name,
-      icon: <ModuleIcon className="h-3.5 w-3.5" />,
+      icon: <ModuleOutline className="h-3.5 w-3.5" />,
       payload: { module_ids: [module.id] },
     });
   });
   modules.push({
     id: "None",
     name: "None",
-    icon: <ModuleIcon className="h-3.5 w-3.5" />,
+    icon: <ModuleOutline className="h-3.5 w-3.5" />,
     payload: {},
   });
   return modules;
@@ -851,19 +852,19 @@ export const getScopeMemberIds = ({
 export const getTeamProjectColumns = (): IGroupByColumn[] | undefined => undefined;
 
 export const SpreadSheetPropertyIconMap: Record<string, FC<ISvgIcons>> = {
-  MembersPropertyIcon: MembersPropertyIcon,
-  CalenderDays: CalendarDays,
-  DueDatePropertyIcon: DueDatePropertyIcon,
-  EstimatePropertyIcon: EstimatePropertyIcon,
-  LabelPropertyIcon: LabelPropertyIcon,
-  ModuleIcon: ModuleIcon,
-  ContrastIcon: CycleIcon,
-  PriorityPropertyIcon: PriorityPropertyIcon,
-  StartDatePropertyIcon: StartDatePropertyIcon,
-  StatePropertyIcon: StatePropertyIcon,
-  Link2: LinkIcon,
-  Paperclip: Paperclip,
-  LayersIcon: LayersIcon,
+  MembersOutline: MembersOutline,
+  CalenderDays: CalendarOutline,
+  DueDateOutline: DueDateOutline,
+  EstimateOutline: EstimateOutline,
+  LabelsOutline: LabelsOutline,
+  ModuleOutline: ModuleOutline,
+  ContrastIcon: CyclesOutline,
+  PriorityOutline: PriorityOutline,
+  StartDateOutline: StartDateOutline,
+  StateOutline: StateOutline,
+  Link2: LinkOutline,
+  AttachOutline: AttachOutline,
+  WorkItemsOutline: WorkItemsOutline,
   Timer: Timer,
 };
 

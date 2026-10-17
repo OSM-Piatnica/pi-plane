@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import Link from "next/link";
 
 import useSWR, { mutate } from "swr";
-import { CheckCircle2 } from "lucide-react";
+import { TickCircleOutline } from "@makeplane/propel/icons";
 // plane imports
 import { getRoleI18nKey, USER_WORKSPACES_LIST } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
@@ -156,7 +156,7 @@ function UserInvitationsPage() {
                           <p className="text-11 text-secondary">{t(getRoleI18nKey(invitation.role))}</p>
                         </div>
                         <span className={`flex-shrink-0 ${isSelected ? "text-accent-primary" : "text-secondary"}`}>
-                          <CheckCircle2 className="h-5 w-5" />
+                          <TickCircleOutline className="h-5 w-5" />
                         </span>
                       </div>
                     );

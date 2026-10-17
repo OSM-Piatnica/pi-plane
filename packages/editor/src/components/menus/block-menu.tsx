@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -17,7 +18,7 @@ import {
 import type { Editor } from "@tiptap/react";
 import type { LucideIcon } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CopyIcon, TrashIcon } from "@plane/propel/icons";
+import { CopyOutline, DeleteOutline } from "@makeplane/propel/icons";
 import type { ISvgIcons } from "@plane/propel/icons";
 import { cn } from "@plane/utils";
 // constants
@@ -150,7 +151,7 @@ export function BlockMenu(props: Props) {
 
   const MENU_ITEMS: BlockMenuOption[] = [
     {
-      icon: TrashIcon,
+      icon: DeleteOutline,
       key: "delete",
       label: "Delete",
       onClick: (_e) => {
@@ -159,7 +160,7 @@ export function BlockMenu(props: Props) {
       },
     },
     {
-      icon: CopyIcon,
+      icon: CopyOutline,
       key: "duplicate",
       label: "Duplicate",
       isDisabled:

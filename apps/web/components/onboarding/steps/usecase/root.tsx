@@ -11,7 +11,7 @@ import { Controller, useForm } from "react-hook-form";
 import { USE_CASES } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
-import { CheckIcon } from "@plane/propel/icons";
+import { TickOutline } from "@makeplane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { TUserProfile } from "@plane/types";
 import { EOnboardingSteps } from "@plane/types";
@@ -132,7 +132,7 @@ export const UseCaseSetupStep = observer(function UseCaseSetupStep({ handleStepC
                         "border-strong": !isSelected,
                       })}
                     >
-                      <CheckIcon
+                      <TickOutline
                         className={cn("h-3 w-3 text-on-color", {
                           "opacity-100": isSelected,
                           "opacity-0": !isSelected,

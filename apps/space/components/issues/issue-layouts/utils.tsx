@@ -1,13 +1,15 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { isNil } from "lodash-es";
 // types
 import { EIconSize, ISSUE_PRIORITIES } from "@plane/constants";
-import { CycleGroupIcon, CycleIcon, ModuleIcon, PriorityIcon, StateGroupIcon } from "@plane/propel/icons";
+import { CycleGroupIcon, PriorityIcon, StateGroupIcon } from "@plane/propel/icons";
+import { CyclesOutline, ModuleOutline } from "@makeplane/propel/icons";
 import type {
   GroupByColumnTypes,
   IGroupByColumn,
@@ -79,7 +81,7 @@ const getCycleColumns = (cycleStore: ICycleStore): IGroupByColumn[] | undefined 
   cycleGroups.push({
     id: "None",
     name: "None",
-    icon: <CycleIcon className="h-3.5 w-3.5" />,
+    icon: <CyclesOutline className="h-3.5 w-3.5" />,
     payload: { cycle_id: null },
   });
 
@@ -98,14 +100,14 @@ const getModuleColumns = (moduleStore: IIssueModuleStore): IGroupByColumn[] | un
       moduleGroups.push({
         id: moduleInfo.id,
         name: moduleInfo.name,
-        icon: <ModuleIcon className="h-3.5 w-3.5" />,
+        icon: <ModuleOutline className="h-3.5 w-3.5" />,
         payload: { module_ids: [moduleInfo.id] },
       });
   }) as any;
   moduleGroups.push({
     id: "None",
     name: "None",
-    icon: <ModuleIcon className="h-3.5 w-3.5" />,
+    icon: <ModuleOutline className="h-3.5 w-3.5" />,
     payload: { module_ids: [] },
   });
 
@@ -146,13 +148,16 @@ const getLabelsColumns = (label: IIssueLabelStore) => {
 
   const labels = [...storeLabels, { id: "None", name: "None", color: "#666" }];
 
-  return labels.map((label) => ({
-    id: label.id,
-    name: label.name,
+  return labels.map((labelItem) => ({
+    id: labelItem.id,
+    name: labelItem.name,
     icon: (
-      <div className="h-[12px] w-[12px] rounded-full" style={{ backgroundColor: label.color ? label.color : "#666" }} />
+      <div
+        className="h-[12px] w-[12px] rounded-full"
+        style={{ backgroundColor: labelItem.color ? labelItem.color : "#666" }}
+      />
     ),
-    payload: label?.id === "None" ? {} : { label_ids: [label.id] },
+    payload: labelItem?.id === "None" ? {} : { label_ids: [labelItem.id] },
   }));
 };
 
@@ -161,11 +166,11 @@ const getAssigneeColumns = (member: IIssueMemberStore) => {
 
   if (!members) return;
 
-  const assigneeColumns: any = members.map((member) => ({
-    id: member.id,
-    name: member?.member__display_name || "",
-    icon: <Avatar name={member?.member__display_name} src={undefined} size="md" />,
-    payload: { assignee_ids: [member.id] },
+  const assigneeColumns: any = members.map((memberItem) => ({
+    id: memberItem.id,
+    name: memberItem?.member__display_name || "",
+    icon: <Avatar name={memberItem?.member__display_name} src={undefined} size="md" />,
+    payload: { assignee_ids: [memberItem.id] },
   }));
 
   assigneeColumns.push({ id: "None", name: "None", icon: <Avatar size="md" />, payload: {} });
@@ -178,10 +183,10 @@ const getCreatedByColumns = (member: IIssueMemberStore) => {
 
   if (!members) return;
 
-  return members.map((member) => ({
-    id: member.id,
-    name: member?.member__display_name || "",
-    icon: <Avatar name={member?.member__display_name} src={undefined} size="md" />,
+  return members.map((memberItem) => ({
+    id: memberItem.id,
+    name: memberItem?.member__display_name || "",
+    icon: <Avatar name={memberItem?.member__display_name} src={undefined} size="md" />,
     payload: {},
   }));
 };

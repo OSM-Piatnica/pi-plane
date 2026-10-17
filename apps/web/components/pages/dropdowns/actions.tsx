@@ -8,12 +8,22 @@
 import { useMemo, useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
-import { ArchiveRestoreIcon, FileOutput, LockKeyhole, LockKeyholeOpen } from "lucide-react";
+import {
+  ArchiveOutline,
+  CopyOutline,
+  DeleteOutline,
+  ExportOutline,
+  GlobeOutline,
+  LinkOutline,
+  LockOutline,
+  LockedOutline,
+  NewTabOutline,
+  RestoreOutline,
+  UnlockedOutline,
+} from "@makeplane/propel/icons";
 // constants
 import { EPageAccess } from "@plane/constants";
 // plane editor
-import { useTranslation } from "@plane/i18n";
-import { LinkIcon, CopyIcon, LockIcon, NewTabIcon, ArchiveIcon, TrashIcon, GlobeIcon } from "@plane/propel/icons";
 // plane ui
 import type { TContextMenuItem } from "@plane/ui";
 import { ContextMenu, CustomMenu } from "@plane/ui";
@@ -27,6 +37,7 @@ import type { EPageStoreType } from "@/hooks/store";
 import { usePageFlag } from "@/hooks/use-page-flag";
 // store types
 import type { TPageInstance } from "@/store/pages/base-page";
+import { useTranslation } from "@plane/i18n";
 
 export type TPageActions =
   | "full-screen"
@@ -90,7 +101,7 @@ export const PageActions = observer(function PageActions(props: Props) {
             pageOperations.toggleLock();
           },
           title: is_locked ? t("power_k.contextual_actions.page.unlock") : t("power_k.contextual_actions.page.lock"),
-          icon: is_locked ? LockKeyholeOpen : LockKeyhole,
+          icon: is_locked ? UnlockedOutline : LockedOutline,
           shouldRender: canCurrentUserLockPage,
         },
         {
@@ -102,21 +113,21 @@ export const PageActions = observer(function PageActions(props: Props) {
             access === EPageAccess.PUBLIC
               ? t("power_k.contextual_actions.page.make_private")
               : t("power_k.contextual_actions.page.make_public"),
-          icon: access === EPageAccess.PUBLIC ? LockIcon : GlobeIcon,
+          icon: access === EPageAccess.PUBLIC ? LockOutline : GlobeOutline,
           shouldRender: canCurrentUserChangeAccess && !archived_at,
         },
         {
           key: "open-in-new-tab",
           action: pageOperations.openInNewTab,
           title: t("open_in_new_tab"),
-          icon: NewTabIcon,
+          icon: NewTabOutline,
           shouldRender: true,
         },
         {
           key: "copy-link",
           action: pageOperations.copyLink,
           title: t("copy_link"),
-          icon: LinkIcon,
+          icon: LinkOutline,
           shouldRender: true,
         },
         {
@@ -125,7 +136,7 @@ export const PageActions = observer(function PageActions(props: Props) {
             pageOperations.duplicate();
           },
           title: t("common.actions.make_a_copy"),
-          icon: CopyIcon,
+          icon: CopyOutline,
           shouldRender: canCurrentUserDuplicatePage,
         },
         {
@@ -134,7 +145,7 @@ export const PageActions = observer(function PageActions(props: Props) {
             pageOperations.toggleArchive();
           },
           title: archived_at ? t("restore") : t("archive"),
-          icon: archived_at ? ArchiveRestoreIcon : ArchiveIcon,
+          icon: archived_at ? RestoreOutline : ArchiveOutline,
           shouldRender: canCurrentUserArchivePage,
         },
         {
@@ -143,14 +154,14 @@ export const PageActions = observer(function PageActions(props: Props) {
             setDeletePageModal(true);
           },
           title: t("delete"),
-          icon: TrashIcon,
+          icon: DeleteOutline,
           shouldRender: canCurrentUserDeletePage && !!archived_at,
         },
         {
           key: "move",
           action: () => setMovePageModal(true),
           title: t("page_actions.move_page.submit_button.default"),
-          icon: FileOutput,
+          icon: ExportOutline,
           shouldRender: canCurrentUserMovePage && isMovePageEnabled,
         },
       ];

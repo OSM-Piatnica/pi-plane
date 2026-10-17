@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
-import type { LucideIcon } from "lucide-react";
+import type { ComponentType, SVGProps } from "react";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 // local imports
@@ -14,7 +15,7 @@ import { MemberDropdownBase } from "./base";
 import type { MemberDropdownProps } from "./types";
 
 type TMemberDropdownProps = {
-  icon?: LucideIcon;
+  icon?: ComponentType<SVGProps<SVGSVGElement>>;
   memberIds?: string[];
   onClose?: () => void;
   optionsClassName?: string;

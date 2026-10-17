@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
 import { observer } from "mobx-react";
 import { Logo } from "@plane/propel/emoji-icon-picker";
-import { ChevronRightIcon } from "@plane/propel/icons";
+import { ChevronRightOutline } from "@makeplane/propel/icons";
 // icons
 import { Row } from "@plane/ui";
 // helpers
@@ -31,11 +32,10 @@ export const CycleListProjectGroupHeader = observer(function CycleListProjectGro
   if (!project) return null;
   return (
     <Row className="flex flex-shrink-0 items-center gap-2 py-2.5">
-      <ChevronRightIcon
+      <ChevronRightOutline
         className={cn("h-4 w-4 text-tertiary duration-300", {
           "rotate-90": isExpanded,
         })}
-        strokeWidth={2}
       />
       <div className="flex size-4 flex-shrink-0 items-center justify-center overflow-hidden">
         <Logo logo={project.logo_props} size={16} />

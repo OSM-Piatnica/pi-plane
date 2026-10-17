@@ -10,10 +10,9 @@ import { range } from "lodash-es";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // icons
-import { Eye, EyeOff, RefreshCw } from "lucide-react";
+import { CopyOutline, HideOutline, RefreshOutline, ShowOutline } from "@makeplane/propel/icons";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
-import { CopyIcon } from "@plane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IWebhook } from "@plane/types";
@@ -98,13 +97,13 @@ export const WebhookSecretKey = observer(function WebhookSecretKey(props: Props)
   const SECRET_KEY_OPTIONS = [
     {
       label: t("project_components.webhooks.view_secret_key"),
-      Icon: shouldShowKey ? EyeOff : Eye,
+      Icon: shouldShowKey ? HideOutline : ShowOutline,
       onClick: toggleShowKey,
       key: "eye",
     },
     {
       label: t("project_components.webhooks.copy_secret_key"),
-      Icon: CopyIcon,
+      Icon: CopyOutline,
       onClick: handleCopySecretKey,
       key: "copy",
     },
@@ -150,7 +149,7 @@ export const WebhookSecretKey = observer(function WebhookSecretKey(props: Props)
                   variant="secondary"
                   size="lg"
                   loading={isRegenerating}
-                  prependIcon={<RefreshCw />}
+                  prependIcon={<RefreshOutline />}
                 >
                   {isRegenerating ? `${t("re_generating")}...` : t("re_generate_key")}
                 </Button>

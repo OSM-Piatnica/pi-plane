@@ -8,9 +8,14 @@
 import { observer } from "mobx-react";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-import { Boxes, Share2, Star, User2 } from "lucide-react";
-import { useTranslation } from "@plane/i18n";
-import { CheckIcon, CloseIcon } from "@plane/propel/icons";
+import {
+  BoxesOutline,
+  CloseOutline,
+  ShareAltOutline,
+  StarOutline,
+  TickOutline,
+  UserOutline,
+} from "@makeplane/propel/icons";
 // components
 import { LogoSpinner } from "@/components/common/logo-spinner";
 import { EmptySpace, EmptySpaceItem } from "@/components/ui/empty-space";
@@ -24,6 +29,7 @@ import { useAppRouter } from "@/hooks/use-app-router";
 // wrappers
 import { AuthenticationWrapper } from "@/lib/wrappers/authentication-wrapper";
 import { WorkspaceService } from "@/services/workspace.service";
+import { useTranslation } from "@plane/i18n";
 // services
 
 // service initialization
@@ -93,8 +99,8 @@ function WorkspaceInvitationPage() {
               title={t("core_ui.invitation.invited_to", { workspace: invitationDetail.workspace.name })}
               description={t("core_ui.invitation.description")}
             >
-              <EmptySpaceItem Icon={CheckIcon} title={t("core_ui.invitation.accept")} action={handleAccept} />
-              <EmptySpaceItem Icon={CloseIcon} title={t("core_ui.invitation.ignore")} action={handleReject} />
+              <EmptySpaceItem Icon={TickOutline} title={t("core_ui.invitation.accept")} action={handleAccept} />
+              <EmptySpaceItem Icon={CloseOutline} title={t("core_ui.invitation.ignore")} action={handleReject} />
             </EmptySpace>
           )
         ) : error || invitationDetail?.responded_at ? (
@@ -103,7 +109,7 @@ function WorkspaceInvitationPage() {
               title={t("core_ui.invitation.already_member", { workspace: invitationDetail.workspace.name })}
               description={t("core_ui.invitation.description")}
             >
-              <EmptySpaceItem Icon={Boxes} title={t("core_ui.invitation.continue_home")} href="/" />
+              <EmptySpaceItem Icon={BoxesOutline} title={t("core_ui.invitation.continue_home")} href="/" />
             </EmptySpace>
           ) : (
             <EmptySpace
@@ -112,17 +118,17 @@ function WorkspaceInvitationPage() {
               link={{ text: t("core_ui.invitation.start_empty_project"), href: "/" }}
             >
               {!currentUser ? (
-                <EmptySpaceItem Icon={User2} title={t("core_ui.invitation.sign_in_continue")} href="/" />
+                <EmptySpaceItem Icon={UserOutline} title={t("core_ui.invitation.sign_in_continue")} href="/" />
               ) : (
-                <EmptySpaceItem Icon={Boxes} title={t("core_ui.invitation.continue_home")} href="/" />
+                <EmptySpaceItem Icon={BoxesOutline} title={t("core_ui.invitation.continue_home")} href="/" />
               )}
               <EmptySpaceItem
-                Icon={Star}
+                Icon={StarOutline}
                 title={t("core_ui.invitation.star_github")}
                 href="https://github.com/makeplane"
               />
               <EmptySpaceItem
-                Icon={Share2}
+                Icon={ShareAltOutline}
                 title={t("core_ui.invitation.join_community")}
                 href="https://forum.plane.so"
               />

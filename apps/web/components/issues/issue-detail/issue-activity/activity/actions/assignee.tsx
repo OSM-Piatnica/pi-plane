@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 // icons
-import { MembersPropertyIcon } from "@plane/propel/icons";
+import { MembersOutline } from "@makeplane/propel/icons";
 // hooks;
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 // components
@@ -26,7 +27,7 @@ export const IssueAssigneeActivity = observer(function IssueAssigneeActivity(pro
   if (!activity) return <></>;
   return (
     <IssueActivityBlockComponent
-      icon={<MembersPropertyIcon className="h-3.5 w-3.5 flex-shrink-0 text-secondary" />}
+      icon={<MembersOutline className="h-3.5 w-3.5 flex-shrink-0 text-secondary" />}
       activityId={activityId}
       ends={ends}
     >

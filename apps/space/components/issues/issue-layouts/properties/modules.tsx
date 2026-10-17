@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 // plane ui
-import { ModuleIcon } from "@plane/propel/icons";
+import { ModuleOutline } from "@makeplane/propel/icons";
 import { Tooltip } from "@plane/propel/tooltip";
 // plane utils
 import { cn } from "@plane/utils";
@@ -36,7 +37,7 @@ export const IssueBlockModules = observer(function IssueBlockModules({ moduleIds
             })}
           >
             <div className="flex items-center gap-1.5 text-secondary">
-              <ModuleIcon className="h-3 w-3 flex-shrink-0" />
+              <ModuleOutline className="h-3 w-3 flex-shrink-0" />
               <div className="text-11">{modules?.[0]?.name ?? "No Modules"}</div>
             </div>
           </div>

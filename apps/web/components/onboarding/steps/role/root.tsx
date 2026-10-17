@@ -7,11 +7,18 @@
 
 import { observer } from "mobx-react";
 import { Controller, useForm } from "react-hook-form";
-import { Box, PenTool, Rocket, Monitor, RefreshCw } from "lucide-react";
+import { PenTool } from "lucide-react";
+import {
+  CubeOutline,
+  MonitorOutline,
+  RefreshOutline,
+  RocketOutline,
+  TickOutline,
+  ViewsOutline,
+} from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
-import { CheckIcon, ViewsIcon } from "@plane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { TUserProfile } from "@plane/types";
 import { EOnboardingSteps } from "@plane/types";
@@ -26,13 +33,13 @@ type Props = {
 };
 
 const ROLES = [
-  { id: "product-manager", labelKey: "onboarding.role.options.product_manager", icon: Box },
-  { id: "engineering-manager", labelKey: "onboarding.role.options.engineering_manager", icon: ViewsIcon },
+  { id: "product-manager", labelKey: "onboarding.role.options.product_manager", icon: CubeOutline },
+  { id: "engineering-manager", labelKey: "onboarding.role.options.engineering_manager", icon: ViewsOutline },
   { id: "designer", labelKey: "onboarding.role.options.designer", icon: PenTool },
-  { id: "developer", labelKey: "onboarding.role.options.developer", icon: Monitor },
-  { id: "founder-executive", labelKey: "onboarding.role.options.founder_executive", icon: Rocket },
-  { id: "operations-manager", labelKey: "onboarding.role.options.operations_manager", icon: RefreshCw },
-  { id: "others", labelKey: "onboarding.role.options.others", icon: Box },
+  { id: "developer", labelKey: "onboarding.role.options.developer", icon: MonitorOutline },
+  { id: "founder-executive", labelKey: "onboarding.role.options.founder_executive", icon: RocketOutline },
+  { id: "operations-manager", labelKey: "onboarding.role.options.operations_manager", icon: RefreshOutline },
+  { id: "others", labelKey: "onboarding.role.options.others", icon: CubeOutline },
 ];
 
 const defaultValues = {
@@ -133,7 +140,7 @@ export const RoleSetupStep = observer(function RoleSetupStep({ handleStepChange 
                         <button
                           className={`border-blue-500 flex size-4 items-center justify-center rounded-sm border-2 bg-accent-primary`}
                         >
-                          <CheckIcon className="h-3 w-3 text-on-color" />
+                          <TickOutline className="h-3 w-3 text-on-color" />
                         </button>
                       </>
                     )}
