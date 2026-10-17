@@ -8,7 +8,8 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp, Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
 import { EPillVariant, Pill, EPillSize } from "@plane/propel/pill";
-import { Input, TextArea, ToggleSwitch } from "@plane/ui";
+import { Input, TextArea } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
 import { CustomPropertiesTemplateEditor } from "./custom-properties-template-editor";
 import type { TAdditionalWorkItemTypeTemplate, TCustomPropertyTemplateField } from "./project-template-form.types";
 
@@ -103,7 +104,7 @@ export const WorkItemTypesTemplateEditor = ({
               {t("workspace_settings.settings.project_templates.form.work_item_types.optional_badge")}
             </Pill>
           </div>
-          <ToggleSwitch value={epicEnabled} onChange={onEpicEnabledChange} size="sm" />
+          <Switch checked={epicEnabled} onCheckedChange={onEpicEnabledChange} size="sm" />
         </div>
         {epicEnabled ? (
           <div className="space-y-2 px-3 py-3">

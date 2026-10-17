@@ -13,7 +13,8 @@ import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { Checkbox, Collapsible } from "@plane/ui";
+import { Collapsible } from "@plane/ui";
+import { Checkbox } from "@makeplane/propel/components/checkbox";
 import { ProjectDropdown } from "@/components/dropdowns/project/dropdown";
 import { getApiErrorMessage, type ApiErrorLike } from "@/helpers/api-error";
 import { getProjectImportLink, MAX_PROJECT_CSV_SIZE_BYTES } from "@/helpers/project-csv-helpers";
@@ -272,7 +273,7 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
                     <Checkbox
                       id={`work-item-import-${name}`}
                       checked={!!value}
-                      onChange={(event) => onChange(event.target.checked)}
+                      onCheckedChange={(checked) => onChange(checked)}
                       disabled={!canImport || importLoading}
                     />
                     {t(`workspace_settings.settings.imports.work_items.options.${name}`)}

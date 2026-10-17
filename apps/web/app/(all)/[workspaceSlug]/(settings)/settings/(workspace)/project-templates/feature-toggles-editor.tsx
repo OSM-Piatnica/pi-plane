@@ -6,7 +6,7 @@
 
 import { Calendar, FileText, Inbox, Layers, ListChecks, Tags, Timer } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
-import { ToggleSwitch } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
 import type { TProjectTemplateFeatureToggles } from "./project-template-form.types";
 
 type TProps = {
@@ -84,9 +84,9 @@ export const FeatureTogglesEditor = ({ value, onChange }: TProps) => {
                   <p className="text-12 text-tertiary">{t(feature.descriptionKey)}</p>
                 </div>
               </div>
-              <ToggleSwitch
-                value={value[feature.key]}
-                onChange={(next) => onChange({ ...value, [feature.key]: next })}
+              <Switch
+                checked={value[feature.key]}
+                onCheckedChange={(next) => onChange({ ...value, [feature.key]: next })}
                 size="sm"
               />
             </li>

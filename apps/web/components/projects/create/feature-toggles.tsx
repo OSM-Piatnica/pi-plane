@@ -7,7 +7,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { Calendar, FileText, Inbox, Layers, ListChecks, Tags, Timer } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
-import { ToggleSwitch } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
 import type { IProject } from "@plane/types";
 
 type TFeatureKey = keyof Pick<
@@ -101,7 +101,7 @@ export function ProjectCreateFeatureToggles() {
                 name={feature.key}
                 control={control}
                 render={({ field: { value, onChange } }) => (
-                  <ToggleSwitch value={Boolean(value)} onChange={onChange} size="sm" />
+                  <Switch checked={Boolean(value)} onCheckedChange={onChange} size="sm" />
                 )}
               />
             </li>

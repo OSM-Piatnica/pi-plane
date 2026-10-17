@@ -9,7 +9,7 @@ import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import { setPromiseToast } from "@plane/propel/toast";
 import type { IProjectWorkflowStates, IWorkflow, IWorkflowFlow, TWorkflowFlowType } from "@plane/types";
-import { ToggleSwitch } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
 import { useWorkflow } from "@/hooks/store/use-workflow";
 
 type Props = {
@@ -84,9 +84,9 @@ export const ProjectWorkflowRoot = observer(function ProjectWorkflowRoot(props: 
           <h4 className="text-13 font-medium">{t("project_settings.workflows.enable_title")}</h4>
           <p className="mt-1 text-11 text-tertiary">{t("project_settings.workflows.enable_description")}</p>
         </div>
-        <ToggleSwitch
-          value={workflowStore.isWorkflowEnabledForProject(projectId)}
-          onChange={handleToggleEnabled}
+        <Switch
+          checked={workflowStore.isWorkflowEnabledForProject(projectId)}
+          onCheckedChange={handleToggleEnabled}
           size="sm"
         />
       </div>
