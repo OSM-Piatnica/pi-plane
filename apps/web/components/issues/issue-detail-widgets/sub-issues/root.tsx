@@ -1,19 +1,21 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
 import { observer } from "mobx-react";
 // plane imports
+import { Collapsible } from "@makeplane/propel/components/collapsible";
 import type { TIssueServiceType } from "@plane/types";
-import { Collapsible } from "@plane/ui";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 // local imports
 import { SubIssuesCollapsibleContent } from "./content";
 import { SubIssuesCollapsibleTitle } from "./title";
+import { SubWorkItemTitleActions } from "./title-actions";
 
 type Props = {
   workspaceSlug: string;
@@ -32,18 +34,19 @@ export const SubIssuesCollapsible = observer(function SubIssuesCollapsible(props
 
   return (
     <Collapsible
-      isOpen={isCollapsibleOpen}
-      onToggle={() => toggleOpenWidget("sub-work-items")}
-      title={
-        <SubIssuesCollapsibleTitle
-          isOpen={isCollapsibleOpen}
-          parentIssueId={issueId}
-          disabled={disabled}
-          projectId={projectId}
-          workspaceSlug={workspaceSlug}
-        />
+      open={isCollapsibleOpen}
+      onOpenChange={() => toggleOpenWidget("sub-work-items")}
+      trigger={<SubIssuesCollapsibleTitle parentIssueId={issueId} issueServiceType={issueServiceType} />}
+      trailing={
+        isCollapsibleOpen ? (
+          <SubWorkItemTitleActions
+            projectId={projectId}
+            parentId={issueId}
+            disabled={disabled}
+            issueServiceType={issueServiceType}
+          />
+        ) : undefined
       }
-      buttonClassName="w-full"
     >
       <SubIssuesCollapsibleContent
         workspaceSlug={workspaceSlug}

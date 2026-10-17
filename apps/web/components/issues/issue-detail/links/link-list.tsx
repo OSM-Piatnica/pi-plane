@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -35,7 +36,7 @@ export const LinkList = observer(function LinkList(props: TLinkList) {
   if (!issueLinks) return null;
 
   return (
-    <div className="flex flex-col gap-2 pt-4">
+    <div className="flex flex-col gap-2">
       {issueLinks.map((linkId) => (
         <IssueLinkItem
           key={linkId}

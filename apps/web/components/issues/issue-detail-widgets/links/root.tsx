@@ -1,19 +1,21 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
 import { observer } from "mobx-react";
 // plane imports
+import { Collapsible } from "@makeplane/propel/components/collapsible";
 import type { TIssueServiceType } from "@plane/types";
-import { Collapsible } from "@plane/ui";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 // local imports
 import { IssueLinksCollapsibleContent } from "./content";
 import { IssueLinksCollapsibleTitle } from "./title";
+import { IssueLinksActionButton } from "./quick-action-button";
 
 type Props = {
   workspaceSlug: string;
@@ -32,17 +34,14 @@ export const LinksCollapsible = observer(function LinksCollapsible(props: Props)
 
   return (
     <Collapsible
-      isOpen={isCollapsibleOpen}
-      onToggle={() => toggleOpenWidget("links")}
-      title={
-        <IssueLinksCollapsibleTitle
-          isOpen={isCollapsibleOpen}
-          issueId={issueId}
-          disabled={disabled}
-          issueServiceType={issueServiceType}
-        />
+      open={isCollapsibleOpen}
+      onOpenChange={() => toggleOpenWidget("links")}
+      trigger={<IssueLinksCollapsibleTitle issueId={issueId} issueServiceType={issueServiceType} />}
+      trailing={
+        isCollapsibleOpen && !disabled ? (
+          <IssueLinksActionButton issueServiceType={issueServiceType} disabled={disabled} />
+        ) : undefined
       }
-      buttonClassName="w-full"
     >
       <IssueLinksCollapsibleContent
         workspaceSlug={workspaceSlug}
