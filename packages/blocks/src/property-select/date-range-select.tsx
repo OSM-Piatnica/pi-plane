@@ -7,6 +7,7 @@
 
 import { useState } from "react";
 import { format } from "date-fns";
+import type { Locale } from "date-fns";
 import { Calendar } from "@makeplane/propel/components/calendar";
 import type { DateSelectCommonProps } from "./date-select-shell";
 import { DateSelectShell } from "./date-select-shell";
@@ -74,14 +75,20 @@ const MERGE_TOKENS: Record<string, { sameYear: MergeTokenPair; sameMonth: MergeT
  * "Jun 10 - 24, 2025"; two months in one year give "Jan 24 - Feb 02, 2025"; anything wider — or any
  * `formatToken` outside {@link MERGE_TOKENS} — stays whole.
  */
-function mergeRangeLabel(range: DateRangeValue, from: string, to: string, formatToken: string): string {
+function mergeRangeLabel(
+  range: DateRangeValue,
+  from: string,
+  to: string,
+  formatToken: string,
+  locale?: Locale
+): string {
   const joined = from && to ? `${from} - ${to}` : from || to;
   if (!range.from || !range.to || !from || !to) return joined;
   if (range.from.getFullYear() !== range.to.getFullYear()) return joined;
   const tokens = MERGE_TOKENS[formatToken];
   if (!tokens) return joined;
   const pair = range.from.getMonth() === range.to.getMonth() ? tokens.sameMonth : tokens.sameYear;
-  return `${format(range.from, pair.from)} - ${format(range.to, pair.to)}`;
+  return `${format(range.from, pair.from, { locale })} - ${format(range.to, pair.to, { locale })}`;
 }
 
 /**
@@ -98,6 +105,7 @@ export function DateRangeSelect(props: DateRangeSelectProps) {
     minDate,
     maxDate,
     weekStartsOn,
+    locale,
     defaultMonth,
     placeholder = "",
     clearable = false,
@@ -111,13 +119,13 @@ export function DateRangeSelect(props: DateRangeSelectProps) {
   // sees a range it did not ask for.
   const [draft, setDraft] = useState<DateRangeValue | null>(null);
   // derived values
-  const from = value.from ? format(value.from, formatToken) : "";
-  const to = value.to ? format(value.to, formatToken) : "";
+  const from = value.from ? format(value.from, formatToken, { locale }) : "";
+  const to = value.to ? format(value.to, formatToken, { locale }) : "";
   const joined = from && to ? `${from} - ${to}` : from || to;
   const formatted = props.formatLabel
     ? props.formatLabel(value, { from, to })
     : props.mergeDates
-      ? mergeRangeLabel(value, from, to, formatToken)
+      ? mergeRangeLabel(value, from, to, formatToken, locale)
       : joined;
   const isEmpty = !value.from && !value.to;
   const disabledMatchers = buildDisabledMatchers(minDate, maxDate);
@@ -150,6 +158,7 @@ export function DateRangeSelect(props: DateRangeSelectProps) {
         defaultMonth={value.from ?? defaultMonth}
         disabled={disabledMatchers}
         weekStartsOn={weekStartsOn}
+        locale={locale}
         onSelect={(range) => {
           const next = { from: range?.from ?? null, to: range?.to ?? null };
           // Deselecting the open end restarts the range without emitting.

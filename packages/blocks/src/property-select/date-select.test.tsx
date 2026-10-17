@@ -8,6 +8,7 @@
 import { useState } from "react";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { de, pl } from "date-fns/locale";
 import { describe, expect, it, vi } from "vitest";
 import type { DateRangeValue } from "./date-range-select";
 import { DateRangeSelect } from "./date-range-select";
@@ -129,6 +130,30 @@ describe("DateSelect", () => {
     await user.click(screen.getByRole("button", { name: /jun/i }));
     expect(popup().queryByRole("button", { name: "Clear" })).toBeNull();
   });
+
+  it("formats the trigger label and names the calendar days in the caller's locale", async () => {
+    const user = userEvent.setup();
+    render(
+      <DateSelect
+        value={new Date(2025, 5, 10)}
+        onChange={vi.fn()}
+        variant="select-md"
+        placeholder="Set date"
+        locale={de}
+      />
+    );
+
+    await user.click(screen.getByRole("button", { name: /jun/i }));
+    expect(popup().getByRole("button", { name: /Dienstag, 10\. Juni 2025/ })).toBeDefined();
+  });
+
+  it("keeps English without a locale", async () => {
+    const user = userEvent.setup();
+    render(<DateSelect value={new Date(2025, 5, 10)} onChange={vi.fn()} variant="select-md" placeholder="Set date" />);
+
+    await user.click(screen.getByRole("button", { name: "Jun 10, 2025" }));
+    expect(popup().getByRole("button", { name: /Tuesday, June 10th, 2025/ })).toBeDefined();
+  });
 });
 
 /** The range picker only advances to its second end when the caller feeds the first one back. */
@@ -191,6 +216,20 @@ describe("DateRangeSelect", () => {
       />
     );
     expect(screen.getByRole("button", { name: "Jan 24 - Feb 02, 2025" })).toBeDefined();
+  });
+
+  it("localizes the merged label's month names", () => {
+    render(
+      <DateRangeSelect
+        value={{ from: new Date(2025, 0, 24), to: new Date(2025, 1, 2) }}
+        onChange={vi.fn()}
+        variant="select-md"
+        placeholder="Set dates"
+        mergeDates
+        locale={pl}
+      />
+    );
+    expect(screen.getByRole("button", { name: "sty 24 - lut 02, 2025" })).toBeDefined();
   });
 
   it("leaves a cross-year range whole", () => {

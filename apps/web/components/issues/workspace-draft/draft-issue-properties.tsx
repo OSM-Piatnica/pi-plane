@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 // icons
 import { DueDateOutline, StartDateOutline } from "@makeplane/propel/icons";
 // plane imports
-import { DateSelect } from "@plane/blocks/property-select";
+import { DateSelect } from "@/components/dropdowns/date-select";
 import { useTranslation } from "@plane/i18n";
 // types
 import type { TIssuePriorities, TWorkspaceDraftIssue } from "@plane/types";

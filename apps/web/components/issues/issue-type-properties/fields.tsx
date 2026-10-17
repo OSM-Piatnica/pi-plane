@@ -8,7 +8,7 @@ import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { Switch } from "@makeplane/propel/components/switch";
-import { DateSelect } from "@plane/blocks/property-select";
+import { DateSelect } from "@/components/dropdowns/date-select";
 import { Select } from "@plane/blocks/select";
 import type { TIssueTypePropertyValueEntry } from "@plane/types";
 import { getDate, renderFormattedPayloadDate } from "@plane/utils";

@@ -22,7 +22,7 @@ import { InputField } from "@makeplane/propel/components/input-field";
 import { Switch } from "@makeplane/propel/components/switch";
 import { TextAreaField } from "@makeplane/propel/components/text-area-field";
 import { CalendarOutline } from "@makeplane/propel/icons";
-import { DateSelect } from "@plane/blocks/property-select";
+import { DateSelect } from "@/components/dropdowns/date-select";
 import { Select } from "@plane/blocks/select";
 import { setToast } from "@plane/blocks/toast";
 import { useTranslation } from "@plane/i18n";

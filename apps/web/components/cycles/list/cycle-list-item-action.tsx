@@ -27,7 +27,7 @@ import { setPromiseToast } from "@plane/blocks/toast";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { ICycle, TCycleGroups } from "@plane/types";
 import { FavoriteStar } from "@plane/blocks/common";
-import { DateRangeSelect } from "@plane/blocks/property-select";
+import { DateRangeSelect } from "@/components/dropdowns/date-select";
 import { getDate, getFileURL, generateQueryParams } from "@plane/utils";
 // components
 import { ButtonAvatars } from "@/components/dropdowns/member/avatar";

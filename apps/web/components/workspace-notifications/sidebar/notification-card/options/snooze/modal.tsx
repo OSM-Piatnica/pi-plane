@@ -26,7 +26,7 @@ import {
 import { Icon } from "@makeplane/propel/components/icon";
 import { IconButton } from "@makeplane/propel/components/icon-button";
 import { CloseOutline } from "@makeplane/propel/icons";
-import { DateSelect } from "@plane/blocks/property-select";
+import { DateSelect } from "@/components/dropdowns/date-select";
 import { Select } from "@plane/blocks/select";
 // components
 import { getDate, cn } from "@plane/utils";

@@ -10,7 +10,7 @@ import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
 import { CalendarOutline } from "@makeplane/propel/icons";
-import { DateSelect } from "@plane/blocks/property-select";
+import { DateSelect } from "@/components/dropdowns/date-select";
 import { ETabIndices } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import type { TIssue } from "@plane/types";

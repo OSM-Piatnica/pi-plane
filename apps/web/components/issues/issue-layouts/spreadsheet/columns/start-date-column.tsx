@@ -9,7 +9,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import { StartDateOutline } from "@makeplane/propel/icons";
-import { DateSelect } from "@plane/blocks/property-select";
+import { DateSelect } from "@/components/dropdowns/date-select";
 // types
 import type { TIssue } from "@plane/types";
 import { getDate, renderFormattedPayloadDate } from "@plane/utils";

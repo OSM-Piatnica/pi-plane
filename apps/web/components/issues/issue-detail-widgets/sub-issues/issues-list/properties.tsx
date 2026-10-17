@@ -12,7 +12,7 @@ import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import { DueDateOutline, StartDateOutline } from "@makeplane/propel/icons";
 import type { DateRangeValue } from "@plane/blocks/property-select";
-import { DateRangeSelect, DateSelect } from "@plane/blocks/property-select";
+import { DateRangeSelect, DateSelect } from "@/components/dropdowns/date-select";
 import type { IIssueDisplayProperties, TIssue } from "@plane/types";
 import { cn, getDate, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
 // components

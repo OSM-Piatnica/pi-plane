@@ -6,6 +6,7 @@
  */
 
 import type { ReactNode } from "react";
+import type { Locale } from "date-fns";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import { Popover, PopoverBody, PopoverContent, PopoverTrigger } from "@makeplane/propel/components/popover";
@@ -41,6 +42,11 @@ export type DateSelectCommonProps = {
   formatToken?: string;
   /** @see WeekStart */
   weekStartsOn?: WeekStart;
+  /**
+   * `date-fns` locale for the calendar (month and weekday names) and for month names in the trigger
+   * label. The app wrapper supplies the one matching the user's language; English when omitted.
+   */
+  locale?: Locale;
   /** Month shown on open while nothing is picked. Defaults to the current month. */
   defaultMonth?: Date;
   /** Leading icon on the trigger. */
