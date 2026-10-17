@@ -106,7 +106,7 @@ export function FavoriteFolder(props: Props) {
       dropTargetForElements({
         element,
         canDrop: ({ source }) => getCanDrop(source, favorite, false),
-        getData: ({ input, element }) => {
+        getData: ({ input, element: targetElement }) => {
           const blockedStates: InstructionType[] = [];
           if (!isLastChild) {
             blockedStates.push("reorder-below");
@@ -114,7 +114,7 @@ export function FavoriteFolder(props: Props) {
 
           return attachInstruction(initialData, {
             input,
-            element,
+            element: targetElement,
             currentLevel: 0,
             indentPerLevel: 0,
             mode: isLastChild ? "last-in-group" : "standard",
@@ -122,8 +122,8 @@ export function FavoriteFolder(props: Props) {
           });
         },
         onDrag: ({ source, self, location }) => {
-          const instruction = getInstructionFromPayload(self, source, location);
-          setInstruction(instruction);
+          const nextInstruction = getInstructionFromPayload(self, source, location);
+          setInstruction(nextInstruction);
         },
         onDragLeave: () => {
           setInstruction(undefined);

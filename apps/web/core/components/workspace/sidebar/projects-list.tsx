@@ -76,6 +76,7 @@ export const SidebarProjectsList = observer(function SidebarProjectsList() {
         title: t("link_copied"),
         message: t("project_link_copied_to_clipboard"),
       });
+      return;
     });
   };
 
@@ -231,6 +232,7 @@ export const SidebarProjectsList = observer(function SidebarProjectsList() {
               {loader === "init-loader" && (
                 <Loader className="w-full space-y-1.5">
                   {Array.from({ length: 4 }).map((_, index) => (
+                    // eslint-disable-next-line react/no-array-index-key -- static skeleton list without stable ids
                     <Loader.Item key={index} height="28px" />
                   ))}
                 </Loader>

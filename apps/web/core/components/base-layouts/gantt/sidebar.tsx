@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -94,9 +95,11 @@ export const BaseGanttSidebar = observer(function BaseGanttSidebar<T extends IBa
                   onDrop={handleOnDrop}
                 >
                   {(isDragging: boolean) => {
-                    const block = getBlockById(blockId);
-                    const isBlockComplete = !!block?.start_date && !!block?.target_date;
-                    const duration = isBlockComplete ? getNumberOfDaysFromPosition(block?.position?.width) : undefined;
+                    const blockDetails = getBlockById(blockId);
+                    const isBlockComplete = !!blockDetails?.start_date && !!blockDetails?.target_date;
+                    const duration = isBlockComplete
+                      ? getNumberOfDaysFromPosition(blockDetails?.position?.width)
+                      : undefined;
                     const isBlockHoveredOn = isBlockActive(blockId);
 
                     return (

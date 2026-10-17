@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React, { useState, useEffect, useCallback, createContext, useContext } from "react";
 import { Collapsible as BaseCollapsible } from "@base-ui-components/react/collapsible";
-import clsx from "clsx";
+import { clsx } from "clsx";
 
 // Types
 type CollapsibleContextType = {
@@ -64,6 +65,7 @@ function Root({ children, className, isOpen: controlledIsOpen, onToggle, default
   }, [controlledIsOpen, onToggle]);
 
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values -- value shape unchanged in lint cleanup
     <CollapsibleContext.Provider value={{ isOpen: localIsOpen, onToggle: handleToggle }}>
       <BaseCollapsible.Root
         className={clsx(className)}

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -274,7 +275,7 @@ export const DescriptionInput = observer(function DescriptionInput(props: Props)
               return asset_id;
             } catch (error) {
               console.log("Error in uploading asset:", error);
-              throw new Error("Asset upload failed. Please try again later.");
+              throw new Error("Asset upload failed. Please try again later.", { cause: error });
             }
           }}
           duplicateFile={async (assetId: string) => {

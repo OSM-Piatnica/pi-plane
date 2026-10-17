@@ -83,6 +83,7 @@ export const ProfileSidebar = observer(function ProfileSidebar(props: TProfileSi
     window.addEventListener("resize", handleToggleProfileSidebar);
     handleToggleProfileSidebar();
     return () => window.removeEventListener("resize", handleToggleProfileSidebar);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally omitted deps; behaviour preserved
   }, []);
 
   return (

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -26,8 +27,8 @@ export function LinkViewContainer({ editor, containerRef }: Props) {
 
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }: { editor: Editor }) => ({
-      linkExtensionStorage: editor.storage.link,
+    selector: ({ editor: stateEditor }: { editor: Editor }) => ({
+      linkExtensionStorage: stateEditor.storage.link,
     }),
   });
 

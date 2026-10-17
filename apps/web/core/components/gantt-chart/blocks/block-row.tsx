@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -51,7 +52,7 @@ export const BlockRow = observer(function BlockRow(props: Props) {
     );
 
     // Observe if the block is visible on the chart
-    const observer = new IntersectionObserver(
+    const intersectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           setIsHidden(!entry.isIntersecting);
@@ -64,10 +65,10 @@ export const BlockRow = observer(function BlockRow(props: Props) {
       }
     );
 
-    observer.observe(timelineBlock);
+    intersectionObserver.observe(timelineBlock);
 
     return () => {
-      observer.unobserve(timelineBlock);
+      intersectionObserver.unobserve(timelineBlock);
     };
   }, [block]);
 

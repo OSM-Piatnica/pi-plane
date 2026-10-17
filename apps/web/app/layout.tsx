@@ -1,12 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import Script from "next/script";
 
 // styles
+// oxlint-disable-next-line eslint(import/no-unassigned-import) -- side-effect global CSS
 import "@/styles/globals.css";
 
 import { SITE_DESCRIPTION, SITE_NAME } from "@plane/constants";

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -111,6 +112,7 @@ export const CycleListItemAction = observer(function CycleListItemAction(props: 
     const addToFavoritePromise = addCycleToFavorites(workspaceSlug?.toString(), projectId.toString(), cycleId).then(
       () => {
         if (!isFavoriteMenuOpen) toggleFavoriteMenu(true);
+        return;
       }
     );
 
@@ -194,6 +196,7 @@ export const CycleListItemAction = observer(function CycleListItemAction(props: 
       )}
       <CycleAdditionalActions cycleId={cycleId} projectId={projectId} />
       {showTransferIssues && (
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged
         <div
           className="flex h-6 cursor-pointer items-center gap-1 px-2 text-accent-secondary"
           onClick={() => {

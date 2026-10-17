@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -89,11 +90,11 @@ export const QuickAddIssueRoot = observer(function QuickAddIssueRoot(props: TQui
     if (!isOpen) reset({ ...defaultValues });
   }, [isOpen, reset]);
 
-  const handleIsOpen = (isOpen: boolean) => {
+  const handleIsOpen = (nextIsOpen: boolean) => {
     if (isQuickAddOpen !== undefined && setIsQuickAddOpen) {
-      setIsQuickAddOpen(isOpen);
+      setIsQuickAddOpen(nextIsOpen);
     } else {
-      setIsOpen(isOpen);
+      setIsOpen(nextIsOpen);
     }
   };
 
@@ -103,7 +104,7 @@ export const QuickAddIssueRoot = observer(function QuickAddIssueRoot(props: TQui
     reset({ ...defaultValues });
 
     const payload = createIssuePayload(projectId.toString(), {
-      ...(prePopulatedData ?? {}),
+      ...prePopulatedData,
       ...formData,
     });
 
@@ -149,7 +150,7 @@ export const QuickAddIssueRoot = observer(function QuickAddIssueRoot(props: TQui
           layout={layout}
           prePopulatedData={prePopulatedData}
           projectId={projectId?.toString()}
-          hasError={errors && errors?.name && errors?.name?.message ? true : false}
+          hasError={!!(errors && errors?.name && errors?.name?.message)}
           setFocus={setFocus}
           register={register}
           onSubmit={handleSubmit(onSubmitHandler)}

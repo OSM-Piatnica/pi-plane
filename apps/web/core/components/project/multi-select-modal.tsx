@@ -106,6 +106,7 @@ export const ProjectMultiSelectModal = observer(function ProjectMultiSelectModal
               const projectDetails = projectDetailsMap.get(projectId);
               if (!projectDetails) return null;
               return (
+                // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged
                 <div
                   key={projectDetails.id}
                   className="group flex cursor-pointer items-center gap-1.5 rounded-sm bg-surface-2 px-2 py-1"

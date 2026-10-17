@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -73,7 +74,7 @@ export const WorkItemLabelSelectBase = observer(function WorkItemLabelSelectBase
     placement: placement ?? "bottom-start",
   });
   // derived values
-  const labelsList = labelIds.map((labelId) => getLabelById(labelId)).filter((label) => !!label);
+  const labelsList = labelIds.map((labelId) => getLabelById(labelId)).filter((labelItem) => !!labelItem);
   const filteredOptions =
     query === "" ? labelsList : labelsList?.filter((l) => l.name.toLowerCase().includes(query.toLowerCase()));
 
@@ -151,6 +152,7 @@ export const WorkItemLabelSelectBase = observer(function WorkItemLabelSelectBase
   };
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged
     <Combobox
       as="div"
       ref={dropdownRef}
@@ -214,20 +216,20 @@ export const WorkItemLabelSelectBase = observer(function WorkItemLabelSelectBase
             <div className="mt-2 max-h-48 space-y-1 overflow-y-scroll">
               {labelsList && filteredOptions ? (
                 filteredOptions.length > 0 ? (
-                  filteredOptions.map((label) => {
-                    const children = labelsList?.filter((l) => l.parent === label.id);
+                  filteredOptions.map((labelItem) => {
+                    const children = labelsList?.filter((l) => l.parent === labelItem.id);
 
                     if (children.length === 0) {
-                      if (!label.parent)
+                      if (!labelItem.parent)
                         return (
                           <Combobox.Option
-                            key={label.id}
+                            key={labelItem.id}
                             className={({ active }) =>
                               `${
                                 active ? "bg-layer-1" : ""
                               } group flex w-full cursor-pointer items-center gap-2 truncate rounded-sm px-1 py-1.5 text-secondary select-none`
                             }
-                            value={label.id}
+                            value={labelItem.id}
                           >
                             {({ selected }) => (
                               <div className="flex w-full justify-between gap-2 rounded-sm">
@@ -235,10 +237,10 @@ export const WorkItemLabelSelectBase = observer(function WorkItemLabelSelectBase
                                   <span
                                     className="h-2.5 w-2.5 flex-shrink-0 rounded-full"
                                     style={{
-                                      backgroundColor: label.color,
+                                      backgroundColor: labelItem.color,
                                     }}
                                   />
-                                  <span className="truncate">{label.name}</span>
+                                  <span className="truncate">{labelItem.name}</span>
                                 </div>
                                 <div className="flex shrink-0 items-center justify-center rounded-sm p-1">
                                   <CheckIcon className={`h-3 w-3 ${selected ? "opacity-100" : "opacity-0"}`} />
@@ -249,9 +251,9 @@ export const WorkItemLabelSelectBase = observer(function WorkItemLabelSelectBase
                         );
                     } else
                       return (
-                        <div key={label.id} className="border-y border-subtle">
+                        <div key={labelItem.id} className="border-y border-subtle">
                           <div className="flex items-center gap-2 truncate p-2 text-primary select-none">
-                            <Component className="h-3 w-3" /> {label.name}
+                            <Component className="h-3 w-3" /> {labelItem.name}
                           </div>
                           <div>
                             {children.map((child) => (
@@ -289,6 +291,7 @@ export const WorkItemLabelSelectBase = observer(function WorkItemLabelSelectBase
                 ) : submitting ? (
                   <Loader className="h-3.5 w-3.5 animate-spin" />
                 ) : createLabelEnabled ? (
+                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events -- pre-existing a11y pattern; markup unchanged
                   <p
                     onClick={() => {
                       if (!query.length) return;

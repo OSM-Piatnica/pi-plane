@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -68,6 +69,7 @@ function Breadcrumbs({ className, children, onBack, isLoading = false }: Breadcr
         <>
           <div className="flex items-center gap-2.5 p-1">
             {onBack && (
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged
               <span onClick={onBack} className="text-secondary">
                 ...
               </span>

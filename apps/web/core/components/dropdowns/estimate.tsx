@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -119,7 +120,6 @@ export const EstimateDropdown = observer(function EstimateDropdown(props: Props)
             </div>
           ),
         };
-      else undefined;
     })
     .filter((estimatePointDropdownOption) => estimatePointDropdownOption != undefined) as DropdownOptions;
   options?.unshift({
@@ -219,6 +219,7 @@ export const EstimateDropdown = observer(function EstimateDropdown(props: Props)
   );
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged
     <ComboDropDown
       as="div"
       ref={dropdownRef}

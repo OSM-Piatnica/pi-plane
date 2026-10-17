@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -45,6 +46,11 @@ export interface ILabelDropdownProps {
   fullHeight?: boolean;
   label: React.ReactNode;
 }
+
+const preventPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  e.stopPropagation();
+  e.preventDefault();
+};
 
 export function LabelDropdown(props: ILabelDropdownProps) {
   const {
@@ -99,18 +105,18 @@ export function LabelDropdown(props: ILabelDropdownProps) {
 
   const options = useMemo(
     () =>
-      projectLabels.map((label) => ({
-        value: label?.id,
-        query: label?.name,
+      projectLabels.map((projectLabel) => ({
+        value: projectLabel?.id,
+        query: projectLabel?.name,
         content: (
           <div className="flex items-center justify-start gap-2 overflow-hidden">
             <span
               className="h-2.5 w-2.5 flex-shrink-0 rounded-full"
               style={{
-                backgroundColor: label?.color,
+                backgroundColor: projectLabel?.color,
               }}
             />
-            <div className="line-clamp-1 inline-block truncate">{label?.name}</div>
+            <div className="line-clamp-1 inline-block truncate">{projectLabel?.name}</div>
           </div>
         ),
       })),
@@ -163,8 +169,8 @@ export function LabelDropdown(props: ILabelDropdownProps) {
   const handleAddLabel = async (labelName: string) => {
     if (!projectId) return;
     setSubmitting(true);
-    const label = await createLabel(workspaceSlug, projectId, { name: labelName, color: getRandomLabelColor() });
-    onChange([...value, label.id]);
+    const newLabel = await createLabel(workspaceSlug, projectId, { name: labelName, color: getRandomLabelColor() });
+    onChange([...value, newLabel.id]);
     setQuery("");
     setSubmitting(false);
   };
@@ -232,13 +238,10 @@ export function LabelDropdown(props: ILabelDropdownProps) {
     ]
   );
 
-  const preventPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation();
-    e.preventDefault();
-  };
-
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged
     <div className={`${fullHeight ? "h-full" : "h-5"}`} onClick={preventPropagation}>
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged */}
       <ComboDropDown
         as="div"
         ref={dropdownRef}
@@ -306,6 +309,7 @@ export function LabelDropdown(props: ILabelDropdownProps) {
                 ) : submitting ? (
                   <Loader className="h-3.5 w-3.5 animate-spin" />
                 ) : canCreateLabel ? (
+                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events -- pre-existing a11y pattern; markup unchanged
                   <p
                     onClick={() => {
                       if (!query.length) return;

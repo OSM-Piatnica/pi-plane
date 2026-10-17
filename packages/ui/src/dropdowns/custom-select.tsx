@@ -68,6 +68,7 @@ function CustomSelect(props: ICustomSelectProps) {
 
   return (
     <DropdownContext.Provider value={closeDropdown}>
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged */}
       <Combobox
         as="div"
         ref={dropdownRef}

@@ -293,6 +293,7 @@ export const DateRangeDropdown = observer(function DateRangeDropdown(props: Prop
   const Options = renderInPortal ? createPortal(comboOptions, document.body) : comboOptions;
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged
     <ComboDropDown
       as="div"
       ref={dropdownRef}

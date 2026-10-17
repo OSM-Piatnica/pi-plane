@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -244,8 +245,10 @@ export const PageEditorBody = observer(function PageEditorBody(props: Props) {
           <div className="page-summary-container absolute top-[64px] right-0 z-[5] h-full">
             <div className="sticky top-[72px]">
               <div className="group/page-toc relative px-page-x">
+                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events -- pre-existing a11y pattern; markup unchanged */}
                 <div
                   className="max-h-[50vh] !cursor-pointer overflow-hidden"
+                  // eslint-disable-next-line jsx-a11y/prefer-tag-over-role -- pre-existing markup; unchanged
                   role="button"
                   aria-label={t("page_navigation_pane.outline_floating_button")}
                   onClick={handleOpenNavigationPane}
@@ -281,7 +284,7 @@ export const PageEditorBody = observer(function PageEditorBody(props: Props) {
                 if (!res) throw new Error("Failed in fetching mentions");
                 return res;
               },
-              renderComponent: (props) => <EditorMentionsRoot {...props} />,
+              renderComponent: (mentionProps) => <EditorMentionsRoot {...mentionProps} />,
               getMentionedEntityDetails: (id: string) => ({ display_name: getUserDetails(id)?.display_name ?? "" }),
             }}
             updatePageProperties={updatePageProperties}

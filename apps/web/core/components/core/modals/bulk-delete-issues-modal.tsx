@@ -120,6 +120,7 @@ export const BulkDeleteIssuesModal = observer(function BulkDeleteIssuesModal(pro
           message: t("core_ui.work_items_deleted"),
         });
         handleClose();
+        return;
       })
       .catch(() =>
         setToast({

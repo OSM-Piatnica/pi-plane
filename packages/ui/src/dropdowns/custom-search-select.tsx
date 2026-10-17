@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -74,7 +75,7 @@ export function CustomSearchSelect(props: ICustomSearchSelectProps) {
 
   const closeDropdown = () => {
     setIsOpen(false);
-    onClose && onClose();
+    if (onClose) onClose();
   };
 
   const handleKeyDown = useDropdownKeyDown(openDropdown, closeDropdown, isOpen);
@@ -86,6 +87,7 @@ export function CustomSearchSelect(props: ICustomSearchSelectProps) {
   };
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged
     <Combobox
       as="div"
       ref={dropdownRef}

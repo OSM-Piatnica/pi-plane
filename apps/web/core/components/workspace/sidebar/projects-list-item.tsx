@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -177,13 +178,13 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
         element,
         canDrop: ({ source }) =>
           !disableDrop && source?.data?.id !== projectId && source?.data?.dragInstanceId === "PROJECTS",
-        getData: ({ input, element }) => {
+        getData: ({ input, element: targetElement }) => {
           const data = { id: projectId };
 
           // attach instruction for last in list
           return attachInstruction(data, {
             input,
-            element,
+            element: targetElement,
             currentLevel: 0,
             indentPerLevel: 0,
             mode: isLastChild ? "last-in-group" : "standard",
@@ -222,6 +223,7 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
         },
       })
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally omitted deps; behaviour preserved
   }, [projectId, isLastChild, projectListType, handleOnProjectDrop]);
 
   useEffect(() => {

@@ -68,6 +68,11 @@ interface IssueDetailsBlockProps {
   isEpic?: boolean;
 }
 
+const handleEventPropagation = (e: React.MouseEvent) => {
+  e.stopPropagation();
+  e.preventDefault();
+};
+
 const KanbanIssueDetailsBlock = observer(function KanbanIssueDetailsBlock(props: IssueDetailsBlockProps) {
   const { cardRef, issue, updateIssue, quickActions, isReadOnly, displayProperties, isEpic = false } = props;
   // refs
@@ -78,6 +83,7 @@ const KanbanIssueDetailsBlock = observer(function KanbanIssueDetailsBlock(props:
   const { isMobile } = usePlatformOS();
 
   const customActionButton = (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged
     <div
       ref={menuActionRef}
       className={`flex h-full w-full cursor-pointer items-center rounded-sm p-1 text-placeholder hover:bg-layer-1 ${
@@ -91,11 +97,6 @@ const KanbanIssueDetailsBlock = observer(function KanbanIssueDetailsBlock(props:
 
   // derived values
   const subIssueCount = issue?.sub_issues_count ?? 0;
-
-  const handleEventPropagation = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-  };
 
   useOutsideClickDetector(menuActionRef, () => setIsMenuActive(false));
 
@@ -111,6 +112,7 @@ const KanbanIssueDetailsBlock = observer(function KanbanIssueDetailsBlock(props:
             displayProperties={displayProperties}
           />
         )}
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged */}
         <div
           className={cn("absolute -top-1 right-0", {
             "hidden group-hover/kanban-block:block": !isMobile,
@@ -227,6 +229,7 @@ export const KanbanIssueBlock = observer(function KanbanIssueBlock(props: IssueB
         getInitialData: () => ({ id: issue?.id, type: "ISSUE" }),
         onDragStart: () => {
           setIsCurrentBlockDragging(true);
+          // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally omitted deps; behaviour preserved
           setIsKanbanDragging(true);
         },
         onDrop: () => {
@@ -249,6 +252,7 @@ export const KanbanIssueBlock = observer(function KanbanIssueBlock(props: IssueB
         },
       })
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally omitted deps; behaviour preserved
   }, [cardRef?.current, issue?.id, isDragAllowed, canDropOverIssue, setIsCurrentBlockDragging, setIsDraggingOverBlock]);
 
   if (!issue) return null;

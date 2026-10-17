@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -137,6 +138,7 @@ function ContextMenuWithoutPortal(props: ContextMenuProps) {
       parentElement.removeEventListener("contextmenu", handleContextMenu);
       window.removeEventListener("keydown", hideContextMenu);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally omitted deps; behaviour preserved
   }, [contextMenuRef, isMobile, isOpen, parentRef, setIsOpen, setPosition]);
 
   // handle keyboard navigation
@@ -167,6 +169,7 @@ function ContextMenuWithoutPortal(props: ContextMenuProps) {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally omitted deps; behaviour preserved
   }, [activeItemIndex, isOpen, renderedItems, setIsOpen]);
 
   // Custom handler for nested menu portal clicks
@@ -199,6 +202,7 @@ function ContextMenuWithoutPortal(props: ContextMenuProps) {
         document.removeEventListener("mousedown", handleDocumentClick, true);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally omitted deps; behaviour preserved
   }, [isOpen, handleClose]);
 
   return (
@@ -219,6 +223,7 @@ function ContextMenuWithoutPortal(props: ContextMenuProps) {
         }}
         data-context-menu="true"
       >
+        {/* eslint-disable-next-line react/jsx-no-constructed-context-values -- value shape unchanged in lint cleanup */}
         <ContextMenuContext.Provider value={{ closeAllSubmenus, registerSubmenu, portalContainer }}>
           {renderedItems.map((item, index) => (
             <ContextMenuItem

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -47,6 +48,12 @@ type Props = TDropdownProps & {
         value: string[];
       }
   );
+
+const renderIcon = (logoProps: TProject["logo_props"]) => (
+  <span className="grid h-4 w-4 flex-shrink-0 place-items-center">
+    <Logo logo={logoProps} size={14} />
+  </span>
+);
 
 export const ProjectDropdownBase = observer(function ProjectDropdownBase(props: Props) {
   const {
@@ -139,27 +146,25 @@ export const ProjectDropdownBase = observer(function ProjectDropdownBase(props: 
     if (!multiple) handleClose();
   };
 
-  const getDisplayName = (value: string | string[] | null, placeholder: string = "") => {
-    if (Array.isArray(value)) {
-      const firstProject = getProjectById(value[0]);
-      return value.length ? (value.length === 1 ? firstProject?.name : `${value.length} projects`) : placeholder;
+  const getDisplayName = (projectValue: string | string[] | null, fallbackText: string = "") => {
+    if (Array.isArray(projectValue)) {
+      const firstProject = getProjectById(projectValue[0]);
+      return projectValue.length
+        ? projectValue.length === 1
+          ? firstProject?.name
+          : `${projectValue.length} projects`
+        : fallbackText;
     } else {
-      return value ? (getProjectById(value)?.name ?? placeholder) : placeholder;
+      return projectValue ? (getProjectById(projectValue)?.name ?? fallbackText) : fallbackText;
     }
   };
 
-  const getProjectIcon = (value: string | string[] | null) => {
-    const renderIcon = (logoProps: TProject["logo_props"]) => (
-      <span className="grid h-4 w-4 flex-shrink-0 place-items-center">
-        <Logo logo={logoProps} size={14} />
-      </span>
-    );
-
-    if (Array.isArray(value)) {
+  const getProjectIcon = (projectValue: string | string[] | null) => {
+    if (Array.isArray(projectValue)) {
       return (
         <div className="flex items-center gap-0.5">
-          {value.length > 0 ? (
-            value.map((projectId) => {
+          {projectValue.length > 0 ? (
+            projectValue.map((projectId) => {
               const projectDetails = getProjectById(projectId);
               return projectDetails?.logo_props ? renderIcon(projectDetails.logo_props) : null;
             })
@@ -169,7 +174,7 @@ export const ProjectDropdownBase = observer(function ProjectDropdownBase(props: 
         </div>
       );
     } else {
-      const projectDetails = getProjectById(value);
+      const projectDetails = getProjectById(projectValue);
       return projectDetails?.logo_props ? renderIcon(projectDetails.logo_props) : null;
     }
   };
@@ -224,6 +229,7 @@ export const ProjectDropdownBase = observer(function ProjectDropdownBase(props: 
   );
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged
     <ComboDropDown
       as="div"
       ref={dropdownRef}

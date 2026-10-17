@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -93,8 +94,8 @@ export function MultiSelectDropdown(props: IMultiSelectDropdown) {
     if (!options) return undefined;
 
     const filteredOptions = queryArray
-      ? (options || []).filter((options) => {
-          const queryString = queryArray.map((query) => options.data[query]).join(" ");
+      ? (options || []).filter((optionItem) => {
+          const queryString = queryArray.map((queryKey) => optionItem.data[queryKey]).join(" ");
           return queryString.toLowerCase().includes(query.toLowerCase());
         })
       : options;
@@ -106,6 +107,7 @@ export function MultiSelectDropdown(props: IMultiSelectDropdown) {
       (option) => !(value ?? []).includes(option.data[option.value]),
       () => sortByKey && sortByKey.toLowerCase(),
     ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally omitted deps; behaviour preserved
   }, [query, options]);
 
   // hooks
@@ -114,6 +116,7 @@ export function MultiSelectDropdown(props: IMultiSelectDropdown) {
   useOutsideClickDetector(dropdownRef, handleClose);
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged
     <Combobox
       as="div"
       ref={dropdownRef}

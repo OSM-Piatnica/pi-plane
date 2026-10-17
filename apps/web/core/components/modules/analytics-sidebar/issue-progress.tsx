@@ -60,7 +60,7 @@ export const ModuleAnalyticsProgress = observer(function ModuleAnalyticsProgress
   const selectedStateGroups = moduleFilter?.findFirstConditionByPropertyAndOperator("state_group", "in");
   const moduleDetails = getModuleById(moduleId);
   const plotType: TModulePlotType = getPlotTypeByModuleId(moduleId);
-  const isCurrentProjectEstimateEnabled = projectId && areEstimateEnabledByProjectId(projectId) ? true : false;
+  const isCurrentProjectEstimateEnabled = !!(projectId && areEstimateEnabledByProjectId(projectId));
   const estimateDetails =
     isCurrentProjectEstimateEnabled && currentActiveEstimateId && estimateById(currentActiveEstimateId);
   const isCurrentEstimateTypeIsPoints = estimateDetails && estimateDetails?.type === EEstimateSystem.POINTS;
@@ -73,7 +73,7 @@ export const ModuleAnalyticsProgress = observer(function ModuleAnalyticsProgress
       ? completedEstimatePoints != 0 && totalEstimatePoints != 0
         ? Math.round((completedEstimatePoints / totalEstimatePoints) * 100)
         : 0
-      : completedIssues != 0 && completedIssues != 0
+      : completedIssues != 0 && totalIssues != 0
         ? Math.round((completedIssues / totalIssues) * 100)
         : 0
     : 0;
@@ -121,7 +121,7 @@ export const ModuleAnalyticsProgress = observer(function ModuleAnalyticsProgress
   if (!moduleDetails) return <></>;
   return (
     <div className="space-y-4 border-t border-subtle px-3 py-4">
-      <Disclosure defaultOpen={isModuleDateValid ? true : false}>
+      <Disclosure defaultOpen={!!isModuleDateValid}>
         {({ open }) => (
           <div className="space-y-6">
             {/* progress bar header */}

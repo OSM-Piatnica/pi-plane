@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -172,17 +173,17 @@ export const PeekOverviewIssueDetails = observer(function PeekOverviewIssueDetai
               isRestoreDisabled: disabled || isArchived,
             }}
             fetchHandlers={{
-              listDescriptionVersions: (issueId) =>
+              listDescriptionVersions: (workItemId) =>
                 workItemVersionService.listDescriptionVersions(
                   workspaceSlug,
                   issue.project_id?.toString() ?? "",
-                  issueId
+                  workItemId
                 ),
-              retrieveDescriptionVersion: (issueId, versionId) =>
+              retrieveDescriptionVersion: (workItemId, versionId) =>
                 workItemVersionService.retrieveDescriptionVersion(
                   workspaceSlug,
                   issue.project_id?.toString() ?? "",
-                  issueId,
+                  workItemId,
                   versionId
                 ),
             }}

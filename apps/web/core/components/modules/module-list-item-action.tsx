@@ -67,6 +67,7 @@ export const ModuleListItemAction = observer(function ModuleListItemAction(props
       () => {
         // open favorites menu if closed
         if (!storedValue) toggleFavoriteMenu(true);
+        return;
       }
     );
 
@@ -117,6 +118,7 @@ export const ModuleListItemAction = observer(function ModuleListItemAction(props
           title: t("toast.success"),
           message: t("entity.update.success", { entity: t("common.module") }),
         });
+        return;
       })
       .catch((err) => {
         setToast({

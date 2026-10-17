@@ -62,6 +62,7 @@ export const ViewQuickActions = observer(function ViewQuickActions(props: Props)
         title: t("common.link_copied"),
         message: t("view_link_copied_to_clipboard"),
       });
+      return;
     });
   const handleOpenInNewTab = () => window.open(`/${viewLink}`, "_blank");
 

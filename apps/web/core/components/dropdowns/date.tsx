@@ -168,6 +168,7 @@ export const DateDropdown = observer(function DateDropdown(props: Props) {
   );
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- pre-existing a11y pattern; markup unchanged
     <ComboDropDown
       as="div"
       ref={dropdownRef}
