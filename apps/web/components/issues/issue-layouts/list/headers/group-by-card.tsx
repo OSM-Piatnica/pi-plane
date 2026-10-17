@@ -12,10 +12,10 @@ import { CircleDashed } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
 import { AddOutline } from "@makeplane/propel/icons";
 // types
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { TIssue, ISearchIssueResponse, TIssueGroupByOptions } from "@plane/types";
 // ui
-import { CustomMenu } from "@plane/ui";
+import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
 // components
 import { cn } from "@plane/utils";
 import { ExistingIssuesListModal } from "@/components/core/modals/existing-issues-list-modal";
@@ -57,7 +57,7 @@ export const HeaderGroupByCard = observer(function HeaderGroupByCard(props: IHea
     handleCollapsedGroups,
     isEpic = false,
   } = props;
-  // i18n
+  // plane hooks
   const { t } = useTranslation();
   // states
   const [isOpen, setIsOpen] = useState(false);
@@ -81,13 +81,13 @@ export const HeaderGroupByCard = observer(function HeaderGroupByCard(props: IHea
       await addIssuesToView?.(issues);
 
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("toast.success"),
         message: t("issue_ui.add_to_cycle_success"),
       });
     } catch (_error) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("issue_ui.add_to_cycle_failed"),
       });
@@ -130,38 +130,44 @@ export const HeaderGroupByCard = observer(function HeaderGroupByCard(props: IHea
 
         {!disableIssueCreation &&
           (renderExistingIssueModal ? (
-            <CustomMenu
-              customButton={
-                <span className="flex h-5 w-5 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xs transition-all hover:bg-layer-1">
-                  <AddOutline className="h-3.5 w-3.5" />
-                </span>
-              }
-            >
-              <CustomMenu.MenuItem
-                onClick={() => {
-                  setIsOpen(true);
-                }}
-              >
-                <span className="flex items-center justify-start gap-2">{t("create_work_item")}</span>
-              </CustomMenu.MenuItem>
-              <CustomMenu.MenuItem
-                onClick={() => {
-                  setOpenExistingIssueListModal(true);
-                }}
-              >
-                <span className="flex items-center justify-start gap-2">{t("issue.add.existing")}</span>
-              </CustomMenu.MenuItem>
-            </CustomMenu>
+            <Menu>
+              <MenuTrigger
+                render={
+                  <button
+                    type="button"
+                    aria-label={t("common.add")}
+                    className="flex h-5 w-5 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xs transition-all hover:bg-layer-1"
+                  >
+                    <AddOutline className="h-3.5 w-3.5" />
+                  </button>
+                }
+              />
+              <MenuContent side="bottom" align="start">
+                <MenuItem
+                  label={t("create_work_item")}
+                  onClick={() => {
+                    setIsOpen(true);
+                  }}
+                />
+                <MenuItem
+                  label={t("issue.add.existing")}
+                  onClick={() => {
+                    setOpenExistingIssueListModal(true);
+                  }}
+                />
+              </MenuContent>
+            </Menu>
           ) : (
-            // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup
-            <div
+            <button
+              type="button"
+              aria-label={t("common.add")}
               className="flex h-5 w-5 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xs transition-all hover:bg-layer-1"
               onClick={() => {
                 setIsOpen(true);
               }}
             >
               <AddOutline width={14} />
-            </div>
+            </button>
           ))}
 
         {isEpic ? (

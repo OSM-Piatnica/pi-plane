@@ -10,9 +10,9 @@ import { Controller, useForm } from "react-hook-form";
 // plane imports
 import { USE_CASES } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 import { TickOutline } from "@makeplane/propel/icons";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { TUserProfile } from "@plane/types";
 import { EOnboardingSteps } from "@plane/types";
 import { cn } from "@plane/utils";
@@ -57,13 +57,13 @@ export const UseCaseSetupStep = observer(function UseCaseSetupStep({ handleStepC
       await updateUserProfile(profileUpdatePayload);
       // totalSteps > 2 && stepChange({ profile_complete: true }),
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("toast.success"),
         message: t("onboarding.profile.toast.profile_setup_completed"),
       });
     } catch {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("onboarding.profile.toast.profile_setup_failed"),
       });
@@ -152,12 +152,15 @@ export const UseCaseSetupStep = observer(function UseCaseSetupStep({ handleStepC
 
       {/* Action Buttons */}
       <div className="space-y-3">
-        <Button variant="primary" type="submit" className="w-full" size="xl" disabled={isButtonDisabled}>
-          {t("common.continue")}
-        </Button>
-        <Button variant="ghost" onClick={handleSkip} className="w-full" size="xl">
-          {t("onboarding.skip")}
-        </Button>
+        <Button
+          variant="primary"
+          type="submit"
+          stretch="full"
+          size="lg"
+          disabled={isButtonDisabled}
+          label={t("common.continue")}
+        />
+        <Button variant="ghost" onClick={handleSkip} stretch="full" size="lg" label={t("onboarding.skip")} />
       </div>
     </form>
   );

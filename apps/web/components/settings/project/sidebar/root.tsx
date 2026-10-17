@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 // plane imports
-import { ScrollArea } from "@plane/propel/scrollarea";
+import { ScrollArea } from "@makeplane/propel/components/scroll-area";
 // local imports
 import { ProjectSettingsSidebarHeader } from "./header";
 import { ProjectSettingsSidebarItemCategories } from "./item-categories";
@@ -18,15 +19,13 @@ export function ProjectSettingsSidebarRoot(props: Props) {
   const { projectId } = props;
 
   return (
-    <ScrollArea
-      scrollType="hover"
-      orientation="vertical"
-      size="sm"
-      rootClassName="shrink-0 animate-fade-in h-full w-[250px] bg-surface-1 border-r border-r-subtle overflow-y-scroll"
-      viewportClassName="pb-5"
-    >
-      <ProjectSettingsSidebarHeader projectId={projectId} />
-      <ProjectSettingsSidebarItemCategories projectId={projectId} />
-    </ScrollArea>
+    <div className="flex h-full w-[250px] shrink-0 animate-fade-in flex-col overflow-hidden border-r border-r-subtle bg-surface-1">
+      <ScrollArea orientation="vertical">
+        <div className="pb-5">
+          <ProjectSettingsSidebarHeader projectId={projectId} />
+          <ProjectSettingsSidebarItemCategories projectId={projectId} />
+        </div>
+      </ScrollArea>
+    </div>
   );
 }

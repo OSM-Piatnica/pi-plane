@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -29,18 +30,15 @@ export const CustomCalloutExtensionConfig: CustomCalloutExtensionType = Node.cre
   content: "block+",
 
   addAttributes() {
-    const attributes = {
-      // Reduce instead of map to accumulate the attributes directly into an object
-      ...Object.values(ECalloutAttributeNames).reduce(
-        (acc, value) => {
-          acc[value] = {
-            default: DEFAULT_CALLOUT_BLOCK_ATTRIBUTES[value],
-          };
-          return acc;
-        },
-        {} as Record<ECalloutAttributeNames, { default: TCalloutBlockAttributes[ECalloutAttributeNames] }>
-      ),
-    };
+    const attributes = Object.values(ECalloutAttributeNames).reduce(
+      (acc, value) => {
+        acc[value] = {
+          default: DEFAULT_CALLOUT_BLOCK_ATTRIBUTES[value],
+        };
+        return acc;
+      },
+      {} as Record<ECalloutAttributeNames, { default: TCalloutBlockAttributes[ECalloutAttributeNames] }>
+    );
 
     return attributes;
   },

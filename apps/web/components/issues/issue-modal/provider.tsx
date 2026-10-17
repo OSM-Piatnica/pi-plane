@@ -12,7 +12,7 @@ import { observer } from "mobx-react";
 import type { UseFormWatch } from "react-hook-form";
 import { DEFAULT_WORK_ITEM_FORM_VALUES } from "@plane/constants";
 import type { ISearchIssueResponse, TIssue, TIssuePropertyValueErrors, TIssuePropertyValues } from "@plane/types";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import { useTranslation } from "@plane/i18n";
 import { IssueModalContext } from "@/components/issues/issue-modal/context";
 import type { TIssueFields } from "@/components/issues/issue-modal/issue-type-select";
@@ -85,7 +85,7 @@ export const IssueModalProvider = observer(function IssueModalProvider(props: TI
       } catch (e) {
         console.error(e);
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("error"),
           message: t("work_item_templates.apply_failed_toast"),
         });

@@ -5,13 +5,13 @@
  * See the LICENSE file for details.
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { TGroupedIssues, TIssue, TIssueMap, TPaginationData, ICalendarDate } from "@plane/types";
 // types
 // ui
@@ -87,6 +87,27 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
 
   const dayTileRef = useRef<HTMLDivElement | null>(null);
 
+  // Reads the latest issues map and drop handler without re-registering the drop target
+  const handleDrop = useEffectEvent((sourceData: { id: string; date: string }, destinationDate: string) => {
+    const issueDetails = issues?.[sourceData?.id];
+    if (issueDetails?.start_date) {
+      const issueStartDate = new Date(issueDetails.start_date);
+      const targetDate = new Date(destinationDate);
+      const diffInDays = differenceInCalendarDays(targetDate, issueStartDate);
+      if (diffInDays < 0) {
+        setToast({
+          type: "error",
+          title: t("toast.error"),
+          message: t("issue_ui.due_before_start"),
+        });
+        return false;
+      }
+    }
+
+    handleDragAndDrop(sourceData?.id, issueDetails?.project_id ?? undefined, sourceData?.date, destinationDate);
+    return true;
+  });
+
   useEffect(() => {
     const element = dayTileRef.current;
 
@@ -108,34 +129,13 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
           const destinationData = self?.data as { date: string } | undefined;
           if (!sourceData || !destinationData) return;
 
-          const issueDetails = issues?.[sourceData?.id];
-          if (issueDetails?.start_date) {
-            const issueStartDate = new Date(issueDetails.start_date);
-            const targetDate = new Date(destinationData?.date);
-            const diffInDays = differenceInCalendarDays(targetDate, issueStartDate);
-            if (diffInDays < 0) {
-              setToast({
-                type: TOAST_TYPE.ERROR,
-                // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
-                title: t("toast.error"),
-                message: t("issue_ui.due_before_start"),
-              });
-              return;
-            }
-          }
-
-          handleDragAndDrop(
-            sourceData?.id,
-            issueDetails?.project_id ?? undefined,
-            sourceData?.date,
-            destinationData?.date
-          );
+          if (!handleDrop(sourceData, destinationData.date)) return;
           highlightIssueOnDrop(source?.element?.id, false);
         },
       })
     );
     // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
-  }, [dayTileRef?.current, formattedDatePayload]);
+  }, [formattedDatePayload]);
 
   if (!formattedDatePayload) return null;
   const issueIds = groupedIssueIds?.[formattedDatePayload];
@@ -203,7 +203,8 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
 
         {/* Mobile view content */}
         {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
-        <div
+        <button
+          type="button"
           onClick={() => setSelectedDate(date.date)}
           className={cn(
             "mx-auto flex h-full w-full cursor-pointer flex-col items-center justify-start py-2.5 text-13 font-medium opacity-80 md:hidden",
@@ -212,15 +213,15 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
             }
           )}
         >
-          <div
+          <span
             className={cn("flex size-6 items-center justify-center rounded-full", {
               "bg-accent-primary text-on-color": isSelectedDate,
               "bg-accent-primary/10 text-accent-primary": isToday && !isSelectedDate,
             })}
           >
             {date.date.getDate()}
-          </div>
-        </div>
+          </span>
+        </button>
       </div>
     </>
   );

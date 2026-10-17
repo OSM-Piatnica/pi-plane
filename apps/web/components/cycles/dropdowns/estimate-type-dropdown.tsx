@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import type { TCycleEstimateType } from "@plane/types";
 import { EEstimateSystem } from "@plane/types";
-import { CustomSelect } from "@plane/ui";
+import { Select } from "@plane/blocks/select";
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useCycle } from "@/hooks/store/use-cycle";
 // local imports
@@ -34,19 +34,20 @@ export const EstimateTypeDropdown = observer(function EstimateTypeDropdown(props
   return (getIsPointsDataAvailable(cycleId) || isCurrentProjectEstimateEnabled) &&
     currentProjectEstimateType !== EEstimateSystem.CATEGORIES ? (
     <div className="relative flex items-center gap-2">
-      <CustomSelect
-        value={value}
-        label={<span>{t(selectedOption?.labelKey ?? "common.none")}</span>}
-        onChange={onChange}
-        maxHeight="lg"
-        buttonClassName="bg-surface-2 border-none rounded-sm text-13 font-medium "
+      <Select<(typeof cycleEstimateOptions)[number]>
+        getValues={() => cycleEstimateOptions}
+        value={cycleEstimateOptions.find((v) => v.value === value) ?? null}
+        onChange={(next) => void onChange(next as TCycleEstimateType)}
+        getOptionValue={(option) => option.value}
+        getOptionLabel={(option) => t(option.labelKey)}
+        showSearch={false}
+        pinSelected={false}
+        placeholder={t("common.none")}
       >
-        {cycleEstimateOptions.map((item) => (
-          <CustomSelect.Option key={item.value} value={item.value}>
-            {t(item.labelKey)}
-          </CustomSelect.Option>
-        ))}
-      </CustomSelect>
+        <Select.Trigger variant="select-md" className="rounded-sm border-none bg-surface-2 text-13 font-medium">
+          <Select.Value />
+        </Select.Trigger>
+      </Select>
     </div>
   ) : showDefault ? (
     <span className="capitalize">{selectedOption ? t(selectedOption.labelKey) : value}</span>

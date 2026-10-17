@@ -8,7 +8,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { ISearchIssueResponse, TIssue, TIssueServiceType, TWorkItemWidgets } from "@plane/types";
 // components
 import { ExistingIssuesListModal } from "@/components/core/modals/existing-issues-list-modal";
@@ -116,7 +116,7 @@ export const IssueDetailWidgetModals = observer(function IssueDetailWidgetModals
     if (!relationKey) return;
     if (data.length === 0) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("issue.select.error"),
       });
@@ -133,7 +133,7 @@ export const IssueDetailWidgetModals = observer(function IssueDetailWidgetModals
       );
     } catch (error) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: getIssueApiErrorMessage(error, t("issue.relation.dependency_create_failed"), t),
       });

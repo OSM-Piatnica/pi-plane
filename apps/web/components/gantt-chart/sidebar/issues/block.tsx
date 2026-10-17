@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 // plane imports
 import type { IGanttBlock } from "@plane/types";
-import { Row } from "@plane/ui";
+import { Row } from "@plane/blocks/layout";
 import { cn } from "@plane/utils";
 // components
 import { MultipleSelectEntityAction } from "@/components/core/multiple-select";

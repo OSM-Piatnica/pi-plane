@@ -10,8 +10,8 @@ import { observer } from "mobx-react";
 // ui
 import { EIconSize } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { StateGroupIcon } from "@plane/propel/icons";
-import { Loader } from "@plane/ui";
+import { StateGroupIcon } from "@plane/blocks/icons";
+import { Loader } from "@plane/blocks/skeleton";
 // hooks
 import { useStates } from "@/hooks/store/use-state";
 // local imports
@@ -59,7 +59,7 @@ export const FilterState = observer(function FilterState(props: Props) {
                 {filteredOptions.slice(0, itemsToRender).map((state) => (
                   <FilterOption
                     key={state.id}
-                    isChecked={appliedFilters?.includes(state.id) ? true : false}
+                    isChecked={!!appliedFilters?.includes(state.id)}
                     onClick={() => handleUpdate(state.id)}
                     icon={<StateGroupIcon stateGroup={state.group} color={state.color} size={EIconSize.MD} />}
                     title={state.name}

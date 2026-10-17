@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useTranslation } from "@plane/i18n";
 import { CloseOutline, EditOutline } from "@makeplane/propel/icons";
 // Plane
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { ISearchIssueResponse, TIssueRelationTypes } from "@plane/types";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { cn, generateWorkItemLink } from "@plane/utils";
@@ -57,7 +57,7 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
   const onSubmit = async (data: ISearchIssueResponse[]) => {
     if (data.length === 0) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("issue.select.error"),
       });
@@ -77,7 +77,7 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
       })
       .catch((error) => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: getIssueApiErrorMessage(error, "Could not create relation."),
         });

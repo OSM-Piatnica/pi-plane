@@ -9,9 +9,18 @@ import { useState } from "react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 // ui
-import { Button } from "@plane/propel/button";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
+import { Button } from "@makeplane/propel/components/button";
+import { setToast } from "@plane/blocks/toast";
+import {
+  Dialog,
+  DialogActions,
+  DialogBody,
+  DialogContent,
+  DialogHeader,
+  DialogHeading,
+  DialogMain,
+  DialogTitle,
+} from "@makeplane/propel/components/dialog";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useAppRouter } from "@/hooks/use-app-router";
@@ -49,7 +58,7 @@ export function ArchiveRestoreProjectModal(props: Props) {
     await archiveProject(workspaceSlug, projectId)
       .then(() => {
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("project_components.archive_restore_modal.archive_success_title"),
           message: t("project_components.archive_restore_modal.archive_success_message", { name: projectDetails.name }),
         });
@@ -59,7 +68,7 @@ export function ArchiveRestoreProjectModal(props: Props) {
       })
       .catch(() =>
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: t("project_components.archive_restore_modal.archive_error"),
         })
@@ -72,7 +81,7 @@ export function ArchiveRestoreProjectModal(props: Props) {
     await restoreProject(workspaceSlug, projectId)
       .then(() => {
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("project_components.archive_restore_modal.restore_success_title"),
           message: t("project_components.archive_restore_modal.restore_success_message", { name: projectDetails.name }),
         });
@@ -82,7 +91,7 @@ export function ArchiveRestoreProjectModal(props: Props) {
       })
       .catch(() =>
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: t("project_components.archive_restore_modal.restore_error"),
         })
@@ -91,40 +100,51 @@ export function ArchiveRestoreProjectModal(props: Props) {
   };
 
   return (
-    <ModalCore isOpen={isOpen} handleClose={handleClose} position={EModalPosition.CENTER} width={EModalWidth.LG}>
-      <div className="px-5 py-4">
-        <h3 className="text-18 font-medium 2xl:text-20">
-          {archive
-            ? t("project_components.archive_restore_modal.archive_heading", { name: projectDetails.name })
-            : t("project_components.archive_restore_modal.restore_heading", { name: projectDetails.name })}
-        </h3>
-        <p className="mt-3 text-13 text-secondary">
-          {archive
-            ? t("project_components.archive_restore_modal.archive_description")
-            : t("project_components.archive_restore_modal.restore_description")}
-        </p>
-        <div className="mt-3 flex justify-end gap-2">
-          <Button variant="secondary" size="lg" onClick={onClose}>
-            {t("cancel")}
-          </Button>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+    >
+      <DialogContent size="sm">
+        <DialogMain>
+          <DialogHeader>
+            <DialogHeading>
+              <DialogTitle>
+                {archive
+                  ? t("project_components.archive_restore_modal.archive_heading", { name: projectDetails.name })
+                  : t("project_components.archive_restore_modal.restore_heading", { name: projectDetails.name })}
+              </DialogTitle>
+            </DialogHeading>
+          </DialogHeader>
+          <DialogBody>
+            <p className="text-13 text-secondary">
+              {archive
+                ? t("project_components.archive_restore_modal.archive_description")
+                : t("project_components.archive_restore_modal.restore_description")}
+            </p>
+          </DialogBody>
+        </DialogMain>
+        <DialogActions>
+          <Button variant="secondary" size="md" stretch="auto" label={t("cancel")} onClick={onClose} />
           <Button
             variant="primary"
-            size="lg"
-            // oxlint-disable-next-line tabindex-no-positive -- existing behaviour; lint cleanup only
-            tabIndex={1}
+            size="md"
+            stretch="auto"
+            label={
+              archive
+                ? isLoading
+                  ? t("common.archiving")
+                  : t("archive")
+                : isLoading
+                  ? t("project_components.shared.restoring")
+                  : t("restore")
+            }
             onClick={archive ? handleArchiveProject : handleRestoreProject}
             loading={isLoading}
-          >
-            {archive
-              ? isLoading
-                ? t("common.archiving")
-                : t("archive")
-              : isLoading
-                ? t("project_components.shared.restoring")
-                : t("restore")}
-          </Button>
-        </div>
-      </div>
-    </ModalCore>
+          />
+        </DialogActions>
+      </DialogContent>
+    </Dialog>
   );
 }

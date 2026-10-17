@@ -11,18 +11,20 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 // constants
 import { EPageAccess } from "@plane/constants";
 // plane types
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 import { PagesOutline } from "@makeplane/propel/icons";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { TPage } from "@plane/types";
 // plane ui
-import { Breadcrumbs, Header } from "@plane/ui";
+import { Breadcrumbs } from "@plane/blocks/breadcrumb";
+import { Header } from "@plane/blocks/layout";
 import { useTranslation } from "@plane/i18n";
 // helpers
 import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { CommonProjectBreadcrumbs } from "@/components/breadcrumbs/common";
+import { useProjectCrumbProps } from "@/components/breadcrumbs/use-project-crumb-props";
 import { EPageStoreType, usePageStore } from "@/hooks/store";
 
 export const PagesListHeader = observer(function PagesListHeader() {
@@ -33,6 +35,7 @@ export const PagesListHeader = observer(function PagesListHeader() {
   // router
   const router = useRouter();
   const { workspaceSlug, projectId } = useParams();
+  const projectCrumb = useProjectCrumbProps(workspaceSlug?.toString(), projectId?.toString());
   const searchParams = useSearchParams();
   const pageType = searchParams.get("type");
   // store hooks
@@ -54,7 +57,7 @@ export const PagesListHeader = observer(function PagesListHeader() {
       })
       .catch((err) => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: err?.data?.error || "Page could not be created. Please try again.",
         });
@@ -66,7 +69,11 @@ export const PagesListHeader = observer(function PagesListHeader() {
     <Header>
       <Header.LeftItem>
         <Breadcrumbs isLoading={loader === "init-loader"}>
-          <CommonProjectBreadcrumbs workspaceSlug={workspaceSlug?.toString()} projectId={projectId?.toString()} />
+          <CommonProjectBreadcrumbs
+            workspaceSlug={workspaceSlug?.toString()}
+            projectId={projectId?.toString()}
+            {...projectCrumb}
+          />
           <Breadcrumbs.Item
             component={
               <BreadcrumbLink
@@ -82,9 +89,14 @@ export const PagesListHeader = observer(function PagesListHeader() {
       </Header.LeftItem>
       {canCurrentUserCreatePage && (
         <Header.RightItem>
-          <Button variant="primary" size="lg" onClick={handleCreatePage} loading={isCreatingPage}>
-            {isCreatingPage ? t("adding") : t("page_ui.add_page")}
-          </Button>
+          <Button
+            variant="primary"
+            size="md"
+            stretch="auto"
+            label={isCreatingPage ? t("adding") : t("page_ui.add_page")}
+            onClick={handleCreatePage}
+            loading={isCreatingPage}
+          />
         </Header.RightItem>
       )}
     </Header>

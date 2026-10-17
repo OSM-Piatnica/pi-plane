@@ -8,7 +8,7 @@
 import { useRef, useState } from "react";
 // Plane
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { IBlockUpdateDependencyData, IGanttBlock } from "@plane/types";
 // hooks
 import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
@@ -132,7 +132,7 @@ export const useGanttResizable = (
         if (updateBlockDates) updateBlockDates(blockUpdates);
       } catch {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: "Something went wrong while updating block dates",
         });

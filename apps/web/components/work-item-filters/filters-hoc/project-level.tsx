@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 // plane imports
 import { EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { setToast, TOAST_TYPE } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { IProjectView, TWorkItemFilterExpression } from "@plane/types";
 import { EUserProjectRoles, EViewAccess } from "@plane/types";
 // components
@@ -143,7 +143,7 @@ export const ProjectLevelWorkItemFiltersHOC = observer(function ProjectLevelWork
     (filterExpression: TWorkItemFilterExpression) => {
       if (!viewDetails) {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("project_components.view_filters.view_not_found_title"),
           message: t("project_components.view_filters.view_not_found_message"),
         });
@@ -156,7 +156,7 @@ export const ProjectLevelWorkItemFiltersHOC = observer(function ProjectLevelWork
       })
         .then(() => {
           setToast({
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             title: t("toast.success"),
             message: t("project_components.view_filters.view_updated"),
           });
@@ -164,7 +164,7 @@ export const ProjectLevelWorkItemFiltersHOC = observer(function ProjectLevelWork
         })
         .catch(() => {
           setToast({
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("toast.error"),
             message: t("project_components.view_filters.view_update_error"),
           });

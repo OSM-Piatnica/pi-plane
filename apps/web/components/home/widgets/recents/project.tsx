@@ -8,12 +8,12 @@
 import { useRouter } from "next/navigation";
 // plane types
 import { useTranslation } from "@plane/i18n";
-import { Logo } from "@plane/propel/emoji-icon-picker";
+import { Logo } from "@plane/blocks/emoji-icon-picker";
 import type { TActivityEntityData, TProjectEntityData } from "@plane/types";
 import { calculateTimeAgo } from "@plane/utils";
 // components
 import { ListItem } from "@/components/core/list";
-import { MemberDropdown } from "@/components/dropdowns/member/dropdown";
+import { MemberSelect } from "@/components/dropdowns/member/member-select";
 // helpers
 
 type BlockProps = {
@@ -56,20 +56,14 @@ export function RecentProject(props: BlockProps) {
         <div className="flex gap-4">
           {projectDetails?.project_members?.length > 0 && (
             <div className="h-5">
-              <MemberDropdown
+              <MemberSelect
                 projectId={projectDetails?.id}
                 value={projectDetails?.project_members}
                 onChange={() => {}}
                 disabled
                 multiple
-                buttonVariant={
-                  projectDetails?.project_members?.length > 0 ? "transparent-without-text" : "border-without-text"
-                }
-                buttonClassName={projectDetails?.project_members?.length > 0 ? "hover:bg-transparent px-0" : ""}
-                showTooltip={projectDetails?.project_members?.length === 0}
+                variant="avatar-group-sm"
                 placeholder={t("assignees")}
-                optionsClassName="z-10"
-                tooltipContent=""
               />
             </div>
           )}

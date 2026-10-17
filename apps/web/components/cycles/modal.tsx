@@ -9,15 +9,14 @@ import { useEffect, useState } from "react";
 import { mutate } from "swr";
 // types
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { CycleDateCheckData, ICycle, TCycleTabOptions } from "@plane/types";
 // ui
-import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
+import { Dialog, DialogContent } from "@makeplane/propel/components/dialog";
 // hooks
 import { renderFormattedPayloadDate } from "@plane/utils";
 import { useCycle } from "@/hooks/store/use-cycle";
 import { useProject } from "@/hooks/store/use-project";
-import useKeypress from "@/hooks/use-keypress";
 import useLocalStorage from "@/hooks/use-local-storage";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // services
@@ -65,7 +64,7 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
         }
 
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("toast.success"),
           message: t("cycle_ui.create_success"),
         });
@@ -73,7 +72,7 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
       })
       .catch((err) => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: err?.detail ?? t("cycle_ui.create_error"),
         });
@@ -87,7 +86,7 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
     await updateCycleDetails(workspaceSlug, selectedProjectId, cycleId, payload)
       .then((_res) => {
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("toast.success"),
           message: t("project_cycles.action.update.success.description"),
         });
@@ -95,7 +94,7 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
       })
       .catch((err) => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: err?.detail ?? t("project_cycles.action.update.failed.description"),
         });
@@ -158,7 +157,7 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
       handleClose();
     } else
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("project_cycles.action.update.error.already_exists"),
       });
@@ -185,21 +184,27 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
       setActiveProject(projectId ?? workspaceProjectIds?.[0] ?? null);
   }, [activeProject, data, projectId, workspaceProjectIds, isOpen]);
 
-  useKeypress("Escape", () => {
-    if (isOpen) handleClose();
-  });
-
   return (
-    <ModalCore isOpen={isOpen} position={EModalPosition.TOP} width={EModalWidth.XXL}>
-      <CycleForm
-        handleFormSubmit={handleFormSubmit}
-        handleClose={handleClose}
-        status={!!data}
-        projectId={activeProject ?? ""}
-        setActiveProject={setActiveProject}
-        data={data}
-        isMobile={isMobile}
-      />
-    </ModalCore>
+    <Dialog
+      open={isOpen}
+      // The legacy modal shell had no `handleClose`, so an outside press never dismissed it and
+      // Escape came from `useKeypress`; Base UI's own Escape now reaches the same handler.
+      disablePointerDismissal
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+    >
+      <DialogContent size="md">
+        <CycleForm
+          handleFormSubmit={handleFormSubmit}
+          handleClose={handleClose}
+          status={!!data}
+          projectId={activeProject ?? ""}
+          setActiveProject={setActiveProject}
+          data={data}
+          isMobile={isMobile}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }

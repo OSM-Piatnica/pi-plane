@@ -7,28 +7,34 @@
 import React from "react";
 import { observer } from "mobx-react";
 // plane imports
+import { Select } from "@plane/blocks/select";
 import { useTranslation } from "@plane/i18n";
-import { CustomSelect } from "@plane/ui";
+import type { TLanguage } from "@plane/i18n";
+
+type TLanguageOption = { value: string; label: string };
 
 export const AuthLanguageSelect = observer(function AuthLanguageSelect() {
   const { currentLocale, changeLanguage, languages } = useTranslation();
 
-  const currentLanguageLabel = languages.find((language) => language.value === currentLocale)?.label ?? currentLocale;
+  const options: TLanguageOption[] = languages.map((language) => ({ value: language.value, label: language.label }));
+  const currentLanguage = options.find((language) => language.value === currentLocale) ?? {
+    value: currentLocale,
+    label: currentLocale,
+  };
 
   return (
-    <CustomSelect
-      value={currentLocale}
-      label={<span className="text-body-sm-regular text-tertiary">{currentLanguageLabel}</span>}
-      onChange={changeLanguage}
-      buttonClassName="border-none px-2 py-1"
-      placement="bottom-end"
-      input
+    <Select<TLanguageOption>
+      getValues={() => options}
+      value={currentLanguage}
+      onChange={(value) => changeLanguage(value as TLanguage)}
+      getOptionValue={(option) => option.value}
+      getOptionLabel={(option) => option.label}
+      showSearch={false}
+      pinSelected={false}
     >
-      {languages.map((language) => (
-        <CustomSelect.Option key={language.value} value={language.value}>
-          {language.label}
-        </CustomSelect.Option>
-      ))}
-    </CustomSelect>
+      <Select.Trigger variant="select-ghost-md">
+        <Select.Value />
+      </Select.Trigger>
+    </Select>
   );
 });

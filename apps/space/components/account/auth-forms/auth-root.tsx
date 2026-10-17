@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,7 +11,7 @@ import { useSearchParams } from "next/navigation";
 // plane imports
 import { SitesAuthService } from "@plane/services";
 import type { IEmailCheckData } from "@plane/types";
-import { OAuthOptions } from "@plane/ui";
+import { OAuthOptions } from "@plane/blocks/auth";
 // helpers
 import type { TAuthErrorInfo } from "@/helpers/authentication.helper";
 import { EErrorAlertType, authErrorHandler, EAuthenticationErrorCodes } from "@/helpers/authentication.helper";
@@ -134,8 +135,8 @@ export const AuthRoot = observer(function AuthRoot() {
   };
 
   // generating the unique code
-  const generateEmailUniqueCode = async (email: string): Promise<{ code: string } | undefined> => {
-    const payload = { email: email };
+  const generateEmailUniqueCode = async (emailToVerify: string): Promise<{ code: string } | undefined> => {
+    const payload = { email: emailToVerify };
     return await authService
       .generateUniqueCode(payload)
       .then(() => ({ code: "" }))
@@ -185,7 +186,7 @@ export const AuthRoot = observer(function AuthRoot() {
             }}
           />
         )}
-        <TermsAndConditions isSignUp={authMode === EAuthModes.SIGN_UP ? true : false} />
+        <TermsAndConditions isSignUp={authMode === EAuthModes.SIGN_UP} />
       </div>
     </div>
   );

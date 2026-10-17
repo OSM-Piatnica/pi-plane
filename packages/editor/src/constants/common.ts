@@ -29,7 +29,7 @@ import {
   ToDoOutline,
   UnderlineOutline,
 } from "@makeplane/propel/icons";
-import { MonospaceIcon, SansSerifIcon, SerifIcon } from "@plane/propel/icons";
+import { MonospaceIcon, SansSerifIcon, SerifIcon } from "@plane/blocks/icons";
 import type { TEditorFontStyle } from "@/types/config";
 import type { TCommandExtraProps, TEditorCommands } from "@/types/editor";
 

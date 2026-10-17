@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 // plane imports
-import { ScrollArea } from "@plane/propel/scrollarea";
+import { ScrollArea } from "@makeplane/propel/components/scroll-area";
 import { cn } from "@plane/utils";
 // components
 import { AppHeader } from "@/components/core/app-header";
@@ -26,7 +27,7 @@ export function SettingsContentWrapper(props: Props) {
           <AppHeader header={header} />
         </div>
       )}
-      <ScrollArea scrollType="hover" orientation="vertical" size="sm" className="size-full grow overflow-y-scroll">
+      <ScrollArea orientation="vertical">
         <div
           className={cn("py-9", {
             "w-full px-page-x lg:px-12": hugging,

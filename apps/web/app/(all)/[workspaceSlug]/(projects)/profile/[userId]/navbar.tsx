@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,7 @@ import { useParams, usePathname } from "next/navigation";
 // plane imports
 import { PROFILE_VIEWER_TAB, PROFILE_ADMINS_TAB } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { Header, EHeaderVariant } from "@plane/ui";
+import { Header, EHeaderVariant } from "@plane/blocks/layout";
 import { cn } from "@plane/utils";
 
 type Props = {

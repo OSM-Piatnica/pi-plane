@@ -9,7 +9,7 @@
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { Layers } from "lucide-react";
-import { CloseIcon } from "@plane/propel/icons";
+import { CloseOutline } from "@makeplane/propel/icons";
 import { SwitcherIcon } from "@/components/common/switcher-label";
 import { useWorkspaceIssueTypes } from "@/hooks/use-workspace-issue-types";
 
@@ -39,7 +39,7 @@ export const AppliedIssueTypeFilters = observer(function AppliedIssueTypeFilters
                 className="grid place-items-center text-tertiary hover:text-secondary"
                 onClick={() => handleRemove(typeId)}
               >
-                <CloseIcon height={10} width={10} strokeWidth={2} />
+                <CloseOutline height={10} width={10} strokeWidth={2} />
               </button>
             ) : null}
           </div>

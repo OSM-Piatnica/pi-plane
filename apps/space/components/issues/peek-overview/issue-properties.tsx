@@ -9,9 +9,9 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { StateGroupIcon, PriorityIcon } from "@plane/propel/icons";
+import { StateGroupIcon, PriorityIcon } from "@plane/blocks/icons";
 import { DueDateOutline, LinkOutline, PriorityOutline, StateOutline } from "@makeplane/propel/icons";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import { cn, getIssuePriorityFilters } from "@plane/utils";
 // helpers
 import { renderFormattedDate } from "@/helpers/date-time.helper";
@@ -48,7 +48,7 @@ export const PeekOverviewIssueProperties = observer(function PeekOverviewIssuePr
 
     copyTextToClipboard(urlToCopy).then(() => {
       setToast({
-        type: TOAST_TYPE.INFO,
+        type: "info",
         title: "Link copied!",
         message: "Work item link copied to clipboard",
       });
@@ -101,7 +101,7 @@ export const PeekOverviewIssueProperties = observer(function PeekOverviewIssuePr
                         : "border-priority-none text-priority-none"
               }`}
             >
-              {priority && <PriorityIcon priority={priority?.key} size={12} className="flex-shrink-0" />}
+              {priority && <PriorityIcon priority={priority?.key} className="size-3" />}
               <span>{t(priority?.titleTranslationKey || "common.none")}</span>
             </div>
           </div>

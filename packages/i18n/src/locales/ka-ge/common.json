@@ -8,6 +8,7 @@
   "submit": "გაგზავნა",
   "cancel": "გაუქმება",
   "loading": "ჩატვირთვა",
+  "searching": "ძიება მიმდინარეობს...",
   "error": "შეცდომა",
   "success": "წარმატება",
   "warning": "გაფრთხილება",
@@ -304,6 +305,9 @@
   "create_new_label": "ახალი იარლიყის შექმნა",
   "label_name": "ჭდის სახელი",
   "failed_to_create_label": "ჭდის შექმნა ვერ მოხერხდა. სცადეთ ხელახლა.",
+  "no_matching_labels": "შესაბამისი იარლიყები არ მოიძებნა",
+  "adding_label": "„{name}“ ემატება",
+  "add_label_to_labels": "დაამატეთ „{name}“ იარლიყებში",
   "start_date": "დაწყების თარიღი",
   "end_date": "დასრულების თარიღი",
   "due_date": "ვადის თარიღი",
@@ -526,6 +530,7 @@
       "updated_on": "განახლებულია"
     },
     "sort": {
+      "label": "დალაგება",
       "asc": "აღმავალი",
       "desc": "დაღმავალი",
       "created_on": "შექმნილია",
@@ -625,7 +630,8 @@
       "enable": "ჩართვა",
       "disable": "გამორთვა",
       "copy_markdown": "Markdown-ის კოპირება",
-      "reply": "პასუხი"
+      "reply": "პასუხი",
+      "add_reaction": "რეაქციის დამატება"
     },
     "name": "სახელი",
     "discard": "გაუქმება",
@@ -874,6 +880,7 @@
       "short_description": "ექსპორტი json-ად"
     }
   },
+  "labels_count": "{count, plural, one {# იარლიყი} other {# იარლიყი}}",
   "onboarding": {
     "skip": "გამოტოვება",
     "profile": {

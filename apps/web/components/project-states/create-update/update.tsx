@@ -8,7 +8,7 @@
 import { useState } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { IState, TStateOperationsCallbacks } from "@plane/types";
 // components
 import { StateForm } from "@/components/project-states";
@@ -36,7 +36,7 @@ export const StateUpdate = observer(function StateUpdate(props: TStateUpdate) {
     try {
       await updateStateCallback(state.id, formData);
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("toast.success"),
         message: t("project_components.states.updated"),
       });
@@ -46,14 +46,14 @@ export const StateUpdate = observer(function StateUpdate(props: TStateUpdate) {
       const errorStatus = error as { status: number };
       if (errorStatus?.status === 400) {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: t("project_components.states.update_name_exists"),
         });
         return { status: "already_exists" };
       } else {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: t("project_components.states.update_error"),
         });

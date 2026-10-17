@@ -7,7 +7,8 @@
 
 import { useParams } from "next/navigation";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
+import type { SetToastProps } from "@plane/blocks/toast";
 import type { EIssuesStoreType, TIssue, TIssueGroupByOptions, TIssueOrderByOptions } from "@plane/types";
 import type { GroupDropLocation } from "@/components/issues/issue-layouts/utils";
 import { handleGroupDragDrop } from "@/components/issues/issue-layouts/utils";
@@ -65,8 +66,8 @@ export const useGroupIssuesDragNDrop = (
       };
     }
   ) => {
-    const errorToastProps = {
-      type: TOAST_TYPE.ERROR,
+    const errorToastProps: SetToastProps = {
+      type: "error",
       title: t("toast.error"),
       message: t("page_ui.hooks.work_item_update_error"),
     };
@@ -102,7 +103,7 @@ export const useGroupIssuesDragNDrop = (
       updateIssue(projectId, issueId, data).catch((err) =>
         setToast({
           ...errorToastProps,
-          message: getIssueApiErrorMessage(err, errorToastProps.message, t),
+          message: getIssueApiErrorMessage(err, errorToastProps.message ?? "", t),
         })
       );
     }
@@ -129,7 +130,7 @@ export const useGroupIssuesDragNDrop = (
     ).catch((err) => {
       setToast({
         title: t("toast.error"),
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         message: getIssueApiErrorMessage(err, "Failed to perform this action", t),
       });
     });

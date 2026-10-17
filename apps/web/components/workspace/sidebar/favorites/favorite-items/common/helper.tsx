@@ -6,12 +6,12 @@
  */
 
 import type { LucideIcon } from "lucide-react";
-import { Logo } from "@plane/propel/emoji-icon-picker";
-import type { ISvgIcons } from "@plane/propel/icons";
-import { CyclesOutline, ModuleOutline, PagesOutline, ProjectsOutline, ViewsOutline } from "@makeplane/propel/icons";
-import { FavoriteFolderIcon } from "@plane/propel/icons";
 // plane imports
-import type { IFavorite, TLogoProps } from "@plane/types";
+import type { TLogoProps, IFavorite } from "@plane/types";
+import { FavoriteFolderIcon } from "@plane/blocks/icons";
+import { CyclesOutline, ModuleOutline, PagesOutline, ProjectsOutline, ViewsOutline } from "@makeplane/propel/icons";
+import type { ISvgIcons } from "@plane/blocks/icons";
+import { Logo } from "@plane/blocks/emoji-icon-picker";
 import { FAVORITE_ITEM_LINKS } from "@plane/constants";
 
 const FAVORITE_ITEM_ICONS: Record<string, React.FC<ISvgIcons> | LucideIcon> = {

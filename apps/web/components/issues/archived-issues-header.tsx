@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,7 +12,7 @@ import { EIssueFilterType, ISSUE_DISPLAY_FILTERS_BY_PAGE } from "@plane/constant
 import { useTranslation } from "@plane/i18n";
 import type { IIssueDisplayFilterOptions, IIssueDisplayProperties } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
-import { EHeaderVariant, Header } from "@plane/ui";
+import { EHeaderVariant, Header } from "@plane/blocks/layout";
 // components
 import { ArchiveTabsList } from "@/components/archives";
 import { DisplayFiltersSelection, FiltersDropdown } from "@/components/issues/issue-layouts/filters";

@@ -11,7 +11,7 @@ import { useTranslation } from "@plane/i18n";
 // types
 import type { TIssue } from "@plane/types";
 // helpers
-import { Row } from "@plane/ui";
+import { Row } from "@plane/blocks/layout";
 
 type Props = {
   issue: TIssue;

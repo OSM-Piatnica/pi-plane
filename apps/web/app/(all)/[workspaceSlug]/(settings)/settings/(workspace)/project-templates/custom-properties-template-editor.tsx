@@ -7,12 +7,40 @@
 import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { CustomSelect, Input, TextArea } from "@plane/ui";
+import { Button } from "@makeplane/propel/components/button";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { Switch } from "@makeplane/propel/components/switch";
-import { ProjectTemplateSelectField } from "./project-template-select-field";
+import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
+import { Select } from "@plane/blocks/select";
 import type { TCustomPropertyTemplateField, TCustomPropertyType } from "./project-template-form.types";
 import { CUSTOM_PROPERTY_TYPES, DEFAULT_CUSTOM_PROPERTY } from "./project-template-form.types";
+
+type TTemplateSelectOption = { value: string; label: string };
+
+type TTemplateSelectProps = {
+  value: string;
+  onChange: (value: string) => void;
+  options: TTemplateSelectOption[];
+};
+
+function TemplateSelect({ value, onChange, options }: TTemplateSelectProps) {
+  const selected = options.find((option) => option.value === value) ?? null;
+  return (
+    <Select<TTemplateSelectOption>
+      getValues={() => options}
+      value={selected}
+      onChange={onChange}
+      getOptionValue={(option) => option.value}
+      getOptionLabel={(option) => option.label}
+      showSearch={false}
+      pinSelected={false}
+    >
+      <Select.Trigger variant="select-lg" className="w-full">
+        <Select.Value />
+      </Select.Trigger>
+    </Select>
+  );
+}
 
 type TProps = {
   properties: TCustomPropertyTemplateField[];
@@ -122,9 +150,14 @@ export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint
               </p>
             </div>
             <div className="flex shrink-0 gap-1">
-              <Button type="button" variant="secondary" size="sm" onClick={() => startEdit(property)}>
-                {t("edit")}
-              </Button>
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                stretch="auto"
+                onClick={() => startEdit(property)}
+                label={t("edit")}
+              />
               <button
                 type="button"
                 className="rounded-md p-1.5 text-tertiary hover:bg-surface-1 hover:text-danger-primary"
@@ -144,29 +177,29 @@ export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint
               <label className="text-12 text-tertiary">
                 {t("workspace_settings.settings.project_templates.form.custom_property.title_label")}
               </label>
-              <Input
-                className="mt-1 h-8 w-full"
-                value={draft.title}
-                onChange={(e) => patchDraft({ title: e.target.value })}
-                placeholder={t("workspace_settings.settings.project_templates.form.custom_property.title_placeholder")}
-              />
+              <div className="mt-1">
+                <InputGroup size="lg">
+                  <Input
+                    size="lg"
+                    value={draft.title}
+                    onChange={(e) => patchDraft({ title: e.target.value })}
+                    placeholder={t(
+                      "workspace_settings.settings.project_templates.form.custom_property.title_placeholder"
+                    )}
+                  />
+                </InputGroup>
+              </div>
             </div>
             <div>
               <label className="text-12 text-tertiary">
                 {t("workspace_settings.settings.project_templates.form.custom_property.type_label")}
               </label>
               <div className="mt-1">
-                <ProjectTemplateSelectField
+                <TemplateSelect
                   value={draft.propertyType}
-                  onChange={(value: TCustomPropertyType) => patchDraft({ propertyType: value })}
-                  label={propertyTypeLabel(draft.propertyType)}
-                >
-                  {CUSTOM_PROPERTY_TYPES.map((type) => (
-                    <CustomSelect.Option key={type} value={type}>
-                      {propertyTypeLabel(type)}
-                    </CustomSelect.Option>
-                  ))}
-                </ProjectTemplateSelectField>
+                  onChange={(value) => patchDraft({ propertyType: value as TCustomPropertyType })}
+                  options={CUSTOM_PROPERTY_TYPES.map((type) => ({ value: type, label: propertyTypeLabel(type) }))}
+                />
               </div>
             </div>
           </div>
@@ -174,15 +207,20 @@ export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint
             <label className="text-12 text-tertiary">
               {t("workspace_settings.settings.project_templates.form.custom_property.description_label")}
             </label>
-            <TextArea
-              className="mt-1 min-h-[56px] w-full resize-y"
-              rows={2}
-              value={draft.description}
-              onChange={(e) => patchDraft({ description: e.target.value })}
-              placeholder={t(
-                "workspace_settings.settings.project_templates.form.custom_property.description_placeholder"
-              )}
-            />
+            <div className="mt-1">
+              <TextAreaGroup resize="vertical">
+                <TextArea
+                  size="md"
+                  surface="field"
+                  rows={2}
+                  value={draft.description}
+                  onChange={(e) => patchDraft({ description: e.target.value })}
+                  placeholder={t(
+                    "workspace_settings.settings.project_templates.form.custom_property.description_placeholder"
+                  )}
+                />
+              </TextAreaGroup>
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-6">
             <label className="flex items-center gap-2 text-13 text-secondary">
@@ -209,22 +247,25 @@ export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint
                     {t("workspace_settings.settings.project_templates.form.custom_property.select_mode_label")}
                   </label>
                   <div className="mt-1">
-                    <ProjectTemplateSelectField
+                    <TemplateSelect
                       value={draft.selectMode}
-                      onChange={(value) => patchDraft({ selectMode: value, defaultOption: null })}
-                      label={
-                        draft.selectMode === "multi"
-                          ? t("workspace_settings.settings.project_templates.form.custom_property.select_multi")
-                          : t("workspace_settings.settings.project_templates.form.custom_property.select_single")
+                      onChange={(value) =>
+                        patchDraft({
+                          selectMode: value as TCustomPropertyTemplateField["selectMode"],
+                          defaultOption: null,
+                        })
                       }
-                    >
-                      <CustomSelect.Option value="single">
-                        {t("workspace_settings.settings.project_templates.form.custom_property.select_single")}
-                      </CustomSelect.Option>
-                      <CustomSelect.Option value="multi">
-                        {t("workspace_settings.settings.project_templates.form.custom_property.select_multi")}
-                      </CustomSelect.Option>
-                    </ProjectTemplateSelectField>
+                      options={[
+                        {
+                          value: "single",
+                          label: t("workspace_settings.settings.project_templates.form.custom_property.select_single"),
+                        },
+                        {
+                          value: "multi",
+                          label: t("workspace_settings.settings.project_templates.form.custom_property.select_multi"),
+                        },
+                      ]}
+                    />
                   </div>
                 </div>
                 {draft.selectMode === "single" && draft.options.length > 0 ? (
@@ -233,23 +274,17 @@ export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint
                       {t("workspace_settings.settings.project_templates.form.custom_property.default_option_label")}
                     </label>
                     <div className="mt-1">
-                      <ProjectTemplateSelectField
+                      <TemplateSelect
                         value={draft.defaultOption ?? ""}
                         onChange={(value) => patchDraft({ defaultOption: value || null })}
-                        label={
-                          draft.defaultOption ||
-                          t("workspace_settings.settings.project_templates.form.custom_property.no_default")
-                        }
-                      >
-                        <CustomSelect.Option value="">
-                          {t("workspace_settings.settings.project_templates.form.custom_property.no_default")}
-                        </CustomSelect.Option>
-                        {draft.options.map((opt) => (
-                          <CustomSelect.Option key={opt} value={opt}>
-                            {opt}
-                          </CustomSelect.Option>
-                        ))}
-                      </ProjectTemplateSelectField>
+                        options={[
+                          {
+                            value: "",
+                            label: t("workspace_settings.settings.project_templates.form.custom_property.no_default"),
+                          },
+                          ...draft.options.map((opt) => ({ value: opt, label: opt })),
+                        ]}
+                      />
                     </div>
                   </div>
                 ) : null}
@@ -269,33 +304,54 @@ export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint
                 ))}
               </div>
               <div className="flex items-center gap-2">
-                <Input
-                  className="h-8 flex-1"
-                  value={optionDraft}
-                  onChange={(e) => setOptionDraft(e.target.value)}
-                  placeholder={t(
-                    "workspace_settings.settings.project_templates.form.custom_property.option_placeholder"
-                  )}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      addOption();
-                    }
-                  }}
+                <div className="min-w-0 flex-1">
+                  <InputGroup size="lg">
+                    <Input
+                      size="lg"
+                      value={optionDraft}
+                      onChange={(e) => setOptionDraft(e.target.value)}
+                      placeholder={t(
+                        "workspace_settings.settings.project_templates.form.custom_property.option_placeholder"
+                      )}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          addOption();
+                        }
+                      }}
+                    />
+                  </InputGroup>
+                </div>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  stretch="auto"
+                  onClick={addOption}
+                  disabled={!optionDraft.trim()}
+                  label={t("add")}
                 />
-                <Button type="button" variant="secondary" size="sm" onClick={addOption} disabled={!optionDraft.trim()}>
-                  {t("add")}
-                </Button>
               </div>
             </div>
           ) : null}
           <div className="flex justify-end gap-2">
-            <Button type="button" variant="secondary" size="sm" onClick={resetDraft}>
-              {t("cancel")}
-            </Button>
-            <Button type="button" variant="primary" size="sm" onClick={saveDraft} disabled={!draft.title.trim()}>
-              {editingId && properties.some((p) => p.id === editingId) ? t("update") : t("add")}
-            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              stretch="auto"
+              onClick={resetDraft}
+              label={t("cancel")}
+            />
+            <Button
+              type="button"
+              variant="primary"
+              size="sm"
+              stretch="auto"
+              onClick={saveDraft}
+              disabled={!draft.title.trim()}
+              label={editingId && properties.some((p) => p.id === editingId) ? t("update") : t("add")}
+            />
           </div>
         </div>
       ) : null}

@@ -11,10 +11,10 @@ import { useParams, useSearchParams } from "next/navigation";
 // types
 import { PROJECT_ERROR_MESSAGES } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { ICycle } from "@plane/types";
 // ui
-import { AlertModalCore } from "@plane/ui";
+import { ConfirmDialog } from "@plane/blocks/dialog";
 // hooks
 import { useCycle } from "@/hooks/store/use-cycle";
 import { useAppRouter } from "@/hooks/use-app-router";
@@ -49,7 +49,7 @@ export const CycleDeleteModal = observer(function CycleDeleteModal(props: ICycle
         .then(() => {
           if (cycleId || peekCycle) router.push(`/${workspaceSlug}/projects/${projectId}/cycles`);
           setToast({
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             title: t("toast.success"),
             message: t("entity.delete.success", { entity: t("common.cycle") }),
           });
@@ -62,14 +62,14 @@ export const CycleDeleteModal = observer(function CycleDeleteModal(props: ICycle
             : PROJECT_ERROR_MESSAGES.cycleDeleteError;
           setToast({
             title: t(currentError.i18n_title),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             message: currentError.i18n_message && t(currentError.i18n_message),
           });
         })
         .finally(() => handleClose());
     } catch {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("common.warning"),
         message: t("something_went_wrong_please_try_again"),
       });
@@ -79,7 +79,7 @@ export const CycleDeleteModal = observer(function CycleDeleteModal(props: ICycle
   };
 
   return (
-    <AlertModalCore
+    <ConfirmDialog
       handleClose={handleClose}
       handleSubmit={formSubmit}
       isSubmitting={loader}

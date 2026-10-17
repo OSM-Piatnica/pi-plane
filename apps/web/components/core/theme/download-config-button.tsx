@@ -9,8 +9,8 @@ import { observer } from "mobx-react";
 import type { UseFormGetValues } from "react-hook-form";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { setToast, TOAST_TYPE } from "@plane/propel/toast";
+import { Button } from "@makeplane/propel/components/button";
+import { setToast } from "@plane/blocks/toast";
 import type { IUserTheme } from "@plane/types";
 
 type Props = {
@@ -44,14 +44,14 @@ export const CustomThemeDownloadConfigButton = observer(function CustomThemeDown
       URL.revokeObjectURL(url);
 
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("success"),
         message: t("core_ui.theme.download_success"),
       });
     } catch (error) {
       console.error("Failed to download config:", error);
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("error"),
         message: t("core_ui.theme.download_failed"),
       });
@@ -59,8 +59,13 @@ export const CustomThemeDownloadConfigButton = observer(function CustomThemeDown
   };
 
   return (
-    <Button variant="secondary" size="lg" type="button" onClick={handleDownloadConfig}>
-      Download config
-    </Button>
+    <Button
+      variant="secondary"
+      size="md"
+      stretch="auto"
+      type="button"
+      label="Download config"
+      onClick={handleDownloadConfig}
+    />
   );
 });

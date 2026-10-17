@@ -6,10 +6,10 @@
  */
 
 import React from "react";
+import { Button } from "@makeplane/propel/components/button";
+import { Icon } from "@makeplane/propel/components/icon";
 import { TransferWorkItemOutline, WarningCircleOutline } from "@makeplane/propel/icons";
-// ui
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
 
 type Props = {
   handleClick: () => void;
@@ -31,13 +31,14 @@ export function TransferIssues(props: Props) {
         <div>
           <Button
             variant="primary"
-            size="lg"
-            prependIcon={<TransferWorkItemOutline />}
+            size="md"
+            stretch="auto"
+            icon={<Icon icon={TransferWorkItemOutline} />}
+            iconPosition="start"
             onClick={handleClick}
             disabled={disabled}
-          >
-            {t("cycle_ui.transfer_title")}
-          </Button>
+            label={t("cycle_ui.transfer_title")}
+          />
         </div>
       )}
     </div>

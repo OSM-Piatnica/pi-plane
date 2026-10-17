@@ -15,9 +15,19 @@ import type { EditorRefApi } from "@plane/editor";
 // plane i18n
 import { useTranslation } from "@plane/i18n";
 // plane ui
-import { Button } from "@plane/propel/button";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { CustomSelect, EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
+import { Button } from "@makeplane/propel/components/button";
+import {
+  Dialog,
+  DialogActions,
+  DialogBody,
+  DialogContent,
+  DialogHeader,
+  DialogHeading,
+  DialogMain,
+  DialogTitle,
+} from "@makeplane/propel/components/dialog";
+import { Select, SelectDropdownPlacementContext } from "@plane/blocks/select";
+import { setToast } from "@plane/blocks/toast";
 // components
 import { PDFDocument } from "@/components/editor/pdf";
 // hooks
@@ -97,6 +107,9 @@ const CONTENT_VARIETY: {
     label: "No images",
   },
 ];
+
+// The dropdowns open flush with the control's right edge, as `placement="bottom-end"` did.
+const DROPDOWN_PLACEMENT = { side: "bottom", align: "end" } as const;
 
 const defaultValues: TFormValues = {
   export_format: "pdf",
@@ -190,7 +203,7 @@ export function ExportPageModal(props: Props) {
         await handleExportAsMarkdown();
       }
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("toast.success"),
         message: t("page_ui.export_modal.success"),
       });
@@ -198,7 +211,7 @@ export function ExportPageModal(props: Props) {
     } catch (error) {
       console.error("Error in exporting page:", error);
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("page_ui.export_modal.error"),
       });
@@ -208,99 +221,116 @@ export function ExportPageModal(props: Props) {
   };
 
   return (
-    <ModalCore isOpen={isOpen} handleClose={handleClose} position={EModalPosition.CENTER} width={EModalWidth.SM}>
-      <div>
-        <div className="space-y-5 p-5">
-          <h3 className="text-18 font-medium text-secondary">{t("page_ui.export_modal.title")}</h3>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between gap-2">
-              <h6 className="flex-shrink-0 text-13 text-secondary">{t("page_ui.export_modal.export_format")}</h6>
-              <Controller
-                control={control}
-                name="export_format"
-                render={({ field: { onChange, value } }) => (
-                  <CustomSelect
-                    label={EXPORT_FORMATS.find((format) => format.key === value)?.label}
-                    buttonClassName="border-none"
-                    value={value}
-                    onChange={(val: TExportFormats) => onChange(val)}
-                    className="flex-shrink-0"
-                    placement="bottom-end"
-                  >
-                    {EXPORT_FORMATS.map((format) => (
-                      <CustomSelect.Option key={format.key} value={format.key}>
-                        {format.label}
-                      </CustomSelect.Option>
-                    ))}
-                  </CustomSelect>
-                )}
-              />
-            </div>
-            <div className="flex items-center justify-between gap-2">
-              <h6 className="flex-shrink-0 text-13 text-secondary">{t("page_ui.export_modal.include_content")}</h6>
-              <Controller
-                control={control}
-                name="content_variety"
-                render={({ field: { onChange, value } }) => (
-                  <CustomSelect
-                    label={
-                      value === "everything"
-                        ? t("page_ui.export_modal.content_everything")
-                        : t("page_ui.export_modal.content_no_images")
-                    }
-                    buttonClassName="border-none"
-                    value={value}
-                    onChange={(val: TContentVariety) => onChange(val)}
-                    className="flex-shrink-0"
-                    placement="bottom-end"
-                  >
-                    {CONTENT_VARIETY.map((variety) => (
-                      <CustomSelect.Option key={variety.key} value={variety.key}>
-                        {variety.key === "everything"
-                          ? t("page_ui.export_modal.content_everything")
-                          : t("page_ui.export_modal.content_no_images")}
-                      </CustomSelect.Option>
-                    ))}
-                  </CustomSelect>
-                )}
-              />
-            </div>
-            {isPDFSelected && (
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+    >
+      <DialogContent size="xs">
+        <DialogMain>
+          <DialogHeader>
+            <DialogHeading>
+              <DialogTitle>{t("page_ui.export_modal.title")}</DialogTitle>
+            </DialogHeading>
+          </DialogHeader>
+          <DialogBody>
+            <div className="space-y-3">
               <div className="flex items-center justify-between gap-2">
-                <h6 className="flex-shrink-0 text-13 text-secondary">{t("page_ui.export_modal.page_format")}</h6>
+                <h6 className="flex-shrink-0 text-13 text-secondary">{t("page_ui.export_modal.export_format")}</h6>
                 <Controller
                   control={control}
-                  name="page_format"
+                  name="export_format"
                   render={({ field: { onChange, value } }) => (
-                    <CustomSelect
-                      label={PAGE_FORMATS.find((format) => format.key === value)?.label}
-                      buttonClassName="border-none"
+                    <ExportOptionSelect
+                      options={EXPORT_FORMATS}
                       value={value}
-                      onChange={(val: TPageFormats) => onChange(val)}
-                      className="flex-shrink-0"
-                      placement="bottom-end"
-                    >
-                      {PAGE_FORMATS.map((format) => (
-                        <CustomSelect.Option key={format.key.toString()} value={format.key}>
-                          {format.label}
-                        </CustomSelect.Option>
-                      ))}
-                    </CustomSelect>
+                      onChange={(val) => onChange(val as TExportFormats)}
+                    />
                   )}
                 />
               </div>
-            )}
-          </div>
-        </div>
-        <div className="flex items-center justify-end gap-2 border-t-[0.5px] border-subtle px-5 py-4">
-          <Button variant="secondary" size="lg" onClick={handleClose}>
-            {t("cancel")}
-          </Button>
-          <Button variant="primary" size="lg" loading={isExporting} onClick={handleExport}>
-            {isExporting ? t("page_ui.export_modal.exporting") : t("export")}
-          </Button>
-        </div>
-      </div>
-    </ModalCore>
+              <div className="flex items-center justify-between gap-2">
+                <h6 className="flex-shrink-0 text-13 text-secondary">{t("page_ui.export_modal.include_content")}</h6>
+                <Controller
+                  control={control}
+                  name="content_variety"
+                  render={({ field: { onChange, value } }) => (
+                    <ExportOptionSelect
+                      // oxlint-disable-next-line oxc/no-map-spread -- existing behaviour; lint cleanup only
+                      options={CONTENT_VARIETY.map((variety) => ({
+                        ...variety,
+                        label:
+                          variety.key === "everything"
+                            ? t("page_ui.export_modal.content_everything")
+                            : t("page_ui.export_modal.content_no_images"),
+                      }))}
+                      value={value}
+                      onChange={(val) => onChange(val as TContentVariety)}
+                    />
+                  )}
+                />
+              </div>
+              {isPDFSelected && (
+                <div className="flex items-center justify-between gap-2">
+                  <h6 className="flex-shrink-0 text-13 text-secondary">{t("page_ui.export_modal.page_format")}</h6>
+                  <Controller
+                    control={control}
+                    name="page_format"
+                    render={({ field: { onChange, value } }) => (
+                      <ExportOptionSelect
+                        options={PAGE_FORMATS}
+                        value={value}
+                        onChange={(val) => onChange(val as TPageFormats)}
+                      />
+                    )}
+                  />
+                </div>
+              )}
+            </div>
+          </DialogBody>
+        </DialogMain>
+        <DialogActions>
+          <Button variant="secondary" size="md" stretch="auto" label={t("cancel")} onClick={handleClose} />
+          <Button
+            variant="primary"
+            size="md"
+            stretch="auto"
+            label={isExporting ? t("page_ui.export_modal.exporting") : t("export")}
+            loading={isExporting}
+            onClick={handleExport}
+          />
+        </DialogActions>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+type TExportOption<T> = { key: T; label: string };
+
+/** Borderless single-select for one export setting (legacy `CustomSelect` with `buttonClassName="border-none"`). */
+function ExportOptionSelect<T>(props: { options: TExportOption<T>[]; value: T; onChange: (value: string) => void }) {
+  const { options, value, onChange } = props;
+  // derive the selection from the stored key, so an unknown key still renders instead of blanking
+  const selected = options.find((option) => option.key === value) ?? { key: value, label: String(value) };
+
+  return (
+    <div className="flex-shrink-0">
+      <SelectDropdownPlacementContext.Provider value={DROPDOWN_PLACEMENT}>
+        <Select<TExportOption<T>>
+          getValues={() => options}
+          value={selected}
+          onChange={onChange}
+          getOptionValue={(option) => String(option.key)}
+          getOptionLabel={(option) => option.label}
+          showSearch={false}
+          pinSelected={false}
+        >
+          <Select.Trigger variant="select-ghost-md">
+            <span className="grow truncate">{selected.label}</span>
+          </Select.Trigger>
+        </Select>
+      </SelectDropdownPlacementContext.Provider>
+    </div>
   );
 }

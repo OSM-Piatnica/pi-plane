@@ -9,8 +9,9 @@ import { useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react";
 // plane helpers
 import { useOutsideClickDetector } from "@plane/hooks";
+import { useTranslation } from "@plane/i18n";
 import { PreferencesOutline } from "@makeplane/propel/icons";
-import { ScrollArea } from "@plane/propel/scrollarea";
+import { ScrollArea } from "@makeplane/propel/components/scroll-area";
 // components
 import { CustomizeNavigationDialog } from "@/components/navigation/customize-navigation-dialog";
 // hooks
@@ -18,7 +19,8 @@ import { useAppTheme } from "@/hooks/store/use-app-theme";
 import useSize from "@/hooks/use-window-size";
 import { WorkspaceEditionBadge } from "@/components/workspace/edition-badge";
 import { AppSidebarToggleButton } from "./sidebar-toggle-button";
-import { IconButton } from "@plane/propel/icon-button";
+import { IconButton } from "@makeplane/propel/components/icon-button";
+import { Icon } from "@makeplane/propel/components/icon";
 
 type TSidebarWrapperProps = {
   title: string;
@@ -29,6 +31,8 @@ type TSidebarWrapperProps = {
 
 export const SidebarWrapper = observer(function SidebarWrapper(props: TSidebarWrapperProps) {
   const { title, children, quickActions, showCustomizeNavigation = false } = props;
+  // translation
+  const { t } = useTranslation();
   // state
   const [isCustomizeNavDialogOpen, setIsCustomizeNavDialogOpen] = useState(false);
   // store hooks
@@ -60,9 +64,10 @@ export const SidebarWrapper = observer(function SidebarWrapper(props: TSidebarWr
             <div className="flex items-center gap-2">
               {showCustomizeNavigation && (
                 <IconButton
-                  size="base"
+                  size="sm"
                   variant="ghost"
-                  icon={PreferencesOutline}
+                  icon={<Icon icon={PreferencesOutline} />}
+                  aria-label={t("customize_navigation")}
                   onClick={() => setIsCustomizeNavDialogOpen(true)}
                 />
               )}
@@ -73,14 +78,8 @@ export const SidebarWrapper = observer(function SidebarWrapper(props: TSidebarWr
           {quickActions}
         </div>
 
-        <ScrollArea
-          orientation="vertical"
-          scrollType="hover"
-          size="sm"
-          rootClassName="size-full overflow-x-hidden overflow-y-auto"
-          viewportClassName="flex flex-col gap-3 overflow-x-hidden h-full w-full overflow-y-auto px-3 pt-3 pb-0.5"
-        >
-          {children}
+        <ScrollArea orientation="vertical">
+          <div className="flex flex-col gap-3 overflow-x-hidden px-3 pt-3 pb-0.5">{children}</div>
         </ScrollArea>
         {/* Help Section */}
         <div className="flex h-12 items-center justify-between border-t border-subtle bg-surface-1 py-3 pr-3 pl-[4.5rem]">

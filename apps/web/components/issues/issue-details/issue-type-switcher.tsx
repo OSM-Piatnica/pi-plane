@@ -9,8 +9,9 @@
 import { useParams } from "next/navigation";
 import { observer } from "mobx-react";
 import { Layers } from "lucide-react";
+import { Select } from "@plane/blocks/select";
 import { useTranslation } from "@plane/i18n";
-import { CustomSelect } from "@plane/ui";
+import type { TProjectIssueType } from "@plane/types";
 import { SwitcherIcon } from "@/components/common/switcher-label";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
@@ -42,7 +43,9 @@ export const IssueTypeSwitcher = observer(function IssueTypeSwitcher(props: TIss
 
   if (!issueTypesEnabled || types.length === 0) return null;
 
-  const selected = types.find((row) => row.issue_type_id === issue.type_id)?.issue_type_detail;
+  const options = types.filter((row) => row.issue_type_detail);
+  const selectedOption = options.find((row) => row.issue_type_id === issue.type_id) ?? null;
+  const selected = selectedOption?.issue_type_detail;
 
   const onChange = async (value: string) => {
     if (!value || value === issue.type_id) return;
@@ -50,38 +53,31 @@ export const IssueTypeSwitcher = observer(function IssueTypeSwitcher(props: TIss
   };
 
   return (
-    <div className="h-7 max-w-xs min-w-0">
-      <CustomSelect
-        value={issue.type_id ?? ""}
+    <div className="max-w-xs min-w-0">
+      <Select<TProjectIssueType>
+        getValues={() => options}
+        value={selectedOption}
         onChange={onChange}
         disabled={disabled || isLoading}
-        buttonClassName="h-7 border border-subtle bg-layer-1 text-xs"
-        label={
-          selected ? (
+        getOptionValue={(row) => row.issue_type_id}
+        getOptionLabel={(row) => row.issue_type_detail?.name ?? ""}
+        getOptionIcon={(row) => (
+          <SwitcherIcon logo_props={row.issue_type_detail?.logo_props} LabelIcon={Layers} size={12} />
+        )}
+        showSearch={false}
+        pinSelected={false}
+      >
+        <Select.Trigger variant="select-md" className="w-full">
+          {selected ? (
             <span className="flex items-center gap-1.5 truncate">
               <SwitcherIcon logo_props={selected.logo_props} LabelIcon={Layers} size={12} />
               <span className="truncate">{selected.name}</span>
             </span>
           ) : (
             t("work_item_types.select_placeholder")
-          )
-        }
-        className="w-full"
-        input
-      >
-        {types.map((row) => {
-          const detail = row.issue_type_detail;
-          if (!detail) return null;
-          return (
-            <CustomSelect.Option key={row.id} value={row.issue_type_id}>
-              <span className="flex items-center gap-1.5">
-                <SwitcherIcon logo_props={detail.logo_props} LabelIcon={Layers} size={12} />
-                {detail.name}
-              </span>
-            </CustomSelect.Option>
-          );
-        })}
-      </CustomSelect>
+          )}
+        </Select.Trigger>
+      </Select>
     </div>
   );
 });

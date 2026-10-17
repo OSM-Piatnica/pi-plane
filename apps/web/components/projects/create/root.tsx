@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 import { FormProvider, useForm } from "react-hook-form";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import { EFileAssetType } from "@plane/types";
 import type { TProjectTemplate, TProjectTemplatePayload, TProject } from "@plane/types";
 // components
@@ -107,7 +107,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
 
   const showApplyTemplateError = useCallback(() => {
     setToast({
-      type: TOAST_TYPE.ERROR,
+      type: "error",
       title: tRef.current("error"),
       message: tRef.current("workspace_settings.settings.project_templates.toasts.apply_failed.message"),
     });
@@ -177,7 +177,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
 
     addProjectToFavorites(workspaceSlug.toString(), projectId).catch(() => {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("failed_to_remove_project_from_favorites"),
       });
@@ -203,7 +203,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
         } catch (error) {
           console.error("Error uploading cover image:", error);
           setToast({
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("toast.error"),
             message: error instanceof Error ? error.message : "Failed to upload cover image",
           });
@@ -225,7 +225,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
         await updateProject(workspaceSlug.toString(), res.id, { cover_image_url: coverImage });
       }
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("success"),
         message: t("project_created_successfully"),
       });
@@ -264,7 +264,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
         } catch (seedError) {
           console.error(seedError);
           setToast({
-            type: TOAST_TYPE.WARNING,
+            type: "warning",
             title: t("warning"),
             message: t("workspace_settings.settings.project_templates.toasts.apply_followup_failed.message"),
           });
@@ -278,7 +278,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
         } catch (assignError) {
           console.error(assignError);
           setToast({
-            type: TOAST_TYPE.WARNING,
+            type: "warning",
             title: t("warning"),
             message: t("project_create.features.work_item_types.assign_failed"),
           });
@@ -296,7 +296,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
         if (nameError || identifierError || nameCharsError) {
           if (nameError) {
             setToast({
-              type: TOAST_TYPE.ERROR,
+              type: "error",
               title: t("toast.error"),
               message: t("project_name_already_taken"),
             });
@@ -304,7 +304,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
 
           if (identifierError) {
             setToast({
-              type: TOAST_TYPE.ERROR,
+              type: "error",
               title: t("toast.error"),
               message: t("project_identifier_already_taken"),
             });
@@ -312,14 +312,14 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
 
           if (nameCharsError) {
             setToast({
-              type: TOAST_TYPE.ERROR,
+              type: "error",
               title: t("toast.error"),
               message: t("project_name_cannot_contain_special_characters"),
             });
           }
         } else {
           setToast({
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             title: t("toast.error"),
             message: t("something_went_wrong"),
           });
@@ -327,7 +327,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
       } catch (error) {
         console.error("Error processing API error:", error);
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: t("something_went_wrong"),
         });

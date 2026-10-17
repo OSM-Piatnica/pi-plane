@@ -20,10 +20,13 @@ import {
   NewTabOutline,
   TickCircleFilled,
 } from "@makeplane/propel/icons";
-import { IconButton, getIconButtonStyling } from "@plane/propel/icon-button";
+import { useTranslation } from "@plane/i18n";
+import { IconButton } from "@makeplane/propel/components/icon-button";
+import { Icon } from "@makeplane/propel/components/icon";
+import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
 import type { TNameDescriptionLoader } from "@plane/types";
 
-import { Header, CustomMenu, EHeaderVariant } from "@plane/ui";
+import { Header, EHeaderVariant } from "@plane/blocks/layout";
 import { cn, findHowManyDaysLeft, generateWorkItemLink } from "@plane/utils";
 // components
 import { NameDescriptionUpdateStatus } from "@/components/issues/issue-update-status";
@@ -35,7 +38,6 @@ import type { IInboxIssueStore } from "@/store/inbox/inbox-issue.store";
 
 // local imports
 import { InboxIssueStatus } from "../inbox-issue-status";
-import { useTranslation } from "@plane/i18n";
 
 type Props = {
   workspaceSlug: string;
@@ -122,15 +124,15 @@ export const InboxIssueActionsMobileHeader = observer(function InboxIssueActions
         <div className="flex items-center gap-x-2">
           <IconButton
             variant="secondary"
-            size="lg"
-            icon={ChevronUpOutline}
+            size="md"
+            icon={<Icon icon={ChevronUpOutline} />}
             aria-label={t("inbox_ui.previous_work_item")}
             onClick={() => handleInboxIssueNavigation("prev")}
           />
           <IconButton
             variant="secondary"
-            size="lg"
-            icon={ChevronDownOutline}
+            size="md"
+            icon={<Icon icon={ChevronDownOutline} />}
             aria-label={t("inbox_ui.next_work_item")}
             onClick={() => handleInboxIssueNavigation("next")}
           />
@@ -142,102 +144,99 @@ export const InboxIssueActionsMobileHeader = observer(function InboxIssueActions
           </div>
         </div>
         <div className="ml-auto">
-          <CustomMenu
-            customButton={<MoreHorizontalOutline className="size-4" />}
-            customButtonClassName={getIconButtonStyling("secondary", "lg")}
-            placement="bottom-start"
-          >
-            {isAcceptedOrDeclined && (
-              <CustomMenu.MenuItem onClick={handleCopyIssueLink}>
-                <div className="flex items-center gap-2">
-                  <LinkOutline width={14} height={14} />
-                  {t("inbox_issue.actions.copy")}
-                </div>
-              </CustomMenu.MenuItem>
-            )}
-            {isAcceptedOrDeclined && (
-              <CustomMenu.MenuItem onClick={() => router.push(workItemLink)}>
-                <div className="flex items-center gap-2">
-                  <NewTabOutline width={14} height={14} />
-                  {t("inbox_issue.actions.open")}
-                </div>
-              </CustomMenu.MenuItem>
-            )}
-            {canMarkAsAccepted && !isAcceptedOrDeclined && (
-              <CustomMenu.MenuItem
-                onClick={() =>
-                  handleActionWithPermission(
-                    isProjectAdmin,
-                    handleIssueSnoozeAction,
-                    t("inbox_issue.errors.snooze_permission")
-                  )
-                }
-              >
-                <div className="flex items-center gap-2">
-                  <ClockOutline width={14} height={14} />
-                  {inboxIssue?.snoozed_till && numberOfDaysLeft && numberOfDaysLeft > 0
-                    ? t("inbox_issue.actions.unsnooze")
-                    : t("inbox_issue.actions.snooze")}
-                </div>
-              </CustomMenu.MenuItem>
-            )}
-            {canMarkAsDuplicate && !isAcceptedOrDeclined && (
-              <CustomMenu.MenuItem
-                onClick={() =>
-                  handleActionWithPermission(
-                    isProjectAdmin,
-                    () => setSelectDuplicateIssue(true),
-                    t("inbox_ui.errors.duplicate_permission")
-                  )
-                }
-              >
-                <div className="flex items-center gap-2">
-                  <DuplicateOfOutline width={14} height={14} />
-                  {t("inbox_issue.actions.mark_as_duplicate")}
-                </div>
-              </CustomMenu.MenuItem>
-            )}
-            {canMarkAsAccepted && (
-              <CustomMenu.MenuItem
-                onClick={() =>
-                  handleActionWithPermission(
-                    isProjectAdmin,
-                    () => setAcceptIssueModal(true),
-                    t("inbox_issue.errors.accept_permission")
-                  )
-                }
-              >
-                <div className="flex items-center gap-2 text-success-secondary">
-                  <TickCircleFilled width={14} height={14} />
-                  {t("inbox_issue.actions.accept")}
-                </div>
-              </CustomMenu.MenuItem>
-            )}
-            {canMarkAsDeclined && (
-              <CustomMenu.MenuItem
-                onClick={() =>
-                  handleActionWithPermission(
-                    isProjectAdmin,
-                    () => setDeclineIssueModal(true),
-                    t("inbox_issue.errors.decline_permission")
-                  )
-                }
-              >
-                <div className="flex items-center gap-2 text-danger-secondary">
-                  <CloseCircleFilled width={14} height={14} />
-                  {t("inbox_issue.actions.decline")}
-                </div>
-              </CustomMenu.MenuItem>
-            )}
-            {canDelete && !isAcceptedOrDeclined && (
-              <CustomMenu.MenuItem onClick={() => setDeleteIssueModal(true)}>
-                <div className="flex items-center gap-2 text-danger-primary">
-                  <DeleteOutline height={14} width={14} />
-                  Delete
-                </div>
-              </CustomMenu.MenuItem>
-            )}
-          </CustomMenu>
+          <Menu>
+            <MenuTrigger
+              render={
+                <IconButton
+                  variant="secondary"
+                  size="md"
+                  icon={<Icon icon={MoreHorizontalOutline} />}
+                  aria-label={t("aria_labels.common.more_actions")}
+                />
+              }
+            />
+            <MenuContent side="bottom" align="start">
+              {isAcceptedOrDeclined && (
+                <MenuItem
+                  icon={<Icon icon={LinkOutline} />}
+                  label={t("inbox_issue.actions.copy")}
+                  onClick={handleCopyIssueLink}
+                />
+              )}
+              {isAcceptedOrDeclined && (
+                <MenuItem
+                  icon={<Icon icon={NewTabOutline} />}
+                  label={t("inbox_issue.actions.open")}
+                  onClick={() => router.push(workItemLink)}
+                />
+              )}
+              {canMarkAsAccepted && !isAcceptedOrDeclined && (
+                <MenuItem
+                  icon={<Icon icon={ClockOutline} />}
+                  label={
+                    inboxIssue?.snoozed_till && numberOfDaysLeft && numberOfDaysLeft > 0
+                      ? t("inbox_issue.actions.unsnooze")
+                      : t("inbox_issue.actions.snooze")
+                  }
+                  onClick={() =>
+                    handleActionWithPermission(
+                      isProjectAdmin,
+                      handleIssueSnoozeAction,
+                      t("inbox_issue.errors.snooze_permission")
+                    )
+                  }
+                />
+              )}
+              {canMarkAsDuplicate && !isAcceptedOrDeclined && (
+                <MenuItem
+                  icon={<Icon icon={DuplicateOfOutline} />}
+                  label={t("inbox_issue.actions.mark_as_duplicate")}
+                  onClick={() =>
+                    handleActionWithPermission(
+                      isProjectAdmin,
+                      () => setSelectDuplicateIssue(true),
+                      t("inbox_ui.errors.duplicate_permission")
+                    )
+                  }
+                />
+              )}
+              {canMarkAsAccepted && (
+                // Propel menu rows are neutral/accent/danger only, so the accept/decline tint lives on the glyph.
+                <MenuItem
+                  icon={<Icon icon={<TickCircleFilled className="text-success-secondary" />} />}
+                  label={t("inbox_issue.actions.accept")}
+                  onClick={() =>
+                    handleActionWithPermission(
+                      isProjectAdmin,
+                      () => setAcceptIssueModal(true),
+                      t("inbox_issue.errors.accept_permission")
+                    )
+                  }
+                />
+              )}
+              {canMarkAsDeclined && (
+                <MenuItem
+                  icon={<Icon icon={<CloseCircleFilled className="text-danger-secondary" />} />}
+                  label={t("inbox_issue.actions.decline")}
+                  onClick={() =>
+                    handleActionWithPermission(
+                      isProjectAdmin,
+                      () => setDeclineIssueModal(true),
+                      t("inbox_issue.errors.decline_permission")
+                    )
+                  }
+                />
+              )}
+              {canDelete && !isAcceptedOrDeclined && (
+                <MenuItem
+                  variant="danger"
+                  icon={<Icon icon={DeleteOutline} />}
+                  label="Delete"
+                  onClick={() => setDeleteIssueModal(true)}
+                />
+              )}
+            </MenuContent>
+          </Menu>
         </div>
       </div>
     </Header>

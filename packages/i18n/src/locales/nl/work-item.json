@@ -172,7 +172,9 @@
       },
       "failed": {
         "message": "Werkitem kon niet worden gearchiveerd. Probeer het opnieuw."
-      }
+      },
+      "banner_message": "Dit werkitem is gearchiveerd. Ga naar de sectie Archieven om het te herstellen.",
+      "go_to_archives": "Ga naar archieven"
     },
     "restore": {
       "success": {
@@ -326,6 +328,10 @@
         "title": "Werkitems kunnen niet worden bijgewerkt",
         "message": "Statuswijziging is niet toegestaan voor sommige werkitems. Zorg dat de statuswijziging is toegestaan."
       }
+    },
+    "upgrade_banner": {
+      "message": "Wijzig de status, prioriteit en meer voor meerdere werkitems tegelijk. Bespaar gemiddeld drie minuten per bewerking.",
+      "cta": "Upgraden naar One"
     }
   },
   "recurring_work_items": {

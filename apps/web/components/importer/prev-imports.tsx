@@ -9,10 +9,10 @@ import { observer } from "mobx-react";
 import useSWR, { mutate } from "swr";
 import { MoveLeft, MoveRight, RefreshCw } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { EmptyStateCompact } from "@plane/propel/empty-state";
+import { Button } from "@makeplane/propel/components/button";
+import { EmptyStateCompact } from "@plane/blocks/empty-state";
 import type { IExportData } from "@plane/types";
-import { Table } from "@plane/ui";
+import { DataTable } from "@/components/common/data-table";
 import { ImportExportStatusPill } from "@/components/exporter/status-pill";
 import { ImportExportSettingsLoader } from "@/components/ui/loader/settings/import-and-export";
 import { PROJECT_IMPORT_SERVICES_LIST } from "@plane/constants";
@@ -100,46 +100,46 @@ export const PrevImports = observer(function PrevImports(props: Props) {
       <div className="flex items-center justify-between border-b border-subtle pb-3.5">
         <div className="flex items-center gap-2">
           <h3 className="text-h6-medium text-primary">{t("workspace_settings.settings.imports.previous_imports")}</h3>
-          <Button variant="tertiary" className="shrink-0" onClick={handleRefresh}>
-            <RefreshCw className={`h-3 w-3 ${refreshing ? "animate-spin" : ""}`} />
-            {refreshing ? t("refreshing") : t("refresh_status")}
-          </Button>
+          <Button
+            variant="tertiary"
+            size="md"
+            stretch="auto"
+            onClick={handleRefresh}
+            icon={<RefreshCw className={`h-3 w-3 ${refreshing ? "animate-spin" : ""}`} />}
+            label={refreshing ? t("refreshing") : t("refresh_status")}
+          />
         </div>
         {!!importServices?.results?.length && (
           <div className="flex items-center gap-2 text-11">
             <Button
               variant="secondary"
               size="sm"
+              stretch="auto"
               disabled={!importServices?.prev_page_results}
               onClick={() => importServices?.prev_page_results && setCursor(importServices?.prev_cursor)}
-              prependIcon={<MoveLeft />}
-            >
-              {t("prev")}
-            </Button>
+              icon={<MoveLeft />}
+              label={t("prev")}
+            />
             <Button
               variant="secondary"
               size="sm"
+              stretch="auto"
               disabled={!importServices?.next_page_results}
               onClick={() => importServices?.next_page_results && setCursor(importServices?.next_cursor)}
-              appendIcon={<MoveRight />}
-            >
-              {t("next")}
-            </Button>
+              icon={<MoveRight />}
+              iconPosition="end"
+              label={t("next")}
+            />
           </div>
         )}
       </div>
       <div className="flex flex-col">
         {importServices && importServices?.results ? (
           importServices?.results?.length > 0 ? (
-            <Table
+            <DataTable
               columns={columns}
               data={importServices?.results ?? []}
               keyExtractor={(rowData: RowData) => rowData?.id ?? ""}
-              tHeadClassName="border-b border-subtle"
-              thClassName="text-left font-medium divide-x-0 text-placeholder"
-              tBodyClassName="divide-y-0"
-              tBodyTrClassName="divide-x-0 p-4 h-[40px] text-secondary"
-              tHeadTrClassName="divide-x-0"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center">

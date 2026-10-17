@@ -13,7 +13,7 @@ import { useTranslation } from "@plane/i18n";
 import { Avatar } from "@makeplane/propel/components/avatar";
 import type { TInboxIssueFilterMemberKeys } from "@plane/types";
 // plane ui
-import { Loader } from "@plane/ui";
+import { Loader } from "@plane/blocks/skeleton";
 // components
 import { getFileURL } from "@plane/utils";
 import { FilterHeader, FilterOption } from "@/components/issues/issue-layouts/filters";

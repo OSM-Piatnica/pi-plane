@@ -8,7 +8,7 @@
 import { ArrowNarrowRightOutline } from "@makeplane/propel/icons";
 import { useTranslation } from "@plane/i18n";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
-import { Loader } from "@plane/ui";
+import { Loader } from "@plane/blocks/skeleton";
 // hooks
 import { usePlatformOS } from "@/hooks/use-platform-os";
 

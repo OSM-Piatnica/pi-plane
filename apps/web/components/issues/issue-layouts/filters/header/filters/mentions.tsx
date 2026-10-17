@@ -10,7 +10,7 @@ import { sortBy } from "lodash-es";
 import { observer } from "mobx-react";
 // plane ui
 import { Avatar } from "@makeplane/propel/components/avatar";
-import { Loader } from "@plane/ui";
+import { Loader } from "@plane/blocks/skeleton";
 import { useTranslation } from "@plane/i18n";
 // components
 import { getFileURL } from "@plane/utils";

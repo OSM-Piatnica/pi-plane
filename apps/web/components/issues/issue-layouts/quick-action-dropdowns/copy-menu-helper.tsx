@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import type { ISvgIcons } from "@plane/propel/icons";
-import type { TContextMenuItem } from "@plane/ui";
+import type { ISvgIcons } from "@plane/blocks/icons";
+import type { TContextMenuItem } from "@plane/blocks/context-menu";
 
 export interface CopyMenuHelperProps {
   baseItem: {

@@ -10,13 +10,11 @@ import { isEqual, xor } from "lodash-es";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // Plane imports
+import { Dialog, DialogContent } from "@makeplane/propel/components/dialog";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { TBaseIssue, TIssue } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
-import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
-// helpers
-import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
 import { useIssueModal } from "@/hooks/context/use-issue-modal";
 import { useCycle } from "@/hooks/store/use-cycle";
@@ -30,11 +28,12 @@ import { useIssuesActions } from "@/hooks/use-issues-actions";
 import { FileService } from "@/services/file.service";
 const fileService = new FileService();
 // local imports
-import { CreateIssueToastActionItems } from "../create-issue-toast-action-items";
+import { useCreateIssueToastActions } from "../create-issue-toast-action-items";
 import { DraftIssueLayout } from "./draft-issue-layout";
 import { IssueFormRoot } from "./form";
 import type { IssueFormProps } from "./form";
 import type { IssuesModalProps } from "./modal";
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 
 export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueModalBase(props: IssuesModalProps) {
   const {
@@ -89,6 +88,8 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
   const { getProjectByIdentifier } = useProject();
   // current store details
   const { createIssue, updateIssue } = useIssuesActions(storeType);
+  // propel: toast actions cross the boundary as data, never as JSX
+  const buildCreateIssueToastActions = useCreateIssueToastActions();
   // derived values
   const routerProjectIdentifier = workItem?.toString().split("-")[0];
   const projectIdFromRouter = getProjectByIdentifier(routerProjectIdentifier)?.id;
@@ -249,7 +250,7 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
         } catch (propertyError) {
           console.error(propertyError);
           setToast({
-            type: TOAST_TYPE.WARNING,
+            type: "warning",
             title: t("warning"),
             message: t("work_item_types.property_values_save_failed"),
           });
@@ -264,16 +265,13 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
       }
 
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("success"),
         message: `${is_draft_issue ? t("draft_created") : t("issue_created_successfully")} `,
-        actionItems: !is_draft_issue && issueWithType?.project_id && (
-          <CreateIssueToastActionItems
-            workspaceSlug={workspaceSlug.toString()}
-            projectId={issueWithType?.project_id}
-            issueId={issueWithType.id}
-          />
-        ),
+        actionItems:
+          !is_draft_issue && issueWithType?.project_id
+            ? buildCreateIssueToastActions({ workspaceSlug: workspaceSlug.toString(), issueId: issueWithType.id })
+            : undefined,
       });
       if (!createMore) handleClose();
       if (createMore && issueTitleRef) issueTitleRef?.current?.focus();
@@ -282,7 +280,7 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
       return issueWithType;
     } catch (error: any) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("error"),
         message: getIssueApiErrorMessage(
           error,
@@ -380,23 +378,19 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
       });
 
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("success"),
         message: t("issue_updated_successfully"),
         actionItems:
-          showActionItemsOnUpdate && payload.project_id ? (
-            <CreateIssueToastActionItems
-              workspaceSlug={workspaceSlug.toString()}
-              projectId={payload.project_id}
-              issueId={data.id}
-            />
-          ) : undefined,
+          showActionItemsOnUpdate && payload.project_id
+            ? buildCreateIssueToastActions({ workspaceSlug: workspaceSlug.toString(), issueId: data.id })
+            : undefined,
       });
       handleClose();
     } catch (error: any) {
       console.error(error);
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("error"),
         message: getIssueApiErrorMessage(error, t("issue_could_not_be_updated"), t),
       });
@@ -452,17 +446,15 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
   };
 
   return (
-    <ModalCore
-      isOpen={isOpen}
-      position={EModalPosition.TOP}
-      width={isDuplicateModalOpen ? EModalWidth.VIXL : EModalWidth.XXXXL}
-      className="rounded-lg !bg-transparent shadow-none transition-[width] ease-linear"
-    >
-      {withDraftIssueWrapper ? (
-        <DraftIssueLayout {...commonIssueModalProps} changesMade={changesMade} onChange={handleFormChange} />
-      ) : (
-        <IssueFormRoot {...commonIssueModalProps} />
-      )}
-    </ModalCore>
+    /* The modal it replaces passed no `handleClose`, so only its own form dismisses it. */
+    <Dialog open={isOpen} disablePointerDismissal onOpenChange={() => {}}>
+      <DialogContent size="lg">
+        {withDraftIssueWrapper ? (
+          <DraftIssueLayout {...commonIssueModalProps} changesMade={changesMade} onChange={handleFormChange} />
+        ) : (
+          <IssueFormRoot {...commonIssueModalProps} />
+        )}
+      </DialogContent>
+    </Dialog>
   );
 });

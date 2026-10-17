@@ -9,7 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 import { observer } from "mobx-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { IWorkspaceMemberInvitation, TOnboardingStep, TOnboardingSteps, TUserProfile } from "@plane/types";
 import { EOnboardingSteps } from "@plane/types";
 // hooks
@@ -47,7 +47,7 @@ export const OnboardingRoot = observer(function OnboardingRoot({ invitations = [
       await finishUserOnboarding();
     } catch (_error) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("onboarding.finish.toast.title"),
         message: t("onboarding.finish.toast.message"),
       });

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,7 @@ import { observer } from "mobx-react";
 // plane imports
 import { ISSUE_PRIORITY_FILTERS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { PriorityIcon } from "@plane/propel/icons";
+import { PriorityIcon } from "@plane/blocks/icons";
 // local imports
 import { FilterHeader } from "./helpers/filter-header";
 import { FilterOption } from "./helpers/filter-option";
@@ -45,7 +46,7 @@ export const FilterPriority = observer(function FilterPriority(props: Props) {
             filteredOptions.map((priority) => (
               <FilterOption
                 key={priority.key}
-                isChecked={appliedFilters?.includes(priority.key) ? true : false}
+                isChecked={!!appliedFilters?.includes(priority.key)}
                 onClick={() => handleUpdate(priority.key)}
                 icon={<PriorityIcon priority={priority.key} className="h-3.5 w-3.5" />}
                 title={t(priority.titleTranslationKey)}

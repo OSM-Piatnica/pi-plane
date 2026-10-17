@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import type { IIssueLabel } from "@plane/types";
 // components
-import { Loader } from "@plane/ui";
+import { Loader } from "@plane/blocks/skeleton";
 import { FilterHeader, FilterOption } from "@/components/issues/issue-layouts/filters";
 
 // ui

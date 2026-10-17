@@ -17,13 +17,13 @@ import {
   StateOutline,
   TriggerOutline,
   ViewsOutline,
+  WorkflowsPropertyOutline,
 } from "@makeplane/propel/icons";
 // plane imports
-import type { ISvgIcons } from "@plane/propel/icons";
+import type { ISvgIcons } from "@plane/blocks/icons";
 import type { TProjectSettingsTabs } from "@plane/types";
 // components
 import { SettingIcon } from "@/components/icons/attachment";
-import { WorkflowsPropertyIcon } from "@plane/propel/icons";
 
 export const PROJECT_SETTINGS_ICONS: Record<TProjectSettingsTabs, LucideIcon | React.FC<ISvgIcons>> = {
   general: SettingIcon,
@@ -34,7 +34,7 @@ export const PROJECT_SETTINGS_ICONS: Record<TProjectSettingsTabs, LucideIcon | R
   features_pages: PagesOutline,
   features_intake: IntakeOutline,
   states: StateOutline,
-  workflows: WorkflowsPropertyIcon,
+  workflows: WorkflowsPropertyOutline,
   labels: LabelsOutline,
   estimates: EstimateOutline,
   automations: TriggerOutline,

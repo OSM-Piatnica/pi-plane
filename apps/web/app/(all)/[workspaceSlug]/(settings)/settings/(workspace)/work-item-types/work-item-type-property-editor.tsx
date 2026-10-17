@@ -7,8 +7,9 @@
 import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { CustomSelect, Input, TextArea } from "@plane/ui";
+import { Button } from "@makeplane/propel/components/button";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
+import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
 import { Switch } from "@makeplane/propel/components/switch";
 import type { TIssueTypePropertyType } from "@plane/types";
 import {
@@ -16,6 +17,7 @@ import {
   DEFAULT_WORK_ITEM_TYPE_PROPERTY,
   type TWorkItemTypeFormProperty,
 } from "./work-item-type-form.types";
+import { ProjectTemplateSelectField } from "../project-templates/project-template-select-field";
 
 type TProps = {
   properties: TWorkItemTypeFormProperty[];
@@ -125,9 +127,14 @@ export const WorkItemTypePropertyEditor = ({ properties, onChange }: TProps) => 
               </p>
             </div>
             <div className="flex shrink-0 gap-1">
-              <Button type="button" variant="secondary" size="sm" onClick={() => startEdit(property)}>
-                {t("edit")}
-              </Button>
+              <Button
+                stretch="auto"
+                type="button"
+                variant="secondary"
+                size="sm"
+                onClick={() => startEdit(property)}
+                label={t("edit")}
+              />
               <button
                 type="button"
                 className="rounded-md p-1.5 text-tertiary hover:bg-surface-1 hover:text-danger-primary"
@@ -147,29 +154,22 @@ export const WorkItemTypePropertyEditor = ({ properties, onChange }: TProps) => 
               <label className="text-12 text-tertiary">
                 {t("workspace_settings.settings.work_item_types.form.property.title_label")}
               </label>
-              <Input
-                className="mt-1 h-8 w-full"
-                value={draft.title}
-                onChange={(e) => patchDraft({ title: e.target.value })}
-              />
+              <div className="mt-1">
+                <InputGroup size="md">
+                  <Input value={draft.title} onChange={(e) => patchDraft({ title: e.target.value })} size="md" />
+                </InputGroup>
+              </div>
             </div>
             <div>
               <label className="text-12 text-tertiary">
                 {t("workspace_settings.settings.work_item_types.form.property.type_label")}
               </label>
               <div className="mt-1">
-                <CustomSelect
+                <ProjectTemplateSelectField<TIssueTypePropertyType>
                   value={draft.propertyType}
-                  onChange={(value: TIssueTypePropertyType) => patchDraft({ propertyType: value })}
-                  label={propertyTypeLabel(draft.propertyType)}
-                  buttonClassName="w-full"
-                >
-                  {CUSTOM_PROPERTY_TYPES.map((type) => (
-                    <CustomSelect.Option key={type} value={type}>
-                      {propertyTypeLabel(type)}
-                    </CustomSelect.Option>
-                  ))}
-                </CustomSelect>
+                  onChange={(value) => patchDraft({ propertyType: value })}
+                  options={CUSTOM_PROPERTY_TYPES.map((type) => ({ value: type, label: propertyTypeLabel(type) }))}
+                />
               </div>
             </div>
           </div>
@@ -177,12 +177,17 @@ export const WorkItemTypePropertyEditor = ({ properties, onChange }: TProps) => 
             <label className="text-12 text-tertiary">
               {t("workspace_settings.settings.work_item_types.form.property.description_label")}
             </label>
-            <TextArea
-              className="mt-1 min-h-[56px] w-full resize-y"
-              rows={2}
-              value={draft.description}
-              onChange={(e) => patchDraft({ description: e.target.value })}
-            />
+            <div className="mt-1">
+              <TextAreaGroup>
+                <TextArea
+                  size="md"
+                  surface="field"
+                  rows={2}
+                  value={draft.description}
+                  onChange={(e) => patchDraft({ description: e.target.value })}
+                />
+              </TextAreaGroup>
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-6">
             <label className="flex items-center gap-2 text-13 text-secondary">
@@ -201,20 +206,30 @@ export const WorkItemTypePropertyEditor = ({ properties, onChange }: TProps) => 
           {draft.propertyType === "dropdown" ? (
             <div className="space-y-2 rounded-md border border-subtle bg-surface-1 p-3">
               <div className="flex items-center gap-2">
-                <Input
-                  className="h-8 flex-1"
-                  value={optionDraft}
-                  onChange={(e) => setOptionDraft(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      addOption();
-                    }
-                  }}
+                <div className="flex-1">
+                  <InputGroup size="md">
+                    <Input
+                      size="md"
+                      value={optionDraft}
+                      onChange={(e) => setOptionDraft(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          addOption();
+                        }
+                      }}
+                    />
+                  </InputGroup>
+                </div>
+                <Button
+                  stretch="auto"
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  onClick={addOption}
+                  disabled={!optionDraft.trim()}
+                  label={t("add")}
                 />
-                <Button type="button" variant="secondary" size="sm" onClick={addOption} disabled={!optionDraft.trim()}>
-                  {t("add")}
-                </Button>
               </div>
               {draft.options.map((opt) => (
                 <div key={opt} className="flex items-center justify-between rounded border border-subtle px-2 py-1">
@@ -231,12 +246,23 @@ export const WorkItemTypePropertyEditor = ({ properties, onChange }: TProps) => 
             </div>
           ) : null}
           <div className="flex justify-end gap-2">
-            <Button type="button" variant="secondary" size="sm" onClick={resetDraft}>
-              {t("cancel")}
-            </Button>
-            <Button type="button" variant="primary" size="sm" onClick={saveDraft} disabled={!draft.title.trim()}>
-              {editingId && properties.some((p) => p.id === editingId) ? t("update") : t("add")}
-            </Button>
+            <Button
+              stretch="auto"
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={resetDraft}
+              label={t("cancel")}
+            />
+            <Button
+              stretch="auto"
+              type="button"
+              variant="primary"
+              size="sm"
+              onClick={saveDraft}
+              disabled={!draft.title.trim()}
+              label={editingId && properties.some((p) => p.id === editingId) ? t("update") : t("add")}
+            />
           </div>
         </div>
       ) : null}

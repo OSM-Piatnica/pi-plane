@@ -11,7 +11,7 @@ import { Controller } from "react-hook-form";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import type { IUserTheme } from "@plane/types";
-import { InputColorPicker } from "@plane/ui";
+import { InputColorPicker } from "./input-color-picker";
 
 type Props = {
   control: Control<IUserTheme>;

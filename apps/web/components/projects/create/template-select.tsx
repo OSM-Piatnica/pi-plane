@@ -9,7 +9,7 @@
 import { useParams } from "next/navigation";
 import useSWR from "swr";
 import { useTranslation } from "@plane/i18n";
-import { CustomSelect } from "@plane/ui";
+import { Select } from "@plane/blocks/select";
 import type { TProjectTemplate } from "@plane/types";
 import { ProjectTemplateService } from "@/services/project-template.service";
 
@@ -21,6 +21,8 @@ export type TProjectTemplateSelect = {
   onSelect?: (templateId: string | null) => void;
 };
 
+type TOption = { id: string; name: string };
+
 export function ProjectTemplateSelect(props: TProjectTemplateSelect) {
   const { disabled = false, value, onSelect } = props;
   const { workspaceSlug } = useParams();
@@ -30,29 +32,34 @@ export function ProjectTemplateSelect(props: TProjectTemplateSelect) {
     () => projectTemplateService.list(String(workspaceSlug))
   );
 
-  const selectedTemplate = (templates as TProjectTemplate[] | undefined)?.find((template) => template.id === value);
-  const label = isLoading
-    ? t("project_templates.loading")
-    : (selectedTemplate?.name ?? t("project_templates.select_placeholder"));
+  const noneOption: TOption = { id: "", name: t("project_templates.none") };
+  const options: TOption[] = [
+    noneOption,
+    ...((templates as TProjectTemplate[] | undefined) ?? []).map((template) => ({
+      id: template.id,
+      name: template.name,
+    })),
+  ];
+  const selectedOption = options.find((option) => option.id === (value ?? "")) ?? null;
+  const placeholder = isLoading ? t("project_templates.loading") : t("project_templates.select_placeholder");
 
   return (
-    <div className="h-7 min-w-[11rem]">
-      <CustomSelect
-        value={value ?? ""}
-        onChange={(next: string) => onSelect?.(next ? String(next) : null)}
+    <div className="min-w-[11rem]">
+      <Select<TOption>
+        getValues={() => options}
+        value={value ? selectedOption : null}
+        onChange={(next) => onSelect?.(next ? String(next) : null)}
+        getOptionValue={(option) => option.id}
+        getOptionLabel={(option) => option.name}
         disabled={disabled || isLoading}
-        buttonClassName="h-7 border border-subtle bg-custom-background-100 text-xs"
-        className="h-7"
-        label={label}
-        noChevron
+        placeholder={placeholder}
+        showSearch={false}
+        pinSelected={false}
       >
-        <CustomSelect.Option value="">{t("project_templates.none")}</CustomSelect.Option>
-        {(templates as TProjectTemplate[] | undefined)?.map((template) => (
-          <CustomSelect.Option key={template.id} value={template.id}>
-            {template.name}
-          </CustomSelect.Option>
-        ))}
-      </CustomSelect>
+        <Select.Trigger variant="select-md" className="w-full">
+          <Select.Value />
+        </Select.Trigger>
+      </Select>
     </div>
   );
 }

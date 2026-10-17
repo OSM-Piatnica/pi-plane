@@ -9,25 +9,26 @@ import { useCallback, useMemo } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // icons
-import { useTranslation } from "@plane/i18n";
 import { DueDateOutline, StartDateOutline } from "@makeplane/propel/icons";
+// plane imports
+import { DateSelect } from "@plane/blocks/property-select";
+import { useTranslation } from "@plane/i18n";
 // types
 import type { TIssuePriorities, TWorkspaceDraftIssue } from "@plane/types";
-import { getDate, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
+import { cn, getDate, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
 // components
-import { CycleDropdown } from "@/components/dropdowns/cycle";
-import { DateDropdown } from "@/components/dropdowns/date";
-import { EstimateDropdown } from "@/components/dropdowns/estimate";
-import { MemberDropdown } from "@/components/dropdowns/member/dropdown";
-import { ModuleDropdown } from "@/components/dropdowns/module/dropdown";
-import { PriorityDropdown } from "@/components/dropdowns/priority";
-import { StateDropdown } from "@/components/dropdowns/state/dropdown";
-// helpers
+import { CycleSelect } from "@/components/dropdowns/cycle/cycle-select";
+import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select";
+import { MemberSelect } from "@/components/dropdowns/member/member-select";
+import { ModuleSelect } from "@/components/dropdowns/module/module-select";
+import { PrioritySelect } from "@/components/dropdowns/priority/priority-select";
+import { StateSelect } from "@/components/dropdowns/state/state-select";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useLabel } from "@/hooks/store/use-label";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
+import { useUserProfile } from "@/hooks/store/user";
 import { useWorkspaceDraftIssues } from "@/hooks/store/workspace-draft";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { IssuePropertyLabels } from "../issue-layouts/properties";
@@ -55,6 +56,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
   const { addCycleToIssue, addModulesToIssue } = useWorkspaceDraftIssues();
   const { areEstimateEnabledByProjectId } = useProjectEstimates();
   const { getStateById } = useProjectState();
+  const { data: userProfile } = useUserProfile();
   const { isMobile } = usePlatformOS();
   const projectDetails = getProjectById(issue.project_id);
 
@@ -125,7 +127,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
       target_date: date ? (renderFormattedPayloadDate(date) ?? undefined) : undefined,
     });
 
-  const handleEstimate = (value: string | undefined) =>
+  const handleEstimate = (value: string | null) =>
     issue?.project_id && updateIssue && updateIssue(issue.project_id, issue.id, { estimate_point: value });
 
   if (!issue.project_id) return null;
@@ -147,29 +149,20 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
       {/* basic properties */}
       {/* state */}
       {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
-      <div className="h-5" onClick={handleEventPropagation}>
-        <StateDropdown
-          buttonContainerClassName="truncate max-w-40"
+      <div role="presentation" onClick={handleEventPropagation}>
+        <StateSelect
           value={issue.state_id}
           onChange={handleState}
           projectId={issue.project_id}
-          buttonVariant="border-with-text"
-          renderByDefault={isMobile}
-          showTooltip
+          variant="pill-sm"
+          tooltip
         />
       </div>
 
       {/* priority */}
       {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
-      <div className="h-5" onClick={handleEventPropagation}>
-        <PriorityDropdown
-          value={issue?.priority}
-          onChange={handlePriority}
-          buttonVariant="border-without-text"
-          buttonClassName="border"
-          renderByDefault={isMobile}
-          showTooltip
-        />
+      <div role="presentation" onClick={handleEventPropagation}>
+        <PrioritySelect value={issue?.priority} onChange={handlePriority} variant="pill-sm" tooltip />
       </div>
 
       {/* label */}
@@ -185,72 +178,66 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
 
       {/* start date */}
       {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
-      <div className="h-5" onClick={handleEventPropagation}>
-        <DateDropdown
-          value={issue.start_date ?? null}
+      <div role="presentation" onClick={handleEventPropagation}>
+        <DateSelect
+          value={getDate(issue.start_date) ?? null}
           onChange={handleStartDate}
           maxDate={maxDate}
           placeholder={t("start_date")}
-          icon={<StartDateOutline className="h-3 w-3 flex-shrink-0" />}
-          buttonVariant={issue.start_date ? "border-with-text" : "border-without-text"}
-          optionsClassName="z-10"
-          renderByDefault={isMobile}
+          icon={<StartDateOutline />}
+          clearable
           showTooltip
+          tooltipHeading={t("common.order_by.start_date")}
+          weekStartsOn={userProfile?.start_of_the_week}
+          variant="pill-sm"
         />
       </div>
 
       {/* target/due date */}
       {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
-      <div className="h-5" onClick={handleEventPropagation}>
-        <DateDropdown
-          value={issue?.target_date ?? null}
+      <div role="presentation" onClick={handleEventPropagation}>
+        <DateSelect
+          value={getDate(issue?.target_date) ?? null}
           onChange={handleTargetDate}
           minDate={minDate}
           placeholder={t("due_date")}
-          icon={<DueDateOutline className="h-3 w-3 flex-shrink-0" />}
-          buttonVariant={issue.target_date ? "border-with-text" : "border-without-text"}
-          buttonClassName={
-            shouldHighlightIssueDueDate(issue?.target_date || null, stateDetails?.group) ? "text-danger-primary" : ""
-          }
-          clearIconClassName="!text-primary"
-          optionsClassName="z-10"
-          renderByDefault={isMobile}
+          icon={<DueDateOutline />}
+          className={cn({
+            "text-danger-primary": shouldHighlightIssueDueDate(issue?.target_date || null, stateDetails?.group),
+          })}
+          clearable
           showTooltip
+          tooltipHeading={t("common.order_by.due_date")}
+          weekStartsOn={userProfile?.start_of_the_week}
+          variant="pill-sm"
         />
       </div>
 
       {/* assignee */}
       {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
-      <div className="h-5" onClick={handleEventPropagation}>
-        <MemberDropdown
+      <div role="presentation" onClick={handleEventPropagation}>
+        <MemberSelect
           projectId={issue?.project_id}
-          value={issue?.assignee_ids}
+          value={issue?.assignee_ids ?? []}
           onChange={handleAssignee}
           multiple
-          buttonVariant={issue.assignee_ids?.length > 0 ? "transparent-without-text" : "border-without-text"}
-          buttonClassName={issue.assignee_ids?.length > 0 ? "hover:bg-transparent px-0" : ""}
-          showTooltip={issue?.assignee_ids?.length === 0}
+          variant={issue.assignee_ids?.length ? "avatar-group-sm" : "pill-sm"}
           placeholder={t("assignees")}
-          optionsClassName="z-10"
-          tooltipContent=""
-          renderByDefault={isMobile}
+          tooltip={{ heading: t("common.assignees") }}
         />
       </div>
 
       {/* modules */}
       {projectDetails?.module_view && (
         // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup
-        <div className="h-5" onClick={handleEventPropagation}>
-          <ModuleDropdown
-            buttonContainerClassName="truncate max-w-40"
+        <div role="presentation" onClick={handleEventPropagation}>
+          <ModuleSelect
+            multiple
             projectId={issue?.project_id}
             value={issue?.module_ids ?? []}
             onChange={handleModule}
-            renderByDefault={isMobile}
-            multiple
-            buttonVariant="border-with-text"
-            showCount
-            showTooltip
+            variant="pill-sm"
+            tooltip
           />
         </div>
       )}
@@ -258,15 +245,13 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
       {/* cycles */}
       {projectDetails?.cycle_view && (
         // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup
-        <div className="h-5" onClick={handleEventPropagation}>
-          <CycleDropdown
-            buttonContainerClassName="truncate max-w-40"
+        <div role="presentation" onClick={handleEventPropagation}>
+          <CycleSelect
             projectId={issue?.project_id}
             value={issue?.cycle_id || null}
             onChange={handleCycle}
-            buttonVariant="border-with-text"
-            renderByDefault={isMobile}
-            showTooltip
+            variant="pill-sm"
+            tooltip
           />
         </div>
       )}
@@ -274,14 +259,13 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
       {/* estimates */}
       {issue.project_id && areEstimateEnabledByProjectId(issue.project_id?.toString()) && (
         // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup
-        <div className="h-5" onClick={handleEventPropagation}>
-          <EstimateDropdown
+        <div role="presentation" onClick={handleEventPropagation}>
+          <EstimateSelect
             value={issue.estimate_point ?? undefined}
             onChange={handleEstimate}
             projectId={issue.project_id}
-            buttonVariant="border-with-text"
-            renderByDefault={isMobile}
-            showTooltip
+            variant="pill-sm"
+            tooltip
           />
         </div>
       )}

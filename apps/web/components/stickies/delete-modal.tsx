@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,8 +9,8 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 // ui
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { AlertModalCore } from "@plane/ui";
+import { setToast } from "@plane/blocks/toast";
+import { ConfirmDialog } from "@plane/blocks/dialog";
 
 interface IStickyDelete {
   isOpen: boolean;
@@ -30,7 +31,7 @@ export const StickyDeleteModal = observer(function StickyDeleteModal(props: ISti
       await handleSubmit();
     } catch {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("stickies.toasts.not_removed.title"),
         message: t("stickies.toasts.not_removed.message"),
       });
@@ -40,7 +41,7 @@ export const StickyDeleteModal = observer(function StickyDeleteModal(props: ISti
   };
 
   return (
-    <AlertModalCore
+    <ConfirmDialog
       handleClose={handleClose}
       handleSubmit={formSubmit}
       isSubmitting={loader}

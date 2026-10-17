@@ -12,12 +12,12 @@ import useSWR, { mutate } from "swr";
 import { TickCircleOutline } from "@makeplane/propel/icons";
 import { EUserPermissions, EUserPermissionsLevel, WORKSPACE_INTEGRATIONS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { Button } from "@makeplane/propel/components/button";
+import { setToast } from "@plane/blocks/toast";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IAppIntegration, IWorkspaceIntegration } from "@plane/types";
 // ui
-import { Loader } from "@plane/ui";
+import { Loader } from "@plane/blocks/skeleton";
 // assets
 import GithubLogo from "@/app/assets/services/github.png?url";
 import SlackLogo from "@/app/assets/services/slack.png?url";
@@ -93,7 +93,7 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
         setDeletingIntegration(false);
 
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: "Deleted successfully!",
           message: `${integration.title} integration deleted successfully.`,
         });
@@ -103,7 +103,7 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
         setDeletingIntegration(false);
 
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: `${integration.title} integration could not be deleted. Please try again.`,
         });
@@ -149,17 +149,18 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
             disabled={isUserAdmin || isMobile}
           >
             <Button
-              className={`${!isUserAdmin ? "hover:cursor-not-allowed" : ""}`}
-              variant="error-fill"
+              render={<button className={!isUserAdmin ? "hover:cursor-not-allowed" : ""} />}
+              variant="danger"
+              size="sm"
+              stretch="auto"
               onClick={() => {
                 if (!isUserAdmin) return;
                 handleRemoveIntegration();
               }}
               disabled={!isUserAdmin}
               loading={deletingIntegration}
-            >
-              {deletingIntegration ? "Uninstalling..." : "Uninstall"}
-            </Button>
+              label={deletingIntegration ? "Uninstalling..." : "Uninstall"}
+            />
           </Tooltip>
         ) : (
           <Tooltip
@@ -168,16 +169,17 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
             disabled={isUserAdmin || isMobile}
           >
             <Button
-              className={`${!isUserAdmin ? "hover:cursor-not-allowed" : ""}`}
+              render={<button className={!isUserAdmin ? "hover:cursor-not-allowed" : ""} />}
               variant="primary"
+              size="sm"
+              stretch="auto"
               onClick={() => {
                 if (!isUserAdmin) return;
                 startAuth();
               }}
               loading={isInstalling}
-            >
-              {isInstalling ? "Installing..." : "Install"}
-            </Button>
+              label={isInstalling ? "Installing..." : "Install"}
+            />
           </Tooltip>
         )
       ) : (

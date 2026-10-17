@@ -8,14 +8,17 @@
 import { observer } from "mobx-react";
 // plane imports
 import { SUPPORTED_LANGUAGES, useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { CustomSelect } from "@plane/ui";
+import { Select } from "@plane/blocks/select";
+import { setToast } from "@plane/blocks/toast";
 // components
 import { TimezoneSelect } from "@/components/global";
 import { StartOfWeekPreference } from "@/components/profile/start-of-week-preference";
 import { SettingsControlItem } from "@/components/settings/control-item";
 // hooks
 import { useUser, useUserProfile } from "@/hooks/store/user";
+
+/** A supported UI language, in the shape the `Select` renders. */
+type LanguageOption = { value: string; label: string };
 
 export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
   function ProfileSettingsLanguageAndTimezonePreferencesList() {
@@ -35,13 +38,13 @@ export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
         setToast({
           title: t("toast.success"),
           message: t("project_components.profile.timezone_updated"),
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
         });
       } catch (_error) {
         setToast({
           title: t("toast.error"),
           message: t("project_components.profile.timezone_error"),
-          type: TOAST_TYPE.ERROR,
+          type: "error",
         });
       }
     };
@@ -52,13 +55,13 @@ export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
         setToast({
           title: t("toast.success"),
           message: t("project_components.profile.language_updated"),
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
         });
       } catch (_error) {
         setToast({
           title: t("toast.error"),
           message: t("project_components.profile.language_error"),
-          type: TOAST_TYPE.ERROR,
+          type: "error",
         });
       }
     };
@@ -68,6 +71,12 @@ export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
       if (!selectedLanguage) return value;
       return selectedLanguage.label;
     };
+
+    const languageOptions: LanguageOption[] = SUPPORTED_LANGUAGES.map((item) => ({
+      value: item.value,
+      label: item.label,
+    }));
+    const selectedLanguageOption = languageOptions.find((option) => option.value === profile?.language) ?? null;
 
     return (
       <div className="flex flex-col gap-y-1">
@@ -80,25 +89,25 @@ export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
           title={t("language")}
           description={t("language_setting")}
           control={
-            <CustomSelect
-              value={profile?.language}
-              label={
-                profile?.language
-                  ? getLanguageLabel(profile?.language)
-                  : t("project_components.profile.select_language")
-              }
-              onChange={handleLanguageChange}
-              buttonClassName="border border-subtle-1"
-              className="rounded-md"
-              input
-              placement="bottom-end"
+            <Select<LanguageOption>
+              getValues={() => languageOptions}
+              value={selectedLanguageOption}
+              onChange={(value) => void handleLanguageChange(value)}
+              getOptionValue={(option) => option.value}
+              getOptionLabel={(option) => option.label}
+              placeholder={t("project_components.profile.select_language")}
+              showSearch={false}
+              pinSelected={false}
+              contentSizing="anchor"
             >
-              {SUPPORTED_LANGUAGES.map((item) => (
-                <CustomSelect.Option key={item.value} value={item.value}>
-                  {item.label}
-                </CustomSelect.Option>
-              ))}
-            </CustomSelect>
+              <Select.Trigger<LanguageOption> variant="select-md" className="w-42 max-w-full">
+                <span className="min-w-0 grow truncate text-left">
+                  {profile?.language
+                    ? getLanguageLabel(profile.language)
+                    : t("project_components.profile.select_language")}
+                </span>
+              </Select.Trigger>
+            </Select>
           }
         />
         <StartOfWeekPreference

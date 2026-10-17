@@ -11,13 +11,15 @@ import useSWR from "swr";
 import { observer } from "mobx-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { CustomSelect } from "@plane/ui";
+import { Select } from "@plane/blocks/select";
 // hooks
 import { useIssueModal } from "@/hooks/context/use-issue-modal";
 // services
 import { WorkItemTemplateService } from "@/services/work-item-template.service";
 
 const workItemTemplateService = new WorkItemTemplateService();
+
+type TTemplateOption = { id: string; name: string };
 
 export type TWorkItemTemplateDropdownSize = "xs" | "sm";
 
@@ -53,11 +55,18 @@ export const WorkItemTemplateSelect = observer(function WorkItemTemplateSelect(p
     ? t("work_item_templates.loading")
     : (selectedLabel ?? t("work_item_templates.dropdown_placeholder"));
 
+  const options: TTemplateOption[] = [
+    { id: "", name: t("work_item_templates.none") },
+    ...(templates ?? []).map((tmpl) => ({ id: tmpl.id, name: tmpl.name })),
+  ];
+  const selectedOption = options.find((option) => option.id === (workItemTemplateId ?? "")) ?? options[0];
+
   return (
     <div className="h-7 min-w-0 sm:max-w-[12rem]">
-      <CustomSelect
-        value={workItemTemplateId ?? ""}
-        onChange={(value: string) => {
+      <Select<TTemplateOption>
+        getValues={() => options}
+        value={selectedOption}
+        onChange={(value) => {
           if (!value) {
             setWorkItemTemplateId(null);
             return;
@@ -66,20 +75,20 @@ export const WorkItemTemplateSelect = observer(function WorkItemTemplateSelect(p
           handleFormChange?.();
         }}
         disabled={disabled || isLoading}
-        buttonClassName="w-full h-7 border border-subtle bg-layer-1 text-xs max-w-full truncate"
-        label={buttonLabel}
-        className="w-full"
-        noChevron={!renderChevron}
-        tabIndex={0}
-        input
+        getOptionValue={(option) => option.id}
+        getOptionLabel={(option) => option.name}
+        showSearch={false}
+        pinSelected={false}
       >
-        <CustomSelect.Option value="">{t("work_item_templates.none")}</CustomSelect.Option>
-        {(templates ?? []).map((tmpl) => (
-          <CustomSelect.Option key={tmpl.id} value={tmpl.id}>
-            {tmpl.name}
-          </CustomSelect.Option>
-        ))}
-      </CustomSelect>
+        <Select.Trigger
+          variant="select-md"
+          className="w-full max-w-full truncate"
+          appendIcon={renderChevron ? undefined : null}
+          tabIndex={0}
+        >
+          {buttonLabel}
+        </Select.Trigger>
+      </Select>
     </div>
   );
 });

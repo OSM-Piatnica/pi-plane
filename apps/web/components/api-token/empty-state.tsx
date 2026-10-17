@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
 // ui
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 // assets
 import emptyApiTokens from "@/app/assets/empty-state/api-token.svg?url";
 
@@ -27,9 +28,7 @@ export function ApiTokenEmptyState(props: Props) {
         <p className="mb-7 text-tertiary sm:mb-8">
           Create API tokens for safe and easy data sharing with external apps, maintaining control and security.
         </p>
-        <Button className="flex items-center gap-1.5" onClick={onClick}>
-          Add token
-        </Button>
+        <Button variant="primary" size="sm" stretch="auto" label="Add token" onClick={onClick} />
       </div>
     </div>
   );

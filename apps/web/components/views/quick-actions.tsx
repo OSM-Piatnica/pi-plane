@@ -9,15 +9,17 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import { MoreHorizontalOutline } from "@makeplane/propel/icons";
 // plane imports
-import { useTranslation } from "@plane/i18n";
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
-import { IconButton } from "@plane/propel/icon-button";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { useTranslation } from "@plane/i18n";
+import { IconButton } from "@makeplane/propel/components/icon-button";
+import { Icon } from "@makeplane/propel/components/icon";
+import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
+import { setToast } from "@plane/blocks/toast";
 import type { IProjectView } from "@plane/types";
 // ui
-import type { TContextMenuItem } from "@plane/ui";
-import { ContextMenu, CustomMenu } from "@plane/ui";
-import { copyUrlToClipboard, cn } from "@plane/utils";
+import type { TContextMenuItem } from "@plane/blocks/context-menu";
+import { ContextMenu, getRenderableItems, resolveItemVariant } from "@plane/blocks/context-menu";
+import { copyUrlToClipboard } from "@plane/utils";
 // helpers
 import { useViewMenuItems } from "@/components/common/quick-actions-helper";
 // hooks
@@ -32,12 +34,17 @@ type Props = {
   projectId: string;
   view: IProjectView;
   workspaceSlug: string;
+  /**
+   * @deprecated Accepted and ignored. The trigger is a Propel `IconButton`, which takes no
+   * `className`, and the legacy dropdown already dropped this class whenever a custom trigger was
+   * passed.
+   */
   customClassName?: string;
 };
 
 export const ViewQuickActions = observer(function ViewQuickActions(props: Props) {
-  const { parentRef, projectId, view, workspaceSlug, customClassName } = props;
-  // translation
+  const { parentRef, projectId, view, workspaceSlug } = props;
+  // plane hooks
   const { t } = useTranslation();
   // states
   const [createUpdateViewModal, setCreateUpdateViewModal] = useState(false);
@@ -58,7 +65,7 @@ export const ViewQuickActions = observer(function ViewQuickActions(props: Props)
   const handleCopyText = () =>
     copyUrlToClipboard(viewLink).then(() => {
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("common.link_copied"),
         message: t("view_link_copied_to_clipboard"),
       });
@@ -106,46 +113,33 @@ export const ViewQuickActions = observer(function ViewQuickActions(props: Props)
       <PublishViewModal isOpen={isPublishModalOpen} onClose={() => setPublishModalOpen(false)} view={view} />
       {additionalModals}
       <ContextMenu parentRef={parentRef} items={CONTEXT_MENU_ITEMS} />
-      <CustomMenu
-        customButton={<IconButton variant="tertiary" size="lg" icon={MoreHorizontalOutline} />}
-        placement="bottom-end"
-        closeOnSelect
-        buttonClassName={customClassName}
-      >
-        {MENU_ITEMS.map((item) => {
-          if (item.shouldRender === false) return null;
-          return (
-            <CustomMenu.MenuItem
+      <Menu>
+        <MenuTrigger
+          render={
+            <IconButton
+              variant="tertiary"
+              size="md"
+              icon={<Icon icon={MoreHorizontalOutline} />}
+              aria-label={t("aria_labels.common.more_actions")}
+            />
+          }
+        />
+        <MenuContent side="bottom" align="end">
+          {getRenderableItems(MENU_ITEMS).map((item) => (
+            <MenuItem
               key={item.key}
+              variant={resolveItemVariant(item)}
+              icon={item.icon ? <Icon icon={item.icon} /> : undefined}
+              label={item.title ?? ""}
+              description={item.description}
+              disabled={item.disabled}
               onClick={() => {
                 item.action();
               }}
-              className={cn(
-                "flex items-center gap-2",
-                {
-                  "text-placeholder": item.disabled,
-                },
-                item.className
-              )}
-              disabled={item.disabled}
-            >
-              {item.icon && <item.icon className={cn("h-3 w-3", item.iconClassName)} />}
-              <div>
-                <h5>{item.title}</h5>
-                {item.description && (
-                  <p
-                    className={cn("whitespace-pre-line text-tertiary", {
-                      "text-placeholder": item.disabled,
-                    })}
-                  >
-                    {item.description}
-                  </p>
-                )}
-              </div>
-            </CustomMenu.MenuItem>
-          );
-        })}
-      </CustomMenu>
+            />
+          ))}
+        </MenuContent>
+      </Menu>
     </>
   );
 });

@@ -8,17 +8,16 @@
 import { observer } from "mobx-react";
 // types
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { setToast } from "@plane/blocks/toast";
 import type { IProjectView } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 // ui
-import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
+import { Dialog, DialogContent } from "@makeplane/propel/components/dialog";
 // hooks
 import { useIssues } from "@/hooks/store/use-issues";
 import { useProjectView } from "@/hooks/store/use-project-view";
 import { useWorkItemFilters } from "@/hooks/store/work-item-filters/use-work-item-filters";
 import { useAppRouter } from "@/hooks/use-app-router";
-import useKeypress from "@/hooks/use-keypress";
 // local imports
 import { ProjectViewForm } from "./form";
 
@@ -53,13 +52,13 @@ export const CreateUpdateProjectViewModal = observer(function CreateUpdateProjec
       handleClose();
       router.push(`/${workspaceSlug}/projects/${projectId}/views/${res.id}`);
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("toast.success"),
         message: t("project_components.views.created"),
       });
     } catch (_error) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("project_components.views.create_error"),
       });
@@ -74,7 +73,7 @@ export const CreateUpdateProjectViewModal = observer(function CreateUpdateProjec
       handleClose();
     } catch (_error) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("project_components.views.update_error"),
       });
@@ -86,20 +85,24 @@ export const CreateUpdateProjectViewModal = observer(function CreateUpdateProjec
     else await handleUpdateView(formData);
   };
 
-  useKeypress("Escape", () => {
-    if (isOpen) handleClose();
-  });
-
   return (
-    <ModalCore isOpen={isOpen} position={EModalPosition.TOP} width={EModalWidth.XXL}>
-      <ProjectViewForm
-        data={data}
-        handleClose={handleClose}
-        handleFormSubmit={handleFormSubmit}
-        preLoadedData={preLoadedData}
-        projectId={projectId}
-        workspaceSlug={workspaceSlug}
-      />
-    </ModalCore>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+      disablePointerDismissal
+    >
+      <DialogContent size="md">
+        <ProjectViewForm
+          data={data}
+          handleClose={handleClose}
+          handleFormSubmit={handleFormSubmit}
+          preLoadedData={preLoadedData}
+          projectId={projectId}
+          workspaceSlug={workspaceSlug}
+        />
+      </DialogContent>
+    </Dialog>
   );
 });

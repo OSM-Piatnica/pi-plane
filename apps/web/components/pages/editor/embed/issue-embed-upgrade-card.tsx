@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 // plane imports
-import { getButtonStyling } from "@plane/propel/button";
+import { AnchorButton } from "@makeplane/propel/components/anchor-button";
 import { cn } from "@plane/utils";
 // components
 import { ProIcon } from "@/components/common/pro-icon";
@@ -26,14 +27,14 @@ export function IssueEmbedUpgradeCard(props: any) {
           Embed and access issues in pages seamlessly, upgrade to Plane Pro now.
         </p>
       </div>
-      <a
+      <AnchorButton
         href="https://plane.so/pro"
         target="_blank"
         rel="noopener noreferrer"
-        className={cn(getButtonStyling("primary", "base"), "no-underline")}
-      >
-        Upgrade
-      </a>
+        variant="primary"
+        size="md"
+        label="Upgrade"
+      />
     </div>
   );
 }

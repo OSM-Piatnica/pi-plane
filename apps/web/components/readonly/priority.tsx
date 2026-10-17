@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,7 +9,7 @@ import { observer } from "mobx-react";
 // plane imports
 import { ISSUE_PRIORITIES } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { PriorityIcon } from "@plane/propel/icons";
+import { PriorityIcon } from "@plane/blocks/icons";
 import type { TIssuePriorities } from "@plane/types";
 import { cn } from "@plane/utils";
 
@@ -27,7 +28,7 @@ export const ReadonlyPriority = observer(function ReadonlyPriority(props: TReado
 
   return (
     <div className={cn("flex items-center gap-1 text-body-xs-regular", className)}>
-      {!hideIcon && <PriorityIcon priority={value ?? "none"} size={12} className="flex-shrink-0" withContainer />}
+      {!hideIcon && <PriorityIcon priority={value ?? "none"} className="size-4" />}
       <span className="flex-grow truncate">{priorityDetails?.title ?? placeholder ?? t("common.none")}</span>
     </div>
   );

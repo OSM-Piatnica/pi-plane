@@ -8,7 +8,7 @@
 import React from "react";
 // ui
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 // assets
 import EmptyWebhook from "@/app/assets/empty-state/web-hook.svg?url";
 
@@ -28,9 +28,13 @@ export function WebhooksEmptyState(props: Props) {
         <img src={EmptyWebhook} className="w-52 object-cover sm:w-60" alt="empty" />
         <h6 className="mt-6 mb-3 text-18 font-semibold sm:mt-8">{t("project_components.webhooks.empty_title")}</h6>
         <p className="mb-7 text-tertiary sm:mb-8">{t("project_components.webhooks.empty_description")}</p>
-        <Button className="flex items-center gap-1.5" onClick={onClick}>
-          {t("workspace_settings.settings.webhooks.add_webhook")}
-        </Button>
+        <Button
+          variant="primary"
+          size="sm"
+          stretch="auto"
+          label={t("workspace_settings.settings.webhooks.add_webhook")}
+          onClick={onClick}
+        />
       </div>
     </div>
   );

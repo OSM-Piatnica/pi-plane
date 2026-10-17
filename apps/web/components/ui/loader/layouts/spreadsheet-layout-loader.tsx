@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { range } from "lodash-es";
-import { Row } from "@plane/ui";
+import { Row } from "@plane/blocks/layout";
 import { getRandomLength } from "../utils";
 
 export function SpreadsheetIssueRowLoader(props: { columnCount: number }) {

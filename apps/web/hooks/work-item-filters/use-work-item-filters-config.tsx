@@ -22,8 +22,8 @@ import {
 } from "@makeplane/propel/icons";
 // plane imports
 import { Avatar } from "@makeplane/propel/components/avatar";
-import { Logo } from "@plane/propel/emoji-icon-picker";
-import { CycleGroupIcon, PriorityIcon, StateGroupIcon } from "@plane/propel/icons";
+import { Logo } from "@plane/blocks/emoji-icon-picker";
+import { CycleGroupIcon, PriorityIcon, StateGroupIcon } from "@plane/blocks/icons";
 import type {
   ICycle,
   IState,

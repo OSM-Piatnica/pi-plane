@@ -8,10 +8,10 @@
 import { useMemo, useState } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { stringToEmoji } from "@plane/propel/emoji-icon-picker";
-import { EmojiReactionGroup, EmojiReactionPicker } from "@plane/propel/emoji-reaction";
-import type { EmojiReactionType } from "@plane/propel/emoji-reaction";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { stringToEmoji } from "@plane/blocks/emoji-icon-picker";
+import { EmojiReactionGroup, EmojiReactionPicker } from "@plane/blocks/emoji-reaction";
+import type { EmojiReactionType } from "@plane/blocks/emoji-reaction";
+import { setToast } from "@plane/blocks/toast";
 import type { IUser } from "@plane/types";
 // hooks
 // ui
@@ -55,13 +55,13 @@ export const IssueReaction = observer(function IssueReaction(props: TIssueReacti
           await createReaction(workspaceSlug, projectId, issueId, reaction);
           setToast({
             title: t("toast.success"),
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             message: t("updates.reaction.create.success.message"),
           });
         } catch (_error) {
           setToast({
             title: t("toast.error"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             message: t("updates.reaction.create.error.message"),
           });
         }
@@ -72,13 +72,13 @@ export const IssueReaction = observer(function IssueReaction(props: TIssueReacti
           await removeReaction(workspaceSlug, projectId, issueId, reaction, currentUser.id);
           setToast({
             title: t("toast.success"),
-            type: TOAST_TYPE.SUCCESS,
+            type: "success",
             message: t("updates.reaction.remove.success.message"),
           });
         } catch (_error) {
           setToast({
             title: t("toast.error"),
-            type: TOAST_TYPE.ERROR,
+            type: "error",
             message: t("updates.reaction.remove.error.message"),
           });
         }

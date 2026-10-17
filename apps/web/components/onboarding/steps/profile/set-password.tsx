@@ -8,7 +8,7 @@
 import React, { useState, useCallback, useMemo } from "react";
 import { useTranslation } from "@plane/i18n";
 import { ChevronDownOutline, LockOutline } from "@makeplane/propel/icons";
-import { PasswordInput, PasswordStrengthIndicator } from "@plane/ui";
+import { PasswordInput, PasswordStrengthIndicator } from "@plane/blocks/auth";
 import { cn } from "@plane/utils";
 
 interface PasswordState {
@@ -81,12 +81,15 @@ export function SetPasswordRoot({ onPasswordChange, onConfirmPasswordChange, dis
   return (
     <div className={`flex flex-col overflow-hidden rounded-lg bg-surface-2 transition-all duration-300 ease-in-out`}>
       {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- behaviour-preserving lint cleanup; a11y handled separately */}
-      <div
+      <button
+        type="button"
         className={cn(
-          "flex items-center justify-between px-3 py-2 text-13 transition-colors duration-200",
+          "flex w-full items-center justify-between px-3 py-2 text-left text-13 transition-colors duration-200",
           disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
           isExpanded && "pb-1"
         )}
+        aria-expanded={isExpanded}
+        disabled={disabled}
         onClick={handleToggleExpand}
       >
         <div className="flex items-center gap-1 text-tertiary">
@@ -97,13 +100,14 @@ export function SetPasswordRoot({ onPasswordChange, onConfirmPasswordChange, dis
         <div className="flex items-center gap-2 text-placeholder">
           <ChevronDownOutline className={chevronIconClasses} />
         </div>
-      </div>
+      </button>
 
       <div className={expandedContentClasses}>
         {/* Password input */}
         <div className="flex transform flex-col gap-2 pt-1 transition-all duration-300 ease-in-out">
           <PasswordInput
             id="password"
+            label="Password"
             value={passwordState.password}
             onChange={(value) => handlePasswordChange("password", value)}
             placeholder={t("auth.common.password.set_password")}
@@ -113,15 +117,11 @@ export function SetPasswordRoot({ onPasswordChange, onConfirmPasswordChange, dis
         </div>
 
         <div className="flex flex-col gap-2 pb-2">
-          {/* Confirm password label */}
-          <div className="transform text-13 font-medium text-tertiary transition-all delay-75 duration-300 ease-in-out">
-            {t("auth.common.password.confirm_password.label")}
-          </div>
-
           {/* Confirm password input */}
           <div className="transform transition-all delay-100 duration-300 ease-in-out">
             <PasswordInput
               id="confirm-password"
+              label={t("auth.common.password.confirm_password.label")}
               value={passwordState.confirmPassword}
               onChange={(value) => handlePasswordChange("confirmPassword", value)}
               placeholder={t("auth.common.password.confirm_password.placeholder")}

@@ -10,7 +10,8 @@ import { observer } from "mobx-react";
 import { CloseOutline, FilterOutline, SearchOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useOutsideClickDetector } from "@plane/hooks";
-import { IconButton } from "@plane/propel/icon-button";
+import { IconButton } from "@makeplane/propel/components/icon-button";
+import { Icon } from "@makeplane/propel/components/icon";
 import { useTranslation } from "@plane/i18n";
 import type { TCycleFilters, TCycleOrderByOptions } from "@plane/types";
 import { cn, calculateTotalFilters } from "@plane/utils";
@@ -87,12 +88,13 @@ export const CyclesViewHeader = observer(function CyclesViewHeader(props: Props)
       {!isSearchOpen ? (
         <IconButton
           variant="ghost"
-          size="lg"
+          size="md"
           onClick={() => {
             setIsSearchOpen(true);
             inputRef.current?.focus();
           }}
-          icon={SearchOutline}
+          icon={<Icon icon={SearchOutline} />}
+          aria-label={t("common.search.label")}
         />
       ) : (
         <div

@@ -9,16 +9,15 @@ import { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { useForm } from "react-hook-form";
 // Plane imports
+import { Dialog, DialogContent } from "@makeplane/propel/components/dialog";
+import { setToast } from "@plane/blocks/toast";
 import { useTranslation } from "@plane/i18n";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { IModule } from "@plane/types";
-import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
 // components
 import { ModuleForm } from "@/components/modules";
 // hooks
 import { useModule } from "@/hooks/store/use-module";
 import { useProject } from "@/hooks/store/use-project";
-import useKeypress from "@/hooks/use-keypress";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 
 type Props = {
@@ -41,11 +40,12 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
   const { isOpen, onClose, data, workspaceSlug, projectId } = props;
   // states
   const [activeProject, setActiveProject] = useState<string | null>(null);
+  // plane hooks
+  const { t } = useTranslation();
   // store hooks
   const { workspaceProjectIds } = useProject();
   const { createModule, updateModuleDetails } = useModule();
   const { isMobile } = usePlatformOS();
-  const { t } = useTranslation();
 
   const handleClose = () => {
     reset(defaultValues);
@@ -64,7 +64,7 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
       .then((_res) => {
         handleClose();
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("toast.success"),
           message: t("module_ui.create_success"),
         });
@@ -72,7 +72,7 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
       })
       .catch((err) => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: err?.detail ?? err?.error ?? t("module_ui.create_error"),
         });
@@ -88,7 +88,7 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
         handleClose();
 
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: t("toast.success"),
           message: t("entity.update.success", { entity: t("common.module") }),
         });
@@ -96,7 +96,7 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
       })
       .catch((err) => {
         setToast({
-          type: TOAST_TYPE.ERROR,
+          type: "error",
           title: t("toast.error"),
           message: err?.detail ?? err?.error ?? t("module_ui.update_error"),
         });
@@ -134,21 +134,29 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
       setActiveProject(projectId ?? workspaceProjectIds?.[0] ?? null);
   }, [activeProject, data, projectId, workspaceProjectIds, isOpen]);
 
-  useKeypress("Escape", () => {
-    if (isOpen) handleClose();
-  });
-
   return (
-    <ModalCore isOpen={isOpen} position={EModalPosition.TOP} width={EModalWidth.XXL}>
-      <ModuleForm
-        handleFormSubmit={handleFormSubmit}
-        handleClose={handleClose}
-        status={Boolean(data)}
-        projectId={activeProject ?? ""}
-        setActiveProject={setActiveProject}
-        data={data}
-        isMobile={isMobile}
-      />
-    </ModalCore>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+      disablePointerDismissal
+    >
+      {/* ModuleForm renders its own visible heading; the dialog carries the same text as its name. */}
+      <DialogContent
+        size="md"
+        aria-label={`${data ? t("common.update") : t("common.create")} ${t("common.module").toLowerCase()}`}
+      >
+        <ModuleForm
+          handleFormSubmit={handleFormSubmit}
+          handleClose={handleClose}
+          status={!!data}
+          projectId={activeProject ?? ""}
+          setActiveProject={setActiveProject}
+          data={data}
+          isMobile={isMobile}
+        />
+      </DialogContent>
+    </Dialog>
   );
 });

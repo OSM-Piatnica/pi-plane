@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -13,20 +14,18 @@ import { Decoration, DecorationSet } from "@tiptap/pm/view";
 import highlight from "highlight.js/lib/core";
 
 function parseNodes(nodes: any[], className: string[] = []): { text: string; classes: string[] }[] {
-  return nodes
-    .map((node) => {
-      const classes = [...className, ...(node.properties ? node.properties.className : [])];
+  return nodes.flatMap((node) => {
+    const classes = [...className, ...(node.properties ? node.properties.className : [])];
 
-      if (node.children) {
-        return parseNodes(node.children, classes);
-      }
+    if (node.children) {
+      return parseNodes(node.children, classes);
+    }
 
-      return {
-        text: node.value,
-        classes,
-      };
-    })
-    .flat();
+    return {
+      text: node.value,
+      classes,
+    };
+  });
 }
 
 function getHighlightNodes(result: any) {

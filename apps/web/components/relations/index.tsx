@@ -8,7 +8,7 @@
 import { BlockingOutline, CloseCircleOutline, DuplicateOfOutline, RelatesToOutline } from "@makeplane/propel/icons";
 import type { TRelationObject } from "@/components/issues/issue-detail-widgets/relations";
 import type { TIssueRelationTypes } from "@plane/types";
-import { CalendarAfterIcon, CalendarBeforeIcon } from "@plane/propel/icons";
+import { CalendarAfterIcon, CalendarBeforeIcon } from "@plane/blocks/icons";
 
 export * from "./activity";
 

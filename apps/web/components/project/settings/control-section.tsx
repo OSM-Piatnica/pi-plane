@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import { useParams } from "react-router";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 // components
 import { SettingsBoxedControlItem } from "@/components/settings/boxed-control-item";
 // hooks
@@ -62,9 +62,13 @@ export const GeneralProjectSettingsControlSection = observer(function GeneralPro
           title={t("archive")}
           description={t("project_components.control_section.archive_description")}
           control={
-            <Button variant="secondary" onClick={() => setArchiveProject(true)}>
-              {t("archive")}
-            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              stretch="auto"
+              label={t("archive")}
+              onClick={() => setArchiveProject(true)}
+            />
           }
         />
         {/* Format Selector */}
@@ -73,9 +77,13 @@ export const GeneralProjectSettingsControlSection = observer(function GeneralPro
           title={t("delete")}
           description={t("project_components.control_section.delete_description")}
           control={
-            <Button variant="error-outline" onClick={() => setSelectedProject(currentProjectDetails.id ?? null)}>
-              {t("delete")}
-            </Button>
+            <Button
+              variant="danger-outline"
+              size="sm"
+              stretch="auto"
+              label={t("delete")}
+              onClick={() => setSelectedProject(currentProjectDetails.id ?? null)}
+            />
           }
         />
       </div>

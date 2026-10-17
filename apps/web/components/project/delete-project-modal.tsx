@@ -11,10 +11,19 @@ import { WarningTriangleOutline } from "@makeplane/propel/icons";
 // Plane imports
 import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
-import { Button } from "@plane/propel/button";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { Button } from "@makeplane/propel/components/button";
+import { setToast } from "@plane/blocks/toast";
 import type { IProject } from "@plane/types";
-import { EModalPosition, EModalWidth, ModalCore } from "@plane/ui";
+import {
+  Dialog,
+  DialogActions,
+  DialogBody,
+  DialogContent,
+  DialogHeader,
+  DialogHeading,
+  DialogMain,
+  DialogTitle,
+} from "@makeplane/propel/components/dialog";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useAppRouter } from "@/hooks/use-app-router";
@@ -68,13 +77,13 @@ export function DeleteProjectModal(props: DeleteProjectModal) {
       if (projectId && projectId.toString() === project.id) router.push(`/${workspaceSlug}/projects`);
       handleClose();
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("toast.success"),
         message: t("project_components.delete_modal.deleted_success"),
       });
     } catch (_error) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: t("something_went_wrong_please_try_again"),
       });
@@ -82,84 +91,101 @@ export function DeleteProjectModal(props: DeleteProjectModal) {
   };
 
   return (
-    <ModalCore isOpen={isOpen} handleClose={handleClose} position={EModalPosition.CENTER} width={EModalWidth.XXL}>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 p-6">
-        <div className="flex w-full items-center justify-start gap-6">
-          <span className="place-items-center rounded-full bg-danger-subtle p-4">
-            <WarningTriangleOutline className="h-6 w-6 text-danger-primary" aria-hidden="true" />
-          </span>
-          <span className="flex items-center justify-start">
-            <h3 className="text-18 font-medium 2xl:text-20">{t("project_settings.general.delete_project.title")}</h3>
-          </span>
-        </div>
-        <span>
-          <p className="text-13 leading-7 text-secondary">
-            {t("project_components.delete_modal.description", { name: project?.name })}
-          </p>
-        </span>
-        <div className="text-secondary">
-          <p className="text-13 break-words">
-            {t("project_components.delete_modal.enter_project_name", { name: project?.name })}
-          </p>
-          <Controller
-            control={control}
-            name="projectName"
-            render={({ field: { value, onChange, ref } }) => (
-              <Field name="projectName" invalid={Boolean(errors.projectName)}>
-                <InputGroup size="2xl">
-                  <Input
-                    size="2xl"
-                    id="projectName"
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+    >
+      <DialogContent size="md">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex min-h-0 flex-1 flex-col">
+          <DialogMain>
+            <DialogHeader>
+              <div className="flex w-full items-center justify-start gap-6">
+                <span className="place-items-center rounded-full bg-danger-subtle p-4">
+                  <WarningTriangleOutline className="h-6 w-6 text-danger-primary" aria-hidden="true" />
+                </span>
+                <DialogHeading>
+                  <DialogTitle>{t("project_settings.general.delete_project.title")}</DialogTitle>
+                </DialogHeading>
+              </div>
+            </DialogHeader>
+            <DialogBody>
+              <div className="flex flex-col gap-6">
+                <p className="text-13 leading-7 text-secondary">
+                  {t("project_components.delete_modal.description", { name: project?.name })}
+                </p>
+                <div className="text-secondary">
+                  <p className="text-13 break-words">
+                    {t("project_components.delete_modal.enter_project_name", { name: project?.name })}
+                  </p>
+                  <Controller
+                    control={control}
                     name="projectName"
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    ref={ref}
-                    placeholder={t("project_name")}
-                    autoComplete="off"
+                    render={({ field: { value, onChange, ref } }) => (
+                      <Field name="projectName" invalid={Boolean(errors.projectName)}>
+                        <InputGroup size="2xl">
+                          <Input
+                            size="2xl"
+                            id="projectName"
+                            name="projectName"
+                            type="text"
+                            value={value}
+                            onChange={onChange}
+                            ref={ref}
+                            placeholder={t("project_name")}
+                            autoComplete="off"
+                          />
+                        </InputGroup>
+                      </Field>
+                    )}
                   />
-                </InputGroup>
-              </Field>
-            )}
-          />
-        </div>
-        <div className="text-secondary">
-          <p className="text-13">
-            {t("project_components.delete_modal.confirm_type", { phrase: "delete my project" })}
-          </p>
-          <Controller
-            control={control}
-            name="confirmDelete"
-            render={({ field: { value, onChange, ref } }) => (
-              <Field name="confirmDelete" invalid={Boolean(errors.confirmDelete)}>
-                <InputGroup size="2xl">
-                  <Input
-                    size="2xl"
-                    id="confirmDelete"
+                </div>
+                <div className="text-secondary">
+                  <p className="text-13">
+                    {t("project_components.delete_modal.confirm_type", { phrase: "delete my project" })}
+                  </p>
+                  <Controller
+                    control={control}
                     name="confirmDelete"
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    ref={ref}
-                    placeholder={t("project_components.delete_modal.confirm_placeholder", {
-                      phrase: "delete my project",
-                    })}
-                    autoComplete="off"
+                    render={({ field: { value, onChange, ref } }) => (
+                      <Field name="confirmDelete" invalid={Boolean(errors.confirmDelete)}>
+                        <InputGroup size="2xl">
+                          <Input
+                            size="2xl"
+                            id="confirmDelete"
+                            name="confirmDelete"
+                            type="text"
+                            value={value}
+                            onChange={onChange}
+                            ref={ref}
+                            placeholder={t("project_components.delete_modal.confirm_placeholder", {
+                              phrase: "delete my project",
+                            })}
+                            autoComplete="off"
+                          />
+                        </InputGroup>
+                      </Field>
+                    )}
                   />
-                </InputGroup>
-              </Field>
-            )}
-          />
-        </div>
-        <div className="flex justify-end gap-2">
-          <Button variant="secondary" size="lg" onClick={handleClose}>
-            {t("cancel")}
-          </Button>
-          <Button variant="error-fill" size="lg" type="submit" disabled={!canDelete} loading={isSubmitting}>
-            {isSubmitting ? t("common.deleting") : t("project_settings.general.delete_project.title")}
-          </Button>
-        </div>
-      </form>
-    </ModalCore>
+                </div>
+              </div>
+            </DialogBody>
+          </DialogMain>
+          <DialogActions>
+            <Button variant="secondary" size="md" stretch="auto" label={t("cancel")} onClick={handleClose} />
+            <Button
+              variant="danger"
+              size="md"
+              stretch="auto"
+              type="submit"
+              label={isSubmitting ? t("common.deleting") : t("project_settings.general.delete_project.title")}
+              disabled={!canDelete}
+              loading={isSubmitting}
+            />
+          </DialogActions>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

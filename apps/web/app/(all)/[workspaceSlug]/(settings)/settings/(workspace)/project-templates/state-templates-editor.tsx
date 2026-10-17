@@ -7,8 +7,8 @@
 import { useState } from "react";
 import { Plus, Star, Trash2 } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { Input } from "@plane/ui";
+import { Button } from "@makeplane/propel/components/button";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import type { TStateTemplateField, TStateTemplateGroup } from "./project-template-form.types";
 import {
   STATE_GROUP_DEFAULT_COLOR,
@@ -119,12 +119,16 @@ export const StateTemplatesEditor = ({ value, onChange }: TProps) => {
                     onChange={(color) => onUpdate(state.id, { color })}
                     colors={TEMPLATE_COLOR_PALETTE}
                   />
-                  <Input
-                    className="h-8 flex-1"
-                    value={state.name}
-                    onChange={(event) => onUpdate(state.id, { name: event.target.value })}
-                    placeholder={t("workspace_settings.settings.project_templates.form.state_name_placeholder")}
-                  />
+                  <div className="min-w-0 flex-1">
+                    <InputGroup size="lg">
+                      <Input
+                        size="lg"
+                        value={state.name}
+                        onChange={(event) => onUpdate(state.id, { name: event.target.value })}
+                        placeholder={t("workspace_settings.settings.project_templates.form.state_name_placeholder")}
+                      />
+                    </InputGroup>
+                  </div>
                   <button
                     type="button"
                     className={`rounded-md p-1 ${
@@ -149,28 +153,43 @@ export const StateTemplatesEditor = ({ value, onChange }: TProps) => {
               {isDrafting ? (
                 <div className="flex items-center gap-2 px-3 py-2">
                   <ColorSwatchPicker value={draftColor} onChange={setDraftColor} colors={TEMPLATE_COLOR_PALETTE} />
-                  <Input
-                    className="h-8 flex-1"
-                    value={draftName}
-                    onChange={(event) => setDraftName(event.target.value)}
-                    placeholder={t("workspace_settings.settings.project_templates.form.state_name_placeholder")}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") {
-                        event.preventDefault();
-                        onAdd();
-                      }
-                      if (event.key === "Escape") {
-                        event.preventDefault();
-                        cancelDraft();
-                      }
-                    }}
+                  <div className="min-w-0 flex-1">
+                    <InputGroup size="lg">
+                      <Input
+                        size="lg"
+                        value={draftName}
+                        onChange={(event) => setDraftName(event.target.value)}
+                        placeholder={t("workspace_settings.settings.project_templates.form.state_name_placeholder")}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter") {
+                            event.preventDefault();
+                            onAdd();
+                          }
+                          if (event.key === "Escape") {
+                            event.preventDefault();
+                            cancelDraft();
+                          }
+                        }}
+                      />
+                    </InputGroup>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    stretch="auto"
+                    onClick={cancelDraft}
+                    label={t("cancel")}
                   />
-                  <Button type="button" variant="secondary" size="sm" onClick={cancelDraft}>
-                    {t("cancel")}
-                  </Button>
-                  <Button type="button" variant="primary" size="sm" onClick={onAdd} disabled={!draftName.trim()}>
-                    {t("add")}
-                  </Button>
+                  <Button
+                    type="button"
+                    variant="primary"
+                    size="sm"
+                    stretch="auto"
+                    onClick={onAdd}
+                    disabled={!draftName.trim()}
+                    label={t("add")}
+                  />
                 </div>
               ) : null}
             </div>

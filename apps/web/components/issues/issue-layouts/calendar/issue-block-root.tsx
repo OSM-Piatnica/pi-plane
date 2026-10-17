@@ -59,7 +59,7 @@ export const CalendarIssueBlockRoot = observer(function CalendarIssueBlockRoot(p
       })
     );
     // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
-  }, [issueRef?.current, issue, canDrag]);
+  }, [issue, canDrag]);
 
   useOutsideClickDetector(issueRef, () => {
     issueRef?.current?.classList?.remove(HIGHLIGHT_CLASS);

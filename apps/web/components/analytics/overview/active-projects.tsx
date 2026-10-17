@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 import useSWR from "swr";
 // plane package imports
 import { useTranslation } from "@plane/i18n";
-import { Loader } from "@plane/ui";
+import { Loader } from "@plane/blocks/skeleton";
 import { useAnalytics } from "@/hooks/store/use-analytics";
 import { useProject } from "@/hooks/store/use-project";
 import AnalyticsSectionWrapper from "../analytics-section-wrapper";

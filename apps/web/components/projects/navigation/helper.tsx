@@ -1,12 +1,20 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 // plane imports
 import { EUserPermissions, EProjectFeatureKey } from "@plane/constants";
-import { CycleIcon, IntakeIcon, ModuleIcon, PageIcon, ViewsIcon, WorkItemsIcon } from "@plane/propel/icons";
+import {
+  CyclesOutline,
+  IntakeOutline,
+  ModuleOutline,
+  PagesOutline,
+  ViewsOutline,
+  WorkItemsOutline,
+} from "@makeplane/propel/icons";
 // components
 import type { TNavigationItem } from "@/components/workspace/sidebar/project-navigation";
 
@@ -26,7 +34,7 @@ export const getProjectFeatureNavigation = (
     key: EProjectFeatureKey.WORK_ITEMS,
     name: "Work items",
     href: `/${workspaceSlug}/projects/${projectId}/issues`,
-    icon: WorkItemsIcon,
+    icon: WorkItemsOutline,
     access: [EUserPermissions.ADMIN, EUserPermissions.MEMBER, EUserPermissions.GUEST],
     shouldRender: true,
     sortOrder: 1,
@@ -36,7 +44,7 @@ export const getProjectFeatureNavigation = (
     key: EProjectFeatureKey.CYCLES,
     name: "Cycles",
     href: `/${workspaceSlug}/projects/${projectId}/cycles`,
-    icon: CycleIcon,
+    icon: CyclesOutline,
     access: [EUserPermissions.ADMIN, EUserPermissions.MEMBER],
     shouldRender: project.cycle_view,
     sortOrder: 2,
@@ -46,7 +54,7 @@ export const getProjectFeatureNavigation = (
     key: EProjectFeatureKey.MODULES,
     name: "Modules",
     href: `/${workspaceSlug}/projects/${projectId}/modules`,
-    icon: ModuleIcon,
+    icon: ModuleOutline,
     access: [EUserPermissions.ADMIN, EUserPermissions.MEMBER],
     shouldRender: project.module_view,
     sortOrder: 3,
@@ -56,7 +64,7 @@ export const getProjectFeatureNavigation = (
     key: EProjectFeatureKey.VIEWS,
     name: "Views",
     href: `/${workspaceSlug}/projects/${projectId}/views`,
-    icon: ViewsIcon,
+    icon: ViewsOutline,
     access: [EUserPermissions.ADMIN, EUserPermissions.MEMBER, EUserPermissions.GUEST],
     shouldRender: project.issue_views_view,
     sortOrder: 4,
@@ -66,7 +74,7 @@ export const getProjectFeatureNavigation = (
     key: EProjectFeatureKey.PAGES,
     name: "Pages",
     href: `/${workspaceSlug}/projects/${projectId}/pages`,
-    icon: PageIcon,
+    icon: PagesOutline,
     access: [EUserPermissions.ADMIN, EUserPermissions.MEMBER, EUserPermissions.GUEST],
     shouldRender: project.page_view,
     sortOrder: 5,
@@ -76,7 +84,7 @@ export const getProjectFeatureNavigation = (
     key: EProjectFeatureKey.INTAKE,
     name: "Intake",
     href: `/${workspaceSlug}/projects/${projectId}/intake`,
-    icon: IntakeIcon,
+    icon: IntakeOutline,
     access: [EUserPermissions.ADMIN, EUserPermissions.MEMBER, EUserPermissions.GUEST],
     shouldRender: project.inbox_view,
     sortOrder: 6,

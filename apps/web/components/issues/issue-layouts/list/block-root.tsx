@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -16,7 +17,7 @@ import { useOutsideClickDetector } from "@plane/hooks";
 import type { IIssueDisplayProperties, TIssue, TIssueMap } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // components
-import { DropIndicator } from "@plane/ui";
+import { DropIndicator } from "@plane/blocks/common";
 import RenderIfVisible from "@/components/core/render-if-visible-HOC";
 import { ListLoaderItemRow } from "@/components/ui/loader/layouts/list-layout-loader";
 // hooks
