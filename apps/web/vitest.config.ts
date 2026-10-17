@@ -4,9 +4,13 @@
  * See the LICENSE file for details.
  */
 
+import path from "node:path";
+import tsconfigPaths from "vite-tsconfig-paths";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
+  // resolve the `@/*` aliases from tsconfig.json so tests can import app modules
+  plugins: [tsconfigPaths({ projects: [path.resolve(import.meta.dirname, "tsconfig.json")] })],
   test: {
     environment: "node",
     globals: true,
