@@ -34,8 +34,8 @@ import { useProjectInbox } from "@/hooks/store/use-project-inbox";
 import { useUser } from "@/hooks/store/user";
 import useReloadConfirmations from "@/hooks/use-reload-confirmation";
 // store types
-import { DeDupeIssuePopoverRoot } from "@/plane-web/components/de-dupe/duplicate-popover";
-import { useDebouncedDuplicateIssues } from "@/plane-web/hooks/use-debounced-duplicate-issues";
+import { DeDupeIssuePopoverRoot } from "@/components/de-dupe/duplicate-popover";
+import { useDebouncedDuplicateIssues } from "@/hooks/use-debounced-duplicate-issues";
 // services
 import { IntakeWorkItemVersionService } from "@/services/inbox";
 // stores

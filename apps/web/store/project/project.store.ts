@@ -13,11 +13,11 @@ import type { TFetchStatus, TLoader, TProjectAnalyticsCount, TProjectAnalyticsCo
 // helpers
 import { orderProjects, shouldFilterProject } from "@plane/utils";
 // services
-import type { TProject, TPartialProject } from "@/plane-web/types/projects";
+import type { TProject, TPartialProject } from "@/types/projects";
 import { IssueLabelService, IssueService } from "@/services/issue";
 import { ProjectService, ProjectStateService, ProjectArchiveService } from "@/services/project";
 // store
-import type { CoreRootStore } from "../root.store";
+import type { RootStore } from "../root.store";
 
 type ProjectOverviewCollapsible = "links" | "attachments" | "milestones";
 
@@ -88,7 +88,7 @@ export class ProjectStore implements IProjectStore {
   lastCollapsibleAction: ProjectOverviewCollapsible | null = null;
 
   // root store
-  rootStore: CoreRootStore;
+  rootStore: RootStore;
   // service
   projectService;
   projectArchiveService;
@@ -96,7 +96,7 @@ export class ProjectStore implements IProjectStore {
   issueService;
   stateService;
 
-  constructor(_rootStore: CoreRootStore) {
+  constructor(_rootStore: RootStore) {
     makeObservable(this, {
       // observables
       isUpdatingProject: observable,

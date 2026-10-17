@@ -23,7 +23,7 @@ import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
 import { usePlatformOS } from "@/hooks/use-platform-os";
-import { IssueTypeSelect } from "@/plane-web/components/issues/issue-modal";
+import { IssueTypeSelect } from "@/components/issues/issue-modal";
 import type { TWorkItemTemplateFormFields } from "./work-item-template-form.types";
 
 export type { TWorkItemTemplateFormFields } from "./work-item-template-form.types";

@@ -13,7 +13,7 @@ import type { IGanttBlock } from "@plane/types";
 // helpers
 import { cn } from "@plane/utils";
 //  Plane-web
-import { LeftDependencyDraggable, RightDependencyDraggable } from "@/plane-web/components/gantt-chart";
+import { LeftDependencyDraggable, RightDependencyDraggable } from "@/components/gantt-chart";
 //
 import { LeftResizable } from "./blockResizables/left-resizable";
 import { RightResizable } from "./blockResizables/right-resizable";

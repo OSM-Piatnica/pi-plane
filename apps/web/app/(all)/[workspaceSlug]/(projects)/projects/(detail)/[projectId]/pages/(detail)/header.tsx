@@ -23,9 +23,9 @@ import { PageSyncingBadge } from "@/components/pages/header/syncing-badge";
 import { useProject } from "@/hooks/store/use-project";
 import { useAppRouter } from "@/hooks/use-app-router";
 // plane web imports
-import { CommonProjectBreadcrumbs } from "@/plane-web/components/breadcrumbs/common";
-import { PageDetailsHeaderExtraActions } from "@/plane-web/components/pages";
-import { EPageStoreType, usePage, usePageStore } from "@/plane-web/hooks/store";
+import { CommonProjectBreadcrumbs } from "@/components/breadcrumbs/common";
+import { PageDetailsHeaderExtraActions } from "@/components/pages";
+import { EPageStoreType, usePage, usePageStore } from "@/hooks/store";
 
 export interface IPagesHeaderProps {
   showButton?: boolean;

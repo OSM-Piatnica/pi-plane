@@ -45,11 +45,11 @@ import { useWorkspaceDraftIssues } from "@/hooks/store/workspace-draft";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { useProjectIssueProperties } from "@/hooks/use-project-issue-properties";
 // plane web imports
-import { DeDupeButtonRoot } from "@/plane-web/components/de-dupe/de-dupe-button";
-import { DuplicateModalRoot } from "@/plane-web/components/de-dupe/duplicate-modal";
-import { IssueTypeSelect, WorkItemTemplateSelect } from "@/plane-web/components/issues/issue-modal";
-import { WorkItemModalAdditionalProperties } from "@/plane-web/components/issues/issue-modal/modal-additional-properties";
-import { useDebouncedDuplicateIssues } from "@/plane-web/hooks/use-debounced-duplicate-issues";
+import { DeDupeButtonRoot } from "@/components/de-dupe/de-dupe-button";
+import { DuplicateModalRoot } from "@/components/de-dupe/duplicate-modal";
+import { IssueTypeSelect, WorkItemTemplateSelect } from "@/components/issues/issue-modal";
+import { WorkItemModalAdditionalProperties } from "@/components/issues/issue-modal/modal-additional-properties";
+import { useDebouncedDuplicateIssues } from "@/hooks/use-debounced-duplicate-issues";
 
 export interface IssueFormProps {
   data?: Partial<TIssue>;

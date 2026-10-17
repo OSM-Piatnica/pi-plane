@@ -23,10 +23,10 @@ import { useUser } from "@/hooks/store/user";
 import useReloadConfirmations from "@/hooks/use-reload-confirmation";
 import useSize from "@/hooks/use-window-size";
 // plane web components
-import { DeDupeIssuePopoverRoot } from "@/plane-web/components/de-dupe/duplicate-popover";
-import { IssueTypeSwitcher } from "@/plane-web/components/issues/issue-details/issue-type-switcher";
-import { WorkflowApprovalBanner } from "@/plane-web/components/workflow";
-import { useDebouncedDuplicateIssues } from "@/plane-web/hooks/use-debounced-duplicate-issues";
+import { DeDupeIssuePopoverRoot } from "@/components/de-dupe/duplicate-popover";
+import { IssueTypeSwitcher } from "@/components/issues/issue-details/issue-type-switcher";
+import { WorkflowApprovalBanner } from "@/components/workflow";
+import { useDebouncedDuplicateIssues } from "@/hooks/use-debounced-duplicate-issues";
 // services
 import { WorkItemVersionService } from "@/services/issue";
 // local imports

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,10 +13,10 @@ import type { IEstimate as IEstimateType, IEstimateFormData, TEstimateSystemKeys
 // plane web services
 import estimateService from "@/services/estimate.service";
 // plane web store
-import type { IEstimate } from "@/plane-web/store/estimates/estimate";
-import { Estimate } from "@/plane-web/store/estimates/estimate";
+import type { IEstimate } from "@/store/estimates/estimate";
+import { Estimate } from "@/store/estimates/estimate";
 // store
-import type { CoreRootStore } from "../root.store";
+import type { RootStore } from "../root.store";
 
 type TEstimateLoader = "init-loader" | "mutation-loader" | undefined;
 type TErrorCodes = {
@@ -59,7 +60,7 @@ export class ProjectEstimateStore implements IProjectEstimateStore {
   estimates: Record<string, IEstimate> = {}; // estimate_id -> estimate
   error: TErrorCodes | undefined = undefined;
 
-  constructor(private store: CoreRootStore) {
+  constructor(private store: RootStore) {
     makeObservable(this, {
       // observables
       loader: observable.ref,

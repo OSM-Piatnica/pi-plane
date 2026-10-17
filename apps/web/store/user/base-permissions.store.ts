@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -18,7 +19,7 @@ import type { EUserProjectRoles, IUserProjectsRole, IWorkspaceMemberMe, TProject
 import { EUserWorkspaceRoles } from "@plane/types";
 // plane web imports
 import { WorkspaceService } from "@/services/workspace.service";
-import type { RootStore } from "@/plane-web/store/root.store";
+import type { RootStore } from "@/store/root.store";
 // services
 import projectMemberService from "@/services/project/project-member.service";
 import userService from "@/services/user.service";

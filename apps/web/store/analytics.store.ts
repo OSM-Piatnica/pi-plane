@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,7 +11,7 @@ import type { TAnalyticsTabsBase } from "@plane/types";
 
 type DurationType = (typeof ANALYTICS_DURATION_FILTER_OPTIONS)[number]["value"];
 
-export interface IBaseAnalyticsStore {
+export interface IAnalyticsStore {
   //observables
   currentTab: TAnalyticsTabsBase;
   selectedProjects: string[];
@@ -31,7 +32,7 @@ export interface IBaseAnalyticsStore {
   updateIsEpic: (isEpic: boolean) => void;
 }
 
-export abstract class BaseAnalyticsStore implements IBaseAnalyticsStore {
+export class AnalyticsStore implements IAnalyticsStore {
   //observables
   currentTab: TAnalyticsTabsBase = "overview";
   selectedProjects: string[] = [];

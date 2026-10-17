@@ -26,7 +26,7 @@ import { InboxIssueService } from "@/services/inbox";
 // root store
 import type { IInboxIssueStore } from "@/store/inbox/inbox-issue.store";
 import { InboxIssueStore } from "@/store/inbox/inbox-issue.store";
-import type { CoreRootStore } from "../root.store";
+import type { RootStore } from "../root.store";
 
 type TLoader =
   | "init-loading"
@@ -99,7 +99,7 @@ export class ProjectInboxStore implements IProjectInboxStore {
   // services
   inboxIssueService;
 
-  constructor(private store: CoreRootStore) {
+  constructor(private store: RootStore) {
     makeObservable(this, {
       currentTab: observable.ref,
       loader: observable.ref,

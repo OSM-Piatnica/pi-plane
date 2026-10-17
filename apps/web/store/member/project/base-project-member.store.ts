@@ -18,7 +18,7 @@ import type {
   TProjectMembership,
 } from "@plane/types";
 // plane web imports
-import type { RootStore } from "@/plane-web/store/root.store";
+import type { RootStore } from "@/store/root.store";
 // services
 import { ProjectMemberService, ProjectService } from "@/services/project";
 // store

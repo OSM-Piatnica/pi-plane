@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -19,8 +20,8 @@ import { useModule } from "@/hooks/store/use-module";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectView } from "@/hooks/store/use-project-view";
 // plane web hooks
-import { EPageStoreType, usePage } from "@/plane-web/hooks/store";
-import { useAdditionalFavoriteItemDetails } from "@/plane-web/hooks/use-additional-favorite-item-details";
+import { EPageStoreType, usePage } from "@/hooks/store";
+import { useAdditionalFavoriteItemDetails } from "@/hooks/use-additional-favorite-item-details";
 
 export const useFavoriteItemDetails = (workspaceSlug: string, favorite: IFavorite) => {
   const {

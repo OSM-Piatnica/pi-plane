@@ -34,7 +34,7 @@ import { CycleArchiveService } from "@/services/cycle_archive.service";
 import { IssueService } from "@/services/issue";
 import { ProjectService } from "@/services/project";
 // store
-import type { CoreRootStore } from "./root.store";
+import type { RootStore } from "./root.store";
 
 export interface ICycleStore {
   // loaders
@@ -122,7 +122,7 @@ export class CycleStore implements ICycleStore {
   cycleService;
   cycleArchiveService;
 
-  constructor(_rootStore: CoreRootStore) {
+  constructor(_rootStore: RootStore) {
     makeObservable(this, {
       // observables
       loader: observable.ref,

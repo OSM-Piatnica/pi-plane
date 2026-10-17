@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,8 +15,7 @@ import type { TEditorAsset } from "@plane/editor";
 import { useTranslation } from "@plane/i18n";
 import { getEditorAssetDownloadSrc, getEditorAssetSrc } from "@plane/utils";
 // plane web imports
-import { AdditionalPageNavigationPaneAssetItem } from "@/plane-web/components/pages/navigation-pane/tab-panels/assets";
-import { PageNavigationPaneAssetsTabEmptyState } from "@/plane-web/components/pages/navigation-pane/tab-panels/empty-states/assets";
+import { PageNavigationPaneAssetsTabEmptyState } from "@/components/pages/navigation-pane/tab-panels/empty-states/assets";
 // store
 import type { TPageInstance } from "@/store/pages/base-page";
 
@@ -124,3 +124,17 @@ export const PageNavigationPaneAssetsTabPanel = observer(function PageNavigation
     </div>
   );
 });
+
+// plane imports
+// store
+
+export type TAdditionalPageNavigationPaneAssetItemProps = {
+  asset: TEditorAsset;
+  assetSrc: string;
+  assetDownloadSrc: string;
+  page: TPageInstance;
+};
+
+export function AdditionalPageNavigationPaneAssetItem(_props: TAdditionalPageNavigationPaneAssetItemProps) {
+  return null;
+}

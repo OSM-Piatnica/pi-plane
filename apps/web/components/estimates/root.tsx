@@ -18,7 +18,7 @@ import { EmptyStateCompact } from "@plane/propel/empty-state";
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useProject } from "@/hooks/store/use-project";
 // plane web components
-import { UpdateEstimateModal } from "@/plane-web/components/estimates";
+import { UpdateEstimateModal } from "@/components/estimates";
 // local imports
 import { CreateEstimateModal } from "./create/modal";
 import { DeleteEstimateModal } from "./delete/modal";

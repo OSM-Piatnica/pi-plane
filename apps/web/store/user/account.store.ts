@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,7 +12,7 @@ import type { IUserAccount } from "@plane/types";
 // services
 import { UserService } from "@/services/user.service";
 // store
-import type { CoreRootStore } from "../root.store";
+import type { RootStore } from "../root.store";
 
 export interface IAccountStore {
   // observables
@@ -31,7 +32,7 @@ export class AccountStore implements IAccountStore {
   // service
   userService: UserService;
   constructor(
-    private store: CoreRootStore,
+    private store: RootStore,
     private _account: IUserAccount
   ) {
     makeObservable(this, {

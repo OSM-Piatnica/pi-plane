@@ -18,13 +18,13 @@ import type {
   TWorkItemWidgets,
 } from "@plane/types";
 // plane web store
-import { IssueActivityStore } from "@/plane-web/store/issue/issue-details/activity.store";
+import { IssueActivityStore } from "@/store/issue/issue-details/activity.store";
 import type {
   IIssueActivityStore,
   IIssueActivityStoreActions,
   TActivityLoader,
-} from "@/plane-web/store/issue/issue-details/activity.store";
-import type { TIssueRelationTypes } from "@/plane-web/types";
+} from "@/store/issue/issue-details/activity.store";
+import type { TIssueRelationTypes } from "@/types";
 import type { IIssueRootStore } from "../root.store";
 import { IssueAttachmentStore } from "./attachment.store";
 import type { IIssueAttachmentStore, IIssueAttachmentStoreActions } from "./attachment.store";
@@ -127,7 +127,7 @@ export interface IIssueDetail
   relation: IIssueRelationStore;
 }
 
-export abstract class IssueDetail implements IIssueDetail {
+export class IssueDetail implements IIssueDetail {
   // observables
   peekIssue: TPeekIssue | undefined = undefined;
   relationKey: TIssueRelationTypes | null = null;

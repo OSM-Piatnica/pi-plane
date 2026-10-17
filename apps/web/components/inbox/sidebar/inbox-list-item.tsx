@@ -23,7 +23,7 @@ import { useMember } from "@/hooks/store/use-member";
 import { useProjectInbox } from "@/hooks/store/use-project-inbox";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // plane web imports
-import { InboxSourcePill } from "@/plane-web/components/inbox/source-pill";
+import { InboxSourcePill } from "@/components/inbox/source-pill";
 // local imports
 import { InboxIssueStatus } from "../inbox-issue-status";
 

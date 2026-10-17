@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,7 +13,7 @@ import type { TModuleDisplayFilters, TModuleFilters, TModuleFiltersByState } fro
 // helpers
 import { storage } from "@/lib/local-storage";
 // store
-import type { CoreRootStore } from "./root.store";
+import type { RootStore } from "./root.store";
 
 // localStorage keys
 const MODULE_DISPLAY_FILTERS_KEY = "module_display_filters";
@@ -47,9 +48,9 @@ export class ModuleFilterStore implements IModuleFilterStore {
   searchQuery: string = "";
   archivedModulesSearchQuery: string = "";
   // root store
-  rootStore: CoreRootStore;
+  rootStore: RootStore;
 
-  constructor(_rootStore: CoreRootStore) {
+  constructor(_rootStore: RootStore) {
     makeObservable(this, {
       // observables
       displayFilters: observable,

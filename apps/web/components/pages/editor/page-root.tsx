@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -13,9 +14,9 @@ import type { TDocumentPayload, TPage, TPageVersion, TWebhookConnectionQueryPara
 import { usePageFallback } from "@/hooks/use-page-fallback";
 // plane web import
 import type { PageUpdateHandler, TCustomEventHandlers } from "@/hooks/use-realtime-page-events";
-import { PageModals } from "@/plane-web/components/pages";
-import { usePagesPaneExtensions, useExtendedEditorProps } from "@/plane-web/hooks/pages";
-import type { EPageStoreType } from "@/plane-web/hooks/store";
+import { PageModals } from "@/components/pages";
+import { usePagesPaneExtensions, useExtendedEditorProps } from "@/hooks/pages";
+import type { EPageStoreType } from "@/hooks/store";
 // store
 import type { TPageInstance } from "@/store/pages/base-page";
 // local imports

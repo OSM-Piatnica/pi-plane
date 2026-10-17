@@ -16,7 +16,7 @@ import { EStartOfTheWeek } from "@plane/types";
 // services
 import { UserService } from "@/services/user.service";
 // store
-import type { CoreRootStore } from "../root.store";
+import type { RootStore } from "../root.store";
 
 type TError = {
   status: string;
@@ -72,7 +72,7 @@ export class ProfileStore implements IUserProfileStore {
   // services
   userService: UserService;
 
-  constructor(public store: CoreRootStore) {
+  constructor(public store: RootStore) {
     makeObservable(this, {
       // observables
       isLoading: observable.ref,

@@ -43,7 +43,7 @@ import { useProjectState } from "@/hooks/store/use-project-state";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { useIssuesStore } from "@/hooks/use-issue-layout-store";
 // Plane-web
-import { useWorkFlowFDragNDrop } from "@/plane-web/components/workflow";
+import { useWorkFlowFDragNDrop } from "@/components/workflow";
 //
 import { GroupDragOverlay } from "../group-drag-overlay";
 import type { TRenderQuickActions } from "../list/list-view-types";

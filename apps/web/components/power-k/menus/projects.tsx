@@ -10,7 +10,7 @@ import React from "react";
 import { useTranslation } from "@plane/i18n";
 import { Logo } from "@plane/propel/emoji-icon-picker";
 // plane imports
-import type { TPartialProject } from "@/plane-web/types";
+import type { TPartialProject } from "@/types";
 // local imports
 import { PowerKMenuBuilder } from "./builder";
 

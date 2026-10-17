@@ -33,7 +33,7 @@ import { useAppRouter } from "@/hooks/use-app-router";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { useTimeZoneConverter } from "@/hooks/use-timezone-converter";
 // plane web components
-import { CycleAdditionalActions } from "@/plane-web/components/cycles";
+import { CycleAdditionalActions } from "@/components/cycles";
 // local imports
 import { CycleQuickActions } from "../quick-actions";
 import { TransferIssuesModal } from "../transfer-issues-modal";

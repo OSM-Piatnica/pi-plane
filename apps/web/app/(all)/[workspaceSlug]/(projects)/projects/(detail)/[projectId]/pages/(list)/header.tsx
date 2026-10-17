@@ -23,8 +23,8 @@ import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 // plane web imports
-import { CommonProjectBreadcrumbs } from "@/plane-web/components/breadcrumbs/common";
-import { EPageStoreType, usePageStore } from "@/plane-web/hooks/store";
+import { CommonProjectBreadcrumbs } from "@/components/breadcrumbs/common";
+import { EPageStoreType, usePageStore } from "@/hooks/store";
 
 export const PagesListHeader = observer(function PagesListHeader() {
   // states

@@ -12,7 +12,7 @@ import { APITokenService } from "@plane/services";
 import type { IApiToken } from "@plane/types";
 // services
 // store
-import type { CoreRootStore } from "../root.store";
+import type { RootStore } from "../root.store";
 
 export interface IApiTokenStore {
   // observables
@@ -35,7 +35,7 @@ export class ApiTokenStore implements IApiTokenStore {
   // root store
   rootStore;
 
-  constructor(_rootStore: CoreRootStore) {
+  constructor(_rootStore: RootStore) {
     makeObservable(this, {
       // observables
       apiTokens: observable,

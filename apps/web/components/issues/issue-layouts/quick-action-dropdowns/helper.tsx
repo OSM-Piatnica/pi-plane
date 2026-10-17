@@ -15,7 +15,7 @@ import type { EIssuesStoreType, TIssue } from "@plane/types";
 import type { TContextMenuItem } from "@plane/ui";
 import { copyUrlToClipboard, generateWorkItemLink } from "@plane/utils";
 // types
-import { createCopyMenuWithDuplication } from "@/plane-web/components/issues/issue-layouts/quick-action-dropdowns";
+import { createCopyMenuWithDuplication } from "@/components/issues/issue-layouts/quick-action-dropdowns";
 
 type TTranslate = (key: string, params?: Record<string, any>) => string;
 

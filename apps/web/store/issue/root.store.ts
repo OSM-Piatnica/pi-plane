@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,22 +11,22 @@ import { autorun, makeObservable, observable } from "mobx";
 import type { ICycle, IIssueLabel, IModule, IProject, IState, IUserLite, TIssueServiceType } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // plane web store
-import type { IProjectEpics, IProjectEpicsFilter } from "@/plane-web/store/issue/epic";
-import { ProjectEpics, ProjectEpicsFilter } from "@/plane-web/store/issue/epic";
-import type { IIssueDetail } from "@/plane-web/store/issue/issue-details/root.store";
-import { IssueDetail } from "@/plane-web/store/issue/issue-details/root.store";
-import type { ITeamIssuesFilter, ITeamIssues } from "@/plane-web/store/issue/team";
-import { TeamIssues, TeamIssuesFilter } from "@/plane-web/store/issue/team";
-import type { ITeamProjectWorkItemsFilter } from "@/plane-web/store/issue/team-project/filter.store";
-import { TeamProjectWorkItemsFilter } from "@/plane-web/store/issue/team-project/filter.store";
-import type { ITeamProjectWorkItems } from "@/plane-web/store/issue/team-project/issue.store";
-import { TeamProjectWorkItems } from "@/plane-web/store/issue/team-project/issue.store";
-import type { ITeamViewIssues, ITeamViewIssuesFilter } from "@/plane-web/store/issue/team-views";
-import { TeamViewIssues, TeamViewIssuesFilter } from "@/plane-web/store/issue/team-views";
+import type { IProjectEpics, IProjectEpicsFilter } from "@/store/issue/epic";
+import { ProjectEpics, ProjectEpicsFilter } from "@/store/issue/epic";
+import type { IIssueDetail } from "@/store/issue/issue-details/root.store";
+import { IssueDetail } from "@/store/issue/issue-details/root.store";
+import type { ITeamIssuesFilter, ITeamIssues } from "@/store/issue/team";
+import { TeamIssues, TeamIssuesFilter } from "@/store/issue/team";
+import type { ITeamProjectWorkItemsFilter } from "@/store/issue/team-project/filter.store";
+import { TeamProjectWorkItemsFilter } from "@/store/issue/team-project/filter.store";
+import type { ITeamProjectWorkItems } from "@/store/issue/team-project/issue.store";
+import { TeamProjectWorkItems } from "@/store/issue/team-project/issue.store";
+import type { ITeamViewIssues, ITeamViewIssuesFilter } from "@/store/issue/team-views";
+import { TeamViewIssues, TeamViewIssuesFilter } from "@/store/issue/team-views";
 // root store
-import type { IWorkspaceIssues } from "@/plane-web/store/issue/workspace/issue.store";
-import { WorkspaceIssues } from "@/plane-web/store/issue/workspace/issue.store";
-import type { RootStore } from "@/plane-web/store/root.store";
+import type { IWorkspaceIssues } from "@/store/issue/workspace/issue.store";
+import { WorkspaceIssues } from "@/store/issue/workspace/issue.store";
+import type { RootStore } from "@/store/root.store";
 import type { IWorkspaceMembership } from "@/store/member/workspace/workspace-member.store";
 // issues data store
 import type { IArchivedIssuesFilter, IArchivedIssues } from "./archived";

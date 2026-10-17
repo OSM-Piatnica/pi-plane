@@ -12,7 +12,7 @@ import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 // types
 import type { IIssueDisplayProperties, TIssue } from "@plane/types";
 // components
-import { SPREADSHEET_COLUMNS } from "@/plane-web/components/issues/issue-layouts/utils";
+import { SPREADSHEET_COLUMNS } from "@/components/issues/issue-layouts/utils";
 import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 import { shouldRenderColumn } from "@/helpers/issue-filter.helper";
 import { WithDisplayPropertiesHOC } from "../properties/with-display-properties-HOC";
