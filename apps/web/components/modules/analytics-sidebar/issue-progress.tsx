@@ -72,8 +72,7 @@ export const ModuleAnalyticsProgress = observer(function ModuleAnalyticsProgress
       ? completedEstimatePoints != 0 && totalEstimatePoints != 0
         ? Math.round((completedEstimatePoints / totalEstimatePoints) * 100)
         : 0
-      : // oxlint-disable-next-line oxc/const-comparisons -- existing behaviour (likely meant totalIssues); lint cleanup only
-        completedIssues != 0 && completedIssues != 0
+      : completedIssues != 0 && totalIssues != 0
         ? Math.round((completedIssues / totalIssues) * 100)
         : 0
     : 0;

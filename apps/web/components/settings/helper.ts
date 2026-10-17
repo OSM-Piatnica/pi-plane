@@ -32,7 +32,7 @@ export const pathnameToAccessKey = (pathname: string) => {
   const pathArray = pathname.replace(/^\/|\/$/g, "").split("/"); // Regex removes leading and trailing slashes
   const workspaceSlug = pathArray[0];
   const accessKey = pathArray.slice(1, 3).join("/");
-  return { workspaceSlug, accessKey: `/${accessKey}` };
+  return { workspaceSlug, accessKey: accessKey ? `/${accessKey}` : "" };
 };
 
 export const getWorkspaceActivePath = (pathname: string) => {
