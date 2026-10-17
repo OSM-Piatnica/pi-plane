@@ -3,7 +3,7 @@
     "progress": {
       "title": "Postęp",
       "since_last_update": "Od ostatniej aktualizacji",
-      "comments": "{count, plural, one{# komentarz} other{# komentarze}}"
+      "comments": "{count, plural, one{# komentarz} few{# komentarze} many{# komentarzy} other{# komentarza}}"
     },
     "add_update": "Dodaj aktualizację",
     "add_update_placeholder": "Dodaj swoją aktualizację tutaj",

@@ -191,7 +191,7 @@
     },
     "common": {
       "months_count": "{months, plural, one{# mesiac} few{# mesiace} other{# mesiacov}}",
-      "days_count": "{days, plural, one{# deň} other{# dni}}"
+      "days_count": "{days, plural, one{# deň} few{# dni} many{# dňa} other{# dní}}"
     },
     "empty_state": {
       "general": {

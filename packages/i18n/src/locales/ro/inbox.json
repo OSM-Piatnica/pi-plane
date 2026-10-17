@@ -11,7 +11,7 @@
       },
       "snoozed": {
         "title": "Amânate",
-        "description": "{days, plural, one{# zi} other{# zile}} rămase"
+        "description": "{days, plural, one{# zi} few{# zile} other{# de zile}} rămase"
       },
       "accepted": {
         "title": "Acceptate",
