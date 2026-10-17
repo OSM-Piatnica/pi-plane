@@ -73,6 +73,59 @@ All four dependencies expose health checks; `api-tests` waits for `service_healt
 
 Test-time env overrides live in the compose file itself (`POSTGRES_HOST=test-db`, `REDIS_URL=redis://test-redis:6379/`, `AWS_S3_ENDPOINT_URL=http://test-minio:9000`, `DJANGO_SETTINGS_MODULE=plane.settings.test`). Everything else is inherited from `apps/api/.env`.
 
+## Running in a sandbox with an egress proxy
+
+Cloud/agent sandboxes often block direct internet access and route HTTPS through a proxy that re-signs TLS. Build containers can't reach that proxy or trust its CA, so `docker compose -f compose-test.yaml up --build` fails in `apk add` (`DNS lookup error`) or `uv sync` (`invalid peer certificate: UnknownIssuer`). Normal machines and CI don't need any of this.
+
+Without changing any repo file, keep a patched Dockerfile and a compose override outside the repo and pass both to compose. In the examples, `CA_DIR` is the directory holding the proxy CA bundle (`ca-bundle.crt`) and `WORK` is any scratch directory.
+
+1. **Allow the registries.** The sandbox network policy must allow `ghcr.io` and `pkg-containers.githubusercontent.com` (the `uv` base image) alongside Docker Hub.
+2. **Trust the proxy CA in the build.** Create `$WORK/Dockerfile.sandbox` from `apps/api/Dockerfile.dev`, inserting this right after `FROM python:3.12.5-alpine AS backend`:
+
+   ```dockerfile
+   COPY --from=ca ca-bundle.crt /usr/local/share/ccr-ca.crt
+   RUN cat /usr/local/share/ccr-ca.crt >> /etc/ssl/certs/ca-certificates.crt
+   ENV UV_NATIVE_TLS=1 UV_SYSTEM_CERTS=1 SSL_CERT_FILE=/usr/local/share/ccr-ca.crt REQUESTS_CA_BUNDLE=/usr/local/share/ccr-ca.crt CARGO_HTTP_CAINFO=/usr/local/share/ccr-ca.crt
+   ARG HTTPS_PROXY
+   ARG https_proxy
+   ARG NO_PROXY
+   ARG no_proxy
+   ```
+
+   The `ENV` points at a separate copy of the CA because `apk add` replaces `/etc/ssl/certs/ca-certificates.crt` and would drop the appended CA before `uv sync` runs.
+
+3. **Build on the host network and fix RabbitMQ.** Create `$WORK/compose.override.yaml`:
+
+   ```yaml
+   services:
+     api-tests:
+       build:
+         context: ./apps/api
+         dockerfile: /abs/path/to/Dockerfile.sandbox
+         network: host
+         additional_contexts:
+           ca: /abs/path/to/CA_DIR
+         args:
+           HTTPS_PROXY: ${HTTPS_PROXY}
+           https_proxy: ${HTTPS_PROXY}
+           NO_PROXY: ${NO_PROXY}
+           no_proxy: ${NO_PROXY}
+     test-mq:
+       # The default root-owned tmpfs makes RabbitMQ fail to read .erlang.cookie (eacces)
+       tmpfs: !override
+         - /var/lib/rabbitmq:uid=100,gid=101,mode=0755
+   ```
+
+4. **Run with both files:**
+
+   ```bash
+   docker compose -f compose-test.yaml -f "$WORK/compose.override.yaml" \
+     up --build --abort-on-container-exit --exit-code-from api-tests
+   docker compose -f compose-test.yaml -f "$WORK/compose.override.yaml" down -v
+   ```
+
+Host networking gives the build the host's network namespace, so only use this where that is acceptable. If you can't use Docker at all, the suite also runs natively (`cd apps/api && uv sync`, then `pytest`) against a local Postgres and Redis, but tests that dispatch Celery tasks fail without a RabbitMQ broker on `localhost:5672`, and a test database left over from an older checkout can cause `NOT NULL` errors — pass `--create-db`.
+
 ## Troubleshooting
 
 - **`./apps/api/.env: no such file or directory`** — run `./setup.sh` from the repo root.
