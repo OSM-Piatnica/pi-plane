@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { CloseIcon } from "@plane/propel/icons";
+import { CloseOutline } from "@makeplane/propel/icons";
 // types
 import type { TFilters } from "@/types/issue";
 // components
@@ -59,7 +60,7 @@ export const AppliedFiltersList = observer(function AppliedFiltersList(props: Pr
                 className="grid place-items-center text-tertiary hover:text-secondary"
                 onClick={() => handleRemoveFilter(filterKey, null)}
               >
-                <CloseIcon height={12} width={12} strokeWidth={2} />
+                <CloseOutline height={12} width={12} />
               </button>
             </div>
           </div>
@@ -71,7 +72,7 @@ export const AppliedFiltersList = observer(function AppliedFiltersList(props: Pr
         className="flex items-center gap-2 rounded-md border border-subtle px-2 py-1 text-11 text-tertiary hover:text-secondary"
       >
         {t("common.clear_all")}
-        <CloseIcon height={12} width={12} strokeWidth={2} />
+        <CloseOutline height={12} width={12} />
       </button>
     </div>
   );

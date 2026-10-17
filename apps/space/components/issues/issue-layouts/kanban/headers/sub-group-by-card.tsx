@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 import { Circle } from "lucide-react";
-import { ChevronDownIcon, ChevronUpIcon } from "@plane/propel/icons";
+import { ChevronDownOutline, ChevronUpOutline } from "@makeplane/propel/icons";
 // mobx
 
 interface IHeaderSubGroupByCard {
@@ -20,12 +21,13 @@ interface IHeaderSubGroupByCard {
 export const HeaderSubGroupByCard = observer(function HeaderSubGroupByCard(props: IHeaderSubGroupByCard) {
   const { icon, title, count, isExpanded, toggleExpanded } = props;
   return (
+    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing behaviour; a11y handled separately
     <div
       className={`relative flex w-full flex-shrink-0 cursor-pointer flex-row items-center gap-2 rounded-xs p-1.5`}
       onClick={() => toggleExpanded()}
     >
       <div className="flex h-[20px] w-[20px] flex-shrink-0 items-center justify-center overflow-hidden rounded-xs transition-all hover:bg-layer-1">
-        {isExpanded ? <ChevronUpIcon width={14} strokeWidth={2} /> : <ChevronDownIcon width={14} strokeWidth={2} />}
+        {isExpanded ? <ChevronUpOutline width={14} height={14} /> : <ChevronDownOutline width={14} height={14} />}
       </div>
 
       <div className="flex h-[20px] w-[20px] flex-shrink-0 items-center justify-center overflow-hidden rounded-xs">

@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { TIssueLayout } from "@plane/constants";
-import { ListLayoutIcon, BoardLayoutIcon } from "@plane/propel/icons";
+import { BoardOutline, ListOutline } from "@makeplane/propel/icons";
 import type { ISvgIcons } from "@plane/propel/icons";
 
 export function IssueLayoutIcon({
@@ -20,9 +21,9 @@ export function IssueLayoutIcon({
 
   switch (layout) {
     case "list":
-      return <ListLayoutIcon {...iconProps} />;
+      return <ListOutline {...iconProps} />;
     case "kanban":
-      return <BoardLayoutIcon {...iconProps} />;
+      return <BoardOutline {...iconProps} />;
     default:
       return null;
   }

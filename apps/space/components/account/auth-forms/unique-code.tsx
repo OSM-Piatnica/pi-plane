@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React, { useEffect, useState } from "react";
-import { CircleCheck, XCircle } from "lucide-react";
+import { CloseCircleOutline, TickCircleOutline } from "@makeplane/propel/icons";
 // plane imports
 import { API_BASE_URL } from "@plane/constants";
 import { Button } from "@plane/propel/button";
@@ -52,10 +53,10 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
   const handleFormChange = (key: keyof TUniqueCodeFormValues, value: string) =>
     setUniqueCodeFormData((prev) => ({ ...prev, [key]: value }));
 
-  const generateNewCode = async (email: string) => {
+  const generateNewCode = async (emailAddress: string) => {
     try {
       setIsRequestingNewCode(true);
-      const uniqueCode = await generateEmailUniqueCode(email);
+      const uniqueCode = await generateEmailUniqueCode(emailAddress);
       setResendCodeTimer(defaultResetTimerValue);
       handleFormChange("code", uniqueCode?.code || "");
       setIsRequestingNewCode(false);
@@ -102,10 +103,15 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
             disabled
           />
           {uniqueCodeFormData.email.length > 0 && (
-            <XCircle
-              className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+            <button
+              type="button"
+              aria-label="Clear email"
+              className="absolute right-3 hover:cursor-pointer"
               onClick={handleEmailClear}
-            />
+              tabIndex={-1}
+            >
+              <CloseCircleOutline className="h-5 w-5 text-placeholder" />
+            </button>
           )}
         </div>
       </div>
@@ -121,11 +127,12 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
           placeholder="123456"
           className="h-10 w-full border border-subtle !bg-surface-1 pr-12 disable-autofill-style placeholder:text-placeholder"
           autoComplete="off"
+          // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; a11y handled separately
           autoFocus
         />
         <div className="flex w-full items-center justify-between px-1 pt-1 text-11">
           <p className="flex items-center gap-1 font-medium text-success-primary">
-            <CircleCheck height={12} width={12} />
+            <TickCircleOutline height={12} width={12} />
             Paste the code sent to your email
           </p>
           <button

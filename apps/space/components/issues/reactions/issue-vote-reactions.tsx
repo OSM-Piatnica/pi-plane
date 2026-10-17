@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useState } from "react";
-import { ArrowDown, ArrowUp } from "lucide-react";
+import { ArrowDownOutline, TopArrowOutline } from "@makeplane/propel/icons";
 import { observer } from "mobx-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 // plane imports
@@ -115,7 +116,7 @@ export const IssueVotes = observer(function IssueVotes(props: TIssueVotes) {
             }
           )}
         >
-          <ArrowUp className="size-3.5 shrink-0" />
+          <TopArrowOutline className="size-3.5 shrink-0" />
           <span className="text-13 font-regular transition-opacity ease-in-out">{allUpVotes.length}</span>
         </button>
       </Tooltip>
@@ -156,7 +157,7 @@ export const IssueVotes = observer(function IssueVotes(props: TIssueVotes) {
             }
           )}
         >
-          <ArrowDown className="size-3.5 shrink-0" />
+          <ArrowDownOutline className="size-3.5 shrink-0" />
           <span className="text-13 font-regular transition-opacity ease-in-out">{allDownVotes.length}</span>
         </button>
       </Tooltip>
