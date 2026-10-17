@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,7 @@ import { action, observable, makeObservable, runInAction, computed } from "mobx"
 import { v4 as uuidv4 } from "uuid";
 import type { IFavorite } from "@plane/types";
 import { FavoriteService } from "@/services/favorite";
-import type { CoreRootStore } from "./root.store";
+import type { RootStore } from "./root.store";
 
 export interface IFavoriteStore {
   // observables
@@ -60,7 +61,7 @@ export class FavoriteStore implements IFavoriteStore {
   cycleStore;
   moduleStore;
 
-  constructor(_rootStore: CoreRootStore) {
+  constructor(_rootStore: RootStore) {
     makeObservable(this, {
       // observable
       favoriteMap: observable,

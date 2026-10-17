@@ -40,8 +40,8 @@ import { useUserPermissions } from "@/hooks/store/user";
 import { useProjectNavigationPreferences } from "@/hooks/use-navigation-preferences";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // plane web imports
-import { useNavigationItems } from "@/plane-web/components/navigations";
-import { ProjectNavigationRoot } from "@/plane-web/components/sidebar";
+import { useNavigationItems } from "@/components/navigations";
+import { ProjectNavigationRoot } from "@/components/sidebar";
 // local imports
 import { HIGHLIGHT_CLASS, highlightIssueOnDrop } from "../../issues/issue-layouts/utils";
 

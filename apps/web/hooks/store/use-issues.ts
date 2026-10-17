@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,12 +11,12 @@ import type { TIssueMap } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 import { StoreContext } from "@/lib/store-context";
 // plane web types
-import type { IProjectEpics, IProjectEpicsFilter } from "@/plane-web/store/issue/epic";
+import type { IProjectEpics, IProjectEpicsFilter } from "@/store/issue/epic";
 // types
-import type { ITeamIssues, ITeamIssuesFilter } from "@/plane-web/store/issue/team";
-import type { ITeamProjectWorkItemsFilter, ITeamProjectWorkItems } from "@/plane-web/store/issue/team-project";
-import type { ITeamViewIssues, ITeamViewIssuesFilter } from "@/plane-web/store/issue/team-views";
-import type { IWorkspaceIssues } from "@/plane-web/store/issue/workspace/issue.store";
+import type { ITeamIssues, ITeamIssuesFilter } from "@/store/issue/team";
+import type { ITeamProjectWorkItemsFilter, ITeamProjectWorkItems } from "@/store/issue/team-project";
+import type { ITeamViewIssues, ITeamViewIssuesFilter } from "@/store/issue/team-views";
+import type { IWorkspaceIssues } from "@/store/issue/workspace/issue.store";
 import type { IArchivedIssues, IArchivedIssuesFilter } from "@/store/issue/archived";
 import type { ICycleIssues, ICycleIssuesFilter } from "@/store/issue/cycle";
 import type { IModuleIssues, IModuleIssuesFilter } from "@/store/issue/module";

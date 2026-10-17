@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -19,7 +20,7 @@ import { DisplayFiltersSelection, FiltersDropdown } from "@/components/issues/is
 import { WorkspaceLevelWorkItemFiltersHOC } from "@/components/work-item-filters/filters-hoc/workspace-level";
 // plane web imports
 import { WorkItemFiltersRow } from "@/components/work-item-filters/filters-row";
-import { AccessController } from "@/plane-web/components/views/access-controller";
+import { AccessController } from "@/components/views/access-controller";
 
 type Props = {
   handleFormSubmit: (values: Partial<IWorkspaceView>) => Promise<void>;

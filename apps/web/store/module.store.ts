@@ -18,7 +18,7 @@ import { ModuleService } from "@/services/module.service";
 import { ModuleArchiveService } from "@/services/module_archive.service";
 import { ProjectService } from "@/services/project";
 // store
-import type { CoreRootStore } from "./root.store";
+import type { RootStore } from "./root.store";
 
 export interface IModuleStore {
   //Loaders
@@ -95,7 +95,7 @@ export class ModulesStore implements IModuleStore {
   moduleService;
   moduleArchiveService;
 
-  constructor(_rootStore: CoreRootStore) {
+  constructor(_rootStore: RootStore) {
     makeObservable(this, {
       // observables
       loader: observable.ref,

@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
-
 import { observer } from "mobx-react";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import type {
   TFilterConditionNode,
   TFilterValue,
@@ -21,7 +22,6 @@ import type {
 } from "@plane/types";
 import { FILTER_FIELD_TYPE } from "@plane/types";
 // local imports
-import { AdditionalFilterValueInput } from "@/plane-web/components/rich-filters/filter-value-input/root";
 import type { TFilterValueInputProps } from "../shared";
 import { DateRangeFilterValueInput } from "./date/range";
 import { SingleDateFilterValueInput } from "./date/single";
@@ -82,4 +82,22 @@ export const FilterValueInput = observer(function FilterValueInput<P extends TFi
   }
 
   return <AdditionalFilterValueInput {...props} />;
+});
+
+// plane imports
+// local imports
+
+export const AdditionalFilterValueInput = observer(function AdditionalFilterValueInput<
+  P extends TFilterProperty,
+  V extends TFilterValue,
+>(_props: TFilterValueInputProps<P, V>) {
+  // translation
+  const { t } = useTranslation();
+
+  return (
+    // Fallback
+    <div className="flex h-full cursor-not-allowed items-center px-4 text-11 text-placeholder transition-opacity duration-200">
+      {t("project_components.rich_filters.filter_type_not_supported")}
+    </div>
+  );
 });

@@ -18,7 +18,7 @@ import type { TIssueEntityData, TIssueSearchResponse, TActivityEntityData } from
 // import { usePowerK } from "@/hooks/store/use-power-k";
 // import { useAppRouter } from "@/hooks/use-app-router";
 // plane web imports
-// import { IssueIdentifier } from "@/plane-web/components/issues/issue-details/issue-identifier";
+// import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 import { WorkspaceService } from "@/services/workspace.service";
 
 const workspaceService = new WorkspaceService();

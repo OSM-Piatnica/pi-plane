@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -13,6 +14,7 @@ import useCyclesDetails from "../active-cycle/use-cycles-details";
 import { CycleAnalyticsProgress } from "./issue-progress";
 import { CycleSidebarDetails } from "./sidebar-details";
 import { CycleSidebarHeader } from "./sidebar-header";
+import { SidebarChart } from "./base";
 
 type Props = {
   handleClose: () => void;
@@ -66,3 +68,13 @@ export const CycleDetailsSidebar = observer(function CycleDetailsSidebar(props: 
     </div>
   );
 });
+
+type SidebarChartRootProps = {
+  workspaceSlug: string;
+  projectId: string;
+  cycleId: string;
+};
+
+export function SidebarChartRoot(props: SidebarChartRootProps) {
+  return <SidebarChart {...props} />;
+}

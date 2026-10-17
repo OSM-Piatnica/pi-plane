@@ -21,10 +21,10 @@ import { ExistingIssuesListModal } from "@/components/core/modals/existing-issue
 import { CreateUpdateIssueModal } from "@/components/issues/issue-modal/modal";
 // constants
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
-import { CreateUpdateEpicModal } from "@/plane-web/components/epics/epic-modal";
+import { CreateUpdateEpicModal } from "@/components/epics/epic-modal";
 // types
 // Plane-web
-import { WorkFlowGroupTree } from "@/plane-web/components/workflow";
+import { WorkFlowGroupTree } from "@/components/workflow";
 
 interface IHeaderGroupByCard {
   sub_group_by: TIssueGroupByOptions | undefined;

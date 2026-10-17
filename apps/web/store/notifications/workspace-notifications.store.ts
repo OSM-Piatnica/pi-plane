@@ -26,7 +26,7 @@ import workspaceNotificationService from "@/services/workspace-notification.serv
 // store
 import type { INotification } from "@/store/notifications/notification";
 import { Notification } from "@/store/notifications/notification";
-import type { CoreRootStore } from "@/store/root.store";
+import type { RootStore } from "@/store/root.store";
 
 type TNotificationLoader = ENotificationLoader | undefined;
 type TNotificationQueryParamType = ENotificationQueryParamType;
@@ -85,7 +85,7 @@ export class WorkspaceNotificationStore implements IWorkspaceNotificationStore {
     read: false,
   };
 
-  constructor(protected store: CoreRootStore) {
+  constructor(protected store: RootStore) {
     makeObservable(this, {
       // observables
       loader: observable.ref,

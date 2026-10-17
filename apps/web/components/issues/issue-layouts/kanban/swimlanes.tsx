@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -23,7 +24,7 @@ import { Row } from "@plane/ui";
 // hooks
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 // plane web imports
-import { useWorkFlowFDragNDrop } from "@/plane-web/components/workflow";
+import { useWorkFlowFDragNDrop } from "@/components/workflow";
 // local imports
 import type { TRenderQuickActions } from "../list/list-view-types";
 import type { GroupDropLocation } from "../utils";

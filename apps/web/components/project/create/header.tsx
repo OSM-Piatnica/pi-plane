@@ -20,7 +20,7 @@ import { getTabIndex } from "@plane/utils";
 import { CoverImage } from "@/components/common/cover-image";
 import { ImagePickerPopover } from "@/components/core/image-picker-popover";
 // plane web imports
-import { ProjectTemplateSelect } from "@/plane-web/components/projects/create/template-select";
+import { ProjectTemplateSelect } from "@/components/projects/create/template-select";
 
 type Props = {
   handleClose: () => void;

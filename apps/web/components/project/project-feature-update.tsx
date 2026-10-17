@@ -16,7 +16,7 @@ import { Row } from "@plane/ui";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 // plane web imports
-import { ProjectFeaturesList } from "@/plane-web/components/projects/settings/features-list";
+import { ProjectFeaturesList } from "@/components/projects/settings/features-list";
 
 type Props = {
   workspaceSlug: string;

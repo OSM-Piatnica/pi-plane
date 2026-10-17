@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -13,8 +14,8 @@ import type { TEstimateSystemKeys } from "@plane/types";
 // components
 import { convertMinutesToHoursMinutesString } from "@plane/utils";
 // plane web imports
-import { isEstimateSystemEnabled } from "@/plane-web/components/estimates/helper";
-import { UpgradeBadge } from "@/plane-web/components/workspace/upgrade-badge";
+import { isEstimateSystemEnabled } from "@/components/estimates/helper";
+import { UpgradeBadge } from "@/components/workspace/upgrade-badge";
 import { RadioInput } from "../radio-select";
 // local imports
 

@@ -1,14 +1,15 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 // plane web components
 import { EIssuesStoreType } from "@plane/types";
-import { TeamEmptyState } from "@/plane-web/components/issues/issue-layouts/empty-states/team-issues";
-import { TeamProjectWorkItemEmptyState } from "@/plane-web/components/issues/issue-layouts/empty-states/team-project";
-import { TeamViewEmptyState } from "@/plane-web/components/issues/issue-layouts/empty-states/team-view-issues";
+import { TeamEmptyState } from "@/components/issues/issue-layouts/empty-states/team-issues";
+import { TeamProjectWorkItemEmptyState } from "@/components/issues/issue-layouts/empty-states/team-project";
+import { TeamViewEmptyState } from "@/components/issues/issue-layouts/empty-states/team-view-issues";
 // components
 import { ProjectArchivedEmptyState } from "./archived-issues";
 import { CycleEmptyState } from "./cycle";
@@ -18,6 +19,9 @@ import { ProfileViewEmptyState } from "./profile-view";
 import { ProjectEpicsEmptyState } from "./project-epic";
 import { ProjectEmptyState } from "./project-issues";
 import { ProjectViewEmptyState } from "./project-view";
+
+export * from "./team-issues";
+export * from "./team-view-issues";
 
 interface Props {
   storeType: EIssuesStoreType;

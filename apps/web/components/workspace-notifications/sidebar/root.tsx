@@ -20,7 +20,7 @@ import { CountChip } from "@/components/common/count-chip";
 import { useWorkspaceNotifications } from "@/hooks/store/notifications";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 // plane web components
-import { NotificationListRoot } from "@/plane-web/components/workspace-notifications/list-root";
+import { NotificationListRoot } from "@/components/workspace-notifications/list-root";
 // local imports
 import { NotificationEmptyState } from "./empty-state";
 import { AppliedFilters } from "./filters/applied-filter";

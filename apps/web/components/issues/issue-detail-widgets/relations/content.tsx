@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -16,9 +17,9 @@ import { CreateUpdateIssueModal } from "@/components/issues/issue-modal/modal";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 // Plane-web
-import { CreateUpdateEpicModal } from "@/plane-web/components/epics/epic-modal";
-import { useTimeLineRelationOptions } from "@/plane-web/components/relations";
-import type { TIssueRelationTypes } from "@/plane-web/types";
+import { CreateUpdateEpicModal } from "@/components/epics/epic-modal";
+import { useTimeLineRelationOptions } from "@/components/relations";
+import type { TIssueRelationTypes } from "@/types";
 // helper
 import { DeleteIssueModal } from "../../delete-issue-modal";
 import { RelationIssueList } from "../../relations/issue-list";

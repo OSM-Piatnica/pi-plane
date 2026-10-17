@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,8 +15,8 @@ import { CommentCard } from "@/components/comments/card/root";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 // plane web components
-import { IssueAdditionalPropertiesActivity } from "@/plane-web/components/issues/issue-details/issue-properties-activity";
-import { IssueActivityWorklog } from "@/plane-web/components/issues/worklog/activity/root";
+import { IssueAdditionalPropertiesActivity } from "@/components/issues/issue-details/issue-properties-activity";
+import { IssueActivityWorklog } from "@/components/issues/worklog/activity/root";
 // local imports
 import { IssueActivityItem } from "./activity/activity-list";
 import { IssueActivityLoader } from "./loader";

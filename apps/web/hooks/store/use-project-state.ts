@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,7 +9,7 @@ import { useContext } from "react";
 // mobx store
 import { StoreContext } from "@/lib/store-context";
 // Plane-web
-import type { IStateStore } from "@/plane-web/store/state.store";
+import type { IStateStore } from "@/store/state.store";
 
 export const useProjectState = (): IStateStore => {
   const context = useContext(StoreContext);

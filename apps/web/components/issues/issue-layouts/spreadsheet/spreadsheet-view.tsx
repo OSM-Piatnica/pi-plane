@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -16,9 +17,9 @@ import { MultipleSelectGroup } from "@/components/core/multiple-select";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 // plane web components
-import { IssueBulkOperationsRoot } from "@/plane-web/components/issues/bulk-operations";
+import { IssueBulkOperationsRoot } from "@/components/issues/bulk-operations";
 // plane web hooks
-import { useBulkOperationStatus } from "@/plane-web/hooks/use-bulk-operation-status";
+import { useBulkOperationStatus } from "@/hooks/use-bulk-operation-status";
 // local imports
 import type { TRenderQuickActions } from "../list/list-view-types";
 import { QuickAddIssueRoot, SpreadsheetAddIssueButton } from "../quick-add";

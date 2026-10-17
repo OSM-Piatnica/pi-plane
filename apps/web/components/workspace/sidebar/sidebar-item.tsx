@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -19,8 +20,7 @@ import { SidebarNavItem } from "@/components/sidebar/sidebar-navigation";
 import { useAppTheme } from "@/hooks/store/use-app-theme";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
 import { useWorkspaceNavigationPreferences } from "@/hooks/use-navigation-preferences";
-// plane web imports
-import { getSidebarNavigationItemIcon } from "@/plane-web/components/workspace/sidebar/helper";
+import { getSidebarNavigationItemIcon } from "@/components/workspace/sidebar/helper";
 
 type Props = {
   item: IWorkspaceSidebarNavigationItem;
@@ -79,3 +79,11 @@ export const SidebarItemBase = observer(function SidebarItemBase({
     </Link>
   );
 });
+
+type SidebarItemProps = {
+  item: IWorkspaceSidebarNavigationItem;
+};
+
+export function SidebarItem({ item }: SidebarItemProps) {
+  return <SidebarItemBase item={item} />;
+}

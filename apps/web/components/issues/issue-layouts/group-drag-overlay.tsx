@@ -14,7 +14,7 @@ import type { TIssueOrderByOptions } from "@plane/types";
 // helpers
 import { cn, getIssueOrderByField } from "@plane/utils";
 // plane web imports
-import { WorkFlowDisabledOverlay } from "@/plane-web/components/workflow";
+import { WorkFlowDisabledOverlay } from "@/components/workflow";
 
 type Props = {
   dragColumnOrientation: "justify-start" | "justify-center" | "justify-end";

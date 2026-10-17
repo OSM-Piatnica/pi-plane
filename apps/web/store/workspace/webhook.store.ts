@@ -13,7 +13,7 @@ import type { IWebhook } from "@plane/types";
 // services
 import { WebhookService } from "@/services/webhook.service";
 // store
-import type { CoreRootStore } from "../root.store";
+import type { RootStore } from "../root.store";
 
 export interface IWebhookStore {
   // observables
@@ -50,7 +50,7 @@ export class WebhookStore implements IWebhookStore {
   // root store
   rootStore;
 
-  constructor(_rootStore: CoreRootStore) {
+  constructor(_rootStore: RootStore) {
     makeObservable(this, {
       // observables
       webhooks: observable,

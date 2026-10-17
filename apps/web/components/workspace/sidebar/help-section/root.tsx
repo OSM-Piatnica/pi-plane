@@ -18,7 +18,7 @@ import { AppSidebarItem } from "@/components/sidebar/sidebar-item";
 // hooks
 import { usePowerK } from "@/hooks/store/use-power-k";
 // plane web components
-import { PlaneVersionNumber } from "@/plane-web/components/global";
+import { PlaneVersionNumber } from "@/components/global";
 
 export const HelpMenuRoot = observer(function HelpMenuRoot() {
   // store hooks

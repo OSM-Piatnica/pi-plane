@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,12 +15,10 @@ import { EUserProjectRoles } from "@plane/types";
 // helpers
 import { filterPagesByPageType, getPageName, orderPages, shouldFilterPage } from "@plane/utils";
 // plane web constants
-// plane web store
-import type { RootStore } from "@/plane-web/store/root.store";
 // services
 import { ProjectPageService } from "@/services/page";
 // store
-import type { CoreRootStore } from "../root.store";
+import type { RootStore } from "@/store/root.store";
 import type { TProjectPage } from "./project-page";
 import { ProjectPage } from "./project-page";
 
@@ -79,7 +78,7 @@ export class ProjectPageStore implements IProjectPageStore {
   };
   // service
   service: ProjectPageService;
-  rootStore: CoreRootStore;
+  rootStore: RootStore;
 
   constructor(private store: RootStore) {
     makeObservable(this, {

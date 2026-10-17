@@ -41,11 +41,11 @@ import { useMember } from "@/hooks/store/use-member";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
 // plane web components
-import { WorkItemAdditionalSidebarProperties } from "@/plane-web/components/issues/issue-details/additional-properties";
-import { IssueParentSelectRoot } from "@/plane-web/components/issues/issue-details/parent-select-root";
-import { DateAlert } from "@/plane-web/components/issues/issue-details/sidebar/date-alert";
-import { TransferHopInfo } from "@/plane-web/components/issues/issue-details/sidebar/transfer-hop-info";
-import { IssueWorklogProperty } from "@/plane-web/components/issues/worklog/property";
+import { WorkItemAdditionalSidebarProperties } from "@/components/issues/issue-details/additional-properties";
+import { IssueParentSelectRoot } from "@/components/issues/issue-details/parent-select-root";
+import { DateAlert } from "@/components/issues/issue-details/sidebar/date-alert";
+import { TransferHopInfo } from "@/components/issues/issue-details/sidebar/transfer-hop-info";
+import { IssueWorklogProperty } from "@/components/issues/worklog/property";
 import type { TIssueOperations } from "../issue-detail";
 import { IssueCycleSelect } from "../issue-detail/cycle-select";
 import { IssueLabel } from "../issue-detail/label";

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,7 +12,7 @@ import type { IUserLite, TNotification, TNotificationData } from "@plane/types";
 // services
 import workspaceNotificationService from "@/services/workspace-notification.service";
 // store
-import type { CoreRootStore } from "../root.store";
+import type { RootStore } from "../root.store";
 
 export interface INotification extends TNotification {
   // observables
@@ -57,7 +58,7 @@ export class Notification implements INotification {
   updated_by: string | undefined = undefined;
 
   constructor(
-    private store: CoreRootStore,
+    private store: RootStore,
     private notification: TNotification
   ) {
     this.id = this.notification.id;

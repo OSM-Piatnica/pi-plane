@@ -21,7 +21,7 @@ import usePeekOverviewOutsideClickDetector from "@/hooks/use-peek-overview-outsi
 import type { TIssueOperations } from "../issue-detail";
 import { IssueActivity } from "../issue-detail/issue-activity";
 import { IssueDetailWidgets } from "../issue-detail-widgets";
-import { WorkflowApprovalBanner } from "@/plane-web/components/workflow";
+import { WorkflowApprovalBanner } from "@/components/workflow";
 import { IssuePeekOverviewError } from "./error";
 import type { TPeekModes } from "./header";
 import { IssuePeekOverviewHeader } from "./header";

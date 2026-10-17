@@ -31,7 +31,7 @@ import { EIssueLayoutTypes } from "@plane/types";
 import { getComputedDisplayFilters, getComputedDisplayProperties } from "@plane/utils";
 // lib
 import { storage } from "@/lib/local-storage";
-import { getEnabledDisplayFilters } from "@/plane-web/store/issue/helpers/filter-utils";
+import { getEnabledDisplayFilters } from "@/store/issue/helpers/filter-utils";
 
 interface ILocalStoreIssueFilters {
   key: EIssuesStoreType;

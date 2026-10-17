@@ -22,7 +22,7 @@ import {
   useWorkspaceNavigationPreferences,
 } from "@/hooks/use-navigation-preferences";
 // helpers
-import { getSidebarNavigationItemIcon } from "@/plane-web/components/workspace/sidebar/helper";
+import { getSidebarNavigationItemIcon } from "@/components/workspace/sidebar/helper";
 // types
 import type { TPersonalNavigationItemKey } from "@/types/navigation-preferences";
 

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -13,7 +14,7 @@ import type { TIssueRelationIdMap, TIssueRelationMap, TIssueRelation, TIssue } f
 import type { TRelationObject } from "@/components/issues/issue-detail-widgets/relations";
 // Plane-web
 import { REVERSE_RELATIONS } from "@/constants/gantt-chart";
-import type { TIssueRelationTypes } from "@/plane-web/types";
+import type { TIssueRelationTypes } from "@/types";
 // services
 import { IssueRelationService } from "@/services/issue";
 // types

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -17,7 +18,7 @@ import type {
 // services
 import { WorkspaceService } from "@/services/workspace.service";
 // store
-import type { CoreRootStore } from "@/store/root.store";
+import type { RootStore } from "@/store/root.store";
 // sub-stores
 import type { IApiTokenStore } from "./api-token.store";
 import { ApiTokenStore } from "./api-token.store";
@@ -70,7 +71,7 @@ export interface IWorkspaceRootStore {
   home: IHomeStore;
 }
 
-export abstract class BaseWorkspaceRootStore implements IWorkspaceRootStore {
+export class WorkspaceRootStore implements IWorkspaceRootStore {
   loader: boolean = false;
   // observables
   workspaces: Record<string, IWorkspace> = {};
@@ -86,7 +87,7 @@ export abstract class BaseWorkspaceRootStore implements IWorkspaceRootStore {
   webhook: IWebhookStore;
   apiToken: IApiTokenStore;
 
-  constructor(_rootStore: CoreRootStore) {
+  constructor(_rootStore: RootStore) {
     makeObservable(this, {
       loader: observable.ref,
       // observables
@@ -386,5 +387,7 @@ export abstract class BaseWorkspaceRootStore implements IWorkspaceRootStore {
    * Mutate workspace members activity
    * @param workspaceSlug
    */
-  abstract mutateWorkspaceMembersActivity(workspaceSlug: string): Promise<void>;
+  mutateWorkspaceMembersActivity = async (_workspaceSlug: string) => {
+    // No-op in default/CE version
+  };
 }

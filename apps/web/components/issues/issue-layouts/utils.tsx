@@ -5,15 +5,30 @@
  * See the LICENSE file for details.
  */
 
-import type { CSSProperties } from "react";
+import type { CSSProperties, FC } from "react";
 import { extractInstruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
+import { CalendarDays, LayersIcon, Paperclip, Timer } from "lucide-react";
 import { clone, isNil, pull, uniq, concat } from "lodash-es";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
 // plane types
-import { EIconSize, ISSUE_PRIORITIES, STATE_GROUPS } from "@plane/constants";
+import { EIconSize, ISSUE_GROUP_BY_OPTIONS, ISSUE_PRIORITIES, STATE_GROUPS } from "@plane/constants";
 import { Logo } from "@plane/propel/emoji-icon-picker";
 import type { ISvgIcons } from "@plane/propel/icons";
-import { CycleGroupIcon, CycleIcon, ModuleIcon, PriorityIcon, StateGroupIcon } from "@plane/propel/icons";
+import {
+  CycleGroupIcon,
+  CycleIcon,
+  DueDatePropertyIcon,
+  EstimatePropertyIcon,
+  LabelPropertyIcon,
+  LinkIcon,
+  MembersPropertyIcon,
+  ModuleIcon,
+  PriorityIcon,
+  PriorityPropertyIcon,
+  StartDatePropertyIcon,
+  StateGroupIcon,
+  StatePropertyIcon,
+} from "@plane/propel/icons";
 import type {
   GroupByColumnTypes,
   IGroupByColumn,
@@ -27,6 +42,7 @@ import type {
   TGroupedIssues,
   IIssueDisplayFilterOptions,
   TGetColumns,
+  TSpreadsheetColumn,
 } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 // plane ui
@@ -35,15 +51,26 @@ import { renderFormattedDate, getFileURL } from "@plane/utils";
 // helpers
 // store
 import { store } from "@/lib/store-context";
-// plane web store
-import {
-  getScopeMemberIds,
-  getTeamProjectColumns,
-  SpreadSheetPropertyIconMap,
-} from "@/plane-web/components/issues/issue-layouts/utils";
 // store
 import { ISSUE_FILTER_DEFAULT_DATA } from "@/store/issue/helpers/base-issues.store";
 import { DEFAULT_DISPLAY_PROPERTIES } from "@/store/issue/issue-details/sub_issues_filter.store";
+import {
+  SpreadsheetAssigneeColumn,
+  SpreadsheetAttachmentColumn,
+  SpreadsheetCreatedOnColumn,
+  SpreadsheetDueDateColumn,
+  SpreadsheetDurationColumn,
+  SpreadsheetEstimateColumn,
+  SpreadsheetLabelColumn,
+  SpreadsheetModuleColumn,
+  SpreadsheetCycleColumn,
+  SpreadsheetLinkColumn,
+  SpreadsheetPriorityColumn,
+  SpreadsheetStartDateColumn,
+  SpreadsheetStateColumn,
+  SpreadsheetSubIssueColumn,
+  SpreadsheetUpdatedOnColumn,
+} from "@/components/issues/issue-layouts/spreadsheet/columns";
 
 export const HIGHLIGHT_CLASS = "highlight";
 export const HIGHLIGHT_WITH_LINE = "highlight-with-line";
@@ -772,4 +799,83 @@ export const isFiltersApplied = (filters: IIssueFilterOptions): boolean =>
 export const calculateIdentifierWidth = (projectIdentifierLength: number, maxSequenceId: number): number => {
   const sequenceDigits = Math.max(1, Math.floor(Math.log10(maxSequenceId)) + 1);
   return projectIdentifierLength * 7 + 7 + sequenceDigits * 7; // project identifier chars + dash + sequence digits
+};
+
+// types
+export type TGetScopeMemberIdsResult = {
+  memberIds: string[];
+  includeNone: boolean;
+};
+
+export const getScopeMemberIds = ({
+  isWorkspaceLevel: isWorkspaceLevelScope,
+  projectId,
+}: TGetColumns): TGetScopeMemberIdsResult => {
+  // store values
+  const { workspaceMemberIds } = store.memberRoot.workspace;
+  const { projectMemberIds } = store.memberRoot.project;
+  // derived values
+  const memberIds = workspaceMemberIds;
+
+  if (isWorkspaceLevelScope) {
+    return { memberIds: memberIds ?? [], includeNone: true };
+  }
+
+  if (projectId || (projectMemberIds && projectMemberIds.length > 0)) {
+    const { getProjectMemberIds } = store.memberRoot.project;
+    const _projectMemberIds = projectId ? getProjectMemberIds(projectId, false) : projectMemberIds;
+    return {
+      memberIds: _projectMemberIds ?? [],
+      includeNone: true,
+    };
+  }
+
+  return { memberIds: [], includeNone: true };
+};
+
+export const getTeamProjectColumns = (): IGroupByColumn[] | undefined => undefined;
+
+export const SpreadSheetPropertyIconMap: Record<string, FC<ISvgIcons>> = {
+  MembersPropertyIcon: MembersPropertyIcon,
+  CalenderDays: CalendarDays,
+  DueDatePropertyIcon: DueDatePropertyIcon,
+  EstimatePropertyIcon: EstimatePropertyIcon,
+  LabelPropertyIcon: LabelPropertyIcon,
+  ModuleIcon: ModuleIcon,
+  ContrastIcon: CycleIcon,
+  PriorityPropertyIcon: PriorityPropertyIcon,
+  StartDatePropertyIcon: StartDatePropertyIcon,
+  StatePropertyIcon: StatePropertyIcon,
+  Link2: LinkIcon,
+  Paperclip: Paperclip,
+  LayersIcon: LayersIcon,
+  Timer: Timer,
+};
+
+export const SPREADSHEET_COLUMNS: { [key in keyof IIssueDisplayProperties]: TSpreadsheetColumn } = {
+  assignee: SpreadsheetAssigneeColumn,
+  created_on: SpreadsheetCreatedOnColumn,
+  due_date: SpreadsheetDueDateColumn,
+  duration: SpreadsheetDurationColumn,
+  estimate: SpreadsheetEstimateColumn,
+  labels: SpreadsheetLabelColumn,
+  modules: SpreadsheetModuleColumn,
+  cycle: SpreadsheetCycleColumn,
+  link: SpreadsheetLinkColumn,
+  priority: SpreadsheetPriorityColumn,
+  start_date: SpreadsheetStartDateColumn,
+  state: SpreadsheetStateColumn,
+  sub_issue_count: SpreadsheetSubIssueColumn,
+  updated_on: SpreadsheetUpdatedOnColumn,
+  attachment_count: SpreadsheetAttachmentColumn,
+};
+
+export const useGroupByOptions = (
+  options: TIssueGroupByOptions[]
+): {
+  key: TIssueGroupByOptions;
+  titleTranslationKey: string;
+}[] => {
+  const groupByOptions = ISSUE_GROUP_BY_OPTIONS.filter((option) => options.includes(option.key));
+  return groupByOptions;
 };

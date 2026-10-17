@@ -25,8 +25,8 @@ import { useIssues } from "@/hooks/store/use-issues";
 import { useProject } from "@/hooks/store/use-project";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // Plane web imports
-import { useTimeLineRelationOptions } from "@/plane-web/components/relations";
-import type { TIssueRelationTypes } from "@/plane-web/types";
+import { useTimeLineRelationOptions } from "@/components/relations";
+import type { TIssueRelationTypes } from "@/types";
 import type { TRelationObject } from "../issue-detail-widgets/relations";
 
 type TIssueRelationSelect = {

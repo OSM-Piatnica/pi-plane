@@ -29,7 +29,7 @@ import {
   useWorkspaceNavigationPreferences,
 } from "@/hooks/use-navigation-preferences";
 // plane-web imports
-import { SidebarItem } from "@/plane-web/components/workspace/sidebar/sidebar-item";
+import { SidebarItem } from "@/components/workspace/sidebar/sidebar-item";
 
 export const SidebarMenuItems = observer(function SidebarMenuItems() {
   // routers

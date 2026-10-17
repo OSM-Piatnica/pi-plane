@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,7 +15,7 @@ import { SettingsBoxedControlItem } from "@/components/settings/boxed-control-it
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useEstimate } from "@/hooks/store/estimates/use-estimate";
 // plane web imports
-import { EstimateListItemButtons } from "@/plane-web/components/estimates";
+import { EstimateListItemButtons } from "@/components/estimates";
 
 type TEstimateListItem = {
   estimateId: string;

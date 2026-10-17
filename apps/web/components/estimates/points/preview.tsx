@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,7 +15,7 @@ import { EditIcon, TrashIcon } from "@plane/propel/icons";
 import type { TEstimatePointsObject, TEstimateSystemKeys, TEstimateTypeErrorObject } from "@plane/types";
 import { convertMinutesToHoursMinutesString } from "@plane/utils";
 // plane web imports
-import { EstimatePointDelete } from "@/plane-web/components/estimates";
+import { EstimatePointDelete } from "@/components/estimates";
 // local imports
 import { EstimatePointUpdate } from "./update";
 

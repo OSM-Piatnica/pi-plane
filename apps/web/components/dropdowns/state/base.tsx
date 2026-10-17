@@ -25,7 +25,7 @@ import type { TDropdownProps } from "@/components/dropdowns/types";
 // hooks
 import { useDropdown } from "@/hooks/use-dropdown";
 // plane web imports
-import { StateOption } from "@/plane-web/components/workflow";
+import { StateOption } from "@/components/workflow";
 
 export type TWorkItemStateDropdownBaseProps = TDropdownProps & {
   alwaysAllowStateChange?: boolean;

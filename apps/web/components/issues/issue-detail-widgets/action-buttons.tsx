@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,7 +12,6 @@ import { LinkIcon, ViewsIcon, RelationPropertyIcon } from "@plane/propel/icons";
 // plane imports
 import type { TIssueServiceType, TWorkItemWidgets } from "@plane/types";
 // plane web imports
-import { WorkItemAdditionalWidgetActionButtons } from "@/plane-web/components/issues/issue-detail-widgets/action-buttons";
 // local imports
 import { IssueAttachmentActionButton } from "./attachments";
 import { IssueLinksActionButton } from "./links";
@@ -102,4 +102,19 @@ export function IssueDetailWidgetActionButtons(props: Props) {
       />
     </div>
   );
+}
+
+// plane types
+
+export type TWorkItemAdditionalWidgetActionButtonsProps = {
+  disabled: boolean;
+  hideWidgets: TWorkItemWidgets[];
+  issueServiceType: TIssueServiceType;
+  projectId: string;
+  workItemId: string;
+  workspaceSlug: string;
+};
+
+export function WorkItemAdditionalWidgetActionButtons(_props: TWorkItemAdditionalWidgetActionButtonsProps) {
+  return null;
 }

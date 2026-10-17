@@ -21,7 +21,7 @@ import { renderFormattedPayloadDate } from "@plane/utils";
 import { InboxIssueService } from "@/services/inbox";
 import { IssueService } from "@/services/issue";
 // store
-import type { CoreRootStore } from "../root.store";
+import type { RootStore } from "../root.store";
 
 export interface IInboxIssueStore {
   isLoading: boolean;
@@ -63,7 +63,7 @@ export class InboxIssueStore implements IInboxIssueStore {
     workspaceSlug: string,
     projectId: string,
     data: TInboxIssue,
-    private store: CoreRootStore
+    private store: RootStore
   ) {
     this.id = data.id;
     this.status = data.status;

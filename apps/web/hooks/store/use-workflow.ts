@@ -6,7 +6,7 @@
 
 import { useContext } from "react";
 import { StoreContext } from "@/lib/store-context";
-import type { IWorkflowStore } from "@/plane-web/store/workflow.store";
+import type { IWorkflowStore } from "@/store/workflow.store";
 
 export const useWorkflow = (): IWorkflowStore => {
   const context = useContext(StoreContext);
