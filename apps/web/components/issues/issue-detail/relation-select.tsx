@@ -13,8 +13,8 @@ import { useTranslation } from "@plane/i18n";
 import { EditIcon, CloseIcon } from "@plane/propel/icons";
 // Plane
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { Tooltip } from "@plane/propel/tooltip";
 import type { ISearchIssueResponse, TIssueRelationTypes } from "@plane/types";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { cn, generateWorkItemLink } from "@plane/utils";
 // components
 import { ExistingIssuesListModal } from "@/components/core/modals/existing-issues-list-modal";
@@ -131,7 +131,7 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
                     key={relationIssueId}
                     className={`group flex items-center gap-1 rounded-sm px-1.5 pt-1 pb-1 leading-3 hover:bg-surface-2 ${currRelationOption?.className}`}
                   >
-                    <Tooltip tooltipHeading={t("common.title")} tooltipContent={currentIssue.name} isMobile={isMobile}>
+                    <Tooltip label={`${t("common.title")}: ${currentIssue.name}`} disabled={isMobile}>
                       <Link
                         href={generateWorkItemLink({
                           workspaceSlug,
@@ -149,7 +149,7 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
                       </Link>
                     </Tooltip>
                     {!disabled && (
-                      <Tooltip tooltipContent={t("common.remove")} position="bottom" isMobile={isMobile}>
+                      <Tooltip label={t("common.remove")} side="bottom" disabled={isMobile}>
                         <button
                           type="button"
                           className="inline-flex"

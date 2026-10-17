@@ -14,7 +14,7 @@ import { EUserPermissions, EUserPermissionsLevel, IS_FAVORITE_MENU_OPEN } from "
 import { useLocalStorage } from "@plane/hooks";
 import { useTranslation } from "@plane/i18n";
 import { LockIcon } from "@plane/propel/icons";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IProjectView } from "@plane/types";
 import { EViewAccess } from "@plane/types";
 import { FavoriteStar } from "@plane/ui";
@@ -97,9 +97,7 @@ export const ViewListItemAction = observer(function ViewListItemAction(props: Pr
       )}
       <DeleteProjectViewModal data={view} isOpen={deleteViewModal} onClose={() => setDeleteViewModal(false)} />
       <div className="cursor-default text-tertiary">
-        <Tooltip
-          tooltipContent={access === EViewAccess.PUBLIC ? t("common.access.public") : t("common.access.private")}
-        >
+        <Tooltip label={access === EViewAccess.PUBLIC ? t("common.access.public") : t("common.access.private")}>
           {access === EViewAccess.PUBLIC ? <Earth className="h-4 w-4" /> : <LockIcon className="h-4 w-4" />}
         </Tooltip>
       </div>

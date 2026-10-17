@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,7 @@ import { observer } from "mobx-react";
 
 import { LinkIcon, CheckIcon } from "@plane/propel/icons";
 // plane imports
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { IconButton } from "@plane/propel/icon-button";
 import { cn } from "@plane/utils";
 // hooks
@@ -57,7 +58,7 @@ export const PageCopyLinkControl = observer(function PageCopyLinkControl({ page 
   }, [pageOperations]);
 
   return (
-    <Tooltip tooltipContent={isCopied ? "Copied!" : "Copy link"} position="bottom">
+    <Tooltip label={isCopied ? "Copied!" : "Copy link"} side="bottom">
       <IconButton
         variant="ghost"
         size="lg"

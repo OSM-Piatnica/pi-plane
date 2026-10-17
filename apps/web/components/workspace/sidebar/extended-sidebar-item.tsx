@@ -17,7 +17,7 @@ import { Pin, PinOff } from "lucide-react";
 import type { IWorkspaceSidebarNavigationItem } from "@plane/constants";
 import { EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { DragHandle, DropIndicator } from "@plane/ui";
 import { cn } from "@plane/utils";
 // components
@@ -171,12 +171,7 @@ export const ExtendedSidebarItem = observer(function ExtendedSidebarItem(props: 
         id={`${item.key}`}
       >
         {!disableDrag && (
-          <Tooltip
-            // isMobile={isMobile}
-            tooltipContent={t("drag_to_rearrange")}
-            position="top-start"
-            disabled={isDragging}
-          >
+          <Tooltip label={t("drag_to_rearrange")} align="start" disabled={isDragging}>
             <button
               type="button"
               className={cn(
@@ -206,14 +201,14 @@ export const ExtendedSidebarItem = observer(function ExtendedSidebarItem(props: 
               </div>
             )}
             {isPinned ? (
-              <Tooltip tooltipContent="Unpin">
+              <Tooltip label="Unpin">
                 <PinOff
                   className="size-3.5 flex-shrink-0 text-placeholder outline-none hover:text-tertiary"
                   onClick={() => unPinNavigationItem(item.key)}
                 />
               </Tooltip>
             ) : (
-              <Tooltip tooltipContent="Pin">
+              <Tooltip label="Pin">
                 <Pin
                   className="size-3.5 flex-shrink-0 text-placeholder outline-none hover:text-tertiary"
                   onClick={() => pinNavigationItem(item.key)}

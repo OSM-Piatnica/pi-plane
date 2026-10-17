@@ -28,7 +28,7 @@ import { useTranslation } from "@plane/i18n";
 import { Button, getButtonStyling } from "@plane/propel/button";
 import { PlaneLogo } from "@plane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { cn } from "@plane/utils";
 // assets
 import WorkSpaceNotAvailable from "@/app/assets/workspace/workspace-not-available.png?url";
@@ -169,7 +169,7 @@ export const WorkspaceAuthWrapper = observer(function WorkspaceAuthWrapper(props
                 className="relative flex h-6 w-6 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-sm hover:bg-layer-1"
                 onClick={handleSignOut}
               >
-                <Tooltip tooltipContent={"Sign out"} position="top" className="ml-2" isMobile={isMobile}>
+                <Tooltip label={"Sign out"} alignOffset={8} disabled={isMobile}>
                   <LogOut size={14} />
                 </Tooltip>
               </div>

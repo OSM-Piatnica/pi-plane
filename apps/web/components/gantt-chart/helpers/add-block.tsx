@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,7 @@ import { addDays } from "date-fns";
 import { observer } from "mobx-react";
 import { PlusIcon } from "@plane/propel/icons";
 // ui
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IBlockUpdateData, IGanttBlock } from "@plane/types";
 // helpers
 import { renderFormattedDate, renderFormattedPayloadDate } from "@plane/utils";
@@ -88,7 +89,7 @@ export const ChartAddBlock = observer(function ChartAddBlock(props: Props) {
     >
       <div ref={containerRef} className="h-full w-full" />
       {isButtonVisible && (
-        <Tooltip tooltipContent={buttonStartDate && renderFormattedDate(buttonStartDate)} isMobile={isMobile}>
+        <Tooltip label={renderFormattedDate(buttonStartDate) ?? ""} disabled={isMobile}>
           <button
             type="button"
             className="absolute top-1/2 grid h-8 w-8 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-sm border border-strong bg-layer-1 p-1.5 text-secondary hover:text-primary"

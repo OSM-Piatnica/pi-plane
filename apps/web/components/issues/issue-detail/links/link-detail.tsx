@@ -8,7 +8,7 @@
 import { useTranslation } from "@plane/i18n";
 import { NewTabIcon, EditIcon, TrashIcon } from "@plane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { getIconForLink, copyTextToClipboard, calculateTimeAgo } from "@plane/utils";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -67,8 +67,9 @@ export function IssueLinkDetail(props: TIssueLinkDetail) {
               <Icon className="size-3 flex-shrink-0 stroke-2 text-tertiary group-hover:text-primary" />
             </span>
             <Tooltip
-              tooltipContent={linkDetail.title && linkDetail.title !== "" ? linkDetail.title : linkDetail.url}
-              isMobile={isMobile}
+              label={linkDetail.title && linkDetail.title !== "" ? linkDetail.title : linkDetail.url}
+              layout="stacked"
+              disabled={isMobile}
             >
               <span className="truncate text-11">
                 {linkDetail.title && linkDetail.title !== "" ? linkDetail.title : linkDetail.url}

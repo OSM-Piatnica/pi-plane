@@ -8,7 +8,7 @@
 import { useState, useEffect } from "react";
 import { CloudOff, Dot } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { Badge } from "@plane/propel/badge";
 
 type Props = {
@@ -40,21 +40,19 @@ export function PageSyncingBadge({ syncStatus }: Props) {
   const badgeContent = {
     syncing: {
       label: t("page_sync_ui.syncing"),
-      tooltipHeading: t("page_sync_ui.syncing"),
-      tooltipContent: t("page_sync_ui.syncing_description"),
+      tooltipLabel: `${t("page_sync_ui.syncing")} ${t("page_sync_ui.syncing_description")}`,
     },
     error: {
       label: t("page_sync_ui.connection_lost"),
-      tooltipHeading: t("page_sync_ui.connection_lost"),
-      tooltipContent: t("page_sync_ui.connection_lost_description"),
+      tooltipLabel: `${t("page_sync_ui.connection_lost")} ${t("page_sync_ui.connection_lost_description")}`,
     },
   };
 
-  // This way we guarantee badgeContent is defined
+  // The synced early-return above guarantees this key exists
   const content = badgeContent[syncStatus];
 
   return (
-    <Tooltip tooltipHeading={content.tooltipHeading} tooltipContent={content.tooltipContent}>
+    <Tooltip label={content.tooltipLabel} layout="stacked">
       <span className="animate-quickFadeIn">
         <Badge
           variant={syncStatus === "syncing" ? "brand" : "danger"}

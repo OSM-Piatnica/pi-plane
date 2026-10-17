@@ -16,7 +16,7 @@ import { useOutsideClickDetector } from "@plane/hooks";
 import { useTranslation } from "@plane/i18n";
 import { ChevronRightIcon } from "@plane/propel/icons";
 // types
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IIssueDisplayProperties, TIssue } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // ui
@@ -312,10 +312,7 @@ const IssueRowDetails = observer(function IssueRowDetails(props: IssueRowDetails
             >
               {/* select checkbox */}
               {projectId && canSelectIssues && (
-                <Tooltip
-                  tooltipContent={t("issue_ui.select_within_project")}
-                  disabled={issueDetail.project_id === projectId}
-                >
+                <Tooltip label={t("issue_ui.select_within_project")} disabled={issueDetail.project_id === projectId}>
                   <div className="absolute left-1 mr-1 grid w-3.5 flex-shrink-0 place-items-center">
                     <MultipleSelectEntityAction
                       className={cn(
@@ -357,7 +354,7 @@ const IssueRowDetails = observer(function IssueRowDetails(props: IssueRowDetails
               <div className="my-auto flex h-full w-full items-center justify-between gap-2 truncate">
                 <div className="line-clamp-1 w-full text-14 text-primary">
                   <div className="w-full overflow-hidden">
-                    <Tooltip tooltipContent={issueDetail.name} isMobile={isMobile}>
+                    <Tooltip label={issueDetail.name} layout="stacked" disabled={isMobile}>
                       <div
                         className="h-full w-full cursor-pointer truncate pr-4 text-left text-13 text-primary focus:outline-none"
                         tabIndex={-1}

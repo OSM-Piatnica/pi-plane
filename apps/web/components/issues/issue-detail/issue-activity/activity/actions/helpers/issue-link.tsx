@@ -6,7 +6,7 @@
  */
 
 import { useTranslation } from "@plane/i18n";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { generateWorkItemLink } from "@plane/utils";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -37,8 +37,8 @@ export function IssueLink(props: TIssueLink) {
   });
   return (
     <Tooltip
-      tooltipContent={activity.issue_detail ? activity.issue_detail.name : t("issue_ui.work_item_deleted")}
-      isMobile={isMobile}
+      label={activity.issue_detail ? activity.issue_detail.name : t("issue_ui.work_item_deleted")}
+      disabled={isMobile}
     >
       <a
         aria-disabled={activity.issue === null}

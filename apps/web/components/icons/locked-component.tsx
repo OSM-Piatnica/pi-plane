@@ -1,11 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { LockIcon } from "@plane/propel/icons";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 
 export function LockedComponent(props: { toolTipContent?: string }) {
   const { toolTipContent } = props;
@@ -18,7 +19,13 @@ export function LockedComponent(props: { toolTipContent?: string }) {
 
   return (
     <>
-      {toolTipContent ? <Tooltip tooltipContent={toolTipContent}>{lockedComponent}</Tooltip> : <>{lockedComponent}</>}
+      {toolTipContent ? (
+        <Tooltip label={toolTipContent} layout="stacked">
+          {lockedComponent}
+        </Tooltip>
+      ) : (
+        <>{lockedComponent}</>
+      )}
     </>
   );
 }

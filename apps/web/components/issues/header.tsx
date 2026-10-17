@@ -14,7 +14,7 @@ import { EUserPermissions, EUserPermissionsLevel, SPACE_BASE_PATH, SPACE_BASE_UR
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { NewTabIcon, WorkItemsIcon } from "@plane/propel/icons";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { EIssuesStoreType } from "@plane/types";
 import { Breadcrumbs, Header } from "@plane/ui";
 // components
@@ -78,9 +78,9 @@ export const IssuesHeader = observer(function IssuesHeader() {
           </Breadcrumbs>
           {issuesCount && issuesCount > 0 ? (
             <Tooltip
-              isMobile={isMobile}
-              tooltipContent={t("issue_ui.project_work_items_count", { count: issuesCount })}
-              position="bottom"
+              disabled={isMobile}
+              label={t("issue_ui.project_work_items_count", { count: issuesCount })}
+              side="bottom"
             >
               <CountChip count={issuesCount} />
             </Tooltip>
