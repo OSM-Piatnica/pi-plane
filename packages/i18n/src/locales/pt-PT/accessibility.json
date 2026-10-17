@@ -31,6 +31,19 @@
       "hide_password": "Ocultar palavra-passe",
       "close_alert": "Fechar alerta",
       "close_popover": "Fechar popover"
+    },
+    "breadcrumb": {
+      "trail": "Caminho de navegação",
+      "show_more": "Mostrar mais itens do caminho de navegação"
+    },
+    "common": {
+      "more_actions": "Mais ações",
+      "remove": "Remover"
+    },
+    "color_picker": {
+      "open": "Abrir seletor de cores",
+      "swatches": "Cores predefinidas",
+      "hex_input": "Cor hexadecimal"
     }
   }
 }
