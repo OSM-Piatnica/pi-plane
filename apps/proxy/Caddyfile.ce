@@ -1,4 +1,14 @@
 (plane_proxy) {
+	# Per-client-IP flood guard. Everyone behind one office IP shares this bucket,
+	# so keep it well above the whole office's traffic. Needs the caddy-ratelimit plugin.
+	rate_limit {
+		zone per_ip {
+			key {client_ip}
+			events {$RATE_LIMIT_PER_IP_PER_MIN:50000}
+			window 1m
+		}
+	}
+
 	request_body {
 		max_size {$FILE_SIZE_LIMIT}
 	}
@@ -24,12 +34,16 @@
 }
 
 {
+	order rate_limit before basicauth
 	{$CERT_EMAIL}
 	acme_ca {$CERT_ACME_CA:https://acme-v02.api.letsencrypt.org/directory} 
 	{$CERT_ACME_DNS}
 	servers {
 		max_header_size 25MB
 		client_ip_headers X-Forwarded-For X-Real-IP
+		# Only peers in this range may set X-Forwarded-For/X-Real-IP; for anyone else Caddy uses the
+		# connecting address. The default trusts every peer, so the client IP (and the per-IP rate
+		# limit) can be spoofed. Set TRUSTED_PROXIES to your real proxy/CDN range.
 		trusted_proxies static {$TRUSTED_PROXIES:0.0.0.0/0}
 	}
 }

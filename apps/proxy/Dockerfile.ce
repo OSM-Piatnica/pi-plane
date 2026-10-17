@@ -9,6 +9,7 @@ RUN XCADDY_SKIP_CLEANUP=1 xcaddy build \
         --with github.com/caddy-dns/cloudflare@v0.2.1 \
         --with github.com/caddy-dns/digitalocean@04bde2867106aa1b44c2f9da41a285fa02e629c5 \
         --with github.com/mholt/caddy-l4@6faae83b167fda94e62b686be5cbeb9b3f8fe002 \
+        --with github.com/mholt/caddy-ratelimit@v0.1.0 \
         --with github.com/go-jose/go-jose/v3@v3.0.5 \
         --with github.com/go-jose/go-jose/v4@v4.1.5 \
         --with google.golang.org/grpc@v1.83.2 \

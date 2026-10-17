@@ -26,6 +26,8 @@ from plane.utils.path_validator import get_safe_redirect_url
 class AuthenticationThrottle(AnonRateThrottle):
     # Rate is configurable per-deployment via the AUTHENTICATION_RATE_LIMIT
     # env var (DRF format: "<num>/<period>" where period is second/minute/hour/day).
+    # Counted per client IP, so users behind one office/NAT IP share this budget:
+    # size it for the whole office signing in at once, not for a single user.
     rate = os.environ.get("AUTHENTICATION_RATE_LIMIT", "10/minute")
     scope = "authentication"
 
