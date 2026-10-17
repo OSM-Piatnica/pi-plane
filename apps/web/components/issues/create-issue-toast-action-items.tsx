@@ -8,6 +8,7 @@
 import { useCallback } from "react";
 import { useTranslation } from "@plane/i18n";
 import type { ToastActionItem } from "@plane/blocks/toast";
+import { setToast } from "@plane/blocks/toast";
 import { copyTextToClipboard, copyUrlToClipboard, generateWorkItemLink } from "@plane/utils";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -17,6 +18,49 @@ type TCreateIssueToastActionArgs = {
   workspaceSlug: string;
   issueId: string;
   isEpic?: boolean;
+};
+
+type TTranslate = (key: string) => string;
+
+type TWorkItemToastActionsArgs = {
+  t: TTranslate;
+  workItemLink: string;
+  identifier: string;
+  isEpic: boolean;
+};
+
+/**
+ * The toast's three actions. The old markup swapped "Copy link" for a "Copied!" label after a click;
+ * the data actions have no state to swap, so each copy confirms with its own success toast instead
+ * (and an error toast when the clipboard is unavailable).
+ */
+export const buildWorkItemToastActions = (args: TWorkItemToastActionsArgs): ToastActionItem[] => {
+  const { t, workItemLink, identifier, isEpic } = args;
+  const copyWithToast = (copy: () => Promise<void>, successTitle: string) => {
+    copy()
+      .then(() => setToast({ type: "success", title: successTitle }))
+      .catch(() => setToast({ type: "error", title: t("toast.error"), message: t("something_went_wrong") }));
+  };
+
+  // Propel renders two left actions plus one right-aligned `primary`, so all three fit: view
+  // takes the primary slot (it is the call to action on a success toast) and the two copy
+  // affordances the old markup offered stay in the left cluster.
+  return [
+    {
+      label: t("common.actions.copy_link"),
+      onClick: () => copyWithToast(() => copyUrlToClipboard(workItemLink), t("common.link_copied")),
+    },
+    {
+      label: identifier,
+      onClick: () => copyWithToast(() => copyTextToClipboard(identifier), t("common.copied")),
+    },
+    {
+      label: isEpic ? t("issue_ui.view_epic") : t("issue_ui.view_work_item"),
+      href: workItemLink,
+      target: "_blank",
+      primary: true,
+    },
+  ];
 };
 
 /**
@@ -52,29 +96,7 @@ export function useCreateIssueToastActions() {
       });
       if (!workItemLink) return [];
 
-      // Propel renders two left actions plus one right-aligned `primary`, so all three fit: view
-      // takes the primary slot (it is the call to action on a success toast) and the two copy
-      // affordances the old markup offered stay in the left cluster.
-      return [
-        {
-          label: t("common.actions.copy_link"),
-          onClick: () => {
-            void copyUrlToClipboard(workItemLink);
-          },
-        },
-        {
-          label: identifier,
-          onClick: () => {
-            void copyTextToClipboard(identifier);
-          },
-        },
-        {
-          label: isEpic ? t("issue_ui.view_epic") : t("issue_ui.view_work_item"),
-          href: workItemLink,
-          target: "_blank",
-          primary: true,
-        },
-      ];
+      return buildWorkItemToastActions({ t, workItemLink, identifier, isEpic });
     },
     [t, getIssueById, getProjectIdentifierById]
   );
