@@ -11,6 +11,7 @@ import { useSearchParams } from "next/navigation";
 // icons
 import { HideOutline, ShowOutline } from "@makeplane/propel/icons";
 // ui
+import { Banner } from "@makeplane/propel/components/banner";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { API_BASE_URL, E_PASSWORD_STRENGTH } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
@@ -24,7 +25,6 @@ import { EErrorAlertType, authErrorHandler } from "@/helpers/authentication.help
 // services
 import { AuthService } from "@/services/auth.service";
 // local imports
-import { AuthBanner } from "./auth-banner";
 import { FormContainer } from "./common/container";
 import { AuthFormHeader } from "./common/header";
 
@@ -104,7 +104,13 @@ export const ResetPasswordForm = observer(function ResetPasswordForm() {
       <AuthFormHeader title={t("core_ui.auth.reset_password")} description={t("core_ui.auth.create_new_password")} />
 
       {errorInfo && errorInfo?.type === EErrorAlertType.BANNER_ALERT && (
-        <AuthBanner message={errorInfo.message} handleBannerData={(value) => setErrorInfo(value)} />
+        <Banner
+          placement="inline"
+          variant="accent"
+          role="alert"
+          description={errorInfo.message}
+          onDismiss={() => setErrorInfo(undefined)}
+        />
       )}
       <form
         className="space-y-4"

@@ -9,10 +9,10 @@ import { observer } from "mobx-react";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 // ui
-import { useTranslation } from "@plane/i18n";
-import { Banner } from "@plane/propel/banner";
-import { Button } from "@plane/propel/button";
+import { Banner } from "@makeplane/propel/components/banner";
 import { ArchiveOutline } from "@makeplane/propel/icons";
+import { useTranslation } from "@plane/i18n";
+import { Button } from "@plane/propel/button";
 import { Loader } from "@plane/ui";
 // components
 import { PageHead } from "@/components/core/page-title";
@@ -27,9 +27,9 @@ function ArchivedIssueDetailsPage({ params }: Route.ComponentProps) {
   // router
   const { workspaceSlug, projectId, archivedIssueId } = params;
   const router = useRouter();
-  const { t } = useTranslation();
   // states
   // hooks
+  const { t } = useTranslation();
   const {
     fetchIssue,
     issue: { getIssueById },
@@ -71,10 +71,11 @@ function ArchivedIssueDetailsPage({ params }: Route.ComponentProps) {
       ) : (
         <>
           <Banner
+            placement="page"
             variant="warning"
             title={t("issue_ui.archived_banner")}
-            icon={<ArchiveOutline className="size-4" />}
-            action={
+            icon={<ArchiveOutline />}
+            actions={
               <Button
                 variant="secondary"
                 onClick={() => router.push(`/${workspaceSlug}/projects/${projectId}/archives/issues/`)}
@@ -82,7 +83,6 @@ function ArchivedIssueDetailsPage({ params }: Route.ComponentProps) {
                 {t("issue_ui.go_to_archives")}
               </Button>
             }
-            className="border-b border-subtle"
           />
           <div className="flex h-full overflow-hidden">
             <div className="h-full w-full space-y-3 divide-y-2 divide-subtle-1 overflow-y-auto">
