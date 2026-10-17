@@ -188,8 +188,8 @@ importers:
         specifier: ^2.2.10
         version: 2.2.10(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@makeplane/propel':
-        specifier: 0.2.0
-        version: 0.2.0(@date-fns/tz@1.4.1)(@types/react@19.2.17)(date-fns@4.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(tailwindcss@4.1.17)
+        specifier: 0.3.0
+        version: 0.3.0(@date-fns/tz@1.4.1)(@types/react@19.2.17)(date-fns@4.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(tailwindcss@4.1.17)
       '@plane/constants':
         specifier: workspace:*
         version: link:../../packages/constants
@@ -602,8 +602,8 @@ importers:
         specifier: ^2.2.10
         version: 2.2.10(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@makeplane/propel':
-        specifier: 0.2.0
-        version: 0.2.0(@date-fns/tz@1.4.1)(@types/react@19.2.17)(date-fns@4.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(tailwindcss@4.1.17)
+        specifier: 0.3.0
+        version: 0.3.0(@date-fns/tz@1.4.1)(@types/react@19.2.17)(date-fns@4.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(tailwindcss@4.1.17)
       '@plane/constants':
         specifier: workspace:*
         version: link:../../packages/constants
@@ -1283,8 +1283,8 @@ importers:
   packages/tailwind-config:
     dependencies:
       '@makeplane/propel':
-        specifier: 0.2.0
-        version: 0.2.0(@date-fns/tz@1.4.1)(@types/react@19.2.17)(date-fns@4.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(tailwindcss@4.1.17)
+        specifier: 0.3.0
+        version: 0.3.0(@date-fns/tz@1.4.1)(@types/react@19.2.17)(date-fns@4.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(tailwindcss@4.1.17)
       '@tailwindcss/postcss':
         specifier: 4.1.17
         version: 4.1.17
@@ -2657,8 +2657,8 @@ packages:
     peerDependencies:
       '@types/react': 19.2.17
 
-  '@makeplane/propel@0.2.0':
-    resolution: {integrity: sha512-a4gd9m9gTMbc2NOrpb1jrSkM/OtocVBTf2bmnaAdU8K8Xw3OoTgvMLM3nRtfUbSFNLl1OjG7SCXeg2x/7lYvSA==}
+  '@makeplane/propel@0.3.0':
+    resolution: {integrity: sha512-nGhiE42vLQVvv7NZOcQYKARJiTXyKDSSTcHOzPdtFpa+WkSz9B91jw6i+3Ikz5cpkv/aEKjOTJF+cByw2zv5ZQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       react: 19.2.8
@@ -10450,7 +10450,7 @@ snapshots:
     dependencies:
       '@types/react': 19.2.17
 
-  '@makeplane/propel@0.2.0(@date-fns/tz@1.4.1)(@types/react@19.2.17)(date-fns@4.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(tailwindcss@4.1.17)':
+  '@makeplane/propel@0.3.0(@date-fns/tz@1.4.1)(@types/react@19.2.17)(date-fns@4.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(tailwindcss@4.1.17)':
     dependencies:
       '@base-ui/react': 1.6.0(@date-fns/tz@1.4.1)(@types/react@19.2.17)(date-fns@4.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       class-variance-authority: 0.7.1

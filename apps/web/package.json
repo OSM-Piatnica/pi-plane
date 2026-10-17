@@ -27,7 +27,7 @@
     "@fontsource/ibm-plex-mono": "5.2.7",
     "@fontsource/material-symbols-rounded": "5.2.30",
     "@headlessui/react": "^2.2.10",
-    "@makeplane/propel": "0.2.0",
+    "@makeplane/propel": "0.3.0",
     "@plane/constants": "workspace:*",
     "@plane/editor": "workspace:*",
     "@plane/hooks": "workspace:*",
