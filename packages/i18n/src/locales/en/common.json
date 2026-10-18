@@ -1397,5 +1397,70 @@
       "state_group": "State Group",
       "subscriber": "Subscriber"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Dismiss"
+    },
+    "auth_header": {
+      "sign_in_header": "Sign in to upvote or comment",
+      "sign_in_sub_header": "Contribute in nudging the features you want to get built.",
+      "sign_up_header": "View, comment, and do more",
+      "sign_up_sub_header": "Sign up or log in to work with Plane work items and Pages.",
+      "default_header": "Comment or react to work items",
+      "default_sub_header": "Use plane to add your valuable inputs to features."
+    },
+    "terms": {
+      "agree_sign_up": "By creating an account, you agree to our\n<terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "agree_sign_in": "By signing in, you agree to our\n<terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Nice! Just one more step.",
+      "description": "Enter the public-share URL or link of the view or Page you are trying to see in the browser's address bar.",
+      "image_alt": "User already logged in"
+    },
+    "auth_unique_code": {
+      "resend_in": "Resend in {seconds}s"
+    },
+    "oauth": {
+      "sign_up_with": "Sign up with {provider}",
+      "sign_in_with": "Sign in with {provider}",
+      "continue_with": "Continue with {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "The public board does not exist. Please check the URL.",
+      "cycle_tooltip": "Cycle: {name}",
+      "no_cycle": "No Cycle",
+      "due_date_tooltip": "Due Date: {date}",
+      "no_date": "No Date",
+      "labels_tooltip": "Labels: {labels}",
+      "no_labels": "No Labels",
+      "labels_count": "{count} Labels",
+      "no_assignees": "No Assignees",
+      "comment_post_failed": "Comment could not be posted. Please try again.",
+      "add_comment_placeholder": "Add comment...",
+      "sign_in_to_comment": "Sign in to add your comment",
+      "empty": "Empty",
+      "no_upvotes": "No upvotes yet",
+      "no_downvotes": "No downvotes yet",
+      "voters_and_more": "{names} and {count} more"
+    },
+    "error_page": {
+      "title": "Yikes! That doesn't look good.",
+      "description": "That crashed Plane, pun intended. No worries, though. Our engineers have been notified. If you have more details, please write to <email/> or on our <forum/>."
+    },
+    "not_found_page": {
+      "title": "That didn't work",
+      "description": "Check the URL you are entering in the browser's address bar and try again."
+    },
+    "powered_by": {
+      "label": "Powered by <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane instance failure",
+      "title": "Unable to fetch instance details.",
+      "description": "We were unable to fetch the details of the instance.",
+      "hint": "Fret not, it might just be a connectivity issue."
+    }
   }
 }

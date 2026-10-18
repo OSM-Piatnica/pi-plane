@@ -1397,5 +1397,70 @@
       "state_group": "Skupina stavov",
       "subscriber": "Odberateľ"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Zavrieť"
+    },
+    "auth_header": {
+      "sign_in_header": "Prihláste sa, aby ste mohli hlasovať alebo komentovať",
+      "sign_in_sub_header": "Prispejte k tomu, ktoré funkcie sa budú vytvárať.",
+      "sign_up_header": "Prezerajte, komentujte a robte viac",
+      "sign_up_sub_header": "Zaregistrujte sa alebo sa prihláste a pracujte s pracovnými položkami a Stránkami v Plane.",
+      "default_header": "Komentujte pracovné položky alebo na ne reagujte",
+      "default_sub_header": "Použite Plane a pridajte svoje cenné podnety k funkciám."
+    },
+    "terms": {
+      "agree_sign_up": "Vytvorením účtu súhlasíte s našimi\n<terms>Podmienkami služby</terms> a <privacy>Zásadami ochrany osobných údajov</privacy>.",
+      "agree_sign_in": "Prihlásením súhlasíte s našimi\n<terms>Podmienkami služby</terms> a <privacy>Zásadami ochrany osobných údajov</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Skvelé! Zostáva už len jeden krok.",
+      "description": "Do adresového riadka prehliadača zadajte verejnú adresu URL alebo odkaz na zobrazenie či Stránku, ktorú chcete zobraziť.",
+      "image_alt": "Používateľ je už prihlásený"
+    },
+    "auth_unique_code": {
+      "resend_in": "Znova odoslať o {seconds} s"
+    },
+    "oauth": {
+      "sign_up_with": "Registrácia cez {provider}",
+      "sign_in_with": "Prihlásenie cez {provider}",
+      "continue_with": "Pokračovať cez {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "Verejná nástenka neexistuje. Skontrolujte prosím adresu URL.",
+      "cycle_tooltip": "Cyklus: {name}",
+      "no_cycle": "Žiadny cyklus",
+      "due_date_tooltip": "Termín: {date}",
+      "no_date": "Žiadny dátum",
+      "labels_tooltip": "Štítky: {labels}",
+      "no_labels": "Žiadne štítky",
+      "labels_count": "Štítkov: {count}",
+      "no_assignees": "Žiadni priradení",
+      "comment_post_failed": "Komentár sa nepodarilo odoslať. Skúste to prosím znova.",
+      "add_comment_placeholder": "Pridať komentár...",
+      "sign_in_to_comment": "Prihláste sa a pridajte komentár",
+      "empty": "Prázdne",
+      "no_upvotes": "Zatiaľ žiadne kladné hlasy",
+      "no_downvotes": "Zatiaľ žiadne záporné hlasy",
+      "voters_and_more": "{names} a ďalších {count}"
+    },
+    "error_page": {
+      "title": "Jej! Toto nevyzerá dobre.",
+      "description": "Plane sa zrútil, bez preháňania. Nič sa nedeje, naši inžinieri boli upozornení. Ak máte ďalšie podrobnosti, napíšte na <email/> alebo na naše <forum/>."
+    },
+    "not_found_page": {
+      "title": "To sa nepodarilo",
+      "description": "Skontrolujte adresu URL, ktorú zadávate do adresového riadka prehliadača, a skúste to znova."
+    },
+    "powered_by": {
+      "label": "Využíva <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Zlyhanie inštancie Pi-Plane",
+      "title": "Nepodarilo sa načítať podrobnosti o inštancii.",
+      "description": "Nepodarilo sa nám načítať podrobnosti o inštancii.",
+      "hint": "Žiadne obavy, môže ísť len o problém s pripojením."
+    }
   }
 }

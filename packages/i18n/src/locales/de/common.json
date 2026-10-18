@@ -1397,5 +1397,70 @@
       "state_group": "Statusgruppe",
       "subscriber": "Abonnent"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Schließen"
+    },
+    "auth_header": {
+      "sign_in_header": "Anmelden, um abzustimmen oder zu kommentieren",
+      "sign_in_sub_header": "Helfen Sie mit, die gewünschten Funktionen voranzubringen.",
+      "sign_up_header": "Ansehen, kommentieren und mehr",
+      "sign_up_sub_header": "Registrieren oder anmelden, um mit Arbeitselementen und Seiten in Plane zu arbeiten.",
+      "default_header": "Arbeitselemente kommentieren oder darauf reagieren",
+      "default_sub_header": "Nutzen Sie Plane, um Ihr wertvolles Feedback zu Funktionen einzubringen."
+    },
+    "terms": {
+      "agree_sign_up": "Mit der Erstellung eines Kontos stimmen Sie unseren\n<terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> zu.",
+      "agree_sign_in": "Mit der Anmeldung stimmen Sie unseren\n<terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> zu."
+    },
+    "user_logged_in": {
+      "title": "Super! Nur noch ein Schritt.",
+      "description": "Geben Sie die öffentliche URL oder den Link der Ansicht oder Seite, die Sie sehen möchten, in die Adressleiste des Browsers ein.",
+      "image_alt": "Benutzer bereits angemeldet"
+    },
+    "auth_unique_code": {
+      "resend_in": "Erneut senden in {seconds} s"
+    },
+    "oauth": {
+      "sign_up_with": "Mit {provider} registrieren",
+      "sign_in_with": "Mit {provider} anmelden",
+      "continue_with": "Weiter mit {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "Das öffentliche Board existiert nicht. Bitte überprüfen Sie die URL.",
+      "cycle_tooltip": "Zyklus: {name}",
+      "no_cycle": "Kein Zyklus",
+      "due_date_tooltip": "Fälligkeitsdatum: {date}",
+      "no_date": "Kein Datum",
+      "labels_tooltip": "Labels: {labels}",
+      "no_labels": "Keine Labels",
+      "labels_count": "{count} Labels",
+      "no_assignees": "Keine Zugewiesenen",
+      "comment_post_failed": "Der Kommentar konnte nicht gepostet werden. Bitte versuchen Sie es erneut.",
+      "add_comment_placeholder": "Kommentar hinzufügen...",
+      "sign_in_to_comment": "Anmelden, um einen Kommentar hinzuzufügen",
+      "empty": "Leer",
+      "no_upvotes": "Noch keine Upvotes",
+      "no_downvotes": "Noch keine Downvotes",
+      "voters_and_more": "{names} und {count} weitere"
+    },
+    "error_page": {
+      "title": "Hoppla! Das sieht nicht gut aus.",
+      "description": "Plane ist abgestürzt. Keine Sorge, unsere Entwickler wurden benachrichtigt. Wenn Sie weitere Details haben, schreiben Sie an <email/> oder in unser <forum/>."
+    },
+    "not_found_page": {
+      "title": "Das hat nicht funktioniert",
+      "description": "Überprüfen Sie die URL in der Adressleiste des Browsers und versuchen Sie es erneut."
+    },
+    "powered_by": {
+      "label": "Bereitgestellt von <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane-Instanzfehler",
+      "title": "Instanzdetails können nicht abgerufen werden.",
+      "description": "Die Details der Instanz konnten nicht abgerufen werden.",
+      "hint": "Keine Sorge, es könnte nur ein Verbindungsproblem sein."
+    }
   }
 }

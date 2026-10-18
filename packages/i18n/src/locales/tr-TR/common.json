@@ -1397,5 +1397,70 @@
       "state_group": "Durum grubu",
       "subscriber": "Abone"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Kapat"
+    },
+    "auth_header": {
+      "sign_in_header": "Oy vermek veya yorum yapmak için giriş yapın",
+      "sign_in_sub_header": "İstediğiniz özelliklerin geliştirilmesine katkıda bulunun.",
+      "sign_up_header": "Görüntüleyin, yorum yapın ve daha fazlasını yapın",
+      "sign_up_sub_header": "Plane iş öğeleri ve Sayfalarıyla çalışmak için kaydolun veya giriş yapın.",
+      "default_header": "İş öğelerine yorum yapın veya tepki verin",
+      "default_sub_header": "Özelliklere değerli görüşlerinizi eklemek için Plane'i kullanın."
+    },
+    "terms": {
+      "agree_sign_up": "Hesap oluşturarak\n<terms>Hizmet Şartları</terms> ve <privacy>Gizlilik Politikası</privacy>'nı kabul etmiş olursunuz.",
+      "agree_sign_in": "Giriş yaparak\n<terms>Hizmet Şartları</terms> ve <privacy>Gizlilik Politikası</privacy>'nı kabul etmiş olursunuz."
+    },
+    "user_logged_in": {
+      "title": "Harika! Sadece bir adım kaldı.",
+      "description": "Görmeye çalıştığınız görünümün veya Sayfanın herkese açık paylaşım URL'sini ya da bağlantısını tarayıcının adres çubuğuna girin.",
+      "image_alt": "Kullanıcı zaten giriş yapmış"
+    },
+    "auth_unique_code": {
+      "resend_in": "{seconds} sn içinde yeniden gönder"
+    },
+    "oauth": {
+      "sign_up_with": "{provider} ile kaydol",
+      "sign_in_with": "{provider} ile giriş yap",
+      "continue_with": "{provider} ile devam et"
+    },
+    "issues": {
+      "public_board_not_found": "Herkese açık pano mevcut değil. Lütfen URL'yi kontrol edin.",
+      "cycle_tooltip": "Döngü: {name}",
+      "no_cycle": "Döngü Yok",
+      "due_date_tooltip": "Son tarih: {date}",
+      "no_date": "Tarih Yok",
+      "labels_tooltip": "Etiketler: {labels}",
+      "no_labels": "Etiket Yok",
+      "labels_count": "{count} Etiket",
+      "no_assignees": "Atanan Yok",
+      "comment_post_failed": "Yorum gönderilemedi. Lütfen tekrar deneyin.",
+      "add_comment_placeholder": "Yorum ekle...",
+      "sign_in_to_comment": "Yorumunuzu eklemek için giriş yapın",
+      "empty": "Boş",
+      "no_upvotes": "Henüz olumlu oy yok",
+      "no_downvotes": "Henüz olumsuz oy yok",
+      "voters_and_more": "{names} ve {count} kişi daha"
+    },
+    "error_page": {
+      "title": "Eyvah! Bu hiç iyi görünmüyor.",
+      "description": "Bu, Plane'in çökmesine neden oldu, kelime oyunu amaçlanmadı. Endişelenmeyin, mühendislerimiz bilgilendirildi. Daha fazla ayrıntınız varsa lütfen <email/> adresine veya <forum/> sayfamıza yazın."
+    },
+    "not_found_page": {
+      "title": "Bu işe yaramadı",
+      "description": "Tarayıcının adres çubuğuna girdiğiniz URL'yi kontrol edin ve tekrar deneyin."
+    },
+    "powered_by": {
+      "label": "<name>Plane Publish</name> tarafından desteklenmektedir"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane örneği hatası",
+      "title": "Örnek ayrıntıları alınamadı.",
+      "description": "Örneğin ayrıntıları alınamadı.",
+      "hint": "Endişelenmeyin, yalnızca bir bağlantı sorunu olabilir."
+    }
   }
 }

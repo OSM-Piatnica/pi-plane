@@ -1397,5 +1397,70 @@
       "state_group": "狀態群組",
       "subscriber": "訂閱者"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "關閉"
+    },
+    "auth_header": {
+      "sign_in_header": "登入即可按讚或留言",
+      "sign_in_sub_header": "參與推動您希望開發的功能。",
+      "sign_up_header": "檢視、留言，探索更多",
+      "sign_up_sub_header": "註冊或登入，即可使用 Plane 工作事項和頁面。",
+      "default_header": "對工作事項留言或回應",
+      "default_sub_header": "使用 Plane 為功能提出您的寶貴意見。"
+    },
+    "terms": {
+      "agree_sign_up": "建立帳號即表示您同意我們的\n<terms>服務條款</terms>和<privacy>隱私權政策</privacy>。",
+      "agree_sign_in": "登入即表示您同意我們的\n<terms>服務條款</terms>和<privacy>隱私權政策</privacy>。"
+    },
+    "user_logged_in": {
+      "title": "太好了！只差最後一步。",
+      "description": "請在瀏覽器網址列中輸入您想檢視的檢視或頁面的公開分享 URL 或連結。",
+      "image_alt": "使用者已登入"
+    },
+    "auth_unique_code": {
+      "resend_in": "{seconds} 秒後重新傳送"
+    },
+    "oauth": {
+      "sign_up_with": "使用 {provider} 註冊",
+      "sign_in_with": "使用 {provider} 登入",
+      "continue_with": "使用 {provider} 繼續"
+    },
+    "issues": {
+      "public_board_not_found": "此公開看板不存在。請檢查 URL。",
+      "cycle_tooltip": "週期：{name}",
+      "no_cycle": "無週期",
+      "due_date_tooltip": "截止日期：{date}",
+      "no_date": "無日期",
+      "labels_tooltip": "標籤：{labels}",
+      "no_labels": "無標籤",
+      "labels_count": "{count} 個標籤",
+      "no_assignees": "無指派對象",
+      "comment_post_failed": "無法發佈留言。請再試一次。",
+      "add_comment_placeholder": "新增留言...",
+      "sign_in_to_comment": "登入後新增留言",
+      "empty": "空",
+      "no_upvotes": "尚無按讚",
+      "no_downvotes": "尚無倒讚",
+      "voters_and_more": "{names} 等 {count} 人"
+    },
+    "error_page": {
+      "title": "糟糕！情況不太妙。",
+      "description": "Plane 當機了。不過請放心，我們的工程師已收到通知。如果您有更多詳細資訊，請寄信至 <email/> 或在我們的 <forum/> 留言。"
+    },
+    "not_found_page": {
+      "title": "發生錯誤",
+      "description": "請檢查您在瀏覽器網址列中輸入的 URL，然後再試一次。"
+    },
+    "powered_by": {
+      "label": "由 <name>Plane Publish</name> 提供支援"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane 執行個體故障",
+      "title": "無法取得執行個體詳細資訊。",
+      "description": "我們無法取得該執行個體的詳細資訊。",
+      "hint": "別擔心，這可能只是連線問題。"
+    }
   }
 }

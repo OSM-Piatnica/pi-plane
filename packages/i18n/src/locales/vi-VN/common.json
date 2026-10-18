@@ -1397,5 +1397,70 @@
       "state_group": "Nhóm trạng thái",
       "subscriber": "Người đăng ký"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Đóng"
+    },
+    "auth_header": {
+      "sign_in_header": "Đăng nhập để bình chọn hoặc bình luận",
+      "sign_in_sub_header": "Hãy góp phần thúc đẩy những tính năng bạn muốn được phát triển.",
+      "sign_up_header": "Xem, bình luận và làm được nhiều hơn",
+      "sign_up_sub_header": "Đăng ký hoặc đăng nhập để làm việc với các mục công việc và Trang của Plane.",
+      "default_header": "Bình luận hoặc bày tỏ cảm xúc về các mục công việc",
+      "default_sub_header": "Hãy dùng Plane để đóng góp ý kiến quý báu của bạn cho các tính năng."
+    },
+    "terms": {
+      "agree_sign_up": "Khi tạo tài khoản, bạn đồng ý với\n<terms>Điều khoản dịch vụ</terms> và <privacy>Chính sách quyền riêng tư</privacy> của chúng tôi.",
+      "agree_sign_in": "Khi đăng nhập, bạn đồng ý với\n<terms>Điều khoản dịch vụ</terms> và <privacy>Chính sách quyền riêng tư</privacy> của chúng tôi."
+    },
+    "user_logged_in": {
+      "title": "Tuyệt! Chỉ còn một bước nữa.",
+      "description": "Nhập URL chia sẻ công khai hoặc liên kết của chế độ xem hoặc Trang bạn muốn xem vào thanh địa chỉ của trình duyệt.",
+      "image_alt": "Người dùng đã đăng nhập"
+    },
+    "auth_unique_code": {
+      "resend_in": "Gửi lại sau {seconds} giây"
+    },
+    "oauth": {
+      "sign_up_with": "Đăng ký bằng {provider}",
+      "sign_in_with": "Đăng nhập bằng {provider}",
+      "continue_with": "Tiếp tục với {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "Bảng công khai không tồn tại. Vui lòng kiểm tra URL.",
+      "cycle_tooltip": "Chu kỳ: {name}",
+      "no_cycle": "Không có Chu kỳ",
+      "due_date_tooltip": "Ngày hết hạn: {date}",
+      "no_date": "Không có ngày",
+      "labels_tooltip": "Nhãn: {labels}",
+      "no_labels": "Không có nhãn",
+      "labels_count": "{count} nhãn",
+      "no_assignees": "Không có người phụ trách",
+      "comment_post_failed": "Không thể đăng bình luận. Vui lòng thử lại.",
+      "add_comment_placeholder": "Thêm bình luận...",
+      "sign_in_to_comment": "Đăng nhập để thêm bình luận của bạn",
+      "empty": "Trống",
+      "no_upvotes": "Chưa có lượt bình chọn tán thành",
+      "no_downvotes": "Chưa có lượt bình chọn không tán thành",
+      "voters_and_more": "{names} và {count} người khác"
+    },
+    "error_page": {
+      "title": "Ôi! Trông có vẻ không ổn.",
+      "description": "Lỗi này đã làm Plane gặp sự cố. Đừng lo, các kỹ sư của chúng tôi đã được thông báo. Nếu bạn có thêm chi tiết, vui lòng viết thư đến <email/> hoặc đăng trên <forum/> của chúng tôi."
+    },
+    "not_found_page": {
+      "title": "Không thành công",
+      "description": "Hãy kiểm tra URL bạn đã nhập vào thanh địa chỉ của trình duyệt và thử lại."
+    },
+    "powered_by": {
+      "label": "Được cung cấp bởi <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Lỗi phiên bản Pi-Plane",
+      "title": "Không thể lấy chi tiết phiên bản.",
+      "description": "Chúng tôi không thể lấy chi tiết của phiên bản.",
+      "hint": "Đừng lo, có thể chỉ là sự cố kết nối."
+    }
   }
 }

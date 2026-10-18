@@ -38,7 +38,7 @@ export const FilterSelection = observer(function FilterSelection(props: Props) {
           <input
             type="text"
             className="w-full bg-surface-2 outline-none placeholder:text-placeholder"
-            placeholder="Search"
+            placeholder={t("common.search.label")}
             aria-label={t("common.search.label")}
             value={filtersSearchQuery}
             onChange={(e) => setFiltersSearchQuery(e.target.value)}

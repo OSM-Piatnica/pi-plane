@@ -1397,5 +1397,70 @@
       "state_group": "상태 그룹",
       "subscriber": "구독자"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "닫기"
+    },
+    "auth_header": {
+      "sign_in_header": "로그인하고 추천 또는 댓글 남기기",
+      "sign_in_sub_header": "원하는 기능이 개발되도록 힘을 보태 주세요.",
+      "sign_up_header": "보기, 댓글 달기 등 더 많은 활동",
+      "sign_up_sub_header": "가입하거나 로그인하여 Plane 작업 항목과 페이지를 이용하세요.",
+      "default_header": "작업 항목에 댓글 또는 반응 남기기",
+      "default_sub_header": "Plane을 사용하여 기능에 대한 소중한 의견을 남겨 주세요."
+    },
+    "terms": {
+      "agree_sign_up": "계정을 만들면\n<terms>서비스 약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하는 것으로 간주됩니다.",
+      "agree_sign_in": "로그인하면\n<terms>서비스 약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하는 것으로 간주됩니다."
+    },
+    "user_logged_in": {
+      "title": "좋아요! 한 단계만 더 남았습니다.",
+      "description": "보려는 뷰 또는 페이지의 공개 공유 URL 또는 링크를 브라우저 주소 표시줄에 입력하세요.",
+      "image_alt": "사용자가 이미 로그인되어 있습니다"
+    },
+    "auth_unique_code": {
+      "resend_in": "{seconds}초 후 재전송"
+    },
+    "oauth": {
+      "sign_up_with": "{provider}(으)로 가입",
+      "sign_in_with": "{provider}(으)로 로그인",
+      "continue_with": "{provider}(으)로 계속"
+    },
+    "issues": {
+      "public_board_not_found": "공개 보드가 존재하지 않습니다. URL을 확인하세요.",
+      "cycle_tooltip": "사이클: {name}",
+      "no_cycle": "사이클 없음",
+      "due_date_tooltip": "마감일: {date}",
+      "no_date": "날짜 없음",
+      "labels_tooltip": "레이블: {labels}",
+      "no_labels": "레이블 없음",
+      "labels_count": "레이블 {count}개",
+      "no_assignees": "담당자 없음",
+      "comment_post_failed": "댓글을 게시할 수 없습니다. 다시 시도하세요.",
+      "add_comment_placeholder": "댓글 추가...",
+      "sign_in_to_comment": "로그인하여 댓글 추가",
+      "empty": "비어 있음",
+      "no_upvotes": "아직 추천이 없습니다",
+      "no_downvotes": "아직 비추천이 없습니다",
+      "voters_and_more": "{names} 외 {count}명"
+    },
+    "error_page": {
+      "title": "문제가 발생했습니다.",
+      "description": "Plane이 중단되었습니다. 걱정하지 마세요. 엔지니어에게 알림이 전송되었습니다. 자세한 내용이 있으시면 <email/>로 문의하시거나 <forum/>에 남겨 주세요."
+    },
+    "not_found_page": {
+      "title": "작동하지 않았습니다",
+      "description": "브라우저 주소 표시줄에 입력한 URL을 확인하고 다시 시도하세요."
+    },
+    "powered_by": {
+      "label": "Powered by <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane 인스턴스 오류",
+      "title": "인스턴스 세부 정보를 가져올 수 없습니다.",
+      "description": "인스턴스의 세부 정보를 가져올 수 없습니다.",
+      "hint": "연결 문제일 수 있으니 걱정하지 마세요."
+    }
   }
 }

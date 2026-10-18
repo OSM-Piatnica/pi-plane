@@ -1397,5 +1397,70 @@
       "state_group": "Grupo de estado",
       "subscriber": "Inscrito"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Dispensar"
+    },
+    "auth_header": {
+      "sign_in_header": "Entre para votar a favor ou comentar",
+      "sign_in_sub_header": "Ajude a impulsionar os recursos que você quer ver desenvolvidos.",
+      "sign_up_header": "Veja, comente e faça mais",
+      "sign_up_sub_header": "Cadastre-se ou entre para trabalhar com os itens de trabalho e as Páginas do Plane.",
+      "default_header": "Comente ou reaja aos itens de trabalho",
+      "default_sub_header": "Use o Plane para dar suas valiosas contribuições aos recursos."
+    },
+    "terms": {
+      "agree_sign_up": "Ao criar uma conta, você concorda com nossos\n<terms>Termos de Serviço</terms> e nossa <privacy>Política de Privacidade</privacy>.",
+      "agree_sign_in": "Ao entrar, você concorda com nossos\n<terms>Termos de Serviço</terms> e nossa <privacy>Política de Privacidade</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Legal! Falta só mais um passo.",
+      "description": "Digite na barra de endereços do navegador a URL pública ou o link da visualização ou Página que você está tentando ver.",
+      "image_alt": "Usuário já conectado"
+    },
+    "auth_unique_code": {
+      "resend_in": "Reenviar em {seconds}s"
+    },
+    "oauth": {
+      "sign_up_with": "Cadastrar-se com {provider}",
+      "sign_in_with": "Entrar com {provider}",
+      "continue_with": "Continuar com {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "O quadro público não existe. Verifique a URL.",
+      "cycle_tooltip": "Ciclo: {name}",
+      "no_cycle": "Sem Ciclo",
+      "due_date_tooltip": "Data de vencimento: {date}",
+      "no_date": "Sem data",
+      "labels_tooltip": "Etiquetas: {labels}",
+      "no_labels": "Sem etiquetas",
+      "labels_count": "{count} etiquetas",
+      "no_assignees": "Sem responsáveis",
+      "comment_post_failed": "Não foi possível publicar o comentário. Tente novamente.",
+      "add_comment_placeholder": "Adicionar comentário...",
+      "sign_in_to_comment": "Entre para adicionar seu comentário",
+      "empty": "Vazio",
+      "no_upvotes": "Ainda não há votos a favor",
+      "no_downvotes": "Ainda não há votos contra",
+      "voters_and_more": "{names} e mais {count}"
+    },
+    "error_page": {
+      "title": "Ops! Isso não parece bom.",
+      "description": "Isso derrubou o Plane, sem trocadilhos. Mas não se preocupe: nossos engenheiros foram notificados. Se tiver mais detalhes, escreva para <email/> ou em nosso <forum/>."
+    },
+    "not_found_page": {
+      "title": "Isso não funcionou",
+      "description": "Verifique a URL que você digitou na barra de endereços do navegador e tente novamente."
+    },
+    "powered_by": {
+      "label": "Desenvolvido por <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Falha na instância do Pi-Plane",
+      "title": "Não foi possível obter os detalhes da instância.",
+      "description": "Não foi possível obter os detalhes da instância.",
+      "hint": "Calma, pode ser apenas um problema de conexão."
+    }
   }
 }

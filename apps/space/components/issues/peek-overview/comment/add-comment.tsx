@@ -72,7 +72,7 @@ export const AddComment = observer(function AddComment(props: Props) {
         setToast({
           type: "error",
           title: t("toast.error"),
-          message: "Comment could not be posted. Please try again.",
+          message: t("space_text.issues.comment_post_failed"),
         })
       );
   };
@@ -101,7 +101,7 @@ export const AddComment = observer(function AddComment(props: Props) {
               }
               onChange={(comment_json, comment_html) => onChange(comment_html)}
               isSubmitting={isSubmitting}
-              placeholder="Add comment..."
+              placeholder={t("space_text.issues.add_comment_placeholder")}
               uploadFile={async (blockId, file) => {
                 const { asset_id } = await uploadCommentAsset(file, anchor);
                 setUploadAssetIds((prev) => [...prev, asset_id]);

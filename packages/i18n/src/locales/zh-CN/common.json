@@ -1397,5 +1397,70 @@
       "state_group": "状态组",
       "subscriber": "订阅者"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "关闭"
+    },
+    "auth_header": {
+      "sign_in_header": "登录后即可点赞或评论",
+      "sign_in_sub_header": "参与推动您希望开发的功能。",
+      "sign_up_header": "查看、评论，探索更多",
+      "sign_up_sub_header": "注册或登录，即可使用 Plane 工作项和页面。",
+      "default_header": "评论工作项或对其做出回应",
+      "default_sub_header": "使用 Plane 为功能提出您的宝贵意见。"
+    },
+    "terms": {
+      "agree_sign_up": "创建账户即表示您同意我们的\n<terms>服务条款</terms>和<privacy>隐私政策</privacy>。",
+      "agree_sign_in": "登录即表示您同意我们的\n<terms>服务条款</terms>和<privacy>隐私政策</privacy>。"
+    },
+    "user_logged_in": {
+      "title": "太好了！只差最后一步。",
+      "description": "请在浏览器地址栏中输入您想查看的视图或页面的公开分享 URL 或链接。",
+      "image_alt": "用户已登录"
+    },
+    "auth_unique_code": {
+      "resend_in": "{seconds} 秒后重新发送"
+    },
+    "oauth": {
+      "sign_up_with": "使用 {provider} 注册",
+      "sign_in_with": "使用 {provider} 登录",
+      "continue_with": "使用 {provider} 继续"
+    },
+    "issues": {
+      "public_board_not_found": "该公开看板不存在。请检查 URL。",
+      "cycle_tooltip": "周期：{name}",
+      "no_cycle": "无周期",
+      "due_date_tooltip": "截止日期：{date}",
+      "no_date": "无日期",
+      "labels_tooltip": "标签：{labels}",
+      "no_labels": "无标签",
+      "labels_count": "{count} 个标签",
+      "no_assignees": "无负责人",
+      "comment_post_failed": "无法发布评论。请重试。",
+      "add_comment_placeholder": "添加评论...",
+      "sign_in_to_comment": "登录后添加评论",
+      "empty": "空",
+      "no_upvotes": "暂无点赞",
+      "no_downvotes": "暂无点踩",
+      "voters_and_more": "{names} 等 {count} 人"
+    },
+    "error_page": {
+      "title": "糟糕！情况不太妙。",
+      "description": "Plane 崩溃了。不过请放心，我们的工程师已收到通知。如果您有更多详细信息，请发送邮件至 <email/> 或在我们的 <forum/> 留言。"
+    },
+    "not_found_page": {
+      "title": "出错了",
+      "description": "请检查您在浏览器地址栏中输入的 URL，然后重试。"
+    },
+    "powered_by": {
+      "label": "由 <name>Plane Publish</name> 提供支持"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane 实例故障",
+      "title": "无法获取实例详情。",
+      "description": "我们无法获取该实例的详情。",
+      "hint": "别担心，这可能只是网络连接问题。"
+    }
   }
 }

@@ -1397,5 +1397,70 @@
       "state_group": "Gruppo di stati",
       "subscriber": "Abbonato"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Chiudi"
+    },
+    "auth_header": {
+      "sign_in_header": "Accedi per votare o commentare",
+      "sign_in_sub_header": "Contribuisci a spingere le funzionalità che vuoi vedere realizzate.",
+      "sign_up_header": "Visualizza, commenta e fai di più",
+      "sign_up_sub_header": "Registrati o accedi per lavorare con gli elementi di lavoro e le Pagine di Plane.",
+      "default_header": "Commenta o reagisci agli elementi di lavoro",
+      "default_sub_header": "Usa Plane per aggiungere il tuo prezioso contributo alle funzionalità."
+    },
+    "terms": {
+      "agree_sign_up": "Creando un account, accetti i nostri\n<terms>Termini di servizio</terms> e la nostra <privacy>Informativa sulla privacy</privacy>.",
+      "agree_sign_in": "Accedendo, accetti i nostri\n<terms>Termini di servizio</terms> e la nostra <privacy>Informativa sulla privacy</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Bene! Manca solo un passaggio.",
+      "description": "Inserisci nella barra degli indirizzi del browser l’URL pubblico o il link della vista o della Pagina che desideri vedere.",
+      "image_alt": "Utente già connesso"
+    },
+    "auth_unique_code": {
+      "resend_in": "Reinvia tra {seconds} s"
+    },
+    "oauth": {
+      "sign_up_with": "Registrati con {provider}",
+      "sign_in_with": "Accedi con {provider}",
+      "continue_with": "Continua con {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "La bacheca pubblica non esiste. Controlla l’URL.",
+      "cycle_tooltip": "Ciclo: {name}",
+      "no_cycle": "Nessun Ciclo",
+      "due_date_tooltip": "Scadenza: {date}",
+      "no_date": "Nessuna data",
+      "labels_tooltip": "Etichette: {labels}",
+      "no_labels": "Nessuna etichetta",
+      "labels_count": "{count} etichette",
+      "no_assignees": "Nessun assegnatario",
+      "comment_post_failed": "Impossibile pubblicare il commento. Riprova.",
+      "add_comment_placeholder": "Aggiungi un commento...",
+      "sign_in_to_comment": "Accedi per aggiungere il tuo commento",
+      "empty": "Vuoto",
+      "no_upvotes": "Ancora nessun voto positivo",
+      "no_downvotes": "Ancora nessun voto negativo",
+      "voters_and_more": "{names} e altri {count}"
+    },
+    "error_page": {
+      "title": "Ops! Non sembra andare bene.",
+      "description": "Plane è andato in crash. Nessun problema, i nostri ingegneri sono stati avvisati. Se hai altri dettagli, scrivi a <email/> o sul nostro <forum/>."
+    },
+    "not_found_page": {
+      "title": "Non ha funzionato",
+      "description": "Controlla l’URL inserito nella barra degli indirizzi del browser e riprova."
+    },
+    "powered_by": {
+      "label": "Realizzato con <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Errore dell’istanza Pi-Plane",
+      "title": "Impossibile recuperare i dettagli dell’istanza.",
+      "description": "Non è stato possibile recuperare i dettagli dell’istanza.",
+      "hint": "Niente paura, potrebbe essere solo un problema di connettività."
+    }
   }
 }

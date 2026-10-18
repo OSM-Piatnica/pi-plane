@@ -1397,5 +1397,70 @@
       "state_group": "Groupe d’états",
       "subscriber": "Abonné"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Ignorer"
+    },
+    "auth_header": {
+      "sign_in_header": "Connectez-vous pour voter ou commenter",
+      "sign_in_sub_header": "Contribuez à faire avancer les fonctionnalités que vous souhaitez voir développées.",
+      "sign_up_header": "Consultez, commentez et faites plus",
+      "sign_up_sub_header": "Inscrivez-vous ou connectez-vous pour travailler avec les éléments de travail et les Pages de Plane.",
+      "default_header": "Commentez les éléments de travail ou réagissez-y",
+      "default_sub_header": "Utilisez Plane pour apporter vos précieuses contributions aux fonctionnalités."
+    },
+    "terms": {
+      "agree_sign_up": "En créant un compte, vous acceptez nos\n<terms>Conditions d’utilisation</terms> et notre <privacy>Politique de confidentialité</privacy>.",
+      "agree_sign_in": "En vous connectant, vous acceptez nos\n<terms>Conditions d’utilisation</terms> et notre <privacy>Politique de confidentialité</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Parfait ! Plus qu’une étape.",
+      "description": "Saisissez l’URL publique ou le lien de la vue ou de la Page que vous souhaitez consulter dans la barre d’adresse du navigateur.",
+      "image_alt": "Utilisateur déjà connecté"
+    },
+    "auth_unique_code": {
+      "resend_in": "Renvoyer dans {seconds} s"
+    },
+    "oauth": {
+      "sign_up_with": "S’inscrire avec {provider}",
+      "sign_in_with": "Se connecter avec {provider}",
+      "continue_with": "Continuer avec {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "Le tableau public n’existe pas. Veuillez vérifier l’URL.",
+      "cycle_tooltip": "Cycle : {name}",
+      "no_cycle": "Aucun Cycle",
+      "due_date_tooltip": "Date d’échéance : {date}",
+      "no_date": "Aucune date",
+      "labels_tooltip": "Étiquettes : {labels}",
+      "no_labels": "Aucune étiquette",
+      "labels_count": "{count} étiquettes",
+      "no_assignees": "Aucun acteur",
+      "comment_post_failed": "Le commentaire n’a pas pu être publié. Veuillez réessayer.",
+      "add_comment_placeholder": "Ajouter un commentaire...",
+      "sign_in_to_comment": "Connectez-vous pour ajouter votre commentaire",
+      "empty": "Vide",
+      "no_upvotes": "Aucun vote positif pour le moment",
+      "no_downvotes": "Aucun vote négatif pour le moment",
+      "voters_and_more": "{names} et {count} autres"
+    },
+    "error_page": {
+      "title": "Aïe ! Ça ne se présente pas bien.",
+      "description": "Plane a planté. Pas d’inquiétude, nos ingénieurs ont été prévenus. Si vous avez plus de détails, écrivez à <email/> ou sur notre <forum/>."
+    },
+    "not_found_page": {
+      "title": "Ça n’a pas fonctionné",
+      "description": "Vérifiez l’URL saisie dans la barre d’adresse du navigateur et réessayez."
+    },
+    "powered_by": {
+      "label": "Propulsé par <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Défaillance de l’instance Pi-Plane",
+      "title": "Impossible de récupérer les détails de l’instance.",
+      "description": "Nous n’avons pas pu récupérer les détails de l’instance.",
+      "hint": "Pas de panique, il s’agit peut-être simplement d’un problème de connexion."
+    }
   }
 }
