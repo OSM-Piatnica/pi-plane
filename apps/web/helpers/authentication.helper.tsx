@@ -165,6 +165,9 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
     title: "auth.error_alerts.titles.password_login_disabled",
     message: contactAdmin("auth.error_alerts.titles.password_login_disabled"),
   },
+  // Plane's original behaviour was to show "User account deactivated. Please contact {SUPPORT_EMAIL}." using the
+  // auth.error_alerts.user_account_deactivated_contact message. That message is kept in the locale files but unused
+  // while SUPPORT_EMAIL is disabled (see packages/constants/src/endpoints.ts); this is the fallback it used.
   [EAuthenticationErrorCodes.USER_ACCOUNT_DEACTIVATED]: {
     title: "auth.error_alerts.titles.user_account_deactivated",
     message: (t) =>

@@ -69,6 +69,8 @@ const errorCodeMessages: {
       </div>
     ),
   },
+  // Plane showed "Please contact {SUPPORT_EMAIL}" here. SUPPORT_EMAIL is disabled for now, see
+  // packages/constants/src/endpoints.ts.
   [EAdminAuthErrorCodes.ADMIN_USER_DEACTIVATED]: {
     title: `User account deactivated`,
     message: () => "User account deactivated. Please contact administrator.",

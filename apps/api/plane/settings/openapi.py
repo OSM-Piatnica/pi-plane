@@ -21,6 +21,9 @@ SPECTACULAR_SETTINGS = {
     "CONTACT": {
         "name": "Pi-Plane",
         "url": "https://github.com/OSM-Piatnica/pi-plane",
+        # Disabled: upstream listed support@plane.so, which is not a Pi-Plane contact. Add a Pi-Plane
+        # support mailbox here if one is set up.
+        # "email": "support@plane.so",
     },
     "VERSION": "0.0.1",
     "LICENSE": {

@@ -53,6 +53,12 @@ ENV VITE_WEB_BASE_URL=$VITE_WEB_BASE_URL
 ARG VITE_WEB_BASE_PATH=""
 ENV VITE_WEB_BASE_PATH=$VITE_WEB_BASE_PATH
 
+# Support email shown in "account deactivated" messages. Disabled: upstream defaulted to support@plane.so, which is
+# not a Pi-Plane contact. To enable, uncomment these two lines and the SUPPORT_EMAIL constant in
+# packages/constants/src/endpoints.ts (see the note there), and add VITE_SUPPORT_EMAIL back to turbo.json.
+# ARG VITE_SUPPORT_EMAIL=""
+# ENV VITE_SUPPORT_EMAIL=$VITE_SUPPORT_EMAIL
+
 
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
