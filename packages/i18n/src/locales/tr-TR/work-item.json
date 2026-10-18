@@ -522,5 +522,401 @@
     "add_related_work_items": "İlgili iş öğeleri ekle",
     "toggle_workspace_level_search": "Çalışma alanı düzeyinde aramayı aç/kapat",
     "search_results_for_in_project": "Projede <query>\"{query}\"</query> için arama sonuçları:"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "iş öğesini arşivledi.",
+      "assignee": {
+        "added": "<user/> kişisini yeni atanan olarak ekledi.",
+        "added_with_issue": "<user/> kişisini <issue/> öğesine yeni atanan olarak ekledi.",
+        "removed": "<user/> atananını kaldırdı.",
+        "removed_with_issue": "<issue/> öğesinden <user/> atananını kaldırdı."
+      },
+      "attachment": {
+        "added": "yeni bir ek yükledi.",
+        "added_with_issue": "<issue/> öğesine yeni bir ek yükledi.",
+        "removed": "bir eki kaldırdı.",
+        "removed_with_issue": "<issue/> öğesinden bir eki kaldırdı."
+      },
+      "created": "iş öğesini oluşturdu.",
+      "created_via": "iş öğesini <source/> üzerinden oluşturdu.",
+      "cycle": {
+        "added": "bu iş öğesini <cycle/> döngüsüne ekledi",
+        "removed": "iş öğesini <cycle/> döngüsünden kaldırdı",
+        "set": "döngüyü <cycle/> olarak ayarladı"
+      },
+      "deleted": "bir iş öğesini sildi.",
+      "description": {
+        "updated": "açıklamayı güncelledi.",
+        "updated_with_issue": "<issue/> öğesinin açıklamasını güncelledi."
+      },
+      "duration": {
+        "days": "{count, plural, one {# gün} other {# gün}}",
+        "removed": "süreyi kaldırdı.",
+        "removed_with_issue": "<issue/> öğesinden süreyi kaldırdı.",
+        "set": "süreyi <value/> olarak ayarladı.",
+        "set_with_issue": "<issue/> için süreyi <value/> olarak ayarladı."
+      },
+      "estimate": {
+        "removed": "<value/> tahmin puanını kaldırdı.",
+        "removed_with_issue": "<issue/> öğesinden <value/> tahmin puanını kaldırdı.",
+        "set": "tahmin puanını <value/> olarak ayarladı.",
+        "set_with_issue": "<issue/> için tahmin puanını <value/> olarak ayarladı."
+      },
+      "intake": {
+        "accepted": "bu iş öğesini Intake'ten kabul etti.",
+        "declined": "bu iş öğesini Intake'ten reddetti.",
+        "duplicate": "bu iş öğesini yinelenen bir iş öğesi olarak işaretleyerek Intake'ten reddetti.",
+        "snoozed": "bu iş öğesini erteledi.",
+        "updated": "Intake iş öğesi durumunu güncelledi."
+      },
+      "label": {
+        "added": "yeni <label/> etiketini ekledi",
+        "added_with_issue": "<issue/> öğesine yeni <label/> etiketini ekledi",
+        "removed": "<label/> etiketini kaldırdı",
+        "removed_with_issue": "<issue/> öğesinden <label/> etiketini kaldırdı"
+      },
+      "link": {
+        "added": "<link>bağlantı</link> ekledi.",
+        "added_with_issue": "<issue/> öğesine <link>bağlantı</link> ekledi.",
+        "removed": "bu <link>bağlantıyı</link> kaldırdı.",
+        "removed_with_issue": "<issue/> öğesinden bu <link>bağlantıyı</link> kaldırdı.",
+        "updated": "<link>bağlantıyı</link> güncelledi.",
+        "updated_with_issue": "<issue/> öğesindeki <link>bağlantıyı</link> güncelledi."
+      },
+      "module": {
+        "added": "bu iş öğesini <module/> modülüne ekledi",
+        "removed": "iş öğesini <module/> modülünden kaldırdı",
+        "set": "modülü <module/> olarak ayarladı"
+      },
+      "name": {
+        "set": "adı {name} olarak ayarladı."
+      },
+      "parent": {
+        "removed": "<value/> üst öğesini kaldırdı.",
+        "removed_with_issue": "<issue/> öğesinden <value/> üst öğesini kaldırdı.",
+        "set": "üst öğeyi <value/> olarak ayarladı.",
+        "set_with_issue": "<issue/> için üst öğeyi <value/> olarak ayarladı."
+      },
+      "priority": {
+        "set": "önceliği <value/> olarak ayarladı.",
+        "set_with_issue": "<issue/> için önceliği <value/> olarak ayarladı."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "bu iş öğesini <value/> tarafından engelleniyor olarak işaretledi.",
+          "removed": "bu iş öğesinin <value/> iş öğesi tarafından engellenmesini kaldırdı."
+        },
+        "blocking": {
+          "added": "bu iş öğesini <value/> iş öğesini engelliyor olarak işaretledi.",
+          "removed": "engellenen <value/> iş öğesini kaldırdı."
+        },
+        "duplicate": {
+          "added": "bu iş öğesini <value/> öğesinin kopyası olarak işaretledi.",
+          "removed": "bu iş öğesinin <value/> öğesinin kopyası olduğu işaretini kaldırdı."
+        },
+        "finish_after": {
+          "added": "bu iş öğesinin <value/> öğesinden sonra bittiğini işaretledi.",
+          "removed": "<value/> ile olan \"sonra biter\" ilişkisini kaldırdı."
+        },
+        "finish_before": {
+          "added": "bu iş öğesinin <value/> öğesinden önce bittiğini işaretledi.",
+          "removed": "<value/> ile olan \"önce biter\" ilişkisini kaldırdı."
+        },
+        "relates_to": {
+          "added": "bu iş öğesinin <value/> ile ilişkili olduğunu işaretledi.",
+          "removed": "<value/> ile olan ilişkiyi kaldırdı."
+        },
+        "start_after": {
+          "added": "bu iş öğesinin <value/> öğesinden sonra başladığını işaretledi.",
+          "removed": "<value/> ile olan \"sonra başlar\" ilişkisini kaldırdı."
+        },
+        "start_before": {
+          "added": "bu iş öğesinin <value/> öğesinden önce başladığını işaretledi.",
+          "removed": "<value/> ile olan \"önce başlar\" ilişkisini kaldırdı."
+        }
+      },
+      "restored": "iş öğesini geri yükledi.",
+      "start_date": {
+        "removed": "başlangıç tarihini kaldırdı.",
+        "removed_with_issue": "<issue/> öğesinden başlangıç tarihini kaldırdı.",
+        "set": "başlangıç tarihini <value/> olarak ayarladı.",
+        "set_with_issue": "<issue/> için başlangıç tarihini <value/> olarak ayarladı."
+      },
+      "state": {
+        "set": "durumu <value/> olarak ayarladı.",
+        "set_with_issue": "<issue/> için durumu <value/> olarak ayarladı."
+      },
+      "target_date": {
+        "removed": "son tarihi kaldırdı.",
+        "removed_with_issue": "<issue/> öğesinden son tarihi kaldırdı.",
+        "set": "son tarihi <value/> olarak ayarladı.",
+        "set_with_issue": "<issue/> için son tarihi <value/> olarak ayarladı."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "<issue/> öğesini arşivledi",
+        "restored": "<issue/> öğesini geri yükledi"
+      },
+      "assignee": {
+        "added_with_issue": "<assignee/> kişisini <issue/> öğesine yeni atanan olarak ekledi",
+        "added_without_issue": "<assignee/> kişisini yeni atanan olarak ekledi",
+        "removed_with_issue": "<issue/> öğesinden <assignee/> atananını kaldırdı",
+        "removed_without_issue": "<assignee/> atananını kaldırdı"
+      },
+      "attachment": {
+        "added_with_issue": "<issue/> öğesine yeni bir ek yükledi",
+        "added_without_issue": "yeni bir ek yükledi",
+        "removed_with_issue": "<issue/> öğesinden bir eki kaldırdı",
+        "removed_without_issue": "bir eki kaldırdı"
+      },
+      "blocked_by": {
+        "added_with_issue": "<issue/> öğesini <value/> tarafından engelleniyor olarak işaretledi.",
+        "added_without_issue": "bu iş öğesini <value/> tarafından engelleniyor olarak işaretledi.",
+        "removed_with_issue": "<issue/> öğesinin <value/> iş öğesi tarafından engellenmesini kaldırdı.",
+        "removed_without_issue": "bu iş öğesinin <value/> iş öğesi tarafından engellenmesini kaldırdı."
+      },
+      "blocking": {
+        "added_with_issue": "<issue/> öğesini <value/> iş öğesini engelliyor olarak işaretledi.",
+        "added_without_issue": "bu iş öğesini <value/> iş öğesini engelliyor olarak işaretledi.",
+        "removed": "engellenen <value/> iş öğesini kaldırdı."
+      },
+      "cycle": {
+        "added_with_issue": "<issue/> öğesini <value/> <nowrap>döngüsüne</nowrap> ekledi",
+        "added_without_issue": "bu iş öğesini <value/> <nowrap>döngüsüne</nowrap> ekledi",
+        "removed": "<issue/> öğesini <value/> döngüsünden kaldırdı",
+        "set": "<nowrap>döngüyü</nowrap> <value/> olarak ayarladı"
+      },
+      "description": {
+        "updated_with_issue": "<issue/> öğesinin açıklamasını güncelledi",
+        "updated_without_issue": "açıklamayı güncelledi"
+      },
+      "duplicate": {
+        "added_with_issue": "<issue/> öğesini <value/> öğesinin kopyası olarak işaretledi.",
+        "added_without_issue": "bu iş öğesini <value/> öğesinin kopyası olarak işaretledi.",
+        "removed_with_issue": "<issue/> öğesinin <value/> öğesinin kopyası olduğu işaretini kaldırdı.",
+        "removed_without_issue": "bu iş öğesinin <value/> öğesinin kopyası olduğu işaretini kaldırdı."
+      },
+      "duration": {
+        "days": "{count, plural, one {# gün} other {# gün}}",
+        "removed_with_issue": "<issue/> öğesinden süreyi kaldırdı",
+        "removed_without_issue": "süreyi kaldırdı",
+        "set_with_issue": "<issue/> için süreyi <value/> olarak ayarladı",
+        "set_without_issue": "süreyi <value/> olarak ayarladı"
+      },
+      "epic": {
+        "converted_to_work_item": "<issue/> öğesini iş öğesine dönüştürdü",
+        "created": "<issue/> öğesini oluşturdu",
+        "deleted": "<issue/> öğesini sildi"
+      },
+      "estimate_point": {
+        "removed_with_issue": "<issue/> öğesinden tahmin puanını kaldırdı",
+        "removed_without_issue": "tahmin puanını kaldırdı",
+        "set_with_issue": "<issue/> için tahmin puanını <value/> olarak ayarladı",
+        "set_without_issue": "tahmin puanını <value/> olarak ayarladı"
+      },
+      "inbox": {
+        "accepted_with_issue": "<issue/> iş öğesini kabul etti",
+        "accepted_without_issue": "bu iş öğesini Intake'ten kabul etti.",
+        "declined_with_issue": "<issue/> iş öğesini reddetti",
+        "declined_without_issue": "bu iş öğesini Intake'ten reddetti.",
+        "duplicate_with_issue": "<issue/> iş öğesini yinelenen bir iş öğesi olarak işaretleyerek Intake'ten reddetti.",
+        "duplicate_without_issue": "bu iş öğesini yinelenen bir iş öğesi olarak işaretleyerek Intake'ten reddetti.",
+        "snoozed_with_issue": "<issue/> iş öğesini erteledi",
+        "snoozed_without_issue": "bu iş öğesini erteledi.",
+        "updated_with_issue": "Intake iş öğesi durumunu güncelledi. <issue/>",
+        "updated_without_issue": "Intake iş öğesi durumunu güncelledi."
+      },
+      "issue": {
+        "converted_to_epic": "<issue/> öğesini epiğe dönüştürdü",
+        "created": "<issue/> öğesini oluşturdu",
+        "deleted": "<issue/> öğesini sildi",
+        "deleted_tooltip": "Bu iş öğesi silindi",
+        "fallback_name": "bir iş öğesi"
+      },
+      "label": {
+        "added_with_issue": "<issue/> öğesine yeni <label/> etiketini ekledi",
+        "added_without_issue": "yeni <label/> etiketini ekledi",
+        "removed_with_issue": "<issue/> öğesinden <label/> etiketini kaldırdı",
+        "removed_without_issue": "<label/> etiketini kaldırdı"
+      },
+      "link": {
+        "added_with_issue": "<issue/> öğesine bu <link>bağlantıyı</link> ekledi",
+        "added_without_issue": "bu <link>bağlantıyı</link> ekledi",
+        "removed_with_issue": "<issue/> öğesinden bu <link>bağlantıyı</link> kaldırdı",
+        "removed_without_issue": "bu <link>bağlantıyı</link> kaldırdı",
+        "updated_with_issue": "<issue/> öğesindeki <link>bağlantıyı</link> güncelledi",
+        "updated_without_issue": "<link>bağlantıyı</link> güncelledi"
+      },
+      "module": {
+        "added_with_issue": "<issue/> öğesini <value/> modülüne ekledi",
+        "added_without_issue": "bu iş öğesini <value/> modülüne ekledi",
+        "removed": "<issue/> öğesini <value/> modülünden kaldırdı",
+        "set": "modülü <value/> olarak ayarladı"
+      },
+      "name": {
+        "set_with_issue": "<issue/> öğesinin başlığını <value/> olarak ayarladı",
+        "set_without_issue": "başlığı <value/> olarak ayarladı"
+      },
+      "parent": {
+        "removed_with_issue": "<issue/> öğesinden <value/> üst öğesini kaldırdı",
+        "removed_without_issue": "<value/> üst öğesini kaldırdı",
+        "set_with_issue": "<issue/> için üst öğeyi <value/> olarak ayarladı",
+        "set_without_issue": "üst öğeyi <value/> olarak ayarladı"
+      },
+      "priority": {
+        "high": "Yüksek",
+        "low": "Düşük",
+        "medium": "Orta",
+        "none": "Yok",
+        "set_with_issue": "<issue/> için önceliği <value/> olarak ayarladı",
+        "set_without_issue": "önceliği <value/> olarak ayarladı",
+        "urgent": "Acil"
+      },
+      "relates_to": {
+        "added_with_issue": "<issue/> öğesinin <value/> ile ilişkili olduğunu işaretledi.",
+        "added_without_issue": "bu iş öğesinin <value/> ile ilişkili olduğunu işaretledi.",
+        "removed": "<value/> ile olan ilişkiyi kaldırdı."
+      },
+      "start_date": {
+        "removed_with_issue": "<issue/> öğesinden başlangıç tarihini kaldırdı",
+        "removed_without_issue": "başlangıç tarihini kaldırdı",
+        "set_with_issue": "<issue/> için başlangıç tarihini <value/> olarak ayarladı",
+        "set_without_issue": "başlangıç tarihini <value/> olarak ayarladı"
+      },
+      "state": {
+        "set_with_issue": "<issue/> için durumu <value/> olarak ayarladı",
+        "set_without_issue": "durumu <value/> olarak ayarladı"
+      },
+      "target_date": {
+        "removed_with_issue": "<issue/> öğesinden son tarihi kaldırdı",
+        "removed_without_issue": "son tarihi kaldırdı",
+        "set_with_issue": "<issue/> için son tarihi <value/> olarak ayarladı",
+        "set_without_issue": "son tarihi <value/> olarak ayarladı"
+      }
+    },
+    "project": {
+      "archived_at": {
+        "archived": "projeyi arşivledi",
+        "restored": "projeyi geri yükledi"
+      },
+      "cycle_view": {
+        "disabled": "döngü görünümünü devre dışı bıraktı",
+        "enabled": "döngü görünümünü etkinleştirdi",
+        "fallback": "{verb} döngü görünümü"
+      },
+      "cycles": {
+        "added": "bu projeyi <value/> döngüsüne ekledi",
+        "removed": "bu projeyi <value/> döngüsünden kaldırdı",
+        "unknown": "Bilinmeyen döngü"
+      },
+      "default": "{verb} {field} ",
+      "description": {
+        "removed": "proje açıklamasını kaldırdı",
+        "updated": "proje açıklamasını güncelledi"
+      },
+      "estimate": {
+        "removed": "tahmin puanını kaldırdı",
+        "removed_with_value": "<value/> tahmin puanını kaldırdı",
+        "set": "tahmin puanını <value/> olarak ayarladı"
+      },
+      "identifier": {
+        "updated": "proje tanımlayıcısını <value/> olarak güncelledi"
+      },
+      "inbox": {
+        "disabled": "gelen kutusunu devre dışı bıraktı",
+        "enabled": "gelen kutusunu etkinleştirdi"
+      },
+      "intake_view": {
+        "disabled": "Intake görünümünü devre dışı bıraktı",
+        "enabled": "Intake görünümünü etkinleştirdi",
+        "fallback": "{verb} Intake görünümü"
+      },
+      "is_epic_enabled": {
+        "disabled": "epikleri devre dışı bıraktı",
+        "enabled": "epikleri etkinleştirdi",
+        "fallback": "{verb} epikler"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "iş öğesi türlerini devre dışı bıraktı",
+        "enabled": "iş öğesi türlerini etkinleştirdi",
+        "fallback": "{verb} iş öğesi türleri"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "proje güncellemelerini devre dışı bıraktı",
+        "enabled": "proje güncellemelerini etkinleştirdi",
+        "fallback": "{verb} proje güncellemeleri"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "zaman takibini devre dışı bıraktı",
+        "enabled": "zaman takibini etkinleştirdi",
+        "fallback": "{verb} zaman takibi"
+      },
+      "is_workflow_enabled": {
+        "disabled": "özel iş akışını devre dışı bıraktı",
+        "enabled": "özel iş akışını etkinleştirdi",
+        "fallback": "{verb} özel iş akışı"
+      },
+      "issue_views_view": {
+        "disabled": "iş öğesi görünümleri görünümünü devre dışı bıraktı",
+        "enabled": "iş öğesi görünümleri görünümünü etkinleştirdi",
+        "fallback": "{verb} iş öğesi görünümleri görünümü"
+      },
+      "labels": {
+        "added": "<value/> etiketini ekledi",
+        "created": "<value/> etiketini oluşturdu",
+        "deleted": "<value/> etiketini sildi",
+        "removed": "<value/> etiketini kaldırdı",
+        "untitled": "Başlıksız etiket",
+        "updated": "<value/> etiketini güncelledi"
+      },
+      "module_view": {
+        "disabled": "modül görünümünü devre dışı bıraktı",
+        "enabled": "modül görünümünü etkinleştirdi",
+        "fallback": "{verb} modül görünümü"
+      },
+      "modules": {
+        "added": "bu projeyi <value/> modülüne ekledi",
+        "removed": "bu projeyi <value/> modülünden kaldırdı",
+        "unknown": "Bilinmeyen modül"
+      },
+      "name": {
+        "renamed": "projeyi <value/> olarak yeniden adlandırdı"
+      },
+      "network": {
+        "disabled": "ağ erişimini devre dışı bıraktı",
+        "enabled": "ağ erişimini etkinleştirdi"
+      },
+      "page": {
+        "created": "<value/> proje sayfasını oluşturdu",
+        "removed": "<value/> proje sayfasını kaldırdı",
+        "untitled": "Başlıksız sayfa"
+      },
+      "page_view": {
+        "disabled": "sayfa görünümünü devre dışı bıraktı",
+        "enabled": "sayfa görünümünü etkinleştirdi",
+        "fallback": "{verb} sayfa görünümü"
+      },
+      "priority": {
+        "set": "önceliği <value/> olarak ayarladı"
+      },
+      "start_date": {
+        "removed": "başlangıç tarihini kaldırdı",
+        "set": "başlangıç tarihini <value/> olarak ayarladı"
+      },
+      "state": {
+        "set": "durumu <value/> olarak ayarladı"
+      },
+      "target_date": {
+        "removed": "hedef tarihi kaldırdı",
+        "set": "hedef tarihi <value/> olarak ayarladı"
+      },
+      "timezone": {
+        "changed": "proje saat dilimini <value/> olarak değiştirdi",
+        "default": "varsayılan"
+      },
+      "value_none": "yok"
+    }
   }
 }

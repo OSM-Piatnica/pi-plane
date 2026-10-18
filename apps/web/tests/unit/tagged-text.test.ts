@@ -39,6 +39,19 @@ describe("splitTaggedText", () => {
     ]);
   });
 
+  it("treats a self-closing tag as a placeholder with no text", () => {
+    expect(splitTaggedText("added this work item to the cycle <cycle/>.")).toEqual([
+      "added this work item to the cycle ",
+      { tag: "cycle", text: "" },
+      ".",
+    ]);
+    expect(splitTaggedText("<user /> removed <issue/>")).toEqual([
+      { tag: "user", text: "" },
+      " removed ",
+      { tag: "issue", text: "" },
+    ]);
+  });
+
   it("leaves a lone angle bracket alone", () => {
     expect(splitTaggedText("a < b")).toEqual(["a < b"]);
   });

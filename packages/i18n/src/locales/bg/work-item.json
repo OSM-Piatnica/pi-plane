@@ -522,5 +522,401 @@
     "add_related_work_items": "Добавяне на свързани работни елементи",
     "toggle_workspace_level_search": "Превключване на търсенето на ниво работно пространство",
     "search_results_for_in_project": "Резултати от търсенето за <query>\"{query}\"</query> в проекта:"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "архивира работния елемент.",
+      "assignee": {
+        "added": "добави нов изпълнител <user/>.",
+        "added_with_issue": "добави нов изпълнител <user/> към <issue/>.",
+        "removed": "премахна изпълнителя <user/>.",
+        "removed_with_issue": "премахна изпълнителя <user/> от <issue/>."
+      },
+      "attachment": {
+        "added": "качи нов прикачен файл.",
+        "added_with_issue": "качи нов прикачен файл към <issue/>.",
+        "removed": "премахна прикачен файл.",
+        "removed_with_issue": "премахна прикачен файл от <issue/>."
+      },
+      "created": "създаде работния елемент.",
+      "created_via": "създаде работния елемент чрез <source/>.",
+      "cycle": {
+        "added": "добави този работен елемент към цикъла <cycle/>",
+        "removed": "премахна работния елемент от цикъла <cycle/>",
+        "set": "зададе цикъла на <cycle/>"
+      },
+      "deleted": "изтри работен елемент.",
+      "description": {
+        "updated": "актуализира описанието.",
+        "updated_with_issue": "актуализира описанието на <issue/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# ден} other {# дни}}",
+        "removed": "премахна продължителността.",
+        "removed_with_issue": "премахна продължителността от <issue/>.",
+        "set": "зададе продължителността на <value/>.",
+        "set_with_issue": "зададе продължителността на <value/> за <issue/>."
+      },
+      "estimate": {
+        "removed": "премахна точката за оценка <value/>.",
+        "removed_with_issue": "премахна точката за оценка <value/> от <issue/>.",
+        "set": "зададе точката за оценка на <value/>.",
+        "set_with_issue": "зададе точката за оценка на <value/> за <issue/>."
+      },
+      "intake": {
+        "accepted": "прие този работен елемент от Intake.",
+        "declined": "отхвърли този работен елемент от Intake.",
+        "duplicate": "отхвърли този работен елемент от Intake, като го маркира като дубликат.",
+        "snoozed": "отложи този работен елемент.",
+        "updated": "актуализира статуса на работния елемент в Intake."
+      },
+      "label": {
+        "added": "добави нов етикет <label/>",
+        "added_with_issue": "добави нов етикет <label/> към <issue/>",
+        "removed": "премахна етикета <label/>",
+        "removed_with_issue": "премахна етикета <label/> от <issue/>"
+      },
+      "link": {
+        "added": "добави <link>връзка</link>.",
+        "added_with_issue": "добави <link>връзка</link> към <issue/>.",
+        "removed": "премахна тази <link>връзка</link>.",
+        "removed_with_issue": "премахна тази <link>връзка</link> от <issue/>.",
+        "updated": "актуализира <link>връзката</link>.",
+        "updated_with_issue": "актуализира <link>връзката</link> на <issue/>."
+      },
+      "module": {
+        "added": "добави този работен елемент към модула <module/>",
+        "removed": "премахна работния елемент от модула <module/>",
+        "set": "зададе модула на <module/>"
+      },
+      "name": {
+        "set": "зададе името на {name}."
+      },
+      "parent": {
+        "removed": "премахна родителя <value/>.",
+        "removed_with_issue": "премахна родителя <value/> от <issue/>.",
+        "set": "зададе <value/> като родител.",
+        "set_with_issue": "зададе <value/> като родител на <issue/>."
+      },
+      "priority": {
+        "set": "зададе приоритета на <value/>.",
+        "set_with_issue": "зададе приоритета на <value/> за <issue/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "маркира, че този работен елемент е блокиран от <value/>.",
+          "removed": "премахна блокирането на този работен елемент от работния елемент <value/>."
+        },
+        "blocking": {
+          "added": "маркира, че този работен елемент блокира работния елемент <value/>.",
+          "removed": "премахна блокирания работен елемент <value/>."
+        },
+        "duplicate": {
+          "added": "маркира този работен елемент като дубликат на <value/>.",
+          "removed": "премахна този работен елемент като дубликат на <value/>."
+        },
+        "finish_after": {
+          "added": "маркира, че този работен елемент приключва след <value/>.",
+          "removed": "премахна връзката „приключва след“ към <value/>."
+        },
+        "finish_before": {
+          "added": "маркира, че този работен елемент приключва преди <value/>.",
+          "removed": "премахна връзката „приключва преди“ към <value/>."
+        },
+        "relates_to": {
+          "added": "маркира, че този работен елемент е свързан с <value/>.",
+          "removed": "премахна връзката с <value/>."
+        },
+        "start_after": {
+          "added": "маркира, че този работен елемент започва след <value/>.",
+          "removed": "премахна връзката „започва след“ към <value/>."
+        },
+        "start_before": {
+          "added": "маркира, че този работен елемент започва преди <value/>.",
+          "removed": "премахна връзката „започва преди“ към <value/>."
+        }
+      },
+      "restored": "възстанови работния елемент.",
+      "start_date": {
+        "removed": "премахна началната дата.",
+        "removed_with_issue": "премахна началната дата от <issue/>.",
+        "set": "зададе началната дата на <value/>.",
+        "set_with_issue": "зададе началната дата на <value/> за <issue/>."
+      },
+      "state": {
+        "set": "зададе състоянието на <value/>.",
+        "set_with_issue": "зададе състоянието на <value/> за <issue/>."
+      },
+      "target_date": {
+        "removed": "премахна крайния срок.",
+        "removed_with_issue": "премахна крайния срок от <issue/>.",
+        "set": "зададе крайния срок на <value/>.",
+        "set_with_issue": "зададе крайния срок на <value/> за <issue/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "архивира <issue/>",
+        "restored": "възстанови <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "добави нов изпълнител <assignee/> към <issue/>",
+        "added_without_issue": "добави нов изпълнител <assignee/>",
+        "removed_with_issue": "премахна изпълнителя <assignee/> от <issue/>",
+        "removed_without_issue": "премахна изпълнителя <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "качи нов прикачен файл към <issue/>",
+        "added_without_issue": "качи нов прикачен файл",
+        "removed_with_issue": "премахна прикачен файл от <issue/>",
+        "removed_without_issue": "премахна прикачен файл"
+      },
+      "blocked_by": {
+        "added_with_issue": "маркира, че <issue/> е блокиран от <value/>.",
+        "added_without_issue": "маркира, че този работен елемент е блокиран от <value/>.",
+        "removed_with_issue": "премахна блокирането на <issue/> от работния елемент <value/>.",
+        "removed_without_issue": "премахна блокирането на този работен елемент от работния елемент <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "маркира, че <issue/> блокира работния елемент <value/>.",
+        "added_without_issue": "маркира, че този работен елемент блокира работния елемент <value/>.",
+        "removed": "премахна блокирания работен елемент <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "добави <issue/> <nowrap>към цикъла</nowrap> <value/>",
+        "added_without_issue": "добави този работен елемент <nowrap>към цикъла</nowrap> <value/>",
+        "removed": "премахна <issue/> от цикъла <value/>",
+        "set": "<nowrap>зададе цикъла на</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "актуализира описанието на <issue/>",
+        "updated_without_issue": "актуализира описанието"
+      },
+      "duplicate": {
+        "added_with_issue": "маркира <issue/> като дубликат на <value/>.",
+        "added_without_issue": "маркира този работен елемент като дубликат на <value/>.",
+        "removed_with_issue": "премахна <issue/> като дубликат на <value/>.",
+        "removed_without_issue": "премахна този работен елемент като дубликат на <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# ден} other {# дни}}",
+        "removed_with_issue": "премахна продължителността от <issue/>",
+        "removed_without_issue": "премахна продължителността",
+        "set_with_issue": "зададе продължителността на <value/> за <issue/>",
+        "set_without_issue": "зададе продължителността на <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "преобразува <issue/> в работен елемент",
+        "created": "създаде <issue/>",
+        "deleted": "изтри <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "премахна точката за оценка от <issue/>",
+        "removed_without_issue": "премахна точката за оценка",
+        "set_with_issue": "зададе точката за оценка на <value/> за <issue/>",
+        "set_without_issue": "зададе точката за оценка на <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "прие работния елемент <issue/>",
+        "accepted_without_issue": "прие този работен елемент от Intake.",
+        "declined_with_issue": "отхвърли работния елемент <issue/>",
+        "declined_without_issue": "отхвърли този работен елемент от Intake.",
+        "duplicate_with_issue": "отхвърли работния елемент <issue/> от Intake, като го маркира като дубликат.",
+        "duplicate_without_issue": "отхвърли този работен елемент от Intake, като го маркира като дубликат.",
+        "snoozed_with_issue": "отложи работния елемент <issue/>",
+        "snoozed_without_issue": "отложи този работен елемент.",
+        "updated_with_issue": "актуализира статуса на работния елемент в Intake. <issue/>",
+        "updated_without_issue": "актуализира статуса на работния елемент в Intake."
+      },
+      "issue": {
+        "converted_to_epic": "преобразува <issue/> в епик",
+        "created": "създаде <issue/>",
+        "deleted": "изтри <issue/>",
+        "deleted_tooltip": "Този работен елемент е изтрит",
+        "fallback_name": "работен елемент"
+      },
+      "label": {
+        "added_with_issue": "добави нов етикет <label/> към <issue/>",
+        "added_without_issue": "добави нов етикет <label/>",
+        "removed_with_issue": "премахна етикета <label/> от <issue/>",
+        "removed_without_issue": "премахна етикета <label/>"
+      },
+      "link": {
+        "added_with_issue": "добави тази <link>връзка</link> към <issue/>",
+        "added_without_issue": "добави тази <link>връзка</link>",
+        "removed_with_issue": "премахна тази <link>връзка</link> от <issue/>",
+        "removed_without_issue": "премахна тази <link>връзка</link>",
+        "updated_with_issue": "актуализира <link>връзката</link> на <issue/>",
+        "updated_without_issue": "актуализира <link>връзката</link>"
+      },
+      "module": {
+        "added_with_issue": "добави <issue/> към модула <value/>",
+        "added_without_issue": "добави този работен елемент към модула <value/>",
+        "removed": "премахна <issue/> от модула <value/>",
+        "set": "зададе модула на <value/>"
+      },
+      "name": {
+        "set_with_issue": "зададе заглавието на <issue/> на <value/>",
+        "set_without_issue": "зададе заглавието на <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "премахна родителя <value/> от <issue/>",
+        "removed_without_issue": "премахна родителя <value/>",
+        "set_with_issue": "зададе <value/> като родител на <issue/>",
+        "set_without_issue": "зададе <value/> като родител"
+      },
+      "priority": {
+        "high": "Висок",
+        "low": "Нисък",
+        "medium": "Среден",
+        "none": "Няма",
+        "set_with_issue": "зададе приоритета на <value/> за <issue/>",
+        "set_without_issue": "зададе приоритета на <value/>",
+        "urgent": "Спешен"
+      },
+      "relates_to": {
+        "added_with_issue": "маркира, че <issue/> е свързан с <value/>.",
+        "added_without_issue": "маркира, че този работен елемент е свързан с <value/>.",
+        "removed": "премахна връзката с <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "премахна началната дата от <issue/>",
+        "removed_without_issue": "премахна началната дата",
+        "set_with_issue": "зададе началната дата на <value/> за <issue/>",
+        "set_without_issue": "зададе началната дата на <value/>"
+      },
+      "state": {
+        "set_with_issue": "зададе състоянието на <value/> за <issue/>",
+        "set_without_issue": "зададе състоянието на <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "премахна крайния срок от <issue/>",
+        "removed_without_issue": "премахна крайния срок",
+        "set_with_issue": "зададе крайния срок на <value/> за <issue/>",
+        "set_without_issue": "зададе крайния срок на <value/>"
+      }
+    },
+    "project": {
+      "archived_at": {
+        "archived": "архивира проекта",
+        "restored": "възстанови проекта"
+      },
+      "cycle_view": {
+        "disabled": "изключи изгледа за цикли",
+        "enabled": "включи изгледа за цикли",
+        "fallback": "{verb} изгледа за цикли"
+      },
+      "cycles": {
+        "added": "добави този проект към цикъла <value/>",
+        "removed": "премахна този проект от цикъла <value/>",
+        "unknown": "Неизвестен цикъл"
+      },
+      "default": "{verb} {field} ",
+      "description": {
+        "removed": "премахна описанието на проекта",
+        "updated": "актуализира описанието на проекта"
+      },
+      "estimate": {
+        "removed": "премахна точката за оценка",
+        "removed_with_value": "премахна точката за оценка <value/>",
+        "set": "зададе точката за оценка на <value/>"
+      },
+      "identifier": {
+        "updated": "актуализира идентификатора на проекта на <value/>"
+      },
+      "inbox": {
+        "disabled": "изключи Intake",
+        "enabled": "включи Intake"
+      },
+      "intake_view": {
+        "disabled": "изключи изгледа за Intake",
+        "enabled": "включи изгледа за Intake",
+        "fallback": "{verb} изгледа за Intake"
+      },
+      "is_epic_enabled": {
+        "disabled": "изключи епиците",
+        "enabled": "включи епиците",
+        "fallback": "{verb} епиците"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "изключи типовете работни елементи",
+        "enabled": "включи типовете работни елементи",
+        "fallback": "{verb} типовете работни елементи"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "изключи актуализациите на проекта",
+        "enabled": "включи актуализациите на проекта",
+        "fallback": "{verb} актуализациите на проекта"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "изключи проследяването на времето",
+        "enabled": "включи проследяването на времето",
+        "fallback": "{verb} проследяването на времето"
+      },
+      "is_workflow_enabled": {
+        "disabled": "изключи персонализирания работен процес",
+        "enabled": "включи персонализирания работен процес",
+        "fallback": "{verb} персонализирания работен процес"
+      },
+      "issue_views_view": {
+        "disabled": "изключи изгледа за изгледи на работни елементи",
+        "enabled": "включи изгледа за изгледи на работни елементи",
+        "fallback": "{verb} изгледа за изгледи на работни елементи"
+      },
+      "labels": {
+        "added": "добави етикета <value/>",
+        "created": "създаде етикета <value/>",
+        "deleted": "изтри етикета <value/>",
+        "removed": "премахна етикета <value/>",
+        "untitled": "Етикет без заглавие",
+        "updated": "актуализира етикета <value/>"
+      },
+      "module_view": {
+        "disabled": "изключи изгледа за модули",
+        "enabled": "включи изгледа за модули",
+        "fallback": "{verb} изгледа за модули"
+      },
+      "modules": {
+        "added": "добави този проект към модула <value/>",
+        "removed": "премахна този проект от модула <value/>",
+        "unknown": "Неизвестен модул"
+      },
+      "name": {
+        "renamed": "преименува проекта на <value/>"
+      },
+      "network": {
+        "disabled": "изключи достъпа до мрежата",
+        "enabled": "включи достъпа до мрежата"
+      },
+      "page": {
+        "created": "създаде страницата на проекта <value/>",
+        "removed": "премахна страницата на проекта <value/>",
+        "untitled": "Страница без заглавие"
+      },
+      "page_view": {
+        "disabled": "изключи изгледа за страници",
+        "enabled": "включи изгледа за страници",
+        "fallback": "{verb} изгледа за страници"
+      },
+      "priority": {
+        "set": "зададе приоритета на <value/>"
+      },
+      "start_date": {
+        "removed": "премахна началната дата",
+        "set": "зададе началната дата на <value/>"
+      },
+      "state": {
+        "set": "зададе състоянието на <value/>"
+      },
+      "target_date": {
+        "removed": "премахна целевата дата",
+        "set": "зададе целевата дата на <value/>"
+      },
+      "timezone": {
+        "changed": "промени часовата зона на проекта на <value/>",
+        "default": "по подразбиране"
+      },
+      "value_none": "няма"
+    }
   }
 }

@@ -522,5 +522,401 @@
     "add_related_work_items": "Gerelateerde werkitems toevoegen",
     "toggle_workspace_level_search": "Zoeken op werkruimteniveau in- of uitschakelen",
     "search_results_for_in_project": "Zoekresultaten voor <query>\"{query}\"</query> in project:"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "archiveerde het werkitem.",
+      "assignee": {
+        "added": "voegde een nieuwe toegewezene <user/> toe.",
+        "added_with_issue": "voegde een nieuwe toegewezene <user/> toe aan <issue/>.",
+        "removed": "verwijderde de toegewezene <user/>.",
+        "removed_with_issue": "verwijderde de toegewezene <user/> van <issue/>."
+      },
+      "attachment": {
+        "added": "uploadde een nieuwe bijlage.",
+        "added_with_issue": "uploadde een nieuwe bijlage naar <issue/>.",
+        "removed": "verwijderde een bijlage.",
+        "removed_with_issue": "verwijderde een bijlage van <issue/>."
+      },
+      "created": "maakte het werkitem aan.",
+      "created_via": "maakte het werkitem aan via <source/>.",
+      "cycle": {
+        "added": "voegde dit werkitem toe aan de cyclus <cycle/>",
+        "removed": "verwijderde het werkitem uit de cyclus <cycle/>",
+        "set": "stelde de cyclus in op <cycle/>"
+      },
+      "deleted": "verwijderde een werkitem.",
+      "description": {
+        "updated": "werkte de beschrijving bij.",
+        "updated_with_issue": "werkte de beschrijving van <issue/> bij."
+      },
+      "duration": {
+        "days": "{count, plural, one {# dag} other {# dagen}}",
+        "removed": "verwijderde de duur.",
+        "removed_with_issue": "verwijderde de duur van <issue/>.",
+        "set": "stelde de duur in op <value/>.",
+        "set_with_issue": "stelde de duur in op <value/> voor <issue/>."
+      },
+      "estimate": {
+        "removed": "verwijderde het schattingspunt <value/>.",
+        "removed_with_issue": "verwijderde het schattingspunt <value/> van <issue/>.",
+        "set": "stelde het schattingspunt in op <value/>.",
+        "set_with_issue": "stelde het schattingspunt in op <value/> voor <issue/>."
+      },
+      "intake": {
+        "accepted": "accepteerde dit werkitem vanuit Intake.",
+        "declined": "wees dit werkitem af vanuit Intake.",
+        "duplicate": "wees dit werkitem af vanuit Intake door een dubbel werkitem aan te geven.",
+        "snoozed": "stelde dit werkitem uit.",
+        "updated": "werkte de status van het Intake-werkitem bij."
+      },
+      "label": {
+        "added": "voegde een nieuw label <label/> toe",
+        "added_with_issue": "voegde een nieuw label <label/> toe aan <issue/>",
+        "removed": "verwijderde het label <label/>",
+        "removed_with_issue": "verwijderde het label <label/> van <issue/>"
+      },
+      "link": {
+        "added": "voegde <link>link</link> toe.",
+        "added_with_issue": "voegde <link>link</link> toe aan <issue/>.",
+        "removed": "verwijderde deze <link>link</link>.",
+        "removed_with_issue": "verwijderde deze <link>link</link> van <issue/>.",
+        "updated": "werkte de <link>link</link> bij.",
+        "updated_with_issue": "werkte de <link>link</link> van <issue/> bij."
+      },
+      "module": {
+        "added": "voegde dit werkitem toe aan de module <module/>",
+        "removed": "verwijderde het werkitem uit de module <module/>",
+        "set": "stelde de module in op <module/>"
+      },
+      "name": {
+        "set": "stelde de naam in op {name}."
+      },
+      "parent": {
+        "removed": "verwijderde het bovenliggende werkitem <value/>.",
+        "removed_with_issue": "verwijderde het bovenliggende werkitem <value/> van <issue/>.",
+        "set": "stelde het bovenliggende werkitem in op <value/>.",
+        "set_with_issue": "stelde het bovenliggende werkitem in op <value/> voor <issue/>."
+      },
+      "priority": {
+        "set": "stelde de prioriteit in op <value/>.",
+        "set_with_issue": "stelde de prioriteit in op <value/> voor <issue/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "markeerde dit werkitem als geblokkeerd door <value/>.",
+          "removed": "verwijderde de blokkade van dit werkitem door werkitem <value/>."
+        },
+        "blocking": {
+          "added": "markeerde dit werkitem als blokkerend voor werkitem <value/>.",
+          "removed": "verwijderde het blokkerende werkitem <value/>."
+        },
+        "duplicate": {
+          "added": "markeerde dit werkitem als duplicaat van <value/>.",
+          "removed": "verwijderde dit werkitem als duplicaat van <value/>."
+        },
+        "finish_after": {
+          "added": "markeerde dat dit werkitem eindigt na <value/>.",
+          "removed": "verwijderde de relatie \"eindigt na\" met <value/>."
+        },
+        "finish_before": {
+          "added": "markeerde dat dit werkitem eindigt vóór <value/>.",
+          "removed": "verwijderde de relatie \"eindigt vóór\" met <value/>."
+        },
+        "relates_to": {
+          "added": "markeerde dit werkitem als gerelateerd aan <value/>.",
+          "removed": "verwijderde de relatie met <value/>."
+        },
+        "start_after": {
+          "added": "markeerde dat dit werkitem start na <value/>.",
+          "removed": "verwijderde de relatie \"start na\" met <value/>."
+        },
+        "start_before": {
+          "added": "markeerde dat dit werkitem start vóór <value/>.",
+          "removed": "verwijderde de relatie \"start vóór\" met <value/>."
+        }
+      },
+      "restored": "herstelde het werkitem.",
+      "start_date": {
+        "removed": "verwijderde de startdatum.",
+        "removed_with_issue": "verwijderde de startdatum van <issue/>.",
+        "set": "stelde de startdatum in op <value/>.",
+        "set_with_issue": "stelde de startdatum in op <value/> voor <issue/>."
+      },
+      "state": {
+        "set": "stelde de status in op <value/>.",
+        "set_with_issue": "stelde de status in op <value/> voor <issue/>."
+      },
+      "target_date": {
+        "removed": "verwijderde de vervaldatum.",
+        "removed_with_issue": "verwijderde de vervaldatum van <issue/>.",
+        "set": "stelde de vervaldatum in op <value/>.",
+        "set_with_issue": "stelde de vervaldatum in op <value/> voor <issue/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "archiveerde <issue/>",
+        "restored": "herstelde <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "voegde een nieuwe toegewezene <assignee/> toe aan <issue/>",
+        "added_without_issue": "voegde een nieuwe toegewezene <assignee/> toe",
+        "removed_with_issue": "verwijderde de toegewezene <assignee/> van <issue/>",
+        "removed_without_issue": "verwijderde de toegewezene <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "uploadde een nieuwe bijlage naar <issue/>",
+        "added_without_issue": "uploadde een nieuwe bijlage",
+        "removed_with_issue": "verwijderde een bijlage van <issue/>",
+        "removed_without_issue": "verwijderde een bijlage"
+      },
+      "blocked_by": {
+        "added_with_issue": "markeerde <issue/> als geblokkeerd door <value/>.",
+        "added_without_issue": "markeerde dit werkitem als geblokkeerd door <value/>.",
+        "removed_with_issue": "verwijderde de blokkade van <issue/> door werkitem <value/>.",
+        "removed_without_issue": "verwijderde de blokkade van dit werkitem door werkitem <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "markeerde <issue/> als blokkerend voor werkitem <value/>.",
+        "added_without_issue": "markeerde dit werkitem als blokkerend voor werkitem <value/>.",
+        "removed": "verwijderde het blokkerende werkitem <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "voegde <issue/> <nowrap>toe aan de cyclus</nowrap> <value/>",
+        "added_without_issue": "voegde dit werkitem <nowrap>toe aan de cyclus</nowrap> <value/>",
+        "removed": "verwijderde <issue/> uit de cyclus <value/>",
+        "set": "<nowrap>stelde de cyclus in op</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "werkte de beschrijving van <issue/> bij",
+        "updated_without_issue": "werkte de beschrijving bij"
+      },
+      "duplicate": {
+        "added_with_issue": "markeerde <issue/> als duplicaat van <value/>.",
+        "added_without_issue": "markeerde dit werkitem als duplicaat van <value/>.",
+        "removed_with_issue": "verwijderde <issue/> als duplicaat van <value/>.",
+        "removed_without_issue": "verwijderde dit werkitem als duplicaat van <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# dag} other {# dagen}}",
+        "removed_with_issue": "verwijderde de duur van <issue/>",
+        "removed_without_issue": "verwijderde de duur",
+        "set_with_issue": "stelde de duur in op <value/> voor <issue/>",
+        "set_without_issue": "stelde de duur in op <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "zette <issue/> om naar een werkitem",
+        "created": "maakte <issue/> aan",
+        "deleted": "verwijderde <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "verwijderde het schattingspunt van <issue/>",
+        "removed_without_issue": "verwijderde het schattingspunt",
+        "set_with_issue": "stelde het schattingspunt in op <value/> voor <issue/>",
+        "set_without_issue": "stelde het schattingspunt in op <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "accepteerde werkitem <issue/>",
+        "accepted_without_issue": "accepteerde dit werkitem vanuit Intake.",
+        "declined_with_issue": "wees werkitem <issue/> af",
+        "declined_without_issue": "wees dit werkitem af vanuit Intake.",
+        "duplicate_with_issue": "wees werkitem <issue/> af vanuit Intake door een dubbel werkitem aan te geven.",
+        "duplicate_without_issue": "wees dit werkitem af vanuit Intake door een dubbel werkitem aan te geven.",
+        "snoozed_with_issue": "stelde werkitem <issue/> uit",
+        "snoozed_without_issue": "stelde dit werkitem uit.",
+        "updated_with_issue": "werkte de status van het Intake-werkitem bij. <issue/>",
+        "updated_without_issue": "werkte de status van het Intake-werkitem bij."
+      },
+      "issue": {
+        "converted_to_epic": "zette <issue/> om naar een epic",
+        "created": "maakte <issue/> aan",
+        "deleted": "verwijderde <issue/>",
+        "deleted_tooltip": "Dit werkitem is verwijderd",
+        "fallback_name": "een werkitem"
+      },
+      "label": {
+        "added_with_issue": "voegde een nieuw label <label/> toe aan <issue/>",
+        "added_without_issue": "voegde een nieuw label <label/> toe",
+        "removed_with_issue": "verwijderde het label <label/> van <issue/>",
+        "removed_without_issue": "verwijderde het label <label/>"
+      },
+      "link": {
+        "added_with_issue": "voegde deze <link>link</link> toe aan <issue/>",
+        "added_without_issue": "voegde deze <link>link</link> toe",
+        "removed_with_issue": "verwijderde deze <link>link</link> van <issue/>",
+        "removed_without_issue": "verwijderde deze <link>link</link>",
+        "updated_with_issue": "werkte de <link>link</link> van <issue/> bij",
+        "updated_without_issue": "werkte de <link>link</link> bij"
+      },
+      "module": {
+        "added_with_issue": "voegde <issue/> toe aan de module <value/>",
+        "added_without_issue": "voegde dit werkitem toe aan de module <value/>",
+        "removed": "verwijderde <issue/> uit de module <value/>",
+        "set": "stelde de module in op <value/>"
+      },
+      "name": {
+        "set_with_issue": "stelde de titel van <issue/> in op <value/>",
+        "set_without_issue": "stelde de titel in op <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "verwijderde het bovenliggende werkitem <value/> van <issue/>",
+        "removed_without_issue": "verwijderde het bovenliggende werkitem <value/>",
+        "set_with_issue": "stelde het bovenliggende werkitem in op <value/> voor <issue/>",
+        "set_without_issue": "stelde het bovenliggende werkitem in op <value/>"
+      },
+      "priority": {
+        "high": "Hoog",
+        "low": "Laag",
+        "medium": "Gemiddeld",
+        "none": "Geen",
+        "set_with_issue": "stelde de prioriteit in op <value/> voor <issue/>",
+        "set_without_issue": "stelde de prioriteit in op <value/>",
+        "urgent": "Urgent"
+      },
+      "relates_to": {
+        "added_with_issue": "markeerde dat <issue/> gerelateerd is aan <value/>.",
+        "added_without_issue": "markeerde dat dit werkitem gerelateerd is aan <value/>.",
+        "removed": "verwijderde de relatie met <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "verwijderde de startdatum van <issue/>",
+        "removed_without_issue": "verwijderde de startdatum",
+        "set_with_issue": "stelde de startdatum in op <value/> voor <issue/>",
+        "set_without_issue": "stelde de startdatum in op <value/>"
+      },
+      "state": {
+        "set_with_issue": "stelde de status in op <value/> voor <issue/>",
+        "set_without_issue": "stelde de status in op <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "verwijderde de vervaldatum van <issue/>",
+        "removed_without_issue": "verwijderde de vervaldatum",
+        "set_with_issue": "stelde de vervaldatum in op <value/> voor <issue/>",
+        "set_without_issue": "stelde de vervaldatum in op <value/>"
+      }
+    },
+    "project": {
+      "archived_at": {
+        "archived": "archiveerde het project",
+        "restored": "herstelde het project"
+      },
+      "cycle_view": {
+        "disabled": "schakelde de cyclusweergave uit",
+        "enabled": "schakelde de cyclusweergave in",
+        "fallback": "{verb} cyclusweergave"
+      },
+      "cycles": {
+        "added": "voegde dit project toe aan de cyclus <value/>",
+        "removed": "verwijderde dit project uit de cyclus <value/>",
+        "unknown": "Onbekende cyclus"
+      },
+      "default": "{verb} {field} ",
+      "description": {
+        "removed": "verwijderde de projectbeschrijving",
+        "updated": "werkte de projectbeschrijving bij"
+      },
+      "estimate": {
+        "removed": "verwijderde het schattingspunt",
+        "removed_with_value": "verwijderde het schattingspunt <value/>",
+        "set": "stelde het schattingspunt in op <value/>"
+      },
+      "identifier": {
+        "updated": "werkte de projectidentificatie bij naar <value/>"
+      },
+      "inbox": {
+        "disabled": "schakelde Intake uit",
+        "enabled": "schakelde Intake in"
+      },
+      "intake_view": {
+        "disabled": "schakelde de Intake-weergave uit",
+        "enabled": "schakelde de Intake-weergave in",
+        "fallback": "{verb} Intake-weergave"
+      },
+      "is_epic_enabled": {
+        "disabled": "schakelde epics uit",
+        "enabled": "schakelde epics in",
+        "fallback": "{verb} epics"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "schakelde werkitemtypen uit",
+        "enabled": "schakelde werkitemtypen in",
+        "fallback": "{verb} werkitemtypen"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "schakelde projectupdates uit",
+        "enabled": "schakelde projectupdates in",
+        "fallback": "{verb} projectupdates"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "schakelde tijdregistratie uit",
+        "enabled": "schakelde tijdregistratie in",
+        "fallback": "{verb} tijdregistratie"
+      },
+      "is_workflow_enabled": {
+        "disabled": "schakelde de aangepaste workflow uit",
+        "enabled": "schakelde de aangepaste workflow in",
+        "fallback": "{verb} aangepaste workflow"
+      },
+      "issue_views_view": {
+        "disabled": "schakelde de weergave voor werkitemweergaven uit",
+        "enabled": "schakelde de weergave voor werkitemweergaven in",
+        "fallback": "{verb} weergave voor werkitemweergaven"
+      },
+      "labels": {
+        "added": "voegde het label <value/> toe",
+        "created": "maakte het label <value/> aan",
+        "deleted": "wiste het label <value/>",
+        "removed": "verwijderde het label <value/>",
+        "untitled": "Label zonder titel",
+        "updated": "werkte het label <value/> bij"
+      },
+      "module_view": {
+        "disabled": "schakelde de modulesweergave uit",
+        "enabled": "schakelde de modulesweergave in",
+        "fallback": "{verb} modulesweergave"
+      },
+      "modules": {
+        "added": "voegde dit project toe aan de module <value/>",
+        "removed": "verwijderde dit project uit de module <value/>",
+        "unknown": "Onbekende module"
+      },
+      "name": {
+        "renamed": "hernoemde het project naar <value/>"
+      },
+      "network": {
+        "disabled": "schakelde netwerktoegang uit",
+        "enabled": "schakelde netwerktoegang in"
+      },
+      "page": {
+        "created": "maakte de projectpagina <value/> aan",
+        "removed": "verwijderde de projectpagina <value/>",
+        "untitled": "Pagina zonder titel"
+      },
+      "page_view": {
+        "disabled": "schakelde de paginaweergave uit",
+        "enabled": "schakelde de paginaweergave in",
+        "fallback": "{verb} paginaweergave"
+      },
+      "priority": {
+        "set": "stelde de prioriteit in op <value/>"
+      },
+      "start_date": {
+        "removed": "verwijderde de startdatum",
+        "set": "stelde de startdatum in op <value/>"
+      },
+      "state": {
+        "set": "stelde de status in op <value/>"
+      },
+      "target_date": {
+        "removed": "verwijderde de streefdatum",
+        "set": "stelde de streefdatum in op <value/>"
+      },
+      "timezone": {
+        "changed": "wijzigde de tijdzone van het project naar <value/>",
+        "default": "standaard"
+      },
+      "value_none": "geen"
+    }
   }
 }

@@ -522,5 +522,401 @@
     "add_related_work_items": "Přidat související pracovní položky",
     "toggle_workspace_level_search": "Přepnout vyhledávání na úrovni pracovního prostoru",
     "search_results_for_in_project": "Výsledky hledání pro <query>„{query}“</query> v projektu:"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "archivována pracovní položka.",
+      "assignee": {
+        "added": "přidán nový přiřazený uživatel <user/>.",
+        "added_with_issue": "přidán nový přiřazený uživatel <user/> do <issue/>.",
+        "removed": "odebrán přiřazený uživatel <user/>.",
+        "removed_with_issue": "odebrán přiřazený uživatel <user/> z <issue/>."
+      },
+      "attachment": {
+        "added": "nahrána nová příloha.",
+        "added_with_issue": "nahrána nová příloha do <issue/>.",
+        "removed": "odebrána příloha.",
+        "removed_with_issue": "odebrána příloha z <issue/>."
+      },
+      "created": "vytvořena pracovní položka.",
+      "created_via": "vytvořena pracovní položka přes <source/>.",
+      "cycle": {
+        "added": "přidána tato pracovní položka do cyklu <cycle/>",
+        "removed": "odebrána pracovní položka z cyklu <cycle/>",
+        "set": "nastaven cyklus na <cycle/>"
+      },
+      "deleted": "smazána pracovní položka.",
+      "description": {
+        "updated": "aktualizován popis.",
+        "updated_with_issue": "aktualizován popis položky <issue/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# den} few {# dny} many {# dne} other {# dní}}",
+        "removed": "odebrána doba trvání.",
+        "removed_with_issue": "odebrána doba trvání z <issue/>.",
+        "set": "nastavena doba trvání na <value/>.",
+        "set_with_issue": "nastavena doba trvání na <value/> u <issue/>."
+      },
+      "estimate": {
+        "removed": "odebrán bod odhadu <value/>.",
+        "removed_with_issue": "odebrán bod odhadu <value/> z <issue/>.",
+        "set": "nastaven bod odhadu na <value/>.",
+        "set_with_issue": "nastaven bod odhadu na <value/> u <issue/>."
+      },
+      "intake": {
+        "accepted": "přijata tato pracovní položka z Intake.",
+        "declined": "odmítnuta tato pracovní položka z Intake.",
+        "duplicate": "odmítnuta tato pracovní položka z Intake označením duplicitní pracovní položky.",
+        "snoozed": "odložena tato pracovní položka.",
+        "updated": "aktualizován stav pracovní položky v Intake."
+      },
+      "label": {
+        "added": "přidán nový štítek <label/>",
+        "added_with_issue": "přidán nový štítek <label/> do <issue/>",
+        "removed": "odebrán štítek <label/>",
+        "removed_with_issue": "odebrán štítek <label/> z <issue/>"
+      },
+      "link": {
+        "added": "přidán <link>odkaz</link>.",
+        "added_with_issue": "přidán <link>odkaz</link> do <issue/>.",
+        "removed": "odebrán tento <link>odkaz</link>.",
+        "removed_with_issue": "odebrán tento <link>odkaz</link> z <issue/>.",
+        "updated": "aktualizován <link>odkaz</link>.",
+        "updated_with_issue": "aktualizován <link>odkaz</link> v <issue/>."
+      },
+      "module": {
+        "added": "přidána tato pracovní položka do modulu <module/>",
+        "removed": "odebrána pracovní položka z modulu <module/>",
+        "set": "nastaven modul na <module/>"
+      },
+      "name": {
+        "set": "nastaven název na {name}."
+      },
+      "parent": {
+        "removed": "odebrána nadřazená položka <value/>.",
+        "removed_with_issue": "odebrána nadřazená položka <value/> z <issue/>.",
+        "set": "nastavena nadřazená položka na <value/>.",
+        "set_with_issue": "nastavena nadřazená položka na <value/> u <issue/>."
+      },
+      "priority": {
+        "set": "nastavena priorita na <value/>.",
+        "set_with_issue": "nastavena priorita na <value/> u <issue/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "označeno, že tato pracovní položka je blokována položkou <value/>.",
+          "removed": "odebráno blokování této pracovní položky pracovní položkou <value/>."
+        },
+        "blocking": {
+          "added": "označeno, že tato pracovní položka blokuje pracovní položku <value/>.",
+          "removed": "odebrána blokovaná pracovní položka <value/>."
+        },
+        "duplicate": {
+          "added": "označena tato pracovní položka jako duplikát <value/>.",
+          "removed": "odebrána tato pracovní položka jako duplikát <value/>."
+        },
+        "finish_after": {
+          "added": "označeno, že tato pracovní položka končí po <value/>.",
+          "removed": "odebrán vztah „končí po“ k <value/>."
+        },
+        "finish_before": {
+          "added": "označeno, že tato pracovní položka končí před <value/>.",
+          "removed": "odebrán vztah „končí před“ k <value/>."
+        },
+        "relates_to": {
+          "added": "označeno, že tato pracovní položka souvisí s <value/>.",
+          "removed": "odebrán vztah s <value/>."
+        },
+        "start_after": {
+          "added": "označeno, že tato pracovní položka začíná po <value/>.",
+          "removed": "odebrán vztah „začíná po“ k <value/>."
+        },
+        "start_before": {
+          "added": "označeno, že tato pracovní položka začíná před <value/>.",
+          "removed": "odebrán vztah „začíná před“ k <value/>."
+        }
+      },
+      "restored": "obnovena pracovní položka.",
+      "start_date": {
+        "removed": "odebráno datum začátku.",
+        "removed_with_issue": "odebráno datum začátku z <issue/>.",
+        "set": "nastaveno datum začátku na <value/>.",
+        "set_with_issue": "nastaveno datum začátku na <value/> u <issue/>."
+      },
+      "state": {
+        "set": "nastaven stav na <value/>.",
+        "set_with_issue": "nastaven stav na <value/> u <issue/>."
+      },
+      "target_date": {
+        "removed": "odebrán termín.",
+        "removed_with_issue": "odebrán termín z <issue/>.",
+        "set": "nastaven termín na <value/>.",
+        "set_with_issue": "nastaven termín na <value/> u <issue/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "archivováno <issue/>",
+        "restored": "obnoveno <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "přidán nový přiřazený uživatel <assignee/> do <issue/>",
+        "added_without_issue": "přidán nový přiřazený uživatel <assignee/>",
+        "removed_with_issue": "odebrán přiřazený uživatel <assignee/> z <issue/>",
+        "removed_without_issue": "odebrán přiřazený uživatel <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "nahrána nová příloha do <issue/>",
+        "added_without_issue": "nahrána nová příloha",
+        "removed_with_issue": "odebrána příloha z <issue/>",
+        "removed_without_issue": "odebrána příloha"
+      },
+      "blocked_by": {
+        "added_with_issue": "označeno, že <issue/> je blokováno položkou <value/>.",
+        "added_without_issue": "označeno, že tato pracovní položka je blokována položkou <value/>.",
+        "removed_with_issue": "odebráno blokování <issue/> pracovní položkou <value/>.",
+        "removed_without_issue": "odebráno blokování této pracovní položky pracovní položkou <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "označeno, že <issue/> blokuje pracovní položku <value/>.",
+        "added_without_issue": "označeno, že tato pracovní položka blokuje pracovní položku <value/>.",
+        "removed": "odebrána blokovaná pracovní položka <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "<issue/> přidáno <nowrap>do cyklu</nowrap> <value/>",
+        "added_without_issue": "přidána tato pracovní položka <nowrap>do cyklu</nowrap> <value/>",
+        "removed": "<issue/> odebráno z cyklu <value/>",
+        "set": "<nowrap>nastaven cyklus na</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "aktualizován popis položky <issue/>",
+        "updated_without_issue": "aktualizován popis"
+      },
+      "duplicate": {
+        "added_with_issue": "<issue/> označeno jako duplikát <value/>.",
+        "added_without_issue": "označena tato pracovní položka jako duplikát <value/>.",
+        "removed_with_issue": "<issue/> odebráno jako duplikát <value/>.",
+        "removed_without_issue": "odebrána tato pracovní položka jako duplikát <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# den} few {# dny} many {# dne} other {# dní}}",
+        "removed_with_issue": "odebrána doba trvání z <issue/>",
+        "removed_without_issue": "odebrána doba trvání",
+        "set_with_issue": "nastavena doba trvání na <value/> u <issue/>",
+        "set_without_issue": "nastavena doba trvání na <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "<issue/> převedeno na pracovní položku",
+        "created": "vytvořeno <issue/>",
+        "deleted": "smazáno <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "odebrán bod odhadu z <issue/>",
+        "removed_without_issue": "odebrán bod odhadu",
+        "set_with_issue": "nastaven bod odhadu na <value/> u <issue/>",
+        "set_without_issue": "nastaven bod odhadu na <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "přijata pracovní položka <issue/>",
+        "accepted_without_issue": "přijata tato pracovní položka z Intake.",
+        "declined_with_issue": "odmítnuta pracovní položka <issue/>",
+        "declined_without_issue": "odmítnuta tato pracovní položka z Intake.",
+        "duplicate_with_issue": "odmítnuta pracovní položka <issue/> z Intake označením duplicitní pracovní položky.",
+        "duplicate_without_issue": "odmítnuta tato pracovní položka z Intake označením duplicitní pracovní položky.",
+        "snoozed_with_issue": "odložena pracovní položka <issue/>",
+        "snoozed_without_issue": "odložena tato pracovní položka.",
+        "updated_with_issue": "aktualizován stav pracovní položky v Intake. <issue/>",
+        "updated_without_issue": "aktualizován stav pracovní položky v Intake."
+      },
+      "issue": {
+        "converted_to_epic": "<issue/> převedeno na epik",
+        "created": "vytvořeno <issue/>",
+        "deleted": "smazáno <issue/>",
+        "deleted_tooltip": "Tato pracovní položka byla smazána",
+        "fallback_name": "pracovní položka"
+      },
+      "label": {
+        "added_with_issue": "přidán nový štítek <label/> do <issue/>",
+        "added_without_issue": "přidán nový štítek <label/>",
+        "removed_with_issue": "odebrán štítek <label/> z <issue/>",
+        "removed_without_issue": "odebrán štítek <label/>"
+      },
+      "link": {
+        "added_with_issue": "přidán tento <link>odkaz</link> do <issue/>",
+        "added_without_issue": "přidán tento <link>odkaz</link>",
+        "removed_with_issue": "odebrán tento <link>odkaz</link> z <issue/>",
+        "removed_without_issue": "odebrán tento <link>odkaz</link>",
+        "updated_with_issue": "aktualizován <link>odkaz</link> v <issue/>",
+        "updated_without_issue": "aktualizován <link>odkaz</link>"
+      },
+      "module": {
+        "added_with_issue": "<issue/> přidáno do modulu <value/>",
+        "added_without_issue": "přidána tato pracovní položka do modulu <value/>",
+        "removed": "<issue/> odebráno z modulu <value/>",
+        "set": "nastaven modul na <value/>"
+      },
+      "name": {
+        "set_with_issue": "nastaven název <issue/> na <value/>",
+        "set_without_issue": "nastaven název na <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "odebrána nadřazená položka <value/> z <issue/>",
+        "removed_without_issue": "odebrána nadřazená položka <value/>",
+        "set_with_issue": "nastavena nadřazená položka na <value/> u <issue/>",
+        "set_without_issue": "nastavena nadřazená položka na <value/>"
+      },
+      "priority": {
+        "high": "Vysoká",
+        "low": "Nízká",
+        "medium": "Střední",
+        "none": "Žádná",
+        "set_with_issue": "nastavena priorita na <value/> u <issue/>",
+        "set_without_issue": "nastavena priorita na <value/>",
+        "urgent": "Naléhavá"
+      },
+      "relates_to": {
+        "added_with_issue": "označeno, že <issue/> souvisí s <value/>.",
+        "added_without_issue": "označeno, že tato pracovní položka souvisí s <value/>.",
+        "removed": "odebrán vztah s <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "odebráno datum začátku z <issue/>",
+        "removed_without_issue": "odebráno datum začátku",
+        "set_with_issue": "nastaveno datum začátku na <value/> u <issue/>",
+        "set_without_issue": "nastaveno datum začátku na <value/>"
+      },
+      "state": {
+        "set_with_issue": "nastaven stav na <value/> u <issue/>",
+        "set_without_issue": "nastaven stav na <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "odebrán termín z <issue/>",
+        "removed_without_issue": "odebrán termín",
+        "set_with_issue": "nastaven termín na <value/> u <issue/>",
+        "set_without_issue": "nastaven termín na <value/>"
+      }
+    },
+    "project": {
+      "archived_at": {
+        "archived": "archivován projekt",
+        "restored": "obnoven projekt"
+      },
+      "cycle_view": {
+        "disabled": "vypnuto zobrazení cyklů",
+        "enabled": "zapnuto zobrazení cyklů",
+        "fallback": "{verb} zobrazení cyklů"
+      },
+      "cycles": {
+        "added": "tento projekt přidán do cyklu <value/>",
+        "removed": "tento projekt odebrán z cyklu <value/>",
+        "unknown": "Neznámý cyklus"
+      },
+      "default": "{verb} {field} ",
+      "description": {
+        "removed": "odebrán popis projektu",
+        "updated": "aktualizován popis projektu"
+      },
+      "estimate": {
+        "removed": "odebrán bod odhadu",
+        "removed_with_value": "odebrán bod odhadu <value/>",
+        "set": "nastaven bod odhadu na <value/>"
+      },
+      "identifier": {
+        "updated": "aktualizován identifikátor projektu na <value/>"
+      },
+      "inbox": {
+        "disabled": "vypnut Intake",
+        "enabled": "zapnut Intake"
+      },
+      "intake_view": {
+        "disabled": "vypnuto zobrazení Intake",
+        "enabled": "zapnuto zobrazení Intake",
+        "fallback": "{verb} zobrazení Intake"
+      },
+      "is_epic_enabled": {
+        "disabled": "vypnuty epiky",
+        "enabled": "zapnuty epiky",
+        "fallback": "{verb} epiky"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "vypnuty typy pracovních položek",
+        "enabled": "zapnuty typy pracovních položek",
+        "fallback": "{verb} typy pracovních položek"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "vypnuty aktualizace projektu",
+        "enabled": "zapnuty aktualizace projektu",
+        "fallback": "{verb} aktualizace projektu"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "vypnuto sledování času",
+        "enabled": "zapnuto sledování času",
+        "fallback": "{verb} sledování času"
+      },
+      "is_workflow_enabled": {
+        "disabled": "vypnut vlastní pracovní postup",
+        "enabled": "zapnut vlastní pracovní postup",
+        "fallback": "{verb} vlastní pracovní postup"
+      },
+      "issue_views_view": {
+        "disabled": "vypnuto zobrazení pohledů pracovních položek",
+        "enabled": "zapnuto zobrazení pohledů pracovních položek",
+        "fallback": "{verb} zobrazení pohledů pracovních položek"
+      },
+      "labels": {
+        "added": "přidán štítek <value/>",
+        "created": "vytvořen štítek <value/>",
+        "deleted": "smazán štítek <value/>",
+        "removed": "odebrán štítek <value/>",
+        "untitled": "Štítek bez názvu",
+        "updated": "aktualizován štítek <value/>"
+      },
+      "module_view": {
+        "disabled": "vypnuto zobrazení modulů",
+        "enabled": "zapnuto zobrazení modulů",
+        "fallback": "{verb} zobrazení modulů"
+      },
+      "modules": {
+        "added": "tento projekt přidán do modulu <value/>",
+        "removed": "tento projekt odebrán z modulu <value/>",
+        "unknown": "Neznámý modul"
+      },
+      "name": {
+        "renamed": "projekt přejmenován na <value/>"
+      },
+      "network": {
+        "disabled": "vypnut přístup k síti",
+        "enabled": "zapnut přístup k síti"
+      },
+      "page": {
+        "created": "vytvořena stránka projektu <value/>",
+        "removed": "odebrána stránka projektu <value/>",
+        "untitled": "Stránka bez názvu"
+      },
+      "page_view": {
+        "disabled": "vypnuto zobrazení stránek",
+        "enabled": "zapnuto zobrazení stránek",
+        "fallback": "{verb} zobrazení stránek"
+      },
+      "priority": {
+        "set": "nastavena priorita na <value/>"
+      },
+      "start_date": {
+        "removed": "odebráno datum začátku",
+        "set": "nastaveno datum začátku na <value/>"
+      },
+      "state": {
+        "set": "nastaven stav na <value/>"
+      },
+      "target_date": {
+        "removed": "odebráno cílové datum",
+        "set": "nastaveno cílové datum na <value/>"
+      },
+      "timezone": {
+        "changed": "změněno časové pásmo projektu na <value/>",
+        "default": "výchozí"
+      },
+      "value_none": "žádná"
+    }
   }
 }

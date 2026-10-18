@@ -522,5 +522,401 @@
     "add_related_work_items": "添加相关工作项",
     "toggle_workspace_level_search": "切换工作区级别搜索",
     "search_results_for_in_project": "在项目中搜索 <query>\"{query}\"</query> 的结果："
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "归档了工作项。",
+      "assignee": {
+        "added": "添加了新负责人 <user/>。",
+        "added_with_issue": "向 <issue/> 添加了新负责人 <user/>。",
+        "removed": "移除了负责人 <user/>。",
+        "removed_with_issue": "从 <issue/> 中移除了负责人 <user/>。"
+      },
+      "attachment": {
+        "added": "上传了新附件。",
+        "added_with_issue": "向 <issue/> 上传了新附件。",
+        "removed": "移除了一个附件。",
+        "removed_with_issue": "从 <issue/> 中移除了一个附件。"
+      },
+      "created": "创建了工作项。",
+      "created_via": "通过 <source/> 创建了工作项。",
+      "cycle": {
+        "added": "将此工作项添加到了周期 <cycle/>",
+        "removed": "将工作项从周期 <cycle/> 中移除",
+        "set": "将周期设置为 <cycle/>"
+      },
+      "deleted": "删除了一个工作项。",
+      "description": {
+        "updated": "更新了描述。",
+        "updated_with_issue": "更新了 <issue/> 的描述。"
+      },
+      "duration": {
+        "days": "{count, plural, one {# 天} other {# 天}}",
+        "removed": "移除了时长。",
+        "removed_with_issue": "移除了 <issue/> 的时长。",
+        "set": "将时长设置为 <value/>。",
+        "set_with_issue": "将 <issue/> 的时长设置为 <value/>。"
+      },
+      "estimate": {
+        "removed": "移除了估算点数 <value/>。",
+        "removed_with_issue": "移除了 <issue/> 的估算点数 <value/>。",
+        "set": "将估算点数设置为 <value/>。",
+        "set_with_issue": "将 <issue/> 的估算点数设置为 <value/>。"
+      },
+      "intake": {
+        "accepted": "接受了来自 Intake 的此工作项。",
+        "declined": "拒绝了来自 Intake 的此工作项。",
+        "duplicate": "通过标记重复工作项，拒绝了来自 Intake 的此工作项。",
+        "snoozed": "暂缓了此工作项。",
+        "updated": "更新了 Intake 工作项状态。"
+      },
+      "label": {
+        "added": "添加了新标签 <label/>",
+        "added_with_issue": "向 <issue/> 添加了新标签 <label/>",
+        "removed": "移除了标签 <label/>",
+        "removed_with_issue": "从 <issue/> 中移除了标签 <label/>"
+      },
+      "link": {
+        "added": "添加了<link>链接</link>。",
+        "added_with_issue": "向 <issue/> 添加了<link>链接</link>。",
+        "removed": "移除了此<link>链接</link>。",
+        "removed_with_issue": "从 <issue/> 中移除了此<link>链接</link>。",
+        "updated": "更新了<link>链接</link>。",
+        "updated_with_issue": "更新了 <issue/> 的<link>链接</link>。"
+      },
+      "module": {
+        "added": "将此工作项添加到了模块 <module/>",
+        "removed": "将工作项从模块 <module/> 中移除",
+        "set": "将模块设置为 <module/>"
+      },
+      "name": {
+        "set": "将名称设置为 {name}。"
+      },
+      "parent": {
+        "removed": "移除了父工作项 <value/>。",
+        "removed_with_issue": "移除了 <issue/> 的父工作项 <value/>。",
+        "set": "将父工作项设置为 <value/>。",
+        "set_with_issue": "将 <issue/> 的父工作项设置为 <value/>。"
+      },
+      "priority": {
+        "set": "将优先级设置为 <value/>。",
+        "set_with_issue": "将 <issue/> 的优先级设置为 <value/>。"
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "将此工作项标记为被 <value/> 阻止。",
+          "removed": "移除了此工作项被工作项 <value/> 阻止的关系。"
+        },
+        "blocking": {
+          "added": "将此工作项标记为阻止工作项 <value/>。",
+          "removed": "移除了所阻止的工作项 <value/>。"
+        },
+        "duplicate": {
+          "added": "将此工作项标记为 <value/> 的重复项。",
+          "removed": "取消了此工作项作为 <value/> 重复项的标记。"
+        },
+        "finish_after": {
+          "added": "将此工作项标记为在 <value/> 之后完成。",
+          "removed": "移除了与 <value/> 的“在其之后完成”关系。"
+        },
+        "finish_before": {
+          "added": "将此工作项标记为在 <value/> 之前完成。",
+          "removed": "移除了与 <value/> 的“在其之前完成”关系。"
+        },
+        "relates_to": {
+          "added": "标记此工作项与 <value/> 相关。",
+          "removed": "移除了与 <value/> 的关系。"
+        },
+        "start_after": {
+          "added": "将此工作项标记为在 <value/> 之后开始。",
+          "removed": "移除了与 <value/> 的“在其之后开始”关系。"
+        },
+        "start_before": {
+          "added": "将此工作项标记为在 <value/> 之前开始。",
+          "removed": "移除了与 <value/> 的“在其之前开始”关系。"
+        }
+      },
+      "restored": "恢复了工作项。",
+      "start_date": {
+        "removed": "移除了开始日期。",
+        "removed_with_issue": "移除了 <issue/> 的开始日期。",
+        "set": "将开始日期设置为 <value/>。",
+        "set_with_issue": "将 <issue/> 的开始日期设置为 <value/>。"
+      },
+      "state": {
+        "set": "将状态设置为 <value/>。",
+        "set_with_issue": "将 <issue/> 的状态设置为 <value/>。"
+      },
+      "target_date": {
+        "removed": "移除了截止日期。",
+        "removed_with_issue": "移除了 <issue/> 的截止日期。",
+        "set": "将截止日期设置为 <value/>。",
+        "set_with_issue": "将 <issue/> 的截止日期设置为 <value/>。"
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "归档了 <issue/>",
+        "restored": "恢复了 <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "向 <issue/> 添加了新负责人 <assignee/>",
+        "added_without_issue": "添加了新负责人 <assignee/>",
+        "removed_with_issue": "从 <issue/> 中移除了负责人 <assignee/>",
+        "removed_without_issue": "移除了负责人 <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "向 <issue/> 上传了新附件",
+        "added_without_issue": "上传了新附件",
+        "removed_with_issue": "从 <issue/> 中移除了一个附件",
+        "removed_without_issue": "移除了一个附件"
+      },
+      "blocked_by": {
+        "added_with_issue": "将 <issue/> 标记为被 <value/> 阻止。",
+        "added_without_issue": "将此工作项标记为被 <value/> 阻止。",
+        "removed_with_issue": "移除了 <issue/> 被工作项 <value/> 阻止的关系。",
+        "removed_without_issue": "移除了此工作项被工作项 <value/> 阻止的关系。"
+      },
+      "blocking": {
+        "added_with_issue": "将 <issue/> 标记为阻止工作项 <value/>。",
+        "added_without_issue": "将此工作项标记为阻止工作项 <value/>。",
+        "removed": "移除了所阻止的工作项 <value/>。"
+      },
+      "cycle": {
+        "added_with_issue": "将 <issue/> <nowrap>添加到周期</nowrap> <value/>",
+        "added_without_issue": "将此工作项<nowrap>添加到周期</nowrap> <value/>",
+        "removed": "将 <issue/> 从周期 <value/> 中移除",
+        "set": "<nowrap>将周期设置为</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "更新了 <issue/> 的描述",
+        "updated_without_issue": "更新了描述"
+      },
+      "duplicate": {
+        "added_with_issue": "将 <issue/> 标记为 <value/> 的重复项。",
+        "added_without_issue": "将此工作项标记为 <value/> 的重复项。",
+        "removed_with_issue": "取消了 <issue/> 作为 <value/> 重复项的标记。",
+        "removed_without_issue": "取消了此工作项作为 <value/> 重复项的标记。"
+      },
+      "duration": {
+        "days": "{count, plural, one {# 天} other {# 天}}",
+        "removed_with_issue": "移除了 <issue/> 的时长",
+        "removed_without_issue": "移除了时长",
+        "set_with_issue": "将 <issue/> 的时长设置为 <value/>",
+        "set_without_issue": "将时长设置为 <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "将 <issue/> 转换为工作项",
+        "created": "创建了 <issue/>",
+        "deleted": "删除了 <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "移除了 <issue/> 的估算点数",
+        "removed_without_issue": "移除了估算点数",
+        "set_with_issue": "将 <issue/> 的估算点数设置为 <value/>",
+        "set_without_issue": "将估算点数设置为 <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "接受了工作项 <issue/>",
+        "accepted_without_issue": "接受了来自 Intake 的此工作项。",
+        "declined_with_issue": "拒绝了工作项 <issue/>",
+        "declined_without_issue": "拒绝了来自 Intake 的此工作项。",
+        "duplicate_with_issue": "通过标记重复工作项，拒绝了来自 Intake 的工作项 <issue/>。",
+        "duplicate_without_issue": "通过标记重复工作项，拒绝了来自 Intake 的此工作项。",
+        "snoozed_with_issue": "暂缓了工作项 <issue/>",
+        "snoozed_without_issue": "暂缓了此工作项。",
+        "updated_with_issue": "更新了 Intake 工作项状态。<issue/>",
+        "updated_without_issue": "更新了 Intake 工作项状态。"
+      },
+      "issue": {
+        "converted_to_epic": "将 <issue/> 转换为史诗",
+        "created": "创建了 <issue/>",
+        "deleted": "删除了 <issue/>",
+        "deleted_tooltip": "此工作项已被删除",
+        "fallback_name": "一个工作项"
+      },
+      "label": {
+        "added_with_issue": "向 <issue/> 添加了新标签 <label/>",
+        "added_without_issue": "添加了新标签 <label/>",
+        "removed_with_issue": "从 <issue/> 中移除了标签 <label/>",
+        "removed_without_issue": "移除了标签 <label/>"
+      },
+      "link": {
+        "added_with_issue": "向 <issue/> 添加了此<link>链接</link>",
+        "added_without_issue": "添加了此<link>链接</link>",
+        "removed_with_issue": "从 <issue/> 中移除了此<link>链接</link>",
+        "removed_without_issue": "移除了此<link>链接</link>",
+        "updated_with_issue": "更新了 <issue/> 的<link>链接</link>",
+        "updated_without_issue": "更新了<link>链接</link>"
+      },
+      "module": {
+        "added_with_issue": "将 <issue/> 添加到模块 <value/>",
+        "added_without_issue": "将此工作项添加到模块 <value/>",
+        "removed": "将 <issue/> 从模块 <value/> 中移除",
+        "set": "将模块设置为 <value/>"
+      },
+      "name": {
+        "set_with_issue": "将 <issue/> 的标题设置为 <value/>",
+        "set_without_issue": "将标题设置为 <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "移除了 <issue/> 的父工作项 <value/>",
+        "removed_without_issue": "移除了父工作项 <value/>",
+        "set_with_issue": "将 <issue/> 的父工作项设置为 <value/>",
+        "set_without_issue": "将父工作项设置为 <value/>"
+      },
+      "priority": {
+        "high": "高",
+        "low": "低",
+        "medium": "中",
+        "none": "无",
+        "set_with_issue": "将 <issue/> 的优先级设置为 <value/>",
+        "set_without_issue": "将优先级设置为 <value/>",
+        "urgent": "紧急"
+      },
+      "relates_to": {
+        "added_with_issue": "标记 <issue/> 与 <value/> 相关。",
+        "added_without_issue": "标记此工作项与 <value/> 相关。",
+        "removed": "移除了与 <value/> 的关系。"
+      },
+      "start_date": {
+        "removed_with_issue": "移除了 <issue/> 的开始日期",
+        "removed_without_issue": "移除了开始日期",
+        "set_with_issue": "将 <issue/> 的开始日期设置为 <value/>",
+        "set_without_issue": "将开始日期设置为 <value/>"
+      },
+      "state": {
+        "set_with_issue": "将 <issue/> 的状态设置为 <value/>",
+        "set_without_issue": "将状态设置为 <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "移除了 <issue/> 的截止日期",
+        "removed_without_issue": "移除了截止日期",
+        "set_with_issue": "将 <issue/> 的截止日期设置为 <value/>",
+        "set_without_issue": "将截止日期设置为 <value/>"
+      }
+    },
+    "project": {
+      "archived_at": {
+        "archived": "归档了项目",
+        "restored": "恢复了项目"
+      },
+      "cycle_view": {
+        "disabled": "停用了周期视图",
+        "enabled": "启用了周期视图",
+        "fallback": "{verb}周期视图"
+      },
+      "cycles": {
+        "added": "将此项目添加到周期 <value/>",
+        "removed": "将此项目从周期 <value/> 中移除",
+        "unknown": "未知周期"
+      },
+      "default": "{verb} {field} ",
+      "description": {
+        "removed": "移除了项目描述",
+        "updated": "更新了项目描述"
+      },
+      "estimate": {
+        "removed": "移除了估算点数",
+        "removed_with_value": "移除了估算点数 <value/>",
+        "set": "将估算点数设置为 <value/>"
+      },
+      "identifier": {
+        "updated": "将项目标识符更新为 <value/>"
+      },
+      "inbox": {
+        "disabled": "停用了 Intake",
+        "enabled": "启用了 Intake"
+      },
+      "intake_view": {
+        "disabled": "停用了 Intake 视图",
+        "enabled": "启用了 Intake 视图",
+        "fallback": "{verb} Intake 视图"
+      },
+      "is_epic_enabled": {
+        "disabled": "停用了史诗",
+        "enabled": "启用了史诗",
+        "fallback": "{verb}史诗"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "停用了工作项类型",
+        "enabled": "启用了工作项类型",
+        "fallback": "{verb}工作项类型"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "停用了项目更新",
+        "enabled": "启用了项目更新",
+        "fallback": "{verb}项目更新"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "停用了时间跟踪",
+        "enabled": "启用了时间跟踪",
+        "fallback": "{verb}时间跟踪"
+      },
+      "is_workflow_enabled": {
+        "disabled": "停用了自定义工作流",
+        "enabled": "启用了自定义工作流",
+        "fallback": "{verb}自定义工作流"
+      },
+      "issue_views_view": {
+        "disabled": "停用了工作项视图功能",
+        "enabled": "启用了工作项视图功能",
+        "fallback": "{verb}工作项视图功能"
+      },
+      "labels": {
+        "added": "添加了标签 <value/>",
+        "created": "创建了标签 <value/>",
+        "deleted": "删除了标签 <value/>",
+        "removed": "移除了标签 <value/>",
+        "untitled": "未命名标签",
+        "updated": "更新了标签 <value/>"
+      },
+      "module_view": {
+        "disabled": "停用了模块视图",
+        "enabled": "启用了模块视图",
+        "fallback": "{verb}模块视图"
+      },
+      "modules": {
+        "added": "将此项目添加到模块 <value/>",
+        "removed": "将此项目从模块 <value/> 中移除",
+        "unknown": "未知模块"
+      },
+      "name": {
+        "renamed": "将项目重命名为 <value/>"
+      },
+      "network": {
+        "disabled": "停用了网络访问",
+        "enabled": "启用了网络访问"
+      },
+      "page": {
+        "created": "创建了项目页面 <value/>",
+        "removed": "移除了项目页面 <value/>",
+        "untitled": "未命名页面"
+      },
+      "page_view": {
+        "disabled": "停用了页面视图",
+        "enabled": "启用了页面视图",
+        "fallback": "{verb}页面视图"
+      },
+      "priority": {
+        "set": "将优先级设置为 <value/>"
+      },
+      "start_date": {
+        "removed": "移除了开始日期",
+        "set": "将开始日期设置为 <value/>"
+      },
+      "state": {
+        "set": "将状态设置为 <value/>"
+      },
+      "target_date": {
+        "removed": "移除了目标日期",
+        "set": "将目标日期设置为 <value/>"
+      },
+      "timezone": {
+        "changed": "将项目时区更改为 <value/>",
+        "default": "默认"
+      },
+      "value_none": "无"
+    }
   }
 }

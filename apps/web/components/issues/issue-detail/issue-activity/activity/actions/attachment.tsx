@@ -6,6 +6,8 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 import { AttachOutline } from "@makeplane/propel/icons";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -20,21 +22,27 @@ export const IssueAttachmentActivity = observer(function IssueAttachmentActivity
   const {
     activity: { getActivityById },
   } = useIssueDetail();
+  const { t } = useTranslation();
 
   const activity = getActivityById(activityId);
 
   if (!activity) return <></>;
+
+  const isCreated = activity.verb === "created";
+  const message = isCreated
+    ? showIssue
+      ? t("activity_feed.issue.attachment.added_with_issue")
+      : t("activity_feed.issue.attachment.added")
+    : showIssue
+      ? t("activity_feed.issue.attachment.removed_with_issue")
+      : t("activity_feed.issue.attachment.removed");
   return (
     <IssueActivityBlockComponent
       icon={<AttachOutline width={14} height={14} className="text-secondary" aria-hidden="true" />}
       activityId={activityId}
       ends={ends}
     >
-      <>
-        {activity.verb === "created" ? `uploaded a new attachment` : `removed an attachment`}
-        {showIssue && (activity.verb === "created" ? ` to ` : ` from `)}
-        {showIssue && <IssueLink activityId={activityId} />}.
-      </>
+      {renderTaggedText(message, { issue: () => <IssueLink activityId={activityId} /> })}
     </IssueActivityBlockComponent>
   );
 });

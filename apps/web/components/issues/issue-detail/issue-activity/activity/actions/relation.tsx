@@ -6,9 +6,11 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
-import { getRelationActivityContent, useTimeLineRelationOptions } from "@/components/relations";
+import { useTimeLineRelationOptions } from "@/components/relations";
 import type { TIssueRelationTypes } from "@plane/types";
 //
 import { IssueActivityBlockComponent } from "./";
@@ -21,10 +23,50 @@ export const IssueRelationActivity = observer(function IssueRelationActivity(pro
   const {
     activity: { getActivityById },
   } = useIssueDetail();
+  const { t } = useTranslation();
 
   const activity = getActivityById(activityId);
   const ISSUE_RELATION_OPTIONS = useTimeLineRelationOptions();
-  const activityContent = getRelationActivityContent(activity);
+  const isAdded = activity?.old_value === "";
+  const getMessage = (): string | undefined => {
+    switch (activity?.field) {
+      case "blocking":
+        return isAdded
+          ? t("activity_feed.issue.relation.blocking.added")
+          : t("activity_feed.issue.relation.blocking.removed");
+      case "blocked_by":
+        return isAdded
+          ? t("activity_feed.issue.relation.blocked_by.added")
+          : t("activity_feed.issue.relation.blocked_by.removed");
+      case "duplicate":
+        return isAdded
+          ? t("activity_feed.issue.relation.duplicate.added")
+          : t("activity_feed.issue.relation.duplicate.removed");
+      case "relates_to":
+        return isAdded
+          ? t("activity_feed.issue.relation.relates_to.added")
+          : t("activity_feed.issue.relation.relates_to.removed");
+      case "start_before":
+        return isAdded
+          ? t("activity_feed.issue.relation.start_before.added")
+          : t("activity_feed.issue.relation.start_before.removed");
+      case "start_after":
+        return isAdded
+          ? t("activity_feed.issue.relation.start_after.added")
+          : t("activity_feed.issue.relation.start_after.removed");
+      case "finish_before":
+        return isAdded
+          ? t("activity_feed.issue.relation.finish_before.added")
+          : t("activity_feed.issue.relation.finish_before.removed");
+      case "finish_after":
+        return isAdded
+          ? t("activity_feed.issue.relation.finish_after.added")
+          : t("activity_feed.issue.relation.finish_after.removed");
+      default:
+        return undefined;
+    }
+  };
+  const message = getMessage();
 
   if (!activity) return <></>;
   return (
@@ -33,12 +75,14 @@ export const IssueRelationActivity = observer(function IssueRelationActivity(pro
       activityId={activityId}
       ends={ends}
     >
-      {activityContent}
-      {activity.old_value === "" ? (
-        <span className="font-medium text-primary">{activity.new_value}.</span>
-      ) : (
-        <span className="font-medium text-primary">{activity.old_value}.</span>
-      )}
+      {message &&
+        renderTaggedText(message, {
+          value: () => (
+            <span className="font-medium text-primary">
+              {activity.old_value === "" ? activity.new_value : activity.old_value}
+            </span>
+          ),
+        })}
     </IssueActivityBlockComponent>
   );
 });

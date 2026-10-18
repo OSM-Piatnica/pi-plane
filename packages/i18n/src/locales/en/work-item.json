@@ -522,5 +522,401 @@
     "add_related_work_items": "Add related work items",
     "toggle_workspace_level_search": "Toggle workspace level search",
     "search_results_for_in_project": "Search results for <query>\"{query}\"</query> in project:"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "archived the work item.",
+      "assignee": {
+        "added": "added a new assignee <user/>.",
+        "added_with_issue": "added a new assignee <user/> to <issue/>.",
+        "removed": "removed the assignee <user/>.",
+        "removed_with_issue": "removed the assignee <user/> from <issue/>."
+      },
+      "attachment": {
+        "added": "uploaded a new attachment.",
+        "added_with_issue": "uploaded a new attachment to <issue/>.",
+        "removed": "removed an attachment.",
+        "removed_with_issue": "removed an attachment from <issue/>."
+      },
+      "created": "created the work item.",
+      "created_via": "created the work item via <source/>.",
+      "cycle": {
+        "added": "added this work item to the cycle <cycle/>",
+        "removed": "removed the work item from the cycle <cycle/>",
+        "set": "set the cycle to <cycle/>"
+      },
+      "deleted": "deleted a work item.",
+      "description": {
+        "updated": "updated the description.",
+        "updated_with_issue": "updated the description of <issue/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# day} other {# days}}",
+        "removed": "removed the duration.",
+        "removed_with_issue": "removed the duration from <issue/>.",
+        "set": "set the duration to <value/>.",
+        "set_with_issue": "set the duration to <value/> for <issue/>."
+      },
+      "estimate": {
+        "removed": "removed the estimate point <value/>.",
+        "removed_with_issue": "removed the estimate point <value/> from <issue/>.",
+        "set": "set the estimate point to <value/>.",
+        "set_with_issue": "set the estimate point to <value/> to <issue/>."
+      },
+      "intake": {
+        "accepted": "accepted this work item from intake.",
+        "declined": "declined this work item from intake.",
+        "duplicate": "declined this work item from intake by marking a duplicate work item.",
+        "snoozed": "snoozed this work item.",
+        "updated": "updated intake work item status."
+      },
+      "label": {
+        "added": "added a new label <label/>",
+        "added_with_issue": "added a new label <label/> to <issue/>",
+        "removed": "removed the label <label/>",
+        "removed_with_issue": "removed the label <label/> from <issue/>"
+      },
+      "link": {
+        "added": "added <link>link</link>.",
+        "added_with_issue": "added <link>link</link> to <issue/>.",
+        "removed": "removed this <link>link</link>.",
+        "removed_with_issue": "removed this <link>link</link> from <issue/>.",
+        "updated": "updated the <link>link</link>.",
+        "updated_with_issue": "updated the <link>link</link> from <issue/>."
+      },
+      "module": {
+        "added": "added this work item to the module <module/>",
+        "removed": "removed the work item from the module <module/>",
+        "set": "set the module to <module/>"
+      },
+      "name": {
+        "set": "set the name to {name}."
+      },
+      "parent": {
+        "removed": "removed the parent <value/>.",
+        "removed_with_issue": "removed the parent <value/> from <issue/>.",
+        "set": "set the parent to <value/>.",
+        "set_with_issue": "set the parent to <value/> for <issue/>."
+      },
+      "priority": {
+        "set": "set the priority to <value/>.",
+        "set_with_issue": "set the priority to <value/> for <issue/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "marked this work item is being blocked by <value/>.",
+          "removed": "removed this work item being blocked by work item <value/>."
+        },
+        "blocking": {
+          "added": "marked this work item is blocking work item <value/>.",
+          "removed": "removed the blocking work item <value/>."
+        },
+        "duplicate": {
+          "added": "marked this work item as duplicate of <value/>.",
+          "removed": "removed this work item as a duplicate of <value/>."
+        },
+        "finish_after": {
+          "added": "marked this work item finishes after <value/>.",
+          "removed": "removed the finishes after relation to <value/>."
+        },
+        "finish_before": {
+          "added": "marked this work item finishes before <value/>.",
+          "removed": "removed the finishes before relation to <value/>."
+        },
+        "relates_to": {
+          "added": "marked that this work item relates to <value/>.",
+          "removed": "removed the relation from <value/>."
+        },
+        "start_after": {
+          "added": "marked this work item starts after <value/>.",
+          "removed": "removed the starts after relation to <value/>."
+        },
+        "start_before": {
+          "added": "marked this work item starts before <value/>.",
+          "removed": "removed the starts before relation to <value/>."
+        }
+      },
+      "restored": "restored the work item.",
+      "start_date": {
+        "removed": "removed the start date.",
+        "removed_with_issue": "removed the start date from <issue/>.",
+        "set": "set the start date to <value/>.",
+        "set_with_issue": "set the start date to <value/> for <issue/>."
+      },
+      "state": {
+        "set": "set the state to <value/>.",
+        "set_with_issue": "set the state to <value/> for <issue/>."
+      },
+      "target_date": {
+        "removed": "removed the due date.",
+        "removed_with_issue": "removed the due date from <issue/>.",
+        "set": "set the due date to <value/>.",
+        "set_with_issue": "set the due date to <value/> for <issue/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "archived <issue/>",
+        "restored": "restored <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "added a new assignee <assignee/> to <issue/>",
+        "added_without_issue": "added a new assignee <assignee/>",
+        "removed_with_issue": "removed the assignee <assignee/> from <issue/>",
+        "removed_without_issue": "removed the assignee <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "uploaded a new attachment to <issue/>",
+        "added_without_issue": "uploaded a new attachment",
+        "removed_with_issue": "removed an attachment from <issue/>",
+        "removed_without_issue": "removed an attachment"
+      },
+      "blocked_by": {
+        "added_with_issue": "marked <issue/> is being blocked by <value/>.",
+        "added_without_issue": "marked this work item is being blocked by <value/>.",
+        "removed_with_issue": "removed <issue/> being blocked by work item <value/>.",
+        "removed_without_issue": "removed this work item being blocked by work item <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "marked <issue/> is blocking work item <value/>.",
+        "added_without_issue": "marked this work item is blocking work item <value/>.",
+        "removed": "removed the blocking work item <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "added <issue/> <nowrap>to the cycle</nowrap> <value/>",
+        "added_without_issue": "added this work item <nowrap>to the cycle</nowrap> <value/>",
+        "removed": "removed <issue/> from the cycle <value/>",
+        "set": "<nowrap>set the cycle to</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "updated the description of <issue/>",
+        "updated_without_issue": "updated the description"
+      },
+      "duplicate": {
+        "added_with_issue": "marked <issue/> as duplicate of <value/>.",
+        "added_without_issue": "marked this work item as duplicate of <value/>.",
+        "removed_with_issue": "removed <issue/> as a duplicate of <value/>.",
+        "removed_without_issue": "removed this work item as a duplicate of <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# day} other {# days}}",
+        "removed_with_issue": "removed the duration from <issue/>",
+        "removed_without_issue": "removed the duration",
+        "set_with_issue": "set the duration to <value/> for <issue/>",
+        "set_without_issue": "set the duration to <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "converted <issue/> to a work item",
+        "created": "created <issue/>",
+        "deleted": "deleted <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "removed the estimate point from <issue/>",
+        "removed_without_issue": "removed the estimate point",
+        "set_with_issue": "set the estimate point to <value/> for <issue/>",
+        "set_without_issue": "set the estimate point to <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "accepted work item <issue/>",
+        "accepted_without_issue": "accepted this work item from intake.",
+        "declined_with_issue": "declined work item <issue/>",
+        "declined_without_issue": "declined this work item from intake.",
+        "duplicate_with_issue": "declined work item <issue/> from intake by marking a duplicate work item.",
+        "duplicate_without_issue": "declined this work item from intake by marking a duplicate work item.",
+        "snoozed_with_issue": "snoozed work item <issue/>",
+        "snoozed_without_issue": "snoozed this work item.",
+        "updated_with_issue": "updated intake work item status. <issue/>",
+        "updated_without_issue": "updated intake work item status."
+      },
+      "issue": {
+        "converted_to_epic": "converted <issue/> to an epic",
+        "created": "created <issue/>",
+        "deleted": "deleted <issue/>",
+        "deleted_tooltip": "This work item has been deleted",
+        "fallback_name": "a work item"
+      },
+      "label": {
+        "added_with_issue": "added a new label <label/> to <issue/>",
+        "added_without_issue": "added a new label <label/>",
+        "removed_with_issue": "removed the label <label/> from <issue/>",
+        "removed_without_issue": "removed the label <label/>"
+      },
+      "link": {
+        "added_with_issue": "added this <link>link</link> to <issue/>",
+        "added_without_issue": "added this <link>link</link>",
+        "removed_with_issue": "removed this <link>link</link> from <issue/>",
+        "removed_without_issue": "removed this <link>link</link>",
+        "updated_with_issue": "updated the <link>link</link> from <issue/>",
+        "updated_without_issue": "updated the <link>link</link>"
+      },
+      "module": {
+        "added_with_issue": "added <issue/> to the module <value/>",
+        "added_without_issue": "added this work item to the module <value/>",
+        "removed": "removed <issue/> from the module <value/>",
+        "set": "set the module to <value/>"
+      },
+      "name": {
+        "set_with_issue": "set the title to <value/> of <issue/>",
+        "set_without_issue": "set the title to <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "removed the parent <value/> from <issue/>",
+        "removed_without_issue": "removed the parent <value/>",
+        "set_with_issue": "set the parent to <value/> for <issue/>",
+        "set_without_issue": "set the parent to <value/>"
+      },
+      "priority": {
+        "high": "High",
+        "low": "Low",
+        "medium": "Medium",
+        "none": "None",
+        "set_with_issue": "set the priority to <value/> for <issue/>",
+        "set_without_issue": "set the priority to <value/>",
+        "urgent": "Urgent"
+      },
+      "relates_to": {
+        "added_with_issue": "marked that <issue/> relates to <value/>.",
+        "added_without_issue": "marked that this work item relates to <value/>.",
+        "removed": "removed the relation from <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "removed the start date from <issue/>",
+        "removed_without_issue": "removed the start date",
+        "set_with_issue": "set the start date to <value/> for <issue/>",
+        "set_without_issue": "set the start date to <value/>"
+      },
+      "state": {
+        "set_with_issue": "set the state to <value/> for <issue/>",
+        "set_without_issue": "set the state to <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "removed the due date from <issue/>",
+        "removed_without_issue": "removed the due date",
+        "set_with_issue": "set the due date to <value/> for <issue/>",
+        "set_without_issue": "set the due date to <value/>"
+      }
+    },
+    "project": {
+      "archived_at": {
+        "archived": "archived the project",
+        "restored": "restored the project"
+      },
+      "cycle_view": {
+        "disabled": "disabled cycle view",
+        "enabled": "enabled cycle view",
+        "fallback": "{verb} cycle view"
+      },
+      "cycles": {
+        "added": "added this project to the cycle <value/>",
+        "removed": "removed this project from the cycle <value/>",
+        "unknown": "Unknown cycle"
+      },
+      "default": "{verb} {field} ",
+      "description": {
+        "removed": "removed the project description",
+        "updated": "updated the project description"
+      },
+      "estimate": {
+        "removed": "removed the estimate point",
+        "removed_with_value": "removed the estimate point <value/>",
+        "set": "set the estimate point to <value/>"
+      },
+      "identifier": {
+        "updated": "updated project identifier to <value/>"
+      },
+      "inbox": {
+        "disabled": "disabled inbox",
+        "enabled": "enabled inbox"
+      },
+      "intake_view": {
+        "disabled": "disabled intake view",
+        "enabled": "enabled intake view",
+        "fallback": "{verb} intake view"
+      },
+      "is_epic_enabled": {
+        "disabled": "disabled epics",
+        "enabled": "enabled epics",
+        "fallback": "{verb} epics"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "disabled work item types",
+        "enabled": "enabled work item types",
+        "fallback": "{verb} work item types"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "disabled project updates",
+        "enabled": "enabled project updates",
+        "fallback": "{verb} project updates"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "disabled time tracking",
+        "enabled": "enabled time tracking",
+        "fallback": "{verb} time tracking"
+      },
+      "is_workflow_enabled": {
+        "disabled": "disabled custom workflow",
+        "enabled": "enabled custom workflow",
+        "fallback": "{verb} custom workflow"
+      },
+      "issue_views_view": {
+        "disabled": "disabled issue views view",
+        "enabled": "enabled issue views view",
+        "fallback": "{verb} issue views view"
+      },
+      "labels": {
+        "added": "added the label <value/>",
+        "created": "created the label <value/>",
+        "deleted": "deleted the label <value/>",
+        "removed": "removed the label <value/>",
+        "untitled": "Untitled label",
+        "updated": "updated the label <value/>"
+      },
+      "module_view": {
+        "disabled": "disabled module view",
+        "enabled": "enabled module view",
+        "fallback": "{verb} module view"
+      },
+      "modules": {
+        "added": "added this project to the module <value/>",
+        "removed": "removed this project from the module <value/>",
+        "unknown": "Unknown module"
+      },
+      "name": {
+        "renamed": "renamed the project to <value/>"
+      },
+      "network": {
+        "disabled": "disabled network access",
+        "enabled": "enabled network access"
+      },
+      "page": {
+        "created": "created the project page <value/>",
+        "removed": "removed the project page <value/>",
+        "untitled": "Untitled page"
+      },
+      "page_view": {
+        "disabled": "disabled page view",
+        "enabled": "enabled page view",
+        "fallback": "{verb} page view"
+      },
+      "priority": {
+        "set": "set the priority to <value/>"
+      },
+      "start_date": {
+        "removed": "removed the start date",
+        "set": "set the start date to <value/>"
+      },
+      "state": {
+        "set": "set the state to <value/>"
+      },
+      "target_date": {
+        "removed": "removed the target date",
+        "set": "set the target date to <value/>"
+      },
+      "timezone": {
+        "changed": "changed project timezone to <value/>",
+        "default": "default"
+      },
+      "value_none": "none"
+    }
   }
 }

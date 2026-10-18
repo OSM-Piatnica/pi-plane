@@ -9,12 +9,14 @@ import type { ReactNode } from "react";
 
 export type TTaggedTextPart = string | { tag: string; text: string };
 
-const TAG_PATTERN = /<(\w+)>(.*?)<\/\1>/gs;
+// `<tag>text</tag>` or a self-closing `<tag/>` placeholder
+const TAG_PATTERN = /<(\w+)>(.*?)<\/\1>|<(\w+)\s*\/>/gs;
 
 /**
  * Splits a translated string into plain text and `<tag>…</tag>` parts, so a translation can put
  * markup (a link, a highlighted word) wherever the language's word order needs it:
- * `"No account found. <link>Create one</link> to get started."`. Tags do not nest.
+ * `"No account found. <link>Create one</link> to get started."`. A self-closing `<tag/>` marks where
+ * a value that must not be spliced into the string (a user-supplied name) is rendered. Tags do not nest.
  */
 export const splitTaggedText = (text: string): TTaggedTextPart[] => {
   const parts: TTaggedTextPart[] = [];
@@ -22,7 +24,7 @@ export const splitTaggedText = (text: string): TTaggedTextPart[] => {
   for (const match of text.matchAll(TAG_PATTERN)) {
     const start = match.index ?? 0;
     if (start > cursor) parts.push(text.slice(cursor, start));
-    parts.push({ tag: match[1] ?? "", text: match[2] ?? "" });
+    parts.push({ tag: match[1] ?? match[3] ?? "", text: match[2] ?? "" });
     cursor = start + match[0].length;
   }
   if (cursor < text.length) parts.push(text.slice(cursor));
