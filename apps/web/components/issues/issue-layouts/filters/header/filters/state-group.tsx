@@ -57,7 +57,7 @@ export const FilterStateGroup = observer(function FilterStateGroup(props: Props)
                   isChecked={appliedFiltersSet.has(stateGroup.key)}
                   onClick={() => handleUpdate(stateGroup.key)}
                   icon={<StateGroupIcon stateGroup={stateGroup.key} />}
-                  title={stateGroup.label}
+                  title={t(stateGroup.i18n_label)}
                 />
               ))}
               {filteredOptions.length > 5 && (

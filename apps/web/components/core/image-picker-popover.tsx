@@ -289,8 +289,10 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                                         className="relative col-span-2 aspect-video md:col-span-1"
                                         aria-label={
                                           unsplashImage.alt_description
-                                            ? `Select image: ${unsplashImage.alt_description}`
-                                            : "Select image"
+                                            ? t("app_text.image_upload.select_image_named", {
+                                                description: unsplashImage.alt_description,
+                                              })
+                                            : t("app_text.image_upload.select_image")
                                         }
                                         onClick={() => {
                                           setIsOpen(false);
@@ -306,7 +308,9 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                                     ))}
                                   </div>
                                 ) : (
-                                  <p className="pt-7 text-center text-11 text-secondary">No images found.</p>
+                                  <p className="pt-7 text-center text-11 text-secondary">
+                                    {t("app_text.image_upload.no_images")}
+                                  </p>
                                 )
                               ) : (
                                 <Loader className="grid grid-cols-4 gap-4">
@@ -331,7 +335,7 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                               type="button"
                               key={imageUrl}
                               className="relative col-span-2 aspect-video md:col-span-1"
-                              aria-label={`Select cover image ${index + 1}`}
+                              aria-label={t("app_text.image_upload.select_cover_image", { index: index + 1 })}
                               onClick={() => handleStaticImageSelect(imageUrl)}
                             >
                               <img
@@ -358,7 +362,7 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                                 type="button"
                                 className="absolute top-0 right-0 z-40 -translate-y-1/2 rounded-sm bg-surface-2 px-2 py-0.5 text-11 font-medium text-secondary"
                               >
-                                Edit
+                                {t("common.edit")}
                               </button>
                               {image !== null || (value && value !== "") ? (
                                 <>
@@ -372,7 +376,9 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                               ) : (
                                 <div>
                                   <span className="mt-2 block text-13 font-medium text-secondary">
-                                    {isDragActive ? "Drop image here to upload" : "Drag & drop image here"}
+                                    {isDragActive
+                                      ? t("app_text.image_upload.drop_to_upload")
+                                      : t("app_text.image_upload.drag_and_drop")}
                                   </span>
                                 </div>
                               )}
@@ -383,19 +389,19 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                           {fileRejections.length > 0 && (
                             <p className="text-13 text-danger-primary">
                               {fileRejections[0].errors[0].code === "file-too-large"
-                                ? "The image size cannot exceed 5 MB."
-                                : "Please upload a file in a valid format."}
+                                ? t("app_text.image_upload.size_exceeded")
+                                : t("app_text.image_upload.invalid_format")}
                             </p>
                           )}
 
-                          <p className="text-13 text-secondary">File formats supported- .jpeg, .jpg, .png, .webp</p>
+                          <p className="text-13 text-secondary">{t("app_text.image_upload.formats_supported")}</p>
 
                           <div className="flex h-12 items-start justify-end gap-2">
                             <Button
                               variant="secondary"
                               size="sm"
                               stretch="auto"
-                              label="Cancel"
+                              label={t("common.cancel")}
                               onClick={() => {
                                 setIsOpen(false);
                                 setImage(null);
@@ -405,7 +411,11 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                               variant="primary"
                               size="sm"
                               stretch="full"
-                              label={isImageUploading ? "Uploading" : "Upload & Save"}
+                              label={
+                                isImageUploading
+                                  ? t("app_text.image_upload.uploading")
+                                  : t("app_text.image_upload.upload_and_save")
+                              }
                               onClick={handleSubmit}
                               disabled={!image}
                               loading={isImageUploading}

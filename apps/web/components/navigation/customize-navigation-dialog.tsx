@@ -369,7 +369,9 @@ export const CustomizeNavigationDialog = observer(function CustomizeNavigationDi
                               />
                             </div>
                             {parseInt(projectCountInput) < 1 && projectCountInput !== "" && (
-                              <span className="pl-0.5 text-11 text-danger-primary">Minimum value is 1</span>
+                              <span className="pl-0.5 text-11 text-danger-primary">
+                                {t("app_text.navigation.minimum_value_is_one")}
+                              </span>
                             )}
                           </div>
                         </div>

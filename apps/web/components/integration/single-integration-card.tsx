@@ -37,13 +37,13 @@ type Props = {
 const integrationDetails: { [key: string]: any } = {
   github: {
     logo: GithubLogo,
-    installed: "Activate GitHub on individual projects to sync with specific repositories.",
-    notInstalled: "Connect with GitHub with your Plane workspace to sync project work items.",
+    installed: "app_text.integrations.github_installed",
+    notInstalled: "app_text.integrations.github_not_installed",
   },
   slack: {
     logo: SlackLogo,
-    installed: "Activate Slack on individual projects to sync with specific channels.",
-    notInstalled: "Connect with Slack with your Plane workspace to sync project work items.",
+    installed: "app_text.integrations.slack_installed",
+    notInstalled: "app_text.integrations.slack_not_installed",
   },
 };
 
@@ -94,8 +94,8 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
 
         setToast({
           type: "success",
-          title: "Deleted successfully!",
-          message: `${integration.title} integration deleted successfully.`,
+          title: t("app_text.integrations.deleted_title"),
+          message: t("app_text.integrations.deleted_message", { title: integration.title }),
         });
         return;
       })
@@ -105,7 +105,7 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
         setToast({
           type: "error",
           title: t("toast.error"),
-          message: `${integration.title} integration could not be deleted. Please try again.`,
+          message: t("app_text.integrations.delete_failed_message", { title: integration.title }),
         });
       });
   };
@@ -121,7 +121,7 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
           <img
             src={integrationDetails[integration.provider].logo}
             className="h-full w-full object-cover"
-            alt={`${integration.title} Logo`}
+            alt={t("app_text.integrations.logo_alt", { title: integration.title })}
           />
         </div>
         <div>
@@ -134,9 +134,9 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
           <p className="text-body-xs-regular text-secondary">
             {workspaceIntegrations
               ? isInstalled
-                ? integrationDetails[integration.provider].installed
-                : integrationDetails[integration.provider].notInstalled
-              : "Loading..."}
+                ? t(integrationDetails[integration.provider].installed)
+                : t(integrationDetails[integration.provider].notInstalled)
+              : t("app_text.integrations.loading")}
           </p>
         </div>
       </div>
@@ -144,7 +144,7 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
       {workspaceIntegrations ? (
         isInstalled ? (
           <Tooltip
-            label={!isUserAdmin ? "You don't have permission to perform this" : ""}
+            label={!isUserAdmin ? t("app_text.integrations.no_permission") : ""}
             layout="stacked"
             disabled={isUserAdmin || isMobile}
           >
@@ -159,12 +159,14 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
               }}
               disabled={!isUserAdmin}
               loading={deletingIntegration}
-              label={deletingIntegration ? "Uninstalling..." : "Uninstall"}
+              label={
+                deletingIntegration ? t("app_text.integrations.uninstalling") : t("app_text.integrations.uninstall")
+              }
             />
           </Tooltip>
         ) : (
           <Tooltip
-            label={!isUserAdmin ? "You don't have permission to perform this" : ""}
+            label={!isUserAdmin ? t("app_text.integrations.no_permission") : ""}
             layout="stacked"
             disabled={isUserAdmin || isMobile}
           >
@@ -178,7 +180,7 @@ export const SingleIntegrationCard = observer(function SingleIntegrationCard({ i
                 startAuth();
               }}
               loading={isInstalling}
-              label={isInstalling ? "Installing..." : "Install"}
+              label={isInstalling ? t("app_text.integrations.installing") : t("app_text.integrations.install")}
             />
           </Tooltip>
         )

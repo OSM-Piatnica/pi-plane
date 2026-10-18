@@ -146,7 +146,7 @@ export const useRealtimePageEvents = ({
 
         error: ({ pageIds, data }: { pageIds: string[]; data: EventToPayloadMap["error"] }) => {
           const errorType = data.error_type;
-          const errorMessage = data.error_message || "An error occurred";
+          const errorMessage = data.error_message || t("app_text.stores.generic_error");
           const errorCode = data.error_code;
 
           if (page.id && pageIds.includes(page.id)) {

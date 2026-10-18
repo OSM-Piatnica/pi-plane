@@ -36,22 +36,22 @@ export const CustomThemeImportConfigButton = observer(function CustomThemeImport
 
       // Validate required fields
       if (!config.primary || !config.background) {
-        throw new Error("Missing required fields: primary and background");
+        throw new Error(t("app_text.theme.missing_fields"));
       }
 
       // Validate hex color format
       const hexPattern = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
       if (!hexPattern.test(config.primary)) {
-        throw new Error("Invalid brand color hex format");
+        throw new Error(t("app_text.theme.invalid_brand_hex"));
       }
       if (!hexPattern.test(config.background)) {
-        throw new Error("Invalid neutral color hex format");
+        throw new Error(t("app_text.theme.invalid_neutral_hex"));
       }
 
       // Validate theme mode
       const themeMode = config.darkPalette ?? false;
       if (typeof themeMode !== "boolean") {
-        throw new Error("Invalid theme mode. Must be a boolean");
+        throw new Error(t("app_text.theme.invalid_mode"));
       }
 
       // Apply the configuration to form
@@ -81,7 +81,7 @@ export const CustomThemeImportConfigButton = observer(function CustomThemeImport
       setToast({
         type: "error",
         title: t("error"),
-        message: error instanceof Error ? error.message : "Failed to import theme configuration",
+        message: error instanceof Error ? error.message : t("app_text.theme.import_failed"),
       });
     } finally {
       // Reset file input
@@ -99,7 +99,7 @@ export const CustomThemeImportConfigButton = observer(function CustomThemeImport
         size="md"
         stretch="auto"
         type="button"
-        label="Import config"
+        label={t("app_text.theme.import_config")}
         onClick={() => fileInputRef.current?.click()}
       />
     </>

@@ -1,16 +1,19 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { range } from "lodash-es";
+import { useTranslation } from "@plane/i18n";
 
 export function PagesLoader() {
+  const { t } = useTranslation();
   return (
     <div className="flex h-full flex-col space-y-5 overflow-hidden p-6">
       <div className="flex justify-between gap-4">
-        <h3 className="text-20 font-semibold text-primary">Pages</h3>
+        <h3 className="text-20 font-semibold text-primary">{t("common.pages")}</h3>
       </div>
       <div className="flex items-center gap-3">
         {range(5).map((i) => (

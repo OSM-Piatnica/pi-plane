@@ -9,6 +9,7 @@ import { useCallback, useState } from "react";
 import { setToast } from "@plane/blocks/toast";
 import { copyUrlToClipboard } from "@plane/utils";
 import type { TNavigationItem } from "@/components/navigation/tab-navigation-root";
+import { useTranslation } from "@plane/i18n";
 
 type UseProjectActionsProps = {
   workspaceSlug: string;
@@ -17,6 +18,7 @@ type UseProjectActionsProps = {
 };
 
 export const useProjectActions = ({ workspaceSlug, projectId, activeItem }: UseProjectActionsProps) => {
+  const { t } = useTranslation();
   const [publishModalOpen, setPublishModalOpen] = useState(false);
   const [leaveProjectModalOpen, setLeaveProjectModalOpen] = useState(false);
 
@@ -31,17 +33,17 @@ export const useProjectActions = ({ workspaceSlug, projectId, activeItem }: UseP
       await copyUrlToClipboard(pathToCopy);
       setToast({
         type: "info",
-        title: "Link copied!",
-        message: "Project link copied to clipboard.",
+        title: t("common.link_copied"),
+        message: t("app_text.navigation.project_link_copied"),
       });
     } catch (_error) {
       setToast({
         type: "error",
-        title: "Copy failed",
-        message: "We couldn't copy the link. Please try again.",
+        title: t("app_text.navigation.copy_failed"),
+        message: t("app_text.navigation.copy_failed_message"),
       });
     }
-  }, [activeItem, projectId, workspaceSlug]);
+  }, [activeItem, projectId, t, workspaceSlug]);
 
   const handlePublishModal = useCallback((open: boolean) => {
     setPublishModalOpen(open);

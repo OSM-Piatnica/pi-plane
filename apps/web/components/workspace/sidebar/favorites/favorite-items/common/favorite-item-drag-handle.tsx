@@ -11,6 +11,7 @@ import { observer } from "mobx-react";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { DragHandle } from "@plane/blocks/common";
 // helper
+import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 // hooks
 import { usePlatformOS } from "@/hooks/use-platform-os";
@@ -22,12 +23,13 @@ type Props = {
 
 export const FavoriteItemDragHandle = observer(function FavoriteItemDragHandle(props: Props) {
   const { sort_order, isDragging } = props;
+  const { t } = useTranslation();
   // store hooks
   const { isMobile } = usePlatformOS();
 
   return (
     <Tooltip
-      label={sort_order === null ? "Join the project to rearrange" : "Drag to rearrange"}
+      label={sort_order === null ? t("join_the_project_to_rearrange") : t("drag_to_rearrange")}
       align="end"
       disabled={isDragging || isMobile}
     >

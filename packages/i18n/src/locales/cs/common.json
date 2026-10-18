@@ -1064,5 +1064,338 @@
   "progress_chart": {
     "current": "{title}: aktuální",
     "ideal": "{title}: ideální"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "Pusťte obrázek sem pro nahrání",
+      "drag_and_drop": "Přetáhněte obrázek sem",
+      "size_exceeded": "Velikost obrázku nesmí překročit 5 MB.",
+      "invalid_format": "Nahrajte prosím soubor v platném formátu.",
+      "formats_supported": "Podporované formáty souborů: .jpeg, .jpg, .png, .webp",
+      "uploading": "Nahrávání",
+      "upload_and_save": "Nahrát a uložit",
+      "title": "Nahrát obrázek",
+      "select_image": "Vybrat obrázek",
+      "select_image_named": "Vybrat obrázek: {description}",
+      "select_cover_image": "Vybrat úvodní obrázek {index}",
+      "no_images": "Nebyly nalezeny žádné obrázky."
+    },
+    "ai_assistant": {
+      "rate_limit": "Dosáhli jste maximálního počtu požadavků, tedy 50 požadavků měsíčně na uživatele.",
+      "use_response": "Použít tuto odpověď",
+      "generating_response": "Generování odpovědi...",
+      "generate_response": "Vygenerovat odpověď",
+      "generate_again": "Vygenerovat znovu",
+      "content_label": "Obsah:",
+      "response_label": "Odpověď:",
+      "no_response": "Nepodařilo se vygenerovat žádnou odpověď. Může to být způsobeno nedostatečným obsahem nebo informacemi o úkolu. Zkuste to prosím znovu.",
+      "placeholder_with_content": "Řekněte AI, jakou akci má s tímto obsahem provést...",
+      "placeholder_empty": "Zeptejte se AI na cokoli...",
+      "consent": "Používáním této funkce souhlasíte se sdílením zprávy se službou třetí strany."
+    },
+    "multiple_select": {
+      "select_all_in_group": "Vybrat vše ve skupině"
+    },
+    "theme": {
+      "download_config": "Stáhnout konfiguraci",
+      "import_config": "Importovat konfiguraci",
+      "import_failed": "Import konfigurace motivu se nezdařil",
+      "missing_fields": "Chybí povinná pole: primary a background",
+      "invalid_brand_hex": "Neplatný formát hexadecimální hodnoty barvy značky",
+      "invalid_neutral_hex": "Neplatný formát hexadecimální hodnoty neutrální barvy",
+      "invalid_mode": "Neplatný režim motivu. Musí být logická hodnota",
+      "choose_color_mode": "Vyberte barevný režim",
+      "light_mode": "Světlý režim",
+      "dark_mode": "Tmavý režim"
+    },
+    "workspace": {
+      "delete_warning": "Chystáte se smazat pracovní prostor <name/>. Pokud to potvrdíte, ztratíte přístup ke všem svým pracovním datům v tomto pracovním prostoru bez možnosti obnovení. Postupujte velmi opatrně.",
+      "delete_type_name": "Pro pokračování zadejte název tohoto pracovního prostoru.",
+      "delete_final_confirmation": "Pro konečné potvrzení napište níže <phrase/>."
+    },
+    "workspace_settings": {
+      "invitation_removed": "Pozvánka byla úspěšně odebrána.",
+      "workspace_updated": "Pracovní prostor byl úspěšně aktualizován",
+      "picture_removed": "Obrázek pracovního prostoru byl úspěšně odebrán.",
+      "picture_remove_failed": "Při odstraňování profilového obrázku došlo k chybě. Zkuste to prosím znovu.",
+      "url_copied": "Adresa URL pracovního prostoru byla zkopírována do schránky."
+    },
+    "workspace_views": {
+      "delete_failed": "Pohled se nepodařilo smazat. Zkuste to prosím znovu.",
+      "create_failed": "Pohled se nepodařilo vytvořit. Zkuste to prosím znovu.",
+      "updated": "Pohled byl úspěšně aktualizován.",
+      "update_failed": "Pohled se nepodařilo aktualizovat. Zkuste to prosím znovu.",
+      "edit_view": "Upravit pohled",
+      "delete_view": "Smazat pohled"
+    },
+    "sticky_colors": {
+      "gray": "Šedá",
+      "peach": "Broskvová",
+      "pink": "Růžová",
+      "orange": "Oranžová",
+      "green": "Zelená",
+      "light_blue": "Světle modrá",
+      "dark_blue": "Tmavě modrá",
+      "purple": "Fialová"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "Pracujte ve všech dimenzích.",
+      "welcome_back": "Vítejte zpět v Plane.",
+      "create_your_account": "Vytvořte si účet Plane."
+    },
+    "auth_root": {
+      "no_auth_methods_title": "Nejsou k dispozici žádné metody ověřování",
+      "no_auth_methods_description": "Obraťte se na správce, aby pro vaši instanci povolil ověřování."
+    },
+    "auth_password": {
+      "create_account": "Vytvořit účet"
+    },
+    "terms": {
+      "agree_sign_up": "Vytvořením účtu berete na vědomí a souhlasíte s \n našimi <terms>Smluvními podmínkami</terms> a <privacy>Zásadami ochrany osobních údajů</privacy>.",
+      "agree_sign_in": "Přihlášením berete na vědomí a souhlasíte s \n našimi <terms>Smluvními podmínkami</terms> a <privacy>Zásadami ochrany osobních údajů</privacy>."
+    },
+    "auth_screens": {
+      "sign_up": "Registrace",
+      "sign_in": "Přihlásit se",
+      "join_teams": "Připojte se k více než 10 000 týmů, které tvoří s Plane",
+      "not_authorized_view_title": "Jejda! Nemáte oprávnění zobrazit tuto stránku",
+      "not_authorized": "Neoprávněný přístup!",
+      "not_a_member_description": "Nejste členem tohoto pracovního prostoru. Obraťte se na správce pracovního prostoru, aby vám poslal pozvánku, nebo zkontrolujte své čekající pozvánky.",
+      "check_pending_invites": "Zkontrolovat čekající pozvánky"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "Pracovní prostor nenalezen",
+      "workspace_not_found_description": "Pro tuto adresu URL nebyl nalezen žádný pracovní prostor. Možná neexistuje nebo nemáte oprávnění jej zobrazit.",
+      "visit_profile": "Navštívit profil"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "Přepnout nabídku nastavení",
+      "back_to_project": "Zpět do projektu",
+      "toggle_project_feature": "Přepnout funkci projektu"
+    },
+    "headers": {
+      "toggle_sidebar": "Přepnout postranní panel"
+    },
+    "profile_activity": {
+      "page_title": "Profil – Aktivita"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook byl úspěšně aktualizován.",
+      "not_authorized": "Nemáte oprávnění k přístupu na tuto stránku.",
+      "enable_webhook": "Povolit webhook",
+      "toggle_webhook": "Přepnout webhook"
+    },
+    "project_settings_empty": {
+      "title": "Zatím žádné projekty",
+      "description": "Projekty tvoří základ práce zaměřené na cíle. Umožňují vám spravovat své týmy, úkoly a vše, co potřebujete k dokončení práce.",
+      "learn_more": "Další informace o projektech"
+    },
+    "project_templates": {
+      "imported_template": "Importovaná šablona",
+      "pick_color": "Vybrat barvu"
+    },
+    "not_found": {
+      "image_alt": "404 – Stránka nenalezena",
+      "title": "Jejda! Něco se pokazilo.",
+      "description": "Omlouváme se, stránka, kterou hledáte, nebyla nalezena. Mohla být odstraněna, mohl se změnit její název nebo je dočasně nedostupná.",
+      "go_to_home": "Přejít na úvodní stránku"
+    },
+    "api_tokens": {
+      "empty_title": "Žádné tokeny API",
+      "empty_description": "Vytvářejte tokeny API pro bezpečné a snadné sdílení dat s externími aplikacemi při zachování kontroly a zabezpečení.",
+      "add_token": "Přidat token",
+      "delete_token": "Smazat token"
+    },
+    "base_layouts": {
+      "gantt": "Rozložení Gantt"
+    },
+    "command_palette": {
+      "no_states_found": "Nebyly nalezeny žádné stavy"
+    },
+    "quick_actions": {
+      "archive_module_hint": "Archivovat lze pouze dokončené nebo zrušené moduly"
+    },
+    "progress": {
+      "cycle_progress": "Průběh cyklu"
+    },
+    "estimates": {
+      "delete_title": "Smazat systém odhadů",
+      "delete_description": "Smazáním systému odhadů <name/> jej trvale odstraníte ze všech pracovních položek. Tuto akci nelze vrátit zpět. Pokud odhady přidáte znovu, budete muset aktualizovat všechny pracovní položky.",
+      "deleting": "Mazání",
+      "delete_estimate": "Smazat odhad",
+      "toggle_estimates": "Přepnout odhady",
+      "estimates_list": "Seznam odhadů",
+      "archived_title": "Archivované odhady",
+      "archived_description": "Odhady prošly změnou. Toto jsou odhady z vašich starších verzí, které se nepoužívaly. Více se o nich dozvíte <link>zde.</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "Vytvořit závislost „blokováno“",
+      "create_blocking_dependency": "Vytvořit závislost „blokuje“",
+      "update_block_dates_failed": "Při aktualizaci dat bloku se něco pokazilo"
+    },
+    "product_updates": {
+      "fetch_failed": "Máme potíže s načtením aktualit. Nejnovější aktuality najdete v našem seznamu změn.",
+      "go_to_changelog": "Přejít na seznam změn"
+    },
+    "inbox": {
+      "intake_form_user": "Uživatel formuláře Intake",
+      "status": "Stav",
+      "created_by": "Vytvořil"
+    },
+    "instance": {
+      "contact_support": "Kontaktovat podporu",
+      "maintenance_title": "🚧 Vypadá to, že se Plane nespustil správně!",
+      "maintenance_description": "Některé služby se možná nepodařilo spustit. Zkontrolujte protokoly kontejnerů, abyste problém zjistili a vyřešili. Pokud si nevíte rady, obraťte se na náš tým podpory.",
+      "welcome_title": "Vítejte v Plane",
+      "welcome_description": "Nastavte svou instanci a vytvořte svůj první pracovní prostor, abyste mohli začít spravovat projekty a práci."
+    },
+    "integrations": {
+      "github_installed": "Aktivujte GitHub u jednotlivých projektů pro synchronizaci s konkrétními repozitáři.",
+      "github_not_installed": "Propojte GitHub se svým pracovním prostorem Plane pro synchronizaci pracovních položek projektu.",
+      "slack_installed": "Aktivujte Slack u jednotlivých projektů pro synchronizaci s konkrétními kanály.",
+      "slack_not_installed": "Propojte Slack se svým pracovním prostorem Plane pro synchronizaci pracovních položek projektu.",
+      "deleted_title": "Úspěšně smazáno!",
+      "deleted_message": "Integrace {title} byla úspěšně smazána.",
+      "delete_failed_message": "Integraci {title} se nepodařilo smazat. Zkuste to prosím znovu.",
+      "logo_alt": "Logo {title}",
+      "loading": "Načítání...",
+      "no_permission": "Nemáte oprávnění k provedení této akce",
+      "uninstalling": "Odinstalování...",
+      "uninstall": "Odinstalovat",
+      "installing": "Instalace...",
+      "install": "Nainstalovat"
+    },
+    "attachments": {
+      "upload_progress": "Průběh nahrávání"
+    },
+    "labels": {
+      "delete_confirmation": "Opravdu chcete smazat <name/>? Štítek bude odstraněn ze všech pracovních položek i ze všech pohledů, ve kterých je podle něj filtrováno.",
+      "edit_label": "Upravit štítek",
+      "delete_label": "Smazat štítek",
+      "remove_from_group": "Odebrat ze skupiny"
+    },
+    "modules": {
+      "module_progress": "Průběh modulu"
+    },
+    "navigation": {
+      "icon_only": "Pouze ikona",
+      "icon_with_name": "Ikona s názvem",
+      "dock_app_rail": "Ukotvit panel aplikací",
+      "undock_app_rail": "Uvolnit panel aplikací",
+      "minimum_value_is_one": "Minimální hodnota je 1",
+      "show": "Zobrazit",
+      "clear_default": "Zrušit výchozí",
+      "hide_in_more_menu": "Skrýt v nabídce Více",
+      "project_link_copied": "Odkaz na projekt byl zkopírován do schránky.",
+      "copy_failed": "Kopírování se nezdařilo",
+      "copy_failed_message": "Odkaz se nepodařilo zkopírovat. Zkuste to prosím znovu.",
+      "default_tab_updated": "Výchozí karta byla úspěšně aktualizována.",
+      "default_tab_update_failed": "Výchozí kartu se nepodařilo aktualizovat. Zkuste to prosím později.",
+      "hide_tab_failed": "Kartu se nepodařilo skrýt. Zkuste to prosím později.",
+      "generic_error": "Něco se pokazilo. Zkuste to prosím později."
+    },
+    "onboarding": {
+      "select_workspace_invitation": "Vybrat pozvánku do pracovního prostoru"
+    },
+    "tour": {
+      "work_items_title": "Plánujte pomocí pracovních položek",
+      "work_items_description": "Pracovní položka je základním stavebním kamenem Plane. Většina konceptů v Plane je spojena s pracovními položkami a jejich vlastnostmi.",
+      "cycles_title": "Postupujte pomocí cyklů",
+      "cycles_description": "Cykly vám a vašemu týmu pomáhají postupovat rychleji, podobně jako sprinty běžně používané ve vývoji agile.",
+      "modules_title": "Rozdělte na moduly",
+      "modules_description": "Moduly rozdělují vaši velkou věc na projekty nebo funkce, abyste se lépe zorganizovali.",
+      "views_description": "Vytvářejte vlastní filtry a zobrazujte jen pracovní položky, na kterých vám záleží. Filtry uložíte a sdílíte během pár kliknutí.",
+      "pages_title": "Dokumentujte pomocí stránek",
+      "pages_description": "Pomocí stránek rychle zapisujte pracovní položky na schůzce nebo na začátku dne.",
+      "welcome_title": "Vítejte v Plane, {firstName} {lastName}",
+      "welcome_description": "Jsme rádi, že jste se rozhodli Plane vyzkoušet. Nyní můžete snadno spravovat své projekty. Začněte vytvořením projektu.",
+      "take_tour": "Absolvovat prohlídku produktu",
+      "skip": "Ne, děkuji, prozkoumám to sám",
+      "create_first_project": "Vytvořte svůj první projekt",
+      "sidebar_heading": "Začněme!<br/>Získejte z Plane víc."
+    },
+    "ai": {
+      "ask_pi": "Zeptat se Pi",
+      "tone_professional": "💼 Profesionální",
+      "tone_casual": "😃 Neformální",
+      "third_party_consent": "Používáním této funkce souhlasíte se sdílením zprávy se službou třetí strany.",
+      "pi_writing": "Pi píše",
+      "pi_generating_response": "Pi generuje odpověď"
+    },
+    "pages": {
+      "icon": "Ikona",
+      "color": "Barva",
+      "remove_text_color": "Odebrat barvu textu",
+      "remove_background_color": "Odebrat barvu pozadí",
+      "formatting_toolbar": "Panel formátování",
+      "copied_link": "Odkaz zkopírován",
+      "remove_favorite": "Odebrat z oblíbených",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "Bot {name}"
+    },
+    "project": {
+      "identifier": "Identifikátor"
+    },
+    "projects": {
+      "toggle_feature": "Přepnout funkci projektu",
+      "cover_upload_failed": "Nahrání úvodního obrázku se nezdařilo"
+    },
+    "notifications": {
+      "notification_options": "Možnosti oznámení"
+    },
+    "stores": {
+      "generic_error": "Došlo k chybě",
+      "inbox_fetch_error": "Při načítání pracovních položek Intake došlo k chybě. Zkuste to prosím později.",
+      "page_make_public_error": "Stránku se nepodařilo zveřejnit. Zkuste to prosím později.",
+      "page_make_private_error": "Stránku se nepodařilo nastavit jako soukromou. Zkuste to prosím později.",
+      "workflow_pending_approval": "Pracovní položka čeká na schválení.",
+      "workflow_transition_not_allowed": "Tento přechod stavu není pracovním postupem povolen."
+    },
+    "validation": {
+      "name_max_length": "Název musí mít nejvýše 50 znaků",
+      "name_special_chars": "Jména nesmí obsahovat speciální znaky, například {chars}",
+      "name_invalid_chars": "Jména mohou obsahovat pouze písmena, mezery, pomlčky a apostrofy",
+      "display_name_max_length": "Zobrazované jméno musí mít nejvýše 50 znaků",
+      "display_name_special_chars": "Zobrazované jméno nesmí obsahovat speciální znaky, například {chars}",
+      "display_name_invalid_chars": "Zobrazované jméno může obsahovat pouze písmena, číslice, tečky, pomlčky a podtržítka",
+      "company_name_max_length": "Název společnosti musí mít nejvýše 80 znaků",
+      "company_name_special_chars": "Název společnosti nesmí obsahovat speciální znaky, například {chars}",
+      "company_name_invalid_chars": "Název společnosti může obsahovat pouze písmena, číslice, mezery, pomlčky a podtržítka",
+      "company_name_needs_alphanumeric": "Název společnosti musí obsahovat alespoň jedno písmeno nebo číslici",
+      "workspace_name_required": "Název pracovního prostoru je povinný",
+      "workspace_name_max_length": "Název pracovního prostoru musí mít nejvýše 80 znaků",
+      "workspace_name_special_chars": "Název pracovního prostoru nesmí obsahovat speciální znaky, například {chars}",
+      "workspace_name_invalid_chars": "Název pracovního prostoru může obsahovat pouze písmena, číslice, mezery, pomlčky a podtržítka",
+      "workspace_name_needs_alphanumeric": "Název pracovního prostoru musí obsahovat alespoň jedno písmeno nebo číslici",
+      "slug_required": "Slug je povinný",
+      "slug_max_length": "Slug musí mít nejvýše 48 znaků",
+      "slug_special_chars": "Slug nesmí obsahovat speciální znaky, například {chars}",
+      "slug_invalid_chars": "Slug může obsahovat pouze písmena, číslice, pomlčky a podtržítka"
+    },
+    "analytics": {
+      "state_name": "Název stavu",
+      "estimate_point": "Bod odhadu",
+      "completed_date": "Datum dokončení",
+      "yesterday": "Včera",
+      "last_7_days": "Posledních 7 dní",
+      "last_30_days": "Posledních 30 dní",
+      "last_3_months": "Poslední 3 měsíce",
+      "duration": "Trvání"
+    },
+    "auth_labels": {
+      "magic_code": "Magický kód"
+    },
+    "state_groups": {
+      "canceled": "Zrušeno"
+    },
+    "filters": {
+      "state_group": "Skupina stavů",
+      "subscriber": "Odběratel"
+    }
   }
 }

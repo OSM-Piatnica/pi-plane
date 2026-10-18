@@ -210,7 +210,7 @@ export const BulkDeleteIssuesModal = observer(function BulkDeleteIssuesModal(pro
           </Combobox>
           {issues.length > 0 && (
             <DialogActions>
-              <Button variant="secondary" size="md" stretch="auto" label="Cancel" onClick={handleClose} />
+              <Button variant="secondary" size="md" stretch="auto" label={t("common.cancel")} onClick={handleClose} />
               <Button
                 variant="danger"
                 size="md"

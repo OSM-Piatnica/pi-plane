@@ -40,7 +40,7 @@ export const InboxIssueAppliedFiltersPriority = observer(function InboxIssueAppl
             <div className="relative flex h-3 w-3 flex-shrink-0 items-center justify-center overflow-hidden">
               <PriorityIcon priority={optionDetail.key} className="h-3 w-3" />
             </div>
-            <div className="truncate text-11">{optionDetail?.title}</div>
+            <div className="truncate text-11">{t(optionDetail.i18n_title)}</div>
             <button
               type="button"
               aria-label={t("common.remove")}

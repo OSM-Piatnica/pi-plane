@@ -69,14 +69,14 @@ function WebhookDetailsPage({ params }: Route.ComponentProps) {
       setToast({
         type: "success",
         title: t("toast.success"),
-        message: "Webhook updated successfully.",
+        message: t("app_text.webhooks.updated_successfully"),
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setToast({
         type: "error",
         title: t("toast.error"),
-        message: error?.error ?? "Something went wrong. Please try again.",
+        message: error?.error ?? t("something_went_wrong_please_try_again"),
       });
     }
   };
@@ -86,7 +86,7 @@ function WebhookDetailsPage({ params }: Route.ComponentProps) {
       <>
         <PageHead title={pageTitle} />
         <div className="mt-10 flex h-full w-full justify-center p-4">
-          <p className="text-13 text-tertiary">You are not authorized to access this page.</p>
+          <p className="text-13 text-tertiary">{t("app_text.webhooks.not_authorized")}</p>
         </div>
       </>
     );

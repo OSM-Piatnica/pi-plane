@@ -1064,5 +1064,338 @@
   "progress_chart": {
     "current": "{title} atuais",
     "ideal": "{title} ideais"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "Solte a imagem aqui para carregar",
+      "drag_and_drop": "Arraste e solte a imagem aqui",
+      "size_exceeded": "O tamanho da imagem não pode exceder 5 MB.",
+      "invalid_format": "Carregue um ficheiro num formato válido.",
+      "formats_supported": "Formatos de ficheiro compatíveis: .jpeg, .jpg, .png, .webp",
+      "uploading": "A carregar",
+      "upload_and_save": "Carregar e guardar",
+      "title": "Carregar imagem",
+      "select_image": "Selecionar imagem",
+      "select_image_named": "Selecionar imagem: {description}",
+      "select_cover_image": "Selecionar imagem de capa {index}",
+      "no_images": "Nenhuma imagem encontrada."
+    },
+    "ai_assistant": {
+      "rate_limit": "Atingiu o número máximo de pedidos: 50 pedidos por mês por utilizador.",
+      "use_response": "Usar esta resposta",
+      "generating_response": "A gerar resposta...",
+      "generate_response": "Gerar resposta",
+      "generate_again": "Gerar novamente",
+      "content_label": "Conteúdo:",
+      "response_label": "Resposta:",
+      "no_response": "Não foi possível gerar uma resposta. Isso pode ocorrer por falta de conteúdo ou de informações da tarefa. Tente novamente.",
+      "placeholder_with_content": "Diga à IA qual ação executar neste conteúdo...",
+      "placeholder_empty": "Pergunte qualquer coisa à IA...",
+      "consent": "Ao utilizar esta funcionalidade, concorda em partilhar a mensagem com um serviço de terceiros."
+    },
+    "multiple_select": {
+      "select_all_in_group": "Selecionar tudo no grupo"
+    },
+    "theme": {
+      "download_config": "Transferir configuração",
+      "import_config": "Importar configuração",
+      "import_failed": "Falha ao importar a configuração do tema",
+      "missing_fields": "Campos obrigatórios ausentes: primary e background",
+      "invalid_brand_hex": "Formato hexadecimal da cor da marca inválido",
+      "invalid_neutral_hex": "Formato hexadecimal da cor neutra inválido",
+      "invalid_mode": "Modo de tema inválido. Deve ser um valor booleano",
+      "choose_color_mode": "Escolher modo de cor",
+      "light_mode": "Modo claro",
+      "dark_mode": "Modo escuro"
+    },
+    "workspace": {
+      "delete_warning": "Está prestes a eliminar o espaço de trabalho <name/>. Se confirmar, perderá o acesso a todos os dados de trabalho neste espaço de trabalho, sem qualquer forma de os restaurar. Tenha muito cuidado.",
+      "delete_type_name": "Digite o nome deste espaço de trabalho para continuar.",
+      "delete_final_confirmation": "Para a confirmação final, digite <phrase/> abaixo."
+    },
+    "workspace_settings": {
+      "invitation_removed": "Convite removido com sucesso.",
+      "workspace_updated": "Espaço de trabalho atualizado com sucesso",
+      "picture_removed": "Imagem do espaço de trabalho removida com sucesso.",
+      "picture_remove_failed": "Ocorreu um erro ao eliminar a sua fotografia de perfil. Tente novamente.",
+      "url_copied": "URL do espaço de trabalho copiada para a área de transferência."
+    },
+    "workspace_views": {
+      "delete_failed": "Falha ao eliminar a visualização. Tente novamente.",
+      "create_failed": "Não foi possível criar a visualização. Tente novamente.",
+      "updated": "Visualização atualizada com sucesso.",
+      "update_failed": "Não foi possível atualizar a visualização. Tente novamente.",
+      "edit_view": "Editar visualização",
+      "delete_view": "Eliminar visualização"
+    },
+    "sticky_colors": {
+      "gray": "Cinza",
+      "peach": "Pêssego",
+      "pink": "Rosa",
+      "orange": "Laranja",
+      "green": "Verde",
+      "light_blue": "Azul-claro",
+      "dark_blue": "Azul-escuro",
+      "purple": "Roxo"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "Trabalhe em todas as dimensões.",
+      "welcome_back": "Bem-vindo de volta ao Plane.",
+      "create_your_account": "Crie a sua conta do Plane."
+    },
+    "auth_root": {
+      "no_auth_methods_title": "Nenhum método de autenticação disponível",
+      "no_auth_methods_description": "Contacte o administrador para ativar a autenticação na sua instância."
+    },
+    "auth_password": {
+      "create_account": "Criar conta"
+    },
+    "terms": {
+      "agree_sign_up": "Ao criar uma conta, compreende e concorda com \n nossos <terms>Termos de Serviço</terms> e a nossa <privacy>Política de Privacidade</privacy>.",
+      "agree_sign_in": "Ao iniciar sessão, compreende e concorda com \n nossos <terms>Termos de Serviço</terms> e a nossa <privacy>Política de Privacidade</privacy>."
+    },
+    "auth_screens": {
+      "sign_up": "Registar-se",
+      "sign_in": "Iniciar sessão",
+      "join_teams": "Junte-se a mais de 10.000 equipas que trabalham com o Plane",
+      "not_authorized_view_title": "Ups! Não tem autorização para ver esta página",
+      "not_authorized": "Não autorizado!",
+      "not_a_member_description": "Não é membro deste espaço de trabalho. Contacte o administrador do espaço de trabalho para receber um convite ou verifique os seus convites pendentes.",
+      "check_pending_invites": "Verificar convites pendentes"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "Espaço de trabalho não encontrado",
+      "workspace_not_found_description": "Nenhum espaço de trabalho foi encontrado com essa URL. Pode não existir ou pode não ter autorização para o ver.",
+      "visit_profile": "Visitar perfil"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "Alternar menu de configurações",
+      "back_to_project": "Voltar ao projeto",
+      "toggle_project_feature": "Alternar funcionalidade do projeto"
+    },
+    "headers": {
+      "toggle_sidebar": "Alternar barra lateral"
+    },
+    "profile_activity": {
+      "page_title": "Perfil - Atividade"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook atualizado com sucesso.",
+      "not_authorized": "Não tem autorização para aceder a esta página.",
+      "enable_webhook": "Ativar webhook",
+      "toggle_webhook": "Alternar webhook"
+    },
+    "project_settings_empty": {
+      "title": "Ainda não há projetos",
+      "description": "Os projetos são a base do trabalho orientado a objetivos. Permitem-lhe gerir as suas equipas, tarefas e tudo o que precisa para concluir o trabalho.",
+      "learn_more": "Saiba mais sobre projetos"
+    },
+    "project_templates": {
+      "imported_template": "Modelo importado",
+      "pick_color": "Escolher cor"
+    },
+    "not_found": {
+      "image_alt": "404: página não encontrada",
+      "title": "Ups! Algo correu mal.",
+      "description": "Desculpe, a página que procura não foi encontrada. Pode ter sido removida, ter mudado de nome ou estar temporariamente indisponível.",
+      "go_to_home": "Ir para a página inicial"
+    },
+    "api_tokens": {
+      "empty_title": "Nenhum token de API",
+      "empty_description": "Crie tokens de API para partilhar dados com aplicações externos de forma segura e fácil, mantendo o controlo e a segurança.",
+      "add_token": "Adicionar token",
+      "delete_token": "Eliminar token"
+    },
+    "base_layouts": {
+      "gantt": "Layout Gantt"
+    },
+    "command_palette": {
+      "no_states_found": "Nenhum estado encontrado"
+    },
+    "quick_actions": {
+      "archive_module_hint": "Somente módulos concluídos ou cancelados podem ser arquivados"
+    },
+    "progress": {
+      "cycle_progress": "Progresso do ciclo"
+    },
+    "estimates": {
+      "delete_title": "Eliminar sistema de estimativa",
+      "delete_description": "Eliminar o sistema de estimativa <name/> removê-lo-á de todos os itens de trabalho permanentemente. Esta ação não pode ser desfeita. Se voltar a adicionar estimativas, terá de atualizar todos os itens de trabalho.",
+      "deleting": "A eliminar",
+      "delete_estimate": "Eliminar estimativa",
+      "toggle_estimates": "Alternar estimativas",
+      "estimates_list": "Lista de estimativas",
+      "archived_title": "Estimativas arquivadas",
+      "archived_description": "As estimativas passaram por uma mudança; estas são as estimativas das suas versões anteriores que não estavam em uso. Saiba mais sobre elas <link>aqui.</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "Criar dependência de bloqueado por",
+      "create_blocking_dependency": "Criar dependência de bloqueio",
+      "update_block_dates_failed": "Algo correu mal ao atualizar as datas do bloco"
+    },
+    "product_updates": {
+      "fetch_failed": "Estamos com dificuldade em obter as atualizações. Visite o nosso changelog para ver as novidades mais recentes.",
+      "go_to_changelog": "Ir para o changelog"
+    },
+    "inbox": {
+      "intake_form_user": "Usuário do formulário do Intake",
+      "status": "Status",
+      "created_by": "Criado por"
+    },
+    "instance": {
+      "contact_support": "Contactar o suporte",
+      "maintenance_title": "🚧 Parece que o Plane não iniciou corretamente!",
+      "maintenance_description": "Alguns serviços podem ter falhado ao iniciar. Verifique os registos dos dos seus contentores para identificar e resolver o problema. Se precisar de ajuda, contacte a nossa equipa de suporte.",
+      "welcome_title": "Bem-vindo ao Plane",
+      "welcome_description": "Configure a sua instância e crie o seu primeiro espaço de trabalho para começar a gerir projetos e trabalho."
+    },
+    "integrations": {
+      "github_installed": "Ative o GitHub em projetos individuais para sincronizar com repositórios específicos.",
+      "github_not_installed": "Conecte o GitHub ao seu espaço de trabalho do Plane para sincronizar os itens de trabalho do projeto.",
+      "slack_installed": "Ative o Slack em projetos individuais para sincronizar com canais específicos.",
+      "slack_not_installed": "Conecte o Slack ao seu espaço de trabalho do Plane para sincronizar os itens de trabalho do projeto.",
+      "deleted_title": "Eliminado com sucesso!",
+      "deleted_message": "A integração com {title} foi eliminada com sucesso.",
+      "delete_failed_message": "Não foi possível eliminar a integração com {title}. Tente novamente.",
+      "logo_alt": "Logotipo de {title}",
+      "loading": "A carregar...",
+      "no_permission": "Não tem permissão para realizar esta ação",
+      "uninstalling": "A desinstalar...",
+      "uninstall": "Desinstalar",
+      "installing": "A instalar...",
+      "install": "Instalar"
+    },
+    "attachments": {
+      "upload_progress": "Progresso do carregamento"
+    },
+    "labels": {
+      "delete_confirmation": "Tem a certeza de que deseja eliminar <name/>? Isto removerá a etiqueta de todos os itens de trabalho e de quaisquer visualizações em que a etiqueta esteja a ser usada como filtro.",
+      "edit_label": "Editar etiqueta",
+      "delete_label": "Eliminar etiqueta",
+      "remove_from_group": "Remover do grupo"
+    },
+    "modules": {
+      "module_progress": "Progresso do módulo"
+    },
+    "navigation": {
+      "icon_only": "Somente ícone",
+      "icon_with_name": "Ícone com nome",
+      "dock_app_rail": "Fixar barra de aplicações",
+      "undock_app_rail": "Desafixar barra de aplicações",
+      "minimum_value_is_one": "O valor mínimo é 1",
+      "show": "Mostrar",
+      "clear_default": "Limpar predefinição",
+      "hide_in_more_menu": "Ocultar no menu Mais",
+      "project_link_copied": "Link do projeto copiado para a área de transferência.",
+      "copy_failed": "Falha ao copiar",
+      "copy_failed_message": "Não foi possível copiar o link. Tente novamente.",
+      "default_tab_updated": "Separador predefinido atualizado com sucesso.",
+      "default_tab_update_failed": "Falha ao atualizar o separador predefinido. Tente novamente mais tarde.",
+      "hide_tab_failed": "Falha ao ocultar o separador. Tente novamente mais tarde.",
+      "generic_error": "Algo correu mal. Tente novamente mais tarde."
+    },
+    "onboarding": {
+      "select_workspace_invitation": "Selecionar convite de espaço de trabalho"
+    },
+    "tour": {
+      "work_items_title": "Planeie com itens de trabalho",
+      "work_items_description": "O item de trabalho é o bloco de construção do Plane. A maioria dos conceitos do Plane está associada a itens de trabalho e às suas propriedades.",
+      "cycles_title": "Avance com ciclos",
+      "cycles_description": "Os ciclos ajudam-no a si e à sua equipa a progredir mais rápido, de forma semelhante às sprints normalmente usadas no desenvolvimento ágil.",
+      "modules_title": "Divida em módulos",
+      "modules_description": "Os módulos dividem o seu grande objetivo em projetos ou funcionalidades, para o ajudar a organizar-se melhor.",
+      "views_description": "Crie filtros personalizados para mostrar apenas os itens de trabalho que são importantes para si. Guarde e partilhe os seus filtros em poucos cliques.",
+      "pages_title": "Documente com páginas",
+      "pages_description": "Use as páginas para anotar rapidamente itens de trabalho quando estiver numa reunião ou ao começar o dia.",
+      "welcome_title": "Bem-vindo ao Plane, {firstName} {lastName}",
+      "welcome_description": "Ficámos contentes por ter decidido experimentar o Plane. Agora pode gerir os seus projetos com facilidade. Comece por criar um projeto.",
+      "take_tour": "Fazer um tour pelo produto",
+      "skip": "Não, obrigado, vou explorar por conta própria",
+      "create_first_project": "Crie o seu primeiro projeto",
+      "sidebar_heading": "Vamos começar!<br/>Aproveite mais o Plane."
+    },
+    "ai": {
+      "ask_pi": "Perguntar ao Pi",
+      "tone_professional": "💼 Profissional",
+      "tone_casual": "😃 Casual",
+      "third_party_consent": "Ao utilizar esta funcionalidade, concorda em partilhar a mensagem com um serviço de terceiros.",
+      "pi_writing": "O Pi está a escrever",
+      "pi_generating_response": "O Pi está a gerar a resposta"
+    },
+    "pages": {
+      "icon": "Ícone",
+      "color": "Cor",
+      "remove_text_color": "Remover cor do texto",
+      "remove_background_color": "Remover cor de fundo",
+      "formatting_toolbar": "Barra de ferramentas de formatação",
+      "copied_link": "Link copiado",
+      "remove_favorite": "Remover dos favoritos",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "Bot {name}"
+    },
+    "project": {
+      "identifier": "Identificador"
+    },
+    "projects": {
+      "toggle_feature": "Alternar funcionalidade do projeto",
+      "cover_upload_failed": "Falha ao carregar a imagem de capa"
+    },
+    "notifications": {
+      "notification_options": "Opções de notificação"
+    },
+    "stores": {
+      "generic_error": "Ocorreu um erro",
+      "inbox_fetch_error": "Erro ao obter os itens de trabalho do Intake. Tente novamente mais tarde.",
+      "page_make_public_error": "Não foi possível tornar a página pública. Tente novamente mais tarde.",
+      "page_make_private_error": "Não foi possível tornar a página privada. Tente novamente mais tarde.",
+      "workflow_pending_approval": "O item de trabalho tem uma aprovação pendente.",
+      "workflow_transition_not_allowed": "Esta transição de estado não é permitida pelo fluxo de trabalho."
+    },
+    "validation": {
+      "name_max_length": "O nome deve ter 50 caracteres ou menos",
+      "name_special_chars": "Os nomes não podem conter caracteres especiais como {chars}",
+      "name_invalid_chars": "Os nomes só podem conter letras, espaços, hifens e apóstrofos",
+      "display_name_max_length": "O nome de exibição deve ter 50 caracteres ou menos",
+      "display_name_special_chars": "O nome de exibição não pode conter caracteres especiais como {chars}",
+      "display_name_invalid_chars": "O nome de exibição só pode conter letras, números, pontos, hifens e sublinhados",
+      "company_name_max_length": "O nome da empresa deve ter 80 caracteres ou menos",
+      "company_name_special_chars": "O nome da empresa não pode conter caracteres especiais como {chars}",
+      "company_name_invalid_chars": "O nome da empresa só pode conter letras, números, espaços, hifens e sublinhados",
+      "company_name_needs_alphanumeric": "O nome da empresa deve conter pelo menos uma letra ou um número",
+      "workspace_name_required": "O nome do espaço de trabalho é obrigatório",
+      "workspace_name_max_length": "O nome do espaço de trabalho deve ter 80 caracteres ou menos",
+      "workspace_name_special_chars": "O nome do espaço de trabalho não pode conter caracteres especiais como {chars}",
+      "workspace_name_invalid_chars": "O nome do espaço de trabalho só pode conter letras, números, espaços, hifens e sublinhados",
+      "workspace_name_needs_alphanumeric": "O nome do espaço de trabalho deve conter pelo menos uma letra ou um número",
+      "slug_required": "O slug é obrigatório",
+      "slug_max_length": "O slug deve ter 48 caracteres ou menos",
+      "slug_special_chars": "O slug não pode conter caracteres especiais como {chars}",
+      "slug_invalid_chars": "O slug só pode conter letras, números, hifens e sublinhados"
+    },
+    "analytics": {
+      "state_name": "Nome do estado",
+      "estimate_point": "Ponto de estimativa",
+      "completed_date": "Data de conclusão",
+      "yesterday": "Ontem",
+      "last_7_days": "Últimos 7 dias",
+      "last_30_days": "Últimos 30 dias",
+      "last_3_months": "Últimos 3 meses",
+      "duration": "Duração"
+    },
+    "auth_labels": {
+      "magic_code": "Código mágico"
+    },
+    "state_groups": {
+      "canceled": "Cancelado"
+    },
+    "filters": {
+      "state_group": "Grupo de estado",
+      "subscriber": "Inscrito"
+    }
   }
 }

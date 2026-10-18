@@ -5,7 +5,6 @@
  * See the LICENSE file for details.
  */
 
-import { useMemo } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { EEstimateSystem } from "@plane/constants";
@@ -23,7 +22,7 @@ type Props = {
   value: ChartYAxisMetric;
   onChange: (val: ChartYAxisMetric | null) => void;
   hiddenOptions?: ChartYAxisMetric[];
-  options: { value: ChartYAxisMetric; label: string }[];
+  options: { value: ChartYAxisMetric; label: string; i18n_label: string }[];
 };
 
 export const SelectYAxis = observer(function SelectYAxis({ value, onChange, hiddenOptions, options }: Props) {
@@ -53,10 +52,13 @@ export const SelectYAxis = observer(function SelectYAxis({ value, onChange, hidd
   // derived values
   // computed on every render (not memoised): `isEstimateEnabled` reads observable estimate state
   const hiddenSet = new Set(hiddenOptions);
-  const selectOptions: YAxisOption[] = options.filter(
-    (item) => !hiddenSet.has(item.value) && isEstimateEnabled(item.value)
-  );
-  const selected = useMemo(() => options.find((option) => option.value === value) ?? null, [options, value]);
+  const selectOptions: YAxisOption[] = options
+    .filter((item) => !hiddenSet.has(item.value) && isEstimateEnabled(item.value))
+    .map((item) => ({ value: item.value, label: t(item.i18n_label) }));
+  const selectedOption = options.find((option) => option.value === value);
+  const selected: YAxisOption | null = selectedOption
+    ? { value: selectedOption.value, label: t(selectedOption.i18n_label) }
+    : null;
 
   return (
     <Select<YAxisOption>

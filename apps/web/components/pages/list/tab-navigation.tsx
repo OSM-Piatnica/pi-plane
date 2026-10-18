@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,6 +10,7 @@ import Link from "next/link";
 import type { TPageNavigationTabs } from "@plane/types";
 // helpers
 import { cn } from "@plane/utils";
+import { useTranslation } from "@plane/i18n";
 
 type TPageTabNavigation = {
   workspaceSlug: string;
@@ -17,23 +19,24 @@ type TPageTabNavigation = {
 };
 
 // pages tab options
-const pageTabs: { key: TPageNavigationTabs; label: string }[] = [
+const pageTabs: { key: TPageNavigationTabs; labelKey: string }[] = [
   {
     key: "public",
-    label: "Public",
+    labelKey: "public",
   },
   {
     key: "private",
-    label: "Private",
+    labelKey: "private",
   },
   {
     key: "archived",
-    label: "Archived",
+    labelKey: "project_components.shared.archived",
   },
 ];
 
 export function PageTabNavigation(props: TPageTabNavigation) {
   const { workspaceSlug, projectId, pageType } = props;
+  const { t } = useTranslation();
 
   const handleTabClick = (e: React.MouseEvent<HTMLAnchorElement>, tabKey: TPageNavigationTabs) => {
     if (tabKey === pageType) e.preventDefault();
@@ -53,7 +56,7 @@ export function PageTabNavigation(props: TPageTabNavigation) {
               "text-accent-primary": tab.key === pageType,
             })}
           >
-            {tab.label}
+            {t(tab.labelKey)}
           </div>
           <div
             className={cn(`w-full rounded-t border-t-2 border-transparent transition-all`, {

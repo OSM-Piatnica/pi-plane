@@ -45,7 +45,7 @@ function AutomationSettingsPage({ params }: Route.ComponentProps) {
       setToast({
         type: "error",
         title: t("toast.error"),
-        message: "Something went wrong. Please try again.",
+        message: t("something_went_wrong_please_try_again"),
       });
     }
   };

@@ -41,30 +41,30 @@ export const useCollaborativePageActions = (props: Props) => {
     () => ({
       [DocumentCollaborativeEvents.lock.client]: {
         execute: (shouldSync?: boolean, recursive?: boolean) => page.lock({ shouldSync, recursive }),
-        errorMessage: "Page could not be locked. Please try again later.",
+        errorMessage: t("page_ui.operations.lock_error"),
       },
       [DocumentCollaborativeEvents.unlock.client]: {
         execute: (shouldSync?: boolean, recursive?: boolean) => page.unlock({ shouldSync, recursive }),
-        errorMessage: "Page could not be unlocked. Please try again later.",
+        errorMessage: t("page_ui.operations.unlock_error"),
       },
       [DocumentCollaborativeEvents.archive.client]: {
         execute: (shouldSync?: boolean) => page.archive({ shouldSync }),
-        errorMessage: "Page could not be archived. Please try again later.",
+        errorMessage: t("page_ui.operations.archive_error"),
       },
       [DocumentCollaborativeEvents.unarchive.client]: {
         execute: (shouldSync?: boolean) => page.restore({ shouldSync }),
-        errorMessage: "Page could not be restored. Please try again later.",
+        errorMessage: t("page_ui.operations.restore_error"),
       },
       [DocumentCollaborativeEvents["make-public"].client]: {
         execute: (shouldSync?: boolean) => page.makePublic({ shouldSync }),
-        errorMessage: "Page could not be made public. Please try again later.",
+        errorMessage: t("app_text.stores.page_make_public_error"),
       },
       [DocumentCollaborativeEvents["make-private"].client]: {
         execute: (shouldSync?: boolean) => page.makePrivate({ shouldSync }),
-        errorMessage: "Page could not be made private. Please try again later.",
+        errorMessage: t("app_text.stores.page_make_private_error"),
       },
     }),
-    [page]
+    [page, t]
   );
 
   const executeCollaborativeAction = useCallback(

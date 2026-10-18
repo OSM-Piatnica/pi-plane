@@ -1064,5 +1064,338 @@
   "progress_chart": {
     "current": "Huidige {title}",
     "ideal": "Ideale {title}"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "Zet de afbeelding hier neer om te uploaden",
+      "drag_and_drop": "Sleep de afbeelding hierheen",
+      "size_exceeded": "De afbeelding mag niet groter zijn dan 5 MB.",
+      "invalid_format": "Upload een bestand in een geldig formaat.",
+      "formats_supported": "Ondersteunde bestandsformaten: .jpeg, .jpg, .png, .webp",
+      "uploading": "Uploaden",
+      "upload_and_save": "Uploaden en opslaan",
+      "title": "Afbeelding uploaden",
+      "select_image": "Afbeelding selecteren",
+      "select_image_named": "Afbeelding selecteren: {description}",
+      "select_cover_image": "Omslagafbeelding {index} selecteren",
+      "no_images": "Geen afbeeldingen gevonden."
+    },
+    "ai_assistant": {
+      "rate_limit": "U heeft het maximum van 50 verzoeken per maand per gebruiker bereikt.",
+      "use_response": "Dit antwoord gebruiken",
+      "generating_response": "Antwoord wordt gegenereerd...",
+      "generate_response": "Antwoord genereren",
+      "generate_again": "Opnieuw genereren",
+      "content_label": "Inhoud:",
+      "response_label": "Antwoord:",
+      "no_response": "Er kon geen antwoord worden gegenereerd. Dit kan komen door onvoldoende inhoud of taakinformatie. Probeer het opnieuw.",
+      "placeholder_with_content": "Vertel de AI welke actie moet worden uitgevoerd op deze inhoud...",
+      "placeholder_empty": "Vraag de AI alles...",
+      "consent": "Door deze functie te gebruiken, stemt u ermee in dat het bericht wordt gedeeld met een externe dienst."
+    },
+    "multiple_select": {
+      "select_all_in_group": "Alles in groep selecteren"
+    },
+    "theme": {
+      "download_config": "Configuratie downloaden",
+      "import_config": "Configuratie importeren",
+      "import_failed": "Thema-configuratie importeren mislukt",
+      "missing_fields": "Verplichte velden ontbreken: primary en background",
+      "invalid_brand_hex": "Ongeldig hex-formaat voor merkkleur",
+      "invalid_neutral_hex": "Ongeldig hex-formaat voor neutrale kleur",
+      "invalid_mode": "Ongeldige themamodus. Moet een booleaanse waarde zijn",
+      "choose_color_mode": "Kleurmodus kiezen",
+      "light_mode": "Lichte modus",
+      "dark_mode": "Donkere modus"
+    },
+    "workspace": {
+      "delete_warning": "U staat op het punt de werkruimte <name/> te verwijderen. Als u dit bevestigt, verliest u de toegang tot al uw werkgegevens in deze werkruimte, zonder mogelijkheid tot herstel. Ga uiterst voorzichtig te werk.",
+      "delete_type_name": "Typ de naam van deze werkruimte om door te gaan.",
+      "delete_final_confirmation": "Typ ter definitieve bevestiging <phrase/> hieronder."
+    },
+    "workspace_settings": {
+      "invitation_removed": "Uitnodiging succesvol verwijderd.",
+      "workspace_updated": "Werkruimte succesvol bijgewerkt",
+      "picture_removed": "Werkruimteafbeelding succesvol verwijderd.",
+      "picture_remove_failed": "Er is een fout opgetreden bij het verwijderen van uw profielfoto. Probeer het opnieuw.",
+      "url_copied": "Werkruimte-URL gekopieerd naar het klembord."
+    },
+    "workspace_views": {
+      "delete_failed": "De weergave kon niet worden verwijderd. Probeer het opnieuw.",
+      "create_failed": "De weergave kon niet worden aangemaakt. Probeer het opnieuw.",
+      "updated": "Weergave succesvol bijgewerkt.",
+      "update_failed": "De weergave kon niet worden bijgewerkt. Probeer het opnieuw.",
+      "edit_view": "Weergave bewerken",
+      "delete_view": "Weergave verwijderen"
+    },
+    "sticky_colors": {
+      "gray": "Grijs",
+      "peach": "Perzik",
+      "pink": "Roze",
+      "orange": "Oranje",
+      "green": "Groen",
+      "light_blue": "Lichtblauw",
+      "dark_blue": "Donkerblauw",
+      "purple": "Paars"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "Werk in alle dimensies.",
+      "welcome_back": "Welkom terug bij Plane.",
+      "create_your_account": "Maak uw Plane-account aan."
+    },
+    "auth_root": {
+      "no_auth_methods_title": "Geen authenticatiemethoden beschikbaar",
+      "no_auth_methods_description": "Neem contact op met uw beheerder om authenticatie voor uw instantie in te schakelen."
+    },
+    "auth_password": {
+      "create_account": "Account aanmaken"
+    },
+    "terms": {
+      "agree_sign_up": "Door een account aan te maken, begrijpt en accepteert u \n onze <terms>Servicevoorwaarden</terms> en ons <privacy>Privacybeleid</privacy>.",
+      "agree_sign_in": "Door u aan te melden, begrijpt en accepteert u \n onze <terms>Servicevoorwaarden</terms> en ons <privacy>Privacybeleid</privacy>."
+    },
+    "auth_screens": {
+      "sign_up": "Registreren",
+      "sign_in": "Aanmelden",
+      "join_teams": "Sluit u aan bij meer dan 10.000 teams die met Plane bouwen",
+      "not_authorized_view_title": "Oeps! U bent niet gemachtigd om deze pagina te bekijken",
+      "not_authorized": "Niet geautoriseerd!",
+      "not_a_member_description": "U bent geen lid van deze werkruimte. Neem contact op met de beheerder van de werkruimte voor een uitnodiging of controleer uw openstaande uitnodigingen.",
+      "check_pending_invites": "Openstaande uitnodigingen controleren"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "Werkruimte niet gevonden",
+      "workspace_not_found_description": "Er is geen werkruimte gevonden met deze URL. Mogelijk bestaat deze niet of heeft u geen toestemming om deze te bekijken.",
+      "visit_profile": "Profiel bekijken"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "Instellingenmenu in-/uitschakelen",
+      "back_to_project": "Terug naar project",
+      "toggle_project_feature": "Projectfunctie in-/uitschakelen"
+    },
+    "headers": {
+      "toggle_sidebar": "Zijbalk in-/uitschakelen"
+    },
+    "profile_activity": {
+      "page_title": "Profiel - Activiteit"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook succesvol bijgewerkt.",
+      "not_authorized": "U bent niet gemachtigd om deze pagina te openen.",
+      "enable_webhook": "Webhook inschakelen",
+      "toggle_webhook": "Webhook in-/uitschakelen"
+    },
+    "project_settings_empty": {
+      "title": "Nog geen projecten",
+      "description": "Projecten vormen de basis voor doelgericht werk. Hiermee beheert u uw teams, taken en alles wat u nodig heeft om dingen gedaan te krijgen.",
+      "learn_more": "Meer informatie over projecten"
+    },
+    "project_templates": {
+      "imported_template": "Geïmporteerde sjabloon",
+      "pick_color": "Kleur kiezen"
+    },
+    "not_found": {
+      "image_alt": "404 - Pagina niet gevonden",
+      "title": "Oeps! Er is iets misgegaan.",
+      "description": "Sorry, de pagina die u zoekt kan niet worden gevonden. Mogelijk is deze verwijderd, hernoemd of tijdelijk niet beschikbaar.",
+      "go_to_home": "Naar startpagina"
+    },
+    "api_tokens": {
+      "empty_title": "Geen API-tokens",
+      "empty_description": "Maak API-tokens aan voor veilig en eenvoudig delen van gegevens met externe apps, met behoud van controle en veiligheid.",
+      "add_token": "Token toevoegen",
+      "delete_token": "Token verwijderen"
+    },
+    "base_layouts": {
+      "gantt": "Gantt-indeling"
+    },
+    "command_palette": {
+      "no_states_found": "Geen statussen gevonden"
+    },
+    "quick_actions": {
+      "archive_module_hint": "Alleen voltooide of geannuleerde modules kunnen worden gearchiveerd"
+    },
+    "progress": {
+      "cycle_progress": "Cyclusvoortgang"
+    },
+    "estimates": {
+      "delete_title": "Schattingssysteem verwijderen",
+      "delete_description": "Als u het schattingssysteem <name/> verwijdert, wordt het permanent uit alle werkitems verwijderd. Deze actie kan niet ongedaan worden gemaakt. Als u opnieuw schattingen toevoegt, moet u alle werkitems bijwerken.",
+      "deleting": "Bezig met verwijderen",
+      "delete_estimate": "Schatting verwijderen",
+      "toggle_estimates": "Schattingen in-/uitschakelen",
+      "estimates_list": "Schattingenlijst",
+      "archived_title": "Gearchiveerde schattingen",
+      "archived_description": "Schattingen zijn gewijzigd. Dit zijn de schattingen uit uw oudere versies die niet in gebruik waren. Lees er meer over <link>hier.</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "Afhankelijkheid 'geblokkeerd door' aanmaken",
+      "create_blocking_dependency": "Blokkerende afhankelijkheid aanmaken",
+      "update_block_dates_failed": "Er is iets misgegaan bij het bijwerken van de blokdatums"
+    },
+    "product_updates": {
+      "fetch_failed": "We hebben moeite om de updates op te halen. Bezoek onze changelog om de laatste updates te bekijken.",
+      "go_to_changelog": "Naar changelog"
+    },
+    "inbox": {
+      "intake_form_user": "Gebruiker van Intake-formulier",
+      "status": "Status",
+      "created_by": "Aangemaakt door"
+    },
+    "instance": {
+      "contact_support": "Contact opnemen met support",
+      "maintenance_title": "🚧 Het lijkt erop dat Plane niet correct is opgestart!",
+      "maintenance_description": "Mogelijk zijn sommige services niet gestart. Controleer uw containerlogs om het probleem te achterhalen en op te lossen. Als u er niet uitkomt, neem dan contact op met ons supportteam.",
+      "welcome_title": "Welkom bij Plane",
+      "welcome_description": "Stel uw instantie in en maak uw eerste werkruimte aan om projecten en werk te beheren."
+    },
+    "integrations": {
+      "github_installed": "Activeer GitHub voor afzonderlijke projecten om te synchroniseren met specifieke repositories.",
+      "github_not_installed": "Koppel GitHub aan uw Plane-werkruimte om werkitems van projecten te synchroniseren.",
+      "slack_installed": "Activeer Slack voor afzonderlijke projecten om te synchroniseren met specifieke kanalen.",
+      "slack_not_installed": "Koppel Slack aan uw Plane-werkruimte om werkitems van projecten te synchroniseren.",
+      "deleted_title": "Succesvol verwijderd!",
+      "deleted_message": "De integratie {title} is succesvol verwijderd.",
+      "delete_failed_message": "De integratie {title} kon niet worden verwijderd. Probeer het opnieuw.",
+      "logo_alt": "Logo van {title}",
+      "loading": "Laden...",
+      "no_permission": "U heeft geen toestemming om dit uit te voeren",
+      "uninstalling": "Deïnstalleren...",
+      "uninstall": "Deïnstalleren",
+      "installing": "Installeren...",
+      "install": "Installeren"
+    },
+    "attachments": {
+      "upload_progress": "Uploadvoortgang"
+    },
+    "labels": {
+      "delete_confirmation": "Weet u zeker dat u <name/> wilt verwijderen? Hierdoor wordt het label verwijderd van alle werkitems en uit alle weergaven waarin op dit label wordt gefilterd.",
+      "edit_label": "Label bewerken",
+      "delete_label": "Label verwijderen",
+      "remove_from_group": "Uit groep verwijderen"
+    },
+    "modules": {
+      "module_progress": "Modulevoortgang"
+    },
+    "navigation": {
+      "icon_only": "Alleen pictogram",
+      "icon_with_name": "Pictogram met naam",
+      "dock_app_rail": "App-balk vastzetten",
+      "undock_app_rail": "App-balk losmaken",
+      "minimum_value_is_one": "De minimumwaarde is 1",
+      "show": "Tonen",
+      "clear_default": "Standaard wissen",
+      "hide_in_more_menu": "Verbergen in menu Meer",
+      "project_link_copied": "Projectlink gekopieerd naar het klembord.",
+      "copy_failed": "Kopiëren mislukt",
+      "copy_failed_message": "We konden de link niet kopiëren. Probeer het opnieuw.",
+      "default_tab_updated": "Standaardtabblad succesvol bijgewerkt.",
+      "default_tab_update_failed": "Het standaardtabblad kon niet worden bijgewerkt. Probeer het later opnieuw.",
+      "hide_tab_failed": "Het tabblad kon niet worden verborgen. Probeer het later opnieuw.",
+      "generic_error": "Er is iets misgegaan. Probeer het later opnieuw."
+    },
+    "onboarding": {
+      "select_workspace_invitation": "Werkruimte-uitnodiging selecteren"
+    },
+    "tour": {
+      "work_items_title": "Plannen met werkitems",
+      "work_items_description": "Het werkitem is de bouwsteen van Plane. De meeste concepten in Plane zijn gekoppeld aan werkitems en hun eigenschappen.",
+      "cycles_title": "Vooruitgang boeken met cycli",
+      "cycles_description": "Cycli helpen u en uw team sneller vooruit te komen, vergelijkbaar met de sprints die vaak worden gebruikt bij agile ontwikkeling.",
+      "modules_title": "Opdelen in modules",
+      "modules_description": "Modules splitsen uw grote project op in Projecten of Functies, zodat u beter kunt organiseren.",
+      "views_description": "Maak aangepaste filters om alleen de werkitems weer te geven die voor u van belang zijn. Sla uw filters op en deel ze met een paar klikken.",
+      "pages_title": "Documenteren met pagina's",
+      "pages_description": "Gebruik Pagina's om snel werkitems te noteren wanneer u in een vergadering zit of aan een dag begint.",
+      "welcome_title": "Welkom bij Plane, {firstName} {lastName}",
+      "welcome_description": "Fijn dat u Plane wilt uitproberen. U kunt uw projecten nu moeiteloos beheren. Begin door een project aan te maken.",
+      "take_tour": "Productrondleiding volgen",
+      "skip": "Nee bedankt, ik ga het zelf ontdekken",
+      "create_first_project": "Uw eerste project aanmaken",
+      "sidebar_heading": "Laten we beginnen!<br/>Haal meer uit Plane."
+    },
+    "ai": {
+      "ask_pi": "Vraag het aan Pi",
+      "tone_professional": "💼 Professioneel",
+      "tone_casual": "😃 Informeel",
+      "third_party_consent": "Door deze functie te gebruiken, stemt u ermee in dat het bericht wordt gedeeld met een externe dienst.",
+      "pi_writing": "Pi is aan het schrijven",
+      "pi_generating_response": "Pi genereert een antwoord"
+    },
+    "pages": {
+      "icon": "Pictogram",
+      "color": "Kleur",
+      "remove_text_color": "Tekstkleur verwijderen",
+      "remove_background_color": "Achtergrondkleur verwijderen",
+      "formatting_toolbar": "Opmaakwerkbalk",
+      "copied_link": "Link gekopieerd",
+      "remove_favorite": "Favoriet verwijderen",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "{name}-bot"
+    },
+    "project": {
+      "identifier": "Identificatie"
+    },
+    "projects": {
+      "toggle_feature": "Projectfunctie in-/uitschakelen",
+      "cover_upload_failed": "Omslagafbeelding uploaden mislukt"
+    },
+    "notifications": {
+      "notification_options": "Meldingsopties"
+    },
+    "stores": {
+      "generic_error": "Er is een fout opgetreden",
+      "inbox_fetch_error": "Fout bij het ophalen van de Intake-werkitems. Probeer het later opnieuw.",
+      "page_make_public_error": "De pagina kon niet openbaar worden gemaakt. Probeer het later opnieuw.",
+      "page_make_private_error": "De pagina kon niet privé worden gemaakt. Probeer het later opnieuw.",
+      "workflow_pending_approval": "Het werkitem wacht op goedkeuring.",
+      "workflow_transition_not_allowed": "Deze statusovergang is niet toegestaan door de workflow."
+    },
+    "validation": {
+      "name_max_length": "De naam mag maximaal 50 tekens lang zijn",
+      "name_special_chars": "Namen mogen geen speciale tekens bevatten zoals {chars}",
+      "name_invalid_chars": "Namen mogen alleen letters, spaties, koppeltekens en apostrofs bevatten",
+      "display_name_max_length": "De weergavenaam mag maximaal 50 tekens lang zijn",
+      "display_name_special_chars": "De weergavenaam mag geen speciale tekens bevatten zoals {chars}",
+      "display_name_invalid_chars": "De weergavenaam mag alleen letters, cijfers, punten, koppeltekens en underscores bevatten",
+      "company_name_max_length": "De bedrijfsnaam mag maximaal 80 tekens lang zijn",
+      "company_name_special_chars": "De bedrijfsnaam mag geen speciale tekens bevatten zoals {chars}",
+      "company_name_invalid_chars": "De bedrijfsnaam mag alleen letters, cijfers, spaties, koppeltekens en underscores bevatten",
+      "company_name_needs_alphanumeric": "De bedrijfsnaam moet minstens één letter of cijfer bevatten",
+      "workspace_name_required": "Werkruimtenaam is verplicht",
+      "workspace_name_max_length": "De werkruimtenaam mag maximaal 80 tekens lang zijn",
+      "workspace_name_special_chars": "De werkruimtenaam mag geen speciale tekens bevatten zoals {chars}",
+      "workspace_name_invalid_chars": "De werkruimtenaam mag alleen letters, cijfers, spaties, koppeltekens en underscores bevatten",
+      "workspace_name_needs_alphanumeric": "De werkruimtenaam moet minstens één letter of cijfer bevatten",
+      "slug_required": "Slug is verplicht",
+      "slug_max_length": "De slug mag maximaal 48 tekens lang zijn",
+      "slug_special_chars": "De slug mag geen speciale tekens bevatten zoals {chars}",
+      "slug_invalid_chars": "De slug mag alleen letters, cijfers, koppeltekens en underscores bevatten"
+    },
+    "analytics": {
+      "state_name": "Statusnaam",
+      "estimate_point": "Schattingspunt",
+      "completed_date": "Voltooiingsdatum",
+      "yesterday": "Gisteren",
+      "last_7_days": "Laatste 7 dagen",
+      "last_30_days": "Laatste 30 dagen",
+      "last_3_months": "Laatste 3 maanden",
+      "duration": "Duur"
+    },
+    "auth_labels": {
+      "magic_code": "Magic code"
+    },
+    "state_groups": {
+      "canceled": "Geannuleerd"
+    },
+    "filters": {
+      "state_group": "Statusgroep",
+      "subscriber": "Abonnee"
+    }
   }
 }

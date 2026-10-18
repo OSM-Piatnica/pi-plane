@@ -134,7 +134,7 @@ export const useGanttResizable = (
         setToast({
           type: "error",
           title: t("toast.error"),
-          message: "Something went wrong while updating block dates",
+          message: t("app_text.gantt.update_block_dates_failed"),
         });
       }
 

@@ -217,7 +217,7 @@ export const ProfileSetupStep = observer(function ProfileSetupStep({ handleStepC
             name="first_name"
             rules={{
               required: t("name_is_required"),
-              validate: validatePersonName,
+              validate: (value) => validatePersonName(value, t),
               maxLength: {
                 value: 50,
                 message: t("onboarding.profile.name_max_length"),

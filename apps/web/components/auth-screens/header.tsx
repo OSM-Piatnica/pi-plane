@@ -17,15 +17,15 @@ import { AuthLanguageSelect } from "./language-select";
 
 const authContentMap = {
   [EAuthModes.SIGN_IN]: {
-    pageTitle: "Sign up",
+    pageTitle: "app_text.auth_screens.sign_up",
     text: "auth.common.new_to_plane",
-    linkText: "Sign up",
+    linkText: "app_text.auth_screens.sign_up",
     linkHref: "/sign-up",
   },
   [EAuthModes.SIGN_UP]: {
-    pageTitle: "Sign in",
+    pageTitle: "app_text.auth_screens.sign_in",
     text: "auth.common.already_have_an_account",
-    linkText: "Sign in",
+    linkText: "app_text.auth_screens.sign_in",
     linkHref: "/sign-in",
   },
 };

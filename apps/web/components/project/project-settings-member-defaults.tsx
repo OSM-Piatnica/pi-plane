@@ -213,7 +213,7 @@ export const ProjectSettingsMemberDefaults = observer(function ProjectSettingsMe
               checked={!!currentProjectDetails?.guest_view_all_features}
               onCheckedChange={toggleGuestViewAllIssues}
               disabled={!isAdmin}
-              aria-label="Guest access"
+              aria-label={t("project_components.member_defaults.guest_access")}
             />
           </div>
         </DefaultSettingItem>

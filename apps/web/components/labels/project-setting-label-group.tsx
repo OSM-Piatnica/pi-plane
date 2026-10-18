@@ -21,6 +21,7 @@ import type { ICustomMenuItem } from "./label-block/label-item-block";
 import { LabelItemBlock } from "./label-block/label-item-block";
 import { LabelDndHOC } from "./label-drag-n-drop-HOC";
 import { ProjectSettingLabelItem } from "./project-setting-label-item";
+import { useTranslation } from "@plane/i18n";
 
 type Props = {
   label: IIssueLabel;
@@ -55,6 +56,7 @@ export const ProjectSettingLabelGroup = observer(function ProjectSettingLabelGro
   // states
   const [isOpen, setIsOpen] = useState(true);
   const [isEditLabelForm, setEditLabelForm] = useState(false);
+  const { t } = useTranslation();
 
   const customMenuItems: ICustomMenuItem[] = [
     {
@@ -64,7 +66,7 @@ export const ProjectSettingLabelGroup = observer(function ProjectSettingLabelGro
         setIsUpdating(true);
       },
       isVisible: true,
-      text: "Edit label",
+      text: t("app_text.labels.edit_label"),
       key: "edit_label",
     },
     {
@@ -73,7 +75,7 @@ export const ProjectSettingLabelGroup = observer(function ProjectSettingLabelGro
         handleLabelDelete(label);
       },
       isVisible: true,
-      text: "Delete label",
+      text: t("app_text.labels.delete_label"),
       key: "delete_label",
     },
   ];

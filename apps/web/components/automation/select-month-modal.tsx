@@ -107,7 +107,7 @@ export function SelectMonthModal({ type, initialValues, isOpen, handleClose, han
             </DialogBody>
           </DialogMain>
           <DialogActions>
-            <Button variant="secondary" size="md" stretch="auto" label="Cancel" onClick={onClose} />
+            <Button variant="secondary" size="md" stretch="auto" label={t("common.cancel")} onClick={onClose} />
             <Button
               variant="primary"
               size="md"

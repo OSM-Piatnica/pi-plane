@@ -48,7 +48,7 @@ export const ProjectSettingsSidebarHeader = observer(function ProjectSettingsSid
           variant="ghost"
           size="sm"
           icon={<Icon icon={ArrowNarrowLeftOutline} />}
-          aria-label="Back to project"
+          aria-label={t("app_text.settings_nav.back_to_project")}
           onClick={() => router.push(`/${currentWorkspace?.slug}/projects/${projectId}/issues/`)}
         />
         <p>Project settings</p>

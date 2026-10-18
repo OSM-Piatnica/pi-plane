@@ -191,7 +191,7 @@ export function FavoriteFolder(props: Props) {
                   onClick={() => setIsOpen(!isOpen)}
                 >
                   <Tooltip
-                    label={favorite.sort_order === null ? "Join the project to rearrange" : "Drag to rearrange"}
+                    label={favorite.sort_order === null ? t("join_the_project_to_rearrange") : t("drag_to_rearrange")}
                     align="end"
                     disabled={isDragging || isMobile}
                   >

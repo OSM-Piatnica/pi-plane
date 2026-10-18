@@ -12,6 +12,7 @@ import type { ICycle, IModule, IProjectView, IWorkspaceView } from "@plane/types
 import type { TContextMenuItem } from "@plane/blocks/context-menu";
 // hooks
 import { useQuickActionsFactory } from "@/components/common/quick-actions-factory";
+import { useTranslation } from "@plane/i18n";
 
 // Types
 interface UseCycleMenuItemsProps {
@@ -69,6 +70,7 @@ type MenuResult = {
 
 export const useCycleMenuItems = (props: UseCycleMenuItemsProps): MenuResult => {
   const factory = useQuickActionsFactory();
+  const { t } = useTranslation();
   const { cycleDetails, isEditingAllowed, ...handlers } = props;
 
   const isArchived = !!cycleDetails?.archived_at;
@@ -82,7 +84,7 @@ export const useCycleMenuItems = (props: UseCycleMenuItemsProps): MenuResult => 
     factory.createArchiveMenuItem(handlers.handleArchive, {
       shouldRender: isEditingAllowed && !isArchived,
       disabled: !isCompleted,
-      description: isCompleted ? undefined : "Only completed cycles can be archived",
+      description: isCompleted ? undefined : t("project_cycles.only_completed_cycles_can_be_archived"),
     }),
     factory.createRestoreMenuItem(handlers.handleRestore, isEditingAllowed && isArchived),
     factory.createDeleteMenuItem(handlers.handleDelete, isEditingAllowed && !isCompleted && !isArchived),
@@ -93,6 +95,7 @@ export const useCycleMenuItems = (props: UseCycleMenuItemsProps): MenuResult => 
 
 export const useModuleMenuItems = (props: UseModuleMenuItemsProps): MenuResult => {
   const factory = useQuickActionsFactory();
+  const { t } = useTranslation();
   const { moduleDetails, isEditingAllowed, ...handlers } = props;
 
   const isArchived = !!moduleDetails?.archived_at;
@@ -107,7 +110,7 @@ export const useModuleMenuItems = (props: UseModuleMenuItemsProps): MenuResult =
     factory.createArchiveMenuItem(handlers.handleArchive, {
       shouldRender: isEditingAllowed && !isArchived,
       disabled: !isInArchivableGroup,
-      description: isInArchivableGroup ? undefined : "Only completed or cancelled modules can be archived",
+      description: isInArchivableGroup ? undefined : t("app_text.quick_actions.archive_module_hint"),
     }),
     factory.createRestoreMenuItem(handlers.handleRestore, isEditingAllowed && isArchived),
     factory.createDeleteMenuItem(handlers.handleDelete, isEditingAllowed && !isArchived),

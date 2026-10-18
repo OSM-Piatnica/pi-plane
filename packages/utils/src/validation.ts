@@ -61,6 +61,22 @@ export const SLUG_REGEX = /^[\p{L}\p{N}_-]+$/u;
 // =============================================================================
 
 /**
+ * Translates an i18n key. The validators run outside of components, so the caller passes its `t`.
+ * The messages stay English when it is omitted.
+ */
+export type TValidationTranslate = (key: string, params?: Record<string, string>) => string;
+
+// characters the allowlist rejects, shown in the "cannot contain special characters" messages
+const BLOCKED_CHARS = "< > ' \" { } [ ] * ^ ! # %";
+
+const translateValidation = (
+  t: TValidationTranslate | undefined,
+  key: string,
+  fallback: string,
+  params?: Record<string, string>
+): string => (t ? t(key, params) : fallback);
+
+/**
  * @description Validates person names (first name, last name)
  * @param {string} name - Name to validate
  * @returns {boolean | string} true if valid, error message if invalid
@@ -70,21 +86,30 @@ export const SLUG_REGEX = /^[\p{L}\p{N}_-]+$/u;
  * validatePersonName("Jean-Paul") // returns true
  * validatePersonName("John<script>") // returns error message
  */
-export const validatePersonName = (name: string): boolean | string => {
+export const validatePersonName = (name: string, t?: TValidationTranslate): boolean | string => {
   if (!name || name.trim() === "") {
-    return "Name is required";
+    return translateValidation(t, "name_is_required", "Name is required");
   }
 
   if (name.length > 50) {
-    return "Name must be 50 characters or less";
+    return translateValidation(t, "app_text.validation.name_max_length", "Name must be 50 characters or less");
   }
 
   if (hasInjectionRiskChars(name)) {
-    return "Names cannot contain special characters like < > ' \" { } [ ] * ^ ! # %";
+    return translateValidation(
+      t,
+      "app_text.validation.name_special_chars",
+      `Names cannot contain special characters like ${BLOCKED_CHARS}`,
+      { chars: BLOCKED_CHARS }
+    );
   }
 
   if (!PERSON_NAME_REGEX.test(name)) {
-    return "Names can only contain letters, spaces, hyphens, and apostrophes";
+    return translateValidation(
+      t,
+      "app_text.validation.name_invalid_chars",
+      "Names can only contain letters, spaces, hyphens, and apostrophes"
+    );
   }
 
   return true;
@@ -100,21 +125,34 @@ export const validatePersonName = (name: string): boolean | string => {
  * validateDisplayName("john doe") // returns error message (spaces not allowed)
  * validateDisplayName("john<>doe") // returns error message
  */
-export const validateDisplayName = (displayName: string): boolean | string => {
+export const validateDisplayName = (displayName: string, t?: TValidationTranslate): boolean | string => {
   if (!displayName || displayName.trim() === "") {
     return true; // Display name is optional in most cases
   }
 
   if (displayName.length > 50) {
-    return "Display name must be 50 characters or less";
+    return translateValidation(
+      t,
+      "app_text.validation.display_name_max_length",
+      "Display name must be 50 characters or less"
+    );
   }
 
   if (hasInjectionRiskChars(displayName)) {
-    return "Display name cannot contain special characters like < > ' \" { } [ ] * ^ ! # %";
+    return translateValidation(
+      t,
+      "app_text.validation.display_name_special_chars",
+      `Display name cannot contain special characters like ${BLOCKED_CHARS}`,
+      { chars: BLOCKED_CHARS }
+    );
   }
 
   if (!DISPLAY_NAME_REGEX.test(displayName)) {
-    return "Display name can only contain letters, numbers, periods, hyphens, and underscores";
+    return translateValidation(
+      t,
+      "app_text.validation.display_name_invalid_chars",
+      "Display name can only contain letters, numbers, periods, hyphens, and underscores"
+    );
   }
 
   return true;
@@ -130,25 +168,52 @@ export const validateDisplayName = (displayName: string): boolean | string => {
  * validateCompanyName("Acme_Corp-123") // returns true
  * validateCompanyName("Acme{Corp}") // returns error message
  */
-export const validateCompanyName = (companyName: string, required: boolean = false): boolean | string => {
+export const validateCompanyName = (
+  companyName: string,
+  required: boolean = false,
+  t?: TValidationTranslate
+): boolean | string => {
   if (!companyName || companyName.trim() === "") {
-    return required ? "Company name is required" : true;
+    return required
+      ? translateValidation(
+          t,
+          "templates.settings.form.publish.company_name.validation.required",
+          "Company name is required"
+        )
+      : true;
   }
 
   if (companyName.length > 80) {
-    return "Company name must be 80 characters or less";
+    return translateValidation(
+      t,
+      "app_text.validation.company_name_max_length",
+      "Company name must be 80 characters or less"
+    );
   }
 
   if (hasInjectionRiskChars(companyName)) {
-    return "Company name cannot contain special characters like < > ' \" { } [ ] * ^ ! # %";
+    return translateValidation(
+      t,
+      "app_text.validation.company_name_special_chars",
+      `Company name cannot contain special characters like ${BLOCKED_CHARS}`,
+      { chars: BLOCKED_CHARS }
+    );
   }
 
   if (!COMPANY_NAME_REGEX.test(companyName)) {
-    return "Company name can only contain letters, numbers, spaces, hyphens, and underscores";
+    return translateValidation(
+      t,
+      "app_text.validation.company_name_invalid_chars",
+      "Company name can only contain letters, numbers, spaces, hyphens, and underscores"
+    );
   }
 
   if (!HAS_ALPHANUMERIC_REGEX.test(companyName)) {
-    return "Company name must contain at least one letter or number";
+    return translateValidation(
+      t,
+      "app_text.validation.company_name_needs_alphanumeric",
+      "Company name must contain at least one letter or number"
+    );
   }
 
   return true;
@@ -164,25 +229,48 @@ export const validateCompanyName = (companyName: string, required: boolean = fal
  * validateWorkspaceName("Acme_Corp-123") // returns true
  * validateWorkspaceName("Acme{Corp}") // returns error message
  */
-export const validateWorkspaceName = (workspaceName: string, required: boolean = false): boolean | string => {
+export const validateWorkspaceName = (
+  workspaceName: string,
+  required: boolean = false,
+  t?: TValidationTranslate
+): boolean | string => {
   if (!workspaceName || workspaceName.trim() === "") {
-    return required ? "Workspace name is required" : true;
+    return required
+      ? translateValidation(t, "app_text.validation.workspace_name_required", "Workspace name is required")
+      : true;
   }
 
   if (workspaceName.length > 80) {
-    return "Workspace name must be 80 characters or less";
+    return translateValidation(
+      t,
+      "app_text.validation.workspace_name_max_length",
+      "Workspace name must be 80 characters or less"
+    );
   }
 
   if (hasInjectionRiskChars(workspaceName)) {
-    return "Workspace name cannot contain special characters like < > ' \" { } [ ] * ^ ! # %";
+    return translateValidation(
+      t,
+      "app_text.validation.workspace_name_special_chars",
+      `Workspace name cannot contain special characters like ${BLOCKED_CHARS}`,
+      { chars: BLOCKED_CHARS }
+    );
   }
 
   if (!COMPANY_NAME_REGEX.test(workspaceName)) {
-    return "Workspace name can only contain letters, numbers, spaces, hyphens, and underscores";
+    return translateValidation(
+      t,
+      "app_text.validation.workspace_name_invalid_chars",
+      "Workspace name can only contain letters, numbers, spaces, hyphens, and underscores"
+    );
   }
 
   if (!HAS_ALPHANUMERIC_REGEX.test(workspaceName)) {
-    return "Workspace name must contain at least one letter or number";
+    return translateValidation(
+      t,
+      "app_text.validation.workspace_name_needs_alphanumeric",
+      "Workspace name must contain at least one letter or number"
+    );
   }
 
   return true;
@@ -197,21 +285,30 @@ export const validateWorkspaceName = (workspaceName: string, required: boolean =
  * validateSlug("my_workspace_123") // returns true
  * validateSlug("my workspace") // returns error message (spaces not allowed)
  */
-export const validateSlug = (slug: string): boolean | string => {
+export const validateSlug = (slug: string, t?: TValidationTranslate): boolean | string => {
   if (!slug || slug.trim() === "") {
-    return "Slug is required";
+    return translateValidation(t, "app_text.validation.slug_required", "Slug is required");
   }
 
   if (slug.length > 48) {
-    return "Slug must be 48 characters or less";
+    return translateValidation(t, "app_text.validation.slug_max_length", "Slug must be 48 characters or less");
   }
 
   if (hasInjectionRiskChars(slug)) {
-    return "Slug cannot contain special characters like < > ' \" { } [ ] * ^ ! # %";
+    return translateValidation(
+      t,
+      "app_text.validation.slug_special_chars",
+      `Slug cannot contain special characters like ${BLOCKED_CHARS}`,
+      { chars: BLOCKED_CHARS }
+    );
   }
 
   if (!SLUG_REGEX.test(slug)) {
-    return "Slug can only contain letters, numbers, hyphens, and underscores";
+    return translateValidation(
+      t,
+      "app_text.validation.slug_invalid_chars",
+      "Slug can only contain letters, numbers, hyphens, and underscores"
+    );
   }
 
   return true;

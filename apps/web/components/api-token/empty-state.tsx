@@ -10,6 +10,7 @@ import React from "react";
 import { Button } from "@makeplane/propel/components/button";
 // assets
 import emptyApiTokens from "@/app/assets/empty-state/api-token.svg?url";
+import { useTranslation } from "@plane/i18n";
 
 type Props = {
   onClick: () => void;
@@ -17,6 +18,7 @@ type Props = {
 
 export function ApiTokenEmptyState(props: Props) {
   const { onClick } = props;
+  const { t } = useTranslation();
 
   return (
     <div
@@ -24,11 +26,15 @@ export function ApiTokenEmptyState(props: Props) {
     >
       <div className="flex w-full flex-col items-center text-center">
         <img src={emptyApiTokens} className="w-52 object-contain sm:w-60" alt="empty" />
-        <h6 className="mt-6 mb-3 text-18 font-semibold sm:mt-8">No API tokens</h6>
-        <p className="mb-7 text-tertiary sm:mb-8">
-          Create API tokens for safe and easy data sharing with external apps, maintaining control and security.
-        </p>
-        <Button variant="primary" size="sm" stretch="auto" label="Add token" onClick={onClick} />
+        <h6 className="mt-6 mb-3 text-18 font-semibold sm:mt-8">{t("app_text.api_tokens.empty_title")}</h6>
+        <p className="mb-7 text-tertiary sm:mb-8">{t("app_text.api_tokens.empty_description")}</p>
+        <Button
+          variant="primary"
+          size="sm"
+          stretch="auto"
+          label={t("app_text.api_tokens.add_token")}
+          onClick={onClick}
+        />
       </div>
     </div>
   );

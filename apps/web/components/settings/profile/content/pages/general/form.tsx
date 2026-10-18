@@ -277,7 +277,7 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
                   name="first_name"
                   rules={{
                     required: t("project_components.profile.first_name_required"),
-                    validate: validatePersonName,
+                    validate: (value) => validatePersonName(value, t),
                   }}
                   render={({ field: { value, onChange, ref } }) => (
                     <Field name="first_name" invalid={Boolean(errors.first_name)}>
@@ -306,7 +306,7 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
                   control={control}
                   name="last_name"
                   rules={{
-                    validate: validatePersonName,
+                    validate: (value) => validatePersonName(value, t),
                   }}
                   render={({ field: { value, onChange, ref } }) => (
                     <Field name="last_name" invalid={Boolean(errors.last_name)}>
@@ -339,7 +339,7 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
                   name="display_name"
                   rules={{
                     required: t("project_components.profile.display_name_required"),
-                    validate: validateDisplayName,
+                    validate: (value) => validateDisplayName(value, t),
                   }}
                   render={({ field: { value, onChange, ref } }) => (
                     <Field name="display_name" invalid={Boolean(errors?.display_name)}>

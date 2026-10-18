@@ -6,6 +6,7 @@
  */
 
 import React from "react";
+import { useTranslation } from "@plane/i18n";
 import { AccentureLogo, DolbyLogo, SonyLogo, ZerodhaLogo } from "@plane/blocks/icons";
 
 const BRAND_LOGOS: {
@@ -31,9 +32,10 @@ const BRAND_LOGOS: {
 ];
 
 export function AuthFooter() {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col items-center gap-6">
-      <span className="text-13 whitespace-nowrap text-tertiary">Join 10,000+ teams building with Plane</span>
+      <span className="text-13 whitespace-nowrap text-tertiary">{t("app_text.auth_screens.join_teams")}</span>
       <div className="flex w-full flex-wrap items-center justify-center gap-x-10 gap-y-4">
         {BRAND_LOGOS.map((brand) => (
           <div className="flex h-7 flex-1 items-center justify-center" key={brand.id}>

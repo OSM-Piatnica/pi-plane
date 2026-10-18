@@ -74,7 +74,7 @@ export const AnalyticsSelectParams = observer(function AnalyticsSelectParams(pro
                 <div className="flex items-center gap-2">
                   <CalendarOutline className="h-3 w-3" />
                   <span className={cn("text-secondary", value && "text-primary")}>
-                    {xAxisOptions.find((v) => v.value === value)?.label || t("analytics_ui.add_property")}
+                    {t(xAxisOptions.find((v) => v.value === value)?.i18n_label ?? "analytics_ui.add_property")}
                   </span>
                 </div>
               }
