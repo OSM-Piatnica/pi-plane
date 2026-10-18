@@ -1049,5 +1049,20 @@
     "workflow_flow_type": "Typ toku",
     "workflow_target_state": "Cílový stav",
     "workflow_reject_state": "Stav při zamítnutí"
+  },
+  "api_token_expiry": {
+    "one_week": "1 týden",
+    "one_month": "1 měsíc",
+    "three_months": "3 měsíce",
+    "one_year": "1 rok",
+    "custom_date": "Vlastní datum",
+    "set_expiration_date": "Nastavit datum vypršení"
+  },
+  "profile_sidebar": {
+    "due": "Termín"
+  },
+  "progress_chart": {
+    "current": "{title}: aktuální",
+    "ideal": "{title}: ideální"
   }
 }

@@ -1049,5 +1049,20 @@
     "workflow_flow_type": "ნაკადის ტიპი",
     "workflow_target_state": "სამიზნე მდგომარეობა",
     "workflow_reject_state": "უარყოფის მდგომარეობა"
+  },
+  "api_token_expiry": {
+    "one_week": "1 კვირა",
+    "one_month": "1 თვე",
+    "three_months": "3 თვე",
+    "one_year": "1 წელი",
+    "custom_date": "მორგებული თარიღი",
+    "set_expiration_date": "დააყენეთ ვადის თარიღი"
+  },
+  "profile_sidebar": {
+    "due": "ვადა"
+  },
+  "progress_chart": {
+    "current": "მიმდინარე {title}",
+    "ideal": "იდეალური {title}"
   }
 }

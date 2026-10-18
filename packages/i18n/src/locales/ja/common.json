@@ -1049,5 +1049,20 @@
     "workflow_flow_type": "フロータイプ",
     "workflow_target_state": "対象ステータス",
     "workflow_reject_state": "却下時のステータス"
+  },
+  "api_token_expiry": {
+    "one_week": "1週間",
+    "one_month": "1か月",
+    "three_months": "3か月",
+    "one_year": "1年",
+    "custom_date": "カスタム日付",
+    "set_expiration_date": "有効期限を設定"
+  },
+  "profile_sidebar": {
+    "due": "期限"
+  },
+  "progress_chart": {
+    "current": "現在の{title}",
+    "ideal": "理想の{title}"
   }
 }

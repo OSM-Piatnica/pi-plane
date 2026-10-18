@@ -1049,5 +1049,20 @@
     "workflow_flow_type": "Тип потоку",
     "workflow_target_state": "Цільовий стан",
     "workflow_reject_state": "Стан відхилення"
+  },
+  "api_token_expiry": {
+    "one_week": "1 тиждень",
+    "one_month": "1 місяць",
+    "three_months": "3 місяці",
+    "one_year": "1 рік",
+    "custom_date": "Власна дата",
+    "set_expiration_date": "Встановити дату закінчення"
+  },
+  "profile_sidebar": {
+    "due": "Термін"
+  },
+  "progress_chart": {
+    "current": "Поточні {title}",
+    "ideal": "Ідеальні {title}"
   }
 }

@@ -41,22 +41,22 @@ type Props = {
 const EXPIRY_DATE_OPTIONS = [
   {
     key: "1_week",
-    label: "1 week",
+    label: "api_token_expiry.one_week",
     value: { weeks: 1 },
   },
   {
     key: "1_month",
-    label: "1 month",
+    label: "api_token_expiry.one_month",
     value: { months: 1 },
   },
   {
     key: "3_months",
-    label: "3 months",
+    label: "api_token_expiry.three_months",
     value: { months: 3 },
   },
   {
     key: "1_year",
-    label: "1 year",
+    label: "api_token_expiry.one_year",
     value: { years: 1 },
   },
 ];
@@ -66,7 +66,7 @@ type TExpiryOption = { key: string; label: string };
 
 const EXPIRY_SELECT_OPTIONS: TExpiryOption[] = [
   ...EXPIRY_DATE_OPTIONS.map(({ key, label }) => ({ key, label })),
-  { key: "custom", label: "Custom" },
+  { key: "custom", label: "project_components.shared.custom" },
 ];
 
 const defaultValues: Partial<IApiToken> = {
@@ -213,7 +213,7 @@ export function CreateApiTokenForm(props: Props) {
                         value={selectedOption}
                         onChange={onChange}
                         getOptionValue={(option) => option.key}
-                        getOptionLabel={(option) => option.label}
+                        getOptionLabel={(option) => t(option.label)}
                         showSearch={false}
                         pinSelected={false}
                         disabled={neverExpires}
@@ -223,7 +223,11 @@ export function CreateApiTokenForm(props: Props) {
                           the longest label here ("Set expiration date"). */}
                         <Select.Trigger variant="select-md" className="w-auto" prependIcon={<CalendarOutline />}>
                           <span className="min-w-0 grow truncate text-left">
-                            {value === "custom" ? "Custom date" : (selectedOption?.label ?? "Set expiration date")}
+                            {value === "custom"
+                              ? t("api_token_expiry.custom_date")
+                              : selectedOption
+                                ? t(selectedOption.label)
+                                : t("api_token_expiry.set_expiration_date")}
                           </span>
                         </Select.Trigger>
                       </Select>

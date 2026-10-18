@@ -521,7 +521,8 @@
     "archived_work_items_count": "{count, plural, one {C’è # elemento di lavoro nell’archivio del progetto} many {Ci sono # di elementi di lavoro nell’archivio del progetto} other {Ci sono # elementi di lavoro nell’archivio del progetto}}",
     "add_related_work_items": "Aggiungi elementi di lavoro correlati",
     "toggle_workspace_level_search": "Attiva o disattiva la ricerca a livello di spazio di lavoro",
-    "search_results_for_in_project": "Risultati di ricerca per <query>«{query}»</query> nel progetto:"
+    "search_results_for_in_project": "Risultati di ricerca per <query>«{query}»</query> nel progetto:",
+    "cannot_move_to_completed_cycle": "Un elemento di lavoro non può essere spostato nei cicli completati"
   },
   "activity_feed": {
     "issue": {

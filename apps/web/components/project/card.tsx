@@ -262,7 +262,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
               <div data-prevent-progress className="flex h-full flex-shrink-0 items-center gap-2">
                 <button
                   type="button"
-                  aria-label="Copy link"
+                  aria-label={t("common.actions.copy_link")}
                   className="flex h-6 w-6 items-center justify-center rounded-sm bg-white/10"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -353,7 +353,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
                   <IconButton
                     variant="ghost"
                     size="xs"
-                    aria-label="Delete"
+                    aria-label={t("common.actions.delete")}
                     icon={<Icon icon={DeleteOutline} />}
                     onClick={(e) => {
                       e.preventDefault();

@@ -52,6 +52,7 @@ import { EIssuesStoreType } from "@plane/types";
 import { renderFormattedDate, getFileURL } from "@plane/utils";
 // helpers
 // store
+import { COMPLETED_CYCLE_DROP_ERROR } from "@/helpers/group-column";
 import { store } from "@/lib/store-context";
 // store
 import { ISSUE_FILTER_DEFAULT_DATA } from "@/store/issue/helpers/base-issues.store";
@@ -197,7 +198,7 @@ const getCycleColumns = (): IGroupByColumn[] | undefined => {
       icon: <CycleGroupIcon cycleGroup={cycleStatus} className="h-3.5 w-3.5" />,
       payload: { cycle_id: cycle.id },
       isDropDisabled,
-      dropErrorMessage: isDropDisabled ? "Work item cannot be moved to completed cycles" : undefined,
+      dropErrorMessage: isDropDisabled ? COMPLETED_CYCLE_DROP_ERROR : undefined,
     });
   });
   cycles.push({

@@ -5,6 +5,7 @@
  * See the LICENSE file for details.
  */
 
+import { useTranslation } from "@plane/i18n";
 import type { MutableRefObject } from "react";
 import { observer } from "mobx-react";
 // plane imports
@@ -27,6 +28,7 @@ import { useWorkFlowFDragNDrop } from "@/components/workflow";
 // local imports
 import type { TRenderQuickActions } from "../list/list-view-types";
 import type { GroupDropLocation } from "../utils";
+import { getGroupColumnName } from "@/helpers/group-column";
 import { getGroupByColumns, isWorkspaceLevel } from "../utils";
 import { KanBan } from "./default";
 import { HeaderGroupByCard } from "./headers/group-by-card";
@@ -69,6 +71,7 @@ const SubGroupSwimlaneHeader = observer(function SubGroupSwimlaneHeader({
   showEmptyGroup,
   sub_group_by,
 }: ISubGroupSwimlaneHeader) {
+  const { t } = useTranslation();
   const { getIsWorkflowWorkItemCreationDisabled } = useWorkFlowFDragNDrop(group_by, sub_group_by);
 
   return (
@@ -89,7 +92,7 @@ const SubGroupSwimlaneHeader = observer(function SubGroupSwimlaneHeader({
                 group_by={group_by}
                 column_id={_list.id}
                 icon={_list.icon}
-                title={_list.name}
+                title={getGroupColumnName(_list, t)}
                 count={groupCount}
                 collapsedGroups={collapsedGroups}
                 handleCollapsedGroups={handleCollapsedGroups}
@@ -131,6 +134,7 @@ interface ISubGroupSwimlane extends ISubGroupSwimlaneHeader {
 }
 
 const SubGroupSwimlane = observer(function SubGroupSwimlane(props: ISubGroupSwimlane) {
+  const { t } = useTranslation();
   const {
     addIssuesToView,
     canEditProperties,
@@ -188,7 +192,7 @@ const SubGroupSwimlane = observer(function SubGroupSwimlane(props: ISubGroupSwim
                   <HeaderSubGroupByCard
                     column_id={_list.id}
                     icon={_list.icon}
-                    title={_list.name}
+                    title={getGroupColumnName(_list, t)}
                     count={issueCount}
                     collapsedGroups={collapsedGroups}
                     handleCollapsedGroups={handleCollapsedGroups}

@@ -1049,5 +1049,20 @@
     "workflow_flow_type": "흐름 유형",
     "workflow_target_state": "대상 상태",
     "workflow_reject_state": "거부 상태"
+  },
+  "api_token_expiry": {
+    "one_week": "1주",
+    "one_month": "1개월",
+    "three_months": "3개월",
+    "one_year": "1년",
+    "custom_date": "사용자 지정 날짜",
+    "set_expiration_date": "만료 날짜 설정"
+  },
+  "profile_sidebar": {
+    "due": "마감"
+  },
+  "progress_chart": {
+    "current": "현재 {title}",
+    "ideal": "이상적인 {title}"
   }
 }

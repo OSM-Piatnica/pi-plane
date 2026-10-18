@@ -1049,5 +1049,20 @@
     "workflow_flow_type": "Type de flux",
     "workflow_target_state": "État cible",
     "workflow_reject_state": "État de rejet"
+  },
+  "api_token_expiry": {
+    "one_week": "1 semaine",
+    "one_month": "1 mois",
+    "three_months": "3 mois",
+    "one_year": "1 an",
+    "custom_date": "Date personnalisée",
+    "set_expiration_date": "Définir la date d’expiration"
+  },
+  "profile_sidebar": {
+    "due": "Échéance"
+  },
+  "progress_chart": {
+    "current": "{title} actuels",
+    "ideal": "{title} idéaux"
   }
 }

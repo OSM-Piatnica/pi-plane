@@ -1049,5 +1049,20 @@
     "workflow_flow_type": "Akış türü",
     "workflow_target_state": "Hedef durum",
     "workflow_reject_state": "Reddetme durumu"
+  },
+  "api_token_expiry": {
+    "one_week": "1 hafta",
+    "one_month": "1 ay",
+    "three_months": "3 ay",
+    "one_year": "1 yıl",
+    "custom_date": "Özel tarih",
+    "set_expiration_date": "Son kullanma tarihini ayarla"
+  },
+  "profile_sidebar": {
+    "due": "Son tarih"
+  },
+  "progress_chart": {
+    "current": "Mevcut {title}",
+    "ideal": "İdeal {title}"
   }
 }

@@ -1049,5 +1049,20 @@
     "workflow_flow_type": "Stroomtype",
     "workflow_target_state": "Doelstatus",
     "workflow_reject_state": "Afwijzingsstatus"
+  },
+  "api_token_expiry": {
+    "one_week": "1 week",
+    "one_month": "1 maand",
+    "three_months": "3 maanden",
+    "one_year": "1 jaar",
+    "custom_date": "Aangepaste datum",
+    "set_expiration_date": "Vervaldatum instellen"
+  },
+  "profile_sidebar": {
+    "due": "Vervaldatum"
+  },
+  "progress_chart": {
+    "current": "Huidige {title}",
+    "ideal": "Ideale {title}"
   }
 }

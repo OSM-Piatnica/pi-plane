@@ -1049,5 +1049,20 @@
     "workflow_flow_type": "流程类型",
     "workflow_target_state": "目标状态",
     "workflow_reject_state": "拒绝状态"
+  },
+  "api_token_expiry": {
+    "one_week": "1 周",
+    "one_month": "1 个月",
+    "three_months": "3 个月",
+    "one_year": "1 年",
+    "custom_date": "自定义日期",
+    "set_expiration_date": "设置过期日期"
+  },
+  "profile_sidebar": {
+    "due": "截止"
+  },
+  "progress_chart": {
+    "current": "当前{title}",
+    "ideal": "理想{title}"
   }
 }
