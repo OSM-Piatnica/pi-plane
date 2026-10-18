@@ -77,7 +77,7 @@ mediafiles
 package-lock.json
 
 .secrets
-tmp/
+/tmp/
 
 ## packages
 .temp/
@@ -94,9 +94,8 @@ CLAUDE.md
 .claude/worktrees/
 .claude/scheduled_tasks.lock
 
-temp/
-scripts/
-!packages/i18n/scripts/
+/temp/
+/scripts/
 
 # i18n auto-generated types (regenerated on every build)
 packages/i18n/src/types/keys.generated.ts
