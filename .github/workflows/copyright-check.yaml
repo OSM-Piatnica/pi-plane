@@ -10,9 +10,11 @@ on:
       - "synchronize"
       - "ready_for_review"
       - "reopened"
+      - "edited"
 
 jobs:
   license-check:
+    if: (github.event.action != 'edited' || github.event.changes.base != null)
     name: Copy Right Check
     runs-on: ubuntu-latest
     steps:

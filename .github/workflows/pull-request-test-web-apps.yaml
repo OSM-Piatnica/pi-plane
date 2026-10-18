@@ -10,6 +10,7 @@ on:
       - "synchronize"
       - "ready_for_review"
       - "reopened"
+      - "edited"
     paths:
       - "apps/**"
       - "!apps/api/**"
@@ -31,7 +32,7 @@ jobs:
     name: test:web-apps
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.draft == false && (github.event.action != 'edited' || github.event.changes.base != null))
     env:
       TURBO_SCM_BASE: ${{ github.event.pull_request.base.sha }}
       TURBO_SCM_HEAD: ${{ github.sha }}

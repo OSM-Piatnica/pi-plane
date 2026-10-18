@@ -10,6 +10,7 @@ on:
       - "synchronize"
       - "reopened"
       - "ready_for_review"
+      - "edited"
     paths:
       - "packages/i18n/**"
       - ".github/workflows/i18n-sync-check.yml"
@@ -31,7 +32,7 @@ jobs:
     name: check:sync
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: github.event_name == 'push' || github.event.pull_request.draft == false
+    if: github.event_name == 'push' || (github.event.pull_request.draft == false && (github.event.action != 'edited' || github.event.changes.base != null))
     steps:
       - name: Checkout code
         uses: actions/checkout@v6

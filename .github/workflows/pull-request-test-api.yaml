@@ -10,6 +10,7 @@ on:
       - "synchronize"
       - "ready_for_review"
       - "reopened"
+      - "edited"
     paths:
       - "apps/api/**"
       - "compose-test.yaml"
@@ -27,7 +28,7 @@ jobs:
     name: Test API
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.draft == false && (github.event.action != 'edited' || github.event.changes.base != null))
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
