@@ -1397,5 +1397,70 @@
       "state_group": "Grup de stări",
       "subscriber": "Abonat"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Închide"
+    },
+    "auth_header": {
+      "sign_in_header": "Autentifică-te pentru a vota sau a comenta",
+      "sign_in_sub_header": "Contribuie la stabilirea funcțiilor care vor fi dezvoltate.",
+      "sign_up_header": "Vizualizează, comentează și fă mai mult",
+      "sign_up_sub_header": "Înregistrează-te sau autentifică-te pentru a lucra cu activitățile și paginile din Plane.",
+      "default_header": "Comentează sau reacționează la activități",
+      "default_sub_header": "Folosește Plane pentru a-ți aduce contribuția la funcții."
+    },
+    "terms": {
+      "agree_sign_up": "Prin crearea unui cont, ești de acord cu\n<terms>Termenii și condițiile</terms> și cu <privacy>Politica de confidențialitate</privacy>.",
+      "agree_sign_in": "Prin autentificare, ești de acord cu\n<terms>Termenii și condițiile</terms> și cu <privacy>Politica de confidențialitate</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Excelent! Încă un pas.",
+      "description": "Introdu în bara de adrese a browserului adresa URL publică sau linkul către vizualizarea sau pagina pe care vrei să o vezi.",
+      "image_alt": "Utilizatorul este deja autentificat"
+    },
+    "auth_unique_code": {
+      "resend_in": "Retrimite în {seconds} s"
+    },
+    "oauth": {
+      "sign_up_with": "Înregistrează-te cu {provider}",
+      "sign_in_with": "Autentifică-te cu {provider}",
+      "continue_with": "Continuă cu {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "Panoul public nu există. Verifică adresa URL.",
+      "cycle_tooltip": "Ciclu: {name}",
+      "no_cycle": "Fără ciclu",
+      "due_date_tooltip": "Data limită: {date}",
+      "no_date": "Fără dată",
+      "labels_tooltip": "Etichete: {labels}",
+      "no_labels": "Fără etichete",
+      "labels_count": "{count} etichete",
+      "no_assignees": "Fără responsabili",
+      "comment_post_failed": "Comentariul nu a putut fi publicat. Încearcă din nou.",
+      "add_comment_placeholder": "Adaugă un comentariu...",
+      "sign_in_to_comment": "Autentifică-te pentru a adăuga un comentariu",
+      "empty": "Gol",
+      "no_upvotes": "Încă nu există voturi pentru",
+      "no_downvotes": "Încă nu există voturi împotrivă",
+      "voters_and_more": "{names} și încă {count}"
+    },
+    "error_page": {
+      "title": "Oops! Nu arată bine.",
+      "description": "Plane s-a blocat. Nu-ți face griji, inginerii noștri au fost notificați. Dacă ai mai multe detalii, scrie-ne la <email/> sau pe <forum/>."
+    },
+    "not_found_page": {
+      "title": "Nu a funcționat",
+      "description": "Verifică adresa URL introdusă în bara de adrese a browserului și încearcă din nou."
+    },
+    "powered_by": {
+      "label": "Oferit de <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Eroare la instanța Pi-Plane",
+      "title": "Nu s-au putut obține detaliile instanței.",
+      "description": "Nu am putut obține detaliile instanței.",
+      "hint": "Nu-ți face griji, poate fi doar o problemă de conectivitate."
+    }
   }
 }

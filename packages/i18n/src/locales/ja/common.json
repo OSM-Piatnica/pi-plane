@@ -1397,5 +1397,70 @@
       "state_group": "ステータスグループ",
       "subscriber": "購読者"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "閉じる"
+    },
+    "auth_header": {
+      "sign_in_header": "サインインして投票またはコメント",
+      "sign_in_sub_header": "ご希望の機能の開発を後押ししましょう。",
+      "sign_up_header": "閲覧、コメントなど",
+      "sign_up_sub_header": "サインアップまたはログインして、Plane の作業項目やページを利用しましょう。",
+      "default_header": "作業項目にコメントまたはリアクション",
+      "default_sub_header": "Plane を使って、機能に関する貴重なご意見をお寄せください。"
+    },
+    "terms": {
+      "agree_sign_up": "アカウントを作成すると、\n<terms>利用規約</terms>および<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。",
+      "agree_sign_in": "サインインすると、\n<terms>利用規約</terms>および<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。"
+    },
+    "user_logged_in": {
+      "title": "あと一歩です。",
+      "description": "閲覧したいビューまたはページの公開共有 URL またはリンクを、ブラウザーのアドレスバーに入力してください。",
+      "image_alt": "ユーザーはすでにログインしています"
+    },
+    "auth_unique_code": {
+      "resend_in": "{seconds}秒後に再送信"
+    },
+    "oauth": {
+      "sign_up_with": "{provider} でサインアップ",
+      "sign_in_with": "{provider} でサインイン",
+      "continue_with": "{provider} で続行"
+    },
+    "issues": {
+      "public_board_not_found": "このパブリックボードは存在しません。URL を確認してください。",
+      "cycle_tooltip": "サイクル: {name}",
+      "no_cycle": "サイクルなし",
+      "due_date_tooltip": "期限: {date}",
+      "no_date": "日付なし",
+      "labels_tooltip": "ラベル: {labels}",
+      "no_labels": "ラベルなし",
+      "labels_count": "{count} 件のラベル",
+      "no_assignees": "担当者なし",
+      "comment_post_failed": "コメントを投稿できませんでした。もう一度お試しください。",
+      "add_comment_placeholder": "コメントを追加...",
+      "sign_in_to_comment": "サインインしてコメントを追加",
+      "empty": "空",
+      "no_upvotes": "まだ高評価はありません",
+      "no_downvotes": "まだ低評価はありません",
+      "voters_and_more": "{names} 他 {count} 名"
+    },
+    "error_page": {
+      "title": "問題が発生しました。",
+      "description": "Plane がクラッシュしました。ご安心ください。エンジニアに通知済みです。詳細がありましたら、<email/> または<forum/>までご連絡ください。"
+    },
+    "not_found_page": {
+      "title": "うまくいきませんでした",
+      "description": "ブラウザーのアドレスバーに入力した URL を確認して、もう一度お試しください。"
+    },
+    "powered_by": {
+      "label": "Powered by <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane インスタンスの障害",
+      "title": "インスタンスの詳細を取得できません。",
+      "description": "インスタンスの詳細を取得できませんでした。",
+      "hint": "接続の問題の可能性があります。ご心配なく。"
+    }
   }
 }

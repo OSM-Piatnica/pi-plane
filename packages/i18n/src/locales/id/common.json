@@ -1397,5 +1397,70 @@
       "state_group": "Grup status",
       "subscriber": "Pelanggan"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Tutup"
+    },
+    "auth_header": {
+      "sign_in_header": "Masuk untuk memberikan suara setuju atau berkomentar",
+      "sign_in_sub_header": "Berkontribusilah untuk mendorong fitur yang Anda inginkan agar segera dibuat.",
+      "sign_up_header": "Lihat, komentari, dan lakukan lebih banyak",
+      "sign_up_sub_header": "Daftar atau masuk untuk bekerja dengan item kerja dan Halaman Plane.",
+      "default_header": "Komentari atau beri reaksi pada item kerja",
+      "default_sub_header": "Gunakan Plane untuk menyampaikan masukan berharga Anda terhadap fitur."
+    },
+    "terms": {
+      "agree_sign_up": "Dengan membuat akun, Anda menyetujui\n<terms>Ketentuan Layanan</terms> dan <privacy>Kebijakan Privasi</privacy> kami.",
+      "agree_sign_in": "Dengan masuk, Anda menyetujui\n<terms>Ketentuan Layanan</terms> dan <privacy>Kebijakan Privasi</privacy> kami."
+    },
+    "user_logged_in": {
+      "title": "Bagus! Tinggal satu langkah lagi.",
+      "description": "Masukkan URL atau tautan berbagi publik dari tampilan atau Halaman yang ingin Anda lihat di bilah alamat browser.",
+      "image_alt": "Pengguna sudah masuk"
+    },
+    "auth_unique_code": {
+      "resend_in": "Kirim ulang dalam {seconds} dtk"
+    },
+    "oauth": {
+      "sign_up_with": "Daftar dengan {provider}",
+      "sign_in_with": "Masuk dengan {provider}",
+      "continue_with": "Lanjutkan dengan {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "Papan publik tidak ada. Periksa URL Anda.",
+      "cycle_tooltip": "Siklus: {name}",
+      "no_cycle": "Tanpa Siklus",
+      "due_date_tooltip": "Tanggal jatuh tempo: {date}",
+      "no_date": "Tanpa tanggal",
+      "labels_tooltip": "Label: {labels}",
+      "no_labels": "Tanpa label",
+      "labels_count": "{count} label",
+      "no_assignees": "Tanpa penugas",
+      "comment_post_failed": "Komentar tidak dapat diposting. Silakan coba lagi.",
+      "add_comment_placeholder": "Tambahkan komentar...",
+      "sign_in_to_comment": "Masuk untuk menambahkan komentar Anda",
+      "empty": "Kosong",
+      "no_upvotes": "Belum ada suara setuju",
+      "no_downvotes": "Belum ada suara tidak setuju",
+      "voters_and_more": "{names} dan {count} lainnya"
+    },
+    "error_page": {
+      "title": "Waduh! Ini tampaknya tidak baik.",
+      "description": "Itu membuat Plane mengalami crash. Tenang saja, para engineer kami sudah diberi tahu. Jika Anda punya detail lebih lanjut, silakan tulis ke <email/> atau di <forum/> kami."
+    },
+    "not_found_page": {
+      "title": "Itu tidak berhasil",
+      "description": "Periksa URL yang Anda masukkan di bilah alamat browser, lalu coba lagi."
+    },
+    "powered_by": {
+      "label": "Didukung oleh <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Kegagalan instans Pi-Plane",
+      "title": "Tidak dapat mengambil detail instans.",
+      "description": "Tidak dapat mengambil detail instans.",
+      "hint": "Tenang saja, mungkin hanya masalah konektivitas."
+    }
   }
 }

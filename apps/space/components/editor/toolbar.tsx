@@ -11,6 +11,7 @@ import { TOOLBAR_ITEMS } from "@plane/editor";
 import type { ToolbarMenuItem, EditorRefApi } from "@plane/editor";
 import { Button } from "@makeplane/propel/components/button";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
+import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 
 type Props = {
@@ -26,6 +27,7 @@ const toolbarItems = TOOLBAR_ITEMS.lite;
 
 export function IssueCommentToolbar(props: Props) {
   const { executeCommand, handleSubmit, isCommentEmpty, editorRef, isSubmitting, showSubmitButton } = props;
+  const { t } = useTranslation();
   // states
   const [activeStates, setActiveStates] = useState<Record<string, boolean>>({});
 
@@ -104,7 +106,7 @@ export function IssueCommentToolbar(props: Props) {
               variant="primary"
               size="sm"
               stretch="auto"
-              label="Comment"
+              label={t("common.comment")}
               onClick={handleSubmit}
               disabled={isCommentEmpty}
               loading={isSubmitting}

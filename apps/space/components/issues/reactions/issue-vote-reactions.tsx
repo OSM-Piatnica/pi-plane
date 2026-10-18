@@ -11,6 +11,7 @@ import { observer } from "mobx-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 // plane imports
 import { Tooltip } from "@makeplane/propel/components/tooltip";
+import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 // helpers
 import { queryParamGenerator } from "@/helpers/query-param-generator";
@@ -27,6 +28,7 @@ type TIssueVotes = {
 
 export const IssueVotes = observer(function IssueVotes(props: TIssueVotes) {
   const { anchor, issueIdFromProps, size = "md" } = props;
+  const { t } = useTranslation();
   // states
   const [isSubmitting, setIsSubmitting] = useState(false);
   // router
@@ -80,19 +82,26 @@ export const IssueVotes = observer(function IssueVotes(props: TIssueVotes) {
   const { queryParam } = queryParamGenerator({ peekId, board, state, priority, labels });
   const votingDimensions = size === "sm" ? "px-1 h-6 min-w-9" : "px-2 h-7";
 
+  const getVotersLabel = (voters: (string | undefined)[], emptyLabel: string) => {
+    if (voters.length === 0) return emptyLabel;
+    const names = voters.slice(0, VOTES_LIMIT).join(", ");
+    return voters.length > VOTES_LIMIT
+      ? t("space_text.issues.voters_and_more", { names, count: voters.length - VOTES_LIMIT })
+      : names;
+  };
+  const upVotesLabel = getVotersLabel(
+    allUpVotes.map((r) => r.actor_details?.display_name),
+    t("space_text.issues.no_upvotes")
+  );
+  const downVotesLabel = getVotersLabel(
+    allDownVotes.map((r) => r.actor_details?.display_name),
+    t("space_text.issues.no_downvotes")
+  );
+
   return (
     <div className="flex items-center gap-2">
       {/* upvote button 👇 */}
-      <Tooltip
-        label={
-          allUpVotes.length > 0
-            ? allUpVotes
-                .map((r) => r.actor_details?.display_name)
-                .slice(0, VOTES_LIMIT)
-                .join(", ") + (allUpVotes.length > VOTES_LIMIT ? ` and ${allUpVotes.length - VOTES_LIMIT} more` : "")
-            : "No upvotes yet"
-        }
-      >
+      <Tooltip label={upVotesLabel}>
         <button
           type="button"
           disabled={isSubmitting}
@@ -117,17 +126,7 @@ export const IssueVotes = observer(function IssueVotes(props: TIssueVotes) {
       </Tooltip>
 
       {/* downvote button 👇 */}
-      <Tooltip
-        label={
-          allDownVotes.length > 0
-            ? allDownVotes
-                .map((r) => r.actor_details.display_name)
-                .slice(0, VOTES_LIMIT)
-                .join(", ") +
-              (allDownVotes.length > VOTES_LIMIT ? ` and ${allDownVotes.length - VOTES_LIMIT} more` : "")
-            : "No downvotes yet"
-        }
-      >
+      <Tooltip label={downVotesLabel}>
         <button
           type="button"
           disabled={isSubmitting}

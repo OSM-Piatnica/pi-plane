@@ -1397,5 +1397,70 @@
       "state_group": "Statusgroep",
       "subscriber": "Abonnee"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Sluiten"
+    },
+    "auth_header": {
+      "sign_in_header": "Meld u aan om te stemmen of te reageren",
+      "sign_in_sub_header": "Help mee bepalen welke functies worden gebouwd.",
+      "sign_up_header": "Bekijken, reageren en meer",
+      "sign_up_sub_header": "Registreer of meld u aan om met werkitems en Pagina's in Plane te werken.",
+      "default_header": "Reageer op werkitems of geef een reactie",
+      "default_sub_header": "Gebruik Plane om uw waardevolle input voor functies toe te voegen."
+    },
+    "terms": {
+      "agree_sign_up": "Door een account aan te maken, gaat u akkoord met onze\n<terms>Servicevoorwaarden</terms> en ons <privacy>Privacybeleid</privacy>.",
+      "agree_sign_in": "Door u aan te melden, gaat u akkoord met onze\n<terms>Servicevoorwaarden</terms> en ons <privacy>Privacybeleid</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Mooi! Nog één stap.",
+      "description": "Voer de openbare URL of link van de weergave of Pagina die u wilt bekijken in de adresbalk van de browser in.",
+      "image_alt": "Gebruiker is al aangemeld"
+    },
+    "auth_unique_code": {
+      "resend_in": "Opnieuw verzenden over {seconds} s"
+    },
+    "oauth": {
+      "sign_up_with": "Registreren met {provider}",
+      "sign_in_with": "Aanmelden met {provider}",
+      "continue_with": "Doorgaan met {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "Het openbare bord bestaat niet. Controleer de URL.",
+      "cycle_tooltip": "Cyclus: {name}",
+      "no_cycle": "Geen cyclus",
+      "due_date_tooltip": "Vervaldatum: {date}",
+      "no_date": "Geen datum",
+      "labels_tooltip": "Labels: {labels}",
+      "no_labels": "Geen labels",
+      "labels_count": "{count} labels",
+      "no_assignees": "Geen toegewezenen",
+      "comment_post_failed": "De opmerking kon niet worden geplaatst. Probeer het opnieuw.",
+      "add_comment_placeholder": "Opmerking toevoegen...",
+      "sign_in_to_comment": "Meld u aan om een opmerking toe te voegen",
+      "empty": "Leeg",
+      "no_upvotes": "Nog geen upvotes",
+      "no_downvotes": "Nog geen downvotes",
+      "voters_and_more": "{names} en {count} anderen"
+    },
+    "error_page": {
+      "title": "Oei! Dat ziet er niet goed uit.",
+      "description": "Plane is gecrasht. Geen zorgen, onze engineers zijn op de hoogte gesteld. Heeft u meer details, schrijf dan naar <email/> of op ons <forum/>."
+    },
+    "not_found_page": {
+      "title": "Dat is niet gelukt",
+      "description": "Controleer de URL in de adresbalk van de browser en probeer het opnieuw."
+    },
+    "powered_by": {
+      "label": "Mogelijk gemaakt door <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane-instantiefout",
+      "title": "Kan de instantiegegevens niet ophalen.",
+      "description": "We konden de gegevens van de instantie niet ophalen.",
+      "hint": "Geen zorgen, het is mogelijk slechts een verbindingsprobleem."
+    }
   }
 }

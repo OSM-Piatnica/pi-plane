@@ -9,6 +9,7 @@ import { observer } from "mobx-react";
 import { Link } from "react-router";
 import { usePathname } from "next/navigation";
 import { LockOutline } from "@makeplane/propel/icons";
+import { useTranslation } from "@plane/i18n";
 // plane imports
 import { Button } from "@makeplane/propel/components/button";
 // components
@@ -29,6 +30,7 @@ type Props = {
 
 export const PeekOverviewIssueActivity = observer(function PeekOverviewIssueActivity(props: Props) {
   const { anchor } = props;
+  const { t } = useTranslation();
   // router
   const pathname = usePathname();
   // store hooks
@@ -41,7 +43,7 @@ export const PeekOverviewIssueActivity = observer(function PeekOverviewIssueActi
 
   return (
     <div className="pb-10">
-      <h4 className="font-medium">Comments</h4>
+      <h4 className="font-medium">{t("comments")}</h4>
       <div className="mt-4">
         <div className="space-y-4">
           {comments.map((comment) => (
@@ -61,7 +63,7 @@ export const PeekOverviewIssueActivity = observer(function PeekOverviewIssueActi
             <div className="mt-4 flex items-center justify-between gap-2 rounded-sm border border-strong bg-layer-2 px-2 py-2.5">
               <p className="flex items-center gap-2 overflow-hidden text-13 break-words text-secondary">
                 <LockOutline className="size-3 shrink-0" />
-                Sign in to add your comment
+                {t("space_text.issues.sign_in_to_comment")}
               </p>
               <Button
                 variant="primary"
@@ -69,7 +71,7 @@ export const PeekOverviewIssueActivity = observer(function PeekOverviewIssueActi
                 stretch="auto"
                 nativeButton={false}
                 render={<Link to={`/?next_path=${pathname}`} />}
-                label="Sign in"
+                label={t("app_text.auth_screens.sign_in")}
               />
             </div>
           ))}

@@ -1397,5 +1397,70 @@
       "state_group": "Grupo de estado",
       "subscriber": "Inscrito"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Dispensar"
+    },
+    "auth_header": {
+      "sign_in_header": "Inicie sessão para votar a favor ou comentar",
+      "sign_in_sub_header": "Ajude a impulsionar as funcionalidades que quer ver desenvolvidas.",
+      "sign_up_header": "Veja, comente e faça mais",
+      "sign_up_sub_header": "Registe-se ou inicie sessão para trabalhar com os itens de trabalho e as Páginas do Plane.",
+      "default_header": "Comente ou reaja aos itens de trabalho",
+      "default_sub_header": "Utilize o Plane para dar os seus valiosos contributos às funcionalidades."
+    },
+    "terms": {
+      "agree_sign_up": "Ao criar uma conta, concorda com os nossos\n<terms>Termos de Serviço</terms> e com a nossa <privacy>Política de Privacidade</privacy>.",
+      "agree_sign_in": "Ao iniciar sessão, concorda com os nossos\n<terms>Termos de Serviço</terms> e com a nossa <privacy>Política de Privacidade</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Ótimo! Falta só mais um passo.",
+      "description": "Introduza na barra de endereços do navegador o URL público ou a ligação da vista ou Página que está a tentar ver.",
+      "image_alt": "Utilizador com sessão já iniciada"
+    },
+    "auth_unique_code": {
+      "resend_in": "Reenviar dentro de {seconds}s"
+    },
+    "oauth": {
+      "sign_up_with": "Registar-se com {provider}",
+      "sign_in_with": "Iniciar sessão com {provider}",
+      "continue_with": "Continuar com {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "O quadro público não existe. Verifique o URL.",
+      "cycle_tooltip": "Ciclo: {name}",
+      "no_cycle": "Sem Ciclo",
+      "due_date_tooltip": "Data de vencimento: {date}",
+      "no_date": "Sem data",
+      "labels_tooltip": "Etiquetas: {labels}",
+      "no_labels": "Sem etiquetas",
+      "labels_count": "{count} etiquetas",
+      "no_assignees": "Sem responsáveis",
+      "comment_post_failed": "Não foi possível publicar o comentário. Tente novamente.",
+      "add_comment_placeholder": "Adicionar comentário...",
+      "sign_in_to_comment": "Inicie sessão para adicionar o seu comentário",
+      "empty": "Vazio",
+      "no_upvotes": "Ainda sem votos a favor",
+      "no_downvotes": "Ainda sem votos contra",
+      "voters_and_more": "{names} e mais {count}"
+    },
+    "error_page": {
+      "title": "Ups! Isto não parece nada bom.",
+      "description": "Isto fez o Plane falhar, sem trocadilhos. Mas não se preocupe: os nossos engenheiros foram notificados. Se tiver mais detalhes, escreva para <email/> ou no nosso <forum/>."
+    },
+    "not_found_page": {
+      "title": "Isso não funcionou",
+      "description": "Verifique o URL que introduziu na barra de endereços do navegador e tente novamente."
+    },
+    "powered_by": {
+      "label": "Com tecnologia <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Falha na instância do Pi-Plane",
+      "title": "Não foi possível obter os detalhes da instância.",
+      "description": "Não foi possível obter os detalhes da instância.",
+      "hint": "Calma, pode ser apenas um problema de ligação."
+    }
   }
 }

@@ -1397,5 +1397,70 @@
       "state_group": "Grupa stanów",
       "subscriber": "Subskrybent"
     }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Odrzuć"
+    },
+    "auth_header": {
+      "sign_in_header": "Zaloguj się, aby głosować lub komentować",
+      "sign_in_sub_header": "Pomóż wybrać funkcje, które mają zostać zbudowane.",
+      "sign_up_header": "Wyświetlaj, komentuj i rób więcej",
+      "sign_up_sub_header": "Zarejestruj się lub zaloguj, aby pracować z elementami pracy i Stronami w Plane.",
+      "default_header": "Komentuj elementy pracy lub reaguj na nie",
+      "default_sub_header": "Użyj Plane, aby dodać swoje cenne uwagi do funkcji."
+    },
+    "terms": {
+      "agree_sign_up": "Tworząc konto, akceptujesz nasz\n<terms>Regulamin</terms> i <privacy>Politykę prywatności</privacy>.",
+      "agree_sign_in": "Logując się, akceptujesz nasz\n<terms>Regulamin</terms> i <privacy>Politykę prywatności</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Świetnie! Został jeszcze jeden krok.",
+      "description": "Wpisz w pasku adresu przeglądarki publiczny adres URL lub link do widoku albo Strony, którą chcesz zobaczyć.",
+      "image_alt": "Użytkownik jest już zalogowany"
+    },
+    "auth_unique_code": {
+      "resend_in": "Wyślij ponownie za {seconds} s"
+    },
+    "oauth": {
+      "sign_up_with": "Zarejestruj się przez {provider}",
+      "sign_in_with": "Zaloguj się przez {provider}",
+      "continue_with": "Kontynuuj przez {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "Publiczna tablica nie istnieje. Sprawdź adres URL.",
+      "cycle_tooltip": "Cykl: {name}",
+      "no_cycle": "Brak cyklu",
+      "due_date_tooltip": "Termin: {date}",
+      "no_date": "Brak daty",
+      "labels_tooltip": "Etykiety: {labels}",
+      "no_labels": "Brak etykiet",
+      "labels_count": "Etykiety: {count}",
+      "no_assignees": "Brak przypisanych",
+      "comment_post_failed": "Nie udało się opublikować komentarza. Spróbuj ponownie.",
+      "add_comment_placeholder": "Dodaj komentarz...",
+      "sign_in_to_comment": "Zaloguj się, aby dodać komentarz",
+      "empty": "Pusto",
+      "no_upvotes": "Brak głosów za",
+      "no_downvotes": "Brak głosów przeciw",
+      "voters_and_more": "{names} i {count} więcej"
+    },
+    "error_page": {
+      "title": "Ups! To nie wygląda dobrze.",
+      "description": "Plane uległ awarii. Bez obaw, nasi inżynierowie zostali powiadomieni. Jeśli masz więcej szczegółów, napisz na <email/> lub na naszym <forum/>."
+    },
+    "not_found_page": {
+      "title": "To nie zadziałało",
+      "description": "Sprawdź adres URL wpisany w pasku adresu przeglądarki i spróbuj ponownie."
+    },
+    "powered_by": {
+      "label": "Obsługiwane przez <name>Plane Publish</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Awaria instancji Pi-Plane",
+      "title": "Nie można pobrać szczegółów instancji.",
+      "description": "Nie udało się pobrać szczegółów instancji.",
+      "hint": "Spokojnie, to może być tylko problem z połączeniem."
+    }
   }
 }

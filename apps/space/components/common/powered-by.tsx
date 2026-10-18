@@ -6,8 +6,10 @@
  */
 
 import { WEBSITE_URL } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 // assets
 import { PlaneLogo } from "@plane/blocks/icons";
+import { renderTaggedText } from "@/helpers/tagged-text";
 
 type TPoweredBy = {
   disabled?: boolean;
@@ -16,6 +18,7 @@ type TPoweredBy = {
 export function PoweredBy(props: TPoweredBy) {
   // props
   const { disabled = false } = props;
+  const { t } = useTranslation();
 
   if (disabled || !WEBSITE_URL) return null;
 
@@ -28,7 +31,9 @@ export function PoweredBy(props: TPoweredBy) {
     >
       <PlaneLogo className="h-3 w-auto text-primary" />
       <div className="text-11">
-        Powered by <span className="font-semibold">Plane Publish</span>
+        {renderTaggedText(t("space_text.powered_by.label"), {
+          name: (text) => <span className="font-semibold">{text}</span>,
+        })}
       </div>
     </a>
   );

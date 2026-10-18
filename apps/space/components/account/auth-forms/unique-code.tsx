@@ -8,6 +8,7 @@
 import React, { useEffect, useState } from "react";
 import { CloseCircleOutline, TickCircleOutline } from "@makeplane/propel/icons";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import { API_BASE_URL } from "@plane/constants";
 import { Button } from "@makeplane/propel/components/button";
 import { AuthService } from "@plane/services";
@@ -40,6 +41,7 @@ const defaultValues: TUniqueCodeFormValues = {
 
 export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
   const { mode, email, nextPath, handleEmailClear, generateEmailUniqueCode } = props;
+  const { t } = useTranslation();
   // derived values
   const defaultResetTimerValue = 5;
   // states
@@ -88,7 +90,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
       <input type="hidden" value={nextPath} name="next_path" />
       <div className="space-y-1">
         <label className="text-13 font-medium text-tertiary" htmlFor="email">
-          Email
+          {t("auth.common.email.label")}
         </label>
         <div className="relative flex h-10 items-center rounded-md border border-subtle bg-surface-1 px-3 [&_input]:disable-autofill-style">
           <Input
@@ -98,14 +100,14 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
             size="xl"
             value={uniqueCodeFormData.email}
             onChange={(e) => handleFormChange("email", e.target.value)}
-            placeholder="name@company.com"
+            placeholder={t("auth.common.email.placeholder")}
             autoComplete="off"
             disabled
           />
           {uniqueCodeFormData.email.length > 0 && (
             <button
               type="button"
-              aria-label="Clear email"
+              aria-label={t("aria_labels.auth_forms.clear_email")}
               className="absolute right-3 hover:cursor-pointer"
               onClick={handleEmailClear}
               tabIndex={-1}
@@ -118,7 +120,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
 
       <div className="space-y-1">
         <label className="text-13 font-medium text-tertiary" htmlFor="code">
-          Unique code
+          {t("auth.common.unique_code.label")}
         </label>
         <div className="relative flex h-10 items-center rounded-md border border-subtle bg-surface-1 pr-12 pl-3 [&_input]:disable-autofill-style">
           <Input
@@ -127,7 +129,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
             size="xl"
             value={uniqueCodeFormData.code}
             onChange={(e) => handleFormChange("code", e.target.value)}
-            placeholder="123456"
+            placeholder={t("auth.common.unique_code.placeholder")}
             autoComplete="off"
             // oxlint-disable-next-line jsx-a11y/no-autofocus -- sole primary field of a dedicated auth step; matches standard sign-in flows
             autoFocus
@@ -136,7 +138,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
         <div className="flex w-full items-center justify-between px-1 pt-1 text-11">
           <p className="flex items-center gap-1 font-medium text-success-primary">
             <TickCircleOutline height={12} width={12} />
-            Paste the code sent to your email
+            {t("auth.common.unique_code.paste_code")}
           </p>
           <button
             type="button"
@@ -149,10 +151,10 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
             disabled={isRequestNewCodeDisabled}
           >
             {resendTimerCode > 0
-              ? `Resend in ${resendTimerCode}s`
+              ? t("space_text.auth_unique_code.resend_in", { seconds: resendTimerCode })
               : isRequestingNewCode
-                ? "Requesting new code"
-                : "Resend"}
+                ? t("auth.common.unique_code.requesting_new_code")
+                : t("common.resend")}
           </button>
         </div>
       </div>
@@ -165,7 +167,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
           stretch="full"
           disabled={isButtonDisabled}
           loading={isSubmitting && !isRequestingNewCode}
-          label={isRequestingNewCode ? "Sending code" : "Continue"}
+          label={isRequestingNewCode ? t("auth.common.unique_code.sending_code") : t("common.continue")}
         />
       </div>
     </form>
