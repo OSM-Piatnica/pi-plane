@@ -10,8 +10,6 @@ import type { TRelationObject } from "@/components/issues/issue-detail-widgets/r
 import type { TIssueRelationTypes } from "@plane/types";
 import { CalendarAfterIcon, CalendarBeforeIcon } from "@plane/blocks/icons";
 
-export * from "./activity";
-
 export const ISSUE_RELATION_OPTIONS: Record<TIssueRelationTypes, TRelationObject> = {
   relates_to: {
     key: "relates_to",

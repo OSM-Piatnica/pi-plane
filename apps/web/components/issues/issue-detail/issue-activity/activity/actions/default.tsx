@@ -6,6 +6,8 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 // plane imports
 import { WorkItemsOutline } from "@makeplane/propel/icons";
 import { EInboxIssueSource } from "@plane/types";
@@ -23,6 +25,7 @@ export const IssueDefaultActivity = observer(function IssueDefaultActivity(props
   const {
     activity: { getActivityById },
   } = useIssueDetail();
+  const { t } = useTranslation();
 
   const activity = getActivityById(activityId);
 
@@ -35,20 +38,19 @@ export const IssueDefaultActivity = observer(function IssueDefaultActivity(props
       icon={<WorkItemsOutline width={14} height={14} className="text-secondary" aria-hidden="true" />}
       ends={ends}
     >
-      <>
-        {activity.verb === "created" ? (
-          source && source !== EInboxIssueSource.IN_APP ? (
-            <span>
-              created the work item via{" "}
-              <span className="font-medium">{capitalizeFirstLetter(source.toLowerCase() || "")}</span>.
-            </span>
-          ) : (
-            <span> created the work item.</span>
-          )
+      {activity.verb === "created" ? (
+        source && source !== EInboxIssueSource.IN_APP ? (
+          <span>
+            {renderTaggedText(t("activity_feed.issue.created_via"), {
+              source: () => <span className="font-medium">{capitalizeFirstLetter(source.toLowerCase() || "")}</span>,
+            })}
+          </span>
         ) : (
-          <span> deleted a work item.</span>
-        )}
-      </>
+          <span>{t("activity_feed.issue.created")}</span>
+        )
+      ) : (
+        <span>{t("activity_feed.issue.deleted")}</span>
+      )}
     </IssueActivityBlockComponent>
   );
 });

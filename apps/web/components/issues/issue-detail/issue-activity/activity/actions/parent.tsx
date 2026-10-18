@@ -6,6 +6,8 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 import { ParentOutline } from "@makeplane/propel/icons";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -20,26 +22,33 @@ export const IssueParentActivity = observer(function IssueParentActivity(props: 
   const {
     activity: { getActivityById },
   } = useIssueDetail();
+  const { t } = useTranslation();
 
   const activity = getActivityById(activityId);
 
   if (!activity) return <></>;
+
+  const message = activity.new_value
+    ? showIssue
+      ? t("activity_feed.issue.parent.set_with_issue")
+      : t("activity_feed.issue.parent.set")
+    : showIssue
+      ? t("activity_feed.issue.parent.removed_with_issue")
+      : t("activity_feed.issue.parent.removed");
   return (
     <IssueActivityBlockComponent
       icon={<ParentOutline className="h-3.5 w-3.5 text-secondary" aria-hidden="true" />}
       activityId={activityId}
       ends={ends}
     >
-      <>
-        {activity.new_value ? `set the parent to ` : `removed the parent `}
-        {activity.new_value ? (
-          <span className="font-medium text-primary">{activity.new_value}</span>
-        ) : (
-          <span className="font-medium text-primary">{activity.old_value}</span>
-        )}
-        {showIssue && (activity.new_value ? ` for ` : ` from `)}
-        {showIssue && <IssueLink activityId={activityId} />}.
-      </>
+      {renderTaggedText(message, {
+        value: () => (
+          <span className="font-medium text-primary">
+            {activity.new_value ? activity.new_value : activity.old_value}
+          </span>
+        ),
+        issue: () => <IssueLink activityId={activityId} />,
+      })}
     </IssueActivityBlockComponent>
   );
 });

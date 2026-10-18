@@ -6,6 +6,8 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 import { PriorityOutline } from "@makeplane/propel/icons";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -20,21 +22,23 @@ export const IssuePriorityActivity = observer(function IssuePriorityActivity(pro
   const {
     activity: { getActivityById },
   } = useIssueDetail();
+  const { t } = useTranslation();
 
   const activity = getActivityById(activityId);
 
   if (!activity) return <></>;
+
+  const message = showIssue ? t("activity_feed.issue.priority.set_with_issue") : t("activity_feed.issue.priority.set");
   return (
     <IssueActivityBlockComponent
       icon={<PriorityOutline className="h-3.5 w-3.5 text-secondary" aria-hidden="true" />}
       activityId={activityId}
       ends={ends}
     >
-      <>
-        set the priority to <span className="font-medium text-primary">{activity.new_value}</span>
-        {showIssue ? ` for ` : ``}
-        {showIssue && <IssueLink activityId={activityId} />}.
-      </>
+      {renderTaggedText(message, {
+        value: () => <span className="font-medium text-primary">{activity.new_value}</span>,
+        issue: () => <IssueLink activityId={activityId} />,
+      })}
     </IssueActivityBlockComponent>
   );
 });

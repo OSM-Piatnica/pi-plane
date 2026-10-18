@@ -522,5 +522,401 @@
     "add_related_work_items": "Thêm mục công việc liên quan",
     "toggle_workspace_level_search": "Bật/tắt tìm kiếm cấp không gian làm việc",
     "search_results_for_in_project": "Kết quả tìm kiếm cho <query>\"{query}\"</query> trong dự án:"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "đã lưu trữ mục công việc.",
+      "assignee": {
+        "added": "đã thêm người phụ trách mới <user/>.",
+        "added_with_issue": "đã thêm người phụ trách mới <user/> vào <issue/>.",
+        "removed": "đã xóa người phụ trách <user/>.",
+        "removed_with_issue": "đã xóa người phụ trách <user/> khỏi <issue/>."
+      },
+      "attachment": {
+        "added": "đã tải lên một tệp đính kèm mới.",
+        "added_with_issue": "đã tải lên một tệp đính kèm mới cho <issue/>.",
+        "removed": "đã xóa một tệp đính kèm.",
+        "removed_with_issue": "đã xóa một tệp đính kèm khỏi <issue/>."
+      },
+      "created": "đã tạo mục công việc.",
+      "created_via": "đã tạo mục công việc qua <source/>.",
+      "cycle": {
+        "added": "đã thêm mục công việc này vào chu kỳ <cycle/>",
+        "removed": "đã xóa mục công việc khỏi chu kỳ <cycle/>",
+        "set": "đã đặt chu kỳ là <cycle/>"
+      },
+      "deleted": "đã xóa một mục công việc.",
+      "description": {
+        "updated": "đã cập nhật mô tả.",
+        "updated_with_issue": "đã cập nhật mô tả của <issue/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# ngày} other {# ngày}}",
+        "removed": "đã xóa thời lượng.",
+        "removed_with_issue": "đã xóa thời lượng khỏi <issue/>.",
+        "set": "đã đặt thời lượng là <value/>.",
+        "set_with_issue": "đã đặt thời lượng là <value/> cho <issue/>."
+      },
+      "estimate": {
+        "removed": "đã xóa điểm ước tính <value/>.",
+        "removed_with_issue": "đã xóa điểm ước tính <value/> khỏi <issue/>.",
+        "set": "đã đặt điểm ước tính là <value/>.",
+        "set_with_issue": "đã đặt điểm ước tính là <value/> cho <issue/>."
+      },
+      "intake": {
+        "accepted": "đã chấp nhận mục công việc này từ Intake.",
+        "declined": "đã từ chối mục công việc này từ Intake.",
+        "duplicate": "đã từ chối mục công việc này từ Intake bằng cách đánh dấu là mục công việc trùng lặp.",
+        "snoozed": "đã tạm hoãn mục công việc này.",
+        "updated": "đã cập nhật trạng thái mục công việc Intake."
+      },
+      "label": {
+        "added": "đã thêm nhãn mới <label/>",
+        "added_with_issue": "đã thêm nhãn mới <label/> vào <issue/>",
+        "removed": "đã xóa nhãn <label/>",
+        "removed_with_issue": "đã xóa nhãn <label/> khỏi <issue/>"
+      },
+      "link": {
+        "added": "đã thêm <link>liên kết</link>.",
+        "added_with_issue": "đã thêm <link>liên kết</link> vào <issue/>.",
+        "removed": "đã xóa <link>liên kết</link> này.",
+        "removed_with_issue": "đã xóa <link>liên kết</link> này khỏi <issue/>.",
+        "updated": "đã cập nhật <link>liên kết</link>.",
+        "updated_with_issue": "đã cập nhật <link>liên kết</link> của <issue/>."
+      },
+      "module": {
+        "added": "đã thêm mục công việc này vào mô-đun <module/>",
+        "removed": "đã xóa mục công việc khỏi mô-đun <module/>",
+        "set": "đã đặt mô-đun là <module/>"
+      },
+      "name": {
+        "set": "đã đặt tên là {name}."
+      },
+      "parent": {
+        "removed": "đã xóa mục công việc cha <value/>.",
+        "removed_with_issue": "đã xóa mục công việc cha <value/> khỏi <issue/>.",
+        "set": "đã đặt mục công việc cha là <value/>.",
+        "set_with_issue": "đã đặt mục công việc cha là <value/> cho <issue/>."
+      },
+      "priority": {
+        "set": "đã đặt mức ưu tiên là <value/>.",
+        "set_with_issue": "đã đặt mức ưu tiên là <value/> cho <issue/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "đã đánh dấu mục công việc này đang bị chặn bởi <value/>.",
+          "removed": "đã xóa việc mục công việc này bị chặn bởi mục công việc <value/>."
+        },
+        "blocking": {
+          "added": "đã đánh dấu mục công việc này đang chặn mục công việc <value/>.",
+          "removed": "đã xóa mục công việc đang bị chặn <value/>."
+        },
+        "duplicate": {
+          "added": "đã đánh dấu mục công việc này trùng lặp với <value/>.",
+          "removed": "đã bỏ đánh dấu mục công việc này là trùng lặp với <value/>."
+        },
+        "finish_after": {
+          "added": "đã đánh dấu mục công việc này kết thúc sau <value/>.",
+          "removed": "đã xóa mối quan hệ kết thúc sau với <value/>."
+        },
+        "finish_before": {
+          "added": "đã đánh dấu mục công việc này kết thúc trước <value/>.",
+          "removed": "đã xóa mối quan hệ kết thúc trước với <value/>."
+        },
+        "relates_to": {
+          "added": "đã đánh dấu mục công việc này có liên quan đến <value/>.",
+          "removed": "đã xóa mối quan hệ với <value/>."
+        },
+        "start_after": {
+          "added": "đã đánh dấu mục công việc này bắt đầu sau <value/>.",
+          "removed": "đã xóa mối quan hệ bắt đầu sau với <value/>."
+        },
+        "start_before": {
+          "added": "đã đánh dấu mục công việc này bắt đầu trước <value/>.",
+          "removed": "đã xóa mối quan hệ bắt đầu trước với <value/>."
+        }
+      },
+      "restored": "đã khôi phục mục công việc.",
+      "start_date": {
+        "removed": "đã xóa ngày bắt đầu.",
+        "removed_with_issue": "đã xóa ngày bắt đầu khỏi <issue/>.",
+        "set": "đã đặt ngày bắt đầu là <value/>.",
+        "set_with_issue": "đã đặt ngày bắt đầu là <value/> cho <issue/>."
+      },
+      "state": {
+        "set": "đã đặt trạng thái là <value/>.",
+        "set_with_issue": "đã đặt trạng thái là <value/> cho <issue/>."
+      },
+      "target_date": {
+        "removed": "đã xóa ngày hết hạn.",
+        "removed_with_issue": "đã xóa ngày hết hạn khỏi <issue/>.",
+        "set": "đã đặt ngày hết hạn là <value/>.",
+        "set_with_issue": "đã đặt ngày hết hạn là <value/> cho <issue/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "đã lưu trữ <issue/>",
+        "restored": "đã khôi phục <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "đã thêm người phụ trách mới <assignee/> vào <issue/>",
+        "added_without_issue": "đã thêm người phụ trách mới <assignee/>",
+        "removed_with_issue": "đã xóa người phụ trách <assignee/> khỏi <issue/>",
+        "removed_without_issue": "đã xóa người phụ trách <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "đã tải lên một tệp đính kèm mới cho <issue/>",
+        "added_without_issue": "đã tải lên một tệp đính kèm mới",
+        "removed_with_issue": "đã xóa một tệp đính kèm khỏi <issue/>",
+        "removed_without_issue": "đã xóa một tệp đính kèm"
+      },
+      "blocked_by": {
+        "added_with_issue": "đã đánh dấu <issue/> đang bị chặn bởi <value/>.",
+        "added_without_issue": "đã đánh dấu mục công việc này đang bị chặn bởi <value/>.",
+        "removed_with_issue": "đã xóa việc <issue/> bị chặn bởi mục công việc <value/>.",
+        "removed_without_issue": "đã xóa việc mục công việc này bị chặn bởi mục công việc <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "đã đánh dấu <issue/> đang chặn mục công việc <value/>.",
+        "added_without_issue": "đã đánh dấu mục công việc này đang chặn mục công việc <value/>.",
+        "removed": "đã xóa mục công việc đang bị chặn <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "đã thêm <issue/> <nowrap>vào chu kỳ</nowrap> <value/>",
+        "added_without_issue": "đã thêm mục công việc này <nowrap>vào chu kỳ</nowrap> <value/>",
+        "removed": "đã xóa <issue/> khỏi chu kỳ <value/>",
+        "set": "<nowrap>đã đặt chu kỳ là</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "đã cập nhật mô tả của <issue/>",
+        "updated_without_issue": "đã cập nhật mô tả"
+      },
+      "duplicate": {
+        "added_with_issue": "đã đánh dấu <issue/> trùng lặp với <value/>.",
+        "added_without_issue": "đã đánh dấu mục công việc này trùng lặp với <value/>.",
+        "removed_with_issue": "đã bỏ đánh dấu <issue/> là trùng lặp với <value/>.",
+        "removed_without_issue": "đã bỏ đánh dấu mục công việc này là trùng lặp với <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# ngày} other {# ngày}}",
+        "removed_with_issue": "đã xóa thời lượng khỏi <issue/>",
+        "removed_without_issue": "đã xóa thời lượng",
+        "set_with_issue": "đã đặt thời lượng là <value/> cho <issue/>",
+        "set_without_issue": "đã đặt thời lượng là <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "đã chuyển <issue/> thành mục công việc",
+        "created": "đã tạo <issue/>",
+        "deleted": "đã xóa <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "đã xóa điểm ước tính khỏi <issue/>",
+        "removed_without_issue": "đã xóa điểm ước tính",
+        "set_with_issue": "đã đặt điểm ước tính là <value/> cho <issue/>",
+        "set_without_issue": "đã đặt điểm ước tính là <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "đã chấp nhận mục công việc <issue/>",
+        "accepted_without_issue": "đã chấp nhận mục công việc này từ Intake.",
+        "declined_with_issue": "đã từ chối mục công việc <issue/>",
+        "declined_without_issue": "đã từ chối mục công việc này từ Intake.",
+        "duplicate_with_issue": "đã từ chối mục công việc <issue/> từ Intake bằng cách đánh dấu là mục công việc trùng lặp.",
+        "duplicate_without_issue": "đã từ chối mục công việc này từ Intake bằng cách đánh dấu là mục công việc trùng lặp.",
+        "snoozed_with_issue": "đã tạm hoãn mục công việc <issue/>",
+        "snoozed_without_issue": "đã tạm hoãn mục công việc này.",
+        "updated_with_issue": "đã cập nhật trạng thái mục công việc Intake. <issue/>",
+        "updated_without_issue": "đã cập nhật trạng thái mục công việc Intake."
+      },
+      "issue": {
+        "converted_to_epic": "đã chuyển <issue/> thành sử thi",
+        "created": "đã tạo <issue/>",
+        "deleted": "đã xóa <issue/>",
+        "deleted_tooltip": "Mục công việc này đã bị xóa",
+        "fallback_name": "một mục công việc"
+      },
+      "label": {
+        "added_with_issue": "đã thêm nhãn mới <label/> vào <issue/>",
+        "added_without_issue": "đã thêm nhãn mới <label/>",
+        "removed_with_issue": "đã xóa nhãn <label/> khỏi <issue/>",
+        "removed_without_issue": "đã xóa nhãn <label/>"
+      },
+      "link": {
+        "added_with_issue": "đã thêm <link>liên kết</link> này vào <issue/>",
+        "added_without_issue": "đã thêm <link>liên kết</link> này",
+        "removed_with_issue": "đã xóa <link>liên kết</link> này khỏi <issue/>",
+        "removed_without_issue": "đã xóa <link>liên kết</link> này",
+        "updated_with_issue": "đã cập nhật <link>liên kết</link> của <issue/>",
+        "updated_without_issue": "đã cập nhật <link>liên kết</link>"
+      },
+      "module": {
+        "added_with_issue": "đã thêm <issue/> vào mô-đun <value/>",
+        "added_without_issue": "đã thêm mục công việc này vào mô-đun <value/>",
+        "removed": "đã xóa <issue/> khỏi mô-đun <value/>",
+        "set": "đã đặt mô-đun là <value/>"
+      },
+      "name": {
+        "set_with_issue": "đã đặt tiêu đề của <issue/> là <value/>",
+        "set_without_issue": "đã đặt tiêu đề là <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "đã xóa mục công việc cha <value/> khỏi <issue/>",
+        "removed_without_issue": "đã xóa mục công việc cha <value/>",
+        "set_with_issue": "đã đặt mục công việc cha là <value/> cho <issue/>",
+        "set_without_issue": "đã đặt mục công việc cha là <value/>"
+      },
+      "priority": {
+        "high": "Cao",
+        "low": "Thấp",
+        "medium": "Trung bình",
+        "none": "Không có",
+        "set_with_issue": "đã đặt mức ưu tiên là <value/> cho <issue/>",
+        "set_without_issue": "đã đặt mức ưu tiên là <value/>",
+        "urgent": "Khẩn cấp"
+      },
+      "relates_to": {
+        "added_with_issue": "đã đánh dấu <issue/> có liên quan đến <value/>.",
+        "added_without_issue": "đã đánh dấu mục công việc này có liên quan đến <value/>.",
+        "removed": "đã xóa mối quan hệ với <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "đã xóa ngày bắt đầu khỏi <issue/>",
+        "removed_without_issue": "đã xóa ngày bắt đầu",
+        "set_with_issue": "đã đặt ngày bắt đầu là <value/> cho <issue/>",
+        "set_without_issue": "đã đặt ngày bắt đầu là <value/>"
+      },
+      "state": {
+        "set_with_issue": "đã đặt trạng thái là <value/> cho <issue/>",
+        "set_without_issue": "đã đặt trạng thái là <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "đã xóa ngày hết hạn khỏi <issue/>",
+        "removed_without_issue": "đã xóa ngày hết hạn",
+        "set_with_issue": "đã đặt ngày hết hạn là <value/> cho <issue/>",
+        "set_without_issue": "đã đặt ngày hết hạn là <value/>"
+      }
+    },
+    "project": {
+      "archived_at": {
+        "archived": "đã lưu trữ dự án",
+        "restored": "đã khôi phục dự án"
+      },
+      "cycle_view": {
+        "disabled": "đã tắt chế độ xem chu kỳ",
+        "enabled": "đã bật chế độ xem chu kỳ",
+        "fallback": "đã cập nhật chế độ xem chu kỳ"
+      },
+      "cycles": {
+        "added": "đã thêm dự án này vào chu kỳ <value/>",
+        "removed": "đã xóa dự án này khỏi chu kỳ <value/>",
+        "unknown": "Chu kỳ không xác định"
+      },
+      "default": "đã cập nhật cài đặt dự án",
+      "description": {
+        "removed": "đã xóa mô tả dự án",
+        "updated": "đã cập nhật mô tả dự án"
+      },
+      "estimate": {
+        "removed": "đã xóa điểm ước tính",
+        "removed_with_value": "đã xóa điểm ước tính <value/>",
+        "set": "đã đặt điểm ước tính là <value/>"
+      },
+      "identifier": {
+        "updated": "đã cập nhật mã định danh dự án thành <value/>"
+      },
+      "inbox": {
+        "disabled": "đã tắt Intake",
+        "enabled": "đã bật Intake"
+      },
+      "intake_view": {
+        "disabled": "đã tắt chế độ xem Intake",
+        "enabled": "đã bật chế độ xem Intake",
+        "fallback": "đã cập nhật chế độ xem Intake"
+      },
+      "is_epic_enabled": {
+        "disabled": "đã tắt sử thi",
+        "enabled": "đã bật sử thi",
+        "fallback": "đã cập nhật sử thi"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "đã tắt loại mục công việc",
+        "enabled": "đã bật loại mục công việc",
+        "fallback": "đã cập nhật loại mục công việc"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "đã tắt cập nhật dự án",
+        "enabled": "đã bật cập nhật dự án",
+        "fallback": "đã cập nhật cập nhật dự án"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "đã tắt theo dõi thời gian",
+        "enabled": "đã bật theo dõi thời gian",
+        "fallback": "đã cập nhật theo dõi thời gian"
+      },
+      "is_workflow_enabled": {
+        "disabled": "đã tắt quy trình làm việc tùy chỉnh",
+        "enabled": "đã bật quy trình làm việc tùy chỉnh",
+        "fallback": "đã cập nhật quy trình làm việc tùy chỉnh"
+      },
+      "issue_views_view": {
+        "disabled": "đã tắt chế độ xem của các chế độ xem mục công việc",
+        "enabled": "đã bật chế độ xem của các chế độ xem mục công việc",
+        "fallback": "đã cập nhật chế độ xem của các chế độ xem mục công việc"
+      },
+      "labels": {
+        "added": "đã thêm nhãn <value/>",
+        "created": "đã tạo nhãn <value/>",
+        "deleted": "đã xóa nhãn <value/>",
+        "removed": "đã xóa nhãn <value/>",
+        "untitled": "Nhãn chưa có tiêu đề",
+        "updated": "đã cập nhật nhãn <value/>"
+      },
+      "module_view": {
+        "disabled": "đã tắt chế độ xem mô-đun",
+        "enabled": "đã bật chế độ xem mô-đun",
+        "fallback": "đã cập nhật chế độ xem mô-đun"
+      },
+      "modules": {
+        "added": "đã thêm dự án này vào mô-đun <value/>",
+        "removed": "đã xóa dự án này khỏi mô-đun <value/>",
+        "unknown": "Mô-đun không xác định"
+      },
+      "name": {
+        "renamed": "đã đổi tên dự án thành <value/>"
+      },
+      "network": {
+        "disabled": "đã tắt quyền truy cập mạng",
+        "enabled": "đã bật quyền truy cập mạng"
+      },
+      "page": {
+        "created": "đã tạo trang dự án <value/>",
+        "removed": "đã xóa trang dự án <value/>",
+        "untitled": "Trang chưa có tiêu đề"
+      },
+      "page_view": {
+        "disabled": "đã tắt chế độ xem trang",
+        "enabled": "đã bật chế độ xem trang",
+        "fallback": "đã cập nhật chế độ xem trang"
+      },
+      "priority": {
+        "set": "đã đặt mức ưu tiên là <value/>"
+      },
+      "start_date": {
+        "removed": "đã xóa ngày bắt đầu",
+        "set": "đã đặt ngày bắt đầu là <value/>"
+      },
+      "state": {
+        "set": "đã đặt trạng thái là <value/>"
+      },
+      "target_date": {
+        "removed": "đã xóa ngày mục tiêu",
+        "set": "đã đặt ngày mục tiêu là <value/>"
+      },
+      "timezone": {
+        "changed": "đã đổi múi giờ dự án thành <value/>",
+        "default": "mặc định"
+      },
+      "value_none": "không có"
+    }
   }
 }

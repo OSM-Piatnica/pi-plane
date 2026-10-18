@@ -522,5 +522,401 @@
     "add_related_work_items": "დაკავშირებული სამუშაო ელემენტების დამატება",
     "toggle_workspace_level_search": "სამუშაო სივრცის დონის ძიების გადართვა",
     "search_results_for_in_project": "ძიების შედეგები <query>„{query}“</query> პროექტში:"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "დაარქივა სამუშაო ელემენტი.",
+      "assignee": {
+        "added": "დაამატა ახალი მინიჭებული პირი <user/>.",
+        "added_with_issue": "დაამატა ახალი მინიჭებული პირი <user/> <issue/>-ში.",
+        "removed": "ამოიღო მინიჭებული პირი <user/>.",
+        "removed_with_issue": "ამოიღო მინიჭებული პირი <user/> <issue/>-დან."
+      },
+      "attachment": {
+        "added": "ატვირთა ახალი დანართი.",
+        "added_with_issue": "ატვირთა ახალი დანართი <issue/>-ში.",
+        "removed": "ამოიღო დანართი.",
+        "removed_with_issue": "ამოიღო დანართი <issue/>-დან."
+      },
+      "created": "შექმნა სამუშაო ელემენტი.",
+      "created_via": "შექმნა სამუშაო ელემენტი <source/>-ის მეშვეობით.",
+      "cycle": {
+        "added": "დაამატა ეს სამუშაო ელემენტი ციკლში <cycle/>",
+        "removed": "ამოიღო სამუშაო ელემენტი ციკლიდან <cycle/>",
+        "set": "დააყენა ციკლად <cycle/>"
+      },
+      "deleted": "წაშალა სამუშაო ელემენტი.",
+      "description": {
+        "updated": "განაახლა აღწერა.",
+        "updated_with_issue": "განაახლა აღწერა <issue/>-ში."
+      },
+      "duration": {
+        "days": "{count, plural, one {# დღე} other {# დღე}}",
+        "removed": "წაშალა ხანგრძლივობა.",
+        "removed_with_issue": "წაშალა ხანგრძლივობა <issue/>-დან.",
+        "set": "დააყენა ხანგრძლივობად <value/>.",
+        "set_with_issue": "დააყენა ხანგრძლივობად <value/> <issue/>-ზე."
+      },
+      "estimate": {
+        "removed": "ამოიღო შეფასების ქულა <value/>.",
+        "removed_with_issue": "ამოიღო შეფასების ქულა <value/> <issue/>-დან.",
+        "set": "დააყენა შეფასების ქულად <value/>.",
+        "set_with_issue": "დააყენა შეფასების ქულად <value/> <issue/>-ზე."
+      },
+      "intake": {
+        "accepted": "მიიღო ეს სამუშაო ელემენტი Intake-დან.",
+        "declined": "უარყო ეს სამუშაო ელემენტი Intake-დან.",
+        "duplicate": "უარყო ეს სამუშაო ელემენტი Intake-დან დუბლიკატად მონიშვნით.",
+        "snoozed": "გადადო ეს სამუშაო ელემენტი.",
+        "updated": "განაახლა სამუშაო ელემენტის სტატუსი Intake-ში."
+      },
+      "label": {
+        "added": "დაამატა ახალი იარლიყი <label/>",
+        "added_with_issue": "დაამატა ახალი იარლიყი <label/> <issue/>-ში",
+        "removed": "ამოიღო იარლიყი <label/>",
+        "removed_with_issue": "ამოიღო იარლიყი <label/> <issue/>-დან"
+      },
+      "link": {
+        "added": "დაამატა <link>ბმული</link>.",
+        "added_with_issue": "დაამატა <link>ბმული</link> <issue/>-ში.",
+        "removed": "ამოიღო ეს <link>ბმული</link>.",
+        "removed_with_issue": "ამოიღო ეს <link>ბმული</link> <issue/>-დან.",
+        "updated": "განაახლა <link>ბმული</link>.",
+        "updated_with_issue": "განაახლა <link>ბმული</link> <issue/>-ში."
+      },
+      "module": {
+        "added": "დაამატა ეს სამუშაო ელემენტი მოდულში <module/>",
+        "removed": "ამოიღო სამუშაო ელემენტი მოდულიდან <module/>",
+        "set": "დააყენა მოდულად <module/>"
+      },
+      "name": {
+        "set": "დააყენა სახელად {name}."
+      },
+      "parent": {
+        "removed": "ამოიღო მშობელი <value/>.",
+        "removed_with_issue": "ამოიღო მშობელი <value/> <issue/>-დან.",
+        "set": "დააყენა მშობლად <value/>.",
+        "set_with_issue": "დააყენა მშობლად <value/> <issue/>-ზე."
+      },
+      "priority": {
+        "set": "დააყენა პრიორიტეტად <value/>.",
+        "set_with_issue": "დააყენა პრიორიტეტად <value/> <issue/>-ზე."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "მონიშნა, რომ ამ სამუშაო ელემენტს ბლოკავს <value/>.",
+          "removed": "მოხსნა ამ სამუშაო ელემენტის დაბლოკვა სამუშაო ელემენტის მიერ: <value/>."
+        },
+        "blocking": {
+          "added": "მონიშნა, რომ ეს სამუშაო ელემენტი ბლოკავს სამუშაო ელემენტს <value/>.",
+          "removed": "ამოიღო მაბლოკირებელი სამუშაო ელემენტი <value/>."
+        },
+        "duplicate": {
+          "added": "მონიშნა ეს სამუშაო ელემენტი დუბლიკატად: <value/>.",
+          "removed": "მოხსნა ამ სამუშაო ელემენტის დუბლიკატად მონიშვნა: <value/>."
+        },
+        "finish_after": {
+          "added": "მონიშნა, რომ ეს სამუშაო ელემენტი მთავრდება უფრო გვიან, ვიდრე <value/>.",
+          "removed": "ამოიღო კავშირი „მთავრდება უფრო გვიან“: <value/>."
+        },
+        "finish_before": {
+          "added": "მონიშნა, რომ ეს სამუშაო ელემენტი მთავრდება უფრო ადრე, ვიდრე <value/>.",
+          "removed": "ამოიღო კავშირი „მთავრდება უფრო ადრე“: <value/>."
+        },
+        "relates_to": {
+          "added": "მონიშნა, რომ ეს სამუშაო ელემენტი უკავშირდება <value/>-ს.",
+          "removed": "ამოიღო კავშირი: <value/>."
+        },
+        "start_after": {
+          "added": "მონიშნა, რომ ეს სამუშაო ელემენტი იწყება უფრო გვიან, ვიდრე <value/>.",
+          "removed": "ამოიღო კავშირი „იწყება უფრო გვიან“: <value/>."
+        },
+        "start_before": {
+          "added": "მონიშნა, რომ ეს სამუშაო ელემენტი იწყება უფრო ადრე, ვიდრე <value/>.",
+          "removed": "ამოიღო კავშირი „იწყება უფრო ადრე“: <value/>."
+        }
+      },
+      "restored": "აღადგინა სამუშაო ელემენტი.",
+      "start_date": {
+        "removed": "წაშალა დაწყების თარიღი.",
+        "removed_with_issue": "წაშალა დაწყების თარიღი <issue/>-დან.",
+        "set": "დააყენა დაწყების თარიღად <value/>.",
+        "set_with_issue": "დააყენა დაწყების თარიღად <value/> <issue/>-ზე."
+      },
+      "state": {
+        "set": "დააყენა მდგომარეობად <value/>.",
+        "set_with_issue": "დააყენა მდგომარეობად <value/> <issue/>-ზე."
+      },
+      "target_date": {
+        "removed": "წაშალა ვადის თარიღი.",
+        "removed_with_issue": "წაშალა ვადის თარიღი <issue/>-დან.",
+        "set": "დააყენა ვადის თარიღად <value/>.",
+        "set_with_issue": "დააყენა ვადის თარიღად <value/> <issue/>-ზე."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "დაარქივა <issue/>",
+        "restored": "აღადგინა <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "დაამატა ახალი მინიჭებული პირი <assignee/> <issue/>-ში",
+        "added_without_issue": "დაამატა ახალი მინიჭებული პირი <assignee/>",
+        "removed_with_issue": "ამოიღო მინიჭებული პირი <assignee/> <issue/>-დან",
+        "removed_without_issue": "ამოიღო მინიჭებული პირი <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "ატვირთა ახალი დანართი <issue/>-ში",
+        "added_without_issue": "ატვირთა ახალი დანართი",
+        "removed_with_issue": "ამოიღო დანართი <issue/>-დან",
+        "removed_without_issue": "ამოიღო დანართი"
+      },
+      "blocked_by": {
+        "added_with_issue": "მონიშნა, რომ <issue/>-ს ბლოკავს <value/>.",
+        "added_without_issue": "მონიშნა, რომ ამ სამუშაო ელემენტს ბლოკავს <value/>.",
+        "removed_with_issue": "მოხსნა <issue/>-ის დაბლოკვა სამუშაო ელემენტის მიერ: <value/>.",
+        "removed_without_issue": "მოხსნა ამ სამუშაო ელემენტის დაბლოკვა სამუშაო ელემენტის მიერ: <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "მონიშნა, რომ <issue/> ბლოკავს სამუშაო ელემენტს <value/>.",
+        "added_without_issue": "მონიშნა, რომ ეს სამუშაო ელემენტი ბლოკავს სამუშაო ელემენტს <value/>.",
+        "removed": "ამოიღო მაბლოკირებელი სამუშაო ელემენტი <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "დაამატა <issue/> <nowrap>ციკლში</nowrap> <value/>",
+        "added_without_issue": "დაამატა ეს სამუშაო ელემენტი <nowrap>ციკლში</nowrap> <value/>",
+        "removed": "ამოიღო <issue/> ციკლიდან <value/>",
+        "set": "<nowrap>დააყენა ციკლად</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "განაახლა აღწერა <issue/>-ში",
+        "updated_without_issue": "განაახლა აღწერა"
+      },
+      "duplicate": {
+        "added_with_issue": "მონიშნა <issue/> დუბლიკატად: <value/>.",
+        "added_without_issue": "მონიშნა ეს სამუშაო ელემენტი დუბლიკატად: <value/>.",
+        "removed_with_issue": "მოხსნა <issue/>-ის დუბლიკატად მონიშვნა: <value/>.",
+        "removed_without_issue": "მოხსნა ამ სამუშაო ელემენტის დუბლიკატად მონიშვნა: <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# დღე} other {# დღე}}",
+        "removed_with_issue": "წაშალა ხანგრძლივობა <issue/>-დან",
+        "removed_without_issue": "წაშალა ხანგრძლივობა",
+        "set_with_issue": "დააყენა ხანგრძლივობად <value/> <issue/>-ზე",
+        "set_without_issue": "დააყენა ხანგრძლივობად <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "გადააკეთა <issue/> სამუშაო ელემენტად",
+        "created": "შექმნა <issue/>",
+        "deleted": "წაშალა <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "ამოიღო შეფასების ქულა <issue/>-დან",
+        "removed_without_issue": "ამოიღო შეფასების ქულა",
+        "set_with_issue": "დააყენა შეფასების ქულად <value/> <issue/>-ზე",
+        "set_without_issue": "დააყენა შეფასების ქულად <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "მიიღო სამუშაო ელემენტი <issue/>",
+        "accepted_without_issue": "მიიღო ეს სამუშაო ელემენტი Intake-დან.",
+        "declined_with_issue": "უარყო სამუშაო ელემენტი <issue/>",
+        "declined_without_issue": "უარყო ეს სამუშაო ელემენტი Intake-დან.",
+        "duplicate_with_issue": "უარყო სამუშაო ელემენტი <issue/> Intake-დან დუბლიკატად მონიშვნით.",
+        "duplicate_without_issue": "უარყო ეს სამუშაო ელემენტი Intake-დან დუბლიკატად მონიშვნით.",
+        "snoozed_with_issue": "გადადო სამუშაო ელემენტი <issue/>",
+        "snoozed_without_issue": "გადადო ეს სამუშაო ელემენტი.",
+        "updated_with_issue": "განაახლა სამუშაო ელემენტის სტატუსი Intake-ში. <issue/>",
+        "updated_without_issue": "განაახლა სამუშაო ელემენტის სტატუსი Intake-ში."
+      },
+      "issue": {
+        "converted_to_epic": "გადააკეთა <issue/> ეპიკად",
+        "created": "შექმნა <issue/>",
+        "deleted": "წაშალა <issue/>",
+        "deleted_tooltip": "ეს სამუშაო ელემენტი წაიშალა",
+        "fallback_name": "სამუშაო ელემენტი"
+      },
+      "label": {
+        "added_with_issue": "დაამატა ახალი იარლიყი <label/> <issue/>-ში",
+        "added_without_issue": "დაამატა ახალი იარლიყი <label/>",
+        "removed_with_issue": "ამოიღო იარლიყი <label/> <issue/>-დან",
+        "removed_without_issue": "ამოიღო იარლიყი <label/>"
+      },
+      "link": {
+        "added_with_issue": "დაამატა ეს <link>ბმული</link> <issue/>-ში",
+        "added_without_issue": "დაამატა ეს <link>ბმული</link>",
+        "removed_with_issue": "ამოიღო ეს <link>ბმული</link> <issue/>-დან",
+        "removed_without_issue": "ამოიღო ეს <link>ბმული</link>",
+        "updated_with_issue": "განაახლა <link>ბმული</link> <issue/>-ში",
+        "updated_without_issue": "განაახლა <link>ბმული</link>"
+      },
+      "module": {
+        "added_with_issue": "დაამატა <issue/> მოდულში <value/>",
+        "added_without_issue": "დაამატა ეს სამუშაო ელემენტი მოდულში <value/>",
+        "removed": "ამოიღო <issue/> მოდულიდან <value/>",
+        "set": "დააყენა მოდულად <value/>"
+      },
+      "name": {
+        "set_with_issue": "დააყენა <issue/>-ის სათაურად <value/>",
+        "set_without_issue": "დააყენა სათაურად <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "ამოიღო მშობელი <value/> <issue/>-დან",
+        "removed_without_issue": "ამოიღო მშობელი <value/>",
+        "set_with_issue": "დააყენა მშობლად <value/> <issue/>-ზე",
+        "set_without_issue": "დააყენა მშობლად <value/>"
+      },
+      "priority": {
+        "high": "მაღალი",
+        "low": "დაბალი",
+        "medium": "საშუალო",
+        "none": "არცერთი",
+        "set_with_issue": "დააყენა პრიორიტეტად <value/> <issue/>-ზე",
+        "set_without_issue": "დააყენა პრიორიტეტად <value/>",
+        "urgent": "გადაუდებელი"
+      },
+      "relates_to": {
+        "added_with_issue": "მონიშნა, რომ <issue/> უკავშირდება <value/>-ს.",
+        "added_without_issue": "მონიშნა, რომ ეს სამუშაო ელემენტი უკავშირდება <value/>-ს.",
+        "removed": "ამოიღო კავშირი: <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "წაშალა დაწყების თარიღი <issue/>-დან",
+        "removed_without_issue": "წაშალა დაწყების თარიღი",
+        "set_with_issue": "დააყენა დაწყების თარიღად <value/> <issue/>-ზე",
+        "set_without_issue": "დააყენა დაწყების თარიღად <value/>"
+      },
+      "state": {
+        "set_with_issue": "დააყენა მდგომარეობად <value/> <issue/>-ზე",
+        "set_without_issue": "დააყენა მდგომარეობად <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "წაშალა ვადის თარიღი <issue/>-დან",
+        "removed_without_issue": "წაშალა ვადის თარიღი",
+        "set_with_issue": "დააყენა ვადის თარიღად <value/> <issue/>-ზე",
+        "set_without_issue": "დააყენა ვადის თარიღად <value/>"
+      }
+    },
+    "project": {
+      "archived_at": {
+        "archived": "დაარქივა პროექტი",
+        "restored": "აღადგინა პროექტი"
+      },
+      "cycle_view": {
+        "disabled": "გამორთო ციკლების ხედი",
+        "enabled": "ჩართო ციკლების ხედი",
+        "fallback": "განაახლა ციკლების ხედი"
+      },
+      "cycles": {
+        "added": "დაამატა ეს პროექტი ციკლში <value/>",
+        "removed": "ამოიღო ეს პროექტი ციკლიდან <value/>",
+        "unknown": "უცნობი ციკლი"
+      },
+      "default": "განაახლა პროექტის პარამეტრები",
+      "description": {
+        "removed": "წაშალა პროექტის აღწერა",
+        "updated": "განაახლა პროექტის აღწერა"
+      },
+      "estimate": {
+        "removed": "ამოიღო შეფასების ქულა",
+        "removed_with_value": "ამოიღო შეფასების ქულა <value/>",
+        "set": "დააყენა შეფასების ქულად <value/>"
+      },
+      "identifier": {
+        "updated": "პროექტის იდენტიფიკატორად დააყენა <value/>"
+      },
+      "inbox": {
+        "disabled": "გამორთო Intake",
+        "enabled": "ჩართო Intake"
+      },
+      "intake_view": {
+        "disabled": "გამორთო Intake-ის ხედი",
+        "enabled": "ჩართო Intake-ის ხედი",
+        "fallback": "განაახლა Intake-ის ხედი"
+      },
+      "is_epic_enabled": {
+        "disabled": "გამორთო ეპიკები",
+        "enabled": "ჩართო ეპიკები",
+        "fallback": "განაახლა ეპიკები"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "გამორთო სამუშაო ელემენტის ტიპები",
+        "enabled": "ჩართო სამუშაო ელემენტის ტიპები",
+        "fallback": "განაახლა სამუშაო ელემენტის ტიპები"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "გამორთო პროექტის განახლებები",
+        "enabled": "ჩართო პროექტის განახლებები",
+        "fallback": "განაახლა პროექტის განახლებები"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "გამორთო დროის აღრიცხვა",
+        "enabled": "ჩართო დროის აღრიცხვა",
+        "fallback": "განაახლა დროის აღრიცხვა"
+      },
+      "is_workflow_enabled": {
+        "disabled": "გამორთო მორგებული სამუშაო პროცესი",
+        "enabled": "ჩართო მორგებული სამუშაო პროცესი",
+        "fallback": "განაახლა მორგებული სამუშაო პროცესი"
+      },
+      "issue_views_view": {
+        "disabled": "გამორთო სამუშაო ელემენტების ხედების ხედი",
+        "enabled": "ჩართო სამუშაო ელემენტების ხედების ხედი",
+        "fallback": "განაახლა სამუშაო ელემენტების ხედების ხედი"
+      },
+      "labels": {
+        "added": "დაამატა იარლიყი <value/>",
+        "created": "შექმნა იარლიყი <value/>",
+        "deleted": "წაშალა იარლიყი <value/>",
+        "removed": "ამოიღო იარლიყი <value/>",
+        "untitled": "უსათაურო იარლიყი",
+        "updated": "განაახლა იარლიყი <value/>"
+      },
+      "module_view": {
+        "disabled": "გამორთო მოდულების ხედი",
+        "enabled": "ჩართო მოდულების ხედი",
+        "fallback": "განაახლა მოდულების ხედი"
+      },
+      "modules": {
+        "added": "დაამატა ეს პროექტი მოდულში <value/>",
+        "removed": "ამოიღო ეს პროექტი მოდულიდან <value/>",
+        "unknown": "უცნობი მოდული"
+      },
+      "name": {
+        "renamed": "გადაარქვა პროექტს სახელად <value/>"
+      },
+      "network": {
+        "disabled": "გამორთო ქსელური წვდომა",
+        "enabled": "ჩართო ქსელური წვდომა"
+      },
+      "page": {
+        "created": "შექმნა პროექტის გვერდი <value/>",
+        "removed": "ამოიღო პროექტის გვერდი <value/>",
+        "untitled": "უსათაურო გვერდი"
+      },
+      "page_view": {
+        "disabled": "გამორთო გვერდების ხედი",
+        "enabled": "ჩართო გვერდების ხედი",
+        "fallback": "განაახლა გვერდების ხედი"
+      },
+      "priority": {
+        "set": "დააყენა პრიორიტეტად <value/>"
+      },
+      "start_date": {
+        "removed": "წაშალა დაწყების თარიღი",
+        "set": "დააყენა დაწყების თარიღად <value/>"
+      },
+      "state": {
+        "set": "დააყენა მდგომარეობად <value/>"
+      },
+      "target_date": {
+        "removed": "წაშალა სამიზნე თარიღი",
+        "set": "დააყენა სამიზნე თარიღად <value/>"
+      },
+      "timezone": {
+        "changed": "პროექტის დროის სარტყლად დააყენა <value/>",
+        "default": "ნაგულისხმევი"
+      },
+      "value_none": "არცერთი"
+    }
   }
 }

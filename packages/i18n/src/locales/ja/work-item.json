@@ -522,5 +522,401 @@
     "add_related_work_items": "関連する作業項目を追加",
     "toggle_workspace_level_search": "ワークスペース全体の検索を切り替え",
     "search_results_for_in_project": "プロジェクト内の<query>「{query}」</query>の検索結果:"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "作業項目をアーカイブしました。",
+      "assignee": {
+        "added": "新しい担当者<user/>を追加しました。",
+        "added_with_issue": "<issue/>に新しい担当者<user/>を追加しました。",
+        "removed": "担当者<user/>を削除しました。",
+        "removed_with_issue": "<issue/>から担当者<user/>を削除しました。"
+      },
+      "attachment": {
+        "added": "新しい添付ファイルをアップロードしました。",
+        "added_with_issue": "<issue/>に新しい添付ファイルをアップロードしました。",
+        "removed": "添付ファイルを削除しました。",
+        "removed_with_issue": "<issue/>から添付ファイルを削除しました。"
+      },
+      "created": "作業項目を作成しました。",
+      "created_via": "<source/>経由で作業項目を作成しました。",
+      "cycle": {
+        "added": "この作業項目をサイクル<cycle/>に追加しました",
+        "removed": "作業項目をサイクル<cycle/>から削除しました",
+        "set": "サイクルを<cycle/>に設定しました"
+      },
+      "deleted": "作業項目を削除しました。",
+      "description": {
+        "updated": "説明を更新しました。",
+        "updated_with_issue": "<issue/>の説明を更新しました。"
+      },
+      "duration": {
+        "days": "{count, plural, one {#日} other {#日}}",
+        "removed": "期間を削除しました。",
+        "removed_with_issue": "<issue/>から期間を削除しました。",
+        "set": "期間を<value/>に設定しました。",
+        "set_with_issue": "<issue/>の期間を<value/>に設定しました。"
+      },
+      "estimate": {
+        "removed": "見積もりポイント<value/>を削除しました。",
+        "removed_with_issue": "<issue/>から見積もりポイント<value/>を削除しました。",
+        "set": "見積もりポイントを<value/>に設定しました。",
+        "set_with_issue": "<issue/>の見積もりポイントを<value/>に設定しました。"
+      },
+      "intake": {
+        "accepted": "この作業項目をIntakeから承認しました。",
+        "declined": "この作業項目をIntakeから却下しました。",
+        "duplicate": "重複する作業項目として指定し、この作業項目をIntakeから却下しました。",
+        "snoozed": "この作業項目をスヌーズしました。",
+        "updated": "Intakeの作業項目のステータスを更新しました。"
+      },
+      "label": {
+        "added": "新しいラベル<label/>を追加しました",
+        "added_with_issue": "<issue/>に新しいラベル<label/>を追加しました",
+        "removed": "ラベル<label/>を削除しました",
+        "removed_with_issue": "<issue/>からラベル<label/>を削除しました"
+      },
+      "link": {
+        "added": "<link>リンク</link>を追加しました。",
+        "added_with_issue": "<issue/>に<link>リンク</link>を追加しました。",
+        "removed": "この<link>リンク</link>を削除しました。",
+        "removed_with_issue": "<issue/>からこの<link>リンク</link>を削除しました。",
+        "updated": "<link>リンク</link>を更新しました。",
+        "updated_with_issue": "<issue/>の<link>リンク</link>を更新しました。"
+      },
+      "module": {
+        "added": "この作業項目をモジュール<module/>に追加しました",
+        "removed": "作業項目をモジュール<module/>から削除しました",
+        "set": "モジュールを<module/>に設定しました"
+      },
+      "name": {
+        "set": "名前を{name}に設定しました。"
+      },
+      "parent": {
+        "removed": "親<value/>を削除しました。",
+        "removed_with_issue": "<issue/>から親<value/>を削除しました。",
+        "set": "親を<value/>に設定しました。",
+        "set_with_issue": "<issue/>の親を<value/>に設定しました。"
+      },
+      "priority": {
+        "set": "優先度を<value/>に設定しました。",
+        "set_with_issue": "<issue/>の優先度を<value/>に設定しました。"
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "この作業項目が<value/>にブロックされていることを設定しました。",
+          "removed": "この作業項目が作業項目<value/>にブロックされている設定を削除しました。"
+        },
+        "blocking": {
+          "added": "この作業項目が作業項目<value/>をブロックしていることを設定しました。",
+          "removed": "ブロック対象の作業項目<value/>を削除しました。"
+        },
+        "duplicate": {
+          "added": "この作業項目を<value/>の重複としてマークしました。",
+          "removed": "この作業項目の<value/>との重複設定を削除しました。"
+        },
+        "finish_after": {
+          "added": "この作業項目が<value/>より後に終了することを設定しました。",
+          "removed": "<value/>との「より後に終了」の関連を削除しました。"
+        },
+        "finish_before": {
+          "added": "この作業項目が<value/>より前に終了することを設定しました。",
+          "removed": "<value/>との「より前に終了」の関連を削除しました。"
+        },
+        "relates_to": {
+          "added": "この作業項目が<value/>に関連していることを設定しました。",
+          "removed": "<value/>との関連を削除しました。"
+        },
+        "start_after": {
+          "added": "この作業項目が<value/>より後に開始することを設定しました。",
+          "removed": "<value/>との「より後に開始」の関連を削除しました。"
+        },
+        "start_before": {
+          "added": "この作業項目が<value/>より前に開始することを設定しました。",
+          "removed": "<value/>との「より前に開始」の関連を削除しました。"
+        }
+      },
+      "restored": "作業項目を復元しました。",
+      "start_date": {
+        "removed": "開始日を削除しました。",
+        "removed_with_issue": "<issue/>から開始日を削除しました。",
+        "set": "開始日を<value/>に設定しました。",
+        "set_with_issue": "<issue/>の開始日を<value/>に設定しました。"
+      },
+      "state": {
+        "set": "状態を<value/>に設定しました。",
+        "set_with_issue": "<issue/>の状態を<value/>に設定しました。"
+      },
+      "target_date": {
+        "removed": "期限を削除しました。",
+        "removed_with_issue": "<issue/>から期限を削除しました。",
+        "set": "期限を<value/>に設定しました。",
+        "set_with_issue": "<issue/>の期限を<value/>に設定しました。"
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "<issue/>をアーカイブしました",
+        "restored": "<issue/>を復元しました"
+      },
+      "assignee": {
+        "added_with_issue": "<issue/>に新しい担当者<assignee/>を追加しました",
+        "added_without_issue": "新しい担当者<assignee/>を追加しました",
+        "removed_with_issue": "<issue/>から担当者<assignee/>を削除しました",
+        "removed_without_issue": "担当者<assignee/>を削除しました"
+      },
+      "attachment": {
+        "added_with_issue": "<issue/>に新しい添付ファイルをアップロードしました",
+        "added_without_issue": "新しい添付ファイルをアップロードしました",
+        "removed_with_issue": "<issue/>から添付ファイルを削除しました",
+        "removed_without_issue": "添付ファイルを削除しました"
+      },
+      "blocked_by": {
+        "added_with_issue": "<issue/>が<value/>にブロックされていることを設定しました。",
+        "added_without_issue": "この作業項目が<value/>にブロックされていることを設定しました。",
+        "removed_with_issue": "<issue/>が作業項目<value/>にブロックされている設定を削除しました。",
+        "removed_without_issue": "この作業項目が作業項目<value/>にブロックされている設定を削除しました。"
+      },
+      "blocking": {
+        "added_with_issue": "<issue/>が作業項目<value/>をブロックしていることを設定しました。",
+        "added_without_issue": "この作業項目が作業項目<value/>をブロックしていることを設定しました。",
+        "removed": "ブロック対象の作業項目<value/>を削除しました。"
+      },
+      "cycle": {
+        "added_with_issue": "<issue/>を<nowrap>サイクル</nowrap><value/>に追加しました",
+        "added_without_issue": "この作業項目を<nowrap>サイクル</nowrap><value/>に追加しました",
+        "removed": "<issue/>をサイクル<value/>から削除しました",
+        "set": "<nowrap>サイクルを</nowrap><value/>に設定しました"
+      },
+      "description": {
+        "updated_with_issue": "<issue/>の説明を更新しました",
+        "updated_without_issue": "説明を更新しました"
+      },
+      "duplicate": {
+        "added_with_issue": "<issue/>を<value/>の重複としてマークしました。",
+        "added_without_issue": "この作業項目を<value/>の重複としてマークしました。",
+        "removed_with_issue": "<issue/>の<value/>との重複設定を削除しました。",
+        "removed_without_issue": "この作業項目の<value/>との重複設定を削除しました。"
+      },
+      "duration": {
+        "days": "{count, plural, one {#日} other {#日}}",
+        "removed_with_issue": "<issue/>から期間を削除しました",
+        "removed_without_issue": "期間を削除しました",
+        "set_with_issue": "<issue/>の期間を<value/>に設定しました",
+        "set_without_issue": "期間を<value/>に設定しました"
+      },
+      "epic": {
+        "converted_to_work_item": "<issue/>を作業項目に変換しました",
+        "created": "<issue/>を作成しました",
+        "deleted": "<issue/>を削除しました"
+      },
+      "estimate_point": {
+        "removed_with_issue": "<issue/>から見積もりポイントを削除しました",
+        "removed_without_issue": "見積もりポイントを削除しました",
+        "set_with_issue": "<issue/>の見積もりポイントを<value/>に設定しました",
+        "set_without_issue": "見積もりポイントを<value/>に設定しました"
+      },
+      "inbox": {
+        "accepted_with_issue": "作業項目<issue/>を承認しました",
+        "accepted_without_issue": "この作業項目をIntakeから承認しました。",
+        "declined_with_issue": "作業項目<issue/>を却下しました",
+        "declined_without_issue": "この作業項目をIntakeから却下しました。",
+        "duplicate_with_issue": "重複する作業項目として指定し、作業項目<issue/>をIntakeから却下しました。",
+        "duplicate_without_issue": "重複する作業項目として指定し、この作業項目をIntakeから却下しました。",
+        "snoozed_with_issue": "作業項目<issue/>をスヌーズしました",
+        "snoozed_without_issue": "この作業項目をスヌーズしました。",
+        "updated_with_issue": "Intakeの作業項目のステータスを更新しました。<issue/>",
+        "updated_without_issue": "Intakeの作業項目のステータスを更新しました。"
+      },
+      "issue": {
+        "converted_to_epic": "<issue/>をエピックに変換しました",
+        "created": "<issue/>を作成しました",
+        "deleted": "<issue/>を削除しました",
+        "deleted_tooltip": "この作業項目は削除されました",
+        "fallback_name": "作業項目"
+      },
+      "label": {
+        "added_with_issue": "<issue/>に新しいラベル<label/>を追加しました",
+        "added_without_issue": "新しいラベル<label/>を追加しました",
+        "removed_with_issue": "<issue/>からラベル<label/>を削除しました",
+        "removed_without_issue": "ラベル<label/>を削除しました"
+      },
+      "link": {
+        "added_with_issue": "<issue/>にこの<link>リンク</link>を追加しました",
+        "added_without_issue": "この<link>リンク</link>を追加しました",
+        "removed_with_issue": "<issue/>からこの<link>リンク</link>を削除しました",
+        "removed_without_issue": "この<link>リンク</link>を削除しました",
+        "updated_with_issue": "<issue/>の<link>リンク</link>を更新しました",
+        "updated_without_issue": "<link>リンク</link>を更新しました"
+      },
+      "module": {
+        "added_with_issue": "<issue/>をモジュール<value/>に追加しました",
+        "added_without_issue": "この作業項目をモジュール<value/>に追加しました",
+        "removed": "<issue/>をモジュール<value/>から削除しました",
+        "set": "モジュールを<value/>に設定しました"
+      },
+      "name": {
+        "set_with_issue": "<issue/>のタイトルを<value/>に設定しました",
+        "set_without_issue": "タイトルを<value/>に設定しました"
+      },
+      "parent": {
+        "removed_with_issue": "<issue/>から親<value/>を削除しました",
+        "removed_without_issue": "親<value/>を削除しました",
+        "set_with_issue": "<issue/>の親を<value/>に設定しました",
+        "set_without_issue": "親を<value/>に設定しました"
+      },
+      "priority": {
+        "high": "高",
+        "low": "低",
+        "medium": "中",
+        "none": "なし",
+        "set_with_issue": "<issue/>の優先度を<value/>に設定しました",
+        "set_without_issue": "優先度を<value/>に設定しました",
+        "urgent": "緊急"
+      },
+      "relates_to": {
+        "added_with_issue": "<issue/>が<value/>に関連していることを設定しました。",
+        "added_without_issue": "この作業項目が<value/>に関連していることを設定しました。",
+        "removed": "<value/>との関連を削除しました。"
+      },
+      "start_date": {
+        "removed_with_issue": "<issue/>から開始日を削除しました",
+        "removed_without_issue": "開始日を削除しました",
+        "set_with_issue": "<issue/>の開始日を<value/>に設定しました",
+        "set_without_issue": "開始日を<value/>に設定しました"
+      },
+      "state": {
+        "set_with_issue": "<issue/>の状態を<value/>に設定しました",
+        "set_without_issue": "状態を<value/>に設定しました"
+      },
+      "target_date": {
+        "removed_with_issue": "<issue/>から期限を削除しました",
+        "removed_without_issue": "期限を削除しました",
+        "set_with_issue": "<issue/>の期限を<value/>に設定しました",
+        "set_without_issue": "期限を<value/>に設定しました"
+      }
+    },
+    "project": {
+      "archived_at": {
+        "archived": "プロジェクトをアーカイブしました",
+        "restored": "プロジェクトを復元しました"
+      },
+      "cycle_view": {
+        "disabled": "サイクル表示を無効にしました",
+        "enabled": "サイクル表示を有効にしました",
+        "fallback": "サイクル表示を更新しました"
+      },
+      "cycles": {
+        "added": "このプロジェクトをサイクル<value/>に追加しました",
+        "removed": "このプロジェクトをサイクル<value/>から削除しました",
+        "unknown": "不明なサイクル"
+      },
+      "default": "プロジェクト設定を更新しました",
+      "description": {
+        "removed": "プロジェクトの説明を削除しました",
+        "updated": "プロジェクトの説明を更新しました"
+      },
+      "estimate": {
+        "removed": "見積もりポイントを削除しました",
+        "removed_with_value": "見積もりポイント<value/>を削除しました",
+        "set": "見積もりポイントを<value/>に設定しました"
+      },
+      "identifier": {
+        "updated": "プロジェクト識別子を<value/>に更新しました"
+      },
+      "inbox": {
+        "disabled": "Intakeを無効にしました",
+        "enabled": "Intakeを有効にしました"
+      },
+      "intake_view": {
+        "disabled": "Intake表示を無効にしました",
+        "enabled": "Intake表示を有効にしました",
+        "fallback": "Intake表示を更新しました"
+      },
+      "is_epic_enabled": {
+        "disabled": "エピックを無効にしました",
+        "enabled": "エピックを有効にしました",
+        "fallback": "エピックを更新しました"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "作業項目タイプを無効にしました",
+        "enabled": "作業項目タイプを有効にしました",
+        "fallback": "作業項目タイプを更新しました"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "プロジェクト更新を無効にしました",
+        "enabled": "プロジェクト更新を有効にしました",
+        "fallback": "プロジェクト更新を更新しました"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "時間トラッキングを無効にしました",
+        "enabled": "時間トラッキングを有効にしました",
+        "fallback": "時間トラッキングを更新しました"
+      },
+      "is_workflow_enabled": {
+        "disabled": "カスタムワークフローを無効にしました",
+        "enabled": "カスタムワークフローを有効にしました",
+        "fallback": "カスタムワークフローを更新しました"
+      },
+      "issue_views_view": {
+        "disabled": "ビュー表示を無効にしました",
+        "enabled": "ビュー表示を有効にしました",
+        "fallback": "ビュー表示を更新しました"
+      },
+      "labels": {
+        "added": "ラベル<value/>を追加しました",
+        "created": "ラベル<value/>を作成しました",
+        "deleted": "ラベル<value/>を削除しました",
+        "removed": "ラベル<value/>を削除しました",
+        "untitled": "無題のラベル",
+        "updated": "ラベル<value/>を更新しました"
+      },
+      "module_view": {
+        "disabled": "モジュール表示を無効にしました",
+        "enabled": "モジュール表示を有効にしました",
+        "fallback": "モジュール表示を更新しました"
+      },
+      "modules": {
+        "added": "このプロジェクトをモジュール<value/>に追加しました",
+        "removed": "このプロジェクトをモジュール<value/>から削除しました",
+        "unknown": "不明なモジュール"
+      },
+      "name": {
+        "renamed": "プロジェクト名を<value/>に変更しました"
+      },
+      "network": {
+        "disabled": "ネットワークアクセスを無効にしました",
+        "enabled": "ネットワークアクセスを有効にしました"
+      },
+      "page": {
+        "created": "プロジェクトページ<value/>を作成しました",
+        "removed": "プロジェクトページ<value/>を削除しました",
+        "untitled": "無題のページ"
+      },
+      "page_view": {
+        "disabled": "ページ表示を無効にしました",
+        "enabled": "ページ表示を有効にしました",
+        "fallback": "ページ表示を更新しました"
+      },
+      "priority": {
+        "set": "優先度を<value/>に設定しました"
+      },
+      "start_date": {
+        "removed": "開始日を削除しました",
+        "set": "開始日を<value/>に設定しました"
+      },
+      "state": {
+        "set": "状態を<value/>に設定しました"
+      },
+      "target_date": {
+        "removed": "目標日を削除しました",
+        "set": "目標日を<value/>に設定しました"
+      },
+      "timezone": {
+        "changed": "プロジェクトのタイムゾーンを<value/>に変更しました",
+        "default": "デフォルト"
+      },
+      "value_none": "なし"
+    }
   }
 }

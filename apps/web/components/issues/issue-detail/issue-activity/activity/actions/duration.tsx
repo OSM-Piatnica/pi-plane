@@ -5,6 +5,8 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 import { Timer } from "lucide-react";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -19,28 +21,33 @@ export const IssueDurationActivity = observer(function IssueDurationActivity(pro
   const {
     activity: { getActivityById },
   } = useIssueDetail();
+  const { t } = useTranslation();
 
   const activity = getActivityById(activityId);
 
   if (!activity) return <></>;
+
+  const message = activity.new_value
+    ? showIssue
+      ? t("activity_feed.issue.duration.set_with_issue")
+      : t("activity_feed.issue.duration.set")
+    : showIssue
+      ? t("activity_feed.issue.duration.removed_with_issue")
+      : t("activity_feed.issue.duration.removed");
   return (
     <IssueActivityBlockComponent
       icon={<Timer size={14} className="text-secondary" aria-hidden="true" />}
       activityId={activityId}
       ends={ends}
     >
-      <>
-        {activity.new_value ? `set the duration to ` : `removed the duration `}
-        {activity.new_value && (
-          <>
-            <span className="font-medium text-primary">
-              {activity.new_value} {activity.new_value === "1" ? "day" : "days"}
-            </span>
-          </>
-        )}
-        {showIssue && (activity.new_value ? ` for ` : ` from `)}
-        {showIssue && <IssueLink activityId={activityId} />}.
-      </>
+      {renderTaggedText(message, {
+        value: () => (
+          <span className="font-medium text-primary">
+            {t("activity_feed.issue.duration.days", { count: Number(activity.new_value) })}
+          </span>
+        ),
+        issue: () => <IssueLink activityId={activityId} />,
+      })}
     </IssueActivityBlockComponent>
   );
 });

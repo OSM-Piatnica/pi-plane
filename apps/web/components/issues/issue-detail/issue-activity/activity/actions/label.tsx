@@ -6,6 +6,8 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 import { LabelsOutline } from "@makeplane/propel/icons";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -21,6 +23,7 @@ export const IssueLabelActivity = observer(function IssueLabelActivity(props: TI
   const {
     activity: { getActivityById },
   } = useIssueDetail();
+  const { t } = useTranslation();
   const { getLabelById } = useLabel();
 
   const activity = getActivityById(activityId);
@@ -28,21 +31,30 @@ export const IssueLabelActivity = observer(function IssueLabelActivity(props: TI
   const newLabelColor = getLabelById(activity?.new_identifier ?? "")?.color;
 
   if (!activity) return <></>;
+
+  const message =
+    activity.old_value === ""
+      ? showIssue
+        ? t("activity_feed.issue.label.added_with_issue")
+        : t("activity_feed.issue.label.added")
+      : showIssue
+        ? t("activity_feed.issue.label.removed_with_issue")
+        : t("activity_feed.issue.label.removed");
   return (
     <IssueActivityBlockComponent
       icon={<LabelsOutline height={14} width={14} className="text-secondary" />}
       activityId={activityId}
       ends={ends}
     >
-      <>
-        {activity.old_value === "" ? `added a new label ` : `removed the label `}
-        <LabelActivityChip
-          name={activity.old_value === "" ? activity.new_value : activity.old_value}
-          color={activity.old_value === "" ? newLabelColor : oldLabelColor}
-        />
-        {showIssue && (activity.old_value === "" ? ` to ` : ` from `)}
-        {showIssue && <IssueLink activityId={activityId} />}
-      </>
+      {renderTaggedText(message, {
+        label: () => (
+          <LabelActivityChip
+            name={activity.old_value === "" ? activity.new_value : activity.old_value}
+            color={activity.old_value === "" ? newLabelColor : oldLabelColor}
+          />
+        ),
+        issue: () => <IssueLink activityId={activityId} />,
+      })}
     </IssueActivityBlockComponent>
   );
 });

@@ -522,5 +522,401 @@
     "add_related_work_items": "Додати пов’язані робочі одиниці",
     "toggle_workspace_level_search": "Перемкнути пошук на рівні робочого простору",
     "search_results_for_in_project": "Результати пошуку за <query>\"{query}\"</query> у проєкті:"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "заархівовано робочу одиницю.",
+      "assignee": {
+        "added": "додано нового виконавця <user/>.",
+        "added_with_issue": "додано нового виконавця <user/> до <issue/>.",
+        "removed": "видалено виконавця <user/>.",
+        "removed_with_issue": "видалено виконавця <user/> з <issue/>."
+      },
+      "attachment": {
+        "added": "завантажено нове вкладення.",
+        "added_with_issue": "завантажено нове вкладення до <issue/>.",
+        "removed": "видалено вкладення.",
+        "removed_with_issue": "видалено вкладення з <issue/>."
+      },
+      "created": "створено робочу одиницю.",
+      "created_via": "створено робочу одиницю через <source/>.",
+      "cycle": {
+        "added": "додано цю робочу одиницю до циклу <cycle/>",
+        "removed": "видалено робочу одиницю з циклу <cycle/>",
+        "set": "встановлено цикл <cycle/>"
+      },
+      "deleted": "видалено робочу одиницю.",
+      "description": {
+        "updated": "оновлено опис.",
+        "updated_with_issue": "оновлено опис <issue/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# день} few {# дні} many {# днів} other {# дня}}",
+        "removed": "видалено тривалість.",
+        "removed_with_issue": "видалено тривалість з <issue/>.",
+        "set": "встановлено тривалість <value/>.",
+        "set_with_issue": "встановлено тривалість <value/> для <issue/>."
+      },
+      "estimate": {
+        "removed": "видалено оцінку <value/>.",
+        "removed_with_issue": "видалено оцінку <value/> з <issue/>.",
+        "set": "встановлено оцінку <value/>.",
+        "set_with_issue": "встановлено оцінку <value/> для <issue/>."
+      },
+      "intake": {
+        "accepted": "прийнято цю робочу одиницю з Intake.",
+        "declined": "відхилено цю робочу одиницю з Intake.",
+        "duplicate": "відхилено цю робочу одиницю з Intake, позначивши її як дублікат робочої одиниці.",
+        "snoozed": "відкладено цю робочу одиницю.",
+        "updated": "оновлено стан робочої одиниці в Intake."
+      },
+      "label": {
+        "added": "додано нову мітку <label/>",
+        "added_with_issue": "додано нову мітку <label/> до <issue/>",
+        "removed": "видалено мітку <label/>",
+        "removed_with_issue": "видалено мітку <label/> з <issue/>"
+      },
+      "link": {
+        "added": "додано <link>посилання</link>.",
+        "added_with_issue": "додано <link>посилання</link> до <issue/>.",
+        "removed": "видалено це <link>посилання</link>.",
+        "removed_with_issue": "видалено це <link>посилання</link> з <issue/>.",
+        "updated": "оновлено <link>посилання</link>.",
+        "updated_with_issue": "оновлено <link>посилання</link> в <issue/>."
+      },
+      "module": {
+        "added": "додано цю робочу одиницю до модуля <module/>",
+        "removed": "видалено робочу одиницю з модуля <module/>",
+        "set": "встановлено модуль <module/>"
+      },
+      "name": {
+        "set": "встановлено назву {name}."
+      },
+      "parent": {
+        "removed": "видалено батьківську одиницю <value/>.",
+        "removed_with_issue": "видалено батьківську одиницю <value/> з <issue/>.",
+        "set": "встановлено батьківську одиницю <value/>.",
+        "set_with_issue": "встановлено батьківську одиницю <value/> для <issue/>."
+      },
+      "priority": {
+        "set": "встановлено пріоритет <value/>.",
+        "set_with_issue": "встановлено пріоритет <value/> для <issue/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "позначено, що ця робоча одиниця блокується одиницею <value/>.",
+          "removed": "видалено блокування цієї робочої одиниці робочою одиницею <value/>."
+        },
+        "blocking": {
+          "added": "позначено, що ця робоча одиниця блокує робочу одиницю <value/>.",
+          "removed": "видалено блокувану робочу одиницю <value/>."
+        },
+        "duplicate": {
+          "added": "позначено цю робочу одиницю як дублікат <value/>.",
+          "removed": "знято позначку цієї робочої одиниці як дубліката <value/>."
+        },
+        "finish_after": {
+          "added": "позначено, що ця робоча одиниця завершується після <value/>.",
+          "removed": "видалено зв'язок «завершується після» з <value/>."
+        },
+        "finish_before": {
+          "added": "позначено, що ця робоча одиниця завершується до <value/>.",
+          "removed": "видалено зв'язок «завершується до» з <value/>."
+        },
+        "relates_to": {
+          "added": "позначено, що ця робоча одиниця пов'язана з <value/>.",
+          "removed": "видалено зв'язок з <value/>."
+        },
+        "start_after": {
+          "added": "позначено, що ця робоча одиниця починається після <value/>.",
+          "removed": "видалено зв'язок «починається після» з <value/>."
+        },
+        "start_before": {
+          "added": "позначено, що ця робоча одиниця починається до <value/>.",
+          "removed": "видалено зв'язок «починається до» з <value/>."
+        }
+      },
+      "restored": "відновлено робочу одиницю.",
+      "start_date": {
+        "removed": "видалено дату початку.",
+        "removed_with_issue": "видалено дату початку з <issue/>.",
+        "set": "встановлено дату початку <value/>.",
+        "set_with_issue": "встановлено дату початку <value/> для <issue/>."
+      },
+      "state": {
+        "set": "встановлено стан <value/>.",
+        "set_with_issue": "встановлено стан <value/> для <issue/>."
+      },
+      "target_date": {
+        "removed": "видалено крайній термін.",
+        "removed_with_issue": "видалено крайній термін з <issue/>.",
+        "set": "встановлено крайній термін <value/>.",
+        "set_with_issue": "встановлено крайній термін <value/> для <issue/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "заархівовано <issue/>",
+        "restored": "відновлено <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "додано нового виконавця <assignee/> до <issue/>",
+        "added_without_issue": "додано нового виконавця <assignee/>",
+        "removed_with_issue": "видалено виконавця <assignee/> з <issue/>",
+        "removed_without_issue": "видалено виконавця <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "завантажено нове вкладення до <issue/>",
+        "added_without_issue": "завантажено нове вкладення",
+        "removed_with_issue": "видалено вкладення з <issue/>",
+        "removed_without_issue": "видалено вкладення"
+      },
+      "blocked_by": {
+        "added_with_issue": "позначено, що <issue/> блокується одиницею <value/>.",
+        "added_without_issue": "позначено, що ця робоча одиниця блокується одиницею <value/>.",
+        "removed_with_issue": "видалено блокування <issue/> робочою одиницею <value/>.",
+        "removed_without_issue": "видалено блокування цієї робочої одиниці робочою одиницею <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "позначено, що <issue/> блокує робочу одиницю <value/>.",
+        "added_without_issue": "позначено, що ця робоча одиниця блокує робочу одиницю <value/>.",
+        "removed": "видалено блокувану робочу одиницю <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "додано <issue/> <nowrap>до циклу</nowrap> <value/>",
+        "added_without_issue": "додано цю робочу одиницю <nowrap>до циклу</nowrap> <value/>",
+        "removed": "видалено <issue/> з циклу <value/>",
+        "set": "<nowrap>встановлено цикл</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "оновлено опис <issue/>",
+        "updated_without_issue": "оновлено опис"
+      },
+      "duplicate": {
+        "added_with_issue": "позначено <issue/> як дублікат <value/>.",
+        "added_without_issue": "позначено цю робочу одиницю як дублікат <value/>.",
+        "removed_with_issue": "знято позначку <issue/> як дубліката <value/>.",
+        "removed_without_issue": "знято позначку цієї робочої одиниці як дубліката <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# день} few {# дні} many {# днів} other {# дня}}",
+        "removed_with_issue": "видалено тривалість з <issue/>",
+        "removed_without_issue": "видалено тривалість",
+        "set_with_issue": "встановлено тривалість <value/> для <issue/>",
+        "set_without_issue": "встановлено тривалість <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "перетворено <issue/> на робочу одиницю",
+        "created": "створено <issue/>",
+        "deleted": "видалено <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "видалено оцінку з <issue/>",
+        "removed_without_issue": "видалено оцінку",
+        "set_with_issue": "встановлено оцінку <value/> для <issue/>",
+        "set_without_issue": "встановлено оцінку <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "прийнято робочу одиницю <issue/>",
+        "accepted_without_issue": "прийнято цю робочу одиницю з Intake.",
+        "declined_with_issue": "відхилено робочу одиницю <issue/>",
+        "declined_without_issue": "відхилено цю робочу одиницю з Intake.",
+        "duplicate_with_issue": "відхилено робочу одиницю <issue/> з Intake, позначивши її як дублікат робочої одиниці.",
+        "duplicate_without_issue": "відхилено цю робочу одиницю з Intake, позначивши її як дублікат робочої одиниці.",
+        "snoozed_with_issue": "відкладено робочу одиницю <issue/>",
+        "snoozed_without_issue": "відкладено цю робочу одиницю.",
+        "updated_with_issue": "оновлено стан робочої одиниці в Intake. <issue/>",
+        "updated_without_issue": "оновлено стан робочої одиниці в Intake."
+      },
+      "issue": {
+        "converted_to_epic": "перетворено <issue/> на епік",
+        "created": "створено <issue/>",
+        "deleted": "видалено <issue/>",
+        "deleted_tooltip": "Цю робочу одиницю було видалено",
+        "fallback_name": "робочу одиницю"
+      },
+      "label": {
+        "added_with_issue": "додано нову мітку <label/> до <issue/>",
+        "added_without_issue": "додано нову мітку <label/>",
+        "removed_with_issue": "видалено мітку <label/> з <issue/>",
+        "removed_without_issue": "видалено мітку <label/>"
+      },
+      "link": {
+        "added_with_issue": "додано це <link>посилання</link> до <issue/>",
+        "added_without_issue": "додано це <link>посилання</link>",
+        "removed_with_issue": "видалено це <link>посилання</link> з <issue/>",
+        "removed_without_issue": "видалено це <link>посилання</link>",
+        "updated_with_issue": "оновлено <link>посилання</link> в <issue/>",
+        "updated_without_issue": "оновлено <link>посилання</link>"
+      },
+      "module": {
+        "added_with_issue": "додано <issue/> до модуля <value/>",
+        "added_without_issue": "додано цю робочу одиницю до модуля <value/>",
+        "removed": "видалено <issue/> з модуля <value/>",
+        "set": "встановлено модуль <value/>"
+      },
+      "name": {
+        "set_with_issue": "встановлено назву <value/> для <issue/>",
+        "set_without_issue": "встановлено назву <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "видалено батьківську одиницю <value/> з <issue/>",
+        "removed_without_issue": "видалено батьківську одиницю <value/>",
+        "set_with_issue": "встановлено батьківську одиницю <value/> для <issue/>",
+        "set_without_issue": "встановлено батьківську одиницю <value/>"
+      },
+      "priority": {
+        "high": "Високий",
+        "low": "Низький",
+        "medium": "Середній",
+        "none": "Немає",
+        "set_with_issue": "встановлено пріоритет <value/> для <issue/>",
+        "set_without_issue": "встановлено пріоритет <value/>",
+        "urgent": "Терміновий"
+      },
+      "relates_to": {
+        "added_with_issue": "позначено, що <issue/> пов'язано з <value/>.",
+        "added_without_issue": "позначено, що ця робоча одиниця пов'язана з <value/>.",
+        "removed": "видалено зв'язок з <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "видалено дату початку з <issue/>",
+        "removed_without_issue": "видалено дату початку",
+        "set_with_issue": "встановлено дату початку <value/> для <issue/>",
+        "set_without_issue": "встановлено дату початку <value/>"
+      },
+      "state": {
+        "set_with_issue": "встановлено стан <value/> для <issue/>",
+        "set_without_issue": "встановлено стан <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "видалено крайній термін з <issue/>",
+        "removed_without_issue": "видалено крайній термін",
+        "set_with_issue": "встановлено крайній термін <value/> для <issue/>",
+        "set_without_issue": "встановлено крайній термін <value/>"
+      }
+    },
+    "project": {
+      "archived_at": {
+        "archived": "заархівовано проєкт",
+        "restored": "відновлено проєкт"
+      },
+      "cycle_view": {
+        "disabled": "вимкнено подання циклів",
+        "enabled": "увімкнено подання циклів",
+        "fallback": "оновлено подання циклів"
+      },
+      "cycles": {
+        "added": "додано цей проєкт до циклу <value/>",
+        "removed": "видалено цей проєкт з циклу <value/>",
+        "unknown": "Невідомий цикл"
+      },
+      "default": "оновлено налаштування проєкту",
+      "description": {
+        "removed": "видалено опис проєкту",
+        "updated": "оновлено опис проєкту"
+      },
+      "estimate": {
+        "removed": "видалено оцінку",
+        "removed_with_value": "видалено оцінку <value/>",
+        "set": "встановлено оцінку <value/>"
+      },
+      "identifier": {
+        "updated": "оновлено ідентифікатор проєкту на <value/>"
+      },
+      "inbox": {
+        "disabled": "вимкнено вхідні",
+        "enabled": "увімкнено вхідні"
+      },
+      "intake_view": {
+        "disabled": "вимкнено подання Intake",
+        "enabled": "увімкнено подання Intake",
+        "fallback": "оновлено подання Intake"
+      },
+      "is_epic_enabled": {
+        "disabled": "вимкнено епіки",
+        "enabled": "увімкнено епіки",
+        "fallback": "оновлено епіки"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "вимкнено типи робочих одиниць",
+        "enabled": "увімкнено типи робочих одиниць",
+        "fallback": "оновлено типи робочих одиниць"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "вимкнено оновлення проєкту",
+        "enabled": "увімкнено оновлення проєкту",
+        "fallback": "оновлено оновлення проєкту"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "вимкнено відстеження часу",
+        "enabled": "увімкнено відстеження часу",
+        "fallback": "оновлено відстеження часу"
+      },
+      "is_workflow_enabled": {
+        "disabled": "вимкнено користувацький робочий процес",
+        "enabled": "увімкнено користувацький робочий процес",
+        "fallback": "оновлено користувацький робочий процес"
+      },
+      "issue_views_view": {
+        "disabled": "вимкнено подання вигляду робочих одиниць",
+        "enabled": "увімкнено подання вигляду робочих одиниць",
+        "fallback": "оновлено подання вигляду робочих одиниць"
+      },
+      "labels": {
+        "added": "додано мітку <value/>",
+        "created": "створено мітку <value/>",
+        "deleted": "видалено мітку <value/>",
+        "removed": "вилучено мітку <value/>",
+        "untitled": "Мітка без назви",
+        "updated": "оновлено мітку <value/>"
+      },
+      "module_view": {
+        "disabled": "вимкнено подання модулів",
+        "enabled": "увімкнено подання модулів",
+        "fallback": "оновлено подання модулів"
+      },
+      "modules": {
+        "added": "додано цей проєкт до модуля <value/>",
+        "removed": "видалено цей проєкт з модуля <value/>",
+        "unknown": "Невідомий модуль"
+      },
+      "name": {
+        "renamed": "перейменовано проєкт на <value/>"
+      },
+      "network": {
+        "disabled": "вимкнено мережевий доступ",
+        "enabled": "увімкнено мережевий доступ"
+      },
+      "page": {
+        "created": "створено сторінку проєкту <value/>",
+        "removed": "видалено сторінку проєкту <value/>",
+        "untitled": "Сторінка без назви"
+      },
+      "page_view": {
+        "disabled": "вимкнено подання сторінок",
+        "enabled": "увімкнено подання сторінок",
+        "fallback": "оновлено подання сторінок"
+      },
+      "priority": {
+        "set": "встановлено пріоритет <value/>"
+      },
+      "start_date": {
+        "removed": "видалено дату початку",
+        "set": "встановлено дату початку <value/>"
+      },
+      "state": {
+        "set": "встановлено стан <value/>"
+      },
+      "target_date": {
+        "removed": "видалено цільову дату",
+        "set": "встановлено цільову дату <value/>"
+      },
+      "timezone": {
+        "changed": "змінено часовий пояс проєкту на <value/>",
+        "default": "за замовчуванням"
+      },
+      "value_none": "немає"
+    }
   }
 }

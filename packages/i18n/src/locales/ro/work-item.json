@@ -522,5 +522,401 @@
     "add_related_work_items": "Adaugă activități conexe",
     "toggle_workspace_level_search": "Comută căutarea la nivel de spațiu de lucru",
     "search_results_for_in_project": "Rezultate căutare pentru <query>„{query}”</query> în proiect:"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "a arhivat activitatea.",
+      "assignee": {
+        "added": "a adăugat un responsabil nou <user/>.",
+        "added_with_issue": "a adăugat un responsabil nou <user/> la <issue/>.",
+        "removed": "a eliminat responsabilul <user/>.",
+        "removed_with_issue": "a eliminat responsabilul <user/> din <issue/>."
+      },
+      "attachment": {
+        "added": "a încărcat un atașament nou.",
+        "added_with_issue": "a încărcat un atașament nou în <issue/>.",
+        "removed": "a eliminat un atașament.",
+        "removed_with_issue": "a eliminat un atașament din <issue/>."
+      },
+      "created": "a creat activitatea.",
+      "created_via": "a creat activitatea prin <source/>.",
+      "cycle": {
+        "added": "a adăugat această activitate la ciclul <cycle/>",
+        "removed": "a eliminat activitatea din ciclul <cycle/>",
+        "set": "a setat ciclul la <cycle/>"
+      },
+      "deleted": "a șters o activitate.",
+      "description": {
+        "updated": "a actualizat descrierea.",
+        "updated_with_issue": "a actualizat descrierea pentru <issue/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# zi} few {# zile} other {# de zile}}",
+        "removed": "a eliminat durata.",
+        "removed_with_issue": "a eliminat durata din <issue/>.",
+        "set": "a setat durata la <value/>.",
+        "set_with_issue": "a setat durata la <value/> pentru <issue/>."
+      },
+      "estimate": {
+        "removed": "a eliminat punctul de estimare <value/>.",
+        "removed_with_issue": "a eliminat punctul de estimare <value/> din <issue/>.",
+        "set": "a setat punctul de estimare la <value/>.",
+        "set_with_issue": "a setat punctul de estimare la <value/> pentru <issue/>."
+      },
+      "intake": {
+        "accepted": "a acceptat această activitate din Intake.",
+        "declined": "a respins această activitate din Intake.",
+        "duplicate": "a respins această activitate din Intake, marcând-o ca duplicat al altei activități.",
+        "snoozed": "a amânat această activitate.",
+        "updated": "a actualizat starea activității din Intake."
+      },
+      "label": {
+        "added": "a adăugat o etichetă nouă <label/>",
+        "added_with_issue": "a adăugat o etichetă nouă <label/> la <issue/>",
+        "removed": "a eliminat eticheta <label/>",
+        "removed_with_issue": "a eliminat eticheta <label/> din <issue/>"
+      },
+      "link": {
+        "added": "a adăugat un <link>link</link>.",
+        "added_with_issue": "a adăugat un <link>link</link> la <issue/>.",
+        "removed": "a eliminat acest <link>link</link>.",
+        "removed_with_issue": "a eliminat acest <link>link</link> din <issue/>.",
+        "updated": "a actualizat <link>linkul</link>.",
+        "updated_with_issue": "a actualizat <link>linkul</link> din <issue/>."
+      },
+      "module": {
+        "added": "a adăugat această activitate la modulul <module/>",
+        "removed": "a eliminat activitatea din modulul <module/>",
+        "set": "a setat modulul la <module/>"
+      },
+      "name": {
+        "set": "a setat numele la {name}."
+      },
+      "parent": {
+        "removed": "a eliminat părintele <value/>.",
+        "removed_with_issue": "a eliminat părintele <value/> din <issue/>.",
+        "set": "a setat părintele la <value/>.",
+        "set_with_issue": "a setat părintele la <value/> pentru <issue/>."
+      },
+      "priority": {
+        "set": "a setat prioritatea la <value/>.",
+        "set_with_issue": "a setat prioritatea la <value/> pentru <issue/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "a marcat că această activitate este blocată de <value/>.",
+          "removed": "a eliminat blocarea acestei activități de către activitatea <value/>."
+        },
+        "blocking": {
+          "added": "a marcat că această activitate blochează activitatea <value/>.",
+          "removed": "a eliminat activitatea blocată <value/>."
+        },
+        "duplicate": {
+          "added": "a marcat această activitate ca duplicat al <value/>.",
+          "removed": "a eliminat marcarea acestei activități ca duplicat al <value/>."
+        },
+        "finish_after": {
+          "added": "a marcat că această activitate se termină după <value/>.",
+          "removed": "a eliminat relația „se termină după” cu <value/>."
+        },
+        "finish_before": {
+          "added": "a marcat că această activitate se termină înainte de <value/>.",
+          "removed": "a eliminat relația „se termină înainte de” cu <value/>."
+        },
+        "relates_to": {
+          "added": "a marcat că această activitate are legătură cu <value/>.",
+          "removed": "a eliminat relația cu <value/>."
+        },
+        "start_after": {
+          "added": "a marcat că această activitate începe după <value/>.",
+          "removed": "a eliminat relația „începe după” cu <value/>."
+        },
+        "start_before": {
+          "added": "a marcat că această activitate începe înainte de <value/>.",
+          "removed": "a eliminat relația „începe înainte de” cu <value/>."
+        }
+      },
+      "restored": "a restaurat activitatea.",
+      "start_date": {
+        "removed": "a eliminat data de început.",
+        "removed_with_issue": "a eliminat data de început din <issue/>.",
+        "set": "a setat data de început la <value/>.",
+        "set_with_issue": "a setat data de început la <value/> pentru <issue/>."
+      },
+      "state": {
+        "set": "a setat starea la <value/>.",
+        "set_with_issue": "a setat starea la <value/> pentru <issue/>."
+      },
+      "target_date": {
+        "removed": "a eliminat termenul limită.",
+        "removed_with_issue": "a eliminat termenul limită din <issue/>.",
+        "set": "a setat termenul limită la <value/>.",
+        "set_with_issue": "a setat termenul limită la <value/> pentru <issue/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "a arhivat <issue/>",
+        "restored": "a restaurat <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "a adăugat un responsabil nou <assignee/> la <issue/>",
+        "added_without_issue": "a adăugat un responsabil nou <assignee/>",
+        "removed_with_issue": "a eliminat responsabilul <assignee/> din <issue/>",
+        "removed_without_issue": "a eliminat responsabilul <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "a încărcat un atașament nou în <issue/>",
+        "added_without_issue": "a încărcat un atașament nou",
+        "removed_with_issue": "a eliminat un atașament din <issue/>",
+        "removed_without_issue": "a eliminat un atașament"
+      },
+      "blocked_by": {
+        "added_with_issue": "a marcat că <issue/> este blocată de <value/>.",
+        "added_without_issue": "a marcat că această activitate este blocată de <value/>.",
+        "removed_with_issue": "a eliminat blocarea lui <issue/> de către activitatea <value/>.",
+        "removed_without_issue": "a eliminat blocarea acestei activități de către activitatea <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "a marcat că <issue/> blochează activitatea <value/>.",
+        "added_without_issue": "a marcat că această activitate blochează activitatea <value/>.",
+        "removed": "a eliminat activitatea blocată <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "a adăugat <issue/> <nowrap>la ciclul</nowrap> <value/>",
+        "added_without_issue": "a adăugat această activitate <nowrap>la ciclul</nowrap> <value/>",
+        "removed": "a eliminat <issue/> din ciclul <value/>",
+        "set": "<nowrap>a setat ciclul la</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "a actualizat descrierea pentru <issue/>",
+        "updated_without_issue": "a actualizat descrierea"
+      },
+      "duplicate": {
+        "added_with_issue": "a marcat <issue/> ca duplicat al <value/>.",
+        "added_without_issue": "a marcat această activitate ca duplicat al <value/>.",
+        "removed_with_issue": "a eliminat marcarea lui <issue/> ca duplicat al <value/>.",
+        "removed_without_issue": "a eliminat marcarea acestei activități ca duplicat al <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# zi} few {# zile} other {# de zile}}",
+        "removed_with_issue": "a eliminat durata din <issue/>",
+        "removed_without_issue": "a eliminat durata",
+        "set_with_issue": "a setat durata la <value/> pentru <issue/>",
+        "set_without_issue": "a setat durata la <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "a convertit <issue/> într-o activitate",
+        "created": "a creat <issue/>",
+        "deleted": "a șters <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "a eliminat punctul de estimare din <issue/>",
+        "removed_without_issue": "a eliminat punctul de estimare",
+        "set_with_issue": "a setat punctul de estimare la <value/> pentru <issue/>",
+        "set_without_issue": "a setat punctul de estimare la <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "a acceptat activitatea <issue/>",
+        "accepted_without_issue": "a acceptat această activitate din Intake.",
+        "declined_with_issue": "a respins activitatea <issue/>",
+        "declined_without_issue": "a respins această activitate din Intake.",
+        "duplicate_with_issue": "a respins activitatea <issue/> din Intake, marcând-o ca duplicat al altei activități.",
+        "duplicate_without_issue": "a respins această activitate din Intake, marcând-o ca duplicat al altei activități.",
+        "snoozed_with_issue": "a amânat activitatea <issue/>",
+        "snoozed_without_issue": "a amânat această activitate.",
+        "updated_with_issue": "a actualizat starea activității din Intake. <issue/>",
+        "updated_without_issue": "a actualizat starea activității din Intake."
+      },
+      "issue": {
+        "converted_to_epic": "a convertit <issue/> într-o sarcină majoră",
+        "created": "a creat <issue/>",
+        "deleted": "a șters <issue/>",
+        "deleted_tooltip": "Această activitate a fost ștearsă",
+        "fallback_name": "o activitate"
+      },
+      "label": {
+        "added_with_issue": "a adăugat o etichetă nouă <label/> la <issue/>",
+        "added_without_issue": "a adăugat o etichetă nouă <label/>",
+        "removed_with_issue": "a eliminat eticheta <label/> din <issue/>",
+        "removed_without_issue": "a eliminat eticheta <label/>"
+      },
+      "link": {
+        "added_with_issue": "a adăugat acest <link>link</link> la <issue/>",
+        "added_without_issue": "a adăugat acest <link>link</link>",
+        "removed_with_issue": "a eliminat acest <link>link</link> din <issue/>",
+        "removed_without_issue": "a eliminat acest <link>link</link>",
+        "updated_with_issue": "a actualizat <link>linkul</link> din <issue/>",
+        "updated_without_issue": "a actualizat <link>linkul</link>"
+      },
+      "module": {
+        "added_with_issue": "a adăugat <issue/> la modulul <value/>",
+        "added_without_issue": "a adăugat această activitate la modulul <value/>",
+        "removed": "a eliminat <issue/> din modulul <value/>",
+        "set": "a setat modulul la <value/>"
+      },
+      "name": {
+        "set_with_issue": "a setat titlul la <value/> pentru <issue/>",
+        "set_without_issue": "a setat titlul la <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "a eliminat părintele <value/> din <issue/>",
+        "removed_without_issue": "a eliminat părintele <value/>",
+        "set_with_issue": "a setat părintele la <value/> pentru <issue/>",
+        "set_without_issue": "a setat părintele la <value/>"
+      },
+      "priority": {
+        "high": "Ridicată",
+        "low": "Scăzută",
+        "medium": "Medie",
+        "none": "Fără",
+        "set_with_issue": "a setat prioritatea la <value/> pentru <issue/>",
+        "set_without_issue": "a setat prioritatea la <value/>",
+        "urgent": "Urgentă"
+      },
+      "relates_to": {
+        "added_with_issue": "a marcat că <issue/> are legătură cu <value/>.",
+        "added_without_issue": "a marcat că această activitate are legătură cu <value/>.",
+        "removed": "a eliminat relația cu <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "a eliminat data de început din <issue/>",
+        "removed_without_issue": "a eliminat data de început",
+        "set_with_issue": "a setat data de început la <value/> pentru <issue/>",
+        "set_without_issue": "a setat data de început la <value/>"
+      },
+      "state": {
+        "set_with_issue": "a setat starea la <value/> pentru <issue/>",
+        "set_without_issue": "a setat starea la <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "a eliminat termenul limită din <issue/>",
+        "removed_without_issue": "a eliminat termenul limită",
+        "set_with_issue": "a setat termenul limită la <value/> pentru <issue/>",
+        "set_without_issue": "a setat termenul limită la <value/>"
+      }
+    },
+    "project": {
+      "archived_at": {
+        "archived": "a arhivat proiectul",
+        "restored": "a restaurat proiectul"
+      },
+      "cycle_view": {
+        "disabled": "a dezactivat vizualizarea ciclurilor",
+        "enabled": "a activat vizualizarea ciclurilor",
+        "fallback": "a actualizat vizualizarea ciclurilor"
+      },
+      "cycles": {
+        "added": "a adăugat acest proiect la ciclul <value/>",
+        "removed": "a eliminat acest proiect din ciclul <value/>",
+        "unknown": "Ciclu necunoscut"
+      },
+      "default": "a actualizat setările proiectului",
+      "description": {
+        "removed": "a eliminat descrierea proiectului",
+        "updated": "a actualizat descrierea proiectului"
+      },
+      "estimate": {
+        "removed": "a eliminat punctul de estimare",
+        "removed_with_value": "a eliminat punctul de estimare <value/>",
+        "set": "a setat punctul de estimare la <value/>"
+      },
+      "identifier": {
+        "updated": "a actualizat identificatorul proiectului la <value/>"
+      },
+      "inbox": {
+        "disabled": "a dezactivat Intake",
+        "enabled": "a activat Intake"
+      },
+      "intake_view": {
+        "disabled": "a dezactivat vizualizarea Intake",
+        "enabled": "a activat vizualizarea Intake",
+        "fallback": "a actualizat vizualizarea Intake"
+      },
+      "is_epic_enabled": {
+        "disabled": "a dezactivat sarcinile majore",
+        "enabled": "a activat sarcinile majore",
+        "fallback": "a actualizat sarcinile majore"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "a dezactivat tipurile de activități",
+        "enabled": "a activat tipurile de activități",
+        "fallback": "a actualizat tipurile de activități"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "a dezactivat actualizările proiectului",
+        "enabled": "a activat actualizările proiectului",
+        "fallback": "a actualizat actualizările proiectului"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "a dezactivat urmărirea timpului",
+        "enabled": "a activat urmărirea timpului",
+        "fallback": "a actualizat urmărirea timpului"
+      },
+      "is_workflow_enabled": {
+        "disabled": "a dezactivat fluxul de lucru personalizat",
+        "enabled": "a activat fluxul de lucru personalizat",
+        "fallback": "a actualizat fluxul de lucru personalizat"
+      },
+      "issue_views_view": {
+        "disabled": "a dezactivat vizualizarea perspectivelor activităților",
+        "enabled": "a activat vizualizarea perspectivelor activităților",
+        "fallback": "a actualizat vizualizarea perspectivelor activităților"
+      },
+      "labels": {
+        "added": "a adăugat eticheta <value/>",
+        "created": "a creat eticheta <value/>",
+        "deleted": "a șters eticheta <value/>",
+        "removed": "a eliminat eticheta <value/>",
+        "untitled": "Etichetă fără titlu",
+        "updated": "a actualizat eticheta <value/>"
+      },
+      "module_view": {
+        "disabled": "a dezactivat vizualizarea modulelor",
+        "enabled": "a activat vizualizarea modulelor",
+        "fallback": "a actualizat vizualizarea modulelor"
+      },
+      "modules": {
+        "added": "a adăugat acest proiect la modulul <value/>",
+        "removed": "a eliminat acest proiect din modulul <value/>",
+        "unknown": "Modul necunoscut"
+      },
+      "name": {
+        "renamed": "a redenumit proiectul în <value/>"
+      },
+      "network": {
+        "disabled": "a dezactivat accesul la rețea",
+        "enabled": "a activat accesul la rețea"
+      },
+      "page": {
+        "created": "a creat pagina de proiect <value/>",
+        "removed": "a eliminat pagina de proiect <value/>",
+        "untitled": "Pagină fără titlu"
+      },
+      "page_view": {
+        "disabled": "a dezactivat vizualizarea paginilor",
+        "enabled": "a activat vizualizarea paginilor",
+        "fallback": "a actualizat vizualizarea paginilor"
+      },
+      "priority": {
+        "set": "a setat prioritatea la <value/>"
+      },
+      "start_date": {
+        "removed": "a eliminat data de început",
+        "set": "a setat data de început la <value/>"
+      },
+      "state": {
+        "set": "a setat starea la <value/>"
+      },
+      "target_date": {
+        "removed": "a eliminat data țintă",
+        "set": "a setat data țintă la <value/>"
+      },
+      "timezone": {
+        "changed": "a schimbat fusul orar al proiectului la <value/>",
+        "default": "implicit"
+      },
+      "value_none": "niciuna"
+    }
   }
 }

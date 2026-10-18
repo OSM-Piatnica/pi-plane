@@ -9,6 +9,7 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
+import { useTranslation } from "@plane/i18n";
 // store hooks
 // icons
 import { TriangleIcon, SignalMediumIcon, Timer } from "lucide-react";
@@ -36,12 +37,16 @@ import { renderFormattedDate, generateWorkItemLink, capitalizeFirstLetter } from
 // helpers
 import { useLabel } from "@/hooks/store/use-label";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { renderTaggedText } from "@/helpers/tagged-text";
 // types
+
+type TTranslate = (key: string, params?: Record<string, unknown>) => string;
 
 export function IssueLink({ activity }: { activity: IIssueActivity }) {
   // router params
   const { workspaceSlug } = useParams();
   const { isMobile } = usePlatformOS();
+  const { t } = useTranslation();
 
   const workItemLink = generateWorkItemLink({
     workspaceSlug: workspaceSlug?.toString() ?? activity.workspace_detail?.slug,
@@ -53,7 +58,7 @@ export function IssueLink({ activity }: { activity: IIssueActivity }) {
 
   return (
     <Tooltip
-      label={activity?.issue_detail ? activity.issue_detail.name : "This work item has been deleted"}
+      label={activity?.issue_detail ? activity.issue_detail.name : t("activity_feed.profile.issue.deleted_tooltip")}
       layout="stacked"
       disabled={isMobile}
     >
@@ -70,7 +75,7 @@ export function IssueLink({ activity }: { activity: IIssueActivity }) {
         </a>
       ) : (
         <span className="inline-flex items-center gap-1 font-medium whitespace-nowrap text-primary">
-          {" a work item"}{" "}
+          {` ${t("activity_feed.profile.issue.fallback_name")}`}{" "}
         </span>
       )}
     </Tooltip>
@@ -114,667 +119,479 @@ const LabelPill = observer(function LabelPill({ labelId, workspaceSlug }: { labe
   );
 });
 
-const inboxActivityMessage = {
-  declined: {
-    showIssue: "declined work item",
-    noIssue: "declined this work item from intake.",
-  },
-  snoozed: {
-    showIssue: "snoozed work item",
-    noIssue: "snoozed this work item.",
-  },
-  accepted: {
-    showIssue: "accepted work item",
-    noIssue: "accepted this work item from intake.",
-  },
-  markedDuplicate: {
-    showIssue: "declined work item",
-    noIssue: "declined this work item from intake by marking a duplicate work item.",
-  },
-};
+// renderers shared by the sentence templates
+const issueTag = (activity: IIssueActivity) => ({ issue: () => <IssueLink activity={activity} /> });
 
-const getInboxUserActivityMessage = (activity: IIssueActivity, showIssue: boolean) => {
+const emphasisTag = (text: string | null | undefined, className: string) => ({
+  value: () => <span className={className}>{text}</span>,
+});
+
+const NOWRAP_VALUE_CLASS = "font-medium whitespace-nowrap text-primary";
+
+const entityLinkTag = (href: string, text: string | null | undefined) => ({
+  value: () => (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline items-center gap-1 font-medium text-primary hover:underline"
+    >
+      <span className="break-all">{text}</span>
+    </a>
+  ),
+});
+
+const labelTag = (labelId: string, workspaceSlug: string, text: string | null | undefined) => ({
+  label: () => (
+    <span className="inline-flex items-center gap-2 rounded-full border border-strong px-2 py-0.5 text-11">
+      <LabelPill labelId={labelId} workspaceSlug={workspaceSlug} />
+      <span className="line-clamp-1 flex-shrink font-medium break-all text-primary">{text}</span>
+    </span>
+  ),
+});
+
+const linkTag = (href: string | null | undefined) => ({
+  link: (children: string) => (
+    <a
+      href={`${href}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
+    >
+      {children}
+    </a>
+  ),
+});
+
+const nowrapTag = { nowrap: (children: string) => <span className="whitespace-nowrap">{children}</span> };
+
+const getInboxUserActivityMessage = (activity: IIssueActivity, showIssue: boolean, t: TTranslate): string => {
   switch (activity.verb) {
     case "-1":
-      return showIssue ? inboxActivityMessage.declined.showIssue : inboxActivityMessage.declined.noIssue;
+      return showIssue
+        ? t("activity_feed.profile.inbox.declined_with_issue")
+        : t("activity_feed.profile.inbox.declined_without_issue");
     case "0":
-      return showIssue ? inboxActivityMessage.snoozed.showIssue : inboxActivityMessage.snoozed.noIssue;
+      return showIssue
+        ? t("activity_feed.profile.inbox.snoozed_with_issue")
+        : t("activity_feed.profile.inbox.snoozed_without_issue");
     case "1":
-      return showIssue ? inboxActivityMessage.accepted.showIssue : inboxActivityMessage.accepted.noIssue;
+      return showIssue
+        ? t("activity_feed.profile.inbox.accepted_with_issue")
+        : t("activity_feed.profile.inbox.accepted_without_issue");
     case "2":
-      return showIssue ? inboxActivityMessage.markedDuplicate.showIssue : inboxActivityMessage.markedDuplicate.noIssue;
+      return showIssue
+        ? t("activity_feed.profile.inbox.duplicate_with_issue")
+        : t("activity_feed.profile.inbox.duplicate_without_issue");
     default:
-      return "updated intake work item status.";
+      return showIssue
+        ? t("activity_feed.profile.inbox.updated_with_issue")
+        : t("activity_feed.profile.inbox.updated_without_issue");
+  }
+};
+
+const getPriorityLabel = (priority: string | null | undefined, t: TTranslate): string => {
+  switch (priority) {
+    case undefined:
+    case null:
+    case "":
+      return t("activity_feed.profile.priority.none");
+    case "urgent":
+      return t("activity_feed.profile.priority.urgent");
+    case "high":
+      return t("activity_feed.profile.priority.high");
+    case "medium":
+      return t("activity_feed.profile.priority.medium");
+    case "low":
+      return t("activity_feed.profile.priority.low");
+    case "none":
+      return t("activity_feed.profile.priority.none");
+    default:
+      return capitalizeFirstLetter(priority);
   }
 };
 
 const activityDetails: {
   [key: string]: {
-    message: (activity: IIssueActivity, showIssue: boolean, workspaceSlug: string) => React.ReactNode;
+    message: (activity: IIssueActivity, showIssue: boolean, workspaceSlug: string, t: TTranslate) => React.ReactNode;
     icon: React.ReactNode;
   };
 } = {
   assignees: {
-    message: (activity, showIssue) => {
+    message: (activity, showIssue, _workspaceSlug, t) => {
+      const renderers = { ...issueTag(activity), assignee: () => <UserLink activity={activity} /> };
       if (activity.old_value === "")
-        return (
-          <>
-            added a new assignee <UserLink activity={activity} />
-            {showIssue && (
-              <>
-                {" "}
-                to <IssueLink activity={activity} />
-              </>
-            )}
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.assignee.added_with_issue")
+            : t("activity_feed.profile.assignee.added_without_issue"),
+          renderers
         );
-      else
-        return (
-          <>
-            removed the assignee <UserLink activity={activity} />
-            {showIssue && (
-              <>
-                {" "}
-                from <IssueLink activity={activity} />
-              </>
-            )}
-          </>
-        );
+      return renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.assignee.removed_with_issue")
+          : t("activity_feed.profile.assignee.removed_without_issue"),
+        renderers
+      );
     },
     icon: <MembersOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   archived_at: {
-    message: (activity) => {
-      if (activity.new_value === "restore")
-        return (
-          <>
-            restored <IssueLink activity={activity} />
-          </>
-        );
-      else
-        return (
-          <>
-            archived <IssueLink activity={activity} />
-          </>
-        );
-    },
+    message: (activity, _showIssue, _workspaceSlug, t) =>
+      renderTaggedText(
+        activity.new_value === "restore"
+          ? t("activity_feed.profile.archived_at.restored")
+          : t("activity_feed.profile.archived_at.archived"),
+        issueTag(activity)
+      ),
     icon: <ArchiveOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   attachment: {
-    message: (activity, showIssue) => {
+    message: (activity, showIssue, _workspaceSlug, t) => {
       if (activity.verb === "created")
-        return (
-          <>
-            uploaded a new attachment
-            {showIssue && (
-              <>
-                {" "}
-                to <IssueLink activity={activity} />
-              </>
-            )}
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.attachment.added_with_issue")
+            : t("activity_feed.profile.attachment.added_without_issue"),
+          issueTag(activity)
         );
-      else
-        return (
-          <>
-            removed an attachment
-            {showIssue && (
-              <>
-                {" "}
-                from <IssueLink activity={activity} />
-              </>
-            )}
-          </>
-        );
+      return renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.attachment.removed_with_issue")
+          : t("activity_feed.profile.attachment.removed_without_issue"),
+        issueTag(activity)
+      );
     },
     icon: <AttachOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   description: {
-    message: (activity, showIssue) => (
-      <>
-        updated the description
-        {showIssue && (
-          <>
-            {" "}
-            of <IssueLink activity={activity} />
-          </>
-        )}
-      </>
-    ),
+    message: (activity, showIssue, _workspaceSlug, t) =>
+      renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.description.updated_with_issue")
+          : t("activity_feed.profile.description.updated_without_issue"),
+        issueTag(activity)
+      ),
     icon: <ChatOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   estimate_point: {
-    message: (activity, showIssue) => {
+    message: (activity, showIssue, _workspaceSlug, t) => {
       if (!activity.new_value)
-        return (
-          <>
-            removed the estimate point
-            {showIssue && (
-              <>
-                {" "}
-                from <IssueLink activity={activity} />
-              </>
-            )}
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.estimate_point.removed_with_issue")
+            : t("activity_feed.profile.estimate_point.removed_without_issue"),
+          issueTag(activity)
         );
-      else
-        return (
-          <>
-            set the estimate point to {activity.new_value}
-            {showIssue && (
-              <>
-                {" "}
-                for <IssueLink activity={activity} />
-              </>
-            )}
-          </>
-        );
+      return renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.estimate_point.set_with_issue")
+          : t("activity_feed.profile.estimate_point.set_without_issue"),
+        { ...issueTag(activity), value: () => activity.new_value }
+      );
     },
     icon: <TriangleIcon size={12} className="text-secondary" aria-hidden="true" />,
   },
   issue: {
-    message: (activity) => {
+    message: (activity, _showIssue, _workspaceSlug, t) => {
       if (activity.verb === "created")
-        return (
-          <>
-            created <IssueLink activity={activity} />
-          </>
-        );
-      else if (activity.verb === "converted")
-        return (
-          <>
-            converted <IssueLink activity={activity} /> to an epic
-          </>
-        );
-      else
-        return (
-          <>
-            deleted <IssueLink activity={activity} />
-          </>
-        );
+        return renderTaggedText(t("activity_feed.profile.issue.created"), issueTag(activity));
+      if (activity.verb === "converted")
+        return renderTaggedText(t("activity_feed.profile.issue.converted_to_epic"), issueTag(activity));
+      return renderTaggedText(t("activity_feed.profile.issue.deleted"), issueTag(activity));
     },
     icon: <WorkItemsOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   epic: {
-    message: (activity) => {
+    message: (activity, _showIssue, _workspaceSlug, t) => {
       if (activity.verb === "created")
-        return (
-          <>
-            created <IssueLink activity={activity} />
-          </>
-        );
-      else if (activity.verb === "converted")
-        return (
-          <>
-            converted <IssueLink activity={activity} /> to a work item
-          </>
-        );
-      else
-        return (
-          <>
-            deleted <IssueLink activity={activity} />
-          </>
-        );
+        return renderTaggedText(t("activity_feed.profile.epic.created"), issueTag(activity));
+      if (activity.verb === "converted")
+        return renderTaggedText(t("activity_feed.profile.epic.converted_to_work_item"), issueTag(activity));
+      return renderTaggedText(t("activity_feed.profile.epic.deleted"), issueTag(activity));
     },
     icon: <EpicOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   labels: {
-    message: (activity, showIssue, workspaceSlug) => {
+    message: (activity, showIssue, workspaceSlug, t) => {
       if (activity.old_value === "")
         return (
           <span className="overflow-hidden">
-            added a new label{" "}
-            <span className="inline-flex items-center gap-2 rounded-full border border-strong px-2 py-0.5 text-11">
-              <LabelPill labelId={activity.new_identifier ?? ""} workspaceSlug={workspaceSlug} />
-              <span className="line-clamp-1 flex-shrink font-medium break-all text-primary">{activity.new_value}</span>
-            </span>
-            {showIssue && (
-              <span className="">
-                {" "}
-                to <IssueLink activity={activity} />
-              </span>
+            {renderTaggedText(
+              showIssue
+                ? t("activity_feed.profile.label.added_with_issue")
+                : t("activity_feed.profile.label.added_without_issue"),
+              {
+                ...issueTag(activity),
+                ...labelTag(activity.new_identifier ?? "", workspaceSlug, activity.new_value),
+              }
             )}
           </span>
         );
-      else
-        return (
-          <>
-            removed the label{" "}
-            <span className="inline-flex items-center gap-2 rounded-full border border-strong px-2 py-0.5 text-11">
-              <LabelPill labelId={activity.old_identifier ?? ""} workspaceSlug={workspaceSlug} />
-              <span className="line-clamp-1 flex-shrink font-medium break-all text-primary">{activity.old_value}</span>
-            </span>
-            {showIssue && (
-              <span>
-                {" "}
-                from <IssueLink activity={activity} />
-              </span>
-            )}
-          </>
-        );
+      return (
+        <>
+          {renderTaggedText(
+            showIssue
+              ? t("activity_feed.profile.label.removed_with_issue")
+              : t("activity_feed.profile.label.removed_without_issue"),
+            {
+              ...issueTag(activity),
+              ...labelTag(activity.old_identifier ?? "", workspaceSlug, activity.old_value),
+            }
+          )}
+        </>
+      );
     },
     icon: <LabelsOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   link: {
-    message: (activity, showIssue) => {
+    message: (activity, showIssue, _workspaceSlug, t) => {
       if (activity.verb === "created")
-        return (
-          <>
-            added this{" "}
-            <a
-              href={`${activity.new_value}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
-            >
-              link
-            </a>
-            {showIssue && (
-              <>
-                {" "}
-                to <IssueLink activity={activity} />
-              </>
-            )}
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.link.added_with_issue")
+            : t("activity_feed.profile.link.added_without_issue"),
+          { ...issueTag(activity), ...linkTag(activity.new_value) }
         );
-      else if (activity.verb === "updated")
-        return (
-          <>
-            updated the{" "}
-            <a
-              href={`${activity.old_value}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
-            >
-              link
-            </a>
-            {showIssue && (
-              <>
-                {" "}
-                from <IssueLink activity={activity} />
-              </>
-            )}
-          </>
+      if (activity.verb === "updated")
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.link.updated_with_issue")
+            : t("activity_feed.profile.link.updated_without_issue"),
+          { ...issueTag(activity), ...linkTag(activity.old_value) }
         );
-      else
-        return (
-          <>
-            removed this{" "}
-            <a
-              href={`${activity.old_value}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
-            >
-              link
-            </a>
-            {showIssue && (
-              <>
-                {" "}
-                from <IssueLink activity={activity} />
-              </>
-            )}
-          </>
-        );
+      return renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.link.removed_with_issue")
+          : t("activity_feed.profile.link.removed_without_issue"),
+        { ...issueTag(activity), ...linkTag(activity.old_value) }
+      );
     },
     icon: <LinkOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   cycles: {
-    message: (activity, showIssue, workspaceSlug) => {
+    message: (activity, showIssue, workspaceSlug, t) => {
+      const base = `/${workspaceSlug}/projects/${activity.project}/cycles/`;
       if (activity.verb === "created")
-        return (
-          <>
-            <span className="flex-shrink-0">
-              added {showIssue ? <IssueLink activity={activity} /> : "this work item"}{" "}
-              <span className="whitespace-nowrap">to the cycle</span>{" "}
-            </span>
-            <a
-              href={`/${workspaceSlug}/projects/${activity.project}/cycles/${activity.new_identifier}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline items-center gap-1 font-medium text-primary hover:underline"
-            >
-              <span className="break-all">{activity.new_value}</span>
-            </a>
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.cycle.added_with_issue")
+            : t("activity_feed.profile.cycle.added_without_issue"),
+          {
+            ...issueTag(activity),
+            ...nowrapTag,
+            ...entityLinkTag(`${base}${activity.new_identifier}`, activity.new_value),
+          }
         );
-      else if (activity.verb === "updated")
-        return (
-          <>
-            <span className="flex-shrink-0 whitespace-nowrap">set the cycle to </span>
-            <a
-              href={`/${workspaceSlug}/projects/${activity.project}/cycles/${activity.new_identifier}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline items-center gap-1 font-medium text-primary hover:underline"
-            >
-              <span className="break-all">{activity.new_value}</span>
-            </a>
-          </>
-        );
-      else
-        return (
-          <>
-            removed <IssueLink activity={activity} /> from the cycle{" "}
-            <a
-              href={`/${workspaceSlug}/projects/${activity.project}/cycles/${activity.old_identifier}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline items-center gap-1 font-medium text-primary hover:underline"
-            >
-              <span className="break-all">{activity.old_value}</span>
-            </a>
-          </>
-        );
+      if (activity.verb === "updated")
+        return renderTaggedText(t("activity_feed.profile.cycle.set"), {
+          ...nowrapTag,
+          ...entityLinkTag(`${base}${activity.new_identifier}`, activity.new_value),
+        });
+      return renderTaggedText(t("activity_feed.profile.cycle.removed"), {
+        ...issueTag(activity),
+        ...entityLinkTag(`${base}${activity.old_identifier}`, activity.old_value),
+      });
     },
     icon: <CyclesOutline height={12} width={12} className="text-secondary" aria-hidden="true" />,
   },
   modules: {
-    message: (activity, showIssue, workspaceSlug) => {
+    message: (activity, showIssue, workspaceSlug, t) => {
+      const base = `/${workspaceSlug}/projects/${activity.project}/modules/`;
       if (activity.verb === "created")
-        return (
-          <>
-            added {showIssue ? <IssueLink activity={activity} /> : "this work item"} to the module{" "}
-            <a
-              href={`/${workspaceSlug}/projects/${activity.project}/modules/${activity.new_identifier}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline items-center gap-1 font-medium text-primary hover:underline"
-            >
-              <span className="break-all">{activity.new_value}</span>
-            </a>
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.module.added_with_issue")
+            : t("activity_feed.profile.module.added_without_issue"),
+          { ...issueTag(activity), ...entityLinkTag(`${base}${activity.new_identifier}`, activity.new_value) }
         );
-      else if (activity.verb === "updated")
-        return (
-          <>
-            set the module to{" "}
-            <a
-              href={`/${workspaceSlug}/projects/${activity.project}/modules/${activity.new_identifier}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline items-center gap-1 font-medium text-primary hover:underline"
-            >
-              <span className="break-all">{activity.new_value}</span>
-            </a>
-          </>
+      if (activity.verb === "updated")
+        return renderTaggedText(
+          t("activity_feed.profile.module.set"),
+          entityLinkTag(`${base}${activity.new_identifier}`, activity.new_value)
         );
-      else
-        return (
-          <>
-            removed <IssueLink activity={activity} /> from the module{" "}
-            <a
-              href={`/${workspaceSlug}/projects/${activity.project}/modules/${activity.old_identifier}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline items-center gap-1 font-medium text-primary hover:underline"
-            >
-              <span className="break-all">{activity.old_value}</span>
-            </a>
-          </>
-        );
+      return renderTaggedText(t("activity_feed.profile.module.removed"), {
+        ...issueTag(activity),
+        ...entityLinkTag(`${base}${activity.old_identifier}`, activity.old_value),
+      });
     },
     icon: <ModuleOutline className="h-3 w-3 !text-secondary" aria-hidden="true" />,
   },
   name: {
-    message: (activity, showIssue) => (
-      <>
-        set the title to <span className="break-all">{activity.new_value}</span>
-        {showIssue && (
-          <>
-            {" "}
-            of <IssueLink activity={activity} />
-          </>
-        )}
-      </>
-    ),
+    message: (activity, showIssue, _workspaceSlug, t) =>
+      renderTaggedText(
+        showIssue ? t("activity_feed.profile.name.set_with_issue") : t("activity_feed.profile.name.set_without_issue"),
+        { ...issueTag(activity), ...emphasisTag(activity.new_value, "break-all") }
+      ),
     icon: <ChatOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   parent: {
-    message: (activity, showIssue) => {
+    message: (activity, showIssue, _workspaceSlug, t) => {
       if (!activity.new_value)
-        return (
-          <>
-            removed the parent <span className="font-medium whitespace-nowrap text-primary">{activity.old_value}</span>
-            {showIssue && (
-              <>
-                {" "}
-                from <IssueLink activity={activity} />
-              </>
-            )}
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.parent.removed_with_issue")
+            : t("activity_feed.profile.parent.removed_without_issue"),
+          { ...issueTag(activity), ...emphasisTag(activity.old_value, NOWRAP_VALUE_CLASS) }
         );
-      else
-        return (
-          <>
-            set the parent to <span className="font-medium whitespace-nowrap text-primary">{activity.new_value}</span>
-            {showIssue && (
-              <>
-                {" "}
-                for <IssueLink activity={activity} />
-              </>
-            )}
-          </>
-        );
+      return renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.parent.set_with_issue")
+          : t("activity_feed.profile.parent.set_without_issue"),
+        { ...issueTag(activity), ...emphasisTag(activity.new_value, NOWRAP_VALUE_CLASS) }
+      );
     },
     icon: <MembersOutline className="h-3 w-3 !text-secondary" aria-hidden="true" />,
   },
   priority: {
-    message: (activity, showIssue) => (
-      <>
-        set the priority to{" "}
-        <span className="font-medium text-primary">
-          {activity.new_value ? capitalizeFirstLetter(activity.new_value) : "None"}
-        </span>
-        {showIssue && (
-          <>
-            {" "}
-            for <IssueLink activity={activity} />
-          </>
-        )}
-      </>
-    ),
+    message: (activity, showIssue, _workspaceSlug, t) =>
+      renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.priority.set_with_issue")
+          : t("activity_feed.profile.priority.set_without_issue"),
+        { ...issueTag(activity), ...emphasisTag(getPriorityLabel(activity.new_value, t), "font-medium text-primary") }
+      ),
     icon: <SignalMediumIcon size={12} className="text-secondary" aria-hidden="true" />,
   },
   relates_to: {
-    message: (activity, showIssue) => {
+    message: (activity, showIssue, _workspaceSlug, t) => {
       if (activity.old_value === "")
-        return (
-          <>
-            marked that {showIssue ? <IssueLink activity={activity} /> : "this work item"} relates to{" "}
-            <span className="font-medium whitespace-nowrap text-primary">{activity.new_value}</span>.
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.relates_to.added_with_issue")
+            : t("activity_feed.profile.relates_to.added_without_issue"),
+          { ...issueTag(activity), ...emphasisTag(activity.new_value, NOWRAP_VALUE_CLASS) }
         );
-      else
-        return (
-          <>
-            removed the relation from{" "}
-            <span className="font-medium whitespace-nowrap text-primary">{activity.old_value}</span>.
-          </>
-        );
+      return renderTaggedText(
+        t("activity_feed.profile.relates_to.removed"),
+        emphasisTag(activity.old_value, NOWRAP_VALUE_CLASS)
+      );
     },
     icon: <RelatesToOutline height="12" width="12" className="text-secondary" />,
   },
   blocking: {
-    message: (activity, showIssue) => {
+    message: (activity, showIssue, _workspaceSlug, t) => {
       if (activity.old_value === "")
-        return (
-          <>
-            marked {showIssue ? <IssueLink activity={activity} /> : "this work item"} is blocking work item{" "}
-            <span className="font-medium whitespace-nowrap text-primary">{activity.new_value}</span>.
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.blocking.added_with_issue")
+            : t("activity_feed.profile.blocking.added_without_issue"),
+          { ...issueTag(activity), ...emphasisTag(activity.new_value, NOWRAP_VALUE_CLASS) }
         );
-      else
-        return (
-          <>
-            removed the blocking work item{" "}
-            <span className="font-medium whitespace-nowrap text-primary">{activity.old_value}</span>.
-          </>
-        );
+      return renderTaggedText(
+        t("activity_feed.profile.blocking.removed"),
+        emphasisTag(activity.old_value, NOWRAP_VALUE_CLASS)
+      );
     },
     icon: <BlockerIcon height="12" width="12" className="text-secondary" />,
   },
   blocked_by: {
-    message: (activity, showIssue) => {
+    message: (activity, showIssue, _workspaceSlug, t) => {
       if (activity.old_value === "")
-        return (
-          <>
-            marked {showIssue ? <IssueLink activity={activity} /> : "this work item"} is being blocked by{" "}
-            <span className="font-medium whitespace-nowrap text-primary">{activity.new_value}</span>.
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.blocked_by.added_with_issue")
+            : t("activity_feed.profile.blocked_by.added_without_issue"),
+          { ...issueTag(activity), ...emphasisTag(activity.new_value, NOWRAP_VALUE_CLASS) }
         );
-      else
-        return (
-          <>
-            removed {showIssue ? <IssueLink activity={activity} /> : "this work item"} being blocked by work item{" "}
-            <span className="font-medium whitespace-nowrap text-primary">{activity.old_value}</span>.
-          </>
-        );
+      return renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.blocked_by.removed_with_issue")
+          : t("activity_feed.profile.blocked_by.removed_without_issue"),
+        { ...issueTag(activity), ...emphasisTag(activity.old_value, NOWRAP_VALUE_CLASS) }
+      );
     },
     icon: <BlockedIcon height="12" width="12" className="text-secondary" />,
   },
   duplicate: {
-    message: (activity, showIssue) => {
+    message: (activity, showIssue, _workspaceSlug, t) => {
       if (activity.old_value === "")
-        return (
-          <>
-            marked {showIssue ? <IssueLink activity={activity} /> : "this work item"} as duplicate of{" "}
-            <span className="font-medium whitespace-nowrap text-primary">{activity.new_value}</span>.
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.duplicate.added_with_issue")
+            : t("activity_feed.profile.duplicate.added_without_issue"),
+          { ...issueTag(activity), ...emphasisTag(activity.new_value, NOWRAP_VALUE_CLASS) }
         );
-      else
-        return (
-          <>
-            removed {showIssue ? <IssueLink activity={activity} /> : "this work item"} as a duplicate of{" "}
-            <span className="font-medium whitespace-nowrap text-primary">{activity.old_value}</span>.
-          </>
-        );
+      return renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.duplicate.removed_with_issue")
+          : t("activity_feed.profile.duplicate.removed_without_issue"),
+        { ...issueTag(activity), ...emphasisTag(activity.old_value, NOWRAP_VALUE_CLASS) }
+      );
     },
     icon: <DuplicateOfOutline width={12} height={12} className="text-secondary" />,
   },
   state: {
-    message: (activity, showIssue) => (
-      <>
-        set the state to <span className="font-medium break-all text-primary">{activity.new_value}</span>
-        {showIssue && (
-          <>
-            {" "}
-            for <IssueLink activity={activity} />
-          </>
-        )}
-      </>
-    ),
+    message: (activity, showIssue, _workspaceSlug, t) =>
+      renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.state.set_with_issue")
+          : t("activity_feed.profile.state.set_without_issue"),
+        { ...issueTag(activity), ...emphasisTag(activity.new_value, "font-medium break-all text-primary") }
+      ),
     icon: <GridOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   start_date: {
-    message: (activity, showIssue) => {
+    message: (activity, showIssue, _workspaceSlug, t) => {
       if (!activity.new_value)
-        return (
-          <>
-            removed the start date
-            {showIssue && (
-              <>
-                {" "}
-                from <IssueLink activity={activity} />
-              </>
-            )}
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.start_date.removed_with_issue")
+            : t("activity_feed.profile.start_date.removed_without_issue"),
+          issueTag(activity)
         );
-      else
-        return (
-          <>
-            set the start date to{" "}
-            <span className="font-medium whitespace-nowrap text-primary">
-              {renderFormattedDate(activity.new_value)}
-            </span>
-            {showIssue && (
-              <>
-                {" "}
-                for <IssueLink activity={activity} />
-              </>
-            )}
-          </>
-        );
+      return renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.start_date.set_with_issue")
+          : t("activity_feed.profile.start_date.set_without_issue"),
+        { ...issueTag(activity), ...emphasisTag(renderFormattedDate(activity.new_value), NOWRAP_VALUE_CLASS) }
+      );
     },
     icon: <CalendarOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   target_date: {
-    message: (activity, showIssue) => {
+    message: (activity, showIssue, _workspaceSlug, t) => {
       if (!activity.new_value)
-        return (
-          <>
-            removed the due date
-            {showIssue && (
-              <>
-                {" "}
-                from <IssueLink activity={activity} />
-              </>
-            )}
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.target_date.removed_with_issue")
+            : t("activity_feed.profile.target_date.removed_without_issue"),
+          issueTag(activity)
         );
-      else
-        return (
-          <>
-            set the due date to{" "}
-            <span className="font-medium whitespace-nowrap text-primary">
-              {renderFormattedDate(activity.new_value)}
-            </span>
-            {showIssue && (
-              <>
-                <IssueLink activity={activity} />
-              </>
-            )}
-          </>
-        );
+      return renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.target_date.set_with_issue")
+          : t("activity_feed.profile.target_date.set_without_issue"),
+        { ...issueTag(activity), ...emphasisTag(renderFormattedDate(activity.new_value), NOWRAP_VALUE_CLASS) }
+      );
     },
     icon: <CalendarOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   duration: {
-    message: (activity, showIssue) => {
+    message: (activity, showIssue, _workspaceSlug, t) => {
       if (!activity.new_value)
-        return (
-          <>
-            removed the duration
-            {showIssue && (
-              <>
-                {" "}
-                from <IssueLink activity={activity} />
-              </>
-            )}
-          </>
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.duration.removed_with_issue")
+            : t("activity_feed.profile.duration.removed_without_issue"),
+          issueTag(activity)
         );
-      else
-        return (
-          <>
-            set the duration to{" "}
-            <span className="font-medium whitespace-nowrap text-primary">
-              {activity.new_value} {activity.new_value === "1" ? "day" : "days"}
-            </span>
-            {showIssue && (
-              <>
-                {" "}
-                for <IssueLink activity={activity} />
-              </>
-            )}
-          </>
-        );
+      const days = Number(activity.new_value);
+      return renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.duration.set_with_issue")
+          : t("activity_feed.profile.duration.set_without_issue"),
+        {
+          ...issueTag(activity),
+          ...emphasisTag(t("activity_feed.profile.duration.days", { count: days }), NOWRAP_VALUE_CLASS),
+        }
+      );
     },
     icon: <Timer size={12} className="text-secondary" aria-hidden="true" />,
   },
   inbox: {
-    message: (activity, showIssue) => (
-      <>
-        {getInboxUserActivityMessage(activity, showIssue)}
-        {showIssue && (
-          <>
-            {" "}
-            <IssueLink activity={activity} />
-          </>
-        )}
-        {activity.verb === "2" && ` from intake by marking a duplicate work item.`}
-      </>
-    ),
+    message: (activity, showIssue, _workspaceSlug, t) =>
+      renderTaggedText(getInboxUserActivityMessage(activity, showIssue, t), issueTag(activity)),
     icon: <IntakeOutline className="size-3 text-secondary" aria-hidden="true" />,
   },
 };
@@ -791,6 +608,7 @@ type ActivityMessageProps = {
 export function ActivityMessage({ activity, showIssue = false }: ActivityMessageProps) {
   // router params
   const { workspaceSlug } = useParams();
+  const { t } = useTranslation();
   const activityField = activity.field ?? "issue";
 
   return (
@@ -798,7 +616,8 @@ export function ActivityMessage({ activity, showIssue = false }: ActivityMessage
       {activityDetails[activityField as keyof typeof activityDetails]?.message(
         activity,
         showIssue,
-        workspaceSlug ? workspaceSlug.toString() : (activity.workspace_detail?.slug ?? "")
+        workspaceSlug ? workspaceSlug.toString() : (activity.workspace_detail?.slug ?? ""),
+        t
       )}
     </>
   );
