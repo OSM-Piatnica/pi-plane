@@ -49,8 +49,10 @@ export const WorkItemAdditionalSidebarProperties = observer(function WorkItemAdd
   useEffect(() => {
     if (!schema?.length) return;
     const next: Record<string, unknown> = {};
+    // reversed so the first match wins, like Array.find
+    const savedByPropertyId = new Map((savedValues ?? []).toReversed().map((v) => [v.property_id, v] as const));
     for (const row of schema) {
-      const saved = savedValues?.find((v) => v.property_id === row.property_id);
+      const saved = savedByPropertyId.get(row.property_id);
       next[row.property_id] = saved?.value ?? row.default_value ?? null;
     }
     setLocalValues(next);

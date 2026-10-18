@@ -437,10 +437,10 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
                       </div>
                       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                         <div>
-                          <label className="text-12 text-tertiary">
+                          <span id="project-template-default-lead-label" className="text-12 text-tertiary">
                             {t("workspace_settings.settings.project_templates.form.default_lead")}
-                          </label>
-                          <div className="mt-1 h-8">
+                          </span>
+                          <div className="mt-1 h-8" role="group" aria-labelledby="project-template-default-lead-label">
                             <Controller
                               name="projectLeadId"
                               control={control}
@@ -457,10 +457,14 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
                           </div>
                         </div>
                         <div>
-                          <label className="text-12 text-tertiary">
+                          <span id="project-template-default-assignee-label" className="text-12 text-tertiary">
                             {t("workspace_settings.settings.project_templates.form.default_assignee")}
-                          </label>
-                          <div className="mt-1 h-8">
+                          </span>
+                          <div
+                            className="mt-1 h-8"
+                            role="group"
+                            aria-labelledby="project-template-default-assignee-label"
+                          >
                             <Controller
                               name="defaultAssigneeId"
                               control={control}

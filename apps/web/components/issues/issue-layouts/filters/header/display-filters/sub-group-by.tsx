@@ -31,6 +31,8 @@ export const FilterSubGroupBy = observer(function FilterSubGroupBy(props: Props)
 
   const selectedGroupBy = displayFilters.group_by ?? null;
   const selectedSubGroupBy = displayFilters.sub_group_by ?? null;
+  const subGroupByOptionsSet = new Set(subGroupByOptions);
+  const ignoreGroupedFiltersSet = new Set(ignoreGroupedFilters);
 
   return (
     <>
@@ -41,9 +43,9 @@ export const FilterSubGroupBy = observer(function FilterSubGroupBy(props: Props)
       />
       {previewEnabled && (
         <div>
-          {ISSUE_GROUP_BY_OPTIONS.filter((option) => subGroupByOptions.includes(option.key)).map((subGroupBy) => {
+          {ISSUE_GROUP_BY_OPTIONS.filter((option) => subGroupByOptionsSet.has(option.key)).map((subGroupBy) => {
             if (selectedGroupBy !== null && subGroupBy.key === selectedGroupBy) return null;
-            if (ignoreGroupedFilters.includes(subGroupBy?.key)) return null;
+            if (ignoreGroupedFiltersSet.has(subGroupBy?.key)) return null;
 
             return (
               <FilterOption

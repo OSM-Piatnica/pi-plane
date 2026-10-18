@@ -1043,5 +1043,11 @@
     "uploaded_on": "Téléversé par {name} le {date}",
     "date_range": "{start} - {end}",
     "expiry": "Expiration"
+  },
+  "a11y": {
+    "toggle_details": "Afficher ou masquer les détails",
+    "workflow_flow_type": "Type de flux",
+    "workflow_target_state": "État cible",
+    "workflow_reject_state": "État de rejet"
   }
 }

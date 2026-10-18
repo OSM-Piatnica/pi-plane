@@ -47,6 +47,8 @@ export function ProjectCreateIssueTypesAssign(props: TProps) {
     return <p className="text-12 text-tertiary">{t("project_create.features.work_item_types.no_types_hint")}</p>;
   }
 
+  const selectedIds = new Set(value);
+
   return (
     <div className="space-y-2">
       <p className="text-12 text-tertiary">{t("project_create.features.work_item_types.assign_hint")}</p>
@@ -55,7 +57,7 @@ export function ProjectCreateIssueTypesAssign(props: TProps) {
           <li key={row.id}>
             <label className="flex cursor-pointer items-center gap-2 rounded px-1 py-1.5 hover:bg-surface-1">
               <Checkbox
-                checked={value.includes(row.id)}
+                checked={selectedIds.has(row.id)}
                 onCheckedChange={() => toggleType(row.id)}
                 disabled={disabled}
               />

@@ -31,6 +31,7 @@ type TLabelStatComponent = {
 export const LabelStatComponent = observer(function LabelStatComponent(props: TLabelStatComponent) {
   const { distribution, isEditable, selectedLabelIds, handleLabelFiltersUpdate } = props;
   const { t } = useTranslation();
+  const selectedLabelIdSet = new Set(selectedLabelIds);
   return (
     <div>
       {distribution && distribution.length > 0 ? (
@@ -54,15 +55,15 @@ export const LabelStatComponent = observer(function LabelStatComponent(props: TL
                 total={label.total}
                 {...(isEditable && {
                   onClick: () => handleLabelFiltersUpdate(label.id),
-                  selected: label.id ? selectedLabelIds.includes(label.id) : false,
+                  selected: label.id ? selectedLabelIdSet.has(label.id) : false,
                 })}
               />
             );
           } else {
             return (
               <SingleProgressStats
-                // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
-                key={`no-label-${index}`}
+                // react-doctor-disable-next-line no-array-index-as-key -- the no-label bucket has no id and the list is never reordered
+                key={`no-label-${index}`} // oxlint-disable-line react/no-array-index-key
                 title={
                   <div className="flex items-center gap-2">
                     <span

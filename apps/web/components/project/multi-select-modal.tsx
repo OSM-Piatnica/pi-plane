@@ -73,8 +73,11 @@ export const ProjectMultiSelectModal = observer(function ProjectMultiSelectModal
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    await onSubmit(selectedProjectIds);
-    setIsSubmitting(false);
+    try {
+      await onSubmit(selectedProjectIds);
+    } finally {
+      setIsSubmitting(false);
+    }
     handleClose();
   };
 

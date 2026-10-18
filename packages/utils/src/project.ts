@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -71,8 +72,8 @@ export const shouldFilterProject = (
     if (filterKey === "lead" && filters.lead && filters.lead.length > 0)
       fallsInFilters = fallsInFilters && filters.lead.includes(`${project.project_lead}`);
     if (filterKey === "members" && filters.members && filters.members.length > 0) {
-      const memberIds = project.members;
-      fallsInFilters = fallsInFilters && filters.members.some((memberId) => memberIds?.includes(memberId));
+      const memberIds = new Set(project.members ?? []);
+      fallsInFilters = fallsInFilters && filters.members.some((memberId) => memberIds.has(memberId));
     }
     if (filterKey === "created_at" && filters.created_at && filters.created_at.length > 0) {
       const createdDate = getDate(project.created_at);
@@ -100,11 +101,11 @@ export const orderProjects = (projects: TProject[], orderByKey: TProjectOrderByO
 
   if (orderByKey === "sort_order") orderedProjects = sortBy(projects, [(p) => p.sort_order]);
   if (orderByKey === "name") orderedProjects = sortBy(projects, [(p) => p.name.toLowerCase()]);
-  if (orderByKey === "-name") orderedProjects = sortBy(projects, [(p) => p.name.toLowerCase()]).reverse();
+  if (orderByKey === "-name") orderedProjects = sortBy(projects, [(p) => p.name.toLowerCase()]).toReversed();
   if (orderByKey === "created_at") orderedProjects = sortBy(projects, [(p) => p.created_at]);
   if (orderByKey === "-created_at") orderedProjects = sortBy(projects, [(p) => !p.created_at]);
   if (orderByKey === "members_length") orderedProjects = sortBy(projects, [(p) => p.members?.length]);
-  if (orderByKey === "-members_length") orderedProjects = sortBy(projects, [(p) => p.members?.length]).reverse();
+  if (orderByKey === "-members_length") orderedProjects = sortBy(projects, [(p) => p.members?.length]).toReversed();
 
   return orderedProjects;
 };

@@ -40,6 +40,7 @@ export function Invitations(props: Props) {
   // states
   const [isJoiningWorkspaces, setIsJoiningWorkspaces] = useState(false);
   const [invitationsRespond, setInvitationsRespond] = useState<string[]>([]);
+  const invitationsRespondSet = new Set(invitationsRespond);
   // store hooks
   const { fetchWorkspaces } = useWorkspace();
   const { fetchCurrentUserSettings } = useUserSettings();
@@ -77,11 +78,11 @@ export function Invitations(props: Props) {
         {invitations &&
           invitations.length > 0 &&
           invitations.map((invitation) => {
-            const isSelected = invitationsRespond.includes(invitation.id);
+            const isSelected = invitationsRespondSet.has(invitation.id);
             const invitedWorkspace = invitation.workspace;
             return (
-              // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- behaviour-preserving lint cleanup; a11y handled separately
-              <div
+              // react-doctor-disable-next-line click-events-have-key-events, no-static-element-interactions -- the row wraps a Checkbox, so a button would nest interactive controls
+              <div // oxlint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- row wraps a Checkbox; nested interactive controls
                 key={invitation.id}
                 className={`flex cursor-pointer items-center gap-2 rounded-sm border border-subtle p-3.5 hover:bg-surface-2`}
                 onClick={() => handleInvitation(invitation, isSelected ? "withdraw" : "accepted")}

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -50,6 +51,9 @@ const KanbanIssueBlockLoader = forwardRef(function KanbanIssueBlockLoader(
 });
 KanbanIssueBlockLoader.displayName = "KanbanIssueBlockLoader";
 
+// static skeleton rows shown while the next page loads
+const LOADER_KEYS = Array.from({ length: 2 }, (_, position) => `loader-${position}`);
+
 export const KanbanGroup = observer(function KanbanGroup(props: IKanbanGroup) {
   const {
     groupId,
@@ -95,14 +99,14 @@ export const KanbanGroup = observer(function KanbanGroup(props: IKanbanGroup) {
   const loadMore = isPaginating ? (
     <KanbanIssueBlockLoader />
   ) : (
-    <div
-      className="w-full cursor-pointer p-3 text-13 font-medium text-accent-primary hover:text-accent-secondary hover:underline"
+    <button
+      type="button"
+      className="w-full cursor-pointer p-3 text-left text-13 font-medium text-accent-primary hover:text-accent-secondary hover:underline"
       onClick={loadMoreIssuesInThisGroup}
-      role="button"
     >
       {" "}
       Load More &darr;
-    </div>
+    </button>
   );
 
   const shouldLoadMore = nextPageResults === undefined ? issueIds?.length < groupIssueCount : !!nextPageResults;
@@ -126,8 +130,8 @@ export const KanbanGroup = observer(function KanbanGroup(props: IKanbanGroup) {
           <>{loadMore}</>
         ) : (
           <div className="flex flex-col gap-2">
-            {Array.from({ length: 2 }).map((_, index) => (
-              <KanbanIssueBlockLoader key={index} />
+            {LOADER_KEYS.map((loaderKey) => (
+              <KanbanIssueBlockLoader key={loaderKey} />
             ))}
             <KanbanIssueBlockLoader ref={setIntersectionElement} />
           </div>

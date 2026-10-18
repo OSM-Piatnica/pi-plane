@@ -40,8 +40,9 @@ export const SpreadsheetModuleColumn = observer(function SpreadsheetModuleColumn
       const updatedModuleIds = xor(issue.module_ids, moduleIds);
       const modulesToAdd: string[] = [];
       const modulesToRemove: string[] = [];
+      const currentModuleIds = new Set(issue.module_ids);
       for (const moduleId of updatedModuleIds) {
-        if (issue.module_ids.includes(moduleId)) modulesToRemove.push(moduleId);
+        if (currentModuleIds.has(moduleId)) modulesToRemove.push(moduleId);
         else modulesToAdd.push(moduleId);
       }
       changeModulesInIssue(workspaceSlug.toString(), issue.project_id, issue.id, modulesToAdd, modulesToRemove);

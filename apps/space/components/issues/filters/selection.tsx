@@ -8,6 +8,7 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react";
 import { CloseOutline, SearchOutline } from "@makeplane/propel/icons";
+import { useTranslation } from "@plane/i18n";
 // types
 import type { IIssueFilterOptions, TIssueFilterKeys } from "@/types/issue";
 // local imports
@@ -23,6 +24,8 @@ type Props = {
 export const FilterSelection = observer(function FilterSelection(props: Props) {
   const { filters, handleFilters, layoutDisplayFiltersOptions } = props;
 
+  const { t } = useTranslation();
+
   const [filtersSearchQuery, setFiltersSearchQuery] = useState("");
 
   const isFilterEnabled = (filter: keyof IIssueFilterOptions) => layoutDisplayFiltersOptions.includes(filter);
@@ -36,10 +39,11 @@ export const FilterSelection = observer(function FilterSelection(props: Props) {
             type="text"
             className="w-full bg-surface-2 outline-none placeholder:text-placeholder"
             placeholder="Search"
+            aria-label={t("common.search.label")}
             value={filtersSearchQuery}
             onChange={(e) => setFiltersSearchQuery(e.target.value)}
-            // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; a11y handled separately
-            autoFocus
+            // react-doctor-disable-next-line no-autofocus -- intentional: the search field is the primary control when the filter popover opens
+            autoFocus // oxlint-disable-line jsx-a11y/no-autofocus -- intentional popover search focus
           />
           {filtersSearchQuery !== "" && (
             <button type="button" className="grid place-items-center" onClick={() => setFiltersSearchQuery("")}>

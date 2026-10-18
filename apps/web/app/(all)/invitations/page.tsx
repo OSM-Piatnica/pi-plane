@@ -110,6 +110,8 @@ function UserInvitationsPage() {
       });
   };
 
+  const respondingInvitationIds = new Set(invitationsRespond);
+
   return (
     <AuthenticationWrapper>
       <div className="flex h-full flex-col gap-y-2 overflow-hidden sm:flex-row sm:gap-y-0">
@@ -133,7 +135,7 @@ function UserInvitationsPage() {
                 <h4 className="text-20 font-semibold">{t("join_a_workspace")}</h4>
                 <div className="max-h-[37vh] space-y-4 overflow-y-auto md:w-3/5">
                   {invitations.map((invitation) => {
-                    const isSelected = invitationsRespond.includes(invitation.id);
+                    const isSelected = respondingInvitationIds.has(invitation.id);
 
                     return (
                       // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; behaviour unchanged

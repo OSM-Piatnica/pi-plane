@@ -43,12 +43,14 @@ export type EmojiReactionButtonProps = React.ComponentPropsWithRef<"button"> & {
   onAddReaction?: () => void;
 };
 
+const EMPTY_USERS: NonNullable<EmojiReactionProps["users"]> = [];
+
 const EmojiReaction = React.forwardRef(function EmojiReaction(
   {
     emoji,
     count,
     reacted = false,
-    users = [],
+    users = EMPTY_USERS,
     onReactionClick,
     className,
     showCount = true,
@@ -146,9 +148,9 @@ const EmojiReactionGroup = React.forwardRef(function EmojiReactionGroup(
   return (
     <div ref={ref} className={cn("flex flex-wrap items-center gap-2", className)} {...props}>
       {reactions.map((reaction, index) => (
+        // react-doctor-disable-next-line no-array-index-key -- reactions carry no id and emoji is not guaranteed unique; the index keeps keys unique as before
         <EmojiReaction
-          // oxlint-disable-next-line react/no-array-index-key -- existing behaviour; lint cleanup only
-          key={`${reaction.emoji}-${index}`}
+          key={`${reaction.emoji}-${index}`} // oxlint-disable-line react/no-array-index-key -- existing behaviour; lint cleanup only
           emoji={reaction.emoji}
           count={reaction.count}
           reacted={reaction.reacted}

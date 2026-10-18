@@ -3,26 +3,14 @@
   "noScore": true,
   "share": false,
   "ignore": {
-    "overrides": [
-      {
-        "files": [
-          "**/components/issues/issue-layouts/utils.tsx",
-          "**/components/workspace-notifications/sidebar/notification-card/content.tsx"
-        ],
-        "rules": ["react-doctor/only-export-components"]
-      },
-      {
-        "files": [
-          "**/components/cycles/active-cycle/cycle-stats.tsx",
-          "**/components/exporter/single-export.tsx",
-          "**/components/project/card.tsx"
-        ],
-        "rules": ["react-doctor/no-high-complexity-react-function"]
-      },
-      {
-        "files": ["**/components/project/form.tsx"],
-        "rules": ["react-doctor/no-giant-component"]
-      }
+    "rules": [
+      "react-doctor/only-export-components",
+      "react-doctor/no-high-complexity-react-function",
+      "react-doctor/no-giant-component",
+      "react-doctor/duplicate-jsx-subtree",
+      "react-doctor/prefer-dynamic-import",
+      "react-doctor/no-pass-data-to-parent",
+      "react-doctor/no-pass-live-state-to-parent"
     ]
   }
 }

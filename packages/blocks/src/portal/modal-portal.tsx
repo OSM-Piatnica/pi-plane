@@ -28,6 +28,10 @@ export type ModalPortalProps = {
   closeOnEscape?: boolean;
   /** Called on outside click; omit to keep the modal open. */
   onOutsideClick?: () => void;
+  /** Accessible name for the dialog; pass this or ariaLabelledBy. */
+  ariaLabel?: string;
+  /** Id of the element that titles the dialog. */
+  ariaLabelledBy?: string;
 };
 
 /**
@@ -44,6 +48,8 @@ export type ModalPortalProps = {
  * @param showOverlay - Whether to show background overlay
  * @param closeOnEscape - Whether pressing Escape closes modal
  * @param onOutsideClick - Called on outside click; omit to keep the modal open
+ * @param ariaLabel - Accessible name for the dialog
+ * @param ariaLabelledBy - Id of the element that titles the dialog
  */
 export function ModalPortal({
   children,
@@ -59,6 +65,8 @@ export function ModalPortal({
   showOverlay = true,
   closeOnEscape = true,
   onOutsideClick,
+  ariaLabel,
+  ariaLabelledBy,
 }: ModalPortalProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -88,7 +96,10 @@ export function ModalPortal({
     <div
       className={cn("absolute inset-0 h-full w-full overflow-y-auto", className)}
       style={{ zIndex: MODAL_Z_INDEX }}
+      // react-doctor-disable-next-line prefer-html-dialog -- portal-rendered overlay with its own dismissal hook (useDialogDismissal); a native <dialog> would change top-layer stacking and focus handling for all consumers
       role="dialog"
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
     >
       <div
         className={cn(

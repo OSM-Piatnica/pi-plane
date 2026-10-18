@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -65,25 +66,27 @@ export const TrackFileRestorationPlugin = (editor: Editor, restoreHandler: TFile
           addedFiles.push(node as TFileNode);
         });
 
-        addedFiles.forEach(async (node) => {
-          const nodeType = node.type.name as keyof NodeFileMapType;
-          const src = node.attrs.src;
-          const nodeFileSetDetails = NODE_FILE_MAP[nodeType];
-          if (!nodeFileSetDetails) return;
-          const extensionFileSetStorage = editor.storage[nodeType]?.[nodeFileSetDetails.fileSetName];
-          const wasDeleted = extensionFileSetStorage?.get(src);
-          if (!nodeFileSetDetails || !src) return;
-          if (wasDeleted === undefined) {
-            extensionFileSetStorage?.set(src, false);
-          } else if (wasDeleted === true) {
-            try {
-              await restoreHandler(src);
+        void Promise.all(
+          addedFiles.map(async (node) => {
+            const nodeType = node.type.name as keyof NodeFileMapType;
+            const src = node.attrs.src;
+            const nodeFileSetDetails = NODE_FILE_MAP[nodeType];
+            if (!nodeFileSetDetails) return;
+            const extensionFileSetStorage = editor.storage[nodeType]?.[nodeFileSetDetails.fileSetName];
+            const wasDeleted = extensionFileSetStorage?.get(src);
+            if (!nodeFileSetDetails || !src) return;
+            if (wasDeleted === undefined) {
               extensionFileSetStorage?.set(src, false);
-            } catch (error) {
-              console.error("Error restoring file via restore utility plugin:", error);
+            } else if (wasDeleted === true) {
+              try {
+                await restoreHandler(src);
+                extensionFileSetStorage?.set(src, false);
+              } catch (error) {
+                console.error("Error restoring file via restore utility plugin:", error);
+              }
             }
-          }
-        });
+          })
+        );
       });
       return null;
     },

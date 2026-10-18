@@ -270,6 +270,7 @@ function WorkflowBuilder(props: BuilderProps) {
                       <select
                         className="rounded border border-subtle bg-surface-1 px-2 py-1 text-12"
                         value={flow.flow_type}
+                        aria-label={t("a11y.workflow_flow_type")}
                         onChange={(event) => updateFlow(index, { flow_type: event.target.value as TWorkflowFlowType })}
                       >
                         <option value="transition">{t("project_settings.workflows.transition")}</option>
@@ -278,6 +279,7 @@ function WorkflowBuilder(props: BuilderProps) {
                       <select
                         className="rounded border border-subtle bg-surface-1 px-2 py-1 text-12"
                         value={flow.target_state_id}
+                        aria-label={t("a11y.workflow_target_state")}
                         onChange={(event) => updateFlow(index, { target_state_id: event.target.value })}
                       >
                         {states.map((targetState) => (
@@ -290,6 +292,7 @@ function WorkflowBuilder(props: BuilderProps) {
                         <select
                           className="rounded border border-subtle bg-surface-1 px-2 py-1 text-12"
                           value={flow.reject_state_id ?? ""}
+                          aria-label={t("a11y.workflow_reject_state")}
                           onChange={(event) => updateFlow(index, { reject_state_id: event.target.value })}
                         >
                           {states.map((targetState) => (

@@ -1043,5 +1043,11 @@
     "uploaded_on": "{name} tarafından {date} tarihinde yüklendi",
     "date_range": "{start} - {end}",
     "expiry": "Son kullanma"
+  },
+  "a11y": {
+    "toggle_details": "Ayrıntıları aç/kapat",
+    "workflow_flow_type": "Akış türü",
+    "workflow_target_state": "Hedef durum",
+    "workflow_reject_state": "Reddetme durumu"
   }
 }

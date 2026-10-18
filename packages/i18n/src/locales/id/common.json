@@ -1043,5 +1043,11 @@
     "uploaded_on": "Diunggah oleh {name} pada {date}",
     "date_range": "{start} - {end}",
     "expiry": "Kedaluwarsa"
+  },
+  "a11y": {
+    "toggle_details": "Alihkan detail",
+    "workflow_flow_type": "Jenis alur",
+    "workflow_target_state": "Status target",
+    "workflow_reject_state": "Status penolakan"
   }
 }

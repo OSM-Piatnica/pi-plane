@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -20,12 +21,14 @@ export type TActivityFilterRoot = {
 export function ActivityFilterRoot(props: TActivityFilterRoot) {
   const { selectedFilters, toggleFilter } = props;
 
+  const selectedFiltersSet = new Set(selectedFilters);
+
   const filters: TActivityFilterOption[] = Object.entries(ACTIVITY_FILTER_TYPE_OPTIONS).map(([key, value]) => {
     const filterKey = key as TActivityFilters;
     return {
       key: filterKey,
       labelTranslationKey: value.labelTranslationKey,
-      isSelected: selectedFilters.includes(filterKey),
+      isSelected: selectedFiltersSet.has(filterKey),
       onClick: () => toggleFilter(filterKey),
     };
   });

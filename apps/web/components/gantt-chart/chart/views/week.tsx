@@ -64,8 +64,8 @@ export const WeekChartView = observer(function WeekChartView(_props: any) {
               <div className="flex h-5 w-full">
                 {block?.children?.map((weekDay, index) => (
                   <div
-                    // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
-                    key={`sub-title-${rootIndex}-${index}`}
+                    // react-doctor-disable-next-line no-array-index-as-key -- static list generated from fixed data, never reordered
+                    key={`sub-title-${rootIndex}-${index}`} // oxlint-disable-line react/no-array-index-key -- no stable unique key available
                     className={cn(
                       "flex flex-shrink-0 justify-between p-1 text-center capitalize outline-[0.25px] outline-subtle-1",
                       {

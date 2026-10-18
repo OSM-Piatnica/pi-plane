@@ -1043,5 +1043,11 @@
     "uploaded_on": "Завантажено: {name}, {date}",
     "date_range": "{start} - {end}",
     "expiry": "Термін дії"
+  },
+  "a11y": {
+    "toggle_details": "Показати або сховати подробиці",
+    "workflow_flow_type": "Тип потоку",
+    "workflow_target_state": "Цільовий стан",
+    "workflow_reject_state": "Стан відхилення"
   }
 }

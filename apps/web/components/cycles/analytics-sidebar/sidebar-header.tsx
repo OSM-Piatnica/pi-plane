@@ -159,6 +159,7 @@ export const CycleSidebarHeader = observer(function CycleSidebarHeader(props: Pr
                   <div className="h-7">
                     <DateRangeSelect
                       variant="pill-sm"
+                      // react-doctor-disable-next-line rendering-hydration-mismatch-time -- client-only SPA, never server-rendered
                       minDate={new Date()}
                       value={{
                         from: getDate(startDateValue) ?? null,

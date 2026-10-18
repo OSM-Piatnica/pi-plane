@@ -1043,5 +1043,11 @@
     "uploaded_on": "{name}於{date}上傳",
     "date_range": "{start} - {end}",
     "expiry": "到期時間"
+  },
+  "a11y": {
+    "toggle_details": "切換詳細資料",
+    "workflow_flow_type": "流程類型",
+    "workflow_target_state": "目標狀態",
+    "workflow_reject_state": "拒絕狀態"
   }
 }

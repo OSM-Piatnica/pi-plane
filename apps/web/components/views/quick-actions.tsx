@@ -71,7 +71,7 @@ export const ViewQuickActions = observer(function ViewQuickActions(props: Props)
       });
       return;
     });
-  const handleOpenInNewTab = () => window.open(`/${viewLink}`, "_blank");
+  const handleOpenInNewTab = () => window.open(`/${viewLink}`, "_blank", "noopener,noreferrer");
 
   const menuResult = useViewMenuItems({
     isOwner,

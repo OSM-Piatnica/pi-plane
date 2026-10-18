@@ -83,7 +83,8 @@ export const IssueMainContent = observer(function IssueMainContent(props: Props)
   useEffect(() => {
     if (isSubmitting === "submitted") {
       setShowAlert(false);
-      setTimeout(async () => setIsSubmitting("saved"), 2000);
+      const timeoutId = setTimeout(() => setIsSubmitting("saved"), 2000);
+      return () => clearTimeout(timeoutId);
     } else if (isSubmitting === "submitting") setShowAlert(true);
   }, [isSubmitting, setShowAlert, setIsSubmitting]);
 

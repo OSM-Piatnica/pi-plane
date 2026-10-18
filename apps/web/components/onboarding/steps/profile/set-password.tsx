@@ -37,19 +37,15 @@ export function SetPasswordRoot({ onPasswordChange, onConfirmPasswordChange, dis
 
   const handlePasswordChange = useCallback(
     (field: keyof PasswordState, value: string) => {
-      setPasswordState((prev) => {
-        const newState = { ...prev, [field]: value };
+      setPasswordState((prev) => ({ ...prev, [field]: value }));
 
-        // Notify parent component when password changes
-        if (field === "password" && onPasswordChange) {
-          onPasswordChange(value);
-        }
-        if (field === "confirmPassword" && onConfirmPasswordChange) {
-          onConfirmPasswordChange(value);
-        }
-
-        return newState;
-      });
+      // Notify parent component when password changes
+      if (field === "password" && onPasswordChange) {
+        onPasswordChange(value);
+      }
+      if (field === "confirmPassword" && onConfirmPasswordChange) {
+        onConfirmPasswordChange(value);
+      }
     },
     [onPasswordChange, onConfirmPasswordChange]
   );

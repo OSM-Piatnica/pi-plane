@@ -203,8 +203,8 @@ export const CycleListItemAction = observer(function CycleListItemAction(props: 
       )}
       <CycleAdditionalActions cycleId={cycleId} projectId={projectId} />
       {showTransferIssues && (
-        // oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only
-        <div
+        <button
+          type="button"
           className="flex h-6 cursor-pointer items-center gap-1 px-2 text-accent-secondary"
           onClick={() => {
             setTransferIssuesModal(true);
@@ -212,7 +212,7 @@ export const CycleListItemAction = observer(function CycleListItemAction(props: 
         >
           <TransferWorkItemOutline className="w-4 fill-accent-primary" />
           <span>{t("project_cycles.transfer_work_items", { count: transferableIssuesCount })}</span>
-        </div>
+        </button>
       )}
       {isActive ? (
         <>
@@ -245,6 +245,7 @@ export const CycleListItemAction = observer(function CycleListItemAction(props: 
             <DateRangeSelect
               variant="select-ghost-md"
               className="flex h-6 w-full cursor-auto items-center gap-1.5 rounded-sm p-0 text-11 text-tertiary [&>div]:hover:bg-transparent"
+              // react-doctor-disable-next-line rendering-hydration-mismatch-time -- client-only SPA, never server-rendered
               minDate={new Date()}
               value={{
                 from: getDate(cycleDetails.start_date) ?? null,

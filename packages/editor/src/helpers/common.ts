@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -37,9 +38,10 @@ export const findParentNodeOfType = (
   depth: number;
 } | null => {
   let depth = selection.$anchor.depth;
+  const typeNameSet = new Set(typeName);
   while (depth > 0) {
     const node = selection.$anchor.node(depth);
-    if (typeName.includes(node.type.name)) {
+    if (typeNameSet.has(node.type.name)) {
       return {
         node,
         pos: selection.$anchor.start(depth) - 1,
@@ -94,9 +96,9 @@ export const isValidHttpUrl = (string: string): { isValid: boolean; url: string 
   // Try again with https:// prefix
   try {
     const urlWithHttps = `https://${string}`;
-    new URL(urlWithHttps);
+    // constructing the URL throws when it is invalid, which the catch below reports
     return {
-      isValid: true,
+      isValid: Boolean(new URL(urlWithHttps)),
       url: urlWithHttps,
     };
   } catch {

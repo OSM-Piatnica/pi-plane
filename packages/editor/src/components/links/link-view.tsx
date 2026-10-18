@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { Editor } from "@tiptap/react";
 import type { CSSProperties } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // components
 import { LinkEditView, LinkPreview } from "@/components/links";
 
@@ -30,12 +31,11 @@ export function LinkView(props: LinkViewProps & { style: CSSProperties }) {
     setCurrentView(view);
   };
 
-  useEffect(() => {
-    if (props.from !== prevFrom) {
-      setCurrentView("LinkPreview");
-      setPrevFrom(props.from);
-    }
-  }, [prevFrom, props.from]);
+  // reset to the preview whenever the link position changes (adjusting state during render)
+  if (props.from !== prevFrom) {
+    setPrevFrom(props.from);
+    setCurrentView("LinkPreview");
+  }
 
   return (
     <>

@@ -32,6 +32,7 @@ export const FilterStatus = observer(function FilterStatus(props: Props) {
   // derived values
   const filterValue = inboxFilters?.status || [];
   const appliedFiltersCount = filterValue?.length ?? 0;
+  const filterValueSet = new Set(filterValue ?? []);
   const filteredOptions = INBOX_STATUS.filter(
     (s) =>
       ((currentTab === "open" && [-2, 0].includes(s.status)) ||
@@ -60,7 +61,7 @@ export const FilterStatus = observer(function FilterStatus(props: Props) {
             filteredOptions.map((status) => (
               <FilterOption
                 key={status.key}
-                isChecked={Boolean(filterValue?.includes(status.status))}
+                isChecked={filterValueSet.has(status.status)}
                 onClick={() => handleStatusFilterSelect(status.status)}
                 icon={<InboxStatusIcon type={status.status} className={`h-3.5 w-3.5`} />}
                 title={t(status.i18n_title)}

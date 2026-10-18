@@ -168,37 +168,42 @@ export const InboxIssueCreateRoot = observer(function InboxIssueCreateRoot(props
     };
     setFormSubmitting(true);
 
-    await createInboxIssue(workspaceSlug, projectId, payload)
-      .then(async (res) => {
-        if (uploadedAssetIds.length > 0) {
-          await fileService.updateBulkProjectAssetsUploadStatus(workspaceSlug, projectId, res?.issue.id ?? "", {
-            asset_ids: uploadedAssetIds,
+    try {
+      await createInboxIssue(workspaceSlug, projectId, payload)
+        .then(async (res) => {
+          if (uploadedAssetIds.length > 0) {
+            await fileService.updateBulkProjectAssetsUploadStatus(workspaceSlug, projectId, res?.issue.id ?? "", {
+              asset_ids: uploadedAssetIds,
+            });
+            setUploadedAssetIds([]);
+          }
+          if (!createMore) {
+            router.push(
+              `/${workspaceSlug}/projects/${projectId}/intake/?currentTab=open&inboxIssueId=${res?.issue?.id}`
+            );
+            handleModalClose();
+          } else {
+            descriptionEditorRef?.current?.clearEditor();
+            setFormData(defaultIssueData);
+          }
+          setToast({
+            type: "success",
+            title: t("toast.success"),
+            message: t("inbox_ui.create_success"),
           });
-          setUploadedAssetIds([]);
-        }
-        if (!createMore) {
-          router.push(`/${workspaceSlug}/projects/${projectId}/intake/?currentTab=open&inboxIssueId=${res?.issue?.id}`);
-          handleModalClose();
-        } else {
-          descriptionEditorRef?.current?.clearEditor();
-          setFormData(defaultIssueData);
-        }
-        setToast({
-          type: "success",
-          title: t("toast.success"),
-          message: t("inbox_ui.create_success"),
+          return;
+        })
+        .catch((error) => {
+          console.error(error);
+          setToast({
+            type: "error",
+            title: t("toast.error"),
+            message: t("inbox_ui.create_error"),
+          });
         });
-        return;
-      })
-      .catch((error) => {
-        console.error(error);
-        setToast({
-          type: "error",
-          title: t("toast.error"),
-          message: t("inbox_ui.create_error"),
-        });
-      });
-    setFormSubmitting(false);
+    } finally {
+      setFormSubmitting(false);
+    }
   };
 
   const isTitleLengthMoreThan255Character = formData?.name ? formData.name.length > 255 : false;

@@ -45,7 +45,7 @@ export const PaidPlanUpgradeModal = observer(function PaidPlanUpgradeModal(props
     const frequency = price?.recurring ?? "year";
     // Redirect to the appropriate URL
     const redirectUrl = SUBSCRIPTION_REDIRECTION_URLS[planVariant][frequency] ?? TALK_TO_SALES_URL;
-    window.open(redirectUrl, "_blank");
+    window.open(redirectUrl, "_blank", "noopener,noreferrer");
   };
 
   return (

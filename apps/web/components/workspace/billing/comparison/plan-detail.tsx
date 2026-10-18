@@ -50,7 +50,7 @@ export const PlanDetail = observer(function PlanDetail(props: TPlanDetailProps) 
     // Get the redirection URL based on the subscription type and billing frequency
     const redirectUrl = SUBSCRIPTION_REDIRECTION_URLS[subscriptionType][frequency] ?? TALK_TO_SALES_URL;
     // Open the URL in a new tab
-    window.open(redirectUrl, "_blank");
+    window.open(redirectUrl, "_blank", "noopener,noreferrer");
   };
 
   return (

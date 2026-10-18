@@ -6,6 +6,7 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
 
 // plane types
 import { Avatar } from "@makeplane/propel/components/avatar";
@@ -29,6 +30,7 @@ export const InboxIssueAppliedFiltersMember = observer(function InboxIssueApplie
   const { filterKey, label } = props;
   // hooks
   const { inboxFilters, handleInboxIssueFilters } = useProjectInbox();
+  const { t } = useTranslation();
   const { getUserDetails } = useMember();
   // derived values
   const filteredValues = inboxFilters?.[filterKey] || [];
@@ -57,24 +59,26 @@ export const InboxIssueAppliedFiltersMember = observer(function InboxIssueApplie
               />
             </div>
             <div className="truncate text-11">{optionDetail?.display_name}</div>
-            {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
-            <div
+            <button
+              type="button"
+              aria-label={t("common.remove")}
               className="relative flex h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden text-tertiary transition-all hover:text-secondary"
               onClick={() => handleInboxIssueFilters(filterKey, handleFilterValue(value))}
             >
               <CloseOutline className={`h-3 w-3`} />
-            </div>
+            </button>
           </div>
         );
       })}
 
-      {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
-      <div
+      <button
+        type="button"
+        aria-label={t("common.clear")}
         className="relative flex h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden text-tertiary transition-all hover:text-secondary"
         onClick={clearFilter}
       >
         <CloseOutline className={`h-3 w-3`} />
-      </div>
+      </button>
     </div>
   );
 });

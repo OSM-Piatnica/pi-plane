@@ -1043,5 +1043,11 @@
     "uploaded_on": "{name} hat am {date} hochgeladen",
     "date_range": "{start} - {end}",
     "expiry": "Ablaufdatum"
+  },
+  "a11y": {
+    "toggle_details": "Details ein-/ausblenden",
+    "workflow_flow_type": "Ablauftyp",
+    "workflow_target_state": "Zielstatus",
+    "workflow_reject_state": "Status bei Ablehnung"
   }
 }

@@ -154,14 +154,12 @@ export const Emoji = Node.create<EmojiOptions, EmojiStorage>({
     const { emojis: optionEmojis } = this.options;
     const supportMap: Record<number, boolean> = removeDuplicates(optionEmojis.map((item) => item.version))
       .filter((version) => typeof version === "number")
-      .reduce((versions, version) => {
+      .reduce<Record<number, boolean>>((versions, version) => {
         const emoji = optionEmojis.find((item) => item.version === version && item.emoji);
 
-        return {
-          // oxlint-disable-next-line oxc/no-accumulating-spread -- existing behaviour; lint cleanup only
-          ...versions,
-          [version]: emoji ? isEmojiSupported(emoji.emoji as string) : false,
-        };
+        versions[version as number] = emoji ? isEmojiSupported(emoji.emoji as string) : false;
+
+        return versions;
       }, {});
 
     return {

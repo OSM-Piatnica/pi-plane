@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -33,9 +34,10 @@ export const TrailingNode = Extension.create<TrailingNodeOptions>({
 
   addProseMirrorPlugins() {
     const plugin = new PluginKey(this.name);
+    const notAfterSet = new Set<string>(this.options.notAfter);
     const disabledNodes = Object.entries(this.editor.schema.nodes)
       .map(([, value]) => value)
-      .filter((node) => this.options.notAfter.includes(node.name));
+      .filter((node) => notAfterSet.has(node.name));
 
     return [
       new Plugin({

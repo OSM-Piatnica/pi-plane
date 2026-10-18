@@ -63,9 +63,10 @@ export const PeekOverviewIssueDetails = observer(function PeekOverviewIssueDetai
   useEffect(() => {
     if (isSubmitting === "submitted") {
       setShowAlert(false);
-      setTimeout(async () => {
+      const timeoutId = setTimeout(() => {
         setIsSubmitting("saved");
       }, 2000);
+      return () => clearTimeout(timeoutId);
     } else if (isSubmitting === "submitting") {
       setShowAlert(true);
     }

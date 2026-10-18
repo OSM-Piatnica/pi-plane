@@ -210,8 +210,8 @@ export function CustomImageUploader(props: CustomImageUploaderProps) {
   );
 
   return (
-    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing behaviour; lint cleanup only
-    <div
+    // react-doctor-disable-next-line no-static-element-interactions -- drop zone that opens the file picker on click; it contains its own controls so it cannot become a single button
+    <div // oxlint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing behaviour; lint cleanup only
       className={cn(
         "image-upload-component flex cursor-default items-center justify-start gap-2 rounded-lg border border-dashed bg-layer-3 px-2 py-3 text-tertiary transition-all duration-200 ease-in-out",
         {

@@ -170,6 +170,7 @@ export function CycleForm(props: Props) {
                     <DateRangeSelect
                       variant="pill-md"
                       className="h-7"
+                      // react-doctor-disable-next-line rendering-hydration-mismatch-time -- client-only SPA, never server-rendered
                       minDate={new Date()}
                       value={{
                         from: getDate(startDateValue) ?? null,

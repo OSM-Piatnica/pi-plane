@@ -182,7 +182,7 @@ export function ResizableSidebar({
   return (
     <>
       {/* Main Sidebar */}
-      <div
+      <aside
         id="main-sidebar"
         className={cn(
           "z-20 h-full border-r border-subtle bg-surface-1",
@@ -196,7 +196,6 @@ export function ResizableSidebar({
           minWidth: `${isCollapsed ? 0 : width}px`,
           maxWidth: `${isCollapsed ? 0 : width}px`,
         }}
-        role="complementary"
         aria-label={t("core_ui.sidebar.main")}
         data-prevent-outside-click={isMobile}
       >
@@ -209,7 +208,8 @@ export function ResizableSidebar({
           {children}
 
           {/* Resize Handle */}
-          <div
+          {/* react-doctor-disable-next-line interactive-supports-focus -- mouse-only drag handle; resizing has no keyboard equivalent here */}
+          <div // oxlint-disable-line jsx-a11y/interactive-supports-focus -- mouse-only drag handle
             className={cn(
               "absolute z-[20] h-full w-1 cursor-ew-resize transition-all duration-200",
               !isResizing && "hover:bg-surface-2",
@@ -223,9 +223,9 @@ export function ResizableSidebar({
             aria-label={t("core_ui.sidebar.resize")}
           />
         </aside>
-      </div>
+      </aside>
       {/* Peek View */}
-      <div
+      <aside
         className={cn(
           "shadow-sm absolute left-0 z-20 h-full bg-surface-1",
           !isResizing && "transition-all duration-300 ease-in-out",
@@ -239,7 +239,6 @@ export function ResizableSidebar({
         }}
         onMouseEnter={handlePeekEnter}
         onMouseLeave={handlePeekLeave}
-        role="complementary"
         aria-label={t("core_ui.sidebar.peek")}
       >
         <aside
@@ -251,7 +250,8 @@ export function ResizableSidebar({
         >
           {children}
           {/* Resize Handle */}
-          <div
+          {/* react-doctor-disable-next-line interactive-supports-focus -- mouse-only drag handle; resizing has no keyboard equivalent here */}
+          <div // oxlint-disable-line jsx-a11y/interactive-supports-focus -- mouse-only drag handle
             className={cn(
               "absolute z-[20] h-full w-1 cursor-ew-resize transition-all duration-200",
               !isResizing && "hover:bg-surface-2",
@@ -265,7 +265,7 @@ export function ResizableSidebar({
             aria-label={t("core_ui.sidebar.resize")}
           />
         </aside>
-      </div>
+      </aside>
 
       {/* Extended Sidebar */}
       {extendedSidebar}

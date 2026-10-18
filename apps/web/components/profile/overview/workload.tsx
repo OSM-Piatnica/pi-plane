@@ -26,8 +26,7 @@ export function ProfileWorkload({ stateDistribution }: Props) {
       <div className="grid grid-cols-1 justify-stretch gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {stateDistribution.map((group) => (
           <div key={group.state_group}>
-            {/* oxlint-disable-next-line jsx-a11y/anchor-is-valid -- anchor kept as-is */}
-            <a>
+            <div>
               <Card direction="row" spacing="sm">
                 <div
                   className="my-2 h-3 w-3 rounded-xs"
@@ -46,7 +45,7 @@ export function ProfileWorkload({ stateDistribution }: Props) {
                   <p className="text-18 font-semibold">{group.state_count}</p>
                 </div>
               </Card>
-            </a>
+            </div>
           </div>
         ))}
       </div>

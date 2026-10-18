@@ -30,6 +30,7 @@ export const FilterStartDate = observer(function FilterStartDate(props: Props) {
   const { t } = useTranslation();
 
   const appliedFiltersCount = appliedFilters?.length ?? 0;
+  const appliedFiltersSet = new Set(appliedFilters ?? []);
 
   const filteredOptions = DATE_AFTER_FILTER_OPTIONS.filter((d) =>
     d.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -68,7 +69,7 @@ export const FilterStartDate = observer(function FilterStartDate(props: Props) {
               {filteredOptions.map((option) => (
                 <FilterOption
                   key={option.value}
-                  isChecked={Boolean(appliedFilters?.includes(option.value))}
+                  isChecked={appliedFiltersSet.has(option.value)}
                   onClick={() => handleUpdate(option.value)}
                   title={option.name}
                   multiple

@@ -109,12 +109,14 @@ export const IssueReaction = observer(function IssueReaction(props: TIssueReacti
   const reactions: EmojiReactionType[] = useMemo(() => {
     if (!reactionIds) return [];
 
+    const userReactionsSet = new Set(userReactions);
+
     return Object.keys(reactionIds)
       .filter((reaction) => reactionIds[reaction]?.length > 0)
       .map((reaction) => ({
         emoji: stringToEmoji(reaction),
         count: reactionIds[reaction].length,
-        reacted: userReactions.includes(reaction),
+        reacted: userReactionsSet.has(reaction),
         users: getReactionUsers(reaction),
       }));
     // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour

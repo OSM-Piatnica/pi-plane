@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -28,11 +29,14 @@ export const restorePublicImages = (editor: Editor, restoreImageFn: TFileHandler
     }
   });
 
-  imageSources.forEach(async (src) => {
-    try {
-      await restoreImageFn(src);
-    } catch (error) {
-      console.error("Error restoring image: ", error);
-    }
-  });
+  // restore all images concurrently; failures are logged per image
+  void Promise.all(
+    Array.from(imageSources).map(async (src) => {
+      try {
+        await restoreImageFn(src);
+      } catch (error) {
+        console.error("Error restoring image: ", error);
+      }
+    })
+  );
 };
