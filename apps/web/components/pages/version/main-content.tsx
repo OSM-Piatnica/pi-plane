@@ -14,11 +14,11 @@ import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import { setToast } from "@plane/blocks/toast";
 import type { TPageVersion } from "@plane/types";
-import { renderFormattedDate, renderFormattedTime } from "@plane/utils";
 // helpers
 import type { EPageStoreType } from "@/hooks/store";
 // local imports
 import type { TVersionEditorProps } from "./editor";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type Props = {
   activeVersion: string | null;
@@ -44,6 +44,7 @@ export const PageVersionsMainContent = observer(function PageVersionsMainContent
   } = props;
   // translation
   const { t } = useTranslation();
+  const { formatDate, formatTime } = useLocalizedDates();
   // states
   const [isRestoring, setIsRestoring] = useState(false);
   const [isRetrying, setIsRetrying] = useState(false);
@@ -114,7 +115,10 @@ export const PageVersionsMainContent = observer(function PageVersionsMainContent
             <div className="flex items-center gap-4">
               <h6 className="text-14 font-medium">
                 {versionDetails
-                  ? `${renderFormattedDate(versionDetails.last_saved_at)} ${renderFormattedTime(versionDetails.last_saved_at)}`
+                  ? t("date_phrases.date_time", {
+                      date: formatDate(versionDetails.last_saved_at),
+                      time: formatTime(versionDetails.last_saved_at),
+                    })
                   : t("page_ui.version.loading_details")}
               </h6>
               <span className="flex flex-shrink-0 items-center gap-1 rounded-sm bg-accent-primary/20 px-1.5 py-1 text-11 font-medium text-accent-primary">

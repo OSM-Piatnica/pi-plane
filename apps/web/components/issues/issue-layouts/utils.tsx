@@ -729,8 +729,15 @@ export function getApproximateCardHeight(displayProperties: IIssueDisplayPropert
  */
 export const getBlockViewDetails = (
   block: { start_date: string | undefined | null; target_date: string | undefined | null } | undefined | null,
-  backgroundColor: string
+  backgroundColor: string,
+  // optional, for the user's language; English text when omitted
+  localize?: {
+    t: (key: string, params?: Record<string, string | number>) => string;
+    formatDate: (date: string | Date | undefined | null) => string | undefined;
+  }
 ) => {
+  const formatDate = (date: string | undefined | null) =>
+    (localize ? localize.formatDate(date) : renderFormattedDate(date)) ?? "";
   const isBlockVisibleOnChart = block?.start_date || block?.target_date;
   const isBlockComplete = block?.start_date && block?.target_date;
 
@@ -741,14 +748,23 @@ export const getBlockViewDetails = (
 
   if (isBlockVisibleOnChart && !isBlockComplete) {
     if (block?.start_date) {
-      message = `From ${renderFormattedDate(block.start_date)}`;
+      message = localize
+        ? localize.t("date_phrases.from_date", { date: formatDate(block.start_date) })
+        : `From ${formatDate(block.start_date)}`;
       blockStyle.maskImage = `linear-gradient(to right, ${backgroundColor} 50%, transparent 95%)`;
     } else if (block?.target_date) {
-      message = `Till ${renderFormattedDate(block.target_date)}`;
+      message = localize
+        ? localize.t("date_phrases.till_date", { date: formatDate(block.target_date) })
+        : `Till ${formatDate(block.target_date)}`;
       blockStyle.maskImage = `linear-gradient(to left, ${backgroundColor} 50%, transparent 95%)`;
     }
   } else if (isBlockComplete) {
-    message = `${renderFormattedDate(block?.start_date)} to ${renderFormattedDate(block?.target_date)}`;
+    message = localize
+      ? localize.t("date_phrases.date_to_date", {
+          start: formatDate(block?.start_date),
+          end: formatDate(block?.target_date),
+        })
+      : `${formatDate(block?.start_date)} to ${formatDate(block?.target_date)}`;
   }
 
   return {

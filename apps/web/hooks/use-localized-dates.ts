@@ -26,7 +26,12 @@ export const useLocalizedDates = () => {
   return useMemo(() => {
     const dateToken = dateFnsLocale.code === ENGLISH_LOCALE_CODE ? ENGLISH_DATE_TOKEN : LOCALIZED_DATE_TOKEN;
     return {
+      /** The date-fns locale of the user's language, for helpers that take one. */
+      locale: dateFnsLocale,
       formatDate: (date: string | Date | undefined | null) => renderFormattedDate(date, dateToken, dateFnsLocale),
+      /** A date in an explicit date-fns format (a user's own date-format setting, "MMM" for a chart axis). */
+      formatDateAs: (date: string | Date | undefined | null, formatToken: string) =>
+        renderFormattedDate(date, formatToken, dateFnsLocale),
       formatTime: (date: string | Date, timeFormat?: "12-hour" | "24-hour") =>
         renderFormattedTime(date, timeFormat, dateFnsLocale),
       timeAgo: (time: string | number | Date | null) => calculateTimeAgo(time, dateFnsLocale),

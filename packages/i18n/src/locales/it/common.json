@@ -1029,6 +1029,19 @@
     "expires_at": "Scade il {date} alle {time}",
     "never_expires": "Non scade mai",
     "date_at_time": "{date} alle {time}",
-    "till": "Fino al {date}, {time}"
+    "till": "Fino al {date}, {time}",
+    "after_date": "Dopo il {date}",
+    "before_date": "Prima del {date}",
+    "month_week": "{month}, settimana {week}",
+    "target_date": "Data obiettivo: {date}",
+    "from_date": "Dal {date}",
+    "till_date": "Fino al {date}",
+    "date_to_date": "Dal {start} al {end}",
+    "archived_at": "Archiviato il {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Caricato da {name} il {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Scadenza"
   }
 }

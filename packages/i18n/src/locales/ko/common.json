@@ -1029,6 +1029,19 @@
     "expires_at": "{date} {time}에 만료",
     "never_expires": "만료되지 않음",
     "date_at_time": "{date} {time}",
-    "till": "{date}, {time}까지"
+    "till": "{date}, {time}까지",
+    "after_date": "{date} 이후",
+    "before_date": "{date} 이전",
+    "month_week": "{month} {week}주차",
+    "target_date": "목표 날짜: {date}",
+    "from_date": "{date}부터",
+    "till_date": "{date}까지",
+    "date_to_date": "{start} ~ {end}",
+    "archived_at": "{date}에 보관됨",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "{name}님이 {date}에 업로드함",
+    "date_range": "{start} - {end}",
+    "expiry": "만료"
   }
 }

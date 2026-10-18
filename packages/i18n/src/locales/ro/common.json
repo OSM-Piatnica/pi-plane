@@ -1029,6 +1029,19 @@
     "expires_at": "Expiră pe {date} la {time}",
     "never_expires": "Nu expiră niciodată",
     "date_at_time": "{date} la {time}",
-    "till": "Până la {date}, {time}"
+    "till": "Până la {date}, {time}",
+    "after_date": "După {date}",
+    "before_date": "Înainte de {date}",
+    "month_week": "{month}, săptămâna {week}",
+    "target_date": "Dată țintă: {date}",
+    "from_date": "De la {date}",
+    "till_date": "Până la {date}",
+    "date_to_date": "{start} până la {end}",
+    "archived_at": "Arhivat la {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Încărcat de {name} la {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Expirare"
   }
 }

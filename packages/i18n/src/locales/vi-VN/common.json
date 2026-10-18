@@ -1029,6 +1029,19 @@
     "expires_at": "Hết hạn vào {date} lúc {time}",
     "never_expires": "Không bao giờ hết hạn",
     "date_at_time": "{date} lúc {time}",
-    "till": "Đến {date}, {time}"
+    "till": "Đến {date}, {time}",
+    "after_date": "Sau {date}",
+    "before_date": "Trước {date}",
+    "month_week": "{month}, tuần {week}",
+    "target_date": "Ngày mục tiêu: {date}",
+    "from_date": "Từ {date}",
+    "till_date": "Đến {date}",
+    "date_to_date": "{start} đến {end}",
+    "archived_at": "Đã lưu trữ vào {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "{name} đã tải lên vào {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Hết hạn"
   }
 }

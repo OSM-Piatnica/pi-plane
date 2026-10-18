@@ -10,6 +10,8 @@ import React from "react";
 import { AreaChart } from "@plane/blocks/charts/area-chart";
 import type { TChartData, TModuleCompletionChartDistribution } from "@plane/types";
 import { renderFormattedDateWithoutYear } from "@plane/utils";
+// hooks
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type Props = {
   distribution: TModuleCompletionChartDistribution;
@@ -19,8 +21,9 @@ type Props = {
 };
 
 function ProgressChart({ distribution, totalIssues, className = "", plotTitle = "work items" }: Props) {
+  const { locale } = useLocalizedDates();
   const chartData: TChartData<string, string>[] = Object.keys(distribution ?? []).map((key, index) => ({
-    name: renderFormattedDateWithoutYear(key),
+    name: renderFormattedDateWithoutYear(key, locale),
     current: distribution[key] ?? 0,
     ideal: totalIssues * (1 - index / (Object.keys(distribution ?? []).length - 1)),
   }));

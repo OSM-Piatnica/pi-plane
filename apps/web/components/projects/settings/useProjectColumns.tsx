@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,13 +9,13 @@ import { useState } from "react";
 // plane imports
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import type { IWorkspaceMember, TProjectMembership } from "@plane/types";
-import { renderFormattedDate } from "@plane/utils";
 // components
 import { MemberHeaderColumn } from "@/components/project/member-header-column";
 import { AccountTypeColumn, NameColumn } from "@/components/project/settings/member-columns";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import type { IMemberFilters } from "@/store/member/utils";
 
 export interface RowData extends Pick<TProjectMembership, "original_role"> {
@@ -33,6 +34,7 @@ export const useProjectColumns = (props: TUseProjectColumnsProps) => {
 
   // store hooks
   const { data: currentUser } = useUser();
+  const { formatDate } = useLocalizedDates();
   const { allowPermissions, getProjectRoleByWorkspaceSlugAndProjectId } = useUserPermissions();
   const {
     project: {
@@ -131,7 +133,7 @@ export const useProjectColumns = (props: TUseProjectColumnsProps) => {
           handleDisplayFilterUpdate={handleDisplayFilterUpdate}
         />
       ),
-      tdRender: (rowData: RowData) => <div>{renderFormattedDate(rowData?.member?.joining_date)}</div>,
+      tdRender: (rowData: RowData) => <div>{formatDate(rowData?.member?.joining_date)}</div>,
     },
   ];
   return {

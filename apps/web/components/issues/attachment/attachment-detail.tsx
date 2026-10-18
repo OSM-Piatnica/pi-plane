@@ -11,14 +11,7 @@ import Link from "next/link";
 import { CloseOutline, WarningCircleOutline } from "@makeplane/propel/icons";
 // ui
 import { Tooltip } from "@makeplane/propel/components/tooltip";
-import {
-  convertBytesToSize,
-  getFileExtension,
-  getFileName,
-  getFileURL,
-  renderFormattedDate,
-  truncateText,
-} from "@plane/utils";
+import { convertBytesToSize, getFileExtension, getFileName, getFileURL, truncateText } from "@plane/utils";
 // icons
 //
 import { getFileIcon } from "@/components/icons";
@@ -31,6 +24,8 @@ import { useMember } from "@/hooks/store/use-member";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // types
 import type { TAttachmentHelpers } from "../issue-detail-widgets/attachments/helper";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
+import { useTranslation } from "@plane/i18n";
 
 type TAttachmentOperationsRemoveModal = Exclude<TAttachmentHelpers, "create">;
 
@@ -43,6 +38,8 @@ type TIssueAttachmentsDetail = {
 export const IssueAttachmentsDetail = observer(function IssueAttachmentsDetail(props: TIssueAttachmentsDetail) {
   // props
   const { attachmentId, attachmentHelpers, disabled } = props;
+  const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
   // store hooks
   const { getUserDetails } = useMember();
   const {
@@ -81,9 +78,10 @@ export const IssueAttachmentsDetail = observer(function IssueAttachmentsDetail(p
                   <span className="text-13">{truncateText(`${fileName}`, 10)}</span>
                 </Tooltip>
                 <Tooltip
-                  label={`${
-                    getUserDetails(attachment.updated_by)?.display_name ?? ""
-                  } uploaded on ${renderFormattedDate(attachment.updated_at)}`}
+                  label={t("date_phrases.uploaded_on", {
+                    name: getUserDetails(attachment.updated_by)?.display_name ?? "",
+                    date: formatDate(attachment.updated_at),
+                  })}
                   layout="stacked"
                   disabled={isMobile}
                 >

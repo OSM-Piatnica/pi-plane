@@ -16,7 +16,7 @@ import { EIssueServiceType } from "@plane/types";
 import { Icon } from "@makeplane/propel/components/icon";
 import { IconButton } from "@makeplane/propel/components/icon-button";
 import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
-import { convertBytesToSize, getFileExtension, getFileName, getFileURL, renderFormattedDate } from "@plane/utils";
+import { convertBytesToSize, getFileExtension, getFileName, getFileURL } from "@plane/utils";
 // components
 //
 import { ButtonAvatars } from "@/components/dropdowns/member/avatar";
@@ -26,6 +26,7 @@ import { getFileIcon } from "@/components/icons";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useMember } from "@/hooks/store/use-member";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type TIssueAttachmentsListItem = {
   attachmentId: string;
@@ -35,6 +36,7 @@ type TIssueAttachmentsListItem = {
 
 export const IssueAttachmentsListItem = observer(function IssueAttachmentsListItem(props: TIssueAttachmentsListItem) {
   const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
   // props
   const { attachmentId, disabled, issueServiceType = EIssueServiceType.ISSUES } = props;
   // store hooks
@@ -78,9 +80,10 @@ export const IssueAttachmentsListItem = observer(function IssueAttachmentsListIt
             {attachment?.created_by && (
               <>
                 <Tooltip
-                  label={`${
-                    getUserDetails(attachment?.created_by)?.display_name ?? ""
-                  } uploaded on ${renderFormattedDate(attachment.updated_at)}`}
+                  label={t("date_phrases.uploaded_on", {
+                    name: getUserDetails(attachment?.created_by)?.display_name ?? "",
+                    date: formatDate(attachment.updated_at),
+                  })}
                   layout="stacked"
                   disabled={isMobile}
                 >

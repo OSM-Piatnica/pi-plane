@@ -8,10 +8,11 @@
 import { useState } from "react";
 import { observer } from "mobx-react";
 // plane utils
-import { cn, renderFormattedDate } from "@plane/utils";
+import { cn } from "@plane/utils";
 //helpers
 //
 //hooks
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
 
 type LeftResizableProps = {
@@ -27,10 +28,11 @@ export const LeftResizable = observer(function LeftResizable(props: LeftResizabl
   const { enableBlockLeftResize, isMoving, handleBlockDrag, position } = props;
   const [isHovering, setIsHovering] = useState(false);
 
+  const { formatDate } = useLocalizedDates();
   const { getDateFromPositionOnGantt } = useTimeLineChartStore();
 
   const date = position ? getDateFromPositionOnGantt(position.marginLeft, 0) : undefined;
-  const dateString = date ? renderFormattedDate(date) : undefined;
+  const dateString = date ? formatDate(date) : undefined;
 
   const isLeftResizing = isMoving === "left" || isMoving === "move";
 

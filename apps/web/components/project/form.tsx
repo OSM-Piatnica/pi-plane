@@ -22,7 +22,6 @@ import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { EFileAssetType } from "@plane/types";
 import type { IProject, IWorkspace } from "@plane/types";
 import { Select } from "@plane/blocks/select";
-import { renderFormattedDate } from "@plane/utils";
 import { CoverImage } from "@/components/common/cover-image";
 import { ImagePickerPopover } from "@/components/core/image-picker-popover";
 import { TimezoneSelect } from "@/components/global";
@@ -35,6 +34,7 @@ import { usePlatformOS } from "@/hooks/use-platform-os";
 import { ProjectService } from "@/services/project";
 // local imports
 import { ProjectNetworkIcon } from "./project-network-icon";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 export interface IProjectDetailsForm {
   project: IProject;
@@ -47,6 +47,7 @@ const projectService = new ProjectService();
 export function ProjectDetailsForm(props: IProjectDetailsForm) {
   const { project, workspaceSlug, projectId, isAdmin } = props;
   const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
   // states
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -466,7 +467,7 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
               disabled={!isAdmin}
             />
             <span className="text-13 text-placeholder italic">
-              {t("common.created_on")} {renderFormattedDate(project?.created_at)}
+              {t("project_components.card.created_on", { date: formatDate(project?.created_at) })}
             </span>
           </>
         </div>

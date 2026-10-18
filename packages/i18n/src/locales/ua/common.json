@@ -1029,6 +1029,19 @@
     "expires_at": "Спливає {date} о {time}",
     "never_expires": "Без терміну дії",
     "date_at_time": "{date} о {time}",
-    "till": "До {date}, {time}"
+    "till": "До {date}, {time}",
+    "after_date": "Після {date}",
+    "before_date": "До {date}",
+    "month_week": "{month}, тиждень {week}",
+    "target_date": "Цільова дата: {date}",
+    "from_date": "З {date}",
+    "till_date": "До {date}",
+    "date_to_date": "З {start} по {end}",
+    "archived_at": "Архівовано {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Завантажено: {name}, {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Термін дії"
   }
 }

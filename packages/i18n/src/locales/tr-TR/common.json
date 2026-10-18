@@ -1029,6 +1029,19 @@
     "expires_at": "Süre sonu: {date} {time}",
     "never_expires": "Süresi dolmaz",
     "date_at_time": "{date} {time}",
-    "till": "{date}, {time} tarihine kadar"
+    "till": "{date}, {time} tarihine kadar",
+    "after_date": "{date} sonrası",
+    "before_date": "{date} öncesi",
+    "month_week": "{month}, {week}. hafta",
+    "target_date": "Hedef tarih: {date}",
+    "from_date": "{date} tarihinden",
+    "till_date": "{date} tarihine kadar",
+    "date_to_date": "{start} – {end}",
+    "archived_at": "{date} tarihinde arşivlendi",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "{name} tarafından {date} tarihinde yüklendi",
+    "date_range": "{start} - {end}",
+    "expiry": "Son kullanma"
   }
 }

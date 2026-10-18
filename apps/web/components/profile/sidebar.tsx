@@ -19,7 +19,7 @@ import { EditOutline } from "@makeplane/propel/icons";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IUserProfileProjectSegregation } from "@plane/types";
 import { Loader } from "@plane/blocks/skeleton";
-import { cn, renderFormattedDate, getFileURL } from "@plane/utils";
+import { cn, getFileURL } from "@plane/utils";
 // components
 import { CoverImage } from "@/components/common/cover-image";
 // hooks
@@ -30,6 +30,7 @@ import { useUser } from "@/hooks/store/user";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // components
 import { ProfileSidebarTime } from "./time";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type TProfileSidebar = {
   userProjectsData: IUserProfileProjectSegregation | undefined;
@@ -49,6 +50,7 @@ export const ProfileSidebar = observer(function ProfileSidebar(props: TProfileSi
   const { toggleProfileSettingsModal } = useCommandPalette();
   const { isMobile } = usePlatformOS();
   const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
   // derived values
   const userData = userProjectsData?.user_data;
 
@@ -63,7 +65,7 @@ export const ProfileSidebar = observer(function ProfileSidebar(props: TProfileSi
   const userDetails = [
     {
       i18n_label: "profile.details.joined_on",
-      value: renderFormattedDate(userData?.date_joined ?? ""),
+      value: formatDate(userData?.date_joined ?? ""),
     },
     {
       i18n_label: "profile.details.time_zone",

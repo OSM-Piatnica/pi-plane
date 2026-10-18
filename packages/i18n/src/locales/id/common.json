@@ -1029,6 +1029,19 @@
     "expires_at": "Kedaluwarsa pada {date} pukul {time}",
     "never_expires": "Tidak pernah kedaluwarsa",
     "date_at_time": "{date} pukul {time}",
-    "till": "Hingga {date}, {time}"
+    "till": "Hingga {date}, {time}",
+    "after_date": "Setelah {date}",
+    "before_date": "Sebelum {date}",
+    "month_week": "{month}, Minggu {week}",
+    "target_date": "Tanggal target: {date}",
+    "from_date": "Dari {date}",
+    "till_date": "Hingga {date}",
+    "date_to_date": "{start} hingga {end}",
+    "archived_at": "Diarsipkan pada {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Diunggah oleh {name} pada {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Kedaluwarsa"
   }
 }

@@ -17,7 +17,7 @@ import { ImportExportStatusPill } from "@/components/exporter/status-pill";
 import { ImportExportSettingsLoader } from "@/components/ui/loader/settings/import-and-export";
 import { PROJECT_IMPORT_SERVICES_LIST } from "@plane/constants";
 import { ProjectImportService } from "@/services/project/project-import.service";
-import { renderFormattedDate, renderFormattedTime } from "@plane/utils";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 const projectImportService = new ProjectImportService();
 
@@ -34,6 +34,7 @@ export const PrevImports = observer(function PrevImports(props: Props) {
   const { workspaceSlug, cursor, per_page, setCursor } = props;
   const [refreshing, setRefreshing] = useState(false);
   const { t } = useTranslation();
+  const { formatDate, formatTime } = useLocalizedDates();
 
   const { data: importServices } = useSWR(
     workspaceSlug && cursor ? PROJECT_IMPORT_SERVICES_LIST(workspaceSlug, cursor, `${per_page}`) : null,
@@ -58,7 +59,7 @@ export const PrevImports = observer(function PrevImports(props: Props) {
       content: t("workspace_settings.settings.imports.history.imported_on"),
       tdRender: (rowData: RowData) => (
         <span>
-          {renderFormattedDate(rowData.created_at)} {renderFormattedTime(rowData.created_at)}
+          {t("date_phrases.date_time", { date: formatDate(rowData.created_at), time: formatTime(rowData.created_at) })}
         </span>
       ),
     },

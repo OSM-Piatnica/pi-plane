@@ -25,6 +25,7 @@ import { generateExtendedColors, parseChartData } from "@/components/chart/utils
 // hooks
 import { useAnalytics } from "@/hooks/store/use-analytics";
 import { useProjectState } from "@/hooks/store/use-project-state";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { AnalyticsService } from "@/services/analytics.service";
 import { exportCSV } from "../export";
 import { DataTable } from "../insight-table/data-table";
@@ -53,6 +54,7 @@ const analyticsService = new AnalyticsService();
 const PriorityChart = observer(function PriorityChart(props: Props) {
   const { x_axis, y_axis, group_by } = props;
   const { t } = useTranslation();
+  const { locale } = useLocalizedDates();
   // store hooks
   const { selectedDuration, selectedProjects, selectedCycle, selectedModule, isPeekView, isEpic } = useAnalytics();
   const { workspaceStates } = useProjectState();
@@ -81,8 +83,9 @@ const PriorityChart = observer(function PriorityChart(props: Props) {
   );
   const parsedData = useMemo(
     () =>
-      priorityChartData && parseChartData(priorityChartData, props.x_axis, props.group_by, props.x_axis_date_grouping),
-    [priorityChartData, props.x_axis, props.group_by, props.x_axis_date_grouping]
+      priorityChartData &&
+      parseChartData(priorityChartData, props.x_axis, props.group_by, props.x_axis_date_grouping, locale, t),
+    [priorityChartData, props.x_axis, props.group_by, props.x_axis_date_grouping, locale, t]
   );
   const chart_model = props.group_by ? EChartModels.STACKED : EChartModels.BASIC;
 
