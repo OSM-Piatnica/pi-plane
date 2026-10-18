@@ -56,10 +56,10 @@ export function RadioInput({
       {inputLabel && <div className={cn(`mb-2`, inputLabelClassName)}>{inputLabel}</div>}
       <div className={cn(`${wrapperClass}`, inputWrapperClassName)}>
         {options.map(({ value, label, disabled }, index) => (
-          // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged
-          <div
-            // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
-            key={index}
+          // react-doctor-disable-next-line no-static-element-interactions -- the row wraps a radio input and label, so a button would nest interactive controls
+          <div // oxlint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- row wraps a radio input; nested interactive controls
+            // react-doctor-disable-next-line no-array-index-as-key -- static option list, never reordered
+            key={index} // oxlint-disable-line react/no-array-index-key -- no stable unique key available
             onClick={() => !disabled && setSelected(value)}
             className={cn(
               "flex items-center gap-2 text-14",
@@ -80,6 +80,7 @@ export function RadioInput({
               value={value}
               disabled={disabled}
               checked={selected === value}
+              readOnly
             />
             <label htmlFor={`${name}_${index}`} className="w-full cursor-pointer">
               {label}

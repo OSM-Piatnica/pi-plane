@@ -6,6 +6,7 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
 // hooks
 import { CloseOutline } from "@makeplane/propel/icons";
 import { useLabel } from "@/hooks/store/use-label";
@@ -18,6 +19,7 @@ function LabelIcons({ color }: { color: string }) {
 export const InboxIssueAppliedFiltersLabel = observer(function InboxIssueAppliedFiltersLabel() {
   // hooks
   const { inboxFilters, handleInboxIssueFilters } = useProjectInbox();
+  const { t } = useTranslation();
   const { getLabelById } = useLabel();
   // derived values
   const filteredValues = inboxFilters?.labels || [];
@@ -41,24 +43,26 @@ export const InboxIssueAppliedFiltersLabel = observer(function InboxIssueApplied
               <LabelIcons color={optionDetail.color} />
             </div>
             <div className="truncate text-11">{optionDetail?.name}</div>
-            {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
-            <div
+            <button
+              type="button"
+              aria-label={t("common.remove")}
               className="relative flex h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden text-tertiary transition-all hover:text-secondary"
               onClick={() => handleInboxIssueFilters("labels", handleFilterValue(value))}
             >
               <CloseOutline className={`h-3 w-3`} />
-            </div>
+            </button>
           </div>
         );
       })}
 
-      {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
-      <div
+      <button
+        type="button"
+        aria-label={t("common.clear")}
         className="relative flex h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden text-tertiary transition-all hover:text-secondary"
         onClick={clearFilter}
       >
         <CloseOutline className={`h-3 w-3`} />
-      </div>
+      </button>
     </div>
   );
 });

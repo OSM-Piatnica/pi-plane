@@ -80,8 +80,12 @@ function EmptySpaceItem({ title, description, Icon, action, href }: EmptySpaceIt
 
   return (
     <>
-      {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/prefer-tag-over-role -- existing markup; behaviour unchanged */}
-      <li className="cursor-pointer" onClick={action} role="button">
+      {/* react-doctor-disable-next-line click-events-have-key-events, no-noninteractive-element-to-interactive-role -- the item may wrap a Link, so it cannot become a button without nesting interactive elements */}
+      <li // oxlint-disable-line jsx-a11y/click-events-have-key-events -- may wrap a Link; cannot become a button
+        className="cursor-pointer"
+        onClick={action}
+        role="button" // oxlint-disable-line jsx-a11y/prefer-tag-over-role -- may wrap a Link; cannot become a button
+      >
         {spaceItem}
       </li>
     </>

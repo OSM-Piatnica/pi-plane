@@ -23,7 +23,8 @@ type Props = {
 export const CustomTooltip = React.memo(function CustomTooltip(props: Props) {
   const { active, activeKey, label, payload, itemKeys, itemLabels, itemDotColors } = props;
   // derived values
-  const filteredPayload = payload?.filter((item) => item.dataKey && itemKeys.includes(`${item.dataKey}`));
+  const itemKeySet = new Set(itemKeys);
+  const filteredPayload = payload?.filter((item) => item.dataKey && itemKeySet.has(`${item.dataKey}`));
 
   if (!active || !filteredPayload || !filteredPayload.length) return null;
 

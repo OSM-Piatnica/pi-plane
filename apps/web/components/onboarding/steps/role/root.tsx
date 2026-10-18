@@ -119,6 +119,7 @@ export const RoleSetupStep = observer(function RoleSetupStep({ handleStepChange 
 
                 return (
                   <button
+                    type="button"
                     key={role.id}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -137,11 +138,11 @@ export const RoleSetupStep = observer(function RoleSetupStep({ handleStepChange 
                     </div>
                     {isSelected && (
                       <>
-                        <button
+                        <span
                           className={`border-blue-500 flex size-4 items-center justify-center rounded-sm border-2 bg-accent-primary`}
                         >
                           <TickOutline className="h-3 w-3 text-on-color" />
-                        </button>
+                        </span>
                       </>
                     )}
                   </button>

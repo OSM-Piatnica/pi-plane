@@ -56,7 +56,7 @@ describe("clickHandler", () => {
     (href) => {
       const result = getHandleClick()({ state: {} }, 0, makeClickEvent(href));
       expect(result).toBe(true);
-      expect(open).toHaveBeenCalledWith(href, "_blank");
+      expect(open).toHaveBeenCalledWith(href, "_blank", "noopener");
     }
   );
 

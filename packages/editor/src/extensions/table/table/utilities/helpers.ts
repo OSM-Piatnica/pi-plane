@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -129,7 +130,9 @@ export const isRectSelected = (rect: Rect, selection: CellSelection): boolean =>
   const cells = map.cellsInRect(rect);
   const selectedCells = map.cellsInRect(getSelectedRect(selection, map));
 
-  return cells.every((cell) => selectedCells.includes(cell));
+  const selectedCellSet = new Set(selectedCells);
+
+  return cells.every((cell) => selectedCellSet.has(cell));
 };
 
 /**

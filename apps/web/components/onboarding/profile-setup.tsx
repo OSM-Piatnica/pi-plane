@@ -291,11 +291,9 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                     </div>
                   ) : (
                     <div className="relative mr-3 h-16 w-16 overflow-hidden">
-                      {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- behaviour-preserving lint cleanup; a11y handled separately */}
                       <img
                         src={getFileURL(userAvatar ?? "")}
                         className="absolute top-0 left-0 h-full w-full rounded-full object-cover"
-                        onClick={() => setIsImageUploadModalOpen(true)}
                         alt={user?.display_name}
                       />
                     </div>
@@ -504,8 +502,8 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                   render={({ field: { value, onChange } }) => (
                     <div className="flex flex-wrap gap-2 overflow-auto py-2 break-all">
                       {USER_ROLE.map((userRole) => (
-                        // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- behaviour-preserving lint cleanup; a11y handled separately
-                        <div
+                        <button
+                          type="button"
                           key={userRole.value}
                           className={cn(
                             "shrink-0 rounded border-[0.5px] px-3 py-1.5 text-13 font-medium hover:cursor-pointer hover:bg-surface-2",
@@ -517,7 +515,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                           onClick={() => onChange(userRole.value)}
                         >
                           {t(userRole.labelKey)}
-                        </div>
+                        </button>
                       ))}
                     </div>
                   )}
@@ -543,8 +541,8 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                       {USER_DOMAIN.map((userDomain) => {
                         const isSelected = value?.includes(userDomain.value) || false;
                         return (
-                          // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- behaviour-preserving lint cleanup; a11y handled separately
-                          <div
+                          <button
+                            type="button"
                             key={userDomain.value}
                             className={`flex-shrink-0 border-[0.5px] hover:cursor-pointer hover:bg-surface-2 ${
                               isSelected ? "border-accent-strong" : "border-strong"
@@ -559,7 +557,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                             }}
                           >
                             {t(userDomain.labelKey)}
-                          </div>
+                          </button>
                         );
                       })}
                     </div>

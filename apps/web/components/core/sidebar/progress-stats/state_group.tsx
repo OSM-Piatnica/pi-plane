@@ -29,12 +29,14 @@ type TStateGroupStatComponent = {
 export const StateGroupStatComponent = observer(function StateGroupStatComponent(props: TStateGroupStatComponent) {
   const { distribution, isEditable, totalIssuesCount, selectedStateGroups, handleStateGroupFiltersUpdate } = props;
 
+  const selectedStateGroupSet = new Set(selectedStateGroups);
+
   return (
     <div>
       {distribution.map((group, index) => (
         <SingleProgressStats
-          // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
-          key={index}
+          // react-doctor-disable-next-line no-array-index-as-key -- state-group rows have no id and the list is never reordered
+          key={index} // oxlint-disable-line react/no-array-index-key
           title={
             <div className="flex items-center gap-2">
               <StateGroupIcon stateGroup={group.state as TStateGroups} />
@@ -45,7 +47,7 @@ export const StateGroupStatComponent = observer(function StateGroupStatComponent
           total={totalIssuesCount}
           {...(isEditable && {
             onClick: () => group.state && handleStateGroupFiltersUpdate(group.state),
-            selected: group.state ? selectedStateGroups.includes(group.state) : false,
+            selected: group.state ? selectedStateGroupSet.has(group.state) : false,
           })}
         />
       ))}

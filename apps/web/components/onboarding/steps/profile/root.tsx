@@ -176,10 +176,8 @@ export const ProfileSetupStep = observer(function ProfileSetupStep({ handleStepC
           onClick={() => setIsImageUploadModalOpen(true)}
         >
           {userAvatar ? (
-            // oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- behaviour-preserving lint cleanup; a11y handled separately
             <img
               src={getFileURL(userAvatar ?? "")}
-              onClick={() => setIsImageUploadModalOpen(true)}
               alt={user?.display_name}
               className="h-full w-full rounded-full object-cover"
             />
@@ -187,7 +185,12 @@ export const ProfileSetupStep = observer(function ProfileSetupStep({ handleStepC
             <>{watch("first_name")[0] ?? "R"}</>
           )}
         </button>
-        <input type="file" className="hidden" id="profile-image-input" />
+        <input
+          type="file"
+          className="hidden"
+          id="profile-image-input"
+          aria-label={t("onboarding.profile.upload_image")}
+        />
         <button
           className="flex items-center gap-1.5 px-2 py-1 text-13 text-tertiary hover:text-secondary"
           type="button"
@@ -228,8 +231,8 @@ export const ProfileSetupStep = observer(function ProfileSetupStep({ handleStepC
                 type="text"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                // oxlint-disable-next-line jsx-a11y/no-autofocus -- intentional autofocus; behaviour preserved
-                autoFocus
+                // react-doctor-disable-next-line no-autofocus -- intentional focus on the first onboarding field
+                autoFocus // oxlint-disable-line jsx-a11y/no-autofocus -- intentional autofocus; behaviour preserved
                 className={cn(
                   "w-full rounded-md border border-strong bg-surface-1 px-3 py-2 text-secondary transition-all duration-200 placeholder:text-placeholder focus:border-transparent focus:ring-2 focus:ring-accent-strong focus:outline-none",
                   {

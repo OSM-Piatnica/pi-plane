@@ -56,8 +56,8 @@ const CustomLegend = React.forwardRef(function CustomLegend(
       })}
     >
       {payload.map((item, index) => (
-        // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing behaviour; a11y handled separately
-        <div
+        // react-doctor-disable-next-line click-events-have-key-events, no-static-element-interactions -- optional hover/click chart-highlight affordance on a recharts legend entry; it is only clickable when onClick is passed, so a <button> would be wrong for the static case
+        <div // oxlint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing behaviour; a11y handled separately
           key={item.value}
           className={cn("flex items-center gap-1.5 text-13 font-medium whitespace-nowrap text-tertiary", {
             "px-2": layout === "horizontal",

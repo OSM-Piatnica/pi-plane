@@ -69,8 +69,8 @@ export const NotificationsSidebarRoot = observer(function NotificationsSidebarRo
 
         <Header variant={EHeaderVariant.SECONDARY} className="justify-start">
           {NOTIFICATION_TABS.map((tab) => (
-            // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing interactive wrapper; behaviour unchanged
-            <div
+            <button
+              type="button"
               key={tab.value}
               className="relative h-full cursor-pointer px-3"
               onClick={() => handleTabClick(tab.value)}
@@ -92,7 +92,7 @@ export const NotificationsSidebarRoot = observer(function NotificationsSidebarRo
               {currentNotificationTab === tab.value && (
                 <div className="absolute right-0 bottom-0 left-0 rounded-t-md border border-accent-strong" />
               )}
-            </div>
+            </button>
           ))}
         </Header>
 

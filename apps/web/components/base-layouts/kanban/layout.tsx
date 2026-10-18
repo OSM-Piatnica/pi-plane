@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -43,11 +44,13 @@ export const BaseKanbanLayout = observer(function BaseKanbanLayout<T extends IBa
         }
   );
 
+  const collapsedGroupSet = new Set(collapsedGroups);
+
   return (
     <div ref={containerRef} className={cn("relative flex h-full w-full gap-2 overflow-x-auto p-3", className)}>
       {groups.map((group) => {
         const itemIds = groupedItemIds[group.id] || [];
-        const isCollapsed = collapsedGroups.includes(group.id);
+        const isCollapsed = collapsedGroupSet.has(group.id);
 
         if (!showEmptyGroups && itemIds.length === 0) return null;
 

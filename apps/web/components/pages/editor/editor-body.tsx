@@ -251,11 +251,11 @@ export const PageEditorBody = observer(function PageEditorBody(props: Props) {
           <div className="page-summary-container absolute top-[64px] right-0 z-[5] h-full">
             <div className="sticky top-[72px]">
               <div className="group/page-toc relative px-page-x">
-                {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- existing interactive wrapper; behaviour unchanged */}
-                <div
+                {/* react-doctor-disable-next-line interactive-supports-focus, click-events-have-key-events -- pointer shortcut wrapping the outline, which holds its own interactive links; the pane opens via the dedicated toolbar button */}
+                <div // oxlint-disable-line jsx-a11y/click-events-have-key-events -- pointer shortcut wrapping interactive outline links
                   className="max-h-[50vh] !cursor-pointer overflow-hidden"
-                  // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- existing markup; behaviour unchanged
-                  role="button"
+                  // react-doctor-disable-next-line prefer-tag-over-role -- cannot be a <button>: it contains the outline's own interactive links
+                  role="button" // oxlint-disable-line jsx-a11y/prefer-tag-over-role -- cannot be a button, wraps interactive links
                   aria-label={t("page_navigation_pane.outline_floating_button")}
                   onClick={handleOpenNavigationPane}
                 >

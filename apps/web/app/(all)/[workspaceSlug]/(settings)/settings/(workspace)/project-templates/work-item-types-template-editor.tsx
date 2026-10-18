@@ -188,6 +188,7 @@ function AdditionalWorkItemTypeCard(props: {
           className="mt-0.5 rounded p-0.5 text-tertiary hover:bg-surface-1 hover:text-primary"
           onClick={() => setExpanded(!expanded)}
           aria-expanded={expanded}
+          aria-label={t("a11y.toggle_details")}
         >
           {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>

@@ -60,6 +60,7 @@ export function CalloutBlockColorSelector(props: Props) {
                 <button
                   key={color.key}
                   type="button"
+                  aria-label={color.label}
                   className="size-6 flex-shrink-0 rounded-sm border-[0.5px] border-strong-1 transition-opacity hover:opacity-60"
                   style={{
                     backgroundColor: color.backgroundColor,

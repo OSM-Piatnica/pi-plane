@@ -51,7 +51,7 @@ export function clickHandler(options: ClickHandlerOptions): Plugin {
             return false;
           }
 
-          window.open(href, target);
+          window.open(href, target, "noopener");
 
           return true;
         }

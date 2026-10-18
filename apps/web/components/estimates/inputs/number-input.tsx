@@ -23,8 +23,8 @@ export function EstimateNumberInput(props: TEstimateNumberInputProps) {
       onChange={(e) => handleEstimateInputValue(e.target.value)}
       className="w-full border-none bg-transparent px-2 py-2 text-13 focus:border-0 focus:ring-0 focus:outline-none"
       placeholder={t("project_settings.estimates.create.enter_estimate_point")}
-      // oxlint-disable-next-line jsx-a11y/no-autofocus -- autofocus is intentional UX here
-      autoFocus
+      // react-doctor-disable-next-line no-autofocus -- intentional focus on the estimate point field when it appears
+      autoFocus // oxlint-disable-line jsx-a11y/no-autofocus -- autofocus is intentional UX here
       step="any"
     />
   );

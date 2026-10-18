@@ -1044,6 +1044,12 @@
     "date_range": "{start} - {end}",
     "expiry": "有効期限"
   },
+  "a11y": {
+    "toggle_details": "詳細を切り替え",
+    "workflow_flow_type": "フロータイプ",
+    "workflow_target_state": "対象ステータス",
+    "workflow_reject_state": "却下時のステータス"
+  },
   "api_token_expiry": {
     "one_week": "1週間",
     "one_month": "1か月",

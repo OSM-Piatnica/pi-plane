@@ -22,10 +22,14 @@ export const ProjectTemplateCoverField = ({ control, workspaceSlug }: TProps) =>
 
   return (
     <div>
-      <label className="text-12 text-tertiary">
+      <span id="project-template-cover-image-label" className="text-12 text-tertiary">
         {t("workspace_settings.settings.project_templates.form.default_cover_image")}
-      </label>
-      <div className="group relative mt-2 h-36 w-full rounded-lg border border-subtle">
+      </span>
+      <div
+        className="group relative mt-2 h-36 w-full rounded-lg border border-subtle"
+        role="group"
+        aria-labelledby="project-template-cover-image-label"
+      >
         <CoverImage
           src={coverImageUrl}
           alt={t("project_cover_image_alt")}

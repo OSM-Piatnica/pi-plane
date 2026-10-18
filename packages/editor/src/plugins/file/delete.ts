@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -55,22 +56,24 @@ export const TrackFileDeletionPlugin = (editor: Editor, deleteHandler: TFileHand
         }
       });
 
-      removedFiles.forEach(async (node) => {
-        const nodeType = node.type.name as keyof NodeFileMapType;
-        const src = node.attrs.src;
-        const nodeFileSetDetails = NODE_FILE_MAP[nodeType];
-        if (!nodeFileSetDetails || !src) return;
-        try {
-          editor.storage[nodeType]?.[nodeFileSetDetails.fileSetName]?.set(src, true);
-          // update assets list storage value
-          editor.commands.updateAssetsList?.({
-            idToRemove: node.attrs.id,
-          });
-          await deleteHandler(src);
-        } catch (error) {
-          console.error("Error deleting file via delete utility plugin:", error);
-        }
-      });
+      void Promise.all(
+        removedFiles.map(async (node) => {
+          const nodeType = node.type.name as keyof NodeFileMapType;
+          const src = node.attrs.src;
+          const nodeFileSetDetails = NODE_FILE_MAP[nodeType];
+          if (!nodeFileSetDetails || !src) return;
+          try {
+            editor.storage[nodeType]?.[nodeFileSetDetails.fileSetName]?.set(src, true);
+            // update assets list storage value
+            editor.commands.updateAssetsList?.({
+              idToRemove: node.attrs.id,
+            });
+            await deleteHandler(src);
+          } catch (error) {
+            console.error("Error deleting file via delete utility plugin:", error);
+          }
+        })
+      );
 
       return null;
     },

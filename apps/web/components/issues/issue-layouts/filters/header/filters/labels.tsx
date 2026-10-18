@@ -37,6 +37,7 @@ export const FilterLabels = observer(function FilterLabels(props: Props) {
   const [previewEnabled, setPreviewEnabled] = useState(true);
 
   const appliedFiltersCount = appliedFilters?.length ?? 0;
+  const appliedFiltersSet = new Set(appliedFilters);
 
   const sortedOptions = useMemo(() => {
     const filteredOptions = (labels || []).filter((label) =>
@@ -72,7 +73,7 @@ export const FilterLabels = observer(function FilterLabels(props: Props) {
                 {sortedOptions.slice(0, itemsToRender).map((label) => (
                   <FilterOption
                     key={label?.id}
-                    isChecked={Boolean(appliedFilters?.includes(label?.id))}
+                    isChecked={appliedFiltersSet.has(label?.id)}
                     onClick={() => handleUpdate(label?.id)}
                     icon={<LabelIcons color={label.color} />}
                     title={label.name}

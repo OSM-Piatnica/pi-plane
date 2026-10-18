@@ -29,6 +29,7 @@ export const FilterIssueTypes = observer(function FilterIssueTypes(props: Props)
   const { types, isLoading } = useWorkspaceIssueTypes(workspaceSlug?.toString());
 
   const appliedFiltersCount = appliedFilters?.length ?? 0;
+  const appliedFiltersSet = new Set(appliedFilters);
   const filtered = types.filter((row) => row.name.toLowerCase().includes(searchQuery.trim().toLowerCase()));
 
   if (types.length === 0 && !isLoading) return null;
@@ -46,7 +47,7 @@ export const FilterIssueTypes = observer(function FilterIssueTypes(props: Props)
             filtered.map((row) => (
               <FilterOption
                 key={row.id}
-                isChecked={appliedFilters?.includes(row.id) ?? false}
+                isChecked={appliedFiltersSet.has(row.id)}
                 onClick={() => handleUpdate(row.id)}
                 icon={<SwitcherIcon logo_props={row.logo_props} LabelIcon={Layers} size={12} />}
                 title={row.name}

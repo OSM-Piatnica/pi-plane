@@ -36,6 +36,7 @@ export const FilterLabels = observer(function FilterLabels(props: Props) {
   const filterValue = inboxFilters?.labels || [];
 
   const appliedFiltersCount = filterValue?.length ?? 0;
+  const filterValueSet = new Set(filterValue ?? []);
 
   const filteredOptions = labels?.filter((label) => label.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
@@ -64,7 +65,7 @@ export const FilterLabels = observer(function FilterLabels(props: Props) {
                 {filteredOptions.slice(0, itemsToRender).map((label) => (
                   <FilterOption
                     key={label?.id}
-                    isChecked={Boolean(filterValue?.includes(label?.id))}
+                    isChecked={filterValueSet.has(label?.id)}
                     onClick={() => handleInboxIssueFilters("labels", handleFilterValue(label.id))}
                     icon={<LabelIcons color={label.color} />}
                     title={label.name}

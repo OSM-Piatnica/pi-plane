@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -39,6 +40,8 @@ function autoJoin(ranges: Array<number>, newTr: Transaction, nodeTypes: NodeType
   // Figure out which joinable points exist inside those ranges,
   // by checking all node boundaries in their parent nodes.
   const joinable: number[] = [];
+  const joinableSet = new Set<number>();
+  const nodeTypeSet = new Set<NodeType>(nodeTypes);
   for (let i = 0; i < ranges.length; i += 2) {
     const from = ranges[i],
       to = ranges[i + 1];
@@ -49,9 +52,12 @@ function autoJoin(ranges: Array<number>, newTr: Transaction, nodeTypes: NodeType
     for (let index = $from.indexAfter(depth), pos = $from.after(depth + 1); pos <= to; ++index) {
       const after = parent.maybeChild(index);
       if (!after) break;
-      if (index && joinable.indexOf(pos) == -1) {
+      if (index && !joinableSet.has(pos)) {
         const before = parent.child(index - 1);
-        if (before.type == after.type && nodeTypes.includes(before.type)) joinable.push(pos);
+        if (before.type == after.type && nodeTypeSet.has(before.type)) {
+          joinable.push(pos);
+          joinableSet.add(pos);
+        }
       }
       pos += after.nodeSize;
     }

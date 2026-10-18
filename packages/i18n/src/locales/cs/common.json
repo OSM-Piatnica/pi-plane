@@ -1044,6 +1044,12 @@
     "date_range": "{start} - {end}",
     "expiry": "Platnost"
   },
+  "a11y": {
+    "toggle_details": "Přepnout podrobnosti",
+    "workflow_flow_type": "Typ toku",
+    "workflow_target_state": "Cílový stav",
+    "workflow_reject_state": "Stav při zamítnutí"
+  },
   "api_token_expiry": {
     "one_week": "1 týden",
     "one_month": "1 měsíc",

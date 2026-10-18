@@ -269,12 +269,13 @@ export const KanbanGroup = observer(function KanbanGroup(props: IKanbanGroup) {
   const loadMore = isPaginating ? (
     <KanbanIssueBlockLoader />
   ) : (
-    <div
-      className="sticky bottom-0 w-full cursor-pointer p-3 text-13 font-medium text-accent-primary hover:text-accent-secondary hover:underline"
+    <button
+      type="button"
+      className="sticky bottom-0 w-full cursor-pointer p-3 text-left text-13 font-medium text-accent-primary hover:text-accent-secondary hover:underline"
       onClick={loadMoreIssuesInThisGroup}
     >
       {t("common.load_more")} &darr;
-    </div>
+    </button>
   );
 
   const shouldLoadMore = nextPageResults === undefined ? issueIds?.length < groupIssueCount : !!nextPageResults;

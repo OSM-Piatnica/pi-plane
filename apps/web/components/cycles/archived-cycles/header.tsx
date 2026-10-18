@@ -45,12 +45,18 @@ export const ArchivedCyclesHeader = observer(function ArchivedCyclesHeader() {
       if (!projectId) return;
       const newValues = currentProjectArchivedFilters?.[key] ?? [];
 
-      if (Array.isArray(value))
+      if (Array.isArray(value)) {
+        const newValuesSet = new Set(newValues);
         value.forEach((val) => {
-          if (!newValues.includes(val)) newValues.push(val);
-          else newValues.splice(newValues.indexOf(val), 1);
+          if (!newValuesSet.has(val)) {
+            newValues.push(val);
+            newValuesSet.add(val);
+          } else {
+            newValues.splice(newValues.indexOf(val), 1);
+            newValuesSet.delete(val);
+          }
         });
-      else {
+      } else {
         if (currentProjectArchivedFilters?.[key]?.includes(value)) newValues.splice(newValues.indexOf(value), 1);
         else newValues.push(value);
       }

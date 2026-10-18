@@ -1044,6 +1044,12 @@
     "date_range": "{start} - {end}",
     "expiry": "ვადა"
   },
+  "a11y": {
+    "toggle_details": "დეტალების გადართვა",
+    "workflow_flow_type": "ნაკადის ტიპი",
+    "workflow_target_state": "სამიზნე მდგომარეობა",
+    "workflow_reject_state": "უარყოფის მდგომარეობა"
+  },
   "api_token_expiry": {
     "one_week": "1 კვირა",
     "one_month": "1 თვე",

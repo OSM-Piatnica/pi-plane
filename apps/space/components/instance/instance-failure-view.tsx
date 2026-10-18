@@ -24,8 +24,7 @@ export function InstanceFailureView() {
     <div className="relative container mx-auto flex h-screen items-center justify-center overflow-x-hidden overflow-y-auto px-5">
       <div className="relative w-auto max-w-2xl space-y-8 py-10">
         <div className="relative flex flex-col items-center justify-center space-y-4">
-          {/* oxlint-disable-next-line jsx-a11y/img-redundant-alt -- existing behaviour; lint cleanup only */}
-          <img src={instanceImage} alt="Plane instance failure image" />
+          <img src={instanceImage} alt="Pi-Plane instance failure" />
           <h3 className="text-20 font-medium text-on-color">Unable to fetch instance details.</h3>
           <p className="text-center text-14 font-medium">
             We were unable to fetch the details of the instance. <br />

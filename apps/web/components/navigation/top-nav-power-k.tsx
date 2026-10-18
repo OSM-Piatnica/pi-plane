@@ -218,8 +218,8 @@ export const TopNavPowerK = observer(() => {
           "w-[554px]": isOpen,
         })}
       >
-        {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- existing interactive wrapper; behaviour unchanged */}
-        <div
+        {/* react-doctor-disable-next-line interactive-supports-focus -- mouse-only convenience wrapper that forwards clicks to the focusable search input inside it */}
+        <div // oxlint-disable-line jsx-a11y/click-events-have-key-events
           className={cn(
             "flex h-7 w-full items-center rounded-lg border border-subtle-1 bg-layer-2 p-2 transition-colors duration-200",
             {
@@ -231,6 +231,7 @@ export const TopNavPowerK = observer(() => {
           role="button"
         >
           <SearchOutline className="mr-2 size-3.5 shrink-0 text-placeholder" />
+          {/* react-doctor-disable-next-line html-no-nested-interactive -- the wrapper role="button" is a click-to-focus convenience; the input and clear button are the real controls */}
           <input
             ref={inputRef}
             type="text"
@@ -246,6 +247,7 @@ export const TopNavPowerK = observer(() => {
             className="placeholder-text-placeholder min-w-0 flex-1 bg-transparent text-13 text-primary outline-none"
           />
           {searchTerm && (
+            // react-doctor-disable-next-line html-no-nested-interactive -- the wrapper role="button" is a click-to-focus convenience; the input and clear button are the real controls
             <button type="button" onClick={handleClear} className="ml-2 shrink-0">
               <CloseOutline className="size-3.5 text-placeholder hover:text-primary" />
             </button>

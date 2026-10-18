@@ -1044,6 +1044,12 @@
     "date_range": "{start} - {end}",
     "expiry": "Expiry"
   },
+  "a11y": {
+    "toggle_details": "Toggle details",
+    "workflow_flow_type": "Flow type",
+    "workflow_target_state": "Target state",
+    "workflow_reject_state": "Reject state"
+  },
   "api_token_expiry": {
     "one_week": "1 week",
     "one_month": "1 month",

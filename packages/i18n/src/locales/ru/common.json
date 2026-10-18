@@ -1044,6 +1044,12 @@
     "date_range": "{start} - {end}",
     "expiry": "Срок действия"
   },
+  "a11y": {
+    "toggle_details": "Показать или скрыть подробности",
+    "workflow_flow_type": "Тип потока",
+    "workflow_target_state": "Целевой статус",
+    "workflow_reject_state": "Статус отклонения"
+  },
   "api_token_expiry": {
     "one_week": "1 неделя",
     "one_month": "1 месяц",

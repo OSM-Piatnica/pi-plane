@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -92,7 +93,7 @@ export function EditorBubbleMenu(props: Props) {
 
   const editorState: EditorStateType = useEditorState({
     editor,
-    selector: ({ editor }) => ({
+    selector: ({ editor: currentEditor }) => ({
       code: formattingItems.code.isActive(),
       bold: formattingItems.bold.isActive(),
       italic: formattingItems.italic.isActive(),
@@ -101,8 +102,8 @@ export function EditorBubbleMenu(props: Props) {
       left: formattingItems["text-align"].isActive({ alignment: "left" }),
       right: formattingItems["text-align"].isActive({ alignment: "right" }),
       center: formattingItems["text-align"].isActive({ alignment: "center" }),
-      color: COLORS_LIST.find((c) => TextColorItem(editor).isActive({ color: c.key })),
-      backgroundColor: COLORS_LIST.find((c) => BackgroundColorItem(editor).isActive({ color: c.key })),
+      color: COLORS_LIST.find((c) => TextColorItem(currentEditor).isActive({ color: c.key })),
+      backgroundColor: COLORS_LIST.find((c) => BackgroundColorItem(currentEditor).isActive({ color: c.key })),
     }),
   });
 
@@ -112,15 +113,15 @@ export function EditorBubbleMenu(props: Props) {
 
   const bubbleMenuProps: EditorBubbleMenuProps = {
     editor,
-    shouldShow: ({ state, editor }) => {
+    shouldShow: ({ state, editor: currentEditor }) => {
       const { selection } = state;
       const { empty } = selection;
 
       if (
         empty ||
-        !editor.isEditable ||
-        editor.isActive(CORE_EXTENSIONS.IMAGE) ||
-        editor.isActive(CORE_EXTENSIONS.CUSTOM_IMAGE) ||
+        !currentEditor.isEditable ||
+        currentEditor.isActive(CORE_EXTENSIONS.IMAGE) ||
+        currentEditor.isActive(CORE_EXTENSIONS.CUSTOM_IMAGE) ||
         isNodeSelection(selection) ||
         isCellSelection(selection) ||
         isSelecting
@@ -159,6 +160,9 @@ export function EditorBubbleMenu(props: Props) {
   };
 
   useEffect(() => {
+    // teardown callbacks for the mousemove/mouseup listeners registered by an in-flight mousedown
+    const pendingCleanups = new Set<() => void>();
+
     function handleMouseDown(e: MouseEvent) {
       if (menuRef.current?.contains(e.target as Node)) return;
 
@@ -169,20 +173,28 @@ export function EditorBubbleMenu(props: Props) {
         }
       }
 
-      function handleMouseUp() {
-        setIsSelecting(false);
+      function removeListeners() {
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
+        pendingCleanups.delete(removeListeners);
+      }
+
+      function handleMouseUp() {
+        setIsSelecting(false);
+        removeListeners();
       }
 
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
+      pendingCleanups.add(removeListeners);
     }
 
     document.addEventListener("mousedown", handleMouseDown);
 
     return () => {
       document.removeEventListener("mousedown", handleMouseDown);
+      pendingCleanups.forEach((cleanup) => cleanup());
+      pendingCleanups.clear();
     };
   }, [editor]);
 

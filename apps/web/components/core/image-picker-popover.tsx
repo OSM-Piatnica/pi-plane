@@ -5,7 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import React, { useState, useRef, useCallback, useMemo } from "react";
+import React, { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { useDropzone } from "react-dropzone";
@@ -67,7 +67,22 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
     workspaceSlug: workspaceSlugProp,
   } = props;
   // states
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImageState] = useState<File | null>(null);
+  // object URL for the picked file, revoked when the file changes or the component unmounts
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  const imagePreviewUrlRef = useRef<string | null>(null);
+  const setImage = (file: File | null | undefined) => {
+    if (imagePreviewUrlRef.current) URL.revokeObjectURL(imagePreviewUrlRef.current);
+    imagePreviewUrlRef.current = file ? URL.createObjectURL(file) : null;
+    setImagePreviewUrl(imagePreviewUrlRef.current);
+    setImageState(file ?? null);
+  };
+  useEffect(
+    () => () => {
+      if (imagePreviewUrlRef.current) URL.revokeObjectURL(imagePreviewUrlRef.current);
+    },
+    []
+  );
   const [isImageUploading, setIsImageUploading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [searchParams, setSearchParams] = useState("");
@@ -321,8 +336,7 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                             >
                               <img
                                 src={imageUrl}
-                                // oxlint-disable-next-line jsx-a11y/img-redundant-alt -- existing behaviour; lint cleanup only
-                                alt={`Cover image ${index + 1}`}
+                                alt=""
                                 className="absolute top-0 left-0 h-full w-full cursor-pointer rounded-sm object-cover transition-opacity hover:opacity-80"
                               />
                             </button>
@@ -349,7 +363,7 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                               {image !== null || (value && value !== "") ? (
                                 <>
                                   <img
-                                    src={image ? URL.createObjectURL(image) : getCoverImageDisplayURL(value, "")}
+                                    src={imagePreviewUrl ?? getCoverImageDisplayURL(value, "")}
                                     // oxlint-disable-next-line jsx-a11y/img-redundant-alt -- existing behaviour; lint cleanup only
                                     alt="image"
                                     className="h-full w-full rounded-lg object-cover"

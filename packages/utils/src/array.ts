@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -19,8 +20,8 @@ import type { IIssueLabel, IIssueLabelTree } from "@plane/types";
 export const groupBy = (array: any[], key: string) => {
   const innerKey = key.split("."); // split the key by dot
   return array.reduce((result, currentValue) => {
-    const key = innerKey.reduce((obj, i) => obj?.[i], currentValue) ?? "None"; // get the value of the inner key
-    (result[key] = result[key] || []).push(currentValue);
+    const groupKey = innerKey.reduce((obj, i) => obj?.[i], currentValue) ?? "None"; // get the value of the inner key
+    (result[groupKey] = result[groupKey] || []).push(currentValue);
     return result;
   }, {});
 };
@@ -47,6 +48,7 @@ export const orderArrayBy = (orgArray: any[], key: string, ordering: "ascending"
 
   const innerKey = key.split("."); // split the key by dot
 
+  // oxlint-disable-next-line unicorn/no-array-sort -- existing behaviour: sorts the given array in place
   return array.sort((a, b) => {
     const keyA = innerKey.reduce((obj, i) => obj[i], a); // get the value of the inner key
     const keyB = innerKey.reduce((obj, i) => obj[i], b); // get the value of the inner key
@@ -99,7 +101,8 @@ export const checkIfArraysHaveSameElements = (arr1: any[] | null, arr2: any[] | 
   if (!Array.isArray(arr1) || !Array.isArray(arr2)) return false;
   if (arr1.length === 0 && arr2.length === 0) return true;
 
-  return arr1.length === arr2.length && arr1.every((e) => arr2.includes(e));
+  const arr2Set = new Set(arr2);
+  return arr1.length === arr2.length && arr1.every((e) => arr2Set.has(e));
 };
 
 type GroupedItems<T> = { [key: string]: T[] };
@@ -141,6 +144,7 @@ export const sortByField = (array: any[], field: string): any[] =>
 export const orderGroupedDataByField = <T>(groupedData: GroupedItems<T>, orderBy: keyof T): GroupedItems<T> => {
   for (const key in groupedData) {
     if (groupedData.hasOwnProperty(key)) {
+      // oxlint-disable-next-line unicorn/no-array-sort -- existing behaviour: sorts the group in place
       groupedData[key] = groupedData[key].sort((a, b) => {
         if (a[orderBy] < b[orderBy]) return -1;
         if (a[orderBy] > b[orderBy]) return 1;
@@ -222,7 +226,7 @@ export const sortBySelectedFirst = <T extends { value: string | null }>(
   if (selectedSet.size === 0) return options;
 
   // Create a shallow copy to avoid mutating the original array
-  return [...options].sort((a, b) => {
+  return options.toSorted((a, b) => {
     const aSelected = a.value !== null && selectedSet.has(a.value);
     const bSelected = b.value !== null && selectedSet.has(b.value);
 
@@ -256,7 +260,7 @@ export const sortByCurrentUserThenSelected = <T extends { value: string | null }
   const selectedSet = new Set(Array.isArray(selectedValues) ? selectedValues : selectedValues ? [selectedValues] : []);
 
   // Create a shallow copy to avoid mutating the original array
-  return [...options].sort((a, b) => {
+  return options.toSorted((a, b) => {
     const aIsCurrent = currentUserId && a.value === currentUserId;
     const bIsCurrent = currentUserId && b.value === currentUserId;
 

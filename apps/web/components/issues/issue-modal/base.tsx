@@ -337,9 +337,10 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
     const updatedModuleIds = xor(issueData.module_ids, payload.module_ids);
     const modulesToAdd: string[] = [];
     const modulesToRemove: string[] = [];
+    const currentModuleIds = new Set(issueData.module_ids);
 
     for (const updatedModuleId of updatedModuleIds) {
-      if (issueData.module_ids?.includes(updatedModuleId)) {
+      if (currentModuleIds.has(updatedModuleId)) {
         modulesToRemove.push(updatedModuleId);
       } else {
         modulesToAdd.push(updatedModuleId);

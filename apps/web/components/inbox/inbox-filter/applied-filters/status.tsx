@@ -38,13 +38,14 @@ export const InboxIssueAppliedFiltersStatus = observer(function InboxIssueApplie
             </div>
             <div className="truncate text-11">{t(optionDetail?.i18n_title)}</div>
             {handleFilterValue(optionDetail?.status).length >= 1 && (
-              // oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only
-              <div
+              <button
+                type="button"
+                aria-label={t("common.remove")}
                 className="relative flex h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden text-tertiary transition-all hover:text-secondary"
                 onClick={() => handleInboxIssueFilters("status", handleFilterValue(optionDetail?.status))}
               >
                 <CloseOutline className={`h-3 w-3`} />
-              </div>
+              </button>
             )}
           </div>
         );

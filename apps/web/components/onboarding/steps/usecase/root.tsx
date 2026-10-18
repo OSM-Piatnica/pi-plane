@@ -107,6 +107,7 @@ export const UseCaseSetupStep = observer(function UseCaseSetupStep({ handleStepC
                 const isSelected = value?.includes(useCase) || false;
                 return (
                   <button
+                    type="button"
                     key={useCase}
                     onClick={(e) => {
                       e.preventDefault();

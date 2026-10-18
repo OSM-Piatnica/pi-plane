@@ -1044,6 +1044,12 @@
     "date_range": "{start} - {end}",
     "expiry": "Ablaufdatum"
   },
+  "a11y": {
+    "toggle_details": "Details ein-/ausblenden",
+    "workflow_flow_type": "Ablauftyp",
+    "workflow_target_state": "Zielstatus",
+    "workflow_reject_state": "Status bei Ablehnung"
+  },
   "api_token_expiry": {
     "one_week": "1 Woche",
     "one_month": "1 Monat",

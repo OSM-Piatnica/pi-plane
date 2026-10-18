@@ -260,6 +260,7 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
                         </div>
                       </div>
                       <div className="flex flex-wrap items-center gap-6">
+                        {/* react-doctor-disable-next-line label-has-associated-control -- the Switch is rendered inside the Controller render prop, so it is nested in this label */}
                         <label className="flex items-center gap-2 text-13 text-secondary">
                           <Controller
                             name="isEpic"
@@ -270,6 +271,7 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
                           />
                           {t("workspace_settings.settings.work_item_types.form.is_epic")}
                         </label>
+                        {/* react-doctor-disable-next-line label-has-associated-control -- the Switch is rendered inside the Controller render prop, so it is nested in this label */}
                         <label className="flex items-center gap-2 text-13 text-secondary">
                           <Controller
                             name="isActive"
@@ -282,13 +284,13 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
                         </label>
                       </div>
                       <div>
-                        <label className="block text-12 text-tertiary">
+                        <span id="work-item-type-projects-label" className="block text-12 text-tertiary">
                           {t("workspace_settings.settings.work_item_types.form.projects_label")}
-                        </label>
+                        </span>
                         <p className="pt-0.5 pb-1 text-11 text-tertiary">
                           {t("workspace_settings.settings.work_item_types.form.projects_hint")}
                         </p>
-                        <div className="mt-1 h-8 max-w-md">
+                        <div className="mt-1 h-8 max-w-md" role="group" aria-labelledby="work-item-type-projects-label">
                           <Controller
                             name="projectIds"
                             control={control}

@@ -1044,6 +1044,12 @@
     "date_range": "{start} - {end}",
     "expiry": "Ważność"
   },
+  "a11y": {
+    "toggle_details": "Przełącz szczegóły",
+    "workflow_flow_type": "Typ przepływu",
+    "workflow_target_state": "Stan docelowy",
+    "workflow_reject_state": "Stan odrzucenia"
+  },
   "api_token_expiry": {
     "one_week": "1 tydzień",
     "one_month": "1 miesiąc",

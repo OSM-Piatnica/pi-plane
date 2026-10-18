@@ -31,6 +31,7 @@ export const FilterPriority = observer(function FilterPriority(props: Props) {
   // derived values
   const filterValue = inboxFilters?.priority || [];
   const appliedFiltersCount = filterValue?.length ?? 0;
+  const filterValueSet = new Set(filterValue ?? []);
   const filteredOptions = ISSUE_PRIORITIES.filter((p) => p.key.includes(searchQuery.toLowerCase()));
 
   const handleFilterValue = (value: TIssuePriorities): TIssuePriorities[] =>
@@ -49,7 +50,7 @@ export const FilterPriority = observer(function FilterPriority(props: Props) {
             filteredOptions.map((priority) => (
               <FilterOption
                 key={priority.key}
-                isChecked={Boolean(filterValue?.includes(priority.key))}
+                isChecked={filterValueSet.has(priority.key)}
                 onClick={() => handleInboxIssueFilters("priority", handleFilterValue(priority.key))}
                 icon={<PriorityIcon priority={priority.key} className="h-3.5 w-3.5" />}
                 title={priority.title}

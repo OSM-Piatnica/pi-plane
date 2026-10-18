@@ -178,8 +178,8 @@ export const WorkspaceCreateStep = observer(function WorkspaceCreateStep({
                       "border-danger-strong": errors.name,
                     }
                   )}
-                  // eslint-disable-next-line jsx-a11y/no-autofocus
-                  autoFocus
+                  // react-doctor-disable-next-line no-autofocus -- intentional focus on the workspace name field
+                  autoFocus // oxlint-disable-line jsx-a11y/no-autofocus
                 />
               </div>
             )}
@@ -265,6 +265,7 @@ export const WorkspaceCreateStep = observer(function WorkspaceCreateStep({
                     const isSelected = value === size;
                     return (
                       <button
+                        type="button"
                         key={size}
                         onClick={(e) => {
                           e.preventDefault();

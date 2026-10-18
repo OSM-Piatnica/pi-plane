@@ -60,16 +60,18 @@ export const IssueVotes = observer(function IssueVotes(props: TIssueVotes) {
 
     setIsSubmitting(true);
 
-    const actionPerformed = votes?.find((vote) => vote.actor_details?.id === user?.id && vote.vote === voteValue);
+    try {
+      const actionPerformed = votes?.find((vote) => vote.actor_details?.id === user?.id && vote.vote === voteValue);
 
-    if (actionPerformed) await issueDetailsStore.removeIssueVote(anchor, issueId);
-    else {
-      await issueDetailsStore.addIssueVote(anchor, issueId, {
-        vote: voteValue,
-      });
+      if (actionPerformed) await issueDetailsStore.removeIssueVote(anchor, issueId);
+      else {
+        await issueDetailsStore.addIssueVote(anchor, issueId, {
+          vote: voteValue,
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   };
 
   const VOTES_LIMIT = 1000;

@@ -79,10 +79,11 @@ export const IssueTypePropertyField = observer(function IssueTypePropertyField(p
       const options = property.options ?? [];
       if (property.select_mode === "multi") {
         const selected = Array.isArray(value) ? value.map(String) : [];
+        const selectedSet = new Set(selected);
         return (
           <div className="flex flex-wrap gap-1">
             {options.map((opt) => {
-              const active = selected.includes(opt);
+              const active = selectedSet.has(opt);
               return (
                 <button
                   key={opt}

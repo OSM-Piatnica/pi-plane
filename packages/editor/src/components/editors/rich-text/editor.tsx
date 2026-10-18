@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -15,12 +16,14 @@ import { RichTextEditorAdditionalExtensions } from "@/extensions/rich-text-exten
 // types
 import type { EditorRefApi, IRichTextEditorProps } from "@/types";
 
+const EMPTY_EXTENSIONS: NonNullable<IRichTextEditorProps["extensions"]> = [];
+
 function RichTextEditor(props: IRichTextEditorProps) {
   const {
     bubbleMenuEnabled = true,
     disabledExtensions,
     dragDropEnabled,
-    extensions: externalExtensions = [],
+    extensions: externalExtensions = EMPTY_EXTENSIONS,
     fileHandler,
     flaggedExtensions,
     extendedEditorProps,

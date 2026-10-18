@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -66,18 +67,28 @@ export function CustomImageNodeView(props: CustomImageNodeViewProps) {
     setResolvedDownloadSrc(undefined);
     setFailedToLoadImage(false);
 
+    // ignore results of a superseded run so an older request cannot overwrite newer state
+    let isCancelled = false;
+
     const getImageSource = async () => {
       try {
         const url = await extension.options.getImageSource?.(imgNodeSrc);
+        if (isCancelled) return;
         setResolvedSrc(url);
         const downloadUrl = await extension.options.getImageDownloadSource?.(imgNodeSrc);
+        if (isCancelled) return;
         setResolvedDownloadSrc(downloadUrl);
       } catch (error) {
+        if (isCancelled) return;
         console.error("Error fetching image source:", error);
         setFailedToLoadImage(true);
       }
     };
     void getImageSource();
+
+    return () => {
+      isCancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imgNodeSrc, extension.options.getImageSource, extension.options.getImageDownloadSource]);
 

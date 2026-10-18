@@ -86,7 +86,8 @@ export const orderCyclesWithCompleted = (cycles: ICycle[], orderByKey: TCycleOrd
   const rest = cycles.filter((c) => !isCompleted(c));
   // cycles with an unknown status are not listed by orderCycles; keep them at the end instead of dropping them
   const ordered = orderCycles(rest, "status");
-  const unlisted = rest.filter((c) => !ordered.includes(c));
+  const orderedSet = new Set(ordered);
+  const unlisted = rest.filter((c) => !orderedSet.has(c));
   return [...ordered, ...completed, ...unlisted];
 };
 

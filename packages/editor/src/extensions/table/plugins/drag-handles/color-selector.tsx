@@ -54,6 +54,7 @@ export function TableDragHandleDropdownColorSelector(props: Props) {
               <button
                 key={color.key}
                 type="button"
+                aria-label={color.label}
                 className="flex-shrink-0 size-6 rounded-sm border-[0.5px] border-strong-1 hover:opacity-60 transition-opacity"
                 style={{
                   backgroundColor: color.textColor,
@@ -77,6 +78,7 @@ export function TableDragHandleDropdownColorSelector(props: Props) {
               <button
                 key={color.key}
                 type="button"
+                aria-label={color.label}
                 className="size-6 flex-shrink-0 rounded-sm border-[0.5px] border-strong-1 transition-opacity hover:opacity-60"
                 style={{
                   backgroundColor: color.backgroundColor,

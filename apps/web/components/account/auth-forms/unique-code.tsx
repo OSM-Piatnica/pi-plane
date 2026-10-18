@@ -92,7 +92,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
         setIsSubmitting(false);
       }}
     >
-      <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken} />
+      <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken ?? ""} />
       <input type="hidden" value={uniqueCodeFormData.email} name="email" />
       {mode === EAuthModes.SIGN_UP && <input type="hidden" value={currentLocale} name="language" />}
       {nextPath && <input type="hidden" value={nextPath} name="next_path" />}

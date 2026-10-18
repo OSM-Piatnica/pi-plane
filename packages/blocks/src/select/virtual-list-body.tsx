@@ -104,8 +104,8 @@ function SelectOptionRow(props: SelectOptionRowProps) {
           render={
             href ? (
               // base-ui supplies the anchor's content through `render`, which this rule cannot see.
-              // eslint-disable-next-line jsx-a11y/anchor-has-content
-              <a href={href} style={rowStyle} />
+              // react-doctor-disable-next-line anchor-has-content -- base-ui injects the anchor content through `render`
+              <a href={href} style={rowStyle} /> // eslint-disable-line jsx-a11y/anchor-has-content
             ) : rowStyle ? (
               <div style={rowStyle} />
             ) : undefined
@@ -316,8 +316,8 @@ export function VirtualListBody<T>(props: VirtualListBodyProps<T>) {
                     disabled={getOptionDisabled?.(item)}
                     aria-setsize={items.length}
                     aria-posinset={row.optionIndex + 1}
-                    // eslint-disable-next-line jsx-a11y/anchor-has-content
-                    render={<ComboboxItemRow variant="neutral" render={href ? <a href={href} /> : undefined} />}
+                    // react-doctor-disable-next-line anchor-has-content -- base-ui injects the anchor content through `render`
+                    render={<ComboboxItemRow variant="neutral" render={href ? <a href={href} /> : undefined} />} // eslint-disable-line jsx-a11y/anchor-has-content
                   >
                     {renderOption(item)}
                   </BaseCombobox.Item>

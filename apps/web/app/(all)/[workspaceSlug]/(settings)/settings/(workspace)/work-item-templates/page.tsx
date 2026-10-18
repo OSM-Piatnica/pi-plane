@@ -305,13 +305,13 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
                       />
                     </div>
                     <div>
-                      <label className="block text-12 text-tertiary">
+                      <span id="work-item-template-project-label" className="block text-12 text-tertiary">
                         {t("workspace_settings.settings.work_item_templates.table.project")}
-                      </label>
+                      </span>
                       <p className="pt-0.5 pb-1 text-11 text-tertiary">
                         {t("workspace_settings.settings.work_item_templates.form.scope_hint_short")}
                       </p>
-                      <div className="mt-1 max-w-sm">
+                      <div className="mt-1 max-w-sm" role="group" aria-labelledby="work-item-template-project-label">
                         <Controller
                           name="projectId"
                           control={control}

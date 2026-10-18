@@ -1044,6 +1044,12 @@
     "date_range": "{start} - {end}",
     "expiry": "Vervaldatum"
   },
+  "a11y": {
+    "toggle_details": "Details in- of uitklappen",
+    "workflow_flow_type": "Stroomtype",
+    "workflow_target_state": "Doelstatus",
+    "workflow_reject_state": "Afwijzingsstatus"
+  },
   "api_token_expiry": {
     "one_week": "1 week",
     "one_month": "1 maand",
