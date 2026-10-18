@@ -124,7 +124,7 @@ export const messages = (
           newValue === "restore"
             ? t("activity_feed.project.archived_at.restored")
             : t("activity_feed.project.archived_at.archived"),
-        customUserName: newValue === "archive" ? "Plane" : undefined,
+        customUserName: newValue === "archive" ? "Pi-Plane" : undefined,
       };
     case "name":
       return { message: withValue(t("activity_feed.project.name.renamed"), newValue) };

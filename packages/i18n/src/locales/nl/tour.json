@@ -69,7 +69,7 @@
     "page": {
       "step_zero": {
         "title": "Documenteer met AI-gestuurde pagina's",
-        "description": "Met pagina's in Plane leg je projectinformatie vast, orden je die en werk je eraan samen—zonder externe tools."
+        "description": "Met pagina's in Pi-Plane leg je projectinformatie vast, orden je die en werk je eraan samen—zonder externe tools."
       },
       "step_one": {
         "title": "Maak een pagina openbaar of privé",
@@ -95,7 +95,7 @@
     "intake": {
       "step_zero": {
         "title": "Stroomlijn verzoeken met intake",
-        "description": "Een functie exclusief voor Plane waarmee gasten werkitems kunnen aanmaken voor bugs, verzoeken of tickets."
+        "description": "Een functie exclusief voor Pi-Plane waarmee gasten werkitems kunnen aanmaken voor bugs, verzoeken of tickets."
       },
       "step_one": {
         "title": "Open/gesloten intakeverzoeken",
@@ -154,7 +154,7 @@
   },
   "get_started": {
     "title": "Hé {name}, welkom aan boord!",
-    "description": "Dit is alles wat je nodig hebt om met Plane van start te gaan.",
+    "description": "Dit is alles wat je nodig hebt om met Pi-Plane van start te gaan.",
     "checklist_section": {
       "title": "Aan de slag",
       "description": "Begin met instellen en zie je ideeën sneller tot leven komen.",
@@ -188,8 +188,8 @@
       "more_integrations": "Bekijk meer integraties"
     },
     "switch_to_plane_section": {
-      "title": "Ontdek waarom teams overstappen naar Plane",
-      "description": "Vergelijk Plane met de tools die je nu gebruikt en zie het verschil."
+      "title": "Ontdek waarom teams overstappen naar Pi-Plane",
+      "description": "Vergelijk Pi-Plane met de tools die je nu gebruikt en zie het verschil."
     }
   }
 }

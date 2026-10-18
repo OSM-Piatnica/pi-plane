@@ -839,7 +839,7 @@
     "edited_by": "Disunting oleh"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane tidak berhasil dimulai. Ini bisa karena satu atau lebih layanan Plane gagal untuk dimulai.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane tidak berhasil dimulai. Ini bisa karena satu atau lebih layanan Pi-Plane gagal untuk dimulai.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Pilih View Logs dari setup.sh dan log Docker untuk memastikan."
   },
   "customize_navigation": "Sesuaikan navigasi",
@@ -892,7 +892,7 @@
     "skip": "Lewati",
     "profile": {
       "title": "Buat profil Anda.",
-      "description": "Beginilah Anda akan ditampilkan di Plane.",
+      "description": "Beginilah Anda akan ditampilkan di Pi-Plane.",
       "choose_image": "Pilih gambar",
       "upload_image": "Unggah gambar",
       "change_image": "Ubah gambar",
@@ -907,7 +907,7 @@
       "new_password_placeholder": "Kata sandi baru...",
       "role_question": "Anda bekerja dengan peran apa? Pilih satu.",
       "domain_question": "Apa bidang keahlian Anda? Pilih satu atau lebih.",
-      "marketing_consent": "Saya setuju menerima komunikasi pemasaran dari Plane",
+      "marketing_consent": "Saya setuju menerima komunikasi pemasaran dari Pi-Plane",
       "passwords_do_not_match": "Kata sandi tidak cocok",
       "passwords_match": "Kata sandi cocok",
       "seniority_levels": {
@@ -938,7 +938,7 @@
     },
     "role": {
       "title": "Apa peran Anda?",
-      "description": "Mari siapkan Plane sesuai cara kerja Anda.",
+      "description": "Mari siapkan Pi-Plane sesuai cara kerja Anda.",
       "select_one": "Pilih satu",
       "options": {
         "product_manager": "Manajer Produk",
@@ -951,7 +951,7 @@
       }
     },
     "usecase": {
-      "title": "Apa yang membawa Anda ke Plane?",
+      "title": "Apa yang membawa Anda ke Pi-Plane?",
       "description": "Ceritakan tujuan dan ukuran tim Anda.",
       "select_multiple": "Pilih satu atau lebih",
       "select_at_least_one": "Silakan pilih setidaknya satu opsi"
@@ -972,7 +972,7 @@
     },
     "team": {
       "invite_teammates": "Undang rekan tim Anda",
-      "invite_teammates_description": "Bekerja di Plane paling baik bersama tim Anda. Undang mereka sekarang untuk memaksimalkan Plane.",
+      "invite_teammates_description": "Bekerja di Pi-Plane paling baik bersama tim Anda. Undang mereka sekarang untuk memaksimalkan Pi-Plane.",
       "add_another": "Tambah lagi",
       "do_it_later": "Nanti saja",
       "invalid_email": "Email tidak valid",
@@ -1140,8 +1140,8 @@
     },
     "auth_header": {
       "work_in_all_dimensions": "Bekerja di segala dimensi.",
-      "welcome_back": "Selamat datang kembali di Plane.",
-      "create_your_account": "Buat akun Plane Anda."
+      "welcome_back": "Selamat datang kembali di Pi-Plane.",
+      "create_your_account": "Buat akun Pi-Plane Anda."
     },
     "auth_root": {
       "no_auth_methods_title": "Tidak ada metode autentikasi yang tersedia",
@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "Daftar",
       "sign_in": "Masuk",
-      "join_teams": "Bergabunglah dengan lebih dari 10.000 tim yang membangun bersama Plane",
+      "join_teams": "Bergabunglah dengan lebih dari 10.000 tim yang membangun bersama Pi-Plane",
       "not_authorized_view_title": "Ups! Anda tidak berwenang untuk melihat halaman ini",
       "not_authorized": "Tidak berwenang!",
       "not_a_member_description": "Anda bukan anggota ruang kerja ini. Silakan hubungi admin ruang kerja untuk mendapatkan undangan atau periksa undangan Anda yang tertunda.",
@@ -1244,16 +1244,16 @@
     },
     "instance": {
       "contact_support": "Hubungi dukungan",
-      "maintenance_title": "🚧 Sepertinya Plane tidak dimulai dengan benar!",
+      "maintenance_title": "🚧 Sepertinya Pi-Plane tidak dimulai dengan benar!",
       "maintenance_description": "Beberapa layanan mungkin gagal dimulai. Silakan periksa log kontainer Anda untuk mengidentifikasi dan menyelesaikan masalah. Jika Anda mengalami kesulitan, hubungi tim dukungan kami untuk bantuan lebih lanjut.",
-      "welcome_title": "Selamat datang di Plane",
+      "welcome_title": "Selamat datang di Pi-Plane",
       "welcome_description": "Siapkan instans Anda dan buat ruang kerja pertama Anda untuk mulai mengelola proyek dan pekerjaan."
     },
     "integrations": {
       "github_installed": "Aktifkan GitHub pada setiap proyek untuk menyinkronkan dengan repositori tertentu.",
-      "github_not_installed": "Hubungkan GitHub dengan ruang kerja Plane Anda untuk menyinkronkan item kerja proyek.",
+      "github_not_installed": "Hubungkan GitHub dengan ruang kerja Pi-Plane Anda untuk menyinkronkan item kerja proyek.",
       "slack_installed": "Aktifkan Slack pada setiap proyek untuk menyinkronkan dengan saluran tertentu.",
-      "slack_not_installed": "Hubungkan Slack dengan ruang kerja Plane Anda untuk menyinkronkan item kerja proyek.",
+      "slack_not_installed": "Hubungkan Slack dengan ruang kerja Pi-Plane Anda untuk menyinkronkan item kerja proyek.",
       "deleted_title": "Berhasil dihapus!",
       "deleted_message": "Integrasi {title} berhasil dihapus.",
       "delete_failed_message": "Integrasi {title} tidak dapat dihapus. Silakan coba lagi.",
@@ -1299,7 +1299,7 @@
     },
     "tour": {
       "work_items_title": "Rencanakan dengan item kerja",
-      "work_items_description": "Item kerja adalah blok penyusun Plane. Sebagian besar konsep di Plane berkaitan dengan item kerja dan propertinya.",
+      "work_items_description": "Item kerja adalah blok penyusun Pi-Plane. Sebagian besar konsep di Pi-Plane berkaitan dengan item kerja dan propertinya.",
       "cycles_title": "Bergerak dengan siklus",
       "cycles_description": "Siklus membantu Anda dan tim Anda berkembang lebih cepat, mirip dengan sprint yang umum digunakan dalam pengembangan agile.",
       "modules_title": "Pecah menjadi modul",
@@ -1307,12 +1307,12 @@
       "views_description": "Buat filter khusus untuk menampilkan hanya item kerja yang penting bagi Anda. Simpan dan bagikan filter Anda hanya dengan beberapa klik.",
       "pages_title": "Dokumentasikan dengan halaman",
       "pages_description": "Gunakan halaman untuk mencatat item kerja dengan cepat saat Anda berada dalam rapat atau memulai hari.",
-      "welcome_title": "Selamat datang di Plane, {firstName} {lastName}",
-      "welcome_description": "Kami senang Anda memutuskan untuk mencoba Plane. Sekarang Anda dapat mengelola proyek dengan mudah. Mulailah dengan membuat proyek.",
+      "welcome_title": "Selamat datang di Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "Kami senang Anda memutuskan untuk mencoba Pi-Plane. Sekarang Anda dapat mengelola proyek dengan mudah. Mulailah dengan membuat proyek.",
       "take_tour": "Ikuti tur produk",
       "skip": "Tidak, terima kasih, saya akan menjelajahinya sendiri",
       "create_first_project": "Buat proyek pertama Anda",
-      "sidebar_heading": "Mari kita mulai!<br/>Manfaatkan Plane lebih jauh."
+      "sidebar_heading": "Mari kita mulai!<br/>Manfaatkan Pi-Plane lebih jauh."
     },
     "ai": {
       "ask_pi": "Tanya Pi",
@@ -1406,9 +1406,9 @@
       "sign_in_header": "Masuk untuk memberikan suara setuju atau berkomentar",
       "sign_in_sub_header": "Berkontribusilah untuk mendorong fitur yang Anda inginkan agar segera dibuat.",
       "sign_up_header": "Lihat, komentari, dan lakukan lebih banyak",
-      "sign_up_sub_header": "Daftar atau masuk untuk bekerja dengan item kerja dan Halaman Plane.",
+      "sign_up_sub_header": "Daftar atau masuk untuk bekerja dengan item kerja dan Halaman Pi-Plane.",
       "default_header": "Komentari atau beri reaksi pada item kerja",
-      "default_sub_header": "Gunakan Plane untuk menyampaikan masukan berharga Anda terhadap fitur."
+      "default_sub_header": "Gunakan Pi-Plane untuk menyampaikan masukan berharga Anda terhadap fitur."
     },
     "terms": {
       "agree_sign_up": "Dengan membuat akun, Anda menyetujui\n<terms>Ketentuan Layanan</terms> dan <privacy>Kebijakan Privasi</privacy> kami.",
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "Waduh! Ini tampaknya tidak baik.",
-      "description": "Itu membuat Plane mengalami crash. Tenang saja, para engineer kami sudah diberi tahu. Jika Anda punya detail lebih lanjut, silakan tulis ke <email/> atau di <forum/> kami."
+      "description": "Pi-Plane mengalami crash. Tenang saja, para engineer kami sudah diberi tahu. Jika Anda punya detail lebih lanjut, silakan laporkan di <github/>."
     },
     "not_found_page": {
       "title": "Itu tidak berhasil",
       "description": "Periksa URL yang Anda masukkan di bilah alamat browser, lalu coba lagi."
     },
     "powered_by": {
-      "label": "Didukung oleh <name>Plane Publish</name>"
+      "label": "Didukung oleh <name>Pi-Plane</name>"
     },
     "instance_failure": {
       "image_alt": "Kegagalan instans Pi-Plane",

@@ -13,7 +13,7 @@ export function MaintenanceMessage() {
     {
       key: "mail_to",
       label: t("app_text.instance.contact_support"),
-      value: "mailto:support@plane.so",
+      value: "https://github.com/OSM-Piatnica/pi-plane/issues",
     },
   ];
 

@@ -115,7 +115,7 @@
     "empty_state": {
       "activity": {
         "title": "Nog geen activiteiten",
-        "description": "Begin met het maken van een nieuw werkitem! Voeg details en eigenschappen toe. Ontdek meer in Plane om je activiteit te zien."
+        "description": "Begin met het maken van een nieuw werkitem! Voeg details en eigenschappen toe. Ontdek meer in Pi-Plane om je activiteit te zien."
       },
       "assigned": {
         "title": "Er zijn geen werkitems aan je toegewezen",

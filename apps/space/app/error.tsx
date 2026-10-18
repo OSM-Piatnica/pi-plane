@@ -24,19 +24,14 @@ function ErrorPage() {
           <h3 className="text-16 font-semibold">{t("space_text.error_page.title")}</h3>
           <p className="mx-auto text-13 text-secondary md:w-1/2">
             {renderTaggedText(t("space_text.error_page.description"), {
-              email: () => (
-                <a href="mailto:support@plane.so" className="text-accent-primary">
-                  support@plane.so
-                </a>
-              ),
-              forum: () => (
+              github: () => (
                 <a
-                  href="https://forum.plane.so"
+                  href="https://github.com/OSM-Piatnica/pi-plane"
                   target="_blank"
                   className="text-accent-primary"
                   rel="noopener noreferrer"
                 >
-                  {t("forum")}
+                  GitHub
                 </a>
               ),
             })}

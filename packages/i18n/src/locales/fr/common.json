@@ -839,7 +839,7 @@
     "edited_by": "Modifié par"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane n’a pas démarré. Cela pourrait être dû au fait qu’un ou plusieurs services Plane ont échoué à démarrer.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane n’a pas démarré. Cela pourrait être dû au fait qu’un ou plusieurs services Pi-Plane ont échoué à démarrer.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Choisissez View Logs depuis setup.sh et les logs Docker pour en être sûr."
   },
   "customize_navigation": "Personnaliser la navigation",
@@ -892,7 +892,7 @@
     "skip": "Passer",
     "profile": {
       "title": "Créez votre profil.",
-      "description": "C’est ainsi que vous apparaîtrez dans Plane.",
+      "description": "C’est ainsi que vous apparaîtrez dans Pi-Plane.",
       "choose_image": "Choisir une image",
       "upload_image": "Téléverser une image",
       "change_image": "Changer l’image",
@@ -907,7 +907,7 @@
       "new_password_placeholder": "Nouveau mot de passe...",
       "role_question": "Quel rôle occupez-vous ? Choisissez-en un.",
       "domain_question": "Quel est votre domaine d’expertise ? Choisissez-en un ou plusieurs.",
-      "marketing_consent": "J’accepte de recevoir les communications marketing de Plane",
+      "marketing_consent": "J’accepte de recevoir les communications marketing de Pi-Plane",
       "passwords_do_not_match": "Les mots de passe ne correspondent pas",
       "passwords_match": "Les mots de passe correspondent",
       "seniority_levels": {
@@ -938,7 +938,7 @@
     },
     "role": {
       "title": "Quel est votre rôle ?",
-      "description": "Configurons Plane selon votre façon de travailler.",
+      "description": "Configurons Pi-Plane selon votre façon de travailler.",
       "select_one": "Choisissez-en un",
       "options": {
         "product_manager": "Product Manager",
@@ -951,7 +951,7 @@
       }
     },
     "usecase": {
-      "title": "Qu’est-ce qui vous amène sur Plane ?",
+      "title": "Qu’est-ce qui vous amène sur Pi-Plane ?",
       "description": "Parlez-nous de vos objectifs et de la taille de votre équipe.",
       "select_multiple": "Choisissez-en un ou plusieurs",
       "select_at_least_one": "Veuillez sélectionner au moins une option"
@@ -972,7 +972,7 @@
     },
     "team": {
       "invite_teammates": "Invitez vos coéquipiers",
-      "invite_teammates_description": "Le travail dans Plane est plus efficace en équipe. Invitez-les dès maintenant pour tirer pleinement parti de Plane.",
+      "invite_teammates_description": "Le travail dans Pi-Plane est plus efficace en équipe. Invitez-les dès maintenant pour tirer pleinement parti de Pi-Plane.",
       "add_another": "Ajouter un autre",
       "do_it_later": "Je le ferai plus tard",
       "invalid_email": "Adresse e-mail invalide",
@@ -1140,8 +1140,8 @@
     },
     "auth_header": {
       "work_in_all_dimensions": "Travaillez dans toutes les dimensions.",
-      "welcome_back": "Bon retour sur Plane.",
-      "create_your_account": "Créez votre compte Plane."
+      "welcome_back": "Bon retour sur Pi-Plane.",
+      "create_your_account": "Créez votre compte Pi-Plane."
     },
     "auth_root": {
       "no_auth_methods_title": "Aucune méthode d’authentification disponible",
@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "S’inscrire",
       "sign_in": "Se connecter",
-      "join_teams": "Rejoignez plus de 10 000 équipes qui construisent avec Plane",
+      "join_teams": "Rejoignez plus de 10 000 équipes qui construisent avec Pi-Plane",
       "not_authorized_view_title": "Oups ! Vous n’êtes pas autorisé à consulter cette page",
       "not_authorized": "Non autorisé !",
       "not_a_member_description": "Vous n’êtes pas membre de cet espace de travail. Veuillez contacter l’administrateur de l’espace de travail pour obtenir une invitation ou vérifiez vos invitations en attente.",
@@ -1244,16 +1244,16 @@
     },
     "instance": {
       "contact_support": "Contacter le support",
-      "maintenance_title": "🚧 Il semble que Plane n’ait pas démarré correctement !",
+      "maintenance_title": "🚧 Il semble que Pi-Plane n’ait pas démarré correctement !",
       "maintenance_description": "Certains services n’ont peut-être pas démarré. Veuillez consulter les journaux de vos conteneurs pour identifier et résoudre le problème. Si vous êtes bloqué, contactez notre équipe d’assistance.",
-      "welcome_title": "Bienvenue sur Plane",
+      "welcome_title": "Bienvenue sur Pi-Plane",
       "welcome_description": "Configurez votre instance et créez votre premier espace de travail pour commencer à gérer vos projets et votre travail."
     },
     "integrations": {
       "github_installed": "Activez GitHub sur des projets individuels pour synchroniser avec des dépôts spécifiques.",
-      "github_not_installed": "Connectez GitHub à votre espace de travail Plane pour synchroniser les éléments de travail des projets.",
+      "github_not_installed": "Connectez GitHub à votre espace de travail Pi-Plane pour synchroniser les éléments de travail des projets.",
       "slack_installed": "Activez Slack sur des projets individuels pour synchroniser avec des canaux spécifiques.",
-      "slack_not_installed": "Connectez Slack à votre espace de travail Plane pour synchroniser les éléments de travail des projets.",
+      "slack_not_installed": "Connectez Slack à votre espace de travail Pi-Plane pour synchroniser les éléments de travail des projets.",
       "deleted_title": "Supprimé avec succès !",
       "deleted_message": "L’intégration {title} a été supprimée avec succès.",
       "delete_failed_message": "Impossible de supprimer l’intégration {title}. Veuillez réessayer.",
@@ -1299,7 +1299,7 @@
     },
     "tour": {
       "work_items_title": "Planifiez avec des éléments de travail",
-      "work_items_description": "L’élément de travail est la brique de base de Plane. La plupart des concepts de Plane sont associés aux éléments de travail et à leurs propriétés.",
+      "work_items_description": "L’élément de travail est la brique de base de Pi-Plane. La plupart des concepts de Pi-Plane sont associés aux éléments de travail et à leurs propriétés.",
       "cycles_title": "Avancez avec les Cycles",
       "cycles_description": "Les Cycles vous aident, vous et votre équipe, à progresser plus rapidement, à l’image des sprints couramment utilisés dans le développement agile.",
       "modules_title": "Découpez en Modules",
@@ -1307,12 +1307,12 @@
       "views_description": "Créez des filtres personnalisés pour n’afficher que les éléments de travail qui comptent pour vous. Enregistrez et partagez vos filtres en quelques clics.",
       "pages_title": "Documentez avec les Pages",
       "pages_description": "Utilisez les Pages pour noter rapidement des éléments de travail pendant une réunion ou au début de la journée.",
-      "welcome_title": "Bienvenue sur Plane, {firstName} {lastName}",
-      "welcome_description": "Nous sommes ravis que vous ayez décidé d’essayer Plane. Vous pouvez désormais gérer vos projets en toute simplicité. Commencez par créer un projet.",
+      "welcome_title": "Bienvenue sur Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "Nous sommes ravis que vous ayez décidé d’essayer Pi-Plane. Vous pouvez désormais gérer vos projets en toute simplicité. Commencez par créer un projet.",
       "take_tour": "Suivre la visite du produit",
       "skip": "Non merci, je vais explorer par moi-même",
       "create_first_project": "Créer votre premier projet",
-      "sidebar_heading": "Commençons !<br/>Tirez le meilleur parti de Plane."
+      "sidebar_heading": "Commençons !<br/>Tirez le meilleur parti de Pi-Plane."
     },
     "ai": {
       "ask_pi": "Demander à Pi",
@@ -1406,9 +1406,9 @@
       "sign_in_header": "Connectez-vous pour voter ou commenter",
       "sign_in_sub_header": "Contribuez à faire avancer les fonctionnalités que vous souhaitez voir développées.",
       "sign_up_header": "Consultez, commentez et faites plus",
-      "sign_up_sub_header": "Inscrivez-vous ou connectez-vous pour travailler avec les éléments de travail et les Pages de Plane.",
+      "sign_up_sub_header": "Inscrivez-vous ou connectez-vous pour travailler avec les éléments de travail et les Pages de Pi-Plane.",
       "default_header": "Commentez les éléments de travail ou réagissez-y",
-      "default_sub_header": "Utilisez Plane pour apporter vos précieuses contributions aux fonctionnalités."
+      "default_sub_header": "Utilisez Pi-Plane pour apporter vos précieuses contributions aux fonctionnalités."
     },
     "terms": {
       "agree_sign_up": "En créant un compte, vous acceptez nos\n<terms>Conditions d’utilisation</terms> et notre <privacy>Politique de confidentialité</privacy>.",
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "Aïe ! Ça ne se présente pas bien.",
-      "description": "Plane a planté. Pas d’inquiétude, nos ingénieurs ont été prévenus. Si vous avez plus de détails, écrivez à <email/> ou sur notre <forum/>."
+      "description": "Pi-Plane a planté. Pas d’inquiétude, nos ingénieurs ont été prévenus. Si vous avez plus de détails, signalez-les sur <github/>."
     },
     "not_found_page": {
       "title": "Ça n’a pas fonctionné",
       "description": "Vérifiez l’URL saisie dans la barre d’adresse du navigateur et réessayez."
     },
     "powered_by": {
-      "label": "Propulsé par <name>Plane Publish</name>"
+      "label": "Propulsé par <name>Pi-Plane</name>"
     },
     "instance_failure": {
       "image_alt": "Défaillance de l’instance Pi-Plane",

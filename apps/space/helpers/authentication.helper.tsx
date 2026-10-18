@@ -6,7 +6,6 @@
  */
 
 import { Link } from "react-router";
-import { SUPPORT_EMAIL } from "@plane/constants";
 // local imports
 import { renderTaggedText } from "./tagged-text";
 
@@ -186,12 +185,13 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
     title: "auth.error_alerts.titles.sign_in_not_allowed",
     message: (t) => t("auth.error_alerts.sign_in_not_allowed_message"),
   },
+  // Plane's original behaviour was to show "User account deactivated. Please contact {SUPPORT_EMAIL}." using the
+  // auth.error_alerts.user_account_deactivated_contact message. That message is kept in the locale files but unused
+  // while SUPPORT_EMAIL is disabled (see packages/constants/src/endpoints.ts); this is the fallback it used.
   [EAuthenticationErrorCodes.USER_ACCOUNT_DEACTIVATED]: {
     title: "auth.error_alerts.titles.user_account_deactivated",
     message: (t) =>
-      SUPPORT_EMAIL
-        ? t("auth.error_alerts.user_account_deactivated_contact", { contact: SUPPORT_EMAIL })
-        : t("auth.error_alerts.contact_admin", { title: t("auth.error_alerts.titles.user_account_deactivated") }),
+      t("auth.error_alerts.contact_admin", { title: t("auth.error_alerts.titles.user_account_deactivated") }),
   },
 
   [EAuthenticationErrorCodes.USER_DOES_NOT_EXIST]: {

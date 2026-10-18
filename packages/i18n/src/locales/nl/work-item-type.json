@@ -367,7 +367,7 @@
         },
         "confirmation": {
           "title": "Eenmaal ingeschakeld kunnen werkitemtypen niet meer worden uitgeschakeld.",
-          "description": "Het werkitem van Plane wordt het standaard werkitemtype voor dit project en verschijnt met zijn pictogram en achtergrond in dit project.",
+          "description": "Het werkitem van Pi-Plane wordt het standaard werkitemtype voor dit project en verschijnt met zijn pictogram en achtergrond in dit project.",
           "button": {
             "default": "Inschakelen",
             "loading": "Instellen"

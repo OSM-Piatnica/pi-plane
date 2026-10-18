@@ -1,6 +1,6 @@
-# Testing Guide for Plane
+# Testing Guide for Pi-Plane
 
-This guide explains how to write tests for Plane using our pytest-based testing strategy.
+This guide explains how to write tests for Pi-Plane using our pytest-based testing strategy.
 
 ## Test Categories
 

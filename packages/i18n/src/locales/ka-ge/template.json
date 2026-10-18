@@ -170,7 +170,7 @@
           },
           "company_name": {
             "label": "კომპანიის სახელი",
-            "placeholder": "Plane",
+            "placeholder": "Pi-Plane",
             "validation": {
               "required": "კომპანიის სახელი სავალდებულოა",
               "maxLength": "კომპანიის სახელი 255 სიმბოლოზე ნაკლები უნდა იყოს"

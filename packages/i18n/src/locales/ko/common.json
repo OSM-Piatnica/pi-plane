@@ -839,7 +839,7 @@
     "edited_by": "편집자"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane이 시작되지 않았습니다. 이는 하나 이상의 Plane 서비스가 시작에 실패했기 때문일 수 있습니다.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane이 시작되지 않았습니다. 이는 하나 이상의 Pi-Plane 서비스가 시작에 실패했기 때문일 수 있습니다.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "확실히 하려면 setup.sh와 Docker 로그에서 View Logs를 선택하세요."
   },
   "customize_navigation": "내비게이션 사용자 지정",
@@ -907,7 +907,7 @@
       "new_password_placeholder": "새 비밀번호...",
       "role_question": "어떤 역할로 일하고 계신가요? 하나를 선택하세요.",
       "domain_question": "전문 분야는 무엇인가요? 하나 이상 선택하세요.",
-      "marketing_consent": "Plane 마케팅 커뮤니케이션 수신에 동의합니다",
+      "marketing_consent": "Pi-Plane 마케팅 커뮤니케이션 수신에 동의합니다",
       "passwords_do_not_match": "비밀번호가 일치하지 않습니다",
       "passwords_match": "비밀번호가 일치합니다",
       "seniority_levels": {
@@ -1141,7 +1141,7 @@
     "auth_header": {
       "work_in_all_dimensions": "모든 차원에서 작업하세요.",
       "welcome_back": "Plane에 다시 오신 것을 환영합니다.",
-      "create_your_account": "Plane 계정을 만드세요."
+      "create_your_account": "Pi-Plane 계정을 만드세요."
     },
     "auth_root": {
       "no_auth_methods_title": "사용 가능한 인증 방법이 없습니다",
@@ -1251,9 +1251,9 @@
     },
     "integrations": {
       "github_installed": "특정 리포지토리와 동기화하려면 개별 프로젝트에서 GitHub를 활성화하세요.",
-      "github_not_installed": "프로젝트 작업 항목을 동기화하려면 GitHub를 Plane 작업 공간에 연결하세요.",
+      "github_not_installed": "프로젝트 작업 항목을 동기화하려면 GitHub를 Pi-Plane 작업 공간에 연결하세요.",
       "slack_installed": "특정 채널과 동기화하려면 개별 프로젝트에서 Slack을 활성화하세요.",
-      "slack_not_installed": "프로젝트 작업 항목을 동기화하려면 Slack을 Plane 작업 공간에 연결하세요.",
+      "slack_not_installed": "프로젝트 작업 항목을 동기화하려면 Slack을 Pi-Plane 작업 공간에 연결하세요.",
       "deleted_title": "삭제되었습니다.",
       "deleted_message": "{title} 통합이 삭제되었습니다.",
       "delete_failed_message": "{title} 통합을 삭제할 수 없습니다. 다시 시도하세요.",
@@ -1406,7 +1406,7 @@
       "sign_in_header": "로그인하고 추천 또는 댓글 남기기",
       "sign_in_sub_header": "원하는 기능이 개발되도록 힘을 보태 주세요.",
       "sign_up_header": "보기, 댓글 달기 등 더 많은 활동",
-      "sign_up_sub_header": "가입하거나 로그인하여 Plane 작업 항목과 페이지를 이용하세요.",
+      "sign_up_sub_header": "가입하거나 로그인하여 Pi-Plane 작업 항목과 페이지를 이용하세요.",
       "default_header": "작업 항목에 댓글 또는 반응 남기기",
       "default_sub_header": "Plane을 사용하여 기능에 대한 소중한 의견을 남겨 주세요."
     },
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "문제가 발생했습니다.",
-      "description": "Plane이 중단되었습니다. 걱정하지 마세요. 엔지니어에게 알림이 전송되었습니다. 자세한 내용이 있으시면 <email/>로 문의하시거나 <forum/>에 남겨 주세요."
+      "description": "Pi-Plane이 중단되었습니다. 걱정하지 마세요. 엔지니어에게 알림이 전송되었습니다. 자세한 내용이 있으시면 <github/>에 제보해 주세요."
     },
     "not_found_page": {
       "title": "작동하지 않았습니다",
       "description": "브라우저 주소 표시줄에 입력한 URL을 확인하고 다시 시도하세요."
     },
     "powered_by": {
-      "label": "Powered by <name>Plane Publish</name>"
+      "label": "Powered by <name>Pi-Plane</name>"
     },
     "instance_failure": {
       "image_alt": "Pi-Plane 인스턴스 오류",

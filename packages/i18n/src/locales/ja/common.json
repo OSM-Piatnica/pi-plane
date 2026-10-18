@@ -1140,8 +1140,8 @@
     },
     "auth_header": {
       "work_in_all_dimensions": "あらゆる次元で作業。",
-      "welcome_back": "Plane へおかえりなさい。",
-      "create_your_account": "Plane アカウントを作成します。"
+      "welcome_back": "Pi-Plane へおかえりなさい。",
+      "create_your_account": "Pi-Plane アカウントを作成します。"
     },
     "auth_root": {
       "no_auth_methods_title": "利用可能な認証方法がありません",
@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "サインアップ",
       "sign_in": "サインイン",
-      "join_teams": "Plane で開発する 10,000 以上のチームに参加しましょう",
+      "join_teams": "Pi-Plane で開発する 10,000 以上のチームに参加しましょう",
       "not_authorized_view_title": "このページを表示する権限がありません",
       "not_authorized": "権限がありません",
       "not_a_member_description": "このワークスペースのメンバーではありません。ワークスペースの管理者に招待を依頼するか、保留中の招待をご確認ください。",
@@ -1244,16 +1244,16 @@
     },
     "instance": {
       "contact_support": "サポートに問い合わせる",
-      "maintenance_title": "🚧 Plane が正しく起動しなかったようです。",
+      "maintenance_title": "🚧 Pi-Plane が正しく起動しなかったようです。",
       "maintenance_description": "一部のサービスが起動に失敗した可能性があります。コンテナーのログを確認して問題を特定し、解決してください。解決しない場合は、サポートチームにお問い合わせください。",
-      "welcome_title": "Plane へようこそ",
+      "welcome_title": "Pi-Plane へようこそ",
       "welcome_description": "インスタンスをセットアップし、最初のワークスペースを作成して、プロジェクトと作業の管理を始めましょう。"
     },
     "integrations": {
       "github_installed": "特定のリポジトリと同期するには、各プロジェクトで GitHub を有効にしてください。",
-      "github_not_installed": "プロジェクトの作業項目を同期するには、GitHub を Plane ワークスペースに接続してください。",
+      "github_not_installed": "プロジェクトの作業項目を同期するには、GitHub を Pi-Plane ワークスペースに接続してください。",
       "slack_installed": "特定のチャンネルと同期するには、各プロジェクトで Slack を有効にしてください。",
-      "slack_not_installed": "プロジェクトの作業項目を同期するには、Slack を Plane ワークスペースに接続してください。",
+      "slack_not_installed": "プロジェクトの作業項目を同期するには、Slack を Pi-Plane ワークスペースに接続してください。",
       "deleted_title": "削除しました。",
       "deleted_message": "{title} の連携を削除しました。",
       "delete_failed_message": "{title} の連携を削除できませんでした。もう一度お試しください。",
@@ -1299,7 +1299,7 @@
     },
     "tour": {
       "work_items_title": "作業項目で計画",
-      "work_items_description": "作業項目は Plane の基本単位です。Plane のほとんどの概念は、作業項目とそのプロパティに関連付けられています。",
+      "work_items_description": "作業項目は Pi-Plane の基本単位です。Pi-Plane のほとんどの概念は、作業項目とそのプロパティに関連付けられています。",
       "cycles_title": "サイクルで前進",
       "cycles_description": "サイクルは、アジャイル開発でよく使われるスプリントのように、あなたとチームがより速く進めるのに役立ちます。",
       "modules_title": "モジュールに分割",
@@ -1307,12 +1307,12 @@
       "views_description": "カスタムフィルターを作成して、必要な作業項目だけを表示できます。フィルターは数クリックで保存・共有できます。",
       "pages_title": "ページでドキュメント化",
       "pages_description": "ページを使えば、会議中や一日の始まりに作業項目をすばやくメモできます。",
-      "welcome_title": "Plane へようこそ、{lastName} {firstName} さん",
-      "welcome_description": "Plane をお試しいただきありがとうございます。これでプロジェクトを簡単に管理できます。まずはプロジェクトを作成しましょう。",
+      "welcome_title": "Pi-Plane へようこそ、{lastName} {firstName} さん",
+      "welcome_description": "Pi-Plane をお試しいただきありがとうございます。これでプロジェクトを簡単に管理できます。まずはプロジェクトを作成しましょう。",
       "take_tour": "製品ツアーを見る",
       "skip": "いいえ、自分で試します",
       "create_first_project": "最初のプロジェクトを作成",
-      "sidebar_heading": "さあ、始めましょう。<br/>Plane をもっと活用しましょう。"
+      "sidebar_heading": "さあ、始めましょう。<br/>Pi-Plane をもっと活用しましょう。"
     },
     "ai": {
       "ask_pi": "Pi に質問",
@@ -1406,9 +1406,9 @@
       "sign_in_header": "サインインして投票またはコメント",
       "sign_in_sub_header": "ご希望の機能の開発を後押ししましょう。",
       "sign_up_header": "閲覧、コメントなど",
-      "sign_up_sub_header": "サインアップまたはログインして、Plane の作業項目やページを利用しましょう。",
+      "sign_up_sub_header": "サインアップまたはログインして、Pi-Plane の作業項目やページを利用しましょう。",
       "default_header": "作業項目にコメントまたはリアクション",
-      "default_sub_header": "Plane を使って、機能に関する貴重なご意見をお寄せください。"
+      "default_sub_header": "Pi-Plane を使って、機能に関する貴重なご意見をお寄せください。"
     },
     "terms": {
       "agree_sign_up": "アカウントを作成すると、\n<terms>利用規約</terms>および<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。",
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "問題が発生しました。",
-      "description": "Plane がクラッシュしました。ご安心ください。エンジニアに通知済みです。詳細がありましたら、<email/> または<forum/>までご連絡ください。"
+      "description": "Pi-Plane がクラッシュしました。ご安心ください。エンジニアに通知済みです。詳細がありましたら、<github/>で報告してください。"
     },
     "not_found_page": {
       "title": "うまくいきませんでした",
       "description": "ブラウザーのアドレスバーに入力した URL を確認して、もう一度お試しください。"
     },
     "powered_by": {
-      "label": "Powered by <name>Plane Publish</name>"
+      "label": "Powered by <name>Pi-Plane</name>"
     },
     "instance_failure": {
       "image_alt": "Pi-Plane インスタンスの障害",

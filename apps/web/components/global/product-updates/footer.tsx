@@ -40,7 +40,7 @@ export function ProductUpdatesFooter() {
             <circle cx={1} cy={1} r={1} />
           </svg>
           <a
-            href="mailto:support@plane.so"
+            href="https://github.com/OSM-Piatnica/pi-plane/issues"
             target="_blank"
             className="text-13 text-secondary underline-offset-1 outline-none hover:text-primary hover:underline"
             rel="noreferrer"

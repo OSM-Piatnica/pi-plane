@@ -5,11 +5,12 @@
  * See the LICENSE file for details.
  */
 
-import { WEBSITE_URL } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 // assets
 import { PlaneLogo } from "@plane/blocks/icons";
 import { renderTaggedText } from "@/helpers/tagged-text";
+
+const PI_PLANE_REPO_URL = "https://github.com/OSM-Piatnica/pi-plane";
 
 type TPoweredBy = {
   disabled?: boolean;
@@ -20,11 +21,11 @@ export function PoweredBy(props: TPoweredBy) {
   const { disabled = false } = props;
   const { t } = useTranslation();
 
-  if (disabled || !WEBSITE_URL) return null;
+  if (disabled) return null;
 
   return (
     <a
-      href={WEBSITE_URL}
+      href={PI_PLANE_REPO_URL}
       className="fixed right-5 bottom-2.5 !z-[999999] flex items-center gap-1 rounded-sm border border-subtle bg-layer-3 px-2 py-1 shadow-raised-100"
       target="_blank"
       rel="noreferrer noopener"

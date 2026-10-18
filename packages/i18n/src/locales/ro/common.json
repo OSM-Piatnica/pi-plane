@@ -246,7 +246,7 @@
   "full_changelog": "Jurnal complet al modificărilor",
   "support": "Suport",
   "forum": "Forum",
-  "powered_by_plane_pages": "Oferit de Plane Documentație",
+  "powered_by_plane_pages": "Oferit de Pi-Plane Documentație",
   "please_select_at_least_one_invitation": "Te rugăm să selectezi cel puțin o invitație.",
   "please_select_at_least_one_invitation_description": "Te rugăm să selectezi cel puțin o invitație pentru a te alătura spațiului de lucru.",
   "we_see_that_someone_has_invited_you_to_join_a_workspace": "Se pare că cineva te-a invitat să te alături unui spațiu de lucru",
@@ -839,7 +839,7 @@
     "edited_by": "Editat de"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane nu a pornit. Aceasta ar putea fi din cauza că unul sau mai multe servicii Plane au eșuat să pornească.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane nu a pornit. Aceasta ar putea fi din cauza că unul sau mai multe servicii Pi-Plane au eșuat să pornească.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Alegeți View Logs din setup.sh și logurile Docker pentru a fi siguri."
   },
   "customize_navigation": "Personalizează navigarea",
@@ -892,7 +892,7 @@
     "skip": "Omite",
     "profile": {
       "title": "Creează-ți profilul.",
-      "description": "Așa vei apărea în Plane.",
+      "description": "Așa vei apărea în Pi-Plane.",
       "choose_image": "Alege imaginea",
       "upload_image": "Încarcă imaginea",
       "change_image": "Schimbă imaginea",
@@ -907,7 +907,7 @@
       "new_password_placeholder": "Parolă nouă...",
       "role_question": "Ce rol ai? Alege unul.",
       "domain_question": "Care este domeniul tău de expertiză? Alege unul sau mai multe.",
-      "marketing_consent": "Sunt de acord să primesc comunicări de marketing de la Plane",
+      "marketing_consent": "Sunt de acord să primesc comunicări de marketing de la Pi-Plane",
       "passwords_do_not_match": "Parolele nu coincid",
       "passwords_match": "Parolele coincid",
       "seniority_levels": {
@@ -938,7 +938,7 @@
     },
     "role": {
       "title": "Ce rol ai?",
-      "description": "Hai să configurăm Plane după modul tău de lucru.",
+      "description": "Hai să configurăm Pi-Plane după modul tău de lucru.",
       "select_one": "Alege unul",
       "options": {
         "product_manager": "Product Manager",
@@ -951,7 +951,7 @@
       }
     },
     "usecase": {
-      "title": "Ce te aduce în Plane?",
+      "title": "Ce te aduce în Pi-Plane?",
       "description": "Spune-ne obiectivele și dimensiunea echipei tale.",
       "select_multiple": "Alege unul sau mai multe",
       "select_at_least_one": "Selectează cel puțin o opțiune"
@@ -972,7 +972,7 @@
     },
     "team": {
       "invite_teammates": "Invită-ți colegii de echipă",
-      "invite_teammates_description": "Munca în Plane merge cel mai bine în echipă. Invită-i acum pentru a folosi Plane la adevăratul potențial.",
+      "invite_teammates_description": "Munca în Pi-Plane merge cel mai bine în echipă. Invită-i acum pentru a folosi Pi-Plane la adevăratul potențial.",
       "add_another": "Adaugă altul",
       "do_it_later": "Voi face asta mai târziu",
       "invalid_email": "Adresă de e-mail invalidă",
@@ -1140,8 +1140,8 @@
     },
     "auth_header": {
       "work_in_all_dimensions": "Lucrează în toate dimensiunile.",
-      "welcome_back": "Bine ai revenit în Plane.",
-      "create_your_account": "Creează-ți contul Plane."
+      "welcome_back": "Bine ai revenit în Pi-Plane.",
+      "create_your_account": "Creează-ți contul Pi-Plane."
     },
     "auth_root": {
       "no_auth_methods_title": "Nu există metode de autentificare disponibile",
@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "Înregistrează-te",
       "sign_in": "Autentifică-te",
-      "join_teams": "Alătură-te celor peste 10.000 de echipe care construiesc cu Plane",
+      "join_teams": "Alătură-te celor peste 10.000 de echipe care construiesc cu Pi-Plane",
       "not_authorized_view_title": "Hopa! Nu ai autorizație să vizualizezi această pagină",
       "not_authorized": "Neautorizat!",
       "not_a_member_description": "Nu ești membru al acestui spațiu de lucru. Contactează administratorul spațiului de lucru pentru a primi o invitație sau verifică invitațiile în așteptare.",
@@ -1244,16 +1244,16 @@
     },
     "instance": {
       "contact_support": "Contactează asistența",
-      "maintenance_title": "🚧 Se pare că Plane nu a pornit corect!",
+      "maintenance_title": "🚧 Se pare că Pi-Plane nu a pornit corect!",
       "maintenance_description": "Este posibil ca unele servicii să nu fi pornit. Verifică jurnalele containerelor pentru a identifica și rezolva problema. Dacă ai rămas blocat, contactează echipa noastră de asistență pentru ajutor suplimentar.",
-      "welcome_title": "Bun venit în Plane",
+      "welcome_title": "Bun venit în Pi-Plane",
       "welcome_description": "Configurează instanța și creează primul spațiu de lucru pentru a începe să gestionezi proiecte și activități."
     },
     "integrations": {
       "github_installed": "Activează GitHub pentru proiecte individuale pentru a sincroniza cu anumite depozite.",
-      "github_not_installed": "Conectează GitHub la spațiul tău de lucru Plane pentru a sincroniza activitățile proiectului.",
+      "github_not_installed": "Conectează GitHub la spațiul tău de lucru Pi-Plane pentru a sincroniza activitățile proiectului.",
       "slack_installed": "Activează Slack pentru proiecte individuale pentru a sincroniza cu anumite canale.",
-      "slack_not_installed": "Conectează Slack la spațiul tău de lucru Plane pentru a sincroniza activitățile proiectului.",
+      "slack_not_installed": "Conectează Slack la spațiul tău de lucru Pi-Plane pentru a sincroniza activitățile proiectului.",
       "deleted_title": "Șters cu succes!",
       "deleted_message": "Integrarea {title} a fost ștearsă cu succes.",
       "delete_failed_message": "Integrarea {title} nu a putut fi ștearsă. Te rugăm să încerci din nou.",
@@ -1299,7 +1299,7 @@
     },
     "tour": {
       "work_items_title": "Planifică cu ajutorul activităților",
-      "work_items_description": "Activitatea este unitatea de bază din Plane. Majoritatea conceptelor din Plane sunt asociate cu activitățile și cu proprietățile lor.",
+      "work_items_description": "Activitatea este unitatea de bază din Pi-Plane. Majoritatea conceptelor din Pi-Plane sunt asociate cu activitățile și cu proprietățile lor.",
       "cycles_title": "Avansează cu ciclurile",
       "cycles_description": "Ciclurile te ajută pe tine și echipa ta să avansați mai repede, similar sprinturilor folosite frecvent în dezvoltarea agilă.",
       "modules_title": "Împarte în module",
@@ -1307,12 +1307,12 @@
       "views_description": "Creează filtre personalizate pentru a afișa doar activitățile care contează pentru tine. Salvează și partajează filtrele cu doar câteva clicuri.",
       "pages_title": "Documentează cu ajutorul paginilor",
       "pages_description": "Folosește paginile pentru a nota rapid activitățile în timpul unei ședințe sau la începutul zilei.",
-      "welcome_title": "Bun venit în Plane, {firstName} {lastName}",
-      "welcome_description": "Ne bucurăm că ai decis să încerci Plane. Acum îți poți gestiona proiectele cu ușurință. Începe prin a crea un proiect.",
+      "welcome_title": "Bun venit în Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "Ne bucurăm că ai decis să încerci Pi-Plane. Acum îți poți gestiona proiectele cu ușurință. Începe prin a crea un proiect.",
       "take_tour": "Urmează turul produsului",
       "skip": "Nu, mulțumesc, voi explora singur",
       "create_first_project": "Creează primul tău proiect",
-      "sidebar_heading": "Să începem!<br/>Profită la maximum de Plane."
+      "sidebar_heading": "Să începem!<br/>Profită la maximum de Pi-Plane."
     },
     "ai": {
       "ask_pi": "Întreabă Pi",
@@ -1406,9 +1406,9 @@
       "sign_in_header": "Autentifică-te pentru a vota sau a comenta",
       "sign_in_sub_header": "Contribuie la stabilirea funcțiilor care vor fi dezvoltate.",
       "sign_up_header": "Vizualizează, comentează și fă mai mult",
-      "sign_up_sub_header": "Înregistrează-te sau autentifică-te pentru a lucra cu activitățile și paginile din Plane.",
+      "sign_up_sub_header": "Înregistrează-te sau autentifică-te pentru a lucra cu activitățile și paginile din Pi-Plane.",
       "default_header": "Comentează sau reacționează la activități",
-      "default_sub_header": "Folosește Plane pentru a-ți aduce contribuția la funcții."
+      "default_sub_header": "Folosește Pi-Plane pentru a-ți aduce contribuția la funcții."
     },
     "terms": {
       "agree_sign_up": "Prin crearea unui cont, ești de acord cu\n<terms>Termenii și condițiile</terms> și cu <privacy>Politica de confidențialitate</privacy>.",
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "Oops! Nu arată bine.",
-      "description": "Plane s-a blocat. Nu-ți face griji, inginerii noștri au fost notificați. Dacă ai mai multe detalii, scrie-ne la <email/> sau pe <forum/>."
+      "description": "Pi-Plane s-a blocat. Nu-ți face griji, inginerii noștri au fost notificați. Dacă ai mai multe detalii, raportează-le pe <github/>."
     },
     "not_found_page": {
       "title": "Nu a funcționat",
       "description": "Verifică adresa URL introdusă în bara de adrese a browserului și încearcă din nou."
     },
     "powered_by": {
-      "label": "Oferit de <name>Plane Publish</name>"
+      "label": "Oferit de <name>Pi-Plane</name>"
     },
     "instance_failure": {
       "image_alt": "Eroare la instanța Pi-Plane",
