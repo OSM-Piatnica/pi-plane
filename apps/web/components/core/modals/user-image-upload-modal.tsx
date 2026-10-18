@@ -95,7 +95,7 @@ export const UserImageUploadModal = observer(function UserImageUploadModal(props
       setToast({
         type: "error",
         title: t("toast.error"),
-        message: error?.toString() ?? "Something went wrong. Please try again.",
+        message: error?.toString() ?? t("something_went_wrong_please_try_again"),
       });
       throw new Error("Error in uploading file.", { cause: error });
     } finally {
@@ -132,7 +132,7 @@ export const UserImageUploadModal = observer(function UserImageUploadModal(props
         <DialogMain>
           <DialogHeader>
             <DialogHeading>
-              <DialogTitle>Upload Image</DialogTitle>
+              <DialogTitle>{t("app_text.image_upload.title")}</DialogTitle>
             </DialogHeading>
           </DialogHeader>
           <DialogBody tabIndex={0}>
@@ -153,7 +153,7 @@ export const UserImageUploadModal = observer(function UserImageUploadModal(props
                           type="button"
                           className="absolute top-0 right-0 z-40 translate-x-1/2 -translate-y-1/2 rounded-sm bg-surface-2 px-2 py-0.5 text-11 font-medium text-secondary"
                         >
-                          Edit
+                          {t("common.edit")}
                         </button>
                         <img
                           src={imagePreviewUrl ?? (value ? getFileURL(value) : "")}
@@ -166,7 +166,9 @@ export const UserImageUploadModal = observer(function UserImageUploadModal(props
                       <div>
                         <UserOutline className="mx-auto h-16 w-16 text-secondary" />
                         <span className="mt-2 block text-13 font-medium text-secondary">
-                          {isDragActive ? "Drop image here to upload" : "Drag & drop image here"}
+                          {isDragActive
+                            ? t("app_text.image_upload.drop_to_upload")
+                            : t("app_text.image_upload.drag_and_drop")}
                         </span>
                       </div>
                     )}
@@ -177,12 +179,12 @@ export const UserImageUploadModal = observer(function UserImageUploadModal(props
                 {fileRejections.length > 0 && (
                   <p className="text-13 text-danger-primary">
                     {fileRejections[0].errors[0].code === "file-too-large"
-                      ? "The image size cannot exceed 5 MB."
-                      : "Please upload a file in a valid format."}
+                      ? t("app_text.image_upload.size_exceeded")
+                      : t("app_text.image_upload.invalid_format")}
                   </p>
                 )}
               </div>
-              <p className="text-13 text-secondary">File formats supported- .jpeg, .jpg, .png, .webp</p>
+              <p className="text-13 text-secondary">{t("app_text.image_upload.formats_supported")}</p>
             </div>
           </DialogBody>
         </DialogMain>
@@ -192,17 +194,17 @@ export const UserImageUploadModal = observer(function UserImageUploadModal(props
               variant="danger"
               size="md"
               stretch="auto"
-              label={isRemoving ? "Removing" : "Remove"}
+              label={isRemoving ? t("removing") : t("common.remove")}
               onClick={handleImageRemove}
               disabled={!value}
             />
           </DialogInfo>
-          <Button variant="secondary" size="md" stretch="auto" label="Cancel" onClick={handleClose} />
+          <Button variant="secondary" size="md" stretch="auto" label={t("common.cancel")} onClick={handleClose} />
           <Button
             variant="primary"
             size="md"
             stretch="auto"
-            label={isImageUploading ? "Uploading" : "Upload & Save"}
+            label={isImageUploading ? t("app_text.image_upload.uploading") : t("app_text.image_upload.upload_and_save")}
             onClick={handleSubmit}
             disabled={!image}
             loading={isImageUploading}

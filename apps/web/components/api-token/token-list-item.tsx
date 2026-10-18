@@ -4,8 +4,8 @@
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
-
 import { useTranslation } from "@plane/i18n";
+
 import { useState } from "react";
 import { CloseCircleOutline } from "@makeplane/propel/icons";
 // plane imports
@@ -34,7 +34,7 @@ export function ApiTokenListItem(props: Props) {
     <>
       <DeleteApiTokenModal isOpen={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} tokenId={token.id} />
       <div className="group relative flex flex-col justify-center border-b border-subtle py-3">
-        <Tooltip label="Delete token" disabled={isMobile}>
+        <Tooltip label={t("app_text.api_tokens.delete_token")} disabled={isMobile}>
           <button
             onClick={() => setDeleteModalOpen(true)}
             className="absolute right-4 hidden place-items-center group-hover:grid"

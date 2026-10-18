@@ -61,6 +61,7 @@ import { useMember } from "@/hooks/store/use-member";
 import { useModule } from "@/hooks/store/use-module";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
+import { useTranslation } from "@plane/i18n";
 import { useFiltersOperatorConfigs } from "@/hooks/rich-filters/use-filters-operator-configs";
 
 export type TWorkItemFiltersEntityProps = {
@@ -99,7 +100,9 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
   const { getStateById } = useProjectState();
   const { getUserDetails } = useMember();
   // derived values
-  const operatorConfigs = useFiltersOperatorConfigs({ workspaceSlug });
+  const { t } = useTranslation();
+  const baseOperatorConfigs = useFiltersOperatorConfigs({ workspaceSlug });
+  const operatorConfigs = useMemo(() => ({ ...baseOperatorConfigs, t }), [baseOperatorConfigs, t]);
   const filtersToShow = useMemo(() => new Set(allowedFilters), [allowedFilters]);
   const project = useMemo(() => getProjectById(projectId), [projectId, getProjectById]);
   const members: IUserLite[] | undefined = useMemo(

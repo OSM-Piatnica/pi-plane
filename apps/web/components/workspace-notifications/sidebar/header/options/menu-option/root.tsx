@@ -76,7 +76,7 @@ export const NotificationHeaderMenuOption = observer(function NotificationHeader
             size="sm"
             variant="ghost"
             icon={<Icon icon={MoreVerticalOutline} />}
-            aria-label="Notification options"
+            aria-label={t("app_text.notifications.notification_options")}
           />
         }
       />

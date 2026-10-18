@@ -92,9 +92,7 @@ export function GptAssistantPopover(props: Props) {
   const handleServiceError = (err: any) => {
     const error = err?.data?.error;
     const errorMessage =
-      err?.status === 429
-        ? error || "You have reached the maximum number of requests of 50 requests per month per user."
-        : error || "Some error occurred. Please try again.";
+      err?.status === 429 ? error || t("app_text.ai_assistant.rate_limit") : error || t("common.error.message");
 
     setToast({
       type: "error",
@@ -177,7 +175,7 @@ export function GptAssistantPopover(props: Props) {
       variant="primary"
       size="sm"
       stretch="auto"
-      label="Use this response"
+      label={t("app_text.ai_assistant.use_response")}
       onClick={() => {
         onResponse(response);
         onClose();
@@ -186,10 +184,10 @@ export function GptAssistantPopover(props: Props) {
   );
 
   const generateResponseButtonText = isSubmitting
-    ? "Generating response..."
+    ? t("app_text.ai_assistant.generating_response")
     : response === ""
-      ? "Generate response"
-      : "Generate again";
+      ? t("app_text.ai_assistant.generate_response")
+      : t("app_text.ai_assistant.generate_again");
 
   return (
     <div className="relative w-min text-left">
@@ -220,7 +218,7 @@ export function GptAssistantPopover(props: Props) {
               <div className="vertical-scroll-enable max-h-72 space-y-4 overflow-y-auto">
                 {prompt && (
                   <div className="text-13">
-                    Content:
+                    {t("app_text.ai_assistant.content_label")}
                     <RichTextEditor
                       editable={false}
                       id="ai-assistant-content"
@@ -235,7 +233,7 @@ export function GptAssistantPopover(props: Props) {
                 )}
                 {response !== "" && (
                   <div className="page-block-section max-h-[8rem] text-13">
-                    Response:
+                    {t("app_text.ai_assistant.response_label")}
                     <RichTextEditor
                       editable={false}
                       id="ai-assistant-response"
@@ -248,10 +246,7 @@ export function GptAssistantPopover(props: Props) {
                   </div>
                 )}
                 {invalidResponse && (
-                  <div className="text-13 text-danger-primary">
-                    No response could be generated. This may be due to insufficient content or task information. Please
-                    try again.
-                  </div>
+                  <div className="text-13 text-danger-primary">{t("app_text.ai_assistant.no_response")}</div>
                 )}
               </div>
             </PopoverBody>
@@ -270,8 +265,8 @@ export function GptAssistantPopover(props: Props) {
                     ref={ref}
                     placeholder={`${
                       prompt && prompt !== ""
-                        ? "Tell AI what action to perform on this content..."
-                        : "Ask AI anything..."
+                        ? t("app_text.ai_assistant.placeholder_with_content")
+                        : t("app_text.ai_assistant.placeholder_empty")
                     }`}
                     // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; lint cleanup only
                     autoFocus
@@ -286,12 +281,12 @@ export function GptAssistantPopover(props: Props) {
                 <>
                   <div className="flex items-start justify-center gap-2 text-13 text-accent-primary">
                     <WarningCircleOutline className="h-4 w-4" />
-                    <p>By using this feature, you consent to sharing the message with a 3rd party service. </p>
+                    <p>{t("app_text.ai_assistant.consent")} </p>
                   </div>
                 </>
               )}
               <div className="flex items-center gap-2">
-                <Button variant="secondary" size="sm" stretch="auto" label="Close" onClick={onClose} />
+                <Button variant="secondary" size="sm" stretch="auto" label={t("close")} onClick={onClose} />
                 <Button
                   variant="primary"
                   size="sm"

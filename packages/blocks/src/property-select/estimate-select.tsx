@@ -73,7 +73,7 @@ export function EstimateSelect(props: EstimateSelectProps) {
   } = props;
   // derived values
 
-  const resolvedClearLabel = clearLabel ?? (placeholder || "No estimate");
+  const resolvedClearLabel = clearLabel ?? (placeholder || t("project_settings.estimates.no_estimate"));
   const clearOption = useMemo<EstimateOption>(
     () => ({ id: CLEAR_OPTION_ID, displayValue: resolvedClearLabel }),
     [resolvedClearLabel]

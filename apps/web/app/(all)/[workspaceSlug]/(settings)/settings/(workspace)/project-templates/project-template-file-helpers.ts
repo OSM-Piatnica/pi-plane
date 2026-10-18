@@ -68,8 +68,8 @@ export const readTemplateFromJson = async (file: File): Promise<TProjectTemplate
  * Template names are unique per workspace, so a name already in use gets a numeric suffix
  * instead of failing the upload.
  */
-export const buildUniqueTemplateName = (desired: string, existingNames: string[]): string => {
-  const base = desired.trim().slice(0, 255) || "Imported template";
+export const buildUniqueTemplateName = (desired: string, existingNames: string[], fallbackName: string): string => {
+  const base = desired.trim().slice(0, 255) || fallbackName;
   const taken = new Set(existingNames.map((name) => name.trim()));
   if (!taken.has(base)) return base;
 

@@ -1064,5 +1064,338 @@
   "progress_chart": {
     "current": "当前{title}",
     "ideal": "理想{title}"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "将图片拖放到此处上传",
+      "drag_and_drop": "将图片拖放到此处",
+      "size_exceeded": "图片大小不能超过 5 MB。",
+      "invalid_format": "请上传格式有效的文件。",
+      "formats_supported": "支持的文件格式：.jpeg、.jpg、.png、.webp",
+      "uploading": "正在上传",
+      "upload_and_save": "上传并保存",
+      "title": "上传图片",
+      "select_image": "选择图片",
+      "select_image_named": "选择图片：{description}",
+      "select_cover_image": "选择封面图片 {index}",
+      "no_images": "未找到图片。"
+    },
+    "ai_assistant": {
+      "rate_limit": "您已达到每位用户每月 50 次请求的上限。",
+      "use_response": "使用此回复",
+      "generating_response": "正在生成回复…",
+      "generate_response": "生成回复",
+      "generate_again": "重新生成",
+      "content_label": "内容：",
+      "response_label": "回复：",
+      "no_response": "无法生成回复。可能是内容或任务信息不足。请重试。",
+      "placeholder_with_content": "告诉 AI 要对此内容执行什么操作…",
+      "placeholder_empty": "向 AI 提出任何问题…",
+      "consent": "使用此功能即表示您同意将消息共享给第三方服务。"
+    },
+    "multiple_select": {
+      "select_all_in_group": "全选组内项目"
+    },
+    "theme": {
+      "download_config": "下载配置",
+      "import_config": "导入配置",
+      "import_failed": "导入主题配置失败",
+      "missing_fields": "缺少必填字段：primary 和 background",
+      "invalid_brand_hex": "品牌颜色的十六进制格式无效",
+      "invalid_neutral_hex": "中性颜色的十六进制格式无效",
+      "invalid_mode": "主题模式无效。必须为布尔值",
+      "choose_color_mode": "选择颜色模式",
+      "light_mode": "浅色模式",
+      "dark_mode": "深色模式"
+    },
+    "workspace": {
+      "delete_warning": "您即将删除工作区 <name/>。确认后，您将无法访问此工作区中的所有工作数据，且无法恢复。请务必谨慎操作。",
+      "delete_type_name": "请输入此工作区的名称以继续。",
+      "delete_final_confirmation": "为进行最终确认，请在下方输入 <phrase/>。"
+    },
+    "workspace_settings": {
+      "invitation_removed": "邀请已成功移除。",
+      "workspace_updated": "工作区已成功更新",
+      "picture_removed": "工作区图片已成功移除。",
+      "picture_remove_failed": "删除您的头像时出错。请重试。",
+      "url_copied": "工作区 URL 已复制到剪贴板。"
+    },
+    "workspace_views": {
+      "delete_failed": "删除视图失败。请重试。",
+      "create_failed": "无法创建视图。请重试。",
+      "updated": "视图已成功更新。",
+      "update_failed": "无法更新视图。请重试。",
+      "edit_view": "编辑视图",
+      "delete_view": "删除视图"
+    },
+    "sticky_colors": {
+      "gray": "灰色",
+      "peach": "桃色",
+      "pink": "粉色",
+      "orange": "橙色",
+      "green": "绿色",
+      "light_blue": "浅蓝色",
+      "dark_blue": "深蓝色",
+      "purple": "紫色"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "全方位协作。",
+      "welcome_back": "欢迎回到 Plane。",
+      "create_your_account": "创建您的 Plane 账户。"
+    },
+    "auth_root": {
+      "no_auth_methods_title": "没有可用的身份验证方式",
+      "no_auth_methods_description": "请联系您的管理员为您的实例启用身份验证。"
+    },
+    "auth_password": {
+      "create_account": "创建账户"
+    },
+    "terms": {
+      "agree_sign_up": "创建账户即表示您理解并同意\n我们的<terms>服务条款</terms>和<privacy>隐私政策</privacy>。",
+      "agree_sign_in": "登录即表示您理解并同意\n我们的<terms>服务条款</terms>和<privacy>隐私政策</privacy>。"
+    },
+    "auth_screens": {
+      "sign_up": "注册",
+      "sign_in": "登录",
+      "join_teams": "加入 10,000 多个使用 Plane 构建产品的团队",
+      "not_authorized_view_title": "抱歉，您无权查看此页面",
+      "not_authorized": "未授权",
+      "not_a_member_description": "您不是此工作区的成员。请联系工作区管理员获取邀请，或查看您的待处理邀请。",
+      "check_pending_invites": "查看待处理邀请"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "未找到工作区",
+      "workspace_not_found_description": "未找到该 URL 对应的工作区。它可能不存在，或者您无权查看。",
+      "visit_profile": "访问个人资料"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "切换设置菜单",
+      "back_to_project": "返回项目",
+      "toggle_project_feature": "切换项目功能"
+    },
+    "headers": {
+      "toggle_sidebar": "切换侧边栏"
+    },
+    "profile_activity": {
+      "page_title": "个人资料 - 活动"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook 已成功更新。",
+      "not_authorized": "您无权访问此页面。",
+      "enable_webhook": "启用 Webhook",
+      "toggle_webhook": "切换 Webhook"
+    },
+    "project_settings_empty": {
+      "title": "暂无项目",
+      "description": "项目是目标驱动型工作的基础。您可以通过项目管理团队、任务以及完成工作所需的一切。",
+      "learn_more": "了解更多关于项目的信息"
+    },
+    "project_templates": {
+      "imported_template": "已导入的模板",
+      "pick_color": "选择颜色"
+    },
+    "not_found": {
+      "image_alt": "404 - 页面未找到",
+      "title": "出错了。",
+      "description": "抱歉，找不到您要查找的页面。它可能已被删除、已更名或暂时不可用。",
+      "go_to_home": "前往首页"
+    },
+    "api_tokens": {
+      "empty_title": "暂无 API 令牌",
+      "empty_description": "创建 API 令牌，以安全、便捷地与外部应用共享数据，同时保持控制权和安全性。",
+      "add_token": "添加令牌",
+      "delete_token": "删除令牌"
+    },
+    "base_layouts": {
+      "gantt": "甘特图布局"
+    },
+    "command_palette": {
+      "no_states_found": "未找到状态"
+    },
+    "quick_actions": {
+      "archive_module_hint": "只有已完成或已取消的模块才能归档"
+    },
+    "progress": {
+      "cycle_progress": "周期进度"
+    },
+    "estimates": {
+      "delete_title": "删除估算系统",
+      "delete_description": "删除估算系统 <name/> 将把它从所有工作项中永久移除。此操作无法撤销。如果您再次添加估算，则需要更新所有工作项。",
+      "deleting": "正在删除",
+      "delete_estimate": "删除估算",
+      "toggle_estimates": "切换估算",
+      "estimates_list": "估算列表",
+      "archived_title": "已归档的估算",
+      "archived_description": "估算已发生变更，这些是您在旧版本中使用过但已不再使用的估算。了解更多请 <link>点击此处。</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "创建被阻塞依赖",
+      "create_blocking_dependency": "创建阻塞依赖",
+      "update_block_dates_failed": "更新区块日期时出错"
+    },
+    "product_updates": {
+      "fetch_failed": "我们在获取更新时遇到问题。请访问我们的更新日志查看最新更新。",
+      "go_to_changelog": "前往更新日志"
+    },
+    "inbox": {
+      "intake_form_user": "Intake 表单用户",
+      "status": "状态",
+      "created_by": "创建者"
+    },
+    "instance": {
+      "contact_support": "联系支持",
+      "maintenance_title": "🚧 Plane 似乎未能正确启动！",
+      "maintenance_description": "部分服务可能启动失败。请检查您的容器日志以找出并解决问题。如果仍无法解决，请联系我们的支持团队获取更多帮助。",
+      "welcome_title": "欢迎使用 Plane",
+      "welcome_description": "设置您的实例并创建第一个工作区，开始管理项目和工作。"
+    },
+    "integrations": {
+      "github_installed": "在各个项目上启用 GitHub，以便与特定仓库同步。",
+      "github_not_installed": "将 GitHub 连接到您的 Plane 工作区，以同步项目工作项。",
+      "slack_installed": "在各个项目上启用 Slack，以便与特定频道同步。",
+      "slack_not_installed": "将 Slack 连接到您的 Plane 工作区，以同步项目工作项。",
+      "deleted_title": "删除成功！",
+      "deleted_message": "{title} 集成已成功删除。",
+      "delete_failed_message": "无法删除 {title} 集成。请重试。",
+      "logo_alt": "{title} 标志",
+      "loading": "加载中…",
+      "no_permission": "您无权执行此操作",
+      "uninstalling": "正在卸载…",
+      "uninstall": "卸载",
+      "installing": "正在安装…",
+      "install": "安装"
+    },
+    "attachments": {
+      "upload_progress": "上传进度"
+    },
+    "labels": {
+      "delete_confirmation": "确定要删除 <name/> 吗？这将从所有工作项以及按该标签筛选的任何视图中移除该标签。",
+      "edit_label": "编辑标签",
+      "delete_label": "删除标签",
+      "remove_from_group": "从组中移除"
+    },
+    "modules": {
+      "module_progress": "模块进度"
+    },
+    "navigation": {
+      "icon_only": "仅图标",
+      "icon_with_name": "图标加名称",
+      "dock_app_rail": "固定应用栏",
+      "undock_app_rail": "取消固定应用栏",
+      "minimum_value_is_one": "最小值为 1",
+      "show": "显示",
+      "clear_default": "清除默认值",
+      "hide_in_more_menu": "在“更多”菜单中隐藏",
+      "project_link_copied": "项目链接已复制到剪贴板。",
+      "copy_failed": "复制失败",
+      "copy_failed_message": "我们无法复制链接。请重试。",
+      "default_tab_updated": "默认标签页已成功更新。",
+      "default_tab_update_failed": "更新默认标签页失败。请稍后重试。",
+      "hide_tab_failed": "隐藏标签页失败。请稍后重试。",
+      "generic_error": "出错了。请稍后重试。"
+    },
+    "onboarding": {
+      "select_workspace_invitation": "选择工作区邀请"
+    },
+    "tour": {
+      "work_items_title": "用工作项做规划",
+      "work_items_description": "工作项是 Plane 的基本构建块。Plane 中的大多数概念都与工作项及其属性相关联。",
+      "cycles_title": "用周期推进",
+      "cycles_description": "周期可帮助您和团队更快地推进工作，类似于敏捷开发中常用的冲刺。",
+      "modules_title": "用模块拆分",
+      "modules_description": "模块将您的大目标拆分为项目或功能，帮助您更好地组织。",
+      "views_description": "创建自定义筛选器，只显示对您重要的工作项。只需点击几下即可保存并分享您的筛选器。",
+      "pages_title": "用页面记录文档",
+      "pages_description": "在开会或开始新的一天时，使用页面快速记录工作项。",
+      "welcome_title": "欢迎使用 Plane，{lastName}{firstName}",
+      "welcome_description": "很高兴您决定试用 Plane。现在您可以轻松管理项目。从创建项目开始吧。",
+      "take_tour": "参加产品导览",
+      "skip": "不用了，我自己探索",
+      "create_first_project": "创建您的第一个项目",
+      "sidebar_heading": "让我们开始吧！<br/>充分发挥 Plane 的价值。"
+    },
+    "ai": {
+      "ask_pi": "询问 Pi",
+      "tone_professional": "💼 专业",
+      "tone_casual": "😃 随意",
+      "third_party_consent": "使用此功能即表示您同意将消息共享给第三方服务。",
+      "pi_writing": "Pi 正在撰写",
+      "pi_generating_response": "Pi 正在生成回复"
+    },
+    "pages": {
+      "icon": "图标",
+      "color": "颜色",
+      "remove_text_color": "移除文字颜色",
+      "remove_background_color": "移除背景颜色",
+      "formatting_toolbar": "格式工具栏",
+      "copied_link": "链接已复制",
+      "remove_favorite": "取消收藏",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "{name} 机器人"
+    },
+    "project": {
+      "identifier": "标识符"
+    },
+    "projects": {
+      "toggle_feature": "切换项目功能",
+      "cover_upload_failed": "封面图片上传失败"
+    },
+    "notifications": {
+      "notification_options": "通知选项"
+    },
+    "stores": {
+      "generic_error": "发生错误",
+      "inbox_fetch_error": "获取 Intake 工作项时出错，请稍后重试。",
+      "page_make_public_error": "无法将页面设为公开。请稍后重试。",
+      "page_make_private_error": "无法将页面设为私有。请稍后重试。",
+      "workflow_pending_approval": "该工作项有待处理的审批。",
+      "workflow_transition_not_allowed": "工作流不允许此状态转换。"
+    },
+    "validation": {
+      "name_max_length": "名称不得超过 50 个字符",
+      "name_special_chars": "名称不能包含 {chars} 等特殊字符",
+      "name_invalid_chars": "名称只能包含字母、空格、连字符和撇号",
+      "display_name_max_length": "显示名称不得超过 50 个字符",
+      "display_name_special_chars": "显示名称不能包含 {chars} 等特殊字符",
+      "display_name_invalid_chars": "显示名称只能包含字母、数字、句点、连字符和下划线",
+      "company_name_max_length": "公司名称不得超过 80 个字符",
+      "company_name_special_chars": "公司名称不能包含 {chars} 等特殊字符",
+      "company_name_invalid_chars": "公司名称只能包含字母、数字、空格、连字符和下划线",
+      "company_name_needs_alphanumeric": "公司名称必须至少包含一个字母或数字",
+      "workspace_name_required": "工作区名称为必填项",
+      "workspace_name_max_length": "工作区名称不得超过 80 个字符",
+      "workspace_name_special_chars": "工作区名称不能包含 {chars} 等特殊字符",
+      "workspace_name_invalid_chars": "工作区名称只能包含字母、数字、空格、连字符和下划线",
+      "workspace_name_needs_alphanumeric": "工作区名称必须至少包含一个字母或数字",
+      "slug_required": "Slug 为必填项",
+      "slug_max_length": "Slug 不得超过 48 个字符",
+      "slug_special_chars": "Slug 不能包含 {chars} 等特殊字符",
+      "slug_invalid_chars": "Slug 只能包含字母、数字、连字符和下划线"
+    },
+    "analytics": {
+      "state_name": "状态名称",
+      "estimate_point": "估算点数",
+      "completed_date": "完成日期",
+      "yesterday": "昨天",
+      "last_7_days": "过去 7 天",
+      "last_30_days": "过去 30 天",
+      "last_3_months": "过去 3 个月",
+      "duration": "时长"
+    },
+    "auth_labels": {
+      "magic_code": "魔法码"
+    },
+    "state_groups": {
+      "canceled": "已取消"
+    },
+    "filters": {
+      "state_group": "状态组",
+      "subscriber": "订阅者"
+    }
   }
 }

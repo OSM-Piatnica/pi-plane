@@ -84,7 +84,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
         setToast({
           type: "success",
           title: t("toast.success"),
-          message: "Default tab updated successfully.",
+          message: t("app_text.navigation.default_tab_updated"),
         });
         return;
       })
@@ -92,7 +92,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
         setToast({
           type: "error",
           title: t("toast.error"),
-          message: "Failed to update default tab. Please try again later.",
+          message: t("app_text.navigation.default_tab_update_failed"),
         });
       });
   };
@@ -112,7 +112,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
       setToast({
         type: "error",
         title: t("toast.error"),
-        message: "Failed to hide tab. Please try again later.",
+        message: t("app_text.navigation.hide_tab_failed"),
       });
     }
   };
@@ -132,7 +132,7 @@ export const useTabPreferences = (workspaceSlug: string, projectId: string): TTa
       setToast({
         type: "error",
         title: t("toast.error"),
-        message: "Something went wrong. Please try again later.",
+        message: t("app_text.navigation.generic_error"),
       });
     }
   };

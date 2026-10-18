@@ -65,7 +65,7 @@ export interface IWorkflowStore {
     issueId: string | null | undefined,
     fromStateId: string | null | undefined,
     toStateId: string | null | undefined
-  ) => { allowed: boolean; message?: string };
+  ) => { allowed: boolean; message?: string; messageKey?: string };
   getAllowedTargetStatesForProject: (
     projectId: string | null | undefined,
     fromStateId: string | null | undefined
@@ -163,7 +163,10 @@ export class WorkflowStore implements IWorkflowStore {
 
       const status = issueId ? this.getIssueWorkflowStatus(issueId) : undefined;
       if (status?.pending_approval) {
-        return { allowed: false, message: status.blocker_message ?? "Work item has a pending approval." };
+        // when the server gave no message, return an i18n key for the component to translate
+        return status.blocker_message
+          ? { allowed: false, message: status.blocker_message }
+          : { allowed: false, messageKey: "app_text.stores.workflow_pending_approval" };
       }
 
       const allowedIds = issueId
@@ -175,7 +178,7 @@ export class WorkflowStore implements IWorkflowStore {
 
       return {
         allowed: false,
-        message: "This state transition is not allowed by the workflow.",
+        messageKey: "app_text.stores.workflow_transition_not_allowed",
       };
     }
   );

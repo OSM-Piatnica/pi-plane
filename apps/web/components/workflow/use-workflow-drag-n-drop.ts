@@ -8,11 +8,13 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
+import { useTranslation } from "@plane/i18n";
 import type { TIssueGroupByOptions } from "@plane/types";
 import { useWorkflow } from "@/hooks/store/use-workflow";
 
 export const useWorkFlowFDragNDrop = (groupBy: TIssueGroupByOptions | undefined, subGroupBy?: TIssueGroupByOptions) => {
   const { workspaceSlug, projectId } = useParams();
+  const { t } = useTranslation();
   const workflowStore = useWorkflow();
   const [workflowDisabledSource, setWorkflowDisabledSource] = useState<string | undefined>(undefined);
   const [isWorkflowDropDisabled, setIsWorkflowDropDisabled] = useState(false);
@@ -58,7 +60,7 @@ export const useWorkFlowFDragNDrop = (groupBy: TIssueGroupByOptions | undefined,
       if (!result.allowed) {
         setWorkflowDisabledSource(sourceGroupId);
         setIsWorkflowDropDisabled(true);
-        setDropErrorMessage(result.message);
+        setDropErrorMessage(result.messageKey ? t(result.messageKey) : result.message);
         return;
       }
 
@@ -66,7 +68,7 @@ export const useWorkFlowFDragNDrop = (groupBy: TIssueGroupByOptions | undefined,
       setIsWorkflowDropDisabled(false);
       setDropErrorMessage(undefined);
     },
-    [isStateGrouping, projectId, workflowStore]
+    [isStateGrouping, projectId, workflowStore, t]
   );
 
   const getIsWorkflowWorkItemCreationDisabled = useCallback(

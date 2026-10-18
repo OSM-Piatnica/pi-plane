@@ -103,7 +103,10 @@ export function WorkspaceJoinInvitesStep(props: Props) {
                   <p className="text-11 text-secondary">{t(getRoleI18nKey(invitation.role))}</p>
                 </div>
                 <span className="pointer-events-none flex-shrink-0">
-                  <Checkbox checked={isSelected} aria-label={invitedWorkspace?.name ?? "Select workspace invitation"} />
+                  <Checkbox
+                    checked={isSelected}
+                    aria-label={invitedWorkspace?.name ?? t("app_text.onboarding.select_workspace_invitation")}
+                  />
                 </span>
               </div>
             );

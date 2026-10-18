@@ -64,7 +64,7 @@ export const CustomThemeDownloadConfigButton = observer(function CustomThemeDown
       size="md"
       stretch="auto"
       type="button"
-      label="Download config"
+      label={t("app_text.theme.download_config")}
       onClick={handleDownloadConfig}
     />
   );

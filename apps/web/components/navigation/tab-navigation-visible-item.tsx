@@ -57,7 +57,7 @@ export function TabNavigationVisibleItem({
                 onToggleDefault(item.key);
               }}
               icon={<Icon icon={DefaultTabOutline} />}
-              label={isDefault ? "Clear default" : "Set as default"}
+              label={isDefault ? t("app_text.navigation.clear_default") : t("work_item_types.settings.set_as_default")}
             />
             <ContextMenuItem
               onClick={(e) => {
@@ -65,7 +65,7 @@ export function TabNavigationVisibleItem({
                 onHide(item.key);
               }}
               icon={<Icon icon={UnpinOutline} />}
-              label="Hide in more menu"
+              label={t("app_text.navigation.hide_in_more_menu")}
             />
           </ContextMenuContent>
         </ContextMenu>

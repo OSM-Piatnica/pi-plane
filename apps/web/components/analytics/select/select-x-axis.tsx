@@ -23,7 +23,7 @@ type XAxisOption = {
 type Props = {
   value?: ChartXAxisProperty;
   onChange: (val: ChartXAxisProperty | null) => void;
-  options: { value: ChartXAxisProperty; label: string }[];
+  options: { value: ChartXAxisProperty; label: string; i18n_label: string }[];
   placeholder?: string;
   hiddenOptions?: ChartXAxisProperty[];
   allowNoValue?: boolean;
@@ -39,7 +39,7 @@ export function SelectXAxis(props: Props) {
     const hidden = new Set(hiddenOptions);
     const visible = options
       .filter((item) => !hidden.has(item.value))
-      .map((item) => ({ id: item.value, label: item.label, value: item.value }));
+      .map((item) => ({ id: item.value, label: t(item.i18n_label), value: item.value }));
     return allowNoValue ? [{ id: NO_VALUE_ID, label: t("analytics_ui.no_value"), value: null }, ...visible] : visible;
   }, [options, hiddenOptions, allowNoValue, t]);
   const selected = useMemo(

@@ -144,7 +144,7 @@ export const CreateWorkspace = observer(function CreateWorkspace(props: Props) {
             name="name"
             rules={{
               required: t("common.errors.required"),
-              validate: (value) => validateWorkspaceName(value, true),
+              validate: (value) => validateWorkspaceName(value, true, t),
               maxLength: {
                 value: 80,
                 message: t("workspace_creation.errors.validation.name_length"),
@@ -207,7 +207,7 @@ export const CreateWorkspace = observer(function CreateWorkspace(props: Props) {
                     type="text"
                     value={value.toLocaleLowerCase().trim().replace(/ /g, "-")}
                     onChange={(e) => {
-                      const validation = validateSlug(e.target.value);
+                      const validation = validateSlug(e.target.value, t);
                       if (validation === true) setInvalidSlug(false);
                       else setInvalidSlug(true);
                       onChange(e.target.value.toLowerCase());

@@ -287,7 +287,7 @@
   "no_matching_results": "Tidak ada hasil yang cocok",
   "title_is_required": "Judul diperlukan",
   "title": "Judul",
-  "state": "Negara",
+  "state": "Status",
   "transition": "Transisi",
   "history": "Riwayat",
   "priority": "Prioritas",
@@ -426,10 +426,10 @@
     "all": "Semua",
     "no_items_in_this_group": "Tidak ada item dalam grup ini",
     "drop_here_to_move": "Letakkan di sini untuk memindahkan",
-    "states": "Negara-negara",
-    "state": "Negara",
-    "state_groups": "Kelompok negara",
-    "state_group": "Kelompok negara",
+    "states": "Status",
+    "state": "Status",
+    "state_groups": "Kelompok status",
+    "state_group": "Kelompok status",
     "priorities": "Prioritas",
     "priority": "Prioritas",
     "team_project": "Proyek tim",
@@ -1064,5 +1064,338 @@
   "progress_chart": {
     "current": "{title} saat ini",
     "ideal": "{title} ideal"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "Jatuhkan gambar di sini untuk mengunggah",
+      "drag_and_drop": "Seret dan lepas gambar di sini",
+      "size_exceeded": "Ukuran gambar tidak boleh melebihi 5 MB.",
+      "invalid_format": "Harap unggah file dalam format yang valid.",
+      "formats_supported": "Format file yang didukung: .jpeg, .jpg, .png, .webp",
+      "uploading": "Mengunggah",
+      "upload_and_save": "Unggah & Simpan",
+      "title": "Unggah Gambar",
+      "select_image": "Pilih gambar",
+      "select_image_named": "Pilih gambar: {description}",
+      "select_cover_image": "Pilih gambar sampul {index}",
+      "no_images": "Tidak ada gambar yang ditemukan."
+    },
+    "ai_assistant": {
+      "rate_limit": "Anda telah mencapai batas maksimum 50 permintaan per bulan untuk setiap pengguna.",
+      "use_response": "Gunakan respons ini",
+      "generating_response": "Membuat respons...",
+      "generate_response": "Buat respons",
+      "generate_again": "Buat lagi",
+      "content_label": "Konten:",
+      "response_label": "Respons:",
+      "no_response": "Tidak ada respons yang dapat dibuat. Hal ini mungkin karena konten atau informasi tugas tidak mencukupi. Silakan coba lagi.",
+      "placeholder_with_content": "Beri tahu AI tindakan apa yang harus dilakukan pada konten ini...",
+      "placeholder_empty": "Tanyakan apa saja kepada AI...",
+      "consent": "Dengan menggunakan fitur ini, Anda menyetujui pembagian pesan dengan layanan pihak ketiga."
+    },
+    "multiple_select": {
+      "select_all_in_group": "Pilih semua dalam grup"
+    },
+    "theme": {
+      "download_config": "Unduh konfigurasi",
+      "import_config": "Impor konfigurasi",
+      "import_failed": "Gagal mengimpor konfigurasi tema",
+      "missing_fields": "Kolom wajib tidak ada: primary dan background",
+      "invalid_brand_hex": "Format hex warna merek tidak valid",
+      "invalid_neutral_hex": "Format hex warna netral tidak valid",
+      "invalid_mode": "Mode tema tidak valid. Harus berupa boolean",
+      "choose_color_mode": "Pilih mode warna",
+      "light_mode": "Mode terang",
+      "dark_mode": "Mode gelap"
+    },
+    "workspace": {
+      "delete_warning": "Anda akan menghapus ruang kerja <name/>. Jika Anda mengonfirmasi, Anda akan kehilangan akses ke semua data kerja di ruang kerja ini tanpa cara untuk memulihkannya. Harap berhati-hati.",
+      "delete_type_name": "Ketik nama ruang kerja ini untuk melanjutkan.",
+      "delete_final_confirmation": "Untuk konfirmasi akhir, ketik <phrase/> di bawah."
+    },
+    "workspace_settings": {
+      "invitation_removed": "Undangan berhasil dihapus.",
+      "workspace_updated": "Ruang kerja berhasil diperbarui",
+      "picture_removed": "Gambar ruang kerja berhasil dihapus.",
+      "picture_remove_failed": "Terjadi kesalahan saat menghapus foto profil Anda. Silakan coba lagi.",
+      "url_copied": "URL ruang kerja disalin ke papan klip."
+    },
+    "workspace_views": {
+      "delete_failed": "Gagal menghapus tampilan. Silakan coba lagi.",
+      "create_failed": "Tampilan tidak dapat dibuat. Silakan coba lagi.",
+      "updated": "Tampilan berhasil diperbarui.",
+      "update_failed": "Tampilan tidak dapat diperbarui. Silakan coba lagi.",
+      "edit_view": "Edit tampilan",
+      "delete_view": "Hapus tampilan"
+    },
+    "sticky_colors": {
+      "gray": "Abu-abu",
+      "peach": "Persik",
+      "pink": "Merah muda",
+      "orange": "Oranye",
+      "green": "Hijau",
+      "light_blue": "Biru muda",
+      "dark_blue": "Biru tua",
+      "purple": "Ungu"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "Bekerja di segala dimensi.",
+      "welcome_back": "Selamat datang kembali di Plane.",
+      "create_your_account": "Buat akun Plane Anda."
+    },
+    "auth_root": {
+      "no_auth_methods_title": "Tidak ada metode autentikasi yang tersedia",
+      "no_auth_methods_description": "Silakan hubungi administrator Anda untuk mengaktifkan autentikasi pada instans Anda."
+    },
+    "auth_password": {
+      "create_account": "Buat akun"
+    },
+    "terms": {
+      "agree_sign_up": "Dengan membuat akun, Anda memahami dan menyetujui \n <terms>Ketentuan Layanan</terms> dan <privacy>Kebijakan Privasi</privacy> kami.",
+      "agree_sign_in": "Dengan masuk, Anda memahami dan menyetujui \n <terms>Ketentuan Layanan</terms> dan <privacy>Kebijakan Privasi</privacy> kami."
+    },
+    "auth_screens": {
+      "sign_up": "Daftar",
+      "sign_in": "Masuk",
+      "join_teams": "Bergabunglah dengan lebih dari 10.000 tim yang membangun bersama Plane",
+      "not_authorized_view_title": "Ups! Anda tidak berwenang untuk melihat halaman ini",
+      "not_authorized": "Tidak berwenang!",
+      "not_a_member_description": "Anda bukan anggota ruang kerja ini. Silakan hubungi admin ruang kerja untuk mendapatkan undangan atau periksa undangan Anda yang tertunda.",
+      "check_pending_invites": "Periksa undangan tertunda"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "Ruang kerja tidak ditemukan",
+      "workspace_not_found_description": "Tidak ada ruang kerja yang ditemukan dengan URL tersebut. Ruang kerja mungkin tidak ada atau Anda tidak berwenang untuk melihatnya.",
+      "visit_profile": "Kunjungi profil"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "Alihkan menu pengaturan",
+      "back_to_project": "Kembali ke proyek",
+      "toggle_project_feature": "Alihkan fitur proyek"
+    },
+    "headers": {
+      "toggle_sidebar": "Alihkan bilah samping"
+    },
+    "profile_activity": {
+      "page_title": "Profil - Aktivitas"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook berhasil diperbarui.",
+      "not_authorized": "Anda tidak berwenang untuk mengakses halaman ini.",
+      "enable_webhook": "Aktifkan webhook",
+      "toggle_webhook": "Alihkan webhook"
+    },
+    "project_settings_empty": {
+      "title": "Belum ada proyek",
+      "description": "Proyek menjadi fondasi pekerjaan yang berorientasi pada tujuan. Proyek memungkinkan Anda mengelola tim, tugas, dan segala hal yang Anda perlukan untuk menyelesaikan pekerjaan.",
+      "learn_more": "Pelajari lebih lanjut tentang proyek"
+    },
+    "project_templates": {
+      "imported_template": "Templat yang diimpor",
+      "pick_color": "Pilih warna"
+    },
+    "not_found": {
+      "image_alt": "404: Halaman tidak ditemukan",
+      "title": "Ups! Terjadi kesalahan.",
+      "description": "Maaf, halaman yang Anda cari tidak dapat ditemukan. Halaman tersebut mungkin telah dihapus, namanya diubah, atau sementara tidak tersedia.",
+      "go_to_home": "Ke Beranda"
+    },
+    "api_tokens": {
+      "empty_title": "Tidak ada token API",
+      "empty_description": "Buat token API untuk berbagi data dengan aplikasi eksternal secara aman dan mudah, dengan tetap menjaga kendali dan keamanan.",
+      "add_token": "Tambah token",
+      "delete_token": "Hapus token"
+    },
+    "base_layouts": {
+      "gantt": "Tata letak Gantt"
+    },
+    "command_palette": {
+      "no_states_found": "Tidak ada status yang ditemukan"
+    },
+    "quick_actions": {
+      "archive_module_hint": "Hanya Modul yang selesai atau dibatalkan yang dapat diarsipkan"
+    },
+    "progress": {
+      "cycle_progress": "Progres Siklus"
+    },
+    "estimates": {
+      "delete_title": "Hapus sistem perkiraan",
+      "delete_description": "Menghapus sistem perkiraan <name/> akan menghapusnya dari semua item kerja secara permanen. Tindakan ini tidak dapat dibatalkan. Jika Anda menambahkan perkiraan lagi, Anda perlu memperbarui semua item kerja.",
+      "deleting": "Menghapus",
+      "delete_estimate": "Hapus perkiraan",
+      "toggle_estimates": "Alihkan perkiraan",
+      "estimates_list": "Daftar perkiraan",
+      "archived_title": "Perkiraan yang diarsipkan",
+      "archived_description": "Perkiraan telah mengalami perubahan; ini adalah perkiraan dari versi lama Anda yang tidak digunakan. Pelajari lebih lanjut tentangnya <link>di sini.</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "Buat dependensi diblokir oleh",
+      "create_blocking_dependency": "Buat dependensi pemblokiran",
+      "update_block_dates_failed": "Terjadi kesalahan saat memperbarui tanggal blok"
+    },
+    "product_updates": {
+      "fetch_failed": "Kami mengalami kesulitan mengambil pembaruan. Silakan kunjungi changelog kami untuk melihat pembaruan terbaru.",
+      "go_to_changelog": "Buka changelog"
+    },
+    "inbox": {
+      "intake_form_user": "Pengguna formulir Intake",
+      "status": "Status",
+      "created_by": "Dibuat oleh"
+    },
+    "instance": {
+      "contact_support": "Hubungi dukungan",
+      "maintenance_title": "🚧 Sepertinya Plane tidak dimulai dengan benar!",
+      "maintenance_description": "Beberapa layanan mungkin gagal dimulai. Silakan periksa log kontainer Anda untuk mengidentifikasi dan menyelesaikan masalah. Jika Anda mengalami kesulitan, hubungi tim dukungan kami untuk bantuan lebih lanjut.",
+      "welcome_title": "Selamat datang di Plane",
+      "welcome_description": "Siapkan instans Anda dan buat ruang kerja pertama Anda untuk mulai mengelola proyek dan pekerjaan."
+    },
+    "integrations": {
+      "github_installed": "Aktifkan GitHub pada setiap proyek untuk menyinkronkan dengan repositori tertentu.",
+      "github_not_installed": "Hubungkan GitHub dengan ruang kerja Plane Anda untuk menyinkronkan item kerja proyek.",
+      "slack_installed": "Aktifkan Slack pada setiap proyek untuk menyinkronkan dengan saluran tertentu.",
+      "slack_not_installed": "Hubungkan Slack dengan ruang kerja Plane Anda untuk menyinkronkan item kerja proyek.",
+      "deleted_title": "Berhasil dihapus!",
+      "deleted_message": "Integrasi {title} berhasil dihapus.",
+      "delete_failed_message": "Integrasi {title} tidak dapat dihapus. Silakan coba lagi.",
+      "logo_alt": "Logo {title}",
+      "loading": "Memuat...",
+      "no_permission": "Anda tidak memiliki izin untuk melakukan ini",
+      "uninstalling": "Mencopot pemasangan...",
+      "uninstall": "Copot pemasangan",
+      "installing": "Memasang...",
+      "install": "Pasang"
+    },
+    "attachments": {
+      "upload_progress": "Progres unggahan"
+    },
+    "labels": {
+      "delete_confirmation": "Apakah Anda yakin ingin menghapus <name/>? Tindakan ini akan menghapus label dari semua item kerja dan dari tampilan mana pun yang memfilter berdasarkan label tersebut.",
+      "edit_label": "Edit label",
+      "delete_label": "Hapus label",
+      "remove_from_group": "Hapus dari grup"
+    },
+    "modules": {
+      "module_progress": "Progres Modul"
+    },
+    "navigation": {
+      "icon_only": "Hanya ikon",
+      "icon_with_name": "Ikon dengan nama",
+      "dock_app_rail": "Sematkan bilah aplikasi",
+      "undock_app_rail": "Lepas sematan bilah aplikasi",
+      "minimum_value_is_one": "Nilai minimum adalah 1",
+      "show": "Tampilkan",
+      "clear_default": "Hapus default",
+      "hide_in_more_menu": "Sembunyikan di menu lainnya",
+      "project_link_copied": "Tautan proyek disalin ke papan klip.",
+      "copy_failed": "Gagal menyalin",
+      "copy_failed_message": "Kami tidak dapat menyalin tautan. Silakan coba lagi.",
+      "default_tab_updated": "Tab default berhasil diperbarui.",
+      "default_tab_update_failed": "Gagal memperbarui tab default. Silakan coba lagi nanti.",
+      "hide_tab_failed": "Gagal menyembunyikan tab. Silakan coba lagi nanti.",
+      "generic_error": "Terjadi kesalahan. Silakan coba lagi nanti."
+    },
+    "onboarding": {
+      "select_workspace_invitation": "Pilih undangan ruang kerja"
+    },
+    "tour": {
+      "work_items_title": "Rencanakan dengan item kerja",
+      "work_items_description": "Item kerja adalah blok penyusun Plane. Sebagian besar konsep di Plane berkaitan dengan item kerja dan propertinya.",
+      "cycles_title": "Bergerak dengan siklus",
+      "cycles_description": "Siklus membantu Anda dan tim Anda berkembang lebih cepat, mirip dengan sprint yang umum digunakan dalam pengembangan agile.",
+      "modules_title": "Pecah menjadi modul",
+      "modules_description": "Modul memecah pekerjaan besar Anda menjadi proyek atau fitur, agar Anda dapat mengatur dengan lebih baik.",
+      "views_description": "Buat filter khusus untuk menampilkan hanya item kerja yang penting bagi Anda. Simpan dan bagikan filter Anda hanya dengan beberapa klik.",
+      "pages_title": "Dokumentasikan dengan halaman",
+      "pages_description": "Gunakan halaman untuk mencatat item kerja dengan cepat saat Anda berada dalam rapat atau memulai hari.",
+      "welcome_title": "Selamat datang di Plane, {firstName} {lastName}",
+      "welcome_description": "Kami senang Anda memutuskan untuk mencoba Plane. Sekarang Anda dapat mengelola proyek dengan mudah. Mulailah dengan membuat proyek.",
+      "take_tour": "Ikuti tur produk",
+      "skip": "Tidak, terima kasih, saya akan menjelajahinya sendiri",
+      "create_first_project": "Buat proyek pertama Anda",
+      "sidebar_heading": "Mari kita mulai!<br/>Manfaatkan Plane lebih jauh."
+    },
+    "ai": {
+      "ask_pi": "Tanya Pi",
+      "tone_professional": "💼 Profesional",
+      "tone_casual": "😃 Santai",
+      "third_party_consent": "Dengan menggunakan fitur ini, Anda menyetujui pembagian pesan dengan layanan pihak ketiga.",
+      "pi_writing": "Pi sedang menulis",
+      "pi_generating_response": "Pi sedang membuat respons"
+    },
+    "pages": {
+      "icon": "Ikon",
+      "color": "Warna",
+      "remove_text_color": "Hapus warna teks",
+      "remove_background_color": "Hapus warna latar belakang",
+      "formatting_toolbar": "Bilah alat pemformatan",
+      "copied_link": "Tautan disalin",
+      "remove_favorite": "Hapus dari favorit",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "Bot {name}"
+    },
+    "project": {
+      "identifier": "Pengenal"
+    },
+    "projects": {
+      "toggle_feature": "Alihkan fitur proyek",
+      "cover_upload_failed": "Gagal mengunggah gambar sampul"
+    },
+    "notifications": {
+      "notification_options": "Opsi notifikasi"
+    },
+    "stores": {
+      "generic_error": "Terjadi kesalahan",
+      "inbox_fetch_error": "Kesalahan saat mengambil item kerja Intake. Silakan coba lagi nanti.",
+      "page_make_public_error": "Halaman tidak dapat dibuat publik. Silakan coba lagi nanti.",
+      "page_make_private_error": "Halaman tidak dapat dibuat privat. Silakan coba lagi nanti.",
+      "workflow_pending_approval": "Item kerja memiliki persetujuan yang tertunda.",
+      "workflow_transition_not_allowed": "Transisi status ini tidak diizinkan oleh alur kerja."
+    },
+    "validation": {
+      "name_max_length": "Nama harus terdiri dari 50 karakter atau kurang",
+      "name_special_chars": "Nama tidak boleh mengandung karakter khusus seperti {chars}",
+      "name_invalid_chars": "Nama hanya boleh berisi huruf, spasi, tanda hubung, dan apostrof",
+      "display_name_max_length": "Nama tampilan harus terdiri dari 50 karakter atau kurang",
+      "display_name_special_chars": "Nama tampilan tidak boleh mengandung karakter khusus seperti {chars}",
+      "display_name_invalid_chars": "Nama tampilan hanya boleh berisi huruf, angka, titik, tanda hubung, dan garis bawah",
+      "company_name_max_length": "Nama perusahaan harus terdiri dari 80 karakter atau kurang",
+      "company_name_special_chars": "Nama perusahaan tidak boleh mengandung karakter khusus seperti {chars}",
+      "company_name_invalid_chars": "Nama perusahaan hanya boleh berisi huruf, angka, spasi, tanda hubung, dan garis bawah",
+      "company_name_needs_alphanumeric": "Nama perusahaan harus mengandung setidaknya satu huruf atau angka",
+      "workspace_name_required": "Nama ruang kerja wajib diisi",
+      "workspace_name_max_length": "Nama ruang kerja harus terdiri dari 80 karakter atau kurang",
+      "workspace_name_special_chars": "Nama ruang kerja tidak boleh mengandung karakter khusus seperti {chars}",
+      "workspace_name_invalid_chars": "Nama ruang kerja hanya boleh berisi huruf, angka, spasi, tanda hubung, dan garis bawah",
+      "workspace_name_needs_alphanumeric": "Nama ruang kerja harus mengandung setidaknya satu huruf atau angka",
+      "slug_required": "Slug wajib diisi",
+      "slug_max_length": "Slug harus terdiri dari 48 karakter atau kurang",
+      "slug_special_chars": "Slug tidak boleh mengandung karakter khusus seperti {chars}",
+      "slug_invalid_chars": "Slug hanya boleh berisi huruf, angka, tanda hubung, dan garis bawah"
+    },
+    "analytics": {
+      "state_name": "Nama status",
+      "estimate_point": "Poin perkiraan",
+      "completed_date": "Tanggal selesai",
+      "yesterday": "Kemarin",
+      "last_7_days": "7 hari terakhir",
+      "last_30_days": "30 hari terakhir",
+      "last_3_months": "3 bulan terakhir",
+      "duration": "Durasi"
+    },
+    "auth_labels": {
+      "magic_code": "Kode ajaib"
+    },
+    "state_groups": {
+      "canceled": "Dibatalkan"
+    },
+    "filters": {
+      "state_group": "Grup status",
+      "subscriber": "Pelanggan"
+    }
   }
 }

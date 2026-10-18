@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,7 +11,12 @@ import type { IState, TFilterProperty, TStateGroups, TSupportedOperators } from 
 import { COLLECTION_OPERATOR, EQUALITY_OPERATOR } from "@plane/types";
 // local imports
 import type { IFilterIconConfig, TCreateFilterConfig, TCreateFilterConfigParams } from "../../../rich-filters";
-import { createFilterConfig, getMultiSelectConfig, createOperatorConfigEntry } from "../../../rich-filters";
+import {
+  createFilterConfig,
+  getMultiSelectConfig,
+  createOperatorConfigEntry,
+  translateFilterLabel,
+} from "../../../rich-filters";
 
 // ------------ State group filter ------------
 
@@ -28,11 +34,11 @@ export const getStateGroupMultiSelectConfig = (
   params: TCreateStateGroupFilterParams,
   singleValueOperator: TSupportedOperators
 ) =>
-  getMultiSelectConfig<{ key: TStateGroups; label: string }, TStateGroups, TStateGroups>(
+  getMultiSelectConfig<{ key: TStateGroups; label: string; i18n_label: string }, TStateGroups, TStateGroups>(
     {
       items: Object.values(STATE_GROUPS),
       getId: (state) => state.key,
-      getLabel: (state) => state.label,
+      getLabel: (state) => translateFilterLabel(params.t, state.i18n_label, state.label),
       getValue: (state) => state.key,
       getIconData: (state) => state.key,
     },
@@ -56,7 +62,7 @@ export const getStateGroupFilterConfig =
   (params: TCreateStateGroupFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "State Group",
+      label: translateFilterLabel(params.t, "app_text.filters.state_group", "State Group"),
       ...params,
       icon: params.filterIcon,
       supportedOperatorConfigsMap: new Map([
@@ -110,7 +116,7 @@ export const getStateFilterConfig =
   (params: TCreateStateFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "State",
+      label: translateFilterLabel(params.t, "common.state", "State"),
       ...params,
       icon: params.filterIcon,
       supportedOperatorConfigsMap: new Map([

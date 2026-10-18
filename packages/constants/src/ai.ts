@@ -9,8 +9,9 @@ export enum AI_EDITOR_TASKS {
   ASK_ANYTHING = "ASK_ANYTHING",
 }
 
+// values are i18n keys, translate where displayed
 export const LOADING_TEXTS: {
   [key in AI_EDITOR_TASKS]: string;
 } = {
-  [AI_EDITOR_TASKS.ASK_ANYTHING]: "Pi is generating response",
+  [AI_EDITOR_TASKS.ASK_ANYTHING]: "app_text.ai.pi_generating_response",
 };

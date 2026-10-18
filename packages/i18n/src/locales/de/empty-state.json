@@ -192,8 +192,8 @@
       "cta_primary": "Erstellen Sie Ihre Seite"
     },
     "project_overview_state_sidebar": {
-      "title": "Projektzustände aktivieren",
-      "description": "Aktivieren Sie Projektzustände, um Eigenschaften wie Status, Priorität, Fälligkeitsdaten und mehr anzuzeigen und zu verwalten."
+      "title": "Projektstatus aktivieren",
+      "description": "Aktivieren Sie Projektstatus, um Eigenschaften wie Status, Priorität, Fälligkeitsdaten und mehr anzuzeigen und zu verwalten."
     }
   },
   "settings_empty_state": {
@@ -262,8 +262,8 @@
       "description": "Erstellen Sie Workflows, um den Fortschritt Ihrer Arbeitselemente zu verwalten.",
       "cta_primary": "Neuen Workflow hinzufügen",
       "states": {
-        "title": "Zustände hinzufügen",
-        "description": "Wählen Sie die Zustände aus, die das Arbeitselement durchläuft."
+        "title": "Status hinzufügen",
+        "description": "Wählen Sie die Status aus, die das Arbeitselement durchläuft."
       }
     }
   }

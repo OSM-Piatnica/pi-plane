@@ -303,7 +303,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               stretch="full"
               disabled={isButtonDisabled}
               loading={isSubmitting}
-              label="Create account"
+              label={t("app_text.auth_password.create_account")}
             />
           )}
         </div>

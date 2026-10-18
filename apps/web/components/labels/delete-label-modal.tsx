@@ -10,6 +10,7 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // types
 import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 import { setToast } from "@plane/blocks/toast";
 import type { IIssueLabel } from "@plane/types";
 // ui
@@ -70,8 +71,9 @@ export const DeleteLabelModal = observer(function DeleteLabelModal(props: Props)
       title={t("core_ui.delete_label")}
       content={
         <>
-          Are you sure you want to delete <span className="font-medium text-primary">{data?.name}</span>? This will
-          remove the label from all the work item and from any views where the label is being filtered upon.
+          {renderTaggedText(t("app_text.labels.delete_confirmation"), {
+            name: () => <span className="font-medium text-primary">{data?.name}</span>,
+          })}
         </>
       }
     />

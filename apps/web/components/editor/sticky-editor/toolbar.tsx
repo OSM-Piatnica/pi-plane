@@ -11,6 +11,7 @@ import { DeleteOutline, PaletteOutline } from "@makeplane/propel/icons";
 import type { EditorRefApi, ToolbarMenuItem } from "@plane/editor";
 // ui
 import { useOutsideClickDetector } from "@plane/hooks";
+import { useTranslation } from "@plane/i18n";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TSticky } from "@plane/types";
 // constants
@@ -30,6 +31,7 @@ const toolbarItems = TOOLBAR_ITEMS.sticky;
 
 export function StickyEditorToolbar(props: Props) {
   const { executeCommand, editorRef, handleColorChange, handleDelete } = props;
+  const { t } = useTranslation();
 
   // State to manage active states of toolbar items
   const [activeStates, setActiveStates] = useState<Record<string, boolean>>({});
@@ -67,7 +69,7 @@ export function StickyEditorToolbar(props: Props) {
       <div className="my-auto flex gap-4" ref={colorPaletteRef}>
         {/* color palette */}
         {showColorPalette && <ColorPalette handleUpdate={handleColorChange} />}
-        <Tooltip label="Background color">
+        <Tooltip label={t("background_color")}>
           <button type="button" onClick={() => setShowColorPalette(!showColorPalette)} className="flex text-primary/50">
             <PaletteOutline className="my-auto size-4" />
           </button>
@@ -103,7 +105,7 @@ export function StickyEditorToolbar(props: Props) {
         </div>
       </div>
       {/* delete action */}
-      <Tooltip label="Delete">
+      <Tooltip label={t("common.delete")}>
         <button type="button" onClick={handleDelete} className="my-auto text-primary/50">
           <DeleteOutline className="size-4" />
         </button>

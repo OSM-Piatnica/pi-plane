@@ -58,7 +58,7 @@
         "description": "Beginnen Sie, indem Sie auf die Schaltfläche \"+\" klicken. Fügen Sie neue oder vorhandene Arbeitselemente direkt von der Modul-Seite hinzu."
       },
       "step_three": {
-        "title": "Modulzustände",
+        "title": "Modulstatus",
         "description": "Module verwenden diese Status, um Benutzern bei der Planung zu helfen und Fortschritt und Phase klar zu verfolgen."
       },
       "step_four": {

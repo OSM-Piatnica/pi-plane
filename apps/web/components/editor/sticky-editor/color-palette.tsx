@@ -5,6 +5,7 @@
  * See the LICENSE file for details.
  */
 
+import { useTranslation } from "@plane/i18n";
 import type { TSticky } from "@plane/types";
 
 export const STICKY_COLORS_LIST: {
@@ -14,42 +15,42 @@ export const STICKY_COLORS_LIST: {
 }[] = [
   {
     key: "gray",
-    label: "Gray",
+    label: "app_text.sticky_colors.gray",
     backgroundColor: "var(--editor-colors-gray-background)",
   },
   {
     key: "peach",
-    label: "Peach",
+    label: "app_text.sticky_colors.peach",
     backgroundColor: "var(--editor-colors-peach-background)",
   },
   {
     key: "pink",
-    label: "Pink",
+    label: "app_text.sticky_colors.pink",
     backgroundColor: "var(--editor-colors-pink-background)",
   },
   {
     key: "orange",
-    label: "Orange",
+    label: "app_text.sticky_colors.orange",
     backgroundColor: "var(--editor-colors-orange-background)",
   },
   {
     key: "green",
-    label: "Green",
+    label: "app_text.sticky_colors.green",
     backgroundColor: "var(--editor-colors-green-background)",
   },
   {
     key: "light-blue",
-    label: "Light blue",
+    label: "app_text.sticky_colors.light_blue",
     backgroundColor: "var(--editor-colors-light-blue-background)",
   },
   {
     key: "dark-blue",
-    label: "Dark blue",
+    label: "app_text.sticky_colors.dark_blue",
     backgroundColor: "var(--editor-colors-dark-blue-background)",
   },
   {
     key: "purple",
-    label: "Purple",
+    label: "app_text.sticky_colors.purple",
     backgroundColor: "var(--editor-colors-purple-background)",
   },
 ];
@@ -60,15 +61,16 @@ type TProps = {
 
 export function ColorPalette(props: TProps) {
   const { handleUpdate } = props;
+  const { t } = useTranslation();
   return (
     <div className="shadow absolute bottom-5 left-0 z-10 mb-2 w-56 rounded-md bg-surface-1 p-2">
-      <div className="mb-2 text-13 font-semibold text-placeholder">Background colors</div>
+      <div className="mb-2 text-13 font-semibold text-placeholder">{t("page_ui.editor.background_colors")}</div>
       <div className="flex flex-wrap gap-2">
         {STICKY_COLORS_LIST.map((color) => (
           <button
             key={color.key}
             type="button"
-            aria-label={color.label}
+            aria-label={t(color.label)}
             onClick={() => {
               handleUpdate({
                 background_color: color.key,

@@ -73,7 +73,7 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
       setToast({
         title: t("toast.success"),
         type: "success",
-        message: "Workspace updated successfully",
+        message: t("app_text.workspace_settings.workspace_updated"),
       });
     } catch (err: unknown) {
       console.error(err);
@@ -94,13 +94,13 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
       setToast({
         type: "success",
         title: t("toast.success"),
-        message: "Workspace picture removed successfully.",
+        message: t("app_text.workspace_settings.picture_removed"),
       });
     } catch {
       setToast({
         type: "error",
         title: t("toast.error"),
-        message: "There was some error in deleting your profile picture. Please try again.",
+        message: t("app_text.workspace_settings.picture_remove_failed"),
       });
     }
   };
@@ -112,7 +112,7 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
       .then(() => {
         setToast({
           type: "success",
-          title: "Workspace URL copied to the clipboard.",
+          title: t("app_text.workspace_settings.url_copied"),
         });
         return undefined;
       })
@@ -156,7 +156,7 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
                   <img
                     src={getFileURL(workspaceLogo)}
                     className="absolute top-0 left-0 size-full rounded-md object-cover"
-                    alt="Workspace Logo"
+                    alt={t("workspace_logo")}
                   />
                 </div>
               ) : (
@@ -197,7 +197,7 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
                 control={control}
                 name="name"
                 rules={{
-                  validate: (value) => validateWorkspaceName(value, true),
+                  validate: (value) => validateWorkspaceName(value, true, t),
                 }}
                 render={({ field: { value, onChange, ref } }) => (
                   <Field name="name" invalid={Boolean(errors.name)}>

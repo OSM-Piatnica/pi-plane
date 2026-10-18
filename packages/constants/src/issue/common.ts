@@ -37,6 +37,7 @@ export enum EIssueGroupByToServerOptions {
   "cycle" = "cycle_id",
   "module" = "issue_module__module_id",
   "target_date" = "target_date",
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   "project" = "project_id",
   "created_by" = "created_by",
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
@@ -71,26 +72,32 @@ export enum EIssueListRow {
 export const ISSUE_PRIORITIES: {
   key: TIssuePriorities;
   title: string;
+  i18n_title: string;
 }[] = [
   {
     key: "urgent",
     title: "Urgent",
+    i18n_title: "issue.priority.urgent",
   },
   {
     key: "high",
     title: "High",
+    i18n_title: "issue.priority.high",
   },
   {
     key: "medium",
     title: "Medium",
+    i18n_title: "issue.priority.medium",
   },
   {
     key: "low",
     title: "Low",
+    i18n_title: "issue.priority.low",
   },
   {
     key: "none",
     title: "None",
+    i18n_title: "common.none",
   },
 ];
 

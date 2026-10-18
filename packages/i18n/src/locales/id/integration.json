@@ -34,7 +34,7 @@
     "project_issue_sync": "Sinkronisasi Masalah Proyek",
     "project_issue_sync_description": "Sinkronisasi masalah dari GitHub ke proyek Plane",
     "project_issue_sync_empty_state": "Sinkronisasi masalah proyek yang dipetakan akan muncul di sini",
-    "configure_project_issue_sync_state": "Konfigurasikan State Sinkronisasi Masalah",
+    "configure_project_issue_sync_state": "Konfigurasikan Status Sinkronisasi Masalah",
     "select_issue_sync_direction": "Pilih arah sinkronisasi masalah",
     "allow_bidirectional_sync": "Bidirectional - Sinkronisasi masalah dan komentar dalam dua arah antara GitHub dan Plane",
     "allow_unidirectional_sync": "Unidirectional - Sinkronisasi masalah dan komentar dari GitHub ke Plane saja",

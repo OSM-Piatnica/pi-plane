@@ -6,6 +6,7 @@
  */
 
 import { EmptyStateDetailed } from "@plane/blocks/empty-state";
+import { useTranslation } from "@plane/i18n";
 
 type TProductUpdatesFallbackProps = {
   description: string;
@@ -14,6 +15,7 @@ type TProductUpdatesFallbackProps = {
 
 export function ProductUpdatesFallback(props: TProductUpdatesFallbackProps) {
   const { description, variant } = props;
+  const { t } = useTranslation();
   // derived values
   const changelogUrl =
     variant === "cloud"
@@ -28,7 +30,7 @@ export function ProductUpdatesFallback(props: TProductUpdatesFallbackProps) {
         align="center"
         actions={[
           {
-            label: "Go to changelog",
+            label: t("app_text.product_updates.go_to_changelog"),
             variant: "primary",
             onClick: () => window.open(changelogUrl, "_blank"),
           },
