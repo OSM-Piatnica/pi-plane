@@ -14,7 +14,6 @@ import type { RootStore } from "@/store/root.store";
 
 type TError = {
   status: string;
-  message: string;
   data?: {
     is_activated: boolean;
     is_setup_done: boolean;
@@ -75,7 +74,6 @@ export class InstanceStore implements IInstanceStore {
         this.isLoading = false;
         this.error = {
           status: "error",
-          message: "Failed to fetch instance info",
         };
       });
     }

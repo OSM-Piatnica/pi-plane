@@ -15,7 +15,6 @@ import type { RootStore } from "@/store/root.store";
 
 type TError = {
   status: string;
-  message: string;
 };
 
 export interface IProfileStore {
@@ -100,7 +99,6 @@ export class ProfileStore implements IProfileStore {
         this.isLoading = false;
         this.error = {
           status: "user-profile-fetch-error",
-          message: "Failed to fetch user profile",
         };
       });
     }
@@ -132,7 +130,6 @@ export class ProfileStore implements IProfileStore {
       runInAction(() => {
         this.error = {
           status: "user-profile-update-error",
-          message: "Failed to update user profile",
         };
       });
     }
