@@ -195,7 +195,7 @@
         "primary_button": {
           "text": "Maak je eerste werkitem aan",
           "comic": {
-            "title": "Werkitems zijn de bouwstenen in Plane.",
+            "title": "Werkitems zijn de bouwstenen in Pi-Plane.",
             "description": "De Plane-UI opnieuw ontwerpen, het bedrijf rebranden of het nieuwe brandstofinjectiesysteem lanceren zijn voorbeelden van werkitems die waarschijnlijk subwerkitems hebben."
           }
         }
@@ -271,8 +271,8 @@
   "project_page": {
     "empty_state": {
       "general": {
-        "title": "Schrijf een notitie, een document of een complete kennisbank. Laat Galileo, de AI-assistent van Plane, je op weg helpen",
-        "description": "Pagina's zijn de plek in Plane waar je gedachten kunnen groeien. Noteer vergaderaantekeningen, maak ze eenvoudig op, sluit werkitems in, geef ze vorm met een bibliotheek aan componenten en bewaar alles in de context van je project. Roep Galileo, de AI van Plane, aan met een sneltoets of een klik op een knop om elk document snel af te hebben.",
+        "title": "Schrijf een notitie, een document of een complete kennisbank. Laat Galileo, de AI-assistent van Pi-Plane, je op weg helpen",
+        "description": "Pagina's zijn de plek in Pi-Plane waar je gedachten kunnen groeien. Noteer vergaderaantekeningen, maak ze eenvoudig op, sluit werkitems in, geef ze vorm met een bibliotheek aan componenten en bewaar alles in de context van je project. Roep Galileo, de AI van Pi-Plane, aan met een sneltoets of een klik op een knop om elk document snel af te hebben.",
         "primary_button": {
           "text": "Maak je eerste pagina aan"
         }

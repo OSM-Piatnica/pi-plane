@@ -839,7 +839,7 @@
     "edited_by": "Upravené používateľom"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane sa nespustil. Toto môže byť spôsobené tým, že sa jedna alebo viac služieb Plane nepodarilo spustiť.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane sa nespustil. Toto môže byť spôsobené tým, že sa jedna alebo viac služieb Pi-Plane nepodarilo spustiť.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Vyberte View Logs z setup.sh a Docker logov, aby ste si boli istí."
   },
   "customize_navigation": "Prispôsobiť navigáciu",
@@ -892,7 +892,7 @@
     "skip": "Preskočiť",
     "profile": {
       "title": "Vytvorte si profil.",
-      "description": "Takto sa budete zobrazovať v Plane.",
+      "description": "Takto sa budete zobrazovať v Pi-Plane.",
       "choose_image": "Vybrať obrázok",
       "upload_image": "Nahrať obrázok",
       "change_image": "Zmeniť obrázok",
@@ -907,7 +907,7 @@
       "new_password_placeholder": "Nové heslo...",
       "role_question": "Akú rolu zastávate? Vyberte jednu.",
       "domain_question": "Aká je vaša odborná oblasť? Vyberte jednu alebo viac.",
-      "marketing_consent": "Súhlasím so zasielaním marketingových informácií od Plane",
+      "marketing_consent": "Súhlasím so zasielaním marketingových informácií od Pi-Plane",
       "passwords_do_not_match": "Heslá sa nezhodujú",
       "passwords_match": "Heslá sa zhodujú",
       "seniority_levels": {
@@ -938,7 +938,7 @@
     },
     "role": {
       "title": "Aká je vaša rola?",
-      "description": "Nastavme Plane podľa toho, ako pracujete.",
+      "description": "Nastavme Pi-Plane podľa toho, ako pracujete.",
       "select_one": "Vyberte jednu",
       "options": {
         "product_manager": "Produktový manažér",
@@ -951,7 +951,7 @@
       }
     },
     "usecase": {
-      "title": "Čo vás privádza do Plane?",
+      "title": "Čo vás privádza do Pi-Plane?",
       "description": "Povedzte nám o svojich cieľoch a veľkosti tímu.",
       "select_multiple": "Vyberte jednu alebo viac",
       "select_at_least_one": "Vyberte aspoň jednu možnosť"
@@ -972,7 +972,7 @@
     },
     "team": {
       "invite_teammates": "Pozvite svojich kolegov",
-      "invite_teammates_description": "Práca v Plane funguje najlepšie s vaším tímom. Pozvite ho hneď a využite Plane naplno.",
+      "invite_teammates_description": "Práca v Pi-Plane funguje najlepšie s vaším tímom. Pozvite ho hneď a využite Pi-Plane naplno.",
       "add_another": "Pridať ďalšieho",
       "do_it_later": "Urobím to neskôr",
       "invalid_email": "Neplatná e-mailová adresa",
@@ -1140,8 +1140,8 @@
     },
     "auth_header": {
       "work_in_all_dimensions": "Pracujte vo všetkých dimenziách.",
-      "welcome_back": "Vitajte späť v Plane.",
-      "create_your_account": "Vytvorte si účet Plane."
+      "welcome_back": "Vitajte späť v Pi-Plane.",
+      "create_your_account": "Vytvorte si účet Pi-Plane."
     },
     "auth_root": {
       "no_auth_methods_title": "Nie sú k dispozícii žiadne metódy overovania",
@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "Registrácia",
       "sign_in": "Prihlásiť sa",
-      "join_teams": "Pripojte sa k viac ako 10 000 tímom, ktoré tvoria s Plane",
+      "join_teams": "Pripojte sa k viac ako 10 000 tímom, ktoré tvoria s Pi-Plane",
       "not_authorized_view_title": "Ojoj! Nemáte oprávnenie zobraziť túto stránku",
       "not_authorized": "Neoprávnený prístup!",
       "not_a_member_description": "Nie ste členom tohto pracovného priestoru. Obráťte sa na správcu pracovného priestoru, aby vám poslal pozvánku, alebo skontrolujte svoje čakajúce pozvánky.",
@@ -1244,16 +1244,16 @@
     },
     "instance": {
       "contact_support": "Kontaktovať podporu",
-      "maintenance_title": "🚧 Vyzerá to, že sa Plane nespustil správne!",
+      "maintenance_title": "🚧 Vyzerá to, že sa Pi-Plane nespustil správne!",
       "maintenance_description": "Niektoré služby sa možno nepodarilo spustiť. Skontrolujte protokoly kontajnerov, aby ste problém zistili a vyriešili. Ak si neviete rady, obráťte sa na náš tím podpory.",
-      "welcome_title": "Vitajte v Plane",
+      "welcome_title": "Vitajte v Pi-Plane",
       "welcome_description": "Nastavte svoju inštanciu a vytvorte svoj prvý pracovný priestor, aby ste mohli začať spravovať projekty a prácu."
     },
     "integrations": {
       "github_installed": "Aktivujte GitHub pri jednotlivých projektoch na synchronizáciu s konkrétnymi repozitármi.",
-      "github_not_installed": "Prepojte GitHub so svojím pracovným priestorom Plane na synchronizáciu pracovných položiek projektu.",
+      "github_not_installed": "Prepojte GitHub so svojím pracovným priestorom Pi-Plane na synchronizáciu pracovných položiek projektu.",
       "slack_installed": "Aktivujte Slack pri jednotlivých projektoch na synchronizáciu s konkrétnymi kanálmi.",
-      "slack_not_installed": "Prepojte Slack so svojím pracovným priestorom Plane na synchronizáciu pracovných položiek projektu.",
+      "slack_not_installed": "Prepojte Slack so svojím pracovným priestorom Pi-Plane na synchronizáciu pracovných položiek projektu.",
       "deleted_title": "Úspešne zmazané!",
       "deleted_message": "Integrácia {title} bola úspešne zmazaná.",
       "delete_failed_message": "Integráciu {title} sa nepodarilo zmazať. Skúste to prosím znova.",
@@ -1299,7 +1299,7 @@
     },
     "tour": {
       "work_items_title": "Plánujte pomocou pracovných položiek",
-      "work_items_description": "Pracovná položka je základným stavebným kameňom Plane. Väčšina konceptov v Plane je spojená s pracovnými položkami a ich vlastnosťami.",
+      "work_items_description": "Pracovná položka je základným stavebným kameňom Pi-Plane. Väčšina konceptov v Pi-Plane je spojená s pracovnými položkami a ich vlastnosťami.",
       "cycles_title": "Postupujte pomocou cyklov",
       "cycles_description": "Cykly vám a vášmu tímu pomáhajú postupovať rýchlejšie, podobne ako šprinty bežne používané vo vývoji agile.",
       "modules_title": "Rozdeľte na moduly",
@@ -1307,12 +1307,12 @@
       "views_description": "Vytvárajte vlastné filtre a zobrazujte len pracovné položky, na ktorých vám záleží. Filtre uložíte a zdieľate za pár kliknutí.",
       "pages_title": "Dokumentujte pomocou stránok",
       "pages_description": "Pomocou stránok rýchlo zapisujte pracovné položky na schôdzi alebo na začiatku dňa.",
-      "welcome_title": "Vitajte v Plane, {firstName} {lastName}",
-      "welcome_description": "Sme radi, že ste sa rozhodli Plane vyskúšať. Teraz môžete jednoducho spravovať svoje projekty. Začnite vytvorením projektu.",
+      "welcome_title": "Vitajte v Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "Sme radi, že ste sa rozhodli Pi-Plane vyskúšať. Teraz môžete jednoducho spravovať svoje projekty. Začnite vytvorením projektu.",
       "take_tour": "Absolvovať prehliadku produktu",
       "skip": "Nie, ďakujem, preskúmam to sám",
       "create_first_project": "Vytvorte svoj prvý projekt",
-      "sidebar_heading": "Začnime!<br/>Získajte z Plane viac."
+      "sidebar_heading": "Začnime!<br/>Získajte z Pi-Plane viac."
     },
     "ai": {
       "ask_pi": "Opýtať sa Pi",
@@ -1406,9 +1406,9 @@
       "sign_in_header": "Prihláste sa, aby ste mohli hlasovať alebo komentovať",
       "sign_in_sub_header": "Prispejte k tomu, ktoré funkcie sa budú vytvárať.",
       "sign_up_header": "Prezerajte, komentujte a robte viac",
-      "sign_up_sub_header": "Zaregistrujte sa alebo sa prihláste a pracujte s pracovnými položkami a Stránkami v Plane.",
+      "sign_up_sub_header": "Zaregistrujte sa alebo sa prihláste a pracujte s pracovnými položkami a Stránkami v Pi-Plane.",
       "default_header": "Komentujte pracovné položky alebo na ne reagujte",
-      "default_sub_header": "Použite Plane a pridajte svoje cenné podnety k funkciám."
+      "default_sub_header": "Použite Pi-Plane a pridajte svoje cenné podnety k funkciám."
     },
     "terms": {
       "agree_sign_up": "Vytvorením účtu súhlasíte s našimi\n<terms>Podmienkami služby</terms> a <privacy>Zásadami ochrany osobných údajov</privacy>.",
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "Jej! Toto nevyzerá dobre.",
-      "description": "Plane sa zrútil, bez preháňania. Nič sa nedeje, naši inžinieri boli upozornení. Ak máte ďalšie podrobnosti, napíšte na <email/> alebo na naše <forum/>."
+      "description": "Pi-Plane sa zrútil, bez preháňania. Nič sa nedeje, naši inžinieri boli upozornení. Ak máte ďalšie podrobnosti, napíšte na <email/> alebo na naše <forum/>."
     },
     "not_found_page": {
       "title": "To sa nepodarilo",
       "description": "Skontrolujte adresu URL, ktorú zadávate do adresového riadka prehliadača, a skúste to znova."
     },
     "powered_by": {
-      "label": "Využíva <name>Plane Publish</name>"
+      "label": "Využíva <name>Pi-Plane</name>"
     },
     "instance_failure": {
       "image_alt": "Zlyhanie inštancie Pi-Plane",

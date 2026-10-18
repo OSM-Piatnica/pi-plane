@@ -310,7 +310,7 @@
         },
         "app_created": {
           "title": "アプリが正常に作成されました",
-          "description": "認証情報を使用して、Plane ワークスペースにアプリをインストールしてください"
+          "description": "認証情報を使用して、Pi-Plane ワークスペースにアプリをインストールしてください"
         },
         "installed_apps": "インストール済みアプリ",
         "all_apps": "すべてのアプリ",
@@ -351,7 +351,7 @@
         },
         "redirect_uris": {
           "label": "リダイレクトURI（スペース区切り）",
-          "description": "ユーザーは Plane で認証した後、このパスにリダイレクトされます。",
+          "description": "ユーザーは Pi-Plane で認証した後、このパスにリダイレクトされます。",
           "placeholder": "https://example.com https://example.com/"
         },
         "app_available_description": "使用を開始するにはPlaneワークスペースに接続してください",

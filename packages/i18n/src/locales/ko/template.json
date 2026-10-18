@@ -170,7 +170,7 @@
           },
           "company_name": {
             "label": "회사 이름",
-            "placeholder": "Plane",
+            "placeholder": "Pi-Plane",
             "validation": {
               "required": "회사 이름이 필요합니다",
               "maxLength": "회사 이름은 255자 미만이어야 합니다"
@@ -227,7 +227,7 @@
     "empty_state": {
       "upgrade": {
         "title": "템플릿",
-        "description": "플레인의 프로젝트, 워크 아이템 및 페이지 템플릿을 사용하면 처음부터 프로젝트를 만들거나 워크 아이템 속성을 수동으로 설정할 필요가 없습니다.",
+        "description": "Pi-Plane의 프로젝트, 워크 아이템 및 페이지 템플릿을 사용하면 처음부터 프로젝트를 만들거나 워크 아이템 속성을 수동으로 설정할 필요가 없습니다.",
         "sub_description": "템플릿을 사용하면 관리 시간의 80%를 절약할 수 있습니다."
       },
       "no_templates": {

@@ -1,7 +1,7 @@
 {
   "workspace_creation": {
     "heading": "Maak je werkruimte",
-    "subheading": "Om Plane te gebruiken, moet je een werkruimte maken of eraan deelnemen.",
+    "subheading": "Om Pi-Plane te gebruiken, moet je een werkruimte maken of eraan deelnemen.",
     "form": {
       "name": {
         "label": "Geef je werkruimte een naam",
@@ -54,11 +54,11 @@
     "empty_state": {
       "general": {
         "title": "Overzicht van je projecten, activiteit en statistieken",
-        "description": "Welkom bij Plane, we zijn blij dat je er bent. Maak je eerste project en volg je werkitems, en deze pagina verandert in een ruimte die je helpt vooruitgang te boeken. Beheerders zien ook items die hun team helpen vooruit te komen.",
+        "description": "Welkom bij Pi-Plane, we zijn blij dat je er bent. Maak je eerste project en volg je werkitems, en deze pagina verandert in een ruimte die je helpt vooruitgang te boeken. Beheerders zien ook items die hun team helpen vooruit te komen.",
         "primary_button": {
           "text": "Bouw je eerste project",
           "comic": {
-            "title": "In Plane begint alles met een project",
+            "title": "In Pi-Plane begint alles met een project",
             "description": "Een project kan de roadmap van een product zijn, een marketingcampagne of de lancering van een nieuwe auto."
           }
         }
@@ -200,7 +200,7 @@
         "primary_button": {
           "text": "Start je eerste project",
           "comic": {
-            "title": "In Plane begint alles met een project",
+            "title": "In Pi-Plane begint alles met een project",
             "description": "Een project kan de roadmap van een product zijn, een marketingcampagne of de lancering van een nieuwe auto."
           }
         }
@@ -211,7 +211,7 @@
         "primary_button": {
           "text": "Start je eerste project",
           "comic": {
-            "title": "In Plane begint alles met een project",
+            "title": "In Pi-Plane begint alles met een project",
             "description": "Een project kan de roadmap van een product zijn, een marketingcampagne of de lancering van een nieuwe auto."
           }
         }
@@ -289,8 +289,8 @@
   "workspace_pages": {
     "empty_state": {
       "general": {
-        "title": "Schrijf een notitie, een document of een complete kennisbank. Laat Galileo, de AI-assistent van Plane, je op weg helpen",
-        "description": "Pagina's zijn de plek in Plane waar je gedachten kunnen groeien. Noteer vergadernotities, maak ze eenvoudig op, sluit werkitems in, werk ze uit met een bibliotheek van componenten en bewaar alles in de context van je project. Roep Galileo, de AI van Plane, aan met een sneltoets of een klik op een knop om elk document snel af te maken.",
+        "title": "Schrijf een notitie, een document of een complete kennisbank. Laat Galileo, de AI-assistent van Pi-Plane, je op weg helpen",
+        "description": "Pagina's zijn de plek in Pi-Plane waar je gedachten kunnen groeien. Noteer vergadernotities, maak ze eenvoudig op, sluit werkitems in, werk ze uit met een bibliotheek van componenten en bewaar alles in de context van je project. Roep Galileo, de AI van Pi-Plane, aan met een sneltoets of een klik op een knop om elk document snel af te maken.",
         "primary_button": {
           "text": "Maak je eerste pagina"
         }

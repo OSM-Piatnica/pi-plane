@@ -47,6 +47,8 @@ For each term: the source, the required rendering per script group, and **forbid
 
 ### Plane brand & features
 
+> **Pi-Plane fork:** the product brand shown to users is **Pi-Plane**, not Plane. Wherever the table below says "Plane", write "Pi-Plane" (Latin script in every locale, never transliterated). Feature names such as Plane AI, Plane Pro and Plane Runner keep their upstream names.
+
 | Source term                        | Latin locales (fr, es, it, de, pt-BR, pl, cs, sk, ro, tr-TR, vi-VN, id) | ja (katakana-default) | ko (Hangul-default) | zh-CN / zh-TW                                 | ru                | ua                | **Forbidden** (never produce)                                                     |
 | ---------------------------------- | ----------------------------------------------------------------------- | --------------------- | ------------------- | --------------------------------------------- | ----------------- | ----------------- | --------------------------------------------------------------------------------- |
 | **Plane**                          | Plane                                                                   | Plane                 | Plane               | Plane                                         | Plane             | Plane             | 飛行機, 飞机, 비행기, Самолёт, Літак, Avion, Avião, Aereo, Flugzeug               |

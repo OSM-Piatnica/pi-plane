@@ -69,7 +69,7 @@
     "page": {
       "step_zero": {
         "title": "Documente com Páginas com IA",
-        "description": "As Páginas no Plane permitem capturar, organizar e colaborar em informações do projeto—sem ferramentas externas."
+        "description": "As Páginas no Pi-Plane permitem capturar, organizar e colaborar em informações do projeto—sem ferramentas externas."
       },
       "step_one": {
         "title": "Tornar página Pública ou Privada",
@@ -95,7 +95,7 @@
     "intake": {
       "step_zero": {
         "title": "Simplifique solicitações com entrada",
-        "description": "Um recurso exclusivo do Plane que permite aos Convidados criar itens de trabalho para bugs, solicitações ou tickets."
+        "description": "Um recurso exclusivo do Pi-Plane que permite aos Convidados criar itens de trabalho para bugs, solicitações ou tickets."
       },
       "step_one": {
         "title": "Solicitações de entrada abertas/fechadas",
@@ -154,7 +154,7 @@
   },
   "get_started": {
     "title": "Olá {name}, bem-vindo a bordo!",
-    "description": "Aqui está tudo o que precisa para iniciar a sua jornada com o Plane.",
+    "description": "Aqui está tudo o que precisa para iniciar a sua jornada com o Pi-Plane.",
     "checklist_section": {
       "title": "Começar",
       "description": "Comece a sua configuração e veja as suas ideias ganharem vida mais rapidamente.",
@@ -188,8 +188,8 @@
       "more_integrations": "Navegar por mais integrações"
     },
     "switch_to_plane_section": {
-      "title": "Descubra por que as equipas mudam para o Plane",
-      "description": "Compare o Plane com as ferramentas que usa hoje e veja a diferença."
+      "title": "Descubra por que as equipas mudam para o Pi-Plane",
+      "description": "Compare o Pi-Plane com as ferramentas que usa hoje e veja a diferença."
     }
   }
 }

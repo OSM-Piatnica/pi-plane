@@ -839,7 +839,7 @@
     "edited_by": "Bearbeitet von"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane ist nicht gestartet. Dies könnte daran liegen, dass einer oder mehrere Plane-Services nicht starten konnten.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane ist nicht gestartet. Dies könnte daran liegen, dass einer oder mehrere Plane-Services nicht starten konnten.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Wählen Sie View Logs aus setup.sh und Docker-Logs, um sicherzugehen."
   },
   "customize_navigation": "Navigation anpassen",
@@ -892,7 +892,7 @@
     "skip": "Überspringen",
     "profile": {
       "title": "Erstellen Sie Ihr Profil.",
-      "description": "So werden Sie in Plane angezeigt.",
+      "description": "So werden Sie in Pi-Plane angezeigt.",
       "choose_image": "Bild auswählen",
       "upload_image": "Bild hochladen",
       "change_image": "Bild ändern",
@@ -907,7 +907,7 @@
       "new_password_placeholder": "Neues Passwort...",
       "role_question": "In welcher Rolle arbeiten Sie? Wählen Sie eine aus.",
       "domain_question": "Was ist Ihr Fachgebiet? Wählen Sie eines oder mehrere aus.",
-      "marketing_consent": "Ich stimme den Marketing-Mitteilungen von Plane zu",
+      "marketing_consent": "Ich stimme den Marketing-Mitteilungen von Pi-Plane zu",
       "passwords_do_not_match": "Passwörter stimmen nicht überein",
       "passwords_match": "Passwörter stimmen überein",
       "seniority_levels": {
@@ -938,7 +938,7 @@
     },
     "role": {
       "title": "Was ist Ihre Rolle?",
-      "description": "Richten wir Plane passend zu Ihrer Arbeitsweise ein.",
+      "description": "Richten wir Pi-Plane passend zu Ihrer Arbeitsweise ein.",
       "select_one": "Eine auswählen",
       "options": {
         "product_manager": "Produktmanager",
@@ -951,7 +951,7 @@
       }
     },
     "usecase": {
-      "title": "Was führt Sie zu Plane?",
+      "title": "Was führt Sie zu Pi-Plane?",
       "description": "Nennen Sie uns Ihre Ziele und Teamgröße.",
       "select_multiple": "Eine oder mehrere auswählen",
       "select_at_least_one": "Bitte wählen Sie mindestens eine Option aus"
@@ -972,7 +972,7 @@
     },
     "team": {
       "invite_teammates": "Laden Sie Ihre Teammitglieder ein",
-      "invite_teammates_description": "In Plane arbeitet es sich am besten im Team. Laden Sie sie jetzt ein, um Plane voll auszuschöpfen.",
+      "invite_teammates_description": "In Pi-Plane arbeitet es sich am besten im Team. Laden Sie sie jetzt ein, um Pi-Plane voll auszuschöpfen.",
       "add_another": "Weitere hinzufügen",
       "do_it_later": "Später erledigen",
       "invalid_email": "Ungültige E-Mail-Adresse",
@@ -1140,7 +1140,7 @@
     },
     "auth_header": {
       "work_in_all_dimensions": "In allen Dimensionen arbeiten.",
-      "welcome_back": "Willkommen zurück bei Plane.",
+      "welcome_back": "Willkommen zurück bei Pi-Plane.",
       "create_your_account": "Erstellen Sie Ihr Plane-Konto."
     },
     "auth_root": {
@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "Registrieren",
       "sign_in": "Anmelden",
-      "join_teams": "Schließen Sie sich über 10.000 Teams an, die mit Plane arbeiten",
+      "join_teams": "Schließen Sie sich über 10.000 Teams an, die mit Pi-Plane arbeiten",
       "not_authorized_view_title": "Hoppla! Sie sind nicht berechtigt, diese Seite anzuzeigen",
       "not_authorized": "Nicht autorisiert!",
       "not_a_member_description": "Sie sind kein Mitglied dieses Arbeitsbereichs. Bitte wenden Sie sich an den Administrator des Arbeitsbereichs, um eine Einladung zu erhalten, oder prüfen Sie Ihre ausstehenden Einladungen.",
@@ -1244,9 +1244,9 @@
     },
     "instance": {
       "contact_support": "Support kontaktieren",
-      "maintenance_title": "🚧 Plane scheint nicht korrekt gestartet zu sein!",
+      "maintenance_title": "🚧 Pi-Plane scheint nicht korrekt gestartet zu sein!",
       "maintenance_description": "Einige Dienste konnten möglicherweise nicht gestartet werden. Bitte prüfen Sie Ihre Container-Logs, um das Problem zu identifizieren und zu beheben. Wenn Sie nicht weiterkommen, wenden Sie sich an unser Support-Team.",
-      "welcome_title": "Willkommen bei Plane",
+      "welcome_title": "Willkommen bei Pi-Plane",
       "welcome_description": "Richten Sie Ihre Instanz ein und erstellen Sie Ihren ersten Arbeitsbereich, um Projekte und Arbeit zu verwalten."
     },
     "integrations": {
@@ -1299,7 +1299,7 @@
     },
     "tour": {
       "work_items_title": "Mit Arbeitselementen planen",
-      "work_items_description": "Das Arbeitselement ist der Baustein von Plane. Die meisten Konzepte in Plane sind entweder mit Arbeitselementen und deren Eigenschaften verknüpft.",
+      "work_items_description": "Das Arbeitselement ist der Baustein von Pi-Plane. Die meisten Konzepte in Pi-Plane sind entweder mit Arbeitselementen und deren Eigenschaften verknüpft.",
       "cycles_title": "Mit Zyklen vorankommen",
       "cycles_description": "Zyklen helfen Ihnen und Ihrem Team, schneller voranzukommen, ähnlich den Sprints, die in der agilen Entwicklung üblich sind.",
       "modules_title": "In Module aufteilen",
@@ -1307,12 +1307,12 @@
       "views_description": "Erstellen Sie benutzerdefinierte Filter, um nur die Arbeitselemente anzuzeigen, die für Sie wichtig sind. Speichern und teilen Sie Ihre Filter mit wenigen Klicks.",
       "pages_title": "Mit Seiten dokumentieren",
       "pages_description": "Nutzen Sie Seiten, um Arbeitselemente schnell festzuhalten, wenn Sie in einem Meeting sind oder in den Tag starten.",
-      "welcome_title": "Willkommen bei Plane, {firstName} {lastName}",
-      "welcome_description": "Schön, dass Sie Plane ausprobieren möchten. Sie können Ihre Projekte jetzt mühelos verwalten. Beginnen Sie mit dem Erstellen eines Projekts.",
+      "welcome_title": "Willkommen bei Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "Schön, dass Sie Pi-Plane ausprobieren möchten. Sie können Ihre Projekte jetzt mühelos verwalten. Beginnen Sie mit dem Erstellen eines Projekts.",
       "take_tour": "Produkttour starten",
       "skip": "Nein danke, ich erkunde es selbst",
       "create_first_project": "Ihr erstes Projekt erstellen",
-      "sidebar_heading": "Los geht's!<br/>Holen Sie mehr aus Plane heraus."
+      "sidebar_heading": "Los geht's!<br/>Holen Sie mehr aus Pi-Plane heraus."
     },
     "ai": {
       "ask_pi": "Pi fragen",
@@ -1406,9 +1406,9 @@
       "sign_in_header": "Anmelden, um abzustimmen oder zu kommentieren",
       "sign_in_sub_header": "Helfen Sie mit, die gewünschten Funktionen voranzubringen.",
       "sign_up_header": "Ansehen, kommentieren und mehr",
-      "sign_up_sub_header": "Registrieren oder anmelden, um mit Arbeitselementen und Seiten in Plane zu arbeiten.",
+      "sign_up_sub_header": "Registrieren oder anmelden, um mit Arbeitselementen und Seiten in Pi-Plane zu arbeiten.",
       "default_header": "Arbeitselemente kommentieren oder darauf reagieren",
-      "default_sub_header": "Nutzen Sie Plane, um Ihr wertvolles Feedback zu Funktionen einzubringen."
+      "default_sub_header": "Nutzen Sie Pi-Plane, um Ihr wertvolles Feedback zu Funktionen einzubringen."
     },
     "terms": {
       "agree_sign_up": "Mit der Erstellung eines Kontos stimmen Sie unseren\n<terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> zu.",
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "Hoppla! Das sieht nicht gut aus.",
-      "description": "Plane ist abgestürzt. Keine Sorge, unsere Entwickler wurden benachrichtigt. Wenn Sie weitere Details haben, schreiben Sie an <email/> oder in unser <forum/>."
+      "description": "Pi-Plane ist abgestürzt. Keine Sorge, unsere Entwickler wurden benachrichtigt. Wenn Sie weitere Details haben, schreiben Sie an <email/> oder in unser <forum/>."
     },
     "not_found_page": {
       "title": "Das hat nicht funktioniert",
       "description": "Überprüfen Sie die URL in der Adressleiste des Browsers und versuchen Sie es erneut."
     },
     "powered_by": {
-      "label": "Bereitgestellt von <name>Plane Publish</name>"
+      "label": "Bereitgestellt von <name>Pi-Plane</name>"
     },
     "instance_failure": {
       "image_alt": "Pi-Plane-Instanzfehler",

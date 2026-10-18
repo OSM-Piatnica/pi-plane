@@ -839,7 +839,7 @@
     "edited_by": "Edytowane przez"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane nie uruchomił się. Może to być spowodowane tym, że jedna lub więcej usług Plane nie mogła się uruchomić.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane nie uruchomił się. Może to być spowodowane tym, że jedna lub więcej usług Pi-Plane nie mogła się uruchomić.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Wybierz View Logs z setup.sh i logów Docker, aby mieć pewność."
   },
   "customize_navigation": "Dostosuj nawigację",
@@ -892,7 +892,7 @@
     "skip": "Pomiń",
     "profile": {
       "title": "Utwórz swój profil.",
-      "description": "Tak będziesz wyświetlany w Plane.",
+      "description": "Tak będziesz wyświetlany w Pi-Plane.",
       "choose_image": "Wybierz zdjęcie",
       "upload_image": "Prześlij zdjęcie",
       "change_image": "Zmień zdjęcie",
@@ -907,7 +907,7 @@
       "new_password_placeholder": "Nowe hasło...",
       "role_question": "Nad jaką rolą pracujesz? Wybierz jedną.",
       "domain_question": "Jaka jest Twoja dziedzina specjalizacji? Wybierz jedną lub więcej.",
-      "marketing_consent": "Zgadzam się na otrzymywanie komunikacji marketingowej od Plane",
+      "marketing_consent": "Zgadzam się na otrzymywanie komunikacji marketingowej od Pi-Plane",
       "passwords_do_not_match": "Hasła nie są zgodne",
       "passwords_match": "Hasła są zgodne",
       "seniority_levels": {
@@ -938,7 +938,7 @@
     },
     "role": {
       "title": "Jaka jest Twoja rola?",
-      "description": "Skonfigurujmy Plane pod Twój sposób pracy.",
+      "description": "Skonfigurujmy Pi-Plane pod Twój sposób pracy.",
       "select_one": "Wybierz jedną",
       "options": {
         "product_manager": "Product Manager",
@@ -951,7 +951,7 @@
       }
     },
     "usecase": {
-      "title": "Co sprowadza Cię do Plane?",
+      "title": "Co sprowadza Cię do Pi-Plane?",
       "description": "Powiedz nam o swoich celach i wielkości zespołu.",
       "select_multiple": "Wybierz jedną lub więcej",
       "select_at_least_one": "Wybierz co najmniej jedną opcję"
@@ -972,7 +972,7 @@
     },
     "team": {
       "invite_teammates": "Zaproś członków zespołu",
-      "invite_teammates_description": "Praca w Plane działa najlepiej z zespołem. Zaproś ich teraz, aby w pełni wykorzystać możliwości Plane.",
+      "invite_teammates_description": "Praca w Pi-Plane działa najlepiej z zespołem. Zaproś ich teraz, aby w pełni wykorzystać możliwości Pi-Plane.",
       "add_another": "Dodaj kolejny",
       "do_it_later": "Zrobię to później",
       "invalid_email": "Nieprawidłowy adres e-mail",
@@ -1140,8 +1140,8 @@
     },
     "auth_header": {
       "work_in_all_dimensions": "Pracuj we wszystkich wymiarach.",
-      "welcome_back": "Witaj ponownie w Plane.",
-      "create_your_account": "Utwórz swoje konto Plane."
+      "welcome_back": "Witaj ponownie w Pi-Plane.",
+      "create_your_account": "Utwórz swoje konto Pi-Plane."
     },
     "auth_root": {
       "no_auth_methods_title": "Brak dostępnych metod uwierzytelniania",
@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "Zarejestruj się",
       "sign_in": "Zaloguj się",
-      "join_teams": "Dołącz do ponad 10 000 zespołów pracujących z Plane",
+      "join_teams": "Dołącz do ponad 10 000 zespołów pracujących z Pi-Plane",
       "not_authorized_view_title": "Ups! Nie masz uprawnień do wyświetlenia tej strony",
       "not_authorized": "Brak autoryzacji!",
       "not_a_member_description": "Nie jesteś członkiem tej przestrzeni roboczej. Skontaktuj się z administratorem przestrzeni, aby otrzymać zaproszenie, lub sprawdź oczekujące zaproszenia.",
@@ -1244,16 +1244,16 @@
     },
     "instance": {
       "contact_support": "Skontaktuj się z pomocą techniczną",
-      "maintenance_title": "🚧 Wygląda na to, że Plane nie uruchomił się poprawnie!",
+      "maintenance_title": "🚧 Wygląda na to, że Pi-Plane nie uruchomił się poprawnie!",
       "maintenance_description": "Niektóre usługi mogły nie uruchomić się poprawnie. Sprawdź logi kontenerów, aby zidentyfikować i rozwiązać problem. Jeśli potrzebujesz pomocy, skontaktuj się z naszym zespołem wsparcia.",
-      "welcome_title": "Witamy w Plane",
+      "welcome_title": "Witamy w Pi-Plane",
       "welcome_description": "Skonfiguruj swoją instancję i utwórz pierwszą przestrzeń roboczą, aby zacząć zarządzać projektami i pracą."
     },
     "integrations": {
       "github_installed": "Aktywuj GitHub w poszczególnych projektach, aby synchronizować dane z wybranymi repozytoriami.",
-      "github_not_installed": "Połącz GitHub z przestrzenią roboczą Plane, aby synchronizować elementy pracy projektu.",
+      "github_not_installed": "Połącz GitHub z przestrzenią roboczą Pi-Plane, aby synchronizować elementy pracy projektu.",
       "slack_installed": "Aktywuj Slack w poszczególnych projektach, aby synchronizować dane z wybranymi kanałami.",
-      "slack_not_installed": "Połącz Slack z przestrzenią roboczą Plane, aby synchronizować elementy pracy projektu.",
+      "slack_not_installed": "Połącz Slack z przestrzenią roboczą Pi-Plane, aby synchronizować elementy pracy projektu.",
       "deleted_title": "Pomyślnie usunięto!",
       "deleted_message": "Integracja {title} została pomyślnie usunięta.",
       "delete_failed_message": "Nie udało się usunąć integracji {title}. Spróbuj ponownie.",
@@ -1299,7 +1299,7 @@
     },
     "tour": {
       "work_items_title": "Planuj za pomocą elementów pracy",
-      "work_items_description": "Element pracy to podstawowy element składowy Plane. Większość pojęć w Plane jest powiązana z elementami pracy i ich właściwościami.",
+      "work_items_description": "Element pracy to podstawowy element składowy Pi-Plane. Większość pojęć w Pi-Plane jest powiązana z elementami pracy i ich właściwościami.",
       "cycles_title": "Postępuj z Cyklami",
       "cycles_description": "Cykle pomagają Tobie i Twojemu zespołowi szybciej postępować, podobnie jak sprinty powszechnie stosowane w podejściu zwinnym.",
       "modules_title": "Podziel na moduły",
@@ -1307,12 +1307,12 @@
       "views_description": "Twórz własne filtry, aby wyświetlać tylko ważne dla Ciebie elementy pracy. Zapisuj i udostępniaj filtry za pomocą kilku kliknięć.",
       "pages_title": "Dokumentuj za pomocą stron",
       "pages_description": "Używaj stron, aby szybko zapisywać elementy pracy na spotkaniu lub na początku dnia.",
-      "welcome_title": "Witaj w Plane, {firstName} {lastName}",
-      "welcome_description": "Cieszymy się, że zdecydowałeś się wypróbować Plane. Teraz możesz z łatwością zarządzać swoimi projektami. Zacznij od utworzenia projektu.",
+      "welcome_title": "Witaj w Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "Cieszymy się, że zdecydowałeś się wypróbować Pi-Plane. Teraz możesz z łatwością zarządzać swoimi projektami. Zacznij od utworzenia projektu.",
       "take_tour": "Weź udział w prezentacji produktu",
       "skip": "Nie, dziękuję, sam to zbadam",
       "create_first_project": "Utwórz swój pierwszy projekt",
-      "sidebar_heading": "Zaczynajmy!<br/>Wykorzystaj Plane w pełni."
+      "sidebar_heading": "Zaczynajmy!<br/>Wykorzystaj Pi-Plane w pełni."
     },
     "ai": {
       "ask_pi": "Zapytaj Pi",
@@ -1406,9 +1406,9 @@
       "sign_in_header": "Zaloguj się, aby głosować lub komentować",
       "sign_in_sub_header": "Pomóż wybrać funkcje, które mają zostać zbudowane.",
       "sign_up_header": "Wyświetlaj, komentuj i rób więcej",
-      "sign_up_sub_header": "Zarejestruj się lub zaloguj, aby pracować z elementami pracy i Stronami w Plane.",
+      "sign_up_sub_header": "Zarejestruj się lub zaloguj, aby pracować z elementami pracy i Stronami w Pi-Plane.",
       "default_header": "Komentuj elementy pracy lub reaguj na nie",
-      "default_sub_header": "Użyj Plane, aby dodać swoje cenne uwagi do funkcji."
+      "default_sub_header": "Użyj Pi-Plane, aby dodać swoje cenne uwagi do funkcji."
     },
     "terms": {
       "agree_sign_up": "Tworząc konto, akceptujesz nasz\n<terms>Regulamin</terms> i <privacy>Politykę prywatności</privacy>.",
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "Ups! To nie wygląda dobrze.",
-      "description": "Plane uległ awarii. Bez obaw, nasi inżynierowie zostali powiadomieni. Jeśli masz więcej szczegółów, napisz na <email/> lub na naszym <forum/>."
+      "description": "Pi-Plane uległ awarii. Bez obaw, nasi inżynierowie zostali powiadomieni. Jeśli masz więcej szczegółów, napisz na <email/> lub na naszym <forum/>."
     },
     "not_found_page": {
       "title": "To nie zadziałało",
       "description": "Sprawdź adres URL wpisany w pasku adresu przeglądarki i spróbuj ponownie."
     },
     "powered_by": {
-      "label": "Obsługiwane przez <name>Plane Publish</name>"
+      "label": "Obsługiwane przez <name>Pi-Plane</name>"
     },
     "instance_failure": {
       "image_alt": "Awaria instancji Pi-Plane",

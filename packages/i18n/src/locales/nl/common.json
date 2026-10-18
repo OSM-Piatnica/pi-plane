@@ -839,7 +839,7 @@
     "edited_by": "Bewerkt door"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane is niet opgestart. Dit kan komen doordat een of meer Plane-services niet zijn gestart.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane is niet opgestart. Dit kan komen doordat een of meer Plane-services niet zijn gestart.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Kies Logs bekijken in setup.sh en de Docker-logs om zeker te zijn."
   },
   "customize_navigation": "Navigatie aanpassen",
@@ -892,7 +892,7 @@
     "skip": "Overslaan",
     "profile": {
       "title": "Maak je profiel aan.",
-      "description": "Zo verschijn je in Plane.",
+      "description": "Zo verschijn je in Pi-Plane.",
       "choose_image": "Afbeelding kiezen",
       "upload_image": "Afbeelding uploaden",
       "change_image": "Afbeelding wijzigen",
@@ -907,7 +907,7 @@
       "new_password_placeholder": "Nieuw wachtwoord...",
       "role_question": "Welke rol heb je? Kies er een.",
       "domain_question": "Wat is je vakgebied? Kies er een of meer.",
-      "marketing_consent": "Ik ga akkoord met marketingcommunicatie van Plane",
+      "marketing_consent": "Ik ga akkoord met marketingcommunicatie van Pi-Plane",
       "passwords_do_not_match": "Wachtwoorden komen niet overeen",
       "passwords_match": "Wachtwoorden komen overeen",
       "seniority_levels": {
@@ -938,7 +938,7 @@
     },
     "role": {
       "title": "Wat is je rol?",
-      "description": "Laten we Plane instellen voor hoe jij werkt.",
+      "description": "Laten we Pi-Plane instellen voor hoe jij werkt.",
       "select_one": "Selecteer er een",
       "options": {
         "product_manager": "Productmanager",
@@ -951,7 +951,7 @@
       }
     },
     "usecase": {
-      "title": "Wat brengt je naar Plane?",
+      "title": "Wat brengt je naar Pi-Plane?",
       "description": "Vertel ons je doelen en teamgrootte.",
       "select_multiple": "Selecteer er een of meer",
       "select_at_least_one": "Selecteer minimaal één optie"
@@ -972,7 +972,7 @@
     },
     "team": {
       "invite_teammates": "Nodig je teamgenoten uit",
-      "invite_teammates_description": "Werken in Plane gaat het beste met je team. Nodig ze nu uit om Plane optimaal te gebruiken.",
+      "invite_teammates_description": "Werken in Pi-Plane gaat het beste met je team. Nodig ze nu uit om Pi-Plane optimaal te gebruiken.",
       "add_another": "Nog een toevoegen",
       "do_it_later": "Ik doe het later",
       "invalid_email": "Ongeldig e-mailadres",
@@ -1140,7 +1140,7 @@
     },
     "auth_header": {
       "work_in_all_dimensions": "Werk in alle dimensies.",
-      "welcome_back": "Welkom terug bij Plane.",
+      "welcome_back": "Welkom terug bij Pi-Plane.",
       "create_your_account": "Maak uw Plane-account aan."
     },
     "auth_root": {
@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "Registreren",
       "sign_in": "Aanmelden",
-      "join_teams": "Sluit u aan bij meer dan 10.000 teams die met Plane bouwen",
+      "join_teams": "Sluit u aan bij meer dan 10.000 teams die met Pi-Plane bouwen",
       "not_authorized_view_title": "Oeps! U bent niet gemachtigd om deze pagina te bekijken",
       "not_authorized": "Niet geautoriseerd!",
       "not_a_member_description": "U bent geen lid van deze werkruimte. Neem contact op met de beheerder van de werkruimte voor een uitnodiging of controleer uw openstaande uitnodigingen.",
@@ -1244,9 +1244,9 @@
     },
     "instance": {
       "contact_support": "Contact opnemen met support",
-      "maintenance_title": "🚧 Het lijkt erop dat Plane niet correct is opgestart!",
+      "maintenance_title": "🚧 Het lijkt erop dat Pi-Plane niet correct is opgestart!",
       "maintenance_description": "Mogelijk zijn sommige services niet gestart. Controleer uw containerlogs om het probleem te achterhalen en op te lossen. Als u er niet uitkomt, neem dan contact op met ons supportteam.",
-      "welcome_title": "Welkom bij Plane",
+      "welcome_title": "Welkom bij Pi-Plane",
       "welcome_description": "Stel uw instantie in en maak uw eerste werkruimte aan om projecten en werk te beheren."
     },
     "integrations": {
@@ -1299,7 +1299,7 @@
     },
     "tour": {
       "work_items_title": "Plannen met werkitems",
-      "work_items_description": "Het werkitem is de bouwsteen van Plane. De meeste concepten in Plane zijn gekoppeld aan werkitems en hun eigenschappen.",
+      "work_items_description": "Het werkitem is de bouwsteen van Pi-Plane. De meeste concepten in Pi-Plane zijn gekoppeld aan werkitems en hun eigenschappen.",
       "cycles_title": "Vooruitgang boeken met cycli",
       "cycles_description": "Cycli helpen u en uw team sneller vooruit te komen, vergelijkbaar met de sprints die vaak worden gebruikt bij agile ontwikkeling.",
       "modules_title": "Opdelen in modules",
@@ -1307,12 +1307,12 @@
       "views_description": "Maak aangepaste filters om alleen de werkitems weer te geven die voor u van belang zijn. Sla uw filters op en deel ze met een paar klikken.",
       "pages_title": "Documenteren met pagina's",
       "pages_description": "Gebruik Pagina's om snel werkitems te noteren wanneer u in een vergadering zit of aan een dag begint.",
-      "welcome_title": "Welkom bij Plane, {firstName} {lastName}",
-      "welcome_description": "Fijn dat u Plane wilt uitproberen. U kunt uw projecten nu moeiteloos beheren. Begin door een project aan te maken.",
+      "welcome_title": "Welkom bij Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "Fijn dat u Pi-Plane wilt uitproberen. U kunt uw projecten nu moeiteloos beheren. Begin door een project aan te maken.",
       "take_tour": "Productrondleiding volgen",
       "skip": "Nee bedankt, ik ga het zelf ontdekken",
       "create_first_project": "Uw eerste project aanmaken",
-      "sidebar_heading": "Laten we beginnen!<br/>Haal meer uit Plane."
+      "sidebar_heading": "Laten we beginnen!<br/>Haal meer uit Pi-Plane."
     },
     "ai": {
       "ask_pi": "Vraag het aan Pi",
@@ -1406,9 +1406,9 @@
       "sign_in_header": "Meld u aan om te stemmen of te reageren",
       "sign_in_sub_header": "Help mee bepalen welke functies worden gebouwd.",
       "sign_up_header": "Bekijken, reageren en meer",
-      "sign_up_sub_header": "Registreer of meld u aan om met werkitems en Pagina's in Plane te werken.",
+      "sign_up_sub_header": "Registreer of meld u aan om met werkitems en Pagina's in Pi-Plane te werken.",
       "default_header": "Reageer op werkitems of geef een reactie",
-      "default_sub_header": "Gebruik Plane om uw waardevolle input voor functies toe te voegen."
+      "default_sub_header": "Gebruik Pi-Plane om uw waardevolle input voor functies toe te voegen."
     },
     "terms": {
       "agree_sign_up": "Door een account aan te maken, gaat u akkoord met onze\n<terms>Servicevoorwaarden</terms> en ons <privacy>Privacybeleid</privacy>.",
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "Oei! Dat ziet er niet goed uit.",
-      "description": "Plane is gecrasht. Geen zorgen, onze engineers zijn op de hoogte gesteld. Heeft u meer details, schrijf dan naar <email/> of op ons <forum/>."
+      "description": "Pi-Plane is gecrasht. Geen zorgen, onze engineers zijn op de hoogte gesteld. Heeft u meer details, schrijf dan naar <email/> of op ons <forum/>."
     },
     "not_found_page": {
       "title": "Dat is niet gelukt",
       "description": "Controleer de URL in de adresbalk van de browser en probeer het opnieuw."
     },
     "powered_by": {
-      "label": "Mogelijk gemaakt door <name>Plane Publish</name>"
+      "label": "Mogelijk gemaakt door <name>Pi-Plane</name>"
     },
     "instance_failure": {
       "image_alt": "Pi-Plane-instantiefout",

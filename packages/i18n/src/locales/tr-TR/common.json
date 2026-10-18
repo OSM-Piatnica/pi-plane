@@ -839,7 +839,7 @@
     "edited_by": "Tarafından düzenlendi"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane başlatılamadı. Bu, bir veya daha fazla Plane servisinin başlatılamaması nedeniyle olabilir.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane başlatılamadı. Bu, bir veya daha fazla Pi-Plane servisinin başlatılamaması nedeniyle olabilir.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Emin olmak için setup.sh ve Docker loglarından View Logs&apos;u seçin."
   },
   "customize_navigation": "Gezinmeyi özelleştir",
@@ -892,7 +892,7 @@
     "skip": "Atla",
     "profile": {
       "title": "Profilini oluştur.",
-      "description": "Plane'de bu şekilde görüneceksin.",
+      "description": "Pi-Plane'de bu şekilde görüneceksin.",
       "choose_image": "Görsel seç",
       "upload_image": "Görsel yükle",
       "change_image": "Görseli değiştir",
@@ -907,7 +907,7 @@
       "new_password_placeholder": "Yeni parola...",
       "role_question": "Hangi rolde çalışıyorsun? Birini seç.",
       "domain_question": "Uzmanlık alanın nedir? Bir veya daha fazlasını seç.",
-      "marketing_consent": "Plane pazarlama iletişimlerini kabul ediyorum",
+      "marketing_consent": "Pi-Plane pazarlama iletişimlerini kabul ediyorum",
       "passwords_do_not_match": "Parolalar eşleşmiyor",
       "passwords_match": "Parolalar eşleşiyor",
       "seniority_levels": {
@@ -938,7 +938,7 @@
     },
     "role": {
       "title": "Rolün nedir?",
-      "description": "Plane'i çalışma şekline göre ayarlayalım.",
+      "description": "Pi-Plane'i çalışma şekline göre ayarlayalım.",
       "select_one": "Birini seç",
       "options": {
         "product_manager": "Ürün Yöneticisi",
@@ -951,7 +951,7 @@
       }
     },
     "usecase": {
-      "title": "Seni Plane'e ne getirdi?",
+      "title": "Seni Pi-Plane'e ne getirdi?",
       "description": "Hedeflerini ve ekip büyüklüğünü bize anlat.",
       "select_multiple": "Bir veya daha fazlasını seç",
       "select_at_least_one": "Lütfen en az bir seçenek seç"
@@ -972,7 +972,7 @@
     },
     "team": {
       "invite_teammates": "Ekip arkadaşlarını davet et",
-      "invite_teammates_description": "Plane'de çalışmak ekibinle en iyisidir. Plane'in potansiyelinden yararlanmak için onları şimdi davet et.",
+      "invite_teammates_description": "Pi-Plane'de çalışmak ekibinle en iyisidir. Pi-Plane'in potansiyelinden yararlanmak için onları şimdi davet et.",
       "add_another": "Başka ekle",
       "do_it_later": "Sonra yapacağım",
       "invalid_email": "Geçersiz e-posta",
@@ -1140,8 +1140,8 @@
     },
     "auth_header": {
       "work_in_all_dimensions": "Her boyutta çalışın.",
-      "welcome_back": "Plane'e tekrar hoş geldiniz.",
-      "create_your_account": "Plane hesabınızı oluşturun."
+      "welcome_back": "Pi-Plane'e tekrar hoş geldiniz.",
+      "create_your_account": "Pi-Plane hesabınızı oluşturun."
     },
     "auth_root": {
       "no_auth_methods_title": "Kullanılabilir kimlik doğrulama yöntemi yok",
@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "Kaydol",
       "sign_in": "Giriş yap",
-      "join_teams": "Plane ile geliştirme yapan 10.000+ ekibe katılın",
+      "join_teams": "Pi-Plane ile geliştirme yapan 10.000+ ekibe katılın",
       "not_authorized_view_title": "Hay aksi! Bu sayfayı görüntüleme yetkiniz yok",
       "not_authorized": "Yetkiniz yok!",
       "not_a_member_description": "Bu çalışma alanının üyesi değilsiniz. Davet almak için lütfen çalışma alanı yöneticisiyle iletişime geçin veya bekleyen davetlerinizi kontrol edin.",
@@ -1244,16 +1244,16 @@
     },
     "instance": {
       "contact_support": "Destekle iletişime geç",
-      "maintenance_title": "🚧 Görünüşe göre Plane doğru şekilde başlatılamadı!",
+      "maintenance_title": "🚧 Görünüşe göre Pi-Plane doğru şekilde başlatılamadı!",
       "maintenance_description": "Bazı hizmetler başlatılamamış olabilir. Sorunu belirleyip gidermek için lütfen konteyner günlüklerinizi kontrol edin. Takılırsanız daha fazla yardım için destek ekibimizle iletişime geçin.",
-      "welcome_title": "Plane'e hoş geldiniz",
+      "welcome_title": "Pi-Plane'e hoş geldiniz",
       "welcome_description": "Projeleri ve işleri yönetmeye başlamak için örneğinizi kurun ve ilk çalışma alanınızı oluşturun."
     },
     "integrations": {
       "github_installed": "Belirli depolarla eşitlemek için GitHub'ı tek tek projelerde etkinleştirin.",
-      "github_not_installed": "Proje iş öğelerini eşitlemek için GitHub'ı Plane çalışma alanınıza bağlayın.",
+      "github_not_installed": "Proje iş öğelerini eşitlemek için GitHub'ı Pi-Plane çalışma alanınıza bağlayın.",
       "slack_installed": "Belirli kanallarla eşitlemek için Slack'i tek tek projelerde etkinleştirin.",
-      "slack_not_installed": "Proje iş öğelerini eşitlemek için Slack'i Plane çalışma alanınıza bağlayın.",
+      "slack_not_installed": "Proje iş öğelerini eşitlemek için Slack'i Pi-Plane çalışma alanınıza bağlayın.",
       "deleted_title": "Başarıyla silindi!",
       "deleted_message": "{title} entegrasyonu başarıyla silindi.",
       "delete_failed_message": "{title} entegrasyonu silinemedi. Lütfen tekrar deneyin.",
@@ -1299,7 +1299,7 @@
     },
     "tour": {
       "work_items_title": "İş öğeleriyle planlayın",
-      "work_items_description": "İş öğesi, Plane'in yapı taşıdır. Plane'deki kavramların çoğu iş öğeleri ve özellikleriyle ilişkilidir.",
+      "work_items_description": "İş öğesi, Pi-Plane'in yapı taşıdır. Pi-Plane'deki kavramların çoğu iş öğeleri ve özellikleriyle ilişkilidir.",
       "cycles_title": "Döngülerle ilerleyin",
       "cycles_description": "Döngüler, çevik geliştirmede sıkça kullanılan sprintlere benzer şekilde sizin ve ekibinizin daha hızlı ilerlemesine yardımcı olur.",
       "modules_title": "Modüllere ayırın",
@@ -1307,12 +1307,12 @@
       "views_description": "Yalnızca sizin için önemli olan iş öğelerini göstermek üzere özel filtreler oluşturun. Filtrelerinizi birkaç tıklamayla kaydedin ve paylaşın.",
       "pages_title": "Sayfalarla belgeleyin",
       "pages_description": "Bir toplantıdayken veya güne başlarken iş öğelerini hızla not almak için Sayfalar'ı kullanın.",
-      "welcome_title": "Plane'e hoş geldiniz, {firstName} {lastName}",
-      "welcome_description": "Plane'i denemeye karar verdiğiniz için çok memnunuz. Artık projelerinizi kolaylıkla yönetebilirsiniz. Bir proje oluşturarak başlayın.",
+      "welcome_title": "Pi-Plane'e hoş geldiniz, {firstName} {lastName}",
+      "welcome_description": "Pi-Plane'i denemeye karar verdiğiniz için çok memnunuz. Artık projelerinizi kolaylıkla yönetebilirsiniz. Bir proje oluşturarak başlayın.",
       "take_tour": "Ürün turuna çıkın",
       "skip": "Hayır, teşekkürler, kendim keşfedeceğim",
       "create_first_project": "İlk projenizi oluşturun",
-      "sidebar_heading": "Haydi başlayalım!<br/>Plane'den daha fazla verim alın."
+      "sidebar_heading": "Haydi başlayalım!<br/>Pi-Plane'den daha fazla verim alın."
     },
     "ai": {
       "ask_pi": "Pi'ye sor",
@@ -1406,9 +1406,9 @@
       "sign_in_header": "Oy vermek veya yorum yapmak için giriş yapın",
       "sign_in_sub_header": "İstediğiniz özelliklerin geliştirilmesine katkıda bulunun.",
       "sign_up_header": "Görüntüleyin, yorum yapın ve daha fazlasını yapın",
-      "sign_up_sub_header": "Plane iş öğeleri ve Sayfalarıyla çalışmak için kaydolun veya giriş yapın.",
+      "sign_up_sub_header": "Pi-Plane iş öğeleri ve Sayfalarıyla çalışmak için kaydolun veya giriş yapın.",
       "default_header": "İş öğelerine yorum yapın veya tepki verin",
-      "default_sub_header": "Özelliklere değerli görüşlerinizi eklemek için Plane'i kullanın."
+      "default_sub_header": "Özelliklere değerli görüşlerinizi eklemek için Pi-Plane'i kullanın."
     },
     "terms": {
       "agree_sign_up": "Hesap oluşturarak\n<terms>Hizmet Şartları</terms> ve <privacy>Gizlilik Politikası</privacy>'nı kabul etmiş olursunuz.",
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "Eyvah! Bu hiç iyi görünmüyor.",
-      "description": "Bu, Plane'in çökmesine neden oldu, kelime oyunu amaçlanmadı. Endişelenmeyin, mühendislerimiz bilgilendirildi. Daha fazla ayrıntınız varsa lütfen <email/> adresine veya <forum/> sayfamıza yazın."
+      "description": "Bu, Pi-Plane'in çökmesine neden oldu, kelime oyunu amaçlanmadı. Endişelenmeyin, mühendislerimiz bilgilendirildi. Daha fazla ayrıntınız varsa lütfen <email/> adresine veya <forum/> sayfamıza yazın."
     },
     "not_found_page": {
       "title": "Bu işe yaramadı",
       "description": "Tarayıcının adres çubuğuna girdiğiniz URL'yi kontrol edin ve tekrar deneyin."
     },
     "powered_by": {
-      "label": "<name>Plane Publish</name> tarafından desteklenmektedir"
+      "label": "<name>Pi-Plane</name> tarafından desteklenmektedir"
     },
     "instance_failure": {
       "image_alt": "Pi-Plane örneği hatası",

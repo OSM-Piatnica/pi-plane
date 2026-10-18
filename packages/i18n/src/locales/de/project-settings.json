@@ -182,18 +182,18 @@
       "description": "Konfigurieren Sie automatisierte Aktionen, um Ihren Projektmanagement-Workflow zu optimieren und manuelle Aufgaben zu reduzieren.",
       "auto-archive": {
         "title": "Geschlossene Arbeitselemente automatisch archivieren",
-        "description": "Plane archiviert automatisch Arbeitselemente, die abgeschlossen oder abgebrochen wurden.",
+        "description": "Pi-Plane archiviert automatisch Arbeitselemente, die abgeschlossen oder abgebrochen wurden.",
         "duration": "Arbeitselemente automatisch archivieren, die geschlossen sind seit"
       },
       "auto-close": {
         "title": "Arbeitselemente automatisch schließen",
-        "description": "Plane schließt automatisch Arbeitselemente, die nicht abgeschlossen oder abgebrochen wurden.",
+        "description": "Pi-Plane schließt automatisch Arbeitselemente, die nicht abgeschlossen oder abgebrochen wurden.",
         "duration": "Arbeitselemente automatisch schließen, die inaktiv sind seit",
         "auto_close_status": "Auto-Schließ-Status"
       },
       "auto-remind": {
         "title": "Automatische Erinnerungen",
-        "description": "Plane wird automatische Erinnerungen via E-Mail und in-App-Benachrichtigungen senden, um Ihr Team auf den Lauf der Dinge zu halten.",
+        "description": "Pi-Plane wird automatische Erinnerungen via E-Mail und in-App-Benachrichtigungen senden, um Ihr Team auf den Lauf der Dinge zu halten.",
         "duration": "Erinnerung vor"
       }
     },

@@ -839,7 +839,7 @@
     "edited_by": "Edited by"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane didn't start up. This could be because one or more Plane services failed to start.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane didn't start up. This could be because one or more Pi-Plane services failed to start.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Choose View Logs from setup.sh and Docker logs to be sure."
   },
   "customize_navigation": "Customize navigation",
@@ -892,7 +892,7 @@
     "skip": "Skip",
     "profile": {
       "title": "Create your profile.",
-      "description": "This is how you will appear in Plane.",
+      "description": "This is how you will appear in Pi-Plane.",
       "choose_image": "Choose image",
       "upload_image": "Upload image",
       "change_image": "Change image",
@@ -907,7 +907,7 @@
       "new_password_placeholder": "New password...",
       "role_question": "What role are you working on? Choose one.",
       "domain_question": "What is your domain expertise? Choose one or more.",
-      "marketing_consent": "I agree to Plane marketing communications",
+      "marketing_consent": "I agree to Pi-Plane marketing communications",
       "passwords_do_not_match": "Passwords do not match",
       "passwords_match": "Passwords match",
       "seniority_levels": {
@@ -938,7 +938,7 @@
     },
     "role": {
       "title": "What's your role?",
-      "description": "Let's set up Plane for how you work.",
+      "description": "Let's set up Pi-Plane for how you work.",
       "select_one": "Select one",
       "options": {
         "product_manager": "Product Manager",
@@ -951,7 +951,7 @@
       }
     },
     "usecase": {
-      "title": "What brings you to Plane?",
+      "title": "What brings you to Pi-Plane?",
       "description": "Tell us your goals and team size.",
       "select_multiple": "Select one or more",
       "select_at_least_one": "Please select at least one option"
@@ -972,7 +972,7 @@
     },
     "team": {
       "invite_teammates": "Invite your teammates",
-      "invite_teammates_description": "Work in plane happens best with your team. Invite them now to use Plane to its potential.",
+      "invite_teammates_description": "Work in plane happens best with your team. Invite them now to use Pi-Plane to its potential.",
       "add_another": "Add another",
       "do_it_later": "I'll do it later",
       "invalid_email": "Invalid Email ID",
@@ -1140,8 +1140,8 @@
     },
     "auth_header": {
       "work_in_all_dimensions": "Work in all dimensions.",
-      "welcome_back": "Welcome back to Plane.",
-      "create_your_account": "Create your Plane account."
+      "welcome_back": "Welcome back to Pi-Plane.",
+      "create_your_account": "Create your Pi-Plane account."
     },
     "auth_root": {
       "no_auth_methods_title": "No authentication methods available",
@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "Sign up",
       "sign_in": "Sign in",
-      "join_teams": "Join 10,000+ teams building with Plane",
+      "join_teams": "Join 10,000+ teams building with Pi-Plane",
       "not_authorized_view_title": "Oops! You are not authorized to view this page",
       "not_authorized": "Not Authorized!",
       "not_a_member_description": "You're not a member of this workspace. Please contact the workspace admin to get an invitation or check your pending invitations.",
@@ -1244,16 +1244,16 @@
     },
     "instance": {
       "contact_support": "Contact Support",
-      "maintenance_title": "🚧 Looks like Plane didn't start up correctly!",
+      "maintenance_title": "🚧 Looks like Pi-Plane didn't start up correctly!",
       "maintenance_description": "Some services might have failed to start. Please check your container logs to identify and resolve the issue. If you're stuck, reach out to our support team for more help.",
-      "welcome_title": "Welcome to Plane",
+      "welcome_title": "Welcome to Pi-Plane",
       "welcome_description": "Set up your instance and create your first workspace to begin managing projects and work."
     },
     "integrations": {
       "github_installed": "Activate GitHub on individual projects to sync with specific repositories.",
-      "github_not_installed": "Connect with GitHub with your Plane workspace to sync project work items.",
+      "github_not_installed": "Connect with GitHub with your Pi-Plane workspace to sync project work items.",
       "slack_installed": "Activate Slack on individual projects to sync with specific channels.",
-      "slack_not_installed": "Connect with Slack with your Plane workspace to sync project work items.",
+      "slack_not_installed": "Connect with Slack with your Pi-Plane workspace to sync project work items.",
       "deleted_title": "Deleted successfully!",
       "deleted_message": "{title} integration deleted successfully.",
       "delete_failed_message": "{title} integration could not be deleted. Please try again.",
@@ -1299,7 +1299,7 @@
     },
     "tour": {
       "work_items_title": "Plan with work items",
-      "work_items_description": "The work item is the building block of the Plane. Most concepts in Plane are either associated with work items and their properties.",
+      "work_items_description": "The work item is the building block of the Pi-Plane. Most concepts in Pi-Plane are either associated with work items and their properties.",
       "cycles_title": "Move with cycles",
       "cycles_description": "Cycles help you and your team to progress faster, similar to the sprints commonly used in agile development.",
       "modules_title": "Break into modules",
@@ -1307,12 +1307,12 @@
       "views_description": "Create custom filters to display only the work items that matter to you. Save and share your filters in just a few clicks.",
       "pages_title": "Document with pages",
       "pages_description": "Use Pages to quickly jot down work items when you're in a meeting or starting a day.",
-      "welcome_title": "Welcome to Plane, {firstName} {lastName}",
-      "welcome_description": "We're glad that you decided to try out Plane. You can now manage your projects with ease. Get started by creating a project.",
+      "welcome_title": "Welcome to Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "We're glad that you decided to try out Pi-Plane. You can now manage your projects with ease. Get started by creating a project.",
       "take_tour": "Take a Product Tour",
       "skip": "No thanks, I will explore it myself",
       "create_first_project": "Create your first project",
-      "sidebar_heading": "Let's get started!<br/>Get more out of Plane."
+      "sidebar_heading": "Let's get started!<br/>Get more out of Pi-Plane."
     },
     "ai": {
       "ask_pi": "Ask Pi",
@@ -1406,7 +1406,7 @@
       "sign_in_header": "Sign in to upvote or comment",
       "sign_in_sub_header": "Contribute in nudging the features you want to get built.",
       "sign_up_header": "View, comment, and do more",
-      "sign_up_sub_header": "Sign up or log in to work with Plane work items and Pages.",
+      "sign_up_sub_header": "Sign up or log in to work with Pi-Plane work items and Pages.",
       "default_header": "Comment or react to work items",
       "default_sub_header": "Use plane to add your valuable inputs to features."
     },
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "Yikes! That doesn't look good.",
-      "description": "That crashed Plane, pun intended. No worries, though. Our engineers have been notified. If you have more details, please write to <email/> or on our <forum/>."
+      "description": "That crashed Pi-Plane, pun intended. No worries, though. Our engineers have been notified. If you have more details, please write to <email/> or on our <forum/>."
     },
     "not_found_page": {
       "title": "That didn't work",
       "description": "Check the URL you are entering in the browser's address bar and try again."
     },
     "powered_by": {
-      "label": "Powered by <name>Plane Publish</name>"
+      "label": "Powered by <name>Pi-Plane</name>"
     },
     "instance_failure": {
       "image_alt": "Pi-Plane instance failure",

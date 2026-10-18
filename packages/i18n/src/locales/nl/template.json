@@ -170,7 +170,7 @@
           },
           "company_name": {
             "label": "Bedrijfsnaam",
-            "placeholder": "Plane",
+            "placeholder": "Pi-Plane",
             "validation": {
               "required": "Bedrijfsnaam is verplicht",
               "maxLength": "Bedrijfsnaam moet korter zijn dan 255 tekens"
@@ -227,7 +227,7 @@
     "empty_state": {
       "upgrade": {
         "title": "Sjablonen",
-        "description": "Met project-, werkitem- en paginasjablonen in Plane hoef je een project niet van nul te beginnen of werkitemeigenschappen niet handmatig in te stellen.",
+        "description": "Met project-, werkitem- en paginasjablonen in Pi-Plane hoef je een project niet van nul te beginnen of werkitemeigenschappen niet handmatig in te stellen.",
         "sub_description": "Krijg 80% van je beheertijd terug met sjablonen."
       },
       "no_templates": {

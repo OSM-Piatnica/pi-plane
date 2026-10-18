@@ -839,7 +839,7 @@
     "edited_by": "編輯者"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane 未能啟動。這可能是因為一個或多個 Plane 服務啟動失敗。",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane 未能啟動。這可能是因為一個或多個 Pi-Plane 服務啟動失敗。",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "從 setup.sh 和 Docker 日誌中選擇 View Logs 來確認。"
   },
   "customize_navigation": "自訂導覽",
@@ -892,7 +892,7 @@
     "skip": "略過",
     "profile": {
       "title": "建立您的個人檔案。",
-      "description": "這是您在 Plane 中的顯示方式。",
+      "description": "這是您在 Pi-Plane 中的顯示方式。",
       "choose_image": "選擇圖片",
       "upload_image": "上傳圖片",
       "change_image": "更換圖片",
@@ -907,7 +907,7 @@
       "new_password_placeholder": "新密碼...",
       "role_question": "您擔任什麼角色？請選擇一項。",
       "domain_question": "您的專業領域是什麼？請選擇一項或多項。",
-      "marketing_consent": "我同意接收 Plane 的行銷訊息",
+      "marketing_consent": "我同意接收 Pi-Plane 的行銷訊息",
       "passwords_do_not_match": "密碼不一致",
       "passwords_match": "密碼一致",
       "seniority_levels": {
@@ -938,7 +938,7 @@
     },
     "role": {
       "title": "您的角色是什麼？",
-      "description": "讓我們依照您的工作方式來設定 Plane。",
+      "description": "讓我們依照您的工作方式來設定 Pi-Plane。",
       "select_one": "請選擇一項",
       "options": {
         "product_manager": "產品經理",
@@ -951,7 +951,7 @@
       }
     },
     "usecase": {
-      "title": "是什麼讓您來到 Plane？",
+      "title": "是什麼讓您來到 Pi-Plane？",
       "description": "告訴我們您的目標和團隊規模。",
       "select_multiple": "請選擇一項或多項",
       "select_at_least_one": "請至少選擇一個選項"
@@ -972,7 +972,7 @@
     },
     "team": {
       "invite_teammates": "邀請您的團隊成員",
-      "invite_teammates_description": "在 Plane 中與團隊一起工作效果最佳。立即邀請他們，充分發揮 Plane 的潛力。",
+      "invite_teammates_description": "在 Pi-Plane 中與團隊一起工作效果最佳。立即邀請他們，充分發揮 Pi-Plane 的潛力。",
       "add_another": "再新增一位",
       "do_it_later": "稍後再說",
       "invalid_email": "電子郵件無效",
@@ -1140,8 +1140,8 @@
     },
     "auth_header": {
       "work_in_all_dimensions": "全方位協作。",
-      "welcome_back": "歡迎回到 Plane。",
-      "create_your_account": "建立您的 Plane 帳戶。"
+      "welcome_back": "歡迎回到 Pi-Plane。",
+      "create_your_account": "建立您的 Pi-Plane 帳戶。"
     },
     "auth_root": {
       "no_auth_methods_title": "沒有可用的驗證方式",
@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "註冊",
       "sign_in": "登入",
-      "join_teams": "加入 10,000 多個使用 Plane 打造產品的團隊",
+      "join_teams": "加入 10,000 多個使用 Pi-Plane 打造產品的團隊",
       "not_authorized_view_title": "抱歉，您無權檢視此頁面",
       "not_authorized": "未授權",
       "not_a_member_description": "您不是此工作區的成員。請聯絡工作區管理員取得邀請，或查看您的待處理邀請。",
@@ -1244,16 +1244,16 @@
     },
     "instance": {
       "contact_support": "聯絡支援",
-      "maintenance_title": "🚧 Plane 似乎未能正確啟動！",
+      "maintenance_title": "🚧 Pi-Plane 似乎未能正確啟動！",
       "maintenance_description": "部分服務可能啟動失敗。請檢查您的容器記錄檔以找出並解決問題。如果仍無法解決，請聯絡我們的支援團隊取得更多協助。",
-      "welcome_title": "歡迎使用 Plane",
+      "welcome_title": "歡迎使用 Pi-Plane",
       "welcome_description": "設定您的執行個體並建立第一個工作區，開始管理專案和工作。"
     },
     "integrations": {
       "github_installed": "在各個專案上啟用 GitHub，以便與特定儲存庫同步。",
-      "github_not_installed": "將 GitHub 連接到您的 Plane 工作區，以同步專案工作事項。",
+      "github_not_installed": "將 GitHub 連接到您的 Pi-Plane 工作區，以同步專案工作事項。",
       "slack_installed": "在各個專案上啟用 Slack，以便與特定頻道同步。",
-      "slack_not_installed": "將 Slack 連接到您的 Plane 工作區，以同步專案工作事項。",
+      "slack_not_installed": "將 Slack 連接到您的 Pi-Plane 工作區，以同步專案工作事項。",
       "deleted_title": "刪除成功！",
       "deleted_message": "{title} 整合已成功刪除。",
       "delete_failed_message": "無法刪除 {title} 整合。請再試一次。",
@@ -1299,7 +1299,7 @@
     },
     "tour": {
       "work_items_title": "用工作事項做規劃",
-      "work_items_description": "工作事項是 Plane 的基本建構區塊。Plane 中的大多數概念都與工作事項及其屬性相關聯。",
+      "work_items_description": "工作事項是 Pi-Plane 的基本建構區塊。Pi-Plane 中的大多數概念都與工作事項及其屬性相關聯。",
       "cycles_title": "用週期推進",
       "cycles_description": "週期可協助您和團隊更快地推進工作，類似於敏捷開發中常用的衝刺。",
       "modules_title": "用模組拆分",
@@ -1307,12 +1307,12 @@
       "views_description": "建立自訂篩選器，只顯示對您重要的工作事項。只需點選幾下即可儲存並分享您的篩選器。",
       "pages_title": "用頁面記錄文件",
       "pages_description": "在開會或開始新的一天時，使用頁面快速記錄工作事項。",
-      "welcome_title": "歡迎使用 Plane，{lastName}{firstName}",
-      "welcome_description": "很高興您決定試用 Plane。現在您可以輕鬆管理專案。從建立專案開始吧。",
+      "welcome_title": "歡迎使用 Pi-Plane，{lastName}{firstName}",
+      "welcome_description": "很高興您決定試用 Pi-Plane。現在您可以輕鬆管理專案。從建立專案開始吧。",
       "take_tour": "參加產品導覽",
       "skip": "不用了，我自己探索",
       "create_first_project": "建立您的第一個專案",
-      "sidebar_heading": "讓我們開始吧！<br/>充分發揮 Plane 的價值。"
+      "sidebar_heading": "讓我們開始吧！<br/>充分發揮 Pi-Plane 的價值。"
     },
     "ai": {
       "ask_pi": "詢問 Pi",
@@ -1406,9 +1406,9 @@
       "sign_in_header": "登入即可按讚或留言",
       "sign_in_sub_header": "參與推動您希望開發的功能。",
       "sign_up_header": "檢視、留言，探索更多",
-      "sign_up_sub_header": "註冊或登入，即可使用 Plane 工作事項和頁面。",
+      "sign_up_sub_header": "註冊或登入，即可使用 Pi-Plane 工作事項和頁面。",
       "default_header": "對工作事項留言或回應",
-      "default_sub_header": "使用 Plane 為功能提出您的寶貴意見。"
+      "default_sub_header": "使用 Pi-Plane 為功能提出您的寶貴意見。"
     },
     "terms": {
       "agree_sign_up": "建立帳號即表示您同意我們的\n<terms>服務條款</terms>和<privacy>隱私權政策</privacy>。",
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "糟糕！情況不太妙。",
-      "description": "Plane 當機了。不過請放心，我們的工程師已收到通知。如果您有更多詳細資訊，請寄信至 <email/> 或在我們的 <forum/> 留言。"
+      "description": "Pi-Plane 當機了。不過請放心，我們的工程師已收到通知。如果您有更多詳細資訊，請寄信至 <email/> 或在我們的 <forum/> 留言。"
     },
     "not_found_page": {
       "title": "發生錯誤",
       "description": "請檢查您在瀏覽器網址列中輸入的 URL，然後再試一次。"
     },
     "powered_by": {
-      "label": "由 <name>Plane Publish</name> 提供支援"
+      "label": "由 <name>Pi-Plane</name> 提供支援"
     },
     "instance_failure": {
       "image_alt": "Pi-Plane 執行個體故障",

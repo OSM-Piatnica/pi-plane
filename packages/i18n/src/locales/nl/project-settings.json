@@ -182,18 +182,18 @@
       "description": "Configureer geautomatiseerde acties om je projectbeheer te stroomlijnen en handmatige taken te verminderen.",
       "auto-archive": {
         "title": "Gesloten werkitems automatisch archiveren",
-        "description": "Plane archiveert automatisch werkitems die zijn voltooid of geannuleerd.",
+        "description": "Pi-Plane archiveert automatisch werkitems die zijn voltooid of geannuleerd.",
         "duration": "Werkitems automatisch archiveren die gesloten zijn gedurende"
       },
       "auto-close": {
         "title": "Werkitems automatisch sluiten",
-        "description": "Plane sluit automatisch werkitems die niet zijn voltooid of geannuleerd.",
+        "description": "Pi-Plane sluit automatisch werkitems die niet zijn voltooid of geannuleerd.",
         "duration": "Werkitems automatisch sluiten die inactief zijn gedurende",
         "auto_close_status": "Status voor automatisch sluiten"
       },
       "auto-remind": {
         "title": "Automatische herinneringen",
-        "description": "Plane stuurt automatisch herinneringen via e-mail en in-app-meldingen om je team op koers te houden met deadlines.",
+        "description": "Pi-Plane stuurt automatisch herinneringen via e-mail en in-app-meldingen om je team op koers te houden met deadlines.",
         "duration": "Herinnering sturen vóór"
       }
     },

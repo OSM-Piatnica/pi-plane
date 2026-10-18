@@ -839,7 +839,7 @@
     "edited_by": "Được chỉnh sửa bởi"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane không khởi động được. Điều này có thể do một hoặc nhiều dịch vụ Plane không khởi động được.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane không khởi động được. Điều này có thể do một hoặc nhiều dịch vụ Pi-Plane không khởi động được.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Chọn View Logs từ setup.sh và log Docker để chắc chắn."
   },
   "customize_navigation": "Tùy chỉnh điều hướng",
@@ -892,7 +892,7 @@
     "skip": "Bỏ qua",
     "profile": {
       "title": "Tạo hồ sơ của bạn.",
-      "description": "Đây là cách bạn sẽ hiển thị trong Plane.",
+      "description": "Đây là cách bạn sẽ hiển thị trong Pi-Plane.",
       "choose_image": "Chọn ảnh",
       "upload_image": "Tải ảnh lên",
       "change_image": "Đổi ảnh",
@@ -907,7 +907,7 @@
       "new_password_placeholder": "Mật khẩu mới...",
       "role_question": "Bạn đang làm việc ở vai trò nào? Chọn một.",
       "domain_question": "Chuyên môn của bạn là gì? Chọn một hoặc nhiều.",
-      "marketing_consent": "Tôi đồng ý nhận thông tin tiếp thị từ Plane",
+      "marketing_consent": "Tôi đồng ý nhận thông tin tiếp thị từ Pi-Plane",
       "passwords_do_not_match": "Mật khẩu không khớp",
       "passwords_match": "Mật khẩu khớp",
       "seniority_levels": {
@@ -938,7 +938,7 @@
     },
     "role": {
       "title": "Vai trò của bạn là gì?",
-      "description": "Hãy thiết lập Plane theo cách bạn làm việc.",
+      "description": "Hãy thiết lập Pi-Plane theo cách bạn làm việc.",
       "select_one": "Chọn một",
       "options": {
         "product_manager": "Quản lý sản phẩm",
@@ -951,7 +951,7 @@
       }
     },
     "usecase": {
-      "title": "Điều gì đưa bạn đến với Plane?",
+      "title": "Điều gì đưa bạn đến với Pi-Plane?",
       "description": "Hãy cho chúng tôi biết mục tiêu và quy mô nhóm của bạn.",
       "select_multiple": "Chọn một hoặc nhiều",
       "select_at_least_one": "Vui lòng chọn ít nhất một tùy chọn"
@@ -972,7 +972,7 @@
     },
     "team": {
       "invite_teammates": "Mời đồng đội của bạn",
-      "invite_teammates_description": "Làm việc trong Plane hiệu quả nhất khi có nhóm của bạn. Hãy mời họ ngay để khai thác tối đa Plane.",
+      "invite_teammates_description": "Làm việc trong Pi-Plane hiệu quả nhất khi có nhóm của bạn. Hãy mời họ ngay để khai thác tối đa Pi-Plane.",
       "add_another": "Thêm người khác",
       "do_it_later": "Tôi sẽ làm sau",
       "invalid_email": "Email không hợp lệ",
@@ -1140,8 +1140,8 @@
     },
     "auth_header": {
       "work_in_all_dimensions": "Làm việc ở mọi chiều.",
-      "welcome_back": "Chào mừng bạn quay lại Plane.",
-      "create_your_account": "Tạo tài khoản Plane của bạn."
+      "welcome_back": "Chào mừng bạn quay lại Pi-Plane.",
+      "create_your_account": "Tạo tài khoản Pi-Plane của bạn."
     },
     "auth_root": {
       "no_auth_methods_title": "Không có phương thức xác thực nào khả dụng",
@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "Đăng ký",
       "sign_in": "Đăng nhập",
-      "join_teams": "Hơn 10.000 nhóm đang xây dựng cùng Plane",
+      "join_teams": "Hơn 10.000 nhóm đang xây dựng cùng Pi-Plane",
       "not_authorized_view_title": "Rất tiếc! Bạn không có quyền xem trang này",
       "not_authorized": "Không có quyền truy cập",
       "not_a_member_description": "Bạn không phải là thành viên của không gian làm việc này. Vui lòng liên hệ quản trị viên không gian làm việc để nhận lời mời hoặc kiểm tra các lời mời đang chờ của bạn.",
@@ -1244,16 +1244,16 @@
     },
     "instance": {
       "contact_support": "Liên hệ hỗ trợ",
-      "maintenance_title": "🚧 Có vẻ Plane đã không khởi động đúng cách!",
+      "maintenance_title": "🚧 Có vẻ Pi-Plane đã không khởi động đúng cách!",
       "maintenance_description": "Một số dịch vụ có thể đã khởi động thất bại. Vui lòng kiểm tra nhật ký container để xác định và khắc phục sự cố. Nếu bạn vẫn gặp khó khăn, hãy liên hệ nhóm hỗ trợ của chúng tôi để được trợ giúp thêm.",
-      "welcome_title": "Chào mừng đến với Plane",
+      "welcome_title": "Chào mừng đến với Pi-Plane",
       "welcome_description": "Thiết lập phiên bản của bạn và tạo không gian làm việc đầu tiên để bắt đầu quản lý dự án và công việc."
     },
     "integrations": {
       "github_installed": "Kích hoạt GitHub trên từng dự án để đồng bộ với các kho lưu trữ cụ thể.",
-      "github_not_installed": "Kết nối GitHub với không gian làm việc Plane của bạn để đồng bộ các mục công việc của dự án.",
+      "github_not_installed": "Kết nối GitHub với không gian làm việc Pi-Plane của bạn để đồng bộ các mục công việc của dự án.",
       "slack_installed": "Kích hoạt Slack trên từng dự án để đồng bộ với các kênh cụ thể.",
-      "slack_not_installed": "Kết nối Slack với không gian làm việc Plane của bạn để đồng bộ các mục công việc của dự án.",
+      "slack_not_installed": "Kết nối Slack với không gian làm việc Pi-Plane của bạn để đồng bộ các mục công việc của dự án.",
       "deleted_title": "Đã xóa thành công!",
       "deleted_message": "Đã xóa tích hợp {title} thành công.",
       "delete_failed_message": "Không thể xóa tích hợp {title}. Vui lòng thử lại.",
@@ -1299,7 +1299,7 @@
     },
     "tour": {
       "work_items_title": "Lập kế hoạch với các mục công việc",
-      "work_items_description": "Mục công việc là đơn vị cơ bản của Plane. Hầu hết các khái niệm trong Plane đều gắn với các mục công việc và thuộc tính của chúng.",
+      "work_items_description": "Mục công việc là đơn vị cơ bản của Pi-Plane. Hầu hết các khái niệm trong Pi-Plane đều gắn với các mục công việc và thuộc tính của chúng.",
       "cycles_title": "Tiến lên với các chu kỳ",
       "cycles_description": "Chu kỳ giúp bạn và nhóm tiến triển nhanh hơn, tương tự như các sprint thường dùng trong phát triển agile.",
       "modules_title": "Chia nhỏ thành các mô-đun",
@@ -1307,12 +1307,12 @@
       "views_description": "Tạo bộ lọc tùy chỉnh để chỉ hiển thị các mục công việc quan trọng với bạn. Lưu và chia sẻ bộ lọc chỉ với vài cú nhấp chuột.",
       "pages_title": "Ghi chép với các trang",
       "pages_description": "Dùng Trang để nhanh chóng ghi lại các mục công việc khi bạn đang họp hoặc bắt đầu một ngày làm việc.",
-      "welcome_title": "Chào mừng đến với Plane, {firstName} {lastName}",
-      "welcome_description": "Chúng tôi rất vui vì bạn đã quyết định dùng thử Plane. Giờ đây bạn có thể quản lý dự án một cách dễ dàng. Hãy bắt đầu bằng cách tạo một dự án.",
+      "welcome_title": "Chào mừng đến với Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "Chúng tôi rất vui vì bạn đã quyết định dùng thử Pi-Plane. Giờ đây bạn có thể quản lý dự án một cách dễ dàng. Hãy bắt đầu bằng cách tạo một dự án.",
       "take_tour": "Tham quan sản phẩm",
       "skip": "Không, cảm ơn, tôi sẽ tự khám phá",
       "create_first_project": "Tạo dự án đầu tiên của bạn",
-      "sidebar_heading": "Hãy bắt đầu nào!<br/>Khai thác nhiều hơn từ Plane."
+      "sidebar_heading": "Hãy bắt đầu nào!<br/>Khai thác nhiều hơn từ Pi-Plane."
     },
     "ai": {
       "ask_pi": "Hỏi Pi",
@@ -1406,9 +1406,9 @@
       "sign_in_header": "Đăng nhập để bình chọn hoặc bình luận",
       "sign_in_sub_header": "Hãy góp phần thúc đẩy những tính năng bạn muốn được phát triển.",
       "sign_up_header": "Xem, bình luận và làm được nhiều hơn",
-      "sign_up_sub_header": "Đăng ký hoặc đăng nhập để làm việc với các mục công việc và Trang của Plane.",
+      "sign_up_sub_header": "Đăng ký hoặc đăng nhập để làm việc với các mục công việc và Trang của Pi-Plane.",
       "default_header": "Bình luận hoặc bày tỏ cảm xúc về các mục công việc",
-      "default_sub_header": "Hãy dùng Plane để đóng góp ý kiến quý báu của bạn cho các tính năng."
+      "default_sub_header": "Hãy dùng Pi-Plane để đóng góp ý kiến quý báu của bạn cho các tính năng."
     },
     "terms": {
       "agree_sign_up": "Khi tạo tài khoản, bạn đồng ý với\n<terms>Điều khoản dịch vụ</terms> và <privacy>Chính sách quyền riêng tư</privacy> của chúng tôi.",
@@ -1447,14 +1447,14 @@
     },
     "error_page": {
       "title": "Ôi! Trông có vẻ không ổn.",
-      "description": "Lỗi này đã làm Plane gặp sự cố. Đừng lo, các kỹ sư của chúng tôi đã được thông báo. Nếu bạn có thêm chi tiết, vui lòng viết thư đến <email/> hoặc đăng trên <forum/> của chúng tôi."
+      "description": "Lỗi này đã làm Pi-Plane gặp sự cố. Đừng lo, các kỹ sư của chúng tôi đã được thông báo. Nếu bạn có thêm chi tiết, vui lòng viết thư đến <email/> hoặc đăng trên <forum/> của chúng tôi."
     },
     "not_found_page": {
       "title": "Không thành công",
       "description": "Hãy kiểm tra URL bạn đã nhập vào thanh địa chỉ của trình duyệt và thử lại."
     },
     "powered_by": {
-      "label": "Được cung cấp bởi <name>Plane Publish</name>"
+      "label": "Được cung cấp bởi <name>Pi-Plane</name>"
     },
     "instance_failure": {
       "image_alt": "Lỗi phiên bản Pi-Plane",
