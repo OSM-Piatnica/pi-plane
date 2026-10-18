@@ -150,7 +150,7 @@ export const TourRoot = observer(function TourRoot(props: TOnboardingTourProps) 
               <img
                 src={currentStep?.image}
                 className="h-full w-full object-cover"
-                alt={currentStep ? t(currentStep.titleKey) : undefined}
+                alt={currentStep ? t(currentStep.titleKey) : ""}
               />
             </div>
             <div className="flex h-1/2 flex-col overflow-y-auto p-4 sm:h-2/5">

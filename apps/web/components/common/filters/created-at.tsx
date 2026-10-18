@@ -46,6 +46,7 @@ export const FilterCreatedDate = observer(function FilterCreatedDate(props: Prop
   };
 
   const appliedFilterSet = new Set(appliedFilters);
+  const customLabel = t("project_components.shared.custom");
 
   return (
     <>
@@ -78,7 +79,7 @@ export const FilterCreatedDate = observer(function FilterCreatedDate(props: Prop
               <FilterOption
                 isChecked={isCustomDateSelected()}
                 onClick={handleCustomDate}
-                title={t("project_components.shared.custom")}
+                title={customLabel}
                 multiple
               />
             </>
