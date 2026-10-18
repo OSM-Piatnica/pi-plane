@@ -368,7 +368,7 @@
   "re_generate": "Regenerează",
   "re_generate_key": "Regenerează cheia",
   "export": "Exportă",
-  "member": "{count, plural, one{# membru} other{# membri}}",
+  "member": "{count, plural, one{# membru} few{# membri} other{# de membri}}",
   "new_password_must_be_different_from_old_password": "Parola nouă trebuie să fie diferită de parola veche",
   "edited": "editat",
   "bot": "Bot",

@@ -3,7 +3,7 @@
     "progress": {
       "title": "Průběh",
       "since_last_update": "Od poslední aktualizace",
-      "comments": "{count, plural, one{# komentář} other{# komentářů}}"
+      "comments": "{count, plural, one{# komentář} few{# komentáře} many{# komentáře} other{# komentářů}}"
     },
     "add_update": "Přidat aktualizaci",
     "add_update_placeholder": "Napište svou aktualizaci zde",

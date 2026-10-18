@@ -190,8 +190,8 @@
       "archived_projects": "Arhivate"
     },
     "common": {
-      "months_count": "{months, plural, one{# lună} other{# luni}}",
-      "days_count": "{days, plural, one{# zi} other{# zile}}"
+      "months_count": "{months, plural, one{# lună} few{# luni} other{# de luni}}",
+      "days_count": "{days, plural, one{# zi} few{# zile} other{# de zile}}"
     },
     "empty_state": {
       "general": {
