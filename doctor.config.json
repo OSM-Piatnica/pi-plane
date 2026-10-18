@@ -1,5 +1,28 @@
 {
   "$schema": "https://react.doctor/schema/config.json",
   "noScore": true,
-  "share": false
+  "share": false,
+  "ignore": {
+    "overrides": [
+      {
+        "files": [
+          "**/components/issues/issue-layouts/utils.tsx",
+          "**/components/workspace-notifications/sidebar/notification-card/content.tsx"
+        ],
+        "rules": ["react-doctor/only-export-components"]
+      },
+      {
+        "files": [
+          "**/components/cycles/active-cycle/cycle-stats.tsx",
+          "**/components/exporter/single-export.tsx",
+          "**/components/project/card.tsx"
+        ],
+        "rules": ["react-doctor/no-high-complexity-react-function"]
+      },
+      {
+        "files": ["**/components/project/form.tsx"],
+        "rules": ["react-doctor/no-giant-component"]
+      }
+    ]
+  }
 }

@@ -366,10 +366,11 @@ export const getDisplayPropertiesCount = (
 ) => {
   const propertyKeys = Object.keys(displayProperties) as (keyof IIssueDisplayProperties)[];
 
+  const ignored = new Set<keyof IIssueDisplayProperties>(ignoreFields);
   let count = 0;
 
   for (const propertyKey of propertyKeys) {
-    if (ignoreFields && ignoreFields.includes(propertyKey)) continue;
+    if (ignored.has(propertyKey)) continue;
     if (displayProperties[propertyKey]) count++;
   }
 

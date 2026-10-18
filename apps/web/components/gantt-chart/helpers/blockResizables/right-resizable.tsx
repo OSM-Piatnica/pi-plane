@@ -45,15 +45,17 @@ export const RightResizable = observer(function RightResizable(props: RightResiz
           <div className="rounded-sm bg-accent-subtle px-2 py-1">{dateString}</div>
         </div>
       )}
-      {/* oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- behaviour-preserving lint cleanup; a11y handled separately */}
-      <div
+      {/* react-doctor-disable-next-line no-static-element-interactions -- mouse-drag handle; resizing a timeline block has no keyboard equivalent yet */}
+      <div // oxlint-disable-line jsx-a11y/no-static-element-interactions -- mouse-drag handle (see above)
         onMouseDown={(e) => handleBlockDrag(e, "right")}
-        // oxlint-disable-next-line jsx-a11y/mouse-events-have-key-events -- behaviour-preserving lint cleanup; a11y handled separately
+        // react-doctor-disable-next-line mouse-events-have-key-events -- hover only shows the date label; mouse-drag handle; resizing a timeline block has no keyboard equivalent yet
         onMouseOver={() => {
+          // oxlint-disable-line jsx-a11y/mouse-events-have-key-events -- hover label only
           setIsHovering(true);
         }}
-        // oxlint-disable-next-line jsx-a11y/mouse-events-have-key-events -- behaviour-preserving lint cleanup; a11y handled separately
+        // react-doctor-disable-next-line mouse-events-have-key-events -- hover only shows the date label; mouse-drag handle; resizing a timeline block has no keyboard equivalent yet
         onMouseOut={() => {
+          // oxlint-disable-line jsx-a11y/mouse-events-have-key-events -- hover label only
           setIsHovering(false);
         }}
         className="absolute top-1/2 -right-1.5 z-[6] h-full w-3 -translate-y-1/2 cursor-col-resize rounded-md"

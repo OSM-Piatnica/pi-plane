@@ -47,6 +47,9 @@ export const ModuleGanttBlock = observer(function ModuleGanttBlock(props: Props)
     { t, formatDate }
   );
 
+  const openModule = () =>
+    router.push(`/${workspaceSlug?.toString()}/projects/${moduleDetails?.project_id}/modules/${moduleDetails?.id}`);
+
   return (
     <Tooltip
       label={moduleDetails?.name ? `${moduleDetails.name}: ${message ?? ""}` : (message ?? "")}
@@ -54,15 +57,11 @@ export const ModuleGanttBlock = observer(function ModuleGanttBlock(props: Props)
       align="start"
       disabled={isMobile}
     >
-      {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
-      <div
-        className="relative flex h-full w-full cursor-pointer items-center rounded-sm"
+      <button
+        type="button"
+        className="relative flex h-full w-full cursor-pointer items-center rounded-sm text-left"
         style={blockStyle}
-        onClick={() =>
-          router.push(
-            `/${workspaceSlug?.toString()}/projects/${moduleDetails?.project_id}/modules/${moduleDetails?.id}`
-          )
-        }
+        onClick={openModule}
       >
         <div className="absolute top-0 left-0 h-full w-full bg-surface-1/50" />
         <div
@@ -71,7 +70,7 @@ export const ModuleGanttBlock = observer(function ModuleGanttBlock(props: Props)
         >
           {moduleDetails?.name}
         </div>
-      </div>
+      </button>
     </Tooltip>
   );
 });
