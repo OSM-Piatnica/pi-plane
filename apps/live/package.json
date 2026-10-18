@@ -4,7 +4,6 @@
   "private": true,
   "description": "A realtime collaborative server that powers Pi-Plane's rich text editor",
   "license": "AGPL-3.0",
-  "author": "Plane Software Inc.",
   "type": "module",
   "main": "./dist/start.mjs",
   "module": "./dist/start.mjs",
