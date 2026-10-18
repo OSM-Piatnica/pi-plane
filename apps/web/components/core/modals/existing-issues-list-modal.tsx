@@ -28,6 +28,7 @@ import { Switch } from "@makeplane/propel/components/switch";
 import { Loader } from "@plane/blocks/skeleton";
 import { generateWorkItemLink, getTabIndex } from "@plane/utils";
 // helpers
+import { renderTaggedText } from "@/helpers/tagged-text";
 // hooks
 import useDebounce from "@/hooks/use-debounce";
 import { usePlatformOS } from "@/hooks/use-platform-os";
@@ -244,16 +245,11 @@ export function ExistingIssuesListModal(props: Props) {
             </div>
 
             <div className="vertical-scrollbar scrollbar-md max-h-80 min-h-0 scroll-py-2 overflow-x-hidden overflow-y-auto overscroll-contain">
-              {/* TODO: Translate here */}
               {searchTerm !== "" && (
                 <h5 className="text-13 text-secondary">
-                  Search results for{" "}
-                  <span className="text-primary">
-                    {'"'}
-                    {searchTerm}
-                    {'"'}
-                  </span>{" "}
-                  in project:
+                  {renderTaggedText(t("issue_ui.search_results_for_in_project", { query: searchTerm }), {
+                    query: (query) => <span className="text-primary">{query}</span>,
+                  })}
                 </h5>
               )}
 

@@ -1016,5 +1016,10 @@
     "syncing_description": "Je wijzigingen worden met de server gesynchroniseerd. Je kunt doorgaan met wijzigen.",
     "connection_lost": "Verbinding verbroken",
     "connection_lost_description": "We hebben problemen met verbinden met de websocketserver. Je wijzigingen worden elke 10 seconden gesynchroniseerd en opgeslagen."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Pictogram",
+    "contrast_notice": "Kleuren worden aangepast om voldoende contrast te garanderen."
   }
 }

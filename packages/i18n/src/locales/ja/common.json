@@ -1016,5 +1016,10 @@
     "syncing_description": "変更内容をサーバーと同期しています。引き続き編集できます。",
     "connection_lost": "接続が切断されました",
     "connection_lost_description": "WebSocketサーバーへの接続に問題が発生しています。変更内容は10秒ごとに同期・保存されます。"
+  },
+  "emoji_icon_picker": {
+    "emoji": "絵文字",
+    "icon": "アイコン",
+    "contrast_notice": "十分なコントラストを確保するため、色が調整されます。"
   }
 }

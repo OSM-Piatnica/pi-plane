@@ -7,9 +7,20 @@
 
 import React from "react";
 import { E_PASSWORD_STRENGTH } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 import { cn, getPasswordStrength, getPasswordCriteria } from "@plane/utils";
 import { getStrengthInfo, getFragmentColor } from "./helper";
 import { TickCircleOutline } from "@makeplane/propel/icons";
+
+// Spelled out (not built from the criterion key) so the keys stay greppable. The utils label is the
+// English fallback for a criterion this map does not know yet.
+const CRITERIA_LABEL_KEYS: Record<string, string> = {
+  length: "auth.common.password.criteria.length",
+  uppercase: "auth.common.password.criteria.uppercase",
+  lowercase: "auth.common.password.criteria.lowercase",
+  number: "auth.common.password.criteria.number",
+  special: "auth.common.password.criteria.special",
+};
 
 export interface PasswordStrengthIndicatorProps {
   password: string;
@@ -22,6 +33,8 @@ export function PasswordStrengthIndicator({
   showCriteria = true,
   isFocused = false,
 }: PasswordStrengthIndicatorProps) {
+  // translation
+  const { t } = useTranslation();
   const strength = getPasswordStrength(password);
   const criteria = getPasswordCriteria(password);
   const strengthInfo = getStrengthInfo(strength);
@@ -50,7 +63,7 @@ export function PasswordStrengthIndicator({
 
         {/* Strength Message */}
         {password && (
-          <p className={cn("!text-body-xs-medium font-medium", strengthInfo.textColor)}>{strengthInfo.message}</p>
+          <p className={cn("!text-body-xs-medium font-medium", strengthInfo.textColor)}>{t(strengthInfo.messageKey)}</p>
         )}
       </div>
 
@@ -73,7 +86,7 @@ export function PasswordStrengthIndicator({
                   "text-primary": !criterion.isValid,
                 })}
               >
-                {criterion.label}
+                {t(CRITERIA_LABEL_KEYS[criterion.key] ?? criterion.label)}
               </span>
             </div>
           ))}

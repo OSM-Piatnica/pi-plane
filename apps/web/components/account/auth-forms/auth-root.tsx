@@ -64,7 +64,7 @@ export const AuthRoot = observer(function AuthRoot(props: TAuthRoot) {
 
   useEffect(() => {
     if (error_code && authMode) {
-      const errorhandler = authErrorHandler(error_code?.toString() as EAuthenticationErrorCodes);
+      const errorhandler = authErrorHandler(error_code?.toString() as EAuthenticationErrorCodes, t);
       if (errorhandler) {
         // password error handler
         if ([EAuthenticationErrorCodes.AUTHENTICATION_FAILED_SIGN_UP].includes(errorhandler.code)) {
@@ -102,7 +102,7 @@ export const AuthRoot = observer(function AuthRoot(props: TAuthRoot) {
         setErrorInfo(errorhandler);
       }
     }
-  }, [error_code, authMode]);
+  }, [error_code, authMode, t]);
 
   if (!authMode) return <></>;
 

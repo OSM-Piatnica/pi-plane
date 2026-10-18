@@ -520,6 +520,7 @@
     "sub_work_item_progress": "サブ作業項目の進捗",
     "archived_work_items_count": "{count, plural, one {プロジェクトのアーカイブに#件の作業項目があります} other {プロジェクトのアーカイブに#件の作業項目があります}}",
     "add_related_work_items": "関連する作業項目を追加",
-    "toggle_workspace_level_search": "ワークスペース全体の検索を切り替え"
+    "toggle_workspace_level_search": "ワークスペース全体の検索を切り替え",
+    "search_results_for_in_project": "プロジェクト内の<query>「{query}」</query>の検索結果:"
   }
 }

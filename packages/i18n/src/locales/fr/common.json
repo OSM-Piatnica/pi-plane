@@ -1016,5 +1016,10 @@
     "syncing_description": "Vos modifications sont en cours de synchronisation avec le serveur. Vous pouvez continuer à modifier.",
     "connection_lost": "Connexion perdue",
     "connection_lost_description": "Nous avons du mal à nous connecter au serveur websocket. Vos modifications seront synchronisées et enregistrées toutes les 10 secondes."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Icône",
+    "contrast_notice": "Les couleurs seront ajustées pour garantir un contraste suffisant."
   }
 }

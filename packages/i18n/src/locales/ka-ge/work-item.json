@@ -520,6 +520,7 @@
     "sub_work_item_progress": "ქვე-სამუშაო ელემენტების პროგრესი",
     "archived_work_items_count": "{count, plural, one {პროექტის არქივში არის # სამუშაო ელემენტი} other {პროექტის არქივში არის # სამუშაო ელემენტი}}",
     "add_related_work_items": "დაკავშირებული სამუშაო ელემენტების დამატება",
-    "toggle_workspace_level_search": "სამუშაო სივრცის დონის ძიების გადართვა"
+    "toggle_workspace_level_search": "სამუშაო სივრცის დონის ძიების გადართვა",
+    "search_results_for_in_project": "ძიების შედეგები <query>„{query}“</query> პროექტში:"
   }
 }

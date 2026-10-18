@@ -1016,5 +1016,10 @@
     "syncing_description": "Değişiklikleriniz sunucuyla senkronize ediliyor. Değişiklik yapmaya devam edebilirsiniz.",
     "connection_lost": "Bağlantı kesildi",
     "connection_lost_description": "Websocket sunucusuna bağlanmakta sorun yaşıyoruz. Değişiklikleriniz her 10 saniyede bir senkronize edilip kaydedilecek."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Simge",
+    "contrast_notice": "Yeterli kontrastı sağlamak için renkler ayarlanacaktır."
   }
 }

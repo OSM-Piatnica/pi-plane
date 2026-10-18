@@ -1016,5 +1016,10 @@
     "syncing_description": "Modificările dvs. se sincronizează cu serverul. Puteți continua să faceți modificări.",
     "connection_lost": "Conexiune pierdută",
     "connection_lost_description": "Întâmpinăm probleme la conectarea la serverul websocket. Modificările dvs. vor fi sincronizate și salvate la fiecare 10 secunde."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Pictogramă",
+    "contrast_notice": "Culorile vor fi ajustate pentru a asigura un contrast suficient."
   }
 }

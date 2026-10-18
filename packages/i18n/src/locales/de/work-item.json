@@ -520,6 +520,7 @@
     "sub_work_item_progress": "Fortschritt der untergeordneten Arbeitselemente",
     "archived_work_items_count": "{count, plural, one {Im Archiv des Projekts befindet sich # Arbeitselement} other {Im Archiv des Projekts befinden sich # Arbeitselemente}}",
     "add_related_work_items": "Verknüpfte Arbeitselemente hinzufügen",
-    "toggle_workspace_level_search": "Suche auf Arbeitsbereichsebene umschalten"
+    "toggle_workspace_level_search": "Suche auf Arbeitsbereichsebene umschalten",
+    "search_results_for_in_project": "Suchergebnisse für <query>„{query}“</query> im Projekt:"
   }
 }

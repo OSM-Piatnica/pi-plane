@@ -148,7 +148,7 @@ export function IconRoot(props: IconRootProps) {
         </div>
         <div className="flex h-6 w-full items-center gap-2 py-1 pr-3 pl-4">
           <InfoOutline className="h-3 w-3" />
-          <p className="text-caption-sm-regular"> Colors will be adjusted to ensure sufficient contrast.</p>
+          <p className="text-caption-sm-regular">{t("emoji_icon_picker.contrast_notice")}</p>
         </div>
       </div>
       <div className="mt-2 grid grid-cols-8 justify-items-center gap-1 px-2.5">

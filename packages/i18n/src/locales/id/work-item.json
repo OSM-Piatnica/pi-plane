@@ -520,6 +520,7 @@
     "sub_work_item_progress": "Kemajuan sub-item kerja",
     "archived_work_items_count": "{count, plural, one {Ada # item kerja di arsip proyek} other {Ada # item kerja di arsip proyek}}",
     "add_related_work_items": "Tambahkan item kerja terkait",
-    "toggle_workspace_level_search": "Alihkan pencarian tingkat ruang kerja"
+    "toggle_workspace_level_search": "Alihkan pencarian tingkat ruang kerja",
+    "search_results_for_in_project": "Hasil pencarian untuk <query>\"{query}\"</query> di proyek:"
   }
 }

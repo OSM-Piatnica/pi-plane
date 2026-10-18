@@ -88,12 +88,12 @@ export const ResetPasswordForm = observer(function ResetPasswordForm() {
 
   useEffect(() => {
     if (error_code) {
-      const errorhandler = authErrorHandler(error_code?.toString() as EAuthenticationErrorCodes);
+      const errorhandler = authErrorHandler(error_code?.toString() as EAuthenticationErrorCodes, t);
       if (errorhandler) {
         setErrorInfo(errorhandler);
       }
     }
-  }, [error_code]);
+  }, [error_code, t]);
 
   const password = resetFormData?.password ?? "";
   const confirmPassword = resetFormData?.confirm_password ?? "";
