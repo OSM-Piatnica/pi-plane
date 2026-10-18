@@ -1016,5 +1016,10 @@
     "syncing_description": "Your changes are being synced with the server. You can continue making changes.",
     "connection_lost": "Connection lost",
     "connection_lost_description": "We're having trouble connecting to the websocket server. Your changes will be synced and saved every 10 seconds."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Icon",
+    "contrast_notice": "Colors will be adjusted to ensure sufficient contrast."
   }
 }

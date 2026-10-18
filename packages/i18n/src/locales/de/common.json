@@ -1016,5 +1016,10 @@
     "syncing_description": "Ihre Änderungen werden mit dem Server synchronisiert. Sie können weiter Änderungen vornehmen.",
     "connection_lost": "Verbindung verloren",
     "connection_lost_description": "Die Verbindung zum Websocket-Server ist gestört. Ihre Änderungen werden alle 10 Sekunden synchronisiert und gespeichert."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Symbol",
+    "contrast_notice": "Die Farben werden angepasst, um ausreichenden Kontrast sicherzustellen."
   }
 }

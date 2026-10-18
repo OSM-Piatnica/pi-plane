@@ -520,6 +520,7 @@
     "sub_work_item_progress": "子工作事項進度",
     "archived_work_items_count": "{count, plural, one {專案封存中有 # 個工作事項} other {專案封存中有 # 個工作事項}}",
     "add_related_work_items": "新增相關工作事項",
-    "toggle_workspace_level_search": "切換工作區層級搜尋"
+    "toggle_workspace_level_search": "切換工作區層級搜尋",
+    "search_results_for_in_project": "在專案中搜尋 <query>\"{query}\"</query> 的結果："
   }
 }

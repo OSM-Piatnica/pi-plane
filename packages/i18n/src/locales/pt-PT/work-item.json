@@ -520,6 +520,7 @@
     "sub_work_item_progress": "Progresso dos sub-itens de trabalho",
     "archived_work_items_count": "{count, plural, one {Existe # item de trabalho no arquivo do projeto} many {Existem # de itens de trabalho no arquivo do projeto} other {Existem # itens de trabalho no arquivo do projeto}}",
     "add_related_work_items": "Adicionar itens de trabalho relacionados",
-    "toggle_workspace_level_search": "Alternar pesquisa ao nível do espaço de trabalho"
+    "toggle_workspace_level_search": "Alternar pesquisa ao nível do espaço de trabalho",
+    "search_results_for_in_project": "Resultados da pesquisa para <query>\"{query}\"</query> no projeto:"
   }
 }

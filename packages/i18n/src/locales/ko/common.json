@@ -1016,5 +1016,10 @@
     "syncing_description": "변경 사항을 서버와 동기화하고 있습니다. 계속 편집할 수 있습니다.",
     "connection_lost": "연결이 끊어졌습니다",
     "connection_lost_description": "웹소켓 서버에 연결하는 데 문제가 있습니다. 변경 사항은 10초마다 동기화되어 저장됩니다."
+  },
+  "emoji_icon_picker": {
+    "emoji": "이모지",
+    "icon": "아이콘",
+    "contrast_notice": "충분한 대비를 위해 색상이 조정됩니다."
   }
 }

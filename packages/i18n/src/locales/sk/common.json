@@ -1016,5 +1016,10 @@
     "syncing_description": "Vaše zmeny sa synchronizujú so serverom. Môžete pokračovať v úpravách.",
     "connection_lost": "Spojenie stratené",
     "connection_lost_description": "Máme problémy s pripojením k serveru websocket. Vaše zmeny budú synchronizované a ukladané každých 10 sekúnd."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Ikona",
+    "contrast_notice": "Farby sa upravia tak, aby bol zachovaný dostatočný kontrast."
   }
 }

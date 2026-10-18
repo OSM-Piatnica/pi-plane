@@ -22,6 +22,7 @@ import { AuthService } from "@/services/auth.service";
 import { AuthEmailForm } from "./email";
 import { AuthPasswordForm } from "./password";
 import { AuthUniqueCodeForm } from "./unique-code";
+import { useTranslation } from "@plane/i18n";
 
 type TAuthFormRoot = {
   authStep: EAuthSteps;
@@ -38,6 +39,8 @@ const authService = new AuthService();
 
 export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot) {
   const { authStep, authMode, email, setEmail, setAuthMode, setAuthStep, setErrorInfo, currentAuthMode } = props;
+  // translation
+  const { t } = useTranslation();
   // router
   const router = useAppRouter();
   // query params
@@ -78,7 +81,7 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
         return;
       })
       .catch((error) => {
-        const errorhandler = authErrorHandler(error?.error_code?.toString(), data?.email || undefined);
+        const errorhandler = authErrorHandler(error?.error_code?.toString(), t, data?.email || undefined);
         if (errorhandler?.type) setErrorInfo(errorhandler);
       });
   };
@@ -99,7 +102,7 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
       .generateUniqueCode(payload)
       .then(() => ({ code: "" }))
       .catch((error) => {
-        const errorhandler = authErrorHandler(error?.error_code?.toString());
+        const errorhandler = authErrorHandler(error?.error_code?.toString(), t);
         if (errorhandler?.type) setErrorInfo(errorhandler);
         throw error;
       });

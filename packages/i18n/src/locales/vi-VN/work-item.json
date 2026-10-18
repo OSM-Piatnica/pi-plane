@@ -520,6 +520,7 @@
     "sub_work_item_progress": "Tiến độ các mục công việc con",
     "archived_work_items_count": "{count, plural, one {Có # mục công việc trong kho lưu trữ của dự án} other {Có # mục công việc trong kho lưu trữ của dự án}}",
     "add_related_work_items": "Thêm mục công việc liên quan",
-    "toggle_workspace_level_search": "Bật/tắt tìm kiếm cấp không gian làm việc"
+    "toggle_workspace_level_search": "Bật/tắt tìm kiếm cấp không gian làm việc",
+    "search_results_for_in_project": "Kết quả tìm kiếm cho <query>\"{query}\"</query> trong dự án:"
   }
 }

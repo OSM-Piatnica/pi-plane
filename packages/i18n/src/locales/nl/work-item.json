@@ -520,6 +520,7 @@
     "sub_work_item_progress": "Voortgang van subwerkitems",
     "archived_work_items_count": "{count, plural, one {Er is # werkitem in het archief van het project} other {Er zijn # werkitems in het archief van het project}}",
     "add_related_work_items": "Gerelateerde werkitems toevoegen",
-    "toggle_workspace_level_search": "Zoeken op werkruimteniveau in- of uitschakelen"
+    "toggle_workspace_level_search": "Zoeken op werkruimteniveau in- of uitschakelen",
+    "search_results_for_in_project": "Zoekresultaten voor <query>\"{query}\"</query> in project:"
   }
 }

@@ -1016,5 +1016,10 @@
     "syncing_description": "Perubahan Anda sedang disinkronkan dengan server. Anda dapat terus melakukan perubahan.",
     "connection_lost": "Koneksi terputus",
     "connection_lost_description": "Kami mengalami masalah saat terhubung ke server websocket. Perubahan Anda akan disinkronkan dan disimpan setiap 10 detik."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Ikon",
+    "contrast_notice": "Warna akan disesuaikan untuk memastikan kontras yang memadai."
   }
 }

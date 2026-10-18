@@ -1016,5 +1016,10 @@
     "syncing_description": "Các thay đổi của bạn đang được đồng bộ với máy chủ. Bạn có thể tiếp tục chỉnh sửa.",
     "connection_lost": "Mất kết nối",
     "connection_lost_description": "Chúng tôi đang gặp sự cố khi kết nối với máy chủ websocket. Các thay đổi của bạn sẽ được đồng bộ và lưu mỗi 10 giây."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Biểu tượng",
+    "contrast_notice": "Màu sắc sẽ được điều chỉnh để đảm bảo độ tương phản đủ."
   }
 }

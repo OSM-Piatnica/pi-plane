@@ -1016,5 +1016,10 @@
     "syncing_description": "您的更改正在与服务器同步。您可以继续进行更改。",
     "connection_lost": "连接已断开",
     "connection_lost_description": "我们在连接 websocket 服务器时遇到问题。您的更改将每 10 秒同步并保存一次。"
+  },
+  "emoji_icon_picker": {
+    "emoji": "表情符号",
+    "icon": "图标",
+    "contrast_notice": "颜色将自动调整以确保足够的对比度。"
   }
 }

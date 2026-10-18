@@ -520,6 +520,7 @@
     "sub_work_item_progress": "Progresul sub-activităților",
     "archived_work_items_count": "{count, plural, one {Există # activitate în arhiva proiectului} few {Există # activități în arhiva proiectului} other {Există # de activități în arhiva proiectului}}",
     "add_related_work_items": "Adaugă activități conexe",
-    "toggle_workspace_level_search": "Comută căutarea la nivel de spațiu de lucru"
+    "toggle_workspace_level_search": "Comută căutarea la nivel de spațiu de lucru",
+    "search_results_for_in_project": "Rezultate căutare pentru <query>„{query}”</query> în proiect:"
   }
 }

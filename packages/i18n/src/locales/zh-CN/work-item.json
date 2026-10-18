@@ -520,6 +520,7 @@
     "sub_work_item_progress": "子工作项进度",
     "archived_work_items_count": "{count, plural, one {项目归档中有 # 个工作项} other {项目归档中有 # 个工作项}}",
     "add_related_work_items": "添加相关工作项",
-    "toggle_workspace_level_search": "切换工作区级别搜索"
+    "toggle_workspace_level_search": "切换工作区级别搜索",
+    "search_results_for_in_project": "在项目中搜索 <query>\"{query}\"</query> 的结果："
   }
 }

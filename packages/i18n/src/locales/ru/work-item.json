@@ -520,6 +520,7 @@
     "sub_work_item_progress": "Прогресс подэлементов",
     "archived_work_items_count": "{count, plural, one {В архиве проекта # рабочий элемент} few {В архиве проекта # рабочих элемента} many {В архиве проекта # рабочих элементов} other {В архиве проекта # рабочего элемента}}",
     "add_related_work_items": "Добавить связанные рабочие элементы",
-    "toggle_workspace_level_search": "Переключить поиск на уровне рабочего пространства"
+    "toggle_workspace_level_search": "Переключить поиск на уровне рабочего пространства",
+    "search_results_for_in_project": "Результаты поиска по запросу <query>«{query}»</query> в проекте:"
   }
 }

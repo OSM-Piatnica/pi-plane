@@ -520,6 +520,7 @@
     "sub_work_item_progress": "Прогрес похідних робочих одиниць",
     "archived_work_items_count": "{count, plural, one {В архіві проєкту # робоча одиниця} few {В архіві проєкту # робочі одиниці} many {В архіві проєкту # робочих одиниць} other {В архіві проєкту # робочої одиниці}}",
     "add_related_work_items": "Додати пов’язані робочі одиниці",
-    "toggle_workspace_level_search": "Перемкнути пошук на рівні робочого простору"
+    "toggle_workspace_level_search": "Перемкнути пошук на рівні робочого простору",
+    "search_results_for_in_project": "Результати пошуку за <query>\"{query}\"</query> у проєкті:"
   }
 }

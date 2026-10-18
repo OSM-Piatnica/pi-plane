@@ -1016,5 +1016,10 @@
   "no_matching_labels": "Няма съвпадащи етикети",
   "adding_label": "Добавяне на „{name}“",
   "add_label_to_labels": "Добави „{name}“ към етикетите",
-  "labels_count": "{count, plural, one {# етикет} other {# етикета}}"
+  "labels_count": "{count, plural, one {# етикет} other {# етикета}}",
+  "emoji_icon_picker": {
+    "emoji": "Емоджи",
+    "icon": "Икона",
+    "contrast_notice": "Цветовете ще бъдат коригирани, за да се осигури достатъчен контраст."
+  }
 }

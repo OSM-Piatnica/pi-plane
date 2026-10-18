@@ -1016,5 +1016,10 @@
     "syncing_description": "Twoje zmiany są synchronizowane z serwerem. Możesz kontynuować edycję.",
     "connection_lost": "Utracono połączenie",
     "connection_lost_description": "Mamy problem z połączeniem z serwerem websocket. Twoje zmiany będą synchronizowane i zapisywane co 10 sekund."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Ikona",
+    "contrast_notice": "Kolory zostaną dostosowane, aby zapewnić wystarczający kontrast."
   }
 }

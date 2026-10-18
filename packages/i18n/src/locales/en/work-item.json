@@ -520,6 +520,7 @@
     "sub_work_item_progress": "Sub-work-item progress",
     "archived_work_items_count": "{count, plural, one {There is # work item in this project's archive} other {There are # work items in this project's archive}}",
     "add_related_work_items": "Add related work items",
-    "toggle_workspace_level_search": "Toggle workspace level search"
+    "toggle_workspace_level_search": "Toggle workspace level search",
+    "search_results_for_in_project": "Search results for <query>\"{query}\"</query> in project:"
   }
 }
