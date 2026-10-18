@@ -144,7 +144,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
         message: t("project_components.card.link_copied_message"),
       })
     );
-  const handleOpenInNewTab = () => window.open(`/${projectLink}`, "_blank");
+  const handleOpenInNewTab = () => window.open(`/${projectLink}`, "_blank", "noopener,noreferrer");
 
   const MENU_ITEMS: TContextMenuItem[] = [
     {

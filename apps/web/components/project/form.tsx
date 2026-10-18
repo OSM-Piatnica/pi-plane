@@ -159,51 +159,54 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
   const onSubmit = async (formData: IProject) => {
     if (!workspaceSlug) return;
     setIsLoading(true);
-    const payload: Partial<IProject> = {
-      name: formData.name,
-      network: formData.network,
-      identifier: formData.identifier,
-      description: formData.description,
-
-      logo_props: formData.logo_props,
-      timezone: formData.timezone,
-    };
-
-    // Handle cover image changes
     try {
-      const coverImagePayload = await handleCoverImageChange(project.cover_image_url, formData.cover_image_url, {
-        workspaceSlug: workspaceSlug.toString(),
-        entityIdentifier: project.id,
-        entityType: EFileAssetType.PROJECT_COVER,
-        isUserAsset: false,
-      });
+      const payload: Partial<IProject> = {
+        name: formData.name,
+        network: formData.network,
+        identifier: formData.identifier,
+        description: formData.description,
 
-      if (coverImagePayload) {
-        Object.assign(payload, coverImagePayload);
-      }
-    } catch (error) {
-      console.error("Error handling cover image:", error);
-      setToast({
-        type: "error",
-        title: t("toast.error"),
-        message: error instanceof Error ? error.message : t("project_components.form.cover_image_error"),
-      });
-      setIsLoading(false);
-      return;
-    }
+        logo_props: formData.logo_props,
+        timezone: formData.timezone,
+      };
 
-    if (project.identifier !== formData.identifier)
-      await projectService
-        .checkProjectIdentifierAvailability(workspaceSlug, payload.identifier ?? "")
-        .then(async (res) => {
-          if (res.exists) setError("identifier", { message: t("common.identifier_already_exists") });
-          else await handleUpdateChange(payload);
-          return;
+      // Handle cover image changes
+      try {
+        const coverImagePayload = await handleCoverImageChange(project.cover_image_url, formData.cover_image_url, {
+          workspaceSlug: workspaceSlug.toString(),
+          entityIdentifier: project.id,
+          entityType: EFileAssetType.PROJECT_COVER,
+          isUserAsset: false,
         });
-    else await handleUpdateChange(payload);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
+
+        if (coverImagePayload) {
+          Object.assign(payload, coverImagePayload);
+        }
+      } catch (error) {
+        console.error("Error handling cover image:", error);
+        setToast({
+          type: "error",
+          title: t("toast.error"),
+          message: error instanceof Error ? error.message : t("project_components.form.cover_image_error"),
+        });
+        return;
+      }
+
+      if (project.identifier !== formData.identifier)
+        await projectService
+          .checkProjectIdentifierAvailability(workspaceSlug, payload.identifier ?? "")
+          .then(async (res) => {
+            if (res.exists) setError("identifier", { message: t("common.identifier_already_exists") });
+            else await handleUpdateChange(payload);
+            return;
+          });
+      else await handleUpdateChange(payload);
+    } finally {
+      // keep the spinner up a moment so a fast save does not flash
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+    }
   };
 
   return (
