@@ -909,6 +909,7 @@ export const useGroupByOptions = (
   key: TIssueGroupByOptions;
   titleTranslationKey: string;
 }[] => {
-  const groupByOptions = ISSUE_GROUP_BY_OPTIONS.filter((option) => options.includes(option.key));
+  const allowed = new Set(options);
+  const groupByOptions = ISSUE_GROUP_BY_OPTIONS.filter((option) => allowed.has(option.key));
   return groupByOptions;
 };
