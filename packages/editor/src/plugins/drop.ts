@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -103,6 +104,8 @@ type InsertFilesSafelyArgs = {
 export const insertFilesSafely = async (args: InsertFilesSafelyArgs) => {
   const { disabledExtensions, editor, event, files, initialPos, type } = args;
   let pos = initialPos;
+  const imageMimeTypes = new Set<string>(ACCEPTED_IMAGE_MIME_TYPES);
+  const attachmentMimeTypes = new Set<string>(ACCEPTED_ATTACHMENT_MIME_TYPES);
 
   for (const file of files) {
     // safe insertion
@@ -113,11 +116,11 @@ export const insertFilesSafely = async (args: InsertFilesSafelyArgs) => {
 
     try {
       if (type) {
-        if (["image", "attachment"].includes(type)) fileType = type;
+        if (type === "image" || type === "attachment") fileType = type;
         else throw new Error("Wrong file type passed");
       } else {
-        if (ACCEPTED_IMAGE_MIME_TYPES.includes(file.type)) fileType = "image";
-        else if (ACCEPTED_ATTACHMENT_MIME_TYPES.includes(file.type)) fileType = "attachment";
+        if (imageMimeTypes.has(file.type)) fileType = "image";
+        else if (attachmentMimeTypes.has(file.type)) fileType = "attachment";
       }
       // insert file depending on the type at the current position
       if (fileType === "image" && !disabledExtensions?.includes("image")) {

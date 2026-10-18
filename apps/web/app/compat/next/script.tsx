@@ -33,6 +33,8 @@ function Script({ src, id, strategy: _strategy, onLoad, onError, children, ...re
       document.body.appendChild(script);
 
       return () => {
+        if (onLoad) script.removeEventListener("load", onLoad);
+        if (onError) script.removeEventListener("error", onError);
         if (script.parentNode) {
           document.body.removeChild(script);
         }

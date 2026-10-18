@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -30,6 +31,14 @@ type Props = {
   isTouchDevice: boolean;
   provider?: HocuspocusProvider | undefined;
   state?: TCollabValue["state"];
+};
+
+// hides the drag handle when the pointer leaves the editor area
+const handleContainerMouseLeave = () => {
+  const dragHandleElement = document.querySelector("#editor-side-menu");
+  if (!dragHandleElement?.classList.contains("side-menu-hidden")) {
+    dragHandleElement?.classList.add("side-menu-hidden");
+  }
 };
 
 export function EditorContainer(props: Props) {
@@ -153,16 +162,10 @@ export function EditorContainer(props: Props) {
     }
   };
 
-  const handleContainerMouseLeave = () => {
-    const dragHandleElement = document.querySelector("#editor-side-menu");
-    if (!dragHandleElement?.classList.contains("side-menu-hidden")) {
-      dragHandleElement?.classList.add("side-menu-hidden");
-    }
-  };
-
   return (
     <>
-      <div
+      {/* react-doctor-disable-next-line no-static-element-interactions -- click on the empty container area only forwards focus to the editor; keyboard users focus the editor directly */}
+      <div // oxlint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- focus-forwarding click on the container area
         ref={containerRef}
         id={`editor-container-${id}`}
         onClick={handleContainerClick}

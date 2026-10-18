@@ -1043,5 +1043,11 @@
     "uploaded_on": "Încărcat de {name} la {date}",
     "date_range": "{start} - {end}",
     "expiry": "Expirare"
+  },
+  "a11y": {
+    "toggle_details": "Comută detaliile",
+    "workflow_flow_type": "Tip de flux",
+    "workflow_target_state": "Stare țintă",
+    "workflow_reject_state": "Stare de respingere"
   }
 }

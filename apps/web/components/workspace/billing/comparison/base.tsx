@@ -69,8 +69,12 @@ export const PlansComparisonBase = observer(function PlansComparisonBase(props: 
                     <div key={planKey} className="col-span-1 p-3">
                       <ul className="list-disc space-y-1 text-body-xs-regular">
                         {highlights.map((highlight, index) => (
-                          // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
-                          <li key={index}>{highlight}</li>
+                          <li
+                            // react-doctor-disable-next-line no-array-index-as-key -- static list generated from fixed data, never reordered
+                            key={index} // oxlint-disable-line react/no-array-index-key -- static list, never reordered
+                          >
+                            {highlight}
+                          </li>
                         ))}
                       </ul>
                     </div>

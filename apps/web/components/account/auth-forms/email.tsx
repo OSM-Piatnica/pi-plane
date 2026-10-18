@@ -41,8 +41,11 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
     const payload: IEmailCheckData = {
       email: email,
     };
-    await onSubmit(payload);
-    setIsSubmitting(false);
+    try {
+      await onSubmit(payload);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const isButtonDisabled = email.length === 0 || Boolean(emailError?.email) || isSubmitting;

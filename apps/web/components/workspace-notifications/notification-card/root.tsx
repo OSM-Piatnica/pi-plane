@@ -49,12 +49,15 @@ export const NotificationCardListRoot = observer(function NotificationCardListRo
               <div className="text-accent-secondary">{t("loading")}...</div>
             </div>
           ) : (
-            // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; behaviour unchanged
-            <div className="flex items-center justify-center py-4 text-13 font-medium" onClick={getNextNotifications}>
-              <div className="cursor-pointer text-accent-secondary transition-all hover:text-accent-primary">
+            <button
+              type="button"
+              className="flex w-full items-center justify-center py-4 text-13 font-medium"
+              onClick={getNextNotifications}
+            >
+              <span className="cursor-pointer text-accent-secondary transition-all hover:text-accent-primary">
                 {t("load_more")}
-              </div>
-            </div>
+              </span>
+            </button>
           )}
         </>
       )}

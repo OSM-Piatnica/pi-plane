@@ -1043,5 +1043,11 @@
     "uploaded_on": "{name}님이 {date}에 업로드함",
     "date_range": "{start} - {end}",
     "expiry": "만료"
+  },
+  "a11y": {
+    "toggle_details": "세부 정보 전환",
+    "workflow_flow_type": "흐름 유형",
+    "workflow_target_state": "대상 상태",
+    "workflow_reject_state": "거부 상태"
   }
 }

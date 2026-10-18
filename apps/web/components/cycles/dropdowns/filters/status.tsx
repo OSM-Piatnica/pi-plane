@@ -28,6 +28,7 @@ export const FilterStatus = observer(function FilterStatus(props: Props) {
   //hooks
   const { t } = useTranslation();
   const appliedFiltersCount = appliedFilters?.length ?? 0;
+  const appliedFiltersSet = new Set(appliedFilters ?? []);
   const filteredOptions = CYCLE_STATUS.filter((p) => p.value.includes(searchQuery.toLowerCase()));
 
   return (
@@ -43,7 +44,7 @@ export const FilterStatus = observer(function FilterStatus(props: Props) {
             filteredOptions.map((status) => (
               <FilterOption
                 key={status.value}
-                isChecked={Boolean(appliedFilters?.includes(status.value))}
+                isChecked={appliedFiltersSet.has(status.value)}
                 onClick={() => handleUpdate(status.value)}
                 title={t(status.i18n_title)}
               />

@@ -32,6 +32,7 @@ export const FilterCreatedDate = observer(function FilterCreatedDate(props: Prop
   const [isDateFilterModalOpen, setIsDateFilterModalOpen] = useState(false);
   // derived values
   const appliedFiltersCount = appliedFilters?.length ?? 0;
+  const appliedFiltersSet = new Set(appliedFilters ?? []);
   const filteredOptions = PROJECT_CREATED_AT_FILTER_OPTIONS.filter((d) =>
     d.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -69,7 +70,7 @@ export const FilterCreatedDate = observer(function FilterCreatedDate(props: Prop
               {filteredOptions.map((option) => (
                 <FilterOption
                   key={option.value}
-                  isChecked={Boolean(appliedFilters?.includes(option.value))}
+                  isChecked={appliedFiltersSet.has(option.value)}
                   onClick={() => handleUpdate(option.value)}
                   title={option.name}
                   multiple={false}

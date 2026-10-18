@@ -91,8 +91,8 @@ export function BubbleMenuLinkSelector(props: Props) {
               }
             }}
             onFocus={() => setError(false)}
-            // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; lint cleanup only
-            autoFocus
+            // react-doctor-disable-next-line no-autofocus -- the link popover opens only to type a URL, so focusing its single field is intended
+            autoFocus // oxlint-disable-line jsx-a11y/no-autofocus -- existing behaviour; lint cleanup only
           />
           {editor.getAttributes("link").href ? (
             <button

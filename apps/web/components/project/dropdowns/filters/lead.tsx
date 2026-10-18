@@ -40,6 +40,7 @@ export const FilterLead = observer(function FilterLead(props: Props) {
   const { data: currentUser } = useUser();
 
   const appliedFiltersCount = appliedFilters?.length ?? 0;
+  const appliedFiltersSet = new Set(appliedFilters ?? []);
 
   const sortedOptions = useMemo(() => {
     const filteredOptions = (memberIds || []).filter((memberId) =>
@@ -80,7 +81,7 @@ export const FilterLead = observer(function FilterLead(props: Props) {
                   return (
                     <FilterOption
                       key={`lead-${member.id}`}
-                      isChecked={Boolean(appliedFilters?.includes(member.id))}
+                      isChecked={appliedFiltersSet.has(member.id)}
                       onClick={() => handleUpdate(member.id)}
                       icon={
                         <Avatar

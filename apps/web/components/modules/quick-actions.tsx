@@ -69,7 +69,7 @@ export const ModuleQuickActions = observer(function ModuleQuickActions(props: Pr
       });
       return;
     });
-  const handleOpenInNewTab = () => window.open(`/${moduleLink}`, "_blank");
+  const handleOpenInNewTab = () => window.open(`/${moduleLink}`, "_blank", "noopener,noreferrer");
 
   const handleRestoreModule = async () => {
     try {

@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
@@ -26,6 +26,7 @@ type TProps = {
 
 export const WorkItemTypePropertyEditor = ({ properties, onChange }: TProps) => {
   const { t } = useTranslation();
+  const idPrefix = useId();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState<TWorkItemTypeFormProperty | null>(null);
   const [optionDraft, setOptionDraft] = useState("");
@@ -151,20 +152,25 @@ export const WorkItemTypePropertyEditor = ({ properties, onChange }: TProps) => 
         <div className="space-y-3 rounded-md border border-subtle bg-surface-2 p-3">
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             <div>
-              <label className="text-12 text-tertiary">
+              <label htmlFor={`${idPrefix}-title`} className="text-12 text-tertiary">
                 {t("workspace_settings.settings.work_item_types.form.property.title_label")}
               </label>
               <div className="mt-1">
                 <InputGroup size="md">
-                  <Input value={draft.title} onChange={(e) => patchDraft({ title: e.target.value })} size="md" />
+                  <Input
+                    id={`${idPrefix}-title`}
+                    value={draft.title}
+                    onChange={(e) => patchDraft({ title: e.target.value })}
+                    size="md"
+                  />
                 </InputGroup>
               </div>
             </div>
             <div>
-              <label className="text-12 text-tertiary">
+              <span id={`${idPrefix}-type-label`} className="text-12 text-tertiary">
                 {t("workspace_settings.settings.work_item_types.form.property.type_label")}
-              </label>
-              <div className="mt-1">
+              </span>
+              <div className="mt-1" role="group" aria-labelledby={`${idPrefix}-type-label`}>
                 <ProjectTemplateSelectField<TIssueTypePropertyType>
                   value={draft.propertyType}
                   onChange={(value) => patchDraft({ propertyType: value })}
@@ -174,12 +180,13 @@ export const WorkItemTypePropertyEditor = ({ properties, onChange }: TProps) => 
             </div>
           </div>
           <div>
-            <label className="text-12 text-tertiary">
+            <label htmlFor={`${idPrefix}-description`} className="text-12 text-tertiary">
               {t("workspace_settings.settings.work_item_types.form.property.description_label")}
             </label>
             <div className="mt-1">
               <TextAreaGroup>
                 <TextArea
+                  id={`${idPrefix}-description`}
                   size="md"
                   surface="field"
                   rows={2}
@@ -237,6 +244,7 @@ export const WorkItemTypePropertyEditor = ({ properties, onChange }: TProps) => 
                   <button
                     type="button"
                     className="text-tertiary hover:text-danger-primary"
+                    aria-label={t("common.remove")}
                     onClick={() => removeOption(opt)}
                   >
                     <Trash2 className="h-3.5 w-3.5" />

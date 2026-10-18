@@ -34,6 +34,7 @@ export const FilterState = observer(function FilterState(props: Props) {
   const filterValue = inboxFilters?.state || [];
 
   const appliedFiltersCount = filterValue?.length ?? 0;
+  const filterValueSet = new Set(filterValue ?? []);
 
   const filteredOptions = states?.filter((state) => state.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
@@ -62,7 +63,7 @@ export const FilterState = observer(function FilterState(props: Props) {
                 {filteredOptions.slice(0, itemsToRender).map((state) => (
                   <FilterOption
                     key={state?.id}
-                    isChecked={Boolean(filterValue?.includes(state?.id))}
+                    isChecked={filterValueSet.has(state?.id)}
                     onClick={() => handleInboxIssueFilters("state", handleFilterValue(state.id))}
                     icon={
                       <StateGroupIcon

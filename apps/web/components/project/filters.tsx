@@ -54,9 +54,15 @@ const HeaderFilters = observer(function HeaderFilters({
       let newValues = filters?.[key] ?? [];
       if (Array.isArray(value)) {
         if (key === "created_at" && newValues.find((v) => v.includes("custom"))) newValues = [];
+        const newValuesSet = new Set(newValues);
         value.forEach((val) => {
-          if (!newValues.includes(val)) newValues.push(val);
-          else newValues.splice(newValues.indexOf(val), 1);
+          if (!newValuesSet.has(val)) {
+            newValues.push(val);
+            newValuesSet.add(val);
+          } else {
+            newValues.splice(newValues.indexOf(val), 1);
+            newValuesSet.delete(val);
+          }
         });
       } else {
         if (filters?.[key]?.includes(value)) newValues.splice(newValues.indexOf(value), 1);

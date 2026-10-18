@@ -153,8 +153,9 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
       const updatedModuleIds = xor(issue.module_ids, moduleIds);
       const modulesToAdd: string[] = [];
       const modulesToRemove: string[] = [];
+      const currentModuleIds = new Set(issue.module_ids);
       for (const moduleId of updatedModuleIds)
-        if (issue.module_ids.includes(moduleId)) modulesToRemove.push(moduleId);
+        if (currentModuleIds.has(moduleId)) modulesToRemove.push(moduleId);
         else modulesToAdd.push(moduleId);
       if (modulesToAdd.length > 0) issueOperations.addModulesToIssue(modulesToAdd);
       if (modulesToRemove.length > 0) issueOperations.removeModulesFromIssue(modulesToRemove);

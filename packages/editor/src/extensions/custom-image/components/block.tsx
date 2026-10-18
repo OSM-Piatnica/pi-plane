@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -64,7 +65,7 @@ export function CustomImageBlock(props: CustomImageBlockProps) {
   const containerRect = useRef<DOMRect | null>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const [hasErroredOnFirstLoad, setHasErroredOnFirstLoad] = useState(false);
-  const [hasTriedRestoringImageOnce, setHasTriedRestoringImageOnce] = useState(false);
+  const hasTriedRestoringImageOnce = useRef(false);
   // extension options
   const isTouchDevice = !!(editor.storage.utility as { isTouchDevice?: boolean } | undefined)?.isTouchDevice;
 
@@ -182,7 +183,7 @@ export function CustomImageBlock(props: CustomImageBlockProps) {
       window.addEventListener("mousemove", handleResize);
       window.addEventListener("mouseup", handleResizeEnd);
       window.addEventListener("mouseleave", handleResizeEnd);
-      window.addEventListener("touchmove", handleResize);
+      window.addEventListener("touchmove", handleResize, { passive: true });
       window.addEventListener("touchend", handleResizeEnd);
 
       return () => {
@@ -235,7 +236,8 @@ export function CustomImageBlock(props: CustomImageBlockProps) {
         "ml-[100%] -translate-x-full": nodeAlignment === "right",
       })}
     >
-      <div
+      {/* react-doctor-disable-next-line no-static-element-interactions -- mouse-only handler that selects the image node on press; keyboard selection is handled by ProseMirror itself */}
+      <div // oxlint-disable-line jsx-a11y/no-static-element-interactions -- mouse-only image selection handler
         ref={containerRef}
         className="group/image-component relative inline-block max-w-full"
         onMouseDown={handleImageMouseDown}
@@ -255,7 +257,7 @@ export function CustomImageBlock(props: CustomImageBlockProps) {
           onError={(_e) =>
             void (async () => {
               // for old image extension this command doesn't exist or if the image failed to load for the first time
-              if (!extension.options.restoreImage || hasTriedRestoringImageOnce) {
+              if (!extension.options.restoreImage || hasTriedRestoringImageOnce.current) {
                 setFailedToLoadImage(true);
                 return;
               }
@@ -285,7 +287,7 @@ export function CustomImageBlock(props: CustomImageBlockProps) {
                 console.error("Error while loading image", error);
               } finally {
                 setHasErroredOnFirstLoad(false);
-                setHasTriedRestoringImageOnce(true);
+                hasTriedRestoringImageOnce.current = true;
               }
             })()
           }
@@ -333,7 +335,8 @@ export function CustomImageBlock(props: CustomImageBlockProps) {
                 }
               )}
             />
-            <div
+            {/* react-doctor-disable-next-line no-static-element-interactions -- pointer-only resize drag handle (mouse and touch gesture) */}
+            <div // oxlint-disable-line jsx-a11y/no-static-element-interactions -- pointer-only resize handle
               className={cn(
                 "absolute bottom-0 size-4 translate-y-1/2 rounded-full border-2 border-white bg-accent-primary transition-opacity duration-100 ease-in-out",
                 {

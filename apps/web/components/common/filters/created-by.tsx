@@ -59,6 +59,8 @@ export const FilterCreatedBy = observer(function FilterCreatedBy(props: Props) {
     else setItemsToRender(sortedOptions.length);
   };
 
+  const appliedFilterSet = new Set(appliedFilters);
+
   return (
     <>
       <FilterHeader
@@ -78,7 +80,7 @@ export const FilterCreatedBy = observer(function FilterCreatedBy(props: Props) {
                   return (
                     <FilterOption
                       key={`member-${member.id}`}
-                      isChecked={!!appliedFilters?.includes(member.id)}
+                      isChecked={appliedFilterSet.has(member.id)}
                       onClick={() => handleUpdate(member.id)}
                       icon={
                         <Avatar

@@ -39,6 +39,7 @@ export const FilterAssignees = observer(function FilterAssignees(props: Props) {
   const { data: currentUser } = useUser();
 
   const appliedFiltersCount = appliedFilters?.length ?? 0;
+  const appliedFiltersSet = new Set(appliedFilters);
 
   const sortedOptions = useMemo(() => {
     const filteredOptions = (memberIds || []).filter((memberId) =>
@@ -79,7 +80,7 @@ export const FilterAssignees = observer(function FilterAssignees(props: Props) {
                   return (
                     <FilterOption
                       key={`assignees-${member.id}`}
-                      isChecked={Boolean(appliedFilters?.includes(member.id))}
+                      isChecked={appliedFiltersSet.has(member.id)}
                       onClick={() => handleUpdate(member.id)}
                       icon={
                         <Avatar

@@ -160,7 +160,9 @@ export class ProjectInboxStore implements IProjectInboxStore {
       this.currentTab === EInboxIssueCurrentTab.OPEN
         ? [EInboxIssueStatus.PENDING, EInboxIssueStatus.SNOOZED]
         : [EInboxIssueStatus.ACCEPTED, EInboxIssueStatus.DECLINED, EInboxIssueStatus.DUPLICATE];
-    appliedFilters = appliedFilters.filter((filter) => this.inboxFilters?.status?.includes(filter));
+    const inboxStatusFilters = new Set(this.inboxFilters?.status);
+    appliedFilters = appliedFilters.filter((filter) => inboxStatusFilters.has(filter));
+    const appliedFilterSet = new Set(appliedFilters);
     const currentTime = new Date().getTime();
 
     return this.currentTab === EInboxIssueCurrentTab.OPEN
@@ -173,12 +175,12 @@ export class ProjectInboxStore implements IProjectInboxStore {
             );
           if (appliedFilters[0] === EInboxIssueStatus.PENDING)
             return (
-              appliedFilters.includes(this.inboxIssues[id].status) ||
+              appliedFilterSet.has(this.inboxIssues[id].status) ||
               (this.inboxIssues[id].status === EInboxIssueStatus.SNOOZED &&
                 currentTime > new Date(this.inboxIssues[id].snoozed_till!).getTime())
             );
         })
-      : this.inboxIssueIds.filter((id) => appliedFilters.includes(this.inboxIssues[id].status));
+      : this.inboxIssueIds.filter((id) => appliedFilterSet.has(this.inboxIssues[id].status));
   }
 
   getIssueInboxByIssueId = computedFn((issueId: string) => this.inboxIssues?.[issueId]);

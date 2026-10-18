@@ -1043,5 +1043,11 @@
     "uploaded_on": "Caricato da {name} il {date}",
     "date_range": "{start} - {end}",
     "expiry": "Scadenza"
+  },
+  "a11y": {
+    "toggle_details": "Mostra o nascondi i dettagli",
+    "workflow_flow_type": "Tipo di flusso",
+    "workflow_target_state": "Stato di destinazione",
+    "workflow_reject_state": "Stato di rifiuto"
   }
 }

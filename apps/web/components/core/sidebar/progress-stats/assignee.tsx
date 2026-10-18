@@ -34,6 +34,7 @@ type TAssigneeStatComponent = {
 export const AssigneeStatComponent = observer(function AssigneeStatComponent(props: TAssigneeStatComponent) {
   const { distribution, isEditable, selectedAssigneeIds, handleAssigneeFiltersUpdate } = props;
   const { t } = useTranslation();
+  const selectedAssigneeIdSet = new Set(selectedAssigneeIds);
   return (
     <div>
       {distribution && distribution.length > 0 ? (
@@ -57,15 +58,15 @@ export const AssigneeStatComponent = observer(function AssigneeStatComponent(pro
                 total={assignee?.total ?? 0}
                 {...(isEditable && {
                   onClick: () => handleAssigneeFiltersUpdate(assignee.id),
-                  selected: assignee.id ? selectedAssigneeIds.includes(assignee.id) : false,
+                  selected: assignee.id ? selectedAssigneeIdSet.has(assignee.id) : false,
                 })}
               />
             );
           else
             return (
               <SingleProgressStats
-                // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
-                key={`unassigned-${index}`}
+                // react-doctor-disable-next-line no-array-index-as-key -- the unassigned bucket has no id and the list is never reordered
+                key={`unassigned-${index}`} // oxlint-disable-line react/no-array-index-key
                 title={
                   <div className="flex items-center gap-2">
                     <div className="h-4 w-4 rounded-full border-2 border-subtle bg-layer-1">

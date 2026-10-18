@@ -1043,5 +1043,11 @@
     "uploaded_on": "{name} đã tải lên vào {date}",
     "date_range": "{start} - {end}",
     "expiry": "Hết hạn"
+  },
+  "a11y": {
+    "toggle_details": "Bật/tắt chi tiết",
+    "workflow_flow_type": "Loại luồng",
+    "workflow_target_state": "Trạng thái đích",
+    "workflow_reject_state": "Trạng thái từ chối"
   }
 }

@@ -6,6 +6,7 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
 import { EIconSize } from "@plane/constants";
 import { StateGroupIcon } from "@plane/blocks/icons";
 import { CloseOutline } from "@makeplane/propel/icons";
@@ -16,6 +17,7 @@ import { useProjectState } from "@/hooks/store/use-project-state";
 export const InboxIssueAppliedFiltersState = observer(function InboxIssueAppliedFiltersState() {
   // hooks
   const { inboxFilters, handleInboxIssueFilters } = useProjectInbox();
+  const { t } = useTranslation();
   const { getStateById } = useProjectState();
   // derived values
   const filteredValues = inboxFilters?.state || [];
@@ -39,24 +41,26 @@ export const InboxIssueAppliedFiltersState = observer(function InboxIssueApplied
               <StateGroupIcon color={optionDetail.color} stateGroup={optionDetail.group} size={EIconSize.SM} />
             </div>
             <div className="truncate text-11">{optionDetail?.name}</div>
-            {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
-            <div
+            <button
+              type="button"
+              aria-label={t("common.remove")}
               className="relative flex h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden text-tertiary transition-all hover:text-secondary"
               onClick={() => handleInboxIssueFilters("state", handleFilterValue(optionDetail?.id))}
             >
               <CloseOutline className={`h-3 w-3`} />
-            </div>
+            </button>
           </div>
         );
       })}
 
-      {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
-      <div
+      <button
+        type="button"
+        aria-label={t("common.clear")}
         className="relative flex h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden text-tertiary transition-all hover:text-secondary"
         onClick={clearFilter}
       >
         <CloseOutline className={`h-3 w-3`} />
-      </div>
+      </button>
     </div>
   );
 });

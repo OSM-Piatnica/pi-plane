@@ -1043,5 +1043,11 @@
     "uploaded_on": "{name}于{date}上传",
     "date_range": "{start} - {end}",
     "expiry": "过期时间"
+  },
+  "a11y": {
+    "toggle_details": "切换详情",
+    "workflow_flow_type": "流程类型",
+    "workflow_target_state": "目标状态",
+    "workflow_reject_state": "拒绝状态"
   }
 }

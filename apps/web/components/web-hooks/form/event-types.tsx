@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -37,6 +38,7 @@ export function WebhookOptions(props: Props) {
             <input
               id={option.key}
               type="radio"
+              name="webhook-event-type"
               value={option.key}
               checked={value == option.key}
               onChange={() => onChange(option.key)}

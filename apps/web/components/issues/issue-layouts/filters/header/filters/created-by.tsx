@@ -52,6 +52,7 @@ export const FilterCreatedBy = observer(function FilterCreatedBy(props: Props) {
   }, [searchQuery]);
 
   const appliedFiltersCount = appliedFilters?.length ?? 0;
+  const appliedFiltersSet = new Set(appliedFilters);
 
   const handleViewToggle = () => {
     if (!sortedOptions) return;
@@ -79,7 +80,7 @@ export const FilterCreatedBy = observer(function FilterCreatedBy(props: Props) {
                   return (
                     <FilterOption
                       key={`created-by-${member.id}`}
-                      isChecked={Boolean(appliedFilters?.includes(member.id))}
+                      isChecked={appliedFiltersSet.has(member.id)}
                       onClick={() => handleUpdate(member.id)}
                       icon={
                         <Avatar

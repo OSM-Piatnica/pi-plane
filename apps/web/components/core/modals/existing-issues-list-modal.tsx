@@ -134,7 +134,8 @@ export function ExistingIssuesListModal(props: Props) {
 
   useEffect(() => {
     if (isOpen && !hasInitializedSelection.current && selectedWorkItemIds && issues.length > 0) {
-      setSelectedIssues(issues.filter((issue) => selectedWorkItemIds.includes(issue.id)));
+      const selectedIdSet = new Set(selectedWorkItemIds);
+      setSelectedIssues(issues.filter((issue) => selectedIdSet.has(issue.id)));
       hasInitializedSelection.current = true;
     }
   }, [isOpen, issues, selectedWorkItemIds]);

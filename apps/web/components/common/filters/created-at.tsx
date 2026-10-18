@@ -45,6 +45,8 @@ export const FilterCreatedDate = observer(function FilterCreatedDate(props: Prop
     } else setIsDateFilterModalOpen(true);
   };
 
+  const appliedFilterSet = new Set(appliedFilters);
+
   return (
     <>
       {isDateFilterModalOpen && (
@@ -67,7 +69,7 @@ export const FilterCreatedDate = observer(function FilterCreatedDate(props: Prop
               {filteredOptions.map((option) => (
                 <FilterOption
                   key={option.value}
-                  isChecked={!!appliedFilters?.includes(option.value)}
+                  isChecked={appliedFilterSet.has(option.value)}
                   onClick={() => handleUpdate(option.value)}
                   title={option.name}
                   multiple

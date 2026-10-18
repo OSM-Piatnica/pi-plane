@@ -5,7 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react";
 import { useDropzone } from "react-dropzone";
 // plane imports
@@ -42,7 +42,22 @@ type Props = {
 export const UserImageUploadModal = observer(function UserImageUploadModal(props: Props) {
   const { handleRemove, isOpen, onClose, onSuccess, value } = props;
   // states
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImageState] = useState<File | null>(null);
+  // object URL for the picked file, revoked when the file changes or the component unmounts
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  const imagePreviewUrlRef = useRef<string | null>(null);
+  const setImage = (file: File | null | undefined) => {
+    if (imagePreviewUrlRef.current) URL.revokeObjectURL(imagePreviewUrlRef.current);
+    imagePreviewUrlRef.current = file ? URL.createObjectURL(file) : null;
+    setImagePreviewUrl(imagePreviewUrlRef.current);
+    setImageState(file ?? null);
+  };
+  useEffect(
+    () => () => {
+      if (imagePreviewUrlRef.current) URL.revokeObjectURL(imagePreviewUrlRef.current);
+    },
+    []
+  );
   const [isRemoving, setIsRemoving] = useState(false);
   const [isImageUploading, setIsImageUploading] = useState(false);
   const { t } = useTranslation();
@@ -141,7 +156,7 @@ export const UserImageUploadModal = observer(function UserImageUploadModal(props
                           Edit
                         </button>
                         <img
-                          src={image ? URL.createObjectURL(image) : value ? getFileURL(value) : ""}
+                          src={imagePreviewUrl ?? (value ? getFileURL(value) : "")}
                           // oxlint-disable-next-line jsx-a11y/img-redundant-alt -- existing behaviour; lint cleanup only
                           alt="image"
                           className="absolute top-0 left-0 h-full w-full rounded-md object-cover"

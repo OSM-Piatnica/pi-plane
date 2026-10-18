@@ -74,10 +74,9 @@ export function ShortcutBadge({ shortcut }: { shortcut: string | undefined }) {
   return (
     <div className="pointer-events-none inline-flex shrink-0 items-center gap-1 font-medium select-none">
       {labels.map((label, index) => (
-        // oxlint-disable-next-line react/no-array-index-key -- no stable unique key available
         <kbd
-          // oxlint-disable-next-line react/no-array-index-key -- static list from a constant string, never reordered
-          key={index}
+          // react-doctor-disable-next-line no-array-index-as-key -- static list from a constant string, never reordered
+          key={index} // oxlint-disable-line react/no-array-index-key -- static list from a constant string, never reordered
           className="inline-flex h-5 items-center justify-center rounded-sm border border-strong bg-surface-1 px-1.5 font-code text-10 font-medium text-tertiary"
         >
           {label}
@@ -101,8 +100,10 @@ export function KeySequenceBadge({ sequence, separator }: TKeySequenceBadgeProps
   return (
     <div className="pointer-events-none inline-flex shrink-0 items-center gap-1 font-medium select-none">
       {chars.map((char, index) => (
-        // oxlint-disable-next-line react/no-array-index-key -- static list from a constant string, never reordered
-        <React.Fragment key={index}>
+        <React.Fragment
+          // react-doctor-disable-next-line no-array-index-as-key -- static list from a constant string, never reordered
+          key={index} // oxlint-disable-line react/no-array-index-key -- static list from a constant string, never reordered
+        >
           <kbd className="inline-flex h-5 items-center justify-center rounded-sm border border-strong bg-surface-1 px-1.5 font-code text-10 font-medium text-tertiary">
             {char.toUpperCase()}
           </kbd>

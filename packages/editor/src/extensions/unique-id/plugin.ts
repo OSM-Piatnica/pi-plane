@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -40,6 +41,7 @@ export const createUniqueIDPlugin = (options: UniqueIDOptions) => {
       const { tr } = newState;
 
       const { types, attributeName, generateUniqueID } = options;
+      const typeSet = new Set(types);
       const transform = combineTransactionSteps(oldState.doc, transactions as Transaction[]);
 
       const { mapping } = transform;
@@ -50,15 +52,15 @@ export const createUniqueIDPlugin = (options: UniqueIDOptions) => {
       // Get all IDs from the entire document to check for duplicates globally
       const allNodesInDoc: Array<{ node: ProseMirrorNode; pos: number }> = [];
       newState.doc.descendants((node, pos) => {
-        if (types.includes(node.type.name)) {
+        if (typeSet.has(node.type.name)) {
           allNodesInDoc.push({ node, pos });
         }
       });
       const allIds = allNodesInDoc.map(({ node }) => node.attrs[attributeName]).filter((id) => id !== null);
-      const duplicatedIds = findDuplicates(allIds);
+      const duplicatedIds = new Set(findDuplicates(allIds));
 
       changes.forEach(({ newRange }) => {
-        const newNodes = findChildrenInRange(newState.doc, newRange, (node) => types.includes(node.type.name));
+        const newNodes = findChildrenInRange(newState.doc, newRange, (node) => typeSet.has(node.type.name));
 
         newNodes.forEach(({ node, pos }) => {
           // instead of checking `node.attrs[attributeName]` directly
@@ -80,7 +82,7 @@ export const createUniqueIDPlugin = (options: UniqueIDOptions) => {
           const { deleted } = mapping.invert().mapResult(pos);
 
           // If this is a new node (didn't exist in old state) and its ID is duplicated in the entire document
-          const newNode = deleted && duplicatedIds.includes(id);
+          const newNode = deleted && duplicatedIds.has(id);
 
           if (newNode) {
             tr.setNodeMarkup(pos, undefined, {
@@ -174,6 +176,7 @@ export const createUniqueIDPlugin = (options: UniqueIDOptions) => {
         }
 
         const { types, attributeName } = options;
+        const typeSet = new Set(types);
         const removeId = (fragment: Fragment): Fragment => {
           const list: ProseMirrorNode[] = [];
 
@@ -186,7 +189,7 @@ export const createUniqueIDPlugin = (options: UniqueIDOptions) => {
             }
 
             // check for any other child nodes
-            if (!types.includes(node.type.name)) {
+            if (!typeSet.has(node.type.name)) {
               list.push(node.copy(removeId(node.content)));
 
               return;

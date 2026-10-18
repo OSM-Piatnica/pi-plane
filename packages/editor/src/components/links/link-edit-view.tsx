@@ -7,7 +7,7 @@
 
 import type { Node } from "@tiptap/pm/model";
 import { UnlinkOutline } from "@makeplane/propel/icons";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 // components
 import type { LinkViewProps, LinkViews } from "@/components/links";
 // helpers
@@ -22,10 +22,15 @@ type InputViewProps = {
 };
 
 function InputView({ label, value, placeholder, onChange, autoFocus }: InputViewProps) {
+  const inputId = useId();
+
   return (
     <div className="flex flex-col gap-1">
-      <label className="inline-block text-11 font-semibold text-placeholder">{label}</label>
+      <label htmlFor={inputId} className="inline-block text-11 font-semibold text-placeholder">
+        {label}
+      </label>
       <input
+        id={inputId}
         placeholder={placeholder}
         onClick={(e) => e.stopPropagation()}
         className="w-[280px] rounded-md border border-strong bg-layer-1 p-2 text-13 text-primary outline-none"
@@ -138,8 +143,8 @@ export function LinkEditView({ viewProps }: LinkEditViewProps) {
   );
 
   return (
-    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- existing behaviour; lint cleanup only
-    <div
+    // react-doctor-disable-next-line no-static-element-interactions -- keydown only delegates Enter from the child inputs; the container is not itself a control
+    <div // oxlint-disable-line jsx-a11y/no-static-element-interactions -- existing behaviour; lint cleanup only
       onKeyDown={handleKeyDown}
       className="shadow-md animate-in fade-in flex translate-y-1 flex-col gap-3 rounded-sm border-2 border-subtle bg-layer-1 p-2"
       style={{
@@ -153,7 +158,7 @@ export function LinkEditView({ viewProps }: LinkEditViewProps) {
       <div className="bg-strong mb-1 h-[1px] w-full gap-2" />
       <div className="flex items-center gap-2 text-13 text-secondary">
         <UnlinkOutline width={14} height={14} className="inline-block" />
-        <button onClick={removeLink} className="cursor-pointer transition-colors hover:text-placeholder">
+        <button type="button" onClick={removeLink} className="cursor-pointer transition-colors hover:text-placeholder">
           Remove Link
         </button>
       </div>

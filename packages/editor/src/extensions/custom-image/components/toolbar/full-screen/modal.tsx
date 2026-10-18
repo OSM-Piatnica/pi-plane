@@ -208,8 +208,8 @@ function ImageFullScreenModalWithoutPortal(props: Props) {
       aria-modal="true"
       aria-label="Fullscreen image viewer"
     >
-      {/* oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- existing behaviour; lint cleanup only */}
-      <div
+      {/* react-doctor-disable-next-line no-static-element-interactions -- backdrop click-to-close is a mouse convenience; Escape and the close button cover keyboard users */}
+      <div // oxlint-disable-line jsx-a11y/no-static-element-interactions -- existing behaviour; lint cleanup only
         ref={modalRef}
         onMouseDown={(e) => e.target === modalRef.current && handleClose()}
         className="relative grid size-full place-items-center overflow-hidden"
@@ -222,10 +222,11 @@ function ImageFullScreenModalWithoutPortal(props: Props) {
         >
           <CloseOutline className="size-8 text-white/60 transition-colors hover:text-white" />
         </button>
-        {/* oxlint-disable-next-line jsx-a11y/alt-text -- existing behaviour; lint cleanup only */}
-        <img
+        {/* react-doctor-disable-next-line no-noninteractive-element-interactions -- mouse-only pan gesture on the zoomed image; zoom and close are available through the buttons and keyboard */}
+        <img // oxlint-disable-line jsx-a11y/no-noninteractive-element-interactions -- mouse-only pan gesture
           ref={setImageRef}
           src={src}
+          alt=""
           className="read-only-image rounded-lg"
           style={{
             width: `${widthInNumber * initialMagnification}px`,
@@ -276,7 +277,7 @@ function ImageFullScreenModalWithoutPortal(props: Props) {
           {!isTouchDevice && (
             <button
               type="button"
-              onClick={() => window.open(downloadSrc, "_blank")}
+              onClick={() => window.open(downloadSrc, "_blank", "noopener,noreferrer")}
               className="grid size-8 flex-shrink-0 place-items-center text-white/60 transition-colors duration-200 hover:text-white"
               aria-label="Download image"
             >
@@ -286,7 +287,7 @@ function ImageFullScreenModalWithoutPortal(props: Props) {
           {!isTouchDevice && (
             <button
               type="button"
-              onClick={() => window.open(src, "_blank")}
+              onClick={() => window.open(src, "_blank", "noopener,noreferrer")}
               className="grid size-8 flex-shrink-0 place-items-center text-white/60 transition-colors duration-200 hover:text-white"
               aria-label="Open image in new tab"
             >

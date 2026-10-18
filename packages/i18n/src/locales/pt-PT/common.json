@@ -1043,5 +1043,11 @@
     "uploaded_on": "Enviado por {name} em {date}",
     "date_range": "{start} - {end}",
     "expiry": "Validade"
+  },
+  "a11y": {
+    "toggle_details": "Alternar detalhes",
+    "workflow_flow_type": "Tipo de fluxo",
+    "workflow_target_state": "Estado de destino",
+    "workflow_reject_state": "Estado de rejeição"
   }
 }

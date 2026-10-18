@@ -80,9 +80,9 @@ export const ActiveCycleProgress = observer(function ActiveCycleProgress(props: 
             <>
               {groupedIssues[group] > 0 && (
                 <div key={group}>
-                  {/* oxlint-disable-next-line click-events-have-key-events, no-static-element-interactions -- existing behaviour; lint cleanup only */}
-                  <div
-                    className="flex cursor-pointer items-center justify-between gap-2 text-13"
+                  <button
+                    type="button"
+                    className="flex w-full cursor-pointer items-center justify-between gap-2 text-left text-13"
                     onClick={() => {
                       handleFiltersUpdate([{ property: "state_group", operator: "in", value: [group] }]);
                     }}
@@ -99,7 +99,7 @@ export const ActiveCycleProgress = observer(function ActiveCycleProgress(props: 
                     <span className="text-tertiary">{`${groupedIssues[group]} ${
                       groupedIssues[group] > 1 ? t("common.work_items") : t("common.work_item")
                     }`}</span>
-                  </div>
+                  </button>
                 </div>
               )}
             </>

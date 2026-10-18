@@ -1043,5 +1043,11 @@
     "uploaded_on": "Geüpload door {name} op {date}",
     "date_range": "{start} - {end}",
     "expiry": "Vervaldatum"
+  },
+  "a11y": {
+    "toggle_details": "Details in- of uitklappen",
+    "workflow_flow_type": "Stroomtype",
+    "workflow_target_state": "Doelstatus",
+    "workflow_reject_state": "Afwijzingsstatus"
   }
 }

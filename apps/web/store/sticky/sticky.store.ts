@@ -125,8 +125,10 @@ export class StickyStore implements IStickyStore {
         const { results, ...paginationInfo } = response;
 
         // Add new stickies to store
+        const knownStickyIds = new Set(this.workspaceStickies[workspaceSlug]);
         results.forEach((sticky) => {
-          if (!this.workspaceStickies[workspaceSlug]?.includes(sticky.id)) {
+          if (!knownStickyIds.has(sticky.id)) {
+            knownStickyIds.add(sticky.id);
             this.workspaceStickies[workspaceSlug] = [...(this.workspaceStickies[workspaceSlug] || []), sticky.id];
           }
           this.stickies[sticky.id] = sticky;

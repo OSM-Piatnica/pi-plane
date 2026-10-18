@@ -28,6 +28,7 @@ export const FilterStatus = observer(function FilterStatus(props: Props) {
 
   const filteredOptions = MODULE_STATUS.filter((p) => p.value.includes(searchQuery.toLowerCase()));
   const appliedFiltersCount = appliedFilters?.length ?? 0;
+  const appliedFiltersSet = new Set(appliedFilters ?? []);
 
   return (
     <>
@@ -42,7 +43,7 @@ export const FilterStatus = observer(function FilterStatus(props: Props) {
             filteredOptions.map((status) => (
               <FilterOption
                 key={status.value}
-                isChecked={Boolean(appliedFilters?.includes(status.value))}
+                isChecked={appliedFiltersSet.has(status.value)}
                 onClick={() => handleUpdate(status.value)}
                 icon={<ModuleStatusIcon status={status.value} />}
                 title={t(status.i18n_label)}

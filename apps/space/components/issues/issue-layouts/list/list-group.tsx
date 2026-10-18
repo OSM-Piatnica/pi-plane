@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -53,9 +54,9 @@ const ListLoaderItemRow = forwardRef(function ListLoaderItemRow(
         <span className={`h-5 w-52 animate-pulse rounded-sm bg-layer-1`} />
       </div>
       <div className="flex items-center gap-2">
-        {[...Array(6)].map((_, index) => (
-          <Fragment key={index}>
-            <span key={index} className="h-5 w-5 animate-pulse rounded-sm bg-layer-1" />
+        {AVATAR_PLACEHOLDER_KEYS.map((placeholderKey) => (
+          <Fragment key={placeholderKey}>
+            <span className="h-5 w-5 animate-pulse rounded-sm bg-layer-1" />
           </Fragment>
         ))}
       </div>
@@ -64,9 +65,14 @@ const ListLoaderItemRow = forwardRef(function ListLoaderItemRow(
 });
 ListLoaderItemRow.displayName = "ListLoaderItemRow";
 
+const EMPTY_GROUP_ISSUE_IDS: string[] = [];
+
+// static skeleton avatars shown while the list loads
+const AVATAR_PLACEHOLDER_KEYS = Array.from({ length: 6 }, (_, position) => `avatar-${position}`);
+
 export const ListGroup = observer(function ListGroup(props: Props) {
   const {
-    groupIssueIds = [],
+    groupIssueIds = EMPTY_GROUP_ISSUE_IDS,
     group,
     groupBy,
     displayProperties,
@@ -98,15 +104,15 @@ export const ListGroup = observer(function ListGroup(props: Props) {
   const loadMore = isPaginating ? (
     <ListLoaderItemRow />
   ) : (
-    <div
+    <button
+      type="button"
       className={
-        "relative flex h-11 cursor-pointer items-center gap-3 border border-transparent border-t-subtle-1 bg-surface-1 p-3 pl-6 text-13 font-medium text-accent-primary hover:text-accent-secondary hover:underline"
+        "relative flex h-11 w-full cursor-pointer items-center gap-3 border border-transparent border-t-subtle-1 bg-surface-1 p-3 pl-6 text-left text-13 font-medium text-accent-primary hover:text-accent-secondary hover:underline"
       }
       onClick={() => loadMoreIssues(group.id)}
-      role="button"
     >
       {t("common.load_more")} &darr;
-    </div>
+    </button>
   );
 
   const validateEmptyIssueGroups = (issueCount: number = 0) => {

@@ -36,9 +36,7 @@ export const useIntersectionObserver = (
       );
       observer.observe(elementRef);
       return () => {
-        if (elementRef) {
-          observer.unobserve(elementRef);
-        }
+        observer.disconnect();
       };
     }
     // When i am passing callback as a dependency, it is causing infinite loop,

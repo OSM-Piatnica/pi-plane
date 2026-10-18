@@ -1043,5 +1043,11 @@
     "uploaded_on": "{name} subió el {date}",
     "date_range": "{start} - {end}",
     "expiry": "Vencimiento"
+  },
+  "a11y": {
+    "toggle_details": "Alternar detalles",
+    "workflow_flow_type": "Tipo de flujo",
+    "workflow_target_state": "Estado de destino",
+    "workflow_reject_state": "Estado de rechazo"
   }
 }

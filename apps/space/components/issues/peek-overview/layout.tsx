@@ -167,6 +167,7 @@ export const IssuePeekOverview = observer(function IssuePeekOverview(props: TIss
       {isSidePeekOpen && (
         <div
           ref={panelRef}
+          // react-doctor-disable-next-line prefer-html-dialog -- panel manages its own focus and aria-modal; a native <dialog> would change top-layer stacking and close handling
           role="dialog"
           aria-modal="true"
           aria-label={panelLabel}
@@ -184,6 +185,7 @@ export const IssuePeekOverview = observer(function IssuePeekOverview(props: TIss
           />
           <div
             ref={panelRef}
+            // react-doctor-disable-next-line prefer-html-dialog -- panel manages its own focus and aria-modal; a native <dialog> would change top-layer stacking and close handling
             role="dialog"
             aria-modal="true"
             aria-label={panelLabel}

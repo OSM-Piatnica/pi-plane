@@ -115,8 +115,9 @@ export const TabNavigationRoot = observer(function TabNavigationRoot(props: TTab
   // Split items into two categories:
   // 1. visibleNavigationItems: Items NOT user-hidden (may still overflow due to space)
   // 2. hiddenNavigationItems: Items user explicitly hid (always in overflow with "Show" icon)
-  const visibleNavigationItems = allNavigationItems.filter((item) => !tabPreferences.hiddenTabs.includes(item.key));
-  const hiddenNavigationItems = allNavigationItems.filter((item) => tabPreferences.hiddenTabs.includes(item.key));
+  const hiddenTabSet = new Set(tabPreferences.hiddenTabs);
+  const visibleNavigationItems = allNavigationItems.filter((item) => !hiddenTabSet.has(item.key));
+  const hiddenNavigationItems = allNavigationItems.filter((item) => hiddenTabSet.has(item.key));
 
   // Responsive tab layout hook
   const { visibleItems, overflowItems, hasOverflow, itemRefs, containerRef } = useResponsiveTabLayout({

@@ -24,7 +24,9 @@ type Props = {
   invitations?: IWorkspaceMemberInvitation[];
 };
 
-export const OnboardingRoot = observer(function OnboardingRoot({ invitations = [] }: Props) {
+const NO_INVITATIONS: IWorkspaceMemberInvitation[] = [];
+
+export const OnboardingRoot = observer(function OnboardingRoot({ invitations = NO_INVITATIONS }: Props) {
   const [currentStep, setCurrentStep] = useState<TOnboardingStep>(EOnboardingSteps.PROFILE_SETUP);
   // plane hooks
   const { t } = useTranslation();

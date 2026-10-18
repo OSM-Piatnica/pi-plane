@@ -28,6 +28,7 @@ export const FilterAccess = observer(function FilterAccess(props: Props) {
   const { t } = useTranslation();
 
   const appliedFiltersCount = appliedFilters?.length ?? 0;
+  const appliedFiltersSet = new Set(appliedFilters ?? []);
   const filteredOptions = NETWORK_CHOICES.filter((a) => a.i18n_label.includes(searchQuery.toLowerCase()));
 
   return (
@@ -43,7 +44,7 @@ export const FilterAccess = observer(function FilterAccess(props: Props) {
             filteredOptions.map((access) => (
               <FilterOption
                 key={access.key}
-                isChecked={Boolean(appliedFilters?.includes(`${access.key}`))}
+                isChecked={appliedFiltersSet.has(`${access.key}`)}
                 onClick={() => handleUpdate(`${access.key}`)}
                 icon={<ProjectNetworkIcon iconKey={access.iconKey} />}
                 title={t(access.i18n_label)}

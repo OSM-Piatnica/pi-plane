@@ -235,7 +235,8 @@ export class WorkspaceDraftIssues implements IWorkspaceDraftIssues {
           const issueIds = results.map((issue) => issue.id);
           const existingIssueIds = this.issueMapIds[workspaceSlug] ?? [];
           // new issueIds
-          const newIssueIds = issueIds.filter((issueId) => !existingIssueIds.includes(issueId));
+          const existingIssueIdSet = new Set(existingIssueIds);
+          const newIssueIds = issueIds.filter((issueId) => !existingIssueIdSet.has(issueId));
           this.addIssue(results);
           // issue map update
           update(this.issueMapIds, [workspaceSlug], (currentIssueIds = []) => [...newIssueIds, ...currentIssueIds]);

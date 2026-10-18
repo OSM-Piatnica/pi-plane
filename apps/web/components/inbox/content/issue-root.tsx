@@ -71,9 +71,10 @@ export const InboxIssueMainContent = observer(function InboxIssueMainContent(pro
   useEffect(() => {
     if (isSubmitting === "submitted") {
       setShowAlert(false);
-      setTimeout(async () => {
+      const timeoutId = setTimeout(() => {
         setIsSubmitting("saved");
       }, 3000);
+      return () => clearTimeout(timeoutId);
     } else if (isSubmitting === "submitting") {
       setShowAlert(true);
     }
@@ -208,6 +209,7 @@ export const InboxIssueMainContent = observer(function InboxIssueMainContent(pro
             <DescriptionVersionsRoot
               className="flex-shrink-0"
               entityInformation={{
+                // react-doctor-disable-next-line rendering-hydration-mismatch-time -- client-only SPA, never server-rendered
                 createdAt: issue.created_at ? new Date(issue.created_at) : new Date(),
                 createdByDisplayName:
                   inboxIssue.source === EInboxIssueSource.FORMS

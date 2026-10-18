@@ -1043,5 +1043,11 @@
     "uploaded_on": "Nahráno uživatelem {name} dne {date}",
     "date_range": "{start} - {end}",
     "expiry": "Platnost"
+  },
+  "a11y": {
+    "toggle_details": "Přepnout podrobnosti",
+    "workflow_flow_type": "Typ toku",
+    "workflow_target_state": "Cílový stav",
+    "workflow_reject_state": "Stav při zamítnutí"
   }
 }

@@ -54,8 +54,8 @@ export const ChartDraggable = observer(function ChartDraggable(props: Props) {
         isMoving={isMoving}
         position={block.position}
       />
-      {/* oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- behaviour-preserving lint cleanup; a11y handled separately */}
-      <div
+      {/* react-doctor-disable-next-line no-static-element-interactions -- mouse-drag gesture for moving the block; no keyboard equivalent */}
+      <div // oxlint-disable-line jsx-a11y/no-static-element-interactions -- mouse-drag gesture for moving the block
         className={cn("relative z-[6] flex h-8 w-full items-center rounded-sm", {
           "pointer-events-none": isMoving,
         })}

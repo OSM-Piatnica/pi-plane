@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
@@ -21,9 +21,10 @@ type TTemplateSelectProps = {
   value: string;
   onChange: (value: string) => void;
   options: TTemplateSelectOption[];
+  id?: string;
 };
 
-function TemplateSelect({ value, onChange, options }: TTemplateSelectProps) {
+function TemplateSelect({ value, onChange, options, id }: TTemplateSelectProps) {
   const selected = options.find((option) => option.value === value) ?? null;
   return (
     <Select<TTemplateSelectOption>
@@ -35,7 +36,7 @@ function TemplateSelect({ value, onChange, options }: TTemplateSelectProps) {
       showSearch={false}
       pinSelected={false}
     >
-      <Select.Trigger variant="select-lg" className="w-full">
+      <Select.Trigger id={id} variant="select-lg" className="w-full">
         <Select.Value />
       </Select.Trigger>
     </Select>
@@ -50,6 +51,7 @@ type TProps = {
 
 export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint }: TProps) => {
   const { t } = useTranslation();
+  const idPrefix = useId();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState<TCustomPropertyTemplateField | null>(null);
   const [optionDraft, setOptionDraft] = useState("");
@@ -174,12 +176,13 @@ export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint
         <div className="space-y-3 rounded-md border border-subtle bg-surface-2 p-3">
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             <div>
-              <label className="text-12 text-tertiary">
+              <label htmlFor={`${idPrefix}-title`} className="text-12 text-tertiary">
                 {t("workspace_settings.settings.project_templates.form.custom_property.title_label")}
               </label>
               <div className="mt-1">
                 <InputGroup size="lg">
                   <Input
+                    id={`${idPrefix}-title`}
                     size="lg"
                     value={draft.title}
                     onChange={(e) => patchDraft({ title: e.target.value })}
@@ -191,11 +194,12 @@ export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint
               </div>
             </div>
             <div>
-              <label className="text-12 text-tertiary">
+              <label htmlFor={`${idPrefix}-type`} className="text-12 text-tertiary">
                 {t("workspace_settings.settings.project_templates.form.custom_property.type_label")}
               </label>
               <div className="mt-1">
                 <TemplateSelect
+                  id={`${idPrefix}-type`}
                   value={draft.propertyType}
                   onChange={(value) => patchDraft({ propertyType: value as TCustomPropertyType })}
                   options={CUSTOM_PROPERTY_TYPES.map((type) => ({ value: type, label: propertyTypeLabel(type) }))}
@@ -204,12 +208,13 @@ export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint
             </div>
           </div>
           <div>
-            <label className="text-12 text-tertiary">
+            <label htmlFor={`${idPrefix}-description`} className="text-12 text-tertiary">
               {t("workspace_settings.settings.project_templates.form.custom_property.description_label")}
             </label>
             <div className="mt-1">
               <TextAreaGroup resize="vertical">
                 <TextArea
+                  id={`${idPrefix}-description`}
                   size="md"
                   surface="field"
                   rows={2}
@@ -243,11 +248,12 @@ export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint
               </p>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                 <div>
-                  <label className="text-12 text-tertiary">
+                  <label htmlFor={`${idPrefix}-select-mode`} className="text-12 text-tertiary">
                     {t("workspace_settings.settings.project_templates.form.custom_property.select_mode_label")}
                   </label>
                   <div className="mt-1">
                     <TemplateSelect
+                      id={`${idPrefix}-select-mode`}
                       value={draft.selectMode}
                       onChange={(value) =>
                         patchDraft({
@@ -270,11 +276,12 @@ export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint
                 </div>
                 {draft.selectMode === "single" && draft.options.length > 0 ? (
                   <div>
-                    <label className="text-12 text-tertiary">
+                    <label htmlFor={`${idPrefix}-default-option`} className="text-12 text-tertiary">
                       {t("workspace_settings.settings.project_templates.form.custom_property.default_option_label")}
                     </label>
                     <div className="mt-1">
                       <TemplateSelect
+                        id={`${idPrefix}-default-option`}
                         value={draft.defaultOption ?? ""}
                         onChange={(value) => patchDraft({ defaultOption: value || null })}
                         options={[
@@ -296,6 +303,7 @@ export const CustomPropertiesTemplateEditor = ({ properties, onChange, emptyHint
                     <button
                       type="button"
                       className="text-tertiary hover:text-danger-primary"
+                      aria-label={t("common.remove")}
                       onClick={() => removeOption(opt)}
                     >
                       <Trash2 className="h-3.5 w-3.5" />

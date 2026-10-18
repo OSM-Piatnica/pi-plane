@@ -91,8 +91,8 @@ export const ProjectMemberList = observer(function ProjectMemberList(props: TPro
               className="w-full max-w-[234px] border-none bg-transparent text-13 placeholder:text-placeholder focus:outline-none"
               placeholder={t("search")}
               value={searchQuery}
-              // oxlint-disable-next-line no-autofocus -- existing behaviour; lint cleanup only
-              autoFocus
+              // react-doctor-disable-next-line no-autofocus -- intentional focus on the member search field
+              autoFocus // oxlint-disable-line no-autofocus -- existing behaviour; lint cleanup only
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
