@@ -6,9 +6,11 @@ on:
     branches: ["preview", "canary", "master"]
   pull_request:
     branches: ["preview", "canary", "master"]
+    types: [opened, synchronize, reopened, edited]
 
 jobs:
   analyze:
+    if: (github.event.action != 'edited' || github.event.changes.base != null)
     name: Analyze
     runs-on: ubuntu-latest
     permissions:

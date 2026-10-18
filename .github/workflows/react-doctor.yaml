@@ -18,7 +18,7 @@ on:
   pull_request:
     branches:
       - "preview"
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [opened, synchronize, reopened, ready_for_review, edited]
   # Scans `preview` on every push so there is a health-score trend on the default
   # branch. PR-specific steps (the sticky summary comment) are skipped automatically
   # on `push` events.
@@ -49,6 +49,8 @@ concurrency:
 jobs:
   react-doctor:
     name: react-doctor
+    # `edited` fires when a PR is retargeted to preview; skip it for plain title/description edits
+    if: github.event.action != 'edited' || github.event.changes.base != null
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
