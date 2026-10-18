@@ -12,4 +12,3 @@
 # match should no longer trigger; the entry is kept as a safeguard until a scan
 # confirms it. The SSRF mitigation itself is in plane/utils/url_security.py and
 # plane/utils/ip_address.py.
-CVE-2026-30242
