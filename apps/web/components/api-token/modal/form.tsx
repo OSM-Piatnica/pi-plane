@@ -27,9 +27,9 @@ import { Select } from "@plane/blocks/select";
 import { setToast } from "@plane/blocks/toast";
 import { useTranslation } from "@plane/i18n";
 import type { IApiToken } from "@plane/types";
-import { renderFormattedDate, renderFormattedTime } from "@plane/utils";
 // hooks
 import { useUserProfile } from "@/hooks/store/user";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 // helpers
 type Props = {
   handleClose: () => void;
@@ -104,6 +104,7 @@ export function CreateApiTokenForm(props: Props) {
   } = useForm<IApiToken>({ defaultValues });
   // hooks
   const { t } = useTranslation();
+  const { formatDate, formatTime } = useLocalizedDates();
   // store hooks
   const { data: userProfile } = useUserProfile();
 
@@ -247,10 +248,16 @@ export function CreateApiTokenForm(props: Props) {
                 <span className="text-caption-sm-regular text-placeholder">
                   {expiredAt === "custom"
                     ? customDate
-                      ? `Expires ${renderFormattedDate(customDateFormatted ?? "")} at ${renderFormattedTime(customDateFormatted ?? "")}`
+                      ? t("date_phrases.expires_at", {
+                          date: formatDate(customDateFormatted ?? ""),
+                          time: formatTime(customDateFormatted ?? ""),
+                        })
                       : null
                     : expiredAt
-                      ? `Expires ${renderFormattedDate(expiryDate ?? "")} at ${renderFormattedTime(expiryDate ?? "")}`
+                      ? t("date_phrases.expires_at", {
+                          date: formatDate(expiryDate ?? ""),
+                          time: formatTime(expiryDate ?? ""),
+                        })
                       : null}
                 </span>
               )}

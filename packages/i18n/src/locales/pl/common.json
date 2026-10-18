@@ -1029,6 +1029,19 @@
     "expires_at": "Wygasa {date} o {time}",
     "never_expires": "Nigdy nie wygasa",
     "date_at_time": "{date} o {time}",
-    "till": "Do {date}, {time}"
+    "till": "Do {date}, {time}",
+    "after_date": "Po {date}",
+    "before_date": "Przed {date}",
+    "month_week": "{month}, tydzień {week}",
+    "target_date": "Data docelowa: {date}",
+    "from_date": "Od {date}",
+    "till_date": "Do {date}",
+    "date_to_date": "{start} do {end}",
+    "archived_at": "Zarchiwizowano {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Przesłane przez {name} dnia {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Ważność"
   }
 }

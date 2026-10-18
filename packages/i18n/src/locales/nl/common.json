@@ -1029,6 +1029,19 @@
     "expires_at": "Verloopt op {date} om {time}",
     "never_expires": "Verloopt nooit",
     "date_at_time": "{date} om {time}",
-    "till": "Tot {date}, {time}"
+    "till": "Tot {date}, {time}",
+    "after_date": "Na {date}",
+    "before_date": "Voor {date}",
+    "month_week": "{month}, week {week}",
+    "target_date": "Streefdatum: {date}",
+    "from_date": "Vanaf {date}",
+    "till_date": "Tot {date}",
+    "date_to_date": "{start} tot {end}",
+    "archived_at": "Gearchiveerd op {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Geüpload door {name} op {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Vervaldatum"
   }
 }

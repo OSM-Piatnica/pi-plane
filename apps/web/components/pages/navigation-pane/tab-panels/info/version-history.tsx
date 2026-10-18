@@ -14,7 +14,7 @@ import useSWR from "swr";
 import { Avatar } from "@makeplane/propel/components/avatar";
 import { useTranslation } from "@plane/i18n";
 import type { TPageVersion } from "@plane/types";
-import { cn, getFileURL, renderFormattedDate, renderFormattedTime } from "@plane/utils";
+import { cn, getFileURL } from "@plane/utils";
 // components
 import type { TPageRootHandlers } from "@/components/pages/editor/page-root";
 // hooks
@@ -24,6 +24,7 @@ import { useQueryParams } from "@/hooks/use-query-params";
 import type { TPageInstance } from "@/store/pages/base-page";
 // local imports
 import { PAGE_NAVIGATION_PANE_VERSION_QUERY_PARAM } from "../..";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type Props = {
   page: TPageInstance;
@@ -44,6 +45,7 @@ const VersionHistoryItem = observer(function VersionHistoryItem(props: VersionHi
   const versionCreator = getUserDetails(version.owned_by);
   // translation
   const { t } = useTranslation();
+  const { formatDate, formatTime } = useLocalizedDates();
 
   return (
     <li className="relative flex items-center gap-x-4 text-11 font-medium">
@@ -59,7 +61,10 @@ const VersionHistoryItem = observer(function VersionHistoryItem(props: VersionHi
         })}
       >
         <p className="text-tertiary">
-          {renderFormattedDate(version.last_saved_at)}, {renderFormattedTime(version.last_saved_at)}
+          {t("date_phrases.date_comma_time", {
+            date: formatDate(version.last_saved_at),
+            time: formatTime(version.last_saved_at),
+          })}
         </p>
         <p className="mt-1 flex items-center gap-1">
           <Avatar

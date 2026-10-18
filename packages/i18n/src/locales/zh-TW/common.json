@@ -1029,6 +1029,19 @@
     "expires_at": "到期時間：{date} {time}",
     "never_expires": "永不過期",
     "date_at_time": "{date} {time}",
-    "till": "直到 {date}，{time}"
+    "till": "直到 {date}，{time}",
+    "after_date": "{date}之後",
+    "before_date": "{date}之前",
+    "month_week": "{month}，第{week}週",
+    "target_date": "目標日期：{date}",
+    "from_date": "自{date}起",
+    "till_date": "截至{date}",
+    "date_to_date": "{start}至{end}",
+    "archived_at": "封存於{date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "{name}於{date}上傳",
+    "date_range": "{start} - {end}",
+    "expiry": "到期時間"
   }
 }

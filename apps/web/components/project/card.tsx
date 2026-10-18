@@ -34,7 +34,7 @@ import type { IProject } from "@plane/types";
 import type { TContextMenuItem } from "@plane/blocks/context-menu";
 import { ContextMenu } from "@plane/blocks/context-menu";
 import { FavoriteStar } from "@plane/blocks/common";
-import { copyUrlToClipboard, cn, getFileURL, renderFormattedDate } from "@plane/utils";
+import { copyUrlToClipboard, cn, getFileURL } from "@plane/utils";
 // components
 // hooks
 import { useMember } from "@/hooks/store/use-member";
@@ -48,6 +48,7 @@ import { DeleteProjectModal } from "./delete-project-modal";
 import { JoinProjectModal } from "./join-project-modal";
 import { ArchiveRestoreProjectModal } from "./archive-restore-modal";
 import { useTranslation } from "@plane/i18n";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type Props = {
   project: IProject;
@@ -57,6 +58,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
   const { project } = props;
   // translation
   const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
   // states
   const [deleteProjectModalOpen, setDeleteProjectModal] = useState(false);
   const [joinProjectModalOpen, setJoinProjectModal] = useState(false);
@@ -298,7 +300,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
           <p className="line-clamp-2 text-13 break-words text-tertiary">
             {project.description && project.description.trim() !== ""
               ? project.description
-              : t("project_components.card.created_on", { date: renderFormattedDate(project.created_at) })}
+              : t("project_components.card.created_on", { date: formatDate(project.created_at) })}
           </p>
           <div className="item-center flex justify-between">
             <div className="flex items-center justify-center gap-2">

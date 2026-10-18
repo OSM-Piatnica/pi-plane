@@ -21,7 +21,7 @@ import type { ICycle } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 // ui
 import { Loader } from "@plane/blocks/skeleton";
-import { renderFormattedDate, renderFormattedDateWithoutYear, getFileURL } from "@plane/utils";
+import { renderFormattedDateWithoutYear, getFileURL } from "@plane/utils";
 // assets
 import darkAssigneeAsset from "@/app/assets/empty-state/active-cycle/assignee-dark.webp?url";
 import lightAssigneeAsset from "@/app/assets/empty-state/active-cycle/assignee-light.webp?url";
@@ -38,6 +38,7 @@ import { SimpleEmptyState } from "@/components/empty-state/simple-empty-state-ro
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useIssues } from "@/hooks/store/use-issues";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import useLocalStorage from "@/hooks/use-local-storage";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 // store
@@ -64,6 +65,7 @@ export const ActiveCycleStats = observer(function ActiveCycleStats(props: Active
   const { resolvedTheme } = useTheme();
   // plane hooks
   const { t } = useTranslation();
+  const { locale, formatDate } = useLocalizedDates();
   // derived values
   const priorityResolvedPath = resolvedTheme === "light" ? lightPriorityAsset : darkPriorityAsset;
   const assigneesResolvedPath = resolvedTheme === "light" ? lightAssigneeAsset : darkAssigneeAsset;
@@ -157,11 +159,11 @@ export const ActiveCycleStats = observer(function ActiveCycleStats(props: Active
                               tooltip
                             />
                             {issue.target_date && (
-                              <Tooltip label={`Target Date: ${renderFormattedDate(issue.target_date) ?? ""}`}>
+                              <Tooltip label={t("date_phrases.target_date", { date: formatDate(issue.target_date) })}>
                                 <div className="flex h-full cursor-pointer items-center gap-1.5 truncate rounded-sm bg-layer-1 px-2 py-0.5 text-11 group-hover:bg-surface-1">
                                   <CompletedAtOutline className="h-3 w-3 flex-shrink-0" />
                                   <span className="truncate text-11">
-                                    {renderFormattedDateWithoutYear(issue.target_date)}
+                                    {renderFormattedDateWithoutYear(issue.target_date, locale)}
                                   </span>
                                 </div>
                               </Tooltip>

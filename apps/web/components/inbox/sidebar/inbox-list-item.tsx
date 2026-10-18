@@ -15,7 +15,7 @@ import { useTranslation } from "@plane/i18n";
 import { PriorityIcon } from "@plane/blocks/icons";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { Row } from "@plane/blocks/layout";
-import { cn, renderFormattedDate } from "@plane/utils";
+import { cn } from "@plane/utils";
 // components
 import { ButtonAvatars } from "@/components/dropdowns/member/avatar";
 // hooks
@@ -26,6 +26,7 @@ import { usePlatformOS } from "@/hooks/use-platform-os";
 import { InboxSourcePill } from "@/components/inbox/source-pill";
 // local imports
 import { InboxIssueStatus } from "../inbox-issue-status";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type InboxIssueListItemProps = {
   workspaceSlug: string;
@@ -39,6 +40,7 @@ export const InboxIssueListItem = observer(function InboxIssueListItem(props: In
   const { workspaceSlug, projectId, inboxIssueId, projectIdentifier, setIsMobileSidebar } = props;
   // translation
   const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
   // router
   const searchParams = useSearchParams();
   const selectedInboxIssueId = searchParams.get("inboxIssueId");
@@ -88,11 +90,8 @@ export const InboxIssueListItem = observer(function InboxIssueListItem(props: In
 
           <div className="flex items-center justify-between">
             <div className="flex flex-wrap items-center gap-2">
-              <Tooltip
-                label={`${t("common.created_on")}: ${renderFormattedDate(issue.created_at ?? "")}`}
-                disabled={isMobile}
-              >
-                <div className="text-11 text-secondary">{renderFormattedDate(issue.created_at ?? "")}</div>
+              <Tooltip label={`${t("common.created_on")}: ${formatDate(issue.created_at ?? "")}`} disabled={isMobile}>
+                <div className="text-11 text-secondary">{formatDate(issue.created_at ?? "")}</div>
               </Tooltip>
 
               <div className="rounded-full border-2 border-strong-1" />

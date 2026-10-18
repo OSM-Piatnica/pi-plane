@@ -14,9 +14,9 @@ import { useTranslation } from "@plane/i18n";
 import { AreaChart } from "@plane/blocks/charts/area-chart";
 import { EmptyStateCompact } from "@plane/blocks/empty-state";
 import type { IChartResponse, TChartData } from "@plane/types";
-import { renderFormattedDate } from "@plane/utils";
 // hooks
 import { useAnalytics } from "@/hooks/store/use-analytics";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 // services
 import { AnalyticsService } from "@/services/analytics.service";
 import AnalyticsSectionWrapper from "../analytics-section-wrapper";
@@ -35,6 +35,7 @@ const CreatedVsResolved = observer(function CreatedVsResolved() {
   } = useAnalytics();
   const params = useParams();
   const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
   const workspaceSlug = params.workspaceSlug.toString();
   const { data: createdVsResolvedData, isLoading: isCreatedVsResolvedLoading } = useSWR(
     `created-vs-resolved-${workspaceSlug}-${selectedDuration}-${selectedProjects}-${selectedCycle}-${selectedModule}-${isPeekView}-${isEpic}`,
@@ -57,9 +58,9 @@ const CreatedVsResolved = observer(function CreatedVsResolved() {
     return createdVsResolvedData.data.map((datum) => ({
       ...datum,
       [datum.key]: datum.count,
-      name: renderFormattedDate(datum.key) ?? datum.key,
+      name: formatDate(datum.key) || datum.key,
     }));
-  }, [createdVsResolvedData]);
+  }, [createdVsResolvedData, formatDate]);
 
   const areas = useMemo(
     () => [

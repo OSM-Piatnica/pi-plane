@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 // ui
 import { MODULE_STATUS } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 import { ModuleStatusIcon } from "@plane/blocks/icons";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 // components
@@ -18,6 +19,7 @@ import { getBlockViewDetails } from "@/components/issues/issue-layouts/utils";
 // constants
 // hooks
 import { useModule } from "@/hooks/store/use-module";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 
@@ -36,10 +38,13 @@ export const ModuleGanttBlock = observer(function ModuleGanttBlock(props: Props)
   const moduleDetails = getModuleById(moduleId);
   // hooks
   const { isMobile } = usePlatformOS();
+  const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
 
   const { message, blockStyle } = getBlockViewDetails(
     moduleDetails,
-    MODULE_STATUS.find((s) => s.value === moduleDetails?.status)?.color ?? ""
+    MODULE_STATUS.find((s) => s.value === moduleDetails?.status)?.color ?? "",
+    { t, formatDate }
   );
 
   return (

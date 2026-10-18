@@ -13,12 +13,13 @@ import { Dialog, DialogContent } from "@makeplane/propel/components/dialog";
 import { setToast } from "@plane/blocks/toast";
 import { APITokenService } from "@plane/services";
 import type { IApiToken } from "@plane/types";
-import { renderFormattedDate, csvDownload } from "@plane/utils";
+import { csvDownload } from "@plane/utils";
 // constants
 import { API_TOKENS_LIST } from "@plane/constants";
 // local imports
 import { CreateApiTokenForm } from "./form";
 import { GeneratedTokenDetails } from "./generated-token-details";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type Props = {
   isOpen: boolean;
@@ -34,6 +35,7 @@ export function CreateApiTokenModal(props: Props) {
   const [neverExpires, setNeverExpires] = useState<boolean>(false);
   const [generatedToken, setGeneratedToken] = useState<IApiToken | null | undefined>(null);
   const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
 
   const handleClose = () => {
     onClose();
@@ -48,7 +50,9 @@ export function CreateApiTokenModal(props: Props) {
     const csvData = {
       Title: data.label,
       Description: data.description,
-      Expiry: data.expired_at ? (renderFormattedDate(data.expired_at)?.replace(",", " ") ?? "") : "Never expires",
+      [t("date_phrases.expiry")]: data.expired_at
+        ? (formatDate(data.expired_at)?.replace(",", " ") ?? "")
+        : t("date_phrases.never_expires"),
       "Secret key": data.token ?? "",
     };
 

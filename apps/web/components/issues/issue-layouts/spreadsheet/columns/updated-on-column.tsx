@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 import type { TIssue } from "@plane/types";
 // helpers
 import { Row } from "@plane/blocks/layout";
-import { renderFormattedDate } from "@plane/utils";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type Props = {
   issue: TIssue;
@@ -19,10 +19,11 @@ type Props = {
 
 export const SpreadsheetUpdatedOnColumn = observer(function SpreadsheetUpdatedOnColumn(props: Props) {
   const { issue } = props;
+  const { formatDate } = useLocalizedDates();
 
   return (
     <Row className="flex h-11 w-full items-center border-b-[0.5px] border-subtle-1 text-11 group-[.selected-issue-row]:bg-accent-primary/5 hover:bg-layer-1 group-[.selected-issue-row]:hover:bg-accent-primary/10">
-      {renderFormattedDate(issue.updated_at)}
+      {formatDate(issue.updated_at)}
     </Row>
   );
 });

@@ -21,9 +21,10 @@ import {
   DialogMain,
   DialogTitle,
 } from "@makeplane/propel/components/dialog";
-import { renderFormattedDate, renderFormattedTime, copyTextToClipboard } from "@plane/utils";
+import { copyTextToClipboard } from "@plane/utils";
 // hooks
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type Props = {
   handleClose: () => void;
@@ -34,6 +35,7 @@ export function GeneratedTokenDetails(props: Props) {
   const { handleClose, tokenDetails } = props;
   const { isMobile } = usePlatformOS();
   const { t } = useTranslation();
+  const { formatDate, formatTime } = useLocalizedDates();
   const copyApiToken = (token: string) => {
     copyTextToClipboard(token).then(() =>
       setToast({
@@ -69,8 +71,11 @@ export function GeneratedTokenDetails(props: Props) {
       <DialogActions>
         <DialogInfo>
           {tokenDetails.expired_at
-            ? `Expires ${renderFormattedDate(tokenDetails.expired_at)} at ${renderFormattedTime(tokenDetails.expired_at)}`
-            : "Never expires"}
+            ? t("date_phrases.expires_at", {
+                date: formatDate(tokenDetails.expired_at),
+                time: formatTime(tokenDetails.expired_at),
+              })
+            : t("date_phrases.never_expires")}
         </DialogInfo>
         <Button variant="secondary" size="sm" stretch="auto" label={t("close")} onClick={handleClose} />
       </DialogActions>

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,6 +9,7 @@ import { endOfMonth, endOfWeek, endOfYear, startOfMonth, startOfWeek, startOfYea
 // helpers
 // types
 import { DURATION_FILTER_OPTIONS, EDurationFilters } from "@plane/constants";
+import type { useTranslation } from "@plane/i18n";
 import type { TIssuesListTypes } from "@plane/types";
 // constants
 import { renderFormattedDate, renderFormattedPayloadDate } from "@plane/utils";
@@ -87,15 +89,24 @@ export const getTabKey = (duration: EDurationFilters, tab: TIssuesListTypes | un
  * @param duration
  * @param customDates
  */
-export const getDurationFilterDropdownLabel = (duration: EDurationFilters, customDates: string[]): string => {
+export const getDurationFilterDropdownLabel = (
+  duration: EDurationFilters,
+  customDates: string[],
+  formatDate: (date: string) => string | null | undefined = (date) => renderFormattedDate(date),
+  t?: ReturnType<typeof useTranslation>["t"]
+): string => {
   if (duration !== "custom") return DURATION_FILTER_OPTIONS.find((option) => option.key === duration)?.label ?? "";
   else {
     const afterDate = customDates.find((date) => date.includes("after"))?.split(";")[0];
     const beforeDate = customDates.find((date) => date.includes("before"))?.split(";")[0];
 
-    if (afterDate && beforeDate) return `${renderFormattedDate(afterDate)} - ${renderFormattedDate(beforeDate)}`;
-    else if (afterDate) return `After ${renderFormattedDate(afterDate)}`;
-    else if (beforeDate) return `Before ${renderFormattedDate(beforeDate)}`;
-    else return "";
+    if (afterDate && beforeDate) return `${formatDate(afterDate)} - ${formatDate(beforeDate)}`;
+    else if (afterDate) {
+      const date = formatDate(afterDate) ?? "";
+      return t ? t("date_phrases.after_date", { date }) : `After ${date}`;
+    } else if (beforeDate) {
+      const date = formatDate(beforeDate) ?? "";
+      return t ? t("date_phrases.before_date", { date }) : `Before ${date}`;
+    } else return "";
   }
 };

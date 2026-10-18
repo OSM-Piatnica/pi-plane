@@ -1029,6 +1029,19 @@
     "expires_at": "{date} {time}に有効期限が切れます",
     "never_expires": "有効期限なし",
     "date_at_time": "{date} {time}",
-    "till": "{date} {time}まで"
+    "till": "{date} {time}まで",
+    "after_date": "{date}以降",
+    "before_date": "{date}より前",
+    "month_week": "{month}、第{week}週",
+    "target_date": "目標日: {date}",
+    "from_date": "{date}から",
+    "till_date": "{date}まで",
+    "date_to_date": "{start}から{end}",
+    "archived_at": "{date}にアーカイブ",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "{name}が{date}にアップロード",
+    "date_range": "{start} - {end}",
+    "expiry": "有効期限"
   }
 }

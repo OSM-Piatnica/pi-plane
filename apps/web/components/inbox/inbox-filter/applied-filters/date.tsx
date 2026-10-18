@@ -9,7 +9,9 @@ import { observer } from "mobx-react";
 import { PAST_DURATION_FILTER_OPTIONS } from "@plane/constants";
 import { CloseOutline } from "@makeplane/propel/icons";
 import type { TInboxIssueFilterDateKeys } from "@plane/types";
-import { renderFormattedDate } from "@plane/utils";
+import { useTranslation } from "@plane/i18n";
+import { getDateFilterLabel } from "@/helpers/date-filter-label";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { useProjectInbox } from "@/hooks/store/use-project-inbox";
 
 type InboxIssueAppliedFiltersDate = {
@@ -23,6 +25,8 @@ export const InboxIssueAppliedFiltersDate = observer(function InboxIssueAppliedF
 ) {
   const { filterKey, label } = props;
   // hooks
+  const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
   const { inboxFilters, handleInboxIssueFilters } = useProjectInbox();
   // derived values
   const filteredValues = inboxFilters?.[filterKey] || [];
@@ -31,7 +35,7 @@ export const InboxIssueAppliedFiltersDate = observer(function InboxIssueAppliedF
     if (currentDate) return currentDate;
     const dateSplit = date.split(";");
     return {
-      name: `${dateSplit[1].charAt(0).toUpperCase() + dateSplit[1].slice(1)} ${renderFormattedDate(dateSplit[0])}`,
+      name: getDateFilterLabel(dateSplit[0], dateSplit[1], formatDate, t),
       value: date,
     };
   };

@@ -8,9 +8,10 @@
 import { DownloadOutline } from "@makeplane/propel/icons";
 import { useTranslation } from "@plane/i18n";
 import type { IExportData } from "@plane/types";
-import { getDate, getFileURL, renderFormattedDate, renderFormattedTime } from "@plane/utils";
+import { getDate, getFileURL } from "@plane/utils";
 // local imports
 import { ImportExportStatusPill } from "./status-pill";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type RowData = IExportData;
 const checkExpiry = (inputDateString: string) => {
@@ -22,6 +23,7 @@ const checkExpiry = (inputDateString: string) => {
 };
 export const useExportColumns = () => {
   const { t } = useTranslation();
+  const { formatDate, formatTime } = useLocalizedDates();
 
   const columns = [
     {
@@ -56,7 +58,7 @@ export const useExportColumns = () => {
       content: t("workspace_settings.settings.exports.history.exported_on"),
       tdRender: (rowData: RowData) => (
         <span>
-          {renderFormattedDate(rowData.created_at)} {renderFormattedTime(rowData.created_at)}
+          {t("date_phrases.date_time", { date: formatDate(rowData.created_at), time: formatTime(rowData.created_at) })}
         </span>
       ),
     },

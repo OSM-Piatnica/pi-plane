@@ -1029,6 +1029,19 @@
     "expires_at": "ვადა ამოიწურება: {date}, {time}",
     "never_expires": "ვადა არ ამოიწურება",
     "date_at_time": "{date}, {time}",
-    "till": "{date}, {time}-მდე"
+    "till": "{date}, {time}-მდე",
+    "after_date": "{date}-ის შემდეგ",
+    "before_date": "{date}-მდე",
+    "month_week": "{month}, კვირა {week}",
+    "target_date": "სამიზნე თარიღი: {date}",
+    "from_date": "{date}-დან",
+    "till_date": "{date}-მდე",
+    "date_to_date": "{start}-დან {end}-მდე",
+    "archived_at": "დაარქივდა {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "ატვირთვა: {name}, {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "ვადა"
   }
 }

@@ -22,6 +22,7 @@ import {
   renderAdditionalValue,
   shouldShowConnector,
 } from "@/components/workspace-notifications/notification-card/content";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 // Types
 export type TNotificationFieldData = {
@@ -29,6 +30,8 @@ export type TNotificationFieldData = {
   newValue: string | undefined;
   oldValue: string | undefined;
   verb: string | undefined;
+  /** Formats a date in the user's language; English style when omitted. */
+  formatDate?: (date: string | undefined) => string | undefined;
 };
 
 export type TNotificationContentDetails = {
@@ -58,14 +61,14 @@ export const BASE_NOTIFICATION_CONTENT_MAP: TNotificationContentMap = {
     value: newValue !== "" ? newValue : oldValue,
     showConnector: false,
   }),
-  start_date: ({ newValue }) => ({
+  start_date: ({ newValue, formatDate }) => ({
     action: newValue !== "" ? "set start date" : "removed the start date",
-    value: renderFormattedDate(newValue),
+    value: (formatDate ?? renderFormattedDate)(newValue),
     showConnector: false,
   }),
-  target_date: ({ newValue }) => ({
+  target_date: ({ newValue, formatDate }) => ({
     action: newValue !== "" ? "set due date" : "removed the due date",
-    value: renderFormattedDate(newValue),
+    value: (formatDate ?? renderFormattedDate)(newValue),
     showConnector: false,
   }),
   duration: ({ newValue }) => ({
@@ -165,6 +168,7 @@ export function NotificationContent({
   projectId: string;
   renderCommentBox?: boolean;
 }) {
+  const { formatDate } = useLocalizedDates();
   const { data, triggered_by_details: triggeredBy } = notification;
   const notificationField = data?.issue_activity.field;
   const newValue = data?.issue_activity.new_value;
@@ -176,6 +180,7 @@ export function NotificationContent({
     newValue,
     oldValue,
     verb,
+    formatDate,
   };
 
   const renderTriggerName = () => (

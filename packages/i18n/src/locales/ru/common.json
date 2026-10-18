@@ -1029,6 +1029,19 @@
     "expires_at": "Истекает {date} в {time}",
     "never_expires": "Не истекает",
     "date_at_time": "{date} в {time}",
-    "till": "До {date}, {time}"
+    "till": "До {date}, {time}",
+    "after_date": "После {date}",
+    "before_date": "До {date}",
+    "month_week": "{month}, неделя {week}",
+    "target_date": "Целевая дата: {date}",
+    "from_date": "С {date}",
+    "till_date": "До {date}",
+    "date_to_date": "С {start} по {end}",
+    "archived_at": "Архивировано {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Загружено: {name}, {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Срок действия"
   }
 }

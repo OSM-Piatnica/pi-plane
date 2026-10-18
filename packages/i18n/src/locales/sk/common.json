@@ -1029,6 +1029,19 @@
     "expires_at": "Platnosť vyprší {date} o {time}",
     "never_expires": "Platnosť nikdy nevyprší",
     "date_at_time": "{date} o {time}",
-    "till": "Do {date}, {time}"
+    "till": "Do {date}, {time}",
+    "after_date": "Po {date}",
+    "before_date": "Pred {date}",
+    "month_week": "{month}, týždeň {week}",
+    "target_date": "Cieľový dátum: {date}",
+    "from_date": "Od {date}",
+    "till_date": "Do {date}",
+    "date_to_date": "{start} až {end}",
+    "archived_at": "Archivované {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Nahrané používateľom {name} dňa {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Platnosť"
   }
 }

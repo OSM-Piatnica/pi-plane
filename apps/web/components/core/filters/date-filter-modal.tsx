@@ -21,8 +21,9 @@ import { Icon } from "@makeplane/propel/components/icon";
 import { IconButton } from "@makeplane/propel/components/icon-button";
 import { CloseOutline } from "@makeplane/propel/icons";
 import { useTranslation } from "@plane/i18n";
-import { renderFormattedPayloadDate, renderFormattedDate, getDate } from "@plane/utils";
+import { renderFormattedPayloadDate, getDate } from "@plane/utils";
 import { useCalendarLocale } from "@/hooks/use-calendar-locale";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { DateFilterSelect } from "./date-filter-select";
 type Props = {
   title: string;
@@ -47,6 +48,7 @@ export function DateFilterModal({ title, handleClose, isOpen, onSelect }: Props)
   // plane hooks
   const { t } = useTranslation();
   const { dateFnsLocale } = useCalendarLocale();
+  const { formatDate } = useLocalizedDates();
   const { handleSubmit, watch, control } = useForm<TFormValues>({
     defaultValues,
   });
@@ -147,9 +149,9 @@ export function DateFilterModal({ title, handleClose, isOpen, onSelect }: Props)
                 {watch("filterType") === "range" && (
                   <h6 className="flex items-center gap-1 text-11">
                     <span className="text-secondary">{t("calendar_ui.after")}:</span>
-                    <span>{renderFormattedDate(watch("date1"))}</span>
+                    <span>{formatDate(watch("date1"))}</span>
                     <span className="ml-1 text-secondary">{t("calendar_ui.before")}:</span>
-                    {!isInvalid && <span>{renderFormattedDate(watch("date2"))}</span>}
+                    {!isInvalid && <span>{formatDate(watch("date2"))}</span>}
                   </h6>
                 )}
               </div>

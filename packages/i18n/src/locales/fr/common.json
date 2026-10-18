@@ -1029,6 +1029,19 @@
     "expires_at": "Expire le {date} à {time}",
     "never_expires": "N’expire jamais",
     "date_at_time": "{date} à {time}",
-    "till": "Jusqu’au {date}, {time}"
+    "till": "Jusqu’au {date}, {time}",
+    "after_date": "Après le {date}",
+    "before_date": "Avant le {date}",
+    "month_week": "{month}, semaine {week}",
+    "target_date": "Date cible : {date}",
+    "from_date": "Du {date}",
+    "till_date": "Jusqu’au {date}",
+    "date_to_date": "{start} au {end}",
+    "archived_at": "Archivé le {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Téléversé par {name} le {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Expiration"
   }
 }
