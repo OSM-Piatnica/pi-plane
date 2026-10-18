@@ -313,7 +313,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                     name="first_name"
                     rules={{
                       required: t("onboarding.profile.first_name_required"),
-                      validate: validatePersonName,
+                      validate: (value) => validatePersonName(value, t),
                       maxLength: {
                         value: 50,
                         message: t("onboarding.profile.first_name_max_length"),
@@ -355,7 +355,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                     name="last_name"
                     rules={{
                       required: t("onboarding.profile.last_name_required"),
-                      validate: validatePersonName,
+                      validate: (value) => validatePersonName(value, t),
                       maxLength: {
                         value: 50,
                         message: t("onboarding.profile.last_name_max_length"),
@@ -410,7 +410,7 @@ export const ProfileSetup = observer(function ProfileSetup(props: Props) {
                               onFocus={() => setIsPasswordInputFocused(true)}
                               onBlur={() => setIsPasswordInputFocused(false)}
                               autoComplete="new-password"
-                              aria-label="New password..."
+                              aria-label={t("onboarding.profile.new_password_placeholder")}
                             />
                             <button
                               type="button"

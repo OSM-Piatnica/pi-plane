@@ -1064,5 +1064,338 @@
   "progress_chart": {
     "current": "{title} hiện tại",
     "ideal": "{title} lý tưởng"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "Thả hình ảnh vào đây để tải lên",
+      "drag_and_drop": "Kéo và thả hình ảnh vào đây",
+      "size_exceeded": "Kích thước hình ảnh không được vượt quá 5 MB.",
+      "invalid_format": "Vui lòng tải lên tệp có định dạng hợp lệ.",
+      "formats_supported": "Định dạng tệp được hỗ trợ: .jpeg, .jpg, .png, .webp",
+      "uploading": "Đang tải lên",
+      "upload_and_save": "Tải lên và lưu",
+      "title": "Tải hình ảnh lên",
+      "select_image": "Chọn hình ảnh",
+      "select_image_named": "Chọn hình ảnh: {description}",
+      "select_cover_image": "Chọn ảnh bìa {index}",
+      "no_images": "Không tìm thấy hình ảnh nào."
+    },
+    "ai_assistant": {
+      "rate_limit": "Bạn đã đạt số yêu cầu tối đa là 50 yêu cầu mỗi tháng cho mỗi người dùng.",
+      "use_response": "Sử dụng phản hồi này",
+      "generating_response": "Đang tạo phản hồi...",
+      "generate_response": "Tạo phản hồi",
+      "generate_again": "Tạo lại",
+      "content_label": "Nội dung:",
+      "response_label": "Phản hồi:",
+      "no_response": "Không thể tạo phản hồi. Nguyên nhân có thể là do nội dung hoặc thông tin tác vụ không đủ. Vui lòng thử lại.",
+      "placeholder_with_content": "Cho AI biết hành động cần thực hiện với nội dung này...",
+      "placeholder_empty": "Hỏi AI bất cứ điều gì...",
+      "consent": "Khi sử dụng tính năng này, bạn đồng ý chia sẻ tin nhắn với dịch vụ của bên thứ ba."
+    },
+    "multiple_select": {
+      "select_all_in_group": "Chọn tất cả trong nhóm"
+    },
+    "theme": {
+      "download_config": "Tải xuống cấu hình",
+      "import_config": "Nhập cấu hình",
+      "import_failed": "Không thể nhập cấu hình giao diện",
+      "missing_fields": "Thiếu các trường bắt buộc: primary và background",
+      "invalid_brand_hex": "Định dạng mã hex của màu thương hiệu không hợp lệ",
+      "invalid_neutral_hex": "Định dạng mã hex của màu trung tính không hợp lệ",
+      "invalid_mode": "Chế độ giao diện không hợp lệ. Phải là giá trị boolean",
+      "choose_color_mode": "Chọn chế độ màu",
+      "light_mode": "Chế độ sáng",
+      "dark_mode": "Chế độ tối"
+    },
+    "workspace": {
+      "delete_warning": "Bạn sắp xóa không gian làm việc <name/>. Nếu xác nhận, bạn sẽ mất quyền truy cập vào toàn bộ dữ liệu công việc trong không gian làm việc này và không thể khôi phục. Hãy hết sức cẩn trọng.",
+      "delete_type_name": "Nhập tên của không gian làm việc này để tiếp tục.",
+      "delete_final_confirmation": "Để xác nhận lần cuối, hãy nhập <phrase/> bên dưới."
+    },
+    "workspace_settings": {
+      "invitation_removed": "Đã xóa lời mời thành công.",
+      "workspace_updated": "Đã cập nhật không gian làm việc thành công",
+      "picture_removed": "Đã xóa ảnh không gian làm việc thành công.",
+      "picture_remove_failed": "Đã xảy ra lỗi khi xóa ảnh hồ sơ của bạn. Vui lòng thử lại.",
+      "url_copied": "Đã sao chép URL không gian làm việc vào bộ nhớ tạm."
+    },
+    "workspace_views": {
+      "delete_failed": "Không thể xóa chế độ xem. Vui lòng thử lại.",
+      "create_failed": "Không thể tạo chế độ xem. Vui lòng thử lại.",
+      "updated": "Đã cập nhật chế độ xem thành công.",
+      "update_failed": "Không thể cập nhật chế độ xem. Vui lòng thử lại.",
+      "edit_view": "Chỉnh sửa chế độ xem",
+      "delete_view": "Xóa chế độ xem"
+    },
+    "sticky_colors": {
+      "gray": "Xám",
+      "peach": "Đào",
+      "pink": "Hồng",
+      "orange": "Cam",
+      "green": "Xanh lá",
+      "light_blue": "Xanh lam nhạt",
+      "dark_blue": "Xanh lam đậm",
+      "purple": "Tím"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "Làm việc ở mọi chiều.",
+      "welcome_back": "Chào mừng bạn quay lại Plane.",
+      "create_your_account": "Tạo tài khoản Plane của bạn."
+    },
+    "auth_root": {
+      "no_auth_methods_title": "Không có phương thức xác thực nào khả dụng",
+      "no_auth_methods_description": "Vui lòng liên hệ quản trị viên để bật xác thực cho phiên bản của bạn."
+    },
+    "auth_password": {
+      "create_account": "Tạo tài khoản"
+    },
+    "terms": {
+      "agree_sign_up": "Khi tạo tài khoản, bạn hiểu và đồng ý với \n <terms>Điều khoản dịch vụ</terms> và <privacy>Chính sách quyền riêng tư</privacy> của chúng tôi.",
+      "agree_sign_in": "Khi đăng nhập, bạn hiểu và đồng ý với \n <terms>Điều khoản dịch vụ</terms> và <privacy>Chính sách quyền riêng tư</privacy> của chúng tôi."
+    },
+    "auth_screens": {
+      "sign_up": "Đăng ký",
+      "sign_in": "Đăng nhập",
+      "join_teams": "Hơn 10.000 nhóm đang xây dựng cùng Plane",
+      "not_authorized_view_title": "Rất tiếc! Bạn không có quyền xem trang này",
+      "not_authorized": "Không có quyền truy cập",
+      "not_a_member_description": "Bạn không phải là thành viên của không gian làm việc này. Vui lòng liên hệ quản trị viên không gian làm việc để nhận lời mời hoặc kiểm tra các lời mời đang chờ của bạn.",
+      "check_pending_invites": "Kiểm tra lời mời đang chờ"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "Không tìm thấy không gian làm việc",
+      "workspace_not_found_description": "Không tìm thấy không gian làm việc nào với URL này. Có thể không gian làm việc không tồn tại hoặc bạn không có quyền xem.",
+      "visit_profile": "Xem hồ sơ"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "Bật/tắt menu cài đặt",
+      "back_to_project": "Quay lại dự án",
+      "toggle_project_feature": "Bật/tắt tính năng dự án"
+    },
+    "headers": {
+      "toggle_sidebar": "Bật/tắt thanh bên"
+    },
+    "profile_activity": {
+      "page_title": "Hồ sơ - Hoạt động"
+    },
+    "webhooks": {
+      "updated_successfully": "Đã cập nhật webhook thành công.",
+      "not_authorized": "Bạn không có quyền truy cập trang này.",
+      "enable_webhook": "Bật webhook",
+      "toggle_webhook": "Bật/tắt webhook"
+    },
+    "project_settings_empty": {
+      "title": "Chưa có dự án nào",
+      "description": "Dự án là nền tảng cho công việc hướng đến mục tiêu. Dự án giúp bạn quản lý nhóm, tác vụ và mọi thứ cần thiết để hoàn thành công việc.",
+      "learn_more": "Tìm hiểu thêm về dự án"
+    },
+    "project_templates": {
+      "imported_template": "Mẫu đã nhập",
+      "pick_color": "Chọn màu"
+    },
+    "not_found": {
+      "image_alt": "404 - Không tìm thấy trang",
+      "title": "Rất tiếc! Đã xảy ra lỗi.",
+      "description": "Rất tiếc, không tìm thấy trang bạn đang tìm. Trang có thể đã bị xóa, đổi tên hoặc tạm thời không khả dụng.",
+      "go_to_home": "Về trang chủ"
+    },
+    "api_tokens": {
+      "empty_title": "Chưa có token API",
+      "empty_description": "Tạo token API để chia sẻ dữ liệu an toàn và dễ dàng với các ứng dụng bên ngoài, đồng thời duy trì quyền kiểm soát và bảo mật.",
+      "add_token": "Thêm token",
+      "delete_token": "Xóa token"
+    },
+    "base_layouts": {
+      "gantt": "Bố cục Gantt"
+    },
+    "command_palette": {
+      "no_states_found": "Không tìm thấy trạng thái nào"
+    },
+    "quick_actions": {
+      "archive_module_hint": "Chỉ có thể lưu trữ các mô-đun đã hoàn thành hoặc đã hủy"
+    },
+    "progress": {
+      "cycle_progress": "Tiến độ chu kỳ"
+    },
+    "estimates": {
+      "delete_title": "Xóa hệ thống ước tính",
+      "delete_description": "Việc xóa hệ thống ước tính <name/> sẽ gỡ bỏ vĩnh viễn hệ thống này khỏi tất cả các mục công việc. Không thể hoàn tác thao tác này. Nếu thêm lại ước tính, bạn sẽ phải cập nhật tất cả các mục công việc.",
+      "deleting": "Đang xóa",
+      "delete_estimate": "Xóa ước tính",
+      "toggle_estimates": "Bật/tắt ước tính",
+      "estimates_list": "Danh sách ước tính",
+      "archived_title": "Ước tính đã lưu trữ",
+      "archived_description": "Các ước tính đã có thay đổi. Đây là những ước tính bạn có ở các phiên bản cũ hơn và hiện không còn được sử dụng. Tìm hiểu thêm về chúng <link>tại đây.</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "Tạo phụ thuộc bị chặn bởi",
+      "create_blocking_dependency": "Tạo phụ thuộc chặn",
+      "update_block_dates_failed": "Đã xảy ra lỗi khi cập nhật ngày của khối"
+    },
+    "product_updates": {
+      "fetch_failed": "Chúng tôi đang gặp sự cố khi tải các bản cập nhật. Vui lòng truy cập nhật ký thay đổi để xem các bản cập nhật mới nhất.",
+      "go_to_changelog": "Đến nhật ký thay đổi"
+    },
+    "inbox": {
+      "intake_form_user": "Người dùng biểu mẫu Intake",
+      "status": "Trạng thái",
+      "created_by": "Người tạo"
+    },
+    "instance": {
+      "contact_support": "Liên hệ hỗ trợ",
+      "maintenance_title": "🚧 Có vẻ Plane đã không khởi động đúng cách!",
+      "maintenance_description": "Một số dịch vụ có thể đã khởi động thất bại. Vui lòng kiểm tra nhật ký container để xác định và khắc phục sự cố. Nếu bạn vẫn gặp khó khăn, hãy liên hệ nhóm hỗ trợ của chúng tôi để được trợ giúp thêm.",
+      "welcome_title": "Chào mừng đến với Plane",
+      "welcome_description": "Thiết lập phiên bản của bạn và tạo không gian làm việc đầu tiên để bắt đầu quản lý dự án và công việc."
+    },
+    "integrations": {
+      "github_installed": "Kích hoạt GitHub trên từng dự án để đồng bộ với các kho lưu trữ cụ thể.",
+      "github_not_installed": "Kết nối GitHub với không gian làm việc Plane của bạn để đồng bộ các mục công việc của dự án.",
+      "slack_installed": "Kích hoạt Slack trên từng dự án để đồng bộ với các kênh cụ thể.",
+      "slack_not_installed": "Kết nối Slack với không gian làm việc Plane của bạn để đồng bộ các mục công việc của dự án.",
+      "deleted_title": "Đã xóa thành công!",
+      "deleted_message": "Đã xóa tích hợp {title} thành công.",
+      "delete_failed_message": "Không thể xóa tích hợp {title}. Vui lòng thử lại.",
+      "logo_alt": "Logo {title}",
+      "loading": "Đang tải...",
+      "no_permission": "Bạn không có quyền thực hiện thao tác này",
+      "uninstalling": "Đang gỡ cài đặt...",
+      "uninstall": "Gỡ cài đặt",
+      "installing": "Đang cài đặt...",
+      "install": "Cài đặt"
+    },
+    "attachments": {
+      "upload_progress": "Tiến độ tải lên"
+    },
+    "labels": {
+      "delete_confirmation": "Bạn có chắc chắn muốn xóa <name/> không? Thao tác này sẽ gỡ nhãn khỏi tất cả các mục công việc và khỏi mọi chế độ xem đang lọc theo nhãn này.",
+      "edit_label": "Chỉnh sửa nhãn",
+      "delete_label": "Xóa nhãn",
+      "remove_from_group": "Xóa khỏi nhóm"
+    },
+    "modules": {
+      "module_progress": "Tiến độ mô-đun"
+    },
+    "navigation": {
+      "icon_only": "Chỉ biểu tượng",
+      "icon_with_name": "Biểu tượng kèm tên",
+      "dock_app_rail": "Ghim thanh ứng dụng",
+      "undock_app_rail": "Bỏ ghim thanh ứng dụng",
+      "minimum_value_is_one": "Giá trị tối thiểu là 1",
+      "show": "Hiện",
+      "clear_default": "Xóa mặc định",
+      "hide_in_more_menu": "Ẩn trong menu Thêm",
+      "project_link_copied": "Đã sao chép liên kết dự án vào bộ nhớ tạm.",
+      "copy_failed": "Sao chép thất bại",
+      "copy_failed_message": "Chúng tôi không thể sao chép liên kết. Vui lòng thử lại.",
+      "default_tab_updated": "Đã cập nhật tab mặc định thành công.",
+      "default_tab_update_failed": "Không thể cập nhật tab mặc định. Vui lòng thử lại sau.",
+      "hide_tab_failed": "Không thể ẩn tab. Vui lòng thử lại sau.",
+      "generic_error": "Đã xảy ra lỗi. Vui lòng thử lại sau."
+    },
+    "onboarding": {
+      "select_workspace_invitation": "Chọn lời mời vào không gian làm việc"
+    },
+    "tour": {
+      "work_items_title": "Lập kế hoạch với các mục công việc",
+      "work_items_description": "Mục công việc là đơn vị cơ bản của Plane. Hầu hết các khái niệm trong Plane đều gắn với các mục công việc và thuộc tính của chúng.",
+      "cycles_title": "Tiến lên với các chu kỳ",
+      "cycles_description": "Chu kỳ giúp bạn và nhóm tiến triển nhanh hơn, tương tự như các sprint thường dùng trong phát triển agile.",
+      "modules_title": "Chia nhỏ thành các mô-đun",
+      "modules_description": "Mô-đun chia nhỏ công việc lớn của bạn thành các Dự án hoặc Tính năng, giúp bạn tổ chức tốt hơn.",
+      "views_description": "Tạo bộ lọc tùy chỉnh để chỉ hiển thị các mục công việc quan trọng với bạn. Lưu và chia sẻ bộ lọc chỉ với vài cú nhấp chuột.",
+      "pages_title": "Ghi chép với các trang",
+      "pages_description": "Dùng Trang để nhanh chóng ghi lại các mục công việc khi bạn đang họp hoặc bắt đầu một ngày làm việc.",
+      "welcome_title": "Chào mừng đến với Plane, {firstName} {lastName}",
+      "welcome_description": "Chúng tôi rất vui vì bạn đã quyết định dùng thử Plane. Giờ đây bạn có thể quản lý dự án một cách dễ dàng. Hãy bắt đầu bằng cách tạo một dự án.",
+      "take_tour": "Tham quan sản phẩm",
+      "skip": "Không, cảm ơn, tôi sẽ tự khám phá",
+      "create_first_project": "Tạo dự án đầu tiên của bạn",
+      "sidebar_heading": "Hãy bắt đầu nào!<br/>Khai thác nhiều hơn từ Plane."
+    },
+    "ai": {
+      "ask_pi": "Hỏi Pi",
+      "tone_professional": "💼 Chuyên nghiệp",
+      "tone_casual": "😃 Thân mật",
+      "third_party_consent": "Khi sử dụng tính năng này, bạn đồng ý chia sẻ tin nhắn với dịch vụ của bên thứ ba.",
+      "pi_writing": "Pi đang viết",
+      "pi_generating_response": "Pi đang tạo phản hồi"
+    },
+    "pages": {
+      "icon": "Biểu tượng",
+      "color": "Màu",
+      "remove_text_color": "Xóa màu chữ",
+      "remove_background_color": "Xóa màu nền",
+      "formatting_toolbar": "Thanh công cụ định dạng",
+      "copied_link": "Đã sao chép liên kết",
+      "remove_favorite": "Bỏ yêu thích",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "Bot {name}"
+    },
+    "project": {
+      "identifier": "Mã định danh"
+    },
+    "projects": {
+      "toggle_feature": "Bật/tắt tính năng dự án",
+      "cover_upload_failed": "Không thể tải lên ảnh bìa"
+    },
+    "notifications": {
+      "notification_options": "Tùy chọn thông báo"
+    },
+    "stores": {
+      "generic_error": "Đã xảy ra lỗi",
+      "inbox_fetch_error": "Đã xảy ra lỗi khi tải các mục công việc Intake. Vui lòng thử lại sau.",
+      "page_make_public_error": "Không thể chuyển trang sang chế độ công khai. Vui lòng thử lại sau.",
+      "page_make_private_error": "Không thể chuyển trang sang chế độ riêng tư. Vui lòng thử lại sau.",
+      "workflow_pending_approval": "Mục công việc đang chờ phê duyệt.",
+      "workflow_transition_not_allowed": "Quy trình làm việc không cho phép chuyển đổi trạng thái này."
+    },
+    "validation": {
+      "name_max_length": "Tên không được vượt quá 50 ký tự",
+      "name_special_chars": "Tên không được chứa ký tự đặc biệt như {chars}",
+      "name_invalid_chars": "Tên chỉ được chứa chữ cái, khoảng trắng, dấu gạch ngang và dấu nháy đơn",
+      "display_name_max_length": "Tên hiển thị không được vượt quá 50 ký tự",
+      "display_name_special_chars": "Tên hiển thị không được chứa ký tự đặc biệt như {chars}",
+      "display_name_invalid_chars": "Tên hiển thị chỉ được chứa chữ cái, chữ số, dấu chấm, dấu gạch ngang và dấu gạch dưới",
+      "company_name_max_length": "Tên công ty không được vượt quá 80 ký tự",
+      "company_name_special_chars": "Tên công ty không được chứa ký tự đặc biệt như {chars}",
+      "company_name_invalid_chars": "Tên công ty chỉ được chứa chữ cái, chữ số, khoảng trắng, dấu gạch ngang và dấu gạch dưới",
+      "company_name_needs_alphanumeric": "Tên công ty phải chứa ít nhất một chữ cái hoặc chữ số",
+      "workspace_name_required": "Tên không gian làm việc là bắt buộc",
+      "workspace_name_max_length": "Tên không gian làm việc không được vượt quá 80 ký tự",
+      "workspace_name_special_chars": "Tên không gian làm việc không được chứa ký tự đặc biệt như {chars}",
+      "workspace_name_invalid_chars": "Tên không gian làm việc chỉ được chứa chữ cái, chữ số, khoảng trắng, dấu gạch ngang và dấu gạch dưới",
+      "workspace_name_needs_alphanumeric": "Tên không gian làm việc phải chứa ít nhất một chữ cái hoặc chữ số",
+      "slug_required": "Slug là bắt buộc",
+      "slug_max_length": "Slug không được vượt quá 48 ký tự",
+      "slug_special_chars": "Slug không được chứa ký tự đặc biệt như {chars}",
+      "slug_invalid_chars": "Slug chỉ được chứa chữ cái, chữ số, dấu gạch ngang và dấu gạch dưới"
+    },
+    "analytics": {
+      "state_name": "Tên trạng thái",
+      "estimate_point": "Điểm ước tính",
+      "completed_date": "Ngày hoàn thành",
+      "yesterday": "Hôm qua",
+      "last_7_days": "7 ngày qua",
+      "last_30_days": "30 ngày qua",
+      "last_3_months": "3 tháng qua",
+      "duration": "Thời lượng"
+    },
+    "auth_labels": {
+      "magic_code": "Mã ma thuật"
+    },
+    "state_groups": {
+      "canceled": "Đã hủy"
+    },
+    "filters": {
+      "state_group": "Nhóm trạng thái",
+      "subscriber": "Người đăng ký"
+    }
   }
 }

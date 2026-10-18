@@ -132,6 +132,11 @@ export function ExportPageModal(props: Props) {
   const { editorRef, isOpen, onClose, pageTitle } = props;
   // translation
   const { t } = useTranslation();
+  const pageFormatLabels: Record<string, string | undefined> = {
+    LETTER: t("app_text.pages.page_size_letter"),
+    LEGAL: t("app_text.pages.page_size_legal"),
+    TABLOID: t("app_text.pages.page_size_tabloid"),
+  };
   // states
   const [isExporting, setIsExporting] = useState(false);
   // params
@@ -243,7 +248,10 @@ export function ExportPageModal(props: Props) {
                   name="export_format"
                   render={({ field: { onChange, value } }) => (
                     <ExportOptionSelect
-                      options={EXPORT_FORMATS}
+                      options={EXPORT_FORMATS.map((format) => ({
+                        key: format.key,
+                        label: format.key === "markdown" ? t("app_text.pages.export_markdown") : format.label,
+                      }))}
                       value={value}
                       onChange={(val) => onChange(val as TExportFormats)}
                     />
@@ -279,7 +287,10 @@ export function ExportPageModal(props: Props) {
                     name="page_format"
                     render={({ field: { onChange, value } }) => (
                       <ExportOptionSelect
-                        options={PAGE_FORMATS}
+                        options={PAGE_FORMATS.map((format) => ({
+                          key: format.key,
+                          label: pageFormatLabels[String(format.key)] ?? format.label,
+                        }))}
                         value={value}
                         onChange={(val) => onChange(val as TPageFormats)}
                       />

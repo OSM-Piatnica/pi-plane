@@ -25,6 +25,7 @@ import {
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useEstimate } from "@/hooks/store/estimates/use-estimate";
 import { useProject } from "@/hooks/store/use-project";
+import { renderTaggedText } from "@/helpers/tagged-text";
 
 type TDeleteEstimateModal = {
   workspaceSlug: string;
@@ -86,16 +87,16 @@ export const DeleteEstimateModal = observer(function DeleteEstimateModal(props: 
           {/* heading */}
           <DialogHeader>
             <DialogHeading>
-              <DialogTitle>Delete Estimate System</DialogTitle>
+              <DialogTitle>{t("app_text.estimates.delete_title")}</DialogTitle>
             </DialogHeading>
           </DialogHeader>
 
           {/* estimate steps */}
           <DialogBody tabIndex={0}>
             <div className="text-14 text-secondary">
-              Deleting the estimate <span className="font-bold text-primary">{estimate?.name}</span>
-              &nbsp;system will remove it from all work items permanently. This action cannot be undone. If you add
-              estimates again, you will need to update all the work items.
+              {renderTaggedText(t("app_text.estimates.delete_description"), {
+                name: () => <span className="font-bold text-primary">{estimate?.name}</span>,
+              })}
             </div>
           </DialogBody>
         </DialogMain>
@@ -107,7 +108,7 @@ export const DeleteEstimateModal = observer(function DeleteEstimateModal(props: 
             onClick={handleClose}
             disabled={buttonLoader}
             stretch="auto"
-            label="Cancel"
+            label={t("common.cancel")}
           />
           <Button
             variant="danger"
@@ -115,7 +116,7 @@ export const DeleteEstimateModal = observer(function DeleteEstimateModal(props: 
             onClick={handleDeleteEstimate}
             disabled={buttonLoader}
             stretch="auto"
-            label={buttonLoader ? "Deleting" : "Delete Estimate"}
+            label={buttonLoader ? t("app_text.estimates.deleting") : t("app_text.estimates.delete_estimate")}
           />
         </DialogActions>
       </DialogContent>

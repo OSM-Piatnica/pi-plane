@@ -231,7 +231,7 @@ export const InboxIssueActionsMobileHeader = observer(function InboxIssueActions
                 <MenuItem
                   variant="danger"
                   icon={<Icon icon={DeleteOutline} />}
-                  label="Delete"
+                  label={t("common.actions.delete")}
                   onClick={() => setDeleteIssueModal(true)}
                 />
               )}

@@ -69,7 +69,7 @@ export const ActiveCycleProgress = observer(function ActiveCycleProgress(props: 
             size="md"
             variant="brand"
             showValue={false}
-            aria-label="Cycle progress"
+            aria-label={t("app_text.progress.cycle_progress")}
           />
         )}
       </div>

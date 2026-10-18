@@ -78,14 +78,14 @@ export const WorkspaceInvitationsListItem = observer(function WorkspaceInvitatio
       setToast({
         type: "success",
         title: t("toast.success"),
-        message: "Invitation removed successfully.",
+        message: t("app_text.workspace_settings.invitation_removed"),
       });
     } catch (err: unknown) {
       const error = err as { error?: string };
       setToast({
         type: "error",
         title: t("toast.error"),
-        message: error?.error || "Something went wrong. Please try again.",
+        message: error?.error || t("something_went_wrong_please_try_again"),
       });
     }
   };

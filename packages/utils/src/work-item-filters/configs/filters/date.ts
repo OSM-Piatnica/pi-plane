@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,7 +9,7 @@
 import type { TFilterProperty } from "@plane/types";
 // local imports
 import type { TCreateFilterConfig, TCreateDateFilterParams } from "../../../rich-filters";
-import { createFilterConfig, getSupportedDateOperators } from "../../../rich-filters";
+import { createFilterConfig, getSupportedDateOperators, translateFilterLabel } from "../../../rich-filters";
 
 // ------------ Date filters ------------
 
@@ -23,7 +24,7 @@ export const getStartDateFilterConfig =
   (params: TCreateDateFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "Start date",
+      label: translateFilterLabel(params.t, "common.order_by.start_date", "Start date"),
       ...params,
       icon: params.filterIcon,
       allowMultipleFilters: true,
@@ -41,7 +42,7 @@ export const getTargetDateFilterConfig =
   (params: TCreateDateFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "Target date",
+      label: translateFilterLabel(params.t, "target_date", "Target date"),
       ...params,
       icon: params.filterIcon,
       allowMultipleFilters: true,
@@ -59,7 +60,7 @@ export const getCreatedAtFilterConfig =
   (params: TCreateDateFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "Created at",
+      label: translateFilterLabel(params.t, "common.created_at", "Created at"),
       ...params,
       icon: params.filterIcon,
       allowMultipleFilters: true,
@@ -77,7 +78,7 @@ export const getUpdatedAtFilterConfig =
   (params: TCreateDateFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "Updated at",
+      label: translateFilterLabel(params.t, "common.updated_at", "Updated at"),
       ...params,
       icon: params.filterIcon,
       allowMultipleFilters: true,

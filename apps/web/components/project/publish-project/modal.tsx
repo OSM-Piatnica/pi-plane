@@ -255,7 +255,7 @@ export const PublishProjectModal = observer(function PublishProjectModal(props: 
                         <div className="flex flex-shrink-0 items-center gap-1">
                           <a
                             href={publishLink}
-                            aria-label="Open in new tab"
+                            aria-label={t("common.actions.open_in_new_tab")}
                             className="grid size-8 place-items-center rounded-sm bg-layer-3 hover:bg-layer-3-hover"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -326,7 +326,12 @@ export const PublishProjectModal = observer(function PublishProjectModal(props: 
                         control={control}
                         name="is_comments_enabled"
                         render={({ field: { onChange, value } }) => (
-                          <Switch size="sm" checked={!!value} onCheckedChange={onChange} aria-label="Allow comments" />
+                          <Switch
+                            size="sm"
+                            checked={!!value}
+                            onCheckedChange={onChange}
+                            aria-label={t("project_components.publish_modal.allow_comments")}
+                          />
                         )}
                       />
                     </div>
@@ -336,7 +341,12 @@ export const PublishProjectModal = observer(function PublishProjectModal(props: 
                         control={control}
                         name="is_reactions_enabled"
                         render={({ field: { onChange, value } }) => (
-                          <Switch size="sm" checked={!!value} onCheckedChange={onChange} aria-label="Allow reactions" />
+                          <Switch
+                            size="sm"
+                            checked={!!value}
+                            onCheckedChange={onChange}
+                            aria-label={t("project_components.publish_modal.allow_reactions")}
+                          />
                         )}
                       />
                     </div>
@@ -346,7 +356,12 @@ export const PublishProjectModal = observer(function PublishProjectModal(props: 
                         control={control}
                         name="is_votes_enabled"
                         render={({ field: { onChange, value } }) => (
-                          <Switch size="sm" checked={!!value} onCheckedChange={onChange} aria-label="Allow voting" />
+                          <Switch
+                            size="sm"
+                            checked={!!value}
+                            onCheckedChange={onChange}
+                            aria-label={t("project_components.publish_modal.allow_voting")}
+                          />
                         )}
                       />
                     </div>

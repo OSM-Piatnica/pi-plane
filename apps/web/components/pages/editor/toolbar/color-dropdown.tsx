@@ -41,8 +41,8 @@ export const ColorDropdown = memo(function ColorDropdown(props: Props) {
   return (
     <Popover>
       {/* Propel's ToolbarMenuTrigger only wraps a Menu; this is its Popover twin until Propel ships one */}
-      <PopoverTrigger render={<ToolbarMenuTriggerButton aria-label="Color" />}>
-        <ToolbarMenuTriggerLabel>Color</ToolbarMenuTriggerLabel>
+      <PopoverTrigger render={<ToolbarMenuTriggerButton aria-label={t("app_text.pages.color")} />}>
+        <ToolbarMenuTriggerLabel>{t("app_text.pages.color")}</ToolbarMenuTriggerLabel>
         {/* active text + background colour preview */}
         <span
           className={cn("grid size-5 shrink-0 place-items-center rounded-sm border-[0.5px] border-strong", {
@@ -85,7 +85,7 @@ export const ColorDropdown = memo(function ColorDropdown(props: Props) {
             <IconButton
               variant="secondary"
               size="sm"
-              aria-label="Remove text color"
+              aria-label={t("app_text.pages.remove_text_color")}
               icon={<Icon icon={DeactivatedOutline} />}
               onClick={() => handleColorSelect("text-color", undefined)}
             />
@@ -110,7 +110,7 @@ export const ColorDropdown = memo(function ColorDropdown(props: Props) {
             <IconButton
               variant="secondary"
               size="sm"
-              aria-label="Remove background color"
+              aria-label={t("app_text.pages.remove_background_color")}
               icon={<Icon icon={DeactivatedOutline} />}
               onClick={() => handleColorSelect("background-color", undefined)}
             />

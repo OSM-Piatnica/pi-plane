@@ -164,10 +164,10 @@ export const WorkspaceAuthWrapper = observer(function WorkspaceAuthWrapper(props
             <div className="relative flex items-center gap-2">
               <div className="text-13 font-medium">{currentUser?.email}</div>
               {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; behaviour unchanged */}
-              <Tooltip label="Sign out" alignOffset={8} disabled={isMobile}>
+              <Tooltip label={t("sign_out")} alignOffset={8} disabled={isMobile}>
                 <button
                   type="button"
-                  aria-label="Sign out"
+                  aria-label={t("sign_out")}
                   className="relative flex h-6 w-6 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-sm hover:bg-layer-1"
                   onClick={() => void handleSignOut()}
                 >
@@ -180,14 +180,16 @@ export const WorkspaceAuthWrapper = observer(function WorkspaceAuthWrapper(props
             <div className="relative flex-shrink-0">
               <img src={WorkSpaceNotAvailable} className="h-[220px] object-contain object-center" alt="Plane logo" />
             </div>
-            <h3 className="text-center text-16 font-semibold">Workspace not found</h3>
+            <h3 className="text-center text-16 font-semibold">
+              {t("app_text.workspace_wrapper.workspace_not_found_title")}
+            </h3>
             <p className="text-center text-13 text-secondary">
-              No workspace found with the URL. It may not exist or you lack authorization to view it.
+              {t("app_text.workspace_wrapper.workspace_not_found_description")}
             </p>
             <div className="flex items-center justify-center gap-2 pt-4">
               {allWorkspaces && allWorkspaces.length > 0 && (
                 <ButtonElement variant="primary" size="sm" stretch="auto" render={<Link href="/" />}>
-                  Go Home
+                  {t("go_home")}
                 </ButtonElement>
               )}
               {allWorkspaces?.length > 0 && (
@@ -197,12 +199,12 @@ export const WorkspaceAuthWrapper = observer(function WorkspaceAuthWrapper(props
                   stretch="auto"
                   render={<Link href="/settings/profile/general/" />}
                 >
-                  Visit Profile
+                  {t("app_text.workspace_wrapper.visit_profile")}
                 </ButtonElement>
               )}
               {allWorkspaces && allWorkspaces.length === 0 && (
                 <ButtonElement variant="secondary" size="sm" stretch="auto" render={<Link href="/create-workspace/" />}>
-                  Create new workspace
+                  {t("onboarding.workspace.create_new")}
                 </ButtonElement>
               )}
             </div>
@@ -221,18 +223,17 @@ export const WorkspaceAuthWrapper = observer(function WorkspaceAuthWrapper(props
         <div className="grid h-full place-items-center p-4">
           <div className="space-y-8 text-center">
             <div className="space-y-2">
-              <h3 className="text-16 font-semibold">Not Authorized!</h3>
+              <h3 className="text-16 font-semibold">{t("app_text.auth_screens.not_authorized")}</h3>
               <p className="mx-auto w-1/2 text-13 text-secondary">
-                You{"'"}re not a member of this workspace. Please contact the workspace admin to get an invitation or
-                check your pending invitations.
+                {t("app_text.auth_screens.not_a_member_description")}
               </p>
             </div>
             <div className="flex items-center justify-center gap-2">
               <ButtonElement variant="secondary" size="sm" stretch="auto" render={<Link href="/invitations" />}>
-                Check pending invites
+                {t("app_text.auth_screens.check_pending_invites")}
               </ButtonElement>
               <ButtonElement variant="primary" size="sm" stretch="auto" render={<Link href="/create-workspace" />}>
-                Create new workspace
+                {t("onboarding.workspace.create_new")}
               </ButtonElement>
             </div>
           </div>

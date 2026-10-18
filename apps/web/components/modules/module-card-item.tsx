@@ -229,7 +229,7 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
               size="md"
               variant="brand"
               showValue={false}
-              aria-label="Module progress"
+              aria-label={t("app_text.modules.module_progress")}
             />
             {/* Ruling 38: the whole card is a `Link`, so the trigger's click and keyboard
                 activation must not reach it. */}

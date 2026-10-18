@@ -14,6 +14,7 @@ import { StateGroupIcon } from "@plane/blocks/icons";
 import { Spinner } from "@plane/blocks/spinner";
 // store hooks
 import { useProjectState } from "@/hooks/store/use-project-state";
+import { useTranslation } from "@plane/i18n";
 
 export type TChangeWorkItemStateListProps = {
   projectId: string | null;
@@ -25,6 +26,7 @@ export const ChangeWorkItemStateList = observer(function ChangeWorkItemStateList
   const { projectId, currentStateId, handleStateChange } = props;
   // store hooks
   const { getProjectStates } = useProjectState();
+  const { t } = useTranslation();
   // derived values
   const projectStates = getProjectStates(projectId);
 
@@ -47,7 +49,7 @@ export const ChangeWorkItemStateList = observer(function ChangeWorkItemStateList
             </Command.Item>
           ))
         ) : (
-          <div className="text-center">No states found</div>
+          <div className="text-center">{t("app_text.command_palette.no_states_found")}</div>
         )
       ) : (
         <Spinner />

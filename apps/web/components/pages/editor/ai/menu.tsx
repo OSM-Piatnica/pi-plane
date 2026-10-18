@@ -38,31 +38,31 @@ type Props = {
 const MENU_ITEMS: {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   key: AI_EDITOR_TASKS;
-  label: string;
+  labelKey: string;
 }[] = [
   {
     key: AI_EDITOR_TASKS.ASK_ANYTHING,
     icon: AiStar1Outline,
-    label: "Ask Pi",
+    labelKey: "app_text.ai.ask_pi",
   },
 ];
 
 const TONES_LIST = [
   {
     key: "default",
-    label: "Default",
+    labelKey: "common.default",
     casual_score: 5,
     formal_score: 5,
   },
   {
     key: "professional",
-    label: "💼 Professional",
+    labelKey: "app_text.ai.tone_professional",
     casual_score: 0,
     formal_score: 10,
   },
   {
     key: "casual",
-    label: "😃 Casual",
+    labelKey: "app_text.ai.tone_casual",
     casual_score: 10,
     formal_score: 0,
   },
@@ -183,7 +183,7 @@ export function EditorAIMenu(props: Props) {
               >
                 <span className="flex flex-shrink-0 items-center gap-2 truncate">
                   <item.icon className="size-3 flex-shrink-0" />
-                  {item.label}
+                  {t(item.labelKey)}
                 </span>
                 <ChevronRightOutline
                   className={cn("pointer-events-none size-3 flex-shrink-0 opacity-0 transition-opacity", {
@@ -271,7 +271,7 @@ export function EditorAIMenu(props: Props) {
                   </div>
                 ) : (
                   <p className="text-13 text-secondary">
-                    {activeTask ? LOADING_TEXTS[activeTask] : "Pi is writing"}...
+                    {activeTask ? t(LOADING_TEXTS[activeTask]) : t("app_text.ai.pi_writing")}...
                   </p>
                 )}
               </div>
@@ -292,7 +292,7 @@ export function EditorAIMenu(props: Props) {
                       handleToneChange(tone.key);
                     }}
                   >
-                    {tone.label}
+                    {t(tone.labelKey)}
                   </button>
                 ))}
               </div>
@@ -305,9 +305,7 @@ export function EditorAIMenu(props: Props) {
           <span className="grid size-4 flex-shrink-0 place-items-center">
             <WarningTriangleOutline className="size-3" />
           </span>
-          <p className="flex-shrink-0 text-11 font-medium">
-            By using this feature, you consent to sharing the message with a 3rd party service.
-          </p>
+          <p className="flex-shrink-0 text-11 font-medium">{t("app_text.ai.third_party_consent")}</p>
         </div>
       )}
     </div>

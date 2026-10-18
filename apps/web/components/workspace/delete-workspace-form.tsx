@@ -26,6 +26,7 @@ import type { IWorkspace } from "@plane/types";
 
 import { cn } from "@plane/utils";
 // hooks
+import { renderTaggedText } from "@/helpers/tagged-text";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 import { useUserSettings } from "@/hooks/store/user";
 import { useAppRouter } from "@/hooks/use-app-router";
@@ -111,12 +112,12 @@ export const DeleteWorkspaceForm = observer(function DeleteWorkspaceForm(props: 
         <DialogBody tabIndex={0}>
           <div className="space-y-4">
             <p className="text-body-xs-regular text-secondary">
-              You are about to delete the workspace{" "}
-              <span className="text-body-xs-semibold break-words">{data?.name}</span>. If you confirm, you will lose
-              access to all your work data in this workspace without any way to restore it. Tread very carefully.
+              {renderTaggedText(t("app_text.workspace.delete_warning"), {
+                name: () => <span className="text-body-xs-semibold break-words">{data?.name}</span>,
+              })}
             </p>
             <div className="text-secondary">
-              <p className="text-body-xs-regular break-words">Type in this workspace&apos;s name to continue.</p>
+              <p className="text-body-xs-regular break-words">{t("app_text.workspace.delete_type_name")}</p>
               <Controller
                 control={control}
                 name="workspaceName"
@@ -141,9 +142,9 @@ export const DeleteWorkspaceForm = observer(function DeleteWorkspaceForm(props: 
             </div>
             <div className="text-secondary">
               <p className="text-body-xs-regular">
-                For final confirmation, type{" "}
-                <span className="text-body-xs-medium text-primary">delete my workspace </span>
-                below.
+                {renderTaggedText(t("app_text.workspace.delete_final_confirmation"), {
+                  phrase: () => <span className="text-body-xs-medium text-primary">delete my workspace</span>,
+                })}
               </p>
               <Controller
                 control={control}

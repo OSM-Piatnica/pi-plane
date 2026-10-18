@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,12 @@ import type { IIssueLabel, TFilterProperty, TSupportedOperators } from "@plane/t
 import { EQUALITY_OPERATOR, COLLECTION_OPERATOR } from "@plane/types";
 // local imports
 import type { TCreateFilterConfigParams, IFilterIconConfig, TCreateFilterConfig } from "../../../rich-filters";
-import { createFilterConfig, getMultiSelectConfig, createOperatorConfigEntry } from "../../../rich-filters";
+import {
+  createFilterConfig,
+  getMultiSelectConfig,
+  createOperatorConfigEntry,
+  translateFilterLabel,
+} from "../../../rich-filters";
 
 /**
  * Label filter specific params
@@ -53,7 +59,7 @@ export const getLabelFilterConfig =
   (params: TCreateLabelFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "Label",
+      label: translateFilterLabel(params.t, "common.label", "Label"),
       ...params,
       icon: params.filterIcon,
       supportedOperatorConfigsMap: new Map([

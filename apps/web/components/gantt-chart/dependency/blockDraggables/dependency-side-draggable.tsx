@@ -146,7 +146,11 @@ export const DependencySideDraggable = observer(function DependencySideDraggable
   return (
     <button
       type="button"
-      aria-label={side === "left" ? "Create blocked-by dependency" : "Create blocking dependency"}
+      aria-label={
+        side === "left"
+          ? t("app_text.gantt.create_blocked_by_dependency")
+          : t("app_text.gantt.create_blocking_dependency")
+      }
       onMouseDown={handleMouseDown}
       className={cn(
         "border-custom-border-300 bg-custom-background-100 absolute top-1/2 z-[8] size-2.5 -translate-y-1/2 rounded-full border opacity-0 transition-opacity group-hover:opacity-100",

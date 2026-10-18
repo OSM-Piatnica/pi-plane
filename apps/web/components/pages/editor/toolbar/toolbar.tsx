@@ -23,6 +23,7 @@ import { Tooltip, TooltipProvider } from "@makeplane/propel/components/tooltip";
 import { TOOLBAR_ITEMS, TYPOGRAPHY_ITEMS } from "@plane/editor";
 // local imports
 import { ColorDropdown } from "./color-dropdown";
+import { useTranslation } from "@plane/i18n";
 
 type Props = {
   editorRef: EditorRefApi;
@@ -65,6 +66,7 @@ const toolbarItems = TOOLBAR_ITEMS.document;
 
 export function PageToolbar(props: Props) {
   const { editorRef } = props;
+  const { t } = useTranslation();
   // states
   const [activeStates, setActiveStates] = useState<Record<string, boolean>>(() => {
     const initialStates: Record<string, boolean> = {};
@@ -111,7 +113,7 @@ export function PageToolbar(props: Props) {
   return (
     <TooltipProvider>
       <div className="animate-in fade-in flex items-center overflow-x-auto duration-200">
-        <Toolbar size="md" elevation="flat" aria-label="Formatting toolbar">
+        <Toolbar size="md" elevation="flat" aria-label={t("app_text.pages.formatting_toolbar")}>
           <Menu>
             <ToolbarMenuTrigger label={activeTypography?.name || "Text"} />
             <MenuContent side="bottom" align="start">

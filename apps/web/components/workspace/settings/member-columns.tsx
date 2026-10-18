@@ -142,7 +142,7 @@ export const AccountTypeColumn = observer(function AccountTypeColumn(props: Acco
     <>
       {isSuspended ? (
         <div className="flex w-32">
-          <Badge variant="neutral" size="sm" label="Suspended" />
+          <Badge variant="neutral" size="sm" label={t("project_components.shared.suspended")} />
         </div>
       ) : isRoleNonEditable ? (
         <div className="flex w-32">
@@ -152,7 +152,7 @@ export const AccountTypeColumn = observer(function AccountTypeColumn(props: Acco
         <Controller
           name="role"
           control={control}
-          rules={{ required: "Role is required." }}
+          rules={{ required: t("project_components.member_columns.role_required") }}
           render={() => (
             <div className="w-32">
               <Select<TRoleOption>

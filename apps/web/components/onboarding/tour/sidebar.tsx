@@ -10,35 +10,37 @@ import { CyclesOutline, ModuleOutline, PagesOutline, ViewsOutline, WorkItemsOutl
 import type { ISvgIcons } from "@plane/blocks/icons";
 // types
 import type { TTourSteps } from "./root";
+import { renderTaggedText } from "@/helpers/tagged-text";
+import { useTranslation } from "@plane/i18n";
 
 const sidebarOptions: {
   key: TTourSteps;
-  label: string;
+  labelKey: string;
   Icon: React.FC<ISvgIcons>;
 }[] = [
   {
     key: "work-items",
-    label: "Work items",
+    labelKey: "common.work_items",
     Icon: WorkItemsOutline,
   },
   {
     key: "cycles",
-    label: "Cycles",
+    labelKey: "common.cycles",
     Icon: CyclesOutline,
   },
   {
     key: "modules",
-    label: "Modules",
+    labelKey: "common.modules",
     Icon: ModuleOutline,
   },
   {
     key: "views",
-    label: "Views",
+    labelKey: "common.views",
     Icon: ViewsOutline,
   },
   {
     key: "pages",
-    label: "Pages",
+    labelKey: "common.pages",
     Icon: PagesOutline,
   },
 ];
@@ -49,12 +51,11 @@ type Props = {
 };
 
 export function TourSidebar({ step, setStep }: Props) {
+  const { t } = useTranslation();
   return (
     <div className="col-span-3 hidden bg-surface-2 p-8 lg:block">
       <h3 className="text-16 font-medium">
-        Let{"'"}s get started!
-        <br />
-        Get more out of Plane.
+        {renderTaggedText(t("app_text.tour.sidebar_heading"), { br: () => <br /> })}
       </h3>
       <div className="mt-8 space-y-5">
         {sidebarOptions.map((option) => (
@@ -67,7 +68,7 @@ export function TourSidebar({ step, setStep }: Props) {
             onClick={() => setStep(option.key)}
           >
             <option.Icon className="h-4 w-4" aria-hidden="true" />
-            {option.label}
+            {t(option.labelKey)}
           </button>
         ))}
       </div>

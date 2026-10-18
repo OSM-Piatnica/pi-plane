@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,7 +12,12 @@ import type { TFilterProperty, TSupportedOperators } from "@plane/types";
 import { EQUALITY_OPERATOR, COLLECTION_OPERATOR } from "@plane/types";
 // local imports
 import type { TCreateFilterConfigParams, IFilterIconConfig, TCreateFilterConfig } from "../../../rich-filters";
-import { createFilterConfig, getMultiSelectConfig, createOperatorConfigEntry } from "../../../rich-filters";
+import {
+  createFilterConfig,
+  getMultiSelectConfig,
+  createOperatorConfigEntry,
+  translateFilterLabel,
+} from "../../../rich-filters";
 
 // ------------ Priority filter ------------
 
@@ -29,11 +35,15 @@ export const getPriorityMultiSelectConfig = (
   params: TCreatePriorityFilterParams,
   singleValueOperator: TSupportedOperators
 ) =>
-  getMultiSelectConfig<{ key: TIssuePriorities; title: string }, TIssuePriorities, TIssuePriorities>(
+  getMultiSelectConfig<
+    { key: TIssuePriorities; title: string; i18n_title: string },
+    TIssuePriorities,
+    TIssuePriorities
+  >(
     {
       items: ISSUE_PRIORITIES,
       getId: (priority) => priority.key,
-      getLabel: (priority) => priority.title,
+      getLabel: (priority) => translateFilterLabel(params.t, priority.i18n_title, priority.title),
       getValue: (priority) => priority.key,
       getIconData: (priority) => priority.key,
     },
@@ -57,7 +67,7 @@ export const getPriorityFilterConfig =
   (params: TCreatePriorityFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "Priority",
+      label: translateFilterLabel(params.t, "common.priority", "Priority"),
       ...params,
       icon: params.filterIcon,
       supportedOperatorConfigsMap: new Map([

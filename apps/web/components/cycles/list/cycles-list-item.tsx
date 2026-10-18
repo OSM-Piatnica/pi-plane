@@ -23,6 +23,7 @@ import { usePlatformOS } from "@/hooks/use-platform-os";
 // local imports
 import { CycleQuickActions } from "../quick-actions";
 import { CycleListItemAction } from "./cycle-list-item-action";
+import { useTranslation } from "@plane/i18n";
 
 type TCyclesListItem = {
   cycleId: string;
@@ -45,6 +46,7 @@ export const CyclesListItem = observer(function CyclesListItem(props: TCyclesLis
   const pathname = usePathname();
   // hooks
   const { isMobile } = usePlatformOS();
+  const { t } = useTranslation();
   // store hooks
   const { getCycleById } = useCycle();
 
@@ -93,7 +95,7 @@ export const CyclesListItem = observer(function CyclesListItem(props: TCyclesLis
               value={progress}
               size="md"
               variant={progress === 100 ? "success" : "brand"}
-              aria-label="Cycle progress"
+              aria-label={t("app_text.progress.cycle_progress")}
             />
           </div>
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">

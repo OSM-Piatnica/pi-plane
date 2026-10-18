@@ -236,7 +236,7 @@ export const ModuleIssuesHeader = observer(function ModuleIssuesHeader() {
                     variant="secondary"
                     size="md"
                     icon={<Icon icon={BarOutline} />}
-                    aria-label="Analytics"
+                    aria-label={t("common.analytics")}
                     onClick={() => setAnalyticsModal(true)}
                   />
                 </span>
@@ -261,7 +261,7 @@ export const ModuleIssuesHeader = observer(function ModuleIssuesHeader() {
             variant={isSidebarCollapsed ? "ghost" : "tertiary"}
             size="md"
             icon={<Icon icon={RightSidePaneOutline} />}
-            aria-label="Toggle sidebar"
+            aria-label={t("app_text.headers.toggle_sidebar")}
             aria-pressed={!isSidebarCollapsed}
             onClick={toggleSidebar}
           />

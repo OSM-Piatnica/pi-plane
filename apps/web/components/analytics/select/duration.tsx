@@ -24,8 +24,8 @@ type Props = {
 const getDurationOption = (value: string | null) =>
   ANALYTICS_DURATION_FILTER_OPTIONS.find((option) => option.value === value) ?? null;
 
-function DurationDropdown({ placeholder = "Duration", onChange, value }: Props) {
-  useTranslation();
+function DurationDropdown({ placeholder, onChange, value }: Props) {
+  const { t } = useTranslation();
 
   // derived values
   const selectedOption = getDurationOption(value);
@@ -39,11 +39,15 @@ function DurationDropdown({ placeholder = "Duration", onChange, value }: Props) 
         if (option) onChange(option.value);
       }}
       getOptionValue={(option) => option.value}
-      getOptionLabel={(option) => option.name}
+      getOptionLabel={(option) => t(option.i18n_name)}
       pinSelected={false}
     >
       <Select.Trigger<TDurationOption> variant="select-md" prependIcon={<CalendarOutline aria-hidden="true" />}>
-        {(selected) => <span className="truncate">{selected[0]?.name ?? placeholder}</span>}
+        {(selected) => (
+          <span className="truncate">
+            {selected[0] ? t(selected[0].i18n_name) : (placeholder ?? t("app_text.analytics.duration"))}
+          </span>
+        )}
       </Select.Trigger>
     </Select>
   );

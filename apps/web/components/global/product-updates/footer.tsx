@@ -4,8 +4,8 @@
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
-
 import { useTranslation } from "@plane/i18n";
+
 // ui
 import { Button } from "@makeplane/propel/components/button";
 import { DialogActions, DialogInfo } from "@makeplane/propel/components/dialog";
@@ -56,7 +56,7 @@ export function ProductUpdatesFooter() {
             className="text-13 text-secondary underline-offset-1 outline-none hover:text-primary hover:underline"
             rel="noreferrer"
           >
-            Forum
+            {t("forum")}
           </a>
         </div>
       </DialogInfo>

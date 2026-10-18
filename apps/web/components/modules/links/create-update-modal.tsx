@@ -141,7 +141,7 @@ export function CreateUpdateModuleLinkModal(props: Props) {
                       type="text"
                       size="xl"
                       orientation="vertical"
-                      label="Display title"
+                      label={t("common.display_title")}
                       description={t("common.optional")}
                       value={value}
                       onChange={onChange}

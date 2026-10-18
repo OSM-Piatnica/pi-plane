@@ -67,7 +67,7 @@ export const InboxIssueFilterSelection = observer(function InboxIssueFilterSelec
         <div className="py-2">
           <FilterMember
             filterKey="assignees"
-            label="Assignees"
+            label={t("common.assignees")}
             searchQuery={filtersSearchQuery}
             memberIds={projectMemberIds ?? []}
           />
@@ -76,7 +76,7 @@ export const InboxIssueFilterSelection = observer(function InboxIssueFilterSelec
         <div className="py-2">
           <FilterMember
             filterKey="created_by"
-            label="Created By"
+            label={t("app_text.inbox.created_by")}
             searchQuery={filtersSearchQuery}
             memberIds={projectMemberIds ?? []}
           />

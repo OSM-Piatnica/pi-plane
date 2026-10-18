@@ -192,7 +192,7 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
       const parsed = await readTemplateFromJson(file);
       const existingNames = ((templates as TProjectTemplate[] | undefined) ?? []).map((item) => item.name);
       const desired = parsed.name || file.name.replace(/\.json$/i, "");
-      const name = buildUniqueTemplateName(desired, existingNames);
+      const name = buildUniqueTemplateName(desired, existingNames, t("app_text.project_templates.imported_template"));
       const renamed = name !== desired.trim();
 
       await service.create(workspaceSlug, {

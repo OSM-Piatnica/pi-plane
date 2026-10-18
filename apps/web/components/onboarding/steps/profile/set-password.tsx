@@ -103,7 +103,7 @@ export function SetPasswordRoot({ onPasswordChange, onConfirmPasswordChange, dis
         <div className="flex transform flex-col gap-2 pt-1 transition-all duration-300 ease-in-out">
           <PasswordInput
             id="password"
-            label="Password"
+            label={t("password")}
             value={passwordState.password}
             onChange={(value) => handlePasswordChange("password", value)}
             placeholder={t("auth.common.password.set_password")}

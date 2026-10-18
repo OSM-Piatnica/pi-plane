@@ -1,12 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
 import { observer } from "mobx-react";
 // assets
+import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 import ProjectNotAuthorizedImg from "@/app/assets/auth/project-not-authorized.svg?url";
 import Unauthorized from "@/app/assets/auth/unauthorized.svg?url";
@@ -23,6 +25,7 @@ type Props = {
 
 export const NotAuthorizedView = observer(function NotAuthorizedView(props: Props) {
   const { actionButton, section = "general", isProjectView = false, className } = props;
+  const { t } = useTranslation();
 
   // assets
   const settingAsset = isProjectView ? ProjectNotAuthorizedImg : WorkspaceNotAuthorizedImg;
@@ -34,7 +37,7 @@ export const NotAuthorizedView = observer(function NotAuthorizedView(props: Prop
         <div className="h-44 w-72">
           <img src={asset} className="h-[176px] w-[288px] object-contain" alt="ProjectSettingImg" />
         </div>
-        <h1 className="text-18 font-medium text-primary">Oops! You are not authorized to view this page</h1>
+        <h1 className="text-18 font-medium text-primary">{t("app_text.auth_screens.not_authorized_view_title")}</h1>
         {actionButton}
       </div>
     </DefaultLayout>
