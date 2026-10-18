@@ -5,6 +5,7 @@
  * See the LICENSE file for details.
  */
 
+import { useTranslation } from "@plane/i18n";
 import type { MutableRefObject } from "react";
 import { observer } from "mobx-react";
 import type {
@@ -32,6 +33,7 @@ import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import { useWorkFlowFDragNDrop } from "@/components/workflow";
 import type { TRenderQuickActions } from "../list/list-view-types";
 import type { GroupDropLocation } from "../utils";
+import { getGroupColumnName } from "@/helpers/group-column";
 import { getGroupByColumns, isWorkspaceLevel, getApproximateCardHeight } from "../utils";
 // components
 import { HeaderGroupByCard } from "./headers/group-by-card";
@@ -71,6 +73,7 @@ export interface IKanBan {
 }
 
 export const KanBan = observer(function KanBan(props: IKanBan) {
+  const { t } = useTranslation();
   const {
     issuesMap,
     groupedIssueIds,
@@ -173,7 +176,7 @@ export const KanBan = observer(function KanBan(props: IKanBan) {
                     group_by={group_by}
                     column_id={subList.id}
                     icon={subList.icon}
-                    title={subList.name}
+                    title={getGroupColumnName(subList, t)}
                     count={getGroupIssueCount(subList.id, undefined, false) ?? 0}
                     issuePayload={subList.payload}
                     disableIssueCreation={

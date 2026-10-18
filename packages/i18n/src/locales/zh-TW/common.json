@@ -1043,5 +1043,20 @@
     "uploaded_on": "{name}於{date}上傳",
     "date_range": "{start} - {end}",
     "expiry": "到期時間"
+  },
+  "api_token_expiry": {
+    "one_week": "1 週",
+    "one_month": "1 個月",
+    "three_months": "3 個月",
+    "one_year": "1 年",
+    "custom_date": "自訂日期",
+    "set_expiration_date": "設定到期日期"
+  },
+  "profile_sidebar": {
+    "due": "截止"
+  },
+  "progress_chart": {
+    "current": "目前{title}",
+    "ideal": "理想{title}"
   }
 }

@@ -1043,5 +1043,20 @@
     "uploaded_on": "{name} hat am {date} hochgeladen",
     "date_range": "{start} - {end}",
     "expiry": "Ablaufdatum"
+  },
+  "api_token_expiry": {
+    "one_week": "1 Woche",
+    "one_month": "1 Monat",
+    "three_months": "3 Monate",
+    "one_year": "1 Jahr",
+    "custom_date": "Eigenes Datum",
+    "set_expiration_date": "Ablaufdatum festlegen"
+  },
+  "profile_sidebar": {
+    "due": "Fällig"
+  },
+  "progress_chart": {
+    "current": "Aktuelle {title}",
+    "ideal": "Ideale {title}"
   }
 }

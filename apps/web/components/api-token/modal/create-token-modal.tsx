@@ -48,12 +48,12 @@ export function CreateApiTokenModal(props: Props) {
 
   const downloadSecretKey = (data: IApiToken) => {
     const csvData = {
-      Title: data.label,
-      Description: data.description,
+      [t("common.title")]: data.label,
+      [t("common.description")]: data.description,
       [t("date_phrases.expiry")]: data.expired_at
         ? (formatDate(data.expired_at)?.replace(",", " ") ?? "")
         : t("date_phrases.never_expires"),
-      "Secret key": data.token ?? "",
+      [t("workspace_settings.settings.webhooks.secret_key.title")]: data.token ?? "",
     };
 
     csvDownload(csvData, `secret-key-${Date.now()}`);

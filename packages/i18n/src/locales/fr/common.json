@@ -1043,5 +1043,20 @@
     "uploaded_on": "Téléversé par {name} le {date}",
     "date_range": "{start} - {end}",
     "expiry": "Expiration"
+  },
+  "api_token_expiry": {
+    "one_week": "1 semaine",
+    "one_month": "1 mois",
+    "three_months": "3 mois",
+    "one_year": "1 an",
+    "custom_date": "Date personnalisée",
+    "set_expiration_date": "Définir la date d’expiration"
+  },
+  "profile_sidebar": {
+    "due": "Échéance"
+  },
+  "progress_chart": {
+    "current": "{title} actuels",
+    "ideal": "{title} idéaux"
   }
 }

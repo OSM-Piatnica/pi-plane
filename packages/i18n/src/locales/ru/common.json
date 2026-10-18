@@ -1043,5 +1043,20 @@
     "uploaded_on": "Загружено: {name}, {date}",
     "date_range": "{start} - {end}",
     "expiry": "Срок действия"
+  },
+  "api_token_expiry": {
+    "one_week": "1 неделя",
+    "one_month": "1 месяц",
+    "three_months": "3 месяца",
+    "one_year": "1 год",
+    "custom_date": "Своя дата",
+    "set_expiration_date": "Установить дату истечения"
+  },
+  "profile_sidebar": {
+    "due": "Срок"
+  },
+  "progress_chart": {
+    "current": "Текущие {title}",
+    "ideal": "Идеальные {title}"
   }
 }

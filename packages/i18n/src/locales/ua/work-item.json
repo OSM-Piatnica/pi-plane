@@ -521,7 +521,8 @@
     "archived_work_items_count": "{count, plural, one {В архіві проєкту # робоча одиниця} few {В архіві проєкту # робочі одиниці} many {В архіві проєкту # робочих одиниць} other {В архіві проєкту # робочої одиниці}}",
     "add_related_work_items": "Додати пов’язані робочі одиниці",
     "toggle_workspace_level_search": "Перемкнути пошук на рівні робочого простору",
-    "search_results_for_in_project": "Результати пошуку за <query>\"{query}\"</query> у проєкті:"
+    "search_results_for_in_project": "Результати пошуку за <query>\"{query}\"</query> у проєкті:",
+    "cannot_move_to_completed_cycle": "Робочу одиницю не можна перемістити до завершених циклів"
   },
   "activity_feed": {
     "issue": {

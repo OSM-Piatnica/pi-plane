@@ -1043,5 +1043,20 @@
     "uploaded_on": "Качено от {name} на {date}",
     "date_range": "{start} - {end}",
     "expiry": "Срок на валидност"
+  },
+  "api_token_expiry": {
+    "one_week": "1 седмица",
+    "one_month": "1 месец",
+    "three_months": "3 месеца",
+    "one_year": "1 година",
+    "custom_date": "Персонализирана дата",
+    "set_expiration_date": "Задайте дата на изтичане"
+  },
+  "profile_sidebar": {
+    "due": "Краен срок"
+  },
+  "progress_chart": {
+    "current": "{title}: текущо",
+    "ideal": "{title}: идеално"
   }
 }

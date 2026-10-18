@@ -1043,5 +1043,20 @@
     "uploaded_on": "{name}님이 {date}에 업로드함",
     "date_range": "{start} - {end}",
     "expiry": "만료"
+  },
+  "api_token_expiry": {
+    "one_week": "1주",
+    "one_month": "1개월",
+    "three_months": "3개월",
+    "one_year": "1년",
+    "custom_date": "사용자 지정 날짜",
+    "set_expiration_date": "만료 날짜 설정"
+  },
+  "profile_sidebar": {
+    "due": "마감"
+  },
+  "progress_chart": {
+    "current": "현재 {title}",
+    "ideal": "이상적인 {title}"
   }
 }

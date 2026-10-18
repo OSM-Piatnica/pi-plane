@@ -1043,5 +1043,20 @@
     "uploaded_on": "{name}が{date}にアップロード",
     "date_range": "{start} - {end}",
     "expiry": "有効期限"
+  },
+  "api_token_expiry": {
+    "one_week": "1週間",
+    "one_month": "1か月",
+    "three_months": "3か月",
+    "one_year": "1年",
+    "custom_date": "カスタム日付",
+    "set_expiration_date": "有効期限を設定"
+  },
+  "profile_sidebar": {
+    "due": "期限"
+  },
+  "progress_chart": {
+    "current": "現在の{title}",
+    "ideal": "理想の{title}"
   }
 }

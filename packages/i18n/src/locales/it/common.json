@@ -1043,5 +1043,20 @@
     "uploaded_on": "Caricato da {name} il {date}",
     "date_range": "{start} - {end}",
     "expiry": "Scadenza"
+  },
+  "api_token_expiry": {
+    "one_week": "1 settimana",
+    "one_month": "1 mese",
+    "three_months": "3 mesi",
+    "one_year": "1 anno",
+    "custom_date": "Data personalizzata",
+    "set_expiration_date": "Imposta la data di scadenza"
+  },
+  "profile_sidebar": {
+    "due": "Scadenza"
+  },
+  "progress_chart": {
+    "current": "{title} attuali",
+    "ideal": "{title} ideali"
   }
 }

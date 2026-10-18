@@ -1043,5 +1043,20 @@
     "uploaded_on": "Încărcat de {name} la {date}",
     "date_range": "{start} - {end}",
     "expiry": "Expirare"
+  },
+  "api_token_expiry": {
+    "one_week": "1 săptămână",
+    "one_month": "1 lună",
+    "three_months": "3 luni",
+    "one_year": "1 an",
+    "custom_date": "Dată personalizată",
+    "set_expiration_date": "Setează data de expirare"
+  },
+  "profile_sidebar": {
+    "due": "Termen"
+  },
+  "progress_chart": {
+    "current": "{title} curente",
+    "ideal": "{title} ideale"
   }
 }

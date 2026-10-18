@@ -1043,5 +1043,20 @@
     "uploaded_on": "Nahráno uživatelem {name} dne {date}",
     "date_range": "{start} - {end}",
     "expiry": "Platnost"
+  },
+  "api_token_expiry": {
+    "one_week": "1 týden",
+    "one_month": "1 měsíc",
+    "three_months": "3 měsíce",
+    "one_year": "1 rok",
+    "custom_date": "Vlastní datum",
+    "set_expiration_date": "Nastavit datum vypršení"
+  },
+  "profile_sidebar": {
+    "due": "Termín"
+  },
+  "progress_chart": {
+    "current": "{title}: aktuální",
+    "ideal": "{title}: ideální"
   }
 }

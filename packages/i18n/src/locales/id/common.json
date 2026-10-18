@@ -1043,5 +1043,20 @@
     "uploaded_on": "Diunggah oleh {name} pada {date}",
     "date_range": "{start} - {end}",
     "expiry": "Kedaluwarsa"
+  },
+  "api_token_expiry": {
+    "one_week": "1 minggu",
+    "one_month": "1 bulan",
+    "three_months": "3 bulan",
+    "one_year": "1 tahun",
+    "custom_date": "Tanggal kustom",
+    "set_expiration_date": "Atur tanggal kedaluwarsa"
+  },
+  "profile_sidebar": {
+    "due": "Jatuh tempo"
+  },
+  "progress_chart": {
+    "current": "{title} saat ini",
+    "ideal": "{title} ideal"
   }
 }

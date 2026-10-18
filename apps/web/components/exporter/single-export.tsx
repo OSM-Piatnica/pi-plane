@@ -5,9 +5,9 @@
  * See the LICENSE file for details.
  */
 
-import { useState } from "react";
 // ui
 import { Button } from "@makeplane/propel/components/button";
+import { useTranslation } from "@plane/i18n";
 import type { IExportData } from "@plane/types";
 // helpers
 import { getDate } from "@plane/utils";
@@ -23,8 +23,14 @@ export function SingleExport({ service, refreshing }: Props) {
   const provider = service.provider;
   const { formatDate } = useLocalizedDates();
 
-  const [isLoading] = useState(false);
-  const downloadLabel = isLoading ? "Downloading..." : "Download";
+  const { t } = useTranslation();
+  const downloadLabel = t("workspace_settings.settings.exports.history.download");
+  const statusLabels: Record<string, string> = {
+    completed: t("workspace_settings.settings.exports.statuses.completed"),
+    processing: t("workspace_settings.settings.exports.statuses.processing"),
+    failed: t("workspace_settings.settings.exports.statuses.failed"),
+    expired: t("workspace_settings.settings.exports.statuses.expired"),
+  };
 
   const checkExpiry = (inputDateString: string) => {
     const currentDate = new Date();
@@ -39,7 +45,7 @@ export function SingleExport({ service, refreshing }: Props) {
       <div>
         <h4 className="flex items-center gap-2 text-13">
           <span>
-            Export to{" "}
+            {t("workspace_settings.settings.exports.modal.title")}{" "}
             <span className="font-medium">
               {provider === "csv" ? "CSV" : provider === "xlsx" ? "Excel" : provider === "json" ? "JSON" : ""}
             </span>{" "}
@@ -57,12 +63,14 @@ export function SingleExport({ service, refreshing }: Props) {
                       : ""
             }`}
           >
-            {refreshing ? "Refreshing..." : service.status}
+            {refreshing ? `${t("refreshing")}...` : (statusLabels[service.status] ?? service.status)}
           </span>
         </h4>
         <div className="mt-2 flex items-center gap-2 text-11 text-secondary">
           <span>{formatDate(service.created_at)}</span>|
-          <span>Exported by {service?.initiated_by_detail?.display_name}</span>
+          <span>
+            {t("workspace_settings.settings.exports.history.exported_by")} {service?.initiated_by_detail?.display_name}
+          </span>
         </div>
       </div>
       {checkExpiry(service.created_at) ? (
@@ -85,7 +93,7 @@ export function SingleExport({ service, refreshing }: Props) {
           )}
         </>
       ) : (
-        <div className="text-11 text-danger-primary">Expired</div>
+        <div className="text-11 text-danger-primary">{t("date_phrases.expired")}</div>
       )}
     </div>
   );

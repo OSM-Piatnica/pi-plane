@@ -39,6 +39,7 @@ import { useWorkFlowFDragNDrop } from "@/components/workflow";
 //
 import { GroupDragOverlay } from "../group-drag-overlay";
 import { ListQuickAddIssueButton, QuickAddIssueRoot } from "../quick-add";
+import { getGroupColumnName } from "@/helpers/group-column";
 import type { GroupDropLocation } from "../utils";
 import {
   getDestinationFromDropPayload,
@@ -282,7 +283,7 @@ export const ListGroup = observer(function ListGroup(props: Props) {
           groupID={group.id}
           groupBy={group_by}
           icon={group.icon}
-          title={group.name}
+          title={getGroupColumnName(group, t)}
           count={groupIssueCount}
           issuePayload={group.payload}
           canEditProperties={canEditProperties}

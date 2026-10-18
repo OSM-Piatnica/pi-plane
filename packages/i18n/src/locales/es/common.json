@@ -1043,5 +1043,20 @@
     "uploaded_on": "{name} subió el {date}",
     "date_range": "{start} - {end}",
     "expiry": "Vencimiento"
+  },
+  "api_token_expiry": {
+    "one_week": "1 semana",
+    "one_month": "1 mes",
+    "three_months": "3 meses",
+    "one_year": "1 año",
+    "custom_date": "Fecha personalizada",
+    "set_expiration_date": "Establecer fecha de vencimiento"
+  },
+  "profile_sidebar": {
+    "due": "Vencimiento"
+  },
+  "progress_chart": {
+    "current": "{title} actuales",
+    "ideal": "{title} ideales"
   }
 }

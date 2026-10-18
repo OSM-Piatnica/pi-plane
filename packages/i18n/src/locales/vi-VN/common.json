@@ -1043,5 +1043,20 @@
     "uploaded_on": "{name} đã tải lên vào {date}",
     "date_range": "{start} - {end}",
     "expiry": "Hết hạn"
+  },
+  "api_token_expiry": {
+    "one_week": "1 tuần",
+    "one_month": "1 tháng",
+    "three_months": "3 tháng",
+    "one_year": "1 năm",
+    "custom_date": "Ngày tùy chỉnh",
+    "set_expiration_date": "Đặt ngày hết hạn"
+  },
+  "profile_sidebar": {
+    "due": "Hạn"
+  },
+  "progress_chart": {
+    "current": "{title} hiện tại",
+    "ideal": "{title} lý tưởng"
   }
 }
