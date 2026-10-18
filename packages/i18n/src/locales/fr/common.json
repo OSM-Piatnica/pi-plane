@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Aïe ! Ça ne se présente pas bien.",
-      "description": "Pi-Plane a planté. Pas d’inquiétude, nos ingénieurs ont été prévenus. Si vous avez plus de détails, écrivez à <email/> ou sur notre <forum/>."
+      "description": "Pi-Plane a planté. Pas d’inquiétude, nos ingénieurs ont été prévenus. Si vous avez plus de détails, signalez-les sur <github/>."
     },
     "not_found_page": {
       "title": "Ça n’a pas fonctionné",

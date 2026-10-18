@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Yikes! That doesn't look good.",
-      "description": "That crashed Pi-Plane, pun intended. No worries, though. Our engineers have been notified. If you have more details, please write to <email/> or on our <forum/>."
+      "description": "That crashed Pi-Plane, pun intended. No worries, though. Our engineers have been notified. If you have more details, please report them on <github/>."
     },
     "not_found_page": {
       "title": "That didn't work",

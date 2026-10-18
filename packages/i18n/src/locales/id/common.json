@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Waduh! Ini tampaknya tidak baik.",
-      "description": "Itu membuat Pi-Plane mengalami crash. Tenang saja, para engineer kami sudah diberi tahu. Jika Anda punya detail lebih lanjut, silakan tulis ke <email/> atau di <forum/> kami."
+      "description": "Pi-Plane mengalami crash. Tenang saja, para engineer kami sudah diberi tahu. Jika Anda punya detail lebih lanjut, silakan laporkan di <github/>."
     },
     "not_found_page": {
       "title": "Itu tidak berhasil",

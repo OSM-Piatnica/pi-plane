@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Hoppla! Das sieht nicht gut aus.",
-      "description": "Pi-Plane ist abgestürzt. Keine Sorge, unsere Entwickler wurden benachrichtigt. Wenn Sie weitere Details haben, schreiben Sie an <email/> oder in unser <forum/>."
+      "description": "Pi-Plane ist abgestürzt. Keine Sorge, unsere Entwickler wurden benachrichtigt. Wenn Sie weitere Details haben, melden Sie diese bitte auf <github/>."
     },
     "not_found_page": {
       "title": "Das hat nicht funktioniert",

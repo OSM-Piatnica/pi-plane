@@ -18,7 +18,7 @@ const linkMap = [
   {
     key: "mail_to",
     label: "Contact Support",
-    value: "mailto:support@plane.so",
+    value: "https://github.com/OSM-Piatnica/pi-plane/issues",
   },
   {
     key: "status",

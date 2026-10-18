@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "¡Vaya! Eso no se ve bien.",
-      "description": "Eso hizo fallar a Pi-Plane, y no es un juego de palabras. No se preocupe: nuestros ingenieros ya fueron notificados. Si tiene más detalles, escriba a <email/> o en nuestro <forum/>."
+      "description": "Pi-Plane falló. No se preocupe: nuestros ingenieros ya fueron notificados. Si tiene más detalles, infórmelos en <github/>."
     },
     "not_found_page": {
       "title": "Eso no funcionó",

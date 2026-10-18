@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Ups! To nie wygląda dobrze.",
-      "description": "Pi-Plane uległ awarii. Bez obaw, nasi inżynierowie zostali powiadomieni. Jeśli masz więcej szczegółów, napisz na <email/> lub na naszym <forum/>."
+      "description": "Pi-Plane uległ awarii. Bez obaw, nasi inżynierowie zostali powiadomieni. Jeśli masz więcej szczegółów, zgłoś je na <github/>."
     },
     "not_found_page": {
       "title": "To nie zadziałało",

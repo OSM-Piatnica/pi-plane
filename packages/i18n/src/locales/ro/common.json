@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Oops! Nu arată bine.",
-      "description": "Pi-Plane s-a blocat. Nu-ți face griji, inginerii noștri au fost notificați. Dacă ai mai multe detalii, scrie-ne la <email/> sau pe <forum/>."
+      "description": "Pi-Plane s-a blocat. Nu-ți face griji, inginerii noștri au fost notificați. Dacă ai mai multe detalii, raportează-le pe <github/>."
     },
     "not_found_page": {
       "title": "Nu a funcționat",

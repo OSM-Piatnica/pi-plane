@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Ôi! Trông có vẻ không ổn.",
-      "description": "Lỗi này đã làm Pi-Plane gặp sự cố. Đừng lo, các kỹ sư của chúng tôi đã được thông báo. Nếu bạn có thêm chi tiết, vui lòng viết thư đến <email/> hoặc đăng trên <forum/> của chúng tôi."
+      "description": "Pi-Plane đã gặp sự cố. Đừng lo, các kỹ sư của chúng tôi đã được thông báo. Nếu bạn có thêm chi tiết, vui lòng báo cáo trên <github/>."
     },
     "not_found_page": {
       "title": "Không thành công",

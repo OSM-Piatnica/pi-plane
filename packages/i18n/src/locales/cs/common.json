@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Jejda! To nevypadá dobře.",
-      "description": "Pi-Plane se zhroutil, bez nadsázky. Nic se neděje, naši inženýři byli upozorněni. Pokud máte další podrobnosti, napište na <email/> nebo na naše <forum/>."
+      "description": "Pi-Plane se zhroutil. Nic se neděje, naši inženýři byli upozorněni. Pokud máte další podrobnosti, nahlaste je prosím na <github/>."
     },
     "not_found_page": {
       "title": "To se nepovedlo",

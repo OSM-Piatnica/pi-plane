@@ -8,7 +8,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 // plane imports
-import { SUPPORT_EMAIL } from "@plane/constants";
 // local imports
 import { renderTaggedText } from "./tagged-text";
 
@@ -169,9 +168,7 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
   [EAuthenticationErrorCodes.USER_ACCOUNT_DEACTIVATED]: {
     title: "auth.error_alerts.titles.user_account_deactivated",
     message: (t) =>
-      SUPPORT_EMAIL
-        ? t("auth.error_alerts.user_account_deactivated_contact", { contact: SUPPORT_EMAIL })
-        : t("auth.error_alerts.contact_admin", { title: t("auth.error_alerts.titles.user_account_deactivated") }),
+      t("auth.error_alerts.contact_admin", { title: t("auth.error_alerts.titles.user_account_deactivated") }),
   },
   [EAuthenticationErrorCodes.BOT_USER_LOGIN_FORBIDDEN]: {
     title: "auth.error_alerts.titles.sign_in_not_allowed",

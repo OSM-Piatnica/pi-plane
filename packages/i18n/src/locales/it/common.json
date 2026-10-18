@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Ops! Non sembra andare bene.",
-      "description": "Pi-Plane è andato in crash. Nessun problema, i nostri ingegneri sono stati avvisati. Se hai altri dettagli, scrivi a <email/> o sul nostro <forum/>."
+      "description": "Pi-Plane è andato in crash. Nessun problema, i nostri ingegneri sono stati avvisati. Se hai altri dettagli, segnalali su <github/>."
     },
     "not_found_page": {
       "title": "Non ha funzionato",

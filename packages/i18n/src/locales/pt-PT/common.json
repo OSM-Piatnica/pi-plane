@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Ups! Isto não parece nada bom.",
-      "description": "Isto fez o Pi-Plane falhar, sem trocadilhos. Mas não se preocupe: os nossos engenheiros foram notificados. Se tiver mais detalhes, escreva para <email/> ou no nosso <forum/>."
+      "description": "O Pi-Plane falhou. Mas não se preocupe: os nossos engenheiros foram notificados. Se tiver mais detalhes, reporte-os no <github/>."
     },
     "not_found_page": {
       "title": "Isso não funcionou",

@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Oei! Dat ziet er niet goed uit.",
-      "description": "Pi-Plane is gecrasht. Geen zorgen, onze engineers zijn op de hoogte gesteld. Heeft u meer details, schrijf dan naar <email/> of op ons <forum/>."
+      "description": "Pi-Plane is gecrasht. Geen zorgen, onze engineers zijn op de hoogte gesteld. Heeft u meer details, meld deze dan op <github/>."
     },
     "not_found_page": {
       "title": "Dat is niet gelukt",

@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "糟糕！情況不太妙。",
-      "description": "Pi-Plane 當機了。不過請放心，我們的工程師已收到通知。如果您有更多詳細資訊，請寄信至 <email/> 或在我們的 <forum/> 留言。"
+      "description": "Pi-Plane 當機了。不過請放心，我們的工程師已收到通知。如果您有更多詳細資訊，請在 <github/> 上回報。"
     },
     "not_found_page": {
       "title": "發生錯誤",

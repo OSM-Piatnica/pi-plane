@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Jej! Toto nevyzerá dobre.",
-      "description": "Pi-Plane sa zrútil, bez preháňania. Nič sa nedeje, naši inžinieri boli upozornení. Ak máte ďalšie podrobnosti, napíšte na <email/> alebo na naše <forum/>."
+      "description": "Pi-Plane sa zrútil. Nič sa nedeje, naši inžinieri boli upozornení. Ak máte ďalšie podrobnosti, nahláste ich na <github/>."
     },
     "not_found_page": {
       "title": "To sa nepodarilo",

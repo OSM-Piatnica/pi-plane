@@ -1447,7 +1447,7 @@
     },
     "error_page": {
       "title": "Eyvah! Bu hiç iyi görünmüyor.",
-      "description": "Bu, Pi-Plane'in çökmesine neden oldu, kelime oyunu amaçlanmadı. Endişelenmeyin, mühendislerimiz bilgilendirildi. Daha fazla ayrıntınız varsa lütfen <email/> adresine veya <forum/> sayfamıza yazın."
+      "description": "Pi-Plane çöktü. Endişelenmeyin, mühendislerimiz bilgilendirildi. Daha fazla ayrıntınız varsa lütfen <github/> üzerinden bildirin."
     },
     "not_found_page": {
       "title": "Bu işe yaramadı",
