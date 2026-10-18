@@ -10,14 +10,16 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ChatOutline, HistoryOutline } from "@makeplane/propel/icons";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import type { IUserActivityResponse } from "@plane/types";
-import { calculateTimeAgo, getFileURL } from "@plane/utils";
+import { getFileURL } from "@plane/utils";
 // components
 import { ActivityIcon, ActivityMessage, IssueLink } from "@/components/core/activity";
 import { RichTextEditor } from "@/components/editor/rich-text";
 import { ActivitySettingsLoader } from "@/components/ui/loader/settings/activity";
 // hooks
 import { useWorkspace } from "@/hooks/store/use-workspace";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { useUser } from "@/hooks/store/user";
 
 type Props = {
@@ -25,6 +27,8 @@ type Props = {
 };
 
 export const ActivityList = observer(function ActivityList(props: Props) {
+  const { t } = useTranslation();
+  const { timeAgo } = useLocalizedDates();
   const { activity } = props;
   // params
   const { workspaceSlug } = useParams();
@@ -75,7 +79,7 @@ export const ActivityList = observer(function ActivityList(props: Props) {
                             : activityItem.actor_detail.display_name}
                         </div>
                         <p className="mt-0.5 text-11 text-secondary">
-                          Commented {calculateTimeAgo(activityItem.created_at)}
+                          {t("activity_feed.profile.commented_ago", { timeAgo: timeAgo(activityItem.created_at) })}
                         </p>
                       </div>
                       <div className="issue-comments-section p-0">
@@ -166,7 +170,7 @@ export const ActivityList = observer(function ActivityList(props: Props) {
                             <div className="inline gap-1">
                               {message}{" "}
                               <span className="flex-shrink-0 whitespace-nowrap">
-                                {calculateTimeAgo(activityItem.created_at)}
+                                {timeAgo(activityItem.created_at)}
                               </span>
                             </div>
                           </div>

@@ -15,12 +15,14 @@ import { isNumber } from "lodash-es";
  * @description Returns date in the formatted format
  * @param {Date | string} date
  * @param {string} formatToken (optional) // default MMM dd, yyyy
+ * @param {Locale} locale (optional) // date-fns locale for month and weekday names; English when omitted
  * @example renderFormattedDate("2024-01-01", "MM-DD-YYYY") // Jan 01, 2024
  * @example renderFormattedDate("2024-01-01") // Jan 01, 2024
  */
 export const renderFormattedDate = (
   date: string | Date | undefined | null,
-  formatToken: string = "MMM dd, yyyy"
+  formatToken: string = "MMM dd, yyyy",
+  locale?: Locale
 ): string | undefined => {
   // Parse the date to check if it is valid
   const parsedDate = getDate(date);
@@ -31,10 +33,10 @@ export const renderFormattedDate = (
   let formattedDate;
   try {
     // Format the date in the format provided or default format (MMM dd, yyyy)
-    formattedDate = format(parsedDate, formatToken);
+    formattedDate = format(parsedDate, formatToken, { locale });
   } catch (_e) {
     // Format the date in format (MMM dd, yyyy) in case of any error
-    formattedDate = format(parsedDate, "MMM dd, yyyy");
+    formattedDate = format(parsedDate, "MMM dd, yyyy", { locale });
   }
   return formattedDate;
 };
@@ -43,9 +45,10 @@ export const renderFormattedDate = (
  * @returns {string} formatted date in the format of MMM dd
  * @description Returns date in the formatted format
  * @param {string | Date} date
+ * @param {Locale} locale (optional) // date-fns locale for the month name; English when omitted
  * @example renderShortDateFormat("2024-01-01") // Jan 01
  */
-export const renderFormattedDateWithoutYear = (date: string | Date): string => {
+export const renderFormattedDateWithoutYear = (date: string | Date, locale?: Locale): string => {
   // Parse the date to check if it is valid
   const parsedDate = getDate(date);
   // return if undefined
@@ -53,7 +56,7 @@ export const renderFormattedDateWithoutYear = (date: string | Date): string => {
   // Check if the parsed date is valid before formatting
   if (!isValid(parsedDate)) return ""; // Return empty string for invalid dates
   // Format the date in short format (MMM dd)
-  const formattedDate = format(parsedDate, "MMM dd");
+  const formattedDate = format(parsedDate, "MMM dd", { locale });
   return formattedDate;
 };
 
@@ -81,10 +84,15 @@ export const renderFormattedPayloadDate = (date: Date | string | undefined | nul
  * @description Returns date in 12 hour format if in12HourFormat is true else 24 hour format
  * @param {string | Date} date
  * @param {boolean} timeFormat (optional) // default 24 hour
+ * @param {Locale} locale (optional) // date-fns locale for the AM/PM marker; English when omitted
  * @example renderFormattedTime("2024-01-01 13:00:00") // 13:00
  * @example renderFormattedTime("2024-01-01 13:00:00", "12-hour") // 01:00 PM
  */
-export const renderFormattedTime = (date: string | Date, timeFormat: "12-hour" | "24-hour" = "24-hour"): string => {
+export const renderFormattedTime = (
+  date: string | Date,
+  timeFormat: "12-hour" | "24-hour" = "24-hour",
+  locale?: Locale
+): string => {
   // Parse the date to check if it is valid
   const parsedDate = new Date(date);
   // return if undefined
@@ -93,7 +101,7 @@ export const renderFormattedTime = (date: string | Date, timeFormat: "12-hour" |
   if (!isValid(parsedDate)) return ""; // Return empty string for invalid dates
   // Format the date in 12 hour format if in12HourFormat is true
   if (timeFormat === "12-hour") {
-    const formattedTime = format(parsedDate, "hh:mm a");
+    const formattedTime = format(parsedDate, "hh:mm a", { locale });
     return formattedTime;
   }
   // Format the date in 24 hour format

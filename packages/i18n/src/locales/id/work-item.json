@@ -794,7 +794,8 @@
         "removed_without_issue": "menghapus tanggal jatuh tempo",
         "set_with_issue": "menetapkan tanggal jatuh tempo untuk <issue/> menjadi <value/>",
         "set_without_issue": "menetapkan tanggal jatuh tempo menjadi <value/>"
-      }
+      },
+      "commented_ago": "Berkomentar {timeAgo}"
     },
     "project": {
       "archived_at": {

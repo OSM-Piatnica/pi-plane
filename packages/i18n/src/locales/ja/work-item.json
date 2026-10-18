@@ -794,7 +794,8 @@
         "removed_without_issue": "期限を削除しました",
         "set_with_issue": "<issue/>の期限を<value/>に設定しました",
         "set_without_issue": "期限を<value/>に設定しました"
-      }
+      },
+      "commented_ago": "{timeAgo}にコメントしました"
     },
     "project": {
       "archived_at": {

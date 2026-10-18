@@ -794,7 +794,8 @@
         "removed_without_issue": "마감일을 제거했습니다",
         "set_with_issue": "<issue/>의 마감일을 <value/>(으)로 설정했습니다",
         "set_without_issue": "마감일을 <value/>(으)로 설정했습니다"
-      }
+      },
+      "commented_ago": "{timeAgo}에 댓글을 남겼습니다"
     },
     "project": {
       "archived_at": {

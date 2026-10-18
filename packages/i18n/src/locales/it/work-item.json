@@ -794,7 +794,8 @@
         "removed_without_issue": "ha rimosso la scadenza",
         "set_with_issue": "ha impostato la scadenza di <issue/> su <value/>",
         "set_without_issue": "ha impostato la scadenza su <value/>"
-      }
+      },
+      "commented_ago": "Ha commentato {timeAgo}"
     },
     "project": {
       "archived_at": {

@@ -9,9 +9,10 @@ import { useTranslation } from "@plane/i18n";
 import { DeleteOutline, EditOutline, NewTabOutline } from "@makeplane/propel/icons";
 import { setToast } from "@plane/blocks/toast";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
-import { getIconForLink, copyTextToClipboard, calculateTimeAgo } from "@plane/utils";
+import { getIconForLink, copyTextToClipboard } from "@plane/utils";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { useMember } from "@/hooks/store/use-member";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // types
@@ -24,6 +25,7 @@ export type TIssueLinkDetail = {
 };
 
 export function IssueLinkDetail(props: TIssueLinkDetail) {
+  const { timeAgo } = useLocalizedDates();
   // props
   const { linkId, linkOperations, isNotAllowed } = props;
   // hooks
@@ -115,7 +117,7 @@ export function IssueLinkDetail(props: TIssueLinkDetail) {
 
         <div className="px-5">
           <p className="mt-0.5 stroke-[1.5] text-11 text-tertiary">
-            Added {calculateTimeAgo(linkDetail.created_at)}
+            {t("date_phrases.added_ago", { timeAgo: timeAgo(linkDetail.created_at) })}
             <br />
             {createdByDetails && (
               <>

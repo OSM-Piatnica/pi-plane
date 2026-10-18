@@ -794,7 +794,8 @@
         "removed_without_issue": "a eliminat termenul limită",
         "set_with_issue": "a setat termenul limită la <value/> pentru <issue/>",
         "set_without_issue": "a setat termenul limită la <value/>"
-      }
+      },
+      "commented_ago": "A comentat {timeAgo}"
     },
     "project": {
       "archived_at": {

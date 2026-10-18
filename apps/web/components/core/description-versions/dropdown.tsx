@@ -11,9 +11,10 @@ import { Menu, MenuContent, MenuGroup, MenuLabel, MenuTrigger } from "@makeplane
 import { ChevronDownOutline, HistoryOutline } from "@makeplane/propel/icons";
 import { useTranslation } from "@plane/i18n";
 import type { TDescriptionVersion } from "@plane/types";
-import { calculateTimeAgo, cn } from "@plane/utils";
+import { cn } from "@plane/utils";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 // local imports
 import { DescriptionVersionsDropdownItem } from "./dropdown-item";
 import type { TDescriptionVersionEntityInformation } from "./root";
@@ -26,6 +27,7 @@ type Props = {
 };
 
 export const DescriptionVersionsDropdown = observer(function DescriptionVersionsDropdown(props: Props) {
+  const { timeAgo } = useLocalizedDates();
   const { disabled, entityInformation, onVersionClick, versions } = props;
   // store hooks
   const { getUserDetails } = useMember();
@@ -59,7 +61,7 @@ export const DescriptionVersionsDropdown = observer(function DescriptionVersions
           <p className="text-11">
             {t("description_versions.last_edited_by")}{" "}
             <span className="font-medium">{lastUpdatedByUserDisplayName ?? t("common.deactivated_user")}</span>{" "}
-            {calculateTimeAgo(lastUpdatedAt)}
+            {timeAgo(lastUpdatedAt)}
           </p>
         </div>
         {!disabled && <ChevronDownOutline className="size-3.5" />}

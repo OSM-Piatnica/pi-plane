@@ -14,13 +14,14 @@ import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TActivityEntityData, TIssueEntityData } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // plane ui
-import { calculateTimeAgo, generateWorkItemLink } from "@plane/utils";
+import { generateWorkItemLink } from "@plane/utils";
 // components
 import { ListItem } from "@/components/core/list";
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
 // helpers
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
@@ -31,6 +32,7 @@ type BlockProps = {
   workspaceSlug: string;
 };
 export const RecentIssue = observer(function RecentIssue(props: BlockProps) {
+  const { timeAgo } = useLocalizedDates();
   const { activity, ref, workspaceSlug } = props;
   // translation
   const { t } = useTranslation();
@@ -98,9 +100,7 @@ export const RecentIssue = observer(function RecentIssue(props: BlockProps) {
         </div>
       }
       appendTitleElement={
-        <div className="flex-shrink-0 text-11 font-medium text-placeholder">
-          {calculateTimeAgo(activity.visited_at)}
-        </div>
+        <div className="flex-shrink-0 text-11 font-medium text-placeholder">{timeAgo(activity.visited_at)}</div>
       }
       quickActionElement={
         <div className="flex gap-4">

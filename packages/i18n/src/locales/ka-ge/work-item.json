@@ -794,7 +794,8 @@
         "removed_without_issue": "წაშალა ვადის თარიღი",
         "set_with_issue": "დააყენა ვადის თარიღად <value/> <issue/>-ზე",
         "set_without_issue": "დააყენა ვადის თარიღად <value/>"
-      }
+      },
+      "commented_ago": "დააკომენტარა {timeAgo}"
     },
     "project": {
       "archived_at": {

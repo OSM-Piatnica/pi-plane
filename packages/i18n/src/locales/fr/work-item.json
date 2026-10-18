@@ -794,7 +794,8 @@
         "removed_without_issue": "a supprimé la date d’échéance",
         "set_with_issue": "a défini la date d’échéance de <issue/> sur <value/>",
         "set_without_issue": "a défini la date d’échéance sur <value/>"
-      }
+      },
+      "commented_ago": "A commenté {timeAgo}"
     },
     "project": {
       "archived_at": {

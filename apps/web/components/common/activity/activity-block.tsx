@@ -12,9 +12,9 @@ import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TWorkspaceBaseActivity } from "@plane/types";
 // ui
 // helpers
-import { renderFormattedTime, renderFormattedDate, calculateTimeAgo } from "@plane/utils";
 // hooks
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 // local components
 import { User } from "./user";
 
@@ -30,6 +30,7 @@ export function ActivityBlockComponent(props: TActivityBlockComponent) {
   const { icon: Icon, activity, ends, children, customUserName } = props;
   // hooks
   const { isMobile } = usePlatformOS();
+  const { formatDate, formatTime, timeAgo } = useLocalizedDates();
 
   if (!activity) return <></>;
   return (
@@ -46,12 +47,9 @@ export function ActivityBlockComponent(props: TActivityBlockComponent) {
           <User activity={activity} customUserName={customUserName} /> {children}
         </div>
         <div className="mt-1">
-          <Tooltip
-            label={`${renderFormattedDate(activity.created_at)}, ${renderFormattedTime(activity.created_at)}`}
-            disabled={isMobile}
-          >
+          <Tooltip label={`${formatDate(activity.created_at)}, ${formatTime(activity.created_at)}`} disabled={isMobile}>
             <span className="cursor-help font-medium whitespace-nowrap text-tertiary">
-              {calculateTimeAgo(activity.created_at)}
+              {timeAgo(activity.created_at)}
             </span>
           </Tooltip>
         </div>

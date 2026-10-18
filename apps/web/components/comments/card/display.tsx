@@ -5,6 +5,7 @@
  * See the LICENSE file for details.
  */
 
+import { useTranslation } from "@plane/i18n";
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { observer } from "mobx-react";
@@ -17,7 +18,7 @@ import { useHashScroll } from "@plane/hooks";
 import { GlobeOutline, LockOutline } from "@makeplane/propel/icons";
 import { EIssueCommentAccessSpecifier } from "@plane/types";
 import type { TCommentsOperations, TIssueComment } from "@plane/types";
-import { calculateTimeAgo, cn, getFileURL, renderFormattedDate, renderFormattedTime } from "@plane/utils";
+import { cn, getFileURL } from "@plane/utils";
 // components
 import { LiteTextEditor } from "@/components/editor/lite-text";
 // local imports
@@ -25,6 +26,7 @@ import { CommentReactions } from "../comment-reaction";
 import { CommentCardEditForm } from "./edit-form";
 import { EmojiReactionButton, EmojiReactionPicker } from "@plane/blocks/emoji-reaction";
 import { useMember } from "@/hooks/store/use-member";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 export type TCommentCardDisplayProps = {
   activityOperations: TCommentsOperations;
@@ -43,6 +45,8 @@ export type TCommentCardDisplayProps = {
 };
 
 export const CommentCardDisplay = observer(function CommentCardDisplay(props: TCommentCardDisplayProps) {
+  const { t } = useTranslation();
+  const { formatDate, formatTime, timeAgo } = useLocalizedDates();
   const {
     activityOperations,
     comment,
@@ -125,13 +129,16 @@ export const CommentCardDisplay = observer(function CommentCardDisplay(props: TC
           <div className="text-caption-sm-regular text-tertiary">
             commented{" "}
             <Tooltip
-              label={`${renderFormattedDate(comment.created_at)} at ${renderFormattedTime(comment.created_at)}`}
+              label={t("date_phrases.date_at_time", {
+                date: formatDate(comment.created_at),
+                time: formatTime(comment.created_at),
+              })}
               side="bottom"
               layout="single"
               delay={200}
             >
               <span className="text-tertiary">
-                {calculateTimeAgo(comment.created_at)}
+                {timeAgo(comment.created_at)}
                 {comment.edited_at && " (edited)"}
               </span>
             </Tooltip>

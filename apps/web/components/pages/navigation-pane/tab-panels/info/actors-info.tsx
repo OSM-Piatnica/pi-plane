@@ -11,9 +11,10 @@ import { useParams } from "next/navigation";
 // plane imports
 import { Avatar } from "@makeplane/propel/components/avatar";
 import { useTranslation } from "@plane/i18n";
-import { calculateTimeAgoShort, getFileURL, renderFormattedDate } from "@plane/utils";
+import { getFileURL } from "@plane/utils";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 // store
 import type { TPageInstance } from "@/store/pages/base-page";
 
@@ -22,6 +23,7 @@ type Props = {
 };
 
 export const PageNavigationPaneInfoTabActorsInfo = observer(function PageNavigationPaneInfoTabActorsInfo(props: Props) {
+  const { formatDate, timeAgo } = useLocalizedDates();
   const { page } = props;
   // navigation
   const { workspaceSlug } = useParams();
@@ -48,7 +50,7 @@ export const PageNavigationPaneInfoTabActorsInfo = observer(function PageNavigat
             />
             <span>{editorInformation?.display_name ?? t("common.deactivated_user")}</span>
           </Link>
-          <span className="flex-shrink-0 text-tertiary">{calculateTimeAgoShort(page.updated_at ?? "")} ago</span>
+          <span className="flex-shrink-0 text-tertiary">{timeAgo(page.updated_at ?? "")}</span>
         </div>
       </div>
       <div>
@@ -65,7 +67,7 @@ export const PageNavigationPaneInfoTabActorsInfo = observer(function PageNavigat
             />
             <span>{creatorInformation?.display_name ?? t("common.deactivated_user")}</span>
           </Link>
-          <span className="flex-shrink-0 text-tertiary">{renderFormattedDate(page.created_at)}</span>
+          <span className="flex-shrink-0 text-tertiary">{formatDate(page.created_at)}</span>
         </div>
       </div>
     </div>

@@ -794,7 +794,8 @@
         "removed_without_issue": "usunięto termin",
         "set_with_issue": "ustawiono termin na <value/> dla <issue/>",
         "set_without_issue": "ustawiono termin na <value/>"
-      }
+      },
+      "commented_ago": "Skomentowano {timeAgo}"
     },
     "project": {
       "archived_at": {

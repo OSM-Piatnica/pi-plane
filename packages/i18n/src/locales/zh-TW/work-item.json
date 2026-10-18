@@ -794,7 +794,8 @@
         "removed_without_issue": "移除了截止日期",
         "set_with_issue": "將 <issue/> 的截止日期設定為 <value/>",
         "set_without_issue": "將截止日期設定為 <value/>"
-      }
+      },
+      "commented_ago": "{timeAgo}發表了留言"
     },
     "project": {
       "archived_at": {

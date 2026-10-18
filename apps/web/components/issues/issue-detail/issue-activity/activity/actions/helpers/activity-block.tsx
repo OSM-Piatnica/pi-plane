@@ -9,9 +9,8 @@ import type { ReactNode } from "react";
 import { HierarchyOutline } from "@makeplane/propel/icons";
 // plane imports
 import { Tooltip } from "@makeplane/propel/components/tooltip";
-import { renderFormattedTime, renderFormattedDate, calculateTimeAgo } from "@plane/utils";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
-import { useCalendarLocale } from "@/hooks/use-calendar-locale";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { IssueCreatorDisplay } from "@/components/issues/issue-details/issue-creator";
 // local imports
@@ -34,7 +33,7 @@ export function IssueActivityBlockComponent(props: TIssueActivityBlockComponent)
 
   const activity = getActivityById(activityId);
   const { isMobile } = usePlatformOS();
-  const { dateFnsLocale } = useCalendarLocale();
+  const { formatDate, formatTime, timeAgo } = useLocalizedDates();
   if (!activity) return <></>;
   return (
     <div
@@ -54,14 +53,8 @@ export function IssueActivityBlockComponent(props: TIssueActivityBlockComponent)
         )}
         <span> {children} </span>
         <span>
-          <Tooltip
-            label={`${renderFormattedDate(activity.created_at)}, ${renderFormattedTime(activity.created_at)}`}
-            disabled={isMobile}
-          >
-            <span className="whitespace-nowrap text-tertiary">
-              {" "}
-              {calculateTimeAgo(activity.created_at, dateFnsLocale)}
-            </span>
+          <Tooltip label={`${formatDate(activity.created_at)}, ${formatTime(activity.created_at)}`} disabled={isMobile}>
+            <span className="whitespace-nowrap text-tertiary"> {timeAgo(activity.created_at)}</span>
           </Tooltip>
         </span>
       </div>

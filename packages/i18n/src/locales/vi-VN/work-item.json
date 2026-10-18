@@ -794,7 +794,8 @@
         "removed_without_issue": "đã xóa ngày hết hạn",
         "set_with_issue": "đã đặt ngày hết hạn là <value/> cho <issue/>",
         "set_without_issue": "đã đặt ngày hết hạn là <value/>"
-      }
+      },
+      "commented_ago": "Đã bình luận {timeAgo}"
     },
     "project": {
       "archived_at": {
