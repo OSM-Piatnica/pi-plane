@@ -256,16 +256,16 @@
         "description": "도메인을 구성하고 Single sign-on을 활성화하세요"
       },
       "project_states": {
-        "title": "프로젝트 스테이트",
+        "title": "프로젝트 상태",
         "heading": "모든 프로젝트의 진행 상황 개요를 확인하세요.",
-        "description": "프로젝트 스테이트는 어떤 프로젝트 속성으로든 모든 프로젝트의 진행 상황을 추적하는 Plane 전용 기능입니다.",
+        "description": "프로젝트 상태는 어떤 프로젝트 속성으로든 모든 프로젝트의 진행 상황을 추적하는 Plane 전용 기능입니다.",
         "go_to_settings": "설정으로 이동"
       },
       "projects": {
         "title": "프로젝트",
         "description": "프로젝트 상태 관리, 프로젝트 레이블 활성화 및 기타 구성을 관리합니다.",
         "tabs": {
-          "states": "프로젝트 스테이트",
+          "states": "프로젝트 상태",
           "labels": "프로젝트 레이블"
         }
       },
