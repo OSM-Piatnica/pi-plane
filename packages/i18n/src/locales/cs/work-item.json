@@ -794,7 +794,8 @@
         "removed_without_issue": "odebrán termín",
         "set_with_issue": "nastaven termín na <value/> u <issue/>",
         "set_without_issue": "nastaven termín na <value/>"
-      }
+      },
+      "commented_ago": "Komentováno {timeAgo}"
     },
     "project": {
       "archived_at": {

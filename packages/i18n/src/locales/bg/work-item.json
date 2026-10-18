@@ -794,7 +794,8 @@
         "removed_without_issue": "премахна крайния срок",
         "set_with_issue": "зададе крайния срок на <value/> за <issue/>",
         "set_without_issue": "зададе крайния срок на <value/>"
-      }
+      },
+      "commented_ago": "Коментирано {timeAgo}"
     },
     "project": {
       "archived_at": {

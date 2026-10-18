@@ -10,9 +10,10 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "@plane/i18n";
 import { Logo } from "@plane/blocks/emoji-icon-picker";
 import type { TActivityEntityData, TProjectEntityData } from "@plane/types";
-import { calculateTimeAgo } from "@plane/utils";
 // components
 import { ListItem } from "@/components/core/list";
+// hooks
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
 // helpers
 
@@ -22,6 +23,7 @@ type BlockProps = {
   workspaceSlug: string;
 };
 export function RecentProject(props: BlockProps) {
+  const { timeAgo } = useLocalizedDates();
   const { activity, ref, workspaceSlug } = props;
   // translation
   const { t } = useTranslation();
@@ -48,9 +50,7 @@ export function RecentProject(props: BlockProps) {
         </div>
       }
       appendTitleElement={
-        <div className="flex-shrink-0 text-11 font-medium text-placeholder">
-          {calculateTimeAgo(activity.visited_at)}
-        </div>
+        <div className="flex-shrink-0 text-11 font-medium text-placeholder">{timeAgo(activity.visited_at)}</div>
       }
       quickActionElement={
         <div className="flex gap-4">

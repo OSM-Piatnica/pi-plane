@@ -794,7 +794,8 @@
         "removed_without_issue": "hat das Fälligkeitsdatum entfernt",
         "set_with_issue": "hat das Fälligkeitsdatum von <issue/> auf <value/> gesetzt",
         "set_without_issue": "hat das Fälligkeitsdatum auf <value/> gesetzt"
-      }
+      },
+      "commented_ago": "Kommentiert {timeAgo}"
     },
     "project": {
       "archived_at": {

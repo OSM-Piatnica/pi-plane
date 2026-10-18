@@ -33,14 +33,16 @@ import {
 import { BlockedIcon, BlockerIcon } from "@plane/blocks/icons";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IIssueActivity } from "@plane/types";
-import { renderFormattedDate, generateWorkItemLink, capitalizeFirstLetter } from "@plane/utils";
+import { generateWorkItemLink, capitalizeFirstLetter } from "@plane/utils";
 // helpers
 import { useLabel } from "@/hooks/store/use-label";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { renderTaggedText } from "@/helpers/tagged-text";
 // types
 
 type TTranslate = (key: string, params?: Record<string, unknown>) => string;
+type TFormatDate = (date: string | Date | undefined | null) => string | undefined;
 
 export function IssueLink({ activity }: { activity: IIssueActivity }) {
   // router params
@@ -213,7 +215,13 @@ const getPriorityLabel = (priority: string | null | undefined, t: TTranslate): s
 
 const activityDetails: {
   [key: string]: {
-    message: (activity: IIssueActivity, showIssue: boolean, workspaceSlug: string, t: TTranslate) => React.ReactNode;
+    message: (
+      activity: IIssueActivity,
+      showIssue: boolean,
+      workspaceSlug: string,
+      t: TTranslate,
+      formatDate: TFormatDate
+    ) => React.ReactNode;
     icon: React.ReactNode;
   };
 } = {
@@ -532,7 +540,7 @@ const activityDetails: {
     icon: <GridOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   start_date: {
-    message: (activity, showIssue, _workspaceSlug, t) => {
+    message: (activity, showIssue, _workspaceSlug, t, formatDate) => {
       if (!activity.new_value)
         return renderTaggedText(
           showIssue
@@ -544,13 +552,13 @@ const activityDetails: {
         showIssue
           ? t("activity_feed.profile.start_date.set_with_issue")
           : t("activity_feed.profile.start_date.set_without_issue"),
-        { ...issueTag(activity), ...emphasisTag(renderFormattedDate(activity.new_value), NOWRAP_VALUE_CLASS) }
+        { ...issueTag(activity), ...emphasisTag(formatDate(activity.new_value), NOWRAP_VALUE_CLASS) }
       );
     },
     icon: <CalendarOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   target_date: {
-    message: (activity, showIssue, _workspaceSlug, t) => {
+    message: (activity, showIssue, _workspaceSlug, t, formatDate) => {
       if (!activity.new_value)
         return renderTaggedText(
           showIssue
@@ -562,7 +570,7 @@ const activityDetails: {
         showIssue
           ? t("activity_feed.profile.target_date.set_with_issue")
           : t("activity_feed.profile.target_date.set_without_issue"),
-        { ...issueTag(activity), ...emphasisTag(renderFormattedDate(activity.new_value), NOWRAP_VALUE_CLASS) }
+        { ...issueTag(activity), ...emphasisTag(formatDate(activity.new_value), NOWRAP_VALUE_CLASS) }
       );
     },
     icon: <CalendarOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
@@ -609,6 +617,7 @@ export function ActivityMessage({ activity, showIssue = false }: ActivityMessage
   // router params
   const { workspaceSlug } = useParams();
   const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
   const activityField = activity.field ?? "issue";
 
   return (
@@ -617,7 +626,8 @@ export function ActivityMessage({ activity, showIssue = false }: ActivityMessage
         activity,
         showIssue,
         workspaceSlug ? workspaceSlug.toString() : (activity.workspace_detail?.slug ?? ""),
-        t
+        t,
+        formatDate
       )}
     </>
   );

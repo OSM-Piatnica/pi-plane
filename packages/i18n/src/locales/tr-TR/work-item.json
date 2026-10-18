@@ -794,7 +794,8 @@
         "removed_without_issue": "son tarihi kaldırdı",
         "set_with_issue": "<issue/> için son tarihi <value/> olarak ayarladı",
         "set_without_issue": "son tarihi <value/> olarak ayarladı"
-      }
+      },
+      "commented_ago": "{timeAgo} yorum yaptı"
     },
     "project": {
       "archived_at": {

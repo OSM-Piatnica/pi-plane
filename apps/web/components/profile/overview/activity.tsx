@@ -14,7 +14,7 @@ import { Avatar } from "@makeplane/propel/components/avatar";
 import { EmptyStateCompact } from "@plane/blocks/empty-state";
 import { Card } from "@plane/blocks/card";
 import { Loader } from "@plane/blocks/skeleton";
-import { calculateTimeAgo, getFileURL } from "@plane/utils";
+import { getFileURL } from "@plane/utils";
 // components
 import { ActivityMessage, IssueLink } from "@/components/core/activity";
 // constants
@@ -22,12 +22,14 @@ import { USER_PROFILE_ACTIVITY } from "@plane/constants";
 // helpers
 // hooks
 import { useUser } from "@/hooks/store/user";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 // services
 import { UserService } from "@/services/user.service";
 
 const userService = new UserService();
 
 export const ProfileActivity = observer(function ProfileActivity() {
+  const { timeAgo } = useLocalizedDates();
   const { workspaceSlug, userId } = useParams();
   // store hooks
   const { data: currentUser } = useUser();
@@ -78,7 +80,7 @@ export const ProfileActivity = observer(function ProfileActivity() {
                       </span>
                     )}
                   </p>
-                  <p className="text-11 whitespace-nowrap text-secondary">{calculateTimeAgo(activity.created_at)}</p>
+                  <p className="text-11 whitespace-nowrap text-secondary">{timeAgo(activity.created_at)}</p>
                 </div>
               </div>
             ))}

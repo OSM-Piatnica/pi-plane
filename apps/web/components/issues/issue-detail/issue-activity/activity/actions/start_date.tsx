@@ -10,8 +10,8 @@ import { useTranslation } from "@plane/i18n";
 import { renderTaggedText } from "@/helpers/tagged-text";
 import { CalendarOutline } from "@makeplane/propel/icons";
 // hooks
-import { renderFormattedDate } from "@plane/utils";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 // components
 import { IssueActivityBlockComponent, IssueLink } from "./";
 // helpers
@@ -25,6 +25,7 @@ export const IssueStartDateActivity = observer(function IssueStartDateActivity(p
     activity: { getActivityById },
   } = useIssueDetail();
   const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
 
   const activity = getActivityById(activityId);
 
@@ -44,7 +45,7 @@ export const IssueStartDateActivity = observer(function IssueStartDateActivity(p
       ends={ends}
     >
       {renderTaggedText(message, {
-        value: () => <span className="font-medium text-primary">{renderFormattedDate(activity.new_value)}</span>,
+        value: () => <span className="font-medium text-primary">{formatDate(activity.new_value)}</span>,
         issue: () => <IssueLink activityId={activityId} />,
       })}
     </IssueActivityBlockComponent>

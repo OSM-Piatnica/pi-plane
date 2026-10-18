@@ -1,3 +1,4 @@
+import { useTranslation } from "@plane/i18n";
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
@@ -11,7 +12,7 @@ import Link from "next/link";
 import useSWR from "swr";
 // icons
 import { History, MessageSquare } from "lucide-react";
-import { calculateTimeAgo, getFileURL } from "@plane/utils";
+import { getFileURL } from "@plane/utils";
 // hooks
 import { ActivityIcon, ActivityMessage } from "@/components/core/activity";
 import { RichTextEditor } from "@/components/editor/rich-text";
@@ -20,6 +21,7 @@ import { ActivitySettingsLoader } from "@/components/ui/loader/settings/activity
 import { USER_ACTIVITY } from "@plane/constants";
 // hooks
 import { useUser } from "@/hooks/store/user";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 // services
 import { UserService } from "@/services/user.service";
 const userService = new UserService();
@@ -33,6 +35,8 @@ type Props = {
 };
 
 export const ProfileActivityListPage = observer(function ProfileActivityListPage(props: Props) {
+  const { t } = useTranslation();
+  const { timeAgo } = useLocalizedDates();
   const { cursor, perPage, updateResultsCount, updateTotalPages, updateEmptyState } = props;
   // store hooks
   const { data: currentUser } = useUser();
@@ -97,7 +101,7 @@ export const ProfileActivityListPage = observer(function ProfileActivityListPage
                             : activityItem.actor_detail.display_name}
                         </div>
                         <p className="mt-0.5 text-11 text-secondary">
-                          Commented {calculateTimeAgo(activityItem.created_at)}
+                          {t("activity_feed.profile.commented_ago", { timeAgo: timeAgo(activityItem.created_at) })}
                         </p>
                       </div>
                       <div className="issue-comments-section p-0">
@@ -175,7 +179,7 @@ export const ProfileActivityListPage = observer(function ProfileActivityListPage
                             <div className="inline gap-1">
                               {message}{" "}
                               <span className="flex-shrink-0 whitespace-nowrap">
-                                {calculateTimeAgo(activityItem.created_at)}
+                                {timeAgo(activityItem.created_at)}
                               </span>
                             </div>
                           </div>

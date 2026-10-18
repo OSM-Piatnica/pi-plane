@@ -794,7 +794,8 @@
         "removed_without_issue": "removeu a data de vencimento",
         "set_with_issue": "definiu a data de vencimento de <issue/> como <value/>",
         "set_without_issue": "definiu a data de vencimento como <value/>"
-      }
+      },
+      "commented_ago": "Comentou {timeAgo}"
     },
     "project": {
       "archived_at": {

@@ -794,7 +794,8 @@
         "removed_without_issue": "видалено крайній термін",
         "set_with_issue": "встановлено крайній термін <value/> для <issue/>",
         "set_without_issue": "встановлено крайній термін <value/>"
-      }
+      },
+      "commented_ago": "Прокоментовано {timeAgo}"
     },
     "project": {
       "archived_at": {

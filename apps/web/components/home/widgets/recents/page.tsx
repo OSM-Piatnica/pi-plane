@@ -11,10 +11,11 @@ import { Logo } from "@plane/blocks/emoji-icon-picker";
 import { PagesOutline } from "@makeplane/propel/icons";
 // plane import
 import type { TActivityEntityData, TPageEntityData } from "@plane/types";
-import { calculateTimeAgo, getFileURL, getPageName } from "@plane/utils";
+import { getFileURL, getPageName } from "@plane/utils";
 import { ListItem } from "@/components/core/list";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type BlockProps = {
   activity: TActivityEntityData;
@@ -23,6 +24,7 @@ type BlockProps = {
 };
 
 export function RecentPage(props: BlockProps) {
+  const { timeAgo } = useLocalizedDates();
   const { activity, ref, workspaceSlug } = props;
   // router
   const router = useRouter();
@@ -60,9 +62,7 @@ export function RecentPage(props: BlockProps) {
         </div>
       }
       appendTitleElement={
-        <div className="flex-shrink-0 text-11 font-medium text-placeholder">
-          {calculateTimeAgo(activity.visited_at)}
-        </div>
+        <div className="flex-shrink-0 text-11 font-medium text-placeholder">{timeAgo(activity.visited_at)}</div>
       }
       quickActionElement={
         <div className="flex gap-4">
