@@ -1021,5 +1021,14 @@
     "emoji": "Emoji",
     "icon": "Ícone",
     "contrast_notice": "As cores serão ajustadas para garantir contraste suficiente."
+  },
+  "date_phrases": {
+    "added_ago": "Adicionado {timeAgo}",
+    "expired": "Expirado",
+    "expired_ago": "Expirou {timeAgo}",
+    "expires_at": "Expira em {date} às {time}",
+    "never_expires": "Nunca expira",
+    "date_at_time": "{date} às {time}",
+    "till": "Até {date}, {time}"
   }
 }

@@ -1021,5 +1021,14 @@
     "emoji": "Emoji",
     "icon": "Pictogramă",
     "contrast_notice": "Culorile vor fi ajustate pentru a asigura un contrast suficient."
+  },
+  "date_phrases": {
+    "added_ago": "Adăugat {timeAgo}",
+    "expired": "Expirat",
+    "expired_ago": "Expirat {timeAgo}",
+    "expires_at": "Expiră pe {date} la {time}",
+    "never_expires": "Nu expiră niciodată",
+    "date_at_time": "{date} la {time}",
+    "till": "Până la {date}, {time}"
   }
 }

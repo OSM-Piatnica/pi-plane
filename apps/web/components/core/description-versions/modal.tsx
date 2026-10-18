@@ -27,11 +27,12 @@ import { setToast } from "@plane/blocks/toast";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TDescriptionVersion } from "@plane/types";
 import { Loader } from "@plane/blocks/skeleton";
-import { calculateTimeAgo, cn, getFileURL } from "@plane/utils";
+import { cn, getFileURL } from "@plane/utils";
 // components
 import { RichTextEditor } from "@/components/editor/rich-text";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 import { IconButton } from "@makeplane/propel/components/icon-button";
 import { Icon } from "@makeplane/propel/components/icon";
@@ -51,6 +52,7 @@ type Props = {
 };
 
 export const DescriptionVersionsModal = observer(function DescriptionVersionsModal(props: Props) {
+  const { timeAgo } = useLocalizedDates();
   const {
     activeVersionDescription,
     activeVersionDetails,
@@ -115,9 +117,7 @@ export const DescriptionVersionsModal = observer(function DescriptionVersionsMod
                   />
                 </span>
               </p>
-              <p className="flex-shrink-0 text-secondary">
-                {calculateTimeAgo(activeVersionDetails?.last_saved_at ?? "")}
-              </p>
+              <p className="flex-shrink-0 text-secondary">{timeAgo(activeVersionDetails?.last_saved_at ?? "")}</p>
             </div>
             <div className="flex flex-shrink-0 items-center">
               <button

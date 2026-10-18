@@ -1021,5 +1021,14 @@
     "emoji": "Емодзі",
     "icon": "Значок",
     "contrast_notice": "Кольори буде змінено, щоб забезпечити достатню контрастність."
+  },
+  "date_phrases": {
+    "added_ago": "Додано {timeAgo}",
+    "expired": "Термін дії минув",
+    "expired_ago": "Термін дії минув {timeAgo}",
+    "expires_at": "Спливає {date} о {time}",
+    "never_expires": "Без терміну дії",
+    "date_at_time": "{date} о {time}",
+    "till": "До {date}, {time}"
   }
 }

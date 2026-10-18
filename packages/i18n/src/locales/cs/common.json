@@ -1021,5 +1021,14 @@
     "emoji": "Emoji",
     "icon": "Ikona",
     "contrast_notice": "Barvy budou upraveny tak, aby byl zajištěn dostatečný kontrast."
+  },
+  "date_phrases": {
+    "added_ago": "Přidáno {timeAgo}",
+    "expired": "Vypršela platnost",
+    "expired_ago": "Platnost vypršela {timeAgo}",
+    "expires_at": "Platnost vyprší {date} v {time}",
+    "never_expires": "Platnost nikdy nevyprší",
+    "date_at_time": "{date} v {time}",
+    "till": "Do {date}, {time}"
   }
 }

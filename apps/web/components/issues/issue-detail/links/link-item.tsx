@@ -17,10 +17,11 @@ import { EIssueServiceType } from "@plane/types";
 import { Icon } from "@makeplane/propel/components/icon";
 import { IconButton } from "@makeplane/propel/components/icon-button";
 import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
-import { calculateTimeAgo, copyTextToClipboard } from "@plane/utils";
+import { copyTextToClipboard } from "@plane/utils";
 // helpers
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import type { TLinkOperationsModal } from "./create-update-link-modal";
 
@@ -32,6 +33,7 @@ type TIssueLinkItem = {
 };
 
 export const IssueLinkItem = observer(function IssueLinkItem(props: TIssueLinkItem) {
+  const { timeAgo } = useLocalizedDates();
   // props
   const { linkId, linkOperations, isNotAllowed, issueServiceType = EIssueServiceType.ISSUES } = props;
   // hooks
@@ -83,7 +85,7 @@ export const IssueLinkItem = observer(function IssueLinkItem(props: TIssueLinkIt
         </div>
         <div className="flex flex-shrink-0 items-center gap-1">
           <p className="group-hover-text-secondary p-1 align-bottom text-caption-sm-regular leading-5 text-placeholder">
-            {calculateTimeAgo(linkDetail.created_at)}
+            {timeAgo(linkDetail.created_at)}
           </p>
           {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
           <button

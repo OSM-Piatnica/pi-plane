@@ -1021,5 +1021,14 @@
     "emoji": "Эмодзи",
     "icon": "Значок",
     "contrast_notice": "Цвета будут скорректированы для обеспечения достаточной контрастности."
+  },
+  "date_phrases": {
+    "added_ago": "Добавлено {timeAgo}",
+    "expired": "Истёк",
+    "expired_ago": "Истёк {timeAgo}",
+    "expires_at": "Истекает {date} в {time}",
+    "never_expires": "Не истекает",
+    "date_at_time": "{date} в {time}",
+    "till": "До {date}, {time}"
   }
 }

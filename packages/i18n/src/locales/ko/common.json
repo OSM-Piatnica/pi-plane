@@ -1021,5 +1021,14 @@
     "emoji": "이모지",
     "icon": "아이콘",
     "contrast_notice": "충분한 대비를 위해 색상이 조정됩니다."
+  },
+  "date_phrases": {
+    "added_ago": "{timeAgo} 추가됨",
+    "expired": "만료됨",
+    "expired_ago": "{timeAgo} 만료됨",
+    "expires_at": "{date} {time}에 만료",
+    "never_expires": "만료되지 않음",
+    "date_at_time": "{date} {time}",
+    "till": "{date}, {time}까지"
   }
 }

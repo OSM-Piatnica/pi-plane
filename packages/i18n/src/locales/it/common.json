@@ -1021,5 +1021,14 @@
     "emoji": "Emoji",
     "icon": "Icona",
     "contrast_notice": "I colori verranno regolati per garantire un contrasto sufficiente."
+  },
+  "date_phrases": {
+    "added_ago": "Aggiunto {timeAgo}",
+    "expired": "Scaduto",
+    "expired_ago": "Scaduto {timeAgo}",
+    "expires_at": "Scade il {date} alle {time}",
+    "never_expires": "Non scade mai",
+    "date_at_time": "{date} alle {time}",
+    "till": "Fino al {date}, {time}"
   }
 }

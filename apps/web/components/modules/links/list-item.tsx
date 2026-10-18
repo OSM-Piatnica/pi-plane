@@ -14,11 +14,12 @@ import { setToast } from "@plane/blocks/toast";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { ILinkDetails } from "@plane/types";
 // plane ui
-import { getIconForLink, copyTextToClipboard, calculateTimeAgo } from "@plane/utils";
+import { getIconForLink, copyTextToClipboard } from "@plane/utils";
 // helpers
 //
 // hooks
 import { useMember } from "@/hooks/store/use-member";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 
 type Props = {
@@ -29,6 +30,7 @@ type Props = {
 };
 
 export const ModulesLinksListItem = observer(function ModulesLinksListItem(props: Props) {
+  const { timeAgo } = useLocalizedDates();
   const { t } = useTranslation();
   const { handleDeleteLink, handleEditLink, isEditingAllowed, link } = props;
   // store hooks
@@ -102,7 +104,7 @@ export const ModulesLinksListItem = observer(function ModulesLinksListItem(props
       </div>
       <div className="px-5">
         <p className="mt-0.5 flex items-center gap-1.5 stroke-[1.5] text-11 text-tertiary">
-          Added {calculateTimeAgo(link.created_at)}{" "}
+          {t("date_phrases.added_ago", { timeAgo: timeAgo(link.created_at) })}{" "}
           {createdByDetails && (
             <>by {createdByDetails?.is_bot ? createdByDetails?.first_name + " Bot" : createdByDetails?.display_name}</>
           )}

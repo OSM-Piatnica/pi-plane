@@ -11,9 +11,10 @@ import { Avatar } from "@makeplane/propel/components/avatar";
 import { MenuItem } from "@makeplane/propel/components/menu";
 import { useTranslation } from "@plane/i18n";
 import type { TDescriptionVersion } from "@plane/types";
-import { calculateTimeAgo, getFileURL } from "@plane/utils";
+import { getFileURL } from "@plane/utils";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type Props = {
   onClick: (versionId: string) => void;
@@ -21,6 +22,7 @@ type Props = {
 };
 
 export const DescriptionVersionsDropdownItem = observer(function DescriptionVersionsDropdownItem(props: Props) {
+  const { timeAgo } = useLocalizedDates();
   const { onClick, version } = props;
   // store hooks
   const { getUserDetails } = useMember();
@@ -40,7 +42,7 @@ export const DescriptionVersionsDropdownItem = observer(function DescriptionVers
         />
       }
       label={versionCreator?.display_name ?? t("common.deactivated_user")}
-      secondaryText={calculateTimeAgo(version.last_saved_at)}
+      secondaryText={timeAgo(version.last_saved_at)}
       onClick={() => onClick(version.id)}
     />
   );

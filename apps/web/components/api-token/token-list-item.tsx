@@ -5,22 +5,25 @@
  * See the LICENSE file for details.
  */
 
+import { useTranslation } from "@plane/i18n";
 import { useState } from "react";
 import { CloseCircleOutline } from "@makeplane/propel/icons";
 // plane imports
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IApiToken } from "@plane/types";
-import { renderFormattedDate, calculateTimeAgo, renderFormattedTime } from "@plane/utils";
 // components
 import { DeleteApiTokenModal } from "@/components/api-token/delete-token-modal";
 // hooks
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 type Props = {
   token: IApiToken;
 };
 
 export function ApiTokenListItem(props: Props) {
+  const { t } = useTranslation();
+  const { formatDate, formatTime, timeAgo } = useLocalizedDates();
   const { token } = props;
   // states
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -46,7 +49,7 @@ export function ApiTokenListItem(props: Props) {
               token.is_active ? "bg-success-subtle text-success-primary" : "bg-layer-1 text-placeholder"
             } ml-2 flex h-4 max-h-fit items-center rounded-xs px-2 text-11 font-medium`}
           >
-            {token.is_active ? "Active" : "Expired"}
+            {token.is_active ? t("common.active") : t("date_phrases.expired")}
           </span>
         </div>
         <div className="mt-1 flex w-full flex-col justify-center">
@@ -56,9 +59,12 @@ export function ApiTokenListItem(props: Props) {
           <p className="mb-1 text-11 leading-6 text-placeholder">
             {token.is_active
               ? token.expired_at
-                ? `Expires ${renderFormattedDate(token.expired_at)} at ${renderFormattedTime(token.expired_at)}`
-                : "Never expires"
-              : `Expired ${calculateTimeAgo(token.expired_at)}`}
+                ? t("date_phrases.expires_at", {
+                    date: formatDate(token.expired_at),
+                    time: formatTime(token.expired_at),
+                  })
+                : t("date_phrases.never_expires")
+              : t("date_phrases.expired_ago", { timeAgo: timeAgo(token.expired_at) })}
           </p>
         </div>
       </div>

@@ -13,7 +13,8 @@ import { MoreVerticalOutline } from "@makeplane/propel/icons";
 import { getRenderableItems, resolveItemVariant } from "@plane/blocks/context-menu";
 import type { TContextMenuItem } from "@plane/blocks/context-menu";
 import { useTranslation } from "@plane/i18n";
-import { calculateTimeAgo, getIconForLink } from "@plane/utils";
+import { getIconForLink } from "@plane/utils";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 export type TLinkItemBlockProps = {
   title: string;
@@ -24,6 +25,7 @@ export type TLinkItemBlockProps = {
 };
 
 export function LinkItemBlock(props: TLinkItemBlockProps) {
+  const { timeAgo } = useLocalizedDates();
   // props
   const { title, url, createdAt, menuItems, onClick } = props;
   // plane hooks
@@ -43,9 +45,7 @@ export function LinkItemBlock(props: TLinkItemBlockProps) {
         </span>
         <span className="block flex-1 truncate">
           <span className="block truncate text-13 font-medium">{title}</span>
-          {createdAt && (
-            <span className="block text-11 font-medium text-placeholder">{calculateTimeAgo(createdAt)}</span>
-          )}
+          {createdAt && <span className="block text-11 font-medium text-placeholder">{timeAgo(createdAt)}</span>}
         </span>
       </button>
       {menuItems && (

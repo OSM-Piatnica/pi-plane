@@ -1021,5 +1021,14 @@
     "emoji": "Emoji",
     "icon": "Ikon",
     "contrast_notice": "Warna akan disesuaikan untuk memastikan kontras yang memadai."
+  },
+  "date_phrases": {
+    "added_ago": "Ditambahkan {timeAgo}",
+    "expired": "Kedaluwarsa",
+    "expired_ago": "Kedaluwarsa {timeAgo}",
+    "expires_at": "Kedaluwarsa pada {date} pukul {time}",
+    "never_expires": "Tidak pernah kedaluwarsa",
+    "date_at_time": "{date} pukul {time}",
+    "till": "Hingga {date}, {time}"
   }
 }

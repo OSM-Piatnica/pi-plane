@@ -1021,5 +1021,14 @@
     "emoji": "表情符號",
     "icon": "圖示",
     "contrast_notice": "顏色將自動調整以確保足夠的對比度。"
+  },
+  "date_phrases": {
+    "added_ago": "{timeAgo}新增",
+    "expired": "已過期",
+    "expired_ago": "{timeAgo}過期",
+    "expires_at": "到期時間：{date} {time}",
+    "never_expires": "永不過期",
+    "date_at_time": "{date} {time}",
+    "till": "直到 {date}，{time}"
   }
 }

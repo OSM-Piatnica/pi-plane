@@ -1021,5 +1021,14 @@
     "emoji": "Emoji",
     "icon": "Biểu tượng",
     "contrast_notice": "Màu sắc sẽ được điều chỉnh để đảm bảo độ tương phản đủ."
+  },
+  "date_phrases": {
+    "added_ago": "Đã thêm {timeAgo}",
+    "expired": "Đã hết hạn",
+    "expired_ago": "Đã hết hạn {timeAgo}",
+    "expires_at": "Hết hạn vào {date} lúc {time}",
+    "never_expires": "Không bao giờ hết hạn",
+    "date_at_time": "{date} lúc {time}",
+    "till": "Đến {date}, {time}"
   }
 }

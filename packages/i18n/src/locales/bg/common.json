@@ -1021,5 +1021,14 @@
     "emoji": "Емоджи",
     "icon": "Икона",
     "contrast_notice": "Цветовете ще бъдат коригирани, за да се осигури достатъчен контраст."
+  },
+  "date_phrases": {
+    "added_ago": "Добавено {timeAgo}",
+    "expired": "Изтекъл",
+    "expired_ago": "Изтекъл {timeAgo}",
+    "expires_at": "Изтича на {date} в {time}",
+    "never_expires": "Не изтича",
+    "date_at_time": "{date} в {time}",
+    "till": "До {date}, {time}"
   }
 }
