@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "ha disabilitato la visualizzazione dei cicli",
         "enabled": "ha abilitato la visualizzazione dei cicli",
-        "fallback": "{verb} la visualizzazione dei cicli"
+        "fallback": "ha aggiornato la visualizzazione dei cicli"
       },
       "cycles": {
         "added": "ha aggiunto questo progetto al ciclo <value/>",
         "removed": "ha rimosso questo progetto dal ciclo <value/>",
         "unknown": "Ciclo sconosciuto"
       },
-      "default": "{verb} {field} ",
+      "default": "ha aggiornato le impostazioni del progetto",
       "description": {
         "removed": "ha rimosso la descrizione del progetto",
         "updated": "ha aggiornato la descrizione del progetto"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "ha disabilitato la visualizzazione di Intake",
         "enabled": "ha abilitato la visualizzazione di Intake",
-        "fallback": "{verb} la visualizzazione di Intake"
+        "fallback": "ha aggiornato la visualizzazione di Intake"
       },
       "is_epic_enabled": {
         "disabled": "ha disabilitato gli Epic",
         "enabled": "ha abilitato gli Epic",
-        "fallback": "{verb} gli Epic"
+        "fallback": "ha aggiornato gli Epic"
       },
       "is_issue_type_enabled": {
         "disabled": "ha disabilitato i tipi di elemento di lavoro",
         "enabled": "ha abilitato i tipi di elemento di lavoro",
-        "fallback": "{verb} i tipi di elemento di lavoro"
+        "fallback": "ha aggiornato i tipi di elemento di lavoro"
       },
       "is_project_updates_enabled": {
         "disabled": "ha disabilitato gli aggiornamenti del progetto",
         "enabled": "ha abilitato gli aggiornamenti del progetto",
-        "fallback": "{verb} gli aggiornamenti del progetto"
+        "fallback": "ha aggiornato gli aggiornamenti del progetto"
       },
       "is_time_tracking_enabled": {
         "disabled": "ha disabilitato il tracciamento del tempo",
         "enabled": "ha abilitato il tracciamento del tempo",
-        "fallback": "{verb} il tracciamento del tempo"
+        "fallback": "ha aggiornato il tracciamento del tempo"
       },
       "is_workflow_enabled": {
         "disabled": "ha disabilitato il workflow personalizzato",
         "enabled": "ha abilitato il workflow personalizzato",
-        "fallback": "{verb} il workflow personalizzato"
+        "fallback": "ha aggiornato il workflow personalizzato"
       },
       "issue_views_view": {
         "disabled": "ha disabilitato la visualizzazione delle viste",
         "enabled": "ha abilitato la visualizzazione delle viste",
-        "fallback": "{verb} la visualizzazione delle viste"
+        "fallback": "ha aggiornato la visualizzazione delle viste"
       },
       "labels": {
         "added": "ha aggiunto l'etichetta <value/>",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "ha disabilitato la visualizzazione dei moduli",
         "enabled": "ha abilitato la visualizzazione dei moduli",
-        "fallback": "{verb} la visualizzazione dei moduli"
+        "fallback": "ha aggiornato la visualizzazione dei moduli"
       },
       "modules": {
         "added": "ha aggiunto questo progetto al modulo <value/>",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "ha disabilitato la visualizzazione delle pagine",
         "enabled": "ha abilitato la visualizzazione delle pagine",
-        "fallback": "{verb} la visualizzazione delle pagine"
+        "fallback": "ha aggiornato la visualizzazione delle pagine"
       },
       "priority": {
         "set": "ha impostato la priorità su <value/>"

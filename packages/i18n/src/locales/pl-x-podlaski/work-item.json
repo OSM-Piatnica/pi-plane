@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "wyłączono widok cykli",
         "enabled": "włączono widok cykli",
-        "fallback": "{verb} widok cykli"
+        "fallback": "zaktualizowano widok cykli"
       },
       "cycles": {
         "added": "dodano ten projekt do cyklu <value/>",
         "removed": "usunięto ten projekt z cyklu <value/>",
         "unknown": "Nieznany cykl"
       },
-      "default": "{verb} {field} ",
+      "default": "zaktualizowano ustawienia projektu",
       "description": {
         "removed": "usunięto opis projektu",
         "updated": "zaktualizowano opis projektu"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "wyłączono widok Intake",
         "enabled": "włączono widok Intake",
-        "fallback": "{verb} widok Intake"
+        "fallback": "zaktualizowano widok Intake"
       },
       "is_epic_enabled": {
         "disabled": "wyłączono epiki",
         "enabled": "włączono epiki",
-        "fallback": "{verb} epiki"
+        "fallback": "zaktualizowano epiki"
       },
       "is_issue_type_enabled": {
         "disabled": "wyłączono typy elementów pracy",
         "enabled": "włączono typy elementów pracy",
-        "fallback": "{verb} typy elementów pracy"
+        "fallback": "zaktualizowano typy elementów pracy"
       },
       "is_project_updates_enabled": {
         "disabled": "wyłączono aktualizacje projektu",
         "enabled": "włączono aktualizacje projektu",
-        "fallback": "{verb} aktualizacje projektu"
+        "fallback": "zaktualizowano aktualizacje projektu"
       },
       "is_time_tracking_enabled": {
         "disabled": "wyłączono śledzenie czasu",
         "enabled": "włączono śledzenie czasu",
-        "fallback": "{verb} śledzenie czasu"
+        "fallback": "zaktualizowano śledzenie czasu"
       },
       "is_workflow_enabled": {
         "disabled": "wyłączono niestandardowy przepływ pracy",
         "enabled": "włączono niestandardowy przepływ pracy",
-        "fallback": "{verb} niestandardowy przepływ pracy"
+        "fallback": "zaktualizowano niestandardowy przepływ pracy"
       },
       "issue_views_view": {
         "disabled": "wyłączono widok widoków elementów pracy",
         "enabled": "włączono widok widoków elementów pracy",
-        "fallback": "{verb} widok widoków elementów pracy"
+        "fallback": "zaktualizowano widok widoków elementów pracy"
       },
       "labels": {
         "added": "dodano etykietę <value/>",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "wyłączono widok modułów",
         "enabled": "włączono widok modułów",
-        "fallback": "{verb} widok modułów"
+        "fallback": "zaktualizowano widok modułów"
       },
       "modules": {
         "added": "dodano ten projekt do modułu <value/>",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "wyłączono widok stron",
         "enabled": "włączono widok stron",
-        "fallback": "{verb} widok stron"
+        "fallback": "zaktualizowano widok stron"
       },
       "priority": {
         "set": "ustawiono priorytet na <value/>"

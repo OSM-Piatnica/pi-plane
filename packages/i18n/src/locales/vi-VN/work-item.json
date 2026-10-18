@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "đã tắt chế độ xem chu kỳ",
         "enabled": "đã bật chế độ xem chu kỳ",
-        "fallback": "{verb} chế độ xem chu kỳ"
+        "fallback": "đã cập nhật chế độ xem chu kỳ"
       },
       "cycles": {
         "added": "đã thêm dự án này vào chu kỳ <value/>",
         "removed": "đã xóa dự án này khỏi chu kỳ <value/>",
         "unknown": "Chu kỳ không xác định"
       },
-      "default": "{verb} {field} ",
+      "default": "đã cập nhật cài đặt dự án",
       "description": {
         "removed": "đã xóa mô tả dự án",
         "updated": "đã cập nhật mô tả dự án"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "đã tắt chế độ xem Intake",
         "enabled": "đã bật chế độ xem Intake",
-        "fallback": "{verb} chế độ xem Intake"
+        "fallback": "đã cập nhật chế độ xem Intake"
       },
       "is_epic_enabled": {
         "disabled": "đã tắt sử thi",
         "enabled": "đã bật sử thi",
-        "fallback": "{verb} sử thi"
+        "fallback": "đã cập nhật sử thi"
       },
       "is_issue_type_enabled": {
         "disabled": "đã tắt loại mục công việc",
         "enabled": "đã bật loại mục công việc",
-        "fallback": "{verb} loại mục công việc"
+        "fallback": "đã cập nhật loại mục công việc"
       },
       "is_project_updates_enabled": {
         "disabled": "đã tắt cập nhật dự án",
         "enabled": "đã bật cập nhật dự án",
-        "fallback": "{verb} cập nhật dự án"
+        "fallback": "đã cập nhật cập nhật dự án"
       },
       "is_time_tracking_enabled": {
         "disabled": "đã tắt theo dõi thời gian",
         "enabled": "đã bật theo dõi thời gian",
-        "fallback": "{verb} theo dõi thời gian"
+        "fallback": "đã cập nhật theo dõi thời gian"
       },
       "is_workflow_enabled": {
         "disabled": "đã tắt quy trình làm việc tùy chỉnh",
         "enabled": "đã bật quy trình làm việc tùy chỉnh",
-        "fallback": "{verb} quy trình làm việc tùy chỉnh"
+        "fallback": "đã cập nhật quy trình làm việc tùy chỉnh"
       },
       "issue_views_view": {
         "disabled": "đã tắt chế độ xem của các chế độ xem mục công việc",
         "enabled": "đã bật chế độ xem của các chế độ xem mục công việc",
-        "fallback": "{verb} chế độ xem của các chế độ xem mục công việc"
+        "fallback": "đã cập nhật chế độ xem của các chế độ xem mục công việc"
       },
       "labels": {
         "added": "đã thêm nhãn <value/>",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "đã tắt chế độ xem mô-đun",
         "enabled": "đã bật chế độ xem mô-đun",
-        "fallback": "{verb} chế độ xem mô-đun"
+        "fallback": "đã cập nhật chế độ xem mô-đun"
       },
       "modules": {
         "added": "đã thêm dự án này vào mô-đun <value/>",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "đã tắt chế độ xem trang",
         "enabled": "đã bật chế độ xem trang",
-        "fallback": "{verb} chế độ xem trang"
+        "fallback": "đã cập nhật chế độ xem trang"
       },
       "priority": {
         "set": "đã đặt mức ưu tiên là <value/>"

@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "サイクル表示を無効にしました",
         "enabled": "サイクル表示を有効にしました",
-        "fallback": "サイクル表示を{verb}"
+        "fallback": "サイクル表示を更新しました"
       },
       "cycles": {
         "added": "このプロジェクトをサイクル<value/>に追加しました",
         "removed": "このプロジェクトをサイクル<value/>から削除しました",
         "unknown": "不明なサイクル"
       },
-      "default": "{verb} {field} ",
+      "default": "プロジェクト設定を更新しました",
       "description": {
         "removed": "プロジェクトの説明を削除しました",
         "updated": "プロジェクトの説明を更新しました"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "Intake表示を無効にしました",
         "enabled": "Intake表示を有効にしました",
-        "fallback": "Intake表示を{verb}"
+        "fallback": "Intake表示を更新しました"
       },
       "is_epic_enabled": {
         "disabled": "エピックを無効にしました",
         "enabled": "エピックを有効にしました",
-        "fallback": "エピックを{verb}"
+        "fallback": "エピックを更新しました"
       },
       "is_issue_type_enabled": {
         "disabled": "作業項目タイプを無効にしました",
         "enabled": "作業項目タイプを有効にしました",
-        "fallback": "作業項目タイプを{verb}"
+        "fallback": "作業項目タイプを更新しました"
       },
       "is_project_updates_enabled": {
         "disabled": "プロジェクト更新を無効にしました",
         "enabled": "プロジェクト更新を有効にしました",
-        "fallback": "プロジェクト更新を{verb}"
+        "fallback": "プロジェクト更新を更新しました"
       },
       "is_time_tracking_enabled": {
         "disabled": "時間トラッキングを無効にしました",
         "enabled": "時間トラッキングを有効にしました",
-        "fallback": "時間トラッキングを{verb}"
+        "fallback": "時間トラッキングを更新しました"
       },
       "is_workflow_enabled": {
         "disabled": "カスタムワークフローを無効にしました",
         "enabled": "カスタムワークフローを有効にしました",
-        "fallback": "カスタムワークフローを{verb}"
+        "fallback": "カスタムワークフローを更新しました"
       },
       "issue_views_view": {
         "disabled": "ビュー表示を無効にしました",
         "enabled": "ビュー表示を有効にしました",
-        "fallback": "ビュー表示を{verb}"
+        "fallback": "ビュー表示を更新しました"
       },
       "labels": {
         "added": "ラベル<value/>を追加しました",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "モジュール表示を無効にしました",
         "enabled": "モジュール表示を有効にしました",
-        "fallback": "モジュール表示を{verb}"
+        "fallback": "モジュール表示を更新しました"
       },
       "modules": {
         "added": "このプロジェクトをモジュール<value/>に追加しました",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "ページ表示を無効にしました",
         "enabled": "ページ表示を有効にしました",
-        "fallback": "ページ表示を{verb}"
+        "fallback": "ページ表示を更新しました"
       },
       "priority": {
         "set": "優先度を<value/>に設定しました"

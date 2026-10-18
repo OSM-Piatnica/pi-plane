@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "disabled cycle view",
         "enabled": "enabled cycle view",
-        "fallback": "{verb} cycle view"
+        "fallback": "updated cycle view"
       },
       "cycles": {
         "added": "added this project to the cycle <value/>",
         "removed": "removed this project from the cycle <value/>",
         "unknown": "Unknown cycle"
       },
-      "default": "{verb} {field} ",
+      "default": "updated the project settings",
       "description": {
         "removed": "removed the project description",
         "updated": "updated the project description"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "disabled intake view",
         "enabled": "enabled intake view",
-        "fallback": "{verb} intake view"
+        "fallback": "updated intake view"
       },
       "is_epic_enabled": {
         "disabled": "disabled epics",
         "enabled": "enabled epics",
-        "fallback": "{verb} epics"
+        "fallback": "updated epics"
       },
       "is_issue_type_enabled": {
         "disabled": "disabled work item types",
         "enabled": "enabled work item types",
-        "fallback": "{verb} work item types"
+        "fallback": "updated work item types"
       },
       "is_project_updates_enabled": {
         "disabled": "disabled project updates",
         "enabled": "enabled project updates",
-        "fallback": "{verb} project updates"
+        "fallback": "updated project updates"
       },
       "is_time_tracking_enabled": {
         "disabled": "disabled time tracking",
         "enabled": "enabled time tracking",
-        "fallback": "{verb} time tracking"
+        "fallback": "updated time tracking"
       },
       "is_workflow_enabled": {
         "disabled": "disabled custom workflow",
         "enabled": "enabled custom workflow",
-        "fallback": "{verb} custom workflow"
+        "fallback": "updated custom workflow"
       },
       "issue_views_view": {
         "disabled": "disabled issue views view",
         "enabled": "enabled issue views view",
-        "fallback": "{verb} issue views view"
+        "fallback": "updated issue views"
       },
       "labels": {
         "added": "added the label <value/>",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "disabled module view",
         "enabled": "enabled module view",
-        "fallback": "{verb} module view"
+        "fallback": "updated module view"
       },
       "modules": {
         "added": "added this project to the module <value/>",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "disabled page view",
         "enabled": "enabled page view",
-        "fallback": "{verb} page view"
+        "fallback": "updated page view"
       },
       "priority": {
         "set": "set the priority to <value/>"

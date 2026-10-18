@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "schakelde de cyclusweergave uit",
         "enabled": "schakelde de cyclusweergave in",
-        "fallback": "{verb} cyclusweergave"
+        "fallback": "werkte de cyclusweergave bij"
       },
       "cycles": {
         "added": "voegde dit project toe aan de cyclus <value/>",
         "removed": "verwijderde dit project uit de cyclus <value/>",
         "unknown": "Onbekende cyclus"
       },
-      "default": "{verb} {field} ",
+      "default": "werkte de projectinstellingen bij",
       "description": {
         "removed": "verwijderde de projectbeschrijving",
         "updated": "werkte de projectbeschrijving bij"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "schakelde de Intake-weergave uit",
         "enabled": "schakelde de Intake-weergave in",
-        "fallback": "{verb} Intake-weergave"
+        "fallback": "werkte de Intake-weergave bij"
       },
       "is_epic_enabled": {
         "disabled": "schakelde epics uit",
         "enabled": "schakelde epics in",
-        "fallback": "{verb} epics"
+        "fallback": "werkte epics bij"
       },
       "is_issue_type_enabled": {
         "disabled": "schakelde werkitemtypen uit",
         "enabled": "schakelde werkitemtypen in",
-        "fallback": "{verb} werkitemtypen"
+        "fallback": "werkte werkitemtypen bij"
       },
       "is_project_updates_enabled": {
         "disabled": "schakelde projectupdates uit",
         "enabled": "schakelde projectupdates in",
-        "fallback": "{verb} projectupdates"
+        "fallback": "werkte projectupdates bij"
       },
       "is_time_tracking_enabled": {
         "disabled": "schakelde tijdregistratie uit",
         "enabled": "schakelde tijdregistratie in",
-        "fallback": "{verb} tijdregistratie"
+        "fallback": "werkte tijdregistratie bij"
       },
       "is_workflow_enabled": {
         "disabled": "schakelde de aangepaste workflow uit",
         "enabled": "schakelde de aangepaste workflow in",
-        "fallback": "{verb} aangepaste workflow"
+        "fallback": "werkte de aangepaste workflow bij"
       },
       "issue_views_view": {
         "disabled": "schakelde de weergave voor werkitemweergaven uit",
         "enabled": "schakelde de weergave voor werkitemweergaven in",
-        "fallback": "{verb} weergave voor werkitemweergaven"
+        "fallback": "werkte de weergave voor werkitemweergaven bij"
       },
       "labels": {
         "added": "voegde het label <value/> toe",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "schakelde de modulesweergave uit",
         "enabled": "schakelde de modulesweergave in",
-        "fallback": "{verb} modulesweergave"
+        "fallback": "werkte de modulesweergave bij"
       },
       "modules": {
         "added": "voegde dit project toe aan de module <value/>",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "schakelde de paginaweergave uit",
         "enabled": "schakelde de paginaweergave in",
-        "fallback": "{verb} paginaweergave"
+        "fallback": "werkte de paginaweergave bij"
       },
       "priority": {
         "set": "stelde de prioriteit in op <value/>"

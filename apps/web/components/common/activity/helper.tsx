@@ -83,13 +83,22 @@ type TTranslate = (key: string, params?: Record<string, unknown>) => string;
 
 const valueClass = "font-medium text-primary";
 
-// picks the enabled / disabled sentence from the raw "true" / "false" value, else the verb fallback
+// Project activity is a commercial-edition feature: this fork's API does not record it and no screen here
+// renders it (nothing imports this folder), so this file only describes the records that edition produces.
+//
+// Picks the enabled / disabled sentence from the raw "true" / "false" value. Any other value gets the
+// fallback, a plain "updated <setting>" sentence: the backend verb is not echoed, because it is an English
+// word that cannot be translated inside a localized sentence.
 const booleanText = (value: string | undefined, enabled: string, disabled: string, fallback: string) => {
   if (value === "true") return enabled;
   if (value === "false") return disabled;
   return fallback;
 };
 
+/**
+ * Builds the sentence for one project activity record (commercial-edition data, see the note above).
+ * Unknown fields get a generic "updated the project settings" rather than the raw field name and verb.
+ */
 export const messages = (
   activity: TProjectActivity,
   t: TTranslate
@@ -224,7 +233,7 @@ export const messages = (
           newValue,
           t("activity_feed.project.module_view.enabled"),
           t("activity_feed.project.module_view.disabled"),
-          t("activity_feed.project.module_view.fallback", { verb })
+          t("activity_feed.project.module_view.fallback")
         ),
       };
     case "cycle_view":
@@ -233,7 +242,7 @@ export const messages = (
           newValue,
           t("activity_feed.project.cycle_view.enabled"),
           t("activity_feed.project.cycle_view.disabled"),
-          t("activity_feed.project.cycle_view.fallback", { verb })
+          t("activity_feed.project.cycle_view.fallback")
         ),
       };
     case "issue_views_view":
@@ -242,7 +251,7 @@ export const messages = (
           newValue,
           t("activity_feed.project.issue_views_view.enabled"),
           t("activity_feed.project.issue_views_view.disabled"),
-          t("activity_feed.project.issue_views_view.fallback", { verb })
+          t("activity_feed.project.issue_views_view.fallback")
         ),
       };
     case "page_view":
@@ -251,7 +260,7 @@ export const messages = (
           newValue,
           t("activity_feed.project.page_view.enabled"),
           t("activity_feed.project.page_view.disabled"),
-          t("activity_feed.project.page_view.fallback", { verb })
+          t("activity_feed.project.page_view.fallback")
         ),
       };
     case "intake_view":
@@ -260,7 +269,7 @@ export const messages = (
           newValue,
           t("activity_feed.project.intake_view.enabled"),
           t("activity_feed.project.intake_view.disabled"),
-          t("activity_feed.project.intake_view.fallback", { verb })
+          t("activity_feed.project.intake_view.fallback")
         ),
       };
     case "is_project_updates_enabled":
@@ -269,7 +278,7 @@ export const messages = (
           newValue,
           t("activity_feed.project.is_project_updates_enabled.enabled"),
           t("activity_feed.project.is_project_updates_enabled.disabled"),
-          t("activity_feed.project.is_project_updates_enabled.fallback", { verb })
+          t("activity_feed.project.is_project_updates_enabled.fallback")
         ),
       };
     case "is_epic_enabled":
@@ -278,7 +287,7 @@ export const messages = (
           newValue,
           t("activity_feed.project.is_epic_enabled.enabled"),
           t("activity_feed.project.is_epic_enabled.disabled"),
-          t("activity_feed.project.is_epic_enabled.fallback", { verb })
+          t("activity_feed.project.is_epic_enabled.fallback")
         ),
       };
     case "is_workflow_enabled":
@@ -287,7 +296,7 @@ export const messages = (
           newValue,
           t("activity_feed.project.is_workflow_enabled.enabled"),
           t("activity_feed.project.is_workflow_enabled.disabled"),
-          t("activity_feed.project.is_workflow_enabled.fallback", { verb })
+          t("activity_feed.project.is_workflow_enabled.fallback")
         ),
       };
     case "is_time_tracking_enabled":
@@ -296,7 +305,7 @@ export const messages = (
           newValue,
           t("activity_feed.project.is_time_tracking_enabled.enabled"),
           t("activity_feed.project.is_time_tracking_enabled.disabled"),
-          t("activity_feed.project.is_time_tracking_enabled.fallback", { verb })
+          t("activity_feed.project.is_time_tracking_enabled.fallback")
         ),
       };
     case "is_issue_type_enabled":
@@ -305,12 +314,12 @@ export const messages = (
           newValue,
           t("activity_feed.project.is_issue_type_enabled.enabled"),
           t("activity_feed.project.is_issue_type_enabled.disabled"),
-          t("activity_feed.project.is_issue_type_enabled.fallback", { verb })
+          t("activity_feed.project.is_issue_type_enabled.fallback")
         ),
       };
     default:
       return {
-        message: t("activity_feed.project.default", { verb, field: activityType?.replace(/_/g, " ") }),
+        message: t("activity_feed.project.default"),
       };
   }
 };

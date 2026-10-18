@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "döngü görünümünü devre dışı bıraktı",
         "enabled": "döngü görünümünü etkinleştirdi",
-        "fallback": "{verb} döngü görünümü"
+        "fallback": "döngü görünümünü güncelledi"
       },
       "cycles": {
         "added": "bu projeyi <value/> döngüsüne ekledi",
         "removed": "bu projeyi <value/> döngüsünden kaldırdı",
         "unknown": "Bilinmeyen döngü"
       },
-      "default": "{verb} {field} ",
+      "default": "proje ayarlarını güncelledi",
       "description": {
         "removed": "proje açıklamasını kaldırdı",
         "updated": "proje açıklamasını güncelledi"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "Intake görünümünü devre dışı bıraktı",
         "enabled": "Intake görünümünü etkinleştirdi",
-        "fallback": "{verb} Intake görünümü"
+        "fallback": "Intake görünümünü güncelledi"
       },
       "is_epic_enabled": {
         "disabled": "epikleri devre dışı bıraktı",
         "enabled": "epikleri etkinleştirdi",
-        "fallback": "{verb} epikler"
+        "fallback": "epikleri güncelledi"
       },
       "is_issue_type_enabled": {
         "disabled": "iş öğesi türlerini devre dışı bıraktı",
         "enabled": "iş öğesi türlerini etkinleştirdi",
-        "fallback": "{verb} iş öğesi türleri"
+        "fallback": "iş öğesi türlerini güncelledi"
       },
       "is_project_updates_enabled": {
         "disabled": "proje güncellemelerini devre dışı bıraktı",
         "enabled": "proje güncellemelerini etkinleştirdi",
-        "fallback": "{verb} proje güncellemeleri"
+        "fallback": "proje güncellemelerini güncelledi"
       },
       "is_time_tracking_enabled": {
         "disabled": "zaman takibini devre dışı bıraktı",
         "enabled": "zaman takibini etkinleştirdi",
-        "fallback": "{verb} zaman takibi"
+        "fallback": "zaman takibini güncelledi"
       },
       "is_workflow_enabled": {
         "disabled": "özel iş akışını devre dışı bıraktı",
         "enabled": "özel iş akışını etkinleştirdi",
-        "fallback": "{verb} özel iş akışı"
+        "fallback": "özel iş akışını güncelledi"
       },
       "issue_views_view": {
         "disabled": "iş öğesi görünümleri görünümünü devre dışı bıraktı",
         "enabled": "iş öğesi görünümleri görünümünü etkinleştirdi",
-        "fallback": "{verb} iş öğesi görünümleri görünümü"
+        "fallback": "iş öğesi görünümleri görünümünü güncelledi"
       },
       "labels": {
         "added": "<value/> etiketini ekledi",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "modül görünümünü devre dışı bıraktı",
         "enabled": "modül görünümünü etkinleştirdi",
-        "fallback": "{verb} modül görünümü"
+        "fallback": "modül görünümünü güncelledi"
       },
       "modules": {
         "added": "bu projeyi <value/> modülüne ekledi",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "sayfa görünümünü devre dışı bıraktı",
         "enabled": "sayfa görünümünü etkinleştirdi",
-        "fallback": "{verb} sayfa görünümü"
+        "fallback": "sayfa görünümünü güncelledi"
       },
       "priority": {
         "set": "önceliği <value/> olarak ayarladı"

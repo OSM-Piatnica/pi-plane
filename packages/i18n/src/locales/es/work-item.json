@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "desactivó la vista de ciclos",
         "enabled": "activó la vista de ciclos",
-        "fallback": "{verb} la vista de ciclos"
+        "fallback": "actualizó la vista de ciclos"
       },
       "cycles": {
         "added": "agregó este proyecto al ciclo <value/>",
         "removed": "eliminó este proyecto del ciclo <value/>",
         "unknown": "Ciclo desconocido"
       },
-      "default": "{verb} {field} ",
+      "default": "actualizó la configuración del proyecto",
       "description": {
         "removed": "eliminó la descripción del proyecto",
         "updated": "actualizó la descripción del proyecto"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "desactivó la vista de Intake",
         "enabled": "activó la vista de Intake",
-        "fallback": "{verb} la vista de Intake"
+        "fallback": "actualizó la vista de Intake"
       },
       "is_epic_enabled": {
         "disabled": "desactivó los Epics",
         "enabled": "activó los Epics",
-        "fallback": "{verb} los Epics"
+        "fallback": "actualizó los Epics"
       },
       "is_issue_type_enabled": {
         "disabled": "desactivó los tipos de elementos de trabajo",
         "enabled": "activó los tipos de elementos de trabajo",
-        "fallback": "{verb} los tipos de elementos de trabajo"
+        "fallback": "actualizó los tipos de elementos de trabajo"
       },
       "is_project_updates_enabled": {
         "disabled": "desactivó las actualizaciones del proyecto",
         "enabled": "activó las actualizaciones del proyecto",
-        "fallback": "{verb} las actualizaciones del proyecto"
+        "fallback": "actualizó las actualizaciones del proyecto"
       },
       "is_time_tracking_enabled": {
         "disabled": "desactivó el seguimiento de tiempo",
         "enabled": "activó el seguimiento de tiempo",
-        "fallback": "{verb} el seguimiento de tiempo"
+        "fallback": "actualizó el seguimiento de tiempo"
       },
       "is_workflow_enabled": {
         "disabled": "desactivó el flujo de trabajo personalizado",
         "enabled": "activó el flujo de trabajo personalizado",
-        "fallback": "{verb} el flujo de trabajo personalizado"
+        "fallback": "actualizó el flujo de trabajo personalizado"
       },
       "issue_views_view": {
         "disabled": "desactivó la vista de vistas de elementos de trabajo",
         "enabled": "activó la vista de vistas de elementos de trabajo",
-        "fallback": "{verb} la vista de vistas de elementos de trabajo"
+        "fallback": "actualizó la vista de vistas de elementos de trabajo"
       },
       "labels": {
         "added": "agregó la etiqueta <value/>",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "desactivó la vista de módulos",
         "enabled": "activó la vista de módulos",
-        "fallback": "{verb} la vista de módulos"
+        "fallback": "actualizó la vista de módulos"
       },
       "modules": {
         "added": "agregó este proyecto al módulo <value/>",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "desactivó la vista de páginas",
         "enabled": "activó la vista de páginas",
-        "fallback": "{verb} la vista de páginas"
+        "fallback": "actualizó la vista de páginas"
       },
       "priority": {
         "set": "estableció la prioridad en <value/>"

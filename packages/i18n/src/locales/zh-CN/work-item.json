@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "停用了周期视图",
         "enabled": "启用了周期视图",
-        "fallback": "{verb}周期视图"
+        "fallback": "更新了周期视图"
       },
       "cycles": {
         "added": "将此项目添加到周期 <value/>",
         "removed": "将此项目从周期 <value/> 中移除",
         "unknown": "未知周期"
       },
-      "default": "{verb} {field} ",
+      "default": "更新了项目设置",
       "description": {
         "removed": "移除了项目描述",
         "updated": "更新了项目描述"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "停用了 Intake 视图",
         "enabled": "启用了 Intake 视图",
-        "fallback": "{verb} Intake 视图"
+        "fallback": "更新了Intake 视图"
       },
       "is_epic_enabled": {
         "disabled": "停用了史诗",
         "enabled": "启用了史诗",
-        "fallback": "{verb}史诗"
+        "fallback": "更新了史诗"
       },
       "is_issue_type_enabled": {
         "disabled": "停用了工作项类型",
         "enabled": "启用了工作项类型",
-        "fallback": "{verb}工作项类型"
+        "fallback": "更新了工作项类型"
       },
       "is_project_updates_enabled": {
         "disabled": "停用了项目更新",
         "enabled": "启用了项目更新",
-        "fallback": "{verb}项目更新"
+        "fallback": "更新了项目更新"
       },
       "is_time_tracking_enabled": {
         "disabled": "停用了时间跟踪",
         "enabled": "启用了时间跟踪",
-        "fallback": "{verb}时间跟踪"
+        "fallback": "更新了时间跟踪"
       },
       "is_workflow_enabled": {
         "disabled": "停用了自定义工作流",
         "enabled": "启用了自定义工作流",
-        "fallback": "{verb}自定义工作流"
+        "fallback": "更新了自定义工作流"
       },
       "issue_views_view": {
         "disabled": "停用了工作项视图功能",
         "enabled": "启用了工作项视图功能",
-        "fallback": "{verb}工作项视图功能"
+        "fallback": "更新了工作项视图功能"
       },
       "labels": {
         "added": "添加了标签 <value/>",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "停用了模块视图",
         "enabled": "启用了模块视图",
-        "fallback": "{verb}模块视图"
+        "fallback": "更新了模块视图"
       },
       "modules": {
         "added": "将此项目添加到模块 <value/>",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "停用了页面视图",
         "enabled": "启用了页面视图",
-        "fallback": "{verb}页面视图"
+        "fallback": "更新了页面视图"
       },
       "priority": {
         "set": "将优先级设置为 <value/>"

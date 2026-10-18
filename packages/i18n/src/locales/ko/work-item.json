@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "주기 보기를 비활성화했습니다",
         "enabled": "주기 보기를 활성화했습니다",
-        "fallback": "주기 보기 {verb}"
+        "fallback": "주기 보기를 업데이트했습니다"
       },
       "cycles": {
         "added": "이 프로젝트를 <value/> 주기에 추가했습니다",
         "removed": "이 프로젝트를 <value/> 주기에서 제거했습니다",
         "unknown": "알 수 없는 주기"
       },
-      "default": "{field} {verb} ",
+      "default": "프로젝트 설정을 업데이트했습니다",
       "description": {
         "removed": "프로젝트 설명을 제거했습니다",
         "updated": "프로젝트 설명을 업데이트했습니다"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "Intake 보기를 비활성화했습니다",
         "enabled": "Intake 보기를 활성화했습니다",
-        "fallback": "Intake 보기 {verb}"
+        "fallback": "Intake 보기를 업데이트했습니다"
       },
       "is_epic_enabled": {
         "disabled": "에픽을 비활성화했습니다",
         "enabled": "에픽을 활성화했습니다",
-        "fallback": "에픽 {verb}"
+        "fallback": "에픽을 업데이트했습니다"
       },
       "is_issue_type_enabled": {
         "disabled": "작업 항목 유형을 비활성화했습니다",
         "enabled": "작업 항목 유형을 활성화했습니다",
-        "fallback": "작업 항목 유형 {verb}"
+        "fallback": "작업 항목 유형을 업데이트했습니다"
       },
       "is_project_updates_enabled": {
         "disabled": "프로젝트 업데이트를 비활성화했습니다",
         "enabled": "프로젝트 업데이트를 활성화했습니다",
-        "fallback": "프로젝트 업데이트 {verb}"
+        "fallback": "프로젝트 업데이트를 업데이트했습니다"
       },
       "is_time_tracking_enabled": {
         "disabled": "시간 추적을 비활성화했습니다",
         "enabled": "시간 추적을 활성화했습니다",
-        "fallback": "시간 추적 {verb}"
+        "fallback": "시간 추적을 업데이트했습니다"
       },
       "is_workflow_enabled": {
         "disabled": "사용자 지정 워크플로를 비활성화했습니다",
         "enabled": "사용자 지정 워크플로를 활성화했습니다",
-        "fallback": "사용자 지정 워크플로 {verb}"
+        "fallback": "사용자 지정 워크플로를 업데이트했습니다"
       },
       "issue_views_view": {
         "disabled": "작업 항목 뷰 보기를 비활성화했습니다",
         "enabled": "작업 항목 뷰 보기를 활성화했습니다",
-        "fallback": "작업 항목 뷰 보기 {verb}"
+        "fallback": "작업 항목 뷰 보기를 업데이트했습니다"
       },
       "labels": {
         "added": "<value/> 레이블을 추가했습니다",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "모듈 보기를 비활성화했습니다",
         "enabled": "모듈 보기를 활성화했습니다",
-        "fallback": "모듈 보기 {verb}"
+        "fallback": "모듈 보기를 업데이트했습니다"
       },
       "modules": {
         "added": "이 프로젝트를 <value/> 모듈에 추가했습니다",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "페이지 보기를 비활성화했습니다",
         "enabled": "페이지 보기를 활성화했습니다",
-        "fallback": "페이지 보기 {verb}"
+        "fallback": "페이지 보기를 업데이트했습니다"
       },
       "priority": {
         "set": "우선순위를 <value/>(으)로 설정했습니다"

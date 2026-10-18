@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "menonaktifkan tampilan siklus",
         "enabled": "mengaktifkan tampilan siklus",
-        "fallback": "{verb} tampilan siklus"
+        "fallback": "memperbarui tampilan siklus"
       },
       "cycles": {
         "added": "menambahkan proyek ini ke siklus <value/>",
         "removed": "menghapus proyek ini dari siklus <value/>",
         "unknown": "Siklus tidak dikenal"
       },
-      "default": "{verb} {field} ",
+      "default": "memperbarui pengaturan proyek",
       "description": {
         "removed": "menghapus deskripsi proyek",
         "updated": "memperbarui deskripsi proyek"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "menonaktifkan tampilan Intake",
         "enabled": "mengaktifkan tampilan Intake",
-        "fallback": "{verb} tampilan Intake"
+        "fallback": "memperbarui tampilan Intake"
       },
       "is_epic_enabled": {
         "disabled": "menonaktifkan Epik",
         "enabled": "mengaktifkan Epik",
-        "fallback": "{verb} Epik"
+        "fallback": "memperbarui Epik"
       },
       "is_issue_type_enabled": {
         "disabled": "menonaktifkan jenis item kerja",
         "enabled": "mengaktifkan jenis item kerja",
-        "fallback": "{verb} jenis item kerja"
+        "fallback": "memperbarui jenis item kerja"
       },
       "is_project_updates_enabled": {
         "disabled": "menonaktifkan pembaruan proyek",
         "enabled": "mengaktifkan pembaruan proyek",
-        "fallback": "{verb} pembaruan proyek"
+        "fallback": "memperbarui pembaruan proyek"
       },
       "is_time_tracking_enabled": {
         "disabled": "menonaktifkan pelacakan waktu",
         "enabled": "mengaktifkan pelacakan waktu",
-        "fallback": "{verb} pelacakan waktu"
+        "fallback": "memperbarui pelacakan waktu"
       },
       "is_workflow_enabled": {
         "disabled": "menonaktifkan alur kerja kustom",
         "enabled": "mengaktifkan alur kerja kustom",
-        "fallback": "{verb} alur kerja kustom"
+        "fallback": "memperbarui alur kerja kustom"
       },
       "issue_views_view": {
         "disabled": "menonaktifkan fitur tampilan",
         "enabled": "mengaktifkan fitur tampilan",
-        "fallback": "{verb} fitur tampilan"
+        "fallback": "memperbarui fitur tampilan"
       },
       "labels": {
         "added": "menambahkan label <value/>",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "menonaktifkan tampilan modul",
         "enabled": "mengaktifkan tampilan modul",
-        "fallback": "{verb} tampilan modul"
+        "fallback": "memperbarui tampilan modul"
       },
       "modules": {
         "added": "menambahkan proyek ini ke modul <value/>",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "menonaktifkan tampilan halaman",
         "enabled": "mengaktifkan tampilan halaman",
-        "fallback": "{verb} tampilan halaman"
+        "fallback": "memperbarui tampilan halaman"
       },
       "priority": {
         "set": "menetapkan prioritas menjadi <value/>"

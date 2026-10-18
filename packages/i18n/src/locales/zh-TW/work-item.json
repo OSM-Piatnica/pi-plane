@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "停用了週期檢視",
         "enabled": "啟用了週期檢視",
-        "fallback": "{verb}週期檢視"
+        "fallback": "更新了週期檢視"
       },
       "cycles": {
         "added": "將此專案加入週期 <value/>",
         "removed": "將此專案從週期 <value/> 移除",
         "unknown": "未知的週期"
       },
-      "default": "{verb} {field} ",
+      "default": "更新了專案設定",
       "description": {
         "removed": "移除了專案描述",
         "updated": "更新了專案描述"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "停用了 Intake 檢視",
         "enabled": "啟用了 Intake 檢視",
-        "fallback": "{verb} Intake 檢視"
+        "fallback": "更新了Intake 檢視"
       },
       "is_epic_enabled": {
         "disabled": "停用了史詩",
         "enabled": "啟用了史詩",
-        "fallback": "{verb}史詩"
+        "fallback": "更新了史詩"
       },
       "is_issue_type_enabled": {
         "disabled": "停用了工作事項類型",
         "enabled": "啟用了工作事項類型",
-        "fallback": "{verb}工作事項類型"
+        "fallback": "更新了工作事項類型"
       },
       "is_project_updates_enabled": {
         "disabled": "停用了專案更新",
         "enabled": "啟用了專案更新",
-        "fallback": "{verb}專案更新"
+        "fallback": "更新了專案更新"
       },
       "is_time_tracking_enabled": {
         "disabled": "停用了時間追蹤",
         "enabled": "啟用了時間追蹤",
-        "fallback": "{verb}時間追蹤"
+        "fallback": "更新了時間追蹤"
       },
       "is_workflow_enabled": {
         "disabled": "停用了自訂工作流程",
         "enabled": "啟用了自訂工作流程",
-        "fallback": "{verb}自訂工作流程"
+        "fallback": "更新了自訂工作流程"
       },
       "issue_views_view": {
         "disabled": "停用了工作事項檢視功能",
         "enabled": "啟用了工作事項檢視功能",
-        "fallback": "{verb}工作事項檢視功能"
+        "fallback": "更新了工作事項檢視功能"
       },
       "labels": {
         "added": "新增了標籤 <value/>",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "停用了模組檢視",
         "enabled": "啟用了模組檢視",
-        "fallback": "{verb}模組檢視"
+        "fallback": "更新了模組檢視"
       },
       "modules": {
         "added": "將此專案加入模組 <value/>",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "停用了頁面檢視",
         "enabled": "啟用了頁面檢視",
-        "fallback": "{verb}頁面檢視"
+        "fallback": "更新了頁面檢視"
       },
       "priority": {
         "set": "將優先順序設定為 <value/>"

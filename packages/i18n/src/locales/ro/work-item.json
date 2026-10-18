@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "a dezactivat vizualizarea ciclurilor",
         "enabled": "a activat vizualizarea ciclurilor",
-        "fallback": "{verb} vizualizarea ciclurilor"
+        "fallback": "a actualizat vizualizarea ciclurilor"
       },
       "cycles": {
         "added": "a adăugat acest proiect la ciclul <value/>",
         "removed": "a eliminat acest proiect din ciclul <value/>",
         "unknown": "Ciclu necunoscut"
       },
-      "default": "{verb} {field} ",
+      "default": "a actualizat setările proiectului",
       "description": {
         "removed": "a eliminat descrierea proiectului",
         "updated": "a actualizat descrierea proiectului"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "a dezactivat vizualizarea Intake",
         "enabled": "a activat vizualizarea Intake",
-        "fallback": "{verb} vizualizarea Intake"
+        "fallback": "a actualizat vizualizarea Intake"
       },
       "is_epic_enabled": {
         "disabled": "a dezactivat sarcinile majore",
         "enabled": "a activat sarcinile majore",
-        "fallback": "{verb} sarcinile majore"
+        "fallback": "a actualizat sarcinile majore"
       },
       "is_issue_type_enabled": {
         "disabled": "a dezactivat tipurile de activități",
         "enabled": "a activat tipurile de activități",
-        "fallback": "{verb} tipurile de activități"
+        "fallback": "a actualizat tipurile de activități"
       },
       "is_project_updates_enabled": {
         "disabled": "a dezactivat actualizările proiectului",
         "enabled": "a activat actualizările proiectului",
-        "fallback": "{verb} actualizările proiectului"
+        "fallback": "a actualizat actualizările proiectului"
       },
       "is_time_tracking_enabled": {
         "disabled": "a dezactivat urmărirea timpului",
         "enabled": "a activat urmărirea timpului",
-        "fallback": "{verb} urmărirea timpului"
+        "fallback": "a actualizat urmărirea timpului"
       },
       "is_workflow_enabled": {
         "disabled": "a dezactivat fluxul de lucru personalizat",
         "enabled": "a activat fluxul de lucru personalizat",
-        "fallback": "{verb} fluxul de lucru personalizat"
+        "fallback": "a actualizat fluxul de lucru personalizat"
       },
       "issue_views_view": {
         "disabled": "a dezactivat vizualizarea perspectivelor activităților",
         "enabled": "a activat vizualizarea perspectivelor activităților",
-        "fallback": "{verb} vizualizarea perspectivelor activităților"
+        "fallback": "a actualizat vizualizarea perspectivelor activităților"
       },
       "labels": {
         "added": "a adăugat eticheta <value/>",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "a dezactivat vizualizarea modulelor",
         "enabled": "a activat vizualizarea modulelor",
-        "fallback": "{verb} vizualizarea modulelor"
+        "fallback": "a actualizat vizualizarea modulelor"
       },
       "modules": {
         "added": "a adăugat acest proiect la modulul <value/>",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "a dezactivat vizualizarea paginilor",
         "enabled": "a activat vizualizarea paginilor",
-        "fallback": "{verb} vizualizarea paginilor"
+        "fallback": "a actualizat vizualizarea paginilor"
       },
       "priority": {
         "set": "a setat prioritatea la <value/>"

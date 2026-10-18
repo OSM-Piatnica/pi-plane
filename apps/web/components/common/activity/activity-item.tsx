@@ -18,6 +18,9 @@ type TActivityItem = {
   ends?: "top" | "bottom" | undefined;
 };
 
+// One row of the project activity feed. Project activity is a commercial-edition feature: this fork's API
+// does not record it and no screen here renders it (nothing imports this folder). The component and its
+// translated sentences are kept so the records that edition produces display correctly.
 export const ActivityItem = observer(function ActivityItem(props: TActivityItem) {
   const { activity, ends } = props;
   const { t } = useTranslation();

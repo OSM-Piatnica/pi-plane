@@ -804,14 +804,14 @@
       "cycle_view": {
         "disabled": "vypnuté zobrazenie cyklov",
         "enabled": "zapnuté zobrazenie cyklov",
-        "fallback": "{verb} zobrazenie cyklov"
+        "fallback": "aktualizované zobrazenie cyklov"
       },
       "cycles": {
         "added": "tento projekt pridaný do cyklu <value/>",
         "removed": "tento projekt odstránený z cyklu <value/>",
         "unknown": "Neznámy cyklus"
       },
-      "default": "{verb} {field} ",
+      "default": "aktualizované nastavenia projektu",
       "description": {
         "removed": "odstránený popis projektu",
         "updated": "aktualizovaný popis projektu"
@@ -831,37 +831,37 @@
       "intake_view": {
         "disabled": "vypnuté zobrazenie Intake",
         "enabled": "zapnuté zobrazenie Intake",
-        "fallback": "{verb} zobrazenie Intake"
+        "fallback": "aktualizované zobrazenie Intake"
       },
       "is_epic_enabled": {
         "disabled": "vypnuté epiky",
         "enabled": "zapnuté epiky",
-        "fallback": "{verb} epiky"
+        "fallback": "aktualizované epiky"
       },
       "is_issue_type_enabled": {
         "disabled": "vypnuté typy pracovných položiek",
         "enabled": "zapnuté typy pracovných položiek",
-        "fallback": "{verb} typy pracovných položiek"
+        "fallback": "aktualizované typy pracovných položiek"
       },
       "is_project_updates_enabled": {
         "disabled": "vypnuté aktualizácie projektu",
         "enabled": "zapnuté aktualizácie projektu",
-        "fallback": "{verb} aktualizácie projektu"
+        "fallback": "aktualizované aktualizácie projektu"
       },
       "is_time_tracking_enabled": {
         "disabled": "vypnuté sledovanie času",
         "enabled": "zapnuté sledovanie času",
-        "fallback": "{verb} sledovanie času"
+        "fallback": "aktualizované sledovanie času"
       },
       "is_workflow_enabled": {
         "disabled": "vypnutý vlastný pracovný postup",
         "enabled": "zapnutý vlastný pracovný postup",
-        "fallback": "{verb} vlastný pracovný postup"
+        "fallback": "aktualizovaný vlastný pracovný postup"
       },
       "issue_views_view": {
         "disabled": "vypnuté zobrazenie pohľadov pracovných položiek",
         "enabled": "zapnuté zobrazenie pohľadov pracovných položiek",
-        "fallback": "{verb} zobrazenie pohľadov pracovných položiek"
+        "fallback": "aktualizované zobrazenie pohľadov pracovných položiek"
       },
       "labels": {
         "added": "pridaný štítok <value/>",
@@ -874,7 +874,7 @@
       "module_view": {
         "disabled": "vypnuté zobrazenie modulov",
         "enabled": "zapnuté zobrazenie modulov",
-        "fallback": "{verb} zobrazenie modulov"
+        "fallback": "aktualizované zobrazenie modulov"
       },
       "modules": {
         "added": "tento projekt pridaný do modulu <value/>",
@@ -896,7 +896,7 @@
       "page_view": {
         "disabled": "vypnuté zobrazenie stránok",
         "enabled": "zapnuté zobrazenie stránok",
-        "fallback": "{verb} zobrazenie stránok"
+        "fallback": "aktualizované zobrazenie stránok"
       },
       "priority": {
         "set": "nastavená priorita na <value/>"
