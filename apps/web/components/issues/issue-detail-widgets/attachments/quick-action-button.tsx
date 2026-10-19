@@ -106,6 +106,7 @@ export const IssueAttachmentActionButton = observer(function IssueAttachmentActi
       }}
     >
       <button {...getRootProps()} type="button" disabled={disabled}>
+        {/* react-doctor-disable-next-line html-no-nested-interactive -- react-dropzone hidden file input must live inside its root element; restructuring would change the click/drop target */}
         <input {...getInputProps()} />
         {customButton ? customButton : <AddOutline className="h-4 w-4" />}
       </button>

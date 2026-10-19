@@ -150,6 +150,7 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
                     </Tooltip>
                     {!disabled && (
                       <Tooltip label={t("common.remove")} side="bottom" disabled={isMobile}>
+                        {/* react-doctor-disable-next-line html-no-nested-interactive -- remove control lives inside the clickable relation row; moving it out would change layout and behaviour */}
                         <button
                           type="button"
                           className="inline-flex"

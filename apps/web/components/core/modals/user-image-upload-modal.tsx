@@ -48,6 +48,7 @@ export const UserImageUploadModal = observer(function UserImageUploadModal(props
   const imagePreviewUrlRef = useRef<string | null>(null);
   const setImage = (file: File | null | undefined) => {
     if (imagePreviewUrlRef.current) URL.revokeObjectURL(imagePreviewUrlRef.current);
+    // react-doctor-disable-next-line no-create-object-url-without-revoke -- revoked via imagePreviewUrlRef when the file changes and on unmount
     imagePreviewUrlRef.current = file ? URL.createObjectURL(file) : null;
     setImagePreviewUrl(imagePreviewUrlRef.current);
     setImageState(file ?? null);
@@ -157,8 +158,7 @@ export const UserImageUploadModal = observer(function UserImageUploadModal(props
                         </button>
                         <img
                           src={imagePreviewUrl ?? (value ? getFileURL(value) : "")}
-                          // oxlint-disable-next-line jsx-a11y/img-redundant-alt -- existing behaviour; lint cleanup only
-                          alt="image"
+                          alt="Avatar preview"
                           className="absolute top-0 left-0 h-full w-full rounded-md object-cover"
                         />
                       </>

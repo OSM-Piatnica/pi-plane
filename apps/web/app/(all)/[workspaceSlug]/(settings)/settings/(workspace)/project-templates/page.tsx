@@ -126,6 +126,7 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
     defaultValue: DEFAULT_FEATURE_TOGGLES.is_issue_type_enabled,
   });
 
+  // react-doctor-disable-next-line no-event-handler -- the modal is closed from several places (submit, cancel, onOpenChange), so resetting must follow the state itself
   useEffect(() => {
     if (!createTemplateModalOpen) {
       reset(TEMPLATE_FORM_DEFAULTS);

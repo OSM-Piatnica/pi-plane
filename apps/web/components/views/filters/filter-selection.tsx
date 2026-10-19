@@ -45,6 +45,7 @@ export const ViewFiltersSelection = observer(function ViewFiltersSelection(props
     if (Array.isArray(currValues)) {
       if (Array.isArray(value)) {
         value.forEach((val) => {
+          // react-doctor-disable-next-line js-set-map-lookups -- array is mutated (push/splice) inside the loop, so a prebuilt Set would go stale
           if (!currValues.includes(val)) currValues.push(val);
           else currValues.splice(currValues.indexOf(val), 1);
         });

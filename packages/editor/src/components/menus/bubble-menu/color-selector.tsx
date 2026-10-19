@@ -81,6 +81,7 @@ export function BubbleMenuColorSelector(props: Props) {
                 onClick={() => TextColorItem(editor).command({ color: color.key })}
               />
             ))}
+            {/* react-doctor-disable-next-line control-has-associated-label -- no existing translation key in the editor package for the reset-color action */}
             <button
               type="button"
               className="grid size-6 flex-shrink-0 place-items-center rounded-sm border-[0.5px] border-strong-1 text-tertiary transition-colors hover:bg-layer-1"
@@ -105,6 +106,7 @@ export function BubbleMenuColorSelector(props: Props) {
                 onClick={() => BackgroundColorItem(editor).command({ color: color.key })}
               />
             ))}
+            {/* react-doctor-disable-next-line control-has-associated-label -- no existing translation key in the editor package for the reset-color action */}
             <button
               type="button"
               className="grid size-6 flex-shrink-0 place-items-center rounded-sm border-[0.5px] border-strong-1 text-tertiary transition-colors hover:bg-layer-1"

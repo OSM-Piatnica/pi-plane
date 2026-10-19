@@ -128,11 +128,11 @@ export const ChartViewRoot = observer(function ChartViewRoot(props: ChartViewRoo
         updateItemsContainerWidth(currentRender.scrollWidth);
         if (!targetDate) updateCurrentLeftScrollPosition(currentRender.scrollWidth);
         updateAllBlocksOnChartChangeWhileDragging(currentRender.scrollWidth);
-        setItemsContainerWidth(itemsContainerWidth + currentRender.scrollWidth);
+        setItemsContainerWidth((prev) => prev + currentRender.scrollWidth);
       } else if (side === "right") {
         updateCurrentView(view);
         updateRenderView(mergeRenderPayloads(renderView, currentRender.payload));
-        setItemsContainerWidth(itemsContainerWidth + currentRender.scrollWidth);
+        setItemsContainerWidth((prev) => prev + currentRender.scrollWidth);
       } else {
         updateCurrentView(view);
         updateRenderView(currentRender.payload);

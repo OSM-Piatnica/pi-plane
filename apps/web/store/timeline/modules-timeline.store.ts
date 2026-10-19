@@ -19,6 +19,7 @@ export class ModulesTimeLineStore extends BaseTimeLineStore implements IModulesT
   constructor(_rootStore: RootStore) {
     super(_rootStore);
 
+    // react-doctor-disable-next-line mobx-reaction-disposer-discarded -- store lives for the whole app session and has no teardown hook
     autorun(() => {
       const getModuleById = this.rootStore.module.getModuleById;
       this.updateBlocks(getModuleById);

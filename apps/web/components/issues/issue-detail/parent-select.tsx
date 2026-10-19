@@ -108,8 +108,8 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
 
             {!disabled && (
               <Tooltip label={t("common.remove")} side="bottom" disabled={isMobile}>
-                {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
-                <span
+                {/* react-doctor-disable-next-line click-events-have-key-events, no-static-element-interactions -- the whole select is a <button>; a nested button is invalid HTML, so this remove icon stays a span */}
+                <span // oxlint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- same reason
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();

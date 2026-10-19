@@ -99,6 +99,17 @@ export const SubIssuesListItem = observer(function SubIssuesListItem(props: Prop
   //
   const handleIssuePeekOverview = (peekIssue: TIssue) => handleRedirection(workspaceSlug, peekIssue, isMobile);
 
+  const handleToggleSubIssues = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!subIssueHelpers.issue_visibility.includes(issueId)) {
+      setSubIssueHelpers(parentIssueId, "preview_loader", issueId);
+      await fetchSubIssues(workspaceSlug, projectId, issueId);
+      setSubIssueHelpers(parentIssueId, "preview_loader", issueId);
+    }
+    setSubIssueHelpers(parentIssueId, "issue_visibility", issueId);
+  };
+
   if (!issue) return <></>;
 
   // check if current issue is the root issue
@@ -134,26 +145,17 @@ export const SubIssuesListItem = observer(function SubIssuesListItem(props: Prop
                       <LinkOutline width={14} height={14} className="animate-spin" />
                     </div>
                   ) : (
-                    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup
-                    <div
+                    <button
+                      type="button"
                       className="flex h-full w-full cursor-pointer items-center justify-center text-placeholder hover:text-tertiary"
-                      onClick={async (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        if (!subIssueHelpers.issue_visibility.includes(issueId)) {
-                          setSubIssueHelpers(parentIssueId, "preview_loader", issueId);
-                          await fetchSubIssues(workspaceSlug, projectId, issueId);
-                          setSubIssueHelpers(parentIssueId, "preview_loader", issueId);
-                        }
-                        setSubIssueHelpers(parentIssueId, "issue_visibility", issueId);
-                      }}
+                      onClick={handleToggleSubIssues}
                     >
                       <ChevronRightOutline
                         className={cn("size-3.5 transition-all", {
                           "rotate-90": subIssueHelpers.issue_visibility.includes(issue.id),
                         })}
                       />
-                    </div>
+                    </button>
                   )}
                 </>
               )}

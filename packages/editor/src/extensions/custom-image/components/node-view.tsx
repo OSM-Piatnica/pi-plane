@@ -92,6 +92,7 @@ export function CustomImageNodeView(props: CustomImageNodeViewProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imgNodeSrc, extension.options.getImageSource, extension.options.getImageDownloadSource]);
 
+  // react-doctor-disable-next-line no-set-state-after-await-in-effect -- isDuplicatingRef already prevents overlapping runs, and a cancel flag would skip clearing failedToLoadImage when deps change mid-duplication
   useEffect(() => {
     const handleDuplication = async () => {
       if (status !== ECustomImageStatus.DUPLICATING || !extension.options.duplicateImage || !imgNodeSrc) {

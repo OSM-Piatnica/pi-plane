@@ -53,6 +53,7 @@ export const WorkspaceImageUploadModal = observer(function WorkspaceImageUploadM
   const imagePreviewUrlRef = useRef<string | null>(null);
   const setImage = (file: File | null | undefined) => {
     if (imagePreviewUrlRef.current) URL.revokeObjectURL(imagePreviewUrlRef.current);
+    // react-doctor-disable-next-line no-create-object-url-without-revoke -- the URL is kept in a ref and revoked on the next change and on unmount
     imagePreviewUrlRef.current = file ? URL.createObjectURL(file) : null;
     setImagePreviewUrl(imagePreviewUrlRef.current);
     setImageState(file ?? null);
@@ -170,8 +171,7 @@ export const WorkspaceImageUploadModal = observer(function WorkspaceImageUploadM
                         </button>
                         <img
                           src={imagePreviewUrl ?? (value ? getFileURL(value) : "")}
-                          // oxlint-disable-next-line jsx-a11y/img-redundant-alt -- existing behaviour; lint cleanup only
-                          alt="image"
+                          alt="Workspace logo preview"
                           className="absolute top-0 left-0 h-full w-full rounded-md object-cover"
                         />
                       </>

@@ -148,7 +148,8 @@ export function LinkEditView({ viewProps }: LinkEditViewProps) {
       onKeyDown={handleKeyDown}
       className="shadow-md animate-in fade-in flex translate-y-1 flex-col gap-3 rounded-sm border-2 border-subtle bg-layer-1 p-2"
       style={{
-        transition: "all 0.1s cubic-bezier(.55, .085, .68, .53)",
+        transition:
+          "opacity 0.1s cubic-bezier(.55, .085, .68, .53), transform 0.1s cubic-bezier(.55, .085, .68, .53), translate 0.1s cubic-bezier(.55, .085, .68, .53)",
       }}
       tabIndex={0}
     >

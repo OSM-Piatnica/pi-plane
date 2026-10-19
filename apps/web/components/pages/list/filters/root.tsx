@@ -45,6 +45,7 @@ export const PageFiltersSelection = observer(function PageFiltersSelection(props
     if (Array.isArray(newValues)) {
       if (Array.isArray(value))
         value.forEach((val) => {
+          // react-doctor-disable-next-line js-set-map-lookups -- newValues is mutated inside the loop, so a prebuilt Set would go stale
           if (!newValues.includes(val)) newValues.push(val);
           else newValues.splice(newValues.indexOf(val), 1);
         });

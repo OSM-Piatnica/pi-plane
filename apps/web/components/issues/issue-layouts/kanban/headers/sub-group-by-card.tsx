@@ -27,9 +27,9 @@ interface IHeaderSubGroupByCard {
 export const HeaderSubGroupByCard = observer(function HeaderSubGroupByCard(props: IHeaderSubGroupByCard) {
   const { icon, title, count, column_id, collapsedGroups, sub_group_by, handleCollapsedGroups } = props;
   return (
-    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup
-    <div
-      className={`relative flex w-full flex-shrink-0 cursor-pointer flex-row items-center gap-1 rounded-xs py-1.5`}
+    <button
+      type="button"
+      className={`relative flex w-full flex-shrink-0 cursor-pointer flex-row items-center gap-1 rounded-xs py-1.5 text-left`}
       onClick={() => handleCollapsedGroups("sub_group_by", column_id)}
     >
       <div className="flex h-[20px] w-[20px] flex-shrink-0 items-center justify-center overflow-hidden rounded-xs transition-all hover:bg-layer-1">
@@ -50,6 +50,6 @@ export const HeaderSubGroupByCard = observer(function HeaderSubGroupByCard(props
       </div>
 
       <WorkFlowGroupTree groupBy={sub_group_by} groupId={column_id} />
-    </div>
+    </button>
   );
 });

@@ -68,8 +68,10 @@ export const shouldFilterProject = (
   Object.keys(filters).forEach((key) => {
     const filterKey = key as keyof TProjectFilters;
     if (filterKey === "access" && filters.access && filters.access.length > 0)
+      // react-doctor-disable-next-line js-set-map-lookups -- user-selected filter list is tiny and each branch runs once per key, not per item of a large collection
       fallsInFilters = fallsInFilters && filters.access.includes(`${project.network}`);
     if (filterKey === "lead" && filters.lead && filters.lead.length > 0)
+      // react-doctor-disable-next-line js-set-map-lookups -- user-selected filter list is tiny and each branch runs once per key, not per item of a large collection
       fallsInFilters = fallsInFilters && filters.lead.includes(`${project.project_lead}`);
     if (filterKey === "members" && filters.members && filters.members.length > 0) {
       const memberIds = new Set(project.members ?? []);

@@ -102,6 +102,7 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
   const { handleSubmit, control, watch, reset, setValue, formState } = form;
   const projectId = watch("projectId");
 
+  // react-doctor-disable-next-line no-event-handler -- the modal is closed from several places (submit, cancel, onOpenChange), so resetting must follow the state itself
   useEffect(() => {
     if (!modalOpen) {
       reset(TEMPLATE_FORM_DEFAULTS);

@@ -116,10 +116,18 @@ export const HeaderGroupByCard = observer(function HeaderGroupByCard(props: IHea
           {icon ?? <CircleDashed className="size-3.5" strokeWidth={2} />}
         </div>
 
-        {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
         <div
+          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a <button> cannot wrap the block children and nested workflow tree
+          role="button"
+          tabIndex={0}
           className="relative flex w-full cursor-pointer flex-row items-center gap-1 overflow-hidden"
           onClick={() => handleCollapsedGroups(groupID)}
+          onKeyDown={(e) => {
+            if (e.target !== e.currentTarget) return;
+            if (e.key !== "Enter" && e.key !== " ") return;
+            e.preventDefault();
+            handleCollapsedGroups(groupID);
+          }}
         >
           <div className="line-clamp-1 inline-block truncate font-medium text-primary">{title}</div>
           <div className="pl-2 text-13 font-medium text-tertiary">{count || 0}</div>

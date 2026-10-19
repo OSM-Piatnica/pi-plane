@@ -43,6 +43,7 @@ export const ProjectsListMobileHeader = observer(function ProjectsListMobileHead
       const newValues = filters?.[key] ?? [];
       if (Array.isArray(value))
         value.forEach((val) => {
+          // react-doctor-disable-next-line js-set-map-lookups -- array is mutated (push/splice) inside the loop, so a prebuilt Set would go stale
           if (!newValues.includes(val)) newValues.push(val);
           else newValues.splice(newValues.indexOf(val), 1);
         });
