@@ -31,6 +31,7 @@ from django.conf import settings
 
 # Third party imports
 from rest_framework import status
+from rest_framework.permissions import SAFE_METHODS
 from rest_framework.response import Response
 
 # drf-spectacular imports
@@ -61,6 +62,7 @@ from plane.api.serializers import (
     RelatedIssueSerializer,
 )
 from plane.app.permissions import (
+    ProjectAdminPermission,
     ProjectEntityPermission,
     ProjectLitePermission,
     ProjectMemberPermission,
@@ -889,6 +891,12 @@ class LabelListCreateAPIEndpoint(BaseAPIView):
     permission_classes = [ProjectMemberPermission]
     use_read_replica = True
 
+    # Label writes are project-admin-only, matching the app API.
+    def get_permissions(self):
+        if self.request.method in SAFE_METHODS:
+            return [ProjectMemberPermission()]
+        return [ProjectAdminPermission()]
+
     def get_queryset(self):
         return (
             Label.objects.filter(workspace__slug=self.kwargs.get("slug"))
@@ -1199,6 +1207,7 @@ class IssueLinkListCreateAPIEndpoint(BaseAPIView):
         Add a new external link to a work item with URL, title, and metadata.
         Automatically tracks link creation activity.
         """
+        Issue.objects.get(workspace__slug=slug, project_id=project_id, pk=issue_id)
         serializer = IssueLinkCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(project_id=project_id, issue_id=issue_id)
@@ -2531,6 +2540,8 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
         relation_type = serializer.validated_data["relation_type"]
         issues = serializer.validated_data["issues"]
         project = Project.objects.get(pk=project_id, workspace__slug=slug)
+        # The URL issue is one side of every relation; bind it to the URL project too.
+        Issue.issue_objects.get(workspace__slug=slug, project_id=project_id, pk=issue_id)
 
         actual_relation = get_actual_relation(relation_type)
         is_reverse = relation_type in ["blocking", "start_after", "finish_after"]
@@ -2585,7 +2596,7 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
 
         issue_activity.delay(
             type="issue_relation.activity.created",
-            requested_data=json.dumps(request.data, cls=DjangoJSONEncoder),
+            requested_data=json.dumps({"relation_type": relation_type, "issues": issues}, cls=DjangoJSONEncoder),
             actor_id=str(request.user.id),
             issue_id=str(issue_id),
             project_id=str(project_id),

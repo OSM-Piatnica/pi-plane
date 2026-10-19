@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import copy
@@ -25,6 +26,7 @@ from rest_framework.response import Response
 # Module imports
 from plane.app.permissions import allow_permission, ROLE
 from plane.app.serializers import IssueViewSerializer, ViewIssueListSerializer
+from plane.app.serializers.favorite import get_favorite_entities
 from plane.db.models import (
     Issue,
     FileAsset,
@@ -418,6 +420,10 @@ class IssueViewFavoriteViewSet(BaseViewSet):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     def create(self, request, slug, project_id):
+        # 404 unless the view is in this project and visible to the user
+        get_favorite_entities("view", request.user.id, project_id).get(
+            pk=request.data.get("view"), workspace__slug=slug
+        )
         _ = UserFavorite.objects.create(
             user=request.user,
             entity_identifier=request.data.get("view"),
