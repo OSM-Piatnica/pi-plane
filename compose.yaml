@@ -52,7 +52,11 @@ services:
     command: ./bin/docker-entrypoint-api.sh
     env_file:
       - ./apps/api/.env
-    environment: *s3-env
+    environment:
+      <<: *s3-env
+      # Auth requests are counted per client IP, so an office behind one address shares this budget.
+      # The code default is 10/minute; 1000/minute matches the CLI and all-in-one deployments.
+      AUTHENTICATION_RATE_LIMIT: ${AUTHENTICATION_RATE_LIMIT:-1000/minute}
     depends_on:
       - plane-db
       - plane-redis
