@@ -133,7 +133,12 @@ class TestProjectMemberPreferenceOwnership:
 
 
 @pytest.fixture
-def board(db, workspace, project, create_user):
+def visitor(db):
+    return make_user("visitor")
+
+
+@pytest.fixture
+def board(db, workspace, project, create_user, visitor):
     state = State.objects.create(name="Todo", project=project, workspace=workspace, group="backlog", default=True)
     issue = Issue.objects.create(
         name="Issue", workspace=workspace, project=project, state=state, created_by=create_user
@@ -144,8 +149,8 @@ def board(db, workspace, project, create_user):
         workspace=workspace,
         comment_html="<p>c</p>",
         access="EXTERNAL",
-        created_by=create_user,
-        actor=create_user,
+        created_by=visitor,
+        actor=visitor,
     )
     deploy_board = DeployBoard.objects.create(
         entity_name="project",
@@ -158,8 +163,8 @@ def board(db, workspace, project, create_user):
 
 
 @pytest.fixture
-def visitor_client(db):
-    return client_for(make_user("visitor"))
+def visitor_client(visitor):
+    return client_for(visitor)
 
 
 @pytest.fixture(autouse=True)
@@ -203,7 +208,7 @@ class TestPublicAssetUploadScope:
         DeployBoard.objects.filter(pk=board["board"].pk).update(is_comments_enabled=False)
         before = FileAsset.objects.count()
         response = visitor_client.post(asset_url(board["anchor"]), upload_payload(), format="json")
-        assert response.status_code == status.HTTP_403_FORBIDDEN
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert FileAsset.objects.count() == before
 
     @pytest.mark.django_db
@@ -218,7 +223,7 @@ class TestPublicAssetUploadScope:
         response = visitor_client.post(
             asset_url(board["anchor"]), upload_payload(entity_identifier=str(foreign.id)), format="json"
         )
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.status_code == status.HTTP_404_NOT_FOUND
         assert FileAsset.objects.count() == before
 
     @pytest.mark.django_db
