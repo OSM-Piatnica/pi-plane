@@ -19,9 +19,6 @@ import { ProjectEpicsEmptyState } from "./project-epic";
 import { ProjectEmptyState } from "./project-issues";
 import { ProjectViewEmptyState } from "./project-view";
 
-export * from "./team-issues";
-export * from "./team-view-issues";
-
 interface Props {
   storeType: EIssuesStoreType;
 }

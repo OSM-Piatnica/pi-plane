@@ -24,6 +24,7 @@ type Props = {
   workspaceSlug: string;
 };
 
+// react-doctor-disable-next-line only-export-components -- observer() wraps a component; the rule does not recognise the MobX HOC, so this export is a component
 export const CycleDetailsSidebar = observer(function CycleDetailsSidebar(props: Props) {
   const { handleClose, isArchived, projectId, workspaceSlug, cycleId } = props;
 

@@ -48,6 +48,7 @@ type TProps = TStickiesLayout & {
   columnCount: number;
 };
 
+// react-doctor-disable-next-line only-export-components -- observer() wraps a component; the rule does not recognise the MobX HOC, so this export is a component
 export const StickiesList = observer(function StickiesList(props: TProps) {
   const { workspaceSlug, intersectionElement, columnCount } = props;
   // navigation

@@ -22,7 +22,7 @@ import { cn } from "@plane/utils";
 import { useCommandPalette } from "@/hooks/store/use-command-palette";
 import { useSticky } from "@/hooks/use-stickies";
 // components
-import { STICKY_COLORS_LIST } from "../editor/sticky-editor/color-palette";
+import { STICKY_COLORS_LIST } from "../editor/sticky-editor/sticky-colors";
 import { AllStickiesModal } from "./modal";
 import { StickyNote } from "./sticky";
 

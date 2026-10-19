@@ -28,6 +28,7 @@ type Props = {
   additionalStaticItems?: string[];
 };
 
+// react-doctor-disable-next-line only-export-components -- observer() wraps a component; the rule does not recognise the MobX HOC, so this export is a component
 export const SidebarItemBase = observer(function SidebarItemBase({
   item,
   additionalRender,

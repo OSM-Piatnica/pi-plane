@@ -107,6 +107,7 @@ const AssetItem = observer(function AssetItem(props: AssetItemProps) {
   );
 });
 
+// react-doctor-disable-next-line only-export-components -- observer() wraps a component; the rule does not recognise the MobX HOC, so this export is a component
 export const PageNavigationPaneAssetsTabPanel = observer(function PageNavigationPaneAssetsTabPanel(props: Props) {
   const { page } = props;
   // derived values

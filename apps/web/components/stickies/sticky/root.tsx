@@ -16,7 +16,7 @@ import { cn } from "@plane/utils";
 // hooks
 import { useSticky } from "@/hooks/use-stickies";
 // components
-import { STICKY_COLORS_LIST } from "../../editor/sticky-editor/color-palette";
+import { STICKY_COLORS_LIST } from "../../editor/sticky-editor/sticky-colors";
 import { StickyDeleteModal } from "../delete-modal";
 import { StickyInput } from "./inputs";
 import { getRandomStickyColor, useStickyOperations } from "./use-operations";
