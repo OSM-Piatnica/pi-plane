@@ -521,7 +521,7 @@
     "archived_work_items_count": "{count, plural, one {Ada # item kerja di arsip proyek} other {Ada # item kerja di arsip proyek}}",
     "add_related_work_items": "Tambahkan item kerja terkait",
     "toggle_workspace_level_search": "Alihkan pencarian tingkat ruang kerja",
-    "search_results_for_in_project": "Hasil pencarian untuk <query>\"{query}\"</query> di proyek:",
+    "search_results_for_in_project": "Hasil pencarian untuk \"<query/>\" di proyek:",
     "cannot_move_to_completed_cycle": "Item kerja tidak dapat dipindahkan ke siklus yang sudah selesai"
   },
   "activity_feed": {

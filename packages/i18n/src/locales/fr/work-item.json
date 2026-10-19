@@ -521,7 +521,7 @@
     "archived_work_items_count": "{count, plural, one {Il y a # élément de travail dans les archives du projet} many {Il y a # d’éléments de travail dans les archives du projet} other {Il y a # éléments de travail dans les archives du projet}}",
     "add_related_work_items": "Ajouter des éléments de travail associés",
     "toggle_workspace_level_search": "Activer ou désactiver la recherche au niveau de l’espace de travail",
-    "search_results_for_in_project": "Résultats de recherche pour <query>« {query} »</query> dans le projet :",
+    "search_results_for_in_project": "Résultats de recherche pour « <query/> » dans le projet :",
     "cannot_move_to_completed_cycle": "Un élément de travail ne peut pas être déplacé vers des cycles terminés"
   },
   "activity_feed": {
