@@ -22,7 +22,7 @@ from rest_framework import status
 from plane.db.models import DeployBoard, Intake, Project, ProjectMember, Workspace
 
 reset_project_deploy_board_identity = import_module(
-    "plane.db.migrations.0125_reset_project_deploy_board_identity"
+    "plane.db.migrations.0134_reset_project_deploy_board_identity"
 ).reset_project_deploy_board_identity
 
 

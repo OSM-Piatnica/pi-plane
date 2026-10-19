@@ -22,7 +22,7 @@ def reset_project_deploy_board_identity(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("db", "0124_intakeissue_intake_issue_snoozed_till_idx"),
+        ("db", "0133_intakeissue_intake_issue_snoozed_till_idx"),
     ]
 
     operations = [
