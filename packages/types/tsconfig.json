@@ -1,5 +1,11 @@
 {
   "extends": "@plane/typescript-config/node-library.json",
+  "compilerOptions": {
+    // These types use the global React namespace and DOM types (Element, SVGElement). They used to be
+    // pulled in by an unrelated file that imported "react"; load them explicitly instead.
+    "lib": ["es2023", "dom"],
+    "types": ["node", "react"]
+  },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
