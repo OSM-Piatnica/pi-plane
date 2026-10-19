@@ -169,12 +169,12 @@
       "title": "Skonfiguruj przyjmowanie, aby zarządzać przychodzącymi zgłoszeniami i śledzić, jak są akceptowane i odrzucane"
     },
     "home_widget_stickies": {
-      "title": "Zapisz pomysł, uchwć moment olśnienia lub nagraj falę mózgową. Dodaj notatkę, aby rozpocząć."
+      "title": "Zapisz pomysł, uchwć moment olśnienia lub nagraj falę mózgową. Dodaj karteczkę, aby rozpocząć."
     },
     "stickies": {
       "title": "Przechwytuj pomysły natychmiast",
-      "description": "Twórz notatki na szybkie notatki i zadania do zrobienia i zabieraj je ze sobą, dokądkolwiek się udasz.",
-      "cta_primary": "Utwórz pierwszą notatkę",
+      "description": "Twórz karteczki na szybkie notatki i zadania do zrobienia i zabieraj je ze sobą, dokądkolwiek się udasz.",
+      "cta_primary": "Utwórz pierwszą karteczkę",
       "cta_secondary": "Dokumentacja"
     },
     "active_cycles": {

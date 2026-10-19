@@ -1,58 +1,58 @@
 {
   "stickies": {
-    "title": "Twoje notatki",
+    "title": "Twoje karteczki",
     "placeholder": "kliknij, aby zacząć pisać",
-    "all": "Wszystkie notatki",
-    "no-data": "Zapisuj pomysły i myśli. Dodaj pierwszą notatkę.",
-    "add": "Dodaj notatkę",
+    "all": "Wszystkie karteczki",
+    "no-data": "Zapisuj pomysły i myśli. Dodaj pierwszą karteczkę.",
+    "add": "Dodaj karteczkę",
     "search_placeholder": "Szukaj według nazwy",
-    "delete": "Usuń notatkę",
-    "delete_confirmation": "Czy na pewno chcesz usunąć tę notatkę?",
+    "delete": "Usuń karteczkę",
+    "delete_confirmation": "Czy na pewno chcesz usunąć tę karteczkę?",
     "empty_state": {
-      "simple": "Zapisuj pomysły i myśli. Dodaj pierwszą notatkę.",
+      "simple": "Zapisuj pomysły i myśli. Dodaj pierwszą karteczkę.",
       "general": {
-        "title": "Notatki to szybkie zapiski.",
+        "title": "Karteczki to szybkie zapiski.",
         "description": "Zapisuj pomysły i uzyskuj do nich dostęp z dowolnego miejsca.",
         "primary_button": {
-          "text": "Dodaj notatkę"
+          "text": "Dodaj karteczkę"
         }
       },
       "search": {
-        "title": "Nie znaleziono żadnych notatek.",
-        "description": "Spróbuj innego wyrażenia lub utwórz nową notatkę.",
+        "title": "Nie znaleziono żadnych karteczek.",
+        "description": "Spróbuj innego wyrażenia lub utwórz nową karteczkę.",
         "primary_button": {
-          "text": "Dodaj notatkę"
+          "text": "Dodaj karteczkę"
         }
       }
     },
     "toasts": {
       "errors": {
-        "wrong_name": "Nazwa notatki może mieć maks. 100 znaków.",
-        "already_exists": "Notatka bez opisu już istnieje"
+        "wrong_name": "Nazwa karteczki może mieć maks. 100 znaków.",
+        "already_exists": "Karteczka bez opisu już istnieje"
       },
       "created": {
-        "title": "Notatkę utworzono",
-        "message": "Notatkę utworzono pomyślnie"
+        "title": "Karteczkę utworzono",
+        "message": "Karteczkę utworzono pomyślnie"
       },
       "not_created": {
         "title": "Nie udało się utworzyć",
-        "message": "Nie można utworzyć notatki"
+        "message": "Nie można utworzyć karteczki"
       },
       "updated": {
-        "title": "Notatkę zaktualizowano",
-        "message": "Notatkę zaktualizowano pomyślnie"
+        "title": "Karteczkę zaktualizowano",
+        "message": "Karteczkę zaktualizowano pomyślnie"
       },
       "not_updated": {
         "title": "Aktualizacja się nie powiodła",
-        "message": "Nie można zaktualizować notatki"
+        "message": "Nie można zaktualizować karteczki"
       },
       "removed": {
-        "title": "Notatkę usunięto",
-        "message": "Notatkę usunięto pomyślnie"
+        "title": "Karteczkę usunięto",
+        "message": "Karteczkę usunięto pomyślnie"
       },
       "not_removed": {
         "title": "Usunięcie się nie powiodło",
-        "message": "Nie można usunąć notatki"
+        "message": "Nie można usunąć karteczki"
       }
     }
   }
