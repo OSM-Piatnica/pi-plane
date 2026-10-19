@@ -31,7 +31,3 @@ export const WEB_URL = encodeURI(`${WEB_BASE_URL}${WEB_BASE_PATH}`);
 // apps/space/helpers/authentication.helper.tsx and apps/admin/app/(all)/(home)/auth-helpers.tsx
 // (see the auth.error_alerts.user_account_deactivated_contact message).
 // export const SUPPORT_EMAIL = process.env.VITE_SUPPORT_EMAIL || "";
-// marketing links
-export const MARKETING_PRICING_PAGE_LINK = "https://plane.so/pricing";
-export const MARKETING_CONTACT_US_PAGE_LINK = "https://plane.so/contact";
-export const MARKETING_PLANE_ONE_PAGE_LINK = "https://plane.so/one";
