@@ -57,7 +57,8 @@ const defaultFromData: TFormData = {
   email: "",
   company_name: "",
   password: "",
-  is_telemetry_enabled: true,
+  // Opt-in: the box starts unchecked (the API default is off too).
+  is_telemetry_enabled: false,
 };
 
 export function InstanceSetupForm() {
@@ -67,7 +68,8 @@ export function InstanceSetupForm() {
   const lastNameParam = searchParams?.get("last_name") || undefined;
   const companyParam = searchParams?.get("company") || undefined;
   const emailParam = searchParams?.get("email") || undefined;
-  const isTelemetryEnabledParam = searchParams?.get("is_telemetry_enabled") === "True" || true;
+  // The API redirects back here with the submitted value after a failed setup; only an explicit "True" turns it on.
+  const isTelemetryEnabledParam = searchParams?.get("is_telemetry_enabled") === "True";
   const errorCode = searchParams?.get("error_code") || undefined;
   const errorMessage = searchParams?.get("error_message") || undefined;
   // state
@@ -351,13 +353,13 @@ export function InstanceSetupForm() {
               <div>
                 <Checkbox
                   id="is_telemetry_enabled"
-                  aria-label="Allow Pi-Plane to anonymously collect usage events"
+                  aria-label="Allow Plane to anonymously collect usage events"
                   onCheckedChange={(checked) => handleFormChange("is_telemetry_enabled", checked)}
                   checked={formData.is_telemetry_enabled}
                 />
               </div>
               <label className="cursor-pointer text-13 font-medium text-tertiary" htmlFor="is_telemetry_enabled">
-                Allow Pi-Plane to anonymously collect usage events.{" "}
+                Allow Plane to anonymously collect usage events.{" "}
                 <a
                   href="https://developers.plane.so/self-hosting/telemetry"
                   target="_blank"

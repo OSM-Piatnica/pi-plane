@@ -19,7 +19,7 @@ import {
   NewTabOutline,
   PagesOutline,
 } from "@makeplane/propel/icons";
-import { cn } from "@plane/utils";
+import { cn, isNewerVersion } from "@plane/utils";
 // hooks
 import { useInstance, useTheme } from "@/hooks/store";
 // assets
@@ -147,7 +147,19 @@ export const AdminSidebarHelpSection = observer(function AdminSidebarHelpSection
                   );
               })}
             </div>
-            <div className="px-2 pt-2 pb-1 text-10">Version: v{instance?.current_version}</div>
+            <div className="px-2 pt-2 pb-1 text-10">
+              <div>Version: v{instance?.current_version}</div>
+              {instance?.latest_version && (
+                <div className="flex items-center gap-1.5">
+                  <span>Latest: v{instance.latest_version.replace(/^v/, "")}</span>
+                  {isNewerVersion(instance.latest_version, instance.current_version) && (
+                    <span className="rounded-sm bg-accent-primary/10 px-1 py-px font-medium text-accent-primary">
+                      Update available
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
