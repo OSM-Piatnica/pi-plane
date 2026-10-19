@@ -22,7 +22,7 @@ const LANGUAGE_ALIASES: Record<string, TLanguage> = {
 };
 
 // Locales that are chosen deliberately and never inferred from the system language.
-const EXPLICIT_ONLY_LANGUAGES: TLanguage[] = new Set(["pl-x-podlaski"]);
+const EXPLICIT_ONLY_LANGUAGES: Set<string> = new Set(["pl-x-podlaski"]);
 
 const findSupported = (tag: string): TLanguage | undefined => {
   const lower = tag.toLowerCase();
