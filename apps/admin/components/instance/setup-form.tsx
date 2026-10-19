@@ -57,7 +57,8 @@ const defaultFromData: TFormData = {
   email: "",
   company_name: "",
   password: "",
-  is_telemetry_enabled: true,
+  // Opt-in: the box starts unchecked (the API default is off too).
+  is_telemetry_enabled: false,
 };
 
 export function InstanceSetupForm() {
@@ -67,7 +68,8 @@ export function InstanceSetupForm() {
   const lastNameParam = searchParams?.get("last_name") || undefined;
   const companyParam = searchParams?.get("company") || undefined;
   const emailParam = searchParams?.get("email") || undefined;
-  const isTelemetryEnabledParam = searchParams?.get("is_telemetry_enabled") === "True" || true;
+  // The API redirects back here with the submitted value after a failed setup; only an explicit "True" turns it on.
+  const isTelemetryEnabledParam = searchParams?.get("is_telemetry_enabled") === "True";
   const errorCode = searchParams?.get("error_code") || undefined;
   const errorMessage = searchParams?.get("error_message") || undefined;
   // state
