@@ -68,6 +68,7 @@ export function TextAlignmentSelector(props: Props) {
   return (
     <div className="flex gap-0.5 px-2">
       {textAlignmentOptions.map((item) => (
+        // react-doctor-disable-next-line control-has-associated-label -- the editor package has no i18n and no existing translated alignment label to reuse
         <button
           key={item.renderKey}
           type="button"

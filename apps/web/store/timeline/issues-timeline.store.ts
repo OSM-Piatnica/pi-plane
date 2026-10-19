@@ -20,6 +20,7 @@ export class IssuesTimeLineStore extends BaseTimeLineStore implements IIssuesTim
   constructor(_rootStore: RootStore) {
     super(_rootStore);
 
+    // react-doctor-disable-next-line mobx-reaction-disposer-discarded -- store lives for the whole app session and has no teardown hook
     autorun(() => {
       const getIssueById = this.rootStore.issue.issues.getIssueById;
       this.updateBlocks(getIssueById);

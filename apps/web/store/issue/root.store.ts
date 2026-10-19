@@ -210,6 +210,7 @@ export class IssueRootStore implements IIssueRootStore {
     this.serviceType = serviceType;
     this.rootStore = rootStore;
 
+    // react-doctor-disable-next-line mobx-reaction-disposer-discarded -- store is app-lifetime; the sign-out reset replaces it from another file (store/root.store.ts), outside this change
     autorun(() => {
       if (rootStore?.user?.data?.id) this.currentUserId = rootStore?.user?.data?.id;
       if (this.workspaceSlug !== rootStore.router.workspaceSlug) this.workspaceSlug = rootStore.router.workspaceSlug;

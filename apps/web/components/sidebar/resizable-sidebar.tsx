@@ -53,6 +53,7 @@ export function ResizableSidebar({
 }: ResizableSidebarProps) {
   // states
   const [isResizing, setIsResizing] = useState(false);
+  // react-doctor-disable-next-line rerender-state-only-in-handlers -- also read in effects that must run when hover state is committed; a ref would change timing
   const [isHoveringTrigger, setIsHoveringTrigger] = useState(false);
   // refs
   const peekTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);

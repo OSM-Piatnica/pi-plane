@@ -73,6 +73,7 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
   const imagePreviewUrlRef = useRef<string | null>(null);
   const setImage = (file: File | null | undefined) => {
     if (imagePreviewUrlRef.current) URL.revokeObjectURL(imagePreviewUrlRef.current);
+    // react-doctor-disable-next-line no-create-object-url-without-revoke -- revoked via imagePreviewUrlRef when the file changes and on unmount
     imagePreviewUrlRef.current = file ? URL.createObjectURL(file) : null;
     setImagePreviewUrl(imagePreviewUrlRef.current);
     setImageState(file ?? null);
@@ -86,7 +87,8 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
   const [isImageUploading, setIsImageUploading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [searchParams, setSearchParams] = useState("");
-  const [formData, setFormData] = useState({
+  // only read inside handlers, so a ref avoids re-rendering on every keystroke
+  const formDataRef = useRef({
     search: "",
   });
   // router params
@@ -260,11 +262,13 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                                         onKeyDown={(e) => {
                                           if (e.key === "Enter") {
                                             e.preventDefault();
-                                            setSearchParams(formData.search);
+                                            setSearchParams(formDataRef.current.search);
                                           }
                                         }}
                                         value={searchValue}
-                                        onChange={(e) => setFormData({ ...formData, search: e.target.value })}
+                                        onChange={(e) => {
+                                          formDataRef.current = { ...formDataRef.current, search: e.target.value };
+                                        }}
                                         ref={ref}
                                         placeholder={t("core_ui.image_picker.search_images")}
                                       />
@@ -276,7 +280,7 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                                   size="lg"
                                   stretch="auto"
                                   label={t("common.search.label")}
-                                  onClick={() => setSearchParams(formData.search)}
+                                  onClick={() => setSearchParams(formDataRef.current.search)}
                                 />
                               </div>
                               {unsplashImages ? (
@@ -368,8 +372,8 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                                 <>
                                   <img
                                     src={imagePreviewUrl ?? getCoverImageDisplayURL(value, "")}
-                                    // oxlint-disable-next-line jsx-a11y/img-redundant-alt -- existing behaviour; lint cleanup only
-                                    alt="image"
+                                    // react-doctor-disable-next-line img-redundant-alt -- alt text is the existing literal; changing it alters accessible text
+                                    alt="image" // oxlint-disable-line jsx-a11y/img-redundant-alt -- existing behaviour; lint cleanup only
                                     className="h-full w-full rounded-lg object-cover"
                                   />
                                 </>

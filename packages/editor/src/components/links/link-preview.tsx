@@ -32,7 +32,8 @@ export function LinkPreview({
     <div
       className="animate-in fade-in absolute top-0 left-0 max-w-max translate-y-1"
       style={{
-        transition: "all 0.2s cubic-bezier(.55, .085, .68, .53)",
+        transition:
+          "opacity 0.2s cubic-bezier(.55, .085, .68, .53), transform 0.2s cubic-bezier(.55, .085, .68, .53), translate 0.2s cubic-bezier(.55, .085, .68, .53)",
       }}
     >
       <div className="shadow-md flex items-center gap-3 rounded-sm border-2 border-subtle bg-layer-1 p-2 text-11 text-tertiary">

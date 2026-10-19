@@ -95,7 +95,7 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
   const projectIdFromRouter = getProjectByIdentifier(routerProjectIdentifier)?.id;
   const projectId = data?.project_id ?? routerProjectId?.toString() ?? projectIdFromRouter;
 
-  const fetchIssueDetail = async (issueId: string | undefined) => {
+  const fetchIssueDetail = async (issueId: string | undefined, isCancelled: () => boolean) => {
     const fallbackDescription = data?.description_html || "<p></p>";
     setDescription(fallbackDescription);
     if (!workspaceSlug) return;
@@ -106,29 +106,36 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
 
     try {
       const response = await fetchIssue(workspaceSlug.toString(), projectId.toString(), issueId);
-      if (response) setDescription(response?.description_html || "<p></p>");
+      if (response && !isCancelled()) setDescription(response?.description_html || "<p></p>");
     } catch (error) {
       console.error(error);
-      setDescription(fallbackDescription);
+      if (!isCancelled()) setDescription(fallbackDescription);
     }
   };
 
+  // react-doctor-disable-next-line no-set-state-after-await-in-effect -- fetchIssueDetail checks isCancelled() before every setState
   useEffect(() => {
+    // ignore the result of the fetch once the effect re-runs or the modal unmounts
+    let cancelled = false;
     // fetching issue details
-    if (isOpen) fetchIssueDetail(data?.id ?? data?.sourceIssueId);
+    if (isOpen) fetchIssueDetail(data?.id ?? data?.sourceIssueId, () => cancelled);
 
     // if modal is closed, reset active project to null
     // and return to avoid activeProjectId being set to some other project
     if (!isOpen) {
       setActiveProjectId(null);
-      return;
+      return () => {
+        cancelled = true;
+      };
     }
 
     // if data is present, set active project to the project of the
     // issue. This has more priority than the project in the url.
     if (data && data.project_id) {
       setActiveProjectId(data.project_id);
-      return;
+      return () => {
+        cancelled = true;
+      };
     }
 
     // if data is not present, set active project to the first project in the allowedProjectIds array
@@ -136,7 +143,10 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
       setActiveProjectId(projectId?.toString() ?? allowedProjectIds?.[0]);
 
     // clearing up the description state when we leave the component
-    return () => setDescription(undefined);
+    return () => {
+      cancelled = true;
+      setDescription(undefined);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.project_id, data?.id, data?.sourceIssueId, projectId, isOpen, activeProjectId]);
 

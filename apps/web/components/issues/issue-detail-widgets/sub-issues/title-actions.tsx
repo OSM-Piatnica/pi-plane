@@ -75,6 +75,7 @@ export const SubWorkItemTitleActions = observer(function SubWorkItemTitleActions
       if (Array.isArray(value)) {
         // this validation is majorly for the filter start_date, target_date custom
         value.forEach((val) => {
+          // react-doctor-disable-next-line js-set-map-lookups -- newValues is mutated inside the loop, so a prebuilt Set would go stale
           if (!newValues.includes(val)) newValues.push(val);
           else newValues.splice(newValues.indexOf(val), 1);
         });

@@ -123,6 +123,7 @@ export const insertFilesSafely = async (args: InsertFilesSafelyArgs) => {
         else if (attachmentMimeTypes.has(file.type)) fileType = "attachment";
       }
       // insert file depending on the type at the current position
+      // react-doctor-disable-next-line js-set-map-lookups -- disabledExtensions is a tiny list of extension names
       if (fileType === "image" && !disabledExtensions?.includes("image")) {
         editor.commands.insertImageComponent({
           file,

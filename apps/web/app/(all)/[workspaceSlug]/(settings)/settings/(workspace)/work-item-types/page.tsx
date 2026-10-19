@@ -67,6 +67,7 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
   const { handleSubmit, control, reset, watch, setValue, formState } = form;
   const properties = watch("properties");
 
+  // react-doctor-disable-next-line no-event-handler -- modalOpen is closed from several places (submit, cancel, modal onOpenChange), so one effect keeps the reset in sync
   useEffect(() => {
     if (!modalOpen) {
       reset(DEFAULT_WORK_ITEM_TYPE_FORM);

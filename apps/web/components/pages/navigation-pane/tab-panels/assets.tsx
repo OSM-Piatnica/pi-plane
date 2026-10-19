@@ -82,6 +82,7 @@ const AssetItem = observer(function AssetItem(props: AssetItemProps) {
           <p className="truncate text-13 font-medium">{asset.name}</p>
           <div className="flex items-end justify-between gap-2">
             <p className="shrink-0 text-11 text-secondary" />
+            {/* react-doctor-disable-next-line html-no-nested-interactive -- download link sits inside the asset card link; restructuring would change layout and behaviour */}
             <a
               href={assetDownloadSrc}
               target="_blank"

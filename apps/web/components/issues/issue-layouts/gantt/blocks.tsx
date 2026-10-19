@@ -65,8 +65,8 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
         openOnHover
         delay={100}
         render={
-          // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup
-          <div
+          // react-doctor-disable-next-line click-events-have-key-events, no-static-element-interactions -- render target of PopoverTrigger, which supplies the interactive role, focus and keyboard handling
+          <div // oxlint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- same reason
             id={`issue-${issueId}`}
             className="space-between relative flex h-full w-full cursor-pointer items-center rounded-sm"
             style={blockStyle}

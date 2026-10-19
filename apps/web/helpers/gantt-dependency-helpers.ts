@@ -120,6 +120,7 @@ export const wouldUpdatesViolateDependencies = (
     for (const [otherId, otherRelations] of Object.entries(relationMap)) {
       if (!otherRelations || otherId === update.id) continue;
       for (const relationType of TIMELINE_RELATION_TYPES) {
+        // react-doctor-disable-next-line js-set-map-lookups -- each array is searched once per iteration, so a Set would cost more than the scan
         if (!(otherRelations[relationType] ?? []).includes(update.id)) continue;
         const otherDates = getMergedDates(otherId);
         const thisDates = getMergedDates(update.id);

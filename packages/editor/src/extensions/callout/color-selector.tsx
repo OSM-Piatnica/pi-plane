@@ -68,6 +68,7 @@ export function CalloutBlockColorSelector(props: Props) {
                   onClick={() => handleColorSelect(color.key)}
                 />
               ))}
+              {/* react-doctor-disable-next-line control-has-associated-label -- the editor package has no i18n and no existing translated label for removing the colour */}
               <button
                 type="button"
                 className="grid size-6 flex-shrink-0 place-items-center rounded-sm border-[0.5px] border-strong-1 text-tertiary transition-colors hover:bg-layer-1-hover"

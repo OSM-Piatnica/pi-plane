@@ -53,6 +53,7 @@ export const shouldFilterView = (view: IProjectView, filters: TViewFilterProps |
   Object.keys(filters ?? {}).forEach((key) => {
     const filterKey = key as keyof TViewFilterProps;
     if (filterKey === "owned_by" && filters?.owned_by && filters.owned_by.length > 0) {
+      // react-doctor-disable-next-line js-set-map-lookups -- filter selections are a short user-picked list and each key is checked once
       fallsInFilters = fallsInFilters && filters.owned_by.includes(`${view.created_by}`);
     }
 
@@ -64,6 +65,7 @@ export const shouldFilterView = (view: IProjectView, filters: TViewFilterProps |
     }
 
     if (filterKey === "view_type" && filters?.view_type && filters?.view_type?.length > 0) {
+      // react-doctor-disable-next-line js-set-map-lookups -- view_type has only a couple of possible values
       fallsInFilters = filters.view_type.includes(view.access);
     }
   });
