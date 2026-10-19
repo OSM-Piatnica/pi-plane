@@ -1157,6 +1157,7 @@
     "auth_screens": {
       "sign_up": "Đăng ký",
       "sign_in": "Đăng nhập",
+      "join_teams": "Tham gia cùng các nhóm làm việc hiệu quả hơn với Pi-Plane",
       "not_authorized_view_title": "Rất tiếc! Bạn không có quyền xem trang này",
       "not_authorized": "Không có quyền truy cập",
       "not_a_member_description": "Bạn không phải là thành viên của không gian làm việc này. Vui lòng liên hệ quản trị viên không gian làm việc để nhận lời mời hoặc kiểm tra các lời mời đang chờ của bạn.",

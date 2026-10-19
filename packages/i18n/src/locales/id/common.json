@@ -1157,6 +1157,7 @@
     "auth_screens": {
       "sign_up": "Daftar",
       "sign_in": "Masuk",
+      "join_teams": "Bergabunglah dengan tim yang bekerja lebih baik bersama Pi-Plane",
       "not_authorized_view_title": "Ups! Anda tidak berwenang untuk melihat halaman ini",
       "not_authorized": "Tidak berwenang!",
       "not_a_member_description": "Anda bukan anggota ruang kerja ini. Silakan hubungi admin ruang kerja untuk mendapatkan undangan atau periksa undangan Anda yang tertunda.",

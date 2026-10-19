@@ -1157,6 +1157,7 @@
     "auth_screens": {
       "sign_up": "Registrácia",
       "sign_in": "Prihlásiť sa",
+      "join_teams": "Pripojte sa k tímom, ktoré dosahujú lepšie výsledky s Pi-Plane",
       "not_authorized_view_title": "Ojoj! Nemáte oprávnenie zobraziť túto stránku",
       "not_authorized": "Neoprávnený prístup!",
       "not_a_member_description": "Nie ste členom tohto pracovného priestoru. Obráťte sa na správcu pracovného priestoru, aby vám poslal pozvánku, alebo skontrolujte svoje čakajúce pozvánky.",

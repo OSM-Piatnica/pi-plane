@@ -1157,6 +1157,7 @@
     "auth_screens": {
       "sign_up": "Sign up",
       "sign_in": "Sign in",
+      "join_teams": "Join teams performing better with Pi-Plane",
       "not_authorized_view_title": "Oops! You are not authorized to view this page",
       "not_authorized": "Not Authorized!",
       "not_a_member_description": "You're not a member of this workspace. Please contact the workspace admin to get an invitation or check your pending invitations.",

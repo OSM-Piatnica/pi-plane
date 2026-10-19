@@ -1157,6 +1157,7 @@
     "auth_screens": {
       "sign_up": "Zarejestruj się",
       "sign_in": "Zaloguj się",
+      "join_teams": "Dołącz do zespołów, które z Pi-Plane osiągają lepsze wyniki",
       "not_authorized_view_title": "Ups! Nie masz uprawnień do wyświetlenia tej strony",
       "not_authorized": "Brak autoryzacji!",
       "not_a_member_description": "Nie jesteś członkiem tej przestrzeni roboczej. Skontaktuj się z administratorem przestrzeni, aby otrzymać zaproszenie, lub sprawdź oczekujące zaproszenia.",
