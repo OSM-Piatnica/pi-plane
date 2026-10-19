@@ -521,7 +521,7 @@
     "archived_work_items_count": "{count, plural, one {პროექტის არქივში არის # სამუშაო ელემენტი} other {პროექტის არქივში არის # სამუშაო ელემენტი}}",
     "add_related_work_items": "დაკავშირებული სამუშაო ელემენტების დამატება",
     "toggle_workspace_level_search": "სამუშაო სივრცის დონის ძიების გადართვა",
-    "search_results_for_in_project": "ძიების შედეგები <query>„{query}“</query> პროექტში:",
+    "search_results_for_in_project": "ძიების შედეგები „<query/>“ პროექტში:",
     "cannot_move_to_completed_cycle": "სამუშაო ელემენტის გადატანა დასრულებულ ციკლებში შეუძლებელია"
   },
   "activity_feed": {

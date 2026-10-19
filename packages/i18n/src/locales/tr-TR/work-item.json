@@ -521,7 +521,7 @@
     "archived_work_items_count": "{count, plural, one {Proje arşivinde # iş öğesi var} other {Proje arşivinde # iş öğesi var}}",
     "add_related_work_items": "İlgili iş öğeleri ekle",
     "toggle_workspace_level_search": "Çalışma alanı düzeyinde aramayı aç/kapat",
-    "search_results_for_in_project": "Projede <query>\"{query}\"</query> için arama sonuçları:",
+    "search_results_for_in_project": "Projede \"<query/>\" için arama sonuçları:",
     "cannot_move_to_completed_cycle": "İş öğesi tamamlanmış döngülere taşınamaz"
   },
   "activity_feed": {

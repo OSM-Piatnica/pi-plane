@@ -521,7 +521,7 @@
     "archived_work_items_count": "{count, plural, one {V archíve projektu je # pracovná položka} few {V archíve projektu sú # pracovné položky} many {V archíve projektu je # pracovnej položky} other {V archíve projektu je # pracovných položiek}}",
     "add_related_work_items": "Pridať súvisiace pracovné položky",
     "toggle_workspace_level_search": "Prepnúť vyhľadávanie na úrovni pracovného priestoru",
-    "search_results_for_in_project": "Výsledky vyhľadávania pre <query>\"{query}\"</query> v projekte:",
+    "search_results_for_in_project": "Výsledky vyhľadávania pre \"<query/>\" v projekte:",
     "cannot_move_to_completed_cycle": "Pracovnú položku nie je možné presunúť do dokončených cyklov"
   },
   "activity_feed": {

@@ -248,8 +248,10 @@ export function ExistingIssuesListModal(props: Props) {
             <div className="vertical-scrollbar scrollbar-md max-h-80 min-h-0 scroll-py-2 overflow-x-hidden overflow-y-auto overscroll-contain">
               {searchTerm !== "" && (
                 <h5 className="text-13 text-secondary">
-                  {renderTaggedText(t("issue_ui.search_results_for_in_project", { query: searchTerm }), {
-                    query: (query) => <span className="text-primary">{query}</span>,
+                  {/* The term is rendered by the <query/> placeholder, never spliced into the translated string,
+                      so "<" or "</query>" in what the user typed cannot be read as markup. */}
+                  {renderTaggedText(t("issue_ui.search_results_for_in_project"), {
+                    query: () => <span className="text-primary">{searchTerm}</span>,
                   })}
                 </h5>
               )}

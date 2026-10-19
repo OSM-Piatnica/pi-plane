@@ -521,7 +521,7 @@
     "archived_work_items_count": "{count, plural, one {專案封存中有 # 個工作事項} other {專案封存中有 # 個工作事項}}",
     "add_related_work_items": "新增相關工作事項",
     "toggle_workspace_level_search": "切換工作區層級搜尋",
-    "search_results_for_in_project": "在專案中搜尋 <query>\"{query}\"</query> 的結果：",
+    "search_results_for_in_project": "在專案中搜尋 \"<query/>\" 的結果：",
     "cannot_move_to_completed_cycle": "工作事項無法移動到已完成的週期"
   },
   "activity_feed": {

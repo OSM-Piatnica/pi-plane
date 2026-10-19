@@ -521,7 +521,7 @@
     "archived_work_items_count": "{count, plural, one {프로젝트 아카이브에 작업 항목이 #개 있습니다} other {프로젝트 아카이브에 작업 항목이 #개 있습니다}}",
     "add_related_work_items": "관련 작업 항목 추가",
     "toggle_workspace_level_search": "작업 공간 수준 검색 전환",
-    "search_results_for_in_project": "프로젝트에서 <query>\"{query}\"</query> 검색 결과:",
+    "search_results_for_in_project": "프로젝트에서 \"<query/>\" 검색 결과:",
     "cannot_move_to_completed_cycle": "작업 항목을 완료된 주기로 이동할 수 없습니다"
   },
   "activity_feed": {
