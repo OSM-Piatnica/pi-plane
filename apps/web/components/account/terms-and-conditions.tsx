@@ -17,7 +17,7 @@ interface TermsAndConditionsProps {
 }
 
 // Constants for better maintainability
-// Placeholder URLs: replace with Pi-Plane's own terms of use and privacy policy pages.
+// Placeholder URLs: replace with the instance admin's own terms of use and privacy policy pages.
 const LEGAL_LINKS = {
   termsOfService: "https://example.com/terms-of-use",
   privacyPolicy: "https://example.com/privacy-policy",

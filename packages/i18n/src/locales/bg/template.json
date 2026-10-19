@@ -162,7 +162,7 @@
           },
           "website": {
             "label": "URL на уебсайта",
-            "placeholder": "https://plane.so",
+            "placeholder": "https://example.com",
             "validation": {
               "invalid": "Невалиден URL",
               "maxLength": "URL адресът трябва да е под 800 знака"
@@ -178,7 +178,7 @@
           },
           "contact_email": {
             "label": "Имейл за контакт",
-            "placeholder": "help@plane.so",
+            "placeholder": "help@example.com",
             "validation": {
               "invalid": "Невалиден имейл адрес",
               "maxLength": "Имейлът за контакт трябва да е под 255 знака"
@@ -186,7 +186,7 @@
           },
           "privacy_policy_url": {
             "label": "Връзка към политиката ви за поверителност",
-            "placeholder": "https://planes.so/privacy-policy",
+            "placeholder": "https://example.com/privacy-policy",
             "validation": {
               "invalid": "Невалиден URL",
               "maxLength": "URL адресът трябва да е под 800 знака"
@@ -194,7 +194,7 @@
           },
           "terms_of_service_url": {
             "label": "Връзка към условията ви за ползване",
-            "placeholder": "https://planes.so/terms-of-use",
+            "placeholder": "https://example.com/terms-of-use",
             "validation": {
               "invalid": "Невалиден URL",
               "maxLength": "URL адресът трябва да е под 800 знака"

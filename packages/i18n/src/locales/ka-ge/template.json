@@ -162,7 +162,7 @@
           },
           "website": {
             "label": "ვებსაიტის URL",
-            "placeholder": "https://plane.so",
+            "placeholder": "https://example.com",
             "validation": {
               "invalid": "არასწორი URL",
               "maxLength": "URL 800 სიმბოლოზე ნაკლები უნდა იყოს"
@@ -178,7 +178,7 @@
           },
           "contact_email": {
             "label": "საკონტაქტო ელფოსტა",
-            "placeholder": "help@plane.so",
+            "placeholder": "help@example.com",
             "validation": {
               "invalid": "ელფოსტის არასწორი მისამართი",
               "maxLength": "საკონტაქტო ელფოსტა 255 სიმბოლოზე ნაკლები უნდა იყოს"
@@ -186,7 +186,7 @@
           },
           "privacy_policy_url": {
             "label": "თქვენი კონფიდენციალურობის პოლიტიკის ბმული",
-            "placeholder": "https://planes.so/privacy-policy",
+            "placeholder": "https://example.com/privacy-policy",
             "validation": {
               "invalid": "არასწორი URL",
               "maxLength": "URL 800 სიმბოლოზე ნაკლები უნდა იყოს"
@@ -194,7 +194,7 @@
           },
           "terms_of_service_url": {
             "label": "თქვენი გამოყენების პირობების ბმული",
-            "placeholder": "https://planes.so/terms-of-use",
+            "placeholder": "https://example.com/terms-of-use",
             "validation": {
               "invalid": "არასწორი URL",
               "maxLength": "URL 800 სიმბოლოზე ნაკლები უნდა იყოს"

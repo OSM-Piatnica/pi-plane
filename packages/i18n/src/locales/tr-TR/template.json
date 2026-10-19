@@ -162,7 +162,7 @@
           },
           "website": {
             "label": "Web sitesi URL'si",
-            "placeholder": "https://plane.so",
+            "placeholder": "https://example.com",
             "validation": {
               "invalid": "Geçersiz URL",
               "maxLength": "URL 800 karakterden az olmalıdır"
@@ -178,7 +178,7 @@
           },
           "contact_email": {
             "label": "Destek e-postası",
-            "placeholder": "help@plane.so",
+            "placeholder": "help@example.com",
             "validation": {
               "invalid": "Geçersiz e-posta adresi",
               "maxLength": "Destek e-postası 255 karakterden az olmalıdır"
@@ -186,7 +186,7 @@
           },
           "privacy_policy_url": {
             "label": "Gizlilik politikası bağlantısı",
-            "placeholder": "https://planes.so/privacy-policy",
+            "placeholder": "https://example.com/privacy-policy",
             "validation": {
               "invalid": "Geçersiz URL",
               "maxLength": "URL 800 karakterden az olmalıdır"
@@ -194,7 +194,7 @@
           },
           "terms_of_service_url": {
             "label": "Kullanım koşulları bağlantısı",
-            "placeholder": "https://planes.so/terms-of-use",
+            "placeholder": "https://example.com/terms-of-use",
             "validation": {
               "invalid": "Geçersiz URL",
               "maxLength": "URL 800 karakterden az olmalıdır"
