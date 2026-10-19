@@ -215,6 +215,8 @@ class ModuleIssueViewSet(BaseViewSet):
         if not issues:
             return Response({"error": "Issues are required"}, status=status.HTTP_400_BAD_REQUEST)
         project = Project.objects.get(pk=project_id)
+        # The URL module must belong to the URL workspace + project (404 otherwise).
+        Module.objects.get(pk=module_id, project_id=project_id, workspace__slug=slug)
         # Scope to workspace+project to prevent cross-tenant IDOR
         issues = list(
             Issue.issue_objects.filter(
@@ -261,7 +263,6 @@ class ModuleIssueViewSet(BaseViewSet):
         modules = request.data.get("modules", [])
         removed_modules = request.data.get("removed_modules", [])
         project = Project.objects.get(pk=project_id)
-
         # Scope the URL issue and the body module ids to the URL workspace+project to prevent cross-tenant IDOR
         if not Issue.issue_objects.filter(pk=issue_id, workspace__slug=slug, project_id=project_id).exists():
             return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
