@@ -6,8 +6,12 @@
     "overrides": [
       {
         "files": [
+          "**/app/**/layout.tsx",
+          "**/app/**/page.tsx",
+          "**/app/not-found.tsx",
           "**/components/issues/issue-layouts/utils.tsx",
-          "**/components/workspace-notifications/sidebar/notification-card/content.tsx"
+          "**/components/workspace-notifications/sidebar/notification-card/content.tsx",
+          "**/lib/store-context.tsx"
         ],
         "rules": ["react-doctor/only-export-components"]
       },
