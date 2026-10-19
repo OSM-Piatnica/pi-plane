@@ -91,7 +91,7 @@ export const AIHandlePlugin = (options: SideMenuPluginProps): SideMenuHandleOpti
     view.dispatch(view.state.tr.setSelection(nodeSelection));
   };
 
-  const view = (view: EditorView, sideMenu: HTMLDivElement | null) => {
+  const createView = (view: EditorView, sideMenu: HTMLDivElement | null) => {
     // create handle element
     const className =
       "grid place-items-center font-medium size-5 aspect-square text-11 text-tertiary hover:bg-layer-1 rounded-xs opacity-100 !outline-none z-[5] transition-[background-color,_opacity] duration-200 ease-linear";
@@ -104,6 +104,7 @@ export const AIHandlePlugin = (options: SideMenuPluginProps): SideMenuHandleOpti
     iconElement.innerHTML = sparklesIcon;
     aiHandleElement.appendChild(iconElement);
     // bind events
+    // react-doctor-disable-next-line effect-needs-cleanup -- the listener lives on the handle element, which destroy() removes
     aiHandleElement.addEventListener("click", (e) => handleClick(e, view));
 
     sideMenu?.appendChild(aiHandleElement);
@@ -120,7 +121,7 @@ export const AIHandlePlugin = (options: SideMenuPluginProps): SideMenuHandleOpti
   const domEvents = {};
 
   return {
-    view,
+    view: createView,
     domEvents,
   };
 };

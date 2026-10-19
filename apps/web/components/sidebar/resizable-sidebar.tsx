@@ -112,6 +112,7 @@ export function ResizableSidebar({
 
   const handlePeekLeave = useCallback(() => {
     if (isCollapsed && !isAnyExtendedSidebarExpanded && !isAnySidebarDropdownOpen) {
+      // react-doctor-disable-next-line effect-needs-cleanup -- the handle is kept in peekTimeoutRef and cleared on unmount by the cleanup effect below
       peekTimeoutRef.current = setTimeout(() => {
         setShowPeek(false);
       }, peekDuration);

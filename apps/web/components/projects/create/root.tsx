@@ -97,7 +97,10 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
   );
 
   const tRef = useRef(t);
-  tRef.current = t;
+  // Latest `t` for the callbacks below; updated after commit, not while rendering.
+  useEffect(() => {
+    tRef.current = t;
+  });
 
   const fetchingTemplateKeyRef = useRef<string | null>(null);
   const appliedInitialTemplateKeyRef = useRef<string | null>(null);

@@ -221,8 +221,9 @@ export const DragHandlePlugin = (options: SideMenuPluginProps): SideMenuHandleOp
       dragHandleElement?.classList.add("drag-handle-hidden");
   };
 
-  const view = (view: EditorView, sideMenu: HTMLDivElement | null) => {
+  const createView = (view: EditorView, sideMenu: HTMLDivElement | null) => {
     dragHandleElement = createDragHandleElement();
+    // react-doctor-disable-next-line effect-needs-cleanup -- these listeners live on the handle element, which destroy() removes; destroy() also removes the window and document listeners
     dragHandleElement.addEventListener("dragstart", (e) => handleDragStart(e, view));
     dragHandleElement.addEventListener("dragend", (e) => handleDragEnd(e, view));
     dragHandleElement.addEventListener("click", (e) => handleClick(e, view));
@@ -349,7 +350,7 @@ export const DragHandlePlugin = (options: SideMenuPluginProps): SideMenuHandleOp
   };
 
   return {
-    view,
+    view: createView,
     domEvents,
   };
 };

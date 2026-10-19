@@ -34,13 +34,13 @@ export const IssueTypeSwitcher = observer(function IssueTypeSwitcher(props: TIss
   const { getProjectById } = useProject();
 
   const issue = getIssueById(issueId);
-  if (!issue?.project_id || !slug) return null;
-  const projectId = issue.project_id;
-
-  const project = getProjectById(projectId);
+  const projectId = issue?.project_id;
+  const project = projectId ? getProjectById(projectId) : undefined;
   const issueTypesEnabled = Boolean(project?.is_issue_type_enabled);
-  const { types, isLoading } = useProjectIssueTypes(slug, issueTypesEnabled ? projectId : null);
+  // Called before any early return so the hook order never changes; a null project id fetches nothing.
+  const { types, isLoading } = useProjectIssueTypes(slug, slug && issueTypesEnabled ? projectId : null);
 
+  if (!issue || !projectId || !slug) return null;
   if (!issueTypesEnabled || types.length === 0) return null;
 
   const options = types.filter((row) => row.issue_type_detail);

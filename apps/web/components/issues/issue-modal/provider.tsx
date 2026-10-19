@@ -6,7 +6,7 @@
  * See the LICENSE file for details.
  */
 
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { normalizeIssuePropertyValuesForApi } from "@/helpers/issue-type-property-values";
 import { observer } from "mobx-react";
 import type { UseFormWatch } from "react-hook-form";
@@ -40,7 +40,10 @@ export const IssueModalProvider = observer(function IssueModalProvider(props: TI
   const [issuePropertyValueErrors, setIssuePropertyValueErrors] = useState<TIssuePropertyValueErrors>({});
   const [mandatoryPropertyIds, setMandatoryPropertyIds] = useState<string[]>([]);
   const issuePropertyValuesRef = useRef<TIssuePropertyValues>(issuePropertyValues);
-  issuePropertyValuesRef.current = issuePropertyValues;
+  // Keep the latest values for callbacks that run later (after commit, not while rendering).
+  useEffect(() => {
+    issuePropertyValuesRef.current = issuePropertyValues;
+  });
   const projectDefaultTypeRef = useRef<Record<string, string | null>>({});
   const { projectsWithCreatePermissions } = useUser();
   const projectIdsWithCreatePermissions = Object.keys(projectsWithCreatePermissions ?? {});
@@ -118,6 +121,7 @@ export const IssueModalProvider = observer(function IssueModalProvider(props: TI
 
   const getActiveAdditionalPropertiesLength = useCallback(
     (propsArg: { projectId: string | null; workspaceSlug: string; watch: UseFormWatch<TIssueFields> }) => {
+      // react-doctor-disable-next-line effect-needs-cleanup -- react-hook-form's watch(name) reads the current value; it opens no subscription
       const typeId = propsArg.watch("type_id");
       if (!propsArg.projectId || !typeId) return 0;
       return Object.keys(issuePropertyValues).length;
@@ -127,6 +131,7 @@ export const IssueModalProvider = observer(function IssueModalProvider(props: TI
 
   const handlePropertyValuesValidation = useCallback(
     (propsArg: { projectId: string | null; workspaceSlug: string; watch: UseFormWatch<TIssueFields> }) => {
+      // react-doctor-disable-next-line effect-needs-cleanup -- react-hook-form's watch(name) reads the current value; it opens no subscription
       const typeId = propsArg.watch("type_id");
       if (!typeId || !propsArg.projectId || mandatoryPropertyIds.length === 0) {
         setIssuePropertyValueErrors({});

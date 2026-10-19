@@ -159,6 +159,7 @@ export function EditorBubbleMenu(props: Props) {
     },
   };
 
+  // react-doctor-disable-next-line effect-needs-cleanup -- every listener, including the in-flight mousemove/mouseup pair, is removed by the cleanup returned below
   useEffect(() => {
     // teardown callbacks for the mousemove/mouseup listeners registered by an in-flight mousedown
     const pendingCleanups = new Set<() => void>();

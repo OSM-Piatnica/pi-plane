@@ -73,6 +73,7 @@ export const useResponsiveTabLayout = ({
     });
 
     resizeObserverRef.current = resizeObserver;
+    // react-doctor-disable-next-line effect-needs-cleanup -- the observer is kept in resizeObserverRef and disconnected by the unmount effect below
     resizeObserver.observe(node);
   }, []); // Empty deps - callback function remains stable
 
