@@ -40,6 +40,7 @@ export * from "./theme";
 export { resolveGeneralTheme } from "./theme-legacy";
 export * from "./url";
 export * from "./validation";
+export * from "./version";
 export * from "./work-item-filters";
 export * from "./work-item";
 export * from "./workspace";
