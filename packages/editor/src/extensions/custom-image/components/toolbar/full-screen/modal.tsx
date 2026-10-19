@@ -85,15 +85,18 @@ function ImageFullScreenModalWithoutPortal(props: Props) {
         targetZoom = ZOOM_STEPS.toReversed().find((step) => step < prev) ?? MIN_ZOOM;
       }
 
-      // Reset position when zoom matches initial magnification
-      if (targetZoom === 1 && imgRef.current) {
-        imgRef.current.style.left = "0px";
-        imgRef.current.style.top = "0px";
-      }
-
       return targetZoom;
     });
   }, []);
+
+  // Reset the image position when the zoom returns to 100%. Done here, not inside the state updaters, which
+  // React may run more than once.
+  useEffect(() => {
+    if (magnification === 1 && imgRef.current) {
+      imgRef.current.style.left = "0px";
+      imgRef.current.style.top = "0px";
+    }
+  }, [magnification]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -162,15 +165,7 @@ function ImageFullScreenModalWithoutPortal(props: Props) {
         const delta = e.deltaY;
         setMagnification((prev) => {
           const newZoom = prev * (1 - delta * ZOOM_SPEED);
-          const clampedZoom = Math.min(Math.max(newZoom, MIN_ZOOM), MAX_ZOOM);
-
-          // Reset position when zoom matches initial magnification
-          if (clampedZoom === 1 && imgRef.current) {
-            imgRef.current.style.left = "0px";
-            imgRef.current.style.top = "0px";
-          }
-
-          return clampedZoom;
+          return Math.min(Math.max(newZoom, MIN_ZOOM), MAX_ZOOM);
         });
         return;
       }
