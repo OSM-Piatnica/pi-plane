@@ -37,6 +37,7 @@ from plane.app.serializers import (
     PageDetailSerializer,
     PageBinaryUpdateSerializer,
 )
+from plane.app.serializers.favorite import get_favorite_entities
 from plane.db.models import (
     Page,
     PageLog,
@@ -469,6 +470,8 @@ class PageFavoriteViewSet(BaseViewSet):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     def create(self, request, slug, project_id, page_id):
+        # 404 unless the page is in this project and visible to the user
+        get_favorite_entities("page", request.user.id, project_id).get(pk=page_id, workspace__slug=slug)
         _ = UserFavorite.objects.create(
             project_id=project_id,
             entity_identifier=page_id,
