@@ -11,21 +11,9 @@ import { useTranslation } from "@plane/i18n";
 import type { IUser } from "@plane/types";
 // plane ui
 // hooks
+import { formatGreetingDate } from "@/helpers/greeting-date";
+import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 import { useCurrentTime } from "@/hooks/use-current-time";
-
-const HOUR_FORMATTER = new Intl.DateTimeFormat("en-US", {
-  hour12: false,
-  hour: "numeric",
-});
-
-const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
-  month: "short",
-  day: "numeric",
-});
-
-const WEEKDAY_FORMATTER = new Intl.DateTimeFormat("en-US", {
-  weekday: "long",
-});
 
 export interface IUserGreetingsView {
   user: IUser;
@@ -38,22 +26,20 @@ export function UserGreetingsView(props: IUserGreetingsView) {
   // store hooks
   const { t } = useTranslation();
 
-  const hour = HOUR_FORMATTER.format(currentTime);
-
-  const date = DATE_FORMATTER.format(currentTime);
-
-  const weekDay = WEEKDAY_FORMATTER.format(currentTime);
-
-  const timeString = useMemo(
-    () =>
-      new Intl.DateTimeFormat("en-US", {
-        timeZone: user?.user_timezone,
-        hour12: false, // Use 24-hour format
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    [user?.user_timezone]
-  ).format(currentTime);
+  // The weekday, date and clock follow the user's language ("Monday, Oct 19" in English, "poniedziałek, 19 paź" in Polish).
+  const { intlLocale } = useCalendarLocale();
+  const hour = useMemo(
+    () => new Intl.DateTimeFormat("en-US", { hour12: false, hour: "numeric" }).format(currentTime),
+    [currentTime]
+  );
+  const {
+    weekDay,
+    date,
+    time: timeString,
+  } = useMemo(
+    () => formatGreetingDate(intlLocale, currentTime, user?.user_timezone),
+    [intlLocale, currentTime, user?.user_timezone]
+  );
 
   const greeting = parseInt(hour, 10) < 12 ? "morning" : parseInt(hour, 10) < 18 ? "afternoon" : "evening";
 
