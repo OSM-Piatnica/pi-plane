@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from plane.db.models import WorkspaceMember, ProjectMember
@@ -28,6 +29,21 @@ def allow_permission(allowed_roles, level="PROJECT", creator=False, model=None):
                     workspace__slug=kwargs["slug"],
                     is_active=True,
                 ).exists():
+                    return Response(
+                        {"error": "You don't have the required permissions."},
+                        status=status.HTTP_403_FORBIDDEN,
+                    )
+
+                # project-level creator access also requires active membership of the URL project
+                if (
+                    level != "WORKSPACE"
+                    and not ProjectMember.objects.filter(
+                        member=request.user,
+                        workspace__slug=kwargs["slug"],
+                        project_id=kwargs["project_id"],
+                        is_active=True,
+                    ).exists()
+                ):
                     return Response(
                         {"error": "You don't have the required permissions."},
                         status=status.HTTP_403_FORBIDDEN,
