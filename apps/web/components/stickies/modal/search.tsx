@@ -49,6 +49,7 @@ export const StickySearch = observer(function StickySearch() {
 
   // oxlint-disable-next-line react-hooks/exhaustive-deps -- dependencies intentionally limited
   const debouncedSearch = useCallback(
+    // react-doctor-disable-next-line exhaustive-deps -- debounce() must wrap the callback inline; fetchStickies is deliberately left out (limited deps, see above)
     debounce(async () => {
       await fetchStickies();
     }, 500),

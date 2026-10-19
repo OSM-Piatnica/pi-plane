@@ -5,7 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // types
 import { PROJECT_ERROR_MESSAGES, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
@@ -30,6 +30,7 @@ export function WorkspaceDraftIssueDeleteIssueModal(props: Props) {
   const { dataId, data, isOpen, handleClose, onSubmit } = props;
   // states
   const [isDeleting, setIsDeleting] = useState(false);
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
   // store hooks
   const { issueMap } = useIssues();
   const { allowPermissions } = useUserPermissions();
@@ -39,9 +40,11 @@ export function WorkspaceDraftIssueDeleteIssueModal(props: Props) {
   // derived values
   const canPerformProjectAdminActions = allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.PROJECT);
 
-  useEffect(() => {
+  // reset the deleting flag whenever the modal opens or closes (adjusted during render)
+  if (prevIsOpen !== isOpen) {
+    setPrevIsOpen(isOpen);
     setIsDeleting(false);
-  }, [isOpen]);
+  }
 
   if (!dataId && !data) return null;
 

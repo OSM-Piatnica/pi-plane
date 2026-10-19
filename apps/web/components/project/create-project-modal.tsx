@@ -5,7 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Dialog, DialogContent } from "@makeplane/propel/components/dialog";
 import { getAssetIdFromUrl, checkURLValidity } from "@plane/utils";
 // plane ui
@@ -37,13 +37,16 @@ export function CreateProjectModal(props: Props) {
   // states
   const [currentStep, setCurrentStep] = useState<EProjectCreationSteps>(EProjectCreationSteps.CREATE_PROJECT);
   const [createdProjectId, setCreatedProjectId] = useState<string | null>(null);
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
 
-  useEffect(() => {
+  // restart the flow each time the modal opens (adjusted during render)
+  if (prevIsOpen !== isOpen) {
+    setPrevIsOpen(isOpen);
     if (isOpen) {
       setCurrentStep(EProjectCreationSteps.CREATE_PROJECT);
       setCreatedProjectId(null);
     }
-  }, [isOpen]);
+  }
 
   const handleNextStep = (projectId: string) => {
     if (!projectId) return;

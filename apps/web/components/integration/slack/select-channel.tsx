@@ -59,6 +59,7 @@ export const SelectChannel = observer(function SelectChannel({ integration }: Pr
       );
       if (projectSlackIntegrationCheck) {
         setSlackChannel(() => projectSlackIntegrationCheck);
+        // react-doctor-disable-next-line no-adjust-state-on-prop-change -- slackChannel is also set/cleared by the delete and connect flows; the effect syncs it from SWR data
         setSlackChannelAvailabilityToggle(true);
       }
     }

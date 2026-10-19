@@ -27,8 +27,8 @@ export function LinkViewContainer({ editor, containerRef }: Props) {
 
   const editorState = useEditorState({
     editor,
-    selector: ({ editor }: { editor: Editor }) => ({
-      linkExtensionStorage: editor.storage.link,
+    selector: ({ editor: currentEditor }: { editor: Editor }) => ({
+      linkExtensionStorage: currentEditor.storage.link,
     }),
   });
 
@@ -188,6 +188,7 @@ export function LinkViewContainer({ editor, containerRef }: Props) {
   // Close link view when bubble menu opens
   useEffect(() => {
     if (editorState.linkExtensionStorage?.isBubbleMenuOpen && isOpen) {
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- isOpen is also set by hover handlers and timers; this closes the popover when the bubble menu opens
       setIsOpen(false);
     }
   }, [editorState.linkExtensionStorage, isOpen]);

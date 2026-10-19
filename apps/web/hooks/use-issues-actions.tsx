@@ -433,7 +433,7 @@ const useModuleIssueActions = () => {
       if (!workspaceSlug || !targetProjectId) return;
       return await issues.archiveIssue(workspaceSlug, targetProjectId, issueId);
     },
-    [issues.archiveIssue, moduleId, workspaceSlug]
+    [issues.archiveIssue, workspaceSlug]
   );
 
   const updateFilters = useCallback(
@@ -441,7 +441,7 @@ const useModuleIssueActions = () => {
       if (!moduleId || !workspaceSlug) return;
       return await issuesFilter.updateFilters(workspaceSlug, targetProjectId, filterType, filters, moduleId);
     },
-    [issuesFilter.updateFilters, moduleId]
+    [issuesFilter.updateFilters, moduleId, workspaceSlug]
   );
 
   return useMemo(
@@ -456,7 +456,17 @@ const useModuleIssueActions = () => {
       archiveIssue,
       updateFilters,
     }),
-    [fetchIssues, createIssue, updateIssue, removeIssue, removeIssueFromView, archiveIssue, updateFilters]
+    [
+      fetchIssues,
+      fetchNextIssues,
+      createIssue,
+      quickAddIssue,
+      updateIssue,
+      removeIssue,
+      removeIssueFromView,
+      archiveIssue,
+      updateFilters,
+    ]
   );
 };
 
@@ -536,7 +546,7 @@ const useProfileIssueActions = () => {
       archiveIssue,
       updateFilters,
     }),
-    [fetchIssues, createIssue, updateIssue, removeIssue, archiveIssue, updateFilters]
+    [fetchIssues, fetchNextIssues, createIssue, updateIssue, removeIssue, archiveIssue, updateFilters]
   );
 };
 
@@ -561,7 +571,7 @@ const useProjectViewIssueActions = () => {
       if (!workspaceSlug || !projectId || !viewId) return;
       return issues.fetchNextIssues(workspaceSlug.toString(), projectId.toString(), viewId, groupId, subGroupId);
     },
-    [issues.fetchIssues, workspaceSlug, projectId]
+    [issues.fetchNextIssues, workspaceSlug, projectId, viewId]
   );
 
   const createIssue = useCallback(
@@ -651,14 +661,14 @@ const useArchivedIssueActions = () => {
       if (!workspaceSlug || !targetProjectId) return;
       return await issues.removeIssue(workspaceSlug, targetProjectId, issueId);
     },
-    [issues.removeIssue]
+    [issues.removeIssue, workspaceSlug]
   );
   const restoreIssue = useCallback(
     async (targetProjectId: string | undefined | null, issueId: string) => {
       if (!workspaceSlug || !targetProjectId) return;
       return await issues.restoreIssue(workspaceSlug, targetProjectId, issueId);
     },
-    [issues.restoreIssue]
+    [issues.restoreIssue, workspaceSlug]
   );
 
   const updateFilters = useCallback(
@@ -666,7 +676,7 @@ const useArchivedIssueActions = () => {
       if (!workspaceSlug) return;
       return await issuesFilter.updateFilters(workspaceSlug, targetProjectId, filterType, filters);
     },
-    [issuesFilter.updateFilters]
+    [issuesFilter.updateFilters, workspaceSlug]
   );
 
   return useMemo(
@@ -743,7 +753,7 @@ const useGlobalIssueActions = () => {
       removeIssue,
       updateFilters,
     }),
-    [createIssue, updateIssue, removeIssue, updateFilters]
+    [fetchIssues, fetchNextIssues, createIssue, updateIssue, removeIssue, updateFilters]
   );
 };
 

@@ -5,7 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "@plane/i18n";
@@ -59,12 +59,15 @@ export const WebhookForm = observer(function WebhookForm(props: Props) {
     await onSubmit(formData, webhookEventType);
   };
 
-  useEffect(() => {
-    if (!data) return;
-
-    if (data.project && data.cycle && data.module && data.issue && data.issue_comment) setWebhookEventType("all");
-    else setWebhookEventType("individual");
-  }, [data]);
+  // re-derive the event type whenever the webhook data changes
+  const [prevData, setPrevData] = useState<Partial<IWebhook> | undefined>(undefined);
+  if (prevData !== data) {
+    setPrevData(data);
+    if (data) {
+      if (data.project && data.cycle && data.module && data.issue && data.issue_comment) setWebhookEventType("all");
+      else setWebhookEventType("individual");
+    }
+  }
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>

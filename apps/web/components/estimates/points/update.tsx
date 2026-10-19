@@ -6,7 +6,7 @@
  */
 
 import type { FormEvent } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { observer } from "mobx-react";
 import { CloseOutline, InfoOutline, TickOutline } from "@makeplane/propel/icons";
 import { EEstimateSystem, MAX_ESTIMATE_POINT_INPUT_LENGTH } from "@plane/constants";
@@ -57,9 +57,8 @@ export const EstimatePointUpdate = observer(function EstimatePointUpdate(props: 
   const [loader, setLoader] = useState(false);
   const [estimateInputValue, setEstimateInputValue] = useState<string | undefined>(undefined);
 
-  useEffect(() => {
-    if (estimateInputValue === undefined && estimatePoint) setEstimateInputValue(estimatePoint?.value || "");
-  }, [estimateInputValue, estimatePoint]);
+  // seed the input once the estimate point is available
+  if (estimateInputValue === undefined && estimatePoint) setEstimateInputValue(estimatePoint?.value || "");
 
   const handleSuccess = (value: string) => {
     handleEstimatePointValueUpdate(value);

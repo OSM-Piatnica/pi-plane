@@ -75,15 +75,19 @@ export const MentionsListDropdown = forwardRef(function MentionsListDropdown(pro
   }));
 
   // initialize the select index to 0 by default
-  useEffect(() => {
+  const [prevSections, setPrevSections] = useState(sections);
+  if (prevSections !== sections) {
+    setPrevSections(sections);
     setSelectedIndex({
       section: 0,
       item: 0,
     });
-  }, [sections]);
+  }
 
   // debounced search callback
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- dependencies intentionally limited
   const debouncedSearchCallback = useCallback(
+    // react-doctor-disable-next-line exhaustive-deps -- debounce() must wrap the callback inline to keep one debounced instance per searchCallback
     debounce(async (searchQuery: string) => {
       try {
         const sectionsResponse = await searchCallback?.(searchQuery);
@@ -102,6 +106,7 @@ export const MentionsListDropdown = forwardRef(function MentionsListDropdown(pro
   // trigger debounced search when query changes
   useEffect(() => {
     if (query !== undefined && query !== null) {
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- the effect starts a debounced search for the new query; the loading flag belongs to that side effect, not to a value derivable from props
       setIsLoading(true);
       void debouncedSearchCallback(query);
     }
@@ -146,6 +151,7 @@ export const MentionsListDropdown = forwardRef(function MentionsListDropdown(pro
       />
       <div
         ref={dropdownContainer}
+        role="presentation"
         className="relative max-h-80 w-[14rem] space-y-2 overflow-y-auto rounded-md border-[0.5px] border-strong bg-surface-1 px-2 py-2.5 shadow-raised-200"
         style={{
           zIndex: 100,

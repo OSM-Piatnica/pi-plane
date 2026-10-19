@@ -63,6 +63,7 @@ export const StickyNote = observer(function StickyNote(props: TProps) {
 
   // oxlint-disable-next-line react-hooks/exhaustive-deps -- dependencies intentionally limited
   const debouncedFormSave = useCallback(
+    // react-doctor-disable-next-line exhaustive-deps -- debounce() must be created once per its listed deps; wrapping in useCallback with an inline callback is intentional so the pending call is not recreated on every render
     debounce(async (payload: Partial<TSticky>) => {
       await handleChange(payload);
     }, 500),

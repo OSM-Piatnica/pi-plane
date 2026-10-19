@@ -5,7 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   AiStar1Outline,
   ChevronRightOutline,
@@ -76,6 +76,15 @@ export function EditorAIMenu(props: Props) {
   const [activeTask, setActiveTask] = useState<AI_EDITOR_TASKS | null>(null);
   const [response, setResponse] = useState<string | undefined>(undefined);
   const [isRegenerating, setIsRegenerating] = useState(false);
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
+  // reset on close
+  if (prevIsOpen !== isOpen) {
+    setPrevIsOpen(isOpen);
+    if (!isOpen) {
+      setActiveTask(null);
+      setResponse(undefined);
+    }
+  }
   // refs
   const responseContainerRef = useRef<HTMLDivElement>(null);
   // params
@@ -138,14 +147,6 @@ export function EditorAIMenu(props: Props) {
     editorRef?.insertText(response, insertOnNextLine);
     onClose();
   };
-
-  // reset on close
-  useEffect(() => {
-    if (!isOpen) {
-      setActiveTask(null);
-      setResponse(undefined);
-    }
-  }, [isOpen]);
 
   return (
     <div

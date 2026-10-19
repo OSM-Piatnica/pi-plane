@@ -164,6 +164,7 @@ export function ResizableSidebar({
   useEffect(() => {
     if (!isCollapsed) {
       setShowPeek(false);
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- also clears a pending timeout ref; the peek reset is tied to the isCollapsed transition
       setIsHoveringTrigger(false);
       if (peekTimeoutRef.current) {
         clearTimeout(peekTimeoutRef.current);
