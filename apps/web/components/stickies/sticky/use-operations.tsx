@@ -13,7 +13,7 @@ import type { InstructionType, TSticky } from "@plane/types";
 // plane utils
 import { isCommentEmpty } from "@plane/utils";
 // components
-import { STICKY_COLORS_LIST } from "@/components/editor/sticky-editor/color-palette";
+import { STICKY_COLORS_LIST } from "@/components/editor/sticky-editor/sticky-colors";
 // hooks
 import { useSticky } from "@/hooks/use-stickies";
 

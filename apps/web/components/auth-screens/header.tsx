@@ -34,6 +34,7 @@ type AuthHeaderProps = {
   type: EAuthModes;
 };
 
+// react-doctor-disable-next-line only-export-components -- observer() wraps a component; the rule does not recognise the MobX HOC, so this export is a component
 export const AuthHeader = observer(function AuthHeader({ type }: AuthHeaderProps) {
   const { t } = useTranslation();
   // store

@@ -107,6 +107,7 @@ export function NameColumn(props: NameProps) {
   );
 }
 
+// react-doctor-disable-next-line only-export-components -- observer() wraps a component; the rule does not recognise the MobX HOC, so this export is a component
 export const AccountTypeColumn = observer(function AccountTypeColumn(props: AccountTypeProps) {
   const { rowData, projectId, workspaceSlug } = props;
   // plane hooks

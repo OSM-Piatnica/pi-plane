@@ -13,7 +13,7 @@ import { usePlatformOS } from "@/hooks/use-platform-os";
  * Formats a shortcut string for display, one label per key
  * e.g. "cmd+shift+," -> ["⌘", "⇧", ","] on Mac, ["Ctrl", "Shift", ","] elsewhere
  */
-export const formatShortcutForDisplay = (shortcut: string | undefined, isMac: boolean): string[] => {
+const formatShortcutForDisplay = (shortcut: string | undefined, isMac: boolean): string[] => {
   if (!shortcut) return [];
 
   return shortcut.split("+").map((part) => {

@@ -58,6 +58,7 @@ type Props = {
   ) => void;
 };
 
+// react-doctor-disable-next-line only-export-components -- observer() wraps a component; the rule does not recognise the MobX HOC, so this export is a component
 export const LabelDndHOC = observer(function LabelDndHOC(props: Props) {
   const { label, isGroup, isChild, isLastChild, children, onDrop } = props;
 

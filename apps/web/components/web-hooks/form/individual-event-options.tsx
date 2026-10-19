@@ -11,7 +11,7 @@ import { CheckboxField } from "@makeplane/propel/components/checkbox-field";
 import { useTranslation } from "@plane/i18n";
 import type { IWebhook } from "@plane/types";
 
-export const INDIVIDUAL_WEBHOOK_OPTIONS: {
+const INDIVIDUAL_WEBHOOK_OPTIONS: {
   key: keyof IWebhook;
   label: string;
   description: string;
