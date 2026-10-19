@@ -17,9 +17,10 @@ interface TermsAndConditionsProps {
 }
 
 // Constants for better maintainability
+// Placeholder URLs: replace with Pi-Plane's own terms of use and privacy policy pages.
 const LEGAL_LINKS = {
-  termsOfService: "https://plane.so/legals/terms-and-conditions",
-  privacyPolicy: "https://plane.so/legals/privacy-policy",
+  termsOfService: "https://example.com/terms-of-use",
+  privacyPolicy: "https://example.com/privacy-policy",
 } as const;
 
 const MESSAGES = {
