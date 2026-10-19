@@ -27,7 +27,6 @@ import type {
 import { MultipleSelectGroup } from "@/components/core/multiple-select";
 // hooks
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
-import { IssueBulkOperationsRoot } from "@/components/issues/bulk-operations";
 import { useBulkOperationStatus } from "@/hooks/use-bulk-operation-status";
 // utils
 import type { GroupDropLocation } from "../utils";
@@ -169,8 +168,6 @@ export const List = observer(function List(props: IList) {
                   />
                 ))}
               </div>
-
-              <IssueBulkOperationsRoot selectionHelpers={helpers} />
             </>
           )}
         </MultipleSelectGroup>
