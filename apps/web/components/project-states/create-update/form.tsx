@@ -43,6 +43,7 @@ export function StateForm(props: TStateForm) {
   const [errors, setErrors] = useState<Partial<Record<keyof IState, string>> | undefined>(undefined);
 
   useEffect(() => {
+    // react-doctor-disable-next-line no-adjust-state-on-prop-change -- draft is seeded once when data arrives and then edited by the user; the effect depends on formData to seed only while empty
     if (data && !formData) setFromData(data);
   }, [data, formData]);
 

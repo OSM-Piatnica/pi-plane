@@ -165,6 +165,7 @@ export const DescriptionInput = observer(function DescriptionInput(props: Props)
   );
 
   // reset form values
+  // react-doctor-disable-next-line no-derived-state-effect -- localDescription is only re-seeded together with the form reset and the lastSavedContent/unsaved refs, and keeps its previous value when entityId is empty
   useEffect(() => {
     if (!entityId) return;
     const normalizedValue = initialValue?.trim() === "" ? "<p></p>" : (initialValue ?? "<p></p>");
@@ -175,6 +176,7 @@ export const DescriptionInput = observer(function DescriptionInput(props: Props)
       description_html: normalizedValue,
       isMigrationUpdate: false,
     });
+    // react-doctor-disable-next-line no-derived-state -- localDescription is only re-seeded together with form reset and the lastSavedContent/unsaved refs, and keeps its previous value when entityId is empty
     setLocalDescription({
       id: entityId,
       description_html: normalizedValue,
@@ -188,6 +190,7 @@ export const DescriptionInput = observer(function DescriptionInput(props: Props)
   // TODO: Verify the exhaustive-deps warning
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedFormSave = useCallback(
+    // react-doctor-disable-next-line exhaustive-deps -- debounced save must keep a stable identity per entity; adding the submit handler is known to cause adverse effects (see comment above)
     debounce(async () => {
       handleSubmit(handleDescriptionFormSubmit)()
         .catch((error) => console.error(`Failed to save description for ${entityId}:`, error))

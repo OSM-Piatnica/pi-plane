@@ -113,10 +113,12 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
     else await handleUpdateModule(payload);
   };
 
+  // react-doctor-disable-next-line no-derived-state-effect -- activeProject is also written by the form's project selector, so it is not a pure function of props
   useEffect(() => {
     // if modal is closed, reset active project to null
     // and return to avoid activeProject being set to some other project
     if (!isOpen) {
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- reset to null on close is part of the priority logic in this effect, which also depends on activeProject
       setActiveProject(null);
       return;
     }
@@ -124,6 +126,7 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
     // if data is present, set active project to the project of the
     // issue. This has more priority than the project in the url.
     if (data && data.project_id) {
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change, no-derived-state -- activeProject also reads itself and the url/workspace project list; effect resolves priority between several inputs
       setActiveProject(data.project_id);
       return;
     }

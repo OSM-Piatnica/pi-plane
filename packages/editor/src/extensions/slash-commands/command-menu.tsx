@@ -79,7 +79,9 @@ export const SlashCommandsMenu = forwardRef(function SlashCommandsMenu(props: Sl
     };
   }, [sections, selectedIndex, setSelectedIndex, selectItem]);
   // initialize the select index to 0 by default
+  // react-doctor-disable-next-line no-reset-all-state-on-prop-change -- selection index is also moved by keyboard handlers; reset must happen after sections render, before the scroll layout effect
   useEffect(() => {
+    // react-doctor-disable-next-line no-adjust-state-on-prop-change -- keep the reset in an effect so its ordering relative to the keydown and scroll effects is unchanged
     setSelectedIndex({
       section: 0,
       item: 0,
@@ -134,7 +136,7 @@ export const SlashCommandsMenu = forwardRef(function SlashCommandsMenu(props: Sl
         }}
         lockScroll
       />
-      <div
+      <div // oxlint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- mouse events only stop propagation; keyboard is handled by the document listener
         id="slash-command"
         ref={commandListContainer}
         className="relative max-h-80 min-w-[12rem] space-y-2 overflow-y-auto rounded-md border-[0.5px] border-strong bg-surface-1 px-2 py-2.5 shadow-raised-200"

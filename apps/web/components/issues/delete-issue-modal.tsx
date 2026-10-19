@@ -5,7 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // types
@@ -44,9 +44,12 @@ export const DeleteIssueModal = observer(function DeleteIssueModal(props: Props)
 
   const { data: currentUser } = useUser();
 
-  useEffect(() => {
+  // reset the deleting flag whenever the modal is opened or closed
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
+  if (prevIsOpen !== isOpen) {
+    setPrevIsOpen(isOpen);
     setIsDeleting(false);
-  }, [isOpen]);
+  }
 
   if (!dataId && !data) return null;
 

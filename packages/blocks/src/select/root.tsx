@@ -279,11 +279,13 @@ export function SelectRoot<T>(props: SelectProps<T>) {
       appliedOpenRef.current = open;
       isOpenRef.current = open;
       if (open) {
+        // react-doctor-disable-next-line no-adjust-state-on-prop-change -- runs from a base-ui open event or the controlled-open reconciling effect; needs the snapshot in the same render as the open
         setIsEngineMounted(true);
         setPinnedSelected(selected);
         if (isInfinite) onInfiniteOpen();
       } else {
         if (isInfinite) onInfiniteClose();
+        // react-doctor-disable-next-line no-adjust-state-on-prop-change -- runs from a base-ui close event or the controlled-open reconciling effect, not from a prop-change effect of its own
         else setSyncQuery("");
         onClose?.();
       }
@@ -302,6 +304,7 @@ export function SelectRoot<T>(props: SelectProps<T>) {
       // if and when `open` actually moves, and a vetoed close is a no-op.
       if (!isOpenControlled) {
         applyOpenSideEffects(open);
+        // react-doctor-disable-next-line no-adjust-state-on-prop-change -- event handler path for uncontrolled open; the side effects must run synchronously with the base-ui event
         setUncontrolledOpen(open);
       }
       onOpenChange?.(open);

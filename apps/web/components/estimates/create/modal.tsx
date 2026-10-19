@@ -74,7 +74,9 @@ export const CreateEstimateModal = observer(function CreateEstimateModal(props: 
   useEffect(() => {
     if (isOpen) {
       setEstimateSystem(EEstimateSystem.POINTS);
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- reset on open also applies on mount; estimatePoints is user-edited draft state
       setEstimatePoints(undefined);
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- initial value is undefined but the reset sets [], so an adjust-during-render swap would change mount behaviour
       setEstimatePointError([]);
     }
   }, [isOpen]);

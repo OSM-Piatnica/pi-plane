@@ -5,7 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // constants
 import type { EPageAccess } from "@plane/constants";
 import type { TPage } from "@plane/types";
@@ -43,6 +43,7 @@ export function CreatePageModal(props: Props) {
     id: undefined,
     name: "",
     logo_props: undefined,
+    access: pageAccess,
   });
   // router
   const router = useAppRouter();
@@ -52,9 +53,11 @@ export function CreatePageModal(props: Props) {
     setPageFormData((prev) => ({ ...prev, [key]: value }));
 
   // update page access in form data when page access from the store changes
-  useEffect(() => {
+  const [prevPageAccess, setPrevPageAccess] = useState(pageAccess);
+  if (prevPageAccess !== pageAccess) {
+    setPrevPageAccess(pageAccess);
     setPageFormData((prev) => ({ ...prev, access: pageAccess }));
-  }, [pageAccess]);
+  }
 
   const handleStateClear = () => {
     setPageFormData({ id: undefined, name: "", access: pageAccess });

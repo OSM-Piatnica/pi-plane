@@ -55,6 +55,7 @@ export const WorkItemAdditionalSidebarProperties = observer(function WorkItemAdd
       const saved = savedByPropertyId.get(row.property_id);
       next[row.property_id] = saved?.value ?? row.default_value ?? null;
     }
+    // react-doctor-disable-next-line no-adjust-state-on-prop-change -- localValues is also edited optimistically by persistValue, so it is a draft re-seeded from SWR data, not derivable
     setLocalValues(next);
   }, [schema, savedValues]);
 

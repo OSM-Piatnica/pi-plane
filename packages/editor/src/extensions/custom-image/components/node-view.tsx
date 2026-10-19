@@ -49,9 +49,12 @@ export function CustomImageNodeView(props: CustomImageNodeViewProps) {
   // and we need to remove the blob from our file system
   useEffect(() => {
     if (resolvedSrc || imgNodeSrc) {
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- uploaded flag and file-system preview are also set by the upload flow (setIsUploaded/loadImageFromFileSystem), so they are not pure functions of the src
       setIsUploaded(true);
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- uploaded flag and file-system preview are also set by the upload flow (setIsUploaded/loadImageFromFileSystem), so they are not pure functions of the src
       setImageFromFileSystem(undefined);
     } else {
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- uploaded flag and file-system preview are also set by the upload flow (setIsUploaded/loadImageFromFileSystem), so they are not pure functions of the src
       setIsUploaded(false);
     }
   }, [resolvedSrc, imgNodeSrc]);
@@ -140,6 +143,7 @@ export function CustomImageNodeView(props: CustomImageNodeViewProps) {
   useEffect(() => {
     if (status === ECustomImageStatus.UPLOADED) {
       hasRetriedOnMount.current = false;
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- failedToLoadImage is also set by the image block and the fetch/duplication effects; the reset on UPLOADED must stay with the ref reset in this effect
       setFailedToLoadImage(false);
     }
   }, [status]);

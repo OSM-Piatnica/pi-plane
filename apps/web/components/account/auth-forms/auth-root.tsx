@@ -58,7 +58,9 @@ export const AuthRoot = observer(function AuthRoot(props: TAuthRoot) {
   const isEmailBasedAuthEnabled = config?.is_email_password_enabled || config?.is_magic_login_enabled;
   const noAuthMethodsAvailable = !isOAuthEnabled && !isEmailBasedAuthEnabled;
 
+  // react-doctor-disable-next-line no-derived-state-effect -- authMode is seeded once from the prop when it first becomes available and is then owned by local state
   useEffect(() => {
+    // react-doctor-disable-next-line no-derived-state -- authMode is seeded once from the prop when it first becomes available and is then owned by local state (the effect only runs while unset)
     if (!authMode && currentAuthMode) setAuthMode(currentAuthMode);
   }, [currentAuthMode, authMode]);
 

@@ -163,10 +163,12 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
       });
   };
 
+  // react-doctor-disable-next-line no-derived-state-effect -- activeProject is also written by the form's project selector, so it is not a pure function of props
   useEffect(() => {
     // if modal is closed, reset active project to null
     // and return to avoid activeProject being set to some other project
     if (!isOpen) {
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- activeProject is also set by the form's project selector, so it is not a pure function of props
       setActiveProject(null);
       return;
     }
@@ -174,6 +176,7 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
     // if data is present, set active project to the project of the
     // issue. This has more priority than the project in the url.
     if (data && data.project_id) {
+      // react-doctor-disable-next-line no-derived-state -- activeProject is also written by CycleForm via setActiveProject, so it is user-editable state seeded from props
       setActiveProject(data.project_id);
       return;
     }
