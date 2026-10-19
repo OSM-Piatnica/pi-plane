@@ -74,7 +74,7 @@ export function AuthHeaderBase(props: TAuthHeaderBase) {
       <PageHead title={pageTitle + " - Pi-Plane"} />
       <div className="sticky top-0 flex w-full flex-shrink-0 items-center justify-between gap-6">
         <Link href="/">
-          <PlaneLockup height={20} width={95} className="text-primary" />
+          <PlaneLockup height={24} width={82} className="text-primary" />
         </Link>
         <div className="flex items-center gap-3">
           <AuthLanguageSelect />

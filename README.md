@@ -1,8 +1,8 @@
 <br /><br />
 
 <p align="center">
-<a href="https://plane.so">
-  <img src="https://media.docs.plane.so/logo/plane_github_readme.png" alt="Plane Logo" width="400">
+<a href="https://github.com/OSM-Piatnica/pi-plane">
+  <img src="docs/assets/pi-plane-banner.png" alt="Pi-Plane Logo" width="400">
 </a>
 </p>
 <p align="center"><b>Modern project management for all teams</b></p>
