@@ -1,5 +1,9 @@
 {
   "extends": "@plane/typescript-config/node-library.json",
+  "compilerOptions": {
+    // auth/index.ts uses the global React namespace; it used to arrive through @plane/types, so load it explicitly.
+    "types": ["node", "react"]
+  },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
