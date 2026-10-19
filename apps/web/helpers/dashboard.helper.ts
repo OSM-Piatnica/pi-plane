@@ -8,11 +8,10 @@
 import { endOfMonth, endOfWeek, endOfYear, startOfMonth, startOfWeek, startOfYear } from "date-fns";
 // helpers
 // types
-import { DURATION_FILTER_OPTIONS, EDurationFilters } from "@plane/constants";
-import type { useTranslation } from "@plane/i18n";
+import { EDurationFilters } from "@plane/constants";
 import type { TIssuesListTypes } from "@plane/types";
 // constants
-import { renderFormattedDate, renderFormattedPayloadDate } from "@plane/utils";
+import { renderFormattedPayloadDate } from "@plane/utils";
 
 // -------------------- DEPRECATED --------------------
 
@@ -81,32 +80,5 @@ export const getTabKey = (duration: EDurationFilters, tab: TIssuesListTypes | un
   else {
     if (["upcoming", "overdue"].includes(tab)) return tab;
     else return "upcoming";
-  }
-};
-
-/**
- * @description returns the label for the duration filter dropdown
- * @param duration
- * @param customDates
- */
-export const getDurationFilterDropdownLabel = (
-  duration: EDurationFilters,
-  customDates: string[],
-  formatDate: (date: string) => string | null | undefined = (date) => renderFormattedDate(date),
-  t?: ReturnType<typeof useTranslation>["t"]
-): string => {
-  if (duration !== "custom") return DURATION_FILTER_OPTIONS.find((option) => option.key === duration)?.label ?? "";
-  else {
-    const afterDate = customDates.find((date) => date.includes("after"))?.split(";")[0];
-    const beforeDate = customDates.find((date) => date.includes("before"))?.split(";")[0];
-
-    if (afterDate && beforeDate) return `${formatDate(afterDate)} - ${formatDate(beforeDate)}`;
-    else if (afterDate) {
-      const date = formatDate(afterDate) ?? "";
-      return t ? t("date_phrases.after_date", { date }) : `After ${date}`;
-    } else if (beforeDate) {
-      const date = formatDate(beforeDate) ?? "";
-      return t ? t("date_phrases.before_date", { date }) : `Before ${date}`;
-    } else return "";
   }
 };
