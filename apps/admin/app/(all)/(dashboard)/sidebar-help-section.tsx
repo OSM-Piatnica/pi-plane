@@ -147,7 +147,10 @@ export const AdminSidebarHelpSection = observer(function AdminSidebarHelpSection
                   );
               })}
             </div>
-            <div className="px-2 pt-2 pb-1 text-10">Version: v{instance?.current_version}</div>
+            <div className="px-2 pt-2 pb-1 text-10">
+              <div>Version: v{instance?.current_version}</div>
+              {instance?.latest_version && <div>Latest: v{instance.latest_version.replace(/^v/, "")}</div>}
+            </div>
           </div>
         )}
       </div>
