@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+// react-doctor-disable-next-line prefer-dynamic-import -- server-side PDF rendering in apps/live; there is no client bundle to keep small
 import { Circle, Path, Rect, Svg } from "@react-pdf/renderer";
 
 type IconProps = {

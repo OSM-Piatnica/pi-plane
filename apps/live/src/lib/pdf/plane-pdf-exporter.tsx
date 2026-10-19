@@ -6,6 +6,7 @@
 
 import { createRequire } from "module";
 import path from "path";
+// react-doctor-disable-next-line prefer-dynamic-import -- server-side PDF rendering in apps/live; there is no client bundle to keep small
 import { Document, Font, Page, pdf, Text } from "@react-pdf/renderer";
 import { createKeyGenerator, renderNode } from "./node-renderers";
 import { pdfStyles } from "./styles";

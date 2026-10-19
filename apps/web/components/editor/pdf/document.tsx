@@ -6,6 +6,7 @@
  */
 
 import type { PageProps, Styles } from "@react-pdf/renderer";
+// react-doctor-disable-next-line prefer-dynamic-import -- this module is only loaded through a dynamic import in export-page-modal.tsx, so it is already a separate chunk
 import { Document, Font, Page, StyleSheet } from "@react-pdf/renderer";
 import { Html } from "react-pdf-html";
 // assets
