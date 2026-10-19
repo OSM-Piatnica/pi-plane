@@ -5,6 +5,7 @@
  */
 
 import React from "react";
+// react-doctor-disable-next-line prefer-dynamic-import -- the charts are a library: apps import them only on routes that draw charts, where recharts ships in its own route chunk
 import { Sector } from "recharts";
 import type { PieSectorDataItem } from "recharts/types/polar/Pie";
 
