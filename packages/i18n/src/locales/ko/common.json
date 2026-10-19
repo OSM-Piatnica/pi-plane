@@ -1157,7 +1157,6 @@
     "auth_screens": {
       "sign_up": "가입",
       "sign_in": "로그인",
-      "join_teams": "Plane으로 개발하는 10,000개 이상의 팀에 참여하세요",
       "not_authorized_view_title": "이 페이지를 볼 권한이 없습니다",
       "not_authorized": "권한이 없습니다",
       "not_a_member_description": "이 작업 공간의 구성원이 아닙니다. 작업 공간 관리자에게 초대를 요청하거나 대기 중인 초대를 확인하세요.",

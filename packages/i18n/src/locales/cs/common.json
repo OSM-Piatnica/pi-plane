@@ -1157,7 +1157,6 @@
     "auth_screens": {
       "sign_up": "Registrace",
       "sign_in": "Přihlásit se",
-      "join_teams": "Připojte se k více než 10 000 týmů, které tvoří s Pi-Plane",
       "not_authorized_view_title": "Jejda! Nemáte oprávnění zobrazit tuto stránku",
       "not_authorized": "Neoprávněný přístup!",
       "not_a_member_description": "Nejste členem tohoto pracovního prostoru. Obraťte se na správce pracovního prostoru, aby vám poslal pozvánku, nebo zkontrolujte své čekající pozvánky.",

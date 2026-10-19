@@ -1157,7 +1157,6 @@
     "auth_screens": {
       "sign_up": "Înregistrează-te",
       "sign_in": "Autentifică-te",
-      "join_teams": "Alătură-te celor peste 10.000 de echipe care construiesc cu Pi-Plane",
       "not_authorized_view_title": "Hopa! Nu ai autorizație să vizualizezi această pagină",
       "not_authorized": "Neautorizat!",
       "not_a_member_description": "Nu ești membru al acestui spațiu de lucru. Contactează administratorul spațiului de lucru pentru a primi o invitație sau verifică invitațiile în așteptare.",
