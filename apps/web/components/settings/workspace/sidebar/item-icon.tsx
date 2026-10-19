@@ -6,13 +6,7 @@
  */
 
 import type { LucideIcon } from "lucide-react";
-import {
-  BillingsOutline,
-  BuildingOutline,
-  ExportOutline,
-  MembersOutline,
-  WebhooksOutline,
-} from "@makeplane/propel/icons";
+import { BuildingOutline, ExportOutline, MembersOutline, WebhooksOutline } from "@makeplane/propel/icons";
 // plane imports
 import type { ISvgIcons } from "@plane/blocks/icons";
 import type { TWorkspaceSettingsTabs } from "@plane/types";
@@ -23,7 +17,6 @@ export const WORKSPACE_SETTINGS_ICONS: Record<TWorkspaceSettingsTabs, LucideIcon
   members: MembersOutline,
   export: ExportOutline,
   import: ArrowDownToLine,
-  "billing-and-plans": BillingsOutline,
   "work-item-templates": LayoutTemplate,
   "work-item-types": Layers,
   "project-templates": FolderKanban,

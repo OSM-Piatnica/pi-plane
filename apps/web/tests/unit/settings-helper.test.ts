@@ -16,9 +16,9 @@ describe("pathnameToAccessKey", () => {
   });
 
   it("ignores leading and trailing slashes and deeper segments", () => {
-    expect(pathnameToAccessKey("/acme/settings/billing/extra/")).toEqual({
+    expect(pathnameToAccessKey("/acme/settings/exports/extra/")).toEqual({
       workspaceSlug: "acme",
-      accessKey: "/settings/billing",
+      accessKey: "/settings/exports",
     });
   });
 

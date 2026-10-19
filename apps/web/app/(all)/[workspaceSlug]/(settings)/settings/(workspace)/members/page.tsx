@@ -25,7 +25,6 @@ import { WorkspaceMembersList } from "@/components/workspace/settings/members-li
 import { useMember } from "@/hooks/store/use-member";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 import { useUserPermissions } from "@/hooks/store/user";
-import { BillingActionsButton } from "@/components/workspace/billing/billing-actions-button";
 import { SendWorkspaceInvitationModal, MembersActivityButton } from "@/components/workspace/members";
 import { SettingsContentWrapper } from "@/components/settings/content-wrapper";
 // local imports
@@ -147,7 +146,6 @@ const WorkspaceMembersSettingsPage = observer(function WorkspaceMembersSettingsP
                 onClick={() => setInviteModal(true)}
               />
             )}
-            <BillingActionsButton canPerformWorkspaceAdminActions={canPerformWorkspaceAdminActions} />
           </div>
         </div>
         <WorkspaceMembersList searchQuery={searchQuery} isAdmin={canPerformWorkspaceAdminActions} />
