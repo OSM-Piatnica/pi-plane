@@ -718,6 +718,8 @@
     "applying": "Toepassen",
     "overview": "Overzicht",
     "no_of": "Aantal {entity}",
+    "no_of_work_items": "Aantal Werkitems",
+    "no_of_epics": "Aantal Epics",
     "resolved": "Opgelost",
     "get_started": "Aan de slag",
     "worklogs": "Werklogs",

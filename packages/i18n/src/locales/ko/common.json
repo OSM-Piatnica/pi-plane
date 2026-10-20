@@ -718,6 +718,8 @@
     "applying": "적용 중",
     "overview": "오버뷰",
     "no_of": "{entity} 수",
+    "no_of_work_items": "작업 항목 수",
+    "no_of_epics": "에픽스 수",
     "resolved": "해결됨",
     "get_started": "시작하기",
     "worklogs": "워크로그",

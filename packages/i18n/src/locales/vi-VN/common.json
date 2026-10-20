@@ -718,6 +718,8 @@
     "applying": "Đang áp dụng",
     "overview": "Tổng quan",
     "no_of": "Số lượng {entity}",
+    "no_of_work_items": "Số lượng Mục công việc",
+    "no_of_epics": "Số lượng Epics",
     "resolved": "Đã giải quyết",
     "get_started": "Bắt đầu",
     "worklogs": "Nhật ký công việc",

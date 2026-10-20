@@ -718,6 +718,8 @@
     "applying": "Применение",
     "overview": "Обзор",
     "no_of": "Количество {entity}",
+    "no_of_work_items": "Количество Рабочие элементы",
+    "no_of_epics": "Количество Эпики",
     "resolved": "Решено",
     "get_started": "Начать",
     "worklogs": "Рабочие журналы",

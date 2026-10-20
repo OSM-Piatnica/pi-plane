@@ -718,6 +718,8 @@
     "applying": "Application",
     "overview": "Vue d'ensemble",
     "no_of": "Nº de {entity}",
+    "no_of_work_items": "Nº de Éléments de travail",
+    "no_of_epics": "Nº de Epics",
     "resolved": "Résolu",
     "get_started": "Commencer",
     "worklogs": "Journaux de travail",

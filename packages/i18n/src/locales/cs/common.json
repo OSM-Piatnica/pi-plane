@@ -718,6 +718,8 @@
     "applying": "Používání",
     "overview": "Přehled",
     "no_of": "Počet {entity}",
+    "no_of_work_items": "Počet Pracovní položky",
+    "no_of_epics": "Počet Epiky",
     "resolved": "Vyřešeno",
     "get_started": "Začít",
     "worklogs": "Pracovní záznamy",
