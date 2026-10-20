@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -30,7 +31,7 @@ function ProjectDetailSettingsLayout({ params }: Route.ComponentProps) {
       <div className="inset-y-0 flex h-full w-full flex-row">
         <div className="relative flex size-full">
           <div className="hidden h-full shrink-0 md:block">
-            <ProjectSettingsSidebarRoot projectId={projectId} />
+            <ProjectSettingsSidebarRoot projectId={projectId} resizable />
           </div>
           <ProjectAuthWrapper workspaceSlug={workspaceSlug} projectId={projectId}>
             <Outlet />
