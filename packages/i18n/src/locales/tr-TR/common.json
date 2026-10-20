@@ -718,6 +718,8 @@
     "applying": "Uygulanıyor",
     "overview": "Genel Bakış",
     "no_of": "{entity} sayısı",
+    "no_of_work_items": "İş Öğeleri sayısı",
+    "no_of_epics": "Epikler sayısı",
     "resolved": "Çözüldü",
     "get_started": "Başla",
     "worklogs": "Çalışma Logları",

@@ -718,6 +718,8 @@
     "applying": "Terapkan",
     "overview": "Ikhtisar",
     "no_of": "Jumlah {entity}",
+    "no_of_work_items": "Jumlah Item kerja",
+    "no_of_epics": "Jumlah Epik",
     "resolved": "Terselesaikan",
     "get_started": "Mulai",
     "worklogs": "Log Kerja",

@@ -718,6 +718,8 @@
     "applying": "Застосовується",
     "overview": "Оверв'ю",
     "no_of": "Кількість {entity}",
+    "no_of_work_items": "Кількість Робочі одиниці",
+    "no_of_epics": "Кількість Епіки",
     "resolved": "Вирішено",
     "get_started": "Почати",
     "worklogs": "Ворклоги",

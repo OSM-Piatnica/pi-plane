@@ -718,6 +718,8 @@
     "applying": "Applicazione",
     "overview": "Panoramica",
     "no_of": "N. di {entity}",
+    "no_of_work_items": "N. di Elementi di lavoro",
+    "no_of_epics": "N. di Epiche",
     "resolved": "Risolto",
     "get_started": "Inizia",
     "worklogs": "Registrazioni di lavoro",

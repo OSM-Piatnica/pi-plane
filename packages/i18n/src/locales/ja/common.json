@@ -718,6 +718,8 @@
     "applying": "適用中",
     "overview": "概要",
     "no_of": "{entity} の数",
+    "no_of_work_items": "作業項目 の数",
+    "no_of_epics": "エピック の数",
     "resolved": "解決済み",
     "get_started": "はじめに",
     "worklogs": "作業ログ",

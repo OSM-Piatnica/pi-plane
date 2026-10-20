@@ -718,6 +718,8 @@
     "applying": "應用中",
     "overview": "概覽",
     "no_of": "{entity} 的數量",
+    "no_of_work_items": "工作事項 的數量",
+    "no_of_epics": "史詩 的數量",
     "resolved": "已解決",
     "get_started": "開始使用",
     "worklogs": "工作日誌",

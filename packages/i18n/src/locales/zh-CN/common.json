@@ -718,6 +718,8 @@
     "applying": "应用中",
     "overview": "概览",
     "no_of": "{entity} 的数量",
+    "no_of_work_items": "工作项 的数量",
+    "no_of_epics": "史诗 的数量",
     "resolved": "已解决",
     "get_started": "开始使用",
     "worklogs": "工作日志",

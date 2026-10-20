@@ -714,6 +714,8 @@
     "applying": "Прилагане",
     "overview": "Общ преглед",
     "no_of": "Брой {entity}",
+    "no_of_work_items": "Брой Работни елементи",
+    "no_of_epics": "Брой Епици",
     "resolved": "Решено",
     "get_started": "Започнете",
     "worklogs": "Записи за отработено време",

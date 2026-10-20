@@ -718,6 +718,8 @@
     "applying": "Zastosowanie",
     "overview": "Przegląd",
     "no_of": "Liczba {entity}",
+    "no_of_work_items": "Liczba elementów pracy",
+    "no_of_epics": "Liczba epików",
     "resolved": "Rozwiązane",
     "get_started": "Rozpocznij",
     "worklogs": "Logi pracy",

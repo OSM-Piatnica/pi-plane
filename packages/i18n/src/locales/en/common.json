@@ -718,6 +718,8 @@
     "applying": "Applying",
     "overview": "Overview",
     "no_of": "No. of {entity}",
+    "no_of_work_items": "No. of Work items",
+    "no_of_epics": "No. of Epics",
     "resolved": "Resolved",
     "get_started": "Get started",
     "worklogs": "Worklogs",

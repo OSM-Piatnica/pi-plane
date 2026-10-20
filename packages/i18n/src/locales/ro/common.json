@@ -718,6 +718,8 @@
     "applying": "Aplicând",
     "overview": "Prezentare generală",
     "no_of": "Nr. de {entity}",
+    "no_of_work_items": "Nr. de Activități",
+    "no_of_epics": "Nr. de Epice",
     "resolved": "Rezolvat",
     "get_started": "Începe",
     "worklogs": "Jurnale de lucru",
