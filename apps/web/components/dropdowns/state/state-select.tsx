@@ -14,6 +14,7 @@ import { StateSelect as StateSelectBlock } from "@plane/blocks/property-select";
 import type { StateOption } from "@plane/blocks/property-select";
 import type { SelectPaginationParams, SelectTooltip, SelectTooltipOverride, SelectVariant } from "@plane/blocks/select";
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@/helpers/state-name";
 import type { IState, TPaginatedResponse } from "@plane/types";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -48,9 +49,9 @@ type StateSelectWebProps = {
   alwaysAllowStateChange?: boolean;
 };
 
-const toOption = (state: IState): StateOption => ({
+const toOption = (state: IState, t: (key: string) => string): StateOption => ({
   id: state.id,
-  name: state.name,
+  name: getStateName(state.name, t),
   color: state.color,
   group: state.group,
   order: state.order,
@@ -133,8 +134,8 @@ export const StateSelect = observer(function StateSelect(props: StateSelectWebPr
       const results = (stateIds ?? [])
         .map((stateId) => getStateById(stateId))
         .filter((state): state is IState => !!state)
-        .filter((state) => !query || state.name.toLowerCase().includes(query))
-        .map(toOption);
+        .map((state) => toOption(state, t))
+        .filter((option) => !query || option.name.toLowerCase().includes(query));
       return { results, next_page_results: false };
     },
     [
@@ -145,12 +146,13 @@ export const StateSelect = observer(function StateSelect(props: StateSelectWebPr
       getProjectStateIds,
       fetchProjectStates,
       getStateById,
+      t,
     ]
   );
 
   // Resolved in the observer render (not in a memo) so MobX re-renders when the state loads.
   const selectedState = value ? getStateById(value) : undefined;
-  const selected = selectedState ? toOption(selectedState) : null;
+  const selected = selectedState ? toOption(selectedState, t) : null;
 
   // States the workflow allows (null = no restriction).
   const issue = issueId ? getIssueById(issueId) : undefined;

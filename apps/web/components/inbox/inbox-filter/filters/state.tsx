@@ -9,6 +9,7 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import { EIconSize } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@/helpers/state-name";
 import { StateGroupIcon } from "@plane/blocks/icons";
 import type { IState } from "@plane/types";
 import { Loader } from "@plane/blocks/skeleton";
@@ -36,7 +37,9 @@ export const FilterState = observer(function FilterState(props: Props) {
   const appliedFiltersCount = filterValue?.length ?? 0;
   const filterValueSet = new Set(filterValue ?? []);
 
-  const filteredOptions = states?.filter((state) => state.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredOptions = states?.filter((state) =>
+    getStateName(state.name, t).toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleViewToggle = () => {
     if (!filteredOptions) return;
@@ -73,7 +76,7 @@ export const FilterState = observer(function FilterState(props: Props) {
                         percentage={state?.order}
                       />
                     }
-                    title={state.name}
+                    title={getStateName(state.name, t)}
                   />
                 ))}
                 {filteredOptions.length > 5 && (

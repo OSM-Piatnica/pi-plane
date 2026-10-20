@@ -7,6 +7,7 @@
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@/helpers/state-name";
 import { setPromiseToast } from "@plane/blocks/toast";
 import type { IProjectWorkflowStates, IWorkflow, IWorkflowFlow, TWorkflowFlowType } from "@plane/types";
 import { Switch } from "@makeplane/propel/components/switch";
@@ -225,7 +226,7 @@ function WorkflowBuilder(props: BuilderProps) {
               >
                 <div className="flex items-center gap-2">
                   <span className="size-2 rounded-full" style={{ backgroundColor: state.color }} />
-                  <span className="text-13 font-medium">{state.name}</span>
+                  <span className="text-13 font-medium">{getStateName(state.name, t)}</span>
                   <span className="text-11 text-placeholder">{state.group}</span>
                 </div>
                 <span className="text-11 text-tertiary">{stateFlows.length} flows</span>

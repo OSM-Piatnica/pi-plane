@@ -8,10 +8,12 @@
 import { observer } from "mobx-react";
 // plane imports
 import { PriorityIcon, StateGroupIcon } from "@plane/blocks/icons";
+import { useTranslation } from "@plane/i18n";
 import type { TIssue, TStateGroups } from "@plane/types";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
+import { getStateName } from "@/helpers/state-name";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 // local imports
 import { WorkItemPreviewCardDate } from "./date";
@@ -28,6 +30,8 @@ type Props = {
 
 export const WorkItemPreviewCard = observer(function WorkItemPreviewCard(props: Props) {
   const { projectId, stateDetails, workItem } = props;
+  // plane hooks
+  const { t } = useTranslation();
   // store hooks
   const { getProjectIdentifierById } = useProject();
   const { getStateById } = useProjectState();
@@ -35,7 +39,8 @@ export const WorkItemPreviewCard = observer(function WorkItemPreviewCard(props: 
   const projectIdentifier = getProjectIdentifierById(projectId);
   const fallbackStateDetails = stateDetails.id ? getStateById(stateDetails.id) : undefined;
   const stateGroup = stateDetails?.group ?? fallbackStateDetails?.group ?? "backlog";
-  const stateName = stateDetails?.name ?? fallbackStateDetails?.name;
+  const rawStateName = stateDetails?.name ?? fallbackStateDetails?.name;
+  const stateName = rawStateName ? getStateName(rawStateName, t) : rawStateName;
 
   return (
     <div className="w-72 space-y-2">

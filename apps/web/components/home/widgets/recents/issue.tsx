@@ -8,6 +8,7 @@
 import { observer } from "mobx-react";
 // plane types
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@/helpers/state-name";
 import { PriorityIcon, StateGroupIcon } from "@plane/blocks/icons";
 import { WorkItemsOutline } from "@makeplane/propel/icons";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
@@ -104,7 +105,7 @@ export const RecentIssue = observer(function RecentIssue(props: BlockProps) {
       }
       quickActionElement={
         <div className="flex gap-4">
-          <Tooltip label={`${t("state")}: ${state?.name ?? t("state")}`}>
+          <Tooltip label={`${t("state")}: ${state ? getStateName(state.name, t) : t("state")}`}>
             <div>
               <StateGroupIcon
                 stateGroup={state?.group ?? "backlog"}

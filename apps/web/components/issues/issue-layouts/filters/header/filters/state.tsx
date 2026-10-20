@@ -10,6 +10,7 @@ import { sortBy } from "lodash-es";
 import { observer } from "mobx-react";
 import { EIconSize } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@/helpers/state-name";
 import { StateGroupIcon } from "@plane/blocks/icons";
 import type { IState } from "@plane/types";
 // components
@@ -37,7 +38,9 @@ export const FilterState = observer(function FilterState(props: Props) {
   const appliedFiltersSet = new Set(appliedFilters);
 
   const sortedOptions = useMemo(() => {
-    const filteredOptions = (states ?? []).filter((s) => s.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    const filteredOptions = (states ?? []).filter((s) =>
+      getStateName(s.name, t).toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return sortBy(filteredOptions, [(s) => !(appliedFilters ?? []).includes(s.id)]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,7 +78,7 @@ export const FilterState = observer(function FilterState(props: Props) {
                         percentage={state?.order}
                       />
                     }
-                    title={state.name}
+                    title={getStateName(state.name, t)}
                   />
                 ))}
                 {sortedOptions.length > 5 && (

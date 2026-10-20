@@ -4,6 +4,8 @@
  * See the LICENSE file for details.
  */
 
+import { getStateName } from "./state-name";
+
 /**
  * Marks a cycle column that cannot take a drop because the cycle is completed. The column is built
  * where no translation is available, so the drag overlay turns this marker into the message.
@@ -40,10 +42,15 @@ const FIXED_COLUMN_NAME_KEYS = new Map<string, string>(
  * state group columns are built where no translation is available, so they are recognised by their id and
  * translated here.
  */
-export const getGroupColumnName = (column: { id: string; name: string }, t: (key: string) => string): string => {
+export const getGroupColumnName = (
+  column: { id: string; name: string; payload?: { state_id?: string | null } },
+  t: (key: string) => string
+): string => {
   if (column.id === ALL_ISSUES_GROUP_ID) {
     return t(column.name === ALL_EPICS_GROUP_NAME ? "epic.all" : "default_global_view.all_issues");
   }
+  // a column of the group-by-state layouts: its id is the state's uuid, so it is recognised by its payload
+  if (column.payload?.state_id) return getStateName(column.name, t);
   const key = FIXED_COLUMN_NAME_KEYS.get(column.id);
   return key ? t(key) : column.name;
 };

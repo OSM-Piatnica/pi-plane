@@ -329,6 +329,14 @@
   "deleting": "Đang xóa",
   "make_a_copy": "Tạo bản sao",
   "move_to_project": "Di chuyển đến dự án",
+  "default_state_names": {
+    "backlog": "Tồn đọng",
+    "todo": "Cần làm",
+    "in_progress": "Đang tiến hành",
+    "done": "Hoàn thành",
+    "cancelled": "Đã hủy",
+    "triage": "Phân loại"
+  },
   "good": "Chào buổi sáng",
   "morning": "Buổi sáng",
   "afternoon": "Buổi chiều",

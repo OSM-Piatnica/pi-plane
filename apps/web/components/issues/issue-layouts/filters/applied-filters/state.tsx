@@ -9,9 +9,11 @@ import { observer } from "mobx-react";
 // icons
 // plane imports
 import { EIconSize } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 import { StateGroupIcon } from "@plane/blocks/icons";
 import { CloseOutline } from "@makeplane/propel/icons";
 import type { IState } from "@plane/types";
+import { getStateName } from "@/helpers/state-name";
 
 type Props = {
   handleRemove: (val: string) => void;
@@ -22,6 +24,8 @@ type Props = {
 
 export const AppliedStateFilters = observer(function AppliedStateFilters(props: Props) {
   const { handleRemove, states, values, editable } = props;
+  // plane hooks
+  const { t } = useTranslation();
 
   return (
     <>
@@ -38,7 +42,7 @@ export const AppliedStateFilters = observer(function AppliedStateFilters(props: 
               size={EIconSize.SM}
               percentage={stateDetails?.order}
             />
-            {stateDetails.name}
+            {getStateName(stateDetails.name, t)}
             {editable && (
               <button
                 type="button"

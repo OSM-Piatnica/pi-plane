@@ -329,6 +329,14 @@
   "deleting": "Удаление...",
   "make_a_copy": "Создать копию",
   "move_to_project": "Переместить в проект",
+  "default_state_names": {
+    "backlog": "Бэклог",
+    "todo": "К выполнению",
+    "in_progress": "В процессе",
+    "done": "Готово",
+    "cancelled": "Отменено",
+    "triage": "Сортировка"
+  },
   "good": "Доброго",
   "morning": "утра",
   "afternoon": "дня",

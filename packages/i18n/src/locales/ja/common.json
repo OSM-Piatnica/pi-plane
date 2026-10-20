@@ -329,6 +329,14 @@
   "deleting": "削除中",
   "make_a_copy": "コピーを作成",
   "move_to_project": "プロジェクトに移動",
+  "default_state_names": {
+    "backlog": "バックログ",
+    "todo": "未着手",
+    "in_progress": "進行中",
+    "done": "完了",
+    "cancelled": "キャンセル",
+    "triage": "トリアージ"
+  },
   "good": "おはよう",
   "morning": "ございます",
   "afternoon": "こんにちは",

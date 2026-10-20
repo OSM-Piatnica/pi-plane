@@ -15,6 +15,7 @@ import { Spinner } from "@plane/blocks/spinner";
 // store hooks
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@/helpers/state-name";
 
 export type TChangeWorkItemStateListProps = {
   projectId: string | null;
@@ -43,7 +44,7 @@ export const ChangeWorkItemStateList = observer(function ChangeWorkItemStateList
                   size={EIconSize.LG}
                   percentage={state?.order}
                 />
-                <p>{state.name}</p>
+                <p>{getStateName(state.name, t)}</p>
               </div>
               <div>{state.id === currentStateId && <TickOutline className="h-3 w-3" />}</div>
             </Command.Item>

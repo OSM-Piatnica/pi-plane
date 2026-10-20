@@ -7,6 +7,7 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@/helpers/state-name";
 import { setPromiseToast } from "@plane/blocks/toast";
 import { Button } from "@makeplane/propel/components/button";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -71,8 +72,8 @@ export const WorkflowApprovalBanner = observer(function WorkflowApprovalBanner(p
         <p className="text-13 font-medium text-primary">{t("project_settings.workflows.pending_approval_title")}</p>
         <p className="mt-0.5 text-11 text-secondary">
           {t("project_settings.workflows.pending_approval_description", {
-            from: pendingApproval?.source_state_detail?.name ?? "",
-            to: pendingApproval?.approve_state_detail?.name ?? "",
+            from: getStateName(pendingApproval?.source_state_detail?.name ?? "", t),
+            to: getStateName(pendingApproval?.approve_state_detail?.name ?? "", t),
           })}
         </p>
       </div>

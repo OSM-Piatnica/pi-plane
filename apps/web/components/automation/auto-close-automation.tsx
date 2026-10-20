@@ -12,6 +12,7 @@ import { AutoCloseOutline, StateOutline } from "@makeplane/propel/icons";
 // plane imports
 import { PROJECT_AUTOMATION_MONTHS, EUserPermissions, EUserPermissionsLevel, EIconSize } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@/helpers/state-name";
 import { StateGroupIcon } from "@plane/blocks/icons";
 import type { IProject, IState } from "@plane/types";
 import { Switch } from "@makeplane/propel/components/switch";
@@ -177,7 +178,7 @@ export const AutoCloseAutomation = observer(function AutoCloseAutomation(props: 
                       onChange={(val) => void handleChange({ default_state: val })}
                       disabled={!multipleOptions}
                       getOptionValue={(state) => state.id}
-                      getOptionLabel={(state) => state.name}
+                      getOptionLabel={(state) => getStateName(state.name, t)}
                       getOptionIcon={(state) => (
                         <StateGroupIcon stateGroup={state.group} color={state.color} size={EIconSize.LG} />
                       )}
