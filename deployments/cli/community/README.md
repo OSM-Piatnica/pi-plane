@@ -173,6 +173,8 @@ Below are the most import keys you must refer to. _<span style="color: #fcba03">
 
 > `CORS_ALLOWED_ORIGINS` - This is default set to `http://localhost`. Change this to the FQDN you plan to use along with LISTEN_HTTP_PORT (eg. `https://plane.example.com:8080` or `http://[IP-ADDRESS]:8080`)
 
+> `SECRET_KEY` and `LIVE_SERVER_SECRET_KEY` - These ship with the placeholder value `change-this-key-on-deployment`. **Replace both with your own random values before the first start**, e.g. `openssl rand -hex 32` (use a different value for each). The API still starts with the placeholders, but only logs a `SECURITY: SECRET_KEY is set to a known insecure or placeholder value` warning, and anyone who knows the placeholder can forge session data. The all-in-one image refuses to start with placeholder values.
+
 There are many other settings you can play with, but we suggest you configure `EMAIL SETTINGS` as it will enable you to invite your teammates onto the platform.
 
 ---

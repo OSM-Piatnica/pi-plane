@@ -52,7 +52,7 @@ Getting started with Plane is simple. Choose the setup that works best for you:
   Sign up for a free account on [Plane Cloud](https://app.plane.so)—it's the fastest way to get up and running without worrying about infrastructure.
 
 - **Self-host Plane**
-  Prefer full control over your data and infrastructure? Install and run Plane on your own servers. Follow our detailed [deployment guides](https://developers.plane.so/self-hosting/overview) to get started.
+  Prefer full control over your data and infrastructure? Install and run Plane on your own servers. For Docker Compose and Docker Swarm, follow the [Pi-Plane self-hosting guide](deployments/cli/community/README.md); the upstream [deployment guides](https://developers.plane.so/self-hosting/overview) cover other methods.
 
 | Installation methods | Docs link                                                                                                                                                                               |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
