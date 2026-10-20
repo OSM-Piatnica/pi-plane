@@ -119,6 +119,7 @@
       "save_success": "ワークフロー設定を保存しました。",
       "toggle_error": "ワークフロー設定を更新できませんでした。",
       "transition": "遷移",
+      "transition_count": "{count, plural, one {# 件の遷移} other {# 件の遷移}}",
       "transitions_configured": "個の遷移が設定されています"
     }
   },

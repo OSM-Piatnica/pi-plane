@@ -125,6 +125,7 @@
       "save_success": "Konfiguracja workflow zapisana.",
       "toggle_error": "Nie udało się zaktualizować ustawień workflow.",
       "transition": "Przejście",
+      "transition_count": "{count, plural, one {# przejście} few {# przejścia} many {# przejść} other {# przejścia}}",
       "transitions_configured": "skonfigurowanych przejść"
     }
   },

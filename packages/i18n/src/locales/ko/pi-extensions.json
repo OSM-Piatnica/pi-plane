@@ -119,6 +119,7 @@
       "save_success": "워크플로우 구성이 저장되었습니다.",
       "toggle_error": "워크플로우 설정을 업데이트할 수 없습니다.",
       "transition": "전환",
+      "transition_count": "{count, plural, one {전환 #개} other {전환 #개}}",
       "transitions_configured": "전환 구성됨"
     }
   },

@@ -329,6 +329,14 @@
   "deleting": "Mazanie",
   "make_a_copy": "Vytvoriť kópiu",
   "move_to_project": "Presunúť do projektu",
+  "default_state_names": {
+    "backlog": "Backlog",
+    "todo": "Na vykonanie",
+    "in_progress": "Prebieha",
+    "done": "Hotovo",
+    "cancelled": "Zrušené",
+    "triage": "Triedenie"
+  },
   "good": "Dobrý",
   "morning": "ráno",
   "afternoon": "popoludnie",

@@ -9,6 +9,7 @@ import type { MutableRefObject } from "react";
 import { Fragment, forwardRef, useRef, useState } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
+import { getGroupColumnTitle } from "@/helpers/group-column";
 // plane types
 import type {
   IGroupByColumn,
@@ -132,7 +133,7 @@ export const ListGroup = observer(function ListGroup(props: Props) {
         <HeaderGroupByCard
           groupID={group.id}
           icon={group.icon}
-          title={group.name || ""}
+          title={getGroupColumnTitle(group, t)}
           count={groupIssueCount}
           toggleListGroup={toggleListGroup}
         />

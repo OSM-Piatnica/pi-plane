@@ -9,6 +9,7 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@plane/utils";
 import { StateGroupIcon, PriorityIcon } from "@plane/blocks/icons";
 import { DueDateOutline, LinkOutline, PriorityOutline, StateOutline } from "@makeplane/propel/icons";
 import { setToast } from "@plane/blocks/toast";
@@ -78,7 +79,7 @@ export const PeekOverviewIssueProperties = observer(function PeekOverviewIssuePr
           </div>
           <div className="flex w-3/4 items-center gap-1.5 py-0.5 text-13">
             <StateGroupIcon stateGroup={state?.group ?? "backlog"} color={state?.color} />
-            {addSpaceIfCamelCase(state?.name ?? "")}
+            {getStateName(addSpaceIfCamelCase(state?.name ?? ""), t)}
           </div>
         </div>
 

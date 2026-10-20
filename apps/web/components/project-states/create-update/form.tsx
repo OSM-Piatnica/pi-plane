@@ -13,6 +13,7 @@ import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area"
 import { Button } from "@makeplane/propel/components/button";
 import { ColorSwatchPicker } from "@plane/blocks/common";
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@plane/utils";
 import type { IState } from "@plane/types";
 
 type TStateForm = {
@@ -43,9 +44,10 @@ export function StateForm(props: TStateForm) {
   const [errors, setErrors] = useState<Partial<Record<keyof IState, string>> | undefined>(undefined);
 
   useEffect(() => {
+    // the default states are stored with English names but shown translated, so the name field starts with what the user sees
     // react-doctor-disable-next-line no-adjust-state-on-prop-change -- draft is seeded once when data arrives and then edited by the user; the effect depends on formData to seed only while empty
-    if (data && !formData) setFromData(data);
-  }, [data, formData]);
+    if (data && !formData) setFromData({ ...data, name: data.name ? getStateName(data.name, t) : data.name });
+  }, [data, formData, t]);
 
   const handleFormData = <T extends keyof IState>(key: T, value: IState[T]) => {
     setFromData((prev) => ({ ...prev, [key]: value }));

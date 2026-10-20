@@ -9,6 +9,7 @@
 import { useParams } from "next/navigation";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@plane/utils";
 import { GitBranch } from "lucide-react";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useWorkflow } from "@/hooks/store/use-workflow";
@@ -39,7 +40,7 @@ export const WorkFlowDisabledMessage = observer(function WorkFlowDisabledMessage
       <GitBranch className="size-3" />
       <span>
         {outgoingFlows.length} {t("project_settings.workflows.transitions_configured")}
-        {state ? ` · ${state.name}` : ""}
+        {state ? ` · ${getStateName(state.name, t)}` : ""}
       </span>
     </div>
   );

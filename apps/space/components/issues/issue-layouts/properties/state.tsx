@@ -6,6 +6,9 @@
  */
 
 import { observer } from "mobx-react";
+// plane imports
+import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@plane/utils";
 // plane ui
 import { StateGroupIcon } from "@plane/blocks/icons";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
@@ -31,6 +34,8 @@ type Props = {
 
 export const IssueBlockState = observer(function IssueBlockState(props: Props) {
   const { shouldShowBorder = true } = props;
+  // plane hooks
+  const { t } = useTranslation();
   // store hooks
   const { getStateById } = useStates();
   // derived values
@@ -38,7 +43,7 @@ export const IssueBlockState = observer(function IssueBlockState(props: Props) {
   if (!state) return null;
 
   return (
-    <Tooltip label={`State: ${state.name}`}>
+    <Tooltip label={`${t("state")}: ${getStateName(state.name, t)}`}>
       <div
         className={cn("flex h-full w-full items-center justify-between gap-1 rounded-sm px-2.5 py-1 text-11", {
           "border-[0.5px] border-strong": shouldShowBorder,
@@ -46,7 +51,7 @@ export const IssueBlockState = observer(function IssueBlockState(props: Props) {
       >
         <div className="flex w-full items-center gap-1.5">
           <StateGroupIcon stateGroup={state.group} />
-          <div className="text-11">{state.name}</div>
+          <div className="text-11">{getStateName(state.name, t)}</div>
         </div>
       </div>
     </Tooltip>

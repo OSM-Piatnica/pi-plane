@@ -329,6 +329,14 @@
   "deleting": "删除中",
   "make_a_copy": "创建副本",
   "move_to_project": "移动到项目",
+  "default_state_names": {
+    "backlog": "待办",
+    "todo": "待办",
+    "in_progress": "进行中",
+    "done": "完成",
+    "cancelled": "已取消",
+    "triage": "分流"
+  },
   "good": "早上",
   "morning": "早上",
   "afternoon": "下午",

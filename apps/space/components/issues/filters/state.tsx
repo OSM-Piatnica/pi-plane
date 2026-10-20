@@ -10,6 +10,7 @@ import { observer } from "mobx-react";
 // ui
 import { EIconSize } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@plane/utils";
 import { StateGroupIcon } from "@plane/blocks/icons";
 import { Loader } from "@plane/blocks/skeleton";
 // hooks
@@ -36,7 +37,9 @@ export const FilterState = observer(function FilterState(props: Props) {
   const appliedFiltersCount = appliedFilters?.length ?? 0;
   const appliedFiltersSet = new Set(appliedFilters ?? []);
 
-  const filteredOptions = states?.filter((s) => s.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredOptions = states?.filter((s) =>
+    getStateName(s.name, t).toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleViewToggle = () => {
     if (!filteredOptions) return;
@@ -63,7 +66,7 @@ export const FilterState = observer(function FilterState(props: Props) {
                     isChecked={appliedFiltersSet.has(state.id)}
                     onClick={() => handleUpdate(state.id)}
                     icon={<StateGroupIcon stateGroup={state.group} color={state.color} size={EIconSize.MD} />}
-                    title={state.name}
+                    title={getStateName(state.name, t)}
                   />
                 ))}
                 {filteredOptions.length > 5 && (

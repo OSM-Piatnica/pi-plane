@@ -14,7 +14,7 @@ import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TActivityEntityData, TIssueEntityData } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // plane ui
-import { generateWorkItemLink } from "@plane/utils";
+import { generateWorkItemLink, getStateName } from "@plane/utils";
 // components
 import { ListItem } from "@/components/core/list";
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
@@ -104,7 +104,7 @@ export const RecentIssue = observer(function RecentIssue(props: BlockProps) {
       }
       quickActionElement={
         <div className="flex gap-4">
-          <Tooltip label={`${t("state")}: ${state?.name ?? t("state")}`}>
+          <Tooltip label={`${t("state")}: ${state ? getStateName(state.name, t) : t("state")}`}>
             <div>
               <StateGroupIcon
                 stateGroup={state?.group ?? "backlog"}

@@ -119,6 +119,7 @@
       "save_success": "İş akışı yapılandırması kaydedildi.",
       "toggle_error": "İş akışı ayarları güncellenemedi.",
       "transition": "Geçiş",
+      "transition_count": "{count, plural, one {# geçiş} other {# geçiş}}",
       "transitions_configured": "geçiş yapılandırıldı"
     }
   },

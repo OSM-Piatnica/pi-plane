@@ -8,6 +8,8 @@
 import { observer } from "mobx-react";
 // plane imports
 import { StateGroupIcon } from "@plane/blocks/icons";
+import { STATE_GROUPS } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 import type { TStateGroups } from "@plane/types";
 // components
 import { SingleProgressStats } from "@/components/core/sidebar/single-progress-stats";
@@ -26,8 +28,20 @@ type TStateGroupStatComponent = {
   isEditable?: boolean;
 };
 
+// the groups are fixed system categories with translation keys; an unknown value falls back to its raw text
+const groupLabelKeys: Record<string, string> = Object.fromEntries(
+  Object.values(STATE_GROUPS).map((group) => [group.key, group.i18n_label])
+);
+
+const getGroupLabel = (state: string | undefined, t: (key: string) => string) => {
+  const key = state ? groupLabelKeys[state] : undefined;
+  return key ? t(key) : state;
+};
+
 export const StateGroupStatComponent = observer(function StateGroupStatComponent(props: TStateGroupStatComponent) {
   const { distribution, isEditable, totalIssuesCount, selectedStateGroups, handleStateGroupFiltersUpdate } = props;
+  // plane hooks
+  const { t } = useTranslation();
 
   const selectedStateGroupSet = new Set(selectedStateGroups);
 
@@ -40,7 +54,7 @@ export const StateGroupStatComponent = observer(function StateGroupStatComponent
           title={
             <div className="flex items-center gap-2">
               <StateGroupIcon stateGroup={group.state as TStateGroups} />
-              <span className="text-11 capitalize">{group.state}</span>
+              <span className="text-11 capitalize">{getGroupLabel(group.state, t)}</span>
             </div>
           }
           completed={group.completed}

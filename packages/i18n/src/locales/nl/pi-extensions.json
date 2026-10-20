@@ -119,6 +119,7 @@
       "save_success": "Workflowconfiguratie opgeslagen.",
       "toggle_error": "Kon workflowinstellingen niet bijwerken.",
       "transition": "Overgang",
+      "transition_count": "{count, plural, one {# overgang} other {# overgangen}}",
       "transitions_configured": "overgangen geconfigureerd"
     }
   },

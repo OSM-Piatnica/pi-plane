@@ -329,6 +329,14 @@
   "deleting": "Se șterge",
   "make_a_copy": "Creează o copie",
   "move_to_project": "Mută în proiect",
+  "default_state_names": {
+    "backlog": "Restante",
+    "todo": "De făcut",
+    "in_progress": "În desfășurare",
+    "done": "Gata",
+    "cancelled": "Anulate",
+    "triage": "Triaj"
+  },
   "good": "Bună",
   "morning": "dimineața",
   "afternoon": "după-amiaza",

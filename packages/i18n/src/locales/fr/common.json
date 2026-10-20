@@ -329,6 +329,14 @@
   "deleting": "Suppression",
   "make_a_copy": "Faire une copie",
   "move_to_project": "Déplacer vers le projet",
+  "default_state_names": {
+    "backlog": "Backlog",
+    "todo": "À faire",
+    "in_progress": "En cours",
+    "done": "Terminé",
+    "cancelled": "Annulé",
+    "triage": "Tri"
+  },
   "good": "Bonjour",
   "morning": "matin",
   "afternoon": "après-midi",

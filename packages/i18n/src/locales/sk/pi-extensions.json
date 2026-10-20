@@ -119,6 +119,7 @@
       "save_success": "Konfigurácia pracovného postupu bola uložená.",
       "toggle_error": "Aktualizácia nastavení pracovného postupu zlyhala.",
       "transition": "Prechod",
+      "transition_count": "{count, plural, one {# prechod} few {# prechody} many {# prechodu} other {# prechodov}}",
       "transitions_configured": "nakonfigurovaných prechodov"
     }
   },

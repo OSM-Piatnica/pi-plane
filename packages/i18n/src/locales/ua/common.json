@@ -329,6 +329,14 @@
   "deleting": "Видалення",
   "make_a_copy": "Зробити копію",
   "move_to_project": "Перемістити в проєкт",
+  "default_state_names": {
+    "backlog": "Backlog",
+    "todo": "До виконання",
+    "in_progress": "У процесі",
+    "done": "Готово",
+    "cancelled": "Скасовано",
+    "triage": "Сортування"
+  },
   "good": "Доброго",
   "morning": "ранку",
   "afternoon": "дня",

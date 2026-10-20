@@ -119,6 +119,7 @@
       "save_success": "სამუშაო პროცესის კონფიგურაცია შენახულია.",
       "toggle_error": "სამუშაო პროცესის პარამეტრების განახლება ვერ მოხერხდა.",
       "transition": "გადასვლა",
+      "transition_count": "{count, plural, one {# გადასვლა} other {# გადასვლა}}",
       "transitions_configured": "გადასვლა კონფიგურირებულია"
     }
   },

@@ -119,6 +119,7 @@
       "save_success": "Configuration du workflow enregistrée.",
       "toggle_error": "Impossible de mettre à jour les paramètres du workflow.",
       "transition": "Transition",
+      "transition_count": "{count, plural, one {# transition} many {# transitions} other {# transitions}}",
       "transitions_configured": "transitions configurées"
     }
   },

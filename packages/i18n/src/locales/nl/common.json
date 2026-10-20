@@ -329,6 +329,14 @@
   "deleting": "Verwijderen",
   "make_a_copy": "Kopie maken",
   "move_to_project": "Naar project verplaatsen",
+  "default_state_names": {
+    "backlog": "Backlog",
+    "todo": "Te doen",
+    "in_progress": "In uitvoering",
+    "done": "Klaar",
+    "cancelled": "Geannuleerd",
+    "triage": "Triage"
+  },
   "good": "Goede",
   "morning": "morgen",
   "afternoon": "middag",

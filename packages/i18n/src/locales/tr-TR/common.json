@@ -329,6 +329,14 @@
   "deleting": "Siliniyor",
   "make_a_copy": "Kopyasını oluştur",
   "move_to_project": "Projeye taşı",
+  "default_state_names": {
+    "backlog": "Bekleme Listesi",
+    "todo": "Yapılacak",
+    "in_progress": "Devam Ediyor",
+    "done": "Tamamlandı",
+    "cancelled": "İptal Edildi",
+    "triage": "Ön değerlendirme"
+  },
   "good": "İyi",
   "morning": "sabah",
   "afternoon": "öğleden sonra",

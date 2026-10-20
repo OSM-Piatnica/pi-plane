@@ -329,6 +329,14 @@
   "deleting": "Menghapus",
   "make_a_copy": "Buat salinan",
   "move_to_project": "Pindahkan ke proyek",
+  "default_state_names": {
+    "backlog": "Backlog",
+    "todo": "Akan dikerjakan",
+    "in_progress": "Dalam Proses",
+    "done": "Selesai",
+    "cancelled": "Dibatalkan",
+    "triage": "Triase"
+  },
   "good": "Bagus",
   "morning": "pagi",
   "afternoon": "siang",

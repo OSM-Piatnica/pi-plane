@@ -119,6 +119,7 @@
       "save_success": "Configuración del flujo de trabajo guardada.",
       "toggle_error": "No se pudo actualizar la configuración del flujo de trabajo.",
       "transition": "Transición",
+      "transition_count": "{count, plural, one {# transición} other {# transiciones}}",
       "transitions_configured": "transiciones configuradas"
     }
   },

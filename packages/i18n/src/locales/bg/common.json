@@ -325,6 +325,14 @@
   "deleting": "Изтриване",
   "make_a_copy": "Направи копие",
   "move_to_project": "Премести в проект",
+  "default_state_names": {
+    "backlog": "Бъклог",
+    "todo": "За правене",
+    "in_progress": "В процес",
+    "done": "Готово",
+    "cancelled": "Отменено",
+    "triage": "Сортиране"
+  },
   "good": "Добре дошли",
   "morning": "тази сутрин",
   "afternoon": "този следобед",

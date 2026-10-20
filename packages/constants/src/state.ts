@@ -32,7 +32,7 @@ export const STATE_GROUPS: {
     key: "unstarted",
     label: "Unstarted",
     i18n_label: "workspace_projects.state.unstarted",
-    defaultStateName: "Todo",
+    defaultStateName: "To do",
     color: "#3f76ff",
   },
   started: {

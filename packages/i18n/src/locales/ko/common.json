@@ -329,6 +329,14 @@
   "deleting": "삭제 중",
   "make_a_copy": "복사본 만들기",
   "move_to_project": "프로젝트로 이동",
+  "default_state_names": {
+    "backlog": "백로그",
+    "todo": "할 일",
+    "in_progress": "진행 중",
+    "done": "완료",
+    "cancelled": "취소됨",
+    "triage": "분류"
+  },
   "good": "좋은",
   "morning": "아침",
   "afternoon": "오후",
