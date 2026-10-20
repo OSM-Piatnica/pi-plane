@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "项目设置",
     "general": {
       "enter_project_id": "输入项目 ID",
       "please_select_a_timezone": "请选择时区",

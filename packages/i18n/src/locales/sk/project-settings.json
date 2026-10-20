@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Nastavenia projektu",
     "general": {
       "enter_project_id": "Zadajte ID projektu",
       "please_select_a_timezone": "Vyberte časové pásmo",

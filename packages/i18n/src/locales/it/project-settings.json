@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Impostazioni del progetto",
     "general": {
       "enter_project_id": "Inserisci l'ID del progetto",
       "please_select_a_timezone": "Seleziona un fuso orario",

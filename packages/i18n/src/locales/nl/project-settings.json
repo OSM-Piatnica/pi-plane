@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Projectinstellingen",
     "general": {
       "enter_project_id": "Voer project-ID in",
       "please_select_a_timezone": "Selecteer een tijdzone",
