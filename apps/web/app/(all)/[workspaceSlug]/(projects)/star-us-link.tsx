@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -22,7 +23,7 @@ export function StarUsOnGitHubLink() {
     <a
       aria-label={t("home.star_us_on_github")}
       className="flex flex-shrink-0 items-center gap-1.5 rounded-sm bg-layer-2 px-3 py-1.5"
-      href="https://github.com/makeplane/plane"
+      href="https://github.com/OSM-Piatnica/pi-plane"
       target="_blank"
       rel="noopener noreferrer"
     >
