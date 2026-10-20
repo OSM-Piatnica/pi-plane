@@ -243,7 +243,7 @@ export const SendProjectInvitationModal = observer(function SendProjectInvitatio
                                       emptyContent: t("project_components.invitation_modal.select_role_required"),
                                     }}
                                   >
-                                    <span className="min-w-0 grow truncate text-left capitalize">
+                                    <span className="min-w-0 grow truncate text-left">
                                       {value
                                         ? t(getRoleI18nKey(value))
                                         : t("project_components.invitation_modal.select_role_required")}

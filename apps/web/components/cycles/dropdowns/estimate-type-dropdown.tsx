@@ -50,6 +50,6 @@ export const EstimateTypeDropdown = observer(function EstimateTypeDropdown(props
       </Select>
     </div>
   ) : showDefault ? (
-    <span className="capitalize">{selectedOption ? t(selectedOption.labelKey) : value}</span>
+    <span>{selectedOption ? t(selectedOption.labelKey) : value}</span>
   ) : null;
 });

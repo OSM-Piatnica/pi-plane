@@ -90,7 +90,7 @@ export const StateTemplatesEditor = ({ value, onChange }: TProps) => {
                   className="h-2.5 w-2.5 rounded-full"
                   style={{ backgroundColor: STATE_GROUP_DEFAULT_COLOR[group] }}
                 />
-                <span className="text-13 font-medium text-primary capitalize">
+                <span className="text-13 font-medium text-primary">
                   {t(`workspace_settings.settings.project_templates.form.state_groups.${group}`)}
                 </span>
                 <span className="text-11 text-tertiary">({groupStates.length})</span>
