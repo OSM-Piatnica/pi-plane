@@ -39,8 +39,8 @@ export const useMention = () => {
     if (!userDataLoading && userRef.current) {
       return [userRef.current.id];
     } else {
-      const user = await waitForUserDate();
-      return [user.id];
+      const loadedUser = await waitForUserDate();
+      return [loadedUser.id];
     }
   };
 
