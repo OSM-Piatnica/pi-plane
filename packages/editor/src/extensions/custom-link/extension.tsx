@@ -6,7 +6,8 @@
  */
 
 import type { PasteRuleMatch } from "@tiptap/core";
-import { Mark, markPasteRule, mergeAttributes } from "@tiptap/core";
+import { Mark, markPasteRule } from "@tiptap/core";
+import { mergeAttributes } from "@/helpers/merge-attributes";
 import type { Plugin } from "@tiptap/pm/state";
 import { find, registerCustomProtocol, reset } from "linkifyjs";
 // constants

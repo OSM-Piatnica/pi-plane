@@ -11,12 +11,12 @@ import {
   findChildrenInRange,
   getChangedRanges,
   InputRule,
-  mergeAttributes,
   Node,
   nodeInputRule,
   PasteRule,
   removeDuplicates,
 } from "@tiptap/core";
+import { mergeAttributes } from "@/helpers/merge-attributes";
 import type { EmojiStorage } from "@tiptap/extension-emoji";
 import { emojis, emojiToShortcode, shortcodeToEmoji } from "@tiptap/extension-emoji";
 import { Fragment } from "@tiptap/pm/model";
