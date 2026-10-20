@@ -5,23 +5,13 @@
  * See the LICENSE file for details.
  */
 
-import { useMemo, useState } from "react";
-import { sortBy } from "lodash-es";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-// plane types
-import { Avatar } from "@makeplane/propel/components/avatar";
 import type { TInboxIssueFilterMemberKeys } from "@plane/types";
-// plane ui
-import { Loader } from "@plane/blocks/skeleton";
 // components
-import { getFileURL } from "@plane/utils";
-import { FilterHeader, FilterOption } from "@/components/issues/issue-layouts/filters";
-// helpers
+import { FilterMemberList } from "@/components/common/filters/member-filter-list";
 // hooks
-import { useMember } from "@/hooks/store/use-member";
 import { useProjectInbox } from "@/hooks/store/use-project-inbox";
-import { useUser } from "@/hooks/store/user";
 
 type Props = {
   filterKey: TInboxIssueFilterMemberKeys;
@@ -31,100 +21,23 @@ type Props = {
 };
 
 export const FilterMember = observer(function FilterMember(props: Props) {
-  const { filterKey, label = "Members", memberIds, searchQuery } = props;
+  const { filterKey, label, memberIds, searchQuery } = props;
   // hooks
-  const { inboxFilters, handleInboxIssueFilters } = useProjectInbox();
-  const { getUserDetails } = useMember();
-  const { data: currentUser } = useUser();
-  // states
-  const [itemsToRender, setItemsToRender] = useState(5);
-  const [previewEnabled, setPreviewEnabled] = useState(true);
   const { t } = useTranslation();
+  const { inboxFilters, handleInboxIssueFilters } = useProjectInbox();
   // derived values
   const filterValue = inboxFilters?.[filterKey] || [];
-  const appliedFiltersCount = filterValue?.length ?? 0;
-  const filterValueSet = new Set(filterValue ?? []);
-
-  const sortedOptions = useMemo(() => {
-    const filteredOptions = (memberIds || []).filter((memberId) =>
-      getUserDetails(memberId)?.display_name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
-    return sortBy(filteredOptions, [
-      (memberId) => !filterValue.includes(memberId),
-      (memberId) => memberId !== currentUser?.id,
-      (memberId) => getUserDetails(memberId)?.display_name.toLowerCase(),
-    ]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery]);
-
-  const handleViewToggle = () => {
-    if (!sortedOptions) return;
-
-    if (itemsToRender === sortedOptions.length) setItemsToRender(5);
-    else setItemsToRender(sortedOptions.length);
-  };
 
   const handleFilterValue = (value: string): string[] =>
     filterValue?.includes(value) ? filterValue.filter((v) => v !== value) : [...filterValue, value];
 
   return (
-    <>
-      <FilterHeader
-        title={`${label} ${appliedFiltersCount > 0 ? ` (${appliedFiltersCount})` : ""}`}
-        isPreviewEnabled={previewEnabled}
-        handleIsPreviewEnabled={() => setPreviewEnabled(!previewEnabled)}
-      />
-      {previewEnabled && (
-        <div>
-          {sortedOptions ? (
-            sortedOptions.length > 0 ? (
-              <>
-                {sortedOptions.slice(0, itemsToRender).map((memberId) => {
-                  const member = getUserDetails(memberId);
-
-                  if (!member) return null;
-                  return (
-                    <FilterOption
-                      key={`members-${member.id}`}
-                      isChecked={filterValueSet.has(member.id)}
-                      onClick={() => handleInboxIssueFilters(filterKey, handleFilterValue(member.id))}
-                      icon={
-                        <Avatar
-                          alt={member.display_name}
-                          fallback={member.display_name?.[0]?.toUpperCase()}
-                          src={getFileURL(member.avatar_url)}
-                          size="xs"
-                        />
-                      }
-                      title={currentUser?.id === member.id ? t("common.you") : member?.display_name}
-                    />
-                  );
-                })}
-                {sortedOptions.length > 5 && (
-                  <button
-                    type="button"
-                    className="ml-8 text-11 font-medium text-accent-primary"
-                    onClick={handleViewToggle}
-                  >
-                    {itemsToRender === sortedOptions.length
-                      ? t("common.search.view_less")
-                      : t("common.search.view_all")}
-                  </button>
-                )}
-              </>
-            ) : (
-              <p className="text-11 text-placeholder italic">{t("common.search.no_matches_found")}</p>
-            )
-          ) : (
-            <Loader className="space-y-2">
-              <Loader.Item height="20px" />
-              <Loader.Item height="20px" />
-              <Loader.Item height="20px" />
-            </Loader>
-          )}
-        </div>
-      )}
-    </>
+    <FilterMemberList
+      title={label ?? t("members")}
+      memberIds={memberIds}
+      appliedFilters={filterValue}
+      handleUpdate={(memberId) => handleInboxIssueFilters(filterKey, handleFilterValue(memberId))}
+      searchQuery={searchQuery}
+    />
   );
 });
