@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 import { Controller, useForm } from "react-hook-form";
 import { TickCircleOutline } from "@makeplane/propel/icons";
 // plane imports
-import { ORGANIZATION_SIZE, RESTRICTED_URLS } from "@plane/constants";
+import { ORGANIZATION_SIZE, RESTRICTED_URLS, SOLO_ORGANIZATION_SIZE } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import { Button as ButtonElement } from "@makeplane/propel/elements/button";
@@ -86,7 +86,7 @@ export const WorkspaceCreateStep = observer(function WorkspaceCreateStep({
           });
           await fetchWorkspaces();
           await completeStep(workspaceResponse.id);
-          onComplete(formData.organization_size === "Just myself");
+          onComplete(formData.organization_size === SOLO_ORGANIZATION_SIZE);
         } catch {
           setToast({
             type: "error",
