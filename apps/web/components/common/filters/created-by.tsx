@@ -90,7 +90,7 @@ export const FilterCreatedBy = observer(function FilterCreatedBy(props: Props) {
                           size="xs"
                         />
                       }
-                      title={currentUser?.id === member.id ? "You" : member?.display_name}
+                      title={currentUser?.id === member.id ? t("common.you") : member?.display_name}
                     />
                   );
                 })}
