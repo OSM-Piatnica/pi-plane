@@ -6,6 +6,7 @@
 
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react";
+import { STATE_GROUPS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { getStateName } from "@plane/utils";
 import { setPromiseToast } from "@plane/blocks/toast";
@@ -211,6 +212,8 @@ function WorkflowBuilder(props: BuilderProps) {
 
       <div className="divide-y divide-subtle">
         {states.map((state) => {
+          const groupLabelKey = (STATE_GROUPS as Partial<Record<string, { i18n_label: string }>>)[state.group]
+            ?.i18n_label;
           const stateFlows = flows
             .map((flow, index) => ({ flow, index }))
             .filter(({ flow }) => flow.source_state_id === state.id);
@@ -227,7 +230,7 @@ function WorkflowBuilder(props: BuilderProps) {
                 <div className="flex items-center gap-2">
                   <span className="size-2 rounded-full" style={{ backgroundColor: state.color }} />
                   <span className="text-13 font-medium">{getStateName(state.name, t)}</span>
-                  <span className="text-11 text-placeholder">{state.group}</span>
+                  <span className="text-11 text-placeholder">{groupLabelKey ? t(groupLabelKey) : state.group}</span>
                 </div>
                 <span className="text-11 text-tertiary">{stateFlows.length} flows</span>
               </button>

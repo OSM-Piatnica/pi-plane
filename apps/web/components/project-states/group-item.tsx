@@ -14,7 +14,7 @@ import { IconButton } from "@makeplane/propel/components/icon-button";
 import { AddOutline, ChevronDownOutline } from "@makeplane/propel/icons";
 // plane imports
 import { StateGroupIcon } from "@plane/blocks/icons";
-import { EIconSize } from "@plane/constants";
+import { EIconSize, STATE_GROUPS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import type { IState, TStateGroups, TStateOperationsCallbacks } from "@plane/types";
 import { cn } from "@plane/utils";
@@ -55,6 +55,8 @@ export const GroupItem = observer(function GroupItem(props: TGroupItem) {
   const [createState, setCreateState] = useState(false);
   // derived values
   const currentStateExpanded = groupsExpanded.includes(groupKey);
+  // the group names are fixed system categories, so they have translation keys (unlike the state names)
+  const groupLabel = t(STATE_GROUPS[groupKey].i18n_label);
   const shouldShowEmptyState = states.length === 0 && currentStateExpanded && !createState;
 
   const isCreateDisabled = !isEditable || createState;
@@ -83,7 +85,7 @@ export const GroupItem = observer(function GroupItem(props: TGroupItem) {
         trigger={
           <span className="flex w-full items-center gap-1">
             <StateGroupIcon stateGroup={groupKey} size={EIconSize.XL} className="shrink-0" />
-            <span className="px-1 text-14 font-medium text-secondary capitalize">{groupKey}</span>
+            <span className="px-1 text-14 font-medium text-secondary">{groupLabel}</span>
           </span>
         }
         trailing={
@@ -109,7 +111,7 @@ export const GroupItem = observer(function GroupItem(props: TGroupItem) {
       >
         {shouldShowEmptyState && (
           <div className="flex h-full flex-col items-center justify-center py-4 text-13 text-tertiary">
-            <div>{t("project_settings.states.empty_state.title", { groupKey })}</div>
+            <div>{t("project_settings.states.empty_state.title", { groupKey: groupLabel })}</div>
             {isEditable && <div>{t("project_settings.states.empty_state.description")}</div>}
           </div>
         )}
