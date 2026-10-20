@@ -337,6 +337,10 @@
     "cancelled": "გაუქმებული",
     "triage": "დახარისხება"
   },
+  "filter_headings": {
+    "access": "წვდომა",
+    "owned_by": "მფლობელი"
+  },
   "good": "კარგი",
   "morning": "დილა",
   "afternoon": "შუადღე",

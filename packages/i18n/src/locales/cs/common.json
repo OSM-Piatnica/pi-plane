@@ -337,6 +337,10 @@
     "cancelled": "Zrušeno",
     "triage": "Třídění"
   },
+  "filter_headings": {
+    "access": "Přístup",
+    "owned_by": "Vlastník"
+  },
   "good": "Dobrý",
   "morning": "ráno",
   "afternoon": "odpoledne",

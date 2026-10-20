@@ -8,11 +8,11 @@
 import { observer } from "mobx-react";
 import { useTheme } from "next-themes";
 // plane imports
-import { PROGRESS_STATE_GROUPS_DETAILS } from "@plane/constants";
+import { PROGRESS_STATE_GROUPS_DETAILS, STATE_GROUPS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import type { TWorkItemFilterCondition } from "@plane/shared-state";
 import { LinearProgress } from "@makeplane/propel/components/linear-progress";
-import type { ICycle } from "@plane/types";
+import type { ICycle, TStateGroups } from "@plane/types";
 import { Loader } from "@plane/blocks/skeleton";
 // assets
 import darkProgressAsset from "@/app/assets/empty-state/active-cycle/progress-dark.webp?url";
@@ -94,7 +94,11 @@ export const ActiveCycleProgress = observer(function ActiveCycleProgress(props: 
                           backgroundColor: PROGRESS_STATE_GROUPS_DETAILS[index].color,
                         }}
                       />
-                      <span className="w-16 font-medium text-tertiary capitalize">{group}</span>
+                      <span className="w-16 font-medium text-tertiary">
+                        {STATE_GROUPS[group as TStateGroups]
+                          ? t(STATE_GROUPS[group as TStateGroups].i18n_label)
+                          : group}
+                      </span>
                     </div>
                     <span className="text-tertiary">{`${groupedIssues[group]} ${
                       groupedIssues[group] > 1 ? t("common.work_items") : t("common.work_item")

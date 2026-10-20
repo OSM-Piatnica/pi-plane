@@ -333,6 +333,10 @@
     "cancelled": "Отменено",
     "triage": "Сортиране"
   },
+  "filter_headings": {
+    "access": "Достъп",
+    "owned_by": "Собственик"
+  },
   "good": "Добре дошли",
   "morning": "тази сутрин",
   "afternoon": "този следобед",

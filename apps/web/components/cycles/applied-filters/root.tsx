@@ -13,7 +13,7 @@ import { Icon } from "@makeplane/propel/components/icon";
 import { Pill } from "@makeplane/propel/components/pill";
 import { CloseOutline } from "@makeplane/propel/icons";
 import type { TCycleFilters } from "@plane/types";
-import { replaceUnderscoreIfSnakeCase } from "@plane/utils";
+import { getAppliedFilterHeading } from "@/helpers/applied-filter-heading";
 // hooks
 import { useUserPermissions } from "@/hooks/store/user";
 // local imports
@@ -54,9 +54,9 @@ export const CycleAppliedFiltersList = observer(function CycleAppliedFiltersList
         return (
           <div
             key={filterKey}
-            className="my-auto flex min-h-9 cursor-pointer flex-wrap items-center gap-1.5 rounded-md border border-subtle p-1.5 text-11 text-tertiary capitalize hover:text-secondary"
+            className="my-auto flex min-h-9 cursor-pointer flex-wrap items-center gap-1.5 rounded-md border border-subtle p-1.5 text-11 text-tertiary hover:text-secondary"
           >
-            <span className="text-11 text-tertiary">{replaceUnderscoreIfSnakeCase(filterKey)}</span>
+            <span className="text-11 text-tertiary">{getAppliedFilterHeading(filterKey, t)}</span>
             <div className="flex flex-wrap items-center gap-1">
               {filterKey === "status" && (
                 <AppliedStatusFilters

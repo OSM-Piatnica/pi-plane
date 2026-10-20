@@ -337,6 +337,10 @@
     "cancelled": "İptal Edildi",
     "triage": "Ön değerlendirme"
   },
+  "filter_headings": {
+    "access": "Erişim",
+    "owned_by": "Sahibi"
+  },
   "good": "İyi",
   "morning": "sabah",
   "afternoon": "öğleden sonra",

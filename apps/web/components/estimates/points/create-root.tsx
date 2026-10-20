@@ -9,7 +9,8 @@ import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useState } from "react";
 import { observer } from "mobx-react";
 // plane imports
-import { estimateCount } from "@plane/constants";
+import { ESTIMATE_SYSTEMS, estimateCount } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import { Icon } from "@makeplane/propel/components/icon";
 import { AddOutline } from "@makeplane/propel/icons";
@@ -48,6 +49,8 @@ export const EstimatePointCreateRoot = observer(function EstimatePointCreateRoot
     estimatePointError,
     handleEstimatePointError,
   } = props;
+  // plane hooks
+  const { t } = useTranslation();
   // states
   const [estimatePointCreate, setEstimatePointCreate] = useState<TEstimatePointsObject[] | undefined>(undefined);
 
@@ -112,7 +115,7 @@ export const EstimatePointCreateRoot = observer(function EstimatePointCreateRoot
   if (!workspaceSlug || !projectId) return <></>;
   return (
     <div className="space-y-1">
-      <div className="text-13 font-medium text-secondary capitalize">{estimateType}</div>
+      <div className="text-13 font-medium text-secondary">{t(ESTIMATE_SYSTEMS[estimateType].i18n_name)}</div>
 
       <div>
         <Sortable

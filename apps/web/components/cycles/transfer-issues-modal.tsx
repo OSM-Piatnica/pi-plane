@@ -27,11 +27,18 @@ import {
   DialogTitle,
 } from "@makeplane/propel/components/dialog";
 import { IconButton } from "@makeplane/propel/components/icon-button";
+import { CYCLE_STATUS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { setToast } from "@plane/blocks/toast";
 import { EIssuesStoreType } from "@plane/types";
 import { useCycle } from "@/hooks/store/use-cycle";
 import { useIssues } from "@/hooks/store/use-issues";
+
+// The cycle status comes from the API as a lowercase key ("current", "upcoming", ...), so it is looked up for its translation.
+const getCycleStatusTitle = (status: string, t: (key: string) => string) => {
+  const option = CYCLE_STATUS.find((cycleStatus) => cycleStatus.value === status.toLowerCase());
+  return option ? t(option.i18n_title) : status.toLowerCase();
+};
 
 type Props = {
   isOpen: boolean;
@@ -156,8 +163,8 @@ export const TransferIssuesModal = observer(function TransferIssuesModal(props: 
                         <div className="flex w-full justify-between truncate">
                           <span className="truncate">{cycleDetails?.name}</span>
                           {cycleDetails.status && (
-                            <span className="flex flex-shrink-0 items-center rounded-full bg-layer-1 px-2 capitalize">
-                              {cycleDetails.status.toLocaleLowerCase()}
+                            <span className="flex flex-shrink-0 items-center rounded-full bg-layer-1 px-2">
+                              {getCycleStatusTitle(cycleDetails.status, t)}
                             </span>
                           )}
                         </div>

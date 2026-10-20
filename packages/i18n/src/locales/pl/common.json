@@ -337,6 +337,10 @@
     "cancelled": "Anulowane",
     "triage": "Do kwalifikacji"
   },
+  "filter_headings": {
+    "access": "Dostęp",
+    "owned_by": "Właściciel"
+  },
   "good": "Witaj",
   "morning": "rano",
   "afternoon": "po południu",

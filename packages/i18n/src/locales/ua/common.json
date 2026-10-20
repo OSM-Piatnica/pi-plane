@@ -337,6 +337,10 @@
     "cancelled": "Скасовано",
     "triage": "Сортування"
   },
+  "filter_headings": {
+    "access": "Доступ",
+    "owned_by": "Власник"
+  },
   "good": "Доброго",
   "morning": "ранку",
   "afternoon": "дня",
