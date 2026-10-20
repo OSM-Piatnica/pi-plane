@@ -331,7 +331,7 @@
   "move_to_project": "Move to project",
   "default_state_names": {
     "backlog": "Backlog",
-    "todo": "Todo",
+    "todo": "To do",
     "in_progress": "In Progress",
     "done": "Done",
     "cancelled": "Cancelled",

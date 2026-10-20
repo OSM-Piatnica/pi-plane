@@ -10,9 +10,10 @@ import { getStateName } from "../../helpers/state-name";
 const t = (key: string) => `[${key}]`;
 
 describe("getStateName", () => {
-  it("translates the six default state names", () => {
+  it("translates the default state names, including both spellings of To do", () => {
     expect(getStateName("Backlog", t)).toBe("[default_state_names.backlog]");
     expect(getStateName("Todo", t)).toBe("[default_state_names.todo]");
+    expect(getStateName("To do", t)).toBe("[default_state_names.todo]");
     expect(getStateName("In Progress", t)).toBe("[default_state_names.in_progress]");
     expect(getStateName("Done", t)).toBe("[default_state_names.done]");
     expect(getStateName("Cancelled", t)).toBe("[default_state_names.cancelled]");
