@@ -16,7 +16,7 @@ import { Card } from "@plane/blocks/card";
 import { Loader } from "@plane/blocks/skeleton";
 import { getFileURL } from "@plane/utils";
 // components
-import { ActivityMessage, IssueLink } from "@/components/core/activity";
+import { ActivityMessage } from "@/components/core/activity";
 // constants
 import { USER_PROFILE_ACTIVITY } from "@plane/constants";
 // helpers
@@ -70,15 +70,12 @@ export const ProfileActivity = observer(function ProfileActivity() {
                 <div className="-mt-1 w-4/5 break-words">
                   <p className="inline text-13 text-secondary">
                     <span className="font-medium text-primary">
-                      {currentUser?.id === activity.actor_detail?.id ? "You" : activity.actor_detail?.display_name}{" "}
+                      {currentUser?.id === activity.actor_detail?.id
+                        ? t("common.you")
+                        : activity.actor_detail?.display_name}
                     </span>
-                    {activity.field ? (
-                      <ActivityMessage activity={activity} showIssue />
-                    ) : (
-                      <span>
-                        created <IssueLink activity={activity} />
-                      </span>
-                    )}
+                    {t("activity_feed.profile.actor_separator")}
+                    <ActivityMessage activity={activity} showIssue />
                   </p>
                   <p className="text-11 whitespace-nowrap text-secondary">{timeAgo(activity.created_at)}</p>
                 </div>

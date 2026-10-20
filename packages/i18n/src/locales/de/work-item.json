@@ -796,6 +796,7 @@
         "set_with_issue": "hat das Fälligkeitsdatum von <issue/> auf <value/> gesetzt",
         "set_without_issue": "hat das Fälligkeitsdatum auf <value/> gesetzt"
       },
+      "actor_separator": " ",
       "commented_ago": "Kommentiert {timeAgo}"
     },
     "project": {

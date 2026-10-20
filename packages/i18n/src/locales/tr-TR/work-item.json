@@ -796,6 +796,7 @@
         "set_with_issue": "<issue/> için son tarihi <value/> olarak ayarladı",
         "set_without_issue": "son tarihi <value/> olarak ayarladı"
       },
+      "actor_separator": " ",
       "commented_ago": "{timeAgo} yorum yaptı"
     },
     "project": {

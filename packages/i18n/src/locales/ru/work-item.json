@@ -796,6 +796,7 @@
         "set_with_issue": "установил(а) срок выполнения <value/> для <issue/>",
         "set_without_issue": "установил(а) срок выполнения: <value/>"
       },
+      "actor_separator": " ",
       "commented_ago": "Прокомментировал(а) {timeAgo}"
     },
     "project": {

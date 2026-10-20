@@ -796,6 +796,7 @@
         "set_with_issue": "<issue/>の期限を<value/>に設定しました",
         "set_without_issue": "期限を<value/>に設定しました"
       },
+      "actor_separator": " ",
       "commented_ago": "{timeAgo}にコメントしました"
     },
     "project": {

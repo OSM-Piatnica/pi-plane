@@ -796,6 +796,7 @@
         "set_with_issue": "menetapkan tanggal jatuh tempo untuk <issue/> menjadi <value/>",
         "set_without_issue": "menetapkan tanggal jatuh tempo menjadi <value/>"
       },
+      "actor_separator": " ",
       "commented_ago": "Berkomentar {timeAgo}"
     },
     "project": {

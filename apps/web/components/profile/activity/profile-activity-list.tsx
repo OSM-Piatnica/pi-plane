@@ -173,11 +173,12 @@ export const ProfileActivityListPage = observer(function ProfileActivityListPage
                               >
                                 <span className="text-gray font-medium">
                                   {currentUser?.id === activityItem.actor_detail.id
-                                    ? "You"
+                                    ? t("common.you")
                                     : activityItem.actor_detail.display_name}
                                 </span>
                               </Link>
-                            )}{" "}
+                            )}
+                            {t("activity_feed.profile.actor_separator")}
                             <div className="inline gap-1">
                               {message}{" "}
                               <span className="flex-shrink-0 whitespace-nowrap">

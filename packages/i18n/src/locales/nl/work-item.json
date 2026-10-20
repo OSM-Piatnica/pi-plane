@@ -796,6 +796,7 @@
         "set_with_issue": "stelde de vervaldatum in op <value/> voor <issue/>",
         "set_without_issue": "stelde de vervaldatum in op <value/>"
       },
+      "actor_separator": " ",
       "commented_ago": "Plaatste een opmerking {timeAgo}"
     },
     "project": {
