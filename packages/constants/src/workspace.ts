@@ -8,7 +8,11 @@
 import type { TStaticViewTypes, IWorkspaceSearchResults } from "@plane/types";
 import { EUserWorkspaceRoles } from "@plane/types";
 
-export const ORGANIZATION_SIZE: string[] = ["Just myself", "2-10", "11-50", "51-200", "201-500", "500+"];
+// A language-neutral value (no English label), so it needs no translation. Workspaces created before
+// migration 0135 stored "Just myself" for the solo size.
+export const SOLO_ORGANIZATION_SIZE = "1";
+
+export const ORGANIZATION_SIZE: string[] = [SOLO_ORGANIZATION_SIZE, "2-10", "11-50", "51-200", "201-500", "500+"];
 
 export const RESTRICTED_URLS: string[] = [
   "404",
