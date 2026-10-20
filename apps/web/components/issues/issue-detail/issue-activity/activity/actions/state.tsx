@@ -7,6 +7,7 @@
 
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@plane/utils";
 import { renderTaggedText } from "@/helpers/tagged-text";
 // hooks
 import { StateOutline } from "@makeplane/propel/icons";
@@ -37,7 +38,7 @@ export const IssueStateActivity = observer(function IssueStateActivity(props: TI
       ends={ends}
     >
       {renderTaggedText(message, {
-        value: () => <span className="font-medium text-primary">{activity.new_value}</span>,
+        value: () => <span className="font-medium text-primary">{getStateName(activity.new_value ?? "", t)}</span>,
         issue: () => <IssueLink activityId={activityId} />,
       })}
     </IssueActivityBlockComponent>
