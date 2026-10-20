@@ -162,7 +162,7 @@
           },
           "website": {
             "label": "URL webové stránky",
-            "placeholder": "https://plane.so",
+            "placeholder": "https://example.com",
             "validation": {
               "invalid": "Neplatná URL",
               "maxLength": "URL by měla být kratší než 800 znaků"
@@ -178,7 +178,7 @@
           },
           "contact_email": {
             "label": "Email podpory",
-            "placeholder": "help@plane.so",
+            "placeholder": "help@example.com",
             "validation": {
               "invalid": "Neplatná emailová adresa",
               "maxLength": "Email podpory by měl být kratší než 255 znaků"
@@ -186,7 +186,7 @@
           },
           "privacy_policy_url": {
             "label": "Odkaz na vaši ochranu osobních údajů",
-            "placeholder": "https://planes.so/privacy-policy",
+            "placeholder": "https://example.com/privacy-policy",
             "validation": {
               "invalid": "Neplatná URL",
               "maxLength": "URL by měla být kratší než 800 znaků"
@@ -194,7 +194,7 @@
           },
           "terms_of_service_url": {
             "label": "Odkaz na vaše podmínky použití",
-            "placeholder": "https://planes.so/terms-of-use",
+            "placeholder": "https://example.com/terms-of-use",
             "validation": {
               "invalid": "Neplatná URL",
               "maxLength": "URL by měla být kratší než 800 znaků"

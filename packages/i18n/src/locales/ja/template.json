@@ -162,7 +162,7 @@
           },
           "website": {
             "label": "WebサイトのURL",
-            "placeholder": "https://plane.so",
+            "placeholder": "https://example.com",
             "validation": {
               "invalid": "無効なURL",
               "maxLength": "URLは800文字未満にしてください"
@@ -178,7 +178,7 @@
           },
           "contact_email": {
             "label": "サポートメールアドレス",
-            "placeholder": "help@plane.so",
+            "placeholder": "help@example.com",
             "validation": {
               "invalid": "無効なメールアドレス",
               "maxLength": "サポートメールアドレスは255文字未満にしてください"
@@ -186,7 +186,7 @@
           },
           "privacy_policy_url": {
             "label": "プライバシーポリシーのURL",
-            "placeholder": "https://planes.so/privacy-policy",
+            "placeholder": "https://example.com/privacy-policy",
             "validation": {
               "invalid": "無効なURL",
               "maxLength": "URLは800文字未満にしてください"
@@ -194,7 +194,7 @@
           },
           "terms_of_service_url": {
             "label": "利用規約のURL",
-            "placeholder": "https://planes.so/terms-of-use",
+            "placeholder": "https://example.com/terms-of-use",
             "validation": {
               "invalid": "無効なURL",
               "maxLength": "URLは800文字未満にしてください"

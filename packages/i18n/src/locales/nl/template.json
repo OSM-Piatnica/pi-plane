@@ -162,7 +162,7 @@
           },
           "website": {
             "label": "Website-URL",
-            "placeholder": "https://plane.so",
+            "placeholder": "https://example.com",
             "validation": {
               "invalid": "Ongeldige URL",
               "maxLength": "URL moet korter zijn dan 800 tekens"
@@ -178,7 +178,7 @@
           },
           "contact_email": {
             "label": "Contact-e-mail",
-            "placeholder": "help@plane.so",
+            "placeholder": "help@example.com",
             "validation": {
               "invalid": "Ongeldig e-mailadres",
               "maxLength": "Contact-e-mail moet korter zijn dan 255 tekens"
@@ -186,7 +186,7 @@
           },
           "privacy_policy_url": {
             "label": "Link naar je privacybeleid",
-            "placeholder": "https://planes.so/privacy-policy",
+            "placeholder": "https://example.com/privacy-policy",
             "validation": {
               "invalid": "Ongeldige URL",
               "maxLength": "URL moet korter zijn dan 800 tekens"
@@ -194,7 +194,7 @@
           },
           "terms_of_service_url": {
             "label": "Link naar je gebruiksvoorwaarden",
-            "placeholder": "https://planes.so/terms-of-use",
+            "placeholder": "https://example.com/terms-of-use",
             "validation": {
               "invalid": "Ongeldige URL",
               "maxLength": "URL moet korter zijn dan 800 tekens"

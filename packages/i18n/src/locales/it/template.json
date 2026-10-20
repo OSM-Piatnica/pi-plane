@@ -162,7 +162,7 @@
           },
           "website": {
             "label": "URL del sito web",
-            "placeholder": "https://plane.so",
+            "placeholder": "https://example.com",
             "validation": {
               "invalid": "URL non valido",
               "maxLength": "L'URL deve contenere meno di 800 caratteri"
@@ -178,7 +178,7 @@
           },
           "contact_email": {
             "label": "Email di supporto",
-            "placeholder": "help@plane.so",
+            "placeholder": "help@example.com",
             "validation": {
               "invalid": "Indirizzo email non valido",
               "maxLength": "L'email di supporto deve contenere meno di 255 caratteri"
@@ -186,7 +186,7 @@
           },
           "privacy_policy_url": {
             "label": "Link alla tua politica privacy",
-            "placeholder": "https://planes.so/privacy-policy",
+            "placeholder": "https://example.com/privacy-policy",
             "validation": {
               "invalid": "URL non valido",
               "maxLength": "URL deve contenere meno di 800 caratteri"
@@ -194,7 +194,7 @@
           },
           "terms_of_service_url": {
             "label": "Link alla tua politica di utilizzo",
-            "placeholder": "https://planes.so/terms-of-use",
+            "placeholder": "https://example.com/terms-of-use",
             "validation": {
               "invalid": "URL non valido",
               "maxLength": "URL deve contenere meno di 800 caratteri"

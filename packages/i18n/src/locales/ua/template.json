@@ -162,7 +162,7 @@
           },
           "website": {
             "label": "URL вебсайту",
-            "placeholder": "https://plane.so",
+            "placeholder": "https://example.com",
             "validation": {
               "invalid": "Некоректний URL",
               "maxLength": "URL має бути менше 800 символів"
@@ -178,7 +178,7 @@
           },
           "contact_email": {
             "label": "Email підтримки",
-            "placeholder": "help@plane.so",
+            "placeholder": "help@example.com",
             "validation": {
               "invalid": "Некоректна email адреса",
               "maxLength": "Email підтримки має бути менше 255 символів"
@@ -186,7 +186,7 @@
           },
           "privacy_policy_url": {
             "label": "Посилання на вашу політику конфіденційності",
-            "placeholder": "https://planes.so/privacy-policy",
+            "placeholder": "https://example.com/privacy-policy",
             "validation": {
               "invalid": "Некоректне посилання",
               "maxLength": "Посилання має бути менше 800 символів"
@@ -194,7 +194,7 @@
           },
           "terms_of_service_url": {
             "label": "Посилання на ваші умови використання",
-            "placeholder": "https://planes.so/terms-of-use",
+            "placeholder": "https://example.com/terms-of-use",
             "validation": {
               "invalid": "Некоректне посилання",
               "maxLength": "Посилання має бути менше 800 символів"

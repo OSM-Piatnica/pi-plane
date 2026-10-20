@@ -162,7 +162,7 @@
           },
           "website": {
             "label": "URL trang web",
-            "placeholder": "https://plane.so",
+            "placeholder": "https://example.com",
             "validation": {
               "invalid": "URL không hợp lệ",
               "maxLength": "URL không nên vượt quá 800 ký tự"
@@ -178,7 +178,7 @@
           },
           "contact_email": {
             "label": "Email hỗ trợ",
-            "placeholder": "help@plane.so",
+            "placeholder": "help@example.com",
             "validation": {
               "invalid": "Địa chỉ email không hợp lệ",
               "maxLength": "Email hỗ trợ không nên vượt quá 255 ký tự"
@@ -186,7 +186,7 @@
           },
           "privacy_policy_url": {
             "label": "Liên kết đến chính sách bảo mật của bạn",
-            "placeholder": "https://planes.so/privacy-policy",
+            "placeholder": "https://example.com/privacy-policy",
             "validation": {
               "invalid": "URL không hợp lệ",
               "maxLength": "URL không nên vượt quá 800 ký tự"
@@ -194,7 +194,7 @@
           },
           "terms_of_service_url": {
             "label": "Liên kết đến điều khoản sử dụng của bạn",
-            "placeholder": "https://planes.so/terms-of-use",
+            "placeholder": "https://example.com/terms-of-use",
             "validation": {
               "invalid": "URL không hợp lệ",
               "maxLength": "URL không nên vượt quá 800 ký tự"
