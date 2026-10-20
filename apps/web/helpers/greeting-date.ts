@@ -6,11 +6,24 @@
 
 type TGreetingPeriod = "morning" | "afternoon" | "evening";
 
+// The greeting is recomputed on every clock tick, and building an Intl formatter is slow, so each
+// distinct one (locale and options) is built once and reused.
+const formatters = new Map<string, Intl.DateTimeFormat>();
+const getFormatter = (locale: string, options: Intl.DateTimeFormatOptions): Intl.DateTimeFormat => {
+  const key = `${locale}|${JSON.stringify(options)}`;
+  let formatter = formatters.get(key);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat(locale, options);
+    formatters.set(key, formatter);
+  }
+  return formatter;
+};
+
 // An unset or unknown time zone falls back to the browser's, because Intl throws a RangeError for it.
 const resolveTimeZone = (timeZone?: string | null): string | undefined => {
   if (!timeZone) return undefined;
   try {
-    new Intl.DateTimeFormat(undefined, { timeZone }).resolvedOptions();
+    getFormatter("en-US", { timeZone });
     return timeZone;
   } catch {
     return undefined;
@@ -26,15 +39,12 @@ const resolveTimeZone = (timeZone?: string | null): string | undefined => {
 export const formatGreetingDate = (intlLocale: string, date: Date, timeZone?: string | null) => {
   const zone = resolveTimeZone(timeZone);
   return {
-    weekDay: new Intl.DateTimeFormat(intlLocale, { timeZone: zone, weekday: "long" }).format(date),
-    date: new Intl.DateTimeFormat(intlLocale, { timeZone: zone, month: "short", day: "numeric" }).format(date),
-    time: new Intl.DateTimeFormat(intlLocale, {
-      timeZone: zone,
-      hourCycle: "h23",
-      hour: "2-digit",
-      minute: "2-digit",
-    }).format(date),
-    hour: Number(new Intl.DateTimeFormat("en-US", { timeZone: zone, hourCycle: "h23", hour: "2-digit" }).format(date)),
+    weekDay: getFormatter(intlLocale, { timeZone: zone, weekday: "long" }).format(date),
+    date: getFormatter(intlLocale, { timeZone: zone, month: "short", day: "numeric" }).format(date),
+    time: getFormatter(intlLocale, { timeZone: zone, hourCycle: "h23", hour: "2-digit", minute: "2-digit" }).format(
+      date
+    ),
+    hour: Number(getFormatter("en-US", { timeZone: zone, hourCycle: "h23", hour: "2-digit" }).format(date)),
   };
 };
 
