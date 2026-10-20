@@ -15,15 +15,21 @@ import { HydratedRouter } from "react-router/dom";
 // initialized instance; hydrating before the client instance is ready would
 // make the first client render diverge from the server HTML, and React 19
 // leaves server DOM it could not adopt in place instead of clearing it.
-void initPromise
-  .catch(() => {})
-  .then(() => {
-    startTransition(() => {
-      hydrateRoot(
-        document,
-        <StrictMode>
-          <HydratedRouter />
-        </StrictMode>
-      );
-    });
+const hydrate = async () => {
+  // hydrate even if the i18n initialisation failed, as before
+  try {
+    await initPromise;
+  } catch {
+    // ignored on purpose
+  }
+  startTransition(() => {
+    hydrateRoot(
+      document,
+      <StrictMode>
+        <HydratedRouter />
+      </StrictMode>
+    );
   });
+};
+
+void hydrate();
