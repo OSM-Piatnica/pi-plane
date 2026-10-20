@@ -119,6 +119,7 @@
       "save_success": "Nastavení workflow bylo uloženo.",
       "toggle_error": "Nastavení workflow se nepodařilo aktualizovat.",
       "transition": "Přechod",
+      "transition_count": "{count, plural, one {# přechod} few {# přechody} many {# přechodu} other {# přechodů}}",
       "transitions_configured": "nastavených přechodů"
     }
   },

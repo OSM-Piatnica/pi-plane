@@ -119,6 +119,7 @@
       "save_success": "Конфигурацията на работния процес е запазена.",
       "toggle_error": "Настройките на работния процес не можаха да бъдат обновени.",
       "transition": "Преход",
+      "transition_count": "{count, plural, one {# преход} other {# прехода}}",
       "transitions_configured": "конфигурирани прехода"
     }
   },

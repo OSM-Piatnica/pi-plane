@@ -119,6 +119,7 @@
       "save_success": "工作流程設定已儲存。",
       "toggle_error": "無法更新工作流程設定。",
       "transition": "轉換",
+      "transition_count": "{count, plural, one {# 項轉換} other {# 項轉換}}",
       "transitions_configured": "項轉換已設定"
     }
   },

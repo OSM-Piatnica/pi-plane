@@ -119,6 +119,7 @@
       "save_success": "Konfigurasi workflow disimpan.",
       "toggle_error": "Tidak dapat memperbarui pengaturan workflow.",
       "transition": "Transisi",
+      "transition_count": "{count, plural, one {# transisi} other {# transisi}}",
       "transitions_configured": "transisi dikonfigurasi"
     }
   },

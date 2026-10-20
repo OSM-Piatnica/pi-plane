@@ -119,6 +119,7 @@
       "save_success": "工作流配置已保存。",
       "toggle_error": "无法更新工作流设置。",
       "transition": "流转",
+      "transition_count": "{count, plural, one {# 个流转} other {# 个流转}}",
       "transitions_configured": "个已配置的流转"
     }
   },

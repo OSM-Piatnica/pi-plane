@@ -71,7 +71,7 @@ export const StateCreate = observer(function StateCreate(props: TStateCreate) {
       onSubmit={onSubmit}
       onCancel={onCancel}
       buttonDisabled={loader}
-      buttonTitle={loader ? `Creating` : `Create`}
+      buttonTitle={loader ? t("creating") : t("common.create")}
     />
   );
 });

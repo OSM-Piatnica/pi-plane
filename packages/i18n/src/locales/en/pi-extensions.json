@@ -119,6 +119,7 @@
       "save_success": "Workflow configuration saved.",
       "toggle_error": "Could not update workflow settings.",
       "transition": "Transition",
+      "transition_count": "{count, plural, one {# transition} other {# transitions}}",
       "transitions_configured": "transitions configured"
     }
   },

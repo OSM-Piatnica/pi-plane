@@ -40,7 +40,7 @@ export function ProfileWorkload({ stateDistribution }: Props) {
                       ? t("profile_ui.workload_not_started")
                       : group.state_group === "started"
                         ? t("profile_ui.workload_working_on")
-                        : STATE_GROUPS[group.state_group].label}
+                        : t(STATE_GROUPS[group.state_group].i18n_label)}
                   </span>
                   <p className="text-18 font-semibold">{group.state_count}</p>
                 </div>

@@ -232,7 +232,9 @@ function WorkflowBuilder(props: BuilderProps) {
                   <span className="text-13 font-medium">{getStateName(state.name, t)}</span>
                   <span className="text-11 text-placeholder">{groupLabelKey ? t(groupLabelKey) : state.group}</span>
                 </div>
-                <span className="text-11 text-tertiary">{stateFlows.length} flows</span>
+                <span className="text-11 text-tertiary">
+                  {t("project_settings.workflows.transition_count", { count: stateFlows.length })}
+                </span>
               </button>
 
               {isExpanded && (

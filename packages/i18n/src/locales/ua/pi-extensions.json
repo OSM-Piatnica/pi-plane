@@ -119,6 +119,7 @@
       "save_success": "Конфігурацію воркфлоу збережено.",
       "toggle_error": "Не вдалося оновити налаштування воркфлоу.",
       "transition": "Перехід",
+      "transition_count": "{count, plural, one {# перехід} few {# переходи} many {# переходів} other {# переходу}}",
       "transitions_configured": "налаштовано переходів"
     }
   },
