@@ -139,7 +139,8 @@ jobs:
         run: |
           mkdir -p "${{ runner.temp }}/digests"
           digest="${{ steps.build.outputs.digest }}"
-          touch "${{ runner.temp }}/digests/${digest#sha256:}"
+          # the file is named after the digest and holds its platform, which the release gate needs
+          echo "${{ matrix.platform }}" > "${{ runner.temp }}/digests/${digest#sha256:}"
 
       - name: Upload digest
         uses: actions/upload-artifact@v7
@@ -185,7 +186,9 @@ jobs:
         working-directory: ${{ runner.temp }}/digests
         run: |
           for digest in *; do
+            # Trivy defaults to linux/amd64 and fails on an index that only holds an arm64 image
             trivy image \
+              --platform "$(cat "${digest}")" \
               --scanners vuln \
               --severity HIGH,CRITICAL \
               --ignore-unfixed \
@@ -288,7 +291,8 @@ jobs:
         run: |
           mkdir -p "${{ runner.temp }}/digests"
           digest="${{ steps.build.outputs.digest }}"
-          touch "${{ runner.temp }}/digests/${digest#sha256:}"
+          # the file is named after the digest and holds its platform, which the release gate needs
+          echo "${{ matrix.platform }}" > "${{ runner.temp }}/digests/${digest#sha256:}"
 
       - name: Upload digest
         uses: actions/upload-artifact@v7
@@ -330,7 +334,9 @@ jobs:
         working-directory: ${{ runner.temp }}/digests
         run: |
           for digest in *; do
+            # Trivy defaults to linux/amd64 and fails on an index that only holds an arm64 image
             trivy image \
+              --platform "$(cat "${digest}")" \
               --scanners vuln \
               --severity HIGH,CRITICAL \
               --ignore-unfixed \
