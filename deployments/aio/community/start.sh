@@ -15,6 +15,7 @@ print_header(){
     echo "    SITE_ADDRESS (default: ':80')"
     echo "    FILE_SIZE_LIMIT (default: 5242880)"
     echo "    APP_PROTOCOL (http or https)"
+    echo "    APP_PORT (public port, if not 80/443)"
     echo ""
     echo "Required secrets (no default, set a unique value for each):"
     echo "    SECRET_KEY, LIVE_SERVER_SECRET_KEY"
@@ -168,6 +169,16 @@ update_env_file(){
     fi
 
     local app_protocol=${APP_PROTOCOL:-http}
+
+    # public host (and port, if the container is published on one other than 80/443) as users reach it
+    local public_host="$DOMAIN_NAME"
+    if [ -n "$APP_PORT" ]; then
+        if ! [[ "$APP_PORT" =~ ^[0-9]+$ ]] || [ "$APP_PORT" -lt 1 ] || [ "$APP_PORT" -gt 65535 ]; then
+            echo "APP_PORT is not a valid port number"
+            exit 1
+        fi
+        public_host="$DOMAIN_NAME:$APP_PORT"
+    fi
     
     update_env_value "APP_PROTOCOL" "$app_protocol"
     update_env_value "DOMAIN_NAME" "$DOMAIN_NAME"
@@ -177,8 +188,8 @@ update_env_file(){
     else
         update_env_value "SITE_ADDRESS" ":80"
     fi
-    update_env_value "WEB_URL" "$app_protocol://$DOMAIN_NAME"
-    update_env_value "CORS_ALLOWED_ORIGINS" "http://$DOMAIN_NAME,https://$DOMAIN_NAME"
+    update_env_value "WEB_URL" "$app_protocol://$public_host"
+    update_env_value "CORS_ALLOWED_ORIGINS" "http://$public_host,https://$public_host"
 
     # update database url
     update_env_value "DATABASE_URL" "$DATABASE_URL"

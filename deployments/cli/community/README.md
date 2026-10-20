@@ -115,7 +115,7 @@ This will prompt you with the below options.
 
 ```bash
 Select an Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -183,7 +183,7 @@ Lets again run the `./setup.sh` command. You will again be prompted with the bel
 
 ```bash
 Select a Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -218,7 +218,7 @@ Lets again run the `./setup.sh` command. You will again be prompted with the bel
 
 ```bash
 Select a Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -265,7 +265,7 @@ Lets again run the `./setup.sh` command. You will again be prompted with the bel
 
 ```bash
 Select a Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -309,7 +309,7 @@ Lets again run the `./setup.sh` command. You will again be prompted with the bel
 
 ```bash
 Select a Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -371,7 +371,7 @@ This time select `6` to view logs.
 
 ```bash
 Select a Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -479,7 +479,7 @@ Lets again run the `./setup.sh` command. You will again be prompted with the bel
 
 ```bash
 Select a Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -497,6 +497,7 @@ In response, you can find the backup folder
 Backing Up plane-app_pgdata
 Backing Up plane-app_redisdata
 Backing Up plane-app_uploads
+Backing Up plane-app_rabbitmq_data
 
 Backup completed successfully. Backup files are stored in /....../plane-app/backup/20240502-1120
 ```

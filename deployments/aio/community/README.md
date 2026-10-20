@@ -96,6 +96,8 @@ docker run --name myaio --rm -it \
 #### Network & Protocol
 
 - `SITE_ADDRESS`: Server bind address (default: `:80`)
+- `APP_PROTOCOL`: `http` or `https` (default: `http`)
+- `APP_PORT`: public port, when the container is published on a port other than 80/443 (e.g. `-p 8080:80 -e APP_PORT=8080`). It is added to the web URL and the allowed CORS origins; `DOMAIN_NAME` itself must be a bare domain or IP address.
 
 #### Security & Secrets
 
@@ -145,7 +147,7 @@ IMAGE_NAME=my-pi-plane-aio ./build.sh --release=1.3.1-pi.1
 
 Available build options:
 
-- `--release`: Pi-Plane version to build (required)
+- `--release`: Pi-Plane version to build (required). The build pulls that release's component images, so use a release published from the same code as your checkout
 - `--image-name`: Custom image name (default: `ghcr.io/osm-piatnica/pi-plane`)
 
 ## Troubleshooting
@@ -159,11 +161,13 @@ All service logs are available in `/app/logs/`:
 
 ### Health Checks
 
-The container runs multiple services managed by Supervisor. Check service status:
+The container runs multiple services managed by Supervisor. The container's output shows the state of each one:
 
 ```bash
-docker exec -it <container-name> supervisorctl status
+docker logs <container-name> 2>&1 | grep -E "entered RUNNING|FATAL|exited"
 ```
+
+The `migrator` exits with status 0 once the database migrations finish; this takes a few minutes on the first start, and the API (and `/api/` requests, which answer 502 meanwhile) only comes up after that.
 
 ### Common Issues
 
