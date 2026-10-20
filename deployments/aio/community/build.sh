@@ -4,7 +4,7 @@ set -e
 
 DIST_DIR=${DIST_DIR:-./dist}
 CPU_ARCH=$(uname -m)
-IMAGE_NAME=${IMAGE_NAME:-makeplane/plane-aio-community}
+IMAGE_NAME=${IMAGE_NAME:-ghcr.io/osm-piatnica/pi-plane}
 
 
 # loop though all flags and set the variables
@@ -38,9 +38,9 @@ if [ -z "$APP_RELEASE_VERSION" ]; then
     echo "   ./build.sh [flags]"
     echo ""
     echo "Flags:"
-    echo "  --release=<APP_RELEASE_VERSION>     required (e.g. v0.27.1)"
+    echo "  --release=<APP_RELEASE_VERSION>     required (e.g. 1.3.1-pi.1)"
     echo ""
-    echo "Example: ./build.sh --release=v0.27.1 --platform=linux/amd64"
+    echo "Example: ./build.sh --release=1.3.1-pi.1"
     exit 1
 fi
 
