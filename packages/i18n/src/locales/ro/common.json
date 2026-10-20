@@ -337,6 +337,10 @@
     "cancelled": "Anulate",
     "triage": "Triaj"
   },
+  "filter_headings": {
+    "access": "Acces",
+    "owned_by": "Proprietar"
+  },
   "good": "Bună",
   "morning": "dimineața",
   "afternoon": "după-amiaza",

@@ -337,6 +337,10 @@
     "cancelled": "Geannuleerd",
     "triage": "Triage"
   },
+  "filter_headings": {
+    "access": "Toegang",
+    "owned_by": "Eigenaar"
+  },
   "good": "Goede",
   "morning": "morgen",
   "afternoon": "middag",

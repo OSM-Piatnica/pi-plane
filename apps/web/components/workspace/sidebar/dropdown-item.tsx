@@ -15,10 +15,10 @@ import { Menu } from "@base-ui/react/menu";
 import { SettingsOutline, TickOutline, UserPlusOutline } from "@makeplane/propel/icons";
 import { Button } from "@makeplane/propel/elements/button";
 // plane imports
-import { EUserPermissions } from "@plane/constants";
+import { EUserPermissions, getRoleI18nKey } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import type { IWorkspace } from "@plane/types";
-import { cn, getFileURL, getUserRole } from "@plane/utils";
+import { cn, getFileURL } from "@plane/utils";
 import { SubscriptionPill } from "@/components/common/subscription/subscription-pill";
 
 type TProps = {
@@ -80,10 +80,10 @@ const SidebarDropdownItem = observer(function SidebarDropdownItem(props: TProps)
             >
               {workspace.name}
             </div>
-            <div className="flex w-fit gap-2 text-13 text-tertiary capitalize">
-              <span>{getUserRole(workspace.role)?.toLowerCase() || "guest"}</span>
+            <div className="flex w-fit gap-2 text-13 text-tertiary">
+              <span>{t(getRoleI18nKey(workspace.role) || getRoleI18nKey(EUserPermissions.GUEST))}</span>
               <div className="m-auto h-1 w-1 rounded-full bg-layer-1/50" />
-              <span className="capitalize">{t("member", { count: workspace.total_members || 0 })}</span>
+              <span>{t("member", { count: workspace.total_members || 0 })}</span>
             </div>
           </div>
           {!isActiveWorkspace && <SubscriptionPill workspace={workspace} />}

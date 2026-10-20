@@ -337,6 +337,10 @@
     "cancelled": "已取消",
     "triage": "分流"
   },
+  "filter_headings": {
+    "access": "存取權限",
+    "owned_by": "擁有者"
+  },
   "good": "早安",
   "morning": "早上",
   "afternoon": "下午",

@@ -337,6 +337,10 @@
     "cancelled": "Annulé",
     "triage": "Tri"
   },
+  "filter_headings": {
+    "access": "Accès",
+    "owned_by": "Propriétaire"
+  },
   "good": "Bonjour",
   "morning": "matin",
   "afternoon": "après-midi",

@@ -10,7 +10,7 @@ import { CloseOutline } from "@makeplane/propel/icons";
 import type { TModuleDisplayFilters, TModuleFilters } from "@plane/types";
 // components
 import { Header, EHeaderVariant } from "@plane/blocks/layout";
-import { replaceUnderscoreIfSnakeCase } from "@plane/utils";
+import { getAppliedFilterHeading } from "@/helpers/applied-filter-heading";
 import { AppliedDateFilters, AppliedMembersFilters, AppliedStatusFilters } from "@/components/modules";
 // helpers
 // types
@@ -33,7 +33,7 @@ const DATE_FILTERS = new Set(["start_date", "target_date"]);
  * outline), shared by the "Clear all" control so it reads as one more chip in the row.
  */
 const FILTER_GROUP_CLASSNAME =
-  "my-auto flex min-h-9 cursor-pointer flex-wrap items-center gap-1.5 rounded-md border border-subtle p-1.5 text-11 text-tertiary capitalize hover:text-secondary";
+  "my-auto flex min-h-9 cursor-pointer flex-wrap items-center gap-1.5 rounded-md border border-subtle p-1.5 text-11 text-tertiary hover:text-secondary";
 
 export function ModuleAppliedFiltersList(props: Props) {
   const {
@@ -64,7 +64,7 @@ export function ModuleAppliedFiltersList(props: Props) {
           return (
             <div key={filterKey} className={FILTER_GROUP_CLASSNAME}>
               <div className="flex flex-wrap items-center gap-1.5">
-                <span className="text-11 text-tertiary">{replaceUnderscoreIfSnakeCase(filterKey)}</span>
+                <span className="text-11 text-tertiary">{getAppliedFilterHeading(filterKey, t)}</span>
                 {filterKey === "status" && (
                   <AppliedStatusFilters
                     editable={isEditingAllowed}

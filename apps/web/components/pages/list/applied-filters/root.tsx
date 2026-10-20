@@ -9,7 +9,7 @@ import { useTranslation } from "@plane/i18n";
 import { CloseOutline } from "@makeplane/propel/icons";
 // plane imports
 import type { TPageFilterProps } from "@plane/types";
-import { replaceUnderscoreIfSnakeCase } from "@plane/utils";
+import { getAppliedFilterHeading } from "@/helpers/applied-filter-heading";
 // components
 import { AppliedDateFilters } from "@/components/common/applied-filters/date";
 import { AppliedMembersFilters } from "@/components/common/applied-filters/members";
@@ -29,7 +29,7 @@ const DATE_FILTERS = new Set(["created_at"]);
  * wrapping container of chips plus their remove buttons, not a single chip, so it keeps plain markup.
  */
 const FILTER_GROUP_CLASSNAME =
-  "my-auto flex min-h-9 cursor-pointer flex-wrap items-center gap-1.5 rounded-md border border-subtle p-1.5 text-11 text-tertiary capitalize hover:text-secondary";
+  "my-auto flex min-h-9 cursor-pointer flex-wrap items-center gap-1.5 rounded-md border border-subtle p-1.5 text-11 text-tertiary hover:text-secondary";
 
 export function PageAppliedFiltersList(props: Props) {
   const { appliedFilters, handleClearAllFilters, handleRemoveFilter, alwaysAllowEditing } = props;
@@ -51,7 +51,7 @@ export function PageAppliedFiltersList(props: Props) {
         return (
           <div key={filterKey} className={FILTER_GROUP_CLASSNAME}>
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-11 text-tertiary">{replaceUnderscoreIfSnakeCase(filterKey)}</span>
+              <span className="text-11 text-tertiary">{getAppliedFilterHeading(filterKey, t)}</span>
               {DATE_FILTERS.has(filterKey) && (
                 <AppliedDateFilters
                   editable={isEditingAllowed}

@@ -337,6 +337,10 @@
     "cancelled": "Dibatalkan",
     "triage": "Triase"
   },
+  "filter_headings": {
+    "access": "Akses",
+    "owned_by": "Pemilik"
+  },
   "good": "Bagus",
   "morning": "pagi",
   "afternoon": "siang",

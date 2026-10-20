@@ -337,6 +337,10 @@
     "cancelled": "Отменено",
     "triage": "Сортировка"
   },
+  "filter_headings": {
+    "access": "Доступ",
+    "owned_by": "Владелец"
+  },
   "good": "Доброго",
   "morning": "утра",
   "afternoon": "дня",

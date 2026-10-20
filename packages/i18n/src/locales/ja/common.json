@@ -337,6 +337,10 @@
     "cancelled": "キャンセル",
     "triage": "トリアージ"
   },
+  "filter_headings": {
+    "access": "アクセス",
+    "owned_by": "所有者"
+  },
   "good": "おはよう",
   "morning": "ございます",
   "afternoon": "こんにちは",

@@ -337,6 +337,10 @@
     "cancelled": "Đã hủy",
     "triage": "Phân loại"
   },
+  "filter_headings": {
+    "access": "Quyền truy cập",
+    "owned_by": "Chủ sở hữu"
+  },
   "good": "Chào buổi sáng",
   "morning": "Buổi sáng",
   "afternoon": "Buổi chiều",

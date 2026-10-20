@@ -34,7 +34,7 @@ export const FilterAccess = observer(function FilterAccess(props: Props) {
   return (
     <>
       <FilterHeader
-        title={`Access${appliedFiltersCount > 0 ? ` (${appliedFiltersCount})` : ""}`}
+        title={`${t("filter_headings.access")}${appliedFiltersCount > 0 ? ` (${appliedFiltersCount})` : ""}`}
         isPreviewEnabled={previewEnabled}
         handleIsPreviewEnabled={() => setPreviewEnabled(!previewEnabled)}
       />

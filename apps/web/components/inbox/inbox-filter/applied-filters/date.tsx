@@ -32,7 +32,7 @@ export const InboxIssueAppliedFiltersDate = observer(function InboxIssueAppliedF
   const filteredValues = inboxFilters?.[filterKey] || [];
   const currentOptionDetail = (date: string) => {
     const currentDate = PAST_DURATION_FILTER_OPTIONS.find((d) => d.value === date);
-    if (currentDate) return currentDate;
+    if (currentDate) return { name: t(currentDate.i18n_name), value: currentDate.value };
     const dateSplit = date.split(";");
     return {
       name: getDateFilterLabel(dateSplit[0], dateSplit[1], formatDate, t),
