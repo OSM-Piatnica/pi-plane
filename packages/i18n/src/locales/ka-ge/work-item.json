@@ -796,6 +796,8 @@
         "set_with_issue": "დააყენა ვადის თარიღად <value/> <issue/>-ზე",
         "set_without_issue": "დააყენა ვადის თარიღად <value/>"
       },
+      "you": "თქვენ",
+      "actor_separator": " ",
       "commented_ago": "დააკომენტარა {timeAgo}"
     },
     "project": {

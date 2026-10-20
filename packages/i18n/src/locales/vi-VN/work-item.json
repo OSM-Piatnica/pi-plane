@@ -796,6 +796,8 @@
         "set_with_issue": "đã đặt ngày hết hạn là <value/> cho <issue/>",
         "set_without_issue": "đã đặt ngày hết hạn là <value/>"
       },
+      "you": "Bạn",
+      "actor_separator": " ",
       "commented_ago": "Đã bình luận {timeAgo}"
     },
     "project": {

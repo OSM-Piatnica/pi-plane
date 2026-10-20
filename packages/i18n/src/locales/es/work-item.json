@@ -796,6 +796,8 @@
         "set_with_issue": "estableció la fecha de vencimiento de <issue/> en <value/>",
         "set_without_issue": "estableció la fecha de vencimiento en <value/>"
       },
+      "you": "Usted",
+      "actor_separator": " ",
       "commented_ago": "Comentó {timeAgo}"
     },
     "project": {

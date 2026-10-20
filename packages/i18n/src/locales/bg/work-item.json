@@ -796,6 +796,8 @@
         "set_with_issue": "зададе крайния срок на <value/> за <issue/>",
         "set_without_issue": "зададе крайния срок на <value/>"
       },
+      "you": "Вие",
+      "actor_separator": " ",
       "commented_ago": "Коментирано {timeAgo}"
     },
     "project": {

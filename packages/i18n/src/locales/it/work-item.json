@@ -796,6 +796,8 @@
         "set_with_issue": "ha impostato la scadenza di <issue/> su <value/>",
         "set_without_issue": "ha impostato la scadenza su <value/>"
       },
+      "you": "Lei",
+      "actor_separator": " ",
       "commented_ago": "Ha commentato {timeAgo}"
     },
     "project": {

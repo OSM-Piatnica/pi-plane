@@ -796,6 +796,8 @@
         "set_with_issue": "nastavený termín na <value/> pre <issue/>",
         "set_without_issue": "nastavený termín na <value/>"
       },
+      "you": "Vy",
+      "actor_separator": " ",
       "commented_ago": "Komentované {timeAgo}"
     },
     "project": {

@@ -796,6 +796,8 @@
         "set_with_issue": "встановлено крайній термін <value/> для <issue/>",
         "set_without_issue": "встановлено крайній термін <value/>"
       },
+      "you": "Ви",
+      "actor_separator": " ",
       "commented_ago": "Прокоментовано {timeAgo}"
     },
     "project": {

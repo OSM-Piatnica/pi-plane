@@ -14,7 +14,7 @@ import { useTranslation } from "@plane/i18n";
 import type { IUserActivityResponse } from "@plane/types";
 import { getFileURL } from "@plane/utils";
 // components
-import { ActivityIcon, ActivityMessage, IssueLink } from "@/components/core/activity";
+import { ActivityIcon, ActivityMessage } from "@/components/core/activity";
 import { RichTextEditor } from "@/components/editor/rich-text";
 import { ActivitySettingsLoader } from "@/components/ui/loader/settings/activity";
 // hooks
@@ -102,18 +102,7 @@ export const ActivityList = observer(function ActivityList(props: Props) {
                 </div>
               );
 
-            const message =
-              activityItem.verb === "created" &&
-              !["cycles", "modules", "attachment", "link", "estimate"].includes(
-                activityItem.field?.toString() as string
-              ) &&
-              !activityItem.field ? (
-                <span>
-                  created <IssueLink activity={activityItem} />
-                </span>
-              ) : (
-                <ActivityMessage activity={activityItem} showIssue />
-              );
+            const message = <ActivityMessage activity={activityItem} showIssue />;
 
             if ("field" in activityItem && activityItem.field !== "updated_by")
               return (
@@ -164,11 +153,12 @@ export const ActivityList = observer(function ActivityList(props: Props) {
                               >
                                 <span className="text-gray font-medium">
                                   {currentUser?.id === activityItem.actor_detail.id
-                                    ? "You"
+                                    ? t("activity_feed.profile.you")
                                     : activityItem.actor_detail.display_name}
                                 </span>
                               </Link>
-                            )}{" "}
+                            )}
+                            {t("activity_feed.profile.actor_separator")}
                             <div className="inline gap-1">
                               {message}{" "}
                               <span className="flex-shrink-0 whitespace-nowrap">

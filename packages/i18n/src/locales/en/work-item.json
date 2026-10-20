@@ -796,6 +796,8 @@
         "set_with_issue": "set the due date to <value/> for <issue/>",
         "set_without_issue": "set the due date to <value/>"
       },
+      "you": "You",
+      "actor_separator": " ",
       "commented_ago": "Commented {timeAgo}"
     },
     "project": {
