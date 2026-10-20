@@ -796,7 +796,6 @@
         "set_with_issue": "a défini la date d’échéance de <issue/> sur <value/>",
         "set_without_issue": "a défini la date d’échéance sur <value/>"
       },
-      "you": "Vous",
       "actor_separator": " ",
       "commented_ago": "A commenté {timeAgo}"
     },

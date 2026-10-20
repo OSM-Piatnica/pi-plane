@@ -796,7 +796,6 @@
         "set_with_issue": "a setat termenul limită la <value/> pentru <issue/>",
         "set_without_issue": "a setat termenul limită la <value/>"
       },
-      "you": "Dumneavoastră",
       "actor_separator": " ",
       "commented_ago": "A comentat {timeAgo}"
     },

@@ -71,7 +71,7 @@ export const ProfileActivity = observer(function ProfileActivity() {
                   <p className="inline text-13 text-secondary">
                     <span className="font-medium text-primary">
                       {currentUser?.id === activity.actor_detail?.id
-                        ? t("activity_feed.profile.you")
+                        ? t("common.you")
                         : activity.actor_detail?.display_name}
                     </span>
                     {t("activity_feed.profile.actor_separator")}

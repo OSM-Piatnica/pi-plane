@@ -173,7 +173,7 @@ export const ProfileActivityListPage = observer(function ProfileActivityListPage
                               >
                                 <span className="text-gray font-medium">
                                   {currentUser?.id === activityItem.actor_detail.id
-                                    ? t("activity_feed.profile.you")
+                                    ? t("common.you")
                                     : activityItem.actor_detail.display_name}
                                 </span>
                               </Link>

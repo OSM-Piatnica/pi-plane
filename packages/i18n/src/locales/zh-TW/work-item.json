@@ -796,7 +796,6 @@
         "set_with_issue": "將 <issue/> 的截止日期設定為 <value/>",
         "set_without_issue": "將截止日期設定為 <value/>"
       },
-      "you": "您",
       "actor_separator": " ",
       "commented_ago": "{timeAgo}發表了留言"
     },

@@ -796,7 +796,6 @@
         "set_with_issue": "ustawiono termin na <value/> dla <issue/>",
         "set_without_issue": "ustawiono termin na <value/>"
       },
-      "you": "Ty",
       "actor_separator": ": ",
       "commented_ago": "Skomentowano {timeAgo}"
     },
