@@ -9,7 +9,7 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import { EIconSize } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { getStateName } from "@/helpers/state-name";
+import { getStateName } from "@plane/utils";
 import { StateGroupIcon } from "@plane/blocks/icons";
 import type { IState } from "@plane/types";
 import { Loader } from "@plane/blocks/skeleton";

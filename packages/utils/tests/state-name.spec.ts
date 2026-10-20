@@ -5,7 +5,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { getStateName } from "../../helpers/state-name";
+import { getStateName } from "../src/state-name";
 
 const t = (key: string) => `[${key}]`;
 

@@ -7,7 +7,7 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { getStateName } from "@/helpers/state-name";
+import { getStateName } from "@plane/utils";
 import { setPromiseToast } from "@plane/blocks/toast";
 import { Button } from "@makeplane/propel/components/button";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";

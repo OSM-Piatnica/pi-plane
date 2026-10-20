@@ -12,7 +12,7 @@ import { AutoCloseOutline, StateOutline } from "@makeplane/propel/icons";
 // plane imports
 import { PROJECT_AUTOMATION_MONTHS, EUserPermissions, EUserPermissionsLevel, EIconSize } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { getStateName } from "@/helpers/state-name";
+import { getStateName } from "@plane/utils";
 import { StateGroupIcon } from "@plane/blocks/icons";
 import type { IProject, IState } from "@plane/types";
 import { Switch } from "@makeplane/propel/components/switch";

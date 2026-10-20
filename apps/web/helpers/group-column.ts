@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import { getStateName } from "./state-name";
+import { getStateName } from "@plane/utils";
 
 /**
  * Marks a cycle column that cannot take a drop because the cycle is completed. The column is built

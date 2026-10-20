@@ -15,7 +15,7 @@ import { Spinner } from "@plane/blocks/spinner";
 // store hooks
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useTranslation } from "@plane/i18n";
-import { getStateName } from "@/helpers/state-name";
+import { getStateName } from "@plane/utils";
 
 export type TChangeWorkItemStateListProps = {
   projectId: string | null;

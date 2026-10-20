@@ -9,7 +9,7 @@ import { observer } from "mobx-react";
 // plane types
 import { StateGroupIcon } from "@plane/blocks/icons";
 import { useTranslation } from "@plane/i18n";
-import { getStateName } from "@/helpers/state-name";
+import { getStateName } from "@plane/utils";
 import type { IState } from "@plane/types";
 // components
 import { PowerKModalCommandItem } from "@/components/power-k/ui/modal/command-item";

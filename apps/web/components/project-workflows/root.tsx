@@ -7,7 +7,7 @@
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
-import { getStateName } from "@/helpers/state-name";
+import { getStateName } from "@plane/utils";
 import { setPromiseToast } from "@plane/blocks/toast";
 import type { IProjectWorkflowStates, IWorkflow, IWorkflowFlow, TWorkflowFlowType } from "@plane/types";
 import { Switch } from "@makeplane/propel/components/switch";

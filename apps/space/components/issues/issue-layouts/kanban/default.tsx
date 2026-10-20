@@ -1,12 +1,15 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { MutableRefObject } from "react";
 import { isNil } from "lodash-es";
 import { observer } from "mobx-react";
+// plane imports
+import { useTranslation } from "@plane/i18n";
 // types
 import type {
   GroupByColumnTypes,
@@ -19,6 +22,7 @@ import type {
   TLoader,
 } from "@plane/types";
 // hooks
+import { getGroupColumnTitle } from "@/helpers/group-column";
 import { useCycle } from "@/hooks/store/use-cycle";
 import { useLabel } from "@/hooks/store/use-label";
 import { useMember } from "@/hooks/store/use-member";
@@ -68,6 +72,7 @@ export const KanBan = observer(function KanBan(props: IKanBan) {
   const cycle = useCycle();
   const modules = useModule();
   const state = useStates();
+  const { t } = useTranslation();
 
   const groupList = getGroupByColumns(groupBy as GroupByColumnTypes, cycle, modules, label, state, member);
 
@@ -103,7 +108,7 @@ export const KanBan = observer(function KanBan(props: IKanBan) {
                 <HeaderGroupByCard
                   groupBy={groupBy}
                   icon={subList.icon as any}
-                  title={subList.name}
+                  title={getGroupColumnTitle(subList, t)}
                   count={getGroupIssueCount(subList.id, undefined, false) ?? 0}
                 />
               </div>

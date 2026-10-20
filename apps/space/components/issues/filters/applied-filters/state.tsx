@@ -8,6 +8,8 @@
 import { observer } from "mobx-react";
 // plane imports
 import { EIconSize } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@plane/utils";
 import { StateGroupIcon } from "@plane/blocks/icons";
 import { CloseOutline } from "@makeplane/propel/icons";
 // hooks
@@ -20,6 +22,8 @@ type Props = {
 
 export const AppliedStateFilters = observer(function AppliedStateFilters(props: Props) {
   const { handleRemove, values } = props;
+  // plane hooks
+  const { t } = useTranslation();
 
   const { sortedStates: states } = useStates();
 
@@ -33,7 +37,7 @@ export const AppliedStateFilters = observer(function AppliedStateFilters(props: 
         return (
           <div key={stateId} className="flex items-center gap-1 rounded-sm bg-layer-3 p-1 text-11">
             <StateGroupIcon color={stateDetails.color} stateGroup={stateDetails.group} size={EIconSize.SM} />
-            {stateDetails.name}
+            {getStateName(stateDetails.name, t)}
             <button
               type="button"
               className="grid place-items-center text-tertiary hover:text-secondary"

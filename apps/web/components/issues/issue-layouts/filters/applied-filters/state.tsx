@@ -13,7 +13,7 @@ import { useTranslation } from "@plane/i18n";
 import { StateGroupIcon } from "@plane/blocks/icons";
 import { CloseOutline } from "@makeplane/propel/icons";
 import type { IState } from "@plane/types";
-import { getStateName } from "@/helpers/state-name";
+import { getStateName } from "@plane/utils";
 
 type Props = {
   handleRemove: (val: string) => void;

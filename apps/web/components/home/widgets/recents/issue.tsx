@@ -8,14 +8,13 @@
 import { observer } from "mobx-react";
 // plane types
 import { useTranslation } from "@plane/i18n";
-import { getStateName } from "@/helpers/state-name";
 import { PriorityIcon, StateGroupIcon } from "@plane/blocks/icons";
 import { WorkItemsOutline } from "@makeplane/propel/icons";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TActivityEntityData, TIssueEntityData } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // plane ui
-import { generateWorkItemLink } from "@plane/utils";
+import { generateWorkItemLink, getStateName } from "@plane/utils";
 // components
 import { ListItem } from "@/components/core/list";
 import { MemberSelect } from "@/components/dropdowns/member/member-select";

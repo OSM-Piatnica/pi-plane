@@ -14,7 +14,7 @@ import { DragDropOutline, EditOutline } from "@makeplane/propel/icons";
 import { StateGroupIcon } from "@plane/blocks/icons";
 import { EIconSize } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { getStateName } from "@/helpers/state-name";
+import { getStateName } from "@plane/utils";
 import type { IState, TStateOperationsCallbacks } from "@plane/types";
 // local imports
 import { useProjectState } from "@/hooks/store/use-project-state";

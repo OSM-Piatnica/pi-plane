@@ -14,7 +14,7 @@ import { StateSelect as StateSelectBlock } from "@plane/blocks/property-select";
 import type { StateOption } from "@plane/blocks/property-select";
 import type { SelectPaginationParams, SelectTooltip, SelectTooltipOverride, SelectVariant } from "@plane/blocks/select";
 import { useTranslation } from "@plane/i18n";
-import { getStateName } from "@/helpers/state-name";
+import { getStateName } from "@plane/utils";
 import type { IState, TPaginatedResponse } from "@plane/types";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
