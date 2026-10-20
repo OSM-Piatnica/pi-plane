@@ -3,7 +3,6 @@
 set -e
 
 DIST_DIR=${DIST_DIR:-./dist}
-CPU_ARCH=$(uname -m)
 IMAGE_NAME=${IMAGE_NAME:-ghcr.io/osm-piatnica/pi-plane}
 
 
@@ -42,13 +41,6 @@ if [ -z "$APP_RELEASE_VERSION" ]; then
     echo ""
     echo "Example: ./build.sh --release=1.3.1-pi.1"
     exit 1
-fi
-
-# Install yq if not present
-if ! command -v yq &> /dev/null; then
-    echo "Installing yq..."
-    sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${CPU_ARCH}
-    sudo chmod +x /usr/local/bin/yq
 fi
 
 cd $(dirname "$0")
