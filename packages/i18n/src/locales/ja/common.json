@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "サインアップ",
       "sign_in": "サインイン",
-      "join_teams": "Pi-Plane で開発する 10,000 以上のチームに参加しましょう",
+      "join_teams": "Pi-Plane でより高い成果を上げているチームに参加しましょう",
       "not_authorized_view_title": "このページを表示する権限がありません",
       "not_authorized": "権限がありません",
       "not_a_member_description": "このワークスペースのメンバーではありません。ワークスペースの管理者に招待を依頼するか、保留中の招待をご確認ください。",

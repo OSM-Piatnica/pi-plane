@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "S’inscrire",
       "sign_in": "Se connecter",
-      "join_teams": "Rejoignez plus de 10 000 équipes qui construisent avec Pi-Plane",
+      "join_teams": "Rejoignez les équipes plus performantes avec Pi-Plane",
       "not_authorized_view_title": "Oups ! Vous n’êtes pas autorisé à consulter cette page",
       "not_authorized": "Non autorisé !",
       "not_a_member_description": "Vous n’êtes pas membre de cet espace de travail. Veuillez contacter l’administrateur de l’espace de travail pour obtenir une invitation ou vérifiez vos invitations en attente.",

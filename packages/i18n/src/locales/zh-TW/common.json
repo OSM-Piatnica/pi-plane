@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "註冊",
       "sign_in": "登入",
-      "join_teams": "加入 10,000 多個使用 Pi-Plane 打造產品的團隊",
+      "join_teams": "加入使用 Pi-Plane 表現更出色的團隊",
       "not_authorized_view_title": "抱歉，您無權檢視此頁面",
       "not_authorized": "未授權",
       "not_a_member_description": "您不是此工作區的成員。請聯絡工作區管理員取得邀請，或查看您的待處理邀請。",

@@ -1157,7 +1157,7 @@
     "auth_screens": {
       "sign_up": "注册",
       "sign_in": "登录",
-      "join_teams": "加入 10,000 多个使用 Pi-Plane 构建产品的团队",
+      "join_teams": "加入使用 Pi-Plane 表现更出色的团队",
       "not_authorized_view_title": "抱歉，您无权查看此页面",
       "not_authorized": "未授权",
       "not_a_member_description": "您不是此工作区的成员。请联系工作区管理员获取邀请，或查看您的待处理邀请。",
