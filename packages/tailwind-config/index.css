@@ -16,6 +16,42 @@
 @import "@makeplane/propel/styles";
 @source "../**/*.{ts,tsx}";
 
+/*
+ * Logical inset utilities (`inset-s-*` = inset-inline-start, `inset-e-*` = inset-inline-end). They arrived
+ * in Tailwind 4.2 and @makeplane/propel uses them to place the close button of dialogs and toasts, the
+ * drawer, table and calendar edges and the tooltip arrow. This repo pins tailwindcss 4.1.x, where such a
+ * class generates no CSS, so the element lost its horizontal position and the close button sat at the top
+ * left of every popup. Remove this block when tailwindcss is upgraded to 4.2 or later.
+ */
+@utility inset-s-* {
+  inset-inline-start: calc(var(--spacing) * --value(integer));
+  inset-inline-start: --value([length], [percentage]);
+  inset-inline-start: calc(--value(ratio) * 100%);
+}
+@utility inset-s-auto {
+  inset-inline-start: auto;
+}
+@utility inset-s-full {
+  inset-inline-start: 100%;
+}
+@utility inset-s-px {
+  inset-inline-start: 1px;
+}
+@utility inset-e-* {
+  inset-inline-end: calc(var(--spacing) * --value(integer));
+  inset-inline-end: --value([length], [percentage]);
+  inset-inline-end: calc(--value(ratio) * 100%);
+}
+@utility inset-e-auto {
+  inset-inline-end: auto;
+}
+@utility inset-e-full {
+  inset-inline-end: 100%;
+}
+@utility inset-e-px {
+  inset-inline-end: 1px;
+}
+
 * {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
