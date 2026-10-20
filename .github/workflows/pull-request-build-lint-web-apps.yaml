@@ -14,7 +14,8 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # a skipped `edited` run (title/description edit) must not cancel the real run of the latest push
+  cancel-in-progress: ${{ github.event.action != 'edited' || github.event.changes.base != null }}
 
 jobs:
   # Format check has no build dependencies - run immediately in parallel

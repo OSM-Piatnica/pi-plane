@@ -22,7 +22,8 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # a skipped `edited` run (title/description edit) must not cancel the real run of the latest push
+  cancel-in-progress: ${{ github.event.action != 'edited' || github.event.changes.base != null }}
 
 permissions:
   contents: read
