@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Настройки на проекта",
     "general": {
       "enter_project_id": "Въведете ID на проекта",
       "please_select_a_timezone": "Изберете часова зона",

@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "プロジェクト設定",
     "general": {
       "enter_project_id": "プロジェクトIDを入力",
       "please_select_a_timezone": "タイムゾーンを選択してください",

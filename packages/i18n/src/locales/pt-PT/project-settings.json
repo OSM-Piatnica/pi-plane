@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Configurações do projeto",
     "general": {
       "enter_project_id": "Inserir ID do projeto",
       "please_select_a_timezone": "Por favor, selecione um fuso horário",

@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Pengaturan proyek",
     "general": {
       "enter_project_id": "Masukkan ID proyek",
       "please_select_a_timezone": "Silakan pilih zona waktu",

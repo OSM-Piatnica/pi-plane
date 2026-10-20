@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Paramètres du projet",
     "general": {
       "enter_project_id": "Saisissez l’ID du projet",
       "please_select_a_timezone": "Veuillez sélectionner un fuseau horaire",

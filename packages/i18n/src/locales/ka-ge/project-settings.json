@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "პროექტის პარამეტრები",
     "general": {
       "enter_project_id": "შეიყვანეთ პროექტის ID",
       "please_select_a_timezone": "გთხოვთ, აირჩიოთ დროის სარტყელი",

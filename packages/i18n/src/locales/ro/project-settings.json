@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Setări proiect",
     "general": {
       "enter_project_id": "Introdu ID-ul proiectului",
       "please_select_a_timezone": "Te rugăm să selectezi un fus orar",

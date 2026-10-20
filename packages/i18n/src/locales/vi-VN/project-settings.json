@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Cài đặt dự án",
     "general": {
       "enter_project_id": "Nhập ID dự án",
       "please_select_a_timezone": "Vui lòng chọn múi giờ",

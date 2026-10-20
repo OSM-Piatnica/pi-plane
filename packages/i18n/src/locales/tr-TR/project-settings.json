@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Proje Ayarları",
     "general": {
       "enter_project_id": "Proje ID girin",
       "please_select_a_timezone": "Lütfen bir saat dilimi seçin",
