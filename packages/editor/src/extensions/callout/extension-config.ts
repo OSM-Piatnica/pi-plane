@@ -5,7 +5,8 @@
  * See the LICENSE file for details.
  */
 
-import { Node, mergeAttributes } from "@tiptap/core";
+import { Node } from "@tiptap/core";
+import { mergeAttributes } from "@/helpers/merge-attributes";
 import type { MarkdownSerializerState } from "@tiptap/pm/markdown";
 import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
 // constants

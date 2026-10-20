@@ -1,11 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { ParentConfig } from "@tiptap/core";
-import { callOrReturn, getExtensionField, mergeAttributes, Node } from "@tiptap/core";
+import { callOrReturn, getExtensionField, Node } from "@tiptap/core";
+import { mergeAttributes } from "@/helpers/merge-attributes";
 import { TextSelection } from "@tiptap/pm/state";
 import {
   addColumnAfter,
