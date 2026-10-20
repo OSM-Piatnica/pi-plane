@@ -1,12 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
-import { DueDatePropertyIcon } from "@plane/propel/icons";
-import { Tooltip } from "@plane/propel/tooltip";
+import { DueDateOutline } from "@makeplane/propel/icons";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 // helpers
 import { renderFormattedDate } from "@/helpers/date-time.helper";
@@ -23,6 +25,7 @@ type Props = {
 
 export const IssueBlockDate = observer(function IssueBlockDate(props: Props) {
   const { due_date, stateId, shouldHighLight = true, shouldShowBorder = true } = props;
+  const { t } = useTranslation();
   const { getStateById } = useStates();
 
   const state = getStateById(stateId);
@@ -30,15 +33,15 @@ export const IssueBlockDate = observer(function IssueBlockDate(props: Props) {
   const formattedDate = renderFormattedDate(due_date);
 
   return (
-    <Tooltip tooltipHeading="Due Date" tooltipContent={formattedDate}>
+    <Tooltip label={t("space_text.issues.due_date_tooltip", { date: formattedDate ?? t("space_text.issues.no_date") })}>
       <div
         className={cn("flex h-full items-center gap-1 rounded-sm px-2.5 py-1 text-11 text-primary", {
           "text-danger-primary": shouldHighLight && due_date && shouldHighlightIssueDueDate(due_date, state?.group),
           "border-[0.5px] border-strong": shouldShowBorder,
         })}
       >
-        <DueDatePropertyIcon className="size-3 flex-shrink-0" />
-        {formattedDate ? formattedDate : "No Date"}
+        <DueDateOutline className="size-3 flex-shrink-0" />
+        {formattedDate ? formattedDate : t("space_text.issues.no_date")}
       </div>
     </Tooltip>
   );

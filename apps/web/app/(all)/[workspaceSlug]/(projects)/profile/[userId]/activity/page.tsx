@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,7 @@ import { observer } from "mobx-react";
 // plane imports
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 // components
 import { PageHead } from "@/components/core/page-title";
 import { DownloadActivityButton } from "@/components/profile/activity/download-button";
@@ -54,19 +55,23 @@ function ProfileActivityPage() {
 
   return (
     <>
-      <PageHead title="Profile - Activity" />
+      <PageHead title={t("app_text.profile_activity.page_title")} />
       <div className="flex h-full w-full flex-col overflow-hidden py-5">
         <div className="flex items-center justify-between gap-2 px-5 md:px-9">
           <h3 className="text-16 font-medium">{t("profile.stats.recent_activity.title")}</h3>
           {canDownloadActivity && <DownloadActivityButton />}
         </div>
-        <div className="vertical-scrollbar flex scrollbar-md h-full flex-col overflow-y-auto px-5 md:px-9">
+        <div className="vertical-scrollbar scrollbar-md flex h-full flex-col overflow-y-auto px-5 md:px-9">
           {activityPages}
           {pageCount < totalPages && resultsCount !== 0 && (
             <div className="flex w-full items-center justify-center text-11">
-              <Button variant="secondary" onClick={handleLoadMore}>
-                {t("common.load_more")}
-              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                stretch="auto"
+                label={t("common.load_more")}
+                onClick={handleLoadMore}
+              />
             </div>
           )}
         </div>

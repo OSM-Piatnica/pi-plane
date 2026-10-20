@@ -1,10 +1,12 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
-# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
-from django.db.models import Prefetch, Q, Count
+from django.contrib.postgres.aggregates import ArrayAgg
+from django.contrib.postgres.fields import ArrayField
+from django.db.models import Prefetch, Q, Count, UUIDField, Value
+from django.db.models.functions import Coalesce
 
 # Third party modules
 from rest_framework import status
@@ -108,6 +110,19 @@ class WorkspaceModulesEndpoint(BaseAPIView):
                         issue_module__deleted_at__isnull=True,
                     ),
                     distinct=True,
+                )
+            )
+            .annotate(
+                member_ids=Coalesce(
+                    ArrayAgg(
+                        "members__id",
+                        distinct=True,
+                        filter=Q(
+                            members__id__isnull=False,
+                            modulemember__deleted_at__isnull=True,
+                        ),
+                    ),
+                    Value([], output_field=ArrayField(UUIDField())),
                 )
             )
             .order_by(self.kwargs.get("order_by", "-created_at"))

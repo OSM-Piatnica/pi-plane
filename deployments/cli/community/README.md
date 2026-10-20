@@ -44,9 +44,9 @@ After installation, you can verify the installation by opening a terminal (Comma
 
 ---
 
-## Installing Plane
+## Installing Pi-Plane
 
-Installing plane is a very easy and minimal step process.
+Installing Pi-Plane is a very easy and minimal step process.
 
 ### Prerequisite
 
@@ -105,7 +105,7 @@ Versions follow `<upstream Plane version>-pi.<n>`. For example, `1.3.1-pi.1` is 
 
 ### Proceed with setup
 
-Above steps will set you ready to install and start plane services.
+Above steps will set you ready to install and start Pi-Plane services.
 
 Lets get started by running the `./setup.sh` command.
 
@@ -115,7 +115,7 @@ This will prompt you with the below options.
 
 ```bash
 Select an Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -183,7 +183,7 @@ Lets again run the `./setup.sh` command. You will again be prompted with the bel
 
 ```bash
 Select a Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -204,7 +204,7 @@ Be patient as it might take sometime based on download speed and system configur
 
 This is the confirmation that all images were downloaded and the services are up & running.
 
-You have successfully self hosted `Plane` instance. Access the application by going to IP or domain you have configured it (e.g `https://plane.example.com:8080` or `http://[IP-ADDRESS]:8080`)
+You have successfully self hosted Pi-Plane instance. Access the application by going to IP or domain you have configured it (e.g `https://plane.example.com:8080` or `http://[IP-ADDRESS]:8080`)
 
 ---
 
@@ -218,7 +218,7 @@ Lets again run the `./setup.sh` command. You will again be prompted with the bel
 
 ```bash
 Select a Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -265,7 +265,7 @@ Lets again run the `./setup.sh` command. You will again be prompted with the bel
 
 ```bash
 Select a Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -299,9 +299,9 @@ If all goes well, you will see the confirmation from docker cli
 
 ---
 
-### Upgrading Plane Version
+### Upgrading Pi-Plane Version
 
-It is always advised to keep Plane up to date with the latest release.
+It is always advised to keep Pi-Plane up to date with the latest release.
 
 Lets again run the `./setup.sh` command. You will again be prompted with the below options. This time select `5` to upgrade the release.
 
@@ -309,7 +309,7 @@ Lets again run the `./setup.sh` command. You will again be prompted with the bel
 
 ```bash
 Select a Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -371,7 +371,7 @@ This time select `6` to view logs.
 
 ```bash
 Select a Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -479,7 +479,7 @@ Lets again run the `./setup.sh` command. You will again be prompted with the bel
 
 ```bash
 Select a Action you want to perform:
-   1) Install (x86_64)
+   1) Install
    2) Start
    3) Stop
    4) Restart
@@ -497,6 +497,7 @@ In response, you can find the backup folder
 Backing Up plane-app_pgdata
 Backing Up plane-app_redisdata
 Backing Up plane-app_uploads
+Backing Up plane-app_rabbitmq_data
 
 Backup completed successfully. Backup files are stored in /....../plane-app/backup/20240502-1120
 ```
@@ -507,7 +508,7 @@ Backup completed successfully. Backup files are stored in /....../plane-app/back
 
 When you want to restore the previously backed-up data, follow the instructions below.
 
-1. Make sure that Plane-CE is installed, started, and then stopped. This ensures that the Docker volumes are created.
+1. Make sure that Pi-Plane is installed, started, and then stopped. This ensures that the Docker volumes are created.
 
 1. Download the restore script using the command below. We suggest downloading it in the same folder as `setup.sh`.
 

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,7 +15,7 @@ export const useMention = () => {
   const userService = new UserService();
   const { data: user, isLoading: userDataLoading } = useSWR("currentUser", async () => userService.me());
 
-  const userRef = useRef<IUser | undefined>();
+  const userRef = useRef<IUser | undefined>(undefined);
 
   useEffect(() => {
     if (userRef) {
@@ -38,8 +39,8 @@ export const useMention = () => {
     if (!userDataLoading && userRef.current) {
       return [userRef.current.id];
     } else {
-      const user = await waitForUserDate();
-      return [user.id];
+      const loadedUser = await waitForUserDate();
+      return [loadedUser.id];
     }
   };
 

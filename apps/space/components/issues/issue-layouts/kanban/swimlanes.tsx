@@ -1,12 +1,15 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { MutableRefObject } from "react";
 import { useState } from "react";
 import { observer } from "mobx-react";
+// plane imports
+import { useTranslation } from "@plane/i18n";
 // types
 import type {
   GroupByColumnTypes,
@@ -28,6 +31,7 @@ import { useStates } from "@/hooks/store/use-state";
 //
 import { getGroupByColumns } from "../utils";
 import { KanBan } from "./default";
+import { getGroupColumnTitle } from "@/helpers/group-column";
 import { HeaderGroupByCard } from "./headers/group-by-card";
 import { HeaderSubGroupByCard } from "./headers/sub-group-by-card";
 
@@ -138,6 +142,8 @@ const SubGroupSwimlaneHeader = observer(function SubGroupSwimlaneHeader({
   showEmptyGroup,
   getGroupIssueCount,
 }: ISubGroupSwimlaneHeader) {
+  const { t } = useTranslation();
+
   return (
     <div className="relative flex h-max min-h-full w-full items-center gap-2">
       {groupList &&
@@ -150,7 +156,12 @@ const SubGroupSwimlaneHeader = observer(function SubGroupSwimlaneHeader({
           if (subGroupByVisibilityToggle === false) return <></>;
           return (
             <div key={`${subGroupBy}_${group.id}`} className="flex w-[350px] flex-shrink-0 flex-col">
-              <HeaderGroupByCard groupBy={groupBy} icon={group.icon} title={group.name} count={groupCount} />
+              <HeaderGroupByCard
+                groupBy={groupBy}
+                icon={group.icon}
+                title={getGroupColumnTitle(group, t)}
+                count={groupCount}
+              />
             </div>
           );
         })}
@@ -245,6 +256,7 @@ const SubGroup = observer(function SubGroup(props: ISubGroup) {
     showEmptyGroup,
     scrollableContainerRef,
   } = props;
+  const { t } = useTranslation();
 
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -279,7 +291,7 @@ const SubGroup = observer(function SubGroup(props: ISubGroup) {
           <div className="sticky left-0 flex-shrink-0">
             <HeaderSubGroupByCard
               icon={group.icon as any}
-              title={group.name || ""}
+              title={getGroupColumnTitle(group, t)}
               count={issueCount}
               isExpanded={isExpanded}
               toggleExpanded={toggleExpanded}

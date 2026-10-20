@@ -1,0 +1,96 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { observer } from "mobx-react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+// ui
+import { MODULE_STATUS } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
+import { ModuleStatusIcon } from "@plane/blocks/icons";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+// components
+import { SIDEBAR_WIDTH } from "@/components/gantt-chart/constants";
+import { getBlockViewDetails } from "@/components/issues/issue-layouts/utils";
+// constants
+// hooks
+import { useModule } from "@/hooks/store/use-module";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
+import { useAppRouter } from "@/hooks/use-app-router";
+import { usePlatformOS } from "@/hooks/use-platform-os";
+
+type Props = {
+  moduleId: string;
+};
+
+export const ModuleGanttBlock = observer(function ModuleGanttBlock(props: Props) {
+  const { moduleId } = props;
+  // router
+  const router = useAppRouter();
+  const { workspaceSlug } = useParams();
+  // store hooks
+  const { getModuleById } = useModule();
+  // derived values
+  const moduleDetails = getModuleById(moduleId);
+  // hooks
+  const { isMobile } = usePlatformOS();
+  const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
+
+  const { message, blockStyle } = getBlockViewDetails(
+    moduleDetails,
+    MODULE_STATUS.find((s) => s.value === moduleDetails?.status)?.color ?? "",
+    { t, formatDate }
+  );
+
+  const openModule = () =>
+    router.push(`/${workspaceSlug?.toString()}/projects/${moduleDetails?.project_id}/modules/${moduleDetails?.id}`);
+
+  return (
+    <Tooltip
+      label={moduleDetails?.name ? `${moduleDetails.name}: ${message ?? ""}` : (message ?? "")}
+      layout="stacked"
+      align="start"
+      disabled={isMobile}
+    >
+      <button
+        type="button"
+        className="relative flex h-full w-full cursor-pointer items-center rounded-sm text-left"
+        style={blockStyle}
+        onClick={openModule}
+      >
+        <div className="absolute top-0 left-0 h-full w-full bg-surface-1/50" />
+        <div
+          className="sticky w-auto truncate overflow-hidden px-2.5 py-1 text-13 text-primary"
+          style={{ left: `${SIDEBAR_WIDTH}px` }}
+        >
+          {moduleDetails?.name}
+        </div>
+      </button>
+    </Tooltip>
+  );
+});
+
+export const ModuleGanttSidebarBlock = observer(function ModuleGanttSidebarBlock(props: Props) {
+  const { moduleId } = props;
+  const { workspaceSlug } = useParams();
+  // store hooks
+  const { getModuleById } = useModule();
+  // derived values
+  const moduleDetails = getModuleById(moduleId);
+
+  return (
+    <Link
+      className="relative flex h-full w-full items-center gap-2"
+      href={`/${workspaceSlug?.toString()}/projects/${moduleDetails?.project_id}/modules/${moduleDetails?.id}`}
+      draggable={false}
+    >
+      <ModuleStatusIcon status={moduleDetails?.status ?? "backlog"} height="16px" width="16px" />
+      <h6 className="flex-grow truncate text-13 font-medium">{moduleDetails?.name}</h6>
+    </Link>
+  );
+});

@@ -1,6 +1,5 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
-# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -154,10 +153,11 @@ class UserProjectInvitationsViewset(BaseViewSet):
         # network check above (GHSA-45hc-q4mw-jhxm).
         validated_project_ids = [str(p.id) for p in projects]
 
-        # If the user was already part of workspace
+        # If the user was already part of the project, reactivate them with the
+        # same role a new joiner gets; a previous project role is not restored.
         _ = ProjectMember.objects.filter(
-            workspace__slug=slug, project_id__in=validated_project_ids, member=request.user
-        ).update(is_active=True)
+            workspace__slug=slug, project_id__in=validated_project_ids, member=request.user, is_active=False
+        ).update(is_active=True, role=workspace_role, updated_by=request.user, updated_at=timezone.now())
 
         ProjectMember.objects.bulk_create(
             [
@@ -249,9 +249,16 @@ class ProjectJoinEndpoint(BaseAPIView):
                     workspace_member.is_active = True
                     workspace_member.save()
 
-                # Check if the user was already a member of project then activate the user
+                # Check if the user was already a member of the invited project
+                # then activate the user.  The lookup must be scoped to
+                # `project_id` — a workspace-wide lookup reactivates whatever
+                # membership the user already had (typically a project they were
+                # removed from) and leaves the invited project without a member
+                # row (SECUR-234).
                 project_member = ProjectMember.objects.filter(
-                    workspace_id=project_invite.workspace_id, member=user
+                    workspace_id=project_invite.workspace_id,
+                    project_id=project_id,
+                    member=user,
                 ).first()
                 if project_member is None:
                     # Create a Project Member
@@ -261,8 +268,10 @@ class ProjectJoinEndpoint(BaseAPIView):
                         role=project_invite.role,
                     )
                 else:
+                    # The invitation's role is what the inviting admin chose; the
+                    # stale role on a deactivated row must not survive the rejoin.
                     project_member.is_active = True
-                    project_member.role = project_member.role
+                    project_member.role = project_invite.role
                     project_member.save()
 
                 return Response(

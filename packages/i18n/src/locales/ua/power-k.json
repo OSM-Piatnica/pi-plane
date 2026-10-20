@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Відкрити гарячі клавіші",
-      "open_plane_documentation": "Відкрити документацію Plane",
+      "open_plane_documentation": "Відкрити документацію Pi-Plane",
       "join_forum": "Приєднатися до нашого форуму",
       "report_bug": "Повідомити про помилку",
       "chat_with_us": "Поспілкуватися з нами"
@@ -175,6 +175,11 @@
     },
     "footer": {
       "workspace_level": "Рівень робочого простору"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Знайти гарячі клавіші",
+      "no_results": "Не знайдено гарячих клавіш для «{query}»",
+      "sequence_separator": "потім"
     },
     "group_titles": {
       "actions": "Дії",

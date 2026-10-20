@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -48,15 +49,15 @@ export const orderPages = (
 
   if (sortByKey === "name") {
     orderedPages = sortBy(pages, [(m) => m.name?.toLowerCase()]);
-    if (sortByOrder === "desc") orderedPages = orderedPages.reverse();
+    if (sortByOrder === "desc") orderedPages = orderedPages.toReversed();
   }
   if (sortByKey === "created_at") {
     orderedPages = sortBy(pages, [(m) => m.created_at]);
-    if (sortByOrder === "desc") orderedPages = orderedPages.reverse();
+    if (sortByOrder === "desc") orderedPages = orderedPages.toReversed();
   }
   if (sortByKey === "updated_at") {
     orderedPages = sortBy(pages, [(m) => m.updated_at]);
-    if (sortByOrder === "desc") orderedPages = orderedPages.reverse();
+    if (sortByOrder === "desc") orderedPages = orderedPages.toReversed();
   }
 
   return orderedPages;
@@ -73,6 +74,7 @@ export const shouldFilterPage = (page: TPage, filters: TPageFilterProps | undefi
   Object.keys(filters ?? {}).forEach((key) => {
     const filterKey = key as keyof TPageFilterProps;
     if (filterKey === "created_by" && filters?.created_by && filters.created_by.length > 0)
+      // react-doctor-disable-next-line js-set-map-lookups -- user-selected filter list is tiny and each branch runs once per key, not per item of a large collection
       fallsInFilters = fallsInFilters && filters.created_by.includes(`${page.owned_by}`);
     if (filterKey === "created_at" && filters?.created_at && filters.created_at.length > 0) {
       const createdDate = getDate(page.created_at);

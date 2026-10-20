@@ -1,0 +1,925 @@
+{
+  "issue": {
+    "label": "{count, plural, one {Werkitem} other {Werkitems}}",
+    "all": "Alle werkitems",
+    "edit": "Werkitem bewerken",
+    "title": {
+      "label": "Titel van werkitem",
+      "required": "Titel van werkitem is verplicht."
+    },
+    "add": {
+      "press_enter": "Druk op 'Enter' om nog een werkitem toe te voegen",
+      "label": "Werkitem toevoegen",
+      "cycle": {
+        "failed": "Werkitem kon niet aan de cyclus worden toegevoegd. Probeer het opnieuw.",
+        "success": "{count, plural, one {Werkitem} other {Werkitems}} succesvol aan de cyclus toegevoegd.",
+        "loading": "{count, plural, one {Werkitem} other {Werkitems}} toevoegen aan de cyclus"
+      },
+      "assignee": "Toegewezenen toevoegen",
+      "start_date": "Startdatum toevoegen",
+      "due_date": "Einddatum toevoegen",
+      "parent": "Bovenliggend werkitem toevoegen",
+      "sub_issue": "Subwerkitem toevoegen",
+      "dependency": "Afhankelijkheid toevoegen",
+      "relation": "Relatie toevoegen",
+      "link": "Link toevoegen",
+      "existing": "Bestaand werkitem toevoegen"
+    },
+    "remove": {
+      "label": "Werkitem verwijderen",
+      "cycle": {
+        "loading": "Werkitem verwijderen uit de cyclus",
+        "success": "Werkitem succesvol uit de cyclus verwijderd.",
+        "failed": "Werkitem kon niet uit de cyclus worden verwijderd. Probeer het opnieuw."
+      },
+      "module": {
+        "loading": "Werkitem verwijderen uit de module",
+        "success": "Werkitem succesvol uit de module verwijderd.",
+        "failed": "Werkitem kon niet uit de module worden verwijderd. Probeer het opnieuw."
+      },
+      "parent": {
+        "label": "Bovenliggend werkitem verwijderen"
+      }
+    },
+    "new": "Nieuw werkitem",
+    "adding": "Werkitem toevoegen",
+    "create": {
+      "success": "Werkitem succesvol aangemaakt"
+    },
+    "priority": {
+      "urgent": "Urgent",
+      "high": "Hoog",
+      "medium": "Gemiddeld",
+      "low": "Laag"
+    },
+    "display": {
+      "properties": {
+        "label": "Eigenschappen weergeven",
+        "id": "ID",
+        "issue_type": "Werkitemtype",
+        "sub_issue_count": "Aantal subwerkitems",
+        "attachment_count": "Aantal bijlagen",
+        "created_on": "Aangemaakt op",
+        "sub_issue": "Subwerkitem",
+        "work_item_count": "Aantal werkitems"
+      },
+      "extra": {
+        "show_sub_issues": "Subwerkitems tonen",
+        "show_empty_groups": "Lege groepen tonen"
+      }
+    },
+    "layouts": {
+      "ordered_by_label": "Deze indeling is gesorteerd op",
+      "list": "Lijst",
+      "kanban": "Bord",
+      "calendar": "Kalender",
+      "spreadsheet": "Tabel",
+      "gantt": "Tijdlijn",
+      "title": {
+        "list": "Lijstindeling",
+        "kanban": "Bordindeling",
+        "calendar": "Kalenderindeling",
+        "spreadsheet": "Tabelindeling",
+        "gantt": "Tijdlijnindeling"
+      }
+    },
+    "states": {
+      "active": "Actief",
+      "backlog": "Backlog"
+    },
+    "comments": {
+      "placeholder": "Opmerking toevoegen",
+      "switch": {
+        "private": "Overschakelen naar privéopmerking",
+        "public": "Overschakelen naar openbare opmerking"
+      },
+      "create": {
+        "success": "Opmerking succesvol aangemaakt",
+        "error": "Opmerking aanmaken mislukt. Probeer het later opnieuw."
+      },
+      "update": {
+        "success": "Opmerking succesvol bijgewerkt",
+        "error": "Opmerking bijwerken mislukt. Probeer het later opnieuw."
+      },
+      "remove": {
+        "success": "Opmerking succesvol verwijderd",
+        "error": "Opmerking verwijderen mislukt. Probeer het later opnieuw."
+      },
+      "upload": {
+        "error": "Bestand uploaden mislukt. Probeer het later opnieuw."
+      },
+      "copy_link": {
+        "success": "Opmerkingslink gekopieerd naar klembord",
+        "error": "Fout bij het kopiëren van de opmerkingslink. Probeer het later opnieuw."
+      },
+      "replies": {
+        "create": {
+          "submit_button": "Reactie toevoegen",
+          "placeholder": "Reactie toevoegen"
+        },
+        "toast": {
+          "fetch": {
+            "error": {
+              "message": "Reacties ophalen mislukt"
+            }
+          },
+          "create": {
+            "success": {
+              "message": "Reactie succesvol aangemaakt"
+            },
+            "error": {
+              "message": "Reactie aanmaken mislukt"
+            }
+          },
+          "update": {
+            "success": {
+              "message": "Reactie succesvol bijgewerkt"
+            },
+            "error": {
+              "message": "Reactie bijwerken mislukt"
+            }
+          },
+          "delete": {
+            "success": {
+              "message": "Reactie succesvol verwijderd"
+            },
+            "error": {
+              "message": "Reactie verwijderen mislukt"
+            }
+          }
+        }
+      }
+    },
+    "empty_state": {
+      "issue_detail": {
+        "title": "Werkitem bestaat niet",
+        "description": "Het werkitem dat je zoekt bestaat niet, is gearchiveerd of is verwijderd.",
+        "primary_button": {
+          "text": "Andere werkitems bekijken"
+        }
+      }
+    },
+    "sibling": {
+      "label": "Werkitems op hetzelfde niveau"
+    },
+    "archive": {
+      "description": "Alleen voltooide of geannuleerde werkitems kunnen worden gearchiveerd",
+      "label": "Werkitem archiveren",
+      "confirm_message": "Weet je zeker dat je het werkitem wilt archiveren? Al je gearchiveerde werkitems kunnen later worden hersteld.",
+      "success": {
+        "label": "Archiveren geslaagd",
+        "message": "Je archieven vind je in de projectarchieven."
+      },
+      "failed": {
+        "message": "Werkitem kon niet worden gearchiveerd. Probeer het opnieuw."
+      },
+      "banner_message": "Dit werkitem is gearchiveerd. Ga naar de sectie Archieven om het te herstellen.",
+      "go_to_archives": "Ga naar archieven"
+    },
+    "restore": {
+      "success": {
+        "title": "Herstellen geslaagd",
+        "message": "Je werkitem vind je in de werkitems van het project."
+      },
+      "failed": {
+        "message": "Werkitem kon niet worden hersteld. Probeer het opnieuw."
+      }
+    },
+    "relation": {
+      "relates_to": "Gerelateerd aan",
+      "duplicate": "Duplicaat van",
+      "blocked_by": "Geblokkeerd door",
+      "blocking": "Blokkeert",
+      "start_before": "Start vóór",
+      "start_after": "Start na",
+      "finish_before": "Eindigt vóór",
+      "finish_after": "Eindigt na",
+      "implements": "Implementeert",
+      "implemented_by": "Geïmplementeerd door"
+    },
+    "copy_link": "Werkitemlink kopiëren",
+    "delete": {
+      "label": "Werkitem verwijderen",
+      "error": "Fout bij het verwijderen van het werkitem"
+    },
+    "subscription": {
+      "actions": {
+        "subscribed": "Succesvol geabonneerd op werkitem",
+        "unsubscribed": "Abonnement op werkitem succesvol opgezegd"
+      }
+    },
+    "select": {
+      "error": "Selecteer minstens één werkitem",
+      "empty": "Geen werkitems geselecteerd",
+      "add_selected": "Geselecteerde werkitems toevoegen",
+      "select_all": "Alles selecteren",
+      "deselect_all": "Alles deselecteren"
+    },
+    "open_in_full_screen": "Werkitem op volledig scherm openen",
+    "duplicate": {
+      "modal": {
+        "title": "Maak een kopie in een ander project",
+        "description1": "Dit maakt een kopie van het werkitem.",
+        "description2": "Alle eigenschapsgegevens worden verwijderd tijdens het dupliceren.",
+        "placeholder": "Selecteer een project"
+      }
+    },
+    "toast": {
+      "duplicate": {
+        "success": {
+          "message": "Werkitem succesvol gedupliceerd"
+        },
+        "error": {
+          "message": "Werkitem dupliceren mislukt"
+        }
+      }
+    },
+    "pages": {
+      "link_pages": "Pagina's koppelen",
+      "show_wiki_pages": "Wiki-pagina's tonen",
+      "link_pages_to": "Pagina's koppelen aan",
+      "linked_pages": "Gekoppelde pagina's",
+      "no_description": "Dit is een lege pagina. Schrijf er iets in en zie het hier verschijnen in plaats van deze placeholder",
+      "toasts": {
+        "link": {
+          "success": {
+            "title": "Pagina's bijgewerkt",
+            "message": "Pagina's succesvol bijgewerkt"
+          },
+          "error": {
+            "title": "Bijwerken van pagina's mislukt",
+            "message": "Bijwerken van pagina's mislukt"
+          }
+        },
+        "remove": {
+          "success": {
+            "title": "Pagina verwijderd",
+            "message": "Pagina succesvol verwijderd"
+          },
+          "error": {
+            "title": "Verwijderen van pagina mislukt",
+            "message": "Verwijderen van pagina mislukt"
+          }
+        }
+      }
+    },
+    "vote": {
+      "click_to_upvote": "Klik om omhoog te stemmen",
+      "click_to_downvote": "Klik om omlaag te stemmen",
+      "click_to_view_upvotes": "Klik om positieve stemmen te bekijken",
+      "click_to_view_downvotes": "Klik om negatieve stemmen te bekijken"
+    }
+  },
+  "sub_work_item": {
+    "update": {
+      "success": "Subwerkitem succesvol bijgewerkt",
+      "error": "Fout bij het bijwerken van het subwerkitem"
+    },
+    "remove": {
+      "success": "Subwerkitem succesvol verwijderd",
+      "error": "Fout bij het verwijderen van het subwerkitem"
+    },
+    "empty_state": {
+      "sub_list_filters": {
+        "title": "Je hebt geen subwerkitems die overeenkomen met de toegepaste filters.",
+        "description": "Wis alle toegepaste filters om alle subwerkitems te zien.",
+        "action": "Filters wissen"
+      },
+      "list_filters": {
+        "title": "Je hebt geen werkitems die overeenkomen met de toegepaste filters.",
+        "description": "Wis alle toegepaste filters om alle werkitems te zien.",
+        "action": "Filters wissen"
+      }
+    }
+  },
+  "issue_relation": {
+    "empty_state": {
+      "search": {
+        "title": "Geen overeenkomende werkitems gevonden"
+      },
+      "no_issues": {
+        "title": "Geen werkitems gevonden"
+      }
+    }
+  },
+  "issue_comment": {
+    "empty_state": {
+      "general": {
+        "title": "Nog geen opmerkingen",
+        "description": "Opmerkingen kunnen worden gebruikt als ruimte voor discussie en opvolging van de werkitems"
+      }
+    }
+  },
+  "bulk_operations": {
+    "error_details": {
+      "invalid_archive_state_group": {
+        "title": "Werkitems kunnen niet worden gearchiveerd",
+        "message": "Alleen werkitems die tot de statusgroepen Voltooid of Geannuleerd behoren, kunnen worden gearchiveerd."
+      },
+      "invalid_issue_start_date": {
+        "title": "Werkitems kunnen niet worden bijgewerkt",
+        "message": "De geselecteerde startdatum ligt na de einddatum van sommige werkitems. Zorg dat de startdatum vóór de einddatum ligt."
+      },
+      "invalid_issue_target_date": {
+        "title": "Werkitems kunnen niet worden bijgewerkt",
+        "message": "De geselecteerde einddatum ligt vóór de startdatum van sommige werkitems. Zorg dat de einddatum na de startdatum ligt."
+      },
+      "invalid_state_transition": {
+        "title": "Werkitems kunnen niet worden bijgewerkt",
+        "message": "Statuswijziging is niet toegestaan voor sommige werkitems. Zorg dat de statuswijziging is toegestaan."
+      }
+    },
+    "upgrade_banner": {
+      "message": "Wijzig de status, prioriteit en meer voor meerdere werkitems tegelijk. Bespaar gemiddeld drie minuten per bewerking.",
+      "cta": "Upgraden naar One"
+    }
+  },
+  "recurring_work_items": {
+    "settings": {
+      "heading": "Terugkerende werkitems",
+      "description": "Stel je herhaalbare werk één keer in en wij zorgen voor de herhalingen. Je ziet alles hier wanneer het zover is.",
+      "new_recurring_work_item": "Nieuw terugkerend werkitem",
+      "update_recurring_work_item": "Terugkerend werkitem bijwerken",
+      "form": {
+        "interval": {
+          "title": "Schema",
+          "start_date": {
+            "validation": {
+              "required": "Startdatum is verplicht"
+            }
+          },
+          "interval_type": {
+            "validation": {
+              "required": "Intervaltype is verplicht"
+            }
+          }
+        },
+        "button": {
+          "create": "Terugkerend werkitem aanmaken",
+          "update": "Terugkerend werkitem bijwerken"
+        }
+      },
+      "create_button": {
+        "label": "Terugkerend werkitem aanmaken",
+        "no_permission": "Neem contact op met je projectbeheerder om terugkerende werkitems aan te maken"
+      }
+    },
+    "empty_state": {
+      "upgrade": {
+        "title": "Jouw werk op de automatische piloot",
+        "description": "Stel het één keer in. Wij brengen het terug wanneer het aan de beurt is. Upgrade naar Business om terugkerend werk moeiteloos te maken."
+      },
+      "no_templates": {
+        "button": "Maak je eerste terugkerende werkitem aan"
+      }
+    },
+    "toasts": {
+      "create": {
+        "success": {
+          "title": "Terugkerend werkitem aangemaakt",
+          "message": "Het terugkerende werkitem {name} is nu beschikbaar voor je werkruimte."
+        },
+        "error": {
+          "title": "We konden dat terugkerende werkitem deze keer niet aanmaken.",
+          "message": "Probeer je gegevens opnieuw op te slaan of kopieer ze naar een nieuw terugkerend werkitem, bij voorkeur in een ander tabblad."
+        }
+      },
+      "update": {
+        "success": {
+          "title": "Terugkerend werkitem gewijzigd",
+          "message": "Het terugkerende werkitem {name} is gewijzigd."
+        },
+        "error": {
+          "title": "We konden de wijzigingen aan dit terugkerende werkitem niet opslaan.",
+          "message": "Probeer je gegevens opnieuw op te slaan of kom later op dit terugkerende werkitem terug. Blijft het problemen geven, neem dan contact met ons op."
+        }
+      },
+      "delete": {
+        "success": {
+          "title": "Terugkerend werkitem verwijderd",
+          "message": "Het terugkerende werkitem {name} is nu uit je werkruimte verwijderd."
+        },
+        "error": {
+          "title": "We konden dat terugkerende werkitem deze keer niet verwijderen.",
+          "message": "Probeer het opnieuw te verwijderen of kom er later op terug. Lukt het dan nog niet, neem dan contact met ons op."
+        }
+      }
+    },
+    "delete_confirmation": {
+      "title": "Terugkerend werkitem verwijderen",
+      "description": {
+        "prefix": "Weet je zeker dat je het terugkerende werkitem ",
+        "suffix": " wilt verwijderen? Alle gegevens van het terugkerende werkitem worden definitief verwijderd. Deze actie kan niet ongedaan worden gemaakt."
+      }
+    }
+  },
+  "epic": {
+    "new": "Nieuwe epic",
+    "label": "{count, plural, one {Epic} other {Epics}}",
+    "adding": "Epic toevoegen",
+    "create": {
+      "success": "Epic succesvol aangemaakt"
+    },
+    "add": {
+      "label": "Epic toevoegen",
+      "press_enter": "Druk op 'Enter' om nog een epic toe te voegen"
+    },
+    "title": {
+      "label": "Titel van epic",
+      "required": "Titel van epic is verplicht."
+    }
+  },
+  "issue_ui": {
+    "id_copied": "Werkitem-ID gekopieerd naar klembord",
+    "click_to_copy": "Klik om te kopiëren",
+    "asset_duplication_failed": "Bestand dupliceren mislukt. Probeer het later opnieuw.",
+    "required": "Dit is verplicht",
+    "no_siblings": "Geen gelijkwaardige werkitems",
+    "attachments": {
+      "uploading": "Bijlage uploaden...",
+      "uploaded_title": "Bijlage geüpload",
+      "uploaded_message": "De bijlage is succesvol geüpload",
+      "not_uploaded_title": "Bijlage niet geüpload",
+      "not_uploaded_message": "De bijlage kon niet worden geüpload",
+      "removed_title": "Bijlage verwijderd",
+      "removed_message": "De bijlage is succesvol verwijderd",
+      "not_removed_title": "Bijlage niet verwijderd",
+      "not_removed_message": "De bijlage kon niet worden verwijderd",
+      "drop_here": "Zet hier neer...",
+      "uploading_short": "Uploaden...",
+      "click_or_drag": "Klik of sleep een bestand hierheen",
+      "invalid_file": "Ongeldig bestandstype of ongeldige grootte (max. {size} MB)"
+    },
+    "due_before_start": "De einddatum mag niet vóór de startdatum van het werkitem liggen.",
+    "clear_filters": "Filters wissen",
+    "add_to_cycle_success": "Werkitems succesvol aan de cyclus toegevoegd.",
+    "add_to_cycle_failed": "Geselecteerde werkitems konden niet aan de cyclus worden toegevoegd. Probeer het opnieuw.",
+    "add_to_module_success": "Werkitems succesvol aan de module toegevoegd.",
+    "add_to_module_failed": "Geselecteerde werkitems konden niet aan de module worden toegevoegd. Probeer het opnieuw.",
+    "project_view_empty": {
+      "title": "Weergave van werkitems verschijnt hier",
+      "description": "Met werkitems houd je individuele stukken werk bij. Zo weet je wat er speelt, wie eraan werkt en wat klaar is."
+    },
+    "sub_group_by": "Subgroeperen op",
+    "filters": {
+      "custom": "Aangepast",
+      "mention": "Vermelding"
+    },
+    "cannot_move": {
+      "title": "Werkitem kan niet worden verplaatst",
+      "not_allowed": "Je mag dit werkitem niet verplaatsen",
+      "dnd_disabled": "Slepen en neerzetten is uitgeschakeld voor de huidige groepering"
+    },
+    "select_within_project": "Alleen werkitems binnen het huidige project kunnen worden geselecteerd.",
+    "drop_to_delete": "Zet hier neer om het werkitem te verwijderen.",
+    "view_not_exist": {
+      "title": "Weergave bestaat niet",
+      "description": "De weergave die je zoekt bestaat niet of je hebt geen toestemming om deze te bekijken."
+    },
+    "go_to_all_work_items": "Ga naar alle werkitems",
+    "save_as": "Opslaan als",
+    "columns": {
+      "select_cycle": "Selecteer cyclus",
+      "select_modules": "Selecteer modules"
+    },
+    "quick_actions": {
+      "action_not_available": "Actie niet beschikbaar",
+      "not_implemented": "Actie {action} is niet geïmplementeerd.",
+      "restore_success_title": "Herstellen geslaagd",
+      "restore_success_message": "Je werkitem vind je in de werkitems van het project.",
+      "restore_failed": "Werkitem kon niet worden hersteld. Probeer het opnieuw.",
+      "remove_from_cycle": "Verwijderen uit cyclus",
+      "remove_from_module": "Verwijderen uit module"
+    },
+    "close_peek": "Voorbeeldweergave sluiten",
+    "labels_count": "{count} labels",
+    "view_epic": "Epic bekijken",
+    "view_work_item": "Werkitem bekijken",
+    "save_draft": {
+      "title": "Dit concept opslaan?",
+      "description": "Je kunt dit werkitem opslaan in Concepten zodat je er later op terug kunt komen."
+    },
+    "delete_confirm": {
+      "work_item": "Weet je zeker dat je werkitem {identifier} wilt verwijderen? Alle gegevens van het werkitem worden definitief verwijderd. Deze actie kan niet ongedaan worden gemaakt.",
+      "epic": "Weet je zeker dat je epic {identifier} wilt verwijderen? Alle gegevens van de epic worden definitief verwijderd. Deze actie kan niet ongedaan worden gemaakt."
+    },
+    "work_item_deleted": "Dit werkitem is verwijderd",
+    "epics_link_copied": "Link naar epics gekopieerd naar klembord.",
+    "work_items_link_copied": "Link naar werkitems gekopieerd naar klembord.",
+    "editor_processing": "De editor verwerkt nog wijzigingen. Wacht even voordat je verdergaat.",
+    "ai_title_not_informative": "De titel van het werkitem is niet informatief genoeg om de beschrijving te genereren. Probeer het met een andere titel.",
+    "ai_rate_limit": "Je hebt het maximum van 50 verzoeken per maand per gebruiker bereikt.",
+    "generic_error": "Er is een fout opgetreden. Probeer het opnieuw.",
+    "move_to_project_failed": "Werkitem verplaatsen naar project mislukt. Probeer het opnieuw.",
+    "project_work_items_count": "{count, plural, one {Er is # werkitem in dit project} other {Er zijn # werkitems in dit project}}",
+    "archived_banner": "Dit werkitem is gearchiveerd. Ga naar het gedeelte Archieven om het te herstellen.",
+    "go_to_archives": "Ga naar archieven",
+    "select_work_item": "Werkitem selecteren",
+    "select_work_items_to_delete": "Selecteer werkitems om te verwijderen",
+    "delete_selected_work_items": "Geselecteerde werkitems verwijderen",
+    "sub_work_item_progress": "Voortgang van subwerkitems",
+    "archived_work_items_count": "{count, plural, one {Er is # werkitem in het archief van het project} other {Er zijn # werkitems in het archief van het project}}",
+    "add_related_work_items": "Gerelateerde werkitems toevoegen",
+    "toggle_workspace_level_search": "Zoeken op werkruimteniveau in- of uitschakelen",
+    "search_results_for_in_project": "Zoekresultaten voor \"<query/>\" in project:",
+    "cannot_move_to_completed_cycle": "Een werkitem kan niet naar voltooide cycli worden verplaatst"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "archiveerde het werkitem.",
+      "assignee": {
+        "added": "voegde een nieuwe toegewezene <user/> toe.",
+        "added_with_issue": "voegde een nieuwe toegewezene <user/> toe aan <issue/>.",
+        "removed": "verwijderde de toegewezene <user/>.",
+        "removed_with_issue": "verwijderde de toegewezene <user/> van <issue/>."
+      },
+      "attachment": {
+        "added": "uploadde een nieuwe bijlage.",
+        "added_with_issue": "uploadde een nieuwe bijlage naar <issue/>.",
+        "removed": "verwijderde een bijlage.",
+        "removed_with_issue": "verwijderde een bijlage van <issue/>."
+      },
+      "created": "maakte het werkitem aan.",
+      "created_via": "maakte het werkitem aan via <source/>.",
+      "cycle": {
+        "added": "voegde dit werkitem toe aan de cyclus <cycle/>",
+        "removed": "verwijderde het werkitem uit de cyclus <cycle/>",
+        "set": "stelde de cyclus in op <cycle/>"
+      },
+      "deleted": "verwijderde een werkitem.",
+      "description": {
+        "updated": "werkte de beschrijving bij.",
+        "updated_with_issue": "werkte de beschrijving van <issue/> bij."
+      },
+      "duration": {
+        "days": "{count, plural, one {# dag} other {# dagen}}",
+        "removed": "verwijderde de duur.",
+        "removed_with_issue": "verwijderde de duur van <issue/>.",
+        "set": "stelde de duur in op <value/>.",
+        "set_with_issue": "stelde de duur in op <value/> voor <issue/>."
+      },
+      "estimate": {
+        "removed": "verwijderde het schattingspunt <value/>.",
+        "removed_with_issue": "verwijderde het schattingspunt <value/> van <issue/>.",
+        "set": "stelde het schattingspunt in op <value/>.",
+        "set_with_issue": "stelde het schattingspunt in op <value/> voor <issue/>."
+      },
+      "intake": {
+        "accepted": "accepteerde dit werkitem vanuit Intake.",
+        "declined": "wees dit werkitem af vanuit Intake.",
+        "duplicate": "wees dit werkitem af vanuit Intake door een dubbel werkitem aan te geven.",
+        "snoozed": "stelde dit werkitem uit.",
+        "updated": "werkte de status van het Intake-werkitem bij."
+      },
+      "label": {
+        "added": "voegde een nieuw label <label/> toe",
+        "added_with_issue": "voegde een nieuw label <label/> toe aan <issue/>",
+        "removed": "verwijderde het label <label/>",
+        "removed_with_issue": "verwijderde het label <label/> van <issue/>"
+      },
+      "link": {
+        "added": "voegde <link>link</link> toe.",
+        "added_with_issue": "voegde <link>link</link> toe aan <issue/>.",
+        "removed": "verwijderde deze <link>link</link>.",
+        "removed_with_issue": "verwijderde deze <link>link</link> van <issue/>.",
+        "updated": "werkte de <link>link</link> bij.",
+        "updated_with_issue": "werkte de <link>link</link> van <issue/> bij."
+      },
+      "module": {
+        "added": "voegde dit werkitem toe aan de module <module/>",
+        "removed": "verwijderde het werkitem uit de module <module/>",
+        "set": "stelde de module in op <module/>"
+      },
+      "name": {
+        "set": "stelde de naam in op {name}."
+      },
+      "parent": {
+        "removed": "verwijderde het bovenliggende werkitem <value/>.",
+        "removed_with_issue": "verwijderde het bovenliggende werkitem <value/> van <issue/>.",
+        "set": "stelde het bovenliggende werkitem in op <value/>.",
+        "set_with_issue": "stelde het bovenliggende werkitem in op <value/> voor <issue/>."
+      },
+      "priority": {
+        "set": "stelde de prioriteit in op <value/>.",
+        "set_with_issue": "stelde de prioriteit in op <value/> voor <issue/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "markeerde dit werkitem als geblokkeerd door <value/>.",
+          "removed": "verwijderde de blokkade van dit werkitem door werkitem <value/>."
+        },
+        "blocking": {
+          "added": "markeerde dit werkitem als blokkerend voor werkitem <value/>.",
+          "removed": "verwijderde het blokkerende werkitem <value/>."
+        },
+        "duplicate": {
+          "added": "markeerde dit werkitem als duplicaat van <value/>.",
+          "removed": "verwijderde dit werkitem als duplicaat van <value/>."
+        },
+        "finish_after": {
+          "added": "markeerde dat dit werkitem eindigt na <value/>.",
+          "removed": "verwijderde de relatie \"eindigt na\" met <value/>."
+        },
+        "finish_before": {
+          "added": "markeerde dat dit werkitem eindigt vóór <value/>.",
+          "removed": "verwijderde de relatie \"eindigt vóór\" met <value/>."
+        },
+        "relates_to": {
+          "added": "markeerde dit werkitem als gerelateerd aan <value/>.",
+          "removed": "verwijderde de relatie met <value/>."
+        },
+        "start_after": {
+          "added": "markeerde dat dit werkitem start na <value/>.",
+          "removed": "verwijderde de relatie \"start na\" met <value/>."
+        },
+        "start_before": {
+          "added": "markeerde dat dit werkitem start vóór <value/>.",
+          "removed": "verwijderde de relatie \"start vóór\" met <value/>."
+        }
+      },
+      "restored": "herstelde het werkitem.",
+      "start_date": {
+        "removed": "verwijderde de startdatum.",
+        "removed_with_issue": "verwijderde de startdatum van <issue/>.",
+        "set": "stelde de startdatum in op <value/>.",
+        "set_with_issue": "stelde de startdatum in op <value/> voor <issue/>."
+      },
+      "state": {
+        "set": "stelde de status in op <value/>.",
+        "set_with_issue": "stelde de status in op <value/> voor <issue/>."
+      },
+      "target_date": {
+        "removed": "verwijderde de vervaldatum.",
+        "removed_with_issue": "verwijderde de vervaldatum van <issue/>.",
+        "set": "stelde de vervaldatum in op <value/>.",
+        "set_with_issue": "stelde de vervaldatum in op <value/> voor <issue/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "archiveerde <issue/>",
+        "restored": "herstelde <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "voegde een nieuwe toegewezene <assignee/> toe aan <issue/>",
+        "added_without_issue": "voegde een nieuwe toegewezene <assignee/> toe",
+        "removed_with_issue": "verwijderde de toegewezene <assignee/> van <issue/>",
+        "removed_without_issue": "verwijderde de toegewezene <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "uploadde een nieuwe bijlage naar <issue/>",
+        "added_without_issue": "uploadde een nieuwe bijlage",
+        "removed_with_issue": "verwijderde een bijlage van <issue/>",
+        "removed_without_issue": "verwijderde een bijlage"
+      },
+      "blocked_by": {
+        "added_with_issue": "markeerde <issue/> als geblokkeerd door <value/>.",
+        "added_without_issue": "markeerde dit werkitem als geblokkeerd door <value/>.",
+        "removed_with_issue": "verwijderde de blokkade van <issue/> door werkitem <value/>.",
+        "removed_without_issue": "verwijderde de blokkade van dit werkitem door werkitem <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "markeerde <issue/> als blokkerend voor werkitem <value/>.",
+        "added_without_issue": "markeerde dit werkitem als blokkerend voor werkitem <value/>.",
+        "removed": "verwijderde het blokkerende werkitem <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "voegde <issue/> <nowrap>toe aan de cyclus</nowrap> <value/>",
+        "added_without_issue": "voegde dit werkitem <nowrap>toe aan de cyclus</nowrap> <value/>",
+        "removed": "verwijderde <issue/> uit de cyclus <value/>",
+        "set": "<nowrap>stelde de cyclus in op</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "werkte de beschrijving van <issue/> bij",
+        "updated_without_issue": "werkte de beschrijving bij"
+      },
+      "duplicate": {
+        "added_with_issue": "markeerde <issue/> als duplicaat van <value/>.",
+        "added_without_issue": "markeerde dit werkitem als duplicaat van <value/>.",
+        "removed_with_issue": "verwijderde <issue/> als duplicaat van <value/>.",
+        "removed_without_issue": "verwijderde dit werkitem als duplicaat van <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# dag} other {# dagen}}",
+        "removed_with_issue": "verwijderde de duur van <issue/>",
+        "removed_without_issue": "verwijderde de duur",
+        "set_with_issue": "stelde de duur in op <value/> voor <issue/>",
+        "set_without_issue": "stelde de duur in op <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "zette <issue/> om naar een werkitem",
+        "created": "maakte <issue/> aan",
+        "deleted": "verwijderde <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "verwijderde het schattingspunt van <issue/>",
+        "removed_without_issue": "verwijderde het schattingspunt",
+        "set_with_issue": "stelde het schattingspunt in op <value/> voor <issue/>",
+        "set_without_issue": "stelde het schattingspunt in op <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "accepteerde werkitem <issue/>",
+        "accepted_without_issue": "accepteerde dit werkitem vanuit Intake.",
+        "declined_with_issue": "wees werkitem <issue/> af",
+        "declined_without_issue": "wees dit werkitem af vanuit Intake.",
+        "duplicate_with_issue": "wees werkitem <issue/> af vanuit Intake door een dubbel werkitem aan te geven.",
+        "duplicate_without_issue": "wees dit werkitem af vanuit Intake door een dubbel werkitem aan te geven.",
+        "snoozed_with_issue": "stelde werkitem <issue/> uit",
+        "snoozed_without_issue": "stelde dit werkitem uit.",
+        "updated_with_issue": "werkte de status van het Intake-werkitem bij. <issue/>",
+        "updated_without_issue": "werkte de status van het Intake-werkitem bij."
+      },
+      "issue": {
+        "converted_to_epic": "zette <issue/> om naar een epic",
+        "created": "maakte <issue/> aan",
+        "deleted": "verwijderde <issue/>",
+        "deleted_tooltip": "Dit werkitem is verwijderd",
+        "fallback_name": "een werkitem"
+      },
+      "label": {
+        "added_with_issue": "voegde een nieuw label <label/> toe aan <issue/>",
+        "added_without_issue": "voegde een nieuw label <label/> toe",
+        "removed_with_issue": "verwijderde het label <label/> van <issue/>",
+        "removed_without_issue": "verwijderde het label <label/>"
+      },
+      "link": {
+        "added_with_issue": "voegde deze <link>link</link> toe aan <issue/>",
+        "added_without_issue": "voegde deze <link>link</link> toe",
+        "removed_with_issue": "verwijderde deze <link>link</link> van <issue/>",
+        "removed_without_issue": "verwijderde deze <link>link</link>",
+        "updated_with_issue": "werkte de <link>link</link> van <issue/> bij",
+        "updated_without_issue": "werkte de <link>link</link> bij"
+      },
+      "module": {
+        "added_with_issue": "voegde <issue/> toe aan de module <value/>",
+        "added_without_issue": "voegde dit werkitem toe aan de module <value/>",
+        "removed": "verwijderde <issue/> uit de module <value/>",
+        "set": "stelde de module in op <value/>"
+      },
+      "name": {
+        "set_with_issue": "stelde de titel van <issue/> in op <value/>",
+        "set_without_issue": "stelde de titel in op <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "verwijderde het bovenliggende werkitem <value/> van <issue/>",
+        "removed_without_issue": "verwijderde het bovenliggende werkitem <value/>",
+        "set_with_issue": "stelde het bovenliggende werkitem in op <value/> voor <issue/>",
+        "set_without_issue": "stelde het bovenliggende werkitem in op <value/>"
+      },
+      "priority": {
+        "high": "Hoog",
+        "low": "Laag",
+        "medium": "Gemiddeld",
+        "none": "Geen",
+        "set_with_issue": "stelde de prioriteit in op <value/> voor <issue/>",
+        "set_without_issue": "stelde de prioriteit in op <value/>",
+        "urgent": "Urgent"
+      },
+      "relates_to": {
+        "added_with_issue": "markeerde dat <issue/> gerelateerd is aan <value/>.",
+        "added_without_issue": "markeerde dat dit werkitem gerelateerd is aan <value/>.",
+        "removed": "verwijderde de relatie met <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "verwijderde de startdatum van <issue/>",
+        "removed_without_issue": "verwijderde de startdatum",
+        "set_with_issue": "stelde de startdatum in op <value/> voor <issue/>",
+        "set_without_issue": "stelde de startdatum in op <value/>"
+      },
+      "state": {
+        "set_with_issue": "stelde de status in op <value/> voor <issue/>",
+        "set_without_issue": "stelde de status in op <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "verwijderde de vervaldatum van <issue/>",
+        "removed_without_issue": "verwijderde de vervaldatum",
+        "set_with_issue": "stelde de vervaldatum in op <value/> voor <issue/>",
+        "set_without_issue": "stelde de vervaldatum in op <value/>"
+      },
+      "actor_separator": " ",
+      "commented_ago": "Plaatste een opmerking {timeAgo}"
+    },
+    "project": {
+      "archived_at": {
+        "archived": "archiveerde het project",
+        "restored": "herstelde het project"
+      },
+      "cycle_view": {
+        "disabled": "schakelde de cyclusweergave uit",
+        "enabled": "schakelde de cyclusweergave in",
+        "fallback": "werkte de cyclusweergave bij"
+      },
+      "cycles": {
+        "added": "voegde dit project toe aan de cyclus <value/>",
+        "removed": "verwijderde dit project uit de cyclus <value/>",
+        "unknown": "Onbekende cyclus"
+      },
+      "default": "werkte de projectinstellingen bij",
+      "description": {
+        "removed": "verwijderde de projectbeschrijving",
+        "updated": "werkte de projectbeschrijving bij"
+      },
+      "estimate": {
+        "removed": "verwijderde het schattingspunt",
+        "removed_with_value": "verwijderde het schattingspunt <value/>",
+        "set": "stelde het schattingspunt in op <value/>"
+      },
+      "identifier": {
+        "updated": "werkte de projectidentificatie bij naar <value/>"
+      },
+      "inbox": {
+        "disabled": "schakelde Intake uit",
+        "enabled": "schakelde Intake in"
+      },
+      "intake_view": {
+        "disabled": "schakelde de Intake-weergave uit",
+        "enabled": "schakelde de Intake-weergave in",
+        "fallback": "werkte de Intake-weergave bij"
+      },
+      "is_epic_enabled": {
+        "disabled": "schakelde epics uit",
+        "enabled": "schakelde epics in",
+        "fallback": "werkte epics bij"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "schakelde werkitemtypen uit",
+        "enabled": "schakelde werkitemtypen in",
+        "fallback": "werkte werkitemtypen bij"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "schakelde projectupdates uit",
+        "enabled": "schakelde projectupdates in",
+        "fallback": "werkte projectupdates bij"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "schakelde tijdregistratie uit",
+        "enabled": "schakelde tijdregistratie in",
+        "fallback": "werkte tijdregistratie bij"
+      },
+      "is_workflow_enabled": {
+        "disabled": "schakelde de aangepaste workflow uit",
+        "enabled": "schakelde de aangepaste workflow in",
+        "fallback": "werkte de aangepaste workflow bij"
+      },
+      "issue_views_view": {
+        "disabled": "schakelde de weergave voor werkitemweergaven uit",
+        "enabled": "schakelde de weergave voor werkitemweergaven in",
+        "fallback": "werkte de weergave voor werkitemweergaven bij"
+      },
+      "labels": {
+        "added": "voegde het label <value/> toe",
+        "created": "maakte het label <value/> aan",
+        "deleted": "wiste het label <value/>",
+        "removed": "verwijderde het label <value/>",
+        "untitled": "Label zonder titel",
+        "updated": "werkte het label <value/> bij"
+      },
+      "module_view": {
+        "disabled": "schakelde de modulesweergave uit",
+        "enabled": "schakelde de modulesweergave in",
+        "fallback": "werkte de modulesweergave bij"
+      },
+      "modules": {
+        "added": "voegde dit project toe aan de module <value/>",
+        "removed": "verwijderde dit project uit de module <value/>",
+        "unknown": "Onbekende module"
+      },
+      "name": {
+        "renamed": "hernoemde het project naar <value/>"
+      },
+      "network": {
+        "disabled": "schakelde netwerktoegang uit",
+        "enabled": "schakelde netwerktoegang in"
+      },
+      "page": {
+        "created": "maakte de projectpagina <value/> aan",
+        "removed": "verwijderde de projectpagina <value/>",
+        "untitled": "Pagina zonder titel"
+      },
+      "page_view": {
+        "disabled": "schakelde de paginaweergave uit",
+        "enabled": "schakelde de paginaweergave in",
+        "fallback": "werkte de paginaweergave bij"
+      },
+      "priority": {
+        "set": "stelde de prioriteit in op <value/>"
+      },
+      "start_date": {
+        "removed": "verwijderde de startdatum",
+        "set": "stelde de startdatum in op <value/>"
+      },
+      "state": {
+        "set": "stelde de status in op <value/>"
+      },
+      "target_date": {
+        "removed": "verwijderde de streefdatum",
+        "set": "stelde de streefdatum in op <value/>"
+      },
+      "timezone": {
+        "changed": "wijzigde de tijdzone van het project naar <value/>",
+        "default": "standaard"
+      },
+      "value_none": "geen"
+    }
+  }
+}

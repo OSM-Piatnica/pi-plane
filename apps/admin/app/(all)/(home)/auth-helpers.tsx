@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import Link from "next/link";
 // plane packages
 import type { TAdminAuthErrorInfo } from "@plane/constants";
-import { SUPPORT_EMAIL, EAdminAuthErrorCodes } from "@plane/constants";
+import { EAdminAuthErrorCodes } from "@plane/constants";
 
 export enum EErrorAlertType {
   BANNER_ALERT = "BANNER_ALERT",
@@ -69,9 +70,11 @@ const errorCodeMessages: {
       </div>
     ),
   },
+  // Plane showed "Please contact {SUPPORT_EMAIL}" here. SUPPORT_EMAIL is disabled for now, see
+  // packages/constants/src/endpoints.ts.
   [EAdminAuthErrorCodes.ADMIN_USER_DEACTIVATED]: {
     title: `User account deactivated`,
-    message: () => `User account deactivated. Please contact ${SUPPORT_EMAIL ? SUPPORT_EMAIL : "administrator"}.`,
+    message: () => "User account deactivated. Please contact administrator.",
   },
 };
 

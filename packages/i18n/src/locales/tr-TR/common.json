@@ -8,6 +8,7 @@
   "submit": "Gönder",
   "cancel": "İptal",
   "loading": "Yükleniyor",
+  "searching": "Aranıyor...",
   "error": "Hata",
   "success": "Başarılı",
   "warning": "Uyarı",
@@ -304,6 +305,9 @@
   "create_new_label": "Yeni etiket oluştur",
   "label_name": "Etiket adı",
   "failed_to_create_label": "Etiket oluşturulamadı. Lütfen tekrar deneyin.",
+  "no_matching_labels": "Eşleşen etiket yok",
+  "adding_label": "\"{name}\" ekleniyor",
+  "add_label_to_labels": "\"{name}\" etiketlere ekle",
   "start_date": "Başlangıç tarihi",
   "end_date": "Bitiş tarihi",
   "due_date": "Son tarih",
@@ -325,6 +329,18 @@
   "deleting": "Siliniyor",
   "make_a_copy": "Kopyasını oluştur",
   "move_to_project": "Projeye taşı",
+  "default_state_names": {
+    "backlog": "Bekleme Listesi",
+    "todo": "Yapılacak",
+    "in_progress": "Devam Ediyor",
+    "done": "Tamamlandı",
+    "cancelled": "İptal Edildi",
+    "triage": "Ön değerlendirme"
+  },
+  "filter_headings": {
+    "access": "Erişim",
+    "owned_by": "Sahibi"
+  },
   "good": "İyi",
   "morning": "sabah",
   "afternoon": "öğleden sonra",
@@ -526,6 +542,7 @@
       "updated_on": "Güncellenme tarihi"
     },
     "sort": {
+      "label": "Sırala",
       "asc": "Artan",
       "desc": "Azalan",
       "created_on": "Oluşturulma tarihi",
@@ -598,6 +615,13 @@
       "label": "Ara",
       "placeholder": "Aramak için yazın",
       "no_matches_found": "Eşleşme bulunamadı",
+      "cycles": "Döngü ara...",
+      "estimates": "Tahmin ara...",
+      "labels": "Etiket ara...",
+      "members": "Üye ara...",
+      "modules": "Modül ara...",
+      "projects": "Proje ara...",
+      "states": "Durum ara...",
       "no_matching_results": "Eşleşen sonuç yok",
       "min_chars": "Arama için en az {count} karakter yazın",
       "error": "Arama sonuçları alınırken hata oluştu",
@@ -625,7 +649,8 @@
       "enable": "Etkinleştir",
       "disable": "Devre dışı bırak",
       "copy_markdown": "Markdown'ı kopyala",
-      "reply": "Yanıtla"
+      "reply": "Yanıtla",
+      "add_reaction": "Tepki ekle"
     },
     "name": "Ad",
     "discard": "Vazgeç",
@@ -705,6 +730,8 @@
     "applying": "Uygulanıyor",
     "overview": "Genel Bakış",
     "no_of": "{entity} sayısı",
+    "no_of_work_items": "İş Öğeleri sayısı",
+    "no_of_epics": "Epikler sayısı",
     "resolved": "Çözüldü",
     "get_started": "Başla",
     "worklogs": "Çalışma Logları",
@@ -826,7 +853,7 @@
     "edited_by": "Tarafından düzenlendi"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane başlatılamadı. Bu, bir veya daha fazla Plane servisinin başlatılamaması nedeniyle olabilir.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane başlatılamadı. Bu, bir veya daha fazla Pi-Plane servisinin başlatılamaması nedeniyle olabilir.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Emin olmak için setup.sh ve Docker loglarından View Logs&apos;u seçin."
   },
   "customize_navigation": "Gezinmeyi özelleştir",
@@ -874,11 +901,12 @@
       "short_description": "JSON olarak aktar"
     }
   },
+  "labels_count": "{count, plural, one {# etiket} other {# etiket}}",
   "onboarding": {
     "skip": "Atla",
     "profile": {
       "title": "Profilini oluştur.",
-      "description": "Plane'de bu şekilde görüneceksin.",
+      "description": "Pi-Plane'de bu şekilde görüneceksin.",
       "choose_image": "Görsel seç",
       "upload_image": "Görsel yükle",
       "change_image": "Görseli değiştir",
@@ -893,7 +921,7 @@
       "new_password_placeholder": "Yeni parola...",
       "role_question": "Hangi rolde çalışıyorsun? Birini seç.",
       "domain_question": "Uzmanlık alanın nedir? Bir veya daha fazlasını seç.",
-      "marketing_consent": "Plane pazarlama iletişimlerini kabul ediyorum",
+      "marketing_consent": "Pi-Plane pazarlama iletişimlerini kabul ediyorum",
       "passwords_do_not_match": "Parolalar eşleşmiyor",
       "passwords_match": "Parolalar eşleşiyor",
       "seniority_levels": {
@@ -924,7 +952,7 @@
     },
     "role": {
       "title": "Rolün nedir?",
-      "description": "Plane'i çalışma şekline göre ayarlayalım.",
+      "description": "Pi-Plane'i çalışma şekline göre ayarlayalım.",
       "select_one": "Birini seç",
       "options": {
         "product_manager": "Ürün Yöneticisi",
@@ -937,7 +965,7 @@
       }
     },
     "usecase": {
-      "title": "Seni Plane'e ne getirdi?",
+      "title": "Seni Pi-Plane'e ne getirdi?",
       "description": "Hedeflerini ve ekip büyüklüğünü bize anlat.",
       "select_multiple": "Bir veya daha fazlasını seç",
       "select_at_least_one": "Lütfen en az bir seçenek seç"
@@ -958,7 +986,7 @@
     },
     "team": {
       "invite_teammates": "Ekip arkadaşlarını davet et",
-      "invite_teammates_description": "Plane'de çalışmak ekibinle en iyisidir. Plane'in potansiyelinden yararlanmak için onları şimdi davet et.",
+      "invite_teammates_description": "Pi-Plane'de çalışmak ekibinle en iyisidir. Pi-Plane'in potansiyelinden yararlanmak için onları şimdi davet et.",
       "add_another": "Başka ekle",
       "do_it_later": "Sonra yapacağım",
       "invalid_email": "Geçersiz e-posta",
@@ -1002,5 +1030,451 @@
     "syncing_description": "Değişiklikleriniz sunucuyla senkronize ediliyor. Değişiklik yapmaya devam edebilirsiniz.",
     "connection_lost": "Bağlantı kesildi",
     "connection_lost_description": "Websocket sunucusuna bağlanmakta sorun yaşıyoruz. Değişiklikleriniz her 10 saniyede bir senkronize edilip kaydedilecek."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Simge",
+    "contrast_notice": "Yeterli kontrastı sağlamak için renkler ayarlanacaktır."
+  },
+  "date_phrases": {
+    "added_ago": "{timeAgo} eklendi",
+    "expired": "Süresi doldu",
+    "expired_ago": "{timeAgo} süresi doldu",
+    "expires_at": "Süre sonu: {date} {time}",
+    "never_expires": "Süresi dolmaz",
+    "date_at_time": "{date} {time}",
+    "till": "{date}, {time} tarihine kadar",
+    "after_date": "{date} sonrası",
+    "before_date": "{date} öncesi",
+    "month_week": "{month}, {week}. hafta",
+    "target_date": "Hedef tarih: {date}",
+    "from_date": "{date} tarihinden",
+    "till_date": "{date} tarihine kadar",
+    "date_to_date": "{start} – {end}",
+    "archived_at": "{date} tarihinde arşivlendi",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "{name} tarafından {date} tarihinde yüklendi",
+    "date_range": "{start} - {end}",
+    "expiry": "Son kullanma"
+  },
+  "a11y": {
+    "toggle_details": "Ayrıntıları aç/kapat",
+    "workflow_flow_type": "Akış türü",
+    "workflow_target_state": "Hedef durum",
+    "workflow_reject_state": "Reddetme durumu"
+  },
+  "api_token_expiry": {
+    "one_week": "1 hafta",
+    "one_month": "1 ay",
+    "three_months": "3 ay",
+    "one_year": "1 yıl",
+    "custom_date": "Özel tarih",
+    "set_expiration_date": "Son kullanma tarihini ayarla"
+  },
+  "profile_sidebar": {
+    "due": "Son tarih"
+  },
+  "progress_chart": {
+    "current": "Mevcut {title}",
+    "ideal": "İdeal {title}"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "Yüklemek için görseli buraya bırakın",
+      "drag_and_drop": "Görseli buraya sürükleyip bırakın",
+      "size_exceeded": "Görsel boyutu 5 MB'ı aşamaz.",
+      "invalid_format": "Lütfen geçerli bir biçimde dosya yükleyin.",
+      "formats_supported": "Desteklenen dosya biçimleri: .jpeg, .jpg, .png, .webp",
+      "uploading": "Yükleniyor",
+      "upload_and_save": "Yükle ve kaydet",
+      "title": "Görsel yükle",
+      "select_image": "Görsel seç",
+      "select_image_named": "Görsel seç: {description}",
+      "select_cover_image": "Kapak görseli seç {index}",
+      "no_images": "Görsel bulunamadı."
+    },
+    "ai_assistant": {
+      "rate_limit": "Kullanıcı başına aylık 50 istek olan azami istek sayısına ulaştınız.",
+      "use_response": "Bu yanıtı kullan",
+      "generating_response": "Yanıt oluşturuluyor...",
+      "generate_response": "Yanıt oluştur",
+      "generate_again": "Yeniden oluştur",
+      "content_label": "İçerik:",
+      "response_label": "Yanıt:",
+      "no_response": "Yanıt oluşturulamadı. Bunun nedeni yetersiz içerik veya görev bilgisi olabilir. Lütfen tekrar deneyin.",
+      "placeholder_with_content": "Yapay zekaya bu içerik üzerinde hangi işlemi yapacağını söyleyin...",
+      "placeholder_empty": "Yapay zekaya her şeyi sorun...",
+      "consent": "Bu özelliği kullanarak mesajın üçüncü taraf bir hizmetle paylaşılmasını kabul etmiş olursunuz."
+    },
+    "multiple_select": {
+      "select_all_in_group": "Gruptakilerin tümünü seç"
+    },
+    "theme": {
+      "download_config": "Yapılandırmayı indir",
+      "import_config": "Yapılandırmayı içe aktar",
+      "import_failed": "Tema yapılandırması içe aktarılamadı",
+      "missing_fields": "Gerekli alanlar eksik: primary ve background",
+      "invalid_brand_hex": "Marka rengi hex biçimi geçersiz",
+      "invalid_neutral_hex": "Nötr renk hex biçimi geçersiz",
+      "invalid_mode": "Geçersiz tema modu. Boolean olmalıdır",
+      "choose_color_mode": "Renk modunu seçin",
+      "light_mode": "Açık mod",
+      "dark_mode": "Koyu mod"
+    },
+    "workspace": {
+      "delete_warning": "<name/> çalışma alanını silmek üzeresiniz. Onaylarsanız bu çalışma alanındaki tüm iş verilerinize erişiminizi kaybedersiniz ve geri alma imkanı olmaz. Lütfen çok dikkatli olun.",
+      "delete_type_name": "Devam etmek için bu çalışma alanının adını yazın.",
+      "delete_final_confirmation": "Son onay için aşağıya <phrase/> yazın."
+    },
+    "workspace_settings": {
+      "invitation_removed": "Davet başarıyla kaldırıldı.",
+      "workspace_updated": "Çalışma alanı başarıyla güncellendi",
+      "picture_removed": "Çalışma alanı resmi başarıyla kaldırıldı.",
+      "picture_remove_failed": "Profil resminiz silinirken bir hata oluştu. Lütfen tekrar deneyin.",
+      "url_copied": "Çalışma alanı URL'si panoya kopyalandı."
+    },
+    "workspace_views": {
+      "delete_failed": "Görünüm silinemedi. Lütfen tekrar deneyin.",
+      "create_failed": "Görünüm oluşturulamadı. Lütfen tekrar deneyin.",
+      "updated": "Görünüm başarıyla güncellendi.",
+      "update_failed": "Görünüm güncellenemedi. Lütfen tekrar deneyin.",
+      "edit_view": "Görünümü düzenle",
+      "delete_view": "Görünümü sil"
+    },
+    "sticky_colors": {
+      "gray": "Gri",
+      "peach": "Şeftali",
+      "pink": "Pembe",
+      "orange": "Turuncu",
+      "green": "Yeşil",
+      "light_blue": "Açık mavi",
+      "dark_blue": "Koyu mavi",
+      "purple": "Mor"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "Her boyutta çalışın.",
+      "welcome_back": "Pi-Plane'e tekrar hoş geldiniz.",
+      "create_your_account": "Pi-Plane hesabınızı oluşturun."
+    },
+    "auth_root": {
+      "no_auth_methods_title": "Kullanılabilir kimlik doğrulama yöntemi yok",
+      "no_auth_methods_description": "Örneğiniz için kimlik doğrulamayı etkinleştirmek üzere lütfen yöneticinizle iletişime geçin."
+    },
+    "auth_password": {
+      "create_account": "Hesap oluştur"
+    },
+    "terms": {
+      "agree_sign_up": "Hesap oluşturarak \n <terms>Hizmet Şartları</terms> ve <privacy>Gizlilik Politikası</privacy>'nı anladığınızı ve kabul ettiğinizi onaylarsınız.",
+      "agree_sign_in": "Giriş yaparak \n <terms>Hizmet Şartları</terms> ve <privacy>Gizlilik Politikası</privacy>'nı anladığınızı ve kabul ettiğinizi onaylarsınız."
+    },
+    "auth_screens": {
+      "sign_up": "Kaydol",
+      "sign_in": "Giriş yap",
+      "join_teams": "Pi-Plane ile daha iyi performans gösteren ekiplere katılın",
+      "not_authorized_view_title": "Hay aksi! Bu sayfayı görüntüleme yetkiniz yok",
+      "not_authorized": "Yetkiniz yok!",
+      "not_a_member_description": "Bu çalışma alanının üyesi değilsiniz. Davet almak için lütfen çalışma alanı yöneticisiyle iletişime geçin veya bekleyen davetlerinizi kontrol edin.",
+      "check_pending_invites": "Bekleyen davetleri kontrol et"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "Çalışma alanı bulunamadı",
+      "workspace_not_found_description": "Bu URL ile bir çalışma alanı bulunamadı. Mevcut olmayabilir veya görüntüleme yetkiniz olmayabilir.",
+      "visit_profile": "Profili görüntüle"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "Ayarlar menüsünü aç/kapat",
+      "back_to_project": "Projeye geri dön",
+      "toggle_project_feature": "Proje özelliğini aç/kapat"
+    },
+    "headers": {
+      "toggle_sidebar": "Kenar çubuğunu aç/kapat"
+    },
+    "profile_activity": {
+      "page_title": "Profil - Etkinlik"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook başarıyla güncellendi.",
+      "not_authorized": "Bu sayfaya erişim yetkiniz yok.",
+      "enable_webhook": "Webhook'u etkinleştir",
+      "toggle_webhook": "Webhook'u aç/kapat"
+    },
+    "project_settings_empty": {
+      "title": "Henüz proje yok",
+      "description": "Projeler, hedef odaklı çalışmanın temelidir. Ekiplerinizi, görevlerinizi ve işleri bitirmek için ihtiyaç duyduğunuz her şeyi yönetmenizi sağlar.",
+      "learn_more": "Projeler hakkında daha fazla bilgi edinin"
+    },
+    "project_templates": {
+      "imported_template": "İçe aktarılan şablon",
+      "pick_color": "Renk seç"
+    },
+    "not_found": {
+      "image_alt": "404 - Sayfa bulunamadı",
+      "title": "Hay aksi! Bir şeyler yanlış gitti.",
+      "description": "Üzgünüz, aradığınız sayfa bulunamadı. Kaldırılmış, adı değiştirilmiş veya geçici olarak kullanılamıyor olabilir.",
+      "go_to_home": "Ana sayfaya git"
+    },
+    "api_tokens": {
+      "empty_title": "API token'ı yok",
+      "empty_description": "Harici uygulamalarla güvenli ve kolay veri paylaşımı için API token'ları oluşturun; kontrolü ve güvenliği elinizde tutun.",
+      "add_token": "Token ekle",
+      "delete_token": "Token'ı sil"
+    },
+    "base_layouts": {
+      "gantt": "Gantt düzeni"
+    },
+    "command_palette": {
+      "no_states_found": "Durum bulunamadı"
+    },
+    "quick_actions": {
+      "archive_module_hint": "Yalnızca tamamlanan veya iptal edilen modüller arşivlenebilir"
+    },
+    "progress": {
+      "cycle_progress": "Döngü ilerlemesi"
+    },
+    "estimates": {
+      "delete_title": "Tahmin sistemini sil",
+      "delete_description": "<name/> tahmin sistemini silmek, onu tüm iş öğelerinden kalıcı olarak kaldıracaktır. Bu işlem geri alınamaz. Tahminleri tekrar eklerseniz tüm iş öğelerini güncellemeniz gerekir.",
+      "deleting": "Siliniyor",
+      "delete_estimate": "Tahmini sil",
+      "toggle_estimates": "Tahminleri aç/kapat",
+      "estimates_list": "Tahmin listesi",
+      "archived_title": "Arşivlenmiş tahminler",
+      "archived_description": "Tahminlerde değişiklik yapıldı; bunlar eski sürümlerinizde bulunan ve kullanılmayan tahminlerdir. Bunlar hakkında daha fazla bilgiyi <link>buradan okuyun.</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "Tarafından engellenen bağımlılık oluştur",
+      "create_blocking_dependency": "Engelleyen bağımlılık oluştur",
+      "update_block_dates_failed": "Blok tarihleri güncellenirken bir şeyler yanlış gitti"
+    },
+    "product_updates": {
+      "fetch_failed": "Güncellemeleri getirirken sorun yaşıyoruz. En son güncellemeleri görmek için lütfen değişiklik günlüğümüzü ziyaret edin.",
+      "go_to_changelog": "Değişiklik günlüğüne git"
+    },
+    "inbox": {
+      "intake_form_user": "Intake formu kullanıcısı",
+      "status": "Durum",
+      "created_by": "Oluşturan"
+    },
+    "instance": {
+      "contact_support": "Destekle iletişime geç",
+      "maintenance_title": "🚧 Görünüşe göre Pi-Plane doğru şekilde başlatılamadı!",
+      "maintenance_description": "Bazı hizmetler başlatılamamış olabilir. Sorunu belirleyip gidermek için lütfen konteyner günlüklerinizi kontrol edin. Takılırsanız daha fazla yardım için destek ekibimizle iletişime geçin.",
+      "welcome_title": "Pi-Plane'e hoş geldiniz",
+      "welcome_description": "Projeleri ve işleri yönetmeye başlamak için örneğinizi kurun ve ilk çalışma alanınızı oluşturun."
+    },
+    "integrations": {
+      "github_installed": "Belirli depolarla eşitlemek için GitHub'ı tek tek projelerde etkinleştirin.",
+      "github_not_installed": "Proje iş öğelerini eşitlemek için GitHub'ı Pi-Plane çalışma alanınıza bağlayın.",
+      "slack_installed": "Belirli kanallarla eşitlemek için Slack'i tek tek projelerde etkinleştirin.",
+      "slack_not_installed": "Proje iş öğelerini eşitlemek için Slack'i Pi-Plane çalışma alanınıza bağlayın.",
+      "deleted_title": "Başarıyla silindi!",
+      "deleted_message": "{title} entegrasyonu başarıyla silindi.",
+      "delete_failed_message": "{title} entegrasyonu silinemedi. Lütfen tekrar deneyin.",
+      "logo_alt": "{title} logosu",
+      "loading": "Yükleniyor...",
+      "no_permission": "Bu işlemi gerçekleştirme yetkiniz yok",
+      "uninstalling": "Kaldırılıyor...",
+      "uninstall": "Kaldır",
+      "installing": "Yükleniyor...",
+      "install": "Yükle"
+    },
+    "attachments": {
+      "upload_progress": "Yükleme ilerlemesi"
+    },
+    "labels": {
+      "delete_confirmation": "<name/> etiketini silmek istediğinizden emin misiniz? Bu işlem etiketi tüm iş öğelerinden ve bu etikete göre filtrelenen tüm görünümlerden kaldıracaktır.",
+      "edit_label": "Etiketi düzenle",
+      "delete_label": "Etiketi sil",
+      "remove_from_group": "Gruptan çıkar"
+    },
+    "modules": {
+      "module_progress": "Modül ilerlemesi"
+    },
+    "navigation": {
+      "icon_only": "Yalnızca simge",
+      "icon_with_name": "Simge ve ad",
+      "dock_app_rail": "Uygulama çubuğunu sabitle",
+      "undock_app_rail": "Uygulama çubuğunun sabitlemesini kaldır",
+      "minimum_value_is_one": "En düşük değer 1'dir",
+      "show": "Göster",
+      "clear_default": "Varsayılanı temizle",
+      "hide_in_more_menu": "Daha fazla menüsünde gizle",
+      "project_link_copied": "Proje bağlantısı panoya kopyalandı.",
+      "copy_failed": "Kopyalama başarısız",
+      "copy_failed_message": "Bağlantıyı kopyalayamadık. Lütfen tekrar deneyin.",
+      "default_tab_updated": "Varsayılan sekme başarıyla güncellendi.",
+      "default_tab_update_failed": "Varsayılan sekme güncellenemedi. Lütfen daha sonra tekrar deneyin.",
+      "hide_tab_failed": "Sekme gizlenemedi. Lütfen daha sonra tekrar deneyin.",
+      "generic_error": "Bir şeyler yanlış gitti. Lütfen daha sonra tekrar deneyin."
+    },
+    "onboarding": {
+      "select_workspace_invitation": "Çalışma alanı davetini seçin"
+    },
+    "tour": {
+      "work_items_title": "İş öğeleriyle planlayın",
+      "work_items_description": "İş öğesi, Pi-Plane'in yapı taşıdır. Pi-Plane'deki kavramların çoğu iş öğeleri ve özellikleriyle ilişkilidir.",
+      "cycles_title": "Döngülerle ilerleyin",
+      "cycles_description": "Döngüler, çevik geliştirmede sıkça kullanılan sprintlere benzer şekilde sizin ve ekibinizin daha hızlı ilerlemesine yardımcı olur.",
+      "modules_title": "Modüllere ayırın",
+      "modules_description": "Modüller, büyük işinizi Projelere veya Özelliklere bölerek daha iyi organize olmanıza yardımcı olur.",
+      "views_description": "Yalnızca sizin için önemli olan iş öğelerini göstermek üzere özel filtreler oluşturun. Filtrelerinizi birkaç tıklamayla kaydedin ve paylaşın.",
+      "pages_title": "Sayfalarla belgeleyin",
+      "pages_description": "Bir toplantıdayken veya güne başlarken iş öğelerini hızla not almak için Sayfalar'ı kullanın.",
+      "welcome_title": "Pi-Plane'e hoş geldiniz, {firstName} {lastName}",
+      "welcome_description": "Pi-Plane'i denemeye karar verdiğiniz için çok memnunuz. Artık projelerinizi kolaylıkla yönetebilirsiniz. Bir proje oluşturarak başlayın.",
+      "take_tour": "Ürün turuna çıkın",
+      "skip": "Hayır, teşekkürler, kendim keşfedeceğim",
+      "create_first_project": "İlk projenizi oluşturun",
+      "sidebar_heading": "Haydi başlayalım!<br/>Pi-Plane'den daha fazla verim alın."
+    },
+    "ai": {
+      "ask_pi": "Pi'ye sor",
+      "tone_professional": "💼 Profesyonel",
+      "tone_casual": "😃 Samimi",
+      "third_party_consent": "Bu özelliği kullanarak mesajın üçüncü taraf bir hizmetle paylaşılmasını kabul etmiş olursunuz.",
+      "pi_writing": "Pi yazıyor",
+      "pi_generating_response": "Pi yanıt oluşturuyor"
+    },
+    "pages": {
+      "icon": "Simge",
+      "color": "Renk",
+      "remove_text_color": "Metin rengini kaldır",
+      "remove_background_color": "Arka plan rengini kaldır",
+      "formatting_toolbar": "Biçimlendirme araç çubuğu",
+      "copied_link": "Bağlantı kopyalandı",
+      "remove_favorite": "Favoriden çıkar",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "{name} Botu"
+    },
+    "project": {
+      "identifier": "Tanımlayıcı"
+    },
+    "projects": {
+      "toggle_feature": "Proje özelliğini aç/kapat",
+      "cover_upload_failed": "Kapak görseli yüklenemedi"
+    },
+    "notifications": {
+      "notification_options": "Bildirim seçenekleri"
+    },
+    "stores": {
+      "generic_error": "Bir hata oluştu",
+      "inbox_fetch_error": "Intake iş öğeleri getirilirken hata oluştu, lütfen daha sonra tekrar deneyin.",
+      "page_make_public_error": "Sayfa herkese açık yapılamadı. Lütfen daha sonra tekrar deneyin.",
+      "page_make_private_error": "Sayfa özel yapılamadı. Lütfen daha sonra tekrar deneyin.",
+      "workflow_pending_approval": "İş öğesi onay bekliyor.",
+      "workflow_transition_not_allowed": "Bu durum geçişine iş akışı izin vermiyor."
+    },
+    "validation": {
+      "name_max_length": "Ad en fazla 50 karakter olmalıdır",
+      "name_special_chars": "Adlar {chars} gibi özel karakterler içeremez",
+      "name_invalid_chars": "Adlar yalnızca harf, boşluk, kısa çizgi ve kesme işareti içerebilir",
+      "display_name_max_length": "Görünen ad en fazla 50 karakter olmalıdır",
+      "display_name_special_chars": "Görünen ad {chars} gibi özel karakterler içeremez",
+      "display_name_invalid_chars": "Görünen ad yalnızca harf, rakam, nokta, kısa çizgi ve alt çizgi içerebilir",
+      "company_name_max_length": "Şirket adı en fazla 80 karakter olmalıdır",
+      "company_name_special_chars": "Şirket adı {chars} gibi özel karakterler içeremez",
+      "company_name_invalid_chars": "Şirket adı yalnızca harf, rakam, boşluk, kısa çizgi ve alt çizgi içerebilir",
+      "company_name_needs_alphanumeric": "Şirket adı en az bir harf veya rakam içermelidir",
+      "workspace_name_required": "Çalışma alanı adı gereklidir",
+      "workspace_name_max_length": "Çalışma alanı adı en fazla 80 karakter olmalıdır",
+      "workspace_name_special_chars": "Çalışma alanı adı {chars} gibi özel karakterler içeremez",
+      "workspace_name_invalid_chars": "Çalışma alanı adı yalnızca harf, rakam, boşluk, kısa çizgi ve alt çizgi içerebilir",
+      "workspace_name_needs_alphanumeric": "Çalışma alanı adı en az bir harf veya rakam içermelidir",
+      "slug_required": "Slug gereklidir",
+      "slug_max_length": "Slug en fazla 48 karakter olmalıdır",
+      "slug_special_chars": "Slug {chars} gibi özel karakterler içeremez",
+      "slug_invalid_chars": "Slug yalnızca harf, rakam, kısa çizgi ve alt çizgi içerebilir"
+    },
+    "analytics": {
+      "state_name": "Durum adı",
+      "estimate_point": "Tahmin puanı",
+      "completed_date": "Tamamlanma tarihi",
+      "yesterday": "Dün",
+      "last_7_days": "Son 7 gün",
+      "last_30_days": "Son 30 gün",
+      "last_3_months": "Son 3 ay",
+      "duration": "Süre"
+    },
+    "auth_labels": {
+      "magic_code": "Sihirli kod"
+    },
+    "state_groups": {
+      "canceled": "İptal edildi"
+    },
+    "filters": {
+      "state_group": "Durum grubu",
+      "subscriber": "Abone"
+    }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Kapat"
+    },
+    "auth_header": {
+      "sign_in_header": "Oy vermek veya yorum yapmak için giriş yapın",
+      "sign_in_sub_header": "İstediğiniz özelliklerin geliştirilmesine katkıda bulunun.",
+      "sign_up_header": "Görüntüleyin, yorum yapın ve daha fazlasını yapın",
+      "sign_up_sub_header": "Pi-Plane iş öğeleri ve Sayfalarıyla çalışmak için kaydolun veya giriş yapın.",
+      "default_header": "İş öğelerine yorum yapın veya tepki verin",
+      "default_sub_header": "Özelliklere değerli görüşlerinizi eklemek için Pi-Plane'i kullanın."
+    },
+    "terms": {
+      "agree_sign_up": "Hesap oluşturarak\n<terms>Hizmet Şartları</terms> ve <privacy>Gizlilik Politikası</privacy>'nı kabul etmiş olursunuz.",
+      "agree_sign_in": "Giriş yaparak\n<terms>Hizmet Şartları</terms> ve <privacy>Gizlilik Politikası</privacy>'nı kabul etmiş olursunuz."
+    },
+    "user_logged_in": {
+      "title": "Harika! Sadece bir adım kaldı.",
+      "description": "Görmeye çalıştığınız görünümün veya Sayfanın herkese açık paylaşım URL'sini ya da bağlantısını tarayıcının adres çubuğuna girin.",
+      "image_alt": "Kullanıcı zaten giriş yapmış"
+    },
+    "auth_unique_code": {
+      "resend_in": "{seconds} sn içinde yeniden gönder"
+    },
+    "oauth": {
+      "sign_up_with": "{provider} ile kaydol",
+      "sign_in_with": "{provider} ile giriş yap",
+      "continue_with": "{provider} ile devam et"
+    },
+    "issues": {
+      "public_board_not_found": "Herkese açık pano mevcut değil. Lütfen URL'yi kontrol edin.",
+      "cycle_tooltip": "Döngü: {name}",
+      "no_cycle": "Döngü Yok",
+      "due_date_tooltip": "Son tarih: {date}",
+      "no_date": "Tarih Yok",
+      "labels_tooltip": "Etiketler: {labels}",
+      "no_labels": "Etiket Yok",
+      "labels_count": "{count} Etiket",
+      "no_assignees": "Atanan Yok",
+      "comment_post_failed": "Yorum gönderilemedi. Lütfen tekrar deneyin.",
+      "add_comment_placeholder": "Yorum ekle...",
+      "sign_in_to_comment": "Yorumunuzu eklemek için giriş yapın",
+      "empty": "Boş",
+      "no_upvotes": "Henüz olumlu oy yok",
+      "no_downvotes": "Henüz olumsuz oy yok",
+      "voters_and_more": "{names} ve {count} kişi daha"
+    },
+    "error_page": {
+      "title": "Eyvah! Bu hiç iyi görünmüyor.",
+      "description": "Pi-Plane çöktü. Endişelenmeyin, mühendislerimiz bilgilendirildi. Daha fazla ayrıntınız varsa lütfen <github/> üzerinden bildirin."
+    },
+    "not_found_page": {
+      "title": "Bu işe yaramadı",
+      "description": "Tarayıcının adres çubuğuna girdiğiniz URL'yi kontrol edin ve tekrar deneyin."
+    },
+    "powered_by": {
+      "label": "<name>Pi-Plane</name> tarafından desteklenmektedir"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane örneği hatası",
+      "title": "Örnek ayrıntıları alınamadı.",
+      "description": "Örneğin ayrıntıları alınamadı.",
+      "hint": "Endişelenmeyin, yalnızca bir bağlantı sorunu olabilir."
+    }
   }
 }

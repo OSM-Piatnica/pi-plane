@@ -1,15 +1,17 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 import { Link } from "react-router";
 import { usePathname } from "next/navigation";
-import { Lock } from "lucide-react";
+import { LockOutline } from "@makeplane/propel/icons";
+import { useTranslation } from "@plane/i18n";
 // plane imports
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 // components
 import { AddComment } from "@/components/issues/peek-overview/comment/add-comment";
 import { CommentCard } from "@/components/issues/peek-overview/comment/comment-detail-card";
@@ -28,6 +30,7 @@ type Props = {
 
 export const PeekOverviewIssueActivity = observer(function PeekOverviewIssueActivity(props: Props) {
   const { anchor } = props;
+  const { t } = useTranslation();
   // router
   const pathname = usePathname();
   // store hooks
@@ -40,7 +43,7 @@ export const PeekOverviewIssueActivity = observer(function PeekOverviewIssueActi
 
   return (
     <div className="pb-10">
-      <h4 className="font-medium">Comments</h4>
+      <h4 className="font-medium">{t("comments")}</h4>
       <div className="mt-4">
         <div className="space-y-4">
           {comments.map((comment) => (
@@ -59,12 +62,17 @@ export const PeekOverviewIssueActivity = observer(function PeekOverviewIssueActi
           ) : (
             <div className="mt-4 flex items-center justify-between gap-2 rounded-sm border border-strong bg-layer-2 px-2 py-2.5">
               <p className="flex items-center gap-2 overflow-hidden text-13 break-words text-secondary">
-                <Lock className="size-3 shrink-0" />
-                Sign in to add your comment
+                <LockOutline className="size-3 shrink-0" />
+                {t("space_text.issues.sign_in_to_comment")}
               </p>
-              <Link to={`/?next_path=${pathname}`}>
-                <Button variant="primary">Sign in</Button>
-              </Link>
+              <Button
+                variant="primary"
+                size="sm"
+                stretch="auto"
+                nativeButton={false}
+                render={<Link to={`/?next_path=${pathname}`} />}
+                label={t("app_text.auth_screens.sign_in")}
+              />
             </div>
           ))}
       </div>

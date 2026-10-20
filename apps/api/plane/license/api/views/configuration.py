@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -114,8 +115,8 @@ class EmailCredentialCheckEndpoint(BaseAPIView):
             use_ssl=EMAIL_USE_SSL == "1",
         )
         # Prepare email details
-        subject = "Email Notification from Plane"
-        message = "This is a sample email notification sent from Plane application."
+        subject = "Email Notification from Pi-Plane"
+        message = "This is a sample email notification sent from Pi-Plane application."
         # Send the email
         try:
             msg = EmailMultiAlternatives(

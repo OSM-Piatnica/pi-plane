@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -30,8 +31,8 @@ export const orderModules = (modules: IModule[], orderByKey: TModuleOrderByOptio
   let orderedModules: IModule[] = [];
   if (modules.length === 0 || !orderByKey) return [];
 
-  if (orderByKey === "name") orderedModules = [...modules].sort((a, b) => naturalSort(a.name, b.name));
-  if (orderByKey === "-name") orderedModules = [...modules].sort((a, b) => naturalSort(b.name, a.name));
+  if (orderByKey === "name") orderedModules = [...modules].toSorted((a, b) => naturalSort(a.name, b.name));
+  if (orderByKey === "-name") orderedModules = [...modules].toSorted((a, b) => naturalSort(b.name, a.name));
   if (["progress", "-progress"].includes(orderByKey))
     orderedModules = sortBy(modules, [
       (m) => {
@@ -67,12 +68,14 @@ export const shouldFilterModule = (
   Object.keys(filters).forEach((key) => {
     const filterKey = key as keyof TModuleFilters;
     if (filterKey === "status" && filters.status && filters.status.length > 0)
+      // react-doctor-disable-next-line js-set-map-lookups -- each filter list is searched once per key, so the loop is over keys, not items
       fallsInFilters = fallsInFilters && filters.status.includes(module.status?.toLowerCase() ?? "");
     if (filterKey === "lead" && filters.lead && filters.lead.length > 0)
+      // react-doctor-disable-next-line js-set-map-lookups -- each filter list is searched once per key, so the loop is over keys, not items
       fallsInFilters = fallsInFilters && filters.lead.includes(`${module.lead_id}`);
     if (filterKey === "members" && filters.members && filters.members.length > 0) {
-      const memberIds = module.member_ids;
-      fallsInFilters = fallsInFilters && filters.members.some((memberId) => memberIds.includes(memberId));
+      const memberIds = new Set(module.member_ids ?? []);
+      fallsInFilters = fallsInFilters && filters.members.some((memberId) => memberIds.has(memberId));
     }
     if (filterKey === "start_date" && filters.start_date && filters.start_date.length > 0) {
       const startDate = getDate(module.start_date);

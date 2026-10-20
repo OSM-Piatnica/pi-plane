@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,8 +10,8 @@ import { observer } from "mobx-react";
 import Link from "next/link";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import { Button, getButtonStyling } from "@plane/propel/button";
-import { PlaneLogo } from "@plane/propel/icons";
+import { Button } from "@makeplane/propel/components/button";
+import { PlaneLogo } from "@plane/blocks/icons";
 import type { IWorkspace } from "@plane/types";
 // assets
 import WorkspaceCreationDisabled from "@/app/assets/workspace/workspace-creation-disabled.png?url";
@@ -39,6 +40,7 @@ const CreateWorkspacePage = observer(function CreateWorkspacePage() {
   });
   // derived values
   const isWorkspaceCreationDisabled = config?.is_workspace_creation_disabled ?? false;
+  const requestAccessLabel = t("workspace_creation.errors.creation_disabled.request_button");
 
   // methods
   const getMailtoHref = () => {
@@ -77,7 +79,7 @@ const CreateWorkspacePage = observer(function CreateWorkspacePage() {
               <img
                 src={WorkspaceCreationDisabled}
                 className="mb-4 h-full w-full object-contain"
-                alt="Workspace creation disabled"
+                alt={t("workspace_creation.errors.creation_disabled.title")}
               />
               <div className="text-center text-16 font-medium">
                 {t("workspace_creation.errors.creation_disabled.title")}
@@ -86,12 +88,23 @@ const CreateWorkspacePage = observer(function CreateWorkspacePage() {
                 {t("workspace_creation.errors.creation_disabled.description")}
               </p>
               <div className="mt-6 flex gap-4">
-                <Button variant="primary" onClick={() => router.back()}>
-                  {t("common.go_back")}
-                </Button>
-                <a href={getMailtoHref()} className={getButtonStyling("secondary", "base")}>
-                  {t("workspace_creation.errors.creation_disabled.request_button")}
-                </a>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  stretch="auto"
+                  label={t("common.go_back")}
+                  onClick={() => router.back()}
+                />
+                {/* Button chrome on a mailto link: the anchor carries the label as its own content (which
+                    takes precedence over Button's label slot) so it always has an accessible name. */}
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  stretch="auto"
+                  nativeButton={false}
+                  render={<a href={getMailtoHref()}>{requestAccessLabel}</a>}
+                  label={requestAccessLabel}
+                />
               </div>
             </div>
           ) : (

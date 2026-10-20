@@ -1,0 +1,108 @@
+{
+  "inbox_issue": {
+    "status": {
+      "pending": {
+        "title": "Pendente",
+        "description": "Pendente"
+      },
+      "declined": {
+        "title": "Recusado",
+        "description": "Recusado"
+      },
+      "snoozed": {
+        "title": "Adiado",
+        "description": "{days, plural, one{Falta # dia} other{Faltam # dias}}"
+      },
+      "accepted": {
+        "title": "Aceito",
+        "description": "Aceito"
+      },
+      "duplicate": {
+        "title": "Duplicado",
+        "description": "Duplicado"
+      }
+    },
+    "modals": {
+      "decline": {
+        "title": "Recusar item de trabalho",
+        "content": "Tem a certeza de que deseja recusar o item de trabalho {value}?"
+      },
+      "delete": {
+        "title": "Eliminar item de trabalho",
+        "content": "Tem a certeza de que deseja eliminar o item de trabalho {value}?",
+        "success": "Item de trabalho eliminado com sucesso"
+      }
+    },
+    "errors": {
+      "snooze_permission": "Apenas administradores do projeto podem adiar/reativar itens de trabalho",
+      "accept_permission": "Apenas administradores do projeto podem aceitar itens de trabalho",
+      "decline_permission": "Apenas administradores do projeto podem recusar itens de trabalho"
+    },
+    "actions": {
+      "accept": "Aceitar",
+      "decline": "Recusar",
+      "snooze": "Adiar",
+      "unsnooze": "Reativar",
+      "copy": "Copiar link do item de trabalho",
+      "delete": "Eliminar",
+      "open": "Abrir item de trabalho",
+      "mark_as_duplicate": "Marcar como duplicado",
+      "move": "Mover {value} para os itens de trabalho do projeto"
+    },
+    "source": {
+      "in-app": "no aplicativo"
+    },
+    "order_by": {
+      "created_at": "Criado em",
+      "updated_at": "Atualizado em",
+      "id": "ID"
+    },
+    "label": "Admissão",
+    "page_label": "{workspace} - Admissão",
+    "modal": {
+      "title": "Criar item de trabalho de admissão"
+    },
+    "tabs": {
+      "open": "Aberto",
+      "closed": "Fechado"
+    },
+    "empty_state": {
+      "sidebar_open_tab": {
+        "title": "Nenhum item de trabalho aberto",
+        "description": "Encontre itens de trabalho abertos aqui. Crie um novo item de trabalho."
+      },
+      "sidebar_closed_tab": {
+        "title": "Nenhum item de trabalho fechado",
+        "description": "Todos os itens de trabalho, sejam aceitos ou recusados, podem ser encontrados aqui."
+      },
+      "sidebar_filter": {
+        "title": "Nenhum item de trabalho correspondente",
+        "description": "Nenhum item de trabalho corresponde ao filtro aplicado na admissão. Crie um novo item de trabalho."
+      },
+      "detail": {
+        "title": "Selecione um item de trabalho para visualizar os seus detalhes."
+      }
+    }
+  },
+  "inbox_ui": {
+    "create_error": "Ocorreu um erro. Tente novamente.",
+    "create_success": "Item de trabalho criado com sucesso.",
+    "created_date": "Data de criação",
+    "delete_failed": "Falha ao eliminar o item de trabalho",
+    "editor_processing": "O editor ainda está a processar as alterações. Aguarde antes de continuar.",
+    "empty_closed": {
+      "description": "Todos os itens de trabalho, aceitos ou recusados, podem ser encontrados aqui.",
+      "title": "Nenhuma solicitação encerrada ainda"
+    },
+    "errors": {
+      "duplicate_permission": "Somente administradores do projeto podem marcar itens de trabalho como duplicados"
+    },
+    "last_updated_date": "Data da última atualização",
+    "next_work_item": "Próximo item de trabalho",
+    "permission_denied": "Permissão negada",
+    "previous_work_item": "Item de trabalho anterior",
+    "search_placeholder": "Pesquisar...",
+    "update_failed": "Falha ao atualizar o item de trabalho",
+    "updated_date": "Data de atualização"
+  }
+}

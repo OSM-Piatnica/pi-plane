@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Mở phím tắt",
-      "open_plane_documentation": "Mở tài liệu Plane",
+      "open_plane_documentation": "Mở tài liệu Pi-Plane",
       "join_forum": "Tham gia diễn đàn của chúng tôi",
       "report_bug": "Báo lỗi",
       "chat_with_us": "Trò chuyện với chúng tôi"
@@ -175,6 +175,11 @@
     },
     "footer": {
       "workspace_level": "Cấp không gian làm việc"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Tìm phím tắt",
+      "no_results": "Không tìm thấy phím tắt cho \"{query}\"",
+      "sequence_separator": "rồi"
     },
     "group_titles": {
       "actions": "Hành động",

@@ -1,10 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
 DIST_DIR=${DIST_DIR:-./dist}
-CPU_ARCH=$(uname -m)
-IMAGE_NAME=${IMAGE_NAME:-makeplane/plane-aio-community}
+IMAGE_NAME=${IMAGE_NAME:-ghcr.io/osm-piatnica/pi-plane}
 
 
 # loop though all flags and set the variables
@@ -38,17 +37,10 @@ if [ -z "$APP_RELEASE_VERSION" ]; then
     echo "   ./build.sh [flags]"
     echo ""
     echo "Flags:"
-    echo "  --release=<APP_RELEASE_VERSION>     required (e.g. v0.27.1)"
+    echo "  --release=<APP_RELEASE_VERSION>     required (e.g. 1.3.1-pi.1)"
     echo ""
-    echo "Example: ./build.sh --release=v0.27.1 --platform=linux/amd64"
+    echo "Example: ./build.sh --release=1.3.1-pi.1"
     exit 1
-fi
-
-# Install yq if not present
-if ! command -v yq &> /dev/null; then
-    echo "Installing yq..."
-    sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${CPU_ARCH}
-    sudo chmod +x /usr/local/bin/yq
 fi
 
 cd $(dirname "$0")

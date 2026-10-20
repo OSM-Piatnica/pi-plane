@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Paramètres du projet",
     "general": {
       "enter_project_id": "Saisissez l’ID du projet",
       "please_select_a_timezone": "Veuillez sélectionner un fuseau horaire",
@@ -182,18 +183,18 @@
       "description": "Configurez des actions automatisées pour fluidifier votre flux de gestion de projet et réduire les tâches manuelles.",
       "auto-archive": {
         "title": "Archiver automatiquement les éléments de travail fermés",
-        "description": "Plane archivera automatiquement les éléments de travail qui ont été complétés ou annulés.",
+        "description": "Pi-Plane archivera automatiquement les éléments de travail qui ont été complétés ou annulés.",
         "duration": "Archiver automatiquement les éléments de travail fermés depuis"
       },
       "auto-close": {
         "title": "Fermer automatiquement les éléments de travail",
-        "description": "Plane fermera automatiquement les éléments de travail qui n’ont pas été complétés ou annulés.",
+        "description": "Pi-Plane fermera automatiquement les éléments de travail qui n’ont pas été complétés ou annulés.",
         "duration": "Fermer automatiquement les éléments de travail inactifs depuis",
         "auto_close_status": "Statut de fermeture automatique"
       },
       "auto-remind": {
         "title": "Rappels automatiques",
-        "description": "Plane enverra automatiquement des rappels via e-mail et notifications dans l'application pour garder votre équipe sur le bon chemin des délais.",
+        "description": "Pi-Plane enverra automatiquement des rappels via e-mail et notifications dans l'application pour garder votre équipe sur le bon chemin des délais.",
         "duration": "Envoyer un rappel avant"
       }
     },
@@ -371,7 +372,7 @@
         },
         "email": {
           "title": "E-mail",
-          "description": "Collectez de nouveaux éléments de travail de toute personne envoyant un e-mail à une adresse Plane.",
+          "description": "Collectez de nouveaux éléments de travail de toute personne envoyant un e-mail à une adresse Pi-Plane.",
           "fieldName": "ID e-mail"
         },
         "form": {

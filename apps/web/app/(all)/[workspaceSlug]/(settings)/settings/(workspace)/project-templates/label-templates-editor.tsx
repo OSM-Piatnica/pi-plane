@@ -7,8 +7,8 @@
 import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { Input } from "@plane/ui";
+import { Button } from "@makeplane/propel/components/button";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import type { TLabelTemplateField } from "./project-template-form.types";
 import { TEMPLATE_COLOR_PALETTE } from "./project-template-form.types";
 import { ColorSwatchPicker } from "./shared/color-swatch-picker";
@@ -84,12 +84,16 @@ export const LabelTemplatesEditor = ({ value, onChange }: TProps) => {
               onChange={(color) => onUpdate(label.id, { color })}
               colors={TEMPLATE_COLOR_PALETTE}
             />
-            <Input
-              className="h-8 flex-1"
-              value={label.name}
-              onChange={(event) => onUpdate(label.id, { name: event.target.value })}
-              placeholder={t("workspace_settings.settings.project_templates.form.label_name_placeholder")}
-            />
+            <div className="flex-1">
+              <InputGroup size="md">
+                <Input
+                  size="md"
+                  value={label.name}
+                  onChange={(event) => onUpdate(label.id, { name: event.target.value })}
+                  placeholder={t("workspace_settings.settings.project_templates.form.label_name_placeholder")}
+                />
+              </InputGroup>
+            </div>
             <button
               type="button"
               className="rounded-md p-1 text-tertiary hover:bg-surface-2 hover:text-danger-primary"
@@ -103,28 +107,36 @@ export const LabelTemplatesEditor = ({ value, onChange }: TProps) => {
         {isDrafting ? (
           <div className="flex items-center gap-2 px-3 py-2">
             <ColorSwatchPicker value={draftColor} onChange={setDraftColor} colors={TEMPLATE_COLOR_PALETTE} />
-            <Input
-              className="h-8 flex-1"
-              value={draftName}
-              onChange={(event) => setDraftName(event.target.value)}
-              placeholder={t("workspace_settings.settings.project_templates.form.label_name_placeholder")}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  event.preventDefault();
-                  onAdd();
-                }
-                if (event.key === "Escape") {
-                  event.preventDefault();
-                  reset();
-                }
-              }}
+            <div className="flex-1">
+              <InputGroup size="md">
+                <Input
+                  size="md"
+                  value={draftName}
+                  onChange={(event) => setDraftName(event.target.value)}
+                  placeholder={t("workspace_settings.settings.project_templates.form.label_name_placeholder")}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      onAdd();
+                    }
+                    if (event.key === "Escape") {
+                      event.preventDefault();
+                      reset();
+                    }
+                  }}
+                />
+              </InputGroup>
+            </div>
+            <Button stretch="auto" type="button" variant="secondary" size="sm" onClick={reset} label={t("cancel")} />
+            <Button
+              stretch="auto"
+              type="button"
+              variant="primary"
+              size="sm"
+              onClick={onAdd}
+              disabled={!draftName.trim()}
+              label={t("add")}
             />
-            <Button type="button" variant="secondary" size="sm" onClick={reset}>
-              {t("cancel")}
-            </Button>
-            <Button type="button" variant="primary" size="sm" onClick={onAdd} disabled={!draftName.trim()}>
-              {t("add")}
-            </Button>
           </div>
         ) : null}
       </div>

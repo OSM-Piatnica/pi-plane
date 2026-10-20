@@ -31,6 +31,7 @@ from django.conf import settings
 
 # Third party imports
 from rest_framework import status
+from rest_framework.permissions import SAFE_METHODS
 from rest_framework.response import Response
 
 # drf-spectacular imports
@@ -61,6 +62,7 @@ from plane.api.serializers import (
     RelatedIssueSerializer,
 )
 from plane.app.permissions import (
+    ProjectAdminPermission,
     ProjectEntityPermission,
     ProjectLitePermission,
     ProjectMemberPermission,
@@ -90,6 +92,7 @@ from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
 from .base import BaseAPIView
 from plane.utils.host import base_host
 from plane.utils.issue_relation_constraints import TIMELINE_RELATION_TYPES
+from plane.utils.serializers import writable_data
 from plane.utils.issue_relation_mapper import get_actual_relation
 from plane.bgtasks.webhook_task import model_activity
 from plane.app.permissions import ROLE
@@ -239,6 +242,10 @@ class WorkspaceIssueAPIEndpoint(BaseAPIView):
         This endpoint provides workspace-level access to work items.
         """
         if issue_identifier and project_identifier:
+            # The `<project_identifier>-<issue_identifier>` route also matches UUIDs;
+            # sequence_id is an integer, so anything else can't be a work item here.
+            if not issue_identifier.isdecimal():
+                return Response({"error": "Work item not found"}, status=status.HTTP_404_NOT_FOUND)
             issue = Issue.issue_objects.annotate(
                 sub_issues_count=Issue.issue_objects.filter(parent=OuterRef("id"))
                 .order_by()
@@ -315,6 +322,20 @@ class IssueListCreateAPIEndpoint(BaseAPIView):
         Retrieve a paginated list of all work items in a project.
         Supports filtering, ordering, and field selection through query parameters.
         """
+
+        unsupported_filters = [param for param in ("pql", "filters") if request.GET.get(param)]
+        if unsupported_filters:
+            return Response(
+                {
+                    "pql": (
+                        "PQL and structured filters are not supported on this Pi-Plane edition. "
+                        "Remove the pql/filters parameter and filter results client-side, or use "
+                        "a Pi-Plane edition that supports work item query filtering."
+                    ),
+                    "unsupported_parameters": unsupported_filters,
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         external_id = request.GET.get("external_id")
         external_source = request.GET.get("external_source")
@@ -492,6 +513,8 @@ class IssueListCreateAPIEndpoint(BaseAPIView):
                 project_id=str(project_id),
                 current_instance=None,
                 epoch=int(timezone.now().timestamp()),
+                notification=True,
+                origin=base_host(request=request, is_app=True),
             )
 
             # Send the model activity
@@ -627,9 +650,7 @@ class IssueDetailAPIEndpoint(BaseAPIView):
                 # changes and dispatch the issue activity
                 current_instance = json.dumps(IssueSerializer(issue).data, cls=DjangoJSONEncoder)
 
-                # Get the requested data, encode it as django object and pass it
-                # to serializer to validation
-                requested_data = json.dumps(self.request.data, cls=DjangoJSONEncoder)
+                # Pass the requested data to the serializer for validation
                 serializer = IssueSerializer(
                     issue,
                     data=request.data,
@@ -643,20 +664,24 @@ class IssueDetailAPIEndpoint(BaseAPIView):
                     # If the serializer is valid, save the issue and dispatch
                     # the update issue activity worker event.
                     serializer.save()
+                    # Read-only fields are ignored on save, so they are not reported as changes either.
+                    accepted_data = writable_data(serializer, request.data)
                     issue_activity.delay(
                         type="issue.activity.updated",
-                        requested_data=requested_data,
+                        requested_data=json.dumps(accepted_data, cls=DjangoJSONEncoder),
                         actor_id=str(request.user.id),
                         issue_id=str(issue.id),
                         project_id=str(project_id),
                         current_instance=current_instance,
                         epoch=int(timezone.now().timestamp()),
+                        notification=True,
+                        origin=base_host(request=request, is_app=True),
                     )
                     # Send the model activity for webhook dispatch
                     model_activity.delay(
                         model_name="issue",
                         model_id=str(issue.id),
-                        requested_data=request.data,
+                        requested_data=accepted_data,
                         current_instance=current_instance,
                         actor_id=request.user.id,
                         slug=slug,
@@ -709,6 +734,8 @@ class IssueDetailAPIEndpoint(BaseAPIView):
                         project_id=str(project_id),
                         current_instance=None,
                         epoch=int(timezone.now().timestamp()),
+                        notification=True,
+                        origin=base_host(request=request, is_app=True),
                     )
                     # Send the model activity for webhook dispatch
                     model_activity.delay(
@@ -759,7 +786,6 @@ class IssueDetailAPIEndpoint(BaseAPIView):
         issue = Issue.objects.get(workspace__slug=slug, project_id=project_id, pk=pk)
         project = Project.objects.get(pk=project_id)
         current_instance = json.dumps(IssueSerializer(issue).data, cls=DjangoJSONEncoder)
-        requested_data = json.dumps(self.request.data, cls=DjangoJSONEncoder)
         serializer = IssueSerializer(
             issue,
             data=request.data,
@@ -786,20 +812,24 @@ class IssueDetailAPIEndpoint(BaseAPIView):
                 )
 
             serializer.save()
+            # Read-only fields are ignored on save, so they are not reported as changes either.
+            accepted_data = writable_data(serializer, request.data)
             issue_activity.delay(
                 type="issue.activity.updated",
-                requested_data=requested_data,
+                requested_data=json.dumps(accepted_data, cls=DjangoJSONEncoder),
                 actor_id=str(request.user.id),
                 issue_id=str(pk),
                 project_id=str(project_id),
                 current_instance=current_instance,
                 epoch=int(timezone.now().timestamp()),
+                notification=True,
+                origin=base_host(request=request, is_app=True),
             )
             # Send the model activity for webhook dispatch
             model_activity.delay(
                 model_name="issue",
                 model_id=str(pk),
-                requested_data=request.data,
+                requested_data=accepted_data,
                 current_instance=current_instance,
                 actor_id=request.user.id,
                 slug=slug,
@@ -862,6 +892,12 @@ class LabelListCreateAPIEndpoint(BaseAPIView):
     model = Label
     permission_classes = [ProjectMemberPermission]
     use_read_replica = True
+
+    # Label writes are project-admin-only, matching the app API.
+    def get_permissions(self):
+        if self.request.method in SAFE_METHODS:
+            return [ProjectMemberPermission()]
+        return [ProjectAdminPermission()]
 
     def get_queryset(self):
         return (
@@ -1173,6 +1209,7 @@ class IssueLinkListCreateAPIEndpoint(BaseAPIView):
         Add a new external link to a work item with URL, title, and metadata.
         Automatically tracks link creation activity.
         """
+        Issue.objects.get(workspace__slug=slug, project_id=project_id, pk=issue_id)
         serializer = IssueLinkCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(project_id=project_id, issue_id=issue_id)
@@ -1287,10 +1324,13 @@ class IssueLinkDetailAPIEndpoint(BaseAPIView):
         issue_link = IssueLink.objects.get(workspace__slug=slug, project_id=project_id, issue_id=issue_id, pk=pk)
         requested_data = json.dumps(request.data, cls=DjangoJSONEncoder)
         current_instance = json.dumps(IssueLinkSerializer(issue_link).data, cls=DjangoJSONEncoder)
+        previous_url = issue_link.url
         serializer = IssueLinkSerializer(issue_link, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            crawl_work_item_link_title.delay(serializer.data.get("id"), serializer.data.get("url"))
+            updated_url = serializer.data.get("url")
+            if updated_url and updated_url != previous_url:
+                crawl_work_item_link_title.delay(serializer.data.get("id"), updated_url)
             issue_activity.delay(
                 type="link.activity.updated",
                 requested_data=requested_data,
@@ -1879,12 +1919,18 @@ class IssueAttachmentListCreateAPIEndpoint(BaseAPIView):
 
         name = sanitize_filename(request.data.get("name"))
         type = request.data.get("type", False)
-        size = request.data.get("size")
+        # Clients may send size as a numeric string ("53314").
+        # 1e400 parses as inf (OverflowError). Non-positive values must not
+        # reach the S3 content-length-range, which is [1, size].
+        try:
+            size = int(request.data.get("size") or 0)
+        except (TypeError, ValueError, OverflowError):
+            size = 0
         external_id = request.data.get("external_id")
         external_source = request.data.get("external_source")
 
         # Check if the request is valid
-        if not name or not size:
+        if not name or size <= 0:
             return Response(
                 {"error": "Invalid request.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -2496,6 +2542,8 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
         relation_type = serializer.validated_data["relation_type"]
         issues = serializer.validated_data["issues"]
         project = Project.objects.get(pk=project_id, workspace__slug=slug)
+        # The URL issue is one side of every relation; bind it to the URL project too.
+        Issue.issue_objects.get(workspace__slug=slug, project_id=project_id, pk=issue_id)
 
         actual_relation = get_actual_relation(relation_type)
         is_reverse = relation_type in ["blocking", "start_after", "finish_after"]
@@ -2550,7 +2598,7 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
 
         issue_activity.delay(
             type="issue_relation.activity.created",
-            requested_data=json.dumps(request.data, cls=DjangoJSONEncoder),
+            requested_data=json.dumps({"relation_type": relation_type, "issues": issues}, cls=DjangoJSONEncoder),
             actor_id=str(request.user.id),
             issue_id=str(issue_id),
             project_id=str(project_id),

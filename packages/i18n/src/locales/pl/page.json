@@ -112,6 +112,9 @@
       "error_message": "Nie udało się usunąć strony z kolekcji. Spróbuj ponownie."
     }
   },
+  "page_content_limit_banner": {
+    "message": "Osiągnięto limit treści, a synchronizacja na żywo jest wyłączona. Utwórz nową stronę lub użyj zagnieżdżonych stron, aby kontynuować synchronizację."
+  },
   "page_ui": {
     "add_page": "Dodaj stronę",
     "ai": {

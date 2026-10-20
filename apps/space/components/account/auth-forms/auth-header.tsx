@@ -1,9 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
+import { useTranslation } from "@plane/i18n";
 // helpers
 import { EAuthModes } from "@/types/auth";
 
@@ -20,28 +22,31 @@ type TAuthHeaderDetails = {
   [mode in EAuthModes]: TAuthHeaderContent;
 };
 
-const Titles: TAuthHeaderDetails = {
+type TTranslate = (key: string) => string;
+
+const getTitles = (t: TTranslate): TAuthHeaderDetails => ({
   [EAuthModes.SIGN_IN]: {
-    header: "Sign in to upvote or comment",
-    subHeader: "Contribute in nudging the features you want to get built.",
+    header: t("space_text.auth_header.sign_in_header"),
+    subHeader: t("space_text.auth_header.sign_in_sub_header"),
   },
   [EAuthModes.SIGN_UP]: {
-    header: "View, comment, and do more",
-    subHeader: "Sign up or log in to work with Plane work items and Pages.",
+    header: t("space_text.auth_header.sign_up_header"),
+    subHeader: t("space_text.auth_header.sign_up_sub_header"),
   },
-};
+});
 
 export function AuthHeader(props: TAuthHeader) {
   const { authMode } = props;
+  const { t } = useTranslation();
 
   const getHeaderSubHeader = (mode: EAuthModes | null): TAuthHeaderContent => {
     if (mode) {
-      return Titles[mode];
+      return getTitles(t)[mode];
     }
 
     return {
-      header: "Comment or react to work items",
-      subHeader: "Use plane to add your valuable inputs to features.",
+      header: t("space_text.auth_header.default_header"),
+      subHeader: t("space_text.auth_header.default_sub_header"),
     };
   };
 

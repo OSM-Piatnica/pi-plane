@@ -123,7 +123,7 @@ def import_community_work_items_into_project(
         raise ValueError(
             {
                 "error": (
-                    "This file does not look like a Plane work-items export (CSV/XLSX/JSON). "
+                    "This file does not look like a Pi-Plane work-items export (CSV/XLSX/JSON). "
                     "Use the file produced by “Export work items” in workspace settings."
                 )
             }

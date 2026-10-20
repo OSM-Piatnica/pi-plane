@@ -26,8 +26,27 @@ from plane.utils.url import is_valid_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Secret Key
-SECRET_KEY = os.environ.get("SECRET_KEY", get_random_secret_key())
+_logger = logging.getLogger("plane")
+
+# Secret Key — use `or` so an explicitly empty env var is treated the same as unset,
+# falling back to a random key rather than passing "" to Django (GHSA-cmwv-pjmw-8483).
+SECRET_KEY = os.environ.get("SECRET_KEY") or get_random_secret_key()
+# Refuse to run silently with a publicly-known or placeholder SECRET_KEY
+# (GHSA-cmwv-pjmw-8483). Emit a critical log so operators notice immediately.
+# The `or get_random_secret_key()` above means the only way to reach this branch
+# is if the environment explicitly passes one of the flagged values.
+_INSECURE_SECRET_KEYS = {
+    "60gp0byfz2dvffa45cxl20p1scy9xbpf6d8c5y0geejgkyp1b5",  # old publicly-known default
+    "change-this-key-on-deployment",  # placeholder shipped in community templates
+}
+if SECRET_KEY in _INSECURE_SECRET_KEYS:
+    _logger.critical(
+        "SECURITY: SECRET_KEY is set to a known insecure or placeholder value. "
+        "This makes your installation vulnerable to session forgery, CSRF bypass, and "
+        "password-reset token forging. Set a unique SECRET_KEY before deploying to production. "
+        "Generate one with: "
+        'python3 -c "from django.utils.crypto import get_random_secret_key; print(get_random_secret_key())"'
+    )
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", "0"))
@@ -40,7 +59,6 @@ IS_SELF_MANAGED = True
 # Example: "10.0.0.0/8,192.168.1.0/24,172.16.0.5"
 _webhook_allowed_ips_raw = os.environ.get("WEBHOOK_ALLOWED_IPS", "")
 WEBHOOK_ALLOWED_IPS = []
-_logger = logging.getLogger("plane")
 for _cidr in _webhook_allowed_ips_raw.split(","):
     _cidr = _cidr.strip()
     if not _cidr:
@@ -118,8 +136,10 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework.authentication.SessionAuthentication",),
     "DEFAULT_THROTTLE_CLASSES": ("rest_framework.throttling.AnonRateThrottle",),
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "30/minute",
-        "asset_id": "5/minute",
+        # Logged-out requests only, counted per client IP (AnonRateThrottle). Signed-in users are not throttled here.
+        "anon": os.environ.get("ANON_RATE_LIMIT", "180/minute"),
+        # Per-asset-ID cap on duplicating an asset (editor paste/copy). Counted across all users.
+        "asset_id": os.environ.get("ASSET_DUPLICATE_RATE_LIMIT", "60/minute"),
     },
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
@@ -128,6 +148,9 @@ REST_FRAMEWORK = {
     # Preserve original Django URL parameter names (pk) instead of converting to 'id'
     "SCHEMA_COERCE_PATH_PK": False,
 }
+
+# API key throttle rate (DRF SimpleRateThrottle format, e.g. "60/minute"). Counted per API key, not per IP.
+API_KEY_RATE_LIMIT = os.environ.get("API_KEY_RATE_LIMIT", "60/minute")
 
 # Django Auth Backend
 AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)  # default
@@ -160,10 +183,8 @@ cors_origins_raw = os.environ.get("CORS_ALLOWED_ORIGINS", "")
 cors_allowed_origins = [origin.strip() for origin in cors_origins_raw.split(",") if origin.strip()]
 if cors_allowed_origins:
     CORS_ALLOWED_ORIGINS = cors_allowed_origins
-    secure_origins = False if [origin for origin in cors_allowed_origins if "http:" in origin] else True
 else:
     CORS_ALLOW_ALL_ORIGINS = True
-    secure_origins = False
 
 CORS_ALLOW_HEADERS = [*default_headers, "X-API-Key"]
 
@@ -318,7 +339,7 @@ CELERY_IMPORTS = (
     "plane.bgtasks.file_asset_task",
     "plane.bgtasks.email_notification_task",
     "plane.bgtasks.cleanup_task",
-    "plane.license.bgtasks.tracer",
+    "plane.license.bgtasks.telemetry_metrics",
     # management tasks
     "plane.bgtasks.dummy_data_task",
     # issue version tasks
@@ -344,17 +365,29 @@ GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", False)
 ANALYTICS_SECRET_KEY = os.environ.get("ANALYTICS_SECRET_KEY", False)
 ANALYTICS_BASE_API = os.environ.get("ANALYTICS_BASE_API", False)
 
-# Posthog settings
-POSTHOG_API_KEY = os.environ.get("POSTHOG_API_KEY", False)
-POSTHOG_HOST = os.environ.get("POSTHOG_HOST", False)
-
 # Skip environment variable configuration
 SKIP_ENV_VAR = os.environ.get("SKIP_ENV_VAR", "1") == "1"
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.environ.get("FILE_SIZE_LIMIT", 5242880))
 
+
+def _cookies_secure(web_url, cors_allowed_origins, app_base_url=None):
+    """
+    Cookies are Secure when Plane is served over https, or when every configured
+    CORS origin is https. Plain-http installs keep non-Secure cookies.
+
+    The serving URL is WEB_URL, falling back to APP_BASE_URL when WEB_URL is
+    unset or empty, matching the precedence used by base_host().
+    """
+    if (web_url or app_base_url or "").strip().lower().startswith("https://"):
+        return True
+    return bool(cors_allowed_origins) and not any("http:" in origin for origin in cors_allowed_origins)
+
+
 # Cookie Settings
-SESSION_COOKIE_SECURE = secure_origins
+SESSION_COOKIE_SECURE = _cookies_secure(
+    os.environ.get("WEB_URL"), cors_allowed_origins, app_base_url=os.environ.get("APP_BASE_URL")
+)
 SESSION_COOKIE_HTTPONLY = True
 SESSION_ENGINE = "plane.db.models.session"
 SESSION_COOKIE_AGE = int(os.environ.get("SESSION_COOKIE_AGE", 604800))
@@ -367,7 +400,7 @@ ADMIN_SESSION_COOKIE_NAME = "admin-session-id"
 ADMIN_SESSION_COOKIE_AGE = int(os.environ.get("ADMIN_SESSION_COOKIE_AGE", 3600))
 
 # CSRF cookies
-CSRF_COOKIE_SECURE = secure_origins
+CSRF_COOKIE_SECURE = SESSION_COOKIE_SECURE
 CSRF_COOKIE_HTTPONLY = True
 CSRF_TRUSTED_ORIGINS = cors_allowed_origins
 CSRF_COOKIE_DOMAIN = os.environ.get("COOKIE_DOMAIN", None)
@@ -527,20 +560,9 @@ ATTACHMENT_MIME_TYPES = [
     "text/markdown",
 ]
 
-# MIME types that browsers can execute as scripts when served inline.
-# These must always be served with Content-Disposition: attachment, even if they
-# somehow end up stored (e.g. uploaded before this restriction was added).
-SCRIPT_CAPABLE_MIME_TYPES: frozenset[str] = frozenset(
-    [
-        "image/svg+xml",  # SVG with onload / embedded <script> tags
-        "text/javascript",
-        "application/javascript",
-        "text/html",
-        "application/xhtml+xml",
-        "text/xml",
-        "application/xml",
-    ]
-)
+# The only MIME types ever served inline (S3Storage.generate_presigned_url pins the
+# type on the response). Everything else, including SVG and HTML, downloads.
+INLINE_SAFE_MIME_TYPES: frozenset[str] = frozenset(["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"])
 
 # Seed directory path
 SEED_DIR = os.path.join(BASE_DIR, "seeds")

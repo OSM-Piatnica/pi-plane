@@ -10,9 +10,9 @@ import { observer } from "mobx-react";
 // types
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { SearchIcon } from "@plane/propel/icons";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { Button } from "@makeplane/propel/components/button";
+import { SearchOutline } from "@makeplane/propel/icons";
+import { setToast } from "@plane/blocks/toast";
 import type { IWorkspaceBulkInviteFormData } from "@plane/types";
 import { cn } from "@plane/utils";
 // components
@@ -25,9 +25,7 @@ import { WorkspaceMembersList } from "@/components/workspace/settings/members-li
 import { useMember } from "@/hooks/store/use-member";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 import { useUserPermissions } from "@/hooks/store/user";
-// plane web components
-import { BillingActionsButton } from "@/plane-web/components/workspace/billing/billing-actions-button";
-import { SendWorkspaceInvitationModal, MembersActivityButton } from "@/plane-web/components/workspace/members";
+import { SendWorkspaceInvitationModal, MembersActivityButton } from "@/components/workspace/members";
 import { SettingsContentWrapper } from "@/components/settings/content-wrapper";
 // local imports
 import type { Route } from "./+types/page";
@@ -61,7 +59,7 @@ const WorkspaceMembersSettingsPage = observer(function WorkspaceMembersSettingsP
       setInviteModal(false);
 
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("toast.success"),
         message: t("workspace_settings.settings.members.invitations_sent_successfully"),
       });
@@ -72,7 +70,7 @@ const WorkspaceMembersSettingsPage = observer(function WorkspaceMembersSettingsP
         message = err.error;
       }
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("toast.error"),
         message: `${message ?? t("something_went_wrong_please_try_again")}`,
       });
@@ -123,13 +121,13 @@ const WorkspaceMembersSettingsPage = observer(function WorkspaceMembersSettingsP
           </h4>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1.5 rounded-md border border-subtle bg-surface-1 px-2.5 py-1.5">
-              <SearchIcon className="h-3.5 w-3.5 text-placeholder" />
+              <SearchOutline className="h-3.5 w-3.5 text-placeholder" />
               <input
                 className="w-full max-w-[234px] border-none bg-transparent text-body-xs-regular outline-none placeholder:text-placeholder"
                 placeholder={`${t("search")}...`}
                 value={searchQuery}
-                // eslint-disable-next-line jsx-a11y/no-autofocus
-                autoFocus
+                // react-doctor-disable-next-line no-autofocus -- intentional initial focus on the members search field
+                autoFocus // eslint-disable-line jsx-a11y/no-autofocus
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
@@ -140,11 +138,14 @@ const WorkspaceMembersSettingsPage = observer(function WorkspaceMembersSettingsP
             />
             <MembersActivityButton workspaceSlug={workspaceSlug} />
             {canPerformWorkspaceAdminActions && (
-              <Button variant="primary" size="lg" onClick={() => setInviteModal(true)}>
-                {t("workspace_settings.settings.members.add_member")}
-              </Button>
+              <Button
+                variant="primary"
+                size="md"
+                stretch="auto"
+                label={t("workspace_settings.settings.members.add_member")}
+                onClick={() => setInviteModal(true)}
+              />
             )}
-            <BillingActionsButton canPerformWorkspaceAdminActions={canPerformWorkspaceAdminActions} />
           </div>
         </div>
         <WorkspaceMembersList searchQuery={searchQuery} isAdmin={canPerformWorkspaceAdminActions} />

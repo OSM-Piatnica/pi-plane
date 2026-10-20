@@ -1,6 +1,5 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
-# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import hashlib
@@ -289,6 +288,7 @@ def webhook_send_task(
             "action": action,
             "webhook_id": str(webhook.id),
             "workspace_id": str(webhook.workspace_id),
+            "workspace_slug": slug,
             "data": event_data,
             "activity": activity,
         }

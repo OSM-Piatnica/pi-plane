@@ -3,7 +3,7 @@
     "progress": {
       "title": "Progres",
       "since_last_update": "De la ultima actualizare",
-      "comments": "{count, plural, one{# comentariu} other{# comentarii}}"
+      "comments": "{count, plural, one{# comentariu} few{# comentarii} other{# de comentarii}}"
     },
     "add_update": "Adaugă actualizare",
     "add_update_placeholder": "Adaugă actualizarea ta aici",

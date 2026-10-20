@@ -1,6 +1,5 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
-# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -114,6 +113,14 @@ class IntakeIssuePublicViewSet(BaseViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        # Ensure the intake belongs to this board before writing: a
+        # caller-supplied intake_id must be bound to the anchor.
+        if str(intake_id) != str(project_deploy_board.intake_id):
+            return Response(
+                {"error": "Intake does not belong to this Project Board"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         if not request.data.get("issue", {}).get("name", False):
             return Response({"error": "Name is required"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -143,7 +150,7 @@ class IntakeIssuePublicViewSet(BaseViewSet):
                 default=False,
             )
 
-        # Sanitize description_html before saving to prevent stored XSS (GHSA-hh2r-3hwp-mvq3)
+        # Sanitize description_html before saving to prevent stored XSS
         raw_description_html = request.data.get("issue", {}).get("description_html", "<p></p>")
         _, _, sanitized_description_html = validate_html_content(raw_description_html)
         safe_description_html = sanitized_description_html if sanitized_description_html is not None else "<p></p>"

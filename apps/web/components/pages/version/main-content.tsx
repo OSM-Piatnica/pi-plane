@@ -1,0 +1,147 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useState } from "react";
+import { observer } from "mobx-react";
+import useSWR from "swr";
+import { ShowOutline, WarningTriangleOutline } from "@makeplane/propel/icons";
+// plane imports
+import { useTranslation } from "@plane/i18n";
+import { Button } from "@makeplane/propel/components/button";
+import { setToast } from "@plane/blocks/toast";
+import type { TPageVersion } from "@plane/types";
+// helpers
+import type { EPageStoreType } from "@/hooks/store";
+// local imports
+import type { TVersionEditorProps } from "./editor";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
+
+type Props = {
+  activeVersion: string | null;
+  editorComponent: React.FC<TVersionEditorProps>;
+  fetchVersionDetails: (pageId: string, versionId: string) => Promise<TPageVersion | undefined>;
+  handleClose: () => void;
+  handleRestore: (descriptionHTML: string) => Promise<void>;
+  pageId: string;
+  restoreEnabled: boolean;
+  storeType: EPageStoreType;
+};
+
+export const PageVersionsMainContent = observer(function PageVersionsMainContent(props: Props) {
+  const {
+    activeVersion,
+    editorComponent,
+    fetchVersionDetails,
+    handleClose,
+    handleRestore,
+    pageId,
+    restoreEnabled,
+    storeType,
+  } = props;
+  // translation
+  const { t } = useTranslation();
+  const { formatDate, formatTime } = useLocalizedDates();
+  // states
+  const [isRestoring, setIsRestoring] = useState(false);
+  const [isRetrying, setIsRetrying] = useState(false);
+
+  const {
+    data: versionDetails,
+    error: versionDetailsError,
+    mutate: mutateVersionDetails,
+  } = useSWR(
+    pageId && activeVersion ? `PAGE_VERSION_${activeVersion}` : null,
+    pageId && activeVersion ? () => fetchVersionDetails(pageId, activeVersion) : null
+  );
+
+  const handleRestoreVersion = async () => {
+    if (!restoreEnabled) return;
+    setIsRestoring(true);
+    await handleRestore(versionDetails?.description_html ?? "<p></p>")
+      .then(() => {
+        setToast({
+          type: "success",
+          title: t("page_ui.version.restored"),
+        });
+        handleClose();
+        return;
+      })
+      .catch(() =>
+        setToast({
+          type: "error",
+          title: t("page_ui.version.restore_failed"),
+        })
+      )
+      .finally(() => setIsRestoring(false));
+  };
+
+  const handleRetry = async () => {
+    setIsRetrying(true);
+    await mutateVersionDetails();
+    setIsRetrying(false);
+  };
+
+  const VersionEditor = editorComponent;
+
+  return (
+    <div className="flex flex-grow flex-col overflow-hidden">
+      {versionDetailsError ? (
+        <div className="grid flex-grow place-items-center">
+          <div className="flex flex-col items-center gap-4 text-center">
+            <span className="grid size-11 flex-shrink-0 place-items-center text-tertiary">
+              <WarningTriangleOutline className="size-10" />
+            </span>
+            <div>
+              <h6 className="text-16 font-semibold">{t("page_ui.version.error_title")}</h6>
+              <p className="text-13 text-tertiary">{t("page_ui.version.error_description")}</p>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              stretch="auto"
+              label={t("page_ui.version.try_again")}
+              onClick={() => void handleRetry()}
+              loading={isRetrying}
+            />
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="flex min-h-14 items-center justify-between gap-2 border-b border-subtle px-5 py-3">
+            <div className="flex items-center gap-4">
+              <h6 className="text-14 font-medium">
+                {versionDetails
+                  ? t("date_phrases.date_time", {
+                      date: formatDate(versionDetails.last_saved_at),
+                      time: formatTime(versionDetails.last_saved_at),
+                    })
+                  : t("page_ui.version.loading_details")}
+              </h6>
+              <span className="flex flex-shrink-0 items-center gap-1 rounded-sm bg-accent-primary/20 px-1.5 py-1 text-11 font-medium text-accent-primary">
+                <ShowOutline className="size-3 flex-shrink-0" />
+                {t("page_ui.version.view_only")}
+              </span>
+            </div>
+            {restoreEnabled && (
+              <Button
+                variant="primary"
+                size="sm"
+                stretch="auto"
+                label={isRestoring ? t("page_ui.version.restoring") : t("restore")}
+                onClick={() => void handleRestoreVersion()}
+                loading={isRestoring}
+              />
+            )}
+          </div>
+          <div className="vertical-scrollbar scrollbar-sm h-full overflow-y-scroll pt-8">
+            <VersionEditor activeVersion={activeVersion} storeType={storeType} versionDetails={versionDetails} />
+          </div>
+        </>
+      )}
+    </div>
+  );
+});

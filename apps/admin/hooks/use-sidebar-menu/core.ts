@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { Image, BrainCog, Cog, Mail } from "lucide-react";
+import { BrainCog } from "lucide-react";
 // plane imports
-import { LockIcon, WorkspaceIcon } from "@plane/propel/icons";
+import { ImageOutline, LockOutline, MailOutline, SettingsOutline, WorkspaceOutline } from "@makeplane/propel/icons";
 // types
 import type { TSidebarMenuItem } from "./types";
 
@@ -14,25 +15,25 @@ export type TCoreSidebarMenuKey = "general" | "email" | "workspace" | "authentic
 
 export const coreSidebarMenuLinks: Record<TCoreSidebarMenuKey, TSidebarMenuItem> = {
   general: {
-    Icon: Cog,
+    Icon: SettingsOutline,
     name: "General",
     description: "Identify your instances and get key details.",
     href: `/general/`,
   },
   email: {
-    Icon: Mail,
+    Icon: MailOutline,
     name: "Email",
     description: "Configure your SMTP controls.",
     href: `/email/`,
   },
   workspace: {
-    Icon: WorkspaceIcon,
+    Icon: WorkspaceOutline,
     name: "Workspaces",
     description: "Manage all workspaces on this instance.",
     href: `/workspace/`,
   },
   authentication: {
-    Icon: LockIcon,
+    Icon: LockOutline,
     name: "Authentication",
     description: "Configure authentication modes.",
     href: `/authentication/`,
@@ -44,8 +45,8 @@ export const coreSidebarMenuLinks: Record<TCoreSidebarMenuKey, TSidebarMenuItem>
     href: `/ai/`,
   },
   image: {
-    Icon: Image,
-    name: "Images in Plane",
+    Icon: ImageOutline,
+    name: "Images in Pi-Plane",
     description: "Allow third-party image libraries.",
     href: `/image/`,
   },

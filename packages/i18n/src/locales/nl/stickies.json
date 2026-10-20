@@ -1,0 +1,59 @@
+{
+  "stickies": {
+    "title": "Notities",
+    "placeholder": "klik om hier te typen",
+    "all": "Alle notities",
+    "no-data": "Noteer een idee, leg een aha-moment vast of schrijf een ingeving op. Voeg een notitie toe om te beginnen.",
+    "add": "Notitie toevoegen",
+    "search_placeholder": "Zoeken op titel",
+    "delete": "Notitie verwijderen",
+    "delete_confirmation": "Weet je zeker dat je deze notitie wilt verwijderen?",
+    "empty_state": {
+      "simple": "Noteer een idee, leg een aha-moment vast of schrijf een ingeving op. Voeg een notitie toe om te beginnen.",
+      "general": {
+        "title": "Notities zijn snelle aantekeningen en to-do's die je razendsnel opschrijft.",
+        "description": "Leg moeiteloos je gedachten en ideeën vast met notities die je altijd en overal kunt openen.",
+        "primary_button": {
+          "text": "Notitie toevoegen"
+        }
+      },
+      "search": {
+        "title": "Dit komt met geen van je notities overeen.",
+        "description": "Probeer een andere term of laat het ons weten\nals je zeker weet dat je zoekopdracht klopt. ",
+        "primary_button": {
+          "text": "Notitie toevoegen"
+        }
+      }
+    },
+    "toasts": {
+      "errors": {
+        "wrong_name": "De naam van de notitie mag niet langer zijn dan 100 tekens.",
+        "already_exists": "Er bestaat al een notitie zonder beschrijving"
+      },
+      "created": {
+        "title": "Notitie aangemaakt",
+        "message": "De notitie is aangemaakt"
+      },
+      "not_created": {
+        "title": "Notitie niet aangemaakt",
+        "message": "De notitie kon niet worden aangemaakt"
+      },
+      "updated": {
+        "title": "Notitie bijgewerkt",
+        "message": "De notitie is bijgewerkt"
+      },
+      "not_updated": {
+        "title": "Notitie niet bijgewerkt",
+        "message": "De notitie kon niet worden bijgewerkt"
+      },
+      "removed": {
+        "title": "Notitie verwijderd",
+        "message": "De notitie is verwijderd"
+      },
+      "not_removed": {
+        "title": "Notitie niet verwijderd",
+        "message": "De notitie kon niet worden verwijderd"
+      }
+    }
+  }
+}

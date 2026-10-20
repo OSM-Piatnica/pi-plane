@@ -1,10 +1,15 @@
 # Trivy ignore file
 # Document the rationale for each suppressed finding.
+#
+# Read by the image scans in .github/workflows/trivy-images.yaml (weekly) and the release gate in
+# .github/workflows/publish-images.yaml. They only report fixable HIGH and CRITICAL findings, so
+# add an ID only for one of those that does not apply to us, with the reason and a review date.
 
-# CVE-2026-30242: SSRF in Plane webhook URL serializer.
-# False positive: Trivy matches our backend's distribution name "Plane" +
-# version 0.24.0 against the makeplane/plane CVE. The "fixed in 1.2.3" refers
-# to the upstream public release version scheme, not this distribution's
-# pyproject.toml version - the SSRF mitigation has been in place for the
-# applicable webhook validation code path.
-CVE-2026-30242
+# No suppressions at the moment.
+#
+# History: CVE-2026-30242 (SSRF in Plane's webhook URL serializer) used to be listed here because Trivy
+# matched our backend's distribution name "Plane" and its old pyproject.toml version (0.24.0) against
+# the makeplane/plane advisory ("fixed in 1.2.3"). pyproject.toml now carries the repo release version
+# (1.3.1+pi.2), and a Trivy Images run on the published pi-plane-api image without the entry did not
+# report it, so it was removed. The SSRF mitigation itself lives in plane/utils/url_security.py and
+# plane/utils/ip_address.py.

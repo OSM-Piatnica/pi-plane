@@ -23,13 +23,17 @@ export const SUPPORTED_LANGUAGES: ILanguageOption[] = [
   { label: "Deutsch", value: "de" },
   { label: "Українська", value: "ua" },
   { label: "Polski", value: "pl" },
+  { label: "Podlaski", value: "pl-x-podlaski" },
   { label: "한국어", value: "ko" },
   { label: "Português Brasil", value: "pt-BR" },
+  { label: "Português (Portugal)", value: "pt-PT" },
   { label: "Indonesian", value: "id" },
   { label: "Română", value: "ro" },
   { label: "Tiếng việt", value: "vi-VN" },
   { label: "Türkçe", value: "tr-TR" },
   { label: "ქართული", value: "ka-ge" },
+  { label: "Nederlands", value: "nl" },
+  { label: "Български", value: "bg" },
 ];
 
 export const LANGUAGE_STORAGE_KEY = "userLanguage";

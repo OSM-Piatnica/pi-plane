@@ -8,6 +8,7 @@
   "submit": "Odoslať",
   "cancel": "Zrušiť",
   "loading": "Načítavanie",
+  "searching": "Vyhľadávanie...",
   "error": "Chyba",
   "success": "Úspech",
   "warning": "Varovanie",
@@ -304,6 +305,9 @@
   "create_new_label": "Vytvoriť nový štítok",
   "label_name": "Názov štítku",
   "failed_to_create_label": "Vytvorenie štítku zlyhalo. Skúste to prosím znova.",
+  "no_matching_labels": "Žiadne zodpovedajúce štítky",
+  "adding_label": "Pridávanie „{name}\"",
+  "add_label_to_labels": "Pridať „{name}\" do štítkov",
   "start_date": "Dátum začiatku",
   "end_date": "Dátum ukončenia",
   "due_date": "Termín",
@@ -325,6 +329,18 @@
   "deleting": "Mazanie",
   "make_a_copy": "Vytvoriť kópiu",
   "move_to_project": "Presunúť do projektu",
+  "default_state_names": {
+    "backlog": "Backlog",
+    "todo": "Na vykonanie",
+    "in_progress": "Prebieha",
+    "done": "Hotovo",
+    "cancelled": "Zrušené",
+    "triage": "Triedenie"
+  },
+  "filter_headings": {
+    "access": "Prístup",
+    "owned_by": "Vlastník"
+  },
   "good": "Dobrý",
   "morning": "ráno",
   "afternoon": "popoludnie",
@@ -526,6 +542,7 @@
       "updated_on": "Aktualizované dňa"
     },
     "sort": {
+      "label": "Zoradiť",
       "asc": "Vzostupne",
       "desc": "Zostupne",
       "created_on": "Vytvorené dňa",
@@ -598,6 +615,13 @@
       "label": "Hľadať",
       "placeholder": "Zadajte hľadaný výraz",
       "no_matches_found": "Nenašli sa žiadne zhody",
+      "cycles": "Hľadať cykly...",
+      "estimates": "Hľadať odhady...",
+      "labels": "Hľadať štítky...",
+      "members": "Hľadať členov...",
+      "modules": "Hľadať moduly...",
+      "projects": "Hľadať projekty...",
+      "states": "Hľadať stavy...",
       "no_matching_results": "Žiadne zodpovedajúce výsledky",
       "min_chars": "Pre vyhľadávanie zadajte aspoň {count} znakov",
       "error": "Chyba pri načítavaní výsledkov vyhľadávania",
@@ -625,7 +649,8 @@
       "enable": "Povoliť",
       "disable": "Zakázať",
       "copy_markdown": "Kopírovať markdown",
-      "reply": "Odpovedať"
+      "reply": "Odpovedať",
+      "add_reaction": "Pridať reakciu"
     },
     "name": "Názov",
     "discard": "Zahodiť",
@@ -705,6 +730,8 @@
     "applying": "Používanie",
     "overview": "Prehľad",
     "no_of": "Počet {entity}",
+    "no_of_work_items": "Počet Pracovné položky",
+    "no_of_epics": "Počet Epiky",
     "resolved": "Vyriešené",
     "get_started": "Začať",
     "worklogs": "Pracovné záznamy",
@@ -826,7 +853,7 @@
     "edited_by": "Upravené používateľom"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane sa nespustil. Toto môže byť spôsobené tým, že sa jedna alebo viac služieb Plane nepodarilo spustiť.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane sa nespustil. Toto môže byť spôsobené tým, že sa jedna alebo viac služieb Pi-Plane nepodarilo spustiť.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Vyberte View Logs z setup.sh a Docker logov, aby ste si boli istí."
   },
   "customize_navigation": "Prispôsobiť navigáciu",
@@ -874,11 +901,12 @@
       "short_description": "Exportovať ako JSON"
     }
   },
+  "labels_count": "{count, plural, one {# štítok} few {# štítky} many {# štítku} other {# štítkov}}",
   "onboarding": {
     "skip": "Preskočiť",
     "profile": {
       "title": "Vytvorte si profil.",
-      "description": "Takto sa budete zobrazovať v Plane.",
+      "description": "Takto sa budete zobrazovať v Pi-Plane.",
       "choose_image": "Vybrať obrázok",
       "upload_image": "Nahrať obrázok",
       "change_image": "Zmeniť obrázok",
@@ -893,7 +921,7 @@
       "new_password_placeholder": "Nové heslo...",
       "role_question": "Akú rolu zastávate? Vyberte jednu.",
       "domain_question": "Aká je vaša odborná oblasť? Vyberte jednu alebo viac.",
-      "marketing_consent": "Súhlasím so zasielaním marketingových informácií od Plane",
+      "marketing_consent": "Súhlasím so zasielaním marketingových informácií od Pi-Plane",
       "passwords_do_not_match": "Heslá sa nezhodujú",
       "passwords_match": "Heslá sa zhodujú",
       "seniority_levels": {
@@ -924,7 +952,7 @@
     },
     "role": {
       "title": "Aká je vaša rola?",
-      "description": "Nastavme Plane podľa toho, ako pracujete.",
+      "description": "Nastavme Pi-Plane podľa toho, ako pracujete.",
       "select_one": "Vyberte jednu",
       "options": {
         "product_manager": "Produktový manažér",
@@ -937,7 +965,7 @@
       }
     },
     "usecase": {
-      "title": "Čo vás privádza do Plane?",
+      "title": "Čo vás privádza do Pi-Plane?",
       "description": "Povedzte nám o svojich cieľoch a veľkosti tímu.",
       "select_multiple": "Vyberte jednu alebo viac",
       "select_at_least_one": "Vyberte aspoň jednu možnosť"
@@ -958,7 +986,7 @@
     },
     "team": {
       "invite_teammates": "Pozvite svojich kolegov",
-      "invite_teammates_description": "Práca v Plane funguje najlepšie s vaším tímom. Pozvite ho hneď a využite Plane naplno.",
+      "invite_teammates_description": "Práca v Pi-Plane funguje najlepšie s vaším tímom. Pozvite ho hneď a využite Pi-Plane naplno.",
       "add_another": "Pridať ďalšieho",
       "do_it_later": "Urobím to neskôr",
       "invalid_email": "Neplatná e-mailová adresa",
@@ -1002,5 +1030,451 @@
     "syncing_description": "Vaše zmeny sa synchronizujú so serverom. Môžete pokračovať v úpravách.",
     "connection_lost": "Spojenie stratené",
     "connection_lost_description": "Máme problémy s pripojením k serveru websocket. Vaše zmeny budú synchronizované a ukladané každých 10 sekúnd."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Ikona",
+    "contrast_notice": "Farby sa upravia tak, aby bol zachovaný dostatočný kontrast."
+  },
+  "date_phrases": {
+    "added_ago": "Pridané {timeAgo}",
+    "expired": "Platnosť vypršala",
+    "expired_ago": "Platnosť vypršala {timeAgo}",
+    "expires_at": "Platnosť vyprší {date} o {time}",
+    "never_expires": "Platnosť nikdy nevyprší",
+    "date_at_time": "{date} o {time}",
+    "till": "Do {date}, {time}",
+    "after_date": "Po {date}",
+    "before_date": "Pred {date}",
+    "month_week": "{month}, týždeň {week}",
+    "target_date": "Cieľový dátum: {date}",
+    "from_date": "Od {date}",
+    "till_date": "Do {date}",
+    "date_to_date": "{start} až {end}",
+    "archived_at": "Archivované {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Nahrané používateľom {name} dňa {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Platnosť"
+  },
+  "a11y": {
+    "toggle_details": "Prepnúť podrobnosti",
+    "workflow_flow_type": "Typ toku",
+    "workflow_target_state": "Cieľový stav",
+    "workflow_reject_state": "Stav zamietnutia"
+  },
+  "api_token_expiry": {
+    "one_week": "1 týždeň",
+    "one_month": "1 mesiac",
+    "three_months": "3 mesiace",
+    "one_year": "1 rok",
+    "custom_date": "Vlastný dátum",
+    "set_expiration_date": "Nastaviť dátum vypršania"
+  },
+  "profile_sidebar": {
+    "due": "Termín"
+  },
+  "progress_chart": {
+    "current": "Aktuálne {title}",
+    "ideal": "Ideálne {title}"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "Pustite obrázok sem na nahratie",
+      "drag_and_drop": "Presuňte obrázok sem",
+      "size_exceeded": "Veľkosť obrázka nesmie presiahnuť 5 MB.",
+      "invalid_format": "Nahrajte prosím súbor v platnom formáte.",
+      "formats_supported": "Podporované formáty súborov: .jpeg, .jpg, .png, .webp",
+      "uploading": "Nahrávanie",
+      "upload_and_save": "Nahrať a uložiť",
+      "title": "Nahrať obrázok",
+      "select_image": "Vybrať obrázok",
+      "select_image_named": "Vybrať obrázok: {description}",
+      "select_cover_image": "Vybrať titulný obrázok {index}",
+      "no_images": "Nenašli sa žiadne obrázky."
+    },
+    "ai_assistant": {
+      "rate_limit": "Dosiahli ste maximálny počet požiadaviek, teda 50 požiadaviek mesačne na používateľa.",
+      "use_response": "Použiť túto odpoveď",
+      "generating_response": "Generovanie odpovede...",
+      "generate_response": "Vygenerovať odpoveď",
+      "generate_again": "Vygenerovať znova",
+      "content_label": "Obsah:",
+      "response_label": "Odpoveď:",
+      "no_response": "Nepodarilo sa vygenerovať žiadnu odpoveď. Môže to byť spôsobené nedostatočným obsahom alebo informáciami o úlohe. Skúste to prosím znova.",
+      "placeholder_with_content": "Povedzte AI, akú akciu má s týmto obsahom vykonať...",
+      "placeholder_empty": "Opýtajte sa AI na čokoľvek...",
+      "consent": "Používaním tejto funkcie súhlasíte so zdieľaním správy so službou tretej strany."
+    },
+    "multiple_select": {
+      "select_all_in_group": "Vybrať všetko v skupine"
+    },
+    "theme": {
+      "download_config": "Stiahnuť konfiguráciu",
+      "import_config": "Importovať konfiguráciu",
+      "import_failed": "Import konfigurácie motívu zlyhal",
+      "missing_fields": "Chýbajú povinné polia: primary a background",
+      "invalid_brand_hex": "Neplatný formát hexadecimálnej hodnoty farby značky",
+      "invalid_neutral_hex": "Neplatný formát hexadecimálnej hodnoty neutrálnej farby",
+      "invalid_mode": "Neplatný režim motívu. Musí byť logická hodnota",
+      "choose_color_mode": "Vyberte farebný režim",
+      "light_mode": "Svetlý režim",
+      "dark_mode": "Tmavý režim"
+    },
+    "workspace": {
+      "delete_warning": "Chystáte sa zmazať pracovný priestor <name/>. Ak to potvrdíte, stratíte prístup ku všetkým svojim pracovným údajom v tomto pracovnom priestore bez možnosti obnovenia. Postupujte veľmi opatrne.",
+      "delete_type_name": "Na pokračovanie zadajte názov tohto pracovného priestoru.",
+      "delete_final_confirmation": "Na konečné potvrdenie napíšte nižšie <phrase/>."
+    },
+    "workspace_settings": {
+      "invitation_removed": "Pozvánka bola úspešne odstránená.",
+      "workspace_updated": "Pracovný priestor bol úspešne aktualizovaný",
+      "picture_removed": "Obrázok pracovného priestoru bol úspešne odstránený.",
+      "picture_remove_failed": "Pri odstraňovaní profilového obrázka došlo k chybe. Skúste to prosím znova.",
+      "url_copied": "Adresa URL pracovného priestoru bola skopírovaná do schránky."
+    },
+    "workspace_views": {
+      "delete_failed": "Pohľad sa nepodarilo zmazať. Skúste to prosím znova.",
+      "create_failed": "Pohľad sa nepodarilo vytvoriť. Skúste to prosím znova.",
+      "updated": "Pohľad bol úspešne aktualizovaný.",
+      "update_failed": "Pohľad sa nepodarilo aktualizovať. Skúste to prosím znova.",
+      "edit_view": "Upraviť pohľad",
+      "delete_view": "Zmazať pohľad"
+    },
+    "sticky_colors": {
+      "gray": "Sivá",
+      "peach": "Broskyňová",
+      "pink": "Ružová",
+      "orange": "Oranžová",
+      "green": "Zelená",
+      "light_blue": "Svetlomodrá",
+      "dark_blue": "Tmavomodrá",
+      "purple": "Fialová"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "Pracujte vo všetkých dimenziách.",
+      "welcome_back": "Vitajte späť v Pi-Plane.",
+      "create_your_account": "Vytvorte si účet Pi-Plane."
+    },
+    "auth_root": {
+      "no_auth_methods_title": "Nie sú k dispozícii žiadne metódy overovania",
+      "no_auth_methods_description": "Obráťte sa na správcu, aby pre vašu inštanciu povolil overovanie."
+    },
+    "auth_password": {
+      "create_account": "Vytvoriť účet"
+    },
+    "terms": {
+      "agree_sign_up": "Vytvorením účtu beriete na vedomie a súhlasíte s \n našimi <terms>Zmluvnými podmienkami</terms> a <privacy>Zásadami ochrany osobných údajov</privacy>.",
+      "agree_sign_in": "Prihlásením beriete na vedomie a súhlasíte s \n našimi <terms>Zmluvnými podmienkami</terms> a <privacy>Zásadami ochrany osobných údajov</privacy>."
+    },
+    "auth_screens": {
+      "sign_up": "Registrácia",
+      "sign_in": "Prihlásiť sa",
+      "join_teams": "Pripojte sa k tímom, ktoré dosahujú lepšie výsledky s Pi-Plane",
+      "not_authorized_view_title": "Ojoj! Nemáte oprávnenie zobraziť túto stránku",
+      "not_authorized": "Neoprávnený prístup!",
+      "not_a_member_description": "Nie ste členom tohto pracovného priestoru. Obráťte sa na správcu pracovného priestoru, aby vám poslal pozvánku, alebo skontrolujte svoje čakajúce pozvánky.",
+      "check_pending_invites": "Skontrolovať čakajúce pozvánky"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "Pracovný priestor sa nenašiel",
+      "workspace_not_found_description": "Pre túto adresu URL sa nenašiel žiadny pracovný priestor. Možno neexistuje alebo nemáte oprávnenie ho zobraziť.",
+      "visit_profile": "Navštíviť profil"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "Prepnúť ponuku nastavení",
+      "back_to_project": "Späť do projektu",
+      "toggle_project_feature": "Prepnúť funkciu projektu"
+    },
+    "headers": {
+      "toggle_sidebar": "Prepnúť bočný panel"
+    },
+    "profile_activity": {
+      "page_title": "Profil – Aktivita"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook bol úspešne aktualizovaný.",
+      "not_authorized": "Nemáte oprávnenie na prístup na túto stránku.",
+      "enable_webhook": "Povoliť webhook",
+      "toggle_webhook": "Prepnúť webhook"
+    },
+    "project_settings_empty": {
+      "title": "Zatiaľ žiadne projekty",
+      "description": "Projekty tvoria základ práce zameranej na ciele. Umožňujú vám spravovať svoje tímy, úlohy a všetko, čo potrebujete na dokončenie práce.",
+      "learn_more": "Ďalšie informácie o projektoch"
+    },
+    "project_templates": {
+      "imported_template": "Importovaná šablóna",
+      "pick_color": "Vybrať farbu"
+    },
+    "not_found": {
+      "image_alt": "404 – Stránka sa nenašla",
+      "title": "Ojoj! Niečo sa pokazilo.",
+      "description": "Ospravedlňujeme sa, stránka, ktorú hľadáte, sa nenašla. Mohla byť odstránená, mohol sa zmeniť jej názov alebo je dočasne nedostupná.",
+      "go_to_home": "Prejsť na úvodnú stránku"
+    },
+    "api_tokens": {
+      "empty_title": "Žiadne tokeny API",
+      "empty_description": "Vytvárajte tokeny API na bezpečné a jednoduché zdieľanie údajov s externými aplikáciami pri zachovaní kontroly a zabezpečenia.",
+      "add_token": "Pridať token",
+      "delete_token": "Zmazať token"
+    },
+    "base_layouts": {
+      "gantt": "Rozloženie Gantt"
+    },
+    "command_palette": {
+      "no_states_found": "Nenašli sa žiadne stavy"
+    },
+    "quick_actions": {
+      "archive_module_hint": "Archivovať možno iba dokončené alebo zrušené moduly"
+    },
+    "progress": {
+      "cycle_progress": "Priebeh cyklu"
+    },
+    "estimates": {
+      "delete_title": "Zmazať systém odhadov",
+      "delete_description": "Zmazaním systému odhadov <name/> ho natrvalo odstránite zo všetkých pracovných položiek. Túto akciu nie je možné vrátiť späť. Ak odhady pridáte znova, budete musieť aktualizovať všetky pracovné položky.",
+      "deleting": "Mazanie",
+      "delete_estimate": "Zmazať odhad",
+      "toggle_estimates": "Prepnúť odhady",
+      "estimates_list": "Zoznam odhadov",
+      "archived_title": "Archivované odhady",
+      "archived_description": "Odhady prešli zmenou. Toto sú odhady z vašich starších verzií, ktoré sa nepoužívali. Viac sa o nich dozviete <link>tu.</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "Vytvoriť závislosť „blokované“",
+      "create_blocking_dependency": "Vytvoriť závislosť „blokuje“",
+      "update_block_dates_failed": "Pri aktualizácii dátumov bloku sa niečo pokazilo"
+    },
+    "product_updates": {
+      "fetch_failed": "Máme problémy s načítaním aktualít. Najnovšie aktuality nájdete v našom zozname zmien.",
+      "go_to_changelog": "Prejsť na zoznam zmien"
+    },
+    "inbox": {
+      "intake_form_user": "Používateľ formulára Intake",
+      "status": "Stav",
+      "created_by": "Vytvoril"
+    },
+    "instance": {
+      "contact_support": "Kontaktovať podporu",
+      "maintenance_title": "🚧 Vyzerá to, že sa Pi-Plane nespustil správne!",
+      "maintenance_description": "Niektoré služby sa možno nepodarilo spustiť. Skontrolujte protokoly kontajnerov, aby ste problém zistili a vyriešili. Ak si neviete rady, obráťte sa na náš tím podpory.",
+      "welcome_title": "Vitajte v Pi-Plane",
+      "welcome_description": "Nastavte svoju inštanciu a vytvorte svoj prvý pracovný priestor, aby ste mohli začať spravovať projekty a prácu."
+    },
+    "integrations": {
+      "github_installed": "Aktivujte GitHub pri jednotlivých projektoch na synchronizáciu s konkrétnymi repozitármi.",
+      "github_not_installed": "Prepojte GitHub so svojím pracovným priestorom Pi-Plane na synchronizáciu pracovných položiek projektu.",
+      "slack_installed": "Aktivujte Slack pri jednotlivých projektoch na synchronizáciu s konkrétnymi kanálmi.",
+      "slack_not_installed": "Prepojte Slack so svojím pracovným priestorom Pi-Plane na synchronizáciu pracovných položiek projektu.",
+      "deleted_title": "Úspešne zmazané!",
+      "deleted_message": "Integrácia {title} bola úspešne zmazaná.",
+      "delete_failed_message": "Integráciu {title} sa nepodarilo zmazať. Skúste to prosím znova.",
+      "logo_alt": "Logo {title}",
+      "loading": "Načítavanie...",
+      "no_permission": "Nemáte oprávnenie na vykonanie tejto akcie",
+      "uninstalling": "Odinštalovanie...",
+      "uninstall": "Odinštalovať",
+      "installing": "Inštalácia...",
+      "install": "Nainštalovať"
+    },
+    "attachments": {
+      "upload_progress": "Priebeh nahrávania"
+    },
+    "labels": {
+      "delete_confirmation": "Naozaj chcete zmazať <name/>? Štítok sa odstráni zo všetkých pracovných položiek aj zo všetkých pohľadov, v ktorých sa podľa neho filtruje.",
+      "edit_label": "Upraviť štítok",
+      "delete_label": "Zmazať štítok",
+      "remove_from_group": "Odstrániť zo skupiny"
+    },
+    "modules": {
+      "module_progress": "Priebeh modulu"
+    },
+    "navigation": {
+      "icon_only": "Iba ikona",
+      "icon_with_name": "Ikona s názvom",
+      "dock_app_rail": "Ukotviť panel aplikácií",
+      "undock_app_rail": "Uvoľniť panel aplikácií",
+      "minimum_value_is_one": "Minimálna hodnota je 1",
+      "show": "Zobraziť",
+      "clear_default": "Zrušiť predvolené",
+      "hide_in_more_menu": "Skryť v ponuke Viac",
+      "project_link_copied": "Odkaz na projekt bol skopírovaný do schránky.",
+      "copy_failed": "Kopírovanie zlyhalo",
+      "copy_failed_message": "Odkaz sa nepodarilo skopírovať. Skúste to prosím znova.",
+      "default_tab_updated": "Predvolená karta bola úspešne aktualizovaná.",
+      "default_tab_update_failed": "Predvolenú kartu sa nepodarilo aktualizovať. Skúste to prosím neskôr.",
+      "hide_tab_failed": "Kartu sa nepodarilo skryť. Skúste to prosím neskôr.",
+      "generic_error": "Niečo sa pokazilo. Skúste to prosím neskôr."
+    },
+    "onboarding": {
+      "select_workspace_invitation": "Vybrať pozvánku do pracovného priestoru"
+    },
+    "tour": {
+      "work_items_title": "Plánujte pomocou pracovných položiek",
+      "work_items_description": "Pracovná položka je základným stavebným kameňom Pi-Plane. Väčšina konceptov v Pi-Plane je spojená s pracovnými položkami a ich vlastnosťami.",
+      "cycles_title": "Postupujte pomocou cyklov",
+      "cycles_description": "Cykly vám a vášmu tímu pomáhajú postupovať rýchlejšie, podobne ako šprinty bežne používané vo vývoji agile.",
+      "modules_title": "Rozdeľte na moduly",
+      "modules_description": "Moduly rozdeľujú vašu veľkú vec na projekty alebo funkcie, aby ste sa lepšie zorganizovali.",
+      "views_description": "Vytvárajte vlastné filtre a zobrazujte len pracovné položky, na ktorých vám záleží. Filtre uložíte a zdieľate za pár kliknutí.",
+      "pages_title": "Dokumentujte pomocou stránok",
+      "pages_description": "Pomocou stránok rýchlo zapisujte pracovné položky na schôdzi alebo na začiatku dňa.",
+      "welcome_title": "Vitajte v Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "Sme radi, že ste sa rozhodli Pi-Plane vyskúšať. Teraz môžete jednoducho spravovať svoje projekty. Začnite vytvorením projektu.",
+      "take_tour": "Absolvovať prehliadku produktu",
+      "skip": "Nie, ďakujem, preskúmam to sám",
+      "create_first_project": "Vytvorte svoj prvý projekt",
+      "sidebar_heading": "Začnime!<br/>Získajte z Pi-Plane viac."
+    },
+    "ai": {
+      "ask_pi": "Opýtať sa Pi",
+      "tone_professional": "💼 Profesionálny",
+      "tone_casual": "😃 Neformálny",
+      "third_party_consent": "Používaním tejto funkcie súhlasíte so zdieľaním správy so službou tretej strany.",
+      "pi_writing": "Pi píše",
+      "pi_generating_response": "Pi generuje odpoveď"
+    },
+    "pages": {
+      "icon": "Ikona",
+      "color": "Farba",
+      "remove_text_color": "Odstrániť farbu textu",
+      "remove_background_color": "Odstrániť farbu pozadia",
+      "formatting_toolbar": "Panel formátovania",
+      "copied_link": "Odkaz skopírovaný",
+      "remove_favorite": "Odstrániť z obľúbených",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "Bot {name}"
+    },
+    "project": {
+      "identifier": "Identifikátor"
+    },
+    "projects": {
+      "toggle_feature": "Prepnúť funkciu projektu",
+      "cover_upload_failed": "Nahratie titulného obrázka zlyhalo"
+    },
+    "notifications": {
+      "notification_options": "Možnosti upozornení"
+    },
+    "stores": {
+      "generic_error": "Došlo k chybe",
+      "inbox_fetch_error": "Pri načítavaní pracovných položiek Intake došlo k chybe. Skúste to prosím neskôr.",
+      "page_make_public_error": "Stránku sa nepodarilo zverejniť. Skúste to prosím neskôr.",
+      "page_make_private_error": "Stránku sa nepodarilo nastaviť ako súkromnú. Skúste to prosím neskôr.",
+      "workflow_pending_approval": "Pracovná položka čaká na schválenie.",
+      "workflow_transition_not_allowed": "Tento prechod stavu nie je pracovným postupom povolený."
+    },
+    "validation": {
+      "name_max_length": "Názov môže mať najviac 50 znakov",
+      "name_special_chars": "Mená nesmú obsahovať špeciálne znaky, napríklad {chars}",
+      "name_invalid_chars": "Mená môžu obsahovať iba písmená, medzery, pomlčky a apostrofy",
+      "display_name_max_length": "Zobrazované meno môže mať najviac 50 znakov",
+      "display_name_special_chars": "Zobrazované meno nesmie obsahovať špeciálne znaky, napríklad {chars}",
+      "display_name_invalid_chars": "Zobrazované meno môže obsahovať iba písmená, číslice, bodky, pomlčky a podčiarkovníky",
+      "company_name_max_length": "Názov spoločnosti môže mať najviac 80 znakov",
+      "company_name_special_chars": "Názov spoločnosti nesmie obsahovať špeciálne znaky, napríklad {chars}",
+      "company_name_invalid_chars": "Názov spoločnosti môže obsahovať iba písmená, číslice, medzery, pomlčky a podčiarkovníky",
+      "company_name_needs_alphanumeric": "Názov spoločnosti musí obsahovať aspoň jedno písmeno alebo číslicu",
+      "workspace_name_required": "Názov pracovného priestoru je povinný",
+      "workspace_name_max_length": "Názov pracovného priestoru môže mať najviac 80 znakov",
+      "workspace_name_special_chars": "Názov pracovného priestoru nesmie obsahovať špeciálne znaky, napríklad {chars}",
+      "workspace_name_invalid_chars": "Názov pracovného priestoru môže obsahovať iba písmená, číslice, medzery, pomlčky a podčiarkovníky",
+      "workspace_name_needs_alphanumeric": "Názov pracovného priestoru musí obsahovať aspoň jedno písmeno alebo číslicu",
+      "slug_required": "Slug je povinný",
+      "slug_max_length": "Slug môže mať najviac 48 znakov",
+      "slug_special_chars": "Slug nesmie obsahovať špeciálne znaky, napríklad {chars}",
+      "slug_invalid_chars": "Slug môže obsahovať iba písmená, číslice, pomlčky a podčiarkovníky"
+    },
+    "analytics": {
+      "state_name": "Názov stavu",
+      "estimate_point": "Bod odhadu",
+      "completed_date": "Dátum dokončenia",
+      "yesterday": "Včera",
+      "last_7_days": "Posledných 7 dní",
+      "last_30_days": "Posledných 30 dní",
+      "last_3_months": "Posledné 3 mesiace",
+      "duration": "Trvanie"
+    },
+    "auth_labels": {
+      "magic_code": "Magický kód"
+    },
+    "state_groups": {
+      "canceled": "Zrušené"
+    },
+    "filters": {
+      "state_group": "Skupina stavov",
+      "subscriber": "Odberateľ"
+    }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Zavrieť"
+    },
+    "auth_header": {
+      "sign_in_header": "Prihláste sa, aby ste mohli hlasovať alebo komentovať",
+      "sign_in_sub_header": "Prispejte k tomu, ktoré funkcie sa budú vytvárať.",
+      "sign_up_header": "Prezerajte, komentujte a robte viac",
+      "sign_up_sub_header": "Zaregistrujte sa alebo sa prihláste a pracujte s pracovnými položkami a Stránkami v Pi-Plane.",
+      "default_header": "Komentujte pracovné položky alebo na ne reagujte",
+      "default_sub_header": "Použite Pi-Plane a pridajte svoje cenné podnety k funkciám."
+    },
+    "terms": {
+      "agree_sign_up": "Vytvorením účtu súhlasíte s našimi\n<terms>Podmienkami služby</terms> a <privacy>Zásadami ochrany osobných údajov</privacy>.",
+      "agree_sign_in": "Prihlásením súhlasíte s našimi\n<terms>Podmienkami služby</terms> a <privacy>Zásadami ochrany osobných údajov</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Skvelé! Zostáva už len jeden krok.",
+      "description": "Do adresového riadka prehliadača zadajte verejnú adresu URL alebo odkaz na zobrazenie či Stránku, ktorú chcete zobraziť.",
+      "image_alt": "Používateľ je už prihlásený"
+    },
+    "auth_unique_code": {
+      "resend_in": "Znova odoslať o {seconds} s"
+    },
+    "oauth": {
+      "sign_up_with": "Registrácia cez {provider}",
+      "sign_in_with": "Prihlásenie cez {provider}",
+      "continue_with": "Pokračovať cez {provider}"
+    },
+    "issues": {
+      "public_board_not_found": "Verejná nástenka neexistuje. Skontrolujte prosím adresu URL.",
+      "cycle_tooltip": "Cyklus: {name}",
+      "no_cycle": "Žiadny cyklus",
+      "due_date_tooltip": "Termín: {date}",
+      "no_date": "Žiadny dátum",
+      "labels_tooltip": "Štítky: {labels}",
+      "no_labels": "Žiadne štítky",
+      "labels_count": "Štítkov: {count}",
+      "no_assignees": "Žiadni priradení",
+      "comment_post_failed": "Komentár sa nepodarilo odoslať. Skúste to prosím znova.",
+      "add_comment_placeholder": "Pridať komentár...",
+      "sign_in_to_comment": "Prihláste sa a pridajte komentár",
+      "empty": "Prázdne",
+      "no_upvotes": "Zatiaľ žiadne kladné hlasy",
+      "no_downvotes": "Zatiaľ žiadne záporné hlasy",
+      "voters_and_more": "{names} a ďalších {count}"
+    },
+    "error_page": {
+      "title": "Jej! Toto nevyzerá dobre.",
+      "description": "Pi-Plane sa zrútil. Nič sa nedeje, naši inžinieri boli upozornení. Ak máte ďalšie podrobnosti, nahláste ich na <github/>."
+    },
+    "not_found_page": {
+      "title": "To sa nepodarilo",
+      "description": "Skontrolujte adresu URL, ktorú zadávate do adresového riadka prehliadača, a skúste to znova."
+    },
+    "powered_by": {
+      "label": "Využíva <name>Pi-Plane</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Zlyhanie inštancie Pi-Plane",
+      "title": "Nepodarilo sa načítať podrobnosti o inštancii.",
+      "description": "Nepodarilo sa nám načítať podrobnosti o inštancii.",
+      "hint": "Žiadne obavy, môže ísť len o problém s pripojením."
+    }
   }
 }

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,12 @@ import type { TFilterProperty } from "@plane/types";
 import { EQUALITY_OPERATOR, COLLECTION_OPERATOR } from "@plane/types";
 // local imports
 import type { TCreateFilterConfig, TCreateUserFilterParams } from "../../../rich-filters";
-import { createFilterConfig, createOperatorConfigEntry, getMemberMultiSelectConfig } from "../../../rich-filters";
+import {
+  createFilterConfig,
+  createOperatorConfigEntry,
+  getMemberMultiSelectConfig,
+  translateFilterLabel,
+} from "../../../rich-filters";
 
 // ------------ Assignee filter ------------
 
@@ -29,7 +35,7 @@ export const getAssigneeFilterConfig =
   (params: TCreateAssigneeFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "Assignees",
+      label: translateFilterLabel(params.t, "common.assignees", "Assignees"),
       ...params,
       icon: params.filterIcon,
       supportedOperatorConfigsMap: new Map([
@@ -57,7 +63,7 @@ export const getMentionFilterConfig =
   (params: TCreateMentionFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "Mentions",
+      label: translateFilterLabel(params.t, "notification.tabs.mentions", "Mentions"),
       ...params,
       icon: params.filterIcon,
       supportedOperatorConfigsMap: new Map([
@@ -85,7 +91,7 @@ export const getCreatedByFilterConfig =
   (params: TCreateCreatedByFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "Created by",
+      label: translateFilterLabel(params.t, "common.created_by", "Created by"),
       ...params,
       icon: params.filterIcon,
       supportedOperatorConfigsMap: new Map([
@@ -113,7 +119,7 @@ export const getSubscriberFilterConfig =
   (params: TCreateSubscriberFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "Subscriber",
+      label: translateFilterLabel(params.t, "app_text.filters.subscriber", "Subscriber"),
       ...params,
       icon: params.filterIcon,
       supportedOperatorConfigsMap: new Map([

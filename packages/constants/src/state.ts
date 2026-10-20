@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -15,6 +16,7 @@ export const STATE_GROUPS: {
   [key in TStateGroups]: {
     key: TStateGroups;
     label: string;
+    i18n_label: string;
     defaultStateName: string;
     color: string;
   };
@@ -22,30 +24,35 @@ export const STATE_GROUPS: {
   backlog: {
     key: "backlog",
     label: "Backlog",
+    i18n_label: "workspace_projects.state.backlog",
     defaultStateName: "Backlog",
     color: "#d9d9d9",
   },
   unstarted: {
     key: "unstarted",
     label: "Unstarted",
-    defaultStateName: "Todo",
+    i18n_label: "workspace_projects.state.unstarted",
+    defaultStateName: "To do",
     color: "#3f76ff",
   },
   started: {
     key: "started",
     label: "Started",
+    i18n_label: "workspace_projects.state.started",
     defaultStateName: "In Progress",
     color: "#f59e0b",
   },
   completed: {
     key: "completed",
     label: "Completed",
+    i18n_label: "workspace_projects.state.completed",
     defaultStateName: "Done",
     color: "#16a34a",
   },
   cancelled: {
     key: "cancelled",
     label: "Canceled",
+    i18n_label: "app_text.state_groups.canceled",
     defaultStateName: "Cancelled",
     color: "#dc2626",
   },

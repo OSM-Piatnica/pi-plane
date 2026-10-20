@@ -172,7 +172,9 @@
       },
       "failed": {
         "message": "Archivácia pracovnej položky zlyhala. Skúste to prosím znova."
-      }
+      },
+      "banner_message": "Táto pracovná položka bola archivovaná. Prejdite do sekcie Archívy a obnovte ju.",
+      "go_to_archives": "Prejsť do archívov"
     },
     "restore": {
       "success": {
@@ -326,6 +328,10 @@
         "title": "Nemožno aktualizovať pracovné položky",
         "message": "Zmena stavu nie je povolená pre niektoré pracovné položky. Uistite sa, že zmena stavu je povolená."
       }
+    },
+    "upgrade_banner": {
+      "message": "Menite stav, prioritu a ďalšie vlastnosti viacerých pracovných položiek naraz. V priemere ušetríte tri minúty na operáciu.",
+      "cta": "Upgradovať na One"
     }
   },
   "recurring_work_items": {
@@ -507,6 +513,413 @@
     "move_to_project_failed": "Presun pracovnej položky do projektu zlyhal. Skúste to prosím znova.",
     "project_work_items_count": "{count, plural, one {V tomto projekte je # pracovná položka} few {V tomto projekte sú # pracovné položky} many {V tomto projekte je # pracovnej položky} other {V tomto projekte je # pracovných položiek}}",
     "archived_banner": "Táto pracovná položka bola archivovaná. Ak ju chcete obnoviť, prejdite do sekcie Archívy.",
-    "go_to_archives": "Prejsť do archívov"
+    "go_to_archives": "Prejsť do archívov",
+    "select_work_item": "Vybrať pracovnú položku",
+    "select_work_items_to_delete": "Vyberte pracovné položky na odstránenie",
+    "delete_selected_work_items": "Odstrániť vybrané pracovné položky",
+    "sub_work_item_progress": "Pokrok podriadených pracovných položiek",
+    "archived_work_items_count": "{count, plural, one {V archíve projektu je # pracovná položka} few {V archíve projektu sú # pracovné položky} many {V archíve projektu je # pracovnej položky} other {V archíve projektu je # pracovných položiek}}",
+    "add_related_work_items": "Pridať súvisiace pracovné položky",
+    "toggle_workspace_level_search": "Prepnúť vyhľadávanie na úrovni pracovného priestoru",
+    "search_results_for_in_project": "Výsledky vyhľadávania pre \"<query/>\" v projekte:",
+    "cannot_move_to_completed_cycle": "Pracovnú položku nie je možné presunúť do dokončených cyklov"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "archivovaná pracovná položka.",
+      "assignee": {
+        "added": "pridaná nová priradená osoba <user/>.",
+        "added_with_issue": "pridaná nová priradená osoba <user/> do <issue/>.",
+        "removed": "odstránená priradená osoba <user/>.",
+        "removed_with_issue": "odstránená priradená osoba <user/> z <issue/>."
+      },
+      "attachment": {
+        "added": "nahratá nová príloha.",
+        "added_with_issue": "nahratá nová príloha do <issue/>.",
+        "removed": "odstránená príloha.",
+        "removed_with_issue": "odstránená príloha z <issue/>."
+      },
+      "created": "vytvorená pracovná položka.",
+      "created_via": "vytvorená pracovná položka cez <source/>.",
+      "cycle": {
+        "added": "táto pracovná položka pridaná do cyklu <cycle/>",
+        "removed": "pracovná položka odstránená z cyklu <cycle/>",
+        "set": "nastavený cyklus na <cycle/>"
+      },
+      "deleted": "odstránená pracovná položka.",
+      "description": {
+        "updated": "aktualizovaný popis.",
+        "updated_with_issue": "aktualizovaný popis položky <issue/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# deň} few {# dni} many {# dňa} other {# dní}}",
+        "removed": "odstránené trvanie.",
+        "removed_with_issue": "odstránené trvanie z <issue/>.",
+        "set": "nastavené trvanie na <value/>.",
+        "set_with_issue": "nastavené trvanie na <value/> pre <issue/>."
+      },
+      "estimate": {
+        "removed": "odstránený bodový odhad <value/>.",
+        "removed_with_issue": "odstránený bodový odhad <value/> z <issue/>.",
+        "set": "nastavený bodový odhad na <value/>.",
+        "set_with_issue": "nastavený bodový odhad na <value/> pre <issue/>."
+      },
+      "intake": {
+        "accepted": "táto pracovná položka prijatá z Intake.",
+        "declined": "táto pracovná položka odmietnutá z Intake.",
+        "duplicate": "táto pracovná položka odmietnutá z Intake označením duplicitnej pracovnej položky.",
+        "snoozed": "táto pracovná položka odložená.",
+        "updated": "aktualizovaný stav pracovnej položky v Intake."
+      },
+      "label": {
+        "added": "pridaný nový štítok <label/>",
+        "added_with_issue": "pridaný nový štítok <label/> do <issue/>",
+        "removed": "odstránený štítok <label/>",
+        "removed_with_issue": "odstránený štítok <label/> z <issue/>"
+      },
+      "link": {
+        "added": "pridaný <link>odkaz</link>.",
+        "added_with_issue": "pridaný <link>odkaz</link> do <issue/>.",
+        "removed": "odstránený tento <link>odkaz</link>.",
+        "removed_with_issue": "odstránený tento <link>odkaz</link> z <issue/>.",
+        "updated": "aktualizovaný <link>odkaz</link>.",
+        "updated_with_issue": "aktualizovaný <link>odkaz</link> v <issue/>."
+      },
+      "module": {
+        "added": "táto pracovná položka pridaná do modulu <module/>",
+        "removed": "pracovná položka odstránená z modulu <module/>",
+        "set": "nastavený modul na <module/>"
+      },
+      "name": {
+        "set": "nastavený názov na {name}."
+      },
+      "parent": {
+        "removed": "odstránená nadradená položka <value/>.",
+        "removed_with_issue": "odstránená nadradená položka <value/> z <issue/>.",
+        "set": "nastavená nadradená položka na <value/>.",
+        "set_with_issue": "nastavená nadradená položka na <value/> pre <issue/>."
+      },
+      "priority": {
+        "set": "nastavená priorita na <value/>.",
+        "set_with_issue": "nastavená priorita na <value/> pre <issue/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "táto pracovná položka označená ako blokovaná položkou <value/>.",
+          "removed": "odstránené blokovanie tejto pracovnej položky pracovnou položkou <value/>."
+        },
+        "blocking": {
+          "added": "táto pracovná položka označená ako blokujúca pracovnú položku <value/>.",
+          "removed": "odstránená blokujúca pracovná položka <value/>."
+        },
+        "duplicate": {
+          "added": "táto pracovná položka označená ako duplikát <value/>.",
+          "removed": "odstránené označenie tejto pracovnej položky ako duplikátu <value/>."
+        },
+        "finish_after": {
+          "added": "označené, že táto pracovná položka končí po <value/>.",
+          "removed": "odstránený vzťah „končí po“ k <value/>."
+        },
+        "finish_before": {
+          "added": "označené, že táto pracovná položka končí pred <value/>.",
+          "removed": "odstránený vzťah „končí pred“ k <value/>."
+        },
+        "relates_to": {
+          "added": "označené, že táto pracovná položka súvisí s <value/>.",
+          "removed": "odstránený vzťah k <value/>."
+        },
+        "start_after": {
+          "added": "označené, že táto pracovná položka začína po <value/>.",
+          "removed": "odstránený vzťah „začína po“ k <value/>."
+        },
+        "start_before": {
+          "added": "označené, že táto pracovná položka začína pred <value/>.",
+          "removed": "odstránený vzťah „začína pred“ k <value/>."
+        }
+      },
+      "restored": "obnovená pracovná položka.",
+      "start_date": {
+        "removed": "odstránený dátum začiatku.",
+        "removed_with_issue": "odstránený dátum začiatku z <issue/>.",
+        "set": "nastavený dátum začiatku na <value/>.",
+        "set_with_issue": "nastavený dátum začiatku na <value/> pre <issue/>."
+      },
+      "state": {
+        "set": "nastavený stav na <value/>.",
+        "set_with_issue": "nastavený stav na <value/> pre <issue/>."
+      },
+      "target_date": {
+        "removed": "odstránený termín.",
+        "removed_with_issue": "odstránený termín z <issue/>.",
+        "set": "nastavený termín na <value/>.",
+        "set_with_issue": "nastavený termín na <value/> pre <issue/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "archivované <issue/>",
+        "restored": "obnovené <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "pridaná nová priradená osoba <assignee/> do <issue/>",
+        "added_without_issue": "pridaná nová priradená osoba <assignee/>",
+        "removed_with_issue": "odstránená priradená osoba <assignee/> z <issue/>",
+        "removed_without_issue": "odstránená priradená osoba <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "nahratá nová príloha do <issue/>",
+        "added_without_issue": "nahratá nová príloha",
+        "removed_with_issue": "odstránená príloha z <issue/>",
+        "removed_without_issue": "odstránená príloha"
+      },
+      "blocked_by": {
+        "added_with_issue": "<issue/> označené ako blokované položkou <value/>.",
+        "added_without_issue": "táto pracovná položka označená ako blokovaná položkou <value/>.",
+        "removed_with_issue": "odstránené blokovanie <issue/> pracovnou položkou <value/>.",
+        "removed_without_issue": "odstránené blokovanie tejto pracovnej položky pracovnou položkou <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "<issue/> označené ako blokujúce pracovnú položku <value/>.",
+        "added_without_issue": "táto pracovná položka označená ako blokujúca pracovnú položku <value/>.",
+        "removed": "odstránená blokujúca pracovná položka <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "<issue/> pridané <nowrap>do cyklu</nowrap> <value/>",
+        "added_without_issue": "táto pracovná položka pridaná <nowrap>do cyklu</nowrap> <value/>",
+        "removed": "<issue/> odstránené z cyklu <value/>",
+        "set": "<nowrap>nastavený cyklus na</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "aktualizovaný popis položky <issue/>",
+        "updated_without_issue": "aktualizovaný popis"
+      },
+      "duplicate": {
+        "added_with_issue": "<issue/> označené ako duplikát <value/>.",
+        "added_without_issue": "táto pracovná položka označená ako duplikát <value/>.",
+        "removed_with_issue": "odstránené označenie <issue/> ako duplikátu <value/>.",
+        "removed_without_issue": "odstránené označenie tejto pracovnej položky ako duplikátu <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# deň} few {# dni} many {# dňa} other {# dní}}",
+        "removed_with_issue": "odstránené trvanie z <issue/>",
+        "removed_without_issue": "odstránené trvanie",
+        "set_with_issue": "nastavené trvanie na <value/> pre <issue/>",
+        "set_without_issue": "nastavené trvanie na <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "<issue/> prevedené na pracovnú položku",
+        "created": "vytvorené <issue/>",
+        "deleted": "odstránené <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "odstránený bodový odhad z <issue/>",
+        "removed_without_issue": "odstránený bodový odhad",
+        "set_with_issue": "nastavený bodový odhad na <value/> pre <issue/>",
+        "set_without_issue": "nastavený bodový odhad na <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "prijatá pracovná položka <issue/>",
+        "accepted_without_issue": "táto pracovná položka prijatá z Intake.",
+        "declined_with_issue": "odmietnutá pracovná položka <issue/>",
+        "declined_without_issue": "táto pracovná položka odmietnutá z Intake.",
+        "duplicate_with_issue": "odmietnutá pracovná položka <issue/> z Intake označením duplicitnej pracovnej položky.",
+        "duplicate_without_issue": "táto pracovná položka odmietnutá z Intake označením duplicitnej pracovnej položky.",
+        "snoozed_with_issue": "odložená pracovná položka <issue/>",
+        "snoozed_without_issue": "táto pracovná položka odložená.",
+        "updated_with_issue": "aktualizovaný stav pracovnej položky v Intake. <issue/>",
+        "updated_without_issue": "aktualizovaný stav pracovnej položky v Intake."
+      },
+      "issue": {
+        "converted_to_epic": "<issue/> prevedené na epiku",
+        "created": "vytvorené <issue/>",
+        "deleted": "odstránené <issue/>",
+        "deleted_tooltip": "Táto pracovná položka bola odstránená",
+        "fallback_name": "pracovná položka"
+      },
+      "label": {
+        "added_with_issue": "pridaný nový štítok <label/> do <issue/>",
+        "added_without_issue": "pridaný nový štítok <label/>",
+        "removed_with_issue": "odstránený štítok <label/> z <issue/>",
+        "removed_without_issue": "odstránený štítok <label/>"
+      },
+      "link": {
+        "added_with_issue": "pridaný tento <link>odkaz</link> do <issue/>",
+        "added_without_issue": "pridaný tento <link>odkaz</link>",
+        "removed_with_issue": "odstránený tento <link>odkaz</link> z <issue/>",
+        "removed_without_issue": "odstránený tento <link>odkaz</link>",
+        "updated_with_issue": "aktualizovaný <link>odkaz</link> v <issue/>",
+        "updated_without_issue": "aktualizovaný <link>odkaz</link>"
+      },
+      "module": {
+        "added_with_issue": "<issue/> pridané do modulu <value/>",
+        "added_without_issue": "táto pracovná položka pridaná do modulu <value/>",
+        "removed": "<issue/> odstránené z modulu <value/>",
+        "set": "nastavený modul na <value/>"
+      },
+      "name": {
+        "set_with_issue": "nastavený názov položky <issue/> na <value/>",
+        "set_without_issue": "nastavený názov na <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "odstránená nadradená položka <value/> z <issue/>",
+        "removed_without_issue": "odstránená nadradená položka <value/>",
+        "set_with_issue": "nastavená nadradená položka na <value/> pre <issue/>",
+        "set_without_issue": "nastavená nadradená položka na <value/>"
+      },
+      "priority": {
+        "high": "Vysoká",
+        "low": "Nízka",
+        "medium": "Stredná",
+        "none": "Žiadna",
+        "set_with_issue": "nastavená priorita na <value/> pre <issue/>",
+        "set_without_issue": "nastavená priorita na <value/>",
+        "urgent": "Naliehavá"
+      },
+      "relates_to": {
+        "added_with_issue": "označené, že <issue/> súvisí s <value/>.",
+        "added_without_issue": "označené, že táto pracovná položka súvisí s <value/>.",
+        "removed": "odstránený vzťah k <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "odstránený dátum začiatku z <issue/>",
+        "removed_without_issue": "odstránený dátum začiatku",
+        "set_with_issue": "nastavený dátum začiatku na <value/> pre <issue/>",
+        "set_without_issue": "nastavený dátum začiatku na <value/>"
+      },
+      "state": {
+        "set_with_issue": "nastavený stav na <value/> pre <issue/>",
+        "set_without_issue": "nastavený stav na <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "odstránený termín z <issue/>",
+        "removed_without_issue": "odstránený termín",
+        "set_with_issue": "nastavený termín na <value/> pre <issue/>",
+        "set_without_issue": "nastavený termín na <value/>"
+      },
+      "actor_separator": " ",
+      "commented_ago": "Komentované {timeAgo}"
+    },
+    "project": {
+      "archived_at": {
+        "archived": "archivovaný projekt",
+        "restored": "obnovený projekt"
+      },
+      "cycle_view": {
+        "disabled": "vypnuté zobrazenie cyklov",
+        "enabled": "zapnuté zobrazenie cyklov",
+        "fallback": "aktualizované zobrazenie cyklov"
+      },
+      "cycles": {
+        "added": "tento projekt pridaný do cyklu <value/>",
+        "removed": "tento projekt odstránený z cyklu <value/>",
+        "unknown": "Neznámy cyklus"
+      },
+      "default": "aktualizované nastavenia projektu",
+      "description": {
+        "removed": "odstránený popis projektu",
+        "updated": "aktualizovaný popis projektu"
+      },
+      "estimate": {
+        "removed": "odstránený bodový odhad",
+        "removed_with_value": "odstránený bodový odhad <value/>",
+        "set": "nastavený bodový odhad na <value/>"
+      },
+      "identifier": {
+        "updated": "aktualizovaný identifikátor projektu na <value/>"
+      },
+      "inbox": {
+        "disabled": "vypnutá doručená pošta",
+        "enabled": "zapnutá doručená pošta"
+      },
+      "intake_view": {
+        "disabled": "vypnuté zobrazenie Intake",
+        "enabled": "zapnuté zobrazenie Intake",
+        "fallback": "aktualizované zobrazenie Intake"
+      },
+      "is_epic_enabled": {
+        "disabled": "vypnuté epiky",
+        "enabled": "zapnuté epiky",
+        "fallback": "aktualizované epiky"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "vypnuté typy pracovných položiek",
+        "enabled": "zapnuté typy pracovných položiek",
+        "fallback": "aktualizované typy pracovných položiek"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "vypnuté aktualizácie projektu",
+        "enabled": "zapnuté aktualizácie projektu",
+        "fallback": "aktualizované aktualizácie projektu"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "vypnuté sledovanie času",
+        "enabled": "zapnuté sledovanie času",
+        "fallback": "aktualizované sledovanie času"
+      },
+      "is_workflow_enabled": {
+        "disabled": "vypnutý vlastný pracovný postup",
+        "enabled": "zapnutý vlastný pracovný postup",
+        "fallback": "aktualizovaný vlastný pracovný postup"
+      },
+      "issue_views_view": {
+        "disabled": "vypnuté zobrazenie pohľadov pracovných položiek",
+        "enabled": "zapnuté zobrazenie pohľadov pracovných položiek",
+        "fallback": "aktualizované zobrazenie pohľadov pracovných položiek"
+      },
+      "labels": {
+        "added": "pridaný štítok <value/>",
+        "created": "vytvorený štítok <value/>",
+        "deleted": "vymazaný štítok <value/>",
+        "removed": "odstránený štítok <value/>",
+        "untitled": "Štítok bez názvu",
+        "updated": "aktualizovaný štítok <value/>"
+      },
+      "module_view": {
+        "disabled": "vypnuté zobrazenie modulov",
+        "enabled": "zapnuté zobrazenie modulov",
+        "fallback": "aktualizované zobrazenie modulov"
+      },
+      "modules": {
+        "added": "tento projekt pridaný do modulu <value/>",
+        "removed": "tento projekt odstránený z modulu <value/>",
+        "unknown": "Neznámy modul"
+      },
+      "name": {
+        "renamed": "projekt premenovaný na <value/>"
+      },
+      "network": {
+        "disabled": "vypnutý sieťový prístup",
+        "enabled": "zapnutý sieťový prístup"
+      },
+      "page": {
+        "created": "vytvorená stránka projektu <value/>",
+        "removed": "odstránená stránka projektu <value/>",
+        "untitled": "Stránka bez názvu"
+      },
+      "page_view": {
+        "disabled": "vypnuté zobrazenie stránok",
+        "enabled": "zapnuté zobrazenie stránok",
+        "fallback": "aktualizované zobrazenie stránok"
+      },
+      "priority": {
+        "set": "nastavená priorita na <value/>"
+      },
+      "start_date": {
+        "removed": "odstránený dátum začiatku",
+        "set": "nastavený dátum začiatku na <value/>"
+      },
+      "state": {
+        "set": "nastavený stav na <value/>"
+      },
+      "target_date": {
+        "removed": "odstránený cieľový dátum",
+        "set": "nastavený cieľový dátum na <value/>"
+      },
+      "timezone": {
+        "changed": "zmenené časové pásmo projektu na <value/>",
+        "default": "predvolené"
+      },
+      "value_none": "žiadne"
+    }
   }
 }

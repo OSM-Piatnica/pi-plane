@@ -1,0 +1,73 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+import { useTranslation } from "@plane/i18n";
+
+import { useState } from "react";
+import { CloseCircleOutline } from "@makeplane/propel/icons";
+// plane imports
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+import type { IApiToken } from "@plane/types";
+// components
+import { DeleteApiTokenModal } from "@/components/api-token/delete-token-modal";
+// hooks
+import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
+
+type Props = {
+  token: IApiToken;
+};
+
+export function ApiTokenListItem(props: Props) {
+  const { t } = useTranslation();
+  const { formatDate, formatTime, timeAgo } = useLocalizedDates();
+  const { token } = props;
+  // states
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  // hooks
+  const { isMobile } = usePlatformOS();
+
+  return (
+    <>
+      <DeleteApiTokenModal isOpen={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} tokenId={token.id} />
+      <div className="group relative flex flex-col justify-center border-b border-subtle py-3">
+        <Tooltip label={t("app_text.api_tokens.delete_token")} disabled={isMobile}>
+          <button
+            onClick={() => setDeleteModalOpen(true)}
+            className="absolute right-4 hidden place-items-center group-hover:grid"
+          >
+            <CloseCircleOutline className="h-4 w-4 text-danger-primary" />
+          </button>
+        </Tooltip>
+        <div className="flex w-4/5 items-center">
+          <h5 className="truncate text-13 font-medium">{token.label}</h5>
+          <span
+            className={`${
+              token.is_active ? "bg-success-subtle text-success-primary" : "bg-layer-1 text-placeholder"
+            } ml-2 flex h-4 max-h-fit items-center rounded-xs px-2 text-11 font-medium`}
+          >
+            {token.is_active ? t("common.active") : t("date_phrases.expired")}
+          </span>
+        </div>
+        <div className="mt-1 flex w-full flex-col justify-center">
+          {token.description.trim() !== "" && (
+            <p className="mb-1 max-w-[70%] text-13 break-words">{token.description}</p>
+          )}
+          <p className="mb-1 text-11 leading-6 text-placeholder">
+            {token.is_active
+              ? token.expired_at
+                ? t("date_phrases.expires_at", {
+                    date: formatDate(token.expired_at),
+                    time: formatTime(token.expired_at),
+                  })
+                : t("date_phrases.never_expires")
+              : t("date_phrases.expired_ago", { timeAgo: timeAgo(token.expired_at) })}
+          </p>
+        </div>
+      </div>
+    </>
+  );
+}

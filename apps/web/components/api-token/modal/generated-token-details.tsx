@@ -1,0 +1,84 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useTranslation } from "@plane/i18n";
+import { Button } from "@makeplane/propel/components/button";
+import { CopyOutline } from "@makeplane/propel/icons";
+import { setToast } from "@plane/blocks/toast";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+import type { IApiToken } from "@plane/types";
+import {
+  DialogActions,
+  DialogBody,
+  DialogDescription,
+  DialogHeader,
+  DialogHeading,
+  DialogInfo,
+  DialogMain,
+  DialogTitle,
+} from "@makeplane/propel/components/dialog";
+import { copyTextToClipboard } from "@plane/utils";
+// hooks
+import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
+
+type Props = {
+  handleClose: () => void;
+  tokenDetails: IApiToken;
+};
+
+export function GeneratedTokenDetails(props: Props) {
+  const { handleClose, tokenDetails } = props;
+  const { isMobile } = usePlatformOS();
+  const { t } = useTranslation();
+  const { formatDate, formatTime } = useLocalizedDates();
+  const copyApiToken = (token: string) => {
+    copyTextToClipboard(token).then(() =>
+      setToast({
+        type: "success",
+        title: `${t("success")}!`,
+        message: t("workspace_settings.token_copied"),
+      })
+    );
+  };
+
+  return (
+    <>
+      <DialogMain>
+        <DialogHeader>
+          <DialogHeading>
+            <DialogTitle>{t("workspace_settings.key_created")}</DialogTitle>
+            <DialogDescription>{t("workspace_settings.copy_key")}</DialogDescription>
+          </DialogHeading>
+        </DialogHeader>
+        <DialogBody>
+          <button
+            type="button"
+            onClick={() => copyApiToken(tokenDetails.token ?? "")}
+            className="flex w-full items-center justify-between truncate rounded-md border-[0.5px] border-subtle px-3 py-2 text-13 font-medium outline-none"
+          >
+            <span className="truncate pr-2">{tokenDetails.token}</span>
+            <Tooltip label={t("project_components.webhooks.copy_secret_key")} disabled={isMobile}>
+              <CopyOutline className="h-4 w-4 flex-shrink-0 text-placeholder" />
+            </Tooltip>
+          </button>
+        </DialogBody>
+      </DialogMain>
+      <DialogActions>
+        <DialogInfo>
+          {tokenDetails.expired_at
+            ? t("date_phrases.expires_at", {
+                date: formatDate(tokenDetails.expired_at),
+                time: formatTime(tokenDetails.expired_at),
+              })
+            : t("date_phrases.never_expires")}
+        </DialogInfo>
+        <Button variant="secondary" size="sm" stretch="auto" label={t("close")} onClick={handleClose} />
+      </DialogActions>
+    </>
+  );
+}

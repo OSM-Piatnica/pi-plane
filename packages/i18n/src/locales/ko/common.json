@@ -8,6 +8,7 @@
   "submit": "제출",
   "cancel": "취소",
   "loading": "로딩 중",
+  "searching": "검색 중...",
   "error": "오류",
   "success": "성공",
   "warning": "경고",
@@ -128,8 +129,8 @@
   "10000_feet_view_description": "모든 프로젝트의 주기를 한 번에 확인할 수 있습니다.",
   "get_snapshot_of_each_active_cycle": "각 활성 주기의 스냅샷을 얻으세요.",
   "get_snapshot_of_each_active_cycle_description": "모든 활성 주기의 고수준 메트릭을 추적하고, 진행 상태를 확인하며, 마감일에 대한 범위를 파악합니다.",
-  "compare_burndowns": "버다운 비교",
-  "compare_burndowns_description": "각 팀의 성과를 모니터링하고 각 주기의 버다운 보고서를 확인합니다.",
+  "compare_burndowns": "번다운 비교",
+  "compare_burndowns_description": "각 팀의 성과를 모니터링하고 각 주기의 번다운 보고서를 확인합니다.",
   "quickly_see_make_or_break_issues": "빠르게 중요한 작업 항목을 확인하세요.",
   "quickly_see_make_or_break_issues_description": "각 주기의 고우선 작업 항목을 미리 보고 마감일에 대한 모든 작업 항목을 한 번에 확인합니다.",
   "zoom_into_cycles_that_need_attention": "주의가 필요한 주기를 확대하세요.",
@@ -304,6 +305,9 @@
   "create_new_label": "새 레이블 생성",
   "label_name": "레이블 이름",
   "failed_to_create_label": "레이블 생성에 실패했습니다. 다시 시도해 주세요.",
+  "no_matching_labels": "일치하는 레이블 없음",
+  "adding_label": "\"{name}\" 추가 중",
+  "add_label_to_labels": "\"{name}\"을(를) 레이블에 추가",
   "start_date": "시작 날짜",
   "end_date": "종료 날짜",
   "due_date": "마감일",
@@ -325,6 +329,18 @@
   "deleting": "삭제 중",
   "make_a_copy": "복사본 만들기",
   "move_to_project": "프로젝트로 이동",
+  "default_state_names": {
+    "backlog": "백로그",
+    "todo": "할 일",
+    "in_progress": "진행 중",
+    "done": "완료",
+    "cancelled": "취소됨",
+    "triage": "분류"
+  },
+  "filter_headings": {
+    "access": "접근 권한",
+    "owned_by": "소유자"
+  },
   "good": "좋은",
   "morning": "아침",
   "afternoon": "오후",
@@ -526,6 +542,7 @@
       "updated_on": "업데이트일"
     },
     "sort": {
+      "label": "정렬",
       "asc": "오름차순",
       "desc": "내림차순",
       "created_on": "생성일",
@@ -598,6 +615,13 @@
       "label": "검색",
       "placeholder": "검색어 입력",
       "no_matches_found": "일치하는 항목 없음",
+      "cycles": "주기 검색...",
+      "estimates": "추정 검색...",
+      "labels": "레이블 검색...",
+      "members": "멤버 검색...",
+      "modules": "모듈 검색...",
+      "projects": "프로젝트 검색...",
+      "states": "상태 검색...",
       "no_matching_results": "일치하는 결과 없음",
       "min_chars": "검색하려면 최소 {count}자를 입력하세요",
       "error": "검색 결과를 가져오는 중 오류 발생",
@@ -625,7 +649,8 @@
       "enable": "활성화",
       "disable": "비활성화",
       "copy_markdown": "마크다운 복사",
-      "reply": "답글"
+      "reply": "답글",
+      "add_reaction": "반응 추가"
     },
     "name": "이름",
     "discard": "폐기",
@@ -705,6 +730,8 @@
     "applying": "적용 중",
     "overview": "오버뷰",
     "no_of": "{entity} 수",
+    "no_of_work_items": "작업 항목 수",
+    "no_of_epics": "에픽스 수",
     "resolved": "해결됨",
     "get_started": "시작하기",
     "worklogs": "워크로그",
@@ -826,7 +853,7 @@
     "edited_by": "편집자"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane이 시작되지 않았습니다. 이는 하나 이상의 Plane 서비스가 시작에 실패했기 때문일 수 있습니다.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane이 시작되지 않았습니다. 이는 하나 이상의 Pi-Plane 서비스가 시작에 실패했기 때문일 수 있습니다.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "확실히 하려면 setup.sh와 Docker 로그에서 View Logs를 선택하세요."
   },
   "customize_navigation": "내비게이션 사용자 지정",
@@ -874,6 +901,7 @@
       "short_description": "JSON으로 내보내기"
     }
   },
+  "labels_count": "{count, plural, one {레이블 #개} other {레이블 #개}}",
   "onboarding": {
     "skip": "건너뛰기",
     "profile": {
@@ -893,7 +921,7 @@
       "new_password_placeholder": "새 비밀번호...",
       "role_question": "어떤 역할로 일하고 계신가요? 하나를 선택하세요.",
       "domain_question": "전문 분야는 무엇인가요? 하나 이상 선택하세요.",
-      "marketing_consent": "Plane 마케팅 커뮤니케이션 수신에 동의합니다",
+      "marketing_consent": "Pi-Plane 마케팅 커뮤니케이션 수신에 동의합니다",
       "passwords_do_not_match": "비밀번호가 일치하지 않습니다",
       "passwords_match": "비밀번호가 일치합니다",
       "seniority_levels": {
@@ -1002,5 +1030,451 @@
     "syncing_description": "변경 사항을 서버와 동기화하고 있습니다. 계속 편집할 수 있습니다.",
     "connection_lost": "연결이 끊어졌습니다",
     "connection_lost_description": "웹소켓 서버에 연결하는 데 문제가 있습니다. 변경 사항은 10초마다 동기화되어 저장됩니다."
+  },
+  "emoji_icon_picker": {
+    "emoji": "이모지",
+    "icon": "아이콘",
+    "contrast_notice": "충분한 대비를 위해 색상이 조정됩니다."
+  },
+  "date_phrases": {
+    "added_ago": "{timeAgo} 추가됨",
+    "expired": "만료됨",
+    "expired_ago": "{timeAgo} 만료됨",
+    "expires_at": "{date} {time}에 만료",
+    "never_expires": "만료되지 않음",
+    "date_at_time": "{date} {time}",
+    "till": "{date}, {time}까지",
+    "after_date": "{date} 이후",
+    "before_date": "{date} 이전",
+    "month_week": "{month} {week}주차",
+    "target_date": "목표 날짜: {date}",
+    "from_date": "{date}부터",
+    "till_date": "{date}까지",
+    "date_to_date": "{start} ~ {end}",
+    "archived_at": "{date}에 보관됨",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "{name}님이 {date}에 업로드함",
+    "date_range": "{start} - {end}",
+    "expiry": "만료"
+  },
+  "a11y": {
+    "toggle_details": "세부 정보 전환",
+    "workflow_flow_type": "흐름 유형",
+    "workflow_target_state": "대상 상태",
+    "workflow_reject_state": "거부 상태"
+  },
+  "api_token_expiry": {
+    "one_week": "1주",
+    "one_month": "1개월",
+    "three_months": "3개월",
+    "one_year": "1년",
+    "custom_date": "사용자 지정 날짜",
+    "set_expiration_date": "만료 날짜 설정"
+  },
+  "profile_sidebar": {
+    "due": "마감"
+  },
+  "progress_chart": {
+    "current": "현재 {title}",
+    "ideal": "이상적인 {title}"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "업로드할 이미지를 여기에 놓으세요",
+      "drag_and_drop": "이미지를 여기로 끌어다 놓으세요",
+      "size_exceeded": "이미지 크기는 5 MB를 초과할 수 없습니다.",
+      "invalid_format": "올바른 형식의 파일을 업로드하세요.",
+      "formats_supported": "지원되는 파일 형식: .jpeg, .jpg, .png, .webp",
+      "uploading": "업로드 중",
+      "upload_and_save": "업로드 및 저장",
+      "title": "이미지 업로드",
+      "select_image": "이미지 선택",
+      "select_image_named": "이미지 선택: {description}",
+      "select_cover_image": "커버 이미지 {index} 선택",
+      "no_images": "이미지를 찾을 수 없습니다."
+    },
+    "ai_assistant": {
+      "rate_limit": "사용자당 월 최대 50건의 요청 한도에 도달했습니다.",
+      "use_response": "이 응답 사용",
+      "generating_response": "응답 생성 중...",
+      "generate_response": "응답 생성",
+      "generate_again": "다시 생성",
+      "content_label": "콘텐츠:",
+      "response_label": "응답:",
+      "no_response": "응답을 생성할 수 없습니다. 콘텐츠 또는 작업 정보가 부족했을 수 있습니다. 다시 시도하세요.",
+      "placeholder_with_content": "이 콘텐츠에 수행할 작업을 AI에게 알려 주세요...",
+      "placeholder_empty": "AI에게 무엇이든 물어보세요...",
+      "consent": "이 기능을 사용하면 메시지를 타사 서비스와 공유하는 것에 동의하게 됩니다."
+    },
+    "multiple_select": {
+      "select_all_in_group": "그룹 내 전체 선택"
+    },
+    "theme": {
+      "download_config": "구성 다운로드",
+      "import_config": "구성 가져오기",
+      "import_failed": "테마 구성을 가져오지 못했습니다",
+      "missing_fields": "필수 필드가 없습니다: primary 및 background",
+      "invalid_brand_hex": "브랜드 색상의 16진수 형식이 올바르지 않습니다",
+      "invalid_neutral_hex": "중립 색상의 16진수 형식이 올바르지 않습니다",
+      "invalid_mode": "테마 모드가 올바르지 않습니다. 불리언 값이어야 합니다",
+      "choose_color_mode": "색상 모드 선택",
+      "light_mode": "라이트 모드",
+      "dark_mode": "다크 모드"
+    },
+    "workspace": {
+      "delete_warning": "작업 공간 <name/>을(를) 삭제하려고 합니다. 확인하면 이 작업 공간의 모든 작업 데이터에 대한 접근 권한을 잃게 되며 복원할 수 없습니다. 매우 신중하게 진행하세요.",
+      "delete_type_name": "계속하려면 이 작업 공간의 이름을 입력하세요.",
+      "delete_final_confirmation": "최종 확인을 위해 아래에 <phrase/>을(를) 입력하세요."
+    },
+    "workspace_settings": {
+      "invitation_removed": "초대가 제거되었습니다.",
+      "workspace_updated": "작업 공간이 업데이트되었습니다",
+      "picture_removed": "작업 공간 사진이 제거되었습니다.",
+      "picture_remove_failed": "프로필 사진을 삭제하는 중 오류가 발생했습니다. 다시 시도하세요.",
+      "url_copied": "작업 공간 URL이 클립보드에 복사되었습니다."
+    },
+    "workspace_views": {
+      "delete_failed": "보기를 삭제하지 못했습니다. 다시 시도하세요.",
+      "create_failed": "보기를 생성할 수 없습니다. 다시 시도하세요.",
+      "updated": "보기가 업데이트되었습니다.",
+      "update_failed": "보기를 업데이트할 수 없습니다. 다시 시도하세요.",
+      "edit_view": "보기 편집",
+      "delete_view": "보기 삭제"
+    },
+    "sticky_colors": {
+      "gray": "회색",
+      "peach": "복숭아색",
+      "pink": "분홍색",
+      "orange": "주황색",
+      "green": "녹색",
+      "light_blue": "연한 파란색",
+      "dark_blue": "진한 파란색",
+      "purple": "보라색"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "모든 차원에서 작업하세요.",
+      "welcome_back": "Plane에 다시 오신 것을 환영합니다.",
+      "create_your_account": "Pi-Plane 계정을 만드세요."
+    },
+    "auth_root": {
+      "no_auth_methods_title": "사용 가능한 인증 방법이 없습니다",
+      "no_auth_methods_description": "인스턴스의 인증을 활성화하려면 관리자에게 문의하세요."
+    },
+    "auth_password": {
+      "create_account": "계정 만들기"
+    },
+    "terms": {
+      "agree_sign_up": "계정을 만들면 \n<terms>서비스 약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하는 것으로 간주됩니다.",
+      "agree_sign_in": "로그인하면 \n<terms>서비스 약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하는 것으로 간주됩니다."
+    },
+    "auth_screens": {
+      "sign_up": "가입",
+      "sign_in": "로그인",
+      "join_teams": "Pi-Plane으로 더 높은 성과를 내는 팀에 참여하세요",
+      "not_authorized_view_title": "이 페이지를 볼 권한이 없습니다",
+      "not_authorized": "권한이 없습니다",
+      "not_a_member_description": "이 작업 공간의 구성원이 아닙니다. 작업 공간 관리자에게 초대를 요청하거나 대기 중인 초대를 확인하세요.",
+      "check_pending_invites": "대기 중인 초대 확인"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "작업 공간을 찾을 수 없습니다",
+      "workspace_not_found_description": "해당 URL의 작업 공간을 찾을 수 없습니다. 존재하지 않거나 볼 권한이 없을 수 있습니다.",
+      "visit_profile": "프로필 보기"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "설정 메뉴 전환",
+      "back_to_project": "프로젝트로 돌아가기",
+      "toggle_project_feature": "프로젝트 기능 전환"
+    },
+    "headers": {
+      "toggle_sidebar": "사이드바 전환"
+    },
+    "profile_activity": {
+      "page_title": "프로필 - 활동"
+    },
+    "webhooks": {
+      "updated_successfully": "웹훅이 업데이트되었습니다.",
+      "not_authorized": "이 페이지에 접근할 권한이 없습니다.",
+      "enable_webhook": "웹훅 활성화",
+      "toggle_webhook": "웹훅 전환"
+    },
+    "project_settings_empty": {
+      "title": "아직 프로젝트가 없습니다",
+      "description": "프로젝트는 목표 중심 작업의 기반입니다. 팀, 작업 및 업무 완수에 필요한 모든 것을 관리할 수 있습니다.",
+      "learn_more": "프로젝트에 대해 자세히 알아보기"
+    },
+    "project_templates": {
+      "imported_template": "가져온 템플릿",
+      "pick_color": "색상 선택"
+    },
+    "not_found": {
+      "image_alt": "404 - 페이지를 찾을 수 없음",
+      "title": "문제가 발생했습니다.",
+      "description": "찾으시는 페이지를 찾을 수 없습니다. 삭제되었거나 이름이 변경되었거나 일시적으로 사용할 수 없을 수 있습니다.",
+      "go_to_home": "홈으로 이동"
+    },
+    "api_tokens": {
+      "empty_title": "API 토큰 없음",
+      "empty_description": "API 토큰을 만들어 외부 앱과 안전하고 쉽게 데이터를 공유하고, 제어권과 보안을 유지하세요.",
+      "add_token": "토큰 추가",
+      "delete_token": "토큰 삭제"
+    },
+    "base_layouts": {
+      "gantt": "간트 레이아웃"
+    },
+    "command_palette": {
+      "no_states_found": "상태를 찾을 수 없습니다"
+    },
+    "quick_actions": {
+      "archive_module_hint": "완료되거나 취소된 모듈만 아카이브할 수 있습니다"
+    },
+    "progress": {
+      "cycle_progress": "사이클 진행률"
+    },
+    "estimates": {
+      "delete_title": "추정 시스템 삭제",
+      "delete_description": "추정 시스템 <name/> 을(를) 삭제하면 모든 작업 항목에서 영구적으로 제거됩니다. 이 작업은 취소할 수 없습니다. 추정을 다시 추가하면 모든 작업 항목을 업데이트해야 합니다.",
+      "deleting": "삭제 중",
+      "delete_estimate": "추정 삭제",
+      "toggle_estimates": "추정 전환",
+      "estimates_list": "추정 목록",
+      "archived_title": "아카이브된 추정",
+      "archived_description": "추정에 변경 사항이 있었습니다. 이전 버전에서 사용하지 않던 추정입니다. 자세한 내용은 <link>여기</link>를 참조하세요."
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "차단됨 종속성 생성",
+      "create_blocking_dependency": "차단 종속성 생성",
+      "update_block_dates_failed": "블록 날짜를 업데이트하는 중 문제가 발생했습니다"
+    },
+    "product_updates": {
+      "fetch_failed": "업데이트를 가져오는 데 문제가 있습니다. 최신 업데이트는 변경 로그에서 확인하세요.",
+      "go_to_changelog": "변경 로그로 이동"
+    },
+    "inbox": {
+      "intake_form_user": "Intake 양식 사용자",
+      "status": "상태",
+      "created_by": "생성자"
+    },
+    "instance": {
+      "contact_support": "지원팀에 문의",
+      "maintenance_title": "🚧 Plane이 제대로 시작되지 않은 것 같습니다.",
+      "maintenance_description": "일부 서비스가 시작되지 못했을 수 있습니다. 컨테이너 로그를 확인하여 문제를 파악하고 해결하세요. 해결되지 않으면 지원팀에 문의하세요.",
+      "welcome_title": "Plane에 오신 것을 환영합니다",
+      "welcome_description": "인스턴스를 설정하고 첫 번째 작업 공간을 만들어 프로젝트와 작업 관리를 시작하세요."
+    },
+    "integrations": {
+      "github_installed": "특정 리포지토리와 동기화하려면 개별 프로젝트에서 GitHub를 활성화하세요.",
+      "github_not_installed": "프로젝트 작업 항목을 동기화하려면 GitHub를 Pi-Plane 작업 공간에 연결하세요.",
+      "slack_installed": "특정 채널과 동기화하려면 개별 프로젝트에서 Slack을 활성화하세요.",
+      "slack_not_installed": "프로젝트 작업 항목을 동기화하려면 Slack을 Pi-Plane 작업 공간에 연결하세요.",
+      "deleted_title": "삭제되었습니다.",
+      "deleted_message": "{title} 통합이 삭제되었습니다.",
+      "delete_failed_message": "{title} 통합을 삭제할 수 없습니다. 다시 시도하세요.",
+      "logo_alt": "{title} 로고",
+      "loading": "로드 중...",
+      "no_permission": "이 작업을 수행할 권한이 없습니다",
+      "uninstalling": "제거 중...",
+      "uninstall": "제거",
+      "installing": "설치 중...",
+      "install": "설치"
+    },
+    "attachments": {
+      "upload_progress": "업로드 진행률"
+    },
+    "labels": {
+      "delete_confirmation": "<name/>을(를) 삭제하시겠습니까? 모든 작업 항목과 이 레이블로 필터링하는 모든 보기에서 레이블이 제거됩니다.",
+      "edit_label": "레이블 편집",
+      "delete_label": "레이블 삭제",
+      "remove_from_group": "그룹에서 제거"
+    },
+    "modules": {
+      "module_progress": "모듈 진행률"
+    },
+    "navigation": {
+      "icon_only": "아이콘만",
+      "icon_with_name": "아이콘과 이름",
+      "dock_app_rail": "앱 레일 고정",
+      "undock_app_rail": "앱 레일 고정 해제",
+      "minimum_value_is_one": "최솟값은 1입니다",
+      "show": "표시",
+      "clear_default": "기본값 해제",
+      "hide_in_more_menu": "더 보기 메뉴에서 숨기기",
+      "project_link_copied": "프로젝트 링크가 클립보드에 복사되었습니다.",
+      "copy_failed": "복사 실패",
+      "copy_failed_message": "링크를 복사할 수 없습니다. 다시 시도하세요.",
+      "default_tab_updated": "기본 탭이 업데이트되었습니다.",
+      "default_tab_update_failed": "기본 탭을 업데이트하지 못했습니다. 나중에 다시 시도하세요.",
+      "hide_tab_failed": "탭을 숨기지 못했습니다. 나중에 다시 시도하세요.",
+      "generic_error": "문제가 발생했습니다. 나중에 다시 시도하세요."
+    },
+    "onboarding": {
+      "select_workspace_invitation": "작업 공간 초대 선택"
+    },
+    "tour": {
+      "work_items_title": "작업 항목으로 계획하기",
+      "work_items_description": "작업 항목은 Plane의 기본 구성 요소입니다. Plane의 대부분의 개념은 작업 항목 및 그 속성과 연결되어 있습니다.",
+      "cycles_title": "사이클로 앞서 나가기",
+      "cycles_description": "사이클은 애자일 개발에서 흔히 쓰는 스프린트처럼 여러분과 팀이 더 빠르게 진행하도록 도와줍니다.",
+      "modules_title": "모듈로 나누기",
+      "modules_description": "모듈은 큰 목표를 프로젝트나 기능으로 나누어 더 잘 정리할 수 있게 해 줍니다.",
+      "views_description": "사용자 지정 필터를 만들어 중요한 작업 항목만 표시하세요. 몇 번의 클릭만으로 필터를 저장하고 공유할 수 있습니다.",
+      "pages_title": "페이지로 문서화하기",
+      "pages_description": "회의 중이나 하루를 시작할 때 페이지를 사용해 작업 항목을 빠르게 적어 두세요.",
+      "welcome_title": "Plane에 오신 것을 환영합니다, {lastName}{firstName}님",
+      "welcome_description": "Plane을 사용해 보시기로 해 주셔서 기쁩니다. 이제 프로젝트를 쉽게 관리할 수 있습니다. 프로젝트를 만들어 시작해 보세요.",
+      "take_tour": "제품 둘러보기",
+      "skip": "괜찮습니다, 직접 둘러볼게요",
+      "create_first_project": "첫 번째 프로젝트 만들기",
+      "sidebar_heading": "시작해 볼까요!<br/>Plane을 더 활용해 보세요."
+    },
+    "ai": {
+      "ask_pi": "Pi에게 질문",
+      "tone_professional": "💼 전문적",
+      "tone_casual": "😃 캐주얼",
+      "third_party_consent": "이 기능을 사용하면 메시지를 타사 서비스와 공유하는 것에 동의하게 됩니다.",
+      "pi_writing": "Pi가 작성 중입니다",
+      "pi_generating_response": "Pi가 응답을 생성하고 있습니다"
+    },
+    "pages": {
+      "icon": "아이콘",
+      "color": "색상",
+      "remove_text_color": "텍스트 색상 제거",
+      "remove_background_color": "배경색 제거",
+      "formatting_toolbar": "서식 도구 모음",
+      "copied_link": "링크가 복사되었습니다",
+      "remove_favorite": "즐겨찾기 제거",
+      "export_markdown": "Markdown",
+      "page_size_letter": "레터",
+      "page_size_legal": "리걸",
+      "page_size_tabloid": "타블로이드"
+    },
+    "activity": {
+      "bot_name": "{name} 봇"
+    },
+    "project": {
+      "identifier": "식별자"
+    },
+    "projects": {
+      "toggle_feature": "프로젝트 기능 전환",
+      "cover_upload_failed": "커버 이미지를 업로드하지 못했습니다"
+    },
+    "notifications": {
+      "notification_options": "알림 옵션"
+    },
+    "stores": {
+      "generic_error": "오류가 발생했습니다",
+      "inbox_fetch_error": "Intake 작업 항목을 가져오는 중 오류가 발생했습니다. 나중에 다시 시도하세요.",
+      "page_make_public_error": "페이지를 공개로 전환할 수 없습니다. 나중에 다시 시도하세요.",
+      "page_make_private_error": "페이지를 비공개로 전환할 수 없습니다. 나중에 다시 시도하세요.",
+      "workflow_pending_approval": "작업 항목에 대기 중인 승인이 있습니다.",
+      "workflow_transition_not_allowed": "이 상태 전환은 워크플로에서 허용되지 않습니다."
+    },
+    "validation": {
+      "name_max_length": "이름은 50자 이하여야 합니다",
+      "name_special_chars": "이름에는 {chars} 같은 특수 문자를 사용할 수 없습니다",
+      "name_invalid_chars": "이름에는 문자, 공백, 하이픈, 아포스트로피만 사용할 수 있습니다",
+      "display_name_max_length": "표시 이름은 50자 이하여야 합니다",
+      "display_name_special_chars": "표시 이름에는 {chars} 같은 특수 문자를 사용할 수 없습니다",
+      "display_name_invalid_chars": "표시 이름에는 문자, 숫자, 마침표, 하이픈, 밑줄만 사용할 수 있습니다",
+      "company_name_max_length": "회사 이름은 80자 이하여야 합니다",
+      "company_name_special_chars": "회사 이름에는 {chars} 같은 특수 문자를 사용할 수 없습니다",
+      "company_name_invalid_chars": "회사 이름에는 문자, 숫자, 공백, 하이픈, 밑줄만 사용할 수 있습니다",
+      "company_name_needs_alphanumeric": "회사 이름에는 문자 또는 숫자가 하나 이상 포함되어야 합니다",
+      "workspace_name_required": "작업 공간 이름은 필수입니다",
+      "workspace_name_max_length": "작업 공간 이름은 80자 이하여야 합니다",
+      "workspace_name_special_chars": "작업 공간 이름에는 {chars} 같은 특수 문자를 사용할 수 없습니다",
+      "workspace_name_invalid_chars": "작업 공간 이름에는 문자, 숫자, 공백, 하이픈, 밑줄만 사용할 수 있습니다",
+      "workspace_name_needs_alphanumeric": "작업 공간 이름에는 문자 또는 숫자가 하나 이상 포함되어야 합니다",
+      "slug_required": "슬러그는 필수입니다",
+      "slug_max_length": "슬러그는 48자 이하여야 합니다",
+      "slug_special_chars": "슬러그에는 {chars} 같은 특수 문자를 사용할 수 없습니다",
+      "slug_invalid_chars": "슬러그에는 문자, 숫자, 하이픈, 밑줄만 사용할 수 있습니다"
+    },
+    "analytics": {
+      "state_name": "상태 이름",
+      "estimate_point": "추정 포인트",
+      "completed_date": "완료일",
+      "yesterday": "어제",
+      "last_7_days": "최근 7일",
+      "last_30_days": "최근 30일",
+      "last_3_months": "최근 3개월",
+      "duration": "기간"
+    },
+    "auth_labels": {
+      "magic_code": "매직 코드"
+    },
+    "state_groups": {
+      "canceled": "취소됨"
+    },
+    "filters": {
+      "state_group": "상태 그룹",
+      "subscriber": "구독자"
+    }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "닫기"
+    },
+    "auth_header": {
+      "sign_in_header": "로그인하고 추천 또는 댓글 남기기",
+      "sign_in_sub_header": "원하는 기능이 개발되도록 힘을 보태 주세요.",
+      "sign_up_header": "보기, 댓글 달기 등 더 많은 활동",
+      "sign_up_sub_header": "가입하거나 로그인하여 Pi-Plane 작업 항목과 페이지를 이용하세요.",
+      "default_header": "작업 항목에 댓글 또는 반응 남기기",
+      "default_sub_header": "Plane을 사용하여 기능에 대한 소중한 의견을 남겨 주세요."
+    },
+    "terms": {
+      "agree_sign_up": "계정을 만들면\n<terms>서비스 약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하는 것으로 간주됩니다.",
+      "agree_sign_in": "로그인하면\n<terms>서비스 약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하는 것으로 간주됩니다."
+    },
+    "user_logged_in": {
+      "title": "좋아요! 한 단계만 더 남았습니다.",
+      "description": "보려는 뷰 또는 페이지의 공개 공유 URL 또는 링크를 브라우저 주소 표시줄에 입력하세요.",
+      "image_alt": "사용자가 이미 로그인되어 있습니다"
+    },
+    "auth_unique_code": {
+      "resend_in": "{seconds}초 후 재전송"
+    },
+    "oauth": {
+      "sign_up_with": "{provider}(으)로 가입",
+      "sign_in_with": "{provider}(으)로 로그인",
+      "continue_with": "{provider}(으)로 계속"
+    },
+    "issues": {
+      "public_board_not_found": "공개 보드가 존재하지 않습니다. URL을 확인하세요.",
+      "cycle_tooltip": "사이클: {name}",
+      "no_cycle": "사이클 없음",
+      "due_date_tooltip": "마감일: {date}",
+      "no_date": "날짜 없음",
+      "labels_tooltip": "레이블: {labels}",
+      "no_labels": "레이블 없음",
+      "labels_count": "레이블 {count}개",
+      "no_assignees": "담당자 없음",
+      "comment_post_failed": "댓글을 게시할 수 없습니다. 다시 시도하세요.",
+      "add_comment_placeholder": "댓글 추가...",
+      "sign_in_to_comment": "로그인하여 댓글 추가",
+      "empty": "비어 있음",
+      "no_upvotes": "아직 추천이 없습니다",
+      "no_downvotes": "아직 비추천이 없습니다",
+      "voters_and_more": "{names} 외 {count}명"
+    },
+    "error_page": {
+      "title": "문제가 발생했습니다.",
+      "description": "Pi-Plane이 중단되었습니다. 걱정하지 마세요. 엔지니어에게 알림이 전송되었습니다. 자세한 내용이 있으시면 <github/>에 제보해 주세요."
+    },
+    "not_found_page": {
+      "title": "작동하지 않았습니다",
+      "description": "브라우저 주소 표시줄에 입력한 URL을 확인하고 다시 시도하세요."
+    },
+    "powered_by": {
+      "label": "Powered by <name>Pi-Plane</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane 인스턴스 오류",
+      "title": "인스턴스 세부 정보를 가져올 수 없습니다.",
+      "description": "인스턴스의 세부 정보를 가져올 수 없습니다.",
+      "hint": "연결 문제일 수 있으니 걱정하지 마세요."
+    }
   }
 }

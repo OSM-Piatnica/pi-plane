@@ -1,8 +1,8 @@
 <br /><br />
 
 <p align="center">
-<a href="https://plane.so">
-  <img src="https://media.docs.plane.so/logo/plane_github_readme.png" alt="Plane Logo" width="400">
+<a href="https://github.com/OSM-Piatnica/pi-plane">
+  <img src="docs/assets/pi-plane-banner.png" alt="Pi-Plane Logo" width="400">
 </a>
 </p>
 <p align="center"><b>Modern project management for all teams</b></p>
@@ -159,7 +159,7 @@ To disclose any security issues, please email us at security@plane.so.
 
 There are many ways you can contribute to Plane:
 
-- Report [bugs](https://github.com/makeplane/plane/issues/new?assignees=srinivaspendem%2Cpushya22&labels=%F0%9F%90%9Bbug&projects=&template=--bug-report.yaml&title=%5Bbug%5D%3A+) or submit [feature requests](https://github.com/makeplane/plane/issues/new?assignees=srinivaspendem%2Cpushya22&labels=%E2%9C%A8feature&projects=&template=--feature-request.yaml&title=%5Bfeature%5D%3A+).
+- Report [bugs](https://github.com/OSM-Piatnica/pi-plane/issues/new?labels=bug&template=bug-report.yaml&title=%5Bbug%5D%3A+) or submit [feature requests](https://github.com/OSM-Piatnica/pi-plane/issues/new?labels=enhancement&template=feature-request.yaml&title=%5Bfeature%5D%3A+).
 - Review the [documentation](https://docs.plane.so/) and submit [pull requests](https://github.com/makeplane/docs) to improve it—whether it's fixing typos or adding new content.
 - Talk or write about Plane or any other ecosystem integration and [let us know](https://forum.plane.so)!
 - Show your support by upvoting [popular feature requests](https://github.com/makeplane/plane/issues).

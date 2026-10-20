@@ -1,6 +1,7 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 
 # Third Party imports
 from rest_framework.response import Response
@@ -202,7 +203,8 @@ class ProjectMemberViewSet(BaseViewSet):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
+    # Only project admins (or workspace admins in the project) may edit membership rows
+    @allow_permission([ROLE.ADMIN])
     def partial_update(self, request, slug, project_id, pk):
         project_member = ProjectMember.objects.get(pk=pk, workspace__slug=slug, project_id=project_id, is_active=True)
 
@@ -387,8 +389,33 @@ class ProjectMemberPreferenceEndpoint(BaseAPIView):
             workspace__slug=slug,
         )
 
+    def can_access(self, request, slug, project_id, member_id):
+        """Preferences are personal: only the owner, a project admin or a workspace admin may use them."""
+        if str(request.user.id) == str(member_id):
+            return True
+        is_project_admin = ProjectMember.objects.filter(
+            project_id=project_id,
+            workspace__slug=slug,
+            member=request.user,
+            role=ROLE.ADMIN.value,
+            is_active=True,
+        ).exists()
+        if is_project_admin:
+            return True
+        return WorkspaceMember.objects.filter(
+            workspace__slug=slug,
+            member=request.user,
+            role=ROLE.ADMIN.value,
+            is_active=True,
+        ).exists()
+
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def patch(self, request, slug, project_id, member_id):
+        if not self.can_access(request, slug, project_id, member_id):
+            return Response(
+                {"error": "You do not have permission to update this member's preferences"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         project_member = self.get_queryset(slug, project_id, member_id)
 
         serializer = ProjectMemberPreferenceSerializer(project_member, {"preferences": request.data}, partial=True)
@@ -401,6 +428,11 @@ class ProjectMemberPreferenceEndpoint(BaseAPIView):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def get(self, request, slug, project_id, member_id):
+        if not self.can_access(request, slug, project_id, member_id):
+            return Response(
+                {"error": "You do not have permission to view this member's preferences"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         project_member = self.get_queryset(slug, project_id, member_id)
 
         serializer = ProjectMemberPreferenceSerializer(project_member)

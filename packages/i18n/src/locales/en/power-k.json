@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Open keyboard shortcuts",
-      "open_plane_documentation": "Open Plane documentation",
+      "open_plane_documentation": "Open Pi-Plane documentation",
       "join_forum": "Join our Forum",
       "report_bug": "Report a bug",
       "chat_with_us": "Chat with us"
@@ -175,6 +175,11 @@
     },
     "footer": {
       "workspace_level": "Workspace level"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Search for shortcuts",
+      "no_results": "No shortcuts found for \"{query}\"",
+      "sequence_separator": "then"
     },
     "group_titles": {
       "actions": "Actions",

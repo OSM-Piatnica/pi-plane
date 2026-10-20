@@ -351,7 +351,7 @@
         },
         "redirect_uris": {
           "label": "Redirect-URIs (durch Leerzeichen getrennt)",
-          "description": "Benutzer werden nach der Authentifizierung mit Plane auf diesen Pfad weitergeleitet.",
+          "description": "Benutzer werden nach der Authentifizierung mit Pi-Plane auf diesen Pfad weitergeleitet.",
           "placeholder": "https://example.com https://example.com/"
         },
         "app_available_description": "Verbinden Sie einen Plane-Workspace, um die Nutzung zu beginnen",
@@ -408,7 +408,7 @@
         "app_consent_workspace_permissions_title": "{app} möchte",
         "app_consent_user_permissions_title": "{app} kann auch die Berechtigung eines Benutzers für die folgenden Ressourcen anfordern. Diese Berechtigungen werden nur von einem Benutzer angefordert und autorisiert.",
         "app_consent_accept_title": "Durch die Annahme",
-        "app_consent_accept_1": "Gewähren Sie der App Zugriff auf Ihre Plane-Daten, wo immer Sie die App innerhalb oder außerhalb von Plane verwenden können",
+        "app_consent_accept_1": "Gewähren Sie der App Zugriff auf Ihre Plane-Daten, wo immer Sie die App innerhalb oder außerhalb von Pi-Plane verwenden können",
         "app_consent_accept_2": "Stimmen Sie der Datenschutzerklärung und den Nutzungsbedingungen von {app} zu",
         "accepting": "Wird akzeptiert...",
         "accept": "Akzeptieren",
@@ -450,7 +450,7 @@
         "upload_and_save": "Hochladen und speichern",
         "app_consent_no_access_title": "Installationsanfrage",
         "app_consent_no_access_description": "Diese App kann nur installiert werden, nachdem ein Workspace-Administrator sie installiert hat. Wenden Sie sich an Ihren Workspace-Administrator, um fortzufahren.",
-        "app_consent_unapproved_title": "Diese App wurde noch nicht von Plane überprüft oder genehmigt.",
+        "app_consent_unapproved_title": "Diese App wurde noch nicht von Pi-Plane überprüft oder genehmigt.",
         "app_consent_unapproved_description": "Stellen Sie sicher, dass Sie dieser App vertrauen, bevor Sie sie mit Ihrem Arbeitsbereich verbinden.",
         "go_to_app": "Zur App",
         "enable_app_mentions": "App-Erwähnungen aktivieren",
@@ -489,7 +489,7 @@
     "empty_state": {
       "api_tokens": {
         "title": "Keine API-Tokens",
-        "description": "Verwenden Sie die API, um Plane mit externen Systemen zu integrieren."
+        "description": "Verwenden Sie die API, um Pi-Plane mit externen Systemen zu integrieren."
       },
       "webhooks": {
         "title": "Keine Webhooks",

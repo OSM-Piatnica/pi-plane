@@ -30,6 +30,7 @@ from plane.app.permissions import ProjectLitePermission
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.db.models import Intake, IntakeIssue, Issue, Project, ProjectMember, State, StateGroup
 from plane.utils.host import base_host
+from plane.utils.serializers import writable_data
 from plane.utils.content_validator import validate_html_content
 from .base import BaseAPIView
 from plane.db.models.intake import SourceType
@@ -385,7 +386,12 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
                     "description_json": description_json,
                 }
 
-            issue_serializer = IssueSerializer(issue, data=issue_data, partial=True)
+            issue_serializer = IssueSerializer(
+                issue,
+                data=issue_data,
+                context={"project_id": project_id, "workspace_id": issue.workspace_id},
+                partial=True,
+            )
 
             if not issue_serializer.is_valid():
                 return Response(issue_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -400,8 +406,8 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
         # Both serializers are valid, now save them
         if issue_serializer:
             current_instance = issue
-            # Log all the updates
-            requested_data = json.dumps(issue_data, cls=DjangoJSONEncoder)
+            # Log all the updates; read-only fields are ignored on save, so they are not reported either.
+            requested_data = json.dumps(writable_data(issue_serializer, issue_data), cls=DjangoJSONEncoder)
             issue_activity.delay(
                 type="issue.activity.updated",
                 requested_data=requested_data,

@@ -8,6 +8,7 @@
   "submit": "送信",
   "cancel": "キャンセル",
   "loading": "読み込み中",
+  "searching": "検索中…",
   "error": "エラー",
   "success": "成功",
   "warning": "警告",
@@ -213,8 +214,8 @@
   "congrats": "おめでとうございます！",
   "open_project": "プロジェクトを開く",
   "issues": "作業項目",
-  "cycles": "Cycles",
-  "modules": "Modules",
+  "cycles": "サイクル",
+  "modules": "モジュール",
   "pages": "ページ",
   "intake": "Intake",
   "renew": "更新",
@@ -233,7 +234,7 @@
   "documentation": "ドキュメント",
   "message_support": "サポートにメッセージ",
   "contact_sales": "営業に問い合わせ",
-  "hyper_mode": "Hyper Mode",
+  "hyper_mode": "ハイパーモード",
   "keyboard_shortcuts": "キーボードショートカット",
   "whats_new": "新機能",
   "version": "バージョン",
@@ -244,8 +245,8 @@
   "docs": "ドキュメント",
   "full_changelog": "完全な変更履歴",
   "support": "サポート",
-  "forum": "Forum",
-  "powered_by_plane_pages": "Powered by Plane Pages",
+  "forum": "フォーラム",
+  "powered_by_plane_pages": "Planeページを利用",
   "please_select_at_least_one_invitation": "少なくとも1つの招待を選択してください。",
   "please_select_at_least_one_invitation_description": "ワークスペースに参加するには少なくとも1つの招待を選択してください。",
   "we_see_that_someone_has_invited_you_to_join_a_workspace": "誰かがあなたをワークスペースに招待しています",
@@ -286,7 +287,7 @@
   "no_matching_results": "一致する結果がありません",
   "title_is_required": "タイトルは必須です",
   "title": "タイトル",
-  "state": "状態",
+  "state": "ステータス",
   "transition": "トランジション",
   "history": "履歴",
   "priority": "優先度",
@@ -304,6 +305,9 @@
   "create_new_label": "新規ラベルを作成",
   "label_name": "ラベル名",
   "failed_to_create_label": "ラベルの作成に失敗しました。もう一度お試しください。",
+  "no_matching_labels": "一致するラベルがありません",
+  "adding_label": "「{name}」を追加中",
+  "add_label_to_labels": "「{name}」をラベルに追加",
   "start_date": "開始日",
   "end_date": "終了日",
   "due_date": "期限",
@@ -325,6 +329,18 @@
   "deleting": "削除中",
   "make_a_copy": "コピーを作成",
   "move_to_project": "プロジェクトに移動",
+  "default_state_names": {
+    "backlog": "バックログ",
+    "todo": "未着手",
+    "in_progress": "進行中",
+    "done": "完了",
+    "cancelled": "キャンセル",
+    "triage": "トリアージ"
+  },
+  "filter_headings": {
+    "access": "アクセス",
+    "owned_by": "所有者"
+  },
   "good": "おはよう",
   "morning": "ございます",
   "afternoon": "こんにちは",
@@ -425,7 +441,7 @@
     "states": "ステータス",
     "state": "ステータス",
     "state_groups": "ステータスグループ",
-    "state_group": "ステート グループ",
+    "state_group": "ステータスグループ",
     "priorities": "優先度",
     "priority": "優先度",
     "team_project": "チームプロジェクト",
@@ -526,6 +542,7 @@
       "updated_on": "更新日"
     },
     "sort": {
+      "label": "並べ替え",
       "asc": "昇順",
       "desc": "降順",
       "created_on": "作成日",
@@ -598,6 +615,13 @@
       "label": "検索",
       "placeholder": "検索するキーワードを入力",
       "no_matches_found": "一致する結果が見つかりません",
+      "cycles": "サイクルを検索...",
+      "estimates": "見積もりを検索...",
+      "labels": "ラベルを検索...",
+      "members": "メンバーを検索...",
+      "modules": "モジュールを検索...",
+      "projects": "プロジェクトを検索...",
+      "states": "ステータスを検索...",
       "no_matching_results": "一致する結果がありません",
       "min_chars": "検索するには{count}文字以上入力してください",
       "error": "検索結果の取得中にエラーが発生しました",
@@ -625,7 +649,8 @@
       "enable": "有効化",
       "disable": "無効化",
       "copy_markdown": "マークダウンをコピー",
-      "reply": "返信"
+      "reply": "返信",
+      "add_reaction": "リアクションを追加"
     },
     "name": "名前",
     "discard": "破棄",
@@ -705,6 +730,8 @@
     "applying": "適用中",
     "overview": "概要",
     "no_of": "{entity} の数",
+    "no_of_work_items": "作業項目 の数",
+    "no_of_epics": "エピック の数",
     "resolved": "解決済み",
     "get_started": "はじめに",
     "worklogs": "作業ログ",
@@ -827,7 +854,7 @@
   },
   "self_hosted_maintenance_message": {
     "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Planeが起動しませんでした。これは1つまたは複数のPlaneサービスの起動に失敗したことが原因である可能性があります。",
-    "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "setup.shとDockerログからView Logsを選択して確認してください。"
+    "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "setup.shとDockerのログで「View Logs」を選択し、状況を確認してください。"
   },
   "customize_navigation": "ナビゲーションをカスタマイズ",
   "personal": "個人",
@@ -874,6 +901,7 @@
       "short_description": "JSONとしてエクスポート"
     }
   },
+  "labels_count": "{count, plural, one {#件のラベル} other {#件のラベル}}",
   "onboarding": {
     "skip": "スキップ",
     "profile": {
@@ -1002,5 +1030,451 @@
     "syncing_description": "変更内容をサーバーと同期しています。引き続き編集できます。",
     "connection_lost": "接続が切断されました",
     "connection_lost_description": "WebSocketサーバーへの接続に問題が発生しています。変更内容は10秒ごとに同期・保存されます。"
+  },
+  "emoji_icon_picker": {
+    "emoji": "絵文字",
+    "icon": "アイコン",
+    "contrast_notice": "十分なコントラストを確保するため、色が調整されます。"
+  },
+  "date_phrases": {
+    "added_ago": "{timeAgo}に追加",
+    "expired": "期限切れ",
+    "expired_ago": "{timeAgo}に有効期限が切れました",
+    "expires_at": "{date} {time}に有効期限が切れます",
+    "never_expires": "有効期限なし",
+    "date_at_time": "{date} {time}",
+    "till": "{date} {time}まで",
+    "after_date": "{date}以降",
+    "before_date": "{date}より前",
+    "month_week": "{month}、第{week}週",
+    "target_date": "目標日: {date}",
+    "from_date": "{date}から",
+    "till_date": "{date}まで",
+    "date_to_date": "{start}から{end}",
+    "archived_at": "{date}にアーカイブ",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "{name}が{date}にアップロード",
+    "date_range": "{start} - {end}",
+    "expiry": "有効期限"
+  },
+  "a11y": {
+    "toggle_details": "詳細を切り替え",
+    "workflow_flow_type": "フロータイプ",
+    "workflow_target_state": "対象ステータス",
+    "workflow_reject_state": "却下時のステータス"
+  },
+  "api_token_expiry": {
+    "one_week": "1週間",
+    "one_month": "1か月",
+    "three_months": "3か月",
+    "one_year": "1年",
+    "custom_date": "カスタム日付",
+    "set_expiration_date": "有効期限を設定"
+  },
+  "profile_sidebar": {
+    "due": "期限"
+  },
+  "progress_chart": {
+    "current": "現在の{title}",
+    "ideal": "理想の{title}"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "ここに画像をドロップしてアップロード",
+      "drag_and_drop": "ここに画像をドラッグ＆ドロップ",
+      "size_exceeded": "画像サイズは 5 MB を超えることはできません。",
+      "invalid_format": "有効な形式のファイルをアップロードしてください。",
+      "formats_supported": "対応ファイル形式：.jpeg、.jpg、.png、.webp",
+      "uploading": "アップロード中",
+      "upload_and_save": "アップロードして保存",
+      "title": "画像をアップロード",
+      "select_image": "画像を選択",
+      "select_image_named": "画像を選択：{description}",
+      "select_cover_image": "カバー画像 {index} を選択",
+      "no_images": "画像が見つかりません。"
+    },
+    "ai_assistant": {
+      "rate_limit": "ユーザーあたり月 50 件のリクエスト上限に達しました。",
+      "use_response": "この回答を使用",
+      "generating_response": "回答を生成中……",
+      "generate_response": "回答を生成",
+      "generate_again": "再生成",
+      "content_label": "コンテンツ：",
+      "response_label": "回答：",
+      "no_response": "回答を生成できませんでした。コンテンツやタスク情報が不足している可能性があります。もう一度お試しください。",
+      "placeholder_with_content": "このコンテンツに対して実行する操作を AI に伝えてください……",
+      "placeholder_empty": "AI に何でも聞いてください……",
+      "consent": "この機能を使用すると、メッセージがサードパーティのサービスと共有されることに同意したものとみなされます。"
+    },
+    "multiple_select": {
+      "select_all_in_group": "グループ内をすべて選択"
+    },
+    "theme": {
+      "download_config": "設定をダウンロード",
+      "import_config": "設定をインポート",
+      "import_failed": "テーマ設定のインポートに失敗しました",
+      "missing_fields": "必須フィールドが不足しています：primary と background",
+      "invalid_brand_hex": "ブランドカラーの 16 進数形式が無効です",
+      "invalid_neutral_hex": "ニュートラルカラーの 16 進数形式が無効です",
+      "invalid_mode": "テーマモードが無効です。ブール値である必要があります",
+      "choose_color_mode": "カラーモードを選択",
+      "light_mode": "ライトモード",
+      "dark_mode": "ダークモード"
+    },
+    "workspace": {
+      "delete_warning": "ワークスペース <name/> を削除しようとしています。確認すると、このワークスペース内のすべての作業データにアクセスできなくなり、復元することはできません。十分にご注意ください。",
+      "delete_type_name": "続行するには、このワークスペースの名前を入力してください。",
+      "delete_final_confirmation": "最終確認として、下に <phrase/> と入力してください。"
+    },
+    "workspace_settings": {
+      "invitation_removed": "招待を削除しました。",
+      "workspace_updated": "ワークスペースを更新しました",
+      "picture_removed": "ワークスペースの画像を削除しました。",
+      "picture_remove_failed": "プロフィール画像の削除中にエラーが発生しました。もう一度お試しください。",
+      "url_copied": "ワークスペースの URL をクリップボードにコピーしました。"
+    },
+    "workspace_views": {
+      "delete_failed": "ビューを削除できませんでした。もう一度お試しください。",
+      "create_failed": "ビューを作成できませんでした。もう一度お試しください。",
+      "updated": "ビューを更新しました。",
+      "update_failed": "ビューを更新できませんでした。もう一度お試しください。",
+      "edit_view": "ビューを編集",
+      "delete_view": "ビューを削除"
+    },
+    "sticky_colors": {
+      "gray": "グレー",
+      "peach": "ピーチ",
+      "pink": "ピンク",
+      "orange": "オレンジ",
+      "green": "グリーン",
+      "light_blue": "ライトブルー",
+      "dark_blue": "ダークブルー",
+      "purple": "パープル"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "あらゆる次元で作業。",
+      "welcome_back": "Pi-Plane へおかえりなさい。",
+      "create_your_account": "Pi-Plane アカウントを作成します。"
+    },
+    "auth_root": {
+      "no_auth_methods_title": "利用可能な認証方法がありません",
+      "no_auth_methods_description": "インスタンスの認証を有効にするには、管理者にお問い合わせください。"
+    },
+    "auth_password": {
+      "create_account": "アカウントを作成"
+    },
+    "terms": {
+      "agree_sign_up": "アカウントを作成すると、\n<terms>利用規約</terms>および<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。",
+      "agree_sign_in": "サインインすると、\n<terms>利用規約</terms>および<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。"
+    },
+    "auth_screens": {
+      "sign_up": "サインアップ",
+      "sign_in": "サインイン",
+      "join_teams": "Pi-Plane でより高い成果を上げているチームに参加しましょう",
+      "not_authorized_view_title": "このページを表示する権限がありません",
+      "not_authorized": "権限がありません",
+      "not_a_member_description": "このワークスペースのメンバーではありません。ワークスペースの管理者に招待を依頼するか、保留中の招待をご確認ください。",
+      "check_pending_invites": "保留中の招待を確認"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "ワークスペースが見つかりません",
+      "workspace_not_found_description": "この URL のワークスペースが見つかりません。存在しないか、表示する権限がない可能性があります。",
+      "visit_profile": "プロフィールを表示"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "設定メニューを切り替え",
+      "back_to_project": "プロジェクトに戻る",
+      "toggle_project_feature": "プロジェクト機能を切り替え"
+    },
+    "headers": {
+      "toggle_sidebar": "サイドバーを切り替え"
+    },
+    "profile_activity": {
+      "page_title": "プロフィール - アクティビティ"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook を更新しました。",
+      "not_authorized": "このページにアクセスする権限がありません。",
+      "enable_webhook": "Webhook を有効にする",
+      "toggle_webhook": "Webhook を切り替え"
+    },
+    "project_settings_empty": {
+      "title": "プロジェクトはまだありません",
+      "description": "プロジェクトは、目標に向けた作業の基盤です。チームやタスク、成果を出すために必要なすべてを管理できます。",
+      "learn_more": "プロジェクトの詳細を見る"
+    },
+    "project_templates": {
+      "imported_template": "インポートしたテンプレート",
+      "pick_color": "色を選択"
+    },
+    "not_found": {
+      "image_alt": "404 - ページが見つかりません",
+      "title": "問題が発生しました。",
+      "description": "お探しのページが見つかりません。削除されたか、名前が変更されたか、一時的に利用できない可能性があります。",
+      "go_to_home": "ホームへ移動"
+    },
+    "api_tokens": {
+      "empty_title": "API トークンはありません",
+      "empty_description": "外部アプリとのデータ共有を安全かつ簡単に行うために API トークンを作成し、管理とセキュリティを維持しましょう。",
+      "add_token": "トークンを追加",
+      "delete_token": "トークンを削除"
+    },
+    "base_layouts": {
+      "gantt": "ガントレイアウト"
+    },
+    "command_palette": {
+      "no_states_found": "ステータスが見つかりません"
+    },
+    "quick_actions": {
+      "archive_module_hint": "完了またはキャンセルされたモジュールのみアーカイブできます"
+    },
+    "progress": {
+      "cycle_progress": "サイクルの進捗"
+    },
+    "estimates": {
+      "delete_title": "見積もりシステムを削除",
+      "delete_description": "見積もりシステム <name/> を削除すると、すべての作業項目から完全に削除されます。この操作は元に戻せません。再度見積もりを追加する場合は、すべての作業項目を更新する必要があります。",
+      "deleting": "削除中",
+      "delete_estimate": "見積もりを削除",
+      "toggle_estimates": "見積もりを切り替え",
+      "estimates_list": "見積もり一覧",
+      "archived_title": "アーカイブされた見積もり",
+      "archived_description": "見積もりに変更がありました。これらは以前のバージョンで使用されていなかった見積もりです。詳細は <link>こちら。</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "ブロックされている依存関係を作成",
+      "create_blocking_dependency": "ブロックする依存関係を作成",
+      "update_block_dates_failed": "ブロックの日付を更新中に問題が発生しました"
+    },
+    "product_updates": {
+      "fetch_failed": "アップデートの取得に問題が発生しています。最新のアップデートは変更履歴をご覧ください。",
+      "go_to_changelog": "変更履歴へ移動"
+    },
+    "inbox": {
+      "intake_form_user": "Intake フォームのユーザー",
+      "status": "ステータス",
+      "created_by": "作成者"
+    },
+    "instance": {
+      "contact_support": "サポートに問い合わせる",
+      "maintenance_title": "🚧 Pi-Plane が正しく起動しなかったようです。",
+      "maintenance_description": "一部のサービスが起動に失敗した可能性があります。コンテナーのログを確認して問題を特定し、解決してください。解決しない場合は、サポートチームにお問い合わせください。",
+      "welcome_title": "Pi-Plane へようこそ",
+      "welcome_description": "インスタンスをセットアップし、最初のワークスペースを作成して、プロジェクトと作業の管理を始めましょう。"
+    },
+    "integrations": {
+      "github_installed": "特定のリポジトリと同期するには、各プロジェクトで GitHub を有効にしてください。",
+      "github_not_installed": "プロジェクトの作業項目を同期するには、GitHub を Pi-Plane ワークスペースに接続してください。",
+      "slack_installed": "特定のチャンネルと同期するには、各プロジェクトで Slack を有効にしてください。",
+      "slack_not_installed": "プロジェクトの作業項目を同期するには、Slack を Pi-Plane ワークスペースに接続してください。",
+      "deleted_title": "削除しました。",
+      "deleted_message": "{title} の連携を削除しました。",
+      "delete_failed_message": "{title} の連携を削除できませんでした。もう一度お試しください。",
+      "logo_alt": "{title} のロゴ",
+      "loading": "読み込み中……",
+      "no_permission": "この操作を実行する権限がありません",
+      "uninstalling": "アンインストール中……",
+      "uninstall": "アンインストール",
+      "installing": "インストール中……",
+      "install": "インストール"
+    },
+    "attachments": {
+      "upload_progress": "アップロードの進捗"
+    },
+    "labels": {
+      "delete_confirmation": "<name/> を削除してもよろしいですか？ すべての作業項目、およびこのラベルでフィルターしているビューからラベルが削除されます。",
+      "edit_label": "ラベルを編集",
+      "delete_label": "ラベルを削除",
+      "remove_from_group": "グループから削除"
+    },
+    "modules": {
+      "module_progress": "モジュールの進捗"
+    },
+    "navigation": {
+      "icon_only": "アイコンのみ",
+      "icon_with_name": "アイコンと名前",
+      "dock_app_rail": "アプリレールを固定",
+      "undock_app_rail": "アプリレールの固定を解除",
+      "minimum_value_is_one": "最小値は 1 です",
+      "show": "表示",
+      "clear_default": "デフォルトを解除",
+      "hide_in_more_menu": "「その他」メニューで非表示",
+      "project_link_copied": "プロジェクトのリンクをクリップボードにコピーしました。",
+      "copy_failed": "コピーに失敗しました",
+      "copy_failed_message": "リンクをコピーできませんでした。もう一度お試しください。",
+      "default_tab_updated": "デフォルトのタブを更新しました。",
+      "default_tab_update_failed": "デフォルトのタブを更新できませんでした。しばらくしてからもう一度お試しください。",
+      "hide_tab_failed": "タブを非表示にできませんでした。しばらくしてからもう一度お試しください。",
+      "generic_error": "問題が発生しました。しばらくしてからもう一度お試しください。"
+    },
+    "onboarding": {
+      "select_workspace_invitation": "ワークスペースの招待を選択"
+    },
+    "tour": {
+      "work_items_title": "作業項目で計画",
+      "work_items_description": "作業項目は Pi-Plane の基本単位です。Pi-Plane のほとんどの概念は、作業項目とそのプロパティに関連付けられています。",
+      "cycles_title": "サイクルで前進",
+      "cycles_description": "サイクルは、アジャイル開発でよく使われるスプリントのように、あなたとチームがより速く進めるのに役立ちます。",
+      "modules_title": "モジュールに分割",
+      "modules_description": "モジュールは大きな目標をプロジェクトや機能に分割し、整理しやすくします。",
+      "views_description": "カスタムフィルターを作成して、必要な作業項目だけを表示できます。フィルターは数クリックで保存・共有できます。",
+      "pages_title": "ページでドキュメント化",
+      "pages_description": "ページを使えば、会議中や一日の始まりに作業項目をすばやくメモできます。",
+      "welcome_title": "Pi-Plane へようこそ、{lastName} {firstName} さん",
+      "welcome_description": "Pi-Plane をお試しいただきありがとうございます。これでプロジェクトを簡単に管理できます。まずはプロジェクトを作成しましょう。",
+      "take_tour": "製品ツアーを見る",
+      "skip": "いいえ、自分で試します",
+      "create_first_project": "最初のプロジェクトを作成",
+      "sidebar_heading": "さあ、始めましょう。<br/>Pi-Plane をもっと活用しましょう。"
+    },
+    "ai": {
+      "ask_pi": "Pi に質問",
+      "tone_professional": "💼 プロフェッショナル",
+      "tone_casual": "😃 カジュアル",
+      "third_party_consent": "この機能を使用すると、メッセージがサードパーティのサービスと共有されることに同意したものとみなされます。",
+      "pi_writing": "Pi が書いています",
+      "pi_generating_response": "Pi が回答を生成しています"
+    },
+    "pages": {
+      "icon": "アイコン",
+      "color": "色",
+      "remove_text_color": "文字色を削除",
+      "remove_background_color": "背景色を削除",
+      "formatting_toolbar": "書式設定ツールバー",
+      "copied_link": "リンクをコピーしました",
+      "remove_favorite": "お気に入りから削除",
+      "export_markdown": "Markdown",
+      "page_size_letter": "レター",
+      "page_size_legal": "リーガル",
+      "page_size_tabloid": "タブロイド"
+    },
+    "activity": {
+      "bot_name": "{name} ボット"
+    },
+    "project": {
+      "identifier": "識別子"
+    },
+    "projects": {
+      "toggle_feature": "プロジェクト機能を切り替え",
+      "cover_upload_failed": "カバー画像のアップロードに失敗しました"
+    },
+    "notifications": {
+      "notification_options": "通知オプション"
+    },
+    "stores": {
+      "generic_error": "エラーが発生しました",
+      "inbox_fetch_error": "Intake の作業項目の取得中にエラーが発生しました。しばらくしてからもう一度お試しください。",
+      "page_make_public_error": "ページを公開にできませんでした。しばらくしてからもう一度お試しください。",
+      "page_make_private_error": "ページを非公開にできませんでした。しばらくしてからもう一度お試しください。",
+      "workflow_pending_approval": "作業項目に保留中の承認があります。",
+      "workflow_transition_not_allowed": "このステータスの遷移はワークフローで許可されていません。"
+    },
+    "validation": {
+      "name_max_length": "名前は 50 文字以内で入力してください",
+      "name_special_chars": "名前に {chars} などの特殊文字は使用できません",
+      "name_invalid_chars": "名前には文字、スペース、ハイフン、アポストロフィのみ使用できます",
+      "display_name_max_length": "表示名は 50 文字以内で入力してください",
+      "display_name_special_chars": "表示名に {chars} などの特殊文字は使用できません",
+      "display_name_invalid_chars": "表示名には文字、数字、ピリオド、ハイフン、アンダースコアのみ使用できます",
+      "company_name_max_length": "会社名は 80 文字以内で入力してください",
+      "company_name_special_chars": "会社名に {chars} などの特殊文字は使用できません",
+      "company_name_invalid_chars": "会社名には文字、数字、スペース、ハイフン、アンダースコアのみ使用できます",
+      "company_name_needs_alphanumeric": "会社名には文字または数字を少なくとも 1 つ含める必要があります",
+      "workspace_name_required": "ワークスペース名は必須です",
+      "workspace_name_max_length": "ワークスペース名は 80 文字以内で入力してください",
+      "workspace_name_special_chars": "ワークスペース名に {chars} などの特殊文字は使用できません",
+      "workspace_name_invalid_chars": "ワークスペース名には文字、数字、スペース、ハイフン、アンダースコアのみ使用できます",
+      "workspace_name_needs_alphanumeric": "ワークスペース名には文字または数字を少なくとも 1 つ含める必要があります",
+      "slug_required": "スラッグは必須です",
+      "slug_max_length": "スラッグは 48 文字以内で入力してください",
+      "slug_special_chars": "スラッグに {chars} などの特殊文字は使用できません",
+      "slug_invalid_chars": "スラッグには文字、数字、ハイフン、アンダースコアのみ使用できます"
+    },
+    "analytics": {
+      "state_name": "ステータス名",
+      "estimate_point": "見積もりポイント",
+      "completed_date": "完了日",
+      "yesterday": "昨日",
+      "last_7_days": "過去 7 日間",
+      "last_30_days": "過去 30 日間",
+      "last_3_months": "過去 3 か月",
+      "duration": "期間"
+    },
+    "auth_labels": {
+      "magic_code": "マジックコード"
+    },
+    "state_groups": {
+      "canceled": "キャンセル"
+    },
+    "filters": {
+      "state_group": "ステータスグループ",
+      "subscriber": "購読者"
+    }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "閉じる"
+    },
+    "auth_header": {
+      "sign_in_header": "サインインして投票またはコメント",
+      "sign_in_sub_header": "ご希望の機能の開発を後押ししましょう。",
+      "sign_up_header": "閲覧、コメントなど",
+      "sign_up_sub_header": "サインアップまたはログインして、Pi-Plane の作業項目やページを利用しましょう。",
+      "default_header": "作業項目にコメントまたはリアクション",
+      "default_sub_header": "Pi-Plane を使って、機能に関する貴重なご意見をお寄せください。"
+    },
+    "terms": {
+      "agree_sign_up": "アカウントを作成すると、\n<terms>利用規約</terms>および<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。",
+      "agree_sign_in": "サインインすると、\n<terms>利用規約</terms>および<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。"
+    },
+    "user_logged_in": {
+      "title": "あと一歩です。",
+      "description": "閲覧したいビューまたはページの公開共有 URL またはリンクを、ブラウザーのアドレスバーに入力してください。",
+      "image_alt": "ユーザーはすでにログインしています"
+    },
+    "auth_unique_code": {
+      "resend_in": "{seconds}秒後に再送信"
+    },
+    "oauth": {
+      "sign_up_with": "{provider} でサインアップ",
+      "sign_in_with": "{provider} でサインイン",
+      "continue_with": "{provider} で続行"
+    },
+    "issues": {
+      "public_board_not_found": "このパブリックボードは存在しません。URL を確認してください。",
+      "cycle_tooltip": "サイクル: {name}",
+      "no_cycle": "サイクルなし",
+      "due_date_tooltip": "期限: {date}",
+      "no_date": "日付なし",
+      "labels_tooltip": "ラベル: {labels}",
+      "no_labels": "ラベルなし",
+      "labels_count": "{count} 件のラベル",
+      "no_assignees": "担当者なし",
+      "comment_post_failed": "コメントを投稿できませんでした。もう一度お試しください。",
+      "add_comment_placeholder": "コメントを追加...",
+      "sign_in_to_comment": "サインインしてコメントを追加",
+      "empty": "空",
+      "no_upvotes": "まだ高評価はありません",
+      "no_downvotes": "まだ低評価はありません",
+      "voters_and_more": "{names} 他 {count} 名"
+    },
+    "error_page": {
+      "title": "問題が発生しました。",
+      "description": "Pi-Plane がクラッシュしました。ご安心ください。エンジニアに通知済みです。詳細がありましたら、<github/>で報告してください。"
+    },
+    "not_found_page": {
+      "title": "うまくいきませんでした",
+      "description": "ブラウザーのアドレスバーに入力した URL を確認して、もう一度お試しください。"
+    },
+    "powered_by": {
+      "label": "Powered by <name>Pi-Plane</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane インスタンスの障害",
+      "title": "インスタンスの詳細を取得できません。",
+      "description": "インスタンスの詳細を取得できませんでした。",
+      "hint": "接続の問題の可能性があります。ご心配なく。"
+    }
   }
 }

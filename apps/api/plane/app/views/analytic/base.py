@@ -1,12 +1,13 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
 from django.db.models import Count, F, Sum, Q
 from django.db.models.functions import ExtractMonth
 from django.utils import timezone
-from django.db.models.functions import Concat
+from django.db.models.functions import Cast, Concat
 from django.db.models import Case, When, Value, OuterRef, Func
 from django.db import models
 
@@ -57,6 +58,12 @@ class AnalyticsEndpoint(BaseAPIView):
 
         # Additional filters that need to be applied
         filters = issue_filters(request.GET, "GET")
+        # Only include projects the user is an active member of
+        filters.update(
+            project__project_projectmember__member=request.user,
+            project__project_projectmember__is_active=True,
+            project__project_projectmember__deleted_at__isnull=True,
+        )
 
         # Get the issues for the workspace with the additional filters applied
         queryset = Issue.issue_objects.filter(workspace__slug=slug, **filters)
@@ -105,7 +112,7 @@ class AnalyticsEndpoint(BaseAPIView):
                             assignees__avatar_asset__isnull=False,
                             then=Concat(
                                 Value("/api/assets/v2/static/"),
-                                "assignees__avatar_asset",  # Assuming avatar_asset has an id or relevant field
+                                Cast("assignees__avatar_asset", models.CharField()),
                                 Value("/"),
                             ),
                         ),
@@ -192,7 +199,13 @@ class SavedAnalyticEndpoint(BaseAPIView):
         analytic_view = AnalyticView.objects.get(pk=analytic_id, workspace__slug=slug)
 
         filter = analytic_view.query
-        queryset = Issue.issue_objects.filter(**filter)
+        queryset = Issue.issue_objects.filter(
+            workspace__slug=slug,
+            project__project_projectmember__member=request.user,
+            project__project_projectmember__is_active=True,
+            project__project_projectmember__deleted_at__isnull=True,
+            **filter,
+        )
 
         x_axis = analytic_view.query_dict.get("x_axis", False)
         y_axis = analytic_view.query_dict.get("y_axis", False)
@@ -240,7 +253,7 @@ class ExportAnalyticsEndpoint(BaseAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        analytic_export_task.delay(email=request.user.email, data=request.data, slug=slug)
+        analytic_export_task.delay(email=request.user.email, data=request.data, slug=slug, user_id=str(request.user.id))
 
         return Response(
             {"message": f"Once the export is ready it will be emailed to you at {str(request.user.email)}"},
@@ -252,7 +265,13 @@ class DefaultAnalyticsEndpoint(BaseAPIView):
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST], level="WORKSPACE")
     def get(self, request, slug):
         filters = issue_filters(request.GET, "GET")
-        base_issues = Issue.issue_objects.filter(workspace__slug=slug, **filters)
+        base_issues = Issue.issue_objects.filter(
+            workspace__slug=slug,
+            project__project_projectmember__member=request.user,
+            project__project_projectmember__is_active=True,
+            project__project_projectmember__deleted_at__isnull=True,
+            **filters,
+        )
 
         total_issues = base_issues.count()
 
@@ -299,7 +318,7 @@ class DefaultAnalyticsEndpoint(BaseAPIView):
                         created_by__avatar_asset__isnull=False,
                         then=Concat(
                             Value("/api/assets/v2/static/"),
-                            "created_by__avatar_asset",  # Assuming avatar_asset has an id or relevant field
+                            Cast("created_by__avatar_asset", models.CharField()),
                             Value("/"),
                         ),
                     ),
@@ -330,7 +349,7 @@ class DefaultAnalyticsEndpoint(BaseAPIView):
                         assignees__avatar_asset__isnull=False,
                         then=Concat(
                             Value("/api/assets/v2/static/"),
-                            "assignees__avatar_asset",  # Assuming avatar_asset has an id or relevant field
+                            Cast("assignees__avatar_asset", models.CharField()),
                             Value("/"),
                         ),
                     ),
@@ -355,7 +374,7 @@ class DefaultAnalyticsEndpoint(BaseAPIView):
                         assignees__avatar_asset__isnull=False,
                         then=Concat(
                             Value("/api/assets/v2/static/"),
-                            "assignees__avatar_asset",  # Assuming avatar_asset has an id or relevant field
+                            Cast("assignees__avatar_asset", models.CharField()),
                             Value("/"),
                         ),
                     ),

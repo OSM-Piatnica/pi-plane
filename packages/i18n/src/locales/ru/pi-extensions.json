@@ -119,6 +119,7 @@
       "save_success": "Настройки рабочего процесса сохранены.",
       "toggle_error": "Не удалось обновить настройки рабочего процесса.",
       "transition": "Переход",
+      "transition_count": "{count, plural, one {# переход} few {# перехода} many {# переходов} other {# перехода}}",
       "transitions_configured": "переходов настроено"
     }
   },

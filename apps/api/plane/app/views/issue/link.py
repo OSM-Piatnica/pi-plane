@@ -17,7 +17,7 @@ from rest_framework import status
 from .. import BaseViewSet
 from plane.app.serializers import IssueLinkSerializer
 from plane.app.permissions import ProjectEntityPermission
-from plane.db.models import IssueLink
+from plane.db.models import Issue, IssueLink
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.bgtasks.work_item_link_task import crawl_work_item_link_title
 from plane.utils.host import base_host
@@ -46,6 +46,8 @@ class IssueLinkViewSet(BaseViewSet):
         )
 
     def create(self, request, slug, project_id, issue_id):
+        # The URL issue must belong to the URL workspace + project (404 otherwise).
+        Issue.objects.get(pk=issue_id, workspace__slug=slug, project_id=project_id)
         serializer = IssueLinkSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(project_id=project_id, issue_id=issue_id)
@@ -73,10 +75,14 @@ class IssueLinkViewSet(BaseViewSet):
         requested_data = json.dumps(request.data, cls=DjangoJSONEncoder)
         current_instance = json.dumps(IssueLinkSerializer(issue_link).data, cls=DjangoJSONEncoder)
 
+        previous_url = issue_link.url
+
         serializer = IssueLinkSerializer(issue_link, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            crawl_work_item_link_title.delay(serializer.data.get("id"), serializer.data.get("url"))
+            updated_url = serializer.data.get("url")
+            if updated_url and updated_url != previous_url:
+                crawl_work_item_link_title.delay(serializer.data.get("id"), updated_url)
 
             issue_activity.delay(
                 type="link.activity.updated",

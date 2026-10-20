@@ -11,12 +11,11 @@ import Link from "next/link";
 import useSWR from "swr";
 // plane types
 import { useTranslation } from "@plane/i18n";
-import { getButtonStyling } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/elements/button";
 import type { TSearchEntityRequestPayload, TWebhookConnectionQueryParams } from "@plane/types";
 import { EFileAssetType } from "@plane/types";
 // plane ui
 // plane utils
-import { cn } from "@plane/utils";
 // components
 import { LogoSpinner } from "@/components/common/logo-spinner";
 import { PageHead } from "@/components/core/page-title";
@@ -28,9 +27,7 @@ import { useEditorConfig } from "@/hooks/editor";
 import { useEditorAsset } from "@/hooks/store/use-editor-asset";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 import { useAppRouter } from "@/hooks/use-app-router";
-// plane web hooks
-import { EPageStoreType, usePage, usePageStore } from "@/plane-web/hooks/store";
-// plane web services
+import { EPageStoreType, usePage, usePageStore } from "@/hooks/store";
 import { WorkspaceService } from "@/services/workspace.service";
 // services
 import { ProjectPageService, ProjectPageVersionService } from "@/services/page";
@@ -83,20 +80,20 @@ function PageDetailsPage({ params }: Route.ComponentProps) {
   const pageRootHandlers: TPageRootHandlers = useMemo(
     () => ({
       create: createPage,
-      fetchAllVersions: async (pageId) =>
-        await projectPageVersionService.fetchAllVersions(workspaceSlug, projectId, pageId),
+      fetchAllVersions: async (versionPageId) =>
+        await projectPageVersionService.fetchAllVersions(workspaceSlug, projectId, versionPageId),
       fetchDescriptionBinary: async () => {
         if (!id) return;
         return await projectPageService.fetchDescriptionBinary(workspaceSlug, projectId, id);
       },
       fetchEntity: fetchEntityCallback,
-      fetchVersionDetails: async (pageId, versionId) =>
-        await projectPageVersionService.fetchVersionById(workspaceSlug, projectId, pageId, versionId),
-      restoreVersion: async (pageId, versionId) =>
-        await projectPageVersionService.restoreVersion(workspaceSlug, projectId, pageId, versionId),
-      getRedirectionLink: (pageId) => {
-        if (pageId) {
-          return `/${workspaceSlug}/projects/${projectId}/pages/${pageId}`;
+      fetchVersionDetails: async (versionPageId, versionId) =>
+        await projectPageVersionService.fetchVersionById(workspaceSlug, projectId, versionPageId, versionId),
+      restoreVersion: async (versionPageId, versionId) =>
+        await projectPageVersionService.restoreVersion(workspaceSlug, projectId, versionPageId, versionId),
+      getRedirectionLink: (linkPageId) => {
+        if (linkPageId) {
+          return `/${workspaceSlug}/projects/${projectId}/pages/${linkPageId}`;
         } else {
           return `/${workspaceSlug}/projects/${projectId}/pages`;
         }
@@ -167,12 +164,14 @@ function PageDetailsPage({ params }: Route.ComponentProps) {
       <div className="flex h-full w-full flex-col items-center justify-center">
         <h3 className="text-center text-16 font-semibold">{t("page_ui.not_found.title")}</h3>
         <p className="mt-3 text-center text-13 text-secondary">{t("page_ui.not_found.description")}</p>
-        <Link
-          href={`/${workspaceSlug}/projects/${projectId}/pages`}
-          className={cn(getButtonStyling("secondary", "base"), "mt-5")}
+        <Button
+          variant="secondary"
+          size="sm"
+          stretch="auto"
+          render={<Link href={`/${workspaceSlug}/projects/${projectId}/pages`} className="mt-5" />}
         >
           {t("page_ui.not_found.view_other_pages")}
-        </Link>
+        </Button>
       </div>
     );
 

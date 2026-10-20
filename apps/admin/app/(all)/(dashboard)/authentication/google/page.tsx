@@ -1,19 +1,21 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useState } from "react";
 import { observer } from "mobx-react";
 import useSWR from "swr";
-import { setPromiseToast } from "@plane/propel/toast";
-import { Loader, ToggleSwitch } from "@plane/ui";
+import { Switch } from "@makeplane/propel/components/switch";
 // assets
 import GoogleLogo from "@/app/assets/logos/google-logo.svg?url";
 // components
 import { AuthenticationMethodCard } from "@/components/authentication/authentication-method-card";
 import { PageWrapper } from "@/components/common/page-wrapper";
+import { Skeleton } from "@/components/common/skeleton";
+import { setPromiseToast } from "@plane/blocks/toast";
 // hooks
 import { useInstance } from "@/hooks/store";
 // types
@@ -57,6 +59,7 @@ const InstanceGoogleAuthenticationPage = observer(function InstanceGoogleAuthent
     await updateConfigPromise
       .then(() => {
         setIsSubmitting(false);
+        return;
       })
       .catch((err) => {
         console.error(err);
@@ -72,9 +75,10 @@ const InstanceGoogleAuthenticationPage = observer(function InstanceGoogleAuthent
             accounts."
           icon={<img src={GoogleLogo} height={24} width={24} alt="Google Logo" />}
           config={
-            <ToggleSwitch
-              value={Boolean(parseInt(enableGoogleConfig))}
-              onChange={() => {
+            <Switch
+              aria-label="Enable Google authentication"
+              checked={Boolean(parseInt(enableGoogleConfig))}
+              onCheckedChange={() => {
                 if (Boolean(parseInt(enableGoogleConfig)) === true) {
                   updateConfig("IS_GOOGLE_ENABLED", "0");
                 } else {
@@ -93,13 +97,13 @@ const InstanceGoogleAuthenticationPage = observer(function InstanceGoogleAuthent
       {formattedConfig ? (
         <InstanceGoogleConfigForm config={formattedConfig} />
       ) : (
-        <Loader className="space-y-8">
-          <Loader.Item height="50px" width="25%" />
-          <Loader.Item height="50px" />
-          <Loader.Item height="50px" />
-          <Loader.Item height="50px" />
-          <Loader.Item height="50px" width="50%" />
-        </Loader>
+        <Skeleton className="space-y-8">
+          <Skeleton.Item height="50px" width="25%" />
+          <Skeleton.Item height="50px" />
+          <Skeleton.Item height="50px" />
+          <Skeleton.Item height="50px" />
+          <Skeleton.Item height="50px" width="50%" />
+        </Skeleton>
       )}
     </PageWrapper>
   );

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,21 +9,24 @@ import React from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane ui
-import { WorkItemsIcon } from "@plane/propel/icons";
-import { Breadcrumbs, Header } from "@plane/ui";
+import { useTranslation } from "@plane/i18n";
+import { WorkItemsOutline } from "@makeplane/propel/icons";
+import { Breadcrumbs } from "@plane/blocks/breadcrumb";
+import { Header } from "@plane/blocks/layout";
 // components
 import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
 import { IssueDetailQuickActions } from "@/components/issues/issue-detail/issue-detail-quick-actions";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
-import { useAppRouter } from "@/hooks/use-app-router";
 // plane web imports
-import { CommonProjectBreadcrumbs } from "@/plane-web/components/breadcrumbs/common";
+import { CommonProjectBreadcrumbs } from "@/components/breadcrumbs/common";
+import { useProjectCrumbProps } from "@/components/breadcrumbs/use-project-crumb-props";
 
 export const WorkItemDetailsHeader = observer(function WorkItemDetailsHeader() {
+  // translation
+  const { t } = useTranslation();
   // router
-  const router = useAppRouter();
   const { workspaceSlug, workItem } = useParams();
   // store hooks
   const { getProjectById, loader } = useProject();
@@ -33,20 +37,25 @@ export const WorkItemDetailsHeader = observer(function WorkItemDetailsHeader() {
   const issueId = getIssueIdByIdentifier(workItem?.toString());
   const issueDetails = issueId ? getIssueById(issueId.toString()) : undefined;
   const projectId = issueDetails ? issueDetails?.project_id : undefined;
+  const projectCrumb = useProjectCrumbProps(workspaceSlug?.toString(), projectId?.toString());
   const projectDetails = projectId ? getProjectById(projectId?.toString()) : undefined;
 
   if (!workspaceSlug || !projectId || !issueId) return null;
   return (
     <Header>
       <Header.LeftItem>
-        <Breadcrumbs onBack={router.back} isLoading={loader === "init-loader"}>
-          <CommonProjectBreadcrumbs workspaceSlug={workspaceSlug?.toString()} projectId={projectId?.toString()} />
+        <Breadcrumbs isLoading={loader === "init-loader"}>
+          <CommonProjectBreadcrumbs
+            workspaceSlug={workspaceSlug?.toString()}
+            projectId={projectId?.toString()}
+            {...projectCrumb}
+          />
           <Breadcrumbs.Item
             component={
               <BreadcrumbLink
-                label="Work Items"
+                label={t("common.work_items")}
                 href={`/${workspaceSlug}/projects/${projectId}/issues/`}
-                icon={<WorkItemsIcon className="h-4 w-4 text-tertiary" />}
+                icon={<WorkItemsOutline className="h-4 w-4 text-tertiary" />}
               />
             }
           />

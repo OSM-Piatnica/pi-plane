@@ -1,0 +1,181 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { NodeViewWrapper } from "@tiptap/react";
+import type { NodeViewProps } from "@tiptap/react";
+import { useEffect, useRef, useState } from "react";
+// local imports
+import type { CustomImageExtensionType, TCustomImageAttributes } from "../types";
+import { ECustomImageAttributeNames, ECustomImageStatus } from "../types";
+import { hasImageDuplicationFailed } from "../utils";
+import { CustomImageBlock } from "./block";
+import { CustomImageUploader } from "./uploader";
+
+export type CustomImageNodeViewProps = Omit<NodeViewProps, "extension" | "updateAttributes"> & {
+  extension: CustomImageExtensionType;
+  node: NodeViewProps["node"] & {
+    attrs: TCustomImageAttributes;
+  };
+  updateAttributes: (attrs: Partial<TCustomImageAttributes>) => void;
+};
+
+export function CustomImageNodeView(props: CustomImageNodeViewProps) {
+  const { editor, extension, node, updateAttributes } = props;
+  const { src: imgNodeSrc, status } = node.attrs;
+
+  const [isUploaded, setIsUploaded] = useState(!!imgNodeSrc);
+  const [resolvedSrc, setResolvedSrc] = useState<string | undefined>(undefined);
+  const [resolvedDownloadSrc, setResolvedDownloadSrc] = useState<string | undefined>(undefined);
+  const [imageFromFileSystem, setImageFromFileSystem] = useState<string | undefined>(undefined);
+  const [failedToLoadImage, setFailedToLoadImage] = useState(false);
+
+  const [editorContainer, setEditorContainer] = useState<HTMLDivElement | null>(null);
+  const imageComponentRef = useRef<HTMLDivElement>(null);
+  const hasRetriedOnMount = useRef(false);
+  const isDuplicatingRef = useRef(false);
+
+  useEffect(() => {
+    const closestEditorContainer = imageComponentRef.current?.closest(".editor-container");
+    if (closestEditorContainer) {
+      setEditorContainer(closestEditorContainer as HTMLDivElement);
+    }
+  }, []);
+
+  // the image is already uploaded if the image-component node has src attribute
+  // and we need to remove the blob from our file system
+  useEffect(() => {
+    if (resolvedSrc || imgNodeSrc) {
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- uploaded flag and file-system preview are also set by the upload flow (setIsUploaded/loadImageFromFileSystem), so they are not pure functions of the src
+      setIsUploaded(true);
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- uploaded flag and file-system preview are also set by the upload flow (setIsUploaded/loadImageFromFileSystem), so they are not pure functions of the src
+      setImageFromFileSystem(undefined);
+    } else {
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- uploaded flag and file-system preview are also set by the upload flow (setIsUploaded/loadImageFromFileSystem), so they are not pure functions of the src
+      setIsUploaded(false);
+    }
+  }, [resolvedSrc, imgNodeSrc]);
+
+  useEffect(() => {
+    if (!imgNodeSrc) {
+      setResolvedSrc(undefined);
+      setResolvedDownloadSrc(undefined);
+      return;
+    }
+
+    setResolvedSrc(undefined);
+    setResolvedDownloadSrc(undefined);
+    setFailedToLoadImage(false);
+
+    // ignore results of a superseded run so an older request cannot overwrite newer state
+    let isCancelled = false;
+
+    const getImageSource = async () => {
+      try {
+        const url = await extension.options.getImageSource?.(imgNodeSrc);
+        if (isCancelled) return;
+        setResolvedSrc(url);
+        const downloadUrl = await extension.options.getImageDownloadSource?.(imgNodeSrc);
+        if (isCancelled) return;
+        setResolvedDownloadSrc(downloadUrl);
+      } catch (error) {
+        if (isCancelled) return;
+        console.error("Error fetching image source:", error);
+        setFailedToLoadImage(true);
+      }
+    };
+    void getImageSource();
+
+    return () => {
+      isCancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imgNodeSrc, extension.options.getImageSource, extension.options.getImageDownloadSource]);
+
+  // react-doctor-disable-next-line no-set-state-after-await-in-effect -- isDuplicatingRef already prevents overlapping runs, and a cancel flag would skip clearing failedToLoadImage when deps change mid-duplication
+  useEffect(() => {
+    const handleDuplication = async () => {
+      if (status !== ECustomImageStatus.DUPLICATING || !extension.options.duplicateImage || !imgNodeSrc) {
+        return;
+      }
+
+      // Prevent duplicate calls - check if already duplicating this asset
+      if (isDuplicatingRef.current) {
+        return;
+      }
+
+      isDuplicatingRef.current = true;
+      try {
+        hasRetriedOnMount.current = true;
+
+        const newAssetId = await extension.options.duplicateImage(imgNodeSrc);
+
+        if (!newAssetId) {
+          throw new Error("Duplication returned invalid asset ID");
+        }
+
+        setFailedToLoadImage(false);
+        updateAttributes({ src: newAssetId, status: ECustomImageStatus.UPLOADED });
+      } catch (error: unknown) {
+        console.error("Failed to duplicate image:", error);
+        // Update status to failed
+        updateAttributes({ status: ECustomImageStatus.DUPLICATION_FAILED });
+      } finally {
+        isDuplicatingRef.current = false;
+      }
+    };
+
+    void handleDuplication();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, imgNodeSrc, extension.options.duplicateImage, updateAttributes]);
+
+  useEffect(() => {
+    if (hasImageDuplicationFailed(status) && !hasRetriedOnMount.current && imgNodeSrc) {
+      hasRetriedOnMount.current = true;
+      // Add a small delay before retrying to avoid immediate retries
+      updateAttributes({ status: ECustomImageStatus.DUPLICATING });
+    }
+  }, [status, imgNodeSrc, updateAttributes]);
+
+  useEffect(() => {
+    if (status === ECustomImageStatus.UPLOADED) {
+      hasRetriedOnMount.current = false;
+      // react-doctor-disable-next-line no-adjust-state-on-prop-change -- failedToLoadImage is also set by the image block and the fetch/duplication effects; the reset on UPLOADED must stay with the ref reset in this effect
+      setFailedToLoadImage(false);
+    }
+  }, [status]);
+
+  const hasDuplicationFailed = hasImageDuplicationFailed(status);
+  const hasValidImageSource = imageFromFileSystem || (isUploaded && resolvedSrc);
+  const shouldShowBlock = hasValidImageSource && !failedToLoadImage && !hasDuplicationFailed;
+
+  return (
+    <NodeViewWrapper key={node.attrs[ECustomImageAttributeNames.ID]}>
+      <div className="mx-0 my-2 p-0" data-drag-handle ref={imageComponentRef}>
+        {shouldShowBlock && !hasDuplicationFailed ? (
+          <CustomImageBlock
+            editorContainer={editorContainer}
+            imageFromFileSystem={imageFromFileSystem}
+            setEditorContainer={setEditorContainer}
+            setFailedToLoadImage={setFailedToLoadImage}
+            src={resolvedSrc}
+            downloadSrc={resolvedDownloadSrc}
+            {...props}
+          />
+        ) : (
+          <CustomImageUploader
+            failedToLoadImage={failedToLoadImage}
+            hasDuplicationFailed={hasDuplicationFailed}
+            loadImageFromFileSystem={setImageFromFileSystem}
+            maxFileSize={(editor.storage.imageComponent as { maxFileSize?: number } | undefined)?.maxFileSize ?? 0}
+            setIsUploaded={setIsUploaded}
+            {...props}
+          />
+        )}
+      </div>
+    </NodeViewWrapper>
+  );
+}

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -55,7 +56,7 @@ def project_add_user_email(current_site, project_member_id, invitor_id):
         ) = get_email_configuration()
 
         # Set the subject
-        subject = "You have been invited to a Plane project"
+        subject = "You have been invited to a Pi-Plane project"
 
         # Render the email template
         html_content = render_to_string("emails/notifications/project_addition.html", context)

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -166,7 +167,8 @@ export class PdfExportService extends Effect.Service<PdfExportService>()("PdfExp
           async () => {
             const urlMap = new Map<string, string>();
             for (const assetId of assetIds) {
-              const url = await pageService.resolveImageAssetUrl?.(workspaceSlug, assetId, projectId);
+              // react-doctor-disable-next-line async-await-in-loop -- sequential on purpose to avoid an unbounded burst of asset URL requests
+              const url = await pageService.resolveImageAssetUrl?.(workspaceSlug, assetId, projectId); // oxlint-disable-line no-await-in-loop -- sequential on purpose
               if (url) urlMap.set(assetId, url);
             }
             return urlMap;

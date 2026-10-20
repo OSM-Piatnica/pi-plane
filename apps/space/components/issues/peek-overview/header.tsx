@@ -1,16 +1,24 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import React from "react";
+import type { ComponentType } from "react";
 import { observer } from "mobx-react";
-import { MoveRight } from "lucide-react";
-import { Listbox, Transition } from "@headlessui/react";
-// ui
-import { LinkIcon, CenterPanelIcon, FullScreenPanelIcon, SidePanelIcon } from "@plane/propel/icons";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import {
+  ArrowNarrowRightOutline,
+  FullScreenPeekOutline,
+  LinkOutline,
+  ModalPeekOutline,
+  SidePeekOutline,
+} from "@makeplane/propel/icons";
+// plane imports
+import { Select } from "@plane/blocks/select";
+import { setToast } from "@plane/blocks/toast";
+import { useTranslation } from "@plane/i18n";
+import { cn } from "@plane/utils";
 // helpers
 import { copyTextToClipboard } from "@/helpers/string.helper";
 // hooks
@@ -24,26 +32,30 @@ type Props = {
   issueDetails: IIssue | undefined;
 };
 
-const PEEK_MODES: {
+type TPeekModeOption = {
   key: IPeekMode;
-  icon: any;
-  label: string;
-}[] = [
-  { key: "side", icon: SidePanelIcon, label: "Side Peek" },
+  icon: ComponentType<{ className?: string }>;
+  labelKey: string;
+};
+
+const PEEK_MODES: TPeekModeOption[] = [
+  { key: "side", icon: SidePeekOutline, labelKey: "common.side_peek" },
   {
     key: "modal",
-    icon: CenterPanelIcon,
-    label: "Modal",
+    icon: ModalPeekOutline,
+    labelKey: "common.modal",
   },
   {
     key: "full",
-    icon: FullScreenPanelIcon,
-    label: "Full Screen",
+    icon: FullScreenPeekOutline,
+    labelKey: "common.full_screen",
   },
 ];
 
 export const PeekOverviewHeader = observer(function PeekOverviewHeader(props: Props) {
   const { handleClose } = props;
+  // plane hooks
+  const { t } = useTranslation();
 
   const { peekMode, setPeekMode } = useIssueDetails();
   const isClipboardWriteAllowed = useClipboardWritePermission();
@@ -53,76 +65,58 @@ export const PeekOverviewHeader = observer(function PeekOverviewHeader(props: Pr
 
     copyTextToClipboard(urlToCopy).then(() => {
       setToast({
-        type: TOAST_TYPE.SUCCESS,
-        title: "Link copied!",
-        message: "Work item link copied to clipboard.",
+        type: "success",
+        title: t("common.link_copied"),
+        message: t("common.copied_to_clipboard"),
       });
+      return;
     });
   };
 
-  const Icon = PEEK_MODES.find((m) => m.key === peekMode)?.icon ?? SidePanelIcon;
+  const selectedPeekMode = PEEK_MODES.find((m) => m.key === peekMode) ?? null;
 
   return (
     <>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           {peekMode === "side" && (
-            <button type="button" onClick={handleClose} className="text-tertiary hover:text-secondary">
-              <MoveRight className="size-4" />
+            <button
+              type="button"
+              onClick={handleClose}
+              className="text-tertiary hover:text-secondary"
+              aria-label={t("close")}
+            >
+              <ArrowNarrowRightOutline className="size-4" />
             </button>
           )}
-          <Listbox
-            as="div"
-            value={peekMode}
-            onChange={(val) => setPeekMode(val)}
-            className="relative shrink-0 text-left"
+          <Select<TPeekModeOption>
+            getValues={() => PEEK_MODES}
+            value={selectedPeekMode}
+            onChange={(val) => setPeekMode(val as IPeekMode)}
+            showSearch={false}
+            pinSelected={false}
+            getOptionValue={(mode) => mode.key}
+            getOptionLabel={(mode) => t(mode.labelKey)}
+            getOptionIcon={(mode) => <mode.icon className="size-4 shrink-0" />}
           >
-            <Listbox.Button
-              className={`grid place-items-center text-tertiary hover:text-secondary ${peekMode === "full" ? "rotate-45" : ""}`}
-            >
-              <Icon className="h-4 w-4 text-tertiary hover:text-secondary" />
-            </Listbox.Button>
-
-            <Transition
-              as={React.Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Listbox.Options className="shadow-lg absolute left-0 z-10 mt-1 min-w-[12rem] origin-top-left overflow-y-auto rounded-md border border-strong bg-surface-2 text-11 whitespace-nowrap focus:outline-none">
-                <div className="space-y-1 p-2">
-                  {PEEK_MODES.map((mode) => (
-                    <Listbox.Option
-                      key={mode.key}
-                      value={mode.key}
-                      className={({ active, selected }) =>
-                        `cursor-pointer truncate rounded-sm px-1 py-1.5 select-none ${
-                          active ? "bg-layer-transparent-hover" : ""
-                        } ${selected ? "text-primary" : "text-secondary"}`
-                      }
-                    >
-                      <div className="flex items-center gap-1.5">
-                        <mode.icon className="-my-1 h-4 w-4 flex-shrink-0" />
-                        {mode.label}
-                      </div>
-                    </Listbox.Option>
-                  ))}
-                </div>
-              </Listbox.Options>
-            </Transition>
-          </Listbox>
+            <Select.Trigger<TPeekModeOption>
+              variant="icon-sm"
+              className={cn("text-tertiary hover:text-secondary", { "rotate-45": peekMode === "full" })}
+              prependIcon={(modes) => {
+                const SelectedIcon = modes[0]?.icon ?? SidePeekOutline;
+                return <SelectedIcon className="size-4" />;
+              }}
+            />
+          </Select>
         </div>
         {isClipboardWriteAllowed && (peekMode === "side" || peekMode === "modal") && (
           <button
             type="button"
             onClick={handleCopyLink}
             className="shrink-0 text-tertiary hover:text-secondary focus:outline-none"
-            tabIndex={1}
+            aria-label={t("copy_link")}
           >
-            <LinkIcon className="h-4 w-4 -rotate-45" />
+            <LinkOutline className="h-4 w-4 -rotate-45" />
           </button>
         )}
       </div>

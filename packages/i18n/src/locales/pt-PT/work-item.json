@@ -1,0 +1,925 @@
+{
+  "issue": {
+    "label": "{count, plural, one {Item de trabalho} other {Itens de trabalho}}",
+    "all": "Todos os Itens de trabalho",
+    "edit": "Editar item de trabalho",
+    "title": {
+      "label": "Título do item de trabalho",
+      "required": "O título do item de trabalho é obrigatório."
+    },
+    "add": {
+      "press_enter": "Pressione 'Enter' para adicionar outro item de trabalho",
+      "label": "Adicionar item de trabalho",
+      "cycle": {
+        "failed": "Não foi possível adicionar o item de trabalho ao ciclo. Por favor, tente novamente.",
+        "success": "{count, plural, one {Item de trabalho} other {Itens de trabalho}} adicionado(s) ao ciclo com sucesso.",
+        "loading": "Adicionando {count, plural, one {item de trabalho} other {itens de trabalho}} ao ciclo"
+      },
+      "assignee": "Adicionar responsáveis",
+      "start_date": "Adicionar data de início",
+      "due_date": "Adicionar data de vencimento",
+      "parent": "Adicionar item de trabalho pai",
+      "sub_issue": "Adicionar sub-item de trabalho",
+      "dependency": "Adicionar dependência",
+      "relation": "Adicionar relação",
+      "link": "Adicionar link",
+      "existing": "Adicionar item de trabalho existente"
+    },
+    "remove": {
+      "label": "Remover item de trabalho",
+      "cycle": {
+        "loading": "Removendo item de trabalho do ciclo",
+        "success": "Item de trabalho removido do ciclo com sucesso.",
+        "failed": "Não foi possível remover o item de trabalho do ciclo. Por favor, tente novamente."
+      },
+      "module": {
+        "loading": "Removendo item de trabalho do módulo",
+        "success": "Item de trabalho removido do módulo com sucesso.",
+        "failed": "Não foi possível remover o item de trabalho do módulo. Por favor, tente novamente."
+      },
+      "parent": {
+        "label": "Remover item de trabalho pai"
+      }
+    },
+    "new": "Novo Item de trabalho",
+    "adding": "Adicionando item de trabalho",
+    "create": {
+      "success": "Item de trabalho criado com sucesso"
+    },
+    "priority": {
+      "urgent": "Urgente",
+      "high": "Alta",
+      "medium": "Média",
+      "low": "Baixa"
+    },
+    "display": {
+      "properties": {
+        "label": "Mostrar Propriedades",
+        "id": "ID",
+        "issue_type": "Tipo de Item de Trabalho",
+        "sub_issue_count": "Contagem de sub-itens de trabalho",
+        "attachment_count": "Contagem de anexos",
+        "created_on": "Criado em",
+        "sub_issue": "Sub-item de trabalho",
+        "work_item_count": "Contagem de itens de trabalho"
+      },
+      "extra": {
+        "show_sub_issues": "Mostrar sub-itens de trabalho",
+        "show_empty_groups": "Mostrar grupos vazios"
+      }
+    },
+    "layouts": {
+      "ordered_by_label": "Este layout é ordenado por",
+      "list": "Lista",
+      "kanban": "Quadro",
+      "calendar": "Calendário",
+      "spreadsheet": "Tabela",
+      "gantt": "Cronograma",
+      "title": {
+        "list": "Layout de Lista",
+        "kanban": "Layout de Quadro",
+        "calendar": "Layout de Calendário",
+        "spreadsheet": "Layout de Tabela",
+        "gantt": "Layout de Cronograma"
+      }
+    },
+    "states": {
+      "active": "Ativo",
+      "backlog": "Backlog"
+    },
+    "comments": {
+      "placeholder": "Adicionar comentário",
+      "switch": {
+        "private": "Alternar para comentário privado",
+        "public": "Alternar para comentário público"
+      },
+      "create": {
+        "success": "Comentário criado com sucesso",
+        "error": "Falha ao criar o comentário. Por favor, tente novamente mais tarde."
+      },
+      "update": {
+        "success": "Comentário atualizado com sucesso",
+        "error": "Falha ao atualizar o comentário. Por favor, tente novamente mais tarde."
+      },
+      "remove": {
+        "success": "Comentário removido com sucesso",
+        "error": "Falha ao remover o comentário. Por favor, tente novamente mais tarde."
+      },
+      "upload": {
+        "error": "Falha ao carregar o recurso. Por favor, tente novamente mais tarde."
+      },
+      "copy_link": {
+        "success": "Link do comentário copiado para a área de transferência",
+        "error": "Erro ao copiar o link do comentário. Tente novamente mais tarde."
+      },
+      "replies": {
+        "create": {
+          "submit_button": "Adicionar resposta",
+          "placeholder": "Adicionar resposta"
+        },
+        "toast": {
+          "fetch": {
+            "error": {
+              "message": "Falha ao buscar as respostas"
+            }
+          },
+          "create": {
+            "success": {
+              "message": "Resposta criada com sucesso"
+            },
+            "error": {
+              "message": "Falha ao criar a resposta"
+            }
+          },
+          "update": {
+            "success": {
+              "message": "Resposta atualizada com sucesso"
+            },
+            "error": {
+              "message": "Falha ao atualizar a resposta"
+            }
+          },
+          "delete": {
+            "success": {
+              "message": "Resposta eliminada com sucesso"
+            },
+            "error": {
+              "message": "Falha ao eliminar a resposta"
+            }
+          }
+        }
+      }
+    },
+    "empty_state": {
+      "issue_detail": {
+        "title": "O item de trabalho não existe",
+        "description": "O item de trabalho que está a procurar não existe, foi arquivado ou foi eliminado.",
+        "primary_button": {
+          "text": "Visualizar outros itens de trabalho"
+        }
+      }
+    },
+    "sibling": {
+      "label": "Itens de trabalho irmãos"
+    },
+    "archive": {
+      "description": "Apenas itens de trabalho concluídos ou cancelados\npodem ser arquivados",
+      "label": "Arquivar Item de Trabalho",
+      "confirm_message": "Tem a certeza de que deseja arquivar o item de trabalho? Todos os seus itens de trabalho arquivados podem ser restaurados posteriormente.",
+      "success": {
+        "label": "Sucesso ao arquivar",
+        "message": "Os seus arquivos podem ser encontrados nos arquivos do projeto."
+      },
+      "failed": {
+        "message": "Não foi possível arquivar o item de trabalho. Por favor, tente novamente."
+      },
+      "banner_message": "Este item de trabalho foi arquivado. Aceda à secção Arquivos para o restaurar.",
+      "go_to_archives": "Ir para os arquivos"
+    },
+    "restore": {
+      "success": {
+        "title": "Sucesso ao restaurar",
+        "message": "O seu item de trabalho pode ser encontrado nos itens de trabalho do projeto."
+      },
+      "failed": {
+        "message": "Não foi possível restaurar o item de trabalho. Por favor, tente novamente."
+      }
+    },
+    "relation": {
+      "relates_to": "Relacionado a",
+      "duplicate": "Duplicado de",
+      "blocked_by": "Bloqueado por",
+      "blocking": "A bloquear",
+      "start_before": "Inicia antes",
+      "start_after": "Inicia depois",
+      "finish_before": "Termina antes",
+      "finish_after": "Termina depois",
+      "implements": "Implementa",
+      "implemented_by": "Implementado por"
+    },
+    "copy_link": "Copiar link do item de trabalho",
+    "delete": {
+      "label": "Eliminar item de trabalho",
+      "error": "Erro ao eliminar item de trabalho"
+    },
+    "subscription": {
+      "actions": {
+        "subscribed": "Item de trabalho inscrito com sucesso",
+        "unsubscribed": "Item de trabalho não inscrito com sucesso"
+      }
+    },
+    "select": {
+      "error": "Selecione pelo menos um item de trabalho",
+      "empty": "Nenhum item de trabalho selecionado",
+      "add_selected": "Adicionar itens de trabalho selecionados",
+      "select_all": "Selecionar tudo",
+      "deselect_all": "Desmarcar tudo"
+    },
+    "open_in_full_screen": "Abrir item de trabalho em ecrã cheia",
+    "duplicate": {
+      "modal": {
+        "title": "Fazer uma cópia para outro projeto",
+        "description1": "Isto cria uma cópia do item de trabalho.",
+        "description2": "Todos os dados de propriedades serão removidos ao duplicar.",
+        "placeholder": "Selecionar um projeto"
+      }
+    },
+    "toast": {
+      "duplicate": {
+        "success": {
+          "message": "Item de trabalho duplicado com sucesso"
+        },
+        "error": {
+          "message": "Falha ao duplicar o item de trabalho"
+        }
+      }
+    },
+    "pages": {
+      "link_pages": "Ligar páginas",
+      "show_wiki_pages": "Mostrar páginas Wiki",
+      "link_pages_to": "Ligar páginas a",
+      "linked_pages": "Páginas associadas",
+      "no_description": "Esta página está vazia. Por que não escreve algo dentro dela e vê isso aparecer aqui como este espaço reservado",
+      "toasts": {
+        "link": {
+          "success": {
+            "title": "Páginas atualizadas",
+            "message": "Páginas atualizadas com sucesso"
+          },
+          "error": {
+            "title": "Falha ao atualizar páginas",
+            "message": "Falha ao atualizar páginas"
+          }
+        },
+        "remove": {
+          "success": {
+            "title": "Página removida",
+            "message": "Página removida com sucesso"
+          },
+          "error": {
+            "title": "Falha ao remover página",
+            "message": "Falha ao remover página"
+          }
+        }
+      }
+    },
+    "vote": {
+      "click_to_upvote": "Clique para votar a favor",
+      "click_to_downvote": "Clique para votar contra",
+      "click_to_view_upvotes": "Clique para ver os votos a favor",
+      "click_to_view_downvotes": "Clique para ver os votos contra"
+    }
+  },
+  "sub_work_item": {
+    "update": {
+      "success": "Sub-item de trabalho atualizado com sucesso",
+      "error": "Erro ao atualizar sub-item de trabalho"
+    },
+    "remove": {
+      "success": "Sub-item de trabalho removido com sucesso",
+      "error": "Erro ao remover sub-item de trabalho"
+    },
+    "empty_state": {
+      "sub_list_filters": {
+        "title": "Não tem sub-itens de trabalho que correspondem aos filtros que aplicou.",
+        "description": "Para ver todos os sub-itens de trabalho, limpe todos os filtros aplicados.",
+        "action": "Limpar filtros"
+      },
+      "list_filters": {
+        "title": "Não tem itens de trabalho que correspondem aos filtros que aplicou.",
+        "description": "Para ver todos os itens de trabalho, limpe todos os filtros aplicados.",
+        "action": "Limpar filtros"
+      }
+    }
+  },
+  "issue_relation": {
+    "empty_state": {
+      "search": {
+        "title": "Nenhum item de trabalho correspondente encontrado"
+      },
+      "no_issues": {
+        "title": "Nenhum item de trabalho encontrado"
+      }
+    }
+  },
+  "issue_comment": {
+    "empty_state": {
+      "general": {
+        "title": "Nenhum comentário ainda",
+        "description": "Os comentários podem ser usados como um espaço de discussão e acompanhamento para os itens de trabalho"
+      }
+    }
+  },
+  "bulk_operations": {
+    "error_details": {
+      "invalid_archive_state_group": {
+        "title": "Não é possível arquivar itens de trabalho",
+        "message": "Apenas itens de trabalho pertencentes aos grupos de estado Concluído ou Cancelado podem ser arquivados."
+      },
+      "invalid_issue_start_date": {
+        "title": "Não é possível atualizar itens de trabalho",
+        "message": "A data de início selecionada sucede a data de vencimento para alguns itens de trabalho. Certifique-se de que a data de início seja anterior à data de vencimento."
+      },
+      "invalid_issue_target_date": {
+        "title": "Não é possível atualizar itens de trabalho",
+        "message": "A data de vencimento selecionada precede a data de início para alguns itens de trabalho. Certifique-se de que a data de vencimento seja posterior à data de início."
+      },
+      "invalid_state_transition": {
+        "title": "Não é possível atualizar itens de trabalho",
+        "message": "A mudança de estado não é permitida para alguns itens de trabalho. Certifique-se de que a mudança de estado seja permitida."
+      }
+    },
+    "upgrade_banner": {
+      "message": "Altere o estado, a prioridade e muito mais em vários itens de trabalho de uma só vez. Poupe, em média, três minutos por operação.",
+      "cta": "Atualizar para One"
+    }
+  },
+  "recurring_work_items": {
+    "settings": {
+      "heading": "Itens de trabalho recorrentes",
+      "description": "Configure o seu trabalho recorrente uma vez e nós cuidaremos das repetições. Verá tudo aqui quando for necessário.",
+      "new_recurring_work_item": "Novo item de trabalho recorrente",
+      "update_recurring_work_item": "Atualizar item de trabalho recorrente",
+      "form": {
+        "interval": {
+          "title": "Agendamento",
+          "start_date": {
+            "validation": {
+              "required": "A data de início é obrigatória"
+            }
+          },
+          "interval_type": {
+            "validation": {
+              "required": "O tipo de intervalo é obrigatório"
+            }
+          }
+        },
+        "button": {
+          "create": "Criar item de trabalho recorrente",
+          "update": "Atualizar item de trabalho recorrente"
+        }
+      },
+      "create_button": {
+        "label": "Criar item de trabalho recorrente",
+        "no_permission": "Entre em contacto com o administrador do projeto para criar itens de trabalho recorrentes"
+      }
+    },
+    "empty_state": {
+      "upgrade": {
+        "title": "O seu trabalho no piloto automático",
+        "description": "Configure uma vez. Nós o traremos de volta quando chegar a hora. Faça upgrade para o Business para tornar o trabalho recorrente mais fácil."
+      },
+      "no_templates": {
+        "button": "Crie o seu primeiro item de trabalho recorrente"
+      }
+    },
+    "toasts": {
+      "create": {
+        "success": {
+          "title": "Item de trabalho recorrente criado",
+          "message": "{name}, o item de trabalho recorrente, agora está disponível no seu espaço de trabalho."
+        },
+        "error": {
+          "title": "Não foi possível criar o item de trabalho recorrente desta vez.",
+          "message": "Tente guardar os seus dados novamente ou copie-os para um novo item de trabalho recorrente, de preferência em outra separador."
+        }
+      },
+      "update": {
+        "success": {
+          "title": "Item de trabalho recorrente alterado",
+          "message": "{name}, o item de trabalho recorrente, foi alterado."
+        },
+        "error": {
+          "title": "Não foi possível guardar as alterações neste item de trabalho recorrente.",
+          "message": "Tente guardar os seus dados novamente ou volte a este item de trabalho recorrente mais tarde. Se o problema persistir, entre em contacto conosco."
+        }
+      },
+      "delete": {
+        "success": {
+          "title": "Item de trabalho recorrente eliminado",
+          "message": "{name}, o item de trabalho recorrente, foi eliminado do seu espaço de trabalho."
+        },
+        "error": {
+          "title": "Não foi possível eliminar o item de trabalho recorrente.",
+          "message": "Tente eliminar novamente ou volte mais tarde. Se não conseguir eliminar, entre em contacto conosco."
+        }
+      }
+    },
+    "delete_confirmation": {
+      "title": "Eliminar item de trabalho recorrente",
+      "description": {
+        "prefix": "Tem a certeza que deseja eliminar o item de trabalho recorrente-",
+        "suffix": "? Todos os dados relacionados ao item de trabalho recorrente serão removidos permanentemente. Esta ação não pode ser desfeita."
+      }
+    }
+  },
+  "epic": {
+    "new": "Novo Épico",
+    "label": "{count, plural, one {Épico} other {Épicos}}",
+    "adding": "Adicionando épico",
+    "create": {
+      "success": "Épico criado com sucesso"
+    },
+    "add": {
+      "label": "Adicionar Épico",
+      "press_enter": "Pressione 'Enter' para adicionar outro épico"
+    },
+    "title": {
+      "label": "Título do Épico",
+      "required": "O título do épico é obrigatório."
+    }
+  },
+  "issue_ui": {
+    "id_copied": "ID do item de trabalho copiado para a área de transferência",
+    "click_to_copy": "Clique para copiar",
+    "asset_duplication_failed": "Falha ao duplicar o recurso. Tente novamente mais tarde.",
+    "required": "Este campo é obrigatório",
+    "no_siblings": "Nenhum item de trabalho irmão",
+    "attachments": {
+      "uploading": "Enviando anexo...",
+      "uploaded_title": "Anexo enviado",
+      "uploaded_message": "O anexo foi enviado com sucesso",
+      "not_uploaded_title": "Anexo não enviado",
+      "not_uploaded_message": "Não foi possível enviar o anexo",
+      "removed_title": "Anexo removido",
+      "removed_message": "O anexo foi removido com sucesso",
+      "not_removed_title": "Anexo não removido",
+      "not_removed_message": "Não foi possível remover o anexo",
+      "drop_here": "Solte aqui...",
+      "uploading_short": "A enviar...",
+      "click_or_drag": "Clique ou arraste um ficheiro aqui",
+      "invalid_file": "Tipo ou tamanho de ficheiro inválido (máx. {size} MB)"
+    },
+    "due_before_start": "A data de vencimento não pode ser anterior à data de início do item de trabalho.",
+    "clear_filters": "Limpar filtros",
+    "add_to_cycle_success": "Itens de trabalho adicionados ao ciclo com sucesso.",
+    "add_to_cycle_failed": "Não foi possível adicionar os itens de trabalho selecionados ao ciclo. Tente novamente.",
+    "add_to_module_success": "Itens de trabalho adicionados ao módulo com sucesso.",
+    "add_to_module_failed": "Não foi possível adicionar os itens de trabalho selecionados ao módulo. Tente novamente.",
+    "project_view_empty": {
+      "title": "Os itens de trabalho da visualização aparecerão aqui",
+      "description": "Os itens de trabalho ajudam a acompanhar cada parte do trabalho. Com eles, sabe o que está a acontecer, quem está a trabalhar e o que já foi feito."
+    },
+    "sub_group_by": "Subagrupar por",
+    "filters": {
+      "custom": "Personalizado",
+      "mention": "Menção"
+    },
+    "cannot_move": {
+      "title": "Não é possível mover o item de trabalho",
+      "not_allowed": "Não tem permissão para mover este item de trabalho",
+      "dnd_disabled": "Arrastar e soltar está desativado para o agrupamento atual"
+    },
+    "select_within_project": "Somente itens de trabalho do projeto atual podem ser selecionados.",
+    "drop_to_delete": "Solte aqui para eliminar o item de trabalho.",
+    "view_not_exist": {
+      "title": "A visualização não existe",
+      "description": "A visualização que procura não existe ou não tem permissão para vê-la."
+    },
+    "go_to_all_work_items": "Ir para todos os itens de trabalho",
+    "save_as": "Guardar como",
+    "columns": {
+      "select_cycle": "Selecionar ciclo",
+      "select_modules": "Selecionar módulos"
+    },
+    "quick_actions": {
+      "action_not_available": "Ação não disponível",
+      "not_implemented": "A ação {action} não está implementada.",
+      "restore_success_title": "Restauração concluída",
+      "restore_success_message": "O seu item de trabalho pode ser encontrado nos itens de trabalho do projeto.",
+      "restore_failed": "Não foi possível restaurar o item de trabalho. Tente novamente.",
+      "remove_from_cycle": "Remover do ciclo",
+      "remove_from_module": "Remover do módulo"
+    },
+    "close_peek": "Fechar a visualização rápida",
+    "labels_count": "{count} etiquetas",
+    "view_epic": "Ver épico",
+    "view_work_item": "Ver item de trabalho",
+    "save_draft": {
+      "title": "Guardar este rascunho?",
+      "description": "Pode guardar este item de trabalho em rascunhos para voltar a ele mais tarde."
+    },
+    "delete_confirm": {
+      "work_item": "Tem a certeza de que deseja eliminar o item de trabalho {identifier}? Todos os dados relacionados ao item de trabalho serão removidos permanentemente. Esta ação não pode ser desfeita.",
+      "epic": "Tem a certeza de que deseja eliminar o épico {identifier}? Todos os dados relacionados ao épico serão removidos permanentemente. Esta ação não pode ser desfeita."
+    },
+    "work_item_deleted": "Este item de trabalho foi eliminado",
+    "epics_link_copied": "Link dos épicos copiado para a área de transferência.",
+    "work_items_link_copied": "Link dos itens de trabalho copiado para a área de transferência.",
+    "editor_processing": "O editor ainda está a processar as alterações. Aguarde antes de continuar.",
+    "ai_title_not_informative": "O título do item de trabalho não é informativo o suficiente para gerar a descrição. Tente com um título diferente.",
+    "ai_rate_limit": "Atingiu o número máximo de 50 solicitações por mês por utilizador.",
+    "generic_error": "Ocorreu um erro. Tente novamente.",
+    "move_to_project_failed": "Falha ao mover o item de trabalho para o projeto. Tente novamente.",
+    "project_work_items_count": "{count, plural, one {Há # item de trabalho neste projeto} other {Há # itens de trabalho neste projeto}}",
+    "archived_banner": "Este item de trabalho foi arquivado. Acesse a seção Arquivos para restaurá-lo.",
+    "go_to_archives": "Ir para ficheiros",
+    "select_work_item": "Selecionar item de trabalho",
+    "select_work_items_to_delete": "Selecione os itens de trabalho a eliminar",
+    "delete_selected_work_items": "Eliminar itens de trabalho selecionados",
+    "sub_work_item_progress": "Progresso dos sub-itens de trabalho",
+    "archived_work_items_count": "{count, plural, one {Existe # item de trabalho no arquivo do projeto} many {Existem # de itens de trabalho no arquivo do projeto} other {Existem # itens de trabalho no arquivo do projeto}}",
+    "add_related_work_items": "Adicionar itens de trabalho relacionados",
+    "toggle_workspace_level_search": "Alternar pesquisa ao nível do espaço de trabalho",
+    "search_results_for_in_project": "Resultados da pesquisa para \"<query/>\" no projeto:",
+    "cannot_move_to_completed_cycle": "O item de trabalho não pode ser movido para ciclos concluídos"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "arquivou o item de trabalho.",
+      "assignee": {
+        "added": "adicionou um novo responsável <user/>.",
+        "added_with_issue": "adicionou um novo responsável <user/> a <issue/>.",
+        "removed": "removeu o responsável <user/>.",
+        "removed_with_issue": "removeu o responsável <user/> de <issue/>."
+      },
+      "attachment": {
+        "added": "carregou um novo anexo.",
+        "added_with_issue": "carregou um novo anexo para <issue/>.",
+        "removed": "removeu um anexo.",
+        "removed_with_issue": "removeu um anexo de <issue/>."
+      },
+      "created": "criou o item de trabalho.",
+      "created_via": "criou o item de trabalho via <source/>.",
+      "cycle": {
+        "added": "adicionou este item de trabalho ao ciclo <cycle/>",
+        "removed": "removeu o item de trabalho do ciclo <cycle/>",
+        "set": "definiu o ciclo como <cycle/>"
+      },
+      "deleted": "eliminou um item de trabalho.",
+      "description": {
+        "updated": "atualizou a descrição.",
+        "updated_with_issue": "atualizou a descrição de <issue/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# dia} many {# dias} other {# dias}}",
+        "removed": "removeu a duração.",
+        "removed_with_issue": "removeu a duração de <issue/>.",
+        "set": "definiu a duração como <value/>.",
+        "set_with_issue": "definiu a duração de <issue/> como <value/>."
+      },
+      "estimate": {
+        "removed": "removeu o ponto de estimativa <value/>.",
+        "removed_with_issue": "removeu o ponto de estimativa <value/> de <issue/>.",
+        "set": "definiu o ponto de estimativa como <value/>.",
+        "set_with_issue": "definiu o ponto de estimativa de <issue/> como <value/>."
+      },
+      "intake": {
+        "accepted": "aceitou este item de trabalho do Intake.",
+        "declined": "rejeitou este item de trabalho do Intake.",
+        "duplicate": "rejeitou este item de trabalho do Intake, marcando-o como duplicado de outro item de trabalho.",
+        "snoozed": "adiou este item de trabalho.",
+        "updated": "atualizou o estado do item de trabalho do Intake."
+      },
+      "label": {
+        "added": "adicionou uma nova etiqueta <label/>",
+        "added_with_issue": "adicionou uma nova etiqueta <label/> a <issue/>",
+        "removed": "removeu a etiqueta <label/>",
+        "removed_with_issue": "removeu a etiqueta <label/> de <issue/>"
+      },
+      "link": {
+        "added": "adicionou um <link>link</link>.",
+        "added_with_issue": "adicionou um <link>link</link> a <issue/>.",
+        "removed": "removeu este <link>link</link>.",
+        "removed_with_issue": "removeu este <link>link</link> de <issue/>.",
+        "updated": "atualizou o <link>link</link>.",
+        "updated_with_issue": "atualizou o <link>link</link> de <issue/>."
+      },
+      "module": {
+        "added": "adicionou este item de trabalho ao módulo <module/>",
+        "removed": "removeu o item de trabalho do módulo <module/>",
+        "set": "definiu o módulo como <module/>"
+      },
+      "name": {
+        "set": "definiu o nome como {name}."
+      },
+      "parent": {
+        "removed": "removeu o item pai <value/>.",
+        "removed_with_issue": "removeu o item pai <value/> de <issue/>.",
+        "set": "definiu o item pai como <value/>.",
+        "set_with_issue": "definiu o item pai de <issue/> como <value/>."
+      },
+      "priority": {
+        "set": "definiu a prioridade como <value/>.",
+        "set_with_issue": "definiu a prioridade de <issue/> como <value/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "marcou este item de trabalho como bloqueado por <value/>.",
+          "removed": "removeu o bloqueio deste item de trabalho pelo item de trabalho <value/>."
+        },
+        "blocking": {
+          "added": "marcou este item de trabalho como bloqueando o item de trabalho <value/>.",
+          "removed": "removeu o item de trabalho bloqueado <value/>."
+        },
+        "duplicate": {
+          "added": "marcou este item de trabalho como duplicado de <value/>.",
+          "removed": "removeu a marcação deste item de trabalho como duplicado de <value/>."
+        },
+        "finish_after": {
+          "added": "marcou que este item de trabalho termina depois de <value/>.",
+          "removed": "removeu a relação \"termina depois de\" com <value/>."
+        },
+        "finish_before": {
+          "added": "marcou que este item de trabalho termina antes de <value/>.",
+          "removed": "removeu a relação \"termina antes de\" com <value/>."
+        },
+        "relates_to": {
+          "added": "marcou que este item de trabalho está relacionado a <value/>.",
+          "removed": "removeu a relação com <value/>."
+        },
+        "start_after": {
+          "added": "marcou que este item de trabalho começa depois de <value/>.",
+          "removed": "removeu a relação \"começa depois de\" com <value/>."
+        },
+        "start_before": {
+          "added": "marcou que este item de trabalho começa antes de <value/>.",
+          "removed": "removeu a relação \"começa antes de\" com <value/>."
+        }
+      },
+      "restored": "restaurou o item de trabalho.",
+      "start_date": {
+        "removed": "removeu a data de início.",
+        "removed_with_issue": "removeu a data de início de <issue/>.",
+        "set": "definiu a data de início como <value/>.",
+        "set_with_issue": "definiu a data de início de <issue/> como <value/>."
+      },
+      "state": {
+        "set": "definiu o estado como <value/>.",
+        "set_with_issue": "definiu o estado de <issue/> como <value/>."
+      },
+      "target_date": {
+        "removed": "removeu a data de vencimento.",
+        "removed_with_issue": "removeu a data de vencimento de <issue/>.",
+        "set": "definiu a data de vencimento como <value/>.",
+        "set_with_issue": "definiu a data de vencimento de <issue/> como <value/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "arquivou <issue/>",
+        "restored": "restaurou <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "adicionou um novo responsável <assignee/> a <issue/>",
+        "added_without_issue": "adicionou um novo responsável <assignee/>",
+        "removed_with_issue": "removeu o responsável <assignee/> de <issue/>",
+        "removed_without_issue": "removeu o responsável <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "carregou um novo anexo para <issue/>",
+        "added_without_issue": "carregou um novo anexo",
+        "removed_with_issue": "removeu um anexo de <issue/>",
+        "removed_without_issue": "removeu um anexo"
+      },
+      "blocked_by": {
+        "added_with_issue": "marcou <issue/> como bloqueado por <value/>.",
+        "added_without_issue": "marcou este item de trabalho como bloqueado por <value/>.",
+        "removed_with_issue": "removeu o bloqueio de <issue/> pelo item de trabalho <value/>.",
+        "removed_without_issue": "removeu o bloqueio deste item de trabalho pelo item de trabalho <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "marcou <issue/> como bloqueando o item de trabalho <value/>.",
+        "added_without_issue": "marcou este item de trabalho como bloqueando o item de trabalho <value/>.",
+        "removed": "removeu o item de trabalho bloqueado <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "adicionou <issue/> <nowrap>ao ciclo</nowrap> <value/>",
+        "added_without_issue": "adicionou este item de trabalho <nowrap>ao ciclo</nowrap> <value/>",
+        "removed": "removeu <issue/> do ciclo <value/>",
+        "set": "<nowrap>definiu o ciclo como</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "atualizou a descrição de <issue/>",
+        "updated_without_issue": "atualizou a descrição"
+      },
+      "duplicate": {
+        "added_with_issue": "marcou <issue/> como duplicado de <value/>.",
+        "added_without_issue": "marcou este item de trabalho como duplicado de <value/>.",
+        "removed_with_issue": "removeu a marcação de <issue/> como duplicado de <value/>.",
+        "removed_without_issue": "removeu a marcação deste item de trabalho como duplicado de <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# dia} many {# dias} other {# dias}}",
+        "removed_with_issue": "removeu a duração de <issue/>",
+        "removed_without_issue": "removeu a duração",
+        "set_with_issue": "definiu a duração de <issue/> como <value/>",
+        "set_without_issue": "definiu a duração como <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "converteu <issue/> em um item de trabalho",
+        "created": "criou <issue/>",
+        "deleted": "eliminou <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "removeu o ponto de estimativa de <issue/>",
+        "removed_without_issue": "removeu o ponto de estimativa",
+        "set_with_issue": "definiu o ponto de estimativa de <issue/> como <value/>",
+        "set_without_issue": "definiu o ponto de estimativa como <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "aceitou o item de trabalho <issue/>",
+        "accepted_without_issue": "aceitou este item de trabalho do Intake.",
+        "declined_with_issue": "rejeitou o item de trabalho <issue/>",
+        "declined_without_issue": "rejeitou este item de trabalho do Intake.",
+        "duplicate_with_issue": "rejeitou o item de trabalho <issue/> do Intake, marcando-o como duplicado de outro item de trabalho.",
+        "duplicate_without_issue": "rejeitou este item de trabalho do Intake, marcando-o como duplicado de outro item de trabalho.",
+        "snoozed_with_issue": "adiou o item de trabalho <issue/>",
+        "snoozed_without_issue": "adiou este item de trabalho.",
+        "updated_with_issue": "atualizou o estado do item de trabalho do Intake. <issue/>",
+        "updated_without_issue": "atualizou o estado do item de trabalho do Intake."
+      },
+      "issue": {
+        "converted_to_epic": "converteu <issue/> em um épico",
+        "created": "criou <issue/>",
+        "deleted": "eliminou <issue/>",
+        "deleted_tooltip": "Este item de trabalho foi eliminado",
+        "fallback_name": "um item de trabalho"
+      },
+      "label": {
+        "added_with_issue": "adicionou uma nova etiqueta <label/> a <issue/>",
+        "added_without_issue": "adicionou uma nova etiqueta <label/>",
+        "removed_with_issue": "removeu a etiqueta <label/> de <issue/>",
+        "removed_without_issue": "removeu a etiqueta <label/>"
+      },
+      "link": {
+        "added_with_issue": "adicionou este <link>link</link> a <issue/>",
+        "added_without_issue": "adicionou este <link>link</link>",
+        "removed_with_issue": "removeu este <link>link</link> de <issue/>",
+        "removed_without_issue": "removeu este <link>link</link>",
+        "updated_with_issue": "atualizou o <link>link</link> de <issue/>",
+        "updated_without_issue": "atualizou o <link>link</link>"
+      },
+      "module": {
+        "added_with_issue": "adicionou <issue/> ao módulo <value/>",
+        "added_without_issue": "adicionou este item de trabalho ao módulo <value/>",
+        "removed": "removeu <issue/> do módulo <value/>",
+        "set": "definiu o módulo como <value/>"
+      },
+      "name": {
+        "set_with_issue": "definiu o título de <issue/> como <value/>",
+        "set_without_issue": "definiu o título como <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "removeu o item pai <value/> de <issue/>",
+        "removed_without_issue": "removeu o item pai <value/>",
+        "set_with_issue": "definiu o item pai de <issue/> como <value/>",
+        "set_without_issue": "definiu o item pai como <value/>"
+      },
+      "priority": {
+        "high": "Alta",
+        "low": "Baixa",
+        "medium": "Média",
+        "none": "Nenhuma",
+        "set_with_issue": "definiu a prioridade de <issue/> como <value/>",
+        "set_without_issue": "definiu a prioridade como <value/>",
+        "urgent": "Urgente"
+      },
+      "relates_to": {
+        "added_with_issue": "marcou que <issue/> está relacionado a <value/>.",
+        "added_without_issue": "marcou que este item de trabalho está relacionado a <value/>.",
+        "removed": "removeu a relação com <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "removeu a data de início de <issue/>",
+        "removed_without_issue": "removeu a data de início",
+        "set_with_issue": "definiu a data de início de <issue/> como <value/>",
+        "set_without_issue": "definiu a data de início como <value/>"
+      },
+      "state": {
+        "set_with_issue": "definiu o estado de <issue/> como <value/>",
+        "set_without_issue": "definiu o estado como <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "removeu a data de vencimento de <issue/>",
+        "removed_without_issue": "removeu a data de vencimento",
+        "set_with_issue": "definiu a data de vencimento de <issue/> como <value/>",
+        "set_without_issue": "definiu a data de vencimento como <value/>"
+      },
+      "actor_separator": " ",
+      "commented_ago": "Comentou {timeAgo}"
+    },
+    "project": {
+      "archived_at": {
+        "archived": "arquivou o projeto",
+        "restored": "restaurou o projeto"
+      },
+      "cycle_view": {
+        "disabled": "desativou a visualização de ciclos",
+        "enabled": "ativou a visualização de ciclos",
+        "fallback": "atualizou a visualização de ciclos"
+      },
+      "cycles": {
+        "added": "adicionou este projeto ao ciclo <value/>",
+        "removed": "removeu este projeto do ciclo <value/>",
+        "unknown": "Ciclo desconhecido"
+      },
+      "default": "atualizou as definições do projeto",
+      "description": {
+        "removed": "removeu a descrição do projeto",
+        "updated": "atualizou a descrição do projeto"
+      },
+      "estimate": {
+        "removed": "removeu o ponto de estimativa",
+        "removed_with_value": "removeu o ponto de estimativa <value/>",
+        "set": "definiu o ponto de estimativa como <value/>"
+      },
+      "identifier": {
+        "updated": "atualizou o identificador do projeto para <value/>"
+      },
+      "inbox": {
+        "disabled": "desativou o Intake",
+        "enabled": "ativou o Intake"
+      },
+      "intake_view": {
+        "disabled": "desativou a visualização do Intake",
+        "enabled": "ativou a visualização do Intake",
+        "fallback": "atualizou a visualização do Intake"
+      },
+      "is_epic_enabled": {
+        "disabled": "desativou os épicos",
+        "enabled": "ativou os épicos",
+        "fallback": "atualizou os épicos"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "desativou os tipos de item de trabalho",
+        "enabled": "ativou os tipos de item de trabalho",
+        "fallback": "atualizou os tipos de item de trabalho"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "desativou as atualizações do projeto",
+        "enabled": "ativou as atualizações do projeto",
+        "fallback": "atualizou as atualizações do projeto"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "desativou o registo de tempo",
+        "enabled": "ativou o registo de tempo",
+        "fallback": "atualizou o registo de tempo"
+      },
+      "is_workflow_enabled": {
+        "disabled": "desativou o fluxo de trabalho personalizado",
+        "enabled": "ativou o fluxo de trabalho personalizado",
+        "fallback": "atualizou o fluxo de trabalho personalizado"
+      },
+      "issue_views_view": {
+        "disabled": "desativou a visualização de visões de itens de trabalho",
+        "enabled": "ativou a visualização de visões de itens de trabalho",
+        "fallback": "atualizou a visualização de visões de itens de trabalho"
+      },
+      "labels": {
+        "added": "adicionou a etiqueta <value/>",
+        "created": "criou a etiqueta <value/>",
+        "deleted": "eliminou a etiqueta <value/>",
+        "removed": "removeu a etiqueta <value/>",
+        "untitled": "Etiqueta sem título",
+        "updated": "atualizou a etiqueta <value/>"
+      },
+      "module_view": {
+        "disabled": "desativou a visualização de módulos",
+        "enabled": "ativou a visualização de módulos",
+        "fallback": "atualizou a visualização de módulos"
+      },
+      "modules": {
+        "added": "adicionou este projeto ao módulo <value/>",
+        "removed": "removeu este projeto do módulo <value/>",
+        "unknown": "Módulo desconhecido"
+      },
+      "name": {
+        "renamed": "renomeou o projeto para <value/>"
+      },
+      "network": {
+        "disabled": "desativou o acesso à rede",
+        "enabled": "ativou o acesso à rede"
+      },
+      "page": {
+        "created": "criou a página do projeto <value/>",
+        "removed": "removeu a página do projeto <value/>",
+        "untitled": "Página sem título"
+      },
+      "page_view": {
+        "disabled": "desativou a visualização de páginas",
+        "enabled": "ativou a visualização de páginas",
+        "fallback": "atualizou a visualização de páginas"
+      },
+      "priority": {
+        "set": "definiu a prioridade como <value/>"
+      },
+      "start_date": {
+        "removed": "removeu a data de início",
+        "set": "definiu a data de início como <value/>"
+      },
+      "state": {
+        "set": "definiu o estado como <value/>"
+      },
+      "target_date": {
+        "removed": "removeu a data-alvo",
+        "set": "definiu a data-alvo como <value/>"
+      },
+      "timezone": {
+        "changed": "alterou o fuso horário do projeto para <value/>",
+        "default": "predefinido"
+      },
+      "value_none": "nenhum"
+    }
+  }
+}

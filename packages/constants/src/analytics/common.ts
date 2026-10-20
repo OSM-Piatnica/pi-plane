@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -105,85 +106,104 @@ export const ANALYTICS_INSIGHTS_FIELDS: Record<TAnalyticsTabsBase, IInsightField
 export const ANALYTICS_DURATION_FILTER_OPTIONS = [
   {
     name: "Yesterday",
+    i18n_name: "app_text.analytics.yesterday",
     value: "yesterday",
   },
   {
     name: "Last 7 days",
+    i18n_name: "app_text.analytics.last_7_days",
     value: "last_7_days",
   },
   {
     name: "Last 30 days",
+    i18n_name: "app_text.analytics.last_30_days",
     value: "last_30_days",
   },
   {
     name: "Last 3 months",
+    i18n_name: "app_text.analytics.last_3_months",
     value: "last_3_months",
   },
 ];
 
-export const ANALYTICS_X_AXIS_VALUES: { value: ChartXAxisProperty; label: string }[] = [
+export const ANALYTICS_X_AXIS_VALUES: { value: ChartXAxisProperty; label: string; i18n_label: string }[] = [
   {
     value: ChartXAxisProperty.STATES,
     label: "State name",
+    i18n_label: "app_text.analytics.state_name",
   },
   {
     value: ChartXAxisProperty.STATE_GROUPS,
     label: "State group",
+    i18n_label: "common.state_group",
   },
   {
     value: ChartXAxisProperty.PRIORITY,
     label: "Priority",
+    i18n_label: "common.priority",
   },
   {
     value: ChartXAxisProperty.LABELS,
     label: "Label",
+    i18n_label: "common.label",
   },
   {
     value: ChartXAxisProperty.ASSIGNEES,
     label: "Assignee",
+    i18n_label: "common.assignee",
   },
   {
     value: ChartXAxisProperty.ESTIMATE_POINTS,
     label: "Estimate point",
+    i18n_label: "app_text.analytics.estimate_point",
   },
   {
     value: ChartXAxisProperty.CYCLES,
     label: "Cycle",
+    i18n_label: "common.cycle",
   },
   {
     value: ChartXAxisProperty.MODULES,
     label: "Module",
+    i18n_label: "common.module",
   },
   {
     value: ChartXAxisProperty.COMPLETED_AT,
     label: "Completed date",
+    i18n_label: "app_text.analytics.completed_date",
   },
   {
     value: ChartXAxisProperty.TARGET_DATE,
     label: "Due date",
+    i18n_label: "common.order_by.due_date",
   },
   {
     value: ChartXAxisProperty.START_DATE,
     label: "Start date",
+    i18n_label: "common.order_by.start_date",
   },
   {
     value: ChartXAxisProperty.CREATED_AT,
     label: "Created date",
+    i18n_label: "inbox_ui.created_date",
   },
 ];
 
-export const ANALYTICS_Y_AXIS_VALUES: { value: ChartYAxisMetric; label: string }[] = [
+export const ANALYTICS_Y_AXIS_VALUES: { value: ChartYAxisMetric; label: string; i18n_label: string }[] = [
   {
     value: ChartYAxisMetric.WORK_ITEM_COUNT,
     label: "Work item",
+    i18n_label: "common.work_item",
   },
   {
     value: ChartYAxisMetric.ESTIMATE_POINT_COUNT,
     label: "Estimate",
+    i18n_label: "common.estimate",
   },
   {
     value: ChartYAxisMetric.EPIC_WORK_ITEM_COUNT,
     label: "Epic",
+    i18n_label: "common.epic",
   },
 ];
 

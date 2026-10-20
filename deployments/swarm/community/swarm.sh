@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 BRANCH=${BRANCH:-main}
 SERVICE_FOLDER=plane-app
@@ -38,7 +38,7 @@ EOF
 
 function checkLatestRelease(){
     echo "Checking for the latest release..." >&2
-    local latest_release=$(curl -s https://api.github.com/repos/$GH_REPO/releases/latest |  grep -o '"tag_name": "[^"]*"' | sed 's/"tag_name": "//;s/"//g;s/^v//')
+    local latest_release=$(curl -s https://api.github.com/repos/$GH_REPO/releases/latest |  grep -o '"tag_name": *"[^"]*"' | sed 's/"tag_name": *"//;s/"//g;s/^v//')
     if [ -z "$latest_release" ]; then
         echo "Failed to check for the latest release. Exiting..." >&2
         exit 1
@@ -158,7 +158,7 @@ function download() {
     echo $FALLBACK_DOWNLOAD_URL
     echo $APP_RELEASE
 
-    RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/docker-compose.yml?$(date +%s)")
+    RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/compose.yaml?$(date +%s)")
     BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
     STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
@@ -166,15 +166,15 @@ function download() {
         echo "$BODY" > $PLANE_INSTALL_DIR/docker-compose.yml
     else
         # Fallback to download from the raw github url
-        RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$FALLBACK_DOWNLOAD_URL/docker-compose.yml?$(date +%s)")
+        RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$FALLBACK_DOWNLOAD_URL/compose.yaml?$(date +%s)")
         BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
         STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
         if [ "$STATUS" -eq 200 ]; then
             echo "$BODY" > $PLANE_INSTALL_DIR/docker-compose.yml
         else
-            echo "Failed to download docker-compose.yml. HTTP Status: $STATUS"
-            echo "URL: $RELEASE_DOWNLOAD_URL/v$APP_RELEASE/docker-compose.yml"
+            echo "Failed to download compose.yaml. HTTP Status: $STATUS"
+            echo "URL: $RELEASE_DOWNLOAD_URL/v$APP_RELEASE/compose.yaml"
             mv $PLANE_INSTALL_DIR/archive/$TS.docker-compose.yml $PLANE_INSTALL_DIR/docker-compose.yml
             exit 1
         fi

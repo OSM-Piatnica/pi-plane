@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -83,7 +84,7 @@ def send_email_update_confirmation(email):
         ) = get_email_configuration()
 
         # Send the confirmation email
-        subject = "Plane email address successfully updated"
+        subject = "Pi-Plane email address successfully updated"
         context = {"email": email}
 
         html_content = render_to_string("emails/user/email_updated.html", context)

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,8 +9,9 @@ import React, { useEffect, useState, useCallback } from "react";
 // plane imports
 import { TOOLBAR_ITEMS } from "@plane/editor";
 import type { ToolbarMenuItem, EditorRefApi } from "@plane/editor";
-import { Button } from "@plane/propel/button";
-import { Tooltip } from "@plane/propel/tooltip";
+import { Button } from "@makeplane/propel/components/button";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 
 type Props = {
@@ -25,6 +27,7 @@ const toolbarItems = TOOLBAR_ITEMS.lite;
 
 export function IssueCommentToolbar(props: Props) {
   const { executeCommand, handleSubmit, isCommentEmpty, editorRef, isSubmitting, showSubmitButton } = props;
+  const { t } = useTranslation();
   // states
   const [activeStates, setActiveStates] = useState<Record<string, boolean>>({});
 
@@ -70,12 +73,8 @@ export function IssueCommentToolbar(props: Props) {
                 return (
                   <Tooltip
                     key={item.renderKey}
-                    tooltipContent={
-                      <p className="flex flex-col gap-1 text-center text-11">
-                        <span className="font-medium">{item.name}</span>
-                        {item.shortcut && <kbd className="text-placeholder">{item.shortcut.join(" + ")}</kbd>}
-                      </p>
-                    }
+                    label={item.name}
+                    shortcut={item.shortcut ? item.shortcut.join(" + ") : undefined}
                   >
                     <button
                       type="button"
@@ -105,12 +104,13 @@ export function IssueCommentToolbar(props: Props) {
             <Button
               type="button"
               variant="primary"
+              size="sm"
+              stretch="auto"
+              label={t("common.comment")}
               onClick={handleSubmit}
               disabled={isCommentEmpty}
               loading={isSubmitting}
-            >
-              Comment
-            </Button>
+            />
           </div>
         )}
       </div>

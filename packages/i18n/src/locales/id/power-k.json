@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Buka pintasan keyboard",
-      "open_plane_documentation": "Buka dokumentasi Plane",
+      "open_plane_documentation": "Buka dokumentasi Pi-Plane",
       "join_forum": "Gabung dengan Forum kami",
       "report_bug": "Laporkan bug",
       "chat_with_us": "Ngobrol dengan kami"
@@ -175,6 +175,11 @@
     },
     "footer": {
       "workspace_level": "Tingkat ruang kerja"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Cari pintasan keyboard",
+      "no_results": "Tidak ada pintasan keyboard yang ditemukan untuk \"{query}\"",
+      "sequence_separator": "lalu"
     },
     "group_titles": {
       "actions": "Aksi",

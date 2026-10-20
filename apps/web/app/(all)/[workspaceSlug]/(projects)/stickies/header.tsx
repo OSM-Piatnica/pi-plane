@@ -1,15 +1,18 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
-import { Button } from "@plane/propel/button";
-import { RecentStickyIcon } from "@plane/propel/icons";
-import { Breadcrumbs, Header } from "@plane/ui";
+import { useTranslation } from "@plane/i18n";
+import { Button } from "@makeplane/propel/components/button";
+import { MultipleStickyOutline } from "@makeplane/propel/icons";
+import { Breadcrumbs } from "@plane/blocks/breadcrumb";
+import { Header } from "@plane/blocks/layout";
 // components
 import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
 import { StickySearch } from "@/components/stickies/modal/search";
@@ -18,6 +21,7 @@ import { useStickyOperations } from "@/components/stickies/sticky/use-operations
 import { useSticky } from "@/hooks/use-stickies";
 
 export const WorkspaceStickyHeader = observer(function WorkspaceStickyHeader() {
+  const { t } = useTranslation();
   const { workspaceSlug } = useParams();
   // hooks
   const { creatingSticky, toggleShowNewSticky } = useSticky();
@@ -32,8 +36,8 @@ export const WorkspaceStickyHeader = observer(function WorkspaceStickyHeader() {
               <Breadcrumbs.Item
                 component={
                   <BreadcrumbLink
-                    label={`Stickies`}
-                    icon={<RecentStickyIcon className="size-5 rotate-90 text-secondary" />}
+                    label={t("sidebar.stickies")}
+                    icon={<MultipleStickyOutline className="size-5 rotate-90 text-secondary" />}
                   />
                 }
               />
@@ -45,15 +49,15 @@ export const WorkspaceStickyHeader = observer(function WorkspaceStickyHeader() {
           <StickySearch />
           <Button
             variant="primary"
-            size="lg"
+            size="md"
+            stretch="auto"
+            label={t("stickies.add")}
             onClick={() => {
               toggleShowNewSticky(true);
               stickyOperations.create();
             }}
             loading={creatingSticky}
-          >
-            Add sticky
-          </Button>
+          />
         </Header.RightItem>
       </Header>
     </>

@@ -5,7 +5,7 @@
       "not_right_now": "Nie teraz",
       "create_project": {
         "title": "Utwórz projekt",
-        "description": "Większość rzeczy zaczyna się od projektu w Plane.",
+        "description": "Większość rzeczy zaczyna się od projektu w Pi-Plane.",
         "cta": "Zacznij"
       },
       "invite_team": {
@@ -19,7 +19,7 @@
         "cta": "Skonfiguruj tę przestrzeń"
       },
       "personalize_account": {
-        "title": "Spersonalizuj Plane.",
+        "title": "Spersonalizuj Pi-Plane.",
         "description": "Wybierz zdjęcie, kolory i inne.",
         "cta": "Dostosuj teraz"
       },
@@ -53,7 +53,7 @@
       }
     },
     "new_at_plane": {
-      "title": "Co nowego w Plane"
+      "title": "Co nowego w Pi-Plane"
     },
     "quick_tutorial": {
       "title": "Szybki samouczek"
@@ -64,7 +64,7 @@
     },
     "manage_widgets": "Zarządzaj widżetami",
     "title": "Strona główna",
-    "star_us_on_github": "Oceń nas na GitHubie",
+    "star_us_on_github": "Daj nam gwiazdkę na GitHubie",
     "business_trial_banner": {
       "title": "Twój 14-dniowy okres próbny planu Business jest aktywny!",
       "description": "Poznaj wszystkie funkcje Business. Gdy będziesz gotowy, wybierz subskrypcję. Nie zostaniesz automatycznie obciążony.",

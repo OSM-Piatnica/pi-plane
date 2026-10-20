@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,7 +11,7 @@ import { useTheme } from "next-themes";
 import useSWR from "swr";
 // plane imports
 import { SPACE_BASE_PATH } from "@plane/constants";
-import { PlaneLockup } from "@plane/propel/icons";
+import { PlaneLockup } from "@plane/blocks/icons";
 // assets
 import PlaneBackgroundPatternDark from "@/app/assets/auth/background-pattern-dark.svg?url";
 import PlaneBackgroundPattern from "@/app/assets/auth/background-pattern.svg?url";
@@ -58,7 +59,7 @@ export const InstanceProvider = observer(function InstanceProvider({ children }:
             </div>
           </div>
           <div className="absolute inset-0 z-0">
-            <img src={patternBackground} className="h-full w-screen object-cover" alt="Plane background pattern" />
+            <img src={patternBackground} className="h-full w-screen object-cover" alt="Pi-Plane background pattern" />
           </div>
           <div className="relative z-10 flex-grow">
             <div className="relative mx-auto flex h-full w-full items-center justify-center overflow-y-auto px-6 py-10">

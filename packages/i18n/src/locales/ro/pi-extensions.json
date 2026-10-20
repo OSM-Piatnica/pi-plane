@@ -119,6 +119,7 @@
       "save_success": "Configurația fluxului de lucru a fost salvată.",
       "toggle_error": "Nu s-au putut actualiza setările fluxului de lucru.",
       "transition": "Tranziție",
+      "transition_count": "{count, plural, one {# tranziție} few {# tranziții} other {# de tranziții}}",
       "transitions_configured": "tranziții configurate"
     }
   },

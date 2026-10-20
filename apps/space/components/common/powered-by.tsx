@@ -1,12 +1,16 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { WEBSITE_URL } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 // assets
-import { PlaneLogo } from "@plane/propel/icons";
+import { PlaneLogo } from "@plane/blocks/icons";
+import { renderTaggedText } from "@/helpers/tagged-text";
+
+const PI_PLANE_REPO_URL = "https://github.com/OSM-Piatnica/pi-plane";
 
 type TPoweredBy = {
   disabled?: boolean;
@@ -15,19 +19,22 @@ type TPoweredBy = {
 export function PoweredBy(props: TPoweredBy) {
   // props
   const { disabled = false } = props;
+  const { t } = useTranslation();
 
-  if (disabled || !WEBSITE_URL) return null;
+  if (disabled) return null;
 
   return (
     <a
-      href={WEBSITE_URL}
+      href={PI_PLANE_REPO_URL}
       className="fixed right-5 bottom-2.5 !z-[999999] flex items-center gap-1 rounded-sm border border-subtle bg-layer-3 px-2 py-1 shadow-raised-100"
       target="_blank"
       rel="noreferrer noopener"
     >
       <PlaneLogo className="h-3 w-auto text-primary" />
       <div className="text-11">
-        Powered by <span className="font-semibold">Plane Publish</span>
+        {renderTaggedText(t("space_text.powered_by.label"), {
+          name: (text) => <span className="font-semibold">{text}</span>,
+        })}
       </div>
     </a>
   );

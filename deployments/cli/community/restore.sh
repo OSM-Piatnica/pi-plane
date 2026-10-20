@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function print_header() {
 clear
@@ -41,7 +41,7 @@ function restoreSingleVolume() {
         -e TAR_NAME="$restoreFile" \
         -v "$selectedVolume":"/vol" \
         -v "$backupFolder":/backup \
-        busybox sh -c 'mkdir -p /restore && tar -xzf "/backup/${TAR_NAME}.tar.gz" -C /restore && mv /restore/${TAR_NAME}/* /vol'
+        busybox sh -c 'mkdir -p /restore && tar -xzf "/backup/${TAR_NAME}.tar.gz" -C /restore && cp -a /restore/${TAR_NAME}/. /vol/'
     
     if [ $? -ne 0 ]; then
         echo "Error: Failed to restore volume ${selectedVolume} from ${restoreFile}.tar.gz"
@@ -77,6 +77,8 @@ function restoreData() {
     fi
     
 
+    local failed_volumes=()
+
     for BACKUP_FILE in $BACKUP_FOLDER/*.tar.gz; do
         if [ -e "$BACKUP_FILE" ]; then
             
@@ -95,7 +97,9 @@ function restoreData() {
                 echo "Skipping: No volume found with name $restoreVolName"
             else
                 echo ".....Restoring $docVol"
-                restoreSingleVolume "$docVol" "$BACKUP_FOLDER" "$restoreFileName"
+                if ! restoreSingleVolume "$docVol" "$BACKUP_FOLDER" "$restoreFileName"; then
+                    failed_volumes+=("$docVol")
+                fi
             fi
         else
             echo "No .tar.gz files found in the current directory."
@@ -108,6 +112,11 @@ function restoreData() {
     done
 
     echo ""
+    if [ ${#failed_volumes[@]} -gt 0 ]; then
+        echo "Restore completed with errors. Failed volumes: ${failed_volumes[*]}"
+        echo ""
+        exit 1
+    fi
     echo "Restore completed successfully."
     echo ""
 }

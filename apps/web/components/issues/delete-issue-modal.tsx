@@ -1,0 +1,133 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useState } from "react";
+import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
+// types
+import { PROJECT_ERROR_MESSAGES, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
+import { setToast } from "@plane/blocks/toast";
+import type { TDeDupeIssue, TIssue } from "@plane/types";
+// ui
+import { ConfirmDialog } from "@plane/blocks/dialog";
+// constants
+// hooks
+import { useIssues } from "@/hooks/store/use-issues";
+import { useProject } from "@/hooks/store/use-project";
+import { useUser, useUserPermissions } from "@/hooks/store/user";
+
+type Props = {
+  isOpen: boolean;
+  handleClose: () => void;
+  dataId?: string | null | undefined;
+  data?: TIssue | TDeDupeIssue;
+  isSubIssue?: boolean;
+  onSubmit?: () => Promise<void>;
+  isEpic?: boolean;
+};
+
+export const DeleteIssueModal = observer(function DeleteIssueModal(props: Props) {
+  const { dataId, data, isOpen, handleClose, isSubIssue = false, onSubmit, isEpic = false } = props;
+  // states
+  const [isDeleting, setIsDeleting] = useState(false);
+  // store hooks
+  const { workspaceSlug } = useParams();
+  const { issueMap } = useIssues();
+  const { getProjectById } = useProject();
+  const { allowPermissions } = useUserPermissions();
+  const { t } = useTranslation();
+
+  const { data: currentUser } = useUser();
+
+  // reset the deleting flag whenever the modal is opened or closed
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
+  if (prevIsOpen !== isOpen) {
+    setPrevIsOpen(isOpen);
+    setIsDeleting(false);
+  }
+
+  if (!dataId && !data) return null;
+
+  // derived values
+  const issue = data ? data : issueMap[dataId!];
+  const projectDetails = getProjectById(issue?.project_id);
+  const isIssueCreator = issue?.created_by === currentUser?.id;
+
+  const canPerformProjectAdminActions = allowPermissions(
+    [EUserPermissions.ADMIN],
+    EUserPermissionsLevel.PROJECT,
+    workspaceSlug?.toString(),
+    projectDetails?.id
+  );
+
+  const authorized = isIssueCreator || canPerformProjectAdminActions;
+
+  const onClose = () => {
+    setIsDeleting(false);
+    handleClose();
+  };
+
+  const handleIssueDelete = async () => {
+    setIsDeleting(true);
+
+    if (!authorized) {
+      setToast({
+        title: t(PROJECT_ERROR_MESSAGES.permissionError.i18n_title),
+        type: "error",
+        message:
+          PROJECT_ERROR_MESSAGES.permissionError.i18n_message && t(PROJECT_ERROR_MESSAGES.permissionError.i18n_message),
+      });
+      onClose();
+      return;
+    }
+    if (!onSubmit) return;
+    try {
+      await onSubmit();
+      setToast({
+        type: "success",
+        title: t("common.success"),
+        message: t("entity.delete.success", {
+          entity: isSubIssue ? t("common.sub_work_item") : isEpic ? t("common.epic") : t("common.work_item"),
+        }),
+      });
+      onClose();
+      return;
+    } catch (errors) {
+      const isPermissionError =
+        (errors as { error?: string } | undefined)?.error ===
+        `Only admin or creator can delete the ${isSubIssue ? "sub-work item" : isEpic ? "epic" : "work item"}`;
+      const currentError = isPermissionError
+        ? PROJECT_ERROR_MESSAGES.permissionError
+        : PROJECT_ERROR_MESSAGES.issueDeleteError;
+      setToast({
+        title: t(currentError.i18n_title),
+        type: "error",
+        message: currentError.i18n_message && t(currentError.i18n_message),
+      });
+    } finally {
+      onClose();
+    }
+  };
+
+  return (
+    <ConfirmDialog
+      handleClose={onClose}
+      handleSubmit={handleIssueDelete}
+      isSubmitting={isDeleting}
+      isOpen={isOpen}
+      title={t("entity.delete.label", { entity: isEpic ? t("common.epic") : t("common.work_item") })}
+      content={
+        <>
+          {t(isEpic ? "issue_ui.delete_confirm.epic" : "issue_ui.delete_confirm.work_item", {
+            identifier: `${projectDetails?.identifier}-${issue?.sequence_id}`,
+          })}
+        </>
+      }
+    />
+  );
+});

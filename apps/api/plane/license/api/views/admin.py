@@ -1,11 +1,11 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
 from urllib.parse import urlencode, urljoin
 import uuid
-from zxcvbn import zxcvbn
 
 # Django imports
 from django.http import HttpResponseRedirect
@@ -34,6 +34,8 @@ from plane.db.models import User, Profile
 from plane.utils.cache import cache_response, invalidate_cache
 from plane.authentication.utils.login import user_login
 from plane.authentication.utils.host import base_host, user_ip
+from plane.authentication.rate_limit import throttle_auth_redirect
+from plane.authentication.utils.password import is_password_strong
 from plane.authentication.adapter.error import (
     AUTHENTICATION_ERROR_CODES,
     AuthenticationException,
@@ -90,6 +92,7 @@ class InstanceAdminEndpoint(BaseAPIView):
 class InstanceAdminSignUpEndpoint(View):
     permission_classes = [AllowAny]
 
+    @throttle_auth_redirect(is_admin=True)
     @invalidate_cache(path="/api/instances/", user=False)
     def post(self, request):
         # Check instance first (outside the transaction — no need to lock yet)
@@ -126,7 +129,7 @@ class InstanceAdminSignUpEndpoint(View):
         first_name = request.POST.get("first_name", False)
         last_name = request.POST.get("last_name", "")
         company_name = request.POST.get("company_name", "")
-        is_telemetry_enabled = request.POST.get("is_telemetry_enabled", True)
+        is_telemetry_enabled = request.POST.get("is_telemetry_enabled", False)
 
         # return error if the email and password is not present
         if not email or not password or not first_name:
@@ -192,8 +195,7 @@ class InstanceAdminSignUpEndpoint(View):
             )
             return HttpResponseRedirect(url)
         else:
-            results = zxcvbn(password)
-            if results["score"] < 3:
+            if not is_password_strong(password):
                 exc = AuthenticationException(
                     error_code=AUTHENTICATION_ERROR_CODES["PASSWORD_TOO_WEAK"],
                     error_message="PASSWORD_TOO_WEAK",
@@ -269,6 +271,7 @@ class InstanceAdminSignUpEndpoint(View):
 class InstanceAdminSignInEndpoint(View):
     permission_classes = [AllowAny]
 
+    @throttle_auth_redirect(is_admin=True)
     @invalidate_cache(path="/api/instances/", user=False)
     def post(self, request):
         # Check instance first

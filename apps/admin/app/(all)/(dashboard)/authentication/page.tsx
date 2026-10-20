@@ -1,21 +1,23 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react";
 import { useTheme } from "next-themes";
 import useSWR from "swr";
 // plane internal packages
-import { setPromiseToast, setToast, TOAST_TYPE } from "@plane/propel/toast";
+import { Switch } from "@makeplane/propel/components/switch";
 import type { TInstanceConfigurationKeys, TInstanceAuthenticationModes } from "@plane/types";
-import { Loader, ToggleSwitch } from "@plane/ui";
 import { cn, resolveGeneralTheme } from "@plane/utils";
 // components
 import { PageWrapper } from "@/components/common/page-wrapper";
 import { AuthenticationMethodCard } from "@/components/authentication/authentication-method-card";
+import { Skeleton } from "@/components/common/skeleton";
+import { setPromiseToast, setToast } from "@plane/blocks/toast";
 // helpers
 import { canDisableAuthMethod } from "@/helpers/authentication";
 // hooks
@@ -54,7 +56,7 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
 
           if (!canDisable) {
             setToast({
-              type: TOAST_TYPE.ERROR,
+              type: "error",
               title: "Cannot disable authentication",
               message:
                 "At least one authentication method must remain enabled. Please enable another method before disabling this one.",
@@ -105,8 +107,10 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
     resolvedTheme,
   });
 
-  // Update ref with latest authentication modes
-  authenticationModesRef.current = authenticationModes;
+  // Update ref with latest authentication modes (updateConfig reads it only from event handlers)
+  useEffect(() => {
+    authenticationModesRef.current = authenticationModes;
+  }, [authenticationModes]);
 
   return (
     <PageWrapper
@@ -128,9 +132,10 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
             </div>
             <div className={`shrink-0 pr-4 ${isSubmitting && "opacity-70"}`}>
               <div className="flex items-center gap-4">
-                <ToggleSwitch
-                  value={Boolean(parseInt(enableSignUpConfig))}
-                  onChange={() => {
+                <Switch
+                  aria-label="Allow anyone to sign up even without an invite"
+                  checked={Boolean(parseInt(enableSignUpConfig))}
+                  onCheckedChange={() => {
                     if (Boolean(parseInt(enableSignUpConfig)) === true) {
                       updateConfig("ENABLE_SIGNUP", "0");
                     } else {
@@ -157,18 +162,18 @@ const InstanceAuthenticationPage = observer(function InstanceAuthenticationPage(
           ))}
         </div>
       ) : (
-        <Loader className="space-y-10">
-          <Loader.Item height="50px" width="75%" />
-          <Loader.Item height="50px" width="75%" />
-          <Loader.Item height="50px" width="40%" />
-          <Loader.Item height="50px" width="40%" />
-          <Loader.Item height="50px" width="20%" />
-        </Loader>
+        <Skeleton className="space-y-10">
+          <Skeleton.Item height="50px" width="75%" />
+          <Skeleton.Item height="50px" width="75%" />
+          <Skeleton.Item height="50px" width="40%" />
+          <Skeleton.Item height="50px" width="40%" />
+          <Skeleton.Item height="50px" width="20%" />
+        </Skeleton>
       )}
     </PageWrapper>
   );
 });
 
-export const meta: Route.MetaFunction = () => [{ title: "Authentication Settings - Plane Web" }];
+export const meta: Route.MetaFunction = () => [{ title: "Authentication Settings - Pi-Plane Web" }];
 
 export default InstanceAuthenticationPage;

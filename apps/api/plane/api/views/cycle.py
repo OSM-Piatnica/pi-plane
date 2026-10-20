@@ -28,13 +28,14 @@ from drf_spectacular.utils import OpenApiRequest, OpenApiResponse
 from plane.api.serializers import (
     CycleIssueSerializer,
     CycleSerializer,
+    CycleLiteSerializer,
     CycleIssueRequestSerializer,
     TransferCycleIssueRequestSerializer,
     CycleCreateSerializer,
     CycleUpdateSerializer,
     IssueSerializer,
 )
-from plane.app.permissions import ProjectEntityPermission
+from plane.app.permissions import ProjectAdminPermission, ProjectEntityPermission
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.db.models import (
     Cycle,
@@ -43,11 +44,10 @@ from plane.db.models import (
     Project,
     FileAsset,
     IssueLink,
-    ProjectMember,
     UserFavorite,
 )
 from plane.utils.cycle_transfer_issues import transfer_cycle_issues
-from plane.utils.order_queryset import ISSUE_ORDER_BY_ALLOWLIST, sanitize_order_by
+from plane.utils.order_queryset import CYCLE_ORDER_BY_ALLOWLIST, ISSUE_ORDER_BY_ALLOWLIST, sanitize_order_by
 from plane.utils.host import base_host
 from .base import BaseAPIView
 from plane.bgtasks.webhook_task import model_activity
@@ -367,6 +367,54 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
             )
 
 
+class CycleListLiteAPIEndpoint(BaseAPIView):
+    """Cycle Lite List Endpoint"""
+
+    serializer_class = CycleLiteSerializer
+    model = Cycle
+    permission_classes = [ProjectEntityPermission]
+    use_read_replica = True
+
+    @cycle_docs(
+        operation_id="list_cycles_lite",
+        summary="List cycles (lite)",
+        description="Retrieve a paginated, lightweight list of cycles in a project for pickers and references.",
+        parameters=[CURSOR_PARAMETER, PER_PAGE_PARAMETER, ORDER_BY_PARAMETER],
+        responses={
+            200: create_paginated_response(
+                CycleLiteSerializer,
+                "PaginatedCycleLiteResponse",
+                "Paginated list of cycles with minimal fields",
+                "Paginated Cycles (Lite)",
+            ),
+        },
+    )
+    def get(self, request, slug, project_id):
+        """List cycles (lite)
+
+        Retrieve a paginated, lightweight list of non-archived cycles in a project,
+        optimized for pickers and references.
+        """
+        cycles = (
+            Cycle.objects.filter(workspace__slug=slug, project_id=project_id)
+            .filter(archived_at__isnull=True)
+            .select_related("project", "workspace", "owned_by")
+            .order_by(
+                sanitize_order_by(
+                    request.GET.get("order_by", "-created_at"),
+                    CYCLE_ORDER_BY_ALLOWLIST,
+                    default="-created_at",
+                )
+            )
+            .distinct()
+        )
+        return self.paginate(
+            request=request,
+            queryset=cycles,
+            on_results=lambda cycles: CycleLiteSerializer(cycles, many=True).data,
+        )
+
+
 class CycleDetailAPIEndpoint(BaseAPIView):
     """
     This viewset automatically provides `retrieve`, `update` and `destroy` actions related to cycle.
@@ -583,15 +631,7 @@ class CycleDetailAPIEndpoint(BaseAPIView):
         Only admins or the cycle creator can perform this action.
         """
         cycle = Cycle.objects.get(workspace__slug=slug, project_id=project_id, pk=pk)
-        if cycle.owned_by_id != request.user.id and (
-            not ProjectMember.objects.filter(
-                workspace__slug=slug,
-                member=request.user,
-                role=20,
-                project_id=project_id,
-                is_active=True,
-            ).exists()
-        ):
+        if cycle.created_by_id != request.user.id and not ProjectAdminPermission().has_permission(request, self):
             return Response(
                 {"error": "Only admin or creator can delete the cycle"},
                 status=status.HTTP_403_FORBIDDEN,
@@ -775,7 +815,7 @@ class CycleArchiveUnarchiveAPIEndpoint(BaseAPIView):
         Only cycles that have ended can be archived.
         """
         cycle = Cycle.objects.get(pk=cycle_id, project_id=project_id, workspace__slug=slug)
-        if cycle.end_date >= timezone.now():
+        if cycle.end_date is None or cycle.end_date >= timezone.now():
             return Response(
                 {"error": "Only completed cycles can be archived"},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -950,8 +990,15 @@ class CycleIssueListCreateAPIEndpoint(BaseAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Get all CycleWorkItems already created
-        cycle_issues = list(CycleIssue.objects.filter(~Q(cycle_id=cycle_id), issue_id__in=issues))
+        # Get all CycleWorkItems already created, scoped to the URL workspace + project
+        cycle_issues = list(
+            CycleIssue.objects.filter(
+                ~Q(cycle_id=cycle_id),
+                issue_id__in=issues,
+                workspace__slug=slug,
+                project_id=project_id,
+            )
+        )
         existing_issues = [
             str(cycle_issue.issue_id) for cycle_issue in cycle_issues if str(cycle_issue.issue_id) in issues
         ]

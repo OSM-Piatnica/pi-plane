@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -198,6 +199,17 @@ const getChartUpdates = (
   };
 };
 
+// index the distribution entries by id once (first match wins, like Array.find)
+const indexById = <T>(items: T[] | undefined, getId: (item: T) => string | null): Map<string | null, T> => {
+  const map = new Map<string | null, T>();
+  if (!Array.isArray(items)) return map;
+  for (const item of items) {
+    const itemId = getId(item);
+    if (!map.has(itemId)) map.set(itemId, item);
+  }
+  return map;
+};
+
 /**
  * Method to update distribution of either cycle or module object
  * @param distributionObject
@@ -213,32 +225,29 @@ export const updateDistribution = (distributionObject: ICycle | IModule, distrib
     if (currentValue !== undefined) set(distributionObject, path, (currentValue ?? 0) + value);
   }
 
+  const issuesAssigneeMap = indexById(distributionObject.distribution?.assignees, (a) => a.assignee_id);
+  const pointsAssigneeMap = indexById(distributionObject.estimate_distribution?.assignees, (a) => a.assignee_id);
+  const issuesLabelMap = indexById(distributionObject.distribution?.labels, (l) => l.label_id);
+  const pointsLabelMap = indexById(distributionObject.estimate_distribution?.labels, (l) => l.label_id);
+
   // for assignee update iterate through the assignee update and apply at the respective position
   for (const assigneeUpdate of assigneeUpdates) {
     const { id } = assigneeUpdate;
 
     // find and update the assignee issue counts
-    if (Array.isArray(distributionObject.distribution?.assignees)) {
-      const issuesAssignee = distributionObject.distribution?.assignees?.find(
-        (assignee) => assignee.assignee_id === id
-      );
-      if (issuesAssignee) {
-        issuesAssignee.completed_issues += assigneeUpdate.completed_issues ?? 0;
-        issuesAssignee.pending_issues += assigneeUpdate.pending_issues ?? 0;
-        issuesAssignee.total_issues += assigneeUpdate.total_issues;
-      }
+    const issuesAssignee = issuesAssigneeMap.get(id);
+    if (issuesAssignee) {
+      issuesAssignee.completed_issues += assigneeUpdate.completed_issues ?? 0;
+      issuesAssignee.pending_issues += assigneeUpdate.pending_issues ?? 0;
+      issuesAssignee.total_issues += assigneeUpdate.total_issues;
     }
 
     // find and update the assignee points
-    if (Array.isArray(distributionObject.estimate_distribution?.assignees)) {
-      const pointsAssignee = distributionObject.estimate_distribution?.assignees?.find(
-        (assignee) => assignee.assignee_id === id
-      );
-      if (pointsAssignee) {
-        pointsAssignee.completed_estimates += assigneeUpdate.completed_estimates ?? 0;
-        pointsAssignee.pending_estimates += assigneeUpdate.pending_estimates ?? 0;
-        pointsAssignee.total_estimates += assigneeUpdate.total_estimates;
-      }
+    const pointsAssignee = pointsAssigneeMap.get(id);
+    if (pointsAssignee) {
+      pointsAssignee.completed_estimates += assigneeUpdate.completed_estimates ?? 0;
+      pointsAssignee.pending_estimates += assigneeUpdate.pending_estimates ?? 0;
+      pointsAssignee.total_estimates += assigneeUpdate.total_estimates;
     }
   }
 
@@ -246,23 +255,19 @@ export const updateDistribution = (distributionObject: ICycle | IModule, distrib
     const { id } = labelUpdate;
 
     // find and update the label issue counts
-    if (Array.isArray(distributionObject.distribution?.labels)) {
-      const issuesLabel = distributionObject.distribution?.labels?.find((label) => label.label_id === id);
-      if (issuesLabel) {
-        issuesLabel.completed_issues += labelUpdate.completed_issues ?? 0;
-        issuesLabel.pending_issues += labelUpdate.pending_issues ?? 0;
-        issuesLabel.total_issues += labelUpdate.total_issues;
-      }
+    const issuesLabel = issuesLabelMap.get(id);
+    if (issuesLabel) {
+      issuesLabel.completed_issues += labelUpdate.completed_issues ?? 0;
+      issuesLabel.pending_issues += labelUpdate.pending_issues ?? 0;
+      issuesLabel.total_issues += labelUpdate.total_issues;
     }
 
     // find and update the label points
-    if (Array.isArray(distributionObject.estimate_distribution?.labels)) {
-      const pointsLabel = distributionObject.estimate_distribution?.labels?.find((label) => label.label_id === id);
-      if (pointsLabel) {
-        pointsLabel.completed_estimates += labelUpdate.completed_estimates ?? 0;
-        pointsLabel.pending_estimates += labelUpdate.pending_estimates ?? 0;
-        pointsLabel.total_estimates += labelUpdate.total_estimates;
-      }
+    const pointsLabel = pointsLabelMap.get(id);
+    if (pointsLabel) {
+      pointsLabel.completed_estimates += labelUpdate.completed_estimates ?? 0;
+      pointsLabel.pending_estimates += labelUpdate.pending_estimates ?? 0;
+      pointsLabel.total_estimates += labelUpdate.total_estimates;
     }
   }
 };

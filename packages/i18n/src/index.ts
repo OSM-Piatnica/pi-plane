@@ -19,6 +19,8 @@ export type { TNamespace } from "./constants/namespaces";
 
 // Utilities
 export { setLanguage } from "./core/set-language";
+export { initPromise } from "./core";
+export { detectLanguage, getSystemLanguage } from "./core/detect-language";
 
 // Constants
 export { FALLBACK_LANGUAGE, SUPPORTED_LANGUAGES, LANGUAGE_STORAGE_KEY } from "./constants/language";

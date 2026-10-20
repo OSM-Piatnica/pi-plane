@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -18,7 +19,6 @@ import type { RootStore } from "@/store/root.store";
 
 type TUserErrorStatus = {
   status: string;
-  message: string;
 };
 
 export interface IUserStore {
@@ -118,7 +118,6 @@ export class UserStore implements IUserStore {
         this.isAuthenticated = false;
         this.error = {
           status: "user-fetch-error",
-          message: "Failed to fetch current user",
         };
         if (error instanceof AxiosError && error.status === 401) {
           this.data = undefined;
@@ -154,7 +153,6 @@ export class UserStore implements IUserStore {
       runInAction(() => {
         this.error = {
           status: "user-update-error",
-          message: "Failed to update current user",
         };
       });
       throw error;

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,12 @@ import type { TFilterProperty } from "@plane/types";
 import { EQUALITY_OPERATOR, COLLECTION_OPERATOR } from "@plane/types";
 // local imports
 import type { TCreateFilterConfig, TCreateProjectFilterParams } from "../../../rich-filters";
-import { createFilterConfig, createOperatorConfigEntry, getProjectMultiSelectConfig } from "../../../rich-filters";
+import {
+  createFilterConfig,
+  createOperatorConfigEntry,
+  getProjectMultiSelectConfig,
+  translateFilterLabel,
+} from "../../../rich-filters";
 
 // ------------ Project filter ------------
 
@@ -24,7 +30,7 @@ export const getProjectFilterConfig =
   (params: TCreateProjectFilterParams) =>
     createFilterConfig<P>({
       id: key,
-      label: "Projects",
+      label: translateFilterLabel(params.t, "common.projects", "Projects"),
       ...params,
       icon: params.filterIcon,
       supportedOperatorConfigsMap: new Map([

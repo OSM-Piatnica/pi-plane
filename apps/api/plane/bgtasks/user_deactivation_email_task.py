@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -24,7 +25,7 @@ def user_deactivation_email(current_site, user_id):
     try:
         # Send email to user when account is deactivated
         user = User.objects.get(id=user_id)
-        subject = f"{user.first_name or user.display_name or user.email} has been deactivated on Plane"
+        subject = f"{user.first_name or user.display_name or user.email} has been deactivated on Pi-Plane"
 
         context = {"email": str(user.email), "login_url": current_site + "/login"}
 
