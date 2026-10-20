@@ -51,7 +51,7 @@ export const ProjectSettingsSidebarItemCategories = observer(function ProjectSet
 
         return (
           <div key={category} className="shrink-0 py-3 first:pt-0 last:pb-0">
-            <div className="p-2 text-caption-md-medium text-tertiary capitalize">
+            <div className="p-2 text-caption-md-medium text-tertiary">
               {t(PROJECT_SETTINGS_CATEGORY_LABELS[category])}
             </div>
             <div className="flex flex-col">
