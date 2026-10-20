@@ -171,3 +171,8 @@ peerDependencyRules:
     # (findDOMNode, string refs, element.ref reads, defaultProps on function components).
     "react-masonry-component>react": "19"
     "use-font-face-observer>react": "19"
+  # @tailwindcss/typography (web, space) lists tailwindcss as a peer, but only packages/tailwind-config
+  # depends on it. Declaring it in the apps makes Vite externalize it in the server build and the
+  # `@import "tailwindcss"` inside tailwind-config/index.css then fails to resolve (ENOENT apps/<app>/tailwindcss).
+  ignoreMissing:
+    - tailwindcss
