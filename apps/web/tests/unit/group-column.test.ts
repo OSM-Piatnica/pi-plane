@@ -5,13 +5,25 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { COMPLETED_CYCLE_DROP_ERROR, getGroupColumnName } from "../../helpers/group-column";
+import {
+  ALL_EPICS_GROUP_NAME,
+  ALL_ISSUES_GROUP_ID,
+  COMPLETED_CYCLE_DROP_ERROR,
+  getGroupColumnName,
+} from "../../helpers/group-column";
 
 const t = (key: string) => `[${key}]`;
 
 describe("getGroupColumnName", () => {
   it("translates the empty 'None' group by its id", () => {
     expect(getGroupColumnName({ id: "None", name: "None" }, t)).toBe("[common.none]");
+  });
+
+  it("translates the 'All' group of an ungrouped layout, for work items and for epics", () => {
+    expect(getGroupColumnName({ id: ALL_ISSUES_GROUP_ID, name: "All work items" }, t)).toBe(
+      "[default_global_view.all_issues]"
+    );
+    expect(getGroupColumnName({ id: ALL_ISSUES_GROUP_ID, name: ALL_EPICS_GROUP_NAME }, t)).toBe("[epic.all]");
   });
 
   it("keeps the name of every other group, such as a user's own cycle called None-ish", () => {

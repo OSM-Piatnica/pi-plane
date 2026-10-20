@@ -52,7 +52,7 @@ import { EIssuesStoreType } from "@plane/types";
 import { renderFormattedDate, getFileURL } from "@plane/utils";
 // helpers
 // store
-import { COMPLETED_CYCLE_DROP_ERROR } from "@/helpers/group-column";
+import { ALL_EPICS_GROUP_NAME, ALL_ISSUES_GROUP_ID, COMPLETED_CYCLE_DROP_ERROR } from "@/helpers/group-column";
 import { store } from "@/lib/store-context";
 // store
 import { ISSUE_FILTER_DEFAULT_DATA } from "@/store/issue/helpers/base-issues.store";
@@ -125,8 +125,8 @@ export const getGroupByColumns = ({
   if (!groupBy && includeNone) {
     return [
       {
-        id: "All Issues",
-        name: `All ${isEpic ? "Epics" : "work items"}`,
+        id: ALL_ISSUES_GROUP_ID,
+        name: isEpic ? ALL_EPICS_GROUP_NAME : "All work items",
         payload: {},
         icon: undefined,
       },

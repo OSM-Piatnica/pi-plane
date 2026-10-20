@@ -10,6 +10,13 @@
  */
 export const COMPLETED_CYCLE_DROP_ERROR = "completed_cycle";
 
+/**
+ * The single group shown when a layout is not grouped. It is built where no translation is available,
+ * so `getGroupColumnName` recognises it by its id and picks the epic or work item wording by its name.
+ */
+export const ALL_ISSUES_GROUP_ID = "All Issues";
+export const ALL_EPICS_GROUP_NAME = "All Epics";
+
 // The priority and state-group columns are built from constants where no translation is available.
 // Their ids are the fixed keys below (a user's own groups have uuid ids), so they are translated here.
 const FIXED_COLUMN_NAME_KEYS = new Map<string, string>(
@@ -29,11 +36,14 @@ const FIXED_COLUMN_NAME_KEYS = new Map<string, string>(
 );
 
 /**
- * The title to show for a group-by column. The empty "None" group, the priority groups and the state
- * group columns are built where no translation is available, so they are recognised by their id and
+ * The title to show for a group-by column. The empty "None" group, the "All" group of an ungrouped layout, the priority groups and the
+ * state group columns are built where no translation is available, so they are recognised by their id and
  * translated here.
  */
 export const getGroupColumnName = (column: { id: string; name: string }, t: (key: string) => string): string => {
+  if (column.id === ALL_ISSUES_GROUP_ID) {
+    return t(column.name === ALL_EPICS_GROUP_NAME ? "epic.all" : "default_global_view.all_issues");
+  }
   const key = FIXED_COLUMN_NAME_KEYS.get(column.id);
   return key ? t(key) : column.name;
 };
