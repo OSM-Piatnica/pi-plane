@@ -73,7 +73,8 @@ describe("activity feed translation keys", () => {
     for (const key of definedKeys) {
       const english = valueAt(locale.activity_feed, key) as string;
       const text = valueAt(translated.activity_feed, key) as string | undefined;
-      if (typeof text !== "string" || text.trim() === "") problems.push(`${key}: missing`);
+      // a blank value is only allowed where English is blank too (the plain-space actor separator)
+      if (typeof text !== "string" || (text.trim() === "" && english.trim() !== "")) problems.push(`${key}: missing`);
       else if (markup(text).join() !== markup(english).join() || variables(text).join() !== variables(english).join())
         problems.push(`${key}: markup or variables differ from English`);
     }
