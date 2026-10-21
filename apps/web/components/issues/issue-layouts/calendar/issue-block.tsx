@@ -24,6 +24,7 @@ import { useProjectState } from "@/hooks/store/use-project-state";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import useIssuePeekOverviewRedirection from "@/hooks/use-issue-peek-overview-redirection";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { guardQuickActionsClick } from "@/components/issues/issue-layouts/quick-action-dropdowns/click-guard";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 // local components
 import { WorkItemPreviewCard } from "../../preview-card";
@@ -152,10 +153,7 @@ export const CalendarIssueBlock = observer(
                       "hidden group-hover/calendar-block:block": !isMobile,
                       block: isMenuActive,
                     })}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
+                    onClick={guardQuickActionsClick}
                   >
                     {quickActions({
                       issue,
