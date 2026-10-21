@@ -145,8 +145,15 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
       onOpenChange={(open) => {
         if (!open) handleClose();
       }}
-      // an outside press closes the untouched form but never discards input
-      disablePointerDismissal={hasFormInput}
+      // an outside press or Escape closes the untouched form; once the user has entered something, propel asks
+      // before discarding it. The form's own Cancel button closes without asking.
+      discard={{
+        when: hasFormInput,
+        title: t("discard_changes.title"),
+        description: t("discard_changes.description"),
+        discardLabel: t("discard"),
+        keepLabel: t("discard_changes.keep_editing"),
+      }}
     >
       {/* ModuleForm renders its own visible heading; the dialog carries the same text as its name. */}
       <DialogContent

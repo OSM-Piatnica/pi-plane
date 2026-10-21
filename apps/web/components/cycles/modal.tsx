@@ -192,9 +192,15 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
   return (
     <Dialog
       open={isOpen}
-      // An outside press closes the untouched form but never discards input; Escape comes from
-      // Base UI and reaches the same handler.
-      disablePointerDismissal={hasFormInput}
+      // An outside press or Escape closes the untouched form; once the user has entered something, propel asks
+      // before discarding it. The form's own Cancel button closes without asking.
+      discard={{
+        when: hasFormInput,
+        title: t("discard_changes.title"),
+        description: t("discard_changes.description"),
+        discardLabel: t("discard"),
+        keepLabel: t("discard_changes.keep_editing"),
+      }}
       onOpenChange={(open) => {
         if (!open) handleClose();
       }}

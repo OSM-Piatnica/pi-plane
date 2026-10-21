@@ -6,7 +6,7 @@
  */
 
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 // plane imports
 import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
@@ -24,7 +24,7 @@ import { ProjectSelect } from "@/components/dropdowns/project/project-select";
 // hooks
 import { useUserProfile } from "@/hooks/store/user";
 import { useUser } from "@/hooks/store/user/user-user";
-import { useReportFormInput } from "@/hooks/use-report-form-input";
+import { hasInputChanged, useReportFormInput } from "@/hooks/use-report-form-input";
 
 type Props = {
   handleFormSubmit: (values: Partial<ICycle>) => Promise<void>;
@@ -62,7 +62,7 @@ export function CycleForm(props: Props) {
   const { data: userProfile } = useUserProfile();
   // form data
   const {
-    formState: { errors, isSubmitting, isDirty },
+    formState: { errors, isSubmitting },
     handleSubmit,
     control,
     reset,
@@ -76,7 +76,11 @@ export function CycleForm(props: Props) {
     },
   });
 
-  useReportFormInput(isDirty, onInputChange);
+  const values = useWatch({ control });
+  useReportFormInput(
+    hasInputChanged<ICycle>(values, { ...defaultValues, ...data }, ["name", "description", "start_date", "end_date"]),
+    onInputChange
+  );
 
   const { getIndex } = getTabIndex(ETabIndices.PROJECT_CYCLE, isMobile);
 

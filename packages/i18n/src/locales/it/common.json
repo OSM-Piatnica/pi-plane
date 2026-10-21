@@ -282,6 +282,11 @@
   "create_more": "Crea altri",
   "add_to_project": "Aggiungi al progetto",
   "discard": "Scarta",
+  "discard_changes": {
+    "title": "Scartare le modifiche?",
+    "description": "Le modifiche non sono state salvate. Scartarle non può essere annullato.",
+    "keep_editing": "Continua a modificare"
+  },
   "duplicate_issue_found": "Elemento di lavoro duplicato trovato",
   "duplicate_issues_found": "Elementi di lavoro duplicati trovati",
   "no_matching_results": "Nessun risultato corrispondente",

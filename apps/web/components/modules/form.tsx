@@ -6,7 +6,7 @@
  */
 
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 // plane imports
 import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
@@ -25,7 +25,7 @@ import { ModuleStatusSelect } from "@/components/modules";
 // hooks
 import { useUserProfile } from "@/hooks/store/user";
 import { useUser } from "@/hooks/store/user/user-user";
-import { useReportFormInput } from "@/hooks/use-report-form-input";
+import { hasInputChanged, useReportFormInput } from "@/hooks/use-report-form-input";
 
 type Props = {
   handleFormSubmit: (values: Partial<IModule>, dirtyFields: any) => Promise<void>;
@@ -62,7 +62,7 @@ export function ModuleForm(props: Props) {
   const { data: userProfile } = useUserProfile();
   // form info
   const {
-    formState: { errors, isSubmitting, dirtyFields, isDirty },
+    formState: { errors, isSubmitting, dirtyFields },
     handleSubmit,
     control,
     reset,
@@ -77,7 +77,17 @@ export function ModuleForm(props: Props) {
     },
   });
 
-  useReportFormInput(isDirty, onInputChange);
+  const values = useWatch({ control });
+  useReportFormInput(
+    hasInputChanged<IModule>(values, { ...defaultValues, ...data }, [
+      "name",
+      "description",
+      "status",
+      "lead_id",
+      "member_ids",
+    ]),
+    onInputChange
+  );
 
   const { getIndex } = getTabIndex(ETabIndices.PROJECT_MODULE, isMobile);
 

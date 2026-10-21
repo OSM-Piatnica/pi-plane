@@ -282,6 +282,11 @@
   "create_more": "Mehr erstellen",
   "add_to_project": "Zum Projekt hinzufügen",
   "discard": "Verwerfen",
+  "discard_changes": {
+    "title": "Änderungen verwerfen?",
+    "description": "Ihre Änderungen wurden nicht gespeichert. Das Verwerfen kann nicht rückgängig gemacht werden.",
+    "keep_editing": "Weiter bearbeiten"
+  },
   "duplicate_issue_found": "Doppeltes Arbeitselement gefunden",
   "duplicate_issues_found": "Doppelte Arbeitselemente gefunden",
   "no_matching_results": "Keine übereinstimmenden Ergebnisse",

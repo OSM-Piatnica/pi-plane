@@ -282,6 +282,11 @@
   "create_more": "さらに作成",
   "add_to_project": "プロジェクトに追加",
   "discard": "破棄",
+  "discard_changes": {
+    "title": "変更を破棄しますか？",
+    "description": "変更は保存されていません。破棄すると元に戻せません。",
+    "keep_editing": "編集を続ける"
+  },
   "duplicate_issue_found": "重複する作業項目が見つかりました",
   "duplicate_issues_found": "重複する作業項目が見つかりました",
   "no_matching_results": "一致する結果がありません",

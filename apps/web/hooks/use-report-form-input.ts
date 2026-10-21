@@ -4,12 +4,13 @@
  * See the LICENSE file for details.
  */
 
+import { isEqual } from "lodash-es";
 import { useEffect } from "react";
 
 /**
  * Tells the dialog around a form whether the form holds anything the user entered, so the dialog can
- * ignore outside clicks (and not discard that input) while the form is dirty, and close on them while
- * it is untouched. Reports `false` again when the form unmounts.
+ * ask before an outside click discards that input, and close on it while the form is untouched.
+ * Reports `false` again when the form unmounts.
  */
 export const useReportFormInput = (hasInput: boolean, onInputChange?: (hasInput: boolean) => void) => {
   useEffect(() => {
@@ -17,3 +18,21 @@ export const useReportFormInput = (hasInput: boolean, onInputChange?: (hasInput:
   }, [hasInput, onInputChange]);
   useEffect(() => () => onInputChange?.(false), [onInputChange]);
 };
+
+const isBlank = (value: unknown) =>
+  value === null || value === undefined || value === "" || (Array.isArray(value) && value.length === 0);
+
+const normalize = (value: unknown) => (Array.isArray(value) ? value.toSorted() : value);
+
+/**
+ * Whether `current` differs from `baseline` in any of `keys`, treating null, undefined, "" and [] as the
+ * same empty value. Unlike react-hook-form's `isDirty`, a field that was typed into and cleared again
+ * counts as unchanged.
+ */
+export const hasInputChanged = <T extends object>(current: object, baseline: Partial<T>, keys: (keyof T & string)[]) =>
+  keys.some((key) => {
+    const currentValue = (current as Record<string, unknown>)[key];
+    const baselineValue = (baseline as Record<string, unknown>)[key];
+    if (isBlank(currentValue) && isBlank(baselineValue)) return false;
+    return !isEqual(normalize(currentValue), normalize(baselineValue));
+  });

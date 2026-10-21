@@ -282,6 +282,11 @@
   "create_more": "创建更多",
   "add_to_project": "添加到项目",
   "discard": "放弃",
+  "discard_changes": {
+    "title": "放弃更改？",
+    "description": "您的更改尚未保存。放弃后无法恢复。",
+    "keep_editing": "继续编辑"
+  },
   "duplicate_issue_found": "发现重复的工作项",
   "duplicate_issues_found": "发现重复的工作项",
   "no_matching_results": "没有匹配的结果",

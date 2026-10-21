@@ -282,6 +282,11 @@
   "create_more": "Créer plus",
   "add_to_project": "Ajouter au projet",
   "discard": "Annuler",
+  "discard_changes": {
+    "title": "Abandonner les modifications ?",
+    "description": "Vos modifications n'ont pas été enregistrées. Les abandonner est irréversible.",
+    "keep_editing": "Continuer la modification"
+  },
   "duplicate_issue_found": "Élément de travail en double trouvé",
   "duplicate_issues_found": "Éléments de travail en double trouvés",
   "no_matching_results": "Aucun résultat correspondant",

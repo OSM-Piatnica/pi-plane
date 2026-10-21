@@ -282,6 +282,11 @@
   "create_more": "Vytvořit více",
   "add_to_project": "Přidat do projektu",
   "discard": "Zahodit",
+  "discard_changes": {
+    "title": "Zahodit změny?",
+    "description": "Vaše změny nebyly uloženy. Jejich zahození nelze vrátit zpět.",
+    "keep_editing": "Pokračovat v úpravách"
+  },
   "duplicate_issue_found": "Nalezena duplicitní pracovní položka",
   "duplicate_issues_found": "Nalezeny duplicitní pracovní položky",
   "no_matching_results": "Žádné odpovídající výsledky",
