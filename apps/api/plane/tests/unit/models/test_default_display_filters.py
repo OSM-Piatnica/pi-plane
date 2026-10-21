@@ -15,7 +15,7 @@ DEFAULT_DISPLAY_FILTERS = {
     "view": view.get_default_display_filters,
     "project": lambda: project.get_default_props()["display_filters"],
     "workspace": lambda: workspace.get_default_props()["display_filters"],
-    "workspace_views": workspace.get_default_display_filters,
+    "workspace_views": lambda: workspace.get_default_display_filters()["display_filters"],
 }
 
 
