@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "Další akce",
+      "resize_column": "Změnit šířku sloupce",
       "remove": "Odebrat"
     },
     "color_picker": {

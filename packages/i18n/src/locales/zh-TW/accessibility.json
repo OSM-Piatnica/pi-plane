@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "更多操作",
+      "resize_column": "調整欄寬",
       "remove": "移除"
     },
     "color_picker": {

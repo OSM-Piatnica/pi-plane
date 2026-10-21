@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "Інші дії",
+      "resize_column": "Змінити ширину стовпця",
       "remove": "Вилучити"
     },
     "color_picker": {

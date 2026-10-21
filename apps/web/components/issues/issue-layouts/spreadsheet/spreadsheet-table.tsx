@@ -10,12 +10,21 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react";
 // plane imports
 import type { IIssueDisplayFilterOptions, IIssueDisplayProperties, TIssue } from "@plane/types";
+import { cn } from "@plane/utils";
 // components
 import { SpreadsheetIssueRowLoader } from "@/components/ui/loader/layouts/spreadsheet-layout-loader";
+// helpers
+import { shouldRenderColumn } from "@/helpers/issue-filter.helper";
+import {
+  SPREADSHEET_COLUMN_DEFAULT_WIDTH,
+  SPREADSHEET_WORK_ITEM_COLUMN_KEY,
+  SPREADSHEET_WORK_ITEM_COLUMN_MIN_WIDTH,
+} from "@/helpers/spreadsheet-column-width";
 // hooks
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { useIssuesStore } from "@/hooks/use-issue-layout-store";
 import type { TSelectionHelper } from "@/hooks/use-multiple-select";
+import { useSpreadsheetColumnWidths } from "@/hooks/use-spreadsheet-column-widths";
 import { useTableKeyboardNavigation } from "@/hooks/use-table-keyboard-navigation";
 // local imports
 import type { TRenderQuickActions } from "../list/list-view-types";
@@ -111,8 +120,36 @@ export const SpreadsheetTable = observer(function SpreadsheetTable(props: Props)
   if (!isEstimateEnabled) ignoreFieldsForCounting.push("estimate");
   const displayPropertiesCount = getDisplayPropertiesCount(displayProperties, ignoreFieldsForCounting);
 
+  // Column widths saved in the browser. Until one is saved the table keeps its automatic layout; after the first
+  // resize every column has a width and the table is laid out with them (a fixed layout).
+  const { widths, ...columnWidthControls } = useSpreadsheetColumnWidths();
+  const hasCustomWidths = Object.keys(widths).length > 0;
+  const visibleColumns = spreadsheetColumnsList.filter(
+    (property) => !!displayProperties[property] && shouldRenderColumn(property)
+  );
+  const workItemColumnWidth = widths[SPREADSHEET_WORK_ITEM_COLUMN_KEY];
+  const tableMinWidth =
+    (workItemColumnWidth ?? SPREADSHEET_WORK_ITEM_COLUMN_MIN_WIDTH) +
+    visibleColumns.reduce((total, property) => total + (widths[property] ?? SPREADSHEET_COLUMN_DEFAULT_WIDTH), 0);
+
   return (
-    <table className="w-full overflow-y-auto bg-surface-1" onKeyDown={handleKeyBoardNavigation}>
+    <table
+      className={cn("w-full overflow-y-auto bg-surface-1", {
+        // cells must clip their content once the columns have a fixed width
+        "[&_td]:overflow-hidden [&_th]:overflow-hidden": hasCustomWidths,
+      })}
+      style={hasCustomWidths ? { tableLayout: "fixed", minWidth: tableMinWidth } : undefined}
+      onKeyDown={handleKeyBoardNavigation}
+    >
+      {hasCustomWidths && (
+        <colgroup>
+          {/* the work item column takes the remaining space until it is resized itself */}
+          <col style={workItemColumnWidth ? { width: workItemColumnWidth } : undefined} />
+          {visibleColumns.map((property) => (
+            <col key={property} style={{ width: widths[property] ?? SPREADSHEET_COLUMN_DEFAULT_WIDTH }} />
+          ))}
+        </colgroup>
+      )}
       <SpreadsheetHeader
         displayProperties={displayProperties}
         displayFilters={displayFilters}
@@ -122,6 +159,7 @@ export const SpreadsheetTable = observer(function SpreadsheetTable(props: Props)
         spreadsheetColumnsList={spreadsheetColumnsList}
         selectionHelpers={selectionHelpers}
         isEpic={isEpic}
+        columnWidthControls={columnWidthControls}
       />
       <tbody>
         {issueIds.map((id) => (
