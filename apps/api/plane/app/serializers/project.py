@@ -123,6 +123,11 @@ class ProjectListSerializer(DynamicBaseSerializer):
     cover_image_url = serializers.CharField(read_only=True)
     inbox_view = serializers.BooleanField(read_only=True, source="intake_view")
     next_work_item_sequence = serializers.SerializerMethodField()
+    # whether the signed-in user has an open request to join this (Private) project
+    has_pending_access_request = serializers.SerializerMethodField()
+
+    def get_has_pending_access_request(self, obj):
+        return bool(getattr(obj, "has_pending_access_request", False))
 
     def get_members(self, obj):
         project_members = getattr(obj, "members_list", None)

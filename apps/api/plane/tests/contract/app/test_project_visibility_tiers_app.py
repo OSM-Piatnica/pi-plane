@@ -101,6 +101,22 @@ class TestGalleryVisibility:
 
 @pytest.mark.contract
 @pytest.mark.django_db
+class TestPendingRequestFlagInTheGallery:
+    def test_the_list_says_which_private_projects_the_user_already_asked_for(self, workspace, projects, outsider):
+        ProjectAccessRequest.objects.create(project=projects["private"], requester=outsider)
+
+        response = _client(outsider).get(f"/api/workspaces/{workspace.slug}/projects/")
+
+        data = response.json()
+        flags = {
+            p["identifier"]: p["has_pending_access_request"]
+            for p in (data["results"] if isinstance(data, dict) else data)
+        }
+        assert flags == {"PRV": True, "PUB": False}
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
 class TestOpeningAProject:
     def _get(self, user, workspace, project):
         return _client(user).get(f"/api/workspaces/{workspace.slug}/projects/{project.id}/")

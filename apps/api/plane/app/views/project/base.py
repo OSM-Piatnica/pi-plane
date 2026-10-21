@@ -32,6 +32,7 @@ from plane.db.models import (
     Intake,
     Project,
     ProjectIdentifier,
+    ProjectAccessRequest,
     ProjectMember,
     ProjectNetwork,
     ProjectUserProperty,
@@ -69,6 +70,15 @@ class ProjectViewSet(BaseViewSet):
                         entity_identifier=OuterRef("pk"),
                         entity_type="project",
                         project_id=OuterRef("pk"),
+                    )
+                )
+            )
+            .annotate(
+                has_pending_access_request=Exists(
+                    ProjectAccessRequest.objects.filter(
+                        project_id=OuterRef("pk"),
+                        requester_id=self.request.user.id,
+                        status=ProjectAccessRequest.PENDING,
                     )
                 )
             )
