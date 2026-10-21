@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,7 +13,6 @@ import { Breadcrumbs } from "@plane/blocks/breadcrumb";
 import { Header } from "@plane/blocks/layout";
 // components
 import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
-import { HomeButton } from "@/components/common/home-button";
 // local imports
 import { NotificationSidebarHeaderOptions } from "./options";
 
@@ -30,8 +30,6 @@ export const NotificationSidebarHeader = observer(function NotificationSidebarHe
   return (
     <Header className="my-auto bg-surface-1">
       <Header.LeftItem>
-        {/* the app sidebar is hidden on this page, so give a way back to the workspace home */}
-        <HomeButton workspaceSlug={workspaceSlug} />
         <Breadcrumbs>
           <Breadcrumbs.Item
             component={
