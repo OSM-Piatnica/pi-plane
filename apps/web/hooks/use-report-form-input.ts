@@ -29,10 +29,10 @@ const normalize = (value: unknown) => (Array.isArray(value) ? value.toSorted() :
  * same empty value. Unlike react-hook-form's `isDirty`, a field that was typed into and cleared again
  * counts as unchanged.
  */
-export const hasInputChanged = <T extends object>(current: Partial<T>, baseline: Partial<T>, keys: (keyof T)[]) =>
+export const hasInputChanged = <T extends object>(current: object, baseline: Partial<T>, keys: (keyof T & string)[]) =>
   keys.some((key) => {
-    const currentValue = current[key];
-    const baselineValue = baseline[key];
+    const currentValue = (current as Record<string, unknown>)[key];
+    const baselineValue = (baseline as Record<string, unknown>)[key];
     if (isBlank(currentValue) && isBlank(baselineValue)) return false;
     return !isEqual(normalize(currentValue), normalize(baselineValue));
   });
