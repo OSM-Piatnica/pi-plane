@@ -46,6 +46,7 @@ function ProfileSettingsPage(props: Route.ComponentProps) {
           <ProfileSettingsSidebarRoot
             activeTab={profileTabId as TProfileSettingsTabs}
             className="w-[250px]"
+            showBackToWorkspace
             updateActiveTab={(tab) => router.push(`/settings/profile/${tab}`)}
           />
           <ProfileSettingsContent
