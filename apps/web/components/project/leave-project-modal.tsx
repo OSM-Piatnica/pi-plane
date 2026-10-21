@@ -74,17 +74,21 @@ export const LeaveProjectModal = observer(function LeaveProjectModal(props: ILea
     if (data) {
       if (data.projectName === project?.name) {
         if (data.confirmLeave === "Leave Project") {
-          router.push(`/${workspaceSlug}/projects`);
           return leaveProject(workspaceSlug.toString(), project.id)
             .then(() => {
               handleClose();
+              router.push(`/${workspaceSlug}/projects`);
               return;
             })
-            .catch((_err) => {
+            .catch((err) => {
+              // the API refuses when the user is the project's only admin (every member can now open this dialog)
+              const isOnlyAdmin = typeof err?.error === "string" && err.error.includes("only admin");
               setToast({
                 type: "error",
                 title: t("toast.error"),
-                message: t("something_went_wrong_please_try_again"),
+                message: isOnlyAdmin
+                  ? t("project_components.leave_modal.only_admin_error")
+                  : t("something_went_wrong_please_try_again"),
               });
             });
         } else {

@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Confirmă părăsirea proiectului tastând „{phrase}”.",
       "description": "Sigur vrei să părăsești proiectul „{name}”? Toate elementele de lucru asociate ție vor deveni inaccesibile.",
       "fill_all_fields": "Completează toate câmpurile.",
+      "only_admin_error": "Ești singurul administrator al acestui proiect, așa că nu îl poți părăsi. Mai întâi numește alt membru administrator sau șterge proiectul.",
       "project_name_error": "Introdu numele proiectului așa cum apare în descriere.",
       "project_name_placeholder": "Introdu numele proiectului",
       "project_name_required": "Numele proiectului este obligatoriu",

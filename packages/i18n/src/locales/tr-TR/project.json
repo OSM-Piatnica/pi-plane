@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Projeden ayrılmayı onaylamak için “{phrase}” yazın.",
       "description": "“{name}” projesinden ayrılmak istediğinizden emin misiniz? Sizinle ilişkili tüm iş öğeleri erişilemez hale gelecek.",
       "fill_all_fields": "Lütfen tüm alanları doldurun.",
+      "only_admin_error": "Bu projenin tek yöneticisi sizsiniz, bu yüzden projeden ayrılamazsınız. Önce başka bir üyeyi yönetici yapın veya projeyi silin.",
       "project_name_error": "Lütfen proje adını açıklamada gösterildiği gibi girin.",
       "project_name_placeholder": "Proje adını girin",
       "project_name_required": "Proje adı gereklidir",

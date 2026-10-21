@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Confirma que quieres salir del proyecto escribiendo «{phrase}».",
       "description": "¿Seguro que quieres salir del proyecto «{name}»? Todos los elementos de trabajo asociados a ti dejarán de ser accesibles.",
       "fill_all_fields": "Completa todos los campos.",
+      "only_admin_error": "Eres el único administrador de este proyecto, por lo que no puedes abandonarlo. Primero nombra administrador a otro miembro o elimina el proyecto.",
       "project_name_error": "Introduce el nombre del proyecto tal como aparece en la descripción.",
       "project_name_placeholder": "Introduce el nombre del proyecto",
       "project_name_required": "El nombre del proyecto es obligatorio",

@@ -20,6 +20,7 @@ import {
   ChevronRightOutline,
   LinkOutline,
   LogOutOutline,
+  MembersOutline,
   MoreHorizontalOutline,
   SettingsOutline,
   ShareAltOutline,
@@ -45,7 +46,8 @@ import { PublishProjectModal } from "@/components/project/publish-project/modal"
 import { useAppTheme } from "@/hooks/store/use-app-theme";
 import { useCommandPalette } from "@/hooks/store/use-command-palette";
 import { useProject } from "@/hooks/store/use-project";
-import { useUserPermissions } from "@/hooks/store/user";
+import { isProjectLead } from "@/helpers/project-lead";
+import { useUser, useUserPermissions } from "@/hooks/store/user";
 import { useProjectNavigationPreferences } from "@/hooks/use-navigation-preferences";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { useNavigationItems } from "@/components/navigations";
@@ -84,6 +86,7 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
   const { getPartialProjectById } = useProject();
   const { isMobile } = usePlatformOS();
   const { allowPermissions } = useUserPermissions();
+  const { data: currentUser } = useUser();
   const { getIsProjectListOpen, toggleProjectListOpen } = useCommandPalette();
   const { preferences: projectPreferences } = useProjectNavigationPreferences();
   const { isExtendedProjectSidebarOpened, toggleExtendedProjectSidebar, toggleAnySidebarDropdown } = useAppTheme();
@@ -138,6 +141,9 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
     workspaceSlug.toString(),
     project?.id
   );
+
+  // admins and the project's lead get a shortcut to the members settings
+  const canManageMembers = isAdmin || isProjectLead(project?.project_lead, currentUser?.id);
 
   const handleLeaveProject = () => {
     setLeaveProjectModal(true);
@@ -397,6 +403,15 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
                           }}
                         />
                       )}
+                      {canManageMembers && (
+                        <MenuItem
+                          icon={<Icon icon={MembersOutline} />}
+                          label={t("members")}
+                          onClick={() => {
+                            router.push(`/${workspaceSlug}/settings/projects/${project?.id}/members`);
+                          }}
+                        />
+                      )}
                       <MenuItem
                         icon={<Icon icon={SettingsOutline} />}
                         label={t("settings")}
@@ -404,14 +419,12 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
                           router.push(`/${workspaceSlug}/settings/projects/${project?.id}`);
                         }}
                       />
-                      {/* leave project */}
-                      {!isAuthorized && (
-                        <MenuItem
-                          icon={<Icon icon={LogOutOutline} />}
-                          label={t("leave_project")}
-                          onClick={handleLeaveProject}
-                        />
-                      )}
+                      {/* every member can leave the project */}
+                      <MenuItem
+                        icon={<Icon icon={LogOutOutline} />}
+                        label={t("leave_project")}
+                        onClick={handleLeaveProject}
+                      />
                     </MenuContent>
                   </Menu>
                 </div>
