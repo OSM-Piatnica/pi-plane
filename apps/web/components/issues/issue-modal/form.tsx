@@ -401,7 +401,9 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
           onSubmit={handleSubmit((formValues) => handleFormSubmit(formValues))}
           className="flex min-h-0 w-full flex-1 flex-col"
         >
-          <DialogMain>
+          {/* DialogMain clips its content and shrinks to the form; letting it grow to its content makes the wrapper
+              above scroll instead of cutting the header, body and buttons off in a short window. */}
+          <DialogMain render={<div style={{ minHeight: "min-content", overflow: "visible" }} />}>
             <DialogHeader>
               <DialogHeading>
                 <DialogTitle>{modalTitle}</DialogTitle>
