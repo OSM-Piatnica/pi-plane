@@ -200,7 +200,7 @@ export function ResizableSidebar({
           maxWidth: `${isCollapsed ? 0 : width}px`,
         }}
         aria-label={t("core_ui.sidebar.main")}
-        data-prevent-outside-click={isMobile}
+        data-prevent-outside-click={isMobile || undefined}
       >
         <aside
           className={cn(
