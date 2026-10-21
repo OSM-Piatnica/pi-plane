@@ -25,6 +25,7 @@
     "@plane/blocks": "workspace:*",
     "@plane/constants": "workspace:*",
     "@plane/editor": "workspace:*",
+    "@plane/hooks": "workspace:*",
     "@plane/i18n": "workspace:*",
     "@plane/services": "workspace:*",
     "@plane/types": "workspace:*",

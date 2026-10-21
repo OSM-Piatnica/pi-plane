@@ -5,10 +5,11 @@
  * See the LICENSE file for details.
  */
 
-import { useCallback, useEffect, useEffectEvent, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
 import { useRouter, useSearchParams } from "next/navigation";
 // plane imports
+import { useLatestCallback } from "@plane/hooks";
 import { useTranslation } from "@plane/i18n";
 // hooks
 import { useIssueDetails } from "@/hooks/store/use-issue-details";
@@ -71,7 +72,7 @@ export const IssuePeekOverview = observer(function IssuePeekOverview(props: TIss
 
   // Called from the document listeners below: always sees the latest `handleClose` without
   // re-subscribing those listeners every time the query params or router change.
-  const onDismiss = useEffectEvent(() => handleClose());
+  const onDismiss = useLatestCallback(() => handleClose());
 
   // propel (ruling 36): the peek was a Headless UI `Dialog` + `Transition`. Propel's `DialogContent`
   // ladder cannot express the `w-1/2` side sheet or the `h-[70%] w-3/5` / `size-[95%]` modal/full
@@ -138,7 +139,7 @@ export const IssuePeekOverview = observer(function IssuePeekOverview(props: TIss
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [isPeekOpen]);
+  }, [isPeekOpen, onDismiss]);
 
   // Remember what had focus when the peek first opened and restore it when the peek closes. This is
   // keyed on `isPeekOpen` only, so switching peek modes does not re-capture the (unmounting) mode select.
