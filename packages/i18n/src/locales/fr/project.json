@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Veuillez confirmer que vous quittez le projet en saisissant « {phrase} ».",
       "description": "Voulez-vous vraiment quitter le projet « {name} » ? Tous les éléments de travail qui vous sont associés deviendront inaccessibles.",
       "fill_all_fields": "Veuillez remplir tous les champs.",
+      "only_admin_error": "Vous êtes le seul administrateur de ce projet et ne pouvez donc pas le quitter. Nommez d'abord un autre membre administrateur ou supprimez le projet.",
       "project_name_error": "Veuillez saisir le nom du projet tel qu'il apparaît dans la description.",
       "project_name_placeholder": "Saisissez le nom du projet",
       "project_name_required": "Le nom du projet est obligatoire",

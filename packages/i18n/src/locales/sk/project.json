@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Potvrďte opustenie projektu zadaním „{phrase}“.",
       "description": "Naozaj chcete opustiť projekt „{name}“? Všetky pracovné položky súvisiace s vami sa stanú neprístupnými.",
       "fill_all_fields": "Vyplňte všetky polia.",
+      "only_admin_error": "Ste jediný správca tohto projektu, preto ho nemôžete opustiť. Najprv určte za správcu iného člena alebo projekt odstráňte.",
       "project_name_error": "Zadajte názov projektu presne podľa popisu.",
       "project_name_placeholder": "Zadajte názov projektu",
       "project_name_required": "Názov projektu je povinný",

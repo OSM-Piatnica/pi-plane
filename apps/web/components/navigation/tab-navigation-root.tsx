@@ -15,7 +15,8 @@ import type { EUserProjectRoles } from "@plane/types";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
-import { useUserPermissions } from "@/hooks/store/user";
+import { isProjectLead } from "@/helpers/project-lead";
+import { useUser, useUserPermissions } from "@/hooks/store/user";
 import { useNavigationItems } from "@/components/navigations";
 // local imports
 import { LeaveProjectModal } from "../project/leave-project-modal";
@@ -59,6 +60,7 @@ export const TabNavigationRoot = observer(function TabNavigationRoot(props: TTab
   // Store hooks
   const { getPartialProjectById } = useProject();
   const { allowPermissions } = useUserPermissions();
+  const { data: currentUser } = useUser();
   const {
     issue: { getIssueIdByIdentifier, getIssueById },
   } = useIssueDetail();
@@ -181,6 +183,7 @@ export const TabNavigationRoot = observer(function TabNavigationRoot(props: TTab
               project={project}
               isAdmin={isAdmin}
               isAuthorized={isAuthorized}
+              canManageMembers={isAdmin || isProjectLead(project?.project_lead, currentUser?.id)}
               onCopyText={handleCopyText}
               onLeaveProject={handleLeaveProject}
               onPublishModal={() => handlePublishModal(true)}

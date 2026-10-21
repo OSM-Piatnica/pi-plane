@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Harap konfirmasi keluar dari proyek dengan mengetik “{phrase}”.",
       "description": "Yakin ingin keluar dari proyek “{name}”? Semua item kerja yang terkait dengan Anda tidak akan dapat diakses.",
       "fill_all_fields": "Harap isi semua kolom.",
+      "only_admin_error": "Anda satu-satunya admin proyek ini sehingga tidak dapat keluar. Jadikan anggota lain sebagai admin terlebih dahulu, atau hapus proyek.",
       "project_name_error": "Harap masukkan nama proyek seperti yang ditampilkan dalam deskripsi.",
       "project_name_placeholder": "Masukkan nama proyek",
       "project_name_required": "Nama proyek wajib diisi",

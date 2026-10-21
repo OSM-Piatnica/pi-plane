@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Vui lòng xác nhận rời dự án bằng cách nhập “{phrase}”.",
       "description": "Bạn có chắc chắn muốn rời khỏi dự án “{name}”? Tất cả các mục công việc liên quan đến bạn sẽ không thể truy cập.",
       "fill_all_fields": "Vui lòng điền tất cả các trường.",
+      "only_admin_error": "Bạn là quản trị viên duy nhất của dự án này nên không thể rời đi. Hãy chỉ định một thành viên khác làm quản trị viên trước, hoặc xóa dự án.",
       "project_name_error": "Vui lòng nhập tên dự án như được hiển thị trong phần mô tả.",
       "project_name_placeholder": "Nhập tên dự án",
       "project_name_required": "Tên dự án là bắt buộc",

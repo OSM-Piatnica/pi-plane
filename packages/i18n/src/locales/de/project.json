@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Bitte bestätigen Sie das Verlassen des Projekts, indem Sie „{phrase}“ eingeben.",
       "description": "Möchten Sie das Projekt „{name}“ wirklich verlassen? Alle Arbeitselemente, die Ihnen zugeordnet sind, werden unzugänglich.",
       "fill_all_fields": "Bitte füllen Sie alle Felder aus.",
+      "only_admin_error": "Sie sind der einzige Administrator dieses Projekts und können es daher nicht verlassen. Machen Sie zuerst ein anderes Mitglied zum Administrator oder löschen Sie das Projekt.",
       "project_name_error": "Bitte geben Sie den Projektnamen wie in der Beschreibung angezeigt ein.",
       "project_name_placeholder": "Projektnamen eingeben",
       "project_name_required": "Projektname ist erforderlich",

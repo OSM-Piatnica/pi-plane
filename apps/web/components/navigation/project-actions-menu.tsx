@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,6 +11,7 @@ import {
   ArchiveOutline,
   LinkOutline,
   LogOutOutline,
+  MembersOutline,
   MoreHorizontalOutline,
   SettingsOutline,
   ShareAltOutline,
@@ -26,6 +28,8 @@ type Props = {
   };
   isAdmin: boolean;
   isAuthorized: boolean;
+  /** Admins and the project's lead get a shortcut to the members settings. */
+  canManageMembers: boolean;
   onCopyText: () => void;
   onLeaveProject: () => void;
   onPublishModal: () => void;
@@ -36,6 +40,7 @@ export function ProjectActionsMenu({
   project,
   isAdmin,
   isAuthorized,
+  canManageMembers,
   onCopyText,
   onLeaveProject,
   onPublishModal,
@@ -79,6 +84,15 @@ export function ProjectActionsMenu({
               }}
             />
           )}
+          {canManageMembers && (
+            <MenuItem
+              icon={<Icon icon={MembersOutline} />}
+              label={t("members")}
+              onClick={() => {
+                void navigate(`/${workspaceSlug}/settings/projects/${project?.id}/members`);
+              }}
+            />
+          )}
           <MenuItem
             icon={<Icon icon={SettingsOutline} />}
             label={t("settings")}
@@ -86,10 +100,8 @@ export function ProjectActionsMenu({
               void navigate(`/${workspaceSlug}/settings/projects/${project?.id}`);
             }}
           />
-          {/* Leave project */}
-          {!isAuthorized && (
-            <MenuItem icon={<Icon icon={LogOutOutline} />} label={t("leave_project")} onClick={onLeaveProject} />
-          )}
+          {/* Every member can leave the project */}
+          <MenuItem icon={<Icon icon={LogOutOutline} />} label={t("leave_project")} onClick={onLeaveProject} />
         </MenuContent>
       </Menu>
     </div>

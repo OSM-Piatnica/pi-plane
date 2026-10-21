@@ -491,6 +491,7 @@
       "confirm_phrase_error": "請輸入「{phrase}」以確認離開專案。",
       "description": "確定要離開專案「{name}」嗎？與您相關的所有工作項目都將無法存取。",
       "fill_all_fields": "請填寫所有欄位。",
+      "only_admin_error": "您是此專案唯一的管理員，因此無法退出。請先將其他成員設為管理員，或刪除該專案。",
       "project_name_error": "請依說明中顯示的內容輸入專案名稱。",
       "project_name_placeholder": "輸入專案名稱",
       "project_name_required": "專案名稱為必填",

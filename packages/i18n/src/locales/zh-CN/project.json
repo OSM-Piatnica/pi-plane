@@ -491,6 +491,7 @@
       "confirm_phrase_error": "请输入“{phrase}”以确认离开项目。",
       "description": "确定要离开项目“{name}”吗？与您相关的所有工作项将无法访问。",
       "fill_all_fields": "请填写所有字段。",
+      "only_admin_error": "您是此项目唯一的管理员，因此无法退出。请先将其他成员设为管理员，或删除该项目。",
       "project_name_error": "请按说明中显示的内容输入项目名称。",
       "project_name_placeholder": "输入项目名称",
       "project_name_required": "项目名称为必填项",
