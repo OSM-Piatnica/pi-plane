@@ -39,6 +39,8 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
   const { isOpen, handleClose, data, workspaceSlug, projectId } = props;
   // states
   const [activeProject, setActiveProject] = useState<string | null>(null);
+  // whether the form holds anything the user entered; an outside click then no longer closes the dialog
+  const [hasFormInput, setHasFormInput] = useState(false);
   // store hooks
   const { workspaceProjectIds } = useProject();
   const { createCycle, updateCycleDetails } = useCycle();
@@ -190,23 +192,27 @@ export function CycleCreateUpdateModal(props: CycleModalProps) {
   return (
     <Dialog
       open={isOpen}
-      // The legacy modal shell had no `handleClose`, so an outside press never dismissed it and
-      // Escape came from `useKeypress`; Base UI's own Escape now reaches the same handler.
-      disablePointerDismissal
+      // An outside press closes the untouched form but never discards input; Escape comes from
+      // Base UI and reaches the same handler.
+      disablePointerDismissal={hasFormInput}
       onOpenChange={(open) => {
         if (!open) handleClose();
       }}
     >
       <DialogContent size="md">
-        <CycleForm
-          handleFormSubmit={handleFormSubmit}
-          handleClose={handleClose}
-          status={!!data}
-          projectId={activeProject ?? ""}
-          setActiveProject={setActiveProject}
-          data={data}
-          isMobile={isMobile}
-        />
+        {/* the form has no DialogBody scroller of its own, so this keeps it reachable on short windows */}
+        <div className="vertical-scrollbar scrollbar-sm min-h-0 flex-1 overflow-y-auto">
+          <CycleForm
+            handleFormSubmit={handleFormSubmit}
+            handleClose={handleClose}
+            onInputChange={setHasFormInput}
+            status={!!data}
+            projectId={activeProject ?? ""}
+            setActiveProject={setActiveProject}
+            data={data}
+            isMobile={isMobile}
+          />
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -63,6 +63,8 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
   const issueTitleRef = useRef<HTMLInputElement>(null);
   // states
   const [changesMade, setChangesMade] = useState<Partial<TIssue> | null>(null);
+  // whether the form holds anything the user entered; an outside click then no longer closes the dialog
+  const [hasFormInput, setHasFormInput] = useState(false);
   const [createMore, setCreateMore] = useState(false);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
   const [description, setDescription] = useState<string | undefined>(undefined);
@@ -443,6 +445,7 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
     },
     onAssetUpload: handleUpdateUploadedAssetIds,
     onClose: handleClose,
+    onInputChange: setHasFormInput,
     onSubmit: (payload) => handleFormSubmit(payload, isDraft),
     projectId: activeProjectId,
     isCreateMoreToggleEnabled: createMore,
@@ -457,8 +460,15 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
   };
 
   return (
-    /* The modal it replaces passed no `handleClose`, so only its own form dismisses it. */
-    <Dialog open={isOpen} disablePointerDismissal onOpenChange={() => {}}>
+    /* Only the form's own buttons and Escape handling dismiss it (they ask about drafts first). An outside
+       press closes the untouched form, and is ignored once the user has entered something. */
+    <Dialog
+      open={isOpen}
+      disablePointerDismissal={hasFormInput}
+      onOpenChange={(open, details) => {
+        if (!open && details.reason === "outside-press") handleClose();
+      }}
+    >
       <DialogContent size="lg">
         {withDraftIssueWrapper ? (
           <DraftIssueLayout {...commonIssueModalProps} changesMade={changesMade} onChange={handleFormChange} />

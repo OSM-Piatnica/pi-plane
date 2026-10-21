@@ -25,10 +25,12 @@ import { ModuleStatusSelect } from "@/components/modules";
 // hooks
 import { useUserProfile } from "@/hooks/store/user";
 import { useUser } from "@/hooks/store/user/user-user";
+import { useReportFormInput } from "@/hooks/use-report-form-input";
 
 type Props = {
   handleFormSubmit: (values: Partial<IModule>, dirtyFields: any) => Promise<void>;
   handleClose: () => void;
+  onInputChange?: (hasInput: boolean) => void;
   status: boolean;
   projectId: string;
   setActiveProject: React.Dispatch<React.SetStateAction<string | null>>;
@@ -45,13 +47,22 @@ const defaultValues: Partial<IModule> = {
 };
 
 export function ModuleForm(props: Props) {
-  const { handleFormSubmit, handleClose, status, projectId, setActiveProject, data, isMobile = false } = props;
+  const {
+    handleFormSubmit,
+    handleClose,
+    onInputChange,
+    status,
+    projectId,
+    setActiveProject,
+    data,
+    isMobile = false,
+  } = props;
   // store hooks
   const { projectsWithCreatePermissions } = useUser();
   const { data: userProfile } = useUserProfile();
   // form info
   const {
-    formState: { errors, isSubmitting, dirtyFields },
+    formState: { errors, isSubmitting, dirtyFields, isDirty },
     handleSubmit,
     control,
     reset,
@@ -65,6 +76,8 @@ export function ModuleForm(props: Props) {
       member_ids: data?.member_ids || [],
     },
   });
+
+  useReportFormInput(isDirty, onInputChange);
 
   const { getIndex } = getTabIndex(ETabIndices.PROJECT_MODULE, isMobile);
 

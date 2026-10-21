@@ -40,6 +40,8 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
   const { isOpen, onClose, data, workspaceSlug, projectId } = props;
   // states
   const [activeProject, setActiveProject] = useState<string | null>(null);
+  // whether the form holds anything the user entered; an outside click then no longer closes the dialog
+  const [hasFormInput, setHasFormInput] = useState(false);
   // plane hooks
   const { t } = useTranslation();
   // store hooks
@@ -143,22 +145,27 @@ export const CreateUpdateModuleModal = observer(function CreateUpdateModuleModal
       onOpenChange={(open) => {
         if (!open) handleClose();
       }}
-      disablePointerDismissal
+      // an outside press closes the untouched form but never discards input
+      disablePointerDismissal={hasFormInput}
     >
       {/* ModuleForm renders its own visible heading; the dialog carries the same text as its name. */}
       <DialogContent
         size="md"
         aria-label={`${data ? t("common.update") : t("common.create")} ${t("common.module").toLowerCase()}`}
       >
-        <ModuleForm
-          handleFormSubmit={handleFormSubmit}
-          handleClose={handleClose}
-          status={!!data}
-          projectId={activeProject ?? ""}
-          setActiveProject={setActiveProject}
-          data={data}
-          isMobile={isMobile}
-        />
+        {/* the form has no DialogBody scroller of its own, so this keeps it reachable on short windows */}
+        <div className="vertical-scrollbar scrollbar-sm min-h-0 flex-1 overflow-y-auto">
+          <ModuleForm
+            handleFormSubmit={handleFormSubmit}
+            handleClose={handleClose}
+            onInputChange={setHasFormInput}
+            status={!!data}
+            projectId={activeProject ?? ""}
+            setActiveProject={setActiveProject}
+            data={data}
+            isMobile={isMobile}
+          />
+        </div>
       </DialogContent>
     </Dialog>
   );

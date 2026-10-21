@@ -24,10 +24,12 @@ import { ProjectSelect } from "@/components/dropdowns/project/project-select";
 // hooks
 import { useUserProfile } from "@/hooks/store/user";
 import { useUser } from "@/hooks/store/user/user-user";
+import { useReportFormInput } from "@/hooks/use-report-form-input";
 
 type Props = {
   handleFormSubmit: (values: Partial<ICycle>) => Promise<void>;
   handleClose: () => void;
+  onInputChange?: (hasInput: boolean) => void;
   status: boolean;
   projectId: string;
   setActiveProject: (projectId: string) => void;
@@ -43,7 +45,16 @@ const defaultValues: Partial<ICycle> = {
 };
 
 export function CycleForm(props: Props) {
-  const { handleFormSubmit, handleClose, status, projectId, setActiveProject, data, isMobile = false } = props;
+  const {
+    handleFormSubmit,
+    handleClose,
+    onInputChange,
+    status,
+    projectId,
+    setActiveProject,
+    data,
+    isMobile = false,
+  } = props;
   // plane hooks
   const { t } = useTranslation();
   // store hooks
@@ -51,7 +62,7 @@ export function CycleForm(props: Props) {
   const { data: userProfile } = useUserProfile();
   // form data
   const {
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
     handleSubmit,
     control,
     reset,
@@ -64,6 +75,8 @@ export function CycleForm(props: Props) {
       end_date: data?.end_date || null,
     },
   });
+
+  useReportFormInput(isDirty, onInputChange);
 
   const { getIndex } = getTabIndex(ETabIndices.PROJECT_CYCLE, isMobile);
 

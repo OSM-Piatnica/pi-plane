@@ -50,6 +50,7 @@ import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useWorkspaceDraftIssues } from "@/hooks/store/workspace-draft";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useReportFormInput } from "@/hooks/use-report-form-input";
 import { useProjectIssueProperties } from "@/hooks/use-project-issue-properties";
 import { DeDupeButtonRoot } from "@/components/de-dupe/de-dupe-button";
 import { DuplicateModalRoot } from "@/components/de-dupe/duplicate-modal";
@@ -64,6 +65,8 @@ export interface IssueFormProps {
   onAssetUpload: (assetId: string) => void;
   onCreateMoreToggleChange: (value: boolean) => void;
   onChange?: (formData: Partial<TIssue> | null) => void;
+  /** Reports whether the form holds anything the user entered, so the dialog can ignore outside clicks then. */
+  onInputChange?: (hasInput: boolean) => void;
   onClose: () => void;
   onSubmit: (values: Partial<TIssue>, is_draft_issue?: boolean) => Promise<void>;
   projectId: string;
@@ -89,6 +92,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     issueTitleRef,
     onAssetUpload,
     onChange,
+    onInputChange,
     onClose,
     onSubmit,
     projectId: defaultProjectId,
@@ -169,6 +173,8 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
   const isDisabled = isSubmitting || isApplyingTemplate;
 
   const { getIndex } = getTabIndex(ETabIndices.ISSUE_FORM, isMobile);
+
+  useReportFormInput(isDirty, onInputChange);
 
   //reset few fields on projectId change
   useEffect(() => {
