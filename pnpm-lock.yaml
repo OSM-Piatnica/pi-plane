@@ -867,6 +867,12 @@ importers:
       jsdom:
         specifier: 23.2.0
         version: 23.2.0
+      mobx:
+        specifier: 'catalog:'
+        version: 6.12.0
+      mobx-react:
+        specifier: 'catalog:'
+        version: 9.2.2(mobx@6.12.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       tsdown:
         specifier: 'catalog:'
         version: 0.16.0(oxc-resolver@11.24.2)(typescript@5.8.3)(unrun@0.2.34(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.3))

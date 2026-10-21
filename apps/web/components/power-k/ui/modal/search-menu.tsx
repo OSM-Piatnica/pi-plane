@@ -9,9 +9,11 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 // plane imports
 import { WORKSPACE_DEFAULT_SEARCH_RESULT } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 import type { IWorkspaceSearchResults } from "@plane/types";
 import { cn } from "@plane/utils";
 // hooks
+import { renderTaggedText } from "@/helpers/tagged-text";
 import { usePowerK } from "@/hooks/store/use-power-k";
 import useDebounce from "@/hooks/use-debounce";
 import { PowerKModalNoSearchResultsCommand } from "@/components/command-palette/power-k/search/no-results-command";
@@ -40,6 +42,7 @@ export function PowerKModalSearchMenu(props: Props) {
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   // navigation
   const { workspaceSlug, projectId } = useParams();
+  const { t } = useTranslation();
   // store hooks
   const { togglePowerKModal } = usePowerK();
 
@@ -91,13 +94,15 @@ export function PowerKModalSearchMenu(props: Props) {
               "animate-pulse": isSearching,
             })}
           >
-            Search results for{" "}
-            <span className="font-medium">
-              {'"'}
-              {searchTerm}
-              {'"'}
-            </span>{" "}
-            in {isWorkspaceLevel ? "workspace" : "project"}:
+            {renderTaggedText(
+              t(
+                isWorkspaceLevel ? "power_k.search_menu.results_in_workspace" : "power_k.search_menu.results_in_project"
+              ),
+              {
+                // the search term is user input, so it is rendered here instead of being spliced into the translation
+                term: () => <span className="font-medium">&quot;{searchTerm}&quot;</span>,
+              }
+            )}
           </h5>
         </div>
       )}

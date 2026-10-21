@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { useEffect, useEffectEvent } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 export const useOutsideClickDetector = (
   ref: { readonly current: Element | null },
@@ -12,8 +13,13 @@ export const useOutsideClickDetector = (
   useCapture = false,
   enabled = true
 ) => {
-  // Reads the latest callback without re-attaching the document listener on every render.
-  const onOutsideClick = useEffectEvent(callback);
+  // Reads the latest callback without re-attaching the document listener on every render. This is a ref
+  // rather than `useEffectEvent`: inside a mobx `observer` component the Effect Event kept the callback
+  // from the first render, so a callback reading state (`if (isOpen) close()`) never saw it change.
+  const callbackRef = useRef(callback);
+  useLayoutEffect(() => {
+    callbackRef.current = callback;
+  });
 
   useEffect(() => {
     if (!enabled) return undefined;
@@ -41,7 +47,7 @@ export const useOutsideClickDetector = (
         if (path.some((el) => el.hasAttribute("data-base-ui-portal") && !el.contains(node))) {
           return;
         }
-        onOutsideClick();
+        callbackRef.current();
       }
     };
 
