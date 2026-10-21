@@ -26,6 +26,7 @@ import { DropIndicator } from "@plane/blocks/common";
 import { cn, generateWorkItemLink } from "@plane/utils";
 // components
 import RenderIfVisible from "@/components/core/render-if-visible-HOC";
+import { guardQuickActionsClick } from "@/components/issues/issue-layouts/quick-action-dropdowns/click-guard";
 import { HIGHLIGHT_CLASS, getIssueBlockId } from "@/components/issues/issue-layouts/utils";
 // helpers
 // hooks
@@ -67,11 +68,6 @@ interface IssueDetailsBlockProps {
   isReadOnly: boolean;
   isEpic?: boolean;
 }
-
-const handleEventPropagation = (e: React.MouseEvent) => {
-  e.stopPropagation();
-  e.preventDefault();
-};
 
 const KanbanIssueDetailsBlock = observer(function KanbanIssueDetailsBlock(props: IssueDetailsBlockProps) {
   const { cardRef, issue, updateIssue, quickActions, isReadOnly, displayProperties, isEpic = false } = props;
@@ -120,7 +116,7 @@ const KanbanIssueDetailsBlock = observer(function KanbanIssueDetailsBlock(props:
             "hidden group-hover/kanban-block:block": !isMobile,
             "!block": isMenuActive,
           })}
-          onClick={handleEventPropagation}
+          onClick={guardQuickActionsClick}
         >
           {quickActions({
             issue,
