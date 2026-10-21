@@ -38,6 +38,8 @@ export function CreateProjectModal(props: Props) {
   const [currentStep, setCurrentStep] = useState<EProjectCreationSteps>(EProjectCreationSteps.CREATE_PROJECT);
   const [createdProjectId, setCreatedProjectId] = useState<string | null>(null);
   const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
+  // whether the create form holds anything the user entered; an outside click then no longer closes the dialog
+  const [hasFormInput, setHasFormInput] = useState(false);
 
   // restart the flow each time the modal opens (adjusted during render)
   if (prevIsOpen !== isOpen) {
@@ -45,6 +47,7 @@ export function CreateProjectModal(props: Props) {
     if (isOpen) {
       setCurrentStep(EProjectCreationSteps.CREATE_PROJECT);
       setCreatedProjectId(null);
+      setHasFormInput(false);
     }
   }
 
@@ -65,7 +68,8 @@ export function CreateProjectModal(props: Props) {
   return (
     <Dialog
       open={isOpen}
-      disablePointerDismissal
+      // an outside click closes the empty create form, but never discards input or the feature step
+      disablePointerDismissal={currentStep !== EProjectCreationSteps.CREATE_PROJECT || hasFormInput}
       onOpenChange={(open) => {
         if (!open) onClose();
       }}
@@ -83,6 +87,7 @@ export function CreateProjectModal(props: Props) {
               handleNextStep={handleNextStep}
               data={data}
               templateId={templateId}
+              onInputChange={setHasFormInput}
             />
           </div>
         )}
