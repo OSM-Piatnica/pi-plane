@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "その他の操作",
+      "resize_column": "列の幅を変更",
       "remove": "削除"
     },
     "color_picker": {

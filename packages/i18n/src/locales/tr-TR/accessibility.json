@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "Diğer işlemler",
+      "resize_column": "Sütun genişliğini değiştir",
       "remove": "Kaldır"
     },
     "color_picker": {

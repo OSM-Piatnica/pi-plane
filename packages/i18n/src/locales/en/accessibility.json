@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "More actions",
+      "resize_column": "Resize column",
       "remove": "Remove"
     },
     "color_picker": {

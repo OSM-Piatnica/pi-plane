@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "Weitere Aktionen",
+      "resize_column": "Spaltenbreite ändern",
       "remove": "Entfernen"
     },
     "color_picker": {

@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "Още действия",
+      "resize_column": "Преоразмеряване на колоната",
       "remove": "Премахни"
     },
     "color_picker": {

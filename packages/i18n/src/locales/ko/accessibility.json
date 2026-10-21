@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "추가 작업",
+      "resize_column": "열 너비 조정",
       "remove": "제거"
     },
     "color_picker": {

@@ -17,6 +17,9 @@ import { cn } from "@plane/utils";
 import { MultipleSelectGroupAction } from "@/components/core/multiple-select";
 // hooks
 import type { TSelectionHelper } from "@/hooks/use-multiple-select";
+import { SPREADSHEET_WORK_ITEM_COLUMN_KEY } from "@/helpers/spreadsheet-column-width";
+import type { TSpreadsheetColumnWidthControls } from "@/hooks/use-spreadsheet-column-widths";
+import { ColumnResizer, SPREADSHEET_COLUMN_KEY_ATTRIBUTE } from "./column-resizer";
 import { SpreadsheetHeaderColumn } from "./spreadsheet-header-column";
 
 interface Props {
@@ -28,6 +31,7 @@ interface Props {
   spreadsheetColumnsList: (keyof IIssueDisplayProperties)[];
   selectionHelpers: TSelectionHelper;
   isEpic?: boolean;
+  columnWidthControls: TSpreadsheetColumnWidthControls;
 }
 
 export const SpreadsheetHeader = observer(function SpreadsheetHeader(props: Props) {
@@ -40,6 +44,7 @@ export const SpreadsheetHeader = observer(function SpreadsheetHeader(props: Prop
     spreadsheetColumnsList,
     selectionHelpers,
     isEpic = false,
+    columnWidthControls,
   } = props;
   // router
   const { projectId } = useParams();
@@ -57,6 +62,7 @@ export const SpreadsheetHeader = observer(function SpreadsheetHeader(props: Prop
         <th
           className="group/list-header left-0 z-[15] h-11 min-w-60 border-r-[0.5px] border-subtle bg-layer-1 text-13 font-medium md:sticky"
           tabIndex={-1}
+          {...{ [SPREADSHEET_COLUMN_KEY_ATTRIBUTE]: SPREADSHEET_WORK_ITEM_COLUMN_KEY }}
         >
           <div className="flex h-full w-full items-center gap-2 px-page-x">
             {/* Workitem header section */}
@@ -78,6 +84,7 @@ export const SpreadsheetHeader = observer(function SpreadsheetHeader(props: Prop
               <span className="text-13 font-medium">{isEpic ? t("common.epics") : t("work_items")}</span>
             </div>
           </div>
+          <ColumnResizer columnKey={SPREADSHEET_WORK_ITEM_COLUMN_KEY} {...columnWidthControls} />
         </th>
 
         {spreadsheetColumnsList.map((property) => (
@@ -89,6 +96,7 @@ export const SpreadsheetHeader = observer(function SpreadsheetHeader(props: Prop
             handleDisplayFilterUpdate={handleDisplayFilterUpdate}
             isEstimateEnabled={isEstimateEnabled}
             isEpic={isEpic}
+            columnWidthControls={columnWidthControls}
           />
         ))}
       </tr>

@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "Другие действия",
+      "resize_column": "Изменить ширину столбца",
       "remove": "Удалить"
     },
     "color_picker": {
