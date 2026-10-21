@@ -105,7 +105,7 @@ class TestPendingRequestFlagInTheGallery:
     def test_the_list_says_which_private_projects_the_user_already_asked_for(self, workspace, projects, outsider):
         ProjectAccessRequest.objects.create(project=projects["private"], requester=outsider)
 
-        response = _client(outsider).get(f"/api/workspaces/{workspace.slug}/projects/")
+        response = _client(outsider).get(f"/api/workspaces/{workspace.slug}/projects/details/")
 
         data = response.json()
         flags = {
