@@ -282,6 +282,11 @@
   "create_more": "Buat lebih banyak",
   "add_to_project": "Tambahkan ke proyek",
   "discard": "Buang",
+  "discard_changes": {
+    "title": "Buang perubahan?",
+    "description": "Perubahan Anda belum disimpan. Membuangnya tidak dapat dibatalkan.",
+    "keep_editing": "Lanjutkan mengedit"
+  },
   "duplicate_issue_found": "Item kerja duplikat ditemukan",
   "duplicate_issues_found": "Item kerja duplikat ditemukan",
   "no_matching_results": "Tidak ada hasil yang cocok",

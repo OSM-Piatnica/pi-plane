@@ -6,7 +6,7 @@
  */
 
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 // plane imports
 import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
@@ -25,10 +25,12 @@ import { ModuleStatusSelect } from "@/components/modules";
 // hooks
 import { useUserProfile } from "@/hooks/store/user";
 import { useUser } from "@/hooks/store/user/user-user";
+import { hasInputChanged, useReportFormInput } from "@/hooks/use-report-form-input";
 
 type Props = {
   handleFormSubmit: (values: Partial<IModule>, dirtyFields: any) => Promise<void>;
   handleClose: () => void;
+  onInputChange?: (hasInput: boolean) => void;
   status: boolean;
   projectId: string;
   setActiveProject: React.Dispatch<React.SetStateAction<string | null>>;
@@ -45,7 +47,16 @@ const defaultValues: Partial<IModule> = {
 };
 
 export function ModuleForm(props: Props) {
-  const { handleFormSubmit, handleClose, status, projectId, setActiveProject, data, isMobile = false } = props;
+  const {
+    handleFormSubmit,
+    handleClose,
+    onInputChange,
+    status,
+    projectId,
+    setActiveProject,
+    data,
+    isMobile = false,
+  } = props;
   // store hooks
   const { projectsWithCreatePermissions } = useUser();
   const { data: userProfile } = useUserProfile();
@@ -65,6 +76,18 @@ export function ModuleForm(props: Props) {
       member_ids: data?.member_ids || [],
     },
   });
+
+  const values = useWatch({ control });
+  useReportFormInput(
+    hasInputChanged<IModule>(values, { ...defaultValues, ...data }, [
+      "name",
+      "description",
+      "status",
+      "lead_id",
+      "member_ids",
+    ]),
+    onInputChange
+  );
 
   const { getIndex } = getTabIndex(ETabIndices.PROJECT_MODULE, isMobile);
 

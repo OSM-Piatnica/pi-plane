@@ -282,6 +282,11 @@
   "create_more": "建立更多",
   "add_to_project": "新增至專案",
   "discard": "捨棄",
+  "discard_changes": {
+    "title": "放棄變更？",
+    "description": "您的變更尚未儲存。放棄後無法復原。",
+    "keep_editing": "繼續編輯"
+  },
   "duplicate_issue_found": "找到重複的工作事項",
   "duplicate_issues_found": "找到重複的工作事項",
   "no_matching_results": "沒有符合的結果",

@@ -282,6 +282,11 @@
   "create_more": "Tạo thêm",
   "add_to_project": "Thêm vào dự án",
   "discard": "Hủy bỏ",
+  "discard_changes": {
+    "title": "Hủy bỏ thay đổi?",
+    "description": "Các thay đổi của bạn chưa được lưu. Không thể hoàn tác việc hủy bỏ.",
+    "keep_editing": "Tiếp tục chỉnh sửa"
+  },
   "duplicate_issue_found": "Đã tìm thấy mục công việc trùng lặp",
   "duplicate_issues_found": "Đã tìm thấy các mục công việc trùng lặp",
   "no_matching_results": "Không có kết quả phù hợp",

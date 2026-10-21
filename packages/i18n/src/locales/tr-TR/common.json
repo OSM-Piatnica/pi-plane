@@ -282,6 +282,11 @@
   "create_more": "Daha fazla oluştur",
   "add_to_project": "Projeye ekle",
   "discard": "Vazgeç",
+  "discard_changes": {
+    "title": "Değişiklikler silinsin mi?",
+    "description": "Değişiklikleriniz kaydedilmedi. Silme işlemi geri alınamaz.",
+    "keep_editing": "Düzenlemeye devam et"
+  },
   "duplicate_issue_found": "Yinelenen iş öğesi bulundu",
   "duplicate_issues_found": "Yinelenen iş öğeleri bulundu",
   "no_matching_results": "Eşleşen sonuç yok",

@@ -282,6 +282,11 @@
   "create_more": "Vytvoriť viac",
   "add_to_project": "Pridať do projektu",
   "discard": "Zahodiť",
+  "discard_changes": {
+    "title": "Zahodiť zmeny?",
+    "description": "Vaše zmeny neboli uložené. Ich zahodenie sa nedá vrátiť späť.",
+    "keep_editing": "Pokračovať v úpravách"
+  },
   "duplicate_issue_found": "Nájdená duplicitná pracovná položka",
   "duplicate_issues_found": "Nájdené duplicitné pracovné položky",
   "no_matching_results": "Žiadne zodpovedajúce výsledky",

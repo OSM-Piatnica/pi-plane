@@ -282,6 +282,11 @@
   "create_more": "Create more",
   "add_to_project": "Add to project",
   "discard": "Discard",
+  "discard_changes": {
+    "title": "Discard changes?",
+    "description": "Your changes haven't been saved. Discarding them can't be undone.",
+    "keep_editing": "Keep editing"
+  },
   "duplicate_issue_found": "Duplicate work item found",
   "duplicate_issues_found": "Duplicate work items found",
   "no_matching_results": "No matching results",

@@ -6,7 +6,7 @@
  */
 
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 // plane imports
 import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
@@ -24,10 +24,12 @@ import { ProjectSelect } from "@/components/dropdowns/project/project-select";
 // hooks
 import { useUserProfile } from "@/hooks/store/user";
 import { useUser } from "@/hooks/store/user/user-user";
+import { hasInputChanged, useReportFormInput } from "@/hooks/use-report-form-input";
 
 type Props = {
   handleFormSubmit: (values: Partial<ICycle>) => Promise<void>;
   handleClose: () => void;
+  onInputChange?: (hasInput: boolean) => void;
   status: boolean;
   projectId: string;
   setActiveProject: (projectId: string) => void;
@@ -43,7 +45,16 @@ const defaultValues: Partial<ICycle> = {
 };
 
 export function CycleForm(props: Props) {
-  const { handleFormSubmit, handleClose, status, projectId, setActiveProject, data, isMobile = false } = props;
+  const {
+    handleFormSubmit,
+    handleClose,
+    onInputChange,
+    status,
+    projectId,
+    setActiveProject,
+    data,
+    isMobile = false,
+  } = props;
   // plane hooks
   const { t } = useTranslation();
   // store hooks
@@ -64,6 +75,12 @@ export function CycleForm(props: Props) {
       end_date: data?.end_date || null,
     },
   });
+
+  const values = useWatch({ control });
+  useReportFormInput(
+    hasInputChanged<ICycle>(values, { ...defaultValues, ...data }, ["name", "description", "start_date", "end_date"]),
+    onInputChange
+  );
 
   const { getIndex } = getTabIndex(ETabIndices.PROJECT_CYCLE, isMobile);
 

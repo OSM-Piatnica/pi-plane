@@ -282,6 +282,11 @@
   "create_more": "Creează mai multe",
   "add_to_project": "Adaugă la proiect",
   "discard": "Renunță",
+  "discard_changes": {
+    "title": "Renunți la modificări?",
+    "description": "Modificările tale nu au fost salvate. Renunțarea la ele nu poate fi anulată.",
+    "keep_editing": "Continuă editarea"
+  },
   "duplicate_issue_found": "Activitate duplicată găsită",
   "duplicate_issues_found": "Activități duplicate găsite",
   "no_matching_results": "Nu există rezultate potrivite",
