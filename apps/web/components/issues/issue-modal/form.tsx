@@ -392,8 +392,10 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
   return (
     <FormProvider {...methods}>
       {/* The form relays DialogContent's max-height into Main/Body: the description scrolls in
-          DialogBody, default properties stay pinned in Main and buttons live in DialogActions. */}
-      <div className="flex min-h-0 flex-1 gap-2 bg-transparent">
+          DialogBody, default properties stay pinned in Main and buttons live in DialogActions. When the window is
+          too short for the header, a usable body and the buttons together, DialogBody keeps a minimum height
+          (instead of shrinking to nothing) and this wrapper scrolls the whole form. */}
+      <div className="vertical-scrollbar scrollbar-sm flex min-h-0 flex-1 gap-2 overflow-y-auto bg-transparent">
         <form
           ref={formRef}
           onSubmit={handleSubmit((formValues) => handleFormSubmit(formValues))}
@@ -465,7 +467,10 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
                 handleFormChange={handleFormChange}
               />
             </DialogHeader>
-            <DialogBody tabIndex={0} render={<div className="vertical-scrollbar scrollbar-sm" />}>
+            <DialogBody
+              tabIndex={0}
+              render={<div className="vertical-scrollbar scrollbar-sm" style={{ minHeight: "10rem" }} />}
+            >
               <IssueDescriptionEditor
                 control={control}
                 isDraft={isDraft}
