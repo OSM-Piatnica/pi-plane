@@ -12,6 +12,12 @@ from .project.base import (
     ProjectArchiveUnarchiveEndpoint,
 )
 
+from .project.access_request import (
+    ProjectAccessRequestEndpoint,
+    ProjectAccessRequestMineEndpoint,
+    ProjectAccessRequestDetailEndpoint,
+)
+
 from .project.invite import (
     UserProjectInvitationsViewset,
     ProjectInvitationsViewset,

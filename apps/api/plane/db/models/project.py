@@ -29,12 +29,20 @@ class ROLE(Enum):
 
 
 class ProjectNetwork(Enum):
+    """Who can see a project and how someone gets in.
+
+    SECRET: invisible to everyone who is not a member (workspace admins still list it); members join by invitation.
+    PRIVATE: listed for workspace members, but its content is locked: people request access or are invited.
+    PUBLIC: listed for workspace members, who can join it at once.
+    """
+
     SECRET = 0
+    PRIVATE = 1
     PUBLIC = 2
 
     @classmethod
     def choices(cls):
-        return [(0, "Secret"), (2, "Public")]
+        return [(0, "Secret"), (1, "Private"), (2, "Public")]
 
 
 def get_default_props():
@@ -69,7 +77,7 @@ def get_default_preferences():
 class Project(ChangeTrackerMixin, BaseModel):
     TRACKED_FIELDS = ["timezone"]
 
-    NETWORK_CHOICES = ((0, "Secret"), (2, "Public"))
+    NETWORK_CHOICES = ((0, "Secret"), (1, "Private"), (2, "Public"))
     name = models.CharField(max_length=255, verbose_name="Project Name")
     description = models.TextField(verbose_name="Project Description", blank=True)
     description_text = models.JSONField(verbose_name="Project Description RT", blank=True, null=True)
@@ -263,6 +271,46 @@ class ProjectMemberInvite(ProjectBaseModel):
 
     def __str__(self):
         return f"{self.project.name} {self.email} {self.accepted}"
+
+
+class ProjectAccessRequest(ProjectBaseModel):
+    """A workspace member asking to join a Private project; a project admin approves or rejects it."""
+
+    PENDING = "pending"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+    STATUS_CHOICES = ((PENDING, "Pending"), (APPROVED, "Approved"), (REJECTED, "Rejected"))
+
+    requester = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="project_access_requests"
+    )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=PENDING)
+    message = models.TextField(blank=True, default="")
+    decided_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="decided_project_access_requests",
+    )
+    decided_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        constraints = [
+            # a person has at most one open request per project; a rejected one can be followed by a new request
+            models.UniqueConstraint(
+                fields=["project", "requester"],
+                condition=Q(status="pending", deleted_at__isnull=True),
+                name="project_access_request_unique_pending_per_requester",
+            )
+        ]
+        verbose_name = "Project Access Request"
+        verbose_name_plural = "Project Access Requests"
+        db_table = "project_access_requests"
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return f"{self.requester_id} -> {self.project_id} ({self.status})"
 
 
 class ProjectMember(ProjectBaseModel):

@@ -17,6 +17,7 @@ from plane.app.serializers.user import UserLiteSerializer, UserAdminLiteSerializ
 from plane.db.models import (
     Project,
     ProjectMember,
+    ProjectAccessRequest,
     ProjectMemberInvite,
     ProjectIdentifier,
     DeployBoard,
@@ -203,6 +204,17 @@ class ProjectMemberInviteSerializer(BaseSerializer):
     class Meta:
         model = ProjectMemberInvite
         fields = "__all__"
+
+
+class ProjectAccessRequestSerializer(BaseSerializer):
+    """An access request to a Private project, with the person asking."""
+
+    requester_detail = UserLiteSerializer(read_only=True, source="requester")
+
+    class Meta:
+        model = ProjectAccessRequest
+        fields = ["id", "project", "requester", "requester_detail", "status", "message", "decided_at", "created_at"]
+        read_only_fields = fields
 
 
 class ProjectMemberInvitePublicSerializer(BaseSerializer):

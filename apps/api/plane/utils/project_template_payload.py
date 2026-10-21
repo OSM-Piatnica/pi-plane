@@ -195,8 +195,8 @@ def validate_and_clean_project_payload(payload: dict, workspace: Workspace, *, r
             if value in [None, ""]:
                 continue
             network = int(value)
-            if network not in [0, 2]:
-                raise serializers.ValidationError({"payload": "network must be 0 or 2"})
+            if network not in [0, 1, 2]:
+                raise serializers.ValidationError({"payload": "network must be 0, 1 or 2"})
             cleaned[key] = network
             continue
         if key in {"start_date", "target_date"}:
