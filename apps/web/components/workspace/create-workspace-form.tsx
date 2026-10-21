@@ -21,7 +21,7 @@ import { Select } from "@plane/blocks/select";
 import { validateWorkspaceName, validateSlug } from "@plane/utils";
 // hooks
 import { useWorkspace } from "@/hooks/store/use-workspace";
-import { useAppRouter } from "@/hooks/use-app-router";
+import { useGoBackOrHome } from "@/hooks/use-go-back-or-home";
 // services
 import { WorkspaceService } from "@/services/workspace.service";
 
@@ -57,8 +57,8 @@ export const CreateWorkspaceForm = observer(function CreateWorkspaceForm(props: 
   // states
   const [slugError, setSlugError] = useState(false);
   const [invalidSlug, setInvalidSlug] = useState(false);
-  // router
-  const router = useAppRouter();
+  // handlers
+  const goBackOrHome = useGoBackOrHome();
   // store hooks
   const { createWorkspace } = useWorkspace();
   // form info
@@ -263,7 +263,7 @@ export const CreateWorkspaceForm = observer(function CreateWorkspaceForm(props: 
             size="lg"
             stretch="auto"
             label={t("common.go_back")}
-            onClick={() => router.back()}
+            onClick={goBackOrHome}
           />
         )}
       </div>

@@ -21,6 +21,7 @@ import { CreateWorkspaceForm } from "@/components/workspace/create-workspace-for
 import { useUser, useUserProfile } from "@/hooks/store/user";
 import { useInstance } from "@/hooks/store/use-instance";
 import { useAppRouter } from "@/hooks/use-app-router";
+import { useGoBackOrHome } from "@/hooks/use-go-back-or-home";
 // wrappers
 import { AuthenticationWrapper } from "@/lib/wrappers/authentication-wrapper";
 
@@ -28,6 +29,7 @@ const CreateWorkspacePage = observer(function CreateWorkspacePage() {
   const { t } = useTranslation();
   // router
   const router = useAppRouter();
+  const goBackOrHome = useGoBackOrHome();
   // store hooks
   const { config } = useInstance();
   const { data: currentUser } = useUser();
@@ -88,13 +90,7 @@ const CreateWorkspacePage = observer(function CreateWorkspacePage() {
                 {t("workspace_creation.errors.creation_disabled.description")}
               </p>
               <div className="mt-6 flex gap-4">
-                <Button
-                  variant="primary"
-                  size="sm"
-                  stretch="auto"
-                  label={t("common.go_back")}
-                  onClick={() => router.back()}
-                />
+                <Button variant="primary" size="sm" stretch="auto" label={t("common.go_back")} onClick={goBackOrHome} />
                 {/* Button chrome on a mailto link: the anchor carries the label as its own content (which
                     takes precedence over Button's label slot) so it always has an accessible name. */}
                 <Button
