@@ -22,6 +22,7 @@ import ProjectCreateButtons from "@/components/project/create/project-create-but
 import { getCoverImageType, uploadCoverImage } from "@/helpers/cover-image.helper";
 import { useProject } from "@/hooks/store/use-project";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useReportFormInput } from "@/hooks/use-report-form-input";
 import { ProjectTemplateService } from "@/services/project-template.service";
 import { IssueTypeService } from "@/services/issue-type.service";
 import { ProjectAttributes } from "./attributes";
@@ -67,12 +68,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
   });
   const { handleSubmit, reset, setValue, watch } = methods;
   const { isDirty } = methods.formState;
-  const hasInput = isDirty || selectedIssueTypeIds.length > 0;
-  useEffect(() => {
-    onInputChange?.(hasInput);
-  }, [hasInput, onInputChange]);
-  // the form unmounts when the dialog moves on or closes: nothing is left to protect
-  useEffect(() => () => onInputChange?.(false), [onInputChange]);
+  useReportFormInput(isDirty || selectedIssueTypeIds.length > 0, onInputChange);
   const { isMobile } = usePlatformOS();
   const isIssueTypeEnabled = Boolean(watch("is_issue_type_enabled"));
   const applyProjectTemplatePayload = useCallback(
