@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -25,13 +26,18 @@ export const PowerKModalFooter = observer(function PowerKModalFooter(props: Prop
       <div />
       <div className="flex items-center gap-2">
         <span className="text-11 text-tertiary">{t("power_k.footer.workspace_level")}</span>
-        <Switch
-          size="sm"
-          checked={isWorkspaceLevel}
-          onCheckedChange={onWorkspaceLevelChange}
-          disabled={!projectId}
-          aria-label={t("power_k.footer.workspace_level")}
-        />
+        {/* Outside a project the search always covers the whole workspace: the switch shows that as on and fixed,
+            not as a disabled control that looks broken. The wrapper only drops the pointer cursor, because
+            Switch takes no className. */}
+        <span className="inline-flex [&_[data-readonly]]:cursor-default">
+          <Switch
+            size="sm"
+            checked={!projectId || isWorkspaceLevel}
+            onCheckedChange={onWorkspaceLevelChange}
+            readOnly={!projectId}
+            aria-label={t("power_k.footer.workspace_level")}
+          />
+        </span>
       </div>
     </div>
   );
