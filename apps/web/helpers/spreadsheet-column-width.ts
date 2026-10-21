@@ -39,18 +39,13 @@ export const sanitizeSpreadsheetColumnWidths = (raw: unknown): TSpreadsheetColum
 /**
  * The widths to apply while a column is dragged to `width`. `measured` holds the rendered width of every
  * column when the drag began, so the first resize freezes the other columns where they are instead of
- * making them jump. The work item column is left to take the remaining space until it is resized itself.
+ * making them jump.
  */
 export const buildSpreadsheetColumnWidths = (
   columnKey: string,
   width: number,
-  measured: TSpreadsheetColumnWidths,
-  saved: TSpreadsheetColumnWidths
-): TSpreadsheetColumnWidths => {
-  const next = sanitizeSpreadsheetColumnWidths(measured);
-  delete next[SPREADSHEET_WORK_ITEM_COLUMN_KEY];
-  const savedWorkItemWidth = saved[SPREADSHEET_WORK_ITEM_COLUMN_KEY];
-  if (savedWorkItemWidth !== undefined) next[SPREADSHEET_WORK_ITEM_COLUMN_KEY] = savedWorkItemWidth;
-  next[columnKey] = clampSpreadsheetColumnWidth(columnKey, width);
-  return next;
-};
+  measured: TSpreadsheetColumnWidths
+): TSpreadsheetColumnWidths => ({
+  ...sanitizeSpreadsheetColumnWidths(measured),
+  [columnKey]: clampSpreadsheetColumnWidth(columnKey, width),
+});

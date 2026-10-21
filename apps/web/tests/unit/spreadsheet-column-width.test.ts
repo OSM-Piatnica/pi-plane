@@ -46,26 +46,23 @@ describe("sanitizeSpreadsheetColumnWidths", () => {
 });
 
 describe("buildSpreadsheetColumnWidths", () => {
-  const measured = { [WORK_ITEM]: 700, state: 144, priority: 144, assignee: 180 };
+  const measured = { [WORK_ITEM]: 431, state: 144, priority: 144, assignee: 180 };
 
-  it("freezes the property columns at their measured width and sets the dragged one", () => {
-    expect(buildSpreadsheetColumnWidths("priority", 220, measured, {})).toEqual({
+  it("freezes every column at its measured width and sets the dragged one", () => {
+    expect(buildSpreadsheetColumnWidths("priority", 220, measured)).toEqual({
+      [WORK_ITEM]: 431,
       state: 144,
       priority: 220,
       assignee: 180,
     });
   });
 
-  it("leaves the work item column to take the remaining space until it is resized itself", () => {
-    expect(buildSpreadsheetColumnWidths("state", 200, measured, {})[WORK_ITEM]).toBeUndefined();
-    expect(buildSpreadsheetColumnWidths(WORK_ITEM, 320, measured, {})[WORK_ITEM]).toBe(320);
+  it("can resize the work item column", () => {
+    expect(buildSpreadsheetColumnWidths(WORK_ITEM, 320, measured)[WORK_ITEM]).toBe(320);
   });
 
-  it("keeps a work item width that was saved earlier", () => {
-    expect(buildSpreadsheetColumnWidths("state", 200, measured, { [WORK_ITEM]: 400 })[WORK_ITEM]).toBe(400);
-  });
-
-  it("clamps the dragged column", () => {
-    expect(buildSpreadsheetColumnWidths("state", 1, measured, {}).state).toBe(96);
+  it("clamps the dragged column and any measured width", () => {
+    expect(buildSpreadsheetColumnWidths("state", 1, measured).state).toBe(96);
+    expect(buildSpreadsheetColumnWidths("state", 200, { ...measured, [WORK_ITEM]: 900 })[WORK_ITEM]).toBe(512);
   });
 });

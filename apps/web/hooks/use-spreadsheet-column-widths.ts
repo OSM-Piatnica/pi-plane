@@ -24,16 +24,16 @@ export const useSpreadsheetColumnWidths = () => {
 
   const previewWidth = useCallback(
     (columnKey: string, width: number, measured: TSpreadsheetColumnWidths) =>
-      setDraft(buildSpreadsheetColumnWidths(columnKey, width, measured, saved)),
-    [saved]
+      setDraft(buildSpreadsheetColumnWidths(columnKey, width, measured)),
+    []
   );
 
   const commitWidth = useCallback(
     (columnKey: string, width: number, measured: TSpreadsheetColumnWidths) => {
-      setValue(buildSpreadsheetColumnWidths(columnKey, width, measured, saved));
+      setValue(buildSpreadsheetColumnWidths(columnKey, width, measured));
       setDraft(null);
     },
-    [saved, setValue]
+    [setValue]
   );
 
   const resetWidth = useCallback(

@@ -143,7 +143,6 @@ export const SpreadsheetTable = observer(function SpreadsheetTable(props: Props)
     >
       {hasCustomWidths && (
         <colgroup>
-          {/* the work item column takes the remaining space until it is resized itself */}
           <col style={workItemColumnWidth ? { width: workItemColumnWidth } : undefined} />
           {visibleColumns.map((property) => (
             <col key={property} style={{ width: widths[property] ?? SPREADSHEET_COLUMN_DEFAULT_WIDTH }} />

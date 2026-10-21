@@ -8,7 +8,6 @@ import type { KeyboardEvent, PointerEvent } from "react";
 import { useRef } from "react";
 import { useTranslation } from "@plane/i18n";
 import type { TSpreadsheetColumnWidths } from "@/helpers/spreadsheet-column-width";
-import { SPREADSHEET_WORK_ITEM_COLUMN_KEY } from "@/helpers/spreadsheet-column-width";
 import type { TSpreadsheetColumnWidthControls } from "@/hooks/use-spreadsheet-column-widths";
 
 /** Attribute that marks the header cells whose rendered width is measured when a drag starts. */
@@ -20,13 +19,12 @@ type Props = TSpreadsheetColumnWidthControls & {
   columnKey: string;
 };
 
-/** Rendered widths of the property columns (and of this one), taken from the header row. */
-const measureColumns = (cell: HTMLElement, columnKey: string): TSpreadsheetColumnWidths => {
+/** Rendered widths of every column, taken from the header row. */
+const measureColumns = (cell: HTMLElement): TSpreadsheetColumnWidths => {
   const measured: TSpreadsheetColumnWidths = {};
   cell.parentElement?.querySelectorAll<HTMLElement>(`[${SPREADSHEET_COLUMN_KEY_ATTRIBUTE}]`).forEach((column) => {
     const key = column.getAttribute(SPREADSHEET_COLUMN_KEY_ATTRIBUTE);
-    if (key && (key !== SPREADSHEET_WORK_ITEM_COLUMN_KEY || key === columnKey))
-      measured[key] = column.getBoundingClientRect().width;
+    if (key) measured[key] = column.getBoundingClientRect().width;
   });
   return measured;
 };
@@ -56,7 +54,7 @@ export function ColumnResizer(props: Props) {
     dragRef.current = {
       startX: event.clientX,
       startWidth: cell.getBoundingClientRect().width,
-      measured: measureColumns(cell, columnKey),
+      measured: measureColumns(cell),
     };
   };
 
@@ -92,7 +90,7 @@ export function ColumnResizer(props: Props) {
     event.preventDefault();
     event.stopPropagation();
     const step = event.key === "ArrowRight" ? KEYBOARD_STEP : -KEYBOARD_STEP;
-    commitWidth(columnKey, cell.getBoundingClientRect().width + step, measureColumns(cell, columnKey));
+    commitWidth(columnKey, cell.getBoundingClientRect().width + step, measureColumns(cell));
   };
 
   return (
