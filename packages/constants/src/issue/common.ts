@@ -139,6 +139,13 @@ export const ISSUE_GROUP_BY_OPTIONS: {
 ];
 
 // what a work item list can be sorted on; the direction is chosen separately (see ISSUE_ORDER_BY_DIRECTION_OPTIONS)
+/**
+ * The order work item lists start in: oldest first, so the newest work item is last. It is separate from
+ * the default orders of modules (`DEFAULT_MODULE_ORDER_BY`) and cycles. The API creates new display filters
+ * with the same value; users who already saved an order keep theirs.
+ */
+export const DEFAULT_WORK_ITEM_ORDER_BY: TIssueOrderByOptions = "created_at";
+
 export const ISSUE_ORDER_BY_OPTIONS: {
   key: TIssueOrderByField;
   titleTranslationKey: string;

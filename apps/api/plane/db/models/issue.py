@@ -63,9 +63,9 @@ def get_default_filters():
 def get_default_display_filters():
     return {
         "group_by": None,
-        "order_by": "-created_at",
+        "order_by": "created_at",
         "type": None,
-        "sub_issue": True,
+        "sub_issue": False,
         "show_empty_groups": True,
         "layout": "list",
         "calendar_date_range": "",

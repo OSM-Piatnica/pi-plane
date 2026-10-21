@@ -87,6 +87,9 @@ export const MODULE_VIEW_LAYOUTS: {
   },
 ];
 
+/** The order the module list starts in: oldest first, so the newest module is last. Separate from the work item order. */
+export const DEFAULT_MODULE_ORDER_BY: TModuleOrderByOptions = "created_at";
+
 export const MODULE_ORDER_BY_OPTIONS: {
   key: TModuleOrderByOptions;
   i18n_label: string;
