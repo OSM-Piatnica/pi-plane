@@ -24,6 +24,7 @@ import { Spinner } from "@plane/blocks/spinner";
 import { cn, generateWorkItemLink } from "@plane/utils";
 // components
 import { MultipleSelectEntityAction } from "@/components/core/multiple-select";
+import { guardQuickActionsClick } from "@/components/issues/issue-layouts/quick-action-dropdowns/click-guard";
 import { IssueProperties } from "@/components/issues/issue-layouts/properties";
 // helpers
 // hooks
@@ -313,10 +314,7 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
                   "md:flex": isSidebarCollapsed,
                   "lg:flex": !isSidebarCollapsed,
                 })}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
+                onClick={guardQuickActionsClick}
               >
                 {quickActions({
                   issue,
