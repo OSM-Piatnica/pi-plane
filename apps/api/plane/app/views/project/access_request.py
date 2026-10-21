@@ -79,7 +79,7 @@ class ProjectAccessRequestEndpoint(BaseAPIView):
 
 
 class ProjectAccessRequestMineEndpoint(BaseAPIView):
-    """The signed-in user's latest access request to the project, or null."""
+    """The signed-in user's latest access request to the project; ``{"status": null}`` when there is none."""
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER], level="WORKSPACE")
     def get(self, request, slug, project_id):
@@ -87,7 +87,7 @@ class ProjectAccessRequestMineEndpoint(BaseAPIView):
         if project is None:
             return Response({"error": "Project does not exist"}, status=status.HTTP_404_NOT_FOUND)
         access_request = ProjectAccessRequest.objects.filter(project=project, requester=request.user).first()
-        data = ProjectAccessRequestSerializer(access_request).data if access_request else None
+        data = ProjectAccessRequestSerializer(access_request).data if access_request else {"status": None}
         return Response(data, status=status.HTTP_200_OK)
 
 

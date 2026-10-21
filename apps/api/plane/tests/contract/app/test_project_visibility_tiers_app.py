@@ -204,7 +204,7 @@ class TestAccessRequests:
     def test_the_requester_sees_the_state_of_their_request(self, workspace, projects, outsider):
         mine = _client(outsider).get(self._url(workspace, projects["private"], "me/"))
         assert mine.status_code == status.HTTP_200_OK
-        assert mine.json() is None
+        assert mine.json() == {"status": None}
 
         self._request_access(outsider, workspace, projects["private"])
         assert _client(outsider).get(self._url(workspace, projects["private"], "me/")).json()["status"] == "pending"
