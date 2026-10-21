@@ -157,9 +157,13 @@
     },
     "network": {
       "label": "네트워크",
+      "secret": {
+        "title": "비밀",
+        "description": "멤버가 아니면 보이지 않음"
+      },
       "private": {
         "title": "비공개",
-        "description": "초대에 의해서만 접근 가능"
+        "description": "워크스페이스의 모든 사람에게 표시되며, 접근하려면 승인 또는 초대가 필요합니다"
       },
       "public": {
         "title": "공개",

@@ -157,9 +157,13 @@
     },
     "network": {
       "label": "Sieć",
+      "secret": {
+        "title": "Tajny",
+        "description": "Ukryty przed wszystkimi, którzy nie są jego członkami"
+      },
       "private": {
         "title": "Prywatny",
-        "description": "Dostęp tylko na zaproszenie"
+        "description": "Widoczny dla wszystkich w przestrzeni roboczej; dostęp wymaga zatwierdzenia lub zaproszenia"
       },
       "public": {
         "title": "Publiczny",

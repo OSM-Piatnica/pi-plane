@@ -624,6 +624,23 @@
       },
       "key_regenerated": "Neuer Schlüssel erfolgreich generiert.",
       "view_secret_key": "Geheimen Schlüssel anzeigen"
+    },
+    "request_access_modal": {
+      "title": "Zugang anfragen",
+      "description": "Bitte die Admins dieses Projekts um Zugang.",
+      "description_named": "Bitte die Admins von {name} um Zugang.",
+      "message_placeholder": "Nachricht an die Admins hinzufügen (optional)",
+      "send": "Anfrage senden",
+      "sending": "Wird gesendet...",
+      "success_title": "Anfrage gesendet",
+      "success_message": "Die Projektadmins werden sie prüfen.",
+      "request_button": "Zugang anfragen",
+      "pending_badge": "Angefragt"
+    },
+    "access_requests": {
+      "title": "Beitrittsanfragen ({count})",
+      "approve": "Genehmigen",
+      "reject": "Ablehnen"
     }
   }
 }

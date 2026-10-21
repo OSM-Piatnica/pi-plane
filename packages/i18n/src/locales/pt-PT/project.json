@@ -624,6 +624,23 @@
       },
       "key_regenerated": "Nova chave gerada com sucesso.",
       "view_secret_key": "Ver chave secreta"
+    },
+    "request_access_modal": {
+      "title": "Pedir acesso",
+      "description": "Peça aos administradores deste projeto que o deixem entrar.",
+      "description_named": "Peça aos administradores de {name} que o deixem entrar.",
+      "message_placeholder": "Adicione uma nota para os administradores (opcional)",
+      "send": "Enviar pedido",
+      "sending": "A enviar...",
+      "success_title": "Pedido enviado",
+      "success_message": "Os administradores do projeto irão analisá-lo.",
+      "request_button": "Pedir acesso",
+      "pending_badge": "Pedido"
+    },
+    "access_requests": {
+      "title": "Pedidos para aderir ({count})",
+      "approve": "Aprovar",
+      "reject": "Rejeitar"
     }
   }
 }

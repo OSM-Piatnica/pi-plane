@@ -624,6 +624,23 @@
       },
       "key_regenerated": "New key regenerated successfully.",
       "view_secret_key": "View secret key"
+    },
+    "request_access_modal": {
+      "title": "Request access",
+      "description": "Ask the admins of this project to let you in.",
+      "description_named": "Ask the admins of {name} to let you in.",
+      "message_placeholder": "Add a note for the admins (optional)",
+      "send": "Send request",
+      "sending": "Sending...",
+      "success_title": "Request sent",
+      "success_message": "The project admins will review it.",
+      "request_button": "Request access",
+      "pending_badge": "Requested"
+    },
+    "access_requests": {
+      "title": "Requests to join ({count})",
+      "approve": "Approve",
+      "reject": "Reject"
     }
   }
 }

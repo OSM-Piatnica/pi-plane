@@ -29,7 +29,12 @@
       "restricted_description": "Contact admin to request for access and you can continue here.",
       "join_description": "Click the button below to join it.",
       "cta_primary": "Join project",
-      "cta_loading": "Joining project"
+      "cta_loading": "Joining project",
+      "pending_title": "Your request is waiting for approval",
+      "pending_description": "The project admins will let you in once they approve it.",
+      "private_title": "This project is private",
+      "private_description": "You can see it, but its admins have to let you in. Send them a request.",
+      "request_cta": "Request access"
     },
     "invalid_project": {
       "title": "Project not found",

@@ -7,7 +7,7 @@
 
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { InfoOutline, LockOutline } from "@makeplane/propel/icons";
+import { InfoOutline, LockOutline, ShieldOutline } from "@makeplane/propel/icons";
 import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
@@ -255,7 +255,8 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
               <span className="flex items-center gap-2 text-13">
                 <span>{watch("identifier")} .</span>
                 <span className="flex items-center gap-1.5">
-                  {project.network === 0 && <LockOutline className="h-2.5 w-2.5 text-on-color" />}
+                  {project.network === 0 && <ShieldOutline className="h-2.5 w-2.5 text-on-color" />}
+                  {project.network === 1 && <LockOutline className="h-2.5 w-2.5 text-on-color" />}
                   {currentNetwork && t(currentNetwork?.i18n_label)}
                 </span>
               </span>

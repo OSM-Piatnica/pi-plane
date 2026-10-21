@@ -12,6 +12,7 @@ import { useTranslation } from "@plane/i18n";
 // components
 import { NotAuthorizedView } from "@/components/auth-screens/not-authorized-view";
 import { PageHead } from "@/components/core/page-title";
+import { ProjectAccessRequests } from "@/components/project/access-requests";
 import { ProjectMemberList } from "@/components/project/member-list";
 import { ProjectSettingsMemberDefaults } from "@/components/project/project-settings-member-defaults";
 import { SettingsContentWrapper } from "@/components/settings/content-wrapper";
@@ -50,6 +51,7 @@ function MembersSettingsPage({ params }: Route.ComponentProps) {
       <PageHead title={pageTitle} />
       <SettingsHeading title={t("common.members")} />
       <ProjectSettingsMemberDefaults projectId={projectId} workspaceSlug={workspaceSlug} />
+      <ProjectAccessRequests projectId={projectId} workspaceSlug={workspaceSlug} />
       <ProjectTeamspaceList projectId={projectId} workspaceSlug={workspaceSlug} />
       <ProjectMemberList projectId={projectId} workspaceSlug={workspaceSlug} />
     </SettingsContentWrapper>

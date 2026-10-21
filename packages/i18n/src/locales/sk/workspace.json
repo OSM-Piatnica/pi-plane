@@ -157,9 +157,13 @@
     },
     "network": {
       "label": "Sieť",
+      "secret": {
+        "title": "Tajný",
+        "description": "Skrytý pre všetkých, ktorí nie sú členmi"
+      },
       "private": {
         "title": "Súkromný",
-        "description": "Prístupné iba na pozvanie"
+        "description": "Viditeľný pre všetkých v pracovnom priestore; prístup vyžaduje schválenie alebo pozvanie"
       },
       "public": {
         "title": "Verejný",

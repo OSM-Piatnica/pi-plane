@@ -624,6 +624,23 @@
       },
       "key_regenerated": "已成功重新產生新密鑰。",
       "view_secret_key": "檢視密鑰"
+    },
+    "request_access_modal": {
+      "title": "請求存取",
+      "description": "請管理員允許你進入此專案。",
+      "description_named": "請 {name} 的管理員允許你進入。",
+      "message_placeholder": "給管理員留言(選填)",
+      "send": "傳送請求",
+      "sending": "傳送中...",
+      "success_title": "請求已傳送",
+      "success_message": "專案管理員將進行審核。",
+      "request_button": "請求存取",
+      "pending_badge": "已請求"
+    },
+    "access_requests": {
+      "title": "加入請求({count})",
+      "approve": "核准",
+      "reject": "拒絕"
     }
   }
 }

@@ -624,6 +624,23 @@
       },
       "key_regenerated": "Cheia nouă a fost regenerată cu succes.",
       "view_secret_key": "Vezi cheia secretă"
+    },
+    "request_access_modal": {
+      "title": "Solicită acces",
+      "description": "Roagă administratorii acestui proiect să te lase să intri.",
+      "description_named": "Roagă administratorii proiectului {name} să te lase să intri.",
+      "message_placeholder": "Adaugă o notă pentru administratori (opțional)",
+      "send": "Trimite cererea",
+      "sending": "Se trimite...",
+      "success_title": "Cerere trimisă",
+      "success_message": "Administratorii proiectului o vor analiza.",
+      "request_button": "Solicită acces",
+      "pending_badge": "Solicitat"
+    },
+    "access_requests": {
+      "title": "Cereri de aderare ({count})",
+      "approve": "Aprobă",
+      "reject": "Respinge"
     }
   }
 }

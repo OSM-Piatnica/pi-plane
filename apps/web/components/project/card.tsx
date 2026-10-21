@@ -15,6 +15,7 @@ import {
   LockOutline,
   NewTabOutline,
   RestoreOutline,
+  ShieldOutline,
   SettingsOutline,
   TickOutline,
   UserPlusOutline,
@@ -46,6 +47,7 @@ import { usePlatformOS } from "@/hooks/use-platform-os";
 import { CoverImage } from "@/components/common/cover-image";
 import { DeleteProjectModal } from "./delete-project-modal";
 import { JoinProjectModal } from "./join-project-modal";
+import { RequestAccessModal } from "./request-access-modal";
 import { ArchiveRestoreProjectModal } from "./archive-restore-modal";
 import { useTranslation } from "@plane/i18n";
 import { useLocalizedDates } from "@/hooks/use-localized-dates";
@@ -62,6 +64,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
   // states
   const [deleteProjectModalOpen, setDeleteProjectModal] = useState(false);
   const [joinProjectModalOpen, setJoinProjectModal] = useState(false);
+  const [requestAccessModalOpen, setRequestAccessModalOpen] = useState(false);
   const [restoreProject, setRestoreProject] = useState(false);
   // refs
   const projectCardRef = useRef(null);
@@ -83,8 +86,19 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
     [EUserPermissions.ADMIN, EUserPermissions.MEMBER],
     EUserPermissionsLevel.WORKSPACE
   );
+  const isWorkspaceAdmin = allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.WORKSPACE);
   // auth
   const isMemberOfProject = !!project.member_role;
+  // a Private project is locked for everyone but its members and the workspace admins: they ask to get in
+  const needsAccessRequest = !isMemberOfProject && project.network === 1 && !isWorkspaceAdmin;
+  const hasPendingRequest = !!project.has_pending_access_request;
+  const openJoinOrRequest = () => {
+    if (needsAccessRequest) {
+      if (!hasPendingRequest) setRequestAccessModalOpen(true);
+      return;
+    }
+    setJoinProjectModal(true);
+  };
   const hasAdminRole = project.member_role === EUserPermissions.ADMIN;
   const hasMemberRole = project.member_role === EUserPermissions.MEMBER;
   // archive
@@ -156,10 +170,10 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
     },
     {
       key: "join",
-      action: () => setJoinProjectModal(true),
-      title: t("common.join"),
+      action: openJoinOrRequest,
+      title: needsAccessRequest ? t("project_components.request_access_modal.request_button") : t("common.join"),
       icon: UserPlusOutline,
-      shouldRender: !isMemberOfProject && !isArchived,
+      shouldRender: !isMemberOfProject && !isArchived && !(needsAccessRequest && hasPendingRequest),
     },
     {
       key: "open-new-tab",
@@ -208,6 +222,15 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
           handleClose={() => setJoinProjectModal(false)}
         />
       )}
+      {workspaceSlug && (
+        <RequestAccessModal
+          workspaceSlug={workspaceSlug.toString()}
+          projectId={project.id}
+          projectName={project.name}
+          isOpen={requestAccessModalOpen}
+          handleClose={() => setRequestAccessModalOpen(false)}
+        />
+      )}
       {/* Restore project modal */}
       {workspaceSlug && project && (
         <ArchiveRestoreProjectModal
@@ -225,7 +248,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
           if (!isMemberOfProject || isArchived) {
             e.preventDefault();
             e.stopPropagation();
-            if (!isArchived) setJoinProjectModal(true);
+            if (!isArchived) openJoinOrRequest();
           }
         }}
         data-prevent-progress={!isMemberOfProject || isArchived}
@@ -253,7 +276,8 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
                 <h3 className="truncate font-semibold text-on-color">{project.name}</h3>
                 <span className="flex items-center gap-1.5">
                   <p className="text-11 font-medium text-on-color">{project.identifier} </p>
-                  {project.network === 0 && <LockOutline className="h-2.5 w-2.5 text-on-color" />}
+                  {project.network === 0 && <ShieldOutline className="h-2.5 w-2.5 text-on-color" />}
+                  {project.network === 1 && <LockOutline className="h-2.5 w-2.5 text-on-color" />}
                 </span>
               </div>
             </div>
@@ -384,17 +408,27 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
                   ))}
                 {!isMemberOfProject && (
                   <div className="flex items-center">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      stretch="auto"
-                      label={t("common.join")}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setJoinProjectModal(true);
-                      }}
-                    />
+                    {needsAccessRequest && hasPendingRequest ? (
+                      <span className="text-13 text-placeholder">
+                        {t("project_components.request_access_modal.pending_badge")}
+                      </span>
+                    ) : (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        stretch="auto"
+                        label={
+                          needsAccessRequest
+                            ? t("project_components.request_access_modal.request_button")
+                            : t("common.join")
+                        }
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          openJoinOrRequest();
+                        }}
+                      />
+                    )}
                   </div>
                 )}
               </>

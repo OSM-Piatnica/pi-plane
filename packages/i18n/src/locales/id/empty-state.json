@@ -29,7 +29,12 @@
       "restricted_description": "Hubungi admin untuk meminta akses agar Anda dapat melanjutkan di sini.",
       "join_description": "Klik tombol di bawah ini untuk bergabung.",
       "cta_primary": "Bergabung dengan proyek",
-      "cta_loading": "Sedang bergabung dengan proyek"
+      "cta_loading": "Sedang bergabung dengan proyek",
+      "pending_title": "Permintaan Anda menunggu persetujuan",
+      "pending_description": "Admin proyek akan mengizinkan Anda masuk setelah menyetujuinya.",
+      "private_title": "Proyek ini privat",
+      "private_description": "Anda dapat melihatnya, tetapi admin harus mengizinkan Anda masuk. Kirim permintaan kepada mereka.",
+      "request_cta": "Minta akses"
     },
     "invalid_project": {
       "title": "Proyek tidak ditemukan",

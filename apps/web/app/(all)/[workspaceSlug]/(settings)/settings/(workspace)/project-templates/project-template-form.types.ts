@@ -71,7 +71,7 @@ export type TProjectTemplateFormFields = {
   taskCustomProperties: TCustomPropertyTemplateField[];
   epicCustomProperties: TCustomPropertyTemplateField[];
   additionalWorkItemTypes: TAdditionalWorkItemTypeTemplate[];
-  network: 0 | 2;
+  network: 0 | 1 | 2;
 };
 
 export const STATE_TEMPLATE_GROUPS: TStateTemplateGroup[] = [

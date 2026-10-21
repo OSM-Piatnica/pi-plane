@@ -157,9 +157,13 @@
     },
     "network": {
       "label": "Réseau",
+      "secret": {
+        "title": "Secret",
+        "description": "Invisible pour les non-membres"
+      },
       "private": {
         "title": "Privé",
-        "description": "Accessible uniquement sur invitation"
+        "description": "Visible par tous dans l'espace de travail ; l'accès nécessite une approbation ou une invitation"
       },
       "public": {
         "title": "Public",

@@ -624,6 +624,23 @@
       },
       "key_regenerated": "Nuova chiave rigenerata con successo.",
       "view_secret_key": "Mostra chiave segreta"
+    },
+    "request_access_modal": {
+      "title": "Richiedi accesso",
+      "description": "Chiedi agli amministratori di questo progetto di farti entrare.",
+      "description_named": "Chiedi agli amministratori di {name} di farti entrare.",
+      "message_placeholder": "Aggiungi una nota per gli amministratori (facoltativo)",
+      "send": "Invia richiesta",
+      "sending": "Invio...",
+      "success_title": "Richiesta inviata",
+      "success_message": "Gli amministratori del progetto la esamineranno.",
+      "request_button": "Richiedi accesso",
+      "pending_badge": "Richiesto"
+    },
+    "access_requests": {
+      "title": "Richieste di adesione ({count})",
+      "approve": "Approva",
+      "reject": "Rifiuta"
     }
   }
 }

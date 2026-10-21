@@ -624,6 +624,23 @@
       },
       "key_regenerated": "새 키가 성공적으로 다시 생성되었습니다.",
       "view_secret_key": "비밀 키 보기"
+    },
+    "request_access_modal": {
+      "title": "접근 요청",
+      "description": "이 프로젝트의 관리자에게 접근을 요청하세요.",
+      "description_named": "{name}의 관리자에게 접근을 요청하세요.",
+      "message_placeholder": "관리자에게 남길 메모 추가(선택)",
+      "send": "요청 보내기",
+      "sending": "보내는 중...",
+      "success_title": "요청을 보냈습니다",
+      "success_message": "프로젝트 관리자가 검토합니다.",
+      "request_button": "접근 요청",
+      "pending_badge": "요청됨"
+    },
+    "access_requests": {
+      "title": "참여 요청 ({count})",
+      "approve": "승인",
+      "reject": "거절"
     }
   }
 }

@@ -12,9 +12,10 @@ export enum EUserPermissions {
 
 export type TUserPermissions = EUserPermissions.ADMIN | EUserPermissions.MEMBER | EUserPermissions.GUEST;
 
-// project network
+// project network (visibility tier)
 export enum EProjectNetwork {
-  PRIVATE = 0,
+  SECRET = 0,
+  PRIVATE = 1,
   PUBLIC = 2,
 }
 

@@ -29,7 +29,12 @@
       "restricted_description": "Contactați administratorul pentru a solicita accesul și veți putea continua aici.",
       "join_description": "Faceți clic pe butonul de mai jos pentru a vă alătura.",
       "cta_primary": "Alăturați-vă proiectului",
-      "cta_loading": "Se alătură proiectului"
+      "cta_loading": "Se alătură proiectului",
+      "pending_title": "Cererea ta așteaptă aprobare",
+      "pending_description": "Administratorii proiectului te vor lăsa să intri după ce o aprobă.",
+      "private_title": "Acest proiect este privat",
+      "private_description": "Îl poți vedea, dar administratorii trebuie să te lase să intri. Trimite-le o cerere.",
+      "request_cta": "Solicită acces"
     },
     "invalid_project": {
       "title": "Proiect negăsit",

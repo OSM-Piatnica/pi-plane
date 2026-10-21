@@ -29,7 +29,12 @@
       "restricted_description": "管理者に連絡してアクセス権をリクエストすると、ここで作業を続けられます。",
       "join_description": "下のボタンをクリックして参加してください。",
       "cta_primary": "プロジェクトに参加",
-      "cta_loading": "プロジェクトに参加中"
+      "cta_loading": "プロジェクトに参加中",
+      "pending_title": "リクエストは承認待ちです",
+      "pending_description": "プロジェクト管理者が承認すると入れるようになります。",
+      "private_title": "このプロジェクトはプライベートです",
+      "private_description": "表示はされますが、管理者の許可が必要です。リクエストを送信してください。",
+      "request_cta": "アクセスをリクエスト"
     },
     "invalid_project": {
       "title": "プロジェクトが見つかりません",
