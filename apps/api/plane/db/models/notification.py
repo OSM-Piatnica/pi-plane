@@ -101,8 +101,8 @@ class UserNotificationPreference(BaseModel):
     )
 
     # preference fields
-    property_change = models.BooleanField(default=True)
-    state_change = models.BooleanField(default=True)
+    property_change = models.BooleanField(default=False)
+    state_change = models.BooleanField(default=False)
     comment = models.BooleanField(default=True)
     mention = models.BooleanField(default=True)
     issue_completed = models.BooleanField(default=True)

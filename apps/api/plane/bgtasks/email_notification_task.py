@@ -4,7 +4,7 @@
 
 import logging
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from bs4 import BeautifulSoup
 
@@ -14,6 +14,7 @@ from django.core.mail import EmailMultiAlternatives, get_connection
 from django.template.loader import render_to_string
 
 # Django imports
+from django.conf import settings
 from django.utils import timezone
 
 # Module imports
@@ -43,45 +44,66 @@ def release_lock(lock_id):
     redis_client.delete(lock_id)
 
 
+def _has_mention(entries):
+    return any((entry.get("data") or {}).get("issue_activity", {}).get("field") == "mention" for entry in entries)
+
+
+def _within_issue_email_cap(receiver_id, issue_id, now):
+    """Whether another email may be sent to the receiver for this issue.
+
+    Every stacking run stamps all logs of one email with the same processed_at,
+    so distinct processed_at values in the window count the emails sent.
+    """
+    window_start = now - timedelta(minutes=settings.EMAIL_NOTIFICATION_WINDOW_MINUTES)
+    emails_sent = (
+        EmailNotificationLog.objects.filter(
+            receiver_id=receiver_id,
+            entity_identifier=issue_id,
+            processed_at__gte=window_start,
+        )
+        .values("processed_at")
+        .distinct()
+        .count()
+    )
+    return emails_sent < settings.EMAIL_NOTIFICATION_MAX_PER_ISSUE
+
+
 @shared_task
 def stack_email_notification():
     # get all email notifications
     email_notifications = EmailNotificationLog.objects.filter(processed_at__isnull=True).order_by("receiver").values()
 
-    # Create the below format for each of the issues
-    # {"issue_id" : { "actor_id1": [ { data }, { data } ], "actor_id2": [ { data }, { data } ] }}
+    # Group the pending logs per receiver and issue, actor-wise:
+    # {"receiver_id": {"issue_id": [log, log]}}
+    grouped = {}
+    for notification in email_notifications:
+        grouped.setdefault(str(notification.get("receiver_id")), {}).setdefault(
+            notification.get("entity_identifier"), []
+        ).append(notification)
 
-    # Convert to unique receivers list
-    receivers = list(set([str(notification.get("receiver_id")) for notification in email_notifications]))
-    processed_notifications = []
-    # Loop through all the issues to create the emails
-    for receiver_id in receivers:
-        # Notification triggered for the receiver
-        receiver_notifications = [
-            notification for notification in email_notifications if str(notification.get("receiver_id")) == receiver_id
-        ]
-        # create payload for all issues
-        payload = {}
-        email_notification_ids = []
-        for receiver_notification in receiver_notifications:
-            payload.setdefault(receiver_notification.get("entity_identifier"), {}).setdefault(
-                str(receiver_notification.get("triggered_by_id")), []
-            ).append(receiver_notification.get("data"))
-            # append processed notifications
-            processed_notifications.append(receiver_notification.get("id"))
-            email_notification_ids.append(receiver_notification.get("id"))
+    now = timezone.now()
+    for receiver_id, issues in grouped.items():
+        for issue_id, entries in issues.items():
+            # Mentions always go through; everything else is capped per issue and
+            # stays pending (not dropped) until the window has room again.
+            if not _has_mention(entries) and not _within_issue_email_cap(receiver_id, issue_id, now):
+                continue
 
-        # Create emails for all the issues
-        for issue_id, notification_data in payload.items():
+            # {"actor_id1": [ { data }, { data } ], "actor_id2": [ { data }, { data } ]}
+            notification_data = {}
+            email_notification_ids = []
+            for entry in entries:
+                notification_data.setdefault(str(entry.get("triggered_by_id")), []).append(entry.get("data"))
+                email_notification_ids.append(entry.get("id"))
+
             send_email_notification.delay(
                 issue_id=issue_id,
                 notification_data=notification_data,
                 receiver_id=receiver_id,
                 email_notification_ids=email_notification_ids,
             )
-
-    # Update the email notification log
-    EmailNotificationLog.objects.filter(pk__in=processed_notifications).update(processed_at=timezone.now())
+            # Stamp each email's logs right away so the next issue's cap sees them
+            EmailNotificationLog.objects.filter(pk__in=email_notification_ids).update(processed_at=now)
 
 
 def create_payload(notification_data):

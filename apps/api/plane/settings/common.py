@@ -505,6 +505,11 @@ WEBHOOK_LOG_RETENTION_DAYS = _retention_days("WEBHOOK_LOG_RETENTION_DAYS", 14)
 # Email notification logs are retained on their own window.
 EMAIL_LOG_RETENTION_DAYS = _retention_days("EMAIL_LOG_RETENTION_DAYS", 7)
 
+# Max non-mention notification emails sent to a user per issue within the window.
+# Extra activity is held back and delivered together once the window frees up.
+EMAIL_NOTIFICATION_MAX_PER_ISSUE = int(os.environ.get("EMAIL_NOTIFICATION_MAX_PER_ISSUE", 3))
+EMAIL_NOTIFICATION_WINDOW_MINUTES = int(os.environ.get("EMAIL_NOTIFICATION_WINDOW_MINUTES", 60))
+
 # Instance Changelog URL
 INSTANCE_CHANGELOG_URL = os.environ.get("INSTANCE_CHANGELOG_URL", "")
 
