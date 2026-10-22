@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -19,6 +20,8 @@ import { Loader } from "@plane/blocks/skeleton";
 import { orderWorkspacesList, cn } from "@plane/utils";
 // helpers
 import { AppSidebarItem } from "@/components/sidebar/sidebar-item";
+// helpers
+import { getWorkspaceHomeHref } from "@/helpers/home-navigation.helper";
 // hooks
 import { useAppTheme } from "@/hooks/store/use-app-theme";
 import { useWorkspace } from "@/hooks/store/use-workspace";
@@ -109,34 +112,40 @@ export const WorkspaceMenuRoot = observer(function WorkspaceMenuRoot(props: Work
           />
         )}
         {variant === "top-navigation" && (
-          <MenuTrigger
-            render={
-              <button
-                type="button"
-                className={cn(
-                  "group/menu-button flex flex-grow items-center justify-between gap-1 truncate rounded-sm p-1 text-13 font-medium text-secondary hover:bg-layer-1 focus:outline-none",
-                  {
-                    "bg-layer-1": isWorkspaceMenuOpen,
-                  }
-                )}
-                aria-label={t("aria_labels.projects_sidebar.open_workspace_switcher")}
-              >
-                <div className="flex flex-grow items-center gap-2 truncate">
-                  <WorkspaceLogo
-                    logo={activeWorkspace?.logo_url}
-                    name={activeWorkspace?.name}
-                    classNames="border border-subtle rounded-md size-7"
-                  />
+          <div
+            className={cn("flex flex-grow items-center truncate rounded-sm hover:bg-layer-1", {
+              "bg-layer-1": isWorkspaceMenuOpen,
+            })}
+          >
+            {/* the logo is a shortcut to the workspace home; the name and chevron open the switcher */}
+            <Link
+              href={getWorkspaceHomeHref(activeWorkspace?.slug)}
+              aria-label={t("home.title")}
+              className="shrink-0 rounded-sm p-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent-strong"
+            >
+              <WorkspaceLogo
+                logo={activeWorkspace?.logo_url}
+                name={activeWorkspace?.name}
+                classNames="border border-subtle rounded-md size-7"
+              />
+            </Link>
+            <MenuTrigger
+              render={
+                <button
+                  type="button"
+                  className="group/menu-button flex flex-grow items-center justify-between gap-1 truncate rounded-sm py-1 pr-1 text-13 font-medium text-secondary focus:outline-none"
+                  aria-label={t("aria_labels.projects_sidebar.open_workspace_switcher")}
+                >
                   <h4 className="truncate text-14 font-medium text-primary">{activeWorkspace?.name ?? t("loading")}</h4>
-                </div>
-                <ChevronDownOutline
-                  className={cn("size-4 flex-shrink-0 text-placeholder duration-300", {
-                    "rotate-180": isWorkspaceMenuOpen,
-                  })}
-                />
-              </button>
-            }
-          />
+                  <ChevronDownOutline
+                    className={cn("size-4 flex-shrink-0 text-placeholder duration-300", {
+                      "rotate-180": isWorkspaceMenuOpen,
+                    })}
+                  />
+                </button>
+              }
+            />
+          </div>
         )}
         <MenuContent side="bottom" align="start">
           <div className="flex w-[19rem] max-w-full flex-col items-start justify-start">
