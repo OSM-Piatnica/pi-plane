@@ -29,7 +29,12 @@
       "restricted_description": "请联系管理员申请访问权限，通过后您可以在此继续。",
       "join_description": "点击下方按钮加入该项目。",
       "cta_primary": "加入项目",
-      "cta_loading": "正在加入项目"
+      "cta_loading": "正在加入项目",
+      "pending_title": "你的请求正在等待批准",
+      "pending_description": "项目管理员批准后你即可进入。",
+      "private_title": "此项目为私有项目",
+      "private_description": "你可以看到它,但需要管理员放行。请向他们发送请求。",
+      "request_cta": "请求访问"
     },
     "invalid_project": {
       "title": "未找到项目",

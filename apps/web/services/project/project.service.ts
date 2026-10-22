@@ -15,6 +15,8 @@ import type {
   TProjectIssuesSearchParams,
   TProject,
   TPartialProject,
+  TProjectAccessRequest,
+  TProjectAccessRequestStatus,
 } from "@plane/types";
 // helpers
 // services
@@ -192,6 +194,56 @@ export class ProjectService extends APIService {
   ): Promise<ISearchIssueResponse[]> {
     return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/search-issues/`, {
       params,
+    })
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** Ask the admins of a Private project for access. Asking again while a request is open returns that request. */
+  async requestProjectAccess(
+    workspaceSlug: string,
+    projectId: string,
+    message?: string
+  ): Promise<TProjectAccessRequest> {
+    return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/access-requests/`, { message })
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** The signed-in user's latest request to the project; `status` is null when there is none. */
+  async getMyProjectAccessRequest(
+    workspaceSlug: string,
+    projectId: string
+  ): Promise<TProjectAccessRequest | { status: null }> {
+    return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/access-requests/me/`)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** The open requests to join the project (project admins). */
+  async getProjectAccessRequests(workspaceSlug: string, projectId: string): Promise<TProjectAccessRequest[]> {
+    return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/access-requests/`)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** Approve or reject an open request (project admins). */
+  async decideProjectAccessRequest(
+    workspaceSlug: string,
+    projectId: string,
+    requestId: string,
+    status: Extract<TProjectAccessRequestStatus, "approved" | "rejected">
+  ): Promise<TProjectAccessRequest> {
+    return this.patch(`/api/workspaces/${workspaceSlug}/projects/${projectId}/access-requests/${requestId}/`, {
+      status,
     })
       .then((response) => response?.data)
       .catch((error) => {

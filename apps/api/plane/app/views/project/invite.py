@@ -140,7 +140,12 @@ class UserProjectInvitationsViewset(BaseViewSet):
         for project in projects:
             if project.network == ProjectNetwork.SECRET.value and workspace_member.role != ROLE.ADMIN.value:
                 return Response(
-                    {"error": "Only workspace admins can join private project"},
+                    {"error": "Only workspace admins can join a secret project"},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+            if project.network == ProjectNetwork.PRIVATE.value and workspace_member.role != ROLE.ADMIN.value:
+                return Response(
+                    {"error": "Request access to join a private project"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 

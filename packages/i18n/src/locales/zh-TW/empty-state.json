@@ -29,7 +29,12 @@
       "restricted_description": "請聯絡管理員以申請存取權，核准後即可在此繼續。",
       "join_description": "點擊下方按鈕加入專案。",
       "cta_primary": "加入專案",
-      "cta_loading": "正在加入專案"
+      "cta_loading": "正在加入專案",
+      "pending_title": "你的請求正在等待核准",
+      "pending_description": "專案管理員核准後你即可進入。",
+      "private_title": "此專案為私人專案",
+      "private_description": "你可以看到它,但需要管理員放行。請向他們傳送請求。",
+      "request_cta": "請求存取"
     },
     "invalid_project": {
       "title": "找不到專案",

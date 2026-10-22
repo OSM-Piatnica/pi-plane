@@ -624,6 +624,23 @@
       },
       "key_regenerated": "Nový kľúč bol úspešne vygenerovaný.",
       "view_secret_key": "Zobraziť tajný kľúč"
+    },
+    "request_access_modal": {
+      "title": "Požiadať o prístup",
+      "description": "Požiadajte správcov tohto projektu o prístup.",
+      "description_named": "Požiadajte správcov projektu {name} o prístup.",
+      "message_placeholder": "Pridajte poznámku pre správcov (voliteľné)",
+      "send": "Odoslať žiadosť",
+      "sending": "Odosielanie...",
+      "success_title": "Žiadosť odoslaná",
+      "success_message": "Správcovia projektu ju posúdia.",
+      "request_button": "Požiadať o prístup",
+      "pending_badge": "Požiadané"
+    },
+    "access_requests": {
+      "title": "Žiadosti o pripojenie ({count})",
+      "approve": "Schváliť",
+      "reject": "Zamietnuť"
     }
   }
 }

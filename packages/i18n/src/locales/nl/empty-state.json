@@ -29,7 +29,12 @@
       "restricted_description": "Neem contact op met de beheerder om toegang aan te vragen, dan kun je hier verder.",
       "join_description": "Klik op de knop hieronder om deel te nemen.",
       "cta_primary": "Deelnemen aan project",
-      "cta_loading": "Deelnemen aan project"
+      "cta_loading": "Deelnemen aan project",
+      "pending_title": "Je verzoek wacht op goedkeuring",
+      "pending_description": "De projectbeheerders laten je binnen zodra ze het goedkeuren.",
+      "private_title": "Dit project is privé",
+      "private_description": "Je kunt het zien, maar de beheerders moeten je binnenlaten. Stuur ze een verzoek.",
+      "request_cta": "Toegang aanvragen"
     },
     "invalid_project": {
       "title": "Project niet gevonden",

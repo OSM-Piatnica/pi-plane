@@ -624,6 +624,23 @@
       },
       "key_regenerated": "新しいキーを再生成しました。",
       "view_secret_key": "シークレットキーを表示"
+    },
+    "request_access_modal": {
+      "title": "アクセスをリクエスト",
+      "description": "このプロジェクトの管理者にアクセスをリクエストします。",
+      "description_named": "{name} の管理者にアクセスをリクエストします。",
+      "message_placeholder": "管理者へのメモを追加(任意)",
+      "send": "リクエストを送信",
+      "sending": "送信中...",
+      "success_title": "リクエストを送信しました",
+      "success_message": "プロジェクト管理者が確認します。",
+      "request_button": "アクセスをリクエスト",
+      "pending_badge": "リクエスト済み"
+    },
+    "access_requests": {
+      "title": "参加リクエスト({count})",
+      "approve": "承認",
+      "reject": "却下"
     }
   }
 }

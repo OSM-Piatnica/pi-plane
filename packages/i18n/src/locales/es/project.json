@@ -624,6 +624,23 @@
       },
       "key_regenerated": "Nueva clave regenerada correctamente.",
       "view_secret_key": "Ver clave secreta"
+    },
+    "request_access_modal": {
+      "title": "Solicitar acceso",
+      "description": "Pide a los administradores de este proyecto que te dejen entrar.",
+      "description_named": "Pide a los administradores de {name} que te dejen entrar.",
+      "message_placeholder": "Añade una nota para los administradores (opcional)",
+      "send": "Enviar solicitud",
+      "sending": "Enviando...",
+      "success_title": "Solicitud enviada",
+      "success_message": "Los administradores del proyecto la revisarán.",
+      "request_button": "Solicitar acceso",
+      "pending_badge": "Solicitado"
+    },
+    "access_requests": {
+      "title": "Solicitudes para unirse ({count})",
+      "approve": "Aprobar",
+      "reject": "Rechazar"
     }
   }
 }

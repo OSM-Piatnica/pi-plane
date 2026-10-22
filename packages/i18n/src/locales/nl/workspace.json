@@ -157,9 +157,13 @@
     },
     "network": {
       "label": "Netwerk",
+      "secret": {
+        "title": "Geheim",
+        "description": "Onzichtbaar voor niet-leden"
+      },
       "private": {
         "title": "Privé",
-        "description": "Alleen toegankelijk op uitnodiging"
+        "description": "Zichtbaar voor iedereen in de werkruimte; toegang vereist goedkeuring of een uitnodiging"
       },
       "public": {
         "title": "Openbaar",

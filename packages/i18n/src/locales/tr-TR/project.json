@@ -624,6 +624,23 @@
       },
       "key_regenerated": "Yeni anahtar başarıyla yeniden oluşturuldu.",
       "view_secret_key": "Gizli anahtarı görüntüle"
+    },
+    "request_access_modal": {
+      "title": "Erişim iste",
+      "description": "Bu projenin yöneticilerinden sizi içeri almalarını isteyin.",
+      "description_named": "{name} projesinin yöneticilerinden sizi içeri almalarını isteyin.",
+      "message_placeholder": "Yöneticiler için bir not ekleyin (isteğe bağlı)",
+      "send": "İstek gönder",
+      "sending": "Gönderiliyor...",
+      "success_title": "İstek gönderildi",
+      "success_message": "Proje yöneticileri inceleyecek.",
+      "request_button": "Erişim iste",
+      "pending_badge": "İstendi"
+    },
+    "access_requests": {
+      "title": "Katılma istekleri ({count})",
+      "approve": "Onayla",
+      "reject": "Reddet"
     }
   }
 }

@@ -624,6 +624,23 @@
       },
       "key_regenerated": "已成功重新生成新密钥。",
       "view_secret_key": "查看密钥"
+    },
+    "request_access_modal": {
+      "title": "请求访问",
+      "description": "请管理员允许你进入此项目。",
+      "description_named": "请 {name} 的管理员允许你进入。",
+      "message_placeholder": "给管理员留言(可选)",
+      "send": "发送请求",
+      "sending": "发送中...",
+      "success_title": "请求已发送",
+      "success_message": "项目管理员将进行审核。",
+      "request_button": "请求访问",
+      "pending_badge": "已请求"
+    },
+    "access_requests": {
+      "title": "加入请求({count})",
+      "approve": "批准",
+      "reject": "拒绝"
     }
   }
 }

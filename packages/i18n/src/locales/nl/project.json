@@ -624,6 +624,23 @@
       },
       "key_regenerated": "Nieuwe sleutel gegenereerd.",
       "view_secret_key": "Geheime sleutel bekijken"
+    },
+    "request_access_modal": {
+      "title": "Toegang aanvragen",
+      "description": "Vraag de beheerders van dit project om je binnen te laten.",
+      "description_named": "Vraag de beheerders van {name} om je binnen te laten.",
+      "message_placeholder": "Voeg een notitie toe voor de beheerders (optioneel)",
+      "send": "Verzoek versturen",
+      "sending": "Versturen...",
+      "success_title": "Verzoek verstuurd",
+      "success_message": "De projectbeheerders bekijken het.",
+      "request_button": "Toegang aanvragen",
+      "pending_badge": "Aangevraagd"
+    },
+    "access_requests": {
+      "title": "Verzoeken om lid te worden ({count})",
+      "approve": "Goedkeuren",
+      "reject": "Afwijzen"
     }
   }
 }

@@ -12,6 +12,9 @@ from plane.app.views import (
     ProjectMemberViewSet,
     ProjectMemberUserEndpoint,
     ProjectJoinEndpoint,
+    ProjectAccessRequestEndpoint,
+    ProjectAccessRequestMineEndpoint,
+    ProjectAccessRequestDetailEndpoint,
     ProjectUserViewsEndpoint,
     ProjectIdentifierEndpoint,
     ProjectFavoritesViewSet,
@@ -73,6 +76,21 @@ urlpatterns = [
         "users/me/workspaces/<str:slug>/project-roles/",
         UserProjectRolesEndpoint.as_view(),
         name="user-project-roles",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/access-requests/",
+        ProjectAccessRequestEndpoint.as_view(),
+        name="project-access-requests",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/access-requests/me/",
+        ProjectAccessRequestMineEndpoint.as_view(),
+        name="project-access-request-mine",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/access-requests/<uuid:pk>/",
+        ProjectAccessRequestDetailEndpoint.as_view(),
+        name="project-access-request-detail",
     ),
     path(
         "workspaces/<str:slug>/projects/<uuid:project_id>/join/<uuid:pk>/",

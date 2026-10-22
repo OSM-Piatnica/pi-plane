@@ -157,9 +157,13 @@
     },
     "network": {
       "label": "Mạng",
+      "secret": {
+        "title": "Bí mật",
+        "description": "Ẩn với tất cả những ai không phải thành viên"
+      },
       "private": {
         "title": "Riêng tư",
-        "description": "Chỉ truy cập bằng lời mời"
+        "description": "Hiển thị với mọi người trong không gian làm việc; truy cập cần được phê duyệt hoặc được mời"
       },
       "public": {
         "title": "Công khai",

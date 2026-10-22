@@ -157,9 +157,13 @@
     },
     "network": {
       "label": "ネットワーク",
+      "secret": {
+        "title": "シークレット",
+        "description": "メンバー以外には非表示"
+      },
       "private": {
         "title": "非公開",
-        "description": "招待された人のみアクセス可能"
+        "description": "ワークスペースの全員に表示されます。アクセスには承認または招待が必要です"
       },
       "public": {
         "title": "公開",
