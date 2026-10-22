@@ -99,6 +99,27 @@ class TestGalleryVisibility:
         assert _listed_names(_client(owner), workspace) == {"SEC", "PRV", "PUB"}
 
 
+def _found_by_search(client, workspace):
+    response = client.get(
+        f"/api/workspaces/{workspace.slug}/entity-search/", {"query_type": "project", "query": "project"}
+    )
+    assert response.status_code == status.HTTP_200_OK
+    return {project["identifier"] for project in response.json()["project"]}
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestFindingProjectsBySearch:
+    def test_member_of_the_projects_finds_all_three(self, workspace, projects, insider):
+        assert _found_by_search(_client(insider), workspace) == {"SEC", "PRV", "PUB"}
+
+    def test_other_workspace_members_find_private_and_public_but_not_secret(self, workspace, projects, outsider):
+        assert _found_by_search(_client(outsider), workspace) == {"PRV", "PUB"}
+
+    def test_guests_find_only_public_projects(self, workspace, projects, guest):
+        assert _found_by_search(_client(guest), workspace) == {"PUB"}
+
+
 @pytest.mark.contract
 @pytest.mark.django_db
 class TestPendingRequestFlagInTheGallery:
