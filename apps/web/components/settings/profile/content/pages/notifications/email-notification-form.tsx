@@ -9,13 +9,20 @@ import { observer } from "mobx-react";
 import { Controller, useForm } from "react-hook-form";
 // plane imports
 import { useTranslation } from "@plane/i18n";
+import { Select } from "@plane/blocks/select";
 import { setToast } from "@plane/blocks/toast";
-import type { IUserEmailNotificationSettings } from "@plane/types";
+import type { IUserEmailNotificationSettings, TEmailNotificationFrequency } from "@plane/types";
 import { Switch } from "@makeplane/propel/components/switch";
 // components
 import { SettingsControlItem } from "@/components/settings/control-item";
 // services
 import { UserService } from "@/services/user.service";
+
+const EMAIL_FREQUENCY_OPTIONS: { value: TEmailNotificationFrequency; i18n_label: string }[] = [
+  { value: "instant", i18n_label: "email_frequency_instant" },
+  { value: "hourly", i18n_label: "email_frequency_hourly" },
+  { value: "daily", i18n_label: "email_frequency_daily" },
+];
 
 type Props = {
   data: IUserEmailNotificationSettings;
@@ -35,7 +42,10 @@ export const NotificationsProfileSettingsForm = observer(function NotificationsP
     },
   });
 
-  const handleSettingChange = async (key: keyof IUserEmailNotificationSettings, value: boolean) => {
+  const handleSettingChange = async (
+    key: keyof IUserEmailNotificationSettings,
+    value: boolean | TEmailNotificationFrequency
+  ) => {
     try {
       await userService.updateCurrentUserEmailNotificationSettings({
         [key]: value,
@@ -60,6 +70,37 @@ export const NotificationsProfileSettingsForm = observer(function NotificationsP
 
   return (
     <div className="flex flex-col gap-y-1">
+      <SettingsControlItem
+        title={t("email_frequency")}
+        description={t("email_frequency_description")}
+        control={
+          <Controller
+            control={control}
+            name="email_frequency"
+            render={({ field: { value, onChange } }) => {
+              const selectedOption = EMAIL_FREQUENCY_OPTIONS.find((option) => option.value === value) ?? null;
+              return (
+                <Select<(typeof EMAIL_FREQUENCY_OPTIONS)[number]>
+                  getValues={() => EMAIL_FREQUENCY_OPTIONS}
+                  value={selectedOption}
+                  onChange={(newValue) => {
+                    onChange(newValue);
+                    void handleSettingChange("email_frequency", newValue as TEmailNotificationFrequency);
+                  }}
+                  getOptionValue={(option) => option.value}
+                  getOptionLabel={(option) => t(option.i18n_label)}
+                  showSearch={false}
+                  pinSelected={false}
+                >
+                  <Select.Trigger variant="pill-md" appendIcon={null} aria-label={t("email_frequency")}>
+                    {selectedOption ? t(selectedOption.i18n_label) : t("email_frequency")}
+                  </Select.Trigger>
+                </Select>
+              );
+            }}
+          />
+        }
+      />
       <SettingsControlItem
         title={t("property_changes")}
         description={t("property_changes_description")}
@@ -102,29 +143,27 @@ export const NotificationsProfileSettingsForm = observer(function NotificationsP
           />
         }
       />
-      <div className="border-l-3 border-subtle-1 pl-3">
-        <SettingsControlItem
-          title={t("issue_completed")}
-          description={t("issue_completed_description")}
-          control={
-            <Controller
-              control={control}
-              name="issue_completed"
-              render={({ field: { value, onChange } }) => (
-                <Switch
-                  size="sm"
-                  checked={value}
-                  onCheckedChange={(newValue) => {
-                    onChange(newValue);
-                    void handleSettingChange("issue_completed", newValue);
-                  }}
-                  aria-label={t("issue_completed")}
-                />
-              )}
-            />
-          }
-        />
-      </div>
+      <SettingsControlItem
+        title={t("issue_completed")}
+        description={t("issue_completed_description")}
+        control={
+          <Controller
+            control={control}
+            name="issue_completed"
+            render={({ field: { value, onChange } }) => (
+              <Switch
+                size="sm"
+                checked={value}
+                onCheckedChange={(newValue) => {
+                  onChange(newValue);
+                  void handleSettingChange("issue_completed", newValue);
+                }}
+                aria-label={t("issue_completed")}
+              />
+            )}
+          />
+        }
+      />
       <SettingsControlItem
         title={t("comments")}
         description={t("comments_description")}

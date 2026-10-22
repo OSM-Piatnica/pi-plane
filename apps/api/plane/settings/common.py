@@ -376,6 +376,7 @@ CELERY_IMPORTS = (
     "plane.bgtasks.exporter_expired_task",
     "plane.bgtasks.file_asset_task",
     "plane.bgtasks.email_notification_task",
+    "plane.bgtasks.email_digest_task",
     "plane.bgtasks.cleanup_task",
     "plane.license.bgtasks.telemetry_metrics",
     # management tasks
@@ -504,6 +505,15 @@ WEBHOOK_LOG_RETENTION_DAYS = _retention_days("WEBHOOK_LOG_RETENTION_DAYS", 14)
 
 # Email notification logs are retained on their own window.
 EMAIL_LOG_RETENTION_DAYS = _retention_days("EMAIL_LOG_RETENTION_DAYS", 7)
+
+# Max non-mention notification emails sent to a user per issue within the window.
+# Extra activity is held back and delivered together once the window frees up.
+EMAIL_NOTIFICATION_MAX_PER_ISSUE = int(os.environ.get("EMAIL_NOTIFICATION_MAX_PER_ISSUE", 3))
+EMAIL_NOTIFICATION_WINDOW_MINUTES = int(os.environ.get("EMAIL_NOTIFICATION_WINDOW_MINUTES", 60))
+
+# Digest emails: hourly digests go out on the hour, daily digests at this hour in this timezone.
+EMAIL_DIGEST_TIMEZONE = os.environ.get("EMAIL_DIGEST_TIMEZONE", "Europe/Warsaw")
+EMAIL_DIGEST_DAILY_HOUR = int(os.environ.get("EMAIL_DIGEST_DAILY_HOUR", 8))
 
 # Instance Changelog URL
 INSTANCE_CHANGELOG_URL = os.environ.get("INSTANCE_CHANGELOG_URL", "")
