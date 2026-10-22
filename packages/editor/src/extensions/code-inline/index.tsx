@@ -5,8 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { Mark, markInputRule, markPasteRule } from "@tiptap/core";
-import { mergeAttributes } from "@/helpers/merge-attributes";
+import { Mark, markInputRule, markPasteRule, mergeAttributes } from "@tiptap/core";
 // constants
 import { CORE_EXTENSIONS } from "@/constants/extension";
 

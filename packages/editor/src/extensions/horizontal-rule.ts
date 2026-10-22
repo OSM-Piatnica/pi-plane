@@ -5,8 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { isNodeSelection, Node, nodeInputRule } from "@tiptap/core";
-import { mergeAttributes } from "@/helpers/merge-attributes";
+import { isNodeSelection, Node, nodeInputRule, mergeAttributes } from "@tiptap/core";
 import { NodeSelection, TextSelection } from "@tiptap/pm/state";
 // constants
 import { CORE_EXTENSIONS } from "@/constants/extension";

@@ -15,8 +15,8 @@ import {
   nodeInputRule,
   PasteRule,
   removeDuplicates,
+  mergeAttributes,
 } from "@tiptap/core";
-import { mergeAttributes } from "@/helpers/merge-attributes";
 import type { EmojiStorage } from "@tiptap/extension-emoji";
 import { emojis, emojiToShortcode, shortcodeToEmoji } from "@tiptap/extension-emoji";
 import { Fragment } from "@tiptap/pm/model";

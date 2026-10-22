@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -27,8 +28,8 @@ type TArgs = Pick<IEditorProps, "getEditorMetaData"> & {
   provider: HocuspocusProvider | undefined;
 };
 
-export const getEditorRefHelpers = (args: TArgs): EditorRefApi => {
-  const { editor, getEditorMetaData, provider } = args;
+export const getEditorRefHelpers = (helperArgs: TArgs): EditorRefApi => {
+  const { editor, getEditorMetaData, provider } = helperArgs;
 
   return {
     blur: () => editor?.commands.blur(),
@@ -130,8 +131,9 @@ export const getEditorRefHelpers = (args: TArgs): EditorRefApi => {
         ?.chain()
         .setMeta(CORE_EDITOR_META.SKIP_FILE_DELETION, true)
         .setMeta(CORE_EDITOR_META.INTENTIONAL_DELETION, true)
-        .setContent(content, emitUpdate, {
-          preserveWhitespace: true,
+        .setContent(content, {
+          emitUpdate,
+          parseOptions: { preserveWhitespace: true },
         })
         .run();
     },
@@ -140,7 +142,7 @@ export const getEditorRefHelpers = (args: TArgs): EditorRefApi => {
       const { itemKey } = props;
       const editorItems = getEditorMenuItems(editor);
 
-      const getEditorMenuItem = (itemKey: TEditorCommands) => editorItems.find((item) => item.key === itemKey);
+      const getEditorMenuItem = (key: TEditorCommands) => editorItems.find((item) => item.key === key);
 
       const item = getEditorMenuItem(itemKey);
       if (item) {
@@ -195,7 +197,7 @@ export const getEditorRefHelpers = (args: TArgs): EditorRefApi => {
       const { itemKey } = props;
       const editorItems = getEditorMenuItems(editor);
 
-      const getEditorMenuItem = (itemKey: TEditorCommands) => editorItems.find((item) => item.key === itemKey);
+      const getEditorMenuItem = (key: TEditorCommands) => editorItems.find((item) => item.key === key);
       const item = getEditorMenuItem(itemKey);
       if (!item) return false;
 

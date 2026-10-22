@@ -16,7 +16,7 @@ import { NODE_FILE_MAP } from "@/constants/utility";
 import type { TFileHandler } from "@/types";
 // local imports
 import type { NodeFileMapType } from "../../constants/utility";
-import type { TFileNode } from "./types";
+import type { TFileNode, TFileStorage } from "./types";
 
 const DELETE_PLUGIN_KEY = new PluginKey("delete-utility");
 
@@ -63,7 +63,7 @@ export const TrackFileDeletionPlugin = (editor: Editor, deleteHandler: TFileHand
           const nodeFileSetDetails = NODE_FILE_MAP[nodeType];
           if (!nodeFileSetDetails || !src) return;
           try {
-            editor.storage[nodeType]?.[nodeFileSetDetails.fileSetName]?.set(src, true);
+            (editor.storage as unknown as TFileStorage)[nodeType]?.[nodeFileSetDetails.fileSetName]?.set(src, true);
             // update assets list storage value
             editor.commands.updateAssetsList?.({
               idToRemove: node.attrs.id,

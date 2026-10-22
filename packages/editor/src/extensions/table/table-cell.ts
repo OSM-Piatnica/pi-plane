@@ -5,8 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { Node } from "@tiptap/core";
-import { mergeAttributes } from "@/helpers/merge-attributes";
+import { Node, mergeAttributes } from "@tiptap/core";
 import { TableMap } from "@tiptap/pm/tables";
 // constants
 import { CORE_EXTENSIONS } from "@/constants/extension";

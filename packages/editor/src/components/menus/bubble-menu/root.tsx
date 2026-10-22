@@ -7,8 +7,9 @@
 
 import { isNodeSelection } from "@tiptap/core";
 import type { Editor } from "@tiptap/core";
-import { BubbleMenu, useEditorState } from "@tiptap/react";
-import type { BubbleMenuProps } from "@tiptap/react";
+import { useEditorState } from "@tiptap/react";
+import { BubbleMenu } from "@tiptap/react/menus";
+import type { BubbleMenuProps } from "@tiptap/react/menus";
 import { useEffect, useState, useRef } from "react";
 // plane utils
 import { cn } from "@plane/utils";
@@ -130,10 +131,8 @@ export function EditorBubbleMenu(props: Props) {
       }
       return true;
     },
-    tippyOptions: {
-      moveTransition: "transform 0.15s ease-out",
-      duration: [300, 0],
-      zIndex: 9,
+    options: {
+      placement: "top",
       onShow: () => {
         if (editor.storage.link) {
           editor.storage.link.isBubbleMenuOpen = true;
@@ -148,15 +147,8 @@ export function EditorBubbleMenu(props: Props) {
           editor.commands.removeActiveDropbarExtension("bubble-menu");
         }, 0);
       },
-      onHidden: () => {
-        if (editor.storage.link) {
-          editor.storage.link.isBubbleMenuOpen = false;
-        }
-        setTimeout(() => {
-          editor.commands.removeActiveDropbarExtension("bubble-menu");
-        }, 0);
-      },
     },
+    style: { zIndex: 9 },
   };
 
   // react-doctor-disable-next-line effect-needs-cleanup -- every listener, including the in-flight mousemove/mouseup pair, is removed by the cleanup returned below
