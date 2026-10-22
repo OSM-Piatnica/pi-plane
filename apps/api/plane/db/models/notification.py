@@ -107,6 +107,14 @@ class UserNotificationPreference(BaseModel):
     mention = models.BooleanField(default=True)
     issue_completed = models.BooleanField(default=True)
 
+    # how often non-mention emails are delivered: one by one, or batched into a digest
+    class EmailFrequency(models.TextChoices):
+        INSTANT = "instant", "Instant"
+        HOURLY = "hourly", "Hourly digest"
+        DAILY = "daily", "Daily digest"
+
+    email_frequency = models.CharField(max_length=10, choices=EmailFrequency.choices, default=EmailFrequency.INSTANT)
+
     class Meta:
         verbose_name = "UserNotificationPreference"
         verbose_name_plural = "UserNotificationPreferences"

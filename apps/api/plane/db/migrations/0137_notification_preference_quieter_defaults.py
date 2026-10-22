@@ -20,4 +20,13 @@ class Migration(migrations.Migration):
             name="state_change",
             field=models.BooleanField(default=False),
         ),
+        migrations.AddField(
+            model_name="usernotificationpreference",
+            name="email_frequency",
+            field=models.CharField(
+                choices=[("instant", "Instant"), ("hourly", "Hourly digest"), ("daily", "Daily digest")],
+                default="instant",
+                max_length=10,
+            ),
+        ),
     ]

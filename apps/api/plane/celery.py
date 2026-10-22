@@ -63,6 +63,11 @@ app.conf.beat_schedule = {
         "task": "plane.bgtasks.work_item_due_reminder_task.stack_due_reminders",
         "schedule": crontab(minute=0),  # Every hour
     },
+    # Ticks hourly, the task itself sends daily digests only at EMAIL_DIGEST_DAILY_HOUR in its own timezone
+    "check-every-hour-to-send-email-digests": {
+        "task": "plane.bgtasks.email_digest_task.stack_email_digests",
+        "schedule": crontab(minute=0),  # Every hour
+    },
     # Occurs once every day
     "check-every-day-to-delete-hard-delete": {
         "task": "plane.bgtasks.deletion_task.hard_delete",

@@ -15,6 +15,7 @@ from uuid import uuid4
 import pytest
 from django.utils import timezone
 
+from plane.bgtasks.email_digest_task import digest_now, send_email_digest, stack_email_digests
 from plane.bgtasks.email_notification_task import stack_email_notification
 from plane.bgtasks.notification_task import should_send_email
 from plane.db.models import EmailNotificationLog, UserNotificationPreference
@@ -151,3 +152,98 @@ class TestPerIssueEmailCap:
         _log(other, actor, busy_issue)  # other receiver, sent
 
         assert self._stack().call_count == 2
+
+
+def _set_frequency(user, frequency):
+    UserNotificationPreference.objects.filter(user=user).update(email_frequency=frequency)
+
+
+@pytest.mark.unit
+@pytest.mark.django_db
+class TestEmailDigest:
+    def test_default_frequency_is_instant(self):
+        user = UserFactory()
+        assert UserNotificationPreference.objects.get(user=user).email_frequency == "instant"
+
+    def test_instant_stacking_leaves_digest_receivers_alone(self):
+        receiver, actor = UserFactory(), UserFactory()
+        _set_frequency(receiver, "hourly")
+        log = _log(receiver, actor, uuid4())
+        with patch("plane.bgtasks.email_notification_task.send_email_notification.delay") as send:
+            stack_email_notification()
+        assert send.call_count == 0
+        log.refresh_from_db()
+        assert log.processed_at is None
+
+    def test_mentions_still_go_out_instantly_for_digest_receivers(self):
+        receiver, actor = UserFactory(), UserFactory()
+        _set_frequency(receiver, "daily")
+        _log(receiver, actor, uuid4(), field="mention")
+        with patch("plane.bgtasks.email_notification_task.send_email_notification.delay") as send:
+            stack_email_notification()
+        assert send.call_count == 1
+
+    def _stack_digests(self, **kwargs):
+        with patch("plane.bgtasks.email_digest_task.send_email_digest.delay") as send:
+            stack_email_digests(**kwargs)
+        return send
+
+    def test_hourly_digest_collects_all_pending_logs_of_a_receiver(self):
+        receiver, actor = UserFactory(), UserFactory()
+        _set_frequency(receiver, "hourly")
+        logs = [_log(receiver, actor, uuid4()) for _ in range(3)]
+        send = self._stack_digests()
+        assert send.call_count == 1
+        assert sorted(send.call_args.kwargs["email_notification_ids"]) == sorted(log.id for log in logs)
+        for log in logs:
+            log.refresh_from_db()
+            assert log.processed_at is not None
+
+    def test_instant_receivers_are_not_digested(self):
+        receiver, actor = UserFactory(), UserFactory()
+        log = _log(receiver, actor, uuid4())
+        assert self._stack_digests(force_daily=True).call_count == 0
+        log.refresh_from_db()
+        assert log.processed_at is None
+
+    def test_daily_digest_only_at_the_configured_hour(self, settings):
+        receiver, actor = UserFactory(), UserFactory()
+        _set_frequency(receiver, "daily")
+        _log(receiver, actor, uuid4())
+        now_hour = digest_now().hour
+        settings.EMAIL_DIGEST_DAILY_HOUR = (now_hour + 1) % 24
+        assert self._stack_digests().call_count == 0
+        settings.EMAIL_DIGEST_DAILY_HOUR = now_hour
+        assert self._stack_digests().call_count == 1
+
+    def test_send_email_digest_sends_one_email_with_a_row_per_issue(self, settings, mailoutbox):
+        settings.WEB_URL = "http://localhost:3000"
+        receiver, actor = UserFactory(), UserFactory()
+        issue_ids = [uuid4(), uuid4()]
+        ids = []
+        for number, issue_id in enumerate(issue_ids, start=1):
+            for field in ("priority", "comment"):
+                log = _log(receiver, actor, issue_id, field=field)
+                log.data = {
+                    "issue": {
+                        "id": str(issue_id),
+                        "name": f"Issue {number}",
+                        "identifier": "PRJ",
+                        "sequence_id": number,
+                        "project_id": str(uuid4()),
+                        "workspace_slug": "ws",
+                    },
+                    "issue_activity": {"field": field},
+                }
+                log.save()
+                ids.append(log.id)
+
+        config = ("localhost", "", "", "25", "0", "0", "noreply@example.com")
+        with patch("plane.bgtasks.email_digest_task.get_email_configuration", return_value=config):
+            send_email_digest(receiver_id=str(receiver.id), email_notification_ids=ids)
+
+        assert len(mailoutbox) == 1
+        assert mailoutbox[0].to == [receiver.email]
+        html = mailoutbox[0].alternatives[0][0]
+        assert "PRJ-1" in html and "PRJ-2" in html
+        assert EmailNotificationLog.objects.filter(pk__in=ids, sent_at__isnull=False).count() == 4

@@ -18,7 +18,7 @@ from django.conf import settings
 from django.utils import timezone
 
 # Module imports
-from plane.db.models import EmailNotificationLog, Issue, User
+from plane.db.models import EmailNotificationLog, Issue, User, UserNotificationPreference
 from plane.license.utils.instance_value import get_email_configuration
 from plane.settings.redis import redis_instance
 from plane.utils.email import generate_plain_text_from_html
@@ -81,13 +81,22 @@ def stack_email_notification():
             notification.get("entity_identifier"), []
         ).append(notification)
 
+    # Receivers on a digest get everything but mentions through stack_email_digests instead
+    digest_receivers = {
+        str(receiver_id)
+        for receiver_id in UserNotificationPreference.objects.filter(
+            user_id__in=list(grouped), email_frequency__in=["hourly", "daily"]
+        ).values_list("user_id", flat=True)
+    }
+
     now = timezone.now()
     for receiver_id, issues in grouped.items():
         for issue_id, entries in issues.items():
             # Mentions always go through; everything else is capped per issue and
             # stays pending (not dropped) until the window has room again.
-            if not _has_mention(entries) and not _within_issue_email_cap(receiver_id, issue_id, now):
-                continue
+            if not _has_mention(entries):
+                if receiver_id in digest_receivers or not _within_issue_email_cap(receiver_id, issue_id, now):
+                    continue
 
             # {"actor_id1": [ { data }, { data } ], "actor_id2": [ { data }, { data } ]}
             notification_data = {}
