@@ -8,7 +8,7 @@
 
 import React, { useState } from "react";
 import { observer } from "mobx-react";
-import { ISSUE_ORDER_BY_DIRECTION_OPTIONS, ISSUE_ORDER_BY_OPTIONS } from "@plane/constants";
+import { DEFAULT_WORK_ITEM_ORDER_BY, ISSUE_ORDER_BY_DIRECTION_OPTIONS, ISSUE_ORDER_BY_OPTIONS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import type { TIssueOrderByDirection, TIssueOrderByField, TIssueOrderByOptions } from "@plane/types";
 import { buildIssueOrderBy, cn, getIssueOrderByDirection, getIssueOrderByField } from "@plane/utils";
@@ -30,7 +30,7 @@ export const FilterOrderBy = observer(function FilterOrderBy(props: Props) {
   const [previewEnabled, setPreviewEnabled] = useState(true);
   const [isDirectionPreviewEnabled, setIsDirectionPreviewEnabled] = useState(true);
 
-  const activeOrderBy = selectedOrderBy ?? "-created_at";
+  const activeOrderBy = selectedOrderBy ?? DEFAULT_WORK_ITEM_ORDER_BY;
   const activeField = getIssueOrderByField(activeOrderBy);
   const activeDirection = getIssueOrderByDirection(activeOrderBy);
   const activeFieldOption = ISSUE_ORDER_BY_OPTIONS.find((option) => option.key === activeField);

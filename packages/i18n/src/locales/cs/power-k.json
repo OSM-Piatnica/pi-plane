@@ -171,7 +171,9 @@
     "search_menu": {
       "no_results": "Nenalezeny žádné výsledky",
       "clear_search": "Vymazat hledání",
-      "go_to_advanced_search": "Přejít na pokročilé hledání"
+      "go_to_advanced_search": "Přejít na pokročilé hledání",
+      "results_in_workspace": "Výsledky hledání pro <term/> v pracovním prostoru:",
+      "results_in_project": "Výsledky hledání pro <term/> v projektu:"
     },
     "footer": {
       "workspace_level": "Úroveň pracovního prostoru"

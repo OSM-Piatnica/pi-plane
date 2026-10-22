@@ -29,7 +29,12 @@
       "restricted_description": "Erişim talep etmek için yöneticiyle iletişime geçin, sonra burada devam edebilirsiniz.",
       "join_description": "Katılmak için aşağıdaki butona tıklayın.",
       "cta_primary": "Projeye katıl",
-      "cta_loading": "Projeye katılınıyor"
+      "cta_loading": "Projeye katılınıyor",
+      "pending_title": "İsteğiniz onay bekliyor",
+      "pending_description": "Proje yöneticileri onayladığında sizi içeri alacak.",
+      "private_title": "Bu proje özel",
+      "private_description": "Projeyi görebilirsiniz ancak yöneticilerin sizi içeri alması gerekir. Onlara bir istek gönderin.",
+      "request_cta": "Erişim iste"
     },
     "invalid_project": {
       "title": "Proje bulunamadı",

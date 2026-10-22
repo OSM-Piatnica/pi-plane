@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Potwierdź opuszczenie projektu, wpisując „{phrase}”.",
       "description": "Czy na pewno chcesz opuścić projekt „{name}”? Wszystkie powiązane z Tobą elementy pracy staną się niedostępne.",
       "fill_all_fields": "Wypełnij wszystkie pola.",
+      "only_admin_error": "Jesteś jedynym administratorem tego projektu, więc nie możesz go opuścić. Najpierw ustaw innego członka jako administratora albo usuń projekt.",
       "project_name_error": "Wpisz nazwę projektu dokładnie tak, jak w opisie.",
       "project_name_placeholder": "Wpisz nazwę projektu",
       "project_name_required": "Nazwa projektu jest wymagana",
@@ -623,6 +624,23 @@
       },
       "key_regenerated": "Nowy klucz został pomyślnie wygenerowany.",
       "view_secret_key": "Pokaż klucz tajny"
+    },
+    "request_access_modal": {
+      "title": "Poproś o dostęp",
+      "description": "Poproś administratorów tego projektu o dostęp.",
+      "description_named": "Poproś administratorów projektu {name} o dostęp.",
+      "message_placeholder": "Dodaj wiadomość dla administratorów (opcjonalnie)",
+      "send": "Wyślij prośbę",
+      "sending": "Wysyłanie...",
+      "success_title": "Prośba wysłana",
+      "success_message": "Administratorzy projektu ją rozpatrzą.",
+      "request_button": "Poproś o dostęp",
+      "pending_badge": "Wysłano prośbę"
+    },
+    "access_requests": {
+      "title": "Prośby o dołączenie ({count})",
+      "approve": "Zatwierdź",
+      "reject": "Odrzuć"
     }
   }
 }

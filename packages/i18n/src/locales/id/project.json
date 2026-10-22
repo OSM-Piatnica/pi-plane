@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Harap konfirmasi keluar dari proyek dengan mengetik “{phrase}”.",
       "description": "Yakin ingin keluar dari proyek “{name}”? Semua item kerja yang terkait dengan Anda tidak akan dapat diakses.",
       "fill_all_fields": "Harap isi semua kolom.",
+      "only_admin_error": "Anda satu-satunya admin proyek ini sehingga tidak dapat keluar. Jadikan anggota lain sebagai admin terlebih dahulu, atau hapus proyek.",
       "project_name_error": "Harap masukkan nama proyek seperti yang ditampilkan dalam deskripsi.",
       "project_name_placeholder": "Masukkan nama proyek",
       "project_name_required": "Nama proyek wajib diisi",
@@ -623,6 +624,23 @@
       },
       "key_regenerated": "Kunci baru berhasil dibuat ulang.",
       "view_secret_key": "Lihat kunci rahasia"
+    },
+    "request_access_modal": {
+      "title": "Minta akses",
+      "description": "Minta admin proyek ini untuk mengizinkan Anda masuk.",
+      "description_named": "Minta admin {name} untuk mengizinkan Anda masuk.",
+      "message_placeholder": "Tambahkan catatan untuk admin (opsional)",
+      "send": "Kirim permintaan",
+      "sending": "Mengirim...",
+      "success_title": "Permintaan terkirim",
+      "success_message": "Admin proyek akan meninjaunya.",
+      "request_button": "Minta akses",
+      "pending_badge": "Diminta"
+    },
+    "access_requests": {
+      "title": "Permintaan bergabung ({count})",
+      "approve": "Setujui",
+      "reject": "Tolak"
     }
   }
 }

@@ -27,7 +27,13 @@ import {
 } from "@makeplane/propel/icons";
 // plane types
 import { Avatar } from "@makeplane/propel/components/avatar";
-import { EIconSize, ISSUE_PRIORITIES, STATE_GROUPS, ISSUE_GROUP_BY_OPTIONS } from "@plane/constants";
+import {
+  DEFAULT_WORK_ITEM_ORDER_BY,
+  EIconSize,
+  ISSUE_PRIORITIES,
+  STATE_GROUPS,
+  ISSUE_GROUP_BY_OPTIONS,
+} from "@plane/constants";
 import { Logo } from "@plane/blocks/emoji-icon-picker";
 import type { ISvgIcons } from "@plane/blocks/icons";
 import { CycleGroupIcon, PriorityIcon, StateGroupIcon } from "@plane/blocks/icons";
@@ -799,9 +805,8 @@ export const isDisplayFiltersApplied = (filters: Partial<IIssueFilters>): boolea
   const isDisplayFilterOptionsApplied = Object.keys(filters.displayFilters ?? {}).some((key) => {
     const value = filters.displayFilters?.[key as keyof IIssueDisplayFilterOptions];
     if (!value) return false;
-    // -create_at is the default order
     if (key === "order_by") {
-      return value !== "-created_at";
+      return value !== DEFAULT_WORK_ITEM_ORDER_BY;
     }
     return true;
   });

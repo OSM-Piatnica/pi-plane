@@ -29,7 +29,12 @@
       "restricted_description": "Kontaktujte administrátora a požádejte o přístup, abyste zde mohli pokračovat.",
       "join_description": "Klikněte na tlačítko níže pro připojení k projektu.",
       "cta_primary": "Připojit se k projektu",
-      "cta_loading": "Připojování k projektu"
+      "cta_loading": "Připojování k projektu",
+      "pending_title": "Vaše žádost čeká na schválení",
+      "pending_description": "Správci projektu vás pustí dál, jakmile ji schválí.",
+      "private_title": "Tento projekt je soukromý",
+      "private_description": "Vidíte jej, ale správci vás musí pustit dál. Pošlete jim žádost.",
+      "request_cta": "Požádat o přístup"
     },
     "invalid_project": {
       "title": "Projekt nebyl nalezen",

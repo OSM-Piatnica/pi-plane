@@ -157,9 +157,13 @@
     },
     "network": {
       "label": "Rețea",
+      "secret": {
+        "title": "Secret",
+        "description": "Ascuns pentru cei care nu sunt membri"
+      },
       "private": {
         "title": "Privat",
-        "description": "Accesibil doar pe bază de invitație"
+        "description": "Vizibil pentru toți din spațiul de lucru; accesul necesită aprobare sau invitație"
       },
       "public": {
         "title": "Public",

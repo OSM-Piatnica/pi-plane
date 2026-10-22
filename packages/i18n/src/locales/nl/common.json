@@ -282,6 +282,11 @@
   "create_more": "Nog een aanmaken",
   "add_to_project": "Aan project toevoegen",
   "discard": "Negeren",
+  "discard_changes": {
+    "title": "Wijzigingen negeren?",
+    "description": "Je wijzigingen zijn niet opgeslagen. Negeren kan niet ongedaan worden gemaakt.",
+    "keep_editing": "Doorgaan met bewerken"
+  },
   "duplicate_issue_found": "Dubbel werkitem gevonden",
   "duplicate_issues_found": "Dubbele werkitems gevonden",
   "no_matching_results": "Geen overeenkomende resultaten",

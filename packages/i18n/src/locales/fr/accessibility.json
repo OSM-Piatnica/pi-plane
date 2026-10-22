@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "Plus d’actions",
+      "resize_column": "Redimensionner la colonne",
       "remove": "Supprimer"
     },
     "color_picker": {

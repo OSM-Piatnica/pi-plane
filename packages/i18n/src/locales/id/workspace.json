@@ -157,9 +157,13 @@
     },
     "network": {
       "label": "Jaringan",
+      "secret": {
+        "title": "Rahasia",
+        "description": "Tersembunyi dari semua orang yang bukan anggota"
+      },
       "private": {
         "title": "Pribadi",
-        "description": "Dapat diakses hanya dengan undangan"
+        "description": "Terlihat oleh semua orang di ruang kerja; akses memerlukan persetujuan atau undangan"
       },
       "public": {
         "title": "Umum",

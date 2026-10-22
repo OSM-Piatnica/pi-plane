@@ -171,7 +171,9 @@
     "search_menu": {
       "no_results": "შედეგები ვერ მოიძებნა",
       "clear_search": "ძიების გასუფთავება",
-      "go_to_advanced_search": "გაფართოებულ ძიებაზე გადასვლა"
+      "go_to_advanced_search": "გაფართოებულ ძიებაზე გადასვლა",
+      "results_in_workspace": "ძიების შედეგები <term/>-სთვის სამუშაო სივრცეში:",
+      "results_in_project": "ძიების შედეგები <term/>-სთვის პროექტში:"
     },
     "footer": {
       "workspace_level": "სამუშაო სივრცის დონე"

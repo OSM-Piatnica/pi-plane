@@ -146,7 +146,7 @@
   "drafts": "Szkice",
   "projects": "Projekty",
   "views": "Widoki",
-  "archives": "Archiwa",
+  "archives": "Archiwum",
   "settings": "Ustawienia",
   "failed_to_move_favorite": "Nie udało się przenieść ulubionego",
   "favorites": "Ulubione",
@@ -282,6 +282,11 @@
   "create_more": "Utwórz więcej",
   "add_to_project": "Dodaj do projektu",
   "discard": "Odrzuć",
+  "discard_changes": {
+    "title": "Odrzucić zmiany?",
+    "description": "Twoje zmiany nie zostały zapisane. Odrzucenia nie można cofnąć.",
+    "keep_editing": "Kontynuuj edycję"
+  },
   "duplicate_issue_found": "Znaleziono zduplikowany element pracy",
   "duplicate_issues_found": "Znaleziono zduplikowane elementy pracy",
   "no_matching_results": "Brak pasujących wyników",

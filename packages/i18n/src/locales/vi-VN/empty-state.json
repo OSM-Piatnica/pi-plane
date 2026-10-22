@@ -29,7 +29,12 @@
       "restricted_description": "Liên hệ với quản trị viên để yêu cầu quyền truy cập và bạn có thể tiếp tục tại đây.",
       "join_description": "Nhấn nút bên dưới để tham gia.",
       "cta_primary": "Tham gia dự án",
-      "cta_loading": "Đang tham gia dự án"
+      "cta_loading": "Đang tham gia dự án",
+      "pending_title": "Yêu cầu của bạn đang chờ phê duyệt",
+      "pending_description": "Quản trị viên dự án sẽ cho bạn vào sau khi phê duyệt.",
+      "private_title": "Dự án này ở chế độ riêng tư",
+      "private_description": "Bạn có thể thấy dự án, nhưng quản trị viên phải cho bạn vào. Hãy gửi yêu cầu cho họ.",
+      "request_cta": "Yêu cầu quyền truy cập"
     },
     "invalid_project": {
       "title": "Không tìm thấy dự án",

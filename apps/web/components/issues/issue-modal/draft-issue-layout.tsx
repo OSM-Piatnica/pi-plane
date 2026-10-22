@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { useState } from "react";
+import { useImperativeHandle, useState } from "react";
 import { isEmpty } from "lodash-es";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
@@ -23,11 +24,13 @@ import type { IssueFormProps } from "./form";
 
 export interface DraftIssueProps extends IssueFormProps {
   changesMade: Partial<TIssue> | null;
+  /** Filled with this layout's close handler (the one that asks about saving a draft), for the dialog's outside press. */
+  closeRequestRef?: React.RefObject<(() => void) | null>;
   onChange: (formData: Partial<TIssue> | null) => void;
 }
 
 export const DraftIssueLayout = observer(function DraftIssueLayout(props: DraftIssueProps) {
-  const { changesMade, data, onChange, onClose, projectId } = props;
+  const { changesMade, closeRequestRef, data, onChange, onClose, projectId } = props;
   // states
   const [issueDiscardModal, setIssueDiscardModal] = useState(false);
   // router params
@@ -74,6 +77,8 @@ export const DraftIssueLayout = observer(function DraftIssueLayout(props: DraftI
       }
     }
   };
+
+  useImperativeHandle(closeRequestRef, () => handleClose);
 
   const handleCreateDraftIssue = async () => {
     if (!changesMade || !workspaceSlug || !projectId) return;

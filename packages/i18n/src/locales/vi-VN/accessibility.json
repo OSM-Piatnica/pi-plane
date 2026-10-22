@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "Thao tác khác",
+      "resize_column": "Thay đổi độ rộng cột",
       "remove": "Xóa"
     },
     "color_picker": {

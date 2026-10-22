@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Bitte bestätigen Sie das Verlassen des Projekts, indem Sie „{phrase}“ eingeben.",
       "description": "Möchten Sie das Projekt „{name}“ wirklich verlassen? Alle Arbeitselemente, die Ihnen zugeordnet sind, werden unzugänglich.",
       "fill_all_fields": "Bitte füllen Sie alle Felder aus.",
+      "only_admin_error": "Sie sind der einzige Administrator dieses Projekts und können es daher nicht verlassen. Machen Sie zuerst ein anderes Mitglied zum Administrator oder löschen Sie das Projekt.",
       "project_name_error": "Bitte geben Sie den Projektnamen wie in der Beschreibung angezeigt ein.",
       "project_name_placeholder": "Projektnamen eingeben",
       "project_name_required": "Projektname ist erforderlich",
@@ -623,6 +624,23 @@
       },
       "key_regenerated": "Neuer Schlüssel erfolgreich generiert.",
       "view_secret_key": "Geheimen Schlüssel anzeigen"
+    },
+    "request_access_modal": {
+      "title": "Zugang anfragen",
+      "description": "Bitte die Admins dieses Projekts um Zugang.",
+      "description_named": "Bitte die Admins von {name} um Zugang.",
+      "message_placeholder": "Nachricht an die Admins hinzufügen (optional)",
+      "send": "Anfrage senden",
+      "sending": "Wird gesendet...",
+      "success_title": "Anfrage gesendet",
+      "success_message": "Die Projektadmins werden sie prüfen.",
+      "request_button": "Zugang anfragen",
+      "pending_badge": "Angefragt"
+    },
+    "access_requests": {
+      "title": "Beitrittsanfragen ({count})",
+      "approve": "Genehmigen",
+      "reject": "Ablehnen"
     }
   }
 }

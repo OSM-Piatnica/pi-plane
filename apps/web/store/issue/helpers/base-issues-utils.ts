@@ -6,7 +6,13 @@
  */
 
 import { uniq, orderBy, isEmpty, indexOf, groupBy, cloneDeep, set } from "lodash-es";
-import { ALL_ISSUES, EIssueFilterType, FILTER_TO_ISSUE_MAP, ISSUE_PRIORITIES } from "@plane/constants";
+import {
+  ALL_ISSUES,
+  DEFAULT_WORK_ITEM_ORDER_BY,
+  EIssueFilterType,
+  FILTER_TO_ISSUE_MAP,
+  ISSUE_PRIORITIES,
+} from "@plane/constants";
 import type {
   IIssueDisplayFilterOptions,
   IIssueDisplayProperties,
@@ -287,6 +293,9 @@ export const getOrderedWorkItems = (workItems: TIssue[], orderByKey: TIssueOrder
     case "-updated_at":
       return getIssueIds(orderBy(workItems, (item) => convertToISODateString(item["updated_at"]), ["desc"]));
 
+    case "created_at":
+      return getIssueIds(orderBy(workItems, (item) => convertToISODateString(item["created_at"])));
+
     case "-created_at":
       return getIssueIds(orderBy(workItems, (item) => convertToISODateString(item["created_at"]), ["desc"]));
 
@@ -313,7 +322,7 @@ export const getOrderedWorkItems = (workItems: TIssue[], orderByKey: TIssueOrder
 export const getGroupedWorkItemIds = (
   workItems: TIssue[],
   groupByKey?: TIssueGroupByOptions,
-  orderByKey: TIssueOrderByOptions = "-created_at"
+  orderByKey: TIssueOrderByOptions = DEFAULT_WORK_ITEM_ORDER_BY
 ): Record<string, string[]> => {
   // If group by is not set set default as ALL ISSUES
   if (!groupByKey) {

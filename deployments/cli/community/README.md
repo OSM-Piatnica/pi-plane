@@ -177,6 +177,16 @@ Below are the most import keys you must refer to. _<span style="color: #fcba03">
 
 There are many other settings you can play with, but we suggest you configure `EMAIL SETTINGS` as it will enable you to invite your teammates onto the platform.
 
+#### Client IP and rate limiting behind proxies
+
+Some endpoints are rate-limited per client IP. Two settings in `plane.env` control how that IP is determined:
+
+- **Pi-Plane directly on the internet behind the bundled proxy:** set `TRUSTED_PROXIES=private_ranges` (or your load balancer's ranges) and `NUM_PROXIES=1`.
+- **Behind an additional load balancer or CDN:** add its ranges to `TRUSTED_PROXIES` (space-separated, e.g. `TRUSTED_PROXIES=private_ranges 203.0.113.0/24`) and raise `NUM_PROXIES` by one per extra hop (e.g. `NUM_PROXIES=2`).
+- **Leaving `NUM_PROXIES` empty and `TRUSTED_PROXIES` at its default (`0.0.0.0/0`)** keeps the current behaviour.
+
+Restart the services after changing these values.
+
 ---
 
 ### Continue with setup - Start Server (Docker Compose)
@@ -304,6 +314,8 @@ If all goes well, you will see the confirmation from docker cli
 ### Upgrading Pi-Plane Version
 
 It is always advised to keep Pi-Plane up to date with the latest release.
+
+> Download the latest `setup.sh` (see [Downloading Latest Release](#downloading-latest-release)) before upgrading. The upgrade runs your local copy of the script, and newer versions generate or rotate the object-storage (MinIO) credentials in `plane.env`.
 
 Lets again run the `./setup.sh` command. You will again be prompted with the below options. This time select `5` to upgrade the release.
 

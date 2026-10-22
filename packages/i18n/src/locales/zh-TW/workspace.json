@@ -157,9 +157,13 @@
     },
     "network": {
       "label": "網路",
+      "secret": {
+        "title": "機密",
+        "description": "對非成員不可見"
+      },
       "private": {
         "title": "私人",
-        "description": "僅受邀者可存取"
+        "description": "工作區內所有人可見;存取需要核准或邀請"
       },
       "public": {
         "title": "公開",

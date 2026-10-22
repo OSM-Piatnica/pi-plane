@@ -282,6 +282,11 @@
   "create_more": "Crear más",
   "add_to_project": "Agregar al proyecto",
   "discard": "Descartar",
+  "discard_changes": {
+    "title": "¿Descartar los cambios?",
+    "description": "Tus cambios no se han guardado. Descartarlos no se puede deshacer.",
+    "keep_editing": "Seguir editando"
+  },
   "duplicate_issue_found": "Se encontró un elemento de trabajo duplicado",
   "duplicate_issues_found": "Se encontraron elementos de trabajo duplicados",
   "no_matching_results": "No hay resultados coincidentes",

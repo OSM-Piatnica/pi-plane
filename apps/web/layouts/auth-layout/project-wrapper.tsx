@@ -28,6 +28,7 @@ import {
 import { GANTT_TIMELINE_TYPE } from "@plane/types";
 // components
 import { ProjectAccessRestriction } from "@/components/auth-screens/project/project-access-restriction";
+import { RequestAccessModal } from "@/components/project/request-access-modal";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useCycle } from "@/hooks/store/use-cycle";
@@ -39,6 +40,9 @@ import { useProjectState } from "@/hooks/store/use-project-state";
 import { useProjectView } from "@/hooks/store/use-project-view";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
 import { useTimeLineChart } from "@/hooks/use-timeline-chart";
+import { ProjectService } from "@/services/project/project.service";
+
+const projectService = new ProjectService();
 
 interface IProjectAuthWrapper {
   workspaceSlug: string;
@@ -51,9 +55,10 @@ export const ProjectAuthWrapper = observer(function ProjectAuthWrapper(props: IP
   const { workspaceSlug, projectId, children, isLoading: isParentLoading = false } = props;
   // states
   const [isJoiningProject, setIsJoiningProject] = useState(false);
+  const [isRequestAccessModalOpen, setIsRequestAccessModalOpen] = useState(false);
   // store hooks
   const { fetchUserProjectInfo, allowPermissions, getProjectRoleByWorkspaceSlugAndProjectId } = useUserPermissions();
-  const { fetchProjectDetails } = useProject();
+  const { fetchProjectDetails, getPartialProjectById } = useProject();
   const { joinProject } = useUserPermissions();
   const { fetchAllCycles } = useCycle();
   const { fetchModulesSlim, fetchModules } = useModule();
@@ -138,6 +143,13 @@ export const ProjectAuthWrapper = observer(function ProjectAuthWrapper(props: IP
     revalidateOnFocus: false,
   });
 
+  // a Private project is listed but locked: the API says so in the body of its 403 answer
+  const isPrivateLocked = projectDetailsError?.status === 403 && projectDetailsError?.data?.network === 1;
+  const { data: myAccessRequest, mutate: mutateMyAccessRequest } = useSWR(
+    isPrivateLocked ? `PROJECT_ACCESS_REQUEST_${workspaceSlug}_${projectId}` : null,
+    () => projectService.getMyProjectAccessRequest(workspaceSlug, projectId)
+  );
+
   // handle join project
   const handleJoinProject = () => {
     setIsJoiningProject(true);
@@ -150,12 +162,25 @@ export const ProjectAuthWrapper = observer(function ProjectAuthWrapper(props: IP
 
   if (!isProjectLoading && hasPermissionToCurrentProject === false) {
     return (
-      <ProjectAccessRestriction
-        errorStatusCode={projectDetailsError?.status}
-        isWorkspaceAdmin={isWorkspaceAdmin}
-        handleJoinProject={handleJoinProject}
-        isJoinButtonDisabled={isJoiningProject}
-      />
+      <>
+        <RequestAccessModal
+          isOpen={isRequestAccessModalOpen}
+          workspaceSlug={workspaceSlug}
+          projectId={projectId}
+          projectName={getPartialProjectById(projectId)?.name}
+          handleClose={() => setIsRequestAccessModalOpen(false)}
+          onRequested={() => void mutateMyAccessRequest()}
+        />
+        <ProjectAccessRestriction
+          errorStatusCode={projectDetailsError?.status}
+          isWorkspaceAdmin={isWorkspaceAdmin}
+          handleJoinProject={handleJoinProject}
+          isJoinButtonDisabled={isJoiningProject}
+          isPrivateLocked={isPrivateLocked}
+          hasPendingRequest={myAccessRequest?.status === "pending"}
+          onRequestAccess={() => setIsRequestAccessModalOpen(true)}
+        />
+      </>
     );
   }
 

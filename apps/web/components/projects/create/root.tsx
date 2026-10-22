@@ -22,6 +22,7 @@ import ProjectCreateButtons from "@/components/project/create/project-create-but
 import { getCoverImageType, uploadCoverImage } from "@/helpers/cover-image.helper";
 import { useProject } from "@/hooks/store/use-project";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useReportFormInput } from "@/hooks/use-report-form-input";
 import { ProjectTemplateService } from "@/services/project-template.service";
 import { IssueTypeService } from "@/services/issue-type.service";
 import { ProjectAttributes } from "./attributes";
@@ -40,10 +41,21 @@ export type TCreateProjectFormProps = {
   data?: Partial<TProject>;
   templateId?: string;
   updateCoverImageStatus: (projectId: string, coverImage: string) => Promise<void>;
+  /** Called whenever the user has entered something (or cleared it again), so the dialog can stop an outside click from discarding it. */
+  onInputChange?: (hasInput: boolean) => void;
 };
 
 export const CreateProjectForm = observer(function CreateProjectForm(props: TCreateProjectFormProps) {
-  const { setToFavorite, workspaceSlug, data, onClose, handleNextStep, updateCoverImageStatus, templateId } = props;
+  const {
+    setToFavorite,
+    workspaceSlug,
+    data,
+    onClose,
+    handleNextStep,
+    updateCoverImageStatus,
+    templateId,
+    onInputChange,
+  } = props;
   const { t } = useTranslation();
   const { addProjectToFavorites, createProject, updateProject } = useProject();
   const [shouldAutoSyncIdentifier, setShouldAutoSyncIdentifier] = useState(true);
@@ -55,6 +67,8 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
     reValidateMode: "onChange",
   });
   const { handleSubmit, reset, setValue, watch } = methods;
+  const { isDirty } = methods.formState;
+  useReportFormInput(isDirty || selectedIssueTypeIds.length > 0, onInputChange);
   const { isMobile } = usePlatformOS();
   const isIssueTypeEnabled = Boolean(watch("is_issue_type_enabled"));
   const applyProjectTemplatePayload = useCallback(

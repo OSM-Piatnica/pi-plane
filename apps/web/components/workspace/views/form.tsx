@@ -11,7 +11,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
-import { ISSUE_DISPLAY_FILTERS_BY_PAGE } from "@plane/constants";
+import { DEFAULT_WORK_ITEM_ORDER_BY, ISSUE_DISPLAY_FILTERS_BY_PAGE } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import type { IIssueDisplayFilterOptions, IIssueDisplayProperties, IWorkspaceView, IIssueFilters } from "@plane/types";
@@ -38,7 +38,7 @@ const DEFAULT_VALUES: Partial<IWorkspaceView> = {
   display_properties: getComputedDisplayProperties(),
   display_filters: getComputedDisplayFilters({
     layout: EIssueLayoutTypes.SPREADSHEET,
-    order_by: "-created_at",
+    order_by: DEFAULT_WORK_ITEM_ORDER_BY,
   }),
 };
 

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -129,7 +130,7 @@ export const DisplayFiltersSelection = observer(function DisplayFiltersSelection
           <FilterExtraOptions
             selectedExtraOptions={{
               show_empty_groups: displayFilters?.show_empty_groups ?? true,
-              sub_issue: displayFilters?.sub_issue ?? true,
+              sub_issue: displayFilters?.sub_issue ?? false,
             }}
             handleUpdate={(key, val) =>
               handleDisplayFiltersUpdate({

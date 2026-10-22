@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Please confirm leaving the project by typing “{phrase}”.",
       "description": "Are you sure you want to leave the project “{name}”? All of the work items associated with you will become inaccessible.",
       "fill_all_fields": "Please fill all fields.",
+      "only_admin_error": "You are the only admin of this project, so you cannot leave it. Make another member an admin first, or delete the project.",
       "project_name_error": "Please enter the project name as shown in the description.",
       "project_name_placeholder": "Enter project name",
       "project_name_required": "Project name is required",
@@ -623,6 +624,23 @@
       },
       "key_regenerated": "New key regenerated successfully.",
       "view_secret_key": "View secret key"
+    },
+    "request_access_modal": {
+      "title": "Request access",
+      "description": "Ask the admins of this project to let you in.",
+      "description_named": "Ask the admins of {name} to let you in.",
+      "message_placeholder": "Add a note for the admins (optional)",
+      "send": "Send request",
+      "sending": "Sending...",
+      "success_title": "Request sent",
+      "success_message": "The project admins will review it.",
+      "request_button": "Request access",
+      "pending_badge": "Requested"
+    },
+    "access_requests": {
+      "title": "Requests to join ({count})",
+      "approve": "Approve",
+      "reject": "Reject"
     }
   }
 }

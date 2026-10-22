@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Projeden ayrılmayı onaylamak için “{phrase}” yazın.",
       "description": "“{name}” projesinden ayrılmak istediğinizden emin misiniz? Sizinle ilişkili tüm iş öğeleri erişilemez hale gelecek.",
       "fill_all_fields": "Lütfen tüm alanları doldurun.",
+      "only_admin_error": "Bu projenin tek yöneticisi sizsiniz, bu yüzden projeden ayrılamazsınız. Önce başka bir üyeyi yönetici yapın veya projeyi silin.",
       "project_name_error": "Lütfen proje adını açıklamada gösterildiği gibi girin.",
       "project_name_placeholder": "Proje adını girin",
       "project_name_required": "Proje adı gereklidir",
@@ -623,6 +624,23 @@
       },
       "key_regenerated": "Yeni anahtar başarıyla yeniden oluşturuldu.",
       "view_secret_key": "Gizli anahtarı görüntüle"
+    },
+    "request_access_modal": {
+      "title": "Erişim iste",
+      "description": "Bu projenin yöneticilerinden sizi içeri almalarını isteyin.",
+      "description_named": "{name} projesinin yöneticilerinden sizi içeri almalarını isteyin.",
+      "message_placeholder": "Yöneticiler için bir not ekleyin (isteğe bağlı)",
+      "send": "İstek gönder",
+      "sending": "Gönderiliyor...",
+      "success_title": "İstek gönderildi",
+      "success_message": "Proje yöneticileri inceleyecek.",
+      "request_button": "Erişim iste",
+      "pending_badge": "İstendi"
+    },
+    "access_requests": {
+      "title": "Katılma istekleri ({count})",
+      "approve": "Onayla",
+      "reject": "Reddet"
     }
   }
 }

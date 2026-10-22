@@ -37,6 +37,8 @@ export interface IPartialProject {
   is_time_tracking_enabled?: boolean;
   project_lead?: IUserLite | string | null;
   network?: number;
+  /** Whether the signed-in user has an open request to join this Private project (gallery list only). */
+  has_pending_access_request?: boolean;
   // Timestamps
   created_at?: Date;
   updated_at?: Date;
@@ -182,3 +184,17 @@ export interface ISearchIssueResponse {
 export type TPartialProject = IPartialProject;
 
 export type TProject = TPartialProject & IProject;
+
+export type TProjectAccessRequestStatus = "pending" | "approved" | "rejected";
+
+/** A request to join a Private project; `status` is null when the user has not asked. */
+export type TProjectAccessRequest = {
+  id: string;
+  project: string;
+  requester: string;
+  requester_detail: IUserLite;
+  status: TProjectAccessRequestStatus;
+  message: string;
+  decided_at: string | null;
+  created_at: string;
+};

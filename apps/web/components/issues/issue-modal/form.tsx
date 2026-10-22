@@ -50,6 +50,7 @@ import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useWorkspaceDraftIssues } from "@/hooks/store/workspace-draft";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useReportFormInput } from "@/hooks/use-report-form-input";
 import { useProjectIssueProperties } from "@/hooks/use-project-issue-properties";
 import { DeDupeButtonRoot } from "@/components/de-dupe/de-dupe-button";
 import { DuplicateModalRoot } from "@/components/de-dupe/duplicate-modal";
@@ -64,6 +65,8 @@ export interface IssueFormProps {
   onAssetUpload: (assetId: string) => void;
   onCreateMoreToggleChange: (value: boolean) => void;
   onChange?: (formData: Partial<TIssue> | null) => void;
+  /** Reports whether the form holds anything the user entered, so the dialog can ignore outside clicks then. */
+  onInputChange?: (hasInput: boolean) => void;
   onClose: () => void;
   onSubmit: (values: Partial<TIssue>, is_draft_issue?: boolean) => Promise<void>;
   projectId: string;
@@ -89,6 +92,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     issueTitleRef,
     onAssetUpload,
     onChange,
+    onInputChange,
     onClose,
     onSubmit,
     projectId: defaultProjectId,
@@ -169,6 +173,8 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
   const isDisabled = isSubmitting || isApplyingTemplate;
 
   const { getIndex } = getTabIndex(ETabIndices.ISSUE_FORM, isMobile);
+
+  useReportFormInput(isDirty, onInputChange);
 
   //reset few fields on projectId change
   useEffect(() => {
@@ -386,14 +392,18 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
   return (
     <FormProvider {...methods}>
       {/* The form relays DialogContent's max-height into Main/Body: the description scrolls in
-          DialogBody, default properties stay pinned in Main and buttons live in DialogActions. */}
-      <div className="flex min-h-0 flex-1 gap-2 bg-transparent">
+          DialogBody, default properties stay pinned in Main and buttons live in DialogActions. When the window is
+          too short for the header, a usable body and the buttons together, DialogBody keeps a minimum height
+          (instead of shrinking to nothing) and this wrapper scrolls the whole form. */}
+      <div className="vertical-scrollbar scrollbar-sm flex min-h-0 flex-1 gap-2 overflow-y-auto bg-transparent">
         <form
           ref={formRef}
           onSubmit={handleSubmit((formValues) => handleFormSubmit(formValues))}
           className="flex min-h-0 w-full flex-1 flex-col"
         >
-          <DialogMain>
+          {/* DialogMain clips its content and shrinks to the form; letting it grow to its content makes the wrapper
+              above scroll instead of cutting the header, body and buttons off in a short window. */}
+          <DialogMain render={<div style={{ minHeight: "min-content", overflow: "visible" }} />}>
             <DialogHeader>
               <DialogHeading>
                 <DialogTitle>{modalTitle}</DialogTitle>
@@ -459,7 +469,10 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
                 handleFormChange={handleFormChange}
               />
             </DialogHeader>
-            <DialogBody tabIndex={0} render={<div className="vertical-scrollbar scrollbar-sm" />}>
+            <DialogBody
+              tabIndex={0}
+              render={<div className="vertical-scrollbar scrollbar-sm" style={{ minHeight: "10rem" }} />}
+            >
               <IssueDescriptionEditor
                 control={control}
                 isDraft={isDraft}

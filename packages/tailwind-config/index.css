@@ -16,42 +16,6 @@
 @import "@makeplane/propel/styles";
 @source "../**/*.{ts,tsx}";
 
-/*
- * Logical inset utilities (`inset-s-*` = inset-inline-start, `inset-e-*` = inset-inline-end). They arrived
- * in Tailwind 4.2 and @makeplane/propel uses them to place the close button of dialogs and toasts, the
- * drawer, table and calendar edges and the tooltip arrow. This repo pins tailwindcss 4.1.x, where such a
- * class generates no CSS, so the element lost its horizontal position and the close button sat at the top
- * left of every popup. Remove this block when tailwindcss is upgraded to 4.2 or later.
- */
-@utility inset-s-* {
-  inset-inline-start: calc(var(--spacing) * --value(integer));
-  inset-inline-start: --value([length], [percentage]);
-  inset-inline-start: calc(--value(ratio) * 100%);
-}
-@utility inset-s-auto {
-  inset-inline-start: auto;
-}
-@utility inset-s-full {
-  inset-inline-start: 100%;
-}
-@utility inset-s-px {
-  inset-inline-start: 1px;
-}
-@utility inset-e-* {
-  inset-inline-end: calc(var(--spacing) * --value(integer));
-  inset-inline-end: --value([length], [percentage]);
-  inset-inline-end: calc(--value(ratio) * 100%);
-}
-@utility inset-e-auto {
-  inset-inline-end: auto;
-}
-@utility inset-e-full {
-  inset-inline-end: 100%;
-}
-@utility inset-e-px {
-  inset-inline-end: 1px;
-}
-
 * {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -114,6 +78,12 @@ body {
       scrollbar-color: rgba(96, 100, 108, 0.7) transparent;
     }
   }
+  /* overlay scroll areas, see "Scroll areas in overlays" below */
+  :where([role="dialog"], [role="alertdialog"], [data-side], [data-align]) :where(.overflow-y-auto, .overflow-auto),
+  :where([data-side], [data-align]):where(.overflow-y-auto, .overflow-auto) {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(96, 100, 108, 0.25) transparent;
+  }
 }
 
 /* ---------- Scrollbar utilities ----------- */
@@ -165,6 +135,41 @@ body {
 
 .vertical-scrollbar-margin-top-md::-webkit-scrollbar-track {
   margin-top: 44px;
+}
+
+/* Scroll areas in overlays
+ * Scrollbars are hidden everywhere (above) and only shown on elements that opt in with `vertical-scrollbar`
+ * and a `scrollbar-*` size. Dialogs, popovers, menus and select lists from propel scroll with a plain
+ * `overflow-y-auto` and cannot take those classes, so their content scrolled with no visible bar. Anything
+ * scrolling with `overflow-y-auto` / `overflow-auto` inside a dialog, or that is itself a positioned popup
+ * (Base UI sets data-side / data-align on those), gets the same thumb as `.vertical-scrollbar`.
+ * `:where()` keeps the specificity at zero, so an element that does use `vertical-scrollbar scrollbar-md`
+ * (or any other size) still wins, and elements that hide their bar on purpose keep doing so. */
+:where([role="dialog"], [role="alertdialog"], [data-side], [data-align]) :where(.overflow-y-auto, .overflow-auto),
+:where([data-side], [data-align]):where(.overflow-y-auto, .overflow-auto) {
+  &::-webkit-scrollbar {
+    display: block;
+    height: 12px;
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-layer-transparent rounded-full;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 3px solid rgba(0, 0, 0, 0);
+    @apply bg-scrollbar-thumb rounded-full;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    @apply bg-scrollbar-thumb-hover;
+  }
+
+  &::-webkit-scrollbar-corner {
+    @apply bg-layer-transparent;
+  }
 }
 
 /* Scrollbar variants

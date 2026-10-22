@@ -9,6 +9,7 @@ import { set } from "lodash-es";
 import { action, computed, observable, makeObservable, runInAction, reaction } from "mobx";
 import { computedFn } from "mobx-utils";
 // types
+import { DEFAULT_MODULE_ORDER_BY } from "@plane/constants";
 import type { TModuleDisplayFilters, TModuleFilters, TModuleFiltersByState } from "@plane/types";
 // helpers
 import { storage } from "@/lib/local-storage";
@@ -186,7 +187,7 @@ export class ModuleFilterStore implements IModuleFilterStore {
       this.displayFilters[projectId] = {
         favorites: displayFilters?.favorites || false,
         layout: displayFilters?.layout || "list",
-        order_by: displayFilters?.order_by || "name",
+        order_by: displayFilters?.order_by || DEFAULT_MODULE_ORDER_BY,
       };
       this.filters[projectId] = this.filters[projectId] ?? {
         default: {},

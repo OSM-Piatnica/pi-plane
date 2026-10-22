@@ -5,8 +5,9 @@
 name: Publish Images
 
 # Publishes the Pi-Plane container images to GHCR when a version tag is pushed.
-# Tags are `<upstream version>-pi.<n>` (e.g. v1.3.1-pi.1); `-rc`, `-alpha` and `-beta`
-# suffixes mark a pre-release, which is published under its version tag only (no `latest`).
+# Tags are `v<major>.<minor>.<patch>`, optionally followed by `-pi.<n>` (e.g. v2.0.0, v1.3.1-pi.1).
+# A trailing `-rc`, `-alpha` or `-beta` (e.g. v2.0.0-rc.1) marks a pre-release, which is published
+# under its version tag only (no `latest`).
 
 on:
   push:
@@ -40,9 +41,9 @@ jobs:
         run: |
           TAG="${GITHUB_REF_NAME}"
           VERSION="${TAG#v}"
-          semver_regex='^v[0-9]+\.[0-9]+\.[0-9]+-pi\.[0-9]+(-(rc|alpha|beta)(\.[0-9]+)?)?$'
+          semver_regex='^v[0-9]+\.[0-9]+\.[0-9]+(-pi\.[0-9]+)?(-(rc|alpha|beta)(\.[0-9]+)?)?$'
           if [[ ! $TAG =~ $semver_regex ]]; then
-            echo "Invalid tag '$TAG'. Expected v<upstream version>-pi.<n>[-rc.<n>], e.g. v1.3.1-pi.1"
+            echo "Invalid tag '$TAG'. Expected v<major>.<minor>.<patch>[-pi.<n>][-rc.<n>], e.g. v2.0.0, v2.0.0-rc.1 or v1.3.1-pi.1"
             exit 1
           fi
           PKG_VERSION=$(node -p "require('./package.json').version")

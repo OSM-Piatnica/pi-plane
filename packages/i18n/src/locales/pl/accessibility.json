@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "Więcej akcji",
+      "resize_column": "Zmień szerokość kolumny",
       "remove": "Usuń"
     },
     "color_picker": {

@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Potvrďte opuštění projektu zadáním „{phrase}“.",
       "description": "Opravdu chcete opustit projekt „{name}“? Všechny pracovní položky, které se vás týkají, se stanou nepřístupnými.",
       "fill_all_fields": "Vyplňte všechna pole.",
+      "only_admin_error": "Jste jediný správce tohoto projektu, takže jej nemůžete opustit. Nejprve jmenujte správcem jiného člena nebo projekt smažte.",
       "project_name_error": "Zadejte název projektu přesně podle popisu.",
       "project_name_placeholder": "Zadejte název projektu",
       "project_name_required": "Název projektu je povinný",
@@ -623,6 +624,23 @@
       },
       "key_regenerated": "Nový klíč byl úspěšně vygenerován.",
       "view_secret_key": "Zobrazit tajný klíč"
+    },
+    "request_access_modal": {
+      "title": "Požádat o přístup",
+      "description": "Požádejte správce tohoto projektu o přístup.",
+      "description_named": "Požádejte správce projektu {name} o přístup.",
+      "message_placeholder": "Přidejte poznámku pro správce (volitelné)",
+      "send": "Odeslat žádost",
+      "sending": "Odesílání...",
+      "success_title": "Žádost odeslána",
+      "success_message": "Správci projektu ji posoudí.",
+      "request_button": "Požádat o přístup",
+      "pending_badge": "Požádáno"
+    },
+    "access_requests": {
+      "title": "Žádosti o připojení ({count})",
+      "approve": "Schválit",
+      "reject": "Zamítnout"
     }
   }
 }

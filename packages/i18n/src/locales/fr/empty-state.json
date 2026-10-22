@@ -29,7 +29,12 @@
       "restricted_description": "Contactez l’administrateur pour demander l’accès afin de pouvoir continuer ici.",
       "join_description": "Cliquez sur le bouton ci-dessous pour rejoindre le projet.",
       "cta_primary": "Rejoindre le projet",
-      "cta_loading": "Rejoindre le projet…"
+      "cta_loading": "Rejoindre le projet…",
+      "pending_title": "Votre demande attend d'être approuvée",
+      "pending_description": "Les administrateurs du projet vous laisseront entrer dès qu'ils l'auront approuvée.",
+      "private_title": "Ce projet est privé",
+      "private_description": "Vous pouvez le voir, mais ses administrateurs doivent vous laisser entrer. Envoyez-leur une demande.",
+      "request_cta": "Demander l'accès"
     },
     "invalid_project": {
       "title": "Projet non trouvé",

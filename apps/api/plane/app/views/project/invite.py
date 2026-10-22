@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -140,7 +141,12 @@ class UserProjectInvitationsViewset(BaseViewSet):
         for project in projects:
             if project.network == ProjectNetwork.SECRET.value and workspace_member.role != ROLE.ADMIN.value:
                 return Response(
-                    {"error": "Only workspace admins can join private project"},
+                    {"error": "Only workspace admins can join a secret project"},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+            if project.network == ProjectNetwork.PRIVATE.value and workspace_member.role != ROLE.ADMIN.value:
+                return Response(
+                    {"error": "Request access to join a private project"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 

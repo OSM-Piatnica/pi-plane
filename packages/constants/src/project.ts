@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,10 +9,10 @@
 import type { TProjectAppliedDisplayFilterKeys, TProjectOrderByOptions } from "@plane/types";
 // local imports
 
-export type TNetworkChoiceIconKey = "Lock" | "Globe2";
+export type TNetworkChoiceIconKey = "Shield" | "Lock" | "Globe2";
 
 export type TNetworkChoice = {
-  key: 0 | 2;
+  key: 0 | 1 | 2;
   labelKey: string;
   i18n_label: string;
   description: string;
@@ -21,9 +22,16 @@ export type TNetworkChoice = {
 export const NETWORK_CHOICES: TNetworkChoice[] = [
   {
     key: 0,
+    labelKey: "Secret",
+    i18n_label: "workspace_projects.network.secret.title",
+    description: "workspace_projects.network.secret.description", //"Invisible to everyone who is not a member",
+    iconKey: "Shield",
+  },
+  {
+    key: 1,
     labelKey: "Private",
     i18n_label: "workspace_projects.network.private.title",
-    description: "workspace_projects.network.private.description", //"Accessible only by invite",
+    description: "workspace_projects.network.private.description", //"Visible to the workspace, but locked: request access or be invited",
     iconKey: "Lock",
   },
   {

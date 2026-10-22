@@ -29,7 +29,12 @@
       "restricted_description": "Kontaktieren Sie den Administrator, um Zugriff anzufordern, damit Sie hier fortfahren können.",
       "join_description": "Klicken Sie unten auf die Schaltfläche, um beizutreten.",
       "cta_primary": "Projekt beitreten",
-      "cta_loading": "Beitritt zum Projekt wird durchgeführt"
+      "cta_loading": "Beitritt zum Projekt wird durchgeführt",
+      "pending_title": "Deine Anfrage wartet auf Genehmigung",
+      "pending_description": "Die Projektadmins lassen dich herein, sobald sie zustimmen.",
+      "private_title": "Dieses Projekt ist privat",
+      "private_description": "Du kannst es sehen, aber die Admins müssen dich hereinlassen. Sende ihnen eine Anfrage.",
+      "request_cta": "Zugang anfragen"
     },
     "invalid_project": {
       "title": "Projekt nicht gefunden",

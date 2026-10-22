@@ -1,12 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { TNetworkChoiceIconKey } from "@plane/constants";
 // plane imports
-import { GlobeOutline, LockOutline } from "@makeplane/propel/icons";
+import { GlobeOutline, LockOutline, ShieldOutline } from "@makeplane/propel/icons";
 import { cn } from "@plane/utils";
 
 type Props = {
@@ -19,6 +20,8 @@ export function ProjectNetworkIcon(props: Props) {
   // Get the icon key
   const getProjectNetworkIcon = () => {
     switch (iconKey) {
+      case "Shield":
+        return ShieldOutline;
       case "Lock":
         return LockOutline;
       case "Globe2":

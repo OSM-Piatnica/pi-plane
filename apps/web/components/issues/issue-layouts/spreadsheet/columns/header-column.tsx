@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,7 +15,7 @@ import {
   SortDescendingOutline,
 } from "@makeplane/propel/icons";
 // constants
-import { SPREADSHEET_PROPERTY_DETAILS } from "@plane/constants";
+import { DEFAULT_WORK_ITEM_ORDER_BY, SPREADSHEET_PROPERTY_DETAILS } from "@plane/constants";
 // i18n
 import { useTranslation } from "@plane/i18n";
 // types
@@ -49,7 +50,7 @@ export function HeaderColumn(props: Props) {
     handleDisplayFilterUpdate({ order_by: order });
 
     setSelectedMenuItem(`${order}_${itemKey}`);
-    setActiveSortingProperty(order === "-created_at" ? "" : itemKey);
+    setActiveSortingProperty(order === DEFAULT_WORK_ITEM_ORDER_BY ? "" : itemKey);
   };
 
   if (!propertyDetails) return null;
@@ -104,13 +105,13 @@ export function HeaderColumn(props: Props) {
         />
         {selectedMenuItem &&
           selectedMenuItem !== "" &&
-          displayFilters?.order_by !== "-created_at" &&
+          displayFilters?.order_by !== DEFAULT_WORK_ITEM_ORDER_BY &&
           selectedMenuItem.includes(property) && (
             <MenuItem
               key={property}
               icon={<Icon icon={EraserOutline} />}
               label={t("common.actions.clear_sorting")}
-              onClick={() => handleOrderBy("-created_at", property)}
+              onClick={() => handleOrderBy(DEFAULT_WORK_ITEM_ORDER_BY, property)}
             />
           )}
       </MenuContent>

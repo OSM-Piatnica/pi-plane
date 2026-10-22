@@ -491,6 +491,7 @@
       "confirm_phrase_error": "프로젝트 나가기를 확인하려면 “{phrase}”을(를) 입력하세요.",
       "description": "“{name}” 프로젝트에서 나가시겠습니까? 나와 관련된 모든 작업 항목에 접근할 수 없게 됩니다.",
       "fill_all_fields": "모든 필드를 입력하세요.",
+      "only_admin_error": "이 프로젝트의 유일한 관리자이므로 나갈 수 없습니다. 먼저 다른 멤버를 관리자로 지정하거나 프로젝트를 삭제하세요.",
       "project_name_error": "설명에 표시된 대로 프로젝트 이름을 입력하세요.",
       "project_name_placeholder": "프로젝트 이름 입력",
       "project_name_required": "프로젝트 이름은 필수입니다",
@@ -623,6 +624,23 @@
       },
       "key_regenerated": "새 키가 성공적으로 다시 생성되었습니다.",
       "view_secret_key": "비밀 키 보기"
+    },
+    "request_access_modal": {
+      "title": "접근 요청",
+      "description": "이 프로젝트의 관리자에게 접근을 요청하세요.",
+      "description_named": "{name}의 관리자에게 접근을 요청하세요.",
+      "message_placeholder": "관리자에게 남길 메모 추가(선택)",
+      "send": "요청 보내기",
+      "sending": "보내는 중...",
+      "success_title": "요청을 보냈습니다",
+      "success_message": "프로젝트 관리자가 검토합니다.",
+      "request_button": "접근 요청",
+      "pending_badge": "요청됨"
+    },
+    "access_requests": {
+      "title": "참여 요청 ({count})",
+      "approve": "승인",
+      "reject": "거절"
     }
   }
 }

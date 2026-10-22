@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -86,6 +87,9 @@ export const MODULE_VIEW_LAYOUTS: {
     i18n_title: "project_modules.layout.timeline",
   },
 ];
+
+/** The order the module list starts in: oldest first, so the newest module is last. Separate from the work item order. */
+export const DEFAULT_MODULE_ORDER_BY: TModuleOrderByOptions = "created_at";
 
 export const MODULE_ORDER_BY_OPTIONS: {
   key: TModuleOrderByOptions;

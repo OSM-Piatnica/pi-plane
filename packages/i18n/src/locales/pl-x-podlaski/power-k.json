@@ -171,7 +171,9 @@
     "search_menu": {
       "no_results": "Nie znaleziono wyników",
       "clear_search": "Wyczyść wyszukiwanie",
-      "go_to_advanced_search": "Przejdź do wyszukiwania zaawansowanego"
+      "go_to_advanced_search": "Przejdź do wyszukiwania zaawansowanego",
+      "results_in_workspace": "Wyniki wyszukiwania dla <term/> w przestrzeni roboczej:",
+      "results_in_project": "Wyniki wyszukiwania dla <term/> w projekcie:"
     },
     "footer": {
       "workspace_level": "Poziom przestrzeni roboczej"

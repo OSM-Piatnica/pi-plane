@@ -81,6 +81,8 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "jsdom": "23.2.0",
+    "mobx": "catalog:",
+    "mobx-react": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:",
     "vitest": "^4.1.11"

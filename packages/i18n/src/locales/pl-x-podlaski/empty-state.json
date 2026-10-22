@@ -29,7 +29,12 @@
       "restricted_description": "Skontaktuj się z administratorem, aby poprosić o dostęp i móc kontynuować tutaj.",
       "join_description": "Kliknij przycisk poniżej, aby dołączyć.",
       "cta_primary": "Dołącz do projektu",
-      "cta_loading": "Dołączanie do projektu"
+      "cta_loading": "Dołączanie do projektu",
+      "pending_title": "Twoja prośba czeka na zatwierdzenie",
+      "pending_description": "Administratorzy projektu wpuszczą Cię, gdy ją zatwierdzą.",
+      "private_title": "Ten projekt jest prywatny",
+      "private_description": "Widzisz go, ale administratorzy muszą Cię wpuścić. Wyślij im prośbę.",
+      "request_cta": "Poproś o dostęp"
     },
     "invalid_project": {
       "title": "Projekt nie został znaleziony",

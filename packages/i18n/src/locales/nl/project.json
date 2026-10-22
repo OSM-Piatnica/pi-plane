@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Bevestig dat je het project verlaat door “{phrase}” te typen.",
       "description": "Weet je zeker dat je het project “{name}” wilt verlaten? Alle werkitems die aan jou zijn gekoppeld worden ontoegankelijk.",
       "fill_all_fields": "Vul alle velden in.",
+      "only_admin_error": "Je bent de enige beheerder van dit project en kunt het daarom niet verlaten. Maak eerst een ander lid beheerder of verwijder het project.",
       "project_name_error": "Voer de projectnaam in zoals weergegeven in de beschrijving.",
       "project_name_placeholder": "Voer projectnaam in",
       "project_name_required": "Projectnaam is verplicht",
@@ -623,6 +624,23 @@
       },
       "key_regenerated": "Nieuwe sleutel gegenereerd.",
       "view_secret_key": "Geheime sleutel bekijken"
+    },
+    "request_access_modal": {
+      "title": "Toegang aanvragen",
+      "description": "Vraag de beheerders van dit project om je binnen te laten.",
+      "description_named": "Vraag de beheerders van {name} om je binnen te laten.",
+      "message_placeholder": "Voeg een notitie toe voor de beheerders (optioneel)",
+      "send": "Verzoek versturen",
+      "sending": "Versturen...",
+      "success_title": "Verzoek verstuurd",
+      "success_message": "De projectbeheerders bekijken het.",
+      "request_button": "Toegang aanvragen",
+      "pending_badge": "Aangevraagd"
+    },
+    "access_requests": {
+      "title": "Verzoeken om lid te worden ({count})",
+      "approve": "Goedkeuren",
+      "reject": "Afwijzen"
     }
   }
 }

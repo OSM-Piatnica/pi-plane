@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,7 +11,9 @@ import { observer } from "mobx-react";
 import type { IIssueDisplayFilterOptions, IIssueDisplayProperties } from "@plane/types";
 //components
 import { shouldRenderColumn } from "@/helpers/issue-filter.helper";
+import type { TSpreadsheetColumnWidthControls } from "@/hooks/use-spreadsheet-column-widths";
 import { WithDisplayPropertiesHOC } from "../properties/with-display-properties-HOC";
+import { ColumnResizer, SPREADSHEET_COLUMN_KEY_ATTRIBUTE } from "./column-resizer";
 import { HeaderColumn } from "./columns/header-column";
 
 interface Props {
@@ -20,9 +23,17 @@ interface Props {
   displayFilters: IIssueDisplayFilterOptions;
   handleDisplayFilterUpdate: (data: Partial<IIssueDisplayFilterOptions>) => void;
   isEpic?: boolean;
+  columnWidthControls: TSpreadsheetColumnWidthControls;
 }
 export const SpreadsheetHeaderColumn = observer(function SpreadsheetHeaderColumn(props: Props) {
-  const { displayProperties, displayFilters, property, handleDisplayFilterUpdate, isEpic = false } = props;
+  const {
+    displayProperties,
+    displayFilters,
+    property,
+    handleDisplayFilterUpdate,
+    isEpic = false,
+    columnWidthControls,
+  } = props;
 
   //hooks
   const tableHeaderCellRef = useRef<HTMLTableCellElement | null>(null);
@@ -36,9 +47,10 @@ export const SpreadsheetHeaderColumn = observer(function SpreadsheetHeaderColumn
       shouldRenderProperty={() => shouldRenderProperty}
     >
       <th
-        className="h-11 min-w-36 items-center border border-t-0 border-b-0 border-subtle bg-layer-1 py-1 text-13 font-medium"
+        className="relative h-11 min-w-36 items-center border border-t-0 border-b-0 border-subtle bg-layer-1 py-1 text-13 font-medium"
         ref={tableHeaderCellRef}
         tabIndex={0}
+        {...{ [SPREADSHEET_COLUMN_KEY_ATTRIBUTE]: property }}
       >
         <HeaderColumn
           displayFilters={displayFilters}
@@ -49,6 +61,7 @@ export const SpreadsheetHeaderColumn = observer(function SpreadsheetHeaderColumn
           }}
           isEpic={isEpic}
         />
+        <ColumnResizer columnKey={property} {...columnWidthControls} />
       </th>
     </WithDisplayPropertiesHOC>
   );

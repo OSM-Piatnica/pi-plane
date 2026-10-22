@@ -16,6 +16,7 @@ import type {
   TProjectAnalyticsCountParams,
   TProject,
   TPartialProject,
+  TProjectAccessRequest,
 } from "@plane/types";
 // helpers
 import { orderProjects, shouldFilterProject } from "@plane/utils";
@@ -77,6 +78,7 @@ export interface IProjectStore {
   // CRUD actions
   createProject: (workspaceSlug: string, data: Partial<TProject>) => Promise<TProject>;
   updateProject: (workspaceSlug: string, projectId: string, data: Partial<TProject>) => Promise<TProject>;
+  requestProjectAccess: (workspaceSlug: string, projectId: string, message?: string) => Promise<TProjectAccessRequest>;
   deleteProject: (workspaceSlug: string, projectId: string) => Promise<void>;
   // archive actions
   archiveProject: (workspaceSlug: string, projectId: string) => Promise<void>;
@@ -137,6 +139,7 @@ export class ProjectStore implements IProjectStore {
       // CRUD actions
       createProject: action,
       updateProject: action,
+      requestProjectAccess: action,
       // collapsible actions
       setOpenCollapsibleSection: action,
       setLastCollapsibleAction: action,
@@ -577,6 +580,20 @@ export class ProjectStore implements IProjectStore {
       });
       throw error;
     }
+  };
+
+  /**
+   * Asks the admins of a Private project for access and marks the request as open in the store
+   * @param workspaceSlug
+   * @param projectId
+   * @param message optional note for the admins
+   */
+  requestProjectAccess = async (workspaceSlug: string, projectId: string, message?: string) => {
+    const response = await this.projectService.requestProjectAccess(workspaceSlug, projectId, message);
+    runInAction(() => {
+      if (this.projectMap[projectId]) set(this.projectMap, [projectId, "has_pending_access_request"], true);
+    });
+    return response;
   };
 
   /**

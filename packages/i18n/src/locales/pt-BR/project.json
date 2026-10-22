@@ -491,6 +491,7 @@
       "confirm_phrase_error": "Confirme a saída do projeto digitando “{phrase}”.",
       "description": "Tem certeza de que deseja sair do projeto “{name}”? Todos os itens de trabalho associados a você ficarão inacessíveis.",
       "fill_all_fields": "Preencha todos os campos.",
+      "only_admin_error": "Você é o único administrador deste projeto e não pode sair dele. Torne outro membro administrador primeiro ou exclua o projeto.",
       "project_name_error": "Digite o nome do projeto conforme mostrado na descrição.",
       "project_name_placeholder": "Digite o nome do projeto",
       "project_name_required": "O nome do projeto é obrigatório",
@@ -623,6 +624,23 @@
       },
       "key_regenerated": "Nova chave gerada com sucesso.",
       "view_secret_key": "Ver chave secreta"
+    },
+    "request_access_modal": {
+      "title": "Solicitar acesso",
+      "description": "Peça aos administradores deste projeto que deixem você entrar.",
+      "description_named": "Peça aos administradores de {name} que deixem você entrar.",
+      "message_placeholder": "Adicione uma nota para os administradores (opcional)",
+      "send": "Enviar solicitação",
+      "sending": "Enviando...",
+      "success_title": "Solicitação enviada",
+      "success_message": "Os administradores do projeto irão analisá-la.",
+      "request_button": "Solicitar acesso",
+      "pending_badge": "Solicitado"
+    },
+    "access_requests": {
+      "title": "Solicitações para participar ({count})",
+      "approve": "Aprovar",
+      "reject": "Rejeitar"
     }
   }
 }

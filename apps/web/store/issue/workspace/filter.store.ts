@@ -10,7 +10,7 @@ import { action, computed, makeObservable, observable, runInAction } from "mobx"
 import { computedFn } from "mobx-utils";
 // plane imports
 import type { TSupportedFilterTypeForUpdate } from "@plane/constants";
-import { EIssueFilterType } from "@plane/constants";
+import { DEFAULT_WORK_ITEM_ORDER_BY, EIssueFilterType } from "@plane/constants";
 import type {
   IIssueDisplayFilterOptions,
   IIssueDisplayProperties,
@@ -162,7 +162,7 @@ export class WorkspaceIssuesFilter extends IssueFilterHelperStore implements IWo
     const _filters = this.handleIssuesLocalFilters.get(EIssuesStoreType.GLOBAL, workspaceSlug, undefined, viewId);
     displayFilters = this.computedDisplayFilters(_filters?.display_filters, {
       layout: EIssueLayoutTypes.SPREADSHEET,
-      order_by: "-created_at",
+      order_by: DEFAULT_WORK_ITEM_ORDER_BY,
     });
     displayProperties = this.computedDisplayProperties(_filters?.display_properties);
     kanbanFilters = {
@@ -176,14 +176,14 @@ export class WorkspaceIssuesFilter extends IssueFilterHelperStore implements IWo
       richFilters = viewDetails?.rich_filters;
       displayFilters = this.computedDisplayFilters(viewDetails?.display_filters, {
         layout: EIssueLayoutTypes.SPREADSHEET,
-        order_by: "-created_at",
+        order_by: DEFAULT_WORK_ITEM_ORDER_BY,
       });
       displayProperties = this.computedDisplayProperties(viewDetails?.display_properties);
     }
 
     // override existing order by if ordered by manual sort_order
     if (displayFilters.order_by === "sort_order") {
-      displayFilters.order_by = "-created_at";
+      displayFilters.order_by = DEFAULT_WORK_ITEM_ORDER_BY;
     }
 
     runInAction(() => {

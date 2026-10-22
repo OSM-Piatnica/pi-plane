@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -32,6 +33,7 @@ from plane.db.models import (
     Intake,
     Project,
     ProjectIdentifier,
+    ProjectAccessRequest,
     ProjectMember,
     ProjectNetwork,
     ProjectUserProperty,
@@ -69,6 +71,15 @@ class ProjectViewSet(BaseViewSet):
                         entity_identifier=OuterRef("pk"),
                         entity_type="project",
                         project_id=OuterRef("pk"),
+                    )
+                )
+            )
+            .annotate(
+                has_pending_access_request=Exists(
+                    ProjectAccessRequest.objects.filter(
+                        project_id=OuterRef("pk"),
+                        requester_id=self.request.user.id,
+                        status=ProjectAccessRequest.PENDING,
                     )
                 )
             )
@@ -125,7 +136,7 @@ class ProjectViewSet(BaseViewSet):
                     project_projectmember__member=self.request.user,
                     project_projectmember__is_active=True,
                 )
-                | Q(network=2)
+                | Q(network__in=[ProjectNetwork.PRIVATE.value, ProjectNetwork.PUBLIC.value])
             )
 
         if request.GET.get("per_page", False) and request.GET.get("cursor", False):
@@ -219,7 +230,7 @@ class ProjectViewSet(BaseViewSet):
                     project_projectmember__member=self.request.user,
                     project_projectmember__is_active=True,
                 )
-                | Q(network=2)
+                | Q(network__in=[ProjectNetwork.PRIVATE.value, ProjectNetwork.PUBLIC.value])
             )
         return Response(projects, status=status.HTTP_200_OK)
 
@@ -236,6 +247,12 @@ class ProjectViewSet(BaseViewSet):
             if project.network == ProjectNetwork.SECRET.value:
                 return Response(
                     {"error": "You do not have permission"},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+            elif project.network == ProjectNetwork.PRIVATE.value:
+                # visible in the gallery but locked: the web app offers to request access
+                return Response(
+                    {"error": "You do not have permission", "network": project.network},
                     status=status.HTTP_403_FORBIDDEN,
                 )
             else:

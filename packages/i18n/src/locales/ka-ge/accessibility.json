@@ -38,6 +38,7 @@
     },
     "common": {
       "more_actions": "მეტი ქმედება",
+      "resize_column": "სვეტის ზომის შეცვლა",
       "remove": "ამოღება"
     },
     "color_picker": {

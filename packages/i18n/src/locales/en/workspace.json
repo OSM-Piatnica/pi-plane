@@ -157,9 +157,13 @@
     },
     "network": {
       "label": "Network",
+      "secret": {
+        "title": "Secret",
+        "description": "Hidden from everyone who is not a member"
+      },
       "private": {
         "title": "Private",
-        "description": "Accessible only by invite"
+        "description": "Listed for everyone in the workspace; access needs approval or an invite"
       },
       "public": {
         "title": "Public",

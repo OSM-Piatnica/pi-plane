@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -32,6 +33,7 @@ from plane.app.permissions import ROLE, WorkspaceUserPermission
 from plane.db.models import (
     Workspace,
     Project,
+    ProjectNetwork,
     Issue,
     Cycle,
     Module,
@@ -329,6 +331,17 @@ class GlobalSearchEndpoint(BaseAPIView):
 class SearchEndpoint(BaseAPIView):
     permission_classes = (WorkspaceUserPermission,)
 
+    def discoverable_projects_q(self, slug):
+        """Projects the user may find by name: their own and the Public ones, plus the Private
+        ones (listed but locked) unless the user is a guest. Secret projects are members-only."""
+        networks = [ProjectNetwork.PUBLIC.value]
+        is_guest = WorkspaceMember.objects.filter(
+            member=self.request.user, workspace__slug=slug, is_active=True, role=ROLE.GUEST.value
+        ).exists()
+        if not is_guest:
+            networks.append(ProjectNetwork.PRIVATE.value)
+        return Q(project_projectmember__member=self.request.user) | Q(network__in=networks)
+
     def get(self, request, slug):
         query = request.query_params.get("query", False)
         query_types = request.query_params.get("query_type", "user_mention").split(",")
@@ -399,7 +412,7 @@ class SearchEndpoint(BaseAPIView):
                     projects = (
                         Project.objects.filter(
                             q,
-                            Q(project_projectmember__member=self.request.user) | Q(network=2),
+                            self.discoverable_projects_q(slug),
                             workspace__slug=slug,
                         )
                         .order_by("-created_at")
@@ -612,7 +625,7 @@ class SearchEndpoint(BaseAPIView):
                     projects = (
                         Project.objects.filter(
                             q,
-                            Q(project_projectmember__member=self.request.user) | Q(network=2),
+                            self.discoverable_projects_q(slug),
                             workspace__slug=slug,
                         )
                         .order_by("-created_at")
