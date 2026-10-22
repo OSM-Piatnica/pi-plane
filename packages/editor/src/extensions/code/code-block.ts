@@ -5,8 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { Node, textblockTypeInputRule } from "@tiptap/core";
-import { mergeAttributes } from "@/helpers/merge-attributes";
+import { Node, textblockTypeInputRule, mergeAttributes } from "@tiptap/core";
 import { Plugin, PluginKey } from "@tiptap/pm/state";
 // constants
 import { CORE_EXTENSIONS } from "@/constants/extension";

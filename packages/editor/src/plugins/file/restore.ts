@@ -18,7 +18,7 @@ import { NODE_FILE_MAP } from "@/constants/utility";
 import type { TFileHandler } from "@/types";
 // local imports
 import type { NodeFileMapType } from "../../constants/utility";
-import type { TFileNode } from "./types";
+import type { TFileNode, TFileStorage } from "./types";
 
 const RESTORE_PLUGIN_KEY = new PluginKey("restore-utility");
 
@@ -72,7 +72,9 @@ export const TrackFileRestorationPlugin = (editor: Editor, restoreHandler: TFile
             const src = node.attrs.src;
             const nodeFileSetDetails = NODE_FILE_MAP[nodeType];
             if (!nodeFileSetDetails) return;
-            const extensionFileSetStorage = editor.storage[nodeType]?.[nodeFileSetDetails.fileSetName];
+            const extensionFileSetStorage = (editor.storage as unknown as TFileStorage)[nodeType]?.[
+              nodeFileSetDetails.fileSetName
+            ];
             const wasDeleted = extensionFileSetStorage?.get(src);
             if (!nodeFileSetDetails || !src) return;
             if (wasDeleted === undefined) {

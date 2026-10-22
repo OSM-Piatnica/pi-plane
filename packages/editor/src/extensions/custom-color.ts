@@ -5,8 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { Mark } from "@tiptap/core";
-import { mergeAttributes } from "@/helpers/merge-attributes";
+import { Mark, mergeAttributes } from "@tiptap/core";
 // constants
 import { COLORS_LIST } from "@/constants/common";
 import { CORE_EXTENSIONS } from "@/constants/extension";

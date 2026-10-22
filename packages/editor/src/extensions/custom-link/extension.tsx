@@ -6,8 +6,7 @@
  */
 
 import type { PasteRuleMatch } from "@tiptap/core";
-import { Mark, markPasteRule } from "@tiptap/core";
-import { mergeAttributes } from "@/helpers/merge-attributes";
+import { Mark, markPasteRule, mergeAttributes } from "@tiptap/core";
 import type { Plugin } from "@tiptap/pm/state";
 import { find, registerCustomProtocol, reset } from "linkifyjs";
 // constants
@@ -70,15 +69,17 @@ declare module "@tiptap/core" {
         target?: string | null;
         rel?: string | null;
         class?: string | null;
+        title?: string | null;
       }) => ReturnType;
       /**
        * Toggle a link mark
        */
-      toggleLink: (attributes: {
+      toggleLink: (attributes?: {
         href: string;
         target?: string | null;
         rel?: string | null;
         class?: string | null;
+        title?: string | null;
       }) => ReturnType;
       /**
        * Unset a link mark
