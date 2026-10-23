@@ -47,8 +47,6 @@ MAX_WORK_ITEMS_IMPORT = 500
 ALLOWED_PRIORITIES = frozenset({"urgent", "high", "medium", "low", "none"})
 DEFAULT_LABEL_COLOR = "#858585"
 ISO_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-# Day-first dates as spreadsheets in Polish locales display them, e.g. 10.09.2026
-DMY_DATE_PATTERN = re.compile(r"^(\d{1,2})\.(\d{1,2})\.(\d{4})$")
 
 # Relation types whose canonical database row points the other way round
 _MIRRORED_RELATIONS = frozenset({"blocking", "start_after", "finish_after", "implements"})
@@ -160,12 +158,6 @@ def _parse_import_date(value):
     if ISO_DATE_PATTERN.match(text):
         try:
             return date.fromisoformat(text).isoformat()
-        except ValueError:
-            return None
-    dmy = DMY_DATE_PATTERN.match(text)
-    if dmy:
-        try:
-            return date(int(dmy.group(3)), int(dmy.group(2)), int(dmy.group(1))).isoformat()
         except ValueError:
             return None
     # Exports always write ISO dates; a spreadsheet may hand back a timestamp instead
