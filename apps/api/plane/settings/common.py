@@ -148,6 +148,9 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "plane.authentication.adapter.exception.auth_exception_handler",
     # Preserve original Django URL parameter names (pk) instead of converting to 'id'
     "SCHEMA_COERCE_PATH_PK": False,
+    # DRF 3.18 reports errors of many=True serializers as a dict keyed by item index. Keep the list
+    # format clients get today; DRF deprecates it and removes it in 3.20, so migrate the clients first.
+    "LIST_SERIALIZER_ERRORS_AS_DICT": False,
 }
 
 # Number of reverse proxies in front of the API. DRF throttles use it to pick the
