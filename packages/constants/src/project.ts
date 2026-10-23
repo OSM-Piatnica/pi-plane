@@ -129,6 +129,9 @@ export const PROJECT_ERROR_MESSAGES = {
   },
 };
 
+/** Longest project identifier (the "PROJ" in PROJ-12) the project forms accept; the API column (`Project.identifier`) holds 12. */
+export const PROJECT_IDENTIFIER_MAX_LENGTH = 12;
+
 export enum EProjectFeatureKey {
   WORK_ITEMS = "work_items",
   CYCLES = "cycles",
