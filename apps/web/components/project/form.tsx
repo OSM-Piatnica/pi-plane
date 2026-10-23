@@ -12,7 +12,7 @@ import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
 import type { TNetworkChoice } from "@plane/constants";
-import { NETWORK_CHOICES } from "@plane/constants";
+import { NETWORK_CHOICES, PROJECT_IDENTIFIER_MAX_LENGTH } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 // plane imports
 import { Button } from "@makeplane/propel/components/button";
@@ -354,8 +354,8 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
                     message: t("project_id_min_char"),
                   },
                   maxLength: {
-                    value: 10,
-                    message: t("project_id_max_char"),
+                    value: PROJECT_IDENTIFIER_MAX_LENGTH,
+                    message: t("project_id_max_char", { max: PROJECT_IDENTIFIER_MAX_LENGTH }),
                   },
                 }}
                 render={({ field: { value, ref } }) => (
