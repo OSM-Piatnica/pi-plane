@@ -290,7 +290,9 @@
         "description": "要查看所有工作事項，請清除所有應用過的過濾器。",
         "action": "清除過濾器"
       }
-    }
+    },
+    "expand": "展開子工作事項",
+    "collapse": "收合子工作事項"
   },
   "issue_relation": {
     "empty_state": {

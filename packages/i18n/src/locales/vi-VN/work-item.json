@@ -290,7 +290,9 @@
         "description": "Để xem tất cả các mục công việc, hãy xóa tất cả các bộ lọc đã áp dụng.",
         "action": "Xóa bộ lọc"
       }
-    }
+    },
+    "expand": "Mở rộng mục công việc con",
+    "collapse": "Thu gọn mục công việc con"
   },
   "issue_relation": {
     "empty_state": {

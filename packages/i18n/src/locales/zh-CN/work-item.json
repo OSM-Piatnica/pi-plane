@@ -290,7 +290,9 @@
         "description": "要查看所有工作项，请清除所有应用的过滤器。",
         "action": "清除过滤器"
       }
-    }
+    },
+    "expand": "展开子工作项",
+    "collapse": "折叠子工作项"
   },
   "issue_relation": {
     "empty_state": {

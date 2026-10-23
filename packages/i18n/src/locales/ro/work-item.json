@@ -290,7 +290,9 @@
         "description": "Pentru a vedea toate elementele de lucru, șterge toate filtrele aplicate.",
         "action": "Șterge filtrele"
       }
-    }
+    },
+    "expand": "Extinde sub-activitățile",
+    "collapse": "Restrânge sub-activitățile"
   },
   "issue_relation": {
     "empty_state": {

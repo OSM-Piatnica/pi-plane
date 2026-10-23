@@ -290,7 +290,9 @@
         "description": "Wis alle toegepaste filters om alle werkitems te zien.",
         "action": "Filters wissen"
       }
-    }
+    },
+    "expand": "Subwerkitems uitvouwen",
+    "collapse": "Subwerkitems samenvouwen"
   },
   "issue_relation": {
     "empty_state": {

@@ -6,7 +6,7 @@
  * See the LICENSE file for details.
  */
 
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
@@ -17,13 +17,15 @@ import type { EIssuesStoreType, IBlockUpdateData, TIssue } from "@plane/types";
 import { EIssueLayoutTypes, GANTT_TIMELINE_TYPE } from "@plane/types";
 import { renderFormattedPayloadDate } from "@plane/utils";
 // components
-import { TimeLineTypeContext } from "@/components/gantt-chart/contexts";
+import { GanttSubWorkItemsContext, TimeLineTypeContext } from "@/components/gantt-chart/contexts";
 import { GanttChartRoot } from "@/components/gantt-chart/root";
 import { IssueGanttSidebar } from "@/components/gantt-chart/sidebar/issues/sidebar";
 // helpers
 import { wouldUpdatesViolateDependencies } from "@/helpers/gantt-dependency-helpers";
+import { flattenGanttRows } from "@/helpers/gantt-sub-work-items.helper";
 import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
+import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useIssues } from "@/hooks/store/use-issues";
 import { useUserPermissions } from "@/hooks/store/user";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
@@ -40,6 +42,9 @@ interface IBaseGanttRoot {
   isCompletedCycle?: boolean;
   isEpic?: boolean;
 }
+
+const NO_ISSUE_IDS: string[] = [];
+const NO_EXPANDED_IDS: ReadonlySet<string> = new Set();
 
 export type GanttStoreType =
   | EIssuesStoreType.PROJECT
@@ -60,6 +65,13 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
   const { initGantt, refreshBlockPositions } = useTimeLineChart(GANTT_TIMELINE_TYPE.ISSUE);
   // store hooks
   const { allowPermissions } = useUserPermissions();
+  const {
+    issue: { getIssueById: getWorkItemById },
+    subIssues: { subIssuesByIssueId, fetchSubIssues },
+  } = useIssueDetail();
+  // sub-work items shown below their parent: ids of the expanded parents and of those still loading
+  const [expandedIds, setExpandedIds] = useState<ReadonlySet<string>>(() => new Set());
+  const [loadingIds, setLoadingIds] = useState<ReadonlySet<string>>(() => new Set());
 
   const appliedDisplayFilters = issuesFilter.issueFilters?.displayFilters;
   const isBulkOperationsEnabled = useBulkOperationStatus();
@@ -75,7 +87,44 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
     initGantt();
   }, [initGantt]);
 
-  const issuesIds = (issues.groupedIssueIds?.[ALL_ISSUES] as string[]) ?? [];
+  const listedIssueIds = (issues.groupedIssueIds?.[ALL_ISSUES] as string[] | undefined) ?? NO_ISSUE_IDS;
+  // When the display option "show sub-work items" is on, the sub-work items are listed in their own rows already.
+  const canExpandSubWorkItems = !appliedDisplayFilters?.sub_issue;
+  // a primitive that changes whenever the sub-work items of an expanded parent change, so the rows below stay stable
+  const loadedSubWorkItemsKey = [...expandedIds]
+    .map((id) => `${id}:${(subIssuesByIssueId(id) ?? []).join(",")}`)
+    .join("|");
+  const { ids: issuesIds, levelById } = useMemo(
+    () => flattenGanttRows(listedIssueIds, canExpandSubWorkItems ? expandedIds : NO_EXPANDED_IDS, subIssuesByIssueId),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- loadedSubWorkItemsKey stands for the sub-work item ids read inside
+    [listedIssueIds, canExpandSubWorkItems, expandedIds, loadedSubWorkItemsKey]
+  );
+
+  const toggleSubWorkItems = useCallback(
+    (workItemId: string) => {
+      if (expandedIds.has(workItemId)) {
+        setExpandedIds((current) => new Set([...current].filter((id) => id !== workItemId)));
+        return;
+      }
+      setExpandedIds((current) => new Set(current).add(workItemId));
+      const workItem = getWorkItemById(workItemId);
+      if (!workspaceSlug || !workItem || subIssuesByIssueId(workItemId) !== undefined) return;
+      setLoadingIds((current) => new Set(current).add(workItemId));
+      fetchSubIssues(workspaceSlug.toString(), workItem.project_id ?? projectId?.toString() ?? "", workItemId)
+        .catch(() => {
+          // leave the row collapsed so the chevron can be used again
+          setExpandedIds((current) => new Set([...current].filter((id) => id !== workItemId)));
+          setToast({ type: "error", title: t("toast.error"), message: t("something_went_wrong_please_try_again") });
+        })
+        .finally(() => setLoadingIds((current) => new Set([...current].filter((id) => id !== workItemId))));
+    },
+    [expandedIds, fetchSubIssues, getWorkItemById, projectId, subIssuesByIssueId, t, workspaceSlug]
+  );
+
+  const subWorkItems = useMemo(
+    () => (canExpandSubWorkItems ? { levelById, expandedIds, loadingIds, toggle: toggleSubWorkItems } : undefined),
+    [canExpandSubWorkItems, levelById, expandedIds, loadingIds, toggleSubWorkItems]
+  );
   const nextPageResults = issues.getPaginationData(undefined, undefined)?.nextPageResults;
 
   const { enableIssueCreation } = issues?.viewFlags || {};
@@ -156,30 +205,32 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
   return (
     <IssueLayoutHOC layout={EIssueLayoutTypes.GANTT}>
       <TimeLineTypeContext.Provider value={GANTT_TIMELINE_TYPE.ISSUE}>
-        <div className="h-full w-full">
-          <GanttChartRoot
-            border={false}
-            title={isEpic ? t("epic.label", { count: 2 }) : t("issue.label", { count: 2 })}
-            loaderTitle={isEpic ? t("epic.label", { count: 2 }) : t("issue.label", { count: 2 })}
-            blockIds={issuesIds}
-            blockUpdateHandler={updateIssueBlockStructure}
-            blockToRender={(data: TIssue) => <IssueGanttBlock issueId={data.id} isEpic={isEpic} />}
-            sidebarToRender={(sidebarProps) => <IssueGanttSidebar {...sidebarProps} showAllBlocks isEpic={isEpic} />}
-            enableBlockLeftResize={isAllowed}
-            enableBlockRightResize={isAllowed}
-            enableBlockMove={isAllowed}
-            enableReorder={appliedDisplayFilters?.order_by === "sort_order" && isAllowed}
-            enableAddBlock={isAllowed}
-            enableSelection={isBulkOperationsEnabled && isAllowed}
-            quickAdd={quickAdd}
-            loadMoreBlocks={loadMoreIssues}
-            canLoadMoreBlocks={nextPageResults}
-            updateBlockDates={updateBlockDates}
-            showAllBlocks
-            enableDependency
-            isEpic={isEpic}
-          />
-        </div>
+        <GanttSubWorkItemsContext.Provider value={subWorkItems}>
+          <div className="h-full w-full">
+            <GanttChartRoot
+              border={false}
+              title={isEpic ? t("epic.label", { count: 2 }) : t("issue.label", { count: 2 })}
+              loaderTitle={isEpic ? t("epic.label", { count: 2 }) : t("issue.label", { count: 2 })}
+              blockIds={issuesIds}
+              blockUpdateHandler={updateIssueBlockStructure}
+              blockToRender={(data: TIssue) => <IssueGanttBlock issueId={data.id} isEpic={isEpic} />}
+              sidebarToRender={(sidebarProps) => <IssueGanttSidebar {...sidebarProps} showAllBlocks isEpic={isEpic} />}
+              enableBlockLeftResize={isAllowed}
+              enableBlockRightResize={isAllowed}
+              enableBlockMove={isAllowed}
+              enableReorder={appliedDisplayFilters?.order_by === "sort_order" && isAllowed}
+              enableAddBlock={isAllowed}
+              enableSelection={isBulkOperationsEnabled && isAllowed}
+              quickAdd={quickAdd}
+              loadMoreBlocks={loadMoreIssues}
+              canLoadMoreBlocks={nextPageResults}
+              updateBlockDates={updateBlockDates}
+              showAllBlocks
+              enableDependency
+              isEpic={isEpic}
+            />
+          </div>
+        </GanttSubWorkItemsContext.Provider>
       </TimeLineTypeContext.Provider>
     </IssueLayoutHOC>
   );

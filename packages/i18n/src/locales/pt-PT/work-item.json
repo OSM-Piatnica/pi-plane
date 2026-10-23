@@ -290,7 +290,9 @@
         "description": "Para ver todos os itens de trabalho, limpe todos os filtros aplicados.",
         "action": "Limpar filtros"
       }
-    }
+    },
+    "expand": "Expandir sub-itens de trabalho",
+    "collapse": "Recolher sub-itens de trabalho"
   },
   "issue_relation": {
     "empty_state": {

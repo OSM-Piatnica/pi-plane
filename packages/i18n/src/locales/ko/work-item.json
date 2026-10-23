@@ -290,7 +290,9 @@
         "description": "모든 작업 항목을 보려면 모든 적용된 필터를 지우세요.",
         "action": "필터 지우기"
       }
-    }
+    },
+    "expand": "하위 작업 항목 펼치기",
+    "collapse": "하위 작업 항목 접기"
   },
   "issue_relation": {
     "empty_state": {

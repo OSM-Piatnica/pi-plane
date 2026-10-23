@@ -290,7 +290,9 @@
         "description": "Aby zobaczyć wszystkie elementy pracy, wyczyść wszystkie zastosowane filtry.",
         "action": "Wyczyść filtry"
       }
-    }
+    },
+    "expand": "Rozwiń podrzędne elementy pracy",
+    "collapse": "Zwiń podrzędne elementy pracy"
   },
   "issue_relation": {
     "empty_state": {

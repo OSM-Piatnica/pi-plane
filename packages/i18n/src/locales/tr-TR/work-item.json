@@ -290,7 +290,9 @@
         "description": "Tüm iş öğelerini görmek için tüm uygulanan filtreleri temizleyin.",
         "action": "Filtreleri temizle"
       }
-    }
+    },
+    "expand": "Alt iş öğelerini genişlet",
+    "collapse": "Alt iş öğelerini daralt"
   },
   "issue_relation": {
     "empty_state": {

@@ -290,7 +290,9 @@
         "description": "Um alle Arbeitselemente anzuzeigen, entfernen Sie alle angewendeten Filter.",
         "action": "Filter entfernen"
       }
-    }
+    },
+    "expand": "Untergeordnete Arbeitselemente aufklappen",
+    "collapse": "Untergeordnete Arbeitselemente zuklappen"
   },
   "issue_relation": {
     "empty_state": {
