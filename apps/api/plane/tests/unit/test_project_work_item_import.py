@@ -28,7 +28,11 @@ from plane.db.models import (
     User,
     WorkspaceMember,
 )
-from plane.utils.project_work_item_import import WorkItemImportOptions, import_work_items_into_project
+from plane.utils.project_work_item_import import (
+    WorkItemImportOptions,
+    _parse_import_date,
+    import_work_items_into_project,
+)
 
 
 def _project_with_state(workspace, user, name, identifier):
@@ -731,14 +735,23 @@ class TestWorkItemImportDates:
                     "external_key": "D1",
                     "name": "Bad date",
                     "state": "Todo",
-                    "start_date": "01.03.2026",
+                    "start_date": "31.02.2026",
                 }
             ],
         )
 
         assert result["created_work_items"] == 1
         assert Issue.objects.get(project=project, name="Bad date").start_date is None
-        assert any("01.03.2026" in w for w in result["warnings"])
+        assert any("31.02.2026" in w for w in result["warnings"])
+
+
+class TestParseImportDate:
+    def test_day_first_dates_are_accepted(self):
+        assert _parse_import_date("10.09.2026") == "2026-09-10"
+        assert _parse_import_date("1.3.2026") == "2026-03-01"
+
+    def test_impossible_day_first_date_is_unreadable(self):
+        assert _parse_import_date("31.02.2026") is None
 
 
 class TestWorkItemImportOptionsParsing:
