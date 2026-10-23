@@ -62,3 +62,21 @@ class TestCSVFormatterEncoding:
         rows = DataImporter("csv").decode(raw)
         assert rows[0]["name"] == "Środki"
         assert rows[0]["identifier"] == "ABC"
+
+
+class TestCSVFormatterDelimiterAndHeaders:
+    def test_decode_detects_tab_delimiter(self):
+        rows = CSVFormatter().decode("Name\tIdentifier\nTest\tABC\n")
+        assert rows[0]["name"] == "Test"
+        assert rows[0]["identifier"] == "ABC"
+
+    def test_decode_ignores_cells_beyond_the_header(self):
+        rows = CSVFormatter().decode("Name,Identifier\nTest,ABC,extra\n")
+        assert rows == [{"name": "Test", "identifier": "ABC"}]
+
+
+def test_parse_import_date_accepts_day_first_dates():
+    from plane.utils.project_work_item_import import _parse_import_date
+
+    assert _parse_import_date("10.09.2026") == "2026-09-10"
+    assert _parse_import_date("31.02.2026") is None
