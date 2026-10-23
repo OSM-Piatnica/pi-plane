@@ -290,7 +290,9 @@
         "description": "Chcete-li zobrazit všechny pracovní položky, odstraňte všechny použité filtry.",
         "action": "Odstranit filtry"
       }
-    }
+    },
+    "expand": "Rozbalit podřízené pracovní položky",
+    "collapse": "Sbalit podřízené pracovní položky"
   },
   "issue_relation": {
     "empty_state": {

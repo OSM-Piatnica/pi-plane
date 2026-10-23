@@ -16,6 +16,7 @@ import { Loader } from "@plane/blocks/skeleton";
 import RenderIfVisible from "@/components/core/render-if-visible-HOC";
 import { GanttLayoutListItemLoader } from "@/components/ui/loader/layouts/gantt-layout-loader";
 //hooks
+import { useGanttSubWorkItems } from "@/components/gantt-chart/contexts";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { useIssuesStore } from "@/hooks/use-issue-layout-store";
 import type { TSelectionHelper } from "@/hooks/use-multiple-select";
@@ -53,6 +54,7 @@ export const IssueGanttSidebar = observer(function IssueGanttSidebar(props: Prop
   } = props;
 
   const { getBlockById } = useTimeLineChart(GANTT_TIMELINE_TYPE.ISSUE);
+  const subWorkItems = useGanttSubWorkItems();
 
   const {
     issues: { getIssueLoader },
@@ -74,7 +76,16 @@ export const IssueGanttSidebar = observer(function IssueGanttSidebar(props: Prop
     droppedBlockId: string | undefined,
     dropAtEndOfList: boolean
   ) => {
-    handleOrderChange(draggingBlockId, droppedBlockId, dropAtEndOfList, blockIds, getBlockById, blockUpdateHandler);
+    // sub-work items below an expanded parent cannot be reordered, so only the top-level rows count as neighbours
+    const topLevelBlockIds = blockIds.filter((id) => !subWorkItems?.levelById[id]);
+    handleOrderChange(
+      draggingBlockId,
+      droppedBlockId,
+      dropAtEndOfList,
+      topLevelBlockIds,
+      getBlockById,
+      blockUpdateHandler
+    );
   };
 
   return (
@@ -100,7 +111,7 @@ export const IssueGanttSidebar = observer(function IssueGanttSidebar(props: Prop
                 <GanttDnDHOC
                   id={block.id}
                   isLastChild={index === blockIds.length - 1}
-                  isDragEnabled={enableReorder}
+                  isDragEnabled={enableReorder && !subWorkItems?.levelById[block.id]}
                   onDrop={handleOnDrop}
                 >
                   {(isDragging: boolean) => (

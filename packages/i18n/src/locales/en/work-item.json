@@ -290,7 +290,9 @@
         "description": "To see all work items, clear all applied filters.",
         "action": "Clear filters"
       }
-    }
+    },
+    "expand": "Expand sub-work items",
+    "collapse": "Collapse sub-work items"
   },
   "issue_relation": {
     "empty_state": {

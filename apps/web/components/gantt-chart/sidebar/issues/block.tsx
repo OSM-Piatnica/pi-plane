@@ -1,15 +1,19 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 // plane imports
+import { ChevronDownOutline } from "@makeplane/propel/icons";
+import { useTranslation } from "@plane/i18n";
 import type { IGanttBlock } from "@plane/types";
 import { Row } from "@plane/blocks/layout";
 import { cn } from "@plane/utils";
 // components
+import { useGanttSubWorkItems } from "@/components/gantt-chart/contexts";
 import { MultipleSelectEntityAction } from "@/components/core/multiple-select";
 import { IssueGanttSidebarBlock } from "@/components/issues/issue-layouts/gantt/blocks";
 // hooks
@@ -32,6 +36,8 @@ export const IssuesSidebarBlock = observer(function IssuesSidebarBlock(props: Pr
   // store hooks
   const { updateActiveBlockId, isBlockActive, getNumberOfDaysFromPosition } = useTimeLineChartStore();
   const { getIsIssuePeeked } = useIssueDetail();
+  const { t } = useTranslation();
+  const subWorkItems = useGanttSubWorkItems();
 
   const isBlockComplete = !!block?.start_date && !!block?.target_date;
   const duration = isBlockComplete ? getNumberOfDaysFromPosition(block?.position?.width) : undefined;
@@ -41,6 +47,11 @@ export const IssuesSidebarBlock = observer(function IssuesSidebarBlock(props: Pr
   const isIssueSelected = selectionHelpers?.getIsEntitySelected(block.id);
   const isIssueFocused = selectionHelpers?.getIsEntityActive(block.id);
   const isBlockHoveredOn = isBlockActive(block.id);
+  // sub-work items: indentation for the nested rows and a chevron for the work items that have some
+  const level = subWorkItems?.levelById[block.id] ?? 0;
+  const hasSubWorkItems = (block.data.sub_issues_count ?? 0) > 0;
+  const isExpanded = !!subWorkItems?.expandedIds.has(block.id);
+  const isLoadingSubWorkItems = !!subWorkItems?.loadingIds.has(block.id);
 
   return (
     <div
@@ -78,6 +89,32 @@ export const IssuesSidebarBlock = observer(function IssuesSidebarBlock(props: Pr
               id={block.id}
               selectionHelpers={selectionHelpers}
             />
+          </div>
+        )}
+        {subWorkItems && (
+          <div className="flex h-full shrink-0 items-center" style={{ paddingLeft: `${level * 16}px` }}>
+            {hasSubWorkItems ? (
+              <button
+                type="button"
+                className="flex size-5 items-center justify-center rounded-sm text-tertiary hover:bg-layer-1 hover:text-primary"
+                aria-expanded={isExpanded}
+                aria-label={isExpanded ? t("sub_work_item.collapse") : t("sub_work_item.expand")}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  subWorkItems.toggle(block.id);
+                }}
+              >
+                <ChevronDownOutline
+                  className={cn("size-3.5 transition-transform", {
+                    "-rotate-90": !isExpanded,
+                    "animate-pulse": isLoadingSubWorkItems,
+                  })}
+                />
+              </button>
+            ) : (
+              <span className="size-5" aria-hidden />
+            )}
           </div>
         )}
         <div className="flex h-full flex-grow items-center justify-between gap-2 truncate">

@@ -290,7 +290,9 @@
         "description": "Untuk melihat semua item kerja, hapus semua filter yang diterapkan.",
         "action": "Hapus filter"
       }
-    }
+    },
+    "expand": "Bentangkan sub-item kerja",
+    "collapse": "Ciutkan sub-item kerja"
   },
   "issue_relation": {
     "empty_state": {

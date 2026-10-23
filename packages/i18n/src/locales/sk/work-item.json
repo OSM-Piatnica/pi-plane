@@ -290,7 +290,9 @@
         "description": "Pre zobrazenie všetkých pracovných položiek vymažte všetky použité filtre.",
         "action": "Vymazať filtre"
       }
-    }
+    },
+    "expand": "Rozbaliť podriadené pracovné položky",
+    "collapse": "Zbaliť podriadené pracovné položky"
   },
   "issue_relation": {
     "empty_state": {
