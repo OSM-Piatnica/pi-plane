@@ -20,13 +20,17 @@ export function plainTextToDescriptionHtml(plain: string): string {
 /** Odwrotność `plainTextToDescriptionHtml` — do wypełnienia formularza przy edycji. */
 export function descriptionHtmlToPlain(html: string | null | undefined): string {
   if (!html) return "";
-  return html
-    .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<\/p>/gi, "\n")
-    .replace(/<[^>]+>/g, "")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
+  let text = html.replace(/<br\s*\/?>/gi, "\n").replace(/<\/p>/gi, "\n");
+  // strip tags until none are left, so that "<<b>script>" cannot reassemble into a tag
+  let previous: string;
+  do {
+    previous = text;
+    text = text.replace(/<[^>]*>/g, "");
+  } while (text !== previous);
+  // decode the entities in one pass, so that "&amp;lt;" becomes "&lt;" and not "<"
+  const entities: Record<string, string> = { "&amp;": "&", "&lt;": "<", "&gt;": ">" };
+  return text
+    .replace(/&(?:amp|lt|gt);/g, (entity) => entities[entity])
     .replace(/\n+$/g, "")
     .trim();
 }

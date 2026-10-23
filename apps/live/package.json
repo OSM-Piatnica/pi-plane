@@ -71,10 +71,10 @@
     "@types/pdf-parse": "^1.1.5",
     "@types/react": "catalog:",
     "@types/ws": "^8.18.1",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/coverage-v8": "^4.1.12",
     "pdf-parse": "^2.4.5",
     "tsdown": "catalog:",
     "typescript": "catalog:",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   }
 }
