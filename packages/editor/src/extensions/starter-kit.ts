@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import StarterKit from "@tiptap/starter-kit";
+import { StarterKit } from "@tiptap/starter-kit";
 
 type TArgs = {
   enableHistory: boolean;
@@ -47,6 +48,11 @@ export const CustomStarterKitExtension = (args: TArgs) => {
       class:
         "text-tertiary transition-all motion-reduce:transition-none motion-reduce:hover:transform-none duration-200 ease-[cubic-bezier(0.165, 0.84, 0.44, 1)]",
     },
-    ...(enableHistory ? {} : { history: false }),
+    // Tiptap 3 bundles these; the editor adds its own link and underline, and did not have the other two before
+    link: false,
+    underline: false,
+    listKeymap: false,
+    trailingNode: false,
+    ...(enableHistory ? {} : { undoRedo: false }),
   });
 };

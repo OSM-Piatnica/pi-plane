@@ -6,8 +6,7 @@
  */
 
 import type { ParentConfig } from "@tiptap/core";
-import { callOrReturn, getExtensionField, Node } from "@tiptap/core";
-import { mergeAttributes } from "@/helpers/merge-attributes";
+import { callOrReturn, getExtensionField, Node, mergeAttributes } from "@tiptap/core";
 import { TextSelection } from "@tiptap/pm/state";
 import {
   addColumnAfter,

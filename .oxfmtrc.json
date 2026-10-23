@@ -24,6 +24,7 @@
     "**/out/",
     "**/coverage/",
     "pnpm-lock.yaml",
-    "packages/i18n/src/types/keys.generated.ts"
+    "packages/i18n/src/types/keys.generated.ts",
+    "apps/api/templates/"
   ]
 }

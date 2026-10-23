@@ -1,6 +1,6 @@
 {
   "name": "live",
-  "version": "2.0.0-rc.1",
+  "version": "2.0.0",
   "private": true,
   "description": "A realtime collaborative server that powers Pi-Plane's rich text editor",
   "license": "AGPL-3.0",
@@ -33,7 +33,7 @@
     "@hocuspocus/extension-logger": "2.15.2",
     "@hocuspocus/extension-redis": "2.15.2",
     "@hocuspocus/server": "2.15.2",
-    "@hocuspocus/transformer": "2.15.2",
+    "@hocuspocus/transformer": "3.4.4",
     "@plane/decorators": "workspace:*",
     "@plane/editor": "workspace:*",
     "@plane/logger": "workspace:*",
@@ -71,10 +71,10 @@
     "@types/pdf-parse": "^1.1.5",
     "@types/react": "catalog:",
     "@types/ws": "^8.18.1",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/coverage-v8": "^4.1.12",
     "pdf-parse": "^2.4.5",
     "tsdown": "catalog:",
     "typescript": "catalog:",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   }
 }

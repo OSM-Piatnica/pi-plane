@@ -304,8 +304,8 @@ def create_user_notification(sender, instance, created, **kwargs):
 
         UserNotificationPreference.objects.create(
             user=instance,
-            property_change=True,
-            state_change=True,
+            property_change=False,
+            state_change=False,
             comment=True,
             mention=True,
             issue_completed=True,

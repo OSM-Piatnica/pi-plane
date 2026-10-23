@@ -181,7 +181,10 @@ export interface IUserProjectsRole {
   [projectId: string]: TUserPermissions;
 }
 
+export type TEmailNotificationFrequency = "instant" | "hourly" | "daily";
+
 export interface IUserEmailNotificationSettings {
+  email_frequency: TEmailNotificationFrequency;
   property_change: boolean;
   state_change: boolean;
   comment: boolean;

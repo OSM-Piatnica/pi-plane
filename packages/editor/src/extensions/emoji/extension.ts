@@ -1,12 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 // local imports
 import { gitHubEmojis, shortcodeToEmoji } from "@tiptap/extension-emoji";
-import type { MarkdownSerializerState } from "@tiptap/pm/markdown";
+import type { EmojiStorage } from "@tiptap/extension-emoji";
+import type { MarkdownSerializerState } from "prosemirror-markdown";
 import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
 import { Emoji } from "./emoji";
 import { emojiSuggestion } from "./suggestion";
@@ -16,7 +18,7 @@ export const EmojiExtension = Emoji.extend({
     const extensionOptions = this.options;
 
     return {
-      ...this.parent?.(),
+      ...(this.parent?.() as EmojiStorage),
       markdown: {
         serialize(state: MarkdownSerializerState, node: ProseMirrorNode) {
           const emojiItem = shortcodeToEmoji(node.attrs.name, extensionOptions.emojis);

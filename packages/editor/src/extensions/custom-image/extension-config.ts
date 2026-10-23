@@ -5,7 +5,7 @@
  * See the LICENSE file for details.
  */
 
-import { mergeAttributes } from "@/helpers/merge-attributes";
+import { mergeAttributes } from "@tiptap/core";
 import { Image as BaseImageExtension } from "@tiptap/extension-image";
 // constants
 import { CORE_EXTENSIONS } from "@/constants/extension";

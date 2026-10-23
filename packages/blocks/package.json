@@ -85,7 +85,7 @@
     "mobx-react": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   },
   "peerDependencies": {
     "react": "^19.0.0",
