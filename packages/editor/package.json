@@ -94,7 +94,7 @@
     "postcss": "^8.4.38",
     "tsdown": "catalog:",
     "typescript": "catalog:",
-    "vitest": "^4.0.8"
+    "vitest": "^4.1.12"
   },
   "peerDependencies": {
     "react": "^19.0.0",
