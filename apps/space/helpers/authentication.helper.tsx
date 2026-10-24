@@ -60,14 +60,12 @@ export enum EAuthenticationErrorCodes {
   EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_UP = "5102",
   // Oauth
   OAUTH_NOT_CONFIGURED = "5104",
-  GOOGLE_NOT_CONFIGURED = "5105",
   GITHUB_NOT_CONFIGURED = "5110",
   GITLAB_NOT_CONFIGURED = "5111",
   OIDC_NOT_CONFIGURED = "5116",
   OIDC_PROVIDER_ERROR = "5117",
   OIDC_IDENTITY_MISMATCH = "5118",
   OIDC_EMAIL_DOMAIN_NOT_ALLOWED = "5119",
-  GOOGLE_OAUTH_PROVIDER_ERROR = "5115",
   OAUTH_PROVIDER_UNVERIFIED_EMAIL = "5124",
   GITHUB_OAUTH_PROVIDER_ERROR = "5120",
   GITLAB_OAUTH_PROVIDER_ERROR = "5121",
@@ -259,10 +257,6 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
     title: "auth.error_alerts.titles.oauth_not_configured",
     message: contactAdmin("auth.error_alerts.titles.oauth_not_configured"),
   },
-  [EAuthenticationErrorCodes.GOOGLE_NOT_CONFIGURED]: {
-    title: "auth.error_alerts.titles.google_not_configured",
-    message: contactAdmin("auth.error_alerts.titles.google_not_configured"),
-  },
   [EAuthenticationErrorCodes.GITHUB_NOT_CONFIGURED]: {
     title: "auth.error_alerts.titles.github_not_configured",
     message: contactAdmin("auth.error_alerts.titles.github_not_configured"),
@@ -270,10 +264,6 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
   [EAuthenticationErrorCodes.GITLAB_NOT_CONFIGURED]: {
     title: "auth.error_alerts.titles.gitlab_not_configured",
     message: contactAdmin("auth.error_alerts.titles.gitlab_not_configured"),
-  },
-  [EAuthenticationErrorCodes.GOOGLE_OAUTH_PROVIDER_ERROR]: {
-    title: "auth.error_alerts.titles.google_oauth_provider_error",
-    message: tryAgain("auth.error_alerts.titles.google_oauth_provider_error"),
   },
   [EAuthenticationErrorCodes.GITHUB_OAUTH_PROVIDER_ERROR]: {
     title: "auth.error_alerts.titles.github_oauth_provider_error",
@@ -400,7 +390,6 @@ export const authErrorHandler = (
     EAuthenticationErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_IN,
     EAuthenticationErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_UP,
     EAuthenticationErrorCodes.OAUTH_NOT_CONFIGURED,
-    EAuthenticationErrorCodes.GOOGLE_NOT_CONFIGURED,
     EAuthenticationErrorCodes.GITHUB_NOT_CONFIGURED,
     EAuthenticationErrorCodes.GITLAB_NOT_CONFIGURED,
     EAuthenticationErrorCodes.OIDC_NOT_CONFIGURED,
@@ -408,7 +397,6 @@ export const authErrorHandler = (
     EAuthenticationErrorCodes.OIDC_IDENTITY_MISMATCH,
     EAuthenticationErrorCodes.OIDC_EMAIL_DOMAIN_NOT_ALLOWED,
     EAuthenticationErrorCodes.OAUTH_PROVIDER_UNVERIFIED_EMAIL,
-    EAuthenticationErrorCodes.GOOGLE_OAUTH_PROVIDER_ERROR,
     EAuthenticationErrorCodes.GITHUB_OAUTH_PROVIDER_ERROR,
     EAuthenticationErrorCodes.GITLAB_OAUTH_PROVIDER_ERROR,
     EAuthenticationErrorCodes.INVALID_PASSWORD_TOKEN,

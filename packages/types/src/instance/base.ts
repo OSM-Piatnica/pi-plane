@@ -49,7 +49,6 @@ export interface IInstance {
 export interface IInstanceConfig {
   enable_signup: boolean;
   is_workspace_creation_disabled: boolean;
-  is_google_enabled: boolean;
   is_github_enabled: boolean;
   is_gitlab_enabled: boolean;
   is_gitea_enabled: boolean;

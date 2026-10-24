@@ -205,10 +205,6 @@ const errorCodeMessages: {
     title: `OAuth not configured`,
     message: () => `OAuth not configured. Please contact your administrator.`,
   },
-  [EAuthErrorCodes.GOOGLE_NOT_CONFIGURED]: {
-    title: `Google not configured`,
-    message: () => `Google not configured. Please contact your administrator.`,
-  },
   [EAuthErrorCodes.GITHUB_NOT_CONFIGURED]: {
     title: `GitHub not configured`,
     message: () => `GitHub not configured. Please contact your administrator.`,
@@ -216,10 +212,6 @@ const errorCodeMessages: {
   [EAuthErrorCodes.GITLAB_NOT_CONFIGURED]: {
     title: `GitLab not configured`,
     message: () => `GitLab not configured. Please contact your administrator.`,
-  },
-  [EAuthErrorCodes.GOOGLE_OAUTH_PROVIDER_ERROR]: {
-    title: `Google OAuth provider error`,
-    message: () => `Google OAuth provider error. Please try again.`,
   },
   [EAuthErrorCodes.GITHUB_OAUTH_PROVIDER_ERROR]: {
     title: `GitHub OAuth provider error`,
@@ -355,7 +347,6 @@ export const authErrorHandler = (errorCode: EAuthErrorCodes, email?: string): TA
     EAuthErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_IN,
     EAuthErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_UP,
     EAuthErrorCodes.OAUTH_NOT_CONFIGURED,
-    EAuthErrorCodes.GOOGLE_NOT_CONFIGURED,
     EAuthErrorCodes.GITHUB_NOT_CONFIGURED,
     EAuthErrorCodes.GITLAB_NOT_CONFIGURED,
     EAuthErrorCodes.OIDC_NOT_CONFIGURED,
@@ -363,7 +354,6 @@ export const authErrorHandler = (errorCode: EAuthErrorCodes, email?: string): TA
     EAuthErrorCodes.OIDC_IDENTITY_MISMATCH,
     EAuthErrorCodes.OIDC_EMAIL_DOMAIN_NOT_ALLOWED,
     EAuthErrorCodes.OAUTH_PROVIDER_UNVERIFIED_EMAIL,
-    EAuthErrorCodes.GOOGLE_OAUTH_PROVIDER_ERROR,
     EAuthErrorCodes.GITHUB_OAUTH_PROVIDER_ERROR,
     EAuthErrorCodes.GITLAB_OAUTH_PROVIDER_ERROR,
     EAuthErrorCodes.INVALID_PASSWORD_TOKEN,
