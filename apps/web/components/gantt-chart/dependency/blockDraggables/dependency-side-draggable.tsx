@@ -13,7 +13,8 @@ import { setToast } from "@plane/blocks/toast";
 import type { IGanttBlock, TIssueRelationTypes } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 import { cn } from "@plane/utils";
-import { BLOCK_HEIGHT, HEADER_HEIGHT, SIDEBAR_WIDTH } from "@/components/gantt-chart/constants";
+import { BLOCK_HEIGHT, HEADER_HEIGHT } from "@/components/gantt-chart/constants";
+import { getSidebarWidth } from "@/components/gantt-chart/helpers/sidebar-width";
 import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
@@ -31,7 +32,7 @@ const getChartPointFromClient = (
 ): { x: number; y: number } => {
   const rect = container.getBoundingClientRect();
   return {
-    x: clientX - rect.left - SIDEBAR_WIDTH + container.scrollLeft,
+    x: clientX - rect.left - getSidebarWidth(container) + container.scrollLeft,
     y: clientY - rect.top - HEADER_HEIGHT + container.scrollTop,
   };
 };

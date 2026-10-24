@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -16,7 +17,8 @@ import { MultipleSelectGroupAction } from "@/components/core/multiple-select";
 // hooks
 import type { TSelectionHelper } from "@/hooks/use-multiple-select";
 // constants
-import { GANTT_SELECT_GROUP, HEADER_HEIGHT, SIDEBAR_WIDTH } from "../constants";
+import { GANTT_SELECT_GROUP, HEADER_HEIGHT, SIDEBAR_WIDTH_VAR } from "../constants";
+import { TimelineSidebarResizeHandle } from "./resize-handle";
 
 type Props = {
   blockIds: string[];
@@ -58,10 +60,11 @@ export const GanttChartSidebar = observer(function GanttChartSidebar(props: Prop
       id="gantt-sidebar"
       className="sticky left-0 z-10 h-max min-h-full flex-shrink-0 border-r-[0.5px] border-subtle-1 bg-surface-1"
       style={{
-        width: `${SIDEBAR_WIDTH}px`,
+        width: SIDEBAR_WIDTH_VAR,
       }}
       variant={ERowVariant.HUGGING}
     >
+      <TimelineSidebarResizeHandle />
       <Row
         className="group/list-header sticky top-0 z-10 box-border flex flex-shrink-0 items-end justify-between gap-2 border-b-[0.5px] border-subtle-1 bg-surface-1 pr-4 pb-2 text-13 font-medium text-tertiary"
         style={{

@@ -16,7 +16,7 @@ import type { TTimelineColorBy } from "@plane/types";
 import { GANTT_TIMELINE_TYPE } from "@plane/types";
 import { findTotalDaysInRange, generateWorkItemLink } from "@plane/utils";
 // components
-import { SIDEBAR_WIDTH } from "@/components/gantt-chart/constants";
+import { SIDEBAR_WIDTH_VAR } from "@/components/gantt-chart/constants";
 import { isBlockRolledUp } from "@/components/gantt-chart/views/helpers";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -111,7 +111,7 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: TGanttBl
             )}
             <div
               className="sticky w-auto flex-1 truncate overflow-hidden px-2.5 py-1 text-13 text-primary"
-              style={{ left: `${SIDEBAR_WIDTH}px` }}
+              style={{ left: SIDEBAR_WIDTH_VAR }}
             >
               {issueDetails?.name}
             </div>

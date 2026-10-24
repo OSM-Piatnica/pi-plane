@@ -28,7 +28,7 @@ import { GanttChartRowList } from "@/components/gantt-chart/blocks/block-row-lis
 import { GanttChartBlocksList } from "@/components/gantt-chart/blocks/blocks-list";
 import { useBulkOperationStatus } from "@/hooks/use-bulk-operation-status";
 //
-import { DEFAULT_BLOCK_WIDTH, GANTT_SELECT_GROUP, HEADER_HEIGHT } from "../constants";
+import { DEFAULT_BLOCK_WIDTH, GANTT_SELECT_GROUP, HEADER_HEIGHT, SIDEBAR_WIDTH_PROPERTY } from "../constants";
 import { getBlockChartDates, getItemPositionWidth } from "../views/helpers";
 import { TimelineDragHelper } from "./timeline-drag-helper";
 
@@ -87,7 +87,7 @@ export const GanttChartMainContent = observer(function GanttChartMainContent(pro
   // refs
   const ganttContainerRef = useRef<HTMLDivElement>(null);
   // chart hook
-  const { currentView, currentViewData } = useTimeLineChartStore();
+  const { currentView, currentViewData, sidebarWidth } = useTimeLineChartStore();
   const isBulkOperationsEnabled = useBulkOperationStatus();
 
   // Enable Auto Scroll for Ganttlist
@@ -177,6 +177,7 @@ export const GanttChartMainContent = observer(function GanttChartMainContent(pro
                   "mb-8": bottomSpacing,
                 }
               )}
+              style={{ [SIDEBAR_WIDTH_PROPERTY]: `${sidebarWidth}px` } as React.CSSProperties}
               ref={ganttContainerRef}
               onScroll={onScroll}
             >
