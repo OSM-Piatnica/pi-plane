@@ -944,5 +944,21 @@
     "all_levels": "すべての階層",
     "load_error": "サブ作業項目を読み込めませんでした",
     "too_many": "一度に展開できる作業項目が多すぎます。残りは1つずつ展開してください。"
+  },
+  "worklog": {
+    "log_time": "時間を記録",
+    "description_placeholder": "何をしましたか？（任意）",
+    "invalid_duration_title": "無効な時間",
+    "invalid_duration_message": "「2h 30m」「45m」のような形式、または分のみで、24時間まで入力してください。",
+    "log_error": "時間を記録できませんでした。もう一度お試しください。",
+    "update_error": "エントリを更新できませんでした。もう一度お試しください。",
+    "delete_error": "エントリを削除できませんでした。もう一度お試しください。",
+    "delete_title": "時間エントリを削除",
+    "delete_description": "この時間エントリを削除してもよろしいですか？この操作は元に戻せません。",
+    "edit_entry": "時間エントリを編集",
+    "delete_entry": "時間エントリを削除",
+    "logged": "<value>{duration}</value>を記録しました",
+    "updated": "記録した時間を<old>{from}</old>から<new>{to}</new>に変更しました",
+    "removed": "記録した時間<value>{duration}</value>を削除しました"
   }
 }

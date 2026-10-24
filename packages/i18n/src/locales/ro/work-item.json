@@ -944,5 +944,21 @@
     "all_levels": "Toate nivelurile",
     "load_error": "Sub-activitățile nu au putut fi încărcate",
     "too_many": "Prea multe activități de extins deodată. Extinde restul pe rând."
+  },
+  "worklog": {
+    "log_time": "Înregistrează timp",
+    "description_placeholder": "Ce s-a făcut? (opțional)",
+    "invalid_duration_title": "Durată nevalidă",
+    "invalid_duration_message": "Folosiți un format precum „2h 30m”, „45m” sau doar minute, până la 24 de ore.",
+    "log_error": "Timpul nu a putut fi înregistrat. Încercați din nou.",
+    "update_error": "Înregistrarea nu a putut fi actualizată. Încercați din nou.",
+    "delete_error": "Înregistrarea nu a putut fi ștearsă. Încercați din nou.",
+    "delete_title": "Șterge înregistrarea de timp",
+    "delete_description": "Sigur doriți să ștergeți această înregistrare de timp? Această acțiune nu poate fi anulată.",
+    "edit_entry": "Editează înregistrarea de timp",
+    "delete_entry": "Șterge înregistrarea de timp",
+    "logged": "a înregistrat <value>{duration}</value>",
+    "updated": "a schimbat timpul înregistrat din <old>{from}</old> în <new>{to}</new>",
+    "removed": "a eliminat timpul înregistrat <value>{duration}</value>"
   }
 }

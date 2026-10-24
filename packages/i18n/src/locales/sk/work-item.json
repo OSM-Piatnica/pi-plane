@@ -944,5 +944,21 @@
     "all_levels": "Všetky úrovne",
     "load_error": "Podriadené pracovné položky sa nepodarilo načítať",
     "too_many": "Príliš veľa pracovných položiek na rozbalenie naraz. Zvyšok rozbaľte jednotlivo."
+  },
+  "worklog": {
+    "log_time": "Zapísať čas",
+    "description_placeholder": "Čo sa robilo? (nepovinné)",
+    "invalid_duration_title": "Neplatné trvanie",
+    "invalid_duration_message": "Použite formát ako „2h 30m“, „45m“ alebo len minúty, najviac 24 hodín.",
+    "log_error": "Čas sa nepodarilo zapísať. Skúste to znova.",
+    "update_error": "Záznam sa nepodarilo upraviť. Skúste to znova.",
+    "delete_error": "Záznam sa nepodarilo odstrániť. Skúste to znova.",
+    "delete_title": "Odstrániť záznam času",
+    "delete_description": "Naozaj chcete odstrániť tento záznam času? Túto akciu nie je možné vrátiť späť.",
+    "edit_entry": "Upraviť záznam času",
+    "delete_entry": "Odstrániť záznam času",
+    "logged": "zapísal(a) <value>{duration}</value>",
+    "updated": "zmenil(a) zapísaný čas z <old>{from}</old> na <new>{to}</new>",
+    "removed": "odstránil(a) zapísaný čas <value>{duration}</value>"
   }
 }

@@ -944,5 +944,21 @@
     "all_levels": "Todos os níveis",
     "load_error": "Não foi possível carregar os sub-itens de trabalho",
     "too_many": "Itens de trabalho demais para expandir de uma vez. Expanda o resto um a um."
+  },
+  "worklog": {
+    "log_time": "Registrar tempo",
+    "description_placeholder": "O que foi feito? (opcional)",
+    "invalid_duration_title": "Duração inválida",
+    "invalid_duration_message": "Use um formato como \"2h 30m\", \"45m\" ou apenas minutos, até 24 horas.",
+    "log_error": "Não foi possível registrar o tempo. Tente novamente.",
+    "update_error": "Não foi possível atualizar o registro. Tente novamente.",
+    "delete_error": "Não foi possível excluir o registro. Tente novamente.",
+    "delete_title": "Excluir registro de tempo",
+    "delete_description": "Tem certeza de que deseja excluir este registro de tempo? Esta ação não pode ser desfeita.",
+    "edit_entry": "Editar registro de tempo",
+    "delete_entry": "Excluir registro de tempo",
+    "logged": "registrou <value>{duration}</value>",
+    "updated": "alterou o tempo registrado de <old>{from}</old> para <new>{to}</new>",
+    "removed": "removeu o tempo registrado <value>{duration}</value>"
   }
 }

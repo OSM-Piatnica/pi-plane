@@ -105,9 +105,11 @@ export class IssueActivityStore implements IIssueActivityStore {
           ? EActivityFilterType.STATE
           : activity.field === "assignees"
             ? EActivityFilterType.ASSIGNEE
-            : activity.field === null
-              ? EActivityFilterType.DEFAULT
-              : EActivityFilterType.ACTIVITY;
+            : activity.field === "worklog"
+              ? EActivityFilterType.WORKLOG
+              : activity.field === null
+                ? EActivityFilterType.DEFAULT
+                : EActivityFilterType.ACTIVITY;
       activityComments.push({
         id: activity.id,
         activity_type: type,

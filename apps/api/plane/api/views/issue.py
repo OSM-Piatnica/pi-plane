@@ -92,6 +92,7 @@ from plane.utils.order_queryset import (
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
 from .base import BaseAPIView
 from plane.utils.host import base_host
+from plane.utils.worklog_access import can_view_worklogs
 from plane.utils.issue_relation_constraints import TIMELINE_RELATION_TYPES
 from plane.utils.serializers import writable_data
 from plane.utils.issue_relation_mapper import get_actual_relation
@@ -1897,6 +1898,9 @@ class IssueActivityListAPIEndpoint(BaseAPIView):
         ).order_by(
             sanitize_order_by(request.GET.get("order_by", "created_at"), ACTIVITY_ORDER_BY_ALLOWLIST, "created_at")
         )
+        # the time logged on a work item is not for guests
+        if not can_view_worklogs(request.user, slug, project_id):
+            issue_activities = issue_activities.exclude(field="worklog")
 
         return self.paginate(
             request=request,
@@ -1962,6 +1966,14 @@ class IssueActivityDetailAPIEndpoint(BaseAPIView):
             )
             .first()
         )
+
+        # the time logged on a work item is not for guests
+        if (
+            issue_activity
+            and issue_activity.field == "worklog"
+            and not can_view_worklogs(request.user, slug, project_id)
+        ):
+            issue_activity = None
 
         if not issue_activity:
             return Response({"message": "Activity not found.", "code": "NOT_FOUND"}, status=status.HTTP_404_NOT_FOUND)

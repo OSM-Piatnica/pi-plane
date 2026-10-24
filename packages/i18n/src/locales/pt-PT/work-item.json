@@ -944,5 +944,21 @@
     "all_levels": "Todos os níveis",
     "load_error": "Não foi possível carregar os sub-itens de trabalho",
     "too_many": "Itens de trabalho a mais para expandir de uma só vez. Expanda o resto um a um."
+  },
+  "worklog": {
+    "log_time": "Registar tempo",
+    "description_placeholder": "O que foi feito? (opcional)",
+    "invalid_duration_title": "Duração inválida",
+    "invalid_duration_message": "Utilize um formato como \"2h 30m\", \"45m\" ou apenas minutos, até 24 horas.",
+    "log_error": "Não foi possível registar o tempo. Tente novamente.",
+    "update_error": "Não foi possível atualizar o registo. Tente novamente.",
+    "delete_error": "Não foi possível eliminar o registo. Tente novamente.",
+    "delete_title": "Eliminar registo de tempo",
+    "delete_description": "Tem a certeza de que pretende eliminar este registo de tempo? Esta ação não pode ser anulada.",
+    "edit_entry": "Editar registo de tempo",
+    "delete_entry": "Eliminar registo de tempo",
+    "logged": "registou <value>{duration}</value>",
+    "updated": "alterou o tempo registado de <old>{from}</old> para <new>{to}</new>",
+    "removed": "removeu o tempo registado <value>{duration}</value>"
   }
 }

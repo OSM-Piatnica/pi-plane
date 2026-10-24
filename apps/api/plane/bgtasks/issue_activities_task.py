@@ -1126,6 +1126,96 @@ def delete_link_activity(
     )
 
 
+def _format_worklog_duration(minutes):
+    minutes = int(minutes or 0)
+    hours, rest = divmod(minutes, 60)
+    if hours and rest:
+        return f"{hours}h {rest}m"
+    if hours:
+        return f"{hours}h"
+    return f"{rest}m"
+
+
+def create_worklog_activity(
+    requested_data,
+    current_instance,
+    issue_id,
+    project_id,
+    workspace_id,
+    actor_id,
+    issue_activities,
+    epoch,
+):
+    requested_data = json.loads(requested_data) if requested_data is not None else {}
+    issue_activities.append(
+        IssueActivity(
+            issue_id=issue_id,
+            project_id=project_id,
+            workspace_id=workspace_id,
+            comment="logged time",
+            verb="created",
+            actor_id=actor_id,
+            field="worklog",
+            new_value=_format_worklog_duration(requested_data.get("duration")),
+            epoch=epoch,
+        )
+    )
+
+
+def update_worklog_activity(
+    requested_data,
+    current_instance,
+    issue_id,
+    project_id,
+    workspace_id,
+    actor_id,
+    issue_activities,
+    epoch,
+):
+    requested_data = json.loads(requested_data) if requested_data is not None else {}
+    current_instance = json.loads(current_instance) if current_instance is not None else {}
+    issue_activities.append(
+        IssueActivity(
+            issue_id=issue_id,
+            project_id=project_id,
+            workspace_id=workspace_id,
+            comment="updated logged time",
+            verb="updated",
+            actor_id=actor_id,
+            field="worklog",
+            old_value=_format_worklog_duration(current_instance.get("duration")),
+            new_value=_format_worklog_duration(requested_data.get("duration")),
+            epoch=epoch,
+        )
+    )
+
+
+def delete_worklog_activity(
+    requested_data,
+    current_instance,
+    issue_id,
+    project_id,
+    workspace_id,
+    actor_id,
+    issue_activities,
+    epoch,
+):
+    requested_data = json.loads(requested_data) if requested_data is not None else {}
+    issue_activities.append(
+        IssueActivity(
+            issue_id=issue_id,
+            project_id=project_id,
+            workspace_id=workspace_id,
+            comment="removed logged time",
+            verb="deleted",
+            actor_id=actor_id,
+            field="worklog",
+            old_value=_format_worklog_duration(requested_data.get("duration")),
+            epoch=epoch,
+        )
+    )
+
+
 def create_attachment_activity(
     requested_data,
     current_instance,
@@ -1684,6 +1774,9 @@ def issue_activity(
             "issue_draft.activity.updated": update_draft_issue_activity,
             "issue_draft.activity.deleted": delete_draft_issue_activity,
             "intake.activity.created": create_intake_activity,
+            "worklog.activity.created": create_worklog_activity,
+            "worklog.activity.updated": update_worklog_activity,
+            "worklog.activity.deleted": delete_worklog_activity,
         }
 
         func = ACTIVITY_MAPPER.get(type)

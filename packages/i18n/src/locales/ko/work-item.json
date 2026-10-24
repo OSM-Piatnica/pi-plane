@@ -944,5 +944,21 @@
     "all_levels": "모든 수준",
     "load_error": "하위 작업 항목을 불러오지 못했습니다",
     "too_many": "한 번에 펼치기에는 작업 항목이 너무 많습니다. 나머지는 하나씩 펼치세요."
+  },
+  "worklog": {
+    "log_time": "시간 기록",
+    "description_placeholder": "무엇을 했나요? (선택 사항)",
+    "invalid_duration_title": "잘못된 소요 시간",
+    "invalid_duration_message": "\"2h 30m\", \"45m\" 같은 형식 또는 분 단위 숫자로 최대 24시간까지 입력하세요.",
+    "log_error": "시간을 기록하지 못했습니다. 다시 시도해 주세요.",
+    "update_error": "항목을 업데이트하지 못했습니다. 다시 시도해 주세요.",
+    "delete_error": "항목을 삭제하지 못했습니다. 다시 시도해 주세요.",
+    "delete_title": "시간 기록 삭제",
+    "delete_description": "이 시간 기록을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+    "edit_entry": "시간 기록 편집",
+    "delete_entry": "시간 기록 삭제",
+    "logged": "<value>{duration}</value>을(를) 기록했습니다",
+    "updated": "기록된 시간을 <old>{from}</old>에서 <new>{to}</new>(으)로 변경했습니다",
+    "removed": "기록된 시간 <value>{duration}</value>을(를) 삭제했습니다"
   }
 }

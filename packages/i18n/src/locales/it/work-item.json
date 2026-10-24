@@ -944,5 +944,21 @@
     "all_levels": "Tutti i livelli",
     "load_error": "Impossibile caricare i sotto-elementi di lavoro",
     "too_many": "Troppi elementi di lavoro da espandere in una volta. Espandi il resto uno per uno."
+  },
+  "worklog": {
+    "log_time": "Registra tempo",
+    "description_placeholder": "Cosa è stato fatto? (facoltativo)",
+    "invalid_duration_title": "Durata non valida",
+    "invalid_duration_message": "Usa un formato come «2h 30m», «45m» o solo minuti, fino a 24 ore.",
+    "log_error": "Impossibile registrare il tempo. Riprova.",
+    "update_error": "Impossibile aggiornare la voce. Riprova.",
+    "delete_error": "Impossibile eliminare la voce. Riprova.",
+    "delete_title": "Elimina registrazione di tempo",
+    "delete_description": "Sei sicuro di voler eliminare questa registrazione di tempo? L'azione non può essere annullata.",
+    "edit_entry": "Modifica registrazione di tempo",
+    "delete_entry": "Elimina registrazione di tempo",
+    "logged": "ha registrato <value>{duration}</value>",
+    "updated": "ha cambiato il tempo registrato da <old>{from}</old> a <new>{to}</new>",
+    "removed": "ha rimosso il tempo registrato <value>{duration}</value>"
   }
 }

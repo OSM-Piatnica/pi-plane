@@ -944,5 +944,21 @@
     "all_levels": "Tất cả cấp độ",
     "load_error": "Không thể tải các mục công việc con",
     "too_many": "Quá nhiều mục công việc để mở rộng cùng lúc. Hãy mở rộng phần còn lại từng mục một."
+  },
+  "worklog": {
+    "log_time": "Ghi nhận thời gian",
+    "description_placeholder": "Đã làm gì? (không bắt buộc)",
+    "invalid_duration_title": "Thời lượng không hợp lệ",
+    "invalid_duration_message": "Dùng định dạng như \"2h 30m\", \"45m\" hoặc chỉ số phút, tối đa 24 giờ.",
+    "log_error": "Không thể ghi nhận thời gian. Vui lòng thử lại.",
+    "update_error": "Không thể cập nhật mục. Vui lòng thử lại.",
+    "delete_error": "Không thể xóa mục. Vui lòng thử lại.",
+    "delete_title": "Xóa mục thời gian",
+    "delete_description": "Bạn có chắc chắn muốn xóa mục thời gian này không? Hành động này không thể hoàn tác.",
+    "edit_entry": "Chỉnh sửa mục thời gian",
+    "delete_entry": "Xóa mục thời gian",
+    "logged": "đã ghi nhận <value>{duration}</value>",
+    "updated": "đã đổi thời gian ghi nhận từ <old>{from}</old> thành <new>{to}</new>",
+    "removed": "đã xóa thời gian ghi nhận <value>{duration}</value>"
   }
 }

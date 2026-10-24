@@ -944,5 +944,21 @@
     "all_levels": "Tous les niveaux",
     "load_error": "Impossible de charger les sous-éléments de travail",
     "too_many": "Trop d'éléments de travail pour tout développer d'un coup. Développez le reste un par un."
+  },
+  "worklog": {
+    "log_time": "Saisir du temps",
+    "description_placeholder": "Qu'a-t-on fait ? (facultatif)",
+    "invalid_duration_title": "Durée non valide",
+    "invalid_duration_message": "Utilisez un format comme « 2h 30m », « 45m » ou seulement des minutes, jusqu'à 24 heures.",
+    "log_error": "Impossible de saisir le temps. Veuillez réessayer.",
+    "update_error": "Impossible de mettre à jour la saisie. Veuillez réessayer.",
+    "delete_error": "Impossible de supprimer la saisie. Veuillez réessayer.",
+    "delete_title": "Supprimer la saisie de temps",
+    "delete_description": "Voulez-vous vraiment supprimer cette saisie de temps ? Cette action est irréversible.",
+    "edit_entry": "Modifier la saisie de temps",
+    "delete_entry": "Supprimer la saisie de temps",
+    "logged": "a saisi <value>{duration}</value>",
+    "updated": "a modifié le temps saisi de <old>{from}</old> à <new>{to}</new>",
+    "removed": "a supprimé le temps saisi <value>{duration}</value>"
   }
 }

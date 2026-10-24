@@ -944,5 +944,21 @@
     "all_levels": "Tüm düzeyler",
     "load_error": "Alt iş öğeleri yüklenemedi",
     "too_many": "Aynı anda genişletilemeyecek kadar çok iş öğesi var. Kalanları tek tek genişletin."
+  },
+  "worklog": {
+    "log_time": "Süre kaydet",
+    "description_placeholder": "Ne yapıldı? (isteğe bağlı)",
+    "invalid_duration_title": "Geçersiz süre",
+    "invalid_duration_message": "\"2h 30m\", \"45m\" gibi bir biçim veya yalnızca dakika kullanın, en fazla 24 saat.",
+    "log_error": "Süre kaydedilemedi. Lütfen tekrar deneyin.",
+    "update_error": "Kayıt güncellenemedi. Lütfen tekrar deneyin.",
+    "delete_error": "Kayıt silinemedi. Lütfen tekrar deneyin.",
+    "delete_title": "Süre kaydını sil",
+    "delete_description": "Bu süre kaydını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+    "edit_entry": "Süre kaydını düzenle",
+    "delete_entry": "Süre kaydını sil",
+    "logged": "<value>{duration}</value> kaydetti",
+    "updated": "kaydedilen süreyi <old>{from}</old> değerinden <new>{to}</new> değerine değiştirdi",
+    "removed": "kaydedilen <value>{duration}</value> süreyi kaldırdı"
   }
 }

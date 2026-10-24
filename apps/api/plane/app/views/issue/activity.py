@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -20,6 +21,7 @@ from .relation import issue_in_project
 from plane.app.serializers import IssueActivitySerializer, IssueCommentSerializer
 from plane.app.permissions import ProjectEntityPermission, allow_permission, ROLE
 from plane.db.models import IssueActivity, IssueComment, CommentReaction, IntakeIssue
+from plane.utils.worklog_access import can_view_worklogs
 
 
 class IssueActivityEndpoint(BaseAPIView):
@@ -50,6 +52,9 @@ class IssueActivityEndpoint(BaseAPIView):
             .filter(**filters)
             .select_related("actor", "workspace", "issue", "project")
         ).order_by("created_at")
+        # the time logged on a work item is not for guests
+        if not can_view_worklogs(request.user, slug, project_id):
+            issue_activities = issue_activities.exclude(field="worklog")
         issue_comments = (
             IssueComment.objects.filter(issue_id=issue_id)
             .filter(

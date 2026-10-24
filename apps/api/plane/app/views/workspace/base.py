@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -353,7 +354,8 @@ class ExportWorkspaceUserActivityEndpoint(BaseAPIView):
             return Response({"error": "Date is required"}, status=status.HTTP_400_BAD_REQUEST)
 
         user_activities = IssueActivity.objects.filter(
-            ~Q(field__in=["comment", "vote", "reaction", "draft"]),
+            # time logged on work items is not part of the profile feeds (it is not for guests)
+            ~Q(field__in=["comment", "vote", "reaction", "draft", "worklog"]),
             _visible_issues_q(request.user, prefix="issue__"),
             workspace__slug=slug,
             created_at__date=request.data.get("date"),

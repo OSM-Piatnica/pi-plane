@@ -944,5 +944,21 @@
     "all_levels": "所有層級",
     "load_error": "無法載入子工作事項",
     "too_many": "工作事項過多，無法一次展開。請逐一展開其餘項目。"
+  },
+  "worklog": {
+    "log_time": "記錄時間",
+    "description_placeholder": "做了什麼？（選填）",
+    "invalid_duration_title": "時長無效",
+    "invalid_duration_message": "請使用「2h 30m」「45m」這樣的格式，或僅輸入分鐘數，最多 24 小時。",
+    "log_error": "無法記錄時間。請重試。",
+    "update_error": "無法更新該記錄。請重試。",
+    "delete_error": "無法刪除該記錄。請重試。",
+    "delete_title": "刪除工時記錄",
+    "delete_description": "確定要刪除此工時記錄嗎？此操作無法復原。",
+    "edit_entry": "編輯工時記錄",
+    "delete_entry": "刪除工時記錄",
+    "logged": "記錄了 <value>{duration}</value>",
+    "updated": "將已記錄的時間從 <old>{from}</old> 改為 <new>{to}</new>",
+    "removed": "刪除了已記錄的時間 <value>{duration}</value>"
   }
 }

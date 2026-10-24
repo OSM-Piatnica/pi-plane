@@ -944,5 +944,21 @@
     "all_levels": "所有层级",
     "load_error": "无法加载子工作项",
     "too_many": "工作项过多，无法一次展开。请逐个展开其余项目。"
+  },
+  "worklog": {
+    "log_time": "记录时间",
+    "description_placeholder": "做了什么？（可选）",
+    "invalid_duration_title": "时长无效",
+    "invalid_duration_message": "请使用“2h 30m”“45m”这样的格式，或仅输入分钟数，最多 24 小时。",
+    "log_error": "无法记录时间。请重试。",
+    "update_error": "无法更新该记录。请重试。",
+    "delete_error": "无法删除该记录。请重试。",
+    "delete_title": "删除工时记录",
+    "delete_description": "确定要删除此工时记录吗？此操作无法撤销。",
+    "edit_entry": "编辑工时记录",
+    "delete_entry": "删除工时记录",
+    "logged": "记录了 <value>{duration}</value>",
+    "updated": "将已记录的时间从 <old>{from}</old> 改为 <new>{to}</new>",
+    "removed": "删除了已记录的时间 <value>{duration}</value>"
   }
 }
