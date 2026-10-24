@@ -1,29 +1,26 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 // plane imports
 import type {
   TAllAvailableOperatorsForDisplay,
-  TFilterExpression,
+  TFilterConditionNode,
   TFilterProperty,
-  TSupportedOperators,
+  TFilterValue,
 } from "@plane/types";
+// local imports
+import { getOperatorForDisplay } from "../../operators/shared";
 
 /**
  * Helper function to get the display operator for a condition.
- * This checks for NOT group context and applies negation if needed.
- * @param operator - The original operator
- * @param expression - The filter expression
- * @param conditionId - The ID of the condition
+ * Negated conditions are shown with their negated operator variant.
+ * @param condition - The condition to get the display operator for
  * @returns The display operator (possibly negated)
  */
 export const getDisplayOperator = <P extends TFilterProperty>(
-  operator: TSupportedOperators,
-  _expression: TFilterExpression<P>,
-  _conditionId: string
-): TAllAvailableOperatorsForDisplay =>
-  // Otherwise, return the operator as-is
-  operator;
+  condition: TFilterConditionNode<P, TFilterValue>
+): TAllAvailableOperatorsForDisplay => getOperatorForDisplay(condition.operator, condition.isNegation);

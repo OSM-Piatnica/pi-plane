@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,6 +13,7 @@ import type {
   TMultiSelectFilterFieldConfig,
 } from "../field-types";
 import type { TCoreOperatorSpecificConfigs } from "../operator-configs";
+import type { TNegatedOperator } from "../operators";
 import type { TFilterOperatorHelper } from "./shared";
 
 // -------- DATE FILTER OPERATORS --------
@@ -46,7 +48,8 @@ export type TCoreSupportedDateFilterOperators<V extends TFilterValue = TFilterVa
   | TCoreSupportedRangeDateFilterOperators<V>;
 
 export type TCoreAllAvailableDateFilterOperatorsForDisplay<V extends TFilterValue = TFilterValue> =
-  TCoreSupportedDateFilterOperators<V>;
+  | TCoreSupportedDateFilterOperators<V>
+  | TNegatedOperator<TCoreSupportedDateFilterOperators<V>>;
 
 // -------- SELECT FILTER OPERATORS --------
 
@@ -80,4 +83,5 @@ export type TCoreSupportedSelectFilterOperators<V extends TFilterValue = TFilter
   | TCoreSupportedMultiSelectFilterOperators<V>;
 
 export type TCoreAllAvailableSelectFilterOperatorsForDisplay<V extends TFilterValue = TFilterValue> =
-  TCoreSupportedSelectFilterOperators<V>;
+  | TCoreSupportedSelectFilterOperators<V>
+  | TNegatedOperator<TCoreSupportedSelectFilterOperators<V>>;
