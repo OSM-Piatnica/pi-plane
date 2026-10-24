@@ -930,5 +930,14 @@
     "children_span": "Sub-itens de trabalho: {start} – {end}",
     "starts_early": "Os sub-itens de trabalho começam antes deste item de trabalho",
     "ends_late": "Os sub-itens de trabalho terminam depois deste item de trabalho"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Expandir tudo",
+    "collapse_all": "Recolher tudo",
+    "levels": "Níveis",
+    "up_to_level": "Até ao nível {level}",
+    "all_levels": "Todos os níveis",
+    "load_error": "Não foi possível carregar os sub-itens de trabalho",
+    "too_many": "Itens de trabalho a mais para expandir de uma só vez. Expanda o resto um a um."
   }
 }

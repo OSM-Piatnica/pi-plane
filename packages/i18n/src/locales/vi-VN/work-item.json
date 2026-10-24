@@ -930,5 +930,14 @@
     "children_span": "Mục công việc con: {start} – {end}",
     "starts_early": "Các mục công việc con bắt đầu trước mục công việc này",
     "ends_late": "Các mục công việc con kết thúc sau mục công việc này"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Mở rộng tất cả",
+    "collapse_all": "Thu gọn tất cả",
+    "levels": "Cấp độ",
+    "up_to_level": "Đến cấp {level}",
+    "all_levels": "Tất cả cấp độ",
+    "load_error": "Không thể tải các mục công việc con",
+    "too_many": "Quá nhiều mục công việc để mở rộng cùng lúc. Hãy mở rộng phần còn lại từng mục một."
   }
 }

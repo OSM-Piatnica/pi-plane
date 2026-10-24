@@ -930,5 +930,14 @@
     "children_span": "子工作事項：{start} – {end}",
     "starts_early": "子工作事項開始於此工作事項之前",
     "ends_late": "子工作事項結束於此工作事項之後"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "全部展開",
+    "collapse_all": "全部摺疊",
+    "levels": "層級",
+    "up_to_level": "展開到第 {level} 層",
+    "all_levels": "所有層級",
+    "load_error": "無法載入子工作事項",
+    "too_many": "工作事項過多，無法一次展開。請逐一展開其餘項目。"
   }
 }

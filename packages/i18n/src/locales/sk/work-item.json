@@ -930,5 +930,14 @@
     "children_span": "Podriadené pracovné položky: {start} – {end}",
     "starts_early": "Podriadené pracovné položky začínajú pred touto pracovnou položkou",
     "ends_late": "Podriadené pracovné položky končia po tejto pracovnej položke"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Rozbaliť všetko",
+    "collapse_all": "Zbaliť všetko",
+    "levels": "Úrovne",
+    "up_to_level": "Do úrovne {level}",
+    "all_levels": "Všetky úrovne",
+    "load_error": "Podriadené pracovné položky sa nepodarilo načítať",
+    "too_many": "Príliš veľa pracovných položiek na rozbalenie naraz. Zvyšok rozbaľte jednotlivo."
   }
 }

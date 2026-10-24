@@ -930,5 +930,14 @@
     "children_span": "Sous-éléments de travail : {start} – {end}",
     "starts_early": "Les sous-éléments de travail commencent avant cet élément de travail",
     "ends_late": "Les sous-éléments de travail se terminent après cet élément de travail"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Tout développer",
+    "collapse_all": "Tout réduire",
+    "levels": "Niveaux",
+    "up_to_level": "Jusqu'au niveau {level}",
+    "all_levels": "Tous les niveaux",
+    "load_error": "Impossible de charger les sous-éléments de travail",
+    "too_many": "Trop d'éléments de travail pour tout développer d'un coup. Développez le reste un par un."
   }
 }
