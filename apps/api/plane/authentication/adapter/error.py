@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 AUTHENTICATION_ERROR_CODES = {
@@ -45,6 +46,10 @@ AUTHENTICATION_ERROR_CODES = {
     "GITHUB_USER_NOT_IN_ORG": 5122,
     "GITLAB_NOT_CONFIGURED": 5111,
     "GITEA_NOT_CONFIGURED": 5112,
+    "OIDC_NOT_CONFIGURED": 5116,
+    "OIDC_PROVIDER_ERROR": 5117,
+    "OIDC_IDENTITY_MISMATCH": 5118,
+    "OIDC_EMAIL_DOMAIN_NOT_ALLOWED": 5119,
     "GOOGLE_OAUTH_PROVIDER_ERROR": 5115,
     "GITHUB_OAUTH_PROVIDER_ERROR": 5120,
     "GITLAB_OAUTH_PROVIDER_ERROR": 5121,

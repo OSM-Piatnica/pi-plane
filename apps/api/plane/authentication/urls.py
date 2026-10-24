@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from django.urls import path
@@ -44,6 +45,9 @@ from .views import (
     GiteaOauthInitiateEndpoint,
     GiteaCallbackSpaceEndpoint,
     GiteaOauthInitiateSpaceEndpoint,
+    OidcCallbackEndpoint,
+    OidcInitiateEndpoint,
+    OidcSpaceInitiateEndpoint,
 )
 
 urlpatterns = [
@@ -137,6 +141,10 @@ urlpatterns = [
     ),
     path("change-password/", ChangePasswordEndpoint.as_view(), name="forgot-password"),
     path("set-password/", SetUserPasswordEndpoint.as_view(), name="set-password"),
+    ## OpenID Connect single sign-on (Microsoft Entra, any OIDC provider), see provider/oidc/registry.py
+    path("oidc/<slug:provider>/", OidcInitiateEndpoint.as_view(), name="oidc-initiate"),
+    path("oidc/<slug:provider>/callback/", OidcCallbackEndpoint.as_view(), name="oidc-callback"),
+    path("spaces/oidc/<slug:provider>/", OidcSpaceInitiateEndpoint.as_view(), name="space-oidc-initiate"),
     ## Gitea Oauth
     path("gitea/", GiteaOauthInitiateEndpoint.as_view(), name="gitea-initiate"),
     path("gitea/callback/", GiteaCallbackEndpoint.as_view(), name="gitea-callback"),

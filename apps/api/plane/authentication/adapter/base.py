@@ -141,6 +141,14 @@ class Adapter:
 
         return "en"
 
+    def find_existing_user(self, email):
+        """The existing user that signs in with this email address, if any (providers may match more strictly)"""
+        return User.objects.filter(email=email).first()
+
+    def check_signup(self, email):
+        """Raise if this person may not sign up (providers may have their own policy)"""
+        return self.__check_signup(email)
+
     def check_sync_enabled(self):
         """Check if sync is enabled for the provider"""
         provider_config_map = {
@@ -334,7 +342,7 @@ class Adapter:
         email = self.sanitize_email(email)
 
         # Check if the user is present
-        user = User.objects.filter(email=email).first()
+        user = self.find_existing_user(email)
 
         # Reject explicitly-deactivated accounts (GHSA-rmmf-rj2q-3rrg).
         # The deactivation endpoint always sets last_logout_time, so using it
@@ -368,7 +376,7 @@ class Adapter:
         # If user is not present, create a new user
         if not user:
             # New user
-            self.__check_signup(email)
+            self.check_signup(email)
 
             # Initialize user
             user = User(email=email, username=uuid.uuid4().hex)
