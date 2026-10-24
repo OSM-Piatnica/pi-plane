@@ -555,6 +555,14 @@
       "filter_type_not_supported": "Tipo de filtro no compatible",
       "invalid_filter": "Filtro no válido",
       "invalid_tooltip": "Esta condición de filtro ya no es válida. Es posible que la propiedad se haya eliminado o que tu acceso a ella haya cambiado.",
+      "operators": {
+        "exact": "es",
+        "in": "es uno de",
+        "range": "entre",
+        "not_exact": "no es",
+        "not_in": "no es ninguno de",
+        "not_range": "no está entre"
+      },
       "remove_filter": "Quitar filtro",
       "save_view": "Guardar vista",
       "update_view": "Actualizar vista"

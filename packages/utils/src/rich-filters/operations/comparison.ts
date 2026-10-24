@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -32,6 +33,7 @@ const createConditionComparable = <P extends TFilterProperty>(condition: TFilter
   type: condition.type,
   property: condition.property,
   operator: condition.operator,
+  isNegation: !!condition.isNegation,
   value: Array.isArray(condition.value) ? condition.value : [condition.value],
 });
 

@@ -555,6 +555,14 @@
       "filter_type_not_supported": "Filtertyp wird nicht unterstützt",
       "invalid_filter": "Ungültiger Filter",
       "invalid_tooltip": "Diese Filterbedingung ist nicht mehr gültig. Die Eigenschaft wurde möglicherweise gelöscht oder Ihr Zugriff darauf hat sich geändert.",
+      "operators": {
+        "exact": "ist",
+        "in": "ist eines von",
+        "range": "zwischen",
+        "not_exact": "ist nicht",
+        "not_in": "ist keines von",
+        "not_range": "nicht zwischen"
+      },
       "remove_filter": "Filter entfernen",
       "save_view": "Ansicht speichern",
       "update_view": "Ansicht aktualisieren"

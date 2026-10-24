@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -17,7 +18,10 @@ import type {
   TAllAvailableOperatorsForDisplay,
 } from "@plane/types";
 import { Select } from "@plane/blocks/select";
+import { useTranslation } from "@plane/i18n";
 import { cn, getOperatorForPayload } from "@plane/utils";
+// helpers
+import { translateOperatorLabel } from "@/helpers/rich-filter-operator-label";
 // local imports
 import { FilterValueInput } from "../filter-value-input/root";
 import { COMMON_FILTER_ITEM_BORDER_CLASSNAME } from "../shared";
@@ -38,12 +42,13 @@ export const FilterItem = observer(function FilterItem<P extends TFilterProperty
   props: IFilterItemProps<P, E>
 ) {
   const { condition, filter, isDisabled = false, showTransition = true } = props;
+  const { t } = useTranslation();
   // derived values
   const filterConfig = condition?.property ? filter.configManager.getConfigByProperty(condition.property) : undefined;
   const operatorOptions =
     filterConfig?.getAllDisplayOperatorOptionsByValue(condition.value as TFilterValue)?.map((option) => ({
       value: option.value,
-      label: option.label,
+      label: translateOperatorLabel(t, option.label),
     })) ?? [];
   const selectedOperatorFieldConfig = filterConfig?.getOperatorConfig(condition.operator);
   const selectedOperatorOption = filterConfig?.getDisplayOperatorByValue(
@@ -108,7 +113,7 @@ export const FilterItem = observer(function FilterItem<P extends TFilterProperty
           {/* A flat segment of the filter chip: no chevron and no own radius, so it sits flush between
               the property and value segments like the legacy custom button did. */}
           <Select.Trigger variant="select-ghost-md" appendIcon={null} className="h-full min-h-0 rounded-none">
-            {filterConfig.getLabelForOperator(selectedOperatorOption)}
+            {translateOperatorLabel(t, filterConfig.getLabelForOperator(selectedOperatorOption))}
           </Select.Trigger>
         </Select>
       </div>

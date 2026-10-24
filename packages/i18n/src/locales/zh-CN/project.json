@@ -555,6 +555,14 @@
       "filter_type_not_supported": "不支持的筛选器类型",
       "invalid_filter": "无效的筛选器",
       "invalid_tooltip": "此筛选条件已失效。该属性可能已被删除，或您对它的访问权限已更改。",
+      "operators": {
+        "exact": "是",
+        "in": "是以下任一",
+        "range": "介于",
+        "not_exact": "不是",
+        "not_in": "不是以下任一",
+        "not_range": "不介于"
+      },
       "remove_filter": "移除筛选器",
       "save_view": "保存视图",
       "update_view": "更新视图"

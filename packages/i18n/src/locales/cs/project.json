@@ -555,6 +555,14 @@
       "filter_type_not_supported": "Typ filtru není podporován",
       "invalid_filter": "Neplatný filtr",
       "invalid_tooltip": "Tato podmínka filtru již není platná. Vlastnost mohla být smazána nebo se mohl změnit váš přístup k ní.",
+      "operators": {
+        "exact": "je",
+        "in": "je některé z",
+        "range": "mezi",
+        "not_exact": "není",
+        "not_in": "není žádné z",
+        "not_range": "není mezi"
+      },
       "remove_filter": "Odebrat filtr",
       "save_view": "Uložit pohled",
       "update_view": "Aktualizovat pohled"

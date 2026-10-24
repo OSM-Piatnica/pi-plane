@@ -555,6 +555,14 @@
       "filter_type_not_supported": "Typ filtra nie jest obsługiwany",
       "invalid_filter": "Nieprawidłowy filtr",
       "invalid_tooltip": "Ten warunek filtra jest już nieprawidłowy. Właściwość mogła zostać usunięta lub Twój dostęp do niej mógł się zmienić.",
+      "operators": {
+        "exact": "jest",
+        "in": "jest jednym z",
+        "range": "pomiędzy",
+        "not_exact": "nie jest",
+        "not_in": "nie jest żadnym z",
+        "not_range": "nie jest pomiędzy"
+      },
       "remove_filter": "Usuń filtr",
       "save_view": "Zapisz widok",
       "update_view": "Zaktualizuj widok"

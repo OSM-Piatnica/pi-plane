@@ -555,6 +555,14 @@
       "filter_type_not_supported": "지원되지 않는 필터 유형",
       "invalid_filter": "잘못된 필터",
       "invalid_tooltip": "이 필터 조건은 더 이상 유효하지 않습니다. 속성이 삭제되었거나 접근 권한이 변경되었을 수 있습니다.",
+      "operators": {
+        "exact": "다음과 같음",
+        "in": "다음 중 하나",
+        "range": "다음 사이",
+        "not_exact": "다음과 같지 않음",
+        "not_in": "다음 중 아무것도 아님",
+        "not_range": "다음 사이가 아님"
+      },
       "remove_filter": "필터 제거",
       "save_view": "보기 저장",
       "update_view": "보기 업데이트"

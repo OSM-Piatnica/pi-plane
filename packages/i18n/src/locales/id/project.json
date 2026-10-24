@@ -555,6 +555,14 @@
       "filter_type_not_supported": "Jenis filter tidak didukung",
       "invalid_filter": "Filter tidak valid",
       "invalid_tooltip": "Kondisi filter ini tidak lagi valid. Properti mungkin telah dihapus atau akses Anda ke properti tersebut telah berubah.",
+      "operators": {
+        "exact": "adalah",
+        "in": "adalah salah satu dari",
+        "range": "antara",
+        "not_exact": "bukan",
+        "not_in": "bukan salah satu dari",
+        "not_range": "tidak antara"
+      },
       "remove_filter": "Hapus filter",
       "save_view": "Simpan tampilan",
       "update_view": "Perbarui tampilan"

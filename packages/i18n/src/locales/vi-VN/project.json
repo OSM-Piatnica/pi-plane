@@ -555,6 +555,14 @@
       "filter_type_not_supported": "Loại bộ lọc không được hỗ trợ",
       "invalid_filter": "Bộ lọc không hợp lệ",
       "invalid_tooltip": "Điều kiện bộ lọc này không còn hợp lệ. Thuộc tính có thể đã bị xóa hoặc quyền truy cập của bạn đã thay đổi.",
+      "operators": {
+        "exact": "là",
+        "in": "là một trong",
+        "range": "giữa",
+        "not_exact": "không phải",
+        "not_in": "không phải một trong",
+        "not_range": "không nằm giữa"
+      },
       "remove_filter": "Xóa bộ lọc",
       "save_view": "Lưu chế độ xem",
       "update_view": "Cập nhật chế độ xem"
