@@ -20,7 +20,9 @@ import type {
   EGanttBlockType,
 } from "@plane/types";
 import { renderFormattedPayloadDate } from "@plane/utils";
+import { SIDEBAR_WIDTH, SIDEBAR_WIDTH_STORAGE_KEY } from "@/components/gantt-chart/constants";
 import { currentViewDataWithView } from "@/components/gantt-chart/data";
+import { clampSidebarWidth, getStoredSidebarWidth } from "@/components/gantt-chart/helpers/sidebar-width";
 import {
   getBlockChartDates,
   getDateFromPositionOnGantt,
@@ -29,6 +31,7 @@ import {
 } from "@/components/gantt-chart/views/helpers";
 // helpers
 // store
+import { setValueIntoLocalStorage } from "@/hooks/use-local-storage";
 import type { RootStore } from "@/store/root.store";
 
 // types
@@ -48,6 +51,8 @@ export interface IBaseTimelineStore {
   activeBlockId: string | null;
   renderView: any;
   isDragging: boolean;
+  /** Width of the sidebar next to the chart, chosen by the user. */
+  sidebarWidth: number;
   isDependencyEnabled: boolean;
   blockIds: string[] | undefined;
   //
@@ -70,6 +75,8 @@ export interface IBaseTimelineStore {
   updateBlockPosition: (id: string, deltaLeft: number, deltaWidth: number, ignoreDependencies?: boolean) => void;
   getNumberOfDaysFromPosition: (position: number | undefined) => number | undefined;
   setIsDragging: (isDragging: boolean) => void;
+  /** Sets the sidebar width; `persist` false keeps the saved width (the container only got narrower). */
+  setSidebarWidth: (width: number, persist?: boolean) => void;
   initGantt: () => void;
   setDependencyDrag: (
     drag: {
@@ -101,6 +108,7 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
   blockIds: string[] | undefined = undefined;
 
   isDragging: boolean = false;
+  sidebarWidth: number = SIDEBAR_WIDTH;
   currentView: TGanttViews = "week";
   currentViewData: ChartDataType | undefined = undefined;
   activeBlockId: string | null = null;
@@ -125,6 +133,7 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
       blocksMap: observable,
       blockIds: observable,
       isDragging: observable.ref,
+      sidebarWidth: observable.ref,
       currentView: observable.ref,
       currentViewData: observable,
       activeBlockId: observable.ref,
@@ -132,6 +141,7 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
       dependencyDrag: observable,
       // actions
       setIsDragging: action,
+      setSidebarWidth: action.bound,
       setBlockIds: action.bound,
       initGantt: action.bound,
       updateCurrentView: action.bound,
@@ -215,7 +225,13 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
       this.currentViewData = newCurrentViewData;
       this.blocksMap = {};
       this.blockIds = undefined;
+      this.sidebarWidth = getStoredSidebarWidth();
     });
+  };
+
+  setSidebarWidth = (width: number, persist = true) => {
+    this.sidebarWidth = clampSidebarWidth(width);
+    if (persist) setValueIntoLocalStorage(SIDEBAR_WIDTH_STORAGE_KEY, this.sidebarWidth);
   };
 
   /** Gets Block from Id */
