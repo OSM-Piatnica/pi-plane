@@ -98,6 +98,9 @@
       "blocked_by_removed": "移除了「被封鎖」關係",
       "generic_updated": "更新了工作事項",
       "end_punctuation": "。"
+    },
+    "access_request": {
+      "requested": "請求存取 <value/>"
     }
   },
   "notification_ui": {

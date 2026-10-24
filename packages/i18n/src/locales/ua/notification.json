@@ -98,6 +98,9 @@
       "blocked_by_removed": "видалив(ла) зв’язок «заблокована»",
       "generic_updated": "оновив(ла) робочу одиницю",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "запросив(ла) доступ до <value/>"
     }
   },
   "notification_ui": {

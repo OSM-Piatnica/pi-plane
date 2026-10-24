@@ -82,5 +82,15 @@
     "button": "プロジェクトを開く",
     "fallback": "ボタンが機能しない場合は、このリンクをコピーしてブラウザーに貼り付けてください。",
     "note": "注: このメールは <span>{email}</span> 宛てに送信されました。この招待に心当たりがない場合は、このメールを無視してください。"
+  },
+  "access_request": {
+    "subject": "{requester} さんが {project} への参加をリクエストしました",
+    "preheader": "{requester} さんが Pi-Plane のワークスペース {workspace} のプライベートプロジェクト {project} への参加をリクエストしました。",
+    "heading": "プロジェクト {project} へのアクセスリクエスト",
+    "intro": "<strong>{requester}</strong> さんが Pi-Plane のワークスペース <strong>{workspace}</strong> のプライベートプロジェクト <strong>{project}</strong> への参加をリクエストしました。リクエストは、プロジェクトのメンバー設定で承認または却下できます。",
+    "message": "メッセージ:",
+    "button": "リクエストを確認",
+    "fallback": "ボタンが機能しない場合は、このリンクをコピーしてブラウザーに貼り付けてください。",
+    "note": "注: このメールは、あなたがこのプロジェクトの管理者またはリーダーであるため、<span>{email}</span> 宛てに送信されました。"
   }
 }

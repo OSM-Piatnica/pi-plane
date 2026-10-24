@@ -90,5 +90,15 @@
     "button": "Go to project",
     "fallback": "If the button doesn’t work, copy and paste this link into your browser:",
     "note": "Note: This email was sent to <span>{email}</span>. If you weren’t expecting this invitation, you can safely ignore this email."
+  },
+  "access_request": {
+    "subject": "{requester} asked to join {project}",
+    "preheader": "{requester} asked to join the private project {project} in {workspace} on Pi-Plane.",
+    "heading": "Access request for the {project} project",
+    "intro": "<strong>{requester}</strong> asked to join the private project <strong>{project}</strong> in the workspace <strong>{workspace}</strong> on Pi-Plane. You can approve or reject the request in the project's member settings.",
+    "message": "Message:",
+    "button": "Review the request",
+    "fallback": "If the button doesn’t work, copy and paste this link into your browser:",
+    "note": "Note: This email was sent to <span>{email}</span> because you are an admin or the lead of this project."
   }
 }

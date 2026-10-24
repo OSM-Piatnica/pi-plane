@@ -90,5 +90,15 @@
     "button": "Projeye git",
     "fallback": "Düğme çalışmıyorsa bu bağlantıyı kopyalayıp tarayıcınıza yapıştırın:",
     "note": "Not: Bu e-posta <span>{email}</span> adresine gönderildi. Bu daveti beklemiyorsanız bu e-postayı yok sayabilirsiniz."
+  },
+  "access_request": {
+    "subject": "{requester}, {project} projesine katılmak istiyor",
+    "preheader": "{requester}, Pi-Plane’deki {workspace} çalışma alanında {project} özel projesine katılmak istiyor.",
+    "heading": "{project} projesi için erişim isteği",
+    "intro": "<strong>{requester}</strong>, Pi-Plane’deki <strong>{workspace}</strong> çalışma alanında <strong>{project}</strong> özel projesine katılmak istiyor. İsteği projenin üye ayarlarından onaylayabilir veya reddedebilirsiniz.",
+    "message": "Mesaj:",
+    "button": "İsteği incele",
+    "fallback": "Düğme çalışmıyorsa bu bağlantıyı kopyalayıp tarayıcınıza yapıştırın:",
+    "note": "Not: Bu e-posta <span>{email}</span> adresine gönderildi çünkü bu projenin yöneticisi veya liderisiniz."
   }
 }

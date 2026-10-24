@@ -98,6 +98,9 @@
       "blocked_by_removed": "a eliminat relația „blocată de”",
       "generic_updated": "a actualizat activitatea",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "a solicitat acces la <value/>"
     }
   },
   "notification_ui": {

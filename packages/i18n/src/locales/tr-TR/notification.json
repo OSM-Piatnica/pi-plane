@@ -98,6 +98,9 @@
       "blocked_by_removed": "“engellenen” ilişkisini kaldırdı",
       "generic_updated": "iş öğesini güncelledi",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "<value/> için erişim istedi"
     }
   },
   "notification_ui": {

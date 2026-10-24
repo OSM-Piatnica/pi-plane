@@ -58,3 +58,13 @@ describe("notification content translations", () => {
     }
   });
 });
+
+describe("access request notification", () => {
+  it("is translated everywhere, with the project name placed by the translation", () => {
+    for (const locale of readdirSync(localesDir)) {
+      const requested = JSON.parse(readFileSync(join(localesDir, locale, "notification.json"), "utf8")).notification
+        .access_request.requested;
+      expect(requested, locale).toContain("<value/>");
+    }
+  });
+});

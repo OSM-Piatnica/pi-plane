@@ -98,6 +98,9 @@
       "blocked_by_removed": "移除了“被阻止”关系",
       "generic_updated": "更新了工作项",
       "end_punctuation": "。"
+    },
+    "access_request": {
+      "requested": "请求访问 <value/>"
     }
   },
   "notification_ui": {

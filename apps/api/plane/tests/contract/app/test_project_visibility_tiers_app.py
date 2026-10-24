@@ -10,13 +10,14 @@ The three project visibility tiers (``Project.network``):
 * Public (2): listed for workspace members, who can join it at once.
 """
 
+from unittest.mock import patch
 from uuid import uuid4
 
 import pytest
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from plane.db.models import Project, ProjectAccessRequest, ProjectMember, User, WorkspaceMember
+from plane.db.models import Notification, Project, ProjectAccessRequest, ProjectMember, User, WorkspaceMember
 
 SECRET, PRIVATE, PUBLIC = 0, 1, 2
 ADMIN, MEMBER, GUEST = 20, 15, 5
@@ -203,6 +204,34 @@ class TestAccessRequests:
         assert again.status_code == status.HTTP_200_OK
         assert again.json()["id"] == first.json()["id"]
         assert ProjectAccessRequest.objects.filter(project=projects["private"], requester=outsider).count() == 1
+
+    def test_a_new_request_is_announced_to_the_approvers_once(
+        self, workspace, projects, outsider, django_capture_on_commit_callbacks
+    ):
+        with patch("plane.app.views.project.access_request.notify_project_access_request.delay") as delay:
+            with django_capture_on_commit_callbacks(execute=True):
+                first = self._request_access(outsider, workspace, projects["private"], "Please let me in")
+            with django_capture_on_commit_callbacks(execute=True):
+                self._request_access(outsider, workspace, projects["private"])
+        delay.assert_called_once_with(first.json()["id"])
+
+    def test_the_inbox_lists_the_announcement_next_to_work_item_notifications(self, workspace, projects, insider):
+        Notification.objects.create(
+            workspace=workspace,
+            project=projects["private"],
+            receiver=insider,
+            triggered_by=insider,
+            entity_name="project_access_request",
+            entity_identifier=uuid4(),
+            sender="in_app:project_access_request",
+            title="requested access",
+            data={"project": {"id": str(projects["private"].id), "name": "PRV project"}},
+        )
+        response = _client(insider).get(f"/api/workspaces/{workspace.slug}/users/notifications/")
+        assert response.status_code == status.HTTP_200_OK
+        entries = response.json()
+        assert [entry["entity_name"] for entry in entries] == ["project_access_request"]
+        assert entries[0]["data"]["project"]["name"] == "PRV project"
 
     def test_requests_are_only_for_private_projects(self, workspace, projects, outsider):
         assert self._request_access(outsider, workspace, projects["public"]).status_code == status.HTTP_400_BAD_REQUEST

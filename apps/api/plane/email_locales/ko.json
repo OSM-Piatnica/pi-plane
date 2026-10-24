@@ -82,5 +82,15 @@
     "button": "프로젝트로 이동",
     "fallback": "버튼이 작동하지 않으면 이 링크를 복사하여 브라우저에 붙여넣으세요.",
     "note": "참고: 이 이메일은 <span>{email}</span>(으)로 전송되었습니다. 이 초대를 예상하지 못했다면 이 이메일을 무시하셔도 됩니다."
+  },
+  "access_request": {
+    "subject": "{requester}님이 {project} 참여를 요청했습니다",
+    "preheader": "{requester}님이 Pi-Plane의 워크스페이스 {workspace}에 있는 비공개 프로젝트 {project}에 참여하기를 요청했습니다.",
+    "heading": "프로젝트 {project} 액세스 요청",
+    "intro": "<strong>{requester}</strong>님이 Pi-Plane의 워크스페이스 <strong>{workspace}</strong>에 있는 비공개 프로젝트 <strong>{project}</strong>에 참여하기를 요청했습니다. 프로젝트의 멤버 설정에서 요청을 승인하거나 거부할 수 있습니다.",
+    "message": "메시지:",
+    "button": "요청 검토",
+    "fallback": "버튼이 작동하지 않으면 이 링크를 복사하여 브라우저에 붙여넣으세요.",
+    "note": "참고: 이 이메일은 귀하가 이 프로젝트의 관리자 또는 리더이므로 <span>{email}</span>(으)로 전송되었습니다."
   }
 }

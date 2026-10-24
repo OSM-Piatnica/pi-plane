@@ -82,5 +82,15 @@
     "button": "Buka proyek",
     "fallback": "Jika tombol tidak berfungsi, salin tautan ini dan tempel di browser Anda:",
     "note": "Catatan: Email ini dikirim ke <span>{email}</span>. Jika Anda tidak mengharapkan undangan ini, Anda dapat mengabaikan email ini."
+  },
+  "access_request": {
+    "subject": "{requester} meminta bergabung dengan {project}",
+    "preheader": "{requester} meminta bergabung dengan proyek privat {project} di ruang kerja {workspace} di Pi-Plane.",
+    "heading": "Permintaan akses untuk proyek {project}",
+    "intro": "<strong>{requester}</strong> meminta bergabung dengan proyek privat <strong>{project}</strong> di ruang kerja <strong>{workspace}</strong> di Pi-Plane. Anda dapat menyetujui atau menolak permintaan ini di pengaturan anggota proyek.",
+    "message": "Pesan:",
+    "button": "Tinjau permintaan",
+    "fallback": "Jika tombol tidak berfungsi, salin tautan ini dan tempel di browser Anda:",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span> karena Anda adalah admin atau pemimpin proyek ini."
   }
 }

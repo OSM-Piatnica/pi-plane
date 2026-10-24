@@ -98,6 +98,9 @@
       "blocked_by_removed": "removeu a relação “bloqueado por”",
       "generic_updated": "atualizou o item de trabalho",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "solicitou acesso a <value/>"
     }
   },
   "notification_ui": {

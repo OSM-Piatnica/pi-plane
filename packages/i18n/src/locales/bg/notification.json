@@ -98,6 +98,9 @@
       "blocked_by_removed": "премахна връзката „блокиран от“",
       "generic_updated": "актуализира работния елемент",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "поиска достъп до <value/>"
     }
   },
   "notification_ui": {

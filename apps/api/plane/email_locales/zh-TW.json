@@ -82,5 +82,15 @@
     "button": "前往專案",
     "fallback": "如果按鈕無法使用，請複製此連結並貼到瀏覽器中：",
     "note": "注意：此郵件已寄送至 <span>{email}</span>。如果您沒有預期收到此邀請，可以忽略此郵件。"
+  },
+  "access_request": {
+    "subject": "{requester} 請求加入 {project}",
+    "preheader": "{requester} 請求加入 Pi-Plane 工作區 {workspace} 中的私人專案 {project}。",
+    "heading": "專案 {project} 的存取請求",
+    "intro": "<strong>{requester}</strong> 請求加入 Pi-Plane 工作區 <strong>{workspace}</strong> 中的私人專案 <strong>{project}</strong>。您可以在專案的成員設定中核准或拒絕該請求。",
+    "message": "留言：",
+    "button": "檢視請求",
+    "fallback": "如果按鈕無法使用，請複製此連結並貼到瀏覽器中：",
+    "note": "注意：此郵件已寄送至 <span>{email}</span>，因為您是此專案的管理員或負責人。"
   }
 }

@@ -98,6 +98,9 @@
       "blocked_by_removed": "「ブロックされている」関係を削除しました",
       "generic_updated": "作業項目を更新しました",
       "end_punctuation": "。"
+    },
+    "access_request": {
+      "requested": "<value/> へのアクセスをリクエストしました"
     }
   },
   "notification_ui": {

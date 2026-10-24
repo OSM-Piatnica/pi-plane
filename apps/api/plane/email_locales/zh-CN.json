@@ -82,5 +82,15 @@
     "button": "前往项目",
     "fallback": "如果按钮无法使用，请复制此链接并粘贴到浏览器中：",
     "note": "注意：此邮件已发送至 <span>{email}</span>。如果您没有预期收到此邀请，可以忽略此邮件。"
+  },
+  "access_request": {
+    "subject": "{requester} 请求加入 {project}",
+    "preheader": "{requester} 请求加入 Pi-Plane 工作区 {workspace} 中的私有项目 {project}。",
+    "heading": "项目 {project} 的访问请求",
+    "intro": "<strong>{requester}</strong> 请求加入 Pi-Plane 工作区 <strong>{workspace}</strong> 中的私有项目 <strong>{project}</strong>。您可以在项目的成员设置中批准或拒绝该请求。",
+    "message": "留言：",
+    "button": "查看请求",
+    "fallback": "如果按钮无法使用，请复制此链接并粘贴到浏览器中：",
+    "note": "注意：此邮件已发送至 <span>{email}</span>，因为您是此项目的管理员或负责人。"
   }
 }
