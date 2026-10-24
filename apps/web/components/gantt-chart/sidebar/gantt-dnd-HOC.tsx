@@ -22,11 +22,13 @@ type Props = {
   isDragEnabled: boolean;
   children: (isDragging: boolean) => React.ReactNode;
   onDrop: (draggingBlockId: string | undefined, droppedBlockId: string | undefined, dropAtEndOfList: boolean) => void;
+  /** Whether the dragged block may land above this one, or after it when it is the last row. */
+  canDropBlock?: (draggingBlockId: string, droppedBlockId: string, dropAtEndOfList: boolean) => boolean;
 };
 
 export const GanttDnDHOC = observer(function GanttDnDHOC(props: Props) {
   const { t } = useTranslation();
-  const { id, isLastChild, children, onDrop, isDragEnabled } = props;
+  const { id, isLastChild, children, onDrop, isDragEnabled, canDropBlock } = props;
   // states
   const [isDragging, setIsDragging] = useState(false);
   const [instruction, setInstruction] = useState<"DRAG_OVER" | "DRAG_BELOW" | undefined>(undefined);
@@ -37,6 +39,16 @@ export const GanttDnDHOC = observer(function GanttDnDHOC(props: Props) {
     const element = blockRef.current;
 
     if (!element) return;
+
+    const isAllowed = (sourceId: string, dropAtEndOfList: boolean) =>
+      !canDropBlock || canDropBlock(sourceId, id, dropAtEndOfList);
+    const getInstruction = (data: Record<string | symbol, unknown> | undefined, sourceId: string) => {
+      const extractedInstruction = extractInstruction(data ?? {})?.type;
+      if (!extractedInstruction) return;
+      const isBelow = extractedInstruction === "reorder-below" && isLastChild;
+      if (!isAllowed(sourceId, isBelow)) return;
+      return isBelow ? "DRAG_BELOW" : "DRAG_OVER";
+    };
 
     return combine(
       draggable({
@@ -52,7 +64,11 @@ export const GanttDnDHOC = observer(function GanttDnDHOC(props: Props) {
       }),
       dropTargetForElements({
         element,
-        canDrop: ({ source }) => source?.data?.id !== id && source?.data?.dragInstanceId === "GANTT_REORDER",
+        canDrop: ({ source }) => {
+          const sourceId = source?.data?.id as string | undefined;
+          if (!sourceId || sourceId === id || source?.data?.dragInstanceId !== "GANTT_REORDER") return false;
+          return isAllowed(sourceId, false) || (isLastChild && isAllowed(sourceId, true));
+        },
         getData: ({ input, element: targetElement }) => {
           const data = { id };
 
@@ -65,39 +81,26 @@ export const GanttDnDHOC = observer(function GanttDnDHOC(props: Props) {
             mode: isLastChild ? "last-in-group" : "standard",
           });
         },
-        onDrag: ({ self }) => {
-          const extractedInstruction = extractInstruction(self?.data)?.type;
-          // check if the highlight is to be shown above or below
-          setInstruction(
-            extractedInstruction
-              ? extractedInstruction === "reorder-below" && isLastChild
-                ? "DRAG_BELOW"
-                : "DRAG_OVER"
-              : undefined
-          );
+        onDrag: ({ self, source }) => {
+          // the highlight shows above or below, and not at all where the block may not land
+          setInstruction(getInstruction(self?.data, source?.data?.id as string));
         },
         onDragLeave: () => {
           setInstruction(undefined);
         },
         onDrop: ({ self, source }) => {
           setInstruction(undefined);
-          const extractedInstruction = extractInstruction(self?.data)?.type;
-          const currentInstruction = extractedInstruction
-            ? extractedInstruction === "reorder-below" && isLastChild
-              ? "DRAG_BELOW"
-              : "DRAG_OVER"
-            : undefined;
-          if (!currentInstruction) return;
-
           const sourceId = source?.data?.id as string | undefined;
           const destinationId = self?.data?.id as string | undefined;
+          const currentInstruction = sourceId ? getInstruction(self?.data, sourceId) : undefined;
+          if (!currentInstruction) return;
 
           onDrop(sourceId, destinationId, currentInstruction === "DRAG_BELOW");
           highlightIssueOnDrop(source?.element?.id, false, true);
         },
       })
     );
-  }, [id, isDragEnabled, isLastChild, onDrop]);
+  }, [id, isDragEnabled, isLastChild, onDrop, canDropBlock]);
 
   useOutsideClickDetector(blockRef, () => blockRef?.current?.classList?.remove(HIGHLIGHT_WITH_LINE));
 

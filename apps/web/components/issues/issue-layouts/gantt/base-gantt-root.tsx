@@ -92,12 +92,19 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
   const listedIssueIds = (issues.groupedIssueIds?.[ALL_ISSUES] as string[] | undefined) ?? NO_ISSUE_IDS;
   // When the display option "show sub-work items" is on, the sub-work items are listed in their own rows already.
   const canExpandSubWorkItems = !appliedDisplayFilters?.sub_issue;
-  // a primitive that changes whenever the sub-work items of an expanded parent change, so the rows below stay stable
-  const loadedSubWorkItemsKey = [...expandedIds]
-    .map((id) => `${id}:${(subIssuesByIssueId(id) ?? []).join(",")}`)
-    .join("|");
+  // Sub-work items are loaded newest first; when the timeline is in manual order they follow it like the rows above.
+  const isManualOrder = appliedDisplayFilters?.order_by === "sort_order";
+  const getChildIds = (id: string) => {
+    const childIds = subIssuesByIssueId(id);
+    if (!isManualOrder || !childIds) return childIds;
+    const sortOrderOf = (childId: string) => getWorkItemById(childId)?.sort_order ?? Number.MAX_SAFE_INTEGER;
+    return childIds.toSorted((a, b) => sortOrderOf(a) - sortOrderOf(b));
+  };
+  // a primitive that changes whenever the sub-work items of an expanded parent (or their order) change, so the rows
+  // below stay stable
+  const loadedSubWorkItemsKey = [...expandedIds].map((id) => `${id}:${(getChildIds(id) ?? []).join(",")}`).join("|");
   const { ids: issuesIds, levelById } = useMemo(
-    () => flattenGanttRows(listedIssueIds, canExpandSubWorkItems ? expandedIds : NO_EXPANDED_IDS, subIssuesByIssueId),
+    () => flattenGanttRows(listedIssueIds, canExpandSubWorkItems ? expandedIds : NO_EXPANDED_IDS, getChildIds),
     // oxlint-disable-next-line react-hooks/exhaustive-deps -- loadedSubWorkItemsKey stands for the sub-work item ids read inside
     [listedIssueIds, canExpandSubWorkItems, expandedIds, loadedSubWorkItemsKey]
   );
