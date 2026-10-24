@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Mostrar sub-itens de trabalho",
         "show_empty_groups": "Mostrar grupos vazios"
+      },
+      "color_by": {
+        "label": "Cor por",
+        "state": "Estado",
+        "key": "ID do item de trabalho"
       }
     },
     "layouts": {

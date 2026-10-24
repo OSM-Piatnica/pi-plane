@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Mostrar sub-elementos",
         "show_empty_groups": "Mostrar grupos vacíos"
+      },
+      "color_by": {
+        "label": "Color por",
+        "state": "Estado",
+        "key": "ID del elemento de trabajo"
       }
     },
     "layouts": {

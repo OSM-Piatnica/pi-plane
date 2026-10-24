@@ -15,6 +15,7 @@ import type {
   IIssueFilterOptions,
   TIssue,
   EIssuesStoreType,
+  TTimelineColorBy,
 } from "@plane/types";
 
 export const ALL_ISSUES = "All Issues";
@@ -213,6 +214,16 @@ export const ISSUE_ORDER_BY_OPTIONS: {
 export const ISSUE_ORDER_BY_DIRECTION_OPTIONS: { key: TIssueOrderByDirection; titleTranslationKey: string }[] = [
   { key: "asc", titleTranslationKey: "common.order_by.asc" },
   { key: "desc", titleTranslationKey: "common.order_by.desc" },
+];
+
+export const DEFAULT_TIMELINE_COLOR_BY: TTimelineColorBy = "state";
+
+export const TIMELINE_COLOR_BY_OPTIONS: {
+  key: TTimelineColorBy;
+  titleTranslationKey: string;
+}[] = [
+  { key: "state", titleTranslationKey: "issue.display.color_by.state" },
+  { key: "key", titleTranslationKey: "issue.display.color_by.key" },
 ];
 
 export const ISSUE_DISPLAY_PROPERTIES_KEYS: (keyof IIssueDisplayProperties)[] = [

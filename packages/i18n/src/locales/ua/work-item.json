@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Показати похідні робочі одиниці",
         "show_empty_groups": "Показати порожні групи"
+      },
+      "color_by": {
+        "label": "Колір за",
+        "state": "Стан",
+        "key": "ID робочої одиниці"
       }
     },
     "layouts": {
