@@ -39,7 +39,7 @@ function StoreWrapper(props: TStoreWrapper) {
   // store hooks
   const { setQuery } = useRouterParams();
   const { config } = useInstance();
-  const { getWorkspaceById } = useWorkspace();
+  const { workspaces } = useWorkspace();
   const { sidebarCollapsed, toggleSidebar } = useAppTheme();
   const { data: userProfile } = useUserProfile();
   // Track if we've initialized theme from server (one-time only)
@@ -49,8 +49,9 @@ function StoreWrapper(props: TStoreWrapper) {
   // Track previous theme to detect transitions from custom theme
   const previousThemeRef = useRef<string | undefined>(undefined);
   // The workspace the instance chose for compact `/i/PROJ-123` links, known once the workspace list has loaded
+  // (found by listing: a lookup by key does not re-run when the workspace list arrives after this renders)
   const defaultWorkspaceSlug = config?.default_workspace_id
-    ? getWorkspaceById(config.default_workspace_id)?.slug
+    ? Object.values(workspaces ?? {}).find((workspace) => workspace.id === config.default_workspace_id)?.slug
     : undefined;
   const effectiveParams = useMemo(
     () => withDefaultWorkspaceParams(params, defaultWorkspaceSlug),
