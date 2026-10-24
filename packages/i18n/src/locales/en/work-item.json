@@ -930,5 +930,14 @@
     "children_span": "Sub-work items: {start} – {end}",
     "starts_early": "Sub-work items start before this work item",
     "ends_late": "Sub-work items end after this work item"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Expand all",
+    "collapse_all": "Collapse all",
+    "levels": "Levels",
+    "up_to_level": "Up to level {level}",
+    "all_levels": "All levels",
+    "load_error": "Could not load the sub-work items",
+    "too_many": "Too many work items to unfold at once. Unfold the rest one by one."
   }
 }

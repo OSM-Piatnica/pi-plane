@@ -930,5 +930,14 @@
     "children_span": "Podrzędne elementy pracy: {start} – {end}",
     "starts_early": "Podrzędne elementy pracy zaczynają się przed tym elementem pracy",
     "ends_late": "Podrzędne elementy pracy kończą się po tym elemencie pracy"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Rozwiń wszystko",
+    "collapse_all": "Zwiń wszystko",
+    "levels": "Poziomy",
+    "up_to_level": "Do poziomu {level}",
+    "all_levels": "Wszystkie poziomy",
+    "load_error": "Nie udało się wczytać podrzędnych elementów pracy",
+    "too_many": "Zbyt wiele elementów pracy do rozwinięcia naraz. Resztę rozwiń pojedynczo."
   }
 }

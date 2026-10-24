@@ -930,5 +930,14 @@
     "children_span": "Sub-elementos de trabajo: {start} – {end}",
     "starts_early": "Los sub-elementos de trabajo empiezan antes que este elemento de trabajo",
     "ends_late": "Los sub-elementos de trabajo terminan después de este elemento de trabajo"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Expandir todo",
+    "collapse_all": "Contraer todo",
+    "levels": "Niveles",
+    "up_to_level": "Hasta el nivel {level}",
+    "all_levels": "Todos los niveles",
+    "load_error": "No se pudieron cargar los sub-elementos de trabajo",
+    "too_many": "Demasiados elementos de trabajo para expandir a la vez. Expanda el resto uno por uno."
   }
 }

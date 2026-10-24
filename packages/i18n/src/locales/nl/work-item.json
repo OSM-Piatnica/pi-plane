@@ -930,5 +930,14 @@
     "children_span": "Subwerkitems: {start} – {end}",
     "starts_early": "Subwerkitems beginnen vóór dit werkitem",
     "ends_late": "Subwerkitems eindigen na dit werkitem"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Alles uitklappen",
+    "collapse_all": "Alles invouwen",
+    "levels": "Niveaus",
+    "up_to_level": "Tot niveau {level}",
+    "all_levels": "Alle niveaus",
+    "load_error": "De subwerkitems konden niet worden geladen",
+    "too_many": "Te veel werkitems om in één keer uit te klappen. Klap de rest een voor een uit."
   }
 }
