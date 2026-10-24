@@ -944,5 +944,21 @@
     "all_levels": "Wszystkie poziomy",
     "load_error": "Nie udało się wczytać podrzędnych elementów pracy",
     "too_many": "Zbyt wiele elementów pracy do rozwinięcia naraz. Resztę rozwiń pojedynczo."
+  },
+  "worklog": {
+    "log_time": "Zapisz czas",
+    "description_placeholder": "Co zostało zrobione? (opcjonalnie)",
+    "invalid_duration_title": "Nieprawidłowy czas trwania",
+    "invalid_duration_message": "Użyj formatu takiego jak „2h 30m”, „45m” lub samych minut, maksymalnie 24 godziny.",
+    "log_error": "Nie udało się zapisać czasu. Spróbuj ponownie.",
+    "update_error": "Nie udało się zaktualizować wpisu. Spróbuj ponownie.",
+    "delete_error": "Nie udało się usunąć wpisu. Spróbuj ponownie.",
+    "delete_title": "Usuń wpis czasu",
+    "delete_description": "Czy na pewno chcesz usunąć ten wpis czasu? Tej czynności nie można cofnąć.",
+    "edit_entry": "Edytuj wpis czasu",
+    "delete_entry": "Usuń wpis czasu",
+    "logged": "zapisał(a) <value>{duration}</value>",
+    "updated": "zmienił(a) zapisany czas z <old>{from}</old> na <new>{to}</new>",
+    "removed": "usunął(-ęła) zapisany czas <value>{duration}</value>"
   }
 }

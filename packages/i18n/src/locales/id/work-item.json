@@ -944,5 +944,21 @@
     "all_levels": "Semua tingkat",
     "load_error": "Sub-item kerja tidak dapat dimuat",
     "too_many": "Terlalu banyak item kerja untuk diperluas sekaligus. Perluas sisanya satu per satu."
+  },
+  "worklog": {
+    "log_time": "Catat waktu",
+    "description_placeholder": "Apa yang dikerjakan? (opsional)",
+    "invalid_duration_title": "Durasi tidak valid",
+    "invalid_duration_message": "Gunakan format seperti \"2h 30m\", \"45m\" atau menit saja, hingga 24 jam.",
+    "log_error": "Tidak dapat mencatat waktu. Silakan coba lagi.",
+    "update_error": "Tidak dapat memperbarui entri. Silakan coba lagi.",
+    "delete_error": "Tidak dapat menghapus entri. Silakan coba lagi.",
+    "delete_title": "Hapus entri waktu",
+    "delete_description": "Yakin ingin menghapus entri waktu ini? Tindakan ini tidak dapat dibatalkan.",
+    "edit_entry": "Edit entri waktu",
+    "delete_entry": "Hapus entri waktu",
+    "logged": "mencatat <value>{duration}</value>",
+    "updated": "mengubah waktu yang dicatat dari <old>{from}</old> menjadi <new>{to}</new>",
+    "removed": "menghapus waktu yang dicatat <value>{duration}</value>"
   }
 }

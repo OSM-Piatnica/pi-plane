@@ -944,5 +944,21 @@
     "all_levels": "Alle Ebenen",
     "load_error": "Die untergeordneten Arbeitselemente konnten nicht geladen werden",
     "too_many": "Zu viele Arbeitselemente zum gleichzeitigen Aufklappen. Klappen Sie den Rest einzeln auf."
+  },
+  "worklog": {
+    "log_time": "Zeit erfassen",
+    "description_placeholder": "Was wurde gemacht? (optional)",
+    "invalid_duration_title": "Ungültige Dauer",
+    "invalid_duration_message": "Verwenden Sie ein Format wie „2h 30m“, „45m“ oder nur Minuten, höchstens 24 Stunden.",
+    "log_error": "Die Zeit konnte nicht erfasst werden. Bitte versuchen Sie es erneut.",
+    "update_error": "Der Eintrag konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
+    "delete_error": "Der Eintrag konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+    "delete_title": "Zeiteintrag löschen",
+    "delete_description": "Möchten Sie diesen Zeiteintrag wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "edit_entry": "Zeiteintrag bearbeiten",
+    "delete_entry": "Zeiteintrag löschen",
+    "logged": "hat <value>{duration}</value> erfasst",
+    "updated": "hat die erfasste Zeit von <old>{from}</old> auf <new>{to}</new> geändert",
+    "removed": "hat die erfasste Zeit <value>{duration}</value> entfernt"
   }
 }

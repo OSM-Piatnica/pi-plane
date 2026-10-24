@@ -944,5 +944,21 @@
     "all_levels": "Všechny úrovně",
     "load_error": "Podřízené pracovní položky se nepodařilo načíst",
     "too_many": "Příliš mnoho pracovních položek k rozbalení najednou. Zbytek rozbalte jednotlivě."
+  },
+  "worklog": {
+    "log_time": "Zapsat čas",
+    "description_placeholder": "Co se dělalo? (nepovinné)",
+    "invalid_duration_title": "Neplatná doba",
+    "invalid_duration_message": "Použijte formát jako „2h 30m“, „45m“ nebo jen minuty, nejvýše 24 hodin.",
+    "log_error": "Čas se nepodařilo zapsat. Zkuste to znovu.",
+    "update_error": "Záznam se nepodařilo upravit. Zkuste to znovu.",
+    "delete_error": "Záznam se nepodařilo smazat. Zkuste to znovu.",
+    "delete_title": "Smazat záznam času",
+    "delete_description": "Opravdu chcete smazat tento záznam času? Tuto akci nelze vrátit zpět.",
+    "edit_entry": "Upravit záznam času",
+    "delete_entry": "Smazat záznam času",
+    "logged": "zapsal(a) <value>{duration}</value>",
+    "updated": "změnil(a) zapsaný čas z <old>{from}</old> na <new>{to}</new>",
+    "removed": "odstranil(a) zapsaný čas <value>{duration}</value>"
   }
 }

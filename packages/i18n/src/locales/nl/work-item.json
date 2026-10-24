@@ -944,5 +944,21 @@
     "all_levels": "Alle niveaus",
     "load_error": "De subwerkitems konden niet worden geladen",
     "too_many": "Te veel werkitems om in één keer uit te klappen. Klap de rest een voor een uit."
+  },
+  "worklog": {
+    "log_time": "Tijd registreren",
+    "description_placeholder": "Wat is er gedaan? (optioneel)",
+    "invalid_duration_title": "Ongeldige duur",
+    "invalid_duration_message": "Gebruik een notatie zoals \"2h 30m\", \"45m\" of alleen minuten, maximaal 24 uur.",
+    "log_error": "De tijd kon niet worden geregistreerd. Probeer het opnieuw.",
+    "update_error": "De registratie kon niet worden bijgewerkt. Probeer het opnieuw.",
+    "delete_error": "De registratie kon niet worden verwijderd. Probeer het opnieuw.",
+    "delete_title": "Tijdregistratie verwijderen",
+    "delete_description": "Weet u zeker dat u deze tijdregistratie wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+    "edit_entry": "Tijdregistratie bewerken",
+    "delete_entry": "Tijdregistratie verwijderen",
+    "logged": "registreerde <value>{duration}</value>",
+    "updated": "wijzigde de geregistreerde tijd van <old>{from}</old> naar <new>{to}</new>",
+    "removed": "verwijderde de geregistreerde tijd <value>{duration}</value>"
   }
 }
