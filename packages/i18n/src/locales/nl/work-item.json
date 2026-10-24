@@ -923,5 +923,12 @@
       },
       "value_none": "geen"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Datums samenvatten",
+    "rolled_up_bar": "Datums samengevat uit de subwerkitems",
+    "children_span": "Subwerkitems: {start} – {end}",
+    "starts_early": "Subwerkitems beginnen vóór dit werkitem",
+    "ends_late": "Subwerkitems eindigen na dit werkitem"
   }
 }

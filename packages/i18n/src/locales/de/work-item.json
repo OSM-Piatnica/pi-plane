@@ -923,5 +923,12 @@
       },
       "value_none": "keine"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Termine zusammenfassen",
+    "rolled_up_bar": "Termine aus den untergeordneten Arbeitselementen zusammengefasst",
+    "children_span": "Untergeordnete Arbeitselemente: {start} – {end}",
+    "starts_early": "Untergeordnete Arbeitselemente beginnen vor diesem Arbeitselement",
+    "ends_late": "Untergeordnete Arbeitselemente enden nach diesem Arbeitselement"
   }
 }

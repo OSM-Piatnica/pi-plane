@@ -30,12 +30,13 @@ import { useIssues } from "@/hooks/store/use-issues";
 import { useUserPermissions } from "@/hooks/store/user";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import { useIssuesActions } from "@/hooks/use-issues-actions";
-import { useTimeLineChart } from "@/hooks/use-timeline-chart";
+import { useIssuesTimeLineChart, useTimeLineChart } from "@/hooks/use-timeline-chart";
 import { useBulkOperationStatus } from "@/hooks/use-bulk-operation-status";
 
 import { IssueLayoutHOC } from "../issue-layout-HOC";
 import { GanttQuickAddIssueButton, QuickAddIssueRoot } from "../quick-add";
 import { IssueGanttBlock } from "./blocks";
+import { GanttRollupToggle } from "./rollup-toggle";
 
 interface IBaseGanttRoot {
   viewId?: string | undefined;
@@ -63,6 +64,7 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
   const { issues, issuesFilter } = useIssues(storeType);
   const { fetchIssues, fetchNextIssues, updateIssue, quickAddIssue } = useIssuesActions(storeType);
   const { initGantt, refreshBlockPositions } = useTimeLineChart(GANTT_TIMELINE_TYPE.ISSUE);
+  const { isDateRollupEnabled, fetchDateRollups } = useIssuesTimeLineChart();
   // store hooks
   const { allowPermissions } = useUserPermissions();
   const {
@@ -99,6 +101,25 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
     // oxlint-disable-next-line react-hooks/exhaustive-deps -- loadedSubWorkItemsKey stands for the sub-work item ids read inside
     [listedIssueIds, canExpandSubWorkItems, expandedIds, loadedSubWorkItemsKey]
   );
+
+  // Parents show the dates of the work items below them. Fetched when a loaded work item moves, is re-parented, changes
+  // dates or gets a child: the key stands for what the rollups depend on.
+  const parentIds = issuesIds.filter((id) => (getWorkItemById(id)?.sub_issues_count ?? 0) > 0);
+  const rollupKey = issuesIds
+    .map((id) => {
+      const workItem = getWorkItemById(id);
+      return `${id}|${workItem?.parent_id}|${workItem?.start_date}|${workItem?.target_date}|${workItem?.sub_issues_count}`;
+    })
+    .join(";");
+  useEffect(() => {
+    if (!isDateRollupEnabled || !workspaceSlug || !projectId || parentIds.length === 0) return;
+    const timeout = setTimeout(() => {
+      fetchDateRollups(workspaceSlug.toString(), projectId.toString(), parentIds).catch(() => undefined);
+    }, 250);
+    return () => clearTimeout(timeout);
+    // parentIds comes from the same inputs as rollupKey
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
+  }, [rollupKey, isDateRollupEnabled, workspaceSlug, projectId, fetchDateRollups]);
 
   const toggleSubWorkItems = useCallback(
     (workItemId: string) => {
@@ -228,6 +249,7 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
               showAllBlocks
               enableDependency
               isEpic={isEpic}
+              headerActions={<GanttRollupToggle />}
             />
           </div>
         </GanttSubWorkItemsContext.Provider>

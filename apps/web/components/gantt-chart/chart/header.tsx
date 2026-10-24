@@ -28,12 +28,22 @@ type Props = {
   loaderTitle: string;
   toggleFullScreenMode: () => void;
   showToday: boolean;
+  /** Extra controls of the chart, shown before the view buttons. */
+  actions?: React.ReactNode;
 };
 
 export const GanttChartHeader = observer(function GanttChartHeader(props: Props) {
   const { t } = useTranslation();
-  const { blockIds, fullScreenMode, handleChartView, handleToday, loaderTitle, toggleFullScreenMode, showToday } =
-    props;
+  const {
+    blockIds,
+    fullScreenMode,
+    handleChartView,
+    handleToday,
+    loaderTitle,
+    toggleFullScreenMode,
+    showToday,
+    actions,
+  } = props;
   // chart hook
   const { currentView } = useTimeLineChartStore();
 
@@ -47,6 +57,8 @@ export const GanttChartHeader = observer(function GanttChartHeader(props: Props)
           {blockIds ? `${blockIds.length} ${loaderTitle}` : t("common.loading")}
         </div>
       </div>
+
+      {actions}
 
       <div className="flex flex-wrap items-center gap-2">
         {VIEWS_LIST.map((chartView: any) => (

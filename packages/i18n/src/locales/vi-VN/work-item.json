@@ -923,5 +923,12 @@
       },
       "value_none": "không có"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Tổng hợp ngày",
+    "rolled_up_bar": "Ngày được tổng hợp từ các mục công việc con",
+    "children_span": "Mục công việc con: {start} – {end}",
+    "starts_early": "Các mục công việc con bắt đầu trước mục công việc này",
+    "ends_late": "Các mục công việc con kết thúc sau mục công việc này"
   }
 }
