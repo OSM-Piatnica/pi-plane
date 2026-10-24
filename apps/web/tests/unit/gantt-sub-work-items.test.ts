@@ -71,7 +71,7 @@ describe("flattenGanttRows with an expansion rule", () => {
     const loaded: Record<string, string[]> = { a: ["a1"] };
     const rows = flattenGanttRows(["a", "b"], rule(null), (id) => loaded[id]);
     expect(rows.ids).toEqual(["a", "a1", "b"]);
-    expect(rows.expandedIds.values().toArray().toSorted()).toEqual(["a", "a1", "b"]);
+    expect(Array.from(rows.expandedIds).toSorted()).toEqual(["a", "a1", "b"]);
     // a1 and b are unfolded but nothing is known about their sub-work items
     expect(rows.unloadedExpandedIds).toEqual(["a1", "b"]);
   });
