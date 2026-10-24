@@ -6,7 +6,7 @@
  * See the LICENSE file for details.
  */
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
@@ -22,7 +22,14 @@ import { GanttChartRoot } from "@/components/gantt-chart/root";
 import { IssueGanttSidebar } from "@/components/gantt-chart/sidebar/issues/sidebar";
 // helpers
 import { wouldUpdatesViolateDependencies } from "@/helpers/gantt-dependency-helpers";
-import { flattenGanttRows } from "@/helpers/gantt-sub-work-items.helper";
+import type { TGanttExpansion } from "@/helpers/gantt-sub-work-items.helper";
+import {
+  DEFAULT_GANTT_EXPANSION,
+  flattenGanttRows,
+  isGanttRowExpanded,
+  showGanttLevels,
+  toggleGanttRow,
+} from "@/helpers/gantt-sub-work-items.helper";
 import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -30,12 +37,14 @@ import { useIssues } from "@/hooks/store/use-issues";
 import { useUserPermissions } from "@/hooks/store/user";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import { useIssuesActions } from "@/hooks/use-issues-actions";
+import useLocalStorage from "@/hooks/use-local-storage";
 import { useIssuesTimeLineChart, useTimeLineChart } from "@/hooks/use-timeline-chart";
 import { useBulkOperationStatus } from "@/hooks/use-bulk-operation-status";
 
 import { IssueLayoutHOC } from "../issue-layout-HOC";
 import { GanttQuickAddIssueButton, QuickAddIssueRoot } from "../quick-add";
 import { IssueGanttBlock } from "./blocks";
+import { GanttHierarchyControls } from "./hierarchy-controls";
 import { GanttRollupToggle } from "./rollup-toggle";
 
 interface IBaseGanttRoot {
@@ -45,7 +54,10 @@ interface IBaseGanttRoot {
 }
 
 const NO_ISSUE_IDS: string[] = [];
-const NO_EXPANDED_IDS: ReadonlySet<string> = new Set();
+const NEVER_EXPANDED = () => false;
+// Unfolding many levels at once loads the sub-work items of every parent, a few requests at a time and not beyond a cap
+const MAX_PARALLEL_FETCHES = 4;
+const MAX_FETCHES_PER_CHOICE = 200;
 
 export type GanttStoreType =
   | EIssuesStoreType.PROJECT
@@ -71,9 +83,17 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
     issue: { getIssueById: getWorkItemById },
     subIssues: { subIssuesByIssueId, fetchSubIssues },
   } = useIssueDetail();
-  // sub-work items shown below their parent: ids of the expanded parents and of those still loading
-  const [expandedIds, setExpandedIds] = useState<ReadonlySet<string>>(() => new Set());
+  // how far the sub-work items below their parent are unfolded, per person and per view
+  const { storedValue: storedExpansion, setValue: setExpansion } = useLocalStorage<TGanttExpansion>(
+    `timeline_hierarchy_${workspaceSlug}_${projectId}_${viewId ?? storeType}`,
+    DEFAULT_GANTT_EXPANSION
+  );
+  const expansion = storedExpansion ?? DEFAULT_GANTT_EXPANSION;
+  // the parents whose sub-work items are being loaded; the ones that failed are not tried again until the next choice
   const [loadingIds, setLoadingIds] = useState<ReadonlySet<string>>(() => new Set());
+  const failedIdsRef = useRef<Set<string>>(new Set());
+  const fetchCountRef = useRef(0);
+  const reportedLimitRef = useRef(false);
 
   const appliedDisplayFilters = issuesFilter.issueFilters?.displayFilters;
   const isBulkOperationsEnabled = useBulkOperationStatus();
@@ -100,14 +120,19 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
     const sortOrderOf = (childId: string) => getWorkItemById(childId)?.sort_order ?? Number.MAX_SAFE_INTEGER;
     return childIds.toSorted((a, b) => sortOrderOf(a) - sortOrderOf(b));
   };
-  // a primitive that changes whenever the sub-work items of an expanded parent (or their order) change, so the rows
-  // below stay stable
-  const loadedSubWorkItemsKey = [...expandedIds].map((id) => `${id}:${(getChildIds(id) ?? []).join(",")}`).join("|");
-  const { ids: issuesIds, levelById } = useMemo(
-    () => flattenGanttRows(listedIssueIds, canExpandSubWorkItems ? expandedIds : NO_EXPANDED_IDS, getChildIds),
-    // oxlint-disable-next-line react-hooks/exhaustive-deps -- loadedSubWorkItemsKey stands for the sub-work item ids read inside
-    [listedIssueIds, canExpandSubWorkItems, expandedIds, loadedSubWorkItemsKey]
+  const rows = flattenGanttRows(
+    listedIssueIds,
+    canExpandSubWorkItems ? (id, level) => isGanttRowExpanded(expansion, id, level) : NEVER_EXPANDED,
+    getChildIds
   );
+  // the rows as a primitive, so that what depends on them only changes when a row does
+  const rowsKey = rows.ids.map((id) => `${id}:${rows.levelById[id]}`).join(",");
+  const { issuesIds, levelById } = useMemo(
+    () => ({ issuesIds: rows.ids, levelById: rows.levelById }),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- rowsKey stands for the ids and levels
+    [rowsKey]
+  );
+  const expandedIds = rows.expandedIds;
 
   // Parents show the dates of the work items below them. Fetched when a loaded work item moves, is re-parented, changes
   // dates or gets a child: the key stands for what the rollups depend on.
@@ -128,25 +153,54 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
     // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [rollupKey, isDateRollupEnabled, workspaceSlug, projectId, fetchDateRollups]);
 
-  const toggleSubWorkItems = useCallback(
-    (workItemId: string) => {
-      if (expandedIds.has(workItemId)) {
-        setExpandedIds((current) => new Set([...current].filter((id) => id !== workItemId)));
-        return;
+  // a new choice of levels or rows starts afresh: failed parents may be tried again
+  useEffect(() => {
+    failedIdsRef.current = new Set();
+    fetchCountRef.current = 0;
+    reportedLimitRef.current = false;
+  }, [expansion]);
+
+  // load the sub-work items of the parents that are unfolded but not loaded yet
+  const pendingIds = rows.unloadedExpandedIds.filter(
+    (id) => (getWorkItemById(id)?.sub_issues_count ?? 0) > 0 && !loadingIds.has(id) && !failedIdsRef.current.has(id)
+  );
+  const pendingKey = pendingIds.join(",");
+  useEffect(() => {
+    if (!workspaceSlug || pendingIds.length === 0) return;
+    let freeSlots = MAX_PARALLEL_FETCHES - loadingIds.size;
+    for (const workItemId of pendingIds) {
+      if (freeSlots <= 0) break;
+      if (fetchCountRef.current >= MAX_FETCHES_PER_CHOICE) {
+        if (!reportedLimitRef.current) {
+          reportedLimitRef.current = true;
+          setToast({ type: "info", title: t("info"), message: t("timeline_hierarchy.too_many") });
+        }
+        break;
       }
-      setExpandedIds((current) => new Set(current).add(workItemId));
       const workItem = getWorkItemById(workItemId);
-      if (!workspaceSlug || !workItem || subIssuesByIssueId(workItemId) !== undefined) return;
+      if (!workItem) continue;
+      freeSlots -= 1;
+      fetchCountRef.current += 1;
       setLoadingIds((current) => new Set(current).add(workItemId));
       fetchSubIssues(workspaceSlug.toString(), workItem.project_id ?? projectId?.toString() ?? "", workItemId)
         .catch(() => {
-          // leave the row collapsed so the chevron can be used again
-          setExpandedIds((current) => new Set([...current].filter((id) => id !== workItemId)));
-          setToast({ type: "error", title: t("toast.error"), message: t("something_went_wrong_please_try_again") });
+          // leave the row folded so that its chevron can be used again
+          failedIdsRef.current.add(workItemId);
+          setExpansion(toggleGanttRow(expansion, workItemId, true));
+          setToast({ type: "error", title: t("toast.error"), message: t("timeline_hierarchy.load_error") });
         })
         .finally(() => setLoadingIds((current) => new Set([...current].filter((id) => id !== workItemId))));
+    }
+    // pendingKey stands for pendingIds; loadingIds frees the slots
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
+  }, [pendingKey, loadingIds, workspaceSlug]);
+
+  const toggleSubWorkItems = useCallback(
+    (workItemId: string) => {
+      failedIdsRef.current.delete(workItemId);
+      setExpansion(toggleGanttRow(expansion, workItemId, expandedIds.has(workItemId)));
     },
-    [expandedIds, fetchSubIssues, getWorkItemById, projectId, subIssuesByIssueId, t, workspaceSlug]
+    [expansion, expandedIds, setExpansion]
   );
 
   const subWorkItems = useMemo(
@@ -241,7 +295,9 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
               loaderTitle={isEpic ? t("epic.label", { count: 2 }) : t("issue.label", { count: 2 })}
               blockIds={issuesIds}
               blockUpdateHandler={updateIssueBlockStructure}
-              blockToRender={(data: TIssue) => <IssueGanttBlock issueId={data.id} isEpic={isEpic} />}
+              blockToRender={(data: TIssue) => (
+                <IssueGanttBlock issueId={data.id} isEpic={isEpic} colorBy={appliedDisplayFilters?.color_by} />
+              )}
               sidebarToRender={(sidebarProps) => <IssueGanttSidebar {...sidebarProps} showAllBlocks isEpic={isEpic} />}
               enableBlockLeftResize={isAllowed}
               enableBlockRightResize={isAllowed}
@@ -256,7 +312,17 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
               showAllBlocks
               enableDependency
               isEpic={isEpic}
-              headerActions={<GanttRollupToggle />}
+              headerActions={
+                <>
+                  {canExpandSubWorkItems && (
+                    <GanttHierarchyControls
+                      depth={expansion.depth}
+                      onShowLevels={(depth) => setExpansion(showGanttLevels(depth))}
+                    />
+                  )}
+                  <GanttRollupToggle />
+                </>
+              }
             />
           </div>
         </GanttSubWorkItemsContext.Provider>

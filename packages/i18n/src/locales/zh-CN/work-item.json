@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "显示子工作项",
         "show_empty_groups": "显示空组"
+      },
+      "color_by": {
+        "label": "颜色依据",
+        "state": "状态",
+        "key": "工作项 ID"
       }
     },
     "layouts": {
@@ -930,5 +935,14 @@
     "children_span": "子工作项：{start} – {end}",
     "starts_early": "子工作项开始于此工作项之前",
     "ends_late": "子工作项结束于此工作项之后"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "全部展开",
+    "collapse_all": "全部折叠",
+    "levels": "层级",
+    "up_to_level": "展开到第 {level} 级",
+    "all_levels": "所有层级",
+    "load_error": "无法加载子工作项",
+    "too_many": "工作项过多，无法一次展开。请逐个展开其余项目。"
   }
 }

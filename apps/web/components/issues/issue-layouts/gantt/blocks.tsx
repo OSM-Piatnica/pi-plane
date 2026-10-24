@@ -12,10 +12,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "@makeplane/propel/compo
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { ControlLink } from "@plane/blocks/layout";
 import { useTranslation } from "@plane/i18n";
+import type { TTimelineColorBy } from "@plane/types";
 import { GANTT_TIMELINE_TYPE } from "@plane/types";
 import { findTotalDaysInRange, generateWorkItemLink } from "@plane/utils";
 // components
-import { SIDEBAR_WIDTH } from "@/components/gantt-chart/constants";
+import { SIDEBAR_WIDTH_VAR } from "@/components/gantt-chart/constants";
 import { isBlockRolledUp } from "@/components/gantt-chart/views/helpers";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -25,12 +26,14 @@ import { useProjectState } from "@/hooks/store/use-project-state";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import useIssuePeekOverviewRedirection from "@/hooks/use-issue-peek-overview-redirection";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useChartPalette } from "@/hooks/use-chart-palette";
 import { useTimeLineChart } from "@/hooks/use-timeline-chart";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 import { IssueStats } from "@/components/issues/issue-layouts/issue-stats";
 // local imports
 import { WorkItemPreviewCard } from "../../preview-card";
 import { getBlockViewDetails } from "../utils";
+import { getBarColor } from "./bar-color";
 import type { GanttStoreType } from "./base-gantt-root";
 
 type Props = {
@@ -38,8 +41,12 @@ type Props = {
   isEpic?: boolean;
 };
 
-export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
-  const { issueId, isEpic } = props;
+type TGanttBlockProps = Props & {
+  colorBy?: TTimelineColorBy;
+};
+
+export const IssueGanttBlock = observer(function IssueGanttBlock(props: TGanttBlockProps) {
+  const { issueId, isEpic, colorBy } = props;
   // router
   const { workspaceSlug: routerWorkspaceSlug } = useParams();
   const workspaceSlug = routerWorkspaceSlug?.toString();
@@ -49,7 +56,9 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
     issue: { getIssueById },
   } = useIssueDetail();
   // hooks
+  const { getProjectIdentifierById } = useProject();
   const { isMobile } = usePlatformOS();
+  const chartPalette = useChartPalette();
   const { handleRedirection } = useIssuePeekOverviewRedirection(isEpic);
   const { getBlockById } = useTimeLineChart(GANTT_TIMELINE_TYPE.ISSUE);
   const { t } = useTranslation();
@@ -60,7 +69,15 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
   const stateDetails =
     issueDetails && getProjectStates(issueDetails?.project_id)?.find((state) => state?.id == issueDetails?.state_id);
 
-  const { blockStyle } = getBlockViewDetails(issueDetails, stateDetails?.color ?? "");
+  const barColor = getBarColor({
+    colorBy,
+    stateColor: stateDetails?.color,
+    projectIdentifier: getProjectIdentifierById(issueDetails?.project_id),
+    sequenceId: issueDetails?.sequence_id,
+    palette: chartPalette,
+  });
+
+  const { blockStyle } = getBlockViewDetails(issueDetails, barColor ?? "");
 
   const handleIssuePeekOverview = () => handleRedirection(workspaceSlug, issueDetails, isMobile);
 
@@ -94,7 +111,7 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
             )}
             <div
               className="sticky w-auto flex-1 truncate overflow-hidden px-2.5 py-1 text-13 text-primary"
-              style={{ left: `${SIDEBAR_WIDTH}px` }}
+              style={{ left: SIDEBAR_WIDTH_VAR }}
             >
               {issueDetails?.name}
             </div>

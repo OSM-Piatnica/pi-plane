@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Untergeordnete Elemente anzeigen",
         "show_empty_groups": "Leere Gruppen anzeigen"
+      },
+      "color_by": {
+        "label": "Farbe nach",
+        "state": "Status",
+        "key": "Arbeitselement-ID"
       }
     },
     "layouts": {
@@ -930,5 +935,14 @@
     "children_span": "Untergeordnete Arbeitselemente: {start} – {end}",
     "starts_early": "Untergeordnete Arbeitselemente beginnen vor diesem Arbeitselement",
     "ends_late": "Untergeordnete Arbeitselemente enden nach diesem Arbeitselement"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Alle aufklappen",
+    "collapse_all": "Alle zuklappen",
+    "levels": "Ebenen",
+    "up_to_level": "Bis Ebene {level}",
+    "all_levels": "Alle Ebenen",
+    "load_error": "Die untergeordneten Arbeitselemente konnten nicht geladen werden",
+    "too_many": "Zu viele Arbeitselemente zum gleichzeitigen Aufklappen. Klappen Sie den Rest einzeln auf."
   }
 }

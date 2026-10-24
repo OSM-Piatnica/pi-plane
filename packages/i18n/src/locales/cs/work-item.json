@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Zobrazit podřízené položky",
         "show_empty_groups": "Zobrazit prázdné skupiny"
+      },
+      "color_by": {
+        "label": "Barva podle",
+        "state": "Stav",
+        "key": "ID pracovní položky"
       }
     },
     "layouts": {
@@ -930,5 +935,14 @@
     "children_span": "Podřízené pracovní položky: {start} – {end}",
     "starts_early": "Podřízené pracovní položky začínají před touto pracovní položkou",
     "ends_late": "Podřízené pracovní položky končí po této pracovní položce"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Rozbalit vše",
+    "collapse_all": "Sbalit vše",
+    "levels": "Úrovně",
+    "up_to_level": "Do úrovně {level}",
+    "all_levels": "Všechny úrovně",
+    "load_error": "Podřízené pracovní položky se nepodařilo načíst",
+    "too_many": "Příliš mnoho pracovních položek k rozbalení najednou. Zbytek rozbalte jednotlivě."
   }
 }
