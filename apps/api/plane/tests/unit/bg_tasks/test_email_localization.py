@@ -4,6 +4,7 @@
 
 """The notification emails are written in the language of their recipient."""
 
+import re
 from unittest.mock import patch
 from uuid import uuid4
 
@@ -16,6 +17,11 @@ from plane.tests.factories import UserFactory
 from plane.utils.email_i18n import user_language
 
 CONFIG = ("localhost", "", "", "25", "0", "0", "noreply@example.com")
+
+
+def _visible_text(html):
+    """The mail without its HTML comments, which keep the developers' notes (in English)."""
+    return re.sub(r"<!--.*?-->", "", html, flags=re.S)
 
 
 def _user(language):
@@ -90,7 +96,7 @@ class TestDigestLanguage:
         html = mail.alternatives[0][0]
         assert "Update digest" in html
         assert "comments: 1" in html
-        assert "aktualizacj" not in html
+        assert "aktualizacj" not in _visible_text(html)
 
     def test_japanese_receiver_gets_the_full_stop_and_word_order_of_japanese(self, settings, mailoutbox):
         mail = self._send(_user("ja"), settings, mailoutbox)
@@ -137,7 +143,7 @@ class TestTemplates:
         assert "Usunięto 3 linki" in html
         assert "+2 więcej" in html
         assert "Zobacz zadanie" in html
-        assert "Updates were made" not in html and "Assignee" not in html
+        assert "Updates were made" not in _visible_text(html) and "Assignee" not in _visible_text(html)
 
     def test_issue_updates_in_english_names_the_others(self):
         html = render_to_string(

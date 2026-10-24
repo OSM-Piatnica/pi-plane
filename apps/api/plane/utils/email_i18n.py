@@ -51,7 +51,7 @@ def plural_category(language, count):
     if language in _ONE_FEW_OTHER:
         if count == 1:
             return "one"
-        return "few" if count == 0 or 2 <= count % 100 <= 19 else "other"
+        return "few" if count == 0 or 1 <= count % 100 <= 19 else "other"
     if language in _ZERO_AND_ONE:
         return "one" if count in (0, 1) else "other"
     return "one" if count == 1 else "other"

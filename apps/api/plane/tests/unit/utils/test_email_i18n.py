@@ -128,7 +128,7 @@ class TestLocaleFiles:
                     language,
                     key,
                 )
-                form.format(**{name: "x" for name in PLACEHOLDER.findall(form)}, count=1)
+                form.format(**{name: "x" for name in PLACEHOLDER.findall(form)})
 
 
 @pytest.mark.unit
