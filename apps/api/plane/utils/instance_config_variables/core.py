@@ -34,6 +34,13 @@ workspace_management_config_variables = [
         "category": "WORKSPACE_MANAGEMENT",
         "is_encrypted": False,
     },
+    {
+        # Workspace UUID that gets compact `/i/PROJ-123` work item links; empty turns them off.
+        "key": "INSTANCE_DEFAULT_WORKSPACE_ID",
+        "value": os.environ.get("INSTANCE_DEFAULT_WORKSPACE_ID", ""),
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
 ]
 
 github_config_variables = [

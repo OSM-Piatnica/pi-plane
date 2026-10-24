@@ -5,6 +5,7 @@
 
 # Python imports
 import os
+import uuid
 
 # Django imports
 from django.conf import settings
@@ -62,6 +63,7 @@ class InstanceEndpoint(BaseAPIView):
             SLACK_CLIENT_ID,
             UNSPLASH_ACCESS_KEY,
             LLM_API_KEY,
+            INSTANCE_DEFAULT_WORKSPACE_ID,
         ) = get_configuration_value(
             [
                 {
@@ -109,6 +111,10 @@ class InstanceEndpoint(BaseAPIView):
                     "key": "LLM_API_KEY",
                     "default": os.environ.get("LLM_API_KEY", ""),
                 },
+                {
+                    "key": "INSTANCE_DEFAULT_WORKSPACE_ID",
+                    "default": os.environ.get("INSTANCE_DEFAULT_WORKSPACE_ID", ""),
+                },
             ]
         )
 
@@ -122,6 +128,17 @@ class InstanceEndpoint(BaseAPIView):
         data["oidc_providers"] = enabled_oidc_providers()
         data["is_magic_login_enabled"] = ENABLE_MAGIC_LINK_LOGIN == "1"
         data["is_email_password_enabled"] = ENABLE_EMAIL_PASSWORD == "1"
+
+        # The UUID is safe to expose and survives workspace slug changes. A stale value is treated as
+        # disabled so the public endpoint never advertises a route that cannot be resolved.
+        default_workspace_id = str(INSTANCE_DEFAULT_WORKSPACE_ID or "").strip()
+        try:
+            default_workspace_exists = (
+                bool(default_workspace_id) and Workspace.objects.filter(id=uuid.UUID(default_workspace_id)).exists()
+            )
+        except (ValueError, TypeError):
+            default_workspace_exists = False
+        data["default_workspace_id"] = default_workspace_id if default_workspace_exists else ""
 
         # Github app name
         data["github_app_name"] = str(GITHUB_APP_NAME)

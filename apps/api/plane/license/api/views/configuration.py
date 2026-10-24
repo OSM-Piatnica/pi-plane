@@ -4,6 +4,7 @@
 # See the LICENSE file for details.
 
 # Python imports
+import uuid
 from smtplib import (
     SMTPAuthenticationError,
     SMTPConnectError,
@@ -22,6 +23,7 @@ from rest_framework.response import Response
 
 # Module imports
 from .base import BaseAPIView
+from plane.db.models import Workspace
 from plane.license.api.permissions import InstanceAdminPermission
 from plane.license.models import InstanceConfiguration
 from plane.license.api.serializers import InstanceConfigurationSerializer
@@ -42,6 +44,23 @@ class InstanceConfigurationEndpoint(BaseAPIView):
     @invalidate_cache(path="/api/instances/configurations/", user=False)
     @invalidate_cache(path="/api/instances/", user=False)
     def patch(self, request):
+        if "INSTANCE_DEFAULT_WORKSPACE_ID" in request.data:
+            default_workspace_id = str(request.data.get("INSTANCE_DEFAULT_WORKSPACE_ID") or "").strip()
+            # Empty clears the choice; anything else has to name a workspace that exists.
+            if default_workspace_id:
+                try:
+                    parsed_workspace_id = uuid.UUID(default_workspace_id)
+                except ValueError:
+                    return Response(
+                        {"error": "The workspace selected for short links is not valid."},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                if not Workspace.objects.filter(id=parsed_workspace_id).exists():
+                    return Response(
+                        {"error": "The workspace selected for short links does not exist."},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+
         configurations = InstanceConfiguration.objects.filter(key__in=request.data.keys())
 
         bulk_configurations = []
