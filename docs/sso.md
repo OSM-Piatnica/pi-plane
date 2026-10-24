@@ -4,11 +4,11 @@ Pi-Plane signs people in through OpenID Connect (authorization code flow with PK
 described in `apps/api/plane/authentication/provider/oidc/`; everything else (sign-in and callback URLs, the instance
 settings, the buttons on the sign-in screens, ID token validation) is shared.
 
-| Provider           | Key           | Notes                                                                         |
-| ------------------ | ------------- | ----------------------------------------------------------------------------- |
-| Microsoft Entra ID | `entra`       | One tenant only. People are bound by tenant id + object id.                   |
-| Google             | `google-oidc` | Optionally one Workspace domain (`hd`). Separate from the older Google login. |
-| Any OIDC provider  | `oidc`        | By issuer URL (Keycloak, Okta, Authentik, ...). The email must be verified.   |
+| Provider           | Key           | Notes                                                                       |
+| ------------------ | ------------- | --------------------------------------------------------------------------- |
+| Microsoft Entra ID | `entra`       | One tenant only. People are bound by tenant id + object id.                 |
+| Google             | `google-oidc` | Optionally one Workspace domain (`hd`). Replaces the former Google login.   |
+| Any OIDC provider  | `oidc`        | By issuer URL (Keycloak, Okta, Authentik, ...). The email must be verified. |
 
 ## Microsoft Entra ID
 
@@ -34,7 +34,12 @@ account and nobody else can take an account over by getting the same address.
 Create an OAuth client (type **Web application**) in the Google Cloud console with the redirect URI
 `<your Pi-Plane URL>/auth/oidc/google-oidc/callback/`, then set `IS_GOOGLE_OIDC_ENABLED=1`, `GOOGLE_OIDC_CLIENT_ID` and
 `GOOGLE_OIDC_CLIENT_SECRET`. To accept only one Google Workspace, also set `GOOGLE_OIDC_HOSTED_DOMAIN`. People are
-bound by their Google account id. The older `IS_GOOGLE_ENABLED` login keeps working independently.
+bound by their Google account id.
+
+> **Upgrading from the former Google login:** `IS_GOOGLE_ENABLED`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` and
+> `ENABLE_GOOGLE_SYNC` are no longer read, and `/auth/google/` is gone. Create the settings above (the same OAuth client
+> works: add the new redirect URI to it). People who signed in with the old login are matched by their email address on
+> their first sign-in and bound from then on.
 
 ## How people are matched
 

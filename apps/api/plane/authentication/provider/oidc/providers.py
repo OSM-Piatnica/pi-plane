@@ -73,8 +73,8 @@ class EntraSpec(OidcProviderSpec):
 class GoogleSpec(OidcProviderSpec):
     """Google accounts, optionally restricted to one Google Workspace domain.
 
-    Separate from the older Google OAuth login (``GOOGLE_*`` settings), which stays as it is. People are bound by
-    their Google account id (``sub``); with a hosted domain set, tokens of accounts outside that Workspace are refused.
+    Replaces the former Google OAuth login (``GOOGLE_*`` settings). People are bound by their Google account id
+    (``sub``); with a hosted domain set, tokens of accounts outside that Workspace are refused.
     """
 
     def __init__(self):
