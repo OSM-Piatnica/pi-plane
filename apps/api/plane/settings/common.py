@@ -141,6 +141,9 @@ REST_FRAMEWORK = {
         "anon": os.environ.get("ANON_RATE_LIMIT", "180/minute"),
         # Per-asset-ID cap on duplicating an asset (editor paste/copy). Counted across all users.
         "asset_id": os.environ.get("ASSET_DUPLICATE_RATE_LIMIT", "60/minute"),
+        # Duplicating a project locks the workspace row while it runs, so it is capped per user and per workspace.
+        "project_duplicate_user": os.environ.get("PROJECT_DUPLICATE_USER_RATE", "10/hour"),
+        "project_duplicate_workspace": os.environ.get("PROJECT_DUPLICATE_WORKSPACE_RATE", "30/hour"),
     },
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),

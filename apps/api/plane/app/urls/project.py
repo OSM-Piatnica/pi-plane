@@ -26,10 +26,16 @@ from plane.app.views import (
     ProjectIssueTypeViewSet,
     ProjectIssueTypeBulkAssignEndpoint,
     ProjectIssueTypePropertiesEndpoint,
+    ProjectDuplicateEndpoint,
 )
 
 
 urlpatterns = [
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/duplicate/",
+        ProjectDuplicateEndpoint.as_view(),
+        name="project-duplicate",
+    ),
     path(
         "workspaces/<str:slug>/projects/",
         ProjectViewSet.as_view({"get": "list", "post": "create"}),
