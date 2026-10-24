@@ -55,6 +55,8 @@ export interface IInstanceConfig {
   oidc_providers?: TOidcProviderOption[];
   is_magic_login_enabled: boolean;
   is_email_password_enabled: boolean;
+  /** Workspace UUID used to resolve compact `/i/PROJECT-123` work item links; empty when short links are off. */
+  default_workspace_id?: string;
   github_app_name: string | undefined;
   slack_client_id: string | undefined;
   has_unsplash_configured: boolean;

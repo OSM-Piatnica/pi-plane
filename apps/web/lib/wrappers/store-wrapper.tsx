@@ -1,19 +1,27 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { ReactNode } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { observer } from "mobx-react";
-import { useParams } from "next/navigation";
 import { useTheme } from "next-themes";
+import { useLocation, useNavigate, useParams } from "react-router";
 // helpers
 import { applyCustomTheme, clearCustomTheme } from "@plane/utils";
+import {
+  RoutePolicyProvider,
+  normalizeDefaultWorkspacePath,
+  withDefaultWorkspaceParams,
+} from "@/app/compat/next/route-policy-context";
 // hooks
 import { useAppTheme } from "@/hooks/store/use-app-theme";
+import { useInstance } from "@/hooks/store/use-instance";
 import { useRouterParams } from "@/hooks/store/use-router-params";
+import { useWorkspace } from "@/hooks/store/use-workspace";
 import { useUserProfile } from "@/hooks/store/user";
 
 type TStoreWrapper = {
@@ -26,8 +34,12 @@ function StoreWrapper(props: TStoreWrapper) {
   const { setTheme } = useTheme();
   // router
   const params = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   // store hooks
   const { setQuery } = useRouterParams();
+  const { config } = useInstance();
+  const { getWorkspaceById } = useWorkspace();
   const { sidebarCollapsed, toggleSidebar } = useAppTheme();
   const { data: userProfile } = useUserProfile();
   // Track if we've initialized theme from server (one-time only)
@@ -36,6 +48,14 @@ function StoreWrapper(props: TStoreWrapper) {
   const currentUserIdRef = useRef<string | undefined>(undefined);
   // Track previous theme to detect transitions from custom theme
   const previousThemeRef = useRef<string | undefined>(undefined);
+  // The workspace the instance chose for compact `/i/PROJ-123` links, known once the workspace list has loaded
+  const defaultWorkspaceSlug = config?.default_workspace_id
+    ? getWorkspaceById(config.default_workspace_id)?.slug
+    : undefined;
+  const effectiveParams = useMemo(
+    () => withDefaultWorkspaceParams(params, defaultWorkspaceSlug),
+    [defaultWorkspaceSlug, params]
+  );
 
   /**
    * Sidebar collapsed fetching from local storage
@@ -104,11 +124,17 @@ function StoreWrapper(props: TStoreWrapper) {
   }, [userProfile?.theme]);
 
   useEffect(() => {
-    if (!params) return;
-    setQuery(params);
-  }, [params, setQuery]);
+    setQuery(effectiveParams);
+  }, [effectiveParams, setQuery]);
 
-  return <>{children}</>;
+  // A work item opened by its workspace-qualified address is shown under the compact one
+  useEffect(() => {
+    const currentPath = `${location.pathname}${location.search}${location.hash}`;
+    const normalizedPath = normalizeDefaultWorkspacePath(currentPath, defaultWorkspaceSlug);
+    if (normalizedPath !== currentPath) void navigate(normalizedPath, { replace: true });
+  }, [defaultWorkspaceSlug, location.hash, location.pathname, location.search, navigate]);
+
+  return <RoutePolicyProvider defaultWorkspaceSlug={defaultWorkspaceSlug}>{children}</RoutePolicyProvider>;
 }
 
 export default observer(StoreWrapper);
