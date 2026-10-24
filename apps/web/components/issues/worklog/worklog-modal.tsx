@@ -25,7 +25,7 @@ import {
 } from "@makeplane/propel/components/dialog";
 import { Icon } from "@makeplane/propel/components/icon";
 import { IconButton } from "@makeplane/propel/components/icon-button";
-import { Input } from "@makeplane/propel/components/input";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { CloseOutline } from "@makeplane/propel/icons";
 import { ConfirmDialog } from "@plane/blocks/dialog";
 import { setToast } from "@plane/blocks/toast";
@@ -186,23 +186,27 @@ export const WorklogModal = observer(function WorklogModal(props: TWorklogModal)
                 {!disabled && (
                   <div className="flex items-start gap-2">
                     <div className="w-28 shrink-0">
-                      <Input
-                        size="md"
-                        value={durationInput}
-                        onChange={(event) => setDurationInput(event.target.value)}
-                        placeholder="2h 30m"
-                        aria-label={t("common.duration")}
-                      />
+                      <InputGroup size="md">
+                        <Input
+                          size="md"
+                          value={durationInput}
+                          onChange={(event) => setDurationInput(event.target.value)}
+                          placeholder="2h 30m"
+                          aria-label={t("common.duration")}
+                        />
+                      </InputGroup>
                     </div>
                     <div className="min-w-0 grow">
-                      <Input
-                        size="md"
-                        value={description}
-                        onChange={(event) => setDescription(event.target.value)}
-                        placeholder={t("worklog.description_placeholder")}
-                        aria-label={t("common.description")}
-                        maxLength={MAX_WORKLOG_DESCRIPTION_LENGTH}
-                      />
+                      <InputGroup size="md">
+                        <Input
+                          size="md"
+                          value={description}
+                          onChange={(event) => setDescription(event.target.value)}
+                          placeholder={t("worklog.description_placeholder")}
+                          aria-label={t("common.description")}
+                          maxLength={MAX_WORKLOG_DESCRIPTION_LENGTH}
+                        />
+                      </InputGroup>
                     </div>
                     <Button
                       variant="primary"
@@ -232,23 +236,27 @@ export const WorklogModal = observer(function WorklogModal(props: TWorklogModal)
                         {isEditing ? (
                           <>
                             <div className="w-28 shrink-0">
-                              <Input
-                                size="md"
-                                value={editDurationInput}
-                                onChange={(event) => setEditDurationInput(event.target.value)}
-                                placeholder="2h 30m"
-                                aria-label={t("common.duration")}
-                              />
+                              <InputGroup size="md">
+                                <Input
+                                  size="md"
+                                  value={editDurationInput}
+                                  onChange={(event) => setEditDurationInput(event.target.value)}
+                                  placeholder="2h 30m"
+                                  aria-label={t("common.duration")}
+                                />
+                              </InputGroup>
                             </div>
                             <div className="min-w-0 grow">
-                              <Input
-                                size="md"
-                                value={editDescription}
-                                onChange={(event) => setEditDescription(event.target.value)}
-                                placeholder={t("worklog.description_placeholder")}
-                                aria-label={t("common.description")}
-                                maxLength={MAX_WORKLOG_DESCRIPTION_LENGTH}
-                              />
+                              <InputGroup size="md">
+                                <Input
+                                  size="md"
+                                  value={editDescription}
+                                  onChange={(event) => setEditDescription(event.target.value)}
+                                  placeholder={t("worklog.description_placeholder")}
+                                  aria-label={t("common.description")}
+                                  maxLength={MAX_WORKLOG_DESCRIPTION_LENGTH}
+                                />
+                              </InputGroup>
                             </div>
                             <Button
                               variant="primary"
