@@ -168,7 +168,9 @@ class OidcProvider(OauthAdapter):
                 return self.complete_login_or_signup()
         except IntegrityError as exc:
             # A concurrent sign-in of the same person won the race
-            self.logger.warning("Concurrent sign-in with %s: %s", self.provider, exc)
+            # only the primary message of the database: its detail would quote the values (email addresses)
+            reason = getattr(getattr(exc.__cause__, "diag", None), "message_primary", type(exc).__name__)
+            self.logger.warning("Sign-in with %s hit a database conflict: %s", self.provider, reason)
             raise _error("OIDC_PROVIDER_ERROR")
 
     # ---- hooks of Adapter.complete_login_or_signup ---------------------------------------------------------------

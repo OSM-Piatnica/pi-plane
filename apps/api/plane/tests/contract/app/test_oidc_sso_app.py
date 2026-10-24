@@ -559,7 +559,7 @@ class TestIssuerScopedBinding:
         CONFIG["OIDC_ISSUER_URL"] = other
         fake = FakeIdp(issuer=other)
         with patch("plane.authentication.provider.oidc.client.pinned_fetch", side_effect=fake.fetch):
-            client = Client()
+            client = Client(HTTP_USER_AGENT="Mozilla/5.0")
             start = client.get(reverse("oidc-initiate", args=["oidc"]))
             query = {k: v[0] for k, v in parse_qs(urlparse(start.url).query).items()}
             fake.id_token = make_token(
