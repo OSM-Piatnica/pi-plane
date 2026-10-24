@@ -11,6 +11,7 @@ import type {
   TSupportedDateFilterOperators,
   TSupportedOperators,
 } from "@plane/types";
+import { OPERATOR_LABEL_KEY_PREFIX } from "./prefix";
 
 /**
  * Extended operator labels
@@ -26,15 +27,15 @@ export const EXTENDED_DATE_OPERATOR_LABELS_MAP: Record<TExtendedSupportedOperato
  * Negated operator labels for all operators
  */
 export const NEGATED_OPERATOR_LABELS_MAP: Record<TNegatedOperator<TSupportedOperators>, string> = {
-  not_exact: "is not",
-  not_in: "is none of",
-  not_range: "not between",
+  not_exact: `${OPERATOR_LABEL_KEY_PREFIX}not_exact`,
+  not_in: `${OPERATOR_LABEL_KEY_PREFIX}not_in`,
+  not_range: `${OPERATOR_LABEL_KEY_PREFIX}not_range`,
 } as const;
 
 /**
  * Negated date operator labels for all date operators
  */
 export const NEGATED_DATE_OPERATOR_LABELS_MAP: Record<TNegatedOperator<TSupportedDateFilterOperators>, string> = {
-  not_exact: "is not",
-  not_range: "not between",
+  not_exact: `${OPERATOR_LABEL_KEY_PREFIX}not_exact`,
+  not_range: `${OPERATOR_LABEL_KEY_PREFIX}not_range`,
 } as const;

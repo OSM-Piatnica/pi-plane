@@ -555,6 +555,14 @@
       "filter_type_not_supported": "Type de filtre non pris en charge",
       "invalid_filter": "Filtre non valide",
       "invalid_tooltip": "Cette condition de filtre n'est plus valide. La propriété a peut-être été supprimée ou votre accès à celle-ci a changé.",
+      "operators": {
+        "exact": "est",
+        "in": "est l'un de",
+        "range": "entre",
+        "not_exact": "n'est pas",
+        "not_in": "n'est aucun de",
+        "not_range": "n'est pas entre"
+      },
       "remove_filter": "Supprimer le filtre",
       "save_view": "Enregistrer la vue",
       "update_view": "Mettre à jour la vue"

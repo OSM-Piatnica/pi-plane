@@ -5,7 +5,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { DATE_OPERATOR_LABELS_MAP, OPERATOR_LABELS_MAP } from "@plane/constants";
+import { DATE_OPERATOR_LABELS_MAP, OPERATOR_LABELS_MAP, OPERATOR_LABEL_KEY_PREFIX } from "@plane/constants";
 import { workItemFiltersAdapter } from "@plane/shared-state";
 import type { TFilterExpression, TWorkItemFilterProperty } from "@plane/types";
 import {
@@ -39,12 +39,12 @@ describe("operators of a negated condition", () => {
     expect(isNegatedOperator("exact")).toBe(false);
   });
 
-  it("have a label each", () => {
-    expect(OPERATOR_LABELS_MAP.not_exact).toBe("is not");
-    expect(OPERATOR_LABELS_MAP.not_in).toBe("is none of");
-    expect(OPERATOR_LABELS_MAP.not_range).toBe("not between");
-    expect(DATE_OPERATOR_LABELS_MAP.not_exact).toBe("is not");
-    expect(DATE_OPERATOR_LABELS_MAP.not_range).toBe("not between");
+  it("have a label each, as a translation key", () => {
+    expect(OPERATOR_LABELS_MAP.not_exact).toBe(`${OPERATOR_LABEL_KEY_PREFIX}not_exact`);
+    expect(OPERATOR_LABELS_MAP.not_in).toBe(`${OPERATOR_LABEL_KEY_PREFIX}not_in`);
+    expect(OPERATOR_LABELS_MAP.not_range).toBe(`${OPERATOR_LABEL_KEY_PREFIX}not_range`);
+    expect(DATE_OPERATOR_LABELS_MAP.not_exact).toBe(`${OPERATOR_LABEL_KEY_PREFIX}not_exact`);
+    expect(DATE_OPERATOR_LABELS_MAP.not_range).toBe(`${OPERATOR_LABEL_KEY_PREFIX}not_range`);
   });
 
   it("are listed with the negation of the conditions of an expression", () => {

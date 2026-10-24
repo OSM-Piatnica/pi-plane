@@ -555,6 +555,14 @@
       "filter_type_not_supported": "Tipul de filtru nu este acceptat",
       "invalid_filter": "Filtru nevalid",
       "invalid_tooltip": "Această condiție de filtru nu mai este validă. Proprietatea ar putea fi ștearsă sau accesul tău la ea s-ar putea fi schimbat.",
+      "operators": {
+        "exact": "este",
+        "in": "este unul dintre",
+        "range": "între",
+        "not_exact": "nu este",
+        "not_in": "nu este niciunul dintre",
+        "not_range": "nu este între"
+      },
       "remove_filter": "Elimină filtrul",
       "save_view": "Salvează vizualizarea",
       "update_view": "Actualizează vizualizarea"

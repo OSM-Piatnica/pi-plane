@@ -555,6 +555,14 @@
       "filter_type_not_supported": "Filter type not supported",
       "invalid_filter": "Invalid filter",
       "invalid_tooltip": "This filter condition is no longer valid. The property may have been deleted or your access to it may have changed.",
+      "operators": {
+        "exact": "is",
+        "in": "is any of",
+        "range": "between",
+        "not_exact": "is not",
+        "not_in": "is none of",
+        "not_range": "not between"
+      },
       "remove_filter": "Remove filter",
       "save_view": "Save view",
       "update_view": "Update view"

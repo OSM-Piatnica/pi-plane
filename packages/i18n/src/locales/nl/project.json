@@ -555,6 +555,14 @@
       "filter_type_not_supported": "Filtertype niet ondersteund",
       "invalid_filter": "Ongeldig filter",
       "invalid_tooltip": "Deze filtervoorwaarde is niet meer geldig. De eigenschap is mogelijk verwijderd of je toegang ertoe is gewijzigd.",
+      "operators": {
+        "exact": "is",
+        "in": "is een van",
+        "range": "tussen",
+        "not_exact": "is niet",
+        "not_in": "is geen van",
+        "not_range": "niet tussen"
+      },
       "remove_filter": "Filter verwijderen",
       "save_view": "Weergave opslaan",
       "update_view": "Weergave bijwerken"

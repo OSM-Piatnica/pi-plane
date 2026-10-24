@@ -555,6 +555,14 @@
       "filter_type_not_supported": "サポートされていないフィルタータイプです",
       "invalid_filter": "無効なフィルター",
       "invalid_tooltip": "このフィルター条件は無効になりました。プロパティが削除されたか、アクセス権が変更された可能性があります。",
+      "operators": {
+        "exact": "が",
+        "in": "のいずれか",
+        "range": "の範囲",
+        "not_exact": "ではない",
+        "not_in": "のいずれでもない",
+        "not_range": "の範囲外"
+      },
       "remove_filter": "フィルターを削除",
       "save_view": "ビューを保存",
       "update_view": "ビューを更新"

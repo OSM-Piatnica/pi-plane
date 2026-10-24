@@ -555,6 +555,14 @@
       "filter_type_not_supported": "Filtre türü desteklenmiyor",
       "invalid_filter": "Geçersiz filtre",
       "invalid_tooltip": "Bu filtre koşulu artık geçerli değil. Özellik silinmiş olabilir veya ona erişiminiz değişmiş olabilir.",
+      "operators": {
+        "exact": "eşittir",
+        "in": "şunlardan biri",
+        "range": "arasında",
+        "not_exact": "eşit değildir",
+        "not_in": "şunlardan hiçbiri",
+        "not_range": "arasında değil"
+      },
       "remove_filter": "Filtreyi kaldır",
       "save_view": "Görünümü kaydet",
       "update_view": "Görünümü güncelle"
