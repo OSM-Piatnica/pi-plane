@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "显示子工作项",
         "show_empty_groups": "显示空组"
+      },
+      "color_by": {
+        "label": "颜色依据",
+        "state": "状态",
+        "key": "工作项 ID"
       }
     },
     "layouts": {

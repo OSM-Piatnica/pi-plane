@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Alt iş öğelerini göster",
         "show_empty_groups": "Boş grupları göster"
+      },
+      "color_by": {
+        "label": "Renk ölçütü",
+        "state": "Durum",
+        "key": "İş öğesi kimliği"
       }
     },
     "layouts": {

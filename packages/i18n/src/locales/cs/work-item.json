@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Zobrazit podřízené položky",
         "show_empty_groups": "Zobrazit prázdné skupiny"
+      },
+      "color_by": {
+        "label": "Barva podle",
+        "state": "Stav",
+        "key": "ID pracovní položky"
       }
     },
     "layouts": {

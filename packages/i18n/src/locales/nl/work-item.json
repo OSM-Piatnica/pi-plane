@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Subwerkitems tonen",
         "show_empty_groups": "Lege groepen tonen"
+      },
+      "color_by": {
+        "label": "Kleur op basis van",
+        "state": "Status",
+        "key": "Werkitem-ID"
       }
     },
     "layouts": {

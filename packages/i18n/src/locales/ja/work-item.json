@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "サブ作業項目を表示",
         "show_empty_groups": "空のグループを表示"
+      },
+      "color_by": {
+        "label": "色の基準",
+        "state": "ステータス",
+        "key": "作業項目ID"
       }
     },
     "layouts": {

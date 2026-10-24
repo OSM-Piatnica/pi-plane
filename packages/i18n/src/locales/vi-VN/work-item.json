@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Hiển thị mục công việc con",
         "show_empty_groups": "Hiển thị nhóm trống"
+      },
+      "color_by": {
+        "label": "Tô màu theo",
+        "state": "Trạng thái",
+        "key": "ID mục công việc"
       }
     },
     "layouts": {

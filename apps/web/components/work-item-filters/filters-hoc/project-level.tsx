@@ -28,6 +28,7 @@ import { useProjectView } from "@/hooks/store/use-project-view";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
 // local imports
 import { WorkItemFiltersHOC } from "./base";
+import { hasDisplayFilterChanges } from "./display-filters";
 import type { TEnableSaveViewProps, TEnableUpdateViewProps, TSharedWorkItemFiltersHOCProps } from "./shared";
 
 type TProjectLevelWorkItemFiltersHOCProps = TSharedWorkItemFiltersHOCProps & {
@@ -101,7 +102,7 @@ export const ProjectLevelWorkItemFiltersHOC = observer(function ProjectLevelWork
   const updateViewLabel = useMemo(() => props.updateViewOptions?.label, [props.updateViewOptions?.label]);
   const hasAdditionalChanges = useMemo(
     () =>
-      !isEqual(initialWorkItemFilters?.displayFilters, viewDetails?.display_filters) ||
+      hasDisplayFilterChanges(initialWorkItemFilters?.displayFilters, viewDetails?.display_filters) ||
       !isEqual(
         removeNillKeys(initialWorkItemFilters?.displayProperties),
         removeNillKeys(viewDetails?.display_properties)
