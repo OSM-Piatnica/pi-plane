@@ -4,10 +4,10 @@ Pi-Plane signs people in through OpenID Connect (authorization code flow with PK
 described in `apps/api/plane/authentication/provider/oidc/`; everything else (sign-in and callback URLs, the instance
 settings, the buttons on the sign-in screens, ID token validation) is shared.
 
-| Provider            | Key     | Notes                                                                    |
-| ------------------- | ------- | ------------------------------------------------------------------------ |
-| Microsoft Entra ID  | `entra` | One tenant only. People are bound by tenant id + object id.              |
-| Any OIDC provider   | `oidc`  | By issuer URL (Keycloak, Okta, Authentik, ...). The email must be verified. |
+| Provider           | Key     | Notes                                                                       |
+| ------------------ | ------- | --------------------------------------------------------------------------- |
+| Microsoft Entra ID | `entra` | One tenant only. People are bound by tenant id + object id.                 |
+| Any OIDC provider  | `oidc`  | By issuer URL (Keycloak, Okta, Authentik, ...). The email must be verified. |
 
 ## Microsoft Entra ID
 
