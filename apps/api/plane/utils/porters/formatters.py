@@ -78,14 +78,10 @@ class CSVFormatter(BaseFormatter):
         if not first_line:
             return self.delimiter
 
-        semicolon_count = first_line.count(";")
-        comma_count = first_line.count(",")
-
-        if semicolon_count > comma_count:
-            return ";"
-        if comma_count > 0:
-            return ","
-        return self.delimiter
+        # Comma wins ties so legacy files keep their old behaviour; tab covers spreadsheet "Text" exports
+        counts = {",": first_line.count(","), ";": first_line.count(";"), "\t": first_line.count("\t")}
+        best = max(counts, key=lambda candidate: (counts[candidate], candidate == ","))
+        return best if counts[best] > 0 else self.delimiter
 
     def _prettify_header(self, header: str) -> str:
         """Transform 'created_by_name' → 'Created By Name'"""
@@ -176,7 +172,8 @@ class CSVFormatter(BaseFormatter):
 
         # Normalize headers: 'Email' → 'email', 'Display Name' → 'display_name'
         if normalize_headers:
-            rows = [{self._normalize_header(k): v for k, v in row.items()} for row in rows]
+            # DictReader files extra cells of a long row under a None key; they have no header to map to
+            rows = [{self._normalize_header(k): v for k, v in row.items() if k is not None} for row in rows]
 
         if self.flatten:
             rows = [self._unflatten(row) for row in rows]
@@ -267,6 +264,9 @@ class XLSXFormatter(BaseFormatter):
         """
         wb = load_workbook(filename=BytesIO(content), read_only=True, data_only=True)
         ws = wb.active
+        # Read-only mode trusts the stored sheet size; files from Sheets or converters often claim A1
+        # and would otherwise yield only the first column
+        ws.reset_dimensions()
 
         rows = list(ws.iter_rows(values_only=True))
         if not rows:
@@ -280,6 +280,8 @@ class XLSXFormatter(BaseFormatter):
         # Convert remaining rows to dicts
         result = []
         for row in rows[1:]:
+            if all(cell is None or (isinstance(cell, str) and not cell.strip()) for cell in row):
+                continue
             row_dict = {}
             for i, value in enumerate(row):
                 if i < len(headers) and headers[i]:

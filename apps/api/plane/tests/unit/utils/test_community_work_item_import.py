@@ -82,3 +82,55 @@ def test_maps_modules_cycles_subscribers_and_relations():
     assert mapped[0]["subscriber_emails"] == ["watcher@example.com"]
     assert mapped[0]["relations"] == '[{"type": "blocking", "issue": "DEM-1"}]'
     assert mapped[0]["estimate"] == "5"
+
+
+def test_unwraps_rows_saved_as_one_quoted_cell():
+    from plane.utils.community_work_item_import import _unwrap_collapsed_rows
+    from plane.utils.porters.formatters import CSVFormatter
+
+    content = (
+        'Project Name,Identifier,Name,Assignees,Is Draft\n"Demo,DEM-1,""11.02,26- Z -70"",""[""""a@x.pl""""]"",False"\n'
+    )
+    rows = _unwrap_collapsed_rows(CSVFormatter().decode(content))
+    assert rows[0]["name"] == "11.02,26- Z -70"
+    assert rows[0]["assignees"] == '["a@x.pl"]'  # the importer parses list strings
+    assert rows[0]["project_name"] == "Demo"
+
+
+def test_missing_name_column_error_lists_found_columns():
+    import pytest
+
+    from plane.utils.community_work_item_import import import_community_work_items_into_project
+
+    with pytest.raises(ValueError) as exc:
+        import_community_work_items_into_project(project=None, user=None, rows=[{"project_name": "x"}])
+    assert "project_name" in exc.value.args[0]["error"]
+
+
+def test_xlsx_with_wrong_stored_dimensions_reads_every_column():
+    import io
+    import re
+    import zipfile
+
+    from openpyxl import Workbook
+
+    from plane.utils.porters.formatters import XLSXFormatter
+
+    wb = Workbook()
+    wb.active.append(["Project Name", "Name", "State Name"])
+    wb.active.append(["Demo", "Task", "Todo"])
+    wb.active.append([None, None, None])
+    buffer = io.BytesIO()
+    wb.save(buffer)
+
+    # Rewrite the sheet so it claims to be one cell wide, as some converters do
+    patched = io.BytesIO()
+    with zipfile.ZipFile(io.BytesIO(buffer.getvalue())) as src, zipfile.ZipFile(patched, "w") as dst:
+        for item in src.infolist():
+            data = src.read(item.filename)
+            if item.filename == "xl/worksheets/sheet1.xml":
+                data = re.sub(rb'<dimension ref="[^"]*"', b'<dimension ref="A1"', data)
+            dst.writestr(item, data)
+
+    rows = XLSXFormatter().decode(patched.getvalue())
+    assert rows == [{"project_name": "Demo", "name": "Task", "state_name": "Todo"}]
