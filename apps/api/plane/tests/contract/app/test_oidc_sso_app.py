@@ -389,3 +389,44 @@ class TestGenericOidc:
     def test_refuses_an_unverified_email(self, instance, idp, verified):
         _, response, _ = sign_in(idp, provider="oidc", token_kwargs={"email_verified": verified})
         assert failed_with(response, "OAUTH_PROVIDER_UNVERIFIED_EMAIL")
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestGoogleOidc:
+    @pytest.fixture(autouse=True)
+    def _google(self):
+        CONFIG.update(
+            {"IS_GOOGLE_OIDC_ENABLED": "1", "GOOGLE_OIDC_CLIENT_ID": CLIENT_ID, "GOOGLE_OIDC_CLIENT_SECRET": "s"}
+        )
+
+    @pytest.fixture
+    def google_idp(self):
+        fake = FakeIdp(issuer="https://accounts.google.com")
+        with patch("plane.authentication.provider.oidc.client.pinned_fetch", side_effect=fake.fetch):
+            yield fake
+
+    def sign_in(self, idp, **claims):
+        claims = {"iss": "https://accounts.google.com", "email_verified": True, "tid": None, "oid": None, **claims}
+        return sign_in(idp, provider="google-oidc", token_kwargs=claims)
+
+    def test_button(self):
+        assert {"key": "google-oidc", "name": "Google", "icon": "google"} in enabled_oidc_providers()
+
+    def test_signs_in_and_binds_the_google_account_id(self, instance, google_idp):
+        _, response, query = self.sign_in(google_idp)
+        assert "error_code" not in response.url
+        assert query["redirect_uri"].endswith("/auth/oidc/google-oidc/callback/")
+        assert Account.objects.get(provider="google-oidc").provider_account_id == "pairwise-sub"
+
+    def test_refuses_an_unverified_email(self, instance, google_idp):
+        _, response, _ = self.sign_in(google_idp, email_verified=False)
+        assert failed_with(response, "OAUTH_PROVIDER_UNVERIFIED_EMAIL")
+
+    def test_hosted_domain_restricts_to_one_workspace(self, instance, google_idp):
+        CONFIG["GOOGLE_OIDC_HOSTED_DOMAIN"] = "piatnica.com.pl"
+        _, ok, _ = self.sign_in(google_idp, hd="piatnica.com.pl")
+        assert "error_code" not in ok.url
+        for hd in ({"hd": "other.com"}, {}):
+            _, refused, _ = self.sign_in(google_idp, sub=str(uuid.uuid4()), email="x@piatnica.com.pl", **hd)
+            assert failed_with(refused, "OIDC_EMAIL_DOMAIN_NOT_ALLOWED")

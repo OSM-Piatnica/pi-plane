@@ -11,9 +11,9 @@ the list of buttons the apps show and the ID token validation.
 
 import os
 
-from .providers import EntraSpec, GenericOidcSpec
+from .providers import EntraSpec, GenericOidcSpec, GoogleSpec
 
-OIDC_PROVIDERS = {spec.key: spec for spec in (EntraSpec(), GenericOidcSpec())}
+OIDC_PROVIDERS = {spec.key: spec for spec in (EntraSpec(), GoogleSpec(), GenericOidcSpec())}
 
 
 def get_provider_spec(key):

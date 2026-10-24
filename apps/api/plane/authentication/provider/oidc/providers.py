@@ -70,6 +70,49 @@ class EntraSpec(OidcProviderSpec):
         )
 
 
+class GoogleSpec(OidcProviderSpec):
+    """Google accounts, optionally restricted to one Google Workspace domain.
+
+    Separate from the older Google OAuth login (``GOOGLE_*`` settings), which stays as it is. People are bound by
+    their Google account id (``sub``); with a hosted domain set, tokens of accounts outside that Workspace are refused.
+    """
+
+    def __init__(self):
+        super().__init__(
+            key="google-oidc",
+            name="Google",
+            icon="google",
+            fields=(
+                OidcConfigField(
+                    name="HOSTED_DOMAIN",
+                    label="Google Workspace domain",
+                    help="Optional. Only accounts of this Workspace domain (the hd claim) can sign in.",
+                ),
+            ),
+        )
+
+    def issuer(self, config):
+        return "https://accounts.google.com"
+
+    def validate_claims(self, claims, config):
+        # Fail closed: an absent claim counts as unverified (GHSA-7j95-vh8g-f365)
+        if claims.get("email_verified") is not True:
+            raise OidcClaimsError("OAUTH_PROVIDER_UNVERIFIED_EMAIL")
+        domain = str(config.get("HOSTED_DOMAIN") or "").strip().lower().lstrip("@")
+        if domain and str(claims.get("hd", "")).lower() != domain:
+            raise OidcClaimsError("OIDC_EMAIL_DOMAIN_NOT_ALLOWED")
+
+    def map_claims(self, claims):
+        first_name, last_name, full_name = _split_name(claims)
+        return OidcIdentity(
+            subject=str(claims["sub"]),
+            email=claims.get("email") or "",
+            first_name=first_name,
+            last_name=last_name,
+            display_name=full_name,
+        )
+
+
 class GenericOidcSpec(OidcProviderSpec):
     """Any other OpenID Connect provider (Keycloak, Okta, Authentik, Google Workspace, ...), by its issuer URL."""
 
