@@ -1,0 +1,102 @@
+{
+  "format": {
+    "date": "%d.%m.%Y"
+  },
+  "priority": {
+    "urgent": "Naléhavá",
+    "high": "Vysoká",
+    "medium": "Střední",
+    "low": "Nízká",
+    "none": "Žádná"
+  },
+  "issue_updates": {
+    "title": "Aktualizace {identifier}",
+    "summary": "Pracovní položku aktualizoval(a) <strong>{actor}</strong>.",
+    "summary_others": "Pracovní položku aktualizoval(a) <strong>{actor}</strong> a další.",
+    "title_changed": "Název pracovní položky byl změněn na {title}",
+    "updates": "Aktualizace",
+    "due_date": "Termín:",
+    "duplicate": "Duplikát:",
+    "assignee": "Přiřazeno:",
+    "labels": "Štítky:",
+    "state": "Stav:",
+    "links": "Odkazy:",
+    "priority": "Priorita:",
+    "blocking": "Blokuje:",
+    "comments": "Komentáře",
+    "more": "+{count} dalších",
+    "links_removed": {
+      "one": "Byl odebrán {count} odkaz",
+      "few": "Byly odebrány {count} odkazy",
+      "other": "Bylo odebráno {count} odkazů"
+    },
+    "view": "Zobrazit pracovní položku",
+    "footer": "Tento e-mail byl odeslán na adresu <a href=\"mailto:{email}\">{email}</a>. Pokud takové e-maily dostávat nechcete, můžete <a href=\"{issue_url}\">přestat tuto pracovní položku sledovat</a> nebo <a href=\"{preferences_url}\">upravit nastavení e-mailů</a>."
+  },
+  "digest": {
+    "title": "Souhrn aktualizací",
+    "greeting_named": "Dobrý den, {name}, máte {summary}",
+    "greeting": "Máte {summary}",
+    "updates_count": {
+      "one": "{count} aktualizaci",
+      "few": "{count} aktualizace",
+      "other": "{count} aktualizací"
+    },
+    "summary": {
+      "one": "{updates} v {count} pracovní položce, kterou sledujete.",
+      "few": "{updates} ve {count} pracovních položkách, které sledujete.",
+      "other": "{updates} v {count} pracovních položkách, které sledujete."
+    },
+    "subject": {
+      "one": "Souhrn: {updates} v {count} pracovní položce",
+      "few": "Souhrn: {updates} ve {count} pracovních položkách",
+      "other": "Souhrn: {updates} v {count} pracovních položkách"
+    },
+    "comments": "komentáře: {count}",
+    "footer": "Toto je souhrn aktualizací pracovních položek. Zmínky dostáváte okamžitě. <a href=\"{preferences_url}\">Změnit nastavení oznámení</a>."
+  },
+  "due_reminder": {
+    "title": "Připomenutí pracovních položek",
+    "greeting_named": "Dobrý den, {name}, máte {summary}",
+    "greeting": "Máte {summary}",
+    "section_overdue": "Po termínu",
+    "section_today": "Pracovní položky s dnešním termínem",
+    "work_items": {
+      "one": "{count} pracovní položku",
+      "few": "{count} pracovní položky",
+      "other": "{count} pracovních položek"
+    },
+    "overdue": {
+      "one": "{count} po termínu",
+      "few": "{count} po termínu",
+      "other": "{count} po termínu"
+    },
+    "overdue_only": {
+      "one": "{count} pracovní položku po termínu",
+      "few": "{count} pracovní položky po termínu",
+      "other": "{count} pracovních položek po termínu"
+    },
+    "summary_both": "{today} s dnešním termínem a {overdue}.",
+    "summary_today": "{today} s dnešním termínem ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Máte {today} s dnešním termínem a {overdue}",
+    "subject_today": "Máte {today} s dnešním termínem ({date})",
+    "subject_overdue": "Máte {overdue}",
+    "days_overdue": {
+      "one": "{count} den po termínu",
+      "few": "{count} dny po termínu",
+      "other": "{count} dní po termínu"
+    },
+    "cta": "Zobrazit moje pracovní položky",
+    "footer": "Toto je automatické připomenutí odesílané každé ráno o pracovních položkách s dnešním termínem a o položkách, jejichž termín již uplynul."
+  },
+  "project_addition": {
+    "subject": "Byli jste pozváni do projektu Pi-Plane",
+    "preheader": "{inviter} vás pozval(a) do projektu {project} v pracovním prostoru {workspace} v Pi-Plane.",
+    "heading": "Byli jste pozváni do projektu {project} v Pi-Plane",
+    "intro": "{inviter} vás pozval(a) ke spolupráci na projektu <strong>{project}</strong> v pracovním prostoru <strong>{workspace}</strong> v Pi-Plane.",
+    "button": "Přejít na projekt",
+    "fallback": "Pokud tlačítko nefunguje, zkopírujte tento odkaz a vložte jej do prohlížeče:",
+    "note": "Poznámka: tento e-mail byl odeslán na adresu <span>{email}</span>. Pokud jste toto pozvání nečekali, můžete tento e-mail ignorovat."
+  }
+}

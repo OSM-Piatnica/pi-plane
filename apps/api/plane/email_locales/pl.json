@@ -1,0 +1,102 @@
+{
+  "format": {
+    "date": "%d.%m.%Y"
+  },
+  "priority": {
+    "urgent": "Pilne",
+    "high": "Wysoki",
+    "medium": "Średni",
+    "low": "Niski",
+    "none": "Brak"
+  },
+  "issue_updates": {
+    "title": "Aktualizacje: {identifier}",
+    "summary": "Wprowadzono zmiany w zadaniu. Autor: <strong>{actor}</strong>.",
+    "summary_others": "Wprowadzono zmiany w zadaniu. Autor: <strong>{actor}</strong> i inne osoby.",
+    "title_changed": "Tytuł zadania zmieniono na {title}",
+    "updates": "Aktualizacje",
+    "due_date": "Termin:",
+    "duplicate": "Duplikat:",
+    "assignee": "Przypisano:",
+    "labels": "Etykiety:",
+    "state": "Stan:",
+    "links": "Linki:",
+    "priority": "Priorytet:",
+    "blocking": "Blokuje:",
+    "comments": "Komentarze",
+    "more": "+{count} więcej",
+    "links_removed": {
+      "one": "Usunięto {count} link",
+      "few": "Usunięto {count} linki",
+      "many": "Usunięto {count} linków"
+    },
+    "view": "Zobacz zadanie",
+    "footer": "Ta wiadomość została wysłana na adres <a href=\"mailto:{email}\">{email}</a>. Jeśli nie chcesz otrzymywać takich wiadomości, <a href=\"{issue_url}\">możesz przestać obserwować to zadanie</a> lub <a href=\"{preferences_url}\">zmienić ustawienia powiadomień e-mail</a>."
+  },
+  "digest": {
+    "title": "Podsumowanie aktualizacji",
+    "greeting_named": "Cześć {name}, masz {summary}",
+    "greeting": "Masz {summary}",
+    "updates_count": {
+      "one": "{count} aktualizacja",
+      "few": "{count} aktualizacje",
+      "many": "{count} aktualizacji"
+    },
+    "summary": {
+      "one": "{updates} w {count} zadaniu, które obserwujesz.",
+      "few": "{updates} w {count} zadaniach, które obserwujesz.",
+      "many": "{updates} w {count} zadaniach, które obserwujesz."
+    },
+    "subject": {
+      "one": "Podsumowanie: {updates} w {count} zadaniu",
+      "few": "Podsumowanie: {updates} w {count} zadaniach",
+      "many": "Podsumowanie: {updates} w {count} zadaniach"
+    },
+    "comments": "komentarze: {count}",
+    "footer": "To jest zbiorcze podsumowanie aktualizacji zadań. Wzmianki dostajesz od razu. <a href=\"{preferences_url}\">Zmień ustawienia powiadomień</a>."
+  },
+  "due_reminder": {
+    "title": "Przypomnienie o zadaniach",
+    "greeting_named": "Cześć {name}, masz {summary}",
+    "greeting": "Masz {summary}",
+    "section_overdue": "Przeterminowane",
+    "section_today": "Zadania z terminem na dzisiaj",
+    "work_items": {
+      "one": "{count} zadanie",
+      "few": "{count} zadania",
+      "many": "{count} zadań"
+    },
+    "overdue": {
+      "one": "{count} przeterminowane",
+      "few": "{count} przeterminowane",
+      "many": "{count} przeterminowanych"
+    },
+    "overdue_only": {
+      "one": "{count} przeterminowane zadanie",
+      "few": "{count} przeterminowane zadania",
+      "many": "{count} przeterminowanych zadań"
+    },
+    "summary_both": "{today} z terminem na dzisiaj i {overdue}.",
+    "summary_today": "{today} z terminem na dzisiaj ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Masz {today} na dzisiaj i {overdue}",
+    "subject_today": "Masz {today} z terminem na dzisiaj ({date})",
+    "subject_overdue": "Masz {overdue}",
+    "days_overdue": {
+      "one": "{count} dzień po terminie",
+      "few": "{count} dni po terminie",
+      "many": "{count} dni po terminie"
+    },
+    "cta": "Zobacz moje zadania",
+    "footer": "To jest automatyczne przypomnienie wysyłane codziennie rano o zadaniach z terminem na dzisiaj oraz o zadaniach, których termin już minął."
+  },
+  "project_addition": {
+    "subject": "Zaproszono Cię do projektu w Pi-Plane",
+    "preheader": "{inviter} zaprasza Cię do projektu {project} w przestrzeni roboczej {workspace} w Pi-Plane.",
+    "heading": "Zaproszono Cię do projektu {project} w Pi-Plane",
+    "intro": "{inviter} zaprasza Cię do współpracy w projekcie <strong>{project}</strong> w przestrzeni roboczej <strong>{workspace}</strong> w Pi-Plane.",
+    "button": "Przejdź do projektu",
+    "fallback": "Jeśli przycisk nie działa, skopiuj ten link i wklej go w przeglądarce:",
+    "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>. Jeśli nie spodziewałeś(-aś) się tego zaproszenia, możesz ją zignorować."
+  }
+}

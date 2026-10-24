@@ -20,20 +20,13 @@ from django.utils import timezone
 from plane.db.models import EmailNotificationLog, User, UserNotificationPreference
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.email import generate_plain_text_from_html
+from plane.utils.email_i18n import translate, user_language
 from plane.utils.exception_logger import log_exception
 
 
 def digest_now():
     """Current time in the timezone the daily digest hour is expressed in."""
     return timezone.now().astimezone(pytz.timezone(settings.EMAIL_DIGEST_TIMEZONE))
-
-
-def update_count_label(count):
-    if count == 1:
-        return "1 aktualizacja"
-    if 2 <= count % 10 <= 4 and not 12 <= count % 100 <= 14:
-        return f"{count} aktualizacje"
-    return f"{count} aktualizacji"
 
 
 @shared_task
@@ -61,7 +54,7 @@ def stack_email_digests(force_daily=False):
         EmailNotificationLog.objects.filter(pk__in=log_ids).update(processed_at=timezone.now())
 
 
-def build_issue_rows(logs, web_url, actor_names):
+def build_issue_rows(logs, web_url, actor_names, language):
     """One row per issue, in order of the first pending activity."""
     rows = {}
     for log in logs:
@@ -90,7 +83,8 @@ def build_issue_rows(logs, web_url, actor_names):
         row["actors"] = ", ".join(
             actor_names.get(actor_id, "") for actor_id, _ in row["actors"].most_common() if actor_names.get(actor_id)
         )
-        row["count_label"] = update_count_label(row["count"])
+        row["count_label"] = translate(language, "digest.updates_count", count=row["count"])
+        row["comments_label"] = translate(language, "digest.comments", count=row["comments"]) if row["comments"] else ""
     return list(rows.values())
 
 
@@ -108,12 +102,20 @@ def send_email_digest(receiver_id, email_notification_ids):
             str(user.id): user.display_name
             for user in User.objects.filter(id__in={log.triggered_by_id for log in logs})
         }
-        issues = build_issue_rows(logs, web_url, actor_names)
+        language = user_language(receiver)
+        issues = build_issue_rows(logs, web_url, actor_names, language)
         total = sum(issue["count"] for issue in issues)
+        updates = translate(language, "digest.updates_count", count=total)
+        summary = translate(language, "digest.summary", count=len(issues), updates=updates)
+        greeting = (
+            translate(language, "digest.greeting_named", name=receiver.first_name, summary=summary)
+            if receiver.first_name
+            else translate(language, "digest.greeting", summary=summary)
+        )
 
         context = {
-            "receiver_first_name": receiver.first_name,
-            "summary_text": f"{update_count_label(total)} w {len(issues)} zadaniach, które obserwujesz.",
+            "email_language": language,
+            "greeting": greeting,
             "issues": issues,
             "preferences_url": f"{web_url}/{issues[0]['workspace_slug']}/settings/account/notifications/",
         }
@@ -140,7 +142,7 @@ def send_email_digest(receiver_id, email_notification_ids):
         )
 
         msg = EmailMultiAlternatives(
-            subject=f"Podsumowanie: {update_count_label(total)} w {len(issues)} zadaniach",
+            subject=translate(language, "digest.subject", count=len(issues), updates=updates),
             body=text_content,
             from_email=EMAIL_FROM,
             to=[receiver.email],

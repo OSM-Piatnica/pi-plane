@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import logging
@@ -22,6 +23,7 @@ from plane.db.models import EmailNotificationLog, Issue, User, UserNotificationP
 from plane.license.utils.instance_value import get_email_configuration
 from plane.settings.redis import redis_instance
 from plane.utils.email import generate_plain_text_from_html
+from plane.utils.email_i18n import user_language
 from plane.utils.exception_logger import log_exception
 
 
@@ -268,13 +270,20 @@ def send_email_notification(issue_id, notification_data, receiver_id, email_noti
                         }
                     )
 
-            summary = "Updates were made to the issue by"
+            # the name the summary line names: the first actor with property changes, else the first commenter
+            lead = (
+                (template_data[0] if template_data else comments[0])["actor_detail"]
+                if (template_data or comments)
+                else {}
+            )
+            lead_actor = f"{lead.get('first_name', '')} {lead.get('last_name', '')}".strip()
 
             # Send the mail
             subject = f"{issue.project.identifier}-{issue.sequence_id} {remove_unwanted_characters(issue.name)}"
             context = {
+                "email_language": user_language(receiver),
+                "lead_actor": lead_actor,
                 "data": template_data,
-                "summary": summary,
                 "actors_involved": len(set(actors_involved)),
                 "issue": {
                     "issue_identifier": f"{str(issue.project.identifier)}-{str(issue.sequence_id)}",

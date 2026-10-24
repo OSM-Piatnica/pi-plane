@@ -1,0 +1,94 @@
+{
+  "format": {
+    "date": "%d/%m/%Y"
+  },
+  "priority": {
+    "urgent": "Urgente",
+    "high": "Alta",
+    "medium": "Media",
+    "low": "Baja",
+    "none": "Ninguna"
+  },
+  "issue_updates": {
+    "title": "Actualizaciones de {identifier}",
+    "summary": "<strong>{actor}</strong> ha actualizado el elemento de trabajo.",
+    "summary_others": "<strong>{actor}</strong> y otras personas han actualizado el elemento de trabajo.",
+    "title_changed": "El título del elemento de trabajo se ha cambiado a {title}",
+    "updates": "Actualizaciones",
+    "due_date": "Fecha de vencimiento:",
+    "duplicate": "Duplicado:",
+    "assignee": "Asignado:",
+    "labels": "Etiquetas:",
+    "state": "Estado:",
+    "links": "Enlaces:",
+    "priority": "Prioridad:",
+    "blocking": "Bloquea:",
+    "comments": "Comentarios",
+    "more": "+{count} más",
+    "links_removed": {
+      "one": "Se eliminó {count} enlace",
+      "other": "Se eliminaron {count} enlaces"
+    },
+    "view": "Ver elemento de trabajo",
+    "footer": "Este correo se envió a <a href=\"mailto:{email}\">{email}</a>. Si prefiere no recibir este tipo de correos, <a href=\"{issue_url}\">puede dejar de seguir este elemento de trabajo</a> o <a href=\"{preferences_url}\">gestionar sus preferencias de correo</a>."
+  },
+  "digest": {
+    "title": "Resumen de actualizaciones",
+    "greeting_named": "Hola {name}, tiene {summary}",
+    "greeting": "Tiene {summary}",
+    "updates_count": {
+      "one": "{count} actualización",
+      "other": "{count} actualizaciones"
+    },
+    "summary": {
+      "one": "{updates} en {count} elemento de trabajo que sigue.",
+      "other": "{updates} en {count} elementos de trabajo que sigue."
+    },
+    "subject": {
+      "one": "Resumen: {updates} en {count} elemento de trabajo",
+      "other": "Resumen: {updates} en {count} elementos de trabajo"
+    },
+    "comments": "comentarios: {count}",
+    "footer": "Este es un resumen de las actualizaciones de los elementos de trabajo. Las menciones las recibe al instante. <a href=\"{preferences_url}\">Cambiar la configuración de notificaciones</a>."
+  },
+  "due_reminder": {
+    "title": "Recordatorio de elementos de trabajo",
+    "greeting_named": "Hola {name}, tiene {summary}",
+    "greeting": "Tiene {summary}",
+    "section_overdue": "Vencidos",
+    "section_today": "Elementos de trabajo que vencen hoy",
+    "work_items": {
+      "one": "{count} elemento de trabajo",
+      "other": "{count} elementos de trabajo"
+    },
+    "overdue": {
+      "one": "{count} vencido",
+      "other": "{count} vencidos"
+    },
+    "overdue_only": {
+      "one": "{count} elemento de trabajo vencido",
+      "other": "{count} elementos de trabajo vencidos"
+    },
+    "summary_both": "{today} que vencen hoy y {overdue}.",
+    "summary_today": "{today} que vencen hoy ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Tiene {today} que vencen hoy y {overdue}",
+    "subject_today": "Tiene {today} que vencen hoy ({date})",
+    "subject_overdue": "Tiene {overdue}",
+    "days_overdue": {
+      "one": "{count} día de retraso",
+      "other": "{count} días de retraso"
+    },
+    "cta": "Ver mis elementos de trabajo",
+    "footer": "Este es un recordatorio automático que se envía cada mañana sobre los elementos de trabajo que vencen hoy y los que ya han vencido."
+  },
+  "project_addition": {
+    "subject": "Le han invitado a un proyecto de Pi-Plane",
+    "preheader": "{inviter} le ha invitado al proyecto {project} del espacio de trabajo {workspace} en Pi-Plane.",
+    "heading": "Le han invitado al proyecto {project} en Pi-Plane",
+    "intro": "{inviter} le ha invitado a colaborar en el proyecto <strong>{project}</strong> del espacio de trabajo <strong>{workspace}</strong> en Pi-Plane.",
+    "button": "Ir al proyecto",
+    "fallback": "Si el botón no funciona, copie este enlace y péguelo en su navegador:",
+    "note": "Nota: este correo se envió a <span>{email}</span>. Si no esperaba esta invitación, puede ignorar este correo."
+  }
+}
