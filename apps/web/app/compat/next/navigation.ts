@@ -8,7 +8,8 @@
 import { useMemo } from "react";
 import { useLocation, useNavigate, useParams as useParamsRR, useSearchParams as useSearchParamsRR } from "react-router";
 import { ensureTrailingSlash } from "./helper";
-import { useRoutePolicy, withDefaultWorkspaceParams } from "./route-policy-context";
+import { withDefaultWorkspaceParams } from "./route-policy";
+import { useRoutePolicy } from "./route-policy-context";
 
 export function useRouter() {
   const navigate = useNavigate();

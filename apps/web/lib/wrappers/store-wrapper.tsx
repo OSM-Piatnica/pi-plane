@@ -12,11 +12,8 @@ import { useTheme } from "next-themes";
 import { useLocation, useNavigate, useParams } from "react-router";
 // helpers
 import { applyCustomTheme, clearCustomTheme } from "@plane/utils";
-import {
-  RoutePolicyProvider,
-  normalizeDefaultWorkspacePath,
-  withDefaultWorkspaceParams,
-} from "@/app/compat/next/route-policy-context";
+import { normalizeDefaultWorkspacePath, withDefaultWorkspaceParams } from "@/app/compat/next/route-policy";
+import { RoutePolicyProvider } from "@/app/compat/next/route-policy-context";
 // hooks
 import { useAppTheme } from "@/hooks/store/use-app-theme";
 import { useInstance } from "@/hooks/store/use-instance";

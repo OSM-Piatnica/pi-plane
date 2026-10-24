@@ -5,7 +5,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { normalizeDefaultWorkspacePath, withDefaultWorkspaceParams } from "@/app/compat/next/route-policy-context";
+import { normalizeDefaultWorkspacePath, withDefaultWorkspaceParams } from "@/app/compat/next/route-policy";
 
 describe("normalizeDefaultWorkspacePath", () => {
   it("shortens the work item browse route of the default workspace", () => {
