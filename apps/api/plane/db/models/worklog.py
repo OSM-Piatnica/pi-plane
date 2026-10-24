@@ -45,7 +45,7 @@ class IssueWorkLog(ProjectBaseModel):
         ]
         constraints = [
             models.CheckConstraint(
-                check=models.Q(duration__gte=1, duration__lte=MAX_WORKLOG_MINUTES),
+                condition=models.Q(duration__gte=1, duration__lte=MAX_WORKLOG_MINUTES),
                 name="issue_worklog_duration_range",
             )
         ]

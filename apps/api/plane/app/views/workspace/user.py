@@ -411,7 +411,8 @@ class WorkspaceUserActivityEndpoint(BaseAPIView):
         projects = request.query_params.getlist("project", [])
 
         queryset = IssueActivity.objects.filter(
-            ~Q(field__in=["comment", "vote", "reaction", "draft"]),
+            # time logged on work items is not part of the profile feeds (it is not for guests)
+            ~Q(field__in=["comment", "vote", "reaction", "draft", "worklog"]),
             _visible_issues_q(request.user, prefix="issue__"),
             workspace__slug=slug,
             project__archived_at__isnull=True,
