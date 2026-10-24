@@ -935,5 +935,14 @@
     "children_span": "Sub-item kerja: {start} – {end}",
     "starts_early": "Sub-item kerja dimulai sebelum item kerja ini",
     "ends_late": "Sub-item kerja berakhir setelah item kerja ini"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Luaskan semua",
+    "collapse_all": "Ciutkan semua",
+    "levels": "Tingkat",
+    "up_to_level": "Hingga tingkat {level}",
+    "all_levels": "Semua tingkat",
+    "load_error": "Sub-item kerja tidak dapat dimuat",
+    "too_many": "Terlalu banyak item kerja untuk diperluas sekaligus. Perluas sisanya satu per satu."
   }
 }

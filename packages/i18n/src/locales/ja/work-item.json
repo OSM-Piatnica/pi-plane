@@ -935,5 +935,14 @@
     "children_span": "サブ作業項目: {start} – {end}",
     "starts_early": "サブ作業項目がこの作業項目より前に始まります",
     "ends_late": "サブ作業項目がこの作業項目より後に終わります"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "すべて展開",
+    "collapse_all": "すべて折りたたむ",
+    "levels": "階層",
+    "up_to_level": "階層{level}まで",
+    "all_levels": "すべての階層",
+    "load_error": "サブ作業項目を読み込めませんでした",
+    "too_many": "一度に展開できる作業項目が多すぎます。残りは1つずつ展開してください。"
   }
 }

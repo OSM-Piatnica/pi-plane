@@ -935,5 +935,14 @@
     "children_span": "Alt iş öğeleri: {start} – {end}",
     "starts_early": "Alt iş öğeleri bu iş öğesinden önce başlıyor",
     "ends_late": "Alt iş öğeleri bu iş öğesinden sonra bitiyor"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Tümünü genişlet",
+    "collapse_all": "Tümünü daralt",
+    "levels": "Düzeyler",
+    "up_to_level": "{level}. düzeye kadar",
+    "all_levels": "Tüm düzeyler",
+    "load_error": "Alt iş öğeleri yüklenemedi",
+    "too_many": "Aynı anda genişletilemeyecek kadar çok iş öğesi var. Kalanları tek tek genişletin."
   }
 }

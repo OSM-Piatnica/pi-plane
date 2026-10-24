@@ -935,5 +935,14 @@
     "children_span": "Sub-activități: {start} – {end}",
     "starts_early": "Sub-activitățile încep înainte de această activitate",
     "ends_late": "Sub-activitățile se termină după această activitate"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Extinde tot",
+    "collapse_all": "Restrânge tot",
+    "levels": "Niveluri",
+    "up_to_level": "Până la nivelul {level}",
+    "all_levels": "Toate nivelurile",
+    "load_error": "Sub-activitățile nu au putut fi încărcate",
+    "too_many": "Prea multe activități de extins deodată. Extinde restul pe rând."
   }
 }
