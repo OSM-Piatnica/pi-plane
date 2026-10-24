@@ -43,15 +43,26 @@ bound by their Google account id.
 
 ## How people are matched
 
-1. By the identity at the provider (`Account.provider_account_id`). If that is known, that user signs in.
-2. Otherwise by email address. The identity is then bound to that user, **unless** the user is already bound to a
-   different identity of the same provider (`OIDC_IDENTITY_MISMATCH`).
+1. By the identity at the provider (`Account.provider_account_id`). If that is known, that user signs in. The identity
+   is the subject **together with the issuer** (for Entra, tenant id + object id), so a subject handed out by another
+   issuer never matches.
+2. Otherwise, if an account with that email address exists, the person is refused (`OIDC_ACCOUNT_LINK_REQUIRED`): an
+   address alone never takes an account over, because anybody could have registered it with a password of their own
+   before its owner first signed in. To migrate existing accounts, set `<KEY>_LINK_EXISTING_ACCOUNTS=1` for the time
+   people sign in for the first time, then switch it off again. Linking binds the identity to the account **and
+   replaces any password set on it**, so from then on only the provider opens it. An account already bound to a
+   different identity of the provider is always refused (`OIDC_IDENTITY_MISMATCH`).
 3. Otherwise a new user is created, if `<KEY>_ENABLE_SIGNUP` is `1` (or they have a workspace invite).
 
+The user, the identity and the profile are created in one transaction, and a binding is never moved to another user.
 `<KEY>_ENABLE_SIGNUP` is independent of `ENABLE_SIGNUP` (email sign-up): a corporate instance can keep email sign-up
 closed and still create accounts for everyone in its tenant. Deactivated accounts and bots are refused as with every
 other sign-in. With `ENABLE_<KEY>_SYNC=1` the name is refreshed from the provider at every sign-in. No token of the
 provider is stored.
+
+Entra: when the tenant sends the optional `xms_edov` claim (email domain verified), a value other than true is refused.
+Provider answers are limited to 1 MiB; the log names the stage of a refused sign-in and the provider's own error code and
+description (never the request, which carries the secret and the code).
 
 ## Adding another provider
 
