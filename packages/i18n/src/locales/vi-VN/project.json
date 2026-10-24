@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Lưu trữ dự án sẽ ẩn dự án khỏi thanh điều hướng bên, nhưng bạn vẫn có thể truy cập từ trang dự án. Bạn có thể khôi phục hoặc xóa dự án bất cứ lúc nào.",
-      "delete_description": "Khi xóa dự án, tất cả dữ liệu và tài nguyên trong dự án sẽ bị xóa vĩnh viễn và không thể khôi phục."
+      "delete_description": "Khi xóa dự án, tất cả dữ liệu và tài nguyên trong dự án sẽ bị xóa vĩnh viễn và không thể khôi phục.",
+      "duplicate_description": "Tạo dự án mới với cài đặt, trạng thái, nhãn và các cấu hình khác của dự án này. Mục công việc không được sao chép."
     },
     "delete_modal": {
       "confirm_placeholder": "Nhập “{phrase}”",
@@ -649,6 +650,17 @@
       "title": "Yêu cầu tham gia ({count})",
       "approve": "Phê duyệt",
       "reject": "Từ chối"
+    },
+    "duplicate_modal": {
+      "always_copied": "Cài đặt, trạng thái và loại mục công việc luôn được sao chép.",
+      "description": "Tạo dự án mới với cùng các cài đặt. Mục công việc, trang và webhook không được sao chép.",
+      "error": "Không thể nhân bản dự án. Vui lòng thử lại.",
+      "submit": "Nhân bản dự án",
+      "submitting": "Đang nhân bản dự án...",
+      "success": "Đã nhân bản dự án thành công.",
+      "title": "Nhân bản dự án",
+      "too_large": "Dự án này quá lớn để sao chép. Hãy tắt bớt một số tùy chọn và thử lại.",
+      "what_to_copy": "Sao chép thêm"
     }
   }
 }

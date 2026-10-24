@@ -185,6 +185,31 @@ export type TPartialProject = IPartialProject;
 
 export type TProject = TPartialProject & IProject;
 
+/** What to carry into a duplicated project; states and work item types are always copied. */
+export type TProjectDuplicateInclude = {
+  labels?: boolean;
+  estimates?: boolean;
+  intake?: boolean;
+  members?: boolean;
+  cycles?: boolean;
+  modules?: boolean;
+  views?: boolean;
+};
+
+export type TProjectDuplicatePayload = {
+  name?: string;
+  identifier?: string;
+  network?: number;
+  include?: TProjectDuplicateInclude;
+};
+
+export type TProjectCopySummary = {
+  source_project_id: string;
+  counts: Record<string, number>;
+  /** Things the copy did not carry over, e.g. `webhooks:not-copied` or `views:private`. */
+  skipped: string[];
+};
+
 export type TProjectAccessRequestStatus = "pending" | "approved" | "rejected";
 
 /** A request to join a Private project; `status` is null when the user has not asked. */

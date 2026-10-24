@@ -18,6 +18,7 @@ import { useProject } from "@/hooks/store/use-project";
 // local imports
 import { ArchiveRestoreProjectModal } from "../archive-restore-modal";
 import { DeleteProjectModal } from "../delete-project-modal";
+import { DuplicateProjectModal } from "../duplicate-project-modal";
 
 type Props = {
   projectId: string;
@@ -30,6 +31,7 @@ export const GeneralProjectSettingsControlSection = observer(function GeneralPro
   // states
   const [selectProject, setSelectedProject] = useState<string | null>(null);
   const [archiveProject, setArchiveProject] = useState<boolean>(false);
+  const [duplicateProject, setDuplicateProject] = useState<boolean>(false);
   // params
   const { workspaceSlug } = useParams();
   // store hooks
@@ -50,15 +52,34 @@ export const GeneralProjectSettingsControlSection = observer(function GeneralPro
           archive
         />
       )}
+      <DuplicateProjectModal
+        project={currentProjectDetails}
+        isOpen={duplicateProject}
+        onClose={() => setDuplicateProject(false)}
+      />
       <DeleteProjectModal
         project={currentProjectDetails}
         isOpen={Boolean(selectProject)}
         onClose={() => setSelectedProject(null)}
       />
       <div className="rounded-lg border border-subtle bg-layer-2">
-        {/* Project Selector */}
         <SettingsBoxedControlItem
           className="rounded-b-none border-0 border-b"
+          title={t("project_components.duplicate_modal.title")}
+          description={t("project_components.control_section.duplicate_description")}
+          control={
+            <Button
+              variant="secondary"
+              size="sm"
+              stretch="auto"
+              label={t("project_components.duplicate_modal.title")}
+              onClick={() => setDuplicateProject(true)}
+            />
+          }
+        />
+        {/* Project Selector */}
+        <SettingsBoxedControlItem
+          className="rounded-none border-0 border-b"
           title={t("archive")}
           description={t("project_components.control_section.archive_description")}
           control={

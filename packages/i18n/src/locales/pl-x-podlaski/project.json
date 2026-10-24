@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Zarchiwizowanie projektu usunie go z nawigacji bocznej, ale nadal będzie dostępny na stronie projektów. Możesz go w dowolnej chwili przywrócić lub usunąć.",
-      "delete_description": "Po usunięciu projektu wszystkie jego dane i zasoby zostaną trwale usunięte i nie będzie można ich odzyskać."
+      "delete_description": "Po usunięciu projektu wszystkie jego dane i zasoby zostaną trwale usunięte i nie będzie można ich odzyskać.",
+      "duplicate_description": "Utwórz nowy projekt z ustawieniami, stanami, etykietami i pozostałą konfiguracją tego projektu. Elementy pracy nie są kopiowane."
     },
     "delete_modal": {
       "confirm_placeholder": "Wpisz „{phrase}”",
@@ -649,6 +650,17 @@
       "title": "Prośby o dołączenie ({count})",
       "approve": "Zatwierdź",
       "reject": "Odrzuć"
+    },
+    "duplicate_modal": {
+      "always_copied": "Ustawienia, stany i typy elementów pracy są zawsze kopiowane.",
+      "description": "Tworzy nowy projekt z tymi samymi ustawieniami. Elementy pracy, strony i webhooki nie są kopiowane.",
+      "error": "Nie udało się zduplikować projektu. Spróbuj ponownie.",
+      "submit": "Duplikuj projekt",
+      "submitting": "Duplikowanie projektu...",
+      "success": "Projekt został zduplikowany.",
+      "title": "Duplikuj projekt",
+      "too_large": "Ten projekt jest zbyt duży, aby go skopiować. Wyłącz część opcji i spróbuj ponownie.",
+      "what_to_copy": "Kopiuj także"
     }
   }
 }

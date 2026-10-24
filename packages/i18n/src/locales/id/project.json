@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Mengarsipkan proyek akan menghapusnya dari navigasi samping, tetapi Anda masih dapat mengaksesnya dari halaman proyek. Anda dapat memulihkan atau menghapus proyek kapan saja.",
-      "delete_description": "Saat menghapus proyek, semua data dan sumber daya di dalamnya akan dihapus secara permanen dan tidak dapat dipulihkan."
+      "delete_description": "Saat menghapus proyek, semua data dan sumber daya di dalamnya akan dihapus secara permanen dan tidak dapat dipulihkan.",
+      "duplicate_description": "Buat proyek baru dengan pengaturan, status, label, dan konfigurasi lain dari proyek ini. Item kerja tidak disalin."
     },
     "delete_modal": {
       "confirm_placeholder": "Masukkan “{phrase}”",
@@ -649,6 +650,17 @@
       "title": "Permintaan bergabung ({count})",
       "approve": "Setujui",
       "reject": "Tolak"
+    },
+    "duplicate_modal": {
+      "always_copied": "Pengaturan, status, dan tipe item kerja selalu disalin.",
+      "description": "Membuat proyek baru dengan pengaturan yang sama. Item kerja, halaman, dan webhook tidak disalin.",
+      "error": "Proyek tidak dapat diduplikasi. Silakan coba lagi.",
+      "submit": "Duplikat proyek",
+      "submitting": "Menduplikasi proyek...",
+      "success": "Proyek berhasil diduplikasi.",
+      "title": "Duplikat proyek",
+      "too_large": "Proyek ini terlalu besar untuk disalin. Matikan beberapa opsi lalu coba lagi.",
+      "what_to_copy": "Salin juga"
     }
   }
 }

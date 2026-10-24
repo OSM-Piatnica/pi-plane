@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Als je een project archiveert, verdwijnt het uit je zijnavigatie, maar je kunt het nog steeds openen via je projectenpagina. Je kunt het project op elk moment herstellen of verwijderen.",
-      "delete_description": "Als je een project verwijdert, worden alle gegevens en bronnen in dat project permanent verwijderd en kunnen ze niet worden hersteld."
+      "delete_description": "Als je een project verwijdert, worden alle gegevens en bronnen in dat project permanent verwijderd en kunnen ze niet worden hersteld.",
+      "duplicate_description": "Maak een nieuw project met de instellingen, statussen, labels en overige configuratie van dit project. Werkitems worden niet gekopieerd."
     },
     "delete_modal": {
       "confirm_placeholder": "Voer “{phrase}” in",
@@ -649,6 +650,17 @@
       "title": "Verzoeken om lid te worden ({count})",
       "approve": "Goedkeuren",
       "reject": "Afwijzen"
+    },
+    "duplicate_modal": {
+      "always_copied": "Instellingen, statussen en typen werkitems worden altijd gekopieerd.",
+      "description": "Maakt een nieuw project met dezelfde instellingen. Werkitems, pagina's en webhooks worden niet gekopieerd.",
+      "error": "Het project kon niet worden gedupliceerd. Probeer het opnieuw.",
+      "submit": "Project dupliceren",
+      "submitting": "Project wordt gedupliceerd...",
+      "success": "Project is gedupliceerd.",
+      "title": "Project dupliceren",
+      "too_large": "Dit project is te groot om te kopiëren. Schakel enkele opties uit en probeer het opnieuw.",
+      "what_to_copy": "Kopieer ook"
     }
   }
 }

@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Arquivar um projeto o removerá da navegação lateral, mas ainda poderá acessá-lo pela página de projetos. Pode restaurar ou eliminar o projeto quando quiser.",
-      "delete_description": "Ao eliminar um projeto, todos os dados e recursos dentro dele serão removidos permanentemente e não poderão ser recuperados."
+      "delete_description": "Ao eliminar um projeto, todos os dados e recursos dentro dele serão removidos permanentemente e não poderão ser recuperados.",
+      "duplicate_description": "Crie um novo projeto com as definições, os estados, as etiquetas e o restante da configuração deste projeto. Os itens de trabalho não são copiados."
     },
     "delete_modal": {
       "confirm_placeholder": "Digite “{phrase}”",
@@ -649,6 +650,17 @@
       "title": "Pedidos para aderir ({count})",
       "approve": "Aprovar",
       "reject": "Rejeitar"
+    },
+    "duplicate_modal": {
+      "always_copied": "As definições, os estados e os tipos de item de trabalho são sempre copiados.",
+      "description": "Cria um novo projeto com as mesmas definições. Os itens de trabalho, as páginas e os webhooks não são copiados.",
+      "error": "Não foi possível duplicar o projeto. Tente novamente.",
+      "submit": "Duplicar projeto",
+      "submitting": "A duplicar o projeto...",
+      "success": "Projeto duplicado com sucesso.",
+      "title": "Duplicar projeto",
+      "too_large": "Este projeto é demasiado grande para ser copiado. Desative algumas opções e tente novamente.",
+      "what_to_copy": "Copiar também"
     }
   }
 }

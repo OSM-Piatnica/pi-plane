@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Bir projeyi arşivlemek onu yan gezinmeden kaldırır, ancak projeler sayfasından erişmeye devam edebilirsiniz. Projeyi istediğiniz zaman geri yükleyebilir veya silebilirsiniz.",
-      "delete_description": "Bir proje silindiğinde, projedeki tüm veriler ve kaynaklar kalıcı olarak kaldırılır ve geri alınamaz."
+      "delete_description": "Bir proje silindiğinde, projedeki tüm veriler ve kaynaklar kalıcı olarak kaldırılır ve geri alınamaz.",
+      "duplicate_description": "Bu projenin ayarları, durumları, etiketleri ve diğer yapılandırmasıyla yeni bir proje oluşturun. İş öğeleri kopyalanmaz."
     },
     "delete_modal": {
       "confirm_placeholder": "“{phrase}” yazın",
@@ -649,6 +650,17 @@
       "title": "Katılma istekleri ({count})",
       "approve": "Onayla",
       "reject": "Reddet"
+    },
+    "duplicate_modal": {
+      "always_copied": "Ayarlar, durumlar ve iş öğesi türleri her zaman kopyalanır.",
+      "description": "Aynı ayarlarla yeni bir proje oluşturur. İş öğeleri, sayfalar ve webhook'lar kopyalanmaz.",
+      "error": "Proje çoğaltılamadı. Lütfen tekrar deneyin.",
+      "submit": "Projeyi çoğalt",
+      "submitting": "Proje çoğaltılıyor...",
+      "success": "Proje başarıyla çoğaltıldı.",
+      "title": "Projeyi çoğalt",
+      "too_large": "Bu proje kopyalanamayacak kadar büyük. Bazı seçenekleri kapatıp tekrar deneyin.",
+      "what_to_copy": "Şunları da kopyala"
     }
   }
 }

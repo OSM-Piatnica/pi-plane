@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Archiváciou projektu sa odstráni z bočnej navigácie, ale stále k nemu budete mať prístup zo stránky projektov. Projekt môžete kedykoľvek obnoviť alebo odstrániť.",
-      "delete_description": "Pri odstránení projektu sa všetky dáta a zdroje v ňom trvalo odstránia a nemožno ich obnoviť."
+      "delete_description": "Pri odstránení projektu sa všetky dáta a zdroje v ňom trvalo odstránia a nemožno ich obnoviť.",
+      "duplicate_description": "Vytvorte nový projekt s nastaveniami, stavmi, štítkami a ďalšou konfiguráciou tohto projektu. Pracovné položky sa nekopírujú."
     },
     "delete_modal": {
       "confirm_placeholder": "Zadajte „{phrase}“",
@@ -649,6 +650,17 @@
       "title": "Žiadosti o pripojenie ({count})",
       "approve": "Schváliť",
       "reject": "Zamietnuť"
+    },
+    "duplicate_modal": {
+      "always_copied": "Nastavenia, stavy a typy pracovných položiek sa kopírujú vždy.",
+      "description": "Vytvorí nový projekt s rovnakým nastavením. Pracovné položky, stránky a webhooky sa nekopírujú.",
+      "error": "Projekt sa nepodarilo duplikovať. Skúste to prosím znova.",
+      "submit": "Duplikovať projekt",
+      "submitting": "Duplikuje sa projekt...",
+      "success": "Projekt bol úspešne duplikovaný.",
+      "title": "Duplikovať projekt",
+      "too_large": "Tento projekt je príliš veľký na skopírovanie. Vypnite niektoré možnosti a skúste to znova.",
+      "what_to_copy": "Kopírovať aj"
     }
   }
 }

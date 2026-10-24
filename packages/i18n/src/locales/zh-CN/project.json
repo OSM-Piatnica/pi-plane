@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "归档项目会将其从侧边导航中移除，但您仍可从项目页面访问它。您可以随时恢复或删除该项目。",
-      "delete_description": "删除项目时，该项目中的所有数据和资源将被永久删除且无法恢复。"
+      "delete_description": "删除项目时，该项目中的所有数据和资源将被永久删除且无法恢复。",
+      "duplicate_description": "使用此项目的设置、状态、标签及其他配置创建新项目。工作项不会被复制。"
     },
     "delete_modal": {
       "confirm_placeholder": "输入“{phrase}”",
@@ -649,6 +650,17 @@
       "title": "加入请求({count})",
       "approve": "批准",
       "reject": "拒绝"
+    },
+    "duplicate_modal": {
+      "always_copied": "设置、状态和工作项类型始终会被复制。",
+      "description": "使用相同的设置创建新项目。工作项、页面和 Webhook 不会被复制。",
+      "error": "无法复制项目，请重试。",
+      "submit": "复制项目",
+      "submitting": "正在复制项目...",
+      "success": "项目复制成功。",
+      "title": "复制项目",
+      "too_large": "此项目过大，无法复制。请关闭部分选项后重试。",
+      "what_to_copy": "同时复制"
     }
   }
 }

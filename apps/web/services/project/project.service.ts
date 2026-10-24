@@ -17,6 +17,8 @@ import type {
   TPartialProject,
   TProjectAccessRequest,
   TProjectAccessRequestStatus,
+  TProjectCopySummary,
+  TProjectDuplicatePayload,
 } from "@plane/types";
 // helpers
 // services
@@ -31,6 +33,23 @@ export class ProjectService extends APIService {
     return this.post(`/api/workspaces/${workspaceSlug}/projects/`, data)
       .then((response) => response?.data)
       .catch((error) => {
+        throw error?.response;
+      });
+  }
+
+  /**
+   * The source project is named in the path, never the body: the API scopes its project-level
+   * permission check to that path segment.
+   */
+  async duplicateProject(
+    workspaceSlug: string,
+    projectId: string,
+    data: TProjectDuplicatePayload
+  ): Promise<TProject & { copy_summary: TProjectCopySummary }> {
+    return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/duplicate/`, data)
+      .then((response) => response?.data)
+      .catch((error) => {
+        // Same as createProject: callers read `err.data` for the API's error codes.
         throw error?.response;
       });
   }

@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "L'archivage d'un projet le retire de la navigation latérale, mais vous pourrez toujours y accéder depuis la page des projets. Vous pouvez le restaurer ou le supprimer à tout moment.",
-      "delete_description": "La suppression d'un projet entraîne la suppression définitive de toutes ses données et ressources, qui ne pourront pas être récupérées."
+      "delete_description": "La suppression d'un projet entraîne la suppression définitive de toutes ses données et ressources, qui ne pourront pas être récupérées.",
+      "duplicate_description": "Créez un nouveau projet avec les paramètres, les états, les étiquettes et le reste de la configuration de ce projet. Les éléments de travail ne sont pas copiés."
     },
     "delete_modal": {
       "confirm_placeholder": "Saisissez « {phrase} »",
@@ -649,6 +650,17 @@
       "title": "Demandes d'adhésion ({count})",
       "approve": "Approuver",
       "reject": "Refuser"
+    },
+    "duplicate_modal": {
+      "always_copied": "Les paramètres, les états et les types d'éléments de travail sont toujours copiés.",
+      "description": "Crée un nouveau projet avec les mêmes paramètres. Les éléments de travail, les pages et les webhooks ne sont pas copiés.",
+      "error": "Le projet n'a pas pu être dupliqué. Veuillez réessayer.",
+      "submit": "Dupliquer le projet",
+      "submitting": "Duplication du projet...",
+      "success": "Projet dupliqué avec succès.",
+      "title": "Dupliquer le projet",
+      "too_large": "Ce projet est trop volumineux pour être copié. Désactivez certaines options et réessayez.",
+      "what_to_copy": "Copier aussi"
     }
   }
 }

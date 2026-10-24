@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "封存專案會將其從側邊導覽中移除，但您仍可從專案頁面存取。您可以隨時還原或刪除該專案。",
-      "delete_description": "刪除專案時，該專案中的所有資料和資源都將被永久移除且無法復原。"
+      "delete_description": "刪除專案時，該專案中的所有資料和資源都將被永久移除且無法復原。",
+      "duplicate_description": "使用此專案的設定、狀態、標籤及其他組態建立新專案。工作事項不會被複製。"
     },
     "delete_modal": {
       "confirm_placeholder": "輸入「{phrase}」",
@@ -649,6 +650,17 @@
       "title": "加入請求({count})",
       "approve": "核准",
       "reject": "拒絕"
+    },
+    "duplicate_modal": {
+      "always_copied": "設定、狀態和工作事項類型一律會被複製。",
+      "description": "使用相同的設定建立新專案。工作事項、頁面和 Webhook 不會被複製。",
+      "error": "無法複製專案，請再試一次。",
+      "submit": "複製專案",
+      "submitting": "正在複製專案...",
+      "success": "專案複製成功。",
+      "title": "複製專案",
+      "too_large": "此專案過大，無法複製。請關閉部分選項後再試一次。",
+      "what_to_copy": "同時複製"
     }
   }
 }

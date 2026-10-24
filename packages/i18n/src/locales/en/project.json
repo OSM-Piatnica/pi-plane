@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Archiving a project will unlist your project from your side navigation although you will still be able to access it from your projects page. You can restore the project or delete it whenever you want.",
-      "delete_description": "When deleting a project, all of the data and resources within that project will be permanently removed and cannot be recovered."
+      "delete_description": "When deleting a project, all of the data and resources within that project will be permanently removed and cannot be recovered.",
+      "duplicate_description": "Create a new project with this project's settings, states, labels and other configuration. Work items are not copied."
     },
     "delete_modal": {
       "confirm_placeholder": "Enter “{phrase}”",
@@ -649,6 +650,17 @@
       "title": "Requests to join ({count})",
       "approve": "Approve",
       "reject": "Reject"
+    },
+    "duplicate_modal": {
+      "always_copied": "Settings, states and work item types are always copied.",
+      "description": "Creates a new project with the same settings. Work items, pages and webhooks are not copied.",
+      "error": "Could not duplicate the project. Please try again.",
+      "submit": "Duplicate project",
+      "submitting": "Duplicating project...",
+      "success": "Project duplicated successfully.",
+      "title": "Duplicate project",
+      "too_large": "This project is too large to copy. Turn off some of the options and try again.",
+      "what_to_copy": "Also copy"
     }
   }
 }
