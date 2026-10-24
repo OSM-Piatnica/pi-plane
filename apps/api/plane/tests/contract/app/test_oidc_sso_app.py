@@ -37,8 +37,13 @@ def _jwks(key=KEY):
 
 
 class FakeResponse:
-    def __init__(self, payload, status=200):
+    def __init__(self, payload, status=200, raw=None):
         self.payload, self.status_code = payload, status
+        self.raw = raw if raw is not None else json.dumps(payload).encode()
+
+    def iter_content(self, chunk_size=8192):
+        for i in range(0, len(self.raw), chunk_size):
+            yield self.raw[i : i + chunk_size]
 
     def raise_for_status(self):
         if self.status_code >= 400:
@@ -60,6 +65,9 @@ class FakeIdp:
         self.issuer = issuer
         self.id_token = None
         self.exchanged = []
+        self.token_status = 200
+        self.token_payload = None
+        self.oversized_keys = False
 
     def fetch(self, method, url, **kwargs):
         if url.endswith("/.well-known/openid-configuration"):
@@ -72,9 +80,13 @@ class FakeIdp:
                 }
             )
         if url == "https://idp.example.com/keys":
+            if self.oversized_keys:
+                return FakeResponse(None, raw=b" " * (2 * 1024 * 1024))
             return FakeResponse(_jwks())
         if url == "https://idp.example.com/token":
             self.exchanged.append(kwargs["data"])
+            if self.token_status != 200:
+                return FakeResponse(self.token_payload, status=self.token_status)
             return FakeResponse({"id_token": self.id_token, "access_token": "secret-access", "refresh_token": "r"})
         raise AssertionError(f"unexpected fetch {url}")
 
@@ -204,6 +216,7 @@ class TestEntraSignIn:
         assert not User.objects.filter(email="ala.nowak@piatnica.com.pl").exists()
 
     def test_existing_user_is_bound_on_first_sign_in(self, instance, idp, create_user):
+        CONFIG["ENTRA_LINK_EXISTING_ACCOUNTS"] = "1"
         client, response, _ = sign_in(idp, token_kwargs={"email": create_user.email})
         assert "error_code" not in response.url
         assert client.session["_auth_user_id"] == str(create_user.id)
@@ -307,6 +320,7 @@ class TestEntraSignIn:
 
     def test_signup_can_be_disabled_per_provider(self, instance, idp, create_user):
         CONFIG["ENTRA_ENABLE_SIGNUP"] = "0"
+        CONFIG["ENTRA_LINK_EXISTING_ACCOUNTS"] = "1"
         _, refused, _ = sign_in(idp)
         assert failed_with(refused, "SIGNUP_DISABLED")
         # people who already have an account still sign in
@@ -320,6 +334,7 @@ class TestEntraSignIn:
         assert "error_code" not in response.url
 
     def test_deactivated_users_are_still_refused(self, instance, idp, create_user):
+        CONFIG["ENTRA_LINK_EXISTING_ACCOUNTS"] = "1"
         create_user.is_active = False
         create_user.last_logout_time = timezone.now()
         create_user.save()
@@ -383,7 +398,7 @@ class TestGenericOidc:
     def test_signs_in_with_a_verified_email(self, instance, idp):
         _, response, _ = sign_in(idp, provider="oidc", token_kwargs={"email_verified": True, "tid": None, "oid": None})
         assert "error_code" not in response.url
-        assert Account.objects.get(provider="oidc").provider_account_id == "pairwise-sub"
+        assert Account.objects.get(provider="oidc").provider_account_id == f"{ISSUER}|pairwise-sub"
 
     @pytest.mark.parametrize("verified", [False, None])
     def test_refuses_an_unverified_email(self, instance, idp, verified):
@@ -417,7 +432,10 @@ class TestGoogleOidc:
         _, response, query = self.sign_in(google_idp)
         assert "error_code" not in response.url
         assert query["redirect_uri"].endswith("/auth/oidc/google-oidc/callback/")
-        assert Account.objects.get(provider="google-oidc").provider_account_id == "pairwise-sub"
+        assert (
+            Account.objects.get(provider="google-oidc").provider_account_id
+            == "https://accounts.google.com|pairwise-sub"
+        )
 
     def test_refuses_an_unverified_email(self, instance, google_idp):
         _, response, _ = self.sign_in(google_idp, email_verified=False)
@@ -430,3 +448,125 @@ class TestGoogleOidc:
         for hd in ({"hd": "other.com"}, {}):
             _, refused, _ = self.sign_in(google_idp, sub=str(uuid.uuid4()), email="x@piatnica.com.pl", **hd)
             assert failed_with(refused, "OIDC_EMAIL_DOMAIN_NOT_ALLOWED")
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestAccountOwnership:
+    """An address alone never takes an account over, and a binding never moves."""
+
+    def test_existing_account_is_not_linked_by_default(self, instance, idp, create_user):
+        # somebody registered the address with a password of their own before the owner first signed in
+        create_user.set_password("attackers-password")
+        create_user.is_password_autoset = False
+        create_user.save()
+        client, response, _ = sign_in(idp, token_kwargs={"email": create_user.email})
+        assert failed_with(response, "OIDC_ACCOUNT_LINK_REQUIRED")
+        assert "_auth_user_id" not in client.session
+        assert not Account.objects.filter(provider="entra").exists()
+        create_user.refresh_from_db()
+        assert create_user.check_password("attackers-password")
+
+    def test_linking_takes_the_account_over_from_whoever_set_a_password(self, instance, idp, create_user):
+        CONFIG["ENTRA_LINK_EXISTING_ACCOUNTS"] = "1"
+        create_user.set_password("attackers-password")
+        create_user.is_password_autoset = False
+        create_user.is_email_verified = False
+        create_user.save()
+        client, response, _ = sign_in(idp, token_kwargs={"email": create_user.email})
+        assert "error_code" not in response.url
+        create_user.refresh_from_db()
+        assert client.session["_auth_user_id"] == str(create_user.id)
+        assert not create_user.check_password("attackers-password")
+        assert create_user.is_password_autoset and create_user.is_email_verified
+
+    def test_a_binding_is_never_moved_to_another_user(self, db, create_user, create_bot_user):
+        from django.test import RequestFactory
+
+        from plane.authentication.adapter.error import AuthenticationException
+        from plane.authentication.provider.oidc.adapter import OidcProvider
+        from plane.authentication.provider.oidc.registry import get_provider_spec
+
+        Account.objects.create(user=create_user, provider="entra", provider_account_id="x", access_token="")
+        adapter = OidcProvider(request=RequestFactory().get("/"), spec=get_provider_spec("entra"))
+        adapter.user_data = {"user": {"provider_id": "x"}}
+        with pytest.raises(AuthenticationException) as raised:
+            adapter.create_update_account(create_bot_user)
+        assert raised.value.error_code == AUTHENTICATION_ERROR_CODES["OIDC_IDENTITY_MISMATCH"]
+        assert Account.objects.get(provider="entra", provider_account_id="x").user_id == create_user.id
+
+    def test_a_failed_binding_leaves_no_half_created_user(self, instance, idp):
+        from django.db import IntegrityError
+
+        with patch.object(Account.objects, "create", side_effect=IntegrityError("race")):
+            client, response, _ = sign_in(idp)
+        assert failed_with(response, "OIDC_PROVIDER_ERROR")
+        assert "_auth_user_id" not in client.session
+        assert not User.objects.filter(email="ala.kowalska@piatnica.com.pl").exists()
+
+    def test_link_setting_is_registered_for_every_provider(self):
+        keys = {v["key"] for v in oidc_config_variables()}
+        assert {
+            "ENTRA_LINK_EXISTING_ACCOUNTS",
+            "GOOGLE_OIDC_LINK_EXISTING_ACCOUNTS",
+            "OIDC_LINK_EXISTING_ACCOUNTS",
+        } <= keys
+
+    @pytest.mark.parametrize("claim,accepted", [(True, True), ("true", True), (False, False), ("0", False)])
+    def test_entra_email_domain_verification_claim(self, instance, idp, claim, accepted):
+        _, response, _ = sign_in(idp, token_kwargs={"xms_edov": claim})
+        assert ("error_code" not in response.url) is accepted
+        if not accepted:
+            assert failed_with(response, "OAUTH_PROVIDER_UNVERIFIED_EMAIL")
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestProviderTransport:
+    def test_oversized_answers_are_refused(self, instance, idp):
+        idp.oversized_keys = True
+        _, response, _ = sign_in(idp)
+        assert failed_with(response, "OIDC_PROVIDER_ERROR")
+
+    def test_the_providers_own_refusal_is_logged_without_secrets(self, instance, idp, caplog):
+        idp.token_status = 400
+        idp.token_payload = {"error": "invalid_client", "error_description": "The OAuth client was not found."}
+        client = Client()
+        start = client.get(reverse("oidc-initiate", args=["entra"]))
+        state = parse_qs(urlparse(start.url).query)["state"][0]
+        with caplog.at_level("WARNING", logger="plane.authentication"):
+            response = client.get(reverse("oidc-callback", args=["entra"]), {"code": "the-code", "state": state})
+        assert failed_with(response, "OIDC_PROVIDER_ERROR")
+        assert "invalid_client" in caplog.text and "The OAuth client was not found." in caplog.text
+        assert "client-secret" not in caplog.text and "the-code" not in caplog.text
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestIssuerScopedBinding:
+    def test_the_same_subject_at_another_issuer_is_another_person(self, instance, idp):
+        CONFIG.update(
+            {
+                "IS_OIDC_ENABLED": "1",
+                "OIDC_CLIENT_ID": CLIENT_ID,
+                "OIDC_CLIENT_SECRET": "s",
+                "OIDC_ISSUER_URL": ISSUER,
+            }
+        )
+        sign_in(idp, provider="oidc", token_kwargs={"email_verified": True, "tid": None, "oid": None})
+        # the administrator points the provider at another issuer, which hands out the same subjects
+        other = "https://other.example.com"
+        CONFIG["OIDC_ISSUER_URL"] = other
+        fake = FakeIdp(issuer=other)
+        with patch("plane.authentication.provider.oidc.client.pinned_fetch", side_effect=fake.fetch):
+            client = Client()
+            start = client.get(reverse("oidc-initiate", args=["oidc"]))
+            query = {k: v[0] for k, v in parse_qs(urlparse(start.url).query).items()}
+            fake.id_token = make_token(
+                query["nonce"], iss=other, email_verified=True, tid=None, oid=None, email="mallory@piatnica.com.pl"
+            )
+            response = client.get(reverse("oidc-callback", args=["oidc"]), {"code": "c", "state": query["state"]})
+        # not Ala's account, although the subject is the same
+        assert "_auth_user_id" in client.session
+        assert User.objects.get(id=client.session["_auth_user_id"]).email == "mallory@piatnica.com.pl"
+        assert Account.objects.filter(provider="oidc").count() == 2
