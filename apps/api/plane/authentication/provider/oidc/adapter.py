@@ -166,9 +166,9 @@ class OidcProvider(OauthAdapter):
             # The user, the binding and the profile are created together or not at all
             with transaction.atomic():
                 return self.complete_login_or_signup()
-        except IntegrityError:
+        except IntegrityError as exc:
             # A concurrent sign-in of the same person won the race
-            self.logger.warning("Concurrent sign-in with %s", self.provider)
+            self.logger.warning("Concurrent sign-in with %s: %s", self.provider, exc)
             raise _error("OIDC_PROVIDER_ERROR")
 
     # ---- hooks of Adapter.complete_login_or_signup ---------------------------------------------------------------

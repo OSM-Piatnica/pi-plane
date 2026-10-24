@@ -565,7 +565,7 @@ class TestIssuerScopedBinding:
             fake.id_token = make_token(
                 query["nonce"], iss=other, email_verified=True, tid=None, oid=None, email="mallory@piatnica.com.pl"
             )
-            response = client.get(reverse("oidc-callback", args=["oidc"]), {"code": "c", "state": query["state"]})
+            client.get(reverse("oidc-callback", args=["oidc"]), {"code": "c", "state": query["state"]})
         # not Ala's account, although the subject is the same
         assert "_auth_user_id" in client.session
         assert User.objects.get(id=client.session["_auth_user_id"]).email == "mallory@piatnica.com.pl"
