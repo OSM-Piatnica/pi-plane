@@ -52,6 +52,8 @@ class OidcProviderSpec:
     name: str  # the label of the button
     icon: str  # which icon the apps draw on the button
     scopes: str = "openid profile email"
+    # The subject is only unique per issuer: bind it together with the issuer unless it already carries its own scope
+    scope_subject_to_issuer: bool = True
     fields: tuple = field(default_factory=tuple)  # extra OidcConfigField settings
 
     # ---- settings -------------------------------------------------------------------------------------------------
@@ -66,8 +68,15 @@ class OidcProviderSpec:
         from plane.license.utils.instance_value import get_configuration_value
 
         """The provider's settings as a dict, read from the instance configuration (or the environment)."""
-        names = ["CLIENT_ID", "CLIENT_SECRET", "ENABLE_SIGNUP", "ALLOWED_EMAIL_DOMAINS", *[f.name for f in self.fields]]
-        defaults = {"ENABLE_SIGNUP": "1", **{f.name: f.default for f in self.fields}}
+        names = [
+            "CLIENT_ID",
+            "CLIENT_SECRET",
+            "ENABLE_SIGNUP",
+            "ALLOWED_EMAIL_DOMAINS",
+            "LINK_EXISTING_ACCOUNTS",
+            *[f.name for f in self.fields],
+        ]
+        defaults = {"ENABLE_SIGNUP": "1", "LINK_EXISTING_ACCOUNTS": "0", **{f.name: f.default for f in self.fields}}
         values = get_configuration_value(
             [
                 {
@@ -121,6 +130,10 @@ class OidcProviderSpec:
             {
                 "key": self.config_key("ALLOWED_EMAIL_DOMAINS"),
                 "value": os.environ.get(self.config_key("ALLOWED_EMAIL_DOMAINS"), ""),
+            },
+            {
+                "key": self.config_key("LINK_EXISTING_ACCOUNTS"),
+                "value": os.environ.get(self.config_key("LINK_EXISTING_ACCOUNTS"), "0"),
             },
             {"key": f"ENABLE_{category}_SYNC", "value": os.environ.get(f"ENABLE_{category}_SYNC", "0")},
         ]
