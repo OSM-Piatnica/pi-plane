@@ -63,7 +63,12 @@ export enum EAuthenticationErrorCodes {
   GOOGLE_NOT_CONFIGURED = "5105",
   GITHUB_NOT_CONFIGURED = "5110",
   GITLAB_NOT_CONFIGURED = "5111",
+  OIDC_NOT_CONFIGURED = "5116",
+  OIDC_PROVIDER_ERROR = "5117",
+  OIDC_IDENTITY_MISMATCH = "5118",
+  OIDC_EMAIL_DOMAIN_NOT_ALLOWED = "5119",
   GOOGLE_OAUTH_PROVIDER_ERROR = "5115",
+  OAUTH_PROVIDER_UNVERIFIED_EMAIL = "5124",
   GITHUB_OAUTH_PROVIDER_ERROR = "5120",
   GITLAB_OAUTH_PROVIDER_ERROR = "5121",
   // Reset Password
@@ -280,6 +285,26 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
   },
 
   // Reset Password
+  [EAuthenticationErrorCodes.OIDC_NOT_CONFIGURED]: {
+    title: "auth.error_alerts.titles.oidc_not_configured",
+    message: contactAdmin("auth.error_alerts.titles.oidc_not_configured"),
+  },
+  [EAuthenticationErrorCodes.OIDC_PROVIDER_ERROR]: {
+    title: "auth.error_alerts.titles.oidc_provider_error",
+    message: tryAgain("auth.error_alerts.titles.oidc_provider_error"),
+  },
+  [EAuthenticationErrorCodes.OIDC_IDENTITY_MISMATCH]: {
+    title: "auth.error_alerts.titles.oidc_identity_mismatch",
+    message: contactAdmin("auth.error_alerts.titles.oidc_identity_mismatch"),
+  },
+  [EAuthenticationErrorCodes.OIDC_EMAIL_DOMAIN_NOT_ALLOWED]: {
+    title: "auth.error_alerts.titles.oidc_email_domain_not_allowed",
+    message: contactAdmin("auth.error_alerts.titles.oidc_email_domain_not_allowed"),
+  },
+  [EAuthenticationErrorCodes.OAUTH_PROVIDER_UNVERIFIED_EMAIL]: {
+    title: "auth.error_alerts.titles.oauth_provider_unverified_email",
+    message: contactAdmin("auth.error_alerts.titles.oauth_provider_unverified_email"),
+  },
   [EAuthenticationErrorCodes.INVALID_PASSWORD_TOKEN]: {
     title: "auth.error_alerts.titles.invalid_password_token",
     message: tryAgain("auth.error_alerts.titles.invalid_password_token"),
@@ -378,6 +403,11 @@ export const authErrorHandler = (
     EAuthenticationErrorCodes.GOOGLE_NOT_CONFIGURED,
     EAuthenticationErrorCodes.GITHUB_NOT_CONFIGURED,
     EAuthenticationErrorCodes.GITLAB_NOT_CONFIGURED,
+    EAuthenticationErrorCodes.OIDC_NOT_CONFIGURED,
+    EAuthenticationErrorCodes.OIDC_PROVIDER_ERROR,
+    EAuthenticationErrorCodes.OIDC_IDENTITY_MISMATCH,
+    EAuthenticationErrorCodes.OIDC_EMAIL_DOMAIN_NOT_ALLOWED,
+    EAuthenticationErrorCodes.OAUTH_PROVIDER_UNVERIFIED_EMAIL,
     EAuthenticationErrorCodes.GOOGLE_OAUTH_PROVIDER_ERROR,
     EAuthenticationErrorCodes.GITHUB_OAUTH_PROVIDER_ERROR,
     EAuthenticationErrorCodes.GITLAB_OAUTH_PROVIDER_ERROR,

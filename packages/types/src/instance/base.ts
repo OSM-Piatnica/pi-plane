@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,6 +13,7 @@ import type {
   TInstanceAuthenticationKeys,
   TInstanceWorkspaceConfigurationKeys,
   TCoreLoginMediums,
+  TOidcProviderOption,
 } from "./";
 import type { TExtendedLoginMediums } from "./auth-ee";
 
@@ -51,6 +53,7 @@ export interface IInstanceConfig {
   is_github_enabled: boolean;
   is_gitlab_enabled: boolean;
   is_gitea_enabled: boolean;
+  oidc_providers?: TOidcProviderOption[];
   is_magic_login_enabled: boolean;
   is_email_password_enabled: boolean;
   github_app_name: string | undefined;

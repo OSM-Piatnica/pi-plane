@@ -15,7 +15,7 @@ settings, the buttons on the sign-in screens, ID token validation) is shared.
 1. In the Entra admin center: **App registrations → New registration**, supported account types **Accounts in this
    organizational directory only**. Redirect URI (platform **Web**): `<your Pi-Plane URL>/auth/oidc/entra/callback/`.
 2. **Certificates & secrets → New client secret**. Copy the secret **value**.
-3. In Pi-Plane (god mode, or the environment) set:
+3. In Pi-Plane, open god mode → Authentication → **Microsoft Entra ID** and fill the form (or set the environment):
 
    ```
    IS_ENTRA_ENABLED=1
@@ -53,7 +53,9 @@ provider is stored.
 Write a subclass of `OidcProviderSpec` in `providers.py` (issuer, extra settings, `validate_claims`, `map_claims`) and
 add it to `OIDC_PROVIDERS` in `registry.py`. The settings (`IS_<KEY>_ENABLED`, `<KEY>_CLIENT_ID`, ...), the routes
 (`/auth/oidc/<key>/`) and the entry in the `oidc_providers` list of the public instance configuration follow from the
-spec. Mind what the claims can prove: take the identity from an immutable claim, and refuse tokens whose email is not
+spec. The god-mode form and the list on the authentication page come from one entry in `OIDC_PROVIDER_DEFINITIONS`
+(`packages/constants/src/auth/oidc.ts`); the sign-in buttons of the web and space apps come from the server's list.
+Mind what the claims can prove: take the identity from an immutable claim, and refuse tokens whose email is not
 verified or whose tenant/organisation is not the expected one.
 
 ## Acknowledgements

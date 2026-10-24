@@ -7,10 +7,13 @@
 
 import { KeyOutline, MailOutline } from "@makeplane/propel/icons";
 // types
+import { OIDC_PROVIDER_DEFINITIONS } from "@plane/constants";
 import type {
   TCoreInstanceAuthenticationModeKeys,
   TGetBaseAuthenticationModeProps,
+  TInstanceAuthenticationMethodKeys,
   TInstanceAuthenticationModes,
+  TOidcProviderKey,
 } from "@plane/types";
 // assets
 import giteaLogo from "@/app/assets/logos/gitea-logo.svg?url";
@@ -24,7 +27,26 @@ import { GiteaConfiguration } from "@/components/authentication/gitea-config";
 import { GithubConfiguration } from "@/components/authentication/github-config";
 import { GitlabConfiguration } from "@/components/authentication/gitlab-config";
 import { GoogleConfiguration } from "@/components/authentication/google-config";
+import { OidcConfiguration } from "@/components/authentication/oidc-config";
+import { OidcProviderIcon } from "@/components/authentication/oidc-icon";
 import { PasswordLoginConfiguration } from "@/components/authentication/password-config-switch";
+
+// Single sign-on providers: described in @plane/constants (OIDC_PROVIDER_DEFINITIONS), the server has the same list
+const getOidcMode = (
+  key: TOidcProviderKey,
+  disabled: boolean,
+  updateConfig: TGetBaseAuthenticationModeProps["updateConfig"]
+): TInstanceAuthenticationModes => {
+  const provider = OIDC_PROVIDER_DEFINITIONS[key];
+  return {
+    key,
+    name: provider.name,
+    description: provider.description,
+    icon: <OidcProviderIcon icon={provider.icon} name={provider.name} size={20} />,
+    config: <OidcConfiguration provider={provider} disabled={disabled} updateConfig={updateConfig} />,
+    enabledConfigKey: `IS_${provider.prefix}_ENABLED` as TInstanceAuthenticationMethodKeys,
+  };
+};
 
 // Authentication methods
 export const getCoreAuthenticationModesMap: (
@@ -90,4 +112,7 @@ export const getCoreAuthenticationModesMap: (
     config: <GiteaConfiguration disabled={disabled} updateConfig={updateConfig} />,
     enabledConfigKey: "IS_GITEA_ENABLED",
   },
+  entra: getOidcMode("entra", disabled, updateConfig),
+  "google-oidc": getOidcMode("google-oidc", disabled, updateConfig),
+  oidc: getOidcMode("oidc", disabled, updateConfig),
 });
