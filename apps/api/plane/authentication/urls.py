@@ -17,8 +17,6 @@ from .views import (
     GitLabOauthInitiateEndpoint,
     GitHubCallbackEndpoint,
     GitHubOauthInitiateEndpoint,
-    GoogleCallbackEndpoint,
-    GoogleOauthInitiateEndpoint,
     MagicGenerateEndpoint,
     MagicSignInEndpoint,
     MagicSignUpEndpoint,
@@ -33,8 +31,6 @@ from .views import (
     GitLabOauthInitiateSpaceEndpoint,
     GitHubCallbackSpaceEndpoint,
     GitHubOauthInitiateSpaceEndpoint,
-    GoogleCallbackSpaceEndpoint,
-    GoogleOauthInitiateSpaceEndpoint,
     MagicGenerateSpaceEndpoint,
     MagicSignInSpaceEndpoint,
     MagicSignUpSpaceEndpoint,
@@ -79,19 +75,6 @@ urlpatterns = [
         "spaces/magic-sign-up/",
         MagicSignUpSpaceEndpoint.as_view(),
         name="space-magic-sign-up",
-    ),
-    ## Google Oauth
-    path("google/", GoogleOauthInitiateEndpoint.as_view(), name="google-initiate"),
-    path("google/callback/", GoogleCallbackEndpoint.as_view(), name="google-callback"),
-    path(
-        "spaces/google/",
-        GoogleOauthInitiateSpaceEndpoint.as_view(),
-        name="space-google-initiate",
-    ),
-    path(
-        "spaces/google/callback/",
-        GoogleCallbackSpaceEndpoint.as_view(),
-        name="space-google-callback",
     ),
     ## Github Oauth
     path("github/", GitHubOauthInitiateEndpoint.as_view(), name="github-initiate"),
