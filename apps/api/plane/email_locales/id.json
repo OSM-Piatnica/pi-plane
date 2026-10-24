@@ -1,0 +1,86 @@
+{
+  "format": {
+    "date": "%d/%m/%Y"
+  },
+  "priority": {
+    "urgent": "Mendesak",
+    "high": "Tinggi",
+    "medium": "Sedang",
+    "low": "Rendah",
+    "none": "Tidak ada"
+  },
+  "issue_updates": {
+    "title": "Pembaruan {identifier}",
+    "summary": "Item kerja diperbarui oleh <strong>{actor}</strong>.",
+    "summary_others": "Item kerja diperbarui oleh <strong>{actor}</strong> dan lainnya.",
+    "title_changed": "Judul item kerja diubah menjadi {title}",
+    "updates": "Pembaruan",
+    "due_date": "Tanggal jatuh tempo:",
+    "duplicate": "Duplikat:",
+    "assignee": "Penugas:",
+    "labels": "Label:",
+    "state": "Status:",
+    "links": "Tautan:",
+    "priority": "Prioritas:",
+    "blocking": "Memblokir:",
+    "comments": "Komentar",
+    "more": "+{count} lainnya",
+    "links_removed": {
+      "other": "{count} tautan dihapus"
+    },
+    "view": "Lihat item kerja",
+    "footer": "Email ini dikirim ke <a href=\"mailto:{email}\">{email}</a>. Jika Anda tidak ingin menerima email seperti ini, Anda dapat <a href=\"{issue_url}\">berhenti berlangganan item kerja ini</a> atau <a href=\"{preferences_url}\">mengelola preferensi email Anda</a>."
+  },
+  "digest": {
+    "title": "Ringkasan pembaruan",
+    "greeting_named": "Halo {name}, Anda memiliki {summary}",
+    "greeting": "Anda memiliki {summary}",
+    "updates_count": {
+      "other": "{count} pembaruan"
+    },
+    "summary": {
+      "other": "{updates} pada {count} item kerja yang Anda ikuti."
+    },
+    "subject": {
+      "other": "Ringkasan: {updates} pada {count} item kerja"
+    },
+    "comments": "komentar: {count}",
+    "footer": "Ini adalah ringkasan pembaruan item kerja. Anda menerima sebutan secara langsung. <a href=\"{preferences_url}\">Ubah pengaturan notifikasi</a>."
+  },
+  "due_reminder": {
+    "title": "Pengingat item kerja",
+    "greeting_named": "Halo {name}, Anda memiliki {summary}",
+    "greeting": "Anda memiliki {summary}",
+    "section_overdue": "Terlambat",
+    "section_today": "Item kerja yang jatuh tempo hari ini",
+    "work_items": {
+      "other": "{count} item kerja"
+    },
+    "overdue": {
+      "other": "{count} terlambat"
+    },
+    "overdue_only": {
+      "other": "{count} item kerja terlambat"
+    },
+    "summary_both": "{today} yang jatuh tempo hari ini dan {overdue}.",
+    "summary_today": "{today} yang jatuh tempo hari ini ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Anda memiliki {today} yang jatuh tempo hari ini dan {overdue}",
+    "subject_today": "Anda memiliki {today} yang jatuh tempo hari ini ({date})",
+    "subject_overdue": "Anda memiliki {overdue}",
+    "days_overdue": {
+      "other": "terlambat {count} hari"
+    },
+    "cta": "Lihat item kerja saya",
+    "footer": "Ini adalah pengingat otomatis yang dikirim setiap pagi tentang item kerja yang jatuh tempo hari ini dan item kerja yang sudah melewati tenggat."
+  },
+  "project_addition": {
+    "subject": "Anda diundang ke proyek Pi-Plane",
+    "preheader": "{inviter} mengundang Anda ke proyek {project} di ruang kerja {workspace} di Pi-Plane.",
+    "heading": "Anda diundang ke proyek {project} di Pi-Plane",
+    "intro": "{inviter} mengundang Anda untuk bekerja sama di proyek <strong>{project}</strong> di ruang kerja <strong>{workspace}</strong> di Pi-Plane.",
+    "button": "Buka proyek",
+    "fallback": "Jika tombol tidak berfungsi, salin tautan ini dan tempel di browser Anda:",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span>. Jika Anda tidak mengharapkan undangan ini, Anda dapat mengabaikan email ini."
+  }
+}

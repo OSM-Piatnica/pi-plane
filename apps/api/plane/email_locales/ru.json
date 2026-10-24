@@ -1,0 +1,102 @@
+{
+  "format": {
+    "date": "%d.%m.%Y"
+  },
+  "priority": {
+    "urgent": "Срочный",
+    "high": "Высокий",
+    "medium": "Средний",
+    "low": "Низкий",
+    "none": "Нет"
+  },
+  "issue_updates": {
+    "title": "Обновления {identifier}",
+    "summary": "Рабочий элемент обновил(а) <strong>{actor}</strong>.",
+    "summary_others": "Рабочий элемент обновили <strong>{actor}</strong> и другие.",
+    "title_changed": "Название рабочего элемента изменено на {title}",
+    "updates": "Обновления",
+    "due_date": "Срок выполнения:",
+    "duplicate": "Дубликат:",
+    "assignee": "Назначен:",
+    "labels": "Метки:",
+    "state": "Статус:",
+    "links": "Ссылки:",
+    "priority": "Приоритет:",
+    "blocking": "Блокирует:",
+    "comments": "Комментарии",
+    "more": "+ещё {count}",
+    "links_removed": {
+      "one": "Удалена {count} ссылка",
+      "few": "Удалены {count} ссылки",
+      "many": "Удалено {count} ссылок"
+    },
+    "view": "Открыть рабочий элемент",
+    "footer": "Это письмо отправлено на адрес <a href=\"mailto:{email}\">{email}</a>. Если вы не хотите получать такие письма, вы можете <a href=\"{issue_url}\">отписаться от этого рабочего элемента</a> или <a href=\"{preferences_url}\">изменить настройки писем</a>."
+  },
+  "digest": {
+    "title": "Сводка обновлений",
+    "greeting_named": "Здравствуйте, {name}! У вас {summary}",
+    "greeting": "У вас {summary}",
+    "updates_count": {
+      "one": "{count} обновление",
+      "few": "{count} обновления",
+      "many": "{count} обновлений"
+    },
+    "summary": {
+      "one": "{updates} в {count} рабочем элементе, который вы отслеживаете.",
+      "few": "{updates} в {count} рабочих элементах, которые вы отслеживаете.",
+      "many": "{updates} в {count} рабочих элементах, которые вы отслеживаете."
+    },
+    "subject": {
+      "one": "Сводка: {updates} в {count} рабочем элементе",
+      "few": "Сводка: {updates} в {count} рабочих элементах",
+      "many": "Сводка: {updates} в {count} рабочих элементах"
+    },
+    "comments": "комментарии: {count}",
+    "footer": "Это сводка обновлений рабочих элементов. Упоминания вы получаете сразу. <a href=\"{preferences_url}\">Изменить настройки уведомлений</a>."
+  },
+  "due_reminder": {
+    "title": "Напоминание о рабочих элементах",
+    "greeting_named": "Здравствуйте, {name}! У вас {summary}",
+    "greeting": "У вас {summary}",
+    "section_overdue": "Просроченные",
+    "section_today": "Рабочие элементы со сроком на сегодня",
+    "work_items": {
+      "one": "{count} рабочий элемент",
+      "few": "{count} рабочих элемента",
+      "many": "{count} рабочих элементов"
+    },
+    "overdue": {
+      "one": "{count} просроченный",
+      "few": "{count} просроченных",
+      "many": "{count} просроченных"
+    },
+    "overdue_only": {
+      "one": "{count} просроченный рабочий элемент",
+      "few": "{count} просроченных рабочих элемента",
+      "many": "{count} просроченных рабочих элементов"
+    },
+    "summary_both": "{today} со сроком на сегодня и {overdue}.",
+    "summary_today": "{today} со сроком на сегодня ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "У вас {today} со сроком на сегодня и {overdue}",
+    "subject_today": "У вас {today} со сроком на сегодня ({date})",
+    "subject_overdue": "У вас {overdue}",
+    "days_overdue": {
+      "one": "просрочено на {count} день",
+      "few": "просрочено на {count} дня",
+      "many": "просрочено на {count} дней"
+    },
+    "cta": "Открыть мои рабочие элементы",
+    "footer": "Это автоматическое напоминание, которое приходит каждое утро о рабочих элементах со сроком на сегодня и о тех, срок которых уже истёк."
+  },
+  "project_addition": {
+    "subject": "Вас пригласили в проект Pi-Plane",
+    "preheader": "{inviter} пригласил(а) вас в проект {project} в рабочем пространстве {workspace} в Pi-Plane.",
+    "heading": "Вас пригласили в проект {project} в Pi-Plane",
+    "intro": "{inviter} пригласил(а) вас к совместной работе над проектом <strong>{project}</strong> в рабочем пространстве <strong>{workspace}</strong> в Pi-Plane.",
+    "button": "Перейти к проекту",
+    "fallback": "Если кнопка не работает, скопируйте эту ссылку и вставьте её в браузер:",
+    "note": "Примечание: это письмо отправлено на адрес <span>{email}</span>. Если вы не ожидали этого приглашения, просто проигнорируйте письмо."
+  }
+}

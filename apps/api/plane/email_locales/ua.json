@@ -1,0 +1,102 @@
+{
+  "format": {
+    "date": "%d.%m.%Y"
+  },
+  "priority": {
+    "urgent": "Терміновий",
+    "high": "Високий",
+    "medium": "Середній",
+    "low": "Низький",
+    "none": "Немає"
+  },
+  "issue_updates": {
+    "title": "Оновлення {identifier}",
+    "summary": "Робочу одиницю оновив(ла) <strong>{actor}</strong>.",
+    "summary_others": "Робочу одиницю оновили <strong>{actor}</strong> та інші.",
+    "title_changed": "Назву робочої одиниці змінено на {title}",
+    "updates": "Оновлення",
+    "due_date": "Крайній термін:",
+    "duplicate": "Дублікат:",
+    "assignee": "Призначено:",
+    "labels": "Мітки:",
+    "state": "Стан:",
+    "links": "Посилання:",
+    "priority": "Пріоритет:",
+    "blocking": "Блокує:",
+    "comments": "Коментарі",
+    "more": "+ще {count}",
+    "links_removed": {
+      "one": "Видалено {count} посилання",
+      "few": "Видалено {count} посилання",
+      "many": "Видалено {count} посилань"
+    },
+    "view": "Відкрити робочу одиницю",
+    "footer": "Цей лист надіслано на адресу <a href=\"mailto:{email}\">{email}</a>. Якщо ви не хочете отримувати такі листи, ви можете <a href=\"{issue_url}\">відписатися від цієї робочої одиниці</a> або <a href=\"{preferences_url}\">змінити налаштування листів</a>."
+  },
+  "digest": {
+    "title": "Підсумок оновлень",
+    "greeting_named": "Вітаємо, {name}! У вас {summary}",
+    "greeting": "У вас {summary}",
+    "updates_count": {
+      "one": "{count} оновлення",
+      "few": "{count} оновлення",
+      "many": "{count} оновлень"
+    },
+    "summary": {
+      "one": "{updates} в {count} робочій одиниці, яку ви відстежуєте.",
+      "few": "{updates} у {count} робочих одиницях, які ви відстежуєте.",
+      "many": "{updates} у {count} робочих одиницях, які ви відстежуєте."
+    },
+    "subject": {
+      "one": "Підсумок: {updates} в {count} робочій одиниці",
+      "few": "Підсумок: {updates} у {count} робочих одиницях",
+      "many": "Підсумок: {updates} у {count} робочих одиницях"
+    },
+    "comments": "коментарі: {count}",
+    "footer": "Це підсумок оновлень робочих одиниць. Згадки ви отримуєте одразу. <a href=\"{preferences_url}\">Змінити налаштування сповіщень</a>."
+  },
+  "due_reminder": {
+    "title": "Нагадування про робочі одиниці",
+    "greeting_named": "Вітаємо, {name}! У вас {summary}",
+    "greeting": "У вас {summary}",
+    "section_overdue": "Прострочені",
+    "section_today": "Робочі одиниці з терміном на сьогодні",
+    "work_items": {
+      "one": "{count} робоча одиниця",
+      "few": "{count} робочі одиниці",
+      "many": "{count} робочих одиниць"
+    },
+    "overdue": {
+      "one": "{count} прострочена",
+      "few": "{count} прострочені",
+      "many": "{count} прострочених"
+    },
+    "overdue_only": {
+      "one": "{count} прострочена робоча одиниця",
+      "few": "{count} прострочені робочі одиниці",
+      "many": "{count} прострочених робочих одиниць"
+    },
+    "summary_both": "{today} з терміном на сьогодні та {overdue}.",
+    "summary_today": "{today} з терміном на сьогодні ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "У вас {today} з терміном на сьогодні та {overdue}",
+    "subject_today": "У вас {today} з терміном на сьогодні ({date})",
+    "subject_overdue": "У вас {overdue}",
+    "days_overdue": {
+      "one": "прострочено на {count} день",
+      "few": "прострочено на {count} дні",
+      "many": "прострочено на {count} днів"
+    },
+    "cta": "Відкрити мої робочі одиниці",
+    "footer": "Це автоматичне нагадування, яке надходить щоранку про робочі одиниці з терміном на сьогодні та про ті, термін яких уже минув."
+  },
+  "project_addition": {
+    "subject": "Вас запросили до проєкту Pi-Plane",
+    "preheader": "{inviter} запросив(ла) вас до проєкту {project} у робочому просторі {workspace} у Pi-Plane.",
+    "heading": "Вас запросили до проєкту {project} у Pi-Plane",
+    "intro": "{inviter} запросив(ла) вас до спільної роботи над проєктом <strong>{project}</strong> у робочому просторі <strong>{workspace}</strong> у Pi-Plane.",
+    "button": "Перейти до проєкту",
+    "fallback": "Якщо кнопка не працює, скопіюйте це посилання та вставте його в браузер:",
+    "note": "Примітка: цей лист надіслано на адресу <span>{email}</span>. Якщо ви не очікували цього запрошення, просто проігноруйте лист."
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "format": {
+    "date": "%d.%m.%Y"
+  },
+  "priority": {
+    "urgent": "Acil",
+    "high": "Yüksek",
+    "medium": "Orta",
+    "low": "Düşük",
+    "none": "Yok"
+  },
+  "issue_updates": {
+    "title": "{identifier} güncellemeleri",
+    "summary": "İş öğesi <strong>{actor}</strong> tarafından güncellendi.",
+    "summary_others": "İş öğesi <strong>{actor}</strong> ve diğer kişiler tarafından güncellendi.",
+    "title_changed": "İş öğesinin başlığı {title} olarak değiştirildi",
+    "updates": "Güncellemeler",
+    "due_date": "Son tarih:",
+    "duplicate": "Yinelenen:",
+    "assignee": "Atanan:",
+    "labels": "Etiketler:",
+    "state": "Durum:",
+    "links": "Bağlantılar:",
+    "priority": "Öncelik:",
+    "blocking": "Engelliyor:",
+    "comments": "Yorumlar",
+    "more": "+{count} tane daha",
+    "links_removed": {
+      "one": "{count} bağlantı kaldırıldı",
+      "other": "{count} bağlantı kaldırıldı"
+    },
+    "view": "İş öğesini görüntüle",
+    "footer": "Bu e-posta <a href=\"mailto:{email}\">{email}</a> adresine gönderildi. Bu tür e-postaları almak istemiyorsanız <a href=\"{issue_url}\">bu iş öğesinin aboneliğinden çıkabilir</a> veya <a href=\"{preferences_url}\">e-posta tercihlerinizi yönetebilirsiniz</a>."
+  },
+  "digest": {
+    "title": "Güncelleme özeti",
+    "greeting_named": "Merhaba {name}! {summary}",
+    "greeting": "{summary}",
+    "updates_count": {
+      "one": "{count} güncelleme",
+      "other": "{count} güncelleme"
+    },
+    "summary": {
+      "one": "Takip ettiğiniz {count} iş öğesinde {updates} var.",
+      "other": "Takip ettiğiniz {count} iş öğesinde {updates} var."
+    },
+    "subject": {
+      "one": "Özet: {count} iş öğesinde {updates}",
+      "other": "Özet: {count} iş öğesinde {updates}"
+    },
+    "comments": "yorumlar: {count}",
+    "footer": "Bu, iş öğesi güncellemelerinin bir özetidir. Bahsetmeleri hemen alırsınız. <a href=\"{preferences_url}\">Bildirim ayarlarını değiştir</a>."
+  },
+  "due_reminder": {
+    "title": "İş öğesi hatırlatması",
+    "greeting_named": "Merhaba {name}! {summary}",
+    "greeting": "{summary}",
+    "section_overdue": "Gecikmiş",
+    "section_today": "Bugün son tarihi olan iş öğeleri",
+    "work_items": {
+      "one": "{count} iş öğesi",
+      "other": "{count} iş öğesi"
+    },
+    "overdue": {
+      "one": "{count} gecikmiş",
+      "other": "{count} gecikmiş"
+    },
+    "overdue_only": {
+      "one": "{count} gecikmiş iş öğesi",
+      "other": "{count} gecikmiş iş öğesi"
+    },
+    "summary_both": "Bugün son tarihi olan {today} ve {overdue} var.",
+    "summary_today": "Bugün son tarihi olan {today} var ({date}).",
+    "summary_overdue": "{overdue} var.",
+    "subject_both": "Bugün son tarihi olan {today} ve {overdue} var",
+    "subject_today": "Bugün son tarihi olan {today} var ({date})",
+    "subject_overdue": "{overdue} var",
+    "days_overdue": {
+      "one": "{count} gün gecikmiş",
+      "other": "{count} gün gecikmiş"
+    },
+    "cta": "İş öğelerimi görüntüle",
+    "footer": "Bu, her sabah bugün son tarihi olan ve son tarihi geçmiş iş öğeleri için gönderilen otomatik bir hatırlatmadır."
+  },
+  "project_addition": {
+    "subject": "Bir Pi-Plane projesine davet edildiniz",
+    "preheader": "{inviter}, sizi Pi-Plane’deki {workspace} çalışma alanında {project} projesine davet etti.",
+    "heading": "Pi-Plane’de {project} projesine davet edildiniz",
+    "intro": "{inviter}, sizi Pi-Plane’deki <strong>{workspace}</strong> çalışma alanında <strong>{project}</strong> projesinde birlikte çalışmaya davet etti.",
+    "button": "Projeye git",
+    "fallback": "Düğme çalışmıyorsa bu bağlantıyı kopyalayıp tarayıcınıza yapıştırın:",
+    "note": "Not: Bu e-posta <span>{email}</span> adresine gönderildi. Bu daveti beklemiyorsanız bu e-postayı yok sayabilirsiniz."
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "format": {
+    "date": "%d/%m/%Y"
+  },
+  "priority": {
+    "urgent": "Urgente",
+    "high": "Alta",
+    "medium": "Média",
+    "low": "Baixa",
+    "none": "Nenhuma"
+  },
+  "issue_updates": {
+    "title": "Atualizações de {identifier}",
+    "summary": "O item de trabalho foi atualizado por <strong>{actor}</strong>.",
+    "summary_others": "O item de trabalho foi atualizado por <strong>{actor}</strong> e outras pessoas.",
+    "title_changed": "O título do item de trabalho foi alterado para {title}",
+    "updates": "Atualizações",
+    "due_date": "Data de vencimento:",
+    "duplicate": "Duplicado:",
+    "assignee": "Responsável:",
+    "labels": "Etiquetas:",
+    "state": "Estado:",
+    "links": "Links:",
+    "priority": "Prioridade:",
+    "blocking": "Bloqueia:",
+    "comments": "Comentários",
+    "more": "+{count} mais",
+    "links_removed": {
+      "one": "{count} link foi removido",
+      "other": "{count} links foram removidos"
+    },
+    "view": "Ver item de trabalho",
+    "footer": "Este e-mail foi enviado para <a href=\"mailto:{email}\">{email}</a>. Se você prefere não receber este tipo de e-mail, <a href=\"{issue_url}\">pode deixar de seguir este item de trabalho</a> ou <a href=\"{preferences_url}\">gerenciar suas preferências de e-mail</a>."
+  },
+  "digest": {
+    "title": "Resumo das atualizações",
+    "greeting_named": "Olá {name}, você tem {summary}",
+    "greeting": "Você tem {summary}",
+    "updates_count": {
+      "one": "{count} atualização",
+      "other": "{count} atualizações"
+    },
+    "summary": {
+      "one": "{updates} em {count} item de trabalho que você acompanha.",
+      "other": "{updates} em {count} itens de trabalho que você acompanha."
+    },
+    "subject": {
+      "one": "Resumo: {updates} em {count} item de trabalho",
+      "other": "Resumo: {updates} em {count} itens de trabalho"
+    },
+    "comments": "comentários: {count}",
+    "footer": "Este é um resumo das atualizações dos itens de trabalho. Você recebe as menções na hora. <a href=\"{preferences_url}\">Alterar as configurações de notificação</a>."
+  },
+  "due_reminder": {
+    "title": "Lembrete de itens de trabalho",
+    "greeting_named": "Olá {name}, você tem {summary}",
+    "greeting": "Você tem {summary}",
+    "section_overdue": "Atrasados",
+    "section_today": "Itens de trabalho que vencem hoje",
+    "work_items": {
+      "one": "{count} item de trabalho",
+      "other": "{count} itens de trabalho"
+    },
+    "overdue": {
+      "one": "{count} atrasado",
+      "other": "{count} atrasados"
+    },
+    "overdue_only": {
+      "one": "{count} item de trabalho atrasado",
+      "other": "{count} itens de trabalho atrasados"
+    },
+    "summary_both": "{today} vencendo hoje e {overdue}.",
+    "summary_today": "{today} vencendo hoje ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Você tem {today} vencendo hoje e {overdue}",
+    "subject_today": "Você tem {today} vencendo hoje ({date})",
+    "subject_overdue": "Você tem {overdue}",
+    "days_overdue": {
+      "one": "{count} dia de atraso",
+      "other": "{count} dias de atraso"
+    },
+    "cta": "Ver meus itens de trabalho",
+    "footer": "Este é um lembrete automático enviado toda manhã sobre os itens de trabalho que vencem hoje e os que já passaram do prazo."
+  },
+  "project_addition": {
+    "subject": "Você foi convidado para um projeto do Pi-Plane",
+    "preheader": "{inviter} convidou você para o projeto {project} no espaço de trabalho {workspace} no Pi-Plane.",
+    "heading": "Você foi convidado para o projeto {project} no Pi-Plane",
+    "intro": "{inviter} convidou você para colaborar no projeto <strong>{project}</strong> no espaço de trabalho <strong>{workspace}</strong> no Pi-Plane.",
+    "button": "Ir para o projeto",
+    "fallback": "Se o botão não funcionar, copie este link e cole-o no seu navegador:",
+    "note": "Observação: este e-mail foi enviado para <span>{email}</span>. Se você não esperava este convite, pode ignorar este e-mail."
+  }
+}

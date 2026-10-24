@@ -1,0 +1,94 @@
+{
+  "format": {
+    "date": "%d.%m.%Y"
+  },
+  "priority": {
+    "urgent": "სასწრაფო",
+    "high": "მაღალი",
+    "medium": "საშუალო",
+    "low": "დაბალი",
+    "none": "არცერთი"
+  },
+  "issue_updates": {
+    "title": "{identifier} — განახლებები",
+    "summary": "სამუშაო ელემენტი განაახლა <strong>{actor}</strong>-მა.",
+    "summary_others": "სამუშაო ელემენტი განაახლეს <strong>{actor}</strong>-მა და სხვებმა.",
+    "title_changed": "სამუშაო ელემენტის სათაური შეიცვალა: {title}",
+    "updates": "განახლებები",
+    "due_date": "ვადის თარიღი:",
+    "duplicate": "დუბლიკატი:",
+    "assignee": "მინიჭებული:",
+    "labels": "იარლიყები:",
+    "state": "მდგომარეობა:",
+    "links": "ბმულები:",
+    "priority": "პრიორიტეტი:",
+    "blocking": "ბლოკავს:",
+    "comments": "კომენტარები",
+    "more": "+კიდევ {count}",
+    "links_removed": {
+      "one": "წაიშალა {count} ბმული",
+      "other": "წაიშალა {count} ბმული"
+    },
+    "view": "სამუშაო ელემენტის ნახვა",
+    "footer": "ეს წერილი გაიგზავნა მისამართზე <a href=\"mailto:{email}\">{email}</a>. თუ ასეთი წერილების მიღება არ გსურთ, შეგიძლიათ <a href=\"{issue_url}\">გააუქმოთ ამ სამუშაო ელემენტის გამოწერა</a> ან <a href=\"{preferences_url}\">მართოთ თქვენი ელფოსტის პარამეტრები</a>."
+  },
+  "digest": {
+    "title": "განახლებების შეჯამება",
+    "greeting_named": "გამარჯობა, {name}, თქვენ გაქვთ {summary}",
+    "greeting": "თქვენ გაქვთ {summary}",
+    "updates_count": {
+      "one": "{count} განახლება",
+      "other": "{count} განახლება"
+    },
+    "summary": {
+      "one": "{updates} {count} სამუშაო ელემენტში, რომელსაც თვალს ადევნებთ.",
+      "other": "{updates} {count} სამუშაო ელემენტში, რომლებსაც თვალს ადევნებთ."
+    },
+    "subject": {
+      "one": "შეჯამება: {updates} {count} სამუშაო ელემენტში",
+      "other": "შეჯამება: {updates} {count} სამუშაო ელემენტში"
+    },
+    "comments": "კომენტარები: {count}",
+    "footer": "ეს არის სამუშაო ელემენტების განახლებების შეჯამება. ხსენებებს დაუყოვნებლივ მიიღებთ. <a href=\"{preferences_url}\">შეცვალეთ შეტყობინებების პარამეტრები</a>."
+  },
+  "due_reminder": {
+    "title": "შეხსენება სამუშაო ელემენტებზე",
+    "greeting_named": "გამარჯობა, {name}, თქვენ გაქვთ {summary}",
+    "greeting": "თქვენ გაქვთ {summary}",
+    "section_overdue": "ვადაგადაცილებული",
+    "section_today": "დღეს ვადიანი სამუშაო ელემენტები",
+    "work_items": {
+      "one": "{count} სამუშაო ელემენტი",
+      "other": "{count} სამუშაო ელემენტი"
+    },
+    "overdue": {
+      "one": "{count} ვადაგადაცილებული",
+      "other": "{count} ვადაგადაცილებული"
+    },
+    "overdue_only": {
+      "one": "{count} ვადაგადაცილებული სამუშაო ელემენტი",
+      "other": "{count} ვადაგადაცილებული სამუშაო ელემენტი"
+    },
+    "summary_both": "{today}, რომლის ვადაც დღეა, და {overdue}.",
+    "summary_today": "{today}, რომლის ვადაც დღეა ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "თქვენ გაქვთ {today}, რომლის ვადაც დღეა, და {overdue}",
+    "subject_today": "თქვენ გაქვთ {today}, რომლის ვადაც დღეა ({date})",
+    "subject_overdue": "თქვენ გაქვთ {overdue}",
+    "days_overdue": {
+      "one": "ვადა გადაცილებულია {count} დღით",
+      "other": "ვადა გადაცილებულია {count} დღით"
+    },
+    "cta": "ჩემი სამუშაო ელემენტების ნახვა",
+    "footer": "ეს არის ავტომატური შეხსენება, რომელიც ყოველ დილით იგზავნება დღეს ვადიანი და ვადაგადაცილებული სამუშაო ელემენტების შესახებ."
+  },
+  "project_addition": {
+    "subject": "თქვენ მოგიწვიეს Pi-Plane-ის პროექტში",
+    "preheader": "{inviter}-მა მოგიწვიათ პროექტში {project} სამუშაო სივრცეში {workspace} Pi-Plane-ში.",
+    "heading": "თქვენ მოგიწვიეს პროექტში {project} Pi-Plane-ში",
+    "intro": "{inviter}-მა მოგიწვიათ ერთობლივ მუშაობაზე პროექტში <strong>{project}</strong> სამუშაო სივრცეში <strong>{workspace}</strong> Pi-Plane-ში.",
+    "button": "პროექტზე გადასვლა",
+    "fallback": "თუ ღილაკი არ მუშაობს, დააკოპირეთ ეს ბმული და ჩასვით თქვენს ბრაუზერში:",
+    "note": "შენიშვნა: ეს წერილი გაიგზავნა მისამართზე <span>{email}</span>. თუ ამ მოწვევას არ ელოდით, შეგიძლიათ უგულებელყოთ ეს წერილი."
+  }
+}
