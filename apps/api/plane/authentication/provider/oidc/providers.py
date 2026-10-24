@@ -30,6 +30,8 @@ class EntraSpec(OidcProviderSpec):
             key="entra",
             name="Microsoft",
             icon="microsoft",
+            # tid:oid already names the tenant
+            scope_subject_to_issuer=False,
             fields=(
                 OidcConfigField(
                     name="TENANT_ID",
@@ -56,6 +58,9 @@ class EntraSpec(OidcProviderSpec):
     def validate_claims(self, claims, config):
         if str(claims.get("tid", "")).lower() != self._tenant(config) or not claims.get("oid"):
             raise OidcClaimsError("OIDC_PROVIDER_ERROR")
+        # Optional claim: when the tenant sends it, the email domain must be one the tenant has verified
+        if "xms_edov" in claims and str(claims["xms_edov"]).lower() not in ("true", "1"):
+            raise OidcClaimsError("OAUTH_PROVIDER_UNVERIFIED_EMAIL")
 
     def map_claims(self, claims):
         # `email` is optional in Entra tokens; the user principal name is the sign-in address of the tenant
@@ -73,8 +78,8 @@ class EntraSpec(OidcProviderSpec):
 class GoogleSpec(OidcProviderSpec):
     """Google accounts, optionally restricted to one Google Workspace domain.
 
-    Separate from the older Google OAuth login (``GOOGLE_*`` settings), which stays as it is. People are bound by
-    their Google account id (``sub``); with a hosted domain set, tokens of accounts outside that Workspace are refused.
+    Replaces the former Google OAuth login (``GOOGLE_*`` settings). People are bound by their Google account id
+    (``sub``); with a hosted domain set, tokens of accounts outside that Workspace are refused.
     """
 
     def __init__(self):

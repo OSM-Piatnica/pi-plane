@@ -1,12 +1,15 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { TLoginMediums } from "@plane/types";
 import { CORE_LOGIN_MEDIUM_LABELS } from "./core";
 import { EXTENDED_LOGIN_MEDIUM_LABELS } from "./extended";
+
+export * from "./oidc";
 
 export enum E_PASSWORD_STRENGTH {
   EMPTY = "empty",
@@ -140,10 +143,14 @@ export enum EAuthErrorCodes {
   EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_UP = "5102",
   // Oauth
   OAUTH_NOT_CONFIGURED = "5104",
-  GOOGLE_NOT_CONFIGURED = "5105",
   GITHUB_NOT_CONFIGURED = "5110",
   GITLAB_NOT_CONFIGURED = "5111",
-  GOOGLE_OAUTH_PROVIDER_ERROR = "5115",
+  OIDC_NOT_CONFIGURED = "5116",
+  OIDC_PROVIDER_ERROR = "5117",
+  OIDC_IDENTITY_MISMATCH = "5118",
+  OIDC_EMAIL_DOMAIN_NOT_ALLOWED = "5119",
+  OIDC_ACCOUNT_LINK_REQUIRED = "5126",
+  OAUTH_PROVIDER_UNVERIFIED_EMAIL = "5124",
   GITHUB_OAUTH_PROVIDER_ERROR = "5120",
   GITLAB_OAUTH_PROVIDER_ERROR = "5121",
   // Reset Password

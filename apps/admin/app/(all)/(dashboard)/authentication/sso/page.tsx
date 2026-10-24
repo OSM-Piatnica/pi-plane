@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
@@ -7,55 +8,54 @@
 
 import { useState } from "react";
 import { observer } from "mobx-react";
+import { useParams } from "react-router";
 import useSWR from "swr";
+// plane internal packages
 import { Switch } from "@makeplane/propel/components/switch";
-// assets
-import GoogleLogo from "@/app/assets/logos/google-logo.svg?url";
+import { setPromiseToast } from "@plane/blocks/toast";
+import { OIDC_PROVIDER_DEFINITIONS } from "@plane/constants";
+import type { TInstanceAuthenticationMethodKeys, TOidcProviderKey } from "@plane/types";
 // components
 import { AuthenticationMethodCard } from "@/components/authentication/authentication-method-card";
+import { OidcProviderIcon } from "@/components/authentication/oidc-icon";
 import { PageWrapper } from "@/components/common/page-wrapper";
 import { Skeleton } from "@/components/common/skeleton";
-import { setPromiseToast } from "@plane/blocks/toast";
+import NotFound from "@/app/components/404";
 // hooks
 import { useInstance } from "@/hooks/store";
 // types
 import type { Route } from "./+types/page";
 // local
-import { InstanceGoogleConfigForm } from "./form";
+import { InstanceOidcConfigForm } from "./form";
 
-const InstanceGoogleAuthenticationPage = observer(function InstanceGoogleAuthenticationPage(
-  _props: Route.ComponentProps
-) {
+const InstanceOidcAuthenticationPage = observer(function InstanceOidcAuthenticationPage() {
+  const { provider: providerKey } = useParams();
+  const provider = OIDC_PROVIDER_DEFINITIONS[providerKey as TOidcProviderKey];
   // store
   const { fetchInstanceConfigurations, formattedConfig, updateInstanceConfigurations } = useInstance();
   // state
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  // config
-  const enableGoogleConfig = formattedConfig?.IS_GOOGLE_ENABLED ?? "";
-
   useSWR("INSTANCE_CONFIGURATIONS", () => fetchInstanceConfigurations());
 
-  const updateConfig = async (key: "IS_GOOGLE_ENABLED", value: string) => {
+  if (!provider) return <NotFound />;
+
+  const enabledKey = `IS_${provider.prefix}_ENABLED` as TInstanceAuthenticationMethodKeys;
+  const isEnabled = (formattedConfig?.[enabledKey] ?? "") === "1";
+
+  const updateConfig = async (key: TInstanceAuthenticationMethodKeys, value: string) => {
     setIsSubmitting(true);
-
-    const payload = {
-      [key]: value,
-    };
-
-    const updateConfigPromise = updateInstanceConfigurations(payload);
-
+    const updateConfigPromise = updateInstanceConfigurations({ [key]: value });
     setPromiseToast(updateConfigPromise, {
       loading: "Saving Configuration",
       success: {
         title: "Configuration saved",
-        message: () => `Google authentication is now ${value === "1" ? "active" : "disabled"}.`,
+        message: () => `${provider.name} authentication is now ${value === "1" ? "active" : "disabled"}.`,
       },
       error: {
         title: "Error",
         message: () => "Failed to save configuration",
       },
     });
-
     await updateConfigPromise
       .then(() => {
         setIsSubmitting(false);
@@ -66,25 +66,19 @@ const InstanceGoogleAuthenticationPage = observer(function InstanceGoogleAuthent
         setIsSubmitting(false);
       });
   };
+
   return (
     <PageWrapper
       customHeader={
         <AuthenticationMethodCard
-          name="Google"
-          description="Allow members to login or sign up to plane with their Google
-            accounts."
-          icon={<img src={GoogleLogo} height={24} width={24} alt="Google Logo" />}
+          name={provider.name}
+          description={provider.description}
+          icon={<OidcProviderIcon icon={provider.icon} name={provider.name} size={24} />}
           config={
             <Switch
-              aria-label="Enable Google authentication"
-              checked={Boolean(parseInt(enableGoogleConfig))}
-              onCheckedChange={() => {
-                if (Boolean(parseInt(enableGoogleConfig)) === true) {
-                  updateConfig("IS_GOOGLE_ENABLED", "0");
-                } else {
-                  updateConfig("IS_GOOGLE_ENABLED", "1");
-                }
-              }}
+              aria-label={`Enable ${provider.name} authentication`}
+              checked={isEnabled}
+              onCheckedChange={() => void updateConfig(enabledKey, isEnabled ? "0" : "1")}
               size="sm"
               disabled={isSubmitting || !formattedConfig}
             />
@@ -95,7 +89,7 @@ const InstanceGoogleAuthenticationPage = observer(function InstanceGoogleAuthent
       }
     >
       {formattedConfig ? (
-        <InstanceGoogleConfigForm config={formattedConfig} />
+        <InstanceOidcConfigForm key={provider.key} provider={provider} config={formattedConfig} />
       ) : (
         <Skeleton className="space-y-8">
           <Skeleton.Item height="50px" width="25%" />
@@ -108,7 +102,6 @@ const InstanceGoogleAuthenticationPage = observer(function InstanceGoogleAuthent
     </PageWrapper>
   );
 });
+export const meta: Route.MetaFunction = () => [{ title: "Single sign-on Authentication - God Mode" }];
 
-export const meta: Route.MetaFunction = () => [{ title: "Google Authentication - God Mode" }];
-
-export default InstanceGoogleAuthenticationPage;
+export default InstanceOidcAuthenticationPage;

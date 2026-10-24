@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from unittest.mock import patch
@@ -12,7 +13,6 @@ from django.urls import reverse
 CALLBACKS = [
     ("github-callback", "plane.authentication.views.app.github.GitHubOAuthProvider"),
     ("gitlab-callback", "plane.authentication.views.app.gitlab.GitLabOAuthProvider"),
-    ("google-callback", "plane.authentication.views.app.google.GoogleOAuthProvider"),
     ("gitea-callback", "plane.authentication.views.app.gitea.GiteaOAuthProvider"),
     ("space-gitea-callback", "plane.authentication.views.space.gitea.GiteaOAuthProvider"),
 ]
@@ -98,7 +98,7 @@ class TestOAuthCallbackState:
         provider.assert_not_called()
 
 
-APP_CALLBACKS = ["github-callback", "gitlab-callback", "google-callback", "gitea-callback"]
+APP_CALLBACKS = ["github-callback", "gitlab-callback", "gitea-callback"]
 
 
 @pytest.mark.contract

@@ -6,6 +6,7 @@
 
 import base64
 import hashlib
+import json
 import secrets
 
 import jwt
@@ -18,6 +19,8 @@ from plane.utils.url_security import pinned_fetch
 ALLOWED_ALGORITHMS = ["RS256", "RS384", "RS512", "ES256", "ES384", "PS256"]
 CACHE_SECONDS = 3600
 TIMEOUT = 10
+# Discovery documents, key sets and token answers are a few kilobytes; anything bigger is not from a provider
+MAX_RESPONSE_BYTES = 1024 * 1024
 
 
 class OidcProtocolError(Exception):
@@ -36,16 +39,49 @@ def new_pkce_pair():
     return verifier, challenge
 
 
-def _get_json(url):
+def _read_json(response):
+    """The JSON body of the response, read with a cap on its size."""
+    chunks, total = [], 0
+    for chunk in response.iter_content(chunk_size=8192):
+        total += len(chunk)
+        if total > MAX_RESPONSE_BYTES:
+            raise OidcProtocolError("Response too large")
+        chunks.append(chunk)
     try:
-        response = pinned_fetch("GET", _https(url), timeout=TIMEOUT, headers={"Accept": "application/json"})
+        return json.loads(b"".join(chunks))
+    except ValueError as exc:
+        raise OidcProtocolError("Response is not JSON") from exc
+
+
+def _refusal(response):
+    """What the provider says about its refusal: only the standard OAuth fields, truncated (never the request)."""
+    try:
+        body = _read_json(response)
+        return f"{body.get('error', '')}: {str(body.get('error_description', ''))[:200]}"
+    except (OidcProtocolError, AttributeError):
+        return ""
+
+
+def _request_json(method, url, **kwargs):
+    try:
+        response = pinned_fetch(
+            method, _https(url), timeout=TIMEOUT, headers={"Accept": "application/json"}, stream=True, **kwargs
+        )
         try:
-            response.raise_for_status()
-            return response.json()
+            if response.status_code >= 400:
+                detail = _refusal(response)
+                raise OidcProtocolError(
+                    f"Provider returned HTTP {response.status_code}" + (f" ({detail})" if detail else "")
+                )
+            return _read_json(response)
         finally:
             response.close()
     except (requests.RequestException, ValueError) as exc:
-        raise OidcProtocolError(str(exc)) from exc
+        raise OidcProtocolError(f"{type(exc).__name__}: {exc}") from exc
+
+
+def _get_json(url):
+    return _request_json("GET", url)
 
 
 def get_discovery(issuer):
@@ -89,28 +125,18 @@ def _signing_key(jwks_uri, token):
 
 
 def exchange_code(discovery, *, client_id, client_secret, code, redirect_uri, code_verifier):
-    try:
-        response = pinned_fetch(
-            "POST",
-            _https(discovery["token_endpoint"]),
-            timeout=TIMEOUT,
-            headers={"Accept": "application/json"},
-            data={
-                "grant_type": "authorization_code",
-                "code": code,
-                "redirect_uri": redirect_uri,
-                "client_id": client_id,
-                "client_secret": client_secret,
-                "code_verifier": code_verifier,
-            },
-        )
-        try:
-            response.raise_for_status()
-            return response.json()
-        finally:
-            response.close()
-    except (requests.RequestException, ValueError) as exc:
-        raise OidcProtocolError(str(exc)) from exc
+    return _request_json(
+        "POST",
+        discovery["token_endpoint"],
+        data={
+            "grant_type": "authorization_code",
+            "code": code,
+            "redirect_uri": redirect_uri,
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "code_verifier": code_verifier,
+        },
+    )
 
 
 def validate_id_token(token, *, discovery, issuer, client_id, nonce):

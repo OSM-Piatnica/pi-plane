@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -15,10 +16,12 @@ export const useAuthenticationModes = (props: TGetAuthenticationModeProps): TIns
   const availableAuthenticationModes: TInstanceAuthenticationModes[] = [
     authenticationModes["unique-codes"],
     authenticationModes["passwords-login"],
-    authenticationModes["google"],
     authenticationModes["github"],
     authenticationModes["gitlab"],
     authenticationModes["gitea"],
+    authenticationModes["entra"],
+    authenticationModes["google-oidc"],
+    authenticationModes["oidc"],
   ];
 
   return availableAuthenticationModes;

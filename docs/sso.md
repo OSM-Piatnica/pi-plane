@@ -4,18 +4,18 @@ Pi-Plane signs people in through OpenID Connect (authorization code flow with PK
 described in `apps/api/plane/authentication/provider/oidc/`; everything else (sign-in and callback URLs, the instance
 settings, the buttons on the sign-in screens, ID token validation) is shared.
 
-| Provider           | Key           | Notes                                                                         |
-| ------------------ | ------------- | ----------------------------------------------------------------------------- |
-| Microsoft Entra ID | `entra`       | One tenant only. People are bound by tenant id + object id.                   |
-| Google             | `google-oidc` | Optionally one Workspace domain (`hd`). Separate from the older Google login. |
-| Any OIDC provider  | `oidc`        | By issuer URL (Keycloak, Okta, Authentik, ...). The email must be verified.   |
+| Provider           | Key           | Notes                                                                       |
+| ------------------ | ------------- | --------------------------------------------------------------------------- |
+| Microsoft Entra ID | `entra`       | One tenant only. People are bound by tenant id + object id.                 |
+| Google             | `google-oidc` | Optionally one Workspace domain (`hd`). Replaces the former Google login.   |
+| Any OIDC provider  | `oidc`        | By issuer URL (Keycloak, Okta, Authentik, ...). The email must be verified. |
 
 ## Microsoft Entra ID
 
 1. In the Entra admin center: **App registrations → New registration**, supported account types **Accounts in this
    organizational directory only**. Redirect URI (platform **Web**): `<your Pi-Plane URL>/auth/oidc/entra/callback/`.
 2. **Certificates & secrets → New client secret**. Copy the secret **value**.
-3. In Pi-Plane (god mode, or the environment) set:
+3. In Pi-Plane, open god mode → Authentication → **Microsoft Entra ID** and fill the form (or set the environment):
 
    ```
    IS_ENTRA_ENABLED=1
@@ -34,26 +34,44 @@ account and nobody else can take an account over by getting the same address.
 Create an OAuth client (type **Web application**) in the Google Cloud console with the redirect URI
 `<your Pi-Plane URL>/auth/oidc/google-oidc/callback/`, then set `IS_GOOGLE_OIDC_ENABLED=1`, `GOOGLE_OIDC_CLIENT_ID` and
 `GOOGLE_OIDC_CLIENT_SECRET`. To accept only one Google Workspace, also set `GOOGLE_OIDC_HOSTED_DOMAIN`. People are
-bound by their Google account id. The older `IS_GOOGLE_ENABLED` login keeps working independently.
+bound by their Google account id.
+
+> **Upgrading from the former Google login:** `IS_GOOGLE_ENABLED`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` and
+> `ENABLE_GOOGLE_SYNC` are no longer read, and `/auth/google/` is gone. Create the settings above (the same OAuth client
+> works: add the new redirect URI to it). People who signed in with the old login are matched by their email address on
+> their first sign-in and bound from then on.
 
 ## How people are matched
 
-1. By the identity at the provider (`Account.provider_account_id`). If that is known, that user signs in.
-2. Otherwise by email address. The identity is then bound to that user, **unless** the user is already bound to a
-   different identity of the same provider (`OIDC_IDENTITY_MISMATCH`).
+1. By the identity at the provider (`Account.provider_account_id`). If that is known, that user signs in. The identity
+   is the subject **together with the issuer** (for Entra, tenant id + object id), so a subject handed out by another
+   issuer never matches.
+2. Otherwise, if an account with that email address exists, the person is refused (`OIDC_ACCOUNT_LINK_REQUIRED`): an
+   address alone never takes an account over, because anybody could have registered it with a password of their own
+   before its owner first signed in. To migrate existing accounts, set `<KEY>_LINK_EXISTING_ACCOUNTS=1` for the time
+   people sign in for the first time, then switch it off again. Linking binds the identity to the account **and
+   replaces any password set on it**, so from then on only the provider opens it. An account already bound to a
+   different identity of the provider is always refused (`OIDC_IDENTITY_MISMATCH`).
 3. Otherwise a new user is created, if `<KEY>_ENABLE_SIGNUP` is `1` (or they have a workspace invite).
 
+The user, the identity and the profile are created in one transaction, and a binding is never moved to another user.
 `<KEY>_ENABLE_SIGNUP` is independent of `ENABLE_SIGNUP` (email sign-up): a corporate instance can keep email sign-up
 closed and still create accounts for everyone in its tenant. Deactivated accounts and bots are refused as with every
 other sign-in. With `ENABLE_<KEY>_SYNC=1` the name is refreshed from the provider at every sign-in. No token of the
 provider is stored.
+
+Entra: when the tenant sends the optional `xms_edov` claim (email domain verified), a value other than true is refused.
+Provider answers are limited to 1 MiB; the log names the stage of a refused sign-in and the provider's own error code and
+description (never the request, which carries the secret and the code).
 
 ## Adding another provider
 
 Write a subclass of `OidcProviderSpec` in `providers.py` (issuer, extra settings, `validate_claims`, `map_claims`) and
 add it to `OIDC_PROVIDERS` in `registry.py`. The settings (`IS_<KEY>_ENABLED`, `<KEY>_CLIENT_ID`, ...), the routes
 (`/auth/oidc/<key>/`) and the entry in the `oidc_providers` list of the public instance configuration follow from the
-spec. Mind what the claims can prove: take the identity from an immutable claim, and refuse tokens whose email is not
+spec. The god-mode form and the list on the authentication page come from one entry in `OIDC_PROVIDER_DEFINITIONS`
+(`packages/constants/src/auth/oidc.ts`); the sign-in buttons of the web and space apps come from the server's list.
+Mind what the claims can prove: take the identity from an immutable claim, and refuse tokens whose email is not
 verified or whose tenant/organisation is not the expected one.
 
 ## Acknowledgements

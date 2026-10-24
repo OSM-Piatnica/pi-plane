@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -36,7 +37,7 @@ export const getPasswordStrength = (password: string): E_PASSWORD_STRENGTH => {
   const hasUpperCase = /[A-Z]/.test(password);
   const hasLowerCase = /[a-z]/.test(password);
   const hasDigit = /[0-9]/.test(password);
-  const hasSpecialChar = /[!@#$%^&*()\-_+=\[\]{}|;:'",.<>?/]/.test(password);
+  const hasSpecialChar = /[!@#$%^&*()\-_+=[\]{}|;:'",.<>?/]/.test(password);
 
   if (hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar) {
     return E_PASSWORD_STRENGTH.STRENGTH_VALID;
@@ -78,7 +79,7 @@ export const getPasswordCriteria = (password: string): PasswordCriteria[] => [
   {
     key: "special",
     label: "Min 1 special character",
-    isValid: /[!@#$%^&*()\-_+=\[\]{}|;:'",.<>?/]/.test(password),
+    isValid: /[!@#$%^&*()\-_+=[\]{}|;:'",.<>?/]/.test(password),
   },
 ];
 
@@ -204,10 +205,6 @@ const errorCodeMessages: {
     title: `OAuth not configured`,
     message: () => `OAuth not configured. Please contact your administrator.`,
   },
-  [EAuthErrorCodes.GOOGLE_NOT_CONFIGURED]: {
-    title: `Google not configured`,
-    message: () => `Google not configured. Please contact your administrator.`,
-  },
   [EAuthErrorCodes.GITHUB_NOT_CONFIGURED]: {
     title: `GitHub not configured`,
     message: () => `GitHub not configured. Please contact your administrator.`,
@@ -215,10 +212,6 @@ const errorCodeMessages: {
   [EAuthErrorCodes.GITLAB_NOT_CONFIGURED]: {
     title: `GitLab not configured`,
     message: () => `GitLab not configured. Please contact your administrator.`,
-  },
-  [EAuthErrorCodes.GOOGLE_OAUTH_PROVIDER_ERROR]: {
-    title: `Google OAuth provider error`,
-    message: () => `Google OAuth provider error. Please try again.`,
   },
   [EAuthErrorCodes.GITHUB_OAUTH_PROVIDER_ERROR]: {
     title: `GitHub OAuth provider error`,
@@ -229,6 +222,31 @@ const errorCodeMessages: {
     message: () => `GitLab OAuth provider error. Please try again.`,
   },
   // Reset Password
+  [EAuthErrorCodes.OIDC_NOT_CONFIGURED]: {
+    title: `Single sign-on not configured`,
+    message: () => `Single sign-on not configured. Please contact your administrator.`,
+  },
+  [EAuthErrorCodes.OIDC_PROVIDER_ERROR]: {
+    title: `Single sign-on error`,
+    message: () => `Single sign-on error. Please try again.`,
+  },
+  [EAuthErrorCodes.OIDC_IDENTITY_MISMATCH]: {
+    title: `Account linked to another identity`,
+    message: () => `This account is linked to another single sign-on identity. Please contact your administrator.`,
+  },
+  [EAuthErrorCodes.OIDC_EMAIL_DOMAIN_NOT_ALLOWED]: {
+    title: `Email domain not allowed`,
+    message: () => `Your email domain cannot sign in with this provider. Please contact your administrator.`,
+  },
+  [EAuthErrorCodes.OIDC_ACCOUNT_LINK_REQUIRED]: {
+    title: `Existing account not linked`,
+    message: () =>
+      `An account with this email exists but is not linked to single sign-on. Please contact your administrator.`,
+  },
+  [EAuthErrorCodes.OAUTH_PROVIDER_UNVERIFIED_EMAIL]: {
+    title: `Email not verified`,
+    message: () => `The provider has not verified your email address. Please contact your administrator.`,
+  },
   [EAuthErrorCodes.INVALID_PASSWORD_TOKEN]: {
     title: `Invalid password token`,
     message: () => `Invalid password token. Please try again.`,
@@ -334,10 +352,14 @@ export const authErrorHandler = (errorCode: EAuthErrorCodes, email?: string): TA
     EAuthErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_IN,
     EAuthErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_UP,
     EAuthErrorCodes.OAUTH_NOT_CONFIGURED,
-    EAuthErrorCodes.GOOGLE_NOT_CONFIGURED,
     EAuthErrorCodes.GITHUB_NOT_CONFIGURED,
     EAuthErrorCodes.GITLAB_NOT_CONFIGURED,
-    EAuthErrorCodes.GOOGLE_OAUTH_PROVIDER_ERROR,
+    EAuthErrorCodes.OIDC_NOT_CONFIGURED,
+    EAuthErrorCodes.OIDC_PROVIDER_ERROR,
+    EAuthErrorCodes.OIDC_IDENTITY_MISMATCH,
+    EAuthErrorCodes.OIDC_EMAIL_DOMAIN_NOT_ALLOWED,
+    EAuthErrorCodes.OIDC_ACCOUNT_LINK_REQUIRED,
+    EAuthErrorCodes.OAUTH_PROVIDER_UNVERIFIED_EMAIL,
     EAuthErrorCodes.GITHUB_OAUTH_PROVIDER_ERROR,
     EAuthErrorCodes.GITLAB_OAUTH_PROVIDER_ERROR,
     EAuthErrorCodes.INVALID_PASSWORD_TOKEN,

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -47,9 +48,7 @@ class OauthAdapter(Adapter):
         self.code = code
 
     def authentication_error_code(self):
-        if self.provider == "google":
-            return "GOOGLE_OAUTH_PROVIDER_ERROR"
-        elif self.provider == "github":
+        if self.provider == "github":
             return "GITHUB_OAUTH_PROVIDER_ERROR"
         elif self.provider == "gitlab":
             return "GITLAB_OAUTH_PROVIDER_ERROR"
