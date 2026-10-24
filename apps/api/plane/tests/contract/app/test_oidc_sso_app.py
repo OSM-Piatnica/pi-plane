@@ -79,7 +79,7 @@ class FakeIdp:
         raise AssertionError(f"unexpected fetch {url}")
 
 
-def make_token(nonce, key=KEY, **overrides):
+def make_token(nonce, /, key=KEY, **overrides):
     now = int(time.time())
     claims = {
         "iss": ISSUER,
