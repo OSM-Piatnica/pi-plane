@@ -72,6 +72,9 @@ export type TIssueOrderByField = TStripDescendingPrefix<TIssueOrderByOptions>;
 
 export type TIssueGroupingFilters = "active" | "backlog";
 
+/** What the timeline bars take their colour from. */
+export type TTimelineColorBy = "state" | "key";
+
 export type TIssueExtraOptions = "show_empty_groups" | "sub_issue";
 
 export type TIssueParams =
@@ -161,6 +164,8 @@ export interface IIssueFilterOptions {
 }
 
 export interface IIssueDisplayFilterOptions {
+  /** Timeline bar colour source; unset means the default (state). */
+  color_by?: TTimelineColorBy;
   calendar?: {
     show_weekends?: boolean;
     layout?: TCalendarLayouts;

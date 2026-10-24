@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Show sub-work items",
         "show_empty_groups": "Show empty groups"
+      },
+      "color_by": {
+        "label": "Color by",
+        "state": "State",
+        "key": "Work item ID"
       }
     },
     "layouts": {
