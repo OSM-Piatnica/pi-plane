@@ -47,3 +47,9 @@ add it to `OIDC_PROVIDERS` in `registry.py`. The settings (`IS_<KEY>_ENABLED`, `
 (`/auth/oidc/<key>/`) and the entry in the `oidc_providers` list of the public instance configuration follow from the
 spec. Mind what the claims can prove: take the identity from an immutable claim, and refuse tokens whose email is not
 verified or whose tenant/organisation is not the expected one.
+
+## Acknowledgements
+
+The design was informed by the OpenID Connect work in the community forks
+[paperplane](https://github.com/inomotech-foss/paperplane) and [Hangar](https://github.com/szymczag/hangar). No code
+was copied from them.
