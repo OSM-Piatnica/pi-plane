@@ -82,5 +82,15 @@
     "button": "Đi đến dự án",
     "fallback": "Nếu nút không hoạt động, hãy sao chép liên kết này và dán vào trình duyệt của bạn:",
     "note": "Lưu ý: Email này được gửi đến <span>{email}</span>. Nếu bạn không mong đợi lời mời này, bạn có thể bỏ qua email này."
+  },
+  "access_request": {
+    "subject": "{requester} xin tham gia {project}",
+    "preheader": "{requester} xin tham gia dự án riêng tư {project} trong không gian làm việc {workspace} trên Pi-Plane.",
+    "heading": "Yêu cầu truy cập dự án {project}",
+    "intro": "<strong>{requester}</strong> xin tham gia dự án riêng tư <strong>{project}</strong> trong không gian làm việc <strong>{workspace}</strong> trên Pi-Plane. Bạn có thể chấp thuận hoặc từ chối yêu cầu trong phần cài đặt thành viên của dự án.",
+    "message": "Tin nhắn:",
+    "button": "Xem xét yêu cầu",
+    "fallback": "Nếu nút không hoạt động, hãy sao chép liên kết này và dán vào trình duyệt của bạn:",
+    "note": "Lưu ý: Email này được gửi đến <span>{email}</span> vì bạn là quản trị viên hoặc trưởng dự án này."
   }
 }

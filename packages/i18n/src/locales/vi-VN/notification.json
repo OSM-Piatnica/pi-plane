@@ -98,6 +98,9 @@
       "blocked_by_removed": "đã xóa quan hệ “bị chặn bởi”",
       "generic_updated": "đã cập nhật mục công việc",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "đã yêu cầu quyền truy cập vào <value/>"
     }
   },
   "notification_ui": {

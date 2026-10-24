@@ -98,5 +98,15 @@
     "button": "Prejsť na projekt",
     "fallback": "Ak tlačidlo nefunguje, skopírujte tento odkaz a vložte ho do prehliadača:",
     "note": "Poznámka: tento e-mail bol odoslaný na adresu <span>{email}</span>. Ak ste toto pozvanie nečakali, môžete tento e-mail ignorovať."
+  },
+  "access_request": {
+    "subject": "{requester} žiada o pripojenie k projektu {project}",
+    "preheader": "{requester} žiada o pripojenie k súkromnému projektu {project} v pracovnom priestore {workspace} v Pi-Plane.",
+    "heading": "Žiadosť o prístup k projektu {project}",
+    "intro": "<strong>{requester}</strong> žiada o pripojenie k súkromnému projektu <strong>{project}</strong> v pracovnom priestore <strong>{workspace}</strong> v Pi-Plane. Žiadosť môžete schváliť alebo zamietnuť v nastaveniach členov projektu.",
+    "message": "Správa:",
+    "button": "Posúdiť žiadosť",
+    "fallback": "Ak tlačidlo nefunguje, skopírujte tento odkaz a vložte ho do prehliadača:",
+    "note": "Poznámka: tento e-mail bol odoslaný na adresu <span>{email}</span>, pretože ste správcom alebo vedúcim tohto projektu."
   }
 }

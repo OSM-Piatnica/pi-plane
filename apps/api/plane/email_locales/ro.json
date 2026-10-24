@@ -98,5 +98,15 @@
     "button": "Mergi la proiect",
     "fallback": "Dacă butonul nu funcționează, copiați acest link și lipiți-l în browser:",
     "note": "Notă: acest e-mail a fost trimis la <span>{email}</span>. Dacă nu vă așteptați la această invitație, puteți ignora acest e-mail."
+  },
+  "access_request": {
+    "subject": "{requester} a cerut să se alăture proiectului {project}",
+    "preheader": "{requester} a cerut să se alăture proiectului privat {project} din spațiul de lucru {workspace} din Pi-Plane.",
+    "heading": "Cerere de acces la proiectul {project}",
+    "intro": "<strong>{requester}</strong> a cerut să se alăture proiectului privat <strong>{project}</strong> din spațiul de lucru <strong>{workspace}</strong> din Pi-Plane. Puteți aproba sau respinge cererea în setările membrilor proiectului.",
+    "message": "Mesaj:",
+    "button": "Examinează cererea",
+    "fallback": "Dacă butonul nu funcționează, copiați acest link și lipiți-l în browser:",
+    "note": "Notă: acest e-mail a fost trimis la <span>{email}</span> deoarece sunteți administrator sau lider al acestui proiect."
   }
 }

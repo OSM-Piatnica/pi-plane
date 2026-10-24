@@ -90,5 +90,15 @@
     "button": "Zum Projekt",
     "fallback": "Wenn die Schaltfläche nicht funktioniert, kopieren Sie diesen Link und fügen Sie ihn in Ihren Browser ein:",
     "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet. Wenn Sie diese Einladung nicht erwartet haben, können Sie diese E-Mail ignorieren."
+  },
+  "access_request": {
+    "subject": "{requester} möchte dem Projekt {project} beitreten",
+    "preheader": "{requester} möchte dem privaten Projekt {project} im Arbeitsbereich {workspace} in Pi-Plane beitreten.",
+    "heading": "Zugriffsanfrage für das Projekt {project}",
+    "intro": "<strong>{requester}</strong> möchte dem privaten Projekt <strong>{project}</strong> im Arbeitsbereich <strong>{workspace}</strong> in Pi-Plane beitreten. Sie können die Anfrage in den Mitgliedereinstellungen des Projekts genehmigen oder ablehnen.",
+    "message": "Nachricht:",
+    "button": "Anfrage prüfen",
+    "fallback": "Wenn die Schaltfläche nicht funktioniert, kopieren Sie diesen Link und fügen Sie ihn in Ihren Browser ein:",
+    "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet, weil Sie Administrator oder Leiter dieses Projekts sind."
   }
 }

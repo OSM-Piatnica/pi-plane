@@ -98,6 +98,9 @@
       "blocked_by_removed": "heeft de relatie ‘geblokkeerd door’ verwijderd",
       "generic_updated": "heeft het werkitem bijgewerkt",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "heeft toegang tot <value/> aangevraagd"
     }
   },
   "notification_ui": {

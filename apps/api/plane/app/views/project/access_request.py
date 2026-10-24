@@ -15,6 +15,7 @@ from .base import BaseAPIView
 from plane.app.permissions import ROLE, allow_permission
 from plane.app.serializers import ProjectAccessRequestSerializer
 from plane.db.models import Project, ProjectAccessRequest, ProjectMember, ProjectUserProperty, WorkspaceMember
+from plane.bgtasks.project_access_request_notification_task import notify_project_access_request
 from plane.db.models.project import ProjectNetwork
 
 MESSAGE_MAX_LENGTH = 500
@@ -64,6 +65,8 @@ class ProjectAccessRequestEndpoint(BaseAPIView):
                 project=project, requester=request.user, status=ProjectAccessRequest.PENDING
             )
             return Response(ProjectAccessRequestSerializer(access_request).data, status=status.HTTP_200_OK)
+        # only after the request is committed, so the task finds it
+        transaction.on_commit(lambda: notify_project_access_request.delay(str(access_request.id)))
         return Response(ProjectAccessRequestSerializer(access_request).data, status=status.HTTP_201_CREATED)
 
     @allow_permission([ROLE.ADMIN])

@@ -98,6 +98,9 @@
       "blocked_by_removed": "'차단됨' 관계를 제거했습니다",
       "generic_updated": "작업 항목을 업데이트했습니다",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "<value/>에 대한 액세스를 요청했습니다"
     }
   },
   "notification_ui": {

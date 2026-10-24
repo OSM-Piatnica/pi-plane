@@ -98,6 +98,9 @@
       "blocked_by_removed": "menghapus relasi “diblokir oleh”",
       "generic_updated": "memperbarui item kerja",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "meminta akses ke <value/>"
     }
   },
   "notification_ui": {

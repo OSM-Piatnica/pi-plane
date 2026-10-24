@@ -18,8 +18,10 @@ import { useWorkspaceNotifications } from "@/hooks/store/notifications";
 import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { useNotification } from "@/hooks/store/notifications/use-notification";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { useAppRouter } from "@/hooks/use-app-router";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 // local imports
+import { AccessRequestNotificationContent } from "./access-request-content";
 import { NotificationContent } from "./content";
 import { NotificationOption } from "./options";
 
@@ -37,6 +39,7 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
   const { asJson: notification, markNotificationAsRead } = useNotification(notificationId);
   const { getIsIssuePeeked, setPeekIssue } = useIssueDetail();
   const { getWorkspaceBySlug } = useWorkspace();
+  const router = useAppRouter();
   // states
   const [isSnoozeStateModalOpen, setIsSnoozeStateModalOpen] = useState(false);
   const [customSnoozeModal, setCustomSnoozeModal] = useState(false);
@@ -46,7 +49,9 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
   const issueId = notification?.data?.issue?.id || undefined;
   const workspace = getWorkspaceBySlug(workspaceSlug);
 
-  const notificationField = notification?.data?.issue_activity.field || undefined;
+  const notificationField = notification?.data?.issue_activity?.field || undefined;
+  // a request to join a Private project has no work item: it opens the members settings where the request waits
+  const isAccessRequest = notification?.entity_name === "project_access_request" && !!notification?.data?.project;
   const notificationTriggeredBy = notification.triggered_by_details || undefined;
 
   const handleNotificationIssuePeekOverview = async () => {
@@ -71,7 +76,27 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
     }
   };
 
-  if (!workspaceSlug || !notificationId || !notification?.id || !notificationField || !workspace?.id || !projectId)
+  const handleNotificationAccessRequest = async () => {
+    if (!workspaceSlug || !projectId || isSnoozeStateModalOpen || customSnoozeModal) return;
+    setCurrentSelectedNotificationId(notificationId);
+    if (notification.read_at === null) {
+      try {
+        await markNotificationAsRead(workspaceSlug);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    router.push(`/${workspaceSlug}/settings/projects/${projectId}/members/`);
+  };
+
+  if (
+    !workspaceSlug ||
+    !notificationId ||
+    !notification?.id ||
+    (!notificationField && !isAccessRequest) ||
+    !workspace?.id ||
+    !projectId
+  )
     return <></>;
 
   return (
@@ -83,7 +108,7 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
           "bg-accent-primary/5": notification.read_at === null,
         }
       )}
-      onClick={handleNotificationIssuePeekOverview}
+      onClick={isAccessRequest ? handleNotificationAccessRequest : handleNotificationIssuePeekOverview}
     >
       {notification.read_at === null && (
         <div className="absolute top-[50%] left-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent-primary" />
@@ -105,12 +130,16 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
         <div className="-mt-2 w-full space-y-1">
           <div className="relative flex h-8 items-center gap-3">
             <div className="line-clamp-1 w-full truncate overflow-hidden text-body-xs-medium break-all whitespace-normal text-primary">
-              <NotificationContent
-                notification={notification}
-                workspaceId={workspace.id}
-                workspaceSlug={workspaceSlug}
-                projectId={projectId}
-              />
+              {isAccessRequest ? (
+                <AccessRequestNotificationContent notification={notification} />
+              ) : (
+                <NotificationContent
+                  notification={notification}
+                  workspaceId={workspace.id}
+                  workspaceSlug={workspaceSlug}
+                  projectId={projectId}
+                />
+              )}
             </div>
             <NotificationOption
               workspaceSlug={workspaceSlug}
@@ -124,8 +153,14 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
 
           <div className="relative flex items-center gap-3 text-caption-sm-regular text-secondary">
             <div className="line-clamp-1 w-full truncate overflow-hidden break-words whitespace-normal">
-              {notification?.data?.issue?.identifier}-{notification?.data?.issue?.sequence_id}&nbsp;
-              {notification?.data?.issue?.name}
+              {isAccessRequest ? (
+                notification?.data?.project?.name
+              ) : (
+                <>
+                  {notification?.data?.issue?.identifier}-{notification?.data?.issue?.sequence_id}&nbsp;
+                  {notification?.data?.issue?.name}
+                </>
+              )}
             </div>
             <div className="flex-shrink-0">
               {notification?.snoozed_till ? (

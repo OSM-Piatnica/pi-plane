@@ -90,5 +90,15 @@
     "button": "Naar het project",
     "fallback": "Werkt de knop niet? Kopieer dan deze link en plak hem in uw browser:",
     "note": "Let op: deze e-mail is verzonden naar <span>{email}</span>. Als u deze uitnodiging niet verwachtte, kunt u deze e-mail negeren."
+  },
+  "access_request": {
+    "subject": "{requester} vraagt om lid te worden van {project}",
+    "preheader": "{requester} vraagt om lid te worden van het privéproject {project} in de werkruimte {workspace} op Pi-Plane.",
+    "heading": "Toegangsverzoek voor het project {project}",
+    "intro": "<strong>{requester}</strong> vraagt om lid te worden van het privéproject <strong>{project}</strong> in de werkruimte <strong>{workspace}</strong> op Pi-Plane. U kunt het verzoek goedkeuren of afwijzen in de ledeninstellingen van het project.",
+    "message": "Bericht:",
+    "button": "Verzoek beoordelen",
+    "fallback": "Werkt de knop niet? Kopieer dan deze link en plak hem in uw browser:",
+    "note": "Let op: deze e-mail is verzonden naar <span>{email}</span> omdat u beheerder of leider van dit project bent."
   }
 }

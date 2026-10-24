@@ -90,5 +90,15 @@
     "button": "Accéder au projet",
     "fallback": "Si le bouton ne fonctionne pas, copiez ce lien et collez-le dans votre navigateur :",
     "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span>. Si vous n’attendiez pas cette invitation, vous pouvez ignorer cet e-mail."
+  },
+  "access_request": {
+    "subject": "{requester} demande à rejoindre {project}",
+    "preheader": "{requester} demande à rejoindre le projet privé {project} dans l’espace de travail {workspace} sur Pi-Plane.",
+    "heading": "Demande d’accès au projet {project}",
+    "intro": "<strong>{requester}</strong> demande à rejoindre le projet privé <strong>{project}</strong> dans l’espace de travail <strong>{workspace}</strong> sur Pi-Plane. Vous pouvez approuver ou refuser la demande dans les paramètres des membres du projet.",
+    "message": "Message :",
+    "button": "Examiner la demande",
+    "fallback": "Si le bouton ne fonctionne pas, copiez ce lien et collez-le dans votre navigateur :",
+    "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span> parce que vous êtes administrateur ou responsable de ce projet."
   }
 }

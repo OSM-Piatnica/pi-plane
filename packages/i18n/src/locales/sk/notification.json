@@ -98,6 +98,9 @@
       "blocked_by_removed": "odstránil(a) vzťah „blokované“",
       "generic_updated": "aktualizoval(a) pracovnú položku",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "požiadal(a) o prístup k <value/>"
     }
   },
   "notification_ui": {

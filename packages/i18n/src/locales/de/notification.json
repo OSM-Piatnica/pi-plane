@@ -98,6 +98,9 @@
       "blocked_by_removed": "hat die Beziehung „blockiert durch“ entfernt",
       "generic_updated": "hat das Arbeitselement aktualisiert",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "hat Zugriff auf <value/> angefragt"
     }
   },
   "notification_ui": {

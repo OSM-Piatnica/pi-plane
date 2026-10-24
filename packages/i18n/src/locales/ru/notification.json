@@ -98,6 +98,9 @@
       "blocked_by_removed": "удалил(а) связь «заблокирован»",
       "generic_updated": "обновил(а) рабочий элемент",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "запросил(а) доступ к <value/>"
     }
   },
   "notification_ui": {

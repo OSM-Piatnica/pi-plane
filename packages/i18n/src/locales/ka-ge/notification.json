@@ -98,6 +98,9 @@
       "blocked_by_removed": "კავშირი „დაბლოკილია“ წაშალა",
       "generic_updated": "სამუშაო ელემენტი განაახლა",
       "end_punctuation": "."
+    },
+    "access_request": {
+      "requested": "მოითხოვა წვდომა: <value/>"
     }
   },
   "notification_ui": {
