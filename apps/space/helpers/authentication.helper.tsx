@@ -66,6 +66,7 @@ export enum EAuthenticationErrorCodes {
   OIDC_PROVIDER_ERROR = "5117",
   OIDC_IDENTITY_MISMATCH = "5118",
   OIDC_EMAIL_DOMAIN_NOT_ALLOWED = "5119",
+  OIDC_ACCOUNT_LINK_REQUIRED = "5126",
   OAUTH_PROVIDER_UNVERIFIED_EMAIL = "5124",
   GITHUB_OAUTH_PROVIDER_ERROR = "5120",
   GITLAB_OAUTH_PROVIDER_ERROR = "5121",
@@ -291,6 +292,10 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
     title: "auth.error_alerts.titles.oidc_email_domain_not_allowed",
     message: contactAdmin("auth.error_alerts.titles.oidc_email_domain_not_allowed"),
   },
+  [EAuthenticationErrorCodes.OIDC_ACCOUNT_LINK_REQUIRED]: {
+    title: "auth.error_alerts.titles.oidc_account_link_required",
+    message: contactAdmin("auth.error_alerts.titles.oidc_account_link_required"),
+  },
   [EAuthenticationErrorCodes.OAUTH_PROVIDER_UNVERIFIED_EMAIL]: {
     title: "auth.error_alerts.titles.oauth_provider_unverified_email",
     message: contactAdmin("auth.error_alerts.titles.oauth_provider_unverified_email"),
@@ -396,6 +401,7 @@ export const authErrorHandler = (
     EAuthenticationErrorCodes.OIDC_PROVIDER_ERROR,
     EAuthenticationErrorCodes.OIDC_IDENTITY_MISMATCH,
     EAuthenticationErrorCodes.OIDC_EMAIL_DOMAIN_NOT_ALLOWED,
+    EAuthenticationErrorCodes.OIDC_ACCOUNT_LINK_REQUIRED,
     EAuthenticationErrorCodes.OAUTH_PROVIDER_UNVERIFIED_EMAIL,
     EAuthenticationErrorCodes.GITHUB_OAUTH_PROVIDER_ERROR,
     EAuthenticationErrorCodes.GITLAB_OAUTH_PROVIDER_ERROR,

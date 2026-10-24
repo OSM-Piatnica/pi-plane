@@ -58,7 +58,7 @@ export type TInstanceGiteaAuthenticationConfigurationKeys =
   | "ENABLE_GITEA_SYNC";
 
 export type TInstanceOidcAuthenticationConfigurationKeys =
-  | `${"ENTRA" | "GOOGLE_OIDC" | "OIDC"}_${"CLIENT_ID" | "CLIENT_SECRET" | "ENABLE_SIGNUP" | "ALLOWED_EMAIL_DOMAINS"}`
+  | `${"ENTRA" | "GOOGLE_OIDC" | "OIDC"}_${"CLIENT_ID" | "CLIENT_SECRET" | "ENABLE_SIGNUP" | "ALLOWED_EMAIL_DOMAINS" | "LINK_EXISTING_ACCOUNTS"}`
   | `ENABLE_${"ENTRA" | "GOOGLE_OIDC" | "OIDC"}_SYNC`
   | "ENTRA_TENANT_ID"
   | "GOOGLE_OIDC_HOSTED_DOMAIN"

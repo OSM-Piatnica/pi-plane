@@ -238,6 +238,11 @@ const errorCodeMessages: {
     title: `Email domain not allowed`,
     message: () => `Your email domain cannot sign in with this provider. Please contact your administrator.`,
   },
+  [EAuthErrorCodes.OIDC_ACCOUNT_LINK_REQUIRED]: {
+    title: `Existing account not linked`,
+    message: () =>
+      `An account with this email exists but is not linked to single sign-on. Please contact your administrator.`,
+  },
   [EAuthErrorCodes.OAUTH_PROVIDER_UNVERIFIED_EMAIL]: {
     title: `Email not verified`,
     message: () => `The provider has not verified your email address. Please contact your administrator.`,
@@ -353,6 +358,7 @@ export const authErrorHandler = (errorCode: EAuthErrorCodes, email?: string): TA
     EAuthErrorCodes.OIDC_PROVIDER_ERROR,
     EAuthErrorCodes.OIDC_IDENTITY_MISMATCH,
     EAuthErrorCodes.OIDC_EMAIL_DOMAIN_NOT_ALLOWED,
+    EAuthErrorCodes.OIDC_ACCOUNT_LINK_REQUIRED,
     EAuthErrorCodes.OAUTH_PROVIDER_UNVERIFIED_EMAIL,
     EAuthErrorCodes.GITHUB_OAUTH_PROVIDER_ERROR,
     EAuthErrorCodes.GITLAB_OAUTH_PROVIDER_ERROR,

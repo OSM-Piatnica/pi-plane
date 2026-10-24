@@ -57,12 +57,18 @@ export function InstanceOidcConfigForm(props: Props) {
     ...provider.fields.map((field) => `${prefix}_${field.name}`),
     `${prefix}_ALLOWED_EMAIL_DOMAINS`,
     `${prefix}_ENABLE_SIGNUP`,
+    `${prefix}_LINK_EXISTING_ACCOUNTS`,
     `ENABLE_${prefix}_SYNC`,
   ];
   const toFormValues = (source: (name: string) => string | undefined): OidcConfigFormValues =>
     Object.fromEntries(
       names.map((name) => {
-        const fallback = name === `${prefix}_ENABLE_SIGNUP` ? "1" : name === `ENABLE_${prefix}_SYNC` ? "0" : "";
+        const fallback =
+          name === `${prefix}_ENABLE_SIGNUP`
+            ? "1"
+            : name.endsWith("_SYNC") || name.endsWith("_LINK_EXISTING_ACCOUNTS")
+              ? "0"
+              : "";
         return [name, source(name) || fallback];
       })
     );
@@ -199,6 +205,29 @@ export function InstanceOidcConfigForm(props: Props) {
                     onCheckedChange={() => onChange(isOn(value) ? "0" : "1")}
                     size="sm"
                     aria-labelledby={`${prefix}-signup-label`}
+                  />
+                )}
+              />
+            </div>
+            <div className="flex items-center justify-between gap-1">
+              <div>
+                <h4 id={`${prefix}-link-label`} className="text-sm text-custom-text-300">
+                  Link existing accounts with the same email on first sign-in
+                </h4>
+                <p className="text-11 text-tertiary">
+                  For migration only: switch it off once everybody has signed in. Linking replaces any password set on
+                  the account.
+                </p>
+              </div>
+              <Controller
+                control={control}
+                name={`${prefix}_LINK_EXISTING_ACCOUNTS`}
+                render={({ field: { value, onChange } }) => (
+                  <Switch
+                    checked={isOn(value)}
+                    onCheckedChange={() => onChange(isOn(value) ? "0" : "1")}
+                    size="sm"
+                    aria-labelledby={`${prefix}-link-label`}
                   />
                 )}
               />
