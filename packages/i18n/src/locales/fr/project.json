@@ -655,6 +655,7 @@
       "always_copied": "Les paramètres, les états et les types d'éléments de travail sont toujours copiés.",
       "description": "Crée un nouveau projet avec les mêmes paramètres. Les éléments de travail, les pages et les webhooks ne sont pas copiés.",
       "error": "Le projet n'a pas pu être dupliqué. Veuillez réessayer.",
+      "identifier_placeholder": "Généré si vide",
       "submit": "Dupliquer le projet",
       "submitting": "Duplication du projet...",
       "success": "Projet dupliqué avec succès.",

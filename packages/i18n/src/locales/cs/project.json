@@ -655,6 +655,7 @@
       "always_copied": "Nastavení, stavy a typy pracovních položek se kopírují vždy.",
       "description": "Vytvoří nový projekt se stejným nastavením. Pracovní položky, stránky a webhooky se nekopírují.",
       "error": "Projekt se nepodařilo duplikovat. Zkuste to prosím znovu.",
+      "identifier_placeholder": "Vytvoří se, pokud zůstane prázdné",
       "submit": "Duplikovat projekt",
       "submitting": "Duplikuje se projekt...",
       "success": "Projekt byl úspěšně duplikován.",

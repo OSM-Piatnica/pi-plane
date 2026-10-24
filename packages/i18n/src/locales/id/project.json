@@ -655,6 +655,7 @@
       "always_copied": "Pengaturan, status, dan tipe item kerja selalu disalin.",
       "description": "Membuat proyek baru dengan pengaturan yang sama. Item kerja, halaman, dan webhook tidak disalin.",
       "error": "Proyek tidak dapat diduplikasi. Silakan coba lagi.",
+      "identifier_placeholder": "Dibuat otomatis jika kosong",
       "submit": "Duplikat proyek",
       "submitting": "Menduplikasi proyek...",
       "success": "Proyek berhasil diduplikasi.",

@@ -655,6 +655,7 @@
       "always_copied": "Einstellungen, Status und Arbeitselementtypen werden immer kopiert.",
       "description": "Erstellt ein neues Projekt mit denselben Einstellungen. Arbeitselemente, Seiten und Webhooks werden nicht kopiert.",
       "error": "Das Projekt konnte nicht dupliziert werden. Bitte versuchen Sie es erneut.",
+      "identifier_placeholder": "Wird erzeugt, wenn leer",
       "submit": "Projekt duplizieren",
       "submitting": "Projekt wird dupliziert...",
       "success": "Projekt erfolgreich dupliziert.",

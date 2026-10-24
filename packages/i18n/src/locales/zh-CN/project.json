@@ -655,6 +655,7 @@
       "always_copied": "设置、状态和工作项类型始终会被复制。",
       "description": "使用相同的设置创建新项目。工作项、页面和 Webhook 不会被复制。",
       "error": "无法复制项目，请重试。",
+      "identifier_placeholder": "留空则自动生成",
       "submit": "复制项目",
       "submitting": "正在复制项目...",
       "success": "项目复制成功。",

@@ -655,6 +655,7 @@
       "always_copied": "Ustawienia, stany i typy elementów pracy są zawsze kopiowane.",
       "description": "Tworzy nowy projekt z tymi samymi ustawieniami. Elementy pracy, strony i webhooki nie są kopiowane.",
       "error": "Nie udało się zduplikować projektu. Spróbuj ponownie.",
+      "identifier_placeholder": "Zostanie wygenerowany, jeśli puste",
       "submit": "Duplikuj projekt",
       "submitting": "Duplikowanie projektu...",
       "success": "Projekt został zduplikowany.",

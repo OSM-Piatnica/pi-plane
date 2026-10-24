@@ -655,6 +655,7 @@
       "always_copied": "Instellingen, statussen en typen werkitems worden altijd gekopieerd.",
       "description": "Maakt een nieuw project met dezelfde instellingen. Werkitems, pagina's en webhooks worden niet gekopieerd.",
       "error": "Het project kon niet worden gedupliceerd. Probeer het opnieuw.",
+      "identifier_placeholder": "Wordt gegenereerd als leeg",
       "submit": "Project dupliceren",
       "submitting": "Project wordt gedupliceerd...",
       "success": "Project is gedupliceerd.",

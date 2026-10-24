@@ -655,6 +655,7 @@
       "always_copied": "設定、狀態和工作事項類型一律會被複製。",
       "description": "使用相同的設定建立新專案。工作事項、頁面和 Webhook 不會被複製。",
       "error": "無法複製專案，請再試一次。",
+      "identifier_placeholder": "留空則自動產生",
       "submit": "複製專案",
       "submitting": "正在複製專案...",
       "success": "專案複製成功。",

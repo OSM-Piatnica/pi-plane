@@ -655,6 +655,7 @@
       "always_copied": "As configurações, os estados e os tipos de item de trabalho são sempre copiados.",
       "description": "Cria um novo projeto com as mesmas configurações. Itens de trabalho, páginas e webhooks não são copiados.",
       "error": "Não foi possível duplicar o projeto. Tente novamente.",
+      "identifier_placeholder": "Gerado se vazio",
       "submit": "Duplicar projeto",
       "submitting": "Duplicando projeto...",
       "success": "Projeto duplicado com sucesso.",

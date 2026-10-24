@@ -655,6 +655,7 @@
       "always_copied": "Ayarlar, durumlar ve iş öğesi türleri her zaman kopyalanır.",
       "description": "Aynı ayarlarla yeni bir proje oluşturur. İş öğeleri, sayfalar ve webhook'lar kopyalanmaz.",
       "error": "Proje çoğaltılamadı. Lütfen tekrar deneyin.",
+      "identifier_placeholder": "Boşsa otomatik oluşturulur",
       "submit": "Projeyi çoğalt",
       "submitting": "Proje çoğaltılıyor...",
       "success": "Proje başarıyla çoğaltıldı.",

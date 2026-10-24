@@ -655,6 +655,7 @@
       "always_copied": "As definições, os estados e os tipos de item de trabalho são sempre copiados.",
       "description": "Cria um novo projeto com as mesmas definições. Os itens de trabalho, as páginas e os webhooks não são copiados.",
       "error": "Não foi possível duplicar o projeto. Tente novamente.",
+      "identifier_placeholder": "Gerado se vazio",
       "submit": "Duplicar projeto",
       "submitting": "A duplicar o projeto...",
       "success": "Projeto duplicado com sucesso.",

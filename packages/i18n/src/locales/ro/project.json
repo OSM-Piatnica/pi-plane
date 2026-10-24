@@ -655,6 +655,7 @@
       "always_copied": "Setările, stările și tipurile de activități sunt întotdeauna copiate.",
       "description": "Creează un proiect nou cu aceleași setări. Activitățile, documentația și webhook-urile nu sunt copiate.",
       "error": "Proiectul nu a putut fi duplicat. Încearcă din nou.",
+      "identifier_placeholder": "Se generează dacă e gol",
       "submit": "Duplică proiectul",
       "submitting": "Se duplică proiectul...",
       "success": "Proiectul a fost duplicat cu succes.",

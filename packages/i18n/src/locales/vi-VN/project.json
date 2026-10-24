@@ -655,6 +655,7 @@
       "always_copied": "Cài đặt, trạng thái và loại mục công việc luôn được sao chép.",
       "description": "Tạo dự án mới với cùng các cài đặt. Mục công việc, trang và webhook không được sao chép.",
       "error": "Không thể nhân bản dự án. Vui lòng thử lại.",
+      "identifier_placeholder": "Tự tạo nếu để trống",
       "submit": "Nhân bản dự án",
       "submitting": "Đang nhân bản dự án...",
       "success": "Đã nhân bản dự án thành công.",

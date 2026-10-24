@@ -655,6 +655,7 @@
       "always_copied": "Settings, states and work item types are always copied.",
       "description": "Creates a new project with the same settings. Work items, pages and webhooks are not copied.",
       "error": "Could not duplicate the project. Please try again.",
+      "identifier_placeholder": "Generated if empty",
       "submit": "Duplicate project",
       "submitting": "Duplicating project...",
       "success": "Project duplicated successfully.",

@@ -90,7 +90,8 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
     if (!isOpen) return;
     reset({
       name: `${project.name} (Copy)`,
-      identifier: projectIdentifierSanitizer(project.identifier ?? "").slice(0, 9),
+      // empty: the API derives a free one, whereas the source's own identifier is always taken
+      identifier: "",
       labels: true,
       estimates: true,
       intake: true,
@@ -107,7 +108,7 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
     try {
       const copy = await duplicateProject(workspaceSlug.toString(), project.id, {
         name: values.name.trim(),
-        identifier: values.identifier.trim().toUpperCase(),
+        ...(values.identifier.trim() ? { identifier: values.identifier.trim().toUpperCase() } : {}),
         include: {
           labels: values.labels,
           estimates: values.estimates,
@@ -215,14 +216,14 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
                     {errors.name?.message && <p className="mt-1 text-11 text-danger-primary">{errors.name.message}</p>}
                   </div>
 
-                  <div className="w-28 flex-shrink-0">
+                  <div className="w-40 flex-shrink-0">
                     <label htmlFor="duplicate-project-identifier" className="text-13 text-secondary">
                       {t("project_id")}
                     </label>
                     <Controller
                       control={control}
                       name="identifier"
-                      rules={{ required: true, maxLength: 12 }}
+                      rules={{ maxLength: 12 }}
                       render={({ field: { value, onChange, ref } }) => (
                         <Field name="identifier" invalid={Boolean(errors.identifier)}>
                           <InputGroup size="2xl">
@@ -237,6 +238,7 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
                                 onChange(projectIdentifierSanitizer(event.target.value.toUpperCase()).slice(0, 12))
                               }
                               ref={ref}
+                              placeholder={t("project_components.duplicate_modal.identifier_placeholder")}
                               autoComplete="off"
                             />
                           </InputGroup>
