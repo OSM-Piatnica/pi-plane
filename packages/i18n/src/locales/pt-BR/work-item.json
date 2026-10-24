@@ -923,5 +923,12 @@
       },
       "value_none": "nenhum"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Agrupar datas",
+    "rolled_up_bar": "Datas agrupadas dos sub-itens de trabalho",
+    "children_span": "Sub-itens de trabalho: {start} – {end}",
+    "starts_early": "Os sub-itens de trabalho começam antes deste item de trabalho",
+    "ends_late": "Os sub-itens de trabalho terminam depois deste item de trabalho"
   }
 }

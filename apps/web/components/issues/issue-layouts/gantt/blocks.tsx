@@ -11,9 +11,12 @@ import { useParams } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "@makeplane/propel/components/popover";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { ControlLink } from "@plane/blocks/layout";
+import { useTranslation } from "@plane/i18n";
+import { GANTT_TIMELINE_TYPE } from "@plane/types";
 import { findTotalDaysInRange, generateWorkItemLink } from "@plane/utils";
 // components
 import { SIDEBAR_WIDTH } from "@/components/gantt-chart/constants";
+import { isBlockRolledUp } from "@/components/gantt-chart/views/helpers";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useIssues } from "@/hooks/store/use-issues";
@@ -22,6 +25,7 @@ import { useProjectState } from "@/hooks/store/use-project-state";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import useIssuePeekOverviewRedirection from "@/hooks/use-issue-peek-overview-redirection";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useTimeLineChart } from "@/hooks/use-timeline-chart";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 import { IssueStats } from "@/components/issues/issue-layouts/issue-stats";
 // local imports
@@ -47,9 +51,12 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
   // hooks
   const { isMobile } = usePlatformOS();
   const { handleRedirection } = useIssuePeekOverviewRedirection(isEpic);
+  const { getBlockById } = useTimeLineChart(GANTT_TIMELINE_TYPE.ISSUE);
+  const { t } = useTranslation();
 
   // derived values
   const issueDetails = getIssueById(issueId);
+  const isRolledUp = isBlockRolledUp(getBlockById(issueId));
   const stateDetails =
     issueDetails && getProjectStates(issueDetails?.project_id)?.find((state) => state?.id == issueDetails?.state_id);
 
@@ -73,6 +80,18 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
             onClick={handleIssuePeekOverview}
           >
             <div className="absolute top-0 left-0 h-full w-full bg-surface-1/50" />
+            {isRolledUp && (
+              // hatched like a rolled-up bar in project plans: the dates come from the work items below
+              <div
+                aria-hidden
+                title={t("timeline_rollup.rolled_up_bar")}
+                className="absolute top-0 left-0 h-full w-full rounded-sm border border-dashed border-strong"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(135deg, transparent 0 5px, rgba(128, 128, 128, 0.28) 5px 10px)",
+                }}
+              />
+            )}
             <div
               className="sticky w-auto flex-1 truncate overflow-hidden px-2.5 py-1 text-13 text-primary"
               style={{ left: `${SIDEBAR_WIDTH}px` }}

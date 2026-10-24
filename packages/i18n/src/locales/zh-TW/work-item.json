@@ -923,5 +923,12 @@
       },
       "value_none": "無"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "彙總日期",
+    "rolled_up_bar": "日期彙總自子工作事項",
+    "children_span": "子工作事項：{start} – {end}",
+    "starts_early": "子工作事項開始於此工作事項之前",
+    "ends_late": "子工作事項結束於此工作事項之後"
   }
 }

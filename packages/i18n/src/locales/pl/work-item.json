@@ -923,5 +923,12 @@
       },
       "value_none": "brak"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Zbierz daty",
+    "rolled_up_bar": "Daty zebrane z podrzędnych elementów pracy",
+    "children_span": "Podrzędne elementy pracy: {start} – {end}",
+    "starts_early": "Podrzędne elementy pracy zaczynają się przed tym elementem pracy",
+    "ends_late": "Podrzędne elementy pracy kończą się po tym elemencie pracy"
   }
 }

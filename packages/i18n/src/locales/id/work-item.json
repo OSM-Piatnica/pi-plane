@@ -923,5 +923,12 @@
       },
       "value_none": "tidak ada"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Rangkum tanggal",
+    "rolled_up_bar": "Tanggal dirangkum dari sub-item kerja",
+    "children_span": "Sub-item kerja: {start} – {end}",
+    "starts_early": "Sub-item kerja dimulai sebelum item kerja ini",
+    "ends_late": "Sub-item kerja berakhir setelah item kerja ini"
   }
 }

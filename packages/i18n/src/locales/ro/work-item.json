@@ -923,5 +923,12 @@
       },
       "value_none": "niciuna"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Însumează datele",
+    "rolled_up_bar": "Date însumate din sub-activități",
+    "children_span": "Sub-activități: {start} – {end}",
+    "starts_early": "Sub-activitățile încep înainte de această activitate",
+    "ends_late": "Sub-activitățile se termină după această activitate"
   }
 }

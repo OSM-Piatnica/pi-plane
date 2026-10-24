@@ -923,5 +923,12 @@
       },
       "value_none": "なし"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "日付を集約",
+    "rolled_up_bar": "サブ作業項目から集約された日付",
+    "children_span": "サブ作業項目: {start} – {end}",
+    "starts_early": "サブ作業項目がこの作業項目より前に始まります",
+    "ends_late": "サブ作業項目がこの作業項目より後に終わります"
   }
 }

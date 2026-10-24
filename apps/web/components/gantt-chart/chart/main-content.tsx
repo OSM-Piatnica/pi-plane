@@ -29,7 +29,7 @@ import { GanttChartBlocksList } from "@/components/gantt-chart/blocks/blocks-lis
 import { useBulkOperationStatus } from "@/hooks/use-bulk-operation-status";
 //
 import { DEFAULT_BLOCK_WIDTH, GANTT_SELECT_GROUP, HEADER_HEIGHT } from "../constants";
-import { getItemPositionWidth } from "../views";
+import { getBlockChartDates, getItemPositionWidth } from "../views/helpers";
 import { TimelineDragHelper } from "./timeline-drag-helper";
 
 type Props = {
@@ -123,8 +123,10 @@ export const GanttChartMainContent = observer(function GanttChartMainContent(pro
 
   const handleScrollToBlock = (block: IGanttBlock) => {
     const scrollContainer = ganttContainerRef.current as HTMLDivElement;
-    const scrollToEndDate = !block.start_date && block.target_date;
-    const scrollToDate = block.start_date ? getDate(block.start_date) : getDate(block.target_date);
+    // scroll to the bar as drawn, which may take dates from the children
+    const chartDates = getBlockChartDates(block);
+    const scrollToEndDate = !chartDates.start_date && chartDates.target_date;
+    const scrollToDate = chartDates.start_date ? getDate(chartDates.start_date) : getDate(chartDates.target_date);
     let chartData;
 
     if (!scrollContainer || !currentViewData || !scrollToDate) return;
@@ -135,7 +137,7 @@ export const GanttChartMainContent = observer(function GanttChartMainContent(pro
       chartData = updateCurrentViewRenderPayload("right", currentView, scrollToDate);
     }
     // update container's scroll position to the block's position
-    const updatedPosition = getItemPositionWidth(chartData ?? currentViewData, block);
+    const updatedPosition = getItemPositionWidth(chartData ?? currentViewData, { ...block, ...chartDates });
 
     setTimeout(() => {
       if (updatedPosition)

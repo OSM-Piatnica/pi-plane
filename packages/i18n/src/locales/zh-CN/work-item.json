@@ -923,5 +923,12 @@
       },
       "value_none": "无"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "汇总日期",
+    "rolled_up_bar": "日期汇总自子工作项",
+    "children_span": "子工作项：{start} – {end}",
+    "starts_early": "子工作项开始于此工作项之前",
+    "ends_late": "子工作项结束于此工作项之后"
   }
 }

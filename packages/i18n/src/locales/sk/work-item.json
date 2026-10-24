@@ -923,5 +923,12 @@
       },
       "value_none": "žiadne"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Zhrnúť dátumy",
+    "rolled_up_bar": "Dátumy zhrnuté z podriadených pracovných položiek",
+    "children_span": "Podriadené pracovné položky: {start} – {end}",
+    "starts_early": "Podriadené pracovné položky začínajú pred touto pracovnou položkou",
+    "ends_late": "Podriadené pracovné položky končia po tejto pracovnej položke"
   }
 }

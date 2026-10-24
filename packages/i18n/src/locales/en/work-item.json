@@ -923,5 +923,12 @@
       },
       "value_none": "none"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Roll up dates",
+    "rolled_up_bar": "Dates rolled up from the sub-work items",
+    "children_span": "Sub-work items: {start} – {end}",
+    "starts_early": "Sub-work items start before this work item",
+    "ends_late": "Sub-work items end after this work item"
   }
 }

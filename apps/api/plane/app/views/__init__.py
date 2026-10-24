@@ -142,6 +142,7 @@ from .issue.base import (
 )
 
 from .issue.activity import IssueActivityEndpoint
+from .issue.hierarchy import IssueDateRollupEndpoint
 
 from .issue.archive import IssueArchiveViewSet, BulkArchiveIssuesEndpoint
 
