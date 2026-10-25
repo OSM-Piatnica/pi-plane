@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Archiváciou projektu sa odstráni z bočnej navigácie, ale stále k nemu budete mať prístup zo stránky projektov. Projekt môžete kedykoľvek obnoviť alebo odstrániť.",
-      "delete_description": "Pri odstránení projektu sa všetky dáta a zdroje v ňom trvalo odstránia a nemožno ich obnoviť."
+      "delete_description": "Pri odstránení projektu sa všetky dáta a zdroje v ňom trvalo odstránia a nemožno ich obnoviť.",
+      "duplicate_description": "Vytvorte nový projekt s nastaveniami, stavmi, štítkami a ďalšou konfiguráciou tohto projektu. Pracovné položky sa kopírujú len ak to zvolíte."
     },
     "delete_modal": {
       "confirm_placeholder": "Zadajte „{phrase}“",
@@ -649,6 +650,52 @@
       "title": "Žiadosti o pripojenie ({count})",
       "approve": "Schváliť",
       "reject": "Zamietnuť"
+    },
+    "duplicate_modal": {
+      "already_running": "V tomto pracovnom priestore už prebieha kopírovanie pracovných položiek. Skúste to znova, keď skončí.",
+      "always_copied": "Nastavenia, stavy a typy pracovných položiek sa kopírujú vždy.",
+      "banner": {
+        "done": "Skopírované pracovné položky: {count}.",
+        "failed": "Kopírovanie pracovných položiek zlyhalo. Čo sa skopírovalo, zostáva; skúste to znova a doplňte zvyšok.",
+        "progress": "Kopírovanie pracovných položiek: {copied} z {total}",
+        "queued": "Pracovné položky čakajú na skopírovanie...",
+        "reload": "Načítať znova",
+        "retry": "Skúsiť znova",
+        "retry_failed": "Kopírovanie sa nepodarilo zopakovať. Skúste to prosím znova."
+      },
+      "clear_all": "Zrušiť výber",
+      "description": "Vytvorí nový projekt s rovnakým nastavením. Stránky a webhooky sa nekopírujú; pracovné položky len ak to zvolíte nižšie.",
+      "error": "Projekt sa nepodarilo duplikovať. Skúste to prosím znova.",
+      "identifier_placeholder": "Vytvorí sa, ak zostane prázdne",
+      "properties": {
+        "assignees": "Priradení",
+        "custom_properties": "Vlastné vlastnosti",
+        "cycles": "Cykly",
+        "dates": "Dátumy",
+        "description_images": "Obrázky v popisoch",
+        "labels": "Štítky",
+        "links": "Odkazy",
+        "modules": "Moduly",
+        "parents": "Väzby podriadených položiek",
+        "relations": "Vzťahy"
+      },
+      "properties_description": "Vyberte, čo sa prenesie s pracovnými položkami. Koncepty, archivované položky a položky intake sa vynechajú; komentáre, prílohy, aktivita a záznamy času sa nikdy nekopírujú.",
+      "properties_heading": "Vlastnosti pracovných položiek",
+      "properties_note": "Cykly a moduly sa prenesú, len keď sa kopírujú vyššie.",
+      "property_groups": {
+        "content": "Obsah",
+        "hierarchy": "Hierarchia a vzťahy",
+        "organization": "Organizácia",
+        "people": "Ľudia"
+      },
+      "select_all": "Vybrať všetko",
+      "submit": "Duplikovať projekt",
+      "submitting": "Duplikuje sa projekt...",
+      "success": "Projekt bol úspešne duplikovaný.",
+      "title": "Duplikovať projekt",
+      "too_large": "Tento projekt je príliš veľký na skopírovanie. Vypnite niektoré možnosti a skúste to znova.",
+      "what_to_copy": "Kopírovať aj",
+      "work_items_too_large": "Tento projekt má viac pracovných položiek, ako sa dá skopírovať (až {count})."
     }
   }
 }

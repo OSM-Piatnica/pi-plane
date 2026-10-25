@@ -107,4 +107,6 @@ from .sticky import Sticky
 
 from .worklog import IssueWorkLog
 
+from .project_copy_job import ProjectCopyJob
+
 from .description import Description, DescriptionVersion

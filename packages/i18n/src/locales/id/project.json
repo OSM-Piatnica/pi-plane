@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Mengarsipkan proyek akan menghapusnya dari navigasi samping, tetapi Anda masih dapat mengaksesnya dari halaman proyek. Anda dapat memulihkan atau menghapus proyek kapan saja.",
-      "delete_description": "Saat menghapus proyek, semua data dan sumber daya di dalamnya akan dihapus secara permanen dan tidak dapat dipulihkan."
+      "delete_description": "Saat menghapus proyek, semua data dan sumber daya di dalamnya akan dihapus secara permanen dan tidak dapat dipulihkan.",
+      "duplicate_description": "Buat proyek baru dengan pengaturan, status, label, dan konfigurasi lain dari proyek ini. Item kerja hanya disalin jika Anda memilihnya."
     },
     "delete_modal": {
       "confirm_placeholder": "Masukkan “{phrase}”",
@@ -649,6 +650,52 @@
       "title": "Permintaan bergabung ({count})",
       "approve": "Setujui",
       "reject": "Tolak"
+    },
+    "duplicate_modal": {
+      "already_running": "Salinan item kerja sedang berjalan di ruang kerja ini. Coba lagi setelah selesai.",
+      "always_copied": "Pengaturan, status, dan tipe item kerja selalu disalin.",
+      "banner": {
+        "done": "Item kerja disalin: {count}.",
+        "failed": "Penyalinan item kerja gagal. Yang sudah disalin tetap ada; coba lagi untuk menambahkan sisanya.",
+        "progress": "Menyalin item kerja: {copied} dari {total}",
+        "queued": "Item kerja sedang antre untuk disalin...",
+        "reload": "Muat ulang",
+        "retry": "Coba lagi",
+        "retry_failed": "Tidak dapat mengulang penyalinan. Silakan coba lagi."
+      },
+      "clear_all": "Hapus semua",
+      "description": "Membuat proyek baru dengan pengaturan yang sama. Halaman dan webhook tidak disalin; item kerja hanya jika Anda memilihnya di bawah.",
+      "error": "Proyek tidak dapat diduplikasi. Silakan coba lagi.",
+      "identifier_placeholder": "Dibuat otomatis jika kosong",
+      "properties": {
+        "assignees": "Penerima tugas",
+        "custom_properties": "Properti kustom",
+        "cycles": "Siklus",
+        "dates": "Tanggal",
+        "description_images": "Gambar dalam deskripsi",
+        "labels": "Label",
+        "links": "Tautan",
+        "modules": "Modul",
+        "parents": "Tautan sub-item",
+        "relations": "Relasi"
+      },
+      "properties_description": "Pilih apa yang dibawa bersama item kerja. Draf, item yang diarsipkan, dan item intake tidak disertakan; komentar, lampiran, aktivitas, dan catatan waktu tidak pernah disalin.",
+      "properties_heading": "Properti item kerja",
+      "properties_note": "Siklus dan modul hanya dibawa jika disalin di atas.",
+      "property_groups": {
+        "content": "Konten",
+        "hierarchy": "Hierarki dan relasi",
+        "organization": "Organisasi",
+        "people": "Orang"
+      },
+      "select_all": "Pilih semua",
+      "submit": "Duplikat proyek",
+      "submitting": "Menduplikasi proyek...",
+      "success": "Proyek berhasil diduplikasi.",
+      "title": "Duplikat proyek",
+      "too_large": "Proyek ini terlalu besar untuk disalin. Matikan beberapa opsi lalu coba lagi.",
+      "what_to_copy": "Salin juga",
+      "work_items_too_large": "Proyek ini memiliki lebih banyak item kerja daripada yang dapat disalin (hingga {count})."
     }
   }
 }

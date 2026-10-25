@@ -54,6 +54,11 @@ app.conf.beat_schedule = {
         "task": "plane.bgtasks.issue_automation_task.unsnooze_expired_intake_issues",
         "schedule": crontab(minute="*/5"),  # Every 5 minutes
     },
+    # Picks up project copies whose worker died or whose task the broker never delivered
+    "check-every-five-minutes-to-reclaim-stalled-project-copies": {
+        "task": "plane.bgtasks.project_copy_task.reclaim_stalled_project_copies",
+        "schedule": crontab(minute="*/5"),  # Every 5 minutes
+    },
     "push-instance-metrics": {
         "task": "plane.license.bgtasks.telemetry_metrics.push_instance_metrics",
         "schedule": schedule(run_every=timedelta(minutes=METRICS_PUSH_INTERVAL_MINUTES)),

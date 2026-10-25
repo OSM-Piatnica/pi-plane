@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Beim Archivieren wird das Projekt aus der Seitennavigation entfernt, Sie können aber weiterhin über die Projektseite darauf zugreifen. Sie können das Projekt jederzeit wiederherstellen oder löschen.",
-      "delete_description": "Beim Löschen eines Projekts werden alle Daten und Ressourcen darin dauerhaft entfernt und können nicht wiederhergestellt werden."
+      "delete_description": "Beim Löschen eines Projekts werden alle Daten und Ressourcen darin dauerhaft entfernt und können nicht wiederhergestellt werden.",
+      "duplicate_description": "Erstellen Sie ein neues Projekt mit den Einstellungen, Status, Labels und der übrigen Konfiguration dieses Projekts. Arbeitselemente werden nur kopiert, wenn Sie es wählen."
     },
     "delete_modal": {
       "confirm_placeholder": "„{phrase}“ eingeben",
@@ -649,6 +650,52 @@
       "title": "Beitrittsanfragen ({count})",
       "approve": "Genehmigen",
       "reject": "Ablehnen"
+    },
+    "duplicate_modal": {
+      "already_running": "In diesem Arbeitsbereich läuft bereits eine Kopie von Arbeitselementen. Versuchen Sie es erneut, wenn sie fertig ist.",
+      "always_copied": "Einstellungen, Status und Arbeitselementtypen werden immer kopiert.",
+      "banner": {
+        "done": "Arbeitselemente kopiert: {count}.",
+        "failed": "Das Kopieren der Arbeitselemente ist fehlgeschlagen. Bereits Kopiertes bleibt erhalten; wiederholen Sie den Vorgang, um den Rest hinzuzufügen.",
+        "progress": "Arbeitselemente werden kopiert: {copied} von {total}",
+        "queued": "Die Arbeitselemente warten auf das Kopieren...",
+        "reload": "Neu laden",
+        "retry": "Erneut versuchen",
+        "retry_failed": "Das Kopieren konnte nicht wiederholt werden. Bitte versuchen Sie es erneut."
+      },
+      "clear_all": "Alle abwählen",
+      "description": "Erstellt ein neues Projekt mit denselben Einstellungen. Seiten und Webhooks werden nicht kopiert; Arbeitselemente nur, wenn Sie es unten wählen.",
+      "error": "Das Projekt konnte nicht dupliziert werden. Bitte versuchen Sie es erneut.",
+      "identifier_placeholder": "Wird erzeugt, wenn leer",
+      "properties": {
+        "assignees": "Zugewiesene",
+        "custom_properties": "Benutzerdefinierte Eigenschaften",
+        "cycles": "Zyklen",
+        "dates": "Termine",
+        "description_images": "Bilder in Beschreibungen",
+        "labels": "Labels",
+        "links": "Links",
+        "modules": "Module",
+        "parents": "Verknüpfungen von Unterelementen",
+        "relations": "Beziehungen"
+      },
+      "properties_description": "Wählen Sie, was mit den Arbeitselementen übernommen wird. Entwürfe, archivierte und Intake-Elemente bleiben außen vor; Kommentare, Anhänge, Aktivitäten und Zeiteinträge werden nie kopiert.",
+      "properties_heading": "Eigenschaften der Arbeitselemente",
+      "properties_note": "Zyklen und Module werden nur übernommen, wenn sie oben kopiert werden.",
+      "property_groups": {
+        "content": "Inhalt",
+        "hierarchy": "Hierarchie und Beziehungen",
+        "organization": "Organisation",
+        "people": "Personen"
+      },
+      "select_all": "Alle auswählen",
+      "submit": "Projekt duplizieren",
+      "submitting": "Projekt wird dupliziert...",
+      "success": "Projekt erfolgreich dupliziert.",
+      "title": "Projekt duplizieren",
+      "too_large": "Dieses Projekt ist zu groß zum Kopieren. Deaktivieren Sie einige Optionen und versuchen Sie es erneut.",
+      "what_to_copy": "Zusätzlich kopieren",
+      "work_items_too_large": "Dieses Projekt hat mehr Arbeitselemente, als kopiert werden können (bis zu {count})."
     }
   }
 }

@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "プロジェクトをアーカイブすると、サイドナビゲーションから非表示になりますが、プロジェクトページからはアクセスできます。プロジェクトはいつでも復元または削除できます。",
-      "delete_description": "プロジェクトを削除すると、プロジェクト内のすべてのデータとリソースが完全に削除され、復元できません。"
+      "delete_description": "プロジェクトを削除すると、プロジェクト内のすべてのデータとリソースが完全に削除され、復元できません。",
+      "duplicate_description": "このプロジェクトの設定、ステータス、ラベルなどの構成で新しいプロジェクトを作成します。作業項目は選択した場合のみコピーされます。"
     },
     "delete_modal": {
       "confirm_placeholder": "「{phrase}」と入力",
@@ -649,6 +650,52 @@
       "title": "参加リクエスト({count})",
       "approve": "承認",
       "reject": "却下"
+    },
+    "duplicate_modal": {
+      "already_running": "このワークスペースでは既に作業項目のコピーが実行中です。完了してからもう一度お試しください。",
+      "always_copied": "設定、ステータス、作業項目タイプは常にコピーされます。",
+      "banner": {
+        "done": "コピーした作業項目: {count} 件。",
+        "failed": "作業項目のコピーに失敗しました。コピー済みの分は保持されます。残りを追加するには再試行してください。",
+        "progress": "作業項目をコピー中: {copied} / {total}",
+        "queued": "作業項目はコピー待ちです...",
+        "reload": "再読み込み",
+        "retry": "再試行",
+        "retry_failed": "コピーを再試行できませんでした。もう一度お試しください。"
+      },
+      "clear_all": "すべて解除",
+      "description": "同じ設定で新しいプロジェクトを作成します。ページと Webhook はコピーされません。作業項目は下で選択した場合のみコピーされます。",
+      "error": "プロジェクトを複製できませんでした。もう一度お試しください。",
+      "identifier_placeholder": "空欄の場合は自動生成",
+      "properties": {
+        "assignees": "担当者",
+        "custom_properties": "カスタムプロパティ",
+        "cycles": "サイクル",
+        "dates": "日付",
+        "description_images": "説明内の画像",
+        "labels": "ラベル",
+        "links": "リンク",
+        "modules": "モジュール",
+        "parents": "サブ項目のリンク",
+        "relations": "関連"
+      },
+      "properties_description": "作業項目と一緒に引き継ぐ内容を選択します。下書き、アーカイブ済み、インテークの項目は除外され、コメント、添付ファイル、アクティビティ、作業時間は一切コピーされません。",
+      "properties_heading": "作業項目のプロパティ",
+      "properties_note": "サイクルとモジュールは、上でコピーする場合のみ引き継がれます。",
+      "property_groups": {
+        "content": "コンテンツ",
+        "hierarchy": "階層と関連",
+        "organization": "整理",
+        "people": "ユーザー"
+      },
+      "select_all": "すべて選択",
+      "submit": "プロジェクトを複製",
+      "submitting": "プロジェクトを複製しています...",
+      "success": "プロジェクトを複製しました。",
+      "title": "プロジェクトを複製",
+      "too_large": "このプロジェクトは大きすぎてコピーできません。いくつかのオプションをオフにして、もう一度お試しください。",
+      "what_to_copy": "あわせてコピー",
+      "work_items_too_large": "このプロジェクトにはコピーできる数を超える作業項目があります（最大 {count} 件）。"
     }
   }
 }

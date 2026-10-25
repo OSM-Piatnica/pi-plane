@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Bir projeyi arşivlemek onu yan gezinmeden kaldırır, ancak projeler sayfasından erişmeye devam edebilirsiniz. Projeyi istediğiniz zaman geri yükleyebilir veya silebilirsiniz.",
-      "delete_description": "Bir proje silindiğinde, projedeki tüm veriler ve kaynaklar kalıcı olarak kaldırılır ve geri alınamaz."
+      "delete_description": "Bir proje silindiğinde, projedeki tüm veriler ve kaynaklar kalıcı olarak kaldırılır ve geri alınamaz.",
+      "duplicate_description": "Bu projenin ayarları, durumları, etiketleri ve diğer yapılandırmasıyla yeni bir proje oluşturun. İş öğeleri yalnızca seçerseniz kopyalanır."
     },
     "delete_modal": {
       "confirm_placeholder": "“{phrase}” yazın",
@@ -649,6 +650,52 @@
       "title": "Katılma istekleri ({count})",
       "approve": "Onayla",
       "reject": "Reddet"
+    },
+    "duplicate_modal": {
+      "already_running": "Bu çalışma alanında zaten bir iş öğesi kopyalama işlemi sürüyor. Bittiğinde tekrar deneyin.",
+      "always_copied": "Ayarlar, durumlar ve iş öğesi türleri her zaman kopyalanır.",
+      "banner": {
+        "done": "Kopyalanan iş öğeleri: {count}.",
+        "failed": "İş öğelerinin kopyalanması başarısız oldu. Kopyalananlar korunur; kalanı eklemek için tekrar deneyin.",
+        "progress": "İş öğeleri kopyalanıyor: {copied} / {total}",
+        "queued": "İş öğeleri kopyalanmak üzere sırada...",
+        "reload": "Yeniden yükle",
+        "retry": "Tekrar dene",
+        "retry_failed": "Kopyalama tekrar denenemedi. Lütfen tekrar deneyin."
+      },
+      "clear_all": "Tümünü temizle",
+      "description": "Aynı ayarlarla yeni bir proje oluşturur. Sayfalar ve webhook'lar kopyalanmaz; iş öğeleri yalnızca aşağıda seçerseniz kopyalanır.",
+      "error": "Proje çoğaltılamadı. Lütfen tekrar deneyin.",
+      "identifier_placeholder": "Boşsa otomatik oluşturulur",
+      "properties": {
+        "assignees": "Atananlar",
+        "custom_properties": "Özel özellikler",
+        "cycles": "Döngüler",
+        "dates": "Tarihler",
+        "description_images": "Açıklamalardaki görseller",
+        "labels": "Etiketler",
+        "links": "Bağlantılar",
+        "modules": "Modüller",
+        "parents": "Alt öğe bağlantıları",
+        "relations": "İlişkiler"
+      },
+      "properties_description": "İş öğeleriyle nelerin taşınacağını seçin. Taslaklar, arşivlenmiş ve intake öğeleri dışarıda bırakılır; yorumlar, ekler, etkinlik ve zaman kayıtları asla kopyalanmaz.",
+      "properties_heading": "İş öğesi özellikleri",
+      "properties_note": "Döngüler ve modüller yalnızca yukarıda kopyalanırsa taşınır.",
+      "property_groups": {
+        "content": "İçerik",
+        "hierarchy": "Hiyerarşi ve ilişkiler",
+        "organization": "Organizasyon",
+        "people": "Kişiler"
+      },
+      "select_all": "Tümünü seç",
+      "submit": "Projeyi çoğalt",
+      "submitting": "Proje çoğaltılıyor...",
+      "success": "Proje başarıyla çoğaltıldı.",
+      "title": "Projeyi çoğalt",
+      "too_large": "Bu proje kopyalanamayacak kadar büyük. Bazı seçenekleri kapatıp tekrar deneyin.",
+      "what_to_copy": "Şunları da kopyala",
+      "work_items_too_large": "Bu projede kopyalanabilecekten fazla iş öğesi var (en fazla {count})."
     }
   }
 }

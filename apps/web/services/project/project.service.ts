@@ -17,6 +17,9 @@ import type {
   TPartialProject,
   TProjectAccessRequest,
   TProjectAccessRequestStatus,
+  TProjectCopyJob,
+  TProjectCopySummary,
+  TProjectDuplicatePayload,
 } from "@plane/types";
 // helpers
 // services
@@ -30,6 +33,41 @@ export class ProjectService extends APIService {
   async createProject(workspaceSlug: string, data: Partial<TProject>): Promise<TProject> {
     return this.post(`/api/workspaces/${workspaceSlug}/projects/`, data)
       .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response;
+      });
+  }
+
+  /**
+   * The source project is named in the path, never the body: the API scopes its project-level
+   * permission check to that path segment.
+   */
+  async duplicateProject(
+    workspaceSlug: string,
+    projectId: string,
+    data: TProjectDuplicatePayload
+  ): Promise<TProject & { copy_summary: TProjectCopySummary }> {
+    return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/duplicate/`, data)
+      .then((response) => response?.data)
+      .catch((error) => {
+        // Same as createProject: callers read `err.data` for the API's error codes.
+        throw error?.response;
+      });
+  }
+
+  /** The background copy of the work items of this (duplicated) project; `null` when it was never copied. */
+  async getProjectCopyStatus(workspaceSlug: string, projectId: string): Promise<TProjectCopyJob | null> {
+    return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/copy-status/`)
+      .then((response) => response?.data?.job ?? null)
+      .catch((error) => {
+        throw error?.response;
+      });
+  }
+
+  /** Asks a failed copy to carry on from where it stopped. */
+  async retryProjectCopy(workspaceSlug: string, projectId: string): Promise<TProjectCopyJob> {
+    return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/copy-retry/`)
+      .then((response) => response?.data?.job)
       .catch((error) => {
         throw error?.response;
       });

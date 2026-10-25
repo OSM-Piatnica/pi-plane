@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "封存專案會將其從側邊導覽中移除，但您仍可從專案頁面存取。您可以隨時還原或刪除該專案。",
-      "delete_description": "刪除專案時，該專案中的所有資料和資源都將被永久移除且無法復原。"
+      "delete_description": "刪除專案時，該專案中的所有資料和資源都將被永久移除且無法復原。",
+      "duplicate_description": "使用此專案的設定、狀態、標籤及其他組態建立新專案。工作事項僅在您選擇時才會被複製。"
     },
     "delete_modal": {
       "confirm_placeholder": "輸入「{phrase}」",
@@ -649,6 +650,52 @@
       "title": "加入請求({count})",
       "approve": "核准",
       "reject": "拒絕"
+    },
+    "duplicate_modal": {
+      "already_running": "此工作區已有一個工作事項複製作業正在執行。請在完成後再試一次。",
+      "always_copied": "設定、狀態和工作事項類型一律會被複製。",
+      "banner": {
+        "done": "已複製工作事項：{count} 個。",
+        "failed": "複製工作事項失敗。已複製的內容會保留；重試即可補上其餘部分。",
+        "progress": "正在複製工作事項：{copied} / {total}",
+        "queued": "工作事項正在排隊等待複製...",
+        "reload": "重新載入",
+        "retry": "重試",
+        "retry_failed": "無法重試複製。請再試一次。"
+      },
+      "clear_all": "全部清除",
+      "description": "使用相同的設定建立新專案。頁面和 Webhook 不會被複製；工作事項僅在您於下方選擇時複製。",
+      "error": "無法複製專案，請再試一次。",
+      "identifier_placeholder": "留空則自動產生",
+      "properties": {
+        "assignees": "負責人",
+        "custom_properties": "自訂屬性",
+        "cycles": "週期",
+        "dates": "日期",
+        "description_images": "描述中的圖片",
+        "labels": "標籤",
+        "links": "連結",
+        "modules": "模組",
+        "parents": "子工作事項連結",
+        "relations": "關係"
+      },
+      "properties_description": "選擇隨工作事項一併帶走的內容。草稿、已封存和 Intake 工作事項會被排除；留言、附件、活動和工時記錄永遠不會被複製。",
+      "properties_heading": "工作事項屬性",
+      "properties_note": "週期和模組僅在上方已複製時才會帶走。",
+      "property_groups": {
+        "content": "內容",
+        "hierarchy": "階層與關係",
+        "organization": "組織",
+        "people": "人員"
+      },
+      "select_all": "全選",
+      "submit": "複製專案",
+      "submitting": "正在複製專案...",
+      "success": "專案複製成功。",
+      "title": "複製專案",
+      "too_large": "此專案過大，無法複製。請關閉部分選項後再試一次。",
+      "what_to_copy": "同時複製",
+      "work_items_too_large": "此專案的工作事項數量超過可複製的上限（最多 {count} 個）。"
     }
   }
 }

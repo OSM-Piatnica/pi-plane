@@ -452,7 +452,8 @@
     },
     "control_section": {
       "archive_description": "Zarchiwizowanie projektu usunie go z nawigacji bocznej, ale nadal będzie dostępny na stronie projektów. Możesz go w dowolnej chwili przywrócić lub usunąć.",
-      "delete_description": "Po usunięciu projektu wszystkie jego dane i zasoby zostaną trwale usunięte i nie będzie można ich odzyskać."
+      "delete_description": "Po usunięciu projektu wszystkie jego dane i zasoby zostaną trwale usunięte i nie będzie można ich odzyskać.",
+      "duplicate_description": "Utwórz nowy projekt z ustawieniami, stanami, etykietami i pozostałą konfiguracją tego projektu. Elementy pracy są kopiowane tylko jeśli tak wybierzesz."
     },
     "delete_modal": {
       "confirm_placeholder": "Wpisz „{phrase}”",
@@ -649,6 +650,52 @@
       "title": "Prośby o dołączenie ({count})",
       "approve": "Zatwierdź",
       "reject": "Odrzuć"
+    },
+    "duplicate_modal": {
+      "already_running": "W tym obszarze roboczym trwa już kopiowanie elementów pracy. Spróbuj ponownie po jego zakończeniu.",
+      "always_copied": "Ustawienia, stany i typy elementów pracy są zawsze kopiowane.",
+      "banner": {
+        "done": "Skopiowane elementy pracy: {count}.",
+        "failed": "Kopiowanie elementów pracy nie powiodło się. To, co skopiowano, zostaje; ponów próbę, aby dodać resztę.",
+        "progress": "Kopiowanie elementów pracy: {copied} z {total}",
+        "queued": "Elementy pracy czekają na skopiowanie...",
+        "reload": "Odśwież",
+        "retry": "Ponów",
+        "retry_failed": "Nie udało się ponowić kopiowania. Spróbuj ponownie."
+      },
+      "clear_all": "Wyczyść wszystko",
+      "description": "Tworzy nowy projekt z tymi samymi ustawieniami. Strony i webhooki nie są kopiowane; elementy pracy tylko jeśli wybierzesz to poniżej.",
+      "error": "Nie udało się zduplikować projektu. Spróbuj ponownie.",
+      "identifier_placeholder": "Zostanie wygenerowany, jeśli puste",
+      "properties": {
+        "assignees": "Przypisani",
+        "custom_properties": "Właściwości niestandardowe",
+        "cycles": "Cykle",
+        "dates": "Daty",
+        "description_images": "Obrazy w opisach",
+        "labels": "Etykiety",
+        "links": "Linki",
+        "modules": "Moduły",
+        "parents": "Powiązania elementów podrzędnych",
+        "relations": "Powiązania"
+      },
+      "properties_description": "Wybierz, co zostanie przeniesione z elementami pracy. Wersje robocze, zarchiwizowane elementy i elementy intake są pomijane; komentarze, załączniki, aktywność i wpisy czasu nigdy nie są kopiowane.",
+      "properties_heading": "Właściwości elementów pracy",
+      "properties_note": "Cykle i moduły są przenoszone tylko wtedy, gdy kopiujesz je powyżej.",
+      "property_groups": {
+        "content": "Treść",
+        "hierarchy": "Hierarchia i powiązania",
+        "organization": "Organizacja",
+        "people": "Osoby"
+      },
+      "select_all": "Zaznacz wszystko",
+      "submit": "Duplikuj projekt",
+      "submitting": "Duplikowanie projektu...",
+      "success": "Projekt został zduplikowany.",
+      "title": "Duplikuj projekt",
+      "too_large": "Ten projekt jest zbyt duży, aby go skopiować. Wyłącz część opcji i spróbuj ponownie.",
+      "what_to_copy": "Kopiuj także",
+      "work_items_too_large": "Ten projekt ma więcej elementów pracy, niż można skopiować (do {count})."
     }
   }
 }
