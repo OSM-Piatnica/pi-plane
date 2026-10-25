@@ -46,14 +46,14 @@ It deploys the images of the chart's `appVersion` unless you set `image.tag`.
 
 One host serves everything, split by path, exactly as the all-in-one proxy does:
 
-| Path                                  | Goes to                                                  |
-| ------------------------------------- | -------------------------------------------------------- |
-| `/`                                   | `web`                                                    |
-| `/spaces`                             | `space` (public boards)                                  |
-| `/god-mode`                           | `admin`                                                  |
-| `/live`                               | `live` (collaborative editing, WebSockets)               |
-| `/api`, `/auth`, `/static`            | `api`                                                    |
-| `/<bucket>` (default `/uploads`)      | the bundled MinIO, for browser uploads (presigned URLs)  |
+| Path                             | Goes to                                                 |
+| -------------------------------- | ------------------------------------------------------- |
+| `/`                              | `web`                                                   |
+| `/spaces`                        | `space` (public boards)                                 |
+| `/god-mode`                      | `admin`                                                 |
+| `/live`                          | `live` (collaborative editing, WebSockets)              |
+| `/api`, `/auth`, `/static`       | `api`                                                   |
+| `/<bucket>` (default `/uploads`) | the bundled MinIO, for browser uploads (presigned URLs) |
 
 The same list renders an `Ingress` or, with `gateway.enabled`, `HTTPRoute`s that attach to a Gateway you own (see
 `examples/gateway-values.yaml`). Allow request bodies of at least `app.fileSizeLimit` (5 MiB by default) on
@@ -72,6 +72,9 @@ upgrades by reading the Secret back. Notes:
 - to own the credentials yourself set `secrets.existingSecret`. It needs `SECRET_KEY`, `LIVE_SERVER_SECRET_KEY`,
   `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, plus `POSTGRES_PASSWORD` and `RABBITMQ_PASSWORD` when those stores
   are bundled (see `examples/production-values.yaml`).
+- to start over after an uninstall, delete the data volumes (`kubectl delete pvc -l app.kubernetes.io/instance=<release>`)
+  **and** the credentials Secret together: a new Secret with the old database volume leaves PostgreSQL with the
+  previous password and the API cannot connect.
 
 Further secrets (SMTP password, SSO client secrets, ...) go in Secrets of your own and are attached with
 `app.envFrom`; plain settings with `app.env`. Both are read into the instance configuration on the first start, after
@@ -85,8 +88,8 @@ give the chart managed services; the connection strings come inline or from a Se
 
 ```yaml
 postgresql: { enabled: false, external: { urlSecret: { name: pi-plane-database, key: url } } }
-valkey:     { enabled: false, external: { url: "rediss://cache.example.com:6380/0" } }
-rabbitmq:   { enabled: false, external: { url: "amqps://plane:...@mq.example.com:5671/plane" } }
+valkey: { enabled: false, external: { url: "rediss://cache.example.com:6380/0" } }
+rabbitmq: { enabled: false, external: { url: "amqps://plane:...@mq.example.com:5671/plane" } }
 objectStorage: { region: eu-central-1, bucket: plane-uploads, bundled: { enabled: false } }
 ```
 
@@ -123,8 +126,10 @@ helm template pi-plane deployments/helm/pi-plane -f deployments/helm/pi-plane/ci
 ```
 
 CI (`.github/workflows/helm.yaml`) lints and renders the chart with every file under `ci/`, validates the output against
-the Kubernetes schemas and checks that invalid values are rejected by `values.schema.json`. The chart has not been
-installed on a cluster by CI.
+the Kubernetes schemas and checks that invalid values are rejected by `values.schema.json`. CI does not install the chart on a cluster. The
+default install (bundled stores, Ingress) was run by hand on k3s with Traefik (`ingress.className=traefik`, plain
+`http://` `publicUrl`): migrations, routing and the first God Mode sign-in worked. The Gateway API and external-store
+values are only linted and rendered.
 
 ## Values
 
