@@ -19,6 +19,7 @@ from unittest import mock
 import pytest
 from django.core.cache import cache
 from rest_framework import status
+from rest_framework.test import APIClient
 
 from plane.bgtasks.project_copy_task import copy_project_work_items
 from plane.db.models import (
@@ -47,7 +48,8 @@ from plane.utils import project_copy_work_items as copy_service
 
 ADMIN = 20
 MEMBER = 15
-ASSET_ID = uuid.UUID("11111111-1111-1111-1111-111111111111")
+# A version 4 id: the image extractor shared with the page copy only recognises those
+ASSET_ID = uuid.UUID("11111111-1111-4111-8111-111111111111")
 
 
 def duplicate_url(slug, project_id):
@@ -509,16 +511,22 @@ class TestCopyJobEndpoints:
         assert response.status_code == status.HTTP_409_CONFLICT
         assert response.data["error"] == "PROJECT_COPY_NOT_RETRYABLE"
 
-    def test_a_member_cannot_retry(self, session_client, workspace, source, create_user):
+    def test_a_member_cannot_retry(self, session_client, workspace, source):
         copy_id = _duplicate(session_client, workspace, source).data["id"]
         ProjectCopyJob.objects.filter(target_project_id=copy_id).update(
             status="failed", completed_at="2026-01-01T00:00:00Z"
         )
-        ProjectMember.objects.filter(project_id=copy_id, member=create_user).update(role=MEMBER)
+        # A workspace admin who is in the project passes whatever their project role, so use a plain member
+        member = User.objects.create(email="retry-member@corp.example", username=uuid.uuid4().hex)
+        WorkspaceMember.objects.create(workspace=workspace, member=member, role=MEMBER)
+        ProjectMember.objects.create(project_id=copy_id, member=member, workspace=workspace, role=MEMBER)
+        client = APIClient()
+        client.force_authenticate(user=member)
 
-        response = session_client.post(retry_url(workspace.slug, copy_id))
+        response = client.post(retry_url(workspace.slug, copy_id))
 
         assert response.status_code == status.HTTP_403_FORBIDDEN
+        assert ProjectCopyJob.objects.get(target_project_id=copy_id).status == "failed"
 
 
 @pytest.mark.contract
