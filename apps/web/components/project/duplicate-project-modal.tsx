@@ -11,6 +11,7 @@ import { useParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { CopyPlus } from "lucide-react";
 // plane imports
+import { PROJECT_COPY_MAX_WORK_ITEMS, PROJECT_COPY_WORK_ITEM_PROPERTY_GROUPS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import { Checkbox } from "@makeplane/propel/components/checkbox";
@@ -29,6 +30,10 @@ import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { setToast } from "@plane/blocks/toast";
 import type { IProject } from "@plane/types";
 import { projectIdentifierSanitizer } from "@plane/utils";
+// components
+import { GroupedOptionPicker } from "@/components/common/grouped-option-picker";
+import { getOptionKeys } from "@/helpers/option-groups";
+import type { TOptionGroup } from "@/helpers/option-groups";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useAppRouter } from "@/hooks/use-app-router";
@@ -50,6 +55,8 @@ type TFormValues = {
   cycles: boolean;
   modules: boolean;
   views: boolean;
+  work_items: boolean;
+  workItemProperties: string[];
 };
 
 /**
@@ -64,7 +71,11 @@ const OPTIONAL_COPY_FIELDS = [
   { key: "cycles", labelKey: "cycles" },
   { key: "modules", labelKey: "modules" },
   { key: "views", labelKey: "views" },
+  { key: "work_items", labelKey: "work_items" },
 ] as const;
+
+type TPropertyGroupKey = keyof typeof PROJECT_COPY_WORK_ITEM_PROPERTY_GROUPS;
+const PROPERTY_GROUP_KEYS = Object.keys(PROJECT_COPY_WORK_ITEM_PROPERTY_GROUPS) as TPropertyGroupKey[];
 
 export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
   const { isOpen, project, onClose } = props;
@@ -82,7 +93,19 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
     handleSubmit,
     reset,
     setError,
+    watch,
   } = useForm<TFormValues>();
+
+  // what the work items can carry, as the picker lists it
+  const propertyGroups: TOptionGroup[] = PROPERTY_GROUP_KEYS.map((groupKey) => ({
+    key: groupKey,
+    label: t(`project_components.duplicate_modal.property_groups.${groupKey}`),
+    options: PROJECT_COPY_WORK_ITEM_PROPERTY_GROUPS[groupKey].map((property) => ({
+      key: property,
+      label: t(`project_components.duplicate_modal.properties.${property}`),
+    })),
+  }));
+  const allProperties = getOptionKeys(propertyGroups);
 
   // Seed from the source every time the modal opens, so reopening it after a
   // failed submit does not keep a stale name the API already rejected.
@@ -99,8 +122,10 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
       cycles: false,
       modules: false,
       views: false,
+      work_items: false,
+      workItemProperties: allProperties,
     });
-  }, [isOpen, project.name, project.identifier, reset]);
+  }, [isOpen, project.name, project.identifier, reset, allProperties]);
 
   const onSubmit = async (values: TFormValues) => {
     if (!workspaceSlug) return;
@@ -117,7 +142,12 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
           cycles: values.cycles,
           modules: values.modules,
           views: values.views,
+          work_items: values.work_items,
         },
+        // everything switched on is sent as no choice, so a property added later is carried too
+        ...(values.work_items && !allProperties.every((property) => values.workItemProperties.includes(property))
+          ? { work_item_properties: allProperties.filter((property) => values.workItemProperties.includes(property)) }
+          : {}),
       });
 
       onClose();
@@ -150,13 +180,17 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
         setError("name", { message: t("project_name_cannot_contain_special_characters") });
         return;
       }
+      const messages: Record<string, string> = {
+        PROJECT_TOO_LARGE_TO_COPY_SYNCHRONOUSLY: t("project_components.duplicate_modal.too_large"),
+        PROJECT_COPY_ALREADY_RUNNING: t("project_components.duplicate_modal.already_running"),
+        PROJECT_TOO_LARGE_TO_COPY: t("project_components.duplicate_modal.work_items_too_large", {
+          count: PROJECT_COPY_MAX_WORK_ITEMS,
+        }),
+      };
       setToast({
         type: "error",
         title: t("toast.error"),
-        message:
-          code === "PROJECT_TOO_LARGE_TO_COPY_SYNCHRONOUSLY"
-            ? t("project_components.duplicate_modal.too_large")
-            : t("project_components.duplicate_modal.error"),
+        message: (code && messages[code]) || t("project_components.duplicate_modal.error"),
       });
     }
   };
@@ -275,6 +309,34 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
                     ))}
                   </div>
                 </div>
+
+                {watch("work_items") && (
+                  <div className="flex flex-col gap-3 rounded-lg border border-subtle p-4">
+                    <div className="flex flex-col gap-1">
+                      <h4 className="text-13 font-medium text-primary">
+                        {t("project_components.duplicate_modal.properties_heading")}
+                      </h4>
+                      <p className="text-11 text-secondary">
+                        {t("project_components.duplicate_modal.properties_description")}
+                      </p>
+                    </div>
+                    <Controller
+                      control={control}
+                      name="workItemProperties"
+                      render={({ field: { value, onChange } }) => (
+                        <GroupedOptionPicker
+                          groups={propertyGroups}
+                          value={value}
+                          onChange={onChange}
+                          idPrefix="duplicate-work-item-property"
+                          selectAllLabel={t("project_components.duplicate_modal.select_all")}
+                          clearAllLabel={t("project_components.duplicate_modal.clear_all")}
+                        />
+                      )}
+                    />
+                    <p className="text-11 text-tertiary">{t("project_components.duplicate_modal.properties_note")}</p>
+                  </div>
+                )}
               </div>
             </DialogBody>
           </DialogMain>

@@ -453,7 +453,7 @@
     "control_section": {
       "archive_description": "프로젝트를 보관하면 사이드 탐색에서 숨겨지지만 프로젝트 페이지에서는 계속 접근할 수 있습니다. 언제든지 프로젝트를 복원하거나 삭제할 수 있습니다.",
       "delete_description": "프로젝트를 삭제하면 프로젝트 내의 모든 데이터와 리소스가 영구적으로 제거되며 복구할 수 없습니다.",
-      "duplicate_description": "이 프로젝트의 설정, 상태, 레이블 및 기타 구성으로 새 프로젝트를 만듭니다. 작업 항목은 복사되지 않습니다."
+      "duplicate_description": "이 프로젝트의 설정, 상태, 레이블 및 기타 구성으로 새 프로젝트를 만듭니다. 작업 항목은 선택한 경우에만 복사됩니다."
     },
     "delete_modal": {
       "confirm_placeholder": "“{phrase}” 입력",
@@ -652,16 +652,50 @@
       "reject": "거절"
     },
     "duplicate_modal": {
+      "already_running": "이 워크스페이스에서는 이미 작업 항목 복사가 진행 중입니다. 완료된 후 다시 시도해 주세요.",
       "always_copied": "설정, 상태, 작업 항목 유형은 항상 복사됩니다.",
-      "description": "동일한 설정으로 새 프로젝트를 만듭니다. 작업 항목, 페이지, 웹훅은 복사되지 않습니다.",
+      "banner": {
+        "done": "복사된 작업 항목: {count}개.",
+        "failed": "작업 항목 복사에 실패했습니다. 복사된 항목은 유지되며, 나머지를 추가하려면 다시 시도하세요.",
+        "progress": "작업 항목 복사 중: {copied} / {total}",
+        "queued": "작업 항목이 복사 대기 중입니다...",
+        "reload": "새로고침",
+        "retry": "다시 시도",
+        "retry_failed": "복사를 다시 시도할 수 없습니다. 다시 시도해 주세요."
+      },
+      "clear_all": "모두 지우기",
+      "description": "동일한 설정으로 새 프로젝트를 만듭니다. 페이지와 웹훅은 복사되지 않으며, 작업 항목은 아래에서 선택한 경우에만 복사됩니다.",
       "error": "프로젝트를 복제할 수 없습니다. 다시 시도해 주세요.",
       "identifier_placeholder": "비워 두면 자동 생성",
+      "properties": {
+        "assignees": "담당자",
+        "custom_properties": "사용자 지정 속성",
+        "cycles": "사이클",
+        "dates": "날짜",
+        "description_images": "설명 속 이미지",
+        "labels": "레이블",
+        "links": "링크",
+        "modules": "모듈",
+        "parents": "하위 항목 링크",
+        "relations": "관계"
+      },
+      "properties_description": "작업 항목과 함께 가져갈 항목을 선택합니다. 초안, 보관된 항목, 인테이크 항목은 제외되며 댓글, 첨부 파일, 활동, 시간 기록은 복사되지 않습니다.",
+      "properties_heading": "작업 항목 속성",
+      "properties_note": "사이클과 모듈은 위에서 복사하는 경우에만 함께 가져갑니다.",
+      "property_groups": {
+        "content": "콘텐츠",
+        "hierarchy": "계층 및 관계",
+        "organization": "구성",
+        "people": "사람"
+      },
+      "select_all": "모두 선택",
       "submit": "프로젝트 복제",
       "submitting": "프로젝트를 복제하는 중...",
       "success": "프로젝트가 복제되었습니다.",
       "title": "프로젝트 복제",
       "too_large": "이 프로젝트는 너무 커서 복사할 수 없습니다. 일부 옵션을 끄고 다시 시도해 주세요.",
-      "what_to_copy": "함께 복사"
+      "what_to_copy": "함께 복사",
+      "work_items_too_large": "이 프로젝트에는 복사할 수 있는 수보다 많은 작업 항목이 있습니다(최대 {count}개)."
     }
   }
 }

@@ -11,8 +11,9 @@ import re
 from rest_framework import serializers
 
 # Module imports
-from plane.db.models import Project
+from plane.db.models import Project, ProjectCopyJob
 from plane.db.models.project import ProjectNetwork
+from plane.utils.project_copy_work_items import InvalidWorkItemProperties, resolve_work_item_properties
 from plane.utils.project_duplicate import COPY_OPTIONS
 
 
@@ -33,6 +34,7 @@ class ProjectCopyOptionsSerializer(serializers.Serializer):
     cycles = serializers.BooleanField(required=False)
     modules = serializers.BooleanField(required=False)
     views = serializers.BooleanField(required=False)
+    work_items = serializers.BooleanField(required=False)
 
     def to_internal_value(self, data):
         if not isinstance(data, dict):
@@ -56,6 +58,8 @@ class ProjectDuplicateSerializer(serializers.Serializer):
     identifier = serializers.CharField(required=False, allow_blank=False, max_length=12)
     network = serializers.ChoiceField(required=False, choices=ProjectNetwork.choices())
     include = ProjectCopyOptionsSerializer(required=False)
+    # Which parts of the work items to carry; only used when `include.work_items` is on
+    work_item_properties = serializers.ListField(child=serializers.CharField(), required=False)
 
     def validate_name(self, name):
         name = name.strip()
@@ -63,8 +67,43 @@ class ProjectDuplicateSerializer(serializers.Serializer):
             raise serializers.ValidationError("PROJECT_NAME_CANNOT_CONTAIN_SPECIAL_CHARACTERS")
         return name
 
+    def validate_work_item_properties(self, value):
+        try:
+            return resolve_work_item_properties(value)
+        except InvalidWorkItemProperties as error:
+            # Built from the names, not from the exception text
+            if error.unknown:
+                raise serializers.ValidationError(f"Unknown work item properties: {', '.join(error.unknown)}")
+            raise serializers.ValidationError("work_item_properties must be a list of names")
+
     def validate_identifier(self, identifier):
         identifier = identifier.strip().upper()
         if re.match(Project.FORBIDDEN_IDENTIFIER_CHARS_PATTERN, identifier):
             raise serializers.ValidationError("PROJECT_IDENTIFIER_CANNOT_CONTAIN_SPECIAL_CHARACTERS")
         return identifier
+
+
+class ProjectCopyJobSerializer(serializers.ModelSerializer):
+    """What the interface needs to report a copy in progress.
+
+    Read-only throughout: nothing about a running copy is client-settable. The lease, the cursor and
+    the stored translation are machinery and are not exposed.
+    """
+
+    class Meta:
+        model = ProjectCopyJob
+        fields = [
+            "id",
+            "status",
+            "stage",
+            "total",
+            "copied",
+            "counts",
+            "skipped",
+            "errors",
+            "reason",
+            "started_at",
+            "completed_at",
+            "created_at",
+        ]
+        read_only_fields = fields

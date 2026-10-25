@@ -392,6 +392,8 @@ CELERY_IMPORTS = (
     "plane.bgtasks.issue_description_version_sync",
     # work item reminders
     "plane.bgtasks.work_item_due_reminder_task",
+    # project duplication: the background copy of the work items, and its sweeper
+    "plane.bgtasks.project_copy_task",
 )
 
 # Work item due date reminders

@@ -453,7 +453,7 @@
     "control_section": {
       "archive_description": "Arquivar um projeto o removerá da navegação lateral, mas você ainda poderá acessá-lo pela página de projetos. Você pode restaurar ou excluir o projeto quando quiser.",
       "delete_description": "Ao excluir um projeto, todos os dados e recursos dentro dele serão removidos permanentemente e não poderão ser recuperados.",
-      "duplicate_description": "Crie um novo projeto com as configurações, os estados, as etiquetas e o restante da configuração deste projeto. Itens de trabalho não são copiados."
+      "duplicate_description": "Crie um novo projeto com as configurações, os estados, as etiquetas e o restante da configuração deste projeto. Itens de trabalho só são copiados se você escolher."
     },
     "delete_modal": {
       "confirm_placeholder": "Digite “{phrase}”",
@@ -652,16 +652,50 @@
       "reject": "Rejeitar"
     },
     "duplicate_modal": {
+      "already_running": "Já há uma cópia de itens de trabalho em andamento neste espaço de trabalho. Tente novamente quando terminar.",
       "always_copied": "As configurações, os estados e os tipos de item de trabalho são sempre copiados.",
-      "description": "Cria um novo projeto com as mesmas configurações. Itens de trabalho, páginas e webhooks não são copiados.",
+      "banner": {
+        "done": "Itens de trabalho copiados: {count}.",
+        "failed": "A cópia dos itens de trabalho falhou. O que foi copiado é mantido; tente novamente para adicionar o restante.",
+        "progress": "Copiando itens de trabalho: {copied} de {total}",
+        "queued": "Os itens de trabalho estão na fila para cópia...",
+        "reload": "Recarregar",
+        "retry": "Tentar novamente",
+        "retry_failed": "Não foi possível repetir a cópia. Tente novamente."
+      },
+      "clear_all": "Limpar tudo",
+      "description": "Cria um novo projeto com as mesmas configurações. Páginas e webhooks não são copiados; itens de trabalho só se você escolher abaixo.",
       "error": "Não foi possível duplicar o projeto. Tente novamente.",
       "identifier_placeholder": "Gerado se vazio",
+      "properties": {
+        "assignees": "Responsáveis",
+        "custom_properties": "Propriedades personalizadas",
+        "cycles": "Ciclos",
+        "dates": "Datas",
+        "description_images": "Imagens nas descrições",
+        "labels": "Etiquetas",
+        "links": "Links",
+        "modules": "Módulos",
+        "parents": "Vínculos de subitens",
+        "relations": "Relações"
+      },
+      "properties_description": "Escolha o que acompanha os itens de trabalho. Rascunhos, itens arquivados e de intake ficam de fora; comentários, anexos, atividade e registros de tempo nunca são copiados.",
+      "properties_heading": "Propriedades dos itens de trabalho",
+      "properties_note": "Ciclos e módulos só são levados quando copiados acima.",
+      "property_groups": {
+        "content": "Conteúdo",
+        "hierarchy": "Hierarquia e relações",
+        "organization": "Organização",
+        "people": "Pessoas"
+      },
+      "select_all": "Selecionar tudo",
       "submit": "Duplicar projeto",
       "submitting": "Duplicando projeto...",
       "success": "Projeto duplicado com sucesso.",
       "title": "Duplicar projeto",
       "too_large": "Este projeto é grande demais para ser copiado. Desative algumas opções e tente novamente.",
-      "what_to_copy": "Copiar também"
+      "what_to_copy": "Copiar também",
+      "work_items_too_large": "Este projeto tem mais itens de trabalho do que podem ser copiados (até {count})."
     }
   }
 }

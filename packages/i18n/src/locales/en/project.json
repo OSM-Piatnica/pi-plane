@@ -453,7 +453,7 @@
     "control_section": {
       "archive_description": "Archiving a project will unlist your project from your side navigation although you will still be able to access it from your projects page. You can restore the project or delete it whenever you want.",
       "delete_description": "When deleting a project, all of the data and resources within that project will be permanently removed and cannot be recovered.",
-      "duplicate_description": "Create a new project with this project's settings, states, labels and other configuration. Work items are not copied."
+      "duplicate_description": "Create a new project with this project's settings, states, labels and other configuration. Work items are copied only if you choose so."
     },
     "delete_modal": {
       "confirm_placeholder": "Enter “{phrase}”",
@@ -652,16 +652,50 @@
       "reject": "Reject"
     },
     "duplicate_modal": {
+      "already_running": "Another work item copy is already running in this workspace. Try again when it finishes.",
       "always_copied": "Settings, states and work item types are always copied.",
-      "description": "Creates a new project with the same settings. Work items, pages and webhooks are not copied.",
+      "banner": {
+        "done": "Work items copied: {count}.",
+        "failed": "Copying the work items failed. What was copied is kept; retry to add the rest.",
+        "progress": "Copying work items: {copied} of {total}",
+        "queued": "The work items are queued for copying...",
+        "reload": "Reload",
+        "retry": "Retry",
+        "retry_failed": "Could not retry the copy. Please try again."
+      },
+      "clear_all": "Clear all",
+      "description": "Creates a new project with the same settings. Pages and webhooks are not copied; work items are copied only if you choose so below.",
       "error": "Could not duplicate the project. Please try again.",
       "identifier_placeholder": "Generated if empty",
+      "properties": {
+        "assignees": "Assignees",
+        "custom_properties": "Custom properties",
+        "cycles": "Cycles",
+        "dates": "Dates",
+        "description_images": "Images in descriptions",
+        "labels": "Labels",
+        "links": "Links",
+        "modules": "Modules",
+        "parents": "Sub-work-item links",
+        "relations": "Relations"
+      },
+      "properties_description": "Choose what is carried with the work items. Drafts, archived and intake items are left out; comments, attachments, activity and time entries are never copied.",
+      "properties_heading": "Work item properties",
+      "properties_note": "Cycles and modules are only carried when they are copied above.",
+      "property_groups": {
+        "content": "Content",
+        "hierarchy": "Hierarchy and relations",
+        "organization": "Organization",
+        "people": "People"
+      },
+      "select_all": "Select all",
       "submit": "Duplicate project",
       "submitting": "Duplicating project...",
       "success": "Project duplicated successfully.",
       "title": "Duplicate project",
       "too_large": "This project is too large to copy. Turn off some of the options and try again.",
-      "what_to_copy": "Also copy"
+      "what_to_copy": "Also copy",
+      "work_items_too_large": "This project has more work items than can be copied (up to {count})."
     }
   }
 }

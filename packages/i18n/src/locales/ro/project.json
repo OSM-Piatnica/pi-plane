@@ -453,7 +453,7 @@
     "control_section": {
       "archive_description": "Arhivarea unui proiect îl va elimina din navigarea laterală, dar îl vei putea accesa în continuare din pagina de proiecte. Poți restaura sau șterge proiectul oricând.",
       "delete_description": "La ștergerea unui proiect, toate datele și resursele din el vor fi eliminate definitiv și nu vor putea fi recuperate.",
-      "duplicate_description": "Creează un proiect nou cu setările, stările, etichetele și restul configurației acestui proiect. Activitățile nu sunt copiate."
+      "duplicate_description": "Creează un proiect nou cu setările, stările, etichetele și restul configurației acestui proiect. Activitățile se copiază doar dacă alegi."
     },
     "delete_modal": {
       "confirm_placeholder": "Introdu „{phrase}”",
@@ -652,16 +652,50 @@
       "reject": "Respinge"
     },
     "duplicate_modal": {
+      "already_running": "În acest spațiu de lucru rulează deja o copiere de activități. Încearcă din nou când se termină.",
       "always_copied": "Setările, stările și tipurile de activități sunt întotdeauna copiate.",
-      "description": "Creează un proiect nou cu aceleași setări. Activitățile, documentația și webhook-urile nu sunt copiate.",
+      "banner": {
+        "done": "Activități copiate: {count}.",
+        "failed": "Copierea activităților a eșuat. Ce s-a copiat se păstrează; încearcă din nou pentru a adăuga restul.",
+        "progress": "Se copiază activitățile: {copied} din {total}",
+        "queued": "Activitățile așteaptă să fie copiate...",
+        "reload": "Reîncarcă",
+        "retry": "Încearcă din nou",
+        "retry_failed": "Copierea nu a putut fi reluată. Încearcă din nou."
+      },
+      "clear_all": "Șterge tot",
+      "description": "Creează un proiect nou cu aceleași setări. Paginile și webhook-urile nu se copiază; activitățile doar dacă alegi mai jos.",
       "error": "Proiectul nu a putut fi duplicat. Încearcă din nou.",
       "identifier_placeholder": "Se generează dacă e gol",
+      "properties": {
+        "assignees": "Persoane atribuite",
+        "custom_properties": "Proprietăți personalizate",
+        "cycles": "Cicluri",
+        "dates": "Date",
+        "description_images": "Imagini în descrieri",
+        "labels": "Etichete",
+        "links": "Linkuri",
+        "modules": "Module",
+        "parents": "Legături ale subactivităților",
+        "relations": "Relații"
+      },
+      "properties_description": "Alege ce se preia odată cu activitățile. Ciornele, activitățile arhivate și cele din cereri sunt lăsate deoparte; comentariile, atașamentele, activitatea și înregistrările de timp nu se copiază niciodată.",
+      "properties_heading": "Proprietățile activităților",
+      "properties_note": "Ciclurile și modulele se preiau doar dacă sunt copiate mai sus.",
+      "property_groups": {
+        "content": "Conținut",
+        "hierarchy": "Ierarhie și relații",
+        "organization": "Organizare",
+        "people": "Persoane"
+      },
+      "select_all": "Selectează tot",
       "submit": "Duplică proiectul",
       "submitting": "Se duplică proiectul...",
       "success": "Proiectul a fost duplicat cu succes.",
       "title": "Duplică proiectul",
       "too_large": "Acest proiect este prea mare pentru a fi copiat. Dezactivează unele opțiuni și încearcă din nou.",
-      "what_to_copy": "Copiază și"
+      "what_to_copy": "Copiază și",
+      "work_items_too_large": "Acest proiect are mai multe activități decât pot fi copiate (până la {count})."
     }
   }
 }

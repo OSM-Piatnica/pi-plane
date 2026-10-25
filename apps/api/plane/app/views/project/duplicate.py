@@ -16,12 +16,14 @@ from rest_framework.throttling import SimpleRateThrottle
 # Module imports
 from plane.app.permissions import ROLE, allow_permission
 from plane.app.serializers import ProjectListSerializer
-from plane.app.serializers.project_duplicate import ProjectDuplicateSerializer
+from plane.app.serializers.project_duplicate import ProjectCopyJobSerializer, ProjectDuplicateSerializer
 from plane.app.views.base import BaseAPIView
 from plane.app.views.project.base import ProjectViewSet
 from plane.bgtasks.project_add_user_email_task import project_add_user_email
+from plane.bgtasks.project_copy_task import copy_project_work_items
 from plane.bgtasks.webhook_task import model_activity
-from plane.db.models import FileAsset, Project, WorkspaceMember
+from plane.db.models import FileAsset, Project, ProjectCopyJob, WorkspaceMember
+from plane.db.models.project_copy_job import ACTIVE_STATUSES
 from plane.settings.storage import S3Storage
 from plane.utils.host import base_host
 from plane.utils.path_validator import sanitize_filename
@@ -143,6 +145,14 @@ class ProjectDuplicateEndpoint(BaseAPIView):
 
         payload = serializer.validated_data
 
+        # One work item copy per workspace at a time. The size cap bounds a single copy; this is what
+        # stops one person queueing ten large ones and holding a worker for an hour. Only checked when
+        # work items were asked for -- a configuration copy is bounded and cheap.
+        if (payload.get("include") or {}).get("work_items") and ProjectCopyJob.objects.filter(
+            workspace__slug=slug, status__in=ACTIVE_STATUSES
+        ).exists():
+            return Response({"error": "PROJECT_COPY_ALREADY_RUNNING"}, status=status.HTTP_409_CONFLICT)
+
         try:
             result = duplicate_project(
                 source=source,
@@ -151,6 +161,7 @@ class ProjectDuplicateEndpoint(BaseAPIView):
                 identifier=payload.get("identifier"),
                 network=payload.get("network"),
                 options=payload.get("include"),
+                work_item_properties=payload.get("work_item_properties"),
             )
         except ProjectCopyError as error:
             body = {"error": error.code}
@@ -190,6 +201,20 @@ class ProjectDuplicateEndpoint(BaseAPIView):
         except Exception:
             log.warning("Could not queue the creation activity for project %s", result.project.id, exc_info=True)
 
+        # Dispatched here rather than inside the service, for the same reason the cover image is: the job
+        # reads rows that only exist once the transaction has committed. A broker failure is not fatal --
+        # the job row is already queued, and `reclaim_stalled_project_copies` picks up anything that was
+        # never delivered.
+        if result.work_item_job_id is not None:
+            try:
+                copy_project_work_items.delay(str(result.work_item_job_id))
+            except Exception:
+                log.warning(
+                    "Could not queue the work item copy for project %s; the sweeper will retry",
+                    result.project.id,
+                    exc_info=True,
+                )
+
         # Same queryset (and so the same shape) `ProjectViewSet.create` answers
         # with, so the web store can treat the two identically.
         viewset = ProjectViewSet()
@@ -202,4 +227,58 @@ class ProjectDuplicateEndpoint(BaseAPIView):
             "counts": result.counts,
             "skipped": result.skipped,
         }
+        if result.work_item_job_id is not None:
+            data["copy_summary"]["work_items"] = {
+                "job_id": str(result.work_item_job_id),
+                "status": ProjectCopyJob.Status.QUEUED,
+                "total": result.counts.get("work_items_planned", 0),
+                "copied": 0,
+            }
         return Response(data, status=status.HTTP_201_CREATED)
+
+
+class ProjectCopyStatusEndpoint(BaseAPIView):
+    """How far the work item copy of this project has got.
+
+    Keyed on the *target* project rather than the job id, because that is what the client has: the
+    duplicate form navigates straight to the copy, and a page reload loses any id held in memory. It
+    also means the read is authorised exactly like every other project read, with no new surface.
+    """
+
+    @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST], level="PROJECT")
+    def get(self, request, slug, project_id):
+        job = ProjectCopyJob.objects.filter(target_project_id=project_id, workspace__slug=slug).first()
+        if job is None:
+            # Most projects were never copied; that is not an error.
+            return Response({"job": None}, status=status.HTTP_200_OK)
+        return Response({"job": ProjectCopyJobSerializer(job).data}, status=status.HTTP_200_OK)
+
+
+class ProjectCopyRetryEndpoint(BaseAPIView):
+    """Ask a failed copy to carry on from where it stopped.
+
+    Resuming is safe because every pass skips what is already present, so a retry adds what is missing
+    rather than a second copy of what is not. Only a failed job can be retried; a running one already
+    has a worker, and the sweeper covers one whose worker died.
+    """
+
+    @allow_permission([ROLE.ADMIN], level="PROJECT")
+    def post(self, request, slug, project_id):
+        job = ProjectCopyJob.objects.filter(target_project_id=project_id, workspace__slug=slug).first()
+        if job is None:
+            return Response({"error": "No copy has been run for this project."}, status=status.HTTP_404_NOT_FOUND)
+        if job.status != ProjectCopyJob.Status.FAILED:
+            return Response({"error": "PROJECT_COPY_NOT_RETRYABLE"}, status=status.HTTP_409_CONFLICT)
+
+        job.status = ProjectCopyJob.Status.QUEUED
+        job.reason = ""
+        job.completed_at = None
+        job.attempt_count = 0
+        job.save(update_fields=["status", "reason", "completed_at", "attempt_count", "updated_at"])
+
+        try:
+            copy_project_work_items.delay(str(job.id))
+        except Exception:
+            log.warning("Could not queue the retry for copy job %s; the sweeper will retry", job.id, exc_info=True)
+
+        return Response({"job": ProjectCopyJobSerializer(job).data}, status=status.HTTP_200_OK)

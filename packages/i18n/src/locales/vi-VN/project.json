@@ -453,7 +453,7 @@
     "control_section": {
       "archive_description": "Lưu trữ dự án sẽ ẩn dự án khỏi thanh điều hướng bên, nhưng bạn vẫn có thể truy cập từ trang dự án. Bạn có thể khôi phục hoặc xóa dự án bất cứ lúc nào.",
       "delete_description": "Khi xóa dự án, tất cả dữ liệu và tài nguyên trong dự án sẽ bị xóa vĩnh viễn và không thể khôi phục.",
-      "duplicate_description": "Tạo dự án mới với cài đặt, trạng thái, nhãn và các cấu hình khác của dự án này. Mục công việc không được sao chép."
+      "duplicate_description": "Tạo dự án mới với cài đặt, trạng thái, nhãn và các cấu hình khác của dự án này. Mục công việc chỉ được sao chép nếu bạn chọn."
     },
     "delete_modal": {
       "confirm_placeholder": "Nhập “{phrase}”",
@@ -652,16 +652,50 @@
       "reject": "Từ chối"
     },
     "duplicate_modal": {
+      "already_running": "Không gian làm việc này đang có một lượt sao chép mục công việc. Hãy thử lại khi nó hoàn tất.",
       "always_copied": "Cài đặt, trạng thái và loại mục công việc luôn được sao chép.",
-      "description": "Tạo dự án mới với cùng các cài đặt. Mục công việc, trang và webhook không được sao chép.",
+      "banner": {
+        "done": "Đã sao chép mục công việc: {count}.",
+        "failed": "Sao chép mục công việc thất bại. Những gì đã sao chép được giữ lại; hãy thử lại để thêm phần còn lại.",
+        "progress": "Đang sao chép mục công việc: {copied}/{total}",
+        "queued": "Các mục công việc đang chờ sao chép...",
+        "reload": "Tải lại",
+        "retry": "Thử lại",
+        "retry_failed": "Không thể thử lại việc sao chép. Vui lòng thử lại."
+      },
+      "clear_all": "Bỏ chọn tất cả",
+      "description": "Tạo dự án mới với cùng các cài đặt. Trang và webhook không được sao chép; mục công việc chỉ được sao chép nếu bạn chọn bên dưới.",
       "error": "Không thể nhân bản dự án. Vui lòng thử lại.",
       "identifier_placeholder": "Tự tạo nếu để trống",
+      "properties": {
+        "assignees": "Người được giao",
+        "custom_properties": "Thuộc tính tùy chỉnh",
+        "cycles": "Chu kỳ",
+        "dates": "Ngày",
+        "description_images": "Hình ảnh trong mô tả",
+        "labels": "Nhãn",
+        "links": "Liên kết",
+        "modules": "Mô-đun",
+        "parents": "Liên kết mục con",
+        "relations": "Quan hệ"
+      },
+      "properties_description": "Chọn những gì được mang theo cùng các mục công việc. Bản nháp, mục đã lưu trữ và mục intake bị bỏ qua; bình luận, tệp đính kèm, hoạt động và nhật ký thời gian không bao giờ được sao chép.",
+      "properties_heading": "Thuộc tính mục công việc",
+      "properties_note": "Chu kỳ và mô-đun chỉ được mang theo khi chúng được sao chép ở trên.",
+      "property_groups": {
+        "content": "Nội dung",
+        "hierarchy": "Phân cấp và quan hệ",
+        "organization": "Tổ chức",
+        "people": "Con người"
+      },
+      "select_all": "Chọn tất cả",
       "submit": "Nhân bản dự án",
       "submitting": "Đang nhân bản dự án...",
       "success": "Đã nhân bản dự án thành công.",
       "title": "Nhân bản dự án",
       "too_large": "Dự án này quá lớn để sao chép. Hãy tắt bớt một số tùy chọn và thử lại.",
-      "what_to_copy": "Sao chép thêm"
+      "what_to_copy": "Sao chép thêm",
+      "work_items_too_large": "Dự án này có nhiều mục công việc hơn mức có thể sao chép (tối đa {count})."
     }
   }
 }

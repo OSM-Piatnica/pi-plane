@@ -15,19 +15,20 @@ settings. There is no feature flag and nothing to configure.
 
 ## What a copy contains
 
-| Always copied                                                                                                   | Copied unless you opt out         | Copied only if you opt in                  | Never copied                                                                     |
-| --------------------------------------------------------------------------------------------------------------- | --------------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------- |
-| Project settings, feature toggles (cycles, modules, pages, intake, time tracking, work item types), cover image | Labels, including their hierarchy | Members and their roles                    | Work items and everything on them (comments, attachments, activity, subscribers) |
-| States, including the triage state                                                                              | Estimates and their points        | Cycles, as empty shells                    | Pages                                                                            |
-| Links to the work item types the source uses                                                                    | Intake configuration              | Modules, as empty shells, with their links | Webhooks and workflows                                                           |
-|                                                                                                                 |                                   | Views, subject to the privacy rules below  | Published boards, favourites, drafts, notifications, import history              |
+| Always copied                                                                                                   | Copied unless you opt out         | Copied only if you opt in                  | Never copied                                                        |
+| --------------------------------------------------------------------------------------------------------------- | --------------------------------- | ------------------------------------------ | ------------------------------------------------------------------- |
+| Project settings, feature toggles (cycles, modules, pages, intake, time tracking, work item types), cover image | Labels, including their hierarchy | Members and their roles                    | Pages                                                               |
+| States, including the triage state                                                                              | Estimates and their points        | Cycles, as empty shells                    | Webhooks and workflows                                              |
+| Links to the work item types the source uses                                                                    | Intake configuration              | Modules, as empty shells, with their links | Published boards, favourites, drafts, notifications, import history |
+|                                                                                                                 |                                   | Views, subject to the privacy rules below  | Comments, attachments, activity, time entries and subscribers       |
+|                                                                                                                 |                                   | **Work items**, in the background          |                                                                     |
 
 The copy always gets a **new name and identifier**, and the person who made it
 becomes its project lead and an admin.
 
 ### Why some things are not copied
 
-- **Work items.** A template is a shape, not a backlog.
+- **Work items, by default.** A template is a shape, not a backlog. They are opt-in; see below.
 - **Webhooks.** A copied webhook would start posting a new project's events to
   an endpoint whose owner never asked for them.
 - **Members, by default.** Copying membership grants people access to something
@@ -60,6 +61,35 @@ Both are required:
    types, which are shared definitions.
 2. **In the workspace**: admin or member, the same bar as creating a project.
 
+## Copying the work items
+
+Tick **Work items** in the form and the new project is created at once, empty; its work items follow in
+the background and a bar at the top of the project shows the progress. When the copy finishes you are
+offered a reload. A failed copy (for example after a restart) is retried automatically a few times; if it
+still fails, an admin of the project gets a **Retry** button, and a retry carries on from where it stopped.
+
+Which work items: everything in the project except **drafts, archived items and intake (triage) items**.
+Work item numbers are kept (`ABC-12` is `ABC-12` in the copy), as are the original author and the created
+and updated dates. Nothing is copied twice: a retry only adds what is missing.
+
+Which parts of them are carried is chosen in the form, in groups, each switched on or off singly or through
+its group (everything is on by default):
+
+| Group                   | Options                                                                      |
+| ----------------------- | ---------------------------------------------------------------------------- |
+| Content                 | dates (start, due, duration), custom property values, images in descriptions |
+| People                  | assignees (only people who are in the copy)                                  |
+| Organization            | labels, cycle membership, module membership                                  |
+| Hierarchy and relations | sub-work-item links, relations (both ends must be in the copy), links        |
+
+Cycle and module membership is only carried when the cycles and modules themselves are copied. Custom
+property values naming people who are not in the copy lose those people. Images in descriptions are
+copied as files of their own, so deleting either project leaves the other's images alone; an image that
+cannot be copied is removed from the description rather than left pointing at the source.
+
+Only one work item copy runs per workspace at a time (a second is refused with `409`), and a project with
+more than 20,000 work items is refused with `PROJECT_TOO_LARGE_TO_COPY`.
+
 ## The API
 
 ```
@@ -81,14 +111,25 @@ Every field is optional.
     "cycles": false, // default false
     "modules": false, // default false
     "views": false, // default false
+    "work_items": false, // default false; copied in the background
   },
+  "work_item_properties": ["dates", "labels"], // only with work_items; omitted: all of them
 }
 ```
 
 `states` and `work_item_types` are always copied. An unrecognised key in
-`include` is rejected. On success the response is the created project, in the
+`include`, or an unknown name in `work_item_properties`, is rejected. The properties are `dates`,
+`custom_properties`, `description_images`, `assignees`, `labels`, `cycles`, `modules`, `parents`,
+`relations` and `links`. On success the response is the created project, in the
 shape project creation returns, plus `copy_summary` (`source_project_id`,
-`counts`, `skipped`).
+`counts`, `skipped`, and `work_items` with the job's id, status and total when work items were asked for).
+
+The progress of the background copy is read from the new project:
+
+```
+GET  /api/workspaces/<slug>/projects/<new_project_id>/copy-status/   // { "job": {status, copied, total, ...} } or { "job": null }
+POST /api/workspaces/<slug>/projects/<new_project_id>/copy-retry/    // admin; only for a failed copy
+```
 
 | Status | `error`                                   | Meaning                                               |
 | ------ | ----------------------------------------- | ----------------------------------------------------- |
@@ -121,6 +162,5 @@ the copy is created without one and the response says `cover_image:failed` (or
 ## Known limitations
 
 - **Pages are not copied.** Use the duplicate action on a page.
-- **Cycles and modules arrive empty**, since there are no work items to put in
-  them.
+- **Cycles and modules arrive empty** unless the work items are copied too.
 - **Workflows are not copied.**

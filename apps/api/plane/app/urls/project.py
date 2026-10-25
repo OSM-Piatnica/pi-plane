@@ -27,6 +27,8 @@ from plane.app.views import (
     ProjectIssueTypeBulkAssignEndpoint,
     ProjectIssueTypePropertiesEndpoint,
     ProjectDuplicateEndpoint,
+    ProjectCopyStatusEndpoint,
+    ProjectCopyRetryEndpoint,
 )
 
 
@@ -35,6 +37,16 @@ urlpatterns = [
         "workspaces/<str:slug>/projects/<uuid:project_id>/duplicate/",
         ProjectDuplicateEndpoint.as_view(),
         name="project-duplicate",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/copy-status/",
+        ProjectCopyStatusEndpoint.as_view(),
+        name="project-copy-status",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/copy-retry/",
+        ProjectCopyRetryEndpoint.as_view(),
+        name="project-copy-retry",
     ),
     path(
         "workspaces/<str:slug>/projects/",

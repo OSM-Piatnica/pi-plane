@@ -453,7 +453,7 @@
     "control_section": {
       "archive_description": "Archiviare un progetto lo rimuoverà dalla navigazione laterale, ma potrai comunque accedervi dalla pagina dei progetti. Puoi ripristinarlo o eliminarlo quando vuoi.",
       "delete_description": "Eliminando un progetto, tutti i dati e le risorse al suo interno verranno rimossi definitivamente e non potranno essere recuperati.",
-      "duplicate_description": "Crea un nuovo progetto con le impostazioni, gli stati, le etichette e il resto della configurazione di questo progetto. Gli elementi di lavoro non vengono copiati."
+      "duplicate_description": "Crea un nuovo progetto con le impostazioni, gli stati, le etichette e il resto della configurazione di questo progetto. Gli elementi di lavoro vengono copiati solo se lo scegli."
     },
     "delete_modal": {
       "confirm_placeholder": "Inserisci “{phrase}”",
@@ -652,16 +652,50 @@
       "reject": "Rifiuta"
     },
     "duplicate_modal": {
+      "already_running": "Nello spazio di lavoro è già in corso una copia di elementi di lavoro. Riprova al termine.",
       "always_copied": "Le impostazioni, gli stati e i tipi di elementi di lavoro vengono sempre copiati.",
-      "description": "Crea un nuovo progetto con le stesse impostazioni. Gli elementi di lavoro, le pagine e i webhook non vengono copiati.",
+      "banner": {
+        "done": "Elementi di lavoro copiati: {count}.",
+        "failed": "La copia degli elementi di lavoro non è riuscita. Quanto copiato viene mantenuto; riprova per aggiungere il resto.",
+        "progress": "Copia degli elementi di lavoro: {copied} di {total}",
+        "queued": "Gli elementi di lavoro sono in coda per la copia...",
+        "reload": "Ricarica",
+        "retry": "Riprova",
+        "retry_failed": "Impossibile ripetere la copia. Riprova."
+      },
+      "clear_all": "Deseleziona tutto",
+      "description": "Crea un nuovo progetto con le stesse impostazioni. Pagine e webhook non vengono copiati; gli elementi di lavoro solo se lo scegli qui sotto.",
       "error": "Impossibile duplicare il progetto. Riprova.",
       "identifier_placeholder": "Generato se vuoto",
+      "properties": {
+        "assignees": "Assegnatari",
+        "custom_properties": "Proprietà personalizzate",
+        "cycles": "Cicli",
+        "dates": "Date",
+        "description_images": "Immagini nelle descrizioni",
+        "labels": "Etichette",
+        "links": "Link",
+        "modules": "Moduli",
+        "parents": "Collegamenti dei sotto-elementi",
+        "relations": "Relazioni"
+      },
+      "properties_description": "Scegli cosa portare con gli elementi di lavoro. Bozze, elementi archiviati e di intake restano esclusi; commenti, allegati, attività e registrazioni di tempo non vengono mai copiati.",
+      "properties_heading": "Proprietà degli elementi di lavoro",
+      "properties_note": "Cicli e moduli vengono portati solo se copiati sopra.",
+      "property_groups": {
+        "content": "Contenuto",
+        "hierarchy": "Gerarchia e relazioni",
+        "organization": "Organizzazione",
+        "people": "Persone"
+      },
+      "select_all": "Seleziona tutto",
       "submit": "Duplica progetto",
       "submitting": "Duplicazione del progetto...",
       "success": "Progetto duplicato correttamente.",
       "title": "Duplica progetto",
       "too_large": "Questo progetto è troppo grande per essere copiato. Disattiva alcune opzioni e riprova.",
-      "what_to_copy": "Copia anche"
+      "what_to_copy": "Copia anche",
+      "work_items_too_large": "Questo progetto ha più elementi di lavoro di quanti se ne possano copiare (fino a {count})."
     }
   }
 }

@@ -542,8 +542,8 @@ class TestProjectDuplicate:
         assert not DeployBoard.objects.filter(project_id=copy_id).exists()
         assert "webhooks:not-copied" in response.data["copy_summary"]["skipped"]
 
-    def test_work_items_are_never_copied(self, session_client, workspace, source_project):
-        """A copy is a shape, not a backlog: work items are never copied."""
+    def test_work_items_are_not_copied_unless_asked_for(self, session_client, workspace, source_project):
+        """A copy is a shape, not a backlog: work items come only when asked for (see the work item copy tests)."""
         from plane.db.models import Issue
 
         response = session_client.post(

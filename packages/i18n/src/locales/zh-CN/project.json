@@ -453,7 +453,7 @@
     "control_section": {
       "archive_description": "归档项目会将其从侧边导航中移除，但您仍可从项目页面访问它。您可以随时恢复或删除该项目。",
       "delete_description": "删除项目时，该项目中的所有数据和资源将被永久删除且无法恢复。",
-      "duplicate_description": "使用此项目的设置、状态、标签及其他配置创建新项目。工作项不会被复制。"
+      "duplicate_description": "使用此项目的设置、状态、标签及其他配置创建新项目。工作项仅在您选择时才会被复制。"
     },
     "delete_modal": {
       "confirm_placeholder": "输入“{phrase}”",
@@ -652,16 +652,50 @@
       "reject": "拒绝"
     },
     "duplicate_modal": {
+      "already_running": "此工作区已有一个工作项复制任务在运行。请在其完成后重试。",
       "always_copied": "设置、状态和工作项类型始终会被复制。",
-      "description": "使用相同的设置创建新项目。工作项、页面和 Webhook 不会被复制。",
+      "banner": {
+        "done": "已复制工作项：{count} 个。",
+        "failed": "复制工作项失败。已复制的内容会保留；重试即可补上其余部分。",
+        "progress": "正在复制工作项：{copied} / {total}",
+        "queued": "工作项正在排队等待复制...",
+        "reload": "重新加载",
+        "retry": "重试",
+        "retry_failed": "无法重试复制。请重试。"
+      },
+      "clear_all": "全部清除",
+      "description": "使用相同的设置创建新项目。页面和 Webhook 不会被复制；工作项仅在您于下方选择时复制。",
       "error": "无法复制项目，请重试。",
       "identifier_placeholder": "留空则自动生成",
+      "properties": {
+        "assignees": "负责人",
+        "custom_properties": "自定义属性",
+        "cycles": "周期",
+        "dates": "日期",
+        "description_images": "描述中的图片",
+        "labels": "标签",
+        "links": "链接",
+        "modules": "模块",
+        "parents": "子工作项链接",
+        "relations": "关系"
+      },
+      "properties_description": "选择随工作项一起带走的内容。草稿、已归档和 Intake 工作项会被排除；评论、附件、活动和工时记录永远不会被复制。",
+      "properties_heading": "工作项属性",
+      "properties_note": "周期和模块仅在上方已复制时才会带走。",
+      "property_groups": {
+        "content": "内容",
+        "hierarchy": "层级与关系",
+        "organization": "组织",
+        "people": "人员"
+      },
+      "select_all": "全选",
       "submit": "复制项目",
       "submitting": "正在复制项目...",
       "success": "项目复制成功。",
       "title": "复制项目",
       "too_large": "此项目过大，无法复制。请关闭部分选项后重试。",
-      "what_to_copy": "同时复制"
+      "what_to_copy": "同时复制",
+      "work_items_too_large": "此项目的工作项数量超过可复制的上限（最多 {count} 个）。"
     }
   }
 }

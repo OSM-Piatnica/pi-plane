@@ -453,7 +453,7 @@
     "control_section": {
       "archive_description": "Als je een project archiveert, verdwijnt het uit je zijnavigatie, maar je kunt het nog steeds openen via je projectenpagina. Je kunt het project op elk moment herstellen of verwijderen.",
       "delete_description": "Als je een project verwijdert, worden alle gegevens en bronnen in dat project permanent verwijderd en kunnen ze niet worden hersteld.",
-      "duplicate_description": "Maak een nieuw project met de instellingen, statussen, labels en overige configuratie van dit project. Werkitems worden niet gekopieerd."
+      "duplicate_description": "Maak een nieuw project met de instellingen, statussen, labels en overige configuratie van dit project. Werkitems worden alleen gekopieerd als je dat kiest."
     },
     "delete_modal": {
       "confirm_placeholder": "Voer “{phrase}” in",
@@ -652,16 +652,50 @@
       "reject": "Afwijzen"
     },
     "duplicate_modal": {
+      "already_running": "In deze werkruimte loopt al een kopie van werkitems. Probeer het opnieuw als die klaar is.",
       "always_copied": "Instellingen, statussen en typen werkitems worden altijd gekopieerd.",
-      "description": "Maakt een nieuw project met dezelfde instellingen. Werkitems, pagina's en webhooks worden niet gekopieerd.",
+      "banner": {
+        "done": "Werkitems gekopieerd: {count}.",
+        "failed": "Het kopiëren van de werkitems is mislukt. Wat gekopieerd is blijft behouden; probeer opnieuw om de rest toe te voegen.",
+        "progress": "Werkitems kopiëren: {copied} van {total}",
+        "queued": "De werkitems staan in de wachtrij om te worden gekopieerd...",
+        "reload": "Opnieuw laden",
+        "retry": "Opnieuw proberen",
+        "retry_failed": "Het kopiëren kon niet opnieuw worden geprobeerd. Probeer het opnieuw."
+      },
+      "clear_all": "Alles wissen",
+      "description": "Maakt een nieuw project met dezelfde instellingen. Pagina's en webhooks worden niet gekopieerd; werkitems alleen als je dat hieronder kiest.",
       "error": "Het project kon niet worden gedupliceerd. Probeer het opnieuw.",
       "identifier_placeholder": "Wordt gegenereerd als leeg",
+      "properties": {
+        "assignees": "Toegewezen aan",
+        "custom_properties": "Aangepaste eigenschappen",
+        "cycles": "Cycli",
+        "dates": "Datums",
+        "description_images": "Afbeeldingen in beschrijvingen",
+        "labels": "Labels",
+        "links": "Links",
+        "modules": "Modules",
+        "parents": "Koppelingen van subitems",
+        "relations": "Relaties"
+      },
+      "properties_description": "Kies wat met de werkitems meegaat. Concepten, gearchiveerde items en intake-items blijven buiten beschouwing; opmerkingen, bijlagen, activiteit en tijdregistraties worden nooit gekopieerd.",
+      "properties_heading": "Eigenschappen van werkitems",
+      "properties_note": "Cycli en modules gaan alleen mee als ze hierboven worden gekopieerd.",
+      "property_groups": {
+        "content": "Inhoud",
+        "hierarchy": "Hiërarchie en relaties",
+        "organization": "Organisatie",
+        "people": "Personen"
+      },
+      "select_all": "Alles selecteren",
       "submit": "Project dupliceren",
       "submitting": "Project wordt gedupliceerd...",
       "success": "Project is gedupliceerd.",
       "title": "Project dupliceren",
       "too_large": "Dit project is te groot om te kopiëren. Schakel enkele opties uit en probeer het opnieuw.",
-      "what_to_copy": "Kopieer ook"
+      "what_to_copy": "Kopieer ook",
+      "work_items_too_large": "Dit project heeft meer werkitems dan er gekopieerd kunnen worden (tot {count})."
     }
   }
 }

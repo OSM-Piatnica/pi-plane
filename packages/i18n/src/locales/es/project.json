@@ -453,7 +453,7 @@
     "control_section": {
       "archive_description": "Archivar un proyecto lo quitará de la navegación lateral, aunque podrás seguir accediendo a él desde la página de proyectos. Puedes restaurarlo o eliminarlo cuando quieras.",
       "delete_description": "Al eliminar un proyecto, todos los datos y recursos que contiene se eliminarán de forma permanente y no podrán recuperarse.",
-      "duplicate_description": "Crea un nuevo proyecto con la configuración, los estados, las etiquetas y el resto de la configuración de este proyecto. Los elementos de trabajo no se copian."
+      "duplicate_description": "Crea un nuevo proyecto con la configuración, los estados, las etiquetas y el resto de la configuración de este proyecto. Los elementos de trabajo solo se copian si lo eliges."
     },
     "delete_modal": {
       "confirm_placeholder": "Escribe «{phrase}»",
@@ -652,16 +652,50 @@
       "reject": "Rechazar"
     },
     "duplicate_modal": {
+      "already_running": "Ya hay una copia de elementos de trabajo en curso en este espacio de trabajo. Inténtalo de nuevo cuando termine.",
       "always_copied": "La configuración, los estados y los tipos de elementos de trabajo siempre se copian.",
-      "description": "Crea un nuevo proyecto con la misma configuración. Los elementos de trabajo, las páginas y los webhooks no se copian.",
+      "banner": {
+        "done": "Elementos de trabajo copiados: {count}.",
+        "failed": "Falló la copia de los elementos de trabajo. Lo copiado se conserva; reintenta para añadir el resto.",
+        "progress": "Copiando elementos de trabajo: {copied} de {total}",
+        "queued": "Los elementos de trabajo están en cola para copiarse...",
+        "reload": "Recargar",
+        "retry": "Reintentar",
+        "retry_failed": "No se pudo reintentar la copia. Inténtalo de nuevo."
+      },
+      "clear_all": "Borrar todo",
+      "description": "Crea un nuevo proyecto con la misma configuración. Las páginas y los webhooks no se copian; los elementos de trabajo solo si lo eliges abajo.",
       "error": "No se pudo duplicar el proyecto. Inténtalo de nuevo.",
       "identifier_placeholder": "Se genera si está vacío",
+      "properties": {
+        "assignees": "Asignados",
+        "custom_properties": "Propiedades personalizadas",
+        "cycles": "Ciclos",
+        "dates": "Fechas",
+        "description_images": "Imágenes en las descripciones",
+        "labels": "Etiquetas",
+        "links": "Enlaces",
+        "modules": "Módulos",
+        "parents": "Enlaces de subelementos",
+        "relations": "Relaciones"
+      },
+      "properties_description": "Elige qué se lleva con los elementos de trabajo. Los borradores, los elementos archivados y los de intake se dejan fuera; los comentarios, adjuntos, actividad y registros de tiempo nunca se copian.",
+      "properties_heading": "Propiedades de los elementos de trabajo",
+      "properties_note": "Los ciclos y módulos solo se llevan si se copian arriba.",
+      "property_groups": {
+        "content": "Contenido",
+        "hierarchy": "Jerarquía y relaciones",
+        "organization": "Organización",
+        "people": "Personas"
+      },
+      "select_all": "Seleccionar todo",
       "submit": "Duplicar proyecto",
       "submitting": "Duplicando proyecto...",
       "success": "Proyecto duplicado correctamente.",
       "title": "Duplicar proyecto",
       "too_large": "Este proyecto es demasiado grande para copiarlo. Desactiva algunas opciones e inténtalo de nuevo.",
-      "what_to_copy": "Copiar también"
+      "what_to_copy": "Copiar también",
+      "work_items_too_large": "Este proyecto tiene más elementos de trabajo de los que se pueden copiar (hasta {count})."
     }
   }
 }

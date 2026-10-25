@@ -194,6 +194,8 @@ export type TProjectDuplicateInclude = {
   cycles?: boolean;
   modules?: boolean;
   views?: boolean;
+  /** Copied in the background after the project exists; see `work_item_properties`. */
+  work_items?: boolean;
 };
 
 export type TProjectDuplicatePayload = {
@@ -201,6 +203,8 @@ export type TProjectDuplicatePayload = {
   identifier?: string;
   network?: number;
   include?: TProjectDuplicateInclude;
+  /** Which parts of the work items to carry; only used with `include.work_items`. Absent means all. */
+  work_item_properties?: string[];
 };
 
 export type TProjectCopySummary = {
@@ -208,6 +212,32 @@ export type TProjectCopySummary = {
   counts: Record<string, number>;
   /** Things the copy did not carry over, e.g. `webhooks:not-copied` or `views:private`. */
   skipped: string[];
+  /** Present when work items were asked for: the background copy that brings them. */
+  work_items?: { job_id: string; status: TProjectCopyJobStatus; total: number; copied: number };
+};
+
+export type TProjectCopyJobStatus =
+  | "queued"
+  | "processing"
+  | "completed"
+  | "completed_with_errors"
+  | "failed"
+  | "cancelled";
+
+/** The background copy of a duplicated project's work items. */
+export type TProjectCopyJob = {
+  id: string;
+  status: TProjectCopyJobStatus;
+  stage: string;
+  total: number;
+  copied: number;
+  counts: Record<string, number>;
+  skipped: string[];
+  errors: { error: string }[];
+  reason: string;
+  started_at: string | null;
+  completed_at: string | null;
+  created_at: string;
 };
 
 export type TProjectAccessRequestStatus = "pending" | "approved" | "rejected";

@@ -12,7 +12,10 @@ cycles/modules/views. Pages are out of scope -- they carry content through the
 S3 and live-server description pipeline and are copied one at a time by
 ``PageDuplicateEndpoint``.
 
-Work items are not copied: a template is a shape, not a backlog.
+Work items are copied too, but not here. They are unbounded, and this transaction holds a lock on the
+workspace row for its whole duration, so inserting thousands of them would stall project creation for
+everyone else in the workspace. This module only reserves their numbers and records a job;
+:mod:`plane.utils.project_copy_work_items` does the work afterwards.
 
 Three rules hold for every step here, and breaking any of them is silent:
 
@@ -32,7 +35,7 @@ Three rules hold for every step here, and breaking any of them is silent:
 from __future__ import annotations
 
 import uuid
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 
 from django.db import transaction
 from django.db.models import Q
@@ -48,6 +51,7 @@ from plane.db.models import (
     ModuleLink,
     ModuleMember,
     Project,
+    ProjectCopyJob,
     ProjectIdentifier,
     ProjectMember,
     State,
@@ -55,12 +59,17 @@ from plane.db.models import (
     WorkspaceMember,
 )
 from plane.db.models.issue_type import ProjectIssueType
+from plane.utils.project_copy_work_items import (
+    WORK_ITEM_PROPERTIES,
+    count_source_work_items,
+    reserve_sequence_range,
+)
 
 # Copy options. Structure that defines "what a project is" is always copied;
 # anything that grants access or carries someone else's work is opt-in.
 ALWAYS_COPIED = ("states", "work_item_types")
 OPTIONAL_DEFAULT_ON = ("labels", "estimates", "intake")
-OPTIONAL_DEFAULT_OFF = ("members", "cycles", "modules", "views")
+OPTIONAL_DEFAULT_OFF = ("members", "cycles", "modules", "views", "work_items")
 COPY_OPTIONS = ALWAYS_COPIED + OPTIONAL_DEFAULT_ON + OPTIONAL_DEFAULT_OFF
 
 # Beyond these a single transaction holds the workspace lock long enough to
@@ -69,6 +78,14 @@ COPY_OPTIONS = ALWAYS_COPIED + OPTIONAL_DEFAULT_ON + OPTIONAL_DEFAULT_OFF
 MAX_MEMBERS = 200
 MAX_CYCLES_AND_MODULES = 500
 MAX_TOTAL_ROWS = 5000
+
+# Work items are deliberately absent from the caps above. Those exist because the synchronous copy
+# holds the workspace lock for its whole duration; work items are copied afterwards by a background
+# job, outside that lock, so counting them there would refuse copies that are in fact cheap on it.
+#
+# This is a different kind of limit: not "try again with fewer options" but "there is no path", because
+# the asynchronous path is already the fallback.
+MAX_WORK_ITEMS = 20_000
 
 # `IssueView.access` numbers PRIVATE as 0 and PUBLIC as 1. `Page.access` numbers
 # them the other way round. Naming the one we use keeps the inversion from
@@ -121,10 +138,17 @@ class CopyPlan:
     cycles: bool = False
     modules: bool = False
     views: bool = False
+    # Off by default like everything that carries other people's work, and by far the most expensive
+    # option: it is the only one copied asynchronously.
+    work_items: bool = False
+    # Which parts of the work items to carry; only read when `work_items` is on
+    work_item_properties: list = field(default_factory=lambda: list(WORK_ITEM_PROPERTIES))
 
     @classmethod
-    def from_options(cls, options: dict | None) -> "CopyPlan":
+    def from_options(cls, options: dict | None, work_item_properties=None) -> "CopyPlan":
         plan = cls(**{key: value for key, value in (options or {}).items() if key in COPY_OPTIONS})
+        if work_item_properties is not None:
+            plan.work_item_properties = list(work_item_properties)
         # Structure is not optional: a project without states cannot hold work.
         plan.states = True
         plan.work_item_types = True
@@ -143,6 +167,9 @@ class CopyResult:
     # committed. An S3 copy cannot be rolled back with the database, so it must
     # not happen inside it.
     cover_source_asset_id: uuid.UUID | None = None
+    # Set when work items were asked for. The view dispatches the job after the transaction commits; a
+    # task starting sooner would find no rows.
+    work_item_job_id: uuid.UUID | None = None
 
 
 class _Remap:
@@ -158,6 +185,10 @@ class _Remap:
         if old_id is None:
             return None
         return self._entries.get(label, {}).get(str(old_id))
+
+    def as_dict(self) -> dict:
+        """A JSON-storable copy, for a job that runs after this request ends."""
+        return {label: {str(old): str(new) for old, new in entries.items()} for label, entries in self._entries.items()}
 
     def translate(self, label: str, old_ids) -> list:
         """Map a list of ids, dropping any that were not copied."""
@@ -820,13 +851,15 @@ def _backpatch_project(context: _Context) -> None:
 
 
 @transaction.atomic
-def duplicate_project(*, source: Project, actor, name=None, identifier=None, network=None, options=None) -> CopyResult:
+def duplicate_project(
+    *, source: Project, actor, name=None, identifier=None, network=None, options=None, work_item_properties=None
+) -> CopyResult:
     """Copy ``source``'s configuration into a new project owned by ``actor``.
 
     The caller is responsible for authorising both the read of ``source`` and the
     creation of a project in its workspace; this function assumes both.
     """
-    plan = CopyPlan.from_options(options)
+    plan = CopyPlan.from_options(options, work_item_properties)
 
     if source.archived_at is not None:
         raise ProjectCopyError("PROJECT_ARCHIVED")
@@ -887,10 +920,43 @@ def duplicate_project(*, source: Project, actor, name=None, identifier=None, net
     # project's events to an endpoint whose owner never asked for them.
     context.skip("webhooks:not-copied")
     # Not copied, and reported so the caller knows what a copy is not.
-    context.skip("work_items:not-copied")
     context.skip("workflows:not-copied")
 
+    if plan.work_items:
+        _queue_work_item_copy(context)
+    else:
+        context.skip("work_items:not-copied")
+
     return context.result
+
+
+def _queue_work_item_copy(context: _Context) -> None:
+    """Reserve the work item numbers and record the job, before committing.
+
+    Both belong inside this transaction. The reservation has to be in place before anyone can create a
+    work item in the copy, and a committed project that asked for work items must never exist without a
+    job to bring them -- the sweeper finds a queued job, but it cannot invent one.
+
+    Dispatching is the caller's job, after commit: a task that starts before the transaction commits
+    would find no rows.
+    """
+    total = count_source_work_items(context.source.id)
+    if total > MAX_WORK_ITEMS:
+        raise ProjectCopyError("PROJECT_TOO_LARGE_TO_COPY", detail={"limit": "work_items"})
+
+    reserve_sequence_range(context.target, context.source.id)
+
+    job = ProjectCopyJob.objects.create(
+        workspace_id=context.target.workspace_id,
+        source_project=context.source,
+        target_project=context.target,
+        initiated_by=context.actor,
+        plan=asdict(context.plan),
+        remap=context.remap.as_dict(),
+        total=total,
+    )
+    context.result.work_item_job_id = job.id
+    context.result.counts["work_items_planned"] = total
 
 
 __all__ = [
