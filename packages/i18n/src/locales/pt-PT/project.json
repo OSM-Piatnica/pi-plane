@@ -649,7 +649,9 @@
     "access_requests": {
       "title": "Pedidos para aderir ({count})",
       "approve": "Aprovar",
-      "reject": "Rejeitar"
+      "reject": "Rejeitar",
+      "already_decided": "Este pedido já foi decidido por outro administrador.",
+      "requester_left": "Esta pessoa já não é membro do espaço de trabalho."
     },
     "duplicate_modal": {
       "already_running": "Já existe uma cópia de itens de trabalho em curso neste espaço de trabalho. Tente novamente quando terminar.",

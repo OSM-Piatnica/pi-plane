@@ -285,7 +285,8 @@ export class ProjectService extends APIService {
     })
       .then((response) => response?.data)
       .catch((error) => {
-        throw error?.response?.data;
+        // Callers read  to tell an already-decided request (409) from other failures.
+        throw error?.response;
       });
   }
 }

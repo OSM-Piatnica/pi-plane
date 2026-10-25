@@ -649,7 +649,9 @@
     "access_requests": {
       "title": "Žiadosti o pripojenie ({count})",
       "approve": "Schváliť",
-      "reject": "Zamietnuť"
+      "reject": "Zamietnuť",
+      "already_decided": "Túto žiadosť už vybavil iný správca.",
+      "requester_left": "Táto osoba už nie je členom pracovného priestoru."
     },
     "duplicate_modal": {
       "already_running": "V tomto pracovnom priestore už prebieha kopírovanie pracovných položiek. Skúste to znova, keď skončí.",

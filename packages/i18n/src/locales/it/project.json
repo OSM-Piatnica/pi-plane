@@ -649,7 +649,9 @@
     "access_requests": {
       "title": "Richieste di adesione ({count})",
       "approve": "Approva",
-      "reject": "Rifiuta"
+      "reject": "Rifiuta",
+      "already_decided": "Questa richiesta è già stata decisa da un altro amministratore.",
+      "requester_left": "Questa persona non è più membro dello spazio di lavoro."
     },
     "duplicate_modal": {
       "already_running": "Nello spazio di lavoro è già in corso una copia di elementi di lavoro. Riprova al termine.",

@@ -649,7 +649,9 @@
     "access_requests": {
       "title": "Beitrittsanfragen ({count})",
       "approve": "Genehmigen",
-      "reject": "Ablehnen"
+      "reject": "Ablehnen",
+      "already_decided": "Diese Anfrage wurde bereits von einem anderen Admin entschieden.",
+      "requester_left": "Diese Person ist kein Mitglied des Workspace mehr."
     },
     "duplicate_modal": {
       "already_running": "In diesem Arbeitsbereich läuft bereits eine Kopie von Arbeitselementen. Versuchen Sie es erneut, wenn sie fertig ist.",
