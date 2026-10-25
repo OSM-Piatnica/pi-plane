@@ -18,7 +18,12 @@ import type {
 import { ProjectWorkflowService } from "@/services/project/project-workflow.service";
 import type { RootStore } from "@/store/root.store";
 
+export type TParentReopenRequest = { id: string; name: string; sequence_id: number | string };
+
 export interface IWorkflowStore {
+  pendingParentReopen: TParentReopenRequest[] | null;
+  confirmParentReopen: (parents: TParentReopenRequest[]) => Promise<boolean>;
+  resolveParentReopen: (confirmed: boolean) => void;
   fetchedMap: Record<string, boolean>;
   workflowMap: Record<string, IWorkflow>;
   projectWorkflowStatesMap: Record<string, IProjectWorkflowStates>;
@@ -79,6 +84,8 @@ export class WorkflowStore implements IWorkflowStore {
   projectWorkflowStatesMap: Record<string, IProjectWorkflowStates> = {};
   issueWorkflowStatusMap: Record<string, IIssueWorkflowStatus> = {};
   workflowHistoryMap: Record<string, IWorkflowHistory[]> = {};
+  pendingParentReopen: TParentReopenRequest[] | null = null;
+  private parentReopenResolver: ((confirmed: boolean) => void) | null = null;
   rootStore: RootStore;
   workflowService: ProjectWorkflowService;
 
@@ -89,6 +96,9 @@ export class WorkflowStore implements IWorkflowStore {
       projectWorkflowStatesMap: observable,
       issueWorkflowStatusMap: observable,
       workflowHistoryMap: observable,
+      pendingParentReopen: observable.ref,
+      confirmParentReopen: action,
+      resolveParentReopen: action,
       fetchProjectWorkflowStates: action,
       fetchIssueWorkflowStatus: action,
       toggleWorkflowEnabled: action,
@@ -103,6 +113,27 @@ export class WorkflowStore implements IWorkflowStore {
     this.rootStore = rootStore;
     this.workflowService = new ProjectWorkflowService();
   }
+
+  /**
+   * Asks the person whether reopening a work item should also reopen its completed parents. Resolves with the
+   * answer once the dialog is dismissed; a second request while one is open is declined.
+   */
+  confirmParentReopen = (parents: TParentReopenRequest[]) => {
+    if (this.pendingParentReopen) return Promise.resolve(false);
+    return new Promise<boolean>((resolve) => {
+      runInAction(() => {
+        this.pendingParentReopen = parents;
+        this.parentReopenResolver = resolve;
+      });
+    });
+  };
+
+  resolveParentReopen = (confirmed: boolean) => {
+    const resolver = this.parentReopenResolver;
+    this.pendingParentReopen = null;
+    this.parentReopenResolver = null;
+    resolver?.(confirmed);
+  };
 
   getWorkflowsByProjectId = computedFn((projectId: string | null | undefined) => {
     if (!projectId) return undefined;

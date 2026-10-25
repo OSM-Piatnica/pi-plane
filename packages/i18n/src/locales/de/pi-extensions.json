@@ -115,6 +115,19 @@
       "pending_approval_title": "Genehmigung erforderlich",
       "rejected_success": "Übergang abgelehnt.",
       "resolving_approval": "Genehmigung wird verarbeitet...",
+      "rules": {
+        "heading": "Regeln",
+        "description": "Projektregeln, die unabhängig davon gelten, ob Workflows aktiviert sind.",
+        "parent_completion": {
+          "description": "Ein Arbeitselement kann nicht abgeschlossen werden, solange es untergeordnete Elemente hat, die weder abgeschlossen noch abgebrochen sind. Wird ein abgeschlossenes untergeordnetes Element unter einem abgeschlossenen übergeordneten Element wieder geöffnet, wird gefragt, ob auch das übergeordnete Element wieder geöffnet werden soll.",
+          "title": "Übergeordnetes Element nur abschließen, wenn alle untergeordneten Elemente erledigt sind"
+        },
+        "reopen_parent": {
+          "confirm": "Wieder öffnen",
+          "content": "In diesem Projekt darf ein übergeordnetes Element nicht abgeschlossen bleiben, solange ein untergeordnetes Element offen ist. Diese abgeschlossenen übergeordneten Elemente werden ebenfalls wieder geöffnet: {names}",
+          "title": "Auch die übergeordneten Arbeitselemente wieder öffnen?"
+        }
+      },
       "save_error": "Workflow-Konfiguration konnte nicht gespeichert werden.",
       "save_success": "Workflow-Konfiguration gespeichert.",
       "toggle_error": "Workflow-Einstellungen konnten nicht aktualisiert werden.",

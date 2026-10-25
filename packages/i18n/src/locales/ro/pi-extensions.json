@@ -115,6 +115,19 @@
       "pending_approval_title": "Este necesară aprobarea",
       "rejected_success": "Tranziție respinsă.",
       "resolving_approval": "Se procesează aprobarea...",
+      "rules": {
+        "heading": "Reguli",
+        "description": "Reguli ale proiectului care se aplică de la sine, indiferent dacă fluxurile de lucru sunt activate.",
+        "parent_completion": {
+          "description": "O activitate nu poate fi finalizată cât timp are sub-activități care nu sunt nici finalizate, nici anulate. Redeschiderea unei sub-activități finalizate sub un părinte finalizat cere să fie redeschis și părintele.",
+          "title": "Finalizează un părinte numai când sub-activitățile lui sunt finalizate"
+        },
+        "reopen_parent": {
+          "confirm": "Redeschide",
+          "content": "Acest proiect nu permite ca un părinte să rămână finalizat cât timp o sub-activitate este deschisă. Aceste activități părinte finalizate vor fi redeschise și ele: {names}",
+          "title": "Redeschizi și activitățile părinte?"
+        }
+      },
       "save_error": "Nu s-a putut salva configurația fluxului de lucru.",
       "save_success": "Configurația fluxului de lucru a fost salvată.",
       "toggle_error": "Nu s-au putut actualiza setările fluxului de lucru.",

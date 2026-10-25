@@ -115,6 +115,19 @@
       "pending_approval_title": "Approvazione richiesta",
       "rejected_success": "Transizione rifiutata.",
       "resolving_approval": "Elaborazione dell'approvazione...",
+      "rules": {
+        "heading": "Regole",
+        "description": "Regole del progetto che si applicano da sole, che i workflow siano attivi o meno.",
+        "parent_completion": {
+          "description": "Un elemento di lavoro non può essere completato finché ha sotto-elementi né completati né annullati. Riaprire un sotto-elemento concluso sotto un padre completato chiede di riaprire anche il padre.",
+          "title": "Completa un elemento padre solo quando i suoi sotto-elementi sono completati"
+        },
+        "reopen_parent": {
+          "confirm": "Riapri",
+          "content": "Questo progetto non consente a un padre di restare completato mentre un sotto-elemento è aperto. Anche questi padri completati verranno riaperti: {names}",
+          "title": "Riaprire anche gli elementi di lavoro padre?"
+        }
+      },
       "save_error": "Impossibile salvare la configurazione del flusso di lavoro.",
       "save_success": "Configurazione del flusso di lavoro salvata.",
       "toggle_error": "Impossibile aggiornare le impostazioni del flusso di lavoro.",

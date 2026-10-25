@@ -853,6 +853,11 @@
         "enabled": "啟用了工作事項類型",
         "fallback": "更新了工作事項類型"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "停用了父項完成規則",
+        "enabled": "啟用了父項完成規則",
+        "fallback": "更新了父項完成規則"
+      },
       "is_project_updates_enabled": {
         "disabled": "停用了專案更新",
         "enabled": "啟用了專案更新",

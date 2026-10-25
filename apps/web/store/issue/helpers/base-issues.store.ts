@@ -184,6 +184,14 @@ const ISSUE_ORDERBY_KEY: Record<TIssueOrderByOptions, keyof TIssue> = {
 };
 
 // locale aware, case insensitive comparison that orders numbers inside names naturally ("2" before "10")
+/** The completed parents an update would reopen, when the API answered that the person has to confirm it first. */
+const getParentReopenRequest = (error: unknown) => {
+  const body = error as
+    | { code?: string; parents?: { id: string; name: string; sequence_id: number | string }[] }
+    | undefined;
+  return body?.code === "parent_reopen_required" && body.parents?.length ? body.parents : null;
+};
+
 const compareIssuesByName = (a: TIssue, b: TIssue) =>
   (a.name ?? "").localeCompare(b.name ?? "", undefined, { numeric: true, sensitivity: "base" });
 
@@ -576,8 +584,9 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     projectId: string,
     issueId: string,
     data: Partial<TIssue>,
-    shouldSync = true
-  ) {
+    shouldSync = true,
+    options?: { reopenParent?: boolean }
+  ): Promise<void> {
     // Store Before state of the issue
     const issueBeforeUpdate = clone(this.rootIssueStore.issues.getIssueById(issueId));
     try {
@@ -595,7 +604,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       } as TIssue);
 
       // call API to update the issue
-      await this.issueService.patchIssue(workspaceSlug, projectId, issueId, data);
+      await this.issueService.patchIssue(workspaceSlug, projectId, issueId, data, options);
 
       // State changes return 204 with no body; re-sync when workflow may have intercepted the transition.
       if (data.state_id !== undefined) {
@@ -615,12 +624,25 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
         await statusPromise;
       }
 
+      // completed parents were reopened with it: bring them up to date
+      if (options?.reopenParent) await this.syncReopenedParents(workspaceSlug, projectId, issueId);
+
       // call fetch Parent Stats
       this.fetchParentStats(workspaceSlug, projectId);
     } catch (error) {
       // If errored out update store again to revert the change
       this.rootIssueStore.issues.updateIssue(issueId, issueBeforeUpdate ?? {});
       this.updateIssueList(issueBeforeUpdate, { ...issueBeforeUpdate, ...data } as TIssue);
+
+      // The project reopens completed parents with a finished child, but only once the person agrees
+      const parents = getParentReopenRequest(error);
+      const workflowStore = this.rootIssueStore.rootStore?.workflow;
+      if (parents && workflowStore) {
+        const confirmed = await workflowStore.confirmParentReopen(parents);
+        if (confirmed)
+          return this.issueUpdate(workspaceSlug, projectId, issueId, data, shouldSync, { reopenParent: true });
+        return;
+      }
       throw error;
     }
   }
@@ -789,6 +811,21 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       });
     });
   };
+
+  /** Re-reads the ancestors of a work item that was reopened along with them, so lists show their new state. */
+  private async syncReopenedParents(workspaceSlug: string, projectId: string, issueId: string) {
+    let parentId = this.rootIssueStore.issues.getIssueById(issueId)?.parent_id;
+    const seen = new Set<string>([issueId]);
+    while (parentId && !seen.has(parentId)) {
+      seen.add(parentId);
+      const before = clone(this.rootIssueStore.issues.getIssueById(parentId));
+      const fresh = await this.issueService.retrieve(workspaceSlug, projectId, parentId).catch(() => undefined);
+      if (!fresh) break;
+      this.rootIssueStore.issues.updateIssue(parentId, { state_id: fresh.state_id });
+      if (before) this.updateIssueList({ ...before, state_id: fresh.state_id } as TIssue, before);
+      parentId = fresh.parent_id;
+    }
+  }
 
   async updateIssueDates(
     workspaceSlug: string,

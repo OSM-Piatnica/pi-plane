@@ -115,6 +115,19 @@
       "pending_approval_title": "Aprovação necessária",
       "rejected_success": "Transição rejeitada.",
       "resolving_approval": "Processando aprovação...",
+      "rules": {
+        "heading": "Regras",
+        "description": "Regras do projeto que se aplicam por si, com os fluxos de trabalho ativados ou não.",
+        "parent_completion": {
+          "description": "Um item de trabalho não pode ser concluído enquanto tiver sub-itens que não estejam concluídos nem cancelados. Reabrir um sub-item concluído sob um item principal concluído pede para reabrir também o item principal.",
+          "title": "Concluir um item principal apenas quando os seus sub-itens estiverem concluídos"
+        },
+        "reopen_parent": {
+          "confirm": "Reabrir",
+          "content": "Este projeto não permite que um item principal continue concluído enquanto um sub-item estiver aberto. Estes itens principais concluídos também serão reabertos: {names}",
+          "title": "Reabrir também os itens de trabalho principais?"
+        }
+      },
       "save_error": "Não foi possível guardar a configuração do fluxo de trabalho.",
       "save_success": "Configuração do fluxo de trabalho guardada.",
       "toggle_error": "Não foi possível atualizar as configurações do fluxo de trabalho.",

@@ -853,6 +853,11 @@
         "enabled": "启用了工作项类型",
         "fallback": "更新了工作项类型"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "停用了父级完成规则",
+        "enabled": "启用了父级完成规则",
+        "fallback": "更新了父级完成规则"
+      },
       "is_project_updates_enabled": {
         "disabled": "停用了项目更新",
         "enabled": "启用了项目更新",

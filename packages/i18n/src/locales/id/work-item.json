@@ -853,6 +853,11 @@
         "enabled": "mengaktifkan jenis item kerja",
         "fallback": "memperbarui jenis item kerja"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "menonaktifkan aturan penyelesaian item induk",
+        "enabled": "mengaktifkan aturan penyelesaian item induk",
+        "fallback": "memperbarui aturan penyelesaian item induk"
+      },
       "is_project_updates_enabled": {
         "disabled": "menonaktifkan pembaruan proyek",
         "enabled": "mengaktifkan pembaruan proyek",

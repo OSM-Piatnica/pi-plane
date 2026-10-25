@@ -115,6 +115,19 @@
       "pending_approval_title": "Approbation requise",
       "rejected_success": "Transition rejetée.",
       "resolving_approval": "Traitement de l'approbation...",
+      "rules": {
+        "heading": "Règles",
+        "description": "Règles du projet qui s'appliquent d'elles-mêmes, que les workflows soient activés ou non.",
+        "parent_completion": {
+          "description": "Un élément de travail ne peut pas être terminé tant qu'il a des sous-éléments ni terminés ni annulés. Rouvrir un sous-élément terminé sous un parent terminé demande aussi de rouvrir le parent.",
+          "title": "Terminer un parent uniquement lorsque ses sous-éléments sont terminés"
+        },
+        "reopen_parent": {
+          "confirm": "Rouvrir",
+          "content": "Ce projet n'autorise pas un parent à rester terminé tant qu'un sous-élément est ouvert. Ces parents terminés seront également rouverts : {names}",
+          "title": "Rouvrir aussi les éléments de travail parents ?"
+        }
+      },
       "save_error": "Impossible d'enregistrer la configuration du workflow.",
       "save_success": "Configuration du workflow enregistrée.",
       "toggle_error": "Impossible de mettre à jour les paramètres du workflow.",

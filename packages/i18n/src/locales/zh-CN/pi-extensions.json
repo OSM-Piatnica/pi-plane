@@ -115,6 +115,19 @@
       "pending_approval_title": "需要审批",
       "rejected_success": "流转已拒绝。",
       "resolving_approval": "正在处理审批...",
+      "rules": {
+        "heading": "规则",
+        "description": "无论是否启用工作流，都会独立生效的项目规则。",
+        "parent_completion": {
+          "description": "只要还有未完成且未取消的子工作项，工作项就无法完成。在已完成的父级下重新打开已完成的子工作项时，会询问是否同时重新打开父级。",
+          "title": "仅在子工作项完成后才能完成父级"
+        },
+        "reopen_parent": {
+          "confirm": "重新打开",
+          "content": "此项目不允许在子工作项未完成时让父级保持已完成状态。以下已完成的父级也将被重新打开：{names}",
+          "title": "是否同时重新打开父级工作项？"
+        }
+      },
       "save_error": "无法保存工作流配置。",
       "save_success": "工作流配置已保存。",
       "toggle_error": "无法更新工作流设置。",

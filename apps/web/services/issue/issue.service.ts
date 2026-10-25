@@ -243,8 +243,16 @@ export class IssueService extends APIService {
       });
   }
 
-  async patchIssue(workspaceSlug: string, projectId: string, issueId: string, data: Partial<TIssue>): Promise<any> {
-    return this.patch(`/api/workspaces/${workspaceSlug}/projects/${projectId}/${this.serviceType}/${issueId}/`, data)
+  async patchIssue(
+    workspaceSlug: string,
+    projectId: string,
+    issueId: string,
+    data: Partial<TIssue>,
+    options?: { reopenParent?: boolean }
+  ): Promise<any> {
+    // reopen_parent confirms that completed parents may be reopened along with a finished work item
+    const payload = options?.reopenParent ? { ...data, reopen_parent: true } : data;
+    return this.patch(`/api/workspaces/${workspaceSlug}/projects/${projectId}/${this.serviceType}/${issueId}/`, payload)
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;
