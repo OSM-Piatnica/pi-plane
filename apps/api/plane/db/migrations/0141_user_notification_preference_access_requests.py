@@ -7,7 +7,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("db", "0139_project_copy_job"),
+        ("db", "0140_project_parent_completion_rule"),
     ]
 
     operations = [
