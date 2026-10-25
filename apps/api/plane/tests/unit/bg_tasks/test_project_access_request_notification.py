@@ -224,7 +224,7 @@ class TestNotifyProjectAccessRequestDecision:
         assert mail.subject == "Ihre Anfrage zum Beitritt zu Secret Plans wurde genehmigt"
         html = mail.alternatives[0][0]
         assert f"http://localhost:3000/{project.workspace.slug}/projects/{project.id}/issues/" in html
-        assert "Anna Admin" in html
+        assert (admin.display_name or "Anna Admin") in html
 
     def test_the_rejection_email_has_no_link_into_the_project(self, decided, project, mailoutbox):
         access_request, admin, requester = decided
