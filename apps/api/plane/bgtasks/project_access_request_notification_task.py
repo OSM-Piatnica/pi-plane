@@ -42,8 +42,8 @@ def _display_name(user):
     return user.display_name or f"{user.first_name} {user.last_name}".strip() or user.email
 
 
-def _send_email(receiver, context, language, subject):
-    html_content = render_to_string("emails/notifications/project_access_request.html", context)
+def _send_email(receiver, context, subject, template="emails/notifications/project_access_request.html"):
+    html_content = render_to_string(template, context)
     text_content = generate_plain_text_from_html(html_content)
     (
         EMAIL_HOST,
@@ -127,9 +127,85 @@ def notify_project_access_request(access_request_id):
             _send_email(
                 receiver,
                 context,
-                language,
                 translate(language, "access_request.subject", requester=requester_name, project=project.name),
             )
             logging.getLogger("plane.worker").info("Access request email sent")
         except Exception as e:
             log_exception(e)
+
+
+DECISION_TEMPLATE = "emails/notifications/project_access_request_decision.html"
+
+
+@shared_task
+def notify_project_access_request_decision(access_request_id):
+    """Tell the person who asked to join a Private project, in the inbox and by email, how it was decided."""
+    try:
+        access_request = ProjectAccessRequest.objects.select_related(
+            "project", "project__workspace", "requester", "decided_by"
+        ).get(pk=access_request_id, status__in=[ProjectAccessRequest.APPROVED, ProjectAccessRequest.REJECTED])
+    except ProjectAccessRequest.DoesNotExist:
+        return
+
+    requester = access_request.requester
+    if not requester.is_active or requester.is_bot:
+        return
+
+    project = access_request.project
+    workspace = project.workspace
+    decider = access_request.decided_by
+    decider_name = _display_name(decider) if decider else ""
+    approved = access_request.status == ProjectAccessRequest.APPROVED
+    outcome = "approved" if approved else "rejected"
+    web_url = settings.WEB_URL or settings.APP_BASE_URL
+    project_url = f"{web_url}/{workspace.slug}/projects/{project.id}/issues/"
+
+    # a decision is announced once
+    notification, created = Notification.objects.get_or_create(
+        workspace=workspace,
+        receiver=requester,
+        entity_name=ACCESS_REQUEST_ENTITY,
+        entity_identifier=access_request.id,
+        defaults={
+            "project": project,
+            "triggered_by": decider,
+            "sender": f"in_app:{ACCESS_REQUEST_ENTITY}",
+            "title": (
+                f"{decider_name} approved your request to join {project.name}"
+                if approved
+                else f"{decider_name} rejected your request to join {project.name}"
+            ).strip(),
+            "data": {
+                "project": {
+                    "id": str(project.id),
+                    "name": project.name,
+                    "identifier": project.identifier,
+                    "workspace_slug": workspace.slug,
+                },
+                "access_request": {"id": str(access_request.id), "status": access_request.status},
+            },
+        },
+    )
+    if not created:
+        return
+
+    language = user_language(requester)
+    context = {
+        "email_language": language,
+        "approved": approved,
+        "decider_name": decider_name,
+        "project_name": project.name,
+        "workspace_name": workspace.name,
+        "email": requester.email,
+        "project_url": project_url,
+    }
+    try:
+        _send_email(
+            requester,
+            context,
+            translate(language, f"access_request_decision.subject_{outcome}", project=project.name),
+            DECISION_TEMPLATE,
+        )
+        logging.getLogger("plane.worker").info("Access request decision email sent")
+    except Exception as e:
+        log_exception(e)

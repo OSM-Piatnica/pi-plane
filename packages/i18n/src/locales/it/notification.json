@@ -100,6 +100,8 @@
       "end_punctuation": "."
     },
     "access_request": {
+      "approved": "ha approvato la tua richiesta di unirti a <value/>",
+      "rejected": "ha rifiutato la tua richiesta di unirti a <value/>",
       "requested": "ha richiesto l’accesso a <value/>"
     }
   },

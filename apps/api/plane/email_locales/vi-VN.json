@@ -92,5 +92,15 @@
     "button": "Xem xét yêu cầu",
     "fallback": "Nếu nút không hoạt động, hãy sao chép liên kết này và dán vào trình duyệt của bạn:",
     "note": "Lưu ý: Email này được gửi đến <span>{email}</span> vì bạn là quản trị viên hoặc trưởng dự án này."
+  },
+  "access_request_decision": {
+    "subject_approved": "Yêu cầu tham gia {project} của bạn đã được chấp thuận",
+    "subject_rejected": "Yêu cầu tham gia {project} của bạn không được chấp thuận",
+    "heading_approved": "Bạn đã có quyền truy cập vào {project}",
+    "heading_rejected": "Yêu cầu tham gia {project} của bạn",
+    "intro_approved": "<strong>{decider}</strong> đã chấp thuận yêu cầu tham gia dự án riêng tư <strong>{project}</strong> trong không gian làm việc <strong>{workspace}</strong> trên Pi-Plane của bạn. Bây giờ bạn có thể mở dự án.",
+    "intro_rejected": "<strong>{decider}</strong> không chấp thuận yêu cầu tham gia dự án riêng tư <strong>{project}</strong> trong không gian làm việc <strong>{workspace}</strong> trên Pi-Plane của bạn. Nếu bạn cho rằng đây là nhầm lẫn, hãy liên hệ quản trị viên dự án.",
+    "button": "Mở dự án",
+    "note": "Lưu ý: Email này được gửi đến <span>{email}</span> vì bạn đã xin tham gia dự án này."
   }
 }

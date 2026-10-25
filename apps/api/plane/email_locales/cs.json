@@ -108,5 +108,15 @@
     "button": "Posoudit žádost",
     "fallback": "Pokud tlačítko nefunguje, zkopírujte tento odkaz a vložte jej do prohlížeče:",
     "note": "Poznámka: tento e-mail byl odeslán na adresu <span>{email}</span>, protože jste správcem nebo vedoucím tohoto projektu."
+  },
+  "access_request_decision": {
+    "subject_approved": "Vaše žádost o připojení k {project} byla schválena",
+    "subject_rejected": "Vaše žádost o připojení k {project} nebyla schválena",
+    "heading_approved": "Nyní máte přístup k {project}",
+    "heading_rejected": "Vaše žádost o připojení k {project}",
+    "intro_approved": "<strong>{decider}</strong> schválil(a) vaši žádost o připojení k soukromému projektu <strong>{project}</strong> v pracovním prostoru <strong>{workspace}</strong> v Pi-Plane. Nyní jej můžete otevřít.",
+    "intro_rejected": "<strong>{decider}</strong> neschválil(a) vaši žádost o připojení k soukromému projektu <strong>{project}</strong> v pracovním prostoru <strong>{workspace}</strong> v Pi-Plane. Pokud si myslíte, že jde o omyl, obraťte se na správce projektu.",
+    "button": "Otevřít projekt",
+    "note": "Poznámka: Tento e-mail byl odeslán na adresu <span>{email}</span>, protože jste požádali o připojení k tomuto projektu."
   }
 }

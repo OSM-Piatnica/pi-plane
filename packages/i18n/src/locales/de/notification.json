@@ -100,6 +100,8 @@
       "end_punctuation": "."
     },
     "access_request": {
+      "approved": "hat Ihre Anfrage zum Beitritt zu <value/> genehmigt",
+      "rejected": "hat Ihre Anfrage zum Beitritt zu <value/> abgelehnt",
       "requested": "hat Zugriff auf <value/> angefragt"
     }
   },

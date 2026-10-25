@@ -100,5 +100,15 @@
     "button": "Anfrage prüfen",
     "fallback": "Wenn die Schaltfläche nicht funktioniert, kopieren Sie diesen Link und fügen Sie ihn in Ihren Browser ein:",
     "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet, weil Sie Administrator oder Leiter dieses Projekts sind."
+  },
+  "access_request_decision": {
+    "subject_approved": "Ihre Anfrage zum Beitritt zu {project} wurde genehmigt",
+    "subject_rejected": "Ihre Anfrage zum Beitritt zu {project} wurde nicht genehmigt",
+    "heading_approved": "Sie haben jetzt Zugriff auf {project}",
+    "heading_rejected": "Ihre Anfrage zum Beitritt zu {project}",
+    "intro_approved": "<strong>{decider}</strong> hat Ihre Anfrage zum Beitritt zum privaten Projekt <strong>{project}</strong> im Arbeitsbereich <strong>{workspace}</strong> in Pi-Plane genehmigt. Sie können es jetzt öffnen.",
+    "intro_rejected": "<strong>{decider}</strong> hat Ihre Anfrage zum Beitritt zum privaten Projekt <strong>{project}</strong> im Arbeitsbereich <strong>{workspace}</strong> in Pi-Plane nicht genehmigt. Wenn Sie das für einen Irrtum halten, wenden Sie sich an einen Projektadministrator.",
+    "button": "Projekt öffnen",
+    "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet, weil Sie den Beitritt zu diesem Projekt angefragt haben."
   }
 }

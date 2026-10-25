@@ -100,6 +100,8 @@
       "end_punctuation": "."
     },
     "access_request": {
+      "approved": "одобрил(а) ваш запрос на доступ к <value/>",
+      "rejected": "отклонил(а) ваш запрос на доступ к <value/>",
       "requested": "запросил(а) доступ к <value/>"
     }
   },

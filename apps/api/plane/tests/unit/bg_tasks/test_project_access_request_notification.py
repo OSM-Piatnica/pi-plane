@@ -2,7 +2,8 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
-"""Admins and the lead of a Private project are told, in the inbox and by email, about a request to join it."""
+"""Admins and the lead of a Private project are told, in the inbox and by email, about a request to join it, and
+the person who asked is told how it was decided."""
 
 from unittest.mock import patch
 
@@ -12,6 +13,7 @@ from plane.bgtasks.project_access_request_notification_task import (
     ACCESS_REQUEST_ENTITY,
     access_request_recipients,
     notify_project_access_request,
+    notify_project_access_request_decision,
 )
 from plane.db.models import Notification, Profile, Project, ProjectAccessRequest, ProjectMember, WorkspaceMember
 from plane.db.models.project import ProjectNetwork
@@ -152,3 +154,106 @@ class TestNotifyProjectAccessRequest:
         ):
             notify_project_access_request(str(access_request.id))
         assert Notification.objects.filter(receiver=admin, entity_name=ACCESS_REQUEST_ENTITY).exists()
+
+
+@pytest.mark.unit
+@pytest.mark.django_db
+class TestNotifyProjectAccessRequestDecision:
+    @pytest.fixture
+    def decided(self, workspace, project):
+        admin = _user(workspace, first_name="Anna", last_name="Admin")
+        requester = _user(workspace, language="de", first_name="Rob", last_name="Roy")
+        _join(project, admin, ADMIN)
+        access_request = ProjectAccessRequest.objects.create(project=project, requester=requester)
+        return access_request, admin, requester
+
+    def _decide(self, access_request, admin, outcome):
+        access_request.status = outcome
+        access_request.decided_by = admin
+        access_request.save()
+        with patch(
+            "plane.bgtasks.project_access_request_notification_task.get_email_configuration", return_value=CONFIG
+        ):
+            notify_project_access_request_decision(str(access_request.id))
+
+    def test_the_requester_gets_an_inbox_entry_for_an_approval(self, decided, project, mailoutbox):
+        access_request, admin, requester = decided
+        self._decide(access_request, admin, ProjectAccessRequest.APPROVED)
+
+        notification = Notification.objects.get(receiver=requester, entity_name=ACCESS_REQUEST_ENTITY)
+        assert notification.triggered_by == admin
+        assert notification.project == project
+        assert notification.read_at is None
+        assert notification.data["project"]["workspace_slug"] == project.workspace.slug
+        assert notification.data["access_request"] == {"id": str(access_request.id), "status": "approved"}
+
+    def test_and_for_a_rejection(self, decided, mailoutbox):
+        access_request, admin, requester = decided
+        self._decide(access_request, admin, ProjectAccessRequest.REJECTED)
+
+        notification = Notification.objects.get(receiver=requester, entity_name=ACCESS_REQUEST_ENTITY)
+        assert notification.data["access_request"]["status"] == "rejected"
+        assert "rejected" in notification.title
+
+    def test_the_approval_email_is_in_the_language_of_the_requester_and_links_to_the_project(
+        self, decided, project, settings, mailoutbox
+    ):
+        settings.WEB_URL = "http://localhost:3000"
+        access_request, admin, requester = decided
+        self._decide(access_request, admin, ProjectAccessRequest.APPROVED)
+
+        assert len(mailoutbox) == 1
+        mail = mailoutbox[0]
+        assert mail.to == [requester.email]
+        assert mail.subject == "Ihre Anfrage zum Beitritt zu Secret Plans wurde genehmigt"
+        html = mail.alternatives[0][0]
+        assert f"http://localhost:3000/{project.workspace.slug}/projects/{project.id}/issues/" in html
+        assert "Anna Admin" in html
+
+    def test_the_rejection_email_has_no_link_into_the_project(self, decided, project, mailoutbox):
+        access_request, admin, requester = decided
+        self._decide(access_request, admin, ProjectAccessRequest.REJECTED)
+
+        mail = mailoutbox[0]
+        assert mail.subject == "Ihre Anfrage zum Beitritt zu Secret Plans wurde nicht genehmigt"
+        assert f"/projects/{project.id}/" not in mail.alternatives[0][0]
+
+    def test_a_second_run_does_not_announce_the_decision_twice(self, decided, mailoutbox):
+        access_request, admin, requester = decided
+        self._decide(access_request, admin, ProjectAccessRequest.APPROVED)
+        self._decide(access_request, admin, ProjectAccessRequest.APPROVED)
+
+        assert Notification.objects.filter(receiver=requester, entity_name=ACCESS_REQUEST_ENTITY).count() == 1
+        assert len(mailoutbox) == 1
+
+    def test_an_open_request_is_not_announced_as_decided(self, decided, mailoutbox):
+        access_request, admin, requester = decided
+        with patch(
+            "plane.bgtasks.project_access_request_notification_task.get_email_configuration", return_value=CONFIG
+        ):
+            notify_project_access_request_decision(str(access_request.id))
+
+        assert not Notification.objects.filter(entity_name=ACCESS_REQUEST_ENTITY).exists()
+        assert mailoutbox == []
+
+    def test_a_deactivated_requester_is_not_told(self, decided, mailoutbox):
+        access_request, admin, requester = decided
+        requester.is_active = False
+        requester.save()
+        self._decide(access_request, admin, ProjectAccessRequest.APPROVED)
+
+        assert not Notification.objects.filter(entity_name=ACCESS_REQUEST_ENTITY).exists()
+        assert mailoutbox == []
+
+    def test_a_failing_email_does_not_lose_the_inbox_entry(self, decided):
+        access_request, admin, requester = decided
+        access_request.status = ProjectAccessRequest.APPROVED
+        access_request.decided_by = admin
+        access_request.save()
+        with patch(
+            "plane.bgtasks.project_access_request_notification_task.get_email_configuration",
+            side_effect=RuntimeError("no smtp"),
+        ):
+            notify_project_access_request_decision(str(access_request.id))
+
+        assert Notification.objects.filter(receiver=requester, entity_name=ACCESS_REQUEST_ENTITY).exists()

@@ -92,5 +92,15 @@
     "button": "查看请求",
     "fallback": "如果按钮无法使用，请复制此链接并粘贴到浏览器中：",
     "note": "注意：此邮件已发送至 <span>{email}</span>，因为您是此项目的管理员或负责人。"
+  },
+  "access_request_decision": {
+    "subject_approved": "您加入 {project} 的请求已获批准",
+    "subject_rejected": "您加入 {project} 的请求未获批准",
+    "heading_approved": "您现在可以访问 {project}",
+    "heading_rejected": "您加入 {project} 的请求",
+    "intro_approved": "<strong>{decider}</strong> 已批准您加入 Pi-Plane 工作区 <strong>{workspace}</strong> 中私有项目 <strong>{project}</strong> 的请求。您现在可以打开该项目。",
+    "intro_rejected": "<strong>{decider}</strong> 未批准您加入 Pi-Plane 工作区 <strong>{workspace}</strong> 中私有项目 <strong>{project}</strong> 的请求。如果您认为这是误操作，请联系项目管理员。",
+    "button": "打开项目",
+    "note": "注意：此邮件发送至 <span>{email}</span>，因为您请求加入此项目。"
   }
 }

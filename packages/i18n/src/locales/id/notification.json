@@ -100,6 +100,8 @@
       "end_punctuation": "."
     },
     "access_request": {
+      "approved": "menyetujui permintaan Anda untuk bergabung dengan <value/>",
+      "rejected": "menolak permintaan Anda untuk bergabung dengan <value/>",
       "requested": "meminta akses ke <value/>"
     }
   },

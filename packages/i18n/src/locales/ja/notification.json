@@ -100,6 +100,8 @@
       "end_punctuation": "。"
     },
     "access_request": {
+      "approved": "<value/> への参加リクエストを承認しました",
+      "rejected": "<value/> への参加リクエストを却下しました",
       "requested": "<value/> へのアクセスをリクエストしました"
     }
   },

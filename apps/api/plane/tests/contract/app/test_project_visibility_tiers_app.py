@@ -293,6 +293,39 @@ class TestAccessRequests:
         opened = _client(outsider).get(f"/api/workspaces/{workspace.slug}/projects/{projects['private'].id}/")
         assert opened.status_code == status.HTTP_200_OK
 
+    @pytest.mark.parametrize("decision", ["approved", "rejected"])
+    def test_a_decision_is_announced_to_the_requester_once(
+        self, workspace, projects, insider, outsider, decision, django_capture_on_commit_callbacks
+    ):
+        access_request = ProjectAccessRequest.objects.create(project=projects["private"], requester=outsider)
+        url = self._url(workspace, projects["private"], f"{access_request.id}/")
+
+        with patch("plane.app.views.project.access_request.notify_project_access_request_decision.delay") as delay:
+            with django_capture_on_commit_callbacks(execute=True):
+                _client(insider).patch(url, {"status": decision}, format="json")
+            with django_capture_on_commit_callbacks(execute=True):
+                again = _client(insider).patch(url, {"status": decision}, format="json")
+
+        assert again.status_code == status.HTTP_409_CONFLICT
+        delay.assert_called_once_with(str(access_request.id))
+
+    def test_a_refused_approval_announces_nothing(
+        self, workspace, projects, insider, outsider, django_capture_on_commit_callbacks
+    ):
+        access_request = ProjectAccessRequest.objects.create(project=projects["private"], requester=outsider)
+        WorkspaceMember.objects.filter(workspace=workspace, member=outsider).update(is_active=False)
+
+        with patch("plane.app.views.project.access_request.notify_project_access_request_decision.delay") as delay:
+            with django_capture_on_commit_callbacks(execute=True):
+                response = _client(insider).patch(
+                    self._url(workspace, projects["private"], f"{access_request.id}/"),
+                    {"status": "approved"},
+                    format="json",
+                )
+
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        delay.assert_not_called()
+
     def test_approving_reactivates_a_former_member_at_the_workspace_role(self, workspace, projects, insider, outsider):
         former = ProjectMember.objects.create(
             workspace=workspace, project=projects["private"], member=outsider, role=ADMIN, is_active=False

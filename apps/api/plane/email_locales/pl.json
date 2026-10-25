@@ -108,5 +108,15 @@
     "button": "Rozpatrz prośbę",
     "fallback": "Jeśli przycisk nie działa, skopiuj ten link i wklej go w przeglądarce:",
     "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>, ponieważ jesteś administratorem lub liderem tego projektu."
+  },
+  "access_request_decision": {
+    "subject_approved": "Twoja prośba o dołączenie do {project} została zatwierdzona",
+    "subject_rejected": "Twoja prośba o dołączenie do {project} nie została zatwierdzona",
+    "heading_approved": "Masz teraz dostęp do {project}",
+    "heading_rejected": "Twoja prośba o dołączenie do {project}",
+    "intro_approved": "<strong>{decider}</strong> zatwierdził(a) Twoją prośbę o dołączenie do prywatnego projektu <strong>{project}</strong> w przestrzeni roboczej <strong>{workspace}</strong> w Pi-Plane. Możesz go teraz otworzyć.",
+    "intro_rejected": "<strong>{decider}</strong> nie zatwierdził(a) Twojej prośby o dołączenie do prywatnego projektu <strong>{project}</strong> w przestrzeni roboczej <strong>{workspace}</strong> w Pi-Plane. Jeśli uważasz, że to pomyłka, zwróć się do administratora projektu.",
+    "button": "Otwórz projekt",
+    "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>, ponieważ poprosiłeś(aś) o dołączenie do tego projektu."
   }
 }

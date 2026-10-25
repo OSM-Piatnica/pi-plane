@@ -38,7 +38,10 @@ export type TNotificationProjectLite = {
 
 export type TNotificationAccessRequest = {
   id: string;
-  message: string;
+  /** Only on the notification to the admins. */
+  message?: string;
+  /** Only on the notification to the requester, who is told how the request was decided; missing means it is open. */
+  status?: "approved" | "rejected";
 };
 
 export type TNotificationData = {

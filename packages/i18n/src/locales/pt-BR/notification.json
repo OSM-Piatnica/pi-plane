@@ -100,6 +100,8 @@
       "end_punctuation": "."
     },
     "access_request": {
+      "approved": "aprovou sua solicitação para entrar em <value/>",
+      "rejected": "rejeitou sua solicitação para entrar em <value/>",
       "requested": "solicitou acesso a <value/>"
     }
   },

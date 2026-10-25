@@ -8,9 +8,13 @@
 import { useTranslation } from "@plane/i18n";
 import type { TNotification } from "@plane/types";
 // helpers
+import { getAccessRequestNotificationTextKey } from "@/helpers/access-request-notification";
 import { renderTaggedText } from "@/helpers/tagged-text";
 
-/** The text of the inbox entry that says someone asked to join a Private project the receiver administers. */
+/**
+ * The text of the inbox entry about a request to join a Private project: that someone asked, to the admins who
+ * decide, or how it was decided, to the person who asked.
+ */
 export function AccessRequestNotificationContent({ notification }: { notification: TNotification }) {
   const { t } = useTranslation();
   const { data, triggered_by_details: triggeredBy } = notification;
@@ -22,7 +26,7 @@ export function AccessRequestNotificationContent({ notification }: { notificatio
         {triggeredBy?.is_bot ? triggeredBy.first_name : triggeredBy?.display_name}{" "}
       </span>
       <span className="text-tertiary">
-        {renderTaggedText(t("notification.access_request.requested"), {
+        {renderTaggedText(t(getAccessRequestNotificationTextKey(data?.access_request?.status)), {
           value: () => <span className="font-medium text-primary">{projectName}</span>,
         })}
       </span>

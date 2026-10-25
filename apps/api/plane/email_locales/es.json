@@ -100,5 +100,15 @@
     "button": "Revisar la solicitud",
     "fallback": "Si el botón no funciona, copie este enlace y péguelo en su navegador:",
     "note": "Nota: este correo se envió a <span>{email}</span> porque usted es administrador o líder de este proyecto."
+  },
+  "access_request_decision": {
+    "subject_approved": "Se aprobó su solicitud para unirse a {project}",
+    "subject_rejected": "No se aprobó su solicitud para unirse a {project}",
+    "heading_approved": "Ya tiene acceso a {project}",
+    "heading_rejected": "Su solicitud para unirse a {project}",
+    "intro_approved": "<strong>{decider}</strong> aprobó su solicitud para unirse al proyecto privado <strong>{project}</strong> del espacio de trabajo <strong>{workspace}</strong> en Pi-Plane. Ya puede abrirlo.",
+    "intro_rejected": "<strong>{decider}</strong> no aprobó su solicitud para unirse al proyecto privado <strong>{project}</strong> del espacio de trabajo <strong>{workspace}</strong> en Pi-Plane. Si cree que es un error, consulte con un administrador del proyecto.",
+    "button": "Abrir el proyecto",
+    "note": "Nota: Este correo se envió a <span>{email}</span> porque solicitó unirse a este proyecto."
   }
 }
