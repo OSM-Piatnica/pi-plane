@@ -649,7 +649,9 @@
     "access_requests": {
       "title": "Yêu cầu tham gia ({count})",
       "approve": "Phê duyệt",
-      "reject": "Từ chối"
+      "reject": "Từ chối",
+      "already_decided": "Yêu cầu này đã được quản trị viên khác xử lý.",
+      "requester_left": "Người này không còn là thành viên của không gian làm việc."
     },
     "duplicate_modal": {
       "already_running": "Không gian làm việc này đang có một lượt sao chép mục công việc. Hãy thử lại khi nó hoàn tất.",

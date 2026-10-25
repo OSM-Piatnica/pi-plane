@@ -649,7 +649,9 @@
     "access_requests": {
       "title": "Demandes d'adhésion ({count})",
       "approve": "Approuver",
-      "reject": "Refuser"
+      "reject": "Refuser",
+      "already_decided": "Cette demande a déjà été traitée par un autre administrateur.",
+      "requester_left": "Cette personne n'est plus membre de l'espace de travail."
     },
     "duplicate_modal": {
       "already_running": "Une copie d'éléments de travail est déjà en cours dans cet espace de travail. Réessayez quand elle sera terminée.",

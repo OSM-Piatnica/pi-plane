@@ -649,7 +649,9 @@
     "access_requests": {
       "title": "Solicitudes para unirse ({count})",
       "approve": "Aprobar",
-      "reject": "Rechazar"
+      "reject": "Rechazar",
+      "already_decided": "Otro administrador ya ha resuelto esta solicitud.",
+      "requester_left": "Esta persona ya no es miembro del espacio de trabajo."
     },
     "duplicate_modal": {
       "already_running": "Ya hay una copia de elementos de trabajo en curso en este espacio de trabajo. Inténtalo de nuevo cuando termine.",

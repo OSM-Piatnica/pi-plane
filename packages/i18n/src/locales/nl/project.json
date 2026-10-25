@@ -649,7 +649,9 @@
     "access_requests": {
       "title": "Verzoeken om lid te worden ({count})",
       "approve": "Goedkeuren",
-      "reject": "Afwijzen"
+      "reject": "Afwijzen",
+      "already_decided": "Dit verzoek is al beoordeeld door een andere beheerder.",
+      "requester_left": "Deze persoon is geen lid meer van de werkruimte."
     },
     "duplicate_modal": {
       "already_running": "In deze werkruimte loopt al een kopie van werkitems. Probeer het opnieuw als die klaar is.",

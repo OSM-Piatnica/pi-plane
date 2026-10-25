@@ -649,7 +649,9 @@
     "access_requests": {
       "title": "Permintaan bergabung ({count})",
       "approve": "Setujui",
-      "reject": "Tolak"
+      "reject": "Tolak",
+      "already_decided": "Permintaan ini sudah diputuskan oleh admin lain.",
+      "requester_left": "Orang ini tidak lagi menjadi anggota ruang kerja."
     },
     "duplicate_modal": {
       "already_running": "Salinan item kerja sedang berjalan di ruang kerja ini. Coba lagi setelah selesai.",

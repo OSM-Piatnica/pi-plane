@@ -649,7 +649,9 @@
     "access_requests": {
       "title": "Prośby o dołączenie ({count})",
       "approve": "Zatwierdź",
-      "reject": "Odrzuć"
+      "reject": "Odrzuć",
+      "already_decided": "Ta prośba została już rozpatrzona przez innego administratora.",
+      "requester_left": "Ta osoba nie jest już członkiem przestrzeni roboczej."
     },
     "duplicate_modal": {
       "already_running": "W tym obszarze roboczym trwa już kopiowanie elementów pracy. Spróbuj ponownie po jego zakończeniu.",
