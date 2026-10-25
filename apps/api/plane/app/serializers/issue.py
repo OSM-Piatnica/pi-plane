@@ -244,9 +244,7 @@ class IssueCreateSerializer(BaseSerializer):
                 reopen_confirmation_payload,
             )
 
-            payload = reopen_confirmation_payload(
-                instance, attrs["state"].id, is_reopen_confirmed(request.data if request else {})
-            )
+            payload = reopen_confirmation_payload(instance, attrs["state"].id, is_reopen_confirmed(self.initial_data))
             if payload:
                 raise ParentReopenRequired(payload)
             self._reopen_parents_from = instance.state_id

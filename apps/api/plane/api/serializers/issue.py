@@ -217,9 +217,8 @@ class IssueSerializer(BaseSerializer):
                 reopen_confirmation_payload,
             )
 
-            request = self.context.get("request")
             payload = reopen_confirmation_payload(
-                self.instance, data["state"].id, is_reopen_confirmed(request.data if request else {})
+                self.instance, data["state"].id, is_reopen_confirmed(self.initial_data)
             )
             if payload:
                 raise ParentReopenRequired(payload)
