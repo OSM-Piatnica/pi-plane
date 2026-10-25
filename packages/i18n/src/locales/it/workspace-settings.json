@@ -95,6 +95,49 @@
               "message": "L'esportazione non è riuscita. Per favore, riprova."
             }
           }
+        },
+        "columns": {
+          "heading": "Colonne",
+          "description": "Scegli quali colonne contiene il file. Identificativo e nome sono sempre inclusi, perché senza di essi il file non potrebbe essere reimportato.",
+          "select_all": "Seleziona tutto",
+          "clear_all": "Deseleziona tutto",
+          "groups": {
+            "details": "Dettagli",
+            "people": "Persone",
+            "dates": "Date",
+            "organization": "Organizzazione",
+            "relations": "Gerarchia e relazioni",
+            "other": "Altro"
+          },
+          "fields": {
+            "project_name": "Nome del progetto",
+            "project_identifier": "Identificativo del progetto",
+            "sequence_id": "Numero di sequenza",
+            "issue_type": "Tipo di elemento di lavoro",
+            "state_name": "Stato",
+            "priority": "Priorità",
+            "description_html": "Descrizione",
+            "estimate": "Stima",
+            "is_draft": "Indicatore di bozza",
+            "assignees": "Assegnatari",
+            "subscribers": "Iscritti",
+            "created_by_name": "Creato da",
+            "start_date": "Data di inizio",
+            "target_date": "Data di scadenza",
+            "duration": "Durata",
+            "completed_at": "Completato il",
+            "created_at": "Creato il",
+            "updated_at": "Aggiornato il",
+            "archived_at": "Archiviato il",
+            "labels": "Etichette",
+            "cycles": "Cicli",
+            "modules": "Moduli",
+            "parent": "Padre",
+            "relations": "Relazioni",
+            "links": "Link",
+            "custom_properties": "Proprietà personalizzate",
+            "comments": "Commenti"
+          }
         }
       },
       "webhooks": {

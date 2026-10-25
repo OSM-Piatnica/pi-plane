@@ -95,6 +95,49 @@
               "message": "Спробуйте ще раз."
             }
           }
+        },
+        "columns": {
+          "heading": "Стовпці",
+          "description": "Виберіть, які стовпці міститиме файл. Ідентифікатор і назва включаються завжди, адже без них файл не можна буде імпортувати повторно.",
+          "select_all": "Вибрати все",
+          "clear_all": "Зняти все",
+          "groups": {
+            "details": "Відомості",
+            "people": "Люди",
+            "dates": "Дати",
+            "organization": "Організація",
+            "relations": "Ієрархія та зв'язки",
+            "other": "Інше"
+          },
+          "fields": {
+            "project_name": "Назва проєкту",
+            "project_identifier": "Ідентифікатор проєкту",
+            "sequence_id": "Порядковий номер",
+            "issue_type": "Тип робочої одиниці",
+            "state_name": "Стан",
+            "priority": "Пріоритет",
+            "description_html": "Опис",
+            "estimate": "Оцінка",
+            "is_draft": "Ознака чернетки",
+            "assignees": "Виконавці",
+            "subscribers": "Підписники",
+            "created_by_name": "Створив",
+            "start_date": "Дата початку",
+            "target_date": "Термін виконання",
+            "duration": "Тривалість",
+            "completed_at": "Завершено",
+            "created_at": "Створено",
+            "updated_at": "Оновлено",
+            "archived_at": "Архівовано",
+            "labels": "Мітки",
+            "cycles": "Цикли",
+            "modules": "Модулі",
+            "parent": "Батьківська",
+            "relations": "Зв'язки",
+            "links": "Посилання",
+            "custom_properties": "Власні властивості",
+            "comments": "Коментарі"
+          }
         }
       },
       "webhooks": {

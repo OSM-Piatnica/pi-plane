@@ -95,6 +95,49 @@
               "message": "エクスポートに失敗しました。もう一度お試しください。"
             }
           }
+        },
+        "columns": {
+          "heading": "列",
+          "description": "ファイルに含める列を選択します。識別子と名前は、含まれていないとファイルを再度インポートできないため、常に含まれます。",
+          "select_all": "すべて選択",
+          "clear_all": "すべて解除",
+          "groups": {
+            "details": "詳細",
+            "people": "ユーザー",
+            "dates": "日付",
+            "organization": "整理",
+            "relations": "階層と関連",
+            "other": "その他"
+          },
+          "fields": {
+            "project_name": "プロジェクト名",
+            "project_identifier": "プロジェクト識別子",
+            "sequence_id": "連番",
+            "issue_type": "作業項目タイプ",
+            "state_name": "ステータス",
+            "priority": "優先度",
+            "description_html": "説明",
+            "estimate": "見積もり",
+            "is_draft": "下書きフラグ",
+            "assignees": "担当者",
+            "subscribers": "購読者",
+            "created_by_name": "作成者",
+            "start_date": "開始日",
+            "target_date": "期限",
+            "duration": "期間",
+            "completed_at": "完了日時",
+            "created_at": "作成日時",
+            "updated_at": "更新日時",
+            "archived_at": "アーカイブ日時",
+            "labels": "ラベル",
+            "cycles": "サイクル",
+            "modules": "モジュール",
+            "parent": "親",
+            "relations": "関連",
+            "links": "リンク",
+            "custom_properties": "カスタムプロパティ",
+            "comments": "コメント"
+          }
         }
       },
       "webhooks": {

@@ -11,6 +11,7 @@ from plane.app.permissions import allow_permission, ROLE
 from plane.app.serializers import ExporterHistorySerializer
 from plane.bgtasks.export_task import issue_export_task
 from plane.db.models import ExporterHistory, Project, Workspace
+from plane.utils.porters.serializers.issue import InvalidIssueExportFields, resolve_issue_export_fields
 from plane.utils.order_queryset import EXPORTER_HISTORY_ORDER_BY_ALLOWLIST, sanitize_order_by
 
 # Module imports
@@ -33,6 +34,18 @@ class ExportIssuesEndpoint(BaseAPIView):
         if csv_delimiter not in [",", ";"]:
             csv_delimiter = ","
 
+        # Which columns to write. Absent means all of them; the ones an import needs are always kept.
+        try:
+            export_fields = resolve_issue_export_fields(request.data.get("fields"))
+        except InvalidIssueExportFields as error:
+            # Built here from the names, not from the exception text
+            message = (
+                f"Unknown export fields: {', '.join(error.unknown)}"
+                if error.unknown
+                else "fields must be a list of column names"
+            )
+            return Response({"error": message}, status=status.HTTP_400_BAD_REQUEST)
+
         if provider in ["csv", "xlsx", "json"]:
             if not project_ids:
                 project_ids = Project.objects.filter(
@@ -49,6 +62,8 @@ class ExportIssuesEndpoint(BaseAPIView):
                 initiated_by=request.user,
                 provider=provider,
                 type="issue_exports",
+                # The history row is the record of what the file holds
+                filters={"fields": export_fields} if export_fields is not None else None,
             )
 
             issue_export_task.delay(
@@ -59,6 +74,7 @@ class ExportIssuesEndpoint(BaseAPIView):
                 multiple=multiple,
                 slug=slug,
                 csv_delimiter=csv_delimiter,
+                export_fields=export_fields,
             )
             return Response(
                 {"message": "Once the export is ready you will be able to download it"},

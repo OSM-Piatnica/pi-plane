@@ -95,6 +95,49 @@
               "message": "Skúste to prosím znova."
             }
           }
+        },
+        "columns": {
+          "heading": "Stĺpce",
+          "description": "Vyberte, ktoré stĺpce súbor obsahuje. Identifikátor a názov sú vždy zahrnuté, pretože bez nich by sa súbor nedal znova importovať.",
+          "select_all": "Vybrať všetko",
+          "clear_all": "Zrušiť výber",
+          "groups": {
+            "details": "Podrobnosti",
+            "people": "Ľudia",
+            "dates": "Dátumy",
+            "organization": "Organizácia",
+            "relations": "Hierarchia a vzťahy",
+            "other": "Ostatné"
+          },
+          "fields": {
+            "project_name": "Názov projektu",
+            "project_identifier": "Identifikátor projektu",
+            "sequence_id": "Poradové číslo",
+            "issue_type": "Typ pracovnej položky",
+            "state_name": "Stav",
+            "priority": "Priorita",
+            "description_html": "Popis",
+            "estimate": "Odhad",
+            "is_draft": "Príznak konceptu",
+            "assignees": "Priradení",
+            "subscribers": "Odberatelia",
+            "created_by_name": "Vytvoril(a)",
+            "start_date": "Dátum začiatku",
+            "target_date": "Termín",
+            "duration": "Trvanie",
+            "completed_at": "Dokončené",
+            "created_at": "Vytvorené",
+            "updated_at": "Aktualizované",
+            "archived_at": "Archivované",
+            "labels": "Štítky",
+            "cycles": "Cykly",
+            "modules": "Moduly",
+            "parent": "Nadradená položka",
+            "relations": "Vzťahy",
+            "links": "Odkazy",
+            "custom_properties": "Vlastné vlastnosti",
+            "comments": "Komentáre"
+          }
         }
       },
       "webhooks": {

@@ -5,23 +5,13 @@
   <img src="docs/assets/pi-plane-banner.png" alt="Pi-Plane Logo" width="400">
 </a>
 </p>
-<p align="center"><b>Modern project management for all teams</b></p>
+<p align="center"><b>Pi-Plane, the OSM Piątnica fork of Plane</b></p>
 
 <p align="center">
-    <a href="https://plane.so/"><b>Website</b></a> •
-    <a href="https://forum.plane.so"><b>Forum</b></a> •
-    <a href="https://x.com/planepowers"><b>X</b></a> •
-    <a href="https://docs.plane.so/"><b>Documentation</b></a>
-</p>
-
-<p>
-    <a href="https://app.plane.so/#gh-light-mode-only" target="_blank">
-      <img
-        src="https://media.docs.plane.so/GitHub-readme/github-top.webp"
-        alt="Plane Screens"
-        width="100%"
-      />
-    </a>
+    <a href="https://github.com/OSM-Piatnica/pi-plane"><b>Repository</b></a> •
+    <a href="https://github.com/OSM-Piatnica/pi-plane/issues"><b>Issues</b></a> •
+    <a href="https://github.com/OSM-Piatnica/pi-plane/blob/preview/CONTRIBUTING.md"><b>Contributing</b></a> •
+    <a href="https://docs.plane.so/"><b>Upstream documentation</b></a>
 </p>
 
 > [!IMPORTANT]
@@ -40,23 +30,15 @@
 >
 > All of the above is licensed under AGPL-3.0-only; see [LICENSE.txt](LICENSE.txt).
 
-Meet [Plane](https://plane.so/), an open-source project management tool to track issues, run ~sprints~ cycles, and manage product roadmaps without the chaos of managing the tool itself. 🧘‍♀️
-
-> Plane is evolving every day. Your suggestions, ideas, and reported bugs help us immensely. Do not hesitate to join in the conversation on [Forum](https://forum.plane.so) or raise a GitHub issue. We read everything and respond to most.
+Pi-Plane is based on [Plane](https://github.com/makeplane/plane), an open-source project management tool to track issues, run ~sprints~ cycles, and manage product roadmaps without the chaos of managing the tool itself. 🧘‍♀️
 
 ## 🚀 Installation
 
-Getting started with Plane is simple. Choose the setup that works best for you:
-
-- **Plane Cloud**
-  Sign up for a free account on [Plane Cloud](https://app.plane.so)—it's the fastest way to get up and running without worrying about infrastructure.
-
-- **Self-host Plane**
-  Prefer full control over your data and infrastructure? Install and run Plane on your own servers. For Docker Compose and Docker Swarm, follow the [Pi-Plane self-hosting guide](deployments/cli/community/README.md); the upstream [deployment guides](https://developers.plane.so/self-hosting/overview) cover other methods.
+Pi-Plane is meant to be self-hosted. For Docker Compose and Docker Swarm, follow the [Pi-Plane self-hosting guide](deployments/cli/community/README.md). The upstream [deployment guides](https://developers.plane.so/self-hosting/overview) cover other methods, but they describe upstream Plane and may not match this fork.
 
 | Installation methods | Docs link                                                                                                                                                                               |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Docker               | [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://developers.plane.so/self-hosting/methods/docker-compose)         |
+| Docker               | [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](deployments/cli/community/README.md)                                    |
 | Kubernetes           | [![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)](https://developers.plane.so/self-hosting/methods/kubernetes) |
 
 `Instance admins` can configure instance settings with [God mode](https://developers.plane.so/self-hosting/govern/instance-admin).
@@ -76,14 +58,14 @@ Getting started with Plane is simple. Choose the setup that works best for you:
   Customize your workflow by creating filters to display only the most relevant issues. Save and share these views with ease.
 
 - **Pages**
-  Capture and organize ideas using Plane Pages, complete with AI capabilities and a rich text editor. Format text, insert images, add hyperlinks, or convert your notes into actionable items.
+  Capture and organize ideas using Pages, complete with a rich text editor. Format text, insert images, add hyperlinks, or convert your notes into actionable items.
 
 - **Analytics**
-  Access real-time insights across all your Plane data. Visualize trends, remove blockers, and keep your projects moving forward.
+  Access real-time insights across all your data. Visualize trends, remove blockers, and keep your projects moving forward.
 
 ## 🛠️ Local development
 
-See [CONTRIBUTING](./CONTRIBUTING.md)
+See [CONTRIBUTING](./CONTRIBUTING.md).
 
 ## ⚙️ Built with
 
@@ -91,86 +73,28 @@ See [CONTRIBUTING](./CONTRIBUTING.md)
 [![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green)](https://www.djangoproject.com/)
 [![Node JS](https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white)](https://nodejs.org/en)
 
-## 📸 Screenshots
-
-  <p>
-    <a href="https://plane.so" target="_blank">
-      <img
-        src="https://media.docs.plane.so/GitHub-readme/github-work-items.webp"
-        alt="Plane Views"
-        width="100%"
-      />
-    </a>
-  </p>
-  <p>
-    <a href="https://plane.so" target="_blank">
-      <img
-        src="https://media.docs.plane.so/GitHub-readme/github-cycles.webp"
-        width="100%"
-      />
-    </a>
-  </p>
-  <p>
-    <a href="https://plane.so" target="_blank">
-      <img
-        src="https://media.docs.plane.so/GitHub-readme/github-modules.webp"
-        alt="Plane Cycles and Modules"
-        width="100%"
-      />
-    </a>
-  </p>
-  <p>
-    <a href="https://plane.so" target="_blank">
-      <img
-        src="https://media.docs.plane.so/GitHub-readme/github-views.webp"
-        alt="Plane Analytics"
-        width="100%"
-      />
-    </a>
-  </p>
-   <p>
-    <a href="https://plane.so" target="_blank">
-      <img
-        src="https://media.docs.plane.so/GitHub-readme/github-analytics.webp"
-        alt="Plane Pages"
-        width="100%"
-      />
-    </a>
-  </p>
-</p>
-
 ## 📝 Documentation
 
-Explore Plane's [product documentation](https://docs.plane.so/) and [developer documentation](https://developers.plane.so/) to learn about features, setup, and usage.
+Fork-specific documentation lives in [`docs/`](docs) and in the [self-hosting guide](deployments/cli/community/README.md). For everything else, see the upstream [product documentation](https://docs.plane.so/) and [developer documentation](https://developers.plane.so/).
 
-## ❤️ Community
+## ❤️ Feedback
 
-Join the Plane community on [GitHub Discussions](https://github.com/orgs/makeplane/discussions) and our [Forum](https://forum.plane.so). We follow a [Code of conduct](https://github.com/makeplane/plane/blob/master/CODE_OF_CONDUCT.md) in all our community channels.
-
-Feel free to ask questions, report bugs, participate in discussions, share ideas, request features, or showcase your projects. We’d love to hear from you!
+Questions, bug reports and feature requests go to [GitHub Issues](https://github.com/OSM-Piatnica/pi-plane/issues). We follow a [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## 🛡️ Security
 
-If you discover a security vulnerability in Plane, please report it responsibly instead of opening a public issue. We take all legitimate reports seriously and will investigate them promptly. See [Security policy](https://github.com/makeplane/plane/blob/master/SECURITY.md) for more info.
-
-To disclose any security issues, please email us at security@plane.so.
+If you discover a security vulnerability in Pi-Plane, please report it responsibly instead of opening a public issue. See the [Security policy](SECURITY.md) for details.
 
 ## 🤝 Contributing
 
-There are many ways you can contribute to Plane:
-
 - Report [bugs](https://github.com/OSM-Piatnica/pi-plane/issues/new?labels=bug&template=bug-report.yaml&title=%5Bbug%5D%3A+) or submit [feature requests](https://github.com/OSM-Piatnica/pi-plane/issues/new?labels=enhancement&template=feature-request.yaml&title=%5Bfeature%5D%3A+).
-- Review the [documentation](https://docs.plane.so/) and submit [pull requests](https://github.com/makeplane/docs) to improve it—whether it's fixing typos or adding new content.
-- Talk or write about Plane or any other ecosystem integration and [let us know](https://forum.plane.so)!
-- Show your support by upvoting [popular feature requests](https://github.com/makeplane/plane/issues).
+- Upvote [popular feature requests](https://github.com/OSM-Piatnica/pi-plane/issues).
 
-Please read [CONTRIBUTING.md](https://github.com/makeplane/plane/blob/master/CONTRIBUTING.md) for details on the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on the process for submitting pull requests.
 
-### Repo activity
+### Thanks to the Plane contributors
 
-![Plane Repo Activity](https://repobeats.axiom.co/api/embed/2523c6ed2f77c082b7908c33e2ab208981d76c39.svg "Repobeats analytics image")
-
-### We couldn't have done this without you.
+Pi-Plane would not exist without the work of the people who built Plane. Thank you!
 
 <a href="https://github.com/makeplane/plane/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=makeplane/plane" />
@@ -178,4 +102,4 @@ Please read [CONTRIBUTING.md](https://github.com/makeplane/plane/blob/master/CON
 
 ## License
 
-This project is licensed under the [GNU Affero General Public License v3.0](https://github.com/makeplane/plane/blob/master/LICENSE.txt).
+This project is licensed under the [GNU Affero General Public License v3.0](LICENSE.txt).
