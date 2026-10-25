@@ -15,7 +15,7 @@ data:
   DEBUG: {{ ternary "1" "0" .Values.app.debug | quote }}
   # Cookie-authenticated browser writes are only accepted from these origins and from the URLs below
   CORS_ALLOWED_ORIGINS: {{ join "," (concat (list $publicUrl) .Values.app.extraCorsOrigins) | quote }}
-  GUNICORN_WORKERS: {{ .Values.app.gunicornWorkers | quote }}
+  GUNICORN_WORKERS: {{ printf "%d" (int64 .Values.app.gunicornWorkers) | quote }}
   # Everything is served from the one public address
   APP_BASE_URL: {{ $publicUrl | quote }}
   APP_BASE_PATH: ""
@@ -36,7 +36,8 @@ data:
   {{- end }}
   # TLS ends at the ingress: presigned upload URLs must say https
   MINIO_ENDPOINT_SSL: {{ include "pi-plane.sslTermination" . | quote }}
-  FILE_SIZE_LIMIT: {{ .Values.app.fileSizeLimit | quote }}
+  # Integers go through printf: a bare number renders in exponent form (5.24288e+06), which Django cannot parse
+  FILE_SIZE_LIMIT: {{ printf "%d" (int64 .Values.app.fileSizeLimit) | quote }}
   AUTHENTICATION_RATE_LIMIT: {{ .Values.app.authenticationRateLimit | quote }}
   API_KEY_RATE_LIMIT: {{ .Values.app.apiKeyRateLimit | quote }}
   ANON_RATE_LIMIT: {{ .Values.app.anonRateLimit | quote }}
