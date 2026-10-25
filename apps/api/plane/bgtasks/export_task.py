@@ -167,12 +167,14 @@ def issue_export_task(
     multiple: bool,
     slug: str,
     csv_delimiter: str = ",",
+    export_fields: List[str] | None = None,
 ):
     """
     Export issues from the workspace.
     provider (str): The provider to export the issues to csv | json | xlsx.
     token_id (str): The export object token id.
     multiple (bool): Whether to export the issues to multiple files per project.
+    export_fields (list[str] | None): The columns to write; None writes all of them.
     """
     try:
         exporter_instance = ExporterHistory.objects.get(token=token_id)
@@ -257,6 +259,7 @@ def issue_export_task(
                 format_type=provider,
                 csv_delimiter=csv_delimiter,
                 context={"member_emails": member_emails},
+                export_fields=export_fields,
             )
         except ValueError as e:
             # Invalid format type

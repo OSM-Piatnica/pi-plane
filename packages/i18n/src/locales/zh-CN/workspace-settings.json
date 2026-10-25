@@ -95,6 +95,49 @@
               "message": "导出未成功。请重试。"
             }
           }
+        },
+        "columns": {
+          "heading": "列",
+          "description": "选择文件包含哪些列。标识符和名称始终包含在内，否则文件将无法再次导入。",
+          "select_all": "全选",
+          "clear_all": "全部清除",
+          "groups": {
+            "details": "详情",
+            "people": "人员",
+            "dates": "日期",
+            "organization": "组织",
+            "relations": "层级与关系",
+            "other": "其他"
+          },
+          "fields": {
+            "project_name": "项目名称",
+            "project_identifier": "项目标识符",
+            "sequence_id": "序号",
+            "issue_type": "工作项类型",
+            "state_name": "状态",
+            "priority": "优先级",
+            "description_html": "描述",
+            "estimate": "估算",
+            "is_draft": "草稿标记",
+            "assignees": "负责人",
+            "subscribers": "订阅者",
+            "created_by_name": "创建者",
+            "start_date": "开始日期",
+            "target_date": "截止日期",
+            "duration": "持续时间",
+            "completed_at": "完成时间",
+            "created_at": "创建时间",
+            "updated_at": "更新时间",
+            "archived_at": "归档时间",
+            "labels": "标签",
+            "cycles": "周期",
+            "modules": "模块",
+            "parent": "父级",
+            "relations": "关系",
+            "links": "链接",
+            "custom_properties": "自定义属性",
+            "comments": "评论"
+          }
         }
       },
       "webhooks": {

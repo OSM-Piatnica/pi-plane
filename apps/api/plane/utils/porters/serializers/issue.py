@@ -12,6 +12,73 @@ from plane.app.serializers import IssueSerializer
 from plane.utils.issue_relation_mapper import get_inverse_relation
 
 
+# Columns every work item export carries, because a file without them cannot be imported again:
+# the importer needs `name` to make a row at all and `identifier` to recognise its own files and to
+# resolve parents and relations between rows (`name` alone is not enough to recognise one).
+ISSUE_EXPORT_REQUIRED_FIELDS = ("identifier", "name")
+
+# The columns a person may leave out, grouped for the export form. Order here is only the order of
+# the form; the file always follows the serializer's own column order.
+ISSUE_EXPORT_FIELD_GROUPS = {
+    "details": (
+        "project_name",
+        "project_identifier",
+        "sequence_id",
+        "issue_type",
+        "state_name",
+        "priority",
+        "description_html",
+        "estimate",
+        "is_draft",
+    ),
+    "people": ("assignees", "subscribers", "created_by_name"),
+    "dates": (
+        "start_date",
+        "target_date",
+        "duration",
+        "completed_at",
+        "created_at",
+        "updated_at",
+        "archived_at",
+    ),
+    "organization": ("labels", "cycles", "modules"),
+    "relations": ("parent", "relations", "links"),
+    "other": ("custom_properties", "comments"),
+}
+ISSUE_EXPORT_OPTIONAL_FIELDS = tuple(field for group in ISSUE_EXPORT_FIELD_GROUPS.values() for field in group)
+
+
+class InvalidIssueExportFields(ValueError):
+    """The requested columns are not a valid choice; ``unknown`` names the entries that are not columns."""
+
+    def __init__(self, message, unknown=()):
+        super().__init__(message)
+        self.unknown = list(unknown)
+
+
+def resolve_issue_export_fields(selected):
+    """
+    The columns of an export: the required ones plus the optional ones that were asked for.
+
+    ``None`` means no choice was made and every column is exported. Raises ``InvalidIssueExportFields``
+    (a ``ValueError``) naming the entries that are not columns of the export (a typo must not silently
+    drop a column).
+    """
+    if selected is None:
+        return None
+    if not isinstance(selected, (list, tuple)) or not all(isinstance(name, str) for name in selected):
+        raise InvalidIssueExportFields("fields must be a list of column names")
+
+    unknown = sorted({name for name in selected if name not in ISSUE_EXPORT_OPTIONAL_FIELDS})
+    # Naming a required column is harmless: it is always exported
+    unknown = [name for name in unknown if name not in ISSUE_EXPORT_REQUIRED_FIELDS]
+    if unknown:
+        raise InvalidIssueExportFields(f"Unknown export fields: {', '.join(unknown)}", unknown)
+
+    wanted = set(selected) | set(ISSUE_EXPORT_REQUIRED_FIELDS)
+    return [name for name in IssueExportSerializer.Meta.fields if name in wanted]
+
+
 class IssueExportSerializer(IssueSerializer):
     """
     Export-optimized serializer that extends IssueSerializer with human-readable fields.
@@ -38,6 +105,13 @@ class IssueExportSerializer(IssueSerializer):
     relations = serializers.SerializerMethodField()
     subscribers = serializers.SerializerMethodField()
     custom_properties = serializers.SerializerMethodField()
+
+    def __init__(self, *args, export_fields=None, **kwargs):
+        """``export_fields`` limits the columns; the others are not even computed."""
+        super().__init__(*args, **kwargs)
+        if export_fields is not None:
+            for name in set(self.fields) - set(export_fields):
+                self.fields.pop(name)
 
     class Meta(IssueSerializer.Meta):
         fields = [

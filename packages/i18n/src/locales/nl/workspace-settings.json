@@ -95,6 +95,49 @@
               "message": "Export is mislukt. Probeer het opnieuw."
             }
           }
+        },
+        "columns": {
+          "heading": "Kolommen",
+          "description": "Kies welke kolommen het bestand bevat. Identificatie en naam zijn altijd opgenomen, omdat het bestand anders niet opnieuw kan worden geïmporteerd.",
+          "select_all": "Alles selecteren",
+          "clear_all": "Alles wissen",
+          "groups": {
+            "details": "Details",
+            "people": "Personen",
+            "dates": "Datums",
+            "organization": "Organisatie",
+            "relations": "Hiërarchie en relaties",
+            "other": "Overig"
+          },
+          "fields": {
+            "project_name": "Projectnaam",
+            "project_identifier": "Projectidentificatie",
+            "sequence_id": "Volgnummer",
+            "issue_type": "Type werkitem",
+            "state_name": "Status",
+            "priority": "Prioriteit",
+            "description_html": "Beschrijving",
+            "estimate": "Schatting",
+            "is_draft": "Conceptmarkering",
+            "assignees": "Toegewezen aan",
+            "subscribers": "Abonnees",
+            "created_by_name": "Gemaakt door",
+            "start_date": "Startdatum",
+            "target_date": "Vervaldatum",
+            "duration": "Duur",
+            "completed_at": "Voltooid op",
+            "created_at": "Gemaakt op",
+            "updated_at": "Bijgewerkt op",
+            "archived_at": "Gearchiveerd op",
+            "labels": "Labels",
+            "cycles": "Cycli",
+            "modules": "Modules",
+            "parent": "Bovenliggend",
+            "relations": "Relaties",
+            "links": "Links",
+            "custom_properties": "Aangepaste eigenschappen",
+            "comments": "Opmerkingen"
+          }
         }
       },
       "webhooks": {

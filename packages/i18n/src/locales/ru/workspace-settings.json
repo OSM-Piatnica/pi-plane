@@ -95,6 +95,49 @@
               "message": "Эскпорт не удался. Попробуйте снова"
             }
           }
+        },
+        "columns": {
+          "heading": "Столбцы",
+          "description": "Выберите, какие столбцы будут в файле. Идентификатор и название включаются всегда, так как без них файл нельзя будет импортировать повторно.",
+          "select_all": "Выбрать все",
+          "clear_all": "Снять все",
+          "groups": {
+            "details": "Сведения",
+            "people": "Люди",
+            "dates": "Даты",
+            "organization": "Организация",
+            "relations": "Иерархия и связи",
+            "other": "Прочее"
+          },
+          "fields": {
+            "project_name": "Название проекта",
+            "project_identifier": "Идентификатор проекта",
+            "sequence_id": "Порядковый номер",
+            "issue_type": "Тип рабочего элемента",
+            "state_name": "Статус",
+            "priority": "Приоритет",
+            "description_html": "Описание",
+            "estimate": "Оценка",
+            "is_draft": "Признак черновика",
+            "assignees": "Исполнители",
+            "subscribers": "Подписчики",
+            "created_by_name": "Создал",
+            "start_date": "Дата начала",
+            "target_date": "Срок выполнения",
+            "duration": "Длительность",
+            "completed_at": "Завершено",
+            "created_at": "Создано",
+            "updated_at": "Обновлено",
+            "archived_at": "Архивировано",
+            "labels": "Метки",
+            "cycles": "Циклы",
+            "modules": "Модули",
+            "parent": "Родитель",
+            "relations": "Связи",
+            "links": "Ссылки",
+            "custom_properties": "Пользовательские свойства",
+            "comments": "Комментарии"
+          }
         }
       },
       "webhooks": {

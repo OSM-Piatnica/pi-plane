@@ -95,6 +95,49 @@
               "message": "Ekspor tidak berhasil. Silakan coba lagi."
             }
           }
+        },
+        "columns": {
+          "heading": "Kolom",
+          "description": "Pilih kolom yang ada di file. Pengenal dan nama selalu disertakan, karena tanpanya file tidak dapat diimpor kembali.",
+          "select_all": "Pilih semua",
+          "clear_all": "Hapus semua",
+          "groups": {
+            "details": "Detail",
+            "people": "Orang",
+            "dates": "Tanggal",
+            "organization": "Organisasi",
+            "relations": "Hierarki dan relasi",
+            "other": "Lainnya"
+          },
+          "fields": {
+            "project_name": "Nama proyek",
+            "project_identifier": "Pengenal proyek",
+            "sequence_id": "Nomor urut",
+            "issue_type": "Tipe item kerja",
+            "state_name": "Status",
+            "priority": "Prioritas",
+            "description_html": "Deskripsi",
+            "estimate": "Perkiraan",
+            "is_draft": "Penanda draf",
+            "assignees": "Penerima tugas",
+            "subscribers": "Pelanggan",
+            "created_by_name": "Dibuat oleh",
+            "start_date": "Tanggal mulai",
+            "target_date": "Tenggat",
+            "duration": "Durasi",
+            "completed_at": "Selesai pada",
+            "created_at": "Dibuat pada",
+            "updated_at": "Diperbarui pada",
+            "archived_at": "Diarsipkan pada",
+            "labels": "Label",
+            "cycles": "Siklus",
+            "modules": "Modul",
+            "parent": "Induk",
+            "relations": "Relasi",
+            "links": "Tautan",
+            "custom_properties": "Properti kustom",
+            "comments": "Komentar"
+          }
         }
       },
       "webhooks": {
