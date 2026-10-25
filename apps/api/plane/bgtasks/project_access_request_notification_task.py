@@ -10,10 +10,11 @@ from celery import shared_task
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, get_connection
 from django.template.loader import render_to_string
+from django.utils import timezone
 
 # Module imports
 from plane.app.permissions import ROLE
-from plane.db.models import Notification, ProjectAccessRequest, ProjectMember, User
+from plane.db.models import Notification, ProjectAccessRequest, ProjectMember, User, UserNotificationPreference
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.email import generate_plain_text_from_html
 from plane.utils.email_i18n import translate, user_language
@@ -36,6 +37,21 @@ def access_request_recipients(project, requester_id):
         receiver_ids.add(project.project_lead_id)
     receiver_ids.discard(requester_id)
     return list(User.objects.filter(pk__in=receiver_ids, is_active=True, is_bot=False))
+
+
+def wants_access_request_emails(user):
+    """False when the person turned off emails about access requests; the inbox entry is kept either way."""
+    preference = UserNotificationPreference.objects.filter(
+        user=user, workspace__isnull=True, project__isnull=True
+    ).first()
+    return preference is None or preference.project_access_request
+
+
+def mark_access_request_notifications_read(access_request):
+    """Once a request is decided, the entries that asked the other admins to decide it are done with."""
+    Notification.objects.filter(
+        entity_name=ACCESS_REQUEST_ENTITY, entity_identifier=access_request.id, read_at__isnull=True
+    ).update(read_at=timezone.now())
 
 
 def _display_name(user):
@@ -110,7 +126,7 @@ def notify_project_access_request(access_request_id):
                 },
             },
         )
-        if not created:
+        if not created or not wants_access_request_emails(receiver):
             continue
 
         language = user_language(receiver)
@@ -186,7 +202,7 @@ def notify_project_access_request_decision(access_request_id):
             },
         },
     )
-    if not created:
+    if not created or not wants_access_request_emails(requester):
         return
 
     language = user_language(requester)

@@ -106,6 +106,8 @@ class UserNotificationPreference(BaseModel):
     comment = models.BooleanField(default=True)
     mention = models.BooleanField(default=True)
     issue_completed = models.BooleanField(default=True)
+    # emails about requests to join Private projects (for their admins) and how they were decided (for the requester)
+    project_access_request = models.BooleanField(default=True)
 
     # how often non-mention emails are delivered: one by one, or batched into a digest
     class EmailFrequency(models.TextChoices):

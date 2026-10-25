@@ -15,7 +15,15 @@ from plane.bgtasks.project_access_request_notification_task import (
     notify_project_access_request,
     notify_project_access_request_decision,
 )
-from plane.db.models import Notification, Profile, Project, ProjectAccessRequest, ProjectMember, WorkspaceMember
+from plane.db.models import (
+    Notification,
+    Profile,
+    Project,
+    ProjectAccessRequest,
+    ProjectMember,
+    UserNotificationPreference,
+    WorkspaceMember,
+)
 from plane.db.models.project import ProjectNetwork
 from plane.tests.factories import UserFactory, WorkspaceFactory
 
@@ -131,6 +139,14 @@ class TestNotifyProjectAccessRequest:
         assert f"http://localhost:3000/{project.workspace.slug}/settings/projects/{project.id}/members/" in html
         assert "Let me in" in html and "Wiadomość:" in html
 
+    def test_an_admin_who_turned_off_the_emails_still_gets_the_inbox_entry(self, request_to_join, mailoutbox):
+        access_request, admin, requester = request_to_join
+        UserNotificationPreference.objects.filter(user=admin).update(project_access_request=False)
+        self._run(access_request)
+
+        assert Notification.objects.filter(receiver=admin, entity_name=ACCESS_REQUEST_ENTITY).exists()
+        assert mailoutbox == []
+
     def test_a_second_run_does_not_announce_the_same_request_twice(self, request_to_join, mailoutbox):
         access_request, admin, requester = request_to_join
         self._run(access_request)
@@ -217,6 +233,20 @@ class TestNotifyProjectAccessRequestDecision:
         mail = mailoutbox[0]
         assert mail.subject == "Ihre Anfrage zum Beitritt zu Secret Plans wurde nicht genehmigt"
         assert f"/projects/{project.id}/" not in mail.alternatives[0][0]
+
+    def test_a_requester_who_turned_off_the_emails_still_gets_the_inbox_entry(self, decided, mailoutbox):
+        access_request, admin, requester = decided
+        UserNotificationPreference.objects.filter(user=requester).update(project_access_request=False)
+        self._decide(access_request, admin, ProjectAccessRequest.APPROVED)
+
+        assert Notification.objects.filter(receiver=requester, entity_name=ACCESS_REQUEST_ENTITY).exists()
+        assert mailoutbox == []
+
+    def test_emails_are_on_by_default(self, decided, mailoutbox):
+        access_request, admin, requester = decided
+        assert UserNotificationPreference.objects.get(user=requester).project_access_request is True
+        self._decide(access_request, admin, ProjectAccessRequest.APPROVED)
+        assert len(mailoutbox) == 1
 
     def test_a_second_run_does_not_announce_the_decision_twice(self, decided, mailoutbox):
         access_request, admin, requester = decided

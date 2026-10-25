@@ -117,6 +117,8 @@
   "comments_description": "Birisi iş öğesine yorum yaptığında bildir.",
   "mentions": "Bahsetmeler",
   "mentions_description": "Birisi yorumlarda veya açıklamada beni etiketlediğinde bildir.",
+  "project_access_requests": "Erişim istekleri",
+  "project_access_requests_description": "Yönettiğim özel projelere katılma istekleri ve kendi isteklerimle ilgili kararlar hakkında bana e-posta gönder.",
   "email_frequency": "E-posta sıklığı",
   "email_frequency_description": "İş öğesi güncellemeleriyle ilgili e-postaları ne sıklıkla almak istediğinizi seçin. Etiketlemeler her zaman hemen gönderilir.",
   "email_frequency_instant": "Anında",

@@ -309,6 +309,47 @@ class TestAccessRequests:
         assert again.status_code == status.HTTP_409_CONFLICT
         delay.assert_called_once_with(str(access_request.id))
 
+    @pytest.mark.parametrize("decision", ["approved", "rejected"])
+    def test_deciding_marks_the_announcements_to_the_admins_as_read(
+        self, workspace, projects, insider, outsider, decision
+    ):
+        access_request = ProjectAccessRequest.objects.create(project=projects["private"], requester=outsider)
+        other_admin = _user(workspace, MEMBER, "second-admin")
+        announced = [
+            Notification.objects.create(
+                workspace=workspace,
+                project=projects["private"],
+                receiver=receiver,
+                triggered_by=outsider,
+                entity_name="project_access_request",
+                entity_identifier=access_request.id,
+                sender="in_app:project_access_request",
+                title="requested access",
+            )
+            for receiver in (insider, other_admin)
+        ]
+        unrelated = Notification.objects.create(
+            workspace=workspace,
+            project=projects["private"],
+            receiver=other_admin,
+            triggered_by=outsider,
+            entity_name="project_access_request",
+            entity_identifier=uuid4(),
+            sender="in_app:project_access_request",
+            title="requested access",
+        )
+
+        with patch("plane.app.views.project.access_request.notify_project_access_request_decision.delay"):
+            _client(insider).patch(
+                self._url(workspace, projects["private"], f"{access_request.id}/"), {"status": decision}, format="json"
+            )
+
+        for notification in announced:
+            notification.refresh_from_db()
+            assert notification.read_at is not None
+        unrelated.refresh_from_db()
+        assert unrelated.read_at is None
+
     def test_a_refused_approval_announces_nothing(
         self, workspace, projects, insider, outsider, django_capture_on_commit_callbacks
     ):

@@ -117,6 +117,8 @@
   "comments_description": "Beri tahu saya ketika seseorang meninggalkan komentar pada item kerja",
   "mentions": "Sebutkan",
   "mentions_description": "Beri tahu saya ketika seseorang menyebut saya dalam komentar atau deskripsi",
+  "project_access_requests": "Permintaan akses",
+  "project_access_requests_description": "Kirimi saya email tentang permintaan bergabung dengan proyek privat yang saya kelola dan tentang keputusan atas permintaan saya sendiri.",
   "email_frequency": "Frekuensi email",
   "email_frequency_description": "Pilih seberapa sering Anda menerima email tentang pembaruan item kerja. Sebutan selalu dikirim segera.",
   "email_frequency_instant": "Segera",

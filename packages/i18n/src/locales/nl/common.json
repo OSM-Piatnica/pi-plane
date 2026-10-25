@@ -117,6 +117,8 @@
   "comments_description": "Meld me wanneer iemand een opmerking bij het werkitem plaatst",
   "mentions": "Vermeldingen",
   "mentions_description": "Meld me wanneer iemand me vermeldt in de opmerkingen of beschrijving",
+  "project_access_requests": "Toegangsverzoeken",
+  "project_access_requests_description": "Stuur me een e-mail over verzoeken om lid te worden van privéprojecten die ik beheer en over de beslissingen over mijn eigen verzoeken.",
   "email_frequency": "E-mailfrequentie",
   "email_frequency_description": "Kies hoe vaak je e-mails ontvangt over updates van werkitems. Vermeldingen worden altijd direct verstuurd.",
   "email_frequency_instant": "Direct",

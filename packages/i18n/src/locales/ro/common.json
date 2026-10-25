@@ -117,6 +117,8 @@
   "comments_description": "Notifică-mă când cineva lasă un comentariu la o activitate",
   "mentions": "Mențiuni",
   "mentions_description": "Notifică-mă când cineva mă menționează în comentarii sau descriere",
+  "project_access_requests": "Cereri de acces",
+  "project_access_requests_description": "Trimite-mi e-mailuri despre cererile de alăturare la proiecte private pe care le administrez și despre deciziile privind propriile mele cereri.",
   "email_frequency": "Frecvența e-mailurilor",
   "email_frequency_description": "Alegeți cât de des primiți e-mailuri despre actualizările activităților. Mențiunile sunt trimise întotdeauna imediat.",
   "email_frequency_instant": "Imediat",

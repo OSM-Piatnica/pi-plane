@@ -117,6 +117,8 @@
   "comments_description": "Avvisami quando qualcuno lascia un commento sull'elemento di lavoro",
   "mentions": "Menzioni",
   "mentions_description": "Avvisami quando qualcuno mi menziona nei commenti o nella descrizione",
+  "project_access_requests": "Richieste di accesso",
+  "project_access_requests_description": "Inviami un’e-mail per le richieste di unirsi ai progetti privati che amministro e per le decisioni sulle mie richieste.",
   "email_frequency": "Frequenza delle e-mail",
   "email_frequency_description": "Scelga con quale frequenza ricevere e-mail sugli aggiornamenti degli elementi di lavoro. Le menzioni vengono sempre inviate immediatamente.",
   "email_frequency_instant": "Immediata",
