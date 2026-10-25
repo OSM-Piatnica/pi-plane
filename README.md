@@ -34,12 +34,12 @@ Pi-Plane is based on [Plane](https://github.com/makeplane/plane), an open-source
 
 ## 🚀 Installation
 
-Pi-Plane is meant to be self-hosted. For Docker Compose and Docker Swarm, follow the [Pi-Plane self-hosting guide](deployments/cli/community/README.md). The upstream [deployment guides](https://developers.plane.so/self-hosting/overview) cover other methods, but they describe upstream Plane and may not match this fork.
+Pi-Plane is meant to be self-hosted. For Docker Compose and Docker Swarm, follow the [Pi-Plane self-hosting guide](deployments/cli/community/README.md); for Kubernetes use the [Helm chart](deployments/helm/pi-plane/README.md). The upstream [deployment guides](https://developers.plane.so/self-hosting/overview) cover other methods, but they describe upstream Plane and may not match this fork.
 
 | Installation methods | Docs link                                                                                                                                                                               |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Docker               | [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](deployments/cli/community/README.md)                                    |
-| Kubernetes           | [![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)](https://developers.plane.so/self-hosting/methods/kubernetes) |
+| Kubernetes           | [![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)](deployments/helm/pi-plane/README.md)                                                                                                                              |
 
 `Instance admins` can configure instance settings with [God mode](https://developers.plane.so/self-hosting/govern/instance-admin).
 

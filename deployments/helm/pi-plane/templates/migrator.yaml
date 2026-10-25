@@ -1,0 +1,58 @@
+{{- /*
+Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+SPDX-License-Identifier: AGPL-3.0-only
+See the LICENSE file for details.
+*/ -}}
+{{- /* One Job per release revision: a Job cannot be updated, and Helm removes the previous revision's when it
+       is no longer in the manifest. The API and the workers wait for the migrations in their entrypoints. */ -}}
+{{- $comp := dict "root" . "component" "migrator" }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "pi-plane.componentName" $comp }}-{{ .Release.Revision }}
+  labels:
+    {{- include "pi-plane.labels" . | nindent 4 }}
+    app.kubernetes.io/component: migrator
+spec:
+  backoffLimit: {{ .Values.migrator.backoffLimit }}
+  activeDeadlineSeconds: {{ .Values.migrator.activeDeadlineSeconds }}
+  template:
+    metadata:
+      labels:
+        {{- include "pi-plane.labels" . | nindent 8 }}
+        app.kubernetes.io/component: migrator
+      {{- with .Values.migrator.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      restartPolicy: OnFailure
+      serviceAccountName: {{ include "pi-plane.serviceAccountName" . }}
+      automountServiceAccountToken: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: migrator
+          image: {{ include "pi-plane.image" (dict "root" . "component" "api") | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["./bin/docker-entrypoint-migrator.sh"]
+          envFrom:
+            - configMapRef:
+                name: {{ include "pi-plane.fullname" . }}-config
+            {{- with .Values.app.envFrom }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          env:
+            {{- include "pi-plane.backendEnv" . | nindent 12 }}
+            {{- with .Values.migrator.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          securityContext:
+            {{- include "pi-plane.containerSecurityContext" . | nindent 12 }}
+          resources:
+            {{- toYaml .Values.migrator.resources | nindent 12 }}
+      {{- include "pi-plane.scheduling" .Values.migrator | nindent 6 }}

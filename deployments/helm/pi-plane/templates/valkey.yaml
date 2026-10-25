@@ -1,0 +1,87 @@
+{{- /*
+Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+SPDX-License-Identifier: AGPL-3.0-only
+See the LICENSE file for details.
+*/ -}}
+{{- if .Values.valkey.enabled }}
+{{- $comp := dict "root" . "component" "valkey" }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "pi-plane.componentName" $comp }}
+  labels:
+    {{- include "pi-plane.labels" . | nindent 4 }}
+    app.kubernetes.io/component: valkey
+spec:
+  replicas: 1
+  serviceName: {{ include "pi-plane.componentName" $comp }}
+  selector:
+    matchLabels:
+      {{- include "pi-plane.selectorLabels" $comp | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "pi-plane.labels" . | nindent 8 }}
+        app.kubernetes.io/component: valkey
+    spec:
+      serviceAccountName: {{ include "pi-plane.serviceAccountName" . }}
+      automountServiceAccountToken: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: valkey
+          image: "{{ .Values.valkey.image.repository }}:{{ .Values.valkey.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # Persisted, so queued work and cache survive a restart
+          args: ["valkey-server", "--appendonly", "yes"]
+          ports:
+            - name: valkey
+              containerPort: 6379
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          readinessProbe:
+            exec:
+              command: ["valkey-cli", "ping"]
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command: ["valkey-cli", "ping"]
+            periodSeconds: 20
+            failureThreshold: 6
+          securityContext:
+            allowPrivilegeEscalation: false
+          resources:
+            {{- toYaml .Values.valkey.resources | nindent 12 }}
+      {{- include "pi-plane.scheduling" .Values.valkey | nindent 6 }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        {{- with .Values.valkey.storage.className }}
+        storageClassName: {{ . | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.valkey.storage.size }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pi-plane.componentName" $comp }}
+  labels:
+    {{- include "pi-plane.labels" . | nindent 4 }}
+    app.kubernetes.io/component: valkey
+spec:
+  selector:
+    {{- include "pi-plane.selectorLabels" $comp | nindent 4 }}
+  ports:
+    - name: valkey
+      port: 6379
+      targetPort: valkey
+{{- end }}

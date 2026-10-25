@@ -1,0 +1,21 @@
+# Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+
+# Gateway API routing, isolation and availability settings together.
+publicUrl: https://plane.example.com
+ingress:
+  enabled: false
+gateway:
+  enabled: true
+  parentRefs:
+    - name: shared-gateway
+      namespace: gateway
+      sectionName: https
+networkPolicy:
+  enabled: true
+  ingressNamespace: envoy-gateway-system
+api: { replicas: 2, pdb: { enabled: true, minAvailable: 1 } }
+web: { replicas: 2, pdb: { enabled: true, minAvailable: 1 } }
+live: { replicas: 2, pdb: { enabled: true, minAvailable: 1 } }
+worker: { replicas: 2 }

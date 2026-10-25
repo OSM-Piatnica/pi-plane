@@ -1,0 +1,71 @@
+# Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+
+# A production-shaped installation: managed PostgreSQL, Redis-compatible cache, RabbitMQ and S3, credentials in
+# Secrets you own (created with kubectl, External Secrets, Sealed Secrets, ...), TLS from cert-manager.
+#
+#   kubectl -n plane create secret generic pi-plane-credentials \
+#     --from-literal=SECRET_KEY="$(openssl rand -base64 48)" \
+#     --from-literal=LIVE_SERVER_SECRET_KEY="$(openssl rand -base64 36)" \
+#     --from-literal=AWS_ACCESS_KEY_ID=... --from-literal=AWS_SECRET_ACCESS_KEY=...
+#   kubectl -n plane create secret generic pi-plane-database \
+#     --from-literal=url='postgresql://plane:<percent-encoded password>@db.example.com:5432/plane'
+#
+#   helm upgrade --install pi-plane ./deployments/helm/pi-plane -n plane -f production-values.yaml
+
+publicUrl: https://plane.example.com
+
+secrets:
+  existingSecret: pi-plane-credentials
+
+ingress:
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  tls:
+    enabled: true
+    secretName: plane-example-com-tls
+
+postgresql:
+  enabled: false
+  external:
+    urlSecret: { name: pi-plane-database, key: url }
+valkey:
+  enabled: false
+  external:
+    url: rediss://cache.example.com:6380/0
+rabbitmq:
+  enabled: false
+  external:
+    url: amqps://plane:<password>@mq.example.com:5671/plane
+objectStorage:
+  region: eu-central-1
+  bucket: plane-uploads
+  bundled:
+    enabled: false
+
+app:
+  # The ingress controller is one proxy in front of the API
+  numProxies: "1"
+
+api:
+  replicas: 2
+  resources:
+    requests: { cpu: 250m, memory: 512Mi }
+    limits: { memory: 1Gi }
+  pdb: { enabled: true, minAvailable: 1 }
+worker:
+  replicas: 2
+  resources:
+    requests: { cpu: 250m, memory: 512Mi }
+    limits: { memory: 1Gi }
+web:
+  replicas: 2
+  pdb: { enabled: true, minAvailable: 1 }
+live:
+  replicas: 2
+  pdb: { enabled: true, minAvailable: 1 }
+
+networkPolicy:
+  enabled: true
