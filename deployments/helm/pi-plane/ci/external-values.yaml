@@ -1,0 +1,32 @@
+# Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+
+# Every bundled store replaced by an external one, credentials from a Secret the operator owns.
+publicUrl: https://plane.example.com
+secrets:
+  existingSecret: pi-plane-credentials
+postgresql:
+  enabled: false
+  external:
+    urlSecret: { name: pi-plane-database, key: url }
+valkey:
+  enabled: false
+  external:
+    url: rediss://cache.example.com:6380/0
+rabbitmq:
+  enabled: false
+  external:
+    url: amqps://plane:secret@mq.example.com:5671/plane
+objectStorage:
+  region: eu-central-1
+  bundled:
+    enabled: false
+app:
+  numProxies: "1"
+  extraCorsOrigins: ["https://plane.internal.example.com"]
+  env:
+    ENABLE_SIGNUP: "0"
+    EMAIL_HOST: smtp.example.com
+  envFrom:
+    - secretRef: { name: pi-plane-sso }
