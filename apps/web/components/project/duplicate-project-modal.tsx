@@ -32,7 +32,6 @@ import type { IProject } from "@plane/types";
 import { projectIdentifierSanitizer } from "@plane/utils";
 // components
 import { GroupedOptionPicker } from "@/components/common/grouped-option-picker";
-import { getOptionKeys } from "@/helpers/option-groups";
 import type { TOptionGroup } from "@/helpers/option-groups";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
@@ -76,6 +75,10 @@ const OPTIONAL_COPY_FIELDS = [
 
 type TPropertyGroupKey = keyof typeof PROJECT_COPY_WORK_ITEM_PROPERTY_GROUPS;
 const PROPERTY_GROUP_KEYS = Object.keys(PROJECT_COPY_WORK_ITEM_PROPERTY_GROUPS) as TPropertyGroupKey[];
+// A constant, so the effect that seeds the form does not run again (and undo the person's choices) on every render
+const ALL_PROPERTIES: string[] = PROPERTY_GROUP_KEYS.flatMap((groupKey) => [
+  ...PROJECT_COPY_WORK_ITEM_PROPERTY_GROUPS[groupKey],
+]);
 
 export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
   const { isOpen, project, onClose } = props;
@@ -105,7 +108,6 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
       label: t(`project_components.duplicate_modal.properties.${property}`),
     })),
   }));
-  const allProperties = getOptionKeys(propertyGroups);
 
   // Seed from the source every time the modal opens, so reopening it after a
   // failed submit does not keep a stale name the API already rejected.
@@ -123,15 +125,15 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
       modules: false,
       views: false,
       work_items: false,
-      workItemProperties: allProperties,
+      workItemProperties: ALL_PROPERTIES,
     });
-  }, [isOpen, project.name, project.identifier, reset, allProperties]);
+  }, [isOpen, project.name, project.identifier, reset]);
 
   const onSubmit = async (values: TFormValues) => {
     if (!workspaceSlug) return;
 
     const selected = new Set(values.workItemProperties);
-    const chosenProperties = allProperties.filter((property) => selected.has(property));
+    const chosenProperties = ALL_PROPERTIES.filter((property) => selected.has(property));
 
     try {
       const copy = await duplicateProject(workspaceSlug.toString(), project.id, {
@@ -148,7 +150,7 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
           work_items: values.work_items,
         },
         // everything switched on is sent as no choice, so a property added later is carried too
-        ...(values.work_items && chosenProperties.length < allProperties.length
+        ...(values.work_items && chosenProperties.length < ALL_PROPERTIES.length
           ? { work_item_properties: chosenProperties }
           : {}),
       });
@@ -253,7 +255,7 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
                     {errors.name?.message && <p className="mt-1 text-11 text-danger-primary">{errors.name.message}</p>}
                   </div>
 
-                  <div className="w-40 flex-shrink-0">
+                  <div className="w-48 flex-shrink-0">
                     <label htmlFor="duplicate-project-identifier" className="text-13 text-secondary">
                       {t("project_id")}
                     </label>
