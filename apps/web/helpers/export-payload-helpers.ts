@@ -19,16 +19,21 @@ export type IssueExportFormPayload = {
   columns?: { selected: string[]; available: string[] };
 };
 
+// Everything switched on is sent as no choice, so a column the API adds later is exported too
+function columnsPayload(columns: IssueExportFormPayload["columns"]) {
+  if (!columns) return {};
+  const selected = new Set(columns.selected);
+  if (columns.available.every((key) => selected.has(key))) return {};
+  return { fields: columns.available.filter((key) => selected.has(key)) };
+}
+
 export function buildIssueExportPayload(formData: IssueExportFormPayload) {
   return {
     provider: formData.provider.provider,
     project: formData.project,
     multiple: formData.project.length > 1,
     rich_filters: formData.filters,
-    // Everything switched on is sent as no choice, so a column the API adds later is exported too
-    ...(formData.columns && !formData.columns.available.every((key) => formData.columns?.selected.includes(key))
-      ? { fields: formData.columns.available.filter((key) => formData.columns?.selected.includes(key)) }
-      : {}),
+    ...columnsPayload(formData.columns),
     ...(formData.provider.provider === "csv" && formData.provider.delimiter
       ? { delimiter: formData.provider.delimiter }
       : {}),

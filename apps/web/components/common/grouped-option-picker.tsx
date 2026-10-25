@@ -31,7 +31,8 @@ export const GroupedOptionPicker = observer(function GroupedOptionPicker(props: 
   const { groups, value, onChange, idPrefix, selectAllLabel, clearAllLabel, disabled = false } = props;
   // derived values
   const allKeys = getOptionKeys(groups);
-  const allSelected = allKeys.length > 0 && allKeys.every((key) => value.includes(key));
+  const selected = new Set(value);
+  const allSelected = allKeys.length > 0 && allKeys.every((key) => selected.has(key));
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -65,7 +66,7 @@ export const GroupedOptionPicker = observer(function GroupedOptionPicker(props: 
                     key={option.key}
                     id={`${idPrefix}-${option.key}`}
                     label={option.label}
-                    checked={value.includes(option.key)}
+                    checked={selected.has(option.key)}
                     onCheckedChange={() => onChange(toggleOption(option.key, value))}
                     disabled={disabled}
                   />
