@@ -853,6 +853,11 @@
         "enabled": "schakelde werkitemtypen in",
         "fallback": "werkte werkitemtypen bij"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "heeft de regel voor het voltooien van bovenliggende items uitgeschakeld",
+        "enabled": "heeft de regel voor het voltooien van bovenliggende items ingeschakeld",
+        "fallback": "heeft de regel voor het voltooien van bovenliggende items bijgewerkt"
+      },
       "is_project_updates_enabled": {
         "disabled": "schakelde projectupdates uit",
         "enabled": "schakelde projectupdates in",

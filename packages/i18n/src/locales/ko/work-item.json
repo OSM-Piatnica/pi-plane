@@ -853,6 +853,11 @@
         "enabled": "작업 항목 유형을 활성화했습니다",
         "fallback": "작업 항목 유형을 업데이트했습니다"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "상위 항목 완료 규칙을 비활성화했습니다",
+        "enabled": "상위 항목 완료 규칙을 활성화했습니다",
+        "fallback": "상위 항목 완료 규칙을 업데이트했습니다"
+      },
       "is_project_updates_enabled": {
         "disabled": "프로젝트 업데이트를 비활성화했습니다",
         "enabled": "프로젝트 업데이트를 활성화했습니다",

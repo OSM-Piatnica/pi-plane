@@ -853,6 +853,11 @@
         "enabled": "włączono typy elementów pracy",
         "fallback": "zaktualizowano typy elementów pracy"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "wyłączono regułę ukończenia elementu nadrzędnego",
+        "enabled": "włączono regułę ukończenia elementu nadrzędnego",
+        "fallback": "zaktualizowano regułę ukończenia elementu nadrzędnego"
+      },
       "is_project_updates_enabled": {
         "disabled": "wyłączono aktualizacje projektu",
         "enabled": "włączono aktualizacje projektu",

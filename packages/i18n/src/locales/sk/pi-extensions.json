@@ -115,6 +115,19 @@
       "pending_approval_title": "Vyžaduje sa schválenie",
       "rejected_success": "Prechod bol zamietnutý.",
       "resolving_approval": "Spracúva sa schválenie...",
+      "rules": {
+        "heading": "Pravidlá",
+        "description": "Pravidlá projektu, ktoré platia samy osebe, či sú pracovné postupy zapnuté, alebo nie.",
+        "parent_completion": {
+          "description": "Pracovnú položku nemožno dokončiť, kým má podriadené položky, ktoré nie sú ani dokončené, ani zrušené. Opätovné otvorenie dokončenej podriadenej položky pod dokončenou nadradenou položkou vyžiada aj opätovné otvorenie nadradenej položky.",
+          "title": "Dokončiť nadradenú položku až po dokončení jej podriadených položiek"
+        },
+        "reopen_parent": {
+          "confirm": "Znova otvoriť",
+          "content": "Tento projekt nedovoľuje, aby nadradená položka zostala dokončená, kým je podriadená položka otvorená. Tieto dokončené nadradené položky sa tiež znova otvoria: {names}",
+          "title": "Znova otvoriť aj nadradené pracovné položky?"
+        }
+      },
       "save_error": "Uloženie konfigurácie pracovného postupu zlyhalo.",
       "save_success": "Konfigurácia pracovného postupu bola uložená.",
       "toggle_error": "Aktualizácia nastavení pracovného postupu zlyhala.",

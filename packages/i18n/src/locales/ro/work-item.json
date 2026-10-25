@@ -853,6 +853,11 @@
         "enabled": "a activat tipurile de activități",
         "fallback": "a actualizat tipurile de activități"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "a dezactivat regula de finalizare a părinților",
+        "enabled": "a activat regula de finalizare a părinților",
+        "fallback": "a actualizat regula de finalizare a părinților"
+      },
       "is_project_updates_enabled": {
         "disabled": "a dezactivat actualizările proiectului",
         "enabled": "a activat actualizările proiectului",

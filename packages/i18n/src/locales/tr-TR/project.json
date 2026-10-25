@@ -649,7 +649,9 @@
     "access_requests": {
       "title": "Katılma istekleri ({count})",
       "approve": "Onayla",
-      "reject": "Reddet"
+      "reject": "Reddet",
+      "already_decided": "Bu istek başka bir yönetici tarafından zaten karara bağlandı.",
+      "requester_left": "Bu kişi artık çalışma alanının üyesi değil."
     },
     "duplicate_modal": {
       "already_running": "Bu çalışma alanında zaten bir iş öğesi kopyalama işlemi sürüyor. Bittiğinde tekrar deneyin.",

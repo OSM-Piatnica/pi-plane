@@ -649,7 +649,9 @@
     "access_requests": {
       "title": "참여 요청 ({count})",
       "approve": "승인",
-      "reject": "거절"
+      "reject": "거절",
+      "already_decided": "이 요청은 이미 다른 관리자가 처리했습니다.",
+      "requester_left": "이 사용자는 더 이상 워크스페이스 멤버가 아닙니다."
     },
     "duplicate_modal": {
       "already_running": "이 워크스페이스에서는 이미 작업 항목 복사가 진행 중입니다. 완료된 후 다시 시도해 주세요.",

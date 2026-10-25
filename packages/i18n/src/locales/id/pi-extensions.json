@@ -115,6 +115,19 @@
       "pending_approval_title": "Persetujuan diperlukan",
       "rejected_success": "Transisi ditolak.",
       "resolving_approval": "Memproses persetujuan...",
+      "rules": {
+        "heading": "Aturan",
+        "description": "Aturan proyek yang berlaku sendiri, baik alur kerja diaktifkan maupun tidak.",
+        "parent_completion": {
+          "description": "Item kerja tidak dapat diselesaikan selama masih memiliki sub-item yang belum selesai atau dibatalkan. Membuka kembali sub-item yang sudah selesai di bawah induk yang selesai akan meminta untuk membuka kembali induknya juga.",
+          "title": "Selesaikan item induk hanya setelah sub-itemnya selesai"
+        },
+        "reopen_parent": {
+          "confirm": "Buka kembali",
+          "content": "Proyek ini tidak mengizinkan induk tetap selesai selagi ada sub-item yang terbuka. Induk yang telah selesai berikut juga akan dibuka kembali: {names}",
+          "title": "Buka kembali juga item kerja induknya?"
+        }
+      },
       "save_error": "Tidak dapat menyimpan konfigurasi workflow.",
       "save_success": "Konfigurasi workflow disimpan.",
       "toggle_error": "Tidak dapat memperbarui pengaturan workflow.",

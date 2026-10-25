@@ -853,6 +853,11 @@
         "enabled": "iş öğesi türlerini etkinleştirdi",
         "fallback": "iş öğesi türlerini güncelledi"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "üst öğe tamamlama kuralını devre dışı bıraktı",
+        "enabled": "üst öğe tamamlama kuralını etkinleştirdi",
+        "fallback": "üst öğe tamamlama kuralını güncelledi"
+      },
       "is_project_updates_enabled": {
         "disabled": "proje güncellemelerini devre dışı bıraktı",
         "enabled": "proje güncellemelerini etkinleştirdi",

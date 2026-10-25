@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -19,6 +20,7 @@ from plane.bgtasks.issue_activities_task import issue_activity
 from plane.db.models import IntakeIssue, Issue, Project, State
 from plane.db.models.intake import IntakeIssueStatus
 from plane.utils.exception_logger import log_exception
+from plane.utils.parent_completion_rule import BLOCKED_TARGET_GROUPS, has_open_sub_items
 
 logger = logging.getLogger("plane.worker")
 
@@ -121,9 +123,16 @@ def close_old_issues():
             # Check if Issues
             if issues:
                 if project.default_state is None:
-                    close_state = State.objects.filter(group="cancelled").first()
+                    close_state = State.objects.filter(project=project, group="cancelled").first()
                 else:
                     close_state = project.default_state
+
+                if close_state is None:
+                    continue
+
+                # A parent with open sub-items cannot be completed; it waits for the next run
+                if project.is_parent_completion_rule_enabled and close_state.group in BLOCKED_TARGET_GROUPS:
+                    issues = issues.exclude(has_open_sub_items())
 
                 issues_to_update = []
                 for issue in issues:

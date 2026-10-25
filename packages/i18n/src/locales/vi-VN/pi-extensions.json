@@ -115,6 +115,19 @@
       "pending_approval_title": "Cần phê duyệt",
       "rejected_success": "Đã từ chối chuyển tiếp.",
       "resolving_approval": "Đang xử lý phê duyệt...",
+      "rules": {
+        "heading": "Quy tắc",
+        "description": "Các quy tắc của dự án áp dụng độc lập, dù quy trình làm việc có được bật hay không.",
+        "parent_completion": {
+          "description": "Một mục công việc không thể hoàn thành khi còn mục con chưa hoàn thành hoặc chưa bị hủy. Mở lại một mục con đã xong dưới mục cha đã hoàn thành sẽ hỏi có mở lại cả mục cha không.",
+          "title": "Chỉ hoàn thành mục cha khi các mục con đã xong"
+        },
+        "reopen_parent": {
+          "confirm": "Mở lại",
+          "content": "Dự án này không cho phép mục cha giữ trạng thái hoàn thành khi một mục con đang mở. Các mục cha đã hoàn thành sau cũng sẽ được mở lại: {names}",
+          "title": "Mở lại cả các mục công việc cha?"
+        }
+      },
       "save_error": "Không thể lưu cấu hình quy trình làm việc.",
       "save_success": "Đã lưu cấu hình quy trình làm việc.",
       "toggle_error": "Không thể cập nhật cài đặt quy trình làm việc.",

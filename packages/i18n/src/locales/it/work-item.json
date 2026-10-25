@@ -853,6 +853,11 @@
         "enabled": "ha abilitato i tipi di elemento di lavoro",
         "fallback": "ha aggiornato i tipi di elemento di lavoro"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "ha disattivato la regola di completamento dei padri",
+        "enabled": "ha attivato la regola di completamento dei padri",
+        "fallback": "ha aggiornato la regola di completamento dei padri"
+      },
       "is_project_updates_enabled": {
         "disabled": "ha disabilitato gli aggiornamenti del progetto",
         "enabled": "ha abilitato gli aggiornamenti del progetto",

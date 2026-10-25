@@ -115,6 +115,19 @@
       "pending_approval_title": "Goedkeuring vereist",
       "rejected_success": "Overgang afgewezen.",
       "resolving_approval": "Goedkeuring verwerken...",
+      "rules": {
+        "heading": "Regels",
+        "description": "Projectregels die op zichzelf gelden, of workflows nu zijn ingeschakeld of niet.",
+        "parent_completion": {
+          "description": "Een werkitem kan niet worden voltooid zolang het subitems heeft die niet voltooid of geannuleerd zijn. Als een afgerond subitem onder een voltooid bovenliggend item opnieuw wordt geopend, wordt gevraagd ook het bovenliggende item opnieuw te openen.",
+          "title": "Een bovenliggend item pas voltooien als de subitems klaar zijn"
+        },
+        "reopen_parent": {
+          "confirm": "Heropenen",
+          "content": "In dit project mag een bovenliggend item niet voltooid blijven terwijl een subitem open is. Deze voltooide bovenliggende items worden ook heropend: {names}",
+          "title": "Ook de bovenliggende werkitems heropenen?"
+        }
+      },
       "save_error": "Kon workflowconfiguratie niet opslaan.",
       "save_success": "Workflowconfiguratie opgeslagen.",
       "toggle_error": "Kon workflowinstellingen niet bijwerken.",
