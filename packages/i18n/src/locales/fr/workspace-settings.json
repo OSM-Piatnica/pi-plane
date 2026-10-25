@@ -95,6 +95,49 @@
               "message": "L’exportation a échoué. Veuillez réessayer."
             }
           }
+        },
+        "columns": {
+          "heading": "Colonnes",
+          "description": "Choisissez les colonnes du fichier. L'identifiant et le nom sont toujours inclus, car le fichier ne pourrait pas être réimporté sans eux.",
+          "select_all": "Tout sélectionner",
+          "clear_all": "Tout effacer",
+          "groups": {
+            "details": "Détails",
+            "people": "Personnes",
+            "dates": "Dates",
+            "organization": "Organisation",
+            "relations": "Hiérarchie et relations",
+            "other": "Autres"
+          },
+          "fields": {
+            "project_name": "Nom du projet",
+            "project_identifier": "Identifiant du projet",
+            "sequence_id": "Numéro de séquence",
+            "issue_type": "Type d'élément de travail",
+            "state_name": "État",
+            "priority": "Priorité",
+            "description_html": "Description",
+            "estimate": "Estimation",
+            "is_draft": "Indicateur de brouillon",
+            "assignees": "Assignés",
+            "subscribers": "Abonnés",
+            "created_by_name": "Créé par",
+            "start_date": "Date de début",
+            "target_date": "Date d'échéance",
+            "duration": "Durée",
+            "completed_at": "Terminé le",
+            "created_at": "Créé le",
+            "updated_at": "Mis à jour le",
+            "archived_at": "Archivé le",
+            "labels": "Étiquettes",
+            "cycles": "Cycles",
+            "modules": "Modules",
+            "parent": "Parent",
+            "relations": "Relations",
+            "links": "Liens",
+            "custom_properties": "Propriétés personnalisées",
+            "comments": "Commentaires"
+          }
         }
       },
       "webhooks": {

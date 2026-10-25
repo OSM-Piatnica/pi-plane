@@ -95,6 +95,49 @@
               "message": "Exportul a eșuat. Te rugăm să încerci din nou."
             }
           }
+        },
+        "columns": {
+          "heading": "Coloane",
+          "description": "Alege ce coloane conține fișierul. Identificatorul și numele sunt incluse întotdeauna, deoarece fără ele fișierul nu ar putea fi importat din nou.",
+          "select_all": "Selectează tot",
+          "clear_all": "Șterge tot",
+          "groups": {
+            "details": "Detalii",
+            "people": "Persoane",
+            "dates": "Date",
+            "organization": "Organizare",
+            "relations": "Ierarhie și relații",
+            "other": "Altele"
+          },
+          "fields": {
+            "project_name": "Numele proiectului",
+            "project_identifier": "Identificatorul proiectului",
+            "sequence_id": "Număr de secvență",
+            "issue_type": "Tipul activității",
+            "state_name": "Stare",
+            "priority": "Prioritate",
+            "description_html": "Descriere",
+            "estimate": "Estimare",
+            "is_draft": "Indicator de ciornă",
+            "assignees": "Persoane atribuite",
+            "subscribers": "Abonați",
+            "created_by_name": "Creat de",
+            "start_date": "Data de început",
+            "target_date": "Data limită",
+            "duration": "Durată",
+            "completed_at": "Finalizat la",
+            "created_at": "Creat la",
+            "updated_at": "Actualizat la",
+            "archived_at": "Arhivat la",
+            "labels": "Etichete",
+            "cycles": "Cicluri",
+            "modules": "Module",
+            "parent": "Părinte",
+            "relations": "Relații",
+            "links": "Linkuri",
+            "custom_properties": "Proprietăți personalizate",
+            "comments": "Comentarii"
+          }
         }
       },
       "webhooks": {

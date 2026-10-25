@@ -95,6 +95,49 @@
               "message": "Spróbuj ponownie."
             }
           }
+        },
+        "columns": {
+          "heading": "Kolumny",
+          "description": "Wybierz, jakie kolumny zawiera plik. Identyfikator i nazwa są zawsze dołączone, ponieważ bez nich nie dałoby się ponownie zaimportować pliku.",
+          "select_all": "Zaznacz wszystko",
+          "clear_all": "Wyczyść wszystko",
+          "groups": {
+            "details": "Szczegóły",
+            "people": "Osoby",
+            "dates": "Daty",
+            "organization": "Organizacja",
+            "relations": "Hierarchia i powiązania",
+            "other": "Inne"
+          },
+          "fields": {
+            "project_name": "Nazwa projektu",
+            "project_identifier": "Identyfikator projektu",
+            "sequence_id": "Numer kolejny",
+            "issue_type": "Typ elementu pracy",
+            "state_name": "Stan",
+            "priority": "Priorytet",
+            "description_html": "Opis",
+            "estimate": "Szacunek",
+            "is_draft": "Znacznik wersji roboczej",
+            "assignees": "Przypisani",
+            "subscribers": "Subskrybenci",
+            "created_by_name": "Utworzył(a)",
+            "start_date": "Data rozpoczęcia",
+            "target_date": "Termin",
+            "duration": "Czas trwania",
+            "completed_at": "Ukończono",
+            "created_at": "Utworzono",
+            "updated_at": "Zaktualizowano",
+            "archived_at": "Zarchiwizowano",
+            "labels": "Etykiety",
+            "cycles": "Cykle",
+            "modules": "Moduły",
+            "parent": "Element nadrzędny",
+            "relations": "Powiązania",
+            "links": "Linki",
+            "custom_properties": "Właściwości niestandardowe",
+            "comments": "Komentarze"
+          }
         }
       },
       "webhooks": {

@@ -15,6 +15,8 @@ export type IssueExportFormPayload = {
   provider: IssueExportProviderOption;
   project: string[];
   filters: TWorkItemFilterExpression;
+  /** The optional columns switched on, with every optional column that can be chosen. */
+  columns?: { selected: string[]; available: string[] };
 };
 
 export function buildIssueExportPayload(formData: IssueExportFormPayload) {
@@ -23,6 +25,10 @@ export function buildIssueExportPayload(formData: IssueExportFormPayload) {
     project: formData.project,
     multiple: formData.project.length > 1,
     rich_filters: formData.filters,
+    // Everything switched on is sent as no choice, so a column the API adds later is exported too
+    ...(formData.columns && !formData.columns.available.every((key) => formData.columns?.selected.includes(key))
+      ? { fields: formData.columns.available.filter((key) => formData.columns?.selected.includes(key)) }
+      : {}),
     ...(formData.provider.provider === "csv" && formData.provider.delimiter
       ? { delimiter: formData.provider.delimiter }
       : {}),

@@ -95,6 +95,49 @@
               "message": "내보내기가 실패했습니다. 다시 시도해주세요."
             }
           }
+        },
+        "columns": {
+          "heading": "열",
+          "description": "파일에 포함할 열을 선택합니다. 식별자와 이름은 없으면 파일을 다시 가져올 수 없으므로 항상 포함됩니다.",
+          "select_all": "모두 선택",
+          "clear_all": "모두 지우기",
+          "groups": {
+            "details": "세부 정보",
+            "people": "사람",
+            "dates": "날짜",
+            "organization": "구성",
+            "relations": "계층 및 관계",
+            "other": "기타"
+          },
+          "fields": {
+            "project_name": "프로젝트 이름",
+            "project_identifier": "프로젝트 식별자",
+            "sequence_id": "순번",
+            "issue_type": "작업 항목 유형",
+            "state_name": "상태",
+            "priority": "우선순위",
+            "description_html": "설명",
+            "estimate": "추정",
+            "is_draft": "초안 표시",
+            "assignees": "담당자",
+            "subscribers": "구독자",
+            "created_by_name": "작성자",
+            "start_date": "시작일",
+            "target_date": "마감일",
+            "duration": "기간",
+            "completed_at": "완료 시각",
+            "created_at": "생성 시각",
+            "updated_at": "수정 시각",
+            "archived_at": "보관 시각",
+            "labels": "레이블",
+            "cycles": "사이클",
+            "modules": "모듈",
+            "parent": "상위 항목",
+            "relations": "관계",
+            "links": "링크",
+            "custom_properties": "사용자 지정 속성",
+            "comments": "댓글"
+          }
         }
       },
       "webhooks": {
