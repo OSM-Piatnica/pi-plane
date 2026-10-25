@@ -13,6 +13,8 @@ Archived and draft sub-items are ignored, like everywhere else work items are co
 from typing import Optional
 
 from django.db.models import Exists, OuterRef
+from rest_framework import status
+from rest_framework.exceptions import APIException
 
 from plane.db.models import Issue, State
 from plane.db.models.state import StateGroup
@@ -54,6 +56,16 @@ def parent_completion_error(issue: Issue, to_state_id) -> Optional[str]:
 # parents that would be reopened, so a client can ask and send the request again.
 
 REOPEN_REQUIRED_CODE = "parent_reopen_required"
+
+
+class ParentReopenRequired(APIException):
+    """Answers 400 with the payload as it is. A ``ValidationError`` raised inside a serializer would have every
+    value wrapped in a list, and clients look for ``code`` as a plain string."""
+
+    status_code = status.HTTP_400_BAD_REQUEST
+
+    def __init__(self, payload: dict):
+        self.detail = payload
 
 
 def is_reopen_confirmed(data) -> bool:

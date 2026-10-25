@@ -186,7 +186,7 @@ const ISSUE_ORDERBY_KEY: Record<TIssueOrderByOptions, keyof TIssue> = {
 // locale aware, case insensitive comparison that orders numbers inside names naturally ("2" before "10")
 /** The completed parents an update would reopen, when the API answered that the person has to confirm it first. */
 const getParentReopenRequest = (error: unknown) => {
-  const body = error as { code?: string; parents?: { id: string; name: string; sequence_id: number }[] } | undefined;
+  const body = error as { code?: string; parents?: { id: string; name: string; sequence_id: number | string }[] } | undefined;
   return body?.code === "parent_reopen_required" && body.parents?.length ? body.parents : null;
 };
 

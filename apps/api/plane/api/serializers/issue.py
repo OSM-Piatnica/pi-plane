@@ -211,14 +211,18 @@ class IssueSerializer(BaseSerializer):
             if rule_error:
                 raise serializers.ValidationError({"state": rule_error})
 
-            from plane.utils.parent_completion_rule import is_reopen_confirmed, reopen_confirmation_payload
+            from plane.utils.parent_completion_rule import (
+                ParentReopenRequired,
+                is_reopen_confirmed,
+                reopen_confirmation_payload,
+            )
 
             request = self.context.get("request")
             payload = reopen_confirmation_payload(
                 self.instance, data["state"].id, is_reopen_confirmed(request.data if request else {})
             )
             if payload:
-                raise serializers.ValidationError(payload)
+                raise ParentReopenRequired(payload)
             self._reopen_parents_from = self.instance.state_id
 
         if self.instance is not None:

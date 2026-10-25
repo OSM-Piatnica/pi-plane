@@ -18,7 +18,7 @@ import type {
 import { ProjectWorkflowService } from "@/services/project/project-workflow.service";
 import type { RootStore } from "@/store/root.store";
 
-export type TParentReopenRequest = { id: string; name: string; sequence_id: number };
+export type TParentReopenRequest = { id: string; name: string; sequence_id: number | string };
 
 export interface IWorkflowStore {
   pendingParentReopen: TParentReopenRequest[] | null;

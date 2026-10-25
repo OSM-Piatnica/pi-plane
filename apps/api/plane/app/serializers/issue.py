@@ -238,13 +238,17 @@ class IssueCreateSerializer(BaseSerializer):
         # A finished work item reopened under a completed parent takes the parent with it, once confirmed
         self._reopen_parents_from = None
         if instance and attrs.get("state") and attrs["state"].id != instance.state_id:
-            from plane.utils.parent_completion_rule import is_reopen_confirmed, reopen_confirmation_payload
+            from plane.utils.parent_completion_rule import (
+                ParentReopenRequired,
+                is_reopen_confirmed,
+                reopen_confirmation_payload,
+            )
 
             payload = reopen_confirmation_payload(
                 instance, attrs["state"].id, is_reopen_confirmed(request.data if request else {})
             )
             if payload:
-                raise serializers.ValidationError(payload)
+                raise ParentReopenRequired(payload)
             self._reopen_parents_from = instance.state_id
 
         # Check parent issue is from workspace as it can be cross workspace
