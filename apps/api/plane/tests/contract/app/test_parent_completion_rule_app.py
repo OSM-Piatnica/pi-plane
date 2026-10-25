@@ -56,13 +56,13 @@ def api_url(workspace, project, issue):
     return f"/api/v1/workspaces/{workspace.slug}/projects/{project.id}/issues/{issue.id}/"
 
 
-def patch(client, url, state, **extra):
+def patch(client, url, state, field="state_id", **extra):
     with (
         mock.patch("plane.app.views.issue.base.issue_activity"),
         mock.patch("plane.app.views.issue.base.model_activity"),
         mock.patch(ACTIVITY),
     ):
-        return client.patch(url, {"state_id": str(state.id), **extra}, format="json")
+        return client.patch(url, {field: str(state.id), **extra}, format="json")
 
 
 @pytest.mark.contract
@@ -112,7 +112,7 @@ class TestCompletingAParent:
         parent = work_item(project, states["doing"], "parent")
         work_item(project, states["todo"], "open child", parent)
 
-        response = patch(api_key_client, api_url(workspace, project, parent), states["done"])
+        response = patch(api_key_client, api_url(workspace, project, parent), states["done"], field="state")
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         parent.refresh_from_db()
@@ -122,7 +122,7 @@ class TestCompletingAParent:
         parent = work_item(project, states["doing"], "parent")
         work_item(project, states["done"], "done child", parent)
 
-        response = patch(api_key_client, api_url(workspace, project, parent), states["done"])
+        response = patch(api_key_client, api_url(workspace, project, parent), states["done"], field="state")
 
         assert response.status_code == status.HTTP_200_OK, response.data
 
@@ -210,8 +210,10 @@ class TestReopeningAChild:
     def test_public_api_asks_and_then_reopens(self, api_key_client, create_user, workspace, project, states):
         _, parent, child = self.finished_tree(project, states)
 
-        first = patch(api_key_client, api_url(workspace, project, child), states["doing"])
-        second = patch(api_key_client, api_url(workspace, project, child), states["doing"], reopen_parent=True)
+        first = patch(api_key_client, api_url(workspace, project, child), states["doing"], field="state")
+        second = patch(
+            api_key_client, api_url(workspace, project, child), states["doing"], reopen_parent=True, field="state"
+        )
 
         assert first.status_code == status.HTTP_400_BAD_REQUEST
         assert first.data["code"] == "parent_reopen_required"
