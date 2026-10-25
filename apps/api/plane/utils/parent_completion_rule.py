@@ -98,12 +98,29 @@ def reopen_confirmation_payload(issue: Issue, to_state_id, confirmed: bool) -> O
     }
 
 
-def reopen_state_for(project):
-    """The state a reopened parent goes to: the first started state, else the project's default."""
+def reopen_state_for(parent: Issue):
+    """The state a reopened parent goes back to.
+
+    The state it was in before it was completed, read from its activity; if that is unknown or no longer an
+    open state (an imported work item, a deleted state), the project's first started state, else its default.
+    """
+    from plane.db.models import IssueActivity
+
+    previous_id = (
+        IssueActivity.objects.filter(issue_id=parent.pk, field="state", new_identifier=parent.state_id)
+        .order_by("-created_at")
+        .values_list("old_identifier", flat=True)
+        .first()
+    )
+    if previous_id:
+        previous = State.objects.filter(pk=previous_id, project_id=parent.project_id).first()
+        if previous and previous.group not in FINISHED_GROUPS:
+            return previous
+    project_states = State.objects.filter(project_id=parent.project_id)
     return (
-        State.objects.filter(project=project, group=StateGroup.STARTED.value).order_by("sequence").first()
-        or State.objects.filter(project=project, default=True).first()
-        or State.objects.filter(project=project, group=StateGroup.UNSTARTED.value).order_by("sequence").first()
+        project_states.filter(group=StateGroup.STARTED.value).order_by("sequence").first()
+        or project_states.filter(default=True).first()
+        or project_states.filter(group=StateGroup.UNSTARTED.value).order_by("sequence").first()
     )
 
 
@@ -120,11 +137,13 @@ def reopen_parents(issue: Issue, previous_state_id, actor_id) -> None:
     # The ancestors are still completed; ``issue`` already holds the new state, so judge by the old one
     previous = Issue(pk=issue.pk, parent_id=issue.parent_id, state_id=previous_state_id, project=issue.project)
     chain = parents_to_reopen(previous, issue.state_id)
-    target = reopen_state_for(issue.project)
-    if not chain or not target:
+    if not chain:
         return
     for parent in chain:
         old_state_id = parent.state_id
+        target = reopen_state_for(parent)
+        if not target:
+            continue
         parent.state = target
         parent.updated_by_id = actor_id
         parent.save(update_fields=["state", "updated_at", "updated_by_id"])

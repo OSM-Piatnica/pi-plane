@@ -13,7 +13,7 @@ from django.utils import timezone
 from rest_framework import status
 
 from plane.bgtasks.issue_automation_task import close_old_issues
-from plane.db.models import Issue, Project, ProjectMember, State
+from plane.db.models import Issue, IssueActivity, Project, ProjectMember, State
 
 ACTIVITY = "plane.bgtasks.issue_activities_task.issue_activity.delay"
 
@@ -158,6 +158,37 @@ class TestReopeningAChild:
         assert child.state_id == states["doing"].id
         assert parent.state_id == states["doing"].id
         assert grandparent.state_id == states["doing"].id
+
+    def test_parent_goes_back_to_the_state_it_had_before_completion(self, session_client, workspace, project, states):
+        review = State.objects.create(
+            name="Review", project=project, workspace=workspace, group="started", sequence=30000
+        )
+        _, parent, child = self.finished_tree(project, states)
+        IssueActivity.objects.create(
+            issue=parent,
+            project=project,
+            workspace=workspace,
+            field="state",
+            verb="updated",
+            old_identifier=review.id,
+            new_identifier=states["done"].id,
+        )
+
+        response = patch(session_client, app_url(workspace, project, child), states["doing"], reopen_parent=True)
+
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+        parent.refresh_from_db()
+        assert parent.state_id == review.id
+
+    def test_without_history_the_parent_goes_to_the_first_started_state(
+        self, session_client, workspace, project, states
+    ):
+        _, parent, child = self.finished_tree(project, states)
+
+        patch(session_client, app_url(workspace, project, child), states["todo"], reopen_parent=True)
+
+        parent.refresh_from_db()
+        assert parent.state_id == states["doing"].id
 
     def test_a_cancelled_parent_is_left_alone(self, session_client, workspace, project, states):
         parent = work_item(project, states["dropped"], "parent")
