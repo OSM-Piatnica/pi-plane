@@ -11,7 +11,7 @@ from plane.app.permissions import allow_permission, ROLE
 from plane.app.serializers import ExporterHistorySerializer
 from plane.bgtasks.export_task import issue_export_task
 from plane.db.models import ExporterHistory, Project, Workspace
-from plane.utils.porters.serializers.issue import resolve_issue_export_fields
+from plane.utils.porters.serializers.issue import InvalidIssueExportFields, resolve_issue_export_fields
 from plane.utils.order_queryset import EXPORTER_HISTORY_ORDER_BY_ALLOWLIST, sanitize_order_by
 
 # Module imports
@@ -37,8 +37,14 @@ class ExportIssuesEndpoint(BaseAPIView):
         # Which columns to write. Absent means all of them; the ones an import needs are always kept.
         try:
             export_fields = resolve_issue_export_fields(request.data.get("fields"))
-        except ValueError as error:
-            return Response({"error": str(error)}, status=status.HTTP_400_BAD_REQUEST)
+        except InvalidIssueExportFields as error:
+            # Built here from the names, not from the exception text
+            message = (
+                f"Unknown export fields: {', '.join(error.unknown)}"
+                if error.unknown
+                else "fields must be a list of column names"
+            )
+            return Response({"error": message}, status=status.HTTP_400_BAD_REQUEST)
 
         if provider in ["csv", "xlsx", "json"]:
             if not project_ids:

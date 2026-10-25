@@ -14,6 +14,7 @@ from plane.utils.porters.serializers.issue import (
     ISSUE_EXPORT_FIELD_GROUPS,
     ISSUE_EXPORT_OPTIONAL_FIELDS,
     ISSUE_EXPORT_REQUIRED_FIELDS,
+    InvalidIssueExportFields,
     IssueExportSerializer,
     resolve_issue_export_fields,
 )
@@ -62,8 +63,10 @@ class TestResolveFields:
         assert resolve_issue_export_fields(["name"]) == resolve_issue_export_fields([])
 
     def test_an_unknown_column_is_rejected_by_name(self):
-        with pytest.raises(ValueError, match="bogus"):
+        with pytest.raises(InvalidIssueExportFields, match="bogus") as raised:
             resolve_issue_export_fields(["priority", "bogus"])
+
+        assert raised.value.unknown == ["bogus"]
 
     @pytest.mark.parametrize("value", ["priority", {"priority": True}, [1], [None]])
     def test_anything_but_a_list_of_names_is_rejected(self, value):

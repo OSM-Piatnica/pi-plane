@@ -48,23 +48,32 @@ ISSUE_EXPORT_FIELD_GROUPS = {
 ISSUE_EXPORT_OPTIONAL_FIELDS = tuple(field for group in ISSUE_EXPORT_FIELD_GROUPS.values() for field in group)
 
 
+class InvalidIssueExportFields(ValueError):
+    """The requested columns are not a valid choice; ``unknown`` names the entries that are not columns."""
+
+    def __init__(self, message, unknown=()):
+        super().__init__(message)
+        self.unknown = list(unknown)
+
+
 def resolve_issue_export_fields(selected):
     """
     The columns of an export: the required ones plus the optional ones that were asked for.
 
-    ``None`` means no choice was made and every column is exported. Raises ``ValueError`` naming
-    the entries that are not columns of the export (a typo must not silently drop a column).
+    ``None`` means no choice was made and every column is exported. Raises ``InvalidIssueExportFields``
+    (a ``ValueError``) naming the entries that are not columns of the export (a typo must not silently
+    drop a column).
     """
     if selected is None:
         return None
     if not isinstance(selected, (list, tuple)) or not all(isinstance(name, str) for name in selected):
-        raise ValueError("fields must be a list of column names")
+        raise InvalidIssueExportFields("fields must be a list of column names")
 
     unknown = sorted({name for name in selected if name not in ISSUE_EXPORT_OPTIONAL_FIELDS})
     # Naming a required column is harmless: it is always exported
     unknown = [name for name in unknown if name not in ISSUE_EXPORT_REQUIRED_FIELDS]
     if unknown:
-        raise ValueError(f"Unknown export fields: {', '.join(unknown)}")
+        raise InvalidIssueExportFields(f"Unknown export fields: {', '.join(unknown)}", unknown)
 
     wanted = set(selected) | set(ISSUE_EXPORT_REQUIRED_FIELDS)
     return [name for name in IssueExportSerializer.Meta.fields if name in wanted]
