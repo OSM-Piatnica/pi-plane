@@ -79,6 +79,7 @@ dependencies = [
   "drf-spectacular==0.29.0",
   # html sanitizer
   "nh3==0.3.7",
+  "mistune==3.4.0",
 ]
 
 [dependency-groups]

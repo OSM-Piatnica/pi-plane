@@ -29,6 +29,7 @@ from plane.db.models import (
     User,
     EstimatePoint,
 )
+from plane.utils.markdown_input import resolve_markdown_input
 from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
@@ -73,6 +74,15 @@ class IssueSerializer(BaseSerializer):
     type_id = serializers.PrimaryKeyRelatedField(
         source="type", queryset=IssueType.objects.all(), required=False, allow_null=True
     )
+    # A script files work items in markdown; it is rendered in validate() below, so the HTML sanitizer stays
+    # the only gate
+    description_markdown = serializers.CharField(
+        write_only=True,
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+        help_text="Work item description written in markdown. Rendered to description_html; send one or the other.",
+    )
 
     class Meta:
         model = Issue
@@ -97,6 +107,9 @@ class IssueSerializer(BaseSerializer):
         return fields
 
     def validate(self, data):
+        # Markdown becomes description_html here, so the sanitizer below is the only gate either input passes
+        data = resolve_markdown_input(data, html_field="description_html", markdown_field="description_markdown")
+
         # Keep duration and the two dates consistent before anything else looks at them, so API
         # clients get the same synchronization the web app performs locally.
         derived = reconcile_work_item_duration(self.instance, data)
@@ -751,6 +764,7 @@ class IssueCommentCreateSerializer(BaseSerializer):
         fields = [
             "comment_json",
             "comment_html",
+            "comment_markdown",
             "access",
             "external_source",
             "external_id",
@@ -770,7 +784,19 @@ class IssueCommentCreateSerializer(BaseSerializer):
             "edited_at",
         ]
 
+    # Same markdown input as the work item description
+    comment_markdown = serializers.CharField(
+        write_only=True,
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+        help_text="Comment written in markdown. Rendered to comment_html; send one or the other.",
+    )
+
     def validate(self, data):
+        # Markdown is rendered first so both inputs leave through the same sanitizer
+        data = resolve_markdown_input(data, html_field="comment_html", markdown_field="comment_markdown")
+
         # Sanitized on write like the full serializer and the app's comment endpoints: a comment created
         # through the API reaches every other consumer of the stored html, not only the web client
         if "comment_html" in data and data["comment_html"]:
@@ -791,6 +817,14 @@ class IssueCommentSerializer(BaseSerializer):
     """
 
     is_member = serializers.BooleanField(read_only=True)
+    # Same markdown input as the work item description
+    comment_markdown = serializers.CharField(
+        write_only=True,
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+        help_text="Comment written in markdown. Rendered to comment_html; send one or the other.",
+    )
 
     class Meta:
         model = IssueComment
@@ -807,6 +841,8 @@ class IssueCommentSerializer(BaseSerializer):
         exclude = ["comment_stripped", "comment_json"]
 
     def validate(self, data):
+        data = resolve_markdown_input(data, html_field="comment_html", markdown_field="comment_markdown")
+
         if "comment_html" in data and data["comment_html"]:
             is_valid, error_msg, sanitized_html = validate_html_content(data["comment_html"])
             if not is_valid:
