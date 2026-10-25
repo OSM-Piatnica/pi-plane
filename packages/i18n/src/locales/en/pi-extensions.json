@@ -115,6 +115,19 @@
       "pending_approval_title": "Approval required",
       "rejected_success": "Transition rejected.",
       "resolving_approval": "Processing approval...",
+      "rules": {
+        "heading": "Rules",
+        "description": "Project rules that apply on their own, whether or not workflows are enabled.",
+        "parent_completion": {
+          "description": "A work item cannot be completed while it has sub-items that are neither completed nor cancelled. Reopening a finished sub-item under a completed parent asks to reopen the parent as well.",
+          "title": "Complete a parent only when its sub-items are done"
+        },
+        "reopen_parent": {
+          "confirm": "Reopen",
+          "content": "This project does not allow a parent to stay completed while a sub-item is open. These completed parents will be reopened as well: {names}",
+          "title": "Reopen the parent work items too?"
+        }
+      },
       "save_error": "Could not save workflow configuration.",
       "save_success": "Workflow configuration saved.",
       "toggle_error": "Could not update workflow settings.",

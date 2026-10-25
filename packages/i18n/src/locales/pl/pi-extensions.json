@@ -121,6 +121,19 @@
       "pending_approval_title": "Wymagana akceptacja",
       "rejected_success": "Przejście odrzucone.",
       "resolving_approval": "Przetwarzanie akceptacji…",
+      "rules": {
+        "heading": "Reguły",
+        "description": "Reguły projektu, które działają niezależnie od tego, czy przepływy pracy są włączone.",
+        "parent_completion": {
+          "description": "Element pracy nie może zostać ukończony, dopóki ma elementy podrzędne, które nie są ukończone ani anulowane. Ponowne otwarcie ukończonego elementu podrzędnego pod ukończonym elementem nadrzędnym wymaga też ponownego otwarcia elementu nadrzędnego.",
+          "title": "Ukończ element nadrzędny dopiero po ukończeniu jego elementów podrzędnych"
+        },
+        "reopen_parent": {
+          "confirm": "Otwórz ponownie",
+          "content": "Ten projekt nie pozwala, aby element nadrzędny pozostał ukończony, gdy element podrzędny jest otwarty. Te ukończone elementy nadrzędne zostaną również ponownie otwarte: {names}",
+          "title": "Ponownie otworzyć także elementy nadrzędne?"
+        }
+      },
       "save_error": "Nie udało się zapisać konfiguracji workflow.",
       "save_success": "Konfiguracja workflow zapisana.",
       "toggle_error": "Nie udało się zaktualizować ustawień workflow.",

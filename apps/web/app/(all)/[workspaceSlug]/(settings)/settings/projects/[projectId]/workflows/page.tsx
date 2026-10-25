@@ -14,6 +14,7 @@ import { PageHead } from "@/components/core/page-title";
 import { ProjectWorkflowRoot } from "@/components/project-workflows";
 import { SettingsContentWrapper } from "@/components/settings/content-wrapper";
 import { SettingsHeading } from "@/components/settings/heading";
+import { ProjectSettingsFeatureControlItem } from "@/components/settings/project/content/feature-control-item";
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
 import type { Route } from "./+types/page";
@@ -42,6 +43,22 @@ function WorkflowsSettingsPage({ params }: Route.ComponentProps) {
         />
         <div className="mt-6">
           <ProjectWorkflowRoot workspaceSlug={workspaceSlug} projectId={projectId} />
+        </div>
+        <div className="mt-10">
+          <SettingsHeading
+            title={t("project_settings.workflows.rules.heading")}
+            description={t("project_settings.workflows.rules.description")}
+          />
+          <div className="mt-6">
+            <ProjectSettingsFeatureControlItem
+              title={t("project_settings.workflows.rules.parent_completion.title")}
+              description={t("project_settings.workflows.rules.parent_completion.description")}
+              featureProperty="is_parent_completion_rule_enabled"
+              projectId={projectId}
+              value={!!currentProjectDetails?.is_parent_completion_rule_enabled}
+              workspaceSlug={workspaceSlug}
+            />
+          </div>
         </div>
       </div>
     </SettingsContentWrapper>

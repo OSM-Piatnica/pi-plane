@@ -115,6 +115,19 @@
       "pending_approval_title": "Vyžadováno schválení",
       "rejected_success": "Přechod byl zamítnut.",
       "resolving_approval": "Zpracování schválení...",
+      "rules": {
+        "heading": "Pravidla",
+        "description": "Pravidla projektu, která platí sama o sobě, ať jsou pracovní postupy zapnuté, nebo ne.",
+        "parent_completion": {
+          "description": "Pracovní položku nelze dokončit, dokud má podřízené položky, které nejsou ani dokončené, ani zrušené. Opětovné otevření dokončené podřízené položky pod dokončenou nadřazenou položkou vyžádá také opětovné otevření nadřazené položky.",
+          "title": "Dokončit nadřazenou položku jen po dokončení jejích podřízených položek"
+        },
+        "reopen_parent": {
+          "confirm": "Znovu otevřít",
+          "content": "Tento projekt nedovoluje, aby nadřazená položka zůstala dokončená, dokud je podřízená položka otevřená. Tyto dokončené nadřazené položky se také znovu otevřou: {names}",
+          "title": "Znovu otevřít i nadřazené pracovní položky?"
+        }
+      },
       "save_error": "Nastavení workflow se nepodařilo uložit.",
       "save_success": "Nastavení workflow bylo uloženo.",
       "toggle_error": "Nastavení workflow se nepodařilo aktualizovat.",

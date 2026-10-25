@@ -235,6 +235,18 @@ class IssueCreateSerializer(BaseSerializer):
                         {"state_id": "New work items cannot be created in this state according to the workflow."}
                     )
 
+        # A finished work item reopened under a completed parent takes the parent with it, once confirmed
+        self._reopen_parents_from = None
+        if instance and attrs.get("state") and attrs["state"].id != instance.state_id:
+            from plane.utils.parent_completion_rule import is_reopen_confirmed, reopen_confirmation_payload
+
+            payload = reopen_confirmation_payload(
+                instance, attrs["state"].id, is_reopen_confirmed(request.data if request else {})
+            )
+            if payload:
+                raise serializers.ValidationError(payload)
+            self._reopen_parents_from = instance.state_id
+
         # Check parent issue is from workspace as it can be cross workspace
         if (
             attrs.get("parent")
@@ -408,7 +420,13 @@ class IssueCreateSerializer(BaseSerializer):
 
         # Time updation occues even when other related models are updated
         instance.updated_at = timezone.now()
-        return super().update(instance, validated_data)
+        previous_state_id = getattr(self, "_reopen_parents_from", None)
+        instance = super().update(instance, validated_data)
+        if previous_state_id:
+            from plane.utils.parent_completion_rule import reopen_parents
+
+            reopen_parents(instance, previous_state_id, instance.updated_by_id)
+        return instance
 
 
 class IssueActivitySerializer(BaseSerializer):

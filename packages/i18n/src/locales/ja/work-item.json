@@ -853,6 +853,11 @@
         "enabled": "作業項目タイプを有効にしました",
         "fallback": "作業項目タイプを更新しました"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "親の完了ルールを無効にしました",
+        "enabled": "親の完了ルールを有効にしました",
+        "fallback": "親の完了ルールを更新しました"
+      },
       "is_project_updates_enabled": {
         "disabled": "プロジェクト更新を無効にしました",
         "enabled": "プロジェクト更新を有効にしました",

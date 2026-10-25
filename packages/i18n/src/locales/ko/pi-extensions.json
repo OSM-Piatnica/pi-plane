@@ -115,6 +115,19 @@
       "pending_approval_title": "승인 필요",
       "rejected_success": "전환이 거부되었습니다.",
       "resolving_approval": "승인 처리 중...",
+      "rules": {
+        "heading": "규칙",
+        "description": "워크플로우 사용 여부와 관계없이 적용되는 프로젝트 규칙입니다.",
+        "parent_completion": {
+          "description": "완료되지도 취소되지도 않은 하위 항목이 있으면 작업 항목을 완료할 수 없습니다. 완료된 상위 항목 아래의 완료된 하위 항목을 다시 열면 상위 항목도 다시 열지 확인합니다.",
+          "title": "하위 항목이 모두 완료된 후에만 상위 항목 완료"
+        },
+        "reopen_parent": {
+          "confirm": "다시 열기",
+          "content": "이 프로젝트에서는 하위 항목이 열려 있는 동안 상위 항목이 완료 상태로 남을 수 없습니다. 완료된 다음 상위 항목도 다시 열립니다: {names}",
+          "title": "상위 작업 항목도 다시 여시겠습니까?"
+        }
+      },
       "save_error": "워크플로우 구성을 저장할 수 없습니다.",
       "save_success": "워크플로우 구성이 저장되었습니다.",
       "toggle_error": "워크플로우 설정을 업데이트할 수 없습니다.",

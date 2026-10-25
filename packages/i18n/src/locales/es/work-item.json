@@ -853,6 +853,11 @@
         "enabled": "activó los tipos de elementos de trabajo",
         "fallback": "actualizó los tipos de elementos de trabajo"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "desactivó la regla de finalización de elementos principales",
+        "enabled": "activó la regla de finalización de elementos principales",
+        "fallback": "actualizó la regla de finalización de elementos principales"
+      },
       "is_project_updates_enabled": {
         "disabled": "desactivó las actualizaciones del proyecto",
         "enabled": "activó las actualizaciones del proyecto",

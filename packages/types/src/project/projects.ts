@@ -34,6 +34,7 @@ export interface IPartialProject {
   guest_view_all_features?: boolean;
   is_issue_type_enabled?: boolean;
   is_workflow_enabled?: boolean;
+  is_parent_completion_rule_enabled?: boolean;
   is_time_tracking_enabled?: boolean;
   project_lead?: IUserLite | string | null;
   network?: number;

@@ -853,6 +853,11 @@
         "enabled": "hat Arbeitselementtypen aktiviert",
         "fallback": "hat Arbeitselementtypen aktualisiert"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "hat die Regel zum Abschluss übergeordneter Elemente deaktiviert",
+        "enabled": "hat die Regel zum Abschluss übergeordneter Elemente aktiviert",
+        "fallback": "hat die Regel zum Abschluss übergeordneter Elemente aktualisiert"
+      },
       "is_project_updates_enabled": {
         "disabled": "hat Projekt-Updates deaktiviert",
         "enabled": "hat Projekt-Updates aktiviert",

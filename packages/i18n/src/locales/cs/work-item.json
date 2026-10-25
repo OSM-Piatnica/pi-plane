@@ -853,6 +853,11 @@
         "enabled": "zapnuty typy pracovních položek",
         "fallback": "aktualizovány typy pracovních položek"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "vypnul(a) pravidlo dokončení nadřazených položek",
+        "enabled": "zapnul(a) pravidlo dokončení nadřazených položek",
+        "fallback": "aktualizoval(a) pravidlo dokončení nadřazených položek"
+      },
       "is_project_updates_enabled": {
         "disabled": "vypnuty aktualizace projektu",
         "enabled": "zapnuty aktualizace projektu",

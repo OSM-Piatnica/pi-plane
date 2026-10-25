@@ -115,6 +115,19 @@
       "pending_approval_title": "需要核准",
       "rejected_success": "轉換已拒絕。",
       "resolving_approval": "正在處理核准…",
+      "rules": {
+        "heading": "規則",
+        "description": "無論是否啟用工作流程，都會獨立生效的專案規則。",
+        "parent_completion": {
+          "description": "只要還有未完成且未取消的子工作事項，工作事項就無法完成。在已完成的父項下重新開啟已完成的子工作事項時，會詢問是否一併重新開啟父項。",
+          "title": "僅在子工作事項完成後才能完成父項"
+        },
+        "reopen_parent": {
+          "confirm": "重新開啟",
+          "content": "此專案不允許在子工作事項未完成時讓父項保持已完成狀態。以下已完成的父項也將被重新開啟：{names}",
+          "title": "是否一併重新開啟父工作事項？"
+        }
+      },
       "save_error": "無法儲存工作流程設定。",
       "save_success": "工作流程設定已儲存。",
       "toggle_error": "無法更新工作流程設定。",

@@ -115,6 +115,19 @@
       "pending_approval_title": "Onay gerekli",
       "rejected_success": "Geçiş reddedildi.",
       "resolving_approval": "Onay işleniyor...",
+      "rules": {
+        "heading": "Kurallar",
+        "description": "İş akışları etkin olsun ya da olmasın kendiliğinden geçerli olan proje kuralları.",
+        "parent_completion": {
+          "description": "Bir iş öğesi, tamamlanmamış veya iptal edilmemiş alt öğeleri varken tamamlanamaz. Tamamlanmış bir üst öğenin altındaki tamamlanmış alt öğeyi yeniden açmak, üst öğenin de yeniden açılmasını ister.",
+          "title": "Üst öğeyi yalnızca alt öğeleri tamamlandığında tamamla"
+        },
+        "reopen_parent": {
+          "confirm": "Yeniden aç",
+          "content": "Bu projede, bir alt öğe açıkken üst öğe tamamlanmış kalamaz. Tamamlanmış şu üst öğeler de yeniden açılacak: {names}",
+          "title": "Üst iş öğeleri de yeniden açılsın mı?"
+        }
+      },
       "save_error": "İş akışı yapılandırması kaydedilemedi.",
       "save_success": "İş akışı yapılandırması kaydedildi.",
       "toggle_error": "İş akışı ayarları güncellenemedi.",

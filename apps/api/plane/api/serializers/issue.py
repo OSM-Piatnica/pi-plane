@@ -107,6 +107,7 @@ class IssueSerializer(BaseSerializer):
         return fields
 
     def validate(self, data):
+        self._reopen_parents_from = None
         # Markdown becomes description_html here, so the sanitizer below is the only gate either input passes
         data = resolve_markdown_input(data, html_field="description_html", markdown_field="description_markdown")
 
@@ -202,6 +203,23 @@ class IssueSerializer(BaseSerializer):
             ).exists()
         ):
             raise serializers.ValidationError("Estimate point is not valid please pass a valid estimate_point_id")
+
+        if self.instance is not None and data.get("state") and data["state"].id != self.instance.state_id:
+            from plane.utils.parent_completion_rule import parent_completion_error
+
+            rule_error = parent_completion_error(self.instance, data["state"].id)
+            if rule_error:
+                raise serializers.ValidationError({"state": rule_error})
+
+            from plane.utils.parent_completion_rule import is_reopen_confirmed, reopen_confirmation_payload
+
+            request = self.context.get("request")
+            payload = reopen_confirmation_payload(
+                self.instance, data["state"].id, is_reopen_confirmed(request.data if request else {})
+            )
+            if payload:
+                raise serializers.ValidationError(payload)
+            self._reopen_parents_from = self.instance.state_id
 
         if self.instance is not None:
             from plane.utils.issue_timeline_relation_validation import validate_issue_update_payload
@@ -349,7 +367,13 @@ class IssueSerializer(BaseSerializer):
 
         # Time updation occues even when other related models are updated
         instance.updated_at = timezone.now()
-        return super().update(instance, validated_data)
+        previous_state_id = getattr(self, "_reopen_parents_from", None)
+        instance = super().update(instance, validated_data)
+        if previous_state_id:
+            from plane.utils.parent_completion_rule import reopen_parents
+
+            reopen_parents(instance, previous_state_id, instance.updated_by_id)
+        return instance
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
