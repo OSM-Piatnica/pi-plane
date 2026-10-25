@@ -770,6 +770,17 @@ class IssueCommentCreateSerializer(BaseSerializer):
             "edited_at",
         ]
 
+    def validate(self, data):
+        # Sanitized on write like the full serializer and the app's comment endpoints: a comment created
+        # through the API reaches every other consumer of the stored html, not only the web client
+        if "comment_html" in data and data["comment_html"]:
+            is_valid, error_msg, sanitized_html = validate_html_content(data["comment_html"])
+            if not is_valid:
+                raise serializers.ValidationError({"comment_html": "HTML content is not valid"})
+            if sanitized_html is not None:
+                data["comment_html"] = sanitized_html
+        return data
+
 
 class IssueCommentSerializer(BaseSerializer):
     """
