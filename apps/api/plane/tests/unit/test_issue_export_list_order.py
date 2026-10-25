@@ -45,8 +45,15 @@ class TestListViewOrder:
 
         assert list_view_order(create_user.id, project.id) == "-sequence_id"
 
-    def test_newest_first_when_nothing_was_chosen(self, workspace, create_user):
+    def test_a_member_who_never_chose_has_the_default_that_comes_with_the_membership(self, workspace, create_user):
+        """The list view sends that stored default too, so the export follows it."""
         project = _project(workspace, create_user, "ORD")
+
+        assert list_view_order(create_user.id, project.id) == "created_at"
+
+    def test_newest_first_when_there_is_no_stored_choice_at_all(self, workspace, create_user):
+        project = _project(workspace, create_user, "ORD")
+        ProjectUserProperty.objects.filter(project=project, user=create_user).delete()
 
         assert list_view_order(create_user.id, project.id) == "-created_at"
 
