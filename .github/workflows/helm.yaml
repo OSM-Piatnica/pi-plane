@@ -66,6 +66,15 @@ jobs:
             echo "::endgroup::"
           done
 
+      - name: Integers render as plain numbers
+        run: |
+          set -euo pipefail
+          # A float-typed value would render as 5.24288e+06, which the API cannot parse
+          rendered=$(helm template pi-plane "$CHART" --set publicUrl=https://plane.example.com)
+          for key in FILE_SIZE_LIMIT GUNICORN_WORKERS; do
+            echo "$rendered" | grep -E "^\s+$key: \"[0-9]+\"$"
+          done
+
       - name: Invalid values are rejected
         run: |
           set -uo pipefail
