@@ -6,7 +6,7 @@
  * See the LICENSE file for details.
  */
 
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { observer } from "mobx-react";
 import useSWR from "swr";
 // plane imports
@@ -43,21 +43,24 @@ export const ProjectCopyStatusBanner = observer(function ProjectCopyStatusBanner
   // store hooks
   const { allowPermissions } = useUserPermissions();
   // states
-  const [watched, setWatched] = useState(false);
   const [isRetrying, setIsRetrying] = useState(false);
+  // A copy that is seen running is announced when it ends; one that ended long ago is not
+  const watched = useRef(false);
 
   const { data: job, mutate } = useSWR(
     `PROJECT_COPY_STATUS_${workspaceSlug}_${projectId}`,
     () => projectService.getProjectCopyStatus(workspaceSlug, projectId),
     // polls only while there is something to wait for
-    { refreshInterval: (latest) => (isActive(latest) ? POLL_MS : 0), shouldRetryOnError: false }
+    {
+      refreshInterval: (latest) => (isActive(latest) ? POLL_MS : 0),
+      shouldRetryOnError: false,
+      onSuccess: (latest) => {
+        if (isActive(latest)) watched.current = true;
+      },
+    }
   );
 
-  // A copy that is seen running is announced when it ends; one that ended long ago is not
   const active = isActive(job);
-  useEffect(() => {
-    if (active) setWatched(true);
-  }, [active]);
 
   const canRetry = allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.PROJECT);
 
@@ -115,7 +118,7 @@ export const ProjectCopyStatusBanner = observer(function ProjectCopyStatusBanner
     );
   }
 
-  if (watched && (job.status === "completed" || job.status === "completed_with_errors")) {
+  if (watched.current && (job.status === "completed" || job.status === "completed_with_errors")) {
     return (
       <div
         role="status"

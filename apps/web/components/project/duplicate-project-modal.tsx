@@ -130,6 +130,9 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
   const onSubmit = async (values: TFormValues) => {
     if (!workspaceSlug) return;
 
+    const selected = new Set(values.workItemProperties);
+    const chosenProperties = allProperties.filter((property) => selected.has(property));
+
     try {
       const copy = await duplicateProject(workspaceSlug.toString(), project.id, {
         name: values.name.trim(),
@@ -145,8 +148,8 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
           work_items: values.work_items,
         },
         // everything switched on is sent as no choice, so a property added later is carried too
-        ...(values.work_items && !allProperties.every((property) => values.workItemProperties.includes(property))
-          ? { work_item_properties: allProperties.filter((property) => values.workItemProperties.includes(property)) }
+        ...(values.work_items && chosenProperties.length < allProperties.length
+          ? { work_item_properties: chosenProperties }
           : {}),
       });
 
