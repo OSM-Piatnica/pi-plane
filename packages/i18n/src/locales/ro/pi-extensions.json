@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue} nu poate fi finalizată până când {related} nu este finalizată (relație de finalizare după).",
           "start_after": "{issue} nu poate începe până când {related} nu a început (relație de începere după)."
-        }
+        },
+        "self": "{issue} nu poate fi legat de sine însuși.",
+        "cycle": "{issue} și {related} ar forma o buclă de relații. Elimină mai întâi relația opusă."
       },
       "date_conflict": "Aceste date intră în conflict cu dependențele existente. Ajustează activitățile înrudite sau elimină mai întâi dependența.",
       "dependency_create_failed": "Nu s-a putut crea dependența. Te rugăm să încerci din nou.",

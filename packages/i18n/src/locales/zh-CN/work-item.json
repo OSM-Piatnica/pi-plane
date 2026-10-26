@@ -200,7 +200,13 @@
       "finish_before": "结束于之前",
       "finish_after": "结束于之后",
       "implements": "实现",
-      "implemented_by": "实现者"
+      "implemented_by": "实现者",
+      "causes": "导致",
+      "caused_by": "由此导致",
+      "clones": "克隆",
+      "cloned_by": "克隆自",
+      "tests": "测试",
+      "tested_by": "被测试于"
     },
     "copy_link": "复制工作项链接",
     "delete": {
@@ -619,6 +625,22 @@
           "added": "将此工作项标记为阻止工作项 <value/>。",
           "removed": "移除了所阻止的工作项 <value/>。"
         },
+        "caused_by": {
+          "added": "添加了关系“由此导致”：<value/>。",
+          "removed": "移除了关系“由此导致”：<value/>。"
+        },
+        "causes": {
+          "added": "添加了关系“导致”：<value/>。",
+          "removed": "移除了关系“导致”：<value/>。"
+        },
+        "cloned_by": {
+          "added": "添加了关系“克隆自”：<value/>。",
+          "removed": "移除了关系“克隆自”：<value/>。"
+        },
+        "clones": {
+          "added": "添加了关系“克隆”：<value/>。",
+          "removed": "移除了关系“克隆”：<value/>。"
+        },
         "duplicate": {
           "added": "将此工作项标记为 <value/> 的重复项。",
           "removed": "取消了此工作项作为 <value/> 重复项的标记。"
@@ -631,6 +653,14 @@
           "added": "将此工作项标记为在 <value/> 之前完成。",
           "removed": "移除了与 <value/> 的“在其之前完成”关系。"
         },
+        "implemented_by": {
+          "added": "添加了关系“实现者”：<value/>。",
+          "removed": "移除了关系“实现者”：<value/>。"
+        },
+        "implements": {
+          "added": "添加了关系“实现”：<value/>。",
+          "removed": "移除了关系“实现”：<value/>。"
+        },
         "relates_to": {
           "added": "标记此工作项与 <value/> 相关。",
           "removed": "移除了与 <value/> 的关系。"
@@ -642,6 +672,14 @@
         "start_before": {
           "added": "将此工作项标记为在 <value/> 之前开始。",
           "removed": "移除了与 <value/> 的“在其之前开始”关系。"
+        },
+        "tested_by": {
+          "added": "添加了关系“被测试于”：<value/>。",
+          "removed": "移除了关系“被测试于”：<value/>。"
+        },
+        "tests": {
+          "added": "添加了关系“测试”：<value/>。",
+          "removed": "移除了关系“测试”：<value/>。"
         }
       },
       "restored": "恢复了工作项。",

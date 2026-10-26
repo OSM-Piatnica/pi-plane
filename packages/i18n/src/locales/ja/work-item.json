@@ -200,7 +200,13 @@
       "finish_before": "終了前",
       "finish_after": "終了後",
       "implements": "実装",
-      "implemented_by": "実装元"
+      "implemented_by": "実装元",
+      "causes": "原因となる",
+      "caused_by": "原因",
+      "clones": "複製する",
+      "cloned_by": "複製元",
+      "tests": "テストする",
+      "tested_by": "テスト対象"
     },
     "copy_link": "作業項目のリンクをコピー",
     "delete": {
@@ -619,6 +625,22 @@
           "added": "この作業項目が作業項目<value/>をブロックしていることを設定しました。",
           "removed": "ブロック対象の作業項目<value/>を削除しました。"
         },
+        "caused_by": {
+          "added": "関係「原因」を追加しました: <value/>。",
+          "removed": "関係「原因」を削除しました: <value/>。"
+        },
+        "causes": {
+          "added": "関係「原因となる」を追加しました: <value/>。",
+          "removed": "関係「原因となる」を削除しました: <value/>。"
+        },
+        "cloned_by": {
+          "added": "関係「複製元」を追加しました: <value/>。",
+          "removed": "関係「複製元」を削除しました: <value/>。"
+        },
+        "clones": {
+          "added": "関係「複製する」を追加しました: <value/>。",
+          "removed": "関係「複製する」を削除しました: <value/>。"
+        },
         "duplicate": {
           "added": "この作業項目を<value/>の重複としてマークしました。",
           "removed": "この作業項目の<value/>との重複設定を削除しました。"
@@ -631,6 +653,14 @@
           "added": "この作業項目が<value/>より前に終了することを設定しました。",
           "removed": "<value/>との「より前に終了」の関連を削除しました。"
         },
+        "implemented_by": {
+          "added": "関係「実装元」を追加しました: <value/>。",
+          "removed": "関係「実装元」を削除しました: <value/>。"
+        },
+        "implements": {
+          "added": "関係「実装」を追加しました: <value/>。",
+          "removed": "関係「実装」を削除しました: <value/>。"
+        },
         "relates_to": {
           "added": "この作業項目が<value/>に関連していることを設定しました。",
           "removed": "<value/>との関連を削除しました。"
@@ -642,6 +672,14 @@
         "start_before": {
           "added": "この作業項目が<value/>より前に開始することを設定しました。",
           "removed": "<value/>との「より前に開始」の関連を削除しました。"
+        },
+        "tested_by": {
+          "added": "関係「テスト対象」を追加しました: <value/>。",
+          "removed": "関係「テスト対象」を削除しました: <value/>。"
+        },
+        "tests": {
+          "added": "関係「テストする」を追加しました: <value/>。",
+          "removed": "関係「テストする」を削除しました: <value/>。"
         }
       },
       "restored": "作業項目を復元しました。",

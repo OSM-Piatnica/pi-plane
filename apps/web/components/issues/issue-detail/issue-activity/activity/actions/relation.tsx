@@ -42,6 +42,38 @@ export const IssueRelationActivity = observer(function IssueRelationActivity(pro
         return isAdded
           ? t("activity_feed.issue.relation.duplicate.added")
           : t("activity_feed.issue.relation.duplicate.removed");
+      case "implements":
+        return isAdded
+          ? t("activity_feed.issue.relation.implements.added")
+          : t("activity_feed.issue.relation.implements.removed");
+      case "implemented_by":
+        return isAdded
+          ? t("activity_feed.issue.relation.implemented_by.added")
+          : t("activity_feed.issue.relation.implemented_by.removed");
+      case "causes":
+        return isAdded
+          ? t("activity_feed.issue.relation.causes.added")
+          : t("activity_feed.issue.relation.causes.removed");
+      case "caused_by":
+        return isAdded
+          ? t("activity_feed.issue.relation.caused_by.added")
+          : t("activity_feed.issue.relation.caused_by.removed");
+      case "clones":
+        return isAdded
+          ? t("activity_feed.issue.relation.clones.added")
+          : t("activity_feed.issue.relation.clones.removed");
+      case "cloned_by":
+        return isAdded
+          ? t("activity_feed.issue.relation.cloned_by.added")
+          : t("activity_feed.issue.relation.cloned_by.removed");
+      case "tests":
+        return isAdded
+          ? t("activity_feed.issue.relation.tests.added")
+          : t("activity_feed.issue.relation.tests.removed");
+      case "tested_by":
+        return isAdded
+          ? t("activity_feed.issue.relation.tested_by.added")
+          : t("activity_feed.issue.relation.tested_by.removed");
       case "relates_to":
         return isAdded
           ? t("activity_feed.issue.relation.relates_to.added")

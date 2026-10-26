@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue} 在 {related} 完成之前无法完成（晚于完成关系）。",
           "start_after": "{issue} 在 {related} 开始之前无法开始（晚于开始关系）。"
-        }
+        },
+        "self": "{issue} 不能与自身关联。",
+        "cycle": "{issue} 与 {related} 会形成关系循环。请先移除相反的关系。"
       },
       "date_conflict": "这些日期与现有依赖关系冲突。请调整相关工作项，或先移除该依赖关系。",
       "dependency_create_failed": "无法创建依赖关系。请重试。",

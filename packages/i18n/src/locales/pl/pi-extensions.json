@@ -50,7 +50,9 @@
         "status": {
           "finish_after": "{issue} nie może zostać ukończone, dopóki {related} nie zostanie ukończone (relacja: kończy się po).",
           "start_after": "{issue} nie może się rozpocząć, dopóki {related} nie zostanie rozpoczęte (relacja: zaczyna się po)."
-        }
+        },
+        "self": "{issue} nie może być powiązany sam ze sobą.",
+        "cycle": "{issue} i {related} znalazłyby się w pętli relacji. Najpierw usuń przeciwną relację."
       },
       "date_conflict": "Te daty kolidują z istniejącymi zależnościami. Dostosuj powiązane elementy pracy albo najpierw usuń zależność.",
       "dependency_create_failed": "Nie udało się utworzyć zależności. Spróbuj ponownie.",

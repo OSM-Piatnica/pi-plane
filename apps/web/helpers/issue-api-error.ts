@@ -25,7 +25,22 @@ const readField = (value: unknown): string | undefined => {
   return undefined;
 };
 
+// Errors about the relation itself rather than about dates or status: one sentence for every relation type
+const RELATION_SHAPE_KEYS: Record<string, string> = {
+  relation_self: "issue.relation.conflict.self",
+  relation_cycle: "issue.relation.conflict.cycle",
+};
+
 const getRelationConflictMessage = (payload: Record<string, unknown>, t: TTranslate): string | undefined => {
+  const shapeKey = RELATION_SHAPE_KEYS[readField(payload.error_code) ?? ""];
+  if (shapeKey) {
+    const message = t(shapeKey, {
+      issue: readField(payload.issue_ref) ?? "",
+      related: readField(payload.related_ref) ?? "",
+    });
+    return message === shapeKey ? undefined : message;
+  }
+
   const kind = RELATION_CONFLICT_KINDS[readField(payload.error_code) ?? ""];
   const relationType = readField(payload.relation_type);
   if (!kind || !relationType) return undefined;

@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue}, {related} tamamlanana kadar tamamlanamaz (sonra biter ilişkisi).",
           "start_after": "{issue}, {related} başlayana kadar başlayamaz (sonra başlar ilişkisi)."
-        }
+        },
+        "self": "{issue} kendisiyle ilişkilendirilemez.",
+        "cycle": "{issue} ve {related} bir ilişki döngüsü oluşturur. Önce karşıt ilişkiyi kaldırın."
       },
       "date_conflict": "Bu tarihler mevcut bağımlılıklarla çelişiyor. İlgili iş öğelerini düzenleyin veya önce bağımlılığı kaldırın.",
       "dependency_create_failed": "Bağımlılık oluşturulamadı. Lütfen tekrar deneyin.",

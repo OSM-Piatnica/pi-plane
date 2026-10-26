@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue} ne peut pas être terminé tant que {related} n'est pas terminé (relation de fin après).",
           "start_after": "{issue} ne peut pas démarrer tant que {related} n'a pas démarré (relation de démarrage après)."
-        }
+        },
+        "self": "{issue} ne peut pas être lié à lui-même.",
+        "cycle": "{issue} et {related} formeraient une boucle de relations. Supprimez d’abord la relation inverse."
       },
       "date_conflict": "Ces dates entrent en conflit avec des dépendances existantes. Ajustez les éléments de travail liés ou supprimez d'abord la dépendance.",
       "dependency_create_failed": "Impossible de créer la dépendance. Veuillez réessayer.",

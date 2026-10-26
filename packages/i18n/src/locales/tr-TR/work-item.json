@@ -200,7 +200,13 @@
       "finish_before": "Finishes Bifor",
       "finish_after": "Finishes Aftır",
       "implements": "Implemente",
-      "implemented_by": "Implemente edilen"
+      "implemented_by": "Implemente edilen",
+      "causes": "Neden olur",
+      "caused_by": "Nedeni",
+      "clones": "Klonlar",
+      "cloned_by": "Klonlayan",
+      "tests": "Test eder",
+      "tested_by": "Test eden"
     },
     "copy_link": "İş öğesi bağlantısını kopyala",
     "delete": {
@@ -619,6 +625,22 @@
           "added": "bu iş öğesini <value/> iş öğesini engelliyor olarak işaretledi.",
           "removed": "engellenen <value/> iş öğesini kaldırdı."
         },
+        "caused_by": {
+          "added": "“Nedeni” ilişkisini ekledi: <value/>.",
+          "removed": "“Nedeni” ilişkisini kaldırdı: <value/>."
+        },
+        "causes": {
+          "added": "“Neden olur” ilişkisini ekledi: <value/>.",
+          "removed": "“Neden olur” ilişkisini kaldırdı: <value/>."
+        },
+        "cloned_by": {
+          "added": "“Klonlayan” ilişkisini ekledi: <value/>.",
+          "removed": "“Klonlayan” ilişkisini kaldırdı: <value/>."
+        },
+        "clones": {
+          "added": "“Klonlar” ilişkisini ekledi: <value/>.",
+          "removed": "“Klonlar” ilişkisini kaldırdı: <value/>."
+        },
         "duplicate": {
           "added": "bu iş öğesini <value/> öğesinin kopyası olarak işaretledi.",
           "removed": "bu iş öğesinin <value/> öğesinin kopyası olduğu işaretini kaldırdı."
@@ -631,6 +653,14 @@
           "added": "bu iş öğesinin <value/> öğesinden önce bittiğini işaretledi.",
           "removed": "<value/> ile olan \"önce biter\" ilişkisini kaldırdı."
         },
+        "implemented_by": {
+          "added": "“Implemente edilen” ilişkisini ekledi: <value/>.",
+          "removed": "“Implemente edilen” ilişkisini kaldırdı: <value/>."
+        },
+        "implements": {
+          "added": "“Implemente” ilişkisini ekledi: <value/>.",
+          "removed": "“Implemente” ilişkisini kaldırdı: <value/>."
+        },
         "relates_to": {
           "added": "bu iş öğesinin <value/> ile ilişkili olduğunu işaretledi.",
           "removed": "<value/> ile olan ilişkiyi kaldırdı."
@@ -642,6 +672,14 @@
         "start_before": {
           "added": "bu iş öğesinin <value/> öğesinden önce başladığını işaretledi.",
           "removed": "<value/> ile olan \"önce başlar\" ilişkisini kaldırdı."
+        },
+        "tested_by": {
+          "added": "“Test eden” ilişkisini ekledi: <value/>.",
+          "removed": "“Test eden” ilişkisini kaldırdı: <value/>."
+        },
+        "tests": {
+          "added": "“Test eder” ilişkisini ekledi: <value/>.",
+          "removed": "“Test eder” ilişkisini kaldırdı: <value/>."
         }
       },
       "restored": "iş öğesini geri yükledi.",

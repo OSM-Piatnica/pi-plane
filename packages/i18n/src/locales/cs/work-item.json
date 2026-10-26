@@ -200,7 +200,13 @@
       "finish_before": "Končí před",
       "finish_after": "Končí po",
       "implements": "Implementuje",
-      "implemented_by": "Implementováno"
+      "implemented_by": "Implementováno",
+      "causes": "Způsobuje",
+      "caused_by": "Způsobeno",
+      "clones": "Klonuje",
+      "cloned_by": "Naklonováno",
+      "tests": "Testuje",
+      "tested_by": "Testováno"
     },
     "copy_link": "Kopírovat odkaz na pracovní položku",
     "delete": {
@@ -619,6 +625,22 @@
           "added": "označeno, že tato pracovní položka blokuje pracovní položku <value/>.",
           "removed": "odebrána blokovaná pracovní položka <value/>."
         },
+        "caused_by": {
+          "added": "přidal(a) vztah „Způsobeno“: <value/>.",
+          "removed": "odebral(a) vztah „Způsobeno“: <value/>."
+        },
+        "causes": {
+          "added": "přidal(a) vztah „Způsobuje“: <value/>.",
+          "removed": "odebral(a) vztah „Způsobuje“: <value/>."
+        },
+        "cloned_by": {
+          "added": "přidal(a) vztah „Naklonováno“: <value/>.",
+          "removed": "odebral(a) vztah „Naklonováno“: <value/>."
+        },
+        "clones": {
+          "added": "přidal(a) vztah „Klonuje“: <value/>.",
+          "removed": "odebral(a) vztah „Klonuje“: <value/>."
+        },
         "duplicate": {
           "added": "označena tato pracovní položka jako duplikát <value/>.",
           "removed": "odebrána tato pracovní položka jako duplikát <value/>."
@@ -631,6 +653,14 @@
           "added": "označeno, že tato pracovní položka končí před <value/>.",
           "removed": "odebrán vztah „končí před“ k <value/>."
         },
+        "implemented_by": {
+          "added": "přidal(a) vztah „Implementováno“: <value/>.",
+          "removed": "odebral(a) vztah „Implementováno“: <value/>."
+        },
+        "implements": {
+          "added": "přidal(a) vztah „Implementuje“: <value/>.",
+          "removed": "odebral(a) vztah „Implementuje“: <value/>."
+        },
         "relates_to": {
           "added": "označeno, že tato pracovní položka souvisí s <value/>.",
           "removed": "odebrán vztah s <value/>."
@@ -642,6 +672,14 @@
         "start_before": {
           "added": "označeno, že tato pracovní položka začíná před <value/>.",
           "removed": "odebrán vztah „začíná před“ k <value/>."
+        },
+        "tested_by": {
+          "added": "přidal(a) vztah „Testováno“: <value/>.",
+          "removed": "odebral(a) vztah „Testováno“: <value/>."
+        },
+        "tests": {
+          "added": "přidal(a) vztah „Testuje“: <value/>.",
+          "removed": "odebral(a) vztah „Testuje“: <value/>."
         }
       },
       "restored": "obnovena pracovní položka.",

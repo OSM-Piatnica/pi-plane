@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue} 必須等到 {related} 完成後才能完成（須晚於完成關聯）。",
           "start_after": "{issue} 必須等到 {related} 開始後才能開始（須晚於開始關聯）。"
-        }
+        },
+        "self": "{issue} 不能與自身關聯。",
+        "cycle": "{issue} 與 {related} 會形成關係迴圈。請先移除相反的關係。"
       },
       "date_conflict": "這些日期與現有的相依關係衝突。請先調整相關工作項目或移除相依關係。",
       "dependency_create_failed": "無法建立相依關係，請再試一次。",

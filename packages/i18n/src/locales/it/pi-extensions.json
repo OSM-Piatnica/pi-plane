@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue} non può essere completato finché {related} non è completato (relazione di fine successiva).",
           "start_after": "{issue} non può iniziare finché {related} non è iniziato (relazione di inizio successivo)."
-        }
+        },
+        "self": "{issue} non può essere collegato a se stesso.",
+        "cycle": "{issue} e {related} formerebbero un ciclo di relazioni. Rimuovi prima la relazione opposta."
       },
       "date_conflict": "Queste date sono in conflitto con le dipendenze esistenti. Modifica gli elementi di lavoro correlati o rimuovi prima la dipendenza.",
       "dependency_create_failed": "Impossibile creare la dipendenza. Riprova.",

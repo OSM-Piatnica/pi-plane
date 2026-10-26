@@ -15,7 +15,15 @@ export type TIssueRelationTypes =
   | "start_before"
   | "start_after"
   | "finish_before"
-  | "finish_after";
+  | "finish_after"
+  | "implements"
+  | "implemented_by"
+  | "causes"
+  | "caused_by"
+  | "clones"
+  | "cloned_by"
+  | "tests"
+  | "tested_by";
 
 export type TIssueRelation = Record<TIssueRelationTypes, TIssue[]>;
 

@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue} kan pas worden voltooid als {related} is voltooid (eindigt na-relatie).",
           "start_after": "{issue} kan pas starten als {related} is gestart (start na-relatie)."
-        }
+        },
+        "self": "{issue} kan niet aan zichzelf worden gekoppeld.",
+        "cycle": "{issue} en {related} zouden een lus van relaties vormen. Verwijder eerst de tegengestelde relatie."
       },
       "date_conflict": "Deze datums conflicteren met bestaande afhankelijkheden. Pas gerelateerde werkitems aan of verwijder eerst de afhankelijkheid.",
       "dependency_create_failed": "Kon afhankelijkheid niet aanmaken. Probeer het opnieuw.",

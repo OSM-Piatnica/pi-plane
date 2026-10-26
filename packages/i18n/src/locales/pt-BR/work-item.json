@@ -200,7 +200,13 @@
       "finish_before": "Termina antes",
       "finish_after": "Termina depois",
       "implements": "Implementa",
-      "implemented_by": "Implementado por"
+      "implemented_by": "Implementado por",
+      "causes": "Causa",
+      "caused_by": "Causado por",
+      "clones": "Clona",
+      "cloned_by": "Clonado por",
+      "tests": "Testa",
+      "tested_by": "Testado por"
     },
     "copy_link": "Copiar link do item de trabalho",
     "delete": {
@@ -619,6 +625,22 @@
           "added": "marcou este item de trabalho como bloqueando o item de trabalho <value/>.",
           "removed": "removeu o item de trabalho bloqueado <value/>."
         },
+        "caused_by": {
+          "added": "adicionou a relação “Causado por”: <value/>.",
+          "removed": "removeu a relação “Causado por”: <value/>."
+        },
+        "causes": {
+          "added": "adicionou a relação “Causa”: <value/>.",
+          "removed": "removeu a relação “Causa”: <value/>."
+        },
+        "cloned_by": {
+          "added": "adicionou a relação “Clonado por”: <value/>.",
+          "removed": "removeu a relação “Clonado por”: <value/>."
+        },
+        "clones": {
+          "added": "adicionou a relação “Clona”: <value/>.",
+          "removed": "removeu a relação “Clona”: <value/>."
+        },
         "duplicate": {
           "added": "marcou este item de trabalho como duplicado de <value/>.",
           "removed": "removeu a marcação deste item de trabalho como duplicado de <value/>."
@@ -631,6 +653,14 @@
           "added": "marcou que este item de trabalho termina antes de <value/>.",
           "removed": "removeu a relação \"termina antes de\" com <value/>."
         },
+        "implemented_by": {
+          "added": "adicionou a relação “Implementado por”: <value/>.",
+          "removed": "removeu a relação “Implementado por”: <value/>."
+        },
+        "implements": {
+          "added": "adicionou a relação “Implementa”: <value/>.",
+          "removed": "removeu a relação “Implementa”: <value/>."
+        },
         "relates_to": {
           "added": "marcou que este item de trabalho está relacionado a <value/>.",
           "removed": "removeu a relação com <value/>."
@@ -642,6 +672,14 @@
         "start_before": {
           "added": "marcou que este item de trabalho começa antes de <value/>.",
           "removed": "removeu a relação \"começa antes de\" com <value/>."
+        },
+        "tested_by": {
+          "added": "adicionou a relação “Testado por”: <value/>.",
+          "removed": "removeu a relação “Testado por”: <value/>."
+        },
+        "tests": {
+          "added": "adicionou a relação “Testa”: <value/>.",
+          "removed": "removeu a relação “Testa”: <value/>."
         }
       },
       "restored": "restaurou o item de trabalho.",
