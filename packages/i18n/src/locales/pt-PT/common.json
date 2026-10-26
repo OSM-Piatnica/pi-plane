@@ -212,8 +212,8 @@
   "add_to_favorites": "Adicionar aos favoritos",
   "remove_from_favorites": "Remover dos favoritos",
   "rename_folder": "Renomear pasta",
-  "publish_project": "Publicar projeto",
-  "publish": "Publicar",
+  "publish_project": "Partilhar na web",
+  "publish": "Ativar a partilha na web",
   "copy_link": "Copiar link",
   "leave_project": "Sair do projeto",
   "join_the_project_to_rearrange": "Participe do projeto para reorganizar",
@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Ótimo! Falta só mais um passo.",
-      "description": "Introduza na barra de endereços do navegador o URL público ou a ligação da vista ou Página que está a tentar ver.",
+      "description": "Introduza na barra de endereços do navegador a ligação partilhada da vista ou da página que quer ver.",
       "image_alt": "Utilizador com sessão já iniciada"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Continuar com {provider}"
     },
     "issues": {
-      "public_board_not_found": "O quadro público não existe. Verifique o URL.",
+      "public_board_not_found": "Este projeto partilhado não existe ou já não é partilhado. Verifique o URL.",
       "cycle_tooltip": "Ciclo: {name}",
       "no_cycle": "Sem Ciclo",
       "due_date_tooltip": "Data de vencimento: {date}",

@@ -9,7 +9,7 @@
 import type { TProjectAppliedDisplayFilterKeys, TProjectOrderByOptions } from "@plane/types";
 // local imports
 
-export type TNetworkChoiceIconKey = "Shield" | "Lock" | "Globe2";
+export type TNetworkChoiceIconKey = "Shield" | "Lock" | "Users";
 
 export type TNetworkChoice = {
   key: 0 | 1 | 2;
@@ -39,7 +39,7 @@ export const NETWORK_CHOICES: TNetworkChoice[] = [
     labelKey: "Public",
     i18n_label: "workspace_projects.network.public.title",
     description: "workspace_projects.network.public.description", //"Anyone in the workspace except Guests can join",
-    iconKey: "Globe2",
+    iconKey: "Users",
   },
 ];
 

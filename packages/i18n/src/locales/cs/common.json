@@ -212,8 +212,8 @@
   "add_to_favorites": "Přidat do oblíbených",
   "remove_from_favorites": "Odebrat z oblíbených",
   "rename_folder": "Přejmenovat složku",
-  "publish_project": "Publikovat projekt",
-  "publish": "Publikovat",
+  "publish_project": "Sdílet na webu",
+  "publish": "Zapnout sdílení na webu",
   "copy_link": "Kopírovat odkaz",
   "leave_project": "Opustit projekt",
   "join_the_project_to_rearrange": "Připojte se k projektu pro změnu uspořádání",
@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Skvělé! Zbývá už jen jeden krok.",
-      "description": "Do adresního řádku prohlížeče zadejte veřejnou adresu URL nebo odkaz na zobrazení či Stránku, kterou chcete zobrazit.",
+      "description": "Do adresního řádku prohlížeče zadejte sdílený odkaz na pohled nebo stránku, kterou chcete zobrazit.",
       "image_alt": "Uživatel je již přihlášen"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Pokračovat přes {provider}"
     },
     "issues": {
-      "public_board_not_found": "Veřejná nástěnka neexistuje. Zkontrolujte prosím adresu URL.",
+      "public_board_not_found": "Tento sdílený projekt neexistuje nebo už není sdílen. Zkontrolujte adresu URL.",
       "cycle_tooltip": "Cyklus: {name}",
       "no_cycle": "Žádný cyklus",
       "due_date_tooltip": "Termín: {date}",

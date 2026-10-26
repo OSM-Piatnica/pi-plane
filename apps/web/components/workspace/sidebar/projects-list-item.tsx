@@ -23,7 +23,7 @@ import {
   MembersOutline,
   MoreHorizontalOutline,
   SettingsOutline,
-  ShareAltOutline,
+  GlobeOutline,
   StarFilled,
   StarOutline,
 } from "@makeplane/propel/icons";
@@ -468,7 +468,7 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
                       {canManageMembers && <MenuSeparator />}
                       {isAdmin && (
                         <MenuItem
-                          icon={<Icon icon={ShareAltOutline} />}
+                          icon={<Icon icon={GlobeOutline} />}
                           label={t("publish_project")}
                           onClick={() => setPublishModal(true)}
                         />

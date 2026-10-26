@@ -166,8 +166,8 @@
         "description": "Zichtbaar voor iedereen in de werkruimte; toegang vereist goedkeuring of een uitnodiging"
       },
       "public": {
-        "title": "Openbaar",
-        "description": "Iedereen in de werkruimte behalve gasten kan deelnemen"
+        "title": "Open",
+        "description": "Open voor de werkruimte: elk lid, behalve gasten, kan deelnemen"
       }
     },
     "error": {

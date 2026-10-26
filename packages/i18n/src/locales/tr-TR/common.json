@@ -212,8 +212,8 @@
   "add_to_favorites": "Favorilere ekle",
   "remove_from_favorites": "Favorilerden kaldır",
   "rename_folder": "Klasörü yeniden adlandır",
-  "publish_project": "Projeyi yayımla",
-  "publish": "Yayınla",
+  "publish_project": "Web'de paylaş",
+  "publish": "Web paylaşımını aç",
   "copy_link": "Bağlantıyı kopyala",
   "leave_project": "Projeden ayrıl",
   "join_the_project_to_rearrange": "Yeniden düzenlemek için projeye katılın",
@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Harika! Sadece bir adım kaldı.",
-      "description": "Görmeye çalıştığınız görünümün veya Sayfanın herkese açık paylaşım URL'sini ya da bağlantısını tarayıcının adres çubuğuna girin.",
+      "description": "Görmek istediğiniz görünümün veya sayfanın paylaşılan bağlantısını tarayıcının adres çubuğuna girin.",
       "image_alt": "Kullanıcı zaten giriş yapmış"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "{provider} ile devam et"
     },
     "issues": {
-      "public_board_not_found": "Herkese açık pano mevcut değil. Lütfen URL'yi kontrol edin.",
+      "public_board_not_found": "Bu paylaşılan proje mevcut değil veya artık paylaşılmıyor. Lütfen URL'yi kontrol edin.",
       "cycle_tooltip": "Döngü: {name}",
       "no_cycle": "Döngü Yok",
       "due_date_tooltip": "Son tarih: {date}",

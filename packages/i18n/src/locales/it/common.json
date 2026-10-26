@@ -212,8 +212,8 @@
   "add_to_favorites": "Aggiungi ai preferiti",
   "remove_from_favorites": "Rimuovi dai preferiti",
   "rename_folder": "Rinomina cartella",
-  "publish_project": "Pubblica progetto",
-  "publish": "Pubblica",
+  "publish_project": "Condividi sul web",
+  "publish": "Attiva la condivisione sul web",
   "copy_link": "Copia link",
   "leave_project": "Lascia progetto",
   "join_the_project_to_rearrange": "Unisciti al progetto per riorganizzare",
@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Bene! Manca solo un passaggio.",
-      "description": "Inserisci nella barra degli indirizzi del browser l’URL pubblico o il link della vista o della Pagina che desideri vedere.",
+      "description": "Inserisci nella barra degli indirizzi del browser il link condiviso della vista o della pagina che vuoi vedere.",
       "image_alt": "Utente già connesso"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Continua con {provider}"
     },
     "issues": {
-      "public_board_not_found": "La bacheca pubblica non esiste. Controlla l’URL.",
+      "public_board_not_found": "Questo progetto condiviso non esiste o non è più condiviso. Controlla l'URL.",
       "cycle_tooltip": "Ciclo: {name}",
       "no_cycle": "Nessun Ciclo",
       "due_date_tooltip": "Scadenza: {date}",

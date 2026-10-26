@@ -166,8 +166,8 @@
         "description": "Visível para todos no espaço de trabalho; o acesso requer aprovação ou convite"
       },
       "public": {
-        "title": "Público",
-        "description": "Qualquer pessoa no espaço de trabalho, exceto convidados, pode participar"
+        "title": "Aberto",
+        "description": "Aberto ao espaço de trabalho: qualquer membro, exceto convidados, pode participar"
       }
     },
     "error": {

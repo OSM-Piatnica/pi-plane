@@ -212,8 +212,8 @@
   "add_to_favorites": "添加到收藏",
   "remove_from_favorites": "从收藏中移除",
   "rename_folder": "重命名文件夹",
-  "publish_project": "发布项目",
-  "publish": "发布",
+  "publish_project": "在网络上分享",
+  "publish": "开启网络分享",
   "copy_link": "复制链接",
   "leave_project": "离开项目",
   "join_the_project_to_rearrange": "加入项目以重新排列",
@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "太好了！只差最后一步。",
-      "description": "请在浏览器地址栏中输入您想查看的视图或页面的公开分享 URL 或链接。",
+      "description": "请在浏览器地址栏中输入你要查看的视图或页面的共享链接。",
       "image_alt": "用户已登录"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "使用 {provider} 继续"
     },
     "issues": {
-      "public_board_not_found": "该公开看板不存在。请检查 URL。",
+      "public_board_not_found": "此共享项目不存在或已不再共享。请检查网址。",
       "cycle_tooltip": "周期：{name}",
       "no_cycle": "无周期",
       "due_date_tooltip": "截止日期：{date}",

@@ -445,7 +445,7 @@
       "removing_from_favorites": "Đang xóa dự án khỏi mục yêu thích..."
     },
     "confirm_member_remove": {
-      "leave_description": "Bạn có chắc chắn muốn rời khỏi dự án {name}? Bạn có thể tham gia lại nếu được mời lần nữa hoặc nếu dự án ở chế độ công khai.",
+      "leave_description": "Bạn có chắc chắn muốn rời khỏi dự án {name}? Bạn có thể tham gia lại nếu được mời lần nữa hoặc nếu dự án mở cho không gian làm việc.",
       "leave_title": "Rời khỏi dự án?",
       "remove_description": "Bạn có chắc chắn muốn xóa thành viên {name}? Họ sẽ không còn quyền truy cập vào dự án này. Hành động này không thể hoàn tác.",
       "remove_title": "Xóa {name}?"
@@ -542,15 +542,24 @@
       "allow_comments": "Cho phép bình luận",
       "allow_reactions": "Cho phép biểu cảm",
       "allow_voting": "Cho phép bỏ phiếu",
-      "anyone_with_link": "Bất kỳ ai có liên kết đều có thể truy cập",
-      "link_copied": "Đã sao chép liên kết trang đã xuất bản.",
-      "live_on_web": "Dự án này hiện đã được đăng trực tuyến",
-      "publishing": "Đang xuất bản",
-      "select_layout_error": "Vui lòng chọn ít nhất một bố cục hiển thị để xuất bản dự án.",
-      "settings_updated": "Đã cập nhật cài đặt xuất bản thành công!",
-      "unpublish": "Hủy xuất bản",
-      "unpublish_error": "Đã xảy ra lỗi khi hủy xuất bản dự án.",
-      "unpublishing": "Đang hủy xuất bản",
+      "anyone_with_link": "Bất kỳ ai trên internet có liên kết đều có thể xem dự án này, không cần tài khoản",
+      "confirm": {
+        "title": "Chia sẻ dự án này trên web?",
+        "description": "Bất kỳ ai trên internet có liên kết đều có thể xem dự án này, kể cả người ngoài không gian làm việc của bạn và người chưa đăng nhập.",
+        "can_see": "Họ sẽ xem được:",
+        "item_work_items": "tất cả mục công việc trong dự án, kèm mô tả, trạng thái, mức ưu tiên, ngày và nhãn",
+        "item_members": "tên và ảnh đại diện của các thành viên dự án",
+        "item_activity": "bình luận, biểu cảm và lượt bình chọn, kèm tên người thực hiện, nếu bạn cho phép",
+        "note": "Người xem không thể chỉnh sửa gì. Liên kết hoạt động cho đến khi bạn dừng chia sẻ, vì vậy chỉ chia sẻ dự án không chứa nội dung bí mật."
+      },
+      "link_copied": "Đã sao chép liên kết web.",
+      "live_on_web": "Dự án này được chia sẻ trên web",
+      "publishing": "Đang bật…",
+      "select_layout_error": "Vui lòng chọn ít nhất một bố cục hiển thị để chia sẻ dự án trên web.",
+      "settings_updated": "Đã cập nhật cài đặt chia sẻ trên web.",
+      "unpublish": "Dừng chia sẻ",
+      "unpublish_error": "Đã xảy ra lỗi khi tắt chia sẻ trên web.",
+      "unpublishing": "Đang tắt…",
       "update_settings": "Cập nhật cài đặt"
     },
     "rich_filters": {

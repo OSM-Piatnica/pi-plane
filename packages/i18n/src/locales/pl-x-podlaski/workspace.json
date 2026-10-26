@@ -166,8 +166,8 @@
         "description": "Widoczny dla wszystkich w przestrzeni roboczej; dostęp wymaga zatwierdzenia lub zaproszenia"
       },
       "public": {
-        "title": "Publiczny",
-        "description": "Każdy w przestrzeni, poza gośćmi, może dołączyć"
+        "title": "Otwarty",
+        "description": "Otwarty dla przestrzeni: każdy członek, poza gośćmi, może dołączyć"
       }
     },
     "error": {

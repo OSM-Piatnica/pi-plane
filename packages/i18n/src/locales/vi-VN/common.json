@@ -212,8 +212,8 @@
   "add_to_favorites": "Thêm vào mục yêu thích",
   "remove_from_favorites": "Xóa khỏi mục yêu thích",
   "rename_folder": "Đổi tên thư mục",
-  "publish_project": "Xuất bản dự án",
-  "publish": "Xuất bản",
+  "publish_project": "Chia sẻ trên web",
+  "publish": "Bật chia sẻ trên web",
   "copy_link": "Sao chép liên kết",
   "leave_project": "Rời dự án",
   "join_the_project_to_rearrange": "Tham gia dự án để sắp xếp lại",
@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Tuyệt! Chỉ còn một bước nữa.",
-      "description": "Nhập URL chia sẻ công khai hoặc liên kết của chế độ xem hoặc Trang bạn muốn xem vào thanh địa chỉ của trình duyệt.",
+      "description": "Nhập liên kết được chia sẻ của chế độ xem hoặc trang bạn muốn xem vào thanh địa chỉ của trình duyệt.",
       "image_alt": "Người dùng đã đăng nhập"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Tiếp tục với {provider}"
     },
     "issues": {
-      "public_board_not_found": "Bảng công khai không tồn tại. Vui lòng kiểm tra URL.",
+      "public_board_not_found": "Dự án được chia sẻ này không tồn tại hoặc không còn được chia sẻ. Vui lòng kiểm tra URL.",
       "cycle_tooltip": "Chu kỳ: {name}",
       "no_cycle": "Không có Chu kỳ",
       "due_date_tooltip": "Ngày hết hạn: {date}",

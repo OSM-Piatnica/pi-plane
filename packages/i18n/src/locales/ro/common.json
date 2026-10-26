@@ -212,8 +212,8 @@
   "add_to_favorites": "Adaugă la favorite",
   "remove_from_favorites": "Elimină din favorite",
   "rename_folder": "Redenumește folderul",
-  "publish_project": "Publică proiectul",
-  "publish": "Publică",
+  "publish_project": "Partajează pe web",
+  "publish": "Activează partajarea pe web",
   "copy_link": "Copiază link-ul",
   "leave_project": "Părăsește proiectul",
   "join_the_project_to_rearrange": "Alătură-te proiectului pentru a rearanja",
@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Excelent! Încă un pas.",
-      "description": "Introdu în bara de adrese a browserului adresa URL publică sau linkul către vizualizarea sau pagina pe care vrei să o vezi.",
+      "description": "Introdu în bara de adrese a browserului linkul partajat al vizualizării sau al paginii pe care vrei să o vezi.",
       "image_alt": "Utilizatorul este deja autentificat"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Continuă cu {provider}"
     },
     "issues": {
-      "public_board_not_found": "Panoul public nu există. Verifică adresa URL.",
+      "public_board_not_found": "Acest proiect partajat nu există sau nu mai este partajat. Verifică adresa URL.",
       "cycle_tooltip": "Ciclu: {name}",
       "no_cycle": "Fără ciclu",
       "due_date_tooltip": "Data limită: {date}",

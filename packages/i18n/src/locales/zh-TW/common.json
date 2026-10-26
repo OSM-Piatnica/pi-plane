@@ -212,8 +212,8 @@
   "add_to_favorites": "加入我的最愛",
   "remove_from_favorites": "從我的最愛移除",
   "rename_folder": "重新命名文件夾",
-  "publish_project": "發佈專案",
-  "publish": "發布",
+  "publish_project": "在網路上分享",
+  "publish": "開啟網路分享",
   "copy_link": "複製連結",
   "leave_project": "離開專案",
   "join_the_project_to_rearrange": "加入專案以重新排列",
@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "太好了！只差最後一步。",
-      "description": "請在瀏覽器網址列中輸入您想檢視的檢視或頁面的公開分享 URL 或連結。",
+      "description": "請在瀏覽器網址列中輸入你要檢視的檢視或頁面的共用連結。",
       "image_alt": "使用者已登入"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "使用 {provider} 繼續"
     },
     "issues": {
-      "public_board_not_found": "此公開看板不存在。請檢查 URL。",
+      "public_board_not_found": "此共用專案不存在或已不再共用。請檢查網址。",
       "cycle_tooltip": "週期：{name}",
       "no_cycle": "無週期",
       "due_date_tooltip": "截止日期：{date}",

@@ -166,8 +166,8 @@
         "description": "工作区内所有人可见;访问需要批准或邀请"
       },
       "public": {
-        "title": "公开",
-        "description": "工作区中除访客外的任何人都可以加入"
+        "title": "开放",
+        "description": "对工作区开放：除访客外的任何成员都可以加入"
       }
     },
     "error": {

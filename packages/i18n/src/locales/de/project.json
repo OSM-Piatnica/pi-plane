@@ -445,7 +445,7 @@
       "removing_from_favorites": "Projekt wird aus Favoriten entfernt..."
     },
     "confirm_member_remove": {
-      "leave_description": "Möchten Sie das Projekt {name} wirklich verlassen? Sie können wieder beitreten, wenn Sie erneut eingeladen werden oder das Projekt öffentlich ist.",
+      "leave_description": "Möchten Sie das Projekt {name} wirklich verlassen? Sie können wieder beitreten, wenn Sie erneut eingeladen werden oder das Projekt für den Arbeitsbereich offen ist.",
       "leave_title": "Projekt verlassen?",
       "remove_description": "Möchten Sie das Mitglied {name} wirklich entfernen? Es hat dann keinen Zugriff mehr auf dieses Projekt. Diese Aktion kann nicht rückgängig gemacht werden.",
       "remove_title": "{name} entfernen?"
@@ -542,15 +542,24 @@
       "allow_comments": "Kommentare zulassen",
       "allow_reactions": "Reaktionen zulassen",
       "allow_voting": "Abstimmung zulassen",
-      "anyone_with_link": "Jeder mit dem Link hat Zugriff",
-      "link_copied": "Link zur veröffentlichten Seite erfolgreich kopiert.",
-      "live_on_web": "Dieses Projekt ist jetzt im Web live",
-      "publishing": "Wird veröffentlicht",
-      "select_layout_error": "Bitte wählen Sie mindestens ein Ansichtslayout aus, um das Projekt zu veröffentlichen.",
-      "settings_updated": "Veröffentlichungseinstellungen erfolgreich aktualisiert!",
-      "unpublish": "Veröffentlichung aufheben",
-      "unpublish_error": "Beim Aufheben der Veröffentlichung des Projekts ist etwas schiefgelaufen.",
-      "unpublishing": "Veröffentlichung wird aufgehoben",
+      "anyone_with_link": "Jeder im Internet mit dem Link kann dieses Projekt ansehen, ohne Konto",
+      "confirm": {
+        "title": "Dieses Projekt im Web teilen?",
+        "description": "Jeder im Internet, der den Link hat, kann dieses Projekt ansehen, auch Personen außerhalb deines Arbeitsbereichs und nicht angemeldete Personen.",
+        "can_see": "Sie können sehen:",
+        "item_work_items": "alle Arbeitselemente des Projekts mit Beschreibung, Status, Priorität, Terminen und Labels",
+        "item_members": "die Namen und Avatare der Projektmitglieder",
+        "item_activity": "Kommentare, Reaktionen und Stimmen mit den Namen der Personen dahinter, wenn du sie erlaubst",
+        "note": "Betrachter können nichts bearbeiten. Der Link funktioniert, bis du die Freigabe beendest. Teile deshalb nur ein Projekt ohne vertrauliche Inhalte."
+      },
+      "link_copied": "Web-Link kopiert.",
+      "live_on_web": "Dieses Projekt ist im Web geteilt",
+      "publishing": "Wird aktiviert…",
+      "select_layout_error": "Bitte wähle mindestens ein Ansichtslayout, um das Projekt im Web zu teilen.",
+      "settings_updated": "Einstellungen der Web-Freigabe aktualisiert.",
+      "unpublish": "Freigabe beenden",
+      "unpublish_error": "Beim Deaktivieren der Web-Freigabe ist etwas schiefgelaufen.",
+      "unpublishing": "Wird deaktiviert…",
       "update_settings": "Einstellungen aktualisieren"
     },
     "rich_filters": {

@@ -445,7 +445,7 @@
       "removing_from_favorites": "正在將專案從我的最愛移除..."
     },
     "confirm_member_remove": {
-      "leave_description": "確定要離開專案 {name} 嗎？如果再次受邀或專案為公開，您可以重新加入。",
+      "leave_description": "確定要離開專案 {name} 嗎？如果再次受邀或專案對工作區開放，您可以重新加入。",
       "leave_title": "離開專案？",
       "remove_description": "確定要移除成員 {name} 嗎？他們將無法再存取此專案。此操作無法復原。",
       "remove_title": "移除 {name}？"
@@ -542,15 +542,24 @@
       "allow_comments": "允許留言",
       "allow_reactions": "允許回應表情",
       "allow_voting": "允許投票",
-      "anyone_with_link": "任何擁有連結的人都可以存取",
-      "link_copied": "已成功複製已發佈頁面的連結。",
-      "live_on_web": "此專案現已在網路上發佈",
-      "publishing": "發佈中",
-      "select_layout_error": "請至少選擇一種檢視版面配置以發佈專案。",
-      "settings_updated": "發佈設定已成功更新！",
-      "unpublish": "取消發佈",
-      "unpublish_error": "取消發佈專案時發生錯誤。",
-      "unpublishing": "正在取消發佈",
+      "anyone_with_link": "任何擁有連結的網際網路使用者無需帳號即可檢視此專案",
+      "confirm": {
+        "title": "要在網路上分享此專案嗎？",
+        "description": "任何擁有連結的網際網路使用者都能檢視此專案，包括工作區以外的人和未登入的人。",
+        "can_see": "他們將看到：",
+        "item_work_items": "專案中的所有工作事項，包括描述、狀態、優先順序、日期和標籤",
+        "item_members": "專案成員的姓名和頭像",
+        "item_activity": "留言、表情回應和投票（如果你允許），以及相應使用者的姓名",
+        "note": "檢視者無法編輯任何內容。連結在你停止分享之前一直有效，因此請只分享不含機密內容的專案。"
+      },
+      "link_copied": "已複製網路連結。",
+      "live_on_web": "此專案已在網路上分享",
+      "publishing": "正在開啟…",
+      "select_layout_error": "請至少選擇一種檢視版面，才能在網路上分享專案。",
+      "settings_updated": "網路分享設定已更新。",
+      "unpublish": "停止分享",
+      "unpublish_error": "關閉網路分享時發生錯誤。",
+      "unpublishing": "正在關閉…",
       "update_settings": "更新設定"
     },
     "rich_filters": {

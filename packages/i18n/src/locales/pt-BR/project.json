@@ -445,7 +445,7 @@
       "removing_from_favorites": "Removendo projeto dos favoritos..."
     },
     "confirm_member_remove": {
-      "leave_description": "Tem certeza de que deseja sair do projeto {name}? Você poderá entrar novamente se for convidado de novo ou se o projeto for público.",
+      "leave_description": "Tem certeza de que deseja sair do projeto {name}? Você poderá entrar novamente se for convidado de novo ou se o projeto estiver aberto ao espaço de trabalho.",
       "leave_title": "Sair do projeto?",
       "remove_description": "Tem certeza de que deseja remover o membro {name}? Ele não terá mais acesso a este projeto. Esta ação não pode ser desfeita.",
       "remove_title": "Remover {name}?"
@@ -542,15 +542,24 @@
       "allow_comments": "Permitir comentários",
       "allow_reactions": "Permitir reações",
       "allow_voting": "Permitir votação",
-      "anyone_with_link": "Qualquer pessoa com o link pode acessar",
-      "link_copied": "Link da página publicada copiado com sucesso.",
-      "live_on_web": "Este projeto está agora no ar na web",
-      "publishing": "Publicando",
-      "select_layout_error": "Selecione pelo menos um layout de visualização para publicar o projeto.",
-      "settings_updated": "Configurações de publicação atualizadas com sucesso!",
-      "unpublish": "Cancelar publicação",
-      "unpublish_error": "Algo deu errado ao cancelar a publicação do projeto.",
-      "unpublishing": "Cancelando publicação",
+      "anyone_with_link": "Qualquer pessoa na internet com o link pode ver este projeto, sem precisar de conta",
+      "confirm": {
+        "title": "Compartilhar este projeto na web?",
+        "description": "Qualquer pessoa na internet que tenha o link poderá ver este projeto, inclusive pessoas de fora do seu espaço de trabalho e sem login.",
+        "can_see": "Elas poderão ver:",
+        "item_work_items": "todos os itens de trabalho do projeto, com descrição, status, prioridade, datas e etiquetas",
+        "item_members": "os nomes e avatares dos membros do projeto",
+        "item_activity": "comentários, reações e votos, com o nome de quem os fez, se você permitir",
+        "note": "Quem visualiza não pode editar nada. O link continua funcionando até você parar de compartilhar, então compartilhe apenas um projeto sem conteúdo confidencial."
+      },
+      "link_copied": "Link da web copiado.",
+      "live_on_web": "Este projeto está compartilhado na web",
+      "publishing": "Ativando…",
+      "select_layout_error": "Selecione pelo menos um layout de visualização para compartilhar o projeto na web.",
+      "settings_updated": "Configurações de compartilhamento na web atualizadas.",
+      "unpublish": "Parar de compartilhar",
+      "unpublish_error": "Algo deu errado ao desativar o compartilhamento na web.",
+      "unpublishing": "Desativando…",
       "update_settings": "Atualizar configurações"
     },
     "rich_filters": {
