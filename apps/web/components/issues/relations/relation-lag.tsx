@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
 import { setToast } from "@plane/blocks/toast";
@@ -30,8 +30,13 @@ type Props = {
 export const isLagRelation = (relationKey: TIssueRelationTypes) =>
   (TIMELINE_RELATION_TYPES as string[]).includes(relationKey);
 
-/** Days of lag of a timeline relation, shown and edited next to the related work item. */
-export const RelationLag = observer(function RelationLag(props: Props) {
+type TInputProps = Props & { lag: number };
+
+/**
+ * The field itself. It is keyed on the stored lag by its parent, so it starts again from the stored value when that
+ * changes from elsewhere or when a change is refused, without an effect resetting its state.
+ */
+const RelationLagInput = observer(function RelationLagInput(props: TInputProps) {
   const {
     workspaceSlug,
     projectId,
@@ -39,17 +44,14 @@ export const RelationLag = observer(function RelationLag(props: Props) {
     relationKey,
     relatedIssueId,
     disabled,
+    lag,
     issueServiceType = EIssueServiceType.ISSUES,
   } = props;
   const { t } = useTranslation();
   const {
-    relation: { getRelationLag, updateRelationLag },
+    relation: { updateRelationLag },
   } = useIssueDetail(issueServiceType);
-  const lag = getRelationLag(issueId, relationKey, relatedIssueId);
   const [draft, setDraft] = useState(String(lag));
-
-  // follow the stored lag when it changes from elsewhere, or when a change is refused
-  useEffect(() => setDraft(String(lag)), [lag]);
 
   const commit = async () => {
     const parsed = Number(draft);
@@ -75,8 +77,6 @@ export const RelationLag = observer(function RelationLag(props: Props) {
     }
   };
 
-  if (disabled && lag === 0) return null;
-
   return (
     <label className="flex items-center gap-1 text-11 text-tertiary" title={t("issue.relation.lag.hint")}>
       <span>{t("issue.relation.lag.label")}</span>
@@ -101,4 +101,17 @@ export const RelationLag = observer(function RelationLag(props: Props) {
       />
     </label>
   );
+});
+
+/** Days of lag of a timeline relation, shown and edited next to the related work item. */
+export const RelationLag = observer(function RelationLag(props: Props) {
+  const { issueId, relationKey, relatedIssueId, disabled, issueServiceType = EIssueServiceType.ISSUES } = props;
+  const {
+    relation: { getRelationLag },
+  } = useIssueDetail(issueServiceType);
+  const lag = getRelationLag(issueId, relationKey, relatedIssueId);
+
+  if (disabled && lag === 0) return null;
+
+  return <RelationLagInput key={lag} {...props} lag={lag} />;
 });
