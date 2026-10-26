@@ -20,7 +20,7 @@ from plane.utils.exception_logger import log_exception
 
 
 @shared_task
-def send_email_update_magic_code(email, token):
+def send_email_update_one_time_code(email, token):
     try:
         (
             EMAIL_HOST,
@@ -36,7 +36,7 @@ def send_email_update_magic_code(email, token):
         subject = "Verify your new email address"
         context = {"code": token, "email": email}
 
-        html_content = render_to_string("emails/auth/magic_signin.html", context)
+        html_content = render_to_string("emails/auth/one_time_code_signin.html", context)
         text_content = generate_plain_text_from_html(html_content)
 
         connection = get_connection(

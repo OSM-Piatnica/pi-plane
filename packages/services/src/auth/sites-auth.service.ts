@@ -40,12 +40,12 @@ export class SitesAuthService extends APIService {
   }
 
   /**
-   * Generates a unique code for magic link authentication
+   * Generates a one-time code for email sign-in
    * @param {{ email: string }} data - Object containing the email address
-   * @returns {Promise<any>} Response containing the generated unique code
+   * @returns {Promise<any>} Response containing the generated one-time code
    * @throws {Error} Throws response data if the request fails
    */
-  async generateUniqueCode(data: { email: string }): Promise<any> {
+  async generateOneTimeCode(data: { email: string }): Promise<any> {
     return this.post("/auth/spaces/magic-generate/", data, { headers: {} })
       .then((response) => response?.data)
       .catch((error) => {

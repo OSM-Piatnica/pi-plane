@@ -6,7 +6,7 @@
  */
 
 export type TCoreInstanceAuthenticationModeKeys =
-  | "unique-codes"
+  | "one-time-codes"
   | "passwords-login"
   | "github"
   | "gitlab"

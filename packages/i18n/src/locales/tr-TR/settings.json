@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Benzersiz kod",
+            "label": "Tek kullanımlık kod",
             "placeholder": "123456",
             "helper_text": "Doğrulama kodu yeni e-postanıza gönderildi.",
             "errors": {
-              "required": "Benzersiz kod zorunludur",
+              "required": "Tek kullanımlık kod gerekli",
               "invalid": "Geçersiz doğrulama kodu. Lütfen tekrar deneyin."
             }
           }

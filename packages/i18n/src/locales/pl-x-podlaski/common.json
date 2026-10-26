@@ -1414,7 +1414,7 @@
       "duration": "Czas trwania"
     },
     "auth_labels": {
-      "magic_code": "Kod jednorazowy"
+      "one_time_code": "Kod jednorazowy"
     },
     "state_groups": {
       "canceled": "Anulowane"
@@ -1445,7 +1445,7 @@
       "description": "Wpisz w pasku adresu przeglądarki publiczny adres URL lub link do widoku albo Strony, którą chcesz zobaczyć.",
       "image_alt": "Użytkownik jest już zalogowany"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Wyślij ponownie za {seconds} s"
     },
     "oauth": {

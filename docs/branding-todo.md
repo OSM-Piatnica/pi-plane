@@ -7,7 +7,7 @@ The Pi-Plane logo replaced the Plane logo in the apps, icons, spinners and READM
 Email clients can't use embedded or repo-relative images reliably, so the logo must be a public HTTPS URL. These 11 templates under `apps/api/templates/emails/` point at `https://media.docs.plane.so/logo/new-logo-dark.png`:
 
 - `auth/forgot_password.html`
-- `auth/magic_signin.html`
+- `auth/one_time_code_signin.html`
 - `exports/analytics.html`
 - `invitations/workspace_invitation.html`
 - `notifications/issue-updates.html`

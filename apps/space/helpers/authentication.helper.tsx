@@ -51,7 +51,7 @@ export enum EAuthenticationErrorCodes {
   INVALID_EMAIL_SIGN_IN = "5075",
   INVALID_EMAIL_MAGIC_SIGN_IN = "5080",
   MAGIC_SIGN_IN_EMAIL_CODE_REQUIRED = "5085",
-  // Both Sign in and Sign up for magic
+  // Both Sign in and Sign up for one-time codes
   INVALID_MAGIC_CODE_SIGN_IN = "5090",
   INVALID_MAGIC_CODE_SIGN_UP = "5092",
   EXPIRED_MAGIC_CODE_SIGN_IN = "5095",
@@ -230,27 +230,27 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
   // Both Sign in and Sign up
   [EAuthenticationErrorCodes.INVALID_MAGIC_CODE_SIGN_IN]: {
     title: "auth.error_alerts.titles.authentication_failed",
-    message: tryAgain("auth.error_alerts.titles.invalid_magic_code"),
+    message: tryAgain("auth.error_alerts.titles.invalid_one_time_code"),
   },
   [EAuthenticationErrorCodes.INVALID_MAGIC_CODE_SIGN_UP]: {
     title: "auth.error_alerts.titles.authentication_failed",
-    message: tryAgain("auth.error_alerts.titles.invalid_magic_code"),
+    message: tryAgain("auth.error_alerts.titles.invalid_one_time_code"),
   },
   [EAuthenticationErrorCodes.EXPIRED_MAGIC_CODE_SIGN_IN]: {
-    title: "auth.error_alerts.titles.expired_magic_code",
-    message: tryAgain("auth.error_alerts.titles.expired_magic_code"),
+    title: "auth.error_alerts.titles.expired_one_time_code",
+    message: tryAgain("auth.error_alerts.titles.expired_one_time_code"),
   },
   [EAuthenticationErrorCodes.EXPIRED_MAGIC_CODE_SIGN_UP]: {
-    title: "auth.error_alerts.titles.expired_magic_code",
-    message: tryAgain("auth.error_alerts.titles.expired_magic_code"),
+    title: "auth.error_alerts.titles.expired_one_time_code",
+    message: tryAgain("auth.error_alerts.titles.expired_one_time_code"),
   },
   [EAuthenticationErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_IN]: {
-    title: "auth.error_alerts.titles.expired_magic_code",
-    message: tryAgain("auth.error_alerts.titles.expired_magic_code"),
+    title: "auth.error_alerts.titles.one_time_code_attempts_exhausted",
+    message: (t) => t("auth.error_alerts.one_time_code_attempts_exhausted_message"),
   },
   [EAuthenticationErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_UP]: {
-    title: "auth.error_alerts.titles.expired_magic_code",
-    message: tryAgain("auth.error_alerts.titles.expired_magic_code"),
+    title: "auth.error_alerts.titles.one_time_code_attempts_exhausted",
+    message: (t) => t("auth.error_alerts.one_time_code_attempts_exhausted_message"),
   },
 
   // Oauth

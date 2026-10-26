@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{% etr "magic_code.subject" code=code %}</title>
+    <title>{% etr "one_time_code.subject" code=code %}</title>
 
     <style>
       /* Basic resets for email clients */
@@ -78,7 +78,7 @@
         visibility: hidden;
       "
     >
-      {% etr "magic_code.preheader" code=code %}
+      {% etr "one_time_code.preheader" code=code %}
     </span>
 
     <!-- Outer Wrapper -->
@@ -127,7 +127,7 @@
 
                   <!-- Heading -->
                   <h1 style="margin: 0 0 12px; font-size: 22px; line-height: 1.35; font-weight: 600; color: #111111">
-                    {% etr "magic_code.heading" %}
+                    {% etr "one_time_code.heading" %}
                   </h1>
 
                   <!-- Code chip -->
@@ -153,12 +153,12 @@
 
                   <!-- Main info -->
                   <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #5f5e5e">
-                    {% etr "magic_code.info" %}
+                    {% etr "one_time_code.info" %}
                   </p>
 
                   <!-- Secondary info -->
                   <p style="margin: 16px 0 0; font-size: 13px; line-height: 1.6; color: #5f5e5e">
-                    {% etr "magic_code.note" email=email span_style="font-family: 'Courier New', Courier, monospace; font-size: 12px; background-color: #f3f3f3; padding: 2px 4px; border-radius: 3px; border: 1px solid #e9e9e9;" %}
+                    {% etr "one_time_code.note" email=email span_style="font-family: 'Courier New', Courier, monospace; font-size: 12px; background-color: #f3f3f3; padding: 2px 4px; border-radius: 3px; border: 1px solid #e9e9e9;" %}
                   </p>
                 </td>
               </tr>

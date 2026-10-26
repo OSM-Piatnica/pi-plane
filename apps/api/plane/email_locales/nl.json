@@ -111,8 +111,8 @@
     "button": "Project openen",
     "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span> omdat u hebt gevraagd om lid te worden van dit project."
   },
-  "magic_code": {
-    "subject": "Uw unieke Pi-Plane-inlogcode is {code}",
+  "one_time_code": {
+    "subject": "Uw eenmalige Pi-Plane-inlogcode is {code}",
     "preheader": "Uw Pi-Plane-inlogcode {code} is 10 minuten geldig.",
     "heading": "Uw inlogcode voor Pi-Plane",
     "info": "Deze code is de komende 10 minuten geldig. Voer hem in op de inlogpagina om het inloggen te voltooien.",

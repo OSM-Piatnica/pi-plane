@@ -103,8 +103,8 @@
     "button": "打开项目",
     "note": "注意：此邮件发送至 <span>{email}</span>，因为您请求加入此项目。"
   },
-  "magic_code": {
-    "subject": "您的 Pi-Plane 唯一登录码是 {code}",
+  "one_time_code": {
+    "subject": "您的 Pi-Plane 一次性登录码是 {code}",
     "preheader": "您的 Pi-Plane 登录码 {code} 有效期为 10 分钟。",
     "heading": "您的 Pi-Plane 登录码",
     "info": "此验证码在接下来的 10 分钟内有效。请在登录页面输入以完成登录。",

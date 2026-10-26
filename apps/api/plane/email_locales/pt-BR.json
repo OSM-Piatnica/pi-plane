@@ -111,8 +111,8 @@
     "button": "Abrir o projeto",
     "note": "Observação: este e-mail foi enviado para <span>{email}</span> porque você pediu para entrar neste projeto."
   },
-  "magic_code": {
-    "subject": "Seu código de login único do Pi-Plane é {code}",
+  "one_time_code": {
+    "subject": "Seu código de login de uso único do Pi-Plane é {code}",
     "preheader": "Seu código de login do Pi-Plane {code} é válido por 10 minutos.",
     "heading": "Seu código de login do Pi-Plane",
     "info": "Este código é válido pelos próximos 10 minutos. Digite-o na página de login para concluir o acesso.",

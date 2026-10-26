@@ -23,7 +23,7 @@ from plane.utils.exception_logger import log_exception
 
 
 @shared_task
-def magic_link(email, key, token, accept_language=None):
+def send_one_time_code(email, key, token, accept_language=None):
     try:
         (
             EMAIL_HOST,
@@ -41,10 +41,10 @@ def magic_link(email, key, token, accept_language=None):
         language = (
             user_language(user) if user and hasattr(user, "profile") else language_from_accept_header(accept_language)
         )
-        subject = translate(language, "magic_code.subject", code=token)
+        subject = translate(language, "one_time_code.subject", code=token)
         context = {"code": token, "email": email, "email_language": language}
 
-        html_content = render_to_string("emails/auth/magic_signin.html", context)
+        html_content = render_to_string("emails/auth/one_time_code_signin.html", context)
         text_content = generate_plain_text_from_html(html_content)
 
         connection = get_connection(

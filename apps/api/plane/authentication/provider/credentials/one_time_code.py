@@ -20,7 +20,7 @@ from plane.authentication.adapter.error import (
 from plane.db.models import User
 
 
-class MagicCodeProvider(CredentialAdapter):
+class OneTimeCodeProvider(CredentialAdapter):
     provider = "magic-code"
 
     # Max wrong-code verification attempts per issued token before the token
@@ -89,7 +89,7 @@ class MagicCodeProvider(CredentialAdapter):
 
         ri = redis_instance()
 
-        key = "magic_" + str(self.key)
+        key = "one_time_code_" + str(self.key)
 
         issued = int(
             ri.eval(
@@ -134,7 +134,7 @@ class MagicCodeProvider(CredentialAdapter):
 
     def set_user_data(self):
         ri = redis_instance()
-        email = str(self.key).replace("magic_", "", 1)
+        email = str(self.key).replace("one_time_code_", "", 1)
         attempts_key = self._verify_attempts_key(self.key)
         if ri.exists(self.key):
             # Count the attempt before comparing, so at most MAX_VERIFY_ATTEMPTS

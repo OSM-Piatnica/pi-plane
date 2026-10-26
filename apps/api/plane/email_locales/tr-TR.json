@@ -111,8 +111,8 @@
     "button": "Projeyi aç",
     "note": "Not: Bu e-posta, bu projeye katılmak istediğiniz için <span>{email}</span> adresine gönderildi."
   },
-  "magic_code": {
-    "subject": "Pi-Plane benzersiz giriş kodunuz: {code}",
+  "one_time_code": {
+    "subject": "Pi-Plane tek kullanımlık giriş kodunuz: {code}",
     "preheader": "Pi-Plane giriş kodunuz {code} 10 dakika geçerlidir.",
     "heading": "Pi-Plane giriş kodunuz",
     "info": "Bu kod önümüzdeki 10 dakika boyunca geçerlidir. Girişi tamamlamak için giriş sayfasına girin.",

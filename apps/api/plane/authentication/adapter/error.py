@@ -3,6 +3,9 @@
 # Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
+# The feature is called "one-time code" everywhere else, but the MAGIC_* names
+# below are kept as they are because they are sent to clients (web/space/admin
+# match on them) and changing them would be a breaking wire change.
 AUTHENTICATION_ERROR_CODES = {
     # Global
     "INSTANCE_NOT_CONFIGURED": 5000,
@@ -32,7 +35,7 @@ AUTHENTICATION_ERROR_CODES = {
     "INVALID_EMAIL_SIGN_IN": 5075,
     "INVALID_EMAIL_MAGIC_SIGN_IN": 5080,
     "MAGIC_SIGN_IN_EMAIL_CODE_REQUIRED": 5085,
-    # Both Sign in and Sign up for magic
+    # Both Sign in and Sign up for one-time codes
     "INVALID_MAGIC_CODE_SIGN_IN": 5090,
     "INVALID_MAGIC_CODE_SIGN_UP": 5092,
     "EXPIRED_MAGIC_CODE_SIGN_IN": 5095,

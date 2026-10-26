@@ -119,8 +119,8 @@
     "button": "Otevřít projekt",
     "note": "Poznámka: Tento e-mail byl odeslán na adresu <span>{email}</span>, protože jste požádali o připojení k tomuto projektu."
   },
-  "magic_code": {
-    "subject": "Váš jedinečný přihlašovací kód do Pi-Plane je {code}",
+  "one_time_code": {
+    "subject": "Váš jednorázový přihlašovací kód do Pi-Plane je {code}",
     "preheader": "Váš přihlašovací kód do Pi-Plane {code} platí 10 minut.",
     "heading": "Váš přihlašovací kód do Pi-Plane",
     "info": "Tento kód platí následujících 10 minut. Zadejte jej na přihlašovací stránce a dokončete přihlášení.",

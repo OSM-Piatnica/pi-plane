@@ -10,7 +10,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from plane.authentication.provider.credentials.magic_code import MagicCodeProvider
+from plane.authentication.provider.credentials.one_time_code import OneTimeCodeProvider
 from plane.authentication.rate_limit import AuthenticationThrottle
 from plane.db.models import User
 
@@ -35,7 +35,7 @@ def _clear_throttle_state():
 @pytest.fixture
 def mock_email_tasks():
     with (
-        patch("plane.app.views.user.base.send_email_update_magic_code.delay") as send_code,
+        patch("plane.app.views.user.base.send_email_update_one_time_code.delay") as send_code,
         patch("plane.app.views.user.base.send_email_update_confirmation.delay"),
     ):
         yield send_code
@@ -61,7 +61,7 @@ class TestUserEmailChangeVerification:
         code = _generate_code(session_client, mock_email_tasks)
         url = reverse("user-email-update")
 
-        for _ in range(MagicCodeProvider.MAX_VERIFY_ATTEMPTS):
+        for _ in range(OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS):
             response = session_client.patch(url, {"email": NEW_EMAIL, "code": _wrong_code(code)}, format="json")
             assert response.status_code == status.HTTP_400_BAD_REQUEST
 
@@ -76,7 +76,7 @@ class TestUserEmailChangeVerification:
         code = _generate_code(session_client, mock_email_tasks)
         url = reverse("user-email-update")
 
-        for _ in range(MagicCodeProvider.MAX_VERIFY_ATTEMPTS - 1):
+        for _ in range(OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS - 1):
             session_client.patch(url, {"email": NEW_EMAIL, "code": _wrong_code(code)}, format="json")
 
         response = session_client.patch(url, {"email": NEW_EMAIL, "code": code}, format="json")
@@ -89,8 +89,8 @@ class TestUserEmailChangeVerification:
         """Attempts are counted before the code is compared, so a used-up budget rejects even the correct code."""
         code = _generate_code(session_client, mock_email_tasks)
         cache.set(
-            f"magic_email_update_{create_user.id}_{NEW_EMAIL}:verify_attempts",
-            MagicCodeProvider.MAX_VERIFY_ATTEMPTS,
+            f"one_time_code_email_update_{create_user.id}_{NEW_EMAIL}:verify_attempts",
+            OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS,
             timeout=600,
         )
 
@@ -105,7 +105,7 @@ class TestUserEmailChangeVerification:
     ):
         """The code is read after the attempt is counted, so a concurrent invalidation is honoured."""
         code = _generate_code(session_client, mock_email_tasks)
-        code_key = f"magic_email_update_{create_user.id}_{NEW_EMAIL}"
+        code_key = f"one_time_code_email_update_{create_user.id}_{NEW_EMAIL}"
         real_incr = cache.incr
 
         def incr_then_invalidate(key, *args, **kwargs):

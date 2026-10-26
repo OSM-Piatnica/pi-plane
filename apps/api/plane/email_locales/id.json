@@ -103,8 +103,8 @@
     "button": "Buka proyek",
     "note": "Catatan: Email ini dikirim ke <span>{email}</span> karena Anda meminta bergabung dengan proyek ini."
   },
-  "magic_code": {
-    "subject": "Kode masuk Pi-Plane unik Anda adalah {code}",
+  "one_time_code": {
+    "subject": "Kode masuk Pi-Plane sekali pakai Anda adalah {code}",
     "preheader": "Kode masuk Pi-Plane Anda {code} berlaku selama 10 menit.",
     "heading": "Kode masuk Anda untuk Pi-Plane",
     "info": "Kode ini berlaku selama 10 menit ke depan. Masukkan di halaman masuk untuk menyelesaikan proses masuk.",

@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Unique code",
+            "label": "One-time code",
             "placeholder": "123456",
             "helper_text": "Verification code sent to your new email.",
             "errors": {
-              "required": "Unique code is required",
+              "required": "One-time code is required",
               "invalid": "Invalid verification code. Please try again."
             }
           }

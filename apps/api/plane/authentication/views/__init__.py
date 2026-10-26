@@ -12,7 +12,7 @@ from .app.github import GitHubCallbackEndpoint, GitHubOauthInitiateEndpoint
 from .app.gitlab import GitLabCallbackEndpoint, GitLabOauthInitiateEndpoint
 from .app.gitea import GiteaCallbackEndpoint, GiteaOauthInitiateEndpoint
 from .oidc import OidcCallbackEndpoint, OidcInitiateEndpoint, OidcSpaceInitiateEndpoint
-from .app.magic import MagicGenerateEndpoint, MagicSignInEndpoint, MagicSignUpEndpoint
+from .app.one_time_code import OneTimeCodeGenerateEndpoint, OneTimeCodeSignInEndpoint, OneTimeCodeSignUpEndpoint
 
 from .app.signout import SignOutAuthEndpoint
 
@@ -25,10 +25,10 @@ from .space.gitlab import GitLabCallbackSpaceEndpoint, GitLabOauthInitiateSpaceE
 
 from .space.gitea import GiteaCallbackSpaceEndpoint, GiteaOauthInitiateSpaceEndpoint
 
-from .space.magic import (
-    MagicGenerateSpaceEndpoint,
-    MagicSignInSpaceEndpoint,
-    MagicSignUpSpaceEndpoint,
+from .space.one_time_code import (
+    OneTimeCodeGenerateSpaceEndpoint,
+    OneTimeCodeSignInSpaceEndpoint,
+    OneTimeCodeSignUpSpaceEndpoint,
 )
 
 from .space.signout import SignOutAuthSpaceEndpoint

@@ -7,6 +7,7 @@
 from django.core.validators import validate_email
 from django.http import HttpResponseRedirect
 from django.views import View
+from django.utils.http import url_has_allowed_host_and_scheme
 
 # Third party imports
 from rest_framework import status
@@ -15,14 +16,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 # Module imports
-from plane.authentication.provider.credentials.magic_code import MagicCodeProvider
+from plane.authentication.provider.credentials.one_time_code import OneTimeCodeProvider
 from plane.authentication.utils.login import user_login
-from plane.authentication.utils.redirection_path import get_redirection_path
-from plane.authentication.utils.user_auth_workflow import post_user_auth_workflow
-from plane.bgtasks.magic_link_code_task import magic_link
+from plane.bgtasks.one_time_code_task import send_one_time_code
 from plane.license.models import Instance
 from plane.authentication.utils.host import base_host
-from plane.db.models import User, Profile
+from plane.db.models import User
 from plane.authentication.adapter.error import (
     AuthenticationException,
     AUTHENTICATION_ERROR_CODES,
@@ -31,10 +30,10 @@ from plane.authentication.rate_limit import (
     AuthenticationThrottle,
     throttle_auth_redirect,
 )
-from plane.utils.path_validator import get_safe_redirect_url
+from plane.utils.path_validator import get_safe_redirect_url, validate_next_path, get_allowed_hosts
 
 
-class MagicGenerateEndpoint(APIView):
+class OneTimeCodeGenerateSpaceEndpoint(APIView):
     permission_classes = [AllowAny]
 
     throttle_classes = [AuthenticationThrottle]
@@ -52,18 +51,17 @@ class MagicGenerateEndpoint(APIView):
         email = request.data.get("email", "").strip().lower()
         try:
             validate_email(email)
-            adapter = MagicCodeProvider(request=request, key=email)
+            adapter = OneTimeCodeProvider(request=request, key=email)
             key, token = adapter.initiate()
             # If the smtp is configured send through here
-            magic_link.delay(email, key, token, accept_language=request.headers.get("Accept-Language"))
+            send_one_time_code.delay(email, key, token, accept_language=request.headers.get("Accept-Language"))
             return Response({"key": str(key)}, status=status.HTTP_200_OK)
         except AuthenticationException as e:
-            params = e.get_error_dict()
-            return Response(params, status=status.HTTP_400_BAD_REQUEST)
+            return Response(e.get_error_dict(), status=status.HTTP_400_BAD_REQUEST)
 
 
-class MagicSignInEndpoint(View):
-    @throttle_auth_redirect(is_app=True)
+class OneTimeCodeSignInSpaceEndpoint(View):
+    @throttle_auth_redirect(is_space=True)
     def post(self, request):
         # set the referer as session to redirect after login
         code = request.POST.get("code", "").strip()
@@ -77,13 +75,12 @@ class MagicSignInEndpoint(View):
             )
             params = exc.get_error_dict()
             url = get_safe_redirect_url(
-                base_url=base_host(request=request, is_app=True),
+                base_url=base_host(request=request, is_space=True),
                 next_path=next_path,
                 params=params,
             )
             return HttpResponseRedirect(url)
 
-        # Existing User
         existing_user = User.objects.filter(email=email).first()
 
         if not existing_user:
@@ -93,49 +90,38 @@ class MagicSignInEndpoint(View):
             )
             params = exc.get_error_dict()
             url = get_safe_redirect_url(
-                base_url=base_host(request=request, is_app=True),
+                base_url=base_host(request=request, is_space=True),
                 next_path=next_path,
                 params=params,
             )
             return HttpResponseRedirect(url)
 
+        # Active User
         try:
-            provider = MagicCodeProvider(
-                request=request,
-                key=f"magic_{email}",
-                code=code,
-                callback=post_user_auth_workflow,
-            )
+            provider = OneTimeCodeProvider(request=request, key=f"one_time_code_{email}", code=code)
             user = provider.authenticate()
-            profile, _ = Profile.objects.get_or_create(user=user)
             # Login the user and record his device info
-            user_login(request=request, user=user, is_app=True)
-            if user.is_password_autoset and profile.is_onboarded:
-                # Redirect to the home page
-                path = "/"
-            else:
-                # Get the redirection path
-                path = str(next_path) if next_path else str(get_redirection_path(user=user))
+            user_login(request=request, user=user, is_space=True)
             # redirect to referer path
-            url = get_safe_redirect_url(
-                base_url=base_host(request=request, is_app=True),
-                next_path=path,
-                params={},
-            )
-            return HttpResponseRedirect(url)
+            next_path = validate_next_path(next_path=next_path)
+            url = f"{base_host(request=request, is_space=True).rstrip('/')}{next_path}"
+            if url_has_allowed_host_and_scheme(url, allowed_hosts=get_allowed_hosts()):
+                return HttpResponseRedirect(url)
+            else:
+                return HttpResponseRedirect(base_host(request=request, is_space=True))
 
         except AuthenticationException as e:
             params = e.get_error_dict()
             url = get_safe_redirect_url(
-                base_url=base_host(request=request, is_app=True),
+                base_url=base_host(request=request, is_space=True),
                 next_path=next_path,
                 params=params,
             )
             return HttpResponseRedirect(url)
 
 
-class MagicSignUpEndpoint(View):
-    @throttle_auth_redirect(is_app=True)
+class OneTimeCodeSignUpSpaceEndpoint(View):
+    @throttle_auth_redirect(is_space=True)
     def post(self, request):
         # set the referer as session to redirect after login
         code = request.POST.get("code", "").strip()
@@ -149,13 +135,14 @@ class MagicSignUpEndpoint(View):
             )
             params = exc.get_error_dict()
             url = get_safe_redirect_url(
-                base_url=base_host(request=request, is_app=True),
+                base_url=base_host(request=request, is_space=True),
                 next_path=next_path,
                 params=params,
             )
             return HttpResponseRedirect(url)
-        # Existing user
+        # Existing User
         existing_user = User.objects.filter(email=email).first()
+        # Already existing
         if existing_user:
             exc = AuthenticationException(
                 error_code=AUTHENTICATION_ERROR_CODES["USER_ALREADY_EXIST"],
@@ -163,39 +150,29 @@ class MagicSignUpEndpoint(View):
             )
             params = exc.get_error_dict()
             url = get_safe_redirect_url(
-                base_url=base_host(request=request, is_app=True),
+                base_url=base_host(request=request, is_space=True),
                 next_path=next_path,
                 params=params,
             )
             return HttpResponseRedirect(url)
 
         try:
-            provider = MagicCodeProvider(
-                request=request,
-                key=f"magic_{email}",
-                code=code,
-                callback=post_user_auth_workflow,
-            )
+            provider = OneTimeCodeProvider(request=request, key=f"one_time_code_{email}", code=code)
             user = provider.authenticate()
             # Login the user and record his device info
-            user_login(request=request, user=user, is_app=True)
-            # Get the redirection path
-            if next_path:
-                path = next_path
-            else:
-                path = get_redirection_path(user=user)
+            user_login(request=request, user=user, is_space=True)
             # redirect to referer path
-            url = get_safe_redirect_url(
-                base_url=base_host(request=request, is_app=True),
-                next_path=path,
-                params={},
-            )
-            return HttpResponseRedirect(url)
+            next_path = validate_next_path(next_path=next_path)
+            url = f"{base_host(request=request, is_space=True).rstrip('/')}{next_path}"
+            if url_has_allowed_host_and_scheme(url, allowed_hosts=get_allowed_hosts()):
+                return HttpResponseRedirect(url)
+            else:
+                return HttpResponseRedirect(base_host(request=request, is_space=True))
 
         except AuthenticationException as e:
             params = e.get_error_dict()
             url = get_safe_redirect_url(
-                base_url=base_host(request=request, is_app=True),
+                base_url=base_host(request=request, is_space=True),
                 next_path=next_path,
                 params=params,
             )

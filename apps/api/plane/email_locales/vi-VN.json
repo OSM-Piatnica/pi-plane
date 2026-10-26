@@ -103,8 +103,8 @@
     "button": "Mở dự án",
     "note": "Lưu ý: Email này được gửi đến <span>{email}</span> vì bạn đã xin tham gia dự án này."
   },
-  "magic_code": {
-    "subject": "Mã đăng nhập Pi-Plane duy nhất của bạn là {code}",
+  "one_time_code": {
+    "subject": "Mã đăng nhập Pi-Plane dùng một lần của bạn là {code}",
     "preheader": "Mã đăng nhập Pi-Plane {code} của bạn có hiệu lực trong 10 phút.",
     "heading": "Mã đăng nhập Pi-Plane của bạn",
     "info": "Mã này có hiệu lực trong 10 phút tới. Hãy nhập mã vào trang đăng nhập để hoàn tất đăng nhập.",

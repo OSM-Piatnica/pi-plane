@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "驗證碼",
+            "label": "一次性驗證碼",
             "placeholder": "123456",
             "helper_text": "驗證碼已傳送到你的新電子郵件。",
             "errors": {
-              "required": "驗證碼為必填",
+              "required": "一次性驗證碼為必填欄位",
               "invalid": "驗證碼無效，請再試一次。"
             }
           }

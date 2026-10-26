@@ -119,8 +119,8 @@
     "button": "Otwórz projekt",
     "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>, ponieważ poprosiłeś(aś) o dołączenie do tego projektu."
   },
-  "magic_code": {
-    "subject": "Twój unikalny kod logowania do Pi-Plane: {code}",
+  "one_time_code": {
+    "subject": "Twój jednorazowy kod logowania do Pi-Plane: {code}",
     "preheader": "Twój kod logowania do Pi-Plane {code} jest ważny przez 10 minut.",
     "heading": "Twój kod logowania do Pi-Plane",
     "info": "Ten kod jest ważny przez najbliższe 10 minut. Wpisz go na stronie logowania, aby dokończyć logowanie.",

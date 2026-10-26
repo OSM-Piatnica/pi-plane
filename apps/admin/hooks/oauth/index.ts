@@ -14,7 +14,7 @@ export const useAuthenticationModes = (props: TGetAuthenticationModeProps): TIns
   const authenticationModes = getCoreAuthenticationModesMap(props);
 
   const availableAuthenticationModes: TInstanceAuthenticationModes[] = [
-    authenticationModes["unique-codes"],
+    authenticationModes["one-time-codes"],
     authenticationModes["passwords-login"],
     authenticationModes["github"],
     authenticationModes["gitlab"],

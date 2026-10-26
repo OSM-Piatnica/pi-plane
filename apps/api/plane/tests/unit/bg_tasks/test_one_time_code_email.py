@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 import pytest
 
-from plane.bgtasks.magic_link_code_task import magic_link
+from plane.bgtasks.one_time_code_task import send_one_time_code
 from plane.db.models import Profile
 from plane.tests.factories import UserFactory
 from plane.utils.email_i18n import language_from_accept_header
@@ -44,13 +44,13 @@ class TestLanguageFromAcceptHeader:
 
 
 def _send(email, token="123456", accept_language=None):
-    with patch("plane.bgtasks.magic_link_code_task.get_email_configuration", return_value=CONFIG):
-        magic_link(email, f"magic_{email}", token, accept_language=accept_language)
+    with patch("plane.bgtasks.one_time_code_task.get_email_configuration", return_value=CONFIG):
+        send_one_time_code(email, f"one_time_code_{email}", token, accept_language=accept_language)
 
 
 @pytest.mark.unit
 @pytest.mark.django_db
-class TestMagicLinkEmail:
+class TestOneTimeCodeEmail:
     def test_english_by_default(self, mailoutbox):
         _send("new@example.com", accept_language=None)
 

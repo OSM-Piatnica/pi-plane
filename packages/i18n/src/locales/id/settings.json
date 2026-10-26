@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Kode unik",
+            "label": "Kode sekali pakai",
             "placeholder": "123456",
             "helper_text": "Kode verifikasi dikirim ke email baru Anda.",
             "errors": {
-              "required": "Kode unik wajib diisi",
+              "required": "Kode sekali pakai wajib diisi",
               "invalid": "Kode verifikasi tidak valid. Coba lagi."
             }
           }

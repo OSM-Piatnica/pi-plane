@@ -1414,7 +1414,7 @@
       "duration": "Duration"
     },
     "auth_labels": {
-      "magic_code": "Magic code"
+      "one_time_code": "One-time code"
     },
     "state_groups": {
       "canceled": "Canceled"
@@ -1445,7 +1445,7 @@
       "description": "Enter the public-share URL or link of the view or Page you are trying to see in the browser's address bar.",
       "image_alt": "User already logged in"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Resend in {seconds}s"
     },
     "oauth": {

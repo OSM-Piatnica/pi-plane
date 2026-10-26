@@ -12,7 +12,7 @@ export enum EAuthModes {
 export enum EAuthSteps {
   EMAIL = "EMAIL",
   PASSWORD = "PASSWORD",
-  UNIQUE_CODE = "UNIQUE_CODE",
+  ONE_TIME_CODE = "ONE_TIME_CODE",
 }
 
 export interface ICsrfTokenData {
