@@ -102,6 +102,30 @@ def subtract_working_days(target, count, weekend_days=()):
     return day
 
 
+def shift_working_days(day, offset, weekend_days=()):
+    """
+    The date ``offset`` working days from ``day``: later for a positive offset, earlier for a negative one.
+
+    The offset counts the working days passed on the way, so a Friday plus 1 is Monday and, from a weekend day,
+    the first working day after it is 1 away. An offset of 0 is the day itself, whatever day it is.
+    """
+    if offset == 0:
+        return day
+    if offset > 0:
+        return add_working_days(day + timedelta(days=1), offset, weekend_days)
+    return subtract_working_days(day - timedelta(days=1), -offset, weekend_days)
+
+
+def effective_start(day, weekend_days=()):
+    """The day work that "starts" on ``day`` really begins: the first working day on or after it."""
+    return add_working_days(day, 1, weekend_days)
+
+
+def effective_finish(day, weekend_days=()):
+    """The day work that "finishes" on ``day`` really ended: the last working day on or before it."""
+    return subtract_working_days(day, 1, weekend_days)
+
+
 def normalize_work_item_duration(value):
     """Coerce any user or API supplied duration into a valid stored value."""
     if value is None or value == "":

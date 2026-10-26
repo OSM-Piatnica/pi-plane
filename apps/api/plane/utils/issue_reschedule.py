@@ -6,7 +6,7 @@
 
 A date change that breaks a timeline relation is refused (``issue_timeline_relation_validation``). When the break is
 only that something that has to come *after* the changed work item would now come too early, the work items
-downstream can be shifted later instead, keeping their durations. That is offered to the person, who confirms it by
+downstream can be shifted later instead, keeping the working days they last. That is offered to the person, who confirms it by
 sending the request again with ``shift_dependents``; the API then applies the shifts together with the change.
 
 Every timeline rule has the form "the successor's date is at least a function of the predecessor's date and the lag",
@@ -18,7 +18,6 @@ are never moved; then nothing is offered and the change stays refused.
 import json
 from collections import deque
 from dataclasses import dataclass, field
-from datetime import timedelta
 from typing import Optional
 
 from django.db import transaction
@@ -29,11 +28,20 @@ from rest_framework.exceptions import APIException
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.db.models import ProjectMember
 from plane.utils.issue_relation_constraints import _as_date
+from plane.utils.work_item_duration import (
+    add_working_days,
+    count_working_days,
+    effective_finish,
+    effective_start,
+    shift_working_days,
+    subtract_working_days,
+)
 from plane.utils.work_item_edit_rule import can_change_work_items
 from plane.utils.issue_timeline_relation_validation import (
     _iter_timeline_constraints,
     issue_display_ref,
     validate_issue_dates_batch,
+    weekend_days_of,
 )
 
 RELATION_RESCHEDULE_AVAILABLE = "relation_reschedule_available"
@@ -60,17 +68,34 @@ class RescheduleOffered(APIException):
         self.detail = payload
 
 
-def _successor_requirement(relation_type, pred_start, pred_finish, lag):
-    """``(field, earliest)`` the successor's date has to reach, for a rule where the changed item is the predecessor."""
+def _successor_requirement(relation_type, pred_start, pred_finish, lag, weekend_days=()):
+    """
+    ``(field, earliest)`` the successor's date has to reach, for a rule where the changed item is the predecessor.
+
+    Counted in working days with the successor's ``weekend_days``, the same way the rule is checked
+    (``issue_relation_constraints``): a start or finish on a weekend day counts as the nearest working day.
+    """
     if relation_type == "blocking" and pred_finish is not None:
-        return "start_date", pred_finish + timedelta(days=1 + lag)
+        return "start_date", shift_working_days(effective_finish(pred_finish, weekend_days), 1 + lag, weekend_days)
     if relation_type == "start_before" and pred_start is not None:
-        return "start_date", pred_start + timedelta(days=lag)
+        return "start_date", shift_working_days(effective_start(pred_start, weekend_days), lag, weekend_days)
     if relation_type == "finish_before" and pred_finish is not None:
-        return "target_date", pred_finish + timedelta(days=lag)
+        return "target_date", shift_working_days(effective_finish(pred_finish, weekend_days), lag, weekend_days)
     if relation_type == "start_before_finish" and pred_start is not None:
-        return "target_date", pred_start + timedelta(days=lag)
+        return "target_date", shift_working_days(effective_start(pred_start, weekend_days), lag, weekend_days)
     return None
+
+
+def _move_to(dates, field_name, earliest, weekend_days):
+    """
+    The ``(start_date, target_date)`` of a work item whose ``field_name`` has to move to ``earliest``: the other date
+    follows so that it keeps the number of working days it lasted.
+    """
+    start, target = dates["start_date"], dates["target_date"]
+    length = max(count_working_days(start, target, weekend_days), 1) if start and target else None
+    if field_name == "start_date":
+        return earliest, (add_working_days(earliest, length, weekend_days) if length else target)
+    return (subtract_working_days(earliest, length, weekend_days) if length else start), earliest
 
 
 @dataclass
@@ -114,11 +139,6 @@ def _iso(value):
     return value.isoformat() if value else None
 
 
-def _shift(value, days):
-    value = _as_date(value)
-    return value + timedelta(days=days) if value else None
-
-
 def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[ReschedulePlan]:
     """Plan the shifts that make the dates in ``proposed`` (work item id -> start/target dates) satisfy every rule.
 
@@ -133,7 +153,7 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
     }
     moved_by_request = set(current)
     objects = {str(issue_id): issues_by_id[str(issue_id)] for issue_id in current if str(issue_id) in issues_by_id}
-    deltas = {}
+    moved = {}
 
     queue = deque(current)
     steps = 0
@@ -147,7 +167,10 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
             continue
         dates = current[predecessor_id]
         for relation_type, successor, lag in _iter_timeline_constraints(predecessor):
-            requirement = _successor_requirement(relation_type, dates["start_date"], dates["target_date"], lag)
+            weekend_days = weekend_days_of(successor)
+            requirement = _successor_requirement(
+                relation_type, dates["start_date"], dates["target_date"], lag, weekend_days
+            )
             if requirement is None:
                 continue
             successor_id = str(successor.id)
@@ -158,23 +181,31 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
             )
             objects.setdefault(successor_id, successor)
             value = successor_dates[field_name]
-            if value is None or value >= earliest:
+            if value is None:
+                continue
+            # a date on a weekend day stands for the working day next to it, as when the rule is checked
+            as_worked = (
+                effective_start(value, weekend_days)
+                if field_name == "start_date"
+                else effective_finish(value, weekend_days)
+            )
+            if as_worked >= earliest:
                 continue
             if successor_id in moved_by_request or getattr(successor.state, "group", None) in NOT_MOVED_GROUPS:
                 return None
-            delta = (earliest - value).days
-            deltas[successor_id] = deltas.get(successor_id, 0) + delta
-            successor_dates["start_date"] = _shift(successor_dates["start_date"], delta)
-            successor_dates["target_date"] = _shift(successor_dates["target_date"], delta)
-            if len(deltas) > MAX_SHIFTED_ISSUES:
+            moved[successor_id] = True
+            successor_dates["start_date"], successor_dates["target_date"] = _move_to(
+                successor_dates, field_name, earliest, weekend_days
+            )
+            if len(moved) > MAX_SHIFTED_ISSUES:
                 return None
             queue.append(successor_id)
 
-    if not deltas:
+    if not moved:
         return None
 
     # the person has to be allowed to edit every work item that moves
-    moving = [objects[issue_id] for issue_id in deltas]
+    moving = [objects[issue_id] for issue_id in moved]
     editable_projects = set(
         ProjectMember.objects.filter(
             member=actor,
@@ -196,7 +227,7 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
                 "start_date": current[issue_id]["start_date"],
                 "target_date": current[issue_id]["target_date"],
             }
-            for issue_id in deltas
+            for issue_id in moved
         }
     )
 
