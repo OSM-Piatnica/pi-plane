@@ -17,6 +17,7 @@ export const getOffDayPositions = (
   dayWidth: number,
   weekendDays: number[]
 ): number[] => {
+  const off = new Set(weekendDays);
   const positions: number[] = [];
   const first = new Date(chartStart.getFullYear(), chartStart.getMonth(), chartStart.getDate());
   const last = new Date(chartEnd.getFullYear(), chartEnd.getMonth(), chartEnd.getDate());
@@ -32,7 +33,7 @@ export const getOffDayPositions = (
 
   for (let index = 0; index < dayCount; index++) {
     const day = new Date(first.getFullYear(), first.getMonth(), first.getDate() + index);
-    if (weekendDays.includes(day.getDay())) positions.push(index * dayWidth);
+    if (off.has(day.getDay())) positions.push(index * dayWidth);
   }
   return positions;
 };
