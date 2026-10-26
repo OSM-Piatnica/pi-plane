@@ -75,6 +75,7 @@ export class CalendarStore implements ICalendarStore {
     this.initCalendar();
 
     // Watch for changes in startOfWeek preference and regenerate calendar
+    // react-doctor-disable-next-line mobx-reaction-disposer-discarded -- store is app-lifetime and the sign-out reset replaces it from store/root.store.ts; this reaction predates this change, which only moves what it reads into getStartOfWeek
     reaction(
       () => this.getStartOfWeek(),
       () => {
