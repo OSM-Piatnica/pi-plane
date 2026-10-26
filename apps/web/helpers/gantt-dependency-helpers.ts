@@ -174,9 +174,40 @@ export const getBlockAnchorPoints = (
   };
 };
 
-export const buildDependencyPathD = (fromX: number, fromY: number, toX: number, toY: number): string => {
+export type TAnchorSide = "left" | "right";
+
+/**
+ * The edges of the two bars an arrow joins, as in a project plan: finish-to-start runs from the end of one bar to
+ * the start of the next, start-to-start from start to start, finish-to-finish from end to end, and start-to-finish
+ * from the start of the first bar to the end of the second. The same for both names of a relation.
+ */
+export const getDependencyAnchorSides = (relationType: TIssueRelationTypes): { from: TAnchorSide; to: TAnchorSide } => {
+  switch (relationType) {
+    case "start_before":
+    case "start_after":
+      return { from: "left", to: "left" };
+    case "finish_before":
+    case "finish_after":
+      return { from: "right", to: "right" };
+    case "start_before_finish":
+    case "finish_after_start":
+      return { from: "left", to: "right" };
+    default:
+      return { from: "right", to: "left" };
+  }
+};
+
+export const buildDependencyPathD = (
+  fromX: number,
+  fromY: number,
+  toX: number,
+  toY: number,
+  fromSide: TAnchorSide = "right",
+  toSide: TAnchorSide = "left"
+): string => {
   const deltaX = Math.max(Math.abs(toX - fromX) * 0.4, 24);
-  const c1x = fromX + deltaX;
-  const c2x = toX - deltaX;
+  // the curve leaves a bar away from it, and arrives from the outside of the other
+  const c1x = fromSide === "right" ? fromX + deltaX : fromX - deltaX;
+  const c2x = toSide === "left" ? toX - deltaX : toX + deltaX;
   return `M ${fromX} ${fromY} C ${c1x} ${fromY}, ${c2x} ${toY}, ${toX} ${toY}`;
 };

@@ -35,6 +35,7 @@ from plane.db.models import (
 )
 from plane.db.models.project import ROLE
 from plane.utils.html_processor import strip_tags
+from plane.utils.issue_relation_constraints import MAX_LAG_DAYS, TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
 from plane.utils.issue_relation_types import ALL_RELATION_NAMES, MIRRORED_RELATIONS, SYMMETRIC_RELATIONS
 from plane.utils.issue_type_property import validate_property_value
@@ -163,6 +164,17 @@ def _parse_import_date(value):
         return None
 
 
+def _coerce_lag(value) -> int:
+    """The lag of an exported relation in whole days, within the range the API allows; 0 for anything else."""
+    if isinstance(value, bool) or value in (None, ""):
+        return 0
+    try:
+        lag = int(value)
+    except (TypeError, ValueError):
+        return 0
+    return lag if abs(lag) <= MAX_LAG_DAYS else 0
+
+
 def _coerce_relations(value) -> list[dict]:
     """Accept the export shape [{"type": ..., "issue": ...}] and tolerate bare identifiers."""
     entries = []
@@ -189,7 +201,11 @@ def _coerce_relations(value) -> list[dict]:
             relation_type = "relates_to"
         if not target:
             continue
-        entries.append({"type": relation_type, "issue": target})
+        entry = {"type": relation_type, "issue": target}
+        lag = _coerce_lag(item.get("lag_days")) if isinstance(item, dict) else 0
+        if lag:
+            entry["lag_days"] = lag
+        entries.append(entry)
     return entries
 
 
@@ -966,6 +982,7 @@ def import_work_items_into_project(
                         issue=source,
                         related_issue=related,
                         relation_type=canonical_type,
+                        lag_days=relation.get("lag_days", 0) if relation_type in TIMELINE_RELATION_TYPES else 0,
                         project=project,
                         workspace=project.workspace,
                         created_by=user,

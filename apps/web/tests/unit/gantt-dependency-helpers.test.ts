@@ -6,7 +6,9 @@
 
 import { describe, expect, it } from "vitest";
 import {
+  buildDependencyPathD,
   buildGanttDependencyEdges,
+  getDependencyAnchorSides,
   getDependencyArrowEndpoints,
   isDependencyRelationInvalid,
   wouldUpdatesViolateDependencies,
@@ -117,5 +119,25 @@ describe("gantt-dependency-helpers", () => {
   it("draws start-to-finish arrows from the item that starts to the one that finishes", () => {
     expect(getDependencyArrowEndpoints("start_before_finish", "a", "b")).toEqual({ fromId: "a", toId: "b" });
     expect(getDependencyArrowEndpoints("finish_after_start", "b", "a")).toEqual({ fromId: "a", toId: "b" });
+  });
+
+  describe("arrow anchors", () => {
+    it("joins the edges of the bars a project plan would", () => {
+      expect(getDependencyAnchorSides("blocked_by")).toEqual({ from: "right", to: "left" });
+      expect(getDependencyAnchorSides("blocking")).toEqual({ from: "right", to: "left" });
+      expect(getDependencyAnchorSides("start_before")).toEqual({ from: "left", to: "left" });
+      expect(getDependencyAnchorSides("start_after")).toEqual({ from: "left", to: "left" });
+      expect(getDependencyAnchorSides("finish_before")).toEqual({ from: "right", to: "right" });
+      expect(getDependencyAnchorSides("finish_after")).toEqual({ from: "right", to: "right" });
+      expect(getDependencyAnchorSides("start_before_finish")).toEqual({ from: "left", to: "right" });
+      expect(getDependencyAnchorSides("finish_after_start")).toEqual({ from: "left", to: "right" });
+    });
+
+    it("bends the curve away from the bar it leaves and towards the side it arrives at", () => {
+      // from the end of a bar to the start of the next: the usual shape
+      expect(buildDependencyPathD(100, 10, 200, 40)).toBe("M 100 10 C 140 10, 160 40, 200 40");
+      // start to finish, the target further left: leaves to the left, arrives from the right
+      expect(buildDependencyPathD(300, 10, 100, 40, "left", "right")).toBe("M 300 10 C 220 10, 180 40, 100 40");
+    });
   });
 });

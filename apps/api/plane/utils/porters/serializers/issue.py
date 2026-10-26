@@ -79,6 +79,11 @@ def resolve_issue_export_fields(selected):
     return [name for name in IssueExportSerializer.Meta.fields if name in wanted]
 
 
+def _lag_entry(relation):
+    """``{"lag_days": n}`` for a relation that has a lag; nothing otherwise, so plain exports stay as they were."""
+    return {"lag_days": relation.lag_days} if relation.lag_days else {}
+
+
 class IssueExportSerializer(IssueSerializer):
     """
     Export-optimized serializer that extends IssueSerializer with human-readable fields.
@@ -229,6 +234,7 @@ class IssueExportSerializer(IssueSerializer):
                     {
                         "type": rel.relation_type,
                         "issue": f"{rel.related_issue.project.identifier}-{rel.related_issue.sequence_id}",
+                        **_lag_entry(rel),
                     }
                 )
 
@@ -238,6 +244,7 @@ class IssueExportSerializer(IssueSerializer):
                     {
                         "type": get_inverse_relation(rel.relation_type),
                         "issue": f"{rel.issue.project.identifier}-{rel.issue.sequence_id}",
+                        **_lag_entry(rel),
                     }
                 )
 
