@@ -325,39 +325,24 @@
     },
     "features": {
       "cycles": {
-        "title": "Cycli",
-        "short_title": "Cycli",
-        "description": "Plan werk in flexibele periodes die zich aanpassen aan het unieke ritme en tempo van dit project.",
         "toggle_title": "Cycli inschakelen",
         "toggle_description": "Plan werk in gerichte tijdvakken."
       },
       "modules": {
-        "title": "Modules",
-        "short_title": "Modules",
-        "description": "Organiseer werk in deelprojecten met eigen leiders en toegewezenen.",
         "toggle_title": "Modules inschakelen",
         "toggle_description": "Projectleden kunnen modules maken en bewerken."
       },
       "views": {
-        "title": "Weergaven",
-        "short_title": "Weergaven",
-        "description": "Sla aangepaste sorteringen, filters en weergaveopties op of deel ze met je team.",
         "toggle_title": "Weergaven inschakelen",
         "toggle_description": "Projectleden kunnen weergaven maken en bewerken."
       },
       "pages": {
-        "title": "Pagina's",
-        "short_title": "Pagina's",
-        "description": "Maak en bewerk vrije inhoud: notities, documenten, alles wat je wilt.",
         "toggle_title": "Pagina's inschakelen",
         "toggle_description": "Projectleden kunnen pagina's maken en bewerken."
       },
       "intake": {
         "intake_responsibility": "Intakeverantwoordelijkheid",
         "intake_sources": "Intakebronnen",
-        "title": "Intake",
-        "short_title": "Intake",
-        "description": "Laat niet-leden bugs, feedback en suggesties delen zonder je workflow te verstoren.",
         "toggle_title": "Intake inschakelen",
         "toggle_description": "Laat projectleden intakeverzoeken in de app maken.",
         "toggle_tooltip_on": "Vraag je projectbeheerder om dit in te schakelen.",
@@ -412,9 +397,6 @@
         }
       },
       "time_tracking": {
-        "title": "Tijdregistratie",
-        "short_title": "Tijdregistratie",
-        "description": "Registreer de tijd die aan werkitems en projecten is besteed.",
         "toggle_title": "Tijdregistratie inschakelen",
         "toggle_description": "Projectleden kunnen gewerkte tijd registreren."
       },

@@ -325,39 +325,24 @@
     },
     "features": {
       "cycles": {
-        "title": "サイクル",
-        "short_title": "サイクル",
-        "description": "このプロジェクト独自のリズムとペースに適応する柔軟な期間で作業をスケジュールします。",
         "toggle_title": "サイクルを有効にする",
         "toggle_description": "集中的な期間で作業を計画します。"
       },
       "modules": {
-        "title": "モジュール",
-        "short_title": "モジュール",
-        "description": "専任のリーダーと担当者を持つサブプロジェクトに作業を整理します。",
         "toggle_title": "モジュールを有効にする",
         "toggle_description": "プロジェクトメンバーはモジュールを作成および編集できるようになります。"
       },
       "views": {
-        "title": "ビュー",
-        "short_title": "ビュー",
-        "description": "カスタムソート、フィルター、表示オプションを保存したり、チームと共有したりします。",
         "toggle_title": "ビューを有効にする",
         "toggle_description": "プロジェクトメンバーはビューを作成および編集できるようになります。"
       },
       "pages": {
-        "title": "ページ",
-        "short_title": "ページ",
-        "description": "自由形式のコンテンツを作成および編集します：メモ、ドキュメント、何でも。",
         "toggle_title": "ページを有効にする",
         "toggle_description": "プロジェクトメンバーはページを作成および編集できるようになります。"
       },
       "intake": {
         "intake_responsibility": "受付責任",
         "intake_sources": "受付ソース",
-        "title": "受付",
-        "short_title": "受付",
-        "description": "ワークフローを中断することなく、非メンバーがバグ、フィードバック、提案を共有できるようにします。",
         "toggle_title": "受付を有効にする",
         "toggle_description": "プロジェクトメンバーがアプリ内で受付リクエストを作成できるようにします。",
         "toggle_tooltip_on": "プロジェクト管理者に有効化を依頼してください。",
@@ -412,9 +397,6 @@
         }
       },
       "time_tracking": {
-        "title": "時間追跡",
-        "short_title": "時間追跡",
-        "description": "作業項目やプロジェクトに費やした時間を記録します。",
         "toggle_title": "時間追跡を有効にする",
         "toggle_description": "プロジェクトメンバーは作業時間を記録できるようになります。"
       },

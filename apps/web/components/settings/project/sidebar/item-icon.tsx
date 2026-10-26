@@ -7,17 +7,12 @@
 
 import type { LucideIcon } from "lucide-react";
 import {
-  CyclesOutline,
   EstimateOutline,
-  IntakeOutline,
   LabelsOutline,
   MembersOutline,
-  ModuleOutline,
-  PagesOutline,
   StateOutline,
-  TimeTrackingOutline,
   TriggerOutline,
-  ViewsOutline,
+  WidgetOutline,
   WorkflowsPropertyOutline,
 } from "@makeplane/propel/icons";
 // plane imports
@@ -29,12 +24,7 @@ import { SettingIcon } from "@/components/icons/attachment";
 export const PROJECT_SETTINGS_ICONS: Record<TProjectSettingsTabs, LucideIcon | React.FC<ISvgIcons>> = {
   general: SettingIcon,
   members: MembersOutline,
-  features_cycles: CyclesOutline,
-  features_modules: ModuleOutline,
-  features_views: ViewsOutline,
-  features_pages: PagesOutline,
-  features_intake: IntakeOutline,
-  features_time_tracking: TimeTrackingOutline,
+  features: WidgetOutline,
   states: StateOutline,
   workflows: WorkflowsPropertyOutline,
   labels: LabelsOutline,
