@@ -80,6 +80,7 @@ from plane.utils.issue_timeline_relation_validation import validate_issue_dates_
 from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
 from plane.utils.timezone_converter import user_timezone_converter
+from plane.utils.project_weekend_days import get_project_weekend_days
 from plane.utils.work_item_duration import (
     WORK_ITEM_DURATION_MIN,
     calculate_work_item_duration,
@@ -421,7 +422,7 @@ class IssueViewSet(BaseViewSet):
         # The serializer derives the missing duration / start date / target date on save. Mirror
         # that here so the activity feed reports the derived values too, since it is built from the
         # raw request payload rather than from what was saved.
-        logged_data = {**request.data, **reconcile_work_item_duration(None, request.data)}
+        logged_data = {**request.data, **reconcile_work_item_duration(None, request.data, project.weekend_days)}
 
         serializer = IssueCreateSerializer(
             data=request.data,
@@ -700,7 +701,10 @@ class IssueViewSet(BaseViewSet):
         # The serializer derives the missing duration / start date / target date on save. Mirror
         # that here so the activity feed reports the derived values too, since it is built from the
         # raw request payload rather than from what was saved.
-        requested_payload = {**request.data, **reconcile_work_item_duration(issue, request.data)}
+        requested_payload = {
+            **request.data,
+            **reconcile_work_item_duration(issue, request.data, get_project_weekend_days(project_id)),
+        }
         serializer = IssueCreateSerializer(
             issue, data=request.data, partial=True, context={"project_id": project_id, "request": request}
         )
@@ -1149,6 +1153,7 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     @restrict_work_item_changes(body=body_update_ids)
     def post(self, request, slug, project_id):
+        weekend_days = get_project_weekend_days(project_id)
         updates = request.data.get("updates", [])
 
         issue_ids = [update["id"] for update in updates if update.get("id")]
@@ -1227,7 +1232,7 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
             # Dates drive the duration, so recalculate it whenever a date actually moved. This
             # endpoint bypasses the serializer, so without this a timeline drag would leave a
             # stale duration behind.
-            new_duration = calculate_work_item_duration(issue.start_date, issue.target_date)
+            new_duration = calculate_work_item_duration(issue.start_date, issue.target_date, weekend_days)
             if new_duration is not None and new_duration >= WORK_ITEM_DURATION_MIN and new_duration != issue.duration:
                 issue_activity.delay(
                     type="issue.activity.updated",
