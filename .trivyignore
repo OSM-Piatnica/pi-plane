@@ -5,7 +5,12 @@
 # .github/workflows/publish-images.yaml. They only report fixable HIGH and CRITICAL findings, so
 # add an ID only for one of those that does not apply to us, with the reason and a review date.
 
-# No suppressions at the moment.
+# CVE-2023-54404 (zod: denial of service through unbounded array validation, fixed only in zod 4.6.6). The zod 3.25.76
+# that Trivy finds in the web, space and live images is not used by the apps: its only dependent is
+# react-doctor > eslint-plugin-react-hooks, a root devDependency (a lint tool), whose files end up in the images'
+# pnpm store but are never loaded. The runtime zod is 4.6.7. Review by 2026-11-30, or drop this entry once
+# react-doctor moves to zod 4.
+CVE-2023-54404
 #
 # History: CVE-2026-30242 (SSRF in Plane's webhook URL serializer) used to be listed here because Trivy
 # matched our backend's distribution name "Plane" and its old pyproject.toml version (0.24.0) against
