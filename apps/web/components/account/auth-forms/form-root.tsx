@@ -21,7 +21,7 @@ import { AuthService } from "@/services/auth.service";
 // local components
 import { AuthEmailForm } from "./email";
 import { AuthPasswordForm } from "./password";
-import { AuthUniqueCodeForm } from "./unique-code";
+import { AuthOneTimeCodeForm } from "./one-time-code";
 import { useTranslation } from "@plane/i18n";
 
 type TAuthFormRoot = {
@@ -63,16 +63,16 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
         if (response.existing) {
           if (currentAuthMode === EAuthModes.SIGN_UP) setAuthMode(EAuthModes.SIGN_IN);
           if (response.status === "MAGIC_CODE") {
-            setAuthStep(EAuthSteps.UNIQUE_CODE);
-            generateEmailUniqueCode(data.email);
+            setAuthStep(EAuthSteps.ONE_TIME_CODE);
+            generateEmailOneTimeCode(data.email);
           } else if (response.status === "CREDENTIAL") {
             setAuthStep(EAuthSteps.PASSWORD);
           }
         } else {
           if (currentAuthMode === EAuthModes.SIGN_IN) setAuthMode(EAuthModes.SIGN_UP);
           if (response.status === "MAGIC_CODE") {
-            setAuthStep(EAuthSteps.UNIQUE_CODE);
-            generateEmailUniqueCode(data.email);
+            setAuthStep(EAuthSteps.ONE_TIME_CODE);
+            generateEmailOneTimeCode(data.email);
           } else if (response.status === "CREDENTIAL") {
             setAuthStep(EAuthSteps.PASSWORD);
           }
@@ -94,12 +94,12 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
     router.push(currentAuthMode === EAuthModes.SIGN_IN ? `/` : "/sign-up");
   };
 
-  // generating the unique code
-  const generateEmailUniqueCode = async (emailAddress: string): Promise<{ code: string } | undefined> => {
+  // generating the one-time code
+  const generateEmailOneTimeCode = async (emailAddress: string): Promise<{ code: string } | undefined> => {
     if (!isSMTPConfigured) return;
     const payload = { email: emailAddress };
     return await authService
-      .generateUniqueCode(payload)
+      .generateOneTimeCode(payload)
       .then(() => ({ code: "" }))
       .catch((error) => {
         const errorhandler = authErrorHandler(error?.error_code?.toString(), t);
@@ -111,14 +111,14 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
   if (authStep === EAuthSteps.EMAIL) {
     return <AuthEmailForm defaultEmail={email} onSubmit={handleEmailVerification} />;
   }
-  if (authStep === EAuthSteps.UNIQUE_CODE) {
+  if (authStep === EAuthSteps.ONE_TIME_CODE) {
     return (
-      <AuthUniqueCodeForm
+      <AuthOneTimeCodeForm
         mode={authMode}
         email={email}
         isExistingEmail={isExistingEmail}
         handleEmailClear={handleEmailClear}
-        generateEmailUniqueCode={generateEmailUniqueCode}
+        generateEmailOneTimeCode={generateEmailOneTimeCode}
         nextPath={nextPath || undefined}
       />
     );
@@ -131,7 +131,7 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
         email={email}
         handleEmailClear={handleEmailClear}
         handleAuthStep={(step: EAuthSteps) => {
-          if (step === EAuthSteps.UNIQUE_CODE) generateEmailUniqueCode(email);
+          if (step === EAuthSteps.ONE_TIME_CODE) generateEmailOneTimeCode(email);
           setAuthStep(step);
         }}
         nextPath={nextPath || undefined}

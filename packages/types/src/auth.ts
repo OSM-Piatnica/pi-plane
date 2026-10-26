@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-export type TEmailCheckTypes = "magic_code" | "password";
+export type TEmailCheckTypes = "one_time_code" | "password";
 
 export interface IEmailCheckData {
   email: string;
@@ -21,7 +21,7 @@ export interface ILoginTokenResponse {
   refresh_token: string;
 }
 
-export interface IMagicSignInData {
+export interface IOneTimeCodeSignInData {
   email: string;
   key: string;
   token: string;

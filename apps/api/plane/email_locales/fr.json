@@ -110,5 +110,12 @@
     "intro_rejected": "<strong>{decider}</strong> n’a pas approuvé votre demande pour rejoindre le projet privé <strong>{project}</strong> dans l’espace de travail <strong>{workspace}</strong> sur Pi-Plane. Si vous pensez qu’il s’agit d’une erreur, contactez un administrateur du projet.",
     "button": "Ouvrir le projet",
     "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span> parce que vous avez demandé à rejoindre ce projet."
+  },
+  "one_time_code": {
+    "subject": "Votre code de connexion à usage unique Pi-Plane est {code}",
+    "preheader": "Votre code de connexion Pi-Plane {code} est valable 10 minutes.",
+    "heading": "Votre code de connexion à Pi-Plane",
+    "info": "Ce code est valable pendant les 10 prochaines minutes. Saisissez-le sur la page de connexion pour terminer votre connexion.",
+    "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span>. Si vous n’attendiez pas de code de connexion, vous pouvez ignorer ce message."
   }
 }

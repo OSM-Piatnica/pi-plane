@@ -1414,7 +1414,7 @@
       "duration": "Thời lượng"
     },
     "auth_labels": {
-      "magic_code": "Mã ma thuật"
+      "one_time_code": "Mã dùng một lần"
     },
     "state_groups": {
       "canceled": "Đã hủy"
@@ -1445,7 +1445,7 @@
       "description": "Nhập URL chia sẻ công khai hoặc liên kết của chế độ xem hoặc Trang bạn muốn xem vào thanh địa chỉ của trình duyệt.",
       "image_alt": "Người dùng đã đăng nhập"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Gửi lại sau {seconds} giây"
     },
     "oauth": {

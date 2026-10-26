@@ -67,7 +67,7 @@ export enum EAuthModes {
 export enum EAuthSteps {
   EMAIL = "EMAIL",
   PASSWORD = "PASSWORD",
-  UNIQUE_CODE = "UNIQUE_CODE",
+  ONE_TIME_CODE = "ONE_TIME_CODE",
 }
 
 export enum EErrorAlertType {
@@ -134,7 +134,7 @@ export enum EAuthErrorCodes {
   INVALID_EMAIL_SIGN_IN = "5075",
   INVALID_EMAIL_MAGIC_SIGN_IN = "5080",
   MAGIC_SIGN_IN_EMAIL_CODE_REQUIRED = "5085",
-  // Both Sign in and Sign up for magic
+  // Both Sign in and Sign up for one-time codes
   INVALID_MAGIC_CODE_SIGN_IN = "5090",
   INVALID_MAGIC_CODE_SIGN_UP = "5092",
   EXPIRED_MAGIC_CODE_SIGN_IN = "5095",

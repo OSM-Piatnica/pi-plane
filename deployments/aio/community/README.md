@@ -118,7 +118,7 @@ In Plane v1.4.0 to v1.4.2 a container started without `SECRET_KEY` received a ge
 #### API Configuration
 
 - `API_KEY_RATE_LIMIT`: API key rate limit (default: `60/minute`)
-- `AUTHENTICATION_RATE_LIMIT`: per-IP throttle for sign-in and magic-link endpoints (default: `1000/minute`, sized for many users behind one IP)
+- `AUTHENTICATION_RATE_LIMIT`: per-IP throttle for sign-in and one-time-code endpoints (default: `1000/minute`, sized for many users behind one IP)
 - `RATE_LIMIT_PER_IP_PER_MIN`: per-client-IP request limit enforced by the Caddy proxy (default: `50000`)
 - `ANON_RATE_LIMIT`: per-IP limit on logged-out requests such as public Spaces boards; users behind one IP share it (default: `180/minute`)
 - `ASSET_DUPLICATE_RATE_LIMIT`: per-asset limit on duplicating an asset when pasting images in the editor, counted across all users (default: `60/minute`)

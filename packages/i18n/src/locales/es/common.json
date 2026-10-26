@@ -1414,7 +1414,7 @@
       "duration": "Duración"
     },
     "auth_labels": {
-      "magic_code": "Código mágico"
+      "one_time_code": "Código de un solo uso"
     },
     "state_groups": {
       "canceled": "Cancelado"
@@ -1445,7 +1445,7 @@
       "description": "Ingrese en la barra de direcciones del navegador la URL pública o el enlace de la vista o Página que intenta ver.",
       "image_alt": "El usuario ya inició sesión"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Reenviar en {seconds} s"
     },
     "oauth": {

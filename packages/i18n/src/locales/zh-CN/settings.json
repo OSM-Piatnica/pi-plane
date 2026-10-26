@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "验证码",
+            "label": "一次性验证码",
             "placeholder": "123456",
             "helper_text": "验证码已发送至你的新邮箱。",
             "errors": {
-              "required": "验证码为必填项",
+              "required": "一次性验证码为必填项",
               "invalid": "验证码无效，请重试。"
             }
           }

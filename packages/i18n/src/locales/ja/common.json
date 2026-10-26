@@ -1414,7 +1414,7 @@
       "duration": "期間"
     },
     "auth_labels": {
-      "magic_code": "マジックコード"
+      "one_time_code": "ワンタイムコード"
     },
     "state_groups": {
       "canceled": "キャンセル"
@@ -1445,7 +1445,7 @@
       "description": "閲覧したいビューまたはページの公開共有 URL またはリンクを、ブラウザーのアドレスバーに入力してください。",
       "image_alt": "ユーザーはすでにログインしています"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "{seconds}秒後に再送信"
     },
     "oauth": {

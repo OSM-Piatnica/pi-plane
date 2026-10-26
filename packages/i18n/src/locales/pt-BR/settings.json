@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Código único",
+            "label": "Código de uso único",
             "placeholder": "123456",
             "helper_text": "Código de verificação enviado para o novo e-mail.",
             "errors": {
-              "required": "O código único é obrigatório",
+              "required": "O código de uso único é obrigatório",
               "invalid": "Código de verificação inválido. Tente novamente."
             }
           }

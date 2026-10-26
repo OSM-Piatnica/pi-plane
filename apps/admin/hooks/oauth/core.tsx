@@ -54,9 +54,9 @@ export const getCoreAuthenticationModesMap: (
   updateConfig,
   resolvedTheme,
 }) => ({
-  "unique-codes": {
-    key: "unique-codes",
-    name: "Unique codes",
+  "one-time-codes": {
+    key: "one-time-codes",
+    name: "One-time codes",
     description:
       "Log in or sign up for Pi-Plane using codes sent via email. You need to have set up SMTP to use this method.",
     icon: <MailOutline className="h-6 w-6 p-0.5 text-tertiary" />,

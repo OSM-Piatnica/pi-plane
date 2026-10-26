@@ -110,5 +110,12 @@
     "intro_rejected": "<strong>{decider}</strong> no aprobó su solicitud para unirse al proyecto privado <strong>{project}</strong> del espacio de trabajo <strong>{workspace}</strong> en Pi-Plane. Si cree que es un error, consulte con un administrador del proyecto.",
     "button": "Abrir el proyecto",
     "note": "Nota: Este correo se envió a <span>{email}</span> porque solicitó unirse a este proyecto."
+  },
+  "one_time_code": {
+    "subject": "Su código de inicio de sesión de un solo uso de Pi-Plane es {code}",
+    "preheader": "Su código de inicio de sesión de Pi-Plane {code} es válido durante 10 minutos.",
+    "heading": "Su código de inicio de sesión de Pi-Plane",
+    "info": "Este código es válido durante los próximos 10 minutos. Introdúzcalo en la página de inicio de sesión para completar el acceso.",
+    "note": "Nota: Este correo se envió a <span>{email}</span>. Si no esperaba un código de inicio de sesión, puede ignorar este mensaje."
   }
 }

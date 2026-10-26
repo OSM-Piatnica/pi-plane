@@ -118,5 +118,12 @@
     "intro_rejected": "<strong>{decider}</strong> nu a aprobat cererea ta de a te alătura proiectului privat <strong>{project}</strong> din spațiul de lucru <strong>{workspace}</strong> din Pi-Plane. Dacă crezi că este o greșeală, contactează un administrator al proiectului.",
     "button": "Deschide proiectul",
     "note": "Notă: Acest e-mail a fost trimis la <span>{email}</span> deoarece ai cerut să te alături acestui proiect."
+  },
+  "one_time_code": {
+    "subject": "Codul tău de unică folosință pentru autentificarea în Pi-Plane este {code}",
+    "preheader": "Codul tău de autentificare Pi-Plane {code} este valabil 10 minute.",
+    "heading": "Codul tău de autentificare în Pi-Plane",
+    "info": "Acest cod este valabil în următoarele 10 minute. Introdu-l pe pagina de autentificare pentru a finaliza autentificarea.",
+    "note": "Notă: Acest e-mail a fost trimis la <span>{email}</span>. Dacă nu te așteptai la un cod de autentificare, poți ignora acest mesaj."
   }
 }

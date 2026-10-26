@@ -1414,7 +1414,7 @@
       "duration": "Trvání"
     },
     "auth_labels": {
-      "magic_code": "Magický kód"
+      "one_time_code": "Jednorázový kód"
     },
     "state_groups": {
       "canceled": "Zrušeno"
@@ -1445,7 +1445,7 @@
       "description": "Do adresního řádku prohlížeče zadejte veřejnou adresu URL nebo odkaz na zobrazení či Stránku, kterou chcete zobrazit.",
       "image_alt": "Uživatel je již přihlášen"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Znovu odeslat za {seconds} s"
     },
     "oauth": {

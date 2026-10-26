@@ -178,27 +178,27 @@ const errorCodeMessages: {
   // Both Sign in and Sign up
   [EAuthErrorCodes.INVALID_MAGIC_CODE_SIGN_IN]: {
     title: `Authentication failed`,
-    message: () => `Invalid magic code. Please try again.`,
+    message: () => `Invalid one-time code. Please try again.`,
   },
   [EAuthErrorCodes.INVALID_MAGIC_CODE_SIGN_UP]: {
     title: `Authentication failed`,
-    message: () => `Invalid magic code. Please try again.`,
+    message: () => `Invalid one-time code. Please try again.`,
   },
   [EAuthErrorCodes.EXPIRED_MAGIC_CODE_SIGN_IN]: {
-    title: `Expired magic code`,
-    message: () => `Expired magic code. Please try again.`,
+    title: `Expired one-time code`,
+    message: () => `Expired one-time code. Please try again.`,
   },
   [EAuthErrorCodes.EXPIRED_MAGIC_CODE_SIGN_UP]: {
-    title: `Expired magic code`,
-    message: () => `Expired magic code. Please try again.`,
+    title: `Expired one-time code`,
+    message: () => `Expired one-time code. Please try again.`,
   },
   [EAuthErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_IN]: {
-    title: `Expired magic code`,
-    message: () => `Expired magic code. Please try again.`,
+    title: `Expired one-time code`,
+    message: () => `Expired one-time code. Please try again.`,
   },
   [EAuthErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_UP]: {
-    title: `Expired magic code`,
-    message: () => `Expired magic code. Please try again.`,
+    title: `Expired one-time code`,
+    message: () => `Expired one-time code. Please try again.`,
   },
   // Oauth
   [EAuthErrorCodes.OAUTH_NOT_CONFIGURED]: {
@@ -307,12 +307,12 @@ const errorCodeMessages: {
     message: () => `Admin user does not exist. Sign in now.`,
   },
   [EAuthErrorCodes.MAGIC_LINK_LOGIN_DISABLED]: {
-    title: `Magic link login disabled`,
-    message: () => `Magic link login is disabled. Please use password to login.`,
+    title: `One-time code login disabled`,
+    message: () => `One-time code login is disabled. Please use password to login.`,
   },
   [EAuthErrorCodes.PASSWORD_LOGIN_DISABLED]: {
     title: `Password login disabled`,
-    message: () => `Password login is disabled. Please use magic link to login.`,
+    message: () => `Password login is disabled. Please use a one-time code to login.`,
   },
   [EAuthErrorCodes.ADMIN_USER_DEACTIVATED]: {
     title: `Admin user deactivated`,

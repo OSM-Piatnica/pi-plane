@@ -110,5 +110,12 @@
     "intro_rejected": "<strong>{decider}</strong> não aprovou sua solicitação para entrar no projeto privado <strong>{project}</strong> no espaço de trabalho <strong>{workspace}</strong> no Pi-Plane. Se você acha que é um engano, fale com um administrador do projeto.",
     "button": "Abrir o projeto",
     "note": "Observação: este e-mail foi enviado para <span>{email}</span> porque você pediu para entrar neste projeto."
+  },
+  "one_time_code": {
+    "subject": "Seu código de login de uso único do Pi-Plane é {code}",
+    "preheader": "Seu código de login do Pi-Plane {code} é válido por 10 minutos.",
+    "heading": "Seu código de login do Pi-Plane",
+    "info": "Este código é válido pelos próximos 10 minutos. Digite-o na página de login para concluir o acesso.",
+    "note": "Observação: este e-mail foi enviado para <span>{email}</span>. Se você não esperava um código de login, pode ignorar esta mensagem."
   }
 }

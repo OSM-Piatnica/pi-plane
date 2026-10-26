@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Codice univoco",
+            "label": "Codice monouso",
             "placeholder": "123456",
             "helper_text": "Codice di verifica inviato alla tua nuova email.",
             "errors": {
-              "required": "Il codice univoco è obbligatorio",
+              "required": "Il codice monouso è obbligatorio",
               "invalid": "Codice di verifica non valido. Riprova."
             }
           }

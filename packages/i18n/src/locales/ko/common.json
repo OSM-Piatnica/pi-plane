@@ -1414,7 +1414,7 @@
       "duration": "기간"
     },
     "auth_labels": {
-      "magic_code": "매직 코드"
+      "one_time_code": "일회용 코드"
     },
     "state_groups": {
       "canceled": "취소됨"
@@ -1445,7 +1445,7 @@
       "description": "보려는 뷰 또는 페이지의 공개 공유 URL 또는 링크를 브라우저 주소 표시줄에 입력하세요.",
       "image_alt": "사용자가 이미 로그인되어 있습니다"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "{seconds}초 후 재전송"
     },
     "oauth": {

@@ -35,7 +35,7 @@ const Titles = {
       header: "app_text.auth_header.work_in_all_dimensions",
       subHeader: "app_text.auth_header.welcome_back",
     },
-    [EAuthSteps.UNIQUE_CODE]: {
+    [EAuthSteps.ONE_TIME_CODE]: {
       header: "app_text.auth_header.work_in_all_dimensions",
       subHeader: "app_text.auth_header.welcome_back",
     },
@@ -49,7 +49,7 @@ const Titles = {
       header: "app_text.auth_header.work_in_all_dimensions",
       subHeader: "app_text.auth_header.create_your_account",
     },
-    [EAuthSteps.UNIQUE_CODE]: {
+    [EAuthSteps.ONE_TIME_CODE]: {
       header: "app_text.auth_header.work_in_all_dimensions",
       subHeader: "app_text.auth_header.create_your_account",
     },

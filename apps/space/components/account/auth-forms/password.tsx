@@ -71,8 +71,8 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
     }
   }, [csrfPromise]);
 
-  const redirectToUniqueCodeSignIn = async () => {
-    handleAuthStep(EAuthSteps.UNIQUE_CODE);
+  const redirectToOneTimeCodeSignIn = async () => {
+    handleAuthStep(EAuthSteps.ONE_TIME_CODE);
   };
 
   const passwordSupport = passwordFormData.password.length > 0 &&
@@ -260,8 +260,8 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
                 variant="secondary"
                 size="lg"
                 stretch="full"
-                label={t("auth.common.sign_in_with_unique_code")}
-                onClick={redirectToUniqueCodeSignIn}
+                label={t("auth.common.sign_in_with_one_time_code")}
+                onClick={redirectToOneTimeCodeSignIn}
               />
             )}
           </>
