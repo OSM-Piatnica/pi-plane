@@ -532,7 +532,11 @@
       "timezone_error": "Actualizarea fusului orar a eșuat",
       "timezone_updated": "Fusul orar a fost actualizat cu succes",
       "update_error": "A apărut o eroare la actualizarea profilului. Încearcă din nou.",
-      "updated": "Profilul a fost actualizat cu succes."
+      "updated": "Profilul a fost actualizat cu succes.",
+      "weekend_days": "Zilele de weekend",
+      "weekend_days_description": "Stabilește ce zile sunt tratate ca timp nelucrător.",
+      "weekend_days_updated": "Zilele de weekend au fost actualizate",
+      "weekend_days_use_default": "Folosește setarea implicită a spațiului de lucru"
     },
     "publish_modal": {
       "allow_comments": "Permite comentarii",

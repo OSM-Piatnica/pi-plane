@@ -532,7 +532,11 @@
       "timezone_error": "Saat dilimi güncellenemedi",
       "timezone_updated": "Saat dilimi başarıyla güncellendi",
       "update_error": "Profiliniz güncellenirken bir hata oluştu. Lütfen tekrar deneyin.",
-      "updated": "Profil başarıyla güncellendi."
+      "updated": "Profil başarıyla güncellendi.",
+      "weekend_days": "Hafta sonu günleri",
+      "weekend_days_description": "Hangi günlerin çalışılmayan süre sayılacağını belirler.",
+      "weekend_days_updated": "Hafta sonu günleri güncellendi",
+      "weekend_days_use_default": "Çalışma alanı varsayılanını kullan"
     },
     "publish_modal": {
       "allow_comments": "Yorumlara izin ver",

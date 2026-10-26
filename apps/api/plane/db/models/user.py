@@ -20,6 +20,7 @@ from django.utils import timezone
 from plane.db.models import FileAsset
 from ..mixins import TimeAuditModel
 from plane.utils.color import get_random_color
+from plane.utils.weekend_days import validate_weekend_days
 
 
 def get_default_onboarding():
@@ -253,6 +254,9 @@ class Profile(TimeAuditModel):
     start_of_the_week = models.PositiveSmallIntegerField(
         choices=START_OF_THE_WEEK_CHOICES, default=None, null=True, blank=True
     )
+    # None: follow the workspace; a list of days (0 = Sunday ... 6 = Saturday): this person's own non-working days,
+    # used where no project decides (inside a project, the project's days apply)
+    weekend_days = models.JSONField(default=None, null=True, blank=True, validators=[validate_weekend_days])
     goals = models.JSONField(default=dict)
     background_color = models.CharField(max_length=255, default=get_random_color)
 

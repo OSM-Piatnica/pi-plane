@@ -14,11 +14,14 @@ import { useUserProfile } from "@/hooks/store/user";
 export const useStartOfTheWeek = (): EStartOfTheWeek => {
   const { data: userProfile } = useUserProfile();
   const { currentProjectDetails } = useProject();
-  const { currentWorkspace } = useWorkspace();
+  const { currentWorkspace, workspaces } = useWorkspace();
+  // Pages outside a workspace (profile settings) take the workspace the person last opened
+  const workspace =
+    currentWorkspace ?? (userProfile?.last_workspace_id ? workspaces[userProfile.last_workspace_id] : undefined);
 
   return resolveStartOfTheWeek({
     profile: userProfile?.start_of_the_week,
     project: currentProjectDetails?.start_of_the_week,
-    workspace: currentWorkspace?.start_of_the_week,
+    workspace: workspace?.start_of_the_week,
   });
 };

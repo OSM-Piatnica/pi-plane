@@ -532,7 +532,11 @@
       "timezone_error": "Falha ao atualizar o fuso horário",
       "timezone_updated": "Fuso horário atualizado com sucesso",
       "update_error": "Ocorreu um erro ao atualizar seu perfil. Tente novamente.",
-      "updated": "Perfil atualizado com sucesso."
+      "updated": "Perfil atualizado com sucesso.",
+      "weekend_days": "Dias de fim de semana",
+      "weekend_days_description": "Define quais dias são tratados como tempo não útil.",
+      "weekend_days_updated": "Dias de fim de semana atualizados com sucesso",
+      "weekend_days_use_default": "Usar o padrão do espaço de trabalho"
     },
     "publish_modal": {
       "allow_comments": "Permitir comentários",

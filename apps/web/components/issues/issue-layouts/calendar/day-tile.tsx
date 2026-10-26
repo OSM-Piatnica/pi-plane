@@ -20,7 +20,9 @@ import type { TGroupedIssues, TIssue, TIssueMap, TPaginationData, ICalendarDate 
 import { cn, renderFormattedPayloadDate } from "@plane/utils";
 import { highlightIssueOnDrop } from "@/components/issues/issue-layouts/utils";
 // helpers
+import { isWeekendDay } from "@/helpers/weekend-days";
 import { useCalendarLocale } from "@/hooks/use-calendar-locale";
+import { useWeekendDays } from "@/hooks/use-weekend-days";
 // types
 import type { ICycleIssuesFilter } from "@/store/issue/cycle";
 import type { IModuleIssuesFilter } from "@/store/issue/module";
@@ -79,6 +81,7 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
   // i18n
   const { t } = useTranslation();
   const { getMonthName } = useCalendarLocale();
+  const weekendDays = useWeekendDays();
 
   const [isDraggingOver, setIsDraggingOver] = useState(false);
 
@@ -144,7 +147,7 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
   const isToday = date.date.toDateString() === new Date().toDateString();
   const isSelectedDate = date.date.toDateString() == selectedDate.toDateString();
 
-  const isWeekend = [0, 6].includes(date.date.getDay());
+  const isWeekend = isWeekendDay(date.date, weekendDays);
   const isMonthLayout = calendarLayout === "month";
 
   const normalBackground = isWeekend ? "bg-layer-1" : "bg-layer-transparent";

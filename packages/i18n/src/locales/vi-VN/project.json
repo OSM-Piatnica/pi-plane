@@ -532,7 +532,11 @@
       "timezone_error": "Không thể cập nhật múi giờ",
       "timezone_updated": "Đã cập nhật múi giờ thành công",
       "update_error": "Đã xảy ra lỗi khi cập nhật hồ sơ của bạn. Vui lòng thử lại.",
-      "updated": "Đã cập nhật hồ sơ thành công."
+      "updated": "Đã cập nhật hồ sơ thành công.",
+      "weekend_days": "Ngày cuối tuần",
+      "weekend_days_description": "Đặt những ngày được coi là thời gian không làm việc.",
+      "weekend_days_updated": "Đã cập nhật ngày cuối tuần",
+      "weekend_days_use_default": "Dùng mặc định của không gian làm việc"
     },
     "publish_modal": {
       "allow_comments": "Cho phép bình luận",

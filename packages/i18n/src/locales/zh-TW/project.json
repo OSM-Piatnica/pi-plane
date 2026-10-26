@@ -532,7 +532,11 @@
       "timezone_error": "更新時區失敗",
       "timezone_updated": "時區已成功更新",
       "update_error": "更新個人資料時發生錯誤，請再試一次。",
-      "updated": "個人資料已成功更新。"
+      "updated": "個人資料已成功更新。",
+      "weekend_days": "週末日",
+      "weekend_days_description": "設定哪些天視為非工作時間。",
+      "weekend_days_updated": "週末日已更新",
+      "weekend_days_use_default": "使用工作區預設值"
     },
     "publish_modal": {
       "allow_comments": "允許留言",

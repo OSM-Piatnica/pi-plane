@@ -23,7 +23,9 @@ import { cn, copyUrlToClipboard, getFileURL, validateWorkspaceName } from "@plan
 // components
 import { WorkspaceImageUploadModal } from "@/components/core/modals/workspace-image-upload-modal";
 import { StartOfWeekSelect } from "@/components/global/start-of-week-select";
+import { WeekendDaysSelect } from "@/components/global/weekend-days-select";
 import { TimezoneSelect } from "@/components/global/timezone-select";
+import { DEFAULT_WEEKEND_DAYS } from "@/helpers/weekend-days";
 // hooks
 import { useWorkspace } from "@/hooks/store/use-workspace";
 import { useUserPermissions } from "@/hooks/store/user";
@@ -36,6 +38,7 @@ const defaultValues: Partial<IWorkspace> = {
   logo_url: null,
   timezone: "UTC",
   start_of_the_week: EStartOfTheWeek.SUNDAY,
+  weekend_days: [...DEFAULT_WEEKEND_DAYS],
 };
 
 export const WorkspaceDetails = observer(function WorkspaceDetails() {
@@ -70,6 +73,7 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
       organization_size: formData.organization_size,
       timezone: formData.timezone,
       start_of_the_week: formData.start_of_the_week,
+      weekend_days: formData.weekend_days,
     };
 
     try {
@@ -298,6 +302,20 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
                 control={control}
                 render={({ field: { value, onChange } }) => (
                   <StartOfWeekSelect value={value} onChange={onChange} disabled={!isAdmin} />
+                )}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <h4 className="text-body-sm-medium text-tertiary">{t("project_components.profile.weekend_days")}</h4>
+              <Controller
+                name="weekend_days"
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <WeekendDaysSelect
+                    value={value ?? [...DEFAULT_WEEKEND_DAYS]}
+                    onChange={onChange}
+                    disabled={!isAdmin}
+                  />
                 )}
               />
             </div>

@@ -84,6 +84,8 @@ export type TUserProfile = {
   updated_at: Date | string;
   /** The person's own first day of the week; null follows the project (or workspace) setting. */
   start_of_the_week: EStartOfTheWeek | null;
+  /** The person's own non-working days (0 = Sunday ... 6 = Saturday); null follows the workspace. */
+  weekend_days: number[] | null;
 };
 
 export interface IInstanceAdminStatus {

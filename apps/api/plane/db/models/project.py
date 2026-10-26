@@ -19,6 +19,7 @@ from plane.db.mixins import AuditModel, ChangeTrackerMixin
 
 from .base import BaseModel
 from .workspace import START_OF_THE_WEEK_CHOICES, SUNDAY
+from plane.utils.weekend_days import default_weekend_days, validate_weekend_days
 
 ROLE_CHOICES = ((20, "Admin"), (15, "Member"), (5, "Guest"))
 
@@ -139,6 +140,9 @@ class Project(ChangeTrackerMixin, BaseModel):
     # First day of the week in this project (0 = Sunday ... 6 = Saturday); copied from the workspace on creation.
     # A person's own preference, when they have one, wins over it.
     start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=SUNDAY)
+    # Days that count as non-working time in this project (0 = Sunday ... 6 = Saturday); copied from the workspace on
+    # creation. Calendars and the timeline shade them, and durations counted in days skip them.
+    weekend_days = models.JSONField(default=default_weekend_days, validators=[validate_weekend_days])
     start_date = models.DateField(null=True, blank=True)
     target_date = models.DateField(null=True, blank=True)
     # external_id for imports
@@ -150,6 +154,8 @@ class Project(ChangeTrackerMixin, BaseModel):
         self.is_timezone_provided = kwargs.get("timezone") is not None
         # Same for the first day of the week
         self.is_start_of_the_week_provided = kwargs.get("start_of_the_week") is not None
+        # ... and for the weekend days
+        self.is_weekend_days_provided = kwargs.get("weekend_days") is not None
         super().__init__(*args, **kwargs)
 
     @property
@@ -226,12 +232,16 @@ class Project(ChangeTrackerMixin, BaseModel):
         self.identifier = self.identifier.strip().upper()
         is_creating = self._state.adding
 
-        if is_creating and not (self.is_timezone_provided and self.is_start_of_the_week_provided):
+        if is_creating and not (
+            self.is_timezone_provided and self.is_start_of_the_week_provided and self.is_weekend_days_provided
+        ):
             workspace = Workspace.objects.get(id=self.workspace_id)
             if not self.is_timezone_provided:
                 self.timezone = workspace.timezone
             if not self.is_start_of_the_week_provided:
                 self.start_of_the_week = workspace.start_of_the_week
+            if not self.is_weekend_days_provided:
+                self.weekend_days = list(workspace.weekend_days)
 
         # Read before super().save(): the change tracker resets once it returns.
         update_fields = kwargs.get("update_fields")

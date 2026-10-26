@@ -532,7 +532,11 @@
       "timezone_error": "Bijwerken van tijdzone mislukt",
       "timezone_updated": "Tijdzone bijgewerkt",
       "update_error": "Er is een fout opgetreden bij het bijwerken van je profiel. Probeer het opnieuw.",
-      "updated": "Profiel bijgewerkt."
+      "updated": "Profiel bijgewerkt.",
+      "weekend_days": "Weekenddagen",
+      "weekend_days_description": "Bepaalt welke dagen als niet-werktijd gelden.",
+      "weekend_days_updated": "Weekenddagen bijgewerkt",
+      "weekend_days_use_default": "Standaard van de werkruimte gebruiken"
     },
     "publish_modal": {
       "allow_comments": "Reacties toestaan",

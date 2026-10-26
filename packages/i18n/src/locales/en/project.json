@@ -532,7 +532,11 @@
       "timezone_error": "Failed to update timezone",
       "timezone_updated": "Timezone updated successfully",
       "update_error": "There was some error in updating your profile. Please try again.",
-      "updated": "Profile updated successfully."
+      "updated": "Profile updated successfully.",
+      "weekend_days": "Weekend days",
+      "weekend_days_description": "Sets which days are treated as non-working time.",
+      "weekend_days_updated": "Weekend days updated successfully",
+      "weekend_days_use_default": "Use the workspace default"
     },
     "publish_modal": {
       "allow_comments": "Allow comments",

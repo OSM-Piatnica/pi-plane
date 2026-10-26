@@ -532,7 +532,11 @@
       "timezone_error": "Gagal memperbarui zona waktu",
       "timezone_updated": "Zona waktu berhasil diperbarui",
       "update_error": "Terjadi kesalahan saat memperbarui profil Anda. Silakan coba lagi.",
-      "updated": "Profil berhasil diperbarui."
+      "updated": "Profil berhasil diperbarui.",
+      "weekend_days": "Hari akhir pekan",
+      "weekend_days_description": "Menentukan hari mana yang dianggap sebagai waktu tidak bekerja.",
+      "weekend_days_updated": "Hari akhir pekan berhasil diperbarui",
+      "weekend_days_use_default": "Gunakan default ruang kerja"
     },
     "publish_modal": {
       "allow_comments": "Izinkan komentar",

@@ -532,7 +532,11 @@
       "timezone_error": "更新时区失败",
       "timezone_updated": "时区已成功更新",
       "update_error": "更新个人资料时出错，请重试。",
-      "updated": "个人资料已成功更新。"
+      "updated": "个人资料已成功更新。",
+      "weekend_days": "周末日",
+      "weekend_days_description": "设置哪些天算作非工作时间。",
+      "weekend_days_updated": "周末日已更新",
+      "weekend_days_use_default": "使用工作区默认值"
     },
     "publish_modal": {
       "allow_comments": "允许评论",

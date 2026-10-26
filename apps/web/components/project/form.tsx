@@ -24,7 +24,7 @@ import type { IProject, IWorkspace } from "@plane/types";
 import { Select } from "@plane/blocks/select";
 import { CoverImage } from "@/components/common/cover-image";
 import { ImagePickerPopover } from "@/components/core/image-picker-popover";
-import { StartOfWeekSelect, TimezoneSelect } from "@/components/global";
+import { StartOfWeekSelect, TimezoneSelect, WeekendDaysSelect } from "@/components/global";
 // helpers
 import { handleCoverImageChange } from "@/helpers/cover-image.helper";
 // hooks
@@ -169,6 +169,7 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
         logo_props: formData.logo_props,
         timezone: formData.timezone,
         start_of_the_week: formData.start_of_the_week,
+        weekend_days: formData.weekend_days,
       };
 
       // Handle cover image changes
@@ -466,6 +467,16 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
               control={control}
               render={({ field: { value, onChange } }) => (
                 <StartOfWeekSelect value={value} onChange={onChange} disabled={!isAdmin} />
+              )}
+            />
+          </div>
+          <div className="col-span-1 flex flex-col gap-1 sm:col-span-2 xl:col-span-1">
+            <h4 className="text-13">{t("project_components.profile.weekend_days")}</h4>
+            <Controller
+              name="weekend_days"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <WeekendDaysSelect value={value ?? [0, 6]} onChange={onChange} disabled={!isAdmin} />
               )}
             />
           </div>
