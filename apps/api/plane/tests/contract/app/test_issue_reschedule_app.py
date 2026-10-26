@@ -69,6 +69,12 @@ def patch(client, workspace, project, issue, data):
     return response, activity
 
 
+def code(response):
+    """The error code of a refusal: a serializer wraps every value of its error in a list, a view does not."""
+    value = response.json()["error_code"]
+    return value[0] if isinstance(value, list) else value
+
+
 def dates(issue):
     issue.refresh_from_db()
     return issue.start_date, issue.target_date
@@ -95,14 +101,24 @@ class TestOfferToShiftDependents:
         assert dates(predecessor) == (date(2026, 1, 1), date(2026, 1, 10))
         assert dates(successor) == (date(2026, 1, 11), date(2026, 1, 20))
 
-    def test_confirmed_the_change_and_the_shift_are_applied_together(self, session_client, workspace, project):
+    def test_confirmed_the_change_and_the_shift_are_applied_together(
+        self, session_client, workspace, project, django_capture_on_commit_callbacks
+    ):
         predecessor = item(project, "predecessor", date(2026, 1, 1), date(2026, 1, 10))
         successor = item(project, "successor", date(2026, 1, 11), date(2026, 1, 20))
         relate(project, predecessor, successor)
 
-        response, activity = patch(
-            session_client, workspace, project, predecessor, {"target_date": "2026-01-14", "shift_dependents": True}
-        )
+        with (
+            mock.patch("plane.app.views.issue.base.issue_activity"),
+            mock.patch("plane.app.views.issue.base.model_activity"),
+            mock.patch(ACTIVITY) as activity,
+            django_capture_on_commit_callbacks(execute=True),
+        ):
+            response = session_client.patch(
+                patch_url(workspace, project, predecessor),
+                {"target_date": "2026-01-14", "shift_dependents": True},
+                format="json",
+            )
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert dates(predecessor) == (date(2026, 1, 1), date(2026, 1, 14))
@@ -198,7 +214,7 @@ class TestOfferToShiftDependents:
         response, _ = patch(session_client, workspace, project, a, {"target_date": "2026-01-14"})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert response.json()["error_code"] == "relation_date_conflict"
+        assert code(response) == "relation_date_conflict"
 
     def test_not_offered_when_the_work_item_itself_is_too_early(self, session_client, workspace, project):
         blocker = item(project, "blocker", date(2026, 1, 1), date(2026, 1, 10))
@@ -209,7 +225,7 @@ class TestOfferToShiftDependents:
         response, _ = patch(session_client, workspace, project, blocked, {"start_date": "2026-01-05"})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert response.json()["error_code"] == "relation_date_conflict"
+        assert code(response) == "relation_date_conflict"
 
     def test_not_offered_for_a_dependent_the_person_may_not_edit(self, session_client, workspace, create_user, project):
         other = Project.objects.create(name="Other", identifier="OTH", workspace=workspace, created_by=create_user)
@@ -220,7 +236,7 @@ class TestOfferToShiftDependents:
         response, _ = patch(session_client, workspace, project, a, {"target_date": "2026-01-14"})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert response.json()["error_code"] == "relation_date_conflict"
+        assert code(response) == "relation_date_conflict"
 
     def test_a_dependent_in_another_project_is_shifted_when_the_person_may_edit_it(
         self, session_client, workspace, create_user, project
@@ -258,7 +274,7 @@ class TestOfferToShiftDependents:
         response, _ = patch(session_client, workspace, project, a, {"target_date": "2026-01-14"})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert response.json()["error_code"] == "relation_date_conflict"
+        assert code(response) == "relation_date_conflict"
 
 
 @pytest.mark.contract
