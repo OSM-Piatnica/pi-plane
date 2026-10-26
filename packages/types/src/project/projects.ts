@@ -72,6 +72,8 @@ export interface IProject extends IPartialProject {
   members?: string[];
   timezone?: string;
   start_of_the_week?: EStartOfTheWeek;
+  /** Days that count as non-working time in this project, 0 = Sunday ... 6 = Saturday. */
+  weekend_days?: number[];
   start_date?: string | null;
   target_date?: string | null;
   next_work_item_sequence?: number;

@@ -532,7 +532,11 @@
       "timezone_error": "タイムゾーンの更新に失敗しました",
       "timezone_updated": "タイムゾーンを更新しました",
       "update_error": "プロフィールの更新中にエラーが発生しました。もう一度お試しください。",
-      "updated": "プロフィールを更新しました。"
+      "updated": "プロフィールを更新しました。",
+      "weekend_days": "週末の曜日",
+      "weekend_days_description": "どの曜日を非稼働日として扱うかを設定します。",
+      "weekend_days_updated": "週末の曜日を更新しました",
+      "weekend_days_use_default": "ワークスペースの既定値を使用"
     },
     "publish_modal": {
       "allow_comments": "コメントを許可",

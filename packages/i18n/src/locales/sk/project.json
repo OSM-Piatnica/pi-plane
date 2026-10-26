@@ -532,7 +532,11 @@
       "timezone_error": "Aktualizácia časového pásma zlyhala",
       "timezone_updated": "Časové pásmo bolo úspešne aktualizované",
       "update_error": "Pri aktualizácii profilu sa vyskytla chyba. Skúste to prosím znova.",
-      "updated": "Profil bol úspešne aktualizovaný."
+      "updated": "Profil bol úspešne aktualizovaný.",
+      "weekend_days": "Dni víkendu",
+      "weekend_days_description": "Určuje, ktoré dni sa považujú za nepracovný čas.",
+      "weekend_days_updated": "Dni víkendu boli úspešne aktualizované",
+      "weekend_days_use_default": "Použiť predvolenú hodnotu pracovného priestoru"
     },
     "publish_modal": {
       "allow_comments": "Povoliť komentáre",

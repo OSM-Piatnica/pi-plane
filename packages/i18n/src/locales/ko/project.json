@@ -532,7 +532,11 @@
       "timezone_error": "시간대를 업데이트하지 못했습니다",
       "timezone_updated": "시간대가 성공적으로 업데이트되었습니다",
       "update_error": "프로필을 업데이트하는 중 오류가 발생했습니다. 다시 시도해 주세요.",
-      "updated": "프로필이 성공적으로 업데이트되었습니다."
+      "updated": "프로필이 성공적으로 업데이트되었습니다.",
+      "weekend_days": "주말 요일",
+      "weekend_days_description": "비근무일로 처리할 요일을 설정합니다.",
+      "weekend_days_updated": "주말 요일을 업데이트했습니다",
+      "weekend_days_use_default": "워크스페이스 기본값 사용"
     },
     "publish_modal": {
       "allow_comments": "댓글 허용",

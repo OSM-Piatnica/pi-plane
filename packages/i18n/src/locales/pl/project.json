@@ -532,7 +532,11 @@
       "timezone_error": "Nie udało się zaktualizować strefy czasowej",
       "timezone_updated": "Strefa czasowa została pomyślnie zaktualizowana",
       "update_error": "Wystąpił błąd podczas aktualizacji profilu. Spróbuj ponownie.",
-      "updated": "Profil został pomyślnie zaktualizowany."
+      "updated": "Profil został pomyślnie zaktualizowany.",
+      "weekend_days": "Dni weekendowe",
+      "weekend_days_description": "Określa, które dni są traktowane jako czas wolny od pracy.",
+      "weekend_days_updated": "Dni weekendowe zostały zaktualizowane",
+      "weekend_days_use_default": "Użyj domyślnych ustawień obszaru roboczego"
     },
     "publish_modal": {
       "allow_comments": "Zezwalaj na komentarze",

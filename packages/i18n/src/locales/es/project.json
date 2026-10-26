@@ -532,7 +532,11 @@
       "timezone_error": "No se pudo actualizar la zona horaria",
       "timezone_updated": "Zona horaria actualizada correctamente",
       "update_error": "Se produjo un error al actualizar tu perfil. Inténtalo de nuevo.",
-      "updated": "Perfil actualizado correctamente."
+      "updated": "Perfil actualizado correctamente.",
+      "weekend_days": "Días de fin de semana",
+      "weekend_days_description": "Define qué días se consideran tiempo no laborable.",
+      "weekend_days_updated": "Días de fin de semana actualizados correctamente",
+      "weekend_days_use_default": "Usar el valor predeterminado del espacio de trabajo"
     },
     "publish_modal": {
       "allow_comments": "Permitir comentarios",

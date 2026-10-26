@@ -532,7 +532,11 @@
       "timezone_error": "Impossibile aggiornare il fuso orario",
       "timezone_updated": "Fuso orario aggiornato con successo",
       "update_error": "Si è verificato un errore durante l'aggiornamento del profilo. Riprova.",
-      "updated": "Profilo aggiornato con successo."
+      "updated": "Profilo aggiornato con successo.",
+      "weekend_days": "Giorni del fine settimana",
+      "weekend_days_description": "Imposta quali giorni sono considerati non lavorativi.",
+      "weekend_days_updated": "Giorni del fine settimana aggiornati con successo",
+      "weekend_days_use_default": "Usa l'impostazione predefinita dello spazio di lavoro"
     },
     "publish_modal": {
       "allow_comments": "Consenti commenti",

@@ -36,6 +36,8 @@ export interface IWorkspace {
   role: number;
   timezone: string;
   start_of_the_week?: EStartOfTheWeek;
+  /** Days that count as non-working time, 0 = Sunday ... 6 = Saturday. */
+  weekend_days?: number[];
 }
 
 export interface IWorkspaceLite {

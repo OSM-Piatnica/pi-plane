@@ -66,6 +66,7 @@ export class ProfileStore implements IUserProfileStore {
     updated_at: "",
     language: "",
     start_of_the_week: null,
+    weekend_days: null,
   };
 
   // services

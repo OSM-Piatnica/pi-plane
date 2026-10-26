@@ -532,7 +532,11 @@
       "timezone_error": "Échec de la mise à jour du fuseau horaire",
       "timezone_updated": "Fuseau horaire mis à jour avec succès",
       "update_error": "Une erreur s'est produite lors de la mise à jour de votre profil. Veuillez réessayer.",
-      "updated": "Profil mis à jour avec succès."
+      "updated": "Profil mis à jour avec succès.",
+      "weekend_days": "Jours de week-end",
+      "weekend_days_description": "Définit les jours considérés comme non travaillés.",
+      "weekend_days_updated": "Jours de week-end mis à jour avec succès",
+      "weekend_days_use_default": "Utiliser la valeur par défaut de l'espace de travail"
     },
     "publish_modal": {
       "allow_comments": "Autoriser les commentaires",

@@ -532,7 +532,11 @@
       "timezone_error": "Zeitzone konnte nicht aktualisiert werden",
       "timezone_updated": "Zeitzone erfolgreich aktualisiert",
       "update_error": "Beim Aktualisieren Ihres Profils ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
-      "updated": "Profil erfolgreich aktualisiert."
+      "updated": "Profil erfolgreich aktualisiert.",
+      "weekend_days": "Wochenendtage",
+      "weekend_days_description": "Legt fest, welche Tage als arbeitsfreie Zeit gelten.",
+      "weekend_days_updated": "Wochenendtage erfolgreich aktualisiert",
+      "weekend_days_use_default": "Standard des Arbeitsbereichs verwenden"
     },
     "publish_modal": {
       "allow_comments": "Kommentare zulassen",
