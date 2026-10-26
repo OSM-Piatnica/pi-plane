@@ -645,6 +645,8 @@ class IssueRelationCreateSerializer(serializers.Serializer):
         ("clones", "Clones"),
         ("tested_by", "Tested By"),
         ("tests", "Tests"),
+        ("start_before_finish", "Starts Before Finish"),
+        ("finish_after_start", "Finishes After Start"),
     ]
 
     relation_type = serializers.ChoiceField(
@@ -657,6 +659,14 @@ class IssueRelationCreateSerializer(serializers.Serializer):
         required=True,
         min_length=1,
         help_text="Array of work item IDs to create relations with",
+    )
+    lag_days = serializers.IntegerField(
+        required=False,
+        allow_null=True,
+        help_text=(
+            "Days kept between the two dates of a blocking, starts or finishes relation; negative lets them overlap. "
+            "Sent for a relation that exists already, it changes the lag."
+        ),
     )
 
     def validate_issues(self, value):

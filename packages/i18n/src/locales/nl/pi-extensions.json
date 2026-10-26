@@ -42,20 +42,30 @@
           "blocked_by": "{issue} kan pas starten als {related} is afgerond (geblokkeerd door relatie).",
           "blocking": "{issue} moet klaar zijn voordat {related} start (blokkerende relatie).",
           "finish_after": "{issue} kan niet eerder eindigen dan {related} (eindigt na-relatie).",
+          "finish_after_start": "{issue} kan niet eindigen voordat {related} begint (relatie ‘eindigt na het begin’).",
           "finish_before": "{issue} moet uiterlijk op het moment van {related} eindigen (eindigt voor-relatie).",
           "start_after": "{issue} kan niet starten vóór {related} (start na-relatie).",
-          "start_before": "{issue} moet uiterlijk op het moment van {related} starten (start voor-relatie)."
+          "start_before": "{issue} moet uiterlijk op het moment van {related} starten (start voor-relatie).",
+          "start_before_finish": "{issue} moet uiterlijk beginnen wanneer {related} eindigt (relatie ‘begint vóór het einde’)."
         },
         "status": {
           "finish_after": "{issue} kan pas worden voltooid als {related} is voltooid (eindigt na-relatie).",
+          "finish_after_start": "{issue} kan pas worden voltooid als {related} is begonnen (relatie ‘eindigt na het begin’).",
           "start_after": "{issue} kan pas starten als {related} is gestart (start na-relatie)."
         },
         "self": "{issue} kan niet aan zichzelf worden gekoppeld.",
-        "cycle": "{issue} en {related} zouden een lus van relaties vormen. Verwijder eerst de tegengestelde relatie."
+        "cycle": "{issue} en {related} zouden een lus van relaties vormen. Verwijder eerst de tegengestelde relatie.",
+        "lag_suffix": " Vertraging van de relatie: {lag} d."
       },
       "date_conflict": "Deze datums conflicteren met bestaande afhankelijkheden. Pas gerelateerde werkitems aan of verwijder eerst de afhankelijkheid.",
       "dependency_create_failed": "Kon afhankelijkheid niet aanmaken. Probeer het opnieuw.",
-      "dependency_created": "Afhankelijkheid van werkitem aangemaakt."
+      "dependency_created": "Afhankelijkheid van werkitem aangemaakt.",
+      "lag": {
+        "hint": "Dagen tussen de twee data; negatief laat ze overlappen.",
+        "invalid": "Voer een geheel aantal dagen in tussen -{max} en {max}.",
+        "label": "Vertraging (dagen)",
+        "update_failed": "De vertraging kon niet worden gewijzigd."
+      }
     }
   },
   "project_create": {

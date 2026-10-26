@@ -206,7 +206,9 @@
       "clones": "Mengkloning",
       "cloned_by": "Dikloning oleh",
       "tests": "Menguji",
-      "tested_by": "Diuji oleh"
+      "tested_by": "Diuji oleh",
+      "start_before_finish": "Mulai sebelum selesainya",
+      "finish_after_start": "Selesai setelah dimulainya"
     },
     "copy_link": "Salin tautan item kerja",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "menandai bahwa item kerja ini selesai setelah <value/>.",
           "removed": "menghapus hubungan \"selesai setelah\" dengan <value/>."
         },
+        "finish_after_start": {
+          "added": "menambahkan relasi “Selesai setelah dimulainya”: <value/>.",
+          "removed": "menghapus relasi “Selesai setelah dimulainya”: <value/>."
+        },
         "finish_before": {
           "added": "menandai bahwa item kerja ini selesai sebelum <value/>.",
           "removed": "menghapus hubungan \"selesai sebelum\" dengan <value/>."
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "menandai bahwa item kerja ini dimulai sebelum <value/>.",
           "removed": "menghapus hubungan \"dimulai sebelum\" dengan <value/>."
+        },
+        "start_before_finish": {
+          "added": "menambahkan relasi “Mulai sebelum selesainya”: <value/>.",
+          "removed": "menghapus relasi “Mulai sebelum selesainya”: <value/>."
         },
         "tested_by": {
           "added": "menambahkan relasi “Diuji oleh”: <value/>.",

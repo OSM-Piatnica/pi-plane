@@ -206,7 +206,9 @@
       "clones": "Clonează",
       "cloned_by": "Clonat de",
       "tests": "Testează",
-      "tested_by": "Testat de"
+      "tested_by": "Testat de",
+      "start_before_finish": "Începe înainte de sfârșitul",
+      "finish_after_start": "Se termină după începutul"
     },
     "copy_link": "Copiază link-ul activității",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "a marcat că această activitate se termină după <value/>.",
           "removed": "a eliminat relația „se termină după” cu <value/>."
         },
+        "finish_after_start": {
+          "added": "a adăugat relația „Se termină după începutul”: <value/>.",
+          "removed": "a eliminat relația „Se termină după începutul”: <value/>."
+        },
         "finish_before": {
           "added": "a marcat că această activitate se termină înainte de <value/>.",
           "removed": "a eliminat relația „se termină înainte de” cu <value/>."
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "a marcat că această activitate începe înainte de <value/>.",
           "removed": "a eliminat relația „începe înainte de” cu <value/>."
+        },
+        "start_before_finish": {
+          "added": "a adăugat relația „Începe înainte de sfârșitul”: <value/>.",
+          "removed": "a eliminat relația „Începe înainte de sfârșitul”: <value/>."
         },
         "tested_by": {
           "added": "a adăugat relația „Testat de”: <value/>.",

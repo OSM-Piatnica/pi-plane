@@ -45,7 +45,7 @@ export const TimelineDependencyPaths = observer(function TimelineDependencyPaths
     };
   };
 
-  const edges = buildGanttDependencyEdges(blockIds, relationMap, getDates);
+  const edges = buildGanttDependencyEdges(blockIds, relationMap, getDates, relation.getRelationLag);
   if (!edges.length) return null;
 
   const indexById = new Map(blockIds.map((id, index) => [id, index]));

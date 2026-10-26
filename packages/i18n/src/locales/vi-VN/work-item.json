@@ -206,7 +206,9 @@
       "clones": "Nhân bản",
       "cloned_by": "Được nhân bản bởi",
       "tests": "Kiểm thử",
-      "tested_by": "Được kiểm thử bởi"
+      "tested_by": "Được kiểm thử bởi",
+      "start_before_finish": "Bắt đầu trước khi kết thúc",
+      "finish_after_start": "Kết thúc sau khi bắt đầu"
     },
     "copy_link": "Sao chép liên kết mục công việc",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "đã đánh dấu mục công việc này kết thúc sau <value/>.",
           "removed": "đã xóa mối quan hệ kết thúc sau với <value/>."
         },
+        "finish_after_start": {
+          "added": "đã thêm quan hệ “Kết thúc sau khi bắt đầu”: <value/>.",
+          "removed": "đã xóa quan hệ “Kết thúc sau khi bắt đầu”: <value/>."
+        },
         "finish_before": {
           "added": "đã đánh dấu mục công việc này kết thúc trước <value/>.",
           "removed": "đã xóa mối quan hệ kết thúc trước với <value/>."
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "đã đánh dấu mục công việc này bắt đầu trước <value/>.",
           "removed": "đã xóa mối quan hệ bắt đầu trước với <value/>."
+        },
+        "start_before_finish": {
+          "added": "đã thêm quan hệ “Bắt đầu trước khi kết thúc”: <value/>.",
+          "removed": "đã xóa quan hệ “Bắt đầu trước khi kết thúc”: <value/>."
         },
         "tested_by": {
           "added": "đã thêm quan hệ “Được kiểm thử bởi”: <value/>.",

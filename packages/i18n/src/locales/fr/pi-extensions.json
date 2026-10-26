@@ -42,20 +42,30 @@
           "blocked_by": "{issue} ne peut pas démarrer tant que {related} n'est pas terminé (relation de blocage).",
           "blocking": "{issue} doit se terminer avant que {related} ne démarre (relation de blocage).",
           "finish_after": "{issue} ne peut pas se terminer avant {related} (relation de fin après).",
+          "finish_after_start": "{issue} ne peut pas se terminer avant que {related} commence (relation « se termine après le début »).",
           "finish_before": "{issue} doit se terminer au plus tard le {related} (relation de fin avant).",
           "start_after": "{issue} ne peut pas démarrer avant {related} (relation de démarrage après).",
-          "start_before": "{issue} doit démarrer au plus tard le {related} (relation de démarrage avant)."
+          "start_before": "{issue} doit démarrer au plus tard le {related} (relation de démarrage avant).",
+          "start_before_finish": "{issue} doit commencer au plus tard quand {related} se termine (relation « commence avant la fin »)."
         },
         "status": {
           "finish_after": "{issue} ne peut pas être terminé tant que {related} n'est pas terminé (relation de fin après).",
+          "finish_after_start": "{issue} ne peut pas être terminé tant que {related} n’a pas commencé (relation « se termine après le début »).",
           "start_after": "{issue} ne peut pas démarrer tant que {related} n'a pas démarré (relation de démarrage après)."
         },
         "self": "{issue} ne peut pas être lié à lui-même.",
-        "cycle": "{issue} et {related} formeraient une boucle de relations. Supprimez d’abord la relation inverse."
+        "cycle": "{issue} et {related} formeraient une boucle de relations. Supprimez d’abord la relation inverse.",
+        "lag_suffix": " Décalage de la relation : {lag} j."
       },
       "date_conflict": "Ces dates entrent en conflit avec des dépendances existantes. Ajustez les éléments de travail liés ou supprimez d'abord la dépendance.",
       "dependency_create_failed": "Impossible de créer la dépendance. Veuillez réessayer.",
-      "dependency_created": "La dépendance de l'élément de travail a été créée avec succès."
+      "dependency_created": "La dépendance de l'élément de travail a été créée avec succès.",
+      "lag": {
+        "hint": "Jours entre les deux dates ; une valeur négative permet le chevauchement.",
+        "invalid": "Saisissez un nombre entier de jours entre -{max} et {max}.",
+        "label": "Décalage (jours)",
+        "update_failed": "Impossible de modifier le décalage."
+      }
     }
   },
   "project_create": {

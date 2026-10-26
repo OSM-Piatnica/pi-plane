@@ -20,11 +20,17 @@ type TIssueDates = TWorkItemTimelineDates;
 
 type TRelationMap = Record<string, Partial<Record<TIssueRelationTypes, string[]>> | undefined>;
 
+/** Days of lag of the relation `issueId <relationType> relatedId`; zero when none is known. */
+export type TGetRelationLag = (issueId: string, relationType: TIssueRelationTypes, relatedId: string) => number;
+
+const NO_LAG: TGetRelationLag = () => 0;
+
 export const isDependencyRelationInvalid = (
   relationType: TTimelineRelationType,
   sourceDates: TIssueDates,
-  relatedDates: TIssueDates
-): boolean => !isTimelineRelationSatisfied(relationType, sourceDates, relatedDates);
+  relatedDates: TIssueDates,
+  lag = 0
+): boolean => !isTimelineRelationSatisfied(relationType, sourceDates, relatedDates, lag);
 
 export const getDependencyArrowEndpoints = (
   relationType: TIssueRelationTypes,
@@ -35,10 +41,12 @@ export const getDependencyArrowEndpoints = (
     case "blocked_by":
     case "finish_after":
     case "start_after":
+    case "finish_after_start":
       return { fromId: relatedId, toId: sourceId };
     case "blocking":
     case "finish_before":
     case "start_before":
+    case "start_before_finish":
     default:
       return { fromId: sourceId, toId: relatedId };
   }
@@ -47,7 +55,8 @@ export const getDependencyArrowEndpoints = (
 export const buildGanttDependencyEdges = (
   blockIds: string[],
   relationMap: TRelationMap,
-  getDates: (issueId: string) => TIssueDates | undefined
+  getDates: (issueId: string) => TIssueDates | undefined,
+  getLag: TGetRelationLag = NO_LAG
 ): TGanttDependencyEdge[] => {
   const visible = new Set(blockIds);
   const edges: TGanttDependencyEdge[] = [];
@@ -69,7 +78,14 @@ export const buildGanttDependencyEdges = (
         const sourceDates = getDates(sourceId);
         const relatedDates = getDates(relatedId);
         const isInvalid =
-          !!sourceDates && !!relatedDates && isDependencyRelationInvalid(relationType, sourceDates, relatedDates);
+          !!sourceDates &&
+          !!relatedDates &&
+          isDependencyRelationInvalid(
+            relationType,
+            sourceDates,
+            relatedDates,
+            getLag(sourceId, relationType, relatedId)
+          );
 
         edges.push({
           id: edgeKey,
@@ -88,7 +104,8 @@ export const buildGanttDependencyEdges = (
 export const wouldUpdatesViolateDependencies = (
   updates: { id: string; start_date?: string; target_date?: string }[],
   relationMap: TRelationMap,
-  getDates: (issueId: string) => TIssueDates | undefined
+  getDates: (issueId: string) => TIssueDates | undefined,
+  getLag: TGetRelationLag = NO_LAG
 ): boolean => {
   const proposed = new Map<string, TIssueDates>();
   for (const update of updates) {
@@ -111,7 +128,14 @@ export const wouldUpdatesViolateDependencies = (
       for (const relatedId of relations[relationType] ?? []) {
         const relatedDates = getMergedDates(relatedId);
         if (!relatedDates) continue;
-        if (isDependencyRelationInvalid(relationType, sourceDates, relatedDates)) {
+        if (
+          isDependencyRelationInvalid(
+            relationType,
+            sourceDates,
+            relatedDates,
+            getLag(update.id, relationType, relatedId)
+          )
+        ) {
           return true;
         }
       }
@@ -125,7 +149,9 @@ export const wouldUpdatesViolateDependencies = (
         const otherDates = getMergedDates(otherId);
         const thisDates = getMergedDates(update.id);
         if (!otherDates || !thisDates) continue;
-        if (isDependencyRelationInvalid(relationType, otherDates, thisDates)) {
+        if (
+          isDependencyRelationInvalid(relationType, otherDates, thisDates, getLag(otherId, relationType, update.id))
+        ) {
           return true;
         }
       }

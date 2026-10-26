@@ -53,7 +53,15 @@ const getRelationConflictMessage = (payload: Record<string, unknown>, t: TTransl
 
   // The translation store echoes the key back when it holds no entry for it, in which case the
   // English sentence the backend already sent is the better answer.
-  return message === key ? undefined : message;
+  if (message === key) return undefined;
+
+  // A relation with a lag says so, because the dates alone would not explain the refusal
+  const lag = Number(readField(payload.lag_days) ?? payload.lag_days ?? 0);
+  if (kind === "date" && Number.isFinite(lag) && lag !== 0) {
+    const suffix = t("issue.relation.conflict.lag_suffix", { lag });
+    if (suffix !== "issue.relation.conflict.lag_suffix") return `${message}${suffix}`;
+  }
+  return message;
 };
 
 export const getIssueApiErrorMessage = (error: unknown, fallback: string, t?: TTranslate): string => {

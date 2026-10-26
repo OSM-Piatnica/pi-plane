@@ -206,7 +206,9 @@
       "clones": "複製する",
       "cloned_by": "複製元",
       "tests": "テストする",
-      "tested_by": "テスト対象"
+      "tested_by": "テスト対象",
+      "start_before_finish": "終了前に開始",
+      "finish_after_start": "開始後に終了"
     },
     "copy_link": "作業項目のリンクをコピー",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "この作業項目が<value/>より後に終了することを設定しました。",
           "removed": "<value/>との「より後に終了」の関連を削除しました。"
         },
+        "finish_after_start": {
+          "added": "関係「開始後に終了」を追加しました: <value/>。",
+          "removed": "関係「開始後に終了」を削除しました: <value/>。"
+        },
         "finish_before": {
           "added": "この作業項目が<value/>より前に終了することを設定しました。",
           "removed": "<value/>との「より前に終了」の関連を削除しました。"
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "この作業項目が<value/>より前に開始することを設定しました。",
           "removed": "<value/>との「より前に開始」の関連を削除しました。"
+        },
+        "start_before_finish": {
+          "added": "関係「終了前に開始」を追加しました: <value/>。",
+          "removed": "関係「終了前に開始」を削除しました: <value/>。"
         },
         "tested_by": {
           "added": "関係「テスト対象」を追加しました: <value/>。",

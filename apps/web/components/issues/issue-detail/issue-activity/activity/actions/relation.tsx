@@ -74,6 +74,14 @@ export const IssueRelationActivity = observer(function IssueRelationActivity(pro
         return isAdded
           ? t("activity_feed.issue.relation.tested_by.added")
           : t("activity_feed.issue.relation.tested_by.removed");
+      case "start_before_finish":
+        return isAdded
+          ? t("activity_feed.issue.relation.start_before_finish.added")
+          : t("activity_feed.issue.relation.start_before_finish.removed");
+      case "finish_after_start":
+        return isAdded
+          ? t("activity_feed.issue.relation.finish_after_start.added")
+          : t("activity_feed.issue.relation.finish_after_start.removed");
       case "relates_to":
         return isAdded
           ? t("activity_feed.issue.relation.relates_to.added")

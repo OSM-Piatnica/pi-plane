@@ -96,7 +96,14 @@ from plane.utils.worklog_access import can_view_worklogs
 from plane.utils.issue_relation_constraints import TIMELINE_RELATION_TYPES
 from plane.utils.serializers import writable_data
 from plane.utils.issue_relation_mapper import get_actual_relation, get_inverse_relation
-from plane.utils.issue_relation_service import existing_symmetric_pairs, relation_ends, validate_new_relation
+from plane.utils.issue_relation_service import (
+    existing_relation_others,
+    existing_symmetric_pairs,
+    parse_lag,
+    relation_ends,
+    set_lag,
+    validate_new_relation,
+)
 from plane.utils.issue_relation_types import ALL_RELATION_NAMES, FORWARD_RELATIONS, SYMMETRIC_RELATIONS, is_mirrored
 from plane.bgtasks.webhook_task import model_activity
 from plane.app.permissions import ROLE
@@ -2631,6 +2638,7 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
             "relation_type",
             "issue_id",
             "related_issue_id",
+            "lag_days",
             issue_project_id=F("issue__project_id"),
             related_issue_project_id=F("related_issue__project_id"),
         )
@@ -2639,7 +2647,11 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
         seen_symmetric = {name: set() for name in SYMMETRIC_RELATIONS}
 
         def entry(project_id_key, issue_id_key, rel):
-            return {"project_id": str(rel[project_id_key]), "issue_id": str(rel[issue_id_key])}
+            return {
+                "project_id": str(rel[project_id_key]),
+                "issue_id": str(rel[issue_id_key]),
+                "lag_days": rel["lag_days"],
+            }
 
         for rel in relations:
             stored = rel["relation_type"]
@@ -2730,6 +2742,9 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
 
         actual_relation = get_actual_relation(relation_type)
         is_reverse = is_mirrored(relation_type)
+        lag, lag_error = parse_lag(request.data.get("lag_days"), relation_type)
+        if lag_error:
+            return Response(lag_error, status=status.HTTP_400_BAD_REQUEST)
 
         # Scope to workspace to prevent cross-tenant IDOR
         # Relations can cross projects so only workspace scope is enforced
@@ -2762,7 +2777,7 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
             if relation_type in TIMELINE_RELATION_TYPES:
                 from plane.utils.issue_timeline_relation_validation import validate_new_timeline_relation
 
-                timeline_error = validate_new_timeline_relation(current_issue, related_issue, relation_type)
+                timeline_error = validate_new_timeline_relation(current_issue, related_issue, relation_type, lag or 0)
                 if timeline_error:
                     return Response(timeline_error, status=status.HTTP_400_BAD_REQUEST)
 
@@ -2770,12 +2785,14 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
         already_related = existing_symmetric_pairs(relation_type, issue_id, issues)
         issues = [item for item in issues if str(item) not in already_related]
 
+        already_there = existing_relation_others(issue_id, issues, relation_type)
         IssueRelation.objects.bulk_create(
             [
                 IssueRelation(
                     issue_id=relation_ends(issue_id, issue, relation_type)[0],
                     related_issue_id=relation_ends(issue_id, issue, relation_type)[1],
                     relation_type=actual_relation,
+                    lag_days=lag or 0,
                     project_id=project_id,
                     workspace_id=project.workspace_id,
                     created_by=request.user,
@@ -2787,17 +2804,25 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
             ignore_conflicts=True,
         )
 
-        issue_activity.delay(
-            type="issue_relation.activity.created",
-            requested_data=json.dumps({"relation_type": relation_type, "issues": issues}, cls=DjangoJSONEncoder),
-            actor_id=str(request.user.id),
-            issue_id=str(issue_id),
-            project_id=str(project_id),
-            current_instance=None,
-            epoch=int(timezone.now().timestamp()),
-            notification=True,
-            origin=base_host(request=request, is_app=True),
-        )
+        if lag is not None:
+            # posting a relation that exists already with a lag changes its lag
+            set_lag(issue_id, issues, relation_type, lag)
+
+        new_issues = [item for item in issues if str(item) not in already_there]
+        if new_issues:
+            issue_activity.delay(
+                type="issue_relation.activity.created",
+                requested_data=json.dumps(
+                    {"relation_type": relation_type, "issues": new_issues}, cls=DjangoJSONEncoder
+                ),
+                actor_id=str(request.user.id),
+                issue_id=str(issue_id),
+                project_id=str(project_id),
+                current_instance=None,
+                epoch=int(timezone.now().timestamp()),
+                notification=True,
+                origin=base_host(request=request, is_app=True),
+            )
 
         # Re-fetch with select_related to avoid N+1 queries in serializers.
         # bulk_create with ignore_conflicts=True may not return PKs,

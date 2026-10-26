@@ -206,7 +206,9 @@
       "clones": "Clone",
       "cloned_by": "Cloné par",
       "tests": "Teste",
-      "tested_by": "Testé par"
+      "tested_by": "Testé par",
+      "start_before_finish": "Commence avant la fin de",
+      "finish_after_start": "Se termine après le début de"
     },
     "copy_link": "Copier le lien de l’élément de travail",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "a indiqué que cet élément de travail se termine après <value/>.",
           "removed": "a supprimé la relation « se termine après » avec <value/>."
         },
+        "finish_after_start": {
+          "added": "a ajouté la relation « Se termine après le début de » : <value/>.",
+          "removed": "a supprimé la relation « Se termine après le début de » : <value/>."
+        },
         "finish_before": {
           "added": "a indiqué que cet élément de travail se termine avant <value/>.",
           "removed": "a supprimé la relation « se termine avant » avec <value/>."
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "a indiqué que cet élément de travail commence avant <value/>.",
           "removed": "a supprimé la relation « commence avant » avec <value/>."
+        },
+        "start_before_finish": {
+          "added": "a ajouté la relation « Commence avant la fin de » : <value/>.",
+          "removed": "a supprimé la relation « Commence avant la fin de » : <value/>."
         },
         "tested_by": {
           "added": "a ajouté la relation « Testé par » : <value/>.",

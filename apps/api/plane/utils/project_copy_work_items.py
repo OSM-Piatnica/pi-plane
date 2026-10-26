@@ -482,6 +482,7 @@ def copy_relations(*, source_project_id, target_project, ids, tally: CopyTally) 
                 issue_id=ids[relation.issue_id],
                 related_issue_id=ids[relation.related_issue_id],
                 relation_type=relation.relation_type,
+                lag_days=relation.lag_days,
                 project=target_project,
                 workspace_id=target_project.workspace_id,
             )

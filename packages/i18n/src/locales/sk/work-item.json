@@ -206,7 +206,9 @@
       "clones": "Klonuje",
       "cloned_by": "Naklonované",
       "tests": "Testuje",
-      "tested_by": "Testované"
+      "tested_by": "Testované",
+      "start_before_finish": "Začína pred koncom",
+      "finish_after_start": "Končí po začiatku"
     },
     "copy_link": "Kopírovať odkaz na pracovnú položku",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "označené, že táto pracovná položka končí po <value/>.",
           "removed": "odstránený vzťah „končí po“ k <value/>."
         },
+        "finish_after_start": {
+          "added": "pridal(a) vzťah „Končí po začiatku“: <value/>.",
+          "removed": "odstránil(a) vzťah „Končí po začiatku“: <value/>."
+        },
         "finish_before": {
           "added": "označené, že táto pracovná položka končí pred <value/>.",
           "removed": "odstránený vzťah „končí pred“ k <value/>."
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "označené, že táto pracovná položka začína pred <value/>.",
           "removed": "odstránený vzťah „začína pred“ k <value/>."
+        },
+        "start_before_finish": {
+          "added": "pridal(a) vzťah „Začína pred koncom“: <value/>.",
+          "removed": "odstránil(a) vzťah „Začína pred koncom“: <value/>."
         },
         "tested_by": {
           "added": "pridal(a) vzťah „Testované“: <value/>.",

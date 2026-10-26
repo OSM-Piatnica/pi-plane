@@ -42,20 +42,30 @@
           "blocked_by": "{issue} não pode começar até que {related} seja concluído (relação de bloqueio).",
           "blocking": "{issue} precisa terminar antes que {related} comece (relação de bloqueio).",
           "finish_after": "{issue} não pode terminar antes de {related} (relação de término após).",
+          "finish_after_start": "{issue} não pode terminar antes de {related} começar (relação “termina depois do início”).",
           "finish_before": "{issue} precisa terminar em ou antes de {related} (relação de término antes).",
           "start_after": "{issue} não pode começar antes de {related} (relação de início após).",
-          "start_before": "{issue} precisa começar em ou antes de {related} (relação de início antes)."
+          "start_before": "{issue} precisa começar em ou antes de {related} (relação de início antes).",
+          "start_before_finish": "{issue} tem de começar o mais tardar quando {related} terminar (relação “começa antes do fim”)."
         },
         "status": {
           "finish_after": "{issue} não pode ser concluído até que {related} seja concluído (relação de término após).",
+          "finish_after_start": "{issue} não pode ser concluído até que {related} tenha começado (relação “termina depois do início”).",
           "start_after": "{issue} não pode começar até que {related} tenha começado (relação de início após)."
         },
         "self": "{issue} não pode estar relacionado consigo próprio.",
-        "cycle": "{issue} e {related} formariam um ciclo de relações. Remova primeiro a relação oposta."
+        "cycle": "{issue} e {related} formariam um ciclo de relações. Remova primeiro a relação oposta.",
+        "lag_suffix": " Atraso da relação: {lag} d."
       },
       "date_conflict": "Essas datas entram em conflito com dependências existentes. Ajuste os itens de trabalho relacionados ou remova a dependência primeiro.",
       "dependency_create_failed": "Não foi possível criar a dependência. Tente novamente.",
-      "dependency_created": "A dependência do item de trabalho foi criada com sucesso."
+      "dependency_created": "A dependência do item de trabalho foi criada com sucesso.",
+      "lag": {
+        "hint": "Dias entre as duas datas; um valor negativo permite sobreposição.",
+        "invalid": "Introduza um número inteiro de dias entre -{max} e {max}.",
+        "label": "Atraso (dias)",
+        "update_failed": "Não foi possível alterar o atraso."
+      }
     }
   },
   "project_create": {

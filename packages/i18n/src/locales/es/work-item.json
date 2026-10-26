@@ -206,7 +206,9 @@
       "clones": "Clona",
       "cloned_by": "Clonado por",
       "tests": "Prueba",
-      "tested_by": "Probado por"
+      "tested_by": "Probado por",
+      "start_before_finish": "Empieza antes de que termine",
+      "finish_after_start": "Termina después de que empiece"
     },
     "copy_link": "Copiar enlace del elemento de trabajo",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "marcó que este elemento de trabajo termina después de <value/>.",
           "removed": "eliminó la relación «termina después de» con <value/>."
         },
+        "finish_after_start": {
+          "added": "añadió la relación «Termina después de que empiece»: <value/>.",
+          "removed": "eliminó la relación «Termina después de que empiece»: <value/>."
+        },
         "finish_before": {
           "added": "marcó que este elemento de trabajo termina antes de <value/>.",
           "removed": "eliminó la relación «termina antes de» con <value/>."
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "marcó que este elemento de trabajo comienza antes de <value/>.",
           "removed": "eliminó la relación «comienza antes de» con <value/>."
+        },
+        "start_before_finish": {
+          "added": "añadió la relación «Empieza antes de que termine»: <value/>.",
+          "removed": "eliminó la relación «Empieza antes de que termine»: <value/>."
         },
         "tested_by": {
           "added": "añadió la relación «Probado por»: <value/>.",

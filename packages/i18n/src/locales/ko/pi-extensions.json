@@ -42,20 +42,30 @@
           "blocked_by": "{issue}은(는) {related}가 완료되어야 시작할 수 있습니다(차단됨 관계).",
           "blocking": "{issue}은(는) {related}가 시작되기 전에 완료되어야 합니다(차단 중 관계).",
           "finish_after": "{issue}은(는) {related}보다 먼저 완료될 수 없습니다(완료 이후 관계).",
+          "finish_after_start": "{issue}은(는) {related}이(가) 시작되기 전에 끝날 수 없습니다(시작 후에 종료 관계).",
           "finish_before": "{issue}은(는) {related} 이전 또는 그와 동시에 완료되어야 합니다(완료 이전 관계).",
           "start_after": "{issue}은(는) {related}보다 먼저 시작할 수 없습니다(시작 이후 관계).",
-          "start_before": "{issue}은(는) {related} 이전 또는 그와 동시에 시작해야 합니다(시작 이전 관계)."
+          "start_before": "{issue}은(는) {related} 이전 또는 그와 동시에 시작해야 합니다(시작 이전 관계).",
+          "start_before_finish": "{issue}은(는) {related}이(가) 끝나는 시점까지는 시작해야 합니다(종료 전에 시작 관계)."
         },
         "status": {
           "finish_after": "{related}가 완료되어야 {issue}을(를) 완료할 수 있습니다(완료 이후 관계).",
+          "finish_after_start": "{issue}은(는) {related}이(가) 시작될 때까지 완료할 수 없습니다(시작 후에 종료 관계).",
           "start_after": "{related}가 시작되어야 {issue}을(를) 시작할 수 있습니다(시작 이후 관계)."
         },
         "self": "{issue}은(는) 자기 자신과 연결할 수 없습니다.",
-        "cycle": "{issue}와(과) {related}이(가) 관계 순환을 이룹니다. 먼저 반대 관계를 제거하세요."
+        "cycle": "{issue}와(과) {related}이(가) 관계 순환을 이룹니다. 먼저 반대 관계를 제거하세요.",
+        "lag_suffix": " 관계 지연: {lag}일."
       },
       "date_conflict": "이 날짜는 기존 종속성과 충돌합니다. 관련 작업 항목을 조정하거나 먼저 종속성을 제거하세요.",
       "dependency_create_failed": "종속성을 생성할 수 없습니다. 다시 시도해 주세요.",
-      "dependency_created": "작업 항목 종속성이 성공적으로 생성되었습니다."
+      "dependency_created": "작업 항목 종속성이 성공적으로 생성되었습니다.",
+      "lag": {
+        "hint": "두 날짜 사이의 일수입니다. 음수이면 겹칠 수 있습니다.",
+        "invalid": "-{max}에서 {max} 사이의 정수 일수를 입력하세요.",
+        "label": "지연(일)",
+        "update_failed": "지연을 변경할 수 없습니다."
+      }
     }
   },
   "project_create": {

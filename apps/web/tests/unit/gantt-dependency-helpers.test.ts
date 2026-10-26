@@ -7,6 +7,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildGanttDependencyEdges,
+  getDependencyArrowEndpoints,
   isDependencyRelationInvalid,
   wouldUpdatesViolateDependencies,
 } from "../../helpers/gantt-dependency-helpers";
@@ -81,5 +82,40 @@ describe("gantt-dependency-helpers", () => {
           : { start_date: "2026-01-05", target_date: "2026-01-20" }
     );
     expect(violated).toBe(true);
+  });
+
+  describe("lag", () => {
+    const dates = (id: string) =>
+      id === "a"
+        ? { start_date: "2026-01-01", target_date: "2026-01-10" }
+        : { start_date: "2026-01-11", target_date: "2026-01-20" };
+
+    it("is part of the check when edges are built", () => {
+      const withoutLag = buildGanttDependencyEdges(["a", "b"], { a: { blocking: ["b"] } }, dates);
+      const withLag = buildGanttDependencyEdges(["a", "b"], { a: { blocking: ["b"] } }, dates, () => 2);
+      expect(withoutLag[0].isInvalid).toBe(false);
+      expect(withLag[0].isInvalid).toBe(true);
+    });
+
+    it("asks the lag of the relation as seen from the work item that owns it", () => {
+      const asked: string[] = [];
+      buildGanttDependencyEdges(["a", "b"], { a: { blocking: ["b"] } }, dates, (issueId, type, relatedId) => {
+        asked.push(`${issueId}:${type}:${relatedId}`);
+        return 0;
+      });
+      expect(asked).toEqual(["a:blocking:b"]);
+    });
+
+    it("makes a drag that breaks a lag count as a violation", () => {
+      const updates = [{ id: "b", start_date: "2026-01-12" }];
+      const relationMap = { a: { blocking: ["b"] }, b: { blocked_by: ["a"] } };
+      expect(wouldUpdatesViolateDependencies(updates, relationMap, dates)).toBe(false);
+      expect(wouldUpdatesViolateDependencies(updates, relationMap, dates, () => 2)).toBe(true);
+    });
+  });
+
+  it("draws start-to-finish arrows from the item that starts to the one that finishes", () => {
+    expect(getDependencyArrowEndpoints("start_before_finish", "a", "b")).toEqual({ fromId: "a", toId: "b" });
+    expect(getDependencyArrowEndpoints("finish_after_start", "b", "a")).toEqual({ fromId: "a", toId: "b" });
   });
 });

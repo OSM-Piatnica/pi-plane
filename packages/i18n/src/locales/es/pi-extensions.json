@@ -42,20 +42,30 @@
           "blocked_by": "{issue} no puede comenzar hasta que {related} finalice (relación de bloqueo).",
           "blocking": "{issue} debe finalizar antes de que {related} comience (relación de bloqueo).",
           "finish_after": "{issue} no puede finalizar antes que {related} (relación de finaliza después).",
+          "finish_after_start": "{issue} no puede terminar antes de que {related} empiece (relación «termina después de que empiece»).",
           "finish_before": "{issue} debe finalizar en la fecha de {related} o antes (relación de finaliza antes).",
           "start_after": "{issue} no puede comenzar antes que {related} (relación de comienza después).",
-          "start_before": "{issue} debe comenzar en la fecha de {related} o antes (relación de comienza antes)."
+          "start_before": "{issue} debe comenzar en la fecha de {related} o antes (relación de comienza antes).",
+          "start_before_finish": "{issue} debe empezar como muy tarde cuando {related} termine (relación «empieza antes de que termine»)."
         },
         "status": {
           "finish_after": "{issue} no puede completarse hasta que {related} se complete (relación de finaliza después).",
+          "finish_after_start": "{issue} no puede completarse hasta que {related} haya empezado (relación «termina después de que empiece»).",
           "start_after": "{issue} no puede comenzar hasta que {related} haya comenzado (relación de comienza después)."
         },
         "self": "{issue} no puede relacionarse consigo mismo.",
-        "cycle": "{issue} y {related} formarían un bucle de relaciones. Elimina primero la relación opuesta."
+        "cycle": "{issue} y {related} formarían un bucle de relaciones. Elimina primero la relación opuesta.",
+        "lag_suffix": " Retraso de la relación: {lag} d."
       },
       "date_conflict": "Estas fechas entran en conflicto con dependencias existentes. Ajusta los elementos de trabajo relacionados o elimina primero la dependencia.",
       "dependency_create_failed": "No se pudo crear la dependencia. Por favor, inténtalo de nuevo.",
-      "dependency_created": "La dependencia del elemento de trabajo se creó correctamente."
+      "dependency_created": "La dependencia del elemento de trabajo se creó correctamente.",
+      "lag": {
+        "hint": "Días entre las dos fechas; un valor negativo permite solaparlas.",
+        "invalid": "Introduce un número entero de días entre -{max} y {max}.",
+        "label": "Retraso (días)",
+        "update_failed": "No se pudo cambiar el retraso."
+      }
     }
   },
   "project_create": {

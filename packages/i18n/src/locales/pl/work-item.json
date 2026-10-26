@@ -206,7 +206,9 @@
       "clones": "Klonuje",
       "cloned_by": "Sklonowane przez",
       "tests": "Testuje",
-      "tested_by": "Testowane przez"
+      "tested_by": "Testowane przez",
+      "start_before_finish": "Zaczyna się przed zakończeniem",
+      "finish_after_start": "Kończy się po rozpoczęciu"
     },
     "copy_link": "Kopiuj link do elementu pracy",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "oznaczono, że ten element pracy kończy się po <value/>.",
           "removed": "usunięto relację „kończy się po” z <value/>."
         },
+        "finish_after_start": {
+          "added": "dodano relację „Kończy się po rozpoczęciu”: <value/>.",
+          "removed": "usunięto relację „Kończy się po rozpoczęciu”: <value/>."
+        },
         "finish_before": {
           "added": "oznaczono, że ten element pracy kończy się przed <value/>.",
           "removed": "usunięto relację „kończy się przed” z <value/>."
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "oznaczono, że ten element pracy rozpoczyna się przed <value/>.",
           "removed": "usunięto relację „rozpoczyna się przed” z <value/>."
+        },
+        "start_before_finish": {
+          "added": "dodano relację „Zaczyna się przed zakończeniem”: <value/>.",
+          "removed": "usunięto relację „Zaczyna się przed zakończeniem”: <value/>."
         },
         "tested_by": {
           "added": "dodano relację „Testowane przez”: <value/>.",

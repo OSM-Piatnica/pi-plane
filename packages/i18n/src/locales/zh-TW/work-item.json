@@ -206,7 +206,9 @@
       "clones": "複製",
       "cloned_by": "複製自",
       "tests": "測試",
-      "tested_by": "被測試於"
+      "tested_by": "被測試於",
+      "start_before_finish": "在其結束前開始",
+      "finish_after_start": "在其開始後結束"
     },
     "copy_link": "複製工作事項連結",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "將此工作事項標記為在 <value/> 之後完成。",
           "removed": "移除了與 <value/> 的「在其之後完成」關聯。"
         },
+        "finish_after_start": {
+          "added": "新增了關係「在其開始後結束」：<value/>。",
+          "removed": "移除了關係「在其開始後結束」：<value/>。"
+        },
         "finish_before": {
           "added": "將此工作事項標記為在 <value/> 之前完成。",
           "removed": "移除了與 <value/> 的「在其之前完成」關聯。"
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "將此工作事項標記為在 <value/> 之前開始。",
           "removed": "移除了與 <value/> 的「在其之前開始」關聯。"
+        },
+        "start_before_finish": {
+          "added": "新增了關係「在其結束前開始」：<value/>。",
+          "removed": "移除了關係「在其結束前開始」：<value/>。"
         },
         "tested_by": {
           "added": "新增了關係「被測試於」：<value/>。",

@@ -42,20 +42,30 @@
           "blocked_by": "{issue} không thể bắt đầu cho đến khi {related} hoàn thành (bị chặn bởi quan hệ).",
           "blocking": "{issue} phải hoàn thành trước khi {related} bắt đầu (quan hệ chặn).",
           "finish_after": "{issue} không thể hoàn thành trước {related} (hoàn thành sau quan hệ).",
+          "finish_after_start": "{issue} không thể kết thúc trước khi {related} bắt đầu (quan hệ kết thúc sau khi bắt đầu).",
           "finish_before": "{issue} phải hoàn thành vào hoặc trước {related} (hoàn thành trước quan hệ).",
           "start_after": "{issue} không thể bắt đầu trước {related} (bắt đầu sau quan hệ).",
-          "start_before": "{issue} phải bắt đầu vào hoặc trước {related} (bắt đầu trước quan hệ)."
+          "start_before": "{issue} phải bắt đầu vào hoặc trước {related} (bắt đầu trước quan hệ).",
+          "start_before_finish": "{issue} phải bắt đầu chậm nhất khi {related} kết thúc (quan hệ bắt đầu trước khi kết thúc)."
         },
         "status": {
           "finish_after": "{issue} không thể hoàn thành cho đến khi {related} đã hoàn thành (hoàn thành sau quan hệ).",
+          "finish_after_start": "{issue} không thể hoàn thành cho đến khi {related} đã bắt đầu (quan hệ kết thúc sau khi bắt đầu).",
           "start_after": "{issue} không thể bắt đầu cho đến khi {related} đã bắt đầu (bắt đầu sau quan hệ)."
         },
         "self": "{issue} không thể liên kết với chính nó.",
-        "cycle": "{issue} và {related} sẽ tạo thành vòng lặp quan hệ. Hãy xóa quan hệ ngược lại trước."
+        "cycle": "{issue} và {related} sẽ tạo thành vòng lặp quan hệ. Hãy xóa quan hệ ngược lại trước.",
+        "lag_suffix": " Độ trễ của quan hệ: {lag} ngày."
       },
       "date_conflict": "Các ngày này xung đột với các phụ thuộc hiện có. Hãy điều chỉnh các mục công việc liên quan hoặc xóa phụ thuộc trước.",
       "dependency_create_failed": "Không thể tạo phụ thuộc. Vui lòng thử lại.",
-      "dependency_created": "Đã tạo phụ thuộc mục công việc thành công."
+      "dependency_created": "Đã tạo phụ thuộc mục công việc thành công.",
+      "lag": {
+        "hint": "Số ngày giữa hai ngày; giá trị âm cho phép chồng lấn.",
+        "invalid": "Nhập số nguyên ngày từ -{max} đến {max}.",
+        "label": "Độ trễ (ngày)",
+        "update_failed": "Không thể thay đổi độ trễ."
+      }
     }
   },
   "project_create": {
