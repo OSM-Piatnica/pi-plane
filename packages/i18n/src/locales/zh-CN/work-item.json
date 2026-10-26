@@ -891,6 +891,11 @@
         "enabled": "启用了 Intake 视图",
         "fallback": "更新了Intake 视图"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "停用了仅负责人编辑规则",
+        "enabled": "启用了仅负责人编辑规则",
+        "fallback": "更新了仅负责人编辑规则"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "停用了被阻塞工作项状态规则",
         "enabled": "启用了被阻塞工作项状态规则",

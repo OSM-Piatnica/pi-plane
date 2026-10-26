@@ -71,7 +71,8 @@
         "content": "Esta alteração quebraria dependências. Estes itens de trabalho podem ser movidos para mais tarde, mantendo a duração, para que todas as dependências continuem válidas:",
         "title": "Mover também os itens de trabalho dependentes?"
       }
-    }
+    },
+    "edit_restricted": "Só os responsáveis por este item de trabalho, o líder do projeto e os administradores do projeto o podem alterar."
   },
   "project_create": {
     "features": {
@@ -147,6 +148,10 @@
         "blocked_status": {
           "description": "Um item de trabalho não pode passar para um estado iniciado ou concluído enquanto um item de trabalho que o bloqueia ainda estiver aberto (bloqueios concluídos e cancelados não contam). Continuar no backlog ou por fazer, e cancelar, continuam possíveis.",
           "title": "Iniciar ou concluir um item só quando os seus bloqueios estiverem resolvidos"
+        },
+        "assignee_edit": {
+          "description": "Quando um item de trabalho tem um responsável, só os responsáveis, o líder do projeto e os administradores do projeto o podem alterar: campos, estado, datas, sub-itens, relações, ligações, anexos, ciclos e módulos, eliminar e arquivar. Todos podem continuar a comentar. Os itens sem responsável continuam abertos a todos os membros.",
+          "title": "Só os responsáveis, o líder do projeto e os administradores podem alterar um item de trabalho"
         }
       },
       "save_error": "Não foi possível guardar a configuração do fluxo de trabalho.",

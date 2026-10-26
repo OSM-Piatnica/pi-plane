@@ -891,6 +891,11 @@
         "enabled": "a activat vizualizarea Intake",
         "fallback": "a actualizat vizualizarea Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "a dezactivat regula de editare de către cei atribuiți",
+        "enabled": "a activat regula de editare de către cei atribuiți",
+        "fallback": "a actualizat regula de editare de către cei atribuiți"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "a dezactivat regula stării activităților blocate",
         "enabled": "a activat regula stării activităților blocate",

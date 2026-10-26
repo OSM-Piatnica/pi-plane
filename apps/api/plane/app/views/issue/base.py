@@ -35,6 +35,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 # Module imports
+from plane.utils.work_item_edit_rule import body_update_ids, restrict_work_item_changes
 from plane.app.permissions import ROLE, allow_permission
 from plane.app.serializers import (
     IssueCreateSerializer,
@@ -644,6 +645,7 @@ class IssueViewSet(BaseViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER], creator=True, model=Issue)
+    @restrict_work_item_changes(param="pk")
     def partial_update(self, request, slug, project_id, pk=None):
         queryset = self.get_queryset()
         queryset = self.apply_annotations(queryset)
@@ -740,6 +742,7 @@ class IssueViewSet(BaseViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @allow_permission([ROLE.ADMIN], creator=True, model=Issue)
+    @restrict_work_item_changes(param="pk")
     def destroy(self, request, slug, project_id, pk=None):
         issue = Issue.objects.get(workspace__slug=slug, project_id=project_id, pk=pk)
 
@@ -1144,6 +1147,7 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
         return True
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @restrict_work_item_changes(body=body_update_ids)
     def post(self, request, slug, project_id):
         updates = request.data.get("updates", [])
 

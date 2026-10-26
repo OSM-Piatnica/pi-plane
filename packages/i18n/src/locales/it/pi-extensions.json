@@ -71,7 +71,8 @@
         "content": "Questa modifica violerebbe delle dipendenze. Questi elementi di lavoro possono essere spostati più avanti, mantenendo la durata, così che tutte le dipendenze restino rispettate:",
         "title": "Spostare anche gli elementi di lavoro dipendenti?"
       }
-    }
+    },
+    "edit_restricted": "Solo gli assegnatari di questo elemento di lavoro, il responsabile del progetto e gli admin del progetto possono modificarlo."
   },
   "project_create": {
     "features": {
@@ -147,6 +148,10 @@
         "blocked_status": {
           "description": "Un elemento di lavoro non può passare a uno stato avviato o completato finché un elemento di lavoro che lo blocca è ancora aperto (i bloccanti completati e annullati non contano). Restare nel backlog o da fare, e annullare, restano possibili.",
           "title": "Avvia o completa un elemento solo quando i suoi bloccanti sono conclusi"
+        },
+        "assignee_edit": {
+          "description": "Quando un elemento di lavoro ha un assegnatario, solo i suoi assegnatari, il responsabile del progetto e gli admin del progetto possono modificarlo: campi, stato, date, sotto-elementi, relazioni, link, allegati, cicli e moduli, eliminazione e archiviazione. Tutti possono ancora commentare. Gli elementi senza assegnatario restano aperti a tutti i membri.",
+          "title": "Solo gli assegnatari, il responsabile del progetto e gli admin possono modificare un elemento di lavoro"
         }
       },
       "save_error": "Impossibile salvare la configurazione del flusso di lavoro.",

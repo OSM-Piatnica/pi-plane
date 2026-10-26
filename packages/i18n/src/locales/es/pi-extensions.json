@@ -71,7 +71,8 @@
         "content": "Este cambio rompería dependencias. Estos elementos de trabajo se pueden mover más adelante, manteniendo su duración, para que todas las dependencias se sigan cumpliendo:",
         "title": "¿Mover también los elementos de trabajo dependientes?"
       }
-    }
+    },
+    "edit_restricted": "Solo los asignados a este elemento de trabajo, el responsable del proyecto y los administradores del proyecto pueden cambiarlo."
   },
   "project_create": {
     "features": {
@@ -147,6 +148,10 @@
         "blocked_status": {
           "description": "Un elemento de trabajo no puede pasar a un estado iniciado o completado mientras un elemento de trabajo que lo bloquea siga abierto (los bloqueos completados y cancelados no cuentan). Seguir en el backlog o por hacer, y cancelar, siguen siendo posibles.",
           "title": "Empezar o completar un elemento solo cuando sus bloqueos estén resueltos"
+        },
+        "assignee_edit": {
+          "description": "Cuando un elemento de trabajo tiene un asignado, solo sus asignados, el responsable del proyecto y los administradores del proyecto pueden cambiarlo: campos, estado, fechas, sub-elementos, relaciones, enlaces, adjuntos, ciclos y módulos, eliminar y archivar. Todos pueden seguir comentando. Los elementos sin asignado siguen abiertos a todos los miembros.",
+          "title": "Solo los asignados, el responsable del proyecto y los administradores pueden cambiar un elemento de trabajo"
         }
       },
       "save_error": "No se pudo guardar la configuración del flujo de trabajo.",

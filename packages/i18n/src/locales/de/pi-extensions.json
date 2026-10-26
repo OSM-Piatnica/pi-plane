@@ -71,7 +71,8 @@
         "content": "Diese Änderung würde Abhängigkeiten verletzen. Diese Arbeitselemente können unter Beibehaltung ihrer Dauer nach hinten verschoben werden, damit alle Abhängigkeiten weiter erfüllt sind:",
         "title": "Auch die abhängigen Arbeitselemente verschieben?"
       }
-    }
+    },
+    "edit_restricted": "Dieses Arbeitselement dürfen nur die ihm Zugewiesenen, die Projektleitung und Projektadmins ändern."
   },
   "project_create": {
     "features": {
@@ -147,6 +148,10 @@
         "blocked_status": {
           "description": "Ein Arbeitselement kann nicht in einen begonnenen oder abgeschlossenen Status wechseln, solange ein Arbeitselement, das es blockiert, noch offen ist (abgeschlossene und abgebrochene Blocker zählen nicht). Im Backlog oder auf „Zu erledigen“ zu bleiben und das Abbrechen bleiben möglich.",
           "title": "Ein Element erst starten oder abschließen, wenn seine Blocker erledigt sind"
+        },
+        "assignee_edit": {
+          "description": "Sobald ein Arbeitselement eine zugewiesene Person hat, dürfen nur die Zugewiesenen, die Projektleitung und die Projektadmins es ändern: Felder, Status, Termine, untergeordnete Elemente, Beziehungen, Links, Anhänge, Zyklen und Module, Löschen und Archivieren. Kommentieren kann weiterhin jeder. Arbeitselemente ohne zugewiesene Person bleiben für alle Mitglieder offen.",
+          "title": "Nur Zugewiesene, die Projektleitung und Admins dürfen ein Arbeitselement ändern"
         }
       },
       "save_error": "Workflow-Konfiguration konnte nicht gespeichert werden.",

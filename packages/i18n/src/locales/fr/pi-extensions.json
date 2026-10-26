@@ -71,7 +71,8 @@
         "content": "Ce changement enfreindrait des dépendances. Ces éléments de travail peuvent être décalés plus tard, en gardant leur durée, pour que toutes les dépendances restent respectées :",
         "title": "Déplacer aussi les éléments de travail dépendants ?"
       }
-    }
+    },
+    "edit_restricted": "Seuls les assignés de cet élément de travail, le responsable du projet et les admins du projet peuvent le modifier."
   },
   "project_create": {
     "features": {
@@ -147,6 +148,10 @@
         "blocked_status": {
           "description": "Un élément de travail ne peut pas passer à un état démarré ou terminé tant qu’un élément de travail qui le bloque est encore ouvert (les éléments bloquants terminés ou annulés ne comptent pas). Rester dans le backlog ou à faire, et annuler, restent possibles.",
           "title": "Ne démarrer ou terminer un élément que lorsque ses éléments bloquants sont terminés"
+        },
+        "assignee_edit": {
+          "description": "Dès qu’un élément de travail a un assigné, seuls ses assignés, le responsable du projet et les admins du projet peuvent le modifier : champs, état, dates, sous-éléments, relations, liens, pièces jointes, cycles et modules, suppression et archivage. Tout le monde peut toujours commenter. Les éléments sans assigné restent ouverts à tous les membres.",
+          "title": "Seuls les assignés, le responsable du projet et les admins peuvent modifier un élément de travail"
         }
       },
       "save_error": "Impossible d'enregistrer la configuration du workflow.",

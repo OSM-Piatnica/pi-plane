@@ -18,6 +18,7 @@ from rest_framework.response import Response
 from drf_spectacular.utils import OpenApiResponse, OpenApiRequest
 
 # Module imports
+from plane.utils.work_item_edit_rule import body_list, restrict_work_item_changes
 from plane.api.serializers import (
     IssueSerializer,
     ModuleIssueSerializer,
@@ -717,6 +718,7 @@ class ModuleIssueListCreateAPIEndpoint(BaseAPIView):
             404: MODULE_NOT_FOUND_RESPONSE,
         },
     )
+    @restrict_work_item_changes(body=body_list("issues"))
     def post(self, request, slug, project_id, module_id):
         """Add module work items
 
@@ -923,6 +925,7 @@ class ModuleIssueDetailAPIEndpoint(BaseAPIView):
             404: MODULE_ISSUE_NOT_FOUND_RESPONSE,
         },
     )
+    @restrict_work_item_changes(param="issue_id")
     def delete(self, request, slug, project_id, module_id, issue_id):
         """Remove module work item
 

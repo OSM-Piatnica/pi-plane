@@ -891,6 +891,11 @@
         "enabled": "zapnuto zobrazení Intake",
         "fallback": "aktualizováno zobrazení Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "vypnul(a) pravidlo úprav přiřazenými osobami",
+        "enabled": "zapnul(a) pravidlo úprav přiřazenými osobami",
+        "fallback": "aktualizoval(a) pravidlo úprav přiřazenými osobami"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "vypnul(a) pravidlo stavu blokovaných položek",
         "enabled": "zapnul(a) pravidlo stavu blokovaných položek",

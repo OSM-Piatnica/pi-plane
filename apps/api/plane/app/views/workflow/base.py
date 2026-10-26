@@ -6,6 +6,7 @@ from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
 
+from plane.utils.work_item_edit_rule import restrict_work_item_changes
 from plane.app.permissions import ROLE, allow_permission
 from plane.app.serializers import (
     WorkflowApprovalSerializer,
@@ -282,6 +283,7 @@ class IssueWorkflowStatusEndpoint(BaseAPIView):
 
 class IssueWorkflowTransitionEndpoint(BaseAPIView):
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @restrict_work_item_changes(param="issue_id")
     def post(self, request, slug, project_id, issue_id):
         issue = (
             Issue.objects.filter(pk=issue_id, project_id=project_id, workspace__slug=slug)

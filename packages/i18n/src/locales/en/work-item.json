@@ -891,6 +891,11 @@
         "enabled": "enabled intake view",
         "fallback": "updated intake view"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "disabled the assignee edit rule",
+        "enabled": "enabled the assignee edit rule",
+        "fallback": "updated the assignee edit rule"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "disabled the blocked status rule",
         "enabled": "enabled the blocked status rule",

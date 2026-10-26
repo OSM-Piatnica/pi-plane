@@ -891,6 +891,11 @@
         "enabled": "mengaktifkan tampilan Intake",
         "fallback": "memperbarui tampilan Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "menonaktifkan aturan pengeditan oleh penerima tugas",
+        "enabled": "mengaktifkan aturan pengeditan oleh penerima tugas",
+        "fallback": "memperbarui aturan pengeditan oleh penerima tugas"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "menonaktifkan aturan status item yang terhalang",
         "enabled": "mengaktifkan aturan status item yang terhalang",

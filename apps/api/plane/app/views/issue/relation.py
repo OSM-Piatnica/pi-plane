@@ -20,6 +20,7 @@ from rest_framework import status
 
 # Module imports
 from .. import BaseViewSet
+from plane.utils.work_item_edit_rule import restrict_work_item_changes
 from plane.app.serializers import IssueRelationSerializer, RelatedIssueSerializer
 from plane.app.permissions import ProjectEntityPermission
 from plane.db.models import (
@@ -198,6 +199,7 @@ class IssueRelationViewSet(BaseViewSet):
 
         return Response(response_data, status=status.HTTP_200_OK)
 
+    @restrict_work_item_changes(param="issue_id")
     def create(self, request, slug, project_id, issue_id):
         relation_type = request.data.get("relation_type", None)
         if relation_type is None:
@@ -312,6 +314,7 @@ class IssueRelationViewSet(BaseViewSet):
                 status=status.HTTP_201_CREATED,
             )
 
+    @restrict_work_item_changes(param="issue_id")
     def remove_relation(self, request, slug, project_id, issue_id):
         related_issue = request.data.get("related_issue", None)
 

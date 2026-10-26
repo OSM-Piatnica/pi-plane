@@ -25,6 +25,7 @@ from rest_framework.response import Response
 from drf_spectacular.utils import OpenApiRequest, OpenApiResponse
 
 # Module imports
+from plane.utils.work_item_edit_rule import body_list, restrict_work_item_changes
 from plane.api.serializers import (
     CycleIssueSerializer,
     CycleSerializer,
@@ -971,6 +972,7 @@ class CycleIssueListCreateAPIEndpoint(BaseAPIView):
             400: REQUIRED_FIELDS_RESPONSE,
         },
     )
+    @restrict_work_item_changes(body=body_list("issues"))
     def post(self, request, slug, project_id, cycle_id):
         """Add cycle issues
 
@@ -1158,6 +1160,7 @@ class CycleIssueDetailAPIEndpoint(BaseAPIView):
             204: DELETED_RESPONSE,
         },
     )
+    @restrict_work_item_changes(param="issue_id")
     def delete(self, request, slug, project_id, cycle_id, issue_id):
         """Remove cycle work item
 

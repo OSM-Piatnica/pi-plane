@@ -26,6 +26,9 @@ const readField = (value: unknown): string | undefined => {
 };
 
 // Errors about the relation itself rather than about dates or status: one sentence for every relation type
+// A project that lets only assignees, the lead and admins change a work item refuses the others with this code
+const EDIT_RESTRICTED_CODE = "work_item_edit_restricted";
+
 const RELATION_SHAPE_KEYS: Record<string, string> = {
   relation_self: "issue.relation.conflict.self",
   relation_cycle: "issue.relation.conflict.cycle",
@@ -70,6 +73,11 @@ export const getIssueApiErrorMessage = (error: unknown, fallback: string, t?: TT
 
   if (typeof error === "object") {
     const payload = error as Record<string, unknown>;
+
+    if (t && readField(payload.error_code) === EDIT_RESTRICTED_CODE) {
+      const message = t("issue.edit_restricted");
+      if (message !== "issue.edit_restricted") return message;
+    }
 
     if (t) {
       const conflictMessage = getRelationConflictMessage(payload, t);

@@ -66,6 +66,14 @@ function WorkflowsSettingsPage({ params }: Route.ComponentProps) {
               value={!!currentProjectDetails?.is_blocked_status_rule_enabled}
               workspaceSlug={workspaceSlug}
             />
+            <ProjectSettingsFeatureControlItem
+              title={t("project_settings.workflows.rules.assignee_edit.title")}
+              description={t("project_settings.workflows.rules.assignee_edit.description")}
+              featureProperty="is_assignee_edit_rule_enabled"
+              projectId={projectId}
+              value={!!currentProjectDetails?.is_assignee_edit_rule_enabled}
+              workspaceSlug={workspaceSlug}
+            />
           </div>
         </div>
       </div>

@@ -71,7 +71,8 @@
         "content": "Tato změna by porušila závislosti. Tyto pracovní položky lze posunout na později při zachování jejich délky, aby všechny závislosti dál platily:",
         "title": "Posunout i závislé pracovní položky?"
       }
-    }
+    },
+    "edit_restricted": "Tuto pracovní položku mohou měnit jen k ní přiřazení, vedoucí projektu a správci projektu."
   },
   "project_create": {
     "features": {
@@ -147,6 +148,10 @@
         "blocked_status": {
           "description": "Pracovní položka nemůže přejít do rozpracovaného ani dokončeného stavu, dokud je otevřená pracovní položka, která ji blokuje (dokončené a zrušené blokující položky se nepočítají). Zůstat v backlogu nebo k provedení a zrušení zůstává možné.",
           "title": "Spustit nebo dokončit položku, až když jsou její blokující položky hotové"
+        },
+        "assignee_edit": {
+          "description": "Jakmile má pracovní položka přiřazenou osobu, mohou ji měnit jen přiřazení, vedoucí projektu a správci projektu: pole, stav, data, podřízené položky, vztahy, odkazy, přílohy, cykly a moduly, mazání a archivaci. Komentovat může dál každý. Pracovní položky bez přiřazené osoby zůstávají otevřené všem členům.",
+          "title": "Pracovní položku mohou měnit jen přiřazení, vedoucí projektu a správci"
         }
       },
       "save_error": "Nastavení workflow se nepodařilo uložit.",

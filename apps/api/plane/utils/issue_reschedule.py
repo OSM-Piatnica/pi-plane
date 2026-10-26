@@ -29,6 +29,7 @@ from rest_framework.exceptions import APIException
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.db.models import ProjectMember
 from plane.utils.issue_relation_constraints import _as_date
+from plane.utils.work_item_edit_rule import can_change_work_items
 from plane.utils.issue_timeline_relation_validation import (
     _iter_timeline_constraints,
     issue_display_ref,
@@ -183,6 +184,9 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
         ).values_list("project_id", flat=True)
     )
     if any(issue.project_id not in editable_projects for issue in moving):
+        return None
+    # and, where a project restricts changes to assignees, the dependents it lets them change
+    if not can_change_work_items(actor, moving):
         return None
 
     plan = ReschedulePlan(

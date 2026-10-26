@@ -72,7 +72,8 @@
         "content": "Ta zmiana naruszyłaby zależności. Te elementy pracy można przesunąć na później z zachowaniem ich czasu trwania, aby wszystkie zależności nadal były spełnione:",
         "title": "Przesunąć także zależne elementy pracy?"
       }
-    }
+    },
+    "edit_restricted": "Ten element pracy mogą zmieniać tylko przypisane do niego osoby, lider projektu i administratorzy projektu."
   },
   "profile": {
     "actions": {
@@ -153,6 +154,10 @@
         "blocked_status": {
           "description": "Element pracy nie może przejść do stanu rozpoczętego ani ukończonego, dopóki element, który go blokuje, jest nadal otwarty (ukończone i anulowane elementy blokujące się nie liczą). Pozostanie w backlogu lub do zrobienia oraz anulowanie nadal są możliwe.",
           "title": "Rozpoczynaj i kończ element dopiero po zakończeniu elementów blokujących"
+        },
+        "assignee_edit": {
+          "description": "Gdy element pracy ma przypisaną osobę, mogą go zmieniać tylko przypisane osoby, lider projektu i administratorzy projektu: pola, stan, daty, elementy podrzędne, relacje, linki, załączniki, cykle i moduły, usuwanie i archiwizację. Komentować nadal może każdy. Elementy pracy bez przypisanej osoby pozostają otwarte dla wszystkich członków.",
+          "title": "Elementy pracy mogą zmieniać tylko osoby przypisane, lider projektu i administratorzy"
         }
       },
       "save_error": "Nie udało się zapisać konfiguracji workflow.",

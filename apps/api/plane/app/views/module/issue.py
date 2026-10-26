@@ -18,6 +18,7 @@ from django.views.decorators.gzip import gzip_page
 from rest_framework import status
 from rest_framework.response import Response
 
+from plane.utils.work_item_edit_rule import body_list, restrict_work_item_changes
 from plane.app.permissions import allow_permission, ROLE
 from plane.app.serializers import ModuleIssueSerializer
 from plane.bgtasks.issue_activities_task import issue_activity
@@ -210,6 +211,7 @@ class ModuleIssueViewSet(BaseViewSet):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     # create multiple issues inside a module
+    @restrict_work_item_changes(body=body_list("issues"))
     def create_module_issues(self, request, slug, project_id, module_id):
         issues = request.data.get("issues", [])
         if not issues:
@@ -259,6 +261,7 @@ class ModuleIssueViewSet(BaseViewSet):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     # add multiple module inside an issue and remove multiple modules from an issue
+    @restrict_work_item_changes(param="issue_id")
     def create_issue_modules(self, request, slug, project_id, issue_id):
         modules = request.data.get("modules", [])
         removed_modules = request.data.get("removed_modules", [])
@@ -336,6 +339,7 @@ class ModuleIssueViewSet(BaseViewSet):
         return Response({"message": "success"}, status=status.HTTP_201_CREATED)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @restrict_work_item_changes(param="issue_id")
     def destroy(self, request, slug, project_id, module_id, issue_id):
         module_issue = ModuleIssue.objects.filter(
             workspace__slug=slug,

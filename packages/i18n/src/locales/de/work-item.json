@@ -891,6 +891,11 @@
         "enabled": "hat die Intake-Ansicht aktiviert",
         "fallback": "hat die Intake-Ansicht aktualisiert"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "hat die Regel zur Bearbeitung durch Zugewiesene deaktiviert",
+        "enabled": "hat die Regel zur Bearbeitung durch Zugewiesene aktiviert",
+        "fallback": "hat die Regel zur Bearbeitung durch Zugewiesene aktualisiert"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "hat die Regel zum Status blockierter Elemente deaktiviert",
         "enabled": "hat die Regel zum Status blockierter Elemente aktiviert",

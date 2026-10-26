@@ -71,7 +71,8 @@
         "content": "Bu değişiklik bağımlılıkları bozardı. Tüm bağımlılıklar korunsun diye bu iş öğeleri süreleri korunarak daha sonraya taşınabilir:",
         "title": "Bağımlı iş öğeleri de taşınsın mı?"
       }
-    }
+    },
+    "edit_restricted": "Bu iş öğesini yalnızca atananlar, proje lideri ve proje yöneticileri değiştirebilir."
   },
   "project_create": {
     "features": {
@@ -147,6 +148,10 @@
         "blocked_status": {
           "description": "Bir iş öğesi, onu engelleyen bir iş öğesi hâlâ açıkken başlatıldı veya tamamlandı durumuna geçemez (tamamlanan ve iptal edilen engelleyenler sayılmaz). Backlog veya yapılacak durumunda kalmak ve iptal etmek mümkün olmaya devam eder.",
           "title": "Bir öğeyi yalnızca engelleyenler bittiğinde başlat veya tamamla"
+        },
+        "assignee_edit": {
+          "description": "Bir iş öğesine biri atandığında, onu yalnızca atananlar, proje lideri ve proje yöneticileri değiştirebilir: alanlar, durum, tarihler, alt öğeler, ilişkiler, bağlantılar, ekler, döngüler ve modüller, silme ve arşivleme. Yorum yapmayı herkes sürdürebilir. Kimsenin atanmadığı iş öğeleri tüm üyelere açık kalır.",
+          "title": "Bir iş öğesini yalnızca atananlar, proje lideri ve yöneticiler değiştirebilir"
         }
       },
       "save_error": "İş akışı yapılandırması kaydedilemedi.",

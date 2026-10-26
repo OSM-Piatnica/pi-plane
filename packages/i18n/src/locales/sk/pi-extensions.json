@@ -71,7 +71,8 @@
         "content": "Táto zmena by porušila závislosti. Tieto pracovné položky možno posunúť na neskôr so zachovaním ich dĺžky, aby všetky závislosti naďalej platili:",
         "title": "Posunúť aj závislé pracovné položky?"
       }
-    }
+    },
+    "edit_restricted": "Túto pracovnú položku môžu meniť len k nej priradení, vedúci projektu a správcovia projektu."
   },
   "project_create": {
     "features": {
@@ -147,6 +148,10 @@
         "blocked_status": {
           "description": "Pracovná položka nemôže prejsť do rozpracovaného ani dokončeného stavu, kým je otvorená pracovná položka, ktorá ju blokuje (dokončené a zrušené blokujúce položky sa nepočítajú). Zostať v backlogu alebo na vykonanie a zrušenie zostáva možné.",
           "title": "Spustiť alebo dokončiť položku, až keď sú jej blokujúce položky hotové"
+        },
+        "assignee_edit": {
+          "description": "Hneď ako má pracovná položka priradenú osobu, môžu ju meniť len priradení, vedúci projektu a správcovia projektu: polia, stav, dátumy, podriadené položky, vzťahy, odkazy, prílohy, cykly a moduly, mazanie a archiváciu. Komentovať môže naďalej každý. Pracovné položky bez priradenej osoby zostávajú otvorené všetkým členom.",
+          "title": "Pracovnú položku môžu meniť len priradení, vedúci projektu a správcovia"
         }
       },
       "save_error": "Uloženie konfigurácie pracovného postupu zlyhalo.",
