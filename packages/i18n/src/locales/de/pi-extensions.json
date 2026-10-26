@@ -65,6 +65,11 @@
         "invalid": "Geben Sie eine ganze Zahl von Tagen zwischen -{max} und {max} ein.",
         "label": "Verzögerung (Tage)",
         "update_failed": "Die Verzögerung konnte nicht geändert werden."
+      },
+      "reschedule": {
+        "confirm": "Verschieben",
+        "content": "Diese Änderung würde Abhängigkeiten verletzen. Diese Arbeitselemente können unter Beibehaltung ihrer Dauer nach hinten verschoben werden, damit alle Abhängigkeiten weiter erfüllt sind:",
+        "title": "Auch die abhängigen Arbeitselemente verschieben?"
       }
     }
   },

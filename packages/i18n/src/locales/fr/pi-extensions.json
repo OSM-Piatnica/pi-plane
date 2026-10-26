@@ -65,6 +65,11 @@
         "invalid": "Saisissez un nombre entier de jours entre -{max} et {max}.",
         "label": "Décalage (jours)",
         "update_failed": "Impossible de modifier le décalage."
+      },
+      "reschedule": {
+        "confirm": "Les décaler",
+        "content": "Ce changement enfreindrait des dépendances. Ces éléments de travail peuvent être décalés plus tard, en gardant leur durée, pour que toutes les dépendances restent respectées :",
+        "title": "Déplacer aussi les éléments de travail dépendants ?"
       }
     }
   },

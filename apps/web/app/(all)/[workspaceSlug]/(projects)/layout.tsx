@@ -10,6 +10,7 @@ import { Outlet } from "react-router";
 import { ProjectsAppPowerKProvider } from "@/components/power-k/projects-app-provider";
 import { StickyActionBar } from "@/components/stickies/action-bar";
 import { ParentReopenConfirmModal } from "@/components/workflow/parent-reopen-confirm-modal";
+import { RescheduleConfirmModal } from "@/components/workflow/reschedule-confirm-modal";
 import { ProjectAppSidebar } from "./_sidebar";
 import { ExtendedProjectSidebar } from "./extended-project-sidebar";
 
@@ -18,6 +19,7 @@ function WorkspaceLayout() {
     <>
       <ProjectsAppPowerKProvider />
       <ParentReopenConfirmModal />
+      <RescheduleConfirmModal />
       <div className="relative flex h-full w-full flex-col overflow-hidden rounded-lg border border-subtle">
         <div id="full-screen-portal" className="absolute inset-0 w-full" />
         <div className="relative flex size-full overflow-hidden">

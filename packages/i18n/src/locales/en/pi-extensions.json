@@ -65,6 +65,11 @@
         "invalid": "Enter a whole number of days between -{max} and {max}.",
         "label": "Lag (days)",
         "update_failed": "Could not change the lag."
+      },
+      "reschedule": {
+        "confirm": "Move them",
+        "content": "This change would break dependencies. These work items can be moved later, keeping their duration, so that every dependency still holds:",
+        "title": "Move the dependent work items too?"
       }
     }
   },

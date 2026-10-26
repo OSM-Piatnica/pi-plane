@@ -65,6 +65,11 @@
         "invalid": "Masukkan bilangan bulat hari antara -{max} dan {max}.",
         "label": "Jeda (hari)",
         "update_failed": "Jeda tidak dapat diubah."
+      },
+      "reschedule": {
+        "confirm": "Pindahkan",
+        "content": "Perubahan ini akan melanggar dependensi. Item kerja berikut dapat dipindahkan ke waktu yang lebih lambat dengan durasi tetap, agar semua dependensi tetap terpenuhi:",
+        "title": "Pindahkan juga item kerja yang bergantung?"
       }
     }
   },

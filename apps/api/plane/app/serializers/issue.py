@@ -8,7 +8,7 @@
 from django.utils import timezone
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 
 # Third Party imports
 from rest_framework import serializers
@@ -280,6 +280,7 @@ class IssueCreateSerializer(BaseSerializer):
             ).exists():
                 raise serializers.ValidationError("Issue type is not enabled for this project")
 
+        self._reschedule_plan = None
         # Checked last on purpose: the dates are the ones `reconcile_work_item_duration` derived
         # above, and a state the workflow just pulled out of attrs no longer counts as a change.
         if self.instance is not None:
@@ -287,7 +288,20 @@ class IssueCreateSerializer(BaseSerializer):
 
             timeline_error = validate_issue_update_payload(self.instance, attrs)
             if timeline_error:
-                raise serializers.ValidationError(timeline_error)
+                from plane.utils.issue_reschedule import (
+                    RescheduleOffered,
+                    is_shift_confirmed,
+                    plan_for_issue_update,
+                )
+
+                # Dates that only come too early for what depends on this work item can be fixed by moving
+                # those along, once the person agrees
+                plan = plan_for_issue_update(self.instance, attrs, request.user if request else None, timeline_error)
+                if plan is None:
+                    raise serializers.ValidationError(timeline_error)
+                if not is_shift_confirmed(self.initial_data):
+                    raise RescheduleOffered(plan.payload(timeline_error))
+                self._reschedule_plan = plan
 
         return attrs
 
@@ -423,11 +437,17 @@ class IssueCreateSerializer(BaseSerializer):
         # Time updation occues even when other related models are updated
         instance.updated_at = timezone.now()
         previous_state_id = getattr(self, "_reopen_parents_from", None)
-        instance = super().update(instance, validated_data)
-        if previous_state_id:
-            from plane.utils.parent_completion_rule import reopen_parents
+        reschedule_plan = getattr(self, "_reschedule_plan", None)
+        with transaction.atomic():
+            instance = super().update(instance, validated_data)
+            if previous_state_id:
+                from plane.utils.parent_completion_rule import reopen_parents
 
-            reopen_parents(instance, previous_state_id, instance.updated_by_id)
+                reopen_parents(instance, previous_state_id, instance.updated_by_id)
+            if reschedule_plan:
+                from plane.utils.issue_reschedule import apply_shifts
+
+                apply_shifts(reschedule_plan, instance.updated_by_id)
         return instance
 
 

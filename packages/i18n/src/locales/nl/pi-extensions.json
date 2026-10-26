@@ -65,6 +65,11 @@
         "invalid": "Voer een geheel aantal dagen in tussen -{max} en {max}.",
         "label": "Vertraging (dagen)",
         "update_failed": "De vertraging kon niet worden gewijzigd."
+      },
+      "reschedule": {
+        "confirm": "Verplaatsen",
+        "content": "Deze wijziging zou afhankelijkheden verbreken. Deze werkitems kunnen later worden gepland, met behoud van hun duur, zodat alle afhankelijkheden blijven kloppen:",
+        "title": "Ook de afhankelijke werkitems verplaatsen?"
       }
     }
   },

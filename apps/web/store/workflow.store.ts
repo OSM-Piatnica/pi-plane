@@ -9,6 +9,7 @@ import { action, makeObservable, observable, runInAction } from "mobx";
 import { computedFn } from "mobx-utils";
 import type {
   IIssueWorkflowStatus,
+  TRelationRescheduleShift,
   IProjectWorkflowStates,
   IWorkflow,
   IWorkflowApproval,
@@ -21,6 +22,9 @@ import type { RootStore } from "@/store/root.store";
 export type TParentReopenRequest = { id: string; name: string; sequence_id: number | string };
 
 export interface IWorkflowStore {
+  pendingReschedule: TRelationRescheduleShift[] | null;
+  confirmReschedule: (shifts: TRelationRescheduleShift[]) => Promise<boolean>;
+  resolveReschedule: (confirmed: boolean) => void;
   pendingParentReopen: TParentReopenRequest[] | null;
   confirmParentReopen: (parents: TParentReopenRequest[]) => Promise<boolean>;
   resolveParentReopen: (confirmed: boolean) => void;
@@ -84,6 +88,8 @@ export class WorkflowStore implements IWorkflowStore {
   projectWorkflowStatesMap: Record<string, IProjectWorkflowStates> = {};
   issueWorkflowStatusMap: Record<string, IIssueWorkflowStatus> = {};
   workflowHistoryMap: Record<string, IWorkflowHistory[]> = {};
+  pendingReschedule: TRelationRescheduleShift[] | null = null;
+  private rescheduleResolver: ((confirmed: boolean) => void) | null = null;
   pendingParentReopen: TParentReopenRequest[] | null = null;
   private parentReopenResolver: ((confirmed: boolean) => void) | null = null;
   rootStore: RootStore;
@@ -96,6 +102,9 @@ export class WorkflowStore implements IWorkflowStore {
       projectWorkflowStatesMap: observable,
       issueWorkflowStatusMap: observable,
       workflowHistoryMap: observable,
+      pendingReschedule: observable.ref,
+      confirmReschedule: action,
+      resolveReschedule: action,
       pendingParentReopen: observable.ref,
       confirmParentReopen: action,
       resolveParentReopen: action,
@@ -126,6 +135,27 @@ export class WorkflowStore implements IWorkflowStore {
         this.parentReopenResolver = resolve;
       });
     });
+  };
+
+  /**
+   * Asks the person whether the work items that depend on one whose dates changed may be moved along. Resolves with
+   * the answer once the dialog is dismissed; a second request while one is open is declined.
+   */
+  confirmReschedule = (shifts: TRelationRescheduleShift[]) => {
+    if (this.pendingReschedule) return Promise.resolve(false);
+    return new Promise<boolean>((resolve) => {
+      runInAction(() => {
+        this.pendingReschedule = shifts;
+        this.rescheduleResolver = resolve;
+      });
+    });
+  };
+
+  resolveReschedule = (confirmed: boolean) => {
+    const resolver = this.rescheduleResolver;
+    this.pendingReschedule = null;
+    this.rescheduleResolver = null;
+    resolver?.(confirmed);
   };
 
   resolveParentReopen = (confirmed: boolean) => {

@@ -66,6 +66,11 @@
         "invalid": "Podaj liczbę całkowitą dni od -{max} do {max}.",
         "label": "Opóźnienie (dni)",
         "update_failed": "Nie udało się zmienić opóźnienia."
+      },
+      "reschedule": {
+        "confirm": "Przesuń",
+        "content": "Ta zmiana naruszyłaby zależności. Te elementy pracy można przesunąć na później z zachowaniem ich czasu trwania, aby wszystkie zależności nadal były spełnione:",
+        "title": "Przesunąć także zależne elementy pracy?"
       }
     }
   },
