@@ -13,6 +13,7 @@ import type { ISearchIssueResponse, TIssue, TIssueServiceType, TWorkItemWidgets 
 // components
 import { ExistingIssuesListModal } from "@/components/core/modals/existing-issues-list-modal";
 // helpers
+import { useOfferCancelDuplicate } from "@/components/issues/relations/use-offer-cancel-duplicate";
 import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -55,6 +56,7 @@ export const IssueDetailWidgetModals = observer(function IssueDetailWidgetModals
   } = useIssueDetail(issueServiceType);
 
   // helper hooks
+  const offerCancelDuplicate = useOfferCancelDuplicate(issueServiceType);
   const subIssueOperations = useSubIssueOperations(issueServiceType);
   const handleLinkOperations = useLinkOperations(workspaceSlug, projectId, issueId, issueServiceType);
 
@@ -141,6 +143,13 @@ export const IssueDetailWidgetModals = observer(function IssueDetailWidgetModals
     }
 
     toggleRelationModal(null, null);
+    await offerCancelDuplicate(
+      workspaceSlug,
+      projectId,
+      issueId,
+      relationKey,
+      data.map((i) => i.id)
+    );
   };
 
   // helpers

@@ -70,6 +70,13 @@
         "confirm": "Moverlos",
         "content": "Este cambio rompería dependencias. Estos elementos de trabajo se pueden mover más adelante, manteniendo su duración, para que todas las dependencias se sigan cumpliendo:",
         "title": "¿Mover también los elementos de trabajo dependientes?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Mover a cancelado",
+        "content": "{issue} ahora está marcado como duplicado de {originals}. ¿Moverlo a «{state}»? Seguirá enlazado y visible.",
+        "failed": "No se pudo cancelar el elemento de trabajo.",
+        "keep": "Dejarlo abierto",
+        "title": "¿Cancelar este elemento de trabajo?"
       }
     }
   },

@@ -70,6 +70,13 @@
         "confirm": "Mover",
         "content": "Esta alteração quebraria dependências. Estes itens de trabalho podem ser movidos para mais tarde, mantendo a duração, para que todas as dependências continuem válidas:",
         "title": "Mover também os itens de trabalho dependentes?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Mover para cancelado",
+        "content": "{issue} agora está marcado como duplicata de {originals}. Movê-lo para “{state}”? Ele continua vinculado e visível.",
+        "failed": "Não foi possível cancelar o item de trabalho.",
+        "keep": "Manter aberto",
+        "title": "Cancelar este item de trabalho?"
       }
     }
   },

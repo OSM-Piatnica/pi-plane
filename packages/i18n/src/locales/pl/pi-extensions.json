@@ -71,6 +71,13 @@
         "confirm": "Przesuń",
         "content": "Ta zmiana naruszyłaby zależności. Te elementy pracy można przesunąć na później z zachowaniem ich czasu trwania, aby wszystkie zależności nadal były spełnione:",
         "title": "Przesunąć także zależne elementy pracy?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Przenieś do anulowanych",
+        "content": "{issue} jest teraz oznaczony jako duplikat elementu {originals}. Przenieść go do stanu „{state}”? Pozostanie powiązany i widoczny.",
+        "failed": "Nie udało się anulować elementu pracy.",
+        "keep": "Zostaw otwarty",
+        "title": "Anulować ten element pracy?"
       }
     }
   },

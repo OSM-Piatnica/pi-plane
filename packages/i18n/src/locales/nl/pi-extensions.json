@@ -70,6 +70,13 @@
         "confirm": "Verplaatsen",
         "content": "Deze wijziging zou afhankelijkheden verbreken. Deze werkitems kunnen later worden gepland, met behoud van hun duur, zodat alle afhankelijkheden blijven kloppen:",
         "title": "Ook de afhankelijke werkitems verplaatsen?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Naar geannuleerd verplaatsen",
+        "content": "{issue} is nu gemarkeerd als duplicaat van {originals}. Verplaatsen naar ‘{state}’? Het blijft gekoppeld en zichtbaar.",
+        "failed": "Het werkitem kon niet worden geannuleerd.",
+        "keep": "Open laten",
+        "title": "Dit werkitem annuleren?"
       }
     }
   },

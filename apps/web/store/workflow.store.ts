@@ -21,7 +21,20 @@ import type { RootStore } from "@/store/root.store";
 
 export type TParentReopenRequest = { id: string; name: string; sequence_id: number | string };
 
+/** What the dialog that offers to cancel a work item just marked as a duplicate shows. */
+export type TDuplicateCancelOffer = {
+  /** The work item marked as a duplicate: "PRJ-5 Name" */
+  issue: string;
+  /** The work items it duplicates: "PRJ-3, PRJ-4" */
+  originals: string;
+  /** The cancelled state it would move to */
+  stateName: string;
+};
+
 export interface IWorkflowStore {
+  pendingDuplicateCancel: TDuplicateCancelOffer | null;
+  confirmDuplicateCancel: (offer: TDuplicateCancelOffer) => Promise<boolean>;
+  resolveDuplicateCancel: (confirmed: boolean) => void;
   pendingReschedule: TRelationRescheduleShift[] | null;
   confirmReschedule: (shifts: TRelationRescheduleShift[]) => Promise<boolean>;
   resolveReschedule: (confirmed: boolean) => void;
@@ -88,6 +101,8 @@ export class WorkflowStore implements IWorkflowStore {
   projectWorkflowStatesMap: Record<string, IProjectWorkflowStates> = {};
   issueWorkflowStatusMap: Record<string, IIssueWorkflowStatus> = {};
   workflowHistoryMap: Record<string, IWorkflowHistory[]> = {};
+  pendingDuplicateCancel: TDuplicateCancelOffer | null = null;
+  private duplicateCancelResolver: ((confirmed: boolean) => void) | null = null;
   pendingReschedule: TRelationRescheduleShift[] | null = null;
   private rescheduleResolver: ((confirmed: boolean) => void) | null = null;
   pendingParentReopen: TParentReopenRequest[] | null = null;
@@ -102,6 +117,9 @@ export class WorkflowStore implements IWorkflowStore {
       projectWorkflowStatesMap: observable,
       issueWorkflowStatusMap: observable,
       workflowHistoryMap: observable,
+      pendingDuplicateCancel: observable.ref,
+      confirmDuplicateCancel: action,
+      resolveDuplicateCancel: action,
       pendingReschedule: observable.ref,
       confirmReschedule: action,
       resolveReschedule: action,
@@ -122,6 +140,27 @@ export class WorkflowStore implements IWorkflowStore {
     this.rootStore = rootStore;
     this.workflowService = new ProjectWorkflowService();
   }
+
+  /**
+   * Asks whether a work item that was just marked as a duplicate should be cancelled. Resolves with the answer once
+   * the dialog is dismissed; a second request while one is open is declined.
+   */
+  confirmDuplicateCancel = (offer: TDuplicateCancelOffer) => {
+    if (this.pendingDuplicateCancel) return Promise.resolve(false);
+    return new Promise<boolean>((resolve) => {
+      runInAction(() => {
+        this.pendingDuplicateCancel = offer;
+        this.duplicateCancelResolver = resolve;
+      });
+    });
+  };
+
+  resolveDuplicateCancel = (confirmed: boolean) => {
+    const resolver = this.duplicateCancelResolver;
+    this.pendingDuplicateCancel = null;
+    this.duplicateCancelResolver = null;
+    resolver?.(confirmed);
+  };
 
   /**
    * Asks the person whether reopening a work item should also reopen its completed parents. Resolves with the

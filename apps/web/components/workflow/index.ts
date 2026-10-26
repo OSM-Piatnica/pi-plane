@@ -12,4 +12,5 @@ export * from "./workflow-group-tree";
 export * from "./workflow-disabled-overlay";
 export * from "./workflow-approval-banner";
 export * from "./parent-reopen-confirm-modal";
+export * from "./duplicate-cancel-confirm-modal";
 export * from "./reschedule-confirm-modal";

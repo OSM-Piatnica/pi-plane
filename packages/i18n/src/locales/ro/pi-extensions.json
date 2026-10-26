@@ -70,6 +70,13 @@
         "confirm": "Mută",
         "content": "Această modificare ar încălca dependențe. Aceste activități pot fi mutate mai târziu, păstrându-și durata, astfel încât toate dependențele să rămână respectate:",
         "title": "Muți și activitățile dependente?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Mută la anulate",
+        "content": "{issue} este acum marcată ca duplicat al {originals}. O muți în „{state}”? Rămâne legată și vizibilă.",
+        "failed": "Activitatea nu a putut fi anulată.",
+        "keep": "Păstrează deschisă",
+        "title": "Anulezi această activitate?"
       }
     }
   },

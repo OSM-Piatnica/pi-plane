@@ -70,6 +70,13 @@
         "confirm": "Sposta",
         "content": "Questa modifica violerebbe delle dipendenze. Questi elementi di lavoro possono essere spostati più avanti, mantenendo la durata, così che tutte le dipendenze restino rispettate:",
         "title": "Spostare anche gli elementi di lavoro dipendenti?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Sposta in annullato",
+        "content": "{issue} ora è contrassegnato come duplicato di {originals}. Spostarlo in «{state}»? Resta collegato e visibile.",
+        "failed": "Impossibile annullare l’elemento di lavoro.",
+        "keep": "Lascialo aperto",
+        "title": "Annullare questo elemento di lavoro?"
       }
     }
   },
