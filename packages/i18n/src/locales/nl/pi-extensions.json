@@ -138,6 +138,10 @@
           "confirm": "Heropenen",
           "content": "In dit project mag een bovenliggend item niet voltooid blijven terwijl een subitem open is. Deze voltooide bovenliggende items worden ook heropend: {names}",
           "title": "Ook de bovenliggende werkitems heropenen?"
+        },
+        "blocked_status": {
+          "description": "Een werkitem kan niet naar een gestarte of voltooide status gaan zolang een werkitem dat het blokkeert nog open is (voltooide en geannuleerde blokkades tellen niet mee). In de backlog of te doen blijven en annuleren blijven mogelijk.",
+          "title": "Een item pas starten of voltooien als de blokkades zijn opgelost"
         }
       },
       "save_error": "Kon workflowconfiguratie niet opslaan.",

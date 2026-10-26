@@ -138,6 +138,10 @@
           "confirm": "Buka kembali",
           "content": "Proyek ini tidak mengizinkan induk tetap selesai selagi ada sub-item yang terbuka. Induk yang telah selesai berikut juga akan dibuka kembali: {names}",
           "title": "Buka kembali juga item kerja induknya?"
+        },
+        "blocked_status": {
+          "description": "Item kerja tidak dapat berpindah ke status dimulai atau selesai selama item kerja yang menghalanginya masih terbuka (penghalang yang selesai atau dibatalkan tidak dihitung). Tetap di backlog atau akan dikerjakan, serta membatalkan, tetap dimungkinkan.",
+          "title": "Mulai atau selesaikan item hanya saat penghalangnya selesai"
         }
       },
       "save_error": "Tidak dapat menyimpan konfigurasi workflow.",

@@ -138,6 +138,10 @@
           "confirm": "Reabrir",
           "content": "Este proyecto no permite que un elemento principal siga completado mientras un sub-elemento esté abierto. Estos elementos principales completados también se reabrirán: {names}",
           "title": "¿Reabrir también los elementos de trabajo principales?"
+        },
+        "blocked_status": {
+          "description": "Un elemento de trabajo no puede pasar a un estado iniciado o completado mientras un elemento de trabajo que lo bloquea siga abierto (los bloqueos completados y cancelados no cuentan). Seguir en el backlog o por hacer, y cancelar, siguen siendo posibles.",
+          "title": "Empezar o completar un elemento solo cuando sus bloqueos estén resueltos"
         }
       },
       "save_error": "No se pudo guardar la configuración del flujo de trabajo.",

@@ -138,6 +138,10 @@
           "confirm": "Reopen",
           "content": "This project does not allow a parent to stay completed while a sub-item is open. These completed parents will be reopened as well: {names}",
           "title": "Reopen the parent work items too?"
+        },
+        "blocked_status": {
+          "description": "A work item cannot move to a started or completed state while a work item that blocks it is still open (completed and cancelled blockers do not count). Staying in backlog or todo, and cancelling, remain possible.",
+          "title": "Start or complete an item only when its blockers are done"
         }
       },
       "save_error": "Could not save workflow configuration.",

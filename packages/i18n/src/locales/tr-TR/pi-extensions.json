@@ -138,6 +138,10 @@
           "confirm": "Yeniden aç",
           "content": "Bu projede, bir alt öğe açıkken üst öğe tamamlanmış kalamaz. Tamamlanmış şu üst öğeler de yeniden açılacak: {names}",
           "title": "Üst iş öğeleri de yeniden açılsın mı?"
+        },
+        "blocked_status": {
+          "description": "Bir iş öğesi, onu engelleyen bir iş öğesi hâlâ açıkken başlatıldı veya tamamlandı durumuna geçemez (tamamlanan ve iptal edilen engelleyenler sayılmaz). Backlog veya yapılacak durumunda kalmak ve iptal etmek mümkün olmaya devam eder.",
+          "title": "Bir öğeyi yalnızca engelleyenler bittiğinde başlat veya tamamla"
         }
       },
       "save_error": "İş akışı yapılandırması kaydedilemedi.",

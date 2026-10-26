@@ -144,6 +144,10 @@
           "confirm": "Otwórz ponownie",
           "content": "Ten projekt nie pozwala, aby element nadrzędny pozostał ukończony, gdy element podrzędny jest otwarty. Te ukończone elementy nadrzędne zostaną również ponownie otwarte: {names}",
           "title": "Ponownie otworzyć także elementy nadrzędne?"
+        },
+        "blocked_status": {
+          "description": "Element pracy nie może przejść do stanu rozpoczętego ani ukończonego, dopóki element, który go blokuje, jest nadal otwarty (ukończone i anulowane elementy blokujące się nie liczą). Pozostanie w backlogu lub do zrobienia oraz anulowanie nadal są możliwe.",
+          "title": "Rozpoczynaj i kończ element dopiero po zakończeniu elementów blokujących"
         }
       },
       "save_error": "Nie udało się zapisać konfiguracji workflow.",

@@ -339,6 +339,7 @@ PROJECT_SCALAR_FIELDS = (
     "is_time_tracking_enabled",
     "is_issue_type_enabled",
     "is_parent_completion_rule_enabled",
+    "is_blocked_status_rule_enabled",
     "guest_view_all_features",
     "archive_in",
     "close_in",

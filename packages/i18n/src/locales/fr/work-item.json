@@ -891,6 +891,11 @@
         "enabled": "a activé l’affichage Intake",
         "fallback": "a mis à jour l’affichage Intake"
       },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "a désactivé la règle du statut des éléments bloqués",
+        "enabled": "a activé la règle du statut des éléments bloqués",
+        "fallback": "a mis à jour la règle du statut des éléments bloqués"
+      },
       "is_epic_enabled": {
         "disabled": "a désactivé les Epics",
         "enabled": "a activé les Epics",

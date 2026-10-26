@@ -8,6 +8,7 @@ from uuid import UUID
 
 from django.utils import timezone
 
+from plane.utils.blocked_status_rule import blocked_status_error
 from plane.utils.parent_completion_rule import parent_completion_error, reopen_parents
 from plane.db.models import (
     Issue,
@@ -130,7 +131,7 @@ def validate_state_transition(
 
     # Ahead of the workflow, so an approval is not requested for a move the rule refuses anyway
     if from_state_id != to_state_id:
-        rule_error = parent_completion_error(issue, to_state_id)
+        rule_error = parent_completion_error(issue, to_state_id) or blocked_status_error(issue, to_state_id)
         if rule_error:
             return TransitionValidationResult(allowed=False, error_message=rule_error)
 
@@ -221,9 +222,11 @@ def resolve_approval(approval: WorkflowApproval, user_id: UUID, approved: bool) 
         raise PermissionError("You do not have permission to approve or reject this transition.")
 
     issue = approval.issue
-    # Sub-items may have been reopened or added since the approval was requested
+    # Sub-items may have been reopened, or blockers added, since the approval was requested
     if approved:
-        rule_error = parent_completion_error(issue, approval.approve_state_id)
+        rule_error = parent_completion_error(issue, approval.approve_state_id) or blocked_status_error(
+            issue, approval.approve_state_id
+        )
         if rule_error:
             raise ValueError(rule_error)
     approval.status = WorkflowApprovalStatus.APPROVED if approved else WorkflowApprovalStatus.REJECTED

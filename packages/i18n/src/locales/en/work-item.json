@@ -891,6 +891,11 @@
         "enabled": "enabled intake view",
         "fallback": "updated intake view"
       },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "disabled the blocked status rule",
+        "enabled": "enabled the blocked status rule",
+        "fallback": "updated the blocked status rule"
+      },
       "is_epic_enabled": {
         "disabled": "disabled epics",
         "enabled": "enabled epics",

@@ -205,9 +205,12 @@ class IssueSerializer(BaseSerializer):
             raise serializers.ValidationError("Estimate point is not valid please pass a valid estimate_point_id")
 
         if self.instance is not None and data.get("state") and data["state"].id != self.instance.state_id:
+            from plane.utils.blocked_status_rule import blocked_status_error
             from plane.utils.parent_completion_rule import parent_completion_error
 
-            rule_error = parent_completion_error(self.instance, data["state"].id)
+            rule_error = parent_completion_error(self.instance, data["state"].id) or blocked_status_error(
+                self.instance, data["state"].id
+            )
             if rule_error:
                 raise serializers.ValidationError({"state": rule_error})
 

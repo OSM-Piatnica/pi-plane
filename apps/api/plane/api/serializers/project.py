@@ -94,6 +94,7 @@ class ProjectCreateSerializer(BaseSerializer):
             "is_issue_type_enabled",
             "is_time_tracking_enabled",
             "is_parent_completion_rule_enabled",
+            "is_blocked_status_rule_enabled",
         ]
 
         read_only_fields = [

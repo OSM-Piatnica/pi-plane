@@ -891,6 +891,11 @@
         "enabled": "đã bật chế độ xem Intake",
         "fallback": "đã cập nhật chế độ xem Intake"
       },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "đã tắt quy tắc trạng thái mục bị chặn",
+        "enabled": "đã bật quy tắc trạng thái mục bị chặn",
+        "fallback": "đã cập nhật quy tắc trạng thái mục bị chặn"
+      },
       "is_epic_enabled": {
         "disabled": "đã tắt sử thi",
         "enabled": "đã bật sử thi",

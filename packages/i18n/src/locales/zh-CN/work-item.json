@@ -891,6 +891,11 @@
         "enabled": "启用了 Intake 视图",
         "fallback": "更新了Intake 视图"
       },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "停用了被阻塞工作项状态规则",
+        "enabled": "启用了被阻塞工作项状态规则",
+        "fallback": "更新了被阻塞工作项状态规则"
+      },
       "is_epic_enabled": {
         "disabled": "停用了史诗",
         "enabled": "启用了史诗",

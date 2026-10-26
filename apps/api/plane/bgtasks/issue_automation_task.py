@@ -20,6 +20,8 @@ from plane.bgtasks.issue_activities_task import issue_activity
 from plane.db.models import IntakeIssue, Issue, Project, State
 from plane.db.models.intake import IntakeIssueStatus
 from plane.utils.exception_logger import log_exception
+from plane.utils.blocked_status_rule import BLOCKED_TARGET_GROUPS as BLOCKED_STATUS_TARGET_GROUPS
+from plane.utils.blocked_status_rule import has_open_blockers
 from plane.utils.parent_completion_rule import BLOCKED_TARGET_GROUPS, has_open_sub_items
 
 logger = logging.getLogger("plane.worker")
@@ -133,6 +135,10 @@ def close_old_issues():
                 # A parent with open sub-items cannot be completed; it waits for the next run
                 if project.is_parent_completion_rule_enabled and close_state.group in BLOCKED_TARGET_GROUPS:
                     issues = issues.exclude(has_open_sub_items())
+
+                # A work item still held back by an open blocker cannot be started or completed either
+                if project.is_blocked_status_rule_enabled and close_state.group in BLOCKED_STATUS_TARGET_GROUPS:
+                    issues = issues.exclude(has_open_blockers())
 
                 issues_to_update = []
                 for issue in issues:

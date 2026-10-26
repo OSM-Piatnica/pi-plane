@@ -891,6 +891,11 @@
         "enabled": "activó la vista de Intake",
         "fallback": "actualizó la vista de Intake"
       },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "desactivó la regla del estado de los elementos bloqueados",
+        "enabled": "activó la regla del estado de los elementos bloqueados",
+        "fallback": "actualizó la regla del estado de los elementos bloqueados"
+      },
       "is_epic_enabled": {
         "disabled": "desactivó los Epics",
         "enabled": "activó los Epics",

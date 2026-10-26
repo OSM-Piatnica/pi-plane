@@ -49,13 +49,21 @@ function WorkflowsSettingsPage({ params }: Route.ComponentProps) {
             title={t("project_settings.workflows.rules.heading")}
             description={t("project_settings.workflows.rules.description")}
           />
-          <div className="mt-6">
+          <div className="mt-6 flex flex-col gap-2">
             <ProjectSettingsFeatureControlItem
               title={t("project_settings.workflows.rules.parent_completion.title")}
               description={t("project_settings.workflows.rules.parent_completion.description")}
               featureProperty="is_parent_completion_rule_enabled"
               projectId={projectId}
               value={!!currentProjectDetails?.is_parent_completion_rule_enabled}
+              workspaceSlug={workspaceSlug}
+            />
+            <ProjectSettingsFeatureControlItem
+              title={t("project_settings.workflows.rules.blocked_status.title")}
+              description={t("project_settings.workflows.rules.blocked_status.description")}
+              featureProperty="is_blocked_status_rule_enabled"
+              projectId={projectId}
+              value={!!currentProjectDetails?.is_blocked_status_rule_enabled}
               workspaceSlug={workspaceSlug}
             />
           </div>

@@ -1,0 +1,19 @@
+# Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+    dependencies = [
+        ("db", "0143_issue_relation_lag"),
+    ]
+
+    operations = [
+        migrations.AddField(
+            model_name="project",
+            name="is_blocked_status_rule_enabled",
+            field=models.BooleanField(default=False),
+        ),
+    ]

@@ -138,6 +138,10 @@
           "confirm": "Znovu otevřít",
           "content": "Tento projekt nedovoluje, aby nadřazená položka zůstala dokončená, dokud je podřízená položka otevřená. Tyto dokončené nadřazené položky se také znovu otevřou: {names}",
           "title": "Znovu otevřít i nadřazené pracovní položky?"
+        },
+        "blocked_status": {
+          "description": "Pracovní položka nemůže přejít do rozpracovaného ani dokončeného stavu, dokud je otevřená pracovní položka, která ji blokuje (dokončené a zrušené blokující položky se nepočítají). Zůstat v backlogu nebo k provedení a zrušení zůstává možné.",
+          "title": "Spustit nebo dokončit položku, až když jsou její blokující položky hotové"
         }
       },
       "save_error": "Nastavení workflow se nepodařilo uložit.",
