@@ -445,7 +445,7 @@
       "removing_from_favorites": "Proje favorilerden kaldırılıyor..."
     },
     "confirm_member_remove": {
-      "leave_description": "{name} projesinden ayrılmak istediğinizden emin misiniz? Tekrar davet edilirseniz veya proje herkese açıksa yeniden katılabilirsiniz.",
+      "leave_description": "{name} projesinden ayrılmak istediğinizden emin misiniz? Tekrar davet edilirseniz veya proje çalışma alanına açıksa yeniden katılabilirsiniz.",
       "leave_title": "Projeden ayrılınsın mı?",
       "remove_description": "{name} üyesini kaldırmak istediğinizden emin misiniz? Artık bu projeye erişemeyecek. Bu işlem geri alınamaz.",
       "remove_title": "{name} kaldırılsın mı?"

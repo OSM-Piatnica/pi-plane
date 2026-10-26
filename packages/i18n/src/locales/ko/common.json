@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "좋아요! 한 단계만 더 남았습니다.",
-      "description": "보려는 뷰 또는 페이지의 공개 공유 URL 또는 링크를 브라우저 주소 표시줄에 입력하세요.",
+      "description": "보려는 보기 또는 페이지의 공유 링크를 브라우저 주소 표시줄에 입력하세요.",
       "image_alt": "사용자가 이미 로그인되어 있습니다"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "{provider}(으)로 계속"
     },
     "issues": {
-      "public_board_not_found": "공개 보드가 존재하지 않습니다. URL을 확인하세요.",
+      "public_board_not_found": "이 공유 프로젝트가 없거나 더 이상 공유되지 않습니다. URL을 확인하세요.",
       "cycle_tooltip": "사이클: {name}",
       "no_cycle": "사이클 없음",
       "due_date_tooltip": "마감일: {date}",

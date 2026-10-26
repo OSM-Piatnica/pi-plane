@@ -445,7 +445,7 @@
       "removing_from_favorites": "Rimozione del progetto dai preferiti..."
     },
     "confirm_member_remove": {
-      "leave_description": "Vuoi davvero lasciare il progetto {name}? Potrai unirti di nuovo se verrai invitato nuovamente o se il progetto è pubblico.",
+      "leave_description": "Vuoi davvero lasciare il progetto {name}? Potrai unirti di nuovo se verrai invitato nuovamente o se il progetto è aperto allo spazio di lavoro.",
       "leave_title": "Lasciare il progetto?",
       "remove_description": "Vuoi davvero rimuovere il membro {name}? Non avrà più accesso a questo progetto. Questa azione non può essere annullata.",
       "remove_title": "Rimuovere {name}?"

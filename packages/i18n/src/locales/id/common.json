@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Bagus! Tinggal satu langkah lagi.",
-      "description": "Masukkan URL atau tautan berbagi publik dari tampilan atau Halaman yang ingin Anda lihat di bilah alamat browser.",
+      "description": "Masukkan tautan yang dibagikan dari tampilan atau halaman yang ingin Anda lihat di bilah alamat browser.",
       "image_alt": "Pengguna sudah masuk"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Lanjutkan dengan {provider}"
     },
     "issues": {
-      "public_board_not_found": "Papan publik tidak ada. Periksa URL Anda.",
+      "public_board_not_found": "Proyek yang dibagikan ini tidak ada atau tidak lagi dibagikan. Periksa URL-nya.",
       "cycle_tooltip": "Siklus: {name}",
       "no_cycle": "Tanpa Siklus",
       "due_date_tooltip": "Tanggal jatuh tempo: {date}",

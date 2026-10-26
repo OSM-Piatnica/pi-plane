@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "あと一歩です。",
-      "description": "閲覧したいビューまたはページの公開共有 URL またはリンクを、ブラウザーのアドレスバーに入力してください。",
+      "description": "表示したいビューまたはページの共有リンクを、ブラウザーのアドレスバーに入力してください。",
       "image_alt": "ユーザーはすでにログインしています"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "{provider} で続行"
     },
     "issues": {
-      "public_board_not_found": "このパブリックボードは存在しません。URL を確認してください。",
+      "public_board_not_found": "この共有プロジェクトは存在しないか、共有が停止されています。URLを確認してください。",
       "cycle_tooltip": "サイクル: {name}",
       "no_cycle": "サイクルなし",
       "due_date_tooltip": "期限: {date}",

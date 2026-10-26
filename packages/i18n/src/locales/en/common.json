@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Nice! Just one more step.",
-      "description": "Enter the public-share URL or link of the view or Page you are trying to see in the browser's address bar.",
+      "description": "Enter the shared link of the view or page you are trying to see in the browser's address bar.",
       "image_alt": "User already logged in"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Continue with {provider}"
     },
     "issues": {
-      "public_board_not_found": "The public board does not exist. Please check the URL.",
+      "public_board_not_found": "This shared project does not exist or is no longer shared. Please check the URL.",
       "cycle_tooltip": "Cycle: {name}",
       "no_cycle": "No Cycle",
       "due_date_tooltip": "Due Date: {date}",

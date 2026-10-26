@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Parfait ! Plus qu’une étape.",
-      "description": "Saisissez l’URL publique ou le lien de la vue ou de la Page que vous souhaitez consulter dans la barre d’adresse du navigateur.",
+      "description": "Saisissez dans la barre d’adresse du navigateur le lien partagé de la vue ou de la page que vous souhaitez voir.",
       "image_alt": "Utilisateur déjà connecté"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Continuer avec {provider}"
     },
     "issues": {
-      "public_board_not_found": "Le tableau public n’existe pas. Veuillez vérifier l’URL.",
+      "public_board_not_found": "Ce projet partagé n’existe pas ou n’est plus partagé. Vérifiez l’URL.",
       "cycle_tooltip": "Cycle : {name}",
       "no_cycle": "Aucun Cycle",
       "due_date_tooltip": "Date d’échéance : {date}",

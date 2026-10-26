@@ -445,7 +445,7 @@
       "removing_from_favorites": "Đang xóa dự án khỏi mục yêu thích..."
     },
     "confirm_member_remove": {
-      "leave_description": "Bạn có chắc chắn muốn rời khỏi dự án {name}? Bạn có thể tham gia lại nếu được mời lần nữa hoặc nếu dự án ở chế độ công khai.",
+      "leave_description": "Bạn có chắc chắn muốn rời khỏi dự án {name}? Bạn có thể tham gia lại nếu được mời lần nữa hoặc nếu dự án mở cho không gian làm việc.",
       "leave_title": "Rời khỏi dự án?",
       "remove_description": "Bạn có chắc chắn muốn xóa thành viên {name}? Họ sẽ không còn quyền truy cập vào dự án này. Hành động này không thể hoàn tác.",
       "remove_title": "Xóa {name}?"

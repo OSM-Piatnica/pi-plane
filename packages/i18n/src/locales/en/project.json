@@ -445,7 +445,7 @@
       "removing_from_favorites": "Removing project from favorites..."
     },
     "confirm_member_remove": {
-      "leave_description": "Are you sure you want to leave the {name} project? You will be able to join the project if invited again or if it's public.",
+      "leave_description": "Are you sure you want to leave the {name} project? You will be able to join the project if invited again or if it's open to the workspace.",
       "leave_title": "Leave project?",
       "remove_description": "Are you sure you want to remove member {name}? They will no longer have access to this project. This action cannot be undone.",
       "remove_title": "Remove {name}?"

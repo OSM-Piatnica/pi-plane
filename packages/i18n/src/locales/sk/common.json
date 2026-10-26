@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Skvelé! Zostáva už len jeden krok.",
-      "description": "Do adresového riadka prehliadača zadajte verejnú adresu URL alebo odkaz na zobrazenie či Stránku, ktorú chcete zobraziť.",
+      "description": "Do adresného riadka prehliadača zadajte zdieľaný odkaz na zobrazenie alebo stránku, ktorú chcete vidieť.",
       "image_alt": "Používateľ je už prihlásený"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Pokračovať cez {provider}"
     },
     "issues": {
-      "public_board_not_found": "Verejná nástenka neexistuje. Skontrolujte prosím adresu URL.",
+      "public_board_not_found": "Tento zdieľaný projekt neexistuje alebo už nie je zdieľaný. Skontrolujte adresu URL.",
       "cycle_tooltip": "Cyklus: {name}",
       "no_cycle": "Žiadny cyklus",
       "due_date_tooltip": "Termín: {date}",

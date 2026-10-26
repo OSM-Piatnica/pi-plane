@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Świetnie! Został jeszcze jeden krok.",
-      "description": "Wpisz w pasku adresu przeglądarki publiczny adres URL lub link do widoku albo Strony, którą chcesz zobaczyć.",
+      "description": "Wpisz w pasku adresu przeglądarki udostępniony link do widoku lub strony, którą chcesz zobaczyć.",
       "image_alt": "Użytkownik jest już zalogowany"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Kontynuuj przez {provider}"
     },
     "issues": {
-      "public_board_not_found": "Publiczna tablica nie istnieje. Sprawdź adres URL.",
+      "public_board_not_found": "Ten udostępniony projekt nie istnieje lub nie jest już udostępniany. Sprawdź adres URL.",
       "cycle_tooltip": "Cykl: {name}",
       "no_cycle": "Brak cyklu",
       "due_date_tooltip": "Termin: {date}",

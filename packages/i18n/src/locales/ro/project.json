@@ -445,7 +445,7 @@
       "removing_from_favorites": "Se elimină proiectul din favorite..."
     },
     "confirm_member_remove": {
-      "leave_description": "Sigur vrei să părăsești proiectul {name}? Vei putea reveni dacă ești invitat din nou sau dacă proiectul este public.",
+      "leave_description": "Sigur vrei să părăsești proiectul {name}? Vei putea reveni dacă ești invitat din nou sau dacă proiectul este deschis spațiului de lucru.",
       "leave_title": "Părăsești proiectul?",
       "remove_description": "Sigur vrei să elimini membrul {name}? Nu va mai avea acces la acest proiect. Această acțiune nu poate fi anulată.",
       "remove_title": "Elimini pe {name}?"

@@ -445,7 +445,7 @@
       "removing_from_favorites": "正在将项目从收藏中移除..."
     },
     "confirm_member_remove": {
-      "leave_description": "确定要离开项目 {name} 吗？如果再次被邀请或项目是公开的，您可以重新加入。",
+      "leave_description": "确定要离开项目 {name} 吗？如果再次被邀请或项目对工作区开放，您可以重新加入。",
       "leave_title": "离开项目？",
       "remove_description": "确定要移除成员 {name} 吗？他们将无法再访问此项目。此操作无法撤销。",
       "remove_title": "移除 {name}？"

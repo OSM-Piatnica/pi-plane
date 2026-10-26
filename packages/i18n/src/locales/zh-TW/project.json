@@ -445,7 +445,7 @@
       "removing_from_favorites": "正在將專案從我的最愛移除..."
     },
     "confirm_member_remove": {
-      "leave_description": "確定要離開專案 {name} 嗎？如果再次受邀或專案為公開，您可以重新加入。",
+      "leave_description": "確定要離開專案 {name} 嗎？如果再次受邀或專案對工作區開放，您可以重新加入。",
       "leave_title": "離開專案？",
       "remove_description": "確定要移除成員 {name} 嗎？他們將無法再存取此專案。此操作無法復原。",
       "remove_title": "移除 {name}？"

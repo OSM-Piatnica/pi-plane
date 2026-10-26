@@ -445,7 +445,7 @@
       "removing_from_favorites": "Menghapus proyek dari favorit..."
     },
     "confirm_member_remove": {
-      "leave_description": "Yakin ingin keluar dari proyek {name}? Anda dapat bergabung kembali jika diundang lagi atau jika proyek ini publik.",
+      "leave_description": "Yakin ingin keluar dari proyek {name}? Anda dapat bergabung kembali jika diundang lagi atau jika proyek ini terbuka untuk ruang kerja.",
       "leave_title": "Keluar dari proyek?",
       "remove_description": "Yakin ingin menghapus anggota {name}? Mereka tidak akan lagi memiliki akses ke proyek ini. Tindakan ini tidak dapat dibatalkan.",
       "remove_title": "Hapus {name}?"

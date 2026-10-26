@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Mooi! Nog één stap.",
-      "description": "Voer de openbare URL of link van de weergave of Pagina die u wilt bekijken in de adresbalk van de browser in.",
+      "description": "Voer in de adresbalk van je browser de gedeelde link in van de weergave of pagina die je wilt bekijken.",
       "image_alt": "Gebruiker is al aangemeld"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Doorgaan met {provider}"
     },
     "issues": {
-      "public_board_not_found": "Het openbare bord bestaat niet. Controleer de URL.",
+      "public_board_not_found": "Dit gedeelde project bestaat niet of wordt niet meer gedeeld. Controleer de URL.",
       "cycle_tooltip": "Cyclus: {name}",
       "no_cycle": "Geen cyclus",
       "due_date_tooltip": "Vervaldatum: {date}",

@@ -445,7 +445,7 @@
       "removing_from_favorites": "Odstraňovanie projektu z obľúbených..."
     },
     "confirm_member_remove": {
-      "leave_description": "Naozaj chcete opustiť projekt {name}? Do projektu sa budete môcť znova pripojiť, ak budete znova pozvaní alebo ak je verejný.",
+      "leave_description": "Naozaj chcete opustiť projekt {name}? Do projektu sa budete môcť znova pripojiť, ak budete znova pozvaní alebo ak je projekt otvorený pre priestor.",
       "leave_title": "Opustiť projekt?",
       "remove_description": "Naozaj chcete odstrániť člena {name}? Stratí prístup k tomuto projektu. Túto akciu nemožno vrátiť späť.",
       "remove_title": "Odstrániť {name}?"

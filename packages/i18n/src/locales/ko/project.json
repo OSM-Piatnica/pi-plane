@@ -445,7 +445,7 @@
       "removing_from_favorites": "프로젝트를 즐겨찾기에서 제거하는 중..."
     },
     "confirm_member_remove": {
-      "leave_description": "{name} 프로젝트에서 나가시겠습니까? 다시 초대받거나 프로젝트가 공개인 경우 다시 참여할 수 있습니다.",
+      "leave_description": "{name} 프로젝트에서 나가시겠습니까? 다시 초대받거나 프로젝트가 작업 공간에 열려 있는 경우 다시 참여할 수 있습니다.",
       "leave_title": "프로젝트에서 나가시겠습니까?",
       "remove_description": "멤버 {name}을(를) 제거하시겠습니까? 더 이상 이 프로젝트에 접근할 수 없습니다. 이 작업은 되돌릴 수 없습니다.",
       "remove_title": "{name}을(를) 제거하시겠습니까?"

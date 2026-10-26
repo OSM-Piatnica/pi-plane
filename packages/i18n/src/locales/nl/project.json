@@ -445,7 +445,7 @@
       "removing_from_favorites": "Project verwijderen uit favorieten..."
     },
     "confirm_member_remove": {
-      "leave_description": "Weet je zeker dat je het project {name} wilt verlaten? Je kunt weer deelnemen als je opnieuw wordt uitgenodigd of als het project openbaar is.",
+      "leave_description": "Weet je zeker dat je het project {name} wilt verlaten? Je kunt weer deelnemen als je opnieuw wordt uitgenodigd of als het project open is voor de werkruimte.",
       "leave_title": "Project verlaten?",
       "remove_description": "Weet je zeker dat je lid {name} wilt verwijderen? Dit lid heeft dan geen toegang meer tot dit project. Dit kan niet ongedaan worden gemaakt.",
       "remove_title": "{name} verwijderen?"

@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Super! Nur noch ein Schritt.",
-      "description": "Geben Sie die öffentliche URL oder den Link der Ansicht oder Seite, die Sie sehen möchten, in die Adressleiste des Browsers ein.",
+      "description": "Gib den geteilten Link zur Ansicht oder Seite, die du sehen möchtest, in die Adressleiste deines Browsers ein.",
       "image_alt": "Benutzer bereits angemeldet"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Weiter mit {provider}"
     },
     "issues": {
-      "public_board_not_found": "Das öffentliche Board existiert nicht. Bitte überprüfen Sie die URL.",
+      "public_board_not_found": "Dieses geteilte Projekt existiert nicht oder wird nicht mehr geteilt. Bitte überprüfe die URL.",
       "cycle_tooltip": "Zyklus: {name}",
       "no_cycle": "Kein Zyklus",
       "due_date_tooltip": "Fälligkeitsdatum: {date}",

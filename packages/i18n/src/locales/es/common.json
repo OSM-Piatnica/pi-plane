@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "¡Genial! Solo falta un paso.",
-      "description": "Ingrese en la barra de direcciones del navegador la URL pública o el enlace de la vista o Página que intenta ver.",
+      "description": "Introduce en la barra de direcciones del navegador el enlace compartido de la vista o la página que quieres ver.",
       "image_alt": "El usuario ya inició sesión"
     },
     "auth_one_time_code": {
@@ -1454,7 +1454,7 @@
       "continue_with": "Continuar con {provider}"
     },
     "issues": {
-      "public_board_not_found": "El tablero público no existe. Verifique la URL.",
+      "public_board_not_found": "Este proyecto compartido no existe o ya no se comparte. Comprueba la URL.",
       "cycle_tooltip": "Ciclo: {name}",
       "no_cycle": "Sin Ciclo",
       "due_date_tooltip": "Fecha de vencimiento: {date}",
