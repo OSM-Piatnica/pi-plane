@@ -66,6 +66,11 @@
         "label": "Verzögerung (Tage)",
         "update_failed": "Die Verzögerung konnte nicht geändert werden."
       },
+      "reschedule": {
+        "confirm": "Verschieben",
+        "content": "Diese Änderung würde Abhängigkeiten verletzen. Diese Arbeitselemente können unter Beibehaltung ihrer Dauer nach hinten verschoben werden, damit alle Abhängigkeiten weiter erfüllt sind:",
+        "title": "Auch die abhängigen Arbeitselemente verschieben?"
+      },
       "duplicate_cancel": {
         "confirm": "In „Abgebrochen“ verschieben",
         "content": "{issue} ist jetzt als Duplikat von {originals} markiert. In „{state}“ verschieben? Es bleibt verknüpft und sichtbar.",

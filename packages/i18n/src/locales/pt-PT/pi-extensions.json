@@ -66,6 +66,11 @@
         "label": "Atraso (dias)",
         "update_failed": "Não foi possível alterar o atraso."
       },
+      "reschedule": {
+        "confirm": "Mover",
+        "content": "Esta alteração quebraria dependências. Estes itens de trabalho podem ser movidos para mais tarde, mantendo a duração, para que todas as dependências continuem válidas:",
+        "title": "Mover também os itens de trabalho dependentes?"
+      },
       "duplicate_cancel": {
         "confirm": "Mover para cancelado",
         "content": "{issue} está agora marcado como duplicado de {originals}. Movê-lo para “{state}”? Continua ligado e visível.",

@@ -66,6 +66,11 @@
         "label": "Jeda (hari)",
         "update_failed": "Jeda tidak dapat diubah."
       },
+      "reschedule": {
+        "confirm": "Pindahkan",
+        "content": "Perubahan ini akan melanggar dependensi. Item kerja berikut dapat dipindahkan ke waktu yang lebih lambat dengan durasi tetap, agar semua dependensi tetap terpenuhi:",
+        "title": "Pindahkan juga item kerja yang bergantung?"
+      },
       "duplicate_cancel": {
         "confirm": "Pindahkan ke dibatalkan",
         "content": "{issue} kini ditandai sebagai duplikat dari {originals}. Pindahkan ke “{state}”? Item tetap terhubung dan terlihat.",

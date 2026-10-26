@@ -66,6 +66,11 @@
         "label": "Retraso (días)",
         "update_failed": "No se pudo cambiar el retraso."
       },
+      "reschedule": {
+        "confirm": "Moverlos",
+        "content": "Este cambio rompería dependencias. Estos elementos de trabajo se pueden mover más adelante, manteniendo su duración, para que todas las dependencias se sigan cumpliendo:",
+        "title": "¿Mover también los elementos de trabajo dependientes?"
+      },
       "duplicate_cancel": {
         "confirm": "Mover a cancelado",
         "content": "{issue} ahora está marcado como duplicado de {originals}. ¿Moverlo a «{state}»? Seguirá enlazado y visible.",

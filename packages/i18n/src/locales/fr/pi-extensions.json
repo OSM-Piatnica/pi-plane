@@ -66,6 +66,11 @@
         "label": "Décalage (jours)",
         "update_failed": "Impossible de modifier le décalage."
       },
+      "reschedule": {
+        "confirm": "Les décaler",
+        "content": "Ce changement enfreindrait des dépendances. Ces éléments de travail peuvent être décalés plus tard, en gardant leur durée, pour que toutes les dépendances restent respectées :",
+        "title": "Déplacer aussi les éléments de travail dépendants ?"
+      },
       "duplicate_cancel": {
         "confirm": "Passer à annulé",
         "content": "{issue} est maintenant marqué comme doublon de {originals}. Le passer à « {state} » ? Il reste lié et visible.",

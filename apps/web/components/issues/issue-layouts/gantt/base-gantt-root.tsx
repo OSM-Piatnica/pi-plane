@@ -21,7 +21,6 @@ import { GanttSubWorkItemsContext, TimeLineTypeContext } from "@/components/gant
 import { GanttChartRoot } from "@/components/gantt-chart/root";
 import { IssueGanttSidebar } from "@/components/gantt-chart/sidebar/issues/sidebar";
 // helpers
-import { wouldUpdatesViolateDependencies } from "@/helpers/gantt-dependency-helpers";
 import type { TGanttExpansion } from "@/helpers/gantt-sub-work-items.helper";
 import {
   DEFAULT_GANTT_EXPANSION,
@@ -235,41 +234,22 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
         target_date?: string;
       }[]
     ) => {
-      const {
-        relation,
-        issue: { getIssueById },
-      } = issues.rootIssueStore.issueDetail;
-
-      const violatesDependencies = wouldUpdatesViolateDependencies(
-        updates,
-        relation.relationMap,
-        (issueId) => {
-          const issue = getIssueById(issueId);
-          return issue ? { start_date: issue.start_date, target_date: issue.target_date } : undefined;
-        },
-        relation.getRelationLag
-      );
-
-      if (violatesDependencies) {
-        refreshBlockPositions();
-        setToast({
-          type: "error",
-          title: t("toast.error"),
-          message: t("issue.relation.date_conflict"),
+      return issues
+        .updateIssueDates(workspaceSlug.toString(), updates, projectId.toString())
+        .then((applied) => {
+          // a declined offer undid the drag in the store; the bars have to follow
+          if (applied === false) refreshBlockPositions();
+        })
+        .catch((error) => {
+          // The server knows every relation, also those of work items outside the view, and either offers to move
+          // what depends on the dragged blocks (handled by the store) or refuses.
+          refreshBlockPositions();
+          setToast({
+            type: "error",
+            title: t("toast.error"),
+            message: getIssueApiErrorMessage(error, t("issue.relation.date_conflict"), t),
+          });
         });
-        return;
-      }
-
-      return issues.updateIssueDates(workspaceSlug.toString(), updates, projectId.toString()).catch((error) => {
-        // The pre-check above only sees relations of the blocks currently on screen, so a
-        // conflict with a work item outside the view reaches us as a rejection from the server.
-        refreshBlockPositions();
-        setToast({
-          type: "error",
-          title: t("toast.error"),
-          message: getIssueApiErrorMessage(error, t("issue.relation.date_conflict"), t),
-        });
-      });
     },
     [issues, projectId, workspaceSlug, t, refreshBlockPositions]
   );

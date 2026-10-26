@@ -66,6 +66,11 @@
         "label": "Oneskorenie (dni)",
         "update_failed": "Oneskorenie sa nepodarilo zmeniť."
       },
+      "reschedule": {
+        "confirm": "Posunúť",
+        "content": "Táto zmena by porušila závislosti. Tieto pracovné položky možno posunúť na neskôr so zachovaním ich dĺžky, aby všetky závislosti naďalej platili:",
+        "title": "Posunúť aj závislé pracovné položky?"
+      },
       "duplicate_cancel": {
         "confirm": "Presunúť do zrušených",
         "content": "{issue} je teraz označená ako duplikát položky {originals}. Presunúť ju do stavu „{state}“? Zostane prepojená a viditeľná.",

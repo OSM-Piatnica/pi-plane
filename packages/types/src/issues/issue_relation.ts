@@ -34,3 +34,16 @@ export type TIssueRelationMap = {
 };
 
 export type TIssueRelationIdMap = Record<TIssueRelationTypes, string[]>;
+
+/** A work item the API offers to move along with a date change that would otherwise break a dependency. */
+export type TRelationRescheduleShift = {
+  id: string;
+  project_id: string;
+  sequence_id: number;
+  ref: string;
+  name: string;
+  start_date: string | null;
+  target_date: string | null;
+  new_start_date: string | null;
+  new_target_date: string | null;
+};

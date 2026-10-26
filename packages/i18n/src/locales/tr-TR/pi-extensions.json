@@ -66,6 +66,11 @@
         "label": "Gecikme (gün)",
         "update_failed": "Gecikme değiştirilemedi."
       },
+      "reschedule": {
+        "confirm": "Taşı",
+        "content": "Bu değişiklik bağımlılıkları bozardı. Tüm bağımlılıklar korunsun diye bu iş öğeleri süreleri korunarak daha sonraya taşınabilir:",
+        "title": "Bağımlı iş öğeleri de taşınsın mı?"
+      },
       "duplicate_cancel": {
         "confirm": "İptal edilene taşı",
         "content": "{issue} artık {originals} öğesinin kopyası olarak işaretlendi. “{state}” durumuna taşınsın mı? Bağlı ve görünür kalır.",
