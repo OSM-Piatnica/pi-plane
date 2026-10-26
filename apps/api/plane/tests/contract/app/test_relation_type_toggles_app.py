@@ -163,7 +163,7 @@ class TestEnforcement:
         assert [row["id"] for row in listed["caused_by"]] == [str(b.id)]
 
         removed = session_client.post(
-            url(workspace, project, a) + "remove-relation/",
+            url(workspace, project, a).replace("issue-relation/", "remove-relation/"),
             {"related_issue": str(b.id), "relation_type": "caused_by"},
             format="json",
         )
