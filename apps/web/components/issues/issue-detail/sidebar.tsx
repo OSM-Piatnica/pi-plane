@@ -81,13 +81,14 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
   const { getStateById } = useProjectState();
   const startOfTheWeek = useStartOfTheWeek();
   const issue = getIssueById(issueId);
+  // called before the early return below: hooks run in the same order on every render
+  const weekendDays = useProjectWeekendDays(issue?.project_id);
   if (!issue) return <></>;
 
   const createdByDetails = getUserDetails(issue.created_by);
 
   // derived values
   const projectDetails = getProjectById(issue.project_id);
-  const weekendDays = useProjectWeekendDays(issue.project_id);
   const stateDetails = getStateById(issue.state_id);
 
   const updateDurationFields = (change: Partial<Pick<TIssue, "start_date" | "target_date" | "duration">>) =>
