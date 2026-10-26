@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue} kann erst abgeschlossen werden, wenn {related} abgeschlossen ist (endet nach Beziehung).",
           "start_after": "{issue} kann erst beginnen, wenn {related} begonnen hat (beginnt nach Beziehung)."
-        }
+        },
+        "self": "{issue} kann nicht mit sich selbst verknüpft werden.",
+        "cycle": "{issue} und {related} würden eine Schleife aus Beziehungen bilden. Entfernen Sie zuerst die entgegengesetzte Beziehung."
       },
       "date_conflict": "Diese Termine stehen im Konflikt mit bestehenden Abhängigkeiten. Passen Sie die verknüpften Arbeitselemente an oder entfernen Sie zuerst die Abhängigkeit.",
       "dependency_create_failed": "Abhängigkeit konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",

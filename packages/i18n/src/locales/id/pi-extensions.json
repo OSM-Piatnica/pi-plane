@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue} tidak dapat diselesaikan sampai {related} selesai (selesai setelah relasi).",
           "start_after": "{issue} tidak dapat dimulai sampai {related} telah dimulai (dimulai setelah relasi)."
-        }
+        },
+        "self": "{issue} tidak dapat dihubungkan dengan dirinya sendiri.",
+        "cycle": "{issue} dan {related} akan membentuk putaran relasi. Hapus dulu relasi sebaliknya."
       },
       "date_conflict": "Tanggal ini bertentangan dengan dependensi yang sudah ada. Sesuaikan item kerja terkait atau hapus dependensi terlebih dahulu.",
       "dependency_create_failed": "Tidak dapat membuat dependensi. Silakan coba lagi.",

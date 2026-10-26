@@ -200,7 +200,13 @@
       "finish_before": "Endet Vor",
       "finish_after": "Endet Nach",
       "implements": "Implementiert",
-      "implemented_by": "Implementiert von"
+      "implemented_by": "Implementiert von",
+      "causes": "Verursacht",
+      "caused_by": "Verursacht durch",
+      "clones": "Klont",
+      "cloned_by": "Geklont von",
+      "tests": "Testet",
+      "tested_by": "Getestet durch"
     },
     "copy_link": "Link zum Arbeitselement kopieren",
     "delete": {
@@ -619,6 +625,22 @@
           "added": "hat markiert, dass dieses Arbeitselement das Arbeitselement <value/> blockiert.",
           "removed": "hat das blockierte Arbeitselement <value/> entfernt."
         },
+        "caused_by": {
+          "added": "Beziehung „Verursacht durch“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Verursacht durch“ entfernt: <value/>."
+        },
+        "causes": {
+          "added": "Beziehung „Verursacht“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Verursacht“ entfernt: <value/>."
+        },
+        "cloned_by": {
+          "added": "Beziehung „Geklont von“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Geklont von“ entfernt: <value/>."
+        },
+        "clones": {
+          "added": "Beziehung „Klont“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Klont“ entfernt: <value/>."
+        },
         "duplicate": {
           "added": "hat dieses Arbeitselement als Duplikat von <value/> markiert.",
           "removed": "hat dieses Arbeitselement nicht mehr als Duplikat von <value/> markiert."
@@ -631,6 +653,14 @@
           "added": "hat markiert, dass dieses Arbeitselement vor <value/> endet.",
           "removed": "hat die Beziehung „Endet vor“ zu <value/> entfernt."
         },
+        "implemented_by": {
+          "added": "Beziehung „Implementiert von“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Implementiert von“ entfernt: <value/>."
+        },
+        "implements": {
+          "added": "Beziehung „Implementiert“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Implementiert“ entfernt: <value/>."
+        },
         "relates_to": {
           "added": "hat markiert, dass dieses Arbeitselement in Beziehung zu <value/> steht.",
           "removed": "hat die Beziehung zu <value/> entfernt."
@@ -642,6 +672,14 @@
         "start_before": {
           "added": "hat markiert, dass dieses Arbeitselement vor <value/> beginnt.",
           "removed": "hat die Beziehung „Beginnt vor“ zu <value/> entfernt."
+        },
+        "tested_by": {
+          "added": "Beziehung „Getestet durch“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Getestet durch“ entfernt: <value/>."
+        },
+        "tests": {
+          "added": "Beziehung „Testet“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Testet“ entfernt: <value/>."
         }
       },
       "restored": "hat das Arbeitselement wiederhergestellt.",

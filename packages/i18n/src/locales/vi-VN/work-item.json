@@ -200,7 +200,13 @@
       "finish_before": "Kết thúc Trước",
       "finish_after": "Kết thúc Sau",
       "implements": "Thực hiện",
-      "implemented_by": "Được thực hiện bởi"
+      "implemented_by": "Được thực hiện bởi",
+      "causes": "Gây ra",
+      "caused_by": "Bị gây ra bởi",
+      "clones": "Nhân bản",
+      "cloned_by": "Được nhân bản bởi",
+      "tests": "Kiểm thử",
+      "tested_by": "Được kiểm thử bởi"
     },
     "copy_link": "Sao chép liên kết mục công việc",
     "delete": {
@@ -619,6 +625,22 @@
           "added": "đã đánh dấu mục công việc này đang chặn mục công việc <value/>.",
           "removed": "đã xóa mục công việc đang bị chặn <value/>."
         },
+        "caused_by": {
+          "added": "đã thêm quan hệ “Bị gây ra bởi”: <value/>.",
+          "removed": "đã xóa quan hệ “Bị gây ra bởi”: <value/>."
+        },
+        "causes": {
+          "added": "đã thêm quan hệ “Gây ra”: <value/>.",
+          "removed": "đã xóa quan hệ “Gây ra”: <value/>."
+        },
+        "cloned_by": {
+          "added": "đã thêm quan hệ “Được nhân bản bởi”: <value/>.",
+          "removed": "đã xóa quan hệ “Được nhân bản bởi”: <value/>."
+        },
+        "clones": {
+          "added": "đã thêm quan hệ “Nhân bản”: <value/>.",
+          "removed": "đã xóa quan hệ “Nhân bản”: <value/>."
+        },
         "duplicate": {
           "added": "đã đánh dấu mục công việc này trùng lặp với <value/>.",
           "removed": "đã bỏ đánh dấu mục công việc này là trùng lặp với <value/>."
@@ -631,6 +653,14 @@
           "added": "đã đánh dấu mục công việc này kết thúc trước <value/>.",
           "removed": "đã xóa mối quan hệ kết thúc trước với <value/>."
         },
+        "implemented_by": {
+          "added": "đã thêm quan hệ “Được thực hiện bởi”: <value/>.",
+          "removed": "đã xóa quan hệ “Được thực hiện bởi”: <value/>."
+        },
+        "implements": {
+          "added": "đã thêm quan hệ “Thực hiện”: <value/>.",
+          "removed": "đã xóa quan hệ “Thực hiện”: <value/>."
+        },
         "relates_to": {
           "added": "đã đánh dấu mục công việc này có liên quan đến <value/>.",
           "removed": "đã xóa mối quan hệ với <value/>."
@@ -642,6 +672,14 @@
         "start_before": {
           "added": "đã đánh dấu mục công việc này bắt đầu trước <value/>.",
           "removed": "đã xóa mối quan hệ bắt đầu trước với <value/>."
+        },
+        "tested_by": {
+          "added": "đã thêm quan hệ “Được kiểm thử bởi”: <value/>.",
+          "removed": "đã xóa quan hệ “Được kiểm thử bởi”: <value/>."
+        },
+        "tests": {
+          "added": "đã thêm quan hệ “Kiểm thử”: <value/>.",
+          "removed": "đã xóa quan hệ “Kiểm thử”: <value/>."
         }
       },
       "restored": "đã khôi phục mục công việc.",

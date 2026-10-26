@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue} nemůže být dokončena, dokud není dokončena {related} (vztah Končí po).",
           "start_after": "{issue} nemůže začít, dokud nezačala {related} (vztah Začíná po)."
-        }
+        },
+        "self": "{issue} nemůže souviset samo se sebou.",
+        "cycle": "{issue} a {related} by vytvořily smyčku vztahů. Nejdřív odeberte opačný vztah."
       },
       "date_conflict": "Tato data jsou v konfliktu se stávajícími závislostmi. Nejprve upravte související pracovní položky nebo závislost odstraňte.",
       "dependency_create_failed": "Závislost se nepodařilo vytvořit. Zkuste to prosím znovu.",

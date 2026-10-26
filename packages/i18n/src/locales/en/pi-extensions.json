@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue} cannot be completed until {related} is completed (finishes after relation).",
           "start_after": "{issue} cannot start until {related} has started (starts after relation)."
-        }
+        },
+        "self": "{issue} cannot be related to itself.",
+        "cycle": "{issue} and {related} would end up in a loop of relations. Remove the opposite relation first."
       },
       "date_conflict": "These dates conflict with existing dependencies. Adjust related work items or remove the dependency first.",
       "dependency_create_failed": "Could not create dependency. Please try again.",

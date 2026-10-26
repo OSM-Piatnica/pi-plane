@@ -200,7 +200,13 @@
       "finish_before": "在之前完成",
       "finish_after": "在之後完成",
       "implements": "實現",
-      "implemented_by": "實現者"
+      "implemented_by": "實現者",
+      "causes": "導致",
+      "caused_by": "由此導致",
+      "clones": "複製",
+      "cloned_by": "複製自",
+      "tests": "測試",
+      "tested_by": "被測試於"
     },
     "copy_link": "複製工作事項連結",
     "delete": {
@@ -619,6 +625,22 @@
           "added": "將此工作事項標記為阻擋工作事項 <value/>。",
           "removed": "移除了所阻擋的工作事項 <value/>。"
         },
+        "caused_by": {
+          "added": "新增了關係「由此導致」：<value/>。",
+          "removed": "移除了關係「由此導致」：<value/>。"
+        },
+        "causes": {
+          "added": "新增了關係「導致」：<value/>。",
+          "removed": "移除了關係「導致」：<value/>。"
+        },
+        "cloned_by": {
+          "added": "新增了關係「複製自」：<value/>。",
+          "removed": "移除了關係「複製自」：<value/>。"
+        },
+        "clones": {
+          "added": "新增了關係「複製」：<value/>。",
+          "removed": "移除了關係「複製」：<value/>。"
+        },
         "duplicate": {
           "added": "將此工作事項標記為 <value/> 的重複項。",
           "removed": "取消了此工作事項作為 <value/> 重複項的標記。"
@@ -631,6 +653,14 @@
           "added": "將此工作事項標記為在 <value/> 之前完成。",
           "removed": "移除了與 <value/> 的「在其之前完成」關聯。"
         },
+        "implemented_by": {
+          "added": "新增了關係「實現者」：<value/>。",
+          "removed": "移除了關係「實現者」：<value/>。"
+        },
+        "implements": {
+          "added": "新增了關係「實現」：<value/>。",
+          "removed": "移除了關係「實現」：<value/>。"
+        },
         "relates_to": {
           "added": "標記此工作事項與 <value/> 相關。",
           "removed": "移除了與 <value/> 的關聯。"
@@ -642,6 +672,14 @@
         "start_before": {
           "added": "將此工作事項標記為在 <value/> 之前開始。",
           "removed": "移除了與 <value/> 的「在其之前開始」關聯。"
+        },
+        "tested_by": {
+          "added": "新增了關係「被測試於」：<value/>。",
+          "removed": "移除了關係「被測試於」：<value/>。"
+        },
+        "tests": {
+          "added": "新增了關係「測試」：<value/>。",
+          "removed": "移除了關係「測試」：<value/>。"
         }
       },
       "restored": "還原了工作事項。",

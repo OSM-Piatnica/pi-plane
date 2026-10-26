@@ -33,6 +33,8 @@ from plane.db.models import (
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.utils.issue_relation_constraints import TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
+from plane.utils.issue_relation_service import existing_symmetric_pairs, relation_ends, validate_new_relation
+from plane.utils.issue_relation_types import ALL_RELATION_NAMES, is_mirrored, is_symmetric
 from plane.utils.host import base_host
 
 
@@ -53,6 +55,25 @@ def issue_in_project(issue_id, slug, project_id, *, include_archived=False):
     """
     manager = Issue.objects if include_archived else Issue.issue_objects
     return manager.filter(pk=issue_id, workspace__slug=slug, project_id=project_id).exists()
+
+
+def related_issue_ids(issue_relations, issue_id, name):
+    """Ids of the work items that stand in relation ``name`` to ``issue_id``, read from either side of the rows."""
+    stored = get_actual_relation(name)
+    if is_symmetric(name):
+        return list(
+            issue_relations.filter(issue_id=issue_id, relation_type=stored).values_list("related_issue_id", flat=True)
+        ) + list(
+            issue_relations.filter(related_issue_id=issue_id, relation_type=stored).values_list("issue_id", flat=True)
+        )
+    if is_mirrored(name):
+        # the row is stored from the other work item: "blocking" is "blocked_by" with this item as the related side
+        return list(
+            issue_relations.filter(related_issue_id=issue_id, relation_type=stored).values_list("issue_id", flat=True)
+        )
+    return list(
+        issue_relations.filter(issue_id=issue_id, relation_type=stored).values_list("related_issue_id", flat=True)
+    )
 
 
 class IssueRelationViewSet(BaseViewSet):
@@ -82,56 +103,6 @@ class IssueRelationViewSet(BaseViewSet):
             .order_by("-created_at")
             .distinct()
         )
-        # get all blocking issues
-        blocking_issues = issue_relations.filter(relation_type="blocked_by", related_issue_id=issue_id).values_list(
-            "issue_id", flat=True
-        )
-
-        # get all blocked by issues
-        blocked_by_issues = issue_relations.filter(relation_type="blocked_by", issue_id=issue_id).values_list(
-            "related_issue_id", flat=True
-        )
-
-        # get all duplicate issues
-        duplicate_issues = issue_relations.filter(issue_id=issue_id, relation_type="duplicate").values_list(
-            "related_issue_id", flat=True
-        )
-
-        # get all relates to issues
-        duplicate_issues_related = issue_relations.filter(
-            related_issue_id=issue_id, relation_type="duplicate"
-        ).values_list("issue_id", flat=True)
-
-        # get all relates to issues
-        relates_to_issues = issue_relations.filter(issue_id=issue_id, relation_type="relates_to").values_list(
-            "related_issue_id", flat=True
-        )
-
-        # get all relates to issues
-        relates_to_issues_related = issue_relations.filter(
-            related_issue_id=issue_id, relation_type="relates_to"
-        ).values_list("issue_id", flat=True)
-
-        # get all start after issues
-        start_after_issues = issue_relations.filter(
-            relation_type="start_before", related_issue_id=issue_id
-        ).values_list("issue_id", flat=True)
-
-        # get all start_before issues
-        start_before_issues = issue_relations.filter(relation_type="start_before", issue_id=issue_id).values_list(
-            "related_issue_id", flat=True
-        )
-
-        # get all finish after issues
-        finish_after_issues = issue_relations.filter(
-            relation_type="finish_before", related_issue_id=issue_id
-        ).values_list("issue_id", flat=True)
-
-        # get all finish before issues
-        finish_before_issues = issue_relations.filter(relation_type="finish_before", issue_id=issue_id).values_list(
-            "related_issue_id", flat=True
-        )
-
         queryset = (
             Issue.issue_objects.filter(workspace__slug=slug)
             .select_related("workspace", "project", "state", "parent")
@@ -205,36 +176,10 @@ class IssueRelationViewSet(BaseViewSet):
         ]
 
         response_data = {
-            "blocking": queryset.filter(pk__in=blocking_issues)
-            .annotate(relation_type=Value("blocking", output_field=CharField()))
-            .values(*fields),
-            "blocked_by": queryset.filter(pk__in=blocked_by_issues)
-            .annotate(relation_type=Value("blocked_by", output_field=CharField()))
-            .values(*fields),
-            "duplicate": queryset.filter(pk__in=duplicate_issues)
-            .annotate(relation_type=Value("duplicate", output_field=CharField()))
+            name: queryset.filter(pk__in=related_issue_ids(issue_relations, issue_id, name))
+            .annotate(relation_type=Value(name, output_field=CharField()))
             .values(*fields)
-            | queryset.filter(pk__in=duplicate_issues_related)
-            .annotate(relation_type=Value("duplicate", output_field=CharField()))
-            .values(*fields),
-            "relates_to": queryset.filter(pk__in=relates_to_issues)
-            .annotate(relation_type=Value("relates_to", output_field=CharField()))
-            .values(*fields)
-            | queryset.filter(pk__in=relates_to_issues_related)
-            .annotate(relation_type=Value("relates_to", output_field=CharField()))
-            .values(*fields),
-            "start_after": queryset.filter(pk__in=start_after_issues)
-            .annotate(relation_type=Value("start_after", output_field=CharField()))
-            .values(*fields),
-            "start_before": queryset.filter(pk__in=start_before_issues)
-            .annotate(relation_type=Value("start_before", output_field=CharField()))
-            .values(*fields),
-            "finish_after": queryset.filter(pk__in=finish_after_issues)
-            .annotate(relation_type=Value("finish_after", output_field=CharField()))
-            .values(*fields),
-            "finish_before": queryset.filter(pk__in=finish_before_issues)
-            .annotate(relation_type=Value("finish_before", output_field=CharField()))
-            .values(*fields),
+            for name in ALL_RELATION_NAMES
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
@@ -266,35 +211,44 @@ class IssueRelationViewSet(BaseViewSet):
             ).values_list("id", flat=True)
         )
 
-        if relation_type in TIMELINE_RELATION_TYPES:
-            from plane.utils.issue_timeline_relation_validation import validate_new_timeline_relation
+        if relation_type not in ALL_RELATION_NAMES:
+            return Response({"message": "Unknown issue relation type"}, status=status.HTTP_400_BAD_REQUEST)
 
-            current_issue = (
-                Issue.objects.select_related("state", "project").filter(pk=issue_id, project_id=project_id).first()
-            )
-            if current_issue is None:
-                return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
+        current_issue = (
+            Issue.objects.select_related("state", "project").filter(pk=issue_id, project_id=project_id).first()
+        )
+        if current_issue is None:
+            return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
 
-            related_issues = Issue.objects.select_related("state", "project").filter(pk__in=issues)
-            related_by_id = {str(item.id): item for item in related_issues}
-            for related_id in issues:
-                related_issue = related_by_id.get(str(related_id))
-                if related_issue is None:
-                    return Response(
-                        {"error": f"Related work item {related_id} not found"},
-                        status=status.HTTP_400_BAD_REQUEST,
-                    )
+        related_by_id = {
+            str(item.id): item for item in Issue.objects.select_related("state", "project").filter(pk__in=issues)
+        }
+        for related_id in issues:
+            related_issue = related_by_id.get(str(related_id))
+            if related_issue is None:
+                return Response(
+                    {"error": f"Related work item {related_id} not found"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            relation_error = validate_new_relation(current_issue, related_issue, relation_type)
+            if relation_error:
+                return Response(relation_error, status=status.HTTP_400_BAD_REQUEST)
+            if relation_type in TIMELINE_RELATION_TYPES:
+                from plane.utils.issue_timeline_relation_validation import validate_new_timeline_relation
+
                 timeline_error = validate_new_timeline_relation(current_issue, related_issue, relation_type)
                 if timeline_error:
                     return Response(timeline_error, status=status.HTTP_400_BAD_REQUEST)
 
+        # a symmetric relation that exists from the other side is not stored a second time
+        already_related = existing_symmetric_pairs(relation_type, issue_id, issues)
+        issues = [item for item in issues if str(item) not in already_related]
+
         issue_relation = IssueRelation.objects.bulk_create(
             [
                 IssueRelation(
-                    issue_id=(issue if relation_type in ["blocking", "start_after", "finish_after"] else issue_id),
-                    related_issue_id=(
-                        issue_id if relation_type in ["blocking", "start_after", "finish_after"] else issue
-                    ),
+                    issue_id=relation_ends(issue_id, issue, relation_type)[0],
+                    related_issue_id=relation_ends(issue_id, issue, relation_type)[1],
                     relation_type=(get_actual_relation(relation_type)),
                     project_id=project_id,
                     workspace_id=project.workspace_id,
@@ -319,7 +273,7 @@ class IssueRelationViewSet(BaseViewSet):
             origin=base_host(request=request, is_app=True),
         )
 
-        if relation_type in ["blocking", "start_after", "finish_after"]:
+        if is_mirrored(relation_type):
             return Response(
                 RelatedIssueSerializer(issue_relation, many=True).data,
                 status=status.HTTP_201_CREATED,
@@ -342,12 +296,24 @@ class IssueRelationViewSet(BaseViewSet):
         if not issue_in_project(issue_id, slug, project_id):
             return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        issue_relations = IssueRelation.objects.filter(
-            workspace__slug=slug,
-        ).filter(
+        relation_type = request.data.get("relation_type", None)
+        rows = IssueRelation.objects.filter(workspace__slug=slug).filter(
             Q(issue_id=related_issue, related_issue_id=issue_id) | Q(issue_id=issue_id, related_issue_id=related_issue)
         )
-        issue_relations = issue_relations.first()
+        if relation_type:
+            if relation_type not in ALL_RELATION_NAMES:
+                return Response({"message": "Unknown issue relation type"}, status=status.HTTP_400_BAD_REQUEST)
+            # only this type, on the side it was added from; the other types between the two stay
+            rows = rows.filter(relation_type=get_actual_relation(relation_type))
+            if not is_symmetric(relation_type):
+                source, related = relation_ends(issue_id, related_issue, relation_type)
+                rows = rows.filter(issue_id=source, related_issue_id=related)
+        elif rows.count() > 1:
+            return Response(
+                {"error": "These work items have more than one relation; say which one to remove (relation_type)"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        issue_relations = rows.first()
         if issue_relations is None:
             # Previously fell through to `None.delete()` -> AttributeError -> 500.
             return Response({"error": "Issue relation not found"}, status=status.HTTP_404_NOT_FOUND)

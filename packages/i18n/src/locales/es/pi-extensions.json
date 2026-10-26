@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue} no puede completarse hasta que {related} se complete (relación de finaliza después).",
           "start_after": "{issue} no puede comenzar hasta que {related} haya comenzado (relación de comienza después)."
-        }
+        },
+        "self": "{issue} no puede relacionarse consigo mismo.",
+        "cycle": "{issue} y {related} formarían un bucle de relaciones. Elimina primero la relación opuesta."
       },
       "date_conflict": "Estas fechas entran en conflicto con dependencias existentes. Ajusta los elementos de trabajo relacionados o elimina primero la dependencia.",
       "dependency_create_failed": "No se pudo crear la dependencia. Por favor, inténtalo de nuevo.",

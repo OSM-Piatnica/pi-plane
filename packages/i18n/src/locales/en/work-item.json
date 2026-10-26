@@ -200,7 +200,13 @@
       "finish_before": "Finishes Before",
       "finish_after": "Finishes After",
       "implements": "Implements",
-      "implemented_by": "Implemented By"
+      "implemented_by": "Implemented By",
+      "causes": "Causes",
+      "caused_by": "Caused by",
+      "clones": "Clones",
+      "cloned_by": "Cloned by",
+      "tests": "Tests",
+      "tested_by": "Tested by"
     },
     "copy_link": "Copy work item link",
     "delete": {
@@ -619,6 +625,22 @@
           "added": "marked this work item is blocking work item <value/>.",
           "removed": "removed the blocking work item <value/>."
         },
+        "caused_by": {
+          "added": "added relation “Caused by”: <value/>.",
+          "removed": "removed relation “Caused by”: <value/>."
+        },
+        "causes": {
+          "added": "added relation “Causes”: <value/>.",
+          "removed": "removed relation “Causes”: <value/>."
+        },
+        "cloned_by": {
+          "added": "added relation “Cloned by”: <value/>.",
+          "removed": "removed relation “Cloned by”: <value/>."
+        },
+        "clones": {
+          "added": "added relation “Clones”: <value/>.",
+          "removed": "removed relation “Clones”: <value/>."
+        },
         "duplicate": {
           "added": "marked this work item as duplicate of <value/>.",
           "removed": "removed this work item as a duplicate of <value/>."
@@ -631,6 +653,14 @@
           "added": "marked this work item finishes before <value/>.",
           "removed": "removed the finishes before relation to <value/>."
         },
+        "implemented_by": {
+          "added": "added relation “Implemented By”: <value/>.",
+          "removed": "removed relation “Implemented By”: <value/>."
+        },
+        "implements": {
+          "added": "added relation “Implements”: <value/>.",
+          "removed": "removed relation “Implements”: <value/>."
+        },
         "relates_to": {
           "added": "marked that this work item relates to <value/>.",
           "removed": "removed the relation from <value/>."
@@ -642,6 +672,14 @@
         "start_before": {
           "added": "marked this work item starts before <value/>.",
           "removed": "removed the starts before relation to <value/>."
+        },
+        "tested_by": {
+          "added": "added relation “Tested by”: <value/>.",
+          "removed": "removed relation “Tested by”: <value/>."
+        },
+        "tests": {
+          "added": "added relation “Tests”: <value/>.",
+          "removed": "removed relation “Tests”: <value/>."
         }
       },
       "restored": "restored the work item.",

@@ -95,7 +95,9 @@ from plane.utils.host import base_host
 from plane.utils.worklog_access import can_view_worklogs
 from plane.utils.issue_relation_constraints import TIMELINE_RELATION_TYPES
 from plane.utils.serializers import writable_data
-from plane.utils.issue_relation_mapper import get_actual_relation
+from plane.utils.issue_relation_mapper import get_actual_relation, get_inverse_relation
+from plane.utils.issue_relation_service import existing_symmetric_pairs, relation_ends, validate_new_relation
+from plane.utils.issue_relation_types import ALL_RELATION_NAMES, FORWARD_RELATIONS, SYMMETRIC_RELATIONS, is_mirrored
 from plane.bgtasks.webhook_task import model_activity
 from plane.app.permissions import ROLE
 from plane.utils.openapi import (
@@ -2552,7 +2554,7 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
     @work_item_relation_docs(
         operation_id="list_work_item_relations",
         summary="List work item relations",
-        description="Retrieve all relationships for a work item including blocking, blocked_by, duplicate, relates_to, start_before, start_after, finish_before, and finish_after relations.",  # noqa E501
+        description="Retrieve all relationships for a work item including blocking, blocked_by, duplicate, relates_to, start_before, start_after, finish_before, finish_after, implements, implemented_by, causes, caused_by, clones, cloned_by, tests, and tested_by relations.",  # noqa E501
         parameters=[
             ISSUE_ID_PARAMETER,
             CURSOR_PARAMETER,
@@ -2633,77 +2635,35 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
             related_issue_project_id=F("related_issue__project_id"),
         )
 
-        response_data = {
-            "blocking": [],
-            "blocked_by": [],
-            "duplicate": [],
-            "relates_to": [],
-            "start_after": [],
-            "start_before": [],
-            "finish_after": [],
-            "finish_before": [],
-        }
-        seen_duplicate = set()
-        seen_relates_to = set()
+        response_data = {name: [] for name in ALL_RELATION_NAMES}
+        seen_symmetric = {name: set() for name in SYMMETRIC_RELATIONS}
+
+        def entry(project_id_key, issue_id_key, rel):
+            return {"project_id": str(rel[project_id_key]), "issue_id": str(rel[issue_id_key])}
 
         for rel in relations:
-            rt = rel["relation_type"]
-            if rt == "blocked_by":
-                if str(rel["related_issue_id"]) == str(issue_id):
-                    response_data["blocking"].append(
-                        {"project_id": str(rel["issue_project_id"]), "issue_id": str(rel["issue_id"])}
-                    )
+            stored = rel["relation_type"]
+            if stored in seen_symmetric:
+                # read the same from both sides, and listed once even if stored from both
                 if str(rel["issue_id"]) == str(issue_id):
-                    response_data["blocked_by"].append(
-                        {"project_id": str(rel["related_issue_project_id"]), "issue_id": str(rel["related_issue_id"])}
-                    )
-            elif rt == "duplicate":
-                if str(rel["issue_id"]) == str(issue_id) and rel["related_issue_id"] not in seen_duplicate:
-                    seen_duplicate.add(rel["related_issue_id"])
-                    response_data["duplicate"].append(
-                        {"project_id": str(rel["related_issue_project_id"]), "issue_id": str(rel["related_issue_id"])}
-                    )
-                if str(rel["related_issue_id"]) == str(issue_id) and rel["issue_id"] not in seen_duplicate:
-                    seen_duplicate.add(rel["issue_id"])
-                    response_data["duplicate"].append(
-                        {"project_id": str(rel["issue_project_id"]), "issue_id": str(rel["issue_id"])}
-                    )
-            elif rt == "relates_to":
-                if str(rel["issue_id"]) == str(issue_id) and rel["related_issue_id"] not in seen_relates_to:
-                    seen_relates_to.add(rel["related_issue_id"])
-                    response_data["relates_to"].append(
-                        {"project_id": str(rel["related_issue_project_id"]), "issue_id": str(rel["related_issue_id"])}
-                    )
-                if str(rel["related_issue_id"]) == str(issue_id) and rel["issue_id"] not in seen_relates_to:
-                    seen_relates_to.add(rel["issue_id"])
-                    response_data["relates_to"].append(
-                        {"project_id": str(rel["issue_project_id"]), "issue_id": str(rel["issue_id"])}
-                    )
-            elif rt == "start_before":
-                if str(rel["related_issue_id"]) == str(issue_id):
-                    response_data["start_after"].append(
-                        {"project_id": str(rel["issue_project_id"]), "issue_id": str(rel["issue_id"])}
-                    )
+                    other = ("related_issue_project_id", "related_issue_id")
+                else:
+                    other = ("issue_project_id", "issue_id")
+                if rel[other[1]] not in seen_symmetric[stored]:
+                    seen_symmetric[stored].add(rel[other[1]])
+                    response_data[stored].append(entry(other[0], other[1], rel))
+            elif stored in FORWARD_RELATIONS:
                 if str(rel["issue_id"]) == str(issue_id):
-                    response_data["start_before"].append(
-                        {"project_id": str(rel["related_issue_project_id"]), "issue_id": str(rel["related_issue_id"])}
-                    )
-            elif rt == "finish_before":
+                    response_data[stored].append(entry("related_issue_project_id", "related_issue_id", rel))
                 if str(rel["related_issue_id"]) == str(issue_id):
-                    response_data["finish_after"].append(
-                        {"project_id": str(rel["issue_project_id"]), "issue_id": str(rel["issue_id"])}
-                    )
-                if str(rel["issue_id"]) == str(issue_id):
-                    response_data["finish_before"].append(
-                        {"project_id": str(rel["related_issue_project_id"]), "issue_id": str(rel["related_issue_id"])}
-                    )
+                    response_data[get_inverse_relation(stored)].append(entry("issue_project_id", "issue_id", rel))
 
         return Response(response_data, status=status.HTTP_200_OK)
 
     @work_item_relation_docs(
         operation_id="create_work_item_relation",
         summary="Create work item relation",
-        description="Create relationships between work items. Supports various relation types including blocking, blocked_by, duplicate, relates_to, start_before, start_after, finish_before, and finish_after.",  # noqa E501
+        description="Create relationships between work items. Supports various relation types including blocking, blocked_by, duplicate, relates_to, start_before, start_after, finish_before, finish_after, implements, implemented_by, causes, caused_by, clones, cloned_by, tests, and tested_by. Work items can be related in more than one way, but a work item cannot be related to itself and directed relations cannot form a loop.",  # noqa E501
         parameters=[
             ISSUE_ID_PARAMETER,
         ],
@@ -2769,7 +2729,7 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
         Issue.issue_objects.get(workspace__slug=slug, project_id=project_id, pk=issue_id)
 
         actual_relation = get_actual_relation(relation_type)
-        is_reverse = relation_type in ["blocking", "start_after", "finish_after"]
+        is_reverse = is_mirrored(relation_type)
 
         # Scope to workspace to prevent cross-tenant IDOR
         # Relations can cross projects so only workspace scope is enforced
@@ -2780,33 +2740,41 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
             ).values_list("id", flat=True)
         )
 
-        if relation_type in TIMELINE_RELATION_TYPES:
-            from plane.utils.issue_timeline_relation_validation import validate_new_timeline_relation
+        current_issue = (
+            Issue.objects.select_related("state", "project").filter(pk=issue_id, project_id=project_id).first()
+        )
+        if current_issue is None:
+            return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
 
-            current_issue = (
-                Issue.objects.select_related("state", "project").filter(pk=issue_id, project_id=project_id).first()
-            )
-            if current_issue is None:
-                return Response({"error": "Issue not found"}, status=status.HTTP_404_NOT_FOUND)
+        related_by_id = {
+            str(item.id): item for item in Issue.objects.select_related("state", "project").filter(pk__in=issues)
+        }
+        for related_id in issues:
+            related_issue = related_by_id.get(str(related_id))
+            if related_issue is None:
+                return Response(
+                    {"error": f"Related work item {related_id} not found"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            relation_error = validate_new_relation(current_issue, related_issue, relation_type)
+            if relation_error:
+                return Response(relation_error, status=status.HTTP_400_BAD_REQUEST)
+            if relation_type in TIMELINE_RELATION_TYPES:
+                from plane.utils.issue_timeline_relation_validation import validate_new_timeline_relation
 
-            related_issues = Issue.objects.select_related("state", "project").filter(pk__in=issues)
-            related_by_id = {str(item.id): item for item in related_issues}
-            for related_id in issues:
-                related_issue = related_by_id.get(str(related_id))
-                if related_issue is None:
-                    return Response(
-                        {"error": f"Related work item {related_id} not found"},
-                        status=status.HTTP_400_BAD_REQUEST,
-                    )
                 timeline_error = validate_new_timeline_relation(current_issue, related_issue, relation_type)
                 if timeline_error:
                     return Response(timeline_error, status=status.HTTP_400_BAD_REQUEST)
 
+        # a symmetric relation that exists from the other side is not stored a second time
+        already_related = existing_symmetric_pairs(relation_type, issue_id, issues)
+        issues = [item for item in issues if str(item) not in already_related]
+
         IssueRelation.objects.bulk_create(
             [
                 IssueRelation(
-                    issue_id=(issue if is_reverse else issue_id),
-                    related_issue_id=(issue_id if is_reverse else issue),
+                    issue_id=relation_ends(issue_id, issue, relation_type)[0],
+                    related_issue_id=relation_ends(issue_id, issue, relation_type)[1],
                     relation_type=actual_relation,
                     project_id=project_id,
                     workspace_id=project.workspace_id,

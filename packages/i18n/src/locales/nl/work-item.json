@@ -200,7 +200,13 @@
       "finish_before": "Eindigt vóór",
       "finish_after": "Eindigt na",
       "implements": "Implementeert",
-      "implemented_by": "Geïmplementeerd door"
+      "implemented_by": "Geïmplementeerd door",
+      "causes": "Veroorzaakt",
+      "caused_by": "Veroorzaakt door",
+      "clones": "Kloont",
+      "cloned_by": "Gekloond door",
+      "tests": "Test",
+      "tested_by": "Getest door"
     },
     "copy_link": "Werkitemlink kopiëren",
     "delete": {
@@ -619,6 +625,22 @@
           "added": "markeerde dit werkitem als blokkerend voor werkitem <value/>.",
           "removed": "verwijderde het blokkerende werkitem <value/>."
         },
+        "caused_by": {
+          "added": "relatie “Veroorzaakt door” toegevoegd: <value/>.",
+          "removed": "relatie “Veroorzaakt door” verwijderd: <value/>."
+        },
+        "causes": {
+          "added": "relatie “Veroorzaakt” toegevoegd: <value/>.",
+          "removed": "relatie “Veroorzaakt” verwijderd: <value/>."
+        },
+        "cloned_by": {
+          "added": "relatie “Gekloond door” toegevoegd: <value/>.",
+          "removed": "relatie “Gekloond door” verwijderd: <value/>."
+        },
+        "clones": {
+          "added": "relatie “Kloont” toegevoegd: <value/>.",
+          "removed": "relatie “Kloont” verwijderd: <value/>."
+        },
         "duplicate": {
           "added": "markeerde dit werkitem als duplicaat van <value/>.",
           "removed": "verwijderde dit werkitem als duplicaat van <value/>."
@@ -631,6 +653,14 @@
           "added": "markeerde dat dit werkitem eindigt vóór <value/>.",
           "removed": "verwijderde de relatie \"eindigt vóór\" met <value/>."
         },
+        "implemented_by": {
+          "added": "relatie “Geïmplementeerd door” toegevoegd: <value/>.",
+          "removed": "relatie “Geïmplementeerd door” verwijderd: <value/>."
+        },
+        "implements": {
+          "added": "relatie “Implementeert” toegevoegd: <value/>.",
+          "removed": "relatie “Implementeert” verwijderd: <value/>."
+        },
         "relates_to": {
           "added": "markeerde dit werkitem als gerelateerd aan <value/>.",
           "removed": "verwijderde de relatie met <value/>."
@@ -642,6 +672,14 @@
         "start_before": {
           "added": "markeerde dat dit werkitem start vóór <value/>.",
           "removed": "verwijderde de relatie \"start vóór\" met <value/>."
+        },
+        "tested_by": {
+          "added": "relatie “Getest door” toegevoegd: <value/>.",
+          "removed": "relatie “Getest door” verwijderd: <value/>."
+        },
+        "tests": {
+          "added": "relatie “Test” toegevoegd: <value/>.",
+          "removed": "relatie “Test” verwijderd: <value/>."
         }
       },
       "restored": "herstelde het werkitem.",

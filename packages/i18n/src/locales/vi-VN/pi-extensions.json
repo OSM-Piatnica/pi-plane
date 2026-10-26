@@ -49,7 +49,9 @@
         "status": {
           "finish_after": "{issue} không thể hoàn thành cho đến khi {related} đã hoàn thành (hoàn thành sau quan hệ).",
           "start_after": "{issue} không thể bắt đầu cho đến khi {related} đã bắt đầu (bắt đầu sau quan hệ)."
-        }
+        },
+        "self": "{issue} không thể liên kết với chính nó.",
+        "cycle": "{issue} và {related} sẽ tạo thành vòng lặp quan hệ. Hãy xóa quan hệ ngược lại trước."
       },
       "date_conflict": "Các ngày này xung đột với các phụ thuộc hiện có. Hãy điều chỉnh các mục công việc liên quan hoặc xóa phụ thuộc trước.",
       "dependency_create_failed": "Không thể tạo phụ thuộc. Vui lòng thử lại.",

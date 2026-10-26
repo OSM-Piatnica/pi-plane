@@ -637,6 +637,14 @@ class IssueRelationCreateSerializer(serializers.Serializer):
         ("start_after", "Starts After"),
         ("finish_before", "Finishes Before"),
         ("finish_after", "Finishes After"),
+        ("implemented_by", "Implemented By"),
+        ("implements", "Implements"),
+        ("caused_by", "Caused By"),
+        ("causes", "Causes"),
+        ("cloned_by", "Cloned By"),
+        ("clones", "Clones"),
+        ("tested_by", "Tested By"),
+        ("tests", "Tests"),
     ]
 
     relation_type = serializers.ChoiceField(

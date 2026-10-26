@@ -36,6 +36,7 @@ from plane.db.models import (
 from plane.db.models.project import ROLE
 from plane.utils.html_processor import strip_tags
 from plane.utils.issue_relation_mapper import get_actual_relation
+from plane.utils.issue_relation_types import ALL_RELATION_NAMES, MIRRORED_RELATIONS, SYMMETRIC_RELATIONS
 from plane.utils.issue_type_property import validate_property_value
 from plane.utils.work_item_duration import (
     normalize_work_item_duration,
@@ -51,21 +52,8 @@ ISO_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 DMY_DATE_PATTERN = re.compile(r"^(\d{1,2})\.(\d{1,2})\.(\d{4})$")
 
 # Relation types whose canonical database row points the other way round
-_MIRRORED_RELATIONS = frozenset({"blocking", "start_after", "finish_after", "implements"})
-_ALLOWED_RELATIONS = frozenset(
-    {
-        "blocked_by",
-        "blocking",
-        "relates_to",
-        "duplicate",
-        "start_before",
-        "start_after",
-        "finish_before",
-        "finish_after",
-        "implemented_by",
-        "implements",
-    }
-)
+_MIRRORED_RELATIONS = MIRRORED_RELATIONS
+_ALLOWED_RELATIONS = frozenset(ALL_RELATION_NAMES)
 _IDENTIFIER_PATTERN = re.compile(r"^([A-Za-z0-9]+)-(\d+)$")
 
 _TRUE_TOKENS = frozenset({"1", "true", "yes", "on"})
@@ -966,7 +954,7 @@ def import_work_items_into_project(
                 # type such as "blocking" is stored as the opposite row with the sides swapped.
                 canonical_type = get_actual_relation(relation_type)
                 source, related = (target, issue) if relation_type in _MIRRORED_RELATIONS else (issue, target)
-                if canonical_type in {"relates_to", "duplicate"}:
+                if canonical_type in SYMMETRIC_RELATIONS:
                     dedupe_key = (canonical_type, *sorted([str(source.id), str(related.id)]))
                 else:
                     dedupe_key = (canonical_type, str(source.id), str(related.id))

@@ -200,7 +200,13 @@
       "finish_before": "Kończy przed",
       "finish_after": "Kończy po",
       "implements": "Implementuje",
-      "implemented_by": "Implementowane przez"
+      "implemented_by": "Implementowane przez",
+      "causes": "Powoduje",
+      "caused_by": "Spowodowane przez",
+      "clones": "Klonuje",
+      "cloned_by": "Sklonowane przez",
+      "tests": "Testuje",
+      "tested_by": "Testowane przez"
     },
     "copy_link": "Kopiuj link do elementu pracy",
     "delete": {
@@ -619,6 +625,22 @@
           "added": "oznaczono, że ten element pracy blokuje element pracy <value/>.",
           "removed": "usunięto blokowany element pracy <value/>."
         },
+        "caused_by": {
+          "added": "dodano relację „Spowodowane przez”: <value/>.",
+          "removed": "usunięto relację „Spowodowane przez”: <value/>."
+        },
+        "causes": {
+          "added": "dodano relację „Powoduje”: <value/>.",
+          "removed": "usunięto relację „Powoduje”: <value/>."
+        },
+        "cloned_by": {
+          "added": "dodano relację „Sklonowane przez”: <value/>.",
+          "removed": "usunięto relację „Sklonowane przez”: <value/>."
+        },
+        "clones": {
+          "added": "dodano relację „Klonuje”: <value/>.",
+          "removed": "usunięto relację „Klonuje”: <value/>."
+        },
         "duplicate": {
           "added": "oznaczono ten element pracy jako duplikat <value/>.",
           "removed": "usunięto oznaczenie tego elementu pracy jako duplikatu <value/>."
@@ -631,6 +653,14 @@
           "added": "oznaczono, że ten element pracy kończy się przed <value/>.",
           "removed": "usunięto relację „kończy się przed” z <value/>."
         },
+        "implemented_by": {
+          "added": "dodano relację „Implementowane przez”: <value/>.",
+          "removed": "usunięto relację „Implementowane przez”: <value/>."
+        },
+        "implements": {
+          "added": "dodano relację „Implementuje”: <value/>.",
+          "removed": "usunięto relację „Implementuje”: <value/>."
+        },
         "relates_to": {
           "added": "oznaczono, że ten element pracy jest powiązany z <value/>.",
           "removed": "usunięto powiązanie z <value/>."
@@ -642,6 +672,14 @@
         "start_before": {
           "added": "oznaczono, że ten element pracy rozpoczyna się przed <value/>.",
           "removed": "usunięto relację „rozpoczyna się przed” z <value/>."
+        },
+        "tested_by": {
+          "added": "dodano relację „Testowane przez”: <value/>.",
+          "removed": "usunięto relację „Testowane przez”: <value/>."
+        },
+        "tests": {
+          "added": "dodano relację „Testuje”: <value/>.",
+          "removed": "usunięto relację „Testuje”: <value/>."
         }
       },
       "restored": "przywrócono element pracy.",

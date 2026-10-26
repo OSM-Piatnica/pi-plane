@@ -200,7 +200,13 @@
       "finish_before": "Selesai Sebelum",
       "finish_after": "Selesai Setelah",
       "implements": "Menerapkan",
-      "implemented_by": "Diterapkan oleh"
+      "implemented_by": "Diterapkan oleh",
+      "causes": "Menyebabkan",
+      "caused_by": "Disebabkan oleh",
+      "clones": "Mengkloning",
+      "cloned_by": "Dikloning oleh",
+      "tests": "Menguji",
+      "tested_by": "Diuji oleh"
     },
     "copy_link": "Salin tautan item kerja",
     "delete": {
@@ -619,6 +625,22 @@
           "added": "menandai bahwa item kerja ini memblokir item kerja <value/>.",
           "removed": "menghapus item kerja yang diblokir <value/>."
         },
+        "caused_by": {
+          "added": "menambahkan relasi “Disebabkan oleh”: <value/>.",
+          "removed": "menghapus relasi “Disebabkan oleh”: <value/>."
+        },
+        "causes": {
+          "added": "menambahkan relasi “Menyebabkan”: <value/>.",
+          "removed": "menghapus relasi “Menyebabkan”: <value/>."
+        },
+        "cloned_by": {
+          "added": "menambahkan relasi “Dikloning oleh”: <value/>.",
+          "removed": "menghapus relasi “Dikloning oleh”: <value/>."
+        },
+        "clones": {
+          "added": "menambahkan relasi “Mengkloning”: <value/>.",
+          "removed": "menghapus relasi “Mengkloning”: <value/>."
+        },
         "duplicate": {
           "added": "menandai item kerja ini sebagai duplikat dari <value/>.",
           "removed": "menghapus item kerja ini sebagai duplikat dari <value/>."
@@ -631,6 +653,14 @@
           "added": "menandai bahwa item kerja ini selesai sebelum <value/>.",
           "removed": "menghapus hubungan \"selesai sebelum\" dengan <value/>."
         },
+        "implemented_by": {
+          "added": "menambahkan relasi “Diterapkan oleh”: <value/>.",
+          "removed": "menghapus relasi “Diterapkan oleh”: <value/>."
+        },
+        "implements": {
+          "added": "menambahkan relasi “Menerapkan”: <value/>.",
+          "removed": "menghapus relasi “Menerapkan”: <value/>."
+        },
         "relates_to": {
           "added": "menandai bahwa item kerja ini berhubungan dengan <value/>.",
           "removed": "menghapus hubungan dengan <value/>."
@@ -642,6 +672,14 @@
         "start_before": {
           "added": "menandai bahwa item kerja ini dimulai sebelum <value/>.",
           "removed": "menghapus hubungan \"dimulai sebelum\" dengan <value/>."
+        },
+        "tested_by": {
+          "added": "menambahkan relasi “Diuji oleh”: <value/>.",
+          "removed": "menghapus relasi “Diuji oleh”: <value/>."
+        },
+        "tests": {
+          "added": "menambahkan relasi “Menguji”: <value/>.",
+          "removed": "menghapus relasi “Menguji”: <value/>."
         }
       },
       "restored": "memulihkan item kerja.",
