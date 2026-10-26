@@ -238,6 +238,8 @@ def apply_shifts(plan: ReschedulePlan, actor_id) -> None:
                     "actor_id": str(actor_id),
                     "project_id": str(issue.project_id),
                     "epoch": epoch,
+                    # a dependent moved along is not the person's doing: no subscription to it
+                    "subscriber": False,
                 }
             )
 

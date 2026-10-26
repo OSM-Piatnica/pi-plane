@@ -168,4 +168,7 @@ def reopen_parents(issue: Issue, previous_state_id, actor_id) -> None:
             current_instance=json.dumps({"state_id": str(old_state_id)}),
             epoch=int(timezone.now().timestamp()),
             notification=True,
+            # the parent is reopened as a side effect of what the person did to the sub-item: the people of the
+            # parent are told, but the person is not subscribed to it by the activity
+            subscriber=False,
         )

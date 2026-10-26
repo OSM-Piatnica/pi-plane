@@ -110,7 +110,9 @@ class NotificationViewSet(BaseViewSet, BasePaginator):
             issue_ids = (
                 IssueSubscriber.objects.filter(workspace__slug=slug, subscriber_id=request.user.id)
                 .annotate(created=Exists(Issue.objects.filter(created_by=request.user, pk=OuterRef("issue_id"))))
-                .annotate(assigned=Exists(IssueAssignee.objects.filter(pk=OuterRef("issue_id"), assignee=request.user)))
+                .annotate(
+                    assigned=Exists(IssueAssignee.objects.filter(issue_id=OuterRef("issue_id"), assignee=request.user))
+                )
                 .filter(created=False, assigned=False)
                 .values_list("issue_id", flat=True)
             )
