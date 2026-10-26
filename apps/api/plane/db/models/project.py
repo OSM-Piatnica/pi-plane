@@ -77,7 +77,7 @@ def get_default_preferences():
 
 
 class Project(ChangeTrackerMixin, BaseModel):
-    TRACKED_FIELDS = ["timezone"]
+    TRACKED_FIELDS = ["timezone", "weekend_days"]
 
     NETWORK_CHOICES = ((0, "Secret"), (1, "Private"), (2, "Public"))
     name = models.CharField(max_length=255, verbose_name="Project Name")
@@ -252,22 +252,40 @@ class Project(ChangeTrackerMixin, BaseModel):
         timezone_persisted = "timezone" not in self.get_deferred_fields() and (
             update_fields is None or "timezone" in update_fields
         )
-        if is_creating or not timezone_persisted:
-            return super().save(*args, **kwargs)
-
-        # A timezone deferred at load has no tracked original, so compare against the stored one.
-        old_timezone = (
-            self.old_values["timezone"]
-            if "timezone" in self.old_values
-            else Project.objects.values_list("timezone", flat=True).get(pk=self.pk)
+        weekend_days_changed = (
+            not is_creating
+            and "weekend_days" not in self.get_deferred_fields()
+            and (update_fields is None or "weekend_days" in update_fields)
+            and "weekend_days" in self.old_values
+            and sorted(self.old_values["weekend_days"] or []) != sorted(self.weekend_days or [])
         )
-        if old_timezone == self.timezone:
-            return super().save(*args, **kwargs)
+        old_timezone = None
+        if not is_creating and timezone_persisted:
+            # A timezone deferred at load has no tracked original, so compare against the stored one.
+            old_timezone = (
+                self.old_values["timezone"]
+                if "timezone" in self.old_values
+                else Project.objects.values_list("timezone", flat=True).get(pk=self.pk)
+            )
 
-        # One transaction so the unsnooze beat task never sees the new timezone with old-timezone snoozes.
-        with transaction.atomic():
+        if old_timezone is None or old_timezone == self.timezone:
             super().save(*args, **kwargs)
-            self._retime_intake_snoozes(old_timezone)
+        else:
+            # One transaction so the unsnooze beat task never sees the new timezone with old-timezone snoozes.
+            with transaction.atomic():
+                super().save(*args, **kwargs)
+                self._retime_intake_snoozes(old_timezone)
+
+        if weekend_days_changed:
+            self._schedule_duration_recompute()
+
+    def _schedule_duration_recompute(self):
+        """Durations count working days, so they follow the weekend days: recalculate them once this is committed."""
+        # Imported here: the task module imports the models
+        from plane.bgtasks.project_duration_task import recompute_project_durations
+
+        project_id = str(self.pk)
+        transaction.on_commit(lambda: recompute_project_durations.delay(project_id))
 
 
 class ProjectBaseModel(BaseModel):

@@ -733,7 +733,7 @@ def import_work_items_into_project(
             duration_payload = {"start_date": start_date, "target_date": target_date}
             if duration is not None:
                 duration_payload["duration"] = duration
-            derived = reconcile_work_item_duration(None, duration_payload)
+            derived = reconcile_work_item_duration(None, duration_payload, project.weekend_days)
             duration = derived.get("duration", duration)
             if "start_date" in derived:
                 start_date = derived["start_date"]
