@@ -110,5 +110,12 @@
     "intro_rejected": "<strong>{decider}</strong>, Pi-Plane’deki <strong>{workspace}</strong> çalışma alanında <strong>{project}</strong> özel projesine katılma isteğinizi onaylamadı. Bunun bir hata olduğunu düşünüyorsanız bir proje yöneticisiyle iletişime geçin.",
     "button": "Projeyi aç",
     "note": "Not: Bu e-posta, bu projeye katılmak istediğiniz için <span>{email}</span> adresine gönderildi."
+  },
+  "magic_code": {
+    "subject": "Pi-Plane benzersiz giriş kodunuz: {code}",
+    "preheader": "Pi-Plane giriş kodunuz {code} 10 dakika geçerlidir.",
+    "heading": "Pi-Plane giriş kodunuz",
+    "info": "Bu kod önümüzdeki 10 dakika boyunca geçerlidir. Girişi tamamlamak için giriş sayfasına girin.",
+    "note": "Not: Bu e-posta <span>{email}</span> adresine gönderildi. Bir giriş kodu beklemiyorsanız bu iletiyi yok sayabilirsiniz."
   }
 }

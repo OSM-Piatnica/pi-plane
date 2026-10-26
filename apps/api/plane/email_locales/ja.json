@@ -102,5 +102,12 @@
     "intro_rejected": "<strong>{decider}</strong> さんは、Pi-Plane のワークスペース <strong>{workspace}</strong> のプライベートプロジェクト <strong>{project}</strong> への参加リクエストを承認しませんでした。誤りだと思われる場合は、プロジェクト管理者にお問い合わせください。",
     "button": "プロジェクトを開く",
     "note": "注: このメールは、あなたがこのプロジェクトへの参加をリクエストしたため、<span>{email}</span> に送信されました。"
+  },
+  "magic_code": {
+    "subject": "Pi-Plane の一意のログインコードは {code} です",
+    "preheader": "Pi-Plane のログインコード {code} は 10 分間有効です。",
+    "heading": "Pi-Plane のログインコード",
+    "info": "このコードは今後 10 分間有効です。ログインページに入力してログインを完了してください。",
+    "note": "注: このメールは <span>{email}</span> に送信されました。ログインコードに心当たりがない場合は、このメッセージを無視してください。"
   }
 }

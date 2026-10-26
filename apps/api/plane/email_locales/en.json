@@ -110,5 +110,12 @@
     "intro_rejected": "<strong>{decider}</strong> did not approve your request to join the private project <strong>{project}</strong> in the workspace <strong>{workspace}</strong> on Pi-Plane. If you think this is a mistake, ask a project admin.",
     "button": "Open the project",
     "note": "Note: This email was sent to <span>{email}</span> because you asked to join this project."
+  },
+  "magic_code": {
+    "subject": "Your unique Pi-Plane login code is {code}",
+    "preheader": "Your Pi-Plane login code {code} is valid for 10 minutes.",
+    "heading": "Your login code for Pi-Plane",
+    "info": "This code is valid for the next 10 minutes. Enter it on the sign-in page to complete your login.",
+    "note": "Note: This email was sent to <span>{email}</span>. If you were not expecting a sign-in code, you can safely ignore this message."
   }
 }

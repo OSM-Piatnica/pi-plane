@@ -15,13 +15,15 @@ from django.core.mail import EmailMultiAlternatives, get_connection
 from django.template.loader import render_to_string
 
 # Module imports
+from plane.db.models import User
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.email import generate_plain_text_from_html
+from plane.utils.email_i18n import language_from_accept_header, translate, user_language
 from plane.utils.exception_logger import log_exception
 
 
 @shared_task
-def magic_link(email, key, token):
+def magic_link(email, key, token, accept_language=None):
     try:
         (
             EMAIL_HOST,
@@ -34,8 +36,13 @@ def magic_link(email, key, token):
         ) = get_email_configuration()
 
         # Send the mail
-        subject = f"Your unique Pi-Plane login code is {token}"
-        context = {"code": token, "email": email}
+        # The language of the profile; someone without one (signing up) gets the language of their browser
+        user = User.objects.filter(email=email).select_related("profile").first()
+        language = (
+            user_language(user) if user and hasattr(user, "profile") else language_from_accept_header(accept_language)
+        )
+        subject = translate(language, "magic_code.subject", code=token)
+        context = {"code": token, "email": email, "email_language": language}
 
         html_content = render_to_string("emails/auth/magic_signin.html", context)
         text_content = generate_plain_text_from_html(html_content)

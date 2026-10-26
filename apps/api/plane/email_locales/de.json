@@ -110,5 +110,12 @@
     "intro_rejected": "<strong>{decider}</strong> hat Ihre Anfrage zum Beitritt zum privaten Projekt <strong>{project}</strong> im Arbeitsbereich <strong>{workspace}</strong> in Pi-Plane nicht genehmigt. Wenn Sie das für einen Irrtum halten, wenden Sie sich an einen Projektadministrator.",
     "button": "Projekt öffnen",
     "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet, weil Sie den Beitritt zu diesem Projekt angefragt haben."
+  },
+  "magic_code": {
+    "subject": "Ihr einmaliger Pi-Plane-Anmeldecode lautet {code}",
+    "preheader": "Ihr Pi-Plane-Anmeldecode {code} ist 10 Minuten lang gültig.",
+    "heading": "Ihr Anmeldecode für Pi-Plane",
+    "info": "Dieser Code ist die nächsten 10 Minuten gültig. Geben Sie ihn auf der Anmeldeseite ein, um die Anmeldung abzuschließen.",
+    "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet. Wenn Sie keinen Anmeldecode erwartet haben, können Sie diese Nachricht ignorieren."
   }
 }

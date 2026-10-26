@@ -118,5 +118,12 @@
     "intro_rejected": "<strong>{decider}</strong> nie zatwierdził(a) Twojej prośby o dołączenie do prywatnego projektu <strong>{project}</strong> w przestrzeni roboczej <strong>{workspace}</strong> w Pi-Plane. Jeśli uważasz, że to pomyłka, zwróć się do administratora projektu.",
     "button": "Otwórz projekt",
     "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>, ponieważ poprosiłeś(aś) o dołączenie do tego projektu."
+  },
+  "magic_code": {
+    "subject": "Twój unikalny kod logowania do Pi-Plane: {code}",
+    "preheader": "Twój kod logowania do Pi-Plane {code} jest ważny przez 10 minut.",
+    "heading": "Twój kod logowania do Pi-Plane",
+    "info": "Ten kod jest ważny przez najbliższe 10 minut. Wpisz go na stronie logowania, aby dokończyć logowanie.",
+    "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>. Jeśli nie spodziewałeś(aś) się kodu logowania, możesz zignorować tę wiadomość."
   }
 }

@@ -102,5 +102,12 @@
     "intro_rejected": "<strong>{decider}</strong> 未核准您加入 Pi-Plane 工作區 <strong>{workspace}</strong> 中私人專案 <strong>{project}</strong> 的請求。如果您認為這是誤判，請聯絡專案管理員。",
     "button": "開啟專案",
     "note": "注意：此郵件寄送至 <span>{email}</span>，因為您請求加入此專案。"
+  },
+  "magic_code": {
+    "subject": "您的 Pi-Plane 唯一登入碼是 {code}",
+    "preheader": "您的 Pi-Plane 登入碼 {code} 有效期為 10 分鐘。",
+    "heading": "您的 Pi-Plane 登入碼",
+    "info": "此驗證碼在接下來的 10 分鐘內有效。請在登入頁面輸入以完成登入。",
+    "note": "注意：此郵件寄送至 <span>{email}</span>。如果您沒有要求登入碼，可以忽略此郵件。"
   }
 }

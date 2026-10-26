@@ -102,5 +102,12 @@
     "intro_rejected": "<strong>{decider}</strong> tidak menyetujui permintaan Anda untuk bergabung dengan proyek privat <strong>{project}</strong> di ruang kerja <strong>{workspace}</strong> di Pi-Plane. Jika Anda merasa ini keliru, hubungi admin proyek.",
     "button": "Buka proyek",
     "note": "Catatan: Email ini dikirim ke <span>{email}</span> karena Anda meminta bergabung dengan proyek ini."
+  },
+  "magic_code": {
+    "subject": "Kode masuk Pi-Plane unik Anda adalah {code}",
+    "preheader": "Kode masuk Pi-Plane Anda {code} berlaku selama 10 menit.",
+    "heading": "Kode masuk Anda untuk Pi-Plane",
+    "info": "Kode ini berlaku selama 10 menit ke depan. Masukkan di halaman masuk untuk menyelesaikan proses masuk.",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span>. Jika Anda tidak mengharapkan kode masuk, Anda dapat mengabaikan pesan ini."
   }
 }

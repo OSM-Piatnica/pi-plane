@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -54,7 +55,7 @@ class MagicGenerateEndpoint(APIView):
             adapter = MagicCodeProvider(request=request, key=email)
             key, token = adapter.initiate()
             # If the smtp is configured send through here
-            magic_link.delay(email, key, token)
+            magic_link.delay(email, key, token, accept_language=request.headers.get("Accept-Language"))
             return Response({"key": str(key)}, status=status.HTTP_200_OK)
         except AuthenticationException as e:
             params = e.get_error_dict()

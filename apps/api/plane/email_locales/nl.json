@@ -110,5 +110,12 @@
     "intro_rejected": "<strong>{decider}</strong> heeft uw verzoek om lid te worden van het privéproject <strong>{project}</strong> in de werkruimte <strong>{workspace}</strong> op Pi-Plane niet goedgekeurd. Denkt u dat dit een vergissing is, neem dan contact op met een projectbeheerder.",
     "button": "Project openen",
     "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span> omdat u hebt gevraagd om lid te worden van dit project."
+  },
+  "magic_code": {
+    "subject": "Uw unieke Pi-Plane-inlogcode is {code}",
+    "preheader": "Uw Pi-Plane-inlogcode {code} is 10 minuten geldig.",
+    "heading": "Uw inlogcode voor Pi-Plane",
+    "info": "Deze code is de komende 10 minuten geldig. Voer hem in op de inlogpagina om het inloggen te voltooien.",
+    "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span>. Als u geen inlogcode verwachtte, kunt u dit bericht negeren."
   }
 }
