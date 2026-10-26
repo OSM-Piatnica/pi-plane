@@ -118,5 +118,12 @@
     "intro_rejected": "<strong>{decider}</strong> neschválil(a) vaši žádost o připojení k soukromému projektu <strong>{project}</strong> v pracovním prostoru <strong>{workspace}</strong> v Pi-Plane. Pokud si myslíte, že jde o omyl, obraťte se na správce projektu.",
     "button": "Otevřít projekt",
     "note": "Poznámka: Tento e-mail byl odeslán na adresu <span>{email}</span>, protože jste požádali o připojení k tomuto projektu."
+  },
+  "one_time_code": {
+    "subject": "Váš jednorázový přihlašovací kód do Pi-Plane je {code}",
+    "preheader": "Váš přihlašovací kód do Pi-Plane {code} platí 10 minut.",
+    "heading": "Váš přihlašovací kód do Pi-Plane",
+    "info": "Tento kód platí následujících 10 minut. Zadejte jej na přihlašovací stránce a dokončete přihlášení.",
+    "note": "Poznámka: Tento e-mail byl odeslán na adresu <span>{email}</span>. Pokud jste přihlašovací kód neočekávali, můžete tuto zprávu ignorovat."
   }
 }

@@ -1414,7 +1414,7 @@
       "duration": "時長"
     },
     "auth_labels": {
-      "magic_code": "魔法碼"
+      "one_time_code": "一次性驗證碼"
     },
     "state_groups": {
       "canceled": "已取消"
@@ -1445,7 +1445,7 @@
       "description": "請在瀏覽器網址列中輸入您想檢視的檢視或頁面的公開分享 URL 或連結。",
       "image_alt": "使用者已登入"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "{seconds} 秒後重新傳送"
     },
     "oauth": {

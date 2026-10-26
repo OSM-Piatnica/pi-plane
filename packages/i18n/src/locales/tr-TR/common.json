@@ -1414,7 +1414,7 @@
       "duration": "Süre"
     },
     "auth_labels": {
-      "magic_code": "Sihirli kod"
+      "one_time_code": "Tek kullanımlık kod"
     },
     "state_groups": {
       "canceled": "İptal edildi"
@@ -1445,7 +1445,7 @@
       "description": "Görmeye çalıştığınız görünümün veya Sayfanın herkese açık paylaşım URL'sini ya da bağlantısını tarayıcının adres çubuğuna girin.",
       "image_alt": "Kullanıcı zaten giriş yapmış"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "{seconds} sn içinde yeniden gönder"
     },
     "oauth": {

@@ -77,7 +77,7 @@ export const AuthRoot = observer(function AuthRoot(props: TAuthRoot) {
           setAuthMode(EAuthModes.SIGN_IN);
           setAuthStep(EAuthSteps.PASSWORD);
         }
-        // magic_code error handler
+        // one-time code error handler
         if (
           [
             EAuthenticationErrorCodes.INVALID_MAGIC_CODE_SIGN_UP,
@@ -87,7 +87,7 @@ export const AuthRoot = observer(function AuthRoot(props: TAuthRoot) {
           ].includes(errorhandler.code)
         ) {
           setAuthMode(EAuthModes.SIGN_UP);
-          setAuthStep(EAuthSteps.UNIQUE_CODE);
+          setAuthStep(EAuthSteps.ONE_TIME_CODE);
         }
         if (
           [
@@ -98,7 +98,7 @@ export const AuthRoot = observer(function AuthRoot(props: TAuthRoot) {
           ].includes(errorhandler.code)
         ) {
           setAuthMode(EAuthModes.SIGN_IN);
-          setAuthStep(EAuthSteps.UNIQUE_CODE);
+          setAuthStep(EAuthSteps.ONE_TIME_CODE);
         }
 
         setErrorInfo(errorhandler);

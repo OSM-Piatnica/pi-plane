@@ -1414,7 +1414,7 @@
       "duration": "时长"
     },
     "auth_labels": {
-      "magic_code": "魔法码"
+      "one_time_code": "一次性验证码"
     },
     "state_groups": {
       "canceled": "已取消"
@@ -1445,7 +1445,7 @@
       "description": "请在浏览器地址栏中输入您想查看的视图或页面的公开分享 URL 或链接。",
       "image_alt": "用户已登录"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "{seconds} 秒后重新发送"
     },
     "oauth": {

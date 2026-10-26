@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Unikalny kod",
+            "label": "Kod jednorazowy",
             "placeholder": "123456",
             "helper_text": "Kod weryfikacyjny wysłano na nowy e-mail.",
             "errors": {
-              "required": "Unikalny kod jest wymagany",
+              "required": "Kod jednorazowy jest wymagany",
               "invalid": "Nieprawidłowy kod weryfikacyjny. Spróbuj ponownie."
             }
           }

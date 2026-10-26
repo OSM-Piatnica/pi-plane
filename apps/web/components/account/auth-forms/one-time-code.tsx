@@ -22,31 +22,31 @@ import { AuthService } from "@/services/auth.service";
 // services
 const authService = new AuthService();
 
-type TAuthUniqueCodeForm = {
+type TAuthOneTimeCodeForm = {
   mode: EAuthModes;
   email: string;
   isExistingEmail: boolean;
   handleEmailClear: () => void;
-  generateEmailUniqueCode: (email: string) => Promise<{ code: string } | undefined>;
+  generateEmailOneTimeCode: (email: string) => Promise<{ code: string } | undefined>;
   nextPath: string | undefined;
 };
 
-type TUniqueCodeFormValues = {
+type TOneTimeCodeFormValues = {
   email: string;
   code: string;
 };
 
-const defaultValues: TUniqueCodeFormValues = {
+const defaultValues: TOneTimeCodeFormValues = {
   email: "",
   code: "",
 };
 
-export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
-  const { mode, email, handleEmailClear, generateEmailUniqueCode, nextPath } = props;
+export function AuthOneTimeCodeForm(props: TAuthOneTimeCodeForm) {
+  const { mode, email, handleEmailClear, generateEmailOneTimeCode, nextPath } = props;
   // derived values
   const defaultResetTimerValue = 5;
   // states
-  const [uniqueCodeFormData, setUniqueCodeFormData] = useState<TUniqueCodeFormValues>({ ...defaultValues, email });
+  const [oneTimeCodeFormData, setOneTimeCodeFormData] = useState<TOneTimeCodeFormValues>({ ...defaultValues, email });
   const [isRequestingNewCode, setIsRequestingNewCode] = useState(false);
   const [csrfToken, setCsrfToken] = useState<string | undefined>(undefined);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,15 +55,15 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
   // plane hooks
   const { t, currentLocale } = useTranslation();
 
-  const handleFormChange = (key: keyof TUniqueCodeFormValues, value: string) =>
-    setUniqueCodeFormData((prev) => ({ ...prev, [key]: value }));
+  const handleFormChange = (key: keyof TOneTimeCodeFormValues, value: string) =>
+    setOneTimeCodeFormData((prev) => ({ ...prev, [key]: value }));
 
   const generateNewCode = async (emailAddress: string) => {
     try {
       setIsRequestingNewCode(true);
-      const uniqueCode = await generateEmailUniqueCode(emailAddress);
+      const oneTimeCode = await generateEmailOneTimeCode(emailAddress);
       setResendCodeTimer(defaultResetTimerValue);
-      handleFormChange("code", uniqueCode?.code || "");
+      handleFormChange("code", oneTimeCode?.code || "");
       setIsRequestingNewCode(false);
     } catch {
       setResendCodeTimer(0);
@@ -78,7 +78,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
   }, [csrfToken]);
 
   const isRequestNewCodeDisabled = isRequestingNewCode || resendTimerCode > 0;
-  const isButtonDisabled = isRequestingNewCode || !uniqueCodeFormData.code || isSubmitting;
+  const isButtonDisabled = isRequestingNewCode || !oneTimeCodeFormData.code || isSubmitting;
 
   return (
     <form
@@ -93,7 +93,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
       }}
     >
       <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken ?? ""} />
-      <input type="hidden" value={uniqueCodeFormData.email} name="email" />
+      <input type="hidden" value={oneTimeCodeFormData.email} name="email" />
       {mode === EAuthModes.SIGN_UP && <input type="hidden" value={currentLocale} name="language" />}
       {nextPath && <input type="hidden" value={nextPath} name="next_path" />}
       <div className="space-y-1">
@@ -106,13 +106,13 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
             id="email"
             name="email"
             type="email"
-            value={uniqueCodeFormData.email}
+            value={oneTimeCodeFormData.email}
             onChange={(e) => handleFormChange("email", e.target.value)}
             placeholder={t("auth.common.email.placeholder")}
             autoComplete="off"
             disabled
           />
-          {uniqueCodeFormData.email.length > 0 && (
+          {oneTimeCodeFormData.email.length > 0 && (
             <button
               type="button"
               className="grid size-5 place-items-center"
@@ -126,17 +126,17 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
       </div>
 
       <div className="space-y-1">
-        <label htmlFor="unique-code" className="text-13 font-medium text-tertiary">
-          {t("auth.common.unique_code.label")}
+        <label htmlFor="one-time-code" className="text-13 font-medium text-tertiary">
+          {t("auth.common.one_time_code.label")}
         </label>
         <InputGroup size="2xl">
           <Input
             size="2xl"
             name="code"
-            id="unique-code"
-            value={uniqueCodeFormData.code}
+            id="one-time-code"
+            value={oneTimeCodeFormData.code}
             onChange={(e) => handleFormChange("code", e.target.value)}
-            placeholder={t("auth.common.unique_code.placeholder")}
+            placeholder={t("auth.common.one_time_code.placeholder")}
             autoComplete="off"
             // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; a11y handled separately
             autoFocus
@@ -145,11 +145,11 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
         <div className="flex w-full items-center justify-between px-1 pt-1 text-11">
           <p className="flex items-center gap-1 font-medium text-success-primary">
             <TickCircleOutline height={12} width={12} />
-            {t("auth.common.unique_code.paste_code")}
+            {t("auth.common.one_time_code.paste_code")}
           </p>
           <button
             type="button"
-            onClick={() => generateNewCode(uniqueCodeFormData.email)}
+            onClick={() => generateNewCode(oneTimeCodeFormData.email)}
             className={
               isRequestNewCodeDisabled
                 ? "text-placeholder"
@@ -160,7 +160,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
             {resendTimerCode > 0
               ? t("auth.common.resend_in", { seconds: resendTimerCode })
               : isRequestingNewCode
-                ? t("auth.common.unique_code.requesting_new_code")
+                ? t("auth.common.one_time_code.requesting_new_code")
                 : t("common.resend")}
           </button>
         </div>
@@ -174,7 +174,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
           stretch="full"
           disabled={isButtonDisabled}
           loading={isSubmitting}
-          label={isRequestingNewCode ? t("auth.common.unique_code.sending_code") : t("common.continue")}
+          label={isRequestingNewCode ? t("auth.common.one_time_code.sending_code") : t("common.continue")}
         />
       </div>
     </form>

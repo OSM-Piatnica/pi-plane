@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Einmaliger Code",
+            "label": "Einmalcode",
             "placeholder": "123456",
             "helper_text": "Verifizierungscode wurde an deine neue E-Mail gesendet.",
             "errors": {
-              "required": "Einmaliger Code ist erforderlich",
+              "required": "Einmalcode ist erforderlich",
               "invalid": "Ungültiger Verifizierungscode. Bitte versuche es erneut."
             }
           }

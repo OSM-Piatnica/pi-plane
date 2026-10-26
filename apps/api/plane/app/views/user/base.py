@@ -49,9 +49,9 @@ from plane.utils.order_queryset import ACTIVITY_ORDER_BY_ALLOWLIST, sanitize_ord
 from plane.authentication.utils.host import user_ip
 from plane.bgtasks.user_deactivation_email_task import user_deactivation_email
 from plane.utils.host import base_host
-from plane.bgtasks.user_email_update_task import send_email_update_magic_code, send_email_update_confirmation
+from plane.bgtasks.user_email_update_task import send_email_update_one_time_code, send_email_update_confirmation
 from plane.authentication.rate_limit import AuthenticationThrottle, EmailVerificationThrottle
-from plane.authentication.provider.credentials.magic_code import MagicCodeProvider
+from plane.authentication.provider.credentials.one_time_code import OneTimeCodeProvider
 
 
 logger = logging.getLogger("plane")
@@ -143,7 +143,7 @@ class UserEndpoint(BaseViewSet):
 
     def generate_email_verification_code(self, request):
         """
-        Generate and send a magic code to the new email address for verification.
+        Generate and send a one-time code to the new email address for verification.
         Rate limited to 3 requests per hour per user (enforced by EmailVerificationThrottle).
         Additional per-email cooldown of 60 seconds prevents rapid repeated requests.
         """
@@ -162,10 +162,10 @@ class UserEndpoint(BaseViewSet):
             self.throttled(request, None)
 
         try:
-            # Generate magic code for email verification
-            # Use a special key prefix to distinguish from regular magic signin
+            # Generate one-time code for email verification
+            # Use a special key prefix to distinguish from regular one-time-code sign-in
             # Include user ID to bind the code to the specific user
-            cache_key = f"magic_email_update_{user.id}_{new_email}"
+            cache_key = f"one_time_code_email_update_{user.id}_{new_email}"
             ## Generate a random token
             token = str(secrets.randbelow(900000) + 100000)
             # Store in cache with 10 minute expiration
@@ -174,8 +174,8 @@ class UserEndpoint(BaseViewSet):
             # Each newly issued code starts with a fresh verify-attempt budget.
             cache.delete(f"{cache_key}:verify_attempts")
 
-            # Send magic code to the new email
-            send_email_update_magic_code.delay(new_email, token)
+            # Send one-time code to the new email
+            send_email_update_one_time_code.delay(new_email, token)
 
             return Response(
                 {"message": "Verification code sent to email"},
@@ -190,7 +190,7 @@ class UserEndpoint(BaseViewSet):
 
     def update_email(self, request):
         """
-        Verify the magic code and update the user's email address.
+        Verify the one-time code and update the user's email address.
         This endpoint verifies the code and updates the existing user record
         without creating a new user, ensuring the user ID remains unchanged.
         """
@@ -209,9 +209,9 @@ class UserEndpoint(BaseViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Verify the magic code
+        # Verify the one-time code
         try:
-            cache_key = f"magic_email_update_{user.id}_{new_email}"
+            cache_key = f"one_time_code_email_update_{user.id}_{new_email}"
 
             # Count every attempt before reading the code so concurrent requests share one
             # budget and a code invalidated in the meantime is never compared. The code and
@@ -231,10 +231,10 @@ class UserEndpoint(BaseViewSet):
             data = json.loads(cached_data)
             stored_token = data.get("token")
 
-            if attempts > MagicCodeProvider.MAX_VERIFY_ATTEMPTS or not secrets.compare_digest(
+            if attempts > OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS or not secrets.compare_digest(
                 str(stored_token).encode(), str(code).encode()
             ):
-                if attempts >= MagicCodeProvider.MAX_VERIFY_ATTEMPTS:
+                if attempts >= OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS:
                     cache.delete_many([cache_key, attempts_key])
                 return Response(
                     {"error": "Invalid verification code"},

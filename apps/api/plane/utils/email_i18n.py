@@ -96,3 +96,43 @@ def user_language(user):
     """The language the emails to the user are written in: the language of their profile."""
     profile = getattr(user, "profile", None)  # a user without a profile row raises an AttributeError subclass
     return normalize_language(getattr(profile, "language", None))
+
+
+# Browser language tags whose email file has another name
+_BROWSER_LANGUAGES = {
+    "uk": "ua",
+    "ka": "ka-ge",
+    "tr": "tr-TR",
+    "vi": "vi-VN",
+    "zh-hans": "zh-CN",
+    "zh-cn": "zh-CN",
+    "zh-sg": "zh-CN",
+    "zh-hant": "zh-TW",
+    "zh-tw": "zh-TW",
+    "zh-hk": "zh-TW",
+    "zh-mo": "zh-TW",
+    "pt-br": "pt-BR",
+    "pt-pt": "pt-PT",
+    "pt": "pt-BR",
+}
+
+
+def language_from_accept_header(header):
+    """The language of the first tag of an ``Accept-Language`` header that has emails of its own, else English.
+
+    For people who have no profile yet, such as someone signing up, whose only hint is their browser.
+    """
+    for part in (header or "").split(","):
+        tag = part.split(";")[0].strip().lower()
+        if not tag or tag == "*":
+            continue
+        parts = tag.split("-")
+        # the most specific match first: zh-hant-tw, zh-hant, zh
+        for length in range(len(parts), 0, -1):
+            prefix = "-".join(parts[:length])
+            language = _BROWSER_LANGUAGES.get(prefix, prefix)
+            if (LOCALES_DIR / f"{language}.json").is_file():
+                return language
+            if language in LANGUAGE_ALIASES:
+                return normalize_language(language)
+    return DEFAULT_LANGUAGE

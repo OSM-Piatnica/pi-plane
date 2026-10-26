@@ -1414,7 +1414,7 @@
       "duration": "Duur"
     },
     "auth_labels": {
-      "magic_code": "Magic code"
+      "one_time_code": "Eenmalige code"
     },
     "state_groups": {
       "canceled": "Geannuleerd"
@@ -1445,7 +1445,7 @@
       "description": "Voer de openbare URL of link van de weergave of Pagina die u wilt bekijken in de adresbalk van de browser in.",
       "image_alt": "Gebruiker is al aangemeld"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Opnieuw verzenden over {seconds} s"
     },
     "oauth": {

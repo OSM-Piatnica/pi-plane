@@ -27,7 +27,7 @@ import { AuthBanner } from "./auth-banner";
 import { AuthHeader } from "./auth-header";
 import { AuthEmailForm } from "./email";
 import { AuthPasswordForm } from "./password";
-import { AuthUniqueCodeForm } from "./unique-code";
+import { AuthOneTimeCodeForm } from "./one-time-code";
 
 const authService = new SitesAuthService();
 
@@ -67,7 +67,7 @@ export const AuthRoot = observer(function AuthRoot() {
           ].includes(errorhandler.code)
         ) {
           setAuthMode(EAuthModes.SIGN_IN);
-          setAuthStep(EAuthSteps.UNIQUE_CODE);
+          setAuthStep(EAuthSteps.ONE_TIME_CODE);
         }
         if (
           [
@@ -77,7 +77,7 @@ export const AuthRoot = observer(function AuthRoot() {
           ].includes(errorhandler.code)
         ) {
           setAuthMode(EAuthModes.SIGN_UP);
-          setAuthStep(EAuthSteps.UNIQUE_CODE);
+          setAuthStep(EAuthSteps.ONE_TIME_CODE);
         }
         setErrorInfo(errorhandler);
       }
@@ -107,8 +107,8 @@ export const AuthRoot = observer(function AuthRoot() {
 
         if (currentAuthMode === EAuthModes.SIGN_IN) {
           if (isSMTPConfigured && isMagicLoginEnabled && response.status === "MAGIC_CODE") {
-            setAuthStep(EAuthSteps.UNIQUE_CODE);
-            generateEmailUniqueCode(data.email);
+            setAuthStep(EAuthSteps.ONE_TIME_CODE);
+            generateEmailOneTimeCode(data.email);
           } else if (isEmailPasswordEnabled) {
             setIsPasswordAutoset(false);
             setAuthStep(EAuthSteps.PASSWORD);
@@ -118,8 +118,8 @@ export const AuthRoot = observer(function AuthRoot() {
           }
         } else {
           if (isSMTPConfigured && isMagicLoginEnabled && response.status === "MAGIC_CODE") {
-            setAuthStep(EAuthSteps.UNIQUE_CODE);
-            generateEmailUniqueCode(data.email);
+            setAuthStep(EAuthSteps.ONE_TIME_CODE);
+            generateEmailOneTimeCode(data.email);
           } else if (isEmailPasswordEnabled) {
             setAuthStep(EAuthSteps.PASSWORD);
           } else {
@@ -135,11 +135,11 @@ export const AuthRoot = observer(function AuthRoot() {
       });
   };
 
-  // generating the unique code
-  const generateEmailUniqueCode = async (emailToVerify: string): Promise<{ code: string } | undefined> => {
+  // generating the one-time code
+  const generateEmailOneTimeCode = async (emailToVerify: string): Promise<{ code: string } | undefined> => {
     const payload = { email: emailToVerify };
     return await authService
-      .generateUniqueCode(payload)
+      .generateOneTimeCode(payload)
       .then(() => ({ code: "" }))
       .catch((error) => {
         const errorhandler = authErrorHandler(error?.error_code.toString(), t);
@@ -158,8 +158,8 @@ export const AuthRoot = observer(function AuthRoot() {
         {isOAuthEnabled && <OAuthOptions options={oAuthOptions} compact={authStep === EAuthSteps.PASSWORD} />}
 
         {authStep === EAuthSteps.EMAIL && <AuthEmailForm defaultEmail={email} onSubmit={handleEmailVerification} />}
-        {authStep === EAuthSteps.UNIQUE_CODE && (
-          <AuthUniqueCodeForm
+        {authStep === EAuthSteps.ONE_TIME_CODE && (
+          <AuthOneTimeCodeForm
             mode={authMode}
             email={email}
             nextPath={nextPath}
@@ -167,7 +167,7 @@ export const AuthRoot = observer(function AuthRoot() {
               setEmail("");
               setAuthStep(EAuthSteps.EMAIL);
             }}
-            generateEmailUniqueCode={generateEmailUniqueCode}
+            generateEmailOneTimeCode={generateEmailOneTimeCode}
           />
         )}
         {authStep === EAuthSteps.PASSWORD && (
@@ -182,7 +182,7 @@ export const AuthRoot = observer(function AuthRoot() {
               setAuthStep(EAuthSteps.EMAIL);
             }}
             handleAuthStep={(step: EAuthSteps) => {
-              if (step === EAuthSteps.UNIQUE_CODE) generateEmailUniqueCode(email);
+              if (step === EAuthSteps.ONE_TIME_CODE) generateEmailOneTimeCode(email);
               setAuthStep(step);
             }}
           />

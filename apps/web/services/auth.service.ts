@@ -52,7 +52,7 @@ export class AuthService extends APIService {
       });
   }
 
-  async generateUniqueCode(data: { email: string }): Promise<any> {
+  async generateOneTimeCode(data: { email: string }): Promise<any> {
     return this.post("/auth/magic-generate/", data, { headers: {} })
       .then((response) => response?.data)
       .catch((error) => {

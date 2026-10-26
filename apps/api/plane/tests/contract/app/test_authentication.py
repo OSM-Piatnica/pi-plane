@@ -14,7 +14,7 @@ from django.test import Client
 from django.core.exceptions import ValidationError
 from unittest.mock import patch
 
-from plane.authentication.provider.credentials.magic_code import MagicCodeProvider
+from plane.authentication.provider.credentials.one_time_code import OneTimeCodeProvider
 from plane.authentication.rate_limit import AuthenticationThrottle
 from plane.authentication.utils.host import base_host
 from plane.db.models import User
@@ -77,12 +77,12 @@ def django_client():
 
 
 @pytest.mark.contract
-class TestMagicLinkGenerate:
-    """Test magic link generation functionality"""
+class TestOneTimeCodeGenerate:
+    """Test one-time code generation functionality"""
 
     @pytest.fixture
     def setup_user(self, db):
-        """Create a test user for magic link tests"""
+        """Create a test user for one-time code tests"""
         user = User.objects.create(email="user@plane.so")
         user.set_password("user@123")
         user.save()
@@ -90,7 +90,7 @@ class TestMagicLinkGenerate:
 
     @pytest.mark.django_db
     def test_without_data(self, api_client, setup_user, setup_instance):
-        """Test magic link generation with empty data"""
+        """Test one-time code generation with empty data"""
         url = reverse("magic-generate")
         try:
             response = api_client.post(url, {}, format="json")
@@ -102,7 +102,7 @@ class TestMagicLinkGenerate:
 
     @pytest.mark.django_db
     def test_email_validity(self, api_client, setup_user, setup_instance):
-        """Test magic link generation with invalid email format"""
+        """Test one-time code generation with invalid email format"""
         url = reverse("magic-generate")
         try:
             response = api_client.post(url, {"email": "useremail.com"}, format="json")
@@ -114,33 +114,33 @@ class TestMagicLinkGenerate:
             assert True
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
-    def test_magic_generate(self, mock_magic_link, api_client, setup_user, setup_instance):
-        """Test successful magic link generation"""
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
+    def test_one_time_code_generate(self, mock_send_one_time_code, api_client, setup_user, setup_instance):
+        """Test successful one-time code generation"""
         url = reverse("magic-generate")
 
         ri = redis_instance()
-        ri.delete("magic_user@plane.so")
-        ri.delete("magic_user@plane.so:issued")
+        ri.delete("one_time_code_user@plane.so")
+        ri.delete("one_time_code_user@plane.so:issued")
 
         response = api_client.post(url, {"email": "user@plane.so"}, format="json")
         assert response.status_code == status.HTTP_200_OK
         assert "key" in response.data  # Check for key in response
 
         # Verify the mock was called with the expected arguments
-        mock_magic_link.assert_called_once()
-        args = mock_magic_link.call_args[0]
+        mock_send_one_time_code.assert_called_once()
+        args = mock_send_one_time_code.call_args[0]
         assert args[0] == "user@plane.so"  # First arg should be the email
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
-    def test_max_generate_attempt(self, mock_magic_link, api_client, setup_user, setup_instance):
-        """Test exceeding maximum magic link generation attempts"""
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
+    def test_max_generate_attempt(self, mock_send_one_time_code, api_client, setup_user, setup_instance):
+        """Test exceeding maximum one-time code generation attempts"""
         url = reverse("magic-generate")
 
         ri = redis_instance()
-        ri.delete("magic_user@plane.so")
-        ri.delete("magic_user@plane.so:issued")
+        ri.delete("one_time_code_user@plane.so")
+        ri.delete("one_time_code_user@plane.so:issued")
 
         for _ in range(4):
             api_client.post(url, {"email": "user@plane.so"}, format="json")
@@ -244,12 +244,12 @@ class TestSignInEndpoint:
 
 
 @pytest.mark.contract
-class TestMagicSignIn:
-    """Test magic link sign-in functionality"""
+class TestOneTimeCodeSignIn:
+    """Test one-time code sign-in functionality"""
 
     @pytest.fixture
     def setup_user(self, db):
-        """Create a test user for magic sign-in tests"""
+        """Create a test user for one-time code sign-in tests"""
         user = User.objects.create(email="user@plane.so")
         user.set_password("user@123")
         user.save()
@@ -257,7 +257,7 @@ class TestMagicSignIn:
 
     @pytest.mark.django_db
     def test_without_data(self, django_client, setup_user, setup_instance):
-        """Test magic link sign-in with empty data"""
+        """Test one-time code sign-in with empty data"""
         url = reverse("magic-sign-in")
         response = django_client.post(url, {}, follow=True)
 
@@ -265,11 +265,11 @@ class TestMagicSignIn:
         assert "MAGIC_SIGN_IN_EMAIL_CODE_REQUIRED" in response.redirect_chain[-1][0]
 
     @pytest.mark.django_db
-    def test_expired_invalid_magic_link(self, django_client, setup_user, setup_instance):
-        """Test magic link sign-in with expired/invalid link"""
+    def test_expired_invalid_one_time_code(self, django_client, setup_user, setup_instance):
+        """Test one-time code sign-in with expired/invalid code"""
         ri = redis_instance()
-        ri.delete("magic_user@plane.so")
-        ri.delete("magic_user@plane.so:issued")
+        ri.delete("one_time_code_user@plane.so")
+        ri.delete("one_time_code_user@plane.so:issued")
 
         url = reverse("magic-sign-in")
         response = django_client.post(url, {"email": "user@plane.so", "code": "xxxx-xxxxx-xxxx"}, follow=False)
@@ -283,7 +283,7 @@ class TestMagicSignIn:
 
     @pytest.mark.django_db
     def test_user_does_not_exist(self, django_client, setup_instance):
-        """Test magic sign-in with non-existent user"""
+        """Test one-time code sign-in with non-existent user"""
         url = reverse("magic-sign-in")
         response = django_client.post(
             url,
@@ -295,19 +295,21 @@ class TestMagicSignIn:
         assert "USER_DOES_NOT_EXIST" in response.redirect_chain[-1][0]
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
-    def test_magic_code_sign_in(self, mock_magic_link, django_client, api_client, setup_user, setup_instance):
-        """Test successful magic link sign-in process"""
-        # First generate a magic link token
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
+    def test_one_time_code_sign_in(
+        self, mock_send_one_time_code, django_client, api_client, setup_user, setup_instance
+    ):
+        """Test successful one-time code sign-in process"""
+        # First generate a one-time code token
         gen_url = reverse("magic-generate")
         response = api_client.post(gen_url, {"email": "user@plane.so"}, format="json")
 
         # Check that the token generation was successful
         assert response.status_code == status.HTTP_200_OK
 
-        # Since we're mocking the magic_link task, we need to manually get the token from Redis
+        # Since we're mocking the send_one_time_code task, we need to manually get the token from Redis
         ri = redis_instance()
-        user_data = json.loads(ri.get("magic_user@plane.so"))
+        user_data = json.loads(ri.get("one_time_code_user@plane.so"))
         token = user_data["token"]
 
         # Use Django client to test the redirect flow without following redirects
@@ -320,22 +322,24 @@ class TestMagicSignIn:
 
         # The user should now be authenticated
         assert "_auth_user_id" in django_client.session
-        assert not ri.exists("magic_user@plane.so:issued")
+        assert not ri.exists("one_time_code_user@plane.so:issued")
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
-    def test_magic_sign_in_with_next_path(self, mock_magic_link, django_client, api_client, setup_user, setup_instance):
-        """Test magic sign-in with next_path parameter"""
-        # First generate a magic link token
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
+    def test_one_time_code_sign_in_with_next_path(
+        self, mock_send_one_time_code, django_client, api_client, setup_user, setup_instance
+    ):
+        """Test one-time code sign-in with next_path parameter"""
+        # First generate a one-time code token
         gen_url = reverse("magic-generate")
         response = api_client.post(gen_url, {"email": "user@plane.so"}, format="json")
 
         # Check that the token generation was successful
         assert response.status_code == status.HTTP_200_OK
 
-        # Since we're mocking the magic_link task, we need to manually get the token from Redis
+        # Since we're mocking the send_one_time_code task, we need to manually get the token from Redis
         ri = redis_instance()
-        user_data = json.loads(ri.get("magic_user@plane.so"))
+        user_data = json.loads(ri.get("one_time_code_user@plane.so"))
         token = user_data["token"]
 
         # Use Django client to test the redirect flow without following redirects.
@@ -360,12 +364,12 @@ class TestMagicSignIn:
 
 
 @pytest.mark.contract
-class TestMagicSignUp:
-    """Test magic link sign-up functionality"""
+class TestOneTimeCodeSignUp:
+    """Test one-time code sign-up functionality"""
 
     @pytest.mark.django_db
     def test_without_data(self, django_client, setup_instance):
-        """Test magic link sign-up with empty data"""
+        """Test one-time code sign-up with empty data"""
         url = reverse("magic-sign-up")
         response = django_client.post(url, {}, follow=True)
 
@@ -374,7 +378,7 @@ class TestMagicSignUp:
 
     @pytest.mark.django_db
     def test_user_already_exists(self, django_client, db, setup_instance):
-        """Test magic sign-up with existing user"""
+        """Test one-time code sign-up with existing user"""
         # Create a user that already exists
         User.objects.create(email="existing@plane.so")
 
@@ -385,8 +389,8 @@ class TestMagicSignUp:
         assert "USER_ALREADY_EXIST" in response.redirect_chain[-1][0]
 
     @pytest.mark.django_db
-    def test_expired_invalid_magic_link(self, django_client, setup_instance):
-        """Test magic link sign-up with expired/invalid link"""
+    def test_expired_invalid_one_time_code(self, django_client, setup_instance):
+        """Test one-time code sign-up with expired/invalid code"""
         url = reverse("magic-sign-up")
         response = django_client.post(url, {"email": "new@plane.so", "code": "xxxx-xxxxx-xxxx"}, follow=False)
 
@@ -398,21 +402,21 @@ class TestMagicSignUp:
         assert "EXPIRED_MAGIC_CODE_SIGN_UP" in response.url or "INVALID_MAGIC_CODE_SIGN_UP" in response.url
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
-    def test_magic_code_sign_up(self, mock_magic_link, django_client, api_client, setup_instance):
-        """Test successful magic link sign-up process"""
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
+    def test_one_time_code_sign_up(self, mock_send_one_time_code, django_client, api_client, setup_instance):
+        """Test successful one-time code sign-up process"""
         email = "newuser@plane.so"
 
-        # First generate a magic link token
+        # First generate a one-time code token
         gen_url = reverse("magic-generate")
         response = api_client.post(gen_url, {"email": email}, format="json")
 
         # Check that the token generation was successful
         assert response.status_code == status.HTTP_200_OK
 
-        # Since we're mocking the magic_link task, we need to manually get the token from Redis
+        # Since we're mocking the send_one_time_code task, we need to manually get the token from Redis
         ri = redis_instance()
-        user_data = json.loads(ri.get(f"magic_{email}"))
+        user_data = json.loads(ri.get(f"one_time_code_{email}"))
         token = user_data["token"]
 
         # Use Django client to test the redirect flow without following redirects
@@ -430,21 +434,23 @@ class TestMagicSignUp:
         assert "_auth_user_id" in django_client.session
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
-    def test_magic_sign_up_with_next_path(self, mock_magic_link, django_client, api_client, setup_instance):
-        """Test magic sign-up with next_path parameter"""
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
+    def test_one_time_code_sign_up_with_next_path(
+        self, mock_send_one_time_code, django_client, api_client, setup_instance
+    ):
+        """Test one-time code sign-up with next_path parameter"""
         email = "newuser2@plane.so"
 
-        # First generate a magic link token
+        # First generate a one-time code token
         gen_url = reverse("magic-generate")
         response = api_client.post(gen_url, {"email": email}, format="json")
 
         # Check that the token generation was successful
         assert response.status_code == status.HTTP_200_OK
 
-        # Since we're mocking the magic_link task, we need to manually get the token from Redis
+        # Since we're mocking the send_one_time_code task, we need to manually get the token from Redis
         ri = redis_instance()
-        user_data = json.loads(ri.get(f"magic_{email}"))
+        user_data = json.loads(ri.get(f"one_time_code_{email}"))
         token = user_data["token"]
 
         # Use Django client to test the redirect flow without following redirects
@@ -466,17 +472,17 @@ class TestMagicSignUp:
         assert "_auth_user_id" in django_client.session
 
 
-def _generate_magic_token(api_client, email):
+def _generate_one_time_code_token(api_client, email):
     """Hit /magic-generate/ for `email` and return the token that landed in Redis."""
     gen_url = reverse("magic-generate")
     response = api_client.post(gen_url, {"email": email}, format="json")
     assert response.status_code == status.HTTP_200_OK
     ri = redis_instance()
-    return json.loads(ri.get(f"magic_{email}"))["token"]
+    return json.loads(ri.get(f"one_time_code_{email}"))["token"]
 
 
 @pytest.mark.contract
-class TestMagicSignInVerifyAttempts:
+class TestOneTimeCodeSignInVerifyAttempts:
     """Per-token wrong-code attempt counter and exhaustion behavior (GHSA-9pvm-fcf6-9234)."""
 
     EMAIL = "verify-attempts@plane.so"
@@ -490,22 +496,22 @@ class TestMagicSignInVerifyAttempts:
 
     @pytest.fixture(autouse=True)
     def _clear_state(self):
-        """Reset throttle cache and magic-link redis state between tests in this class."""
+        """Reset throttle cache and one-time-code redis state between tests in this class."""
         _clear_auth_throttle_keys()
         ri = redis_instance()
-        ri.delete(f"magic_{self.EMAIL}")
-        ri.delete(f"magic_{self.EMAIL}:verify_attempts")
-        ri.delete(f"magic_{self.EMAIL}:issued")
+        ri.delete(f"one_time_code_{self.EMAIL}")
+        ri.delete(f"one_time_code_{self.EMAIL}:verify_attempts")
+        ri.delete(f"one_time_code_{self.EMAIL}:issued")
         yield
         _clear_auth_throttle_keys()
-        ri.delete(f"magic_{self.EMAIL}")
-        ri.delete(f"magic_{self.EMAIL}:verify_attempts")
-        ri.delete(f"magic_{self.EMAIL}:issued")
+        ri.delete(f"one_time_code_{self.EMAIL}")
+        ri.delete(f"one_time_code_{self.EMAIL}:verify_attempts")
+        ri.delete(f"one_time_code_{self.EMAIL}:issued")
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
     def test_exhausted_after_max_wrong_attempts(
-        self, mock_magic_link, django_client, api_client, setup_user, setup_instance
+        self, mock_send_one_time_code, django_client, api_client, setup_user, setup_instance
     ):
         """
         After MAX_VERIFY_ATTEMPTS wrong codes the next verify must redirect with
@@ -514,19 +520,19 @@ class TestMagicSignInVerifyAttempts:
         With MAX_VERIFY_ATTEMPTS=5 the 5th wrong attempt itself triggers exhaustion
         (4 INVALID + 1 EXHAUSTED).
         """
-        _generate_magic_token(api_client, self.EMAIL)
+        _generate_one_time_code_token(api_client, self.EMAIL)
         url = reverse("magic-sign-in")
         ri = redis_instance()
 
         # First (MAX-1) wrong attempts: each redirects with INVALID_MAGIC_CODE_SIGN_IN.
-        for i in range(MagicCodeProvider.MAX_VERIFY_ATTEMPTS - 1):
+        for i in range(OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS - 1):
             response = django_client.post(url, {"email": self.EMAIL, "code": "000000"}, follow=False)
             assert response.status_code == 302, f"attempt {i + 1} unexpected status"
             assert "INVALID_MAGIC_CODE_SIGN_IN" in response.url, f"attempt {i + 1} did not return INVALID"
 
         # Token and counter both still live, with counter at MAX-1.
-        assert ri.exists(f"magic_{self.EMAIL}")
-        assert int(ri.get(f"magic_{self.EMAIL}:verify_attempts")) == MagicCodeProvider.MAX_VERIFY_ATTEMPTS - 1
+        assert ri.exists(f"one_time_code_{self.EMAIL}")
+        assert int(ri.get(f"one_time_code_{self.EMAIL}:verify_attempts")) == OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS - 1
 
         # The MAX-th wrong attempt is the exhausting one.
         response = django_client.post(url, {"email": self.EMAIL, "code": "000000"}, follow=False)
@@ -534,8 +540,8 @@ class TestMagicSignInVerifyAttempts:
         assert "EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_IN" in response.url
 
         # Both the token and the counter must be deleted.
-        assert not ri.exists(f"magic_{self.EMAIL}")
-        assert not ri.exists(f"magic_{self.EMAIL}:verify_attempts")
+        assert not ri.exists(f"one_time_code_{self.EMAIL}")
+        assert not ri.exists(f"one_time_code_{self.EMAIL}:verify_attempts")
 
         # Follow-up verify now sees the key as missing and reports EXPIRED.
         response = django_client.post(url, {"email": self.EMAIL, "code": "000000"}, follow=False)
@@ -543,15 +549,15 @@ class TestMagicSignInVerifyAttempts:
         assert "EXPIRED_MAGIC_CODE_SIGN_IN" in response.url
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
     def test_correct_code_accepted_on_last_attempt(
-        self, mock_magic_link, django_client, api_client, setup_user, setup_instance
+        self, mock_send_one_time_code, django_client, api_client, setup_user, setup_instance
     ):
         """A correct code on the MAX-th attempt still signs in."""
-        token = _generate_magic_token(api_client, self.EMAIL)
+        token = _generate_one_time_code_token(api_client, self.EMAIL)
         url = reverse("magic-sign-in")
 
-        for _ in range(MagicCodeProvider.MAX_VERIFY_ATTEMPTS - 1):
+        for _ in range(OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS - 1):
             django_client.post(url, {"email": self.EMAIL, "code": "000000"}, follow=False)
 
         response = django_client.post(url, {"email": self.EMAIL, "code": token}, follow=False)
@@ -560,45 +566,47 @@ class TestMagicSignInVerifyAttempts:
         assert "_auth_user_id" in django_client.session
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
     def test_correct_code_refused_once_attempts_spent(
-        self, mock_magic_link, django_client, api_client, setup_user, setup_instance
+        self, mock_send_one_time_code, django_client, api_client, setup_user, setup_instance
     ):
         """
         Every verify counts against the attempt budget before the code is compared,
         so a correct code is refused once MAX_VERIFY_ATTEMPTS attempts are counted.
         """
-        token = _generate_magic_token(api_client, self.EMAIL)
+        token = _generate_one_time_code_token(api_client, self.EMAIL)
         ri = redis_instance()
-        ri.set(f"magic_{self.EMAIL}:verify_attempts", MagicCodeProvider.MAX_VERIFY_ATTEMPTS, ex=600)
+        ri.set(f"one_time_code_{self.EMAIL}:verify_attempts", OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS, ex=600)
 
         response = django_client.post(reverse("magic-sign-in"), {"email": self.EMAIL, "code": token}, follow=False)
         assert response.status_code == 302
         assert "EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_IN" in response.url
         assert "_auth_user_id" not in django_client.session
-        assert not ri.exists(f"magic_{self.EMAIL}")
-        assert not ri.exists(f"magic_{self.EMAIL}:verify_attempts")
+        assert not ri.exists(f"one_time_code_{self.EMAIL}")
+        assert not ri.exists(f"one_time_code_{self.EMAIL}:verify_attempts")
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
-    def test_issued_code_limit_persists(self, mock_magic_link, django_client, api_client, setup_user, setup_instance):
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
+    def test_issued_code_limit_persists(
+        self, mock_send_one_time_code, django_client, api_client, setup_user, setup_instance
+    ):
         """Codes issued per email stay capped per window when earlier codes hit the verify cap."""
         url = reverse("magic-sign-in")
         gen_url = reverse("magic-generate")
         ri = redis_instance()
-        issued_key = f"magic_{self.EMAIL}:issued"
+        issued_key = f"one_time_code_{self.EMAIL}:issued"
 
         # The first code plus 3 regenerations are issued; the next request is refused.
         for request_number in range(4):
             # Stay under the per-IP throttle; this test is about the per-email cap.
             _clear_auth_throttle_keys()
-            _generate_magic_token(api_client, self.EMAIL)
-            for _ in range(MagicCodeProvider.MAX_VERIFY_ATTEMPTS):
+            _generate_one_time_code_token(api_client, self.EMAIL)
+            for _ in range(OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS):
                 response = django_client.post(url, {"email": self.EMAIL, "code": "000000"}, follow=False)
             assert "EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_IN" in response.url
             # The issue window is fixed: later requests must not extend its TTL.
             if request_number == 0:
-                assert 0 < ri.ttl(issued_key) <= MagicCodeProvider.ISSUE_WINDOW_SECONDS
+                assert 0 < ri.ttl(issued_key) <= OneTimeCodeProvider.ISSUE_WINDOW_SECONDS
                 ri.expire(issued_key, 60)
             else:
                 assert 0 < ri.ttl(issued_key) <= 60
@@ -609,43 +617,43 @@ class TestMagicSignInVerifyAttempts:
         assert response.data["error_message"] == "EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_IN"
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
     def test_counter_increments_on_each_wrong_attempt(
-        self, mock_magic_link, django_client, api_client, setup_user, setup_instance
+        self, mock_send_one_time_code, django_client, api_client, setup_user, setup_instance
     ):
         """The verify_attempts counter increments by exactly one per wrong-code POST."""
-        _generate_magic_token(api_client, self.EMAIL)
+        _generate_one_time_code_token(api_client, self.EMAIL)
         url = reverse("magic-sign-in")
         ri = redis_instance()
-        counter_key = f"magic_{self.EMAIL}:verify_attempts"
+        counter_key = f"one_time_code_{self.EMAIL}:verify_attempts"
 
         # Before any wrong attempt the counter does not exist (Lua INCR creates it).
         assert not ri.exists(counter_key)
 
-        for expected in range(1, MagicCodeProvider.MAX_VERIFY_ATTEMPTS):
+        for expected in range(1, OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS):
             django_client.post(url, {"email": self.EMAIL, "code": "000000"}, follow=False)
             assert int(ri.get(counter_key)) == expected, f"counter mismatch after {expected} attempts"
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
     def test_counter_resets_on_token_regeneration(
-        self, mock_magic_link, django_client, api_client, setup_user, setup_instance
+        self, mock_send_one_time_code, django_client, api_client, setup_user, setup_instance
     ):
         """
-        Regenerating the magic-link must reset the verify-attempt counter so the
+        Regenerating the one-time code must reset the verify-attempt counter so the
         user isn't pre-locked-out by a previous session's wrong attempts.
         """
-        _generate_magic_token(api_client, self.EMAIL)
+        _generate_one_time_code_token(api_client, self.EMAIL)
         url = reverse("magic-sign-in")
         ri = redis_instance()
-        counter_key = f"magic_{self.EMAIL}:verify_attempts"
+        counter_key = f"one_time_code_{self.EMAIL}:verify_attempts"
 
-        for _ in range(MagicCodeProvider.MAX_VERIFY_ATTEMPTS - 2):
+        for _ in range(OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS - 2):
             django_client.post(url, {"email": self.EMAIL, "code": "000000"}, follow=False)
-        assert int(ri.get(counter_key)) == MagicCodeProvider.MAX_VERIFY_ATTEMPTS - 2
+        assert int(ri.get(counter_key)) == OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS - 2
 
-        # Regenerate the magic-link — the counter should be cleared.
-        _generate_magic_token(api_client, self.EMAIL)
+        # Regenerate the one-time code — the counter should be cleared.
+        _generate_one_time_code_token(api_client, self.EMAIL)
         assert not ri.exists(counter_key)
 
         # Fresh wrong attempt now produces INVALID (not EXHAUSTED) and counter starts at 1.
@@ -655,7 +663,7 @@ class TestMagicSignInVerifyAttempts:
 
 
 @pytest.mark.contract
-class TestMagicSignUpVerifyAttempts:
+class TestOneTimeCodeSignUpVerifyAttempts:
     """Sign-up flow gets the same per-token attempt cap (no existing User row)."""
 
     EMAIL = "signup-verify-attempts@plane.so"
@@ -664,38 +672,38 @@ class TestMagicSignUpVerifyAttempts:
     def _clear_state(self):
         _clear_auth_throttle_keys()
         ri = redis_instance()
-        ri.delete(f"magic_{self.EMAIL}")
-        ri.delete(f"magic_{self.EMAIL}:verify_attempts")
-        ri.delete(f"magic_{self.EMAIL}:issued")
+        ri.delete(f"one_time_code_{self.EMAIL}")
+        ri.delete(f"one_time_code_{self.EMAIL}:verify_attempts")
+        ri.delete(f"one_time_code_{self.EMAIL}:issued")
         yield
         _clear_auth_throttle_keys()
-        ri.delete(f"magic_{self.EMAIL}")
-        ri.delete(f"magic_{self.EMAIL}:verify_attempts")
-        ri.delete(f"magic_{self.EMAIL}:issued")
+        ri.delete(f"one_time_code_{self.EMAIL}")
+        ri.delete(f"one_time_code_{self.EMAIL}:verify_attempts")
+        ri.delete(f"one_time_code_{self.EMAIL}:issued")
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
     def test_signup_exhausted_after_max_wrong_attempts(
-        self, mock_magic_link, django_client, api_client, setup_instance
+        self, mock_send_one_time_code, django_client, api_client, setup_instance
     ):
         """The MAX-th wrong code on the sign-up endpoint returns the SIGN_UP variant of EXHAUSTED."""
-        _generate_magic_token(api_client, self.EMAIL)
+        _generate_one_time_code_token(api_client, self.EMAIL)
         url = reverse("magic-sign-up")
         ri = redis_instance()
 
-        for _ in range(MagicCodeProvider.MAX_VERIFY_ATTEMPTS - 1):
+        for _ in range(OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS - 1):
             response = django_client.post(url, {"email": self.EMAIL, "code": "000000"}, follow=False)
             assert "INVALID_MAGIC_CODE_SIGN_UP" in response.url
 
         response = django_client.post(url, {"email": self.EMAIL, "code": "000000"}, follow=False)
         assert "EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_UP" in response.url
-        assert not ri.exists(f"magic_{self.EMAIL}")
-        assert not ri.exists(f"magic_{self.EMAIL}:verify_attempts")
+        assert not ri.exists(f"one_time_code_{self.EMAIL}")
+        assert not ri.exists(f"one_time_code_{self.EMAIL}:verify_attempts")
 
 
 @pytest.mark.contract
 class TestAuthenticationThrottle:
-    """Per-IP throttle on the redirect-flow magic-link and password endpoints."""
+    """Per-IP throttle on the redirect-flow one-time-code and password endpoints."""
 
     @pytest.fixture(autouse=True)
     def _clear_state(self):
@@ -704,7 +712,7 @@ class TestAuthenticationThrottle:
         _clear_auth_throttle_keys()
 
     @pytest.mark.django_db
-    def test_magic_sign_in_throttled(self, django_client, setup_instance):
+    def test_one_time_code_sign_in_throttled(self, django_client, setup_instance):
         """Posting past the configured rate from one IP returns RATE_LIMIT_EXCEEDED."""
         url = reverse("magic-sign-in")
         # Drop the rate so the test doesn't have to fire 10+ requests.
@@ -720,7 +728,7 @@ class TestAuthenticationThrottle:
             assert "RATE_LIMIT_EXCEEDED" in response.url
 
     @pytest.mark.django_db
-    def test_magic_sign_up_throttled(self, django_client, setup_instance):
+    def test_one_time_code_sign_up_throttled(self, django_client, setup_instance):
         """The sign-up sibling shares the same scope and trips on the same per-IP budget."""
         url = reverse("magic-sign-up")
         with patch.object(AuthenticationThrottle, "rate", "1/minute"):
@@ -851,17 +859,17 @@ class TestBotUserLoginBlocked:
 
     @pytest.fixture(autouse=True)
     def _clear_state(self):
-        """Reset throttle cache and the bot's magic-link redis state around each test."""
+        """Reset throttle cache and the bot's one-time-code redis state around each test."""
         _clear_auth_throttle_keys()
         ri = redis_instance()
-        ri.delete(f"magic_{self.BOT_EMAIL}")
-        ri.delete(f"magic_{self.BOT_EMAIL}:verify_attempts")
-        ri.delete(f"magic_{self.BOT_EMAIL}:issued")
+        ri.delete(f"one_time_code_{self.BOT_EMAIL}")
+        ri.delete(f"one_time_code_{self.BOT_EMAIL}:verify_attempts")
+        ri.delete(f"one_time_code_{self.BOT_EMAIL}:issued")
         yield
         _clear_auth_throttle_keys()
-        ri.delete(f"magic_{self.BOT_EMAIL}")
-        ri.delete(f"magic_{self.BOT_EMAIL}:verify_attempts")
-        ri.delete(f"magic_{self.BOT_EMAIL}:issued")
+        ri.delete(f"one_time_code_{self.BOT_EMAIL}")
+        ri.delete(f"one_time_code_{self.BOT_EMAIL}:verify_attempts")
+        ri.delete(f"one_time_code_{self.BOT_EMAIL}:issued")
 
     @pytest.fixture
     def bot_user(self, db):
@@ -892,11 +900,13 @@ class TestBotUserLoginBlocked:
         assert "_auth_user_id" not in django_client.session
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.magic_link_code_task.magic_link.delay")
-    def test_bot_magic_sign_in_blocked(self, mock_magic_link, django_client, api_client, bot_user, setup_instance):
-        """The same block applies via a second provider (magic code), proving the
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
+    def test_bot_one_time_code_sign_in_blocked(
+        self, mock_send_one_time_code, django_client, api_client, bot_user, setup_instance
+    ):
+        """The same block applies via a second provider (one-time code), proving the
         guard sits at the shared chokepoint rather than in one provider."""
-        token = _generate_magic_token(api_client, self.BOT_EMAIL)
+        token = _generate_one_time_code_token(api_client, self.BOT_EMAIL)
         url = reverse("magic-sign-in")
         response = django_client.post(url, {"email": self.BOT_EMAIL, "code": token}, follow=False)
         assert response.status_code == 302

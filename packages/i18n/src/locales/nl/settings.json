@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Unieke code",
+            "label": "Eenmalige code",
             "placeholder": "123456",
             "helper_text": "Verificatiecode verzonden naar je nieuwe e-mailadres.",
             "errors": {
-              "required": "Unieke code is verplicht",
+              "required": "Eenmalige code is verplicht",
               "invalid": "Ongeldige verificatiecode. Probeer het opnieuw."
             }
           }

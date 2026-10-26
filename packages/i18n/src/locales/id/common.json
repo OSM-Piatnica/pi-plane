@@ -1414,7 +1414,7 @@
       "duration": "Durasi"
     },
     "auth_labels": {
-      "magic_code": "Kode ajaib"
+      "one_time_code": "Kode sekali pakai"
     },
     "state_groups": {
       "canceled": "Dibatalkan"
@@ -1445,7 +1445,7 @@
       "description": "Masukkan URL atau tautan berbagi publik dari tampilan atau Halaman yang ingin Anda lihat di bilah alamat browser.",
       "image_alt": "Pengguna sudah masuk"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Kirim ulang dalam {seconds} dtk"
     },
     "oauth": {

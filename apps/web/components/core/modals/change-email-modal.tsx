@@ -36,10 +36,10 @@ import userService from "@/services/user.service";
 
 type Props = { isOpen: boolean; onClose: () => void };
 
-type TModalStep = "EMAIL" | "UNIQUE_CODE";
-type TUniqueCodeValuesForm = { email: string; code: string };
+type TModalStep = "EMAIL" | "ONE_TIME_CODE";
+type TOneTimeCodeValuesForm = { email: string; code: string };
 
-const defaultValues: TUniqueCodeValuesForm = { email: "", code: "" };
+const defaultValues: TOneTimeCodeValuesForm = { email: "", code: "" };
 
 // service initialization
 const authService = new AuthService();
@@ -59,9 +59,9 @@ export const ChangeEmailModal = observer(function ChangeEmailModal(props: Props)
     setError,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<TUniqueCodeValuesForm>({ defaultValues });
+  } = useForm<TOneTimeCodeValuesForm>({ defaultValues });
 
-  const secondStep = currentStep === "UNIQUE_CODE";
+  const secondStep = currentStep === "ONE_TIME_CODE";
 
   const handleClose = () => {
     reset({ ...defaultValues });
@@ -79,8 +79,8 @@ export const ChangeEmailModal = observer(function ChangeEmailModal(props: Props)
     );
   };
 
-  const onSubmit = async (formData: TUniqueCodeValuesForm) => {
-    if (currentStep === "UNIQUE_CODE") {
+  const onSubmit = async (formData: TOneTimeCodeValuesForm) => {
+    if (currentStep === "ONE_TIME_CODE") {
       // Step 2: Verify the code and update email
       try {
         await userService.verifyEmailCode({ email: formData.email, code: formData.code });
@@ -123,7 +123,7 @@ export const ChangeEmailModal = observer(function ChangeEmailModal(props: Props)
       await userService.generateEmailCode({ email: formData.email });
 
       // Move to verification code step
-      setCurrentStep("UNIQUE_CODE");
+      setCurrentStep("ONE_TIME_CODE");
     } catch (error: unknown) {
       // Extract error code and message from backend response
       const err = error as { error_code?: number | string; error_message?: string };

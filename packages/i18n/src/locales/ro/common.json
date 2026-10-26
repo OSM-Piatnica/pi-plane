@@ -1414,7 +1414,7 @@
       "duration": "Durată"
     },
     "auth_labels": {
-      "magic_code": "Cod magic"
+      "one_time_code": "Cod de unică folosință"
     },
     "state_groups": {
       "canceled": "Anulat"
@@ -1445,7 +1445,7 @@
       "description": "Introdu în bara de adrese a browserului adresa URL publică sau linkul către vizualizarea sau pagina pe care vrei să o vezi.",
       "image_alt": "Utilizatorul este deja autentificat"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Retrimite în {seconds} s"
     },
     "oauth": {

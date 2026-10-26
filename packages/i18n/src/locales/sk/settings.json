@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Jedinečný kód",
+            "label": "Jednorazový kód",
             "placeholder": "123456",
             "helper_text": "Overovací kód bol odoslaný na váš nový e-mail.",
             "errors": {
-              "required": "Jedinečný kód je povinný",
+              "required": "Jednorazový kód je povinný",
               "invalid": "Neplatný overovací kód. Skúste znova."
             }
           }
