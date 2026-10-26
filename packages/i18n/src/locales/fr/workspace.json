@@ -166,8 +166,8 @@
         "description": "Visible par tous dans l'espace de travail ; l'accès nécessite une approbation ou une invitation"
       },
       "public": {
-        "title": "Public",
-        "description": "Accessible à tous dans l’espace de travail, sauf les invités"
+        "title": "Ouvert",
+        "description": "Ouvert à l’espace de travail : tout membre, sauf les invités, peut rejoindre"
       }
     },
     "error": {

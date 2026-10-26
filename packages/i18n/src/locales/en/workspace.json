@@ -166,8 +166,8 @@
         "description": "Listed for everyone in the workspace; access needs approval or an invite"
       },
       "public": {
-        "title": "Public",
-        "description": "Anyone in the workspace except Guests can join"
+        "title": "Open",
+        "description": "Open to the workspace: any member, except Guests, can join"
       }
     },
     "error": {

@@ -166,8 +166,8 @@
         "description": "Visibile a tutti nello spazio di lavoro; l'accesso richiede approvazione o invito"
       },
       "public": {
-        "title": "Pubblico",
-        "description": "Chiunque nello spazio di lavoro, tranne gli ospiti, può unirsi"
+        "title": "Aperto",
+        "description": "Aperto allo spazio di lavoro: ogni membro, esclusi gli ospiti, può unirsi"
       }
     },
     "error": {

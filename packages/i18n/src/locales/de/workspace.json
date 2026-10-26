@@ -166,8 +166,8 @@
         "description": "Für alle im Arbeitsbereich sichtbar; Zugang nur nach Genehmigung oder Einladung"
       },
       "public": {
-        "title": "Öffentlich",
-        "description": "Jeder im Arbeitsbereich außer Gästen kann beitreten"
+        "title": "Offen",
+        "description": "Offen für den Arbeitsbereich: Jedes Mitglied außer Gästen kann beitreten"
       }
     },
     "error": {
