@@ -82,6 +82,10 @@
     "edit_restricted": "Seuls les assignés de cet élément de travail, le responsable du projet et les admins du projet peuvent le modifier."
   },
   "project_create": {
+    "advanced": {
+      "description": "Règles et types de relation. Vous pourrez les modifier plus tard dans les paramètres de workflow du projet.",
+      "title": "Options avancées"
+    },
     "features": {
       "cycles": {
         "description": "Découpez le travail en périodes récurrentes.",
@@ -166,7 +170,27 @@
       "toggle_error": "Impossible de mettre à jour les paramètres du workflow.",
       "transition": "Transition",
       "transition_count": "{count, plural, one {# transition} many {# transitions} other {# transitions}}",
-      "transitions_configured": "transitions configurées"
+      "transitions_configured": "transitions configurées",
+      "relation_types": {
+        "heading": "Types de relation",
+        "description": "Choisissez les relations qui peuvent être ajoutées dans ce projet. Le blocage est toujours disponible, et les relations existantes restent lorsqu'un type est désactivé.",
+        "schedule": {
+          "description": "Commence avant, se termine avant et commence avant la fin, avec un décalage facultatif en jours.",
+          "title": "Dépendances de planning"
+        },
+        "traceability": {
+          "description": "Implémente, cause, clone et teste, avec leurs réciproques.",
+          "title": "Relations de traçabilité"
+        },
+        "relates_to": {
+          "description": "Un simple lien entre deux éléments.",
+          "title": "En relation avec"
+        },
+        "duplicate": {
+          "description": "Marquer un élément comme doublon d'un autre.",
+          "title": "Doublon"
+        }
+      }
     }
   },
   "project_templates": {

@@ -96,6 +96,10 @@ class ProjectCreateSerializer(BaseSerializer):
             "is_parent_completion_rule_enabled",
             "is_blocked_status_rule_enabled",
             "is_assignee_edit_rule_enabled",
+            "is_relation_schedule_enabled",
+            "is_relation_traceability_enabled",
+            "is_relation_relates_to_enabled",
+            "is_relation_duplicate_enabled",
         ]
 
         read_only_fields = [

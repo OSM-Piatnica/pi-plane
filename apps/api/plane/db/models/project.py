@@ -112,6 +112,11 @@ class Project(ChangeTrackerMixin, BaseModel):
     is_parent_completion_rule_enabled = models.BooleanField(default=False)
     is_blocked_status_rule_enabled = models.BooleanField(default=False)
     is_assignee_edit_rule_enabled = models.BooleanField(default=False)
+    # Relation types people may add; blocked_by and blocking are always available (plane.utils.relation_type_toggles)
+    is_relation_schedule_enabled = models.BooleanField(default=False)
+    is_relation_traceability_enabled = models.BooleanField(default=False)
+    is_relation_relates_to_enabled = models.BooleanField(default=True)
+    is_relation_duplicate_enabled = models.BooleanField(default=True)
     guest_view_all_features = models.BooleanField(default=False)
     cover_image = models.TextField(blank=True, null=True)
     cover_image_asset = models.ForeignKey(

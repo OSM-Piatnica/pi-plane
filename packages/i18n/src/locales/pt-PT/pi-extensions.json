@@ -82,6 +82,10 @@
     "edit_restricted": "Só os responsáveis por este item de trabalho, o líder do projeto e os administradores do projeto o podem alterar."
   },
   "project_create": {
+    "advanced": {
+      "description": "Regras e tipos de relação. Pode alterá-los mais tarde nas definições de fluxos de trabalho do projeto.",
+      "title": "Opções avançadas"
+    },
     "features": {
       "cycles": {
         "description": "Delimite o trabalho em períodos recorrentes.",
@@ -166,7 +170,27 @@
       "toggle_error": "Não foi possível atualizar as configurações do fluxo de trabalho.",
       "transition": "Transição",
       "transition_count": "{count, plural, one {# transição} many {# de transições} other {# transições}}",
-      "transitions_configured": "transições configuradas"
+      "transitions_configured": "transições configuradas",
+      "relation_types": {
+        "heading": "Tipos de relação",
+        "description": "Escolha quais as relações que podem ser adicionadas neste projeto. O bloqueio está sempre disponível, e as relações existentes mantêm-se quando um tipo é desativado.",
+        "schedule": {
+          "description": "Começa antes, termina antes e começa antes do fim, com desfasamento opcional em dias.",
+          "title": "Dependências de calendário"
+        },
+        "traceability": {
+          "description": "Implementa, causa, clona e testa, com as inversas.",
+          "title": "Relações de rastreabilidade"
+        },
+        "relates_to": {
+          "description": "Uma ligação simples entre dois itens.",
+          "title": "Relacionado com"
+        },
+        "duplicate": {
+          "description": "Marcar um item como duplicado de outro.",
+          "title": "Duplicado"
+        }
+      }
     }
   },
   "project_templates": {

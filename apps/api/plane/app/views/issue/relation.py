@@ -42,6 +42,7 @@ from plane.utils.issue_relation_service import (
     set_lag,
     validate_new_relation,
 )
+from plane.utils.relation_type_toggles import relation_type_disabled_error
 from plane.utils.issue_relation_types import ALL_RELATION_NAMES, is_mirrored, is_symmetric
 from plane.utils.host import base_host
 
@@ -229,6 +230,10 @@ class IssueRelationViewSet(BaseViewSet):
 
         if relation_type not in ALL_RELATION_NAMES:
             return Response({"message": "Unknown issue relation type"}, status=status.HTTP_400_BAD_REQUEST)
+
+        disabled_error = relation_type_disabled_error(project, relation_type)
+        if disabled_error:
+            return Response(disabled_error, status=status.HTTP_400_BAD_REQUEST)
 
         lag, lag_error = parse_lag(request.data.get("lag_days"), relation_type)
         if lag_error:

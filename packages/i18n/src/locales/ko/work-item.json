@@ -921,6 +921,26 @@
         "enabled": "프로젝트 업데이트를 활성화했습니다",
         "fallback": "프로젝트 업데이트를 업데이트했습니다"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "‘중복’ 관계을(를) 비활성화했습니다",
+        "enabled": "‘중복’ 관계을(를) 활성화했습니다",
+        "fallback": "‘중복’ 관계을(를) 업데이트했습니다"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "‘관련 있음’ 관계을(를) 비활성화했습니다",
+        "enabled": "‘관련 있음’ 관계을(를) 활성화했습니다",
+        "fallback": "‘관련 있음’ 관계을(를) 업데이트했습니다"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "일정 종속성을(를) 비활성화했습니다",
+        "enabled": "일정 종속성을(를) 활성화했습니다",
+        "fallback": "일정 종속성을(를) 업데이트했습니다"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "추적성 관계을(를) 비활성화했습니다",
+        "enabled": "추적성 관계을(를) 활성화했습니다",
+        "fallback": "추적성 관계을(를) 업데이트했습니다"
+      },
       "is_time_tracking_enabled": {
         "disabled": "시간 추적을 비활성화했습니다",
         "enabled": "시간 추적을 활성화했습니다",

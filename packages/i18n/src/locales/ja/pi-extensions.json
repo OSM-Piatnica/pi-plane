@@ -82,6 +82,10 @@
     "edit_restricted": "この作業項目を変更できるのは、担当者、プロジェクトリーダー、プロジェクト管理者のみです。"
   },
   "project_create": {
+    "advanced": {
+      "description": "ルールと関係の種類です。後でプロジェクトのワークフロー設定から変更できます。",
+      "title": "詳細オプション"
+    },
     "features": {
       "cycles": {
         "description": "定期的な期間で作業をタイムボックス化します。",
@@ -166,7 +170,27 @@
       "toggle_error": "ワークフロー設定を更新できませんでした。",
       "transition": "遷移",
       "transition_count": "{count, plural, one {# 件の遷移} other {# 件の遷移}}",
-      "transitions_configured": "個の遷移が設定されています"
+      "transitions_configured": "個の遷移が設定されています",
+      "relation_types": {
+        "heading": "関係の種類",
+        "description": "このプロジェクトで追加できる関係を選びます。ブロックは常に利用でき、種類をオフにしても既存の関係は残ります。",
+        "schedule": {
+          "description": "「より前に開始」「より前に終了」「終了前に開始」を、日数のラグ（任意）付きで設定できます。",
+          "title": "スケジュールの依存関係"
+        },
+        "traceability": {
+          "description": "「実装する」「原因となる」「複製する」「テストする」と、その逆の関係です。",
+          "title": "トレーサビリティの関係"
+        },
+        "relates_to": {
+          "description": "2つの項目をつなぐ単純なリンクです。",
+          "title": "関連する"
+        },
+        "duplicate": {
+          "description": "項目を別の項目の重複としてマークします。",
+          "title": "重複する"
+        }
+      }
     }
   },
   "project_templates": {

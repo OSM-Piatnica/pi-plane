@@ -105,6 +105,7 @@ from plane.utils.issue_relation_service import (
     set_lag,
     validate_new_relation,
 )
+from plane.utils.relation_type_toggles import relation_type_disabled_error
 from plane.utils.issue_relation_types import ALL_RELATION_NAMES, FORWARD_RELATIONS, SYMMETRIC_RELATIONS, is_mirrored
 from plane.bgtasks.webhook_task import model_activity
 from plane.app.permissions import ROLE
@@ -2752,6 +2753,10 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
 
         actual_relation = get_actual_relation(relation_type)
         is_reverse = is_mirrored(relation_type)
+        disabled_error = relation_type_disabled_error(project, relation_type)
+        if disabled_error:
+            return Response(disabled_error, status=status.HTTP_400_BAD_REQUEST)
+
         lag, lag_error = parse_lag(request.data.get("lag_days"), relation_type)
         if lag_error:
             return Response(lag_error, status=status.HTTP_400_BAD_REQUEST)

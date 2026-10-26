@@ -921,6 +921,26 @@
         "enabled": "mengaktifkan pembaruan proyek",
         "fallback": "memperbarui pembaruan proyek"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "menonaktifkan relasi duplikat",
+        "enabled": "mengaktifkan relasi duplikat",
+        "fallback": "memperbarui relasi duplikat"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "menonaktifkan relasi “berhubungan dengan”",
+        "enabled": "mengaktifkan relasi “berhubungan dengan”",
+        "fallback": "memperbarui relasi “berhubungan dengan”"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "menonaktifkan dependensi jadwal",
+        "enabled": "mengaktifkan dependensi jadwal",
+        "fallback": "memperbarui dependensi jadwal"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "menonaktifkan relasi keterlacakan",
+        "enabled": "mengaktifkan relasi keterlacakan",
+        "fallback": "memperbarui relasi keterlacakan"
+      },
       "is_time_tracking_enabled": {
         "disabled": "menonaktifkan pelacakan waktu",
         "enabled": "mengaktifkan pelacakan waktu",

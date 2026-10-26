@@ -921,6 +921,26 @@
         "enabled": "zapnuty aktualizace projektu",
         "fallback": "aktualizovány aktualizace projektu"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "vypnul(a) vztah duplikátu",
+        "enabled": "zapnul(a) vztah duplikátu",
+        "fallback": "aktualizoval(a) vztah duplikátu"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "vypnul(a) vztah „související s“",
+        "enabled": "zapnul(a) vztah „související s“",
+        "fallback": "aktualizoval(a) vztah „související s“"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "vypnul(a) časové závislosti",
+        "enabled": "zapnul(a) časové závislosti",
+        "fallback": "aktualizoval(a) časové závislosti"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "vypnul(a) vztahy sledovatelnosti",
+        "enabled": "zapnul(a) vztahy sledovatelnosti",
+        "fallback": "aktualizoval(a) vztahy sledovatelnosti"
+      },
       "is_time_tracking_enabled": {
         "disabled": "vypnuto sledování času",
         "enabled": "zapnuto sledování času",

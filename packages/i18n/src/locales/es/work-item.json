@@ -921,6 +921,26 @@
         "enabled": "activó las actualizaciones del proyecto",
         "fallback": "actualizó las actualizaciones del proyecto"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "desactivó la relación de duplicado",
+        "enabled": "activó la relación de duplicado",
+        "fallback": "actualizó la relación de duplicado"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "desactivó la relación «se relaciona con»",
+        "enabled": "activó la relación «se relaciona con»",
+        "fallback": "actualizó la relación «se relaciona con»"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "desactivó las dependencias de calendario",
+        "enabled": "activó las dependencias de calendario",
+        "fallback": "actualizó las dependencias de calendario"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "desactivó las relaciones de trazabilidad",
+        "enabled": "activó las relaciones de trazabilidad",
+        "fallback": "actualizó las relaciones de trazabilidad"
+      },
       "is_time_tracking_enabled": {
         "disabled": "desactivó el seguimiento de tiempo",
         "enabled": "activó el seguimiento de tiempo",

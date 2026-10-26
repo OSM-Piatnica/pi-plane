@@ -82,6 +82,10 @@
     "edit_restricted": "Bu iş öğesini yalnızca atananlar, proje lideri ve proje yöneticileri değiştirebilir."
   },
   "project_create": {
+    "advanced": {
+      "description": "Kurallar ve ilişki türleri. Bunları daha sonra projenin iş akışı ayarlarından değiştirebilirsiniz.",
+      "title": "Gelişmiş seçenekler"
+    },
     "features": {
       "cycles": {
         "description": "Çalışmayı tekrarlayan dönemlerde zamana bağlayın.",
@@ -166,7 +170,27 @@
       "toggle_error": "İş akışı ayarları güncellenemedi.",
       "transition": "Geçiş",
       "transition_count": "{count, plural, one {# geçiş} other {# geçiş}}",
-      "transitions_configured": "geçiş yapılandırıldı"
+      "transitions_configured": "geçiş yapılandırıldı",
+      "relation_types": {
+        "heading": "İlişki türleri",
+        "description": "Bu projede hangi ilişkilerin eklenebileceğini seçin. Engelleme her zaman kullanılabilir; bir tür kapatıldığında mevcut ilişkiler korunur.",
+        "schedule": {
+          "description": "Önce başlar, önce biter ve bitişten önce başlar; isteğe bağlı gün cinsinden gecikmeyle.",
+          "title": "Takvim bağımlılıkları"
+        },
+        "traceability": {
+          "description": "Uygular, neden olur, kopyalar ve test eder; ters yönleriyle birlikte.",
+          "title": "İzlenebilirlik ilişkileri"
+        },
+        "relates_to": {
+          "description": "İki öğe arasında basit bir bağlantı.",
+          "title": "İlişkili"
+        },
+        "duplicate": {
+          "description": "Bir öğeyi başka bir öğenin kopyası olarak işaretle.",
+          "title": "Kopyası"
+        }
+      }
     }
   },
   "project_templates": {

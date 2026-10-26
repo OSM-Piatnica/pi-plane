@@ -82,6 +82,10 @@
     "edit_restricted": "Hanya penerima tugas item kerja ini, pemimpin proyek, dan admin proyek yang dapat mengubahnya."
   },
   "project_create": {
+    "advanced": {
+      "description": "Aturan dan jenis relasi. Anda dapat mengubahnya nanti di pengaturan alur kerja proyek.",
+      "title": "Opsi lanjutan"
+    },
     "features": {
       "cycles": {
         "description": "Batasi waktu pekerjaan dalam periode berulang.",
@@ -166,7 +170,27 @@
       "toggle_error": "Tidak dapat memperbarui pengaturan workflow.",
       "transition": "Transisi",
       "transition_count": "{count, plural, one {# transisi} other {# transisi}}",
-      "transitions_configured": "transisi dikonfigurasi"
+      "transitions_configured": "transisi dikonfigurasi",
+      "relation_types": {
+        "heading": "Jenis relasi",
+        "description": "Pilih relasi yang dapat ditambahkan di proyek ini. Penghalangan selalu tersedia, dan relasi yang sudah ada tetap ada saat suatu jenis dinonaktifkan.",
+        "schedule": {
+          "description": "Mulai sebelum, selesai sebelum, dan mulai sebelum selesai, dengan jeda opsional dalam hari.",
+          "title": "Dependensi jadwal"
+        },
+        "traceability": {
+          "description": "Mengimplementasikan, menyebabkan, mengkloning, dan menguji, beserta kebalikannya.",
+          "title": "Relasi keterlacakan"
+        },
+        "relates_to": {
+          "description": "Tautan sederhana antara dua item.",
+          "title": "Berhubungan dengan"
+        },
+        "duplicate": {
+          "description": "Tandai item sebagai duplikat item lain.",
+          "title": "Duplikat"
+        }
+      }
     }
   },
   "project_templates": {

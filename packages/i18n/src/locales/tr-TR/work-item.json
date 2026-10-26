@@ -921,6 +921,26 @@
         "enabled": "proje güncellemelerini etkinleştirdi",
         "fallback": "proje güncellemelerini güncelledi"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "“kopyası” ilişkisini devre dışı bıraktı",
+        "enabled": "“kopyası” ilişkisini etkinleştirdi",
+        "fallback": "“kopyası” ilişkisini güncelledi"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "“ilişkili” ilişkisini devre dışı bıraktı",
+        "enabled": "“ilişkili” ilişkisini etkinleştirdi",
+        "fallback": "“ilişkili” ilişkisini güncelledi"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "takvim bağımlılıklarını devre dışı bıraktı",
+        "enabled": "takvim bağımlılıklarını etkinleştirdi",
+        "fallback": "takvim bağımlılıklarını güncelledi"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "izlenebilirlik ilişkilerini devre dışı bıraktı",
+        "enabled": "izlenebilirlik ilişkilerini etkinleştirdi",
+        "fallback": "izlenebilirlik ilişkilerini güncelledi"
+      },
       "is_time_tracking_enabled": {
         "disabled": "zaman takibini devre dışı bıraktı",
         "enabled": "zaman takibini etkinleştirdi",
