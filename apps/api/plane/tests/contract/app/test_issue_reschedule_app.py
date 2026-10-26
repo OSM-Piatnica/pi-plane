@@ -17,7 +17,10 @@ ACTIVITY = "plane.utils.issue_reschedule.issue_activity.delay"
 
 @pytest.fixture
 def project(db, workspace, create_user):
-    project = Project.objects.create(name="Shift", identifier="SHF", workspace=workspace, created_by=create_user)
+    # These tests count calendar days, so the project has no weekend; the working-day rules have their own tests
+    project = Project.objects.create(
+        name="Shift", identifier="SHF", workspace=workspace, created_by=create_user, weekend_days=[]
+    )
     ProjectMember.objects.create(project=project, member=create_user, role=20, is_active=True)
     return project
 
@@ -228,7 +231,9 @@ class TestOfferToShiftDependents:
         assert code(response) == "relation_date_conflict"
 
     def test_not_offered_for_a_dependent_the_person_may_not_edit(self, session_client, workspace, create_user, project):
-        other = Project.objects.create(name="Other", identifier="OTH", workspace=workspace, created_by=create_user)
+        other = Project.objects.create(
+            name="Other", identifier="OTH", workspace=workspace, created_by=create_user, weekend_days=[]
+        )
         a = item(project, "a", date(2026, 1, 1), date(2026, 1, 10))
         elsewhere = item(other, "elsewhere", date(2026, 1, 11), date(2026, 1, 20))
         relate(project, a, elsewhere)
@@ -241,7 +246,9 @@ class TestOfferToShiftDependents:
     def test_a_dependent_in_another_project_is_shifted_when_the_person_may_edit_it(
         self, session_client, workspace, create_user, project
     ):
-        other = Project.objects.create(name="Other", identifier="OTH", workspace=workspace, created_by=create_user)
+        other = Project.objects.create(
+            name="Other", identifier="OTH", workspace=workspace, created_by=create_user, weekend_days=[]
+        )
         ProjectMember.objects.create(project=other, member=create_user, role=15, is_active=True)
         a = item(project, "a", date(2026, 1, 1), date(2026, 1, 10))
         elsewhere = item(other, "elsewhere", date(2026, 1, 11), date(2026, 1, 20))

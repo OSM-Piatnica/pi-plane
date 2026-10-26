@@ -2,7 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
+
+from plane.utils.work_item_duration import effective_finish, effective_start, shift_working_days
 
 HAS_STARTED_GROUPS = frozenset({"started", "completed"})
 COMPLETED_GROUPS = frozenset({"completed"})
@@ -25,7 +27,7 @@ TIMELINE_RELATION_TYPES = frozenset(
     }
 )
 
-# Largest lag (or lead, when negative) a relation may carry, in calendar days
+# Largest lag (or lead, when negative) a relation may carry, in working days of the dependent work item's project
 MAX_LAG_DAYS = 3650
 
 # Of those, the ones actually stored in the database. The remaining three are inferred by
@@ -45,86 +47,117 @@ def _as_date(value):
     raise TypeError(f"Unsupported date value: {type(value)!r}")
 
 
-def _plus_days(value, days):
-    return value + timedelta(days=days) if value is not None else None
+def _start(value, weekend_days):
+    """A start date as the day work really begins: a start on a weekend day begins on the next working day."""
+    value = _as_date(value)
+    return effective_start(value, weekend_days) if value is not None else None
 
 
-def is_start_before_satisfied(issue_start, related_start, lag=0) -> bool:
-    """Start-to-start: the related work item starts at least ``lag`` days after this one (0 = on or after)."""
-    left = _plus_days(_as_date(issue_start), lag)
-    right = _as_date(related_start)
-    if left is None or right is None:
-        return True
-    return left <= right
+def _finish(value, weekend_days):
+    """A finish date as the day work really ended: a finish on a weekend day ended on the last working day."""
+    value = _as_date(value)
+    return effective_finish(value, weekend_days) if value is not None else None
 
 
-def is_start_after_satisfied(issue_start, related_start, lag=0) -> bool:
-    return is_start_before_satisfied(related_start, issue_start, lag)
+def _shift(value, days, weekend_days):
+    return shift_working_days(value, days, weekend_days) if value is not None else None
 
 
-def is_finish_before_satisfied(issue_finish, related_finish, lag=0) -> bool:
-    """Finish-to-finish: the related work item finishes at least ``lag`` days after this one."""
-    left = _plus_days(_as_date(issue_finish), lag)
-    right = _as_date(related_finish)
-    if left is None or right is None:
-        return True
-    return left <= right
-
-
-def is_finish_after_satisfied(issue_finish, related_finish, lag=0) -> bool:
-    return is_finish_before_satisfied(related_finish, issue_finish, lag)
-
-
-def is_start_before_finish_satisfied(issue_start, related_finish, lag=0) -> bool:
-    """Start-to-finish: the related work item cannot finish before ``lag`` days after this one has started."""
-    left = _plus_days(_as_date(issue_start), lag)
-    right = _as_date(related_finish)
-    if left is None or right is None:
-        return True
-    return left <= right
-
-
-def is_finish_after_start_satisfied(issue_finish, related_start, lag=0) -> bool:
-    return is_start_before_finish_satisfied(related_start, issue_finish, lag)
-
-
-def is_blocked_by_satisfied(issue_start, blocker_finish, lag=0) -> bool:
+def is_start_before_satisfied(issue_start, related_start, lag=0, weekend_days=()) -> bool:
     """
-    Finish-to-start: the blocker has to be done before the blocked work item starts, ``lag`` days apart.
+    Start-to-start: the related work item starts at least ``lag`` working days after this one (0 = on or after).
 
-    Both dates are inclusive calendar days, so a blocker finishing on the day the blocked item
-    starts still overlaps it: with no lag the blocked item starts the day *after* the blocker
-    finishes. A lag of 2 asks for two free days in between; a lead of -1 lets them share a day.
+    ``weekend_days`` are those of the work item that comes later, the one whose dates the rule limits.
     """
-    start = _as_date(issue_start)
-    finish = _plus_days(_as_date(blocker_finish), lag)
+    left = _shift(_start(issue_start, weekend_days), lag, weekend_days)
+    right = _start(related_start, weekend_days)
+    if left is None or right is None:
+        return True
+    return left <= right
+
+
+def is_start_after_satisfied(issue_start, related_start, lag=0, weekend_days=()) -> bool:
+    return is_start_before_satisfied(related_start, issue_start, lag, weekend_days)
+
+
+def is_finish_before_satisfied(issue_finish, related_finish, lag=0, weekend_days=()) -> bool:
+    """Finish-to-finish: the related work item finishes at least ``lag`` working days after this one."""
+    left = _shift(_finish(issue_finish, weekend_days), lag, weekend_days)
+    right = _finish(related_finish, weekend_days)
+    if left is None or right is None:
+        return True
+    return left <= right
+
+
+def is_finish_after_satisfied(issue_finish, related_finish, lag=0, weekend_days=()) -> bool:
+    return is_finish_before_satisfied(related_finish, issue_finish, lag, weekend_days)
+
+
+def is_start_before_finish_satisfied(issue_start, related_finish, lag=0, weekend_days=()) -> bool:
+    """Start-to-finish: the related work item cannot finish before ``lag`` working days after this one has started."""
+    left = _shift(_start(issue_start, weekend_days), lag, weekend_days)
+    right = _finish(related_finish, weekend_days)
+    if left is None or right is None:
+        return True
+    return left <= right
+
+
+def is_finish_after_start_satisfied(issue_finish, related_start, lag=0, weekend_days=()) -> bool:
+    return is_start_before_finish_satisfied(related_start, issue_finish, lag, weekend_days)
+
+
+def is_blocked_by_satisfied(issue_start, blocker_finish, lag=0, weekend_days=()) -> bool:
+    """
+    Finish-to-start: the blocker has to be done before the blocked work item starts, ``lag`` working days apart.
+
+    Both dates are inclusive days, so a blocker finishing on the day the blocked item starts still overlaps it:
+    with no lag the blocked item starts on the working day *after* the blocker finishes (a Friday finish lets the
+    next item start on Monday). A lag of 2 asks for two free working days in between; a lead of -1 lets them share
+    a day. ``weekend_days`` are those of the blocked work item.
+    """
+    start = _start(issue_start, weekend_days)
+    finish = _finish(blocker_finish, weekend_days)
     if start is None or finish is None:
         return True
-    return finish < start
+    return shift_working_days(finish, lag + 1, weekend_days) <= start
 
 
-def is_timeline_relation_satisfied(relation_type, issue_dates, related_dates, lag=0) -> bool:
+def dependent_side(relation_type) -> str:
+    """Which work item a timeline rule limits, the one that comes later: ``"issue"`` or ``"related"``."""
+    return (
+        "issue" if relation_type in ("blocked_by", "start_after", "finish_after", "finish_after_start") else "related"
+    )
+
+
+def is_timeline_relation_satisfied(
+    relation_type, issue_dates, related_dates, lag=0, issue_weekend_days=(), related_weekend_days=()
+) -> bool:
+    """
+    Whether the dates meet the rule of the relation. Working days are counted with the weekend days of the work item
+    the rule limits (the dependent one), so a rule between two projects uses the calendar of the one that has to move.
+    """
     issue_start = (issue_dates or {}).get("start_date")
     issue_finish = (issue_dates or {}).get("target_date")
     related_start = (related_dates or {}).get("start_date")
     related_finish = (related_dates or {}).get("target_date")
+    weekend_days = issue_weekend_days if dependent_side(relation_type) == "issue" else related_weekend_days
 
     if relation_type == "blocked_by":
-        return is_blocked_by_satisfied(issue_start, related_finish, lag)
+        return is_blocked_by_satisfied(issue_start, related_finish, lag, weekend_days)
     if relation_type == "blocking":
-        return is_blocked_by_satisfied(related_start, issue_finish, lag)
+        return is_blocked_by_satisfied(related_start, issue_finish, lag, weekend_days)
     if relation_type == "start_before":
-        return is_start_before_satisfied(issue_start, related_start, lag)
+        return is_start_before_satisfied(issue_start, related_start, lag, weekend_days)
     if relation_type == "start_after":
-        return is_start_after_satisfied(issue_start, related_start, lag)
+        return is_start_after_satisfied(issue_start, related_start, lag, weekend_days)
     if relation_type == "finish_before":
-        return is_finish_before_satisfied(issue_finish, related_finish, lag)
+        return is_finish_before_satisfied(issue_finish, related_finish, lag, weekend_days)
     if relation_type == "finish_after":
-        return is_finish_after_satisfied(issue_finish, related_finish, lag)
+        return is_finish_after_satisfied(issue_finish, related_finish, lag, weekend_days)
     if relation_type == "start_before_finish":
-        return is_start_before_finish_satisfied(issue_start, related_finish, lag)
+        return is_start_before_finish_satisfied(issue_start, related_finish, lag, weekend_days)
     if relation_type == "finish_after_start":
-        return is_finish_after_start_satisfied(issue_finish, related_start, lag)
+        return is_finish_after_start_satisfied(issue_finish, related_start, lag, weekend_days)
 
     raise ValueError(f"Unsupported timeline relation type: {relation_type}")
 
@@ -212,7 +245,7 @@ def date_violation_error(relation_type, issue_ref: str, related_ref: str, lag: i
     """
     return {
         "error": date_violation_message(relation_type, issue_ref, related_ref)
-        + (f" The relation has a lag of {lag} days." if lag else ""),
+        + (f" The relation has a lag of {lag} working days." if lag else ""),
         "error_code": RELATION_DATE_CONFLICT,
         "relation_type": relation_type,
         "issue_ref": issue_ref,

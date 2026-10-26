@@ -14,6 +14,7 @@ from plane.utils.issue_relation_constraints import (
     status_violation_error,
 )
 from plane.utils.issue_relation_mapper import get_inverse_relation
+from plane.utils.weekend_days import default_weekend_days
 
 # Distinguishes "the caller did not mention this date" from "the caller cleared this date",
 # because a cleared date lifts the constraint instead of falling back to the stored one.
@@ -26,6 +27,19 @@ def issue_display_ref(issue) -> str:
     if identifier and issue.sequence_id is not None:
         return f"{identifier}-{issue.sequence_id}"
     return str(issue.id)
+
+
+def weekend_days_of(issue):
+    """The weekend days of the work item's project; Saturday and Sunday when it has none to read."""
+    project = getattr(issue, "project", None)
+    days = getattr(project, "weekend_days", None)
+    return default_weekend_days() if days is None else days
+
+
+def _is_satisfied(relation_type, issue, issue_dates, related, related_dates, lag):
+    return is_timeline_relation_satisfied(
+        relation_type, issue_dates, related_dates, lag, weekend_days_of(issue), weekend_days_of(related)
+    )
 
 
 def _iter_timeline_constraints(issue):
@@ -89,7 +103,7 @@ def validate_issue_timeline_relations(
         }
         related_group = getattr(getattr(related, "state", None), "group", None)
 
-        if check_dates and not is_timeline_relation_satisfied(relation_type, issue_dates, related_dates, lag):
+        if check_dates and not _is_satisfied(relation_type, issue, issue_dates, related, related_dates, lag):
             return date_violation_error(relation_type, issue_ref, related_ref, lag)
 
         if check_status and state_group is not None:
@@ -149,7 +163,7 @@ def validate_new_timeline_relation(issue, related_issue, relation_type, lag=0):
     issue_ref = issue_display_ref(issue)
     related_ref = issue_display_ref(related_issue)
 
-    if not is_timeline_relation_satisfied(relation_type, issue_dates, related_dates, lag):
+    if not _is_satisfied(relation_type, issue, issue_dates, related_issue, related_dates, lag):
         return date_violation_error(relation_type, issue_ref, related_ref, lag)
 
     if not is_status_transition_allowed(relation_type, issue_group, related_group):
@@ -219,7 +233,7 @@ def validate_issue_dates_batch(updates, issues_by_id):
                 str(related.id),
                 {"start_date": related.start_date, "target_date": related.target_date},
             )
-            if not is_timeline_relation_satisfied(relation_type, issue_dates, related_dates, lag):
+            if not _is_satisfied(relation_type, issues_by_id[issue_id], issue_dates, related, related_dates, lag):
                 return date_violation_error(relation_type, issue_ref, issue_display_ref(related), lag)
 
     return None
