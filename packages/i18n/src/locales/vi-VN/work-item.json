@@ -95,8 +95,8 @@
     "comments": {
       "placeholder": "Thêm bình luận",
       "switch": {
-        "private": "Chuyển sang bình luận riêng tư",
-        "public": "Chuyển sang bình luận công khai"
+        "private": "Đặt bình luận này là nội bộ",
+        "public": "Hiển thị bình luận này trên web"
       },
       "create": {
         "success": "Đã tạo bình luận thành công",
@@ -153,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Nội bộ",
+        "external": "Hiển thị trên web"
       }
     },
     "empty_state": {

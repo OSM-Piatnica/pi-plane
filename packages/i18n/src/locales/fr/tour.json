@@ -72,8 +72,8 @@
         "description": "Les Pages dans Pi-Plane vous permettent de capturer, organiser et collaborer sur les informations du projet—sans outils externes."
       },
       "step_one": {
-        "title": "Rendre la page Publique ou Privée",
-        "description": "Les pages peuvent être définies comme publiques, visibles par tous dans votre espace de travail, ou privées, accessibles uniquement par vous."
+        "title": "Partager une page ou la garder pour vous",
+        "description": "Les pages peuvent être partagées avec tout le projet ou rester visibles uniquement par vous."
       },
       "step_two": {
         "title": "Utilisez la commande /",

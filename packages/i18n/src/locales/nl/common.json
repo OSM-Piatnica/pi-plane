@@ -197,8 +197,8 @@
   "select_network": "Selecteer netwerk",
   "lead": "Projectleider",
   "date_range": "Datumbereik",
-  "private": "Privé",
-  "public": "Openbaar",
+  "private": "Alleen ik",
+  "public": "Gedeeld",
   "accessible_only_by_invite": "Alleen toegankelijk met uitnodiging",
   "anyone_in_the_workspace_except_guests_can_join": "Iedereen in de werkruimte behalve gasten kan deelnemen",
   "creating": "Aanmaken",
@@ -534,8 +534,8 @@
     "archiving": "Archiveren",
     "archive": "Archiveren",
     "access": {
-      "public": "Openbaar",
-      "private": "Privé"
+      "public": "Gedeeld met het project",
+      "private": "Alleen ik"
     },
     "done": "Klaar",
     "sub_work_items": "Subwerkitems",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "Er is een fout opgetreden",
       "inbox_fetch_error": "Fout bij het ophalen van de Intake-werkitems. Probeer het later opnieuw.",
-      "page_make_public_error": "De pagina kon niet openbaar worden gemaakt. Probeer het later opnieuw.",
-      "page_make_private_error": "De pagina kon niet privé worden gemaakt. Probeer het later opnieuw.",
+      "page_make_public_error": "De pagina kon niet met het project worden gedeeld. Probeer het later opnieuw.",
+      "page_make_private_error": "De pagina kon niet alleen voor jou zichtbaar worden gemaakt. Probeer het later opnieuw.",
       "workflow_pending_approval": "Het werkitem wacht op goedkeuring.",
       "workflow_transition_not_allowed": "Deze statusovergang is niet toegestaan door de workflow."
     },

@@ -95,8 +95,8 @@
     "comments": {
       "placeholder": "Opmerking toevoegen",
       "switch": {
-        "private": "Overschakelen naar privéopmerking",
-        "public": "Overschakelen naar openbare opmerking"
+        "private": "Deze opmerking intern maken",
+        "public": "Deze opmerking op het web tonen"
       },
       "create": {
         "success": "Opmerking succesvol aangemaakt",
@@ -153,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Intern",
+        "external": "Zichtbaar op het web"
       }
     },
     "empty_state": {

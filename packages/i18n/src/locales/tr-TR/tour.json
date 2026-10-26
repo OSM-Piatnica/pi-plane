@@ -72,8 +72,8 @@
         "description": "Pi-Plane deki Sayfalar, proje bilgilerini yakalamanıza, düzenlemenize ve işbirliği yapmanıza olanak tanır—harici araçlara gerek yoktur."
       },
       "step_one": {
-        "title": "Sayfayı Genel veya Özel yapın",
-        "description": "Sayfalar, çalışma alanınızdaki herkes tarafından görülebilen genel veya yalnızca sizin erişebildiğiniz özel olarak ayarlanabilir."
+        "title": "Bir sayfayı paylaşın ya da kendinize saklayın",
+        "description": "Sayfalar projedeki herkesle paylaşılabilir ya da yalnızca size görünür kalabilir."
       },
       "step_two": {
         "title": "/ komutunu kullanın",

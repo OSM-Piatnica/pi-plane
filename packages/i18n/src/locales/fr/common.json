@@ -197,8 +197,8 @@
   "select_network": "Sélectionner le réseau",
   "lead": "Responsable",
   "date_range": "Plage de dates",
-  "private": "Privé",
-  "public": "Public",
+  "private": "Moi uniquement",
+  "public": "Partagé",
   "accessible_only_by_invite": "Accessible uniquement sur invitation",
   "anyone_in_the_workspace_except_guests_can_join": "Tout le monde dans l’espace de travail peut rejoindre, sauf les invités",
   "creating": "Création",
@@ -534,8 +534,8 @@
     "archiving": "Archivage",
     "archive": "Archiver",
     "access": {
-      "public": "Public",
-      "private": "Privé"
+      "public": "Partagé avec le projet",
+      "private": "Moi uniquement"
     },
     "done": "Terminé",
     "sub_work_items": "Sous-éléments de travail",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "Une erreur s’est produite",
       "inbox_fetch_error": "Erreur lors de la récupération des éléments de travail Intake. Veuillez réessayer plus tard.",
-      "page_make_public_error": "Impossible de rendre la page publique. Veuillez réessayer plus tard.",
-      "page_make_private_error": "Impossible de rendre la page privée. Veuillez réessayer plus tard.",
+      "page_make_public_error": "Impossible de partager la page avec le projet. Veuillez réessayer plus tard.",
+      "page_make_private_error": "Impossible de rendre la page visible uniquement par vous. Veuillez réessayer plus tard.",
       "workflow_pending_approval": "L’élément de travail est en attente d’approbation.",
       "workflow_transition_not_allowed": "Cette transition d’état n’est pas autorisée par le workflow."
     },

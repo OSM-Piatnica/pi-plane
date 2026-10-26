@@ -39,19 +39,19 @@ type Props = {
 type TCommentAccessType = {
   icon: LucideIcon | React.FC<ISvgIcons>;
   key: EIssueCommentAccessSpecifier;
-  label: "common.access.private" | "common.access.public";
+  label: "issue.comments.access.internal" | "issue.comments.access.external";
 };
 
 const COMMENT_ACCESS_SPECIFIERS: TCommentAccessType[] = [
   {
     icon: LockOutline,
     key: EIssueCommentAccessSpecifier.INTERNAL,
-    label: "common.access.private",
+    label: "issue.comments.access.internal",
   },
   {
     icon: GlobeOutline,
     key: EIssueCommentAccessSpecifier.EXTERNAL,
-    label: "common.access.public",
+    label: "issue.comments.access.external",
   },
 ];
 

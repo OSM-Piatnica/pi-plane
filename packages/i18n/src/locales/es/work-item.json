@@ -95,8 +95,8 @@
     "comments": {
       "placeholder": "Agregar comentario",
       "switch": {
-        "private": "Cambiar a comentario privado",
-        "public": "Cambiar a comentario público"
+        "private": "Hacer interno este comentario",
+        "public": "Mostrar este comentario en la web"
       },
       "create": {
         "success": "Comentario creado correctamente",
@@ -153,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Interno",
+        "external": "Visible en la web"
       }
     },
     "empty_state": {

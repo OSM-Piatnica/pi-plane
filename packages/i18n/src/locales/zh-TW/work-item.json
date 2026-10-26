@@ -95,8 +95,8 @@
     "comments": {
       "placeholder": "新增留言",
       "switch": {
-        "private": "切換為私人留言",
-        "public": "切換為公開留言"
+        "private": "將此留言設為內部",
+        "public": "在網路上顯示此留言"
       },
       "create": {
         "success": "留言建立成功",
@@ -153,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "內部",
+        "external": "在網路上可見"
       }
     },
     "empty_state": {

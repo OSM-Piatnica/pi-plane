@@ -197,8 +197,8 @@
   "select_network": "Chọn mạng",
   "lead": "Người phụ trách",
   "date_range": "Khoảng thời gian",
-  "private": "Riêng tư",
-  "public": "Công khai",
+  "private": "Chỉ mình tôi",
+  "public": "Được chia sẻ",
   "accessible_only_by_invite": "Chỉ truy cập được bằng lời mời",
   "anyone_in_the_workspace_except_guests_can_join": "Bất kỳ ai trong không gian làm việc ngoại trừ khách đều có thể tham gia",
   "creating": "Đang tạo",
@@ -534,8 +534,8 @@
     "archiving": "Đang lưu trữ",
     "archive": "Lưu trữ",
     "access": {
-      "public": "Công khai",
-      "private": "Riêng tư"
+      "public": "Chia sẻ với dự án",
+      "private": "Chỉ mình tôi"
     },
     "done": "Hoàn thành",
     "sub_work_items": "Mục công việc con",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "Đã xảy ra lỗi",
       "inbox_fetch_error": "Đã xảy ra lỗi khi tải các mục công việc Intake. Vui lòng thử lại sau.",
-      "page_make_public_error": "Không thể chuyển trang sang chế độ công khai. Vui lòng thử lại sau.",
-      "page_make_private_error": "Không thể chuyển trang sang chế độ riêng tư. Vui lòng thử lại sau.",
+      "page_make_public_error": "Không thể chia sẻ trang với dự án. Vui lòng thử lại sau.",
+      "page_make_private_error": "Không thể đặt trang chỉ hiển thị với bạn. Vui lòng thử lại sau.",
       "workflow_pending_approval": "Mục công việc đang chờ phê duyệt.",
       "workflow_transition_not_allowed": "Quy trình làm việc không cho phép chuyển đổi trạng thái này."
     },

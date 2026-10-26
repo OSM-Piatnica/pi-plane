@@ -95,8 +95,8 @@
     "comments": {
       "placeholder": "コメントを追加",
       "switch": {
-        "private": "プライベートコメントに切り替え",
-        "public": "公開コメントに切り替え"
+        "private": "このコメントを社内向けにする",
+        "public": "このコメントをウェブで表示する"
       },
       "create": {
         "success": "コメントを作成しました",
@@ -153,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "社内向け",
+        "external": "ウェブで表示"
       }
     },
     "empty_state": {

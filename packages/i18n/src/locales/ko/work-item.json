@@ -95,8 +95,8 @@
     "comments": {
       "placeholder": "댓글 추가",
       "switch": {
-        "private": "비공개 댓글로 전환",
-        "public": "공개 댓글로 전환"
+        "private": "이 댓글을 내부용으로 전환",
+        "public": "이 댓글을 웹에 표시"
       },
       "create": {
         "success": "댓글이 성공적으로 생성되었습니다",
@@ -153,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "내부용",
+        "external": "웹에 표시됨"
       }
     },
     "empty_state": {

@@ -72,8 +72,8 @@
         "description": "Halaman di Pi-Plane memungkinkan Anda menangkap, mengorganisir, dan berkolaborasi pada info proyek—tanpa alat eksternal."
       },
       "step_one": {
-        "title": "Jadikan halaman Publik atau Privat",
-        "description": "Halaman dapat diatur sebagai publik, terlihat oleh semua orang di ruang kerja Anda, atau privat, hanya dapat diakses oleh Anda."
+        "title": "Bagikan halaman atau simpan untuk diri sendiri",
+        "description": "Halaman dapat dibagikan ke semua orang di proyek, atau tetap terlihat hanya oleh Anda."
       },
       "step_two": {
         "title": "Gunakan perintah /",

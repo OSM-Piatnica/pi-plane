@@ -95,8 +95,8 @@
     "comments": {
       "placeholder": "Dodaj komentarz",
       "switch": {
-        "private": "Przełącz na komentarz prywatny",
-        "public": "Przełącz na komentarz publiczny"
+        "private": "Ustaw komentarz jako wewnętrzny",
+        "public": "Pokaż ten komentarz w internecie"
       },
       "create": {
         "success": "Komentarz utworzono pomyślnie",
@@ -153,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Wewnętrzny",
+        "external": "Widoczny w internecie"
       }
     },
     "empty_state": {

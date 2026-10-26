@@ -197,8 +197,8 @@
   "select_network": "選擇網路",
   "lead": "負責人",
   "date_range": "日期範圍",
-  "private": "私人",
-  "public": "公開",
+  "private": "僅自己",
+  "public": "共用",
   "accessible_only_by_invite": "僅受邀者可存取",
   "anyone_in_the_workspace_except_guests_can_join": "工作區中除了訪客以外的任何人都可以加入",
   "creating": "建立中",
@@ -534,8 +534,8 @@
     "archiving": "封存中",
     "archive": "封存",
     "access": {
-      "public": "公開",
-      "private": "私人"
+      "public": "與專案共用",
+      "private": "僅自己"
     },
     "done": "完成",
     "sub_work_items": "子工作事項",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "發生錯誤",
       "inbox_fetch_error": "取得 Intake 工作事項時發生錯誤，請稍後再試。",
-      "page_make_public_error": "無法將頁面設為公開。請稍後再試。",
-      "page_make_private_error": "無法將頁面設為私人。請稍後再試。",
+      "page_make_public_error": "無法將頁面與專案共用。請稍後再試。",
+      "page_make_private_error": "無法將頁面設為僅自己可見。請稍後再試。",
       "workflow_pending_approval": "該工作事項有待處理的核准。",
       "workflow_transition_not_allowed": "工作流程不允許此狀態轉換。"
     },

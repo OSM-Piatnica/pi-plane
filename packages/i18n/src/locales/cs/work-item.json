@@ -95,8 +95,8 @@
     "comments": {
       "placeholder": "Přidat komentář",
       "switch": {
-        "private": "Přepnout na soukromý komentář",
-        "public": "Přepnout na veřejný komentář"
+        "private": "Nastavit komentář jako interní",
+        "public": "Zobrazit tento komentář na webu"
       },
       "create": {
         "success": "Komentář úspěšně vytvořen",
@@ -153,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Interní",
+        "external": "Viditelný na webu"
       }
     },
     "empty_state": {

@@ -197,8 +197,8 @@
   "select_network": "Wybierz sieć",
   "lead": "Lider",
   "date_range": "Zakres dat",
-  "private": "Prywatny",
-  "public": "Publiczny",
+  "private": "Tylko ja",
+  "public": "Udostępnione",
   "accessible_only_by_invite": "Dostęp wyłącznie na zaproszenie",
   "anyone_in_the_workspace_except_guests_can_join": "Każdy w przestrzeni, poza gośćmi, może dołączyć",
   "creating": "Tworzenie",
@@ -534,8 +534,8 @@
     "archiving": "Archiwizowanie",
     "archive": "Archiwizuj",
     "access": {
-      "public": "Publiczny",
-      "private": "Prywatny"
+      "public": "Udostępnione projektowi",
+      "private": "Tylko ja"
     },
     "done": "Gotowe",
     "sub_work_items": "Podrzędne elementy pracy",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "Wystąpił błąd",
       "inbox_fetch_error": "Błąd podczas pobierania elementów pracy Intake. Spróbuj ponownie później.",
-      "page_make_public_error": "Nie udało się upublicznić strony. Spróbuj ponownie później.",
-      "page_make_private_error": "Nie udało się ustawić strony jako prywatnej. Spróbuj ponownie później.",
+      "page_make_public_error": "Nie udało się udostępnić strony projektowi. Spróbuj ponownie później.",
+      "page_make_private_error": "Nie udało się ustawić strony jako widocznej tylko dla Ciebie. Spróbuj ponownie później.",
       "workflow_pending_approval": "Element pracy oczekuje na zatwierdzenie.",
       "workflow_transition_not_allowed": "Ta zmiana stanu nie jest dozwolona przez przepływ pracy."
     },

@@ -197,8 +197,8 @@
   "select_network": "Vybrat síť",
   "lead": "Vedoucí",
   "date_range": "Rozsah dat",
-  "private": "Soukromý",
-  "public": "Veřejný",
+  "private": "Jen já",
+  "public": "Sdílené",
   "accessible_only_by_invite": "Přístupné pouze na pozvání",
   "anyone_in_the_workspace_except_guests_can_join": "Kdokoli v pracovním prostoru kromě hostů se může připojit",
   "creating": "Vytváření",
@@ -534,8 +534,8 @@
     "archiving": "Archivace",
     "archive": "Archivovat",
     "access": {
-      "public": "Veřejný",
-      "private": "Soukromý"
+      "public": "Sdíleno s projektem",
+      "private": "Jen já"
     },
     "done": "Hotovo",
     "sub_work_items": "Podřízené pracovní položky",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "Došlo k chybě",
       "inbox_fetch_error": "Při načítání pracovních položek Intake došlo k chybě. Zkuste to prosím později.",
-      "page_make_public_error": "Stránku se nepodařilo zveřejnit. Zkuste to prosím později.",
-      "page_make_private_error": "Stránku se nepodařilo nastavit jako soukromou. Zkuste to prosím později.",
+      "page_make_public_error": "Stránku se nepodařilo sdílet s projektem. Zkuste to prosím později.",
+      "page_make_private_error": "Stránku se nepodařilo nastavit jako viditelnou jen pro vás. Zkuste to prosím později.",
       "workflow_pending_approval": "Pracovní položka čeká na schválení.",
       "workflow_transition_not_allowed": "Tento přechod stavu není pracovním postupem povolen."
     },

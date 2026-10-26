@@ -197,8 +197,8 @@
   "select_network": "네트워크 선택",
   "lead": "리드",
   "date_range": "날짜 범위",
-  "private": "비공개",
-  "public": "공개",
+  "private": "나만",
+  "public": "공유됨",
   "accessible_only_by_invite": "초대에 의해서만 접근 가능",
   "anyone_in_the_workspace_except_guests_can_join": "게스트를 제외한 작업 공간의 모든 사람이 참여할 수 있습니다",
   "creating": "생성 중",
@@ -534,8 +534,8 @@
     "archiving": "아카이브 중",
     "archive": "아카이브",
     "access": {
-      "public": "공개",
-      "private": "비공개"
+      "public": "프로젝트와 공유됨",
+      "private": "나만"
     },
     "done": "완료",
     "sub_work_items": "하위 작업 항목",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "오류가 발생했습니다",
       "inbox_fetch_error": "Intake 작업 항목을 가져오는 중 오류가 발생했습니다. 나중에 다시 시도하세요.",
-      "page_make_public_error": "페이지를 공개로 전환할 수 없습니다. 나중에 다시 시도하세요.",
-      "page_make_private_error": "페이지를 비공개로 전환할 수 없습니다. 나중에 다시 시도하세요.",
+      "page_make_public_error": "페이지를 프로젝트와 공유하지 못했습니다. 나중에 다시 시도해 주세요.",
+      "page_make_private_error": "페이지를 나만 볼 수 있게 하지 못했습니다. 나중에 다시 시도해 주세요.",
       "workflow_pending_approval": "작업 항목에 대기 중인 승인이 있습니다.",
       "workflow_transition_not_allowed": "이 상태 전환은 워크플로에서 허용되지 않습니다."
     },

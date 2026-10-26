@@ -95,8 +95,8 @@
     "comments": {
       "placeholder": "Adaugă comentariu",
       "switch": {
-        "private": "Comută pe comentariu privat",
-        "public": "Comută pe comentariu public"
+        "private": "Fă acest comentariu intern",
+        "public": "Arată acest comentariu pe web"
       },
       "create": {
         "success": "Comentariu adăugat cu succes",
@@ -153,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Intern",
+        "external": "Vizibil pe web"
       }
     },
     "empty_state": {
