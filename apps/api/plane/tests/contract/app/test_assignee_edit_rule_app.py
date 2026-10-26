@@ -185,7 +185,7 @@ class TestOtherWaysOfChangingIt:
         assert Issue.objects.filter(pk=issue.pk).exists()
 
     def test_links(self, workspace, project, people, assigned):
-        endpoint = url(workspace, project, assigned, "links/")
+        endpoint = url(workspace, project, assigned, "issue-links/")
         payload = {"url": "https://example.com"}
 
         assert client_for(people["other"]).post(endpoint, payload, format="json").status_code == 403
