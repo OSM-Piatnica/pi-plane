@@ -96,7 +96,7 @@ export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
               getOptionValue={(option) => option.value}
               getOptionLabel={(option) => option.label}
               placeholder={t("project_components.profile.select_language")}
-              showSearch={false}
+              getOptionSearchText={(option) => `${option.label} ${option.value}`}
               pinSelected={false}
               contentSizing="anchor"
             >
