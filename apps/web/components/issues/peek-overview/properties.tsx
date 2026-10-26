@@ -79,10 +79,11 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
   const startOfTheWeek = useStartOfTheWeek();
   // derived values
   const issue = getIssueById(issueId);
+  // called before the early return below: hooks run in the same order on every render
+  const weekendDays = useProjectWeekendDays(issue?.project_id);
   if (!issue) return <></>;
   const createdByDetails = getUserDetails(issue?.created_by);
   const projectDetails = getProjectById(issue.project_id);
-  const weekendDays = useProjectWeekendDays(issue.project_id);
   const isEstimateEnabled = projectDetails?.estimate;
   const stateDetails = getStateById(issue.state_id);
 
