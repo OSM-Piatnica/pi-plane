@@ -117,6 +117,8 @@
   "comments_description": "Benachrichtigen Sie mich, wenn jemand einen Kommentar zu einem Arbeitselement hinzufügt.",
   "mentions": "Erwähnungen",
   "mentions_description": "Benachrichtigen Sie mich, wenn mich jemand in einem Kommentar oder in einer Beschreibung erwähnt.",
+  "project_access_requests": "Zugriffsanfragen",
+  "project_access_requests_description": "Senden Sie mir E-Mails zu Anfragen für den Beitritt zu privaten Projekten, die ich verwalte, und zu Entscheidungen über meine eigenen Anfragen.",
   "email_frequency": "E-Mail-Häufigkeit",
   "email_frequency_description": "Legen Sie fest, wie oft Sie E-Mails zu Änderungen an Arbeitselementen erhalten. Erwähnungen werden immer sofort gesendet.",
   "email_frequency_instant": "Sofort",

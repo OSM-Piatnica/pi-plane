@@ -100,5 +100,15 @@
     "button": "Review the request",
     "fallback": "If the button doesn’t work, copy and paste this link into your browser:",
     "note": "Note: This email was sent to <span>{email}</span> because you are an admin or the lead of this project."
+  },
+  "access_request_decision": {
+    "subject_approved": "Your request to join {project} was approved",
+    "subject_rejected": "Your request to join {project} was not approved",
+    "heading_approved": "You now have access to {project}",
+    "heading_rejected": "Your request to join {project}",
+    "intro_approved": "<strong>{decider}</strong> approved your request to join the private project <strong>{project}</strong> in the workspace <strong>{workspace}</strong> on Pi-Plane. You can open it now.",
+    "intro_rejected": "<strong>{decider}</strong> did not approve your request to join the private project <strong>{project}</strong> in the workspace <strong>{workspace}</strong> on Pi-Plane. If you think this is a mistake, ask a project admin.",
+    "button": "Open the project",
+    "note": "Note: This email was sent to <span>{email}</span> because you asked to join this project."
   }
 }

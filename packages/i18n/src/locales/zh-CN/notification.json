@@ -100,6 +100,8 @@
       "end_punctuation": "。"
     },
     "access_request": {
+      "approved": "批准了您加入 <value/> 的请求",
+      "rejected": "拒绝了您加入 <value/> 的请求",
       "requested": "请求访问 <value/>"
     }
   },

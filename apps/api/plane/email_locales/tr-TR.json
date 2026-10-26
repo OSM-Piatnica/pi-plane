@@ -100,5 +100,15 @@
     "button": "İsteği incele",
     "fallback": "Düğme çalışmıyorsa bu bağlantıyı kopyalayıp tarayıcınıza yapıştırın:",
     "note": "Not: Bu e-posta <span>{email}</span> adresine gönderildi çünkü bu projenin yöneticisi veya liderisiniz."
+  },
+  "access_request_decision": {
+    "subject_approved": "{project} projesine katılma isteğiniz onaylandı",
+    "subject_rejected": "{project} projesine katılma isteğiniz onaylanmadı",
+    "heading_approved": "Artık {project} projesine erişiminiz var",
+    "heading_rejected": "{project} projesine katılma isteğiniz",
+    "intro_approved": "<strong>{decider}</strong>, Pi-Plane’deki <strong>{workspace}</strong> çalışma alanında <strong>{project}</strong> özel projesine katılma isteğinizi onayladı. Artık projeyi açabilirsiniz.",
+    "intro_rejected": "<strong>{decider}</strong>, Pi-Plane’deki <strong>{workspace}</strong> çalışma alanında <strong>{project}</strong> özel projesine katılma isteğinizi onaylamadı. Bunun bir hata olduğunu düşünüyorsanız bir proje yöneticisiyle iletişime geçin.",
+    "button": "Projeyi aç",
+    "note": "Not: Bu e-posta, bu projeye katılmak istediğiniz için <span>{email}</span> adresine gönderildi."
   }
 }

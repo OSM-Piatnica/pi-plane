@@ -21,6 +21,7 @@ import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 // local imports
+import { getAccessRequestNotificationPath } from "@/helpers/access-request-notification";
 import { AccessRequestNotificationContent } from "./access-request-content";
 import { NotificationContent } from "./content";
 import { NotificationOption } from "./options";
@@ -50,7 +51,7 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
   const workspace = getWorkspaceBySlug(workspaceSlug);
 
   const notificationField = notification?.data?.issue_activity?.field || undefined;
-  // a request to join a Private project has no work item: it opens the members settings where the request waits
+  // a request to join a Private project has no work item: a click opens where the request waits or where it led
   const isAccessRequest = notification?.entity_name === "project_access_request" && !!notification?.data?.project;
   const notificationTriggeredBy = notification.triggered_by_details || undefined;
 
@@ -86,7 +87,7 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
         console.error(error);
       }
     }
-    router.push(`/${workspaceSlug}/settings/projects/${projectId}/members/`);
+    router.push(getAccessRequestNotificationPath(notification.data?.access_request?.status, workspaceSlug, projectId));
   };
 
   if (

@@ -100,6 +100,8 @@
       "end_punctuation": "."
     },
     "access_request": {
+      "approved": "schválil(a) vašu žiadosť o pripojenie k <value/>",
+      "rejected": "zamietol(a) vašu žiadosť o pripojenie k <value/>",
       "requested": "požiadal(a) o prístup k <value/>"
     }
   },

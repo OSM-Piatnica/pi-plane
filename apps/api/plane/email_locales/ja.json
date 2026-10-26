@@ -92,5 +92,15 @@
     "button": "リクエストを確認",
     "fallback": "ボタンが機能しない場合は、このリンクをコピーしてブラウザーに貼り付けてください。",
     "note": "注: このメールは、あなたがこのプロジェクトの管理者またはリーダーであるため、<span>{email}</span> 宛てに送信されました。"
+  },
+  "access_request_decision": {
+    "subject_approved": "{project} への参加リクエストが承認されました",
+    "subject_rejected": "{project} への参加リクエストは承認されませんでした",
+    "heading_approved": "{project} にアクセスできるようになりました",
+    "heading_rejected": "{project} への参加リクエスト",
+    "intro_approved": "<strong>{decider}</strong> さんが、Pi-Plane のワークスペース <strong>{workspace}</strong> のプライベートプロジェクト <strong>{project}</strong> への参加リクエストを承認しました。プロジェクトを開けます。",
+    "intro_rejected": "<strong>{decider}</strong> さんは、Pi-Plane のワークスペース <strong>{workspace}</strong> のプライベートプロジェクト <strong>{project}</strong> への参加リクエストを承認しませんでした。誤りだと思われる場合は、プロジェクト管理者にお問い合わせください。",
+    "button": "プロジェクトを開く",
+    "note": "注: このメールは、あなたがこのプロジェクトへの参加をリクエストしたため、<span>{email}</span> に送信されました。"
   }
 }

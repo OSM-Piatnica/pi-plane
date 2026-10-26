@@ -117,6 +117,8 @@
   "comments_description": "Upozorniť ma, keď niekto pridá komentár k pracovnej položke",
   "mentions": "Zmienky",
   "mentions_description": "Upozorniť ma, keď ma niekto spomenie v komentároch alebo popise",
+  "project_access_requests": "Žiadosti o prístup",
+  "project_access_requests_description": "Posielať mi e-maily o žiadostiach o pripojenie k súkromným projektom, ktoré spravujem, a o rozhodnutiach o mojich vlastných žiadostiach.",
   "email_frequency": "Frekvencia e-mailov",
   "email_frequency_description": "Vyberte, ako často chcete dostávať e-maily o zmenách pracovných položiek. Zmienky sa vždy odosielajú okamžite.",
   "email_frequency_instant": "Okamžite",

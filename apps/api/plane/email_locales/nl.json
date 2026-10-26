@@ -100,5 +100,15 @@
     "button": "Verzoek beoordelen",
     "fallback": "Werkt de knop niet? Kopieer dan deze link en plak hem in uw browser:",
     "note": "Let op: deze e-mail is verzonden naar <span>{email}</span> omdat u beheerder of leider van dit project bent."
+  },
+  "access_request_decision": {
+    "subject_approved": "Uw verzoek om lid te worden van {project} is goedgekeurd",
+    "subject_rejected": "Uw verzoek om lid te worden van {project} is niet goedgekeurd",
+    "heading_approved": "U heeft nu toegang tot {project}",
+    "heading_rejected": "Uw verzoek om lid te worden van {project}",
+    "intro_approved": "<strong>{decider}</strong> heeft uw verzoek om lid te worden van het privéproject <strong>{project}</strong> in de werkruimte <strong>{workspace}</strong> op Pi-Plane goedgekeurd. U kunt het nu openen.",
+    "intro_rejected": "<strong>{decider}</strong> heeft uw verzoek om lid te worden van het privéproject <strong>{project}</strong> in de werkruimte <strong>{workspace}</strong> op Pi-Plane niet goedgekeurd. Denkt u dat dit een vergissing is, neem dan contact op met een projectbeheerder.",
+    "button": "Project openen",
+    "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span> omdat u hebt gevraagd om lid te worden van dit project."
   }
 }

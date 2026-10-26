@@ -117,6 +117,8 @@
   "comments_description": "Notify me when someone leaves a comment on the work item",
   "mentions": "Mentions",
   "mentions_description": "Notify me when someone mentions me in the comments or description",
+  "project_access_requests": "Access requests",
+  "project_access_requests_description": "Email me about requests to join private projects I administer, and about the decisions on my own requests.",
   "email_frequency": "Email frequency",
   "email_frequency_description": "Choose how often you get emails about work item updates. Mentions are always sent immediately.",
   "email_frequency_instant": "Instantly",

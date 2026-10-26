@@ -117,6 +117,8 @@
   "comments_description": "當有人在工作事項上留下留言時通知我",
   "mentions": "提及",
   "mentions_description": "當有人在留言或描述中提及我時通知我",
+  "project_access_requests": "存取請求",
+  "project_access_requests_description": "透過電子郵件通知我加入我管理的私人專案的請求，以及對我自己請求的決定。",
   "email_frequency": "郵件頻率",
   "email_frequency_description": "選擇您接收工作事項更新郵件的頻率。提及一律會立即發送。",
   "email_frequency_instant": "立即",

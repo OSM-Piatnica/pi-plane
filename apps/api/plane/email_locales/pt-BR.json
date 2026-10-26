@@ -100,5 +100,15 @@
     "button": "Analisar a solicitação",
     "fallback": "Se o botão não funcionar, copie este link e cole-o no seu navegador:",
     "note": "Observação: este e-mail foi enviado para <span>{email}</span> porque você é administrador ou líder deste projeto."
+  },
+  "access_request_decision": {
+    "subject_approved": "Sua solicitação para entrar em {project} foi aprovada",
+    "subject_rejected": "Sua solicitação para entrar em {project} não foi aprovada",
+    "heading_approved": "Agora você tem acesso a {project}",
+    "heading_rejected": "Sua solicitação para entrar em {project}",
+    "intro_approved": "<strong>{decider}</strong> aprovou sua solicitação para entrar no projeto privado <strong>{project}</strong> no espaço de trabalho <strong>{workspace}</strong> no Pi-Plane. Você já pode abri-lo.",
+    "intro_rejected": "<strong>{decider}</strong> não aprovou sua solicitação para entrar no projeto privado <strong>{project}</strong> no espaço de trabalho <strong>{workspace}</strong> no Pi-Plane. Se você acha que é um engano, fale com um administrador do projeto.",
+    "button": "Abrir o projeto",
+    "note": "Observação: este e-mail foi enviado para <span>{email}</span> porque você pediu para entrar neste projeto."
   }
 }

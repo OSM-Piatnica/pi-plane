@@ -117,6 +117,8 @@
   "comments_description": "誰かが作業項目にコメントを残したときに通知します",
   "mentions": "メンション",
   "mentions_description": "誰かがコメントや説明で自分をメンションしたときに通知します",
+  "project_access_requests": "アクセスリクエスト",
+  "project_access_requests_description": "自分が管理するプライベートプロジェクトへの参加リクエストと、自分のリクエストに対する決定についてメールで通知します。",
   "email_frequency": "メールの頻度",
   "email_frequency_description": "作業項目の更新に関するメールを受け取る頻度を選択してください。メンションは常にすぐに送信されます。",
   "email_frequency_instant": "すぐに",

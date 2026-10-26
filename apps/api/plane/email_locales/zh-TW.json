@@ -92,5 +92,15 @@
     "button": "檢視請求",
     "fallback": "如果按鈕無法使用，請複製此連結並貼到瀏覽器中：",
     "note": "注意：此郵件已寄送至 <span>{email}</span>，因為您是此專案的管理員或負責人。"
+  },
+  "access_request_decision": {
+    "subject_approved": "您加入 {project} 的請求已獲核准",
+    "subject_rejected": "您加入 {project} 的請求未獲核准",
+    "heading_approved": "您現在可以存取 {project}",
+    "heading_rejected": "您加入 {project} 的請求",
+    "intro_approved": "<strong>{decider}</strong> 已核准您加入 Pi-Plane 工作區 <strong>{workspace}</strong> 中私人專案 <strong>{project}</strong> 的請求。您現在可以開啟該專案。",
+    "intro_rejected": "<strong>{decider}</strong> 未核准您加入 Pi-Plane 工作區 <strong>{workspace}</strong> 中私人專案 <strong>{project}</strong> 的請求。如果您認為這是誤判，請聯絡專案管理員。",
+    "button": "開啟專案",
+    "note": "注意：此郵件寄送至 <span>{email}</span>，因為您請求加入此專案。"
   }
 }

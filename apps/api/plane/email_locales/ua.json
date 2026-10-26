@@ -108,5 +108,15 @@
     "button": "Розглянути запит",
     "fallback": "Якщо кнопка не працює, скопіюйте це посилання та вставте його в браузер:",
     "note": "Примітка: цей лист надіслано на адресу <span>{email}</span>, бо ви адміністратор або керівник цього проєкту."
+  },
+  "access_request_decision": {
+    "subject_approved": "Ваш запит на доступ до {project} схвалено",
+    "subject_rejected": "Ваш запит на доступ до {project} не схвалено",
+    "heading_approved": "Тепер у вас є доступ до {project}",
+    "heading_rejected": "Ваш запит на доступ до {project}",
+    "intro_approved": "<strong>{decider}</strong> схвалив(ла) ваш запит на доступ до закритого проєкту <strong>{project}</strong> у робочому просторі <strong>{workspace}</strong> у Pi-Plane. Тепер ви можете його відкрити.",
+    "intro_rejected": "<strong>{decider}</strong> не схвалив(ла) ваш запит на доступ до закритого проєкту <strong>{project}</strong> у робочому просторі <strong>{workspace}</strong> у Pi-Plane. Якщо ви вважаєте, що це помилка, зверніться до адміністратора проєкту.",
+    "button": "Відкрити проєкт",
+    "note": "Примітка: цей лист надіслано на адресу <span>{email}</span>, бо ви запросили доступ до цього проєкту."
   }
 }

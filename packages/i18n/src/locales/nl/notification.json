@@ -100,6 +100,8 @@
       "end_punctuation": "."
     },
     "access_request": {
+      "approved": "heeft uw verzoek om lid te worden van <value/> goedgekeurd",
+      "rejected": "heeft uw verzoek om lid te worden van <value/> afgewezen",
       "requested": "heeft toegang tot <value/> aangevraagd"
     }
   },

@@ -100,5 +100,15 @@
     "button": "Esamina la richiesta",
     "fallback": "Se il pulsante non funziona, copi questo link e lo incolli nel browser:",
     "note": "Nota: questa e-mail è stata inviata a <span>{email}</span> perché Lei è amministratore o responsabile di questo progetto."
+  },
+  "access_request_decision": {
+    "subject_approved": "La tua richiesta di unirti a {project} è stata approvata",
+    "subject_rejected": "La tua richiesta di unirti a {project} non è stata approvata",
+    "heading_approved": "Ora hai accesso a {project}",
+    "heading_rejected": "La tua richiesta di unirti a {project}",
+    "intro_approved": "<strong>{decider}</strong> ha approvato la tua richiesta di unirti al progetto privato <strong>{project}</strong> nell’area di lavoro <strong>{workspace}</strong> su Pi-Plane. Ora puoi aprirlo.",
+    "intro_rejected": "<strong>{decider}</strong> non ha approvato la tua richiesta di unirti al progetto privato <strong>{project}</strong> nell’area di lavoro <strong>{workspace}</strong> su Pi-Plane. Se pensi che sia un errore, rivolgiti a un amministratore del progetto.",
+    "button": "Apri il progetto",
+    "note": "Nota: questa e-mail è stata inviata a <span>{email}</span> perché hai chiesto di unirti a questo progetto."
   }
 }

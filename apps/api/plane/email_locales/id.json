@@ -92,5 +92,15 @@
     "button": "Tinjau permintaan",
     "fallback": "Jika tombol tidak berfungsi, salin tautan ini dan tempel di browser Anda:",
     "note": "Catatan: Email ini dikirim ke <span>{email}</span> karena Anda adalah admin atau pemimpin proyek ini."
+  },
+  "access_request_decision": {
+    "subject_approved": "Permintaan Anda untuk bergabung dengan {project} disetujui",
+    "subject_rejected": "Permintaan Anda untuk bergabung dengan {project} tidak disetujui",
+    "heading_approved": "Sekarang Anda memiliki akses ke {project}",
+    "heading_rejected": "Permintaan Anda untuk bergabung dengan {project}",
+    "intro_approved": "<strong>{decider}</strong> menyetujui permintaan Anda untuk bergabung dengan proyek privat <strong>{project}</strong> di ruang kerja <strong>{workspace}</strong> di Pi-Plane. Anda sudah dapat membukanya.",
+    "intro_rejected": "<strong>{decider}</strong> tidak menyetujui permintaan Anda untuk bergabung dengan proyek privat <strong>{project}</strong> di ruang kerja <strong>{workspace}</strong> di Pi-Plane. Jika Anda merasa ini keliru, hubungi admin proyek.",
+    "button": "Buka proyek",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span> karena Anda meminta bergabung dengan proyek ini."
   }
 }

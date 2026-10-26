@@ -117,6 +117,8 @@
   "comments_description": "Powiadamiaj, gdy ktoś doda komentarz do elementu pracy",
   "mentions": "Wzmianki",
   "mentions_description": "Powiadamiaj mnie, gdy ktoś mnie wspomni w komentarzach lub opisie",
+  "project_access_requests": "Prośby o dostęp",
+  "project_access_requests_description": "Wysyłaj mi e-maile o prośbach o dołączenie do prywatnych projektów, którymi administruję, oraz o decyzjach w sprawie moich własnych próśb.",
   "email_frequency": "Częstotliwość e-maili",
   "email_frequency_description": "Wybierz, jak często chcesz otrzymywać e-maile o zmianach w elementach pracy. Wzmianki są zawsze wysyłane natychmiast.",
   "email_frequency_instant": "Natychmiast",

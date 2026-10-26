@@ -108,5 +108,15 @@
     "button": "Examinează cererea",
     "fallback": "Dacă butonul nu funcționează, copiați acest link și lipiți-l în browser:",
     "note": "Notă: acest e-mail a fost trimis la <span>{email}</span> deoarece sunteți administrator sau lider al acestui proiect."
+  },
+  "access_request_decision": {
+    "subject_approved": "Cererea ta de a te alătura proiectului {project} a fost aprobată",
+    "subject_rejected": "Cererea ta de a te alătura proiectului {project} nu a fost aprobată",
+    "heading_approved": "Acum ai acces la {project}",
+    "heading_rejected": "Cererea ta de a te alătura proiectului {project}",
+    "intro_approved": "<strong>{decider}</strong> a aprobat cererea ta de a te alătura proiectului privat <strong>{project}</strong> din spațiul de lucru <strong>{workspace}</strong> din Pi-Plane. Îl poți deschide acum.",
+    "intro_rejected": "<strong>{decider}</strong> nu a aprobat cererea ta de a te alătura proiectului privat <strong>{project}</strong> din spațiul de lucru <strong>{workspace}</strong> din Pi-Plane. Dacă crezi că este o greșeală, contactează un administrator al proiectului.",
+    "button": "Deschide proiectul",
+    "note": "Notă: Acest e-mail a fost trimis la <span>{email}</span> deoarece ai cerut să te alături acestui proiect."
   }
 }

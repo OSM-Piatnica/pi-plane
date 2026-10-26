@@ -100,6 +100,8 @@
       "end_punctuation": "."
     },
     "access_request": {
+      "approved": "<value/> 참여 요청을 승인했습니다",
+      "rejected": "<value/> 참여 요청을 거부했습니다",
       "requested": "<value/>에 대한 액세스를 요청했습니다"
     }
   },
