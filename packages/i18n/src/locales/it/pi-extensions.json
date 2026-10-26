@@ -138,6 +138,10 @@
           "confirm": "Riapri",
           "content": "Questo progetto non consente a un padre di restare completato mentre un sotto-elemento è aperto. Anche questi padri completati verranno riaperti: {names}",
           "title": "Riaprire anche gli elementi di lavoro padre?"
+        },
+        "blocked_status": {
+          "description": "Un elemento di lavoro non può passare a uno stato avviato o completato finché un elemento di lavoro che lo blocca è ancora aperto (i bloccanti completati e annullati non contano). Restare nel backlog o da fare, e annullare, restano possibili.",
+          "title": "Avvia o completa un elemento solo quando i suoi bloccanti sono conclusi"
         }
       },
       "save_error": "Impossibile salvare la configurazione del flusso di lavoro.",

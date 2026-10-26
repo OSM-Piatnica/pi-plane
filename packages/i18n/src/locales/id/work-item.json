@@ -891,6 +891,11 @@
         "enabled": "mengaktifkan tampilan Intake",
         "fallback": "memperbarui tampilan Intake"
       },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "menonaktifkan aturan status item yang terhalang",
+        "enabled": "mengaktifkan aturan status item yang terhalang",
+        "fallback": "memperbarui aturan status item yang terhalang"
+      },
       "is_epic_enabled": {
         "disabled": "menonaktifkan Epik",
         "enabled": "mengaktifkan Epik",

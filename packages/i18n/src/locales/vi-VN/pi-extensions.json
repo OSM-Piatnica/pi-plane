@@ -138,6 +138,10 @@
           "confirm": "Mở lại",
           "content": "Dự án này không cho phép mục cha giữ trạng thái hoàn thành khi một mục con đang mở. Các mục cha đã hoàn thành sau cũng sẽ được mở lại: {names}",
           "title": "Mở lại cả các mục công việc cha?"
+        },
+        "blocked_status": {
+          "description": "Một mục công việc không thể chuyển sang trạng thái đã bắt đầu hoặc đã hoàn thành khi một mục công việc chặn nó vẫn còn mở (mục chặn đã hoàn thành hoặc đã hủy không tính). Vẫn có thể ở lại backlog hoặc cần làm, và vẫn có thể hủy.",
+          "title": "Chỉ bắt đầu hoặc hoàn thành mục khi các mục chặn nó đã xong"
         }
       },
       "save_error": "Không thể lưu cấu hình quy trình làm việc.",

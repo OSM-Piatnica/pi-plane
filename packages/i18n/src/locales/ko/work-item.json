@@ -891,6 +891,11 @@
         "enabled": "Intake 보기를 활성화했습니다",
         "fallback": "Intake 보기를 업데이트했습니다"
       },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "차단된 항목 상태 규칙을 비활성화했습니다",
+        "enabled": "차단된 항목 상태 규칙을 활성화했습니다",
+        "fallback": "차단된 항목 상태 규칙을 업데이트했습니다"
+      },
       "is_epic_enabled": {
         "disabled": "에픽을 비활성화했습니다",
         "enabled": "에픽을 활성화했습니다",

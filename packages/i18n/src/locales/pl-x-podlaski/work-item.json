@@ -891,6 +891,11 @@
         "enabled": "włączono widok Intake",
         "fallback": "zaktualizowano widok Intake"
       },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "wyłączono regułę statusu elementów zablokowanych",
+        "enabled": "włączono regułę statusu elementów zablokowanych",
+        "fallback": "zaktualizowano regułę statusu elementów zablokowanych"
+      },
       "is_epic_enabled": {
         "disabled": "wyłączono epiki",
         "enabled": "włączono epiki",

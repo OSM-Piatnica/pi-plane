@@ -138,6 +138,10 @@
           "confirm": "Rouvrir",
           "content": "Ce projet n'autorise pas un parent à rester terminé tant qu'un sous-élément est ouvert. Ces parents terminés seront également rouverts : {names}",
           "title": "Rouvrir aussi les éléments de travail parents ?"
+        },
+        "blocked_status": {
+          "description": "Un élément de travail ne peut pas passer à un état démarré ou terminé tant qu’un élément de travail qui le bloque est encore ouvert (les éléments bloquants terminés ou annulés ne comptent pas). Rester dans le backlog ou à faire, et annuler, restent possibles.",
+          "title": "Ne démarrer ou terminer un élément que lorsque ses éléments bloquants sont terminés"
         }
       },
       "save_error": "Impossible d'enregistrer la configuration du workflow.",

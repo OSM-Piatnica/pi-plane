@@ -138,6 +138,10 @@
           "confirm": "Znova otvoriť",
           "content": "Tento projekt nedovoľuje, aby nadradená položka zostala dokončená, kým je podriadená položka otvorená. Tieto dokončené nadradené položky sa tiež znova otvoria: {names}",
           "title": "Znova otvoriť aj nadradené pracovné položky?"
+        },
+        "blocked_status": {
+          "description": "Pracovná položka nemôže prejsť do rozpracovaného ani dokončeného stavu, kým je otvorená pracovná položka, ktorá ju blokuje (dokončené a zrušené blokujúce položky sa nepočítajú). Zostať v backlogu alebo na vykonanie a zrušenie zostáva možné.",
+          "title": "Spustiť alebo dokončiť položku, až keď sú jej blokujúce položky hotové"
         }
       },
       "save_error": "Uloženie konfigurácie pracovného postupu zlyhalo.",

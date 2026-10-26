@@ -138,6 +138,10 @@
           "confirm": "Redeschide",
           "content": "Acest proiect nu permite ca un părinte să rămână finalizat cât timp o sub-activitate este deschisă. Aceste activități părinte finalizate vor fi redeschise și ele: {names}",
           "title": "Redeschizi și activitățile părinte?"
+        },
+        "blocked_status": {
+          "description": "O activitate nu poate trece într-o stare începută sau finalizată cât timp o activitate care o blochează este încă deschisă (cele finalizate sau anulate nu contează). Rămânerea în backlog sau de făcut și anularea rămân posibile.",
+          "title": "Pornește sau finalizează o activitate doar când cele care o blochează sunt gata"
         }
       },
       "save_error": "Nu s-a putut salva configurația fluxului de lucru.",

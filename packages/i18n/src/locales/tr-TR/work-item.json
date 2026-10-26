@@ -891,6 +891,11 @@
         "enabled": "Intake görünümünü etkinleştirdi",
         "fallback": "Intake görünümünü güncelledi"
       },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "engellenen öğe durumu kuralını devre dışı bıraktı",
+        "enabled": "engellenen öğe durumu kuralını etkinleştirdi",
+        "fallback": "engellenen öğe durumu kuralını güncelledi"
+      },
       "is_epic_enabled": {
         "disabled": "epikleri devre dışı bıraktı",
         "enabled": "epikleri etkinleştirdi",

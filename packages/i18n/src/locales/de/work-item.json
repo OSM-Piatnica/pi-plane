@@ -891,6 +891,11 @@
         "enabled": "hat die Intake-Ansicht aktiviert",
         "fallback": "hat die Intake-Ansicht aktualisiert"
       },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "hat die Regel zum Status blockierter Elemente deaktiviert",
+        "enabled": "hat die Regel zum Status blockierter Elemente aktiviert",
+        "fallback": "hat die Regel zum Status blockierter Elemente aktualisiert"
+      },
       "is_epic_enabled": {
         "disabled": "hat Epics deaktiviert",
         "enabled": "hat Epics aktiviert",

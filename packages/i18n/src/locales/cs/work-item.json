@@ -891,6 +891,11 @@
         "enabled": "zapnuto zobrazení Intake",
         "fallback": "aktualizováno zobrazení Intake"
       },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "vypnul(a) pravidlo stavu blokovaných položek",
+        "enabled": "zapnul(a) pravidlo stavu blokovaných položek",
+        "fallback": "aktualizoval(a) pravidlo stavu blokovaných položek"
+      },
       "is_epic_enabled": {
         "disabled": "vypnuty epiky",
         "enabled": "zapnuty epiky",

@@ -891,6 +891,11 @@
         "enabled": "schakelde de Intake-weergave in",
         "fallback": "werkte de Intake-weergave bij"
       },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "heeft de regel voor de status van geblokkeerde items uitgeschakeld",
+        "enabled": "heeft de regel voor de status van geblokkeerde items ingeschakeld",
+        "fallback": "heeft de regel voor de status van geblokkeerde items bijgewerkt"
+      },
       "is_epic_enabled": {
         "disabled": "schakelde epics uit",
         "enabled": "schakelde epics in",
