@@ -54,7 +54,12 @@ function AdvancedGroup({ heading, items }: { heading: string; items: TAdvancedIt
               name={item.key}
               control={control}
               render={({ field: { value, onChange } }) => (
-                <Switch checked={Boolean(value)} onCheckedChange={onChange} size="sm" />
+                <Switch
+                  checked={Boolean(value)}
+                  onCheckedChange={onChange}
+                  size="sm"
+                  aria-label={t(`${item.i18nPrefix}.title`)}
+                />
               )}
             />
           </li>
