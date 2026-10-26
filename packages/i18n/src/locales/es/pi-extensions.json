@@ -65,6 +65,13 @@
         "invalid": "Introduce un número entero de días entre -{max} y {max}.",
         "label": "Retraso (días)",
         "update_failed": "No se pudo cambiar el retraso."
+      },
+      "duplicate_cancel": {
+        "confirm": "Mover a cancelado",
+        "content": "{issue} ahora está marcado como duplicado de {originals}. ¿Moverlo a «{state}»? Seguirá enlazado y visible.",
+        "failed": "No se pudo cancelar el elemento de trabajo.",
+        "keep": "Dejarlo abierto",
+        "title": "¿Cancelar este elemento de trabajo?"
       }
     }
   },

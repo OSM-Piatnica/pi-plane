@@ -65,6 +65,13 @@
         "invalid": "Informe um número inteiro de dias entre -{max} e {max}.",
         "label": "Atraso (dias)",
         "update_failed": "Não foi possível alterar o atraso."
+      },
+      "duplicate_cancel": {
+        "confirm": "Mover para cancelado",
+        "content": "{issue} agora está marcado como duplicata de {originals}. Movê-lo para “{state}”? Ele continua vinculado e visível.",
+        "failed": "Não foi possível cancelar o item de trabalho.",
+        "keep": "Manter aberto",
+        "title": "Cancelar este item de trabalho?"
       }
     }
   },

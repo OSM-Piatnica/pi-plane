@@ -66,6 +66,13 @@
         "invalid": "Podaj liczbę całkowitą dni od -{max} do {max}.",
         "label": "Opóźnienie (dni)",
         "update_failed": "Nie udało się zmienić opóźnienia."
+      },
+      "duplicate_cancel": {
+        "confirm": "Przenieś do anulowanych",
+        "content": "{issue} jest teraz oznaczony jako duplikat elementu {originals}. Przenieść go do stanu „{state}”? Pozostanie powiązany i widoczny.",
+        "failed": "Nie udało się anulować elementu pracy.",
+        "keep": "Zostaw otwarty",
+        "title": "Anulować ten element pracy?"
       }
     }
   },

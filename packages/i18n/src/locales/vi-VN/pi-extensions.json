@@ -65,6 +65,13 @@
         "invalid": "Nhập số nguyên ngày từ -{max} đến {max}.",
         "label": "Độ trễ (ngày)",
         "update_failed": "Không thể thay đổi độ trễ."
+      },
+      "duplicate_cancel": {
+        "confirm": "Chuyển sang đã hủy",
+        "content": "{issue} hiện được đánh dấu là bản trùng của {originals}. Chuyển sang “{state}”? Mục vẫn được liên kết và hiển thị.",
+        "failed": "Không thể hủy mục công việc.",
+        "keep": "Giữ mở",
+        "title": "Hủy mục công việc này?"
       }
     }
   },

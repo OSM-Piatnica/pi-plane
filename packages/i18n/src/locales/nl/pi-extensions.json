@@ -65,6 +65,13 @@
         "invalid": "Voer een geheel aantal dagen in tussen -{max} en {max}.",
         "label": "Vertraging (dagen)",
         "update_failed": "De vertraging kon niet worden gewijzigd."
+      },
+      "duplicate_cancel": {
+        "confirm": "Naar geannuleerd verplaatsen",
+        "content": "{issue} is nu gemarkeerd als duplicaat van {originals}. Verplaatsen naar ‘{state}’? Het blijft gekoppeld en zichtbaar.",
+        "failed": "Het werkitem kon niet worden geannuleerd.",
+        "keep": "Open laten",
+        "title": "Dit werkitem annuleren?"
       }
     }
   },

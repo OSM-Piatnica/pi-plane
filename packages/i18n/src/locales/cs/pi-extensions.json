@@ -65,6 +65,13 @@
         "invalid": "Zadejte celé číslo dnů od -{max} do {max}.",
         "label": "Zpoždění (dny)",
         "update_failed": "Zpoždění se nepodařilo změnit."
+      },
+      "duplicate_cancel": {
+        "confirm": "Přesunout do zrušených",
+        "content": "{issue} je nyní označena jako duplikát položky {originals}. Přesunout ji do stavu „{state}“? Zůstane propojená a viditelná.",
+        "failed": "Pracovní položku se nepodařilo zrušit.",
+        "keep": "Nechat otevřenou",
+        "title": "Zrušit tuto pracovní položku?"
       }
     }
   },

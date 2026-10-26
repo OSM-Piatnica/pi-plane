@@ -65,6 +65,13 @@
         "invalid": "Zadajte celé číslo dní od -{max} do {max}.",
         "label": "Oneskorenie (dni)",
         "update_failed": "Oneskorenie sa nepodarilo zmeniť."
+      },
+      "duplicate_cancel": {
+        "confirm": "Presunúť do zrušených",
+        "content": "{issue} je teraz označená ako duplikát položky {originals}. Presunúť ju do stavu „{state}“? Zostane prepojená a viditeľná.",
+        "failed": "Pracovnú položku sa nepodarilo zrušiť.",
+        "keep": "Nechať otvorenú",
+        "title": "Zrušiť túto pracovnú položku?"
       }
     }
   },

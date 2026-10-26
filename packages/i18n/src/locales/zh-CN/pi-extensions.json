@@ -65,6 +65,13 @@
         "invalid": "请输入 -{max} 到 {max} 之间的整数天数。",
         "label": "延迟（天）",
         "update_failed": "无法更改延迟。"
+      },
+      "duplicate_cancel": {
+        "confirm": "移到已取消",
+        "content": "{issue} 现已标记为 {originals} 的重复项。要将其移到“{state}”吗？它仍保持关联并可见。",
+        "failed": "无法取消该工作项。",
+        "keep": "保持打开",
+        "title": "是否取消此工作项？"
       }
     }
   },

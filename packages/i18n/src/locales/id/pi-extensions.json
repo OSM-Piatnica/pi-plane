@@ -65,6 +65,13 @@
         "invalid": "Masukkan bilangan bulat hari antara -{max} dan {max}.",
         "label": "Jeda (hari)",
         "update_failed": "Jeda tidak dapat diubah."
+      },
+      "duplicate_cancel": {
+        "confirm": "Pindahkan ke dibatalkan",
+        "content": "{issue} kini ditandai sebagai duplikat dari {originals}. Pindahkan ke “{state}”? Item tetap terhubung dan terlihat.",
+        "failed": "Item kerja tidak dapat dibatalkan.",
+        "keep": "Biarkan terbuka",
+        "title": "Batalkan item kerja ini?"
       }
     }
   },

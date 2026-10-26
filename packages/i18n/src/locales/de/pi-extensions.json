@@ -65,6 +65,13 @@
         "invalid": "Geben Sie eine ganze Zahl von Tagen zwischen -{max} und {max} ein.",
         "label": "Verzögerung (Tage)",
         "update_failed": "Die Verzögerung konnte nicht geändert werden."
+      },
+      "duplicate_cancel": {
+        "confirm": "In „Abgebrochen“ verschieben",
+        "content": "{issue} ist jetzt als Duplikat von {originals} markiert. In „{state}“ verschieben? Es bleibt verknüpft und sichtbar.",
+        "failed": "Das Arbeitselement konnte nicht abgebrochen werden.",
+        "keep": "Offen lassen",
+        "title": "Dieses Arbeitselement abbrechen?"
       }
     }
   },

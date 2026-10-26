@@ -65,6 +65,13 @@
         "invalid": "Enter a whole number of days between -{max} and {max}.",
         "label": "Lag (days)",
         "update_failed": "Could not change the lag."
+      },
+      "duplicate_cancel": {
+        "confirm": "Move to cancelled",
+        "content": "{issue} is now marked as a duplicate of {originals}. Move it to “{state}”? It stays linked and visible.",
+        "failed": "Could not cancel the work item.",
+        "keep": "Keep it open",
+        "title": "Cancel this work item?"
       }
     }
   },

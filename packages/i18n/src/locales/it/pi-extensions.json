@@ -65,6 +65,13 @@
         "invalid": "Inserisci un numero intero di giorni tra -{max} e {max}.",
         "label": "Ritardo (giorni)",
         "update_failed": "Impossibile modificare il ritardo."
+      },
+      "duplicate_cancel": {
+        "confirm": "Sposta in annullato",
+        "content": "{issue} ora è contrassegnato come duplicato di {originals}. Spostarlo in «{state}»? Resta collegato e visibile.",
+        "failed": "Impossibile annullare l’elemento di lavoro.",
+        "keep": "Lascialo aperto",
+        "title": "Annullare questo elemento di lavoro?"
       }
     }
   },

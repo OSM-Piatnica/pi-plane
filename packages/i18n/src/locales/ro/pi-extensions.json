@@ -65,6 +65,13 @@
         "invalid": "Introdu un număr întreg de zile între -{max} și {max}.",
         "label": "Decalaj (zile)",
         "update_failed": "Decalajul nu a putut fi modificat."
+      },
+      "duplicate_cancel": {
+        "confirm": "Mută la anulate",
+        "content": "{issue} este acum marcată ca duplicat al {originals}. O muți în „{state}”? Rămâne legată și vizibilă.",
+        "failed": "Activitatea nu a putut fi anulată.",
+        "keep": "Păstrează deschisă",
+        "title": "Anulezi această activitate?"
       }
     }
   },

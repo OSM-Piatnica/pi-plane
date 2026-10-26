@@ -65,6 +65,13 @@
         "invalid": "請輸入 -{max} 到 {max} 之間的整數天數。",
         "label": "延遲（天）",
         "update_failed": "無法變更延遲。"
+      },
+      "duplicate_cancel": {
+        "confirm": "移到已取消",
+        "content": "{issue} 現已標記為 {originals} 的重複項。要將其移到「{state}」嗎？它仍保持關聯並可見。",
+        "failed": "無法取消該工作事項。",
+        "keep": "保持開啟",
+        "title": "是否取消此工作事項？"
       }
     }
   },

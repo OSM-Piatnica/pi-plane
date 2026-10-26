@@ -65,6 +65,13 @@
         "invalid": "Saisissez un nombre entier de jours entre -{max} et {max}.",
         "label": "Décalage (jours)",
         "update_failed": "Impossible de modifier le décalage."
+      },
+      "duplicate_cancel": {
+        "confirm": "Passer à annulé",
+        "content": "{issue} est maintenant marqué comme doublon de {originals}. Le passer à « {state} » ? Il reste lié et visible.",
+        "failed": "Impossible d’annuler l’élément de travail.",
+        "keep": "Le laisser ouvert",
+        "title": "Annuler cet élément de travail ?"
       }
     }
   },
