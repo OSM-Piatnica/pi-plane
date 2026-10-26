@@ -33,6 +33,8 @@ def project(db, workspace, create_user):
         created_by=create_user,
         is_relation_schedule_enabled=True,
         is_relation_traceability_enabled=True,
+        # these tests count calendar days; the working-day rules have their own tests
+        weekend_days=[],
     )
     ProjectMember.objects.create(project=project, member=create_user, role=20, is_active=True)
     return project

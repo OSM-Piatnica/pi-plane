@@ -20,17 +20,25 @@ type TIssueDates = TWorkItemTimelineDates;
 
 type TRelationMap = Record<string, Partial<Record<TIssueRelationTypes, string[]>> | undefined>;
 
-/** Days of lag of the relation `issueId <relationType> relatedId`; zero when none is known. */
+/** Working days of lag of the relation `issueId <relationType> relatedId`; zero when none is known. */
 export type TGetRelationLag = (issueId: string, relationType: TIssueRelationTypes, relatedId: string) => number;
 
 const NO_LAG: TGetRelationLag = () => 0;
+
+/** The weekend days of a work item's project, to count a relation's lag and 'must start after' in working days. */
+export type TGetWeekendDays = (issueId: string) => readonly number[];
+
+const NO_WEEKEND_DAYS: TGetWeekendDays = () => [];
 
 export const isDependencyRelationInvalid = (
   relationType: TTimelineRelationType,
   sourceDates: TIssueDates,
   relatedDates: TIssueDates,
-  lag = 0
-): boolean => !isTimelineRelationSatisfied(relationType, sourceDates, relatedDates, lag);
+  lag = 0,
+  sourceWeekendDays: readonly number[] = [],
+  relatedWeekendDays: readonly number[] = []
+): boolean =>
+  !isTimelineRelationSatisfied(relationType, sourceDates, relatedDates, lag, sourceWeekendDays, relatedWeekendDays);
 
 export const getDependencyArrowEndpoints = (
   relationType: TIssueRelationTypes,
@@ -56,7 +64,8 @@ export const buildGanttDependencyEdges = (
   blockIds: string[],
   relationMap: TRelationMap,
   getDates: (issueId: string) => TIssueDates | undefined,
-  getLag: TGetRelationLag = NO_LAG
+  getLag: TGetRelationLag = NO_LAG,
+  getWeekendDays: TGetWeekendDays = NO_WEEKEND_DAYS
 ): TGanttDependencyEdge[] => {
   const visible = new Set(blockIds);
   const edges: TGanttDependencyEdge[] = [];
@@ -84,7 +93,9 @@ export const buildGanttDependencyEdges = (
             relationType,
             sourceDates,
             relatedDates,
-            getLag(sourceId, relationType, relatedId)
+            getLag(sourceId, relationType, relatedId),
+            getWeekendDays(sourceId),
+            getWeekendDays(relatedId)
           );
 
         edges.push({
@@ -105,7 +116,8 @@ export const wouldUpdatesViolateDependencies = (
   updates: { id: string; start_date?: string; target_date?: string }[],
   relationMap: TRelationMap,
   getDates: (issueId: string) => TIssueDates | undefined,
-  getLag: TGetRelationLag = NO_LAG
+  getLag: TGetRelationLag = NO_LAG,
+  getWeekendDays: TGetWeekendDays = NO_WEEKEND_DAYS
 ): boolean => {
   const proposed = new Map<string, TIssueDates>();
   for (const update of updates) {
@@ -133,7 +145,9 @@ export const wouldUpdatesViolateDependencies = (
             relationType,
             sourceDates,
             relatedDates,
-            getLag(update.id, relationType, relatedId)
+            getLag(update.id, relationType, relatedId),
+            getWeekendDays(update.id),
+            getWeekendDays(relatedId)
           )
         ) {
           return true;
@@ -150,7 +164,14 @@ export const wouldUpdatesViolateDependencies = (
         const thisDates = getMergedDates(update.id);
         if (!otherDates || !thisDates) continue;
         if (
-          isDependencyRelationInvalid(relationType, otherDates, thisDates, getLag(otherId, relationType, update.id))
+          isDependencyRelationInvalid(
+            relationType,
+            otherDates,
+            thisDates,
+            getLag(otherId, relationType, update.id),
+            getWeekendDays(otherId),
+            getWeekendDays(update.id)
+          )
         ) {
           return true;
         }
