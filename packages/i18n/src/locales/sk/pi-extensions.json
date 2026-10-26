@@ -65,6 +65,11 @@
         "invalid": "Zadajte celé číslo dní od -{max} do {max}.",
         "label": "Oneskorenie (dni)",
         "update_failed": "Oneskorenie sa nepodarilo zmeniť."
+      },
+      "reschedule": {
+        "confirm": "Posunúť",
+        "content": "Táto zmena by porušila závislosti. Tieto pracovné položky možno posunúť na neskôr so zachovaním ich dĺžky, aby všetky závislosti naďalej platili:",
+        "title": "Posunúť aj závislé pracovné položky?"
       }
     }
   },

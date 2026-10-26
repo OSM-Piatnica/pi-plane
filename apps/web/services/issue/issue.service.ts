@@ -248,10 +248,15 @@ export class IssueService extends APIService {
     projectId: string,
     issueId: string,
     data: Partial<TIssue>,
-    options?: { reopenParent?: boolean }
+    options?: { reopenParent?: boolean; shiftDependents?: boolean }
   ): Promise<any> {
-    // reopen_parent confirms that completed parents may be reopened along with a finished work item
-    const payload = options?.reopenParent ? { ...data, reopen_parent: true } : data;
+    // reopen_parent confirms that completed parents may be reopened along with a finished work item, and
+    // shift_dependents that the work items depending on one whose dates change may be moved along
+    const payload = {
+      ...data,
+      ...(options?.reopenParent ? { reopen_parent: true } : {}),
+      ...(options?.shiftDependents ? { shift_dependents: true } : {}),
+    };
     return this.patch(`/api/workspaces/${workspaceSlug}/projects/${projectId}/${this.serviceType}/${issueId}/`, payload)
       .then((response) => response?.data)
       .catch((error) => {
@@ -270,9 +275,13 @@ export class IssueService extends APIService {
   async updateIssueDates(
     workspaceSlug: string,
     projectId: string,
-    updates: { id: string; start_date?: string; target_date?: string }[]
+    updates: { id: string; start_date?: string; target_date?: string }[],
+    options?: { shiftDependents?: boolean }
   ): Promise<void> {
-    return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issue-dates/`, { updates })
+    return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issue-dates/`, {
+      updates,
+      ...(options?.shiftDependents ? { shift_dependents: true } : {}),
+    })
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;

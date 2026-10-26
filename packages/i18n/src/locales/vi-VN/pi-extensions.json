@@ -65,6 +65,11 @@
         "invalid": "Nhập số nguyên ngày từ -{max} đến {max}.",
         "label": "Độ trễ (ngày)",
         "update_failed": "Không thể thay đổi độ trễ."
+      },
+      "reschedule": {
+        "confirm": "Di chuyển",
+        "content": "Thay đổi này sẽ phá vỡ các phụ thuộc. Có thể dời các mục công việc sau đây về sau, giữ nguyên thời lượng, để mọi phụ thuộc vẫn được đáp ứng:",
+        "title": "Di chuyển cả các mục công việc phụ thuộc?"
       }
     }
   },

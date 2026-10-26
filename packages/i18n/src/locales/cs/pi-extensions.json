@@ -65,6 +65,11 @@
         "invalid": "Zadejte celé číslo dnů od -{max} do {max}.",
         "label": "Zpoždění (dny)",
         "update_failed": "Zpoždění se nepodařilo změnit."
+      },
+      "reschedule": {
+        "confirm": "Posunout",
+        "content": "Tato změna by porušila závislosti. Tyto pracovní položky lze posunout na později při zachování jejich délky, aby všechny závislosti dál platily:",
+        "title": "Posunout i závislé pracovní položky?"
       }
     }
   },

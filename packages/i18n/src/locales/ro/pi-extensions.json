@@ -65,6 +65,11 @@
         "invalid": "Introdu un număr întreg de zile între -{max} și {max}.",
         "label": "Decalaj (zile)",
         "update_failed": "Decalajul nu a putut fi modificat."
+      },
+      "reschedule": {
+        "confirm": "Mută",
+        "content": "Această modificare ar încălca dependențe. Aceste activități pot fi mutate mai târziu, păstrându-și durata, astfel încât toate dependențele să rămână respectate:",
+        "title": "Muți și activitățile dependente?"
       }
     }
   },

@@ -65,6 +65,11 @@
         "invalid": "Introduce un número entero de días entre -{max} y {max}.",
         "label": "Retraso (días)",
         "update_failed": "No se pudo cambiar el retraso."
+      },
+      "reschedule": {
+        "confirm": "Moverlos",
+        "content": "Este cambio rompería dependencias. Estos elementos de trabajo se pueden mover más adelante, manteniendo su duración, para que todas las dependencias se sigan cumpliendo:",
+        "title": "¿Mover también los elementos de trabajo dependientes?"
       }
     }
   },

@@ -65,6 +65,11 @@
         "invalid": "-{max} ile {max} arasında tam sayı girin.",
         "label": "Gecikme (gün)",
         "update_failed": "Gecikme değiştirilemedi."
+      },
+      "reschedule": {
+        "confirm": "Taşı",
+        "content": "Bu değişiklik bağımlılıkları bozardı. Tüm bağımlılıklar korunsun diye bu iş öğeleri süreleri korunarak daha sonraya taşınabilir:",
+        "title": "Bağımlı iş öğeleri de taşınsın mı?"
       }
     }
   },
