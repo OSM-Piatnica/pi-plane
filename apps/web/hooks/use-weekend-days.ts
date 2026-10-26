@@ -13,11 +13,14 @@ import { useUserProfile } from "@/hooks/store/user";
 export const useWeekendDays = (): number[] => {
   const { data: userProfile } = useUserProfile();
   const { currentProjectDetails } = useProject();
-  const { currentWorkspace } = useWorkspace();
+  const { currentWorkspace, workspaces } = useWorkspace();
+  // Pages outside a workspace (profile settings) take the workspace the person last opened
+  const workspace =
+    currentWorkspace ?? (userProfile?.last_workspace_id ? workspaces[userProfile.last_workspace_id] : undefined);
 
   return resolveWeekendDays({
     profile: userProfile?.weekend_days,
     project: currentProjectDetails,
-    workspace: currentWorkspace?.weekend_days,
+    workspace: workspace?.weekend_days,
   });
 };
