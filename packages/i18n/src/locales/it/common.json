@@ -197,8 +197,8 @@
   "select_network": "Seleziona rete",
   "lead": "Responsabile",
   "date_range": "Intervallo di date",
-  "private": "Privato",
-  "public": "Pubblico",
+  "private": "Solo io",
+  "public": "Condiviso",
   "accessible_only_by_invite": "Accessibile solo su invito",
   "anyone_in_the_workspace_except_guests_can_join": "Chiunque nello spazio di lavoro, tranne gli ospiti, può unirsi",
   "creating": "Creazione in corso",
@@ -534,8 +534,8 @@
     "archiving": "Archiviazione in corso",
     "archive": "Archivia",
     "access": {
-      "public": "Pubblico",
-      "private": "Privato"
+      "public": "Condiviso con il progetto",
+      "private": "Solo io"
     },
     "done": "Fatto",
     "sub_work_items": "Sotto-elementi di lavoro",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "Si è verificato un errore",
       "inbox_fetch_error": "Errore durante il recupero degli elementi di lavoro Intake. Riprovi più tardi.",
-      "page_make_public_error": "Impossibile rendere pubblica la pagina. Riprovi più tardi.",
-      "page_make_private_error": "Impossibile rendere privata la pagina. Riprovi più tardi.",
+      "page_make_public_error": "Impossibile condividere la pagina con il progetto. Riprova più tardi.",
+      "page_make_private_error": "Impossibile rendere la pagina visibile solo a te. Riprova più tardi.",
       "workflow_pending_approval": "L'elemento di lavoro è in attesa di approvazione.",
       "workflow_transition_not_allowed": "Questa transizione di stato non è consentita dal workflow."
     },

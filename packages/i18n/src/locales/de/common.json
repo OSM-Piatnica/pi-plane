@@ -197,8 +197,8 @@
   "select_network": "Netzwerk auswählen",
   "lead": "Leitung",
   "date_range": "Datumsbereich",
-  "private": "Privat",
-  "public": "Öffentlich",
+  "private": "Nur ich",
+  "public": "Geteilt",
   "accessible_only_by_invite": "Nur auf Einladung zugänglich",
   "anyone_in_the_workspace_except_guests_can_join": "Jeder im Arbeitsbereich außer Gästen kann beitreten",
   "creating": "Wird erstellt",
@@ -534,8 +534,8 @@
     "archiving": "Wird archiviert",
     "archive": "Archivieren",
     "access": {
-      "public": "Öffentlich",
-      "private": "Privat"
+      "public": "Mit dem Projekt geteilt",
+      "private": "Nur ich"
     },
     "done": "Fertig",
     "sub_work_items": "Untergeordnete Arbeitselemente",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "Ein Fehler ist aufgetreten",
       "inbox_fetch_error": "Beim Abrufen der Intake-Arbeitselemente ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
-      "page_make_public_error": "Die Seite konnte nicht öffentlich gemacht werden. Bitte versuchen Sie es später erneut.",
-      "page_make_private_error": "Die Seite konnte nicht privat gemacht werden. Bitte versuchen Sie es später erneut.",
+      "page_make_public_error": "Die Seite konnte nicht mit dem Projekt geteilt werden. Bitte versuche es später erneut.",
+      "page_make_private_error": "Die Seite konnte nicht nur für dich sichtbar gemacht werden. Bitte versuche es später erneut.",
       "workflow_pending_approval": "Das Arbeitselement wartet auf eine Genehmigung.",
       "workflow_transition_not_allowed": "Dieser Statusübergang ist laut Workflow nicht zulässig."
     },

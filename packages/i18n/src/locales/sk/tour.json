@@ -72,8 +72,8 @@
         "description": "Stránky v Pi-Plane vám umožňujú zachytiť, organizovať a spolupracovať na projektových informáciách—bez externých nástrojov."
       },
       "step_one": {
-        "title": "Urobte stránku Verejnou alebo Súkromnou",
-        "description": "Stránky môžu byť nastavené ako verejné, viditeľné pre všetkých vo vašom pracovnom priestore, alebo súkromné, prístupné len vám."
+        "title": "Zdieľajte stránku, alebo si ju nechajte pre seba",
+        "description": "Stránky možno zdieľať so všetkými v projekte, alebo ich nechať viditeľné len pre vás."
       },
       "step_two": {
         "title": "Použite príkaz /",

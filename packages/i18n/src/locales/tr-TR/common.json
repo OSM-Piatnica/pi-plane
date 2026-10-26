@@ -197,8 +197,8 @@
   "select_network": "Ağ seç",
   "lead": "Lider",
   "date_range": "Tarih aralığı",
-  "private": "Özel",
-  "public": "Herkese Açık",
+  "private": "Yalnızca ben",
+  "public": "Paylaşılan",
   "accessible_only_by_invite": "Yalnızca davetle erişilebilir",
   "anyone_in_the_workspace_except_guests_can_join": "Çalışma alanındaki herkes (Misafirler hariç) katılabilir",
   "creating": "Oluşturuluyor",
@@ -534,8 +534,8 @@
     "archiving": "Arşivleniyor",
     "archive": "Arşivle",
     "access": {
-      "public": "Herkese Açık",
-      "private": "Özel"
+      "public": "Projeyle paylaşıldı",
+      "private": "Yalnızca ben"
     },
     "done": "Tamamlandı",
     "sub_work_items": "Alt iş öğeleri",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "Bir hata oluştu",
       "inbox_fetch_error": "Intake iş öğeleri getirilirken hata oluştu, lütfen daha sonra tekrar deneyin.",
-      "page_make_public_error": "Sayfa herkese açık yapılamadı. Lütfen daha sonra tekrar deneyin.",
-      "page_make_private_error": "Sayfa özel yapılamadı. Lütfen daha sonra tekrar deneyin.",
+      "page_make_public_error": "Sayfa projeyle paylaşılamadı. Lütfen daha sonra tekrar deneyin.",
+      "page_make_private_error": "Sayfa yalnızca size görünür yapılamadı. Lütfen daha sonra tekrar deneyin.",
       "workflow_pending_approval": "İş öğesi onay bekliyor.",
       "workflow_transition_not_allowed": "Bu durum geçişine iş akışı izin vermiyor."
     },

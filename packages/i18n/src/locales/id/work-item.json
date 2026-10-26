@@ -95,8 +95,8 @@
     "comments": {
       "placeholder": "Tambah komentar",
       "switch": {
-        "private": "Beralih ke komentar pribadi",
-        "public": "Beralih ke komentar publik"
+        "private": "Jadikan komentar ini internal",
+        "public": "Tampilkan komentar ini di web"
       },
       "create": {
         "success": "Komentar berhasil dibuat",
@@ -153,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Internal",
+        "external": "Terlihat di web"
       }
     },
     "empty_state": {

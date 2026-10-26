@@ -72,8 +72,8 @@
         "description": "Strony w Pi-Plane pozwalają Ci przechwytywać, organizować i współpracować nad informacjami o projekcie—bez zewnętrznych narzędzi."
       },
       "step_one": {
-        "title": "Ustaw stronę jako Publiczną lub Prywatną",
-        "description": "Strony można ustawić jako publiczne, widoczne dla wszystkich w Twoim obszarze roboczym, lub prywatne, dostępne tylko dla Ciebie."
+        "title": "Udostępnij stronę lub zachowaj ją dla siebie",
+        "description": "Strony można udostępnić wszystkim w projekcie albo ustawić tak, by były widoczne tylko dla Ciebie."
       },
       "step_two": {
         "title": "Użyj polecenia /",

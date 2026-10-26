@@ -95,8 +95,8 @@
     "comments": {
       "placeholder": "添加评论",
       "switch": {
-        "private": "切换为私密评论",
-        "public": "切换为公开评论"
+        "private": "将此评论设为内部",
+        "public": "在网络上显示此评论"
       },
       "create": {
         "success": "评论创建成功",
@@ -153,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "内部",
+        "external": "在网络上可见"
       }
     },
     "empty_state": {

@@ -197,8 +197,8 @@
   "select_network": "Selecione a rede",
   "lead": "Líder",
   "date_range": "Intervalo de datas",
-  "private": "Privado",
-  "public": "Público",
+  "private": "Só eu",
+  "public": "Compartilhado",
   "accessible_only_by_invite": "Acessível apenas por convite",
   "anyone_in_the_workspace_except_guests_can_join": "Qualquer pessoa no espaço de trabalho, exceto convidados, pode participar",
   "creating": "Criando",
@@ -534,8 +534,8 @@
     "archiving": "Arquivando",
     "archive": "Arquivar",
     "access": {
-      "public": "Público",
-      "private": "Privado"
+      "public": "Compartilhado com o projeto",
+      "private": "Só eu"
     },
     "done": "Concluído",
     "sub_work_items": "Sub-itens de trabalho",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "Ocorreu um erro",
       "inbox_fetch_error": "Erro ao buscar os itens de trabalho do Intake. Tente novamente mais tarde.",
-      "page_make_public_error": "Não foi possível tornar a página pública. Tente novamente mais tarde.",
-      "page_make_private_error": "Não foi possível tornar a página privada. Tente novamente mais tarde.",
+      "page_make_public_error": "Não foi possível compartilhar a página com o projeto. Tente novamente mais tarde.",
+      "page_make_private_error": "Não foi possível deixar a página visível só para você. Tente novamente mais tarde.",
       "workflow_pending_approval": "O item de trabalho tem uma aprovação pendente.",
       "workflow_transition_not_allowed": "Esta transição de estado não é permitida pelo fluxo de trabalho."
     },

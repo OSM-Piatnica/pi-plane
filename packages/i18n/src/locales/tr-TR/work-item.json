@@ -95,8 +95,8 @@
     "comments": {
       "placeholder": "Yorum ekle",
       "switch": {
-        "private": "Özel yoruma geç",
-        "public": "Genel yoruma geç"
+        "private": "Bu yorumu dahili yap",
+        "public": "Bu yorumu web'de göster"
       },
       "create": {
         "success": "Yorum başarıyla oluşturuldu",
@@ -153,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Dahili",
+        "external": "Web'de görünür"
       }
     },
     "empty_state": {

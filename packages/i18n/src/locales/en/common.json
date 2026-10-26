@@ -197,8 +197,8 @@
   "select_network": "Select network",
   "lead": "Lead",
   "date_range": "Date range",
-  "private": "Private",
-  "public": "Public",
+  "private": "Only me",
+  "public": "Shared",
   "accessible_only_by_invite": "Accessible only by invite",
   "anyone_in_the_workspace_except_guests_can_join": "Anyone in the workspace except Guests can join",
   "creating": "Creating",
@@ -534,8 +534,8 @@
     "archiving": "Archiving",
     "archive": "Archive",
     "access": {
-      "public": "Public",
-      "private": "Private"
+      "public": "Shared with the project",
+      "private": "Only me"
     },
     "done": "Done",
     "sub_work_items": "Sub-work items",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "An error occurred",
       "inbox_fetch_error": "Error fetching the intake work items please try again later.",
-      "page_make_public_error": "Page could not be made public. Please try again later.",
-      "page_make_private_error": "Page could not be made private. Please try again later.",
+      "page_make_public_error": "Page could not be shared with the project. Please try again later.",
+      "page_make_private_error": "Page could not be made visible only to you. Please try again later.",
       "workflow_pending_approval": "Work item has a pending approval.",
       "workflow_transition_not_allowed": "This state transition is not allowed by the workflow."
     },

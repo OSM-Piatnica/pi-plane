@@ -197,8 +197,8 @@
   "select_network": "ネットワークを選択",
   "lead": "リード",
   "date_range": "日付範囲",
-  "private": "プライベート",
-  "public": "パブリック",
+  "private": "自分のみ",
+  "public": "共有",
   "accessible_only_by_invite": "招待のみアクセス可能",
   "anyone_in_the_workspace_except_guests_can_join": "ゲスト以外のワークスペースのメンバーが参加可能",
   "creating": "作成中",
@@ -534,8 +534,8 @@
     "archiving": "アーカイブ中",
     "archive": "アーカイブ",
     "access": {
-      "public": "公開",
-      "private": "非公開"
+      "public": "プロジェクトと共有",
+      "private": "自分のみ"
     },
     "done": "完了",
     "sub_work_items": "サブ作業項目",
@@ -1377,8 +1377,8 @@
     "stores": {
       "generic_error": "エラーが発生しました",
       "inbox_fetch_error": "Intake の作業項目の取得中にエラーが発生しました。しばらくしてからもう一度お試しください。",
-      "page_make_public_error": "ページを公開にできませんでした。しばらくしてからもう一度お試しください。",
-      "page_make_private_error": "ページを非公開にできませんでした。しばらくしてからもう一度お試しください。",
+      "page_make_public_error": "ページをプロジェクトと共有できませんでした。後でもう一度お試しください。",
+      "page_make_private_error": "ページを自分だけに表示できませんでした。後でもう一度お試しください。",
       "workflow_pending_approval": "作業項目に保留中の承認があります。",
       "workflow_transition_not_allowed": "このステータスの遷移はワークフローで許可されていません。"
     },
