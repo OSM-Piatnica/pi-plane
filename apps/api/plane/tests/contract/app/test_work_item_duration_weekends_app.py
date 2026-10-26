@@ -9,8 +9,6 @@ from datetime import date
 from unittest import mock
 
 import pytest
-from django.db import connection
-from django.db.migrations.executor import MigrationExecutor
 from rest_framework import status
 
 from plane.db.models import Issue, Project, ProjectMember, State
@@ -205,9 +203,17 @@ class TestMigration:
         )
         undated = Issue.objects.create(name="D", project=project, workspace=workspace, duration=5)
 
-        # The state the migration really runs on: historical models, without the live models' custom managers
-        historical = MigrationExecutor(connection).loader.project_state([("db", "0148_weekend_days")]).apps
-        migration.count_working_days_only(historical, None)
+        # A model in a migration's state has only a base manager, none of the custom ones the live model declares
+        class HistoricalModel:
+            def __init__(self, model):
+                self._base_manager = model._base_manager
+
+        class HistoricalApps:
+            @staticmethod
+            def get_model(app_label, model_name):
+                return HistoricalModel({"Project": Project, "Issue": Issue}[model_name])
+
+        migration.count_working_days_only(HistoricalApps, None)
 
         for item in (weekdays, calendar, backwards, undated):
             item.refresh_from_db()
