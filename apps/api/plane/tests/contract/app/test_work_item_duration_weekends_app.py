@@ -176,6 +176,16 @@ class TestWeekendChange:
         assert item.duration == 7  # only Wednesday off
 
 
+@pytest.mark.unit
+def test_the_worker_knows_the_recount_task():
+    """A task nobody imports is refused by the worker as unregistered, so the durations would never follow."""
+    from django.conf import settings
+
+    from plane.bgtasks.project_duration_task import recompute_project_durations
+
+    assert recompute_project_durations.__module__ in settings.CELERY_IMPORTS
+
+
 @pytest.mark.contract
 @pytest.mark.django_db
 class TestMigration:

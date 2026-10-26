@@ -389,6 +389,8 @@ CELERY_IMPORTS = (
     "plane.bgtasks.dummy_data_task",
     # issue version tasks
     "plane.bgtasks.issue_version_sync",
+    # recounting durations after a project's weekend days change
+    "plane.bgtasks.project_duration_task",
     "plane.bgtasks.issue_description_version_sync",
     # work item reminders
     "plane.bgtasks.work_item_due_reminder_task",
