@@ -93,7 +93,7 @@ from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
 from .base import BaseAPIView
 from plane.utils.host import base_host
 from plane.utils.worklog_access import can_view_worklogs
-from plane.utils.issue_relation_constraints import TIMELINE_RELATION_TYPES
+from plane.utils.issue_relation_constraints import STORED_TIMELINE_RELATION_TYPES, TIMELINE_RELATION_TYPES
 from plane.utils.serializers import writable_data
 from plane.utils.issue_relation_mapper import get_actual_relation, get_inverse_relation
 from plane.utils.issue_relation_service import (
@@ -2647,11 +2647,11 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
         seen_symmetric = {name: set() for name in SYMMETRIC_RELATIONS}
 
         def entry(project_id_key, issue_id_key, rel):
-            return {
-                "project_id": str(rel[project_id_key]),
-                "issue_id": str(rel[issue_id_key]),
-                "lag_days": rel["lag_days"],
-            }
+            data = {"project_id": str(rel[project_id_key]), "issue_id": str(rel[issue_id_key])}
+            # only a relation between dates has a lag to tell
+            if rel["relation_type"] in STORED_TIMELINE_RELATION_TYPES:
+                data["lag_days"] = rel["lag_days"]
+            return data
 
         for rel in relations:
             stored = rel["relation_type"]

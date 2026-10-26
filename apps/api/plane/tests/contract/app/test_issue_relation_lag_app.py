@@ -186,3 +186,13 @@ class TestPublicApiLag:
 
         assert created.status_code == status.HTTP_201_CREATED, created.data
         assert [(row["issue_id"], row["lag_days"]) for row in listed["start_before_finish"]] == [(str(b.id), 2)]
+
+    def test_relations_without_dates_are_listed_as_before(self, api_key_client, create_user, workspace, project):
+        a, b = item(project, "a"), item(project, "b")
+        api_key_client.post(
+            self.v1(workspace, project, a), {"relation_type": "relates_to", "issues": [str(b.id)]}, format="json"
+        )
+
+        listed = api_key_client.get(self.v1(workspace, project, a)).json()
+
+        assert listed["relates_to"] == [{"project_id": str(project.id), "issue_id": str(b.id)}]
