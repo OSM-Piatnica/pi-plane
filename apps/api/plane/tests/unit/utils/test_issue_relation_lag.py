@@ -106,7 +106,7 @@ class TestErrorPayload:
     def test_carries_the_lag_so_the_web_app_can_say_so(self):
         error = date_violation_error("blocked_by", "A-1", "A-2", 3)
         assert error["lag_days"] == 3
-        assert "lag of 3 days" in error["error"]
+        assert "lag of 3 working days" in error["error"]
 
     def test_says_nothing_about_a_zero_lag(self):
         error = date_violation_error("blocked_by", "A-1", "A-2")

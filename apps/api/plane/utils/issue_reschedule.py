@@ -6,8 +6,9 @@
 
 A date change that breaks a timeline relation is refused (``issue_timeline_relation_validation``). When the break is
 only that something that has to come *after* the changed work item would now come too early, the work items
-downstream can be shifted later instead, keeping the working days they last. That is offered to the person, who confirms it by
-sending the request again with ``shift_dependents``; the API then applies the shifts together with the change.
+downstream can be shifted later instead, keeping the working days they last. That is offered to the person, who
+confirms it by sending the request again with ``shift_dependents``; the API then applies the shifts together with
+the change.
 
 Every timeline rule has the form "the successor's date is at least a function of the predecessor's date and the lag",
 so shifting a successor later can only break rules where it is itself the predecessor: the shift is followed down the
