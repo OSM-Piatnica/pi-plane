@@ -891,6 +891,11 @@
         "enabled": "đã bật chế độ xem Intake",
         "fallback": "đã cập nhật chế độ xem Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "đã tắt quy tắc chỉnh sửa bởi người được giao",
+        "enabled": "đã bật quy tắc chỉnh sửa bởi người được giao",
+        "fallback": "đã cập nhật quy tắc chỉnh sửa bởi người được giao"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "đã tắt quy tắc trạng thái mục bị chặn",
         "enabled": "đã bật quy tắc trạng thái mục bị chặn",

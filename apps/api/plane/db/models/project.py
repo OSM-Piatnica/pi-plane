@@ -111,6 +111,7 @@ class Project(ChangeTrackerMixin, BaseModel):
     is_workflow_enabled = models.BooleanField(default=False)
     is_parent_completion_rule_enabled = models.BooleanField(default=False)
     is_blocked_status_rule_enabled = models.BooleanField(default=False)
+    is_assignee_edit_rule_enabled = models.BooleanField(default=False)
     guest_view_all_features = models.BooleanField(default=False)
     cover_image = models.TextField(blank=True, null=True)
     cover_image_asset = models.ForeignKey(

@@ -78,7 +78,8 @@
         "keep": "Open laten",
         "title": "Dit werkitem annuleren?"
       }
-    }
+    },
+    "edit_restricted": "Alleen de toegewezenen van dit werkitem, de projectleider en de projectbeheerders mogen het wijzigen."
   },
   "project_create": {
     "features": {
@@ -154,6 +155,10 @@
         "blocked_status": {
           "description": "Een werkitem kan niet naar een gestarte of voltooide status gaan zolang een werkitem dat het blokkeert nog open is (voltooide en geannuleerde blokkades tellen niet mee). In de backlog of te doen blijven en annuleren blijven mogelijk.",
           "title": "Een item pas starten of voltooien als de blokkades zijn opgelost"
+        },
+        "assignee_edit": {
+          "description": "Zodra een werkitem een toegewezen persoon heeft, mogen alleen de toegewezenen, de projectleider en de projectbeheerders het wijzigen: velden, status, data, subitems, relaties, links, bijlagen, cycli en modules, verwijderen en archiveren. Iedereen kan nog reageren. Werkitems zonder toegewezen persoon blijven open voor alle leden.",
+          "title": "Alleen toegewezenen, de projectleider en beheerders mogen een werkitem wijzigen"
         }
       },
       "save_error": "Kon workflowconfiguratie niet opslaan.",

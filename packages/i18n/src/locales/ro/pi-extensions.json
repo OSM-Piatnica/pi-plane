@@ -78,7 +78,8 @@
         "keep": "Păstrează deschisă",
         "title": "Anulezi această activitate?"
       }
-    }
+    },
+    "edit_restricted": "Această activitate o pot modifica doar cei atribuiți ei, liderul proiectului și administratorii proiectului."
   },
   "project_create": {
     "features": {
@@ -154,6 +155,10 @@
         "blocked_status": {
           "description": "O activitate nu poate trece într-o stare începută sau finalizată cât timp o activitate care o blochează este încă deschisă (cele finalizate sau anulate nu contează). Rămânerea în backlog sau de făcut și anularea rămân posibile.",
           "title": "Pornește sau finalizează o activitate doar când cele care o blochează sunt gata"
+        },
+        "assignee_edit": {
+          "description": "Când o activitate are o persoană atribuită, doar cei atribuiți, liderul proiectului și administratorii proiectului o pot modifica: câmpuri, stare, date, sub-activități, relații, linkuri, atașamente, cicluri și module, ștergere și arhivare. Oricine poate comenta în continuare. Activitățile fără persoană atribuită rămân deschise tuturor membrilor.",
+          "title": "O activitate pot să o modifice doar cei atribuiți, liderul proiectului și administratorii"
         }
       },
       "save_error": "Nu s-a putut salva configurația fluxului de lucru.",

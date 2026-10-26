@@ -891,6 +891,11 @@
         "enabled": "activó la vista de Intake",
         "fallback": "actualizó la vista de Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "desactivó la regla de edición por los asignados",
+        "enabled": "activó la regla de edición por los asignados",
+        "fallback": "actualizó la regla de edición por los asignados"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "desactivó la regla del estado de los elementos bloqueados",
         "enabled": "activó la regla del estado de los elementos bloqueados",

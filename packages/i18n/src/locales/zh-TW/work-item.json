@@ -891,6 +891,11 @@
         "enabled": "啟用了 Intake 檢視",
         "fallback": "更新了Intake 檢視"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "停用了僅負責人編輯規則",
+        "enabled": "啟用了僅負責人編輯規則",
+        "fallback": "更新了僅負責人編輯規則"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "停用了被阻擋工作事項狀態規則",
         "enabled": "啟用了被阻擋工作事項狀態規則",

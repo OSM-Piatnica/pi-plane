@@ -891,6 +891,11 @@
         "enabled": "a activé l’affichage Intake",
         "fallback": "a mis à jour l’affichage Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "a désactivé la règle de modification par les assignés",
+        "enabled": "a activé la règle de modification par les assignés",
+        "fallback": "a mis à jour la règle de modification par les assignés"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "a désactivé la règle du statut des éléments bloqués",
         "enabled": "a activé la règle du statut des éléments bloqués",

@@ -891,6 +891,11 @@
         "enabled": "włączono widok Intake",
         "fallback": "zaktualizowano widok Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "wyłączono regułę edycji przez przypisane osoby",
+        "enabled": "włączono regułę edycji przez przypisane osoby",
+        "fallback": "zaktualizowano regułę edycji przez przypisane osoby"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "wyłączono regułę statusu elementów zablokowanych",
         "enabled": "włączono regułę statusu elementów zablokowanych",

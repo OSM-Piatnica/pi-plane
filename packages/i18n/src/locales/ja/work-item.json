@@ -891,6 +891,11 @@
         "enabled": "Intake表示を有効にしました",
         "fallback": "Intake表示を更新しました"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "担当者のみ編集ルールを無効にしました",
+        "enabled": "担当者のみ編集ルールを有効にしました",
+        "fallback": "担当者のみ編集ルールを更新しました"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "ブロックされた項目のステータス ルールを無効にしました",
         "enabled": "ブロックされた項目のステータス ルールを有効にしました",

@@ -78,7 +78,8 @@
         "keep": "Keep it open",
         "title": "Cancel this work item?"
       }
-    }
+    },
+    "edit_restricted": "Only the assignees of this work item, the project lead and project admins can change it."
   },
   "project_create": {
     "features": {
@@ -154,6 +155,10 @@
         "blocked_status": {
           "description": "A work item cannot move to a started or completed state while a work item that blocks it is still open (completed and cancelled blockers do not count). Staying in backlog or todo, and cancelling, remain possible.",
           "title": "Start or complete an item only when its blockers are done"
+        },
+        "assignee_edit": {
+          "description": "Once a work item has an assignee, only its assignees, the project lead and project admins can change it: fields, state, dates, sub-items, relations, links, attachments, cycles and modules, deleting and archiving. Everyone can still comment. Work items without an assignee stay open to all members.",
+          "title": "Only assignees, the project lead and admins can change a work item"
         }
       },
       "save_error": "Could not save workflow configuration.",

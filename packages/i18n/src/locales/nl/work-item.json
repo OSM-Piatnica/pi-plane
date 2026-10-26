@@ -891,6 +891,11 @@
         "enabled": "schakelde de Intake-weergave in",
         "fallback": "werkte de Intake-weergave bij"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "heeft de regel voor bewerken door toegewezenen uitgeschakeld",
+        "enabled": "heeft de regel voor bewerken door toegewezenen ingeschakeld",
+        "fallback": "heeft de regel voor bewerken door toegewezenen bijgewerkt"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "heeft de regel voor de status van geblokkeerde items uitgeschakeld",
         "enabled": "heeft de regel voor de status van geblokkeerde items ingeschakeld",

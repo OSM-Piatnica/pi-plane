@@ -891,6 +891,11 @@
         "enabled": "Intake görünümünü etkinleştirdi",
         "fallback": "Intake görünümünü güncelledi"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "atananlarca düzenleme kuralını devre dışı bıraktı",
+        "enabled": "atananlarca düzenleme kuralını etkinleştirdi",
+        "fallback": "atananlarca düzenleme kuralını güncelledi"
+      },
       "is_blocked_status_rule_enabled": {
         "disabled": "engellenen öğe durumu kuralını devre dışı bıraktı",
         "enabled": "engellenen öğe durumu kuralını etkinleştirdi",

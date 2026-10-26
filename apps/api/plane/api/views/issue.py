@@ -43,6 +43,7 @@ from drf_spectacular.utils import (
 )
 
 # Module imports
+from plane.utils.work_item_edit_rule import restrict_work_item_changes
 from plane.api.serializers import (
     IssueAttachmentSerializer,
     IssueActivitySerializer,
@@ -867,6 +868,7 @@ class IssueDetailAPIEndpoint(BaseAPIView):
             409: EXTERNAL_ID_EXISTS_RESPONSE,
         },
     )
+    @restrict_work_item_changes(param="pk")
     def patch(self, request, slug, project_id, pk):
         """Update work item
 
@@ -941,6 +943,7 @@ class IssueDetailAPIEndpoint(BaseAPIView):
             404: WORK_ITEM_NOT_FOUND_RESPONSE,
         },
     )
+    @restrict_work_item_changes(param="pk")
     def delete(self, request, slug, project_id, pk):
         """Delete work item
 
@@ -1301,6 +1304,7 @@ class IssueLinkListCreateAPIEndpoint(BaseAPIView):
             404: ISSUE_NOT_FOUND_RESPONSE,
         },
     )
+    @restrict_work_item_changes(param="issue_id")
     def post(self, request, slug, project_id, issue_id):
         """Create issue link
 
@@ -1421,6 +1425,7 @@ class IssueLinkDetailAPIEndpoint(BaseAPIView):
             404: LINK_NOT_FOUND_RESPONSE,
         },
     )
+    @restrict_work_item_changes(param="issue_id")
     def patch(self, request, slug, project_id, issue_id, pk):
         """Update issue link
 
@@ -1462,6 +1467,7 @@ class IssueLinkDetailAPIEndpoint(BaseAPIView):
             404: OpenApiResponse(description="Work item link not found"),
         },
     )
+    @restrict_work_item_changes(param="issue_id")
     def delete(self, request, slug, project_id, issue_id, pk):
         """Delete work item link
 
@@ -2070,6 +2076,7 @@ class IssueAttachmentListCreateAPIEndpoint(BaseAPIView):
             ),
         },
     )
+    @restrict_work_item_changes(param="issue_id")
     def post(self, request, slug, project_id, issue_id):
         """Create work item attachment
 
@@ -2247,6 +2254,7 @@ class IssueAttachmentDetailAPIEndpoint(BaseAPIView):
             404: ATTACHMENT_NOT_FOUND_RESPONSE,
         },
     )
+    @restrict_work_item_changes(param="issue_id")
     def delete(self, request, slug, project_id, issue_id, pk):
         """Delete work item attachment
 
@@ -2407,6 +2415,7 @@ class IssueAttachmentDetailAPIEndpoint(BaseAPIView):
             404: ATTACHMENT_NOT_FOUND_RESPONSE,
         },
     )
+    @restrict_work_item_changes(param="issue_id")
     def patch(self, request, slug, project_id, issue_id, pk):
         """Confirm attachment upload
 
@@ -2723,6 +2732,7 @@ class IssueRelationListCreateAPIEndpoint(BaseAPIView):
             404: ISSUE_NOT_FOUND_RESPONSE,
         },
     )
+    @restrict_work_item_changes(param="issue_id")
     def post(self, request, slug, project_id, issue_id):
         """Create work item relation
 
