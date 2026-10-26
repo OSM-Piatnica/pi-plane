@@ -82,6 +82,10 @@
     "edit_restricted": "Only the assignees of this work item, the project lead and project admins can change it."
   },
   "project_create": {
+    "advanced": {
+      "description": "Rules and relation types. You can change them later in the project's Workflows settings.",
+      "title": "Advanced options"
+    },
     "features": {
       "cycles": {
         "description": "Timebox work in recurring periods.",
@@ -166,7 +170,27 @@
       "toggle_error": "Could not update workflow settings.",
       "transition": "Transition",
       "transition_count": "{count, plural, one {# transition} other {# transitions}}",
-      "transitions_configured": "transitions configured"
+      "transitions_configured": "transitions configured",
+      "relation_types": {
+        "heading": "Relation types",
+        "description": "Choose which relations people can add in this project. Blocking is always available, and existing relations stay when a type is switched off.",
+        "schedule": {
+          "description": "Starts before, finishes before and starts before finish, with an optional lag in days.",
+          "title": "Schedule dependencies"
+        },
+        "traceability": {
+          "description": "Implements, causes, clones and tests, with their reverses.",
+          "title": "Traceability relations"
+        },
+        "relates_to": {
+          "description": "A plain link between two items.",
+          "title": "Relates to"
+        },
+        "duplicate": {
+          "description": "Mark an item as a duplicate of another.",
+          "title": "Duplicate"
+        }
+      }
     }
   },
   "project_templates": {

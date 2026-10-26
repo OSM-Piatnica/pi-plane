@@ -921,6 +921,26 @@
         "enabled": "włączono aktualizacje projektu",
         "fallback": "zaktualizowano aktualizacje projektu"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "wyłączono relację duplikatu",
+        "enabled": "włączono relację duplikatu",
+        "fallback": "zaktualizowano relację duplikatu"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "wyłączono relację „powiązany z”",
+        "enabled": "włączono relację „powiązany z”",
+        "fallback": "zaktualizowano relację „powiązany z”"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "wyłączono zależności harmonogramu",
+        "enabled": "włączono zależności harmonogramu",
+        "fallback": "zaktualizowano zależności harmonogramu"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "wyłączono relacje śledzenia",
+        "enabled": "włączono relacje śledzenia",
+        "fallback": "zaktualizowano relacje śledzenia"
+      },
       "is_time_tracking_enabled": {
         "disabled": "wyłączono śledzenie czasu",
         "enabled": "włączono śledzenie czasu",

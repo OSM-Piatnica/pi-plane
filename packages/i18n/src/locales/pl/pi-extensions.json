@@ -88,6 +88,10 @@
     }
   },
   "project_create": {
+    "advanced": {
+      "description": "Reguły i typy relacji. Możesz je później zmienić w ustawieniach przepływów pracy projektu.",
+      "title": "Opcje zaawansowane"
+    },
     "features": {
       "cycles": {
         "description": "Grupuj pracę w powtarzalnych okresach czasu.",
@@ -172,7 +176,27 @@
       "toggle_error": "Nie udało się zaktualizować ustawień workflow.",
       "transition": "Przejście",
       "transition_count": "{count, plural, one {# przejście} few {# przejścia} many {# przejść} other {# przejścia}}",
-      "transitions_configured": "skonfigurowanych przejść"
+      "transitions_configured": "skonfigurowanych przejść",
+      "relation_types": {
+        "heading": "Typy relacji",
+        "description": "Wybierz, jakie relacje można dodawać w tym projekcie. Blokowanie jest zawsze dostępne, a istniejące relacje zostają po wyłączeniu typu.",
+        "schedule": {
+          "description": "Zaczyna przed, kończy przed i zaczyna przed zakończeniem, z opcjonalnym opóźnieniem w dniach.",
+          "title": "Zależności harmonogramu"
+        },
+        "traceability": {
+          "description": "Implementuje, powoduje, klonuje i testuje, wraz z relacjami odwrotnymi.",
+          "title": "Relacje śledzenia"
+        },
+        "relates_to": {
+          "description": "Zwykłe powiązanie dwóch elementów.",
+          "title": "Powiązany z"
+        },
+        "duplicate": {
+          "description": "Oznacz element jako duplikat innego.",
+          "title": "Duplikat"
+        }
+      }
     }
   },
   "project_templates": {

@@ -82,6 +82,10 @@
     "edit_restricted": "Dieses Arbeitselement dürfen nur die ihm Zugewiesenen, die Projektleitung und Projektadmins ändern."
   },
   "project_create": {
+    "advanced": {
+      "description": "Regeln und Beziehungstypen. Du kannst sie später in den Workflow-Einstellungen des Projekts ändern.",
+      "title": "Erweiterte Optionen"
+    },
     "features": {
       "cycles": {
         "description": "Zeitlich begrenzte Arbeit in wiederkehrenden Perioden.",
@@ -166,7 +170,27 @@
       "toggle_error": "Workflow-Einstellungen konnten nicht aktualisiert werden.",
       "transition": "Übergang",
       "transition_count": "{count, plural, one {# Übergang} other {# Übergänge}}",
-      "transitions_configured": "Übergänge konfiguriert"
+      "transitions_configured": "Übergänge konfiguriert",
+      "relation_types": {
+        "heading": "Beziehungstypen",
+        "description": "Lege fest, welche Beziehungen in diesem Projekt hinzugefügt werden können. Blockieren ist immer verfügbar, und bestehende Beziehungen bleiben beim Deaktivieren eines Typs erhalten.",
+        "schedule": {
+          "description": "Beginnt vor, endet vor und beginnt vor Ende, mit optionalem Abstand in Tagen.",
+          "title": "Terminabhängigkeiten"
+        },
+        "traceability": {
+          "description": "Implementiert, verursacht, klont und testet, mit den Gegenrichtungen.",
+          "title": "Nachverfolgbarkeits-Beziehungen"
+        },
+        "relates_to": {
+          "description": "Eine einfache Verknüpfung zwischen zwei Elementen.",
+          "title": "Steht in Beziehung zu"
+        },
+        "duplicate": {
+          "description": "Ein Element als Duplikat eines anderen markieren.",
+          "title": "Duplikat"
+        }
+      }
     }
   },
   "project_templates": {

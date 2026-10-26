@@ -82,6 +82,10 @@
     "edit_restricted": "Alleen de toegewezenen van dit werkitem, de projectleider en de projectbeheerders mogen het wijzigen."
   },
   "project_create": {
+    "advanced": {
+      "description": "Regels en relatietypen. Je kunt ze later wijzigen in de workflowinstellingen van het project.",
+      "title": "Geavanceerde opties"
+    },
     "features": {
       "cycles": {
         "description": "Timebox werk in terugkerende periodes.",
@@ -166,7 +170,27 @@
       "toggle_error": "Kon workflowinstellingen niet bijwerken.",
       "transition": "Overgang",
       "transition_count": "{count, plural, one {# overgang} other {# overgangen}}",
-      "transitions_configured": "overgangen geconfigureerd"
+      "transitions_configured": "overgangen geconfigureerd",
+      "relation_types": {
+        "heading": "Relatietypen",
+        "description": "Kies welke relaties in dit project kunnen worden toegevoegd. Blokkeren is altijd beschikbaar en bestaande relaties blijven bestaan als een type wordt uitgeschakeld.",
+        "schedule": {
+          "description": "Begint voor, eindigt voor en begint voor het einde, met optionele vertraging in dagen.",
+          "title": "Planningsafhankelijkheden"
+        },
+        "traceability": {
+          "description": "Implementeert, veroorzaakt, kloont en test, met de omgekeerde relaties.",
+          "title": "Traceerbaarheidsrelaties"
+        },
+        "relates_to": {
+          "description": "Een eenvoudige koppeling tussen twee items.",
+          "title": "Gerelateerd aan"
+        },
+        "duplicate": {
+          "description": "Markeer een item als duplicaat van een ander.",
+          "title": "Duplicaat"
+        }
+      }
     }
   },
   "project_templates": {

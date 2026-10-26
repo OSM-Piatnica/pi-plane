@@ -921,6 +921,26 @@
         "enabled": "schakelde projectupdates in",
         "fallback": "werkte projectupdates bij"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "heeft de duplicaatrelatie uitgeschakeld",
+        "enabled": "heeft de duplicaatrelatie ingeschakeld",
+        "fallback": "heeft de duplicaatrelatie bijgewerkt"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "heeft de relatie ‘gerelateerd aan’ uitgeschakeld",
+        "enabled": "heeft de relatie ‘gerelateerd aan’ ingeschakeld",
+        "fallback": "heeft de relatie ‘gerelateerd aan’ bijgewerkt"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "heeft de planningsafhankelijkheden uitgeschakeld",
+        "enabled": "heeft de planningsafhankelijkheden ingeschakeld",
+        "fallback": "heeft de planningsafhankelijkheden bijgewerkt"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "heeft de traceerbaarheidsrelaties uitgeschakeld",
+        "enabled": "heeft de traceerbaarheidsrelaties ingeschakeld",
+        "fallback": "heeft de traceerbaarheidsrelaties bijgewerkt"
+      },
       "is_time_tracking_enabled": {
         "disabled": "schakelde tijdregistratie uit",
         "enabled": "schakelde tijdregistratie in",

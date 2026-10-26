@@ -921,6 +921,26 @@
         "enabled": "a activat actualizările proiectului",
         "fallback": "a actualizat actualizările proiectului"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "a dezactivat relația de duplicat",
+        "enabled": "a activat relația de duplicat",
+        "fallback": "a actualizat relația de duplicat"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "a dezactivat relația „este legată de”",
+        "enabled": "a activat relația „este legată de”",
+        "fallback": "a actualizat relația „este legată de”"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "a dezactivat dependențele de calendar",
+        "enabled": "a activat dependențele de calendar",
+        "fallback": "a actualizat dependențele de calendar"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "a dezactivat relațiile de trasabilitate",
+        "enabled": "a activat relațiile de trasabilitate",
+        "fallback": "a actualizat relațiile de trasabilitate"
+      },
       "is_time_tracking_enabled": {
         "disabled": "a dezactivat urmărirea timpului",
         "enabled": "a activat urmărirea timpului",

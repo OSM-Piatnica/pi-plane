@@ -82,6 +82,10 @@
     "edit_restricted": "Această activitate o pot modifica doar cei atribuiți ei, liderul proiectului și administratorii proiectului."
   },
   "project_create": {
+    "advanced": {
+      "description": "Reguli și tipuri de relații. Le poți schimba mai târziu în setările fluxurilor de lucru ale proiectului.",
+      "title": "Opțiuni avansate"
+    },
     "features": {
       "cycles": {
         "description": "Planifică activitatea în perioade recurente delimitate în timp.",
@@ -166,7 +170,27 @@
       "toggle_error": "Nu s-au putut actualiza setările fluxului de lucru.",
       "transition": "Tranziție",
       "transition_count": "{count, plural, one {# tranziție} few {# tranziții} other {# de tranziții}}",
-      "transitions_configured": "tranziții configurate"
+      "transitions_configured": "tranziții configurate",
+      "relation_types": {
+        "heading": "Tipuri de relații",
+        "description": "Alege ce relații se pot adăuga în acest proiect. Blocarea este mereu disponibilă, iar relațiile existente rămân când un tip este dezactivat.",
+        "schedule": {
+          "description": "Începe înainte, se termină înainte și începe înainte de final, cu decalaj opțional în zile.",
+          "title": "Dependențe de calendar"
+        },
+        "traceability": {
+          "description": "Implementează, cauzează, clonează și testează, cu inversele lor.",
+          "title": "Relații de trasabilitate"
+        },
+        "relates_to": {
+          "description": "O legătură simplă între două elemente.",
+          "title": "Este legată de"
+        },
+        "duplicate": {
+          "description": "Marchează un element ca duplicat al altuia.",
+          "title": "Duplicată a"
+        }
+      }
     }
   },
   "project_templates": {

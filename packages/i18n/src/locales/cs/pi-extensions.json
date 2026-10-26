@@ -82,6 +82,10 @@
     "edit_restricted": "Tuto pracovní položku mohou měnit jen k ní přiřazení, vedoucí projektu a správci projektu."
   },
   "project_create": {
+    "advanced": {
+      "description": "Pravidla a typy vztahů. Později je můžete změnit v nastavení pracovních postupů projektu.",
+      "title": "Pokročilé možnosti"
+    },
     "features": {
       "cycles": {
         "description": "Rozdělte práci do opakujících se časových úseků.",
@@ -166,7 +170,27 @@
       "toggle_error": "Nastavení workflow se nepodařilo aktualizovat.",
       "transition": "Přechod",
       "transition_count": "{count, plural, one {# přechod} few {# přechody} many {# přechodu} other {# přechodů}}",
-      "transitions_configured": "nastavených přechodů"
+      "transitions_configured": "nastavených přechodů",
+      "relation_types": {
+        "heading": "Typy vztahů",
+        "description": "Vyberte, které vztahy lze v tomto projektu přidávat. Blokování je vždy k dispozici a stávající vztahy po vypnutí typu zůstanou.",
+        "schedule": {
+          "description": "Začíná před, končí před a začíná před koncem, s volitelným odstupem ve dnech.",
+          "title": "Časové závislosti"
+        },
+        "traceability": {
+          "description": "Implementuje, způsobuje, klonuje a testuje, včetně opačných směrů.",
+          "title": "Vztahy sledovatelnosti"
+        },
+        "relates_to": {
+          "description": "Jednoduché propojení dvou položek.",
+          "title": "Související s"
+        },
+        "duplicate": {
+          "description": "Označit položku jako duplikát jiné.",
+          "title": "Duplikát"
+        }
+      }
     }
   },
   "project_templates": {

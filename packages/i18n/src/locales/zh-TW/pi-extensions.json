@@ -82,6 +82,10 @@
     "edit_restricted": "只有此工作事項的負責人、專案負責人和專案管理員可以變更它。"
   },
   "project_create": {
+    "advanced": {
+      "description": "規則與關係類型。之後可在專案的工作流程設定中變更。",
+      "title": "進階選項"
+    },
     "features": {
       "cycles": {
         "description": "在週期性的時間段內安排工作。",
@@ -166,7 +170,27 @@
       "toggle_error": "無法更新工作流程設定。",
       "transition": "轉換",
       "transition_count": "{count, plural, one {# 項轉換} other {# 項轉換}}",
-      "transitions_configured": "項轉換已設定"
+      "transitions_configured": "項轉換已設定",
+      "relation_types": {
+        "heading": "關係類型",
+        "description": "選擇此專案中可新增的關係。阻擋一律可用，關閉某個類型後既有關係會保留。",
+        "schedule": {
+          "description": "先於開始、先於完成與先於完成開始，可選擇設定以天為單位的間隔。",
+          "title": "排程相依"
+        },
+        "traceability": {
+          "description": "實作、導致、複製與測試，以及它們的反向關係。",
+          "title": "可追溯關係"
+        },
+        "relates_to": {
+          "description": "兩個工作事項之間的簡單連結。",
+          "title": "與此相關"
+        },
+        "duplicate": {
+          "description": "將工作事項標記為另一個工作事項的重複項。",
+          "title": "此項重複"
+        }
+      }
     }
   },
   "project_templates": {

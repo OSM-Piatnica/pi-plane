@@ -26,6 +26,7 @@ import { useReportFormInput } from "@/hooks/use-report-form-input";
 import { ProjectTemplateService } from "@/services/project-template.service";
 import { IssueTypeService } from "@/services/issue-type.service";
 import { ProjectAttributes } from "./attributes";
+import { ProjectCreateAdvancedOptions } from "./advanced-options";
 import { ProjectCreateFeatureToggles } from "./feature-toggles";
 import { ProjectCreateIssueTypesAssign } from "./issue-types-assign";
 import { getProjectFormValues } from "./utils";
@@ -385,6 +386,7 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
           />
           <ProjectAttributes isMobile={isMobile} />
           <ProjectCreateFeatureToggles />
+          <ProjectCreateAdvancedOptions />
           {isIssueTypeEnabled && !selectedTemplateId ? (
             <div className="rounded-md border border-subtle bg-surface-1 p-3">
               <p className="pb-2 text-13 font-medium text-primary">

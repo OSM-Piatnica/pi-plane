@@ -921,6 +921,26 @@
         "enabled": "启用了项目更新",
         "fallback": "更新了项目更新"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "停用了“重复于”关系",
+        "enabled": "启用了“重复于”关系",
+        "fallback": "更新了“重复于”关系"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "停用了“关联到”关系",
+        "enabled": "启用了“关联到”关系",
+        "fallback": "更新了“关联到”关系"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "停用了日程依赖",
+        "enabled": "启用了日程依赖",
+        "fallback": "更新了日程依赖"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "停用了可追溯关系",
+        "enabled": "启用了可追溯关系",
+        "fallback": "更新了可追溯关系"
+      },
       "is_time_tracking_enabled": {
         "disabled": "停用了时间跟踪",
         "enabled": "启用了时间跟踪",

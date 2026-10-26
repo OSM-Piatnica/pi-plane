@@ -37,6 +37,10 @@ export interface IPartialProject {
   is_parent_completion_rule_enabled?: boolean;
   is_blocked_status_rule_enabled?: boolean;
   is_assignee_edit_rule_enabled?: boolean;
+  is_relation_schedule_enabled?: boolean;
+  is_relation_traceability_enabled?: boolean;
+  is_relation_relates_to_enabled?: boolean;
+  is_relation_duplicate_enabled?: boolean;
   is_time_tracking_enabled?: boolean;
   project_lead?: IUserLite | string | null;
   network?: number;

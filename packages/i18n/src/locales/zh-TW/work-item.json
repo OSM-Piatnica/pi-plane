@@ -921,6 +921,26 @@
         "enabled": "啟用了專案更新",
         "fallback": "更新了專案更新"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "停用了「此項重複」關係",
+        "enabled": "啟用了「此項重複」關係",
+        "fallback": "更新了「此項重複」關係"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "停用了「與此相關」關係",
+        "enabled": "啟用了「與此相關」關係",
+        "fallback": "更新了「與此相關」關係"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "停用了排程相依",
+        "enabled": "啟用了排程相依",
+        "fallback": "更新了排程相依"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "停用了可追溯關係",
+        "enabled": "啟用了可追溯關係",
+        "fallback": "更新了可追溯關係"
+      },
       "is_time_tracking_enabled": {
         "disabled": "停用了時間追蹤",
         "enabled": "啟用了時間追蹤",

@@ -921,6 +921,26 @@
         "enabled": "プロジェクト更新を有効にしました",
         "fallback": "プロジェクト更新を更新しました"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "「重複する」関係を無効にしました",
+        "enabled": "「重複する」関係を有効にしました",
+        "fallback": "「重複する」関係を更新しました"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "「関連する」関係を無効にしました",
+        "enabled": "「関連する」関係を有効にしました",
+        "fallback": "「関連する」関係を更新しました"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "スケジュールの依存関係を無効にしました",
+        "enabled": "スケジュールの依存関係を有効にしました",
+        "fallback": "スケジュールの依存関係を更新しました"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "トレーサビリティの関係を無効にしました",
+        "enabled": "トレーサビリティの関係を有効にしました",
+        "fallback": "トレーサビリティの関係を更新しました"
+      },
       "is_time_tracking_enabled": {
         "disabled": "時間トラッキングを無効にしました",
         "enabled": "時間トラッキングを有効にしました",

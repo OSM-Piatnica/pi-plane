@@ -82,6 +82,10 @@
     "edit_restricted": "Túto pracovnú položku môžu meniť len k nej priradení, vedúci projektu a správcovia projektu."
   },
   "project_create": {
+    "advanced": {
+      "description": "Pravidlá a typy vzťahov. Neskôr ich môžete zmeniť v nastaveniach pracovných postupov projektu.",
+      "title": "Rozšírené možnosti"
+    },
     "features": {
       "cycles": {
         "description": "Rozdeľte prácu do opakujúcich sa časových úsekov.",
@@ -166,7 +170,27 @@
       "toggle_error": "Aktualizácia nastavení pracovného postupu zlyhala.",
       "transition": "Prechod",
       "transition_count": "{count, plural, one {# prechod} few {# prechody} many {# prechodu} other {# prechodov}}",
-      "transitions_configured": "nakonfigurovaných prechodov"
+      "transitions_configured": "nakonfigurovaných prechodov",
+      "relation_types": {
+        "heading": "Typy vzťahov",
+        "description": "Vyberte, ktoré vzťahy možno v tomto projekte pridávať. Blokovanie je vždy k dispozícii a existujúce vzťahy po vypnutí typu zostanú.",
+        "schedule": {
+          "description": "Začína pred, končí pred a začína pred koncom, s voliteľným odstupom v dňoch.",
+          "title": "Časové závislosti"
+        },
+        "traceability": {
+          "description": "Implementuje, spôsobuje, klonuje a testuje, vrátane opačných smerov.",
+          "title": "Vzťahy sledovateľnosti"
+        },
+        "relates_to": {
+          "description": "Jednoduché prepojenie dvoch položiek.",
+          "title": "Súvisiace s"
+        },
+        "duplicate": {
+          "description": "Označiť položku ako duplikát inej.",
+          "title": "Duplikát"
+        }
+      }
     }
   },
   "project_templates": {

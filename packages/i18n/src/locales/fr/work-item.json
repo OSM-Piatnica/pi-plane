@@ -921,6 +921,26 @@
         "enabled": "a activé les mises à jour du projet",
         "fallback": "a mis à jour les mises à jour du projet"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "a désactivé la relation de doublon",
+        "enabled": "a activé la relation de doublon",
+        "fallback": "a mis à jour la relation de doublon"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "a désactivé la relation « en relation avec »",
+        "enabled": "a activé la relation « en relation avec »",
+        "fallback": "a mis à jour la relation « en relation avec »"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "a désactivé les dépendances de planning",
+        "enabled": "a activé les dépendances de planning",
+        "fallback": "a mis à jour les dépendances de planning"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "a désactivé les relations de traçabilité",
+        "enabled": "a activé les relations de traçabilité",
+        "fallback": "a mis à jour les relations de traçabilité"
+      },
       "is_time_tracking_enabled": {
         "disabled": "a désactivé le suivi du temps",
         "enabled": "a activé le suivi du temps",

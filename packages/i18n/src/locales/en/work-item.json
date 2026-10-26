@@ -921,6 +921,26 @@
         "enabled": "enabled project updates",
         "fallback": "updated project updates"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "disabled the duplicate relation",
+        "enabled": "enabled the duplicate relation",
+        "fallback": "updated the duplicate relation"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "disabled the relates to relation",
+        "enabled": "enabled the relates to relation",
+        "fallback": "updated the relates to relation"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "disabled schedule dependencies",
+        "enabled": "enabled schedule dependencies",
+        "fallback": "updated schedule dependencies"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "disabled traceability relations",
+        "enabled": "enabled traceability relations",
+        "fallback": "updated traceability relations"
+      },
       "is_time_tracking_enabled": {
         "disabled": "disabled time tracking",
         "enabled": "enabled time tracking",

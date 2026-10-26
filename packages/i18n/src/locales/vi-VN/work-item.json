@@ -921,6 +921,26 @@
         "enabled": "đã bật cập nhật dự án",
         "fallback": "đã cập nhật cập nhật dự án"
       },
+      "is_relation_duplicate_enabled": {
+        "disabled": "đã tắt quan hệ “trùng lặp”",
+        "enabled": "đã bật quan hệ “trùng lặp”",
+        "fallback": "đã cập nhật quan hệ “trùng lặp”"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "đã tắt quan hệ “liên quan đến”",
+        "enabled": "đã bật quan hệ “liên quan đến”",
+        "fallback": "đã cập nhật quan hệ “liên quan đến”"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "đã tắt phụ thuộc lịch trình",
+        "enabled": "đã bật phụ thuộc lịch trình",
+        "fallback": "đã cập nhật phụ thuộc lịch trình"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "đã tắt quan hệ truy vết",
+        "enabled": "đã bật quan hệ truy vết",
+        "fallback": "đã cập nhật quan hệ truy vết"
+      },
       "is_time_tracking_enabled": {
         "disabled": "đã tắt theo dõi thời gian",
         "enabled": "đã bật theo dõi thời gian",

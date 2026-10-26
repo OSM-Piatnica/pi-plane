@@ -82,6 +82,10 @@
     "edit_restricted": "只有此工作项的负责人、项目负责人和项目管理员可以更改它。"
   },
   "project_create": {
+    "advanced": {
+      "description": "规则和关系类型。之后可在项目的工作流设置中更改。",
+      "title": "高级选项"
+    },
     "features": {
       "cycles": {
         "description": "以循环周期对工作进行限时管理。",
@@ -166,7 +170,27 @@
       "toggle_error": "无法更新工作流设置。",
       "transition": "流转",
       "transition_count": "{count, plural, one {# 个流转} other {# 个流转}}",
-      "transitions_configured": "个已配置的流转"
+      "transitions_configured": "个已配置的流转",
+      "relation_types": {
+        "heading": "关系类型",
+        "description": "选择此项目中可添加的关系。阻塞始终可用，关闭某个类型后已有关系会保留。",
+        "schedule": {
+          "description": "先于开始、先于完成和先于完成开始，可选择设置以天为单位的间隔。",
+          "title": "日程依赖"
+        },
+        "traceability": {
+          "description": "实现、导致、克隆和测试，以及它们的反向关系。",
+          "title": "可追溯关系"
+        },
+        "relates_to": {
+          "description": "两个工作项之间的简单链接。",
+          "title": "关联到"
+        },
+        "duplicate": {
+          "description": "将工作项标记为另一个工作项的重复项。",
+          "title": "重复于"
+        }
+      }
     }
   },
   "project_templates": {

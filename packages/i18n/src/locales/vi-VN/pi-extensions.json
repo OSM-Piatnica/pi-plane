@@ -82,6 +82,10 @@
     "edit_restricted": "Chỉ những người được giao mục công việc này, trưởng dự án và quản trị viên dự án mới được thay đổi."
   },
   "project_create": {
+    "advanced": {
+      "description": "Quy tắc và loại quan hệ. Bạn có thể thay đổi sau trong cài đặt quy trình làm việc của dự án.",
+      "title": "Tùy chọn nâng cao"
+    },
     "features": {
       "cycles": {
         "description": "Đóng khung thời gian công việc theo các chu kỳ lặp lại.",
@@ -166,7 +170,27 @@
       "toggle_error": "Không thể cập nhật cài đặt quy trình làm việc.",
       "transition": "Chuyển tiếp",
       "transition_count": "{count, plural, one {# chuyển tiếp} other {# chuyển tiếp}}",
-      "transitions_configured": "chuyển tiếp đã cấu hình"
+      "transitions_configured": "chuyển tiếp đã cấu hình",
+      "relation_types": {
+        "heading": "Loại quan hệ",
+        "description": "Chọn những quan hệ có thể thêm trong dự án này. Chặn luôn khả dụng, và các quan hệ hiện có vẫn được giữ khi tắt một loại.",
+        "schedule": {
+          "description": "Bắt đầu trước, kết thúc trước và bắt đầu trước khi kết thúc, với độ trễ tùy chọn tính theo ngày.",
+          "title": "Phụ thuộc lịch trình"
+        },
+        "traceability": {
+          "description": "Triển khai, gây ra, nhân bản và kiểm thử, cùng các chiều ngược lại.",
+          "title": "Quan hệ truy vết"
+        },
+        "relates_to": {
+          "description": "Một liên kết đơn giản giữa hai mục.",
+          "title": "Liên quan đến"
+        },
+        "duplicate": {
+          "description": "Đánh dấu một mục là bản trùng lặp của mục khác.",
+          "title": "Trùng lặp"
+        }
+      }
     }
   },
   "project_templates": {

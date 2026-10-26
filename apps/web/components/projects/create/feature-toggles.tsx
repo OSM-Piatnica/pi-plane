@@ -101,7 +101,12 @@ export function ProjectCreateFeatureToggles() {
                 name={feature.key}
                 control={control}
                 render={({ field: { value, onChange } }) => (
-                  <Switch checked={Boolean(value)} onCheckedChange={onChange} size="sm" />
+                  <Switch
+                    checked={Boolean(value)}
+                    onCheckedChange={onChange}
+                    size="sm"
+                    aria-label={t(feature.labelKey)}
+                  />
                 )}
               />
             </li>
