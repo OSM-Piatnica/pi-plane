@@ -18,6 +18,7 @@ from django.db.models import Q
 from plane.db.mixins import AuditModel, ChangeTrackerMixin
 
 from .base import BaseModel
+from .workspace import START_OF_THE_WEEK_CHOICES, SUNDAY
 
 ROLE_CHOICES = ((20, "Admin"), (15, "Member"), (5, "Guest"))
 
@@ -135,6 +136,9 @@ class Project(ChangeTrackerMixin, BaseModel):
     # timezone
     TIMEZONE_CHOICES = tuple(zip(pytz.common_timezones, pytz.common_timezones))
     timezone = models.CharField(max_length=255, default="UTC", choices=TIMEZONE_CHOICES)
+    # First day of the week in this project (0 = Sunday ... 6 = Saturday); copied from the workspace on creation.
+    # A person's own preference, when they have one, wins over it.
+    start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=SUNDAY)
     start_date = models.DateField(null=True, blank=True)
     target_date = models.DateField(null=True, blank=True)
     # external_id for imports
@@ -144,6 +148,8 @@ class Project(ChangeTrackerMixin, BaseModel):
     def __init__(self, *args, **kwargs):
         # Track if timezone is provided, if so, don't override it with the workspace timezone when saving
         self.is_timezone_provided = kwargs.get("timezone") is not None
+        # Same for the first day of the week
+        self.is_start_of_the_week_provided = kwargs.get("start_of_the_week") is not None
         super().__init__(*args, **kwargs)
 
     @property
@@ -220,9 +226,12 @@ class Project(ChangeTrackerMixin, BaseModel):
         self.identifier = self.identifier.strip().upper()
         is_creating = self._state.adding
 
-        if is_creating and not self.is_timezone_provided:
+        if is_creating and not (self.is_timezone_provided and self.is_start_of_the_week_provided):
             workspace = Workspace.objects.get(id=self.workspace_id)
-            self.timezone = workspace.timezone
+            if not self.is_timezone_provided:
+                self.timezone = workspace.timezone
+            if not self.is_start_of_the_week_provided:
+                self.start_of_the_week = workspace.start_of_the_week
 
         # Read before super().save(): the change tracker resets once it returns.
         update_fields = kwargs.get("update_fields")

@@ -249,7 +249,10 @@ class Profile(TimeAuditModel):
     mobile_timezone_auto_set = models.BooleanField(default=False)
     # language
     language = models.CharField(max_length=255, default="en")
-    start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=SUNDAY)
+    # None: follow the project (or workspace) setting; a day of the week: this person's own choice
+    start_of_the_week = models.PositiveSmallIntegerField(
+        choices=START_OF_THE_WEEK_CHOICES, default=None, null=True, blank=True
+    )
     goals = models.JSONField(default=dict)
     background_color = models.CharField(max_length=255, default=get_random_color)
 
