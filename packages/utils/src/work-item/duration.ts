@@ -99,6 +99,25 @@ export const subtractWorkingDays = (targetDate: Date, count: number, weekendDays
 };
 
 /**
+ * @description The date `offset` working days from `day`: later for a positive offset, earlier for a negative one.
+ * The offset counts the working days passed on the way, so a Friday plus 1 is Monday; an offset of 0 is the day itself.
+ * @example shiftWorkingDays(new Date(2026, 10, 6), 1, [0, 6]) // Mon 9 Nov
+ */
+export const shiftWorkingDays = (day: Date, offset: number, weekendDays: readonly number[] = []): Date => {
+  if (offset === 0) return startOfCalendarDay(day);
+  if (offset > 0) return addWorkingDays(shiftDays(day, 1), offset, weekendDays);
+  return subtractWorkingDays(shiftDays(day, -1), -offset, weekendDays);
+};
+
+/** @description The day work that "starts" on `day` really begins: the first working day on or after it */
+export const effectiveStart = (day: Date, weekendDays: readonly number[] = []): Date =>
+  addWorkingDays(day, 1, weekendDays);
+
+/** @description The day work that "finishes" on `day` really ended: the last working day on or before it */
+export const effectiveFinish = (day: Date, weekendDays: readonly number[] = []): Date =>
+  subtractWorkingDays(day, 1, weekendDays);
+
+/**
  * @description Coerces any user or API supplied duration into a valid stored value
  * @returns {number | null} whole number of days >= WORK_ITEM_DURATION_MIN, or null when unset
  * @example normalizeWorkItemDuration(3.4) // 3

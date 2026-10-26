@@ -16,6 +16,7 @@ import {
   getBlockAnchorPoints,
 } from "@/helpers/gantt-dependency-helpers";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { useGetIssueWeekendDays } from "@/hooks/use-project-weekend-days";
 import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
 
 type Props = {
@@ -33,6 +34,7 @@ export const TimelineDependencyPaths = observer(function TimelineDependencyPaths
     relation,
     issue: { getIssueById },
   } = useIssueDetail(EIssueServiceType.ISSUES);
+  const getWeekendDays = useGetIssueWeekendDays();
 
   if (!isDependencyEnabled || !blockIds?.length) return null;
 
@@ -46,7 +48,7 @@ export const TimelineDependencyPaths = observer(function TimelineDependencyPaths
     };
   };
 
-  const edges = buildGanttDependencyEdges(blockIds, relationMap, getDates, relation.getRelationLag);
+  const edges = buildGanttDependencyEdges(blockIds, relationMap, getDates, relation.getRelationLag, getWeekendDays);
   if (!edges.length) return null;
 
   const indexById = new Map(blockIds.map((id, index) => [id, index]));
