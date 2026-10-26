@@ -16,6 +16,7 @@ from django.db import models
 from .base import BaseModel
 from plane.utils.constants import RESTRICTED_WORKSPACE_SLUGS
 from plane.utils.color import get_random_color
+from plane.utils.weekend_days import default_weekend_days, validate_weekend_days
 
 ROLE_CHOICES = ((20, "Admin"), (15, "Member"), (5, "Guest"))
 
@@ -151,6 +152,8 @@ class Workspace(BaseModel):
     timezone = models.CharField(max_length=255, default="UTC", choices=TIMEZONE_CHOICES)
     # First day of the week for the workspace's projects (0 = Sunday ... 6 = Saturday); a new project copies it
     start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=SUNDAY)
+    # Days that count as non-working time (0 = Sunday ... 6 = Saturday); a new project copies them
+    weekend_days = models.JSONField(default=default_weekend_days, validators=[validate_weekend_days])
     background_color = models.CharField(max_length=255, default=get_random_color)
 
     def __str__(self):

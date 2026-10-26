@@ -90,6 +90,7 @@ class ProjectCreateSerializer(BaseSerializer):
             "close_in",
             "timezone",
             "start_of_the_week",
+            "weekend_days",
             "external_source",
             "external_id",
             "is_issue_type_enabled",

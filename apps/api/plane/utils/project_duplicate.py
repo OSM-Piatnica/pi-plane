@@ -350,6 +350,7 @@ PROJECT_SCALAR_FIELDS = (
     "close_in",
     "timezone",
     "start_of_the_week",
+    "weekend_days",
 )
 
 
