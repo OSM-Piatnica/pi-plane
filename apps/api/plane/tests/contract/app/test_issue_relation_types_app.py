@@ -27,7 +27,14 @@ def _no_activity(db):
 
 @pytest.fixture
 def project(db, workspace, create_user):
-    project = Project.objects.create(name="Rel", identifier="REL", workspace=workspace, created_by=create_user)
+    project = Project.objects.create(
+        name="Rel",
+        identifier="REL",
+        workspace=workspace,
+        created_by=create_user,
+        is_relation_schedule_enabled=True,
+        is_relation_traceability_enabled=True,
+    )
     ProjectMember.objects.create(project=project, member=create_user, role=20, is_active=True)
     return project
 
