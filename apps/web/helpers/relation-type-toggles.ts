@@ -60,3 +60,9 @@ export const isRelationTypeEnabled = (
   if (!flag) return true;
   return project?.[flag] ?? RELATION_TOGGLE_DEFAULTS[flag];
 };
+
+/** The relation options a project lets people add, in their original order. */
+export const filterEnabledRelationOptions = <T extends { key: TIssueRelationTypes }>(
+  options: T[],
+  project: Partial<Pick<IProject, TRelationToggleFlag>> | undefined
+): T[] => options.filter((option) => isRelationTypeEnabled(project, option.key));

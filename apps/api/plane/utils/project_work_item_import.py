@@ -38,6 +38,7 @@ from plane.utils.html_processor import strip_tags
 from plane.utils.issue_relation_constraints import MAX_LAG_DAYS, TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
 from plane.utils.issue_relation_types import ALL_RELATION_NAMES, MIRRORED_RELATIONS, SYMMETRIC_RELATIONS
+from plane.utils.relation_type_toggles import relation_type_enabled
 from plane.utils.issue_type_property import validate_property_value
 from plane.utils.work_item_duration import (
     normalize_work_item_duration,
@@ -956,6 +957,12 @@ def import_work_items_into_project(
                 relation_type = relation["type"]
                 if relation_type not in _ALLOWED_RELATIONS:
                     warnings.append(f'Work item "{item["external_key"]}": unknown relation "{relation_type}", skipped')
+                    continue
+                if not relation_type_enabled(project, relation_type):
+                    warnings.append(
+                        f'Work item "{item["external_key"]}": relation "{relation_type}" is switched off in this '
+                        "project, skipped"
+                    )
                     continue
                 target = _resolve_target(relation["issue"])
                 if target is None:

@@ -169,6 +169,29 @@ class TestEnforcement:
         )
         assert removed.status_code == status.HTTP_204_NO_CONTENT, removed.content
 
+    def test_the_project_the_relation_is_added_from_decides(
+        self, session_client, workspace, project, items, create_user
+    ):
+        """The other work item's project may have the type switched off; only the adding side's setting counts."""
+        other = Project.objects.create(
+            name="Other",
+            identifier="OTH",
+            workspace=workspace,
+            created_by=create_user,
+            is_relation_traceability_enabled=False,
+        )
+        ProjectMember.objects.create(project=other, member=create_user, role=20, is_active=True)
+        elsewhere = Issue.objects.create(name="elsewhere", project=other, workspace=workspace)
+        a, _ = items
+        Project.objects.filter(pk=project.pk).update(is_relation_traceability_enabled=True)
+
+        added = relate(session_client, workspace, project, a, "caused_by", elsewhere)
+        refused = relate(session_client, workspace, other, elsewhere, "tested_by", a)
+
+        assert added.status_code == status.HTTP_201_CREATED, added.content
+        assert refused.status_code == status.HTTP_400_BAD_REQUEST
+        assert refused.json()["error_code"] == RELATION_TYPE_DISABLED
+
     def test_the_public_api_refuses_a_type_that_is_off(self, api_key_client, workspace, project, items):
         a, b = items
         api_url = f"/api/v1/workspaces/{workspace.slug}/projects/{project.id}/work-items/{a.id}/relations/"

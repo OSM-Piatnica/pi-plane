@@ -695,6 +695,7 @@ class TestWorkItemImportRelations:
 
     def test_a_lag_that_is_not_a_number_or_out_of_range_is_left_out(self, workspace, create_user):
         project = _project_with_state(workspace, create_user, "Bad lag", "BLG")
+        Project.objects.filter(pk=project.pk).update(is_relation_schedule_enabled=True)
 
         import_work_items_into_project(
             project=project,
@@ -715,6 +716,57 @@ class TestWorkItemImportRelations:
         )
 
         assert set(IssueRelation.objects.filter(project=project).values_list("lag_days", flat=True)) == {0}
+
+    def test_relations_of_a_type_the_project_has_switched_off_are_skipped_with_a_warning(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Toggled", "TOG")
+        warnings = []
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            warnings=warnings,
+            rows=[
+                {
+                    "external_key": "TOG-1",
+                    "name": "First",
+                    "state": "Todo",
+                    "relations": [
+                        {"type": "blocked_by", "issue": "TOG-2"},
+                        {"type": "caused_by", "issue": "TOG-2"},
+                        {"type": "start_before", "issue": "TOG-2"},
+                        {"type": "relates_to", "issue": "TOG-2"},
+                    ],
+                },
+                {"external_key": "TOG-2", "name": "Second", "state": "Todo"},
+            ],
+        )
+
+        assert set(IssueRelation.objects.filter(project=project).values_list("relation_type", flat=True)) == {
+            "blocked_by",
+            "relates_to",
+        }
+        assert any('relation "caused_by" is switched off' in warning for warning in warnings)
+        assert any('relation "start_before" is switched off' in warning for warning in warnings)
+
+    def test_relations_of_a_type_the_project_has_switched_on_are_imported(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Toggled on", "TON")
+        Project.objects.filter(pk=project.pk).update(is_relation_traceability_enabled=True)
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "TON-1",
+                    "name": "First",
+                    "state": "Todo",
+                    "relations": [{"type": "caused_by", "issue": "TON-2"}],
+                },
+                {"external_key": "TON-2", "name": "Second", "state": "Todo"},
+            ],
+        )
+
+        assert IssueRelation.objects.get(project=project).relation_type == "caused_by"
 
     def test_a_lag_on_a_relation_without_dates_is_ignored(self, workspace, create_user):
         project = _project_with_state(workspace, create_user, "No dates", "NDT")

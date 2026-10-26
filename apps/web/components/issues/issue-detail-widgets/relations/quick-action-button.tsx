@@ -14,7 +14,7 @@ import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/comp
 // plane imports
 import type { TIssueServiceType, TIssueRelationTypes } from "@plane/types";
 // hooks
-import { isRelationTypeEnabled } from "@/helpers/relation-type-toggles";
+import { filterEnabledRelationOptions } from "@/helpers/relation-type-toggles";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
 // components
@@ -69,21 +69,17 @@ export const RelationActionButton = observer(function RelationActionButton(props
         </MenuTrigger>
       )}
       <MenuContent side="bottom" align="start">
-        {Object.values(ISSUE_RELATION_OPTIONS).map((item) => {
-          if (!item || !isRelationTypeEnabled(issueProject, item.key)) return null;
-
-          return (
-            <MenuItem
-              key={item.key}
-              icon={item.icon(12)}
-              label={t(item.i18n_label)}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleOnClick(item.key);
-              }}
-            />
-          );
-        })}
+        {filterEnabledRelationOptions(Object.values(ISSUE_RELATION_OPTIONS), issueProject).map((item) => (
+          <MenuItem
+            key={item.key}
+            icon={item.icon(12)}
+            label={t(item.i18n_label)}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleOnClick(item.key);
+            }}
+          />
+        ))}
       </MenuContent>
     </Menu>
   );

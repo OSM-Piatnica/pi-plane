@@ -7,6 +7,10 @@
 ``blocked_by`` and ``blocking`` are always available. The other types are grouped, and each group is switched on per
 project with a flag on ``Project``. Switching a group off only stops new relations of those types: the ones that exist
 stay in the database and stay visible.
+
+A relation can join work items of two projects. The project of the work item the relation is added from decides: the
+other project's flags are not consulted, so the person adding it never meets a refusal caused by a setting they may
+not be able to see, and that project simply shows the relation, as it does any existing one.
 """
 
 RELATION_TYPE_DISABLED = "relation_type_disabled"
