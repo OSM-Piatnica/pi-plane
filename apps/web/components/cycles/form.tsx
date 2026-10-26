@@ -22,7 +22,7 @@ import { getDate, renderFormattedPayloadDate, getTabIndex } from "@plane/utils";
 // components
 import { ProjectSelect } from "@/components/dropdowns/project/project-select";
 // hooks
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { useUser } from "@/hooks/store/user/user-user";
 import { hasInputChanged, useReportFormInput } from "@/hooks/use-report-form-input";
 
@@ -59,7 +59,7 @@ export function CycleForm(props: Props) {
   const { t } = useTranslation();
   // store hooks
   const { projectsWithCreatePermissions } = useUser();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   // form data
   const {
     formState: { errors, isSubmitting },
@@ -199,7 +199,7 @@ export function CycleForm(props: Props) {
                       }}
                       icon={<CalendarOutline />}
                       placeholder={`${t("start_date")} - ${t("end_date")}`}
-                      weekStartsOn={userProfile?.start_of_the_week}
+                      weekStartsOn={startOfTheWeek}
                       tabIndex={getIndex("date_range")}
                     />
                   )}

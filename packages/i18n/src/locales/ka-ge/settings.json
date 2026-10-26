@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "დასრულების პროცენტი",
+    "first_day_project_default": "პროექტის ნაგულისხმევი",
     "first_day_updated": "კვირის პირველი დღე წარმატებით განახლდა",
     "try_again_later": "გთხოვთ, სცადოთ მოგვიანებით.",
     "update_failed": "განახლება ვერ მოხერხდა",

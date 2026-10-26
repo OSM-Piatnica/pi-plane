@@ -9,7 +9,7 @@ import type { TPaginationInfo } from "./common";
 import type { ICycle } from "./cycle";
 import type { TUserPermissions } from "./enums";
 import type { TProjectMembership } from "./project";
-import type { IUser, IUserLite } from "./users";
+import type { EStartOfTheWeek, IUser, IUserLite } from "./users";
 import type { TLoginMediums } from "./instance";
 import type { IWorkspaceViewProps } from "./view-props";
 
@@ -35,6 +35,7 @@ export interface IWorkspace {
   total_projects?: number;
   role: number;
   timezone: string;
+  start_of_the_week?: EStartOfTheWeek;
 }
 
 export interface IWorkspaceLite {

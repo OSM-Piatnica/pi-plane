@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "완료율",
+    "first_day_project_default": "프로젝트 기본값",
     "first_day_updated": "한 주의 시작일이 업데이트되었습니다",
     "try_again_later": "나중에 다시 시도해 주세요.",
     "update_failed": "업데이트 실패",

@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Persentase penyelesaian",
+    "first_day_project_default": "Default proyek",
     "first_day_updated": "Hari pertama dalam seminggu berhasil diperbarui",
     "try_again_later": "Silakan coba lagi nanti.",
     "update_failed": "Pembaruan gagal",

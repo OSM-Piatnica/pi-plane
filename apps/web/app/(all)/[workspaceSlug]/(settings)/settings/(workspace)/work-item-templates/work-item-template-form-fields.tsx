@@ -24,7 +24,7 @@ import { PrioritySelect } from "@/components/dropdowns/priority/priority-select"
 import { StateSelect } from "@/components/dropdowns/state/state-select";
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useProject } from "@/hooks/store/use-project";
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { IssueTypeSelect } from "@/components/issues/issue-modal";
 import type { TWorkItemTemplateFormFields } from "./work-item-template-form.types";
@@ -45,7 +45,7 @@ export const WorkItemTemplateDefaultValueFields = observer(function WorkItemTemp
   const { areEstimateEnabledByProjectId } = useProjectEstimates();
   const { getProjectById } = useProject();
   const { isMobile } = usePlatformOS();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
 
   const startDate = useWatch({ control, name: "start_date" });
   const targetDate = useWatch({ control, name: "target_date" });
@@ -208,7 +208,7 @@ export const WorkItemTemplateDefaultValueFields = observer(function WorkItemTemp
               maxDate={maxDate ?? undefined}
               placeholder={t("start_date")}
               icon={<CalendarOutline />}
-              weekStartsOn={userProfile?.start_of_the_week}
+              weekStartsOn={startOfTheWeek}
               clearable
               tabIndex={getIndex("start_date")}
               variant="pill-md"
@@ -225,7 +225,7 @@ export const WorkItemTemplateDefaultValueFields = observer(function WorkItemTemp
               minDate={minDate ?? undefined}
               placeholder={t("due_date")}
               icon={<CalendarOutline />}
-              weekStartsOn={userProfile?.start_of_the_week}
+              weekStartsOn={startOfTheWeek}
               clearable
               tabIndex={getIndex("target_date")}
               variant="pill-md"

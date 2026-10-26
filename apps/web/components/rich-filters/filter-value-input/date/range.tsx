@@ -13,7 +13,7 @@ import type { DateRangeValue } from "@plane/blocks/property-select";
 import type { TDateRangeFilterFieldConfig, TFilterConditionNodeForDisplay, TFilterProperty } from "@plane/types";
 import { cn, isValidDate, renderFormattedPayloadDate, toFilterArray } from "@plane/utils";
 // hooks
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 // local imports
 import { COMMON_FILTER_ITEM_BORDER_CLASSNAME, EMPTY_FILTER_PLACEHOLDER_TEXT } from "../../shared";
 
@@ -29,7 +29,7 @@ export const DateRangeFilterValueInput = observer(function DateRangeFilterValueI
 ) {
   const { config, condition, isDisabled, onChange } = props;
   // store hooks
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   // derived values
   const [fromRaw, toRaw] = toFilterArray(condition.value) ?? [];
   const from = isValidDate(fromRaw) ? new Date(fromRaw) : null;
@@ -57,7 +57,7 @@ export const DateRangeFilterValueInput = observer(function DateRangeFilterValueI
       // The legacy `renderPlaceholder` boolean plus `placeholder.from` is one string here: the old
       // dropdown drew no arrow without a `placeholder.to`, so the whole empty state is "--".
       placeholder={EMPTY_FILTER_PLACEHOLDER_TEXT}
-      weekStartsOn={userProfile?.start_of_the_week}
+      weekStartsOn={startOfTheWeek}
       // A flat segment of the filter chip, like the property and operator segments beside it.
       className={cn("h-full max-w-none rounded-none border-0 bg-transparent text-body-xs-regular", {
         [COMMON_FILTER_ITEM_BORDER_CLASSNAME]: !isDisabled,

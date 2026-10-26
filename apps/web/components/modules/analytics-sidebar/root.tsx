@@ -38,7 +38,8 @@ import { CreateUpdateModuleLinkModal, ModuleAnalyticsProgress, ModuleLinksList }
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useModule } from "@/hooks/store/use-module";
-import { useUserPermissions, useUserProfile } from "@/hooks/store/user";
+import { useUserPermissions } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 // plane web constants
 type ModuleStatusOption = (typeof MODULE_STATUS)[number];
 
@@ -150,7 +151,7 @@ export const ModuleAnalyticsSidebar = observer(function ModuleAnalyticsSidebar(p
   // store hooks
   const { t } = useTranslation();
   const { allowPermissions } = useUserPermissions();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
 
   const { getModuleById, updateModuleDetails, createModuleLink, updateModuleLink, deleteModuleLink } = useModule();
   const { areEstimateEnabledByProjectId, currentActiveEstimateId, estimateById } = useProjectEstimates();
@@ -363,7 +364,7 @@ export const ModuleAnalyticsSidebar = observer(function ModuleAnalyticsSidebar(p
                             void handleDateChange(range.from ?? undefined, range.to ?? undefined);
                           }}
                           placeholder={`${t("start_date")} - ${t("end_date")}`}
-                          weekStartsOn={userProfile?.start_of_the_week}
+                          weekStartsOn={startOfTheWeek}
                           disabled={!isEditingAllowed || isArchived}
                         />
                       );

@@ -15,7 +15,7 @@ import type { TIssue } from "@plane/types";
 import { cn, getDate, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
 // hooks
 import { useProjectState } from "@/hooks/store/use-project-state";
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 
 type Props = {
   issue: TIssue;
@@ -28,7 +28,7 @@ export const SpreadsheetDueDateColumn = observer(function SpreadsheetDueDateColu
   const { issue, onChange, disabled, onClose } = props;
   // store hooks
   const { getStateById } = useProjectState();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   // plane hooks
   const { t } = useTranslation();
   // derived values
@@ -58,7 +58,7 @@ export const SpreadsheetDueDateColumn = observer(function SpreadsheetDueDateColu
         className={cn("clickable h-full", {
           "text-danger-primary": shouldHighlightIssueDueDate(issue.target_date, stateDetails?.group),
         })}
-        weekStartsOn={userProfile?.start_of_the_week}
+        weekStartsOn={startOfTheWeek}
         onClose={onClose}
         variant="table-cell"
       />

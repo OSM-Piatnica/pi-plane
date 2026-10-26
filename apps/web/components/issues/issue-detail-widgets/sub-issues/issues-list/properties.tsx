@@ -22,7 +22,7 @@ import { StateSelect } from "@/components/dropdowns/state/state-select";
 // hooks
 import { WithDisplayPropertiesHOC } from "@/components/issues/issue-layouts/properties/with-display-properties-HOC";
 import { useProjectState } from "@/hooks/store/use-project-state";
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 
 type Props = {
   workspaceSlug: string;
@@ -50,7 +50,7 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
   const { workspaceSlug, parentIssueId, issueId, canEdit, updateSubIssue, displayProperties, issue } = props;
   const { t } = useTranslation();
   const { getStateById } = useProjectState();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
 
   const handleStartDate = (date: Date | null) => {
     if (issue.project_id) {
@@ -153,7 +153,7 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
             disabled={!canEdit}
             showTooltip
             tooltipHeading={t("project_cycles.date_range")}
-            weekStartsOn={userProfile?.start_of_the_week}
+            weekStartsOn={startOfTheWeek}
             mergeDates
             side="top"
             align="end"
@@ -178,7 +178,7 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
           disabled={!canEdit}
           showTooltip
           tooltipHeading={t("common.order_by.start_date")}
-          weekStartsOn={userProfile?.start_of_the_week}
+          weekStartsOn={startOfTheWeek}
           side="top"
           align="end"
           variant="pill-sm"
@@ -202,7 +202,7 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
           disabled={!canEdit}
           showTooltip
           tooltipHeading={t("common.order_by.due_date")}
-          weekStartsOn={userProfile?.start_of_the_week}
+          weekStartsOn={startOfTheWeek}
           side="top"
           align="end"
           variant="pill-sm"

@@ -154,3 +154,61 @@ class TestMigration:
         migration.back_to_sunday(apps, None)
         first.refresh_from_db()
         assert first.start_of_the_week == 0
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestNewUserTimezone:
+    def onboard(self, client):
+        return client.patch("/api/users/me/onboard/", {"is_onboarded": True}, format="json")
+
+    def test_finishing_onboarding_takes_over_the_workspace_timezone(self, session_client, create_user, workspace):
+        type(workspace).objects.filter(pk=workspace.pk).update(timezone="Europe/Warsaw")
+        Profile.objects.get_or_create(user=create_user)
+
+        assert self.onboard(session_client).status_code == status.HTTP_200_OK
+
+        create_user.refresh_from_db()
+        assert create_user.user_timezone == "Europe/Warsaw"
+
+    def test_the_workspace_the_person_last_opened_wins(self, session_client, create_user, workspace):
+        from plane.db.models import Workspace, WorkspaceMember
+
+        type(workspace).objects.filter(pk=workspace.pk).update(timezone="Europe/Warsaw")
+        other = Workspace.objects.create(name="Other", slug="other-ws", owner=create_user, timezone="Asia/Tokyo")
+        WorkspaceMember.objects.create(workspace=other, member=create_user, role=20)
+        profile, _ = Profile.objects.get_or_create(user=create_user)
+        Profile.objects.filter(pk=profile.pk).update(last_workspace_id=other.id)
+
+        self.onboard(session_client)
+
+        create_user.refresh_from_db()
+        assert create_user.user_timezone == "Asia/Tokyo"
+
+    def test_a_timezone_the_person_chose_is_kept(self, session_client, create_user, workspace):
+        type(create_user).objects.filter(pk=create_user.pk).update(user_timezone="America/New_York")
+        type(workspace).objects.filter(pk=workspace.pk).update(timezone="Europe/Warsaw")
+        Profile.objects.get_or_create(user=create_user)
+
+        self.onboard(session_client)
+
+        create_user.refresh_from_db()
+        assert create_user.user_timezone == "America/New_York"
+
+    def test_only_the_first_onboarding_counts(self, session_client, create_user, workspace):
+        profile, _ = Profile.objects.get_or_create(user=create_user)
+        Profile.objects.filter(pk=profile.pk).update(is_onboarded=True)
+        type(workspace).objects.filter(pk=workspace.pk).update(timezone="Europe/Warsaw")
+
+        self.onboard(session_client)
+
+        create_user.refresh_from_db()
+        assert create_user.user_timezone == "UTC"
+
+    def test_nothing_changes_when_the_person_has_no_workspace(self, session_client, create_user):
+        Profile.objects.get_or_create(user=create_user)
+
+        assert self.onboard(session_client).status_code == status.HTTP_200_OK
+
+        create_user.refresh_from_db()
+        assert create_user.user_timezone == "UTC"

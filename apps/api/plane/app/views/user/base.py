@@ -33,6 +33,7 @@ from plane.app.serializers import (
     UserSerializer,
 )
 from plane.app.views.base import BaseAPIView, BaseViewSet
+from plane.utils.workspace_defaults import inherit_workspace_timezone
 from plane.db.models import (
     Account,
     IssueActivity,
@@ -391,8 +392,11 @@ class UserSessionEndpoint(BaseAPIView):
 class UpdateUserOnBoardedEndpoint(BaseAPIView):
     def patch(self, request):
         profile = Profile.objects.get(user_id=request.user.id)
+        was_onboarded = profile.is_onboarded
         profile.is_onboarded = request.data.get("is_onboarded", False)
         profile.save()
+        if profile.is_onboarded and not was_onboarded:
+            inherit_workspace_timezone(request.user, profile)
         return Response({"message": "Updated successfully"}, status=status.HTTP_200_OK)
 
 

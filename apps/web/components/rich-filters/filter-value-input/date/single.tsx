@@ -12,7 +12,7 @@ import { DateSelect } from "@/components/dropdowns/date-select";
 import type { TDateFilterFieldConfig, TFilterConditionNodeForDisplay, TFilterProperty } from "@plane/types";
 import { cn, getDate, renderFormattedPayloadDate } from "@plane/utils";
 // hooks
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 // local imports
 import { COMMON_FILTER_ITEM_BORDER_CLASSNAME, EMPTY_FILTER_PLACEHOLDER_TEXT } from "../../shared";
 
@@ -28,7 +28,7 @@ export const SingleDateFilterValueInput = observer(function SingleDateFilterValu
 ) {
   const { config, condition, isDisabled, onChange } = props;
   // store hooks
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   // derived values
   const conditionValue = typeof condition.value === "string" ? condition.value : null;
 
@@ -47,7 +47,7 @@ export const SingleDateFilterValueInput = observer(function SingleDateFilterValu
       minDate={config.min}
       maxDate={config.max}
       placeholder={EMPTY_FILTER_PLACEHOLDER_TEXT}
-      weekStartsOn={userProfile?.start_of_the_week}
+      weekStartsOn={startOfTheWeek}
       defaultOpen={!conditionValue}
       disabled={isDisabled}
       variant="pill-lg"

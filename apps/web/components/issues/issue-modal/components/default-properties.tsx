@@ -35,7 +35,7 @@ import { ParentIssuesListModal } from "@/components/issues/parent-issues-list-mo
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 import { DurationDropdown } from "@/components/dropdowns/duration";
@@ -76,7 +76,7 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
   const { getProjectById } = useProject();
   const { getProjectDefaultStateId } = useProjectState();
   const { isMobile } = usePlatformOS();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   // derived values
   const projectDetails = getProjectById(projectId);
 
@@ -176,7 +176,7 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
             }
             placeholder={t("start_date")}
             icon={<CalendarOutline />}
-            weekStartsOn={userProfile?.start_of_the_week}
+            weekStartsOn={startOfTheWeek}
             clearable
             tabIndex={getIndex("start_date")}
             variant="pill-md"
@@ -195,7 +195,7 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
             }
             placeholder={t("due_date")}
             icon={<CalendarOutline />}
-            weekStartsOn={userProfile?.start_of_the_week}
+            weekStartsOn={startOfTheWeek}
             clearable
             tabIndex={getIndex("target_date")}
             variant="pill-md"

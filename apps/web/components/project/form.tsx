@@ -24,7 +24,7 @@ import type { IProject, IWorkspace } from "@plane/types";
 import { Select } from "@plane/blocks/select";
 import { CoverImage } from "@/components/common/cover-image";
 import { ImagePickerPopover } from "@/components/core/image-picker-popover";
-import { TimezoneSelect } from "@/components/global";
+import { StartOfWeekSelect, TimezoneSelect } from "@/components/global";
 // helpers
 import { handleCoverImageChange } from "@/helpers/cover-image.helper";
 // hooks
@@ -168,6 +168,7 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
 
         logo_props: formData.logo_props,
         timezone: formData.timezone,
+        start_of_the_week: formData.start_of_the_week,
       };
 
       // Handle cover image changes
@@ -457,6 +458,16 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
               )}
             />
             {errors.timezone && <span className="text-11 text-danger-primary">{errors.timezone.message}</span>}
+          </div>
+          <div className="col-span-1 flex flex-col gap-1 sm:col-span-2 xl:col-span-1">
+            <h4 className="text-13">{t("project_components.profile.first_day_of_week")}</h4>
+            <Controller
+              name="start_of_the_week"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <StartOfWeekSelect value={value} onChange={onChange} disabled={!isAdmin} />
+              )}
+            />
           </div>
         </div>
         <div className="flex items-center justify-between py-2">

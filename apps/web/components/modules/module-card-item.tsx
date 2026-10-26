@@ -30,7 +30,8 @@ import { ModuleStatusDropdown } from "@/components/modules/module-status-dropdow
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 import { useModule } from "@/hooks/store/use-module";
-import { useUserPermissions, useUserProfile } from "@/hooks/store/user";
+import { useUserPermissions } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { useTranslation } from "@plane/i18n";
@@ -57,7 +58,7 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
   const { allowPermissions } = useUserPermissions();
   const { getModuleById, addModuleToFavorites, removeModuleFromFavorites, updateModuleDetails } = useModule();
   const { getUserDetails } = useMember();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   // local storage
   const { setValue: toggleFavoriteMenu, storedValue } = useLocalStorage<boolean>(IS_FAVORITE_MENU_OPEN, false);
   // derived values
@@ -255,7 +256,7 @@ export const ModuleCardItem = observer(function ModuleCardItem(props: Props) {
                   });
                 }}
                 placeholder={`${t("start_date")} - ${t("end_date")}`}
-                weekStartsOn={userProfile?.start_of_the_week}
+                weekStartsOn={startOfTheWeek}
                 disabled={isDisabled}
                 icon={renderIcon ? undefined : <CalendarOutline aria-hidden="true" />}
               />

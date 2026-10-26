@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Процент выполнения",
+    "first_day_project_default": "По умолчанию для проекта",
     "first_day_updated": "Первый день недели успешно обновлён",
     "try_again_later": "Повторите попытку позже.",
     "update_failed": "Не удалось обновить",

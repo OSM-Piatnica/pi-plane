@@ -82,7 +82,8 @@ export type TUserProfile = {
   language: string;
   created_at: Date | string;
   updated_at: Date | string;
-  start_of_the_week: EStartOfTheWeek;
+  /** The person's own first day of the week; null follows the project (or workspace) setting. */
+  start_of_the_week: EStartOfTheWeek | null;
 };
 
 export interface IInstanceAdminStatus {

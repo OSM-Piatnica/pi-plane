@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Процент на завършеност",
+    "first_day_project_default": "По подразбиране на проекта",
     "first_day_updated": "Първият ден от седмицата е обновен успешно",
     "try_again_later": "Опитайте отново по-късно.",
     "update_failed": "Обновяването не бе успешно",

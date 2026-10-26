@@ -31,7 +31,7 @@ import { Select } from "@plane/blocks/select";
 // components
 import { getDate, cn } from "@plane/utils";
 // hooks
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 
 type TNotificationSnoozeModal = {
   isOpen: boolean;
@@ -62,7 +62,7 @@ export function NotificationSnoozeModal(props: TNotificationSnoozeModal) {
 
   const { workspaceSlug } = useParams();
   // store hooks
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
 
   const {
     formState: { isSubmitting },
@@ -182,7 +182,7 @@ export function NotificationSnoozeModal(props: TNotificationSnoozeModal) {
                         }}
                         minDate={new Date()}
                         clearable
-                        weekStartsOn={userProfile?.start_of_the_week}
+                        weekStartsOn={startOfTheWeek}
                         variant="select-lg"
                       />
                     )}

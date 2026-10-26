@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Phần trăm hoàn thành",
+    "first_day_project_default": "Mặc định của dự án",
     "first_day_updated": "Đã cập nhật ngày đầu tuần thành công",
     "try_again_later": "Vui lòng thử lại sau.",
     "update_failed": "Cập nhật thất bại",

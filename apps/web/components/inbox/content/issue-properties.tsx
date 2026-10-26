@@ -29,7 +29,7 @@ import type { TIssueOperations } from "@/components/issues/issue-detail";
 import { IssueLabel } from "@/components/issues/issue-detail/label";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { useAppRouter } from "@/hooks/use-app-router";
 
 type Props = {
@@ -51,7 +51,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
   const router = useAppRouter();
   // store hooks
   const { currentProjectDetails } = useProject();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
 
   const minDate = issue.start_date ? getDate(issue.start_date) : null;
   minDate?.setDate(minDate.getDate());
@@ -162,7 +162,7 @@ export const InboxIssueContentProperties = observer(function InboxIssueContentPr
                   }}
                   minDate={minDate ?? undefined}
                   disabled={!isEditable}
-                  weekStartsOn={userProfile?.start_of_the_week}
+                  weekStartsOn={startOfTheWeek}
                   clearable
                   clearLabel={t("common.clear")}
                   variant="select-ghost-md"
