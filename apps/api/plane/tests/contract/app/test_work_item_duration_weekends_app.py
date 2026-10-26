@@ -155,15 +155,18 @@ class TestWeekendChange:
 
         delay.assert_not_called()
 
-    def test_the_settings_endpoint_changes_the_durations(self, session_client, workspace, project, create_user):
+    def test_the_settings_endpoint_changes_the_durations(
+        self, session_client, workspace, project, create_user, django_capture_on_commit_callbacks
+    ):
         item = Issue.objects.create(
             name="Item", project=project, workspace=workspace, start_date=MON, target_date=NEXT_MON, duration=6
         )
 
         with mock.patch("plane.bgtasks.project_duration_task.recompute_project_durations.delay") as delay:
-            response = session_client.patch(
-                f"/api/workspaces/{workspace.slug}/projects/{project.id}/", {"weekend_days": [3]}, format="json"
-            )
+            with django_capture_on_commit_callbacks(execute=True):
+                response = session_client.patch(
+                    f"/api/workspaces/{workspace.slug}/projects/{project.id}/", {"weekend_days": [3]}, format="json"
+                )
 
         assert response.status_code == status.HTTP_200_OK, response.content
         delay.assert_called_once()

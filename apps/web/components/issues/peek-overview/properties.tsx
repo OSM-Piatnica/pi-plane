@@ -44,6 +44,7 @@ import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useMember } from "@/hooks/store/use-member";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
+import { useProjectWeekendDays } from "@/hooks/use-project-weekend-days";
 import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import type { TIssueOperations } from "../issue-detail";
 import { IssueCycleSelect } from "../issue-detail/cycle-select";
@@ -81,11 +82,12 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
   if (!issue) return <></>;
   const createdByDetails = getUserDetails(issue?.created_by);
   const projectDetails = getProjectById(issue.project_id);
+  const weekendDays = useProjectWeekendDays(issue.project_id);
   const isEstimateEnabled = projectDetails?.estimate;
   const stateDetails = getStateById(issue.state_id);
 
   const updateDurationFields = (change: Partial<Pick<TIssue, "start_date" | "target_date" | "duration">>) =>
-    issueOperations.update(workspaceSlug, projectId, issueId, reconcileWorkItemDuration(issue, change));
+    issueOperations.update(workspaceSlug, projectId, issueId, reconcileWorkItemDuration(issue, change, weekendDays));
 
   return (
     <div>

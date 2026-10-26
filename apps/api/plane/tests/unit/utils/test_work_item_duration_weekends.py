@@ -78,8 +78,8 @@ class TestMovingByWorkingDays:
         assert subtract_working_days(day(6), 1, SAT_SUN) == day(4)  # Sun, one day -> Fri
 
     def test_other_weekend_days(self):
-        assert add_working_days(day(3), 2, FRI_SAT) == day(7)  # Thu, Fri and Sat off: Thu + Mon
-        assert subtract_working_days(day(7), 2, FRI_SAT) == day(3)
+        assert add_working_days(day(3), 2, FRI_SAT) == day(6)  # Thu, then Sunday: Friday and Saturday are off
+        assert subtract_working_days(day(6), 2, FRI_SAT) == day(3)
 
     def test_a_week_with_every_day_off_does_not_trap(self):
         assert add_working_days(day(0), 3, [0, 1, 2, 3, 4, 5, 6]) == day(2)

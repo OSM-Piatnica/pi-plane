@@ -44,6 +44,7 @@ import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useMember } from "@/hooks/store/use-member";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
+import { useProjectWeekendDays } from "@/hooks/use-project-weekend-days";
 import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 // components
 import { WorkItemAdditionalSidebarProperties } from "@/components/issues/issue-details/additional-properties";
@@ -86,10 +87,11 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
 
   // derived values
   const projectDetails = getProjectById(issue.project_id);
+  const weekendDays = useProjectWeekendDays(issue.project_id);
   const stateDetails = getStateById(issue.state_id);
 
   const updateDurationFields = (change: Partial<Pick<TIssue, "start_date" | "target_date" | "duration">>) =>
-    issueOperations.update(workspaceSlug, projectId, issueId, reconcileWorkItemDuration(issue, change));
+    issueOperations.update(workspaceSlug, projectId, issueId, reconcileWorkItemDuration(issue, change, weekendDays));
 
   return (
     <>

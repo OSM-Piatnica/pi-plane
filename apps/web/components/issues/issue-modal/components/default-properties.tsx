@@ -35,6 +35,7 @@ import { ParentIssuesListModal } from "@/components/issues/parent-issues-list-mo
 import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
+import { useProjectWeekendDays } from "@/hooks/use-project-weekend-days";
 import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
@@ -79,13 +80,14 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
   const startOfTheWeek = useStartOfTheWeek();
   // derived values
   const projectDetails = getProjectById(projectId);
+  const weekendDays = useProjectWeekendDays(projectId);
 
   const { getIndex } = getTabIndex(ETabIndices.ISSUE_FORM, isMobile);
 
   // Writing the derived fields with setValue rather than the field's own onChange keeps them in
   // dirtyFields, which is what getChangedIssuefields uses to build the update payload.
   const applyDurationChange = (change: Partial<Pick<TIssue, "start_date" | "target_date" | "duration">>) => {
-    const derived = reconcileWorkItemDuration(getValues(), change);
+    const derived = reconcileWorkItemDuration(getValues(), change, weekendDays);
     if (derived.start_date !== undefined) setValue("start_date", derived.start_date, { shouldDirty: true });
     if (derived.target_date !== undefined) setValue("target_date", derived.target_date, { shouldDirty: true });
     if (derived.duration !== undefined) setValue("duration", derived.duration, { shouldDirty: true });
