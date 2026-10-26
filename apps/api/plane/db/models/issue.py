@@ -284,6 +284,7 @@ class IssueRelationChoices(models.TextChoices):
     CAUSED_BY = "caused_by", "Caused By"
     CLONED_BY = "cloned_by", "Cloned By"
     TESTED_BY = "tested_by", "Tested By"
+    START_BEFORE_FINISH = "start_before_finish", "Starts Before Finish"
 
 
 # Bidirectional relation pairs: (forward, reverse); the types themselves live in plane.utils.issue_relation_types
@@ -302,6 +303,8 @@ class IssueRelation(ProjectBaseModel):
         verbose_name="Issue Relation Type",
         default=IssueRelationChoices.BLOCKED_BY,
     )
+    # Days kept between the two dates a timeline relation links; negative lets them overlap (a lead)
+    lag_days = models.IntegerField(default=0)
 
     class Meta:
         # two work items may be related in more than one way (blocked by and relates to), but once per type

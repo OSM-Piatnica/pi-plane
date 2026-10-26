@@ -33,7 +33,14 @@ from plane.db.models import (
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.utils.issue_relation_constraints import TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
-from plane.utils.issue_relation_service import existing_symmetric_pairs, relation_ends, validate_new_relation
+from plane.utils.issue_relation_service import (
+    existing_relation_others,
+    existing_symmetric_pairs,
+    parse_lag,
+    relation_ends,
+    set_lag,
+    validate_new_relation,
+)
 from plane.utils.issue_relation_types import ALL_RELATION_NAMES, is_mirrored, is_symmetric
 from plane.utils.host import base_host
 
@@ -57,23 +64,25 @@ def issue_in_project(issue_id, slug, project_id, *, include_archived=False):
     return manager.filter(pk=issue_id, workspace__slug=slug, project_id=project_id).exists()
 
 
-def related_issue_ids(issue_relations, issue_id, name):
-    """Ids of the work items that stand in relation ``name`` to ``issue_id``, read from either side of the rows."""
+def related_issue_lags(issue_relations, issue_id, name):
+    """``{id: lag_days}`` of the work items that stand in relation ``name`` to ``issue_id``, read from either side."""
     stored = get_actual_relation(name)
     if is_symmetric(name):
-        return list(
-            issue_relations.filter(issue_id=issue_id, relation_type=stored).values_list("related_issue_id", flat=True)
+        pairs = list(
+            issue_relations.filter(issue_id=issue_id, relation_type=stored).values_list("related_issue_id", "lag_days")
         ) + list(
-            issue_relations.filter(related_issue_id=issue_id, relation_type=stored).values_list("issue_id", flat=True)
+            issue_relations.filter(related_issue_id=issue_id, relation_type=stored).values_list("issue_id", "lag_days")
         )
-    if is_mirrored(name):
+    elif is_mirrored(name):
         # the row is stored from the other work item: "blocking" is "blocked_by" with this item as the related side
-        return list(
-            issue_relations.filter(related_issue_id=issue_id, relation_type=stored).values_list("issue_id", flat=True)
+        pairs = list(
+            issue_relations.filter(related_issue_id=issue_id, relation_type=stored).values_list("issue_id", "lag_days")
         )
-    return list(
-        issue_relations.filter(issue_id=issue_id, relation_type=stored).values_list("related_issue_id", flat=True)
-    )
+    else:
+        pairs = list(
+            issue_relations.filter(issue_id=issue_id, relation_type=stored).values_list("related_issue_id", "lag_days")
+        )
+    return dict(pairs)
 
 
 class IssueRelationViewSet(BaseViewSet):
@@ -175,12 +184,17 @@ class IssueRelationViewSet(BaseViewSet):
             "relation_type",
         ]
 
-        response_data = {
-            name: queryset.filter(pk__in=related_issue_ids(issue_relations, issue_id, name))
-            .annotate(relation_type=Value(name, output_field=CharField()))
-            .values(*fields)
-            for name in ALL_RELATION_NAMES
-        }
+        response_data = {}
+        for name in ALL_RELATION_NAMES:
+            lags = related_issue_lags(issue_relations, issue_id, name)
+            rows = list(
+                queryset.filter(pk__in=list(lags))
+                .annotate(relation_type=Value(name, output_field=CharField()))
+                .values(*fields)
+            )
+            for row in rows:
+                row["lag_days"] = lags.get(row["id"], 0)
+            response_data[name] = rows
 
         return Response(response_data, status=status.HTTP_200_OK)
 
@@ -214,6 +228,10 @@ class IssueRelationViewSet(BaseViewSet):
         if relation_type not in ALL_RELATION_NAMES:
             return Response({"message": "Unknown issue relation type"}, status=status.HTTP_400_BAD_REQUEST)
 
+        lag, lag_error = parse_lag(request.data.get("lag_days"), relation_type)
+        if lag_error:
+            return Response(lag_error, status=status.HTTP_400_BAD_REQUEST)
+
         current_issue = (
             Issue.objects.select_related("state", "project").filter(pk=issue_id, project_id=project_id).first()
         )
@@ -236,7 +254,7 @@ class IssueRelationViewSet(BaseViewSet):
             if relation_type in TIMELINE_RELATION_TYPES:
                 from plane.utils.issue_timeline_relation_validation import validate_new_timeline_relation
 
-                timeline_error = validate_new_timeline_relation(current_issue, related_issue, relation_type)
+                timeline_error = validate_new_timeline_relation(current_issue, related_issue, relation_type, lag or 0)
                 if timeline_error:
                     return Response(timeline_error, status=status.HTTP_400_BAD_REQUEST)
 
@@ -244,12 +262,14 @@ class IssueRelationViewSet(BaseViewSet):
         already_related = existing_symmetric_pairs(relation_type, issue_id, issues)
         issues = [item for item in issues if str(item) not in already_related]
 
+        already_there = existing_relation_others(issue_id, issues, relation_type)
         issue_relation = IssueRelation.objects.bulk_create(
             [
                 IssueRelation(
                     issue_id=relation_ends(issue_id, issue, relation_type)[0],
                     related_issue_id=relation_ends(issue_id, issue, relation_type)[1],
                     relation_type=(get_actual_relation(relation_type)),
+                    lag_days=lag or 0,
                     project_id=project_id,
                     workspace_id=project.workspace_id,
                     created_by=request.user,
@@ -261,17 +281,25 @@ class IssueRelationViewSet(BaseViewSet):
             ignore_conflicts=True,
         )
 
-        issue_activity.delay(
-            type="issue_relation.activity.created",
-            requested_data=json.dumps({"relation_type": relation_type, "issues": issues}, cls=DjangoJSONEncoder),
-            actor_id=str(request.user.id),
-            issue_id=str(issue_id),
-            project_id=str(project_id),
-            current_instance=None,
-            epoch=int(timezone.now().timestamp()),
-            notification=True,
-            origin=base_host(request=request, is_app=True),
-        )
+        if lag is not None:
+            # posting a relation that exists already with a lag changes its lag
+            set_lag(issue_id, issues, relation_type, lag)
+
+        new_issues = [item for item in issues if str(item) not in already_there]
+        if new_issues:
+            issue_activity.delay(
+                type="issue_relation.activity.created",
+                requested_data=json.dumps(
+                    {"relation_type": relation_type, "issues": new_issues}, cls=DjangoJSONEncoder
+                ),
+                actor_id=str(request.user.id),
+                issue_id=str(issue_id),
+                project_id=str(project_id),
+                current_instance=None,
+                epoch=int(timezone.now().timestamp()),
+                notification=True,
+                origin=base_host(request=request, is_app=True),
+            )
 
         if is_mirrored(relation_type):
             return Response(

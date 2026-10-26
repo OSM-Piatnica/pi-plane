@@ -14,6 +14,7 @@ DIRECTED_RELATIONS = (
     ("blocked_by", "blocking"),
     ("start_before", "start_after"),
     ("finish_before", "finish_after"),
+    ("start_before_finish", "finish_after_start"),
     ("implemented_by", "implements"),
     ("caused_by", "causes"),
     ("cloned_by", "clones"),

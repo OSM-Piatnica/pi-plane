@@ -206,7 +206,9 @@
       "clones": "Clones",
       "cloned_by": "Cloned by",
       "tests": "Tests",
-      "tested_by": "Tested by"
+      "tested_by": "Tested by",
+      "start_before_finish": "Starts before finish of",
+      "finish_after_start": "Finishes after start of"
     },
     "copy_link": "Copy work item link",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "marked this work item finishes after <value/>.",
           "removed": "removed the finishes after relation to <value/>."
         },
+        "finish_after_start": {
+          "added": "added relation “Finishes after start of”: <value/>.",
+          "removed": "removed relation “Finishes after start of”: <value/>."
+        },
         "finish_before": {
           "added": "marked this work item finishes before <value/>.",
           "removed": "removed the finishes before relation to <value/>."
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "marked this work item starts before <value/>.",
           "removed": "removed the starts before relation to <value/>."
+        },
+        "start_before_finish": {
+          "added": "added relation “Starts before finish of”: <value/>.",
+          "removed": "removed relation “Starts before finish of”: <value/>."
         },
         "tested_by": {
           "added": "added relation “Tested by”: <value/>.",

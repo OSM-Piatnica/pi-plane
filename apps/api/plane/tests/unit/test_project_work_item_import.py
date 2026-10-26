@@ -673,6 +673,68 @@ class TestWorkItemImportRelations:
 
         assert IssueRelation.objects.filter(project=project).count() == 1
 
+    def test_a_lag_survives_the_round_trip(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Lag", "LAG")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "LAG-1",
+                    "name": "Blocker",
+                    "state": "Todo",
+                    # written from the blocker's side, as an export of it would
+                    "relations": [{"type": "blocking", "issue": "LAG-2", "lag_days": -2}],
+                },
+                {"external_key": "LAG-2", "name": "Blocked", "state": "Todo"},
+            ],
+        )
+
+        assert IssueRelation.objects.get(project=project).lag_days == -2
+
+    def test_a_lag_that_is_not_a_number_or_out_of_range_is_left_out(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Bad lag", "BLG")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "BLG-1",
+                    "name": "First",
+                    "state": "Todo",
+                    "relations": [
+                        {"type": "blocked_by", "issue": "BLG-2", "lag_days": "soon"},
+                        {"type": "start_before", "issue": "BLG-3", "lag_days": 999999},
+                    ],
+                },
+                {"external_key": "BLG-2", "name": "Second", "state": "Todo"},
+                {"external_key": "BLG-3", "name": "Third", "state": "Todo"},
+            ],
+        )
+
+        assert set(IssueRelation.objects.filter(project=project).values_list("lag_days", flat=True)) == {0}
+
+    def test_a_lag_on_a_relation_without_dates_is_ignored(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "No dates", "NDT")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "NDT-1",
+                    "name": "First",
+                    "state": "Todo",
+                    "relations": [{"type": "relates_to", "issue": "NDT-2", "lag_days": 4}],
+                },
+                {"external_key": "NDT-2", "name": "Second", "state": "Todo"},
+            ],
+        )
+
+        assert IssueRelation.objects.get(project=project).lag_days == 0
+
     def test_symmetric_relation_is_not_duplicated(self, workspace, create_user):
         project = _project_with_state(workspace, create_user, "Symmetric", "SYM")
 

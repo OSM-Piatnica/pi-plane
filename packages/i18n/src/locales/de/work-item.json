@@ -206,7 +206,9 @@
       "clones": "Klont",
       "cloned_by": "Geklont von",
       "tests": "Testet",
-      "tested_by": "Getestet durch"
+      "tested_by": "Getestet durch",
+      "start_before_finish": "Beginnt vor dem Ende von",
+      "finish_after_start": "Endet nach dem Beginn von"
     },
     "copy_link": "Link zum Arbeitselement kopieren",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "hat markiert, dass dieses Arbeitselement nach <value/> endet.",
           "removed": "hat die Beziehung „Endet nach“ zu <value/> entfernt."
         },
+        "finish_after_start": {
+          "added": "Beziehung „Endet nach dem Beginn von“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Endet nach dem Beginn von“ entfernt: <value/>."
+        },
         "finish_before": {
           "added": "hat markiert, dass dieses Arbeitselement vor <value/> endet.",
           "removed": "hat die Beziehung „Endet vor“ zu <value/> entfernt."
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "hat markiert, dass dieses Arbeitselement vor <value/> beginnt.",
           "removed": "hat die Beziehung „Beginnt vor“ zu <value/> entfernt."
+        },
+        "start_before_finish": {
+          "added": "Beziehung „Beginnt vor dem Ende von“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Beginnt vor dem Ende von“ entfernt: <value/>."
         },
         "tested_by": {
           "added": "Beziehung „Getestet durch“ hinzugefügt: <value/>.",

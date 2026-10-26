@@ -42,20 +42,30 @@
           "blocked_by": "{issue}, {related} tamamlanana kadar başlayamaz (engellendi ilişkisi).",
           "blocking": "{issue}, {related} başlamadan önce tamamlanmalıdır (engelliyor ilişkisi).",
           "finish_after": "{issue}, {related}'dan önce tamamlanamaz (sonra biter ilişkisi).",
+          "finish_after_start": "{issue}, {related} başlamadan bitemez (başlangıçtan sonra biter ilişkisi).",
           "finish_before": "{issue}, {related} tarihinde veya öncesinde tamamlanmalıdır (önce biter ilişkisi).",
           "start_after": "{issue}, {related}'dan önce başlayamaz (sonra başlar ilişkisi).",
-          "start_before": "{issue}, {related} tarihinde veya öncesinde başlamalıdır (önce başlar ilişkisi)."
+          "start_before": "{issue}, {related} tarihinde veya öncesinde başlamalıdır (önce başlar ilişkisi).",
+          "start_before_finish": "{issue}, en geç {related} bittiğinde başlamalıdır (bitişten önce başlar ilişkisi)."
         },
         "status": {
           "finish_after": "{issue}, {related} tamamlanana kadar tamamlanamaz (sonra biter ilişkisi).",
+          "finish_after_start": "{issue}, {related} başlayana kadar tamamlanamaz (başlangıçtan sonra biter ilişkisi).",
           "start_after": "{issue}, {related} başlayana kadar başlayamaz (sonra başlar ilişkisi)."
         },
         "self": "{issue} kendisiyle ilişkilendirilemez.",
-        "cycle": "{issue} ve {related} bir ilişki döngüsü oluşturur. Önce karşıt ilişkiyi kaldırın."
+        "cycle": "{issue} ve {related} bir ilişki döngüsü oluşturur. Önce karşıt ilişkiyi kaldırın.",
+        "lag_suffix": " İlişki gecikmesi: {lag} g."
       },
       "date_conflict": "Bu tarihler mevcut bağımlılıklarla çelişiyor. İlgili iş öğelerini düzenleyin veya önce bağımlılığı kaldırın.",
       "dependency_create_failed": "Bağımlılık oluşturulamadı. Lütfen tekrar deneyin.",
-      "dependency_created": "İş öğesi bağımlılığı başarıyla oluşturuldu."
+      "dependency_created": "İş öğesi bağımlılığı başarıyla oluşturuldu.",
+      "lag": {
+        "hint": "İki tarih arasındaki gün sayısı; negatif değer çakışmaya izin verir.",
+        "invalid": "-{max} ile {max} arasında tam sayı girin.",
+        "label": "Gecikme (gün)",
+        "update_failed": "Gecikme değiştirilemedi."
+      }
     }
   },
   "project_create": {

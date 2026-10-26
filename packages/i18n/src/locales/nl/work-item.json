@@ -206,7 +206,9 @@
       "clones": "Kloont",
       "cloned_by": "Gekloond door",
       "tests": "Test",
-      "tested_by": "Getest door"
+      "tested_by": "Getest door",
+      "start_before_finish": "Begint vóór het einde van",
+      "finish_after_start": "Eindigt na het begin van"
     },
     "copy_link": "Werkitemlink kopiëren",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "markeerde dat dit werkitem eindigt na <value/>.",
           "removed": "verwijderde de relatie \"eindigt na\" met <value/>."
         },
+        "finish_after_start": {
+          "added": "relatie “Eindigt na het begin van” toegevoegd: <value/>.",
+          "removed": "relatie “Eindigt na het begin van” verwijderd: <value/>."
+        },
         "finish_before": {
           "added": "markeerde dat dit werkitem eindigt vóór <value/>.",
           "removed": "verwijderde de relatie \"eindigt vóór\" met <value/>."
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "markeerde dat dit werkitem start vóór <value/>.",
           "removed": "verwijderde de relatie \"start vóór\" met <value/>."
+        },
+        "start_before_finish": {
+          "added": "relatie “Begint vóór het einde van” toegevoegd: <value/>.",
+          "removed": "relatie “Begint vóór het einde van” verwijderd: <value/>."
         },
         "tested_by": {
           "added": "relatie “Getest door” toegevoegd: <value/>.",

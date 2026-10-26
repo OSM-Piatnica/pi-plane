@@ -240,10 +240,15 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
         issue: { getIssueById },
       } = issues.rootIssueStore.issueDetail;
 
-      const violatesDependencies = wouldUpdatesViolateDependencies(updates, relation.relationMap, (issueId) => {
-        const issue = getIssueById(issueId);
-        return issue ? { start_date: issue.start_date, target_date: issue.target_date } : undefined;
-      });
+      const violatesDependencies = wouldUpdatesViolateDependencies(
+        updates,
+        relation.relationMap,
+        (issueId) => {
+          const issue = getIssueById(issueId);
+          return issue ? { start_date: issue.start_date, target_date: issue.target_date } : undefined;
+        },
+        relation.getRelationLag
+      );
 
       if (violatesDependencies) {
         refreshBlockPositions();

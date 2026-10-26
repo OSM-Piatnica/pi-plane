@@ -42,20 +42,30 @@
           "blocked_by": "{issue} non può iniziare finché {related} non è terminato (relazione di blocco).",
           "blocking": "{issue} deve terminare prima che {related} inizi (relazione di blocco).",
           "finish_after": "{issue} non può terminare prima di {related} (relazione di fine successiva).",
+          "finish_after_start": "{issue} non può finire prima che {related} inizi (relazione «finisce dopo l’inizio»).",
           "finish_before": "{issue} deve terminare il giorno di {related} o prima (relazione di fine precedente).",
           "start_after": "{issue} non può iniziare prima di {related} (relazione di inizio successivo).",
-          "start_before": "{issue} deve iniziare il giorno di {related} o prima (relazione di inizio precedente)."
+          "start_before": "{issue} deve iniziare il giorno di {related} o prima (relazione di inizio precedente).",
+          "start_before_finish": "{issue} deve iniziare al più tardi quando {related} finisce (relazione «inizia prima della fine»)."
         },
         "status": {
           "finish_after": "{issue} non può essere completato finché {related} non è completato (relazione di fine successiva).",
+          "finish_after_start": "{issue} non può essere completato finché {related} non è iniziato (relazione «finisce dopo l’inizio»).",
           "start_after": "{issue} non può iniziare finché {related} non è iniziato (relazione di inizio successivo)."
         },
         "self": "{issue} non può essere collegato a se stesso.",
-        "cycle": "{issue} e {related} formerebbero un ciclo di relazioni. Rimuovi prima la relazione opposta."
+        "cycle": "{issue} e {related} formerebbero un ciclo di relazioni. Rimuovi prima la relazione opposta.",
+        "lag_suffix": " Ritardo della relazione: {lag} g."
       },
       "date_conflict": "Queste date sono in conflitto con le dipendenze esistenti. Modifica gli elementi di lavoro correlati o rimuovi prima la dipendenza.",
       "dependency_create_failed": "Impossibile creare la dipendenza. Riprova.",
-      "dependency_created": "La dipendenza dell'elemento di lavoro è stata creata con successo."
+      "dependency_created": "La dipendenza dell'elemento di lavoro è stata creata con successo.",
+      "lag": {
+        "hint": "Giorni tra le due date; un valore negativo permette la sovrapposizione.",
+        "invalid": "Inserisci un numero intero di giorni tra -{max} e {max}.",
+        "label": "Ritardo (giorni)",
+        "update_failed": "Impossibile modificare il ritardo."
+      }
     }
   },
   "project_create": {

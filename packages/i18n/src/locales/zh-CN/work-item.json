@@ -206,7 +206,9 @@
       "clones": "克隆",
       "cloned_by": "克隆自",
       "tests": "测试",
-      "tested_by": "被测试于"
+      "tested_by": "被测试于",
+      "start_before_finish": "在其结束前开始",
+      "finish_after_start": "在其开始后结束"
     },
     "copy_link": "复制工作项链接",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "将此工作项标记为在 <value/> 之后完成。",
           "removed": "移除了与 <value/> 的“在其之后完成”关系。"
         },
+        "finish_after_start": {
+          "added": "添加了关系“在其开始后结束”：<value/>。",
+          "removed": "移除了关系“在其开始后结束”：<value/>。"
+        },
         "finish_before": {
           "added": "将此工作项标记为在 <value/> 之前完成。",
           "removed": "移除了与 <value/> 的“在其之前完成”关系。"
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "将此工作项标记为在 <value/> 之前开始。",
           "removed": "移除了与 <value/> 的“在其之前开始”关系。"
+        },
+        "start_before_finish": {
+          "added": "添加了关系“在其结束前开始”：<value/>。",
+          "removed": "移除了关系“在其结束前开始”：<value/>。"
         },
         "tested_by": {
           "added": "添加了关系“被测试于”：<value/>。",

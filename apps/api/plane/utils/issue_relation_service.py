@@ -5,6 +5,7 @@
 """Rules shared by the app and the public API when work items are related to each other."""
 
 from plane.db.models import IssueRelation
+from plane.utils.issue_relation_constraints import MAX_LAG_DAYS, TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
 from plane.utils.issue_relation_types import FORWARD_RELATIONS, is_mirrored, is_symmetric
 from plane.utils.issue_timeline_relation_validation import issue_display_ref
@@ -96,3 +97,43 @@ def existing_symmetric_pairs(relation_type, issue_id, other_ids):
         relation_type=relation_type, deleted_at__isnull=True, related_issue_id=issue_id, issue_id__in=other_ids
     ).values_list("issue_id", flat=True)
     return {str(item) for item in rows} | {str(item) for item in reverse}
+
+
+def parse_lag(value, relation_type):
+    """``(lag_days, error)`` for the ``lag_days`` of a request: ``(None, None)`` when it was not sent."""
+    if value is None or value == "":
+        return None, None
+    if relation_type not in TIMELINE_RELATION_TYPES:
+        return None, {"error": "A lag only applies to blocking, starts and finishes relations."}
+    if isinstance(value, bool) or (isinstance(value, float) and not value.is_integer()):
+        return None, {"error": "lag_days must be a whole number of days."}
+    try:
+        lag = int(value)
+    except (TypeError, ValueError):
+        return None, {"error": "lag_days must be a whole number of days."}
+    if abs(lag) > MAX_LAG_DAYS:
+        return None, {"error": f"lag_days must be between -{MAX_LAG_DAYS} and {MAX_LAG_DAYS}."}
+    return lag, None
+
+
+def set_lag(issue_id, others, relation_type, lag):
+    """Give the rows ``issue_id <relation_type> other`` the lag, for relations that exist already."""
+    stored_type = get_actual_relation(relation_type)
+    for other in others:
+        source, related = relation_ends(issue_id, other, relation_type)
+        IssueRelation.objects.filter(
+            issue_id=source, related_issue_id=related, relation_type=stored_type, deleted_at__isnull=True
+        ).exclude(lag_days=lag).update(lag_days=lag)
+
+
+def existing_relation_others(issue_id, others, relation_type):
+    """Of ``others``, those that already have this exact relation to ``issue_id`` (so a repeat adds nothing)."""
+    stored_type = get_actual_relation(relation_type)
+    found = set()
+    for other in others:
+        source, related = relation_ends(issue_id, other, relation_type)
+        if IssueRelation.objects.filter(
+            issue_id=source, related_issue_id=related, relation_type=stored_type, deleted_at__isnull=True
+        ).exists():
+            found.add(str(other))
+    return found

@@ -20,6 +20,8 @@ export const REVERSE_RELATIONS: { [key in TIssueRelationTypes]: TIssueRelationTy
   cloned_by: "clones",
   tests: "tested_by",
   tested_by: "tests",
+  start_before_finish: "finish_after_start",
+  finish_after_start: "start_before_finish",
   start_before: "start_after",
   start_after: "start_before",
   finish_before: "finish_after",

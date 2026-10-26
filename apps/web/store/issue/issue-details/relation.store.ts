@@ -48,6 +48,15 @@ export interface IIssueRelationStore extends IIssueRelationStoreActions {
     ISSUE_RELATION_OPTIONS: { [key in TIssueRelationTypes]?: TRelationObject }
   ) => number;
   getRelationByIssueIdRelationType: (issueId: string, relationType: TIssueRelationTypes) => string[] | undefined;
+  getRelationLag: (issueId: string, relationType: TIssueRelationTypes, relatedIssueId: string) => number;
+  updateRelationLag: (
+    workspaceSlug: string,
+    projectId: string,
+    issueId: string,
+    relationType: TIssueRelationTypes,
+    relatedIssueId: string,
+    lagDays: number
+  ) => Promise<void>;
   extractRelationsFromIssues: (issues: TIssue[]) => void;
   createCurrentRelation: (issueId: string, relationType: TIssueRelationTypes, relatedIssueId: string) => Promise<void>;
 }
@@ -55,6 +64,8 @@ export interface IIssueRelationStore extends IIssueRelationStoreActions {
 export class IssueRelationStore implements IIssueRelationStore {
   // observables
   relationMap: TIssueRelationMap = {};
+  // Days of lag per relation, read from either side: issue -> relation type -> related issue -> days
+  relationLagMap: Record<string, Partial<Record<TIssueRelationTypes, Record<string, number>>>> = {};
   // root store
   rootIssueDetailStore: IIssueDetail;
   // services
@@ -64,6 +75,7 @@ export class IssueRelationStore implements IIssueRelationStore {
     makeObservable(this, {
       // observables
       relationMap: observable,
+      relationLagMap: observable,
       // computed
       issueRelations: computed,
       // actions
@@ -71,6 +83,7 @@ export class IssueRelationStore implements IIssueRelationStore {
       createRelation: action,
       createCurrentRelation: action,
       removeRelation: action,
+      updateRelationLag: action,
       extractRelationsFromIssues: action,
     });
     // root store
@@ -109,6 +122,15 @@ export class IssueRelationStore implements IIssueRelationStore {
     return this.relationMap?.[issueId]?.[relationType] ?? undefined;
   };
 
+  getRelationLag = (issueId: string, relationType: TIssueRelationTypes, relatedIssueId: string) =>
+    this.relationLagMap[issueId]?.[relationType]?.[relatedIssueId] ?? 0;
+
+  /** Both sides of a relation carry the same lag, one under the type and one under its reverse. */
+  private setLag = (issueId: string, relationType: TIssueRelationTypes, relatedIssueId: string, lagDays: number) => {
+    set(this.relationLagMap, [issueId, relationType, relatedIssueId], lagDays);
+    set(this.relationLagMap, [relatedIssueId, REVERSE_RELATIONS[relationType], issueId], lagDays);
+  };
+
   // actions
   fetchRelations = async (workspaceSlug: string, projectId: string, issueId: string) => {
     const response = await this.issueRelationService.listIssueRelations(workspaceSlug, projectId, issueId);
@@ -119,6 +141,10 @@ export class IssueRelationStore implements IIssueRelationStore {
         const relation_issues = response[relation_key];
         const issues = relation_issues.flat().map((issue) => issue);
         if (issues && issues.length > 0) this.rootIssueDetailStore.rootIssueStore.issues.addIssue(issues);
+        for (const issue of issues) {
+          const lag = (issue as { lag_days?: number }).lag_days;
+          if (lag !== undefined) set(this.relationLagMap, [issueId, relation_key, issue.id], lag);
+        }
         set(
           this.relationMap,
           [issueId, relation_key],
@@ -222,6 +248,33 @@ export class IssueRelationStore implements IIssueRelationStore {
     }
   };
 
+  /**
+   * Change the lag of a relation that exists: the API takes the relation again, with its lag.
+   * A lag that breaks the dates of the two work items is refused, and the old one stays.
+   */
+  updateRelationLag = async (
+    workspaceSlug: string,
+    projectId: string,
+    issueId: string,
+    relationType: TIssueRelationTypes,
+    relatedIssueId: string,
+    lagDays: number
+  ) => {
+    const previous = this.getRelationLag(issueId, relationType, relatedIssueId);
+    runInAction(() => this.setLag(issueId, relationType, relatedIssueId, lagDays));
+    try {
+      await this.issueRelationService.createIssueRelations(workspaceSlug, projectId, issueId, {
+        relation_type: relationType,
+        issues: [relatedIssueId],
+        lag_days: lagDays,
+      });
+    } catch (error) {
+      runInAction(() => this.setLag(issueId, relationType, relatedIssueId, previous));
+      throw error;
+    }
+    void this.rootIssueDetailStore.activity.fetchActivities(workspaceSlug, projectId, issueId);
+  };
+
   removeRelation = async (
     workspaceSlug: string,
     projectId: string,
@@ -278,10 +331,11 @@ export class IssueRelationStore implements IIssueRelationStore {
 
           if (issue_relation && Array.isArray(issue_relation) && issue_relation.length) {
             for (const relation of issue_relation) {
-              const { relation_type, id } = relation;
+              const { relation_type, id, lag_days } = relation;
 
               if (!relation_type) continue;
 
+              if (lag_days !== undefined) set(this.relationLagMap, [issueId, relation_type, id], lag_days);
               if (issueRelations[relation_type]) issueRelations[relation_type]?.push(id);
               else issueRelations[relation_type] = [id];
             }
@@ -289,11 +343,12 @@ export class IssueRelationStore implements IIssueRelationStore {
 
           if (issue_related && Array.isArray(issue_related) && issue_related.length) {
             for (const relation of issue_related) {
-              const { relation_type, id } = relation;
+              const { relation_type, id, lag_days } = relation;
 
               if (!relation_type) continue;
 
               const reverseRelatedType = REVERSE_RELATIONS[relation_type as TIssueRelationTypes];
+              if (lag_days !== undefined) set(this.relationLagMap, [issueId, reverseRelatedType, id], lag_days);
 
               if (issueRelations[reverseRelatedType]) issueRelations[reverseRelatedType]?.push(id);
               else issueRelations[reverseRelatedType] = [id];

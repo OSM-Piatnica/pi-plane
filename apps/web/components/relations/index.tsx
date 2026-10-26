@@ -135,6 +135,20 @@ export const ISSUE_RELATION_OPTIONS: Record<TIssueRelationTypes, TRelationObject
     icon: (size) => <CheckDoneOutline width={size} height={size} className="text-secondary" />,
     i18n_placeholder: "common.none",
   },
+  start_before_finish: {
+    key: "start_before_finish",
+    i18n_label: "issue.relation.start_before_finish",
+    className: "bg-accent-primary/10 text-accent-primary",
+    icon: (size) => <CalendarBeforeIcon width={size} height={size} className="text-secondary" />,
+    i18n_placeholder: "common.none",
+  },
+  finish_after_start: {
+    key: "finish_after_start",
+    i18n_label: "issue.relation.finish_after_start",
+    className: "bg-accent-primary/10 text-accent-primary",
+    icon: (size) => <CalendarAfterIcon width={size} height={size} className="text-secondary" />,
+    i18n_placeholder: "common.none",
+  },
 };
 
 export const useTimeLineRelationOptions = () => ISSUE_RELATION_OPTIONS;

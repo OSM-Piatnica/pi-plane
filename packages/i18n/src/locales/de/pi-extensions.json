@@ -42,20 +42,30 @@
           "blocked_by": "{issue} kann erst beginnen, wenn {related} abgeschlossen ist (blockiert durch Beziehung).",
           "blocking": "{issue} muss abgeschlossen sein, bevor {related} beginnt (blockierende Beziehung).",
           "finish_after": "{issue} kann nicht vor {related} abgeschlossen werden (endet nach Beziehung).",
+          "finish_after_start": "{issue} kann nicht enden, bevor {related} beginnt (Beziehung „endet nach dem Beginn“).",
           "finish_before": "{issue} muss spätestens mit {related} abgeschlossen werden (endet vor Beziehung).",
           "start_after": "{issue} kann nicht vor {related} beginnen (beginnt nach Beziehung).",
-          "start_before": "{issue} muss spätestens mit {related} beginnen (beginnt vor Beziehung)."
+          "start_before": "{issue} muss spätestens mit {related} beginnen (beginnt vor Beziehung).",
+          "start_before_finish": "{issue} muss spätestens beginnen, wenn {related} endet (Beziehung „beginnt vor dem Ende“)."
         },
         "status": {
           "finish_after": "{issue} kann erst abgeschlossen werden, wenn {related} abgeschlossen ist (endet nach Beziehung).",
+          "finish_after_start": "{issue} kann erst abgeschlossen werden, wenn {related} begonnen hat (Beziehung „endet nach dem Beginn“).",
           "start_after": "{issue} kann erst beginnen, wenn {related} begonnen hat (beginnt nach Beziehung)."
         },
         "self": "{issue} kann nicht mit sich selbst verknüpft werden.",
-        "cycle": "{issue} und {related} würden eine Schleife aus Beziehungen bilden. Entfernen Sie zuerst die entgegengesetzte Beziehung."
+        "cycle": "{issue} und {related} würden eine Schleife aus Beziehungen bilden. Entfernen Sie zuerst die entgegengesetzte Beziehung.",
+        "lag_suffix": " Verzögerung der Beziehung: {lag} T."
       },
       "date_conflict": "Diese Termine stehen im Konflikt mit bestehenden Abhängigkeiten. Passen Sie die verknüpften Arbeitselemente an oder entfernen Sie zuerst die Abhängigkeit.",
       "dependency_create_failed": "Abhängigkeit konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
-      "dependency_created": "Die Abhängigkeit des Arbeitselements wurde erfolgreich erstellt."
+      "dependency_created": "Die Abhängigkeit des Arbeitselements wurde erfolgreich erstellt.",
+      "lag": {
+        "hint": "Tage zwischen den beiden Terminen; negativ erlaubt Überlappung.",
+        "invalid": "Geben Sie eine ganze Zahl von Tagen zwischen -{max} und {max} ein.",
+        "label": "Verzögerung (Tage)",
+        "update_failed": "Die Verzögerung konnte nicht geändert werden."
+      }
     }
   },
   "project_create": {

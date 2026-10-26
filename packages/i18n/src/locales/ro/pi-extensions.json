@@ -42,20 +42,30 @@
           "blocked_by": "{issue} nu poate începe până când {related} nu este finalizată (relație de blocare de către).",
           "blocking": "{issue} trebuie să se finalizeze înainte ca {related} să înceapă (relație de blocare).",
           "finish_after": "{issue} nu se poate finaliza înainte de {related} (relație de finalizare după).",
+          "finish_after_start": "{issue} nu se poate termina înainte să înceapă {related} (relația „se termină după început”).",
           "finish_before": "{issue} trebuie să se finalizeze cel târziu la {related} (relație de finalizare înainte).",
           "start_after": "{issue} nu poate începe înainte de {related} (relație de începere după).",
-          "start_before": "{issue} trebuie să înceapă cel târziu la {related} (relație de începere înainte)."
+          "start_before": "{issue} trebuie să înceapă cel târziu la {related} (relație de începere înainte).",
+          "start_before_finish": "{issue} trebuie să înceapă cel târziu când se termină {related} (relația „începe înainte de sfârșit”)."
         },
         "status": {
           "finish_after": "{issue} nu poate fi finalizată până când {related} nu este finalizată (relație de finalizare după).",
+          "finish_after_start": "{issue} nu poate fi finalizat până nu începe {related} (relația „se termină după început”).",
           "start_after": "{issue} nu poate începe până când {related} nu a început (relație de începere după)."
         },
         "self": "{issue} nu poate fi legat de sine însuși.",
-        "cycle": "{issue} și {related} ar forma o buclă de relații. Elimină mai întâi relația opusă."
+        "cycle": "{issue} și {related} ar forma o buclă de relații. Elimină mai întâi relația opusă.",
+        "lag_suffix": " Decalajul relației: {lag} z."
       },
       "date_conflict": "Aceste date intră în conflict cu dependențele existente. Ajustează activitățile înrudite sau elimină mai întâi dependența.",
       "dependency_create_failed": "Nu s-a putut crea dependența. Te rugăm să încerci din nou.",
-      "dependency_created": "Dependența dintre activități a fost creată cu succes."
+      "dependency_created": "Dependența dintre activități a fost creată cu succes.",
+      "lag": {
+        "hint": "Zile între cele două date; o valoare negativă permite suprapunerea.",
+        "invalid": "Introdu un număr întreg de zile între -{max} și {max}.",
+        "label": "Decalaj (zile)",
+        "update_failed": "Decalajul nu a putut fi modificat."
+      }
     }
   },
   "project_create": {

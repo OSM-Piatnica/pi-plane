@@ -12,6 +12,7 @@ import { BLOCK_HEIGHT } from "@/components/gantt-chart/constants";
 import {
   buildDependencyPathD,
   buildGanttDependencyEdges,
+  getDependencyAnchorSides,
   getBlockAnchorPoints,
 } from "@/helpers/gantt-dependency-helpers";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -45,7 +46,7 @@ export const TimelineDependencyPaths = observer(function TimelineDependencyPaths
     };
   };
 
-  const edges = buildGanttDependencyEdges(blockIds, relationMap, getDates);
+  const edges = buildGanttDependencyEdges(blockIds, relationMap, getDates, relation.getRelationLag);
   if (!edges.length) return null;
 
   const indexById = new Map(blockIds.map((id, index) => [id, index]));
@@ -71,7 +72,10 @@ export const TimelineDependencyPaths = observer(function TimelineDependencyPaths
         const toAnchor = getBlockAnchorPoints(toBlock, toIndex, BLOCK_HEIGHT);
         if (!fromAnchor || !toAnchor) return null;
 
-        const d = buildDependencyPathD(fromAnchor.right.x, fromAnchor.right.y, toAnchor.left.x, toAnchor.left.y);
+        const sides = getDependencyAnchorSides(edge.relationType);
+        const from = fromAnchor[sides.from];
+        const to = toAnchor[sides.to];
+        const d = buildDependencyPathD(from.x, from.y, to.x, to.y, sides.from, sides.to);
         const stroke = edge.isInvalid ? DEP_STROKE_INVALID : DEP_STROKE;
         return (
           <path

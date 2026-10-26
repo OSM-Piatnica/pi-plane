@@ -206,7 +206,9 @@
       "clones": "Klonlar",
       "cloned_by": "Klonlayan",
       "tests": "Test eder",
-      "tested_by": "Test eden"
+      "tested_by": "Test eden",
+      "start_before_finish": "Şunun bitişinden önce başlar",
+      "finish_after_start": "Şunun başlangıcından sonra biter"
     },
     "copy_link": "İş öğesi bağlantısını kopyala",
     "delete": {
@@ -649,6 +651,10 @@
           "added": "bu iş öğesinin <value/> öğesinden sonra bittiğini işaretledi.",
           "removed": "<value/> ile olan \"sonra biter\" ilişkisini kaldırdı."
         },
+        "finish_after_start": {
+          "added": "“Şunun başlangıcından sonra biter” ilişkisini ekledi: <value/>.",
+          "removed": "“Şunun başlangıcından sonra biter” ilişkisini kaldırdı: <value/>."
+        },
         "finish_before": {
           "added": "bu iş öğesinin <value/> öğesinden önce bittiğini işaretledi.",
           "removed": "<value/> ile olan \"önce biter\" ilişkisini kaldırdı."
@@ -672,6 +678,10 @@
         "start_before": {
           "added": "bu iş öğesinin <value/> öğesinden önce başladığını işaretledi.",
           "removed": "<value/> ile olan \"önce başlar\" ilişkisini kaldırdı."
+        },
+        "start_before_finish": {
+          "added": "“Şunun bitişinden önce başlar” ilişkisini ekledi: <value/>.",
+          "removed": "“Şunun bitişinden önce başlar” ilişkisini kaldırdı: <value/>."
         },
         "tested_by": {
           "added": "“Test eden” ilişkisini ekledi: <value/>.",

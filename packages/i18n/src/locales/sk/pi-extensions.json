@@ -42,20 +42,30 @@
           "blocked_by": "{issue} sa nemôže začať, kým sa nedokončí {related} (vzťah Blokované).",
           "blocking": "{issue} musí byť dokončená pred začiatkom {related} (vzťah Blokujúce).",
           "finish_after": "{issue} nemôže byť dokončená pred {related} (vzťah Končí po).",
+          "finish_after_start": "{issue} nemôže skončiť skôr, než {related} začne (vzťah „končí po začiatku“).",
           "finish_before": "{issue} musí byť dokončená najneskôr v deň dokončenia {related} (vzťah Končí pred).",
           "start_after": "{issue} nemôže začať pred {related} (vzťah Začína po).",
-          "start_before": "{issue} musí začať najneskôr v deň začiatku {related} (vzťah Začína pred)."
+          "start_before": "{issue} musí začať najneskôr v deň začiatku {related} (vzťah Začína pred).",
+          "start_before_finish": "{issue} musí začať najneskôr vtedy, keď {related} skončí (vzťah „začína pred koncom“)."
         },
         "status": {
           "finish_after": "{issue} nemôže byť dokončená, kým nebude dokončená {related} (vzťah Končí po).",
+          "finish_after_start": "{issue} nemožno dokončiť, kým {related} nezačne (vzťah „končí po začiatku“).",
           "start_after": "{issue} nemôže začať, kým sa nezačne {related} (vzťah Začína po)."
         },
         "self": "{issue} nemôže súvisieť samo so sebou.",
-        "cycle": "{issue} a {related} by vytvorili slučku vzťahov. Najprv odstráňte opačný vzťah."
+        "cycle": "{issue} a {related} by vytvorili slučku vzťahov. Najprv odstráňte opačný vzťah.",
+        "lag_suffix": " Oneskorenie vzťahu: {lag} d."
       },
       "date_conflict": "Tieto dátumy sú v rozpore s existujúcimi závislosťami. Najprv upravte súvisiace pracovné položky alebo odstráňte závislosť.",
       "dependency_create_failed": "Nepodarilo sa vytvoriť závislosť. Skúste to znova.",
-      "dependency_created": "Závislosť pracovnej položky bola úspešne vytvorená."
+      "dependency_created": "Závislosť pracovnej položky bola úspešne vytvorená.",
+      "lag": {
+        "hint": "Počet dní medzi dátumami; záporná hodnota umožní prekrytie.",
+        "invalid": "Zadajte celé číslo dní od -{max} do {max}.",
+        "label": "Oneskorenie (dni)",
+        "update_failed": "Oneskorenie sa nepodarilo zmeniť."
+      }
     }
   },
   "project_create": {

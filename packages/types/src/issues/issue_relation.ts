@@ -23,7 +23,9 @@ export type TIssueRelationTypes =
   | "clones"
   | "cloned_by"
   | "tests"
-  | "tested_by";
+  | "tested_by"
+  | "start_before_finish"
+  | "finish_after_start";
 
 export type TIssueRelation = Record<TIssueRelationTypes, TIssue[]>;
 

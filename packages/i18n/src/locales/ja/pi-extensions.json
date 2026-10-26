@@ -42,20 +42,30 @@
           "blocked_by": "{issue}は{related}が完了するまで開始できません（ブロックされている関係）。",
           "blocking": "{issue}は{related}が開始する前に完了しなければなりません（ブロックしている関係）。",
           "finish_after": "{issue}は{related}より前に完了できません（後に完了する関係）。",
+          "finish_after_start": "{issue} は {related} が開始する前に終了できません（開始後に終了の関係）。",
           "finish_before": "{issue}は{related}以前に完了しなければなりません（前に完了する関係）。",
           "start_after": "{issue}は{related}より前に開始できません（後に開始する関係）。",
-          "start_before": "{issue}は{related}以前に開始しなければなりません（前に開始する関係）。"
+          "start_before": "{issue}は{related}以前に開始しなければなりません（前に開始する関係）。",
+          "start_before_finish": "{issue} は {related} が終了するまでに開始する必要があります（終了前に開始の関係）。"
         },
         "status": {
           "finish_after": "{related}が完了するまで{issue}を完了できません（後に完了する関係）。",
+          "finish_after_start": "{issue} は {related} が開始されるまで完了できません（開始後に終了の関係）。",
           "start_after": "{related}が開始するまで{issue}を開始できません（後に開始する関係）。"
         },
         "self": "{issue} 自身とは関連付けられません。",
-        "cycle": "{issue} と {related} が関係のループになります。先に反対側の関係を削除してください。"
+        "cycle": "{issue} と {related} が関係のループになります。先に反対側の関係を削除してください。",
+        "lag_suffix": " 関係のラグ: {lag} 日。"
       },
       "date_conflict": "これらの日付は既存の依存関係と競合しています。関連する作業項目を調整するか、先に依存関係を削除してください。",
       "dependency_create_failed": "依存関係を作成できませんでした。もう一度お試しください。",
-      "dependency_created": "作業項目の依存関係が正常に作成されました。"
+      "dependency_created": "作業項目の依存関係が正常に作成されました。",
+      "lag": {
+        "hint": "2 つの日付の間の日数。負の値で重なりを許可します。",
+        "invalid": "-{max} から {max} までの整数の日数を入力してください。",
+        "label": "ラグ（日）",
+        "update_failed": "ラグを変更できませんでした。"
+      }
     }
   },
   "project_create": {

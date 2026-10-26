@@ -42,20 +42,30 @@
           "blocked_by": "{issue} tidak dapat dimulai sampai {related} selesai (diblokir oleh relasi).",
           "blocking": "{issue} harus selesai sebelum {related} dimulai (relasi pemblokiran).",
           "finish_after": "{issue} tidak dapat selesai sebelum {related} (selesai setelah relasi).",
+          "finish_after_start": "{issue} tidak dapat selesai sebelum {related} dimulai (relasi selesai setelah mulai).",
           "finish_before": "{issue} harus selesai pada atau sebelum {related} (selesai sebelum relasi).",
           "start_after": "{issue} tidak dapat dimulai sebelum {related} (dimulai setelah relasi).",
-          "start_before": "{issue} harus dimulai pada atau sebelum {related} (dimulai sebelum relasi)."
+          "start_before": "{issue} harus dimulai pada atau sebelum {related} (dimulai sebelum relasi).",
+          "start_before_finish": "{issue} harus mulai paling lambat saat {related} selesai (relasi mulai sebelum selesai)."
         },
         "status": {
           "finish_after": "{issue} tidak dapat diselesaikan sampai {related} selesai (selesai setelah relasi).",
+          "finish_after_start": "{issue} tidak dapat diselesaikan sebelum {related} dimulai (relasi selesai setelah mulai).",
           "start_after": "{issue} tidak dapat dimulai sampai {related} telah dimulai (dimulai setelah relasi)."
         },
         "self": "{issue} tidak dapat dihubungkan dengan dirinya sendiri.",
-        "cycle": "{issue} dan {related} akan membentuk putaran relasi. Hapus dulu relasi sebaliknya."
+        "cycle": "{issue} dan {related} akan membentuk putaran relasi. Hapus dulu relasi sebaliknya.",
+        "lag_suffix": " Jeda relasi: {lag} hr."
       },
       "date_conflict": "Tanggal ini bertentangan dengan dependensi yang sudah ada. Sesuaikan item kerja terkait atau hapus dependensi terlebih dahulu.",
       "dependency_create_failed": "Tidak dapat membuat dependensi. Silakan coba lagi.",
-      "dependency_created": "Dependensi item kerja berhasil dibuat."
+      "dependency_created": "Dependensi item kerja berhasil dibuat.",
+      "lag": {
+        "hint": "Jumlah hari antara dua tanggal; nilai negatif memungkinkan tumpang tindih.",
+        "invalid": "Masukkan bilangan bulat hari antara -{max} dan {max}.",
+        "label": "Jeda (hari)",
+        "update_failed": "Jeda tidak dapat diubah."
+      }
     }
   },
   "project_create": {

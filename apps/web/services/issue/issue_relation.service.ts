@@ -28,7 +28,7 @@ export class IssueRelationService extends APIService {
     workspaceSlug: string,
     projectId: string,
     issueId: string,
-    data: { relation_type: TIssueRelationTypes; issues: string[] }
+    data: { relation_type: TIssueRelationTypes; issues: string[]; lag_days?: number }
   ): Promise<TIssue[]> {
     return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issues/${issueId}/issue-relation/`, data)
       .then((response) => response?.data)

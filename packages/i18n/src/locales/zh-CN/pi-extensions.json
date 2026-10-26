@@ -42,20 +42,30 @@
           "blocked_by": "{issue} 在 {related} 完成之前无法开始（受阻关系）。",
           "blocking": "{issue} 必须在 {related} 开始之前完成（阻塞关系）。",
           "finish_after": "{issue} 不能在 {related} 之前完成（晚于完成关系）。",
+          "finish_after_start": "{issue} 不能在 {related} 开始之前结束（开始后结束关系）。",
           "finish_before": "{issue} 必须在 {related} 当天或之前完成（早于完成关系）。",
           "start_after": "{issue} 不能在 {related} 之前开始（晚于开始关系）。",
-          "start_before": "{issue} 必须在 {related} 当天或之前开始（早于开始关系）。"
+          "start_before": "{issue} 必须在 {related} 当天或之前开始（早于开始关系）。",
+          "start_before_finish": "{issue} 最迟必须在 {related} 结束时开始（结束前开始关系）。"
         },
         "status": {
           "finish_after": "{issue} 在 {related} 完成之前无法完成（晚于完成关系）。",
+          "finish_after_start": "在 {related} 开始之前，{issue} 无法完成（开始后结束关系）。",
           "start_after": "{issue} 在 {related} 开始之前无法开始（晚于开始关系）。"
         },
         "self": "{issue} 不能与自身关联。",
-        "cycle": "{issue} 与 {related} 会形成关系循环。请先移除相反的关系。"
+        "cycle": "{issue} 与 {related} 会形成关系循环。请先移除相反的关系。",
+        "lag_suffix": "关系延迟：{lag} 天。"
       },
       "date_conflict": "这些日期与现有依赖关系冲突。请调整相关工作项，或先移除该依赖关系。",
       "dependency_create_failed": "无法创建依赖关系。请重试。",
-      "dependency_created": "工作项依赖关系创建成功。"
+      "dependency_created": "工作项依赖关系创建成功。",
+      "lag": {
+        "hint": "两个日期之间的天数；负数允许重叠。",
+        "invalid": "请输入 -{max} 到 {max} 之间的整数天数。",
+        "label": "延迟（天）",
+        "update_failed": "无法更改延迟。"
+      }
     }
   },
   "project_create": {
