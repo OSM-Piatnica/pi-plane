@@ -170,7 +170,7 @@ class TestCascadesDoNotSubscribeThePerson:
         sub = work_item(project, create_user, "Sub", assignee=sub_owner, parent=parent, state=states["todo"])
 
         with mock.patch(
-            "plane.utils.parent_completion_rule.issue_activity.delay",
+            "plane.bgtasks.issue_activities_task.issue_activity.delay",
             side_effect=lambda **kw: issue_activity(**kw),
         ):
             # the sub-item has just been reopened from done to todo by its assignee
