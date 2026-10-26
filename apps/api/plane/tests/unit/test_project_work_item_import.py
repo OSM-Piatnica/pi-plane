@@ -696,6 +696,7 @@ class TestWorkItemImportRelations:
     def test_a_lag_that_is_not_a_number_or_out_of_range_is_left_out(self, workspace, create_user):
         project = _project_with_state(workspace, create_user, "Bad lag", "BLG")
         Project.objects.filter(pk=project.pk).update(is_relation_schedule_enabled=True)
+        project.refresh_from_db()
 
         import_work_items_into_project(
             project=project,
@@ -751,6 +752,7 @@ class TestWorkItemImportRelations:
     def test_relations_of_a_type_the_project_has_switched_on_are_imported(self, workspace, create_user):
         project = _project_with_state(workspace, create_user, "Toggled on", "TON")
         Project.objects.filter(pk=project.pk).update(is_relation_traceability_enabled=True)
+        project.refresh_from_db()
 
         import_work_items_into_project(
             project=project,
