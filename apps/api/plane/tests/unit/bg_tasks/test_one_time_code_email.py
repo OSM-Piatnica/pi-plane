@@ -55,7 +55,7 @@ class TestOneTimeCodeEmail:
         _send("new@example.com", accept_language=None)
 
         mail = mailoutbox[0]
-        assert mail.subject == "Your unique Pi-Plane login code is 123456"
+        assert mail.subject == "Your one-time Pi-Plane login code is 123456"
         html = mail.alternatives[0][0]
         assert 'lang="en"' in html
         assert "This code is valid for the next 10 minutes" in html
@@ -70,7 +70,7 @@ class TestOneTimeCodeEmail:
         _send("known@example.com", accept_language="de")
 
         mail = mailoutbox[0]
-        assert mail.subject == "Twój unikalny kod logowania do Pi-Plane: 123456"
+        assert mail.subject == "Twój jednorazowy kod logowania do Pi-Plane: 123456"
         html = mail.alternatives[0][0]
         assert 'lang="pl"' in html
         assert "Wpisz go na stronie logowania" in html
@@ -78,7 +78,7 @@ class TestOneTimeCodeEmail:
     def test_someone_signing_up_gets_the_language_of_their_browser(self, mailoutbox):
         _send("new@example.com", accept_language="de-DE,de;q=0.9")
 
-        assert mailoutbox[0].subject == "Ihr einmaliger Pi-Plane-Anmeldecode lautet 123456"
+        assert mailoutbox[0].subject == "Ihr Einmalcode für die Pi-Plane-Anmeldung lautet 123456"
 
     def test_the_email_carries_the_code_to_type_and_no_link(self, mailoutbox):
         _send("new@example.com", token="654321", accept_language="pl")
@@ -91,4 +91,4 @@ class TestOneTimeCodeEmail:
     def test_an_unsupported_browser_language_falls_back_to_english(self, mailoutbox):
         _send("new@example.com", accept_language="xx-YY")
 
-        assert mailoutbox[0].subject == "Your unique Pi-Plane login code is 123456"
+        assert mailoutbox[0].subject == "Your one-time Pi-Plane login code is 123456"
