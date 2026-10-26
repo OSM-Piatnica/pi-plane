@@ -14,10 +14,11 @@ def count_working_days_only(apps, schema_editor):
     from the dates with each project's own weekend days (Saturday and Sunday for every project that exists)."""
     Project = apps.get_model("db", "Project")
     Issue = apps.get_model("db", "Issue")
-    for project in Project.objects.all().only("id", "weekend_days").iterator():
+    # `_base_manager`: a historical model has none of the custom managers the live one declares
+    for project in Project._base_manager.all().only("id", "weekend_days").iterator():
         batch = []
-        issues = Issue.objects.filter(
-            project_id=project.id, start_date__isnull=False, target_date__isnull=False
+        issues = Issue._base_manager.filter(
+            project_id=project.id, deleted_at__isnull=True, start_date__isnull=False, target_date__isnull=False
         ).only("id", "start_date", "target_date", "duration")
         for issue in issues.iterator(chunk_size=BATCH_SIZE):
             duration = calculate_work_item_duration(issue.start_date, issue.target_date, project.weekend_days)
@@ -26,10 +27,10 @@ def count_working_days_only(apps, schema_editor):
             issue.duration = duration
             batch.append(issue)
             if len(batch) >= BATCH_SIZE:
-                Issue.objects.bulk_update(batch, ["duration"])
+                Issue._base_manager.bulk_update(batch, ["duration"])
                 batch = []
         if batch:
-            Issue.objects.bulk_update(batch, ["duration"])
+            Issue._base_manager.bulk_update(batch, ["duration"])
 
 
 class Migration(migrations.Migration):
