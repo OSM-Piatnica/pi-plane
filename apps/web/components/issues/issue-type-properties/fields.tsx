@@ -13,7 +13,7 @@ import { Select } from "@plane/blocks/select";
 import type { TIssueTypePropertyValueEntry } from "@plane/types";
 import { getDate, renderFormattedPayloadDate } from "@plane/utils";
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 
 type TProps = {
   property: TIssueTypePropertyValueEntry;
@@ -29,7 +29,7 @@ type TProps = {
 export const IssueTypePropertyField = observer(function IssueTypePropertyField(props: TProps) {
   const { property, value, error, disabled, projectId, onChange, compact } = props;
   const { t } = useTranslation();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   const type = property.property_type ?? "text";
 
   const label = (
@@ -69,7 +69,7 @@ export const IssueTypePropertyField = observer(function IssueTypePropertyField(p
           value={getDate(dateValue) ?? null}
           onChange={(next) => onChange(next ? (renderFormattedPayloadDate(next) ?? null) : null)}
           placeholder={t("start_date")}
-          weekStartsOn={userProfile?.start_of_the_week}
+          weekStartsOn={startOfTheWeek}
           variant="select-lg"
           disabled={disabled}
         />

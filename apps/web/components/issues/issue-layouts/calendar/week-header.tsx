@@ -11,7 +11,7 @@ import { getOrderedDays } from "@plane/utils";
 import { DAYS_LIST } from "@plane/constants";
 // helpers
 // hooks
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 
 type Props = {
@@ -22,9 +22,8 @@ type Props = {
 export const CalendarWeekHeader = observer(function CalendarWeekHeader(props: Props) {
   const { isLoading, showWeekends } = props;
   // hooks
-  const { data } = useUserProfile();
   const { getWeekdayName } = useCalendarLocale();
-  const startOfWeek = data?.start_of_the_week;
+  const startOfWeek = useStartOfTheWeek();
 
   // derived
   const orderedDays = getOrderedDays(DAYS_LIST, (item) => item.value, startOfWeek);

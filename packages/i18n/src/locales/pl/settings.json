@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Procent ukończenia",
+    "first_day_project_default": "Domyślnie jak w projekcie",
     "first_day_updated": "Pierwszy dzień tygodnia został zaktualizowany",
     "try_again_later": "Spróbuj ponownie później.",
     "update_failed": "Aktualizacja nie powiodła się",

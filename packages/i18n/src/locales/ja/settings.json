@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "完了率",
+    "first_day_project_default": "プロジェクトの既定値",
     "first_day_updated": "週の開始日を更新しました",
     "try_again_later": "後でもう一度お試しください。",
     "update_failed": "更新に失敗しました",

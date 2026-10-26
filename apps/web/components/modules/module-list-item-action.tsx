@@ -25,7 +25,8 @@ import { ModuleStatusDropdown } from "@/components/modules/module-status-dropdow
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 import { useModule } from "@/hooks/store/use-module";
-import { useUserPermissions, useUserProfile } from "@/hooks/store/user";
+import { useUserPermissions } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { ButtonAvatars } from "../dropdowns/member/avatar";
 
 type Props = {
@@ -42,7 +43,7 @@ export const ModuleListItemAction = observer(function ModuleListItemAction(props
   const { allowPermissions } = useUserPermissions();
   const { addModuleToFavorites, removeModuleFromFavorites, updateModuleDetails } = useModule();
   const { getUserDetails } = useMember();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
 
   const { t } = useTranslation();
 
@@ -151,7 +152,7 @@ export const ModuleListItemAction = observer(function ModuleListItemAction(props
         }}
         mergeDates
         placeholder={`${t("start_date")} - ${t("end_date")}`}
-        weekStartsOn={userProfile?.start_of_the_week}
+        weekStartsOn={startOfTheWeek}
         disabled={isDisabled}
         icon={renderIcon ? undefined : <CalendarOutline aria-hidden="true" />}
       />

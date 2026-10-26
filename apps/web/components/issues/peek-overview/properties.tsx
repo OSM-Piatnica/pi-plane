@@ -44,7 +44,7 @@ import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useMember } from "@/hooks/store/use-member";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import type { TIssueOperations } from "../issue-detail";
 import { IssueCycleSelect } from "../issue-detail/cycle-select";
 import { IssueLabel } from "../issue-detail/label";
@@ -75,7 +75,7 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
   } = useIssueDetail();
   const { getStateById } = useProjectState();
   const { getUserDetails } = useMember();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   // derived values
   const issue = getIssueById(issueId);
   if (!issue) return <></>;
@@ -153,7 +153,7 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
             placeholder={t("issue.add.start_date")}
             disabled={disabled}
             clearable
-            weekStartsOn={userProfile?.start_of_the_week}
+            weekStartsOn={startOfTheWeek}
             variant="select-ghost-md"
             showTooltip
             tooltipHeading={t("common.order_by.start_date")}
@@ -174,7 +174,7 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
               className={cn({
                 "text-danger-primary": shouldHighlightIssueDueDate(issue.target_date, stateDetails?.group),
               })}
-              weekStartsOn={userProfile?.start_of_the_week}
+              weekStartsOn={startOfTheWeek}
               variant="select-ghost-md"
               showTooltip
               tooltipHeading={t("common.order_by.due_date")}

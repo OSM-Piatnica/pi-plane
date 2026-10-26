@@ -349,6 +349,7 @@ PROJECT_SCALAR_FIELDS = (
     "archive_in",
     "close_in",
     "timezone",
+    "start_of_the_week",
 )
 
 

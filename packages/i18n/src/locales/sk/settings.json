@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Percento dokončenia",
+    "first_day_project_default": "Predvolené podľa projektu",
     "first_day_updated": "Prvý deň v týždni bol úspešne aktualizovaný",
     "try_again_later": "Skúste to prosím neskôr.",
     "update_failed": "Aktualizácia zlyhala",

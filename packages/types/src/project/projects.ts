@@ -8,7 +8,7 @@
 import type { TLogoProps } from "../common";
 import type { TUserPermissions } from "../enums";
 import type { TStateGroups } from "../state";
-import type { IUser, IUserLite } from "../users";
+import type { EStartOfTheWeek, IUser, IUserLite } from "../users";
 import type { IWorkspace } from "../workspace";
 
 export enum EUserProjectRoles {
@@ -71,6 +71,7 @@ export interface IProject extends IPartialProject {
   is_favorite?: boolean;
   members?: string[];
   timezone?: string;
+  start_of_the_week?: EStartOfTheWeek;
   start_date?: string | null;
   target_date?: string | null;
   next_work_item_sequence?: number;

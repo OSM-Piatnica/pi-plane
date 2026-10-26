@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Tamamlanma yüzdesi",
+    "first_day_project_default": "Proje varsayılanı",
     "first_day_updated": "Haftanın ilk günü başarıyla güncellendi",
     "try_again_later": "Lütfen daha sonra tekrar deneyin.",
     "update_failed": "Güncelleme başarısız",

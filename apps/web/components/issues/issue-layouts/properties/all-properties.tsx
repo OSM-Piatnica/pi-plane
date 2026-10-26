@@ -43,7 +43,7 @@ import { useIssues } from "@/hooks/store/use-issues";
 import { useLabel } from "@/hooks/store/use-label";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import { usePlatformOS } from "@/hooks/use-platform-os";
@@ -85,7 +85,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
   } = useIssues(storeType);
   const { areEstimateEnabledByProjectId } = useProjectEstimates();
   const { getStateById } = useProjectState();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   const { isMobile } = usePlatformOS();
   const projectDetails = getProjectById(issue.project_id);
 
@@ -310,7 +310,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
             disabled={isReadOnly}
             showTooltip
             tooltipHeading={t("project_cycles.date_range")}
-            weekStartsOn={userProfile?.start_of_the_week}
+            weekStartsOn={startOfTheWeek}
             variant="pill-sm"
           />
         </div>
@@ -339,7 +339,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
             disabled={isReadOnly}
             showTooltip
             tooltipHeading={t("common.order_by.start_date")}
-            weekStartsOn={userProfile?.start_of_the_week}
+            weekStartsOn={startOfTheWeek}
             variant="pill-sm"
           />
         </div>
@@ -371,7 +371,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
             disabled={isReadOnly}
             showTooltip
             tooltipHeading={t("common.order_by.due_date")}
-            weekStartsOn={userProfile?.start_of_the_week}
+            weekStartsOn={startOfTheWeek}
             variant="pill-sm"
           />
         </div>

@@ -25,7 +25,7 @@ import { PrioritySelect } from "@/components/dropdowns/priority/priority-select"
 import { ParentIssuesListModal } from "@/components/issues/parent-issues-list-modal";
 // hooks
 import { useProjectEstimates } from "@/hooks/store/estimates";
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 
 type TInboxIssueProperties = {
@@ -42,7 +42,7 @@ export const InboxIssueProperties = observer(function InboxIssueProperties(props
   const { t } = useTranslation();
   // hooks
   const { areEstimateEnabledByProjectId } = useProjectEstimates();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   const { isMobile } = usePlatformOS();
   // states
   const [parentIssueModalOpen, setParentIssueModalOpen] = useState(false);
@@ -108,7 +108,7 @@ export const InboxIssueProperties = observer(function InboxIssueProperties(props
           minDate={minDate ?? undefined}
           placeholder={t("start_date")}
           icon={<CalendarOutline />}
-          weekStartsOn={userProfile?.start_of_the_week}
+          weekStartsOn={startOfTheWeek}
           clearable
           clearLabel={t("common.clear")}
           variant="pill-md"
@@ -123,7 +123,7 @@ export const InboxIssueProperties = observer(function InboxIssueProperties(props
         minDate={minDate ?? undefined}
         placeholder={t("due_date")}
         icon={<CalendarOutline />}
-        weekStartsOn={userProfile?.start_of_the_week}
+        weekStartsOn={startOfTheWeek}
         clearable
         clearLabel={t("common.clear")}
         variant="pill-md"

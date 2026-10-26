@@ -28,7 +28,7 @@ import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useLabel } from "@/hooks/store/use-label";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { useWorkspaceDraftIssues } from "@/hooks/store/workspace-draft";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { IssuePropertyLabels } from "../issue-layouts/properties";
@@ -56,7 +56,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
   const { addCycleToIssue, addModulesToIssue } = useWorkspaceDraftIssues();
   const { areEstimateEnabledByProjectId } = useProjectEstimates();
   const { getStateById } = useProjectState();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   const { isMobile } = usePlatformOS();
   const projectDetails = getProjectById(issue.project_id);
 
@@ -188,7 +188,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
           clearable
           showTooltip
           tooltipHeading={t("common.order_by.start_date")}
-          weekStartsOn={userProfile?.start_of_the_week}
+          weekStartsOn={startOfTheWeek}
           variant="pill-sm"
         />
       </div>
@@ -208,7 +208,7 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
           clearable
           showTooltip
           tooltipHeading={t("common.order_by.due_date")}
-          weekStartsOn={userProfile?.start_of_the_week}
+          weekStartsOn={startOfTheWeek}
           variant="pill-sm"
         />
       </div>

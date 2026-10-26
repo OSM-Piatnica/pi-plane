@@ -16,11 +16,13 @@ import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import { EditOutline } from "@makeplane/propel/icons";
 import { setToast } from "@plane/blocks/toast";
+import { EStartOfTheWeek } from "@plane/types";
 import type { IWorkspace } from "@plane/types";
 import { Select, SelectContent, SelectItem, SelectList, SelectTrigger } from "@makeplane/propel/components/select";
 import { cn, copyUrlToClipboard, getFileURL, validateWorkspaceName } from "@plane/utils";
 // components
 import { WorkspaceImageUploadModal } from "@/components/core/modals/workspace-image-upload-modal";
+import { StartOfWeekSelect } from "@/components/global/start-of-week-select";
 import { TimezoneSelect } from "@/components/global/timezone-select";
 // hooks
 import { useWorkspace } from "@/hooks/store/use-workspace";
@@ -33,6 +35,7 @@ const defaultValues: Partial<IWorkspace> = {
   organization_size: "2-10",
   logo_url: null,
   timezone: "UTC",
+  start_of_the_week: EStartOfTheWeek.SUNDAY,
 };
 
 export const WorkspaceDetails = observer(function WorkspaceDetails() {
@@ -66,6 +69,7 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
       name: formData.name,
       organization_size: formData.organization_size,
       timezone: formData.timezone,
+      start_of_the_week: formData.start_of_the_week,
     };
 
     try {
@@ -284,6 +288,16 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
                   <>
                     <TimezoneSelect value={value} onChange={onChange} disabled={!isAdmin} />
                   </>
+                )}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <h4 className="text-body-sm-medium text-tertiary">{t("project_components.profile.first_day_of_week")}</h4>
+              <Controller
+                name="start_of_the_week"
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <StartOfWeekSelect value={value} onChange={onChange} disabled={!isAdmin} />
                 )}
               />
             </div>

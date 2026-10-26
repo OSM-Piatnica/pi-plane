@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Voltooiingspercentage",
+    "first_day_project_default": "Projectstandaard",
     "first_day_updated": "Eerste dag van de week succesvol bijgewerkt",
     "try_again_later": "Probeer het later opnieuw.",
     "update_failed": "Bijwerken mislukt",

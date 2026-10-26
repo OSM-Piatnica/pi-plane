@@ -15,7 +15,7 @@ import { cn } from "@plane/utils";
 import { GanttChartHeader, GanttChartMainContent } from "@/components/gantt-chart";
 // helpers
 // hooks
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
 //
 import { getSidebarWidth } from "../helpers/sidebar-width";
@@ -102,8 +102,7 @@ export const ChartViewRoot = observer(function ChartViewRoot(props: ChartViewRoo
     updateRenderView,
     updateAllBlocksOnChartChangeWhileDragging,
   } = useTimeLineChartStore();
-  const { data } = useUserProfile();
-  const startOfWeek = data?.start_of_the_week;
+  const startOfWeek = useStartOfTheWeek();
 
   const updateCurrentViewRenderPayload = (side: null | "left" | "right", view: TGanttViews, targetDate?: Date) => {
     const selectedCurrentView: TGanttViews = view;

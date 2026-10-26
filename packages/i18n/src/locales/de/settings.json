@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Fertigstellungsgrad",
+    "first_day_project_default": "Projektstandard",
     "first_day_updated": "Erster Tag der Woche erfolgreich aktualisiert",
     "try_again_later": "Bitte versuche es später erneut.",
     "update_failed": "Aktualisierung fehlgeschlagen",

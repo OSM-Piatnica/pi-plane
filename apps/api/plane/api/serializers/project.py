@@ -89,6 +89,7 @@ class ProjectCreateSerializer(BaseSerializer):
             "archive_in",
             "close_in",
             "timezone",
+            "start_of_the_week",
             "external_source",
             "external_id",
             "is_issue_type_enabled",

@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "完成百分比",
+    "first_day_project_default": "项目默认值",
     "first_day_updated": "每周第一天已成功更新",
     "try_again_later": "请稍后重试。",
     "update_failed": "更新失败",

@@ -9,7 +9,7 @@ import { observer } from "mobx-react";
 import type { TGroupedIssues, TIssue, TIssueMap, TPaginationData, ICalendarDate, ICalendarWeek } from "@plane/types";
 import { cn, getOrderedDays, renderFormattedPayloadDate } from "@plane/utils";
 // hooks
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 // types
 import type { ICycleIssuesFilter } from "@/store/issue/cycle";
 import type { IModuleIssuesFilter } from "@/store/issue/module";
@@ -66,8 +66,7 @@ export const CalendarWeekDays = observer(function CalendarWeekDays(props: Props)
     isEpic = false,
   } = props;
   // hooks
-  const { data } = useUserProfile();
-  const startOfWeek = data?.start_of_the_week;
+  const startOfWeek = useStartOfTheWeek();
 
   const calendarLayout = issuesFilterStore?.issueFilters?.displayFilters?.calendar?.layout ?? "month";
   const showWeekends = issuesFilterStore?.issueFilters?.displayFilters?.calendar?.show_weekends ?? false;
