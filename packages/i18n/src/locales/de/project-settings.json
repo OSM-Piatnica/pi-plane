@@ -325,39 +325,24 @@
     },
     "features": {
       "cycles": {
-        "title": "Zyklen",
-        "short_title": "Zyklen",
-        "description": "Planen Sie die Arbeit in flexiblen Zeiträumen, die sich dem einzigartigen Rhythmus und Tempo dieses Projekts anpassen.",
         "toggle_title": "Zyklen aktivieren",
         "toggle_description": "Planen Sie die Arbeit in fokussierten Zeiträumen."
       },
       "modules": {
-        "title": "Module",
-        "short_title": "Module",
-        "description": "Organisieren Sie die Arbeit in Teilprojekte mit engagierten Leitern und Verantwortlichen.",
         "toggle_title": "Module aktivieren",
         "toggle_description": "Projektmitglieder können Module erstellen und bearbeiten."
       },
       "views": {
-        "title": "Ansichten",
-        "short_title": "Ansichten",
-        "description": "Speichern Sie benutzerdefinierte Sortierungen, Filter und Anzeigeoptionen oder teilen Sie sie mit Ihrem Team.",
         "toggle_title": "Ansichten aktivieren",
         "toggle_description": "Projektmitglieder können Ansichten erstellen und bearbeiten."
       },
       "pages": {
-        "title": "Seiten",
-        "short_title": "Seiten",
-        "description": "Erstellen und bearbeiten Sie freie Inhalte: Notizen, Dokumente, alles.",
         "toggle_title": "Seiten aktivieren",
         "toggle_description": "Projektmitglieder können Seiten erstellen und bearbeiten."
       },
       "intake": {
         "intake_responsibility": "Intake-Verantwortung",
         "intake_sources": "Intake-Quellen",
-        "title": "Aufnahme",
-        "short_title": "Aufnahme",
-        "description": "Ermöglichen Sie Nicht-Mitgliedern, Fehler, Feedback und Vorschläge zu teilen, ohne Ihren Workflow zu unterbrechen.",
         "toggle_title": "Aufnahme aktivieren",
         "toggle_description": "Projektmitgliedern erlauben, In-App-Aufnahmeanfragen zu erstellen.",
         "toggle_tooltip_on": "Bitten Sie Ihren Projekt-Admin, dies zu aktivieren.",
@@ -412,9 +397,6 @@
         }
       },
       "time_tracking": {
-        "title": "Zeiterfassung",
-        "short_title": "Zeiterfassung",
-        "description": "Erfassen Sie die für Arbeitselemente und Projekte aufgewendete Zeit.",
         "toggle_title": "Zeiterfassung aktivieren",
         "toggle_description": "Projektmitglieder können die geleistete Arbeit protokollieren."
       },
