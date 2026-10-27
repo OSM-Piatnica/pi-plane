@@ -12,7 +12,7 @@ import { Field } from "@makeplane/propel/components/field";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
 import type { TNetworkChoice } from "@plane/constants";
-import { NETWORK_CHOICES } from "@plane/constants";
+import { NETWORK_CHOICES, PROJECT_IDENTIFIER_MAX_LENGTH } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 // plane imports
 import { Button } from "@makeplane/propel/components/button";
@@ -24,7 +24,7 @@ import type { IProject, IWorkspace } from "@plane/types";
 import { Select } from "@plane/blocks/select";
 import { CoverImage } from "@/components/common/cover-image";
 import { ImagePickerPopover } from "@/components/core/image-picker-popover";
-import { TimezoneSelect } from "@/components/global";
+import { StartOfWeekSelect, TimezoneSelect, WeekendDaysSelect } from "@/components/global";
 // helpers
 import { handleCoverImageChange } from "@/helpers/cover-image.helper";
 // hooks
@@ -168,6 +168,8 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
 
         logo_props: formData.logo_props,
         timezone: formData.timezone,
+        start_of_the_week: formData.start_of_the_week,
+        weekend_days: formData.weekend_days,
       };
 
       // Handle cover image changes
@@ -354,8 +356,8 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
                     message: t("project_id_min_char"),
                   },
                   maxLength: {
-                    value: 10,
-                    message: t("project_id_max_char"),
+                    value: PROJECT_IDENTIFIER_MAX_LENGTH,
+                    message: t("project_id_max_char", { max: PROJECT_IDENTIFIER_MAX_LENGTH }),
                   },
                 }}
                 render={({ field: { value, ref } }) => (
@@ -457,6 +459,26 @@ export function ProjectDetailsForm(props: IProjectDetailsForm) {
               )}
             />
             {errors.timezone && <span className="text-11 text-danger-primary">{errors.timezone.message}</span>}
+          </div>
+          <div className="col-span-1 flex flex-col gap-1 sm:col-span-2 xl:col-span-1">
+            <h4 className="text-13">{t("project_components.profile.first_day_of_week")}</h4>
+            <Controller
+              name="start_of_the_week"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <StartOfWeekSelect value={value} onChange={onChange} disabled={!isAdmin} />
+              )}
+            />
+          </div>
+          <div className="col-span-1 flex flex-col gap-1 sm:col-span-2 xl:col-span-1">
+            <h4 className="text-13">{t("project_components.profile.weekend_days")}</h4>
+            <Controller
+              name="weekend_days"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <WeekendDaysSelect value={value ?? [0, 6]} onChange={onChange} disabled={!isAdmin} />
+              )}
+            />
           </div>
         </div>
         <div className="flex items-center justify-between py-2">

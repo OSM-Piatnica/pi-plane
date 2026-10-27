@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,8 +10,8 @@ import { observable, action, makeObservable, runInAction, computed, reaction } f
 // helpers
 import { computedFn } from "mobx-utils";
 import type { ICalendarPayload, ICalendarWeek } from "@plane/types";
-import { EStartOfTheWeek } from "@plane/types";
 import { generateCalendarData, getWeekNumberOfDate } from "@plane/utils";
+import { resolveStartOfTheWeek } from "@/helpers/start-of-the-week";
 // types
 import type { IIssueRootStore } from "./root.store";
 
@@ -75,8 +76,9 @@ export class CalendarStore implements ICalendarStore {
     this.initCalendar();
 
     // Watch for changes in startOfWeek preference and regenerate calendar
+    // react-doctor-disable-next-line mobx-reaction-disposer-discarded -- store is app-lifetime and the sign-out reset replaces it from store/root.store.ts; this reaction predates this change, which only moves what it reads into getStartOfWeek
     reaction(
-      () => this.rootStore.rootStore.user.userProfile.data?.start_of_the_week,
+      () => this.getStartOfWeek(),
       () => {
         // Regenerate calendar when startOfWeek preference changes
         this.regenerateCalendar();
@@ -134,7 +136,7 @@ export class CalendarStore implements ICalendarStore {
     if (!monthData) return undefined;
 
     // Calculate firstDayOfMonth offset (same logic as calendar generation)
-    const startOfWeek = this.rootStore?.rootStore?.user?.userProfile?.data?.start_of_the_week ?? EStartOfTheWeek.SUNDAY;
+    const startOfWeek = this.getStartOfWeek();
     const firstDayOfMonthRaw = new Date(year, month, 1).getDay();
     const firstDayOfMonth = (firstDayOfMonthRaw - startOfWeek + 7) % 7;
 
@@ -177,11 +179,21 @@ export class CalendarStore implements ICalendarStore {
     });
   };
 
+  /** The person's own first day of the week, else the current project's, else the workspace's. */
+  getStartOfWeek = () => {
+    const { user, projectRoot, workspaceRoot } = this.rootStore.rootStore;
+    return resolveStartOfTheWeek({
+      profile: user.userProfile.data?.start_of_the_week,
+      project: projectRoot.project.currentProjectDetails?.start_of_the_week,
+      workspace: workspaceRoot.currentWorkspace?.start_of_the_week,
+    });
+  };
+
   updateCalendarPayload = (date: Date) => {
     if (!this.calendarPayload) return null;
 
     const nextDate = new Date(date);
-    const startOfWeek = this.rootStore.rootStore.user.userProfile.data?.start_of_the_week ?? EStartOfTheWeek.SUNDAY;
+    const startOfWeek = this.getStartOfWeek();
 
     runInAction(() => {
       this.calendarPayload = generateCalendarData(this.calendarPayload, nextDate, startOfWeek);
@@ -189,7 +201,7 @@ export class CalendarStore implements ICalendarStore {
   };
 
   initCalendar = () => {
-    const startOfWeek = this.rootStore.rootStore.user.userProfile.data?.start_of_the_week ?? EStartOfTheWeek.SUNDAY;
+    const startOfWeek = this.getStartOfWeek();
     const newCalendarPayload = generateCalendarData(null, new Date(), startOfWeek);
 
     runInAction(() => {
@@ -202,7 +214,7 @@ export class CalendarStore implements ICalendarStore {
    * This should be called when startOfWeek preference changes
    */
   regenerateCalendar = () => {
-    const startOfWeek = this.rootStore.rootStore.user.userProfile.data?.start_of_the_week ?? EStartOfTheWeek.SUNDAY;
+    const startOfWeek = this.getStartOfWeek();
     const { activeMonthDate } = this.calendarFilters;
 
     // Force complete regeneration by passing null to clear all cached data

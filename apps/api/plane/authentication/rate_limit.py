@@ -50,7 +50,7 @@ def authentication_throttle_allows(request):
     """
     Apply AuthenticationThrottle to a plain django.views.View request.
 
-    DRF's throttle_classes only run inside APIView.initial(); the magic
+    DRF's throttle_classes only run inside APIView.initial(); the one-time-code
     sign-in / sign-up endpoints extend django.views.View to return
     HttpResponseRedirect from a form POST flow, so they need a manual
     throttle check. Returns True if the request is allowed through,

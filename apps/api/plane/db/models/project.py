@@ -18,6 +18,8 @@ from django.db.models import Q
 from plane.db.mixins import AuditModel, ChangeTrackerMixin
 
 from .base import BaseModel
+from .workspace import START_OF_THE_WEEK_CHOICES, SUNDAY
+from plane.utils.weekend_days import default_weekend_days, validate_weekend_days
 
 ROLE_CHOICES = ((20, "Admin"), (15, "Member"), (5, "Guest"))
 
@@ -75,7 +77,7 @@ def get_default_preferences():
 
 
 class Project(ChangeTrackerMixin, BaseModel):
-    TRACKED_FIELDS = ["timezone"]
+    TRACKED_FIELDS = ["timezone", "weekend_days"]
 
     NETWORK_CHOICES = ((0, "Secret"), (1, "Private"), (2, "Public"))
     name = models.CharField(max_length=255, verbose_name="Project Name")
@@ -109,6 +111,14 @@ class Project(ChangeTrackerMixin, BaseModel):
     is_time_tracking_enabled = models.BooleanField(default=False)
     is_issue_type_enabled = models.BooleanField(default=False)
     is_workflow_enabled = models.BooleanField(default=False)
+    is_parent_completion_rule_enabled = models.BooleanField(default=False)
+    is_blocked_status_rule_enabled = models.BooleanField(default=False)
+    is_assignee_edit_rule_enabled = models.BooleanField(default=False)
+    # Relation types people may add; blocked_by and blocking are always available (plane.utils.relation_type_toggles)
+    is_relation_schedule_enabled = models.BooleanField(default=False)
+    is_relation_traceability_enabled = models.BooleanField(default=False)
+    is_relation_relates_to_enabled = models.BooleanField(default=True)
+    is_relation_duplicate_enabled = models.BooleanField(default=True)
     guest_view_all_features = models.BooleanField(default=False)
     cover_image = models.TextField(blank=True, null=True)
     cover_image_asset = models.ForeignKey(
@@ -127,6 +137,12 @@ class Project(ChangeTrackerMixin, BaseModel):
     # timezone
     TIMEZONE_CHOICES = tuple(zip(pytz.common_timezones, pytz.common_timezones))
     timezone = models.CharField(max_length=255, default="UTC", choices=TIMEZONE_CHOICES)
+    # First day of the week in this project (0 = Sunday ... 6 = Saturday); copied from the workspace on creation.
+    # A person's own preference, when they have one, wins over it.
+    start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=SUNDAY)
+    # Days that count as non-working time in this project (0 = Sunday ... 6 = Saturday); copied from the workspace on
+    # creation. Calendars and the timeline shade them, and durations counted in days skip them.
+    weekend_days = models.JSONField(default=default_weekend_days, validators=[validate_weekend_days])
     start_date = models.DateField(null=True, blank=True)
     target_date = models.DateField(null=True, blank=True)
     # external_id for imports
@@ -136,6 +152,10 @@ class Project(ChangeTrackerMixin, BaseModel):
     def __init__(self, *args, **kwargs):
         # Track if timezone is provided, if so, don't override it with the workspace timezone when saving
         self.is_timezone_provided = kwargs.get("timezone") is not None
+        # Same for the first day of the week
+        self.is_start_of_the_week_provided = kwargs.get("start_of_the_week") is not None
+        # ... and for the weekend days
+        self.is_weekend_days_provided = kwargs.get("weekend_days") is not None
         super().__init__(*args, **kwargs)
 
     @property
@@ -212,9 +232,16 @@ class Project(ChangeTrackerMixin, BaseModel):
         self.identifier = self.identifier.strip().upper()
         is_creating = self._state.adding
 
-        if is_creating and not self.is_timezone_provided:
+        if is_creating and not (
+            self.is_timezone_provided and self.is_start_of_the_week_provided and self.is_weekend_days_provided
+        ):
             workspace = Workspace.objects.get(id=self.workspace_id)
-            self.timezone = workspace.timezone
+            if not self.is_timezone_provided:
+                self.timezone = workspace.timezone
+            if not self.is_start_of_the_week_provided:
+                self.start_of_the_week = workspace.start_of_the_week
+            if not self.is_weekend_days_provided:
+                self.weekend_days = list(workspace.weekend_days)
 
         # Read before super().save(): the change tracker resets once it returns.
         update_fields = kwargs.get("update_fields")
@@ -225,22 +252,40 @@ class Project(ChangeTrackerMixin, BaseModel):
         timezone_persisted = "timezone" not in self.get_deferred_fields() and (
             update_fields is None or "timezone" in update_fields
         )
-        if is_creating or not timezone_persisted:
-            return super().save(*args, **kwargs)
-
-        # A timezone deferred at load has no tracked original, so compare against the stored one.
-        old_timezone = (
-            self.old_values["timezone"]
-            if "timezone" in self.old_values
-            else Project.objects.values_list("timezone", flat=True).get(pk=self.pk)
+        weekend_days_changed = (
+            not is_creating
+            and "weekend_days" not in self.get_deferred_fields()
+            and (update_fields is None or "weekend_days" in update_fields)
+            and "weekend_days" in self.old_values
+            and sorted(self.old_values["weekend_days"] or []) != sorted(self.weekend_days or [])
         )
-        if old_timezone == self.timezone:
-            return super().save(*args, **kwargs)
+        old_timezone = None
+        if not is_creating and timezone_persisted:
+            # A timezone deferred at load has no tracked original, so compare against the stored one.
+            old_timezone = (
+                self.old_values["timezone"]
+                if "timezone" in self.old_values
+                else Project.objects.values_list("timezone", flat=True).get(pk=self.pk)
+            )
 
-        # One transaction so the unsnooze beat task never sees the new timezone with old-timezone snoozes.
-        with transaction.atomic():
+        if old_timezone is None or old_timezone == self.timezone:
             super().save(*args, **kwargs)
-            self._retime_intake_snoozes(old_timezone)
+        else:
+            # One transaction so the unsnooze beat task never sees the new timezone with old-timezone snoozes.
+            with transaction.atomic():
+                super().save(*args, **kwargs)
+                self._retime_intake_snoozes(old_timezone)
+
+        if weekend_days_changed:
+            self._schedule_duration_recompute()
+
+    def _schedule_duration_recompute(self):
+        """Durations count working days, so they follow the weekend days: recalculate them once this is committed."""
+        # Imported here: the task module imports the models
+        from plane.bgtasks.project_duration_task import recompute_project_durations
+
+        project_id = str(self.pk)
+        transaction.on_commit(lambda: recompute_project_durations.delay(project_id))
 
 
 class ProjectBaseModel(BaseModel):

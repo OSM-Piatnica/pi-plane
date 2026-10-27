@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Codice univoco",
+            "label": "Codice monouso",
             "placeholder": "123456",
             "helper_text": "Codice di verifica inviato alla tua nuova email.",
             "errors": {
-              "required": "Il codice univoco è obbligatorio",
+              "required": "Il codice monouso è obbligatorio",
               "invalid": "Codice di verifica non valido. Riprova."
             }
           }
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Percentuale di completamento",
+    "first_day_project_default": "Predefinito del progetto",
     "first_day_updated": "Primo giorno della settimana aggiornato con successo",
     "try_again_later": "Riprova più tardi.",
     "update_failed": "Aggiornamento non riuscito",

@@ -28,6 +28,9 @@ from plane.app.views import (
     IssueDetailEndpoint,
     IssueAttachmentV2Endpoint,
     IssueBulkUpdateDateEndpoint,
+    IssueDateRollupEndpoint,
+    IssueWorkLogDetailEndpoint,
+    IssueWorkLogsEndpoint,
     IssueVersionEndpoint,
     WorkItemDescriptionVersionEndpoint,
     IssueMetaEndpoint,
@@ -284,6 +287,21 @@ urlpatterns = [
         "workspaces/<str:slug>/projects/<uuid:project_id>/issues/<uuid:issue_id>/meta/",
         IssueMetaEndpoint.as_view(),
         name="issue-meta",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issues/<uuid:issue_id>/worklogs/",
+        IssueWorkLogsEndpoint.as_view(),
+        name="issue-worklogs",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issues/<uuid:issue_id>/worklogs/<uuid:pk>/",
+        IssueWorkLogDetailEndpoint.as_view(),
+        name="issue-worklog-detail",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issue-date-rollups/",
+        IssueDateRollupEndpoint.as_view(),
+        name="issue-date-rollups",
     ),
     path(
         "workspaces/<str:slug>/work-items/<str:project_identifier>-<str:issue_identifier>/",

@@ -117,6 +117,8 @@
   "comments_description": "Notifique-me quando alguém deixar um comentário no item de trabalho",
   "mentions": "Menções",
   "mentions_description": "Notifique-me quando alguém me mencionar nos comentários ou na descrição",
+  "project_access_requests": "Solicitações de acesso",
+  "project_access_requests_description": "Enviar e-mail sobre solicitações para entrar em projetos privados que administro e sobre as decisões das minhas próprias solicitações.",
   "email_frequency": "Frequência de e-mails",
   "email_frequency_description": "Escolha com que frequência você recebe e-mails sobre atualizações de itens de trabalho. As menções são sempre enviadas imediatamente.",
   "email_frequency_instant": "Imediatamente",
@@ -195,8 +197,8 @@
   "select_network": "Selecione a rede",
   "lead": "Líder",
   "date_range": "Intervalo de datas",
-  "private": "Privado",
-  "public": "Público",
+  "private": "Só eu",
+  "public": "Compartilhado",
   "accessible_only_by_invite": "Acessível apenas por convite",
   "anyone_in_the_workspace_except_guests_can_join": "Qualquer pessoa no espaço de trabalho, exceto convidados, pode participar",
   "creating": "Criando",
@@ -210,8 +212,8 @@
   "add_to_favorites": "Adicionar aos favoritos",
   "remove_from_favorites": "Remover dos favoritos",
   "rename_folder": "Renomear pasta",
-  "publish_project": "Publicar projeto",
-  "publish": "Publicar",
+  "publish_project": "Compartilhar na web",
+  "publish": "Ativar compartilhamento na web",
   "copy_link": "Copiar link",
   "leave_project": "Sair do projeto",
   "join_the_project_to_rearrange": "Participe do projeto para reorganizar",
@@ -532,8 +534,8 @@
     "archiving": "Arquivando",
     "archive": "Arquivar",
     "access": {
-      "public": "Público",
-      "private": "Privado"
+      "public": "Compartilhado com o projeto",
+      "private": "Só eu"
     },
     "done": "Concluído",
     "sub_work_items": "Sub-itens de trabalho",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "Ocorreu um erro",
       "inbox_fetch_error": "Erro ao buscar os itens de trabalho do Intake. Tente novamente mais tarde.",
-      "page_make_public_error": "Não foi possível tornar a página pública. Tente novamente mais tarde.",
-      "page_make_private_error": "Não foi possível tornar a página privada. Tente novamente mais tarde.",
+      "page_make_public_error": "Não foi possível compartilhar a página com o projeto. Tente novamente mais tarde.",
+      "page_make_private_error": "Não foi possível deixar a página visível só para você. Tente novamente mais tarde.",
       "workflow_pending_approval": "O item de trabalho tem uma aprovação pendente.",
       "workflow_transition_not_allowed": "Esta transição de estado não é permitida pelo fluxo de trabalho."
     },
@@ -1412,7 +1414,7 @@
       "duration": "Duração"
     },
     "auth_labels": {
-      "magic_code": "Código mágico"
+      "one_time_code": "Código de uso único"
     },
     "state_groups": {
       "canceled": "Cancelado"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "Legal! Falta só mais um passo.",
-      "description": "Digite na barra de endereços do navegador a URL pública ou o link da visualização ou Página que você está tentando ver.",
+      "description": "Digite na barra de endereços do navegador o link compartilhado da visualização ou da página que você quer ver.",
       "image_alt": "Usuário já conectado"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Reenviar em {seconds}s"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "Continuar com {provider}"
     },
     "issues": {
-      "public_board_not_found": "O quadro público não existe. Verifique a URL.",
+      "shared_project_load_failed": "Não foi possível carregar este projeto compartilhado. Tente novamente mais tarde.",
       "cycle_tooltip": "Ciclo: {name}",
       "no_cycle": "Sem Ciclo",
       "due_date_tooltip": "Data de vencimento: {date}",

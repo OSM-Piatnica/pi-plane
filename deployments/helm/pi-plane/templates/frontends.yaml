@@ -1,0 +1,82 @@
+{{- /*
+Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+SPDX-License-Identifier: AGPL-3.0-only
+See the LICENSE file for details.
+*/ -}}
+{{- /* The three browser apps differ only by the path they are served under, which is also what their
+       health check asks for. They take no configuration at runtime: their URLs are relative to the host. */ -}}
+{{- range $name, $probePath := dict "web" "/" "space" "/spaces/" "admin" "/god-mode" }}
+{{- $comp := dict "root" $ "component" $name }}
+{{- $values := index $.Values $name }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pi-plane.componentName" $comp }}
+  labels:
+    {{- include "pi-plane.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  replicas: {{ $values.replicas }}
+  selector:
+    matchLabels:
+      {{- include "pi-plane.selectorLabels" $comp | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "pi-plane.labels" $ | nindent 8 }}
+        app.kubernetes.io/component: {{ $name }}
+      {{- with $values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      serviceAccountName: {{ include "pi-plane.serviceAccountName" $ }}
+      automountServiceAccountToken: false
+      {{- with $.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ $name }}
+          image: {{ include "pi-plane.image" $comp | quote }}
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 3000
+          {{- with $values.env }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          readinessProbe:
+            httpGet: { path: {{ $probePath }}, port: http }
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet: { path: {{ $probePath }}, port: http }
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 6
+          securityContext:
+            {{- include "pi-plane.containerSecurityContext" $ | nindent 12 }}
+          resources:
+            {{- toYaml $values.resources | nindent 12 }}
+      {{- include "pi-plane.scheduling" $values | nindent 6 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pi-plane.componentName" $comp }}
+  labels:
+    {{- include "pi-plane.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  selector:
+    {{- include "pi-plane.selectorLabels" $comp | nindent 4 }}
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
+{{- end }}

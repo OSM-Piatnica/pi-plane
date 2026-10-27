@@ -8,6 +8,8 @@ from uuid import UUID
 
 from django.utils import timezone
 
+from plane.utils.blocked_status_rule import blocked_status_error
+from plane.utils.parent_completion_rule import parent_completion_error, reopen_parents
 from plane.db.models import (
     Issue,
     Project,
@@ -127,6 +129,12 @@ def validate_state_transition(
 ) -> TransitionValidationResult:
     project = issue.project
 
+    # Ahead of the workflow, so an approval is not requested for a move the rule refuses anyway
+    if from_state_id != to_state_id:
+        rule_error = parent_completion_error(issue, to_state_id) or blocked_status_error(issue, to_state_id)
+        if rule_error:
+            return TransitionValidationResult(allowed=False, error_message=rule_error)
+
     if not project.is_workflow_enabled:
         return TransitionValidationResult(allowed=True)
 
@@ -214,12 +222,20 @@ def resolve_approval(approval: WorkflowApproval, user_id: UUID, approved: bool) 
         raise PermissionError("You do not have permission to approve or reject this transition.")
 
     issue = approval.issue
+    # Sub-items may have been reopened, or blockers added, since the approval was requested
+    if approved:
+        rule_error = parent_completion_error(issue, approval.approve_state_id) or blocked_status_error(
+            issue, approval.approve_state_id
+        )
+        if rule_error:
+            raise ValueError(rule_error)
     approval.status = WorkflowApprovalStatus.APPROVED if approved else WorkflowApprovalStatus.REJECTED
     approval.resolved_by_id = user_id
     approval.resolved_at = timezone.now()
     approval.updated_by_id = user_id
     approval.save(update_fields=["status", "resolved_by_id", "resolved_at", "updated_at", "updated_by_id"])
 
+    previous_state_id = issue.state_id
     if approved:
         issue.state = approval.approve_state
     elif approval.reject_state:
@@ -227,6 +243,8 @@ def resolve_approval(approval: WorkflowApproval, user_id: UUID, approved: bool) 
 
     issue.updated_by_id = user_id
     issue.save(update_fields=["state", "updated_at", "updated_by_id"])
+    # The approver has confirmed the move; a completed parent goes back to work with it
+    reopen_parents(issue, previous_state_id, user_id)
     return issue
 
 

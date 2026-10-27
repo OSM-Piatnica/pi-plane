@@ -117,6 +117,8 @@
   "comments_description": "Notificarme cuando alguien deje un comentario en el elemento de trabajo",
   "mentions": "Menciones",
   "mentions_description": "Notificarme cuando alguien me mencione en los comentarios o descripción",
+  "project_access_requests": "Solicitudes de acceso",
+  "project_access_requests_description": "Enviarme un correo sobre las solicitudes para unirse a proyectos privados que administro y sobre las decisiones relativas a mis propias solicitudes.",
   "email_frequency": "Frecuencia de correos",
   "email_frequency_description": "Elija con qué frecuencia recibir correos sobre las actualizaciones de los elementos de trabajo. Las menciones se envían siempre de inmediato.",
   "email_frequency_instant": "Al instante",
@@ -195,8 +197,8 @@
   "select_network": "Seleccionar red",
   "lead": "Líder",
   "date_range": "Rango de fechas",
-  "private": "Privado",
-  "public": "Público",
+  "private": "Solo yo",
+  "public": "Compartido",
   "accessible_only_by_invite": "Accesible solo por invitación",
   "anyone_in_the_workspace_except_guests_can_join": "Cualquiera en el espacio de trabajo excepto invitados puede unirse",
   "creating": "Creando",
@@ -210,8 +212,8 @@
   "add_to_favorites": "Agregar a favoritos",
   "remove_from_favorites": "Eliminar de favoritos",
   "rename_folder": "Renombrar carpeta",
-  "publish_project": "Publicar proyecto",
-  "publish": "Publicar",
+  "publish_project": "Compartir en la web",
+  "publish": "Activar compartir en la web",
   "copy_link": "Copiar enlace",
   "leave_project": "Abandonar proyecto",
   "join_the_project_to_rearrange": "Únete al proyecto para reorganizar",
@@ -532,8 +534,8 @@
     "archiving": "Archivando",
     "archive": "Archivar",
     "access": {
-      "public": "Público",
-      "private": "Privado"
+      "public": "Compartido con el proyecto",
+      "private": "Solo yo"
     },
     "done": "Hecho",
     "sub_work_items": "Sub-elementos de trabajo",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "Se produjo un error",
       "inbox_fetch_error": "Error al obtener los elementos de trabajo de Intake. Inténtelo de nuevo más tarde.",
-      "page_make_public_error": "No se pudo hacer pública la página. Inténtelo de nuevo más tarde.",
-      "page_make_private_error": "No se pudo hacer privada la página. Inténtelo de nuevo más tarde.",
+      "page_make_public_error": "No se pudo compartir la página con el proyecto. Inténtalo de nuevo más tarde.",
+      "page_make_private_error": "No se pudo hacer la página visible solo para ti. Inténtalo de nuevo más tarde.",
       "workflow_pending_approval": "El elemento de trabajo tiene una aprobación pendiente.",
       "workflow_transition_not_allowed": "El flujo de trabajo no permite esta transición de estado."
     },
@@ -1412,7 +1414,7 @@
       "duration": "Duración"
     },
     "auth_labels": {
-      "magic_code": "Código mágico"
+      "one_time_code": "Código de un solo uso"
     },
     "state_groups": {
       "canceled": "Cancelado"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "¡Genial! Solo falta un paso.",
-      "description": "Ingrese en la barra de direcciones del navegador la URL pública o el enlace de la vista o Página que intenta ver.",
+      "description": "Introduce en la barra de direcciones del navegador el enlace compartido de la vista o la página que quieres ver.",
       "image_alt": "El usuario ya inició sesión"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Reenviar en {seconds} s"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "Continuar con {provider}"
     },
     "issues": {
-      "public_board_not_found": "El tablero público no existe. Verifique la URL.",
+      "shared_project_load_failed": "No se pudo cargar este proyecto compartido. Inténtalo de nuevo más tarde.",
       "cycle_tooltip": "Ciclo: {name}",
       "no_cycle": "Sin Ciclo",
       "due_date_tooltip": "Fecha de vencimiento: {date}",

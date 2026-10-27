@@ -445,14 +445,15 @@
       "removing_from_favorites": "Rimozione del progetto dai preferiti..."
     },
     "confirm_member_remove": {
-      "leave_description": "Vuoi davvero lasciare il progetto {name}? Potrai unirti di nuovo se verrai invitato nuovamente o se il progetto è pubblico.",
+      "leave_description": "Vuoi davvero lasciare il progetto {name}? Potrai unirti di nuovo se verrai invitato nuovamente o se il progetto è aperto allo spazio di lavoro.",
       "leave_title": "Lasciare il progetto?",
       "remove_description": "Vuoi davvero rimuovere il membro {name}? Non avrà più accesso a questo progetto. Questa azione non può essere annullata.",
       "remove_title": "Rimuovere {name}?"
     },
     "control_section": {
       "archive_description": "Archiviare un progetto lo rimuoverà dalla navigazione laterale, ma potrai comunque accedervi dalla pagina dei progetti. Puoi ripristinarlo o eliminarlo quando vuoi.",
-      "delete_description": "Eliminando un progetto, tutti i dati e le risorse al suo interno verranno rimossi definitivamente e non potranno essere recuperati."
+      "delete_description": "Eliminando un progetto, tutti i dati e le risorse al suo interno verranno rimossi definitivamente e non potranno essere recuperati.",
+      "duplicate_description": "Crea un nuovo progetto con le impostazioni, gli stati, le etichette e il resto della configurazione di questo progetto. Gli elementi di lavoro vengono copiati solo se lo scegli."
     },
     "delete_modal": {
       "confirm_placeholder": "Inserisci “{phrase}”",
@@ -531,21 +532,34 @@
       "timezone_error": "Impossibile aggiornare il fuso orario",
       "timezone_updated": "Fuso orario aggiornato con successo",
       "update_error": "Si è verificato un errore durante l'aggiornamento del profilo. Riprova.",
-      "updated": "Profilo aggiornato con successo."
+      "updated": "Profilo aggiornato con successo.",
+      "weekend_days": "Giorni del fine settimana",
+      "weekend_days_description": "Imposta quali giorni sono considerati non lavorativi.",
+      "weekend_days_updated": "Giorni del fine settimana aggiornati con successo",
+      "weekend_days_use_default": "Usa l'impostazione predefinita dello spazio di lavoro"
     },
     "publish_modal": {
       "allow_comments": "Consenti commenti",
       "allow_reactions": "Consenti reazioni",
       "allow_voting": "Consenti votazione",
-      "anyone_with_link": "Chiunque abbia il link può accedere",
-      "link_copied": "Link della pagina pubblicata copiato con successo.",
-      "live_on_web": "Questo progetto è ora online sul web",
-      "publishing": "Pubblicazione",
-      "select_layout_error": "Seleziona almeno un layout di visualizzazione per pubblicare il progetto.",
-      "settings_updated": "Impostazioni di pubblicazione aggiornate con successo!",
-      "unpublish": "Annulla pubblicazione",
-      "unpublish_error": "Qualcosa è andato storto durante l'annullamento della pubblicazione del progetto.",
-      "unpublishing": "Annullamento della pubblicazione",
+      "anyone_with_link": "Chiunque su internet abbia il link può vedere questo progetto, senza account",
+      "confirm": {
+        "title": "Condividere questo progetto sul web?",
+        "description": "Chiunque su internet abbia il link potrà vedere questo progetto, comprese persone esterne al tuo spazio di lavoro e non connesse.",
+        "can_see": "Potranno vedere:",
+        "item_work_items": "tutti gli elementi di lavoro del progetto, con descrizione, stato, priorità, date ed etichette",
+        "item_members": "i nomi e gli avatar dei membri del progetto",
+        "item_activity": "commenti, reazioni e voti, con i nomi di chi li ha espressi, se li consenti",
+        "note": "Chi guarda non può modificare nulla. Il link continua a funzionare finché non interrompi la condivisione: condividi solo un progetto senza contenuti riservati."
+      },
+      "link_copied": "Link web copiato.",
+      "live_on_web": "Questo progetto è condiviso sul web",
+      "publishing": "Attivazione…",
+      "select_layout_error": "Seleziona almeno un layout di vista per condividere il progetto sul web.",
+      "settings_updated": "Impostazioni di condivisione sul web aggiornate.",
+      "unpublish": "Interrompi la condivisione",
+      "unpublish_error": "Qualcosa è andato storto durante la disattivazione della condivisione sul web.",
+      "unpublishing": "Disattivazione…",
       "update_settings": "Aggiorna impostazioni"
     },
     "rich_filters": {
@@ -555,6 +569,14 @@
       "filter_type_not_supported": "Tipo di filtro non supportato",
       "invalid_filter": "Filtro non valido",
       "invalid_tooltip": "Questa condizione del filtro non è più valida. La proprietà potrebbe essere stata eliminata o il tuo accesso potrebbe essere cambiato.",
+      "operators": {
+        "exact": "è",
+        "in": "è uno tra",
+        "range": "tra",
+        "not_exact": "non è",
+        "not_in": "non è nessuno tra",
+        "not_range": "non tra"
+      },
       "remove_filter": "Rimuovi filtro",
       "save_view": "Salva visualizzazione",
       "update_view": "Aggiorna visualizzazione"
@@ -640,7 +662,55 @@
     "access_requests": {
       "title": "Richieste di adesione ({count})",
       "approve": "Approva",
-      "reject": "Rifiuta"
+      "reject": "Rifiuta",
+      "already_decided": "Questa richiesta è già stata decisa da un altro amministratore.",
+      "requester_left": "Questa persona non è più membro dello spazio di lavoro."
+    },
+    "duplicate_modal": {
+      "already_running": "Nello spazio di lavoro è già in corso una copia di elementi di lavoro. Riprova al termine.",
+      "always_copied": "Le impostazioni, gli stati e i tipi di elementi di lavoro vengono sempre copiati.",
+      "banner": {
+        "done": "Elementi di lavoro copiati: {count}.",
+        "failed": "La copia degli elementi di lavoro non è riuscita. Quanto copiato viene mantenuto; riprova per aggiungere il resto.",
+        "progress": "Copia degli elementi di lavoro: {copied} di {total}",
+        "queued": "Gli elementi di lavoro sono in coda per la copia...",
+        "reload": "Ricarica",
+        "retry": "Riprova",
+        "retry_failed": "Impossibile ripetere la copia. Riprova."
+      },
+      "clear_all": "Deseleziona tutto",
+      "description": "Crea un nuovo progetto con le stesse impostazioni. Pagine e webhook non vengono copiati; gli elementi di lavoro solo se lo scegli qui sotto.",
+      "error": "Impossibile duplicare il progetto. Riprova.",
+      "identifier_placeholder": "Generato se vuoto",
+      "properties": {
+        "assignees": "Assegnatari",
+        "custom_properties": "Proprietà personalizzate",
+        "cycles": "Cicli",
+        "dates": "Date",
+        "description_images": "Immagini nelle descrizioni",
+        "labels": "Etichette",
+        "links": "Link",
+        "modules": "Moduli",
+        "parents": "Collegamenti dei sotto-elementi",
+        "relations": "Relazioni"
+      },
+      "properties_description": "Scegli cosa portare con gli elementi di lavoro. Bozze, elementi archiviati e di intake restano esclusi; commenti, allegati, attività e registrazioni di tempo non vengono mai copiati.",
+      "properties_heading": "Proprietà degli elementi di lavoro",
+      "properties_note": "Cicli e moduli vengono portati solo se copiati sopra.",
+      "property_groups": {
+        "content": "Contenuto",
+        "hierarchy": "Gerarchia e relazioni",
+        "organization": "Organizzazione",
+        "people": "Persone"
+      },
+      "select_all": "Seleziona tutto",
+      "submit": "Duplica progetto",
+      "submitting": "Duplicazione del progetto...",
+      "success": "Progetto duplicato correttamente.",
+      "title": "Duplica progetto",
+      "too_large": "Questo progetto è troppo grande per essere copiato. Disattiva alcune opzioni e riprova.",
+      "what_to_copy": "Copia anche",
+      "work_items_too_large": "Questo progetto ha più elementi di lavoro di quanti se ne possano copiare (fino a {count})."
     }
   }
 }

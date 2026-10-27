@@ -13,6 +13,7 @@ import { setToast } from "@plane/blocks/toast";
 // components
 import { TimezoneSelect } from "@/components/global";
 import { StartOfWeekPreference } from "@/components/profile/start-of-week-preference";
+import { WeekendDaysPreference } from "@/components/profile/weekend-days-preference";
 import { SettingsControlItem } from "@/components/settings/control-item";
 // hooks
 import { useUser, useUserProfile } from "@/hooks/store/user";
@@ -96,7 +97,7 @@ export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
               getOptionValue={(option) => option.value}
               getOptionLabel={(option) => option.label}
               placeholder={t("project_components.profile.select_language")}
-              showSearch={false}
+              getOptionSearchText={(option) => `${option.label} ${option.value}`}
               pinSelected={false}
               contentSizing="anchor"
             >
@@ -116,6 +117,7 @@ export const ProfileSettingsLanguageAndTimezonePreferencesList = observer(
             description: t("project_components.profile.first_day_of_week_description"),
           }}
         />
+        <WeekendDaysPreference />
       </div>
     );
   }

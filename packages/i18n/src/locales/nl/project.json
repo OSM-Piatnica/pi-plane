@@ -445,14 +445,15 @@
       "removing_from_favorites": "Project verwijderen uit favorieten..."
     },
     "confirm_member_remove": {
-      "leave_description": "Weet je zeker dat je het project {name} wilt verlaten? Je kunt weer deelnemen als je opnieuw wordt uitgenodigd of als het project openbaar is.",
+      "leave_description": "Weet je zeker dat je het project {name} wilt verlaten? Je kunt weer deelnemen als je opnieuw wordt uitgenodigd of als het project open is voor de werkruimte.",
       "leave_title": "Project verlaten?",
       "remove_description": "Weet je zeker dat je lid {name} wilt verwijderen? Dit lid heeft dan geen toegang meer tot dit project. Dit kan niet ongedaan worden gemaakt.",
       "remove_title": "{name} verwijderen?"
     },
     "control_section": {
       "archive_description": "Als je een project archiveert, verdwijnt het uit je zijnavigatie, maar je kunt het nog steeds openen via je projectenpagina. Je kunt het project op elk moment herstellen of verwijderen.",
-      "delete_description": "Als je een project verwijdert, worden alle gegevens en bronnen in dat project permanent verwijderd en kunnen ze niet worden hersteld."
+      "delete_description": "Als je een project verwijdert, worden alle gegevens en bronnen in dat project permanent verwijderd en kunnen ze niet worden hersteld.",
+      "duplicate_description": "Maak een nieuw project met de instellingen, statussen, labels en overige configuratie van dit project. Werkitems worden alleen gekopieerd als je dat kiest."
     },
     "delete_modal": {
       "confirm_placeholder": "Voer “{phrase}” in",
@@ -531,21 +532,34 @@
       "timezone_error": "Bijwerken van tijdzone mislukt",
       "timezone_updated": "Tijdzone bijgewerkt",
       "update_error": "Er is een fout opgetreden bij het bijwerken van je profiel. Probeer het opnieuw.",
-      "updated": "Profiel bijgewerkt."
+      "updated": "Profiel bijgewerkt.",
+      "weekend_days": "Weekenddagen",
+      "weekend_days_description": "Bepaalt welke dagen als niet-werktijd gelden.",
+      "weekend_days_updated": "Weekenddagen bijgewerkt",
+      "weekend_days_use_default": "Standaard van de werkruimte gebruiken"
     },
     "publish_modal": {
       "allow_comments": "Reacties toestaan",
       "allow_reactions": "Reacties met emoji toestaan",
       "allow_voting": "Stemmen toestaan",
-      "anyone_with_link": "Iedereen met de link heeft toegang",
-      "link_copied": "Link naar gepubliceerde pagina gekopieerd.",
-      "live_on_web": "Dit project is nu live op het web",
-      "publishing": "Publiceren",
-      "select_layout_error": "Selecteer ten minste één weergave-indeling om het project te publiceren.",
-      "settings_updated": "Publicatie-instellingen bijgewerkt!",
-      "unpublish": "Publicatie ongedaan maken",
-      "unpublish_error": "Er is iets misgegaan bij het ongedaan maken van de publicatie van het project.",
-      "unpublishing": "Publicatie ongedaan maken",
+      "anyone_with_link": "Iedereen op internet met de link kan dit project bekijken, zonder account",
+      "confirm": {
+        "title": "Dit project delen op het web?",
+        "description": "Iedereen op internet met de link kan dit project bekijken, ook mensen buiten je werkruimte en mensen die niet zijn ingelogd.",
+        "can_see": "Ze kunnen zien:",
+        "item_work_items": "alle werkitems in het project, met beschrijving, status, prioriteit, datums en labels",
+        "item_members": "de namen en avatars van de projectleden",
+        "item_activity": "reacties, emoji-reacties en stemmen, met de namen van de mensen erachter, als je ze toestaat",
+        "note": "Bekijkers kunnen niets bewerken. De link blijft werken tot je stopt met delen, dus deel alleen een project zonder vertrouwelijke inhoud."
+      },
+      "link_copied": "Weblink gekopieerd.",
+      "live_on_web": "Dit project wordt gedeeld op het web",
+      "publishing": "Inschakelen…",
+      "select_layout_error": "Selecteer minstens één weergavelay-out om het project op het web te delen.",
+      "settings_updated": "Instellingen voor delen op het web bijgewerkt.",
+      "unpublish": "Stoppen met delen",
+      "unpublish_error": "Er ging iets mis bij het uitschakelen van delen op het web.",
+      "unpublishing": "Uitschakelen…",
       "update_settings": "Instellingen bijwerken"
     },
     "rich_filters": {
@@ -555,6 +569,14 @@
       "filter_type_not_supported": "Filtertype niet ondersteund",
       "invalid_filter": "Ongeldig filter",
       "invalid_tooltip": "Deze filtervoorwaarde is niet meer geldig. De eigenschap is mogelijk verwijderd of je toegang ertoe is gewijzigd.",
+      "operators": {
+        "exact": "is",
+        "in": "is een van",
+        "range": "tussen",
+        "not_exact": "is niet",
+        "not_in": "is geen van",
+        "not_range": "niet tussen"
+      },
       "remove_filter": "Filter verwijderen",
       "save_view": "Weergave opslaan",
       "update_view": "Weergave bijwerken"
@@ -640,7 +662,55 @@
     "access_requests": {
       "title": "Verzoeken om lid te worden ({count})",
       "approve": "Goedkeuren",
-      "reject": "Afwijzen"
+      "reject": "Afwijzen",
+      "already_decided": "Dit verzoek is al beoordeeld door een andere beheerder.",
+      "requester_left": "Deze persoon is geen lid meer van de werkruimte."
+    },
+    "duplicate_modal": {
+      "already_running": "In deze werkruimte loopt al een kopie van werkitems. Probeer het opnieuw als die klaar is.",
+      "always_copied": "Instellingen, statussen en typen werkitems worden altijd gekopieerd.",
+      "banner": {
+        "done": "Werkitems gekopieerd: {count}.",
+        "failed": "Het kopiëren van de werkitems is mislukt. Wat gekopieerd is blijft behouden; probeer opnieuw om de rest toe te voegen.",
+        "progress": "Werkitems kopiëren: {copied} van {total}",
+        "queued": "De werkitems staan in de wachtrij om te worden gekopieerd...",
+        "reload": "Opnieuw laden",
+        "retry": "Opnieuw proberen",
+        "retry_failed": "Het kopiëren kon niet opnieuw worden geprobeerd. Probeer het opnieuw."
+      },
+      "clear_all": "Alles wissen",
+      "description": "Maakt een nieuw project met dezelfde instellingen. Pagina's en webhooks worden niet gekopieerd; werkitems alleen als je dat hieronder kiest.",
+      "error": "Het project kon niet worden gedupliceerd. Probeer het opnieuw.",
+      "identifier_placeholder": "Wordt gegenereerd als leeg",
+      "properties": {
+        "assignees": "Toegewezen aan",
+        "custom_properties": "Aangepaste eigenschappen",
+        "cycles": "Cycli",
+        "dates": "Datums",
+        "description_images": "Afbeeldingen in beschrijvingen",
+        "labels": "Labels",
+        "links": "Links",
+        "modules": "Modules",
+        "parents": "Koppelingen van subitems",
+        "relations": "Relaties"
+      },
+      "properties_description": "Kies wat met de werkitems meegaat. Concepten, gearchiveerde items en intake-items blijven buiten beschouwing; opmerkingen, bijlagen, activiteit en tijdregistraties worden nooit gekopieerd.",
+      "properties_heading": "Eigenschappen van werkitems",
+      "properties_note": "Cycli en modules gaan alleen mee als ze hierboven worden gekopieerd.",
+      "property_groups": {
+        "content": "Inhoud",
+        "hierarchy": "Hiërarchie en relaties",
+        "organization": "Organisatie",
+        "people": "Personen"
+      },
+      "select_all": "Alles selecteren",
+      "submit": "Project dupliceren",
+      "submitting": "Project wordt gedupliceerd...",
+      "success": "Project is gedupliceerd.",
+      "title": "Project dupliceren",
+      "too_large": "Dit project is te groot om te kopiëren. Schakel enkele opties uit en probeer het opnieuw.",
+      "what_to_copy": "Kopieer ook",
+      "work_items_too_large": "Dit project heeft meer werkitems dan er gekopieerd kunnen worden (tot {count})."
     }
   }
 }

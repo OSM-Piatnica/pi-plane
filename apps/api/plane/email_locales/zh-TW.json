@@ -1,0 +1,113 @@
+{
+  "format": {
+    "date": "%Y/%m/%d"
+  },
+  "priority": {
+    "urgent": "緊急",
+    "high": "高",
+    "medium": "中",
+    "low": "低",
+    "none": "無"
+  },
+  "issue_updates": {
+    "title": "{identifier} 的更新",
+    "summary": "<strong>{actor}</strong> 更新了工作事項。",
+    "summary_others": "<strong>{actor}</strong> 等人更新了工作事項。",
+    "title_changed": "工作事項標題已變更為 {title}",
+    "updates": "更新",
+    "due_date": "截止日期：",
+    "duplicate": "重複項目：",
+    "assignee": "指派對象：",
+    "labels": "標籤：",
+    "state": "狀態：",
+    "links": "連結：",
+    "priority": "優先順序：",
+    "blocking": "封鎖：",
+    "comments": "評論",
+    "more": "另有 {count} 項",
+    "links_removed": {
+      "other": "已移除 {count} 個連結"
+    },
+    "view": "檢視工作事項",
+    "footer": "此郵件已寄送至 <a href=\"mailto:{email}\">{email}</a>。如果您不想再收到此類郵件，可以<a href=\"{issue_url}\">取消訂閱此工作事項</a>或<a href=\"{preferences_url}\">管理您的郵件偏好設定</a>。"
+  },
+  "digest": {
+    "title": "更新摘要",
+    "greeting_named": "{name}，您有{summary}",
+    "greeting": "您有{summary}",
+    "updates_count": {
+      "other": "{count} 則更新"
+    },
+    "summary": {
+      "other": "您追蹤的 {count} 個工作事項中有 {updates}。"
+    },
+    "subject": {
+      "other": "摘要：{count} 個工作事項中有 {updates}"
+    },
+    "comments": "評論：{count}",
+    "footer": "這是工作事項更新的摘要。提及會立即通知您。<a href=\"{preferences_url}\">變更通知設定</a>。"
+  },
+  "due_reminder": {
+    "title": "工作事項提醒",
+    "greeting_named": "{name}，您有{summary}",
+    "greeting": "您有{summary}",
+    "section_overdue": "已逾期",
+    "section_today": "今天到期的工作事項",
+    "work_items": {
+      "other": "{count} 個工作事項"
+    },
+    "overdue": {
+      "other": "{count} 個已逾期"
+    },
+    "overdue_only": {
+      "other": "{count} 個已逾期的工作事項"
+    },
+    "summary_both": "今天到期的{today}和{overdue}。",
+    "summary_today": "今天到期的{today}（{date}）。",
+    "summary_overdue": "{overdue}。",
+    "subject_both": "您有今天到期的{today}和{overdue}",
+    "subject_today": "您有今天到期的{today}（{date}）",
+    "subject_overdue": "您有{overdue}",
+    "days_overdue": {
+      "other": "已逾期 {count} 天"
+    },
+    "cta": "檢視我的工作事項",
+    "footer": "這是每天早上寄送的自動提醒，內容涵蓋今天到期的工作事項和已逾期的工作事項。"
+  },
+  "project_addition": {
+    "subject": "您已受邀加入 Pi-Plane 專案",
+    "preheader": "{inviter} 邀請您加入 Pi-Plane 工作區 {workspace} 中的專案 {project}。",
+    "heading": "您已受邀加入 Pi-Plane 專案 {project}",
+    "intro": "{inviter} 邀請您在 Pi-Plane 工作區 <strong>{workspace}</strong> 的專案 <strong>{project}</strong> 中協作。",
+    "button": "前往專案",
+    "fallback": "如果按鈕無法使用，請複製此連結並貼到瀏覽器中：",
+    "note": "注意：此郵件已寄送至 <span>{email}</span>。如果您沒有預期收到此邀請，可以忽略此郵件。"
+  },
+  "access_request": {
+    "subject": "{requester} 請求加入 {project}",
+    "preheader": "{requester} 請求加入 Pi-Plane 工作區 {workspace} 中的私人專案 {project}。",
+    "heading": "專案 {project} 的存取請求",
+    "intro": "<strong>{requester}</strong> 請求加入 Pi-Plane 工作區 <strong>{workspace}</strong> 中的私人專案 <strong>{project}</strong>。您可以在專案的成員設定中核准或拒絕該請求。",
+    "message": "留言：",
+    "button": "檢視請求",
+    "fallback": "如果按鈕無法使用，請複製此連結並貼到瀏覽器中：",
+    "note": "注意：此郵件已寄送至 <span>{email}</span>，因為您是此專案的管理員或負責人。"
+  },
+  "access_request_decision": {
+    "subject_approved": "您加入 {project} 的請求已獲核准",
+    "subject_rejected": "您加入 {project} 的請求未獲核准",
+    "heading_approved": "您現在可以存取 {project}",
+    "heading_rejected": "您加入 {project} 的請求",
+    "intro_approved": "<strong>{decider}</strong> 已核准您加入 Pi-Plane 工作區 <strong>{workspace}</strong> 中私人專案 <strong>{project}</strong> 的請求。您現在可以開啟該專案。",
+    "intro_rejected": "<strong>{decider}</strong> 未核准您加入 Pi-Plane 工作區 <strong>{workspace}</strong> 中私人專案 <strong>{project}</strong> 的請求。如果您認為這是誤判，請聯絡專案管理員。",
+    "button": "開啟專案",
+    "note": "注意：此郵件寄送至 <span>{email}</span>，因為您請求加入此專案。"
+  },
+  "one_time_code": {
+    "subject": "您的 Pi-Plane 一次性登入碼是 {code}",
+    "preheader": "您的 Pi-Plane 登入碼 {code} 有效期為 10 分鐘。",
+    "heading": "您的 Pi-Plane 登入碼",
+    "info": "此驗證碼在接下來的 10 分鐘內有效。請在登入頁面輸入以完成登入。",
+    "note": "注意：此郵件寄送至 <span>{email}</span>。如果您沒有要求登入碼，可以忽略此郵件。"
+  }
+}

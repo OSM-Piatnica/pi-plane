@@ -1,9 +1,11 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
 import os
+import uuid
 
 # Django imports
 from django.conf import settings
@@ -19,6 +21,7 @@ from plane.db.models import Workspace
 from plane.license.api.permissions import InstanceAdminPermission
 from plane.license.api.serializers import InstanceSerializer
 from plane.license.models import Instance
+from plane.authentication.provider.oidc.registry import enabled_oidc_providers
 from plane.license.utils.instance_value import get_configuration_value
 from plane.utils.cache import cache_response, invalidate_cache
 from django.utils.decorators import method_decorator
@@ -50,7 +53,6 @@ class InstanceEndpoint(BaseAPIView):
         (
             ENABLE_SIGNUP,
             DISABLE_WORKSPACE_CREATION,
-            IS_GOOGLE_ENABLED,
             IS_GITHUB_ENABLED,
             GITHUB_APP_NAME,
             IS_GITLAB_ENABLED,
@@ -61,6 +63,7 @@ class InstanceEndpoint(BaseAPIView):
             SLACK_CLIENT_ID,
             UNSPLASH_ACCESS_KEY,
             LLM_API_KEY,
+            INSTANCE_DEFAULT_WORKSPACE_ID,
         ) = get_configuration_value(
             [
                 {
@@ -70,10 +73,6 @@ class InstanceEndpoint(BaseAPIView):
                 {
                     "key": "DISABLE_WORKSPACE_CREATION",
                     "default": os.environ.get("DISABLE_WORKSPACE_CREATION", "0"),
-                },
-                {
-                    "key": "IS_GOOGLE_ENABLED",
-                    "default": os.environ.get("IS_GOOGLE_ENABLED", "0"),
                 },
                 {
                     "key": "IS_GITHUB_ENABLED",
@@ -112,6 +111,10 @@ class InstanceEndpoint(BaseAPIView):
                     "key": "LLM_API_KEY",
                     "default": os.environ.get("LLM_API_KEY", ""),
                 },
+                {
+                    "key": "INSTANCE_DEFAULT_WORKSPACE_ID",
+                    "default": os.environ.get("INSTANCE_DEFAULT_WORKSPACE_ID", ""),
+                },
             ]
         )
 
@@ -119,12 +122,23 @@ class InstanceEndpoint(BaseAPIView):
         # Authentication
         data["enable_signup"] = ENABLE_SIGNUP == "1"
         data["is_workspace_creation_disabled"] = DISABLE_WORKSPACE_CREATION == "1"
-        data["is_google_enabled"] = IS_GOOGLE_ENABLED == "1"
         data["is_github_enabled"] = IS_GITHUB_ENABLED == "1"
         data["is_gitlab_enabled"] = IS_GITLAB_ENABLED == "1"
         data["is_gitea_enabled"] = IS_GITEA_ENABLED == "1"
+        data["oidc_providers"] = enabled_oidc_providers()
         data["is_magic_login_enabled"] = ENABLE_MAGIC_LINK_LOGIN == "1"
         data["is_email_password_enabled"] = ENABLE_EMAIL_PASSWORD == "1"
+
+        # The UUID is safe to expose and survives workspace slug changes. A stale value is treated as
+        # disabled so the public endpoint never advertises a route that cannot be resolved.
+        default_workspace_id = str(INSTANCE_DEFAULT_WORKSPACE_ID or "").strip()
+        try:
+            default_workspace_exists = (
+                bool(default_workspace_id) and Workspace.objects.filter(id=uuid.UUID(default_workspace_id)).exists()
+            )
+        except (ValueError, TypeError):
+            default_workspace_exists = False
+        data["default_workspace_id"] = default_workspace_id if default_workspace_exists else ""
 
         # Github app name
         data["github_app_name"] = str(GITHUB_APP_NAME)

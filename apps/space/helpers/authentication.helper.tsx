@@ -51,7 +51,7 @@ export enum EAuthenticationErrorCodes {
   INVALID_EMAIL_SIGN_IN = "5075",
   INVALID_EMAIL_MAGIC_SIGN_IN = "5080",
   MAGIC_SIGN_IN_EMAIL_CODE_REQUIRED = "5085",
-  // Both Sign in and Sign up for magic
+  // Both Sign in and Sign up for one-time codes
   INVALID_MAGIC_CODE_SIGN_IN = "5090",
   INVALID_MAGIC_CODE_SIGN_UP = "5092",
   EXPIRED_MAGIC_CODE_SIGN_IN = "5095",
@@ -60,10 +60,14 @@ export enum EAuthenticationErrorCodes {
   EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_UP = "5102",
   // Oauth
   OAUTH_NOT_CONFIGURED = "5104",
-  GOOGLE_NOT_CONFIGURED = "5105",
   GITHUB_NOT_CONFIGURED = "5110",
   GITLAB_NOT_CONFIGURED = "5111",
-  GOOGLE_OAUTH_PROVIDER_ERROR = "5115",
+  OIDC_NOT_CONFIGURED = "5116",
+  OIDC_PROVIDER_ERROR = "5117",
+  OIDC_IDENTITY_MISMATCH = "5118",
+  OIDC_EMAIL_DOMAIN_NOT_ALLOWED = "5119",
+  OIDC_ACCOUNT_LINK_REQUIRED = "5126",
+  OAUTH_PROVIDER_UNVERIFIED_EMAIL = "5124",
   GITHUB_OAUTH_PROVIDER_ERROR = "5120",
   GITLAB_OAUTH_PROVIDER_ERROR = "5121",
   // Reset Password
@@ -226,37 +230,33 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
   // Both Sign in and Sign up
   [EAuthenticationErrorCodes.INVALID_MAGIC_CODE_SIGN_IN]: {
     title: "auth.error_alerts.titles.authentication_failed",
-    message: tryAgain("auth.error_alerts.titles.invalid_magic_code"),
+    message: tryAgain("auth.error_alerts.titles.invalid_one_time_code"),
   },
   [EAuthenticationErrorCodes.INVALID_MAGIC_CODE_SIGN_UP]: {
     title: "auth.error_alerts.titles.authentication_failed",
-    message: tryAgain("auth.error_alerts.titles.invalid_magic_code"),
+    message: tryAgain("auth.error_alerts.titles.invalid_one_time_code"),
   },
   [EAuthenticationErrorCodes.EXPIRED_MAGIC_CODE_SIGN_IN]: {
-    title: "auth.error_alerts.titles.expired_magic_code",
-    message: tryAgain("auth.error_alerts.titles.expired_magic_code"),
+    title: "auth.error_alerts.titles.expired_one_time_code",
+    message: tryAgain("auth.error_alerts.titles.expired_one_time_code"),
   },
   [EAuthenticationErrorCodes.EXPIRED_MAGIC_CODE_SIGN_UP]: {
-    title: "auth.error_alerts.titles.expired_magic_code",
-    message: tryAgain("auth.error_alerts.titles.expired_magic_code"),
+    title: "auth.error_alerts.titles.expired_one_time_code",
+    message: tryAgain("auth.error_alerts.titles.expired_one_time_code"),
   },
   [EAuthenticationErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_IN]: {
-    title: "auth.error_alerts.titles.expired_magic_code",
-    message: tryAgain("auth.error_alerts.titles.expired_magic_code"),
+    title: "auth.error_alerts.titles.one_time_code_attempts_exhausted",
+    message: (t) => t("auth.error_alerts.one_time_code_attempts_exhausted_message"),
   },
   [EAuthenticationErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_UP]: {
-    title: "auth.error_alerts.titles.expired_magic_code",
-    message: tryAgain("auth.error_alerts.titles.expired_magic_code"),
+    title: "auth.error_alerts.titles.one_time_code_attempts_exhausted",
+    message: (t) => t("auth.error_alerts.one_time_code_attempts_exhausted_message"),
   },
 
   // Oauth
   [EAuthenticationErrorCodes.OAUTH_NOT_CONFIGURED]: {
     title: "auth.error_alerts.titles.oauth_not_configured",
     message: contactAdmin("auth.error_alerts.titles.oauth_not_configured"),
-  },
-  [EAuthenticationErrorCodes.GOOGLE_NOT_CONFIGURED]: {
-    title: "auth.error_alerts.titles.google_not_configured",
-    message: contactAdmin("auth.error_alerts.titles.google_not_configured"),
   },
   [EAuthenticationErrorCodes.GITHUB_NOT_CONFIGURED]: {
     title: "auth.error_alerts.titles.github_not_configured",
@@ -265,10 +265,6 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
   [EAuthenticationErrorCodes.GITLAB_NOT_CONFIGURED]: {
     title: "auth.error_alerts.titles.gitlab_not_configured",
     message: contactAdmin("auth.error_alerts.titles.gitlab_not_configured"),
-  },
-  [EAuthenticationErrorCodes.GOOGLE_OAUTH_PROVIDER_ERROR]: {
-    title: "auth.error_alerts.titles.google_oauth_provider_error",
-    message: tryAgain("auth.error_alerts.titles.google_oauth_provider_error"),
   },
   [EAuthenticationErrorCodes.GITHUB_OAUTH_PROVIDER_ERROR]: {
     title: "auth.error_alerts.titles.github_oauth_provider_error",
@@ -280,6 +276,30 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
   },
 
   // Reset Password
+  [EAuthenticationErrorCodes.OIDC_NOT_CONFIGURED]: {
+    title: "auth.error_alerts.titles.oidc_not_configured",
+    message: contactAdmin("auth.error_alerts.titles.oidc_not_configured"),
+  },
+  [EAuthenticationErrorCodes.OIDC_PROVIDER_ERROR]: {
+    title: "auth.error_alerts.titles.oidc_provider_error",
+    message: tryAgain("auth.error_alerts.titles.oidc_provider_error"),
+  },
+  [EAuthenticationErrorCodes.OIDC_IDENTITY_MISMATCH]: {
+    title: "auth.error_alerts.titles.oidc_identity_mismatch",
+    message: contactAdmin("auth.error_alerts.titles.oidc_identity_mismatch"),
+  },
+  [EAuthenticationErrorCodes.OIDC_EMAIL_DOMAIN_NOT_ALLOWED]: {
+    title: "auth.error_alerts.titles.oidc_email_domain_not_allowed",
+    message: contactAdmin("auth.error_alerts.titles.oidc_email_domain_not_allowed"),
+  },
+  [EAuthenticationErrorCodes.OIDC_ACCOUNT_LINK_REQUIRED]: {
+    title: "auth.error_alerts.titles.oidc_account_link_required",
+    message: contactAdmin("auth.error_alerts.titles.oidc_account_link_required"),
+  },
+  [EAuthenticationErrorCodes.OAUTH_PROVIDER_UNVERIFIED_EMAIL]: {
+    title: "auth.error_alerts.titles.oauth_provider_unverified_email",
+    message: contactAdmin("auth.error_alerts.titles.oauth_provider_unverified_email"),
+  },
   [EAuthenticationErrorCodes.INVALID_PASSWORD_TOKEN]: {
     title: "auth.error_alerts.titles.invalid_password_token",
     message: tryAgain("auth.error_alerts.titles.invalid_password_token"),
@@ -375,10 +395,14 @@ export const authErrorHandler = (
     EAuthenticationErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_IN,
     EAuthenticationErrorCodes.EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_UP,
     EAuthenticationErrorCodes.OAUTH_NOT_CONFIGURED,
-    EAuthenticationErrorCodes.GOOGLE_NOT_CONFIGURED,
     EAuthenticationErrorCodes.GITHUB_NOT_CONFIGURED,
     EAuthenticationErrorCodes.GITLAB_NOT_CONFIGURED,
-    EAuthenticationErrorCodes.GOOGLE_OAUTH_PROVIDER_ERROR,
+    EAuthenticationErrorCodes.OIDC_NOT_CONFIGURED,
+    EAuthenticationErrorCodes.OIDC_PROVIDER_ERROR,
+    EAuthenticationErrorCodes.OIDC_IDENTITY_MISMATCH,
+    EAuthenticationErrorCodes.OIDC_EMAIL_DOMAIN_NOT_ALLOWED,
+    EAuthenticationErrorCodes.OIDC_ACCOUNT_LINK_REQUIRED,
+    EAuthenticationErrorCodes.OAUTH_PROVIDER_UNVERIFIED_EMAIL,
     EAuthenticationErrorCodes.GITHUB_OAUTH_PROVIDER_ERROR,
     EAuthenticationErrorCodes.GITLAB_OAUTH_PROVIDER_ERROR,
     EAuthenticationErrorCodes.INVALID_PASSWORD_TOKEN,

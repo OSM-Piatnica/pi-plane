@@ -25,7 +25,25 @@ const readField = (value: unknown): string | undefined => {
   return undefined;
 };
 
+// Errors about the relation itself rather than about dates or status: one sentence for every relation type
+// A project that lets only assignees, the lead and admins change a work item refuses the others with this code
+const EDIT_RESTRICTED_CODE = "work_item_edit_restricted";
+
+const RELATION_SHAPE_KEYS: Record<string, string> = {
+  relation_self: "issue.relation.conflict.self",
+  relation_cycle: "issue.relation.conflict.cycle",
+};
+
 const getRelationConflictMessage = (payload: Record<string, unknown>, t: TTranslate): string | undefined => {
+  const shapeKey = RELATION_SHAPE_KEYS[readField(payload.error_code) ?? ""];
+  if (shapeKey) {
+    const message = t(shapeKey, {
+      issue: readField(payload.issue_ref) ?? "",
+      related: readField(payload.related_ref) ?? "",
+    });
+    return message === shapeKey ? undefined : message;
+  }
+
   const kind = RELATION_CONFLICT_KINDS[readField(payload.error_code) ?? ""];
   const relationType = readField(payload.relation_type);
   if (!kind || !relationType) return undefined;
@@ -38,7 +56,15 @@ const getRelationConflictMessage = (payload: Record<string, unknown>, t: TTransl
 
   // The translation store echoes the key back when it holds no entry for it, in which case the
   // English sentence the backend already sent is the better answer.
-  return message === key ? undefined : message;
+  if (message === key) return undefined;
+
+  // A relation with a lag says so, because the dates alone would not explain the refusal
+  const lag = Number(readField(payload.lag_days) ?? payload.lag_days ?? 0);
+  if (kind === "date" && Number.isFinite(lag) && lag !== 0) {
+    const suffix = t("issue.relation.conflict.lag_suffix", { lag });
+    if (suffix !== "issue.relation.conflict.lag_suffix") return `${message}${suffix}`;
+  }
+  return message;
 };
 
 export const getIssueApiErrorMessage = (error: unknown, fallback: string, t?: TTranslate): string => {
@@ -47,6 +73,11 @@ export const getIssueApiErrorMessage = (error: unknown, fallback: string, t?: TT
 
   if (typeof error === "object") {
     const payload = error as Record<string, unknown>;
+
+    if (t && readField(payload.error_code) === EDIT_RESTRICTED_CODE) {
+      const message = t("issue.edit_restricted");
+      if (message !== "issue.edit_restricted") return message;
+    }
 
     if (t) {
       const conflictMessage = getRelationConflictMessage(payload, t);

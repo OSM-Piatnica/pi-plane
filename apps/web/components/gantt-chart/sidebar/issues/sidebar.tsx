@@ -16,13 +16,15 @@ import { Loader } from "@plane/blocks/skeleton";
 import RenderIfVisible from "@/components/core/render-if-visible-HOC";
 import { GanttLayoutListItemLoader } from "@/components/ui/loader/layouts/gantt-layout-loader";
 //hooks
+import { useGanttSubWorkItems } from "@/components/gantt-chart/contexts";
+import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { useIssuesStore } from "@/hooks/use-issue-layout-store";
 import type { TSelectionHelper } from "@/hooks/use-multiple-select";
 // local imports
 import { useTimeLineChart } from "../../../../hooks/use-timeline-chart";
 import { GanttDnDHOC } from "../gantt-dnd-HOC";
-import { handleOrderChange } from "../utils";
+import { getSiblingDrop, handleOrderChange, handleSiblingOrderChange } from "../utils";
 import { IssuesSidebarBlock } from "./block";
 
 type Props = {
@@ -53,6 +55,14 @@ export const IssueGanttSidebar = observer(function IssueGanttSidebar(props: Prop
   } = props;
 
   const { getBlockById } = useTimeLineChart(GANTT_TIMELINE_TYPE.ISSUE);
+  const subWorkItems = useGanttSubWorkItems();
+  const {
+    issue: { getIssueById: getWorkItemById },
+  } = useIssueDetail();
+  // Sub-work items nest under their parent; a top-level row has no parent here, however it got to be listed
+  const getParentId = subWorkItems
+    ? (blockId: string) => (subWorkItems.levelById[blockId] ? getWorkItemById(blockId)?.parent_id : null)
+    : undefined;
 
   const {
     issues: { getIssueLoader },
@@ -74,8 +84,20 @@ export const IssueGanttSidebar = observer(function IssueGanttSidebar(props: Prop
     droppedBlockId: string | undefined,
     dropAtEndOfList: boolean
   ) => {
+    // with sub-work items showing, a row only moves among its siblings, under the same parent
+    if (subWorkItems) {
+      handleSiblingOrderChange(
+        { blockIds, draggingBlockId, droppedBlockId, dropAtEndOfList, getParentId },
+        getBlockById,
+        blockUpdateHandler
+      );
+      return;
+    }
     handleOrderChange(draggingBlockId, droppedBlockId, dropAtEndOfList, blockIds, getBlockById, blockUpdateHandler);
   };
+
+  const canDropBlock = (draggingBlockId: string, droppedBlockId: string, dropAtEndOfList: boolean) =>
+    !subWorkItems || !!getSiblingDrop({ blockIds, draggingBlockId, droppedBlockId, dropAtEndOfList, getParentId });
 
   return (
     <div>
@@ -102,6 +124,7 @@ export const IssueGanttSidebar = observer(function IssueGanttSidebar(props: Prop
                   isLastChild={index === blockIds.length - 1}
                   isDragEnabled={enableReorder}
                   onDrop={handleOnDrop}
+                  canDropBlock={canDropBlock}
                 >
                   {(isDragging: boolean) => (
                     <IssuesSidebarBlock

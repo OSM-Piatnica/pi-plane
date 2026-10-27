@@ -72,8 +72,8 @@
         "description": "Trang trong Pi-Plane cho phép bạn nắm bắt, tổ chức và cộng tác về thông tin dự án—không cần công cụ bên ngoài."
       },
       "step_one": {
-        "title": "Đặt trang thành Công khai hoặc Riêng tư",
-        "description": "Trang có thể được đặt là công khai, hiển thị cho mọi người trong không gian làm việc của bạn, hoặc riêng tư, chỉ bạn mới truy cập được."
+        "title": "Chia sẻ một trang hoặc giữ riêng cho bạn",
+        "description": "Trang có thể được chia sẻ với mọi người trong dự án hoặc chỉ hiển thị với bạn."
       },
       "step_two": {
         "title": "Sử dụng lệnh /",

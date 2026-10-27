@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "顯示子工作事項",
         "show_empty_groups": "顯示空群組"
+      },
+      "color_by": {
+        "label": "顏色依據",
+        "state": "狀態",
+        "key": "工作事項 ID"
       }
     },
     "layouts": {
@@ -90,8 +95,8 @@
     "comments": {
       "placeholder": "新增留言",
       "switch": {
-        "private": "切換為私人留言",
-        "public": "切換為公開留言"
+        "private": "將此留言設為內部",
+        "public": "在網路上顯示此留言"
       },
       "create": {
         "success": "留言建立成功",
@@ -148,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "內部",
+        "external": "在網路上可見"
       }
     },
     "empty_state": {
@@ -195,7 +204,15 @@
       "finish_before": "在之前完成",
       "finish_after": "在之後完成",
       "implements": "實現",
-      "implemented_by": "實現者"
+      "implemented_by": "實現者",
+      "causes": "導致",
+      "caused_by": "由此導致",
+      "clones": "複製",
+      "cloned_by": "複製自",
+      "tests": "測試",
+      "tested_by": "被測試於",
+      "start_before_finish": "在其結束前開始",
+      "finish_after_start": "在其開始後結束"
     },
     "copy_link": "複製工作事項連結",
     "delete": {
@@ -290,7 +307,9 @@
         "description": "要查看所有工作事項，請清除所有應用過的過濾器。",
         "action": "清除過濾器"
       }
-    }
+    },
+    "expand": "展開子工作事項",
+    "collapse": "收合子工作事項"
   },
   "issue_relation": {
     "empty_state": {
@@ -612,6 +631,22 @@
           "added": "將此工作事項標記為阻擋工作事項 <value/>。",
           "removed": "移除了所阻擋的工作事項 <value/>。"
         },
+        "caused_by": {
+          "added": "新增了關係「由此導致」：<value/>。",
+          "removed": "移除了關係「由此導致」：<value/>。"
+        },
+        "causes": {
+          "added": "新增了關係「導致」：<value/>。",
+          "removed": "移除了關係「導致」：<value/>。"
+        },
+        "cloned_by": {
+          "added": "新增了關係「複製自」：<value/>。",
+          "removed": "移除了關係「複製自」：<value/>。"
+        },
+        "clones": {
+          "added": "新增了關係「複製」：<value/>。",
+          "removed": "移除了關係「複製」：<value/>。"
+        },
         "duplicate": {
           "added": "將此工作事項標記為 <value/> 的重複項。",
           "removed": "取消了此工作事項作為 <value/> 重複項的標記。"
@@ -620,9 +655,21 @@
           "added": "將此工作事項標記為在 <value/> 之後完成。",
           "removed": "移除了與 <value/> 的「在其之後完成」關聯。"
         },
+        "finish_after_start": {
+          "added": "新增了關係「在其開始後結束」：<value/>。",
+          "removed": "移除了關係「在其開始後結束」：<value/>。"
+        },
         "finish_before": {
           "added": "將此工作事項標記為在 <value/> 之前完成。",
           "removed": "移除了與 <value/> 的「在其之前完成」關聯。"
+        },
+        "implemented_by": {
+          "added": "新增了關係「實現者」：<value/>。",
+          "removed": "移除了關係「實現者」：<value/>。"
+        },
+        "implements": {
+          "added": "新增了關係「實現」：<value/>。",
+          "removed": "移除了關係「實現」：<value/>。"
         },
         "relates_to": {
           "added": "標記此工作事項與 <value/> 相關。",
@@ -635,6 +682,18 @@
         "start_before": {
           "added": "將此工作事項標記為在 <value/> 之前開始。",
           "removed": "移除了與 <value/> 的「在其之前開始」關聯。"
+        },
+        "start_before_finish": {
+          "added": "新增了關係「在其結束前開始」：<value/>。",
+          "removed": "移除了關係「在其結束前開始」：<value/>。"
+        },
+        "tested_by": {
+          "added": "新增了關係「被測試於」：<value/>。",
+          "removed": "移除了關係「被測試於」：<value/>。"
+        },
+        "tests": {
+          "added": "新增了關係「測試」：<value/>。",
+          "removed": "移除了關係「測試」：<value/>。"
         }
       },
       "restored": "還原了工作事項。",
@@ -836,6 +895,16 @@
         "enabled": "啟用了 Intake 檢視",
         "fallback": "更新了Intake 檢視"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "停用了僅負責人編輯規則",
+        "enabled": "啟用了僅負責人編輯規則",
+        "fallback": "更新了僅負責人編輯規則"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "停用了被阻擋工作事項狀態規則",
+        "enabled": "啟用了被阻擋工作事項狀態規則",
+        "fallback": "更新了被阻擋工作事項狀態規則"
+      },
       "is_epic_enabled": {
         "disabled": "停用了史詩",
         "enabled": "啟用了史詩",
@@ -846,10 +915,35 @@
         "enabled": "啟用了工作事項類型",
         "fallback": "更新了工作事項類型"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "停用了父項完成規則",
+        "enabled": "啟用了父項完成規則",
+        "fallback": "更新了父項完成規則"
+      },
       "is_project_updates_enabled": {
         "disabled": "停用了專案更新",
         "enabled": "啟用了專案更新",
         "fallback": "更新了專案更新"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "停用了「此項重複」關係",
+        "enabled": "啟用了「此項重複」關係",
+        "fallback": "更新了「此項重複」關係"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "停用了「與此相關」關係",
+        "enabled": "啟用了「與此相關」關係",
+        "fallback": "更新了「與此相關」關係"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "停用了排程相依",
+        "enabled": "啟用了排程相依",
+        "fallback": "更新了排程相依"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "停用了可追溯關係",
+        "enabled": "啟用了可追溯關係",
+        "fallback": "更新了可追溯關係"
       },
       "is_time_tracking_enabled": {
         "disabled": "停用了時間追蹤",
@@ -921,5 +1015,37 @@
       },
       "value_none": "無"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "彙總日期",
+    "rolled_up_bar": "日期彙總自子工作事項",
+    "children_span": "子工作事項：{start} – {end}",
+    "starts_early": "子工作事項開始於此工作事項之前",
+    "ends_late": "子工作事項結束於此工作事項之後"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "全部展開",
+    "collapse_all": "全部摺疊",
+    "levels": "層級",
+    "up_to_level": "展開到第 {level} 層",
+    "all_levels": "所有層級",
+    "load_error": "無法載入子工作事項",
+    "too_many": "工作事項過多，無法一次展開。請逐一展開其餘項目。"
+  },
+  "worklog": {
+    "log_time": "記錄時間",
+    "description_placeholder": "做了什麼？（選填）",
+    "invalid_duration_title": "時長無效",
+    "invalid_duration_message": "請使用「2h 30m」「45m」這樣的格式，或僅輸入分鐘數，最多 24 小時。",
+    "log_error": "無法記錄時間。請重試。",
+    "update_error": "無法更新該記錄。請重試。",
+    "delete_error": "無法刪除該記錄。請重試。",
+    "delete_title": "刪除工時記錄",
+    "delete_description": "確定要刪除此工時記錄嗎？此操作無法復原。",
+    "edit_entry": "編輯工時記錄",
+    "delete_entry": "刪除工時記錄",
+    "logged": "記錄了 <value>{duration}</value>",
+    "updated": "將已記錄的時間從 <old>{from}</old> 改為 <new>{to}</new>",
+    "removed": "刪除了已記錄的時間 <value>{duration}</value>"
   }
 }

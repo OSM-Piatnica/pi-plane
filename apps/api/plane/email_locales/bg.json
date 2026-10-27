@@ -1,0 +1,121 @@
+{
+  "format": {
+    "date": "%d.%m.%Y"
+  },
+  "priority": {
+    "urgent": "Спешен",
+    "high": "Висок",
+    "medium": "Среден",
+    "low": "Нисък",
+    "none": "Няма"
+  },
+  "issue_updates": {
+    "title": "Актуализации за {identifier}",
+    "summary": "Работният елемент е актуализиран от <strong>{actor}</strong>.",
+    "summary_others": "Работният елемент е актуализиран от <strong>{actor}</strong> и други.",
+    "title_changed": "Заглавието на работния елемент е променено на {title}",
+    "updates": "Актуализации",
+    "due_date": "Крайна дата:",
+    "duplicate": "Дубликат:",
+    "assignee": "Изпълнител:",
+    "labels": "Етикети:",
+    "state": "Състояние:",
+    "links": "Връзки:",
+    "priority": "Приоритет:",
+    "blocking": "Блокира:",
+    "comments": "Коментари",
+    "more": "+още {count}",
+    "links_removed": {
+      "one": "{count} връзка беше премахната",
+      "other": "{count} връзки бяха премахнати"
+    },
+    "view": "Преглед на работния елемент",
+    "footer": "Този имейл е изпратен до <a href=\"mailto:{email}\">{email}</a>. Ако не искате да получавате такива имейли, можете <a href=\"{issue_url}\">да спрете проследяването на този работен елемент</a> или <a href=\"{preferences_url}\">да промените предпочитанията си за имейли</a>."
+  },
+  "digest": {
+    "title": "Обобщение на актуализациите",
+    "greeting_named": "Здравейте, {name}, имате {summary}",
+    "greeting": "Имате {summary}",
+    "updates_count": {
+      "one": "{count} актуализация",
+      "other": "{count} актуализации"
+    },
+    "summary": {
+      "one": "{updates} в {count} работен елемент, който следите.",
+      "other": "{updates} в {count} работни елемента, които следите."
+    },
+    "subject": {
+      "one": "Обобщение: {updates} в {count} работен елемент",
+      "other": "Обобщение: {updates} в {count} работни елемента"
+    },
+    "comments": "коментари: {count}",
+    "footer": "Това е обобщение на актуализациите на работните елементи. Споменаванията получавате веднага. <a href=\"{preferences_url}\">Промяна на настройките за известия</a>."
+  },
+  "due_reminder": {
+    "title": "Напомняне за работни елементи",
+    "greeting_named": "Здравейте, {name}, имате {summary}",
+    "greeting": "Имате {summary}",
+    "section_overdue": "Просрочени",
+    "section_today": "Работни елементи със срок днес",
+    "work_items": {
+      "one": "{count} работен елемент",
+      "other": "{count} работни елемента"
+    },
+    "overdue": {
+      "one": "{count} просрочен",
+      "other": "{count} просрочени"
+    },
+    "overdue_only": {
+      "one": "{count} просрочен работен елемент",
+      "other": "{count} просрочени работни елемента"
+    },
+    "summary_both": "{today} със срок днес и {overdue}.",
+    "summary_today": "{today} със срок днес ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Имате {today} със срок днес и {overdue}",
+    "subject_today": "Имате {today} със срок днес ({date})",
+    "subject_overdue": "Имате {overdue}",
+    "days_overdue": {
+      "one": "просрочен с {count} ден",
+      "other": "просрочен с {count} дни"
+    },
+    "cta": "Преглед на моите работни елементи",
+    "footer": "Това е автоматично напомняне, изпращано всяка сутрин за работните елементи със срок днес и за онези, чийто срок е изтекъл."
+  },
+  "project_addition": {
+    "subject": "Поканени сте в проект на Pi-Plane",
+    "preheader": "{inviter} ви покани в проекта {project} в работното пространство {workspace} в Pi-Plane.",
+    "heading": "Поканени сте в проекта {project} в Pi-Plane",
+    "intro": "{inviter} ви покани да работите заедно в проекта <strong>{project}</strong> в работното пространство <strong>{workspace}</strong> в Pi-Plane.",
+    "button": "Към проекта",
+    "fallback": "Ако бутонът не работи, копирайте тази връзка и я поставете в браузъра си:",
+    "note": "Забележка: този имейл е изпратен до <span>{email}</span>. Ако не сте очаквали тази покана, можете да го игнорирате."
+  },
+  "access_request": {
+    "subject": "{requester} поиска достъп до проекта {project}",
+    "preheader": "{requester} поиска достъп до частния проект {project} в работното пространство {workspace} в Pi-Plane.",
+    "heading": "Заявка за достъп до проекта {project}",
+    "intro": "<strong>{requester}</strong> поиска достъп до частния проект <strong>{project}</strong> в работното пространство <strong>{workspace}</strong> в Pi-Plane. Можете да одобрите или отхвърлите заявката в настройките за членове на проекта.",
+    "message": "Съобщение:",
+    "button": "Разгледай заявката",
+    "fallback": "Ако бутонът не работи, копирайте тази връзка и я поставете в браузъра си:",
+    "note": "Забележка: този имейл е изпратен до <span>{email}</span>, защото сте администратор или ръководител на този проект."
+  },
+  "access_request_decision": {
+    "subject_approved": "Заявката ви за достъп до {project} беше одобрена",
+    "subject_rejected": "Заявката ви за достъп до {project} не беше одобрена",
+    "heading_approved": "Вече имате достъп до {project}",
+    "heading_rejected": "Заявката ви за достъп до {project}",
+    "intro_approved": "<strong>{decider}</strong> одобри заявката ви за достъп до частния проект <strong>{project}</strong> в работното пространство <strong>{workspace}</strong> в Pi-Plane. Вече можете да го отворите.",
+    "intro_rejected": "<strong>{decider}</strong> не одобри заявката ви за достъп до частния проект <strong>{project}</strong> в работното пространство <strong>{workspace}</strong> в Pi-Plane. Ако смятате, че това е грешка, свържете се с администратор на проекта.",
+    "button": "Отвори проекта",
+    "note": "Забележка: Този имейл е изпратен до <span>{email}</span>, защото поискахте достъп до този проект."
+  },
+  "one_time_code": {
+    "subject": "Вашият еднократен код за вход в Pi-Plane е {code}",
+    "preheader": "Вашият код за вход в Pi-Plane {code} е валиден 10 минути.",
+    "heading": "Вашият код за вход в Pi-Plane",
+    "info": "Този код е валиден следващите 10 минути. Въведете го на страницата за вход, за да завършите влизането.",
+    "note": "Забележка: Този имейл е изпратен до <span>{email}</span>. Ако не сте очаквали код за вход, можете да игнорирате това съобщение."
+  }
+}

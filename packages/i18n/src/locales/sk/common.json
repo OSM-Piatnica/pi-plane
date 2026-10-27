@@ -117,6 +117,8 @@
   "comments_description": "Upozorniť ma, keď niekto pridá komentár k pracovnej položke",
   "mentions": "Zmienky",
   "mentions_description": "Upozorniť ma, keď ma niekto spomenie v komentároch alebo popise",
+  "project_access_requests": "Žiadosti o prístup",
+  "project_access_requests_description": "Posielať mi e-maily o žiadostiach o pripojenie k súkromným projektom, ktoré spravujem, a o rozhodnutiach o mojich vlastných žiadostiach.",
   "email_frequency": "Frekvencia e-mailov",
   "email_frequency_description": "Vyberte, ako často chcete dostávať e-maily o zmenách pracovných položiek. Zmienky sa vždy odosielajú okamžite.",
   "email_frequency_instant": "Okamžite",
@@ -195,8 +197,8 @@
   "select_network": "Vybrať sieť",
   "lead": "Vedúci",
   "date_range": "Rozsah dát",
-  "private": "Súkromný",
-  "public": "Verejný",
+  "private": "Len ja",
+  "public": "Zdieľané",
   "accessible_only_by_invite": "Prístupné iba na pozvanie",
   "anyone_in_the_workspace_except_guests_can_join": "Ktokoľvek v pracovnom priestore okrem hostí sa môže pripojiť",
   "creating": "Vytváranie",
@@ -210,8 +212,8 @@
   "add_to_favorites": "Pridať do obľúbených",
   "remove_from_favorites": "Odstrániť z obľúbených",
   "rename_folder": "Premenovať priečinok",
-  "publish_project": "Publikovať projekt",
-  "publish": "Publikovať",
+  "publish_project": "Zdieľať na webe",
+  "publish": "Zapnúť zdieľanie na webe",
   "copy_link": "Kopírovať odkaz",
   "leave_project": "Opustiť projekt",
   "join_the_project_to_rearrange": "Pripojte sa k projektu pre zmenu usporiadania",
@@ -532,8 +534,8 @@
     "archiving": "Archivovanie",
     "archive": "Archivovať",
     "access": {
-      "public": "Verejný",
-      "private": "Súkromný"
+      "public": "Zdieľané s projektom",
+      "private": "Len ja"
     },
     "done": "Hotovo",
     "sub_work_items": "Podriadené pracovné položky",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "Došlo k chybe",
       "inbox_fetch_error": "Pri načítavaní pracovných položiek Intake došlo k chybe. Skúste to prosím neskôr.",
-      "page_make_public_error": "Stránku sa nepodarilo zverejniť. Skúste to prosím neskôr.",
-      "page_make_private_error": "Stránku sa nepodarilo nastaviť ako súkromnú. Skúste to prosím neskôr.",
+      "page_make_public_error": "Stránku sa nepodarilo zdieľať s projektom. Skúste to prosím neskôr.",
+      "page_make_private_error": "Stránku sa nepodarilo nastaviť ako viditeľnú len pre vás. Skúste to prosím neskôr.",
       "workflow_pending_approval": "Pracovná položka čaká na schválenie.",
       "workflow_transition_not_allowed": "Tento prechod stavu nie je pracovným postupom povolený."
     },
@@ -1412,7 +1414,7 @@
       "duration": "Trvanie"
     },
     "auth_labels": {
-      "magic_code": "Magický kód"
+      "one_time_code": "Jednorazový kód"
     },
     "state_groups": {
       "canceled": "Zrušené"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "Skvelé! Zostáva už len jeden krok.",
-      "description": "Do adresového riadka prehliadača zadajte verejnú adresu URL alebo odkaz na zobrazenie či Stránku, ktorú chcete zobraziť.",
+      "description": "Do adresného riadka prehliadača zadajte zdieľaný odkaz na zobrazenie alebo stránku, ktorú chcete vidieť.",
       "image_alt": "Používateľ je už prihlásený"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Znova odoslať o {seconds} s"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "Pokračovať cez {provider}"
     },
     "issues": {
-      "public_board_not_found": "Verejná nástenka neexistuje. Skontrolujte prosím adresu URL.",
+      "shared_project_load_failed": "Tento zdieľaný projekt sa nepodarilo načítať. Skúste to prosím neskôr.",
       "cycle_tooltip": "Cyklus: {name}",
       "no_cycle": "Žiadny cyklus",
       "due_date_tooltip": "Termín: {date}",

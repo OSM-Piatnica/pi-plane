@@ -14,7 +14,9 @@ import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/comp
 // plane imports
 import type { TIssueServiceType, TIssueRelationTypes } from "@plane/types";
 // hooks
+import { filterEnabledRelationOptions } from "@/helpers/relation-type-toggles";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { useProject } from "@/hooks/store/use-project";
 // components
 import { handleTriggerClick, handleTriggerKeyDown } from "@/components/common/trigger-guard";
 import { useTimeLineRelationOptions } from "@/components/relations";
@@ -31,9 +33,15 @@ export const RelationActionButton = observer(function RelationActionButton(props
   const { customButton, issueId, disabled = false, issueServiceType } = props;
   const { t } = useTranslation();
   // store hooks
-  const { toggleRelationModal, setRelationKey } = useIssueDetail(issueServiceType);
+  const {
+    toggleRelationModal,
+    setRelationKey,
+    issue: { getIssueById },
+  } = useIssueDetail(issueServiceType);
+  const { getProjectById } = useProject();
 
   const ISSUE_RELATION_OPTIONS = useTimeLineRelationOptions();
+  const issueProject = getProjectById(getIssueById(issueId)?.project_id);
 
   // handlers
   const handleOnClick = (relationKey: TIssueRelationTypes) => {
@@ -61,21 +69,17 @@ export const RelationActionButton = observer(function RelationActionButton(props
         </MenuTrigger>
       )}
       <MenuContent side="bottom" align="start">
-        {Object.values(ISSUE_RELATION_OPTIONS).map((item) => {
-          if (!item) return null;
-
-          return (
-            <MenuItem
-              key={item.key}
-              icon={item.icon(12)}
-              label={t(item.i18n_label)}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleOnClick(item.key);
-              }}
-            />
-          );
-        })}
+        {filterEnabledRelationOptions(Object.values(ISSUE_RELATION_OPTIONS), issueProject).map((item) => (
+          <MenuItem
+            key={item.key}
+            icon={item.icon(12)}
+            label={t(item.i18n_label)}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleOnClick(item.key);
+            }}
+          />
+        ))}
       </MenuContent>
     </Menu>
   );

@@ -18,7 +18,8 @@ import type { ICycle } from "@plane/types";
 import { getDate, renderFormattedPayloadDate } from "@plane/utils";
 // hooks
 import { useCycle } from "@/hooks/store/use-cycle";
-import { useUserPermissions, useUserProfile } from "@/hooks/store/user";
+import { useUserPermissions } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { useTimeZoneConverter } from "@/hooks/use-timezone-converter";
 // services
 import { CycleService } from "@/services/cycle.service";
@@ -42,7 +43,7 @@ export const CycleSidebarHeader = observer(function CycleSidebarHeader(props: Pr
   const { workspaceSlug, projectId, cycleDetails, handleClose, isArchived = false } = props;
   // hooks
   const { allowPermissions } = useUserPermissions();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   const { updateCycleDetails } = useCycle();
   const { t } = useTranslation();
   const { renderFormattedDateInUserTimezone, getProjectUTCOffset } = useTimeZoneConverter(projectId);
@@ -185,7 +186,7 @@ export const CycleSidebarHeader = observer(function CycleSidebarHeader(props: Pr
                       // show tooltip only if both start and end date are present
                       showTooltip={!!cycleDetails.start_date && !!cycleDetails.end_date}
                       disabled={!isEditingAllowed || isArchived || isCompleted}
-                      weekStartsOn={userProfile?.start_of_the_week}
+                      weekStartsOn={startOfTheWeek}
                     />
                   </div>
                 )}

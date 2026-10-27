@@ -14,18 +14,24 @@ import type {
   ChartDataType,
   IBlockUpdateDependencyData,
   IGanttBlock,
+  TGanttBlockRollup,
+  TGanttDateRollup,
   TGanttViews,
   EGanttBlockType,
 } from "@plane/types";
 import { renderFormattedPayloadDate } from "@plane/utils";
+import { SIDEBAR_WIDTH, SIDEBAR_WIDTH_STORAGE_KEY } from "@/components/gantt-chart/constants";
 import { currentViewDataWithView } from "@/components/gantt-chart/data";
+import { clampSidebarWidth, getStoredSidebarWidth } from "@/components/gantt-chart/helpers/sidebar-width";
 import {
+  getBlockChartDates,
   getDateFromPositionOnGantt,
   getItemPositionWidth,
   getPositionFromDate,
 } from "@/components/gantt-chart/views/helpers";
 // helpers
 // store
+import { setValueIntoLocalStorage } from "@/hooks/use-local-storage";
 import type { RootStore } from "@/store/root.store";
 
 // types
@@ -45,6 +51,8 @@ export interface IBaseTimelineStore {
   activeBlockId: string | null;
   renderView: any;
   isDragging: boolean;
+  /** Width of the sidebar next to the chart, chosen by the user. */
+  sidebarWidth: number;
   isDependencyEnabled: boolean;
   blockIds: string[] | undefined;
   //
@@ -67,6 +75,8 @@ export interface IBaseTimelineStore {
   updateBlockPosition: (id: string, deltaLeft: number, deltaWidth: number, ignoreDependencies?: boolean) => void;
   getNumberOfDaysFromPosition: (position: number | undefined) => number | undefined;
   setIsDragging: (isDragging: boolean) => void;
+  /** Sets the sidebar width; `persist` false keeps the saved width (the container only got narrower). */
+  setSidebarWidth: (width: number, persist?: boolean) => void;
   initGantt: () => void;
   setDependencyDrag: (
     drag: {
@@ -98,6 +108,7 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
   blockIds: string[] | undefined = undefined;
 
   isDragging: boolean = false;
+  sidebarWidth: number = SIDEBAR_WIDTH;
   currentView: TGanttViews = "week";
   currentViewData: ChartDataType | undefined = undefined;
   activeBlockId: string | null = null;
@@ -122,6 +133,7 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
       blocksMap: observable,
       blockIds: observable,
       isDragging: observable.ref,
+      sidebarWidth: observable.ref,
       currentView: observable.ref,
       currentViewData: observable,
       activeBlockId: observable.ref,
@@ -129,6 +141,7 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
       dependencyDrag: observable,
       // actions
       setIsDragging: action,
+      setSidebarWidth: action.bound,
       setBlockIds: action.bound,
       initGantt: action.bound,
       updateCurrentView: action.bound,
@@ -212,18 +225,43 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
       this.currentViewData = newCurrentViewData;
       this.blocksMap = {};
       this.blockIds = undefined;
+      this.sidebarWidth = getStoredSidebarWidth();
     });
+  };
+
+  setSidebarWidth = (width: number, persist = true) => {
+    this.sidebarWidth = clampSidebarWidth(width);
+    if (persist) setValueIntoLocalStorage(SIDEBAR_WIDTH_STORAGE_KEY, this.sidebarWidth);
   };
 
   /** Gets Block from Id */
   getBlockById = computedFn((blockId: string) => this.blocksMap[blockId]);
 
   /**
+   * Combine a block's own dates with the span of the work items below it. A side the block has no date for is taken
+   * from the children, unless that would put the bar's end before its start.
+   */
+  buildBlockRollup(block: IGanttBlock, rollup: TGanttDateRollup): TGanttBlockRollup {
+    let isStartInferred = !block.start_date && !!rollup.start_date;
+    let isTargetInferred = !block.target_date && !!rollup.target_date;
+    // dates are ISO "YYYY-MM-DD" strings, so they compare as text
+    if (isStartInferred && block.target_date && rollup.start_date! > block.target_date) isStartInferred = false;
+    if (isTargetInferred && block.start_date && rollup.target_date! < block.start_date) isTargetInferred = false;
+    return { ...rollup, is_start_inferred: isStartInferred, is_target_inferred: isTargetInferred };
+  }
+
+  /**
    * updates the BlocksMap from blockIds
    * @param getDataById
+   * @param getRollup the dates of the work items below a block, when the chart rolls dates up
    * @returns
    */
-  updateBlocks(getDataById: (id: string) => BlockData | undefined | null, type?: EGanttBlockType, index?: number) {
+  updateBlocks(
+    getDataById: (id: string) => BlockData | undefined | null,
+    type?: EGanttBlockType,
+    index?: number,
+    getRollup?: (id: string) => TGanttDateRollup | undefined
+  ) {
     if (!this.blockIds || !Array.isArray(this.blockIds) || this.isDragging) return true;
 
     const updatedBlockMaps: { path: string[]; value: any }[] = [];
@@ -246,9 +284,20 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
           index,
           project_id: blockData?.project_id,
         },
+        // always set, so that a rollup that goes away is cleared from the stored block
+        rollup: undefined,
       };
+      const rollup = getRollup?.(blockId);
+      if (rollup) block.rollup = this.buildBlockRollup(block, rollup);
       if (this.currentViewData && (this.currentViewData?.data?.startDate || this.currentViewData?.data?.dayWidth)) {
-        block.position = getItemPositionWidth(this.currentViewData, block);
+        block.position = getItemPositionWidth(this.currentViewData, { ...block, ...getBlockChartDates(block) });
+        if (block.rollup && (block.rollup.start_date || block.rollup.target_date)) {
+          block.rollup.position = getItemPositionWidth(this.currentViewData, {
+            ...block,
+            start_date: block.rollup.start_date ?? undefined,
+            target_date: block.rollup.target_date ?? undefined,
+          });
+        }
       }
 
       // create block updates if the block already exists, or push them to newBlocks
@@ -320,6 +369,7 @@ export class BaseTimeLineStore implements IBaseTimelineStore {
         if (!currBlock || !currBlock.position) return;
 
         currBlock.position.marginLeft += addedWidth;
+        if (currBlock.rollup?.position) currBlock.rollup.position.marginLeft += addedWidth;
       });
     });
   });

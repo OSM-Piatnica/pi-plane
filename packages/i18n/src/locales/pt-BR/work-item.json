@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Mostrar sub-itens de trabalho",
         "show_empty_groups": "Mostrar grupos vazios"
+      },
+      "color_by": {
+        "label": "Cor por",
+        "state": "Estado",
+        "key": "ID do item de trabalho"
       }
     },
     "layouts": {
@@ -90,8 +95,8 @@
     "comments": {
       "placeholder": "Adicionar comentário",
       "switch": {
-        "private": "Alternar para comentário privado",
-        "public": "Alternar para comentário público"
+        "private": "Tornar este comentário interno",
+        "public": "Mostrar este comentário na web"
       },
       "create": {
         "success": "Comentário criado com sucesso",
@@ -148,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Interno",
+        "external": "Visível na web"
       }
     },
     "empty_state": {
@@ -195,7 +204,15 @@
       "finish_before": "Termina antes",
       "finish_after": "Termina depois",
       "implements": "Implementa",
-      "implemented_by": "Implementado por"
+      "implemented_by": "Implementado por",
+      "causes": "Causa",
+      "caused_by": "Causado por",
+      "clones": "Clona",
+      "cloned_by": "Clonado por",
+      "tests": "Testa",
+      "tested_by": "Testado por",
+      "start_before_finish": "Começa antes do fim de",
+      "finish_after_start": "Termina depois do início de"
     },
     "copy_link": "Copiar link do item de trabalho",
     "delete": {
@@ -290,7 +307,9 @@
         "description": "Para ver todos os itens de trabalho, limpe todos os filtros aplicados.",
         "action": "Limpar filtros"
       }
-    }
+    },
+    "expand": "Expandir sub-itens de trabalho",
+    "collapse": "Recolher sub-itens de trabalho"
   },
   "issue_relation": {
     "empty_state": {
@@ -612,6 +631,22 @@
           "added": "marcou este item de trabalho como bloqueando o item de trabalho <value/>.",
           "removed": "removeu o item de trabalho bloqueado <value/>."
         },
+        "caused_by": {
+          "added": "adicionou a relação “Causado por”: <value/>.",
+          "removed": "removeu a relação “Causado por”: <value/>."
+        },
+        "causes": {
+          "added": "adicionou a relação “Causa”: <value/>.",
+          "removed": "removeu a relação “Causa”: <value/>."
+        },
+        "cloned_by": {
+          "added": "adicionou a relação “Clonado por”: <value/>.",
+          "removed": "removeu a relação “Clonado por”: <value/>."
+        },
+        "clones": {
+          "added": "adicionou a relação “Clona”: <value/>.",
+          "removed": "removeu a relação “Clona”: <value/>."
+        },
         "duplicate": {
           "added": "marcou este item de trabalho como duplicado de <value/>.",
           "removed": "removeu a marcação deste item de trabalho como duplicado de <value/>."
@@ -620,9 +655,21 @@
           "added": "marcou que este item de trabalho termina depois de <value/>.",
           "removed": "removeu a relação \"termina depois de\" com <value/>."
         },
+        "finish_after_start": {
+          "added": "adicionou a relação “Termina depois do início de”: <value/>.",
+          "removed": "removeu a relação “Termina depois do início de”: <value/>."
+        },
         "finish_before": {
           "added": "marcou que este item de trabalho termina antes de <value/>.",
           "removed": "removeu a relação \"termina antes de\" com <value/>."
+        },
+        "implemented_by": {
+          "added": "adicionou a relação “Implementado por”: <value/>.",
+          "removed": "removeu a relação “Implementado por”: <value/>."
+        },
+        "implements": {
+          "added": "adicionou a relação “Implementa”: <value/>.",
+          "removed": "removeu a relação “Implementa”: <value/>."
         },
         "relates_to": {
           "added": "marcou que este item de trabalho está relacionado a <value/>.",
@@ -635,6 +682,18 @@
         "start_before": {
           "added": "marcou que este item de trabalho começa antes de <value/>.",
           "removed": "removeu a relação \"começa antes de\" com <value/>."
+        },
+        "start_before_finish": {
+          "added": "adicionou a relação “Começa antes do fim de”: <value/>.",
+          "removed": "removeu a relação “Começa antes do fim de”: <value/>."
+        },
+        "tested_by": {
+          "added": "adicionou a relação “Testado por”: <value/>.",
+          "removed": "removeu a relação “Testado por”: <value/>."
+        },
+        "tests": {
+          "added": "adicionou a relação “Testa”: <value/>.",
+          "removed": "removeu a relação “Testa”: <value/>."
         }
       },
       "restored": "restaurou o item de trabalho.",
@@ -836,6 +895,16 @@
         "enabled": "ativou a visualização do Intake",
         "fallback": "atualizou a visualização do Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "desativou a regra de edição pelos responsáveis",
+        "enabled": "ativou a regra de edição pelos responsáveis",
+        "fallback": "atualizou a regra de edição pelos responsáveis"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "desativou a regra de status dos itens bloqueados",
+        "enabled": "ativou a regra de status dos itens bloqueados",
+        "fallback": "atualizou a regra de status dos itens bloqueados"
+      },
       "is_epic_enabled": {
         "disabled": "desativou os épicos",
         "enabled": "ativou os épicos",
@@ -846,10 +915,35 @@
         "enabled": "ativou os tipos de item de trabalho",
         "fallback": "atualizou os tipos de item de trabalho"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "desativou a regra de conclusão de itens pai",
+        "enabled": "ativou a regra de conclusão de itens pai",
+        "fallback": "atualizou a regra de conclusão de itens pai"
+      },
       "is_project_updates_enabled": {
         "disabled": "desativou as atualizações do projeto",
         "enabled": "ativou as atualizações do projeto",
         "fallback": "atualizou as atualizações do projeto"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "desativou a relação de duplicado",
+        "enabled": "ativou a relação de duplicado",
+        "fallback": "atualizou a relação de duplicado"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "desativou a relação “relacionado a”",
+        "enabled": "ativou a relação “relacionado a”",
+        "fallback": "atualizou a relação “relacionado a”"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "desativou as dependências de cronograma",
+        "enabled": "ativou as dependências de cronograma",
+        "fallback": "atualizou as dependências de cronograma"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "desativou as relações de rastreabilidade",
+        "enabled": "ativou as relações de rastreabilidade",
+        "fallback": "atualizou as relações de rastreabilidade"
       },
       "is_time_tracking_enabled": {
         "disabled": "desativou o controle de tempo",
@@ -921,5 +1015,37 @@
       },
       "value_none": "nenhum"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Agrupar datas",
+    "rolled_up_bar": "Datas agrupadas dos sub-itens de trabalho",
+    "children_span": "Sub-itens de trabalho: {start} – {end}",
+    "starts_early": "Os sub-itens de trabalho começam antes deste item de trabalho",
+    "ends_late": "Os sub-itens de trabalho terminam depois deste item de trabalho"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Expandir tudo",
+    "collapse_all": "Recolher tudo",
+    "levels": "Níveis",
+    "up_to_level": "Até o nível {level}",
+    "all_levels": "Todos os níveis",
+    "load_error": "Não foi possível carregar os sub-itens de trabalho",
+    "too_many": "Itens de trabalho demais para expandir de uma vez. Expanda o resto um a um."
+  },
+  "worklog": {
+    "log_time": "Registrar tempo",
+    "description_placeholder": "O que foi feito? (opcional)",
+    "invalid_duration_title": "Duração inválida",
+    "invalid_duration_message": "Use um formato como \"2h 30m\", \"45m\" ou apenas minutos, até 24 horas.",
+    "log_error": "Não foi possível registrar o tempo. Tente novamente.",
+    "update_error": "Não foi possível atualizar o registro. Tente novamente.",
+    "delete_error": "Não foi possível excluir o registro. Tente novamente.",
+    "delete_title": "Excluir registro de tempo",
+    "delete_description": "Tem certeza de que deseja excluir este registro de tempo? Esta ação não pode ser desfeita.",
+    "edit_entry": "Editar registro de tempo",
+    "delete_entry": "Excluir registro de tempo",
+    "logged": "registrou <value>{duration}</value>",
+    "updated": "alterou o tempo registrado de <old>{from}</old> para <new>{to}</new>",
+    "removed": "removeu o tempo registrado <value>{duration}</value>"
   }
 }

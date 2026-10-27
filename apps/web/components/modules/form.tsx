@@ -23,7 +23,7 @@ import { MemberSelect } from "@/components/dropdowns/member/member-select";
 import { ProjectSelect } from "@/components/dropdowns/project/project-select";
 import { ModuleStatusSelect } from "@/components/modules";
 // hooks
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { useUser } from "@/hooks/store/user/user-user";
 import { hasInputChanged, useReportFormInput } from "@/hooks/use-report-form-input";
 
@@ -59,7 +59,7 @@ export function ModuleForm(props: Props) {
   } = props;
   // store hooks
   const { projectsWithCreatePermissions } = useUser();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   // form info
   const {
     formState: { errors, isSubmitting, dirtyFields },
@@ -214,7 +214,7 @@ export function ModuleForm(props: Props) {
                       }}
                       placeholder={`${t("start_date")} - ${t("end_date")}`}
                       icon={<CalendarOutline />}
-                      weekStartsOn={userProfile?.start_of_the_week}
+                      weekStartsOn={startOfTheWeek}
                       tabIndex={getIndex("date_range")}
                     />
                   )}

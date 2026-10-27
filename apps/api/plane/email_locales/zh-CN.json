@@ -1,0 +1,113 @@
+{
+  "format": {
+    "date": "%Y-%m-%d"
+  },
+  "priority": {
+    "urgent": "紧急",
+    "high": "高",
+    "medium": "中",
+    "low": "低",
+    "none": "无"
+  },
+  "issue_updates": {
+    "title": "{identifier} 的更新",
+    "summary": "<strong>{actor}</strong> 更新了工作项。",
+    "summary_others": "<strong>{actor}</strong> 等人更新了工作项。",
+    "title_changed": "工作项标题已更改为 {title}",
+    "updates": "更新",
+    "due_date": "截止日期：",
+    "duplicate": "重复项：",
+    "assignee": "负责人：",
+    "labels": "标签：",
+    "state": "状态：",
+    "links": "链接：",
+    "priority": "优先级：",
+    "blocking": "阻止：",
+    "comments": "评论",
+    "more": "另有 {count} 项",
+    "links_removed": {
+      "other": "已移除 {count} 个链接"
+    },
+    "view": "查看工作项",
+    "footer": "此邮件已发送至 <a href=\"mailto:{email}\">{email}</a>。如果您不想再收到此类邮件，可以<a href=\"{issue_url}\">取消订阅此工作项</a>或<a href=\"{preferences_url}\">管理您的邮件偏好</a>。"
+  },
+  "digest": {
+    "title": "更新摘要",
+    "greeting_named": "{name}，您有{summary}",
+    "greeting": "您有{summary}",
+    "updates_count": {
+      "other": "{count} 条更新"
+    },
+    "summary": {
+      "other": "您关注的 {count} 个工作项中有 {updates}。"
+    },
+    "subject": {
+      "other": "摘要：{count} 个工作项中有 {updates}"
+    },
+    "comments": "评论：{count}",
+    "footer": "这是工作项更新的摘要。提及会立即通知您。<a href=\"{preferences_url}\">更改通知设置</a>。"
+  },
+  "due_reminder": {
+    "title": "工作项提醒",
+    "greeting_named": "{name}，您有{summary}",
+    "greeting": "您有{summary}",
+    "section_overdue": "已逾期",
+    "section_today": "今天到期的工作项",
+    "work_items": {
+      "other": "{count} 个工作项"
+    },
+    "overdue": {
+      "other": "{count} 个已逾期"
+    },
+    "overdue_only": {
+      "other": "{count} 个已逾期的工作项"
+    },
+    "summary_both": "今天到期的{today}和{overdue}。",
+    "summary_today": "今天到期的{today}（{date}）。",
+    "summary_overdue": "{overdue}。",
+    "subject_both": "您有今天到期的{today}和{overdue}",
+    "subject_today": "您有今天到期的{today}（{date}）",
+    "subject_overdue": "您有{overdue}",
+    "days_overdue": {
+      "other": "已逾期 {count} 天"
+    },
+    "cta": "查看我的工作项",
+    "footer": "这是每天早上发送的自动提醒，涉及今天到期的工作项和已逾期的工作项。"
+  },
+  "project_addition": {
+    "subject": "您已被邀请加入 Pi-Plane 项目",
+    "preheader": "{inviter} 邀请您加入 Pi-Plane 工作区 {workspace} 中的项目 {project}。",
+    "heading": "您已被邀请加入 Pi-Plane 项目 {project}",
+    "intro": "{inviter} 邀请您在 Pi-Plane 工作区 <strong>{workspace}</strong> 的项目 <strong>{project}</strong> 中协作。",
+    "button": "前往项目",
+    "fallback": "如果按钮无法使用，请复制此链接并粘贴到浏览器中：",
+    "note": "注意：此邮件已发送至 <span>{email}</span>。如果您没有预期收到此邀请，可以忽略此邮件。"
+  },
+  "access_request": {
+    "subject": "{requester} 请求加入 {project}",
+    "preheader": "{requester} 请求加入 Pi-Plane 工作区 {workspace} 中的私有项目 {project}。",
+    "heading": "项目 {project} 的访问请求",
+    "intro": "<strong>{requester}</strong> 请求加入 Pi-Plane 工作区 <strong>{workspace}</strong> 中的私有项目 <strong>{project}</strong>。您可以在项目的成员设置中批准或拒绝该请求。",
+    "message": "留言：",
+    "button": "查看请求",
+    "fallback": "如果按钮无法使用，请复制此链接并粘贴到浏览器中：",
+    "note": "注意：此邮件已发送至 <span>{email}</span>，因为您是此项目的管理员或负责人。"
+  },
+  "access_request_decision": {
+    "subject_approved": "您加入 {project} 的请求已获批准",
+    "subject_rejected": "您加入 {project} 的请求未获批准",
+    "heading_approved": "您现在可以访问 {project}",
+    "heading_rejected": "您加入 {project} 的请求",
+    "intro_approved": "<strong>{decider}</strong> 已批准您加入 Pi-Plane 工作区 <strong>{workspace}</strong> 中私有项目 <strong>{project}</strong> 的请求。您现在可以打开该项目。",
+    "intro_rejected": "<strong>{decider}</strong> 未批准您加入 Pi-Plane 工作区 <strong>{workspace}</strong> 中私有项目 <strong>{project}</strong> 的请求。如果您认为这是误操作，请联系项目管理员。",
+    "button": "打开项目",
+    "note": "注意：此邮件发送至 <span>{email}</span>，因为您请求加入此项目。"
+  },
+  "one_time_code": {
+    "subject": "您的 Pi-Plane 一次性登录码是 {code}",
+    "preheader": "您的 Pi-Plane 登录码 {code} 有效期为 10 分钟。",
+    "heading": "您的 Pi-Plane 登录码",
+    "info": "此验证码在接下来的 10 分钟内有效。请在登录页面输入以完成登录。",
+    "note": "注意：此邮件发送至 <span>{email}</span>。如果您没有请求登录码，可以忽略此邮件。"
+  }
+}

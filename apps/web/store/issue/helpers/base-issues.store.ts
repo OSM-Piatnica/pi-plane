@@ -16,6 +16,7 @@ import type {
   TIssue,
   TIssueGroupByOptions,
   TIssueOrderByOptions,
+  TRelationRescheduleShift,
   TGroupedIssues,
   TSubGroupedIssues,
   TLoader,
@@ -112,7 +113,12 @@ export interface IBaseIssuesStore {
     addModuleIds: string[],
     removeModuleIds: string[]
   ): Promise<void>;
-  updateIssueDates(workspaceSlug: string, updates: IBlockUpdateDependencyData[], projectId?: string): Promise<void>;
+  /** Resolves with false when the person declined to move the work items that depend on the dragged ones */
+  updateIssueDates(
+    workspaceSlug: string,
+    updates: IBlockUpdateDependencyData[],
+    projectId?: string
+  ): Promise<boolean | undefined>;
 }
 
 // This constant maps the group by keys to the respective issue property that the key relies on
@@ -184,6 +190,20 @@ const ISSUE_ORDERBY_KEY: Record<TIssueOrderByOptions, keyof TIssue> = {
 };
 
 // locale aware, case insensitive comparison that orders numbers inside names naturally ("2" before "10")
+/** The completed parents an update would reopen, when the API answered that the person has to confirm it first. */
+const getParentReopenRequest = (error: unknown) => {
+  const body = error as
+    | { code?: string; parents?: { id: string; name: string; sequence_id: number | string }[] }
+    | undefined;
+  return body?.code === "parent_reopen_required" && body.parents?.length ? body.parents : null;
+};
+
+/** The work items the API offers to move along with a date change, when it answered that it needs a yes first. */
+const getRescheduleOffer = (error: unknown): TRelationRescheduleShift[] | null => {
+  const body = error as { error_code?: string; shifts?: TRelationRescheduleShift[] } | undefined;
+  return body?.error_code === "relation_reschedule_available" && body.shifts?.length ? body.shifts : null;
+};
+
 const compareIssuesByName = (a: TIssue, b: TIssue) =>
   (a.name ?? "").localeCompare(b.name ?? "", undefined, { numeric: true, sensitivity: "base" });
 
@@ -576,8 +596,9 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     projectId: string,
     issueId: string,
     data: Partial<TIssue>,
-    shouldSync = true
-  ) {
+    shouldSync = true,
+    options?: { reopenParent?: boolean; shiftDependents?: boolean; shiftedWorkItems?: TRelationRescheduleShift[] }
+  ): Promise<void> {
     // Store Before state of the issue
     const issueBeforeUpdate = clone(this.rootIssueStore.issues.getIssueById(issueId));
     try {
@@ -595,7 +616,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       } as TIssue);
 
       // call API to update the issue
-      await this.issueService.patchIssue(workspaceSlug, projectId, issueId, data);
+      await this.issueService.patchIssue(workspaceSlug, projectId, issueId, data, options);
 
       // State changes return 204 with no body; re-sync when workflow may have intercepted the transition.
       if (data.state_id !== undefined) {
@@ -615,12 +636,44 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
         await statusPromise;
       }
 
+      // completed parents were reopened with it: bring them up to date
+      if (options?.reopenParent) await this.syncReopenedParents(workspaceSlug, projectId, issueId);
+
+      // work items that depend on this one were moved along: bring them up to date
+      if (options?.shiftedWorkItems?.length) await this.syncShiftedWorkItems(options.shiftedWorkItems);
+
       // call fetch Parent Stats
       this.fetchParentStats(workspaceSlug, projectId);
     } catch (error) {
       // If errored out update store again to revert the change
       this.rootIssueStore.issues.updateIssue(issueId, issueBeforeUpdate ?? {});
       this.updateIssueList(issueBeforeUpdate, { ...issueBeforeUpdate, ...data } as TIssue);
+
+      // The project reopens completed parents with a finished child, but only once the person agrees
+      const parents = getParentReopenRequest(error);
+      const workflowStore = this.rootIssueStore.rootStore?.workflow;
+      if (parents && workflowStore) {
+        const confirmed = await workflowStore.confirmParentReopen(parents);
+        if (confirmed)
+          return this.issueUpdate(workspaceSlug, projectId, issueId, data, shouldSync, {
+            ...options,
+            reopenParent: true,
+          });
+        return;
+      }
+
+      // Dates that come too early for what depends on this work item: move those along, if the person agrees
+      const shifts = getRescheduleOffer(error);
+      if (shifts && workflowStore) {
+        const confirmed = await workflowStore.confirmReschedule(shifts);
+        if (confirmed)
+          return this.issueUpdate(workspaceSlug, projectId, issueId, data, shouldSync, {
+            ...options,
+            shiftDependents: true,
+            shiftedWorkItems: shifts,
+          });
+        return;
+      }
       throw error;
     }
   }
@@ -790,11 +843,44 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     });
   };
 
+  /** Re-reads the ancestors of a work item that was reopened along with them, so lists show their new state. */
+  private async syncReopenedParents(workspaceSlug: string, projectId: string, issueId: string) {
+    let parentId = this.rootIssueStore.issues.getIssueById(issueId)?.parent_id;
+    const seen = new Set<string>([issueId]);
+    while (parentId && !seen.has(parentId)) {
+      seen.add(parentId);
+      const before = clone(this.rootIssueStore.issues.getIssueById(parentId));
+      const fresh = await this.issueService.retrieve(workspaceSlug, projectId, parentId).catch(() => undefined);
+      if (!fresh) break;
+      this.rootIssueStore.issues.updateIssue(parentId, { state_id: fresh.state_id });
+      if (before) this.updateIssueList({ ...before, state_id: fresh.state_id } as TIssue, before);
+      parentId = fresh.parent_id;
+    }
+  }
+
+  /** Re-reads the work items that were moved along with a date change, so lists and the timeline show their dates. */
+  private async syncShiftedWorkItems(shifts: TRelationRescheduleShift[]) {
+    const workspaceSlug = this.rootIssueStore.workspaceSlug;
+    if (!workspaceSlug) return;
+    await Promise.all(
+      shifts.map(async (shift) => {
+        const before = clone(this.rootIssueStore.issues.getIssueById(shift.id));
+        const fresh = await this.issueService
+          .retrieve(workspaceSlug, shift.project_id, shift.id)
+          .catch(() => undefined);
+        if (!fresh) return;
+        const dates = { start_date: fresh.start_date, target_date: fresh.target_date };
+        this.rootIssueStore.issues.updateIssue(shift.id, dates);
+        if (before) this.updateIssueList({ ...before, ...dates } as TIssue, before);
+      })
+    );
+  }
+
   async updateIssueDates(
     workspaceSlug: string,
     updates: { id: string; start_date?: string; target_date?: string }[],
     projectId?: string
-  ) {
+  ): Promise<boolean | undefined> {
     if (!projectId) return;
     const rollbacks: { id: string; dates: Partial<TIssue> }[] = [];
     try {
@@ -820,7 +906,27 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
         }
       });
 
-      await this.issueService.updateIssueDates(workspaceSlug, projectId, updates);
+      try {
+        await this.issueService.updateIssueDates(workspaceSlug, projectId, updates);
+      } catch (error) {
+        // Dates that come too early for what depends on them: move those along, if the person agrees
+        const shifts = getRescheduleOffer(error);
+        const workflowStore = this.rootIssueStore.rootStore?.workflow;
+        if (!shifts || !workflowStore) throw error;
+        const confirmed = await workflowStore.confirmReschedule(shifts);
+        if (!confirmed) {
+          // declined: the drag is undone, which is no error
+          runInAction(() => {
+            for (const rollback of rollbacks) {
+              this.issueUpdate(workspaceSlug, projectId, rollback.id, rollback.dates, false);
+            }
+          });
+          return false;
+        }
+        await this.issueService.updateIssueDates(workspaceSlug, projectId, updates, { shiftDependents: true });
+        await this.syncShiftedWorkItems(shifts);
+      }
+      return true;
     } catch (e) {
       runInAction(() => {
         for (const rollback of rollbacks) {

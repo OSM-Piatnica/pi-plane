@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -33,31 +34,11 @@ workspace_management_config_variables = [
         "category": "WORKSPACE_MANAGEMENT",
         "is_encrypted": False,
     },
-]
-
-google_config_variables = [
     {
-        "key": "IS_GOOGLE_ENABLED",
-        "value": os.environ.get("IS_GOOGLE_ENABLED", "0"),
-        "category": "GOOGLE",
-        "is_encrypted": False,
-    },
-    {
-        "key": "GOOGLE_CLIENT_ID",
-        "value": os.environ.get("GOOGLE_CLIENT_ID"),
-        "category": "GOOGLE",
-        "is_encrypted": False,
-    },
-    {
-        "key": "GOOGLE_CLIENT_SECRET",
-        "value": os.environ.get("GOOGLE_CLIENT_SECRET"),
-        "category": "GOOGLE",
-        "is_encrypted": True,
-    },
-    {
-        "key": "ENABLE_GOOGLE_SYNC",
-        "value": os.environ.get("ENABLE_GOOGLE_SYNC", "0"),
-        "category": "GOOGLE",
+        # Workspace UUID that gets compact `/i/PROJ-123` work item links; empty turns them off.
+        "key": "INSTANCE_DEFAULT_WORKSPACE_ID",
+        "value": os.environ.get("INSTANCE_DEFAULT_WORKSPACE_ID", ""),
+        "category": "WORKSPACE_MANAGEMENT",
         "is_encrypted": False,
     },
 ]
@@ -253,7 +234,6 @@ unsplash_config_variables = [
 core_config_variables = [
     *authentication_config_variables,
     *workspace_management_config_variables,
-    *google_config_variables,
     *github_config_variables,
     *gitlab_config_variables,
     *gitea_config_variables,

@@ -445,14 +445,15 @@
       "removing_from_favorites": "Menghapus proyek dari favorit..."
     },
     "confirm_member_remove": {
-      "leave_description": "Yakin ingin keluar dari proyek {name}? Anda dapat bergabung kembali jika diundang lagi atau jika proyek ini publik.",
+      "leave_description": "Yakin ingin keluar dari proyek {name}? Anda dapat bergabung kembali jika diundang lagi atau jika proyek ini terbuka untuk ruang kerja.",
       "leave_title": "Keluar dari proyek?",
       "remove_description": "Yakin ingin menghapus anggota {name}? Mereka tidak akan lagi memiliki akses ke proyek ini. Tindakan ini tidak dapat dibatalkan.",
       "remove_title": "Hapus {name}?"
     },
     "control_section": {
       "archive_description": "Mengarsipkan proyek akan menghapusnya dari navigasi samping, tetapi Anda masih dapat mengaksesnya dari halaman proyek. Anda dapat memulihkan atau menghapus proyek kapan saja.",
-      "delete_description": "Saat menghapus proyek, semua data dan sumber daya di dalamnya akan dihapus secara permanen dan tidak dapat dipulihkan."
+      "delete_description": "Saat menghapus proyek, semua data dan sumber daya di dalamnya akan dihapus secara permanen dan tidak dapat dipulihkan.",
+      "duplicate_description": "Buat proyek baru dengan pengaturan, status, label, dan konfigurasi lain dari proyek ini. Item kerja hanya disalin jika Anda memilihnya."
     },
     "delete_modal": {
       "confirm_placeholder": "Masukkan “{phrase}”",
@@ -531,21 +532,34 @@
       "timezone_error": "Gagal memperbarui zona waktu",
       "timezone_updated": "Zona waktu berhasil diperbarui",
       "update_error": "Terjadi kesalahan saat memperbarui profil Anda. Silakan coba lagi.",
-      "updated": "Profil berhasil diperbarui."
+      "updated": "Profil berhasil diperbarui.",
+      "weekend_days": "Hari akhir pekan",
+      "weekend_days_description": "Menentukan hari mana yang dianggap sebagai waktu tidak bekerja.",
+      "weekend_days_updated": "Hari akhir pekan berhasil diperbarui",
+      "weekend_days_use_default": "Gunakan default ruang kerja"
     },
     "publish_modal": {
       "allow_comments": "Izinkan komentar",
       "allow_reactions": "Izinkan reaksi",
       "allow_voting": "Izinkan pemungutan suara",
-      "anyone_with_link": "Siapa saja yang memiliki tautan dapat mengakses",
-      "link_copied": "Tautan halaman yang dipublikasikan berhasil disalin.",
-      "live_on_web": "Proyek ini kini tayang di web",
-      "publishing": "Memublikasikan",
-      "select_layout_error": "Pilih setidaknya satu tata letak tampilan untuk memublikasikan proyek.",
-      "settings_updated": "Pengaturan publikasi berhasil diperbarui!",
-      "unpublish": "Batalkan publikasi",
-      "unpublish_error": "Terjadi kesalahan saat membatalkan publikasi proyek.",
-      "unpublishing": "Membatalkan publikasi",
+      "anyone_with_link": "Siapa pun di internet yang memiliki tautan dapat melihat proyek ini, tanpa akun",
+      "confirm": {
+        "title": "Bagikan proyek ini di web?",
+        "description": "Siapa pun di internet yang memiliki tautan dapat melihat proyek ini, termasuk orang di luar ruang kerja Anda dan orang yang belum masuk.",
+        "can_see": "Mereka dapat melihat:",
+        "item_work_items": "semua item kerja di proyek, beserta deskripsi, status, prioritas, tanggal, dan label",
+        "item_members": "nama dan avatar anggota proyek",
+        "item_activity": "komentar, reaksi, dan suara, beserta nama orang yang memberikannya, jika Anda mengizinkannya",
+        "note": "Pengunjung tidak dapat mengubah apa pun. Tautan tetap berfungsi sampai Anda berhenti berbagi, jadi bagikan hanya proyek yang tidak berisi hal rahasia."
+      },
+      "link_copied": "Tautan web disalin.",
+      "live_on_web": "Proyek ini dibagikan di web",
+      "publishing": "Mengaktifkan…",
+      "select_layout_error": "Pilih setidaknya satu tata letak tampilan untuk membagikan proyek di web.",
+      "settings_updated": "Pengaturan berbagi di web diperbarui.",
+      "unpublish": "Berhenti berbagi",
+      "unpublish_error": "Terjadi kesalahan saat menonaktifkan berbagi di web.",
+      "unpublishing": "Menonaktifkan…",
       "update_settings": "Perbarui pengaturan"
     },
     "rich_filters": {
@@ -555,6 +569,14 @@
       "filter_type_not_supported": "Jenis filter tidak didukung",
       "invalid_filter": "Filter tidak valid",
       "invalid_tooltip": "Kondisi filter ini tidak lagi valid. Properti mungkin telah dihapus atau akses Anda ke properti tersebut telah berubah.",
+      "operators": {
+        "exact": "adalah",
+        "in": "adalah salah satu dari",
+        "range": "antara",
+        "not_exact": "bukan",
+        "not_in": "bukan salah satu dari",
+        "not_range": "tidak antara"
+      },
       "remove_filter": "Hapus filter",
       "save_view": "Simpan tampilan",
       "update_view": "Perbarui tampilan"
@@ -640,7 +662,55 @@
     "access_requests": {
       "title": "Permintaan bergabung ({count})",
       "approve": "Setujui",
-      "reject": "Tolak"
+      "reject": "Tolak",
+      "already_decided": "Permintaan ini sudah diputuskan oleh admin lain.",
+      "requester_left": "Orang ini tidak lagi menjadi anggota ruang kerja."
+    },
+    "duplicate_modal": {
+      "already_running": "Salinan item kerja sedang berjalan di ruang kerja ini. Coba lagi setelah selesai.",
+      "always_copied": "Pengaturan, status, dan tipe item kerja selalu disalin.",
+      "banner": {
+        "done": "Item kerja disalin: {count}.",
+        "failed": "Penyalinan item kerja gagal. Yang sudah disalin tetap ada; coba lagi untuk menambahkan sisanya.",
+        "progress": "Menyalin item kerja: {copied} dari {total}",
+        "queued": "Item kerja sedang antre untuk disalin...",
+        "reload": "Muat ulang",
+        "retry": "Coba lagi",
+        "retry_failed": "Tidak dapat mengulang penyalinan. Silakan coba lagi."
+      },
+      "clear_all": "Hapus semua",
+      "description": "Membuat proyek baru dengan pengaturan yang sama. Halaman dan webhook tidak disalin; item kerja hanya jika Anda memilihnya di bawah.",
+      "error": "Proyek tidak dapat diduplikasi. Silakan coba lagi.",
+      "identifier_placeholder": "Dibuat otomatis jika kosong",
+      "properties": {
+        "assignees": "Penerima tugas",
+        "custom_properties": "Properti kustom",
+        "cycles": "Siklus",
+        "dates": "Tanggal",
+        "description_images": "Gambar dalam deskripsi",
+        "labels": "Label",
+        "links": "Tautan",
+        "modules": "Modul",
+        "parents": "Tautan sub-item",
+        "relations": "Relasi"
+      },
+      "properties_description": "Pilih apa yang dibawa bersama item kerja. Draf, item yang diarsipkan, dan item intake tidak disertakan; komentar, lampiran, aktivitas, dan catatan waktu tidak pernah disalin.",
+      "properties_heading": "Properti item kerja",
+      "properties_note": "Siklus dan modul hanya dibawa jika disalin di atas.",
+      "property_groups": {
+        "content": "Konten",
+        "hierarchy": "Hierarki dan relasi",
+        "organization": "Organisasi",
+        "people": "Orang"
+      },
+      "select_all": "Pilih semua",
+      "submit": "Duplikat proyek",
+      "submitting": "Menduplikasi proyek...",
+      "success": "Proyek berhasil diduplikasi.",
+      "title": "Duplikat proyek",
+      "too_large": "Proyek ini terlalu besar untuk disalin. Matikan beberapa opsi lalu coba lagi.",
+      "what_to_copy": "Salin juga",
+      "work_items_too_large": "Proyek ini memiliki lebih banyak item kerja daripada yang dapat disalin (hingga {count})."
     }
   }
 }

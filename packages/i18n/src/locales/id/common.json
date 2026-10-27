@@ -117,6 +117,8 @@
   "comments_description": "Beri tahu saya ketika seseorang meninggalkan komentar pada item kerja",
   "mentions": "Sebutkan",
   "mentions_description": "Beri tahu saya ketika seseorang menyebut saya dalam komentar atau deskripsi",
+  "project_access_requests": "Permintaan akses",
+  "project_access_requests_description": "Kirimi saya email tentang permintaan bergabung dengan proyek privat yang saya kelola dan tentang keputusan atas permintaan saya sendiri.",
   "email_frequency": "Frekuensi email",
   "email_frequency_description": "Pilih seberapa sering Anda menerima email tentang pembaruan item kerja. Sebutan selalu dikirim segera.",
   "email_frequency_instant": "Segera",
@@ -195,8 +197,8 @@
   "select_network": "Pilih jaringan",
   "lead": "Pemimpin",
   "date_range": "Rentang tanggal",
-  "private": "Pribadi",
-  "public": "Umum",
+  "private": "Hanya saya",
+  "public": "Dibagikan",
   "accessible_only_by_invite": "Diakses hanya dengan undangan",
   "anyone_in_the_workspace_except_guests_can_join": "Siapa saja di ruang kerja kecuali Tamu dapat bergabung",
   "creating": "Membuat",
@@ -210,8 +212,8 @@
   "add_to_favorites": "Tambah ke favorit",
   "remove_from_favorites": "Hapus dari favorit",
   "rename_folder": "Ganti nama folder",
-  "publish_project": "Publikasikan proyek",
-  "publish": "Publikasikan",
+  "publish_project": "Bagikan di web",
+  "publish": "Aktifkan berbagi di web",
   "copy_link": "Salin tautan",
   "leave_project": "Tinggalkan proyek",
   "join_the_project_to_rearrange": "Bergabunglah dengan proyek untuk menyusun ulang",
@@ -532,8 +534,8 @@
     "archiving": "Mengarsipkan",
     "archive": "Arsip",
     "access": {
-      "public": "Publik",
-      "private": "Pribadi"
+      "public": "Dibagikan ke proyek",
+      "private": "Hanya saya"
     },
     "done": "Selesai",
     "sub_work_items": "Sub-item kerja",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "Terjadi kesalahan",
       "inbox_fetch_error": "Kesalahan saat mengambil item kerja Intake. Silakan coba lagi nanti.",
-      "page_make_public_error": "Halaman tidak dapat dibuat publik. Silakan coba lagi nanti.",
-      "page_make_private_error": "Halaman tidak dapat dibuat privat. Silakan coba lagi nanti.",
+      "page_make_public_error": "Halaman tidak dapat dibagikan ke proyek. Silakan coba lagi nanti.",
+      "page_make_private_error": "Halaman tidak dapat dibuat terlihat hanya oleh Anda. Silakan coba lagi nanti.",
       "workflow_pending_approval": "Item kerja memiliki persetujuan yang tertunda.",
       "workflow_transition_not_allowed": "Transisi status ini tidak diizinkan oleh alur kerja."
     },
@@ -1412,7 +1414,7 @@
       "duration": "Durasi"
     },
     "auth_labels": {
-      "magic_code": "Kode ajaib"
+      "one_time_code": "Kode sekali pakai"
     },
     "state_groups": {
       "canceled": "Dibatalkan"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "Bagus! Tinggal satu langkah lagi.",
-      "description": "Masukkan URL atau tautan berbagi publik dari tampilan atau Halaman yang ingin Anda lihat di bilah alamat browser.",
+      "description": "Masukkan tautan yang dibagikan dari tampilan atau halaman yang ingin Anda lihat di bilah alamat browser.",
       "image_alt": "Pengguna sudah masuk"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Kirim ulang dalam {seconds} dtk"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "Lanjutkan dengan {provider}"
     },
     "issues": {
-      "public_board_not_found": "Papan publik tidak ada. Periksa URL Anda.",
+      "shared_project_load_failed": "Proyek yang dibagikan ini tidak dapat dimuat. Silakan coba lagi nanti.",
       "cycle_tooltip": "Siklus: {name}",
       "no_cycle": "Tanpa Siklus",
       "due_date_tooltip": "Tanggal jatuh tempo: {date}",

@@ -31,6 +31,7 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
+from plane.utils.project_weekend_days import get_project_weekend_days
 from plane.utils.work_item_duration import (
     DURATION_DATE_FIELDS,
     reconcile_work_item_duration,
@@ -81,7 +82,11 @@ class DraftIssueCreateSerializer(BaseSerializer):
 
     def validate(self, attrs):
         # Keep duration and the two dates consistent before anything else looks at them.
-        derived = reconcile_work_item_duration(self.instance, attrs)
+        derived = reconcile_work_item_duration(
+            self.instance,
+            attrs,
+            get_project_weekend_days(self.context.get("project_id") or getattr(self.instance, "project_id", None)),
+        )
         for field, value in derived.items():
             attrs[field] = to_work_item_date(value) if field in DURATION_DATE_FIELDS else value
 

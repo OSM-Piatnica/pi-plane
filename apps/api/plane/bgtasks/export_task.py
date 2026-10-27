@@ -32,9 +32,11 @@ from plane.db.models import (
     IssueRelation,
     IssueSubscriber,
     Project,
+    ProjectUserProperty,
     WorkspaceMember,
 )
 from plane.utils.exception_logger import log_exception
+from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.porters.exporter import DataExporter
 from plane.utils.porters.serializers.issue import IssueExportSerializer
 
@@ -158,6 +160,31 @@ def upload_export_file_to_s3(
     _finalize_exporter_upload(token_id=token_id, file_name=file_name, presigned_url=presigned_url)
 
 
+DEFAULT_LIST_ORDER = "-created_at"
+
+
+def list_view_order(user_id, project_id) -> str:
+    """The order the person's own list view of this project uses (newest first when they never chose one)."""
+    display_filters = (
+        ProjectUserProperty.objects.filter(user_id=user_id, project_id=project_id)
+        .values_list("display_filters", flat=True)
+        .first()
+    )
+    order_by = display_filters.get("order_by") if isinstance(display_filters, dict) else None
+    return order_by if isinstance(order_by, str) and order_by else DEFAULT_LIST_ORDER
+
+
+def in_list_view_order(queryset, user_id, project_id):
+    """``queryset`` of one project's work items, ordered as the person's list view of it is.
+
+    Goes through the same ``order_issue_queryset`` the list endpoints use, so a value that is not an
+    orderable field falls back exactly as it does there. Grouping (by state, assignee, ...) is not
+    applied: it only splits the list into sections, and a file has none.
+    """
+    ordered, _ = order_issue_queryset(issue_queryset=queryset, order_by_param=list_view_order(user_id, project_id))
+    return ordered
+
+
 @shared_task
 def issue_export_task(
     provider: str,
@@ -167,12 +194,14 @@ def issue_export_task(
     multiple: bool,
     slug: str,
     csv_delimiter: str = ",",
+    export_fields: List[str] | None = None,
 ):
     """
     Export issues from the workspace.
     provider (str): The provider to export the issues to csv | json | xlsx.
     token_id (str): The export object token id.
     multiple (bool): Whether to export the issues to multiple files per project.
+    export_fields (list[str] | None): The columns to write; None writes all of them.
     """
     try:
         exporter_instance = ExporterHistory.objects.get(token=token_id)
@@ -257,6 +286,7 @@ def issue_export_task(
                 format_type=provider,
                 csv_delimiter=csv_delimiter,
                 context={"member_emails": member_emails},
+                export_fields=export_fields,
             )
         except ValueError as e:
             # Invalid format type
@@ -285,11 +315,24 @@ def issue_export_task(
                     export_date=export_date,
                     project_identifier=project_identifiers.get(str(project_id), str(project_id)),
                 )
-                filename, content = exporter.export(export_filename, project_issues)
+                filename, content = exporter.export(
+                    export_filename, in_list_view_order(project_issues, exporter_instance.initiated_by_id, project_id)
+                )
                 files.append((filename, content))
         else:
-            # Export all issues in a single file
-            filename, content = exporter.export(base_filename, workspace_issues)
+            # Export all issues in a single file: project by project, each in the order of the person's list
+            # view of it (there is no one order across projects)
+            ordered_project_ids = (
+                Project.objects.filter(id__in=project_ids).order_by("identifier").values_list("id", flat=True)
+            )
+            work_items = []
+            for project_id in ordered_project_ids:
+                work_items.extend(
+                    in_list_view_order(
+                        workspace_issues.filter(project_id=project_id), exporter_instance.initiated_by_id, project_id
+                    )
+                )
+            filename, content = exporter.export(base_filename, work_items)
             files.append((filename, content))
 
         if len(files) == 1 and provider == "csv":

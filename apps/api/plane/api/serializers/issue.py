@@ -7,7 +7,7 @@
 # Django imports
 from django.utils import timezone
 from lxml import html
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 
 #  Third party imports
 from rest_framework import serializers
@@ -29,10 +29,12 @@ from plane.db.models import (
     User,
     EstimatePoint,
 )
+from plane.utils.markdown_input import resolve_markdown_input
 from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
+from plane.utils.project_weekend_days import get_project_weekend_days
 from plane.utils.work_item_duration import (
     DURATION_DATE_FIELDS,
     reconcile_work_item_duration,
@@ -73,13 +75,24 @@ class IssueSerializer(BaseSerializer):
     type_id = serializers.PrimaryKeyRelatedField(
         source="type", queryset=IssueType.objects.all(), required=False, allow_null=True
     )
+    # A script files work items in markdown; it is rendered in validate() below, so the HTML sanitizer stays
+    # the only gate
+    description_markdown = serializers.CharField(
+        write_only=True,
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+        help_text="Work item description written in markdown. Rendered to description_html; send one or the other.",
+    )
 
     class Meta:
         model = Issue
+        # Audit fields: BaseModel.save() sets created_by from the request user on create.
         read_only_fields = [
             "id",
             "workspace",
             "project",
+            "created_by",
             "updated_by",
             "updated_at",
             "completed_at",
@@ -97,9 +110,18 @@ class IssueSerializer(BaseSerializer):
         return fields
 
     def validate(self, data):
+        self._reopen_parents_from = None
+        self._reschedule_plan = None
+        # Markdown becomes description_html here, so the sanitizer below is the only gate either input passes
+        data = resolve_markdown_input(data, html_field="description_html", markdown_field="description_markdown")
+
         # Keep duration and the two dates consistent before anything else looks at them, so API
         # clients get the same synchronization the web app performs locally.
-        derived = reconcile_work_item_duration(self.instance, data)
+        derived = reconcile_work_item_duration(
+            self.instance,
+            data,
+            get_project_weekend_days(self.context.get("project_id") or getattr(self.instance, "project_id", None)),
+        )
         for field, value in derived.items():
             data[field] = to_work_item_date(value) if field in DURATION_DATE_FIELDS else value
 
@@ -190,12 +212,52 @@ class IssueSerializer(BaseSerializer):
         ):
             raise serializers.ValidationError("Estimate point is not valid please pass a valid estimate_point_id")
 
+        if self.instance is not None and data.get("state") and data["state"].id != self.instance.state_id:
+            from plane.utils.blocked_status_rule import blocked_status_error
+            from plane.utils.parent_completion_rule import parent_completion_error
+
+            rule_error = parent_completion_error(self.instance, data["state"].id) or blocked_status_error(
+                self.instance, data["state"].id
+            )
+            if rule_error:
+                raise serializers.ValidationError({"state": rule_error})
+
+            from plane.utils.parent_completion_rule import (
+                ParentReopenRequired,
+                is_reopen_confirmed,
+                reopen_confirmation_payload,
+            )
+
+            payload = reopen_confirmation_payload(
+                self.instance, data["state"].id, is_reopen_confirmed(self.initial_data)
+            )
+            if payload:
+                raise ParentReopenRequired(payload)
+            self._reopen_parents_from = self.instance.state_id
+
         if self.instance is not None:
             from plane.utils.issue_timeline_relation_validation import validate_issue_update_payload
 
             timeline_error = validate_issue_update_payload(self.instance, data)
             if timeline_error:
-                raise serializers.ValidationError(timeline_error)
+                from crum import get_current_user
+
+                from plane.utils.issue_reschedule import (
+                    RescheduleOffered,
+                    is_shift_confirmed,
+                    plan_for_issue_update,
+                )
+
+                # Dates that only come too early for what depends on this work item can be fixed by moving
+                # those along, once the caller agrees (shift_dependents)
+                request = self.context.get("request")
+                actor = request.user if request else get_current_user()
+                plan = plan_for_issue_update(self.instance, data, actor, timeline_error)
+                if plan is None:
+                    raise serializers.ValidationError(timeline_error)
+                if not is_shift_confirmed(self.initial_data):
+                    raise RescheduleOffered(plan.payload(timeline_error))
+                self._reschedule_plan = plan
 
         return data
 
@@ -336,7 +398,19 @@ class IssueSerializer(BaseSerializer):
 
         # Time updation occues even when other related models are updated
         instance.updated_at = timezone.now()
-        return super().update(instance, validated_data)
+        previous_state_id = getattr(self, "_reopen_parents_from", None)
+        reschedule_plan = getattr(self, "_reschedule_plan", None)
+        with transaction.atomic():
+            instance = super().update(instance, validated_data)
+            if previous_state_id:
+                from plane.utils.parent_completion_rule import reopen_parents
+
+                reopen_parents(instance, previous_state_id, instance.updated_by_id)
+            if reschedule_plan:
+                from plane.utils.issue_reschedule import apply_shifts
+
+                apply_shifts(reschedule_plan, instance.updated_by_id)
+        return instance
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -597,6 +671,16 @@ class IssueRelationCreateSerializer(serializers.Serializer):
         ("start_after", "Starts After"),
         ("finish_before", "Finishes Before"),
         ("finish_after", "Finishes After"),
+        ("implemented_by", "Implemented By"),
+        ("implements", "Implements"),
+        ("caused_by", "Caused By"),
+        ("causes", "Causes"),
+        ("cloned_by", "Cloned By"),
+        ("clones", "Clones"),
+        ("tested_by", "Tested By"),
+        ("tests", "Tests"),
+        ("start_before_finish", "Starts Before Finish"),
+        ("finish_after_start", "Finishes After Start"),
     ]
 
     relation_type = serializers.ChoiceField(
@@ -609,6 +693,14 @@ class IssueRelationCreateSerializer(serializers.Serializer):
         required=True,
         min_length=1,
         help_text="Array of work item IDs to create relations with",
+    )
+    lag_days = serializers.IntegerField(
+        required=False,
+        allow_null=True,
+        help_text=(
+            "Days kept between the two dates of a blocking, starts or finishes relation; negative lets them overlap. "
+            "Sent for a relation that exists already, it changes the lag."
+        ),
     )
 
     def validate_issues(self, value):
@@ -751,6 +843,7 @@ class IssueCommentCreateSerializer(BaseSerializer):
         fields = [
             "comment_json",
             "comment_html",
+            "comment_markdown",
             "access",
             "external_source",
             "external_id",
@@ -770,6 +863,29 @@ class IssueCommentCreateSerializer(BaseSerializer):
             "edited_at",
         ]
 
+    # Same markdown input as the work item description
+    comment_markdown = serializers.CharField(
+        write_only=True,
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+        help_text="Comment written in markdown. Rendered to comment_html; send one or the other.",
+    )
+
+    def validate(self, data):
+        # Markdown is rendered first so both inputs leave through the same sanitizer
+        data = resolve_markdown_input(data, html_field="comment_html", markdown_field="comment_markdown")
+
+        # Sanitized on write like the full serializer and the app's comment endpoints: a comment created
+        # through the API reaches every other consumer of the stored html, not only the web client
+        if "comment_html" in data and data["comment_html"]:
+            is_valid, error_msg, sanitized_html = validate_html_content(data["comment_html"])
+            if not is_valid:
+                raise serializers.ValidationError({"comment_html": "HTML content is not valid"})
+            if sanitized_html is not None:
+                data["comment_html"] = sanitized_html
+        return data
+
 
 class IssueCommentSerializer(BaseSerializer):
     """
@@ -780,6 +896,14 @@ class IssueCommentSerializer(BaseSerializer):
     """
 
     is_member = serializers.BooleanField(read_only=True)
+    # Same markdown input as the work item description
+    comment_markdown = serializers.CharField(
+        write_only=True,
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+        help_text="Comment written in markdown. Rendered to comment_html; send one or the other.",
+    )
 
     class Meta:
         model = IssueComment
@@ -796,6 +920,8 @@ class IssueCommentSerializer(BaseSerializer):
         exclude = ["comment_stripped", "comment_json"]
 
     def validate(self, data):
+        data = resolve_markdown_input(data, html_field="comment_html", markdown_field="comment_markdown")
+
         if "comment_html" in data and data["comment_html"]:
             is_valid, error_msg, sanitized_html = validate_html_content(data["comment_html"])
             if not is_valid:

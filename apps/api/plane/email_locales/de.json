@@ -1,0 +1,121 @@
+{
+  "format": {
+    "date": "%d.%m.%Y"
+  },
+  "priority": {
+    "urgent": "Dringend",
+    "high": "Hoch",
+    "medium": "Mittel",
+    "low": "Niedrig",
+    "none": "Keine"
+  },
+  "issue_updates": {
+    "title": "Aktualisierungen zu {identifier}",
+    "summary": "Das Arbeitselement wurde von <strong>{actor}</strong> aktualisiert.",
+    "summary_others": "Das Arbeitselement wurde von <strong>{actor}</strong> und weiteren Personen aktualisiert.",
+    "title_changed": "Der Titel des Arbeitselements wurde in {title} geändert",
+    "updates": "Aktualisierungen",
+    "due_date": "Fälligkeitsdatum:",
+    "duplicate": "Duplikat:",
+    "assignee": "Zugewiesen:",
+    "labels": "Labels:",
+    "state": "Status:",
+    "links": "Links:",
+    "priority": "Priorität:",
+    "blocking": "Blockiert:",
+    "comments": "Kommentare",
+    "more": "+{count} weitere",
+    "links_removed": {
+      "one": "{count} Link wurde entfernt",
+      "other": "{count} Links wurden entfernt"
+    },
+    "view": "Arbeitselement ansehen",
+    "footer": "Diese E-Mail wurde an <a href=\"mailto:{email}\">{email}</a> gesendet. Wenn Sie solche E-Mails nicht erhalten möchten, können Sie <a href=\"{issue_url}\">dieses Arbeitselement nicht mehr abonnieren</a> oder <a href=\"{preferences_url}\">Ihre E-Mail-Einstellungen verwalten</a>."
+  },
+  "digest": {
+    "title": "Zusammenfassung der Aktualisierungen",
+    "greeting_named": "Hallo {name}, Sie haben {summary}",
+    "greeting": "Sie haben {summary}",
+    "updates_count": {
+      "one": "{count} Aktualisierung",
+      "other": "{count} Aktualisierungen"
+    },
+    "summary": {
+      "one": "{updates} in {count} Arbeitselement, dem Sie folgen.",
+      "other": "{updates} in {count} Arbeitselementen, denen Sie folgen."
+    },
+    "subject": {
+      "one": "Zusammenfassung: {updates} in {count} Arbeitselement",
+      "other": "Zusammenfassung: {updates} in {count} Arbeitselementen"
+    },
+    "comments": "Kommentare: {count}",
+    "footer": "Dies ist eine Zusammenfassung der Aktualisierungen von Arbeitselementen. Erwähnungen erhalten Sie sofort. <a href=\"{preferences_url}\">Benachrichtigungseinstellungen ändern</a>."
+  },
+  "due_reminder": {
+    "title": "Erinnerung an Arbeitselemente",
+    "greeting_named": "Hallo {name}, Sie haben {summary}",
+    "greeting": "Sie haben {summary}",
+    "section_overdue": "Überfällig",
+    "section_today": "Heute fällige Arbeitselemente",
+    "work_items": {
+      "one": "{count} Arbeitselement",
+      "other": "{count} Arbeitselemente"
+    },
+    "overdue": {
+      "one": "{count} überfälliges",
+      "other": "{count} überfällige"
+    },
+    "overdue_only": {
+      "one": "{count} überfälliges Arbeitselement",
+      "other": "{count} überfällige Arbeitselemente"
+    },
+    "summary_both": "{today} heute fällig und {overdue}.",
+    "summary_today": "{today} heute fällig ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Sie haben {today} heute fällig und {overdue}",
+    "subject_today": "Sie haben {today} heute fällig ({date})",
+    "subject_overdue": "Sie haben {overdue}",
+    "days_overdue": {
+      "one": "{count} Tag überfällig",
+      "other": "{count} Tage überfällig"
+    },
+    "cta": "Meine Arbeitselemente ansehen",
+    "footer": "Dies ist eine automatische Erinnerung, die jeden Morgen an heute fällige und überfällige Arbeitselemente erinnert."
+  },
+  "project_addition": {
+    "subject": "Sie wurden zu einem Pi-Plane-Projekt eingeladen",
+    "preheader": "{inviter} hat Sie zum Projekt {project} im Arbeitsbereich {workspace} in Pi-Plane eingeladen.",
+    "heading": "Sie wurden zum Projekt {project} in Pi-Plane eingeladen",
+    "intro": "{inviter} hat Sie eingeladen, im Projekt <strong>{project}</strong> im Arbeitsbereich <strong>{workspace}</strong> in Pi-Plane mitzuarbeiten.",
+    "button": "Zum Projekt",
+    "fallback": "Wenn die Schaltfläche nicht funktioniert, kopieren Sie diesen Link und fügen Sie ihn in Ihren Browser ein:",
+    "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet. Wenn Sie diese Einladung nicht erwartet haben, können Sie diese E-Mail ignorieren."
+  },
+  "access_request": {
+    "subject": "{requester} möchte dem Projekt {project} beitreten",
+    "preheader": "{requester} möchte dem privaten Projekt {project} im Arbeitsbereich {workspace} in Pi-Plane beitreten.",
+    "heading": "Zugriffsanfrage für das Projekt {project}",
+    "intro": "<strong>{requester}</strong> möchte dem privaten Projekt <strong>{project}</strong> im Arbeitsbereich <strong>{workspace}</strong> in Pi-Plane beitreten. Sie können die Anfrage in den Mitgliedereinstellungen des Projekts genehmigen oder ablehnen.",
+    "message": "Nachricht:",
+    "button": "Anfrage prüfen",
+    "fallback": "Wenn die Schaltfläche nicht funktioniert, kopieren Sie diesen Link und fügen Sie ihn in Ihren Browser ein:",
+    "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet, weil Sie Administrator oder Leiter dieses Projekts sind."
+  },
+  "access_request_decision": {
+    "subject_approved": "Ihre Anfrage zum Beitritt zu {project} wurde genehmigt",
+    "subject_rejected": "Ihre Anfrage zum Beitritt zu {project} wurde nicht genehmigt",
+    "heading_approved": "Sie haben jetzt Zugriff auf {project}",
+    "heading_rejected": "Ihre Anfrage zum Beitritt zu {project}",
+    "intro_approved": "<strong>{decider}</strong> hat Ihre Anfrage zum Beitritt zum privaten Projekt <strong>{project}</strong> im Arbeitsbereich <strong>{workspace}</strong> in Pi-Plane genehmigt. Sie können es jetzt öffnen.",
+    "intro_rejected": "<strong>{decider}</strong> hat Ihre Anfrage zum Beitritt zum privaten Projekt <strong>{project}</strong> im Arbeitsbereich <strong>{workspace}</strong> in Pi-Plane nicht genehmigt. Wenn Sie das für einen Irrtum halten, wenden Sie sich an einen Projektadministrator.",
+    "button": "Projekt öffnen",
+    "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet, weil Sie den Beitritt zu diesem Projekt angefragt haben."
+  },
+  "one_time_code": {
+    "subject": "Ihr Einmalcode für die Pi-Plane-Anmeldung lautet {code}",
+    "preheader": "Ihr Pi-Plane-Anmeldecode {code} ist 10 Minuten lang gültig.",
+    "heading": "Ihr Anmeldecode für Pi-Plane",
+    "info": "Dieser Code ist die nächsten 10 Minuten gültig. Geben Sie ihn auf der Anmeldeseite ein, um die Anmeldung abzuschließen.",
+    "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet. Wenn Sie keinen Anmeldecode erwartet haben, können Sie diese Nachricht ignorieren."
+  }
+}

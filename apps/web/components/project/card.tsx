@@ -8,6 +8,7 @@
 import React, { useRef, useState } from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
+import { CopyPlus } from "lucide-react";
 import { useParams } from "next/navigation";
 import {
   DeleteOutline,
@@ -49,6 +50,7 @@ import { DeleteProjectModal } from "./delete-project-modal";
 import { JoinProjectModal } from "./join-project-modal";
 import { RequestAccessModal } from "./request-access-modal";
 import { ArchiveRestoreProjectModal } from "./archive-restore-modal";
+import { DuplicateProjectModal } from "./duplicate-project-modal";
 import { useTranslation } from "@plane/i18n";
 import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
@@ -66,6 +68,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
   const [joinProjectModalOpen, setJoinProjectModal] = useState(false);
   const [requestAccessModalOpen, setRequestAccessModalOpen] = useState(false);
   const [restoreProject, setRestoreProject] = useState(false);
+  const [duplicateProjectModalOpen, setDuplicateProjectModalOpen] = useState(false);
   // refs
   const projectCardRef = useRef(null);
   // router
@@ -87,6 +90,7 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
     EUserPermissionsLevel.WORKSPACE
   );
   const isWorkspaceAdmin = allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.WORKSPACE);
+  const canCreateProject = shouldRenderFavorite;
   // auth
   const isMemberOfProject = !!project.member_role;
   // a Private project is locked for everyone but its members and the workspace admins: they ask to get in
@@ -190,6 +194,14 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
       shouldRender: !isArchived,
     },
     {
+      key: "duplicate",
+      action: () => setDuplicateProjectModalOpen(true),
+      title: t("project_components.duplicate_modal.title"),
+      icon: CopyPlus,
+      // the same bar the API sets: an admin of the source who may also create projects
+      shouldRender: !isArchived && hasAdminRole && canCreateProject,
+    },
+    {
       key: "restore",
       action: () => setRestoreProject(true),
       title: t("restore"),
@@ -212,6 +224,11 @@ export const ProjectCard = observer(function ProjectCard(props: Props) {
         project={project}
         isOpen={deleteProjectModalOpen}
         onClose={() => setDeleteProjectModal(false)}
+      />
+      <DuplicateProjectModal
+        project={project}
+        isOpen={duplicateProjectModalOpen}
+        onClose={() => setDuplicateProjectModalOpen(false)}
       />
       {/* Join Project Modal */}
       {workspaceSlug && (

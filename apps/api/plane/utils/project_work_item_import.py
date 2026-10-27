@@ -35,7 +35,10 @@ from plane.db.models import (
 )
 from plane.db.models.project import ROLE
 from plane.utils.html_processor import strip_tags
+from plane.utils.issue_relation_constraints import MAX_LAG_DAYS, TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
+from plane.utils.issue_relation_types import ALL_RELATION_NAMES, MIRRORED_RELATIONS, SYMMETRIC_RELATIONS
+from plane.utils.relation_type_toggles import relation_type_enabled
 from plane.utils.issue_type_property import validate_property_value
 from plane.utils.work_item_duration import (
     normalize_work_item_duration,
@@ -47,23 +50,12 @@ MAX_WORK_ITEMS_IMPORT = 500
 ALLOWED_PRIORITIES = frozenset({"urgent", "high", "medium", "low", "none"})
 DEFAULT_LABEL_COLOR = "#858585"
 ISO_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+# Day-first dates as spreadsheets in Polish locales display them, e.g. 10.09.2026
+DMY_DATE_PATTERN = re.compile(r"^(\d{1,2})\.(\d{1,2})\.(\d{4})$")
 
 # Relation types whose canonical database row points the other way round
-_MIRRORED_RELATIONS = frozenset({"blocking", "start_after", "finish_after", "implements"})
-_ALLOWED_RELATIONS = frozenset(
-    {
-        "blocked_by",
-        "blocking",
-        "relates_to",
-        "duplicate",
-        "start_before",
-        "start_after",
-        "finish_before",
-        "finish_after",
-        "implemented_by",
-        "implements",
-    }
-)
+_MIRRORED_RELATIONS = MIRRORED_RELATIONS
+_ALLOWED_RELATIONS = frozenset(ALL_RELATION_NAMES)
 _IDENTIFIER_PATTERN = re.compile(r"^([A-Za-z0-9]+)-(\d+)$")
 
 _TRUE_TOKENS = frozenset({"1", "true", "yes", "on"})
@@ -160,11 +152,28 @@ def _parse_import_date(value):
             return date.fromisoformat(text).isoformat()
         except ValueError:
             return None
+    dmy = DMY_DATE_PATTERN.match(text)
+    if dmy:
+        try:
+            return date(int(dmy.group(3)), int(dmy.group(2)), int(dmy.group(1))).isoformat()
+        except ValueError:
+            return None
     # Exports always write ISO dates; a spreadsheet may hand back a timestamp instead
     try:
         return datetime.fromisoformat(text.replace("Z", "+00:00")).date().isoformat()
     except ValueError:
         return None
+
+
+def _coerce_lag(value) -> int:
+    """The lag of an exported relation in whole days, within the range the API allows; 0 for anything else."""
+    if isinstance(value, bool) or value in (None, ""):
+        return 0
+    try:
+        lag = int(value)
+    except (TypeError, ValueError):
+        return 0
+    return lag if abs(lag) <= MAX_LAG_DAYS else 0
 
 
 def _coerce_relations(value) -> list[dict]:
@@ -193,7 +202,11 @@ def _coerce_relations(value) -> list[dict]:
             relation_type = "relates_to"
         if not target:
             continue
-        entries.append({"type": relation_type, "issue": target})
+        entry = {"type": relation_type, "issue": target}
+        lag = _coerce_lag(item.get("lag_days")) if isinstance(item, dict) else 0
+        if lag:
+            entry["lag_days"] = lag
+        entries.append(entry)
     return entries
 
 
@@ -720,7 +733,7 @@ def import_work_items_into_project(
             duration_payload = {"start_date": start_date, "target_date": target_date}
             if duration is not None:
                 duration_payload["duration"] = duration
-            derived = reconcile_work_item_duration(None, duration_payload)
+            derived = reconcile_work_item_duration(None, duration_payload, project.weekend_days)
             duration = derived.get("duration", duration)
             if "start_date" in derived:
                 start_date = derived["start_date"]
@@ -945,6 +958,12 @@ def import_work_items_into_project(
                 if relation_type not in _ALLOWED_RELATIONS:
                     warnings.append(f'Work item "{item["external_key"]}": unknown relation "{relation_type}", skipped')
                     continue
+                if not relation_type_enabled(project, relation_type):
+                    warnings.append(
+                        f'Work item "{item["external_key"]}": relation "{relation_type}" is switched off in this '
+                        "project, skipped"
+                    )
+                    continue
                 target = _resolve_target(relation["issue"])
                 if target is None:
                     warnings.append(
@@ -958,7 +977,7 @@ def import_work_items_into_project(
                 # type such as "blocking" is stored as the opposite row with the sides swapped.
                 canonical_type = get_actual_relation(relation_type)
                 source, related = (target, issue) if relation_type in _MIRRORED_RELATIONS else (issue, target)
-                if canonical_type in {"relates_to", "duplicate"}:
+                if canonical_type in SYMMETRIC_RELATIONS:
                     dedupe_key = (canonical_type, *sorted([str(source.id), str(related.id)]))
                 else:
                     dedupe_key = (canonical_type, str(source.id), str(related.id))
@@ -970,6 +989,7 @@ def import_work_items_into_project(
                         issue=source,
                         related_issue=related,
                         relation_type=canonical_type,
+                        lag_days=relation.get("lag_days", 0) if relation_type in TIMELINE_RELATION_TYPES else 0,
                         project=project,
                         workspace=project.workspace,
                         created_by=user,

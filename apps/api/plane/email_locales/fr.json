@@ -1,0 +1,121 @@
+{
+  "format": {
+    "date": "%d/%m/%Y"
+  },
+  "priority": {
+    "urgent": "Urgente",
+    "high": "Haute",
+    "medium": "Moyenne",
+    "low": "Basse",
+    "none": "Aucune"
+  },
+  "issue_updates": {
+    "title": "Mises à jour de {identifier}",
+    "summary": "Des modifications ont été apportées à l’élément de travail par <strong>{actor}</strong>.",
+    "summary_others": "Des modifications ont été apportées à l’élément de travail par <strong>{actor}</strong> et d’autres personnes.",
+    "title_changed": "Le titre de l’élément de travail a été remplacé par {title}",
+    "updates": "Mises à jour",
+    "due_date": "Date d’échéance :",
+    "duplicate": "Doublon :",
+    "assignee": "Assigné :",
+    "labels": "Étiquettes :",
+    "state": "État :",
+    "links": "Liens :",
+    "priority": "Priorité :",
+    "blocking": "Bloque :",
+    "comments": "Commentaires",
+    "more": "+{count} de plus",
+    "links_removed": {
+      "one": "{count} lien a été supprimé",
+      "other": "{count} liens ont été supprimés"
+    },
+    "view": "Voir l’élément de travail",
+    "footer": "Cet e-mail a été envoyé à <a href=\"mailto:{email}\">{email}</a>. Si vous ne souhaitez plus recevoir ce type d’e-mail, <a href=\"{issue_url}\">vous pouvez vous désabonner de cet élément de travail</a> ou <a href=\"{preferences_url}\">gérer vos préférences e-mail</a>."
+  },
+  "digest": {
+    "title": "Récapitulatif des mises à jour",
+    "greeting_named": "Bonjour {name}, vous avez {summary}",
+    "greeting": "Vous avez {summary}",
+    "updates_count": {
+      "one": "{count} mise à jour",
+      "other": "{count} mises à jour"
+    },
+    "summary": {
+      "one": "{updates} dans {count} élément de travail que vous suivez.",
+      "other": "{updates} dans {count} éléments de travail que vous suivez."
+    },
+    "subject": {
+      "one": "Récapitulatif : {updates} dans {count} élément de travail",
+      "other": "Récapitulatif : {updates} dans {count} éléments de travail"
+    },
+    "comments": "commentaires : {count}",
+    "footer": "Ceci est un récapitulatif des mises à jour des éléments de travail. Vous recevez les mentions immédiatement. <a href=\"{preferences_url}\">Modifier les paramètres de notification</a>."
+  },
+  "due_reminder": {
+    "title": "Rappel des éléments de travail",
+    "greeting_named": "Bonjour {name}, vous avez {summary}",
+    "greeting": "Vous avez {summary}",
+    "section_overdue": "En retard",
+    "section_today": "Éléments de travail à rendre aujourd’hui",
+    "work_items": {
+      "one": "{count} élément de travail",
+      "other": "{count} éléments de travail"
+    },
+    "overdue": {
+      "one": "{count} en retard",
+      "other": "{count} en retard"
+    },
+    "overdue_only": {
+      "one": "{count} élément de travail en retard",
+      "other": "{count} éléments de travail en retard"
+    },
+    "summary_both": "{today} à rendre aujourd’hui et {overdue}.",
+    "summary_today": "{today} à rendre aujourd’hui ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Vous avez {today} à rendre aujourd’hui et {overdue}",
+    "subject_today": "Vous avez {today} à rendre aujourd’hui ({date})",
+    "subject_overdue": "Vous avez {overdue}",
+    "days_overdue": {
+      "one": "{count} jour de retard",
+      "other": "{count} jours de retard"
+    },
+    "cta": "Voir mes éléments de travail",
+    "footer": "Ceci est un rappel automatique envoyé chaque matin pour les éléments de travail à rendre aujourd’hui et ceux dont l’échéance est dépassée."
+  },
+  "project_addition": {
+    "subject": "Vous avez été invité à un projet Pi-Plane",
+    "preheader": "{inviter} vous a invité au projet {project} dans l’espace de travail {workspace} sur Pi-Plane.",
+    "heading": "Vous avez été invité au projet {project} sur Pi-Plane",
+    "intro": "{inviter} vous a invité à collaborer sur le projet <strong>{project}</strong> dans l’espace de travail <strong>{workspace}</strong> sur Pi-Plane.",
+    "button": "Accéder au projet",
+    "fallback": "Si le bouton ne fonctionne pas, copiez ce lien et collez-le dans votre navigateur :",
+    "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span>. Si vous n’attendiez pas cette invitation, vous pouvez ignorer cet e-mail."
+  },
+  "access_request": {
+    "subject": "{requester} demande à rejoindre {project}",
+    "preheader": "{requester} demande à rejoindre le projet privé {project} dans l’espace de travail {workspace} sur Pi-Plane.",
+    "heading": "Demande d’accès au projet {project}",
+    "intro": "<strong>{requester}</strong> demande à rejoindre le projet privé <strong>{project}</strong> dans l’espace de travail <strong>{workspace}</strong> sur Pi-Plane. Vous pouvez approuver ou refuser la demande dans les paramètres des membres du projet.",
+    "message": "Message :",
+    "button": "Examiner la demande",
+    "fallback": "Si le bouton ne fonctionne pas, copiez ce lien et collez-le dans votre navigateur :",
+    "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span> parce que vous êtes administrateur ou responsable de ce projet."
+  },
+  "access_request_decision": {
+    "subject_approved": "Votre demande pour rejoindre {project} a été approuvée",
+    "subject_rejected": "Votre demande pour rejoindre {project} n’a pas été approuvée",
+    "heading_approved": "Vous avez maintenant accès à {project}",
+    "heading_rejected": "Votre demande pour rejoindre {project}",
+    "intro_approved": "<strong>{decider}</strong> a approuvé votre demande pour rejoindre le projet privé <strong>{project}</strong> dans l’espace de travail <strong>{workspace}</strong> sur Pi-Plane. Vous pouvez l’ouvrir dès maintenant.",
+    "intro_rejected": "<strong>{decider}</strong> n’a pas approuvé votre demande pour rejoindre le projet privé <strong>{project}</strong> dans l’espace de travail <strong>{workspace}</strong> sur Pi-Plane. Si vous pensez qu’il s’agit d’une erreur, contactez un administrateur du projet.",
+    "button": "Ouvrir le projet",
+    "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span> parce que vous avez demandé à rejoindre ce projet."
+  },
+  "one_time_code": {
+    "subject": "Votre code de connexion à usage unique Pi-Plane est {code}",
+    "preheader": "Votre code de connexion Pi-Plane {code} est valable 10 minutes.",
+    "heading": "Votre code de connexion à Pi-Plane",
+    "info": "Ce code est valable pendant les 10 prochaines minutes. Saisissez-le sur la page de connexion pour terminer votre connexion.",
+    "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span>. Si vous n’attendiez pas de code de connexion, vous pouvez ignorer ce message."
+  }
+}

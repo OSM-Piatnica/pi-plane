@@ -117,6 +117,8 @@
   "comments_description": "Me notifier lorsque quelqu’un laisse un commentaire sur l’élément de travail",
   "mentions": "Mentions",
   "mentions_description": "Me notifier lorsque quelqu’un me mentionne dans les commentaires ou la description",
+  "project_access_requests": "Demandes d’accès",
+  "project_access_requests_description": "M’envoyer un e-mail pour les demandes de participation aux projets privés que j’administre et pour les décisions concernant mes propres demandes.",
   "email_frequency": "Fréquence des e-mails",
   "email_frequency_description": "Choisissez la fréquence à laquelle vous recevez des e-mails sur les mises à jour des éléments de travail. Les mentions sont toujours envoyées immédiatement.",
   "email_frequency_instant": "Immédiatement",
@@ -195,8 +197,8 @@
   "select_network": "Sélectionner le réseau",
   "lead": "Responsable",
   "date_range": "Plage de dates",
-  "private": "Privé",
-  "public": "Public",
+  "private": "Moi uniquement",
+  "public": "Partagé",
   "accessible_only_by_invite": "Accessible uniquement sur invitation",
   "anyone_in_the_workspace_except_guests_can_join": "Tout le monde dans l’espace de travail peut rejoindre, sauf les invités",
   "creating": "Création",
@@ -210,8 +212,8 @@
   "add_to_favorites": "Ajouter aux favoris",
   "remove_from_favorites": "Supprimer des favoris",
   "rename_folder": "Renommer le dossier",
-  "publish_project": "Publier le projet",
-  "publish": "Publier",
+  "publish_project": "Partager sur le web",
+  "publish": "Activer le partage sur le web",
   "copy_link": "Copier le lien",
   "leave_project": "Quitter le projet",
   "join_the_project_to_rearrange": "Rejoignez le projet pour réorganiser",
@@ -532,8 +534,8 @@
     "archiving": "Archivage",
     "archive": "Archiver",
     "access": {
-      "public": "Public",
-      "private": "Privé"
+      "public": "Partagé avec le projet",
+      "private": "Moi uniquement"
     },
     "done": "Terminé",
     "sub_work_items": "Sous-éléments de travail",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "Une erreur s’est produite",
       "inbox_fetch_error": "Erreur lors de la récupération des éléments de travail Intake. Veuillez réessayer plus tard.",
-      "page_make_public_error": "Impossible de rendre la page publique. Veuillez réessayer plus tard.",
-      "page_make_private_error": "Impossible de rendre la page privée. Veuillez réessayer plus tard.",
+      "page_make_public_error": "Impossible de partager la page avec le projet. Veuillez réessayer plus tard.",
+      "page_make_private_error": "Impossible de rendre la page visible uniquement par vous. Veuillez réessayer plus tard.",
       "workflow_pending_approval": "L’élément de travail est en attente d’approbation.",
       "workflow_transition_not_allowed": "Cette transition d’état n’est pas autorisée par le workflow."
     },
@@ -1412,7 +1414,7 @@
       "duration": "Durée"
     },
     "auth_labels": {
-      "magic_code": "Code magique"
+      "one_time_code": "Code à usage unique"
     },
     "state_groups": {
       "canceled": "Annulé"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "Parfait ! Plus qu’une étape.",
-      "description": "Saisissez l’URL publique ou le lien de la vue ou de la Page que vous souhaitez consulter dans la barre d’adresse du navigateur.",
+      "description": "Saisissez dans la barre d’adresse du navigateur le lien partagé de la vue ou de la page que vous souhaitez voir.",
       "image_alt": "Utilisateur déjà connecté"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Renvoyer dans {seconds} s"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "Continuer avec {provider}"
     },
     "issues": {
-      "public_board_not_found": "Le tableau public n’existe pas. Veuillez vérifier l’URL.",
+      "shared_project_load_failed": "Impossible de charger ce projet partagé. Veuillez réessayer plus tard.",
       "cycle_tooltip": "Cycle : {name}",
       "no_cycle": "Aucun Cycle",
       "due_date_tooltip": "Date d’échéance : {date}",

@@ -28,7 +28,7 @@ import { setToast } from "@plane/blocks/toast";
 import { useTranslation } from "@plane/i18n";
 import type { IApiToken } from "@plane/types";
 // hooks
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { useLocalizedDates } from "@/hooks/use-localized-dates";
 // helpers
 type Props = {
@@ -106,7 +106,7 @@ export function CreateApiTokenForm(props: Props) {
   const { t } = useTranslation();
   const { formatDate, formatTime } = useLocalizedDates();
   // store hooks
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
 
   const handleFormSubmit = async (data: IApiToken) => {
     // if never expires is toggled off, and the user has not selected a custom date or a predefined date, show an error
@@ -243,7 +243,7 @@ export function CreateApiTokenForm(props: Props) {
                     placeholder={t("core_ui.set_date")}
                     disabled={neverExpires}
                     clearable
-                    weekStartsOn={userProfile?.start_of_the_week}
+                    weekStartsOn={startOfTheWeek}
                     variant="pill-md"
                   />
                 )}

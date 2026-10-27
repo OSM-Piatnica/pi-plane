@@ -1,0 +1,129 @@
+{
+  "format": {
+    "date": "%d.%m.%Y"
+  },
+  "priority": {
+    "urgent": "Urgentă",
+    "high": "Mare",
+    "medium": "Medie",
+    "low": "Mică",
+    "none": "Fără"
+  },
+  "issue_updates": {
+    "title": "Actualizări pentru {identifier}",
+    "summary": "Activitatea a fost actualizată de <strong>{actor}</strong>.",
+    "summary_others": "Activitatea a fost actualizată de <strong>{actor}</strong> și de alte persoane.",
+    "title_changed": "Titlul activității a fost schimbat în {title}",
+    "updates": "Actualizări",
+    "due_date": "Termen limită:",
+    "duplicate": "Duplicat:",
+    "assignee": "Responsabil:",
+    "labels": "Etichete:",
+    "state": "Stare:",
+    "links": "Linkuri:",
+    "priority": "Prioritate:",
+    "blocking": "Blochează:",
+    "comments": "Comentarii",
+    "more": "+încă {count}",
+    "links_removed": {
+      "one": "A fost eliminat {count} link",
+      "few": "Au fost eliminate {count} linkuri",
+      "other": "Au fost eliminate {count} de linkuri"
+    },
+    "view": "Vezi activitatea",
+    "footer": "Acest e-mail a fost trimis la <a href=\"mailto:{email}\">{email}</a>. Dacă nu doriți să primiți astfel de e-mailuri, <a href=\"{issue_url}\">vă puteți dezabona de la această activitate</a> sau <a href=\"{preferences_url}\">puteți gestiona preferințele de e-mail</a>."
+  },
+  "digest": {
+    "title": "Rezumatul actualizărilor",
+    "greeting_named": "Bună, {name}, aveți {summary}",
+    "greeting": "Aveți {summary}",
+    "updates_count": {
+      "one": "{count} actualizare",
+      "few": "{count} actualizări",
+      "other": "{count} de actualizări"
+    },
+    "summary": {
+      "one": "{updates} într-o activitate pe care o urmăriți.",
+      "few": "{updates} în {count} activități pe care le urmăriți.",
+      "other": "{updates} în {count} de activități pe care le urmăriți."
+    },
+    "subject": {
+      "one": "Rezumat: {updates} într-o activitate",
+      "few": "Rezumat: {updates} în {count} activități",
+      "other": "Rezumat: {updates} în {count} de activități"
+    },
+    "comments": "comentarii: {count}",
+    "footer": "Acesta este un rezumat al actualizărilor activităților. Mențiunile le primiți imediat. <a href=\"{preferences_url}\">Schimbați setările de notificare</a>."
+  },
+  "due_reminder": {
+    "title": "Memento pentru activități",
+    "greeting_named": "Bună, {name}, aveți {summary}",
+    "greeting": "Aveți {summary}",
+    "section_overdue": "Întârziate",
+    "section_today": "Activități cu termen astăzi",
+    "work_items": {
+      "one": "{count} activitate",
+      "few": "{count} activități",
+      "other": "{count} de activități"
+    },
+    "overdue": {
+      "one": "{count} întârziată",
+      "few": "{count} întârziate",
+      "other": "{count} întârziate"
+    },
+    "overdue_only": {
+      "one": "{count} activitate întârziată",
+      "few": "{count} activități întârziate",
+      "other": "{count} de activități întârziate"
+    },
+    "summary_both": "{today} cu termen astăzi și {overdue}.",
+    "summary_today": "{today} cu termen astăzi ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Aveți {today} cu termen astăzi și {overdue}",
+    "subject_today": "Aveți {today} cu termen astăzi ({date})",
+    "subject_overdue": "Aveți {overdue}",
+    "days_overdue": {
+      "one": "{count} zi de întârziere",
+      "few": "{count} zile de întârziere",
+      "other": "{count} de zile de întârziere"
+    },
+    "cta": "Vezi activitățile mele",
+    "footer": "Acesta este un memento automat trimis în fiecare dimineață despre activitățile cu termen astăzi și despre cele care și-au depășit termenul."
+  },
+  "project_addition": {
+    "subject": "Ați fost invitat într-un proiect Pi-Plane",
+    "preheader": "{inviter} v-a invitat în proiectul {project} din spațiul de lucru {workspace} din Pi-Plane.",
+    "heading": "Ați fost invitat în proiectul {project} din Pi-Plane",
+    "intro": "{inviter} v-a invitat să colaborați în proiectul <strong>{project}</strong> din spațiul de lucru <strong>{workspace}</strong> din Pi-Plane.",
+    "button": "Mergi la proiect",
+    "fallback": "Dacă butonul nu funcționează, copiați acest link și lipiți-l în browser:",
+    "note": "Notă: acest e-mail a fost trimis la <span>{email}</span>. Dacă nu vă așteptați la această invitație, puteți ignora acest e-mail."
+  },
+  "access_request": {
+    "subject": "{requester} a cerut să se alăture proiectului {project}",
+    "preheader": "{requester} a cerut să se alăture proiectului privat {project} din spațiul de lucru {workspace} din Pi-Plane.",
+    "heading": "Cerere de acces la proiectul {project}",
+    "intro": "<strong>{requester}</strong> a cerut să se alăture proiectului privat <strong>{project}</strong> din spațiul de lucru <strong>{workspace}</strong> din Pi-Plane. Puteți aproba sau respinge cererea în setările membrilor proiectului.",
+    "message": "Mesaj:",
+    "button": "Examinează cererea",
+    "fallback": "Dacă butonul nu funcționează, copiați acest link și lipiți-l în browser:",
+    "note": "Notă: acest e-mail a fost trimis la <span>{email}</span> deoarece sunteți administrator sau lider al acestui proiect."
+  },
+  "access_request_decision": {
+    "subject_approved": "Cererea ta de a te alătura proiectului {project} a fost aprobată",
+    "subject_rejected": "Cererea ta de a te alătura proiectului {project} nu a fost aprobată",
+    "heading_approved": "Acum ai acces la {project}",
+    "heading_rejected": "Cererea ta de a te alătura proiectului {project}",
+    "intro_approved": "<strong>{decider}</strong> a aprobat cererea ta de a te alătura proiectului privat <strong>{project}</strong> din spațiul de lucru <strong>{workspace}</strong> din Pi-Plane. Îl poți deschide acum.",
+    "intro_rejected": "<strong>{decider}</strong> nu a aprobat cererea ta de a te alătura proiectului privat <strong>{project}</strong> din spațiul de lucru <strong>{workspace}</strong> din Pi-Plane. Dacă crezi că este o greșeală, contactează un administrator al proiectului.",
+    "button": "Deschide proiectul",
+    "note": "Notă: Acest e-mail a fost trimis la <span>{email}</span> deoarece ai cerut să te alături acestui proiect."
+  },
+  "one_time_code": {
+    "subject": "Codul tău de unică folosință pentru autentificarea în Pi-Plane este {code}",
+    "preheader": "Codul tău de autentificare Pi-Plane {code} este valabil 10 minute.",
+    "heading": "Codul tău de autentificare în Pi-Plane",
+    "info": "Acest cod este valabil în următoarele 10 minute. Introdu-l pe pagina de autentificare pentru a finaliza autentificarea.",
+    "note": "Notă: Acest e-mail a fost trimis la <span>{email}</span>. Dacă nu te așteptai la un cod de autentificare, poți ignora acest mesaj."
+  }
+}

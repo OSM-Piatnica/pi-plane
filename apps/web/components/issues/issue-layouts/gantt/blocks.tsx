@@ -11,9 +11,13 @@ import { useParams } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "@makeplane/propel/components/popover";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { ControlLink } from "@plane/blocks/layout";
+import { useTranslation } from "@plane/i18n";
+import type { TTimelineColorBy } from "@plane/types";
+import { GANTT_TIMELINE_TYPE } from "@plane/types";
 import { findTotalDaysInRange, generateWorkItemLink } from "@plane/utils";
 // components
-import { SIDEBAR_WIDTH } from "@/components/gantt-chart/constants";
+import { SIDEBAR_WIDTH_VAR } from "@/components/gantt-chart/constants";
+import { isBlockRolledUp } from "@/components/gantt-chart/views/helpers";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useIssues } from "@/hooks/store/use-issues";
@@ -22,11 +26,14 @@ import { useProjectState } from "@/hooks/store/use-project-state";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import useIssuePeekOverviewRedirection from "@/hooks/use-issue-peek-overview-redirection";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useChartPalette } from "@/hooks/use-chart-palette";
+import { useTimeLineChart } from "@/hooks/use-timeline-chart";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 import { IssueStats } from "@/components/issues/issue-layouts/issue-stats";
 // local imports
 import { WorkItemPreviewCard } from "../../preview-card";
 import { getBlockViewDetails } from "../utils";
+import { getBarColor } from "./bar-color";
 import type { GanttStoreType } from "./base-gantt-root";
 
 type Props = {
@@ -34,8 +41,12 @@ type Props = {
   isEpic?: boolean;
 };
 
-export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
-  const { issueId, isEpic } = props;
+type TGanttBlockProps = Props & {
+  colorBy?: TTimelineColorBy;
+};
+
+export const IssueGanttBlock = observer(function IssueGanttBlock(props: TGanttBlockProps) {
+  const { issueId, isEpic, colorBy } = props;
   // router
   const { workspaceSlug: routerWorkspaceSlug } = useParams();
   const workspaceSlug = routerWorkspaceSlug?.toString();
@@ -45,15 +56,28 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
     issue: { getIssueById },
   } = useIssueDetail();
   // hooks
+  const { getProjectIdentifierById } = useProject();
   const { isMobile } = usePlatformOS();
+  const chartPalette = useChartPalette();
   const { handleRedirection } = useIssuePeekOverviewRedirection(isEpic);
+  const { getBlockById } = useTimeLineChart(GANTT_TIMELINE_TYPE.ISSUE);
+  const { t } = useTranslation();
 
   // derived values
   const issueDetails = getIssueById(issueId);
+  const isRolledUp = isBlockRolledUp(getBlockById(issueId));
   const stateDetails =
     issueDetails && getProjectStates(issueDetails?.project_id)?.find((state) => state?.id == issueDetails?.state_id);
 
-  const { blockStyle } = getBlockViewDetails(issueDetails, stateDetails?.color ?? "");
+  const barColor = getBarColor({
+    colorBy,
+    stateColor: stateDetails?.color,
+    projectIdentifier: getProjectIdentifierById(issueDetails?.project_id),
+    sequenceId: issueDetails?.sequence_id,
+    palette: chartPalette,
+  });
+
+  const { blockStyle } = getBlockViewDetails(issueDetails, barColor ?? "");
 
   const handleIssuePeekOverview = () => handleRedirection(workspaceSlug, issueDetails, isMobile);
 
@@ -73,9 +97,21 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: Props) {
             onClick={handleIssuePeekOverview}
           >
             <div className="absolute top-0 left-0 h-full w-full bg-surface-1/50" />
+            {isRolledUp && (
+              // hatched like a rolled-up bar in project plans: the dates come from the work items below
+              <div
+                aria-hidden
+                title={t("timeline_rollup.rolled_up_bar")}
+                className="absolute top-0 left-0 h-full w-full rounded-sm border border-dashed border-strong"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(135deg, transparent 0 5px, rgba(128, 128, 128, 0.28) 5px 10px)",
+                }}
+              />
+            )}
             <div
               className="sticky w-auto flex-1 truncate overflow-hidden px-2.5 py-1 text-13 text-primary"
-              style={{ left: `${SIDEBAR_WIDTH}px` }}
+              style={{ left: SIDEBAR_WIDTH_VAR }}
             >
               {issueDetails?.name}
             </div>

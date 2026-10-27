@@ -15,6 +15,11 @@ from .base import BaseAPIView
 from plane.app.permissions import ROLE, allow_permission
 from plane.app.serializers import ProjectAccessRequestSerializer
 from plane.db.models import Project, ProjectAccessRequest, ProjectMember, ProjectUserProperty, WorkspaceMember
+from plane.bgtasks.project_access_request_notification_task import (
+    mark_access_request_notifications_read,
+    notify_project_access_request,
+    notify_project_access_request_decision,
+)
 from plane.db.models.project import ProjectNetwork
 
 MESSAGE_MAX_LENGTH = 500
@@ -64,6 +69,8 @@ class ProjectAccessRequestEndpoint(BaseAPIView):
                 project=project, requester=request.user, status=ProjectAccessRequest.PENDING
             )
             return Response(ProjectAccessRequestSerializer(access_request).data, status=status.HTTP_200_OK)
+        # only after the request is committed, so the task finds it
+        transaction.on_commit(lambda: notify_project_access_request.delay(str(access_request.id)))
         return Response(ProjectAccessRequestSerializer(access_request).data, status=status.HTTP_201_CREATED)
 
     @allow_permission([ROLE.ADMIN])
@@ -147,5 +154,8 @@ class ProjectAccessRequestDetailEndpoint(BaseAPIView):
             access_request.decided_by = request.user
             access_request.decided_at = timezone.now()
             access_request.save(update_fields=["status", "decided_by", "decided_at", "updated_at"])
+            mark_access_request_notifications_read(access_request)
+            # only after the decision is committed, so the task finds it
+            transaction.on_commit(lambda: notify_project_access_request_decision.delay(str(access_request.id)))
 
         return Response(ProjectAccessRequestSerializer(access_request).data, status=status.HTTP_200_OK)

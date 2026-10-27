@@ -91,7 +91,7 @@ overrides:
   "serialize-javascript": 7.0.5
   "ajv@6": 6.14.0
   "ajv@8": 8.18.0
-  "undici@7": 7.30.0
+  "undici@7": 7.30.1
   flatted: 3.4.2
   picomatch: 2.3.2
   "yaml@1": 1.10.3
@@ -108,7 +108,7 @@ overrides:
   "ws@8": 8.22.0
   "ws@7": 7.5.13
   "linkify-it": 5.0.2
-  "body-parser": 1.20.8
+  "body-parser": 1.20.9
   "js-yaml@4": 4.3.2
   "sanitize-html": 2.18.1
   compression: 1.8.2
@@ -123,8 +123,18 @@ overrides:
   tinypool: 2.2.0
   "webpack-dev-middleware@6": 7.4.6
   "webpack-dev-middleware@7": 7.4.6
-  "fast-uri@3": 3.1.8
+  "fast-uri@3": 3.1.9
+  # @tiptap/html asks for ^20.8.9; GHSA-834v-8h66-3h79 (code execution through an import alias) is only fixed in 21.0.4.
+  # happy-dom is what turns the stored description HTML into a document on the server (live) and in the editor.
+  happy-dom: 21.0.4
   "prosemirror-model": 1.25.12
+  # All editor consumers must share the same ProseMirror class and plugin identities.
+  "prosemirror-state": 1.4.4
+  "prosemirror-transform": 1.12.3
+  # EXACT pin, bump with @tiptap/core. @tiptap/react's optional menu deps use ^ ranges and would otherwise
+  # resolve ahead of @tiptap/core, leaving their peer unmet.
+  "@tiptap/extension-bubble-menu": 3.32.0
+  "@tiptap/extension-floating-menu": 3.32.0
 
 allowBuilds:
   "@parcel/watcher": true

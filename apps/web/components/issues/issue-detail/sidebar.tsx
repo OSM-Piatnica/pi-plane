@@ -44,7 +44,8 @@ import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useMember } from "@/hooks/store/use-member";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
-import { useUserProfile } from "@/hooks/store/user";
+import { useProjectWeekendDays } from "@/hooks/use-project-weekend-days";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 // components
 import { WorkItemAdditionalSidebarProperties } from "@/components/issues/issue-details/additional-properties";
 import { IssueParentSelectRoot } from "@/components/issues/issue-details/parent-select-root";
@@ -78,8 +79,10 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
   } = useIssueDetail();
   const { getUserDetails } = useMember();
   const { getStateById } = useProjectState();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
   const issue = getIssueById(issueId);
+  // called before the early return below: hooks run in the same order on every render
+  const weekendDays = useProjectWeekendDays(issue?.project_id);
   if (!issue) return <></>;
 
   const createdByDetails = getUserDetails(issue.created_by);
@@ -89,7 +92,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
   const stateDetails = getStateById(issue.state_id);
 
   const updateDurationFields = (change: Partial<Pick<TIssue, "start_date" | "target_date" | "duration">>) =>
-    issueOperations.update(workspaceSlug, projectId, issueId, reconcileWorkItemDuration(issue, change));
+    issueOperations.update(workspaceSlug, projectId, issueId, reconcileWorkItemDuration(issue, change, weekendDays));
 
   return (
     <>
@@ -156,7 +159,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                 }
                 disabled={!isEditable}
                 clearable
-                weekStartsOn={userProfile?.start_of_the_week}
+                weekStartsOn={startOfTheWeek}
                 variant="select-ghost-md"
                 showTooltip
                 tooltipHeading={t("common.order_by.start_date")}
@@ -177,7 +180,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                   className={cn({
                     "text-danger-primary": shouldHighlightIssueDueDate(issue.target_date, stateDetails?.group),
                   })}
-                  weekStartsOn={userProfile?.start_of_the_week}
+                  weekStartsOn={startOfTheWeek}
                   variant="select-ghost-md"
                   showTooltip
                   tooltipHeading={t("common.order_by.due_date")}

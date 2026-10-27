@@ -1,0 +1,48 @@
+{{- /*
+Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+SPDX-License-Identifier: AGPL-3.0-only
+See the LICENSE file for details.
+*/ -}}
+{{- if and .Values.ingress.enabled (not .Values.gateway.enabled) }}
+{{- $host := include "pi-plane.host" . }}
+{{- /* nginx refuses request bodies above 1m unless told otherwise, and uploads through the bundled storage pass
+       through it. An annotation of your own with the same key wins. */ -}}
+{{- $annotations := dict }}
+{{- if eq (.Values.ingress.className | default "") "nginx" }}
+{{- $_ := set $annotations "nginx.ingress.kubernetes.io/proxy-body-size" (printf "%d" (int64 .Values.app.fileSizeLimit)) }}
+{{- end }}
+{{- $annotations = mergeOverwrite $annotations .Values.ingress.annotations }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "pi-plane.fullname" . }}
+  labels:
+    {{- include "pi-plane.labels" . | nindent 4 }}
+  {{- with $annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.ingress.className }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  {{- if .Values.ingress.tls.enabled }}
+  tls:
+    - hosts:
+        - {{ $host | quote }}
+      secretName: {{ required "ingress.tls.secretName is required with ingress.tls.enabled" .Values.ingress.tls.secretName }}
+  {{- end }}
+  rules:
+    - host: {{ $host | quote }}
+      http:
+        paths:
+          {{- range include "pi-plane.routes" . | fromYamlArray }}
+          - path: {{ .path }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "pi-plane.componentName" (dict "root" $ "component" .component) }}
+                port:
+                  number: {{ .port }}
+          {{- end }}
+{{- end }}

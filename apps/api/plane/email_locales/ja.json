@@ -1,0 +1,113 @@
+{
+  "format": {
+    "date": "%Y/%m/%d"
+  },
+  "priority": {
+    "urgent": "緊急",
+    "high": "高",
+    "medium": "中",
+    "low": "低",
+    "none": "なし"
+  },
+  "issue_updates": {
+    "title": "{identifier} の更新",
+    "summary": "<strong>{actor}</strong> さんが作業項目を更新しました。",
+    "summary_others": "<strong>{actor}</strong> さんほか数名が作業項目を更新しました。",
+    "title_changed": "作業項目のタイトルが {title} に変更されました",
+    "updates": "更新",
+    "due_date": "期限:",
+    "duplicate": "重複:",
+    "assignee": "担当者:",
+    "labels": "ラベル:",
+    "state": "ステータス:",
+    "links": "リンク:",
+    "priority": "優先度:",
+    "blocking": "ブロック:",
+    "comments": "コメント",
+    "more": "ほか {count} 件",
+    "links_removed": {
+      "other": "{count} 件のリンクが削除されました"
+    },
+    "view": "作業項目を表示",
+    "footer": "このメールは <a href=\"mailto:{email}\">{email}</a> 宛てに送信されました。この種のメールを受け取りたくない場合は、<a href=\"{issue_url}\">この作業項目の購読を解除</a>するか、<a href=\"{preferences_url}\">メールの設定を管理</a>してください。"
+  },
+  "digest": {
+    "title": "更新のまとめ",
+    "greeting_named": "{name} さん、フォロー中の{summary}",
+    "greeting": "フォロー中の{summary}",
+    "updates_count": {
+      "other": "{count} 件の更新"
+    },
+    "summary": {
+      "other": "作業項目 {count} 件に {updates} があります。"
+    },
+    "subject": {
+      "other": "まとめ: 作業項目 {count} 件に {updates}"
+    },
+    "comments": "コメント: {count} 件",
+    "footer": "これは作業項目の更新のまとめです。メンションはすぐにお届けします。<a href=\"{preferences_url}\">通知設定を変更</a>。"
+  },
+  "due_reminder": {
+    "title": "作業項目のリマインダー",
+    "greeting_named": "{name} さん、{summary}",
+    "greeting": "{summary}",
+    "section_overdue": "期限切れ",
+    "section_today": "本日が期限の作業項目",
+    "work_items": {
+      "other": "{count} 件の作業項目"
+    },
+    "overdue": {
+      "other": "期限切れ {count} 件"
+    },
+    "overdue_only": {
+      "other": "期限切れの作業項目 {count} 件"
+    },
+    "summary_both": "本日が期限の{today}と{overdue}があります。",
+    "summary_today": "本日が期限の{today}があります（{date}）。",
+    "summary_overdue": "{overdue}があります。",
+    "subject_both": "本日が期限の{today}と{overdue}があります",
+    "subject_today": "本日が期限の{today}があります（{date}）",
+    "subject_overdue": "{overdue}があります",
+    "days_overdue": {
+      "other": "{count} 日超過"
+    },
+    "cta": "自分の作業項目を表示",
+    "footer": "これは、本日が期限の作業項目と期限を過ぎた作業項目について毎朝送信される自動リマインダーです。"
+  },
+  "project_addition": {
+    "subject": "Pi-Plane のプロジェクトに招待されました",
+    "preheader": "{inviter} さんが Pi-Plane のワークスペース {workspace} のプロジェクト {project} に招待しました。",
+    "heading": "Pi-Plane のプロジェクト {project} に招待されました",
+    "intro": "{inviter} さんが Pi-Plane のワークスペース <strong>{workspace}</strong> のプロジェクト <strong>{project}</strong> での共同作業にあなたを招待しました。",
+    "button": "プロジェクトを開く",
+    "fallback": "ボタンが機能しない場合は、このリンクをコピーしてブラウザーに貼り付けてください。",
+    "note": "注: このメールは <span>{email}</span> 宛てに送信されました。この招待に心当たりがない場合は、このメールを無視してください。"
+  },
+  "access_request": {
+    "subject": "{requester} さんが {project} への参加をリクエストしました",
+    "preheader": "{requester} さんが Pi-Plane のワークスペース {workspace} のプライベートプロジェクト {project} への参加をリクエストしました。",
+    "heading": "プロジェクト {project} へのアクセスリクエスト",
+    "intro": "<strong>{requester}</strong> さんが Pi-Plane のワークスペース <strong>{workspace}</strong> のプライベートプロジェクト <strong>{project}</strong> への参加をリクエストしました。リクエストは、プロジェクトのメンバー設定で承認または却下できます。",
+    "message": "メッセージ:",
+    "button": "リクエストを確認",
+    "fallback": "ボタンが機能しない場合は、このリンクをコピーしてブラウザーに貼り付けてください。",
+    "note": "注: このメールは、あなたがこのプロジェクトの管理者またはリーダーであるため、<span>{email}</span> 宛てに送信されました。"
+  },
+  "access_request_decision": {
+    "subject_approved": "{project} への参加リクエストが承認されました",
+    "subject_rejected": "{project} への参加リクエストは承認されませんでした",
+    "heading_approved": "{project} にアクセスできるようになりました",
+    "heading_rejected": "{project} への参加リクエスト",
+    "intro_approved": "<strong>{decider}</strong> さんが、Pi-Plane のワークスペース <strong>{workspace}</strong> のプライベートプロジェクト <strong>{project}</strong> への参加リクエストを承認しました。プロジェクトを開けます。",
+    "intro_rejected": "<strong>{decider}</strong> さんは、Pi-Plane のワークスペース <strong>{workspace}</strong> のプライベートプロジェクト <strong>{project}</strong> への参加リクエストを承認しませんでした。誤りだと思われる場合は、プロジェクト管理者にお問い合わせください。",
+    "button": "プロジェクトを開く",
+    "note": "注: このメールは、あなたがこのプロジェクトへの参加をリクエストしたため、<span>{email}</span> に送信されました。"
+  },
+  "one_time_code": {
+    "subject": "Pi-Plane のワンタイムログインコードは {code} です",
+    "preheader": "Pi-Plane のログインコード {code} は 10 分間有効です。",
+    "heading": "Pi-Plane のログインコード",
+    "info": "このコードは今後 10 分間有効です。ログインページに入力してログインを完了してください。",
+    "note": "注: このメールは <span>{email}</span> に送信されました。ログインコードに心当たりがない場合は、このメッセージを無視してください。"
+  }
+}

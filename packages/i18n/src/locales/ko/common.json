@@ -117,6 +117,8 @@
   "comments_description": "작업 항목에 누군가 댓글을 남길 때 알림을 받습니다",
   "mentions": "멘션",
   "mentions_description": "댓글이나 설명에서 누군가 나를 멘션할 때 알림을 받습니다",
+  "project_access_requests": "액세스 요청",
+  "project_access_requests_description": "내가 관리하는 비공개 프로젝트의 참여 요청과 내 요청에 대한 결정을 이메일로 보내 주세요.",
   "email_frequency": "이메일 빈도",
   "email_frequency_description": "작업 항목 업데이트에 대한 이메일을 받을 빈도를 선택하세요. 멘션은 항상 즉시 전송됩니다.",
   "email_frequency_instant": "즉시",
@@ -195,8 +197,8 @@
   "select_network": "네트워크 선택",
   "lead": "리드",
   "date_range": "날짜 범위",
-  "private": "비공개",
-  "public": "공개",
+  "private": "나만",
+  "public": "공유됨",
   "accessible_only_by_invite": "초대에 의해서만 접근 가능",
   "anyone_in_the_workspace_except_guests_can_join": "게스트를 제외한 작업 공간의 모든 사람이 참여할 수 있습니다",
   "creating": "생성 중",
@@ -210,8 +212,8 @@
   "add_to_favorites": "즐겨찾기에 추가",
   "remove_from_favorites": "즐겨찾기에서 제거",
   "rename_folder": "폴더 이름 바꾸기",
-  "publish_project": "프로젝트 게시",
-  "publish": "게시",
+  "publish_project": "웹에서 공유",
+  "publish": "웹 공유 켜기",
   "copy_link": "링크 복사",
   "leave_project": "프로젝트 떠나기",
   "join_the_project_to_rearrange": "프로젝트에 참여하여 재정렬",
@@ -532,8 +534,8 @@
     "archiving": "아카이브 중",
     "archive": "아카이브",
     "access": {
-      "public": "공개",
-      "private": "비공개"
+      "public": "프로젝트와 공유됨",
+      "private": "나만"
     },
     "done": "완료",
     "sub_work_items": "하위 작업 항목",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "오류가 발생했습니다",
       "inbox_fetch_error": "Intake 작업 항목을 가져오는 중 오류가 발생했습니다. 나중에 다시 시도하세요.",
-      "page_make_public_error": "페이지를 공개로 전환할 수 없습니다. 나중에 다시 시도하세요.",
-      "page_make_private_error": "페이지를 비공개로 전환할 수 없습니다. 나중에 다시 시도하세요.",
+      "page_make_public_error": "페이지를 프로젝트와 공유하지 못했습니다. 나중에 다시 시도해 주세요.",
+      "page_make_private_error": "페이지를 나만 볼 수 있게 하지 못했습니다. 나중에 다시 시도해 주세요.",
       "workflow_pending_approval": "작업 항목에 대기 중인 승인이 있습니다.",
       "workflow_transition_not_allowed": "이 상태 전환은 워크플로에서 허용되지 않습니다."
     },
@@ -1412,7 +1414,7 @@
       "duration": "기간"
     },
     "auth_labels": {
-      "magic_code": "매직 코드"
+      "one_time_code": "일회용 코드"
     },
     "state_groups": {
       "canceled": "취소됨"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "좋아요! 한 단계만 더 남았습니다.",
-      "description": "보려는 뷰 또는 페이지의 공개 공유 URL 또는 링크를 브라우저 주소 표시줄에 입력하세요.",
+      "description": "보려는 보기 또는 페이지의 공유 링크를 브라우저 주소 표시줄에 입력하세요.",
       "image_alt": "사용자가 이미 로그인되어 있습니다"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "{seconds}초 후 재전송"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "{provider}(으)로 계속"
     },
     "issues": {
-      "public_board_not_found": "공개 보드가 존재하지 않습니다. URL을 확인하세요.",
+      "shared_project_load_failed": "이 공유 프로젝트를 불러오지 못했습니다. 나중에 다시 시도하세요.",
       "cycle_tooltip": "사이클: {name}",
       "no_cycle": "사이클 없음",
       "due_date_tooltip": "마감일: {date}",

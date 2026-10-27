@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Unikalny kod",
+            "label": "Kod jednorazowy",
             "placeholder": "123456",
             "helper_text": "Kod weryfikacyjny wysłano na nowy e-mail.",
             "errors": {
-              "required": "Unikalny kod jest wymagany",
+              "required": "Kod jednorazowy jest wymagany",
               "invalid": "Nieprawidłowy kod weryfikacyjny. Spróbuj ponownie."
             }
           }
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Procent ukończenia",
+    "first_day_project_default": "Domyślnie jak w projekcie",
     "first_day_updated": "Pierwszy dzień tygodnia został zaktualizowany",
     "try_again_later": "Spróbuj ponownie później.",
     "update_failed": "Aktualizacja nie powiodła się",

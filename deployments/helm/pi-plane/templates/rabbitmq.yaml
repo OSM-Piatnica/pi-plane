@@ -1,0 +1,97 @@
+{{- /*
+Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+SPDX-License-Identifier: AGPL-3.0-only
+See the LICENSE file for details.
+*/ -}}
+{{- if .Values.rabbitmq.enabled }}
+{{- $comp := dict "root" . "component" "rabbitmq" }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "pi-plane.componentName" $comp }}
+  labels:
+    {{- include "pi-plane.labels" . | nindent 4 }}
+    app.kubernetes.io/component: rabbitmq
+spec:
+  replicas: 1
+  serviceName: {{ include "pi-plane.componentName" $comp }}
+  selector:
+    matchLabels:
+      {{- include "pi-plane.selectorLabels" $comp | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "pi-plane.labels" . | nindent 8 }}
+        app.kubernetes.io/component: rabbitmq
+    spec:
+      serviceAccountName: {{ include "pi-plane.serviceAccountName" . }}
+      automountServiceAccountToken: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: rabbitmq
+          image: "{{ .Values.rabbitmq.image.repository }}:{{ .Values.rabbitmq.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: amqp
+              containerPort: 5672
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: {{ .Values.rabbitmq.username | quote }}
+            - name: RABBITMQ_DEFAULT_VHOST
+              value: {{ .Values.rabbitmq.vhost | quote }}
+            - name: RABBITMQ_DEFAULT_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "pi-plane.secretName" . }}
+                  key: RABBITMQ_PASSWORD
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/rabbitmq
+          readinessProbe:
+            exec:
+              command: ["rabbitmq-diagnostics", "-q", "ping"]
+            periodSeconds: 15
+            timeoutSeconds: 10
+          livenessProbe:
+            exec:
+              command: ["rabbitmq-diagnostics", "-q", "ping"]
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 6
+          securityContext:
+            allowPrivilegeEscalation: false
+          resources:
+            {{- toYaml .Values.rabbitmq.resources | nindent 12 }}
+      {{- include "pi-plane.scheduling" .Values.rabbitmq | nindent 6 }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        {{- with .Values.rabbitmq.storage.className }}
+        storageClassName: {{ . | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.rabbitmq.storage.size }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pi-plane.componentName" $comp }}
+  labels:
+    {{- include "pi-plane.labels" . | nindent 4 }}
+    app.kubernetes.io/component: rabbitmq
+spec:
+  selector:
+    {{- include "pi-plane.selectorLabels" $comp | nindent 4 }}
+  ports:
+    - name: amqp
+      port: 5672
+      targetPort: amqp
+{{- end }}

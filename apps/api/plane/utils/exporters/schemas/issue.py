@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from collections import defaultdict
@@ -190,20 +191,21 @@ class IssueExportSchema(ExportSchema):
         return f"{i.parent.project.identifier}-{i.parent.sequence_id}"
 
     def prepare_relations(self, i):
-        # Should show reverse relation as well
+        # Should show reverse relation as well. A relation type can hold several work items, and one of them can
+        # carry a lag, written after the identifier: "PRJ-1 (lag 2d)".
         from plane.db.models.issue import IssueRelationChoices
 
-        relations = {
-            r.relation_type: f"{r.related_issue.project.identifier}-{r.related_issue.sequence_id}"
-            for r in i.issue_relation.all()
-        }
-        reverse_relations = {}
+        def reference(work_item, relation):
+            ref = f"{work_item.project.identifier}-{work_item.sequence_id}"
+            return f"{ref} (lag {relation.lag_days}d)" if relation.lag_days else ref
+
+        grouped = {}
+        for relation in i.issue_relation.all():
+            grouped.setdefault(relation.relation_type, []).append(reference(relation.related_issue, relation))
         for relation in i.issue_related.all():
-            reverse_relations[IssueRelationChoices._REVERSE_MAPPING[relation.relation_type]] = (
-                f"{relation.issue.project.identifier}-{relation.issue.sequence_id}"
-            )
-        relations.update(reverse_relations)
-        return relations
+            reverse = IssueRelationChoices._REVERSE_MAPPING[relation.relation_type]
+            grouped.setdefault(reverse, []).append(reference(relation.issue, relation))
+        return {relation_type: ", ".join(items) for relation_type, items in grouped.items()}
 
     @classmethod
     def get_context_data(cls, queryset: QuerySet) -> Dict[str, Any]:

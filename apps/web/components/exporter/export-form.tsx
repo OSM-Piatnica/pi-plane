@@ -14,6 +14,7 @@ import {
   EUserPermissions,
   EUserPermissionsLevel,
   EXPORTERS_LIST,
+  ISSUE_EXPORT_FIELD_GROUPS,
   // ISSUE_DISPLAY_FILTERS_BY_PAGE,
 } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
@@ -28,7 +29,10 @@ import { buildIssueExportPayload } from "@/helpers/export-payload-helpers";
 import { getApiErrorMessage, type ApiErrorLike } from "@/helpers/api-error";
 // import { WorkItemFiltersRow } from "@/components/work-item-filters/filters-row";
 // components
+import { GroupedOptionPicker } from "@/components/common/grouped-option-picker";
 import { ProjectSelect } from "@/components/dropdowns/project/project-select";
+import { getOptionKeys } from "@/helpers/option-groups";
+import type { TOptionGroup } from "@/helpers/option-groups";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
@@ -47,6 +51,7 @@ type FormData = {
   project: string[];
   multiple: boolean;
   filters: TWorkItemFilterExpression;
+  columns: string[];
 };
 
 // const initialWorkItemFilters = {
@@ -60,6 +65,9 @@ type FormData = {
 // };
 
 const projectExportService = new ProjectExportService();
+
+type TColumnGroupKey = keyof typeof ISSUE_EXPORT_FIELD_GROUPS;
+const COLUMN_GROUP_KEYS = Object.keys(ISSUE_EXPORT_FIELD_GROUPS) as TColumnGroupKey[];
 
 export const ExportForm = observer(function ExportForm(props: Props) {
   // props
@@ -79,6 +87,8 @@ export const ExportForm = observer(function ExportForm(props: Props) {
       project: [],
       multiple: false,
       filters: {},
+      // every optional column, as the file holds them all unless told otherwise
+      columns: COLUMN_GROUP_KEYS.flatMap((key) => [...ISSUE_EXPORT_FIELD_GROUPS[key]]),
     },
   });
 
@@ -89,6 +99,14 @@ export const ExportForm = observer(function ExportForm(props: Props) {
     ? intersection(workspaceProjectIds, Object.keys(projectsWithCreatePermissions))
     : [];
   const wsProjectIdsWithCreatePermissionsSet = new Set(wsProjectIdsWithCreatePermisisons);
+  const columnGroups: TOptionGroup[] = COLUMN_GROUP_KEYS.map((groupKey) => ({
+    key: groupKey,
+    label: t(`workspace_settings.settings.exports.columns.groups.${groupKey}`),
+    options: ISSUE_EXPORT_FIELD_GROUPS[groupKey].map((field) => ({
+      key: field,
+      label: t(`workspace_settings.settings.exports.columns.fields.${field}`),
+    })),
+  }));
   const exporterOptions = EXPORTERS_LIST.map((service) => ({
     label: t(service.i18n_title),
     value: service.provider,
@@ -98,7 +116,10 @@ export const ExportForm = observer(function ExportForm(props: Props) {
   async function ExportCSVToMail(formData: FormData) {
     setExportLoading(true);
     if (workspaceSlug && user) {
-      const payload = buildIssueExportPayload(formData);
+      const payload = buildIssueExportPayload({
+        ...formData,
+        columns: { selected: formData.columns, available: getOptionKeys(columnGroups) },
+      });
       try {
         await projectExportService.csvExport(workspaceSlug, payload);
         mutateServices();
@@ -226,6 +247,31 @@ export const ExportForm = observer(function ExportForm(props: Props) {
             />
           }
         />
+        {/* Columns */}
+        <div className="flex w-full flex-col gap-3 px-4 py-3">
+          <div className="flex flex-col gap-1">
+            <h4 className="text-body-sm-medium text-primary">
+              {t("workspace_settings.settings.exports.columns.heading")}
+            </h4>
+            <p className="text-13 text-secondary">{t("workspace_settings.settings.exports.columns.description")}</p>
+          </div>
+          <Controller
+            control={control}
+            name="columns"
+            disabled={!isMember && (!hasProjects || !canPerformAnyCreateAction)}
+            render={({ field: { value, onChange, disabled } }) => (
+              <GroupedOptionPicker
+                groups={columnGroups}
+                value={value}
+                onChange={onChange}
+                idPrefix="export-column"
+                selectAllLabel={t("workspace_settings.settings.exports.columns.select_all")}
+                clearAllLabel={t("workspace_settings.settings.exports.columns.clear_all")}
+                disabled={disabled}
+              />
+            )}
+          />
+        </div>
       </SettingsBoxedSection>
       {/* Rich Filters */}
       {/* <div className="w-full">

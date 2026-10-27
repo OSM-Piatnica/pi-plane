@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
@@ -42,6 +43,46 @@ export const IssueRelationActivity = observer(function IssueRelationActivity(pro
         return isAdded
           ? t("activity_feed.issue.relation.duplicate.added")
           : t("activity_feed.issue.relation.duplicate.removed");
+      case "implements":
+        return isAdded
+          ? t("activity_feed.issue.relation.implements.added")
+          : t("activity_feed.issue.relation.implements.removed");
+      case "implemented_by":
+        return isAdded
+          ? t("activity_feed.issue.relation.implemented_by.added")
+          : t("activity_feed.issue.relation.implemented_by.removed");
+      case "causes":
+        return isAdded
+          ? t("activity_feed.issue.relation.causes.added")
+          : t("activity_feed.issue.relation.causes.removed");
+      case "caused_by":
+        return isAdded
+          ? t("activity_feed.issue.relation.caused_by.added")
+          : t("activity_feed.issue.relation.caused_by.removed");
+      case "clones":
+        return isAdded
+          ? t("activity_feed.issue.relation.clones.added")
+          : t("activity_feed.issue.relation.clones.removed");
+      case "cloned_by":
+        return isAdded
+          ? t("activity_feed.issue.relation.cloned_by.added")
+          : t("activity_feed.issue.relation.cloned_by.removed");
+      case "tests":
+        return isAdded
+          ? t("activity_feed.issue.relation.tests.added")
+          : t("activity_feed.issue.relation.tests.removed");
+      case "tested_by":
+        return isAdded
+          ? t("activity_feed.issue.relation.tested_by.added")
+          : t("activity_feed.issue.relation.tested_by.removed");
+      case "start_before_finish":
+        return isAdded
+          ? t("activity_feed.issue.relation.start_before_finish.added")
+          : t("activity_feed.issue.relation.start_before_finish.removed");
+      case "finish_after_start":
+        return isAdded
+          ? t("activity_feed.issue.relation.finish_after_start.added")
+          : t("activity_feed.issue.relation.finish_after_start.removed");
       case "relates_to":
         return isAdded
           ? t("activity_feed.issue.relation.relates_to.added")

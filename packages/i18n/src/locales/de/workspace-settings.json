@@ -95,6 +95,49 @@
               "message": "Bitte versuchen Sie es erneut."
             }
           }
+        },
+        "columns": {
+          "heading": "Spalten",
+          "description": "Wählen Sie, welche Spalten die Datei enthält. Kennung und Name sind immer enthalten, da die Datei sonst nicht erneut importiert werden könnte.",
+          "select_all": "Alle auswählen",
+          "clear_all": "Alle abwählen",
+          "groups": {
+            "details": "Details",
+            "people": "Personen",
+            "dates": "Termine",
+            "organization": "Organisation",
+            "relations": "Hierarchie und Beziehungen",
+            "other": "Sonstiges"
+          },
+          "fields": {
+            "project_name": "Projektname",
+            "project_identifier": "Projektkennung",
+            "sequence_id": "Laufende Nummer",
+            "issue_type": "Arbeitselementtyp",
+            "state_name": "Status",
+            "priority": "Priorität",
+            "description_html": "Beschreibung",
+            "estimate": "Schätzung",
+            "is_draft": "Entwurfskennzeichen",
+            "assignees": "Zugewiesene",
+            "subscribers": "Abonnenten",
+            "created_by_name": "Erstellt von",
+            "start_date": "Startdatum",
+            "target_date": "Fälligkeitsdatum",
+            "duration": "Dauer",
+            "completed_at": "Abgeschlossen am",
+            "created_at": "Erstellt am",
+            "updated_at": "Aktualisiert am",
+            "archived_at": "Archiviert am",
+            "labels": "Labels",
+            "cycles": "Zyklen",
+            "modules": "Module",
+            "parent": "Übergeordnet",
+            "relations": "Beziehungen",
+            "links": "Links",
+            "custom_properties": "Benutzerdefinierte Eigenschaften",
+            "comments": "Kommentare"
+          }
         }
       },
       "webhooks": {

@@ -17,6 +17,7 @@ import type {
   TProject,
   TPartialProject,
   TProjectAccessRequest,
+  TProjectDuplicatePayload,
 } from "@plane/types";
 // helpers
 import { orderProjects, shouldFilterProject } from "@plane/utils";
@@ -78,6 +79,7 @@ export interface IProjectStore {
   // CRUD actions
   createProject: (workspaceSlug: string, data: Partial<TProject>) => Promise<TProject>;
   updateProject: (workspaceSlug: string, projectId: string, data: Partial<TProject>) => Promise<TProject>;
+  duplicateProject: (workspaceSlug: string, projectId: string, data: TProjectDuplicatePayload) => Promise<TProject>;
   requestProjectAccess: (workspaceSlug: string, projectId: string, message?: string) => Promise<TProjectAccessRequest>;
   deleteProject: (workspaceSlug: string, projectId: string) => Promise<void>;
   // archive actions
@@ -139,6 +141,7 @@ export class ProjectStore implements IProjectStore {
       // CRUD actions
       createProject: action,
       updateProject: action,
+      duplicateProject: action,
       requestProjectAccess: action,
       // collapsible actions
       setOpenCollapsibleSection: action,
@@ -551,6 +554,19 @@ export class ProjectStore implements IProjectStore {
       console.log("Failed to create project from project store");
       throw error;
     }
+  };
+
+  /**
+   * Copies a project's configuration into a new project and adds it to the store
+   * @param workspaceSlug
+   * @param projectId the project to copy
+   * @param data name, identifier and what to include
+   * @returns Promise<TProject> the new project
+   */
+  duplicateProject = async (workspaceSlug: string, projectId: string, data: TProjectDuplicatePayload) => {
+    const response = await this.projectService.duplicateProject(workspaceSlug, projectId, data);
+    this.processProjectAfterCreation(workspaceSlug, response);
+    return response;
   };
 
   /**

@@ -72,8 +72,8 @@
         "description": "Seiten in Pi-Plane ermöglichen es Ihnen, Projektinformationen zu erfassen, zu organisieren und daran zusammenzuarbeiten—ohne externe Tools."
       },
       "step_one": {
-        "title": "Seite als Öffentlich oder Privat festlegen",
-        "description": "Seiten können als öffentlich festgelegt werden, sichtbar für alle in Ihrem Arbeitsbereich, oder privat, nur für Sie zugänglich."
+        "title": "Eine Seite teilen oder für dich behalten",
+        "description": "Seiten können mit allen im Projekt geteilt werden oder nur für dich sichtbar bleiben."
       },
       "step_two": {
         "title": "/ Befehl verwenden",

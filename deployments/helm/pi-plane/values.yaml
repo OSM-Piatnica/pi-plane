@@ -1,0 +1,262 @@
+# Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+
+# Pi-Plane Helm chart: default values.
+#
+# The defaults run a complete, self-contained installation (bundled PostgreSQL, Valkey, RabbitMQ and MinIO) that
+# is meant for evaluation. For production, point the chart at managed services (see examples/production-values.yaml).
+
+nameOverride: ""
+fullnameOverride: ""
+
+# The single address the installation is reached at, without a trailing slash. Everything is served from it:
+# the app at /, the admin at /god-mode, public boards at /spaces, collaboration at /live and the API at /api.
+publicUrl: ""
+
+image:
+  # "-<component>" (web, space, admin, live, api) is appended: ghcr.io/osm-piatnica/pi-plane-api, ...
+  repository: ghcr.io/osm-piatnica/pi-plane
+  # Defaults to the chart's appVersion. Pin a digest or another release here.
+  tag: ""
+  pullPolicy: IfNotPresent
+imagePullSecrets: []
+
+serviceAccount:
+  # One account for every workload; it has no permissions and its token is not mounted
+  create: true
+  name: ""
+  annotations: {}
+
+# --------------------------------------------------------------------------------------------------------------
+# Public routing
+# --------------------------------------------------------------------------------------------------------------
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  # With tls.enabled the host of publicUrl is covered by the named Secret (create it yourself or let
+  # cert-manager do it through annotations)
+  tls:
+    enabled: false
+    secretName: ""
+
+# Gateway API instead of an Ingress: renders HTTPRoutes that attach to a Gateway you manage (listeners, TLS and
+# request-body limits are the Gateway's business). Disables the Ingress.
+gateway:
+  enabled: false
+  parentRefs: []
+  #  - name: shared-gateway
+  #    namespace: gateway
+  #    sectionName: https
+
+# --------------------------------------------------------------------------------------------------------------
+# Credentials
+# --------------------------------------------------------------------------------------------------------------
+secrets:
+  # Name of an existing Secret to use instead of a generated one. It needs the keys SECRET_KEY,
+  # LIVE_SERVER_SECRET_KEY, AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY, plus POSTGRES_PASSWORD when the bundled
+  # PostgreSQL is on and RABBITMQ_PASSWORD when the bundled RabbitMQ is on.
+  #
+  # Without it the chart generates the values on first install and keeps them across upgrades (it reads the
+  # Secret it created). `helm template` and `helm install --dry-run` cannot see the cluster and print fresh
+  # values every time. The generated Secret is kept when the release is uninstalled.
+  existingSecret: ""
+
+# --------------------------------------------------------------------------------------------------------------
+# Application settings (the API, its workers and migrations)
+# --------------------------------------------------------------------------------------------------------------
+app:
+  debug: false
+  gunicornWorkers: 2
+  # Largest upload in bytes; also the request-body limit the ingress is told about
+  fileSizeLimit: 5242880
+  # Throttles. Authentication is counted per client IP, so an office behind one address shares the budget.
+  authenticationRateLimit: "1000/minute"
+  apiKeyRateLimit: "60/minute"
+  anonRateLimit: "180/minute"
+  # Number of reverse proxies in front of the API (the ingress controller counts as one); used to read the
+  # client IP from X-Forwarded-For for the throttles above. Leave empty to keep the default.
+  numProxies: ""
+  # Browser origins other than publicUrl that may send cookie-authenticated writes
+  extraCorsOrigins: []
+  # Outbound webhooks may only reach these (comma separated); empty keeps the application default
+  webhookAllowedIps: ""
+  webhookAllowedHosts: ""
+  # Any further plain setting of the API, e.g. SMTP or sign-in settings (see apps/api/.env.example and
+  # docs/sso.md). They are read once into the instance configuration; afterwards God Mode wins.
+  env: {}
+  #  ENABLE_SIGNUP: "0"
+  #  EMAIL_HOST: smtp.example.com
+  # Settings that are secret (client secrets, passwords) come from Secrets you own, in the same way
+  envFrom: []
+  #  - secretRef:
+  #      name: pi-plane-sso
+
+# --------------------------------------------------------------------------------------------------------------
+# Application components
+# --------------------------------------------------------------------------------------------------------------
+# Every component takes: resources, nodeSelector, tolerations, affinity, podAnnotations and env (extra container
+# env entries). Also replicas, except `beat` (always one pod), and pdb (a PodDisruptionBudget; leave off for a single
+# replica) for api, live, web, space and admin only.
+api:
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  podAnnotations: {}
+  env: []
+  pdb: { enabled: false, minAvailable: 1 }
+  # The first start runs collectstatic and registers the instance, which can be slow
+  startupFailureThreshold: 60
+
+worker:
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  podAnnotations: {}
+  env: []
+
+# Runs the scheduled jobs; there must be exactly one
+beat:
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  podAnnotations: {}
+  env: []
+
+# A Job per release revision applies the database migrations; the API and the workers wait for it
+migrator:
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  podAnnotations: {}
+  env: []
+  backoffLimit: 6
+  activeDeadlineSeconds: 1800
+
+live:
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  podAnnotations: {}
+  env: []
+  pdb: { enabled: false, minAvailable: 1 }
+
+web:
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  podAnnotations: {}
+  env: []
+  pdb: { enabled: false, minAvailable: 1 }
+
+space:
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  podAnnotations: {}
+  env: []
+  pdb: { enabled: false, minAvailable: 1 }
+
+admin:
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  podAnnotations: {}
+  env: []
+  pdb: { enabled: false, minAvailable: 1 }
+
+# --------------------------------------------------------------------------------------------------------------
+# Stateful services. Each is bundled by default; turn it off and fill in `external` to use your own.
+# --------------------------------------------------------------------------------------------------------------
+postgresql:
+  enabled: true
+  image: { repository: postgres, tag: 15.7-alpine }
+  database: plane
+  username: plane
+  maxConnections: 1000
+  storage: { size: 10Gi, className: "" }
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  # With enabled=false give the full connection URL (postgresql://user:password@host:5432/db), inline or from a
+  # Secret you own. Percent-encode special characters in the password.
+  external:
+    url: ""
+    urlSecret: { name: "", key: "" }
+
+valkey:
+  enabled: true
+  image: { repository: valkey/valkey, tag: 7.2.11-alpine }
+  storage: { size: 1Gi, className: "" }
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  # redis:// or rediss:// (TLS is verified by default; see REDIS_SSL_CA_CERTS in apps/api/.env.example)
+  external:
+    url: ""
+    urlSecret: { name: "", key: "" }
+
+rabbitmq:
+  enabled: true
+  image: { repository: rabbitmq, tag: 3.13.6-management-alpine }
+  username: plane
+  vhost: plane
+  storage: { size: 2Gi, className: "" }
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  external:
+    url: ""
+    urlSecret: { name: "", key: "" }
+
+objectStorage:
+  bucket: uploads
+  # S3 region; empty for the bundled MinIO
+  region: ""
+  bundled:
+    enabled: true
+    image: { repository: docker.io/pgsty/silo, tag: RELEASE.2026-09-16T00-00-00Z }
+    storage: { size: 10Gi, className: "" }
+    resources: {}
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+  # With bundled.enabled=false: any S3-compatible store. The access keys come from the credentials Secret
+  # (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY). Presigned upload URLs go to the browser, so the endpoint must
+  # be reachable from there (or empty for AWS S3 itself).
+  external:
+    endpoint: ""
+
+# --------------------------------------------------------------------------------------------------------------
+# Hardening and availability
+# --------------------------------------------------------------------------------------------------------------
+# Ingress rules only: every workload then accepts traffic from the release itself and, for the public
+# components, from the ingress controller. Needs a CNI that enforces NetworkPolicy.
+networkPolicy:
+  enabled: false
+  # Namespace of the ingress controller or Gateway data plane
+  ingressNamespace: ingress-nginx
+  # Labels that select that namespace (the default matches the namespace name)
+  ingressNamespaceLabels: {}
+
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault

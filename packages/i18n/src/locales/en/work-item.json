@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Show sub-work items",
         "show_empty_groups": "Show empty groups"
+      },
+      "color_by": {
+        "label": "Color by",
+        "state": "State",
+        "key": "Work item ID"
       }
     },
     "layouts": {
@@ -90,8 +95,8 @@
     "comments": {
       "placeholder": "Add comment",
       "switch": {
-        "private": "Switch to private comment",
-        "public": "Switch to public comment"
+        "private": "Make this comment internal",
+        "public": "Show this comment on the web"
       },
       "create": {
         "success": "Comment created successfully",
@@ -148,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Internal",
+        "external": "Visible on the web"
       }
     },
     "empty_state": {
@@ -195,7 +204,15 @@
       "finish_before": "Finishes Before",
       "finish_after": "Finishes After",
       "implements": "Implements",
-      "implemented_by": "Implemented By"
+      "implemented_by": "Implemented By",
+      "causes": "Causes",
+      "caused_by": "Caused by",
+      "clones": "Clones",
+      "cloned_by": "Cloned by",
+      "tests": "Tests",
+      "tested_by": "Tested by",
+      "start_before_finish": "Starts before finish of",
+      "finish_after_start": "Finishes after start of"
     },
     "copy_link": "Copy work item link",
     "delete": {
@@ -290,7 +307,9 @@
         "description": "To see all work items, clear all applied filters.",
         "action": "Clear filters"
       }
-    }
+    },
+    "expand": "Expand sub-work items",
+    "collapse": "Collapse sub-work items"
   },
   "issue_relation": {
     "empty_state": {
@@ -612,6 +631,22 @@
           "added": "marked this work item is blocking work item <value/>.",
           "removed": "removed the blocking work item <value/>."
         },
+        "caused_by": {
+          "added": "added relation “Caused by”: <value/>.",
+          "removed": "removed relation “Caused by”: <value/>."
+        },
+        "causes": {
+          "added": "added relation “Causes”: <value/>.",
+          "removed": "removed relation “Causes”: <value/>."
+        },
+        "cloned_by": {
+          "added": "added relation “Cloned by”: <value/>.",
+          "removed": "removed relation “Cloned by”: <value/>."
+        },
+        "clones": {
+          "added": "added relation “Clones”: <value/>.",
+          "removed": "removed relation “Clones”: <value/>."
+        },
         "duplicate": {
           "added": "marked this work item as duplicate of <value/>.",
           "removed": "removed this work item as a duplicate of <value/>."
@@ -620,9 +655,21 @@
           "added": "marked this work item finishes after <value/>.",
           "removed": "removed the finishes after relation to <value/>."
         },
+        "finish_after_start": {
+          "added": "added relation “Finishes after start of”: <value/>.",
+          "removed": "removed relation “Finishes after start of”: <value/>."
+        },
         "finish_before": {
           "added": "marked this work item finishes before <value/>.",
           "removed": "removed the finishes before relation to <value/>."
+        },
+        "implemented_by": {
+          "added": "added relation “Implemented By”: <value/>.",
+          "removed": "removed relation “Implemented By”: <value/>."
+        },
+        "implements": {
+          "added": "added relation “Implements”: <value/>.",
+          "removed": "removed relation “Implements”: <value/>."
         },
         "relates_to": {
           "added": "marked that this work item relates to <value/>.",
@@ -635,6 +682,18 @@
         "start_before": {
           "added": "marked this work item starts before <value/>.",
           "removed": "removed the starts before relation to <value/>."
+        },
+        "start_before_finish": {
+          "added": "added relation “Starts before finish of”: <value/>.",
+          "removed": "removed relation “Starts before finish of”: <value/>."
+        },
+        "tested_by": {
+          "added": "added relation “Tested by”: <value/>.",
+          "removed": "removed relation “Tested by”: <value/>."
+        },
+        "tests": {
+          "added": "added relation “Tests”: <value/>.",
+          "removed": "removed relation “Tests”: <value/>."
         }
       },
       "restored": "restored the work item.",
@@ -836,6 +895,16 @@
         "enabled": "enabled intake view",
         "fallback": "updated intake view"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "disabled the assignee edit rule",
+        "enabled": "enabled the assignee edit rule",
+        "fallback": "updated the assignee edit rule"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "disabled the blocked status rule",
+        "enabled": "enabled the blocked status rule",
+        "fallback": "updated the blocked status rule"
+      },
       "is_epic_enabled": {
         "disabled": "disabled epics",
         "enabled": "enabled epics",
@@ -846,10 +915,35 @@
         "enabled": "enabled work item types",
         "fallback": "updated work item types"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "disabled the parent completion rule",
+        "enabled": "enabled the parent completion rule",
+        "fallback": "updated the parent completion rule"
+      },
       "is_project_updates_enabled": {
         "disabled": "disabled project updates",
         "enabled": "enabled project updates",
         "fallback": "updated project updates"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "disabled the duplicate relation",
+        "enabled": "enabled the duplicate relation",
+        "fallback": "updated the duplicate relation"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "disabled the relates to relation",
+        "enabled": "enabled the relates to relation",
+        "fallback": "updated the relates to relation"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "disabled schedule dependencies",
+        "enabled": "enabled schedule dependencies",
+        "fallback": "updated schedule dependencies"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "disabled traceability relations",
+        "enabled": "enabled traceability relations",
+        "fallback": "updated traceability relations"
       },
       "is_time_tracking_enabled": {
         "disabled": "disabled time tracking",
@@ -921,5 +1015,37 @@
       },
       "value_none": "none"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Roll up dates",
+    "rolled_up_bar": "Dates rolled up from the sub-work items",
+    "children_span": "Sub-work items: {start} – {end}",
+    "starts_early": "Sub-work items start before this work item",
+    "ends_late": "Sub-work items end after this work item"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Expand all",
+    "collapse_all": "Collapse all",
+    "levels": "Levels",
+    "up_to_level": "Up to level {level}",
+    "all_levels": "All levels",
+    "load_error": "Could not load the sub-work items",
+    "too_many": "Too many work items to unfold at once. Unfold the rest one by one."
+  },
+  "worklog": {
+    "log_time": "Log time",
+    "description_placeholder": "What was done? (optional)",
+    "invalid_duration_title": "Invalid duration",
+    "invalid_duration_message": "Use a format like \"2h 30m\", \"45m\" or plain minutes, up to 24 hours.",
+    "log_error": "Could not log the time. Please try again.",
+    "update_error": "Could not update the entry. Please try again.",
+    "delete_error": "Could not delete the entry. Please try again.",
+    "delete_title": "Delete time entry",
+    "delete_description": "Are you sure you want to delete this time entry? This action cannot be undone.",
+    "edit_entry": "Edit time entry",
+    "delete_entry": "Delete time entry",
+    "logged": "logged <value>{duration}</value>",
+    "updated": "changed the logged time from <old>{from}</old> to <new>{to}</new>",
+    "removed": "removed the logged time <value>{duration}</value>"
   }
 }

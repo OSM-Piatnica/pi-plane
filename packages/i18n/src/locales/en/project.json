@@ -445,14 +445,15 @@
       "removing_from_favorites": "Removing project from favorites..."
     },
     "confirm_member_remove": {
-      "leave_description": "Are you sure you want to leave the {name} project? You will be able to join the project if invited again or if it's public.",
+      "leave_description": "Are you sure you want to leave the {name} project? You will be able to join the project if invited again or if it's open to the workspace.",
       "leave_title": "Leave project?",
       "remove_description": "Are you sure you want to remove member {name}? They will no longer have access to this project. This action cannot be undone.",
       "remove_title": "Remove {name}?"
     },
     "control_section": {
       "archive_description": "Archiving a project will unlist your project from your side navigation although you will still be able to access it from your projects page. You can restore the project or delete it whenever you want.",
-      "delete_description": "When deleting a project, all of the data and resources within that project will be permanently removed and cannot be recovered."
+      "delete_description": "When deleting a project, all of the data and resources within that project will be permanently removed and cannot be recovered.",
+      "duplicate_description": "Create a new project with this project's settings, states, labels and other configuration. Work items are copied only if you choose so."
     },
     "delete_modal": {
       "confirm_placeholder": "Enter “{phrase}”",
@@ -531,21 +532,34 @@
       "timezone_error": "Failed to update timezone",
       "timezone_updated": "Timezone updated successfully",
       "update_error": "There was some error in updating your profile. Please try again.",
-      "updated": "Profile updated successfully."
+      "updated": "Profile updated successfully.",
+      "weekend_days": "Weekend days",
+      "weekend_days_description": "Sets which days are treated as non-working time.",
+      "weekend_days_updated": "Weekend days updated successfully",
+      "weekend_days_use_default": "Use the workspace default"
     },
     "publish_modal": {
       "allow_comments": "Allow comments",
       "allow_reactions": "Allow reactions",
       "allow_voting": "Allow voting",
-      "anyone_with_link": "Anyone with the link can access",
-      "link_copied": "Published page link copied successfully.",
-      "live_on_web": "This project is now live on web",
-      "publishing": "Publishing",
-      "select_layout_error": "Please select at least one view layout to publish the project.",
-      "settings_updated": "Publish settings updated successfully!",
-      "unpublish": "Unpublish",
-      "unpublish_error": "Something went wrong while unpublishing the project.",
-      "unpublishing": "Unpublishing",
+      "anyone_with_link": "Anyone on the internet with the link can view this project, no account needed",
+      "confirm": {
+        "title": "Share this project on the web?",
+        "description": "Anyone on the internet who has the link will be able to view this project, including people outside your workspace and people who are not signed in.",
+        "can_see": "They will be able to see:",
+        "item_work_items": "every work item in the project, with its description, status, priority, dates and labels",
+        "item_members": "the names and avatars of the project's members",
+        "item_activity": "comments, reactions and votes, with the names of the people behind them, if you allow them",
+        "note": "Viewers cannot edit anything. The link keeps working until you stop sharing, so only share a project that holds nothing confidential."
+      },
+      "link_copied": "Web link copied.",
+      "live_on_web": "This project is shared on the web",
+      "publishing": "Turning on…",
+      "select_layout_error": "Please select at least one view layout to share the project on the web.",
+      "settings_updated": "Web sharing settings updated.",
+      "unpublish": "Stop sharing",
+      "unpublish_error": "Something went wrong while turning off web sharing.",
+      "unpublishing": "Turning off…",
       "update_settings": "Update settings"
     },
     "rich_filters": {
@@ -555,6 +569,14 @@
       "filter_type_not_supported": "Filter type not supported",
       "invalid_filter": "Invalid filter",
       "invalid_tooltip": "This filter condition is no longer valid. The property may have been deleted or your access to it may have changed.",
+      "operators": {
+        "exact": "is",
+        "in": "is any of",
+        "range": "between",
+        "not_exact": "is not",
+        "not_in": "is none of",
+        "not_range": "not between"
+      },
       "remove_filter": "Remove filter",
       "save_view": "Save view",
       "update_view": "Update view"
@@ -640,7 +662,55 @@
     "access_requests": {
       "title": "Requests to join ({count})",
       "approve": "Approve",
-      "reject": "Reject"
+      "reject": "Reject",
+      "already_decided": "This request has already been decided by another admin.",
+      "requester_left": "This person is no longer a member of the workspace."
+    },
+    "duplicate_modal": {
+      "already_running": "Another work item copy is already running in this workspace. Try again when it finishes.",
+      "always_copied": "Settings, states and work item types are always copied.",
+      "banner": {
+        "done": "Work items copied: {count}.",
+        "failed": "Copying the work items failed. What was copied is kept; retry to add the rest.",
+        "progress": "Copying work items: {copied} of {total}",
+        "queued": "The work items are queued for copying...",
+        "reload": "Reload",
+        "retry": "Retry",
+        "retry_failed": "Could not retry the copy. Please try again."
+      },
+      "clear_all": "Clear all",
+      "description": "Creates a new project with the same settings. Pages and webhooks are not copied; work items are copied only if you choose so below.",
+      "error": "Could not duplicate the project. Please try again.",
+      "identifier_placeholder": "Generated if empty",
+      "properties": {
+        "assignees": "Assignees",
+        "custom_properties": "Custom properties",
+        "cycles": "Cycles",
+        "dates": "Dates",
+        "description_images": "Images in descriptions",
+        "labels": "Labels",
+        "links": "Links",
+        "modules": "Modules",
+        "parents": "Sub-work-item links",
+        "relations": "Relations"
+      },
+      "properties_description": "Choose what is carried with the work items. Drafts, archived and intake items are left out; comments, attachments, activity and time entries are never copied.",
+      "properties_heading": "Work item properties",
+      "properties_note": "Cycles and modules are only carried when they are copied above.",
+      "property_groups": {
+        "content": "Content",
+        "hierarchy": "Hierarchy and relations",
+        "organization": "Organization",
+        "people": "People"
+      },
+      "select_all": "Select all",
+      "submit": "Duplicate project",
+      "submitting": "Duplicating project...",
+      "success": "Project duplicated successfully.",
+      "title": "Duplicate project",
+      "too_large": "This project is too large to copy. Turn off some of the options and try again.",
+      "what_to_copy": "Also copy",
+      "work_items_too_large": "This project has more work items than can be copied (up to {count})."
     }
   }
 }

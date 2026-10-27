@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -186,13 +187,7 @@ export const extractConditionsWithDisplayOperators = <P extends TFilterProperty>
   const rawConditions = extractConditions(expression);
 
   // Transform operators using the extended helper
-  return rawConditions.map((condition) => {
-    const displayOperator = getDisplayOperator(condition.operator, expression, condition.id);
-    return {
-      ...condition,
-      operator: displayOperator,
-    };
-  });
+  return rawConditions.map((condition) => Object.assign({}, condition, { operator: getDisplayOperator(condition) }));
 };
 
 /**

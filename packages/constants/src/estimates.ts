@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -127,16 +128,17 @@ export const ESTIMATE_SYSTEMS: TEstimateSystems = {
         title: "Hours",
         i18n_title: "project_settings.estimates.systems.time.hours",
         values: [
-          { id: undefined, key: 1, value: "1" },
-          { id: undefined, key: 2, value: "2" },
-          { id: undefined, key: 3, value: "3" },
-          { id: undefined, key: 4, value: "4" },
-          { id: undefined, key: 5, value: "5" },
-          { id: undefined, key: 6, value: "6" },
+          // minutes: the time estimates are stored in minutes and shown as hours and minutes
+          { id: undefined, key: 1, value: "60" },
+          { id: undefined, key: 2, value: "120" },
+          { id: undefined, key: 3, value: "180" },
+          { id: undefined, key: 4, value: "240" },
+          { id: undefined, key: 5, value: "300" },
+          { id: undefined, key: 6, value: "360" },
         ],
       },
     },
     is_available: true,
-    is_ee: true,
+    is_ee: false,
   },
 };

@@ -42,21 +42,50 @@
           "blocked_by": "{issue} kann erst beginnen, wenn {related} abgeschlossen ist (blockiert durch Beziehung).",
           "blocking": "{issue} muss abgeschlossen sein, bevor {related} beginnt (blockierende Beziehung).",
           "finish_after": "{issue} kann nicht vor {related} abgeschlossen werden (endet nach Beziehung).",
+          "finish_after_start": "{issue} kann nicht enden, bevor {related} beginnt (Beziehung „endet nach dem Beginn“).",
           "finish_before": "{issue} muss spätestens mit {related} abgeschlossen werden (endet vor Beziehung).",
           "start_after": "{issue} kann nicht vor {related} beginnen (beginnt nach Beziehung).",
-          "start_before": "{issue} muss spätestens mit {related} beginnen (beginnt vor Beziehung)."
+          "start_before": "{issue} muss spätestens mit {related} beginnen (beginnt vor Beziehung).",
+          "start_before_finish": "{issue} muss spätestens beginnen, wenn {related} endet (Beziehung „beginnt vor dem Ende“)."
         },
         "status": {
           "finish_after": "{issue} kann erst abgeschlossen werden, wenn {related} abgeschlossen ist (endet nach Beziehung).",
+          "finish_after_start": "{issue} kann erst abgeschlossen werden, wenn {related} begonnen hat (Beziehung „endet nach dem Beginn“).",
           "start_after": "{issue} kann erst beginnen, wenn {related} begonnen hat (beginnt nach Beziehung)."
-        }
+        },
+        "self": "{issue} kann nicht mit sich selbst verknüpft werden.",
+        "cycle": "{issue} und {related} würden eine Schleife aus Beziehungen bilden. Entfernen Sie zuerst die entgegengesetzte Beziehung.",
+        "lag_suffix": " Verzögerung der Beziehung: {lag} T."
       },
       "date_conflict": "Diese Termine stehen im Konflikt mit bestehenden Abhängigkeiten. Passen Sie die verknüpften Arbeitselemente an oder entfernen Sie zuerst die Abhängigkeit.",
       "dependency_create_failed": "Abhängigkeit konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
-      "dependency_created": "Die Abhängigkeit des Arbeitselements wurde erfolgreich erstellt."
-    }
+      "dependency_created": "Die Abhängigkeit des Arbeitselements wurde erfolgreich erstellt.",
+      "lag": {
+        "hint": "Tage zwischen den beiden Terminen; negativ erlaubt Überlappung.",
+        "invalid": "Geben Sie eine ganze Zahl von Tagen zwischen -{max} und {max} ein.",
+        "label": "Verzögerung (Tage)",
+        "update_failed": "Die Verzögerung konnte nicht geändert werden."
+      },
+      "reschedule": {
+        "confirm": "Verschieben",
+        "content": "Diese Änderung würde Abhängigkeiten verletzen. Diese Arbeitselemente können unter Beibehaltung ihrer Dauer nach hinten verschoben werden, damit alle Abhängigkeiten weiter erfüllt sind:",
+        "title": "Auch die abhängigen Arbeitselemente verschieben?"
+      },
+      "duplicate_cancel": {
+        "confirm": "In „Abgebrochen“ verschieben",
+        "content": "{issue} ist jetzt als Duplikat von {originals} markiert. In „{state}“ verschieben? Es bleibt verknüpft und sichtbar.",
+        "failed": "Das Arbeitselement konnte nicht abgebrochen werden.",
+        "keep": "Offen lassen",
+        "title": "Dieses Arbeitselement abbrechen?"
+      }
+    },
+    "edit_restricted": "Dieses Arbeitselement dürfen nur die ihm Zugewiesenen, die Projektleitung und Projektadmins ändern."
   },
   "project_create": {
+    "advanced": {
+      "description": "Regeln und Beziehungstypen. Du kannst sie später in den Workflow-Einstellungen des Projekts ändern.",
+      "title": "Erweiterte Optionen"
+    },
     "features": {
       "cycles": {
         "description": "Zeitlich begrenzte Arbeit in wiederkehrenden Perioden.",
@@ -115,12 +144,53 @@
       "pending_approval_title": "Genehmigung erforderlich",
       "rejected_success": "Übergang abgelehnt.",
       "resolving_approval": "Genehmigung wird verarbeitet...",
+      "rules": {
+        "heading": "Regeln",
+        "description": "Projektregeln, die unabhängig davon gelten, ob Workflows aktiviert sind.",
+        "parent_completion": {
+          "description": "Ein Arbeitselement kann nicht abgeschlossen werden, solange es untergeordnete Elemente hat, die weder abgeschlossen noch abgebrochen sind. Wird ein abgeschlossenes untergeordnetes Element unter einem abgeschlossenen übergeordneten Element wieder geöffnet, wird gefragt, ob auch das übergeordnete Element wieder geöffnet werden soll.",
+          "title": "Übergeordnetes Element nur abschließen, wenn alle untergeordneten Elemente erledigt sind"
+        },
+        "reopen_parent": {
+          "confirm": "Wieder öffnen",
+          "content": "In diesem Projekt darf ein übergeordnetes Element nicht abgeschlossen bleiben, solange ein untergeordnetes Element offen ist. Diese abgeschlossenen übergeordneten Elemente werden ebenfalls wieder geöffnet: {names}",
+          "title": "Auch die übergeordneten Arbeitselemente wieder öffnen?"
+        },
+        "blocked_status": {
+          "description": "Ein Arbeitselement kann nicht in einen begonnenen oder abgeschlossenen Status wechseln, solange ein Arbeitselement, das es blockiert, noch offen ist (abgeschlossene und abgebrochene Blocker zählen nicht). Im Backlog oder auf „Zu erledigen“ zu bleiben und das Abbrechen bleiben möglich.",
+          "title": "Ein Element erst starten oder abschließen, wenn seine Blocker erledigt sind"
+        },
+        "assignee_edit": {
+          "description": "Sobald ein Arbeitselement eine zugewiesene Person hat, dürfen nur die Zugewiesenen, die Projektleitung und die Projektadmins es ändern: Felder, Status, Termine, untergeordnete Elemente, Beziehungen, Links, Anhänge, Zyklen und Module, Löschen und Archivieren. Kommentieren kann weiterhin jeder. Arbeitselemente ohne zugewiesene Person bleiben für alle Mitglieder offen.",
+          "title": "Nur Zugewiesene, die Projektleitung und Admins dürfen ein Arbeitselement ändern"
+        }
+      },
       "save_error": "Workflow-Konfiguration konnte nicht gespeichert werden.",
       "save_success": "Workflow-Konfiguration gespeichert.",
       "toggle_error": "Workflow-Einstellungen konnten nicht aktualisiert werden.",
       "transition": "Übergang",
       "transition_count": "{count, plural, one {# Übergang} other {# Übergänge}}",
-      "transitions_configured": "Übergänge konfiguriert"
+      "transitions_configured": "Übergänge konfiguriert",
+      "relation_types": {
+        "heading": "Beziehungstypen",
+        "description": "Lege fest, welche Beziehungen in diesem Projekt hinzugefügt werden können. Blockieren ist immer verfügbar, und bestehende Beziehungen bleiben beim Deaktivieren eines Typs erhalten.",
+        "schedule": {
+          "description": "Beginnt vor, endet vor und beginnt vor Ende, mit optionalem Abstand in Tagen.",
+          "title": "Terminabhängigkeiten"
+        },
+        "traceability": {
+          "description": "Implementiert, verursacht, klont und testet, mit den Gegenrichtungen.",
+          "title": "Nachverfolgbarkeits-Beziehungen"
+        },
+        "relates_to": {
+          "description": "Eine einfache Verknüpfung zwischen zwei Elementen.",
+          "title": "Steht in Beziehung zu"
+        },
+        "duplicate": {
+          "description": "Ein Element als Duplikat eines anderen markieren.",
+          "title": "Duplikat"
+        }
+      }
     }
   },
   "project_templates": {

@@ -166,8 +166,8 @@
         "description": "工作區內所有人可見;存取需要核准或邀請"
       },
       "public": {
-        "title": "公開",
-        "description": "工作區中除了訪客以外的任何人都可以加入"
+        "title": "開放",
+        "description": "對工作區開放：除訪客外的任何成員都可以加入"
       }
     },
     "error": {

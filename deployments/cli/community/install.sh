@@ -225,9 +225,8 @@ function buildYourOwnImage(){
     REPO=https://github.com/$GH_REPO.git
     git clone "$REPO" "$PLANE_TEMP_CODE_DIR"  --branch "$BRANCH" --single-branch --depth 1
 
-    cp "$PLANE_TEMP_CODE_DIR/deployments/cli/community/build.yaml" "$PLANE_TEMP_CODE_DIR/build.yaml"
-
-    cd "$PLANE_TEMP_CODE_DIR" || exit
+    # the build contexts in build.yaml are relative to its own folder, so build from there
+    cd "$PLANE_TEMP_CODE_DIR/deployments/cli/community" || exit
 
     bash -c "$COMPOSE_CMD -f build.yaml build --no-cache"  >&2
     if [ $? -ne 0 ]; then
@@ -493,13 +492,13 @@ function upgrade() {
 function viewSpecificLogs(){
     local SERVICE_NAME=$1
 
-    if bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH ps | grep -q '$SERVICE_NAME'"; then
+    if bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH ps | grep -q '$SERVICE_NAME'"; then
         echo "Service '$SERVICE_NAME' is running."
     else
         echo "Service '$SERVICE_NAME' is not running."
     fi
 
-    bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH logs -f $SERVICE_NAME"
+    bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH logs -f $SERVICE_NAME"
 }
 function viewLogs(){
     
@@ -577,7 +576,7 @@ function backup_container_dir() {
     local SERVICE_FOLDER=$4
 
     echo "Backing up $CONTAINER_NAME data..."
-    local CONTAINER_ID=$(bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH ps -q $CONTAINER_NAME")
+    local CONTAINER_ID=$(bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH ps -q $CONTAINER_NAME")
     if [ -z "$CONTAINER_ID" ]; then
         echo "Error: $CONTAINER_NAME container not found. Make sure the services are running."
         return 1

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,6 +12,7 @@ import type {
   TIssueParams,
   IIssueDisplayProperties,
   TBulkOperationsPayload,
+  TGanttDateRollup,
   TIssue,
   TIssueActivity,
   TIssueLink,
@@ -136,6 +138,24 @@ export class IssueService extends APIService {
       });
   }
 
+  /**
+   * The date span of the work items below each listed work item, for rolling dates up on the timeline.
+   * Work items without children are left out.
+   */
+  async getDateRollups(
+    workspaceSlug: string,
+    projectId: string,
+    issueIds: string[]
+  ): Promise<Record<string, TGanttDateRollup>> {
+    return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issue-date-rollups/`, {
+      params: { issue_ids: issueIds.join(",") },
+    })
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
   async getIssueActivities(workspaceSlug: string, projectId: string, issueId: string): Promise<TIssueActivity[]> {
     return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/${this.serviceType}/${issueId}/history/`)
       .then((response) => response?.data)
@@ -223,8 +243,21 @@ export class IssueService extends APIService {
       });
   }
 
-  async patchIssue(workspaceSlug: string, projectId: string, issueId: string, data: Partial<TIssue>): Promise<any> {
-    return this.patch(`/api/workspaces/${workspaceSlug}/projects/${projectId}/${this.serviceType}/${issueId}/`, data)
+  async patchIssue(
+    workspaceSlug: string,
+    projectId: string,
+    issueId: string,
+    data: Partial<TIssue>,
+    options?: { reopenParent?: boolean; shiftDependents?: boolean }
+  ): Promise<any> {
+    // reopen_parent confirms that completed parents may be reopened along with a finished work item, and
+    // shift_dependents that the work items depending on one whose dates change may be moved along
+    const payload = {
+      ...data,
+      ...(options?.reopenParent ? { reopen_parent: true } : {}),
+      ...(options?.shiftDependents ? { shift_dependents: true } : {}),
+    };
+    return this.patch(`/api/workspaces/${workspaceSlug}/projects/${projectId}/${this.serviceType}/${issueId}/`, payload)
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;
@@ -242,9 +275,13 @@ export class IssueService extends APIService {
   async updateIssueDates(
     workspaceSlug: string,
     projectId: string,
-    updates: { id: string; start_date?: string; target_date?: string }[]
+    updates: { id: string; start_date?: string; target_date?: string }[],
+    options?: { shiftDependents?: boolean }
   ): Promise<void> {
-    return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issue-dates/`, { updates })
+    return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issue-dates/`, {
+      updates,
+      ...(options?.shiftDependents ? { shift_dependents: true } : {}),
+    })
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;

@@ -18,10 +18,17 @@ import { useUserProfile } from "@/hooks/store/user";
 import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 import { useTranslation } from "@plane/i18n";
 
-type TStartOfWeekOption = (typeof START_OF_THE_WEEK_OPTIONS)[number];
+// `value: null` is "follow the project (or workspace) setting"
+type TStartOfWeekOption = { value: EStartOfTheWeek | null };
 
-const getStartOfWeekOption = (startOfWeek: EStartOfTheWeek) =>
-  START_OF_THE_WEEK_OPTIONS.find((option) => option.value === startOfWeek) ?? null;
+const START_OF_WEEK_CHOICES: TStartOfWeekOption[] = [{ value: null }, ...START_OF_THE_WEEK_OPTIONS];
+const FOLLOW_PROJECT_KEY = "default";
+
+const getOptionKey = (option: TStartOfWeekOption) =>
+  option.value === null ? FOLLOW_PROJECT_KEY : String(option.value);
+
+const getStartOfWeekOption = (startOfWeek: EStartOfTheWeek | null | undefined) =>
+  START_OF_WEEK_CHOICES.find((option) => option.value === (startOfWeek ?? null)) ?? null;
 
 // The dropdown opens flush with the control's right edge, as `placement="bottom-end"` did.
 const DROPDOWN_PLACEMENT = { side: "bottom", align: "end" } as const;
@@ -34,7 +41,7 @@ export const StartOfWeekPreference = observer(function StartOfWeekPreference(pro
   const { data: userProfile, updateUserProfile } = useUserProfile();
   const { getWeekdayName } = useCalendarLocale();
 
-  const handleStartOfWeekChange = async (val: number) => {
+  const handleStartOfWeekChange = async (val: EStartOfTheWeek | null) => {
     try {
       await updateUserProfile({ start_of_the_week: val });
       setToast({
@@ -51,8 +58,11 @@ export const StartOfWeekPreference = observer(function StartOfWeekPreference(pro
     }
   };
 
+  const getOptionLabel = (option: TStartOfWeekOption) =>
+    option.value === null ? t("profile_ui.first_day_project_default") : getWeekdayName(option.value);
+
   // derived values
-  const selectedOption = getStartOfWeekOption(userProfile.start_of_the_week);
+  const selectedOption = getStartOfWeekOption(userProfile?.start_of_the_week);
 
   return (
     <SettingsControlItem
@@ -61,11 +71,13 @@ export const StartOfWeekPreference = observer(function StartOfWeekPreference(pro
       control={
         <SelectDropdownPlacementContext.Provider value={DROPDOWN_PLACEMENT}>
           <Select<TStartOfWeekOption>
-            getValues={() => START_OF_THE_WEEK_OPTIONS}
+            getValues={() => START_OF_WEEK_CHOICES}
             value={selectedOption}
-            onChange={(val) => void handleStartOfWeekChange(Number(val))}
-            getOptionValue={(option) => String(option.value)}
-            getOptionLabel={(option) => getWeekdayName(option.value)}
+            onChange={(val) =>
+              void handleStartOfWeekChange(val === FOLLOW_PROJECT_KEY ? null : (Number(val) as EStartOfTheWeek))
+            }
+            getOptionValue={getOptionKey}
+            getOptionLabel={getOptionLabel}
             showSearch={false}
             pinSelected={false}
             contentSizing="anchor"
@@ -73,7 +85,7 @@ export const StartOfWeekPreference = observer(function StartOfWeekPreference(pro
             <Select.Trigger<TStartOfWeekOption> variant="select-md" className="w-42 max-w-full border-subtle-1">
               {(options) => (
                 <span className="min-w-0 grow truncate text-left">
-                  {options[0] ? getWeekdayName(options[0].value) : null}
+                  {options[0] ? getOptionLabel(options[0]) : null}
                 </span>
               )}
             </Select.Trigger>

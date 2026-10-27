@@ -117,6 +117,8 @@
   "comments_description": "Meld me wanneer iemand een opmerking bij het werkitem plaatst",
   "mentions": "Vermeldingen",
   "mentions_description": "Meld me wanneer iemand me vermeldt in de opmerkingen of beschrijving",
+  "project_access_requests": "Toegangsverzoeken",
+  "project_access_requests_description": "Stuur me een e-mail over verzoeken om lid te worden van privéprojecten die ik beheer en over de beslissingen over mijn eigen verzoeken.",
   "email_frequency": "E-mailfrequentie",
   "email_frequency_description": "Kies hoe vaak je e-mails ontvangt over updates van werkitems. Vermeldingen worden altijd direct verstuurd.",
   "email_frequency_instant": "Direct",
@@ -195,8 +197,8 @@
   "select_network": "Selecteer netwerk",
   "lead": "Projectleider",
   "date_range": "Datumbereik",
-  "private": "Privé",
-  "public": "Openbaar",
+  "private": "Alleen ik",
+  "public": "Gedeeld",
   "accessible_only_by_invite": "Alleen toegankelijk met uitnodiging",
   "anyone_in_the_workspace_except_guests_can_join": "Iedereen in de werkruimte behalve gasten kan deelnemen",
   "creating": "Aanmaken",
@@ -210,8 +212,8 @@
   "add_to_favorites": "Aan favorieten toevoegen",
   "remove_from_favorites": "Uit favorieten verwijderen",
   "rename_folder": "Map hernoemen",
-  "publish_project": "Project publiceren",
-  "publish": "Publiceren",
+  "publish_project": "Delen op het web",
+  "publish": "Delen op het web inschakelen",
   "copy_link": "Link kopiëren",
   "leave_project": "Project verlaten",
   "join_the_project_to_rearrange": "Word lid van het project om te herschikken",
@@ -532,8 +534,8 @@
     "archiving": "Archiveren",
     "archive": "Archiveren",
     "access": {
-      "public": "Openbaar",
-      "private": "Privé"
+      "public": "Gedeeld met het project",
+      "private": "Alleen ik"
     },
     "done": "Klaar",
     "sub_work_items": "Subwerkitems",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "Er is een fout opgetreden",
       "inbox_fetch_error": "Fout bij het ophalen van de Intake-werkitems. Probeer het later opnieuw.",
-      "page_make_public_error": "De pagina kon niet openbaar worden gemaakt. Probeer het later opnieuw.",
-      "page_make_private_error": "De pagina kon niet privé worden gemaakt. Probeer het later opnieuw.",
+      "page_make_public_error": "De pagina kon niet met het project worden gedeeld. Probeer het later opnieuw.",
+      "page_make_private_error": "De pagina kon niet alleen voor jou zichtbaar worden gemaakt. Probeer het later opnieuw.",
       "workflow_pending_approval": "Het werkitem wacht op goedkeuring.",
       "workflow_transition_not_allowed": "Deze statusovergang is niet toegestaan door de workflow."
     },
@@ -1412,7 +1414,7 @@
       "duration": "Duur"
     },
     "auth_labels": {
-      "magic_code": "Magic code"
+      "one_time_code": "Eenmalige code"
     },
     "state_groups": {
       "canceled": "Geannuleerd"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "Mooi! Nog één stap.",
-      "description": "Voer de openbare URL of link van de weergave of Pagina die u wilt bekijken in de adresbalk van de browser in.",
+      "description": "Voer in de adresbalk van je browser de gedeelde link in van de weergave of pagina die je wilt bekijken.",
       "image_alt": "Gebruiker is al aangemeld"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Opnieuw verzenden over {seconds} s"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "Doorgaan met {provider}"
     },
     "issues": {
-      "public_board_not_found": "Het openbare bord bestaat niet. Controleer de URL.",
+      "shared_project_load_failed": "Dit gedeelde project kon niet worden geladen. Probeer het later opnieuw.",
       "cycle_tooltip": "Cyclus: {name}",
       "no_cycle": "Geen cyclus",
       "due_date_tooltip": "Vervaldatum: {date}",

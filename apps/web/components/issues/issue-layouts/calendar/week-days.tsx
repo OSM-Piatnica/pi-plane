@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,9 @@ import { observer } from "mobx-react";
 import type { TGroupedIssues, TIssue, TIssueMap, TPaginationData, ICalendarDate, ICalendarWeek } from "@plane/types";
 import { cn, getOrderedDays, renderFormattedPayloadDate } from "@plane/utils";
 // hooks
-import { useUserProfile } from "@/hooks/store/user";
+import { isWeekendDay } from "@/helpers/weekend-days";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
+import { useWeekendDays } from "@/hooks/use-weekend-days";
 // types
 import type { ICycleIssuesFilter } from "@/store/issue/cycle";
 import type { IModuleIssuesFilter } from "@/store/issue/module";
@@ -66,8 +69,8 @@ export const CalendarWeekDays = observer(function CalendarWeekDays(props: Props)
     isEpic = false,
   } = props;
   // hooks
-  const { data } = useUserProfile();
-  const startOfWeek = data?.start_of_the_week;
+  const startOfWeek = useStartOfTheWeek();
+  const weekendDays = useWeekendDays();
 
   const calendarLayout = issuesFilterStore?.issueFilters?.displayFilters?.calendar?.layout ?? "month";
   const showWeekends = issuesFilterStore?.issueFilters?.displayFilters?.calendar?.show_weekends ?? false;
@@ -75,20 +78,18 @@ export const CalendarWeekDays = observer(function CalendarWeekDays(props: Props)
   if (!week) return null;
 
   const shouldShowDay = (dayDate: Date) => {
-    if (showWeekends) return true;
-    const day = dayDate.getDay();
-    return !(day === 0 || day === 6);
+    return showWeekends || !isWeekendDay(dayDate, weekendDays);
   };
 
   const sortedWeekDays = getOrderedDays(Object.values(week), (item) => item.date.getDay(), startOfWeek);
+  const visibleDayCount = sortedWeekDays.filter((date) => shouldShowDay(date.date)).length;
 
   return (
     <div
       className={cn("grid divide-subtle-1 md:divide-x-[0.5px]", {
-        "grid-cols-7": showWeekends,
-        "grid-cols-5": !showWeekends,
         "h-full": calendarLayout !== "month",
       })}
+      style={{ gridTemplateColumns: `repeat(${visibleDayCount}, minmax(0, 1fr))` }}
     >
       {sortedWeekDays.map((date: ICalendarDate) => {
         if (!shouldShowDay(date.date)) return null;

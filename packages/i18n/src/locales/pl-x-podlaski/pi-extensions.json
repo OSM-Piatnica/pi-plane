@@ -43,19 +43,44 @@
           "blocked_by": "{issue} nie może się rozpocząć, dopóki {related} się nie zakończy (relacja: zablokowany przez).",
           "blocking": "{issue} musi się zakończyć przed rozpoczęciem {related} (relacja: blokuje).",
           "finish_after": "{issue} nie może się zakończyć wcześniej niż {related} (relacja: kończy się po).",
+          "finish_after_start": "{issue} nie może się zakończyć wcześniej, niż {related} się rozpocznie (relacja: kończy się po rozpoczęciu).",
           "finish_before": "{issue} musi się zakończyć nie później niż {related} (relacja: kończy się przed).",
           "start_after": "{issue} nie może się rozpocząć wcześniej niż {related} (relacja: zaczyna się po).",
-          "start_before": "{issue} musi się rozpocząć nie później niż {related} (relacja: zaczyna się przed)."
+          "start_before": "{issue} musi się rozpocząć nie później niż {related} (relacja: zaczyna się przed).",
+          "start_before_finish": "{issue} musi się rozpocząć najpóźniej wtedy, gdy {related} się zakończy (relacja: zaczyna się przed zakończeniem)."
         },
         "status": {
           "finish_after": "{issue} nie może zostać ukończone, dopóki {related} nie zostanie ukończone (relacja: kończy się po).",
+          "finish_after_start": "{issue} nie może zostać ukończone, dopóki {related} nie zostanie rozpoczęte (relacja: kończy się po rozpoczęciu).",
           "start_after": "{issue} nie może się rozpocząć, dopóki {related} nie zostanie rozpoczęte (relacja: zaczyna się po)."
-        }
+        },
+        "self": "{issue} nie może być powiązany sam ze sobą.",
+        "cycle": "{issue} i {related} znalazłyby się w pętli relacji. Najpierw usuń przeciwną relację.",
+        "lag_suffix": " Opóźnienie relacji: {lag} d."
       },
       "date_conflict": "Te daty kolidują z istniejącymi zależnościami. Dostosuj powiązane elementy pracy albo najpierw usuń zależność.",
       "dependency_create_failed": "Nie udało się utworzyć zależności. Spróbuj ponownie.",
-      "dependency_created": "Zależność między elementami pracy została utworzona."
-    }
+      "dependency_created": "Zależność między elementami pracy została utworzona.",
+      "lag": {
+        "hint": "Liczba dni między datami; wartość ujemna pozwala im na siebie nachodzić.",
+        "invalid": "Podaj liczbę całkowitą dni od -{max} do {max}.",
+        "label": "Opóźnienie (dni)",
+        "update_failed": "Nie udało się zmienić opóźnienia."
+      },
+      "reschedule": {
+        "confirm": "Przesuń",
+        "content": "Ta zmiana naruszyłaby zależności. Te elementy pracy można przesunąć na później z zachowaniem ich czasu trwania, aby wszystkie zależności nadal były spełnione:",
+        "title": "Przesunąć także zależne elementy pracy?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Przenieś do anulowanych",
+        "content": "{issue} jest teraz oznaczony jako duplikat elementu {originals}. Przenieść go do stanu „{state}”? Pozostanie powiązany i widoczny.",
+        "failed": "Nie udało się anulować elementu pracy.",
+        "keep": "Zostaw otwarty",
+        "title": "Anulować ten element pracy?"
+      }
+    },
+    "edit_restricted": "Ten element pracy mogą zmieniać tylko przypisane do niego osoby, lider projektu i administratorzy projektu."
   },
   "profile": {
     "actions": {
@@ -63,6 +88,10 @@
     }
   },
   "project_create": {
+    "advanced": {
+      "description": "Reguły i typy relacji. Możesz je później zmienić w ustawieniach przepływów pracy projektu.",
+      "title": "Opcje zaawansowane"
+    },
     "features": {
       "cycles": {
         "description": "Grupuj pracę w powtarzalnych okresach czasu.",
@@ -121,12 +150,53 @@
       "pending_approval_title": "Wymagana akceptacja",
       "rejected_success": "Przejście odrzucone.",
       "resolving_approval": "Przetwarzanie akceptacji…",
+      "rules": {
+        "heading": "Reguły",
+        "description": "Reguły projektu, które działają niezależnie od tego, czy przepływy pracy są włączone.",
+        "parent_completion": {
+          "description": "Element pracy nie może zostać ukończony, dopóki ma elementy podrzędne, które nie są ukończone ani anulowane. Ponowne otwarcie ukończonego elementu podrzędnego pod ukończonym elementem nadrzędnym wymaga też ponownego otwarcia elementu nadrzędnego.",
+          "title": "Ukończ element nadrzędny dopiero po ukończeniu jego elementów podrzędnych"
+        },
+        "reopen_parent": {
+          "confirm": "Otwórz ponownie",
+          "content": "Ten projekt nie pozwala, aby element nadrzędny pozostał ukończony, gdy element podrzędny jest otwarty. Te ukończone elementy nadrzędne zostaną również ponownie otwarte: {names}",
+          "title": "Ponownie otworzyć także elementy nadrzędne?"
+        },
+        "blocked_status": {
+          "description": "Element pracy nie może przejść do stanu rozpoczętego ani ukończonego, dopóki element, który go blokuje, jest nadal otwarty (ukończone i anulowane elementy blokujące się nie liczą). Pozostanie w backlogu lub do zrobienia oraz anulowanie nadal są możliwe.",
+          "title": "Rozpoczynaj i kończ element dopiero po zakończeniu elementów blokujących"
+        },
+        "assignee_edit": {
+          "description": "Gdy element pracy ma przypisaną osobę, mogą go zmieniać tylko przypisane osoby, lider projektu i administratorzy projektu: pola, stan, daty, elementy podrzędne, relacje, linki, załączniki, cykle i moduły, usuwanie i archiwizację. Komentować nadal może każdy. Elementy pracy bez przypisanej osoby pozostają otwarte dla wszystkich członków.",
+          "title": "Elementy pracy mogą zmieniać tylko osoby przypisane, lider projektu i administratorzy"
+        }
+      },
       "save_error": "Nie udało się zapisać konfiguracji workflow.",
       "save_success": "Konfiguracja workflow zapisana.",
       "toggle_error": "Nie udało się zaktualizować ustawień workflow.",
       "transition": "Przejście",
       "transition_count": "{count, plural, one {# przejście} few {# przejścia} many {# przejść} other {# przejścia}}",
-      "transitions_configured": "skonfigurowanych przejść"
+      "transitions_configured": "skonfigurowanych przejść",
+      "relation_types": {
+        "heading": "Typy relacji",
+        "description": "Wybierz, jakie relacje można dodawać w tym projekcie. Blokowanie jest zawsze dostępne, a istniejące relacje zostają po wyłączeniu typu.",
+        "schedule": {
+          "description": "Zaczyna przed, kończy przed i zaczyna przed zakończeniem, z opcjonalnym opóźnieniem w dniach.",
+          "title": "Zależności harmonogramu"
+        },
+        "traceability": {
+          "description": "Implementuje, powoduje, klonuje i testuje, wraz z relacjami odwrotnymi.",
+          "title": "Relacje śledzenia"
+        },
+        "relates_to": {
+          "description": "Zwykłe powiązanie dwóch elementów.",
+          "title": "Powiązany z"
+        },
+        "duplicate": {
+          "description": "Oznacz element jako duplikat innego.",
+          "title": "Duplikat"
+        }
+      }
     }
   },
   "project_templates": {

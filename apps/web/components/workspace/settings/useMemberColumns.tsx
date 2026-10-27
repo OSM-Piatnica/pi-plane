@@ -118,7 +118,7 @@ export const useMemberColumns = () => {
         if (!loginMedium) return null;
         return (
           <div>
-            {loginMedium === "magic-code" ? t("app_text.auth_labels.magic_code") : LOGIN_MEDIUM_LABELS[loginMedium]}
+            {loginMedium === "magic-code" ? t("app_text.auth_labels.one_time_code") : LOGIN_MEDIUM_LABELS[loginMedium]}
           </div>
         );
       },

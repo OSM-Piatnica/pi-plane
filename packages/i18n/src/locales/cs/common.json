@@ -117,6 +117,8 @@
   "comments_description": "Upozornit mě, když někdo přidá komentář k pracovní položce",
   "mentions": "Zmínky",
   "mentions_description": "Upozornit mě, když mě někdo zmíní v komentářích nebo popisu",
+  "project_access_requests": "Žádosti o přístup",
+  "project_access_requests_description": "Posílat mi e-maily o žádostech o připojení k soukromým projektům, které spravuji, a o rozhodnutích o mých vlastních žádostech.",
   "email_frequency": "Frekvence e-mailů",
   "email_frequency_description": "Vyberte, jak často chcete dostávat e-maily o změnách pracovních položek. Zmínky se vždy odesílají okamžitě.",
   "email_frequency_instant": "Okamžitě",
@@ -195,8 +197,8 @@
   "select_network": "Vybrat síť",
   "lead": "Vedoucí",
   "date_range": "Rozsah dat",
-  "private": "Soukromý",
-  "public": "Veřejný",
+  "private": "Jen já",
+  "public": "Sdílené",
   "accessible_only_by_invite": "Přístupné pouze na pozvání",
   "anyone_in_the_workspace_except_guests_can_join": "Kdokoli v pracovním prostoru kromě hostů se může připojit",
   "creating": "Vytváření",
@@ -210,8 +212,8 @@
   "add_to_favorites": "Přidat do oblíbených",
   "remove_from_favorites": "Odebrat z oblíbených",
   "rename_folder": "Přejmenovat složku",
-  "publish_project": "Publikovat projekt",
-  "publish": "Publikovat",
+  "publish_project": "Sdílet na webu",
+  "publish": "Zapnout sdílení na webu",
   "copy_link": "Kopírovat odkaz",
   "leave_project": "Opustit projekt",
   "join_the_project_to_rearrange": "Připojte se k projektu pro změnu uspořádání",
@@ -532,8 +534,8 @@
     "archiving": "Archivace",
     "archive": "Archivovat",
     "access": {
-      "public": "Veřejný",
-      "private": "Soukromý"
+      "public": "Sdíleno s projektem",
+      "private": "Jen já"
     },
     "done": "Hotovo",
     "sub_work_items": "Podřízené pracovní položky",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "Došlo k chybě",
       "inbox_fetch_error": "Při načítání pracovních položek Intake došlo k chybě. Zkuste to prosím později.",
-      "page_make_public_error": "Stránku se nepodařilo zveřejnit. Zkuste to prosím později.",
-      "page_make_private_error": "Stránku se nepodařilo nastavit jako soukromou. Zkuste to prosím později.",
+      "page_make_public_error": "Stránku se nepodařilo sdílet s projektem. Zkuste to prosím později.",
+      "page_make_private_error": "Stránku se nepodařilo nastavit jako viditelnou jen pro vás. Zkuste to prosím později.",
       "workflow_pending_approval": "Pracovní položka čeká na schválení.",
       "workflow_transition_not_allowed": "Tento přechod stavu není pracovním postupem povolen."
     },
@@ -1412,7 +1414,7 @@
       "duration": "Trvání"
     },
     "auth_labels": {
-      "magic_code": "Magický kód"
+      "one_time_code": "Jednorázový kód"
     },
     "state_groups": {
       "canceled": "Zrušeno"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "Skvělé! Zbývá už jen jeden krok.",
-      "description": "Do adresního řádku prohlížeče zadejte veřejnou adresu URL nebo odkaz na zobrazení či Stránku, kterou chcete zobrazit.",
+      "description": "Do adresního řádku prohlížeče zadejte sdílený odkaz na pohled nebo stránku, kterou chcete zobrazit.",
       "image_alt": "Uživatel je již přihlášen"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Znovu odeslat za {seconds} s"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "Pokračovat přes {provider}"
     },
     "issues": {
-      "public_board_not_found": "Veřejná nástěnka neexistuje. Zkontrolujte prosím adresu URL.",
+      "shared_project_load_failed": "Tento sdílený projekt se nepodařilo načíst. Zkuste to prosím později.",
       "cycle_tooltip": "Cyklus: {name}",
       "no_cycle": "Žádný cyklus",
       "due_date_tooltip": "Termín: {date}",

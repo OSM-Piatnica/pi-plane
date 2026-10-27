@@ -8,7 +8,7 @@
 from django.utils import timezone
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 
 # Third Party imports
 from rest_framework import serializers
@@ -51,6 +51,7 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
+from plane.utils.project_weekend_days import get_project_weekend_days
 from plane.utils.work_item_duration import (
     DURATION_DATE_FIELDS,
     reconcile_work_item_duration,
@@ -151,7 +152,11 @@ class IssueCreateSerializer(BaseSerializer):
 
         # Keep duration and the two dates consistent before anything else looks at them. The web app
         # already derives the same values locally, so this normally just confirms what it sent.
-        derived = reconcile_work_item_duration(self.instance, attrs)
+        derived = reconcile_work_item_duration(
+            self.instance,
+            attrs,
+            get_project_weekend_days(self.context.get("project_id") or getattr(self.instance, "project_id", None)),
+        )
         for field, value in derived.items():
             attrs[field] = to_work_item_date(value) if field in DURATION_DATE_FIELDS else value
 
@@ -235,6 +240,20 @@ class IssueCreateSerializer(BaseSerializer):
                         {"state_id": "New work items cannot be created in this state according to the workflow."}
                     )
 
+        # A finished work item reopened under a completed parent takes the parent with it, once confirmed
+        self._reopen_parents_from = None
+        if instance and attrs.get("state") and attrs["state"].id != instance.state_id:
+            from plane.utils.parent_completion_rule import (
+                ParentReopenRequired,
+                is_reopen_confirmed,
+                reopen_confirmation_payload,
+            )
+
+            payload = reopen_confirmation_payload(instance, attrs["state"].id, is_reopen_confirmed(self.initial_data))
+            if payload:
+                raise ParentReopenRequired(payload)
+            self._reopen_parents_from = instance.state_id
+
         # Check parent issue is from workspace as it can be cross workspace
         if (
             attrs.get("parent")
@@ -266,6 +285,7 @@ class IssueCreateSerializer(BaseSerializer):
             ).exists():
                 raise serializers.ValidationError("Issue type is not enabled for this project")
 
+        self._reschedule_plan = None
         # Checked last on purpose: the dates are the ones `reconcile_work_item_duration` derived
         # above, and a state the workflow just pulled out of attrs no longer counts as a change.
         if self.instance is not None:
@@ -273,7 +293,20 @@ class IssueCreateSerializer(BaseSerializer):
 
             timeline_error = validate_issue_update_payload(self.instance, attrs)
             if timeline_error:
-                raise serializers.ValidationError(timeline_error)
+                from plane.utils.issue_reschedule import (
+                    RescheduleOffered,
+                    is_shift_confirmed,
+                    plan_for_issue_update,
+                )
+
+                # Dates that only come too early for what depends on this work item can be fixed by moving
+                # those along, once the person agrees
+                plan = plan_for_issue_update(self.instance, attrs, request.user if request else None, timeline_error)
+                if plan is None:
+                    raise serializers.ValidationError(timeline_error)
+                if not is_shift_confirmed(self.initial_data):
+                    raise RescheduleOffered(plan.payload(timeline_error))
+                self._reschedule_plan = plan
 
         return attrs
 
@@ -408,7 +441,19 @@ class IssueCreateSerializer(BaseSerializer):
 
         # Time updation occues even when other related models are updated
         instance.updated_at = timezone.now()
-        return super().update(instance, validated_data)
+        previous_state_id = getattr(self, "_reopen_parents_from", None)
+        reschedule_plan = getattr(self, "_reschedule_plan", None)
+        with transaction.atomic():
+            instance = super().update(instance, validated_data)
+            if previous_state_id:
+                from plane.utils.parent_completion_rule import reopen_parents
+
+                reopen_parents(instance, previous_state_id, instance.updated_by_id)
+            if reschedule_plan:
+                from plane.utils.issue_reschedule import apply_shifts
+
+                apply_shifts(reschedule_plan, instance.updated_by_id)
+        return instance
 
 
 class IssueActivitySerializer(BaseSerializer):
@@ -990,6 +1035,7 @@ class IssueListDetailSerializer(serializers.Serializer):
                             "sequence_id": related_issue.sequence_id,
                             "name": related_issue.name,
                             "relation_type": relation.relation_type,
+                            "lag_days": relation.lag_days,
                             "state_id": related_issue.state_id,
                             "priority": related_issue.priority,
                             "created_by": related_issue.created_by_id,
@@ -1015,6 +1061,7 @@ class IssueListDetailSerializer(serializers.Serializer):
                             "sequence_id": issue.sequence_id,
                             "name": issue.name,
                             "relation_type": relation.relation_type,
+                            "lag_days": relation.lag_days,
                             "state_id": issue.state_id,
                             "priority": issue.priority,
                             "created_by": issue.created_by_id,

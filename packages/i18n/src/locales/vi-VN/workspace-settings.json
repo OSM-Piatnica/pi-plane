@@ -95,6 +95,49 @@
               "message": "Xuất không thành công. Vui lòng thử lại."
             }
           }
+        },
+        "columns": {
+          "heading": "Cột",
+          "description": "Chọn các cột có trong tệp. Mã định danh và tên luôn được đưa vào, vì nếu không tệp sẽ không thể nhập lại.",
+          "select_all": "Chọn tất cả",
+          "clear_all": "Bỏ chọn tất cả",
+          "groups": {
+            "details": "Chi tiết",
+            "people": "Con người",
+            "dates": "Ngày",
+            "organization": "Tổ chức",
+            "relations": "Phân cấp và quan hệ",
+            "other": "Khác"
+          },
+          "fields": {
+            "project_name": "Tên dự án",
+            "project_identifier": "Mã định danh dự án",
+            "sequence_id": "Số thứ tự",
+            "issue_type": "Loại mục công việc",
+            "state_name": "Trạng thái",
+            "priority": "Mức ưu tiên",
+            "description_html": "Mô tả",
+            "estimate": "Ước tính",
+            "is_draft": "Cờ bản nháp",
+            "assignees": "Người được giao",
+            "subscribers": "Người đăng ký",
+            "created_by_name": "Người tạo",
+            "start_date": "Ngày bắt đầu",
+            "target_date": "Ngày hết hạn",
+            "duration": "Thời lượng",
+            "completed_at": "Hoàn thành lúc",
+            "created_at": "Tạo lúc",
+            "updated_at": "Cập nhật lúc",
+            "archived_at": "Lưu trữ lúc",
+            "labels": "Nhãn",
+            "cycles": "Chu kỳ",
+            "modules": "Mô-đun",
+            "parent": "Cha",
+            "relations": "Quan hệ",
+            "links": "Liên kết",
+            "custom_properties": "Thuộc tính tùy chỉnh",
+            "comments": "Bình luận"
+          }
         }
       },
       "webhooks": {

@@ -1,11 +1,24 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { BlockingOutline, CloseCircleOutline, DuplicateOfOutline, RelatesToOutline } from "@makeplane/propel/icons";
+import {
+  ArrowNarrowLeftOutline,
+  ArrowNarrowRightOutline,
+  BlockingOutline,
+  CheckDoneOutline,
+  CheckSquareOutline,
+  CloseCircleOutline,
+  CopyOutline,
+  DuplicateOfOutline,
+  GitMergeOutline,
+  GitPullRequestOutline,
+  RelatesToOutline,
+} from "@makeplane/propel/icons";
 import type { TRelationObject } from "@/components/issues/issue-detail-widgets/relations";
 import type { TIssueRelationTypes } from "@plane/types";
 import { CalendarAfterIcon, CalendarBeforeIcon } from "@plane/blocks/icons";
@@ -63,6 +76,76 @@ export const ISSUE_RELATION_OPTIONS: Record<TIssueRelationTypes, TRelationObject
   finish_after: {
     key: "finish_after",
     i18n_label: "issue.relation.finish_after",
+    className: "bg-accent-primary/10 text-accent-primary",
+    icon: (size) => <CalendarAfterIcon width={size} height={size} className="text-secondary" />,
+    i18n_placeholder: "common.none",
+  },
+  implements: {
+    key: "implements",
+    i18n_label: "issue.relation.implements",
+    className: "bg-layer-1 text-secondary",
+    icon: (size) => <GitMergeOutline width={size} height={size} className="text-secondary" />,
+    i18n_placeholder: "common.none",
+  },
+  implemented_by: {
+    key: "implemented_by",
+    i18n_label: "issue.relation.implemented_by",
+    className: "bg-layer-1 text-secondary",
+    icon: (size) => <GitPullRequestOutline width={size} height={size} className="text-secondary" />,
+    i18n_placeholder: "common.none",
+  },
+  causes: {
+    key: "causes",
+    i18n_label: "issue.relation.causes",
+    className: "bg-layer-1 text-secondary",
+    icon: (size) => <ArrowNarrowRightOutline width={size} height={size} className="text-secondary" />,
+    i18n_placeholder: "common.none",
+  },
+  caused_by: {
+    key: "caused_by",
+    i18n_label: "issue.relation.caused_by",
+    className: "bg-layer-1 text-secondary",
+    icon: (size) => <ArrowNarrowLeftOutline width={size} height={size} className="text-secondary" />,
+    i18n_placeholder: "common.none",
+  },
+  clones: {
+    key: "clones",
+    i18n_label: "issue.relation.clones",
+    className: "bg-layer-1 text-secondary",
+    icon: (size) => <CopyOutline width={size} height={size} className="text-secondary" />,
+    i18n_placeholder: "common.none",
+  },
+  cloned_by: {
+    key: "cloned_by",
+    i18n_label: "issue.relation.cloned_by",
+    className: "bg-layer-1 text-secondary",
+    icon: (size) => <CopyOutline width={size} height={size} className="text-secondary" />,
+    i18n_placeholder: "common.none",
+  },
+  tests: {
+    key: "tests",
+    i18n_label: "issue.relation.tests",
+    className: "bg-layer-1 text-secondary",
+    icon: (size) => <CheckSquareOutline width={size} height={size} className="text-secondary" />,
+    i18n_placeholder: "common.none",
+  },
+  tested_by: {
+    key: "tested_by",
+    i18n_label: "issue.relation.tested_by",
+    className: "bg-layer-1 text-secondary",
+    icon: (size) => <CheckDoneOutline width={size} height={size} className="text-secondary" />,
+    i18n_placeholder: "common.none",
+  },
+  start_before_finish: {
+    key: "start_before_finish",
+    i18n_label: "issue.relation.start_before_finish",
+    className: "bg-accent-primary/10 text-accent-primary",
+    icon: (size) => <CalendarBeforeIcon width={size} height={size} className="text-secondary" />,
+    i18n_placeholder: "common.none",
+  },
+  finish_after_start: {
+    key: "finish_after_start",
+    i18n_label: "issue.relation.finish_after_start",
     className: "bg-accent-primary/10 text-accent-primary",
     icon: (size) => <CalendarAfterIcon width={size} height={size} className="text-secondary" />,
     i18n_placeholder: "common.none",

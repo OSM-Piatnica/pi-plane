@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,7 +13,7 @@ export enum EAuthModes {
 export enum EAuthSteps {
   EMAIL = "EMAIL",
   PASSWORD = "PASSWORD",
-  UNIQUE_CODE = "UNIQUE_CODE",
+  ONE_TIME_CODE = "ONE_TIME_CODE",
 }
 
 export interface ICsrfTokenData {

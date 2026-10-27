@@ -21,6 +21,7 @@ from rest_framework import status
 
 # Module imports
 from .. import BaseAPIView
+from plane.utils.work_item_edit_rule import body_list, restrict_work_item_changes
 from plane.app.serializers import IssueSerializer
 from plane.app.permissions import ProjectEntityPermission
 from plane.db.models import Issue, IssueLink, FileAsset, CycleIssue, IssueLabel, IssueAssignee, ModuleIssue
@@ -207,6 +208,7 @@ class SubIssuesEndpoint(BaseAPIView):
         )
 
     # Assign multiple sub issues
+    @restrict_work_item_changes(param="issue_id", body=body_list("sub_issue_ids"))
     def post(self, request, slug, project_id, issue_id):
         # SECURITY: bind the parent issue to the URL workspace + project. A bare
         # pk lookup let any project member re-parent issues under a parent in a

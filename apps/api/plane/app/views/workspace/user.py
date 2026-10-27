@@ -211,12 +211,14 @@ class WorkspaceUserProfileIssuesEndpoint(BaseAPIView):
                             slug=slug,
                             filters=filters,
                             queryset=total_issue_queryset,
+                            user=request.user,
                         ),
                         sub_group_by_fields=issue_group_values(
                             field=sub_group_by,
                             slug=slug,
                             filters=filters,
                             queryset=total_issue_queryset,
+                            user=request.user,
                         ),
                         group_by_field_name=group_by,
                         sub_group_by_field_name=sub_group_by,
@@ -245,6 +247,7 @@ class WorkspaceUserProfileIssuesEndpoint(BaseAPIView):
                         slug=slug,
                         filters=filters,
                         queryset=total_issue_queryset,
+                        user=request.user,
                     ),
                     group_by_field_name=group_by,
                     count_filter=Q(
@@ -411,7 +414,8 @@ class WorkspaceUserActivityEndpoint(BaseAPIView):
         projects = request.query_params.getlist("project", [])
 
         queryset = IssueActivity.objects.filter(
-            ~Q(field__in=["comment", "vote", "reaction", "draft"]),
+            # time logged on work items is not part of the profile feeds (it is not for guests)
+            ~Q(field__in=["comment", "vote", "reaction", "draft", "worklog"]),
             _visible_issues_q(request.user, prefix="issue__"),
             workspace__slug=slug,
             project__archived_at__isnull=True,

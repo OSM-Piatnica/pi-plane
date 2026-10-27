@@ -42,21 +42,50 @@
           "blocked_by": "{issue} tidak dapat dimulai sampai {related} selesai (diblokir oleh relasi).",
           "blocking": "{issue} harus selesai sebelum {related} dimulai (relasi pemblokiran).",
           "finish_after": "{issue} tidak dapat selesai sebelum {related} (selesai setelah relasi).",
+          "finish_after_start": "{issue} tidak dapat selesai sebelum {related} dimulai (relasi selesai setelah mulai).",
           "finish_before": "{issue} harus selesai pada atau sebelum {related} (selesai sebelum relasi).",
           "start_after": "{issue} tidak dapat dimulai sebelum {related} (dimulai setelah relasi).",
-          "start_before": "{issue} harus dimulai pada atau sebelum {related} (dimulai sebelum relasi)."
+          "start_before": "{issue} harus dimulai pada atau sebelum {related} (dimulai sebelum relasi).",
+          "start_before_finish": "{issue} harus mulai paling lambat saat {related} selesai (relasi mulai sebelum selesai)."
         },
         "status": {
           "finish_after": "{issue} tidak dapat diselesaikan sampai {related} selesai (selesai setelah relasi).",
+          "finish_after_start": "{issue} tidak dapat diselesaikan sebelum {related} dimulai (relasi selesai setelah mulai).",
           "start_after": "{issue} tidak dapat dimulai sampai {related} telah dimulai (dimulai setelah relasi)."
-        }
+        },
+        "self": "{issue} tidak dapat dihubungkan dengan dirinya sendiri.",
+        "cycle": "{issue} dan {related} akan membentuk putaran relasi. Hapus dulu relasi sebaliknya.",
+        "lag_suffix": " Jeda relasi: {lag} hr."
       },
       "date_conflict": "Tanggal ini bertentangan dengan dependensi yang sudah ada. Sesuaikan item kerja terkait atau hapus dependensi terlebih dahulu.",
       "dependency_create_failed": "Tidak dapat membuat dependensi. Silakan coba lagi.",
-      "dependency_created": "Dependensi item kerja berhasil dibuat."
-    }
+      "dependency_created": "Dependensi item kerja berhasil dibuat.",
+      "lag": {
+        "hint": "Jumlah hari antara dua tanggal; nilai negatif memungkinkan tumpang tindih.",
+        "invalid": "Masukkan bilangan bulat hari antara -{max} dan {max}.",
+        "label": "Jeda (hari)",
+        "update_failed": "Jeda tidak dapat diubah."
+      },
+      "reschedule": {
+        "confirm": "Pindahkan",
+        "content": "Perubahan ini akan melanggar dependensi. Item kerja berikut dapat dipindahkan ke waktu yang lebih lambat dengan durasi tetap, agar semua dependensi tetap terpenuhi:",
+        "title": "Pindahkan juga item kerja yang bergantung?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Pindahkan ke dibatalkan",
+        "content": "{issue} kini ditandai sebagai duplikat dari {originals}. Pindahkan ke “{state}”? Item tetap terhubung dan terlihat.",
+        "failed": "Item kerja tidak dapat dibatalkan.",
+        "keep": "Biarkan terbuka",
+        "title": "Batalkan item kerja ini?"
+      }
+    },
+    "edit_restricted": "Hanya penerima tugas item kerja ini, pemimpin proyek, dan admin proyek yang dapat mengubahnya."
   },
   "project_create": {
+    "advanced": {
+      "description": "Aturan dan jenis relasi. Anda dapat mengubahnya nanti di pengaturan alur kerja proyek.",
+      "title": "Opsi lanjutan"
+    },
     "features": {
       "cycles": {
         "description": "Batasi waktu pekerjaan dalam periode berulang.",
@@ -115,12 +144,53 @@
       "pending_approval_title": "Persetujuan diperlukan",
       "rejected_success": "Transisi ditolak.",
       "resolving_approval": "Memproses persetujuan...",
+      "rules": {
+        "heading": "Aturan",
+        "description": "Aturan proyek yang berlaku sendiri, baik alur kerja diaktifkan maupun tidak.",
+        "parent_completion": {
+          "description": "Item kerja tidak dapat diselesaikan selama masih memiliki sub-item yang belum selesai atau dibatalkan. Membuka kembali sub-item yang sudah selesai di bawah induk yang selesai akan meminta untuk membuka kembali induknya juga.",
+          "title": "Selesaikan item induk hanya setelah sub-itemnya selesai"
+        },
+        "reopen_parent": {
+          "confirm": "Buka kembali",
+          "content": "Proyek ini tidak mengizinkan induk tetap selesai selagi ada sub-item yang terbuka. Induk yang telah selesai berikut juga akan dibuka kembali: {names}",
+          "title": "Buka kembali juga item kerja induknya?"
+        },
+        "blocked_status": {
+          "description": "Item kerja tidak dapat berpindah ke status dimulai atau selesai selama item kerja yang menghalanginya masih terbuka (penghalang yang selesai atau dibatalkan tidak dihitung). Tetap di backlog atau akan dikerjakan, serta membatalkan, tetap dimungkinkan.",
+          "title": "Mulai atau selesaikan item hanya saat penghalangnya selesai"
+        },
+        "assignee_edit": {
+          "description": "Setelah item kerja memiliki penerima tugas, hanya penerima tugasnya, pemimpin proyek, dan admin proyek yang dapat mengubahnya: kolom, status, tanggal, sub-item, relasi, tautan, lampiran, siklus dan modul, penghapusan dan pengarsipan. Semua orang tetap dapat berkomentar. Item kerja tanpa penerima tugas tetap terbuka bagi semua anggota.",
+          "title": "Hanya penerima tugas, pemimpin proyek, dan admin yang dapat mengubah item kerja"
+        }
+      },
       "save_error": "Tidak dapat menyimpan konfigurasi workflow.",
       "save_success": "Konfigurasi workflow disimpan.",
       "toggle_error": "Tidak dapat memperbarui pengaturan workflow.",
       "transition": "Transisi",
       "transition_count": "{count, plural, one {# transisi} other {# transisi}}",
-      "transitions_configured": "transisi dikonfigurasi"
+      "transitions_configured": "transisi dikonfigurasi",
+      "relation_types": {
+        "heading": "Jenis relasi",
+        "description": "Pilih relasi yang dapat ditambahkan di proyek ini. Penghalangan selalu tersedia, dan relasi yang sudah ada tetap ada saat suatu jenis dinonaktifkan.",
+        "schedule": {
+          "description": "Mulai sebelum, selesai sebelum, dan mulai sebelum selesai, dengan jeda opsional dalam hari.",
+          "title": "Dependensi jadwal"
+        },
+        "traceability": {
+          "description": "Mengimplementasikan, menyebabkan, mengkloning, dan menguji, beserta kebalikannya.",
+          "title": "Relasi keterlacakan"
+        },
+        "relates_to": {
+          "description": "Tautan sederhana antara dua item.",
+          "title": "Berhubungan dengan"
+        },
+        "duplicate": {
+          "description": "Tandai item sebagai duplikat item lain.",
+          "title": "Duplikat"
+        }
+      }
     }
   },
   "project_templates": {

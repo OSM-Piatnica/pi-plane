@@ -8,7 +8,7 @@
 import type { TLogoProps } from "../common";
 import type { TUserPermissions } from "../enums";
 import type { TStateGroups } from "../state";
-import type { IUser, IUserLite } from "../users";
+import type { EStartOfTheWeek, IUser, IUserLite } from "../users";
 import type { IWorkspace } from "../workspace";
 
 export enum EUserProjectRoles {
@@ -34,6 +34,13 @@ export interface IPartialProject {
   guest_view_all_features?: boolean;
   is_issue_type_enabled?: boolean;
   is_workflow_enabled?: boolean;
+  is_parent_completion_rule_enabled?: boolean;
+  is_blocked_status_rule_enabled?: boolean;
+  is_assignee_edit_rule_enabled?: boolean;
+  is_relation_schedule_enabled?: boolean;
+  is_relation_traceability_enabled?: boolean;
+  is_relation_relates_to_enabled?: boolean;
+  is_relation_duplicate_enabled?: boolean;
   is_time_tracking_enabled?: boolean;
   project_lead?: IUserLite | string | null;
   network?: number;
@@ -64,6 +71,9 @@ export interface IProject extends IPartialProject {
   is_favorite?: boolean;
   members?: string[];
   timezone?: string;
+  start_of_the_week?: EStartOfTheWeek;
+  /** Days that count as non-working time in this project, 0 = Sunday ... 6 = Saturday. */
+  weekend_days?: number[];
   start_date?: string | null;
   target_date?: string | null;
   next_work_item_sequence?: number;
@@ -184,6 +194,61 @@ export interface ISearchIssueResponse {
 export type TPartialProject = IPartialProject;
 
 export type TProject = TPartialProject & IProject;
+
+/** What to carry into a duplicated project; states and work item types are always copied. */
+export type TProjectDuplicateInclude = {
+  labels?: boolean;
+  estimates?: boolean;
+  intake?: boolean;
+  members?: boolean;
+  cycles?: boolean;
+  modules?: boolean;
+  views?: boolean;
+  /** Copied in the background after the project exists; see `work_item_properties`. */
+  work_items?: boolean;
+};
+
+export type TProjectDuplicatePayload = {
+  name?: string;
+  identifier?: string;
+  network?: number;
+  include?: TProjectDuplicateInclude;
+  /** Which parts of the work items to carry; only used with `include.work_items`. Absent means all. */
+  work_item_properties?: string[];
+};
+
+export type TProjectCopySummary = {
+  source_project_id: string;
+  counts: Record<string, number>;
+  /** Things the copy did not carry over, e.g. `webhooks:not-copied` or `views:private`. */
+  skipped: string[];
+  /** Present when work items were asked for: the background copy that brings them. */
+  work_items?: { job_id: string; status: TProjectCopyJobStatus; total: number; copied: number };
+};
+
+export type TProjectCopyJobStatus =
+  | "queued"
+  | "processing"
+  | "completed"
+  | "completed_with_errors"
+  | "failed"
+  | "cancelled";
+
+/** The background copy of a duplicated project's work items. */
+export type TProjectCopyJob = {
+  id: string;
+  status: TProjectCopyJobStatus;
+  stage: string;
+  total: number;
+  copied: number;
+  counts: Record<string, number>;
+  skipped: string[];
+  errors: { error: string }[];
+  reason: string;
+  started_at: string | null;
+  completed_at: string | null;
+  created_at: string;
+};
 
 export type TProjectAccessRequestStatus = "pending" | "approved" | "rejected";
 

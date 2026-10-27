@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -106,6 +107,8 @@ class UserNotificationPreference(BaseModel):
     comment = models.BooleanField(default=True)
     mention = models.BooleanField(default=True)
     issue_completed = models.BooleanField(default=True)
+    # emails about requests to join Private projects (for their admins) and how they were decided (for the requester)
+    project_access_request = models.BooleanField(default=True)
 
     # how often non-mention emails are delivered: one by one, or batched into a digest
     class EmailFrequency(models.TextChoices):

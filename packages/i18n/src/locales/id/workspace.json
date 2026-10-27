@@ -166,8 +166,8 @@
         "description": "Terlihat oleh semua orang di ruang kerja; akses memerlukan persetujuan atau undangan"
       },
       "public": {
-        "title": "Umum",
-        "description": "Siapa pun di ruang kerja kecuali Tamu dapat bergabung"
+        "title": "Terbuka",
+        "description": "Terbuka untuk ruang kerja: anggota mana pun, kecuali Tamu, dapat bergabung"
       }
     },
     "error": {

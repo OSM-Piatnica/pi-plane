@@ -1,0 +1,129 @@
+{
+  "format": {
+    "date": "%d.%m.%Y"
+  },
+  "priority": {
+    "urgent": "Naliehavá",
+    "high": "Vysoká",
+    "medium": "Stredná",
+    "low": "Nízka",
+    "none": "Žiadna"
+  },
+  "issue_updates": {
+    "title": "Aktualizácie {identifier}",
+    "summary": "Pracovnú položku aktualizoval(a) <strong>{actor}</strong>.",
+    "summary_others": "Pracovnú položku aktualizoval(a) <strong>{actor}</strong> a ďalší.",
+    "title_changed": "Názov pracovnej položky bol zmenený na {title}",
+    "updates": "Aktualizácie",
+    "due_date": "Termín:",
+    "duplicate": "Duplikát:",
+    "assignee": "Priradené:",
+    "labels": "Štítky:",
+    "state": "Stav:",
+    "links": "Odkazy:",
+    "priority": "Priorita:",
+    "blocking": "Blokuje:",
+    "comments": "Komentáre",
+    "more": "+{count} ďalších",
+    "links_removed": {
+      "one": "Bol odstránený {count} odkaz",
+      "few": "Boli odstránené {count} odkazy",
+      "other": "Bolo odstránených {count} odkazov"
+    },
+    "view": "Zobraziť pracovnú položku",
+    "footer": "Tento e-mail bol odoslaný na adresu <a href=\"mailto:{email}\">{email}</a>. Ak takéto e-maily dostávať nechcete, môžete <a href=\"{issue_url}\">prestať túto pracovnú položku sledovať</a> alebo <a href=\"{preferences_url}\">upraviť nastavenia e-mailov</a>."
+  },
+  "digest": {
+    "title": "Súhrn aktualizácií",
+    "greeting_named": "Dobrý deň, {name}, máte {summary}",
+    "greeting": "Máte {summary}",
+    "updates_count": {
+      "one": "{count} aktualizáciu",
+      "few": "{count} aktualizácie",
+      "other": "{count} aktualizácií"
+    },
+    "summary": {
+      "one": "{updates} v {count} pracovnej položke, ktorú sledujete.",
+      "few": "{updates} v {count} pracovných položkách, ktoré sledujete.",
+      "other": "{updates} v {count} pracovných položkách, ktoré sledujete."
+    },
+    "subject": {
+      "one": "Súhrn: {updates} v {count} pracovnej položke",
+      "few": "Súhrn: {updates} v {count} pracovných položkách",
+      "other": "Súhrn: {updates} v {count} pracovných položkách"
+    },
+    "comments": "komentáre: {count}",
+    "footer": "Toto je súhrn aktualizácií pracovných položiek. Zmienky dostávate okamžite. <a href=\"{preferences_url}\">Zmeniť nastavenia upozornení</a>."
+  },
+  "due_reminder": {
+    "title": "Pripomienka pracovných položiek",
+    "greeting_named": "Dobrý deň, {name}, máte {summary}",
+    "greeting": "Máte {summary}",
+    "section_overdue": "Po termíne",
+    "section_today": "Pracovné položky s dnešným termínom",
+    "work_items": {
+      "one": "{count} pracovnú položku",
+      "few": "{count} pracovné položky",
+      "other": "{count} pracovných položiek"
+    },
+    "overdue": {
+      "one": "{count} po termíne",
+      "few": "{count} po termíne",
+      "other": "{count} po termíne"
+    },
+    "overdue_only": {
+      "one": "{count} pracovnú položku po termíne",
+      "few": "{count} pracovné položky po termíne",
+      "other": "{count} pracovných položiek po termíne"
+    },
+    "summary_both": "{today} s dnešným termínom a {overdue}.",
+    "summary_today": "{today} s dnešným termínom ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Máte {today} s dnešným termínom a {overdue}",
+    "subject_today": "Máte {today} s dnešným termínom ({date})",
+    "subject_overdue": "Máte {overdue}",
+    "days_overdue": {
+      "one": "{count} deň po termíne",
+      "few": "{count} dni po termíne",
+      "other": "{count} dní po termíne"
+    },
+    "cta": "Zobraziť moje pracovné položky",
+    "footer": "Toto je automatická pripomienka odosielaná každé ráno o pracovných položkách s dnešným termínom a o položkách, ktorých termín už uplynul."
+  },
+  "project_addition": {
+    "subject": "Boli ste pozvaní do projektu Pi-Plane",
+    "preheader": "{inviter} vás pozval(a) do projektu {project} v pracovnom priestore {workspace} v Pi-Plane.",
+    "heading": "Boli ste pozvaní do projektu {project} v Pi-Plane",
+    "intro": "{inviter} vás pozval(a) na spoluprácu na projekte <strong>{project}</strong> v pracovnom priestore <strong>{workspace}</strong> v Pi-Plane.",
+    "button": "Prejsť na projekt",
+    "fallback": "Ak tlačidlo nefunguje, skopírujte tento odkaz a vložte ho do prehliadača:",
+    "note": "Poznámka: tento e-mail bol odoslaný na adresu <span>{email}</span>. Ak ste toto pozvanie nečakali, môžete tento e-mail ignorovať."
+  },
+  "access_request": {
+    "subject": "{requester} žiada o pripojenie k projektu {project}",
+    "preheader": "{requester} žiada o pripojenie k súkromnému projektu {project} v pracovnom priestore {workspace} v Pi-Plane.",
+    "heading": "Žiadosť o prístup k projektu {project}",
+    "intro": "<strong>{requester}</strong> žiada o pripojenie k súkromnému projektu <strong>{project}</strong> v pracovnom priestore <strong>{workspace}</strong> v Pi-Plane. Žiadosť môžete schváliť alebo zamietnuť v nastaveniach členov projektu.",
+    "message": "Správa:",
+    "button": "Posúdiť žiadosť",
+    "fallback": "Ak tlačidlo nefunguje, skopírujte tento odkaz a vložte ho do prehliadača:",
+    "note": "Poznámka: tento e-mail bol odoslaný na adresu <span>{email}</span>, pretože ste správcom alebo vedúcim tohto projektu."
+  },
+  "access_request_decision": {
+    "subject_approved": "Vaša žiadosť o pripojenie k {project} bola schválená",
+    "subject_rejected": "Vaša žiadosť o pripojenie k {project} nebola schválená",
+    "heading_approved": "Teraz máte prístup k {project}",
+    "heading_rejected": "Vaša žiadosť o pripojenie k {project}",
+    "intro_approved": "<strong>{decider}</strong> schválil(a) vašu žiadosť o pripojenie k súkromnému projektu <strong>{project}</strong> v pracovnom priestore <strong>{workspace}</strong> v Pi-Plane. Teraz ho môžete otvoriť.",
+    "intro_rejected": "<strong>{decider}</strong> neschválil(a) vašu žiadosť o pripojenie k súkromnému projektu <strong>{project}</strong> v pracovnom priestore <strong>{workspace}</strong> v Pi-Plane. Ak si myslíte, že ide o omyl, obráťte sa na správcu projektu.",
+    "button": "Otvoriť projekt",
+    "note": "Poznámka: Tento e-mail bol odoslaný na adresu <span>{email}</span>, pretože ste požiadali o pripojenie k tomuto projektu."
+  },
+  "one_time_code": {
+    "subject": "Váš jednorazový prihlasovací kód do Pi-Plane je {code}",
+    "preheader": "Váš prihlasovací kód do Pi-Plane {code} platí 10 minút.",
+    "heading": "Váš prihlasovací kód do Pi-Plane",
+    "info": "Tento kód platí nasledujúcich 10 minút. Zadajte ho na prihlasovacej stránke a dokončite prihlásenie.",
+    "note": "Poznámka: Tento e-mail bol odoslaný na adresu <span>{email}</span>. Ak ste prihlasovací kód nečakali, môžete túto správu ignorovať."
+  }
+}

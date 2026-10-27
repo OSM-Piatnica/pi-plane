@@ -166,8 +166,8 @@
         "description": "Çalışma alanındaki herkese görünür; erişim onay veya davet gerektirir"
       },
       "public": {
-        "title": "Herkese Açık",
-        "description": "Çalışma alanındaki herkes (Misafirler hariç) katılabilir"
+        "title": "Açık",
+        "description": "Çalışma alanına açık: Misafirler dışındaki her üye katılabilir"
       }
     },
     "error": {

@@ -39,6 +39,7 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
   } = useWorkspace();
   // derived values
   const disableWorkspaceCreation = formattedConfig?.DISABLE_WORKSPACE_CREATION ?? "";
+  const defaultWorkspaceId = formattedConfig?.INSTANCE_DEFAULT_WORKSPACE_ID ?? "";
   const hasNextPage = paginationInfo?.next_page_results && paginationInfo?.next_cursor !== undefined;
 
   // fetch data
@@ -130,7 +131,8 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
                 </div>
                 <div className={cn("text-11 leading-5 font-regular text-tertiary")}>
                   You can&apos;t yet delete workspaces and you can only go to the workspace if you are an Admin or a
-                  Member.
+                  Member. Choose one workspace to use compact links such as /i/PROJ-123. Clearing the choice restores
+                  workspace-qualified links everywhere.
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -146,7 +148,15 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
             </div>
             <div className="flex flex-col gap-4 py-2">
               {workspaceIds.map((workspaceId) => (
-                <WorkspaceListItem key={workspaceId} workspaceId={workspaceId} />
+                <WorkspaceListItem
+                  key={workspaceId}
+                  workspaceId={workspaceId}
+                  isDefaultForShortLinks={workspaceId === defaultWorkspaceId}
+                  isUpdatingDefault={isSubmitting}
+                  onDefaultChange={(selected) =>
+                    updateConfig("INSTANCE_DEFAULT_WORKSPACE_ID", selected ? workspaceId : "")
+                  }
+                />
               ))}
             </div>
             {hasNextPage && (

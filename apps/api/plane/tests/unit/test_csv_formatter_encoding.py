@@ -62,3 +62,14 @@ class TestCSVFormatterEncoding:
         rows = DataImporter("csv").decode(raw)
         assert rows[0]["name"] == "Środki"
         assert rows[0]["identifier"] == "ABC"
+
+
+class TestCSVFormatterDelimiterAndHeaders:
+    def test_decode_detects_tab_delimiter(self):
+        rows = CSVFormatter().decode("Name\tIdentifier\nTest\tABC\n")
+        assert rows[0]["name"] == "Test"
+        assert rows[0]["identifier"] == "ABC"
+
+    def test_decode_ignores_cells_beyond_the_header(self):
+        rows = CSVFormatter().decode("Name,Identifier\nTest,ABC,extra\n")
+        assert rows == [{"name": "Test", "identifier": "ABC"}]

@@ -117,6 +117,8 @@
   "comments_description": "Powiadamiaj, gdy ktoś doda komentarz do elementu pracy",
   "mentions": "Wzmianki",
   "mentions_description": "Powiadamiaj mnie, gdy ktoś mnie wspomni w komentarzach lub opisie",
+  "project_access_requests": "Prośby o dostęp",
+  "project_access_requests_description": "Wysyłaj mi e-maile o prośbach o dołączenie do prywatnych projektów, którymi administruję, oraz o decyzjach w sprawie moich własnych próśb.",
   "email_frequency": "Częstotliwość e-maili",
   "email_frequency_description": "Wybierz, jak często chcesz otrzymywać e-maile o zmianach w elementach pracy. Wzmianki są zawsze wysyłane natychmiast.",
   "email_frequency_instant": "Natychmiast",
@@ -195,8 +197,8 @@
   "select_network": "Wybierz sieć",
   "lead": "Lider",
   "date_range": "Zakres dat",
-  "private": "Prywatny",
-  "public": "Publiczny",
+  "private": "Tylko ja",
+  "public": "Udostępnione",
   "accessible_only_by_invite": "Dostęp wyłącznie na zaproszenie",
   "anyone_in_the_workspace_except_guests_can_join": "Każdy w przestrzeni, poza gośćmi, może dołączyć",
   "creating": "Tworzenie",
@@ -210,8 +212,8 @@
   "add_to_favorites": "Dodaj do ulubionych",
   "remove_from_favorites": "Usuń z ulubionych",
   "rename_folder": "Zmień nazwę folderu",
-  "publish_project": "Opublikuj projekt",
-  "publish": "Opublikuj",
+  "publish_project": "Udostępnij w internecie",
+  "publish": "Włącz udostępnianie w internecie",
   "copy_link": "Kopiuj link",
   "leave_project": "Opuść projekt",
   "join_the_project_to_rearrange": "Dołącz do projektu, aby zmienić układ",
@@ -532,8 +534,8 @@
     "archiving": "Archiwizowanie",
     "archive": "Archiwizuj",
     "access": {
-      "public": "Publiczny",
-      "private": "Prywatny"
+      "public": "Udostępnione projektowi",
+      "private": "Tylko ja"
     },
     "done": "Gotowe",
     "sub_work_items": "Podrzędne elementy pracy",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "Wystąpił błąd",
       "inbox_fetch_error": "Błąd podczas pobierania elementów pracy Intake. Spróbuj ponownie później.",
-      "page_make_public_error": "Nie udało się upublicznić strony. Spróbuj ponownie później.",
-      "page_make_private_error": "Nie udało się ustawić strony jako prywatnej. Spróbuj ponownie później.",
+      "page_make_public_error": "Nie udało się udostępnić strony projektowi. Spróbuj ponownie później.",
+      "page_make_private_error": "Nie udało się ustawić strony jako widocznej tylko dla Ciebie. Spróbuj ponownie później.",
       "workflow_pending_approval": "Element pracy oczekuje na zatwierdzenie.",
       "workflow_transition_not_allowed": "Ta zmiana stanu nie jest dozwolona przez przepływ pracy."
     },
@@ -1412,7 +1414,7 @@
       "duration": "Czas trwania"
     },
     "auth_labels": {
-      "magic_code": "Kod jednorazowy"
+      "one_time_code": "Kod jednorazowy"
     },
     "state_groups": {
       "canceled": "Anulowane"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "Świetnie! Został jeszcze jeden krok.",
-      "description": "Wpisz w pasku adresu przeglądarki publiczny adres URL lub link do widoku albo Strony, którą chcesz zobaczyć.",
+      "description": "Wpisz w pasku adresu przeglądarki udostępniony link do widoku lub strony, którą chcesz zobaczyć.",
       "image_alt": "Użytkownik jest już zalogowany"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Wyślij ponownie za {seconds} s"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "Kontynuuj przez {provider}"
     },
     "issues": {
-      "public_board_not_found": "Publiczna tablica nie istnieje. Sprawdź adres URL.",
+      "shared_project_load_failed": "Nie udało się załadować tego udostępnionego projektu. Spróbuj ponownie później.",
       "cycle_tooltip": "Cykl: {name}",
       "no_cycle": "Brak cyklu",
       "due_date_tooltip": "Termin: {date}",

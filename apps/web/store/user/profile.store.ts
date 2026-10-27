@@ -12,7 +12,6 @@ import { setLanguage } from "@plane/i18n";
 import type { TLanguage } from "@plane/i18n";
 // types
 import type { IUserTheme, TUserProfile } from "@plane/types";
-import { EStartOfTheWeek } from "@plane/types";
 // services
 import { UserService } from "@/services/user.service";
 // store
@@ -66,7 +65,8 @@ export class ProfileStore implements IUserProfileStore {
     created_at: "",
     updated_at: "",
     language: "",
-    start_of_the_week: EStartOfTheWeek.SUNDAY,
+    start_of_the_week: null,
+    weekend_days: null,
   };
 
   // services

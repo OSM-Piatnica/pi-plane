@@ -20,11 +20,25 @@ type TIssueDates = TWorkItemTimelineDates;
 
 type TRelationMap = Record<string, Partial<Record<TIssueRelationTypes, string[]>> | undefined>;
 
+/** Working days of lag of the relation `issueId <relationType> relatedId`; zero when none is known. */
+export type TGetRelationLag = (issueId: string, relationType: TIssueRelationTypes, relatedId: string) => number;
+
+const NO_LAG: TGetRelationLag = () => 0;
+
+/** The weekend days of a work item's project, to count a relation's lag and 'must start after' in working days. */
+export type TGetWeekendDays = (issueId: string) => readonly number[];
+
+const NO_WEEKEND_DAYS: TGetWeekendDays = () => [];
+
 export const isDependencyRelationInvalid = (
   relationType: TTimelineRelationType,
   sourceDates: TIssueDates,
-  relatedDates: TIssueDates
-): boolean => !isTimelineRelationSatisfied(relationType, sourceDates, relatedDates);
+  relatedDates: TIssueDates,
+  lag = 0,
+  sourceWeekendDays: readonly number[] = [],
+  relatedWeekendDays: readonly number[] = []
+): boolean =>
+  !isTimelineRelationSatisfied(relationType, sourceDates, relatedDates, lag, sourceWeekendDays, relatedWeekendDays);
 
 export const getDependencyArrowEndpoints = (
   relationType: TIssueRelationTypes,
@@ -35,10 +49,12 @@ export const getDependencyArrowEndpoints = (
     case "blocked_by":
     case "finish_after":
     case "start_after":
+    case "finish_after_start":
       return { fromId: relatedId, toId: sourceId };
     case "blocking":
     case "finish_before":
     case "start_before":
+    case "start_before_finish":
     default:
       return { fromId: sourceId, toId: relatedId };
   }
@@ -47,7 +63,9 @@ export const getDependencyArrowEndpoints = (
 export const buildGanttDependencyEdges = (
   blockIds: string[],
   relationMap: TRelationMap,
-  getDates: (issueId: string) => TIssueDates | undefined
+  getDates: (issueId: string) => TIssueDates | undefined,
+  getLag: TGetRelationLag = NO_LAG,
+  getWeekendDays: TGetWeekendDays = NO_WEEKEND_DAYS
 ): TGanttDependencyEdge[] => {
   const visible = new Set(blockIds);
   const edges: TGanttDependencyEdge[] = [];
@@ -69,7 +87,16 @@ export const buildGanttDependencyEdges = (
         const sourceDates = getDates(sourceId);
         const relatedDates = getDates(relatedId);
         const isInvalid =
-          !!sourceDates && !!relatedDates && isDependencyRelationInvalid(relationType, sourceDates, relatedDates);
+          !!sourceDates &&
+          !!relatedDates &&
+          isDependencyRelationInvalid(
+            relationType,
+            sourceDates,
+            relatedDates,
+            getLag(sourceId, relationType, relatedId),
+            getWeekendDays(sourceId),
+            getWeekendDays(relatedId)
+          );
 
         edges.push({
           id: edgeKey,
@@ -88,7 +115,9 @@ export const buildGanttDependencyEdges = (
 export const wouldUpdatesViolateDependencies = (
   updates: { id: string; start_date?: string; target_date?: string }[],
   relationMap: TRelationMap,
-  getDates: (issueId: string) => TIssueDates | undefined
+  getDates: (issueId: string) => TIssueDates | undefined,
+  getLag: TGetRelationLag = NO_LAG,
+  getWeekendDays: TGetWeekendDays = NO_WEEKEND_DAYS
 ): boolean => {
   const proposed = new Map<string, TIssueDates>();
   for (const update of updates) {
@@ -111,7 +140,16 @@ export const wouldUpdatesViolateDependencies = (
       for (const relatedId of relations[relationType] ?? []) {
         const relatedDates = getMergedDates(relatedId);
         if (!relatedDates) continue;
-        if (isDependencyRelationInvalid(relationType, sourceDates, relatedDates)) {
+        if (
+          isDependencyRelationInvalid(
+            relationType,
+            sourceDates,
+            relatedDates,
+            getLag(update.id, relationType, relatedId),
+            getWeekendDays(update.id),
+            getWeekendDays(relatedId)
+          )
+        ) {
           return true;
         }
       }
@@ -125,7 +163,16 @@ export const wouldUpdatesViolateDependencies = (
         const otherDates = getMergedDates(otherId);
         const thisDates = getMergedDates(update.id);
         if (!otherDates || !thisDates) continue;
-        if (isDependencyRelationInvalid(relationType, otherDates, thisDates)) {
+        if (
+          isDependencyRelationInvalid(
+            relationType,
+            otherDates,
+            thisDates,
+            getLag(otherId, relationType, update.id),
+            getWeekendDays(otherId),
+            getWeekendDays(update.id)
+          )
+        ) {
           return true;
         }
       }
@@ -148,9 +195,40 @@ export const getBlockAnchorPoints = (
   };
 };
 
-export const buildDependencyPathD = (fromX: number, fromY: number, toX: number, toY: number): string => {
+export type TAnchorSide = "left" | "right";
+
+/**
+ * The edges of the two bars an arrow joins, as in a project plan: finish-to-start runs from the end of one bar to
+ * the start of the next, start-to-start from start to start, finish-to-finish from end to end, and start-to-finish
+ * from the start of the first bar to the end of the second. The same for both names of a relation.
+ */
+export const getDependencyAnchorSides = (relationType: TIssueRelationTypes): { from: TAnchorSide; to: TAnchorSide } => {
+  switch (relationType) {
+    case "start_before":
+    case "start_after":
+      return { from: "left", to: "left" };
+    case "finish_before":
+    case "finish_after":
+      return { from: "right", to: "right" };
+    case "start_before_finish":
+    case "finish_after_start":
+      return { from: "left", to: "right" };
+    default:
+      return { from: "right", to: "left" };
+  }
+};
+
+export const buildDependencyPathD = (
+  fromX: number,
+  fromY: number,
+  toX: number,
+  toY: number,
+  fromSide: TAnchorSide = "right",
+  toSide: TAnchorSide = "left"
+): string => {
   const deltaX = Math.max(Math.abs(toX - fromX) * 0.4, 24);
-  const c1x = fromX + deltaX;
-  const c2x = toX - deltaX;
+  // the curve leaves a bar away from it, and arrives from the outside of the other
+  const c1x = fromSide === "right" ? fromX + deltaX : fromX - deltaX;
+  const c2x = toSide === "left" ? toX - deltaX : toX + deltaX;
   return `M ${fromX} ${fromY} C ${c1x} ${fromY}, ${c2x} ${toY}, ${toX} ${toY}`;
 };

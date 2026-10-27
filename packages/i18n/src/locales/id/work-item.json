@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Tampilkan sub-item kerja",
         "show_empty_groups": "Tampilkan grup kosong"
+      },
+      "color_by": {
+        "label": "Warna berdasarkan",
+        "state": "Status",
+        "key": "ID item kerja"
       }
     },
     "layouts": {
@@ -90,8 +95,8 @@
     "comments": {
       "placeholder": "Tambah komentar",
       "switch": {
-        "private": "Beralih ke komentar pribadi",
-        "public": "Beralih ke komentar publik"
+        "private": "Jadikan komentar ini internal",
+        "public": "Tampilkan komentar ini di web"
       },
       "create": {
         "success": "Komentar berhasil dibuat",
@@ -148,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Internal",
+        "external": "Terlihat di web"
       }
     },
     "empty_state": {
@@ -195,7 +204,15 @@
       "finish_before": "Selesai Sebelum",
       "finish_after": "Selesai Setelah",
       "implements": "Menerapkan",
-      "implemented_by": "Diterapkan oleh"
+      "implemented_by": "Diterapkan oleh",
+      "causes": "Menyebabkan",
+      "caused_by": "Disebabkan oleh",
+      "clones": "Mengkloning",
+      "cloned_by": "Dikloning oleh",
+      "tests": "Menguji",
+      "tested_by": "Diuji oleh",
+      "start_before_finish": "Mulai sebelum selesainya",
+      "finish_after_start": "Selesai setelah dimulainya"
     },
     "copy_link": "Salin tautan item kerja",
     "delete": {
@@ -290,7 +307,9 @@
         "description": "Untuk melihat semua item kerja, hapus semua filter yang diterapkan.",
         "action": "Hapus filter"
       }
-    }
+    },
+    "expand": "Bentangkan sub-item kerja",
+    "collapse": "Ciutkan sub-item kerja"
   },
   "issue_relation": {
     "empty_state": {
@@ -612,6 +631,22 @@
           "added": "menandai bahwa item kerja ini memblokir item kerja <value/>.",
           "removed": "menghapus item kerja yang diblokir <value/>."
         },
+        "caused_by": {
+          "added": "menambahkan relasi “Disebabkan oleh”: <value/>.",
+          "removed": "menghapus relasi “Disebabkan oleh”: <value/>."
+        },
+        "causes": {
+          "added": "menambahkan relasi “Menyebabkan”: <value/>.",
+          "removed": "menghapus relasi “Menyebabkan”: <value/>."
+        },
+        "cloned_by": {
+          "added": "menambahkan relasi “Dikloning oleh”: <value/>.",
+          "removed": "menghapus relasi “Dikloning oleh”: <value/>."
+        },
+        "clones": {
+          "added": "menambahkan relasi “Mengkloning”: <value/>.",
+          "removed": "menghapus relasi “Mengkloning”: <value/>."
+        },
         "duplicate": {
           "added": "menandai item kerja ini sebagai duplikat dari <value/>.",
           "removed": "menghapus item kerja ini sebagai duplikat dari <value/>."
@@ -620,9 +655,21 @@
           "added": "menandai bahwa item kerja ini selesai setelah <value/>.",
           "removed": "menghapus hubungan \"selesai setelah\" dengan <value/>."
         },
+        "finish_after_start": {
+          "added": "menambahkan relasi “Selesai setelah dimulainya”: <value/>.",
+          "removed": "menghapus relasi “Selesai setelah dimulainya”: <value/>."
+        },
         "finish_before": {
           "added": "menandai bahwa item kerja ini selesai sebelum <value/>.",
           "removed": "menghapus hubungan \"selesai sebelum\" dengan <value/>."
+        },
+        "implemented_by": {
+          "added": "menambahkan relasi “Diterapkan oleh”: <value/>.",
+          "removed": "menghapus relasi “Diterapkan oleh”: <value/>."
+        },
+        "implements": {
+          "added": "menambahkan relasi “Menerapkan”: <value/>.",
+          "removed": "menghapus relasi “Menerapkan”: <value/>."
         },
         "relates_to": {
           "added": "menandai bahwa item kerja ini berhubungan dengan <value/>.",
@@ -635,6 +682,18 @@
         "start_before": {
           "added": "menandai bahwa item kerja ini dimulai sebelum <value/>.",
           "removed": "menghapus hubungan \"dimulai sebelum\" dengan <value/>."
+        },
+        "start_before_finish": {
+          "added": "menambahkan relasi “Mulai sebelum selesainya”: <value/>.",
+          "removed": "menghapus relasi “Mulai sebelum selesainya”: <value/>."
+        },
+        "tested_by": {
+          "added": "menambahkan relasi “Diuji oleh”: <value/>.",
+          "removed": "menghapus relasi “Diuji oleh”: <value/>."
+        },
+        "tests": {
+          "added": "menambahkan relasi “Menguji”: <value/>.",
+          "removed": "menghapus relasi “Menguji”: <value/>."
         }
       },
       "restored": "memulihkan item kerja.",
@@ -836,6 +895,16 @@
         "enabled": "mengaktifkan tampilan Intake",
         "fallback": "memperbarui tampilan Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "menonaktifkan aturan pengeditan oleh penerima tugas",
+        "enabled": "mengaktifkan aturan pengeditan oleh penerima tugas",
+        "fallback": "memperbarui aturan pengeditan oleh penerima tugas"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "menonaktifkan aturan status item yang terhalang",
+        "enabled": "mengaktifkan aturan status item yang terhalang",
+        "fallback": "memperbarui aturan status item yang terhalang"
+      },
       "is_epic_enabled": {
         "disabled": "menonaktifkan Epik",
         "enabled": "mengaktifkan Epik",
@@ -846,10 +915,35 @@
         "enabled": "mengaktifkan jenis item kerja",
         "fallback": "memperbarui jenis item kerja"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "menonaktifkan aturan penyelesaian item induk",
+        "enabled": "mengaktifkan aturan penyelesaian item induk",
+        "fallback": "memperbarui aturan penyelesaian item induk"
+      },
       "is_project_updates_enabled": {
         "disabled": "menonaktifkan pembaruan proyek",
         "enabled": "mengaktifkan pembaruan proyek",
         "fallback": "memperbarui pembaruan proyek"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "menonaktifkan relasi duplikat",
+        "enabled": "mengaktifkan relasi duplikat",
+        "fallback": "memperbarui relasi duplikat"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "menonaktifkan relasi “berhubungan dengan”",
+        "enabled": "mengaktifkan relasi “berhubungan dengan”",
+        "fallback": "memperbarui relasi “berhubungan dengan”"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "menonaktifkan dependensi jadwal",
+        "enabled": "mengaktifkan dependensi jadwal",
+        "fallback": "memperbarui dependensi jadwal"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "menonaktifkan relasi keterlacakan",
+        "enabled": "mengaktifkan relasi keterlacakan",
+        "fallback": "memperbarui relasi keterlacakan"
       },
       "is_time_tracking_enabled": {
         "disabled": "menonaktifkan pelacakan waktu",
@@ -921,5 +1015,37 @@
       },
       "value_none": "tidak ada"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Rangkum tanggal",
+    "rolled_up_bar": "Tanggal dirangkum dari sub-item kerja",
+    "children_span": "Sub-item kerja: {start} – {end}",
+    "starts_early": "Sub-item kerja dimulai sebelum item kerja ini",
+    "ends_late": "Sub-item kerja berakhir setelah item kerja ini"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Luaskan semua",
+    "collapse_all": "Ciutkan semua",
+    "levels": "Tingkat",
+    "up_to_level": "Hingga tingkat {level}",
+    "all_levels": "Semua tingkat",
+    "load_error": "Sub-item kerja tidak dapat dimuat",
+    "too_many": "Terlalu banyak item kerja untuk diperluas sekaligus. Perluas sisanya satu per satu."
+  },
+  "worklog": {
+    "log_time": "Catat waktu",
+    "description_placeholder": "Apa yang dikerjakan? (opsional)",
+    "invalid_duration_title": "Durasi tidak valid",
+    "invalid_duration_message": "Gunakan format seperti \"2h 30m\", \"45m\" atau menit saja, hingga 24 jam.",
+    "log_error": "Tidak dapat mencatat waktu. Silakan coba lagi.",
+    "update_error": "Tidak dapat memperbarui entri. Silakan coba lagi.",
+    "delete_error": "Tidak dapat menghapus entri. Silakan coba lagi.",
+    "delete_title": "Hapus entri waktu",
+    "delete_description": "Yakin ingin menghapus entri waktu ini? Tindakan ini tidak dapat dibatalkan.",
+    "edit_entry": "Edit entri waktu",
+    "delete_entry": "Hapus entri waktu",
+    "logged": "mencatat <value>{duration}</value>",
+    "updated": "mengubah waktu yang dicatat dari <old>{from}</old> menjadi <new>{to}</new>",
+    "removed": "menghapus waktu yang dicatat <value>{duration}</value>"
   }
 }

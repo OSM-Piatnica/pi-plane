@@ -72,6 +72,9 @@ export type TIssueOrderByField = TStripDescendingPrefix<TIssueOrderByOptions>;
 
 export type TIssueGroupingFilters = "active" | "backlog";
 
+/** What the timeline bars take their colour from. */
+export type TTimelineColorBy = "state" | "key";
+
 export type TIssueExtraOptions = "show_empty_groups" | "sub_issue";
 
 export type TIssueParams =
@@ -133,12 +136,24 @@ export type TWorkItemFilterConditionData = Partial<{
 }>;
 
 export type TWorkItemFilterAndGroup = {
-  [LOGICAL_OPERATOR.AND]: TWorkItemFilterConditionData[];
+  [LOGICAL_OPERATOR.AND]: TWorkItemFilterExpressionData[];
 };
 
 export type TWorkItemFilterGroup = TWorkItemFilterAndGroup;
 
-export type TWorkItemFilterExpressionData = TWorkItemFilterConditionData | TWorkItemFilterGroup;
+/**
+ * Key used to negate a single condition in the external filter payload.
+ */
+export const WORK_ITEM_FILTER_NEGATION_KEY = "not";
+
+export type TWorkItemFilterNotGroup = {
+  [WORK_ITEM_FILTER_NEGATION_KEY]: TWorkItemFilterConditionData;
+};
+
+export type TWorkItemFilterExpressionData =
+  | TWorkItemFilterConditionData
+  | TWorkItemFilterNotGroup
+  | TWorkItemFilterGroup;
 
 export type TWorkItemFilterExpression = CompleteOrEmpty<TWorkItemFilterExpressionData>;
 
@@ -161,6 +176,8 @@ export interface IIssueFilterOptions {
 }
 
 export interface IIssueDisplayFilterOptions {
+  /** Timeline bar colour source; unset means the default (state). */
+  color_by?: TTimelineColorBy;
   calendar?: {
     show_weekends?: boolean;
     layout?: TCalendarLayouts;

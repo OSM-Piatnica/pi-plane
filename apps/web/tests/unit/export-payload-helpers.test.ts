@@ -46,4 +46,18 @@ describe("export payload helpers", () => {
       rich_filters: { priority__exact: "high" },
     });
   });
+
+  it("sends the chosen columns only when some are switched off", () => {
+    const base = { provider: { provider: "json" }, project: [], filters: {} };
+    const available = ["priority", "labels", "comments"];
+
+    expect(
+      buildIssueExportPayload({ ...base, columns: { selected: ["comments", "priority"], available } })
+    ).toMatchObject({ fields: ["priority", "comments"] });
+    expect(buildIssueExportPayload({ ...base, columns: { selected: [], available } })).toMatchObject({ fields: [] });
+    expect(buildIssueExportPayload({ ...base, columns: { selected: available, available } })).not.toHaveProperty(
+      "fields"
+    );
+    expect(buildIssueExportPayload(base)).not.toHaveProperty("fields");
+  });
 });

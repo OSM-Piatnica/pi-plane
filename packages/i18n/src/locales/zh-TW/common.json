@@ -117,6 +117,8 @@
   "comments_description": "當有人在工作事項上留下留言時通知我",
   "mentions": "提及",
   "mentions_description": "當有人在留言或描述中提及我時通知我",
+  "project_access_requests": "存取請求",
+  "project_access_requests_description": "透過電子郵件通知我加入我管理的私人專案的請求，以及對我自己請求的決定。",
   "email_frequency": "郵件頻率",
   "email_frequency_description": "選擇您接收工作事項更新郵件的頻率。提及一律會立即發送。",
   "email_frequency_instant": "立即",
@@ -195,8 +197,8 @@
   "select_network": "選擇網路",
   "lead": "負責人",
   "date_range": "日期範圍",
-  "private": "私人",
-  "public": "公開",
+  "private": "僅自己",
+  "public": "共用",
   "accessible_only_by_invite": "僅受邀者可存取",
   "anyone_in_the_workspace_except_guests_can_join": "工作區中除了訪客以外的任何人都可以加入",
   "creating": "建立中",
@@ -210,8 +212,8 @@
   "add_to_favorites": "加入我的最愛",
   "remove_from_favorites": "從我的最愛移除",
   "rename_folder": "重新命名文件夾",
-  "publish_project": "發佈專案",
-  "publish": "發布",
+  "publish_project": "在網路上分享",
+  "publish": "開啟網路分享",
   "copy_link": "複製連結",
   "leave_project": "離開專案",
   "join_the_project_to_rearrange": "加入專案以重新排列",
@@ -532,8 +534,8 @@
     "archiving": "封存中",
     "archive": "封存",
     "access": {
-      "public": "公開",
-      "private": "私人"
+      "public": "與專案共用",
+      "private": "僅自己"
     },
     "done": "完成",
     "sub_work_items": "子工作事項",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "發生錯誤",
       "inbox_fetch_error": "取得 Intake 工作事項時發生錯誤，請稍後再試。",
-      "page_make_public_error": "無法將頁面設為公開。請稍後再試。",
-      "page_make_private_error": "無法將頁面設為私人。請稍後再試。",
+      "page_make_public_error": "無法將頁面與專案共用。請稍後再試。",
+      "page_make_private_error": "無法將頁面設為僅自己可見。請稍後再試。",
       "workflow_pending_approval": "該工作事項有待處理的核准。",
       "workflow_transition_not_allowed": "工作流程不允許此狀態轉換。"
     },
@@ -1412,7 +1414,7 @@
       "duration": "時長"
     },
     "auth_labels": {
-      "magic_code": "魔法碼"
+      "one_time_code": "一次性驗證碼"
     },
     "state_groups": {
       "canceled": "已取消"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "太好了！只差最後一步。",
-      "description": "請在瀏覽器網址列中輸入您想檢視的檢視或頁面的公開分享 URL 或連結。",
+      "description": "請在瀏覽器網址列中輸入你要檢視的檢視或頁面的共用連結。",
       "image_alt": "使用者已登入"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "{seconds} 秒後重新傳送"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "使用 {provider} 繼續"
     },
     "issues": {
-      "public_board_not_found": "此公開看板不存在。請檢查 URL。",
+      "shared_project_load_failed": "無法載入此共用專案。請稍後再試。",
       "cycle_tooltip": "週期：{name}",
       "no_cycle": "無週期",
       "due_date_tooltip": "截止日期：{date}",

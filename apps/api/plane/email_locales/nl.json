@@ -1,0 +1,121 @@
+{
+  "format": {
+    "date": "%d-%m-%Y"
+  },
+  "priority": {
+    "urgent": "Urgent",
+    "high": "Hoog",
+    "medium": "Gemiddeld",
+    "low": "Laag",
+    "none": "Geen"
+  },
+  "issue_updates": {
+    "title": "Updates voor {identifier}",
+    "summary": "Het werkitem is bijgewerkt door <strong>{actor}</strong>.",
+    "summary_others": "Het werkitem is bijgewerkt door <strong>{actor}</strong> en anderen.",
+    "title_changed": "De titel van het werkitem is gewijzigd in {title}",
+    "updates": "Updates",
+    "due_date": "Einddatum:",
+    "duplicate": "Duplicaat:",
+    "assignee": "Toegewezen:",
+    "labels": "Labels:",
+    "state": "Status:",
+    "links": "Links:",
+    "priority": "Prioriteit:",
+    "blocking": "Blokkeert:",
+    "comments": "Reacties",
+    "more": "+{count} meer",
+    "links_removed": {
+      "one": "{count} link is verwijderd",
+      "other": "{count} links zijn verwijderd"
+    },
+    "view": "Werkitem bekijken",
+    "footer": "Deze e-mail is verzonden naar <a href=\"mailto:{email}\">{email}</a>. Wilt u dit soort e-mails liever niet ontvangen, dan kunt u <a href=\"{issue_url}\">zich afmelden voor dit werkitem</a> of <a href=\"{preferences_url}\">uw e-mailvoorkeuren beheren</a>."
+  },
+  "digest": {
+    "title": "Samenvatting van updates",
+    "greeting_named": "Hallo {name}, u heeft {summary}",
+    "greeting": "U heeft {summary}",
+    "updates_count": {
+      "one": "{count} update",
+      "other": "{count} updates"
+    },
+    "summary": {
+      "one": "{updates} in {count} werkitem dat u volgt.",
+      "other": "{updates} in {count} werkitems die u volgt."
+    },
+    "subject": {
+      "one": "Samenvatting: {updates} in {count} werkitem",
+      "other": "Samenvatting: {updates} in {count} werkitems"
+    },
+    "comments": "reacties: {count}",
+    "footer": "Dit is een samenvatting van updates van werkitems. Vermeldingen ontvangt u direct. <a href=\"{preferences_url}\">Meldingsinstellingen wijzigen</a>."
+  },
+  "due_reminder": {
+    "title": "Herinnering voor werkitems",
+    "greeting_named": "Hallo {name}, u heeft {summary}",
+    "greeting": "U heeft {summary}",
+    "section_overdue": "Te laat",
+    "section_today": "Werkitems die vandaag verlopen",
+    "work_items": {
+      "one": "{count} werkitem",
+      "other": "{count} werkitems"
+    },
+    "overdue": {
+      "one": "{count} te laat",
+      "other": "{count} te laat"
+    },
+    "overdue_only": {
+      "one": "{count} werkitem dat te laat is",
+      "other": "{count} werkitems die te laat zijn"
+    },
+    "summary_both": "{today} met vandaag als deadline en {overdue}.",
+    "summary_today": "{today} met vandaag als deadline ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "U heeft {today} met vandaag als deadline en {overdue}",
+    "subject_today": "U heeft {today} met vandaag als deadline ({date})",
+    "subject_overdue": "U heeft {overdue}",
+    "days_overdue": {
+      "one": "{count} dag te laat",
+      "other": "{count} dagen te laat"
+    },
+    "cta": "Mijn werkitems bekijken",
+    "footer": "Dit is een automatische herinnering die elke ochtend wordt verzonden over werkitems die vandaag verlopen en werkitems waarvan de einddatum is verstreken."
+  },
+  "project_addition": {
+    "subject": "U bent uitgenodigd voor een Pi-Plane-project",
+    "preheader": "{inviter} heeft u uitgenodigd voor het project {project} in de werkruimte {workspace} op Pi-Plane.",
+    "heading": "U bent uitgenodigd voor het project {project} op Pi-Plane",
+    "intro": "{inviter} heeft u uitgenodigd om samen te werken aan het project <strong>{project}</strong> in de werkruimte <strong>{workspace}</strong> op Pi-Plane.",
+    "button": "Naar het project",
+    "fallback": "Werkt de knop niet? Kopieer dan deze link en plak hem in uw browser:",
+    "note": "Let op: deze e-mail is verzonden naar <span>{email}</span>. Als u deze uitnodiging niet verwachtte, kunt u deze e-mail negeren."
+  },
+  "access_request": {
+    "subject": "{requester} vraagt om lid te worden van {project}",
+    "preheader": "{requester} vraagt om lid te worden van het privéproject {project} in de werkruimte {workspace} op Pi-Plane.",
+    "heading": "Toegangsverzoek voor het project {project}",
+    "intro": "<strong>{requester}</strong> vraagt om lid te worden van het privéproject <strong>{project}</strong> in de werkruimte <strong>{workspace}</strong> op Pi-Plane. U kunt het verzoek goedkeuren of afwijzen in de ledeninstellingen van het project.",
+    "message": "Bericht:",
+    "button": "Verzoek beoordelen",
+    "fallback": "Werkt de knop niet? Kopieer dan deze link en plak hem in uw browser:",
+    "note": "Let op: deze e-mail is verzonden naar <span>{email}</span> omdat u beheerder of leider van dit project bent."
+  },
+  "access_request_decision": {
+    "subject_approved": "Uw verzoek om lid te worden van {project} is goedgekeurd",
+    "subject_rejected": "Uw verzoek om lid te worden van {project} is niet goedgekeurd",
+    "heading_approved": "U heeft nu toegang tot {project}",
+    "heading_rejected": "Uw verzoek om lid te worden van {project}",
+    "intro_approved": "<strong>{decider}</strong> heeft uw verzoek om lid te worden van het privéproject <strong>{project}</strong> in de werkruimte <strong>{workspace}</strong> op Pi-Plane goedgekeurd. U kunt het nu openen.",
+    "intro_rejected": "<strong>{decider}</strong> heeft uw verzoek om lid te worden van het privéproject <strong>{project}</strong> in de werkruimte <strong>{workspace}</strong> op Pi-Plane niet goedgekeurd. Denkt u dat dit een vergissing is, neem dan contact op met een projectbeheerder.",
+    "button": "Project openen",
+    "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span> omdat u hebt gevraagd om lid te worden van dit project."
+  },
+  "one_time_code": {
+    "subject": "Uw eenmalige Pi-Plane-inlogcode is {code}",
+    "preheader": "Uw Pi-Plane-inlogcode {code} is 10 minuten geldig.",
+    "heading": "Uw inlogcode voor Pi-Plane",
+    "info": "Deze code is de komende 10 minuten geldig. Voer hem in op de inlogpagina om het inloggen te voltooien.",
+    "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span>. Als u geen inlogcode verwachtte, kunt u dit bericht negeren."
+  }
+}

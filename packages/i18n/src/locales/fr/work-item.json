@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Afficher les sous-éléments",
         "show_empty_groups": "Afficher les groupes vides"
+      },
+      "color_by": {
+        "label": "Couleur selon",
+        "state": "État",
+        "key": "ID de l'élément de travail"
       }
     },
     "layouts": {
@@ -90,8 +95,8 @@
     "comments": {
       "placeholder": "Ajouter un commentaire",
       "switch": {
-        "private": "Passer en commentaire privé",
-        "public": "Passer en commentaire public"
+        "private": "Rendre ce commentaire interne",
+        "public": "Afficher ce commentaire sur le web"
       },
       "create": {
         "success": "Commentaire créé avec succès",
@@ -148,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Interne",
+        "external": "Visible sur le web"
       }
     },
     "empty_state": {
@@ -195,7 +204,15 @@
       "finish_before": "Se termine avant",
       "finish_after": "Se termine après",
       "implements": "Implémente",
-      "implemented_by": "Implémenté par"
+      "implemented_by": "Implémenté par",
+      "causes": "Provoque",
+      "caused_by": "Provoqué par",
+      "clones": "Clone",
+      "cloned_by": "Cloné par",
+      "tests": "Teste",
+      "tested_by": "Testé par",
+      "start_before_finish": "Commence avant la fin de",
+      "finish_after_start": "Se termine après le début de"
     },
     "copy_link": "Copier le lien de l’élément de travail",
     "delete": {
@@ -290,7 +307,9 @@
         "description": "Pour voir tous les éléments de travail, effacer tous les filtres appliqués.",
         "action": "Effacer les filtres"
       }
-    }
+    },
+    "expand": "Développer les sous-éléments de travail",
+    "collapse": "Réduire les sous-éléments de travail"
   },
   "issue_relation": {
     "empty_state": {
@@ -612,6 +631,22 @@
           "added": "a indiqué que cet élément de travail bloque l’élément de travail <value/>.",
           "removed": "a retiré l’élément de travail bloqué <value/>."
         },
+        "caused_by": {
+          "added": "a ajouté la relation « Provoqué par » : <value/>.",
+          "removed": "a supprimé la relation « Provoqué par » : <value/>."
+        },
+        "causes": {
+          "added": "a ajouté la relation « Provoque » : <value/>.",
+          "removed": "a supprimé la relation « Provoque » : <value/>."
+        },
+        "cloned_by": {
+          "added": "a ajouté la relation « Cloné par » : <value/>.",
+          "removed": "a supprimé la relation « Cloné par » : <value/>."
+        },
+        "clones": {
+          "added": "a ajouté la relation « Clone » : <value/>.",
+          "removed": "a supprimé la relation « Clone » : <value/>."
+        },
         "duplicate": {
           "added": "a marqué cet élément de travail comme doublon de <value/>.",
           "removed": "a retiré cet élément de travail comme doublon de <value/>."
@@ -620,9 +655,21 @@
           "added": "a indiqué que cet élément de travail se termine après <value/>.",
           "removed": "a supprimé la relation « se termine après » avec <value/>."
         },
+        "finish_after_start": {
+          "added": "a ajouté la relation « Se termine après le début de » : <value/>.",
+          "removed": "a supprimé la relation « Se termine après le début de » : <value/>."
+        },
         "finish_before": {
           "added": "a indiqué que cet élément de travail se termine avant <value/>.",
           "removed": "a supprimé la relation « se termine avant » avec <value/>."
+        },
+        "implemented_by": {
+          "added": "a ajouté la relation « Implémenté par » : <value/>.",
+          "removed": "a supprimé la relation « Implémenté par » : <value/>."
+        },
+        "implements": {
+          "added": "a ajouté la relation « Implémente » : <value/>.",
+          "removed": "a supprimé la relation « Implémente » : <value/>."
         },
         "relates_to": {
           "added": "a indiqué que cet élément de travail est lié à <value/>.",
@@ -635,6 +682,18 @@
         "start_before": {
           "added": "a indiqué que cet élément de travail commence avant <value/>.",
           "removed": "a supprimé la relation « commence avant » avec <value/>."
+        },
+        "start_before_finish": {
+          "added": "a ajouté la relation « Commence avant la fin de » : <value/>.",
+          "removed": "a supprimé la relation « Commence avant la fin de » : <value/>."
+        },
+        "tested_by": {
+          "added": "a ajouté la relation « Testé par » : <value/>.",
+          "removed": "a supprimé la relation « Testé par » : <value/>."
+        },
+        "tests": {
+          "added": "a ajouté la relation « Teste » : <value/>.",
+          "removed": "a supprimé la relation « Teste » : <value/>."
         }
       },
       "restored": "a restauré l’élément de travail.",
@@ -836,6 +895,16 @@
         "enabled": "a activé l’affichage Intake",
         "fallback": "a mis à jour l’affichage Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "a désactivé la règle de modification par les assignés",
+        "enabled": "a activé la règle de modification par les assignés",
+        "fallback": "a mis à jour la règle de modification par les assignés"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "a désactivé la règle du statut des éléments bloqués",
+        "enabled": "a activé la règle du statut des éléments bloqués",
+        "fallback": "a mis à jour la règle du statut des éléments bloqués"
+      },
       "is_epic_enabled": {
         "disabled": "a désactivé les Epics",
         "enabled": "a activé les Epics",
@@ -846,10 +915,35 @@
         "enabled": "a activé les types d’éléments de travail",
         "fallback": "a mis à jour les types d’éléments de travail"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "a désactivé la règle de complétion des parents",
+        "enabled": "a activé la règle de complétion des parents",
+        "fallback": "a mis à jour la règle de complétion des parents"
+      },
       "is_project_updates_enabled": {
         "disabled": "a désactivé les mises à jour du projet",
         "enabled": "a activé les mises à jour du projet",
         "fallback": "a mis à jour les mises à jour du projet"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "a désactivé la relation de doublon",
+        "enabled": "a activé la relation de doublon",
+        "fallback": "a mis à jour la relation de doublon"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "a désactivé la relation « en relation avec »",
+        "enabled": "a activé la relation « en relation avec »",
+        "fallback": "a mis à jour la relation « en relation avec »"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "a désactivé les dépendances de planning",
+        "enabled": "a activé les dépendances de planning",
+        "fallback": "a mis à jour les dépendances de planning"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "a désactivé les relations de traçabilité",
+        "enabled": "a activé les relations de traçabilité",
+        "fallback": "a mis à jour les relations de traçabilité"
       },
       "is_time_tracking_enabled": {
         "disabled": "a désactivé le suivi du temps",
@@ -921,5 +1015,37 @@
       },
       "value_none": "aucune"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Regrouper les dates",
+    "rolled_up_bar": "Dates regroupées à partir des sous-éléments de travail",
+    "children_span": "Sous-éléments de travail : {start} – {end}",
+    "starts_early": "Les sous-éléments de travail commencent avant cet élément de travail",
+    "ends_late": "Les sous-éléments de travail se terminent après cet élément de travail"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Tout développer",
+    "collapse_all": "Tout réduire",
+    "levels": "Niveaux",
+    "up_to_level": "Jusqu'au niveau {level}",
+    "all_levels": "Tous les niveaux",
+    "load_error": "Impossible de charger les sous-éléments de travail",
+    "too_many": "Trop d'éléments de travail pour tout développer d'un coup. Développez le reste un par un."
+  },
+  "worklog": {
+    "log_time": "Saisir du temps",
+    "description_placeholder": "Qu'a-t-on fait ? (facultatif)",
+    "invalid_duration_title": "Durée non valide",
+    "invalid_duration_message": "Utilisez un format comme « 2h 30m », « 45m » ou seulement des minutes, jusqu'à 24 heures.",
+    "log_error": "Impossible de saisir le temps. Veuillez réessayer.",
+    "update_error": "Impossible de mettre à jour la saisie. Veuillez réessayer.",
+    "delete_error": "Impossible de supprimer la saisie. Veuillez réessayer.",
+    "delete_title": "Supprimer la saisie de temps",
+    "delete_description": "Voulez-vous vraiment supprimer cette saisie de temps ? Cette action est irréversible.",
+    "edit_entry": "Modifier la saisie de temps",
+    "delete_entry": "Supprimer la saisie de temps",
+    "logged": "a saisi <value>{duration}</value>",
+    "updated": "a modifié le temps saisi de <old>{from}</old> à <new>{to}</new>",
+    "removed": "a supprimé le temps saisi <value>{duration}</value>"
   }
 }

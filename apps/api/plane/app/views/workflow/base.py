@@ -6,6 +6,7 @@ from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
 
+from plane.utils.work_item_edit_rule import restrict_work_item_changes
 from plane.app.permissions import ROLE, allow_permission
 from plane.app.serializers import (
     WorkflowApprovalSerializer,
@@ -24,6 +25,7 @@ from plane.db.models import (
     WorkflowHistory,
     WorkflowStateConfig,
 )
+from plane.utils.parent_completion_rule import is_reopen_confirmed, reopen_confirmation_payload, reopen_parents
 from plane.utils.workflow import (
     create_default_workflow,
     get_allowed_target_state_ids,
@@ -281,6 +283,7 @@ class IssueWorkflowStatusEndpoint(BaseAPIView):
 
 class IssueWorkflowTransitionEndpoint(BaseAPIView):
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @restrict_work_item_changes(param="issue_id")
     def post(self, request, slug, project_id, issue_id):
         issue = (
             Issue.objects.filter(pk=issue_id, project_id=project_id, workspace__slug=slug)
@@ -313,9 +316,15 @@ class IssueWorkflowTransitionEndpoint(BaseAPIView):
         if not result.allowed:
             return Response({"error": result.error_message}, status=status.HTTP_400_BAD_REQUEST)
 
+        payload = reopen_confirmation_payload(issue, target_state_id, is_reopen_confirmed(request.data))
+        if payload:
+            return Response(payload, status=status.HTTP_400_BAD_REQUEST)
+
+        previous_state_id = issue.state_id
         issue.state_id = target_state_id
         issue.updated_by_id = request.user.id
         issue.save(update_fields=["state_id", "updated_at", "updated_by_id"])
+        reopen_parents(issue, previous_state_id, request.user.id)
 
         return Response({"state_id": str(issue.state_id)}, status=status.HTTP_200_OK)
 

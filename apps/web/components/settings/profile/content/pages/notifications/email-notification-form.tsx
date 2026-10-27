@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -201,6 +202,27 @@ export const NotificationsProfileSettingsForm = observer(function NotificationsP
                   void handleSettingChange("mention", newValue);
                 }}
                 aria-label={t("mentions")}
+              />
+            )}
+          />
+        }
+      />
+      <SettingsControlItem
+        title={t("project_access_requests")}
+        description={t("project_access_requests_description")}
+        control={
+          <Controller
+            control={control}
+            name="project_access_request"
+            render={({ field: { value, onChange } }) => (
+              <Switch
+                size="sm"
+                checked={value}
+                onCheckedChange={(newValue) => {
+                  onChange(newValue);
+                  void handleSettingChange("project_access_request", newValue);
+                }}
+                aria-label={t("project_access_requests")}
               />
             )}
           />

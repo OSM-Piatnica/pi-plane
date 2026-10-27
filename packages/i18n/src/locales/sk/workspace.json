@@ -166,8 +166,8 @@
         "description": "Viditeľný pre všetkých v pracovnom priestore; prístup vyžaduje schválenie alebo pozvanie"
       },
       "public": {
-        "title": "Verejný",
-        "description": "Ktokoľvek v priestore okrem hostí sa môže pripojiť"
+        "title": "Otvorený",
+        "description": "Otvorený pre priestor: pripojiť sa môže každý člen okrem hostí"
       }
     },
     "error": {

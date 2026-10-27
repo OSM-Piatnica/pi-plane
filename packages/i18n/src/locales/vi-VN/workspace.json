@@ -166,8 +166,8 @@
         "description": "Hiển thị với mọi người trong không gian làm việc; truy cập cần được phê duyệt hoặc được mời"
       },
       "public": {
-        "title": "Công khai",
-        "description": "Bất kỳ ai trong không gian làm việc ngoại trừ khách đều có thể tham gia"
+        "title": "Mở",
+        "description": "Mở cho không gian làm việc: mọi thành viên, trừ khách, đều có thể tham gia"
       }
     },
     "error": {

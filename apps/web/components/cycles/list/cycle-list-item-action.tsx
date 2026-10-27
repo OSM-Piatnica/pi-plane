@@ -35,7 +35,8 @@ import { MergedDateDisplay } from "@/components/dropdowns/merged-date";
 // hooks
 import { useCycle } from "@/hooks/store/use-cycle";
 import { useMember } from "@/hooks/store/use-member";
-import { useUserPermissions, useUserProfile } from "@/hooks/store/user";
+import { useUserPermissions } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { useTimeZoneConverter } from "@/hooks/use-timezone-converter";
@@ -76,7 +77,7 @@ export const CycleListItemAction = observer(function CycleListItemAction(props: 
   // store hooks
   const { addCycleToFavorites, removeCycleFromFavorites } = useCycle();
   const { allowPermissions } = useUserPermissions();
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
 
   // local storage
   const { setValue: toggleFavoriteMenu, storedValue: isFavoriteMenuOpen } = useLocalStorage<boolean>(
@@ -260,7 +261,7 @@ export const CycleListItemAction = observer(function CycleListItemAction(props: 
               )} → ${renderFormattedDateInUserTimezone(cycleDetails.end_date ?? "")}`}
               mergeDates
               disabled
-              weekStartsOn={userProfile?.start_of_the_week}
+              weekStartsOn={startOfTheWeek}
               icon={<CalendarOutline />}
             />
           </>

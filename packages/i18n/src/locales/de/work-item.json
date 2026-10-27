@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Untergeordnete Elemente anzeigen",
         "show_empty_groups": "Leere Gruppen anzeigen"
+      },
+      "color_by": {
+        "label": "Farbe nach",
+        "state": "Status",
+        "key": "Arbeitselement-ID"
       }
     },
     "layouts": {
@@ -90,8 +95,8 @@
     "comments": {
       "placeholder": "Kommentar hinzufügen",
       "switch": {
-        "private": "Zu privatem Kommentar wechseln",
-        "public": "Zu öffentlichem Kommentar wechseln"
+        "private": "Diesen Kommentar intern machen",
+        "public": "Diesen Kommentar im Web anzeigen"
       },
       "create": {
         "success": "Kommentar erfolgreich erstellt",
@@ -148,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Intern",
+        "external": "Im Web sichtbar"
       }
     },
     "empty_state": {
@@ -195,7 +204,15 @@
       "finish_before": "Endet Vor",
       "finish_after": "Endet Nach",
       "implements": "Implementiert",
-      "implemented_by": "Implementiert von"
+      "implemented_by": "Implementiert von",
+      "causes": "Verursacht",
+      "caused_by": "Verursacht durch",
+      "clones": "Klont",
+      "cloned_by": "Geklont von",
+      "tests": "Testet",
+      "tested_by": "Getestet durch",
+      "start_before_finish": "Beginnt vor dem Ende von",
+      "finish_after_start": "Endet nach dem Beginn von"
     },
     "copy_link": "Link zum Arbeitselement kopieren",
     "delete": {
@@ -290,7 +307,9 @@
         "description": "Um alle Arbeitselemente anzuzeigen, entfernen Sie alle angewendeten Filter.",
         "action": "Filter entfernen"
       }
-    }
+    },
+    "expand": "Untergeordnete Arbeitselemente aufklappen",
+    "collapse": "Untergeordnete Arbeitselemente zuklappen"
   },
   "issue_relation": {
     "empty_state": {
@@ -612,6 +631,22 @@
           "added": "hat markiert, dass dieses Arbeitselement das Arbeitselement <value/> blockiert.",
           "removed": "hat das blockierte Arbeitselement <value/> entfernt."
         },
+        "caused_by": {
+          "added": "Beziehung „Verursacht durch“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Verursacht durch“ entfernt: <value/>."
+        },
+        "causes": {
+          "added": "Beziehung „Verursacht“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Verursacht“ entfernt: <value/>."
+        },
+        "cloned_by": {
+          "added": "Beziehung „Geklont von“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Geklont von“ entfernt: <value/>."
+        },
+        "clones": {
+          "added": "Beziehung „Klont“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Klont“ entfernt: <value/>."
+        },
         "duplicate": {
           "added": "hat dieses Arbeitselement als Duplikat von <value/> markiert.",
           "removed": "hat dieses Arbeitselement nicht mehr als Duplikat von <value/> markiert."
@@ -620,9 +655,21 @@
           "added": "hat markiert, dass dieses Arbeitselement nach <value/> endet.",
           "removed": "hat die Beziehung „Endet nach“ zu <value/> entfernt."
         },
+        "finish_after_start": {
+          "added": "Beziehung „Endet nach dem Beginn von“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Endet nach dem Beginn von“ entfernt: <value/>."
+        },
         "finish_before": {
           "added": "hat markiert, dass dieses Arbeitselement vor <value/> endet.",
           "removed": "hat die Beziehung „Endet vor“ zu <value/> entfernt."
+        },
+        "implemented_by": {
+          "added": "Beziehung „Implementiert von“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Implementiert von“ entfernt: <value/>."
+        },
+        "implements": {
+          "added": "Beziehung „Implementiert“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Implementiert“ entfernt: <value/>."
         },
         "relates_to": {
           "added": "hat markiert, dass dieses Arbeitselement in Beziehung zu <value/> steht.",
@@ -635,6 +682,18 @@
         "start_before": {
           "added": "hat markiert, dass dieses Arbeitselement vor <value/> beginnt.",
           "removed": "hat die Beziehung „Beginnt vor“ zu <value/> entfernt."
+        },
+        "start_before_finish": {
+          "added": "Beziehung „Beginnt vor dem Ende von“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Beginnt vor dem Ende von“ entfernt: <value/>."
+        },
+        "tested_by": {
+          "added": "Beziehung „Getestet durch“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Getestet durch“ entfernt: <value/>."
+        },
+        "tests": {
+          "added": "Beziehung „Testet“ hinzugefügt: <value/>.",
+          "removed": "Beziehung „Testet“ entfernt: <value/>."
         }
       },
       "restored": "hat das Arbeitselement wiederhergestellt.",
@@ -836,6 +895,16 @@
         "enabled": "hat die Intake-Ansicht aktiviert",
         "fallback": "hat die Intake-Ansicht aktualisiert"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "hat die Regel zur Bearbeitung durch Zugewiesene deaktiviert",
+        "enabled": "hat die Regel zur Bearbeitung durch Zugewiesene aktiviert",
+        "fallback": "hat die Regel zur Bearbeitung durch Zugewiesene aktualisiert"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "hat die Regel zum Status blockierter Elemente deaktiviert",
+        "enabled": "hat die Regel zum Status blockierter Elemente aktiviert",
+        "fallback": "hat die Regel zum Status blockierter Elemente aktualisiert"
+      },
       "is_epic_enabled": {
         "disabled": "hat Epics deaktiviert",
         "enabled": "hat Epics aktiviert",
@@ -846,10 +915,35 @@
         "enabled": "hat Arbeitselementtypen aktiviert",
         "fallback": "hat Arbeitselementtypen aktualisiert"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "hat die Regel zum Abschluss übergeordneter Elemente deaktiviert",
+        "enabled": "hat die Regel zum Abschluss übergeordneter Elemente aktiviert",
+        "fallback": "hat die Regel zum Abschluss übergeordneter Elemente aktualisiert"
+      },
       "is_project_updates_enabled": {
         "disabled": "hat Projekt-Updates deaktiviert",
         "enabled": "hat Projekt-Updates aktiviert",
         "fallback": "hat Projekt-Updates aktualisiert"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "hat die Beziehung „Duplikat“ deaktiviert",
+        "enabled": "hat die Beziehung „Duplikat“ aktiviert",
+        "fallback": "hat die Beziehung „Duplikat“ aktualisiert"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "hat die Beziehung „Steht in Beziehung zu“ deaktiviert",
+        "enabled": "hat die Beziehung „Steht in Beziehung zu“ aktiviert",
+        "fallback": "hat die Beziehung „Steht in Beziehung zu“ aktualisiert"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "hat die Terminabhängigkeiten deaktiviert",
+        "enabled": "hat die Terminabhängigkeiten aktiviert",
+        "fallback": "hat die Terminabhängigkeiten aktualisiert"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "hat die Nachverfolgbarkeits-Beziehungen deaktiviert",
+        "enabled": "hat die Nachverfolgbarkeits-Beziehungen aktiviert",
+        "fallback": "hat die Nachverfolgbarkeits-Beziehungen aktualisiert"
       },
       "is_time_tracking_enabled": {
         "disabled": "hat die Zeiterfassung deaktiviert",
@@ -921,5 +1015,37 @@
       },
       "value_none": "keine"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Termine zusammenfassen",
+    "rolled_up_bar": "Termine aus den untergeordneten Arbeitselementen zusammengefasst",
+    "children_span": "Untergeordnete Arbeitselemente: {start} – {end}",
+    "starts_early": "Untergeordnete Arbeitselemente beginnen vor diesem Arbeitselement",
+    "ends_late": "Untergeordnete Arbeitselemente enden nach diesem Arbeitselement"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Alle aufklappen",
+    "collapse_all": "Alle zuklappen",
+    "levels": "Ebenen",
+    "up_to_level": "Bis Ebene {level}",
+    "all_levels": "Alle Ebenen",
+    "load_error": "Die untergeordneten Arbeitselemente konnten nicht geladen werden",
+    "too_many": "Zu viele Arbeitselemente zum gleichzeitigen Aufklappen. Klappen Sie den Rest einzeln auf."
+  },
+  "worklog": {
+    "log_time": "Zeit erfassen",
+    "description_placeholder": "Was wurde gemacht? (optional)",
+    "invalid_duration_title": "Ungültige Dauer",
+    "invalid_duration_message": "Verwenden Sie ein Format wie „2h 30m“, „45m“ oder nur Minuten, höchstens 24 Stunden.",
+    "log_error": "Die Zeit konnte nicht erfasst werden. Bitte versuchen Sie es erneut.",
+    "update_error": "Der Eintrag konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
+    "delete_error": "Der Eintrag konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+    "delete_title": "Zeiteintrag löschen",
+    "delete_description": "Möchten Sie diesen Zeiteintrag wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "edit_entry": "Zeiteintrag bearbeiten",
+    "delete_entry": "Zeiteintrag löschen",
+    "logged": "hat <value>{duration}</value> erfasst",
+    "updated": "hat die erfasste Zeit von <old>{from}</old> auf <new>{to}</new> geändert",
+    "removed": "hat die erfasste Zeit <value>{duration}</value> entfernt"
   }
 }

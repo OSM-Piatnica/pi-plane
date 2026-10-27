@@ -327,6 +327,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
         display_filters: {
           order_by: ["sort_order", "sequence_id", "name", "-created_at", "-updated_at", "start_date", "-priority"],
           type: ["active", "backlog"],
+          color_by: ["state", "key"],
         },
         extra_options: {
           access: true,
@@ -372,6 +373,7 @@ export enum EActivityFilterType {
   STATE = "STATE",
   ASSIGNEE = "ASSIGNEE",
   DEFAULT = "DEFAULT",
+  WORKLOG = "WORKLOG",
 }
 
 export type TActivityFilters = EActivityFilterType;
@@ -391,6 +393,9 @@ export const ACTIVITY_FILTER_TYPE_OPTIONS: Record<TActivityFilterOptionsKey, { l
   [EActivityFilterType.ASSIGNEE]: {
     labelTranslationKey: "common.assignee",
   },
+  [EActivityFilterType.WORKLOG]: {
+    labelTranslationKey: "common.worklogs",
+  },
 };
 
 export type TActivityFilterOption = {
@@ -405,6 +410,7 @@ export const defaultActivityFilters: TActivityFilters[] = [
   EActivityFilterType.COMMENT,
   EActivityFilterType.STATE,
   EActivityFilterType.ASSIGNEE,
+  EActivityFilterType.WORKLOG,
 ];
 
 export const filterActivityOnSelectedFilters = (

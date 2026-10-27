@@ -445,14 +445,15 @@
       "removing_from_favorites": "Odebírání projektu z oblíbených..."
     },
     "confirm_member_remove": {
-      "leave_description": "Opravdu chcete opustit projekt {name}? Do projektu se budete moci znovu připojit, pokud budete znovu pozváni nebo pokud je veřejný.",
+      "leave_description": "Opravdu chcete opustit projekt {name}? Do projektu se budete moci znovu připojit, pokud budete znovu pozváni nebo pokud je projekt otevřený pro prostor.",
       "leave_title": "Opustit projekt?",
       "remove_description": "Opravdu chcete odebrat člena {name}? Ztratí přístup k tomuto projektu. Tuto akci nelze vrátit zpět.",
       "remove_title": "Odebrat {name}?"
     },
     "control_section": {
       "archive_description": "Archivací projektu se projekt odebere z boční navigace, ale stále k němu budete mít přístup ze stránky projektů. Projekt můžete kdykoli obnovit nebo smazat.",
-      "delete_description": "Po smazání projektu budou všechna data a zdroje v něm trvale odstraněna a nelze je obnovit."
+      "delete_description": "Po smazání projektu budou všechna data a zdroje v něm trvale odstraněna a nelze je obnovit.",
+      "duplicate_description": "Vytvořte nový projekt s nastavením, stavy, štítky a další konfigurací tohoto projektu. Pracovní položky se kopírují jen pokud to zvolíte."
     },
     "delete_modal": {
       "confirm_placeholder": "Zadejte „{phrase}“",
@@ -531,21 +532,34 @@
       "timezone_error": "Aktualizace časového pásma se nezdařila",
       "timezone_updated": "Časové pásmo bylo úspěšně aktualizováno",
       "update_error": "Při aktualizaci profilu došlo k chybě. Zkuste to prosím znovu.",
-      "updated": "Profil byl úspěšně aktualizován."
+      "updated": "Profil byl úspěšně aktualizován.",
+      "weekend_days": "Dny víkendu",
+      "weekend_days_description": "Určuje, které dny se považují za nepracovní.",
+      "weekend_days_updated": "Dny víkendu byly úspěšně aktualizovány",
+      "weekend_days_use_default": "Použít výchozí hodnotu pracovního prostoru"
     },
     "publish_modal": {
       "allow_comments": "Povolit komentáře",
       "allow_reactions": "Povolit reakce",
       "allow_voting": "Povolit hlasování",
-      "anyone_with_link": "Přístup má každý, kdo má odkaz",
-      "link_copied": "Odkaz na publikovanou stránku byl zkopírován.",
-      "live_on_web": "Tento projekt je nyní dostupný na webu",
-      "publishing": "Publikování",
-      "select_layout_error": "Vyberte alespoň jedno rozvržení zobrazení pro publikování projektu.",
-      "settings_updated": "Nastavení publikování bylo úspěšně aktualizováno!",
-      "unpublish": "Zrušit publikování",
-      "unpublish_error": "Při rušení publikování projektu se něco pokazilo.",
-      "unpublishing": "Ruší se publikování",
+      "anyone_with_link": "Kdokoli na internetu s odkazem si může tento projekt prohlédnout, bez účtu",
+      "confirm": {
+        "title": "Sdílet tento projekt na webu?",
+        "description": "Kdokoli na internetu, kdo má odkaz, si tento projekt bude moci prohlédnout, včetně lidí mimo váš prostor a nepřihlášených.",
+        "can_see": "Uvidí:",
+        "item_work_items": "všechny pracovní položky projektu s popisem, stavem, prioritou, daty a štítky",
+        "item_members": "jména a avatary členů projektu",
+        "item_activity": "komentáře, reakce a hlasy se jmény lidí, kteří je přidali, pokud je povolíte",
+        "note": "Návštěvníci nemohou nic upravovat. Odkaz funguje, dokud sdílení nezastavíte, proto sdílejte jen projekt, který neobsahuje nic důvěrného."
+      },
+      "link_copied": "Webový odkaz zkopírován.",
+      "live_on_web": "Tento projekt je sdílen na webu",
+      "publishing": "Zapíná se…",
+      "select_layout_error": "Vyberte alespoň jedno rozvržení pohledu, abyste projekt mohli sdílet na webu.",
+      "settings_updated": "Nastavení sdílení na webu bylo aktualizováno.",
+      "unpublish": "Přestat sdílet",
+      "unpublish_error": "Při vypínání sdílení na webu se něco pokazilo.",
+      "unpublishing": "Vypíná se…",
       "update_settings": "Aktualizovat nastavení"
     },
     "rich_filters": {
@@ -555,6 +569,14 @@
       "filter_type_not_supported": "Typ filtru není podporován",
       "invalid_filter": "Neplatný filtr",
       "invalid_tooltip": "Tato podmínka filtru již není platná. Vlastnost mohla být smazána nebo se mohl změnit váš přístup k ní.",
+      "operators": {
+        "exact": "je",
+        "in": "je některé z",
+        "range": "mezi",
+        "not_exact": "není",
+        "not_in": "není žádné z",
+        "not_range": "není mezi"
+      },
       "remove_filter": "Odebrat filtr",
       "save_view": "Uložit pohled",
       "update_view": "Aktualizovat pohled"
@@ -640,7 +662,55 @@
     "access_requests": {
       "title": "Žádosti o připojení ({count})",
       "approve": "Schválit",
-      "reject": "Zamítnout"
+      "reject": "Zamítnout",
+      "already_decided": "Tato žádost již byla vyřízena jiným správcem.",
+      "requester_left": "Tato osoba již není členem pracovního prostoru."
+    },
+    "duplicate_modal": {
+      "already_running": "V tomto pracovním prostoru už probíhá kopírování pracovních položek. Zkuste to znovu, až skončí.",
+      "always_copied": "Nastavení, stavy a typy pracovních položek se kopírují vždy.",
+      "banner": {
+        "done": "Zkopírované pracovní položky: {count}.",
+        "failed": "Kopírování pracovních položek selhalo. Co se zkopírovalo, zůstává; zkuste to znovu a doplňte zbytek.",
+        "progress": "Kopírování pracovních položek: {copied} z {total}",
+        "queued": "Pracovní položky čekají na zkopírování...",
+        "reload": "Načíst znovu",
+        "retry": "Zkusit znovu",
+        "retry_failed": "Kopírování se nepodařilo zopakovat. Zkuste to prosím znovu."
+      },
+      "clear_all": "Zrušit výběr",
+      "description": "Vytvoří nový projekt se stejným nastavením. Stránky a webhooky se nekopírují; pracovní položky jen pokud to zvolíte níže.",
+      "error": "Projekt se nepodařilo duplikovat. Zkuste to prosím znovu.",
+      "identifier_placeholder": "Vytvoří se, pokud zůstane prázdné",
+      "properties": {
+        "assignees": "Přiřazení",
+        "custom_properties": "Vlastní vlastnosti",
+        "cycles": "Cykly",
+        "dates": "Data",
+        "description_images": "Obrázky v popisech",
+        "labels": "Štítky",
+        "links": "Odkazy",
+        "modules": "Moduly",
+        "parents": "Vazby podřízených položek",
+        "relations": "Vztahy"
+      },
+      "properties_description": "Vyberte, co se přenese s pracovními položkami. Koncepty, archivované položky a položky intake se vynechají; komentáře, přílohy, aktivita a záznamy času se nikdy nekopírují.",
+      "properties_heading": "Vlastnosti pracovních položek",
+      "properties_note": "Cykly a moduly se přenesou, jen když se kopírují výše.",
+      "property_groups": {
+        "content": "Obsah",
+        "hierarchy": "Hierarchie a vztahy",
+        "organization": "Organizace",
+        "people": "Lidé"
+      },
+      "select_all": "Vybrat vše",
+      "submit": "Duplikovat projekt",
+      "submitting": "Duplikuje se projekt...",
+      "success": "Projekt byl úspěšně duplikován.",
+      "title": "Duplikovat projekt",
+      "too_large": "Tento projekt je příliš velký ke zkopírování. Vypněte některé možnosti a zkuste to znovu.",
+      "what_to_copy": "Kopírovat také",
+      "work_items_too_large": "Tento projekt má více pracovních položek, než lze zkopírovat (až {count})."
     }
   }
 }

@@ -25,6 +25,7 @@ import { useIssues } from "@/hooks/store/use-issues";
 import { useProject } from "@/hooks/store/use-project";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { useTimeLineRelationOptions } from "@/components/relations";
+import { useOfferCancelDuplicate } from "@/components/issues/relations/use-offer-cancel-duplicate";
 import type { TRelationObject } from "../issue-detail-widgets/relations";
 
 type TIssueRelationSelect = {
@@ -51,6 +52,7 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
   } = useIssueDetail();
   const { issueMap } = useIssues();
   const { isMobile } = usePlatformOS();
+  const offerCancelDuplicate = useOfferCancelDuplicate();
   const relationIssueIds = getRelationByIssueIdRelationType(issueId, relationKey);
   const ISSUE_RELATION_OPTIONS = useTimeLineRelationOptions();
 
@@ -71,8 +73,15 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
       relationKey,
       data.map((i) => i.id)
     )
-      .then(() => {
+      .then(async () => {
         toggleRelationModal(null, null);
+        await offerCancelDuplicate(
+          workspaceSlug,
+          projectId,
+          issueId,
+          relationKey,
+          data.map((i) => i.id)
+        );
         return null;
       })
       .catch((error) => {

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -86,12 +87,12 @@ export class AuthService extends APIService {
   }
 
   /**
-   * Generates a unique code for magic link authentication
+   * Generates a one-time code for email sign-in
    * @param {{ email: string }} data - Object containing the email address
-   * @returns {Promise<any>} Response containing the generated unique code
+   * @returns {Promise<any>} Response containing the generated one-time code
    * @throws {Error} Throws response data if the request fails
    */
-  async generateUniqueCode(data: { email: string }): Promise<any> {
+  async generateOneTimeCode(data: { email: string }): Promise<any> {
     return this.post("/auth/magic-generate/", data, { headers: {} })
       .then((response) => response?.data)
       .catch((error) => {

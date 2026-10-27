@@ -26,6 +26,7 @@ import { IssueIdentifier } from "@/components/issues/issue-details/issue-identif
 // local imports
 import { useRelationOperations } from "../issue-detail-widgets/relations/helper";
 import { RelationIssueProperty } from "./properties";
+import { RelationLag, isLagRelation } from "./relation-lag";
 import type { TIssue, TIssueRelationTypes, TIssueServiceType } from "@plane/types";
 
 type Props = {
@@ -154,7 +155,7 @@ export const RelationIssueListItem = observer(function RelationIssueListItem(pro
                 own activation must not reach it. */}
             <div
               role="presentation"
-              className="flex-shrink-0 text-13"
+              className="flex flex-shrink-0 items-center gap-2 text-13"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -163,6 +164,17 @@ export const RelationIssueListItem = observer(function RelationIssueListItem(pro
                 if (e.key === "Enter" || e.key === " ") e.stopPropagation();
               }}
             >
+              {isLagRelation(relationKey) && (
+                <RelationLag
+                  workspaceSlug={workspaceSlug}
+                  projectId={projectId}
+                  issueId={issueId}
+                  relationKey={relationKey}
+                  relatedIssueId={relationIssueId}
+                  disabled={disabled}
+                  issueServiceType={issueServiceType}
+                />
+              )}
               <RelationIssueProperty
                 workspaceSlug={workspaceSlug}
                 issueId={relationIssueId}

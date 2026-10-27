@@ -8,6 +8,7 @@ from django.db import transaction
 from rest_framework import status
 from rest_framework.response import Response
 
+from plane.utils.work_item_edit_rule import restrict_work_item_changes
 from plane.app.permissions import ROLE, allow_permission
 from plane.app.views.base import BaseAPIView
 from plane.db.models import Issue, IssuePropertyValue, IssueTypeProperty, ProjectIssueType
@@ -65,6 +66,7 @@ class IssuePropertyValueEndpoint(BaseAPIView):
         return Response({"results": payload}, status=status.HTTP_200_OK)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER], level="PROJECT")
+    @restrict_work_item_changes(param="issue_id")
     def post(self, request, slug, project_id, issue_id):
         issue = self._get_issue(slug, project_id, issue_id)
         if not issue:

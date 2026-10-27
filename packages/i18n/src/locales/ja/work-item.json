@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "サブ作業項目を表示",
         "show_empty_groups": "空のグループを表示"
+      },
+      "color_by": {
+        "label": "色の基準",
+        "state": "ステータス",
+        "key": "作業項目ID"
       }
     },
     "layouts": {
@@ -90,8 +95,8 @@
     "comments": {
       "placeholder": "コメントを追加",
       "switch": {
-        "private": "プライベートコメントに切り替え",
-        "public": "公開コメントに切り替え"
+        "private": "このコメントを社内向けにする",
+        "public": "このコメントをウェブで表示する"
       },
       "create": {
         "success": "コメントを作成しました",
@@ -148,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "社内向け",
+        "external": "ウェブで表示"
       }
     },
     "empty_state": {
@@ -195,7 +204,15 @@
       "finish_before": "終了前",
       "finish_after": "終了後",
       "implements": "実装",
-      "implemented_by": "実装元"
+      "implemented_by": "実装元",
+      "causes": "原因となる",
+      "caused_by": "原因",
+      "clones": "複製する",
+      "cloned_by": "複製元",
+      "tests": "テストする",
+      "tested_by": "テスト対象",
+      "start_before_finish": "終了前に開始",
+      "finish_after_start": "開始後に終了"
     },
     "copy_link": "作業項目のリンクをコピー",
     "delete": {
@@ -290,7 +307,9 @@
         "description": "すべての作業項目を表示するには、すべての適用されたフィルターをクリアしてください。",
         "action": "フィルターをクリア"
       }
-    }
+    },
+    "expand": "サブ作業項目を展開",
+    "collapse": "サブ作業項目を折りたたむ"
   },
   "issue_relation": {
     "empty_state": {
@@ -612,6 +631,22 @@
           "added": "この作業項目が作業項目<value/>をブロックしていることを設定しました。",
           "removed": "ブロック対象の作業項目<value/>を削除しました。"
         },
+        "caused_by": {
+          "added": "関係「原因」を追加しました: <value/>。",
+          "removed": "関係「原因」を削除しました: <value/>。"
+        },
+        "causes": {
+          "added": "関係「原因となる」を追加しました: <value/>。",
+          "removed": "関係「原因となる」を削除しました: <value/>。"
+        },
+        "cloned_by": {
+          "added": "関係「複製元」を追加しました: <value/>。",
+          "removed": "関係「複製元」を削除しました: <value/>。"
+        },
+        "clones": {
+          "added": "関係「複製する」を追加しました: <value/>。",
+          "removed": "関係「複製する」を削除しました: <value/>。"
+        },
         "duplicate": {
           "added": "この作業項目を<value/>の重複としてマークしました。",
           "removed": "この作業項目の<value/>との重複設定を削除しました。"
@@ -620,9 +655,21 @@
           "added": "この作業項目が<value/>より後に終了することを設定しました。",
           "removed": "<value/>との「より後に終了」の関連を削除しました。"
         },
+        "finish_after_start": {
+          "added": "関係「開始後に終了」を追加しました: <value/>。",
+          "removed": "関係「開始後に終了」を削除しました: <value/>。"
+        },
         "finish_before": {
           "added": "この作業項目が<value/>より前に終了することを設定しました。",
           "removed": "<value/>との「より前に終了」の関連を削除しました。"
+        },
+        "implemented_by": {
+          "added": "関係「実装元」を追加しました: <value/>。",
+          "removed": "関係「実装元」を削除しました: <value/>。"
+        },
+        "implements": {
+          "added": "関係「実装」を追加しました: <value/>。",
+          "removed": "関係「実装」を削除しました: <value/>。"
         },
         "relates_to": {
           "added": "この作業項目が<value/>に関連していることを設定しました。",
@@ -635,6 +682,18 @@
         "start_before": {
           "added": "この作業項目が<value/>より前に開始することを設定しました。",
           "removed": "<value/>との「より前に開始」の関連を削除しました。"
+        },
+        "start_before_finish": {
+          "added": "関係「終了前に開始」を追加しました: <value/>。",
+          "removed": "関係「終了前に開始」を削除しました: <value/>。"
+        },
+        "tested_by": {
+          "added": "関係「テスト対象」を追加しました: <value/>。",
+          "removed": "関係「テスト対象」を削除しました: <value/>。"
+        },
+        "tests": {
+          "added": "関係「テストする」を追加しました: <value/>。",
+          "removed": "関係「テストする」を削除しました: <value/>。"
         }
       },
       "restored": "作業項目を復元しました。",
@@ -836,6 +895,16 @@
         "enabled": "Intake表示を有効にしました",
         "fallback": "Intake表示を更新しました"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "担当者のみ編集ルールを無効にしました",
+        "enabled": "担当者のみ編集ルールを有効にしました",
+        "fallback": "担当者のみ編集ルールを更新しました"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "ブロックされた項目のステータス ルールを無効にしました",
+        "enabled": "ブロックされた項目のステータス ルールを有効にしました",
+        "fallback": "ブロックされた項目のステータス ルールを更新しました"
+      },
       "is_epic_enabled": {
         "disabled": "エピックを無効にしました",
         "enabled": "エピックを有効にしました",
@@ -846,10 +915,35 @@
         "enabled": "作業項目タイプを有効にしました",
         "fallback": "作業項目タイプを更新しました"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "親の完了ルールを無効にしました",
+        "enabled": "親の完了ルールを有効にしました",
+        "fallback": "親の完了ルールを更新しました"
+      },
       "is_project_updates_enabled": {
         "disabled": "プロジェクト更新を無効にしました",
         "enabled": "プロジェクト更新を有効にしました",
         "fallback": "プロジェクト更新を更新しました"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "「重複する」関係を無効にしました",
+        "enabled": "「重複する」関係を有効にしました",
+        "fallback": "「重複する」関係を更新しました"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "「関連する」関係を無効にしました",
+        "enabled": "「関連する」関係を有効にしました",
+        "fallback": "「関連する」関係を更新しました"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "スケジュールの依存関係を無効にしました",
+        "enabled": "スケジュールの依存関係を有効にしました",
+        "fallback": "スケジュールの依存関係を更新しました"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "トレーサビリティの関係を無効にしました",
+        "enabled": "トレーサビリティの関係を有効にしました",
+        "fallback": "トレーサビリティの関係を更新しました"
       },
       "is_time_tracking_enabled": {
         "disabled": "時間トラッキングを無効にしました",
@@ -921,5 +1015,37 @@
       },
       "value_none": "なし"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "日付を集約",
+    "rolled_up_bar": "サブ作業項目から集約された日付",
+    "children_span": "サブ作業項目: {start} – {end}",
+    "starts_early": "サブ作業項目がこの作業項目より前に始まります",
+    "ends_late": "サブ作業項目がこの作業項目より後に終わります"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "すべて展開",
+    "collapse_all": "すべて折りたたむ",
+    "levels": "階層",
+    "up_to_level": "階層{level}まで",
+    "all_levels": "すべての階層",
+    "load_error": "サブ作業項目を読み込めませんでした",
+    "too_many": "一度に展開できる作業項目が多すぎます。残りは1つずつ展開してください。"
+  },
+  "worklog": {
+    "log_time": "時間を記録",
+    "description_placeholder": "何をしましたか？（任意）",
+    "invalid_duration_title": "無効な時間",
+    "invalid_duration_message": "「2h 30m」「45m」のような形式、または分のみで、24時間まで入力してください。",
+    "log_error": "時間を記録できませんでした。もう一度お試しください。",
+    "update_error": "エントリを更新できませんでした。もう一度お試しください。",
+    "delete_error": "エントリを削除できませんでした。もう一度お試しください。",
+    "delete_title": "時間エントリを削除",
+    "delete_description": "この時間エントリを削除してもよろしいですか？この操作は元に戻せません。",
+    "edit_entry": "時間エントリを編集",
+    "delete_entry": "時間エントリを削除",
+    "logged": "<value>{duration}</value>を記録しました",
+    "updated": "記録した時間を<old>{from}</old>から<new>{to}</new>に変更しました",
+    "removed": "記録した時間<value>{duration}</value>を削除しました"
   }
 }

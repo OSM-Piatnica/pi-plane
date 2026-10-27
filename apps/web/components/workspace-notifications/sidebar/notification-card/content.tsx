@@ -7,6 +7,7 @@
 
 import type { ReactNode } from "react";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import type { TNotification } from "@plane/types";
 import {
   convertMinutesToHoursMinutesString,
@@ -20,8 +21,8 @@ import {
   ADDITIONAL_NOTIFICATION_CONTENT_MAP,
   renderAdditionalAction,
   renderAdditionalValue,
-  shouldShowConnector,
 } from "@/components/workspace-notifications/notification-card/content";
+import { renderTaggedText } from "@/helpers/tagged-text";
 import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
 // Types
@@ -32,12 +33,13 @@ export type TNotificationFieldData = {
   verb: string | undefined;
   /** Formats a date in the user's language; English style when omitted. */
   formatDate?: (date: string | undefined) => string | undefined;
+  /** Translates the action text of the notification. */
+  t: (key: string) => string;
 };
 
 export type TNotificationContentDetails = {
   action?: ReactNode;
   value?: ReactNode;
-  showConnector?: boolean;
 };
 
 export type TNotificationContentHandler = (data: TNotificationFieldData) => TNotificationContentDetails | null;
@@ -46,82 +48,69 @@ export type TNotificationContentMap = {
   [key: string]: TNotificationContentHandler;
 };
 
-// Base notification content map for core fields
+// Base notification content map for core fields. Each action is a full phrase, including the word that links it to
+// the value that follows ("changed the state to"), because that word and its place differ between languages.
 export const BASE_NOTIFICATION_CONTENT_MAP: TNotificationContentMap = {
-  duplicate: ({ verb }) => ({
+  duplicate: ({ verb, t }) => ({
     action:
-      verb === "created"
-        ? "marked that this work item is a duplicate of"
-        : "marked that this work item is not a duplicate",
+      verb === "created" ? t("notification.content.duplicate_added") : t("notification.content.duplicate_removed"),
     value: null,
-    showConnector: false,
   }),
-  assignees: ({ newValue, oldValue }) => ({
-    action: newValue !== "" ? "added assignee" : "removed assignee",
+  assignees: ({ newValue, oldValue, t }) => ({
+    action: newValue !== "" ? t("notification.content.assignee_added") : t("notification.content.assignee_removed"),
     value: newValue !== "" ? newValue : oldValue,
-    showConnector: false,
   }),
-  start_date: ({ newValue, formatDate }) => ({
-    action: newValue !== "" ? "set start date" : "removed the start date",
+  start_date: ({ newValue, formatDate, t }) => ({
+    action: newValue !== "" ? t("notification.content.start_date_set") : t("notification.content.start_date_removed"),
     value: (formatDate ?? renderFormattedDate)(newValue),
-    showConnector: false,
   }),
-  target_date: ({ newValue, formatDate }) => ({
-    action: newValue !== "" ? "set due date" : "removed the due date",
+  target_date: ({ newValue, formatDate, t }) => ({
+    action: newValue !== "" ? t("notification.content.due_date_set") : t("notification.content.due_date_removed"),
     value: (formatDate ?? renderFormattedDate)(newValue),
-    showConnector: false,
   }),
-  duration: ({ newValue }) => ({
-    action: newValue !== "" ? "set duration" : "removed the duration",
+  duration: ({ newValue, t }) => ({
+    action: newValue !== "" ? t("notification.content.duration_set") : t("notification.content.duration_removed"),
     value: newValue,
-    showConnector: false,
   }),
-  labels: ({ newValue, oldValue }) => ({
-    action: newValue !== "" ? "added label" : "removed label",
+  labels: ({ newValue, oldValue, t }) => ({
+    action: newValue !== "" ? t("notification.content.label_added") : t("notification.content.label_removed"),
     value: newValue !== "" ? newValue : oldValue,
-    showConnector: false,
   }),
-  parent: ({ newValue, oldValue }) => ({
-    action: newValue !== "" ? "added parent" : "removed parent",
+  parent: ({ newValue, oldValue, t }) => ({
+    action: newValue !== "" ? t("notification.content.parent_added") : t("notification.content.parent_removed"),
     value: newValue !== "" ? newValue : oldValue,
-    showConnector: false,
   }),
-  relates_to: () => ({
-    action: "marked that this work item is related to",
+  relates_to: ({ t }) => ({
+    action: t("notification.content.relates_to"),
     value: null,
-    showConnector: true,
   }),
-  comment: ({ newValue }, renderCommentBox?: boolean) => ({
-    action: "commented",
+  comment: ({ newValue, t }, renderCommentBox?: boolean) => ({
+    action: t("notification.content.commented"),
     value: renderCommentBox ? null : sanitizeCommentForNotification(newValue),
-    showConnector: false,
   }),
-  archived_at: ({ newValue }) => ({
-    action: newValue === "restore" ? "restored the work item" : "archived the work item",
+  archived_at: ({ newValue, t }) => ({
+    action: newValue === "restore" ? t("notification.content.restored") : t("notification.content.archived"),
     value: null,
-    showConnector: false,
   }),
-  None: () => ({
-    action: null,
-    value: "the work item and assigned it to you.",
-    showConnector: false,
+  // a work item that was created and assigned to the receiver has no field
+  None: ({ t }) => ({
+    action: t("notification.content.created_and_assigned"),
+    value: null,
   }),
-  // Fields below only define value - action falls through to default handler
-  attachment: () => ({
-    action: null,
-    value: "the work item",
-    showConnector: true,
+  mention: ({ t }) => ({
+    action: t("notification.content.mentioned_you"),
+    value: null,
   }),
-  description: ({ newValue }) => ({
+  description: ({ newValue, t }) => ({
+    action: t("notification.content.description_updated"),
     value: stripAndTruncateHTML(newValue || "", 55),
-    showConnector: true,
   }),
-  estimate_time: ({ newValue, oldValue }) => ({
+  estimate_time: ({ newValue, oldValue, t }) => ({
+    action: t("notification.content.estimate_updated"),
     value:
       newValue !== ""
         ? convertMinutesToHoursMinutesString(Number(newValue))
         : convertMinutesToHoursMinutesString(Number(oldValue)),
-    showConnector: true,
   }),
 };
 
@@ -169,11 +158,12 @@ export function NotificationContent({
   renderCommentBox?: boolean;
 }) {
   const { formatDate } = useLocalizedDates();
+  const { t } = useTranslation();
   const { data, triggered_by_details: triggeredBy } = notification;
-  const notificationField = data?.issue_activity.field;
-  const newValue = data?.issue_activity.new_value;
-  const oldValue = data?.issue_activity.old_value;
-  const verb = data?.issue_activity.verb;
+  const notificationField = data?.issue_activity?.field;
+  const newValue = data?.issue_activity?.new_value;
+  const oldValue = data?.issue_activity?.old_value;
+  const verb = data?.issue_activity?.verb;
 
   const fieldData: TNotificationFieldData = {
     field: notificationField,
@@ -181,6 +171,7 @@ export function NotificationContent({
     oldValue,
     verb,
     formatDate,
+    t,
   };
 
   const renderTriggerName = () => (
@@ -199,7 +190,7 @@ export function NotificationContent({
     // Check if action is explicitly defined in map (including null)
     if (contentDetails && "action" in contentDetails) return contentDetails.action;
     // Fallback to default action handler for fields not in map or without action defined
-    return renderAdditionalAction(notificationField, verb);
+    return renderAdditionalAction(notificationField, verb, t);
   };
 
   // Render value - use map value if defined, otherwise fall through to default handler
@@ -210,18 +201,24 @@ export function NotificationContent({
     return renderAdditionalValue(notificationField, newValue, oldValue);
   };
 
-  // Determine if connector should be shown - prefer map value, fallback to function
-  const showConnector =
-    contentDetails?.showConnector !== undefined ? contentDetails.showConnector : shouldShowConnector(notificationField);
+  const actionNode = renderAction();
+  const valueNode = verb === "deleted" ? null : renderValue();
+  // a translation can place the value inside the phrase (`<value/>`), where the word order of its language needs it
+  const hasInlineValue = typeof actionNode === "string" && actionNode.includes("<value/>");
 
   return (
     <>
       {renderTriggerName()}
-      <span className="text-tertiary">{renderAction()} </span>
+      <span className="text-tertiary">
+        {hasInlineValue
+          ? renderTaggedText(actionNode, {
+              value: () => <span className="font-medium text-primary">{valueNode}</span>,
+            })
+          : actionNode}{" "}
+      </span>
       {verb !== "deleted" && (
         <>
-          {showConnector && <span className="text-tertiary">to </span>}
-          <span className="font-medium text-primary">{renderValue()}</span>
+          {!hasInlineValue && <span className="font-medium text-primary">{valueNode}</span>}
           {notificationField === "comment" && renderCommentBox && (
             <div className="origin-left scale-75">
               <LiteTextEditor
@@ -237,7 +234,7 @@ export function NotificationContent({
               />
             </div>
           )}
-          {"."}
+          {t("notification.content.end_punctuation")}
         </>
       )}
     </>

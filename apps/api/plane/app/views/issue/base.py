@@ -24,6 +24,7 @@ from django.db.models import (
     UUIDField,
     Value,
 )
+from django.db import transaction
 from django.db.models.functions import Coalesce
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -34,6 +35,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 # Module imports
+from plane.utils.work_item_edit_rule import body_update_ids, restrict_work_item_changes
 from plane.app.permissions import ROLE, allow_permission
 from plane.app.serializers import (
     IssueCreateSerializer,
@@ -73,10 +75,12 @@ from plane.utils.grouper import (
 from plane.utils.host import base_host
 from plane.utils.serializers import writable_data
 from plane.utils.issue_filters import issue_filters
+from plane.utils.issue_reschedule import apply_shifts, is_shift_confirmed, plan_for_batch
 from plane.utils.issue_timeline_relation_validation import validate_issue_dates_batch
 from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
 from plane.utils.timezone_converter import user_timezone_converter
+from plane.utils.project_weekend_days import get_project_weekend_days
 from plane.utils.work_item_duration import (
     WORK_ITEM_DURATION_MIN,
     calculate_work_item_duration,
@@ -418,7 +422,7 @@ class IssueViewSet(BaseViewSet):
         # The serializer derives the missing duration / start date / target date on save. Mirror
         # that here so the activity feed reports the derived values too, since it is built from the
         # raw request payload rather than from what was saved.
-        logged_data = {**request.data, **reconcile_work_item_duration(None, request.data)}
+        logged_data = {**request.data, **reconcile_work_item_duration(None, request.data, project.weekend_days)}
 
         serializer = IssueCreateSerializer(
             data=request.data,
@@ -642,6 +646,7 @@ class IssueViewSet(BaseViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER], creator=True, model=Issue)
+    @restrict_work_item_changes(param="pk")
     def partial_update(self, request, slug, project_id, pk=None):
         queryset = self.get_queryset()
         queryset = self.apply_annotations(queryset)
@@ -696,7 +701,10 @@ class IssueViewSet(BaseViewSet):
         # The serializer derives the missing duration / start date / target date on save. Mirror
         # that here so the activity feed reports the derived values too, since it is built from the
         # raw request payload rather than from what was saved.
-        requested_payload = {**request.data, **reconcile_work_item_duration(issue, request.data)}
+        requested_payload = {
+            **request.data,
+            **reconcile_work_item_duration(issue, request.data, get_project_weekend_days(project_id)),
+        }
         serializer = IssueCreateSerializer(
             issue, data=request.data, partial=True, context={"project_id": project_id, "request": request}
         )
@@ -738,6 +746,7 @@ class IssueViewSet(BaseViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @allow_permission([ROLE.ADMIN], creator=True, model=Issue)
+    @restrict_work_item_changes(param="pk")
     def destroy(self, request, slug, project_id, pk=None):
         issue = Issue.objects.get(workspace__slug=slug, project_id=project_id, pk=pk)
 
@@ -1142,7 +1151,9 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
         return True
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    @restrict_work_item_changes(body=body_update_ids)
     def post(self, request, slug, project_id):
+        weekend_days = get_project_weekend_days(project_id)
         updates = request.data.get("updates", [])
 
         issue_ids = [update["id"] for update in updates if update.get("id")]
@@ -1171,8 +1182,14 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
         # The whole batch is validated against its own proposed state, so dragging two linked
         # work items at once is not rejected because one of them still sees a stale neighbour.
         timeline_error = validate_issue_dates_batch(updates, issues_dict)
+        reschedule_plan = None
         if timeline_error:
-            return Response(timeline_error, status=status.HTTP_400_BAD_REQUEST)
+            # Work items that come too early for what depends on them can be moved along, once the person agrees
+            reschedule_plan = plan_for_batch(updates, issues_dict, request.user, timeline_error)
+            if reschedule_plan is None:
+                return Response(timeline_error, status=status.HTTP_400_BAD_REQUEST)
+            if not is_shift_confirmed(request.data):
+                return Response(reschedule_plan.payload(timeline_error), status=status.HTTP_400_BAD_REQUEST)
 
         for update in updates:
             issue_id = str(update.get("id"))
@@ -1215,7 +1232,7 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
             # Dates drive the duration, so recalculate it whenever a date actually moved. This
             # endpoint bypasses the serializer, so without this a timeline drag would leave a
             # stale duration behind.
-            new_duration = calculate_work_item_duration(issue.start_date, issue.target_date)
+            new_duration = calculate_work_item_duration(issue.start_date, issue.target_date, weekend_days)
             if new_duration is not None and new_duration >= WORK_ITEM_DURATION_MIN and new_duration != issue.duration:
                 issue_activity.delay(
                     type="issue.activity.updated",
@@ -1231,7 +1248,10 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
             issues_to_update.append(issue)
 
         # Bulk update issues
-        Issue.objects.bulk_update(issues_to_update, ["start_date", "target_date", "duration"])
+        with transaction.atomic():
+            Issue.objects.bulk_update(issues_to_update, ["start_date", "target_date", "duration"])
+            if reschedule_plan:
+                apply_shifts(reschedule_plan, request.user.id)
 
         return Response({"message": "Issues updated successfully"}, status=status.HTTP_200_OK)
 

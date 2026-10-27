@@ -52,12 +52,22 @@ export const ProjectAccessRequests = observer(function ProjectAccessRequests(pro
       await mutate();
       // an approved person is a member now
       if (status === "approved") await fetchProjectMembers(workspaceSlug, projectId);
-    } catch {
+    } catch (error) {
+      // 409: another admin decided first. 400: the requester left the workspace. Either way the
+      // request is settled, so refresh the list instead of leaving it to be clicked again.
+      const code = (error as { status?: number } | undefined)?.status;
+      const messageKey =
+        code === 409
+          ? "project_components.access_requests.already_decided"
+          : code === 400
+            ? "project_components.access_requests.requester_left"
+            : "something_went_wrong_please_try_again";
       setToast({
         type: "error",
         title: t("toast.error"),
-        message: t("something_went_wrong_please_try_again"),
+        message: t(messageKey),
       });
+      if (code === 409 || code === 400) await mutate();
     } finally {
       setDecidingId(null);
     }

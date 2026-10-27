@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -35,6 +36,8 @@ export const DATE_OPERATOR_LABELS_MAP: Record<TAllAvailableDateFilterOperatorsFo
   ...EXTENDED_DATE_OPERATOR_LABELS_MAP,
   ...NEGATED_DATE_OPERATOR_LABELS_MAP,
 } as const;
+
+export { OPERATOR_LABEL_KEY_PREFIX } from "./prefix";
 
 // -------- RE-EXPORTS --------
 

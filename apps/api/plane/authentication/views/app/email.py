@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -26,7 +27,7 @@ from plane.utils.path_validator import get_safe_redirect_url
 
 class SignInAuthEndpoint(View):
     # Rate-limit password auth attempts before any DB access, using the same
-    # AuthenticationThrottle the magic-code views use (default 10/minute,
+    # AuthenticationThrottle the one-time-code views use (default 10/minute,
     # configurable via the AUTHENTICATION_RATE_LIMIT env var).
     @throttle_auth_redirect(is_app=True)
     def post(self, request):

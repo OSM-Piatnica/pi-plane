@@ -28,7 +28,11 @@ from plane.db.models import (
     User,
     WorkspaceMember,
 )
-from plane.utils.project_work_item_import import WorkItemImportOptions, import_work_items_into_project
+from plane.utils.project_work_item_import import (
+    WorkItemImportOptions,
+    _parse_import_date,
+    import_work_items_into_project,
+)
 
 
 def _project_with_state(workspace, user, name, identifier):
@@ -669,6 +673,122 @@ class TestWorkItemImportRelations:
 
         assert IssueRelation.objects.filter(project=project).count() == 1
 
+    def test_a_lag_survives_the_round_trip(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Lag", "LAG")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "LAG-1",
+                    "name": "Blocker",
+                    "state": "Todo",
+                    # written from the blocker's side, as an export of it would
+                    "relations": [{"type": "blocking", "issue": "LAG-2", "lag_days": -2}],
+                },
+                {"external_key": "LAG-2", "name": "Blocked", "state": "Todo"},
+            ],
+        )
+
+        assert IssueRelation.objects.get(project=project).lag_days == -2
+
+    def test_a_lag_that_is_not_a_number_or_out_of_range_is_left_out(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Bad lag", "BLG")
+        Project.objects.filter(pk=project.pk).update(is_relation_schedule_enabled=True)
+        project.refresh_from_db()
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "BLG-1",
+                    "name": "First",
+                    "state": "Todo",
+                    "relations": [
+                        {"type": "blocked_by", "issue": "BLG-2", "lag_days": "soon"},
+                        {"type": "start_before", "issue": "BLG-3", "lag_days": 999999},
+                    ],
+                },
+                {"external_key": "BLG-2", "name": "Second", "state": "Todo"},
+                {"external_key": "BLG-3", "name": "Third", "state": "Todo"},
+            ],
+        )
+
+        assert set(IssueRelation.objects.filter(project=project).values_list("lag_days", flat=True)) == {0}
+
+    def test_relations_of_a_type_the_project_has_switched_off_are_skipped_with_a_warning(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Toggled", "TOG")
+        warnings = []
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            warnings=warnings,
+            rows=[
+                {
+                    "external_key": "TOG-1",
+                    "name": "First",
+                    "state": "Todo",
+                    "relations": [
+                        {"type": "blocked_by", "issue": "TOG-2"},
+                        {"type": "caused_by", "issue": "TOG-2"},
+                        {"type": "start_before", "issue": "TOG-2"},
+                        {"type": "relates_to", "issue": "TOG-2"},
+                    ],
+                },
+                {"external_key": "TOG-2", "name": "Second", "state": "Todo"},
+            ],
+        )
+
+        assert set(IssueRelation.objects.filter(project=project).values_list("relation_type", flat=True)) == {
+            "blocked_by",
+            "relates_to",
+        }
+        assert any('relation "caused_by" is switched off' in warning for warning in warnings)
+        assert any('relation "start_before" is switched off' in warning for warning in warnings)
+
+    def test_relations_of_a_type_the_project_has_switched_on_are_imported(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Toggled on", "TON")
+        Project.objects.filter(pk=project.pk).update(is_relation_traceability_enabled=True)
+        project.refresh_from_db()
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "TON-1",
+                    "name": "First",
+                    "state": "Todo",
+                    "relations": [{"type": "caused_by", "issue": "TON-2"}],
+                },
+                {"external_key": "TON-2", "name": "Second", "state": "Todo"},
+            ],
+        )
+
+        assert IssueRelation.objects.get(project=project).relation_type == "caused_by"
+
+    def test_a_lag_on_a_relation_without_dates_is_ignored(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "No dates", "NDT")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "NDT-1",
+                    "name": "First",
+                    "state": "Todo",
+                    "relations": [{"type": "relates_to", "issue": "NDT-2", "lag_days": 4}],
+                },
+                {"external_key": "NDT-2", "name": "Second", "state": "Todo"},
+            ],
+        )
+
+        assert IssueRelation.objects.get(project=project).lag_days == 0
+
     def test_symmetric_relation_is_not_duplicated(self, workspace, create_user):
         project = _project_with_state(workspace, create_user, "Symmetric", "SYM")
 
@@ -731,14 +851,23 @@ class TestWorkItemImportDates:
                     "external_key": "D1",
                     "name": "Bad date",
                     "state": "Todo",
-                    "start_date": "01.03.2026",
+                    "start_date": "31.02.2026",
                 }
             ],
         )
 
         assert result["created_work_items"] == 1
         assert Issue.objects.get(project=project, name="Bad date").start_date is None
-        assert any("01.03.2026" in w for w in result["warnings"])
+        assert any("31.02.2026" in w for w in result["warnings"])
+
+
+class TestParseImportDate:
+    def test_day_first_dates_are_accepted(self):
+        assert _parse_import_date("10.09.2026") == "2026-09-10"
+        assert _parse_import_date("1.3.2026") == "2026-03-01"
+
+    def test_impossible_day_first_date_is_unreadable(self):
+        assert _parse_import_date("31.02.2026") is None
 
 
 class TestWorkItemImportOptionsParsing:

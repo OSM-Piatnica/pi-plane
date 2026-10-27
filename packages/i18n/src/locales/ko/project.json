@@ -445,14 +445,15 @@
       "removing_from_favorites": "프로젝트를 즐겨찾기에서 제거하는 중..."
     },
     "confirm_member_remove": {
-      "leave_description": "{name} 프로젝트에서 나가시겠습니까? 다시 초대받거나 프로젝트가 공개인 경우 다시 참여할 수 있습니다.",
+      "leave_description": "{name} 프로젝트에서 나가시겠습니까? 다시 초대받거나 프로젝트가 작업 공간에 열려 있는 경우 다시 참여할 수 있습니다.",
       "leave_title": "프로젝트에서 나가시겠습니까?",
       "remove_description": "멤버 {name}을(를) 제거하시겠습니까? 더 이상 이 프로젝트에 접근할 수 없습니다. 이 작업은 되돌릴 수 없습니다.",
       "remove_title": "{name}을(를) 제거하시겠습니까?"
     },
     "control_section": {
       "archive_description": "프로젝트를 보관하면 사이드 탐색에서 숨겨지지만 프로젝트 페이지에서는 계속 접근할 수 있습니다. 언제든지 프로젝트를 복원하거나 삭제할 수 있습니다.",
-      "delete_description": "프로젝트를 삭제하면 프로젝트 내의 모든 데이터와 리소스가 영구적으로 제거되며 복구할 수 없습니다."
+      "delete_description": "프로젝트를 삭제하면 프로젝트 내의 모든 데이터와 리소스가 영구적으로 제거되며 복구할 수 없습니다.",
+      "duplicate_description": "이 프로젝트의 설정, 상태, 레이블 및 기타 구성으로 새 프로젝트를 만듭니다. 작업 항목은 선택한 경우에만 복사됩니다."
     },
     "delete_modal": {
       "confirm_placeholder": "“{phrase}” 입력",
@@ -531,21 +532,34 @@
       "timezone_error": "시간대를 업데이트하지 못했습니다",
       "timezone_updated": "시간대가 성공적으로 업데이트되었습니다",
       "update_error": "프로필을 업데이트하는 중 오류가 발생했습니다. 다시 시도해 주세요.",
-      "updated": "프로필이 성공적으로 업데이트되었습니다."
+      "updated": "프로필이 성공적으로 업데이트되었습니다.",
+      "weekend_days": "주말 요일",
+      "weekend_days_description": "비근무일로 처리할 요일을 설정합니다.",
+      "weekend_days_updated": "주말 요일을 업데이트했습니다",
+      "weekend_days_use_default": "워크스페이스 기본값 사용"
     },
     "publish_modal": {
       "allow_comments": "댓글 허용",
       "allow_reactions": "반응 허용",
       "allow_voting": "투표 허용",
-      "anyone_with_link": "링크가 있는 모든 사용자가 접근할 수 있습니다",
-      "link_copied": "게시된 페이지 링크가 복사되었습니다.",
-      "live_on_web": "이 프로젝트는 현재 웹에 게시되어 있습니다",
-      "publishing": "게시 중",
-      "select_layout_error": "프로젝트를 게시하려면 보기 레이아웃을 하나 이상 선택하세요.",
-      "settings_updated": "게시 설정이 성공적으로 업데이트되었습니다!",
-      "unpublish": "게시 취소",
-      "unpublish_error": "프로젝트 게시를 취소하는 중 문제가 발생했습니다.",
-      "unpublishing": "게시 취소 중",
+      "anyone_with_link": "링크가 있는 인터넷상의 누구나 계정 없이 이 프로젝트를 볼 수 있습니다",
+      "confirm": {
+        "title": "이 프로젝트를 웹에서 공유할까요?",
+        "description": "링크가 있는 인터넷상의 누구나 작업 공간 밖의 사람과 로그인하지 않은 사람을 포함해 이 프로젝트를 볼 수 있게 됩니다.",
+        "can_see": "다음 내용을 볼 수 있습니다:",
+        "item_work_items": "프로젝트의 모든 작업 항목(설명, 상태, 우선순위, 날짜, 레이블 포함)",
+        "item_members": "프로젝트 구성원의 이름과 아바타",
+        "item_activity": "댓글, 반응, 투표(허용한 경우)와 작성한 사람의 이름",
+        "note": "보는 사람은 아무것도 수정할 수 없습니다. 링크는 공유를 중지할 때까지 계속 작동하므로 기밀 정보가 없는 프로젝트만 공유하세요."
+      },
+      "link_copied": "웹 링크를 복사했습니다.",
+      "live_on_web": "이 프로젝트는 웹에서 공유되고 있습니다",
+      "publishing": "켜는 중…",
+      "select_layout_error": "프로젝트를 웹에서 공유하려면 보기 레이아웃을 하나 이상 선택하세요.",
+      "settings_updated": "웹 공유 설정을 업데이트했습니다.",
+      "unpublish": "공유 중지",
+      "unpublish_error": "웹 공유를 끄는 중 문제가 발생했습니다.",
+      "unpublishing": "끄는 중…",
       "update_settings": "설정 업데이트"
     },
     "rich_filters": {
@@ -555,6 +569,14 @@
       "filter_type_not_supported": "지원되지 않는 필터 유형",
       "invalid_filter": "잘못된 필터",
       "invalid_tooltip": "이 필터 조건은 더 이상 유효하지 않습니다. 속성이 삭제되었거나 접근 권한이 변경되었을 수 있습니다.",
+      "operators": {
+        "exact": "다음과 같음",
+        "in": "다음 중 하나",
+        "range": "다음 사이",
+        "not_exact": "다음과 같지 않음",
+        "not_in": "다음 중 아무것도 아님",
+        "not_range": "다음 사이가 아님"
+      },
       "remove_filter": "필터 제거",
       "save_view": "보기 저장",
       "update_view": "보기 업데이트"
@@ -640,7 +662,55 @@
     "access_requests": {
       "title": "참여 요청 ({count})",
       "approve": "승인",
-      "reject": "거절"
+      "reject": "거절",
+      "already_decided": "이 요청은 이미 다른 관리자가 처리했습니다.",
+      "requester_left": "이 사용자는 더 이상 워크스페이스 멤버가 아닙니다."
+    },
+    "duplicate_modal": {
+      "already_running": "이 워크스페이스에서는 이미 작업 항목 복사가 진행 중입니다. 완료된 후 다시 시도해 주세요.",
+      "always_copied": "설정, 상태, 작업 항목 유형은 항상 복사됩니다.",
+      "banner": {
+        "done": "복사된 작업 항목: {count}개.",
+        "failed": "작업 항목 복사에 실패했습니다. 복사된 항목은 유지되며, 나머지를 추가하려면 다시 시도하세요.",
+        "progress": "작업 항목 복사 중: {copied} / {total}",
+        "queued": "작업 항목이 복사 대기 중입니다...",
+        "reload": "새로고침",
+        "retry": "다시 시도",
+        "retry_failed": "복사를 다시 시도할 수 없습니다. 다시 시도해 주세요."
+      },
+      "clear_all": "모두 지우기",
+      "description": "동일한 설정으로 새 프로젝트를 만듭니다. 페이지와 웹훅은 복사되지 않으며, 작업 항목은 아래에서 선택한 경우에만 복사됩니다.",
+      "error": "프로젝트를 복제할 수 없습니다. 다시 시도해 주세요.",
+      "identifier_placeholder": "비워 두면 자동 생성",
+      "properties": {
+        "assignees": "담당자",
+        "custom_properties": "사용자 지정 속성",
+        "cycles": "사이클",
+        "dates": "날짜",
+        "description_images": "설명 속 이미지",
+        "labels": "레이블",
+        "links": "링크",
+        "modules": "모듈",
+        "parents": "하위 항목 링크",
+        "relations": "관계"
+      },
+      "properties_description": "작업 항목과 함께 가져갈 항목을 선택합니다. 초안, 보관된 항목, 인테이크 항목은 제외되며 댓글, 첨부 파일, 활동, 시간 기록은 복사되지 않습니다.",
+      "properties_heading": "작업 항목 속성",
+      "properties_note": "사이클과 모듈은 위에서 복사하는 경우에만 함께 가져갑니다.",
+      "property_groups": {
+        "content": "콘텐츠",
+        "hierarchy": "계층 및 관계",
+        "organization": "구성",
+        "people": "사람"
+      },
+      "select_all": "모두 선택",
+      "submit": "프로젝트 복제",
+      "submitting": "프로젝트를 복제하는 중...",
+      "success": "프로젝트가 복제되었습니다.",
+      "title": "프로젝트 복제",
+      "too_large": "이 프로젝트는 너무 커서 복사할 수 없습니다. 일부 옵션을 끄고 다시 시도해 주세요.",
+      "what_to_copy": "함께 복사",
+      "work_items_too_large": "이 프로젝트에는 복사할 수 있는 수보다 많은 작업 항목이 있습니다(최대 {count}개)."
     }
   }
 }

@@ -42,21 +42,50 @@
           "blocked_by": "{issue} 必須等到 {related} 完成後才能開始（受阻擋關聯限制）。",
           "blocking": "{issue} 必須在 {related} 開始前完成（阻擋關聯）。",
           "finish_after": "{issue} 不能在 {related} 之前完成（須晚於完成關聯）。",
+          "finish_after_start": "{issue} 不能在 {related} 開始之前結束（開始後結束關係）。",
           "finish_before": "{issue} 必須在 {related} 當天或之前完成（須早於完成關聯）。",
           "start_after": "{issue} 不能在 {related} 之前開始（須晚於開始關聯）。",
-          "start_before": "{issue} 必須在 {related} 當天或之前開始（須早於開始關聯）。"
+          "start_before": "{issue} 必須在 {related} 當天或之前開始（須早於開始關聯）。",
+          "start_before_finish": "{issue} 最遲必須在 {related} 結束時開始（結束前開始關係）。"
         },
         "status": {
           "finish_after": "{issue} 必須等到 {related} 完成後才能完成（須晚於完成關聯）。",
+          "finish_after_start": "在 {related} 開始之前，{issue} 無法完成（開始後結束關係）。",
           "start_after": "{issue} 必須等到 {related} 開始後才能開始（須晚於開始關聯）。"
-        }
+        },
+        "self": "{issue} 不能與自身關聯。",
+        "cycle": "{issue} 與 {related} 會形成關係迴圈。請先移除相反的關係。",
+        "lag_suffix": "關係延遲：{lag} 天。"
       },
       "date_conflict": "這些日期與現有的相依關係衝突。請先調整相關工作項目或移除相依關係。",
       "dependency_create_failed": "無法建立相依關係，請再試一次。",
-      "dependency_created": "工作項目相依關係已成功建立。"
-    }
+      "dependency_created": "工作項目相依關係已成功建立。",
+      "lag": {
+        "hint": "兩個日期之間的天數；負數允許重疊。",
+        "invalid": "請輸入 -{max} 到 {max} 之間的整數天數。",
+        "label": "延遲（天）",
+        "update_failed": "無法變更延遲。"
+      },
+      "reschedule": {
+        "confirm": "移動",
+        "content": "此變更會破壞相依關係。可以將以下工作事項順延（維持其工期），使所有相依關係仍然成立：",
+        "title": "是否同時移動依賴它的工作事項？"
+      },
+      "duplicate_cancel": {
+        "confirm": "移到已取消",
+        "content": "{issue} 現已標記為 {originals} 的重複項。要將其移到「{state}」嗎？它仍保持關聯並可見。",
+        "failed": "無法取消該工作事項。",
+        "keep": "保持開啟",
+        "title": "是否取消此工作事項？"
+      }
+    },
+    "edit_restricted": "只有此工作事項的負責人、專案負責人和專案管理員可以變更它。"
   },
   "project_create": {
+    "advanced": {
+      "description": "規則與關係類型。之後可在專案的工作流程設定中變更。",
+      "title": "進階選項"
+    },
     "features": {
       "cycles": {
         "description": "在週期性的時間段內安排工作。",
@@ -115,12 +144,53 @@
       "pending_approval_title": "需要核准",
       "rejected_success": "轉換已拒絕。",
       "resolving_approval": "正在處理核准…",
+      "rules": {
+        "heading": "規則",
+        "description": "無論是否啟用工作流程，都會獨立生效的專案規則。",
+        "parent_completion": {
+          "description": "只要還有未完成且未取消的子工作事項，工作事項就無法完成。在已完成的父項下重新開啟已完成的子工作事項時，會詢問是否一併重新開啟父項。",
+          "title": "僅在子工作事項完成後才能完成父項"
+        },
+        "reopen_parent": {
+          "confirm": "重新開啟",
+          "content": "此專案不允許在子工作事項未完成時讓父項保持已完成狀態。以下已完成的父項也將被重新開啟：{names}",
+          "title": "是否一併重新開啟父工作事項？"
+        },
+        "blocked_status": {
+          "description": "只要阻擋它的工作事項仍未結束，就不能將其移到已開始或已完成狀態（已完成和已取消的阻擋項不計）。仍可停留在待辦清單或未開始，也可取消。",
+          "title": "僅在阻擋項完成後才能開始或完成工作事項"
+        },
+        "assignee_edit": {
+          "description": "工作事項有負責人後，只有其負責人、專案負責人和專案管理員可以變更它：欄位、狀態、日期、子工作事項、關係、連結、附件、週期和模組，以及刪除和封存。任何人仍可留言。沒有負責人的工作事項對所有成員開放。",
+          "title": "只有負責人、專案負責人和管理員可以變更工作事項"
+        }
+      },
       "save_error": "無法儲存工作流程設定。",
       "save_success": "工作流程設定已儲存。",
       "toggle_error": "無法更新工作流程設定。",
       "transition": "轉換",
       "transition_count": "{count, plural, one {# 項轉換} other {# 項轉換}}",
-      "transitions_configured": "項轉換已設定"
+      "transitions_configured": "項轉換已設定",
+      "relation_types": {
+        "heading": "關係類型",
+        "description": "選擇此專案中可新增的關係。阻擋一律可用，關閉某個類型後既有關係會保留。",
+        "schedule": {
+          "description": "先於開始、先於完成與先於完成開始，可選擇設定以天為單位的間隔。",
+          "title": "排程相依"
+        },
+        "traceability": {
+          "description": "實作、導致、複製與測試，以及它們的反向關係。",
+          "title": "可追溯關係"
+        },
+        "relates_to": {
+          "description": "兩個工作事項之間的簡單連結。",
+          "title": "與此相關"
+        },
+        "duplicate": {
+          "description": "將工作事項標記為另一個工作事項的重複項。",
+          "title": "此項重複"
+        }
+      }
     }
   },
   "project_templates": {

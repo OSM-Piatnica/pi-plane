@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Einmaliger Code",
+            "label": "Einmalcode",
             "placeholder": "123456",
             "helper_text": "Verifizierungscode wurde an deine neue E-Mail gesendet.",
             "errors": {
-              "required": "Einmaliger Code ist erforderlich",
+              "required": "Einmalcode ist erforderlich",
               "invalid": "Ungültiger Verifizierungscode. Bitte versuche es erneut."
             }
           }
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Fertigstellungsgrad",
+    "first_day_project_default": "Projektstandard",
     "first_day_updated": "Erster Tag der Woche erfolgreich aktualisiert",
     "try_again_later": "Bitte versuche es später erneut.",
     "update_failed": "Aktualisierung fehlgeschlagen",

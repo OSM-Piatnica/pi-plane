@@ -70,6 +70,13 @@ export const iconsMap: ActivityIconMap = {
   is_project_updates_enabled: SubscribeOutline,
   is_epic_enabled: GridOutline,
   is_workflow_enabled: GitBranchOutline,
+  is_parent_completion_rule_enabled: GitBranchOutline,
+  is_blocked_status_rule_enabled: GitBranchOutline,
+  is_assignee_edit_rule_enabled: GitBranchOutline,
+  is_relation_schedule_enabled: GitBranchOutline,
+  is_relation_traceability_enabled: GitBranchOutline,
+  is_relation_relates_to_enabled: GitBranchOutline,
+  is_relation_duplicate_enabled: GitBranchOutline,
   is_time_tracking_enabled: TimeTrackingOutline,
   is_issue_type_enabled: ToDoOutline,
   default: HierarchyOutline,
@@ -298,6 +305,69 @@ export const messages = (
           t("activity_feed.project.is_workflow_enabled.enabled"),
           t("activity_feed.project.is_workflow_enabled.disabled"),
           t("activity_feed.project.is_workflow_enabled.fallback")
+        ),
+      };
+    case "is_parent_completion_rule_enabled":
+      return {
+        message: booleanText(
+          newValue,
+          t("activity_feed.project.is_parent_completion_rule_enabled.enabled"),
+          t("activity_feed.project.is_parent_completion_rule_enabled.disabled"),
+          t("activity_feed.project.is_parent_completion_rule_enabled.fallback")
+        ),
+      };
+    case "is_blocked_status_rule_enabled":
+      return {
+        message: booleanText(
+          newValue,
+          t("activity_feed.project.is_blocked_status_rule_enabled.enabled"),
+          t("activity_feed.project.is_blocked_status_rule_enabled.disabled"),
+          t("activity_feed.project.is_blocked_status_rule_enabled.fallback")
+        ),
+      };
+    case "is_assignee_edit_rule_enabled":
+      return {
+        message: booleanText(
+          newValue,
+          t("activity_feed.project.is_assignee_edit_rule_enabled.enabled"),
+          t("activity_feed.project.is_assignee_edit_rule_enabled.disabled"),
+          t("activity_feed.project.is_assignee_edit_rule_enabled.fallback")
+        ),
+      };
+    case "is_relation_schedule_enabled":
+      return {
+        message: booleanText(
+          newValue,
+          t("activity_feed.project.is_relation_schedule_enabled.enabled"),
+          t("activity_feed.project.is_relation_schedule_enabled.disabled"),
+          t("activity_feed.project.is_relation_schedule_enabled.fallback")
+        ),
+      };
+    case "is_relation_traceability_enabled":
+      return {
+        message: booleanText(
+          newValue,
+          t("activity_feed.project.is_relation_traceability_enabled.enabled"),
+          t("activity_feed.project.is_relation_traceability_enabled.disabled"),
+          t("activity_feed.project.is_relation_traceability_enabled.fallback")
+        ),
+      };
+    case "is_relation_relates_to_enabled":
+      return {
+        message: booleanText(
+          newValue,
+          t("activity_feed.project.is_relation_relates_to_enabled.enabled"),
+          t("activity_feed.project.is_relation_relates_to_enabled.disabled"),
+          t("activity_feed.project.is_relation_relates_to_enabled.fallback")
+        ),
+      };
+    case "is_relation_duplicate_enabled":
+      return {
+        message: booleanText(
+          newValue,
+          t("activity_feed.project.is_relation_duplicate_enabled.enabled"),
+          t("activity_feed.project.is_relation_duplicate_enabled.disabled"),
+          t("activity_feed.project.is_relation_duplicate_enabled.fallback")
         ),
       };
     case "is_time_tracking_enabled":

@@ -166,8 +166,8 @@
         "description": "Vizibil pentru toți din spațiul de lucru; accesul necesită aprobare sau invitație"
       },
       "public": {
-        "title": "Public",
-        "description": "Oricine din spațiul de lucru, cu excepția celor din categoria Invitați, se poate alătura"
+        "title": "Deschis",
+        "description": "Deschis spațiului de lucru: orice membru, cu excepția invitaților, se poate alătura"
       }
     },
     "error": {

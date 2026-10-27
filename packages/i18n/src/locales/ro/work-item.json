@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Afișează sub-activitățile",
         "show_empty_groups": "Afișează grupurile goale"
+      },
+      "color_by": {
+        "label": "Culoare după",
+        "state": "Stare",
+        "key": "ID-ul activității"
       }
     },
     "layouts": {
@@ -90,8 +95,8 @@
     "comments": {
       "placeholder": "Adaugă comentariu",
       "switch": {
-        "private": "Comută pe comentariu privat",
-        "public": "Comută pe comentariu public"
+        "private": "Fă acest comentariu intern",
+        "public": "Arată acest comentariu pe web"
       },
       "create": {
         "success": "Comentariu adăugat cu succes",
@@ -148,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Intern",
+        "external": "Vizibil pe web"
       }
     },
     "empty_state": {
@@ -195,7 +204,15 @@
       "finish_before": "Termină înainte",
       "finish_after": "Termină după",
       "implements": "Implementează",
-      "implemented_by": "Implementat de"
+      "implemented_by": "Implementat de",
+      "causes": "Cauzează",
+      "caused_by": "Cauzat de",
+      "clones": "Clonează",
+      "cloned_by": "Clonat de",
+      "tests": "Testează",
+      "tested_by": "Testat de",
+      "start_before_finish": "Începe înainte de sfârșitul",
+      "finish_after_start": "Se termină după începutul"
     },
     "copy_link": "Copiază link-ul activității",
     "delete": {
@@ -290,7 +307,9 @@
         "description": "Pentru a vedea toate elementele de lucru, șterge toate filtrele aplicate.",
         "action": "Șterge filtrele"
       }
-    }
+    },
+    "expand": "Extinde sub-activitățile",
+    "collapse": "Restrânge sub-activitățile"
   },
   "issue_relation": {
     "empty_state": {
@@ -612,6 +631,22 @@
           "added": "a marcat că această activitate blochează activitatea <value/>.",
           "removed": "a eliminat activitatea blocată <value/>."
         },
+        "caused_by": {
+          "added": "a adăugat relația „Cauzat de”: <value/>.",
+          "removed": "a eliminat relația „Cauzat de”: <value/>."
+        },
+        "causes": {
+          "added": "a adăugat relația „Cauzează”: <value/>.",
+          "removed": "a eliminat relația „Cauzează”: <value/>."
+        },
+        "cloned_by": {
+          "added": "a adăugat relația „Clonat de”: <value/>.",
+          "removed": "a eliminat relația „Clonat de”: <value/>."
+        },
+        "clones": {
+          "added": "a adăugat relația „Clonează”: <value/>.",
+          "removed": "a eliminat relația „Clonează”: <value/>."
+        },
         "duplicate": {
           "added": "a marcat această activitate ca duplicat al <value/>.",
           "removed": "a eliminat marcarea acestei activități ca duplicat al <value/>."
@@ -620,9 +655,21 @@
           "added": "a marcat că această activitate se termină după <value/>.",
           "removed": "a eliminat relația „se termină după” cu <value/>."
         },
+        "finish_after_start": {
+          "added": "a adăugat relația „Se termină după începutul”: <value/>.",
+          "removed": "a eliminat relația „Se termină după începutul”: <value/>."
+        },
         "finish_before": {
           "added": "a marcat că această activitate se termină înainte de <value/>.",
           "removed": "a eliminat relația „se termină înainte de” cu <value/>."
+        },
+        "implemented_by": {
+          "added": "a adăugat relația „Implementat de”: <value/>.",
+          "removed": "a eliminat relația „Implementat de”: <value/>."
+        },
+        "implements": {
+          "added": "a adăugat relația „Implementează”: <value/>.",
+          "removed": "a eliminat relația „Implementează”: <value/>."
         },
         "relates_to": {
           "added": "a marcat că această activitate are legătură cu <value/>.",
@@ -635,6 +682,18 @@
         "start_before": {
           "added": "a marcat că această activitate începe înainte de <value/>.",
           "removed": "a eliminat relația „începe înainte de” cu <value/>."
+        },
+        "start_before_finish": {
+          "added": "a adăugat relația „Începe înainte de sfârșitul”: <value/>.",
+          "removed": "a eliminat relația „Începe înainte de sfârșitul”: <value/>."
+        },
+        "tested_by": {
+          "added": "a adăugat relația „Testat de”: <value/>.",
+          "removed": "a eliminat relația „Testat de”: <value/>."
+        },
+        "tests": {
+          "added": "a adăugat relația „Testează”: <value/>.",
+          "removed": "a eliminat relația „Testează”: <value/>."
         }
       },
       "restored": "a restaurat activitatea.",
@@ -836,6 +895,16 @@
         "enabled": "a activat vizualizarea Intake",
         "fallback": "a actualizat vizualizarea Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "a dezactivat regula de editare de către cei atribuiți",
+        "enabled": "a activat regula de editare de către cei atribuiți",
+        "fallback": "a actualizat regula de editare de către cei atribuiți"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "a dezactivat regula stării activităților blocate",
+        "enabled": "a activat regula stării activităților blocate",
+        "fallback": "a actualizat regula stării activităților blocate"
+      },
       "is_epic_enabled": {
         "disabled": "a dezactivat sarcinile majore",
         "enabled": "a activat sarcinile majore",
@@ -846,10 +915,35 @@
         "enabled": "a activat tipurile de activități",
         "fallback": "a actualizat tipurile de activități"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "a dezactivat regula de finalizare a părinților",
+        "enabled": "a activat regula de finalizare a părinților",
+        "fallback": "a actualizat regula de finalizare a părinților"
+      },
       "is_project_updates_enabled": {
         "disabled": "a dezactivat actualizările proiectului",
         "enabled": "a activat actualizările proiectului",
         "fallback": "a actualizat actualizările proiectului"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "a dezactivat relația de duplicat",
+        "enabled": "a activat relația de duplicat",
+        "fallback": "a actualizat relația de duplicat"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "a dezactivat relația „este legată de”",
+        "enabled": "a activat relația „este legată de”",
+        "fallback": "a actualizat relația „este legată de”"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "a dezactivat dependențele de calendar",
+        "enabled": "a activat dependențele de calendar",
+        "fallback": "a actualizat dependențele de calendar"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "a dezactivat relațiile de trasabilitate",
+        "enabled": "a activat relațiile de trasabilitate",
+        "fallback": "a actualizat relațiile de trasabilitate"
       },
       "is_time_tracking_enabled": {
         "disabled": "a dezactivat urmărirea timpului",
@@ -921,5 +1015,37 @@
       },
       "value_none": "niciuna"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Însumează datele",
+    "rolled_up_bar": "Date însumate din sub-activități",
+    "children_span": "Sub-activități: {start} – {end}",
+    "starts_early": "Sub-activitățile încep înainte de această activitate",
+    "ends_late": "Sub-activitățile se termină după această activitate"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Extinde tot",
+    "collapse_all": "Restrânge tot",
+    "levels": "Niveluri",
+    "up_to_level": "Până la nivelul {level}",
+    "all_levels": "Toate nivelurile",
+    "load_error": "Sub-activitățile nu au putut fi încărcate",
+    "too_many": "Prea multe activități de extins deodată. Extinde restul pe rând."
+  },
+  "worklog": {
+    "log_time": "Înregistrează timp",
+    "description_placeholder": "Ce s-a făcut? (opțional)",
+    "invalid_duration_title": "Durată nevalidă",
+    "invalid_duration_message": "Folosiți un format precum „2h 30m”, „45m” sau doar minute, până la 24 de ore.",
+    "log_error": "Timpul nu a putut fi înregistrat. Încercați din nou.",
+    "update_error": "Înregistrarea nu a putut fi actualizată. Încercați din nou.",
+    "delete_error": "Înregistrarea nu a putut fi ștearsă. Încercați din nou.",
+    "delete_title": "Șterge înregistrarea de timp",
+    "delete_description": "Sigur doriți să ștergeți această înregistrare de timp? Această acțiune nu poate fi anulată.",
+    "edit_entry": "Editează înregistrarea de timp",
+    "delete_entry": "Șterge înregistrarea de timp",
+    "logged": "a înregistrat <value>{duration}</value>",
+    "updated": "a schimbat timpul înregistrat din <old>{from}</old> în <new>{to}</new>",
+    "removed": "a eliminat timpul înregistrat <value>{duration}</value>"
   }
 }

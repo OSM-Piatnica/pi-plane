@@ -141,10 +141,17 @@ class Adapter:
 
         return "en"
 
+    def find_existing_user(self, email):
+        """The existing user that signs in with this email address, if any (providers may match more strictly)"""
+        return User.objects.filter(email=email).first()
+
+    def check_signup(self, email):
+        """Raise if this person may not sign up (providers may have their own policy)"""
+        return self.__check_signup(email)
+
     def check_sync_enabled(self):
         """Check if sync is enabled for the provider"""
         provider_config_map = {
-            "google": "ENABLE_GOOGLE_SYNC",
             "github": "ENABLE_GITHUB_SYNC",
             "gitlab": "ENABLE_GITLAB_SYNC",
             "gitea": "ENABLE_GITEA_SYNC",
@@ -334,7 +341,7 @@ class Adapter:
         email = self.sanitize_email(email)
 
         # Check if the user is present
-        user = User.objects.filter(email=email).first()
+        user = self.find_existing_user(email)
 
         # Reject explicitly-deactivated accounts (GHSA-rmmf-rj2q-3rrg).
         # The deactivation endpoint always sets last_logout_time, so using it
@@ -353,7 +360,7 @@ class Adapter:
         # Reject bot service accounts (BOT_USER_LOGIN_FORBIDDEN). Bots (is_bot=True,
         # e.g. the WORKSPACE_SEED bot) are internal identities that act only through
         # API tokens; they must never be assumable via the interactive login/signup
-        # flow (email/password, magic code, or any OAuth provider). A brand-new
+        # flow (email/password, one-time code, or any OAuth provider). A brand-new
         # signup can never be a bot — bots are provisioned internally, never through
         # this path — so guarding on an existing `user` record is sufficient.
         if user and user.is_bot:
@@ -368,7 +375,7 @@ class Adapter:
         # If user is not present, create a new user
         if not user:
             # New user
-            self.__check_signup(email)
+            self.check_signup(email)
 
             # Initialize user
             user = User(email=email, username=uuid.uuid4().hex)

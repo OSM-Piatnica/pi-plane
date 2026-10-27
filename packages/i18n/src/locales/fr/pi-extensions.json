@@ -42,21 +42,50 @@
           "blocked_by": "{issue} ne peut pas démarrer tant que {related} n'est pas terminé (relation de blocage).",
           "blocking": "{issue} doit se terminer avant que {related} ne démarre (relation de blocage).",
           "finish_after": "{issue} ne peut pas se terminer avant {related} (relation de fin après).",
+          "finish_after_start": "{issue} ne peut pas se terminer avant que {related} commence (relation « se termine après le début »).",
           "finish_before": "{issue} doit se terminer au plus tard le {related} (relation de fin avant).",
           "start_after": "{issue} ne peut pas démarrer avant {related} (relation de démarrage après).",
-          "start_before": "{issue} doit démarrer au plus tard le {related} (relation de démarrage avant)."
+          "start_before": "{issue} doit démarrer au plus tard le {related} (relation de démarrage avant).",
+          "start_before_finish": "{issue} doit commencer au plus tard quand {related} se termine (relation « commence avant la fin »)."
         },
         "status": {
           "finish_after": "{issue} ne peut pas être terminé tant que {related} n'est pas terminé (relation de fin après).",
+          "finish_after_start": "{issue} ne peut pas être terminé tant que {related} n’a pas commencé (relation « se termine après le début »).",
           "start_after": "{issue} ne peut pas démarrer tant que {related} n'a pas démarré (relation de démarrage après)."
-        }
+        },
+        "self": "{issue} ne peut pas être lié à lui-même.",
+        "cycle": "{issue} et {related} formeraient une boucle de relations. Supprimez d’abord la relation inverse.",
+        "lag_suffix": " Décalage de la relation : {lag} j."
       },
       "date_conflict": "Ces dates entrent en conflit avec des dépendances existantes. Ajustez les éléments de travail liés ou supprimez d'abord la dépendance.",
       "dependency_create_failed": "Impossible de créer la dépendance. Veuillez réessayer.",
-      "dependency_created": "La dépendance de l'élément de travail a été créée avec succès."
-    }
+      "dependency_created": "La dépendance de l'élément de travail a été créée avec succès.",
+      "lag": {
+        "hint": "Jours entre les deux dates ; une valeur négative permet le chevauchement.",
+        "invalid": "Saisissez un nombre entier de jours entre -{max} et {max}.",
+        "label": "Décalage (jours)",
+        "update_failed": "Impossible de modifier le décalage."
+      },
+      "reschedule": {
+        "confirm": "Les décaler",
+        "content": "Ce changement enfreindrait des dépendances. Ces éléments de travail peuvent être décalés plus tard, en gardant leur durée, pour que toutes les dépendances restent respectées :",
+        "title": "Déplacer aussi les éléments de travail dépendants ?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Passer à annulé",
+        "content": "{issue} est maintenant marqué comme doublon de {originals}. Le passer à « {state} » ? Il reste lié et visible.",
+        "failed": "Impossible d’annuler l’élément de travail.",
+        "keep": "Le laisser ouvert",
+        "title": "Annuler cet élément de travail ?"
+      }
+    },
+    "edit_restricted": "Seuls les assignés de cet élément de travail, le responsable du projet et les admins du projet peuvent le modifier."
   },
   "project_create": {
+    "advanced": {
+      "description": "Règles et types de relation. Vous pourrez les modifier plus tard dans les paramètres de workflow du projet.",
+      "title": "Options avancées"
+    },
     "features": {
       "cycles": {
         "description": "Découpez le travail en périodes récurrentes.",
@@ -115,12 +144,53 @@
       "pending_approval_title": "Approbation requise",
       "rejected_success": "Transition rejetée.",
       "resolving_approval": "Traitement de l'approbation...",
+      "rules": {
+        "heading": "Règles",
+        "description": "Règles du projet qui s'appliquent d'elles-mêmes, que les workflows soient activés ou non.",
+        "parent_completion": {
+          "description": "Un élément de travail ne peut pas être terminé tant qu'il a des sous-éléments ni terminés ni annulés. Rouvrir un sous-élément terminé sous un parent terminé demande aussi de rouvrir le parent.",
+          "title": "Terminer un parent uniquement lorsque ses sous-éléments sont terminés"
+        },
+        "reopen_parent": {
+          "confirm": "Rouvrir",
+          "content": "Ce projet n'autorise pas un parent à rester terminé tant qu'un sous-élément est ouvert. Ces parents terminés seront également rouverts : {names}",
+          "title": "Rouvrir aussi les éléments de travail parents ?"
+        },
+        "blocked_status": {
+          "description": "Un élément de travail ne peut pas passer à un état démarré ou terminé tant qu’un élément de travail qui le bloque est encore ouvert (les éléments bloquants terminés ou annulés ne comptent pas). Rester dans le backlog ou à faire, et annuler, restent possibles.",
+          "title": "Ne démarrer ou terminer un élément que lorsque ses éléments bloquants sont terminés"
+        },
+        "assignee_edit": {
+          "description": "Dès qu’un élément de travail a un assigné, seuls ses assignés, le responsable du projet et les admins du projet peuvent le modifier : champs, état, dates, sous-éléments, relations, liens, pièces jointes, cycles et modules, suppression et archivage. Tout le monde peut toujours commenter. Les éléments sans assigné restent ouverts à tous les membres.",
+          "title": "Seuls les assignés, le responsable du projet et les admins peuvent modifier un élément de travail"
+        }
+      },
       "save_error": "Impossible d'enregistrer la configuration du workflow.",
       "save_success": "Configuration du workflow enregistrée.",
       "toggle_error": "Impossible de mettre à jour les paramètres du workflow.",
       "transition": "Transition",
       "transition_count": "{count, plural, one {# transition} many {# transitions} other {# transitions}}",
-      "transitions_configured": "transitions configurées"
+      "transitions_configured": "transitions configurées",
+      "relation_types": {
+        "heading": "Types de relation",
+        "description": "Choisissez les relations qui peuvent être ajoutées dans ce projet. Le blocage est toujours disponible, et les relations existantes restent lorsqu'un type est désactivé.",
+        "schedule": {
+          "description": "Commence avant, se termine avant et commence avant la fin, avec un décalage facultatif en jours.",
+          "title": "Dépendances de planning"
+        },
+        "traceability": {
+          "description": "Implémente, cause, clone et teste, avec leurs réciproques.",
+          "title": "Relations de traçabilité"
+        },
+        "relates_to": {
+          "description": "Un simple lien entre deux éléments.",
+          "title": "En relation avec"
+        },
+        "duplicate": {
+          "description": "Marquer un élément comme doublon d'un autre.",
+          "title": "Doublon"
+        }
+      }
     }
   },
   "project_templates": {

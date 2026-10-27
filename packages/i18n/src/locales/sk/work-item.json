@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Zobraziť podriadené položky",
         "show_empty_groups": "Zobraziť prázdne skupiny"
+      },
+      "color_by": {
+        "label": "Farba podľa",
+        "state": "Stav",
+        "key": "ID pracovnej položky"
       }
     },
     "layouts": {
@@ -90,8 +95,8 @@
     "comments": {
       "placeholder": "Pridať komentár",
       "switch": {
-        "private": "Prepnúť na súkromný komentár",
-        "public": "Prepnúť na verejný komentár"
+        "private": "Nastaviť komentár ako interný",
+        "public": "Zobraziť tento komentár na webe"
       },
       "create": {
         "success": "Komentár bol úspešne vytvorený",
@@ -148,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Interný",
+        "external": "Viditeľný na webe"
       }
     },
     "empty_state": {
@@ -195,7 +204,15 @@
       "finish_before": "Končí pred",
       "finish_after": "Končí po",
       "implements": "Implementuje",
-      "implemented_by": "Implementované"
+      "implemented_by": "Implementované",
+      "causes": "Spôsobuje",
+      "caused_by": "Spôsobené",
+      "clones": "Klonuje",
+      "cloned_by": "Naklonované",
+      "tests": "Testuje",
+      "tested_by": "Testované",
+      "start_before_finish": "Začína pred koncom",
+      "finish_after_start": "Končí po začiatku"
     },
     "copy_link": "Kopírovať odkaz na pracovnú položku",
     "delete": {
@@ -290,7 +307,9 @@
         "description": "Pre zobrazenie všetkých pracovných položiek vymažte všetky použité filtre.",
         "action": "Vymazať filtre"
       }
-    }
+    },
+    "expand": "Rozbaliť podriadené pracovné položky",
+    "collapse": "Zbaliť podriadené pracovné položky"
   },
   "issue_relation": {
     "empty_state": {
@@ -612,6 +631,22 @@
           "added": "táto pracovná položka označená ako blokujúca pracovnú položku <value/>.",
           "removed": "odstránená blokujúca pracovná položka <value/>."
         },
+        "caused_by": {
+          "added": "pridal(a) vzťah „Spôsobené“: <value/>.",
+          "removed": "odstránil(a) vzťah „Spôsobené“: <value/>."
+        },
+        "causes": {
+          "added": "pridal(a) vzťah „Spôsobuje“: <value/>.",
+          "removed": "odstránil(a) vzťah „Spôsobuje“: <value/>."
+        },
+        "cloned_by": {
+          "added": "pridal(a) vzťah „Naklonované“: <value/>.",
+          "removed": "odstránil(a) vzťah „Naklonované“: <value/>."
+        },
+        "clones": {
+          "added": "pridal(a) vzťah „Klonuje“: <value/>.",
+          "removed": "odstránil(a) vzťah „Klonuje“: <value/>."
+        },
         "duplicate": {
           "added": "táto pracovná položka označená ako duplikát <value/>.",
           "removed": "odstránené označenie tejto pracovnej položky ako duplikátu <value/>."
@@ -620,9 +655,21 @@
           "added": "označené, že táto pracovná položka končí po <value/>.",
           "removed": "odstránený vzťah „končí po“ k <value/>."
         },
+        "finish_after_start": {
+          "added": "pridal(a) vzťah „Končí po začiatku“: <value/>.",
+          "removed": "odstránil(a) vzťah „Končí po začiatku“: <value/>."
+        },
         "finish_before": {
           "added": "označené, že táto pracovná položka končí pred <value/>.",
           "removed": "odstránený vzťah „končí pred“ k <value/>."
+        },
+        "implemented_by": {
+          "added": "pridal(a) vzťah „Implementované“: <value/>.",
+          "removed": "odstránil(a) vzťah „Implementované“: <value/>."
+        },
+        "implements": {
+          "added": "pridal(a) vzťah „Implementuje“: <value/>.",
+          "removed": "odstránil(a) vzťah „Implementuje“: <value/>."
         },
         "relates_to": {
           "added": "označené, že táto pracovná položka súvisí s <value/>.",
@@ -635,6 +682,18 @@
         "start_before": {
           "added": "označené, že táto pracovná položka začína pred <value/>.",
           "removed": "odstránený vzťah „začína pred“ k <value/>."
+        },
+        "start_before_finish": {
+          "added": "pridal(a) vzťah „Začína pred koncom“: <value/>.",
+          "removed": "odstránil(a) vzťah „Začína pred koncom“: <value/>."
+        },
+        "tested_by": {
+          "added": "pridal(a) vzťah „Testované“: <value/>.",
+          "removed": "odstránil(a) vzťah „Testované“: <value/>."
+        },
+        "tests": {
+          "added": "pridal(a) vzťah „Testuje“: <value/>.",
+          "removed": "odstránil(a) vzťah „Testuje“: <value/>."
         }
       },
       "restored": "obnovená pracovná položka.",
@@ -836,6 +895,16 @@
         "enabled": "zapnuté zobrazenie Intake",
         "fallback": "aktualizované zobrazenie Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "vypol(a) pravidlo úprav priradenými osobami",
+        "enabled": "zapol(a) pravidlo úprav priradenými osobami",
+        "fallback": "aktualizoval(a) pravidlo úprav priradenými osobami"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "vypol(a) pravidlo stavu blokovaných položiek",
+        "enabled": "zapol(a) pravidlo stavu blokovaných položiek",
+        "fallback": "aktualizoval(a) pravidlo stavu blokovaných položiek"
+      },
       "is_epic_enabled": {
         "disabled": "vypnuté epiky",
         "enabled": "zapnuté epiky",
@@ -846,10 +915,35 @@
         "enabled": "zapnuté typy pracovných položiek",
         "fallback": "aktualizované typy pracovných položiek"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "vypol(a) pravidlo dokončenia nadradených položiek",
+        "enabled": "zapol(a) pravidlo dokončenia nadradených položiek",
+        "fallback": "aktualizoval(a) pravidlo dokončenia nadradených položiek"
+      },
       "is_project_updates_enabled": {
         "disabled": "vypnuté aktualizácie projektu",
         "enabled": "zapnuté aktualizácie projektu",
         "fallback": "aktualizované aktualizácie projektu"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "vypol(a) vzťah duplikátu",
+        "enabled": "zapol(a) vzťah duplikátu",
+        "fallback": "aktualizoval(a) vzťah duplikátu"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "vypol(a) vzťah „súvisiace s“",
+        "enabled": "zapol(a) vzťah „súvisiace s“",
+        "fallback": "aktualizoval(a) vzťah „súvisiace s“"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "vypol(a) časové závislosti",
+        "enabled": "zapol(a) časové závislosti",
+        "fallback": "aktualizoval(a) časové závislosti"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "vypol(a) vzťahy sledovateľnosti",
+        "enabled": "zapol(a) vzťahy sledovateľnosti",
+        "fallback": "aktualizoval(a) vzťahy sledovateľnosti"
       },
       "is_time_tracking_enabled": {
         "disabled": "vypnuté sledovanie času",
@@ -921,5 +1015,37 @@
       },
       "value_none": "žiadne"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Zhrnúť dátumy",
+    "rolled_up_bar": "Dátumy zhrnuté z podriadených pracovných položiek",
+    "children_span": "Podriadené pracovné položky: {start} – {end}",
+    "starts_early": "Podriadené pracovné položky začínajú pred touto pracovnou položkou",
+    "ends_late": "Podriadené pracovné položky končia po tejto pracovnej položke"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Rozbaliť všetko",
+    "collapse_all": "Zbaliť všetko",
+    "levels": "Úrovne",
+    "up_to_level": "Do úrovne {level}",
+    "all_levels": "Všetky úrovne",
+    "load_error": "Podriadené pracovné položky sa nepodarilo načítať",
+    "too_many": "Príliš veľa pracovných položiek na rozbalenie naraz. Zvyšok rozbaľte jednotlivo."
+  },
+  "worklog": {
+    "log_time": "Zapísať čas",
+    "description_placeholder": "Čo sa robilo? (nepovinné)",
+    "invalid_duration_title": "Neplatné trvanie",
+    "invalid_duration_message": "Použite formát ako „2h 30m“, „45m“ alebo len minúty, najviac 24 hodín.",
+    "log_error": "Čas sa nepodarilo zapísať. Skúste to znova.",
+    "update_error": "Záznam sa nepodarilo upraviť. Skúste to znova.",
+    "delete_error": "Záznam sa nepodarilo odstrániť. Skúste to znova.",
+    "delete_title": "Odstrániť záznam času",
+    "delete_description": "Naozaj chcete odstrániť tento záznam času? Túto akciu nie je možné vrátiť späť.",
+    "edit_entry": "Upraviť záznam času",
+    "delete_entry": "Odstrániť záznam času",
+    "logged": "zapísal(a) <value>{duration}</value>",
+    "updated": "zmenil(a) zapísaný čas z <old>{from}</old> na <new>{to}</new>",
+    "removed": "odstránil(a) zapísaný čas <value>{duration}</value>"
   }
 }

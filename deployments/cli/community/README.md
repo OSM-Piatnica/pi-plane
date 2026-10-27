@@ -53,6 +53,7 @@ Installing Pi-Plane is a very easy and minimal step process.
 - Docker installed and running
 - OS with bash scripting enabled (Ubuntu, Linux AMI, macos). Windows systems need to have [gitbash](https://git-scm.com/download/win)
 - User context used must have access to docker services. In most cases, use sudo su to switch as root user
+- `curl` (and `git` for local builds); `jq` and the `busybox` image for the restore script
 - Use the terminal (or gitbash) window to run all the future steps
 
 ### Downloading Latest Release
@@ -95,10 +96,10 @@ Pi-Plane publishes multi-architecture (`linux/amd64`, `linux/arm64`) images to t
 | Proxy        | `ghcr.io/osm-piatnica/pi-plane-proxy` |
 | All-in-one   | `ghcr.io/osm-piatnica/pi-plane`       |
 
-Versions follow `<upstream Plane version>-pi.<n>`. For example, `1.3.1-pi.1` is the first Pi-Plane release based on Plane 1.3.1.
+Versions are plain `MAJOR.MINOR.PATCH` (for example `2.1.0`) from 2.0.0 on. Earlier releases were `<upstream Plane version>-pi.<n>` (for example `1.3.1-pi.5`).
 
-- Each release is published under its exact version tag (e.g. `1.3.1-pi.1`, without the `v` used by the GitHub release tag) and `latest`. Pre-releases (`-rc`, `-alpha`, `-beta`) get only their version tag.
-- `./setup.sh` installs the latest release. To pin a version, set `APP_RELEASE` in `plane.env`.
+- Each release is published under its exact version tag (e.g. `2.1.0`, without the `v` used by the GitHub release tag) and `latest`. Pre-releases (`-rc`, `-alpha`, `-beta`) get only their version tag.
+- `./setup.sh` installs the latest release. Install writes the release it installed into `APP_RELEASE` in `plane.env`, so the installation stays on that version until you choose **Upgrade**; to move to another version by hand, change it there.
 - To use a different registry or a local build, set `IMAGE_REPO` in `plane.env` (default `ghcr.io/osm-piatnica/pi-plane`).
 
 ---
@@ -134,7 +135,7 @@ This will create a folder `plane-app` and will download 2 files inside that
 - `docker-compose.yaml`
 - `plane.env`
 
-Again the `options [1-8]` will be popped up, and this time hit `8` to exit.
+The script ends after the install. Run `./setup.sh` again for the next action (for example `2` to start the services).
 
 #### Docker Swarm
 
@@ -153,18 +154,13 @@ Action [3]: 1
 
 For the 1st time setup, type "1" as action input.
 
-This will create a create a folder `plane-app` and will download 2 files inside that
-
-- `docker-compose.yaml`
-- `plane.env`
-
-Again the `options [1-7]` will be popped up, and this time hit `7` to exit.
+The script asks for a stack name (default `plane`), creates a folder `plane-app`, downloads two files into it, `docker-compose.yml` and `plane.env`, and deploys the stack. It then ends; run `./setup.sh` again for the next action.
 
 ---
 
 ### Continue with setup - Environment Settings
 
-Before proceeding, we suggest used to review `.env` file and set the values.
+Before proceeding, we suggest you review the `plane.env` file and set the values.
 Below are the most import keys you must refer to. _<span style="color: #fcba03">You can use any text editor to edit this file</span>_.
 
 > `LISTEN_HTTP_PORT` - This is default set to `80`. Make sure the port you choose to use is not preoccupied. (e.g `LISTEN_HTTP_PORT=8080`)
@@ -175,7 +171,7 @@ Below are the most import keys you must refer to. _<span style="color: #fcba03">
 
 > `SECRET_KEY` and `LIVE_SERVER_SECRET_KEY` - These ship with the placeholder value `change-this-key-on-deployment`. **Replace both with your own random values before the first start**, e.g. `openssl rand -hex 32` (use a different value for each). The API still starts with the placeholders, but only logs a `SECURITY: SECRET_KEY is set to a known insecure or placeholder value` warning, and anyone who knows the placeholder can forge session data. The all-in-one image refuses to start with placeholder values.
 
-There are many other settings you can play with, but we suggest you configure `EMAIL SETTINGS` as it will enable you to invite your teammates onto the platform.
+There are many other settings you can play with. Configure email in God mode (**Email** under the instance settings), not in `plane.env`: this stack does not pass `EMAIL_*` variables to the API. Email is what lets you invite your teammates onto the platform.
 
 #### Client IP and rate limiting behind proxies
 
@@ -183,7 +179,10 @@ Some endpoints are rate-limited per client IP. Two settings in `plane.env` contr
 
 - **Pi-Plane directly on the internet behind the bundled proxy:** set `TRUSTED_PROXIES=private_ranges` (or your load balancer's ranges) and `NUM_PROXIES=1`.
 - **Behind an additional load balancer or CDN:** add its ranges to `TRUSTED_PROXIES` (space-separated, e.g. `TRUSTED_PROXIES=private_ranges 203.0.113.0/24`) and raise `NUM_PROXIES` by one per extra hop (e.g. `NUM_PROXIES=2`).
-- **Leaving `NUM_PROXIES` empty and `TRUSTED_PROXIES` at its default (`0.0.0.0/0`)** keeps the current behaviour.
+- **Behind a CDN or a load balancer with a public address:** put its ranges in `TRUSTED_PROXIES`. The default is `private_ranges`, so the bundled proxy believes `X-Forwarded-For` only from private addresses; a client on the internet cannot choose its own address and get around the per-IP limits. The cost is that behind a public-address proxy every request appears to come from that proxy until you list its ranges.
+- **Installations made before 2.1.0** have `TRUSTED_PROXIES=0.0.0.0/0` in `plane.env`, which trusts every peer and lets any client spoof its address; change it as above.
+
+`TRUSTED_PROXIES` is read only by the bundled proxy, `NUM_PROXIES` only by the API, worker and scheduler.
 
 Restart the services after changing these values.
 
@@ -341,7 +340,7 @@ You must expect the below message
 
 ![Alt text](images/upgrade.png)
 
-Once done, choose `8` to exit from prompt.
+The script then ends.
 
 > It is very important for you to validate the `plane.env` for the new changes.
 
@@ -363,13 +362,9 @@ Lets again run the `./setup.sh` command. You will again be prompted with the bel
 Action [3]: 5
 ```
 
-By choosing this, it will stop the services and then will download the latest `docker-compose.yaml` and `plane.env`.
+By choosing this, it downloads the latest `docker-compose.yml` and `plane.env` and redeploys the stack, removing the old one on the way. There is no pause to edit `plane.env` in between.
 
-Once done, choose `7` to exit from prompt.
-
-> It is very important for you to validate the `plane.env` for the new changes.
-
-Once done with making changes in `plane.env` file, jump on to `Redeploy Stack`
+> It is very important for you to validate the `plane.env` for the new changes; if you change it, choose `Redeploy Stack` afterwards.
 
 ---
 
@@ -505,13 +500,13 @@ Select a Action you want to perform:
 Action [2]: 7
 ```
 
-In response, you can find the backup folder
+The backup copies the data out of the running containers, so the stack must be running (it fails with "container not found" otherwise), and the database files are copied while it runs. The logs and the proxy's certificates volume are not included. In response, you can find the backup folder
 
 ```bash
-Backing Up plane-app_pgdata
-Backing Up plane-app_redisdata
-Backing Up plane-app_uploads
-Backing Up plane-app_rabbitmq_data
+Backing up plane-db data...
+Copying plane-db data directory...
+Successfully backed up pgdata data
+(the same for uploads, rabbitmq_data and redisdata)
 
 Backup completed successfully. Backup files are stored in /....../plane-app/backup/20240502-1120
 ```
@@ -523,6 +518,8 @@ Backup completed successfully. Backup files are stored in /....../plane-app/back
 When you want to restore the previously backed-up data, follow the instructions below.
 
 1. Make sure that Pi-Plane is installed, started, and then stopped. This ensures that the Docker volumes are created.
+
+1. **The restore replaces the data in the existing volumes:** each volume is deleted and recreated from the backup, so whatever is in the installation now is lost. Take a fresh backup first if in doubt.
 
 1. Download the restore script using the command below. We suggest downloading it in the same folder as `setup.sh`.
 

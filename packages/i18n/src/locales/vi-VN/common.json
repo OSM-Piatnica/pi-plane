@@ -117,6 +117,8 @@
   "comments_description": "Thông báo cho tôi khi ai đó bình luận về mục công việc",
   "mentions": "Đề cập",
   "mentions_description": "Thông báo cho tôi khi ai đó đề cập đến tôi trong bình luận hoặc mô tả",
+  "project_access_requests": "Yêu cầu truy cập",
+  "project_access_requests_description": "Gửi email cho tôi về các yêu cầu tham gia dự án riêng tư mà tôi quản trị và về quyết định đối với yêu cầu của chính tôi.",
   "email_frequency": "Tần suất email",
   "email_frequency_description": "Chọn tần suất bạn nhận email về các cập nhật của mục công việc. Các lượt đề cập luôn được gửi ngay lập tức.",
   "email_frequency_instant": "Ngay lập tức",
@@ -195,8 +197,8 @@
   "select_network": "Chọn mạng",
   "lead": "Người phụ trách",
   "date_range": "Khoảng thời gian",
-  "private": "Riêng tư",
-  "public": "Công khai",
+  "private": "Chỉ mình tôi",
+  "public": "Được chia sẻ",
   "accessible_only_by_invite": "Chỉ truy cập được bằng lời mời",
   "anyone_in_the_workspace_except_guests_can_join": "Bất kỳ ai trong không gian làm việc ngoại trừ khách đều có thể tham gia",
   "creating": "Đang tạo",
@@ -210,8 +212,8 @@
   "add_to_favorites": "Thêm vào mục yêu thích",
   "remove_from_favorites": "Xóa khỏi mục yêu thích",
   "rename_folder": "Đổi tên thư mục",
-  "publish_project": "Xuất bản dự án",
-  "publish": "Xuất bản",
+  "publish_project": "Chia sẻ trên web",
+  "publish": "Bật chia sẻ trên web",
   "copy_link": "Sao chép liên kết",
   "leave_project": "Rời dự án",
   "join_the_project_to_rearrange": "Tham gia dự án để sắp xếp lại",
@@ -532,8 +534,8 @@
     "archiving": "Đang lưu trữ",
     "archive": "Lưu trữ",
     "access": {
-      "public": "Công khai",
-      "private": "Riêng tư"
+      "public": "Chia sẻ với dự án",
+      "private": "Chỉ mình tôi"
     },
     "done": "Hoàn thành",
     "sub_work_items": "Mục công việc con",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "Đã xảy ra lỗi",
       "inbox_fetch_error": "Đã xảy ra lỗi khi tải các mục công việc Intake. Vui lòng thử lại sau.",
-      "page_make_public_error": "Không thể chuyển trang sang chế độ công khai. Vui lòng thử lại sau.",
-      "page_make_private_error": "Không thể chuyển trang sang chế độ riêng tư. Vui lòng thử lại sau.",
+      "page_make_public_error": "Không thể chia sẻ trang với dự án. Vui lòng thử lại sau.",
+      "page_make_private_error": "Không thể đặt trang chỉ hiển thị với bạn. Vui lòng thử lại sau.",
       "workflow_pending_approval": "Mục công việc đang chờ phê duyệt.",
       "workflow_transition_not_allowed": "Quy trình làm việc không cho phép chuyển đổi trạng thái này."
     },
@@ -1412,7 +1414,7 @@
       "duration": "Thời lượng"
     },
     "auth_labels": {
-      "magic_code": "Mã ma thuật"
+      "one_time_code": "Mã dùng một lần"
     },
     "state_groups": {
       "canceled": "Đã hủy"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "Tuyệt! Chỉ còn một bước nữa.",
-      "description": "Nhập URL chia sẻ công khai hoặc liên kết của chế độ xem hoặc Trang bạn muốn xem vào thanh địa chỉ của trình duyệt.",
+      "description": "Nhập liên kết được chia sẻ của chế độ xem hoặc trang bạn muốn xem vào thanh địa chỉ của trình duyệt.",
       "image_alt": "Người dùng đã đăng nhập"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Gửi lại sau {seconds} giây"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "Tiếp tục với {provider}"
     },
     "issues": {
-      "public_board_not_found": "Bảng công khai không tồn tại. Vui lòng kiểm tra URL.",
+      "shared_project_load_failed": "Không thể tải dự án được chia sẻ này. Vui lòng thử lại sau.",
       "cycle_tooltip": "Chu kỳ: {name}",
       "no_cycle": "Không có Chu kỳ",
       "due_date_tooltip": "Ngày hết hạn: {date}",

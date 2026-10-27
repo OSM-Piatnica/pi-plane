@@ -14,7 +14,7 @@ import { DateSelect } from "@/components/dropdowns/date-select";
 import type { TIssue } from "@plane/types";
 import { getDate, renderFormattedPayloadDate } from "@plane/utils";
 // hooks
-import { useUserProfile } from "@/hooks/store/user";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 
 type Props = {
   issue: TIssue;
@@ -28,7 +28,7 @@ export const SpreadsheetStartDateColumn = observer(function SpreadsheetStartDate
   // plane hooks
   const { t } = useTranslation();
   // store hooks
-  const { data: userProfile } = useUserProfile();
+  const startOfTheWeek = useStartOfTheWeek();
 
   return (
     <div className="h-11 border-b-[0.5px] border-subtle">
@@ -52,7 +52,7 @@ export const SpreadsheetStartDateColumn = observer(function SpreadsheetStartDate
         clearable
         // `.clickable` is what the table's keyboard navigation clicks on Enter / Space in a focused cell.
         className="clickable h-full"
-        weekStartsOn={userProfile?.start_of_the_week}
+        weekStartsOn={startOfTheWeek}
         onClose={onClose}
         variant="table-cell"
       />

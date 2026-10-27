@@ -42,21 +42,50 @@
           "blocked_by": "{issue}은(는) {related}가 완료되어야 시작할 수 있습니다(차단됨 관계).",
           "blocking": "{issue}은(는) {related}가 시작되기 전에 완료되어야 합니다(차단 중 관계).",
           "finish_after": "{issue}은(는) {related}보다 먼저 완료될 수 없습니다(완료 이후 관계).",
+          "finish_after_start": "{issue}은(는) {related}이(가) 시작되기 전에 끝날 수 없습니다(시작 후에 종료 관계).",
           "finish_before": "{issue}은(는) {related} 이전 또는 그와 동시에 완료되어야 합니다(완료 이전 관계).",
           "start_after": "{issue}은(는) {related}보다 먼저 시작할 수 없습니다(시작 이후 관계).",
-          "start_before": "{issue}은(는) {related} 이전 또는 그와 동시에 시작해야 합니다(시작 이전 관계)."
+          "start_before": "{issue}은(는) {related} 이전 또는 그와 동시에 시작해야 합니다(시작 이전 관계).",
+          "start_before_finish": "{issue}은(는) {related}이(가) 끝나는 시점까지는 시작해야 합니다(종료 전에 시작 관계)."
         },
         "status": {
           "finish_after": "{related}가 완료되어야 {issue}을(를) 완료할 수 있습니다(완료 이후 관계).",
+          "finish_after_start": "{issue}은(는) {related}이(가) 시작될 때까지 완료할 수 없습니다(시작 후에 종료 관계).",
           "start_after": "{related}가 시작되어야 {issue}을(를) 시작할 수 있습니다(시작 이후 관계)."
-        }
+        },
+        "self": "{issue}은(는) 자기 자신과 연결할 수 없습니다.",
+        "cycle": "{issue}와(과) {related}이(가) 관계 순환을 이룹니다. 먼저 반대 관계를 제거하세요.",
+        "lag_suffix": " 관계 지연: {lag}일."
       },
       "date_conflict": "이 날짜는 기존 종속성과 충돌합니다. 관련 작업 항목을 조정하거나 먼저 종속성을 제거하세요.",
       "dependency_create_failed": "종속성을 생성할 수 없습니다. 다시 시도해 주세요.",
-      "dependency_created": "작업 항목 종속성이 성공적으로 생성되었습니다."
-    }
+      "dependency_created": "작업 항목 종속성이 성공적으로 생성되었습니다.",
+      "lag": {
+        "hint": "두 날짜 사이의 일수입니다. 음수이면 겹칠 수 있습니다.",
+        "invalid": "-{max}에서 {max} 사이의 정수 일수를 입력하세요.",
+        "label": "지연(일)",
+        "update_failed": "지연을 변경할 수 없습니다."
+      },
+      "reschedule": {
+        "confirm": "옮기기",
+        "content": "이 변경은 종속 관계를 깨뜨립니다. 모든 종속 관계가 유지되도록 다음 작업 항목을 기간은 그대로 두고 뒤로 옮길 수 있습니다:",
+        "title": "종속된 작업 항목도 함께 옮기시겠습니까?"
+      },
+      "duplicate_cancel": {
+        "confirm": "취소됨으로 이동",
+        "content": "{issue}이(가) 이제 {originals}의 중복으로 표시되었습니다. “{state}”(으)로 옮기시겠습니까? 연결된 채로 계속 표시됩니다.",
+        "failed": "작업 항목을 취소할 수 없습니다.",
+        "keep": "열어 두기",
+        "title": "이 작업 항목을 취소하시겠습니까?"
+      }
+    },
+    "edit_restricted": "이 작업 항목은 담당자, 프로젝트 리더, 프로젝트 관리자만 변경할 수 있습니다."
   },
   "project_create": {
+    "advanced": {
+      "description": "규칙과 관계 유형입니다. 나중에 프로젝트의 워크플로 설정에서 변경할 수 있습니다.",
+      "title": "고급 옵션"
+    },
     "features": {
       "cycles": {
         "description": "반복되는 기간 동안 작업을 타임박스로 관리합니다.",
@@ -115,12 +144,53 @@
       "pending_approval_title": "승인 필요",
       "rejected_success": "전환이 거부되었습니다.",
       "resolving_approval": "승인 처리 중...",
+      "rules": {
+        "heading": "규칙",
+        "description": "워크플로우 사용 여부와 관계없이 적용되는 프로젝트 규칙입니다.",
+        "parent_completion": {
+          "description": "완료되지도 취소되지도 않은 하위 항목이 있으면 작업 항목을 완료할 수 없습니다. 완료된 상위 항목 아래의 완료된 하위 항목을 다시 열면 상위 항목도 다시 열지 확인합니다.",
+          "title": "하위 항목이 모두 완료된 후에만 상위 항목 완료"
+        },
+        "reopen_parent": {
+          "confirm": "다시 열기",
+          "content": "이 프로젝트에서는 하위 항목이 열려 있는 동안 상위 항목이 완료 상태로 남을 수 없습니다. 완료된 다음 상위 항목도 다시 열립니다: {names}",
+          "title": "상위 작업 항목도 다시 여시겠습니까?"
+        },
+        "blocked_status": {
+          "description": "이 항목을 차단하는 작업 항목이 아직 열려 있는 동안에는 시작됨 또는 완료 상태로 옮길 수 없습니다(완료되거나 취소된 차단 항목은 세지 않습니다). 백로그나 할 일에 머무르는 것과 취소는 계속 가능합니다.",
+          "title": "차단 항목이 모두 끝난 뒤에만 항목 시작·완료"
+        },
+        "assignee_edit": {
+          "description": "작업 항목에 담당자가 있으면 필드, 상태, 날짜, 하위 항목, 관계, 링크, 첨부 파일, 사이클과 모듈, 삭제와 보관은 해당 담당자, 프로젝트 리더, 프로젝트 관리자만 변경할 수 있습니다. 댓글은 누구나 계속 남길 수 있습니다. 담당자가 없는 작업 항목은 모든 멤버에게 열려 있습니다.",
+          "title": "작업 항목은 담당자, 프로젝트 리더, 관리자만 변경할 수 있습니다"
+        }
+      },
       "save_error": "워크플로우 구성을 저장할 수 없습니다.",
       "save_success": "워크플로우 구성이 저장되었습니다.",
       "toggle_error": "워크플로우 설정을 업데이트할 수 없습니다.",
       "transition": "전환",
       "transition_count": "{count, plural, one {전환 #개} other {전환 #개}}",
-      "transitions_configured": "전환 구성됨"
+      "transitions_configured": "전환 구성됨",
+      "relation_types": {
+        "heading": "관계 유형",
+        "description": "이 프로젝트에서 추가할 수 있는 관계를 선택하세요. 차단은 항상 사용할 수 있으며, 유형을 끄더라도 기존 관계는 유지됩니다.",
+        "schedule": {
+          "description": "먼저 시작, 먼저 종료, 종료 전 시작 관계이며 일 단위 지연을 선택적으로 지정할 수 있습니다.",
+          "title": "일정 종속성"
+        },
+        "traceability": {
+          "description": "구현, 원인, 복제, 테스트 관계와 그 반대 관계입니다.",
+          "title": "추적성 관계"
+        },
+        "relates_to": {
+          "description": "두 항목을 잇는 단순한 링크입니다.",
+          "title": "관련 있음"
+        },
+        "duplicate": {
+          "description": "항목을 다른 항목의 중복으로 표시합니다.",
+          "title": "중복"
+        }
+      }
     }
   },
   "project_templates": {

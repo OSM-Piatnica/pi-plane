@@ -87,6 +87,8 @@ type IssueRelation = {
   project_id: string;
   relation_type: TIssueRelationTypes;
   sequence_id: number;
+  /** Days kept between the dates a timeline relation links; negative is a lead */
+  lag_days?: number;
 };
 
 export type TIssue = TBaseIssue & {
@@ -188,7 +190,7 @@ export interface IPublicIssue extends Pick<
 > {
   comments: TIssuePublicComment[];
   reaction_items: IIssuePublicReaction[];
-  vote_items: IPublicVote[];
+  vote_items: IPublicVote[] | null;
 }
 
 type TPublicIssueResponseResults =

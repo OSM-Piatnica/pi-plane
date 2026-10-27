@@ -117,6 +117,8 @@
   "comments_description": "Notify me when someone leaves a comment on the work item",
   "mentions": "Mentions",
   "mentions_description": "Notify me when someone mentions me in the comments or description",
+  "project_access_requests": "Access requests",
+  "project_access_requests_description": "Email me about requests to join private projects I administer, and about the decisions on my own requests.",
   "email_frequency": "Email frequency",
   "email_frequency_description": "Choose how often you get emails about work item updates. Mentions are always sent immediately.",
   "email_frequency_instant": "Instantly",
@@ -195,8 +197,8 @@
   "select_network": "Select network",
   "lead": "Lead",
   "date_range": "Date range",
-  "private": "Private",
-  "public": "Public",
+  "private": "Only me",
+  "public": "Shared",
   "accessible_only_by_invite": "Accessible only by invite",
   "anyone_in_the_workspace_except_guests_can_join": "Anyone in the workspace except Guests can join",
   "creating": "Creating",
@@ -210,8 +212,8 @@
   "add_to_favorites": "Add to favorites",
   "remove_from_favorites": "Remove from favorites",
   "rename_folder": "Rename Folder",
-  "publish_project": "Publish project",
-  "publish": "Publish",
+  "publish_project": "Share on the web",
+  "publish": "Turn on web sharing",
   "copy_link": "Copy link",
   "leave_project": "Leave project",
   "join_the_project_to_rearrange": "Join the project to rearrange",
@@ -532,8 +534,8 @@
     "archiving": "Archiving",
     "archive": "Archive",
     "access": {
-      "public": "Public",
-      "private": "Private"
+      "public": "Shared with the project",
+      "private": "Only me"
     },
     "done": "Done",
     "sub_work_items": "Sub-work items",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "An error occurred",
       "inbox_fetch_error": "Error fetching the intake work items please try again later.",
-      "page_make_public_error": "Page could not be made public. Please try again later.",
-      "page_make_private_error": "Page could not be made private. Please try again later.",
+      "page_make_public_error": "Page could not be shared with the project. Please try again later.",
+      "page_make_private_error": "Page could not be made visible only to you. Please try again later.",
       "workflow_pending_approval": "Work item has a pending approval.",
       "workflow_transition_not_allowed": "This state transition is not allowed by the workflow."
     },
@@ -1412,7 +1414,7 @@
       "duration": "Duration"
     },
     "auth_labels": {
-      "magic_code": "Magic code"
+      "one_time_code": "One-time code"
     },
     "state_groups": {
       "canceled": "Canceled"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "Nice! Just one more step.",
-      "description": "Enter the public-share URL or link of the view or Page you are trying to see in the browser's address bar.",
+      "description": "Enter the shared link of the view or page you are trying to see in the browser's address bar.",
       "image_alt": "User already logged in"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Resend in {seconds}s"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "Continue with {provider}"
     },
     "issues": {
-      "public_board_not_found": "The public board does not exist. Please check the URL.",
+      "shared_project_load_failed": "This shared project could not be loaded. Please try again later.",
       "cycle_tooltip": "Cycle: {name}",
       "no_cycle": "No Cycle",
       "due_date_tooltip": "Due Date: {date}",

@@ -10,13 +10,14 @@ The three project visibility tiers (``Project.network``):
 * Public (2): listed for workspace members, who can join it at once.
 """
 
+from unittest.mock import patch
 from uuid import uuid4
 
 import pytest
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from plane.db.models import Project, ProjectAccessRequest, ProjectMember, User, WorkspaceMember
+from plane.db.models import Notification, Project, ProjectAccessRequest, ProjectMember, User, WorkspaceMember
 
 SECRET, PRIVATE, PUBLIC = 0, 1, 2
 ADMIN, MEMBER, GUEST = 20, 15, 5
@@ -204,6 +205,34 @@ class TestAccessRequests:
         assert again.json()["id"] == first.json()["id"]
         assert ProjectAccessRequest.objects.filter(project=projects["private"], requester=outsider).count() == 1
 
+    def test_a_new_request_is_announced_to_the_approvers_once(
+        self, workspace, projects, outsider, django_capture_on_commit_callbacks
+    ):
+        with patch("plane.app.views.project.access_request.notify_project_access_request.delay") as delay:
+            with django_capture_on_commit_callbacks(execute=True):
+                first = self._request_access(outsider, workspace, projects["private"], "Please let me in")
+            with django_capture_on_commit_callbacks(execute=True):
+                self._request_access(outsider, workspace, projects["private"])
+        delay.assert_called_once_with(first.json()["id"])
+
+    def test_the_inbox_lists_the_announcement_next_to_work_item_notifications(self, workspace, projects, insider):
+        Notification.objects.create(
+            workspace=workspace,
+            project=projects["private"],
+            receiver=insider,
+            triggered_by=insider,
+            entity_name="project_access_request",
+            entity_identifier=uuid4(),
+            sender="in_app:project_access_request",
+            title="requested access",
+            data={"project": {"id": str(projects["private"].id), "name": "PRV project"}},
+        )
+        response = _client(insider).get(f"/api/workspaces/{workspace.slug}/users/notifications/")
+        assert response.status_code == status.HTTP_200_OK
+        entries = response.json()
+        assert [entry["entity_name"] for entry in entries] == ["project_access_request"]
+        assert entries[0]["data"]["project"]["name"] == "PRV project"
+
     def test_requests_are_only_for_private_projects(self, workspace, projects, outsider):
         assert self._request_access(outsider, workspace, projects["public"]).status_code == status.HTTP_400_BAD_REQUEST
         # a secret project is not revealed
@@ -263,6 +292,80 @@ class TestAccessRequests:
         # the project now opens for them
         opened = _client(outsider).get(f"/api/workspaces/{workspace.slug}/projects/{projects['private'].id}/")
         assert opened.status_code == status.HTTP_200_OK
+
+    @pytest.mark.parametrize("decision", ["approved", "rejected"])
+    def test_a_decision_is_announced_to_the_requester_once(
+        self, workspace, projects, insider, outsider, decision, django_capture_on_commit_callbacks
+    ):
+        access_request = ProjectAccessRequest.objects.create(project=projects["private"], requester=outsider)
+        url = self._url(workspace, projects["private"], f"{access_request.id}/")
+
+        with patch("plane.app.views.project.access_request.notify_project_access_request_decision.delay") as delay:
+            with django_capture_on_commit_callbacks(execute=True):
+                _client(insider).patch(url, {"status": decision}, format="json")
+            with django_capture_on_commit_callbacks(execute=True):
+                again = _client(insider).patch(url, {"status": decision}, format="json")
+
+        assert again.status_code == status.HTTP_409_CONFLICT
+        delay.assert_called_once_with(str(access_request.id))
+
+    @pytest.mark.parametrize("decision", ["approved", "rejected"])
+    def test_deciding_marks_the_announcements_to_the_admins_as_read(
+        self, workspace, projects, insider, outsider, decision
+    ):
+        access_request = ProjectAccessRequest.objects.create(project=projects["private"], requester=outsider)
+        other_admin = _user(workspace, MEMBER, "second-admin")
+        announced = [
+            Notification.objects.create(
+                workspace=workspace,
+                project=projects["private"],
+                receiver=receiver,
+                triggered_by=outsider,
+                entity_name="project_access_request",
+                entity_identifier=access_request.id,
+                sender="in_app:project_access_request",
+                title="requested access",
+            )
+            for receiver in (insider, other_admin)
+        ]
+        unrelated = Notification.objects.create(
+            workspace=workspace,
+            project=projects["private"],
+            receiver=other_admin,
+            triggered_by=outsider,
+            entity_name="project_access_request",
+            entity_identifier=uuid4(),
+            sender="in_app:project_access_request",
+            title="requested access",
+        )
+
+        with patch("plane.app.views.project.access_request.notify_project_access_request_decision.delay"):
+            _client(insider).patch(
+                self._url(workspace, projects["private"], f"{access_request.id}/"), {"status": decision}, format="json"
+            )
+
+        for notification in announced:
+            notification.refresh_from_db()
+            assert notification.read_at is not None
+        unrelated.refresh_from_db()
+        assert unrelated.read_at is None
+
+    def test_a_refused_approval_announces_nothing(
+        self, workspace, projects, insider, outsider, django_capture_on_commit_callbacks
+    ):
+        access_request = ProjectAccessRequest.objects.create(project=projects["private"], requester=outsider)
+        WorkspaceMember.objects.filter(workspace=workspace, member=outsider).update(is_active=False)
+
+        with patch("plane.app.views.project.access_request.notify_project_access_request_decision.delay") as delay:
+            with django_capture_on_commit_callbacks(execute=True):
+                response = _client(insider).patch(
+                    self._url(workspace, projects["private"], f"{access_request.id}/"),
+                    {"status": "approved"},
+                    format="json",
+                )
+
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        delay.assert_not_called()
 
     def test_approving_reactivates_a_former_member_at_the_workspace_role(self, workspace, projects, insider, outsider):
         former = ProjectMember.objects.create(

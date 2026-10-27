@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,7 +15,6 @@ import giteaLogo from "@/app/assets/logos/gitea-logo.svg?url";
 import GithubLightLogo from "@/app/assets/logos/github-black.png?url";
 import GithubDarkLogo from "@/app/assets/logos/github-dark.svg?url";
 import gitlabLogo from "@/app/assets/logos/gitlab-logo.svg?url";
-import googleLogo from "@/app/assets/logos/google-logo.svg?url";
 // hooks
 import { useInstance } from "@/hooks/store/use-instance";
 
@@ -29,22 +29,8 @@ export const useCoreOAuthConfig = (oauthActionText: string): TOAuthConfigs => {
   const { config } = useInstance();
   // derived values
   const isOAuthEnabled =
-    (config &&
-      (config?.is_google_enabled ||
-        config?.is_github_enabled ||
-        config?.is_gitlab_enabled ||
-        config?.is_gitea_enabled)) ||
-    false;
+    (config && (config?.is_github_enabled || config?.is_gitlab_enabled || config?.is_gitea_enabled)) || false;
   const oAuthOptions: TOAuthOption[] = [
-    {
-      id: "google",
-      text: `${oauthActionText} with Google`,
-      icon: <img src={googleLogo} height={18} width={18} alt="Google Logo" />,
-      onClick: () => {
-        window.location.assign(`${API_BASE_URL}/auth/google/${next_path ? `?next_path=${next_path}` : ``}`);
-      },
-      enabled: config?.is_google_enabled,
-    },
     {
       id: "github",
       text: `${oauthActionText} with GitHub`,

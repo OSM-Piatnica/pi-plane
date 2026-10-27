@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Alt iş öğelerini göster",
         "show_empty_groups": "Boş grupları göster"
+      },
+      "color_by": {
+        "label": "Renk ölçütü",
+        "state": "Durum",
+        "key": "İş öğesi kimliği"
       }
     },
     "layouts": {
@@ -90,8 +95,8 @@
     "comments": {
       "placeholder": "Yorum ekle",
       "switch": {
-        "private": "Özel yoruma geç",
-        "public": "Genel yoruma geç"
+        "private": "Bu yorumu dahili yap",
+        "public": "Bu yorumu web'de göster"
       },
       "create": {
         "success": "Yorum başarıyla oluşturuldu",
@@ -148,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Dahili",
+        "external": "Web'de görünür"
       }
     },
     "empty_state": {
@@ -195,7 +204,15 @@
       "finish_before": "Finishes Bifor",
       "finish_after": "Finishes Aftır",
       "implements": "Implemente",
-      "implemented_by": "Implemente edilen"
+      "implemented_by": "Implemente edilen",
+      "causes": "Neden olur",
+      "caused_by": "Nedeni",
+      "clones": "Klonlar",
+      "cloned_by": "Klonlayan",
+      "tests": "Test eder",
+      "tested_by": "Test eden",
+      "start_before_finish": "Şunun bitişinden önce başlar",
+      "finish_after_start": "Şunun başlangıcından sonra biter"
     },
     "copy_link": "İş öğesi bağlantısını kopyala",
     "delete": {
@@ -290,7 +307,9 @@
         "description": "Tüm iş öğelerini görmek için tüm uygulanan filtreleri temizleyin.",
         "action": "Filtreleri temizle"
       }
-    }
+    },
+    "expand": "Alt iş öğelerini genişlet",
+    "collapse": "Alt iş öğelerini daralt"
   },
   "issue_relation": {
     "empty_state": {
@@ -612,6 +631,22 @@
           "added": "bu iş öğesini <value/> iş öğesini engelliyor olarak işaretledi.",
           "removed": "engellenen <value/> iş öğesini kaldırdı."
         },
+        "caused_by": {
+          "added": "“Nedeni” ilişkisini ekledi: <value/>.",
+          "removed": "“Nedeni” ilişkisini kaldırdı: <value/>."
+        },
+        "causes": {
+          "added": "“Neden olur” ilişkisini ekledi: <value/>.",
+          "removed": "“Neden olur” ilişkisini kaldırdı: <value/>."
+        },
+        "cloned_by": {
+          "added": "“Klonlayan” ilişkisini ekledi: <value/>.",
+          "removed": "“Klonlayan” ilişkisini kaldırdı: <value/>."
+        },
+        "clones": {
+          "added": "“Klonlar” ilişkisini ekledi: <value/>.",
+          "removed": "“Klonlar” ilişkisini kaldırdı: <value/>."
+        },
         "duplicate": {
           "added": "bu iş öğesini <value/> öğesinin kopyası olarak işaretledi.",
           "removed": "bu iş öğesinin <value/> öğesinin kopyası olduğu işaretini kaldırdı."
@@ -620,9 +655,21 @@
           "added": "bu iş öğesinin <value/> öğesinden sonra bittiğini işaretledi.",
           "removed": "<value/> ile olan \"sonra biter\" ilişkisini kaldırdı."
         },
+        "finish_after_start": {
+          "added": "“Şunun başlangıcından sonra biter” ilişkisini ekledi: <value/>.",
+          "removed": "“Şunun başlangıcından sonra biter” ilişkisini kaldırdı: <value/>."
+        },
         "finish_before": {
           "added": "bu iş öğesinin <value/> öğesinden önce bittiğini işaretledi.",
           "removed": "<value/> ile olan \"önce biter\" ilişkisini kaldırdı."
+        },
+        "implemented_by": {
+          "added": "“Implemente edilen” ilişkisini ekledi: <value/>.",
+          "removed": "“Implemente edilen” ilişkisini kaldırdı: <value/>."
+        },
+        "implements": {
+          "added": "“Implemente” ilişkisini ekledi: <value/>.",
+          "removed": "“Implemente” ilişkisini kaldırdı: <value/>."
         },
         "relates_to": {
           "added": "bu iş öğesinin <value/> ile ilişkili olduğunu işaretledi.",
@@ -635,6 +682,18 @@
         "start_before": {
           "added": "bu iş öğesinin <value/> öğesinden önce başladığını işaretledi.",
           "removed": "<value/> ile olan \"önce başlar\" ilişkisini kaldırdı."
+        },
+        "start_before_finish": {
+          "added": "“Şunun bitişinden önce başlar” ilişkisini ekledi: <value/>.",
+          "removed": "“Şunun bitişinden önce başlar” ilişkisini kaldırdı: <value/>."
+        },
+        "tested_by": {
+          "added": "“Test eden” ilişkisini ekledi: <value/>.",
+          "removed": "“Test eden” ilişkisini kaldırdı: <value/>."
+        },
+        "tests": {
+          "added": "“Test eder” ilişkisini ekledi: <value/>.",
+          "removed": "“Test eder” ilişkisini kaldırdı: <value/>."
         }
       },
       "restored": "iş öğesini geri yükledi.",
@@ -836,6 +895,16 @@
         "enabled": "Intake görünümünü etkinleştirdi",
         "fallback": "Intake görünümünü güncelledi"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "atananlarca düzenleme kuralını devre dışı bıraktı",
+        "enabled": "atananlarca düzenleme kuralını etkinleştirdi",
+        "fallback": "atananlarca düzenleme kuralını güncelledi"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "engellenen öğe durumu kuralını devre dışı bıraktı",
+        "enabled": "engellenen öğe durumu kuralını etkinleştirdi",
+        "fallback": "engellenen öğe durumu kuralını güncelledi"
+      },
       "is_epic_enabled": {
         "disabled": "epikleri devre dışı bıraktı",
         "enabled": "epikleri etkinleştirdi",
@@ -846,10 +915,35 @@
         "enabled": "iş öğesi türlerini etkinleştirdi",
         "fallback": "iş öğesi türlerini güncelledi"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "üst öğe tamamlama kuralını devre dışı bıraktı",
+        "enabled": "üst öğe tamamlama kuralını etkinleştirdi",
+        "fallback": "üst öğe tamamlama kuralını güncelledi"
+      },
       "is_project_updates_enabled": {
         "disabled": "proje güncellemelerini devre dışı bıraktı",
         "enabled": "proje güncellemelerini etkinleştirdi",
         "fallback": "proje güncellemelerini güncelledi"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "“kopyası” ilişkisini devre dışı bıraktı",
+        "enabled": "“kopyası” ilişkisini etkinleştirdi",
+        "fallback": "“kopyası” ilişkisini güncelledi"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "“ilişkili” ilişkisini devre dışı bıraktı",
+        "enabled": "“ilişkili” ilişkisini etkinleştirdi",
+        "fallback": "“ilişkili” ilişkisini güncelledi"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "takvim bağımlılıklarını devre dışı bıraktı",
+        "enabled": "takvim bağımlılıklarını etkinleştirdi",
+        "fallback": "takvim bağımlılıklarını güncelledi"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "izlenebilirlik ilişkilerini devre dışı bıraktı",
+        "enabled": "izlenebilirlik ilişkilerini etkinleştirdi",
+        "fallback": "izlenebilirlik ilişkilerini güncelledi"
       },
       "is_time_tracking_enabled": {
         "disabled": "zaman takibini devre dışı bıraktı",
@@ -921,5 +1015,37 @@
       },
       "value_none": "yok"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Tarihleri topla",
+    "rolled_up_bar": "Tarihler alt iş öğelerinden toplandı",
+    "children_span": "Alt iş öğeleri: {start} – {end}",
+    "starts_early": "Alt iş öğeleri bu iş öğesinden önce başlıyor",
+    "ends_late": "Alt iş öğeleri bu iş öğesinden sonra bitiyor"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Tümünü genişlet",
+    "collapse_all": "Tümünü daralt",
+    "levels": "Düzeyler",
+    "up_to_level": "{level}. düzeye kadar",
+    "all_levels": "Tüm düzeyler",
+    "load_error": "Alt iş öğeleri yüklenemedi",
+    "too_many": "Aynı anda genişletilemeyecek kadar çok iş öğesi var. Kalanları tek tek genişletin."
+  },
+  "worklog": {
+    "log_time": "Süre kaydet",
+    "description_placeholder": "Ne yapıldı? (isteğe bağlı)",
+    "invalid_duration_title": "Geçersiz süre",
+    "invalid_duration_message": "\"2h 30m\", \"45m\" gibi bir biçim veya yalnızca dakika kullanın, en fazla 24 saat.",
+    "log_error": "Süre kaydedilemedi. Lütfen tekrar deneyin.",
+    "update_error": "Kayıt güncellenemedi. Lütfen tekrar deneyin.",
+    "delete_error": "Kayıt silinemedi. Lütfen tekrar deneyin.",
+    "delete_title": "Süre kaydını sil",
+    "delete_description": "Bu süre kaydını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+    "edit_entry": "Süre kaydını düzenle",
+    "delete_entry": "Süre kaydını sil",
+    "logged": "<value>{duration}</value> kaydetti",
+    "updated": "kaydedilen süreyi <old>{from}</old> değerinden <new>{to}</new> değerine değiştirdi",
+    "removed": "kaydedilen <value>{duration}</value> süreyi kaldırdı"
   }
 }

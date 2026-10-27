@@ -117,6 +117,8 @@
   "comments_description": "Benachrichtigen Sie mich, wenn jemand einen Kommentar zu einem Arbeitselement hinzufügt.",
   "mentions": "Erwähnungen",
   "mentions_description": "Benachrichtigen Sie mich, wenn mich jemand in einem Kommentar oder in einer Beschreibung erwähnt.",
+  "project_access_requests": "Zugriffsanfragen",
+  "project_access_requests_description": "Senden Sie mir E-Mails zu Anfragen für den Beitritt zu privaten Projekten, die ich verwalte, und zu Entscheidungen über meine eigenen Anfragen.",
   "email_frequency": "E-Mail-Häufigkeit",
   "email_frequency_description": "Legen Sie fest, wie oft Sie E-Mails zu Änderungen an Arbeitselementen erhalten. Erwähnungen werden immer sofort gesendet.",
   "email_frequency_instant": "Sofort",
@@ -195,8 +197,8 @@
   "select_network": "Netzwerk auswählen",
   "lead": "Leitung",
   "date_range": "Datumsbereich",
-  "private": "Privat",
-  "public": "Öffentlich",
+  "private": "Nur ich",
+  "public": "Geteilt",
   "accessible_only_by_invite": "Nur auf Einladung zugänglich",
   "anyone_in_the_workspace_except_guests_can_join": "Jeder im Arbeitsbereich außer Gästen kann beitreten",
   "creating": "Wird erstellt",
@@ -210,8 +212,8 @@
   "add_to_favorites": "Zu Favoriten hinzufügen",
   "remove_from_favorites": "Aus Favoriten entfernen",
   "rename_folder": "Ordner umbenennen",
-  "publish_project": "Projekt veröffentlichen",
-  "publish": "Veröffentlichen",
+  "publish_project": "Im Web teilen",
+  "publish": "Web-Freigabe aktivieren",
   "copy_link": "Link kopieren",
   "leave_project": "Projekt verlassen",
   "join_the_project_to_rearrange": "Treten Sie dem Projekt bei, um die Anordnung zu ändern",
@@ -532,8 +534,8 @@
     "archiving": "Wird archiviert",
     "archive": "Archivieren",
     "access": {
-      "public": "Öffentlich",
-      "private": "Privat"
+      "public": "Mit dem Projekt geteilt",
+      "private": "Nur ich"
     },
     "done": "Fertig",
     "sub_work_items": "Untergeordnete Arbeitselemente",
@@ -1375,8 +1377,8 @@
     "stores": {
       "generic_error": "Ein Fehler ist aufgetreten",
       "inbox_fetch_error": "Beim Abrufen der Intake-Arbeitselemente ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
-      "page_make_public_error": "Die Seite konnte nicht öffentlich gemacht werden. Bitte versuchen Sie es später erneut.",
-      "page_make_private_error": "Die Seite konnte nicht privat gemacht werden. Bitte versuchen Sie es später erneut.",
+      "page_make_public_error": "Die Seite konnte nicht mit dem Projekt geteilt werden. Bitte versuche es später erneut.",
+      "page_make_private_error": "Die Seite konnte nicht nur für dich sichtbar gemacht werden. Bitte versuche es später erneut.",
       "workflow_pending_approval": "Das Arbeitselement wartet auf eine Genehmigung.",
       "workflow_transition_not_allowed": "Dieser Statusübergang ist laut Workflow nicht zulässig."
     },
@@ -1412,7 +1414,7 @@
       "duration": "Dauer"
     },
     "auth_labels": {
-      "magic_code": "Magic Code"
+      "one_time_code": "Einmalcode"
     },
     "state_groups": {
       "canceled": "Abgebrochen"
@@ -1440,10 +1442,10 @@
     },
     "user_logged_in": {
       "title": "Super! Nur noch ein Schritt.",
-      "description": "Geben Sie die öffentliche URL oder den Link der Ansicht oder Seite, die Sie sehen möchten, in die Adressleiste des Browsers ein.",
+      "description": "Gib den geteilten Link zur Ansicht oder Seite, die du sehen möchtest, in die Adressleiste deines Browsers ein.",
       "image_alt": "Benutzer bereits angemeldet"
     },
-    "auth_unique_code": {
+    "auth_one_time_code": {
       "resend_in": "Erneut senden in {seconds} s"
     },
     "oauth": {
@@ -1452,7 +1454,7 @@
       "continue_with": "Weiter mit {provider}"
     },
     "issues": {
-      "public_board_not_found": "Das öffentliche Board existiert nicht. Bitte überprüfen Sie die URL.",
+      "shared_project_load_failed": "Dieses geteilte Projekt konnte nicht geladen werden. Bitte versuche es später erneut.",
       "cycle_tooltip": "Zyklus: {name}",
       "no_cycle": "Kein Zyklus",
       "due_date_tooltip": "Fälligkeitsdatum: {date}",

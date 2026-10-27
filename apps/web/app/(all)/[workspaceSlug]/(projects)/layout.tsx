@@ -9,6 +9,9 @@ import { observer } from "mobx-react";
 import { Outlet } from "react-router";
 import { ProjectsAppPowerKProvider } from "@/components/power-k/projects-app-provider";
 import { StickyActionBar } from "@/components/stickies/action-bar";
+import { DuplicateCancelConfirmModal } from "@/components/workflow/duplicate-cancel-confirm-modal";
+import { ParentReopenConfirmModal } from "@/components/workflow/parent-reopen-confirm-modal";
+import { RescheduleConfirmModal } from "@/components/workflow/reschedule-confirm-modal";
 import { ProjectAppSidebar } from "./_sidebar";
 import { ExtendedProjectSidebar } from "./extended-project-sidebar";
 
@@ -16,6 +19,9 @@ function WorkspaceLayout() {
   return (
     <>
       <ProjectsAppPowerKProvider />
+      <ParentReopenConfirmModal />
+      <DuplicateCancelConfirmModal />
+      <RescheduleConfirmModal />
       <div className="relative flex h-full w-full flex-col overflow-hidden rounded-lg border border-subtle">
         <div id="full-screen-portal" className="absolute inset-0 w-full" />
         <div className="relative flex size-full overflow-hidden">
@@ -25,7 +31,7 @@ function WorkspaceLayout() {
             <Outlet />
           </main>
         </div>
-        <div className="absolute bottom-px left-3 z-20">
+        <div className="absolute bottom-0 left-3 z-20">
           <StickyActionBar />
         </div>
       </div>

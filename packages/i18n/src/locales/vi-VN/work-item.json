@@ -66,6 +66,11 @@
       "extra": {
         "show_sub_issues": "Hiển thị mục công việc con",
         "show_empty_groups": "Hiển thị nhóm trống"
+      },
+      "color_by": {
+        "label": "Tô màu theo",
+        "state": "Trạng thái",
+        "key": "ID mục công việc"
       }
     },
     "layouts": {
@@ -90,8 +95,8 @@
     "comments": {
       "placeholder": "Thêm bình luận",
       "switch": {
-        "private": "Chuyển sang bình luận riêng tư",
-        "public": "Chuyển sang bình luận công khai"
+        "private": "Đặt bình luận này là nội bộ",
+        "public": "Hiển thị bình luận này trên web"
       },
       "create": {
         "success": "Đã tạo bình luận thành công",
@@ -148,6 +153,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Nội bộ",
+        "external": "Hiển thị trên web"
       }
     },
     "empty_state": {
@@ -195,7 +204,15 @@
       "finish_before": "Kết thúc Trước",
       "finish_after": "Kết thúc Sau",
       "implements": "Thực hiện",
-      "implemented_by": "Được thực hiện bởi"
+      "implemented_by": "Được thực hiện bởi",
+      "causes": "Gây ra",
+      "caused_by": "Bị gây ra bởi",
+      "clones": "Nhân bản",
+      "cloned_by": "Được nhân bản bởi",
+      "tests": "Kiểm thử",
+      "tested_by": "Được kiểm thử bởi",
+      "start_before_finish": "Bắt đầu trước khi kết thúc",
+      "finish_after_start": "Kết thúc sau khi bắt đầu"
     },
     "copy_link": "Sao chép liên kết mục công việc",
     "delete": {
@@ -290,7 +307,9 @@
         "description": "Để xem tất cả các mục công việc, hãy xóa tất cả các bộ lọc đã áp dụng.",
         "action": "Xóa bộ lọc"
       }
-    }
+    },
+    "expand": "Mở rộng mục công việc con",
+    "collapse": "Thu gọn mục công việc con"
   },
   "issue_relation": {
     "empty_state": {
@@ -612,6 +631,22 @@
           "added": "đã đánh dấu mục công việc này đang chặn mục công việc <value/>.",
           "removed": "đã xóa mục công việc đang bị chặn <value/>."
         },
+        "caused_by": {
+          "added": "đã thêm quan hệ “Bị gây ra bởi”: <value/>.",
+          "removed": "đã xóa quan hệ “Bị gây ra bởi”: <value/>."
+        },
+        "causes": {
+          "added": "đã thêm quan hệ “Gây ra”: <value/>.",
+          "removed": "đã xóa quan hệ “Gây ra”: <value/>."
+        },
+        "cloned_by": {
+          "added": "đã thêm quan hệ “Được nhân bản bởi”: <value/>.",
+          "removed": "đã xóa quan hệ “Được nhân bản bởi”: <value/>."
+        },
+        "clones": {
+          "added": "đã thêm quan hệ “Nhân bản”: <value/>.",
+          "removed": "đã xóa quan hệ “Nhân bản”: <value/>."
+        },
         "duplicate": {
           "added": "đã đánh dấu mục công việc này trùng lặp với <value/>.",
           "removed": "đã bỏ đánh dấu mục công việc này là trùng lặp với <value/>."
@@ -620,9 +655,21 @@
           "added": "đã đánh dấu mục công việc này kết thúc sau <value/>.",
           "removed": "đã xóa mối quan hệ kết thúc sau với <value/>."
         },
+        "finish_after_start": {
+          "added": "đã thêm quan hệ “Kết thúc sau khi bắt đầu”: <value/>.",
+          "removed": "đã xóa quan hệ “Kết thúc sau khi bắt đầu”: <value/>."
+        },
         "finish_before": {
           "added": "đã đánh dấu mục công việc này kết thúc trước <value/>.",
           "removed": "đã xóa mối quan hệ kết thúc trước với <value/>."
+        },
+        "implemented_by": {
+          "added": "đã thêm quan hệ “Được thực hiện bởi”: <value/>.",
+          "removed": "đã xóa quan hệ “Được thực hiện bởi”: <value/>."
+        },
+        "implements": {
+          "added": "đã thêm quan hệ “Thực hiện”: <value/>.",
+          "removed": "đã xóa quan hệ “Thực hiện”: <value/>."
         },
         "relates_to": {
           "added": "đã đánh dấu mục công việc này có liên quan đến <value/>.",
@@ -635,6 +682,18 @@
         "start_before": {
           "added": "đã đánh dấu mục công việc này bắt đầu trước <value/>.",
           "removed": "đã xóa mối quan hệ bắt đầu trước với <value/>."
+        },
+        "start_before_finish": {
+          "added": "đã thêm quan hệ “Bắt đầu trước khi kết thúc”: <value/>.",
+          "removed": "đã xóa quan hệ “Bắt đầu trước khi kết thúc”: <value/>."
+        },
+        "tested_by": {
+          "added": "đã thêm quan hệ “Được kiểm thử bởi”: <value/>.",
+          "removed": "đã xóa quan hệ “Được kiểm thử bởi”: <value/>."
+        },
+        "tests": {
+          "added": "đã thêm quan hệ “Kiểm thử”: <value/>.",
+          "removed": "đã xóa quan hệ “Kiểm thử”: <value/>."
         }
       },
       "restored": "đã khôi phục mục công việc.",
@@ -836,6 +895,16 @@
         "enabled": "đã bật chế độ xem Intake",
         "fallback": "đã cập nhật chế độ xem Intake"
       },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "đã tắt quy tắc chỉnh sửa bởi người được giao",
+        "enabled": "đã bật quy tắc chỉnh sửa bởi người được giao",
+        "fallback": "đã cập nhật quy tắc chỉnh sửa bởi người được giao"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "đã tắt quy tắc trạng thái mục bị chặn",
+        "enabled": "đã bật quy tắc trạng thái mục bị chặn",
+        "fallback": "đã cập nhật quy tắc trạng thái mục bị chặn"
+      },
       "is_epic_enabled": {
         "disabled": "đã tắt sử thi",
         "enabled": "đã bật sử thi",
@@ -846,10 +915,35 @@
         "enabled": "đã bật loại mục công việc",
         "fallback": "đã cập nhật loại mục công việc"
       },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "đã tắt quy tắc hoàn thành mục cha",
+        "enabled": "đã bật quy tắc hoàn thành mục cha",
+        "fallback": "đã cập nhật quy tắc hoàn thành mục cha"
+      },
       "is_project_updates_enabled": {
         "disabled": "đã tắt cập nhật dự án",
         "enabled": "đã bật cập nhật dự án",
         "fallback": "đã cập nhật cập nhật dự án"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "đã tắt quan hệ “trùng lặp”",
+        "enabled": "đã bật quan hệ “trùng lặp”",
+        "fallback": "đã cập nhật quan hệ “trùng lặp”"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "đã tắt quan hệ “liên quan đến”",
+        "enabled": "đã bật quan hệ “liên quan đến”",
+        "fallback": "đã cập nhật quan hệ “liên quan đến”"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "đã tắt phụ thuộc lịch trình",
+        "enabled": "đã bật phụ thuộc lịch trình",
+        "fallback": "đã cập nhật phụ thuộc lịch trình"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "đã tắt quan hệ truy vết",
+        "enabled": "đã bật quan hệ truy vết",
+        "fallback": "đã cập nhật quan hệ truy vết"
       },
       "is_time_tracking_enabled": {
         "disabled": "đã tắt theo dõi thời gian",
@@ -921,5 +1015,37 @@
       },
       "value_none": "không có"
     }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Tổng hợp ngày",
+    "rolled_up_bar": "Ngày được tổng hợp từ các mục công việc con",
+    "children_span": "Mục công việc con: {start} – {end}",
+    "starts_early": "Các mục công việc con bắt đầu trước mục công việc này",
+    "ends_late": "Các mục công việc con kết thúc sau mục công việc này"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Mở rộng tất cả",
+    "collapse_all": "Thu gọn tất cả",
+    "levels": "Cấp độ",
+    "up_to_level": "Đến cấp {level}",
+    "all_levels": "Tất cả cấp độ",
+    "load_error": "Không thể tải các mục công việc con",
+    "too_many": "Quá nhiều mục công việc để mở rộng cùng lúc. Hãy mở rộng phần còn lại từng mục một."
+  },
+  "worklog": {
+    "log_time": "Ghi nhận thời gian",
+    "description_placeholder": "Đã làm gì? (không bắt buộc)",
+    "invalid_duration_title": "Thời lượng không hợp lệ",
+    "invalid_duration_message": "Dùng định dạng như \"2h 30m\", \"45m\" hoặc chỉ số phút, tối đa 24 giờ.",
+    "log_error": "Không thể ghi nhận thời gian. Vui lòng thử lại.",
+    "update_error": "Không thể cập nhật mục. Vui lòng thử lại.",
+    "delete_error": "Không thể xóa mục. Vui lòng thử lại.",
+    "delete_title": "Xóa mục thời gian",
+    "delete_description": "Bạn có chắc chắn muốn xóa mục thời gian này không? Hành động này không thể hoàn tác.",
+    "edit_entry": "Chỉnh sửa mục thời gian",
+    "delete_entry": "Xóa mục thời gian",
+    "logged": "đã ghi nhận <value>{duration}</value>",
+    "updated": "đã đổi thời gian ghi nhận từ <old>{from}</old> thành <new>{to}</new>",
+    "removed": "đã xóa thời gian ghi nhận <value>{duration}</value>"
   }
 }

@@ -445,14 +445,15 @@
       "removing_from_favorites": "Proje favorilerden kaldırılıyor..."
     },
     "confirm_member_remove": {
-      "leave_description": "{name} projesinden ayrılmak istediğinizden emin misiniz? Tekrar davet edilirseniz veya proje herkese açıksa yeniden katılabilirsiniz.",
+      "leave_description": "{name} projesinden ayrılmak istediğinizden emin misiniz? Tekrar davet edilirseniz veya proje çalışma alanına açıksa yeniden katılabilirsiniz.",
       "leave_title": "Projeden ayrılınsın mı?",
       "remove_description": "{name} üyesini kaldırmak istediğinizden emin misiniz? Artık bu projeye erişemeyecek. Bu işlem geri alınamaz.",
       "remove_title": "{name} kaldırılsın mı?"
     },
     "control_section": {
       "archive_description": "Bir projeyi arşivlemek onu yan gezinmeden kaldırır, ancak projeler sayfasından erişmeye devam edebilirsiniz. Projeyi istediğiniz zaman geri yükleyebilir veya silebilirsiniz.",
-      "delete_description": "Bir proje silindiğinde, projedeki tüm veriler ve kaynaklar kalıcı olarak kaldırılır ve geri alınamaz."
+      "delete_description": "Bir proje silindiğinde, projedeki tüm veriler ve kaynaklar kalıcı olarak kaldırılır ve geri alınamaz.",
+      "duplicate_description": "Bu projenin ayarları, durumları, etiketleri ve diğer yapılandırmasıyla yeni bir proje oluşturun. İş öğeleri yalnızca seçerseniz kopyalanır."
     },
     "delete_modal": {
       "confirm_placeholder": "“{phrase}” yazın",
@@ -531,21 +532,34 @@
       "timezone_error": "Saat dilimi güncellenemedi",
       "timezone_updated": "Saat dilimi başarıyla güncellendi",
       "update_error": "Profiliniz güncellenirken bir hata oluştu. Lütfen tekrar deneyin.",
-      "updated": "Profil başarıyla güncellendi."
+      "updated": "Profil başarıyla güncellendi.",
+      "weekend_days": "Hafta sonu günleri",
+      "weekend_days_description": "Hangi günlerin çalışılmayan süre sayılacağını belirler.",
+      "weekend_days_updated": "Hafta sonu günleri güncellendi",
+      "weekend_days_use_default": "Çalışma alanı varsayılanını kullan"
     },
     "publish_modal": {
       "allow_comments": "Yorumlara izin ver",
       "allow_reactions": "Tepkilere izin ver",
       "allow_voting": "Oylamaya izin ver",
-      "anyone_with_link": "Bağlantıya sahip herkes erişebilir",
-      "link_copied": "Yayınlanan sayfa bağlantısı başarıyla kopyalandı.",
-      "live_on_web": "Bu proje artık web'de yayında",
-      "publishing": "Yayınlanıyor",
-      "select_layout_error": "Projeyi yayınlamak için en az bir görünüm düzeni seçin.",
-      "settings_updated": "Yayın ayarları başarıyla güncellendi!",
-      "unpublish": "Yayından kaldır",
-      "unpublish_error": "Proje yayından kaldırılırken bir sorun oluştu.",
-      "unpublishing": "Yayından kaldırılıyor",
+      "anyone_with_link": "İnternetteki bağlantıya sahip herkes bu projeyi hesapsız görüntüleyebilir",
+      "confirm": {
+        "title": "Bu proje web'de paylaşılsın mı?",
+        "description": "İnternette bağlantıya sahip herkes bu projeyi görüntüleyebilir; buna çalışma alanınızın dışındaki ve oturum açmamış kişiler de dahildir.",
+        "can_see": "Şunları görebilirler:",
+        "item_work_items": "projedeki tüm iş öğeleri; açıklamaları, durumları, öncelikleri, tarihleri ve etiketleriyle",
+        "item_members": "proje üyelerinin adları ve avatarları",
+        "item_activity": "yorumlar, tepkiler ve oylar; izin verirseniz bunları yapan kişilerin adlarıyla birlikte",
+        "note": "Görüntüleyenler hiçbir şeyi düzenleyemez. Bağlantı, paylaşımı durdurana kadar çalışır; bu yüzden yalnızca gizli bir şey içermeyen bir projeyi paylaşın."
+      },
+      "link_copied": "Web bağlantısı kopyalandı.",
+      "live_on_web": "Bu proje web'de paylaşılıyor",
+      "publishing": "Açılıyor…",
+      "select_layout_error": "Projeyi web'de paylaşmak için en az bir görünüm düzeni seçin.",
+      "settings_updated": "Web paylaşımı ayarları güncellendi.",
+      "unpublish": "Paylaşımı durdur",
+      "unpublish_error": "Web paylaşımı kapatılırken bir şeyler ters gitti.",
+      "unpublishing": "Kapatılıyor…",
       "update_settings": "Ayarları güncelle"
     },
     "rich_filters": {
@@ -555,6 +569,14 @@
       "filter_type_not_supported": "Filtre türü desteklenmiyor",
       "invalid_filter": "Geçersiz filtre",
       "invalid_tooltip": "Bu filtre koşulu artık geçerli değil. Özellik silinmiş olabilir veya ona erişiminiz değişmiş olabilir.",
+      "operators": {
+        "exact": "eşittir",
+        "in": "şunlardan biri",
+        "range": "arasında",
+        "not_exact": "eşit değildir",
+        "not_in": "şunlardan hiçbiri",
+        "not_range": "arasında değil"
+      },
       "remove_filter": "Filtreyi kaldır",
       "save_view": "Görünümü kaydet",
       "update_view": "Görünümü güncelle"
@@ -640,7 +662,55 @@
     "access_requests": {
       "title": "Katılma istekleri ({count})",
       "approve": "Onayla",
-      "reject": "Reddet"
+      "reject": "Reddet",
+      "already_decided": "Bu istek başka bir yönetici tarafından zaten karara bağlandı.",
+      "requester_left": "Bu kişi artık çalışma alanının üyesi değil."
+    },
+    "duplicate_modal": {
+      "already_running": "Bu çalışma alanında zaten bir iş öğesi kopyalama işlemi sürüyor. Bittiğinde tekrar deneyin.",
+      "always_copied": "Ayarlar, durumlar ve iş öğesi türleri her zaman kopyalanır.",
+      "banner": {
+        "done": "Kopyalanan iş öğeleri: {count}.",
+        "failed": "İş öğelerinin kopyalanması başarısız oldu. Kopyalananlar korunur; kalanı eklemek için tekrar deneyin.",
+        "progress": "İş öğeleri kopyalanıyor: {copied} / {total}",
+        "queued": "İş öğeleri kopyalanmak üzere sırada...",
+        "reload": "Yeniden yükle",
+        "retry": "Tekrar dene",
+        "retry_failed": "Kopyalama tekrar denenemedi. Lütfen tekrar deneyin."
+      },
+      "clear_all": "Tümünü temizle",
+      "description": "Aynı ayarlarla yeni bir proje oluşturur. Sayfalar ve webhook'lar kopyalanmaz; iş öğeleri yalnızca aşağıda seçerseniz kopyalanır.",
+      "error": "Proje çoğaltılamadı. Lütfen tekrar deneyin.",
+      "identifier_placeholder": "Boşsa otomatik oluşturulur",
+      "properties": {
+        "assignees": "Atananlar",
+        "custom_properties": "Özel özellikler",
+        "cycles": "Döngüler",
+        "dates": "Tarihler",
+        "description_images": "Açıklamalardaki görseller",
+        "labels": "Etiketler",
+        "links": "Bağlantılar",
+        "modules": "Modüller",
+        "parents": "Alt öğe bağlantıları",
+        "relations": "İlişkiler"
+      },
+      "properties_description": "İş öğeleriyle nelerin taşınacağını seçin. Taslaklar, arşivlenmiş ve intake öğeleri dışarıda bırakılır; yorumlar, ekler, etkinlik ve zaman kayıtları asla kopyalanmaz.",
+      "properties_heading": "İş öğesi özellikleri",
+      "properties_note": "Döngüler ve modüller yalnızca yukarıda kopyalanırsa taşınır.",
+      "property_groups": {
+        "content": "İçerik",
+        "hierarchy": "Hiyerarşi ve ilişkiler",
+        "organization": "Organizasyon",
+        "people": "Kişiler"
+      },
+      "select_all": "Tümünü seç",
+      "submit": "Projeyi çoğalt",
+      "submitting": "Proje çoğaltılıyor...",
+      "success": "Proje başarıyla çoğaltıldı.",
+      "title": "Projeyi çoğalt",
+      "too_large": "Bu proje kopyalanamayacak kadar büyük. Bazı seçenekleri kapatıp tekrar deneyin.",
+      "what_to_copy": "Şunları da kopyala",
+      "work_items_too_large": "Bu projede kopyalanabilecekten fazla iş öğesi var (en fazla {count})."
     }
   }
 }

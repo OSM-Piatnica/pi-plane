@@ -95,6 +95,49 @@
               "message": "Dışa aktarma başarısız oldu. Lütfen tekrar deneyin."
             }
           }
+        },
+        "columns": {
+          "heading": "Sütunlar",
+          "description": "Dosyanın hangi sütunları içereceğini seçin. Tanımlayıcı ve ad her zaman dahildir; aksi halde dosya yeniden içe aktarılamaz.",
+          "select_all": "Tümünü seç",
+          "clear_all": "Tümünü temizle",
+          "groups": {
+            "details": "Ayrıntılar",
+            "people": "Kişiler",
+            "dates": "Tarihler",
+            "organization": "Organizasyon",
+            "relations": "Hiyerarşi ve ilişkiler",
+            "other": "Diğer"
+          },
+          "fields": {
+            "project_name": "Proje adı",
+            "project_identifier": "Proje tanımlayıcısı",
+            "sequence_id": "Sıra numarası",
+            "issue_type": "İş öğesi türü",
+            "state_name": "Durum",
+            "priority": "Öncelik",
+            "description_html": "Açıklama",
+            "estimate": "Tahmin",
+            "is_draft": "Taslak işareti",
+            "assignees": "Atananlar",
+            "subscribers": "Aboneler",
+            "created_by_name": "Oluşturan",
+            "start_date": "Başlangıç tarihi",
+            "target_date": "Bitiş tarihi",
+            "duration": "Süre",
+            "completed_at": "Tamamlanma zamanı",
+            "created_at": "Oluşturulma zamanı",
+            "updated_at": "Güncellenme zamanı",
+            "archived_at": "Arşivlenme zamanı",
+            "labels": "Etiketler",
+            "cycles": "Döngüler",
+            "modules": "Modüller",
+            "parent": "Üst öğe",
+            "relations": "İlişkiler",
+            "links": "Bağlantılar",
+            "custom_properties": "Özel özellikler",
+            "comments": "Yorumlar"
+          }
         }
       },
       "webhooks": {

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from django.urls import path
@@ -16,11 +17,9 @@ from .views import (
     GitLabOauthInitiateEndpoint,
     GitHubCallbackEndpoint,
     GitHubOauthInitiateEndpoint,
-    GoogleCallbackEndpoint,
-    GoogleOauthInitiateEndpoint,
-    MagicGenerateEndpoint,
-    MagicSignInEndpoint,
-    MagicSignUpEndpoint,
+    OneTimeCodeGenerateEndpoint,
+    OneTimeCodeSignInEndpoint,
+    OneTimeCodeSignUpEndpoint,
     SignInAuthEndpoint,
     SignOutAuthEndpoint,
     SignUpAuthEndpoint,
@@ -32,11 +31,9 @@ from .views import (
     GitLabOauthInitiateSpaceEndpoint,
     GitHubCallbackSpaceEndpoint,
     GitHubOauthInitiateSpaceEndpoint,
-    GoogleCallbackSpaceEndpoint,
-    GoogleOauthInitiateSpaceEndpoint,
-    MagicGenerateSpaceEndpoint,
-    MagicSignInSpaceEndpoint,
-    MagicSignUpSpaceEndpoint,
+    OneTimeCodeGenerateSpaceEndpoint,
+    OneTimeCodeSignInSpaceEndpoint,
+    OneTimeCodeSignUpSpaceEndpoint,
     SignInAuthSpaceEndpoint,
     SignUpAuthSpaceEndpoint,
     SignOutAuthSpaceEndpoint,
@@ -44,6 +41,9 @@ from .views import (
     GiteaOauthInitiateEndpoint,
     GiteaCallbackSpaceEndpoint,
     GiteaOauthInitiateSpaceEndpoint,
+    OidcCallbackEndpoint,
+    OidcInitiateEndpoint,
+    OidcSpaceInitiateEndpoint,
 )
 
 urlpatterns = [
@@ -57,37 +57,24 @@ urlpatterns = [
     path("spaces/sign-out/", SignOutAuthSpaceEndpoint.as_view(), name="space-sign-out"),
     # csrf token
     path("get-csrf-token/", CSRFTokenEndpoint.as_view(), name="get_csrf_token"),
-    # Magic sign in
-    path("magic-generate/", MagicGenerateEndpoint.as_view(), name="magic-generate"),
-    path("magic-sign-in/", MagicSignInEndpoint.as_view(), name="magic-sign-in"),
-    path("magic-sign-up/", MagicSignUpEndpoint.as_view(), name="magic-sign-up"),
+    # One-time code sign in
+    path("magic-generate/", OneTimeCodeGenerateEndpoint.as_view(), name="magic-generate"),
+    path("magic-sign-in/", OneTimeCodeSignInEndpoint.as_view(), name="magic-sign-in"),
+    path("magic-sign-up/", OneTimeCodeSignUpEndpoint.as_view(), name="magic-sign-up"),
     path(
         "spaces/magic-generate/",
-        MagicGenerateSpaceEndpoint.as_view(),
+        OneTimeCodeGenerateSpaceEndpoint.as_view(),
         name="space-magic-generate",
     ),
     path(
         "spaces/magic-sign-in/",
-        MagicSignInSpaceEndpoint.as_view(),
+        OneTimeCodeSignInSpaceEndpoint.as_view(),
         name="space-magic-sign-in",
     ),
     path(
         "spaces/magic-sign-up/",
-        MagicSignUpSpaceEndpoint.as_view(),
+        OneTimeCodeSignUpSpaceEndpoint.as_view(),
         name="space-magic-sign-up",
-    ),
-    ## Google Oauth
-    path("google/", GoogleOauthInitiateEndpoint.as_view(), name="google-initiate"),
-    path("google/callback/", GoogleCallbackEndpoint.as_view(), name="google-callback"),
-    path(
-        "spaces/google/",
-        GoogleOauthInitiateSpaceEndpoint.as_view(),
-        name="space-google-initiate",
-    ),
-    path(
-        "spaces/google/callback/",
-        GoogleCallbackSpaceEndpoint.as_view(),
-        name="space-google-callback",
     ),
     ## Github Oauth
     path("github/", GitHubOauthInitiateEndpoint.as_view(), name="github-initiate"),
@@ -137,6 +124,10 @@ urlpatterns = [
     ),
     path("change-password/", ChangePasswordEndpoint.as_view(), name="forgot-password"),
     path("set-password/", SetUserPasswordEndpoint.as_view(), name="set-password"),
+    ## OpenID Connect single sign-on (Microsoft Entra, any OIDC provider), see provider/oidc/registry.py
+    path("oidc/<slug:provider>/", OidcInitiateEndpoint.as_view(), name="oidc-initiate"),
+    path("oidc/<slug:provider>/callback/", OidcCallbackEndpoint.as_view(), name="oidc-callback"),
+    path("spaces/oidc/<slug:provider>/", OidcSpaceInitiateEndpoint.as_view(), name="space-oidc-initiate"),
     ## Gitea Oauth
     path("gitea/", GiteaOauthInitiateEndpoint.as_view(), name="gitea-initiate"),
     path("gitea/callback/", GiteaCallbackEndpoint.as_view(), name="gitea-callback"),

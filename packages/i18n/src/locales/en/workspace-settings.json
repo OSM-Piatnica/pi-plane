@@ -95,6 +95,49 @@
               "message": "Export was unsuccessful. Please try again."
             }
           }
+        },
+        "columns": {
+          "heading": "Columns",
+          "description": "Choose which columns the file contains. Identifier and Name are always included, because the file could not be imported again without them.",
+          "select_all": "Select all",
+          "clear_all": "Clear all",
+          "groups": {
+            "details": "Details",
+            "people": "People",
+            "dates": "Dates",
+            "organization": "Organization",
+            "relations": "Hierarchy and relations",
+            "other": "Other"
+          },
+          "fields": {
+            "project_name": "Project name",
+            "project_identifier": "Project identifier",
+            "sequence_id": "Sequence number",
+            "issue_type": "Work item type",
+            "state_name": "State",
+            "priority": "Priority",
+            "description_html": "Description",
+            "estimate": "Estimate",
+            "is_draft": "Draft flag",
+            "assignees": "Assignees",
+            "subscribers": "Subscribers",
+            "created_by_name": "Created by",
+            "start_date": "Start date",
+            "target_date": "Due date",
+            "duration": "Duration",
+            "completed_at": "Completed at",
+            "created_at": "Created at",
+            "updated_at": "Updated at",
+            "archived_at": "Archived at",
+            "labels": "Labels",
+            "cycles": "Cycles",
+            "modules": "Modules",
+            "parent": "Parent",
+            "relations": "Relations",
+            "links": "Links",
+            "custom_properties": "Custom properties",
+            "comments": "Comments"
+          }
         }
       },
       "webhooks": {

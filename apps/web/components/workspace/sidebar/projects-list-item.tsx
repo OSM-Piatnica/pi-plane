@@ -23,18 +23,21 @@ import {
   MembersOutline,
   MoreHorizontalOutline,
   SettingsOutline,
-  ShareAltOutline,
+  GlobeOutline,
+  StarFilled,
+  StarOutline,
 } from "@makeplane/propel/icons";
 // plane imports
-import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
-import { useOutsideClickDetector } from "@plane/hooks";
+import { EUserPermissions, EUserPermissionsLevel, IS_FAVORITE_MENU_OPEN } from "@plane/constants";
+import { useLocalStorage, useOutsideClickDetector } from "@plane/hooks";
 import { useTranslation } from "@plane/i18n";
 import { Logo } from "@plane/blocks/emoji-icon-picker";
 import { IconButton } from "@makeplane/propel/components/icon-button";
 import { Icon } from "@makeplane/propel/components/icon";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import { ControlLink } from "@plane/blocks/layout";
-import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
+import { setPromiseToast } from "@plane/blocks/toast";
+import { Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger } from "@makeplane/propel/components/menu";
 import { DropIndicator, DragHandle } from "@plane/blocks/common";
 import { cn } from "@plane/utils";
 // components
@@ -83,7 +86,7 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
   } = props;
   // store hooks
   const { t } = useTranslation();
-  const { getPartialProjectById } = useProject();
+  const { getPartialProjectById, getProjectById, addProjectToFavorites, removeProjectFromFavorites } = useProject();
   const { isMobile } = usePlatformOS();
   const { allowPermissions } = useUserPermissions();
   const { data: currentUser } = useUser();
@@ -106,6 +109,12 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
   const router = useRouter();
   // derived values
   const project = getPartialProjectById(projectId);
+  const isFavorite = !!getProjectById(projectId)?.is_favorite;
+  // local storage
+  const { setValue: toggleFavoriteMenu, storedValue: isFavoriteMenuOpen } = useLocalStorage<boolean>(
+    IS_FAVORITE_MENU_OPEN,
+    false
+  );
 
   // Get available navigation items for this project
   const navigationItems = useNavigationItems({
@@ -144,6 +153,41 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
 
   // admins and the project's lead get a shortcut to the members settings
   const canManageMembers = isAdmin || isProjectLead(project?.project_lead, currentUser?.id);
+
+  const handleAddToFavorites = () => {
+    const addToFavoritePromise = addProjectToFavorites(workspaceSlug.toString(), projectId);
+    setPromiseToast(addToFavoritePromise, {
+      loading: t("project_components.card.adding_to_favorites"),
+      success: {
+        title: t("toast.success"),
+        message: () => t("project_components.card.added_to_favorites"),
+        // reveal the favorites section so the project can be seen landing there
+        actionItems: () => {
+          if (!isFavoriteMenuOpen) toggleFavoriteMenu(true);
+          return [];
+        },
+      },
+      error: {
+        title: t("toast.error"),
+        message: () => t("couldnt_add_the_project_to_favorites"),
+      },
+    });
+  };
+
+  const handleRemoveFromFavorites = () => {
+    const removeFromFavoritePromise = removeProjectFromFavorites(workspaceSlug.toString(), projectId);
+    setPromiseToast(removeFromFavoritePromise, {
+      loading: t("project_components.card.removing_from_favorites"),
+      success: {
+        title: t("toast.success"),
+        message: () => t("project_components.card.removed_from_favorites"),
+      },
+      error: {
+        title: t("toast.error"),
+        message: () => t("couldnt_remove_the_project_from_favorites"),
+      },
+    });
+  };
 
   const handleLeaveProject = () => {
     setLeaveProjectModal(true);
@@ -384,13 +428,18 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
                       }
                     />
                     <MenuContent side="bottom" align="start">
-                      {/* TODO: Removed is_favorite logic due to the optimization in projects API */}
-                      {/* publish project settings */}
-                      {isAdmin && (
+                      {/* options for every member */}
+                      {isFavorite ? (
                         <MenuItem
-                          icon={<Icon icon={ShareAltOutline} />}
-                          label={t("publish_project")}
-                          onClick={() => setPublishModal(true)}
+                          icon={<Icon icon={<StarFilled className="text-yellow-500" />} />}
+                          label={t("remove_from_favorites")}
+                          onClick={handleRemoveFromFavorites}
+                        />
+                      ) : (
+                        <MenuItem
+                          icon={<Icon icon={StarOutline} />}
+                          label={t("add_to_favorites")}
+                          onClick={handleAddToFavorites}
                         />
                       )}
                       <MenuItem icon={<Icon icon={LinkOutline} />} label={t("copy_link")} onClick={handleCopyText} />
@@ -403,6 +452,27 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
                           }}
                         />
                       )}
+                      <MenuItem
+                        icon={<Icon icon={SettingsOutline} />}
+                        label={t("settings")}
+                        onClick={() => {
+                          router.push(`/${workspaceSlug}/settings/projects/${project?.id}`);
+                        }}
+                      />
+                      <MenuItem
+                        icon={<Icon icon={LogOutOutline} />}
+                        label={t("leave_project")}
+                        onClick={handleLeaveProject}
+                      />
+                      {/* options for the project lead and admins only */}
+                      {canManageMembers && <MenuSeparator />}
+                      {isAdmin && (
+                        <MenuItem
+                          icon={<Icon icon={GlobeOutline} />}
+                          label={t("publish_project")}
+                          onClick={() => setPublishModal(true)}
+                        />
+                      )}
                       {canManageMembers && (
                         <MenuItem
                           icon={<Icon icon={MembersOutline} />}
@@ -412,19 +482,6 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
                           }}
                         />
                       )}
-                      <MenuItem
-                        icon={<Icon icon={SettingsOutline} />}
-                        label={t("settings")}
-                        onClick={() => {
-                          router.push(`/${workspaceSlug}/settings/projects/${project?.id}`);
-                        }}
-                      />
-                      {/* every member can leave the project */}
-                      <MenuItem
-                        icon={<Icon icon={LogOutOutline} />}
-                        label={t("leave_project")}
-                        onClick={handleLeaveProject}
-                      />
                     </MenuContent>
                   </Menu>
                 </div>

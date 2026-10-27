@@ -9,7 +9,7 @@
 import type { TProjectAppliedDisplayFilterKeys, TProjectOrderByOptions } from "@plane/types";
 // local imports
 
-export type TNetworkChoiceIconKey = "Shield" | "Lock" | "Globe2";
+export type TNetworkChoiceIconKey = "Shield" | "Lock" | "Users";
 
 export type TNetworkChoice = {
   key: 0 | 1 | 2;
@@ -39,7 +39,7 @@ export const NETWORK_CHOICES: TNetworkChoice[] = [
     labelKey: "Public",
     i18n_label: "workspace_projects.network.public.title",
     description: "workspace_projects.network.public.description", //"Anyone in the workspace except Guests can join",
-    iconKey: "Globe2",
+    iconKey: "Users",
   },
 ];
 
@@ -129,6 +129,9 @@ export const PROJECT_ERROR_MESSAGES = {
   },
 };
 
+/** Longest project identifier (the "PROJ" in PROJ-12) the project forms accept; the API column (`Project.identifier`) holds 12. */
+export const PROJECT_IDENTIFIER_MAX_LENGTH = 12;
+
 export enum EProjectFeatureKey {
   WORK_ITEMS = "work_items",
   CYCLES = "cycles",
@@ -137,3 +140,17 @@ export enum EProjectFeatureKey {
   PAGES = "pages",
   INTAKE = "intake",
 }
+
+/**
+ * What a duplicated project can carry of its work items, in groups for the duplicate form. Mirrors
+ * `WORK_ITEM_PROPERTY_GROUPS` of the API (a web test keeps the two in step).
+ */
+export const PROJECT_COPY_WORK_ITEM_PROPERTY_GROUPS = {
+  content: ["dates", "custom_properties", "description_images"],
+  people: ["assignees"],
+  organization: ["labels", "cycles", "modules"],
+  hierarchy: ["parents", "relations", "links"],
+} as const;
+
+/** The most work items a project copy takes along; mirrors `MAX_WORK_ITEMS` of the API. */
+export const PROJECT_COPY_MAX_WORK_ITEMS = 20_000;

@@ -7,7 +7,7 @@
 
 import type { HocuspocusProvider } from "@hocuspocus/provider";
 import type { Extensions } from "@tiptap/core";
-import { Placeholder } from "@tiptap/extension-placeholder";
+import { Placeholder } from "@tiptap/extensions";
 import { useEditor } from "@tiptap/react";
 import { useImperativeHandle } from "react";
 // constants

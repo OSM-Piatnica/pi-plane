@@ -42,21 +42,50 @@
           "blocked_by": "{issue}, {related} tamamlanana kadar başlayamaz (engellendi ilişkisi).",
           "blocking": "{issue}, {related} başlamadan önce tamamlanmalıdır (engelliyor ilişkisi).",
           "finish_after": "{issue}, {related}'dan önce tamamlanamaz (sonra biter ilişkisi).",
+          "finish_after_start": "{issue}, {related} başlamadan bitemez (başlangıçtan sonra biter ilişkisi).",
           "finish_before": "{issue}, {related} tarihinde veya öncesinde tamamlanmalıdır (önce biter ilişkisi).",
           "start_after": "{issue}, {related}'dan önce başlayamaz (sonra başlar ilişkisi).",
-          "start_before": "{issue}, {related} tarihinde veya öncesinde başlamalıdır (önce başlar ilişkisi)."
+          "start_before": "{issue}, {related} tarihinde veya öncesinde başlamalıdır (önce başlar ilişkisi).",
+          "start_before_finish": "{issue}, en geç {related} bittiğinde başlamalıdır (bitişten önce başlar ilişkisi)."
         },
         "status": {
           "finish_after": "{issue}, {related} tamamlanana kadar tamamlanamaz (sonra biter ilişkisi).",
+          "finish_after_start": "{issue}, {related} başlayana kadar tamamlanamaz (başlangıçtan sonra biter ilişkisi).",
           "start_after": "{issue}, {related} başlayana kadar başlayamaz (sonra başlar ilişkisi)."
-        }
+        },
+        "self": "{issue} kendisiyle ilişkilendirilemez.",
+        "cycle": "{issue} ve {related} bir ilişki döngüsü oluşturur. Önce karşıt ilişkiyi kaldırın.",
+        "lag_suffix": " İlişki gecikmesi: {lag} g."
       },
       "date_conflict": "Bu tarihler mevcut bağımlılıklarla çelişiyor. İlgili iş öğelerini düzenleyin veya önce bağımlılığı kaldırın.",
       "dependency_create_failed": "Bağımlılık oluşturulamadı. Lütfen tekrar deneyin.",
-      "dependency_created": "İş öğesi bağımlılığı başarıyla oluşturuldu."
-    }
+      "dependency_created": "İş öğesi bağımlılığı başarıyla oluşturuldu.",
+      "lag": {
+        "hint": "İki tarih arasındaki gün sayısı; negatif değer çakışmaya izin verir.",
+        "invalid": "-{max} ile {max} arasında tam sayı girin.",
+        "label": "Gecikme (gün)",
+        "update_failed": "Gecikme değiştirilemedi."
+      },
+      "reschedule": {
+        "confirm": "Taşı",
+        "content": "Bu değişiklik bağımlılıkları bozardı. Tüm bağımlılıklar korunsun diye bu iş öğeleri süreleri korunarak daha sonraya taşınabilir:",
+        "title": "Bağımlı iş öğeleri de taşınsın mı?"
+      },
+      "duplicate_cancel": {
+        "confirm": "İptal edilene taşı",
+        "content": "{issue} artık {originals} öğesinin kopyası olarak işaretlendi. “{state}” durumuna taşınsın mı? Bağlı ve görünür kalır.",
+        "failed": "İş öğesi iptal edilemedi.",
+        "keep": "Açık bırak",
+        "title": "Bu iş öğesi iptal edilsin mi?"
+      }
+    },
+    "edit_restricted": "Bu iş öğesini yalnızca atananlar, proje lideri ve proje yöneticileri değiştirebilir."
   },
   "project_create": {
+    "advanced": {
+      "description": "Kurallar ve ilişki türleri. Bunları daha sonra projenin iş akışı ayarlarından değiştirebilirsiniz.",
+      "title": "Gelişmiş seçenekler"
+    },
     "features": {
       "cycles": {
         "description": "Çalışmayı tekrarlayan dönemlerde zamana bağlayın.",
@@ -115,12 +144,53 @@
       "pending_approval_title": "Onay gerekli",
       "rejected_success": "Geçiş reddedildi.",
       "resolving_approval": "Onay işleniyor...",
+      "rules": {
+        "heading": "Kurallar",
+        "description": "İş akışları etkin olsun ya da olmasın kendiliğinden geçerli olan proje kuralları.",
+        "parent_completion": {
+          "description": "Bir iş öğesi, tamamlanmamış veya iptal edilmemiş alt öğeleri varken tamamlanamaz. Tamamlanmış bir üst öğenin altındaki tamamlanmış alt öğeyi yeniden açmak, üst öğenin de yeniden açılmasını ister.",
+          "title": "Üst öğeyi yalnızca alt öğeleri tamamlandığında tamamla"
+        },
+        "reopen_parent": {
+          "confirm": "Yeniden aç",
+          "content": "Bu projede, bir alt öğe açıkken üst öğe tamamlanmış kalamaz. Tamamlanmış şu üst öğeler de yeniden açılacak: {names}",
+          "title": "Üst iş öğeleri de yeniden açılsın mı?"
+        },
+        "blocked_status": {
+          "description": "Bir iş öğesi, onu engelleyen bir iş öğesi hâlâ açıkken başlatıldı veya tamamlandı durumuna geçemez (tamamlanan ve iptal edilen engelleyenler sayılmaz). Backlog veya yapılacak durumunda kalmak ve iptal etmek mümkün olmaya devam eder.",
+          "title": "Bir öğeyi yalnızca engelleyenler bittiğinde başlat veya tamamla"
+        },
+        "assignee_edit": {
+          "description": "Bir iş öğesine biri atandığında, onu yalnızca atananlar, proje lideri ve proje yöneticileri değiştirebilir: alanlar, durum, tarihler, alt öğeler, ilişkiler, bağlantılar, ekler, döngüler ve modüller, silme ve arşivleme. Yorum yapmayı herkes sürdürebilir. Kimsenin atanmadığı iş öğeleri tüm üyelere açık kalır.",
+          "title": "Bir iş öğesini yalnızca atananlar, proje lideri ve yöneticiler değiştirebilir"
+        }
+      },
       "save_error": "İş akışı yapılandırması kaydedilemedi.",
       "save_success": "İş akışı yapılandırması kaydedildi.",
       "toggle_error": "İş akışı ayarları güncellenemedi.",
       "transition": "Geçiş",
       "transition_count": "{count, plural, one {# geçiş} other {# geçiş}}",
-      "transitions_configured": "geçiş yapılandırıldı"
+      "transitions_configured": "geçiş yapılandırıldı",
+      "relation_types": {
+        "heading": "İlişki türleri",
+        "description": "Bu projede hangi ilişkilerin eklenebileceğini seçin. Engelleme her zaman kullanılabilir; bir tür kapatıldığında mevcut ilişkiler korunur.",
+        "schedule": {
+          "description": "Önce başlar, önce biter ve bitişten önce başlar; isteğe bağlı gün cinsinden gecikmeyle.",
+          "title": "Takvim bağımlılıkları"
+        },
+        "traceability": {
+          "description": "Uygular, neden olur, kopyalar ve test eder; ters yönleriyle birlikte.",
+          "title": "İzlenebilirlik ilişkileri"
+        },
+        "relates_to": {
+          "description": "İki öğe arasında basit bir bağlantı.",
+          "title": "İlişkili"
+        },
+        "duplicate": {
+          "description": "Bir öğeyi başka bir öğenin kopyası olarak işaretle.",
+          "title": "Kopyası"
+        }
+      }
     }
   },
   "project_templates": {

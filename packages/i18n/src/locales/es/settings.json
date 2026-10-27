@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Código único",
+            "label": "Código de un solo uso",
             "placeholder": "123456",
             "helper_text": "Código de verificación enviado a tu nuevo correo electrónico.",
             "errors": {
-              "required": "El código único es obligatorio",
+              "required": "El código de un solo uso es obligatorio",
               "invalid": "Código de verificación inválido. Inténtalo de nuevo."
             }
           }
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Porcentaje de finalización",
+    "first_day_project_default": "Predeterminado del proyecto",
     "first_day_updated": "Primer día de la semana actualizado correctamente",
     "try_again_later": "Inténtalo de nuevo más tarde.",
     "update_failed": "Error al actualizar",
