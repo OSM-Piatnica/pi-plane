@@ -1454,7 +1454,7 @@
       "continue_with": "{provider}(으)로 계속"
     },
     "issues": {
-      "public_board_not_found": "이 공유 프로젝트가 없거나 더 이상 공유되지 않습니다. URL을 확인하세요.",
+      "shared_project_load_failed": "이 공유 프로젝트를 불러오지 못했습니다. 나중에 다시 시도하세요.",
       "cycle_tooltip": "사이클: {name}",
       "no_cycle": "사이클 없음",
       "due_date_tooltip": "마감일: {date}",

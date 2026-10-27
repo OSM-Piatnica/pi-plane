@@ -1454,7 +1454,7 @@
       "continue_with": "Pokračovať cez {provider}"
     },
     "issues": {
-      "public_board_not_found": "Tento zdieľaný projekt neexistuje alebo už nie je zdieľaný. Skontrolujte adresu URL.",
+      "shared_project_load_failed": "Tento zdieľaný projekt sa nepodarilo načítať. Skúste to prosím neskôr.",
       "cycle_tooltip": "Cyklus: {name}",
       "no_cycle": "Žiadny cyklus",
       "due_date_tooltip": "Termín: {date}",

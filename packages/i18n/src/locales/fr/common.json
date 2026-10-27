@@ -1454,7 +1454,7 @@
       "continue_with": "Continuer avec {provider}"
     },
     "issues": {
-      "public_board_not_found": "Ce projet partagé n’existe pas ou n’est plus partagé. Vérifiez l’URL.",
+      "shared_project_load_failed": "Impossible de charger ce projet partagé. Veuillez réessayer plus tard.",
       "cycle_tooltip": "Cycle : {name}",
       "no_cycle": "Aucun Cycle",
       "due_date_tooltip": "Date d’échéance : {date}",

@@ -1454,7 +1454,7 @@
       "continue_with": "{provider} で続行"
     },
     "issues": {
-      "public_board_not_found": "この共有プロジェクトは存在しないか、共有が停止されています。URLを確認してください。",
+      "shared_project_load_failed": "この共有プロジェクトを読み込めませんでした。しばらくしてからもう一度お試しください。",
       "cycle_tooltip": "サイクル: {name}",
       "no_cycle": "サイクルなし",
       "due_date_tooltip": "期限: {date}",

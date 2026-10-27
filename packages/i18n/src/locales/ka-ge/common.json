@@ -1454,7 +1454,7 @@
       "continue_with": "გაგრძელება {provider}-ით"
     },
     "issues": {
-      "public_board_not_found": "ეს გაზიარებული პროექტი არ არსებობს ან აღარ არის გაზიარებული. შეამოწმეთ URL.",
+      "shared_project_load_failed": "ამ გაზიარებული პროექტის ჩატვირთვა ვერ მოხერხდა. გთხოვთ, სცადოთ მოგვიანებით.",
       "cycle_tooltip": "ციკლი: {name}",
       "no_cycle": "ციკლის გარეშე",
       "due_date_tooltip": "ვადის თარიღი: {date}",

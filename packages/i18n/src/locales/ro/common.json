@@ -1454,7 +1454,7 @@
       "continue_with": "Continuă cu {provider}"
     },
     "issues": {
-      "public_board_not_found": "Acest proiect partajat nu există sau nu mai este partajat. Verifică adresa URL.",
+      "shared_project_load_failed": "Acest proiect partajat nu a putut fi încărcat. Încearcă din nou mai târziu.",
       "cycle_tooltip": "Ciclu: {name}",
       "no_cycle": "Fără ciclu",
       "due_date_tooltip": "Data limită: {date}",

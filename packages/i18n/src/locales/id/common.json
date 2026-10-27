@@ -1454,7 +1454,7 @@
       "continue_with": "Lanjutkan dengan {provider}"
     },
     "issues": {
-      "public_board_not_found": "Proyek yang dibagikan ini tidak ada atau tidak lagi dibagikan. Periksa URL-nya.",
+      "shared_project_load_failed": "Proyek yang dibagikan ini tidak dapat dimuat. Silakan coba lagi nanti.",
       "cycle_tooltip": "Siklus: {name}",
       "no_cycle": "Tanpa Siklus",
       "due_date_tooltip": "Tanggal jatuh tempo: {date}",

@@ -1454,7 +1454,7 @@
       "continue_with": "Продовжити через {provider}"
     },
     "issues": {
-      "public_board_not_found": "Цього спільного проєкту не існує, або доступ до нього закрито. Перевірте URL.",
+      "shared_project_load_failed": "Не вдалося завантажити цей спільний проєкт. Спробуйте пізніше.",
       "cycle_tooltip": "Цикл: {name}",
       "no_cycle": "Немає циклу",
       "due_date_tooltip": "Крайній термін: {date}",
