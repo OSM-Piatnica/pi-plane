@@ -25,7 +25,7 @@ export const WorkspaceEditionBadge = observer(function WorkspaceEditionBadge() {
   const { isMobile } = usePlatformOS();
 
   return (
-    <Tooltip label={`${t("home.star_us_on_github")} · Version: v${packageJson.version}`} disabled={isMobile}>
+    <Tooltip label={`Version: v${packageJson.version} · ${t("home.star_us_on_github")}`} disabled={isMobile}>
       <Button
         variant="tertiary"
         size="lg"
