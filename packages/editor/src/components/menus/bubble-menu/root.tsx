@@ -7,10 +7,11 @@
 
 import { isNodeSelection } from "@tiptap/core";
 import type { Editor } from "@tiptap/core";
+import { PluginKey } from "@tiptap/pm/state";
 import { useEditorState } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import type { BubbleMenuProps } from "@tiptap/react/menus";
-import { useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 // plane utils
 import { cn } from "@plane/utils";
 // components
@@ -37,6 +38,9 @@ import type { IEditorPropsExtended, TEditorCommands, TExtensions } from "@/types
 // local imports
 import { TextAlignmentSelector } from "./alignment-selector";
 import { BubbleMenuLinkSelector } from "./link-selector";
+
+// Explicit so the drag handler can address the plugin; BubbleMenu otherwise generates a unique key.
+const bubbleMenuPluginKey = new PluginKey("editorBubbleMenu");
 
 type EditorBubbleMenuProps = Omit<BubbleMenuProps, "children">;
 
@@ -80,6 +84,10 @@ export function EditorBubbleMenu(props: Props) {
   const [isSelecting, setIsSelecting] = useState(false);
   // refs
   const menuRef = useRef<HTMLDivElement>(null);
+  // read by the plugin's shouldShow, which outlives a render
+  const isSelectingRef = useRef(false);
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(hideTimerRef.current), [editor]);
 
   const formattingItems = {
     code: CodeItem(editor),
@@ -112,87 +120,109 @@ export function EditorBubbleMenu(props: Props) {
     ? [formattingItems.code]
     : [formattingItems.bold, formattingItems.italic, formattingItems.underline, formattingItems.strikethrough];
 
-  const bubbleMenuProps: EditorBubbleMenuProps = {
-    editor,
-    shouldShow: ({ state, editor: currentEditor }) => {
-      const { selection } = state;
-      const { empty } = selection;
+  const canShowBubbleMenu = useCallback(() => {
+    const { selection } = editor.state;
+    const { empty } = selection;
 
-      if (
-        empty ||
-        !currentEditor.isEditable ||
-        currentEditor.isActive(CORE_EXTENSIONS.IMAGE) ||
-        currentEditor.isActive(CORE_EXTENSIONS.CUSTOM_IMAGE) ||
-        isNodeSelection(selection) ||
-        isCellSelection(selection) ||
-        isSelecting
-      ) {
-        return false;
-      }
-      return true;
-    },
-    options: {
+    if (
+      empty ||
+      !editor.isEditable ||
+      editor.isActive(CORE_EXTENSIONS.IMAGE) ||
+      editor.isActive(CORE_EXTENSIONS.CUSTOM_IMAGE) ||
+      isNodeSelection(selection) ||
+      isCellSelection(selection) ||
+      isSelectingRef.current
+    ) {
+      return false;
+    }
+    return true;
+  }, [editor]);
+
+  // memoized: BubbleMenu re-sends its options to the plugin whenever this object changes
+  const options: EditorBubbleMenuProps["options"] = useMemo(
+    () => ({
       placement: "top",
+      offset: 8,
       onShow: () => {
+        clearTimeout(hideTimerRef.current);
+        if (editor.isDestroyed) return;
         if (editor.storage.link) {
           editor.storage.link.isBubbleMenuOpen = true;
         }
         editor.commands.addActiveDropbarExtension("bubble-menu");
       },
       onHide: () => {
+        if (editor.isDestroyed) return;
         if (editor.storage.link) {
           editor.storage.link.isBubbleMenuOpen = false;
         }
-        setTimeout(() => {
+        clearTimeout(hideTimerRef.current);
+        hideTimerRef.current = setTimeout(() => {
+          if (editor.isDestroyed) return;
           editor.commands.removeActiveDropbarExtension("bubble-menu");
         }, 0);
       },
-    },
-    style: { zIndex: 9 },
-  };
+    }),
+    [editor]
+  );
 
   // react-doctor-disable-next-line effect-needs-cleanup -- every listener, including the in-flight mousemove/mouseup pair, is removed by the cleanup returned below
   useEffect(() => {
-    // teardown callbacks for the mousemove/mouseup listeners registered by an in-flight mousedown
-    const pendingCleanups = new Set<() => void>();
+    const doc = editor.view.dom.ownerDocument;
+    let showFrame: number | undefined;
 
-    function handleMouseDown(e: MouseEvent) {
-      if (menuRef.current?.contains(e.target as Node)) return;
-
-      function handleMouseMove() {
-        if (!editor.state.selection.empty) {
-          setIsSelecting(true);
-          document.removeEventListener("mousemove", handleMouseMove);
+    const clearDragListeners = () => {
+      doc.removeEventListener("mousemove", handleMouseMove);
+      doc.removeEventListener("mouseup", handleMouseUp);
+    };
+    function handleMouseMove() {
+      if (!editor.isDestroyed && !editor.state.selection.empty) {
+        isSelectingRef.current = true;
+        setIsSelecting(true);
+        doc.removeEventListener("mousemove", handleMouseMove);
+      }
+    }
+    function handleMouseUp() {
+      const wasSelecting = isSelectingRef.current;
+      isSelectingRef.current = false;
+      setIsSelecting(false);
+      clearDragListeners();
+      if (!wasSelecting) return;
+      // The selection may stop changing before mouseup, and v3 only re-evaluates on a selection or doc change,
+      // so show explicitly once React has restored the menu DOM.
+      showFrame = requestAnimationFrame(() => {
+        if (!editor.isDestroyed && canShowBubbleMenu()) {
+          editor.view.dispatch(editor.state.tr.setMeta(bubbleMenuPluginKey, "show"));
         }
-      }
-
-      function removeListeners() {
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
-        pendingCleanups.delete(removeListeners);
-      }
-
-      function handleMouseUp() {
-        setIsSelecting(false);
-        removeListeners();
-      }
-
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-      pendingCleanups.add(removeListeners);
+      });
+    }
+    function handleMouseDown(e: MouseEvent) {
+      const target = e.target as HTMLElement;
+      // Portal controls and selections in other editors must not start this editor's drag lifecycle.
+      if (e.button !== 0 || !editor.view.dom.contains(target) || menuRef.current?.contains(target)) return;
+      cancelAnimationFrame(showFrame ?? 0);
+      clearDragListeners();
+      doc.addEventListener("mousemove", handleMouseMove);
+      doc.addEventListener("mouseup", handleMouseUp);
     }
 
-    document.addEventListener("mousedown", handleMouseDown);
-
+    doc.addEventListener("mousedown", handleMouseDown);
     return () => {
-      document.removeEventListener("mousedown", handleMouseDown);
-      pendingCleanups.forEach((cleanup) => cleanup());
-      pendingCleanups.clear();
+      doc.removeEventListener("mousedown", handleMouseDown);
+      clearDragListeners();
+      cancelAnimationFrame(showFrame ?? 0);
+      isSelectingRef.current = false;
     };
-  }, [editor]);
+  }, [editor, canShowBubbleMenu]);
 
   return (
-    <BubbleMenu {...bubbleMenuProps}>
+    <BubbleMenu
+      editor={editor}
+      pluginKey={bubbleMenuPluginKey}
+      shouldShow={canShowBubbleMenu}
+      options={options}
+      style={{ zIndex: 9, transition: "transform 0.15s ease-out" }}
+    >
       {!isSelecting && (
         <div
           ref={menuRef}

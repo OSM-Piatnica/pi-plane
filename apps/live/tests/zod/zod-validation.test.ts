@@ -6,7 +6,7 @@
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@plane/editor", () => ({
+vi.mock("@plane/editor/server", () => ({
   convertHTMLDocumentToAllFormats: vi.fn(() => ({ description_json: { type: "doc" }, description_binary: "AAEC" })),
 }));
 vi.mock("@plane/logger", () => ({ logger: { error: vi.fn(), info: vi.fn(), warn: vi.fn() } }));
