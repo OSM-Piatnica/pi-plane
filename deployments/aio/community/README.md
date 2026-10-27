@@ -99,7 +99,7 @@ docker run --name myaio --rm -it \
 - `APP_PROTOCOL`: `http` or `https` (default: `http`)
 - `APP_PORT`: public port, when the container is published on a port other than 80/443 (e.g. `-p 8080:80 -e APP_PORT=8080`). It is added to the web URL and the allowed CORS origins; `DOMAIN_NAME` itself must be a bare domain or IP address.
 
-- `TRUSTED_PROXIES` and `NUM_PROXIES`: how the client IP is determined for rate limiting; pass them with `-e`. The proxy trusts `0.0.0.0/0` by default, so any client can spoof `X-Forwarded-For` and get around the per-IP limits; see "Client IP and rate limiting behind proxies" in the [Docker Compose guide](../../cli/community/README.md).
+- `TRUSTED_PROXIES` and `NUM_PROXIES`: how the client IP is determined for rate limiting; pass them with `-e`. The proxy trusts forwarded headers only from private addresses by default (`private_ranges`); behind a CDN or a load balancer with a public address, list its ranges. Before 2.1.0 the default was `0.0.0.0/0`, which let any client spoof `X-Forwarded-For`; see "Client IP and rate limiting behind proxies" in the [Docker Compose guide](../../cli/community/README.md).
 
 #### Security & Secrets
 
