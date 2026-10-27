@@ -6,7 +6,7 @@
 
 * Project member preferences (CVE-2026-102985): ``member_id`` in the URL was never
   compared to the caller, so any project member could read or rewrite another
-  member's preferences. Now only the owner, a project admin or a workspace admin may.
+  member's preferences. Now only the owner may, admins included.
 * Public Spaces asset upload (CVE-2026-102986): any authenticated user who knew a
   board anchor could create assets of any entity type in the board's project, and
   attach them to any ``comment_id``. Now limited to the entity types the Spaces client
@@ -116,19 +116,21 @@ class TestProjectMemberPreferenceOwnership:
         assert response.status_code == status.HTTP_200_OK, response.data
 
     @pytest.mark.django_db
-    def test_project_admin_keeps_edit_rights(self, workspace, project, make_member):
+    def test_project_admin_cannot_use_other_members_preferences(self, workspace, project, make_member):
         _, admin = make_member("padmin", 20)
         victim, _ = make_member("victim", 15)
-        assert admin.get(preference_url(workspace.slug, project.id, victim.id)).status_code == status.HTTP_200_OK
+        assert admin.get(preference_url(workspace.slug, project.id, victim.id)).status_code == status.HTTP_403_FORBIDDEN
         response = admin.patch(preference_url(workspace.slug, project.id, victim.id), {}, format="json")
-        assert response.status_code == status.HTTP_200_OK, response.data
+        assert response.status_code == status.HTTP_403_FORBIDDEN, response.data
 
     @pytest.mark.django_db
-    def test_workspace_admin_keeps_edit_rights(self, workspace, project, make_member, session_client):
+    def test_workspace_admin_cannot_use_other_members_preferences(
+        self, workspace, project, make_member, session_client
+    ):
         """``create_user`` is a workspace admin (and project admin)."""
         victim, _ = make_member("victim", 15)
         response = session_client.patch(preference_url(workspace.slug, project.id, victim.id), {}, format="json")
-        assert response.status_code == status.HTTP_200_OK, response.data
+        assert response.status_code == status.HTTP_403_FORBIDDEN, response.data
 
 
 @pytest.fixture

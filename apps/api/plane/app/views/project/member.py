@@ -410,31 +410,12 @@ class ProjectMemberPreferenceEndpoint(BaseAPIView):
             workspace__slug=slug,
         )
 
-    def can_access(self, request, slug, project_id, member_id):
-        """Preferences are personal: only the owner, a project admin or a workspace admin may use them."""
-        if str(request.user.id) == str(member_id):
-            return True
-        is_project_admin = ProjectMember.objects.filter(
-            project_id=project_id,
-            workspace__slug=slug,
-            member=request.user,
-            role=ROLE.ADMIN.value,
-            is_active=True,
-        ).exists()
-        if is_project_admin:
-            return True
-        return WorkspaceMember.objects.filter(
-            workspace__slug=slug,
-            member=request.user,
-            role=ROLE.ADMIN.value,
-            is_active=True,
-        ).exists()
-
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def patch(self, request, slug, project_id, member_id):
-        if not self.can_access(request, slug, project_id, member_id):
+        # Preferences are personal: a member may only modify their own.
+        if str(member_id) != str(request.user.id):
             return Response(
-                {"error": "You do not have permission to update this member's preferences"},
+                {"error": "You cannot access another member's preferences."},
                 status=status.HTTP_403_FORBIDDEN,
             )
         project_member = self.get_queryset(slug, project_id, member_id)
@@ -449,9 +430,10 @@ class ProjectMemberPreferenceEndpoint(BaseAPIView):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def get(self, request, slug, project_id, member_id):
-        if not self.can_access(request, slug, project_id, member_id):
+        # Preferences are personal: a member may only read their own.
+        if str(member_id) != str(request.user.id):
             return Response(
-                {"error": "You do not have permission to view this member's preferences"},
+                {"error": "You cannot access another member's preferences."},
                 status=status.HTTP_403_FORBIDDEN,
             )
         project_member = self.get_queryset(slug, project_id, member_id)
