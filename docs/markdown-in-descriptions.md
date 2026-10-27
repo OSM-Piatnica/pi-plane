@@ -38,8 +38,10 @@ from a web page keeps its formatting, and pasting prose that merely mentions
 
 **"Paste without formatting"** — `Ctrl+Shift+V`, or `Cmd+Shift+V` on macOS — also
 converts markdown, because the browser hands the editor the plain text only.
-That shortcut is a browser feature and works in Chrome, Edge, Safari and
-Firefox.
+That shortcut is a browser feature and works in Chrome, Edge and Firefox; Safari
+calls it "Paste and Match Style" and uses `Option+Cmd+Shift+V`. Text with no
+whitespace at all (one word, a path or a URL) is never treated as markdown, and a
+copy taken from the editor itself is pasted as it is.
 
 ## Through the API
 
@@ -79,7 +81,7 @@ HTML inside markdown is escaped, not rendered: `<b>x</b>` in a markdown field
 arrives as the literal text `<b>x</b>`. The rendered HTML then passes the same
 sanitizer that hand-written `description_html` passes, which allows a fixed list
 of tags and attributes and only the `http`, `https`, `mailto` and `tel` URL
-schemes. A link written as `[click](javascript:alert(1))` loses its target.
+schemes. A link written as `[click](javascript:alert(1))` is neutralised: it becomes a link to a dead in-page anchor (`#harmful-link`).
 
 Two consequences worth stating plainly:
 

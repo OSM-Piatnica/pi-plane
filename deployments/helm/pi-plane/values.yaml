@@ -96,8 +96,9 @@ app:
 # --------------------------------------------------------------------------------------------------------------
 # Application components
 # --------------------------------------------------------------------------------------------------------------
-# Every component takes: replicas, resources, nodeSelector, tolerations, affinity, podAnnotations, env (extra
-# container env entries), and pdb (a PodDisruptionBudget; leave off for a single replica).
+# Every component takes: resources, nodeSelector, tolerations, affinity, podAnnotations and env (extra container
+# env entries). Also replicas, except `beat` (always one pod), and pdb (a PodDisruptionBudget; leave off for a single
+# replica) for api, live, web, space and admin only.
 api:
   replicas: 1
   resources: {}
