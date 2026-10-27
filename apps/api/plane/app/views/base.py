@@ -154,9 +154,7 @@ class BaseViewSet(TimezoneMixin, ReadReplicaControlMixin, ModelViewSet, BasePagi
         # the viewset overrode it.
         if action == "create":
             perform_create_owner = self._action_owner("perform_create")
-            if perform_create_owner is not None and not perform_create_owner.__module__.startswith(
-                "rest_framework"
-            ):
+            if perform_create_owner is not None and not perform_create_owner.__module__.startswith("rest_framework"):
                 return True
 
         # DRF's partial_update delegates to self.update(), so a viewset that

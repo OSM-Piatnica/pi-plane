@@ -52,9 +52,7 @@ def _make_issue(name, project, workspace, author):
 
 
 def _make_comment(issue, project, workspace, actor):
-    return IssueComment.objects.create(
-        issue=issue, project=project, actor=actor, comment_html="<p>secret comment</p>"
-    )
+    return IssueComment.objects.create(issue=issue, project=project, actor=actor, comment_html="<p>secret comment</p>")
 
 
 def _make_attachment(issue, project, workspace):
@@ -365,9 +363,7 @@ class TestGuestIssueSubresourceScope:
         assert response.status_code == status.HTTP_200_OK
         assert len(response.data) == 1
 
-    def test_unrestricted_guest_reads_foreign_issue_attachments(
-        self, guest_client, workspace, project, foreign_issue
-    ):
+    def test_unrestricted_guest_reads_foreign_issue_attachments(self, guest_client, workspace, project, foreign_issue):
         """When guest_view_all_features is enabled, the guest sees all attachments."""
         project.guest_view_all_features = True
         project.save(update_fields=["guest_view_all_features"])
