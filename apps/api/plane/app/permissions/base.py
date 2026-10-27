@@ -116,8 +116,10 @@ def issue_hidden_from_guest(request, slug, project_id, issue_id):
     Ownership is checked with ``Issue.objects`` (like issue detail), so the
     guest's own archived, draft and triage issues stay visible.
 
-    Returns False for admins, members, unrestricted guests, and for the guest's
-    own issues. Callers should translate a True result into a 403.
+    Returns False for admins, members, unrestricted guests, active workspace
+    admins (who can already change their own project role, and keep seeing the
+    activity, worklog entries included), and for the guest's own issues.
+    Callers should translate a True result into a 403.
     """
     from plane.db.models import Issue
 
@@ -130,6 +132,11 @@ def issue_hidden_from_guest(request, slug, project_id, issue_id):
         project__guest_view_all_features=False,
     ).exists()
     if not is_restricted_guest:
+        return False
+
+    if WorkspaceMember.objects.filter(
+        workspace__slug=slug, member=request.user, role=ROLE.ADMIN.value, is_active=True
+    ).exists():
         return False
 
     owns_issue = Issue.objects.filter(
