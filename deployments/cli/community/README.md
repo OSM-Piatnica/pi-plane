@@ -179,7 +179,10 @@ Some endpoints are rate-limited per client IP. Two settings in `plane.env` contr
 
 - **Pi-Plane directly on the internet behind the bundled proxy:** set `TRUSTED_PROXIES=private_ranges` (or your load balancer's ranges) and `NUM_PROXIES=1`.
 - **Behind an additional load balancer or CDN:** add its ranges to `TRUSTED_PROXIES` (space-separated, e.g. `TRUSTED_PROXIES=private_ranges 203.0.113.0/24`) and raise `NUM_PROXIES` by one per extra hop (e.g. `NUM_PROXIES=2`).
-- **Leaving `NUM_PROXIES` empty and `TRUSTED_PROXIES` at its default (`0.0.0.0/0`)** keeps the current behaviour. Note that with that default any client can spoof `X-Forwarded-For` and get around the per-IP limits. `TRUSTED_PROXIES` is read only by the bundled proxy, `NUM_PROXIES` only by the API, worker and scheduler.
+- **Behind a CDN or a load balancer with a public address:** put its ranges in `TRUSTED_PROXIES`. The default is `private_ranges`, so the bundled proxy believes `X-Forwarded-For` only from private addresses; a client on the internet cannot choose its own address and get around the per-IP limits. The cost is that behind a public-address proxy every request appears to come from that proxy until you list its ranges.
+- **Installations made before 2.1.0** have `TRUSTED_PROXIES=0.0.0.0/0` in `plane.env`, which trusts every peer and lets any client spoof its address; change it as above.
+
+`TRUSTED_PROXIES` is read only by the bundled proxy, `NUM_PROXIES` only by the API, worker and scheduler.
 
 Restart the services after changing these values.
 

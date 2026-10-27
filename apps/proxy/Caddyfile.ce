@@ -42,9 +42,10 @@
 		max_header_size 25MB
 		client_ip_headers X-Forwarded-For X-Real-IP
 		# Only peers in this range may set X-Forwarded-For/X-Real-IP; for anyone else Caddy uses the
-		# connecting address. The default trusts every peer, so the client IP (and the per-IP rate
-		# limit) can be spoofed. Set TRUSTED_PROXIES to your real proxy/CDN range.
-		trusted_proxies static {$TRUSTED_PROXIES:0.0.0.0/0}
+		# connecting address. The default is the private ranges: a load balancer inside your network is
+		# trusted, a client on the internet is not and cannot spoof its address (or the per-IP rate
+		# limit). Behind a CDN or a load balancer with a public address, set TRUSTED_PROXIES to its range.
+		trusted_proxies static {$TRUSTED_PROXIES:private_ranges}
 	}
 }
 
