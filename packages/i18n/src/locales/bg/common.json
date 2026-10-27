@@ -1454,7 +1454,7 @@
       "continue_with": "Продължи с {provider}"
     },
     "issues": {
-      "public_board_not_found": "Този споделен проект не съществува или вече не е споделен. Проверете URL адреса.",
+      "shared_project_load_failed": "Този споделен проект не можа да бъде зареден. Опитайте отново по-късно.",
       "cycle_tooltip": "Цикъл: {name}",
       "no_cycle": "Без цикъл",
       "due_date_tooltip": "Краен срок: {date}",

@@ -1454,7 +1454,7 @@
       "continue_with": "使用 {provider} 继续"
     },
     "issues": {
-      "public_board_not_found": "此共享项目不存在或已不再共享。请检查网址。",
+      "shared_project_load_failed": "无法加载此共享项目。请稍后重试。",
       "cycle_tooltip": "周期：{name}",
       "no_cycle": "无周期",
       "due_date_tooltip": "截止日期：{date}",

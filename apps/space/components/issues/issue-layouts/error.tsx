@@ -24,7 +24,7 @@ export function SomethingWentWrongError() {
           </div>
         </div>
         <h1 className="mt-12 text-24 font-semibold">{t("app_text.not_found.title")}</h1>
-        <p className="mt-4 text-tertiary">{t("space_text.issues.public_board_not_found")}</p>
+        <p className="mt-4 text-tertiary">{t("space_text.issues.shared_project_load_failed")}</p>
       </div>
     </div>
   );

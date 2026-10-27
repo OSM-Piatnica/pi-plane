@@ -1454,7 +1454,7 @@
       "continue_with": "{provider} ile devam et"
     },
     "issues": {
-      "public_board_not_found": "Bu paylaşılan proje mevcut değil veya artık paylaşılmıyor. Lütfen URL'yi kontrol edin.",
+      "shared_project_load_failed": "Bu paylaşılan proje yüklenemedi. Lütfen daha sonra tekrar deneyin.",
       "cycle_tooltip": "Döngü: {name}",
       "no_cycle": "Döngü Yok",
       "due_date_tooltip": "Son tarih: {date}",

@@ -1454,7 +1454,7 @@
       "continue_with": "Kontynuuj przez {provider}"
     },
     "issues": {
-      "public_board_not_found": "Ten udostępniony projekt nie istnieje lub nie jest już udostępniany. Sprawdź adres URL.",
+      "shared_project_load_failed": "Nie udało się załadować tego udostępnionego projektu. Spróbuj ponownie później.",
       "cycle_tooltip": "Cykl: {name}",
       "no_cycle": "Brak cyklu",
       "due_date_tooltip": "Termin: {date}",

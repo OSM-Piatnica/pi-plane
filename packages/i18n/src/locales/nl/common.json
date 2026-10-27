@@ -1454,7 +1454,7 @@
       "continue_with": "Doorgaan met {provider}"
     },
     "issues": {
-      "public_board_not_found": "Dit gedeelde project bestaat niet of wordt niet meer gedeeld. Controleer de URL.",
+      "shared_project_load_failed": "Dit gedeelde project kon niet worden geladen. Probeer het later opnieuw.",
       "cycle_tooltip": "Cyclus: {name}",
       "no_cycle": "Geen cyclus",
       "due_date_tooltip": "Vervaldatum: {date}",

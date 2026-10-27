@@ -1454,7 +1454,7 @@
       "continue_with": "Weiter mit {provider}"
     },
     "issues": {
-      "public_board_not_found": "Dieses geteilte Projekt existiert nicht oder wird nicht mehr geteilt. Bitte überprüfe die URL.",
+      "shared_project_load_failed": "Dieses geteilte Projekt konnte nicht geladen werden. Bitte versuche es später erneut.",
       "cycle_tooltip": "Zyklus: {name}",
       "no_cycle": "Kein Zyklus",
       "due_date_tooltip": "Fälligkeitsdatum: {date}",

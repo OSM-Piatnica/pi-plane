@@ -1454,7 +1454,7 @@
       "continue_with": "使用 {provider} 繼續"
     },
     "issues": {
-      "public_board_not_found": "此共用專案不存在或已不再共用。請檢查網址。",
+      "shared_project_load_failed": "無法載入此共用專案。請稍後再試。",
       "cycle_tooltip": "週期：{name}",
       "no_cycle": "無週期",
       "due_date_tooltip": "截止日期：{date}",

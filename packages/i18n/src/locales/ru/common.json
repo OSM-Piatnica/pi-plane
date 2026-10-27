@@ -1454,7 +1454,7 @@
       "continue_with": "Продолжить через {provider}"
     },
     "issues": {
-      "public_board_not_found": "Этого общего проекта не существует, или доступ к нему закрыт. Проверьте URL.",
+      "shared_project_load_failed": "Не удалось загрузить этот общий проект. Повторите попытку позже.",
       "cycle_tooltip": "Цикл: {name}",
       "no_cycle": "Нет цикла",
       "due_date_tooltip": "Срок выполнения: {date}",

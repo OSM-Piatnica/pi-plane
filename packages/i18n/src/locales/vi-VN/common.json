@@ -1454,7 +1454,7 @@
       "continue_with": "Tiếp tục với {provider}"
     },
     "issues": {
-      "public_board_not_found": "Dự án được chia sẻ này không tồn tại hoặc không còn được chia sẻ. Vui lòng kiểm tra URL.",
+      "shared_project_load_failed": "Không thể tải dự án được chia sẻ này. Vui lòng thử lại sau.",
       "cycle_tooltip": "Chu kỳ: {name}",
       "no_cycle": "Không có Chu kỳ",
       "due_date_tooltip": "Ngày hết hạn: {date}",
