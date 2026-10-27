@@ -225,9 +225,8 @@ function buildYourOwnImage(){
     REPO=https://github.com/$GH_REPO.git
     git clone "$REPO" "$PLANE_TEMP_CODE_DIR"  --branch "$BRANCH" --single-branch --depth 1
 
-    cp "$PLANE_TEMP_CODE_DIR/deployments/cli/community/build.yaml" "$PLANE_TEMP_CODE_DIR/build.yaml"
-
-    cd "$PLANE_TEMP_CODE_DIR" || exit
+    # the build contexts in build.yaml are relative to its own folder, so build from there
+    cd "$PLANE_TEMP_CODE_DIR/deployments/cli/community" || exit
 
     bash -c "$COMPOSE_CMD -f build.yaml build --no-cache"  >&2
     if [ $? -ne 0 ]; then
