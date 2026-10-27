@@ -37,6 +37,7 @@ export async function drainCollaborationServer(instance: Hocuspocus, timeoutMs =
         // executeNow has no promise for a save whose timer already fired.
         while (instance.debouncer.isCurrentlyExecuting(`onStoreDocument-${document.name}`)) {
           // oxlint-disable-next-line no-await-in-loop -- polling until the running save finishes
+          // react-doctor-disable-next-line async-await-in-loop -- polling one running save; there is nothing to run concurrently
           await beforeDeadline(new Promise((resolve) => setTimeout(resolve, 10)));
         }
         await beforeDeadline(instance.unloadDocument(document));
