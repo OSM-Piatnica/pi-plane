@@ -15,13 +15,13 @@ settings. There is no feature flag and nothing to configure.
 
 ## What a copy contains
 
-| Always copied                                                                                                   | Copied unless you opt out         | Copied only if you opt in                  | Never copied                                                        |
-| --------------------------------------------------------------------------------------------------------------- | --------------------------------- | ------------------------------------------ | ------------------------------------------------------------------- |
-| Project settings, feature toggles (cycles, modules, pages, intake, time tracking, work item types), cover image | Labels, including their hierarchy | Members and their roles                    | Pages                                                               |
-| States, including the triage state                                                                              | Estimates and their points        | Cycles, as empty shells                    | Webhooks and workflows                                              |
-| Links to the work item types the source uses                                                                    | Intake configuration              | Modules, as empty shells, with their links | Published boards, favourites, drafts, notifications, import history |
-|                                                                                                                 |                                   | Views, subject to the privacy rules below  | Comments, attachments, activity, time entries and subscribers       |
-|                                                                                                                 |                                   | **Work items**, in the background          |                                                                     |
+| Always copied                                                                                                   | Copied unless you opt out                         | Copied only if you opt in                                    | Never copied                                                   |
+| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------- |
+| Project settings, feature toggles (cycles, modules, pages, intake, time tracking, work item types), cover image | Labels, including their hierarchy                 | Members and their roles                                      | Pages                                                          |
+| States, including the triage state                                                                              | Estimates and their points                        | Cycles, as empty shells                                      | Webhooks and workflows                                         |
+| Links to the work item types the source uses                                                                    | Intake configuration, if the source has intake on | Modules, as empty shells, with their links, lead and members | Web sharing, favourites, drafts, notifications, import history |
+|                                                                                                                 |                                                   | Views, subject to the privacy rules below                    | Comments, attachments, activity, time entries and subscribers  |
+|                                                                                                                 |                                                   | **Work items**, in the background                            |                                                                |
 
 The copy always gets a **new name and identifier**, and the person who made it
 becomes its project lead and an admin.
@@ -131,22 +131,30 @@ GET  /api/workspaces/<slug>/projects/<new_project_id>/copy-status/   // { "job":
 POST /api/workspaces/<slug>/projects/<new_project_id>/copy-retry/    // admin; only for a failed copy
 ```
 
-| Status | `error`                                   | Meaning                                               |
-| ------ | ----------------------------------------- | ----------------------------------------------------- |
-| 400    | `PROJECT_NAME_ALREADY_EXIST`              | The name you supplied is taken in this workspace      |
-| 400    | `PROJECT_IDENTIFIER_ALREADY_EXIST`        | The identifier you supplied is taken                  |
-| 400    | `PROJECT_ARCHIVED`                        | The source project is archived; restore it first      |
-| 400    | `PROJECT_TOO_LARGE_TO_COPY_SYNCHRONOUSLY` | Over a size limit, see below                          |
-| 403    | -                                         | Not an admin of the source, or cannot create projects |
-| 404    | -                                         | No such project in this workspace                     |
-| 429    | -                                         | Rate limited                                          |
+| Status | `error`                                                                                                  | Meaning                                                                                             |
+| ------ | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| 400    | `PROJECT_NAME_ALREADY_EXIST`                                                                             | The name you supplied is taken in this workspace                                                    |
+| 400    | `PROJECT_IDENTIFIER_ALREADY_EXIST`                                                                       | The identifier you supplied is taken                                                                |
+| 400    | `PROJECT_ARCHIVED`                                                                                       | The source project is archived; restore it first                                                    |
+| 400    | `PROJECT_TOO_LARGE_TO_COPY_SYNCHRONOUSLY`                                                                | Over a size limit, see below                                                                        |
+| 400    | `PROJECT_NAME_CANNOT_CONTAIN_SPECIAL_CHARACTERS`, `PROJECT_IDENTIFIER_CANNOT_CONTAIN_SPECIAL_CHARACTERS` | The name or identifier has characters that are not allowed                                          |
+| 400    | `PROJECT_TOO_LARGE_TO_COPY`                                                                              | More than 20,000 work items; the work items are not copied                                          |
+| 403    | -                                                                                                        | Not an admin of the source (including people who are not a member of it), or cannot create projects |
+| 409    | `PROJECT_COPY_ALREADY_RUNNING`                                                                           | A work item copy is already running in this workspace                                               |
+| 409    | `PROJECT_COPY_NOT_RETRYABLE`                                                                             | `copy-retry` on a copy that did not fail                                                            |
+| 404    | -                                                                                                        | No such project in this workspace                                                                   |
+| 429    | -                                                                                                        | Rate limited                                                                                        |
 
 ## Limits
 
-A copy runs in one database transaction inside the request, so it is atomic. It
-is refused above 200 members, 500 cycles and modules combined, or 5000 rows in
-total, because past those the transaction holds the workspace lock long enough
-to delay other people creating projects.
+The configuration copy runs in one database transaction inside the request, so
+it is atomic. It is refused above 200 members, 500 cycles and modules combined,
+or 5000 in total across states, labels, estimates, members, cycles, modules and
+views (estimate points, intake and work items are not counted), because past
+those the transaction holds the workspace lock long enough to delay other people
+creating projects. The work items are copied afterwards by a background job, in
+batches with retries, so they are not part of that transaction; the cover image
+is copied after the commit.
 
 Duplication is rate limited per user (`PROJECT_DUPLICATE_USER_RATE`, default
 `10/hour`) and per workspace (`PROJECT_DUPLICATE_WORKSPACE_RATE`, default
