@@ -98,7 +98,9 @@ uploads straight to it through presigned URLs, so `objectStorage.external.endpoi
 (leave it empty for AWS S3). The complete example is `examples/production-values.yaml`.
 
 Also consider `networkPolicy.enabled` (ingress rules: everything in the release talks to itself, only the public
-components accept the ingress controller), the `pdb` of `api`, `live`, `web`, `space` and `admin`, resource requests, and more than one replica
+components accept the ingress controller; set `networkPolicy.ingressNamespace` to the namespace your ingress controller
+or Gateway runs in, `ingress-nginx` by default, or requests through the ingress fail with `502`, for example
+`--set networkPolicy.ingressNamespace=kube-system` for the Traefik of k3s), the `pdb` of `api`, `live`, `web`, `space` and `admin`, resource requests, and more than one replica
 of `api`, `worker`, `web` and `live`. The `beat` scheduler is always exactly one pod.
 
 ## Migrations and upgrades
