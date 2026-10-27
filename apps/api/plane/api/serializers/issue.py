@@ -87,10 +87,12 @@ class IssueSerializer(BaseSerializer):
 
     class Meta:
         model = Issue
+        # Audit fields: BaseModel.save() sets created_by from the request user on create.
         read_only_fields = [
             "id",
             "workspace",
             "project",
+            "created_by",
             "updated_by",
             "updated_at",
             "completed_at",
