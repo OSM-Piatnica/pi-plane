@@ -38,10 +38,25 @@ bound by their Google account id.
 
 > **Upgrading from the former Google login:** `IS_GOOGLE_ENABLED`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` and
 > `ENABLE_GOOGLE_SYNC` are no longer read, and `/auth/google/` is gone. Create the settings above (the same OAuth client
-> works: add the new redirect URI to it). People who signed in with the old login are matched by their email address on
-> their first sign-in and bound from then on.
+> works: add the new redirect URI to it). The old login left accounts that have no identity at the new provider, so
+> people who used it are refused on their first sign-in (`OIDC_ACCOUNT_LINK_REQUIRED`) until you set
+> `GOOGLE_OIDC_LINK_EXISTING_ACCOUNTS=1` for the time they sign in for the first time; see
+> [How people are matched](#how-people-are-matched).
+
+## Any OIDC provider
+
+For Keycloak, Okta, Authentik and similar: register a client with the redirect URI
+`<your Pi-Plane URL>/auth/oidc/oidc/callback/`, then set `IS_OIDC_ENABLED=1`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`
+and `OIDC_ISSUER_URL` (the provider's `/.well-known/openid-configuration` is read from there), and optionally
+`OIDC_DISPLAY_NAME`, the label of the sign-in button (default "Single sign-on"). The issuer URL must start with
+`https://`; otherwise the provider counts as not configured and no button is shown. The provider must send
+`email_verified: true`; a token without it is refused.
 
 ## How people are matched
+
+In the settings below `<KEY>` is the provider key in capitals with `-` written as `_`: `ENTRA`, `GOOGLE_OIDC` or
+`OIDC`. For Google that makes `GOOGLE_OIDC_LINK_EXISTING_ACCOUNTS`, `GOOGLE_OIDC_ENABLE_SIGNUP` and
+`ENABLE_GOOGLE_OIDC_SYNC`.
 
 1. By the identity at the provider (`Account.provider_account_id`). If that is known, that user signs in. The identity
    is the subject **together with the issuer** (for Entra, tenant id + object id), so a subject handed out by another
@@ -60,7 +75,7 @@ closed and still create accounts for everyone in its tenant. Deactivated account
 other sign-in. With `ENABLE_<KEY>_SYNC=1` the name is refreshed from the provider at every sign-in. No token of the
 provider is stored.
 
-Entra: when the tenant sends the optional `xms_edov` claim (email domain verified), a value other than true is refused.
+Entra: when the tenant sends the optional `xms_edov` claim (email domain verified), a value other than `true` or `1` (in any case) is refused.
 Provider answers are limited to 1 MiB; the log names the stage of a refused sign-in and the provider's own error code and
 description (never the request, which carries the secret and the code).
 
@@ -69,8 +84,11 @@ description (never the request, which carries the secret and the code).
 Write a subclass of `OidcProviderSpec` in `providers.py` (issuer, extra settings, `validate_claims`, `map_claims`) and
 add it to `OIDC_PROVIDERS` in `registry.py`. The settings (`IS_<KEY>_ENABLED`, `<KEY>_CLIENT_ID`, ...), the routes
 (`/auth/oidc/<key>/`) and the entry in the `oidc_providers` list of the public instance configuration follow from the
-spec. The god-mode form and the list on the authentication page come from one entry in `OIDC_PROVIDER_DEFINITIONS`
-(`packages/constants/src/auth/oidc.ts`); the sign-in buttons of the web and space apps come from the server's list.
+spec. In the front end the god-mode form comes from an entry in `OIDC_PROVIDER_DEFINITIONS`
+(`packages/constants/src/auth/oidc.ts`), and a new key also has to be added to the `TOidcProviderKey` type
+(`packages/types/src/instance/auth.ts`) and to the admin app's provider lists and titles (`apps/admin/hooks/oauth/`,
+`apps/admin/components/common/header/core.ts`, `packages/constants/src/auth/core.ts`). The sign-in buttons of the web
+and space apps come from the server's list.
 Mind what the claims can prove: take the identity from an immutable claim, and refuse tokens whose email is not
 verified or whose tenant/organisation is not the expected one.
 

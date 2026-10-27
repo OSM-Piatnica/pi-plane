@@ -6,7 +6,7 @@ See the LICENSE file for details.
 
 # Pi-Plane Helm chart
 
-Deploys Pi-Plane (the `ghcr.io/osm-piatnica/pi-plane-*` images) on Kubernetes: the web app, the public boards
+Deploys Pi-Plane (the `ghcr.io/osm-piatnica/pi-plane-*` images) on Kubernetes: the web app, the shared-project pages (web sharing)
 (`space`), the admin (`admin`, served at `/god-mode`), the collaboration server (`live`), the API with its worker,
 scheduler and migration Job, and, if you want them, PostgreSQL, Valkey, RabbitMQ and MinIO.
 
@@ -49,7 +49,7 @@ One host serves everything, split by path, exactly as the all-in-one proxy does:
 | Path                             | Goes to                                                 |
 | -------------------------------- | ------------------------------------------------------- |
 | `/`                              | `web`                                                   |
-| `/spaces`                        | `space` (public boards)                                 |
+| `/spaces`                        | `space` (projects shared on the web)                    |
 | `/god-mode`                      | `admin`                                                 |
 | `/live`                          | `live` (collaborative editing, WebSockets)              |
 | `/api`, `/auth`, `/static`       | `api`                                                   |
@@ -62,7 +62,7 @@ The web, space and admin images use addresses relative to the host, so they need
 
 ## Credentials
 
-By default the chart creates the Secret `<release>-pi-plane-credentials` with random values (Django `SECRET_KEY`, the
+By default the chart creates the Secret `<fullname>-credentials` (`pi-plane-credentials` for the install command above) with random values (Django `SECRET_KEY`, the
 live server key, and the database, RabbitMQ and object storage passwords) on first install and keeps them across
 upgrades by reading the Secret back. Notes:
 
@@ -98,19 +98,19 @@ uploads straight to it through presigned URLs, so `objectStorage.external.endpoi
 (leave it empty for AWS S3). The complete example is `examples/production-values.yaml`.
 
 Also consider `networkPolicy.enabled` (ingress rules: everything in the release talks to itself, only the public
-components accept the ingress controller), the `pdb` of each component, resource requests, and more than one replica
+components accept the ingress controller), the `pdb` of `api`, `live`, `web`, `space` and `admin`, resource requests, and more than one replica
 of `api`, `worker`, `web` and `live`. The `beat` scheduler is always exactly one pod.
 
 ## Migrations and upgrades
 
-A Job named `<release>-pi-plane-migrator-<revision>` applies the database migrations; the API, the worker and the
-scheduler wait for it in their entrypoints. Helm deletes the previous revision's Job when it is no longer in the
+A Job named `<fullname>-migrator-<revision>` applies the database migrations; the API, the worker and the
+scheduler wait for it in their entrypoints. `<fullname>` is the release name when it already contains `pi-plane`, otherwise `<release>-pi-plane`. Helm deletes the previous revision's Job when it is no longer in the
 manifest. To upgrade, change `image.tag` (or the chart) and run `helm upgrade`; read the release notes for
 migrations that need care.
 
 ## Security notes
 
-- Every workload uses a dedicated ServiceAccount without a mounted token, and no RBAC is created.
+- All workloads share one ServiceAccount without a mounted token, and no RBAC is created.
 - Application containers drop all capabilities, forbid privilege escalation and use the runtime default seccomp
   profile. The images currently run as root, so `runAsNonRoot` is not set; the bundled stores keep their own entrypoint
   user handling and only forbid privilege escalation.

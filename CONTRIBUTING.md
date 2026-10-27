@@ -89,7 +89,7 @@ To ensure consistency throughout the source code, please keep these rules in min
 
 - All features or bug fixes must be tested by one or more specs (unit-tests).
 - Run `pnpm check` (format, lint, types) before opening a PR, and `pnpm fix` to auto-fix what it can. Run `pnpm doctor` for React changes.
-- Backend tests run in Docker: `docker compose -f compose-test.yaml run --rm --build api-tests pytest -m unit`. See `apps/api/tests/RUNNING_TESTS.md` and `apps/api/tests/TESTING_GUIDE.md`.
+- Backend tests run in Docker: `docker compose -f compose-test.yaml run --rm --build api-tests pytest -m unit`. See `apps/api/tests/RUNNING_TESTS.md` and `apps/api/plane/tests/TESTING_GUIDE.md`.
 - We lint with [OxLint](https://oxc.rs/docs/guide/usage/linter) using the shared `.oxlintrc.json` and format with [oxfmt](https://oxc.rs/docs/guide/usage/formatter) using `.oxfmtrc.json`.
 - Keep the per-file copyright notices accurate on every `.ts`, `.tsx` and `.py` file you touch (see the README, "per-file notices"). New files carry only the OSM Piątnica line, changed upstream files keep the Plane line and gain `Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.`, and substantially rewritten upstream files also gain the OSM Piątnica copyright line. JSON locale files carry no notice.
 

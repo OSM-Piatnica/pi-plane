@@ -6,9 +6,9 @@ The Pi-Plane All-In-One Docker image packages all Pi-Plane services into a singl
 
 The AIO image contains the following services:
 
-- **Web App** (Port 3001): Main Pi-Plane web interface
+- **Web App**: Main Pi-Plane web interface, served as static files by the proxy
 - **Space** (Port 3002): Public project spaces
-- **Admin** (Port 3003): Administrative interface
+- **Admin**: Administrative interface (god mode), served as static files by the proxy
 - **API Server** (Port 3004): Backend API
 - **Live Server** (Port 3005): Real-time collaboration
 - **Proxy** (Port 80, 443): Caddy reverse proxy
@@ -46,7 +46,7 @@ You must provide these environment variables:
 
 ## Image
 
-The image is published to the GitHub Container Registry as `ghcr.io/osm-piatnica/pi-plane` (`linux/amd64` and `linux/arm64`). Each release is tagged with its exact version (`<upstream Plane version>-pi.<n>`, e.g. `1.3.1-pi.1`) and `latest`; use a version tag to pin a release.
+The image is published to the GitHub Container Registry as `ghcr.io/osm-piatnica/pi-plane` (`linux/amd64` and `linux/arm64`). Each release is tagged with its exact version (`MAJOR.MINOR.PATCH`, e.g. `2.1.0`; releases before 2.0.0 were `<upstream Plane version>-pi.<n>`) and `latest`; use a version tag to pin a release.
 
 ## Quick Start
 
@@ -99,6 +99,8 @@ docker run --name myaio --rm -it \
 - `APP_PROTOCOL`: `http` or `https` (default: `http`)
 - `APP_PORT`: public port, when the container is published on a port other than 80/443 (e.g. `-p 8080:80 -e APP_PORT=8080`). It is added to the web URL and the allowed CORS origins; `DOMAIN_NAME` itself must be a bare domain or IP address.
 
+- `TRUSTED_PROXIES` and `NUM_PROXIES`: how the client IP is determined for rate limiting; pass them with `-e`. The proxy trusts `0.0.0.0/0` by default, so any client can spoof `X-Forwarded-For` and get around the per-IP limits; see "Client IP and rate limiting behind proxies" in the [Docker Compose guide](../../cli/community/README.md).
+
 #### Security & Secrets
 
 - `SECRET_KEY` (required): Django secret key. It also encrypts saved instance settings, so keep the same value across restarts and container recreation. No default is provided and none is generated.
@@ -145,8 +147,10 @@ To build the AIO image yourself:
 
 ```bash
 cd deployments/aio/community
-IMAGE_NAME=my-pi-plane-aio ./build.sh --release=1.3.1-pi.1
+IMAGE_NAME=my-pi-plane-aio ./build.sh --release=2.1.0
 ```
+
+`build.sh` does not build the image itself: it prepares the `dist/` folder the Dockerfile needs and prints the `docker build` command to run next.
 
 Available build options:
 
