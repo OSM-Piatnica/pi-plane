@@ -22,7 +22,7 @@ export function CustomMentionExtension(props: TMentionHandler) {
   return CustomMentionExtensionConfig.extend({
     addOptions(this) {
       return {
-        ...(this.parent?.() as TMentionExtensionOptions),
+        ...this.parent!(),
         renderComponent,
         getMentionedEntityDetails,
       };

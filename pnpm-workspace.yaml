@@ -128,6 +128,13 @@ overrides:
   # happy-dom is what turns the stored description HTML into a document on the server (live) and in the editor.
   happy-dom: 21.0.4
   "prosemirror-model": 1.25.12
+  # All editor consumers must share the same ProseMirror class and plugin identities.
+  "prosemirror-state": 1.4.4
+  "prosemirror-transform": 1.12.3
+  # EXACT pin, bump with @tiptap/core. @tiptap/react's optional menu deps use ^ ranges and would otherwise
+  # resolve ahead of @tiptap/core, leaving their peer unmet.
+  "@tiptap/extension-bubble-menu": 3.32.0
+  "@tiptap/extension-floating-menu": 3.32.0
 
 allowBuilds:
   "@parcel/watcher": true

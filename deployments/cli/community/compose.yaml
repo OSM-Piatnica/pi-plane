@@ -104,6 +104,7 @@ services:
       - web
 
   live:
+    stop_grace_period: 30s
     image: ${IMAGE_REPO:-ghcr.io/osm-piatnica/pi-plane}-live:${APP_RELEASE:-latest}
     environment:
       <<: [*live-env, *redis-env]
