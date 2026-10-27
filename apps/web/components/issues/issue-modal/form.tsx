@@ -56,6 +56,7 @@ import { DeDupeButtonRoot } from "@/components/de-dupe/de-dupe-button";
 import { DuplicateModalRoot } from "@/components/de-dupe/duplicate-modal";
 import { IssueTypeSelect, WorkItemTemplateSelect } from "@/components/issues/issue-modal";
 import { WorkItemModalAdditionalProperties } from "@/components/issues/issue-modal/modal-additional-properties";
+import { isSubmitShortcut } from "@/components/issues/issue-modal/submit-shortcut";
 import { useDebouncedDuplicateIssues } from "@/hooks/use-debounced-duplicate-issues";
 
 export interface IssueFormProps {
@@ -385,6 +386,27 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
     };
   }, [formRef, modalContainerRef]);
 
+  // Ctrl+Enter or Cmd+Enter saves from any field, through the same button a click would use (so it does nothing
+  // while the button is disabled or busy)
+  const handleFormKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
+    const { key, ctrlKey, metaKey, altKey, shiftKey, defaultPrevented } = event;
+    if (
+      !isSubmitShortcut({
+        key,
+        ctrlKey,
+        metaKey,
+        altKey,
+        shiftKey,
+        defaultPrevented,
+        isComposing: event.nativeEvent.isComposing,
+      })
+    ) {
+      return;
+    }
+    event.preventDefault();
+    submitBtnRef.current?.click();
+  };
+
   // TODO: Remove this after the de-dupe feature is implemented
 
   const shouldRenderDuplicateModal = isDuplicateModalOpen && duplicateIssues?.length > 0;
@@ -399,6 +421,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
         <form
           ref={formRef}
           onSubmit={handleSubmit((formValues) => handleFormSubmit(formValues))}
+          onKeyDown={handleFormKeyDown}
           className="flex min-h-0 w-full flex-1 flex-col"
         >
           {/* DialogMain clips its content and shrinks to the form; letting it grow to its content makes the wrapper
@@ -548,7 +571,7 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
                   label={t("discard")}
                 />
               </div>
-              <div tabIndex={isDraft ? getIndex("submit_button") : getIndex("draft_button")}>
+              <div tabIndex={isDraft ? getIndex("submit_button") : getIndex("draft_button")} title="Ctrl/⌘ + Enter">
                 <Button
                   variant={moveToIssue ? "secondary" : "primary"}
                   size="md"
