@@ -109,7 +109,10 @@ export const useEditor = (props: TEditorHookProps) => {
       const { uploadInProgress: isUploadInProgress } = editor.storage.utility;
       if (!editor.isDestroyed && !isUploadInProgress) {
         try {
-          editor.commands.setContent(value, { emitUpdate: false, parseOptions: { preserveWhitespace: true } });
+          editor.commands.setContent(value, {
+            emitUpdate: false,
+            parseOptions: { preserveWhitespace: true },
+          });
           if (editor.state.selection) {
             const docLength = editor.state.doc.content.size;
             const relativePosition = Math.min(editor.state.selection.from, docLength - 1);

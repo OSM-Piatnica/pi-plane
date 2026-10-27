@@ -131,7 +131,10 @@ export const getEditorRefHelpers = (helperArgs: TArgs): EditorRefApi => {
         ?.chain()
         .setMeta(CORE_EDITOR_META.SKIP_FILE_DELETION, true)
         .setMeta(CORE_EDITOR_META.INTENTIONAL_DELETION, true)
-        .setContent(content, { emitUpdate, parseOptions: { preserveWhitespace: true } })
+        .setContent(content, {
+          emitUpdate,
+          parseOptions: { preserveWhitespace: true },
+        })
         .run();
     },
     emitRealTimeUpdate: (message) => provider?.sendStateless(message),
@@ -148,7 +151,7 @@ export const getEditorRefHelpers = (helperArgs: TArgs): EditorRefApi => {
         console.warn(`No command found for item: ${itemKey}`);
       }
     },
-    focus: (position) => editor?.commands.focus(position),
+    focus: (args) => editor?.commands.focus(args),
     getCoordsFromPos: (pos) => editor?.view.coordsAtPos(pos ?? editor.state.selection.from),
     getCurrentCursorPosition: () => editor?.state.selection.from,
     getAttributesWithExtendedMark: (mark, attribute) => {
