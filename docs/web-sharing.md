@@ -22,7 +22,7 @@ Any of the three can also be shared on the web. "Open" does not mean "visible to
 
 Project admins see **Share on the web** in the project's menu in the sidebar. Pick the layouts to show (**List** and **Board**; at least one) and whether viewers may comment, react and vote, then **Turn on web sharing**. A confirmation lists what becomes visible; sharing starts only after you confirm it. Changing the settings of an already shared project does not ask again.
 
-> **Known gap:** the menu item is limited to project admins, but the API call behind it (`POST /api/workspaces/<slug>/projects/<id>/project-deploy-boards/`) also accepts plain project members, and a member can switch sharing on or off through the API.
+Switching sharing on, changing it and stopping it are for project admins, in the web app and in the API (`/api/workspaces/<slug>/projects/<id>/project-deploy-boards/`); project members can read the settings.
 
 **Stop sharing** switches the link off: the link shows the not-found page. Turning sharing on again creates a **new** link with a new address; the old one never works again, so links you sent earlier must be sent again.
 
@@ -33,7 +33,7 @@ Without signing in, a viewer can read:
 - every work item that is shown on the project's lists: not archived, not a draft, not waiting in triage or intake, and not in an archived project. For each: description, state, priority, dates, labels, estimate, assignee and creator ids, the parent, and the description as stored;
 - the project's name, description and cover, its states (except Triage), labels, and the names of its cycles and modules;
 - the id, display name and avatar of every active project member;
-- images embedded in work item descriptions and in comments, for anyone who holds the image's id;
+- images embedded in the descriptions of those work items and in comments set to **Visible on the web**, for anyone who holds the image's id (images of Internal comments, of drafts and of archived work items are not served);
 - the votes and reactions on work items, **with the names and avatars of the people behind them, whether or not voting and reactions are switched on** (the switches only decide who may add them);
 - comments, when comments are allowed: only those set to **Visible on the web** (the default for a comment is **Internal**, which stays inside the project).
 
