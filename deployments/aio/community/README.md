@@ -46,7 +46,7 @@ You must provide these environment variables:
 
 ## Image
 
-The image is published to the GitHub Container Registry as `ghcr.io/osm-piatnica/pi-plane` (`linux/amd64` and `linux/arm64`). Each release is tagged with its exact version (`<upstream Plane version>-pi.<n>`, e.g. `1.3.1-pi.1`) and `latest`; use a version tag to pin a release.
+The image is published to the GitHub Container Registry as `ghcr.io/osm-piatnica/pi-plane` (`linux/amd64` and `linux/arm64`). Each release is tagged with its exact version (`MAJOR.MINOR.PATCH`, e.g. `2.1.0`; releases before 2.0.0 were `<upstream Plane version>-pi.<n>`) and `latest`; use a version tag to pin a release.
 
 ## Quick Start
 
@@ -145,7 +145,7 @@ To build the AIO image yourself:
 
 ```bash
 cd deployments/aio/community
-IMAGE_NAME=my-pi-plane-aio ./build.sh --release=1.3.1-pi.1
+IMAGE_NAME=my-pi-plane-aio ./build.sh --release=2.1.0
 ```
 
 Available build options:

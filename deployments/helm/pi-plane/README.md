@@ -6,7 +6,7 @@ See the LICENSE file for details.
 
 # Pi-Plane Helm chart
 
-Deploys Pi-Plane (the `ghcr.io/osm-piatnica/pi-plane-*` images) on Kubernetes: the web app, the public boards
+Deploys Pi-Plane (the `ghcr.io/osm-piatnica/pi-plane-*` images) on Kubernetes: the web app, the shared-project pages (web sharing)
 (`space`), the admin (`admin`, served at `/god-mode`), the collaboration server (`live`), the API with its worker,
 scheduler and migration Job, and, if you want them, PostgreSQL, Valkey, RabbitMQ and MinIO.
 
@@ -49,7 +49,7 @@ One host serves everything, split by path, exactly as the all-in-one proxy does:
 | Path                             | Goes to                                                 |
 | -------------------------------- | ------------------------------------------------------- |
 | `/`                              | `web`                                                   |
-| `/spaces`                        | `space` (public boards)                                 |
+| `/spaces`                        | `space` (projects shared on the web)                    |
 | `/god-mode`                      | `admin`                                                 |
 | `/live`                          | `live` (collaborative editing, WebSockets)              |
 | `/api`, `/auth`, `/static`       | `api`                                                   |

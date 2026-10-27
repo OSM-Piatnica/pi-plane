@@ -95,9 +95,9 @@ Pi-Plane publishes multi-architecture (`linux/amd64`, `linux/arm64`) images to t
 | Proxy        | `ghcr.io/osm-piatnica/pi-plane-proxy` |
 | All-in-one   | `ghcr.io/osm-piatnica/pi-plane`       |
 
-Versions follow `<upstream Plane version>-pi.<n>`. For example, `1.3.1-pi.1` is the first Pi-Plane release based on Plane 1.3.1.
+Versions are plain `MAJOR.MINOR.PATCH` (for example `2.1.0`) from 2.0.0 on. Earlier releases were `<upstream Plane version>-pi.<n>` (for example `1.3.1-pi.5`).
 
-- Each release is published under its exact version tag (e.g. `1.3.1-pi.1`, without the `v` used by the GitHub release tag) and `latest`. Pre-releases (`-rc`, `-alpha`, `-beta`) get only their version tag.
+- Each release is published under its exact version tag (e.g. `2.1.0`, without the `v` used by the GitHub release tag) and `latest`. Pre-releases (`-rc`, `-alpha`, `-beta`) get only their version tag.
 - `./setup.sh` installs the latest release. To pin a version, set `APP_RELEASE` in `plane.env`.
 - To use a different registry or a local build, set `IMAGE_REPO` in `plane.env` (default `ghcr.io/osm-piatnica/pi-plane`).
 
