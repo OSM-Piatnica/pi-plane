@@ -4,14 +4,22 @@ The Pi-Plane logo replaced the Plane logo in the apps, icons, spinners and READM
 
 ## 1. Email templates still load the upstream-hosted logo
 
-Email clients can't use embedded or repo-relative images reliably, so the logo must be a public HTTPS URL. These 11 templates under `apps/api/templates/emails/` point at `https://media.docs.plane.so/logo/new-logo-dark.png`:
+Email clients can't use embedded or repo-relative images reliably, so the logo must be a public HTTPS URL. 14 templates under `apps/api/templates/emails/` load their logo from `media.docs.plane.so`, in two variants.
+
+`https://media.docs.plane.so/logo/new-logo-dark.png` (for light backgrounds):
 
 - `auth/forgot_password.html`
 - `auth/one_time_code_signin.html`
 - `exports/analytics.html`
 - `invitations/workspace_invitation.html`
-- `notifications/issue-updates.html`
+- `notifications/project_access_request.html`
+- `notifications/project_access_request_decision.html`
 - `notifications/project_addition.html`
+
+`https://media.docs.plane.so/logo/new-logo-white.png` (for dark headers):
+
+- `notifications/issue-digest.html`
+- `notifications/issue-updates.html`
 - `notifications/webhook-deactivate.html`
 - `notifications/work-item-due-reminder.html`
 - `user/email_updated.html`
@@ -20,15 +28,17 @@ Email clients can't use embedded or repo-relative images reliably, so the logo m
 
 **To do:**
 
-1. Host a Pi-Plane logo (PNG, about 2x the displayed size, readable on light email backgrounds) at a stable public URL.
-2. Replace the `src` in every template above. Prefer a single setting or template variable over 11 hard-coded copies.
-3. Check the same URL in the repo README if any other upstream-hosted image remains.
+1. Host a Pi-Plane logo in both variants (PNG, about 2x the displayed size, readable on the light and the dark background respectively) at a stable public URL.
+2. Replace the `src` in every template above. Prefer a single setting or template variable over 14 hard-coded copies.
+3. The templates also load upstream-hosted icons (`https://plane-marketing.s3.ap-south-1.amazonaws.com/plane-assets/emails/*.png`: state, priority, label and arrow icons) and third-party social icons from `creative-assets.mailinblue.com`; decide whether those stay. The repo README has no upstream-hosted image left.
 
 ## 2. API static logo
 
 `apps/api/plane/static/logos/Logo.png` is still the Plane logo. The sibling social icons (`github_32px.png` and others) are generic and can stay.
 
-**To do:** replace `Logo.png` with a Pi-Plane PNG, keeping the same filename and a similar size, or make the final location match item 1 if the emails end up using it.
+Nothing in the repo references this file at the moment.
+
+**To do:** replace `Logo.png` with a Pi-Plane PNG, keeping the same filename and a similar size, or delete it if the emails use the hosted logos from item 1.
 
 ## Also worth doing
 
