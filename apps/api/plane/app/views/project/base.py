@@ -577,6 +577,9 @@ class DeployBoardViewSet(BaseViewSet):
         serializer = DeployBoardSerializer(project_deploy_board)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    # Sharing a project on the web is for project admins, as in the web app's menu. ProjectMemberPermission lets
+    # members POST, so the writes are limited here.
+    @allow_permission([ROLE.ADMIN])
     def create(self, request, slug, project_id):
         comments = request.data.get("is_comments_enabled", False)
         reactions = request.data.get("is_reactions_enabled", False)
@@ -616,3 +619,15 @@ class DeployBoardViewSet(BaseViewSet):
 
         serializer = DeployBoardSerializer(project_deploy_board)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @allow_permission([ROLE.ADMIN])
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
+
+    @allow_permission([ROLE.ADMIN])
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+
+    @allow_permission([ROLE.ADMIN])
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)

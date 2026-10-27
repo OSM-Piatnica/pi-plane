@@ -8,6 +8,7 @@ import uuid
 
 # Django imports
 from django.conf import settings
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.utils import timezone
 
@@ -17,7 +18,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
-from plane.db.models import DeployBoard, FileAsset, IssueComment
+from plane.db.models import DeployBoard, FileAsset, Issue, IssueComment
 from plane.settings.storage import S3Storage
 from plane.utils.path_validator import sanitize_filename
 
@@ -54,16 +55,36 @@ class EntityAssetEndpoint(BaseAPIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        # get the asset id — scope to project to prevent cross-project IDOR
-        asset = FileAsset.objects.get(
-            workspace_id=deploy_board.workspace_id,
-            project_id=deploy_board.project_id,
-            pk=pk,
-            entity_type__in=[
-                FileAsset.EntityTypeContext.ISSUE_DESCRIPTION,
-                FileAsset.EntityTypeContext.COMMENT_DESCRIPTION,
-            ],
+        # An image is served only when it belongs to something the board shows: a description of a work item the
+        # public lists contain (not a draft, archived or triage item), or an image in an EXTERNAL comment. An image
+        # of an Internal comment, or one not yet bound to a comment, is not public; the person who uploaded the
+        # latter can still see it while writing the comment.
+        visible_issue_ids = Issue.issue_objects.filter(
+            workspace_id=deploy_board.workspace_id, project_id=deploy_board.project_id
+        ).values("id")
+        allowed = Q(
+            entity_type=FileAsset.EntityTypeContext.ISSUE_DESCRIPTION,
+        ) & (Q(issue__isnull=True) | Q(issue_id__in=visible_issue_ids))
+        allowed |= Q(
+            entity_type=FileAsset.EntityTypeContext.COMMENT_DESCRIPTION,
+            comment__access="EXTERNAL",
+            comment__issue_id__in=visible_issue_ids,
         )
+        if request.user.is_authenticated:
+            allowed |= Q(
+                entity_type=FileAsset.EntityTypeContext.COMMENT_DESCRIPTION,
+                comment__isnull=True,
+                created_by=request.user,
+            )
+        # scope to the board's project to prevent cross-project IDOR
+        asset = FileAsset.objects.filter(
+            allowed, workspace_id=deploy_board.workspace_id, project_id=deploy_board.project_id, pk=pk
+        ).first()
+        if asset is None:
+            return Response(
+                {"error": "The requested asset could not be found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
         # Check if the asset is uploaded
         if not asset.is_uploaded:
