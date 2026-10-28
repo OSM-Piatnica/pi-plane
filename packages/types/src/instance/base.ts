@@ -66,6 +66,12 @@ export interface IInstanceConfig {
   file_size_limit: number | undefined;
   /** The most the administrator can set it to, in bytes. */
   file_size_limit_max?: number;
+  /** The largest spreadsheet for a work item import, in bytes. */
+  import_file_size_limit?: number;
+  /** The most work items one import may hold. */
+  import_max_work_items?: number;
+  /** The most the administrator can set `import_max_work_items` to. */
+  import_max_work_items_max?: number;
   is_smtp_configured: boolean;
   app_base_url: string | undefined;
   space_base_url: string | undefined;

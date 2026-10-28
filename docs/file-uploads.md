@@ -24,6 +24,15 @@ One limit applies to every kind of upload above. It starts at `FILE_SIZE_LIMIT` 
 
 - It applies to new uploads. **Lowering it never touches files that are already stored**, however large they are.
 - It can be set from 1 MB up to `FILE_SIZE_LIMIT_MAX` (100 MiB by default), which is also the largest request body the bundled proxy accepts. Raise `FILE_SIZE_LIMIT_MAX` in `plane.env` (Docker), `app.fileSizeLimitMax` (Helm) or with `-e` (all-in-one) to allow more, and keep it at least as large as `FILE_SIZE_LIMIT`. If you run another proxy or ingress in front, it has to allow the same size.
-- "Use the default" in the admin page removes the setting, and the `FILE_SIZE_LIMIT` of the environment applies again.
+- "Use the default" next to a field removes that setting, and the `FILE_SIZE_LIMIT` of the environment applies again.
 - People see the limit in the upload messages of the web app. They pick up a new value when they reload the page.
 - An object store can have limits of its own. The storage also enforces the size announced for each upload.
+
+## Spreadsheet imports
+
+Importing work items from a spreadsheet has two limits of its own, on the same page (**File uploads and imports**):
+
+- **Largest spreadsheet** (15 MB by default, up to `FILE_SIZE_LIMIT_MAX`): the CSV, Excel or JSON file the person picks. It travels as an ordinary request, so it cannot be larger than the proxy accepts.
+- **Most work items in one import** (500 by default, up to 5000). An import runs within a single request, so a very large one can run into the time limit of your web server or proxy.
+
+Both apply to new imports at once, and the import page of the web app shows the file limit that is set.

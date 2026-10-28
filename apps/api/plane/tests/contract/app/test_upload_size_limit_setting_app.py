@@ -173,3 +173,97 @@ class TestNewUploads:
         # a new upload of the same size is now clamped
         again = self.attach(session_client, workspace, issue, 30 * MB)
         assert FileAsset.objects.get(id=again.data["asset_id"]).size == 5 * MB
+
+
+IMPORT_FILE = "IMPORT_FILE_SIZE_LIMIT"
+IMPORT_ITEMS = "IMPORT_MAX_WORK_ITEMS"
+
+
+@pytest.fixture
+def import_settings(db):
+    return [
+        InstanceConfiguration.objects.create(key=key, value="", category="WORKSPACE_MANAGEMENT")
+        for key in (IMPORT_FILE, IMPORT_ITEMS)
+    ]
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestImportLimits:
+    def test_the_defaults_are_reported(self, session_client, instance_admin, import_settings):
+        config = session_client.get(INSTANCE).data["config"]
+        assert config["import_file_size_limit"] == 15 * MB
+        assert config["import_max_work_items"] == 500
+        assert config["import_max_work_items_max"] == 5000
+
+    def test_both_can_be_saved_and_are_reported(self, session_client, instance_admin, import_settings):
+        response = session_client.patch(
+            CONFIGURATIONS, {IMPORT_FILE: str(40 * MB), IMPORT_ITEMS: "2000"}, format="json"
+        )
+        assert response.status_code == 200, response.data
+        config = session_client.get(INSTANCE).data["config"]
+        assert config["import_file_size_limit"] == 40 * MB
+        assert config["import_max_work_items"] == 2000
+
+    @pytest.mark.parametrize(
+        "payload",
+        [
+            {IMPORT_FILE: "abc"},
+            {IMPORT_FILE: str(MIN_FILE_SIZE_LIMIT - 1)},
+            {IMPORT_FILE: str(get_file_size_limit_max() + 1)},
+            {IMPORT_ITEMS: "0"},
+            {IMPORT_ITEMS: "5001"},
+            {IMPORT_ITEMS: "ten"},
+        ],
+    )
+    def test_values_out_of_range_are_refused(self, session_client, instance_admin, import_settings, payload):
+        assert session_client.patch(CONFIGURATIONS, payload, format="json").status_code == 400
+        assert all(setting.value == "" for setting in InstanceConfiguration.objects.filter(key__in=payload))
+
+    def test_empty_goes_back_to_the_defaults(self, session_client, instance_admin, import_settings):
+        session_client.patch(CONFIGURATIONS, {IMPORT_FILE: str(40 * MB), IMPORT_ITEMS: "2000"}, format="json")
+        assert (
+            session_client.patch(CONFIGURATIONS, {IMPORT_FILE: "", IMPORT_ITEMS: ""}, format="json").status_code == 200
+        )
+        config = session_client.get(INSTANCE).data["config"]
+        assert config["import_file_size_limit"] == 15 * MB and config["import_max_work_items"] == 500
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestImportUsesTheLimits:
+    def project(self, workspace, create_user):
+        project = Project.objects.create(name="Imp", identifier="IMP", workspace=workspace, created_by=create_user)
+        ProjectMember.objects.create(project=project, member=create_user, role=20, is_active=True)
+        State.objects.create(name="Todo", project=project, workspace=workspace, group="backlog", default=True)
+        return project
+
+    def post(self, client, workspace, project, rows):
+        from django.core.files.uploadedfile import SimpleUploadedFile
+
+        csv = "Name\n" + "\n".join(f"item {i}" for i in range(rows)) + "\n"
+        return client.post(
+            f"/api/workspaces/{workspace.slug}/import-work-items/",
+            {"file": SimpleUploadedFile("w.csv", csv.encode()), "project_id": str(project.id), "provider": "csv"},
+            format="multipart",
+        )
+
+    def test_the_number_of_work_items_follows_the_setting(
+        self, session_client, workspace, create_user, import_settings
+    ):
+        project = self.project(workspace, create_user)
+        import_settings[1].value = "3"
+        import_settings[1].save()
+        refused = self.post(session_client, workspace, project, 4)
+        assert refused.status_code == 400
+        assert "3 work items" in str(refused.data)
+        assert self.post(session_client, workspace, project, 3).status_code in (200, 201)
+
+    def test_the_file_size_follows_the_setting(self, session_client, workspace, create_user, import_settings):
+        project = self.project(workspace, create_user)
+        import_settings[0].value = str(MIN_FILE_SIZE_LIMIT)
+        import_settings[0].save()
+        csv_rows = 200000
+        refused = self.post(session_client, workspace, project, csv_rows)
+        assert refused.status_code == 400
+        assert "MB" in str(refused.data)

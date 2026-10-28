@@ -24,6 +24,11 @@ from plane.license.models import Instance
 from plane.authentication.provider.oidc.registry import enabled_oidc_providers
 from plane.license.utils.instance_value import get_configuration_value
 from plane.utils.file_size_limit import get_file_size_limit, get_file_size_limit_max
+from plane.utils.import_limits import (
+    MAX_IMPORT_MAX_WORK_ITEMS,
+    get_import_file_size_limit,
+    get_import_max_work_items,
+)
 from plane.utils.cache import cache_response, invalidate_cache
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
@@ -156,6 +161,10 @@ class InstanceEndpoint(BaseAPIView):
         # File size settings
         data["file_size_limit"] = float(get_file_size_limit())
         data["file_size_limit_max"] = float(get_file_size_limit_max())
+        # Spreadsheet imports
+        data["import_file_size_limit"] = float(get_import_file_size_limit())
+        data["import_max_work_items"] = get_import_max_work_items()
+        data["import_max_work_items_max"] = MAX_IMPORT_MAX_WORK_ITEMS
 
         # is smtp configured
         data["is_smtp_configured"] = bool(EMAIL_HOST)

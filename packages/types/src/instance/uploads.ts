@@ -4,4 +4,4 @@
  * See the LICENSE file for details.
  */
 
-export type TInstanceUploadConfigurationKeys = "FILE_SIZE_LIMIT";
+export type TInstanceUploadConfigurationKeys = "FILE_SIZE_LIMIT" | "IMPORT_FILE_SIZE_LIMIT" | "IMPORT_MAX_WORK_ITEMS";

@@ -29,10 +29,15 @@ from plane.license.models import InstanceConfiguration
 from plane.license.api.serializers import InstanceConfigurationSerializer
 from plane.license.utils.encryption import encrypt_data
 from plane.utils.cache import cache_response, invalidate_cache
+from plane.utils.import_limits import (
+    MAX_IMPORT_MAX_WORK_ITEMS,
+    MIN_IMPORT_MAX_WORK_ITEMS,
+    get_import_file_size_limit_max,
+)
 from plane.utils.file_size_limit import (
     MIN_FILE_SIZE_LIMIT,
     get_file_size_limit_max,
-    parse_file_size_limit,
+    parse_whole_number,
 )
 from plane.license.utils.instance_value import get_email_configuration
 
@@ -66,18 +71,35 @@ class InstanceConfigurationEndpoint(BaseAPIView):
                         status=status.HTTP_400_BAD_REQUEST,
                     )
 
-        if "FILE_SIZE_LIMIT" in request.data:
-            raw_limit = str(request.data.get("FILE_SIZE_LIMIT") or "").strip()
-            # Empty goes back to the default of the deployment; anything else is a whole number of bytes in range.
+        # Empty goes back to the default; anything else is a whole number in range
+        size_ranges = {
+            "FILE_SIZE_LIMIT": ("upload limit", MIN_FILE_SIZE_LIMIT, get_file_size_limit_max()),
+            "IMPORT_FILE_SIZE_LIMIT": ("import file limit", MIN_FILE_SIZE_LIMIT, get_import_file_size_limit_max()),
+        }
+        for key, (name, minimum, maximum) in size_ranges.items():
+            raw_limit = str(request.data.get(key) or "").strip() if key in request.data else ""
             if raw_limit:
-                limit = parse_file_size_limit(raw_limit)
-                maximum = get_file_size_limit_max()
-                if limit is None or limit < MIN_FILE_SIZE_LIMIT or limit > maximum:
+                limit = parse_whole_number(raw_limit)
+                if limit is None or limit < minimum or limit > maximum:
                     return Response(
                         {
                             "error": (
-                                f"The upload limit must be between {MIN_FILE_SIZE_LIMIT // (1024 * 1024)} MB "
+                                f"The {name} must be between {minimum // (1024 * 1024)} MB "
                                 f"and {maximum // (1024 * 1024)} MB."
+                            )
+                        },
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+        if "IMPORT_MAX_WORK_ITEMS" in request.data:
+            raw_count = str(request.data.get("IMPORT_MAX_WORK_ITEMS") or "").strip()
+            if raw_count:
+                count = parse_whole_number(raw_count)
+                if count is None or count < MIN_IMPORT_MAX_WORK_ITEMS or count > MAX_IMPORT_MAX_WORK_ITEMS:
+                    return Response(
+                        {
+                            "error": (
+                                f"The number of work items per import must be between {MIN_IMPORT_MAX_WORK_ITEMS} "
+                                f"and {MAX_IMPORT_MAX_WORK_ITEMS}."
                             )
                         },
                         status=status.HTTP_400_BAD_REQUEST,

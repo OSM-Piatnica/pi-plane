@@ -24,8 +24,8 @@ def get_file_size_limit_max() -> int:
     return max(int(settings.FILE_SIZE_LIMIT_MAX), int(settings.FILE_SIZE_LIMIT))
 
 
-def parse_file_size_limit(raw) -> int | None:
-    """A whole number of bytes, or None when `raw` is empty or not one."""
+def parse_whole_number(raw) -> int | None:
+    """A positive whole number, or None when `raw` is empty or not one."""
     text = str(raw if raw is not None else "").strip()
     if not text.isdecimal():
         return None
@@ -33,16 +33,23 @@ def parse_file_size_limit(raw) -> int | None:
     return value if value > 0 else None
 
 
+def get_saved_number(key: str) -> int | None:
+    """The whole number the administrator saved under this instance setting, or None (not saved, empty, garbage).
+
+    Only the database is read, and only when it rules (``SKIP_ENV_VAR``); otherwise the environment decides.
+    """
+    if not settings.SKIP_ENV_VAR:
+        return None
+    # Imported here: plane.license models import this package's siblings at start-up
+    from plane.license.models import InstanceConfiguration
+
+    saved = InstanceConfiguration.objects.filter(key=key).values_list("value", flat=True).first()
+    return parse_whole_number(saved)
+
+
 def get_file_size_limit() -> int:
     """The limit in bytes: the saved setting, else the environment default, within the allowed range."""
-    default = int(settings.FILE_SIZE_LIMIT)
-    value = None
-    if settings.SKIP_ENV_VAR:
-        # Imported here: plane.license models import this package's siblings at start-up
-        from plane.license.models import InstanceConfiguration
-
-        saved = InstanceConfiguration.objects.filter(key=CONFIG_KEY).values_list("value", flat=True).first()
-        value = parse_file_size_limit(saved)
+    value = get_saved_number(CONFIG_KEY)
     if value is None:
-        return default
+        return int(settings.FILE_SIZE_LIMIT)
     return max(MIN_FILE_SIZE_LIMIT, min(value, get_file_size_limit_max()))
