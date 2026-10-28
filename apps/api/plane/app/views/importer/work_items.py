@@ -92,9 +92,9 @@ class ImportWorkItemsEndpoint(BaseAPIView):
         )
 
         try:
-            content = upload.read()
             max_upload_bytes = get_import_file_size_limit()
-            if len(content) > max_upload_bytes:
+            # The size is known before the file is read, so a file that is far too large is never held in memory
+            if upload.size > max_upload_bytes:
                 history.status = "failed"
                 history.reason = "File too large."
                 history.save(update_fields=["status", "reason", "updated_at"])
@@ -102,6 +102,8 @@ class ImportWorkItemsEndpoint(BaseAPIView):
                     {"error": f"File must be smaller than {max_upload_bytes // (1024 * 1024)} MB."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
+
+            content = upload.read()
 
             format_type = provider if provider in {"csv", "xlsx", "json"} else _detect_format(upload.name, content)
             history.provider = format_type

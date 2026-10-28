@@ -269,3 +269,23 @@ class TestImportUsesTheLimits:
         refused = self.post(session_client, workspace, project, csv_rows)
         assert refused.status_code == 400
         assert "MB" in str(refused.data)
+
+    def test_a_file_over_the_general_request_limit_reaches_the_importer(
+        self, session_client, workspace, create_user, import_settings
+    ):
+        """The general request-body limit (FILE_SIZE_LIMIT) answers 413 for other requests; an import has its own."""
+        from django.core.files.uploadedfile import SimpleUploadedFile
+
+        project = self.project(workspace, create_user)
+        url = f"/api/workspaces/{workspace.slug}/import-work-items/"
+        data = {"project_id": str(project.id), "provider": "csv"}
+
+        six_mb = SimpleUploadedFile("six.csv", b"Name\n" + b"x" * (6 * MB))
+        response = session_client.post(url, {**data, "file": six_mb}, format="multipart")
+        assert response.status_code != 413, response.data
+        assert "smaller than" not in str(response.data)
+
+        sixteen_mb = SimpleUploadedFile("big.csv", b"Name\n" + b"x" * (16 * MB))
+        response = session_client.post(url, {**data, "file": sixteen_mb}, format="multipart")
+        assert response.status_code == 400
+        assert "smaller than 15 MB" in str(response.data)
