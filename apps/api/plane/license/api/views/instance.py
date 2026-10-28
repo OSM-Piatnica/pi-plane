@@ -23,6 +23,7 @@ from plane.license.api.serializers import InstanceSerializer
 from plane.license.models import Instance
 from plane.authentication.provider.oidc.registry import enabled_oidc_providers
 from plane.license.utils.instance_value import get_configuration_value
+from plane.utils.file_size_limit import get_file_size_limit, get_file_size_limit_max
 from plane.utils.cache import cache_response, invalidate_cache
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
@@ -153,7 +154,8 @@ class InstanceEndpoint(BaseAPIView):
         data["has_llm_configured"] = bool(LLM_API_KEY)
 
         # File size settings
-        data["file_size_limit"] = float(os.environ.get("FILE_SIZE_LIMIT", 5242880))
+        data["file_size_limit"] = float(get_file_size_limit())
+        data["file_size_limit_max"] = float(get_file_size_limit_max())
 
         # is smtp configured
         data["is_smtp_configured"] = bool(EMAIL_HOST)

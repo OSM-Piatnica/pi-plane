@@ -56,7 +56,7 @@ One host serves everything, split by path, exactly as the all-in-one proxy does:
 | `/<bucket>` (default `/uploads`) | the bundled MinIO, for browser uploads (presigned URLs) |
 
 The same list renders an `Ingress` or, with `gateway.enabled`, `HTTPRoute`s that attach to a Gateway you own (see
-`examples/gateway-values.yaml`). Allow request bodies of at least `app.fileSizeLimit` (5 MiB by default) on
+`examples/gateway-values.yaml`). Allow request bodies of at least `app.fileSizeLimitMax` (100 MiB by default; `app.fileSizeLimit`, 5 MiB, is the upload limit until the administrator sets one in the admin app) on
 whatever sits in front: with `ingress.className: nginx` the chart sets the `proxy-body-size` annotation for you.
 The web, space and admin images use addresses relative to the host, so they need no per-installation configuration.
 

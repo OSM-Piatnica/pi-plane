@@ -10,7 +10,7 @@
 	}
 
 	request_body {
-		max_size {$FILE_SIZE_LIMIT}
+		max_size {$FILE_SIZE_LIMIT_MAX:104857600}
 	}
 
   redir /spaces /spaces/ permanent

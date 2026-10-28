@@ -11,6 +11,7 @@ import type {
   TInstanceEmailConfigurationKeys,
   TInstanceImageConfigurationKeys,
   TInstanceAuthenticationKeys,
+  TInstanceUploadConfigurationKeys,
   TInstanceWorkspaceConfigurationKeys,
   TCoreLoginMediums,
   TOidcProviderOption,
@@ -61,7 +62,10 @@ export interface IInstanceConfig {
   slack_client_id: string | undefined;
   has_unsplash_configured: boolean;
   has_llm_configured: boolean;
+  /** The largest upload in bytes: the administrator's setting, else the deployment default. */
   file_size_limit: number | undefined;
+  /** The most the administrator can set it to, in bytes. */
+  file_size_limit_max?: number;
   is_smtp_configured: boolean;
   app_base_url: string | undefined;
   space_base_url: string | undefined;
@@ -87,6 +91,7 @@ export type TInstanceConfigurationKeys =
   | TInstanceEmailConfigurationKeys
   | TInstanceImageConfigurationKeys
   | TInstanceAuthenticationKeys
+  | TInstanceUploadConfigurationKeys
   | TInstanceWorkspaceConfigurationKeys;
 
 export interface IInstanceConfiguration {

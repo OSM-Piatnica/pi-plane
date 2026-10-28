@@ -115,7 +115,8 @@ In Plane v1.4.0 to v1.4.2 a container started without `SECRET_KEY` received a ge
 
 #### File Handling
 
-- `FILE_SIZE_LIMIT`: Maximum file upload size in bytes (default: `5242880` = 5MB)
+- `FILE_SIZE_LIMIT`: Maximum file upload size in bytes until the instance administrator sets one on the General page of the admin app (default: `5242880` = 5 MB)
+- `FILE_SIZE_LIMIT_MAX`: The most the administrator can set it to, and the largest request body the proxy accepts, in bytes (default: `104857600` = 100 MB). Keep it at least as large as `FILE_SIZE_LIMIT`
 
 #### API Configuration
 

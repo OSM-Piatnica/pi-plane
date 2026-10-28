@@ -29,6 +29,11 @@ from plane.license.models import InstanceConfiguration
 from plane.license.api.serializers import InstanceConfigurationSerializer
 from plane.license.utils.encryption import encrypt_data
 from plane.utils.cache import cache_response, invalidate_cache
+from plane.utils.file_size_limit import (
+    MIN_FILE_SIZE_LIMIT,
+    get_file_size_limit_max,
+    parse_file_size_limit,
+)
 from plane.license.utils.instance_value import get_email_configuration
 
 
@@ -58,6 +63,23 @@ class InstanceConfigurationEndpoint(BaseAPIView):
                 if not Workspace.objects.filter(id=parsed_workspace_id).exists():
                     return Response(
                         {"error": "The workspace selected for short links does not exist."},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+
+        if "FILE_SIZE_LIMIT" in request.data:
+            raw_limit = str(request.data.get("FILE_SIZE_LIMIT") or "").strip()
+            # Empty goes back to the default of the deployment; anything else is a whole number of bytes in range.
+            if raw_limit:
+                limit = parse_file_size_limit(raw_limit)
+                maximum = get_file_size_limit_max()
+                if limit is None or limit < MIN_FILE_SIZE_LIMIT or limit > maximum:
+                    return Response(
+                        {
+                            "error": (
+                                f"The upload limit must be between {MIN_FILE_SIZE_LIMIT // (1024 * 1024)} MB "
+                                f"and {maximum // (1024 * 1024)} MB."
+                            )
+                        },
                         status=status.HTTP_400_BAD_REQUEST,
                     )
 

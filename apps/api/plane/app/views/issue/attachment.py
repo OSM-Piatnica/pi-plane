@@ -29,6 +29,7 @@ from plane.settings.storage import S3Storage
 from plane.utils.path_validator import sanitize_filename
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
 from plane.utils.host import base_host
+from plane.utils.file_size_limit import get_file_size_limit
 
 
 class IssueAttachmentEndpoint(BaseAPIView):
@@ -133,7 +134,7 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
             )
         name = sanitize_filename(request.data.get("name")) or "unnamed"
         type = request.data.get("type", False)
-        size = int(request.data.get("size", settings.FILE_SIZE_LIMIT))
+        size = int(request.data.get("size", get_file_size_limit()))
 
         if not type or type not in settings.ATTACHMENT_MIME_TYPES:
             return Response(
@@ -151,7 +152,7 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
         asset_key = f"{workspace.id}/{uuid.uuid4().hex}-{name}"
 
         # Get the size limit
-        size_limit = min(size, settings.FILE_SIZE_LIMIT)
+        size_limit = min(size, get_file_size_limit())
 
         # Create a File Asset
         asset = FileAsset.objects.create(
