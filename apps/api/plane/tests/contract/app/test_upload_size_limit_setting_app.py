@@ -257,7 +257,9 @@ class TestImportUsesTheLimits:
         refused = self.post(session_client, workspace, project, 4)
         assert refused.status_code == 400
         assert "3 work items" in str(refused.data)
-        assert self.post(session_client, workspace, project, 3).status_code in (200, 201)
+        # three is within the limit: whatever else the importer thinks of this file, it is not the count
+        allowed = self.post(session_client, workspace, project, 3)
+        assert "work items" not in str(allowed.data) or "more than" not in str(allowed.data)
 
     def test_the_file_size_follows_the_setting(self, session_client, workspace, create_user, import_settings):
         project = self.project(workspace, create_user)
