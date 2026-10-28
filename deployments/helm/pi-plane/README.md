@@ -95,7 +95,7 @@ objectStorage: { region: eu-central-1, bucket: plane-uploads, bundled: { enabled
 
 Percent-encode special characters in passwords inside URLs. For an S3 store other than the bundled MinIO the browser
 uploads straight to it through presigned URLs, so `objectStorage.external.endpoint` must be reachable from there
-(leave it empty for AWS S3). The complete example is `examples/production-values.yaml`.
+(leave it empty for AWS S3). For Google Cloud Storage use `endpoint: https://storage.googleapis.com`, `region: auto` and an HMAC key as the access keys in the credentials Secret; the bucket, roles and CORS rules are described in the [Docker guide](../../cli/community/README.md#using-your-own-object-storage-aws-s3-google-cloud-storage). The complete example is `examples/production-values.yaml`.
 
 Also consider `networkPolicy.enabled` (ingress rules: everything in the release talks to itself, only the public
 components accept the ingress controller; set `networkPolicy.ingressNamespace` to the namespace your ingress controller
