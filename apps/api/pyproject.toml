@@ -80,6 +80,7 @@ dependencies = [
   # html sanitizer
   "nh3==0.3.7",
   "mistune==3.4.0",
+  "azure-storage-blob==12.31.0",
 ]
 
 [dependency-groups]

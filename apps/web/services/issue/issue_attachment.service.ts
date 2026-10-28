@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { AxiosRequestConfig } from "axios";
 import { API_BASE_URL } from "@plane/constants";
 // plane types
-import { getFileMetaDataForUpload, generateFileUploadPayload } from "@plane/services";
+import { getFileMetaDataForUpload } from "@plane/services";
 import type { TIssueAttachment, TIssueAttachmentUploadResponse, TIssueServiceType } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // services
@@ -54,12 +55,7 @@ export class IssueAttachmentService extends APIService {
     )
       .then(async (response) => {
         const signedURLResponse: TIssueAttachmentUploadResponse = response?.data;
-        const fileUploadPayload = generateFileUploadPayload(signedURLResponse, file);
-        await this.fileUploadService.uploadFile(
-          signedURLResponse.upload_data.url,
-          fileUploadPayload,
-          uploadProgressHandler
-        );
+        await this.fileUploadService.uploadSignedFile(signedURLResponse, file, uploadProgressHandler);
         await this.updateIssueAttachmentUploadStatus(workspaceSlug, projectId, issueId, signedURLResponse.asset_id);
         return signedURLResponse.attachment;
       })

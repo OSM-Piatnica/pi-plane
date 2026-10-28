@@ -59,7 +59,7 @@ from plane.db.models import (
     ProjectIssueType,
     ProjectMember,
 )
-from plane.settings.storage import S3Storage
+from plane.settings.storage import get_storage
 from plane.utils.path_validator import sanitize_filename
 
 log = logging.getLogger(__name__)
@@ -520,7 +520,7 @@ def copy_description_images(*, source_project_id, target_project, ids, tally: Co
     if not ids:
         return
 
-    storage = S3Storage()
+    storage = get_storage()
     copied = removed = 0
     for target_issue in Issue.objects.filter(id__in=list(ids.values()), description_html__contains="image-component"):
         asset_ids = extract_asset_ids(target_issue.description_html, "image-component")

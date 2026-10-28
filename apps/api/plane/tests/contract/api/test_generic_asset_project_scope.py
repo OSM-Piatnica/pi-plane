@@ -32,7 +32,7 @@ from plane.db.models import (
     WorkspaceMember,
 )
 
-S3_STORAGE_PATH = "plane.api.views.asset.S3Storage"
+S3_STORAGE_PATH = "plane.api.views.asset.get_storage"
 
 
 def asset_detail_url(slug, asset_id):

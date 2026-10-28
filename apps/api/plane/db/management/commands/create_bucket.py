@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -18,6 +19,10 @@ class Command(BaseCommand):
     help = "Create the default bucket for the instance"
 
     def handle(self, *args, **options):
+        if os.environ.get("STORAGE_PROVIDER", "s3").strip().lower() == "azure":
+            self.create_azure_container()
+            return
+
         # Create a session using the credentials from Django settings
         try:
             s3_client = boto3.client(
@@ -61,4 +66,17 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.ERROR(f"Failed to check bucket: {e}"))
         except Exception as ex:
             # Handle any other exception
+            self.stdout.write(self.style.ERROR(f"An error occurred: {ex}"))
+
+    def create_azure_container(self):
+        from plane.utils.azure_storage import AzureBlobStorage
+
+        try:
+            storage = AzureBlobStorage()
+            self.stdout.write(self.style.NOTICE("Checking container..."))
+            if storage.ensure_container():
+                self.stdout.write(self.style.SUCCESS(f"Container '{storage.container_name}' created successfully."))
+            else:
+                self.stdout.write(self.style.SUCCESS(f"Container '{storage.container_name}' exists."))
+        except Exception as ex:
             self.stdout.write(self.style.ERROR(f"An error occurred: {ex}"))

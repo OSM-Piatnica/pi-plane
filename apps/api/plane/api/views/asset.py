@@ -17,7 +17,7 @@ from drf_spectacular.utils import OpenApiExample, OpenApiRequest
 
 # Module Imports
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
-from plane.settings.storage import S3Storage
+from plane.settings.storage import get_storage
 from plane.utils.path_validator import sanitize_filename
 from plane.db.models import FileAsset, Project, ProjectMember, User, Workspace
 from plane.app.permissions import WorkspaceUserPermission
@@ -164,7 +164,7 @@ class UserAssetEndpoint(BaseAPIView):
         )
 
         # Get the presigned URL
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         # Generate a presigned URL to share an S3 object
         presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size_limit)
         # Return the presigned URL
@@ -337,7 +337,7 @@ class UserServerAssetEndpoint(BaseAPIView):
         )
 
         # Get the presigned URL
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         # Generate a presigned URL to share an S3 object
         presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size_limit)
         # Return the presigned URL
@@ -455,7 +455,7 @@ class GenericAssetEndpoint(BaseAPIView):
 
             # Generate presigned URL for GET. Inline only for an allow-listed image type, which S3Storage
             # pins as the response Content-Type; any other type downloads.
-            storage = S3Storage(request=request)
+            storage = get_storage(request=request)
             presigned_url = storage.generate_presigned_url(
                 object_name=asset.asset.name,
                 filename=asset.attributes.get("name"),
@@ -607,7 +607,7 @@ class GenericAssetEndpoint(BaseAPIView):
         )
 
         # Get the presigned URL
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size_limit)
 
         return Response(

@@ -8,7 +8,7 @@ See the LICENSE file for details.
 
 ## What is kept in the storage
 
-The bucket behind `AWS_S3_ENDPOINT_URL` (the bundled MinIO-compatible service by default, or any S3 service you point it at) holds files only:
+The storage (the bucket behind `AWS_S3_ENDPOINT_URL`: the bundled MinIO-compatible service by default, or any S3 service you point it at; or an Azure Blob Storage container, see [Azure Blob Storage](azure-blob-storage.md)) holds files only:
 
 - work item attachments, and images pasted into work item descriptions, drafts and comments;
 - images and files inserted into Pages;
@@ -26,7 +26,7 @@ One limit applies to every kind of upload above. It starts at `FILE_SIZE_LIMIT` 
 - It can be set from 1 MB up to `FILE_SIZE_LIMIT_MAX` (100 MiB by default), which is also the largest request body the bundled proxy accepts. Raise `FILE_SIZE_LIMIT_MAX` in `plane.env` (Docker), `app.fileSizeLimitMax` (Helm) or with `-e` (all-in-one) to allow more, and keep it at least as large as `FILE_SIZE_LIMIT`. If you run another proxy or ingress in front, it has to allow the same size.
 - "Use the default" next to a field removes that setting, and the `FILE_SIZE_LIMIT` of the environment applies again.
 - People see the limit in the upload messages of the web app. They pick up a new value when they reload the page.
-- An object store can have limits of its own. The storage also enforces the size announced for each upload.
+- An object store can have limits of its own. An S3-compatible store enforces the size announced for each upload itself; Azure Blob Storage cannot, so there a file over the announced size is deleted right after it is uploaded.
 
 ## Spreadsheet imports
 

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -135,6 +136,10 @@ class Command(BaseCommand):
         return
 
     def handle(self, *args, **options):
+        if os.environ.get("STORAGE_PROVIDER", "s3").strip().lower() == "azure":
+            self.stdout.write("Azure Blob Storage has no bucket policy to update.")
+            return
+
         # Create a session using the credentials from Django settings
 
         # Check if the bucket exists

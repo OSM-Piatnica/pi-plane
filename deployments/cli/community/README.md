@@ -186,7 +186,7 @@ Some endpoints are rate-limited per client IP. Two settings in `plane.env` contr
 
 Restart the services after changing these values.
 
-#### Using your own object storage (AWS S3, Google Cloud Storage)
+#### Using your own object storage (AWS S3, Google Cloud Storage, Azure Blob Storage)
 
 Files (attachments, images, avatars, covers, exports) go to the bundled `plane-minio` service, which keeps them in a Docker volume. To use an S3 service instead, set these in `plane.env` and restart:
 
@@ -226,6 +226,18 @@ The bundled service can stay; it is then unused. (You can comment it out in `doc
 Releases up to 2.1.0 cannot write export files to Google Cloud Storage (the export fails with `SignatureDoesNotMatch`); later releases can.
 
 Other S3-compatible services (Ceph, Cloudflare R2, Backblaze B2, Wasabi, and so on) take the same settings. They were not tested here; presigned uploads and CORS are where they differ.
+
+**Azure Blob Storage** is not S3-compatible; it has its own storage mode, selected with `STORAGE_PROVIDER=azure`:
+
+```bash
+STORAGE_PROVIDER=azure
+USE_MINIO=0
+AZURE_STORAGE_ACCOUNT_NAME=your-account
+AZURE_STORAGE_ACCOUNT_KEY=...       # or AZURE_STORAGE_CONNECTION_STRING instead of both
+AZURE_STORAGE_CONTAINER=uploads     # created at start if it does not exist
+```
+
+The container needs CORS rules for your `WEB_URL`, and a file larger than the size announced for its upload is deleted right after the upload. The full guide, including the CORS command, other clouds and what was tested (the Azurite emulator only, not a real Azure account), is [Azure Blob Storage](../../../docs/azure-blob-storage.md). Not available in the all-in-one image.
 
 ---
 

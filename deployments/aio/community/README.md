@@ -23,7 +23,7 @@ The AIO image requires these external services to be running:
 - **PostgreSQL Database**: For data storage
 - **Redis**: For caching and session management
 - **RabbitMQ**: For message queuing
-- **S3-Compatible Storage**: For file uploads (AWS S3, Google Cloud Storage or MinIO; for Google Cloud Storage see the [Docker guide](../../cli/community/README.md#using-your-own-object-storage-aws-s3-google-cloud-storage))
+- **S3-Compatible Storage**: For file uploads (AWS S3, Google Cloud Storage or MinIO; Azure Blob Storage is not supported in this image; for Google Cloud Storage see the [Docker guide](../../cli/community/README.md#using-your-own-object-storage-aws-s3-google-cloud-storage-azure-blob-storage))
 
 ### Required Environment Variables
 

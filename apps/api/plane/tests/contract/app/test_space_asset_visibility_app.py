@@ -25,7 +25,7 @@ SIGNED = "https://storage.test/signed"
 
 @pytest.fixture(autouse=True)
 def _storage():
-    with mock.patch("plane.space.views.asset.S3Storage") as storage:
+    with mock.patch("plane.space.views.asset.get_storage") as storage:
         storage.return_value.generate_presigned_url.return_value = SIGNED
         yield
 

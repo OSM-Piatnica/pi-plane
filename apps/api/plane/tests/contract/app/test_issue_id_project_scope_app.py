@@ -51,7 +51,7 @@ def _no_side_effects(db):
         mock.patch("plane.app.views.issue.link.base_host", return_value="http://testserver"),
         mock.patch("plane.app.views.issue.attachment.issue_activity"),
         mock.patch("plane.app.views.issue.attachment.base_host", return_value="http://testserver"),
-        mock.patch("plane.app.views.issue.attachment.S3Storage") as s3,
+        mock.patch("plane.app.views.issue.attachment.get_storage") as s3,
         mock.patch("plane.app.views.issue.reaction.issue_activity"),
         mock.patch("plane.app.views.issue.reaction.base_host", return_value="http://testserver"),
         mock.patch("plane.app.views.issue.comment.issue_activity"),

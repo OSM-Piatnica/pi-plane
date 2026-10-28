@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -16,6 +17,7 @@ from celery import shared_task
 
 # Module imports
 from plane.db.models import ExporterHistory
+from plane.settings.storage import get_storage
 from plane.utils.s3_config import s3_client_config
 
 
@@ -25,6 +27,14 @@ def delete_old_s3_link():
     expired_exporter_history = ExporterHistory.objects.filter(
         Q(url__isnull=False) & Q(created_at__lte=timezone.now() - timedelta(days=8))
     ).values_list("key", "id")
+    if settings.STORAGE_PROVIDER == "azure":
+        storage = get_storage()
+        for file_name, exporter_id in expired_exporter_history:
+            if file_name:
+                storage.delete_files([file_name])
+            ExporterHistory.objects.filter(id=exporter_id).update(url=None)
+        return
+
     if settings.USE_MINIO:
         s3 = boto3.client(
             "s3",

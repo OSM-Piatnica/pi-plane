@@ -231,6 +231,9 @@ rabbitmq:
     urlSecret: { name: "", key: "" }
 
 objectStorage:
+  # s3: any S3-compatible store (the bundled MinIO, AWS S3, Google Cloud Storage, ...); azure: Azure Blob Storage,
+  # which needs bundled.enabled=false and the azure values below
+  provider: s3
   bucket: uploads
   # S3 region; empty for the bundled MinIO
   region: ""
@@ -247,6 +250,17 @@ objectStorage:
   # be reachable from there (or empty for AWS S3 itself).
   external:
     endpoint: ""
+  # With provider=azure. The container is objectStorage.bucket. Browsers upload to and download from it directly with
+  # signed URLs, so the container needs CORS rules for the public URL (PUT, GET, HEAD; headers x-ms-*, content-type).
+  # See docs/azure-blob-storage.md.
+  azure:
+    accountName: ""
+    # Empty means https://<accountName>.blob.core.windows.net
+    endpoint: ""
+    # What a browser can reach when it is not the address the API uses (a private endpoint, an emulator)
+    publicEndpoint: ""
+    # The account key, in a Secret you own
+    accountKeySecret: { name: "", key: AZURE_STORAGE_ACCOUNT_KEY }
 
 # --------------------------------------------------------------------------------------------------------------
 # Hardening and availability

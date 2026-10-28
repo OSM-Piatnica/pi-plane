@@ -144,6 +144,13 @@ app.kubernetes.io/component: {{ .component }}
     secretKeyRef:
       name: {{ include "pi-plane.secretName" . }}
       key: AWS_SECRET_ACCESS_KEY
+{{- if eq .Values.objectStorage.provider "azure" }}
+- name: AZURE_STORAGE_ACCOUNT_KEY
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.objectStorage.azure.accountKeySecret.name | quote }}
+      key: {{ .Values.objectStorage.azure.accountKeySecret.key | quote }}
+{{- end }}
 {{- end -}}
 
 {{/* Container security context of the application containers (the images run as root today, so no runAsNonRoot) */}}

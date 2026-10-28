@@ -25,7 +25,7 @@ from plane.app.serializers import IssueAttachmentSerializer
 from plane.db.models import FileAsset, Issue, Workspace
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.app.permissions import allow_permission, issue_hidden_from_guest, ROLE
-from plane.settings.storage import S3Storage
+from plane.settings.storage import get_storage
 from plane.utils.path_validator import sanitize_filename
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
 from plane.utils.host import base_host
@@ -167,7 +167,7 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
         )
 
         # Get the presigned URL
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
 
         # Generate a presigned URL to share an S3 object
         presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size_limit)
@@ -225,7 +225,7 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            storage = S3Storage(request=request)
+            storage = get_storage(request=request)
             presigned_url = storage.generate_presigned_url(
                 object_name=asset.asset.name,
                 disposition="attachment",
