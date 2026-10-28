@@ -249,6 +249,7 @@ objectStorage:
     endpoint: ""
   # With provider=azure. The container is objectStorage.bucket. Browsers upload to and download from it directly with
   # signed URLs, so the container needs CORS rules for the public URL (PUT, GET, HEAD; headers x-ms-*, content-type).
+  # See docs/azure-blob-storage.md.
   azure:
     accountName: ""
     # Empty means https://<accountName>.blob.core.windows.net
