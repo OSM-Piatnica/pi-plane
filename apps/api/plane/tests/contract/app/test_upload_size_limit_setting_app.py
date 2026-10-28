@@ -144,7 +144,7 @@ def issue(db, workspace, create_user):
 
 @pytest.mark.contract
 @pytest.mark.django_db
-@mock.patch("plane.app.views.issue.attachment.S3Storage")
+@mock.patch("plane.app.views.issue.attachment.get_storage")
 class TestNewUploads:
     def attach(self, client, workspace, issue, size):
         url = f"/api/assets/v2/workspaces/{workspace.slug}/projects/{issue.project_id}/issues/{issue.id}/attachments/"
