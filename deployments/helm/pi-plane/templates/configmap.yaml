@@ -38,6 +38,7 @@ data:
   MINIO_ENDPOINT_SSL: {{ include "pi-plane.sslTermination" . | quote }}
   # Integers go through printf: a bare number renders in exponent form (5.24288e+06), which Django cannot parse
   FILE_SIZE_LIMIT: {{ printf "%d" (int64 .Values.app.fileSizeLimit) | quote }}
+  FILE_SIZE_LIMIT_MAX: {{ printf "%d" (int64 (max .Values.app.fileSizeLimit .Values.app.fileSizeLimitMax)) | quote }}
   AUTHENTICATION_RATE_LIMIT: {{ .Values.app.authenticationRateLimit | quote }}
   API_KEY_RATE_LIMIT: {{ .Values.app.apiKeyRateLimit | quote }}
   ANON_RATE_LIMIT: {{ .Values.app.anonRateLimit | quote }}

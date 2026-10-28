@@ -403,7 +403,10 @@ CELERY_IMPORTS = (
 WORK_ITEM_DUE_REMINDER_TIMEZONE = os.environ.get("WORK_ITEM_DUE_REMINDER_TIMEZONE", "Europe/Warsaw")
 WORK_ITEM_DUE_REMINDER_HOUR = int(os.environ.get("WORK_ITEM_DUE_REMINDER_HOUR", 7))
 
+# The default for the largest upload (bytes); the instance administrator can change it in the admin app
 FILE_SIZE_LIMIT = int(os.environ.get("FILE_SIZE_LIMIT", 5242880))
+# The most the administrator may set it to. The proxy in front of the API refuses a request body above this.
+FILE_SIZE_LIMIT_MAX = int(os.environ.get("FILE_SIZE_LIMIT_MAX", 104857600))
 
 # Unsplash Access key
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")

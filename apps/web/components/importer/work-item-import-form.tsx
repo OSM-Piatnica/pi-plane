@@ -18,6 +18,7 @@ import { Collapsible } from "@makeplane/propel/components/collapsible";
 import { ProjectSelect } from "@/components/dropdowns/project/project-select";
 import { getApiErrorMessage, type ApiErrorLike } from "@/helpers/api-error";
 import { getProjectImportLink, MAX_PROJECT_CSV_SIZE_BYTES } from "@/helpers/project-csv-helpers";
+import { useInstance } from "@/hooks/store/use-instance";
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
 import type { TWorkItemImportOptions } from "@/services/project/project-import.service";
@@ -75,6 +76,9 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
   const { mutateServices } = props;
   const { workspaceSlug } = useParams();
   const { t } = useTranslation();
+  const { config } = useInstance();
+  // the administrator sets the limit; the constant is the default until the instance answers
+  const maxImportBytes = config?.import_file_size_limit ?? MAX_PROJECT_CSV_SIZE_BYTES;
   const { allowPermissions } = useUserPermissions();
   const { joinedProjectIds } = useProject();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -111,8 +115,8 @@ export const WorkItemImportForm = observer(function WorkItemImportForm(props: Pr
       return;
     }
 
-    if (selectedFile.size > MAX_PROJECT_CSV_SIZE_BYTES) {
-      const maxMb = Math.round(MAX_PROJECT_CSV_SIZE_BYTES / (1024 * 1024));
+    if (selectedFile.size > maxImportBytes) {
+      const maxMb = Math.round(maxImportBytes / (1024 * 1024));
       setToast({
         type: "error",
         title: t("toast.error"),

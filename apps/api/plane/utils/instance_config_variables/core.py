@@ -35,6 +35,27 @@ workspace_management_config_variables = [
         "is_encrypted": False,
     },
     {
+        # Largest upload in bytes, set in the admin app. Empty means the FILE_SIZE_LIMIT environment default.
+        "key": "FILE_SIZE_LIMIT",
+        "value": "",
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
+    {
+        # Largest spreadsheet for a work item import, in bytes, set in the admin app. Empty means the default.
+        "key": "IMPORT_FILE_SIZE_LIMIT",
+        "value": "",
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
+    {
+        # Most work items in one import, set in the admin app. Empty means the default.
+        "key": "IMPORT_MAX_WORK_ITEMS",
+        "value": "",
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
+    {
         # Workspace UUID that gets compact `/i/PROJ-123` work item links; empty turns them off.
         "key": "INSTANCE_DEFAULT_WORKSPACE_ID",
         "value": os.environ.get("INSTANCE_DEFAULT_WORKSPACE_ID", ""),

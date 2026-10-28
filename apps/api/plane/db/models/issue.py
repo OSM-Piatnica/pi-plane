@@ -19,6 +19,7 @@ from django import apps
 # Module imports
 from plane.utils.html_processor import strip_tags
 from plane.utils.path_validator import sanitize_filename
+from plane.utils.file_size_limit import get_file_size_limit
 from plane.db.mixins import SoftDeletionManager, ChangeTrackerMixin
 from plane.utils.exception_logger import log_exception
 from .project import ProjectBaseModel
@@ -396,8 +397,8 @@ def get_upload_path(instance, filename):
 
 def file_size(value):
     # File limit check is only for cloud hosted
-    if value.size > settings.FILE_SIZE_LIMIT:
-        raise ValidationError("File too large. Size should not exceed 5 MB.")
+    if value.size > get_file_size_limit():
+        raise ValidationError("File too large.")
 
 
 class IssueAttachment(ProjectBaseModel):

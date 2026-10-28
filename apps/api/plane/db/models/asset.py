@@ -1,17 +1,18 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
 from uuid import uuid4
 
 # Django import
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 
 # Module import
 from plane.utils.path_validator import sanitize_filename
+from plane.utils.file_size_limit import get_file_size_limit
 
 from .base import BaseModel
 from .project import ProjectMember
@@ -25,8 +26,8 @@ def get_upload_path(instance, filename):
 
 
 def file_size(value):
-    if value.size > settings.FILE_SIZE_LIMIT:
-        raise ValidationError("File too large. Size should not exceed 5 MB.")
+    if value.size > get_file_size_limit():
+        raise ValidationError("File too large.")
 
 
 class FileAsset(BaseModel):

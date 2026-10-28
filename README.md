@@ -70,7 +70,7 @@ Beyond Plane Community Edition, Pi-Plane adds, among other things:
 - **Access and visibility:** Secret, Private and Open projects with access requests, and [sharing a project on the web](docs/web-sharing.md).
 - **Planning:** relations between work items in several ways, with lag and without loops; project rules (parents stay open until their sub-items are done, blocked items cannot start, who may change an item); [weekend days and durations in working days](docs/working-days.md); dates rolled up from sub-work items on the timeline.
 - **Tracking:** time tracking with worklogs and time estimates; negated filters; choosing the columns of an export, in the order of your list view.
-- **Setup:** [single sign-on with OpenID Connect](docs/sso.md); [duplicating a project's configuration](docs/duplicating-projects.md); [compact work item links](docs/workspace-short-links.md); [Markdown in descriptions and comments](docs/markdown-in-descriptions.md); email in the recipient's language, with digests; a Helm chart.
+- **Setup:** [single sign-on with OpenID Connect](docs/sso.md); [duplicating a project's configuration](docs/duplicating-projects.md); [compact work item links](docs/workspace-short-links.md); [Markdown in descriptions and comments](docs/markdown-in-descriptions.md); [file uploads and their size limit](docs/file-uploads.md); email in the recipient's language, with digests; a Helm chart.
 
 ## 🛠️ Local development
 

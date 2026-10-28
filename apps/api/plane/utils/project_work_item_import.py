@@ -35,6 +35,7 @@ from plane.db.models import (
 )
 from plane.db.models.project import ROLE
 from plane.utils.html_processor import strip_tags
+from plane.utils.import_limits import get_import_max_work_items
 from plane.utils.issue_relation_constraints import MAX_LAG_DAYS, TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
 from plane.utils.issue_relation_types import ALL_RELATION_NAMES, MIRRORED_RELATIONS, SYMMETRIC_RELATIONS
@@ -46,7 +47,6 @@ from plane.utils.work_item_duration import (
     to_work_item_date,
 )
 
-MAX_WORK_ITEMS_IMPORT = 500
 ALLOWED_PRIORITIES = frozenset({"urgent", "high", "medium", "low", "none"})
 DEFAULT_LABEL_COLOR = "#858585"
 ISO_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -452,12 +452,12 @@ def import_work_items_into_project(
     if not rows:
         return {"created_work_items": 0, "warnings": warnings}
 
-    if len(rows) > MAX_WORK_ITEMS_IMPORT:
+    max_work_items = get_import_max_work_items()
+    if len(rows) > max_work_items:
         raise ValueError(
             {
                 "error": (
-                    f"Import contains more than {MAX_WORK_ITEMS_IMPORT} work items. "
-                    "Reduce the file size or split the import."
+                    f"Import contains more than {max_work_items} work items. Reduce the file size or split the import."
                 )
             }
         )
