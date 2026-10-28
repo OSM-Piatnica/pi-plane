@@ -13,10 +13,10 @@ from django.db.models import Q
 
 # Third party imports
 from celery import shared_task
-from botocore.client import Config
 
 # Module imports
 from plane.db.models import ExporterHistory
+from plane.utils.s3_config import s3_client_config
 
 
 @shared_task
@@ -31,7 +31,7 @@ def delete_old_s3_link():
             endpoint_url=settings.AWS_S3_ENDPOINT_URL,
             aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            config=Config(signature_version="s3v4"),
+            config=s3_client_config(),
         )
     else:
         s3 = boto3.client(
@@ -39,7 +39,7 @@ def delete_old_s3_link():
             region_name=settings.AWS_REGION,
             aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            config=Config(signature_version="s3v4"),
+            config=s3_client_config(),
         )
 
     for file_name, exporter_id in expired_exporter_history:
