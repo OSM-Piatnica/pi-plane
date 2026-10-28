@@ -22,7 +22,7 @@ from plane.bgtasks.user_activation_email_task import user_activation_email
 # Module imports
 from plane.db.models import FileAsset, Profile, User, WorkspaceMemberInvite
 from plane.license.utils.instance_value import get_configuration_value
-from plane.settings.storage import S3Storage
+from plane.settings.storage import get_storage
 from plane.utils.exception_logger import log_exception
 from plane.utils.host import base_host
 from plane.utils.ip_address import get_client_ip
@@ -224,7 +224,7 @@ class Adapter:
             # Generate unique filename
             filename = f"{uuid.uuid4().hex}-user-avatar.{extension}"
 
-            storage = S3Storage(request=self.request)
+            storage = get_storage(request=self.request)
 
             # Create file-like object from the size-bounded buffer
             file_obj = BytesIO(content)
@@ -284,7 +284,7 @@ class Adapter:
         try:
             if user.avatar_asset:
                 asset = FileAsset.objects.get(pk=user.avatar_asset_id, user_id=user.id)
-                storage = S3Storage(request=self.request)
+                storage = get_storage(request=self.request)
                 storage.delete_files(object_names=[asset.asset.name])
 
                 # Delete the user avatar

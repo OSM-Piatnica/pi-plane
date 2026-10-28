@@ -728,6 +728,13 @@
     "objectStorage": {
       "type": "object",
       "properties": {
+        "provider": {
+          "type": "string",
+          "enum": [
+            "s3",
+            "azure"
+          ]
+        },
         "bucket": {
           "type": "string",
           "pattern": "^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$"

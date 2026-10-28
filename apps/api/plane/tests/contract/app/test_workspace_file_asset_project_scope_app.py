@@ -32,7 +32,7 @@ from plane.db.models import (
     WorkspaceMember,
 )
 
-S3_STORAGE_PATH = "plane.app.views.asset.v2.S3Storage"
+S3_STORAGE_PATH = "plane.app.views.asset.v2.get_storage"
 
 
 @pytest.fixture

@@ -27,7 +27,7 @@ from rest_framework.test import APIClient
 
 from plane.db.models import FileAsset, Project, ProjectMember, User, WorkspaceMember
 
-S3_STORAGE_PATH = "plane.app.views.asset.v2.S3Storage"
+S3_STORAGE_PATH = "plane.app.views.asset.v2.get_storage"
 
 
 def download_url(slug, asset_id):

@@ -621,7 +621,7 @@ def source_with_image(db, workspace, source, create_user):
     return source
 
 
-STORAGE = "plane.utils.project_copy_work_items.S3Storage"
+STORAGE = "plane.utils.project_copy_work_items.get_storage"
 SYNC = "plane.utils.project_copy_work_items.sync_with_external_service"
 
 

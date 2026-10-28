@@ -84,7 +84,7 @@ def _upload_payload(**overrides):
 
 @pytest.fixture(autouse=True)
 def _no_storage():
-    with mock.patch("plane.space.views.asset.S3Storage") as storage:
+    with mock.patch("plane.space.views.asset.get_storage") as storage:
         storage.return_value.generate_presigned_post.return_value = {"url": "https://storage.test/", "fields": {}}
         yield
 

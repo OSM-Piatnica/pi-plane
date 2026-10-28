@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { AxiosRequestConfig } from "axios";
 // plane types
 import { API_BASE_URL } from "@plane/constants";
-import { getFileMetaDataForUpload, generateFileUploadPayload } from "@plane/services";
+import { getFileMetaDataForUpload } from "@plane/services";
 import type { EFileAssetType, TFileEntityInfo, TFileSignedURLResponse } from "@plane/types";
 import { getAssetIdFromUrl } from "@plane/utils";
 // helpers
@@ -82,12 +83,7 @@ export class FileService extends APIService {
     })
       .then(async (response) => {
         const signedURLResponse: TFileSignedURLResponse = response?.data;
-        const fileUploadPayload = generateFileUploadPayload(signedURLResponse, file);
-        await this.fileUploadService.uploadFile(
-          signedURLResponse.upload_data.url,
-          fileUploadPayload,
-          uploadProgressHandler
-        );
+        await this.fileUploadService.uploadSignedFile(signedURLResponse, file, uploadProgressHandler);
         await this.updateWorkspaceAssetUploadStatus(workspaceSlug.toString(), signedURLResponse.asset_id);
         return signedURLResponse;
       })
@@ -159,12 +155,7 @@ export class FileService extends APIService {
     })
       .then(async (response) => {
         const signedURLResponse: TFileSignedURLResponse = response?.data;
-        const fileUploadPayload = generateFileUploadPayload(signedURLResponse, file);
-        await this.fileUploadService.uploadFile(
-          signedURLResponse.upload_data.url,
-          fileUploadPayload,
-          uploadProgressHandler
-        );
+        await this.fileUploadService.uploadSignedFile(signedURLResponse, file, uploadProgressHandler);
         await this.updateProjectAssetUploadStatus(workspaceSlug, projectId, signedURLResponse.asset_id);
         return signedURLResponse;
       })
@@ -189,8 +180,7 @@ export class FileService extends APIService {
     })
       .then(async (response) => {
         const signedURLResponse: TFileSignedURLResponse = response?.data;
-        const fileUploadPayload = generateFileUploadPayload(signedURLResponse, file);
-        await this.fileUploadService.uploadFile(signedURLResponse.upload_data.url, fileUploadPayload);
+        await this.fileUploadService.uploadSignedFile(signedURLResponse, file);
         await this.updateUserAssetUploadStatus(signedURLResponse.asset_id);
         return signedURLResponse;
       })

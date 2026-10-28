@@ -26,6 +26,7 @@ data:
   LIVE_BASE_URL: {{ $publicUrl | quote }}
   LIVE_BASE_PATH: "/live"
   # Object storage
+  STORAGE_PROVIDER: {{ .Values.objectStorage.provider | quote }}
   USE_MINIO: {{ ternary "1" "0" .Values.objectStorage.bundled.enabled | quote }}
   AWS_S3_BUCKET_NAME: {{ .Values.objectStorage.bucket | quote }}
   AWS_REGION: {{ .Values.objectStorage.region | quote }}
@@ -33,6 +34,25 @@ data:
   AWS_S3_ENDPOINT_URL: {{ printf "http://%s:9000" (include "pi-plane.minioHost" .) | quote }}
   {{- else if .Values.objectStorage.external.endpoint }}
   AWS_S3_ENDPOINT_URL: {{ .Values.objectStorage.external.endpoint | quote }}
+  {{- end }}
+  {{- if eq .Values.objectStorage.provider "azure" }}
+  {{- if .Values.objectStorage.bundled.enabled }}
+  {{- fail "objectStorage.provider=azure needs objectStorage.bundled.enabled=false" }}
+  {{- end }}
+  {{- if not .Values.objectStorage.azure.accountName }}
+  {{- fail "objectStorage.provider=azure needs objectStorage.azure.accountName" }}
+  {{- end }}
+  {{- if not .Values.objectStorage.azure.accountKeySecret.name }}
+  {{- fail "objectStorage.provider=azure needs objectStorage.azure.accountKeySecret.name" }}
+  {{- end }}
+  AZURE_STORAGE_ACCOUNT_NAME: {{ .Values.objectStorage.azure.accountName | quote }}
+  AZURE_STORAGE_CONTAINER: {{ .Values.objectStorage.bucket | quote }}
+  {{- with .Values.objectStorage.azure.endpoint }}
+  AZURE_STORAGE_ENDPOINT: {{ . | quote }}
+  {{- end }}
+  {{- with .Values.objectStorage.azure.publicEndpoint }}
+  AZURE_STORAGE_PUBLIC_ENDPOINT: {{ . | quote }}
+  {{- end }}
   {{- end }}
   # TLS ends at the ingress: presigned upload URLs must say https
   MINIO_ENDPOINT_SSL: {{ include "pi-plane.sslTermination" . | quote }}

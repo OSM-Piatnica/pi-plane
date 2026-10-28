@@ -52,7 +52,7 @@ class TestCopyS3Objects:
         )
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.copy_s3_object.S3Storage")
+    @patch("plane.bgtasks.copy_s3_object.get_storage")
     def test_copy_s3_objects_of_description_and_assets(
         self, mock_s3_storage, create_user, workspace, project, issue, file_asset
     ):
@@ -101,7 +101,7 @@ class TestCopyS3Objects:
         assert new_assets.count() == 4  # 2 original + 2 copied
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.copy_s3_object.S3Storage")
+    @patch("plane.bgtasks.copy_s3_object.get_storage")
     def test_copy_assets_successful(self, mock_s3_storage, workspace, project, issue, file_asset):
         """Test successful copying of assets"""
         # Arrange
@@ -135,7 +135,7 @@ class TestCopyS3Objects:
         assert new_asset.is_uploaded is True
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.copy_s3_object.S3Storage")
+    @patch("plane.bgtasks.copy_s3_object.get_storage")
     def test_copy_assets_empty_asset_ids(self, mock_s3_storage, workspace, project, issue):
         """Test copying with empty asset_ids list"""
         # Arrange
@@ -156,7 +156,7 @@ class TestCopyS3Objects:
         mock_storage_instance.copy_object.assert_not_called()
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.copy_s3_object.S3Storage")
+    @patch("plane.bgtasks.copy_s3_object.get_storage")
     def test_copy_assets_nonexistent_asset(self, mock_s3_storage, workspace, project, issue):
         """Test copying with non-existent asset ID"""
         # Arrange

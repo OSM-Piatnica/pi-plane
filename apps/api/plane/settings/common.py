@@ -334,6 +334,8 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 USE_MINIO = int(os.environ.get("USE_MINIO", 0)) == 1
 
 STORAGES = {"staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"}}
+# "s3" (any S3-compatible store, the default) or "azure" (Azure Blob Storage)
+STORAGE_PROVIDER = os.environ.get("STORAGE_PROVIDER", "s3").strip().lower()
 STORAGES["default"] = {"BACKEND": "plane.settings.storage.S3Storage"}
 # No fallback: when unset, boto3 resolves credentials through its default chain, as S3Storage does.
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")

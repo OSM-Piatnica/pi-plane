@@ -35,6 +35,7 @@ from plane.db.models import (
     ProjectUserProperty,
     WorkspaceMember,
 )
+from plane.settings.storage import get_storage
 from plane.utils.exception_logger import log_exception
 from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.porters.exporter import DataExporter
@@ -109,12 +110,28 @@ def _finalize_exporter_upload(*, token_id: str, file_name: str, presigned_url: s
     exporter_instance.save(update_fields=["status", "url", "key"])
 
 
+def _upload_to_azure(file_buffer, file_name, content_type, export_filename, expires_in, token_id) -> None:
+    """Write an export to Azure Blob Storage and keep a download link for it."""
+    storage = get_storage()
+    if not storage.upload_file(file_buffer, file_name, content_type):
+        _finalize_exporter_upload(token_id=token_id, file_name=file_name, presigned_url=None)
+        return
+    url = storage.generate_presigned_url(
+        file_name, expiration=expires_in, disposition="attachment", filename=export_filename
+    )
+    _finalize_exporter_upload(token_id=token_id, file_name=file_name, presigned_url=url)
+
+
 def upload_to_s3(zip_file: io.BytesIO, workspace_id: UUID, token_id: str, export_filename: str) -> None:
     """
     Upload a ZIP file to S3 and generate a presigned URL.
     """
     file_name = f"{workspace_id}/{export_filename}"
     expires_in = 7 * 24 * 60 * 60
+
+    if settings.STORAGE_PROVIDER == "azure":
+        _upload_to_azure(zip_file, file_name, "application/zip", export_filename, expires_in, token_id)
+        return
 
     upload_s3 = _get_s3_client()
     extra_args = {"ContentType": "application/zip"}
@@ -143,6 +160,10 @@ def upload_export_file_to_s3(
 ) -> None:
     file_name = f"{workspace_id}/{export_filename}"
     expires_in = 7 * 24 * 60 * 60
+
+    if settings.STORAGE_PROVIDER == "azure":
+        _upload_to_azure(file_buffer, file_name, content_type, export_filename, expires_in, token_id)
+        return
 
     upload_s3 = _get_s3_client()
     extra_args = {"ContentType": content_type}

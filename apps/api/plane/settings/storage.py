@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -216,3 +217,14 @@ class S3Storage(S3Boto3Storage):
         except ClientError as e:
             log_exception(e)
             return False
+
+
+def get_storage(request=None):
+    """The object storage the instance is configured for: Azure Blob Storage when ``STORAGE_PROVIDER=azure``, an
+    S3-compatible store (AWS S3, MinIO, Google Cloud Storage, ...) otherwise. Both answer to the same methods."""
+    if settings.STORAGE_PROVIDER == "azure":
+        # Imported here so an S3 installation never loads the Azure SDK
+        from plane.utils.azure_storage import AzureBlobStorage
+
+        return AzureBlobStorage(request=request)
+    return S3Storage(request=request)

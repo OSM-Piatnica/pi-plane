@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -20,7 +21,7 @@ from rest_framework.permissions import AllowAny
 # Module imports
 from ..base import BaseAPIView
 from plane.db.models import FileAsset, Workspace, Project, User, WorkspaceMember, ProjectMember
-from plane.settings.storage import S3Storage
+from plane.settings.storage import get_storage
 from plane.app.permissions import allow_permission, ROLE
 from plane.utils.cache import invalidate_cache_directly
 from plane.utils.path_validator import sanitize_filename
@@ -196,7 +197,7 @@ class UserAssetsV2Endpoint(BaseAPIView):
         )
 
         # Get the presigned URL
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         # Generate a presigned URL to share an S3 object
         presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size_limit)
         # Return the presigned URL
@@ -417,7 +418,7 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
         )
 
         # Get the presigned URL
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         # Generate a presigned URL to share an S3 object
         presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size_limit)
         # Return the presigned URL
@@ -503,7 +504,7 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
             )
 
         # Get the presigned URL
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         # Generate a presigned URL to share an S3 object
         signed_url = storage.generate_presigned_url(
             object_name=asset.asset.name,
@@ -544,7 +545,7 @@ class StaticFileAssetEndpoint(BaseAPIView):
 
         # Get the presigned URL. Inline only for an allow-listed image type, which S3Storage
         # pins as the response Content-Type; any other type downloads.
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         # Generate a presigned URL to share an S3 object
         signed_url = storage.generate_presigned_url(
             object_name=asset.asset.name,
@@ -659,7 +660,7 @@ class ProjectAssetEndpoint(BaseAPIView):
         )
 
         # Get the presigned URL
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         # Generate a presigned URL to share an S3 object
         presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size_limit)
         # Return the presigned URL
@@ -722,7 +723,7 @@ class ProjectAssetEndpoint(BaseAPIView):
             )
 
         # Get the presigned URL
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         # Generate a presigned URL to share an S3 object
         signed_url = storage.generate_presigned_url(
             object_name=asset.asset.name,
@@ -873,7 +874,7 @@ class DuplicateAssetEndpoint(BaseAPIView):
 
         workspace = Workspace.objects.get(slug=slug)
 
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         # Restrict the source asset to the same destination workspace to prevent cross-workspace asset copying
         original_asset = FileAsset.objects.filter(
             id=asset_id,
@@ -966,7 +967,7 @@ class WorkspaceAssetDownloadEndpoint(BaseAPIView):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         signed_url = storage.generate_presigned_url(
             object_name=asset.asset.name,
             disposition="attachment",
@@ -994,7 +995,7 @@ class ProjectAssetDownloadEndpoint(BaseAPIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         signed_url = storage.generate_presigned_url(
             object_name=asset.asset.name,
             disposition="attachment",
