@@ -186,6 +186,59 @@ Some endpoints are rate-limited per client IP. Two settings in `plane.env` contr
 
 Restart the services after changing these values.
 
+#### Using your own object storage (AWS S3, Google Cloud Storage, Azure Blob Storage)
+
+Files (attachments, images, avatars, covers, exports) go to the bundled `plane-minio` service, which keeps them in a Docker volume. To use an S3 service instead, set these in `plane.env` and restart:
+
+```bash
+USE_MINIO=0
+AWS_S3_ENDPOINT_URL=          # empty for AWS S3
+AWS_REGION=eu-central-1
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
+AWS_S3_BUCKET_NAME=your-bucket
+```
+
+The bundled service can stay; it is then unused. (You can comment it out in `docker-compose.yaml`, but an upgrade downloads a fresh copy of that file.) Browsers upload straight to the bucket, so the bucket needs CORS rules that allow your `WEB_URL` as an origin (methods `GET`, `POST`, `PUT`, `HEAD`). Files already in the bundled storage are not copied; move them yourself.
+
+**Google Cloud Storage** works through its S3-compatible API with an HMAC key. It was tested with attachments uploaded from the browser, avatars, exports, signed downloads, and copying, listing and deleting objects.
+
+1. Create a bucket (uniform access control; public access prevention can stay on).
+2. Create a service account and give it, on that bucket, the roles **Storage Object Admin** and **Storage Legacy Bucket Reader** (the second lets the API check at start that the bucket exists).
+3. Create an HMAC key for the service account (Cloud Storage → Settings → Interoperability, or `gcloud storage hmac create <service-account-email>`). Keep the secret; Google shows it once.
+4. Set the CORS rules, with your `WEB_URL` as the origin, for example `cors.json`:
+
+   ```json
+   [
+     {
+       "origin": ["https://plane.example.com"],
+       "method": ["GET", "POST", "PUT", "HEAD"],
+       "responseHeader": ["Content-Type", "x-goog-meta-*", "ETag"],
+       "maxAgeSeconds": 3600
+     }
+   ]
+   ```
+
+   and `gcloud storage buckets update gs://your-bucket --cors-file=cors.json`.
+
+5. In `plane.env`: `USE_MINIO=0`, `AWS_S3_ENDPOINT_URL=https://storage.googleapis.com`, `AWS_REGION=auto`, `AWS_ACCESS_KEY_ID=<HMAC access id>`, `AWS_SECRET_ACCESS_KEY=<HMAC secret>` and `AWS_S3_BUCKET_NAME=your-bucket`.
+
+Releases up to 2.1.0 cannot write export files to Google Cloud Storage (the export fails with `SignatureDoesNotMatch`); later releases can.
+
+Other S3-compatible services (Ceph, Cloudflare R2, Backblaze B2, Wasabi, and so on) take the same settings. They were not tested here; presigned uploads and CORS are where they differ.
+
+**Azure Blob Storage** is not S3-compatible; it has its own storage mode, selected with `STORAGE_PROVIDER=azure`:
+
+```bash
+STORAGE_PROVIDER=azure
+USE_MINIO=0
+AZURE_STORAGE_ACCOUNT_NAME=your-account
+AZURE_STORAGE_ACCOUNT_KEY=...       # or AZURE_STORAGE_CONNECTION_STRING instead of both
+AZURE_STORAGE_CONTAINER=uploads     # created at start if it does not exist
+```
+
+The container needs CORS rules for your `WEB_URL`, and a file larger than the size announced for its upload is deleted right after the upload. The full guide, including the CORS command, other clouds and what was tested (the Azurite emulator only, not a real Azure account), is [Azure Blob Storage](../../../docs/azure-blob-storage.md). Not available in the all-in-one image.
+
 ---
 
 ### Continue with setup - Start Server (Docker Compose)

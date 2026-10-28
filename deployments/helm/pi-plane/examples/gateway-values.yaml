@@ -3,7 +3,7 @@
 # See the LICENSE file for details.
 
 # Gateway API instead of an Ingress. The Gateway (listeners, TLS, request-body limit) is yours; the chart only
-# attaches HTTPRoutes to it. Allow request bodies of at least app.fileSizeLimit on it.
+# attaches HTTPRoutes to it. Allow request bodies of at least app.fileSizeLimitMax on it.
 publicUrl: https://plane.example.com
 
 ingress:

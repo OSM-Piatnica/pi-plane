@@ -7,7 +7,6 @@
 import uuid
 
 # Django imports
-from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.utils import timezone
 from django.db import IntegrityError
@@ -27,6 +26,7 @@ from plane.utils.cache import invalidate_cache_directly
 from plane.utils.path_validator import sanitize_filename
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
 from plane.throttles.asset import AssetRateThrottle
+from plane.utils.file_size_limit import get_file_size_limit
 
 
 def can_modify_asset(user, asset):
@@ -153,11 +153,11 @@ class UserAssetsV2Endpoint(BaseAPIView):
         # get the asset key
         name = sanitize_filename(request.data.get("name")) or "unnamed"
         type = request.data.get("type", "image/jpeg")
-        size = int(request.data.get("size", settings.FILE_SIZE_LIMIT))
+        size = int(request.data.get("size", get_file_size_limit()))
         entity_type = request.data.get("entity_type", False)
 
         # Check if the file size is within the limit
-        size_limit = min(size, settings.FILE_SIZE_LIMIT)
+        size_limit = min(size, get_file_size_limit())
 
         #  Check if the entity type is allowed
         if not entity_type or entity_type not in ["USER_AVATAR", "USER_COVER"]:
@@ -358,7 +358,7 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
     def post(self, request, slug):
         name = sanitize_filename(request.data.get("name")) or "unnamed"
         type = request.data.get("type", "image/jpeg")
-        size = int(request.data.get("size", settings.FILE_SIZE_LIMIT))
+        size = int(request.data.get("size", get_file_size_limit()))
         entity_type = request.data.get("entity_type")
         entity_identifier = request.data.get("entity_identifier", False)
 
@@ -398,7 +398,7 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
             )
 
         # Get the size limit
-        size_limit = min(settings.FILE_SIZE_LIMIT, size)
+        size_limit = min(get_file_size_limit(), size)
 
         # Get the workspace
         workspace = Workspace.objects.get(slug=slug)
@@ -610,7 +610,7 @@ class ProjectAssetEndpoint(BaseAPIView):
     def post(self, request, slug, project_id):
         name = sanitize_filename(request.data.get("name")) or "unnamed"
         type = request.data.get("type", "image/jpeg")
-        size = int(request.data.get("size", settings.FILE_SIZE_LIMIT))
+        size = int(request.data.get("size", get_file_size_limit()))
         entity_type = request.data.get("entity_type", "")
         entity_identifier = request.data.get("entity_identifier")
 
@@ -639,7 +639,7 @@ class ProjectAssetEndpoint(BaseAPIView):
             )
 
         # Get the size limit
-        size_limit = min(settings.FILE_SIZE_LIMIT, size)
+        size_limit = min(get_file_size_limit(), size)
 
         # Get the workspace
         workspace = Workspace.objects.get(slug=slug)

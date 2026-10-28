@@ -14,6 +14,7 @@ print_header(){
     echo "Other optional environment variables: "
     echo "    SITE_ADDRESS (default: ':80')"
     echo "    FILE_SIZE_LIMIT (default: 5242880)"
+    echo "    FILE_SIZE_LIMIT_MAX (default: 104857600)"
     echo "    APP_PROTOCOL (http or https)"
     echo "    APP_PORT (public port, if not 80/443)"
     echo ""
@@ -210,6 +211,7 @@ update_env_file(){
     # Optional environment variables
     update_env_value "SECRET_KEY" "$SECRET_KEY"
     update_env_value "FILE_SIZE_LIMIT" "${FILE_SIZE_LIMIT:-5242880}"
+    update_env_value "FILE_SIZE_LIMIT_MAX" "${FILE_SIZE_LIMIT_MAX:-104857600}"
     update_env_value "LIVE_SERVER_SECRET_KEY" "$LIVE_SERVER_SECRET_KEY"
 
     update_env_value "API_KEY_RATE_LIMIT" "${API_KEY_RATE_LIMIT:-60/minute}"

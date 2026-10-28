@@ -10,7 +10,6 @@ import zipfile
 from datetime import date
 from typing import List
 import boto3
-from botocore.client import Config
 from uuid import UUID
 
 # Third party imports
@@ -40,6 +39,7 @@ from plane.utils.exception_logger import log_exception
 from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.porters.exporter import DataExporter
 from plane.utils.porters.serializers.issue import IssueExportSerializer
+from plane.utils.s3_config import s3_client_config
 
 
 def create_zip_file(files: List[tuple[str, str | bytes]]) -> io.BytesIO:
@@ -89,7 +89,7 @@ def _get_s3_client(*, presign: bool = False):
     client_kwargs = {
         "aws_access_key_id": settings.AWS_ACCESS_KEY_ID,
         "aws_secret_access_key": settings.AWS_SECRET_ACCESS_KEY,
-        "config": Config(signature_version="s3v4"),
+        "config": s3_client_config(),
     }
     if endpoint_url:
         client_kwargs["endpoint_url"] = endpoint_url

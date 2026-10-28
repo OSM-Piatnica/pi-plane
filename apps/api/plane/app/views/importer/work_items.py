@@ -14,12 +14,10 @@ from plane.app.serializers import ExporterHistorySerializer
 from plane.db.models import ExporterHistory, Project, ProjectMember, Workspace
 from plane.utils.community_work_item_import import import_community_work_items_into_project
 from plane.utils.porters.importer import DataImporter
-from plane.utils.project_work_item_import import MAX_WORK_ITEMS_IMPORT, WorkItemImportOptions
+from plane.utils.import_limits import get_import_file_size_limit, get_import_max_work_items
+from plane.utils.project_work_item_import import WorkItemImportOptions
 
 from .. import BaseAPIView
-
-# Matches MAX_PROJECT_CSV_SIZE_BYTES in the web app so the browser and the server agree
-MAX_UPLOAD_BYTES = 15 * 1024 * 1024
 
 
 def _detect_format(filename: str, content: bytes) -> str:
@@ -94,15 +92,18 @@ class ImportWorkItemsEndpoint(BaseAPIView):
         )
 
         try:
-            content = upload.read()
-            if len(content) > MAX_UPLOAD_BYTES:
+            max_upload_bytes = get_import_file_size_limit()
+            # The size is known before the file is read, so a file that is far too large is never held in memory
+            if upload.size > max_upload_bytes:
                 history.status = "failed"
                 history.reason = "File too large."
                 history.save(update_fields=["status", "reason", "updated_at"])
                 return Response(
-                    {"error": f"File must be smaller than {MAX_UPLOAD_BYTES // (1024 * 1024)} MB."},
+                    {"error": f"File must be smaller than {max_upload_bytes // (1024 * 1024)} MB."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
+
+            content = upload.read()
 
             format_type = provider if provider in {"csv", "xlsx", "json"} else _detect_format(upload.name, content)
             history.provider = format_type
@@ -115,12 +116,13 @@ class ImportWorkItemsEndpoint(BaseAPIView):
                 history.save(update_fields=["status", "reason", "updated_at"])
                 return Response({"error": "File is empty."}, status=status.HTTP_400_BAD_REQUEST)
 
-            if len(rows) > MAX_WORK_ITEMS_IMPORT:
+            max_work_items = get_import_max_work_items()
+            if len(rows) > max_work_items:
                 history.status = "failed"
-                history.reason = f"File exceeds {MAX_WORK_ITEMS_IMPORT} work item rows."
+                history.reason = f"File exceeds {max_work_items} work item rows."
                 history.save(update_fields=["status", "reason", "updated_at"])
                 return Response(
-                    {"error": f"File cannot contain more than {MAX_WORK_ITEMS_IMPORT} work items."},
+                    {"error": f"File cannot contain more than {max_work_items} work items."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 

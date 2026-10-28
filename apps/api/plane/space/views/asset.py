@@ -7,7 +7,6 @@
 import uuid
 
 # Django imports
-from django.conf import settings
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.utils import timezone
@@ -21,6 +20,7 @@ from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
 from plane.db.models import DeployBoard, FileAsset, Issue, IssueComment
 from plane.settings.storage import get_storage
 from plane.utils.path_validator import sanitize_filename
+from plane.utils.file_size_limit import get_file_size_limit
 
 # Module imports
 from .base import BaseAPIView
@@ -124,7 +124,7 @@ class EntityAssetEndpoint(BaseAPIView):
         name = sanitize_filename(request.data.get("name")) or "unnamed"
         type = request.data.get("type", "image/jpeg")
         try:
-            size = int(request.data.get("size", settings.FILE_SIZE_LIMIT))
+            size = int(request.data.get("size", get_file_size_limit()))
         except (TypeError, ValueError):
             return Response(
                 {"error": "Invalid size.", "status": False},
@@ -137,7 +137,7 @@ class EntityAssetEndpoint(BaseAPIView):
         # Clamp the client-provided size to [1, FILE_SIZE_LIMIT] so the signed
         # upload policy cannot exceed the instance limit and always carries a
         # valid content-length-range bound
-        size_limit = max(1, min(size, settings.FILE_SIZE_LIMIT))
+        size_limit = max(1, min(size, get_file_size_limit()))
 
         # Check if the entity type is allowed
         if entity_type != FileAsset.EntityTypeContext.COMMENT_DESCRIPTION:

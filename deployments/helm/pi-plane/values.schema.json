@@ -114,6 +114,10 @@
           "type": "integer",
           "minimum": 1
         },
+        "fileSizeLimitMax": {
+          "type": "integer",
+          "minimum": 1
+        },
         "authenticationRateLimit": {
           "type": "string",
           "pattern": "^[0-9]+/(second|minute|hour|day)$"

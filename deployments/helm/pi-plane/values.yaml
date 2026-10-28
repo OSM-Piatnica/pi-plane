@@ -69,8 +69,11 @@ secrets:
 app:
   debug: false
   gunicornWorkers: 2
-  # Largest upload in bytes; also the request-body limit the ingress is told about
+  # Largest upload in bytes until the administrator sets one in the admin app
   fileSizeLimit: 5242880
+  # The most the instance administrator can set it to in the admin app; also the request-body limit the ingress is
+  # told about. Keep it at least as large as fileSizeLimit.
+  fileSizeLimitMax: 104857600
   # Throttles. Authentication is counted per client IP, so an office behind one address shares the budget.
   authenticationRateLimit: "1000/minute"
   apiKeyRateLimit: "60/minute"

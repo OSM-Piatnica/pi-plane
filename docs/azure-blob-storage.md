@@ -42,6 +42,6 @@ Files already in another storage are not copied. Move them yourself (for example
 
 ## How it differs from S3
 
-- **Upload size.** An S3 upload carries a policy that limits the size. A SAS cannot do that, so the size announced for an upload is checked right after the upload, and a file over it is deleted and the upload counts as failed. The limit itself is the same one as everywhere (see file uploads (docs/file-uploads.md, once the upload-limit change is merged)); until the check runs the oversized file exists in the container, and a signature is valid for an hour at most (`SIGNED_URL_EXPIRATION`).
+- **Upload size.** An S3 upload carries a policy that limits the size. A SAS cannot do that, so the size announced for an upload is checked right after the upload, and a file over it is deleted and the upload counts as failed. The limit itself is the same one as everywhere (see [file uploads](file-uploads.md)); until the check runs the oversized file exists in the container, and a signature is valid for an hour at most (`SIGNED_URL_EXPIRATION`).
 - **Download links.** A link is a SAS with read access to one blob. As on S3, only a few image types are served inline; everything else downloads.
 - **Exports** are written to the container with a link valid for 7 days; expired ones are deleted.

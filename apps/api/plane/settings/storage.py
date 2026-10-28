@@ -17,6 +17,7 @@ from urllib.parse import quote
 
 # Module imports
 from plane.utils.exception_logger import log_exception
+from plane.utils.s3_config import s3_client_config
 from storages.backends.s3boto3 import S3Boto3Storage
 
 
@@ -53,7 +54,7 @@ class S3Storage(S3Boto3Storage):
                 aws_secret_access_key=self.aws_secret_access_key,
                 region_name=self.aws_region,
                 endpoint_url=(f"{endpoint_protocol}://{request.get_host()}" if request else self.aws_s3_endpoint_url),
-                config=boto3.session.Config(signature_version="s3v4"),
+                config=s3_client_config(),
             )
         else:
             # Create an S3 client
@@ -63,7 +64,7 @@ class S3Storage(S3Boto3Storage):
                 aws_secret_access_key=self.aws_secret_access_key,
                 region_name=self.aws_region,
                 endpoint_url=self.aws_s3_endpoint_url,
-                config=boto3.session.Config(signature_version="s3v4"),
+                config=s3_client_config(),
             )
 
     def generate_presigned_post(self, object_name, file_type, file_size, expiration=None):

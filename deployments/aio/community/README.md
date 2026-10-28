@@ -23,7 +23,7 @@ The AIO image requires these external services to be running:
 - **PostgreSQL Database**: For data storage
 - **Redis**: For caching and session management
 - **RabbitMQ**: For message queuing
-- **S3-Compatible Storage**: For file uploads (AWS S3 or MinIO)
+- **S3-Compatible Storage**: For file uploads (AWS S3, Google Cloud Storage or MinIO; Azure Blob Storage is not supported in this image; for Google Cloud Storage see the [Docker guide](../../cli/community/README.md#using-your-own-object-storage-aws-s3-google-cloud-storage-azure-blob-storage))
 
 ### Required Environment Variables
 
@@ -115,7 +115,8 @@ In Plane v1.4.0 to v1.4.2 a container started without `SECRET_KEY` received a ge
 
 #### File Handling
 
-- `FILE_SIZE_LIMIT`: Maximum file upload size in bytes (default: `5242880` = 5MB)
+- `FILE_SIZE_LIMIT`: Maximum file upload size in bytes until the instance administrator sets one on the General page of the admin app (default: `5242880` = 5 MB)
+- `FILE_SIZE_LIMIT_MAX`: The most the administrator can set it to, and the largest request body the proxy accepts, in bytes (default: `104857600` = 100 MB). Keep it at least as large as `FILE_SIZE_LIMIT`
 
 #### API Configuration
 
