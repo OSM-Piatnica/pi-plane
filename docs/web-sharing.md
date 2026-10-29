@@ -32,7 +32,7 @@ An instance that never shares anything on the web can switch it off, or leave th
 
 - the sharing options are hidden in the web app (the **Share on the web** menu item, the dialog, the "public" badge of a shared project and the **Visible on the web** choice of comments);
 - the API refuses them: `/api/workspaces/<slug>/projects/<id>/project-deploy-boards/` answers `403` and the public API (`/api/public/...`) and the public sign-in (`/auth/spaces/...`) answer `404`;
-- `/spaces` answers `404`.
+- the public site has nothing to show: when `space` is left out of the deployment `/spaces` answers `404`; when only the admin switch is off the site's pages still load, but every board is not found.
 
 Projects that were shared stay marked as shared and keep their link: turning web sharing on again brings the same links back.
 
