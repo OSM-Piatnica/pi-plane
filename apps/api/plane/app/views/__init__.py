@@ -76,6 +76,12 @@ from .workspace.invite import (
     UserWorkspaceInvitationsViewSet,
 )
 from .workspace.label import WorkspaceLabelsEndpoint
+from .workspace.user_group import (
+    UserGroupDetailEndpoint,
+    UserGroupListEndpoint,
+    UserGroupMemberDetailEndpoint,
+    UserGroupMembersEndpoint,
+)
 from .workspace.state import WorkspaceStatesEndpoint
 from .workspace.user import (
     UserLastProjectWithWorkspaceEndpoint,

@@ -17,6 +17,10 @@ from plane.app.views import (
     WorkSpaceAvailabilityCheckEndpoint,
     UserLastProjectWithWorkspaceEndpoint,
     WorkspaceThemeViewSet,
+    UserGroupDetailEndpoint,
+    UserGroupListEndpoint,
+    UserGroupMemberDetailEndpoint,
+    UserGroupMembersEndpoint,
     WorkspaceUserProfileStatsEndpoint,
     WorkspaceUserActivityEndpoint,
     WorkspaceUserProfileEndpoint,
@@ -132,6 +136,26 @@ urlpatterns = [
         "workspaces/<str:slug>/workspace-themes/<uuid:pk>/",
         WorkspaceThemeViewSet.as_view({"get": "retrieve", "patch": "partial_update", "delete": "destroy"}),
         name="workspace-themes",
+    ),
+    path(
+        "workspaces/<str:slug>/user-groups/",
+        UserGroupListEndpoint.as_view(),
+        name="workspace-user-groups",
+    ),
+    path(
+        "workspaces/<str:slug>/user-groups/<uuid:pk>/",
+        UserGroupDetailEndpoint.as_view(),
+        name="workspace-user-group",
+    ),
+    path(
+        "workspaces/<str:slug>/user-groups/<uuid:pk>/members/",
+        UserGroupMembersEndpoint.as_view(),
+        name="workspace-user-group-members",
+    ),
+    path(
+        "workspaces/<str:slug>/user-groups/<uuid:pk>/members/<uuid:user_id>/",
+        UserGroupMemberDetailEndpoint.as_view(),
+        name="workspace-user-group-member",
     ),
     path(
         "workspaces/<str:slug>/user-stats/<uuid:user_id>/",

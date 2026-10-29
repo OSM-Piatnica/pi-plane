@@ -10,11 +10,12 @@ import { BuildingOutline, ExportOutline, MembersOutline, WebhooksOutline } from 
 // plane imports
 import type { ISvgIcons } from "@plane/blocks/icons";
 import type { TWorkspaceSettingsTabs } from "@plane/types";
-import { ArrowDownToLine, FolderKanban, Layers, LayoutTemplate } from "lucide-react";
+import { ArrowDownToLine, FolderKanban, Layers, LayoutTemplate, Network } from "lucide-react";
 
 export const WORKSPACE_SETTINGS_ICONS: Record<TWorkspaceSettingsTabs, LucideIcon | React.FC<ISvgIcons>> = {
   general: BuildingOutline,
   members: MembersOutline,
+  groups: Network,
   export: ExportOutline,
   import: ArrowDownToLine,
   "work-item-templates": LayoutTemplate,

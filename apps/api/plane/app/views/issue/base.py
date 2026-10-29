@@ -67,6 +67,7 @@ from plane.db.models import (
 )
 from plane.utils.filters import ComplexFilterBackend, IssueFilterSet
 from plane.utils.global_paginator import paginate
+from plane.utils.user_groups import group_assignee_ids_annotation
 from plane.utils.grouper import (
     issue_group_values,
     issue_on_results,
@@ -203,6 +204,7 @@ class IssueListEndpoint(BaseAPIView):
                 "module_ids",
                 "label_ids",
                 "assignee_ids",
+                "group_assignee_ids",
                 "sub_issues_count",
                 "created_at",
                 "updated_at",
@@ -474,6 +476,7 @@ class IssueViewSet(BaseViewSet):
                     "module_ids",
                     "label_ids",
                     "assignee_ids",
+                    "group_assignee_ids",
                     "sub_issues_count",
                     "created_at",
                     "updated_at",
@@ -559,6 +562,7 @@ class IssueViewSet(BaseViewSet):
                     ),
                     Value([], output_field=ArrayField(UUIDField())),
                 ),
+                group_assignee_ids=group_assignee_ids_annotation(),
                 assignee_ids=Coalesce(
                     Subquery(
                         IssueAssignee.objects.filter(
@@ -664,6 +668,7 @@ class IssueViewSet(BaseViewSet):
                     ),
                     Value([], output_field=ArrayField(UUIDField())),
                 ),
+                group_assignee_ids=group_assignee_ids_annotation(),
                 assignee_ids=Coalesce(
                     ArrayAgg(
                         "assignees__id",
@@ -916,6 +921,7 @@ class IssuePaginatedViewSet(BaseViewSet):
             "module_ids",
             "label_ids",
             "assignee_ids",
+            "group_assignee_ids",
             "link_count",
             "attachment_count",
             "sub_issues_count",
@@ -958,6 +964,7 @@ class IssuePaginatedViewSet(BaseViewSet):
                 ),
                 Value([], output_field=ArrayField(UUIDField())),
             ),
+            group_assignee_ids=group_assignee_ids_annotation(),
             assignee_ids=Coalesce(
                 Subquery(
                     IssueAssignee.objects.filter(
@@ -1340,6 +1347,7 @@ class IssueDetailIdentifierEndpoint(BaseAPIView):
                     ),
                     Value([], output_field=ArrayField(UUIDField())),
                 ),
+                group_assignee_ids=group_assignee_ids_annotation(),
                 assignee_ids=Coalesce(
                     ArrayAgg(
                         "assignees__id",

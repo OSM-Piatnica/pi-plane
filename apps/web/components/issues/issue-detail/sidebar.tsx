@@ -7,7 +7,7 @@
  */
 
 import { observer } from "mobx-react";
-import { Timer } from "lucide-react";
+import { Network, Timer } from "lucide-react";
 // i18n
 import { useTranslation } from "@plane/i18n";
 // ui
@@ -35,6 +35,7 @@ import {
 // components
 import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select";
 import { ButtonAvatars } from "@/components/dropdowns/member/avatar";
+import { GroupAssigneeSelect } from "@/components/workspace/user-groups/group-assignee-select";
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
 import { PrioritySelect } from "@/components/dropdowns/priority/priority-select";
 import { StateSelect } from "@/components/dropdowns/state/state-select";
@@ -126,6 +127,17 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                 variant="select-ghost-md"
                 showLabel={(issue?.assignee_ids?.length ?? 0) <= 1}
                 tooltip={{ heading: t("common.assignees") }}
+              />
+            </SidebarPropertyListItem>
+
+            <SidebarPropertyListItem icon={Network} label={t("workspace_settings.settings.groups.group_assignees")}>
+              <GroupAssigneeSelect
+                workspaceSlug={workspaceSlug}
+                value={issue?.group_assignee_ids ?? []}
+                onChange={(val) =>
+                  issueOperations.update(workspaceSlug, projectId, issueId, { group_assignee_ids: val })
+                }
+                disabled={!isEditable}
               />
             </SidebarPropertyListItem>
 

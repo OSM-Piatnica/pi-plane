@@ -1,0 +1,49 @@
+/**
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * See the LICENSE file for details.
+ */
+
+import type { IUserLite } from "./users";
+
+/** Where a group comes from: made in the workspace, or mirrored from the identity provider a person signed in with. */
+export type TUserGroupSource = "local" | "entra" | "google" | "oidc";
+
+/** A role inside one group, and the groups nested below it. */
+export enum EUserGroupRole {
+  ADMIN = 20,
+  MEMBER = 15,
+}
+
+export type TUserGroup = {
+  id: string;
+  name: string;
+  description: string;
+  parent: string | null;
+  source: TUserGroupSource;
+  external_id: string | null;
+  is_external: boolean;
+  /** Direct members only. */
+  member_count: number;
+  /** What the requester may do with this group. */
+  can_manage: boolean;
+  can_delete: boolean;
+  created_at: string;
+};
+
+export type TUserGroupFormData = {
+  name: string;
+  description?: string;
+  parent?: string | null;
+};
+
+export type TUserGroupMember = {
+  id: string;
+  user: IUserLite;
+  group: string;
+  group_name: string;
+  role: EUserGroupRole;
+  /** Put in by the identity provider's sync, so it cannot be changed here. */
+  managed_externally: boolean;
+  created_at: string;
+};
