@@ -54,8 +54,8 @@
         "indicator": "Pagina",
         "lock": "Blocca",
         "unlock": "Sblocca",
-        "make_private": "Rendi privato",
-        "make_public": "Rendi pubblico",
+        "make_private": "Rendi visibile solo a me",
+        "make_public": "Condividi con il progetto",
         "archive": "Archivia",
         "restore": "Ripristina",
         "add_to_favorites": "Aggiungi ai preferiti",
@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Apri scorciatoie da tastiera",
-      "open_plane_documentation": "Apri la documentazione di Plane",
+      "open_plane_documentation": "Apri la documentazione di Pi-Plane",
       "join_forum": "Unisciti al nostro forum",
       "report_bug": "Segnala un bug",
       "chat_with_us": "Chatta con noi"
@@ -171,10 +171,17 @@
     "search_menu": {
       "no_results": "Nessun risultato trovato",
       "clear_search": "Cancella ricerca",
-      "go_to_advanced_search": "Vai alla ricerca avanzata"
+      "go_to_advanced_search": "Vai alla ricerca avanzata",
+      "results_in_workspace": "Risultati della ricerca per <term/> nello spazio di lavoro:",
+      "results_in_project": "Risultati della ricerca per <term/> nel progetto:"
     },
     "footer": {
       "workspace_level": "Livello dello spazio di lavoro"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Cerca scorciatoie da tastiera",
+      "no_results": "Nessuna scorciatoia da tastiera trovata per «{query}»",
+      "sequence_separator": "poi"
     },
     "group_titles": {
       "actions": "Azioni",

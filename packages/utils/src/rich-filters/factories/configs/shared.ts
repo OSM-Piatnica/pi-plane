@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -36,7 +37,22 @@ export type TCreateFilterConfigParams = Omit<TBaseFilterFieldConfig, "isOperator
   allowedOperators: Set<TSupportedOperators>;
   rightContent?: React.ReactNode; // content to display on the right side of the filter option in the dropdown
   tooltipContent?: React.ReactNode; // content to display when hovering over the applied filter item in the filter list
+  t?: TFilterTranslate; // translates the filter and option labels, they stay English when omitted
 };
+
+/**
+ * Translates an i18n key. The factories take it from the caller because they run outside of components.
+ */
+export type TFilterTranslate = (key: string) => string;
+
+/**
+ * Returns the translated label, or the English fallback when no translator was given.
+ * @param t - The optional translator
+ * @param key - The i18n key
+ * @param fallback - The English label
+ */
+export const translateFilterLabel = (t: TFilterTranslate | undefined, key: string, fallback: string): string =>
+  t ? t(key) : fallback;
 
 /**
  * Type for filter icon type

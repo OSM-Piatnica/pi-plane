@@ -1,0 +1,530 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useCallback, useEffect, useRef, useState } from "react";
+import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
+import { draggable, dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { pointerOutsideOfPreview } from "@atlaskit/pragmatic-drag-and-drop/element/pointer-outside-of-preview";
+import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
+import { attachInstruction, extractInstruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
+import { observer } from "mobx-react";
+import { useParams, useRouter } from "next/navigation";
+import { createRoot } from "react-dom/client";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
+import {
+  ArchiveOutline,
+  ChevronRightOutline,
+  LinkOutline,
+  LogOutOutline,
+  MembersOutline,
+  MoreHorizontalOutline,
+  SettingsOutline,
+  GlobeOutline,
+  StarFilled,
+  StarOutline,
+} from "@makeplane/propel/icons";
+// plane imports
+import { EUserPermissions, EUserPermissionsLevel, IS_FAVORITE_MENU_OPEN } from "@plane/constants";
+import { useLocalStorage, useOutsideClickDetector } from "@plane/hooks";
+import { useTranslation } from "@plane/i18n";
+import { Logo } from "@plane/blocks/emoji-icon-picker";
+import { IconButton } from "@makeplane/propel/components/icon-button";
+import { Icon } from "@makeplane/propel/components/icon";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+import { ControlLink } from "@plane/blocks/layout";
+import { setPromiseToast } from "@plane/blocks/toast";
+import { Menu, MenuContent, MenuItem, MenuSeparator, MenuTrigger } from "@makeplane/propel/components/menu";
+import { DropIndicator, DragHandle } from "@plane/blocks/common";
+import { cn } from "@plane/utils";
+// components
+import { DEFAULT_TAB_KEY, getTabUrl } from "@/components/navigation/tab-navigation-utils";
+import { useTabPreferences } from "@/components/navigation/use-tab-preferences";
+import { LeaveProjectModal } from "@/components/project/leave-project-modal";
+import { PublishProjectModal } from "@/components/project/publish-project/modal";
+import { useSpaceEnabled } from "@/hooks/use-space-enabled";
+// hooks
+import { useAppTheme } from "@/hooks/store/use-app-theme";
+import { useCommandPalette } from "@/hooks/store/use-command-palette";
+import { useProject } from "@/hooks/store/use-project";
+import { isProjectLead } from "@/helpers/project-lead";
+import { useUser, useUserPermissions } from "@/hooks/store/user";
+import { useProjectNavigationPreferences } from "@/hooks/use-navigation-preferences";
+import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useNavigationItems } from "@/components/navigations";
+import { ProjectNavigationRoot } from "@/components/sidebar";
+// local imports
+import { HIGHLIGHT_CLASS, highlightIssueOnDrop } from "../../issues/issue-layouts/utils";
+
+type Props = {
+  projectId: string;
+  handleCopyText: () => void;
+  handleOnProjectDrop?: (
+    sourceId: string | undefined,
+    destinationId: string | undefined,
+    shouldDropAtEnd: boolean
+  ) => void;
+  projectListType: "JOINED" | "FAVORITES";
+  disableDrag?: boolean;
+  disableDrop?: boolean;
+  isLastChild: boolean;
+  renderInExtendedSidebar?: boolean;
+};
+
+export const SidebarProjectsListItem = observer(function SidebarProjectsListItem(props: Props) {
+  const {
+    projectId,
+    handleCopyText,
+    disableDrag,
+    disableDrop,
+    isLastChild,
+    handleOnProjectDrop,
+    projectListType,
+    renderInExtendedSidebar = false,
+  } = props;
+  // store hooks
+  const { t } = useTranslation();
+  const { getPartialProjectById, getProjectById, addProjectToFavorites, removeProjectFromFavorites } = useProject();
+  const { isMobile } = usePlatformOS();
+  const { allowPermissions } = useUserPermissions();
+  const { data: currentUser } = useUser();
+  const { getIsProjectListOpen, toggleProjectListOpen } = useCommandPalette();
+  const { preferences: projectPreferences } = useProjectNavigationPreferences();
+  const { isExtendedProjectSidebarOpened, toggleExtendedProjectSidebar, toggleAnySidebarDropdown } = useAppTheme();
+
+  // states
+  const [leaveProjectModalOpen, setLeaveProjectModal] = useState(false);
+  const [publishModalOpen, setPublishModal] = useState(false);
+  const isSpaceEnabled = useSpaceEnabled();
+  const [isMenuActive, setIsMenuActive] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const isProjectListOpen = getIsProjectListOpen(projectId);
+  const [instruction, setInstruction] = useState<"DRAG_OVER" | "DRAG_BELOW" | undefined>(undefined);
+  // refs
+  const projectRef = useRef<HTMLDivElement | null>(null);
+  const dragHandleRef = useRef<HTMLButtonElement | null>(null);
+  // router
+  const { workspaceSlug, projectId: URLProjectId } = useParams();
+  const router = useRouter();
+  // derived values
+  const project = getPartialProjectById(projectId);
+  const isFavorite = !!getProjectById(projectId)?.is_favorite;
+  // local storage
+  const { setValue: toggleFavoriteMenu, storedValue: isFavoriteMenuOpen } = useLocalStorage<boolean>(
+    IS_FAVORITE_MENU_OPEN,
+    false
+  );
+
+  // Get available navigation items for this project
+  const navigationItems = useNavigationItems({
+    workspaceSlug: workspaceSlug.toString(),
+    projectId,
+    project,
+    allowPermissions,
+  });
+  const availableTabKeys = navigationItems.map((item) => item.key);
+
+  // Get preferences from hook
+  const { tabPreferences } = useTabPreferences(workspaceSlug.toString(), projectId);
+  const defaultTabKey = tabPreferences.defaultTab;
+  // Validate that the default tab is available
+  const validatedDefaultTabKey = availableTabKeys.includes(defaultTabKey) ? defaultTabKey : DEFAULT_TAB_KEY;
+  const defaultTabUrl = project ? getTabUrl(workspaceSlug.toString(), project.id, validatedDefaultTabKey) : "";
+
+  // toggle project list open
+  const setIsProjectListOpen = useCallback(
+    (value: boolean) => toggleProjectListOpen(projectId, value),
+    [projectId, toggleProjectListOpen]
+  );
+  // auth
+  const isAdmin = allowPermissions(
+    [EUserPermissions.ADMIN],
+    EUserPermissionsLevel.PROJECT,
+    workspaceSlug.toString(),
+    project?.id
+  );
+  const isAuthorized = allowPermissions(
+    [EUserPermissions.ADMIN, EUserPermissions.MEMBER],
+    EUserPermissionsLevel.PROJECT,
+    workspaceSlug.toString(),
+    project?.id
+  );
+
+  // admins and the project's lead get a shortcut to the members settings
+  const canManageMembers = isAdmin || isProjectLead(project?.project_lead, currentUser?.id);
+
+  const handleAddToFavorites = () => {
+    const addToFavoritePromise = addProjectToFavorites(workspaceSlug.toString(), projectId);
+    setPromiseToast(addToFavoritePromise, {
+      loading: t("project_components.card.adding_to_favorites"),
+      success: {
+        title: t("toast.success"),
+        message: () => t("project_components.card.added_to_favorites"),
+        // reveal the favorites section so the project can be seen landing there
+        actionItems: () => {
+          if (!isFavoriteMenuOpen) toggleFavoriteMenu(true);
+          return [];
+        },
+      },
+      error: {
+        title: t("toast.error"),
+        message: () => t("couldnt_add_the_project_to_favorites"),
+      },
+    });
+  };
+
+  const handleRemoveFromFavorites = () => {
+    const removeFromFavoritePromise = removeProjectFromFavorites(workspaceSlug.toString(), projectId);
+    setPromiseToast(removeFromFavoritePromise, {
+      loading: t("project_components.card.removing_from_favorites"),
+      success: {
+        title: t("toast.success"),
+        message: () => t("project_components.card.removed_from_favorites"),
+      },
+      error: {
+        title: t("toast.error"),
+        message: () => t("couldnt_remove_the_project_from_favorites"),
+      },
+    });
+  };
+
+  const handleLeaveProject = () => {
+    setLeaveProjectModal(true);
+  };
+
+  useEffect(() => {
+    const element = projectRef.current;
+    const dragHandleElement = dragHandleRef.current;
+
+    if (!element) return;
+
+    return combine(
+      draggable({
+        element,
+        canDrag: () => !disableDrag,
+        dragHandle: dragHandleElement ?? undefined,
+        getInitialData: () => ({ id: projectId, dragInstanceId: "PROJECTS" }),
+        onDragStart: () => {
+          setIsDragging(true);
+        },
+        onDrop: () => {
+          setIsDragging(false);
+        },
+        onGenerateDragPreview: ({ nativeSetDragImage }) => {
+          // Add a custom drag image
+          setCustomNativeDragPreview({
+            getOffset: pointerOutsideOfPreview({ x: "0px", y: "0px" }),
+            render: ({ container }) => {
+              const root = createRoot(container);
+              root.render(
+                <div className="flex items-center rounded-sm bg-surface-1 p-1 pr-2 text-13">
+                  <div className="grid size-4 flex-shrink-0 place-items-center">
+                    {project && <Logo logo={project?.logo_props} />}
+                  </div>
+                  <p className="truncate text-secondary">{project?.name}</p>
+                </div>
+              );
+              return () => root.unmount();
+            },
+            nativeSetDragImage,
+          });
+        },
+      }),
+      dropTargetForElements({
+        element,
+        canDrop: ({ source }) =>
+          !disableDrop && source?.data?.id !== projectId && source?.data?.dragInstanceId === "PROJECTS",
+        getData: ({ input, element: targetElement }) => {
+          const data = { id: projectId };
+
+          // attach instruction for last in list
+          return attachInstruction(data, {
+            input,
+            element: targetElement,
+            currentLevel: 0,
+            indentPerLevel: 0,
+            mode: isLastChild ? "last-in-group" : "standard",
+          });
+        },
+        onDrag: ({ self }) => {
+          const extractedInstruction = extractInstruction(self?.data)?.type;
+          // check if the highlight is to be shown above or below
+          setInstruction(
+            extractedInstruction
+              ? extractedInstruction === "reorder-below" && isLastChild
+                ? "DRAG_BELOW"
+                : "DRAG_OVER"
+              : undefined
+          );
+        },
+        onDragLeave: () => {
+          setInstruction(undefined);
+        },
+        onDrop: ({ self, source }) => {
+          setInstruction(undefined);
+          const extractedInstruction = extractInstruction(self?.data)?.type;
+          const currentInstruction = extractedInstruction
+            ? extractedInstruction === "reorder-below" && isLastChild
+              ? "DRAG_BELOW"
+              : "DRAG_OVER"
+            : undefined;
+          if (!currentInstruction) return;
+
+          const sourceId = source?.data?.id as string | undefined;
+          const destinationId = self?.data?.id as string | undefined;
+
+          handleOnProjectDrop?.(sourceId, destinationId, currentInstruction === "DRAG_BELOW");
+
+          highlightIssueOnDrop(`sidebar-${sourceId}-${projectListType}`);
+        },
+      })
+    );
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency list
+  }, [projectId, isLastChild, projectListType, handleOnProjectDrop]);
+
+  useEffect(() => {
+    if (isMenuActive) toggleAnySidebarDropdown(true);
+    else toggleAnySidebarDropdown(false);
+  }, [isMenuActive, toggleAnySidebarDropdown]);
+
+  useOutsideClickDetector(projectRef, () => projectRef?.current?.classList?.remove(HIGHLIGHT_CLASS));
+
+  useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+    if (URLProjectId === project?.id) {
+      setIsProjectListOpen(true);
+      // Scroll to active project
+      if (projectRef.current) {
+        timeoutId = setTimeout(() => {
+          if (projectRef.current) {
+            scrollIntoView(projectRef.current, {
+              behavior: "smooth",
+              block: "center",
+              scrollMode: "if-needed",
+            });
+          }
+        }, 200);
+      }
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [URLProjectId, project?.id, setIsProjectListOpen]);
+
+  if (!project) return null;
+
+  const isAccordionMode = projectPreferences.navigationMode === "ACCORDION";
+
+  const handleItemClick = () => {
+    if (projectPreferences.navigationMode === "ACCORDION") {
+      setIsProjectListOpen(!isProjectListOpen);
+    } else {
+      router.push(defaultTabUrl);
+    }
+    // close the extended sidebar if it is open
+    if (isExtendedProjectSidebarOpened && !isAccordionMode) {
+      toggleExtendedProjectSidebar(false);
+    }
+  };
+
+  const shouldHighlightProject = URLProjectId === project?.id && projectPreferences.navigationMode !== "ACCORDION";
+
+  return (
+    <>
+      <PublishProjectModal isOpen={publishModalOpen} projectId={projectId} onClose={() => setPublishModal(false)} />
+      <LeaveProjectModal project={project} isOpen={leaveProjectModalOpen} onClose={() => setLeaveProjectModal(false)} />
+      <div key={`${project.id}_${URLProjectId}`}>
+        <div
+          id={`sidebar-${projectId}-${projectListType}`}
+          className={cn("relative", {
+            "bg-layer-1 opacity-60": isDragging,
+          })}
+          ref={projectRef}
+        >
+          <DropIndicator classNames="absolute top-0" isVisible={instruction === "DRAG_OVER"} />
+          <div
+            className={cn(
+              "group/project-item relative flex w-full items-center rounded-md px-2 py-1.5 text-primary hover:bg-layer-transparent-hover",
+              {
+                "bg-surface-2": isMenuActive,
+                "bg-layer-transparent-active": shouldHighlightProject,
+              }
+            )}
+            id={`${project?.id}`}
+          >
+            {!disableDrag && (
+              <Tooltip
+                label={project.sort_order === null ? t("join_the_project_to_rearrange") : t("drag_to_rearrange")}
+                align="end"
+                disabled={isDragging || isMobile}
+              >
+                <button
+                  type="button"
+                  className={cn(
+                    "absolute top-1/2 -left-3 hidden -translate-y-1/2 cursor-grab items-center justify-center rounded-sm text-placeholder group-hover/project-item:flex",
+                    {
+                      "cursor-not-allowed opacity-60": project.sort_order === null,
+                      "cursor-grabbing": isDragging,
+                      flex: isMenuActive || renderInExtendedSidebar,
+                    }
+                  )}
+                  ref={dragHandleRef}
+                >
+                  <DragHandle className="bg-transparent" />
+                </button>
+              </Tooltip>
+            )}
+            <>
+              <ControlLink href={defaultTabUrl} className="flex flex-grow truncate" onClick={handleItemClick}>
+                {isAccordionMode ? (
+                  <button
+                    type="button"
+                    className="flex w-full flex-grow items-center gap-1.5 text-left select-none"
+                    aria-expanded={isProjectListOpen}
+                    aria-label={
+                      isProjectListOpen
+                        ? t("aria_labels.projects_sidebar.close_project_menu")
+                        : t("aria_labels.projects_sidebar.open_project_menu")
+                    }
+                  >
+                    <div className="grid size-4 flex-shrink-0 place-items-center">
+                      <Logo logo={project.logo_props} size={16} />
+                    </div>
+                    <p className="truncate text-13 font-medium text-secondary">{project.name}</p>
+                  </button>
+                ) : (
+                  <div className="flex w-full flex-grow items-center gap-1.5 text-left select-none">
+                    <div className="grid size-4 flex-shrink-0 place-items-center">
+                      <Logo logo={project.logo_props} size={16} />
+                    </div>
+                    <p className="truncate text-13 font-medium text-secondary">{project.name}</p>
+                  </div>
+                )}
+              </ControlLink>
+              <div className="flex items-center gap-1">
+                <div
+                  className={cn(
+                    "pointer-events-none flex-shrink-0 opacity-0 group-hover/project-item:pointer-events-auto group-hover/project-item:opacity-100",
+                    {
+                      "pointer-events-auto opacity-100": isMenuActive,
+                    }
+                  )}
+                >
+                  <Menu onOpenChange={setIsMenuActive}>
+                    <MenuTrigger
+                      render={
+                        <IconButton
+                          variant="ghost"
+                          size="xs"
+                          icon={<Icon icon={MoreHorizontalOutline} />}
+                          aria-label={t("aria_labels.projects_sidebar.toggle_quick_actions_menu")}
+                          render={<button type="button" className="text-placeholder" />}
+                        />
+                      }
+                    />
+                    <MenuContent side="bottom" align="start">
+                      {/* options for every member */}
+                      {isFavorite ? (
+                        <MenuItem
+                          icon={<Icon icon={<StarFilled className="text-yellow-500" />} />}
+                          label={t("remove_from_favorites")}
+                          onClick={handleRemoveFromFavorites}
+                        />
+                      ) : (
+                        <MenuItem
+                          icon={<Icon icon={StarOutline} />}
+                          label={t("add_to_favorites")}
+                          onClick={handleAddToFavorites}
+                        />
+                      )}
+                      <MenuItem icon={<Icon icon={LinkOutline} />} label={t("copy_link")} onClick={handleCopyText} />
+                      {isAuthorized && (
+                        <MenuItem
+                          icon={<Icon icon={ArchiveOutline} />}
+                          label={t("archives")}
+                          onClick={() => {
+                            router.push(`/${workspaceSlug}/projects/${project?.id}/archives/issues`);
+                          }}
+                        />
+                      )}
+                      <MenuItem
+                        icon={<Icon icon={SettingsOutline} />}
+                        label={t("settings")}
+                        onClick={() => {
+                          router.push(`/${workspaceSlug}/settings/projects/${project?.id}`);
+                        }}
+                      />
+                      <MenuItem
+                        icon={<Icon icon={LogOutOutline} />}
+                        label={t("leave_project")}
+                        onClick={handleLeaveProject}
+                      />
+                      {/* options for the project lead and admins only */}
+                      {canManageMembers && <MenuSeparator />}
+                      {isAdmin && isSpaceEnabled && (
+                        <MenuItem
+                          icon={<Icon icon={GlobeOutline} />}
+                          label={t("publish_project")}
+                          onClick={() => setPublishModal(true)}
+                        />
+                      )}
+                      {canManageMembers && (
+                        <MenuItem
+                          icon={<Icon icon={MembersOutline} />}
+                          label={t("members")}
+                          onClick={() => {
+                            router.push(`/${workspaceSlug}/settings/projects/${project?.id}/members`);
+                          }}
+                        />
+                      )}
+                    </MenuContent>
+                  </Menu>
+                </div>
+                {isAccordionMode && (
+                  <span
+                    className={cn("hidden text-placeholder group-hover/project-item:inline-flex", {
+                      "inline-flex": isMenuActive,
+                    })}
+                  >
+                    <IconButton
+                      variant="ghost"
+                      size="xs"
+                      icon={
+                        <ChevronRightOutline
+                          className={cn("size-3.5 transition-transform", {
+                            "rotate-90": isProjectListOpen,
+                          })}
+                        />
+                      }
+                      onClick={() => setIsProjectListOpen(!isProjectListOpen)}
+                      aria-expanded={isProjectListOpen}
+                      aria-label={t(
+                        isProjectListOpen
+                          ? "aria_labels.projects_sidebar.close_project_menu"
+                          : "aria_labels.projects_sidebar.open_project_menu"
+                      )}
+                    />
+                  </span>
+                )}
+              </div>
+            </>
+          </div>
+          {isAccordionMode && isProjectListOpen && (
+            <div className="relative mt-1 mb-1.5 flex flex-col gap-0.5 pl-6">
+              <div className="absolute top-0 bottom-1 left-[15px] w-[1px] bg-layer-3" />
+              <ProjectNavigationRoot workspaceSlug={workspaceSlug.toString()} projectId={projectId.toString()} />
+            </div>
+          )}
+          {isLastChild && <DropIndicator isVisible={instruction === "DRAG_BELOW"} />}
+        </div>
+      </div>
+    </>
+  );
+});

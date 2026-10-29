@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -15,7 +16,6 @@ import type { RootStore } from "@/store/root.store";
 
 type TError = {
   status: string;
-  message: string;
 };
 
 export interface IProfileStore {
@@ -59,6 +59,7 @@ export class ProfileStore implements IProfileStore {
     updated_at: "",
     language: "",
     start_of_the_week: EStartOfTheWeek.SUNDAY,
+    weekend_days: null,
   };
 
   // services
@@ -100,7 +101,6 @@ export class ProfileStore implements IProfileStore {
         this.isLoading = false;
         this.error = {
           status: "user-profile-fetch-error",
-          message: "Failed to fetch user profile",
         };
       });
     }
@@ -132,7 +132,6 @@ export class ProfileStore implements IProfileStore {
       runInAction(() => {
         this.error = {
           status: "user-profile-update-error",
-          message: "Failed to update user profile",
         };
       });
     }

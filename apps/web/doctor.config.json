@@ -1,0 +1,10 @@
+{
+  "$schema": "https://react.doctor/schema/config.json",
+  "ignore": {
+    "rules": [
+      "react-doctor/no-unguarded-browser-global-in-render-or-hook-init",
+      "react-doctor/rendering-hydration-mismatch-time",
+      "react-doctor/rendering-hydration-no-flicker"
+    ]
+  }
+}

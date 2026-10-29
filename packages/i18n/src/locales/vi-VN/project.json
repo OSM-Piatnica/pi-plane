@@ -195,8 +195,8 @@
         "primary_button": {
           "text": "Tạo mục công việc đầu tiên của bạn",
           "comic": {
-            "title": "Mục công việc là khối xây dựng cơ bản trong Plane.",
-            "description": "Thiết kế lại giao diện Plane, định vị lại thương hiệu công ty hoặc ra mắt hệ thống phun nhiên liệu mới đều là ví dụ về mục công việc có thể chứa các mục công việc con."
+            "title": "Mục công việc là khối xây dựng cơ bản trong Pi-Plane.",
+            "description": "Thiết kế lại giao diện Pi-Plane, định vị lại thương hiệu công ty hoặc ra mắt hệ thống phun nhiên liệu mới đều là ví dụ về mục công việc có thể chứa các mục công việc con."
           }
         }
       },
@@ -271,8 +271,8 @@
   "project_page": {
     "empty_state": {
       "general": {
-        "title": "Viết ghi chú, tài liệu hoặc cơ sở kiến thức đầy đủ. Để trợ lý AI Galileo của Plane giúp bạn bắt đầu",
-        "description": "Trang là không gian ghi lại suy nghĩ trong Plane. Ghi lại các ghi chú cuộc họp, định dạng dễ dàng, nhúng mục công việc, sử dụng thư viện thành phần để bố cục và lưu tất cả trong ngữ cảnh dự án. Để hoàn thành nhanh bất kỳ tài liệu nào, bạn có thể gọi AI Galileo của Plane thông qua phím tắt hoặc nhấp nút.",
+        "title": "Viết ghi chú, tài liệu hoặc cơ sở kiến thức đầy đủ. Để trợ lý AI Galileo của Pi-Plane giúp bạn bắt đầu",
+        "description": "Trang là không gian ghi lại suy nghĩ trong Pi-Plane. Ghi lại các ghi chú cuộc họp, định dạng dễ dàng, nhúng mục công việc, sử dụng thư viện thành phần để bố cục và lưu tất cả trong ngữ cảnh dự án. Để hoàn thành nhanh bất kỳ tài liệu nào, bạn có thể gọi AI Galileo của Pi-Plane thông qua phím tắt hoặc nhấp nút.",
         "primary_button": {
           "text": "Tạo trang đầu tiên của bạn"
         }
@@ -445,14 +445,15 @@
       "removing_from_favorites": "Đang xóa dự án khỏi mục yêu thích..."
     },
     "confirm_member_remove": {
-      "leave_description": "Bạn có chắc chắn muốn rời khỏi dự án {name}? Bạn có thể tham gia lại nếu được mời lần nữa hoặc nếu dự án ở chế độ công khai.",
+      "leave_description": "Bạn có chắc chắn muốn rời khỏi dự án {name}? Bạn có thể tham gia lại nếu được mời lần nữa hoặc nếu dự án mở cho không gian làm việc.",
       "leave_title": "Rời khỏi dự án?",
       "remove_description": "Bạn có chắc chắn muốn xóa thành viên {name}? Họ sẽ không còn quyền truy cập vào dự án này. Hành động này không thể hoàn tác.",
       "remove_title": "Xóa {name}?"
     },
     "control_section": {
       "archive_description": "Lưu trữ dự án sẽ ẩn dự án khỏi thanh điều hướng bên, nhưng bạn vẫn có thể truy cập từ trang dự án. Bạn có thể khôi phục hoặc xóa dự án bất cứ lúc nào.",
-      "delete_description": "Khi xóa dự án, tất cả dữ liệu và tài nguyên trong dự án sẽ bị xóa vĩnh viễn và không thể khôi phục."
+      "delete_description": "Khi xóa dự án, tất cả dữ liệu và tài nguyên trong dự án sẽ bị xóa vĩnh viễn và không thể khôi phục.",
+      "duplicate_description": "Tạo dự án mới với cài đặt, trạng thái, nhãn và các cấu hình khác của dự án này. Mục công việc chỉ được sao chép nếu bạn chọn."
     },
     "delete_modal": {
       "confirm_placeholder": "Nhập “{phrase}”",
@@ -491,6 +492,7 @@
       "confirm_phrase_error": "Vui lòng xác nhận rời dự án bằng cách nhập “{phrase}”.",
       "description": "Bạn có chắc chắn muốn rời khỏi dự án “{name}”? Tất cả các mục công việc liên quan đến bạn sẽ không thể truy cập.",
       "fill_all_fields": "Vui lòng điền tất cả các trường.",
+      "only_admin_error": "Bạn là quản trị viên duy nhất của dự án này nên không thể rời đi. Hãy chỉ định một thành viên khác làm quản trị viên trước, hoặc xóa dự án.",
       "project_name_error": "Vui lòng nhập tên dự án như được hiển thị trong phần mô tả.",
       "project_name_placeholder": "Nhập tên dự án",
       "project_name_required": "Tên dự án là bắt buộc",
@@ -530,21 +532,34 @@
       "timezone_error": "Không thể cập nhật múi giờ",
       "timezone_updated": "Đã cập nhật múi giờ thành công",
       "update_error": "Đã xảy ra lỗi khi cập nhật hồ sơ của bạn. Vui lòng thử lại.",
-      "updated": "Đã cập nhật hồ sơ thành công."
+      "updated": "Đã cập nhật hồ sơ thành công.",
+      "weekend_days": "Ngày cuối tuần",
+      "weekend_days_description": "Đặt những ngày được coi là thời gian không làm việc.",
+      "weekend_days_updated": "Đã cập nhật ngày cuối tuần",
+      "weekend_days_use_default": "Dùng mặc định của không gian làm việc"
     },
     "publish_modal": {
       "allow_comments": "Cho phép bình luận",
       "allow_reactions": "Cho phép biểu cảm",
       "allow_voting": "Cho phép bỏ phiếu",
-      "anyone_with_link": "Bất kỳ ai có liên kết đều có thể truy cập",
-      "link_copied": "Đã sao chép liên kết trang đã xuất bản.",
-      "live_on_web": "Dự án này hiện đã được đăng trực tuyến",
-      "publishing": "Đang xuất bản",
-      "select_layout_error": "Vui lòng chọn ít nhất một bố cục hiển thị để xuất bản dự án.",
-      "settings_updated": "Đã cập nhật cài đặt xuất bản thành công!",
-      "unpublish": "Hủy xuất bản",
-      "unpublish_error": "Đã xảy ra lỗi khi hủy xuất bản dự án.",
-      "unpublishing": "Đang hủy xuất bản",
+      "anyone_with_link": "Bất kỳ ai trên internet có liên kết đều có thể xem dự án này, không cần tài khoản",
+      "confirm": {
+        "title": "Chia sẻ dự án này trên web?",
+        "description": "Bất kỳ ai trên internet có liên kết đều có thể xem dự án này, kể cả người ngoài không gian làm việc của bạn và người chưa đăng nhập.",
+        "can_see": "Họ sẽ xem được:",
+        "item_work_items": "tất cả mục công việc trong dự án, kèm mô tả, trạng thái, mức ưu tiên, ngày và nhãn",
+        "item_members": "tên và ảnh đại diện của các thành viên dự án",
+        "item_activity": "bình luận, biểu cảm và lượt bình chọn, kèm tên người thực hiện, nếu bạn cho phép",
+        "note": "Người xem không thể chỉnh sửa gì. Liên kết hoạt động cho đến khi bạn dừng chia sẻ, vì vậy chỉ chia sẻ dự án không chứa nội dung bí mật."
+      },
+      "link_copied": "Đã sao chép liên kết web.",
+      "live_on_web": "Dự án này được chia sẻ trên web",
+      "publishing": "Đang bật…",
+      "select_layout_error": "Vui lòng chọn ít nhất một bố cục hiển thị để chia sẻ dự án trên web.",
+      "settings_updated": "Đã cập nhật cài đặt chia sẻ trên web.",
+      "unpublish": "Dừng chia sẻ",
+      "unpublish_error": "Đã xảy ra lỗi khi tắt chia sẻ trên web.",
+      "unpublishing": "Đang tắt…",
       "update_settings": "Cập nhật cài đặt"
     },
     "rich_filters": {
@@ -554,6 +569,14 @@
       "filter_type_not_supported": "Loại bộ lọc không được hỗ trợ",
       "invalid_filter": "Bộ lọc không hợp lệ",
       "invalid_tooltip": "Điều kiện bộ lọc này không còn hợp lệ. Thuộc tính có thể đã bị xóa hoặc quyền truy cập của bạn đã thay đổi.",
+      "operators": {
+        "exact": "là",
+        "in": "là một trong",
+        "range": "giữa",
+        "not_exact": "không phải",
+        "not_in": "không phải một trong",
+        "not_range": "không nằm giữa"
+      },
       "remove_filter": "Xóa bộ lọc",
       "save_view": "Lưu chế độ xem",
       "update_view": "Cập nhật chế độ xem"
@@ -623,6 +646,71 @@
       },
       "key_regenerated": "Đã tạo lại khóa mới thành công.",
       "view_secret_key": "Xem khóa bí mật"
+    },
+    "request_access_modal": {
+      "title": "Yêu cầu quyền truy cập",
+      "description": "Nhờ quản trị viên dự án này cho bạn vào.",
+      "description_named": "Nhờ quản trị viên của {name} cho bạn vào.",
+      "message_placeholder": "Thêm ghi chú cho quản trị viên (không bắt buộc)",
+      "send": "Gửi yêu cầu",
+      "sending": "Đang gửi...",
+      "success_title": "Đã gửi yêu cầu",
+      "success_message": "Quản trị viên dự án sẽ xem xét.",
+      "request_button": "Yêu cầu quyền truy cập",
+      "pending_badge": "Đã yêu cầu"
+    },
+    "access_requests": {
+      "title": "Yêu cầu tham gia ({count})",
+      "approve": "Phê duyệt",
+      "reject": "Từ chối",
+      "already_decided": "Yêu cầu này đã được quản trị viên khác xử lý.",
+      "requester_left": "Người này không còn là thành viên của không gian làm việc."
+    },
+    "duplicate_modal": {
+      "already_running": "Không gian làm việc này đang có một lượt sao chép mục công việc. Hãy thử lại khi nó hoàn tất.",
+      "always_copied": "Cài đặt, trạng thái và loại mục công việc luôn được sao chép.",
+      "banner": {
+        "done": "Đã sao chép mục công việc: {count}.",
+        "failed": "Sao chép mục công việc thất bại. Những gì đã sao chép được giữ lại; hãy thử lại để thêm phần còn lại.",
+        "progress": "Đang sao chép mục công việc: {copied}/{total}",
+        "queued": "Các mục công việc đang chờ sao chép...",
+        "reload": "Tải lại",
+        "retry": "Thử lại",
+        "retry_failed": "Không thể thử lại việc sao chép. Vui lòng thử lại."
+      },
+      "clear_all": "Bỏ chọn tất cả",
+      "description": "Tạo dự án mới với cùng các cài đặt. Trang và webhook không được sao chép; mục công việc chỉ được sao chép nếu bạn chọn bên dưới.",
+      "error": "Không thể nhân bản dự án. Vui lòng thử lại.",
+      "identifier_placeholder": "Tự tạo nếu để trống",
+      "properties": {
+        "assignees": "Người được giao",
+        "custom_properties": "Thuộc tính tùy chỉnh",
+        "cycles": "Chu kỳ",
+        "dates": "Ngày",
+        "description_images": "Hình ảnh trong mô tả",
+        "labels": "Nhãn",
+        "links": "Liên kết",
+        "modules": "Mô-đun",
+        "parents": "Liên kết mục con",
+        "relations": "Quan hệ"
+      },
+      "properties_description": "Chọn những gì được mang theo cùng các mục công việc. Bản nháp, mục đã lưu trữ và mục intake bị bỏ qua; bình luận, tệp đính kèm, hoạt động và nhật ký thời gian không bao giờ được sao chép.",
+      "properties_heading": "Thuộc tính mục công việc",
+      "properties_note": "Chu kỳ và mô-đun chỉ được mang theo khi chúng được sao chép ở trên.",
+      "property_groups": {
+        "content": "Nội dung",
+        "hierarchy": "Phân cấp và quan hệ",
+        "organization": "Tổ chức",
+        "people": "Con người"
+      },
+      "select_all": "Chọn tất cả",
+      "submit": "Nhân bản dự án",
+      "submitting": "Đang nhân bản dự án...",
+      "success": "Đã nhân bản dự án thành công.",
+      "title": "Nhân bản dự án",
+      "too_large": "Dự án này quá lớn để sao chép. Hãy tắt bớt một số tùy chọn và thử lại.",
+      "what_to_copy": "Sao chép thêm",
+      "work_items_too_large": "Dự án này có nhiều mục công việc hơn mức có thể sao chép (tối đa {count})."
     }
   }
 }

@@ -1,11 +1,13 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Module imports
 from .base import BaseSerializer
 from .issue import IssueExpandSerializer
 from plane.db.models import IntakeIssue, Issue, State, StateGroup
+from plane.utils.timezone_converter import snooze_day_start
 from rest_framework import serializers
 
 
@@ -116,6 +118,12 @@ class IntakeIssueUpdateSerializer(BaseSerializer):
         the project has a default state to transition to.
         """
 
+        if attrs.get("snoozed_till"):
+            attrs["snoozed_till"] = (
+                snooze_day_start(self.initial_data.get("snoozed_till"), self.instance.project_id)
+                or attrs["snoozed_till"]
+            )
+
         # Check if status is being updated to accepted
         if attrs.get("status") == 1:
             intake_issue = self.instance
@@ -167,4 +175,12 @@ class IssueDataSerializer(serializers.Serializer):
 
     name = serializers.CharField(max_length=255, help_text="Issue name")
     description_html = serializers.CharField(required=False, allow_null=True, help_text="Issue description HTML")
+    # Intake is the other way a script files work, so it takes markdown on the same terms as the work item
+    # endpoints
+    description_markdown = serializers.CharField(
+        required=False,
+        allow_null=True,
+        allow_blank=True,
+        help_text="Issue description written in markdown. Rendered to description_html; send one or the other.",
+    )
     priority = serializers.ChoiceField(choices=Issue.PRIORITY_CHOICES, default="none", help_text="Issue priority")

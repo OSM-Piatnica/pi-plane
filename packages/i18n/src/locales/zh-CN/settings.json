@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "验证码",
+            "label": "一次性验证码",
             "placeholder": "123456",
             "helper_text": "验证码已发送至你的新邮箱。",
             "errors": {
-              "required": "验证码为必填项",
+              "required": "一次性验证码为必填项",
               "invalid": "验证码无效，请重试。"
             }
           }
@@ -115,7 +115,7 @@
     "empty_state": {
       "activity": {
         "title": "尚无活动",
-        "description": "通过创建新工作项开始！为其添加详细信息和属性。在 Plane 中探索更多内容以查看您的活动。"
+        "description": "通过创建新工作项开始！为其添加详细信息和属性。在 Pi-Plane 中探索更多内容以查看您的活动。"
       },
       "assigned": {
         "title": "没有分配给您的工作项",
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "完成百分比",
+    "first_day_project_default": "项目默认值",
     "first_day_updated": "每周第一天已成功更新",
     "try_again_later": "请稍后重试。",
     "update_failed": "更新失败",

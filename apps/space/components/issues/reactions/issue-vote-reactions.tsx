@@ -1,15 +1,17 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useState } from "react";
-import { ArrowDown, ArrowUp } from "lucide-react";
+import { ArrowDownOutline, TopArrowOutline } from "@makeplane/propel/icons";
 import { observer } from "mobx-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 // plane imports
-import { Tooltip } from "@plane/propel/tooltip";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 // helpers
 import { queryParamGenerator } from "@/helpers/query-param-generator";
@@ -26,6 +28,7 @@ type TIssueVotes = {
 
 export const IssueVotes = observer(function IssueVotes(props: TIssueVotes) {
   const { anchor, issueIdFromProps, size = "md" } = props;
+  const { t } = useTranslation();
   // states
   const [isSubmitting, setIsSubmitting] = useState(false);
   // router
@@ -59,16 +62,18 @@ export const IssueVotes = observer(function IssueVotes(props: TIssueVotes) {
 
     setIsSubmitting(true);
 
-    const actionPerformed = votes?.find((vote) => vote.actor_details?.id === user?.id && vote.vote === voteValue);
+    try {
+      const actionPerformed = votes?.find((vote) => vote.actor_details?.id === user?.id && vote.vote === voteValue);
 
-    if (actionPerformed) await issueDetailsStore.removeIssueVote(anchor, issueId);
-    else {
-      await issueDetailsStore.addIssueVote(anchor, issueId, {
-        vote: voteValue,
-      });
+      if (actionPerformed) await issueDetailsStore.removeIssueVote(anchor, issueId);
+      else {
+        await issueDetailsStore.addIssueVote(anchor, issueId, {
+          vote: voteValue,
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   };
 
   const VOTES_LIMIT = 1000;
@@ -77,26 +82,26 @@ export const IssueVotes = observer(function IssueVotes(props: TIssueVotes) {
   const { queryParam } = queryParamGenerator({ peekId, board, state, priority, labels });
   const votingDimensions = size === "sm" ? "px-1 h-6 min-w-9" : "px-2 h-7";
 
+  const getVotersLabel = (voters: (string | undefined)[], emptyLabel: string) => {
+    if (voters.length === 0) return emptyLabel;
+    const names = voters.slice(0, VOTES_LIMIT).join(", ");
+    return voters.length > VOTES_LIMIT
+      ? t("space_text.issues.voters_and_more", { names, count: voters.length - VOTES_LIMIT })
+      : names;
+  };
+  const upVotesLabel = getVotersLabel(
+    allUpVotes.map((r) => r.actor_details?.display_name),
+    t("space_text.issues.no_upvotes")
+  );
+  const downVotesLabel = getVotersLabel(
+    allDownVotes.map((r) => r.actor_details?.display_name),
+    t("space_text.issues.no_downvotes")
+  );
+
   return (
     <div className="flex items-center gap-2">
       {/* upvote button 👇 */}
-      <Tooltip
-        tooltipContent={
-          <div>
-            {allUpVotes.length > 0 ? (
-              <>
-                {allUpVotes
-                  .map((r) => r.actor_details?.display_name)
-                  .splice(0, VOTES_LIMIT)
-                  .join(", ")}
-                {allUpVotes.length > VOTES_LIMIT && " and " + (allUpVotes.length - VOTES_LIMIT) + " more"}
-              </>
-            ) : (
-              "No upvotes yet"
-            )}
-          </div>
-        }
-      >
+      <Tooltip label={upVotesLabel}>
         <button
           type="button"
           disabled={isSubmitting}
@@ -115,29 +120,13 @@ export const IssueVotes = observer(function IssueVotes(props: TIssueVotes) {
             }
           )}
         >
-          <ArrowUp className="size-3.5 shrink-0" />
+          <TopArrowOutline className="size-3.5 shrink-0" />
           <span className="text-13 font-regular transition-opacity ease-in-out">{allUpVotes.length}</span>
         </button>
       </Tooltip>
 
       {/* downvote button 👇 */}
-      <Tooltip
-        tooltipContent={
-          <div>
-            {allDownVotes.length > 0 ? (
-              <>
-                {allDownVotes
-                  .map((r) => r.actor_details.display_name)
-                  .splice(0, VOTES_LIMIT)
-                  .join(", ")}
-                {allDownVotes.length > VOTES_LIMIT && " and " + (allDownVotes.length - VOTES_LIMIT) + " more"}
-              </>
-            ) : (
-              "No downvotes yet"
-            )}
-          </div>
-        }
-      >
+      <Tooltip label={downVotesLabel}>
         <button
           type="button"
           disabled={isSubmitting}
@@ -156,7 +145,7 @@ export const IssueVotes = observer(function IssueVotes(props: TIssueVotes) {
             }
           )}
         >
-          <ArrowDown className="size-3.5 shrink-0" />
+          <ArrowDownOutline className="size-3.5 shrink-0" />
           <span className="text-13 font-regular transition-opacity ease-in-out">{allDownVotes.length}</span>
         </button>
       </Tooltip>

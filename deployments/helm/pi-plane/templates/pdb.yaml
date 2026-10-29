@@ -1,0 +1,24 @@
+{{- /*
+Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+SPDX-License-Identifier: AGPL-3.0-only
+See the LICENSE file for details.
+*/ -}}
+{{- range $name := list "api" "live" "web" "space" "admin" }}
+{{- $values := index $.Values $name }}
+{{- if and $values.pdb.enabled (or (ne $name "space") $values.enabled) }}
+{{- $comp := dict "root" $ "component" $name }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "pi-plane.componentName" $comp }}
+  labels:
+    {{- include "pi-plane.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  minAvailable: {{ $values.pdb.minAvailable }}
+  selector:
+    matchLabels:
+      {{- include "pi-plane.selectorLabels" $comp | nindent 6 }}
+{{- end }}
+{{- end }}

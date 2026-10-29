@@ -1,0 +1,123 @@
+{
+  "notification": {
+    "label": "Skrzynka",
+    "page_label": "{workspace} - Skrzynka",
+    "options": {
+      "mark_all_as_read": "Oznacz wszystko jako przeczytane",
+      "mark_read": "Oznacz jako przeczytane",
+      "mark_unread": "Oznacz jako nieprzeczytane",
+      "refresh": "Odśwież",
+      "filters": "Filtry skrzynki",
+      "show_unread": "Pokaż nieprzeczytane",
+      "show_snoozed": "Pokaż odłożone",
+      "show_archived": "Pokaż zarchiwizowane",
+      "mark_archive": "Archiwizuj",
+      "mark_unarchive": "Przywróć z archiwum",
+      "mark_snooze": "Odłóż",
+      "mark_unsnooze": "Anuluj odłożenie"
+    },
+    "toasts": {
+      "read": "Powiadomienie oznaczono jako przeczytane",
+      "unread": "Oznaczono jako nieprzeczytane",
+      "archived": "Zarchiwizowano",
+      "unarchived": "Przywrócono z archiwum",
+      "snoozed": "Odłożono",
+      "unsnoozed": "Anulowano odłożenie"
+    },
+    "empty_state": {
+      "detail": {
+        "title": "Wybierz, aby zobaczyć szczegóły."
+      },
+      "all": {
+        "title": "Brak przypisanych elementów",
+        "description": "Aktualizacje przypisanych elementów pojawią się tutaj."
+      },
+      "mentions": {
+        "title": "Brak wzmianek",
+        "description": "Twoje wzmianki pojawią się tutaj."
+      }
+    },
+    "tabs": {
+      "all": "Wszystko",
+      "mentions": "Wzmianki"
+    },
+    "filter": {
+      "assigned": "Przypisano mnie",
+      "created": "Utworzyłem(am)",
+      "subscribed": "Subskrybuję"
+    },
+    "snooze": {
+      "1_day": "1 dzień",
+      "3_days": "3 dni",
+      "5_days": "5 dni",
+      "1_week": "1 tydzień",
+      "2_weeks": "2 tygodnie",
+      "custom": "Niestandardowe"
+    },
+    "content": {
+      "duplicate_added": "oznaczył(a) ten element pracy jako duplikat",
+      "duplicate_removed": "usunął(a) oznaczenie duplikatu z tego elementu pracy",
+      "assignee_added": "dodał(a) osobę przypisaną",
+      "assignee_removed": "usunął(a) osobę przypisaną",
+      "start_date_set": "ustawił(a) datę rozpoczęcia",
+      "start_date_removed": "usunął(a) datę rozpoczęcia",
+      "finish_date_set": "set finish date",
+      "finish_date_removed": "removed the finish date",
+      "due_date_set": "ustawił(a) termin",
+      "due_date_removed": "usunął(a) termin",
+      "duration_set": "ustawił(a) czas trwania",
+      "duration_removed": "usunął(a) czas trwania",
+      "label_added": "dodał(a) etykietę",
+      "label_removed": "usunął(a) etykietę",
+      "parent_added": "dodał(a) element nadrzędny",
+      "parent_removed": "usunął(a) element nadrzędny",
+      "relates_to": "oznaczył(a) ten element pracy jako powiązany z innym elementem pracy",
+      "commented": "skomentował(a)",
+      "restored": "przywrócił(a) element pracy",
+      "archived": "zarchiwizował(a) element pracy",
+      "created_and_assigned": "utworzył(a) element pracy i przypisał(a) go Tobie",
+      "mentioned_you": "wspomniał(a) o Tobie",
+      "description_updated": "zaktualizował(a) opis na",
+      "estimate_updated": "zmienił(a) szacowanie na",
+      "state_updated": "zmienił(a) stan na",
+      "priority_updated": "zmienił(a) priorytet na",
+      "name_updated": "zmienił(a) tytuł na",
+      "type_updated": "zmienił(a) typ elementu pracy na",
+      "cycle_added": "dodał(a) element pracy do cyklu",
+      "cycle_updated": "zmienił(a) cykl na",
+      "cycle_removed": "usunął(a) element pracy z cyklu",
+      "module_added": "dodał(a) element pracy do modułu",
+      "module_updated": "zmienił(a) moduł na",
+      "module_removed": "usunął(a) element pracy z modułu",
+      "link_added": "dodał(a) link",
+      "link_updated": "zaktualizował(a) link",
+      "link_removed": "usunął(a) link",
+      "attachment_added": "dodał(a) załącznik",
+      "attachment_removed": "usunął(a) załącznik",
+      "blocking_added": "oznaczył(a) ten element pracy jako blokujący",
+      "blocking_removed": "usunął(a) relację blokowania",
+      "blocked_by_added": "oznaczył(a) ten element pracy jako blokowany przez",
+      "blocked_by_removed": "usunął(a) relację „blokowany przez”",
+      "generic_updated": "zaktualizował(a) element pracy",
+      "end_punctuation": "."
+    },
+    "access_request": {
+      "approved": "zatwierdził(a) Twoją prośbę o dołączenie do <value/>",
+      "rejected": "odrzucił(a) Twoją prośbę o dołączenie do <value/>",
+      "requested": "poprosił(a) o dostęp do <value/>"
+    }
+  },
+  "notification_ui": {
+    "snooze_modal": {
+      "date_required": "Wybierz datę",
+      "no_time_available": "Brak dostępnych godzin dla tej daty.",
+      "pick_date": "Wybierz datę",
+      "pick_time": "Wybierz godzinę",
+      "select_date": "Wybierz datę",
+      "select_time": "Wybierz godzinę",
+      "submitting": "Wysyłanie...",
+      "time_required": "Wybierz godzinę",
+      "title": "Dostosuj czas odłożenia"
+    }
+  }
+}

@@ -1,7 +1,26 @@
 (plane_proxy) {
-	request_body {
-		max_size {$FILE_SIZE_LIMIT}
+	# Per-client-IP flood guard. Everyone behind one office IP shares this bucket,
+	# so keep it well above the whole office's traffic. Needs the caddy-ratelimit plugin.
+	rate_limit {
+		zone per_ip {
+			key {client_ip}
+			events {$RATE_LIMIT_PER_IP_PER_MIN:50000}
+			window 1m
+		}
 	}
+
+	request_body {
+		max_size {$FILE_SIZE_LIMIT_MAX:104857600}
+	}
+
+    # Space left out of the deployment (ENABLE_SPACE=0): nothing answers there
+    @space_off {
+        path /spaces /spaces/*
+        expression `{env.ENABLE_SPACE} == '0'`
+    }
+    handle @space_off {
+        respond "Not found" 404
+    }
 
     handle /spaces/* {
         reverse_proxy localhost:3002
@@ -31,13 +50,18 @@
 }
 
 {
+	order rate_limit before basicauth
 	{$CERT_EMAIL}
 	acme_ca {$CERT_ACME_CA:https://acme-v02.api.letsencrypt.org/directory} 
 	{$CERT_ACME_DNS}
 	servers {
 		max_header_size 25MB
 		client_ip_headers X-Forwarded-For X-Real-IP
-		trusted_proxies static {$TRUSTED_PROXIES:0.0.0.0/0}
+		# Only peers in this range may set X-Forwarded-For/X-Real-IP; for anyone else Caddy uses the
+		# connecting address. The default is the private ranges: a load balancer inside your network is
+		# trusted, a client on the internet is not and cannot spoof its address (or the per-IP rate
+		# limit). Behind a CDN or a load balancer with a public address, set TRUSTED_PROXIES to its range.
+		trusted_proxies static {$TRUSTED_PROXIES:private_ranges}
 	}
 }
 

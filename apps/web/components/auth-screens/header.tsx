@@ -1,0 +1,86 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import React from "react";
+import { observer } from "mobx-react";
+import Link from "next/link";
+import { useTranslation } from "@plane/i18n";
+import { PlaneLockup } from "@plane/blocks/icons";
+import { PageHead } from "@/components/core/page-title";
+import { EAuthModes } from "@/helpers/authentication.helper";
+import { useInstance } from "@/hooks/store/use-instance";
+import { AuthLanguageSelect } from "./language-select";
+
+const authContentMap = {
+  [EAuthModes.SIGN_IN]: {
+    pageTitle: "app_text.auth_screens.sign_up",
+    text: "auth.common.new_to_plane",
+    linkText: "app_text.auth_screens.sign_up",
+    linkHref: "/sign-up",
+  },
+  [EAuthModes.SIGN_UP]: {
+    pageTitle: "app_text.auth_screens.sign_in",
+    text: "auth.common.already_have_an_account",
+    linkText: "app_text.auth_screens.sign_in",
+    linkHref: "/sign-in",
+  },
+};
+
+type AuthHeaderProps = {
+  type: EAuthModes;
+};
+
+// react-doctor-disable-next-line only-export-components -- observer() wraps a component; the rule does not recognise the MobX HOC, so this export is a component
+export const AuthHeader = observer(function AuthHeader({ type }: AuthHeaderProps) {
+  const { t } = useTranslation();
+  // store
+  const { config } = useInstance();
+  // derived values
+  const enableSignUpConfig = config?.enable_signup ?? false;
+
+  return (
+    <AuthHeaderBase
+      pageTitle={t(authContentMap[type].pageTitle)}
+      additionalAction={
+        enableSignUpConfig && (
+          <div className="flex flex-col items-end text-center text-13 font-medium text-tertiary sm:flex-row sm:items-center sm:gap-2">
+            <span className="text-body-sm-regular text-tertiary">{t(authContentMap[type].text)}</span>
+            <Link
+              href={authContentMap[type].linkHref}
+              className="text-body-sm-semibold text-accent-primary hover:underline"
+            >
+              {t(authContentMap[type].linkText)}
+            </Link>
+          </div>
+        )
+      }
+    />
+  );
+});
+
+type TAuthHeaderBase = {
+  pageTitle: string;
+  additionalAction?: React.ReactNode;
+};
+
+export function AuthHeaderBase(props: TAuthHeaderBase) {
+  const { pageTitle, additionalAction } = props;
+  return (
+    <>
+      <PageHead title={pageTitle + " - Pi-Plane"} />
+      <div className="sticky top-0 flex w-full flex-shrink-0 items-center justify-between gap-6">
+        <Link href="/">
+          <PlaneLockup height={24} width={82} className="text-primary" />
+        </Link>
+        <div className="flex items-center gap-3">
+          <AuthLanguageSelect />
+          {additionalAction}
+        </div>
+      </div>
+    </>
+  );
+}

@@ -1,7 +1,7 @@
 {
   "workspace_creation": {
     "heading": "Vytvorte si pracovný priestor",
-    "subheading": "Na používanie Plane musíte vytvoriť alebo sa pripojiť k pracovnému priestoru.",
+    "subheading": "Na používanie Pi-Plane musíte vytvoriť alebo sa pripojiť k pracovnému priestoru.",
     "form": {
       "name": {
         "label": "Pomenujte svoj pracovný priestor",
@@ -54,11 +54,11 @@
     "empty_state": {
       "general": {
         "title": "Prehľad projektov, aktivít a metrík",
-        "description": "Vitajte v Plane, teší nás, že ste tu. Vytvorte prvý projekt, sledujte pracovné položky a táto stránka sa zmení na priestor pre váš pokrok. Správcovia tu uvidia aj položky pomáhajúce tímu.",
+        "description": "Vitajte v Pi-Plane, teší nás, že ste tu. Vytvorte prvý projekt, sledujte pracovné položky a táto stránka sa zmení na priestor pre váš pokrok. Správcovia tu uvidia aj položky pomáhajúce tímu.",
         "primary_button": {
           "text": "Vytvorte prvý projekt",
           "comic": {
-            "title": "Všetko začína projektom v Plane",
+            "title": "Všetko začína projektom v Pi-Plane",
             "description": "Projektom môže byť roadmapa produktu, marketingová kampaň alebo uvedenie nového auta."
           }
         }
@@ -157,13 +157,17 @@
     },
     "network": {
       "label": "Sieť",
+      "secret": {
+        "title": "Tajný",
+        "description": "Skrytý pre všetkých, ktorí nie sú členmi"
+      },
       "private": {
         "title": "Súkromný",
-        "description": "Prístupné iba na pozvanie"
+        "description": "Viditeľný pre všetkých v pracovnom priestore; prístup vyžaduje schválenie alebo pozvanie"
       },
       "public": {
-        "title": "Verejný",
-        "description": "Ktokoľvek v priestore okrem hostí sa môže pripojiť"
+        "title": "Otvorený",
+        "description": "Otvorený pre priestor: pripojiť sa môže každý člen okrem hostí"
       }
     },
     "error": {
@@ -191,7 +195,7 @@
     },
     "common": {
       "months_count": "{months, plural, one{# mesiac} few{# mesiace} other{# mesiacov}}",
-      "days_count": "{days, plural, one{# deň} other{# dni}}"
+      "days_count": "{days, plural, one{# deň} few{# dni} many{# dňa} other{# dní}}"
     },
     "empty_state": {
       "general": {
@@ -200,7 +204,7 @@
         "primary_button": {
           "text": "Začnite prvý projekt",
           "comic": {
-            "title": "Všetko začína projektom v Plane",
+            "title": "Všetko začína projektom v Pi-Plane",
             "description": "Projektom môže byť roadmapa produktu, marketingová kampaň alebo uvedenie nového auta."
           }
         }
@@ -211,7 +215,7 @@
         "primary_button": {
           "text": "Začnite prvý projekt",
           "comic": {
-            "title": "Všetko začína projektom v Plane",
+            "title": "Všetko začína projektom v Pi-Plane",
             "description": "Projektom môže byť roadmapa produktu, marketingová kampaň alebo uvedenie nového auta."
           }
         }
@@ -434,7 +438,7 @@
       "not_found": "Pozvánka sa nenašla",
       "invited_to": "Boli ste pozvaní do {workspace}",
       "already_member": "Ste už členom {workspace}",
-      "description": "Váš pracovný priestor je miesto, kde vytvárate projekty, spolupracujete na pracovných položkách a organizujete rôzne prúdy práce vo svojom účte Plane.",
+      "description": "Váš pracovný priestor je miesto, kde vytvárate projekty, spolupracujete na pracovných položkách a organizujete rôzne prúdy práce vo svojom účte Pi-Plane.",
       "accept": "Prijať",
       "ignore": "Ignorovať",
       "continue_home": "Pokračovať na domovskú stránku",

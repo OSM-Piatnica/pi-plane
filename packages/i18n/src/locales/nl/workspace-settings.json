@@ -1,0 +1,591 @@
+{
+  "workspace_settings": {
+    "label": "Werkruimte-instellingen",
+    "page_label": "{workspace} - Algemene instellingen",
+    "key_created": "Sleutel aangemaakt",
+    "copy_key": "Kopieer deze geheime sleutel en bewaar hem in Plane Pages. Je kunt deze sleutel niet meer zien nadat je op Sluiten hebt geklikt. Er is een CSV-bestand met de sleutel gedownload.",
+    "token_copied": "Token gekopieerd naar klembord.",
+    "settings": {
+      "general": {
+        "title": "Algemeen",
+        "upload_logo": "Logo uploaden",
+        "edit_logo": "Logo bewerken",
+        "name": "Naam van werkruimte",
+        "company_size": "Bedrijfsgrootte",
+        "url": "URL van werkruimte",
+        "workspace_timezone": "Tijdzone van werkruimte",
+        "update_workspace": "Werkruimte bijwerken",
+        "delete_workspace": "Deze werkruimte verwijderen",
+        "delete_workspace_description": "Wanneer je een werkruimte verwijdert, worden alle gegevens en bronnen in die werkruimte definitief verwijderd en kunnen ze niet worden hersteld.",
+        "delete_btn": "Deze werkruimte verwijderen",
+        "delete_modal": {
+          "title": "Weet je zeker dat je deze werkruimte wilt verwijderen?",
+          "description": "Je hebt een actieve proefperiode voor een van onze betaalde abonnementen. Annuleer die eerst om door te gaan.",
+          "dismiss": "Sluiten",
+          "cancel": "Proefperiode annuleren",
+          "success_title": "Werkruimte verwijderd.",
+          "success_message": "Je wordt binnenkort doorgestuurd naar je profielpagina.",
+          "error_title": "Dat is niet gelukt.",
+          "error_message": "Probeer het opnieuw."
+        },
+        "errors": {
+          "name": {
+            "required": "Naam is verplicht",
+            "max_length": "De naam van de werkruimte mag niet langer zijn dan 80 tekens"
+          },
+          "company_size": {
+            "required": "Bedrijfsgrootte is verplicht",
+            "select_a_range": "Selecteer organisatiegrootte"
+          }
+        }
+      },
+      "members": {
+        "title": "Leden",
+        "add_member": "Lid toevoegen",
+        "pending_invites": "Openstaande uitnodigingen",
+        "invitations_sent_successfully": "Uitnodigingen succesvol verzonden",
+        "leave_confirmation": "Weet je zeker dat je de werkruimte wilt verlaten? Je hebt dan geen toegang meer tot deze werkruimte. Deze actie kan niet ongedaan worden gemaakt.",
+        "details": {
+          "full_name": "Volledige naam",
+          "display_name": "Weergavenaam",
+          "email_address": "E-mailadres",
+          "account_type": "Accounttype",
+          "authentication": "Authenticatie",
+          "joining_date": "Datum van toetreding"
+        },
+        "modal": {
+          "title": "Nodig mensen uit om samen te werken",
+          "description": "Nodig mensen uit om samen te werken in je werkruimte.",
+          "button": "Uitnodigingen versturen",
+          "button_loading": "Uitnodigingen versturen",
+          "placeholder": "naam@bedrijf.com",
+          "errors": {
+            "required": "We hebben een e-mailadres nodig om iemand uit te nodigen.",
+            "invalid": "E-mailadres is ongeldig"
+          }
+        }
+      },
+      "groups": {
+        "title": "Groepen",
+        "description": "Organiseer mensen in groepen. Groepen kunnen genest worden, een persoon kan bij meerdere groepen horen en werkitems kunnen aan een groep worden toegewezen.",
+        "create_group": "Groep maken",
+        "create": "Maken",
+        "edit_group": "Groep bewerken",
+        "edit": "Bewerken",
+        "add_subgroup": "Subgroep toevoegen",
+        "members": "Leden",
+        "name": "Naam",
+        "description_label": "Beschrijving",
+        "parent": "Bovenliggende groep",
+        "top_level": "Geen bovenliggende groep (hoogste niveau)",
+        "no_groups": "Er zijn nog geen groepen.",
+        "member_count": "{count, plural, one {# lid} other {# leden}}",
+        "managed_by": "Beheerd door {provider}",
+        "sources": {
+          "local": "Lokaal",
+          "entra": "Microsoft Entra",
+          "google": "Google",
+          "oidc": "SSO"
+        },
+        "members_of": "Leden van {name}",
+        "managed_externally_hint": "Deze groep wordt beheerd door uw identiteitsprovider. De leden volgen de provider en kunnen hier niet worden gewijzigd.",
+        "select_member": "Selecteer een lid",
+        "add_member": "Toevoegen",
+        "role": "Rol",
+        "role_member": "Lid",
+        "role_admin": "Groepsbeheerder",
+        "no_members": "Deze groep heeft nog geen leden.",
+        "group_created": "Groep gemaakt.",
+        "group_updated": "Groep bijgewerkt.",
+        "group_deleted": "Groep verwijderd.",
+        "delete_title": "{name} verwijderen?",
+        "delete_content": "De mensen in deze groep blijven in de werkruimte. Werkitems die aan de groep zijn toegewezen, verliezen die toewijzing. Deze actie kan niet ongedaan worden gemaakt.",
+        "group_assignees": "Toegewezen groepen",
+        "add_group_assignee": "Groep toevoegen",
+        "no_group_assignees": "Geen groepen toegewezen"
+      },
+      "billing_and_plans": {
+        "heading": "Facturatie en abonnementen",
+        "description": "Kies je abonnement, beheer abonnementen en upgrade eenvoudig wanneer je behoeften groeien.",
+        "title": "Facturatie en abonnementen",
+        "current_plan": "Huidig abonnement",
+        "free_plan": "Je gebruikt momenteel het gratis abonnement",
+        "view_plans": "Abonnementen bekijken"
+      },
+      "exports": {
+        "heading": "Exports",
+        "description": "Exporteer je projectgegevens in verschillende formaten en bekijk je exportgeschiedenis met downloadlinks.",
+        "title": "Exports",
+        "exporting": "Exporteren",
+        "previous_exports": "Eerdere exports",
+        "export_separate_files": "Exporteer de gegevens naar afzonderlijke bestanden",
+        "exporting_projects": "Geëxporteerde projecten",
+        "format": "Formaat",
+        "filters_info": "Pas filters toe om specifieke werkitems te exporteren op basis van je criteria.",
+        "modal": {
+          "title": "Exporteren naar",
+          "toasts": {
+            "success": {
+              "title": "Export geslaagd",
+              "message": "Je kunt de geëxporteerde {entity} downloaden via de eerdere exports."
+            },
+            "error": {
+              "title": "Export mislukt",
+              "message": "Export is mislukt. Probeer het opnieuw."
+            }
+          }
+        },
+        "columns": {
+          "heading": "Kolommen",
+          "description": "Kies welke kolommen het bestand bevat. Identificatie en naam zijn altijd opgenomen, omdat het bestand anders niet opnieuw kan worden geïmporteerd.",
+          "select_all": "Alles selecteren",
+          "clear_all": "Alles wissen",
+          "groups": {
+            "details": "Details",
+            "people": "Personen",
+            "dates": "Datums",
+            "organization": "Organisatie",
+            "relations": "Hiërarchie en relaties",
+            "other": "Overig"
+          },
+          "fields": {
+            "project_name": "Projectnaam",
+            "project_identifier": "Projectidentificatie",
+            "sequence_id": "Volgnummer",
+            "issue_type": "Type werkitem",
+            "state_name": "Status",
+            "priority": "Prioriteit",
+            "description_html": "Beschrijving",
+            "estimate": "Schatting",
+            "is_draft": "Conceptmarkering",
+            "assignees": "Toegewezen aan",
+            "subscribers": "Abonnees",
+            "created_by_name": "Gemaakt door",
+            "start_date": "Startdatum",
+            "finish_date": "Afrondingsdatum",
+            "target_date": "Vervaldatum",
+            "duration": "Duur",
+            "completed_at": "Voltooid op",
+            "created_at": "Gemaakt op",
+            "updated_at": "Bijgewerkt op",
+            "archived_at": "Gearchiveerd op",
+            "labels": "Labels",
+            "cycles": "Cycli",
+            "modules": "Modules",
+            "parent": "Bovenliggend",
+            "relations": "Relaties",
+            "links": "Links",
+            "custom_properties": "Aangepaste eigenschappen",
+            "comments": "Opmerkingen"
+          }
+        }
+      },
+      "webhooks": {
+        "heading": "Webhooks",
+        "description": "Automatiseer meldingen naar externe diensten wanneer er projectgebeurtenissen plaatsvinden.",
+        "title": "Webhooks",
+        "add_webhook": "Webhook toevoegen",
+        "modal": {
+          "title": "Webhook aanmaken",
+          "details": "Webhookdetails",
+          "payload": "Payload-URL",
+          "question": "Welke gebeurtenissen moeten deze webhook activeren?",
+          "error": "URL is verplicht"
+        },
+        "secret_key": {
+          "title": "Geheime sleutel",
+          "message": "Genereer een token om de webhook-payload te ondertekenen"
+        },
+        "options": {
+          "all": "Stuur me alles",
+          "individual": "Selecteer individuele gebeurtenissen"
+        },
+        "toasts": {
+          "created": {
+            "title": "Webhook aangemaakt",
+            "message": "De webhook is succesvol aangemaakt"
+          },
+          "not_created": {
+            "title": "Webhook niet aangemaakt",
+            "message": "De webhook kon niet worden aangemaakt"
+          },
+          "updated": {
+            "title": "Webhook bijgewerkt",
+            "message": "De webhook is succesvol bijgewerkt"
+          },
+          "not_updated": {
+            "title": "Webhook niet bijgewerkt",
+            "message": "De webhook kon niet worden bijgewerkt"
+          },
+          "removed": {
+            "title": "Webhook verwijderd",
+            "message": "De webhook is succesvol verwijderd"
+          },
+          "not_removed": {
+            "title": "Webhook niet verwijderd",
+            "message": "De webhook kon niet worden verwijderd"
+          },
+          "secret_key_copied": {
+            "message": "Geheime sleutel gekopieerd naar klembord."
+          },
+          "secret_key_not_copied": {
+            "message": "Er is een fout opgetreden bij het kopiëren van de geheime sleutel."
+          }
+        }
+      },
+      "api_tokens": {
+        "heading": "Toegangstokens",
+        "description": "Genereer beveiligde API-tokens om je gegevens te integreren met externe systemen en toepassingen.",
+        "title": "Toegangstokens",
+        "add_token": "Toegangstoken toevoegen",
+        "create_token": "Token aanmaken",
+        "never_expires": "Verloopt nooit",
+        "generate_token": "Token genereren",
+        "generating": "Genereren",
+        "delete": {
+          "title": "Toegangstoken verwijderen",
+          "description": "Elke toepassing die dit token gebruikt, heeft geen toegang meer tot Plane-gegevens. Deze actie kan niet ongedaan worden gemaakt.",
+          "success": {
+            "title": "Gelukt!",
+            "message": "Het token is succesvol verwijderd"
+          },
+          "error": {
+            "title": "Fout!",
+            "message": "Het token kon niet worden verwijderd"
+          }
+        }
+      },
+      "integrations": {
+        "title": "Integraties",
+        "heading": "Integraties",
+        "description": "Maak verbinding met populaire tools en diensten om je werk te synchroniseren in je hele workflow-ecosysteem.",
+        "page_title": "Werk met je Plane-gegevens in beschikbare apps of je eigen apps.",
+        "page_description": "Bekijk alle integraties die door deze werkruimte of door jou worden gebruikt."
+      },
+      "imports": {
+        "title": "Imports",
+        "heading": "Imports",
+        "description": "Verbind en importeer gegevens uit je bestaande projectmanagementtools om je workflow-integratie te stroomlijnen."
+      },
+      "worklogs": {
+        "title": "Werklogs",
+        "heading": "Werklogs",
+        "description": "Download werklogs, oftewel urenstaten, van iedereen in elk project."
+      },
+      "group_syncing": {
+        "title": "Groepssynchronisatie",
+        "heading": "Groepssynchronisatie",
+        "description": "Koppel groepen van de identiteitsprovider aan projecten en rollen. Gebruikerstoegang wordt automatisch bijgewerkt wanneer het groepslidmaatschap in je IdP verandert, wat onboarding en offboarding vereenvoudigt.",
+        "enable": {
+          "title": "Groepssynchronisatie inschakelen",
+          "description": "Voeg gebruikers automatisch toe aan projecten op basis van groepen van de identiteitsprovider."
+        },
+        "config": {
+          "title": "Groepssynchronisatie configureren",
+          "description": "Stel in hoe groepen van de identiteitsprovider worden gekoppeld aan projecten en rollen.",
+          "sync_on_login": {
+            "title": "Synchroniseren bij inloggen",
+            "description": "Werk het groepslidmaatschap en de projecttoegang bij wanneer een gebruiker inlogt."
+          },
+          "sync_offline": {
+            "title": "Offline synchronisatie",
+            "description": "Voert elke zes uur automatisch een synchronisatie uit, zonder te wachten tot gebruikers inloggen."
+          },
+          "auto_remove": {
+            "title": "Automatisch verwijderen",
+            "description": "Verwijder gebruikers automatisch uit projecten wanneer ze niet meer overeenkomen met de groep."
+          },
+          "group_attribute_key": {
+            "title": "Sleutel voor groepskenmerk",
+            "description": "Het kenmerk van de identiteitsprovider dat wordt gebruikt om gebruikersgroepen te identificeren en te synchroniseren.",
+            "placeholder": "Groepen"
+          }
+        },
+        "group_mapping": {
+          "title": "Groepskoppeling",
+          "description": "Koppel groepen van de identiteitsprovider aan projecten en rollen.",
+          "button_text": "Nieuwe groepssynchronisatie toevoegen"
+        },
+        "toast": {
+          "updating": "Functie voor groepssynchronisatie bijwerken",
+          "success": "Functie voor groepssynchronisatie succesvol bijgewerkt.",
+          "error": "Functie voor groepssynchronisatie bijwerken mislukt!"
+        },
+        "delete_modal": {
+          "title": "Groepssynchronisatie verwijderen",
+          "content": "Nieuwe gebruikers uit deze identiteitsgroep worden niet meer aan het project toegevoegd. Reeds toegevoegde gebruikers behouden hun huidige rol."
+        },
+        "modal": {
+          "idp_group_name": {
+            "text": "Gebruikersgroep",
+            "required": "Gebruikersgroep is verplicht",
+            "placeholder": "Voer de IdP-groepsnamen in"
+          },
+          "project": {
+            "text": "Project",
+            "required": "Project is verplicht",
+            "placeholder": "Selecteer een project"
+          },
+          "default_role": {
+            "text": "Projectrol",
+            "required": "Projectrol is verplicht",
+            "placeholder": "Selecteer een projectrol"
+          }
+        }
+      },
+      "identity": {
+        "title": "Identiteit",
+        "heading": "Identiteit",
+        "description": "Configureer je domein en schakel Single sign-on in"
+      },
+      "project_states": {
+        "title": "Projectstatussen",
+        "heading": "Zie een voortgangsoverzicht van alle projecten.",
+        "description": "Projectstatussen is een functie die alleen in Pi-Plane beschikbaar is om de voortgang van al je projecten bij te houden op basis van elke projecteigenschap.",
+        "go_to_settings": "Ga naar instellingen"
+      },
+      "projects": {
+        "title": "Projecten",
+        "description": "Beheer projectstatussen, schakel projectlabels in en configureer meer.",
+        "tabs": {
+          "states": "Projectstatussen",
+          "labels": "Projectlabels"
+        }
+      },
+      "templates": {
+        "title": "Sjablonen",
+        "heading": "Sjablonen",
+        "description": "Bespaar 80% van de tijd die je kwijt bent aan het aanmaken van projecten, werkitems en pagina's met sjablonen."
+      },
+      "relations": {
+        "title": "Relaties",
+        "heading": "Relaties",
+        "description": "Maak relatietypen aan en beheer ze om werkitems in je werkruimte met elkaar te verbinden."
+      },
+      "cancel_trial": {
+        "title": "Annuleer eerst je proefperiode.",
+        "description": "Je hebt een actieve proefperiode voor een van onze betaalde abonnementen. Annuleer die eerst om door te gaan.",
+        "dismiss": "Sluiten",
+        "cancel": "Proefperiode annuleren",
+        "cancel_success_title": "Proefperiode geannuleerd.",
+        "cancel_success_message": "Je kunt de werkruimte nu verwijderen.",
+        "cancel_error_title": "Dat is niet gelukt.",
+        "cancel_error_message": "Probeer het opnieuw."
+      },
+      "applications": {
+        "internal": "Intern",
+        "title": "Toepassingen",
+        "applicationId_copied": "Toepassings-ID gekopieerd naar klembord",
+        "clientId_copied": "Client-ID gekopieerd naar klembord",
+        "clientSecret_copied": "Client Secret gekopieerd naar klembord",
+        "third_party_apps": "Apps van derden",
+        "your_apps": "Je apps",
+        "connect": "Verbinden",
+        "connected": "Verbonden",
+        "disconnect": "Verbinding verbreken",
+        "install": "Installeren",
+        "installed": "Geïnstalleerd",
+        "configure": "Configureren",
+        "app_available": "Je hebt deze app beschikbaar gemaakt voor gebruik met een Plane-werkruimte",
+        "app_credentials_regenrated": {
+          "title": "App-referenties succesvol opnieuw gegenereerd",
+          "description": "Vervang de client secret overal waar hij wordt gebruikt. Het vorige secret is niet meer geldig."
+        },
+        "app_created": {
+          "title": "App succesvol aangemaakt",
+          "description": "Gebruik de referenties om de app in een Plane-werkruimte te installeren"
+        },
+        "installed_apps": "Geïnstalleerde apps",
+        "all_apps": "Alle apps",
+        "internal_apps": "Interne apps",
+        "app_name_title": "App-naam",
+        "app_description_title": {
+          "label": "Uitgebreide beschrijving",
+          "placeholder": "Schrijf een uitgebreide beschrijving voor de marketplace. Druk op ‘/’ voor opdrachten."
+        },
+        "authorization_grant_type": {
+          "title": "Verbindingstype",
+          "description": "Kies of je app één keer voor de werkruimte wordt geïnstalleerd of dat elke gebruiker zijn eigen account laat verbinden"
+        },
+        "website": {
+          "title": "Website",
+          "description": "Link naar de website van je app.",
+          "placeholder": "https://example.com"
+        },
+        "app_maker": {
+          "title": "App-maker",
+          "description": "De persoon of organisatie die de app maakt."
+        },
+        "app_maker_error": "Naam van maker is verplicht",
+        "setup_url": {
+          "label": "Setup-URL",
+          "description": "Gebruikers worden naar deze URL doorgestuurd wanneer ze de app installeren.",
+          "placeholder": "https://example.com/setup"
+        },
+        "webhook_url": {
+          "label": "Webhook-URL",
+          "description": "Hier sturen we webhook-gebeurtenissen en updates naartoe vanuit de werkruimten waarin je app is geïnstalleerd.",
+          "placeholder": "https://example.com/webhook"
+        },
+        "webhook_secret": {
+          "label": "Webhook Secret",
+          "description": "Secret waarmee inkomende webhookverzoeken worden geverifieerd.",
+          "placeholder": "Voer een willekeurige geheime sleutel in"
+        },
+        "redirect_uris": {
+          "label": "Redirect-URI's (gescheiden door spaties)",
+          "description": "Gebruikers worden naar dit pad doorgestuurd nadat ze zich bij Pi-Plane hebben geauthenticeerd.",
+          "placeholder": "https://example.com https://example.com/"
+        },
+        "app_available_description": "Verbind een Plane-werkruimte om de app te gebruiken",
+        "client_id_and_secret": "Client-ID en Secret",
+        "client_id_and_secret_description": "Kopieer deze geheime sleutel en bewaar hem in Pages. Je kunt deze sleutel niet opnieuw zien nadat je op Sluiten hebt geklikt.",
+        "client_id_and_secret_download": "Je kunt hier een CSV met de sleutel downloaden.",
+        "application_id": "Toepassings-ID",
+        "client_id": "Client-ID",
+        "client_secret": "Client Secret",
+        "export_as_csv": "Exporteren als CSV",
+        "slug_already_exists": "Slug bestaat al",
+        "failed_to_create_application": "Toepassing aanmaken mislukt",
+        "upload_logo": "Logo uploaden",
+        "app_name_error": "App-naam is verplicht",
+        "app_short_description_title": "Korte beschrijving",
+        "app_short_description_error": "Korte beschrijving van de app is verplicht",
+        "app_description_error": "Beschrijving van de app is verplicht",
+        "app_slug_title": "App-slug",
+        "app_slug_error": "App-slug is verplicht",
+        "invalid_website_error": "Ongeldige website",
+        "webhook_url_title": "Webhook-URL",
+        "webhook_url_error": "Webhook-URL is verplicht",
+        "invalid_webhook_url_error": "Ongeldige webhook-URL",
+        "redirect_uris_title": "Redirect-URI's",
+        "redirect_uris_error": "Redirect-URI's zijn verplicht",
+        "invalid_redirect_uris_error": "Ongeldige redirect-URI's",
+        "redirect_uris_description": "Voer door spaties gescheiden URI's in waarnaar de app doorstuurt nadat de gebruiker is ingelogd, bijv. https://example.com https://example.com/",
+        "authorized_javascript_origins_title": "Geautoriseerde Javascript-origins",
+        "authorized_javascript_origins_error": "Geautoriseerde Javascript-origins zijn verplicht",
+        "invalid_authorized_javascript_origins_error": "Ongeldige geautoriseerde Javascript-origins",
+        "authorized_javascript_origins_description": "Voer door spaties gescheiden origins in waarvandaan de app verzoeken mag doen, bijv. app.com example.com",
+        "create_app": "App aanmaken",
+        "update_app": "App bijwerken",
+        "build_your_own_app": "Bouw je eigen app",
+        "edit_app_details": "App-details bewerken",
+        "regenerate_client_secret_description": "Genereer de client secret opnieuw. Als je het secret opnieuw genereert, kun je de sleutel direct daarna kopiëren of downloaden als CSV-bestand.",
+        "regenerate_client_secret": "Client secret opnieuw genereren",
+        "regenerate_client_secret_confirm_title": "Weet je zeker dat je de client secret opnieuw wilt genereren?",
+        "regenerate_client_secret_confirm_description": "Apps die dit secret gebruiken, werken niet meer. Je moet het secret in de app bijwerken.",
+        "regenerate_client_secret_confirm_cancel": "Annuleren",
+        "regenerate_client_secret_confirm_regenerate": "Opnieuw genereren",
+        "read_only_access_to_workspace": "Alleen-lezentoegang tot je werkruimte",
+        "write_access_to_workspace": "Schrijftoegang tot je werkruimte",
+        "read_only_access_to_user_profile": "Alleen-lezentoegang tot je gebruikersprofiel",
+        "write_access_to_user_profile": "Schrijftoegang tot je gebruikersprofiel",
+        "connect_app_to_workspace": "Verbind {app} met je werkruimte {workspace}",
+        "user_permissions": "Gebruikersmachtigingen",
+        "user_permissions_description": "Gebruikersmachtigingen worden gebruikt om toegang te verlenen tot het profiel van de gebruiker.",
+        "workspace_permissions": "Werkruimtemachtigingen",
+        "workspace_permissions_description": "Werkruimtemachtigingen worden gebruikt om toegang tot de werkruimte te verlenen.",
+        "with_the_permissions": "met de machtigingen",
+        "app_consent_title": "{app} vraagt toegang tot je Plane-werkruimte en profiel.",
+        "choose_workspace_to_connect_app_with": "Kies een werkruimte om de app mee te verbinden",
+        "app_consent_workspace_permissions_title": "{app} wil graag",
+        "app_consent_user_permissions_title": "{app} kan ook de machtiging van een gebruiker vragen voor de volgende bronnen. Deze machtigingen worden alleen aan een gebruiker gevraagd en door een gebruiker verleend.",
+        "app_consent_accept_title": "Door te accepteren,",
+        "app_consent_accept_1": "geef je de app toegang tot je Plane-gegevens overal waar je de app in of buiten Pi-Plane kunt gebruiken",
+        "app_consent_accept_2": "ga je akkoord met het privacybeleid en de gebruiksvoorwaarden van {app}",
+        "accepting": "Accepteren...",
+        "accept": "Accepteren",
+        "categories": "Categorieën",
+        "select_app_categories": "Selecteer app-categorieën",
+        "categories_title": "Categorieën",
+        "categories_error": "Categorieën zijn verplicht",
+        "invalid_categories_error": "Ongeldige categorieën",
+        "categories_description": "Selecteer de categorieën die de app het best beschrijven",
+        "supported_plans": "Ondersteunde abonnementen",
+        "supported_plans_description": "Selecteer de werkruimteabonnementen die deze toepassing mogen installeren. Laat leeg om alle abonnementen toe te staan.",
+        "select_plans": "Selecteer abonnementen",
+        "privacy_policy_url_title": "URL van privacybeleid",
+        "privacy_policy_url_error": "URL van privacybeleid is verplicht",
+        "invalid_privacy_policy_url_error": "Ongeldige URL van privacybeleid",
+        "terms_of_service_url_title": "URL van gebruiksvoorwaarden",
+        "terms_of_service_url_error": "URL van gebruiksvoorwaarden is verplicht",
+        "invalid_terms_of_service_url_error": "Ongeldige URL van gebruiksvoorwaarden",
+        "support_url_title": "Support-URL",
+        "support_url_error": "Support-URL is verplicht",
+        "invalid_support_url_error": "Ongeldige support-URL",
+        "video_url_title": "Video-URL",
+        "video_url_error": "Video-URL is verplicht",
+        "invalid_video_url_error": "Ongeldige video-URL",
+        "setup_url_error": "Setup-URL is verplicht",
+        "invalid_setup_url_error": "Ongeldige setup-URL",
+        "configuration_url_title": "Configuratie-URL",
+        "configuration_url_error": "Configuratie-URL is verplicht",
+        "invalid_configuration_url_error": "Ongeldige configuratie-URL",
+        "contact_email_title": "Contact-e-mail",
+        "contact_email_error": "Contact-e-mail is verplicht",
+        "invalid_contact_email_error": "Ongeldig contact-e-mailadres",
+        "upload_attachments": "Bijlagen uploaden",
+        "uploading_images": "{count} {count, plural, one {afbeelding} other {afbeeldingen}} uploaden",
+        "drop_images_here": "Zet afbeeldingen hier neer",
+        "click_to_upload_images": "Klik om afbeeldingen te uploaden",
+        "invalid_file_or_exceeds_size_limit": "Ongeldig bestand of overschrijdt de groottelimiet ({size} MB)",
+        "uploading": "Uploaden...",
+        "upload_and_save": "Uploaden en opslaan",
+        "app_consent_no_access_title": "Verzoek om te installeren",
+        "app_consent_no_access_description": "Deze app kan pas worden geïnstalleerd nadat een werkruimtebeheerder hem heeft geïnstalleerd. Neem contact op met je werkruimtebeheerder om verder te gaan.",
+        "app_consent_unapproved_title": "Deze app is nog niet beoordeeld of goedgekeurd door Pi-Plane.",
+        "app_consent_unapproved_description": "Zorg dat je deze app vertrouwt voordat je hem met je werkruimte verbindt.",
+        "go_to_app": "Ga naar app",
+        "enable_app_mentions": "App-vermeldingen inschakelen",
+        "enable_app_mentions_tooltip": "Wanneer dit is ingeschakeld, kunnen gebruikers deze toepassing vermelden of werkitems eraan toewijzen.",
+        "scopes": "Scopes",
+        "select_scopes": "Selecteer scopes",
+        "read_access_to": "Alleen-lezentoegang tot",
+        "write_access_to": "Schrijftoegang tot",
+        "global_permission_expiration": "Globale scopes verlopen binnenkort. Gebruik in plaats daarvan gedetailleerde scopes. Gebruik bijvoorbeeld project:read in plaats van een globale read.",
+        "selected_scopes": "{count} geselecteerd",
+        "scopes_and_permissions": "Scopes en machtigingen",
+        "read": "Lezen",
+        "write": "Schrijven",
+        "scope_description": {
+          "projects": "Toegang tot projecten en alle projectgerelateerde entiteiten",
+          "wiki": "Toegang tot wiki en alle wikigerelateerde entiteiten",
+          "workspaces": "Toegang tot werkruimten en alle werkruimtegerelateerde entiteiten",
+          "stickies": "Toegang tot notities en alle notitiegerelateerde entiteiten",
+          "profile": "Toegang tot informatie van het gebruikersprofiel",
+          "agents": "Toegang tot agents en alle agentgerelateerde entiteiten",
+          "assets": "Toegang tot assets en alle assetgerelateerde entiteiten"
+        }
+      },
+      "plane-intelligence": {
+        "title": "Plane AI",
+        "heading": "Plane AI",
+        "description": "Zie je werk slimmer en sneller worden met AI die native is verbonden met je werk en kennisbank. "
+      },
+      "runners": {
+        "title": "Plane Runner",
+        "heading": "Scripts",
+        "new_script": "Nieuw script",
+        "description": "Automatiseer je workflows met aangepaste scripts en automatiseringsregels."
+      }
+    },
+    "empty_state": {
+      "api_tokens": {
+        "title": "Geen toegangstokens aangemaakt",
+        "description": "Met de Plane-API's kun je je gegevens in Pi-Plane integreren met elk extern systeem. Maak een token aan om te beginnen."
+      },
+      "webhooks": {
+        "title": "Geen webhooks toegevoegd",
+        "description": "Maak webhooks aan om realtime updates te ontvangen en acties te automatiseren."
+      },
+      "exports": {
+        "title": "Nog geen exports",
+        "description": "Elke keer dat je exporteert, vind je hier ook een kopie ter referentie."
+      },
+      "imports": {
+        "title": "Nog geen imports",
+        "description": "Vind hier al je eerdere imports en download ze."
+      }
+    }
+  }
+}

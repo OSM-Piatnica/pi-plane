@@ -65,6 +65,45 @@
           }
         }
       },
+      "groups": {
+        "title": "グループ",
+        "description": "メンバーをグループにまとめられます。グループは入れ子にでき、1 人が複数のグループに所属でき、作業項目をグループに割り当てることもできます。",
+        "create_group": "グループを作成",
+        "create": "作成",
+        "edit_group": "グループを編集",
+        "edit": "編集",
+        "add_subgroup": "サブグループを追加",
+        "members": "メンバー",
+        "name": "名前",
+        "description_label": "説明",
+        "parent": "親グループ",
+        "top_level": "親なし（最上位）",
+        "no_groups": "グループはまだありません。",
+        "member_count": "{count, plural, one {# 人のメンバー} other {# 人のメンバー}}",
+        "managed_by": "{provider} が管理",
+        "sources": {
+          "local": "ローカル",
+          "entra": "Microsoft Entra",
+          "google": "Google",
+          "oidc": "SSO"
+        },
+        "members_of": "{name} のメンバー",
+        "managed_externally_hint": "このグループは ID プロバイダーによって管理されています。メンバーはプロバイダーに従うため、ここでは変更できません。",
+        "select_member": "メンバーを選択",
+        "add_member": "追加",
+        "role": "ロール",
+        "role_member": "メンバー",
+        "role_admin": "グループ管理者",
+        "no_members": "このグループにはまだメンバーがいません。",
+        "group_created": "グループを作成しました。",
+        "group_updated": "グループを更新しました。",
+        "group_deleted": "グループを削除しました。",
+        "delete_title": "{name} を削除しますか？",
+        "delete_content": "このグループのメンバーはワークスペースに残ります。グループに割り当てられた作業項目は、その割り当てが解除されます。この操作は元に戻せません。",
+        "group_assignees": "割り当て先グループ",
+        "add_group_assignee": "グループを追加",
+        "no_group_assignees": "割り当てられたグループはありません"
+      },
       "billing_and_plans": {
         "heading": "請求とプラン",
         "description": "プランを選択してサブスクリプションを管理し、ニーズの拡大に応じて簡単にアップグレードできます。",
@@ -95,6 +134,50 @@
               "message": "エクスポートに失敗しました。もう一度お試しください。"
             }
           }
+        },
+        "columns": {
+          "heading": "列",
+          "description": "ファイルに含める列を選択します。識別子と名前は、含まれていないとファイルを再度インポートできないため、常に含まれます。",
+          "select_all": "すべて選択",
+          "clear_all": "すべて解除",
+          "groups": {
+            "details": "詳細",
+            "people": "ユーザー",
+            "dates": "日付",
+            "organization": "整理",
+            "relations": "階層と関連",
+            "other": "その他"
+          },
+          "fields": {
+            "project_name": "プロジェクト名",
+            "project_identifier": "プロジェクト識別子",
+            "sequence_id": "連番",
+            "issue_type": "作業項目タイプ",
+            "state_name": "ステータス",
+            "priority": "優先度",
+            "description_html": "説明",
+            "estimate": "見積もり",
+            "is_draft": "下書きフラグ",
+            "assignees": "担当者",
+            "subscribers": "購読者",
+            "created_by_name": "作成者",
+            "start_date": "開始日",
+            "finish_date": "Finish date",
+            "target_date": "期限",
+            "duration": "期間",
+            "completed_at": "完了日時",
+            "created_at": "作成日時",
+            "updated_at": "更新日時",
+            "archived_at": "アーカイブ日時",
+            "labels": "ラベル",
+            "cycles": "サイクル",
+            "modules": "モジュール",
+            "parent": "親",
+            "relations": "関連",
+            "links": "リンク",
+            "custom_properties": "カスタムプロパティ",
+            "comments": "コメント"
+          }
         }
       },
       "webhooks": {
@@ -111,7 +194,7 @@
         },
         "secret_key": {
           "title": "シークレットキー",
-          "message": "Webhookペイロードにサインインするためのトークンを生成"
+          "message": "Webhookペイロードに署名するためのトークンを生成"
         },
         "options": {
           "all": "すべてを送信",
@@ -176,8 +259,8 @@
         "title": "インテグレーション",
         "heading": "インテグレーション",
         "description": "人気のツールやサービスと接続して、ワークフローエコシステム全体で作業を同期します。",
-        "page_title": "Plane のデータを利用可能なアプリや自分のアプリで利用できます。",
-        "page_description": "このワークスペースまたはあなたが使用しているすべての連携を表示します。"
+        "page_title": "Planeのデータを既存のアプリや独自のアプリで利用できます。",
+        "page_description": "このワークスペースまたは自分が使用中のすべての連携を確認できます。"
       },
       "imports": {
         "title": "インポート",
@@ -187,7 +270,7 @@
       "worklogs": {
         "title": "作業ログ",
         "heading": "作業ログ",
-        "description": "あらゆるプロジェクトの誰の作業ログ（タイムシート）でもダウンロードできます。"
+        "description": "すべてのプロジェクトについて、任意のメンバーの作業ログ（タイムシート）をダウンロードできます。"
       },
       "group_syncing": {
         "title": "グループ同期",
@@ -310,7 +393,7 @@
         },
         "app_created": {
           "title": "アプリが正常に作成されました",
-          "description": "認証情報を使用して、Plane ワークスペースにアプリをインストールしてください"
+          "description": "認証情報を使用して、Pi-Plane ワークスペースにアプリをインストールしてください"
         },
         "installed_apps": "インストール済みアプリ",
         "all_apps": "すべてのアプリ",
@@ -351,7 +434,7 @@
         },
         "redirect_uris": {
           "label": "リダイレクトURI（スペース区切り）",
-          "description": "ユーザーは Plane で認証した後、このパスにリダイレクトされます。",
+          "description": "ユーザーは Pi-Plane で認証した後、このパスにリダイレクトされます。",
           "placeholder": "https://example.com https://example.com/"
         },
         "app_available_description": "使用を開始するにはPlaneワークスペースに接続してください",
@@ -408,7 +491,7 @@
         "app_consent_workspace_permissions_title": "{app}は以下を要求しています",
         "app_consent_user_permissions_title": "{app}は以下のリソースに対するユーザーの許可も要求できます。これらの権限はユーザーによってのみ要求され、承認されます。",
         "app_consent_accept_title": "承認することで",
-        "app_consent_accept_1": "アプリにPlane内外でアプリを使用できる場所であなたのPlaneデータへのアクセスを許可します",
+        "app_consent_accept_1": "Plane内外でこのアプリを使用する際に、Planeデータへのアクセスを許可します",
         "app_consent_accept_2": "{app}のプライバシーポリシーと利用規約に同意します",
         "accepting": "承認中...",
         "accept": "承認",
@@ -442,7 +525,7 @@
         "contact_email_error": "連絡先メールは必須です",
         "invalid_contact_email_error": "無効な連絡先メール",
         "upload_attachments": "添付ファイルをアップロード",
-        "uploading_images": "アップロード中 {count} 画像{count, plural, one {s} other {s}}",
+        "uploading_images": "{count, plural, one {#枚の画像をアップロード中} other {#枚の画像をアップロード中}}",
         "drop_images_here": "画像をここにドラッグ&ドロップ",
         "click_to_upload_images": "画像をクリックしてアップロード",
         "invalid_file_or_exceeds_size_limit": "無効なファイルまたはサイズの制限を超えています ({size} MB)",
@@ -477,7 +560,7 @@
       "plane-intelligence": {
         "title": "Plane AI",
         "heading": "Plane AI",
-        "description": "あなたの作業がより知能的で速くなるように、ネイティブに接続されたAIを使用してください。"
+        "description": "作業やナレッジベースと直接連携するAIで、よりスマートかつ迅速に作業を進められます。"
       },
       "runners": {
         "title": "Plane Runner",

@@ -54,8 +54,8 @@
         "indicator": "Сторінка",
         "lock": "Заблокувати",
         "unlock": "Розблокувати",
-        "make_private": "Зробити приватною",
-        "make_public": "Зробити публічною",
+        "make_private": "Зробити видимою лише для мене",
+        "make_public": "Поділитися з проєктом",
         "archive": "Заархівувати",
         "restore": "Відновити",
         "add_to_favorites": "Додати у вибране",
@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Відкрити гарячі клавіші",
-      "open_plane_documentation": "Відкрити документацію Plane",
+      "open_plane_documentation": "Відкрити документацію Pi-Plane",
       "join_forum": "Приєднатися до нашого форуму",
       "report_bug": "Повідомити про помилку",
       "chat_with_us": "Поспілкуватися з нами"
@@ -171,10 +171,17 @@
     "search_menu": {
       "no_results": "Не знайдено результатів",
       "clear_search": "Очистити пошук",
-      "go_to_advanced_search": "Перейти до розширеного пошуку"
+      "go_to_advanced_search": "Перейти до розширеного пошуку",
+      "results_in_workspace": "Результати пошуку за запитом <term/> у робочому просторі:",
+      "results_in_project": "Результати пошуку за запитом <term/> у проєкті:"
     },
     "footer": {
       "workspace_level": "Рівень робочого простору"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Знайти гарячі клавіші",
+      "no_results": "Не знайдено гарячих клавіш для «{query}»",
+      "sequence_separator": "потім"
     },
     "group_titles": {
       "actions": "Дії",

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Third Party imports
@@ -34,7 +35,7 @@ class WorkSpaceBasePermission(BasePermission):
             return WorkspaceMember.objects.filter(
                 member=request.user,
                 workspace__slug=view.workspace_slug,
-                role__in=[Admin, Member],
+                role=Admin,
                 is_active=True,
             ).exists()
 
@@ -54,7 +55,7 @@ class WorkspaceOwnerPermission(BasePermission):
             return False
 
         return WorkspaceMember.objects.filter(
-            workspace__slug=view.workspace_slug, member=request.user, role=Admin
+            workspace__slug=view.workspace_slug, member=request.user, role=Admin, is_active=True
         ).exists()
 
 
@@ -108,3 +109,28 @@ class WorkspaceUserPermission(BasePermission):
         return WorkspaceMember.objects.filter(
             member=request.user, workspace__slug=view.workspace_slug, is_active=True
         ).exists()
+
+
+class WorkspaceMemberPermission(BasePermission):
+    """Allows access only to active workspace members.
+
+    Resolves the workspace via 'slug' or 'workspace_id' in URL kwargs so this
+    class can be used on endpoints that identify the workspace by either
+    identifier (e.g. FileAssetEndpoint which mixes both URL patterns).
+    """
+
+    def has_permission(self, request, view):
+        if request.user.is_anonymous:
+            return False
+
+        workspace_id = view.kwargs.get("workspace_id")
+        if workspace_id:
+            return WorkspaceMember.objects.filter(
+                workspace_id=workspace_id, member=request.user, is_active=True
+            ).exists()
+
+        slug = view.kwargs.get("slug")
+        if slug:
+            return WorkspaceMember.objects.filter(workspace__slug=slug, member=request.user, is_active=True).exists()
+
+        return False

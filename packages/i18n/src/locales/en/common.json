@@ -8,6 +8,7 @@
   "submit": "Submit",
   "cancel": "Cancel",
   "loading": "Loading",
+  "searching": "Searching...",
   "error": "Error",
   "success": "Success",
   "warning": "Warning",
@@ -107,15 +108,24 @@
   "failed_to_update_email_notification_setting": "Failed to update email notification setting",
   "notify_me_when": "Notify me when",
   "property_changes": "Property changes",
-  "property_changes_description": "Notify me when work items' properties like assignees, priority, estimates or anything else changes.",
+  "property_changes_description": "Notify me when properties of a work item, like assignees, priority or estimates, change.",
   "state_change": "State change",
-  "state_change_description": "Notify me when the work items moves to a different state",
+  "state_change_description": "Notify me when a work item moves to a different state",
   "issue_completed": "Work item completed",
-  "issue_completed_description": "Notify me only when a work item is completed",
+  "issue_completed_description": "Notify me when a work item is completed",
   "comments": "Comments",
   "comments_description": "Notify me when someone leaves a comment on the work item",
   "mentions": "Mentions",
-  "mentions_description": "Notify me only when someone mentions me in the comments or description",
+  "mentions_description": "Notify me when someone mentions me in the comments or description",
+  "project_access_requests": "Access requests",
+  "project_access_requests_description": "Email me about requests to join private projects I administer, and about the decisions on my own requests.",
+  "workspace_admin_messages": "Email me when someone writes to the workspace admins",
+  "workspace_admin_messages_description": "Applies only if you are a workspace admin. The message always reaches your inbox; this controls only the email copy, and only for you.",
+  "email_frequency": "Email frequency",
+  "email_frequency_description": "Choose how often you get emails about work item updates. Mentions are always sent immediately.",
+  "email_frequency_instant": "Instantly",
+  "email_frequency_hourly": "Hourly digest",
+  "email_frequency_daily": "Daily digest",
   "old_password": "Old password",
   "general_settings": "General settings",
   "sign_out": "Sign out",
@@ -189,8 +199,8 @@
   "select_network": "Select network",
   "lead": "Lead",
   "date_range": "Date range",
-  "private": "Private",
-  "public": "Public",
+  "private": "Only me",
+  "public": "Shared",
   "accessible_only_by_invite": "Accessible only by invite",
   "anyone_in_the_workspace_except_guests_can_join": "Anyone in the workspace except Guests can join",
   "creating": "Creating",
@@ -204,8 +214,8 @@
   "add_to_favorites": "Add to favorites",
   "remove_from_favorites": "Remove from favorites",
   "rename_folder": "Rename Folder",
-  "publish_project": "Publish project",
-  "publish": "Publish",
+  "publish_project": "Share on the web",
+  "publish": "Turn on web sharing",
   "copy_link": "Copy link",
   "leave_project": "Leave project",
   "join_the_project_to_rearrange": "Join the project to rearrange",
@@ -233,6 +243,25 @@
   "documentation": "Documentation",
   "message_support": "Message support",
   "contact_sales": "Contact sales",
+  "contact_workspace_admins": {
+    "menu_label": "Contact workspace admins",
+    "title": "Contact workspace admins",
+    "description": "The admins of {workspace} add people, change roles and help with access. Write to them with your email app.",
+    "email_all": "Email all admins",
+    "subject": "Question for the admins of {workspace}",
+    "body": "Hello,\n\n\n\n{name}",
+    "message_label": "Message to the admins",
+    "message_placeholder": "Say what you need, for example access to a project or a change of role.",
+    "characters": "{count} / {max}",
+    "send": "Send message",
+    "sent": "Your message was sent to the workspace admins.",
+    "error_rate_limited": "You have sent several messages recently. Please try again later.",
+    "error_generic": "The message could not be sent. Try again, or email the admins.",
+    "or_email": "Or write from your own email app",
+    "notification_text": "wrote to the admins of this workspace",
+    "message_from": "Message from {name}",
+    "reply_by_email": "Reply by email"
+  },
   "hyper_mode": "Hyper Mode",
   "keyboard_shortcuts": "Keyboard shortcuts",
   "whats_new": "What's new?",
@@ -281,6 +310,11 @@
   "create_more": "Create more",
   "add_to_project": "Add to project",
   "discard": "Discard",
+  "discard_changes": {
+    "title": "Discard changes?",
+    "description": "Your changes haven't been saved. Discarding them can't be undone.",
+    "keep_editing": "Keep editing"
+  },
   "duplicate_issue_found": "Duplicate work item found",
   "duplicate_issues_found": "Duplicate work items found",
   "no_matching_results": "No matching results",
@@ -304,6 +338,9 @@
   "create_new_label": "Create new label",
   "label_name": "Label name",
   "failed_to_create_label": "Failed to create label. Please try again.",
+  "no_matching_labels": "No matching labels",
+  "adding_label": "Adding \"{name}\"",
+  "add_label_to_labels": "Add \"{name}\" to labels",
   "start_date": "Start date",
   "end_date": "End date",
   "due_date": "Due date",
@@ -326,6 +363,18 @@
   "deleting": "Deleting",
   "make_a_copy": "Make a copy",
   "move_to_project": "Move to project",
+  "default_state_names": {
+    "backlog": "Backlog",
+    "todo": "To do",
+    "in_progress": "In Progress",
+    "done": "Done",
+    "cancelled": "Cancelled",
+    "triage": "Triage"
+  },
+  "filter_headings": {
+    "access": "Access",
+    "owned_by": "Owned by"
+  },
   "good": "Good",
   "morning": "morning",
   "afternoon": "afternoon",
@@ -507,8 +556,8 @@
     "archiving": "Archiving",
     "archive": "Archive",
     "access": {
-      "public": "Public",
-      "private": "Private"
+      "public": "Shared with the project",
+      "private": "Only me"
     },
     "done": "Done",
     "sub_work_items": "Sub-work items",
@@ -528,6 +577,7 @@
       "updated_on": "Updated on"
     },
     "sort": {
+      "label": "Sort",
       "asc": "Ascending",
       "desc": "Descending",
       "created_on": "Created on",
@@ -600,6 +650,13 @@
       "label": "Search",
       "placeholder": "Type to search",
       "no_matches_found": "No matches found",
+      "cycles": "Search cycles...",
+      "estimates": "Search estimates...",
+      "labels": "Search labels...",
+      "members": "Search members...",
+      "modules": "Search modules...",
+      "projects": "Search projects...",
+      "states": "Search states...",
       "no_matching_results": "No matching results",
       "min_chars": "Type at least {count} characters to search",
       "error": "Error fetching search results",
@@ -627,7 +684,8 @@
       "enable": "Enable",
       "disable": "Disable",
       "copy_markdown": "Copy markdown",
-      "reply": "Reply"
+      "reply": "Reply",
+      "add_reaction": "Add reaction"
     },
     "name": "Name",
     "discard": "Discard",
@@ -707,6 +765,8 @@
     "applying": "Applying",
     "overview": "Overview",
     "no_of": "No. of {entity}",
+    "no_of_work_items": "No. of Work items",
+    "no_of_epics": "No. of Epics",
     "resolved": "Resolved",
     "get_started": "Get started",
     "worklogs": "Worklogs",
@@ -828,7 +888,7 @@
     "edited_by": "Edited by"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane didn't start up. This could be because one or more Plane services failed to start.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane didn't start up. This could be because one or more Pi-Plane services failed to start.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Choose View Logs from setup.sh and Docker logs to be sure."
   },
   "customize_navigation": "Customize navigation",
@@ -876,11 +936,12 @@
       "short_description": "Export as json"
     }
   },
+  "labels_count": "{count, plural, one {# label} other {# labels}}",
   "onboarding": {
     "skip": "Skip",
     "profile": {
       "title": "Create your profile.",
-      "description": "This is how you will appear in Plane.",
+      "description": "This is how you will appear in Pi-Plane.",
       "choose_image": "Choose image",
       "upload_image": "Upload image",
       "change_image": "Change image",
@@ -895,7 +956,7 @@
       "new_password_placeholder": "New password...",
       "role_question": "What role are you working on? Choose one.",
       "domain_question": "What is your domain expertise? Choose one or more.",
-      "marketing_consent": "I agree to Plane marketing communications",
+      "marketing_consent": "I agree to Pi-Plane marketing communications",
       "passwords_do_not_match": "Passwords do not match",
       "passwords_match": "Passwords match",
       "seniority_levels": {
@@ -926,7 +987,7 @@
     },
     "role": {
       "title": "What's your role?",
-      "description": "Let's set up Plane for how you work.",
+      "description": "Let's set up Pi-Plane for how you work.",
       "select_one": "Select one",
       "options": {
         "product_manager": "Product Manager",
@@ -939,7 +1000,7 @@
       }
     },
     "usecase": {
-      "title": "What brings you to Plane?",
+      "title": "What brings you to Pi-Plane?",
       "description": "Tell us your goals and team size.",
       "select_multiple": "Select one or more",
       "select_at_least_one": "Please select at least one option"
@@ -960,7 +1021,7 @@
     },
     "team": {
       "invite_teammates": "Invite your teammates",
-      "invite_teammates_description": "Work in plane happens best with your team. Invite them now to use Plane to its potential.",
+      "invite_teammates_description": "Work in plane happens best with your team. Invite them now to use Pi-Plane to its potential.",
       "add_another": "Add another",
       "do_it_later": "I'll do it later",
       "invalid_email": "Invalid Email ID",
@@ -1004,5 +1065,451 @@
     "syncing_description": "Your changes are being synced with the server. You can continue making changes.",
     "connection_lost": "Connection lost",
     "connection_lost_description": "We're having trouble connecting to the websocket server. Your changes will be synced and saved every 10 seconds."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Icon",
+    "contrast_notice": "Colors will be adjusted to ensure sufficient contrast."
+  },
+  "date_phrases": {
+    "added_ago": "Added {timeAgo}",
+    "expired": "Expired",
+    "expired_ago": "Expired {timeAgo}",
+    "expires_at": "Expires {date} at {time}",
+    "never_expires": "Never expires",
+    "date_at_time": "{date} at {time}",
+    "till": "Till {date}, {time}",
+    "after_date": "After {date}",
+    "before_date": "Before {date}",
+    "month_week": "{month}, Week {week}",
+    "target_date": "Target Date: {date}",
+    "from_date": "From {date}",
+    "till_date": "Till {date}",
+    "date_to_date": "{start} to {end}",
+    "archived_at": "Archived at {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "{name} uploaded on {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Expiry"
+  },
+  "a11y": {
+    "toggle_details": "Toggle details",
+    "workflow_flow_type": "Flow type",
+    "workflow_target_state": "Target state",
+    "workflow_reject_state": "Reject state"
+  },
+  "api_token_expiry": {
+    "one_week": "1 week",
+    "one_month": "1 month",
+    "three_months": "3 months",
+    "one_year": "1 year",
+    "custom_date": "Custom date",
+    "set_expiration_date": "Set expiration date"
+  },
+  "profile_sidebar": {
+    "due": "Due"
+  },
+  "progress_chart": {
+    "current": "Current {title}",
+    "ideal": "Ideal {title}"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "Drop image here to upload",
+      "drag_and_drop": "Drag & drop image here",
+      "size_exceeded": "The image size cannot exceed 5 MB.",
+      "invalid_format": "Please upload a file in a valid format.",
+      "formats_supported": "File formats supported- .jpeg, .jpg, .png, .webp",
+      "uploading": "Uploading",
+      "upload_and_save": "Upload & Save",
+      "title": "Upload Image",
+      "select_image": "Select image",
+      "select_image_named": "Select image: {description}",
+      "select_cover_image": "Select cover image {index}",
+      "no_images": "No images found."
+    },
+    "ai_assistant": {
+      "rate_limit": "You have reached the maximum number of requests of 50 requests per month per user.",
+      "use_response": "Use this response",
+      "generating_response": "Generating response...",
+      "generate_response": "Generate response",
+      "generate_again": "Generate again",
+      "content_label": "Content:",
+      "response_label": "Response:",
+      "no_response": "No response could be generated. This may be due to insufficient content or task information. Please try again.",
+      "placeholder_with_content": "Tell AI what action to perform on this content...",
+      "placeholder_empty": "Ask AI anything...",
+      "consent": "By using this feature, you consent to sharing the message with a 3rd party service."
+    },
+    "multiple_select": {
+      "select_all_in_group": "Select all in group"
+    },
+    "theme": {
+      "download_config": "Download config",
+      "import_config": "Import config",
+      "import_failed": "Failed to import theme configuration",
+      "missing_fields": "Missing required fields: primary and background",
+      "invalid_brand_hex": "Invalid brand color hex format",
+      "invalid_neutral_hex": "Invalid neutral color hex format",
+      "invalid_mode": "Invalid theme mode. Must be a boolean",
+      "choose_color_mode": "Choose color mode",
+      "light_mode": "Light mode",
+      "dark_mode": "Dark mode"
+    },
+    "workspace": {
+      "delete_warning": "You are about to delete the workspace <name/>. If you confirm, you will lose access to all your work data in this workspace without any way to restore it. Tread very carefully.",
+      "delete_type_name": "Type in this workspace's name to continue.",
+      "delete_final_confirmation": "For final confirmation, type <phrase/> below."
+    },
+    "workspace_settings": {
+      "invitation_removed": "Invitation removed successfully.",
+      "workspace_updated": "Workspace updated successfully",
+      "picture_removed": "Workspace picture removed successfully.",
+      "picture_remove_failed": "There was some error in deleting your profile picture. Please try again.",
+      "url_copied": "Workspace URL copied to the clipboard."
+    },
+    "workspace_views": {
+      "delete_failed": "Failed to delete the view. Please try again.",
+      "create_failed": "View could not be created. Please try again.",
+      "updated": "View updated successfully.",
+      "update_failed": "View could not be updated. Please try again.",
+      "edit_view": "Edit View",
+      "delete_view": "Delete View"
+    },
+    "sticky_colors": {
+      "gray": "Gray",
+      "peach": "Peach",
+      "pink": "Pink",
+      "orange": "Orange",
+      "green": "Green",
+      "light_blue": "Light blue",
+      "dark_blue": "Dark blue",
+      "purple": "Purple"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "Work in all dimensions.",
+      "welcome_back": "Welcome back to Pi-Plane.",
+      "create_your_account": "Create your Pi-Plane account."
+    },
+    "auth_root": {
+      "no_auth_methods_title": "No authentication methods available",
+      "no_auth_methods_description": "Please contact your administrator to enable authentication for your instance."
+    },
+    "auth_password": {
+      "create_account": "Create account"
+    },
+    "terms": {
+      "agree_sign_up": "By creating an account, you understand and agree to \n our <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "agree_sign_in": "By signing in, you understand and agree to \n our <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
+    },
+    "auth_screens": {
+      "sign_up": "Sign up",
+      "sign_in": "Sign in",
+      "join_teams": "Join teams performing better with Pi-Plane",
+      "not_authorized_view_title": "Oops! You are not authorized to view this page",
+      "not_authorized": "Not Authorized!",
+      "not_a_member_description": "You're not a member of this workspace. Please contact the workspace admin to get an invitation or check your pending invitations.",
+      "check_pending_invites": "Check pending invites"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "Workspace not found",
+      "workspace_not_found_description": "No workspace found with the URL. It may not exist or you lack authorization to view it.",
+      "visit_profile": "Visit Profile"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "Toggle settings menu",
+      "back_to_project": "Back to project",
+      "toggle_project_feature": "Toggle project feature"
+    },
+    "headers": {
+      "toggle_sidebar": "Toggle sidebar"
+    },
+    "profile_activity": {
+      "page_title": "Profile - Activity"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook updated successfully.",
+      "not_authorized": "You are not authorized to access this page.",
+      "enable_webhook": "Enable webhook",
+      "toggle_webhook": "Toggle webhook"
+    },
+    "project_settings_empty": {
+      "title": "No projects yet",
+      "description": "Projects act as the foundation for goal-driven work. They let you manage your teams, tasks, and everything you need to get things done.",
+      "learn_more": "Learn more about projects"
+    },
+    "project_templates": {
+      "imported_template": "Imported template",
+      "pick_color": "Pick color"
+    },
+    "not_found": {
+      "image_alt": "404- Page not found",
+      "title": "Oops! Something went wrong.",
+      "description": "Sorry, the page you are looking for cannot be found. It may have been removed, had its name changed, or is temporarily unavailable.",
+      "go_to_home": "Go to Home"
+    },
+    "api_tokens": {
+      "empty_title": "No API tokens",
+      "empty_description": "Create API tokens for safe and easy data sharing with external apps, maintaining control and security.",
+      "add_token": "Add token",
+      "delete_token": "Delete token"
+    },
+    "base_layouts": {
+      "gantt": "Gantt Layout"
+    },
+    "command_palette": {
+      "no_states_found": "No states found"
+    },
+    "quick_actions": {
+      "archive_module_hint": "Only completed or cancelled modules can be archived"
+    },
+    "progress": {
+      "cycle_progress": "Cycle progress"
+    },
+    "estimates": {
+      "delete_title": "Delete Estimate System",
+      "delete_description": "Deleting the estimate <name/> system will remove it from all work items permanently. This action cannot be undone. If you add estimates again, you will need to update all the work items.",
+      "deleting": "Deleting",
+      "delete_estimate": "Delete Estimate",
+      "toggle_estimates": "Toggle estimates",
+      "estimates_list": "Estimates list",
+      "archived_title": "Archived estimates",
+      "archived_description": "Estimates have gone through a change, these are the estimates you had in your older versions which were not in use. Read more about them <link>here.</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "Create blocked-by dependency",
+      "create_blocking_dependency": "Create blocking dependency",
+      "update_block_dates_failed": "Something went wrong while updating block dates"
+    },
+    "product_updates": {
+      "fetch_failed": "We're having trouble fetching the updates. Please visit our changelog to view the latest updates.",
+      "go_to_changelog": "Go to changelog"
+    },
+    "inbox": {
+      "intake_form_user": "Intake Form user",
+      "status": "Status",
+      "created_by": "Created By"
+    },
+    "instance": {
+      "contact_support": "Contact Support",
+      "maintenance_title": "🚧 Looks like Pi-Plane didn't start up correctly!",
+      "maintenance_description": "Some services might have failed to start. Please check your container logs to identify and resolve the issue. If you're stuck, reach out to our support team for more help.",
+      "welcome_title": "Welcome to Pi-Plane",
+      "welcome_description": "Set up your instance and create your first workspace to begin managing projects and work."
+    },
+    "integrations": {
+      "github_installed": "Activate GitHub on individual projects to sync with specific repositories.",
+      "github_not_installed": "Connect with GitHub with your Pi-Plane workspace to sync project work items.",
+      "slack_installed": "Activate Slack on individual projects to sync with specific channels.",
+      "slack_not_installed": "Connect with Slack with your Pi-Plane workspace to sync project work items.",
+      "deleted_title": "Deleted successfully!",
+      "deleted_message": "{title} integration deleted successfully.",
+      "delete_failed_message": "{title} integration could not be deleted. Please try again.",
+      "logo_alt": "{title} Logo",
+      "loading": "Loading...",
+      "no_permission": "You don't have permission to perform this",
+      "uninstalling": "Uninstalling...",
+      "uninstall": "Uninstall",
+      "installing": "Installing...",
+      "install": "Install"
+    },
+    "attachments": {
+      "upload_progress": "Upload progress"
+    },
+    "labels": {
+      "delete_confirmation": "Are you sure you want to delete <name/>? This will remove the label from all the work item and from any views where the label is being filtered upon.",
+      "edit_label": "Edit label",
+      "delete_label": "Delete label",
+      "remove_from_group": "Remove from group"
+    },
+    "modules": {
+      "module_progress": "Module progress"
+    },
+    "navigation": {
+      "icon_only": "Icon only",
+      "icon_with_name": "Icon with name",
+      "dock_app_rail": "Dock App Rail",
+      "undock_app_rail": "Undock App Rail",
+      "minimum_value_is_one": "Minimum value is 1",
+      "show": "Show",
+      "clear_default": "Clear default",
+      "hide_in_more_menu": "Hide in more menu",
+      "project_link_copied": "Project link copied to clipboard.",
+      "copy_failed": "Copy failed",
+      "copy_failed_message": "We couldn't copy the link. Please try again.",
+      "default_tab_updated": "Default tab updated successfully.",
+      "default_tab_update_failed": "Failed to update default tab. Please try again later.",
+      "hide_tab_failed": "Failed to hide tab. Please try again later.",
+      "generic_error": "Something went wrong. Please try again later."
+    },
+    "onboarding": {
+      "select_workspace_invitation": "Select workspace invitation"
+    },
+    "tour": {
+      "work_items_title": "Plan with work items",
+      "work_items_description": "The work item is the building block of the Pi-Plane. Most concepts in Pi-Plane are either associated with work items and their properties.",
+      "cycles_title": "Move with cycles",
+      "cycles_description": "Cycles help you and your team to progress faster, similar to the sprints commonly used in agile development.",
+      "modules_title": "Break into modules",
+      "modules_description": "Modules break your big thing into Projects or Features, to help you organize better.",
+      "views_description": "Create custom filters to display only the work items that matter to you. Save and share your filters in just a few clicks.",
+      "pages_title": "Document with pages",
+      "pages_description": "Use Pages to quickly jot down work items when you're in a meeting or starting a day.",
+      "welcome_title": "Welcome to Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "We're glad that you decided to try out Pi-Plane. You can now manage your projects with ease. Get started by creating a project.",
+      "take_tour": "Take a Product Tour",
+      "skip": "No thanks, I will explore it myself",
+      "create_first_project": "Create your first project",
+      "sidebar_heading": "Let's get started!<br/>Get more out of Pi-Plane."
+    },
+    "ai": {
+      "ask_pi": "Ask Pi",
+      "tone_professional": "💼 Professional",
+      "tone_casual": "😃 Casual",
+      "third_party_consent": "By using this feature, you consent to sharing the message with a 3rd party service.",
+      "pi_writing": "Pi is writing",
+      "pi_generating_response": "Pi is generating response"
+    },
+    "pages": {
+      "icon": "Icon",
+      "color": "Color",
+      "remove_text_color": "Remove text color",
+      "remove_background_color": "Remove background color",
+      "formatting_toolbar": "Formatting toolbar",
+      "copied_link": "Copied link",
+      "remove_favorite": "Remove favorite",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "{name} Bot"
+    },
+    "project": {
+      "identifier": "Identifier"
+    },
+    "projects": {
+      "toggle_feature": "Toggle project feature",
+      "cover_upload_failed": "Failed to upload cover image"
+    },
+    "notifications": {
+      "notification_options": "Notification options"
+    },
+    "stores": {
+      "generic_error": "An error occurred",
+      "inbox_fetch_error": "Error fetching the intake work items please try again later.",
+      "page_make_public_error": "Page could not be shared with the project. Please try again later.",
+      "page_make_private_error": "Page could not be made visible only to you. Please try again later.",
+      "workflow_pending_approval": "Work item has a pending approval.",
+      "workflow_transition_not_allowed": "This state transition is not allowed by the workflow."
+    },
+    "validation": {
+      "name_max_length": "Name must be 50 characters or less",
+      "name_special_chars": "Names cannot contain special characters like {chars}",
+      "name_invalid_chars": "Names can only contain letters, spaces, hyphens, and apostrophes",
+      "display_name_max_length": "Display name must be 50 characters or less",
+      "display_name_special_chars": "Display name cannot contain special characters like {chars}",
+      "display_name_invalid_chars": "Display name can only contain letters, numbers, periods, hyphens, and underscores",
+      "company_name_max_length": "Company name must be 80 characters or less",
+      "company_name_special_chars": "Company name cannot contain special characters like {chars}",
+      "company_name_invalid_chars": "Company name can only contain letters, numbers, spaces, hyphens, and underscores",
+      "company_name_needs_alphanumeric": "Company name must contain at least one letter or number",
+      "workspace_name_required": "Workspace name is required",
+      "workspace_name_max_length": "Workspace name must be 80 characters or less",
+      "workspace_name_special_chars": "Workspace name cannot contain special characters like {chars}",
+      "workspace_name_invalid_chars": "Workspace name can only contain letters, numbers, spaces, hyphens, and underscores",
+      "workspace_name_needs_alphanumeric": "Workspace name must contain at least one letter or number",
+      "slug_required": "Slug is required",
+      "slug_max_length": "Slug must be 48 characters or less",
+      "slug_special_chars": "Slug cannot contain special characters like {chars}",
+      "slug_invalid_chars": "Slug can only contain letters, numbers, hyphens, and underscores"
+    },
+    "analytics": {
+      "state_name": "State name",
+      "estimate_point": "Estimate point",
+      "completed_date": "Completed date",
+      "yesterday": "Yesterday",
+      "last_7_days": "Last 7 days",
+      "last_30_days": "Last 30 days",
+      "last_3_months": "Last 3 months",
+      "duration": "Duration"
+    },
+    "auth_labels": {
+      "one_time_code": "One-time code"
+    },
+    "state_groups": {
+      "canceled": "Canceled"
+    },
+    "filters": {
+      "state_group": "State Group",
+      "subscriber": "Subscriber"
+    }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Dismiss"
+    },
+    "auth_header": {
+      "sign_in_header": "Sign in to upvote or comment",
+      "sign_in_sub_header": "Contribute in nudging the features you want to get built.",
+      "sign_up_header": "View, comment, and do more",
+      "sign_up_sub_header": "Sign up or log in to work with Pi-Plane work items and Pages.",
+      "default_header": "Comment or react to work items",
+      "default_sub_header": "Use plane to add your valuable inputs to features."
+    },
+    "terms": {
+      "agree_sign_up": "By creating an account, you agree to our\n<terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+      "agree_sign_in": "By signing in, you agree to our\n<terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Nice! Just one more step.",
+      "description": "Enter the shared link of the view or page you are trying to see in the browser's address bar.",
+      "image_alt": "User already logged in"
+    },
+    "auth_one_time_code": {
+      "resend_in": "Resend in {seconds}s"
+    },
+    "oauth": {
+      "sign_up_with": "Sign up with {provider}",
+      "sign_in_with": "Sign in with {provider}",
+      "continue_with": "Continue with {provider}"
+    },
+    "issues": {
+      "shared_project_load_failed": "This shared project could not be loaded. Please try again later.",
+      "cycle_tooltip": "Cycle: {name}",
+      "no_cycle": "No Cycle",
+      "due_date_tooltip": "Due Date: {date}",
+      "no_date": "No Date",
+      "labels_tooltip": "Labels: {labels}",
+      "no_labels": "No Labels",
+      "labels_count": "{count} Labels",
+      "no_assignees": "No Assignees",
+      "comment_post_failed": "Comment could not be posted. Please try again.",
+      "add_comment_placeholder": "Add comment...",
+      "sign_in_to_comment": "Sign in to add your comment",
+      "empty": "Empty",
+      "no_upvotes": "No upvotes yet",
+      "no_downvotes": "No downvotes yet",
+      "voters_and_more": "{names} and {count} more"
+    },
+    "error_page": {
+      "title": "Yikes! That doesn't look good.",
+      "description": "That crashed Pi-Plane, pun intended. No worries, though. Our engineers have been notified. If you have more details, please report them on <github/>."
+    },
+    "not_found_page": {
+      "title": "That didn't work",
+      "description": "Check the URL you are entering in the browser's address bar and try again."
+    },
+    "powered_by": {
+      "label": "Powered by <name>Pi-Plane</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane instance failure",
+      "title": "Unable to fetch instance details.",
+      "description": "We were unable to fetch the details of the instance.",
+      "hint": "Fret not, it might just be a connectivity issue."
+    }
   }
 }

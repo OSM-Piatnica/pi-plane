@@ -8,6 +8,7 @@
   "submit": "Conferma",
   "cancel": "Annulla",
   "loading": "Caricamento",
+  "searching": "Ricerca in corso...",
   "error": "Errore",
   "success": "Successo",
   "warning": "Avviso",
@@ -107,15 +108,24 @@
   "failed_to_update_email_notification_setting": "Impossibile aggiornare le impostazioni delle notifiche email",
   "notify_me_when": "Avvisami quando",
   "property_changes": "Modifiche alle proprietà",
-  "property_changes_description": "Avvisami quando le proprietà degli elementi di lavoro, come assegnatari, priorità, stime o altro, cambiano.",
+  "property_changes_description": "Avvisami quando cambiano le proprietà di un elemento di lavoro, come assegnatari, priorità o stime.",
   "state_change": "Cambio di stato",
   "state_change_description": "Avvisami quando l'elemento di lavoro passa a uno stato diverso",
   "issue_completed": "Elemento di lavoro completato",
-  "issue_completed_description": "Avvisami solo quando un elemento di lavoro è completato",
+  "issue_completed_description": "Avvisami quando un elemento di lavoro è completato",
   "comments": "Commenti",
   "comments_description": "Avvisami quando qualcuno lascia un commento sull'elemento di lavoro",
   "mentions": "Menzioni",
-  "mentions_description": "Avvisami solo quando qualcuno mi menziona nei commenti o nella descrizione",
+  "mentions_description": "Avvisami quando qualcuno mi menziona nei commenti o nella descrizione",
+  "project_access_requests": "Richieste di accesso",
+  "project_access_requests_description": "Inviami un’e-mail per le richieste di unirsi ai progetti privati che amministro e per le decisioni sulle mie richieste.",
+  "workspace_admin_messages": "Inviami un’e-mail quando qualcuno scrive agli amministratori dello spazio di lavoro",
+  "workspace_admin_messages_description": "Vale solo se è amministratore di uno spazio di lavoro. Il messaggio arriva sempre nella sua casella di posta; questa impostazione stabilisce solo se riceve anche un’e-mail, e solo per lei.",
+  "email_frequency": "Frequenza delle e-mail",
+  "email_frequency_description": "Scelga con quale frequenza ricevere e-mail sugli aggiornamenti degli elementi di lavoro. Le menzioni vengono sempre inviate immediatamente.",
+  "email_frequency_instant": "Immediata",
+  "email_frequency_hourly": "Riepilogo orario",
+  "email_frequency_daily": "Riepilogo giornaliero",
   "old_password": "Vecchia password",
   "general_settings": "Impostazioni generali",
   "sign_out": "Esci",
@@ -189,8 +199,8 @@
   "select_network": "Seleziona rete",
   "lead": "Responsabile",
   "date_range": "Intervallo di date",
-  "private": "Privato",
-  "public": "Pubblico",
+  "private": "Solo io",
+  "public": "Condiviso",
   "accessible_only_by_invite": "Accessibile solo su invito",
   "anyone_in_the_workspace_except_guests_can_join": "Chiunque nello spazio di lavoro, tranne gli ospiti, può unirsi",
   "creating": "Creazione in corso",
@@ -204,8 +214,8 @@
   "add_to_favorites": "Aggiungi ai preferiti",
   "remove_from_favorites": "Rimuovi dai preferiti",
   "rename_folder": "Rinomina cartella",
-  "publish_project": "Pubblica progetto",
-  "publish": "Pubblica",
+  "publish_project": "Condividi sul web",
+  "publish": "Attiva la condivisione sul web",
   "copy_link": "Copia link",
   "leave_project": "Lascia progetto",
   "join_the_project_to_rearrange": "Unisciti al progetto per riorganizzare",
@@ -233,6 +243,25 @@
   "documentation": "Documentazione",
   "message_support": "Contatta il supporto",
   "contact_sales": "Contatta le vendite",
+  "contact_workspace_admins": {
+    "menu_label": "Contatta gli amministratori",
+    "title": "Contatta gli amministratori dello spazio di lavoro",
+    "description": "Gli amministratori di {workspace} aggiungono persone, modificano i ruoli e aiutano con l’accesso. Scriva loro con la sua app di posta.",
+    "email_all": "Scrivi a tutti gli amministratori",
+    "subject": "Domanda per gli amministratori di {workspace}",
+    "body": "Buongiorno,\n\n\n\n{name}",
+    "message_label": "Messaggio agli amministratori",
+    "message_placeholder": "Scriva di cosa ha bisogno, ad esempio l’accesso a un progetto o un cambio di ruolo.",
+    "characters": "{count} / {max}",
+    "send": "Invia messaggio",
+    "sent": "Il suo messaggio è stato inviato agli amministratori dello spazio di lavoro.",
+    "error_rate_limited": "Ha inviato diversi messaggi di recente. Riprovi più tardi.",
+    "error_generic": "Impossibile inviare il messaggio. Riprovi, oppure scriva agli amministratori via e-mail.",
+    "or_email": "Oppure scriva dalla sua app di posta",
+    "notification_text": "ha scritto agli amministratori di questo spazio di lavoro",
+    "message_from": "Messaggio da {name}",
+    "reply_by_email": "Rispondi via e-mail"
+  },
   "hyper_mode": "Modalità Hyper",
   "keyboard_shortcuts": "Scorciatoie da tastiera",
   "whats_new": "Novità?",
@@ -281,6 +310,11 @@
   "create_more": "Crea altri",
   "add_to_project": "Aggiungi al progetto",
   "discard": "Scarta",
+  "discard_changes": {
+    "title": "Scartare le modifiche?",
+    "description": "Le modifiche non sono state salvate. Scartarle non può essere annullato.",
+    "keep_editing": "Continua a modificare"
+  },
   "duplicate_issue_found": "Elemento di lavoro duplicato trovato",
   "duplicate_issues_found": "Elementi di lavoro duplicati trovati",
   "no_matching_results": "Nessun risultato corrispondente",
@@ -304,6 +338,9 @@
   "create_new_label": "Crea nuova etichetta",
   "label_name": "Nome etichetta",
   "failed_to_create_label": "Impossibile creare l'etichetta. Riprova.",
+  "no_matching_labels": "Nessuna etichetta corrispondente",
+  "adding_label": "Aggiungendo \"{name}\"",
+  "add_label_to_labels": "Aggiungi \"{name}\" alle etichette",
   "start_date": "Data di inizio",
   "end_date": "Data di fine",
   "due_date": "Scadenza",
@@ -326,6 +363,18 @@
   "deleting": "Eliminazione in corso",
   "make_a_copy": "Crea una copia",
   "move_to_project": "Sposta nel progetto",
+  "default_state_names": {
+    "backlog": "Backlog",
+    "todo": "Da fare",
+    "in_progress": "In corso",
+    "done": "Fatto",
+    "cancelled": "Annullato",
+    "triage": "Triage"
+  },
+  "filter_headings": {
+    "access": "Accesso",
+    "owned_by": "Proprietario"
+  },
   "good": "Buono",
   "morning": "Mattina",
   "afternoon": "Pomeriggio",
@@ -507,8 +556,8 @@
     "archiving": "Archiviazione in corso",
     "archive": "Archivia",
     "access": {
-      "public": "Pubblico",
-      "private": "Privato"
+      "public": "Condiviso con il progetto",
+      "private": "Solo io"
     },
     "done": "Fatto",
     "sub_work_items": "Sotto-elementi di lavoro",
@@ -528,6 +577,7 @@
       "updated_on": "Aggiornato il"
     },
     "sort": {
+      "label": "Ordina",
       "asc": "Ascendente",
       "desc": "Discendente",
       "created_on": "Creato il",
@@ -600,6 +650,13 @@
       "label": "Cerca",
       "placeholder": "Digita per cercare",
       "no_matches_found": "Nessuna corrispondenza trovata",
+      "cycles": "Cerca cicli...",
+      "estimates": "Cerca stime...",
+      "labels": "Cerca etichette...",
+      "members": "Cerca membri...",
+      "modules": "Cerca moduli...",
+      "projects": "Cerca progetti...",
+      "states": "Cerca stati...",
       "no_matching_results": "Nessun risultato corrispondente",
       "min_chars": "Digita almeno {count} caratteri per cercare",
       "error": "Errore durante il recupero dei risultati di ricerca",
@@ -627,7 +684,8 @@
       "enable": "Abilita",
       "disable": "Disabilita",
       "copy_markdown": "Copia markdown",
-      "reply": "Rispondi"
+      "reply": "Rispondi",
+      "add_reaction": "Aggiungi una reazione"
     },
     "name": "Nome",
     "discard": "Scarta",
@@ -707,6 +765,8 @@
     "applying": "Applicazione",
     "overview": "Panoramica",
     "no_of": "N. di {entity}",
+    "no_of_work_items": "N. di Elementi di lavoro",
+    "no_of_epics": "N. di Epiche",
     "resolved": "Risolto",
     "get_started": "Inizia",
     "worklogs": "Registrazioni di lavoro",
@@ -828,7 +888,7 @@
     "edited_by": "Modificato da"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane non si è avviato. Questo potrebbe essere dovuto al fatto che uno o più servizi Plane non sono riusciti ad avviarsi.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane non si è avviato. Questo potrebbe essere dovuto al fatto che uno o più servizi Pi-Plane non sono riusciti ad avviarsi.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Scegli View Logs da setup.sh e dai log Docker per essere sicuro."
   },
   "customize_navigation": "Personalizza la navigazione",
@@ -876,11 +936,12 @@
       "short_description": "Esporta come JSON"
     }
   },
+  "labels_count": "{count, plural, one {# etichetta} many {# etichette} other {# etichette}}",
   "onboarding": {
     "skip": "Salta",
     "profile": {
       "title": "Crea il tuo profilo.",
-      "description": "Così apparirai in Plane.",
+      "description": "Così apparirai in Pi-Plane.",
       "choose_image": "Scegli immagine",
       "upload_image": "Carica immagine",
       "change_image": "Cambia immagine",
@@ -895,7 +956,7 @@
       "new_password_placeholder": "Nuova password...",
       "role_question": "Con quale ruolo lavori? Scegline uno.",
       "domain_question": "Qual è la tua area di competenza? Scegline una o più.",
-      "marketing_consent": "Accetto le comunicazioni di marketing di Plane",
+      "marketing_consent": "Accetto le comunicazioni di marketing di Pi-Plane",
       "passwords_do_not_match": "Le password non corrispondono",
       "passwords_match": "Le password corrispondono",
       "seniority_levels": {
@@ -926,7 +987,7 @@
     },
     "role": {
       "title": "Qual è il tuo ruolo?",
-      "description": "Configuriamo Plane in base al tuo modo di lavorare.",
+      "description": "Configuriamo Pi-Plane in base al tuo modo di lavorare.",
       "select_one": "Scegline uno",
       "options": {
         "product_manager": "Product Manager",
@@ -939,7 +1000,7 @@
       }
     },
     "usecase": {
-      "title": "Cosa ti porta su Plane?",
+      "title": "Cosa ti porta su Pi-Plane?",
       "description": "Raccontaci i tuoi obiettivi e la dimensione del tuo team.",
       "select_multiple": "Scegline uno o più",
       "select_at_least_one": "Seleziona almeno un'opzione"
@@ -960,7 +1021,7 @@
     },
     "team": {
       "invite_teammates": "Invita i tuoi colleghi",
-      "invite_teammates_description": "Lavorare in Plane funziona meglio con il tuo team. Invitali ora per sfruttare Plane al massimo.",
+      "invite_teammates_description": "Lavorare in Pi-Plane funziona meglio con il tuo team. Invitali ora per sfruttare Pi-Plane al massimo.",
       "add_another": "Aggiungine un altro",
       "do_it_later": "Lo farò più tardi",
       "invalid_email": "Indirizzo e-mail non valido",
@@ -1004,5 +1065,451 @@
     "syncing_description": "Le tue modifiche vengono sincronizzate con il server. Puoi continuare a modificare.",
     "connection_lost": "Connessione persa",
     "connection_lost_description": "Stiamo avendo problemi a connetterci al server websocket. Le tue modifiche verranno sincronizzate e salvate ogni 10 secondi."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Icona",
+    "contrast_notice": "I colori verranno regolati per garantire un contrasto sufficiente."
+  },
+  "date_phrases": {
+    "added_ago": "Aggiunto {timeAgo}",
+    "expired": "Scaduto",
+    "expired_ago": "Scaduto {timeAgo}",
+    "expires_at": "Scade il {date} alle {time}",
+    "never_expires": "Non scade mai",
+    "date_at_time": "{date} alle {time}",
+    "till": "Fino al {date}, {time}",
+    "after_date": "Dopo il {date}",
+    "before_date": "Prima del {date}",
+    "month_week": "{month}, settimana {week}",
+    "target_date": "Data obiettivo: {date}",
+    "from_date": "Dal {date}",
+    "till_date": "Fino al {date}",
+    "date_to_date": "Dal {start} al {end}",
+    "archived_at": "Archiviato il {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Caricato da {name} il {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Scadenza"
+  },
+  "a11y": {
+    "toggle_details": "Mostra o nascondi i dettagli",
+    "workflow_flow_type": "Tipo di flusso",
+    "workflow_target_state": "Stato di destinazione",
+    "workflow_reject_state": "Stato di rifiuto"
+  },
+  "api_token_expiry": {
+    "one_week": "1 settimana",
+    "one_month": "1 mese",
+    "three_months": "3 mesi",
+    "one_year": "1 anno",
+    "custom_date": "Data personalizzata",
+    "set_expiration_date": "Imposta la data di scadenza"
+  },
+  "profile_sidebar": {
+    "due": "Scadenza"
+  },
+  "progress_chart": {
+    "current": "{title} attuali",
+    "ideal": "{title} ideali"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "Rilascia qui l'immagine da caricare",
+      "drag_and_drop": "Trascina e rilascia qui l'immagine",
+      "size_exceeded": "La dimensione dell'immagine non può superare 5 MB.",
+      "invalid_format": "Carica un file in un formato valido.",
+      "formats_supported": "Formati di file supportati: .jpeg, .jpg, .png, .webp",
+      "uploading": "Caricamento in corso",
+      "upload_and_save": "Carica e salva",
+      "title": "Carica immagine",
+      "select_image": "Seleziona immagine",
+      "select_image_named": "Seleziona immagine: {description}",
+      "select_cover_image": "Seleziona immagine di copertina {index}",
+      "no_images": "Nessuna immagine trovata."
+    },
+    "ai_assistant": {
+      "rate_limit": "Ha raggiunto il numero massimo di 50 richieste al mese per utente.",
+      "use_response": "Usa questa risposta",
+      "generating_response": "Generazione della risposta in corso...",
+      "generate_response": "Genera risposta",
+      "generate_again": "Genera di nuovo",
+      "content_label": "Contenuto:",
+      "response_label": "Risposta:",
+      "no_response": "Non è stato possibile generare una risposta. Potrebbe essere dovuto a contenuti o informazioni sull'attività insufficienti. Riprovi.",
+      "placeholder_with_content": "Indichi all'IA quale azione eseguire su questo contenuto...",
+      "placeholder_empty": "Chieda qualsiasi cosa all'IA...",
+      "consent": "Utilizzando questa funzione, acconsente alla condivisione del messaggio con un servizio di terze parti."
+    },
+    "multiple_select": {
+      "select_all_in_group": "Seleziona tutto nel gruppo"
+    },
+    "theme": {
+      "download_config": "Scarica configurazione",
+      "import_config": "Importa configurazione",
+      "import_failed": "Importazione della configurazione del tema non riuscita",
+      "missing_fields": "Campi obbligatori mancanti: primary e background",
+      "invalid_brand_hex": "Formato esadecimale del colore del brand non valido",
+      "invalid_neutral_hex": "Formato esadecimale del colore neutro non valido",
+      "invalid_mode": "Modalità del tema non valida. Deve essere un valore booleano",
+      "choose_color_mode": "Scegli la modalità colore",
+      "light_mode": "Modalità chiara",
+      "dark_mode": "Modalità scura"
+    },
+    "workspace": {
+      "delete_warning": "Sta per eliminare lo spazio di lavoro <name/>. Se conferma, perderà l'accesso a tutti i dati di lavoro in questo spazio di lavoro senza alcuna possibilità di ripristino. Proceda con estrema cautela.",
+      "delete_type_name": "Digiti il nome di questo spazio di lavoro per continuare.",
+      "delete_final_confirmation": "Per la conferma finale, digiti <phrase/> qui sotto."
+    },
+    "workspace_settings": {
+      "invitation_removed": "Invito rimosso correttamente.",
+      "workspace_updated": "Spazio di lavoro aggiornato correttamente",
+      "picture_removed": "Immagine dello spazio di lavoro rimossa correttamente.",
+      "picture_remove_failed": "Si è verificato un errore durante l'eliminazione dell'immagine del profilo. Riprovi.",
+      "url_copied": "URL dello spazio di lavoro copiato negli appunti."
+    },
+    "workspace_views": {
+      "delete_failed": "Impossibile eliminare la vista. Riprovi.",
+      "create_failed": "Impossibile creare la vista. Riprovi.",
+      "updated": "Vista aggiornata correttamente.",
+      "update_failed": "Impossibile aggiornare la vista. Riprovi.",
+      "edit_view": "Modifica vista",
+      "delete_view": "Elimina vista"
+    },
+    "sticky_colors": {
+      "gray": "Grigio",
+      "peach": "Pesca",
+      "pink": "Rosa",
+      "orange": "Arancione",
+      "green": "Verde",
+      "light_blue": "Azzurro",
+      "dark_blue": "Blu scuro",
+      "purple": "Viola"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "Lavora in tutte le dimensioni.",
+      "welcome_back": "Bentornato su Pi-Plane.",
+      "create_your_account": "Crei il suo account Pi-Plane."
+    },
+    "auth_root": {
+      "no_auth_methods_title": "Nessun metodo di autenticazione disponibile",
+      "no_auth_methods_description": "Contatti il suo amministratore per abilitare l'autenticazione per la sua istanza."
+    },
+    "auth_password": {
+      "create_account": "Crea account"
+    },
+    "terms": {
+      "agree_sign_up": "Creando un account, comprende e accetta \n i nostri <terms>Termini di servizio</terms> e la nostra <privacy>Informativa sulla privacy</privacy>.",
+      "agree_sign_in": "Accedendo, comprende e accetta \n i nostri <terms>Termini di servizio</terms> e la nostra <privacy>Informativa sulla privacy</privacy>."
+    },
+    "auth_screens": {
+      "sign_up": "Registrati",
+      "sign_in": "Accedi",
+      "join_teams": "Entra a far parte dei team che ottengono risultati migliori con Pi-Plane",
+      "not_authorized_view_title": "Ops! Non è autorizzato a visualizzare questa pagina",
+      "not_authorized": "Non autorizzato!",
+      "not_a_member_description": "Non è un membro di questo spazio di lavoro. Contatti l'amministratore dello spazio di lavoro per ricevere un invito oppure controlli i suoi inviti in sospeso.",
+      "check_pending_invites": "Controlla gli inviti in sospeso"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "Spazio di lavoro non trovato",
+      "workspace_not_found_description": "Nessuno spazio di lavoro trovato con questo URL. Potrebbe non esistere oppure potrebbe non avere l'autorizzazione per visualizzarlo.",
+      "visit_profile": "Visualizza profilo"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "Mostra/nascondi menu delle impostazioni",
+      "back_to_project": "Torna al progetto",
+      "toggle_project_feature": "Attiva/disattiva funzionalità del progetto"
+    },
+    "headers": {
+      "toggle_sidebar": "Mostra/nascondi barra laterale"
+    },
+    "profile_activity": {
+      "page_title": "Profilo - Attività"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook aggiornato correttamente.",
+      "not_authorized": "Non è autorizzato ad accedere a questa pagina.",
+      "enable_webhook": "Abilita webhook",
+      "toggle_webhook": "Attiva/disattiva webhook"
+    },
+    "project_settings_empty": {
+      "title": "Ancora nessun progetto",
+      "description": "I progetti sono la base del lavoro orientato agli obiettivi. Consentono di gestire team, attività e tutto ciò che serve per portare a termine il lavoro.",
+      "learn_more": "Scopri di più sui progetti"
+    },
+    "project_templates": {
+      "imported_template": "Modello importato",
+      "pick_color": "Scegli colore"
+    },
+    "not_found": {
+      "image_alt": "404 - Pagina non trovata",
+      "title": "Ops! Qualcosa è andato storto.",
+      "description": "Spiacenti, la pagina che sta cercando non è stata trovata. Potrebbe essere stata rimossa, rinominata o temporaneamente non disponibile.",
+      "go_to_home": "Vai alla home"
+    },
+    "api_tokens": {
+      "empty_title": "Nessun token API",
+      "empty_description": "Crei token API per condividere dati con app esterne in modo semplice e sicuro, mantenendo controllo e sicurezza.",
+      "add_token": "Aggiungi token",
+      "delete_token": "Elimina token"
+    },
+    "base_layouts": {
+      "gantt": "Layout Gantt"
+    },
+    "command_palette": {
+      "no_states_found": "Nessuno stato trovato"
+    },
+    "quick_actions": {
+      "archive_module_hint": "Solo i moduli completati o annullati possono essere archiviati"
+    },
+    "progress": {
+      "cycle_progress": "Avanzamento del Ciclo"
+    },
+    "estimates": {
+      "delete_title": "Elimina sistema di stime",
+      "delete_description": "L'eliminazione del sistema di stime <name/> lo rimuoverà definitivamente da tutti gli elementi di lavoro. Questa azione non può essere annullata. Se aggiunge nuovamente delle stime, dovrà aggiornare tutti gli elementi di lavoro.",
+      "deleting": "Eliminazione in corso",
+      "delete_estimate": "Elimina stima",
+      "toggle_estimates": "Attiva/disattiva stime",
+      "estimates_list": "Elenco delle stime",
+      "archived_title": "Stime archiviate",
+      "archived_description": "Le stime sono state modificate: queste sono le stime delle sue versioni precedenti che non erano in uso. Maggiori informazioni <link>qui.</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "Crea dipendenza «bloccato da»",
+      "create_blocking_dependency": "Crea dipendenza di blocco",
+      "update_block_dates_failed": "Si è verificato un errore durante l'aggiornamento delle date del blocco"
+    },
+    "product_updates": {
+      "fetch_failed": "Si sono verificati problemi nel recupero degli aggiornamenti. Visiti il nostro changelog per vedere gli ultimi aggiornamenti.",
+      "go_to_changelog": "Vai al changelog"
+    },
+    "inbox": {
+      "intake_form_user": "Utente del modulo Intake",
+      "status": "Stato",
+      "created_by": "Creato da"
+    },
+    "instance": {
+      "contact_support": "Contatta il supporto",
+      "maintenance_title": "🚧 Sembra che Pi-Plane non si sia avviato correttamente!",
+      "maintenance_description": "Alcuni servizi potrebbero non essersi avviati. Controlli i log dei suoi container per individuare e risolvere il problema. Se non riesce a risolvere, contatti il nostro team di supporto.",
+      "welcome_title": "Benvenuto in Pi-Plane",
+      "welcome_description": "Configuri la sua istanza e crei il suo primo spazio di lavoro per iniziare a gestire progetti e attività."
+    },
+    "integrations": {
+      "github_installed": "Attivi GitHub sui singoli progetti per sincronizzare con repository specifici.",
+      "github_not_installed": "Colleghi GitHub al suo spazio di lavoro Pi-Plane per sincronizzare gli elementi di lavoro dei progetti.",
+      "slack_installed": "Attivi Slack sui singoli progetti per sincronizzare con canali specifici.",
+      "slack_not_installed": "Colleghi Slack al suo spazio di lavoro Pi-Plane per sincronizzare gli elementi di lavoro dei progetti.",
+      "deleted_title": "Eliminato correttamente!",
+      "deleted_message": "Integrazione {title} eliminata correttamente.",
+      "delete_failed_message": "Impossibile eliminare l'integrazione {title}. Riprovi.",
+      "logo_alt": "Logo {title}",
+      "loading": "Caricamento...",
+      "no_permission": "Non ha l'autorizzazione per eseguire questa operazione",
+      "uninstalling": "Disinstallazione in corso...",
+      "uninstall": "Disinstalla",
+      "installing": "Installazione in corso...",
+      "install": "Installa"
+    },
+    "attachments": {
+      "upload_progress": "Avanzamento del caricamento"
+    },
+    "labels": {
+      "delete_confirmation": "Eliminare davvero <name/>? Verrà rimossa l'etichetta da tutti gli elementi di lavoro e da tutte le viste in cui viene usata come filtro.",
+      "edit_label": "Modifica etichetta",
+      "delete_label": "Elimina etichetta",
+      "remove_from_group": "Rimuovi dal gruppo"
+    },
+    "modules": {
+      "module_progress": "Avanzamento del Modulo"
+    },
+    "navigation": {
+      "icon_only": "Solo icona",
+      "icon_with_name": "Icona con nome",
+      "dock_app_rail": "Ancora barra delle app",
+      "undock_app_rail": "Sgancia barra delle app",
+      "minimum_value_is_one": "Il valore minimo è 1",
+      "show": "Mostra",
+      "clear_default": "Cancella predefinito",
+      "hide_in_more_menu": "Nascondi nel menu Altro",
+      "project_link_copied": "Link del progetto copiato negli appunti.",
+      "copy_failed": "Copia non riuscita",
+      "copy_failed_message": "Non è stato possibile copiare il link. Riprovi.",
+      "default_tab_updated": "Scheda predefinita aggiornata correttamente.",
+      "default_tab_update_failed": "Impossibile aggiornare la scheda predefinita. Riprovi più tardi.",
+      "hide_tab_failed": "Impossibile nascondere la scheda. Riprovi più tardi.",
+      "generic_error": "Qualcosa è andato storto. Riprovi più tardi."
+    },
+    "onboarding": {
+      "select_workspace_invitation": "Seleziona invito allo spazio di lavoro"
+    },
+    "tour": {
+      "work_items_title": "Pianifica con gli elementi di lavoro",
+      "work_items_description": "L'elemento di lavoro è il mattone fondamentale di Pi-Plane. La maggior parte dei concetti in Pi-Plane è associata agli elementi di lavoro e alle loro proprietà.",
+      "cycles_title": "Avanza con i Cicli",
+      "cycles_description": "I Cicli aiutano lei e il suo team a progredire più velocemente, in modo simile agli sprint comunemente usati nello sviluppo agile.",
+      "modules_title": "Suddividi in Moduli",
+      "modules_description": "I Moduli suddividono il suo grande obiettivo in Progetti o Funzionalità, per aiutarla a organizzarsi meglio.",
+      "views_description": "Crei filtri personalizzati per visualizzare solo gli elementi di lavoro che le interessano. Salvi e condivida i suoi filtri in pochi clic.",
+      "pages_title": "Documenta con le Pagine",
+      "pages_description": "Usi le Pagine per annotare rapidamente gli elementi di lavoro durante una riunione o all'inizio della giornata.",
+      "welcome_title": "Benvenuto in Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "Siamo lieti che abbia deciso di provare Pi-Plane. Ora può gestire i suoi progetti con facilità. Inizi creando un progetto.",
+      "take_tour": "Fai il tour del prodotto",
+      "skip": "No grazie, esplorerò da solo",
+      "create_first_project": "Crea il primo progetto",
+      "sidebar_heading": "Iniziamo!<br/>Ottenga di più da Pi-Plane."
+    },
+    "ai": {
+      "ask_pi": "Chiedi a Pi",
+      "tone_professional": "💼 Professionale",
+      "tone_casual": "😃 Informale",
+      "third_party_consent": "Utilizzando questa funzione, acconsente alla condivisione del messaggio con un servizio di terze parti.",
+      "pi_writing": "Pi sta scrivendo",
+      "pi_generating_response": "Pi sta generando una risposta"
+    },
+    "pages": {
+      "icon": "Icona",
+      "color": "Colore",
+      "remove_text_color": "Rimuovi colore del testo",
+      "remove_background_color": "Rimuovi colore di sfondo",
+      "formatting_toolbar": "Barra degli strumenti di formattazione",
+      "copied_link": "Link copiato",
+      "remove_favorite": "Rimuovi dai preferiti",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "Bot {name}"
+    },
+    "project": {
+      "identifier": "Identificatore"
+    },
+    "projects": {
+      "toggle_feature": "Attiva/disattiva funzionalità del progetto",
+      "cover_upload_failed": "Caricamento dell'immagine di copertina non riuscito"
+    },
+    "notifications": {
+      "notification_options": "Opzioni di notifica"
+    },
+    "stores": {
+      "generic_error": "Si è verificato un errore",
+      "inbox_fetch_error": "Errore durante il recupero degli elementi di lavoro Intake. Riprovi più tardi.",
+      "page_make_public_error": "Impossibile condividere la pagina con il progetto. Riprova più tardi.",
+      "page_make_private_error": "Impossibile rendere la pagina visibile solo a te. Riprova più tardi.",
+      "workflow_pending_approval": "L'elemento di lavoro è in attesa di approvazione.",
+      "workflow_transition_not_allowed": "Questa transizione di stato non è consentita dal workflow."
+    },
+    "validation": {
+      "name_max_length": "Il nome non può superare i 50 caratteri",
+      "name_special_chars": "I nomi non possono contenere caratteri speciali come {chars}",
+      "name_invalid_chars": "I nomi possono contenere solo lettere, spazi, trattini e apostrofi",
+      "display_name_max_length": "Il nome visualizzato non può superare i 50 caratteri",
+      "display_name_special_chars": "Il nome visualizzato non può contenere caratteri speciali come {chars}",
+      "display_name_invalid_chars": "Il nome visualizzato può contenere solo lettere, numeri, punti, trattini e trattini bassi",
+      "company_name_max_length": "Il nome dell'azienda non può superare gli 80 caratteri",
+      "company_name_special_chars": "Il nome dell'azienda non può contenere caratteri speciali come {chars}",
+      "company_name_invalid_chars": "Il nome dell'azienda può contenere solo lettere, numeri, spazi, trattini e trattini bassi",
+      "company_name_needs_alphanumeric": "Il nome dell'azienda deve contenere almeno una lettera o un numero",
+      "workspace_name_required": "Il nome dello spazio di lavoro è obbligatorio",
+      "workspace_name_max_length": "Il nome dello spazio di lavoro non può superare gli 80 caratteri",
+      "workspace_name_special_chars": "Il nome dello spazio di lavoro non può contenere caratteri speciali come {chars}",
+      "workspace_name_invalid_chars": "Il nome dello spazio di lavoro può contenere solo lettere, numeri, spazi, trattini e trattini bassi",
+      "workspace_name_needs_alphanumeric": "Il nome dello spazio di lavoro deve contenere almeno una lettera o un numero",
+      "slug_required": "Lo slug è obbligatorio",
+      "slug_max_length": "Lo slug non può superare i 48 caratteri",
+      "slug_special_chars": "Lo slug non può contenere caratteri speciali come {chars}",
+      "slug_invalid_chars": "Lo slug può contenere solo lettere, numeri, trattini e trattini bassi"
+    },
+    "analytics": {
+      "state_name": "Nome dello stato",
+      "estimate_point": "Punto di stima",
+      "completed_date": "Data di completamento",
+      "yesterday": "Ieri",
+      "last_7_days": "Ultimi 7 giorni",
+      "last_30_days": "Ultimi 30 giorni",
+      "last_3_months": "Ultimi 3 mesi",
+      "duration": "Durata"
+    },
+    "auth_labels": {
+      "one_time_code": "Codice monouso"
+    },
+    "state_groups": {
+      "canceled": "Annullato"
+    },
+    "filters": {
+      "state_group": "Gruppo di stati",
+      "subscriber": "Abbonato"
+    }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Chiudi"
+    },
+    "auth_header": {
+      "sign_in_header": "Accedi per votare o commentare",
+      "sign_in_sub_header": "Contribuisci a spingere le funzionalità che vuoi vedere realizzate.",
+      "sign_up_header": "Visualizza, commenta e fai di più",
+      "sign_up_sub_header": "Registrati o accedi per lavorare con gli elementi di lavoro e le Pagine di Pi-Plane.",
+      "default_header": "Commenta o reagisci agli elementi di lavoro",
+      "default_sub_header": "Usa Pi-Plane per aggiungere il tuo prezioso contributo alle funzionalità."
+    },
+    "terms": {
+      "agree_sign_up": "Creando un account, accetti i nostri\n<terms>Termini di servizio</terms> e la nostra <privacy>Informativa sulla privacy</privacy>.",
+      "agree_sign_in": "Accedendo, accetti i nostri\n<terms>Termini di servizio</terms> e la nostra <privacy>Informativa sulla privacy</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Bene! Manca solo un passaggio.",
+      "description": "Inserisci nella barra degli indirizzi del browser il link condiviso della vista o della pagina che vuoi vedere.",
+      "image_alt": "Utente già connesso"
+    },
+    "auth_one_time_code": {
+      "resend_in": "Reinvia tra {seconds} s"
+    },
+    "oauth": {
+      "sign_up_with": "Registrati con {provider}",
+      "sign_in_with": "Accedi con {provider}",
+      "continue_with": "Continua con {provider}"
+    },
+    "issues": {
+      "shared_project_load_failed": "Impossibile caricare questo progetto condiviso. Riprova più tardi.",
+      "cycle_tooltip": "Ciclo: {name}",
+      "no_cycle": "Nessun Ciclo",
+      "due_date_tooltip": "Scadenza: {date}",
+      "no_date": "Nessuna data",
+      "labels_tooltip": "Etichette: {labels}",
+      "no_labels": "Nessuna etichetta",
+      "labels_count": "{count} etichette",
+      "no_assignees": "Nessun assegnatario",
+      "comment_post_failed": "Impossibile pubblicare il commento. Riprova.",
+      "add_comment_placeholder": "Aggiungi un commento...",
+      "sign_in_to_comment": "Accedi per aggiungere il tuo commento",
+      "empty": "Vuoto",
+      "no_upvotes": "Ancora nessun voto positivo",
+      "no_downvotes": "Ancora nessun voto negativo",
+      "voters_and_more": "{names} e altri {count}"
+    },
+    "error_page": {
+      "title": "Ops! Non sembra andare bene.",
+      "description": "Pi-Plane è andato in crash. Nessun problema, i nostri ingegneri sono stati avvisati. Se hai altri dettagli, segnalali su <github/>."
+    },
+    "not_found_page": {
+      "title": "Non ha funzionato",
+      "description": "Controlla l’URL inserito nella barra degli indirizzi del browser e riprova."
+    },
+    "powered_by": {
+      "label": "Realizzato con <name>Pi-Plane</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Errore dell’istanza Pi-Plane",
+      "title": "Impossibile recuperare i dettagli dell’istanza.",
+      "description": "Non è stato possibile recuperare i dettagli dell’istanza.",
+      "hint": "Niente paura, potrebbe essere solo un problema di connettività."
+    }
   }
 }

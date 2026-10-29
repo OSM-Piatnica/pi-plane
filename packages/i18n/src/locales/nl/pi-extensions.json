@@ -1,0 +1,616 @@
+{
+  "account_settings": {
+    "api_tokens": {
+      "heading": "Persoonlijke toegangstokens"
+    }
+  },
+  "approve": "Goedkeuren",
+  "duration": "Duur",
+  "duration_days": "{count, plural, one {# dag} other {# dagen}}",
+  "epic": {
+    "all": "Alle epics"
+  },
+  "exporter": {
+    "csv_comma": {
+      "description": "Exporteer naar CSV met komma als scheidingsteken.",
+      "short_description": "CSV komma",
+      "title": "CSV (komma)"
+    },
+    "csv_semicolon": {
+      "description": "Exporteer naar CSV met puntkomma als scheidingsteken voor Excel.",
+      "short_description": "CSV puntkomma",
+      "title": "CSV (puntkomma, Excel)"
+    }
+  },
+  "importer": {
+    "github": {
+      "description": "Importeer werkitems uit GitHub-repository's en synchroniseer ze.",
+      "title": "Github"
+    },
+    "jira": {
+      "description": "Importeer werkitems en epics uit Jira-projecten en -epics.",
+      "title": "Jira"
+    }
+  },
+  "issue": {
+    "add": {
+      "duration": "Duur toevoegen"
+    },
+    "relation": {
+      "conflict": {
+        "date": {
+          "blocked_by": "{issue} kan pas starten als {related} is afgerond (geblokkeerd door relatie).",
+          "blocking": "{issue} moet klaar zijn voordat {related} start (blokkerende relatie).",
+          "finish_after": "{issue} kan niet eerder eindigen dan {related} (eindigt na-relatie).",
+          "finish_after_start": "{issue} kan niet eindigen voordat {related} begint (relatie ‘eindigt na het begin’).",
+          "finish_before": "{issue} moet uiterlijk op het moment van {related} eindigen (eindigt voor-relatie).",
+          "start_after": "{issue} kan niet starten vóór {related} (start na-relatie).",
+          "start_before": "{issue} moet uiterlijk op het moment van {related} starten (start voor-relatie).",
+          "start_before_finish": "{issue} moet uiterlijk beginnen wanneer {related} eindigt (relatie ‘begint vóór het einde’)."
+        },
+        "status": {
+          "finish_after": "{issue} kan pas worden voltooid als {related} is voltooid (eindigt na-relatie).",
+          "finish_after_start": "{issue} kan pas worden voltooid als {related} is begonnen (relatie ‘eindigt na het begin’).",
+          "start_after": "{issue} kan pas starten als {related} is gestart (start na-relatie)."
+        },
+        "self": "{issue} kan niet aan zichzelf worden gekoppeld.",
+        "cycle": "{issue} en {related} zouden een lus van relaties vormen. Verwijder eerst de tegengestelde relatie.",
+        "lag_suffix": " Vertraging van de relatie: {lag} d."
+      },
+      "date_conflict": "Deze datums conflicteren met bestaande afhankelijkheden. Pas gerelateerde werkitems aan of verwijder eerst de afhankelijkheid.",
+      "dependency_create_failed": "Kon afhankelijkheid niet aanmaken. Probeer het opnieuw.",
+      "dependency_created": "Afhankelijkheid van werkitem aangemaakt.",
+      "lag": {
+        "hint": "Dagen tussen de twee data; negatief laat ze overlappen.",
+        "invalid": "Voer een geheel aantal dagen in tussen -{max} en {max}.",
+        "label": "Vertraging (dagen)",
+        "update_failed": "De vertraging kon niet worden gewijzigd."
+      },
+      "reschedule": {
+        "confirm": "Verplaatsen",
+        "content": "Deze wijziging zou afhankelijkheden verbreken. Deze werkitems kunnen later worden gepland, met behoud van hun duur, zodat alle afhankelijkheden blijven kloppen:",
+        "title": "Ook de afhankelijke werkitems verplaatsen?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Naar geannuleerd verplaatsen",
+        "content": "{issue} is nu gemarkeerd als duplicaat van {originals}. Verplaatsen naar ‘{state}’? Het blijft gekoppeld en zichtbaar.",
+        "failed": "Het werkitem kon niet worden geannuleerd.",
+        "keep": "Open laten",
+        "title": "Dit werkitem annuleren?"
+      }
+    },
+    "edit_restricted": "Alleen de toegewezenen van dit werkitem, de projectleider en de projectbeheerders mogen het wijzigen."
+  },
+  "project_create": {
+    "advanced": {
+      "description": "Regels en relatietypen. Je kunt ze later wijzigen in de workflowinstellingen van het project.",
+      "title": "Geavanceerde opties"
+    },
+    "features": {
+      "cycles": {
+        "description": "Timebox werk in terugkerende periodes.",
+        "label": "Cycli"
+      },
+      "description": "Kies welke functies zijn ingeschakeld voor dit project.",
+      "intake": {
+        "description": "Beoordeel binnenkomend werk voordat je het aan het project toevoegt.",
+        "label": "Intake"
+      },
+      "modules": {
+        "description": "Groepeer werk in opzetten die lijken op deelprojecten.",
+        "label": "Modules"
+      },
+      "pages": {
+        "description": "Maak pagina's voor projectdocumentatie aan.",
+        "label": "Pagina's"
+      },
+      "time_tracking": {
+        "description": "Houd de bestede tijd aan werkitems bij.",
+        "label": "Tijdregistratie"
+      },
+      "title": "Projectfuncties",
+      "views": {
+        "description": "Sla sorteringen, filters en indelingen op en deel ze.",
+        "label": "Weergaven"
+      },
+      "work_item_types": {
+        "assign_failed": "Het project is aangemaakt, maar werkitemtypen konden niet worden toegewezen.",
+        "assign_hint": "Selecteer welke typen uit de werkruimte beschikbaar moeten zijn in dit project.",
+        "assign_label": "Werkitemtypen toewijzen",
+        "description": "Gebruik aangepaste typen met eigen eigenschappen voor werkitems.",
+        "label": "Werkitemtypen",
+        "no_types_hint": "Geen actieve werkitemtypen in deze werkruimte. Maak ze eerst aan in de werkruimte-instellingen."
+      }
+    }
+  },
+  "project_settings": {
+    "workflows": {
+      "add_approval": "Goedkeuringspoort toevoegen",
+      "add_transition": "Overgang toevoegen",
+      "allow_creation": "Nieuwe werkitems toestaan in deze status",
+      "approval": "Goedkeuring",
+      "approval_error": "Kon goedkeuring niet verwerken.",
+      "approved_success": "Overgang goedgekeurd.",
+      "blocker_message": "Deze overgang is niet toegestaan door de workflow.",
+      "builder_description": "Vouw een status uit om toegestane overgangen en goedkeuringspoorten te configureren.",
+      "builder_title": "Workflowbouwer",
+      "disabled_success": "Workflows uitgeschakeld voor dit project.",
+      "enable_description": "Indien ingeschakeld volgen werkitems de geconfigureerde statusovergangen en goedkeuringsregels.",
+      "enable_title": "Workflows inschakelen",
+      "enabled_success": "Workflows ingeschakeld voor dit project.",
+      "enabling": "Workflowinstellingen bijwerken...",
+      "paused": "Gepauzeerd",
+      "pending_approval_description": "Verplaatsing van {from} naar {to} wacht op goedkeuring.",
+      "pending_approval_title": "Goedkeuring vereist",
+      "rejected_success": "Overgang afgewezen.",
+      "resolving_approval": "Goedkeuring verwerken...",
+      "rules": {
+        "heading": "Regels",
+        "description": "Projectregels die op zichzelf gelden, of workflows nu zijn ingeschakeld of niet.",
+        "parent_completion": {
+          "description": "Een werkitem kan niet worden voltooid zolang het subitems heeft die niet voltooid of geannuleerd zijn. Als een afgerond subitem onder een voltooid bovenliggend item opnieuw wordt geopend, wordt gevraagd ook het bovenliggende item opnieuw te openen.",
+          "title": "Een bovenliggend item pas voltooien als de subitems klaar zijn"
+        },
+        "reopen_parent": {
+          "confirm": "Heropenen",
+          "content": "In dit project mag een bovenliggend item niet voltooid blijven terwijl een subitem open is. Deze voltooide bovenliggende items worden ook heropend: {names}",
+          "title": "Ook de bovenliggende werkitems heropenen?"
+        },
+        "blocked_status": {
+          "description": "Een werkitem kan niet naar een gestarte of voltooide status gaan zolang een werkitem dat het blokkeert nog open is (voltooide en geannuleerde blokkades tellen niet mee). In de backlog of te doen blijven en annuleren blijven mogelijk.",
+          "title": "Een item pas starten of voltooien als de blokkades zijn opgelost"
+        },
+        "assignee_edit": {
+          "description": "Zodra een werkitem een toegewezen persoon heeft, mogen alleen de toegewezenen, de projectleider en de projectbeheerders het wijzigen: velden, status, data, subitems, relaties, links, bijlagen, cycli en modules, verwijderen en archiveren. Iedereen kan nog reageren. Werkitems zonder toegewezen persoon blijven open voor alle leden.",
+          "title": "Alleen toegewezenen, de projectleider en beheerders mogen een werkitem wijzigen"
+        }
+      },
+      "save_error": "Kon workflowconfiguratie niet opslaan.",
+      "save_success": "Workflowconfiguratie opgeslagen.",
+      "toggle_error": "Kon workflowinstellingen niet bijwerken.",
+      "transition": "Overgang",
+      "transition_count": "{count, plural, one {# overgang} other {# overgangen}}",
+      "transitions_configured": "overgangen geconfigureerd",
+      "relation_types": {
+        "heading": "Relatietypen",
+        "description": "Kies welke relaties in dit project kunnen worden toegevoegd. Blokkeren is altijd beschikbaar en bestaande relaties blijven bestaan als een type wordt uitgeschakeld.",
+        "schedule": {
+          "description": "Begint voor, eindigt voor en begint voor het einde, met optionele vertraging in dagen.",
+          "title": "Planningsafhankelijkheden"
+        },
+        "traceability": {
+          "description": "Implementeert, veroorzaakt, kloont en test, met de omgekeerde relaties.",
+          "title": "Traceerbaarheidsrelaties"
+        },
+        "relates_to": {
+          "description": "Een eenvoudige koppeling tussen twee items.",
+          "title": "Gerelateerd aan"
+        },
+        "duplicate": {
+          "description": "Markeer een item als duplicaat van een ander.",
+          "title": "Duplicaat"
+        }
+      }
+    }
+  },
+  "project_templates": {
+    "loading": "Sjablonen laden…",
+    "none": "Geen sjabloon",
+    "select_placeholder": "Selecteer een sjabloon"
+  },
+  "project_views": {
+    "empty_state": {
+      "filter": {
+        "description": "Geen weergaven komen overeen met de zoekcriteria. \n Maak in plaats daarvan een nieuwe weergave aan.",
+        "title": "Geen overeenkomende weergaven"
+      }
+    }
+  },
+  "reject": "Afwijzen",
+  "settings_empty_state": {
+    "imports": {
+      "description": "Je hebt momenteel geen importrecords. Zodra je een bestand in een project importeert, verschijnen alle records hier.",
+      "title": "Nog geen imports"
+    }
+  },
+  "work_item_templates": {
+    "apply_failed_toast": "Kon het werkitemsjabloon niet toepassen.",
+    "dropdown_placeholder": "Sjabloon",
+    "loading": "Sjablonen laden…",
+    "none": "Geen sjabloon"
+  },
+  "work_item_types": {
+    "loading": "Typen laden…",
+    "property_values_save_failed": "Het werkitem is aangemaakt, maar extra eigenschappen konden niet worden opgeslagen. Vul ze in via de details van het werkitem.",
+    "select_placeholder": "Type"
+  },
+  "workspace_settings": {
+    "settings": {
+      "exports": {
+        "all_projects": "Alle projecten",
+        "history": {
+          "download": "Downloaden",
+          "expired": "Verlopen",
+          "exported_by": "Geëxporteerd door",
+          "exported_on": "Geëxporteerd op",
+          "project_count": "{count, plural, one {# project} other {# projecten}}",
+          "projects": "Geëxporteerde projecten",
+          "status": "Status"
+        },
+        "statuses": {
+          "completed": "Voltooid",
+          "expired": "Verlopen",
+          "failed": "Mislukt",
+          "processing": "Verwerken"
+        },
+        "tabs": {
+          "export": "Exporteren",
+          "import": "Importeren"
+        },
+        "work_items_export": {
+          "description": "Exporteer werkitems uit geselecteerde projecten naar CSV, Excel of JSON.",
+          "heading": "Werkitems exporteren"
+        }
+      },
+      "imports": {
+        "file_too_large": "Het bestand moet kleiner zijn dan {size} MB.",
+        "history": {
+          "file": "Bestand",
+          "imported_by": "Geïmporteerd door",
+          "imported_on": "Geïmporteerd op",
+          "project_count": "{count, plural, one {# project} other {# projecten}}",
+          "projects": "Projecten",
+          "reason": "Reden",
+          "status": "Status"
+        },
+        "previous_imports": "Eerdere imports",
+        "work_items": {
+          "description": "Importeer werkitems uit een bestand dat is gemaakt met “Werkitems exporteren” (CSV, Excel of JSON) in een bestaand project.",
+          "heading": "Werkitems importeren",
+          "import_button": "Werkitems importeren",
+          "invalid_file_type": "Upload een CSV-, Excel- (.xlsx) of JSON-bestand.",
+          "no_projects": "Geen projecten beschikbaar",
+          "open_project": "Project openen",
+          "options": {
+            "assignees": "Toegewezenen",
+            "clear_all": "Alles wissen",
+            "cycles": "Cycli",
+            "dates": "Datums en duur",
+            "heading": "Wat te importeren",
+            "labels": "Labels",
+            "modules": "Modules",
+            "parents": "Bovenliggende werkitems",
+            "relations": "Relaties tussen werkitems",
+            "select_all": "Alles selecteren",
+            "subscribers": "Abonnees"
+          },
+          "result_summary": "{count, plural, one {# werkitem} other {# werkitems}} geïmporteerd in “{name}”.",
+          "select_file": "Bestand selecteren",
+          "select_file_label": "Exportbestand",
+          "select_project": "Doelproject",
+          "select_project_placeholder": "Selecteer een project",
+          "toasts": {
+            "error": {
+              "message": "Importeren van werkitems mislukt. Gebruik een bestand uit “Werkitems exporteren” en probeer het opnieuw."
+            },
+            "success": {
+              "message": "{count} werkitems geïmporteerd in \"{name}\"."
+            }
+          },
+          "warnings_heading": "{count, plural, one {# waarschuwing} other {# waarschuwingen}} tijdens het importeren",
+          "warnings_none": "Alles is zonder waarschuwingen geïmporteerd."
+        }
+      },
+      "project_templates": {
+        "add_template": "Sjabloon toevoegen",
+        "delete_confirm": "Dit projectsjabloon verwijderen? Bestaande projecten worden niet beïnvloed.",
+        "description": "Maak herbruikbare projectopzetten met standaardeigenschappen, ingeschakelde functies, statussen, labels en werkitemtypen.",
+        "edit_template": "Sjabloon bewerken",
+        "form": {
+          "add_label": "Label toevoegen",
+          "add_state": "Status toevoegen",
+          "custom_property": {
+            "active_checkbox": "Actief",
+            "add_property": "Eigenschap toevoegen",
+            "default_option_label": "Standaardoptie",
+            "description_label": "Beschrijving",
+            "description_placeholder": "Helptekst voor deze eigenschap (optioneel)",
+            "dropdown_options_heading": "Opties van de keuzelijst",
+            "inactive": "Inactief",
+            "mandatory": "Verplicht",
+            "mandatory_checkbox": "Verplicht bij het aanmaken van werkitems",
+            "no_default": "Geen standaard",
+            "option_placeholder": "Optienaam",
+            "select_mode_label": "Selectiemodus",
+            "select_multi": "Meervoudige selectie",
+            "select_single": "Enkelvoudige selectie",
+            "title_label": "Titel",
+            "title_placeholder": "Eigenschapsnaam",
+            "type_label": "Type",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Datum",
+              "dropdown": "Keuzelijst",
+              "member_picker": "Lid",
+              "number": "Getal",
+              "text": "Tekst"
+            }
+          },
+          "default_assignee": "Standaard toegewezene",
+          "default_cover_image": "Omslagafbeelding",
+          "default_labels": "Standaardlabels",
+          "default_lead": "Projectleider",
+          "default_project_description": "Projectbeschrijving",
+          "default_project_description_placeholder": "Standaardbeschrijving voor nieuwe projecten",
+          "default_project_identifier": "Projectidentificatie",
+          "default_project_identifier_placeholder": "bijv. PROD",
+          "default_project_name": "Projectnaam",
+          "default_project_name_placeholder": "bijv. Productlancering",
+          "default_start_date": "Startdatum",
+          "default_target_date": "Doeldatum",
+          "default_visibility": "Zichtbaarheid",
+          "features": {
+            "cycles": {
+              "description": "Timeboxed iteraties voor planning en oplevering.",
+              "label": "Cycli"
+            },
+            "intake": {
+              "description": "Beoordeel binnenkomende verzoeken voordat ze werkitems worden.",
+              "label": "Intake"
+            },
+            "modules": {
+              "description": "Groepeer werk in focusgebieden of mijlpalen.",
+              "label": "Modules"
+            },
+            "pages": {
+              "description": "Projectwiki en documentatie.",
+              "label": "Pagina's"
+            },
+            "time_tracking": {
+              "description": "Registreer de bestede tijd aan werkitems.",
+              "label": "Tijdregistratie"
+            },
+            "views": {
+              "description": "Opgeslagen filters en indelingen voor het team.",
+              "label": "Weergaven"
+            },
+            "work_item_types": {
+              "description": "Verschillende soorten werk met aangepaste eigenschappen.",
+              "label": "Werkitemtypen"
+            }
+          },
+          "identifier_invalid": "Gebruik alleen letters en cijfers",
+          "identifier_max_char": "De identificatie mag maximaal 5 tekens bevatten",
+          "label_name_placeholder": "Labelnaam",
+          "labels_empty": "Nog geen labels.",
+          "mark_default_state": "Als standaardstatus markeren",
+          "modal_intro": "Geef het sjabloon een naam en voeg een korte notitie voor je team toe. Configureer daarna de standaardwaarden van het project—dezelfde soort instellingen die je gebruikt bij het aanmaken van een project.",
+          "name_required": "Sjabloonnaam is verplicht",
+          "section_features": "Functies",
+          "section_features_hint": "Kies welke optionele projectfuncties worden ingeschakeld wanneer dit sjabloon wordt toegepast.",
+          "section_labels": "Labels",
+          "section_labels_hint": "Definieer standaardlabels voor nieuwe projecten.",
+          "section_properties": "Standaardprojecteigenschappen",
+          "section_states": "Statussen",
+          "section_states_hint": "Definieer standaardworkflowstatussen voor nieuwe projecten.",
+          "section_template": "Sjabloon",
+          "section_work_item_types": "Werkitemtypen",
+          "section_work_item_types_hint": "Configureer standaardwerkitemtypen en aangepaste eigenschappen voor projecten die met dit sjabloon worden aangemaakt.",
+          "state_groups": {
+            "backlog": "Backlog",
+            "cancelled": "Geannuleerd",
+            "completed": "Voltooid",
+            "started": "Gestart",
+            "unstarted": "Niet gestart"
+          },
+          "state_name_placeholder": "Statusnaam",
+          "states_group_empty": "Nog geen statussen in deze groep.",
+          "template_name_label": "Sjabloonnaam",
+          "template_name_placeholder": "bijv. Software-oplevering",
+          "template_note_label": "Beschrijving (voor je team)",
+          "template_note_placeholder": "Waar dit sjabloon voor dient (optioneel).",
+          "work_item_types": {
+            "additional_section": {
+              "add_type": "Werkitemtype toevoegen",
+              "description": "Voeg meer werkitemtypen toe die beschikbaar zijn in projecten van dit sjabloon.",
+              "empty": "Nog geen extra typen.",
+              "title": "Extra typen"
+            },
+            "default_badge": "Standaard",
+            "disabled_hint": "Schakel werkitemtypen in onder Functies hierboven om hier typen te configureren.",
+            "epic": {
+              "description": "Omvangrijk werkpakket dat in taken kan worden opgedeeld.",
+              "disabled": "Epics zijn uitgeschakeld voor dit sjabloon.",
+              "title": "Epic"
+            },
+            "optional_badge": "Optioneel",
+            "properties_empty": "Geen aangepaste eigenschappen voor dit type.",
+            "task": {
+              "description": "Standaardwerkitemtype voor dagelijkse taken.",
+              "title": "Taak"
+            },
+            "type_description_placeholder": "Korte beschrijving (optioneel)",
+            "type_name_placeholder": "Typenaam"
+          }
+        },
+        "loading": "Sjablonen laden…",
+        "none": "Geen sjabloon",
+        "select_placeholder": "Selecteer een sjabloon",
+        "table": {
+          "download_template": "Downloaden",
+          "no_description": "Geen beschrijving",
+          "use_template": "Sjabloon gebruiken"
+        },
+        "title": "Projectsjablonen",
+        "toasts": {
+          "apply_failed": {
+            "message": "Kon het projectsjabloon niet toepassen."
+          },
+          "apply_followup_failed": {
+            "message": "Het project is aangemaakt, maar sommige sjablooninstellingen konden niet worden toegepast."
+          },
+          "create_failed": {
+            "message": "Controleer het formulier en probeer het opnieuw.",
+            "title": "Kon sjabloon niet aanmaken"
+          },
+          "created": {
+            "message": "Het projectsjabloon is opgeslagen.",
+            "title": "Sjabloon aangemaakt"
+          },
+          "delete_failed": {
+            "message": "Probeer het opnieuw.",
+            "title": "Kon niet verwijderen"
+          },
+          "deleted": {
+            "message": "Het projectsjabloon is verwijderd.",
+            "title": "Sjabloon verwijderd"
+          },
+          "download_failed": {
+            "message": "Kon het sjabloonbestand niet downloaden."
+          },
+          "save_failed": {
+            "message": "Controleer het formulier en probeer het opnieuw.",
+            "title": "Kon sjabloon niet opslaan"
+          },
+          "saved": {
+            "message": "Het projectsjabloon is bijgewerkt.",
+            "title": "Sjabloon opgeslagen"
+          },
+          "upload_failed": {
+            "message": "Kon het sjabloon niet uploaden. Controleer het bestand en probeer het opnieuw."
+          },
+          "uploaded_renamed": {
+            "message": "Die naam was al in gebruik, dus het sjabloon is opgeslagen als \"{name}\"."
+          },
+          "uploaded": {
+            "message": "Sjabloon \"{name}\" is geüpload vanuit het bestand."
+          }
+        },
+        "upload_invalid_file": "Upload een JSON-bestand dat is gedownload met de knop “Downloaden”.",
+        "upload_template": "Uploaden vanuit bestand",
+        "upload_too_large": "Het bestand moet kleiner zijn dan {size} MB."
+      },
+      "work_item_templates": {
+        "add_template": "Sjabloon toevoegen",
+        "delete_confirm": "Weet je zeker dat je dit werkitemsjabloon wilt verwijderen?",
+        "description": "Maak herbruikbare startsets voor nieuwe werkitems (titel, beschrijving, toegewezenen, prioriteit en meer). Een sjabloon kan gelden voor de hele werkruimte of voor één project.",
+        "edit_template": "Sjabloon bewerken",
+        "form": {
+          "default_values_section_hint": "Wanneer iemand dit sjabloon toepast bij het aanmaken van een werkitem, worden deze velden ingevuld. Alles hier is optioneel.",
+          "default_values_section_title": "Standaardwaarden van werkitem",
+          "default_work_item_description": "Beschrijving",
+          "default_work_item_description_hint": "Platte tekst; wordt opgeslagen als beschrijving van het werkitem. Regeleinden blijven behouden.",
+          "default_work_item_description_placeholder": "Tekst die standaard in het nieuwe werkitem moet staan",
+          "default_work_item_name": "Titel",
+          "default_work_item_name_placeholder": "bijv. [Bug] …",
+          "modal_intro": "Geef het sjabloon een naam en voeg een korte notitie voor het team toe. Stel daarna standaardwaarden voor werkitems in—dezelfde soort titel, beschrijving, toegewezenen en prioriteit die je gebruikt bij het aanmaken van een werkitem.",
+          "name_required": "Sjabloonnaam is verplicht",
+          "scope_hint": "Laat project leeg om dit sjabloon in elk project beschikbaar te maken. Projectspecifieke velden (status, labels, cyclus, modules) kunnen alleen worden opgeslagen als een project is geselecteerd.",
+          "scope_hint_short": "Optioneel. Indien leeg is het sjabloon beschikbaar in alle projecten. Indien ingesteld zijn suggesties voor toegewezenen beperkt tot dat project; anders worden leden van de werkruimte gebruikt.",
+          "scope_project": "Beperken tot één project (optioneel)",
+          "template_name_label": "Sjabloonnaam",
+          "template_name_placeholder": "bijv. Bugrapport",
+          "template_note_label": "Beschrijving (voor je team)",
+          "template_note_placeholder": "Waar dit sjabloon voor dient (optioneel; dit is niet de beschrijving van het werkitem)."
+        },
+        "heading": "Werkitemsjablonen",
+        "table": {
+          "name": "Sjabloon",
+          "project": "Project",
+          "scope": "Bereik",
+          "workspace_wide": "Alle projecten"
+        },
+        "title": "Werkitemsjablonen",
+        "toasts": {
+          "create_failed": {
+            "message": "Controleer het formulier en probeer het opnieuw.",
+            "title": "Kon sjabloon niet aanmaken"
+          },
+          "created": {
+            "message": "Het werkitemsjabloon is opgeslagen.",
+            "title": "Sjabloon aangemaakt"
+          },
+          "delete_failed": {
+            "message": "Probeer het opnieuw.",
+            "title": "Kon niet verwijderen"
+          },
+          "deleted": {
+            "message": "Het werkitemsjabloon is verwijderd.",
+            "title": "Sjabloon verwijderd"
+          },
+          "save_failed": {
+            "message": "Controleer het formulier en probeer het opnieuw.",
+            "title": "Kon sjabloon niet opslaan"
+          },
+          "saved": {
+            "message": "Het werkitemsjabloon is bijgewerkt.",
+            "title": "Sjabloon opgeslagen"
+          }
+        }
+      },
+      "work_item_types": {
+        "add_type": "Type toevoegen",
+        "delete_confirm": "Dit werkitemtype verwijderen? Bestaande werkitems behouden hun gegevens.",
+        "description": "Definieer werkitemtypen met een eigen identiteit, aangepaste eigenschappen en projectbereik. Schakel typen in of uit zonder bestaande items te beïnvloeden.",
+        "edit_type": "Type bewerken",
+        "epic_badge": "Epic",
+        "form": {
+          "description_label": "Beschrijving",
+          "is_active": "Actief",
+          "is_epic": "Epic-type",
+          "modal_intro": "Geef het type een naam, kies een pictogram en koppel alleen de eigenschappen die dit soort werk nodig heeft. Wijs het toe aan projecten waar het beschikbaar moet zijn.",
+          "name_label": "Naam",
+          "name_required": "Typenaam is verplicht",
+          "projects_hint": "Laat leeg om het type in de bibliotheek te bewaren zonder het al aan een project toe te wijzen.",
+          "projects_label": "Projecten",
+          "properties_heading": "Aangepaste eigenschappen",
+          "property": {
+            "active_checkbox": "Actief",
+            "add": "Eigenschap toevoegen",
+            "description_label": "Beschrijving",
+            "empty": "Nog geen aangepaste eigenschappen.",
+            "inactive": "Inactief",
+            "mandatory": "Verplicht",
+            "mandatory_checkbox": "Verplicht bij het aanmaken van werkitems",
+            "title_label": "Titel",
+            "type_label": "Type",
+            "types": {
+              "boolean": "Boolean",
+              "date": "Datum",
+              "dropdown": "Keuzelijst",
+              "member_picker": "Lid",
+              "number": "Getal",
+              "text": "Tekst"
+            }
+          }
+        },
+        "table": {
+          "name": "Type",
+          "no_projects": "Niet toegewezen",
+          "projects": "Projecten",
+          "properties": "Eigenschappen",
+          "status": "Actief"
+        },
+        "title": "Werkitemtypen",
+        "toasts": {
+          "delete_failed": {
+            "message": "Probeer het opnieuw.",
+            "title": "Kon niet verwijderen"
+          },
+          "deleted": {
+            "message": "Het werkitemtype is verwijderd.",
+            "title": "Type verwijderd"
+          },
+          "save_failed": {
+            "message": "Controleer het formulier en probeer het opnieuw.",
+            "title": "Kon type niet opslaan"
+          },
+          "saved": {
+            "message": "Het werkitemtype is opgeslagen.",
+            "title": "Type opgeslagen"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useMemo } from "react";
+// plane imports
+import { useTranslation } from "@plane/i18n";
+import { setToast } from "@plane/blocks/toast";
+import type { TIssue, TIssueServiceType } from "@plane/types";
+import { EIssueServiceType } from "@plane/types";
+import { copyUrlToClipboard } from "@plane/utils";
+// helpers
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
+// hooks
+import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+
+export type TRelationIssueOperations = {
+  copyLink: (path: string) => void;
+  update: (workspaceSlug: string, projectId: string, issueId: string, data: Partial<TIssue>) => Promise<void>;
+  remove: (workspaceSlug: string, projectId: string, issueId: string) => Promise<void>;
+};
+
+export const useRelationOperations = (
+  issueServiceType: TIssueServiceType = EIssueServiceType.ISSUES
+): TRelationIssueOperations => {
+  const { updateIssue, removeIssue } = useIssueDetail(issueServiceType);
+  const { t } = useTranslation();
+  // derived values
+  const entityName = issueServiceType === EIssueServiceType.ISSUES ? t("common.work_item") : t("common.epic");
+
+  const issueOperations: TRelationIssueOperations = useMemo(
+    () => ({
+      copyLink: async (path) => {
+        await copyUrlToClipboard(path);
+        setToast({
+          type: "success",
+          title: t("common.link_copied"),
+          message: t("entity.link_copied_to_clipboard", { entity: entityName }),
+        });
+      },
+      update: async (workspaceSlug, projectId, issueId, data) => {
+        try {
+          await updateIssue(workspaceSlug, projectId, issueId, data);
+          setToast({
+            title: t("toast.success"),
+            type: "success",
+            message: t("entity.update.success", { entity: entityName }),
+          });
+        } catch (error) {
+          setToast({
+            title: t("toast.error"),
+            type: "error",
+            message: getIssueApiErrorMessage(error, t("entity.update.failed", { entity: entityName }), t),
+          });
+        }
+      },
+      remove: async (workspaceSlug, projectId, issueId) => {
+        return removeIssue(workspaceSlug, projectId, issueId);
+      },
+    }),
+    [entityName, removeIssue, t, updateIssue]
+  );
+
+  return issueOperations;
+};

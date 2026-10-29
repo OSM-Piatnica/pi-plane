@@ -1,9 +1,11 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
 import json
+import logging
 from datetime import timedelta
 
 # Third party imports
@@ -15,8 +17,14 @@ from django.utils import timezone
 
 # Module imports
 from plane.bgtasks.issue_activities_task import issue_activity
-from plane.db.models import Issue, Project, State
+from plane.db.models import IntakeIssue, Issue, Project, State
+from plane.db.models.intake import IntakeIssueStatus
 from plane.utils.exception_logger import log_exception
+from plane.utils.blocked_status_rule import BLOCKED_TARGET_GROUPS as BLOCKED_STATUS_TARGET_GROUPS
+from plane.utils.blocked_status_rule import has_open_blockers
+from plane.utils.parent_completion_rule import BLOCKED_TARGET_GROUPS, has_open_sub_items
+
+logger = logging.getLogger("plane.worker")
 
 
 @shared_task
@@ -117,9 +125,20 @@ def close_old_issues():
             # Check if Issues
             if issues:
                 if project.default_state is None:
-                    close_state = State.objects.filter(group="cancelled").first()
+                    close_state = State.objects.filter(project=project, group="cancelled").first()
                 else:
                     close_state = project.default_state
+
+                if close_state is None:
+                    continue
+
+                # A parent with open sub-items cannot be completed; it waits for the next run
+                if project.is_parent_completion_rule_enabled and close_state.group in BLOCKED_TARGET_GROUPS:
+                    issues = issues.exclude(has_open_sub_items())
+
+                # A work item still held back by an open blocker cannot be started or completed either
+                if project.is_blocked_status_rule_enabled and close_state.group in BLOCKED_STATUS_TARGET_GROUPS:
+                    issues = issues.exclude(has_open_blockers())
 
                 issues_to_update = []
                 for issue in issues:
@@ -147,3 +166,25 @@ def close_old_issues():
     except Exception as e:
         log_exception(e)
         return
+
+
+@shared_task
+def unsnooze_expired_intake_issues():
+    """Return intake items whose snooze has lapsed to PENDING.
+
+    ``snoozed_till`` is already the wake-up instant (a picked day is stored as
+    its midnight in the project timezone, and Project.save() re-times it if that
+    timezone changes), so a plain comparison with now is enough. A bulk
+    ``update()`` is fine: nothing listens for SNOOZED -> PENDING.
+    """
+    try:
+        now = timezone.now()
+        updated_count = IntakeIssue.objects.filter(status=IntakeIssueStatus.SNOOZED, snoozed_till__lte=now).update(
+            status=IntakeIssueStatus.PENDING, snoozed_till=None, updated_at=now
+        )
+        if updated_count:
+            logger.info("unsnooze_expired_intake_issues: returned %d intake issues to pending", updated_count)
+        return updated_count
+    except Exception as e:
+        log_exception(e)
+        return 0

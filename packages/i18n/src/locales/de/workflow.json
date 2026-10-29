@@ -1,9 +1,9 @@
 {
   "workflows": {
     "workflow_states": {
-      "work_item_creation": "Neue Arbeitsaufgaben erlauben",
-      "work_item_creation_disable_tooltip": "Erstellung von Arbeitsaufgaben ist für diesen Status deaktiviert",
-      "default_state": "Der Standardstatus erlaubt allen Mitgliedern, neue Arbeitsaufgaben zu erstellen. Dies kann nicht geändert werden",
+      "work_item_creation": "Neue Arbeitselemente erlauben",
+      "work_item_creation_disable_tooltip": "Das Erstellen von Arbeitselementen ist für diesen Status deaktiviert",
+      "default_state": "Der Standardstatus erlaubt allen Mitgliedern, neue Arbeitselemente zu erstellen. Dies kann nicht geändert werden",
       "state_change_count": "{count, plural, one {1 erlaubte Statusänderung} other {{count} erlaubte Statusänderungen}}",
       "movers_count": "{count, plural, one {1 aufgelisteter Prüfer} other {{count} aufgelistete Prüfer}}",
       "state_changes": {
@@ -14,25 +14,25 @@
         "move_to": "Status ändern zu",
         "movers": {
           "label": "Bei Prüfung durch",
-          "tooltip": "Prüfer sind Personen, die berechtigt sind, Arbeitsaufgaben von einem Status in einen anderen zu verschieben.",
+          "tooltip": "Prüfer sind Personen, die berechtigt sind, Arbeitselemente von einem Status in einen anderen zu verschieben.",
           "add": "Prüfer hinzufügen"
         }
       }
     },
     "workflow_disabled": {
-      "title": "Sie können diese Arbeitsaufgabe nicht hierher verschieben."
+      "title": "Sie können dieses Arbeitselement nicht hierher verschieben."
     },
     "workflow_enabled": {
       "label": "Statusänderung"
     },
     "workflow_tree": {
-      "label": "Für Arbeitsaufgaben in",
+      "label": "Für Arbeitselemente in",
       "state_change_label": "kann es verschieben nach"
     },
     "empty_state": {
       "upgrade": {
         "title": "Kontrollieren Sie das Chaos von Änderungen und Überprüfungen mit Workflows.",
-        "description": "Legen Sie Regeln fest, wohin sich Ihre Arbeit bewegt, durch wen und wann mit Workflows in Plane."
+        "description": "Legen Sie mit Workflows in Pi-Plane Regeln fest, wohin sich Ihre Arbeit bewegt, wer sie bewegen darf und wann."
       }
     },
     "quick_actions": {
@@ -46,7 +46,7 @@
       },
       "delete_state_change": {
         "title": "Sind Sie sicher, dass Sie diese Statusänderungsregel löschen möchten?",
-        "description": "Einmal gelöscht, können Sie diese Änderung nicht rückgängig machen und müssen die Regel erneut festlegen, wenn Sie möchten, dass sie für dieses Projekt gilt."
+        "description": "Nach dem Löschen können Sie diese Änderung nicht rückgängig machen und müssen die Regel erneut festlegen, wenn sie für dieses Projekt gelten soll."
       }
     },
     "toasts": {

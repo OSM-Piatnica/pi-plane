@@ -54,8 +54,8 @@
         "indicator": "Strona",
         "lock": "Zablokuj",
         "unlock": "Odblokuj",
-        "make_private": "Ustaw jako prywatne",
-        "make_public": "Ustaw jako publiczne",
+        "make_private": "Ustaw jako widoczne tylko dla mnie",
+        "make_public": "Udostępnij projektowi",
         "archive": "Archiwizuj",
         "restore": "Przywróć",
         "add_to_favorites": "Dodaj do ulubionych",
@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Otwórz skróty klawiszowe",
-      "open_plane_documentation": "Otwórz dokumentację Plane",
+      "open_plane_documentation": "Otwórz dokumentację Pi-Plane",
       "join_forum": "Dołącz do naszego forum",
       "report_bug": "Zgłoś błąd",
       "chat_with_us": "Napisz do nas"
@@ -171,10 +171,17 @@
     "search_menu": {
       "no_results": "Nie znaleziono wyników",
       "clear_search": "Wyczyść wyszukiwanie",
-      "go_to_advanced_search": "Przejdź do wyszukiwania zaawansowanego"
+      "go_to_advanced_search": "Przejdź do wyszukiwania zaawansowanego",
+      "results_in_workspace": "Wyniki wyszukiwania dla <term/> w przestrzeni roboczej:",
+      "results_in_project": "Wyniki wyszukiwania dla <term/> w projekcie:"
     },
     "footer": {
       "workspace_level": "Poziom przestrzeni roboczej"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Szukaj skrótów klawiaturowych",
+      "no_results": "Nie znaleziono skrótów klawiaturowych dla „{query}”",
+      "sequence_separator": "potem"
     },
     "group_titles": {
       "actions": "Akcje",

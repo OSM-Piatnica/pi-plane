@@ -42,21 +42,50 @@
           "blocked_by": "{issue} nemůže začít, dokud není dokončena {related} (vztah Blokováno).",
           "blocking": "{issue} musí skončit dříve, než začne {related} (vztah Blokující).",
           "finish_after": "{issue} nemůže skončit dříve než {related} (vztah Končí po).",
+          "finish_after_start": "{issue} nemůže skončit dřív, než {related} začne (vztah „končí po začátku“).",
           "finish_before": "{issue} musí skončit nejpozději v den, kdy končí {related} (vztah Končí před).",
           "start_after": "{issue} nemůže začít dříve než {related} (vztah Začíná po).",
-          "start_before": "{issue} musí začít nejpozději v den, kdy začíná {related} (vztah Začíná před)."
+          "start_before": "{issue} musí začít nejpozději v den, kdy začíná {related} (vztah Začíná před).",
+          "start_before_finish": "{issue} musí začít nejpozději ve chvíli, kdy {related} skončí (vztah „začíná před koncem“)."
         },
         "status": {
           "finish_after": "{issue} nemůže být dokončena, dokud není dokončena {related} (vztah Končí po).",
+          "finish_after_start": "{issue} nelze dokončit, dokud {related} nezačne (vztah „končí po začátku“).",
           "start_after": "{issue} nemůže začít, dokud nezačala {related} (vztah Začíná po)."
-        }
+        },
+        "self": "{issue} nemůže souviset samo se sebou.",
+        "cycle": "{issue} a {related} by vytvořily smyčku vztahů. Nejdřív odeberte opačný vztah.",
+        "lag_suffix": " Zpoždění vztahu: {lag} d."
       },
       "date_conflict": "Tato data jsou v konfliktu se stávajícími závislostmi. Nejprve upravte související pracovní položky nebo závislost odstraňte.",
       "dependency_create_failed": "Závislost se nepodařilo vytvořit. Zkuste to prosím znovu.",
-      "dependency_created": "Závislost mezi pracovními položkami byla úspěšně vytvořena."
-    }
+      "dependency_created": "Závislost mezi pracovními položkami byla úspěšně vytvořena.",
+      "lag": {
+        "hint": "Počet dnů mezi daty; záporná hodnota umožní překryv.",
+        "invalid": "Zadejte celé číslo dnů od -{max} do {max}.",
+        "label": "Zpoždění (dny)",
+        "update_failed": "Zpoždění se nepodařilo změnit."
+      },
+      "reschedule": {
+        "confirm": "Posunout",
+        "content": "Tato změna by porušila závislosti. Tyto pracovní položky lze posunout na později při zachování jejich délky, aby všechny závislosti dál platily:",
+        "title": "Posunout i závislé pracovní položky?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Přesunout do zrušených",
+        "content": "{issue} je nyní označena jako duplikát položky {originals}. Přesunout ji do stavu „{state}“? Zůstane propojená a viditelná.",
+        "failed": "Pracovní položku se nepodařilo zrušit.",
+        "keep": "Nechat otevřenou",
+        "title": "Zrušit tuto pracovní položku?"
+      }
+    },
+    "edit_restricted": "Tuto pracovní položku mohou měnit jen k ní přiřazení, vedoucí projektu a správci projektu."
   },
   "project_create": {
+    "advanced": {
+      "description": "Pravidla a typy vztahů. Později je můžete změnit v nastavení pracovních postupů projektu.",
+      "title": "Pokročilé možnosti"
+    },
     "features": {
       "cycles": {
         "description": "Rozdělte práci do opakujících se časových úseků.",
@@ -115,11 +144,53 @@
       "pending_approval_title": "Vyžadováno schválení",
       "rejected_success": "Přechod byl zamítnut.",
       "resolving_approval": "Zpracování schválení...",
+      "rules": {
+        "heading": "Pravidla",
+        "description": "Pravidla projektu, která platí sama o sobě, ať jsou pracovní postupy zapnuté, nebo ne.",
+        "parent_completion": {
+          "description": "Pracovní položku nelze dokončit, dokud má podřízené položky, které nejsou ani dokončené, ani zrušené. Opětovné otevření dokončené podřízené položky pod dokončenou nadřazenou položkou vyžádá také opětovné otevření nadřazené položky.",
+          "title": "Dokončit nadřazenou položku jen po dokončení jejích podřízených položek"
+        },
+        "reopen_parent": {
+          "confirm": "Znovu otevřít",
+          "content": "Tento projekt nedovoluje, aby nadřazená položka zůstala dokončená, dokud je podřízená položka otevřená. Tyto dokončené nadřazené položky se také znovu otevřou: {names}",
+          "title": "Znovu otevřít i nadřazené pracovní položky?"
+        },
+        "blocked_status": {
+          "description": "Pracovní položka nemůže přejít do rozpracovaného ani dokončeného stavu, dokud je otevřená pracovní položka, která ji blokuje (dokončené a zrušené blokující položky se nepočítají). Zůstat v backlogu nebo k provedení a zrušení zůstává možné.",
+          "title": "Spustit nebo dokončit položku, až když jsou její blokující položky hotové"
+        },
+        "assignee_edit": {
+          "description": "Jakmile má pracovní položka přiřazenou osobu, mohou ji měnit jen přiřazení, vedoucí projektu a správci projektu: pole, stav, data, podřízené položky, vztahy, odkazy, přílohy, cykly a moduly, mazání a archivaci. Komentovat může dál každý. Pracovní položky bez přiřazené osoby zůstávají otevřené všem členům.",
+          "title": "Pracovní položku mohou měnit jen přiřazení, vedoucí projektu a správci"
+        }
+      },
       "save_error": "Nastavení workflow se nepodařilo uložit.",
       "save_success": "Nastavení workflow bylo uloženo.",
       "toggle_error": "Nastavení workflow se nepodařilo aktualizovat.",
       "transition": "Přechod",
-      "transitions_configured": "nastavených přechodů"
+      "transition_count": "{count, plural, one {# přechod} few {# přechody} many {# přechodu} other {# přechodů}}",
+      "transitions_configured": "nastavených přechodů",
+      "relation_types": {
+        "heading": "Typy vztahů",
+        "description": "Vyberte, které vztahy lze v tomto projektu přidávat. Blokování je vždy k dispozici a stávající vztahy po vypnutí typu zůstanou.",
+        "schedule": {
+          "description": "Začíná před, končí před a začíná před koncem, s volitelným odstupem ve dnech.",
+          "title": "Časové závislosti"
+        },
+        "traceability": {
+          "description": "Implementuje, způsobuje, klonuje a testuje, včetně opačných směrů.",
+          "title": "Vztahy sledovatelnosti"
+        },
+        "relates_to": {
+          "description": "Jednoduché propojení dvou položek.",
+          "title": "Související s"
+        },
+        "duplicate": {
+          "description": "Označit položku jako duplikát jiné.",
+          "title": "Duplikát"
+        }
+      }
     }
   },
   "project_templates": {

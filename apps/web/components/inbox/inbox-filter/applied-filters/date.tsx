@@ -1,0 +1,80 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { observer } from "mobx-react";
+import { PAST_DURATION_FILTER_OPTIONS } from "@plane/constants";
+import { CloseOutline } from "@makeplane/propel/icons";
+import type { TInboxIssueFilterDateKeys } from "@plane/types";
+import { useTranslation } from "@plane/i18n";
+import { getDateFilterLabel } from "@/helpers/date-filter-label";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
+import { useProjectInbox } from "@/hooks/store/use-project-inbox";
+
+type InboxIssueAppliedFiltersDate = {
+  filterKey: TInboxIssueFilterDateKeys;
+  label: string;
+};
+
+// oxlint-disable-next-line no-shadow -- function name intentionally matches the exported const (display name)
+export const InboxIssueAppliedFiltersDate = observer(function InboxIssueAppliedFiltersDate(
+  props: InboxIssueAppliedFiltersDate
+) {
+  const { filterKey, label } = props;
+  // hooks
+  const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
+  const { inboxFilters, handleInboxIssueFilters } = useProjectInbox();
+  // derived values
+  const filteredValues = inboxFilters?.[filterKey] || [];
+  const currentOptionDetail = (date: string) => {
+    const currentDate = PAST_DURATION_FILTER_OPTIONS.find((d) => d.value === date);
+    if (currentDate) return { name: t(currentDate.i18n_name), value: currentDate.value };
+    const dateSplit = date.split(";");
+    return {
+      name: getDateFilterLabel(dateSplit[0], dateSplit[1], formatDate, t),
+      value: date,
+    };
+  };
+
+  const handleFilterValue = (value: string): string[] =>
+    filteredValues?.includes(value) ? filteredValues.filter((v) => v !== value) : [...filteredValues, value];
+
+  const clearFilter = () => handleInboxIssueFilters(filterKey, undefined);
+
+  if (filteredValues.length === 0) return <></>;
+  return (
+    <div className="my-auto flex min-h-9 cursor-pointer flex-wrap items-center gap-1.5 rounded-md border border-subtle p-1.5 text-11 text-tertiary hover:text-secondary">
+      <div className="text-11 text-secondary">{label}</div>
+      {filteredValues.map((value) => {
+        const optionDetail = currentOptionDetail(value);
+        if (!optionDetail) return <></>;
+        return (
+          <div key={value} className="relative flex items-center gap-1 rounded-sm bg-layer-1 p-1 text-11">
+            <div className="truncate text-11">{optionDetail?.name}</div>
+            <button
+              type="button"
+              aria-label={t("common.remove")}
+              className="relative flex h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden text-tertiary transition-all hover:text-secondary"
+              onClick={() => handleInboxIssueFilters(filterKey, handleFilterValue(optionDetail?.value))}
+            >
+              <CloseOutline className={`h-3 w-3`} />
+            </button>
+          </div>
+        );
+      })}
+
+      <button
+        type="button"
+        aria-label={t("common.clear")}
+        className="relative flex h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden text-tertiary transition-all hover:text-secondary"
+        onClick={clearFilter}
+      >
+        <CloseOutline className={`h-3 w-3`} />
+      </button>
+    </div>
+  );
+});

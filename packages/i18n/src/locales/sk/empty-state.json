@@ -29,7 +29,12 @@
       "restricted_description": "Kontaktujte administrátora, aby ste požiadali o prístup, a potom tu môžete pokračovať.",
       "join_description": "Kliknite na tlačidlo nižšie, aby ste sa pripojili.",
       "cta_primary": "Pripojiť sa k projektu",
-      "cta_loading": "Pripájanie k projektu"
+      "cta_loading": "Pripájanie k projektu",
+      "pending_title": "Vaša žiadosť čaká na schválenie",
+      "pending_description": "Správcovia projektu vás pustia dnu, keď ju schvália.",
+      "private_title": "Tento projekt je súkromný",
+      "private_description": "Vidíte ho, ale správcovia vás musia pustiť dnu. Pošlite im žiadosť.",
+      "request_cta": "Požiadať o prístup"
     },
     "invalid_project": {
       "title": "Projekt nebol nájdený",
@@ -188,7 +193,7 @@
     },
     "wiki": {
       "title": "Napíšte poznámku, dokument alebo celú vedomostnú bázu.",
-      "description": "Stránky sú priestorom pre zachytenie myšlienok v Plane. Robte poznámky zo stretnutí, jednoducho ich formátujte, vkladajte pracovné položky, usporiadajte ich pomocou knižnice komponentov a udržujte všetko v kontexte vášho projektu.",
+      "description": "Stránky sú priestorom pre zachytenie myšlienok v Pi-Plane. Robte poznámky zo stretnutí, jednoducho ich formátujte, vkladajte pracovné položky, usporiadajte ich pomocou knižnice komponentov a udržujte všetko v kontexte vášho projektu.",
       "cta_primary": "Vytvorte svoju stránku"
     },
     "project_overview_state_sidebar": {

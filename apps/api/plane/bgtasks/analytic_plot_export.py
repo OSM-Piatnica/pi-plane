@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -15,13 +16,14 @@ from django.core.mail import EmailMultiAlternatives, get_connection
 from django.template.loader import render_to_string
 from django.db.models import Q, Case, Value, When
 from django.db import models
-from django.db.models.functions import Concat
+from django.db.models.functions import Cast, Concat
 
 # Module imports
-from plane.db.models import Issue
+from plane.db.models import Issue, User
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.analytics_plot import build_graph_plot
 from plane.utils.email import generate_plain_text_from_html
+from plane.utils.email_i18n import DEFAULT_LANGUAGE, translate, user_language
 from plane.utils.exception_logger import log_exception
 from plane.utils.issue_filters import issue_filters
 from plane.utils.csv_utils import sanitize_csv_row
@@ -33,6 +35,7 @@ row_mapping = {
     "assignees__id": "Assignee Name",
     "start_date": "Start Date",
     "target_date": "Due Date",
+    "finish_date": "Finish Date",
     "completed_at": "Completed At",
     "created_at": "Created At",
     "issue_count": "Issue Count",
@@ -51,8 +54,10 @@ MODULE_ID = "issue_module__module_id"
 
 def send_export_email(email, slug, csv_buffer, rows):
     """Helper function to send export email."""
-    subject = "Your Export is ready"
-    html_content = render_to_string("emails/exports/analytics.html", {})
+    user = User.objects.filter(email=email).first()
+    language = user_language(user) if user else DEFAULT_LANGUAGE
+    subject = translate(language, "analytics_export.subject")
+    html_content = render_to_string("emails/exports/analytics.html", {"email_language": language})
     text_content = generate_plain_text_from_html(html_content)
 
     csv_buffer.seek(0)
@@ -103,7 +108,7 @@ def get_assignee_details(slug, filters):
                     assignees__avatar_asset__isnull=False,
                     then=Concat(
                         Value("/api/assets/v2/static/"),
-                        "assignees__avatar_asset",  # Assuming avatar_asset has an id or relevant field
+                        Cast("assignees__avatar_asset", models.CharField()),
                         Value("/"),
                     ),
                 ),
@@ -347,9 +352,15 @@ def generate_non_segmented_rows(
 
 
 @shared_task
-def analytic_export_task(email, data, slug):
+def analytic_export_task(email, data, slug, user_id):
     try:
         filters = issue_filters(data, "POST")
+        # Only include projects the user is an active member of
+        filters.update(
+            project__project_projectmember__member_id=user_id,
+            project__project_projectmember__is_active=True,
+            project__project_projectmember__deleted_at__isnull=True,
+        )
         queryset = Issue.issue_objects.filter(**filters, workspace__slug=slug)
 
         x_axis = data.get("x_axis", False)

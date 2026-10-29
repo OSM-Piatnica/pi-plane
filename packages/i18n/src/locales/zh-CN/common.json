@@ -8,6 +8,7 @@
   "submit": "提交",
   "cancel": "取消",
   "loading": "加载中",
+  "searching": "搜索中…",
   "error": "错误",
   "success": "成功",
   "warning": "警告",
@@ -107,15 +108,24 @@
   "failed_to_update_email_notification_setting": "邮件通知设置更新失败",
   "notify_me_when": "在以下情况通知我",
   "property_changes": "属性变更",
-  "property_changes_description": "当工作项的属性（如负责人、优先级、估算等）发生变更时通知我。",
+  "property_changes_description": "当工作项的属性（如负责人、优先级或估算）发生变更时通知我。",
   "state_change": "状态变更",
   "state_change_description": "当工作项移动到不同状态时通知我",
   "issue_completed": "工作项完成",
-  "issue_completed_description": "仅当工作项完成时通知我",
+  "issue_completed_description": "当工作项完成时通知我",
   "comments": "评论",
   "comments_description": "当有人在工作项上发表评论时通知我",
   "mentions": "提及",
-  "mentions_description": "仅当有人在评论或描述中提及我时通知我",
+  "mentions_description": "当有人在评论或描述中提及我时通知我",
+  "project_access_requests": "访问请求",
+  "project_access_requests_description": "通过电子邮件通知我加入我管理的私有项目的请求，以及对我自己请求的决定。",
+  "workspace_admin_messages": "有人给工作空间管理员写信时给我发邮件",
+  "workspace_admin_messages_description": "仅在您是工作空间管理员时适用。消息始终会进入您的收件箱；此设置只决定您是否还会收到邮件，并且只对您本人生效。",
+  "email_frequency": "邮件频率",
+  "email_frequency_description": "选择您接收工作项更新邮件的频率。提及始终会立即发送。",
+  "email_frequency_instant": "立即",
+  "email_frequency_hourly": "每小时摘要",
+  "email_frequency_daily": "每日摘要",
   "old_password": "旧密码",
   "general_settings": "常规设置",
   "sign_out": "退出登录",
@@ -189,8 +199,8 @@
   "select_network": "选择网络",
   "lead": "负责人",
   "date_range": "日期范围",
-  "private": "私有",
-  "public": "公开",
+  "private": "仅自己",
+  "public": "共享",
   "accessible_only_by_invite": "仅受邀者可访问",
   "anyone_in_the_workspace_except_guests_can_join": "除访客外的工作区所有成员都可以加入",
   "creating": "创建中",
@@ -204,8 +214,8 @@
   "add_to_favorites": "添加到收藏",
   "remove_from_favorites": "从收藏中移除",
   "rename_folder": "重命名文件夹",
-  "publish_project": "发布项目",
-  "publish": "发布",
+  "publish_project": "在网络上分享",
+  "publish": "开启网络分享",
   "copy_link": "复制链接",
   "leave_project": "离开项目",
   "join_the_project_to_rearrange": "加入项目以重新排列",
@@ -233,6 +243,25 @@
   "documentation": "文档",
   "message_support": "联系支持",
   "contact_sales": "联系销售",
+  "contact_workspace_admins": {
+    "menu_label": "联系工作空间管理员",
+    "title": "联系工作空间管理员",
+    "description": "{workspace} 的管理员负责添加成员、更改角色并协助处理访问权限。您可以用邮件应用给他们写信。",
+    "email_all": "给所有管理员发邮件",
+    "subject": "给 {workspace} 管理员的问题",
+    "body": "您好，\n\n\n\n{name}",
+    "message_label": "给管理员的消息",
+    "message_placeholder": "请说明您的需求，例如访问某个项目或更改角色。",
+    "characters": "{count} / {max}",
+    "send": "发送消息",
+    "sent": "您的消息已发送给工作空间管理员。",
+    "error_rate_limited": "您最近发送了多条消息，请稍后再试。",
+    "error_generic": "消息发送失败。请重试，或通过邮件联系管理员。",
+    "or_email": "或使用您自己的邮件应用撰写",
+    "notification_text": "给此工作空间的管理员写了信",
+    "message_from": "来自 {name} 的消息",
+    "reply_by_email": "通过邮件回复"
+  },
   "hyper_mode": "超级模式",
   "keyboard_shortcuts": "键盘快捷键",
   "whats_new": "新功能",
@@ -281,6 +310,11 @@
   "create_more": "创建更多",
   "add_to_project": "添加到项目",
   "discard": "放弃",
+  "discard_changes": {
+    "title": "放弃更改？",
+    "description": "您的更改尚未保存。放弃后无法恢复。",
+    "keep_editing": "继续编辑"
+  },
   "duplicate_issue_found": "发现重复的工作项",
   "duplicate_issues_found": "发现重复的工作项",
   "no_matching_results": "没有匹配的结果",
@@ -304,6 +338,9 @@
   "create_new_label": "创建新标签",
   "label_name": "标签名称",
   "failed_to_create_label": "创建标签失败，请重试。",
+  "no_matching_labels": "没有匹配的标签",
+  "adding_label": "正在添加\"{name}\"",
+  "add_label_to_labels": "将\"{name}\"添加到标签",
   "start_date": "开始日期",
   "end_date": "结束日期",
   "due_date": "截止日期",
@@ -326,6 +363,18 @@
   "deleting": "删除中",
   "make_a_copy": "创建副本",
   "move_to_project": "移动到项目",
+  "default_state_names": {
+    "backlog": "待办",
+    "todo": "待办",
+    "in_progress": "进行中",
+    "done": "完成",
+    "cancelled": "已取消",
+    "triage": "分流"
+  },
+  "filter_headings": {
+    "access": "访问权限",
+    "owned_by": "所有者"
+  },
   "good": "早上",
   "morning": "早上",
   "afternoon": "下午",
@@ -507,8 +556,8 @@
     "archiving": "归档中",
     "archive": "归档",
     "access": {
-      "public": "公开",
-      "private": "私有"
+      "public": "与项目共享",
+      "private": "仅自己"
     },
     "done": "完成",
     "sub_work_items": "子工作项",
@@ -528,6 +577,7 @@
       "updated_on": "更新时间"
     },
     "sort": {
+      "label": "排序",
       "asc": "升序",
       "desc": "降序",
       "created_on": "创建时间",
@@ -600,6 +650,13 @@
       "label": "搜索",
       "placeholder": "输入搜索内容",
       "no_matches_found": "未找到匹配项",
+      "cycles": "搜索周期...",
+      "estimates": "搜索估算...",
+      "labels": "搜索标签...",
+      "members": "搜索成员...",
+      "modules": "搜索模块...",
+      "projects": "搜索项目...",
+      "states": "搜索状态...",
       "no_matching_results": "没有匹配的结果",
       "min_chars": "至少输入 {count} 个字符进行搜索",
       "error": "获取搜索结果时出错",
@@ -627,7 +684,8 @@
       "enable": "启用",
       "disable": "禁用",
       "copy_markdown": "复制Markdown",
-      "reply": "回复"
+      "reply": "回复",
+      "add_reaction": "添加表情回应"
     },
     "name": "名称",
     "discard": "放弃",
@@ -707,6 +765,8 @@
     "applying": "应用中",
     "overview": "概览",
     "no_of": "{entity} 的数量",
+    "no_of_work_items": "工作项 的数量",
+    "no_of_epics": "史诗 的数量",
     "resolved": "已解决",
     "get_started": "开始使用",
     "worklogs": "工作日志",
@@ -828,7 +888,7 @@
     "edited_by": "编辑者"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane 未能启动。这可能是因为一个或多个 Plane 服务启动失败。",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane 未能启动。这可能是因为一个或多个 Pi-Plane 服务启动失败。",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "请选择“查看日志”来查看 setup.sh 和 Docker 日志，以确认问题。"
   },
   "customize_navigation": "自定义导航",
@@ -876,11 +936,12 @@
       "short_description": "导出为 JSON"
     }
   },
+  "labels_count": "{count, plural, one {# 个标签} other {# 个标签}}",
   "onboarding": {
     "skip": "跳过",
     "profile": {
       "title": "创建您的个人资料。",
-      "description": "这是您在 Plane 中的显示方式。",
+      "description": "这是您在 Pi-Plane 中的显示方式。",
       "choose_image": "选择图片",
       "upload_image": "上传图片",
       "change_image": "更换图片",
@@ -895,7 +956,7 @@
       "new_password_placeholder": "新密码...",
       "role_question": "您担任什么角色？请选择一项。",
       "domain_question": "您的专业领域是什么？请选择一项或多项。",
-      "marketing_consent": "我同意接收 Plane 的营销信息",
+      "marketing_consent": "我同意接收 Pi-Plane 的营销信息",
       "passwords_do_not_match": "密码不匹配",
       "passwords_match": "密码匹配",
       "seniority_levels": {
@@ -926,7 +987,7 @@
     },
     "role": {
       "title": "您的角色是什么？",
-      "description": "让我们根据您的工作方式来设置 Plane。",
+      "description": "让我们根据您的工作方式来设置 Pi-Plane。",
       "select_one": "请选择一项",
       "options": {
         "product_manager": "产品经理",
@@ -939,7 +1000,7 @@
       }
     },
     "usecase": {
-      "title": "是什么让您来到 Plane？",
+      "title": "是什么让您来到 Pi-Plane？",
       "description": "告诉我们您的目标和团队规模。",
       "select_multiple": "请选择一项或多项",
       "select_at_least_one": "请至少选择一个选项"
@@ -960,7 +1021,7 @@
     },
     "team": {
       "invite_teammates": "邀请您的团队成员",
-      "invite_teammates_description": "在 Plane 中与团队一起工作效果最佳。立即邀请他们，充分发挥 Plane 的潜力。",
+      "invite_teammates_description": "在 Pi-Plane 中与团队一起工作效果最佳。立即邀请他们，充分发挥 Pi-Plane 的潜力。",
       "add_another": "再添加一个",
       "do_it_later": "稍后再说",
       "invalid_email": "邮箱无效",
@@ -1004,5 +1065,451 @@
     "syncing_description": "您的更改正在与服务器同步。您可以继续进行更改。",
     "connection_lost": "连接已断开",
     "connection_lost_description": "我们在连接 websocket 服务器时遇到问题。您的更改将每 10 秒同步并保存一次。"
+  },
+  "emoji_icon_picker": {
+    "emoji": "表情符号",
+    "icon": "图标",
+    "contrast_notice": "颜色将自动调整以确保足够的对比度。"
+  },
+  "date_phrases": {
+    "added_ago": "{timeAgo}添加",
+    "expired": "已过期",
+    "expired_ago": "{timeAgo}过期",
+    "expires_at": "过期时间：{date} {time}",
+    "never_expires": "永不过期",
+    "date_at_time": "{date} {time}",
+    "till": "截至 {date}，{time}",
+    "after_date": "{date}之后",
+    "before_date": "{date}之前",
+    "month_week": "{month}，第{week}周",
+    "target_date": "目标日期：{date}",
+    "from_date": "自{date}起",
+    "till_date": "截至{date}",
+    "date_to_date": "{start}至{end}",
+    "archived_at": "归档于{date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "{name}于{date}上传",
+    "date_range": "{start} - {end}",
+    "expiry": "过期时间"
+  },
+  "a11y": {
+    "toggle_details": "切换详情",
+    "workflow_flow_type": "流程类型",
+    "workflow_target_state": "目标状态",
+    "workflow_reject_state": "拒绝状态"
+  },
+  "api_token_expiry": {
+    "one_week": "1 周",
+    "one_month": "1 个月",
+    "three_months": "3 个月",
+    "one_year": "1 年",
+    "custom_date": "自定义日期",
+    "set_expiration_date": "设置过期日期"
+  },
+  "profile_sidebar": {
+    "due": "截止"
+  },
+  "progress_chart": {
+    "current": "当前{title}",
+    "ideal": "理想{title}"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "将图片拖放到此处上传",
+      "drag_and_drop": "将图片拖放到此处",
+      "size_exceeded": "图片大小不能超过 5 MB。",
+      "invalid_format": "请上传格式有效的文件。",
+      "formats_supported": "支持的文件格式：.jpeg、.jpg、.png、.webp",
+      "uploading": "正在上传",
+      "upload_and_save": "上传并保存",
+      "title": "上传图片",
+      "select_image": "选择图片",
+      "select_image_named": "选择图片：{description}",
+      "select_cover_image": "选择封面图片 {index}",
+      "no_images": "未找到图片。"
+    },
+    "ai_assistant": {
+      "rate_limit": "您已达到每位用户每月 50 次请求的上限。",
+      "use_response": "使用此回复",
+      "generating_response": "正在生成回复…",
+      "generate_response": "生成回复",
+      "generate_again": "重新生成",
+      "content_label": "内容：",
+      "response_label": "回复：",
+      "no_response": "无法生成回复。可能是内容或任务信息不足。请重试。",
+      "placeholder_with_content": "告诉 AI 要对此内容执行什么操作…",
+      "placeholder_empty": "向 AI 提出任何问题…",
+      "consent": "使用此功能即表示您同意将消息共享给第三方服务。"
+    },
+    "multiple_select": {
+      "select_all_in_group": "全选组内项目"
+    },
+    "theme": {
+      "download_config": "下载配置",
+      "import_config": "导入配置",
+      "import_failed": "导入主题配置失败",
+      "missing_fields": "缺少必填字段：primary 和 background",
+      "invalid_brand_hex": "品牌颜色的十六进制格式无效",
+      "invalid_neutral_hex": "中性颜色的十六进制格式无效",
+      "invalid_mode": "主题模式无效。必须为布尔值",
+      "choose_color_mode": "选择颜色模式",
+      "light_mode": "浅色模式",
+      "dark_mode": "深色模式"
+    },
+    "workspace": {
+      "delete_warning": "您即将删除工作区 <name/>。确认后，您将无法访问此工作区中的所有工作数据，且无法恢复。请务必谨慎操作。",
+      "delete_type_name": "请输入此工作区的名称以继续。",
+      "delete_final_confirmation": "为进行最终确认，请在下方输入 <phrase/>。"
+    },
+    "workspace_settings": {
+      "invitation_removed": "邀请已成功移除。",
+      "workspace_updated": "工作区已成功更新",
+      "picture_removed": "工作区图片已成功移除。",
+      "picture_remove_failed": "删除您的头像时出错。请重试。",
+      "url_copied": "工作区 URL 已复制到剪贴板。"
+    },
+    "workspace_views": {
+      "delete_failed": "删除视图失败。请重试。",
+      "create_failed": "无法创建视图。请重试。",
+      "updated": "视图已成功更新。",
+      "update_failed": "无法更新视图。请重试。",
+      "edit_view": "编辑视图",
+      "delete_view": "删除视图"
+    },
+    "sticky_colors": {
+      "gray": "灰色",
+      "peach": "桃色",
+      "pink": "粉色",
+      "orange": "橙色",
+      "green": "绿色",
+      "light_blue": "浅蓝色",
+      "dark_blue": "深蓝色",
+      "purple": "紫色"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "全方位协作。",
+      "welcome_back": "欢迎回到 Pi-Plane。",
+      "create_your_account": "创建您的 Pi-Plane 账户。"
+    },
+    "auth_root": {
+      "no_auth_methods_title": "没有可用的身份验证方式",
+      "no_auth_methods_description": "请联系您的管理员为您的实例启用身份验证。"
+    },
+    "auth_password": {
+      "create_account": "创建账户"
+    },
+    "terms": {
+      "agree_sign_up": "创建账户即表示您理解并同意\n我们的<terms>服务条款</terms>和<privacy>隐私政策</privacy>。",
+      "agree_sign_in": "登录即表示您理解并同意\n我们的<terms>服务条款</terms>和<privacy>隐私政策</privacy>。"
+    },
+    "auth_screens": {
+      "sign_up": "注册",
+      "sign_in": "登录",
+      "join_teams": "加入使用 Pi-Plane 表现更出色的团队",
+      "not_authorized_view_title": "抱歉，您无权查看此页面",
+      "not_authorized": "未授权",
+      "not_a_member_description": "您不是此工作区的成员。请联系工作区管理员获取邀请，或查看您的待处理邀请。",
+      "check_pending_invites": "查看待处理邀请"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "未找到工作区",
+      "workspace_not_found_description": "未找到该 URL 对应的工作区。它可能不存在，或者您无权查看。",
+      "visit_profile": "访问个人资料"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "切换设置菜单",
+      "back_to_project": "返回项目",
+      "toggle_project_feature": "切换项目功能"
+    },
+    "headers": {
+      "toggle_sidebar": "切换侧边栏"
+    },
+    "profile_activity": {
+      "page_title": "个人资料 - 活动"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook 已成功更新。",
+      "not_authorized": "您无权访问此页面。",
+      "enable_webhook": "启用 Webhook",
+      "toggle_webhook": "切换 Webhook"
+    },
+    "project_settings_empty": {
+      "title": "暂无项目",
+      "description": "项目是目标驱动型工作的基础。您可以通过项目管理团队、任务以及完成工作所需的一切。",
+      "learn_more": "了解更多关于项目的信息"
+    },
+    "project_templates": {
+      "imported_template": "已导入的模板",
+      "pick_color": "选择颜色"
+    },
+    "not_found": {
+      "image_alt": "404 - 页面未找到",
+      "title": "出错了。",
+      "description": "抱歉，找不到您要查找的页面。它可能已被删除、已更名或暂时不可用。",
+      "go_to_home": "前往首页"
+    },
+    "api_tokens": {
+      "empty_title": "暂无 API 令牌",
+      "empty_description": "创建 API 令牌，以安全、便捷地与外部应用共享数据，同时保持控制权和安全性。",
+      "add_token": "添加令牌",
+      "delete_token": "删除令牌"
+    },
+    "base_layouts": {
+      "gantt": "甘特图布局"
+    },
+    "command_palette": {
+      "no_states_found": "未找到状态"
+    },
+    "quick_actions": {
+      "archive_module_hint": "只有已完成或已取消的模块才能归档"
+    },
+    "progress": {
+      "cycle_progress": "周期进度"
+    },
+    "estimates": {
+      "delete_title": "删除估算系统",
+      "delete_description": "删除估算系统 <name/> 将把它从所有工作项中永久移除。此操作无法撤销。如果您再次添加估算，则需要更新所有工作项。",
+      "deleting": "正在删除",
+      "delete_estimate": "删除估算",
+      "toggle_estimates": "切换估算",
+      "estimates_list": "估算列表",
+      "archived_title": "已归档的估算",
+      "archived_description": "估算已发生变更，这些是您在旧版本中使用过但已不再使用的估算。了解更多请 <link>点击此处。</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "创建被阻塞依赖",
+      "create_blocking_dependency": "创建阻塞依赖",
+      "update_block_dates_failed": "更新区块日期时出错"
+    },
+    "product_updates": {
+      "fetch_failed": "我们在获取更新时遇到问题。请访问我们的更新日志查看最新更新。",
+      "go_to_changelog": "前往更新日志"
+    },
+    "inbox": {
+      "intake_form_user": "Intake 表单用户",
+      "status": "状态",
+      "created_by": "创建者"
+    },
+    "instance": {
+      "contact_support": "联系支持",
+      "maintenance_title": "🚧 Pi-Plane 似乎未能正确启动！",
+      "maintenance_description": "部分服务可能启动失败。请检查您的容器日志以找出并解决问题。如果仍无法解决，请联系我们的支持团队获取更多帮助。",
+      "welcome_title": "欢迎使用 Pi-Plane",
+      "welcome_description": "设置您的实例并创建第一个工作区，开始管理项目和工作。"
+    },
+    "integrations": {
+      "github_installed": "在各个项目上启用 GitHub，以便与特定仓库同步。",
+      "github_not_installed": "将 GitHub 连接到您的 Pi-Plane 工作区，以同步项目工作项。",
+      "slack_installed": "在各个项目上启用 Slack，以便与特定频道同步。",
+      "slack_not_installed": "将 Slack 连接到您的 Pi-Plane 工作区，以同步项目工作项。",
+      "deleted_title": "删除成功！",
+      "deleted_message": "{title} 集成已成功删除。",
+      "delete_failed_message": "无法删除 {title} 集成。请重试。",
+      "logo_alt": "{title} 标志",
+      "loading": "加载中…",
+      "no_permission": "您无权执行此操作",
+      "uninstalling": "正在卸载…",
+      "uninstall": "卸载",
+      "installing": "正在安装…",
+      "install": "安装"
+    },
+    "attachments": {
+      "upload_progress": "上传进度"
+    },
+    "labels": {
+      "delete_confirmation": "确定要删除 <name/> 吗？这将从所有工作项以及按该标签筛选的任何视图中移除该标签。",
+      "edit_label": "编辑标签",
+      "delete_label": "删除标签",
+      "remove_from_group": "从组中移除"
+    },
+    "modules": {
+      "module_progress": "模块进度"
+    },
+    "navigation": {
+      "icon_only": "仅图标",
+      "icon_with_name": "图标加名称",
+      "dock_app_rail": "固定应用栏",
+      "undock_app_rail": "取消固定应用栏",
+      "minimum_value_is_one": "最小值为 1",
+      "show": "显示",
+      "clear_default": "清除默认值",
+      "hide_in_more_menu": "在“更多”菜单中隐藏",
+      "project_link_copied": "项目链接已复制到剪贴板。",
+      "copy_failed": "复制失败",
+      "copy_failed_message": "我们无法复制链接。请重试。",
+      "default_tab_updated": "默认标签页已成功更新。",
+      "default_tab_update_failed": "更新默认标签页失败。请稍后重试。",
+      "hide_tab_failed": "隐藏标签页失败。请稍后重试。",
+      "generic_error": "出错了。请稍后重试。"
+    },
+    "onboarding": {
+      "select_workspace_invitation": "选择工作区邀请"
+    },
+    "tour": {
+      "work_items_title": "用工作项做规划",
+      "work_items_description": "工作项是 Pi-Plane 的基本构建块。Pi-Plane 中的大多数概念都与工作项及其属性相关联。",
+      "cycles_title": "用周期推进",
+      "cycles_description": "周期可帮助您和团队更快地推进工作，类似于敏捷开发中常用的冲刺。",
+      "modules_title": "用模块拆分",
+      "modules_description": "模块将您的大目标拆分为项目或功能，帮助您更好地组织。",
+      "views_description": "创建自定义筛选器，只显示对您重要的工作项。只需点击几下即可保存并分享您的筛选器。",
+      "pages_title": "用页面记录文档",
+      "pages_description": "在开会或开始新的一天时，使用页面快速记录工作项。",
+      "welcome_title": "欢迎使用 Pi-Plane，{lastName}{firstName}",
+      "welcome_description": "很高兴您决定试用 Pi-Plane。现在您可以轻松管理项目。从创建项目开始吧。",
+      "take_tour": "参加产品导览",
+      "skip": "不用了，我自己探索",
+      "create_first_project": "创建您的第一个项目",
+      "sidebar_heading": "让我们开始吧！<br/>充分发挥 Pi-Plane 的价值。"
+    },
+    "ai": {
+      "ask_pi": "询问 Pi",
+      "tone_professional": "💼 专业",
+      "tone_casual": "😃 随意",
+      "third_party_consent": "使用此功能即表示您同意将消息共享给第三方服务。",
+      "pi_writing": "Pi 正在撰写",
+      "pi_generating_response": "Pi 正在生成回复"
+    },
+    "pages": {
+      "icon": "图标",
+      "color": "颜色",
+      "remove_text_color": "移除文字颜色",
+      "remove_background_color": "移除背景颜色",
+      "formatting_toolbar": "格式工具栏",
+      "copied_link": "链接已复制",
+      "remove_favorite": "取消收藏",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "{name} 机器人"
+    },
+    "project": {
+      "identifier": "标识符"
+    },
+    "projects": {
+      "toggle_feature": "切换项目功能",
+      "cover_upload_failed": "封面图片上传失败"
+    },
+    "notifications": {
+      "notification_options": "通知选项"
+    },
+    "stores": {
+      "generic_error": "发生错误",
+      "inbox_fetch_error": "获取 Intake 工作项时出错，请稍后重试。",
+      "page_make_public_error": "无法将页面与项目共享。请稍后重试。",
+      "page_make_private_error": "无法将页面设为仅自己可见。请稍后重试。",
+      "workflow_pending_approval": "该工作项有待处理的审批。",
+      "workflow_transition_not_allowed": "工作流不允许此状态转换。"
+    },
+    "validation": {
+      "name_max_length": "名称不得超过 50 个字符",
+      "name_special_chars": "名称不能包含 {chars} 等特殊字符",
+      "name_invalid_chars": "名称只能包含字母、空格、连字符和撇号",
+      "display_name_max_length": "显示名称不得超过 50 个字符",
+      "display_name_special_chars": "显示名称不能包含 {chars} 等特殊字符",
+      "display_name_invalid_chars": "显示名称只能包含字母、数字、句点、连字符和下划线",
+      "company_name_max_length": "公司名称不得超过 80 个字符",
+      "company_name_special_chars": "公司名称不能包含 {chars} 等特殊字符",
+      "company_name_invalid_chars": "公司名称只能包含字母、数字、空格、连字符和下划线",
+      "company_name_needs_alphanumeric": "公司名称必须至少包含一个字母或数字",
+      "workspace_name_required": "工作区名称为必填项",
+      "workspace_name_max_length": "工作区名称不得超过 80 个字符",
+      "workspace_name_special_chars": "工作区名称不能包含 {chars} 等特殊字符",
+      "workspace_name_invalid_chars": "工作区名称只能包含字母、数字、空格、连字符和下划线",
+      "workspace_name_needs_alphanumeric": "工作区名称必须至少包含一个字母或数字",
+      "slug_required": "Slug 为必填项",
+      "slug_max_length": "Slug 不得超过 48 个字符",
+      "slug_special_chars": "Slug 不能包含 {chars} 等特殊字符",
+      "slug_invalid_chars": "Slug 只能包含字母、数字、连字符和下划线"
+    },
+    "analytics": {
+      "state_name": "状态名称",
+      "estimate_point": "估算点数",
+      "completed_date": "完成日期",
+      "yesterday": "昨天",
+      "last_7_days": "过去 7 天",
+      "last_30_days": "过去 30 天",
+      "last_3_months": "过去 3 个月",
+      "duration": "时长"
+    },
+    "auth_labels": {
+      "one_time_code": "一次性验证码"
+    },
+    "state_groups": {
+      "canceled": "已取消"
+    },
+    "filters": {
+      "state_group": "状态组",
+      "subscriber": "订阅者"
+    }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "关闭"
+    },
+    "auth_header": {
+      "sign_in_header": "登录后即可点赞或评论",
+      "sign_in_sub_header": "参与推动您希望开发的功能。",
+      "sign_up_header": "查看、评论，探索更多",
+      "sign_up_sub_header": "注册或登录，即可使用 Pi-Plane 工作项和页面。",
+      "default_header": "评论工作项或对其做出回应",
+      "default_sub_header": "使用 Pi-Plane 为功能提出您的宝贵意见。"
+    },
+    "terms": {
+      "agree_sign_up": "创建账户即表示您同意我们的\n<terms>服务条款</terms>和<privacy>隐私政策</privacy>。",
+      "agree_sign_in": "登录即表示您同意我们的\n<terms>服务条款</terms>和<privacy>隐私政策</privacy>。"
+    },
+    "user_logged_in": {
+      "title": "太好了！只差最后一步。",
+      "description": "请在浏览器地址栏中输入你要查看的视图或页面的共享链接。",
+      "image_alt": "用户已登录"
+    },
+    "auth_one_time_code": {
+      "resend_in": "{seconds} 秒后重新发送"
+    },
+    "oauth": {
+      "sign_up_with": "使用 {provider} 注册",
+      "sign_in_with": "使用 {provider} 登录",
+      "continue_with": "使用 {provider} 继续"
+    },
+    "issues": {
+      "shared_project_load_failed": "无法加载此共享项目。请稍后重试。",
+      "cycle_tooltip": "周期：{name}",
+      "no_cycle": "无周期",
+      "due_date_tooltip": "截止日期：{date}",
+      "no_date": "无日期",
+      "labels_tooltip": "标签：{labels}",
+      "no_labels": "无标签",
+      "labels_count": "{count} 个标签",
+      "no_assignees": "无负责人",
+      "comment_post_failed": "无法发布评论。请重试。",
+      "add_comment_placeholder": "添加评论...",
+      "sign_in_to_comment": "登录后添加评论",
+      "empty": "空",
+      "no_upvotes": "暂无点赞",
+      "no_downvotes": "暂无点踩",
+      "voters_and_more": "{names} 等 {count} 人"
+    },
+    "error_page": {
+      "title": "糟糕！情况不太妙。",
+      "description": "Pi-Plane 崩溃了。不过请放心，我们的工程师已收到通知。如果您有更多详细信息，请在 <github/> 上反馈。"
+    },
+    "not_found_page": {
+      "title": "出错了",
+      "description": "请检查您在浏览器地址栏中输入的 URL，然后重试。"
+    },
+    "powered_by": {
+      "label": "由 <name>Pi-Plane</name> 提供支持"
+    },
+    "instance_failure": {
+      "image_alt": "Pi-Plane 实例故障",
+      "title": "无法获取实例详情。",
+      "description": "我们无法获取该实例的详情。",
+      "hint": "别担心，这可能只是网络连接问题。"
+    }
   }
 }

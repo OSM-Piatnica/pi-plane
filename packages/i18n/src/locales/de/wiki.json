@@ -22,7 +22,7 @@
     },
     "delete_modal": {
       "title": "Sammlung löschen",
-      "page_count": "Diese Sammlung enthält {pageCount} Seiten. Wählen Sie aus, was mit ihnen passieren soll.",
+      "page_count": "Diese Sammlung enthält {pageCount} {pageCount, plural, one {Seite} other {Seiten}}. Wählen Sie aus, was mit ihnen passieren soll.",
       "transfer_title": "Seiten verschieben und Sammlung löschen",
       "transfer_description": "Verschieben Sie vor dem Löschen alle Seiten in eine andere Sammlung. Seiten und ihre Berechtigungen bleiben erhalten.",
       "transfer_warning": "Verschobene Seiten übernehmen die Berechtigungen der ausgewählten Sammlung.",
@@ -43,7 +43,7 @@
     },
     "add_existing_page_modal": {
       "search_placeholder": "Nach Seiten suchen",
-      "success_message": "{count} Seiten zur Sammlung hinzugefügt.",
+      "success_message": "{count} {count, plural, one {Seite} other {Seiten}} zur Sammlung hinzugefügt.",
       "error_message": "Seiten konnten nicht verschoben werden. Bitte versuchen Sie es erneut.",
       "no_pages_found": "Keine Seiten gefunden, die Ihrer Suche entsprechen",
       "no_pages_available": "Keine Seiten zum Verschieben verfügbar",

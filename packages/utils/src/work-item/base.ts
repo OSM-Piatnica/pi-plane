@@ -9,7 +9,12 @@ import { isEmpty } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 // plane imports
 import type { TIssueFilterPriorityObject, TIssuePriorities } from "@plane/constants";
-import { ISSUE_DISPLAY_FILTERS_BY_PAGE, ISSUE_PRIORITY_FILTERS, STATE_GROUPS } from "@plane/constants";
+import {
+  DEFAULT_TIMELINE_COLOR_BY,
+  ISSUE_DISPLAY_FILTERS_BY_PAGE,
+  ISSUE_PRIORITY_FILTERS,
+  STATE_GROUPS,
+} from "@plane/constants";
 import type {
   IGanttBlock,
   IIssueDisplayFilterOptions,
@@ -286,6 +291,8 @@ export const getComputedDisplayFilters = (
     sub_group_by: filters?.sub_group_by || null,
     sub_issue: filters?.sub_issue || false,
     show_empty_groups: filters?.show_empty_groups || false,
+    // the default stays implicit so views saved without it still compare equal
+    ...(filters?.color_by && filters.color_by !== DEFAULT_TIMELINE_COLOR_BY ? { color_by: filters.color_by } : {}),
   };
 };
 

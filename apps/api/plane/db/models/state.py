@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -10,6 +11,7 @@ from django.db.models import Q
 # Module imports
 from .project import ProjectBaseModel
 from plane.db.mixins import SoftDeletionManager
+
 
 class StateGroup(models.TextChoices):
     BACKLOG = "backlog", "Backlog"
@@ -30,7 +32,7 @@ DEFAULT_STATES = [
         "default": True,
     },
     {
-        "name": "Todo",
+        "name": "To do",
         "color": "#60646C",
         "sequence": 25000,
         "group": StateGroup.UNSTARTED.value,

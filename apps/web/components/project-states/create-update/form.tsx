@@ -1,0 +1,155 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useEffect, useState } from "react";
+import { Field } from "@makeplane/propel/components/field";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@makeplane/propel/components/popover";
+import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
+import { Button } from "@makeplane/propel/components/button";
+import { ColorSwatchPicker } from "@plane/blocks/common";
+import { useTranslation } from "@plane/i18n";
+import { getStateName } from "@plane/utils";
+import type { IState } from "@plane/types";
+
+type TStateForm = {
+  data: Partial<IState>;
+  onSubmit: (formData: Partial<IState>) => Promise<{ status: string }>;
+  onCancel: () => void;
+  buttonDisabled: boolean;
+  buttonTitle: string;
+};
+
+function PopoverButton({ color }: { color?: string }) {
+  return (
+    <span
+      className="group inline-flex h-5 w-5 items-center rounded-sm text-14 font-medium transition-all"
+      style={{
+        backgroundColor: color ?? "black",
+      }}
+    />
+  );
+}
+
+export function StateForm(props: TStateForm) {
+  const { data, onSubmit, onCancel, buttonDisabled, buttonTitle } = props;
+  // plane hooks
+  const { t } = useTranslation();
+  // states
+  const [formData, setFromData] = useState<Partial<IState> | undefined>(undefined);
+  const [errors, setErrors] = useState<Partial<Record<keyof IState, string>> | undefined>(undefined);
+
+  useEffect(() => {
+    // the default states are stored with English names but shown translated, so the name field starts with what the user sees
+    // react-doctor-disable-next-line no-adjust-state-on-prop-change -- draft is seeded once when data arrives and then edited by the user; the effect depends on formData to seed only while empty
+    if (data && !formData) setFromData({ ...data, name: data.name ? getStateName(data.name, t) : data.name });
+  }, [data, formData, t]);
+
+  const handleFormData = <T extends keyof IState>(key: T, value: IState[T]) => {
+    setFromData((prev) => ({ ...prev, [key]: value }));
+    setErrors((prev) => ({ ...prev, [key]: "" }));
+  };
+
+  const formSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
+
+    const name = formData?.name || undefined;
+    if (!formData || !name) {
+      let currentErrors: Partial<Record<keyof IState, string>> = {};
+      if (!name) currentErrors = { ...currentErrors, name: t("name_is_required") };
+      setErrors(currentErrors);
+      return;
+    }
+
+    try {
+      await onSubmit(formData);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  return (
+    <div className="relative flex space-x-2 rounded-sm bg-surface-1 p-3">
+      {/* color */}
+      <div className="mt-2 h-full flex-shrink-0">
+        <Popover>
+          <PopoverTrigger
+            render={
+              <button
+                type="button"
+                className="flex items-center justify-center rounded-sm focus:outline-none"
+                aria-label={t("aria_labels.color_picker.open")}
+              >
+                <PopoverButton color={formData?.color} />
+              </button>
+            }
+          />
+          <PopoverContent variant="rich" side="bottom" align="start">
+            <ColorSwatchPicker value={formData?.color} onChange={(hex) => handleFormData("color", hex)} />
+          </PopoverContent>
+        </Popover>
+      </div>
+
+      <div className="w-full space-y-2">
+        {/* title */}
+        <Field name="name" invalid={(errors && Boolean(errors.name)) || false}>
+          <InputGroup size="2xl">
+            <Input
+              size="2xl"
+              id="name"
+              type="text"
+              name="name"
+              placeholder={t("name")}
+              value={formData?.name}
+              onChange={(e) => handleFormData("name", e.target.value)}
+              maxLength={100}
+              // oxlint-disable-next-line jsx-a11y/no-autofocus -- existing behaviour; a11y handled separately
+              autoFocus
+            />
+          </InputGroup>
+        </Field>
+
+        {/* description */}
+        <Field name="description" invalid={(errors && Boolean(errors.description)) || false}>
+          <TextAreaGroup resize="none">
+            <TextArea
+              size="lg"
+              surface="field"
+              autoResize
+              maxRows={8}
+              id="description"
+              name="description"
+              placeholder={t("project_components.states.description_placeholder")}
+              value={formData?.description ?? ""}
+              onChange={(e) => handleFormData("description", e.target.value)}
+            />
+          </TextAreaGroup>
+        </Field>
+
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="primary"
+            size="md"
+            stretch="auto"
+            label={buttonTitle}
+            onClick={formSubmit}
+            disabled={buttonDisabled}
+          />
+          <Button
+            type="button"
+            variant="secondary"
+            size="md"
+            stretch="auto"
+            label={t("cancel")}
+            disabled={buttonDisabled}
+            onClick={onCancel}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

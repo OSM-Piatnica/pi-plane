@@ -19,7 +19,7 @@
     "start_date": "Startdatum",
     "end_date": "Enddatum",
     "in_your_timezone": "In Ihrer Zeitzone",
-    "transfer_work_items": "Übertragen von {count} Arbeitselementen",
+    "transfer_work_items": "{count} Arbeitselemente übertragen",
     "transfer": {
       "no_cycles_available": "Keine anderen Zyklen verfügbar, um Arbeitselemente zu übertragen."
     },
@@ -30,7 +30,7 @@
       "progress": "Fortschritt",
       "chart": "Burndown-Diagramm",
       "priority_issue": "Hochpriorisierte Elemente",
-      "assignees": "Zuweisungen",
+      "assignees": "Zugewiesene",
       "issue_burndown": "Burndown für Arbeitselemente",
       "ideal": "Ideal",
       "current": "Aktuell",
@@ -190,7 +190,7 @@
   "project_issues": {
     "empty_state": {
       "no_issues": {
-        "title": "Erstellen und zuweisen eines Arbeitselements",
+        "title": "Arbeitselement erstellen und zuweisen",
         "description": "Arbeitselemente sind Aufgaben, die Sie sich selbst oder dem Team zuweisen. Verfolgen Sie deren Fortschritt.",
         "primary_button": {
           "text": "Erstes Element erstellen",
@@ -271,8 +271,8 @@
   "project_page": {
     "empty_state": {
       "general": {
-        "title": "Notieren Sie Ideen, Dokumente oder Wissensdatenbanken. Nutzen Sie AI Galileo.",
-        "description": "Seiten sind Orte für Ihre Gedanken. Schreiben, formatieren, fügen Sie Arbeitselemente ein und verwenden Sie Komponenten.",
+        "title": "Notieren Sie Ideen, Dokumente oder Wissensdatenbanken. Nutzen Sie Galileo, den KI-Assistenten von Pi-Plane.",
+        "description": "Seiten sind Orte für Ihre Gedanken. Schreiben Sie, formatieren Sie, fügen Sie Arbeitselemente ein und verwenden Sie Komponenten.",
         "primary_button": {
           "text": "Erste Seite erstellen"
         }
@@ -300,8 +300,8 @@
   "disabled_project": {
     "empty_state": {
       "inbox": {
-        "title": "Eingang ist nicht aktiviert",
-        "description": "Aktivieren Sie den Eingang in den Projekteinstellungen, um Anfragen zu verwalten.",
+        "title": "Intake ist nicht aktiviert",
+        "description": "Aktivieren Sie Intake in den Projekteinstellungen, um Anfragen zu verwalten.",
         "primary_button": {
           "text": "Funktionen verwalten"
         }
@@ -416,7 +416,7 @@
         },
         "import_failed": {
           "title": "Import fehlgeschlagen",
-          "message": "Etwas ist schief gelaufen."
+          "message": "Etwas ist schiefgelaufen."
         }
       }
     }
@@ -445,14 +445,15 @@
       "removing_from_favorites": "Projekt wird aus Favoriten entfernt..."
     },
     "confirm_member_remove": {
-      "leave_description": "Möchten Sie das Projekt {name} wirklich verlassen? Sie können wieder beitreten, wenn Sie erneut eingeladen werden oder das Projekt öffentlich ist.",
+      "leave_description": "Möchten Sie das Projekt {name} wirklich verlassen? Sie können wieder beitreten, wenn Sie erneut eingeladen werden oder das Projekt für den Arbeitsbereich offen ist.",
       "leave_title": "Projekt verlassen?",
       "remove_description": "Möchten Sie das Mitglied {name} wirklich entfernen? Es hat dann keinen Zugriff mehr auf dieses Projekt. Diese Aktion kann nicht rückgängig gemacht werden.",
       "remove_title": "{name} entfernen?"
     },
     "control_section": {
       "archive_description": "Beim Archivieren wird das Projekt aus der Seitennavigation entfernt, Sie können aber weiterhin über die Projektseite darauf zugreifen. Sie können das Projekt jederzeit wiederherstellen oder löschen.",
-      "delete_description": "Beim Löschen eines Projekts werden alle Daten und Ressourcen darin dauerhaft entfernt und können nicht wiederhergestellt werden."
+      "delete_description": "Beim Löschen eines Projekts werden alle Daten und Ressourcen darin dauerhaft entfernt und können nicht wiederhergestellt werden.",
+      "duplicate_description": "Erstellen Sie ein neues Projekt mit den Einstellungen, Status, Labels und der übrigen Konfiguration dieses Projekts. Arbeitselemente werden nur kopiert, wenn Sie es wählen."
     },
     "delete_modal": {
       "confirm_placeholder": "„{phrase}“ eingeben",
@@ -491,6 +492,7 @@
       "confirm_phrase_error": "Bitte bestätigen Sie das Verlassen des Projekts, indem Sie „{phrase}“ eingeben.",
       "description": "Möchten Sie das Projekt „{name}“ wirklich verlassen? Alle Arbeitselemente, die Ihnen zugeordnet sind, werden unzugänglich.",
       "fill_all_fields": "Bitte füllen Sie alle Felder aus.",
+      "only_admin_error": "Sie sind der einzige Administrator dieses Projekts und können es daher nicht verlassen. Machen Sie zuerst ein anderes Mitglied zum Administrator oder löschen Sie das Projekt.",
       "project_name_error": "Bitte geben Sie den Projektnamen wie in der Beschreibung angezeigt ein.",
       "project_name_placeholder": "Projektnamen eingeben",
       "project_name_required": "Projektname ist erforderlich",
@@ -530,21 +532,34 @@
       "timezone_error": "Zeitzone konnte nicht aktualisiert werden",
       "timezone_updated": "Zeitzone erfolgreich aktualisiert",
       "update_error": "Beim Aktualisieren Ihres Profils ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
-      "updated": "Profil erfolgreich aktualisiert."
+      "updated": "Profil erfolgreich aktualisiert.",
+      "weekend_days": "Wochenendtage",
+      "weekend_days_description": "Legt fest, welche Tage als arbeitsfreie Zeit gelten.",
+      "weekend_days_updated": "Wochenendtage erfolgreich aktualisiert",
+      "weekend_days_use_default": "Standard des Arbeitsbereichs verwenden"
     },
     "publish_modal": {
       "allow_comments": "Kommentare zulassen",
       "allow_reactions": "Reaktionen zulassen",
       "allow_voting": "Abstimmung zulassen",
-      "anyone_with_link": "Jeder mit dem Link hat Zugriff",
-      "link_copied": "Link zur veröffentlichten Seite erfolgreich kopiert.",
-      "live_on_web": "Dieses Projekt ist jetzt im Web live",
-      "publishing": "Wird veröffentlicht",
-      "select_layout_error": "Bitte wählen Sie mindestens ein Ansichtslayout aus, um das Projekt zu veröffentlichen.",
-      "settings_updated": "Veröffentlichungseinstellungen erfolgreich aktualisiert!",
-      "unpublish": "Veröffentlichung aufheben",
-      "unpublish_error": "Beim Aufheben der Veröffentlichung des Projekts ist etwas schiefgelaufen.",
-      "unpublishing": "Veröffentlichung wird aufgehoben",
+      "anyone_with_link": "Jeder im Internet mit dem Link kann dieses Projekt ansehen, ohne Konto",
+      "confirm": {
+        "title": "Dieses Projekt im Web teilen?",
+        "description": "Jeder im Internet, der den Link hat, kann dieses Projekt ansehen, auch Personen außerhalb Ihres Arbeitsbereichs und nicht angemeldete Personen.",
+        "can_see": "Diese Personen können sehen:",
+        "item_work_items": "alle Arbeitselemente des Projekts mit Beschreibung, Status, Priorität, Terminen und Labels",
+        "item_members": "die Namen und Avatare der Projektmitglieder",
+        "item_activity": "Kommentare, Reaktionen und Stimmen mit den Namen der Personen dahinter, wenn Sie sie erlauben",
+        "note": "Betrachter können nichts bearbeiten. Der Link funktioniert, bis Sie die Freigabe beenden. Teilen Sie deshalb nur ein Projekt ohne vertrauliche Inhalte."
+      },
+      "link_copied": "Web-Link kopiert.",
+      "live_on_web": "Dieses Projekt ist im Web geteilt",
+      "publishing": "Wird aktiviert…",
+      "select_layout_error": "Bitte wählen Sie mindestens ein Ansichtslayout, um das Projekt im Web zu teilen.",
+      "settings_updated": "Einstellungen der Web-Freigabe aktualisiert.",
+      "unpublish": "Freigabe beenden",
+      "unpublish_error": "Beim Deaktivieren der Web-Freigabe ist etwas schiefgelaufen.",
+      "unpublishing": "Wird deaktiviert…",
       "update_settings": "Einstellungen aktualisieren"
     },
     "rich_filters": {
@@ -554,6 +569,14 @@
       "filter_type_not_supported": "Filtertyp wird nicht unterstützt",
       "invalid_filter": "Ungültiger Filter",
       "invalid_tooltip": "Diese Filterbedingung ist nicht mehr gültig. Die Eigenschaft wurde möglicherweise gelöscht oder Ihr Zugriff darauf hat sich geändert.",
+      "operators": {
+        "exact": "ist",
+        "in": "ist eines von",
+        "range": "zwischen",
+        "not_exact": "ist nicht",
+        "not_in": "ist keines von",
+        "not_range": "nicht zwischen"
+      },
       "remove_filter": "Filter entfernen",
       "save_view": "Ansicht speichern",
       "update_view": "Ansicht aktualisieren"
@@ -623,6 +646,71 @@
       },
       "key_regenerated": "Neuer Schlüssel erfolgreich generiert.",
       "view_secret_key": "Geheimen Schlüssel anzeigen"
+    },
+    "request_access_modal": {
+      "title": "Zugang anfragen",
+      "description": "Bitten Sie die Admins dieses Projekts um Zugang.",
+      "description_named": "Bitten Sie die Admins von {name} um Zugang.",
+      "message_placeholder": "Nachricht an die Admins hinzufügen (optional)",
+      "send": "Anfrage senden",
+      "sending": "Wird gesendet...",
+      "success_title": "Anfrage gesendet",
+      "success_message": "Die Projektadmins werden sie prüfen.",
+      "request_button": "Zugang anfragen",
+      "pending_badge": "Angefragt"
+    },
+    "access_requests": {
+      "title": "Beitrittsanfragen ({count})",
+      "approve": "Genehmigen",
+      "reject": "Ablehnen",
+      "already_decided": "Diese Anfrage wurde bereits von einem anderen Admin entschieden.",
+      "requester_left": "Diese Person ist kein Mitglied des Arbeitsbereichs mehr."
+    },
+    "duplicate_modal": {
+      "already_running": "In diesem Arbeitsbereich läuft bereits eine Kopie von Arbeitselementen. Versuchen Sie es erneut, wenn sie fertig ist.",
+      "always_copied": "Einstellungen, Status und Arbeitselementtypen werden immer kopiert.",
+      "banner": {
+        "done": "Arbeitselemente kopiert: {count}.",
+        "failed": "Das Kopieren der Arbeitselemente ist fehlgeschlagen. Bereits Kopiertes bleibt erhalten; wiederholen Sie den Vorgang, um den Rest hinzuzufügen.",
+        "progress": "Arbeitselemente werden kopiert: {copied} von {total}",
+        "queued": "Die Arbeitselemente warten auf das Kopieren...",
+        "reload": "Neu laden",
+        "retry": "Erneut versuchen",
+        "retry_failed": "Das Kopieren konnte nicht wiederholt werden. Bitte versuchen Sie es erneut."
+      },
+      "clear_all": "Alle abwählen",
+      "description": "Erstellt ein neues Projekt mit denselben Einstellungen. Seiten und Webhooks werden nicht kopiert; Arbeitselemente nur, wenn Sie es unten wählen.",
+      "error": "Das Projekt konnte nicht dupliziert werden. Bitte versuchen Sie es erneut.",
+      "identifier_placeholder": "Wird erzeugt, wenn leer",
+      "properties": {
+        "assignees": "Zugewiesene",
+        "custom_properties": "Benutzerdefinierte Eigenschaften",
+        "cycles": "Zyklen",
+        "dates": "Termine",
+        "description_images": "Bilder in Beschreibungen",
+        "labels": "Labels",
+        "links": "Links",
+        "modules": "Module",
+        "parents": "Verknüpfungen von Unterelementen",
+        "relations": "Beziehungen"
+      },
+      "properties_description": "Wählen Sie, was mit den Arbeitselementen übernommen wird. Entwürfe, archivierte und Intake-Elemente bleiben außen vor; Kommentare, Anhänge, Aktivitäten und Zeiteinträge werden nie kopiert.",
+      "properties_heading": "Eigenschaften der Arbeitselemente",
+      "properties_note": "Zyklen und Module werden nur übernommen, wenn sie oben kopiert werden.",
+      "property_groups": {
+        "content": "Inhalt",
+        "hierarchy": "Hierarchie und Beziehungen",
+        "organization": "Organisation",
+        "people": "Personen"
+      },
+      "select_all": "Alle auswählen",
+      "submit": "Projekt duplizieren",
+      "submitting": "Projekt wird dupliziert...",
+      "success": "Projekt erfolgreich dupliziert.",
+      "title": "Projekt duplizieren",
+      "too_large": "Dieses Projekt ist zu groß zum Kopieren. Deaktivieren Sie einige Optionen und versuchen Sie es erneut.",
+      "what_to_copy": "Zusätzlich kopieren",
+      "work_items_too_large": "Dieses Projekt hat mehr Arbeitselemente, als kopiert werden können (bis zu {count})."
     }
   }
 }

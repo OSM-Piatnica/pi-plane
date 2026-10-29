@@ -1,0 +1,104 @@
+# Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+name: Helm chart
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - "preview"
+    types:
+      - "opened"
+      - "synchronize"
+      - "reopened"
+      - "ready_for_review"
+      - "edited"
+    paths:
+      - "deployments/helm/**"
+      - ".github/workflows/helm.yaml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # a skipped `edited` run (title/description edit) must not cancel the real run of the latest push
+  cancel-in-progress: ${{ github.event.action != 'edited' || github.event.changes.base != null }}
+
+permissions:
+  contents: read
+
+env:
+  CHART: deployments/helm/pi-plane
+  HELM_VERSION: v4.2.3
+  KUBECONFORM_VERSION: v0.6.7
+  KUBECONFORM_SHA256: 95f14e87aa28c09d5941f11bd024c1d02fdc0303ccaa23f61cef67bc92619d73
+  KUBERNETES_VERSION: 1.30.0
+
+jobs:
+  chart:
+    if: (github.event.action != 'edited' || github.event.changes.base != null)
+    name: lint + render + schema
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: ${{ env.HELM_VERSION }}
+
+      - name: Install kubeconform
+        run: |
+          curl -fsSL "https://github.com/yannh/kubeconform/releases/download/${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz" -o kubeconform.tar.gz
+          echo "${KUBECONFORM_SHA256}  kubeconform.tar.gz" | sha256sum --check
+          tar -xzf kubeconform.tar.gz kubeconform
+          sudo install kubeconform /usr/local/bin/kubeconform
+
+      - name: Lint and render with every values file under ci/
+        run: |
+          set -euo pipefail
+          for values in "$CHART"/ci/*.yaml "$CHART"/examples/*.yaml; do
+            echo "::group::$values"
+            helm lint "$CHART" --strict -f "$values"
+            # Gateway API CRDs have no schema in the default catalog, so HTTPRoute is skipped, not failed
+            helm template pi-plane "$CHART" --namespace plane -f "$values" \
+              | kubeconform -strict -summary -kubernetes-version "$KUBERNETES_VERSION" -ignore-missing-schemas
+            echo "::endgroup::"
+          done
+
+      - name: Integers render as plain numbers
+        run: |
+          set -euo pipefail
+          # A float-typed value would render as 5.24288e+06, which the API cannot parse
+          rendered=$(helm template pi-plane "$CHART" --set publicUrl=https://plane.example.com)
+          for key in FILE_SIZE_LIMIT GUNICORN_WORKERS; do
+            echo "$rendered" | grep -E "^\s+$key: \"[0-9]+\"$"
+          done
+
+      - name: Invalid values are rejected
+        run: |
+          set -uo pipefail
+          fail=0
+          while IFS= read -r setting; do
+            if helm template pi-plane "$CHART" --set publicUrl=https://plane.example.com --set "$setting" >/dev/null 2>&1; then
+              echo "::error::accepted invalid value: $setting"
+              fail=1
+            fi
+          done <<'CASES'
+          app.fileSizeLimit=0
+          app.authenticationRateLimit=lots
+          web.replicas=-1
+          gateway.enabled=true
+          postgresql.storage.size=big
+          objectStorage.bucket=Not_A_Bucket
+          CASES
+          for url in plane.example.com https://plane.example.com/ ""; do
+            if helm template pi-plane "$CHART" --set "publicUrl=$url" >/dev/null 2>&1; then
+              echo "::error::accepted invalid publicUrl: '$url'"
+              fail=1
+            fi
+          done
+          exit "$fail"
+
+      - name: Package
+        run: helm package "$CHART" --destination "$RUNNER_TEMP"

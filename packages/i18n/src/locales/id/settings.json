@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Kode unik",
+            "label": "Kode sekali pakai",
             "placeholder": "123456",
             "helper_text": "Kode verifikasi dikirim ke email baru Anda.",
             "errors": {
-              "required": "Kode unik wajib diisi",
+              "required": "Kode sekali pakai wajib diisi",
               "invalid": "Kode verifikasi tidak valid. Coba lagi."
             }
           }
@@ -115,7 +115,7 @@
     "empty_state": {
       "activity": {
         "title": "Belum ada aktivitas",
-        "description": "Mulai dengan membuat item kerja baru! Tambahkan detail dan properti. Jelajahi lebih lanjut di Plane untuk melihat aktivitas Anda."
+        "description": "Mulai dengan membuat item kerja baru! Tambahkan detail dan properti. Jelajahi lebih lanjut di Pi-Plane untuk melihat aktivitas Anda."
       },
       "assigned": {
         "title": "Tidak ada item kerja yang ditugaskan kepada Anda",
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Persentase penyelesaian",
+    "first_day_project_default": "Default proyek",
     "first_day_updated": "Hari pertama dalam seminggu berhasil diperbarui",
     "try_again_later": "Silakan coba lagi nanti.",
     "update_failed": "Pembaruan gagal",

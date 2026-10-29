@@ -65,6 +65,45 @@
           }
         }
       },
+      "groups": {
+        "title": "Gruplar",
+        "description": "Kişileri gruplar halinde düzenleyin. Gruplar iç içe olabilir, bir kişi birden çok gruba ait olabilir ve iş öğeleri bir gruba atanabilir.",
+        "create_group": "Grup oluştur",
+        "create": "Oluştur",
+        "edit_group": "Grubu düzenle",
+        "edit": "Düzenle",
+        "add_subgroup": "Alt grup ekle",
+        "members": "Üyeler",
+        "name": "Ad",
+        "description_label": "Açıklama",
+        "parent": "Üst grup",
+        "top_level": "Üst grup yok (en üst düzey)",
+        "no_groups": "Henüz grup yok.",
+        "member_count": "{count, plural, one {# üye} other {# üye}}",
+        "managed_by": "{provider} tarafından yönetiliyor",
+        "sources": {
+          "local": "Yerel",
+          "entra": "Microsoft Entra",
+          "google": "Google",
+          "oidc": "SSO"
+        },
+        "members_of": "{name} üyeleri",
+        "managed_externally_hint": "Bu grup kimlik sağlayıcınız tarafından yönetiliyor. Üyeleri sağlayıcıyı izler ve burada değiştirilemez.",
+        "select_member": "Bir üye seçin",
+        "add_member": "Ekle",
+        "role": "Rol",
+        "role_member": "Üye",
+        "role_admin": "Grup yöneticisi",
+        "no_members": "Bu grubun henüz üyesi yok.",
+        "group_created": "Grup oluşturuldu.",
+        "group_updated": "Grup güncellendi.",
+        "group_deleted": "Grup silindi.",
+        "delete_title": "{name} silinsin mi?",
+        "delete_content": "Bu gruptaki kişiler çalışma alanında kalır. Gruba atanmış iş öğeleri bu atamayı kaybeder. Bu işlem geri alınamaz.",
+        "group_assignees": "Atanan gruplar",
+        "add_group_assignee": "Grup ekle",
+        "no_group_assignees": "Atanmış grup yok"
+      },
       "billing_and_plans": {
         "heading": "Faturalandırma ve Planlar",
         "description": "Planınızı seçin, abonelikleri yönetin ve ihtiyaçlarınız arttıkça kolayca yükseltin.",
@@ -94,6 +133,50 @@
               "title": "Dışa aktarma başarısız",
               "message": "Dışa aktarma başarısız oldu. Lütfen tekrar deneyin."
             }
+          }
+        },
+        "columns": {
+          "heading": "Sütunlar",
+          "description": "Dosyanın hangi sütunları içereceğini seçin. Tanımlayıcı ve ad her zaman dahildir; aksi halde dosya yeniden içe aktarılamaz.",
+          "select_all": "Tümünü seç",
+          "clear_all": "Tümünü temizle",
+          "groups": {
+            "details": "Ayrıntılar",
+            "people": "Kişiler",
+            "dates": "Tarihler",
+            "organization": "Organizasyon",
+            "relations": "Hiyerarşi ve ilişkiler",
+            "other": "Diğer"
+          },
+          "fields": {
+            "project_name": "Proje adı",
+            "project_identifier": "Proje tanımlayıcısı",
+            "sequence_id": "Sıra numarası",
+            "issue_type": "İş öğesi türü",
+            "state_name": "Durum",
+            "priority": "Öncelik",
+            "description_html": "Açıklama",
+            "estimate": "Tahmin",
+            "is_draft": "Taslak işareti",
+            "assignees": "Atananlar",
+            "subscribers": "Aboneler",
+            "created_by_name": "Oluşturan",
+            "start_date": "Başlangıç tarihi",
+            "finish_date": "Finish date",
+            "target_date": "Bitiş tarihi",
+            "duration": "Süre",
+            "completed_at": "Tamamlanma zamanı",
+            "created_at": "Oluşturulma zamanı",
+            "updated_at": "Güncellenme zamanı",
+            "archived_at": "Arşivlenme zamanı",
+            "labels": "Etiketler",
+            "cycles": "Döngüler",
+            "modules": "Modüller",
+            "parent": "Üst öğe",
+            "relations": "İlişkiler",
+            "links": "Bağlantılar",
+            "custom_properties": "Özel özellikler",
+            "comments": "Yorumlar"
           }
         }
       },
@@ -161,7 +244,7 @@
         "generating": "Oluşturuluyor",
         "delete": {
           "title": "API Token'ını sil",
-          "description": "Bu token'ı kullanan uygulamalar artık Plane verilerine erişemeyecek. Bu işlem geri alınamaz.",
+          "description": "Bu token'ı kullanan uygulamalar artık Pi-Plane verilerine erişemeyecek. Bu işlem geri alınamaz.",
           "success": {
             "title": "Başarılı!",
             "message": "API token'ı başarıyla silindi"
@@ -176,7 +259,7 @@
         "title": "Entegrasyonlar",
         "heading": "Entegrasyonlar",
         "description": "Tüm iş akışı ekosisteminizde işinizi senkronize etmek için popüler araçlar ve hizmetlerle bağlantı kurun.",
-        "page_title": "Plane verilerinizi mevcut uygulamalarda veya kendi uygulamalarınızda kullanın.",
+        "page_title": "Pi-Plane verilerinizi mevcut uygulamalarda veya kendi uygulamalarınızda kullanın.",
         "page_description": "Bu çalışma alanı veya sizin tarafınızdan kullanılan tüm entegrasyonları görüntüleyin."
       },
       "imports": {
@@ -258,7 +341,7 @@
       "project_states": {
         "title": "Proje durumları",
         "heading": "Tüm projeler için ilerleme özetini görün.",
-        "description": "Proje Durumları, herhangi bir proje özelliğine göre tüm projelerinizin ilerlemesini takip etmek için Plane'e özgü bir özelliktir.",
+        "description": "Proje Durumları, herhangi bir proje özelliğine göre tüm projelerinizin ilerlemesini takip etmek için Pi-Plane'e özgü bir özelliktir.",
         "go_to_settings": "Ayarlara git"
       },
       "projects": {
@@ -310,7 +393,7 @@
         },
         "app_created": {
           "title": "Uygulama başarıyla oluşturuldu",
-          "description": "Uygulamayı bir Plane çalışma alanına yüklemek için kimlik bilgilerini kullanın"
+          "description": "Uygulamayı bir Pi-Plane çalışma alanına yüklemek için kimlik bilgilerini kullanın"
         },
         "installed_apps": "Yüklü uygulamalar",
         "all_apps": "Tüm uygulamalar",
@@ -351,7 +434,7 @@
         },
         "redirect_uris": {
           "label": "Yönlendirme URI'leri (boşluk ile ayrılmış)",
-          "description": "Kullanıcılar Plane ile kimlik doğrulaması yaptıktan sonra bu yola yönlendirilecektir.",
+          "description": "Kullanıcılar Pi-Plane ile kimlik doğrulaması yaptıktan sonra bu yola yönlendirilecektir.",
           "placeholder": "https://example.com https://example.com/"
         },
         "app_available_description": "Kullanmaya başlamak için bir Pleyn workspeysi bağlayın",
@@ -450,7 +533,7 @@
         "upload_and_save": "Yükle ve kaydet",
         "app_consent_no_access_title": "Yükleme talebi",
         "app_consent_no_access_description": "Bu uygulama yalnızca bir workspace yöneticisi tarafından kurulduktan sonra yüklenebilir. Devam etmek için workspace yöneticinizle iletişime geçin.",
-        "app_consent_unapproved_title": "Bu uygulama henüz Plane tarafından incelenmedi veya onaylanmadı.",
+        "app_consent_unapproved_title": "Bu uygulama henüz Pi-Plane tarafından incelenmedi veya onaylanmadı.",
         "app_consent_unapproved_description": "Bu uygulamayı çalışma alanınıza bağlamadan önce güvendiğinizden emin olun.",
         "go_to_app": "Uygulamaya git",
         "enable_app_mentions": "Uygulama bahsini etkinleştir",
@@ -489,7 +572,7 @@
     "empty_state": {
       "api_tokens": {
         "title": "API token'ı oluşturulmadı",
-        "description": "Plane API'lerini harici sistemlere entegre etmek için bir token oluşturun."
+        "description": "Pi-Plane API'lerini harici sistemlere entegre etmek için bir token oluşturun."
       },
       "webhooks": {
         "title": "Webhook eklenmedi",

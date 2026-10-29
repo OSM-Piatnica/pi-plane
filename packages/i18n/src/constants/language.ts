@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -16,19 +17,23 @@ export const SUPPORTED_LANGUAGES: ILanguageOption[] = [
   { label: "简体中文", value: "zh-CN" },
   { label: "繁體中文", value: "zh-TW" },
   { label: "Русский", value: "ru" },
-  { label: "Italian", value: "it" },
+  { label: "Italiano", value: "it" },
   { label: "Čeština", value: "cs" },
   { label: "Slovenčina", value: "sk" },
   { label: "Deutsch", value: "de" },
   { label: "Українська", value: "ua" },
   { label: "Polski", value: "pl" },
+  { label: "Podlaski", value: "pl-x-podlaski" },
   { label: "한국어", value: "ko" },
-  { label: "Português Brasil", value: "pt-BR" },
-  { label: "Indonesian", value: "id" },
+  { label: "Português (Brasil)", value: "pt-BR" },
+  { label: "Português (Portugal)", value: "pt-PT" },
+  { label: "Bahasa Indonesia", value: "id" },
   { label: "Română", value: "ro" },
-  { label: "Tiếng việt", value: "vi-VN" },
+  { label: "Tiếng Việt", value: "vi-VN" },
   { label: "Türkçe", value: "tr-TR" },
   { label: "ქართული", value: "ka-ge" },
+  { label: "Nederlands", value: "nl" },
+  { label: "Български", value: "bg" },
 ];
 
 export const LANGUAGE_STORAGE_KEY = "userLanguage";

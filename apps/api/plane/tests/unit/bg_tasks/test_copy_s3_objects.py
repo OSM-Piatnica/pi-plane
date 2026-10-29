@@ -2,10 +2,13 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
+import uuid
+
 import pytest
 from plane.db.models import Project, ProjectMember, Issue, FileAsset
 from unittest.mock import patch, MagicMock
 from plane.bgtasks.copy_s3_object import (
+    extract_asset_ids,
     copy_s3_objects_of_description_and_assets,
     copy_assets,
 )
@@ -49,7 +52,7 @@ class TestCopyS3Objects:
         )
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.copy_s3_object.S3Storage")
+    @patch("plane.bgtasks.copy_s3_object.get_storage")
     def test_copy_s3_objects_of_description_and_assets(
         self, mock_s3_storage, create_user, workspace, project, issue, file_asset
     ):
@@ -78,6 +81,7 @@ class TestCopyS3Objects:
             mock_sync.return_value = {
                 "description": "test description",
                 "description_binary": base64.b64encode(b"test binary").decode(),
+                "description_json": {"type": "doc", "content": []},
             }
 
             # Call the actual function (not .delay())
@@ -97,7 +101,7 @@ class TestCopyS3Objects:
         assert new_assets.count() == 4  # 2 original + 2 copied
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.copy_s3_object.S3Storage")
+    @patch("plane.bgtasks.copy_s3_object.get_storage")
     def test_copy_assets_successful(self, mock_s3_storage, workspace, project, issue, file_asset):
         """Test successful copying of assets"""
         # Arrange
@@ -131,7 +135,7 @@ class TestCopyS3Objects:
         assert new_asset.is_uploaded is True
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.copy_s3_object.S3Storage")
+    @patch("plane.bgtasks.copy_s3_object.get_storage")
     def test_copy_assets_empty_asset_ids(self, mock_s3_storage, workspace, project, issue):
         """Test copying with empty asset_ids list"""
         # Arrange
@@ -152,7 +156,7 @@ class TestCopyS3Objects:
         mock_storage_instance.copy_object.assert_not_called()
 
     @pytest.mark.django_db
-    @patch("plane.bgtasks.copy_s3_object.S3Storage")
+    @patch("plane.bgtasks.copy_s3_object.get_storage")
     def test_copy_assets_nonexistent_asset(self, mock_s3_storage, workspace, project, issue):
         """Test copying with non-existent asset ID"""
         # Arrange
@@ -172,3 +176,17 @@ class TestCopyS3Objects:
         # Assert
         assert result == []
         mock_storage_instance.copy_object.assert_not_called()
+
+
+@pytest.mark.unit
+def test_extract_asset_ids_skips_external_urls():
+    """External image srcs used to reach ``FileAsset.objects.filter(id__in=...)`` and
+    raise "is not a valid UUID", aborting the whole asset copy on page duplicate."""
+    asset_id = str(uuid.uuid4())
+    html = (
+        f'<image-component src="{asset_id}"></image-component>'
+        '<image-component src="https://media.docs.plane.so/seed_assets/31.png"></image-component>'
+        "<image-component></image-component>"
+    )
+
+    assert extract_asset_ids(html, "image-component") == [asset_id]

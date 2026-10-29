@@ -4,36 +4,41 @@
  * See the LICENSE file for details.
  */
 
-import type { ReactNode } from "react";
-import { CustomSelect } from "@plane/ui";
+import { Select } from "@plane/blocks/select";
+
+export type TProjectTemplateSelectOption<T extends string | number> = { value: T; label: string };
 
 type TProps<T extends string | number> = {
   value: T;
   onChange: (value: T) => void;
-  label: ReactNode;
-  children: ReactNode;
+  options: TProjectTemplateSelectOption<T>[];
   disabled?: boolean;
 };
 
 export function ProjectTemplateSelectField<T extends string | number>({
   value,
   onChange,
-  label,
-  children,
+  options,
   disabled = false,
 }: TProps<T>) {
+  const selected = options.find((option) => option.value === value) ?? null;
   return (
-    <CustomSelect
-      value={value}
-      onChange={onChange}
+    <Select<TProjectTemplateSelectOption<T>>
+      getValues={() => options}
+      value={selected}
+      onChange={(next) => {
+        const match = options.find((option) => String(option.value) === next);
+        if (match) onChange(match.value);
+      }}
+      getOptionValue={(option) => String(option.value)}
+      getOptionLabel={(option) => option.label}
       disabled={disabled}
-      input
-      className="w-full"
-      buttonClassName="h-8 w-full min-h-8 bg-surface-1 text-13 text-primary"
-      label={<span className="block min-w-0 flex-1 truncate text-left text-primary">{label}</span>}
-      maxHeight="md"
+      showSearch={false}
+      pinSelected={false}
     >
-      {children}
-    </CustomSelect>
+      <Select.Trigger variant="select-lg" className="w-full">
+        <Select.Value />
+      </Select.Trigger>
+    </Select>
   );
 }

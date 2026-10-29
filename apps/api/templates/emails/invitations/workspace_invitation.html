@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+{% load email_i18n %}
+{% load email_assets %}
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{{first_name}} invited you to {{workspace_name}} on Plane</title>
+    <title>{% etr "workspace_invitation.heading" workspace=workspace_name %}</title>
 
     <style>
       /* Basic resets for email clients */
@@ -48,7 +50,11 @@
     style="
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        &quot;Segoe UI&quot;,
         sans-serif;
       font-weight: 400;
       color: #474747;
@@ -73,37 +79,21 @@
         visibility: hidden;
       "
     >
-      {{first_name}} has invited you to join {{workspace_name}} on Plane.
+      {% etr "workspace_invitation.preheader" inviter=first_name workspace=workspace_name %}
     </span>
 
     <!-- Outer Wrapper -->
-    <center
-      class="email-body"
-      style="width: 100%; background-color: #f9f9f9; padding: 40px 0;"
-    >
+    <center class="email-body" style="width: 100%; background-color: #f9f9f9; padding: 40px 0">
       <!-- HEADER -->
       <table role="presentation" width="100%">
         <tr>
           <td></td>
 
-          <td
-            class="email-container"
-            width="620"
-            style="width: 620px; max-width: 620px; margin: 0 auto;"
-          >
-            <table
-              role="presentation"
-              width="100%"
-              style="background-color: #000000;"
-            >
+          <td class="email-container" width="620" style="width: 620px; max-width: 620px; margin: 0 auto">
+            <table role="presentation" width="100%" style="background-color: #000000">
               <tr>
-                <td style="padding: 24px 40px; text-align: center;">
-                  <img
-                    src="https://media.docs.plane.so/logo/new-logo-dark.png"
-                    width="120"
-                    alt="Plane"
-                    style="height: auto; display: block; margin: 0 auto;"
-                  />
+                <td style="padding: 24px 40px; text-align: center">
+                  {% email_logo "dark" 120 %}
                 </td>
               </tr>
             </table>
@@ -118,57 +108,31 @@
         <tr>
           <td></td>
 
-          <td
-            class="email-container"
-            width="620"
-            style="width: 620px; max-width: 620px; margin: 0 auto;"
-          >
+          <td class="email-container" width="620" style="width: 620px; max-width: 620px; margin: 0 auto">
             <table
               role="presentation"
               width="100%"
               class="email-content"
-              style="background-color: #ffffff; padding: 32px 40px 32px 40px;"
+              style="background-color: #ffffff; padding: 32px 40px 32px 40px"
             >
               <tr>
-                <td
-                  style="
-                    font-size: 16px;
-                    line-height: 1.5;
-                    color: #474747;
-                    padding: 24px;
-                  "
-                >
+                <td style="font-size: 16px; line-height: 1.5; color: #474747; padding: 24px">
                   <!-- ========================================= -->
                   <!--        PLANE WORKSPACE INVITE EMAIL       -->
                   <!-- ========================================= -->
 
                   <!-- Heading -->
-                  <h1
-                    style="
-                      margin: 0 0 12px;
-                      font-size: 22px;
-                      line-height: 1.35;
-                      font-weight: 600;
-                      color: #111111;
-                    "
-                  >
-                    Join {{workspace_name}} on Plane
+                  <h1 style="margin: 0 0 12px; font-size: 22px; line-height: 1.35; font-weight: 600; color: #111111">
+                    {% etr "workspace_invitation.heading" workspace=workspace_name %}
                   </h1>
 
                   <!-- Intro copy -->
-                  <p style="margin: 0 0 12px;">
-                    {{first_name}} has invited you to collaborate with them in
-                    <strong>{{workspace_name}}</strong> workspace on Plane.
+                  <p style="margin: 0 0 12px">
+                    {% etr "workspace_invitation.intro" inviter=first_name workspace=workspace_name %}
                   </p>
 
                   <!-- Primary button -->
-                  <table
-                    role="presentation"
-                    cellspacing="0"
-                    cellpadding="0"
-                    border="0"
-                    style="margin: 0 0 24px;"
-                  >
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 0 24px">
                     <tr>
                       <td>
                         <a
@@ -187,37 +151,22 @@
                             white-space: nowrap;
                           "
                         >
-                          Accept invite
+                          {% etr "workspace_invitation.button" %}
                         </a>
                       </td>
                     </tr>
                   </table>
 
                   <!-- Secondary info -->
-                  <p
-                    style="
-                      margin: 0;
-                      font-size: 13px;
-                      line-height: 1.6;
-                      color: #5f5e5e;
-                    "
-                  >
-                    If the button doesn’t work, copy and paste this link into
-                    your browser:
+                  <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #5f5e5e">
+                    {% etr "shared.fallback" %}
                   </p>
 
-                  <p
-                    style="
-                      margin: 6px 0 0;
-                      font-size: 13px;
-                      line-height: 1.6;
-                      color: #5f5e5e;
-                    "
-                  >
+                  <p style="margin: 6px 0 0; font-size: 13px; line-height: 1.6; color: #5f5e5e">
                     <span
                       style="
                         display: inline-block;
-                        font-family: 'Courier New', Courier, monospace;
+                        font-family: &quot;Courier New&quot;, Courier, monospace;
                         font-size: 12px;
                         background-color: #f3f3f3;
                         padding: 4px 6px;
@@ -230,27 +179,8 @@
                   </p>
 
                   <!-- Note -->
-                  <p
-                    style="
-                      margin: 16px 0 0;
-                      font-size: 13px;
-                      line-height: 1.6;
-                      color: #5f5e5e;
-                    "
-                  >
-                    Note: This invitation was intended for
-                    <span
-                      style="
-                        font-family: 'Courier New', Courier, monospace;
-                        font-size: 12px;
-                        background-color: #f3f3f3;
-                        padding: 2px 4px;
-                        border-radius: 3px;
-                        border: 1px solid #e9e9e9;
-                      "
-                      >{{email}}</span
-                    >. If you were not expecting this invitation, you can ignore
-                    this email.
+                  <p style="margin: 16px 0 0; font-size: 13px; line-height: 1.6; color: #5f5e5e">
+                    {% etr "workspace_invitation.note" email=email span_style="font-family: 'Courier New', Courier, monospace; font-size: 12px; background-color: #f3f3f3; padding: 2px 4px; border-radius: 3px; border: 1px solid #e9e9e9;" %}
                   </p>
                 </td>
               </tr>
@@ -266,16 +196,12 @@
         <tr>
           <td></td>
 
-          <td
-            class="email-container"
-            width="620"
-            style="width: 620px; max-width: 620px; margin: 0 auto;"
-          >
+          <td class="email-container" width="620" style="width: 620px; max-width: 620px; margin: 0 auto">
             <table
               role="presentation"
               width="100%"
               class="email-footer"
-              style="background-color: #ffffff; padding: 0 40px 16px 40px;"
+              style="background-color: #ffffff; padding: 0 40px 16px 40px"
             >
               <tr>
                 <td
@@ -288,9 +214,7 @@
                     text-align: left;
                   "
                 >
-                  <p style="margin: 0;">
-                    Plane Software, Inc.
-                  </p>
+                  <p style="margin: 0">Pi-Plane</p>
                 </td>
               </tr>
             </table>

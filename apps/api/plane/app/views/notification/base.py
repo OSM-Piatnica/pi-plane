@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -23,6 +24,7 @@ from plane.db.models import (
     WorkspaceMember,
 )
 from plane.utils.paginator import BasePaginator
+from plane.utils.order_queryset import NOTIFICATION_ORDER_BY_ALLOWLIST, sanitize_order_by
 from plane.app.permissions import allow_permission, ROLE
 
 # Module imports
@@ -62,7 +64,7 @@ class NotificationViewSet(BaseViewSet, BasePaginator):
 
         notifications = (
             Notification.objects.filter(workspace__slug=slug, receiver_id=request.user.id)
-            .filter(entity_name="issue")
+            .filter(entity_name__in=["issue", "project_access_request", "workspace_admin_message"])
             .annotate(is_inbox_issue=Exists(intake_issue))
             .annotate(is_intake_issue=Exists(intake_issue))
             .annotate(
@@ -108,7 +110,9 @@ class NotificationViewSet(BaseViewSet, BasePaginator):
             issue_ids = (
                 IssueSubscriber.objects.filter(workspace__slug=slug, subscriber_id=request.user.id)
                 .annotate(created=Exists(Issue.objects.filter(created_by=request.user, pk=OuterRef("issue_id"))))
-                .annotate(assigned=Exists(IssueAssignee.objects.filter(pk=OuterRef("issue_id"), assignee=request.user)))
+                .annotate(
+                    assigned=Exists(IssueAssignee.objects.filter(issue_id=OuterRef("issue_id"), assignee=request.user))
+                )
                 .filter(created=False, assigned=False)
                 .values_list("issue_id", flat=True)
             )
@@ -139,7 +143,11 @@ class NotificationViewSet(BaseViewSet, BasePaginator):
         # Pagination
         if request.GET.get("per_page", False) and request.GET.get("cursor", False):
             return self.paginate(
-                order_by=request.GET.get("order_by", "-created_at"),
+                order_by=sanitize_order_by(
+                    request.GET.get("order_by", "-created_at"),
+                    NOTIFICATION_ORDER_BY_ALLOWLIST,
+                    "-created_at",
+                ),
                 request=request,
                 queryset=(notifications),
                 on_results=lambda notifications: NotificationSerializer(notifications, many=True).data,

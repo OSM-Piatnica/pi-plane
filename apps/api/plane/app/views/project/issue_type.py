@@ -190,11 +190,7 @@ class ProjectIssueTypeBulkAssignEndpoint(BaseAPIView):
 
         rows = self._get_links(project_id)
         return Response(
-            {
-                "results": [
-                    IssueTypeSerializer(row.issue_type, context={"slug": slug}).data for row in rows
-                ]
-            },
+            {"results": [IssueTypeSerializer(row.issue_type, context={"slug": slug}).data for row in rows]},
             status=status.HTTP_200_OK,
         )
 

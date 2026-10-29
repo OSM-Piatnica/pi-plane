@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -19,13 +20,15 @@ from rest_framework.permissions import AllowAny
 
 # Module imports
 from .base import BaseViewSet, BaseAPIView
-from plane.app.serializers import ProjectMemberInviteSerializer
+from plane.app.serializers import (
+    ProjectMemberInviteSerializer,
+    ProjectMemberInvitePublicSerializer,
+)
 from plane.app.permissions import allow_permission, ROLE
 from plane.db.models import (
     ProjectMember,
     Workspace,
     ProjectMemberInvite,
-    User,
     WorkspaceMember,
     Project,
     ProjectUserProperty,
@@ -49,6 +52,20 @@ class ProjectInvitationsViewset(BaseViewSet):
             .select_related("project")
             .select_related("workspace", "workspace__owner")
         )
+
+    # Every invitation action (list/retrieve/destroy, like create) is limited to
+    # project admins.
+    @allow_permission([ROLE.ADMIN])
+    def list(self, request, slug, project_id):
+        return super().list(request)
+
+    @allow_permission([ROLE.ADMIN])
+    def retrieve(self, request, slug, project_id, pk):
+        return super().retrieve(request)
+
+    @allow_permission([ROLE.ADMIN])
+    def destroy(self, request, slug, project_id, pk):
+        return super().destroy(request)
 
     @allow_permission([ROLE.ADMIN])
     def create(self, request, slug, project_id):
@@ -138,17 +155,27 @@ class UserProjectInvitationsViewset(BaseViewSet):
         for project in projects:
             if project.network == ProjectNetwork.SECRET.value and workspace_member.role != ROLE.ADMIN.value:
                 return Response(
-                    {"error": "Only workspace admins can join private project"},
+                    {"error": "Only workspace admins can join a secret project"},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+            if project.network == ProjectNetwork.PRIVATE.value and workspace_member.role != ROLE.ADMIN.value:
+                return Response(
+                    {"error": "Request access to join a private project"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
         workspace_role = workspace_member.role
         workspace = workspace_member.workspace
 
-        # If the user was already part of workspace
-        _ = ProjectMember.objects.filter(workspace__slug=slug, project_id__in=project_ids, member=request.user).update(
-            is_active=True
-        )
+        # Membership writes use only the project IDs validated above: projects in
+        # this workspace that passed the network check.
+        validated_project_ids = [str(p.id) for p in projects]
+
+        # If the user was already part of the project, reactivate them with the
+        # same role a new joiner gets; a previous project role is not restored.
+        _ = ProjectMember.objects.filter(
+            workspace__slug=slug, project_id__in=validated_project_ids, member=request.user, is_active=False
+        ).update(is_active=True, role=workspace_role, updated_by=request.user, updated_at=timezone.now())
 
         ProjectMember.objects.bulk_create(
             [
@@ -159,7 +186,7 @@ class UserProjectInvitationsViewset(BaseViewSet):
                     workspace=workspace,
                     created_by=request.user,
                 )
-                for project_id in project_ids
+                for project_id in validated_project_ids
             ],
             ignore_conflicts=True,
         )
@@ -172,7 +199,7 @@ class UserProjectInvitationsViewset(BaseViewSet):
                     workspace=workspace,
                     created_by=request.user,
                 )
-                for project_id in project_ids
+                for project_id in validated_project_ids
             ],
             ignore_conflicts=True,
         )
@@ -186,22 +213,43 @@ class ProjectJoinEndpoint(BaseAPIView):
     def post(self, request, slug, project_id, pk):
         project_invite = ProjectMemberInvite.objects.get(pk=pk, project_id=project_id, workspace__slug=slug)
 
-        email = request.data.get("email", "")
+        token = request.data.get("token", "")
 
-        if email == "" or project_invite.email != email:
+        # Validate the token to verify the user received the invitation email
+        if not token or project_invite.token != token:
             return Response(
                 {"error": "You do not have permission to join the project"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
+        # Require an authenticated session — the accepting user must be the
+        # person who was invited.
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Authentication required to accept project invitation"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        if request.user.email.lower() != project_invite.email.lower():
+            return Response(
+                {"error": "You do not have permission to accept this invitation"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
         if project_invite.responded_at is None:
-            project_invite.accepted = request.data.get("accepted", False)
+            accepted = request.data.get("accepted", False)
+            if not isinstance(accepted, bool):
+                return Response(
+                    {"error": "`accepted` must be a boolean"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            project_invite.accepted = accepted
             project_invite.responded_at = timezone.now()
             project_invite.save()
 
             if project_invite.accepted:
-                # Check if the user account exists
-                user = User.objects.filter(email=email).first()
+                # Use the authenticated user directly — they've already been
+                # validated as the invite recipient above.
+                user = request.user
 
                 # Check if user is a part of workspace
                 workspace_member = WorkspaceMember.objects.filter(workspace__slug=slug, member=user).first()
@@ -217,9 +265,16 @@ class ProjectJoinEndpoint(BaseAPIView):
                     workspace_member.is_active = True
                     workspace_member.save()
 
-                # Check if the user was already a member of project then activate the user
+                # Check if the user was already a member of the invited project
+                # then activate the user.  The lookup must be scoped to
+                # `project_id` — a workspace-wide lookup reactivates whatever
+                # membership the user already had (typically a project they were
+                # removed from) and leaves the invited project without a member
+                # row (SECUR-234).
                 project_member = ProjectMember.objects.filter(
-                    workspace_id=project_invite.workspace_id, member=user
+                    workspace_id=project_invite.workspace_id,
+                    project_id=project_id,
+                    member=user,
                 ).first()
                 if project_member is None:
                     # Create a Project Member
@@ -229,8 +284,10 @@ class ProjectJoinEndpoint(BaseAPIView):
                         role=project_invite.role,
                     )
                 else:
+                    # The invitation's role is what the inviting admin chose; the
+                    # stale role on a deactivated row must not survive the rejoin.
                     project_member.is_active = True
-                    project_member.role = project_member.role
+                    project_member.role = project_invite.role
                     project_member.save()
 
                 return Response(
@@ -250,5 +307,5 @@ class ProjectJoinEndpoint(BaseAPIView):
 
     def get(self, request, slug, project_id, pk):
         project_invitation = ProjectMemberInvite.objects.get(workspace__slug=slug, project_id=project_id, pk=pk)
-        serializer = ProjectMemberInviteSerializer(project_invitation)
+        serializer = ProjectMemberInvitePublicSerializer(project_invitation)
         return Response(serializer.data, status=status.HTTP_200_OK)

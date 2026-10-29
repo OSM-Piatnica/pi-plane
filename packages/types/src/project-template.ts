@@ -33,7 +33,7 @@ export type TProjectTemplatePayload = {
   description?: string;
   start_date?: string | null;
   target_date?: string | null;
-  network?: 0 | 2;
+  network?: 0 | 1 | 2;
   project_lead?: string | null;
   default_assignee?: string | null;
   logo_props?: TLogoProps | null;

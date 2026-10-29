@@ -7,17 +7,12 @@
 
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
-import { LinkIcon } from "lucide-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import {
-  StatePropertyIcon,
-  StateGroupIcon,
-  PriorityPropertyIcon,
-  DueDatePropertyIcon,
-  PriorityIcon,
-} from "@plane/propel/icons";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { getStateName } from "@plane/utils";
+import { StateGroupIcon, PriorityIcon } from "@plane/blocks/icons";
+import { DueDateOutline, LinkOutline, PriorityOutline, StateOutline } from "@makeplane/propel/icons";
+import { setToast } from "@plane/blocks/toast";
 import { cn, getIssuePriorityFilters } from "@plane/utils";
 // helpers
 import { renderFormattedDate } from "@/helpers/date-time.helper";
@@ -54,10 +49,11 @@ export const PeekOverviewIssueProperties = observer(function PeekOverviewIssuePr
 
     copyTextToClipboard(urlToCopy).then(() => {
       setToast({
-        type: TOAST_TYPE.INFO,
-        title: "Link copied!",
-        message: "Work item link copied to clipboard",
+        type: "info",
+        title: t("common.link_copied"),
+        message: t("common.copied_to_clipboard"),
       });
+      return;
     });
   };
 
@@ -70,7 +66,7 @@ export const PeekOverviewIssueProperties = observer(function PeekOverviewIssuePr
           </h6>
           <div className="flex items-center gap-2">
             <button type="button" onClick={handleCopyLink} className="-rotate-45">
-              <LinkIcon className="size-3.5 shrink-0" />
+              <LinkOutline className="size-3.5 shrink-0" />
             </button>
           </div>
         </div>
@@ -78,19 +74,19 @@ export const PeekOverviewIssueProperties = observer(function PeekOverviewIssuePr
       <div className={`space-y-2 ${mode === "full" ? "pt-3" : ""}`}>
         <div className="flex h-8 items-center gap-3">
           <div className="flex w-1/4 flex-shrink-0 items-center gap-1 text-13 text-tertiary">
-            <StatePropertyIcon className="size-4 flex-shrink-0" />
-            <span>State</span>
+            <StateOutline className="size-4 flex-shrink-0" />
+            <span>{t("state")}</span>
           </div>
           <div className="flex w-3/4 items-center gap-1.5 py-0.5 text-13">
             <StateGroupIcon stateGroup={state?.group ?? "backlog"} color={state?.color} />
-            {addSpaceIfCamelCase(state?.name ?? "")}
+            {getStateName(addSpaceIfCamelCase(state?.name ?? ""), t)}
           </div>
         </div>
 
         <div className="flex h-8 items-center gap-3">
           <div className="flex w-1/4 flex-shrink-0 items-center gap-1 text-13 text-tertiary">
-            <PriorityPropertyIcon className="size-4 flex-shrink-0" />
-            <span>Priority</span>
+            <PriorityOutline className="size-4 flex-shrink-0" />
+            <span>{t("priority")}</span>
           </div>
           <div className="w-3/4">
             <div
@@ -106,7 +102,7 @@ export const PeekOverviewIssueProperties = observer(function PeekOverviewIssuePr
                         : "border-priority-none text-priority-none"
               }`}
             >
-              {priority && <PriorityIcon priority={priority?.key} size={12} className="flex-shrink-0" />}
+              {priority && <PriorityIcon priority={priority?.key} className="size-3" />}
               <span>{t(priority?.titleTranslationKey || "common.none")}</span>
             </div>
           </div>
@@ -114,25 +110,25 @@ export const PeekOverviewIssueProperties = observer(function PeekOverviewIssuePr
 
         <div className="flex h-8 items-center gap-3">
           <div className="flex w-1/4 flex-shrink-0 items-center gap-1 text-13 text-tertiary">
-            <DueDatePropertyIcon className="size-4 flex-shrink-0" />
-            <span>Finish date</span>
+            <DueDateOutline className="size-4 flex-shrink-0" />
+            <span>{t("finish_date")}</span>
           </div>
           <div>
             {issueDetails.finish_date ? (
               <div className="flex items-center gap-1.5 rounded-sm py-0.5 text-11 text-primary">
-                <DueDatePropertyIcon className="size-3" />
+                <DueDateOutline className="size-3" />
                 {renderFormattedDate(issueDetails.finish_date)}
               </div>
             ) : (
-              <span className="text-13 text-secondary">Empty</span>
+              <span className="text-13 text-secondary">{t("space_text.issues.empty")}</span>
             )}
           </div>
         </div>
 
         <div className="flex h-8 items-center gap-3">
           <div className="flex w-1/4 flex-shrink-0 items-center gap-1 text-13 text-tertiary">
-            <DueDatePropertyIcon className="size-4 flex-shrink-0" />
-            <span>Due date</span>
+            <DueDateOutline className="size-4 flex-shrink-0" />
+            <span>{t("due_date")}</span>
           </div>
           <div>
             {issueDetails.target_date ? (
@@ -141,11 +137,11 @@ export const PeekOverviewIssueProperties = observer(function PeekOverviewIssuePr
                   "text-danger-primary": shouldHighlightIssueDueDate(issueDetails.target_date, state?.group),
                 })}
               >
-                <DueDatePropertyIcon className="size-3" />
+                <DueDateOutline className="size-3" />
                 {renderFormattedDate(issueDetails.target_date)}
               </div>
             ) : (
-              <span className="text-13 text-secondary">Empty</span>
+              <span className="text-13 text-secondary">{t("space_text.issues.empty")}</span>
             )}
           </div>
         </div>

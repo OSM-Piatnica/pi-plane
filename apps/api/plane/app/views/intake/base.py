@@ -44,12 +44,14 @@ from plane.app.serializers import (
     IssueDescriptionVersionDetailSerializer,
 )
 from plane.utils.issue_filters import issue_filters
+from plane.utils.order_queryset import INTAKE_ISSUE_ORDER_BY_ALLOWLIST, sanitize_order_by
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.bgtasks.issue_description_version_task import issue_description_version_task
 from plane.app.views.base import BaseAPIView
 from plane.utils.timezone_converter import user_timezone_converter
 from plane.utils.global_paginator import paginate
 from plane.utils.host import base_host
+from plane.utils.serializers import writable_data
 from plane.db.models.intake import SourceType
 
 
@@ -195,7 +197,13 @@ class IntakeIssueViewSet(BaseViewSet):
                     Value([], output_field=ArrayField(UUIDField())),
                 )
             )
-        ).order_by(request.GET.get("order_by", "-issue__created_at"))
+        ).order_by(
+            sanitize_order_by(
+                request.GET.get("order_by", "-issue__created_at"),
+                INTAKE_ISSUE_ORDER_BY_ALLOWLIST,
+                "-issue__created_at",
+            )
+        )
         # Intake status filter
         intake_status = [item for item in request.GET.get("status", "-2").split(",") if item != "null"]
         if intake_status:
@@ -402,11 +410,12 @@ class IntakeIssueViewSet(BaseViewSet):
                 }
 
             issue_current_instance = json.dumps(IssueDetailSerializer(issue).data, cls=DjangoJSONEncoder)
-            issue_requested_data = json.dumps(issue_data, cls=DjangoJSONEncoder)
 
             issue_serializer = IssueCreateSerializer(
                 issue, data=issue_data, partial=True, context={"project_id": project_id, "allow_triage_state": True}
             )
+            # Read-only fields are ignored on save, so they are not reported as changes either.
+            issue_requested_data = json.dumps(writable_data(issue_serializer, issue_data), cls=DjangoJSONEncoder)
 
             if not issue_serializer.is_valid():
                 return Response(issue_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

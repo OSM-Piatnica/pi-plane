@@ -67,6 +67,11 @@
       "extra": {
         "show_sub_issues": "Tampilkan sub-item kerja",
         "show_empty_groups": "Tampilkan grup kosong"
+      },
+      "color_by": {
+        "label": "Warna berdasarkan",
+        "state": "Status",
+        "key": "ID item kerja"
       }
     },
     "layouts": {
@@ -91,8 +96,8 @@
     "comments": {
       "placeholder": "Tambah komentar",
       "switch": {
-        "private": "Beralih ke komentar pribadi",
-        "public": "Beralih ke komentar publik"
+        "private": "Jadikan komentar ini internal",
+        "public": "Tampilkan komentar ini di web"
       },
       "create": {
         "success": "Komentar berhasil dibuat",
@@ -149,6 +154,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Internal",
+        "external": "Terlihat di web"
       }
     },
     "empty_state": {
@@ -173,7 +182,9 @@
       },
       "failed": {
         "message": "Item kerja tidak dapat diarsipkan. Silakan coba lagi."
-      }
+      },
+      "banner_message": "Item kerja ini telah diarsipkan. Kunjungi bagian Arsip untuk memulihkannya.",
+      "go_to_archives": "Buka arsip"
     },
     "restore": {
       "success": {
@@ -194,7 +205,15 @@
       "finish_before": "Selesai Sebelum",
       "finish_after": "Selesai Setelah",
       "implements": "Menerapkan",
-      "implemented_by": "Diterapkan oleh"
+      "implemented_by": "Diterapkan oleh",
+      "causes": "Menyebabkan",
+      "caused_by": "Disebabkan oleh",
+      "clones": "Mengkloning",
+      "cloned_by": "Dikloning oleh",
+      "tests": "Menguji",
+      "tested_by": "Diuji oleh",
+      "start_before_finish": "Mulai sebelum selesainya",
+      "finish_after_start": "Selesai setelah dimulainya"
     },
     "copy_link": "Salin tautan item kerja",
     "delete": {
@@ -332,7 +351,9 @@
         "description": "Untuk melihat semua item kerja, hapus semua filter yang diterapkan.",
         "action": "Hapus filter"
       }
-    }
+    },
+    "expand": "Bentangkan sub-item kerja",
+    "collapse": "Ciutkan sub-item kerja"
   },
   "issue_relation": {
     "empty_state": {
@@ -370,6 +391,10 @@
         "title": "Tidak dapat memperbarui item kerja",
         "message": "Perubahan status tidak diizinkan untuk beberapa item kerja. Pastikan perubahan status diizinkan."
       }
+    },
+    "upgrade_banner": {
+      "message": "Ubah status, prioritas, dan lainnya untuk beberapa item kerja sekaligus. Hemat rata-rata tiga menit per operasi.",
+      "cta": "Tingkatkan ke One"
     }
   },
   "recurring_work_items": {
@@ -551,6 +576,532 @@
     "move_to_project_failed": "Gagal memindahkan item kerja ke proyek. Silakan coba lagi.",
     "project_work_items_count": "{count, plural, other {Ada # item kerja di proyek ini}}",
     "archived_banner": "Item kerja ini telah diarsipkan. Kunjungi bagian Arsip untuk memulihkannya.",
-    "go_to_archives": "Buka arsip"
+    "go_to_archives": "Buka arsip",
+    "select_work_item": "Pilih item kerja",
+    "select_work_items_to_delete": "Pilih item kerja yang akan dihapus",
+    "delete_selected_work_items": "Hapus item kerja yang dipilih",
+    "sub_work_item_progress": "Kemajuan sub-item kerja",
+    "archived_work_items_count": "{count, plural, one {Ada # item kerja di arsip proyek} other {Ada # item kerja di arsip proyek}}",
+    "add_related_work_items": "Tambahkan item kerja terkait",
+    "toggle_workspace_level_search": "Alihkan pencarian tingkat ruang kerja",
+    "search_results_for_in_project": "Hasil pencarian untuk \"<query/>\" di proyek:",
+    "cannot_move_to_completed_cycle": "Item kerja tidak dapat dipindahkan ke siklus yang sudah selesai"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "mengarsipkan item kerja.",
+      "assignee": {
+        "added": "menambahkan penugasan baru, <user/>.",
+        "added_with_issue": "menambahkan penugasan baru, <user/>, ke <issue/>.",
+        "removed": "menghapus penugasan <user/>.",
+        "removed_with_issue": "menghapus penugasan <user/> dari <issue/>."
+      },
+      "attachment": {
+        "added": "mengunggah lampiran baru.",
+        "added_with_issue": "mengunggah lampiran baru ke <issue/>.",
+        "removed": "menghapus sebuah lampiran.",
+        "removed_with_issue": "menghapus sebuah lampiran dari <issue/>."
+      },
+      "created": "membuat item kerja.",
+      "created_via": "membuat item kerja melalui <source/>.",
+      "cycle": {
+        "added": "menambahkan item kerja ini ke siklus <cycle/>",
+        "removed": "menghapus item kerja dari siklus <cycle/>",
+        "set": "menetapkan siklus menjadi <cycle/>"
+      },
+      "deleted": "menghapus sebuah item kerja.",
+      "description": {
+        "updated": "memperbarui deskripsi.",
+        "updated_with_issue": "memperbarui deskripsi <issue/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# hari} other {# hari}}",
+        "removed": "menghapus durasi.",
+        "removed_with_issue": "menghapus durasi dari <issue/>.",
+        "set": "menetapkan durasi menjadi <value/>.",
+        "set_with_issue": "menetapkan durasi untuk <issue/> menjadi <value/>."
+      },
+      "estimate": {
+        "removed": "menghapus poin perkiraan <value/>.",
+        "removed_with_issue": "menghapus poin perkiraan <value/> dari <issue/>.",
+        "set": "menetapkan poin perkiraan menjadi <value/>.",
+        "set_with_issue": "menetapkan poin perkiraan untuk <issue/> menjadi <value/>."
+      },
+      "intake": {
+        "accepted": "menerima item kerja ini dari Intake.",
+        "declined": "menolak item kerja ini dari Intake.",
+        "duplicate": "menolak item kerja ini dari Intake dengan menandainya sebagai duplikat dari item kerja lain.",
+        "snoozed": "menunda item kerja ini.",
+        "updated": "memperbarui status item kerja Intake."
+      },
+      "label": {
+        "added": "menambahkan label baru, <label/>",
+        "added_with_issue": "menambahkan label baru, <label/>, ke <issue/>",
+        "removed": "menghapus label <label/>",
+        "removed_with_issue": "menghapus label <label/> dari <issue/>"
+      },
+      "link": {
+        "added": "menambahkan <link>tautan</link>.",
+        "added_with_issue": "menambahkan <link>tautan</link> ke <issue/>.",
+        "removed": "menghapus <link>tautan</link> ini.",
+        "removed_with_issue": "menghapus <link>tautan</link> ini dari <issue/>.",
+        "updated": "memperbarui <link>tautan</link>.",
+        "updated_with_issue": "memperbarui <link>tautan</link> dari <issue/>."
+      },
+      "module": {
+        "added": "menambahkan item kerja ini ke modul <module/>",
+        "removed": "menghapus item kerja dari modul <module/>",
+        "set": "menetapkan modul menjadi <module/>"
+      },
+      "name": {
+        "set": "menetapkan nama menjadi {name}."
+      },
+      "parent": {
+        "removed": "menghapus induk <value/>.",
+        "removed_with_issue": "menghapus induk <value/> dari <issue/>.",
+        "set": "menetapkan induk menjadi <value/>.",
+        "set_with_issue": "menetapkan induk untuk <issue/> menjadi <value/>."
+      },
+      "priority": {
+        "set": "menetapkan prioritas menjadi <value/>.",
+        "set_with_issue": "menetapkan prioritas untuk <issue/> menjadi <value/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "menandai bahwa item kerja ini diblokir oleh <value/>.",
+          "removed": "menghapus pemblokiran item kerja ini oleh item kerja <value/>."
+        },
+        "blocking": {
+          "added": "menandai bahwa item kerja ini memblokir item kerja <value/>.",
+          "removed": "menghapus item kerja yang diblokir <value/>."
+        },
+        "caused_by": {
+          "added": "menambahkan relasi “Disebabkan oleh”: <value/>.",
+          "removed": "menghapus relasi “Disebabkan oleh”: <value/>."
+        },
+        "causes": {
+          "added": "menambahkan relasi “Menyebabkan”: <value/>.",
+          "removed": "menghapus relasi “Menyebabkan”: <value/>."
+        },
+        "cloned_by": {
+          "added": "menambahkan relasi “Dikloning oleh”: <value/>.",
+          "removed": "menghapus relasi “Dikloning oleh”: <value/>."
+        },
+        "clones": {
+          "added": "menambahkan relasi “Mengkloning”: <value/>.",
+          "removed": "menghapus relasi “Mengkloning”: <value/>."
+        },
+        "duplicate": {
+          "added": "menandai item kerja ini sebagai duplikat dari <value/>.",
+          "removed": "menghapus item kerja ini sebagai duplikat dari <value/>."
+        },
+        "finish_after": {
+          "added": "menandai bahwa item kerja ini selesai setelah <value/>.",
+          "removed": "menghapus hubungan \"selesai setelah\" dengan <value/>."
+        },
+        "finish_after_start": {
+          "added": "menambahkan relasi “Selesai setelah dimulainya”: <value/>.",
+          "removed": "menghapus relasi “Selesai setelah dimulainya”: <value/>."
+        },
+        "finish_before": {
+          "added": "menandai bahwa item kerja ini selesai sebelum <value/>.",
+          "removed": "menghapus hubungan \"selesai sebelum\" dengan <value/>."
+        },
+        "implemented_by": {
+          "added": "menambahkan relasi “Diterapkan oleh”: <value/>.",
+          "removed": "menghapus relasi “Diterapkan oleh”: <value/>."
+        },
+        "implements": {
+          "added": "menambahkan relasi “Menerapkan”: <value/>.",
+          "removed": "menghapus relasi “Menerapkan”: <value/>."
+        },
+        "relates_to": {
+          "added": "menandai bahwa item kerja ini berhubungan dengan <value/>.",
+          "removed": "menghapus hubungan dengan <value/>."
+        },
+        "start_after": {
+          "added": "menandai bahwa item kerja ini dimulai setelah <value/>.",
+          "removed": "menghapus hubungan \"dimulai setelah\" dengan <value/>."
+        },
+        "start_before": {
+          "added": "menandai bahwa item kerja ini dimulai sebelum <value/>.",
+          "removed": "menghapus hubungan \"dimulai sebelum\" dengan <value/>."
+        },
+        "start_before_finish": {
+          "added": "menambahkan relasi “Mulai sebelum selesainya”: <value/>.",
+          "removed": "menghapus relasi “Mulai sebelum selesainya”: <value/>."
+        },
+        "tested_by": {
+          "added": "menambahkan relasi “Diuji oleh”: <value/>.",
+          "removed": "menghapus relasi “Diuji oleh”: <value/>."
+        },
+        "tests": {
+          "added": "menambahkan relasi “Menguji”: <value/>.",
+          "removed": "menghapus relasi “Menguji”: <value/>."
+        }
+      },
+      "restored": "memulihkan item kerja.",
+      "start_date": {
+        "removed": "menghapus tanggal mulai.",
+        "removed_with_issue": "menghapus tanggal mulai dari <issue/>.",
+        "set": "menetapkan tanggal mulai menjadi <value/>.",
+        "set_with_issue": "menetapkan tanggal mulai untuk <issue/> menjadi <value/>."
+      },
+      "state": {
+        "set": "menetapkan status menjadi <value/>.",
+        "set_with_issue": "menetapkan status untuk <issue/> menjadi <value/>."
+      },
+      "finish_date": {
+        "removed": "removed the finish date.",
+        "removed_with_issue": "removed the finish date from <issue/>.",
+        "set": "set the finish date to <value/>.",
+        "set_with_issue": "set the finish date to <value/> for <issue/>."
+      },
+      "target_date": {
+        "removed": "menghapus tanggal jatuh tempo.",
+        "removed_with_issue": "menghapus tanggal jatuh tempo dari <issue/>.",
+        "set": "menetapkan tanggal jatuh tempo menjadi <value/>.",
+        "set_with_issue": "menetapkan tanggal jatuh tempo untuk <issue/> menjadi <value/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "mengarsipkan <issue/>",
+        "restored": "memulihkan <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "menambahkan penugasan baru, <assignee/>, ke <issue/>",
+        "added_without_issue": "menambahkan penugasan baru, <assignee/>",
+        "removed_with_issue": "menghapus penugasan <assignee/> dari <issue/>",
+        "removed_without_issue": "menghapus penugasan <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "mengunggah lampiran baru ke <issue/>",
+        "added_without_issue": "mengunggah lampiran baru",
+        "removed_with_issue": "menghapus sebuah lampiran dari <issue/>",
+        "removed_without_issue": "menghapus sebuah lampiran"
+      },
+      "blocked_by": {
+        "added_with_issue": "menandai bahwa <issue/> diblokir oleh <value/>.",
+        "added_without_issue": "menandai bahwa item kerja ini diblokir oleh <value/>.",
+        "removed_with_issue": "menghapus pemblokiran <issue/> oleh item kerja <value/>.",
+        "removed_without_issue": "menghapus pemblokiran item kerja ini oleh item kerja <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "menandai bahwa <issue/> memblokir item kerja <value/>.",
+        "added_without_issue": "menandai bahwa item kerja ini memblokir item kerja <value/>.",
+        "removed": "menghapus item kerja yang diblokir <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "menambahkan <issue/> <nowrap>ke siklus</nowrap> <value/>",
+        "added_without_issue": "menambahkan item kerja ini <nowrap>ke siklus</nowrap> <value/>",
+        "removed": "menghapus <issue/> dari siklus <value/>",
+        "set": "<nowrap>menetapkan siklus menjadi</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "memperbarui deskripsi <issue/>",
+        "updated_without_issue": "memperbarui deskripsi"
+      },
+      "duplicate": {
+        "added_with_issue": "menandai <issue/> sebagai duplikat dari <value/>.",
+        "added_without_issue": "menandai item kerja ini sebagai duplikat dari <value/>.",
+        "removed_with_issue": "menghapus <issue/> sebagai duplikat dari <value/>.",
+        "removed_without_issue": "menghapus item kerja ini sebagai duplikat dari <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# hari} other {# hari}}",
+        "removed_with_issue": "menghapus durasi dari <issue/>",
+        "removed_without_issue": "menghapus durasi",
+        "set_with_issue": "menetapkan durasi untuk <issue/> menjadi <value/>",
+        "set_without_issue": "menetapkan durasi menjadi <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "mengonversi <issue/> menjadi item kerja",
+        "created": "membuat <issue/>",
+        "deleted": "menghapus <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "menghapus poin perkiraan dari <issue/>",
+        "removed_without_issue": "menghapus poin perkiraan",
+        "set_with_issue": "menetapkan poin perkiraan untuk <issue/> menjadi <value/>",
+        "set_without_issue": "menetapkan poin perkiraan menjadi <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "menerima item kerja <issue/>",
+        "accepted_without_issue": "menerima item kerja ini dari Intake.",
+        "declined_with_issue": "menolak item kerja <issue/>",
+        "declined_without_issue": "menolak item kerja ini dari Intake.",
+        "duplicate_with_issue": "menolak item kerja <issue/> dari Intake dengan menandainya sebagai duplikat dari item kerja lain.",
+        "duplicate_without_issue": "menolak item kerja ini dari Intake dengan menandainya sebagai duplikat dari item kerja lain.",
+        "snoozed_with_issue": "menunda item kerja <issue/>",
+        "snoozed_without_issue": "menunda item kerja ini.",
+        "updated_with_issue": "memperbarui status item kerja Intake. <issue/>",
+        "updated_without_issue": "memperbarui status item kerja Intake."
+      },
+      "issue": {
+        "converted_to_epic": "mengonversi <issue/> menjadi Epik",
+        "created": "membuat <issue/>",
+        "deleted": "menghapus <issue/>",
+        "deleted_tooltip": "Item kerja ini telah dihapus",
+        "fallback_name": "sebuah item kerja"
+      },
+      "label": {
+        "added_with_issue": "menambahkan label baru, <label/>, ke <issue/>",
+        "added_without_issue": "menambahkan label baru, <label/>",
+        "removed_with_issue": "menghapus label <label/> dari <issue/>",
+        "removed_without_issue": "menghapus label <label/>"
+      },
+      "link": {
+        "added_with_issue": "menambahkan <link>tautan</link> ini ke <issue/>",
+        "added_without_issue": "menambahkan <link>tautan</link> ini",
+        "removed_with_issue": "menghapus <link>tautan</link> ini dari <issue/>",
+        "removed_without_issue": "menghapus <link>tautan</link> ini",
+        "updated_with_issue": "memperbarui <link>tautan</link> dari <issue/>",
+        "updated_without_issue": "memperbarui <link>tautan</link>"
+      },
+      "module": {
+        "added_with_issue": "menambahkan <issue/> ke modul <value/>",
+        "added_without_issue": "menambahkan item kerja ini ke modul <value/>",
+        "removed": "menghapus <issue/> dari modul <value/>",
+        "set": "menetapkan modul menjadi <value/>"
+      },
+      "name": {
+        "set_with_issue": "menetapkan judul <issue/> menjadi <value/>",
+        "set_without_issue": "menetapkan judul menjadi <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "menghapus induk <value/> dari <issue/>",
+        "removed_without_issue": "menghapus induk <value/>",
+        "set_with_issue": "menetapkan induk untuk <issue/> menjadi <value/>",
+        "set_without_issue": "menetapkan induk menjadi <value/>"
+      },
+      "priority": {
+        "high": "Tinggi",
+        "low": "Rendah",
+        "medium": "Sedang",
+        "none": "Tidak ada",
+        "set_with_issue": "menetapkan prioritas untuk <issue/> menjadi <value/>",
+        "set_without_issue": "menetapkan prioritas menjadi <value/>",
+        "urgent": "Mendesak"
+      },
+      "relates_to": {
+        "added_with_issue": "menandai bahwa <issue/> berhubungan dengan <value/>.",
+        "added_without_issue": "menandai bahwa item kerja ini berhubungan dengan <value/>.",
+        "removed": "menghapus hubungan dengan <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "menghapus tanggal mulai dari <issue/>",
+        "removed_without_issue": "menghapus tanggal mulai",
+        "set_with_issue": "menetapkan tanggal mulai untuk <issue/> menjadi <value/>",
+        "set_without_issue": "menetapkan tanggal mulai menjadi <value/>"
+      },
+      "state": {
+        "set_with_issue": "menetapkan status untuk <issue/> menjadi <value/>",
+        "set_without_issue": "menetapkan status menjadi <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "removed the finish date from <issue/>",
+        "removed_without_issue": "removed the finish date",
+        "set_with_issue": "set the finish date to <value/> for <issue/>",
+        "set_without_issue": "set the finish date to <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "menghapus tanggal jatuh tempo dari <issue/>",
+        "removed_without_issue": "menghapus tanggal jatuh tempo",
+        "set_with_issue": "menetapkan tanggal jatuh tempo untuk <issue/> menjadi <value/>",
+        "set_without_issue": "menetapkan tanggal jatuh tempo menjadi <value/>"
+      },
+      "actor_separator": " ",
+      "commented_ago": "Berkomentar {timeAgo}"
+    },
+    "project": {
+      "archived_at": {
+        "archived": "mengarsipkan proyek",
+        "restored": "memulihkan proyek"
+      },
+      "cycle_view": {
+        "disabled": "menonaktifkan tampilan siklus",
+        "enabled": "mengaktifkan tampilan siklus",
+        "fallback": "memperbarui tampilan siklus"
+      },
+      "cycles": {
+        "added": "menambahkan proyek ini ke siklus <value/>",
+        "removed": "menghapus proyek ini dari siklus <value/>",
+        "unknown": "Siklus tidak dikenal"
+      },
+      "default": "memperbarui pengaturan proyek",
+      "description": {
+        "removed": "menghapus deskripsi proyek",
+        "updated": "memperbarui deskripsi proyek"
+      },
+      "estimate": {
+        "removed": "menghapus poin perkiraan",
+        "removed_with_value": "menghapus poin perkiraan <value/>",
+        "set": "menetapkan poin perkiraan menjadi <value/>"
+      },
+      "identifier": {
+        "updated": "memperbarui pengenal proyek menjadi <value/>"
+      },
+      "inbox": {
+        "disabled": "menonaktifkan Intake",
+        "enabled": "mengaktifkan Intake"
+      },
+      "intake_view": {
+        "disabled": "menonaktifkan tampilan Intake",
+        "enabled": "mengaktifkan tampilan Intake",
+        "fallback": "memperbarui tampilan Intake"
+      },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "menonaktifkan aturan pengeditan oleh penerima tugas",
+        "enabled": "mengaktifkan aturan pengeditan oleh penerima tugas",
+        "fallback": "memperbarui aturan pengeditan oleh penerima tugas"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "menonaktifkan aturan status item yang terhalang",
+        "enabled": "mengaktifkan aturan status item yang terhalang",
+        "fallback": "memperbarui aturan status item yang terhalang"
+      },
+      "is_epic_enabled": {
+        "disabled": "menonaktifkan Epik",
+        "enabled": "mengaktifkan Epik",
+        "fallback": "memperbarui Epik"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "menonaktifkan jenis item kerja",
+        "enabled": "mengaktifkan jenis item kerja",
+        "fallback": "memperbarui jenis item kerja"
+      },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "menonaktifkan aturan penyelesaian item induk",
+        "enabled": "mengaktifkan aturan penyelesaian item induk",
+        "fallback": "memperbarui aturan penyelesaian item induk"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "menonaktifkan pembaruan proyek",
+        "enabled": "mengaktifkan pembaruan proyek",
+        "fallback": "memperbarui pembaruan proyek"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "menonaktifkan relasi duplikat",
+        "enabled": "mengaktifkan relasi duplikat",
+        "fallback": "memperbarui relasi duplikat"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "menonaktifkan relasi “berhubungan dengan”",
+        "enabled": "mengaktifkan relasi “berhubungan dengan”",
+        "fallback": "memperbarui relasi “berhubungan dengan”"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "menonaktifkan dependensi jadwal",
+        "enabled": "mengaktifkan dependensi jadwal",
+        "fallback": "memperbarui dependensi jadwal"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "menonaktifkan relasi keterlacakan",
+        "enabled": "mengaktifkan relasi keterlacakan",
+        "fallback": "memperbarui relasi keterlacakan"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "menonaktifkan pelacakan waktu",
+        "enabled": "mengaktifkan pelacakan waktu",
+        "fallback": "memperbarui pelacakan waktu"
+      },
+      "is_workflow_enabled": {
+        "disabled": "menonaktifkan alur kerja kustom",
+        "enabled": "mengaktifkan alur kerja kustom",
+        "fallback": "memperbarui alur kerja kustom"
+      },
+      "issue_views_view": {
+        "disabled": "menonaktifkan fitur tampilan",
+        "enabled": "mengaktifkan fitur tampilan",
+        "fallback": "memperbarui fitur tampilan"
+      },
+      "labels": {
+        "added": "menambahkan label <value/>",
+        "created": "membuat label <value/>",
+        "deleted": "menghapus label <value/>",
+        "removed": "menghapus label <value/>",
+        "untitled": "Label tanpa judul",
+        "updated": "memperbarui label <value/>"
+      },
+      "module_view": {
+        "disabled": "menonaktifkan tampilan modul",
+        "enabled": "mengaktifkan tampilan modul",
+        "fallback": "memperbarui tampilan modul"
+      },
+      "modules": {
+        "added": "menambahkan proyek ini ke modul <value/>",
+        "removed": "menghapus proyek ini dari modul <value/>",
+        "unknown": "Modul tidak dikenal"
+      },
+      "name": {
+        "renamed": "mengganti nama proyek menjadi <value/>"
+      },
+      "network": {
+        "disabled": "menonaktifkan akses jaringan",
+        "enabled": "mengaktifkan akses jaringan"
+      },
+      "page": {
+        "created": "membuat halaman proyek <value/>",
+        "removed": "menghapus halaman proyek <value/>",
+        "untitled": "Halaman tanpa judul"
+      },
+      "page_view": {
+        "disabled": "menonaktifkan tampilan halaman",
+        "enabled": "mengaktifkan tampilan halaman",
+        "fallback": "memperbarui tampilan halaman"
+      },
+      "priority": {
+        "set": "menetapkan prioritas menjadi <value/>"
+      },
+      "start_date": {
+        "removed": "menghapus tanggal mulai",
+        "set": "menetapkan tanggal mulai menjadi <value/>"
+      },
+      "state": {
+        "set": "menetapkan status menjadi <value/>"
+      },
+      "target_date": {
+        "removed": "menghapus tanggal target",
+        "set": "menetapkan tanggal target menjadi <value/>"
+      },
+      "timezone": {
+        "changed": "mengubah zona waktu proyek menjadi <value/>",
+        "default": "default"
+      },
+      "value_none": "tidak ada"
+    }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Rangkum tanggal",
+    "rolled_up_bar": "Tanggal dirangkum dari sub-item kerja",
+    "children_span": "Sub-item kerja: {start} – {end}",
+    "starts_early": "Sub-item kerja dimulai sebelum item kerja ini",
+    "ends_late": "Sub-item kerja berakhir setelah item kerja ini"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Luaskan semua",
+    "collapse_all": "Ciutkan semua",
+    "levels": "Tingkat",
+    "up_to_level": "Hingga tingkat {level}",
+    "all_levels": "Semua tingkat",
+    "load_error": "Sub-item kerja tidak dapat dimuat",
+    "too_many": "Terlalu banyak item kerja untuk diperluas sekaligus. Perluas sisanya satu per satu."
+  },
+  "worklog": {
+    "log_time": "Catat waktu",
+    "description_placeholder": "Apa yang dikerjakan? (opsional)",
+    "invalid_duration_title": "Durasi tidak valid",
+    "invalid_duration_message": "Gunakan format seperti \"2h 30m\", \"45m\" atau menit saja, hingga 24 jam.",
+    "log_error": "Tidak dapat mencatat waktu. Silakan coba lagi.",
+    "update_error": "Tidak dapat memperbarui entri. Silakan coba lagi.",
+    "delete_error": "Tidak dapat menghapus entri. Silakan coba lagi.",
+    "delete_title": "Hapus entri waktu",
+    "delete_description": "Yakin ingin menghapus entri waktu ini? Tindakan ini tidak dapat dibatalkan.",
+    "edit_entry": "Edit entri waktu",
+    "delete_entry": "Hapus entri waktu",
+    "logged": "mencatat <value>{duration}</value>",
+    "updated": "mengubah waktu yang dicatat dari <old>{from}</old> menjadi <new>{to}</new>",
+    "removed": "menghapus waktu yang dicatat <value>{duration}</value>"
   }
 }

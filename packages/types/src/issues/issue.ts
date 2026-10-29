@@ -53,6 +53,8 @@ export type TBaseIssue = {
   priority: TIssuePriorities | null;
   label_ids: string[];
   assignee_ids: string[];
+  /** The user groups the work item is assigned to; absent from answers that do not carry them. */
+  group_assignee_ids?: string[];
   estimate_point: string | null;
 
   sub_issues_count: number;
@@ -99,6 +101,8 @@ type IssueRelation = {
   project_id: string;
   relation_type: TIssueRelationTypes;
   sequence_id: number;
+  /** Days kept between the dates a timeline relation links; negative is a lead */
+  lag_days?: number;
 };
 
 export type TIssue = TBaseIssue & {
@@ -202,7 +206,7 @@ export interface IPublicIssue extends Pick<
 > {
   comments: TIssuePublicComment[];
   reaction_items: IIssuePublicReaction[];
-  vote_items: IPublicVote[];
+  vote_items: IPublicVote[] | null;
 }
 
 type TPublicIssueResponseResults =

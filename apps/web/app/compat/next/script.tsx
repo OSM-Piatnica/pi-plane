@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -24,14 +25,16 @@ function Script({ src, id, strategy: _strategy, onLoad, onError, children, ...re
       const script = document.createElement("script");
       if (id) script.id = id;
       script.src = src;
-      if (onLoad) script.onload = onLoad;
-      if (onError) script.onerror = onError;
+      if (onLoad) script.addEventListener("load", onLoad);
+      if (onError) script.addEventListener("error", onError);
       Object.keys(rest).forEach((key) => {
         script.setAttribute(key, rest[key]);
       });
       document.body.appendChild(script);
 
       return () => {
+        if (onLoad) script.removeEventListener("load", onLoad);
+        if (onError) script.removeEventListener("error", onError);
         if (script.parentNode) {
           document.body.removeChild(script);
         }

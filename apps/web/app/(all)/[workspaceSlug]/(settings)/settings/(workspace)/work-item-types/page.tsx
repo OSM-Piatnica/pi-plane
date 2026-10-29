@@ -10,16 +10,19 @@ import { observer } from "mobx-react";
 import useSWR, { useSWRConfig } from "swr";
 import { Layers } from "lucide-react";
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
-import type { TChangeHandlerProps } from "@plane/propel/emoji-icon-picker";
-import { EmojiIconPickerTypes, EmojiPicker, Logo } from "@plane/propel/emoji-icon-picker";
+import type { ChangeHandlerPayload } from "@plane/blocks/emoji-icon-picker";
+import { EmojiPicker, Logo } from "@plane/blocks/emoji-icon-picker";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { EModalPosition, EModalWidth, Input, ModalCore, TextArea, ToggleSwitch } from "@plane/ui";
+import { Button } from "@makeplane/propel/components/button";
+import { Dialog, DialogBody, DialogContent, DialogMain } from "@makeplane/propel/components/dialog";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
+import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
+import { setToast } from "@plane/blocks/toast";
+import { Switch } from "@makeplane/propel/components/switch";
 import type { TIssueType } from "@plane/types";
 import { PageHead } from "@/components/core/page-title";
 import { NotAuthorizedView } from "@/components/auth-screens/not-authorized-view";
-import { ProjectDropdown } from "@/components/dropdowns/project/dropdown";
+import { ProjectSelect } from "@/components/dropdowns/project/project-select";
 import { SwitcherIcon } from "@/components/common/switcher-label";
 import { SettingsContentWrapper } from "@/components/settings/content-wrapper";
 import { SettingsHeading } from "@/components/settings/heading";
@@ -64,6 +67,7 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
   const { handleSubmit, control, reset, watch, setValue, formState } = form;
   const properties = watch("properties");
 
+  // react-doctor-disable-next-line no-event-handler -- modalOpen is closed from several places (submit, cancel, modal onOpenChange), so one effect keeps the reset in sync
   useEffect(() => {
     if (!modalOpen) {
       reset(DEFAULT_WORK_ITEM_TYPE_FORM);
@@ -90,7 +94,7 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
   const onSubmit = handleSubmit(async (values) => {
     if (!values.name.trim()) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("error"),
         message: t("workspace_settings.settings.work_item_types.form.name_required"),
       });
@@ -107,14 +111,14 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
       await mutate(listKey);
       setModalOpen(false);
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("workspace_settings.settings.work_item_types.toasts.saved.title"),
         message: t("workspace_settings.settings.work_item_types.toasts.saved.message"),
       });
     } catch (e) {
       console.error(e);
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("workspace_settings.settings.work_item_types.toasts.save_failed.title"),
         message: t("workspace_settings.settings.work_item_types.toasts.save_failed.message"),
       });
@@ -130,7 +134,7 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
     } catch (e) {
       console.error(e);
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("error"),
         message: t("workspace_settings.settings.work_item_types.toasts.save_failed.message"),
       });
@@ -143,14 +147,14 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
       await service.removeWorkspaceType(workspaceSlug, id);
       await mutate(listKey);
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("workspace_settings.settings.work_item_types.toasts.deleted.title"),
         message: t("workspace_settings.settings.work_item_types.toasts.deleted.message"),
       });
     } catch (e) {
       console.error(e);
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("workspace_settings.settings.work_item_types.toasts.delete_failed.title"),
         message: t("workspace_settings.settings.work_item_types.toasts.delete_failed.message"),
       });
@@ -165,156 +169,190 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
     <FormProvider {...form}>
       <SettingsContentWrapper header={<WorkItemTypesSettingsHeader />}>
         <PageHead title={pageTitle} />
-        <ModalCore
-          isOpen={modalOpen}
-          handleClose={() => setModalOpen(false)}
-          position={EModalPosition.CENTER}
-          width={EModalWidth.VIIXL}
+        <Dialog
+          open={modalOpen}
+          onOpenChange={(open) => {
+            if (!open) setModalOpen(false);
+          }}
         >
-          <form onSubmit={onSubmit} className="max-h-[min(90vh,920px)] overflow-y-auto p-5">
-            <h3 className="text-h3-medium text-primary">
-              {editingId
-                ? t("workspace_settings.settings.work_item_types.edit_type")
-                : t("workspace_settings.settings.work_item_types.add_type")}
-            </h3>
-            <p className="pt-1 pb-4 text-13 text-tertiary">
-              {t("workspace_settings.settings.work_item_types.form.modal_intro")}
-            </p>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <Controller
-                  name="logoProps"
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <EmojiPicker
-                      iconType="material"
-                      closeOnSelect={false}
-                      isOpen={logoPickerOpen}
-                      handleToggle={(open: boolean) => setLogoPickerOpen(open)}
-                      className="flex shrink-0 items-center justify-center"
-                      buttonClassName="flex h-10 w-10 items-center justify-center rounded-md border border-subtle bg-surface-2"
-                      label={<Logo logo={value} size={20} />}
-                      onChange={(val: TChangeHandlerProps) => {
-                        let logoValue = {};
-                        if (val?.type === "emoji") logoValue = { value: val.value };
-                        else if (val?.type === "icon") logoValue = val.value;
-                        onChange({
-                          in_use: val?.type,
-                          [val?.type]: logoValue,
-                        });
-                        setLogoPickerOpen(false);
-                      }}
-                      defaultIconColor={value?.in_use === "icon" ? value?.icon?.color : undefined}
-                      defaultOpen={value?.in_use === "emoji" ? EmojiIconPickerTypes.EMOJI : EmojiIconPickerTypes.ICON}
-                    />
-                  )}
-                />
-                <div className="min-w-0 flex-1 space-y-3">
-                  <div>
-                    <label className="text-12 text-tertiary" htmlFor="work-item-type-name">
-                      {t("workspace_settings.settings.work_item_types.form.name_label")}
-                    </label>
-                    <Controller
-                      name="name"
-                      control={control}
-                      render={({ field }) => (
-                        <Input
-                          id="work-item-type-name"
-                          className="mt-1 w-full"
-                          value={field.value}
-                          onChange={field.onChange}
+          <DialogContent size="xl">
+            <form onSubmit={onSubmit} className="flex min-h-0 flex-1 flex-col">
+              <DialogMain>
+                <DialogBody tabIndex={0}>
+                  <div className="max-h-[min(90vh,920px)] p-1">
+                    <h3 className="text-h3-medium text-primary">
+                      {editingId
+                        ? t("workspace_settings.settings.work_item_types.edit_type")
+                        : t("workspace_settings.settings.work_item_types.add_type")}
+                    </h3>
+                    <p className="pt-1 pb-4 text-13 text-tertiary">
+                      {t("workspace_settings.settings.work_item_types.form.modal_intro")}
+                    </p>
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-3">
+                        <Controller
+                          name="logoProps"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <EmojiPicker
+                              iconType="material"
+                              closeOnSelect={false}
+                              isOpen={logoPickerOpen}
+                              handleToggle={(open: boolean) => setLogoPickerOpen(open)}
+                              className="flex shrink-0 items-center justify-center"
+                              buttonClassName="flex h-10 w-10 items-center justify-center rounded-md border border-subtle bg-surface-2"
+                              label={<Logo logo={value} size={20} />}
+                              onChange={(val: ChangeHandlerPayload) => {
+                                let logoValue = {};
+                                if (val?.type === "emoji") logoValue = { value: val.value };
+                                else if (val?.type === "icon") logoValue = val.value;
+                                onChange({
+                                  in_use: val?.type,
+                                  [val?.type]: logoValue,
+                                });
+                                setLogoPickerOpen(false);
+                              }}
+                              defaultIconColor={value?.in_use === "icon" ? value?.icon?.color : undefined}
+                              defaultOpen={value?.in_use === "emoji" ? "emoji" : "icon"}
+                            />
+                          )}
                         />
-                      )}
-                    />
-                  </div>
-                  <div>
-                    <label className="text-12 text-tertiary" htmlFor="work-item-type-description">
-                      {t("workspace_settings.settings.work_item_types.form.description_label")}
-                    </label>
-                    <Controller
-                      name="description"
-                      control={control}
-                      render={({ field }) => (
-                        <TextArea
-                          id="work-item-type-description"
-                          className="mt-1 min-h-[80px] w-full resize-y"
-                          rows={3}
-                          value={field.value}
-                          onChange={field.onChange}
+                        <div className="min-w-0 flex-1 space-y-3">
+                          <div>
+                            <label className="mb-1 block text-12 text-tertiary" htmlFor="work-item-type-name">
+                              {t("workspace_settings.settings.work_item_types.form.name_label")}
+                            </label>
+                            <Controller
+                              name="name"
+                              control={control}
+                              render={({ field }) => (
+                                <InputGroup size="lg">
+                                  <Input
+                                    size="lg"
+                                    id="work-item-type-name"
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                  />
+                                </InputGroup>
+                              )}
+                            />
+                          </div>
+                          <div>
+                            <label className="mb-1 block text-12 text-tertiary" htmlFor="work-item-type-description">
+                              {t("workspace_settings.settings.work_item_types.form.description_label")}
+                            </label>
+                            <Controller
+                              name="description"
+                              control={control}
+                              render={({ field }) => (
+                                <TextAreaGroup resize="vertical">
+                                  <TextArea
+                                    size="md"
+                                    surface="field"
+                                    id="work-item-type-description"
+                                    rows={3}
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                  />
+                                </TextAreaGroup>
+                              )}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-6">
+                        {/* react-doctor-disable-next-line label-has-associated-control -- the Switch is rendered inside the Controller render prop, so it is nested in this label */}
+                        <label className="flex items-center gap-2 text-13 text-secondary">
+                          <Controller
+                            name="isEpic"
+                            control={control}
+                            render={({ field }) => (
+                              <Switch checked={field.value} onCheckedChange={field.onChange} size="sm" />
+                            )}
+                          />
+                          {t("workspace_settings.settings.work_item_types.form.is_epic")}
+                        </label>
+                        {/* react-doctor-disable-next-line label-has-associated-control -- the Switch is rendered inside the Controller render prop, so it is nested in this label */}
+                        <label className="flex items-center gap-2 text-13 text-secondary">
+                          <Controller
+                            name="isActive"
+                            control={control}
+                            render={({ field }) => (
+                              <Switch checked={field.value} onCheckedChange={field.onChange} size="sm" />
+                            )}
+                          />
+                          {t("workspace_settings.settings.work_item_types.form.is_active")}
+                        </label>
+                      </div>
+                      <div>
+                        <span id="work-item-type-projects-label" className="block text-12 text-tertiary">
+                          {t("workspace_settings.settings.work_item_types.form.projects_label")}
+                        </span>
+                        <p className="pt-0.5 pb-1 text-11 text-tertiary">
+                          {t("workspace_settings.settings.work_item_types.form.projects_hint")}
+                        </p>
+                        <div className="mt-1 h-8 max-w-md" role="group" aria-labelledby="work-item-type-projects-label">
+                          <Controller
+                            name="projectIds"
+                            control={control}
+                            render={({ field }) => (
+                              <ProjectSelect
+                                value={field.value}
+                                onChange={(ids) => field.onChange(ids)}
+                                multiple
+                                variant="select-md"
+                              />
+                            )}
+                          />
+                        </div>
+                      </div>
+                      <div className="rounded-md border border-subtle bg-surface-1 p-3">
+                        <h4 className="pb-2 text-14 font-medium text-primary">
+                          {t("workspace_settings.settings.work_item_types.form.properties_heading")}
+                        </h4>
+                        <WorkItemTypePropertyEditor
+                          properties={properties}
+                          onChange={(next) => setValue("properties", next, { shouldDirty: true })}
                         />
-                      )}
-                    />
+                      </div>
+                      <div className="flex justify-end gap-2 pt-2">
+                        <Button
+                          size="md"
+                          stretch="auto"
+                          type="button"
+                          variant="secondary"
+                          onClick={() => setModalOpen(false)}
+                          label={t("cancel")}
+                        />
+                        <Button
+                          size="md"
+                          stretch="auto"
+                          type="submit"
+                          variant="primary"
+                          disabled={saving || formState.isSubmitting}
+                          loading={saving}
+                          label={editingId ? t("update") : t("add")}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="flex flex-wrap items-center gap-6">
-                <label className="flex items-center gap-2 text-13 text-secondary">
-                  <Controller
-                    name="isEpic"
-                    control={control}
-                    render={({ field }) => <ToggleSwitch value={field.value} onChange={field.onChange} size="sm" />}
-                  />
-                  {t("workspace_settings.settings.work_item_types.form.is_epic")}
-                </label>
-                <label className="flex items-center gap-2 text-13 text-secondary">
-                  <Controller
-                    name="isActive"
-                    control={control}
-                    render={({ field }) => <ToggleSwitch value={field.value} onChange={field.onChange} size="sm" />}
-                  />
-                  {t("workspace_settings.settings.work_item_types.form.is_active")}
-                </label>
-              </div>
-              <div>
-                <label className="block text-12 text-tertiary">
-                  {t("workspace_settings.settings.work_item_types.form.projects_label")}
-                </label>
-                <p className="pt-0.5 pb-1 text-11 text-tertiary">
-                  {t("workspace_settings.settings.work_item_types.form.projects_hint")}
-                </p>
-                <div className="mt-1 h-8 max-w-md">
-                  <Controller
-                    name="projectIds"
-                    control={control}
-                    render={({ field }) => (
-                      <ProjectDropdown
-                        value={field.value}
-                        onChange={(ids) => field.onChange(Array.isArray(ids) ? ids : ids ? [ids] : [])}
-                        multiple
-                        buttonVariant="border-with-text"
-                      />
-                    )}
-                  />
-                </div>
-              </div>
-              <div className="rounded-md border border-subtle bg-surface-1 p-3">
-                <h4 className="pb-2 text-14 font-medium text-primary">
-                  {t("workspace_settings.settings.work_item_types.form.properties_heading")}
-                </h4>
-                <WorkItemTypePropertyEditor
-                  properties={properties}
-                  onChange={(next) => setValue("properties", next, { shouldDirty: true })}
-                />
-              </div>
-              <div className="flex justify-end gap-2 pt-2">
-                <Button type="button" variant="secondary" onClick={() => setModalOpen(false)}>
-                  {t("cancel")}
-                </Button>
-                <Button type="submit" variant="primary" disabled={saving || formState.isSubmitting} loading={saving}>
-                  {editingId ? t("update") : t("add")}
-                </Button>
-              </div>
-            </div>
-          </form>
-        </ModalCore>
+                </DialogBody>
+              </DialogMain>
+            </form>
+          </DialogContent>
+        </Dialog>
         <div className="w-full">
           <SettingsHeading
             title={t("workspace_settings.settings.work_item_types.title")}
             description={t("workspace_settings.settings.work_item_types.description")}
             control={
-              <Button variant="primary" size="lg" onClick={openCreate}>
-                {t("workspace_settings.settings.work_item_types.add_type")}
-              </Button>
+              <Button
+                stretch="auto"
+                variant="primary"
+                size="lg"
+                onClick={openCreate}
+                label={t("workspace_settings.settings.work_item_types.add_type")}
+              />
             }
           />
           {isLoading || !issueTypes ? (
@@ -360,16 +398,24 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
                           : (row.project_ids ?? []).map((id) => getProjectById(id)?.name ?? id).join(", ")}
                       </td>
                       <td className="p-2">
-                        <ToggleSwitch value={row.is_active} onChange={() => onToggleActive(row)} size="sm" />
+                        <Switch checked={row.is_active} onCheckedChange={() => onToggleActive(row)} size="sm" />
                       </td>
                       <td className="p-2 text-right">
                         <div className="flex justify-end gap-1">
-                          <Button variant="secondary" size="sm" onClick={() => openEdit(row)}>
-                            {t("edit")}
-                          </Button>
-                          <Button variant="error-outline" size="sm" onClick={() => onDelete(row.id)}>
-                            {t("remove")}
-                          </Button>
+                          <Button
+                            stretch="auto"
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => openEdit(row)}
+                            label={t("edit")}
+                          />
+                          <Button
+                            stretch="auto"
+                            variant="danger-outline"
+                            size="sm"
+                            onClick={() => onDelete(row.id)}
+                            label={t("remove")}
+                          />
                         </div>
                       </td>
                     </tr>

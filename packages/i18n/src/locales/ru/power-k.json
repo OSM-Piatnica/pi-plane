@@ -54,8 +54,8 @@
         "indicator": "Страница",
         "lock": "Заблокировать",
         "unlock": "Разблокировать",
-        "make_private": "Сделать приватной",
-        "make_public": "Сделать публичной",
+        "make_private": "Сделать видимой только для меня",
+        "make_public": "Поделиться с проектом",
         "archive": "Архивировать",
         "restore": "Восстановить",
         "add_to_favorites": "Добавить в избранное",
@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Открыть горячие клавиши",
-      "open_plane_documentation": "Открыть документацию Plane",
+      "open_plane_documentation": "Открыть документацию Pi-Plane",
       "join_forum": "Присоединиться к нашему форуму",
       "report_bug": "Сообщить об ошибке",
       "chat_with_us": "Чат с нами"
@@ -171,10 +171,17 @@
     "search_menu": {
       "no_results": "Ничего не найдено",
       "clear_search": "Очистить поиск",
-      "go_to_advanced_search": "Перейти к расширенному поиску"
+      "go_to_advanced_search": "Перейти к расширенному поиску",
+      "results_in_workspace": "Результаты поиска по запросу <term/> в рабочем пространстве:",
+      "results_in_project": "Результаты поиска по запросу <term/> в проекте:"
     },
     "footer": {
       "workspace_level": "Уровень рабочего пространства"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Найти горячие клавиши",
+      "no_results": "Не найдено горячих клавиш для «{query}»",
+      "sequence_separator": "затем"
     },
     "group_titles": {
       "actions": "Действия",

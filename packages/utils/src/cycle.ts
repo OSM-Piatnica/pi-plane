@@ -86,7 +86,8 @@ export const orderCyclesWithCompleted = (cycles: ICycle[], orderByKey: TCycleOrd
   const rest = cycles.filter((c) => !isCompleted(c));
   // cycles with an unknown status are not listed by orderCycles; keep them at the end instead of dropping them
   const ordered = orderCycles(rest, "status");
-  const unlisted = rest.filter((c) => !ordered.includes(c));
+  const orderedSet = new Set(ordered);
+  const unlisted = rest.filter((c) => !orderedSet.has(c));
   return [...ordered, ...completed, ...unlisted];
 };
 
@@ -101,6 +102,7 @@ export const shouldFilterCycle = (cycle: ICycle, filter: TCycleFilters): boolean
   Object.keys(filter).forEach((key) => {
     const filterKey = key as keyof TCycleFilters;
     if (filterKey === "status" && filter.status && filter.status.length > 0)
+      // react-doctor-disable-next-line js-set-map-lookups -- user-selected filter list is tiny and each branch runs once per key, not per item of a large collection
       fallsInFilters = fallsInFilters && filter.status.includes(cycle.status?.toLowerCase() ?? "");
     if (filterKey === "start_date" && filter.start_date && filter.start_date.length > 0) {
       const startDate = getDate(cycle.start_date);

@@ -80,11 +80,13 @@ export const canInitializePairedDate = (
  * The preview is for display only. Never present it as saved; the server decides.
  *
  * @param initialize user wants the one-time default ("Set only finish/due" opts out)
+ * @param weekendDays the project's non-working days, which the duration does not count
  */
 export const planWorkItemDateChange = (
   current: TWorkItemPlanningDates,
   change: Partial<TWorkItemPlanningDates>,
-  initialize = true
+  initialize = true,
+  weekendDays: readonly number[] = []
 ): TPlannedDateChange => {
   let patch: TPlannedDateChange["patch"] = { ...change };
   let notice: TPairedDateNotice | undefined;
@@ -113,7 +115,7 @@ export const planWorkItemDateChange = (
     }
   }
 
-  patch = { ...patch, ...reconcileWorkItemDuration(current, patch) };
+  patch = { ...patch, ...reconcileWorkItemDuration(current, patch, weekendDays) };
 
   const error = validateWorkItemSchedule(
     "start_date" in patch ? patch.start_date : current.start_date,

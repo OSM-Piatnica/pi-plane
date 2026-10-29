@@ -17,10 +17,9 @@ class TestWorkspaceInvitationsExistingMember:
 
     @pytest.mark.django_db
     @pytest.mark.parametrize("variant", ["{email}", "{EMAIL}", "  {email}  ", "{Email}"])
-    @patch("plane.app.views.workspace.invite.track_event.delay")
     @patch("plane.app.views.workspace.invite.workspace_invitation.delay")
     def test_existing_member_is_rejected_regardless_of_case_or_whitespace(
-        self, mock_send, mock_track, variant, session_client, create_user, workspace
+        self, mock_send, variant, session_client, create_user, workspace
     ):
         email = create_user.email
         typed = variant.format(email=email, EMAIL=email.upper(), Email=email.capitalize())
@@ -34,9 +33,8 @@ class TestWorkspaceInvitationsExistingMember:
         mock_send.assert_not_called()
 
     @pytest.mark.django_db
-    @patch("plane.app.views.workspace.invite.track_event.delay")
     @patch("plane.app.views.workspace.invite.workspace_invitation.delay")
-    def test_new_email_is_stored_normalised(self, mock_send, mock_track, session_client, workspace):
+    def test_new_email_is_stored_normalised(self, mock_send, session_client, workspace):
         url = reverse("workspace-invitations", kwargs={"slug": workspace.slug})
 
         payload = {"emails": [{"email": "  New.Person@Example.com ", "role": 15}]}

@@ -445,14 +445,15 @@
       "removing_from_favorites": "Usuwanie projektu z ulubionych..."
     },
     "confirm_member_remove": {
-      "leave_description": "Czy na pewno chcesz opuścić projekt {name}? Będziesz mógł dołączyć ponownie, jeśli zostaniesz zaproszony lub jeśli projekt jest publiczny.",
+      "leave_description": "Czy na pewno chcesz opuścić projekt {name}? Będziesz mógł dołączyć ponownie, jeśli zostaniesz zaproszony lub jeśli projekt jest otwarty dla przestrzeni.",
       "leave_title": "Opuścić projekt?",
       "remove_description": "Czy na pewno chcesz usunąć członka {name}? Straci on dostęp do tego projektu. Tej czynności nie można cofnąć.",
       "remove_title": "Usunąć {name}?"
     },
     "control_section": {
       "archive_description": "Zarchiwizowanie projektu usunie go z nawigacji bocznej, ale nadal będzie dostępny na stronie projektów. Możesz go w dowolnej chwili przywrócić lub usunąć.",
-      "delete_description": "Po usunięciu projektu wszystkie jego dane i zasoby zostaną trwale usunięte i nie będzie można ich odzyskać."
+      "delete_description": "Po usunięciu projektu wszystkie jego dane i zasoby zostaną trwale usunięte i nie będzie można ich odzyskać.",
+      "duplicate_description": "Utwórz nowy projekt z ustawieniami, stanami, etykietami i pozostałą konfiguracją tego projektu. Elementy pracy są kopiowane tylko jeśli tak wybierzesz."
     },
     "delete_modal": {
       "confirm_placeholder": "Wpisz „{phrase}”",
@@ -491,6 +492,7 @@
       "confirm_phrase_error": "Potwierdź opuszczenie projektu, wpisując „{phrase}”.",
       "description": "Czy na pewno chcesz opuścić projekt „{name}”? Wszystkie powiązane z Tobą elementy pracy staną się niedostępne.",
       "fill_all_fields": "Wypełnij wszystkie pola.",
+      "only_admin_error": "Jesteś jedynym administratorem tego projektu, więc nie możesz go opuścić. Najpierw ustaw innego członka jako administratora albo usuń projekt.",
       "project_name_error": "Wpisz nazwę projektu dokładnie tak, jak w opisie.",
       "project_name_placeholder": "Wpisz nazwę projektu",
       "project_name_required": "Nazwa projektu jest wymagana",
@@ -530,21 +532,34 @@
       "timezone_error": "Nie udało się zaktualizować strefy czasowej",
       "timezone_updated": "Strefa czasowa została pomyślnie zaktualizowana",
       "update_error": "Wystąpił błąd podczas aktualizacji profilu. Spróbuj ponownie.",
-      "updated": "Profil został pomyślnie zaktualizowany."
+      "updated": "Profil został pomyślnie zaktualizowany.",
+      "weekend_days": "Dni weekendowe",
+      "weekend_days_description": "Określa, które dni są traktowane jako czas wolny od pracy.",
+      "weekend_days_updated": "Dni weekendowe zostały zaktualizowane",
+      "weekend_days_use_default": "Użyj domyślnych ustawień obszaru roboczego"
     },
     "publish_modal": {
       "allow_comments": "Zezwalaj na komentarze",
       "allow_reactions": "Zezwalaj na reakcje",
       "allow_voting": "Zezwalaj na głosowanie",
-      "anyone_with_link": "Każdy, kto ma link, ma dostęp",
-      "link_copied": "Link do opublikowanej strony został skopiowany.",
-      "live_on_web": "Ten projekt jest teraz dostępny w internecie",
-      "publishing": "Publikowanie",
-      "select_layout_error": "Wybierz co najmniej jeden układ widoku, aby opublikować projekt.",
-      "settings_updated": "Ustawienia publikacji zostały pomyślnie zaktualizowane!",
-      "unpublish": "Cofnij publikację",
-      "unpublish_error": "Coś poszło nie tak podczas cofania publikacji projektu.",
-      "unpublishing": "Cofanie publikacji",
+      "anyone_with_link": "Każdy w internecie, kto ma link, może przeglądać ten projekt, bez konta",
+      "confirm": {
+        "title": "Udostępnić ten projekt w internecie?",
+        "description": "Każdy w internecie, kto ma link, będzie mógł przeglądać ten projekt, także osoby spoza przestrzeni i niezalogowane.",
+        "can_see": "Zobaczą:",
+        "item_work_items": "wszystkie elementy pracy w projekcie wraz z opisem, statusem, priorytetem, datami i etykietami",
+        "item_members": "nazwy i awatary członków projektu",
+        "item_activity": "komentarze, reakcje i głosy wraz z nazwami osób, które je dodały, jeśli na to pozwolisz",
+        "note": "Osoby przeglądające niczego nie zmienią. Link działa, dopóki nie przestaniesz udostępniać, więc udostępniaj tylko projekt, który nie zawiera niczego poufnego."
+      },
+      "link_copied": "Skopiowano link internetowy.",
+      "live_on_web": "Ten projekt jest udostępniony w internecie",
+      "publishing": "Włączanie…",
+      "select_layout_error": "Wybierz co najmniej jeden układ widoku, aby udostępnić projekt w internecie.",
+      "settings_updated": "Zaktualizowano ustawienia udostępniania w internecie.",
+      "unpublish": "Przestań udostępniać",
+      "unpublish_error": "Coś poszło nie tak podczas wyłączania udostępniania w internecie.",
+      "unpublishing": "Wyłączanie…",
       "update_settings": "Zaktualizuj ustawienia"
     },
     "rich_filters": {
@@ -554,6 +569,14 @@
       "filter_type_not_supported": "Typ filtra nie jest obsługiwany",
       "invalid_filter": "Nieprawidłowy filtr",
       "invalid_tooltip": "Ten warunek filtra jest już nieprawidłowy. Właściwość mogła zostać usunięta lub Twój dostęp do niej mógł się zmienić.",
+      "operators": {
+        "exact": "jest",
+        "in": "jest jednym z",
+        "range": "pomiędzy",
+        "not_exact": "nie jest",
+        "not_in": "nie jest żadnym z",
+        "not_range": "nie jest pomiędzy"
+      },
       "remove_filter": "Usuń filtr",
       "save_view": "Zapisz widok",
       "update_view": "Zaktualizuj widok"
@@ -623,6 +646,71 @@
       },
       "key_regenerated": "Nowy klucz został pomyślnie wygenerowany.",
       "view_secret_key": "Pokaż klucz tajny"
+    },
+    "request_access_modal": {
+      "title": "Poproś o dostęp",
+      "description": "Poproś administratorów tego projektu o dostęp.",
+      "description_named": "Poproś administratorów projektu {name} o dostęp.",
+      "message_placeholder": "Dodaj wiadomość dla administratorów (opcjonalnie)",
+      "send": "Wyślij prośbę",
+      "sending": "Wysyłanie...",
+      "success_title": "Prośba wysłana",
+      "success_message": "Administratorzy projektu ją rozpatrzą.",
+      "request_button": "Poproś o dostęp",
+      "pending_badge": "Wysłano prośbę"
+    },
+    "access_requests": {
+      "title": "Prośby o dołączenie ({count})",
+      "approve": "Zatwierdź",
+      "reject": "Odrzuć",
+      "already_decided": "Ta prośba została już rozpatrzona przez innego administratora.",
+      "requester_left": "Ta osoba nie jest już członkiem przestrzeni roboczej."
+    },
+    "duplicate_modal": {
+      "already_running": "W tym obszarze roboczym trwa już kopiowanie elementów pracy. Spróbuj ponownie po jego zakończeniu.",
+      "always_copied": "Ustawienia, stany i typy elementów pracy są zawsze kopiowane.",
+      "banner": {
+        "done": "Skopiowane elementy pracy: {count}.",
+        "failed": "Kopiowanie elementów pracy nie powiodło się. To, co skopiowano, zostaje; ponów próbę, aby dodać resztę.",
+        "progress": "Kopiowanie elementów pracy: {copied} z {total}",
+        "queued": "Elementy pracy czekają na skopiowanie...",
+        "reload": "Odśwież",
+        "retry": "Ponów",
+        "retry_failed": "Nie udało się ponowić kopiowania. Spróbuj ponownie."
+      },
+      "clear_all": "Wyczyść wszystko",
+      "description": "Tworzy nowy projekt z tymi samymi ustawieniami. Strony i webhooki nie są kopiowane; elementy pracy tylko jeśli wybierzesz to poniżej.",
+      "error": "Nie udało się zduplikować projektu. Spróbuj ponownie.",
+      "identifier_placeholder": "Zostanie wygenerowany, jeśli puste",
+      "properties": {
+        "assignees": "Przypisani",
+        "custom_properties": "Właściwości niestandardowe",
+        "cycles": "Cykle",
+        "dates": "Daty",
+        "description_images": "Obrazy w opisach",
+        "labels": "Etykiety",
+        "links": "Linki",
+        "modules": "Moduły",
+        "parents": "Powiązania elementów podrzędnych",
+        "relations": "Powiązania"
+      },
+      "properties_description": "Wybierz, co zostanie przeniesione z elementami pracy. Wersje robocze, zarchiwizowane elementy i elementy intake są pomijane; komentarze, załączniki, aktywność i wpisy czasu nigdy nie są kopiowane.",
+      "properties_heading": "Właściwości elementów pracy",
+      "properties_note": "Cykle i moduły są przenoszone tylko wtedy, gdy kopiujesz je powyżej.",
+      "property_groups": {
+        "content": "Treść",
+        "hierarchy": "Hierarchia i powiązania",
+        "organization": "Organizacja",
+        "people": "Osoby"
+      },
+      "select_all": "Zaznacz wszystko",
+      "submit": "Duplikuj projekt",
+      "submitting": "Duplikowanie projektu...",
+      "success": "Projekt został zduplikowany.",
+      "title": "Duplikuj projekt",
+      "too_large": "Ten projekt jest zbyt duży, aby go skopiować. Wyłącz część opcji i spróbuj ponownie.",
+      "what_to_copy": "Kopiuj także",
+      "work_items_too_large": "Ten projekt ma więcej elementów pracy, niż można skopiować (do {count})."
     }
   }
 }

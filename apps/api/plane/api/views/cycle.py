@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -24,16 +25,18 @@ from rest_framework.response import Response
 from drf_spectacular.utils import OpenApiRequest, OpenApiResponse
 
 # Module imports
+from plane.utils.work_item_edit_rule import body_list, restrict_work_item_changes
 from plane.api.serializers import (
     CycleIssueSerializer,
     CycleSerializer,
+    CycleLiteSerializer,
     CycleIssueRequestSerializer,
     TransferCycleIssueRequestSerializer,
     CycleCreateSerializer,
     CycleUpdateSerializer,
     IssueSerializer,
 )
-from plane.app.permissions import ProjectEntityPermission
+from plane.app.permissions import ProjectAdminPermission, ProjectEntityPermission
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.db.models import (
     Cycle,
@@ -42,12 +45,13 @@ from plane.db.models import (
     Project,
     FileAsset,
     IssueLink,
-    ProjectMember,
     UserFavorite,
 )
 from plane.utils.cycle_transfer_issues import transfer_cycle_issues
+from plane.utils.order_queryset import CYCLE_ORDER_BY_ALLOWLIST, ISSUE_ORDER_BY_ALLOWLIST, sanitize_order_by
 from plane.utils.host import base_host
 from .base import BaseAPIView
+from .issue import guest_cannot_view_issue, is_restricted_guest
 from plane.bgtasks.webhook_task import model_activity
 from plane.utils.openapi.decorators import cycle_docs
 from plane.utils.openapi import (
@@ -215,13 +219,15 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
             return self.paginate(
                 request=request,
                 queryset=(queryset),
-                on_results=lambda cycles: CycleSerializer(
-                    cycles,
-                    many=True,
-                    fields=self.fields,
-                    expand=self.expand,
-                    context={"project": project},
-                ).data,
+                on_results=lambda cycles: (
+                    CycleSerializer(
+                        cycles,
+                        many=True,
+                        fields=self.fields,
+                        expand=self.expand,
+                        context={"project": project},
+                    ).data
+                ),
             )
 
         # Completed Cycles
@@ -230,13 +236,15 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
             return self.paginate(
                 request=request,
                 queryset=(queryset),
-                on_results=lambda cycles: CycleSerializer(
-                    cycles,
-                    many=True,
-                    fields=self.fields,
-                    expand=self.expand,
-                    context={"project": project},
-                ).data,
+                on_results=lambda cycles: (
+                    CycleSerializer(
+                        cycles,
+                        many=True,
+                        fields=self.fields,
+                        expand=self.expand,
+                        context={"project": project},
+                    ).data
+                ),
             )
 
         # Draft Cycles
@@ -245,13 +253,15 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
             return self.paginate(
                 request=request,
                 queryset=(queryset),
-                on_results=lambda cycles: CycleSerializer(
-                    cycles,
-                    many=True,
-                    fields=self.fields,
-                    expand=self.expand,
-                    context={"project": project},
-                ).data,
+                on_results=lambda cycles: (
+                    CycleSerializer(
+                        cycles,
+                        many=True,
+                        fields=self.fields,
+                        expand=self.expand,
+                        context={"project": project},
+                    ).data
+                ),
             )
 
         # Incomplete Cycles
@@ -260,24 +270,28 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
             return self.paginate(
                 request=request,
                 queryset=(queryset),
-                on_results=lambda cycles: CycleSerializer(
+                on_results=lambda cycles: (
+                    CycleSerializer(
+                        cycles,
+                        many=True,
+                        fields=self.fields,
+                        expand=self.expand,
+                        context={"project": project},
+                    ).data
+                ),
+            )
+        return self.paginate(
+            request=request,
+            queryset=(queryset),
+            on_results=lambda cycles: (
+                CycleSerializer(
                     cycles,
                     many=True,
                     fields=self.fields,
                     expand=self.expand,
                     context={"project": project},
-                ).data,
-            )
-        return self.paginate(
-            request=request,
-            queryset=(queryset),
-            on_results=lambda cycles: CycleSerializer(
-                cycles,
-                many=True,
-                fields=self.fields,
-                expand=self.expand,
-                context={"project": project},
-            ).data,
+                ).data
+            ),
         )
 
     @cycle_docs(
@@ -305,7 +319,9 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
         if (request.data.get("start_date", None) is None and request.data.get("end_date", None) is None) or (
             request.data.get("start_date", None) is not None and request.data.get("end_date", None) is not None
         ):
-            serializer = CycleCreateSerializer(data=request.data, context={"request": request})
+            serializer = CycleCreateSerializer(
+                data=request.data, context={"request": request, "project_id": project_id}
+            )
             if serializer.is_valid():
                 if (
                     request.data.get("external_id")
@@ -351,6 +367,54 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
                 {"error": "Both start date and end date are either required or are to be null"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+
+class CycleListLiteAPIEndpoint(BaseAPIView):
+    """Cycle Lite List Endpoint"""
+
+    serializer_class = CycleLiteSerializer
+    model = Cycle
+    permission_classes = [ProjectEntityPermission]
+    use_read_replica = True
+
+    @cycle_docs(
+        operation_id="list_cycles_lite",
+        summary="List cycles (lite)",
+        description="Retrieve a paginated, lightweight list of cycles in a project for pickers and references.",
+        parameters=[CURSOR_PARAMETER, PER_PAGE_PARAMETER, ORDER_BY_PARAMETER],
+        responses={
+            200: create_paginated_response(
+                CycleLiteSerializer,
+                "PaginatedCycleLiteResponse",
+                "Paginated list of cycles with minimal fields",
+                "Paginated Cycles (Lite)",
+            ),
+        },
+    )
+    def get(self, request, slug, project_id):
+        """List cycles (lite)
+
+        Retrieve a paginated, lightweight list of non-archived cycles in a project,
+        optimized for pickers and references.
+        """
+        cycles = (
+            Cycle.objects.filter(workspace__slug=slug, project_id=project_id)
+            .filter(archived_at__isnull=True)
+            .select_related("project", "workspace", "owned_by")
+            .order_by(
+                sanitize_order_by(
+                    request.GET.get("order_by", "-created_at"),
+                    CYCLE_ORDER_BY_ALLOWLIST,
+                    default="-created_at",
+                )
+            )
+            .distinct()
+        )
+        return self.paginate(
+            request=request,
+            queryset=cycles,
+            on_results=lambda cycles: CycleLiteSerializer(cycles, many=True).data,
+        )
 
 
 class CycleDetailAPIEndpoint(BaseAPIView):
@@ -516,7 +580,9 @@ class CycleDetailAPIEndpoint(BaseAPIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-        serializer = CycleUpdateSerializer(cycle, data=request.data, partial=True, context={"request": request})
+        serializer = CycleUpdateSerializer(
+            cycle, data=request.data, partial=True, context={"request": request, "project_id": project_id}
+        )
         if serializer.is_valid():
             if (
                 request.data.get("external_id")
@@ -567,15 +633,7 @@ class CycleDetailAPIEndpoint(BaseAPIView):
         Only admins or the cycle creator can perform this action.
         """
         cycle = Cycle.objects.get(workspace__slug=slug, project_id=project_id, pk=pk)
-        if cycle.owned_by_id != request.user.id and (
-            not ProjectMember.objects.filter(
-                workspace__slug=slug,
-                member=request.user,
-                role=20,
-                project_id=project_id,
-                is_active=True,
-            ).exists()
-        ):
+        if cycle.created_by_id != request.user.id and not ProjectAdminPermission().has_permission(request, self):
             return Response(
                 {"error": "Only admin or creator can delete the cycle"},
                 status=status.HTTP_403_FORBIDDEN,
@@ -759,7 +817,7 @@ class CycleArchiveUnarchiveAPIEndpoint(BaseAPIView):
         Only cycles that have ended can be archived.
         """
         cycle = Cycle.objects.get(pk=cycle_id, project_id=project_id, workspace__slug=slug)
-        if cycle.end_date >= timezone.now():
+        if cycle.end_date is None or cycle.end_date >= timezone.now():
             return Response(
                 {"error": "Only completed cycles can be archived"},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -850,7 +908,7 @@ class CycleIssueListCreateAPIEndpoint(BaseAPIView):
         Returns paginated results with work item details, assignees, and labels.
         """
         # List
-        order_by = request.GET.get("order_by", "created_at")
+        order_by = sanitize_order_by(request.GET.get("order_by", "created_at"), ISSUE_ORDER_BY_ALLOWLIST, "created_at")
         issues = (
             Issue.issue_objects.filter(issue_cycle__cycle_id=cycle_id, issue_cycle__deleted_at__isnull=True)
             .annotate(
@@ -886,6 +944,11 @@ class CycleIssueListCreateAPIEndpoint(BaseAPIView):
             )
         )
 
+        # Restricted guests (GUEST role, guest_view_all_features disabled) may
+        # only see work items they created -- mirrors IssueDetailEndpoint.get.
+        if is_restricted_guest(request.user.id, project_id, slug):
+            issues = issues.filter(created_by=request.user)
+
         return self.paginate(
             request=request,
             queryset=(issues),
@@ -909,6 +972,7 @@ class CycleIssueListCreateAPIEndpoint(BaseAPIView):
             400: REQUIRED_FIELDS_RESPONSE,
         },
     )
+    @restrict_work_item_changes(body=body_list("issues"))
     def post(self, request, slug, project_id, cycle_id):
         """Add cycle issues
 
@@ -934,12 +998,29 @@ class CycleIssueListCreateAPIEndpoint(BaseAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Get all CycleWorkItems already created
-        cycle_issues = list(CycleIssue.objects.filter(~Q(cycle_id=cycle_id), issue_id__in=issues))
+        # Get all CycleWorkItems already created, scoped to the URL workspace + project
+        cycle_issues = list(
+            CycleIssue.objects.filter(
+                ~Q(cycle_id=cycle_id),
+                issue_id__in=issues,
+                workspace__slug=slug,
+                project_id=project_id,
+            )
+        )
         existing_issues = [
             str(cycle_issue.issue_id) for cycle_issue in cycle_issues if str(cycle_issue.issue_id) in issues
         ]
         new_issues = list(set(issues) - set(existing_issues))
+
+        # Scope to workspace+project to prevent cross-tenant IDOR
+        new_issues = list(
+            str(i)
+            for i in Issue.issue_objects.filter(
+                workspace__slug=slug,
+                project_id=project_id,
+                pk__in=new_issues,
+            ).values_list("id", flat=True)
+        )
 
         # New issues to create
         created_records = CycleIssue.objects.bulk_create(
@@ -1058,6 +1139,10 @@ class CycleIssueDetailAPIEndpoint(BaseAPIView):
         Retrieve details of a specific cycle work item.
         Returns paginated results with work item details, assignees, and labels.
         """
+        issue = Issue.objects.get(workspace__slug=slug, project_id=project_id, pk=issue_id)
+        if guest_cannot_view_issue(request.user.id, issue, slug):
+            raise Issue.DoesNotExist()
+
         cycle_issue = CycleIssue.objects.get(
             workspace__slug=slug,
             project_id=project_id,
@@ -1075,6 +1160,7 @@ class CycleIssueDetailAPIEndpoint(BaseAPIView):
             204: DELETED_RESPONSE,
         },
     )
+    @restrict_work_item_changes(param="issue_id")
     def delete(self, request, slug, project_id, cycle_id, issue_id):
         """Remove cycle work item
 

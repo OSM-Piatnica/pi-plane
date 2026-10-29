@@ -1,0 +1,198 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import React from "react";
+import { observer } from "mobx-react";
+import Link from "next/link";
+
+import { useTranslation } from "@plane/i18n";
+import { CloseOutline, EditOutline } from "@makeplane/propel/icons";
+// Plane
+import { setToast } from "@plane/blocks/toast";
+import type { ISearchIssueResponse, TIssueRelationTypes } from "@plane/types";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+import { cn, generateWorkItemLink } from "@plane/utils";
+// components
+import { ExistingIssuesListModal } from "@/components/core/modals/existing-issues-list-modal";
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
+// hooks
+import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { useIssues } from "@/hooks/store/use-issues";
+import { useProject } from "@/hooks/store/use-project";
+import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useTimeLineRelationOptions } from "@/components/relations";
+import { useOfferCancelDuplicate } from "@/components/issues/relations/use-offer-cancel-duplicate";
+import type { TRelationObject } from "../issue-detail-widgets/relations";
+
+type TIssueRelationSelect = {
+  className?: string;
+  workspaceSlug: string;
+  projectId: string;
+  issueId: string;
+  relationKey: TIssueRelationTypes;
+  disabled?: boolean;
+};
+
+export const IssueRelationSelect = observer(function IssueRelationSelect(props: TIssueRelationSelect) {
+  const { className = "", workspaceSlug, projectId, issueId, relationKey, disabled = false } = props;
+  // i18n
+  const { t } = useTranslation();
+  // hooks
+  const { getProjectById } = useProject();
+  const {
+    createRelation,
+    removeRelation,
+    relation: { getRelationByIssueIdRelationType },
+    isRelationModalOpen,
+    toggleRelationModal,
+  } = useIssueDetail();
+  const { issueMap } = useIssues();
+  const { isMobile } = usePlatformOS();
+  const offerCancelDuplicate = useOfferCancelDuplicate();
+  const relationIssueIds = getRelationByIssueIdRelationType(issueId, relationKey);
+  const ISSUE_RELATION_OPTIONS = useTimeLineRelationOptions();
+
+  const onSubmit = async (data: ISearchIssueResponse[]) => {
+    if (data.length === 0) {
+      setToast({
+        type: "error",
+        title: t("toast.error"),
+        message: t("issue.select.error"),
+      });
+      return;
+    }
+
+    await createRelation(
+      workspaceSlug,
+      projectId,
+      issueId,
+      relationKey,
+      data.map((i) => i.id)
+    )
+      .then(async () => {
+        toggleRelationModal(null, null);
+        await offerCancelDuplicate(
+          workspaceSlug,
+          projectId,
+          issueId,
+          relationKey,
+          data.map((i) => i.id)
+        );
+        return null;
+      })
+      .catch((error) => {
+        setToast({
+          type: "error",
+          title: t("toast.error"),
+          message: getIssueApiErrorMessage(error, "Could not create relation."),
+        });
+      });
+  };
+
+  if (!relationIssueIds) return null;
+
+  const isRelationKeyModalActive =
+    isRelationModalOpen?.relationType === relationKey && isRelationModalOpen?.issueId === issueId;
+
+  const currRelationOption: TRelationObject | undefined = ISSUE_RELATION_OPTIONS[relationKey];
+
+  return (
+    <>
+      <ExistingIssuesListModal
+        workspaceSlug={workspaceSlug}
+        projectId={projectId}
+        isOpen={isRelationKeyModalActive}
+        handleClose={() => toggleRelationModal(null, null)}
+        searchParams={{ issue_relation: true, issue_id: issueId }}
+        handleOnSubmit={onSubmit}
+        workspaceLevelToggle
+      />
+
+      <button
+        type="button"
+        className={cn(
+          "group flex items-center gap-2 rounded-sm px-2 py-0.5 outline-none",
+          {
+            "cursor-not-allowed": disabled,
+            "hover:bg-layer-1": !disabled,
+            "bg-layer-1": isRelationKeyModalActive,
+          },
+          className
+        )}
+        onClick={() => toggleRelationModal(issueId, relationKey)}
+        disabled={disabled}
+      >
+        <div className="flex w-full items-start justify-between">
+          {relationIssueIds.length > 0 ? (
+            <div className="flex flex-wrap items-center gap-2 py-0.5">
+              {relationIssueIds.map((relationIssueId) => {
+                const currentIssue = issueMap[relationIssueId];
+                if (!currentIssue) return;
+
+                const projectDetails = getProjectById(currentIssue.project_id);
+
+                return (
+                  <div
+                    key={relationIssueId}
+                    className={`group flex items-center gap-1 rounded-sm px-1.5 pt-1 pb-1 leading-3 hover:bg-surface-2 ${currRelationOption?.className}`}
+                  >
+                    <Tooltip label={`${t("common.title")}: ${currentIssue.name}`} disabled={isMobile}>
+                      <Link
+                        href={generateWorkItemLink({
+                          workspaceSlug,
+                          projectId: projectDetails?.id,
+                          issueId: currentIssue.id,
+                          projectIdentifier: projectDetails?.identifier,
+                          sequenceId: currentIssue?.sequence_id,
+                        })}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-caption-sm-medium"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {`${projectDetails?.identifier}-${currentIssue?.sequence_id}`}
+                      </Link>
+                    </Tooltip>
+                    {!disabled && (
+                      <Tooltip label={t("common.remove")} side="bottom" disabled={isMobile}>
+                        {/* react-doctor-disable-next-line html-no-nested-interactive -- remove control lives inside the clickable relation row; moving it out would change layout and behaviour */}
+                        <button
+                          type="button"
+                          className="inline-flex"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            removeRelation(workspaceSlug, projectId, issueId, relationKey, relationIssueId);
+                          }}
+                        >
+                          <CloseOutline className="h-2.5 w-2.5 text-tertiary hover:text-danger-primary" />
+                        </button>
+                      </Tooltip>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <span className="text-body-xs-regular text-placeholder">
+              {currRelationOption ? t(currRelationOption.i18n_placeholder) : null}
+            </span>
+          )}
+          {!disabled && (
+            <span
+              className={cn("flex-shrink-0 p-1 opacity-0 group-hover:opacity-100", {
+                "text-placeholder": relationIssueIds.length === 0,
+              })}
+            >
+              <EditOutline className="h-2.5 w-2.5 flex-shrink-0" />
+            </span>
+          )}
+        </div>
+      </button>
+    </>
+  );
+});

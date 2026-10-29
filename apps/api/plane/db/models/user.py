@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -20,6 +21,7 @@ from django.utils import timezone
 from plane.db.models import FileAsset
 from ..mixins import TimeAuditModel
 from plane.utils.color import get_random_color
+from plane.utils.weekend_days import validate_weekend_days
 
 
 def get_default_onboarding():
@@ -249,7 +251,13 @@ class Profile(TimeAuditModel):
     mobile_timezone_auto_set = models.BooleanField(default=False)
     # language
     language = models.CharField(max_length=255, default="en")
-    start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=SUNDAY)
+    # None: follow the project (or workspace) setting; a day of the week: this person's own choice
+    start_of_the_week = models.PositiveSmallIntegerField(
+        choices=START_OF_THE_WEEK_CHOICES, default=None, null=True, blank=True
+    )
+    # None: follow the workspace; a list of days (0 = Sunday ... 6 = Saturday): this person's own non-working days,
+    # used where no project decides (inside a project, the project's days apply)
+    weekend_days = models.JSONField(default=None, null=True, blank=True, validators=[validate_weekend_days])
     goals = models.JSONField(default=dict)
     background_color = models.CharField(max_length=255, default=get_random_color)
 
@@ -304,8 +312,8 @@ def create_user_notification(sender, instance, created, **kwargs):
 
         UserNotificationPreference.objects.create(
             user=instance,
-            property_change=True,
-            state_change=True,
+            property_change=False,
+            state_change=False,
             comment=True,
             mention=True,
             issue_completed=True,

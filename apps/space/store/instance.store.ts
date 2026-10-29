@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -14,7 +15,6 @@ import type { RootStore } from "@/store/root.store";
 
 type TError = {
   status: string;
-  message: string;
   data?: {
     is_activated: boolean;
     is_setup_done: boolean;
@@ -75,7 +75,6 @@ export class InstanceStore implements IInstanceStore {
         this.isLoading = false;
         this.error = {
           status: "error",
-          message: "Failed to fetch instance info",
         };
       });
     }

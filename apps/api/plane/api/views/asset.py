@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python Imports
@@ -16,9 +17,10 @@ from drf_spectacular.utils import OpenApiExample, OpenApiRequest
 
 # Module Imports
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
-from plane.settings.storage import S3Storage
+from plane.settings.storage import get_storage
 from plane.utils.path_validator import sanitize_filename
-from plane.db.models import FileAsset, User, Workspace
+from plane.db.models import FileAsset, Project, ProjectMember, User, Workspace
+from plane.app.permissions import WorkspaceUserPermission
 from plane.api.views.base import BaseAPIView
 from plane.api.serializers import (
     UserAssetUploadSerializer,
@@ -44,6 +46,7 @@ from plane.utils.openapi import (
     asset_docs,
 )
 from plane.utils.exception_logger import log_exception
+from plane.utils.file_size_limit import get_file_size_limit
 
 
 class UserAssetEndpoint(BaseAPIView):
@@ -117,11 +120,11 @@ class UserAssetEndpoint(BaseAPIView):
         # get the asset key
         name = sanitize_filename(request.data.get("name")) or "unnamed"
         type = request.data.get("type", "image/jpeg")
-        size = int(request.data.get("size", settings.FILE_SIZE_LIMIT))
+        size = int(request.data.get("size", get_file_size_limit()))
         entity_type = request.data.get("entity_type", False)
 
         # Check if the file size is within the limit
-        size_limit = min(size, settings.FILE_SIZE_LIMIT)
+        size_limit = min(size, get_file_size_limit())
 
         #  Check if the entity type is allowed
         if not entity_type or entity_type not in ["USER_AVATAR", "USER_COVER"]:
@@ -161,7 +164,7 @@ class UserAssetEndpoint(BaseAPIView):
         )
 
         # Get the presigned URL
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         # Generate a presigned URL to share an S3 object
         presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size_limit)
         # Return the presigned URL
@@ -290,11 +293,11 @@ class UserServerAssetEndpoint(BaseAPIView):
         # get the asset key
         name = sanitize_filename(request.data.get("name")) or "unnamed"
         type = request.data.get("type", "image/jpeg")
-        size = int(request.data.get("size", settings.FILE_SIZE_LIMIT))
+        size = int(request.data.get("size", get_file_size_limit()))
         entity_type = request.data.get("entity_type", False)
 
         # Check if the file size is within the limit
-        size_limit = min(size, settings.FILE_SIZE_LIMIT)
+        size_limit = min(size, get_file_size_limit())
 
         #  Check if the entity type is allowed
         if not entity_type or entity_type not in ["USER_AVATAR", "USER_COVER"]:
@@ -334,7 +337,7 @@ class UserServerAssetEndpoint(BaseAPIView):
         )
 
         # Get the presigned URL
-        storage = S3Storage(request=request, is_server=True)
+        storage = get_storage(request=request)
         # Generate a presigned URL to share an S3 object
         presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size_limit)
         # Return the presigned URL
@@ -404,6 +407,12 @@ class UserServerAssetEndpoint(BaseAPIView):
 class GenericAssetEndpoint(BaseAPIView):
     """This endpoint is used to upload generic assets that can be later bound to entities."""
 
+    # The workspace is taken straight from the URL slug, so every method must
+    # verify the caller is an active member of that workspace. Without this the
+    # endpoint is a cross-workspace IDOR (the public-API sibling of the
+    # CVE-2026-46558 dashboard fix).
+    permission_classes = [WorkspaceUserPermission]
+
     use_read_replica = True
 
     @asset_docs(
@@ -430,6 +439,13 @@ class GenericAssetEndpoint(BaseAPIView):
             # Get the asset
             asset = FileAsset.objects.get(id=asset_id, workspace_id=workspace.id, is_deleted=False)
 
+            # A project-bound asset requires active membership of its project.
+            if not asset.is_project_accessible_to(request.user):
+                return Response(
+                    {"error": "You don't have access to this asset."},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+
             # Check if the asset exists and is uploaded
             if not asset.is_uploaded:
                 return Response(
@@ -437,10 +453,14 @@ class GenericAssetEndpoint(BaseAPIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            # Generate presigned URL for GET
-            storage = S3Storage(request=request, is_server=True)
+            # Generate presigned URL for GET. Inline only for an allow-listed image type, which S3Storage
+            # pins as the response Content-Type; any other type downloads.
+            storage = get_storage(request=request)
             presigned_url = storage.generate_presigned_url(
-                object_name=asset.asset.name, filename=asset.attributes.get("name")
+                object_name=asset.asset.name,
+                filename=asset.attributes.get("name"),
+                disposition="inline",
+                content_type=asset.attributes.get("type"),
             )
 
             return Response(
@@ -501,7 +521,7 @@ class GenericAssetEndpoint(BaseAPIView):
         """
         name = sanitize_filename(request.data.get("name"))
         type = request.data.get("type")
-        size = int(request.data.get("size", settings.FILE_SIZE_LIMIT))
+        size = int(request.data.get("size", get_file_size_limit()))
         project_id = request.data.get("project_id")
         external_id = request.data.get("external_id")
         external_source = request.data.get("external_source")
@@ -514,7 +534,7 @@ class GenericAssetEndpoint(BaseAPIView):
             )
 
         # Check if the file size is within the limit
-        size_limit = min(size, settings.FILE_SIZE_LIMIT)
+        size_limit = min(size, get_file_size_limit())
 
         # Check if the file type is allowed
         if not type or type not in settings.ATTACHMENT_MIME_TYPES:
@@ -526,13 +546,38 @@ class GenericAssetEndpoint(BaseAPIView):
         # Get the workspace
         workspace = Workspace.objects.get(slug=slug)
 
+        # The asset is an issue attachment: it needs a project in this workspace that the
+        # caller is an active member of. Validated before the dedup lookup, which is scoped
+        # to that project.
+        if not project_id:
+            return Response(
+                {"error": "Project id is required.", "status": False},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if not Project.objects.filter(id=project_id, workspace_id=workspace.id).exists():
+            return Response(
+                {"error": "Project not found.", "status": False},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        if not ProjectMember.objects.filter(
+            member=request.user,
+            workspace_id=workspace.id,
+            project_id=project_id,
+            is_active=True,
+        ).exists():
+            return Response(
+                {"error": "You don't have access to this project.", "status": False},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
         # asset key
         asset_key = f"{workspace.id}/{uuid.uuid4().hex}-{name}"
 
-        # Check for existing asset with same external details if provided
+        # Check for existing asset with same external details in this project
         if external_id and external_source:
             existing_asset = FileAsset.objects.filter(
-                workspace__slug=slug,
+                workspace_id=workspace.id,
+                project_id=project_id,
                 external_source=external_source,
                 external_id=external_id,
                 is_deleted=False,
@@ -562,7 +607,7 @@ class GenericAssetEndpoint(BaseAPIView):
         )
 
         # Get the presigned URL
-        storage = S3Storage(request=request, is_server=True)
+        storage = get_storage(request=request)
         presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size_limit)
 
         return Response(
@@ -603,6 +648,13 @@ class GenericAssetEndpoint(BaseAPIView):
         """
         try:
             asset = FileAsset.objects.get(id=asset_id, workspace__slug=slug, is_deleted=False)
+
+            # A project-bound asset requires active membership of its project.
+            if not asset.is_project_accessible_to(request.user):
+                return Response(
+                    {"error": "You don't have access to this asset."},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
 
             # Update is_uploaded status
             asset.is_uploaded = request.data.get("is_uploaded", asset.is_uploaded)

@@ -1,0 +1,86 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useState } from "react";
+import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
+// types
+import { PROJECT_ERROR_MESSAGES } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
+import { setToast } from "@plane/blocks/toast";
+import type { IModule } from "@plane/types";
+// ui
+import { ConfirmDialog } from "@plane/blocks/dialog";
+// constants
+// hooks
+import { useModule } from "@/hooks/store/use-module";
+import { useAppRouter } from "@/hooks/use-app-router";
+
+type Props = {
+  data: IModule;
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+export const DeleteModuleModal = observer(function DeleteModuleModal(props: Props) {
+  const { data, isOpen, onClose } = props;
+  // states
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  // router
+  const router = useAppRouter();
+  const { workspaceSlug, projectId, moduleId, peekModule } = useParams();
+  // store hooks
+  const { deleteModule } = useModule();
+  const { t } = useTranslation();
+
+  const handleClose = () => {
+    onClose();
+    setIsDeleteLoading(false);
+  };
+
+  const handleDeletion = async () => {
+    if (!workspaceSlug || !projectId) return;
+
+    setIsDeleteLoading(true);
+
+    try {
+      await deleteModule(workspaceSlug.toString(), projectId.toString(), data.id);
+      if (moduleId || peekModule) router.push(`/${workspaceSlug}/projects/${data.project_id}/modules`);
+      setToast({
+        type: "success",
+        title: t("toast.success"),
+        message: t("entity.delete.success", { entity: t("common.module") }),
+      });
+      return;
+    } catch (errors) {
+      const isPermissionError =
+        (errors as { error?: string } | undefined)?.error === "You don't have the required permissions.";
+      const currentError = isPermissionError
+        ? PROJECT_ERROR_MESSAGES.permissionError
+        : PROJECT_ERROR_MESSAGES.moduleDeleteError;
+      setToast({
+        title: t(currentError.i18n_title),
+        type: "error",
+        message: currentError.i18n_message && t(currentError.i18n_message),
+      });
+    } finally {
+      setIsDeleteLoading(false);
+      onClose();
+    }
+  };
+
+  return (
+    <ConfirmDialog
+      handleClose={handleClose}
+      handleSubmit={handleDeletion}
+      isSubmitting={isDeleteLoading}
+      isOpen={isOpen}
+      title={t("project_module.delete_module")}
+      content={<>{t("module_ui.delete_modal_description", { name: data?.name })}</>}
+    />
+  );
+});

@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Codice univoco",
+            "label": "Codice monouso",
             "placeholder": "123456",
             "helper_text": "Codice di verifica inviato alla tua nuova email.",
             "errors": {
-              "required": "Il codice univoco è obbligatorio",
+              "required": "Il codice monouso è obbligatorio",
               "invalid": "Codice di verifica non valido. Riprova."
             }
           }
@@ -115,7 +115,7 @@
     "empty_state": {
       "activity": {
         "title": "Nessuna attività ancora",
-        "description": "Inizia creando un nuovo elemento di lavoro! Aggiungi dettagli e proprietà ad esso. Esplora Plane per vedere la tua attività."
+        "description": "Inizia creando un nuovo elemento di lavoro! Aggiungi dettagli e proprietà ad esso. Esplora Pi-Plane per vedere la tua attività."
       },
       "assigned": {
         "title": "Nessun elemento di lavoro assegnato a te",
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Percentuale di completamento",
+    "first_day_project_default": "Predefinito del progetto",
     "first_day_updated": "Primo giorno della settimana aggiornato con successo",
     "try_again_later": "Riprova più tardi.",
     "update_failed": "Aggiornamento non riuscito",

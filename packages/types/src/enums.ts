@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,9 +13,10 @@ export enum EUserPermissions {
 
 export type TUserPermissions = EUserPermissions.ADMIN | EUserPermissions.MEMBER | EUserPermissions.GUEST;
 
-// project network
+// project network (visibility tier)
 export enum EProjectNetwork {
-  PRIVATE = 0,
+  SECRET = 0,
+  PRIVATE = 1,
   PUBLIC = 2,
 }
 

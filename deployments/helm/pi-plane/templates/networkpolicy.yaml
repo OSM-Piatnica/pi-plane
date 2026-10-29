@@ -1,0 +1,55 @@
+{{- /*
+Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+SPDX-License-Identifier: AGPL-3.0-only
+The ingress-only isolation (everything in the release talks to itself, the public components are reachable from
+the ingress controller) follows the approach of the NetworkPolicies of the Hangar chart (szymczag/hangar,
+AGPL-3.0-only), reduced to ingress rules.
+See the LICENSE file for details.
+*/ -}}
+{{- if .Values.networkPolicy.enabled }}
+# Selecting every pod of the release makes anything not allowed below unreachable
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "pi-plane.fullname" . }}-internal
+  labels:
+    {{- include "pi-plane.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "pi-plane.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: {{ include "pi-plane.name" . }}
+              app.kubernetes.io/instance: {{ .Release.Name }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "pi-plane.fullname" . }}-public
+  labels:
+    {{- include "pi-plane.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "pi-plane.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+    matchExpressions:
+      - key: app.kubernetes.io/component
+        operator: In
+        values: [web, space, admin, live, api{{ if .Values.objectStorage.bundled.enabled }}, minio{{ end }}]
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              {{- if .Values.networkPolicy.ingressNamespaceLabels }}
+              {{- toYaml .Values.networkPolicy.ingressNamespaceLabels | nindent 14 }}
+              {{- else }}
+              kubernetes.io/metadata.name: {{ .Values.networkPolicy.ingressNamespace }}
+              {{- end }}
+{{- end }}

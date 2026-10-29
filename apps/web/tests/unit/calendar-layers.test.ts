@@ -10,7 +10,7 @@ import {
   buildCalendarPlacement,
   getCalendarDragPatch,
   getScheduledSpan,
-} from "../../core/store/issue/helpers/calendar-layers";
+} from "../../store/issue/helpers/calendar-layers";
 
 describe("getScheduledSpan", () => {
   it("returns the start..finish span", () => {

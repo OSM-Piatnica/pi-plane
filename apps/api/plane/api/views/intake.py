@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -27,9 +28,13 @@ from plane.api.serializers import (
 )
 from plane.app.permissions import ProjectLitePermission
 from plane.bgtasks.issue_activities_task import issue_activity
-from plane.db.models import Intake, IntakeIssue, Issue, Project, ProjectMember, State, StateGroup
+from plane.db.models import Intake, IntakeIssue, Issue, Project, ProjectMember, State, StateGroup, WorkspaceMember
 from plane.utils.host import base_host
+from plane.utils.serializers import writable_data
+from plane.utils.content_validator import validate_html_content
+from plane.utils.markdown_input import resolve_markdown_input
 from .base import BaseAPIView
+from .issue import is_restricted_guest
 from plane.db.models.intake import SourceType
 from plane.utils.openapi import (
     intake_docs,
@@ -71,7 +76,7 @@ class IntakeIssueListCreateAPIEndpoint(BaseAPIView):
         if intake is None or not project.intake_view:
             return IntakeIssue.objects.none()
 
-        return (
+        queryset = (
             IntakeIssue.objects.filter(
                 Q(snoozed_till__gte=timezone.now()) | Q(snoozed_till__isnull=True),
                 workspace__slug=self.kwargs.get("slug"),
@@ -81,6 +86,10 @@ class IntakeIssueListCreateAPIEndpoint(BaseAPIView):
             .select_related("issue", "workspace", "project")
             .order_by(self.kwargs.get("order_by", "-created_at"))
         )
+        # Restricted guests only see the intake work items they submitted
+        if is_restricted_guest(self.request.user.id, self.kwargs.get("project_id"), self.kwargs.get("slug")):
+            queryset = queryset.filter(created_by=self.request.user)
+        return queryset
 
     @intake_docs(
         operation_id="get_intake_work_items_list",
@@ -113,9 +122,9 @@ class IntakeIssueListCreateAPIEndpoint(BaseAPIView):
         return self.paginate(
             request=request,
             queryset=(issue_queryset),
-            on_results=lambda intake_issues: IntakeIssueSerializer(
-                intake_issues, many=True, fields=self.fields, expand=self.expand
-            ).data,
+            on_results=lambda intake_issues: (
+                IntakeIssueSerializer(intake_issues, many=True, fields=self.fields, expand=self.expand).data
+            ),
         )
 
     @intake_docs(
@@ -185,12 +194,20 @@ class IntakeIssueListCreateAPIEndpoint(BaseAPIView):
 
         # create an issue
         issue_data = request.data.get("issue", {})
+        # Markdown becomes description_html before the sanitizer below, which stays the only gate on either input
+        issue_data = resolve_markdown_input(
+            dict(issue_data), html_field="description_html", markdown_field="description_markdown"
+        )
         # Accept both "description" and "description_json" keys for the description_json field
         description_json = issue_data.get("description") or issue_data.get("description_json") or {}
+        # Sanitize description_html before saving to prevent stored XSS (GHSA-hh2r-3hwp-mvq3)
+        raw_description_html = issue_data.get("description_html", "<p></p>")
+        _, _, sanitized_description_html = validate_html_content(raw_description_html)
+        safe_description_html = sanitized_description_html if sanitized_description_html is not None else "<p></p>"
         issue = Issue.objects.create(
             name=issue_data.get("name"),
             description_json=description_json,
-            description_html=issue_data.get("description_html", "<p></p>"),
+            description_html=safe_description_html,
             priority=issue_data.get("priority", "none"),
             project_id=project_id,
             state_id=triage_state.id,
@@ -241,7 +258,7 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
         if intake is None or not project.intake_view:
             return IntakeIssue.objects.none()
 
-        return (
+        queryset = (
             IntakeIssue.objects.filter(
                 Q(snoozed_till__gte=timezone.now()) | Q(snoozed_till__isnull=True),
                 workspace__slug=self.kwargs.get("slug"),
@@ -251,6 +268,10 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
             .select_related("issue", "workspace", "project")
             .order_by(self.kwargs.get("order_by", "-created_at"))
         )
+        # Restricted guests only see the intake work items they submitted
+        if is_restricted_guest(self.request.user.id, self.kwargs.get("project_id"), self.kwargs.get("slug")):
+            queryset = queryset.filter(created_by=self.request.user)
+        return queryset
 
     @intake_docs(
         operation_id="retrieve_intake_work_item",
@@ -370,6 +391,12 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
                 ),
             ).get(pk=issue_id, workspace__slug=slug, project_id=project_id)
 
+            # Markdown reaches the serializer as html, and does so before the guest allowlist below drops
+            # unknown keys
+            issue_data = resolve_markdown_input(
+                dict(issue_data), html_field="description_html", markdown_field="description_markdown"
+            )
+
             # Only allow guests to edit name and description
             if project_member.role <= 5:
                 description_json = issue_data.get("description") or issue_data.get("description_json") or {}
@@ -379,7 +406,12 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
                     "description_json": description_json,
                 }
 
-            issue_serializer = IssueSerializer(issue, data=issue_data, partial=True)
+            issue_serializer = IssueSerializer(
+                issue,
+                data=issue_data,
+                context={"project_id": project_id, "workspace_id": issue.workspace_id},
+                partial=True,
+            )
 
             if not issue_serializer.is_valid():
                 return Response(issue_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -394,8 +426,8 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
         # Both serializers are valid, now save them
         if issue_serializer:
             current_instance = issue
-            # Log all the updates
-            requested_data = json.dumps(issue_data, cls=DjangoJSONEncoder)
+            # Log all the updates; read-only fields are ignored on save, so they are not reported either.
+            requested_data = json.dumps(writable_data(issue_serializer, issue_data), cls=DjangoJSONEncoder)
             issue_activity.delay(
                 type="issue.activity.updated",
                 requested_data=requested_data,
@@ -470,24 +502,33 @@ class IntakeIssueDetailAPIEndpoint(BaseAPIView):
             project_id=project_id,
             intake_id=intake.id,
         )
+        # Restricted guests only see the intake work items they submitted
+        if intake_issue.created_by_id != request.user.id and is_restricted_guest(request.user.id, project_id, slug):
+            raise IntakeIssue.DoesNotExist()
+
+        # Only the work item's creator, a project admin or a workspace admin can delete it
+        issue = Issue.objects.filter(workspace__slug=slug, project_id=project_id, pk=issue_id).first()
+        if not (
+            (issue is not None and issue.created_by_id == request.user.id)
+            or ProjectMember.objects.filter(
+                workspace__slug=slug,
+                member=request.user,
+                role=20,
+                project_id=project_id,
+                is_active=True,
+            ).exists()
+            or WorkspaceMember.objects.filter(
+                workspace__slug=slug, member=request.user, role=20, is_active=True
+            ).exists()
+        ):
+            return Response(
+                {"error": "Only admin or creator can delete the work item"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
 
         # Check the issue status
         if intake_issue.status in [-2, -1, 0, 2]:
             # Delete the issue also
-            issue = Issue.objects.filter(workspace__slug=slug, project_id=project_id, pk=issue_id).first()
-            if issue.created_by_id != request.user.id and (
-                not ProjectMember.objects.filter(
-                    workspace__slug=slug,
-                    member=request.user,
-                    role=20,
-                    project_id=project_id,
-                    is_active=True,
-                ).exists()
-            ):
-                return Response(
-                    {"error": "Only admin or creator can delete the work item"},
-                    status=status.HTTP_403_FORBIDDEN,
-                )
             issue.delete()
 
         intake_issue.delete()

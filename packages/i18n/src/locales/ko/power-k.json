@@ -54,8 +54,8 @@
         "indicator": "페이지",
         "lock": "잠금",
         "unlock": "잠금 해제",
-        "make_private": "비공개로 설정",
-        "make_public": "공개로 설정",
+        "make_private": "나만 볼 수 있게 설정",
+        "make_public": "프로젝트와 공유",
         "archive": "아카이브",
         "restore": "복원",
         "add_to_favorites": "즐겨찾기에 추가",
@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "키보드 단축키 열기",
-      "open_plane_documentation": "Plane 문서 열기",
+      "open_plane_documentation": "Pi-Plane 문서 열기",
       "join_forum": "포럼 참여",
       "report_bug": "버그 신고",
       "chat_with_us": "문의하기"
@@ -171,10 +171,17 @@
     "search_menu": {
       "no_results": "결과를 찾을 수 없습니다",
       "clear_search": "검색 지우기",
-      "go_to_advanced_search": "고급 검색으로 이동"
+      "go_to_advanced_search": "고급 검색으로 이동",
+      "results_in_workspace": "작업 공간에서 <term/>에 대한 검색 결과:",
+      "results_in_project": "프로젝트에서 <term/>에 대한 검색 결과:"
     },
     "footer": {
       "workspace_level": "작업 공간 수준"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "키보드 단축키 검색",
+      "no_results": "\"{query}\"에 대한 키보드 단축키를 찾을 수 없습니다",
+      "sequence_separator": "다음"
     },
     "group_titles": {
       "actions": "액션",

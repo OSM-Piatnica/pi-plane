@@ -1,0 +1,54 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+// types
+import { useTranslation } from "@plane/i18n";
+import type { TWebhookEventTypes } from "@plane/types";
+
+type Props = {
+  value: string;
+  onChange: (value: TWebhookEventTypes) => void;
+};
+
+const WEBHOOK_EVENT_TYPES: { key: TWebhookEventTypes; i18n_label: string }[] = [
+  {
+    key: "all",
+    i18n_label: "workspace_settings.settings.webhooks.options.all",
+  },
+  {
+    key: "individual",
+    i18n_label: "workspace_settings.settings.webhooks.options.individual",
+  },
+];
+
+export function WebhookOptions(props: Props) {
+  const { value, onChange } = props;
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <h6 className="text-13 font-medium">{t("workspace_settings.settings.webhooks.modal.question")}</h6>
+      <div className="space-y-3">
+        {WEBHOOK_EVENT_TYPES.map((option) => (
+          <div key={option.key} className="flex items-center gap-2">
+            <input
+              id={option.key}
+              type="radio"
+              name="webhook-event-type"
+              value={option.key}
+              checked={value == option.key}
+              onChange={() => onChange(option.key)}
+            />
+            <label className="text-13" htmlFor={option.key}>
+              {t(option.i18n_label)}
+            </label>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}

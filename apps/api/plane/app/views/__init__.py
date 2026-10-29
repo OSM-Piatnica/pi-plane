@@ -12,6 +12,12 @@ from .project.base import (
     ProjectArchiveUnarchiveEndpoint,
 )
 
+from .project.access_request import (
+    ProjectAccessRequestEndpoint,
+    ProjectAccessRequestMineEndpoint,
+    ProjectAccessRequestDetailEndpoint,
+)
+
 from .project.invite import (
     UserProjectInvitationsViewset,
     ProjectInvitationsViewset,
@@ -25,6 +31,7 @@ from .project.member import (
     ProjectMemberPreferenceEndpoint,
 )
 
+from .project.duplicate import ProjectCopyRetryEndpoint, ProjectCopyStatusEndpoint, ProjectDuplicateEndpoint
 from .project.issue_type import ProjectIssueTypeViewSet, ProjectIssueTypeBulkAssignEndpoint
 
 from .user.base import (
@@ -69,6 +76,13 @@ from .workspace.invite import (
     UserWorkspaceInvitationsViewSet,
 )
 from .workspace.label import WorkspaceLabelsEndpoint
+from .workspace.admin_message import WorkspaceAdminMessageEndpoint
+from .workspace.user_group import (
+    UserGroupDetailEndpoint,
+    UserGroupListEndpoint,
+    UserGroupMemberDetailEndpoint,
+    UserGroupMembersEndpoint,
+)
 from .workspace.state import WorkspaceStatesEndpoint
 from .workspace.user import (
     UserLastProjectWithWorkspaceEndpoint,
@@ -136,6 +150,8 @@ from .issue.base import (
 )
 
 from .issue.activity import IssueActivityEndpoint
+from .issue.hierarchy import IssueDateRollupEndpoint
+from .issue.worklog import IssueWorkLogDetailEndpoint, IssueWorkLogsEndpoint
 
 from .issue.archive import IssueArchiveViewSet, BulkArchiveIssuesEndpoint
 

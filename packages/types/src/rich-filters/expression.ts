@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -45,6 +46,7 @@ type TBaseFilterNode = {
  * - property: Field being filtered
  * - operator: Comparison operator (is, is not, between, not between, etc.)
  * - value: Filter value(s) - array for operators that support multiple values
+ * - isNegation: Whether the condition is negated (e.g. "state is not backlog")
  * @template P - Property key type
  * @template V - Value type
  */
@@ -53,6 +55,7 @@ export type TFilterConditionNode<P extends TFilterProperty, V extends TFilterVal
   property: P;
   operator: TSupportedOperators;
   value: SingleOrArray<V>;
+  isNegation?: boolean;
 };
 
 /**

@@ -14,7 +14,7 @@
     },
     "not_found": {
       "title": "Hata! Bir şeyler ters gitti",
-      "description": "Şu anda Plane hesabınızı alamıyoruz. Bu bir ağ hatası olabilir.",
+      "description": "Şu anda Pi-Plane hesabınızı alamıyoruz. Bu bir ağ hatası olabilir.",
       "cta_primary": "Yeniden yüklemeyi dene"
     },
     "server_error": {
@@ -29,7 +29,12 @@
       "restricted_description": "Erişim talep etmek için yöneticiyle iletişime geçin, sonra burada devam edebilirsiniz.",
       "join_description": "Katılmak için aşağıdaki butona tıklayın.",
       "cta_primary": "Projeye katıl",
-      "cta_loading": "Projeye katılınıyor"
+      "cta_loading": "Projeye katılınıyor",
+      "pending_title": "İsteğiniz onay bekliyor",
+      "pending_description": "Proje yöneticileri onayladığında sizi içeri alacak.",
+      "private_title": "Bu proje özel",
+      "private_description": "Projeyi görebilirsiniz ancak yöneticilerin sizi içeri alması gerekir. Onlara bir istek gönderin.",
+      "request_cta": "Erişim iste"
     },
     "invalid_project": {
       "title": "Proje bulunamadı",
@@ -188,7 +193,7 @@
     },
     "wiki": {
       "title": "Bir not, bir belge veya tam bir bilgi tabanı yazın.",
-      "description": "Sayfalar Plane'de düşünce yakalama alanıdır. Toplantı notları alın, kolayca biçimlendirin, iş öğelerini yerleştirin, bir bileşenler kütüphanesi kullanarak düzenleyin ve hepsini projenizin bağlamında tutun.",
+      "description": "Sayfalar Pi-Plane'de düşünce yakalama alanıdır. Toplantı notları alın, kolayca biçimlendirin, iş öğelerini yerleştirin, bir bileşenler kütüphanesi kullanarak düzenleyin ve hepsini projenizin bağlamında tutun.",
       "cta_primary": "Sayfanızı oluşturun"
     },
     "project_overview_state_sidebar": {

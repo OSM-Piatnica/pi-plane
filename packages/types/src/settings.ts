@@ -14,7 +14,7 @@ export type TProfileSettingsTabs = "general" | "preferences" | "activity" | "not
 export type TWorkspaceSettingsTabs =
   | "general"
   | "members"
-  | "billing-and-plans"
+  | "groups"
   | "export"
   | "import"
   | "work-item-templates"
@@ -32,11 +32,7 @@ export type TWorkspaceSettingsItem = {
 export type TProjectSettingsTabs =
   | "general"
   | "members"
-  | "features_cycles"
-  | "features_modules"
-  | "features_views"
-  | "features_pages"
-  | "features_intake"
+  | "features"
   | "states"
   | "workflows"
   | "labels"

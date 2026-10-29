@@ -18,11 +18,14 @@
     "check:lint": "oxlint --max-warnings=38 .",
     "check:types": "tsc --noEmit",
     "check:format": "oxfmt --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "fix:lint": "oxlint --fix .",
     "fix:format": "oxfmt .",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
+    "@makeplane/propel": "0.7.3",
     "@plane/constants": "workspace:*",
     "@plane/types": "workspace:*",
     "chroma-js": "^3.2.0",
@@ -38,7 +41,7 @@
     "rehype-remark": "^10.0.1",
     "remark-gfm": "^4.0.1",
     "remark-stringify": "^11.0.0",
-    "sanitize-html": "2.17.0",
+    "sanitize-html": "2.18.1",
     "tailwind-merge": "3.4.0",
     "unified": "^11.0.5",
     "uuid": "catalog:"
@@ -53,6 +56,7 @@
     "@types/react": "catalog:",
     "@types/sanitize-html": "2.16.0",
     "tsdown": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "^4.1.12"
   }
 }

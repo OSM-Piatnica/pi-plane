@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -81,7 +82,10 @@ export type TUserProfile = {
   language: string;
   created_at: Date | string;
   updated_at: Date | string;
-  start_of_the_week: EStartOfTheWeek;
+  /** The person's own first day of the week; null follows the project (or workspace) setting. */
+  start_of_the_week: EStartOfTheWeek | null;
+  /** The person's own non-working days (0 = Sunday ... 6 = Saturday); null follows the workspace. */
+  weekend_days: number[] | null;
 };
 
 export interface IInstanceAdminStatus {
@@ -181,12 +185,17 @@ export interface IUserProjectsRole {
   [projectId: string]: TUserPermissions;
 }
 
+export type TEmailNotificationFrequency = "instant" | "hourly" | "daily";
+
 export interface IUserEmailNotificationSettings {
+  email_frequency: TEmailNotificationFrequency;
   property_change: boolean;
   state_change: boolean;
   comment: boolean;
   mention: boolean;
   issue_completed: boolean;
+  project_access_request: boolean;
+  workspace_admin_message: boolean;
 }
 
 export type TProfileViews = "assigned" | "created" | "subscribed";

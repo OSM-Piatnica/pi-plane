@@ -5,7 +5,7 @@
       "not_right_now": "Nu acum",
       "create_project": {
         "title": "Creează un proiect",
-        "description": "Majoritatea lucrurilor încep cu un proiect în Plane.",
+        "description": "Majoritatea lucrurilor încep cu un proiect în Pi-Plane.",
         "cta": "Începe acum"
       },
       "invite_team": {
@@ -19,7 +19,7 @@
         "cta": "Configurează acest spațiu de lucru"
       },
       "personalize_account": {
-        "title": "Personalizează Plane.",
+        "title": "Personalizează Pi-Plane.",
         "description": "Alege-ți poza de profil, culorile și multe altele.",
         "cta": "Personalizează acum"
       },
@@ -53,7 +53,7 @@
       }
     },
     "new_at_plane": {
-      "title": "Noutăți în Plane"
+      "title": "Noutăți în Pi-Plane"
     },
     "quick_tutorial": {
       "title": "Tutorial rapid"
@@ -64,12 +64,12 @@
     },
     "manage_widgets": "Gestionează mini-aplicațiile",
     "title": "Acasă",
-    "star_us_on_github": "Dă-ne o stea pe GitHub",
+    "star_us_on_github": "Dați-ne o stea pe GitHub",
     "business_trial_banner": {
       "title": "Perioada de probă de 14 zile pentru planul Business este activă!",
       "description": "Explorați toate funcțiile Business. Când sunteți pregătit, alegeți să vă abonați. Nu veți fi facturat automat.",
       "trial_ends_today": "Perioada de probă se încheie astăzi",
-      "trial_ends_in_days": "Perioada de probă se încheie în {days, plural, one {# zi} other {# zile}}",
+      "trial_ends_in_days": "Perioada de probă se încheie în {days, plural, one {# zi} few {# zile} other {# de zile}}",
       "start_subscription": "Începe abonamentul",
       "explore_business_features": "Explorează funcțiile Business"
     }

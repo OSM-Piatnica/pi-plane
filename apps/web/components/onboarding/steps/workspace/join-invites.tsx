@@ -1,0 +1,138 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useState } from "react";
+// plane imports
+import { getRoleI18nKey } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
+import { Button } from "@makeplane/propel/components/button";
+import { Button as ButtonElement } from "@makeplane/propel/elements/button";
+import type { IWorkspaceMemberInvitation } from "@plane/types";
+import { Checkbox } from "@makeplane/propel/components/checkbox";
+import { Spinner } from "@plane/blocks/spinner";
+import { truncateText } from "@plane/utils";
+// constants
+import { WorkspaceLogo } from "@/components/workspace/logo";
+// hooks
+import { useWorkspace } from "@/hooks/store/use-workspace";
+import { useUserSettings } from "@/hooks/store/user";
+// services
+import { WorkspaceService } from "@/services/workspace.service";
+// local components
+import { CommonOnboardingHeader } from "../common";
+
+type Props = {
+  invitations: IWorkspaceMemberInvitation[];
+  handleNextStep: () => Promise<void>;
+  handleCurrentViewChange: () => void;
+};
+const workspaceService = new WorkspaceService();
+
+export function WorkspaceJoinInvitesStep(props: Props) {
+  const { invitations, handleNextStep, handleCurrentViewChange } = props;
+  // plane hooks
+  const { t } = useTranslation();
+  // states
+  const [isJoiningWorkspaces, setIsJoiningWorkspaces] = useState(false);
+  const [invitationsRespond, setInvitationsRespond] = useState<string[]>([]);
+  const invitationsRespondSet = new Set(invitationsRespond);
+  // store hooks
+  const { fetchWorkspaces } = useWorkspace();
+  const { fetchCurrentUserSettings } = useUserSettings();
+
+  // handle invitation
+  const handleInvitation = (workspace_invitation: IWorkspaceMemberInvitation, action: "accepted" | "withdraw") => {
+    if (action === "accepted") {
+      setInvitationsRespond((prevData) => [...prevData, workspace_invitation.id]);
+    } else if (action === "withdraw") {
+      setInvitationsRespond((prevData) => prevData.filter((item: string) => item !== workspace_invitation.id));
+    }
+  };
+
+  // submit invitations
+  const submitInvitations = async () => {
+    const invitation = invitations?.find((item) => item.id === invitationsRespond[0]);
+
+    if (invitationsRespond.length <= 0 && !invitation?.role) return;
+
+    setIsJoiningWorkspaces(true);
+
+    try {
+      await workspaceService.joinWorkspaces({ invitations: invitationsRespond });
+      await fetchWorkspaces();
+      await fetchCurrentUserSettings();
+      await handleNextStep();
+    } catch (error: any) {
+      console.error(error);
+      setIsJoiningWorkspaces(false);
+    }
+  };
+
+  return invitations && invitations.length > 0 ? (
+    <div className="flex flex-col gap-10">
+      <CommonOnboardingHeader
+        title={t("onboarding.workspace.join_or_create_title")}
+        description={t("onboarding.workspace.all_work_unified")}
+      />
+      <div className="flex flex-col gap-3">
+        {invitations &&
+          invitations.length > 0 &&
+          invitations.map((invitation) => {
+            const isSelected = invitationsRespondSet.has(invitation.id);
+            const invitedWorkspace = invitation.workspace;
+            return (
+              // react-doctor-disable-next-line click-events-have-key-events, no-static-element-interactions -- the row wraps a Checkbox, so a button would nest interactive controls
+              <div // oxlint-disable-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- row wraps a Checkbox; nested interactive controls
+                key={invitation.id}
+                className={`flex cursor-pointer items-center gap-2 rounded-lg border border-subtle px-3 py-2 hover:bg-surface-2`}
+                onClick={() => handleInvitation(invitation, isSelected ? "withdraw" : "accepted")}
+              >
+                <div className="flex-shrink-0">
+                  <WorkspaceLogo
+                    logo={invitedWorkspace?.logo_url}
+                    name={invitedWorkspace?.name}
+                    classNames="size-8 flex-shrink-0 rounded-lg"
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-13 font-medium">{truncateText(invitedWorkspace?.name, 30)}</div>
+                  <p className="text-11 text-secondary">{t(getRoleI18nKey(invitation.role))}</p>
+                </div>
+                <span className="pointer-events-none flex-shrink-0">
+                  <Checkbox
+                    checked={isSelected}
+                    aria-label={invitedWorkspace?.name ?? t("app_text.onboarding.select_workspace_invitation")}
+                  />
+                </span>
+              </div>
+            );
+          })}
+      </div>
+      <div className="flex flex-col gap-4">
+        <ButtonElement
+          variant="primary"
+          size="lg"
+          stretch="full"
+          onClick={submitInvitations}
+          disabled={isJoiningWorkspaces || !invitationsRespond.length}
+        >
+          {isJoiningWorkspaces ? <Spinner height="20px" width="20px" /> : t("common.continue")}
+        </ButtonElement>
+        <Button
+          variant="ghost"
+          size="lg"
+          stretch="full"
+          label={t("onboarding.workspace.create_new")}
+          onClick={handleCurrentViewChange}
+          disabled={isJoiningWorkspaces}
+        />
+      </div>
+    </div>
+  ) : (
+    <div>{t("onboarding.workspace.no_invitations_found")}</div>
+  );
+}

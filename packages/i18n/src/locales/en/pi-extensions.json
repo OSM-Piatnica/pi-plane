@@ -42,21 +42,50 @@
           "blocked_by": "{issue} cannot start until {related} is finished (blocked by relation).",
           "blocking": "{issue} has to finish before {related} starts (blocking relation).",
           "finish_after": "{issue} cannot finish before {related} (finishes after relation).",
+          "finish_after_start": "{issue} cannot finish before {related} starts (finishes after start relation).",
           "finish_before": "{issue} has to finish on or before {related} (finishes before relation).",
           "start_after": "{issue} cannot start before {related} (starts after relation).",
-          "start_before": "{issue} has to start on or before {related} (starts before relation)."
+          "start_before": "{issue} has to start on or before {related} (starts before relation).",
+          "start_before_finish": "{issue} has to start on or before {related} finishes (starts before finish relation)."
         },
         "status": {
           "finish_after": "{issue} cannot be completed until {related} is completed (finishes after relation).",
+          "finish_after_start": "{issue} cannot be completed until {related} has started (finishes after start relation).",
           "start_after": "{issue} cannot start until {related} has started (starts after relation)."
-        }
+        },
+        "self": "{issue} cannot be related to itself.",
+        "cycle": "{issue} and {related} would end up in a loop of relations. Remove the opposite relation first.",
+        "lag_suffix": " Relation lag: {lag} d."
       },
       "date_conflict": "These dates conflict with existing dependencies. Adjust related work items or remove the dependency first.",
       "dependency_create_failed": "Could not create dependency. Please try again.",
-      "dependency_created": "Work item dependency was created successfully."
-    }
+      "dependency_created": "Work item dependency was created successfully.",
+      "lag": {
+        "hint": "Days between the two dates; negative lets them overlap.",
+        "invalid": "Enter a whole number of days between -{max} and {max}.",
+        "label": "Lag (days)",
+        "update_failed": "Could not change the lag."
+      },
+      "reschedule": {
+        "confirm": "Move them",
+        "content": "This change would break dependencies. These work items can be moved later, keeping their duration, so that every dependency still holds:",
+        "title": "Move the dependent work items too?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Move to cancelled",
+        "content": "{issue} is now marked as a duplicate of {originals}. Move it to “{state}”? It stays linked and visible.",
+        "failed": "Could not cancel the work item.",
+        "keep": "Keep it open",
+        "title": "Cancel this work item?"
+      }
+    },
+    "edit_restricted": "Only the assignees of this work item, the project lead and project admins can change it."
   },
   "project_create": {
+    "advanced": {
+      "description": "Rules and relation types. You can change them later in the project's Workflows settings.",
+      "title": "Advanced options"
+    },
     "features": {
       "cycles": {
         "description": "Timebox work in recurring periods.",
@@ -115,11 +144,53 @@
       "pending_approval_title": "Approval required",
       "rejected_success": "Transition rejected.",
       "resolving_approval": "Processing approval...",
+      "rules": {
+        "heading": "Rules",
+        "description": "Project rules that apply on their own, whether or not workflows are enabled.",
+        "parent_completion": {
+          "description": "A work item cannot be completed while it has sub-items that are neither completed nor cancelled. Reopening a finished sub-item under a completed parent asks to reopen the parent as well.",
+          "title": "Complete a parent only when its sub-items are done"
+        },
+        "reopen_parent": {
+          "confirm": "Reopen",
+          "content": "This project does not allow a parent to stay completed while a sub-item is open. These completed parents will be reopened as well: {names}",
+          "title": "Reopen the parent work items too?"
+        },
+        "blocked_status": {
+          "description": "A work item cannot move to a started or completed state while a work item that blocks it is still open (completed and cancelled blockers do not count). Staying in backlog or todo, and cancelling, remain possible.",
+          "title": "Start or complete an item only when its blockers are done"
+        },
+        "assignee_edit": {
+          "description": "Once a work item has an assignee, only its assignees, the project lead and project admins can change it: fields, state, dates, sub-items, relations, links, attachments, cycles and modules, deleting and archiving. Everyone can still comment. Work items without an assignee stay open to all members.",
+          "title": "Only assignees, the project lead and admins can change a work item"
+        }
+      },
       "save_error": "Could not save workflow configuration.",
       "save_success": "Workflow configuration saved.",
       "toggle_error": "Could not update workflow settings.",
       "transition": "Transition",
-      "transitions_configured": "transitions configured"
+      "transition_count": "{count, plural, one {# transition} other {# transitions}}",
+      "transitions_configured": "transitions configured",
+      "relation_types": {
+        "heading": "Relation types",
+        "description": "Choose which relations people can add in this project. Blocking is always available, and existing relations stay when a type is switched off.",
+        "schedule": {
+          "description": "Starts before, finishes before and starts before finish, with an optional lag in days.",
+          "title": "Schedule dependencies"
+        },
+        "traceability": {
+          "description": "Implements, causes, clones and tests, with their reverses.",
+          "title": "Traceability relations"
+        },
+        "relates_to": {
+          "description": "A plain link between two items.",
+          "title": "Relates to"
+        },
+        "duplicate": {
+          "description": "Mark an item as a duplicate of another.",
+          "title": "Duplicate"
+        }
+      }
     }
   },
   "project_templates": {

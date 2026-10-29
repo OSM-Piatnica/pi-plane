@@ -14,6 +14,7 @@ from plane.utils.issue_relation_constraints import (
     status_violation_error,
 )
 from plane.utils.issue_relation_mapper import get_inverse_relation
+from plane.utils.weekend_days import default_weekend_days
 
 # Distinguishes "the caller did not mention this date" from "the caller cleared this date",
 # because a cleared date lifts the constraint instead of falling back to the stored one.
@@ -28,9 +29,22 @@ def issue_display_ref(issue) -> str:
     return str(issue.id)
 
 
+def weekend_days_of(issue):
+    """The weekend days of the work item's project; Saturday and Sunday when it has none to read."""
+    project = getattr(issue, "project", None)
+    days = getattr(project, "weekend_days", None)
+    return default_weekend_days() if days is None else days
+
+
+def _is_satisfied(relation_type, issue, issue_dates, related, related_dates, lag):
+    return is_timeline_relation_satisfied(
+        relation_type, issue_dates, related_dates, lag, weekend_days_of(issue), weekend_days_of(related)
+    )
+
+
 def _iter_timeline_constraints(issue):
     """
-    Yield (relation_type_from_issue_perspective, related_issue) for date-bearing relations.
+    Yield (relation_type_from_issue_perspective, related_issue, lag_days) for date-bearing relations.
     Only the forward direction is stored, so the reverse rows are inverted on the way out.
     """
     forward = (
@@ -42,7 +56,7 @@ def _iter_timeline_constraints(issue):
         .iterator()
     )
     for relation in forward:
-        yield relation.relation_type, relation.related_issue
+        yield relation.relation_type, relation.related_issue, relation.lag_days
 
     reverse = (
         IssueRelation.objects.filter(
@@ -53,7 +67,7 @@ def _iter_timeline_constraints(issue):
         .iterator()
     )
     for relation in reverse:
-        yield get_inverse_relation(relation.relation_type), relation.issue
+        yield get_inverse_relation(relation.relation_type), relation.issue, relation.lag_days
 
 
 def validate_issue_timeline_relations(
@@ -81,7 +95,7 @@ def validate_issue_timeline_relations(
 
     issue_ref = issue_display_ref(issue)
 
-    for relation_type, related in _iter_timeline_constraints(issue):
+    for relation_type, related, lag in _iter_timeline_constraints(issue):
         related_ref = issue_display_ref(related)
         related_dates = {
             "start_date": related.start_date,
@@ -89,8 +103,8 @@ def validate_issue_timeline_relations(
         }
         related_group = getattr(getattr(related, "state", None), "group", None)
 
-        if check_dates and not is_timeline_relation_satisfied(relation_type, issue_dates, related_dates):
-            return date_violation_error(relation_type, issue_ref, related_ref)
+        if check_dates and not _is_satisfied(relation_type, issue, issue_dates, related, related_dates, lag):
+            return date_violation_error(relation_type, issue_ref, related_ref, lag)
 
         if check_status and state_group is not None:
             if not is_status_transition_allowed(relation_type, state_group, related_group):
@@ -131,7 +145,7 @@ def validate_issue_update_payload(issue, attrs):
     )
 
 
-def validate_new_timeline_relation(issue, related_issue, relation_type):
+def validate_new_timeline_relation(issue, related_issue, relation_type, lag=0):
     """
     Validate creating a timeline relation between two existing issues.
     `relation_type` is from the API perspective (may be reverse like start_after).
@@ -149,8 +163,8 @@ def validate_new_timeline_relation(issue, related_issue, relation_type):
     issue_ref = issue_display_ref(issue)
     related_ref = issue_display_ref(related_issue)
 
-    if not is_timeline_relation_satisfied(relation_type, issue_dates, related_dates):
-        return date_violation_error(relation_type, issue_ref, related_ref)
+    if not _is_satisfied(relation_type, issue, issue_dates, related_issue, related_dates, lag):
+        return date_violation_error(relation_type, issue_ref, related_ref, lag)
 
     if not is_status_transition_allowed(relation_type, issue_group, related_group):
         return status_violation_error(relation_type, issue_ref, related_ref)
@@ -169,7 +183,7 @@ def _fetch_timeline_constraints(issue_ids):
         relation_type__in=STORED_TIMELINE_RELATION_TYPES,
     ).select_related("related_issue", "related_issue__project")
     for relation in forward:
-        constraints[str(relation.issue_id)].append((relation.relation_type, relation.related_issue))
+        constraints[str(relation.issue_id)].append((relation.relation_type, relation.related_issue, relation.lag_days))
 
     reverse = IssueRelation.objects.filter(
         related_issue_id__in=issue_ids,
@@ -177,7 +191,7 @@ def _fetch_timeline_constraints(issue_ids):
     ).select_related("issue", "issue__project")
     for relation in reverse:
         constraints[str(relation.related_issue_id)].append(
-            (get_inverse_relation(relation.relation_type), relation.issue)
+            (get_inverse_relation(relation.relation_type), relation.issue, relation.lag_days)
         )
 
     return constraints
@@ -214,20 +228,16 @@ def validate_issue_dates_batch(updates, issues_by_id):
     for issue_id, issue_dates in proposed.items():
         issue_ref = issue_display_ref(issues_by_id[issue_id])
 
-        for relation_type, related in constraints.get(issue_id, []):
+        for relation_type, related, lag in constraints.get(issue_id, []):
             related_dates = proposed.get(
                 str(related.id),
                 {"start_date": related.start_date, "finish_date": related.finish_date},
             )
-            if not is_timeline_relation_satisfied(relation_type, issue_dates, related_dates):
-                return date_violation_error(relation_type, issue_ref, issue_display_ref(related))
+            if not _is_satisfied(relation_type, issues_by_id[issue_id], issue_dates, related, related_dates, lag):
+                return date_violation_error(relation_type, issue_ref, issue_display_ref(related), lag)
 
     return None
 
 
 def get_issue_with_timeline_prefetch(issue_id):
-    return (
-        Issue.objects.select_related("state", "project")
-        .filter(pk=issue_id)
-        .first()
-    )
+    return Issue.objects.select_related("state", "project").filter(pk=issue_id).first()

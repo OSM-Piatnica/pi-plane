@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """
@@ -12,16 +13,18 @@ SPECTACULAR_SETTINGS = {
     # ========================================================================
     # Basic API Information
     # ========================================================================
-    "TITLE": "The Plane REST API",
+    "TITLE": "The Pi-Plane REST API",
     "DESCRIPTION": (
-        "The Plane REST API\n\n"
+        "The Pi-Plane REST API\n\n"
         "Visit our quick start guide and full API documentation at "
         "[developers.plane.so](https://developers.plane.so/api-reference/introduction)."
     ),
     "CONTACT": {
-        "name": "Plane",
-        "url": "https://plane.so",
-        "email": "support@plane.so",
+        "name": "Pi-Plane",
+        "url": "https://github.com/OSM-Piatnica/pi-plane",
+        # Disabled: upstream listed support@plane.so, which is not a Pi-Plane contact. Add a Pi-Plane
+        # support mailbox here if one is set up.
+        # "email": "support@plane.so",
     },
     "VERSION": "0.0.1",
     "LICENSE": {

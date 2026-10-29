@@ -67,6 +67,11 @@
       "extra": {
         "show_sub_issues": "Показывать подэлементы",
         "show_empty_groups": "Показывать пустые группы"
+      },
+      "color_by": {
+        "label": "Цвет по",
+        "state": "Статус",
+        "key": "ID элемента"
       }
     },
     "layouts": {
@@ -91,8 +96,8 @@
     "comments": {
       "placeholder": "Добавить комментарий",
       "switch": {
-        "private": "Изменить на приватный комментарий",
-        "public": "Изменить на публичный комментарий"
+        "private": "Сделать комментарий внутренним",
+        "public": "Показывать этот комментарий в интернете"
       },
       "create": {
         "success": "Комментарий успешно добавлен",
@@ -149,6 +154,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Внутренний",
+        "external": "Виден в интернете"
       }
     },
     "empty_state": {
@@ -173,7 +182,9 @@
       },
       "failed": {
         "message": "Ошибка архивации рабочего элемента. Попробуйте позже."
-      }
+      },
+      "banner_message": "Этот рабочий элемент архивирован. Перейдите в раздел «Архивы», чтобы восстановить его.",
+      "go_to_archives": "Перейти в архивы"
     },
     "restore": {
       "success": {
@@ -194,7 +205,15 @@
       "finish_before": "Заканчивается до",
       "finish_after": "Заканчивается после",
       "implements": "Реализует",
-      "implemented_by": "Реализовано"
+      "implemented_by": "Реализовано",
+      "causes": "Вызывает",
+      "caused_by": "Вызвано",
+      "clones": "Клонирует",
+      "cloned_by": "Клонировано",
+      "tests": "Тестирует",
+      "tested_by": "Тестируется",
+      "start_before_finish": "Начинается до завершения",
+      "finish_after_start": "Завершается после начала"
     },
     "copy_link": "Копировать ссылку на рабочий элемент",
     "delete": {
@@ -332,7 +351,9 @@
         "description": "Чтобы увидеть все рабочие элементы, очистите все примененные фильтры.",
         "action": "Очистить фильтры"
       }
-    }
+    },
+    "expand": "Развернуть подэлементы",
+    "collapse": "Свернуть подэлементы"
   },
   "issue_relation": {
     "empty_state": {
@@ -370,6 +391,10 @@
         "title": "Не удалось обновить рабочие элементы",
         "message": "Изменение состояния не разрешено для некоторых рабочих элементов. Убедитесь, что изменение состояния разрешено."
       }
+    },
+    "upgrade_banner": {
+      "message": "Изменяйте статус, приоритет и другие параметры сразу для нескольких рабочих элементов. В среднем экономьте три минуты на операцию.",
+      "cta": "Обновить до One"
     }
   },
   "recurring_work_items": {
@@ -551,6 +576,532 @@
     "move_to_project_failed": "Не удалось переместить рабочий элемент в проект. Повторите попытку.",
     "project_work_items_count": "{count, plural, one {В этом проекте # рабочий элемент} few {В этом проекте # рабочих элемента} many {В этом проекте # рабочих элементов} other {В этом проекте # рабочего элемента}}",
     "archived_banner": "Этот рабочий элемент архивирован. Чтобы восстановить его, перейдите в раздел «Архивы».",
-    "go_to_archives": "Перейти в архивы"
+    "go_to_archives": "Перейти в архивы",
+    "select_work_item": "Выберите рабочий элемент",
+    "select_work_items_to_delete": "Выберите рабочие элементы для удаления",
+    "delete_selected_work_items": "Удалить выбранные рабочие элементы",
+    "sub_work_item_progress": "Прогресс подэлементов",
+    "archived_work_items_count": "{count, plural, one {В архиве проекта # рабочий элемент} few {В архиве проекта # рабочих элемента} many {В архиве проекта # рабочих элементов} other {В архиве проекта # рабочего элемента}}",
+    "add_related_work_items": "Добавить связанные рабочие элементы",
+    "toggle_workspace_level_search": "Переключить поиск на уровне рабочего пространства",
+    "search_results_for_in_project": "Результаты поиска по запросу «<query/>» в проекте:",
+    "cannot_move_to_completed_cycle": "Рабочий элемент нельзя переместить в завершённые циклы"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "архивировал(а) рабочий элемент.",
+      "assignee": {
+        "added": "добавил(а) нового ответственного <user/>.",
+        "added_with_issue": "добавил(а) нового ответственного <user/> в <issue/>.",
+        "removed": "удалил(а) ответственного <user/>.",
+        "removed_with_issue": "удалил(а) ответственного <user/> из <issue/>."
+      },
+      "attachment": {
+        "added": "загрузил(а) новое вложение.",
+        "added_with_issue": "загрузил(а) новое вложение в <issue/>.",
+        "removed": "удалил(а) вложение.",
+        "removed_with_issue": "удалил(а) вложение из <issue/>."
+      },
+      "created": "создал(а) рабочий элемент.",
+      "created_via": "создал(а) рабочий элемент через <source/>.",
+      "cycle": {
+        "added": "добавил(а) этот рабочий элемент в цикл <cycle/>",
+        "removed": "удалил(а) рабочий элемент из цикла <cycle/>",
+        "set": "установил(а) цикл: <cycle/>"
+      },
+      "deleted": "удалил(а) рабочий элемент.",
+      "description": {
+        "updated": "обновил(а) описание.",
+        "updated_with_issue": "обновил(а) описание <issue/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# день} few {# дня} many {# дней} other {# дня}}",
+        "removed": "удалил(а) длительность.",
+        "removed_with_issue": "удалил(а) длительность у <issue/>.",
+        "set": "установил(а) длительность: <value/>.",
+        "set_with_issue": "установил(а) длительность <value/> для <issue/>."
+      },
+      "estimate": {
+        "removed": "удалил(а) оценку <value/>.",
+        "removed_with_issue": "удалил(а) оценку <value/> у <issue/>.",
+        "set": "установил(а) оценку: <value/>.",
+        "set_with_issue": "установил(а) оценку <value/> для <issue/>."
+      },
+      "intake": {
+        "accepted": "принял(а) этот рабочий элемент из Intake.",
+        "declined": "отклонил(а) этот рабочий элемент из Intake.",
+        "duplicate": "отклонил(а) этот рабочий элемент из Intake, отметив его как дубликат другого рабочего элемента.",
+        "snoozed": "отложил(а) этот рабочий элемент.",
+        "updated": "обновил(а) статус рабочего элемента в Intake."
+      },
+      "label": {
+        "added": "добавил(а) новую метку <label/>",
+        "added_with_issue": "добавил(а) новую метку <label/> в <issue/>",
+        "removed": "удалил(а) метку <label/>",
+        "removed_with_issue": "удалил(а) метку <label/> из <issue/>"
+      },
+      "link": {
+        "added": "добавил(а) <link>ссылку</link>.",
+        "added_with_issue": "добавил(а) <link>ссылку</link> в <issue/>.",
+        "removed": "удалил(а) эту <link>ссылку</link>.",
+        "removed_with_issue": "удалил(а) эту <link>ссылку</link> из <issue/>.",
+        "updated": "обновил(а) <link>ссылку</link>.",
+        "updated_with_issue": "обновил(а) <link>ссылку</link> в <issue/>."
+      },
+      "module": {
+        "added": "добавил(а) этот рабочий элемент в модуль <module/>",
+        "removed": "удалил(а) рабочий элемент из модуля <module/>",
+        "set": "установил(а) модуль: <module/>"
+      },
+      "name": {
+        "set": "установил(а) название: {name}."
+      },
+      "parent": {
+        "removed": "удалил(а) родителя <value/>.",
+        "removed_with_issue": "удалил(а) родителя <value/> у <issue/>.",
+        "set": "установил(а) родителя: <value/>.",
+        "set_with_issue": "установил(а) родителя <value/> для <issue/>."
+      },
+      "priority": {
+        "set": "установил(а) приоритет: <value/>.",
+        "set_with_issue": "установил(а) приоритет <value/> для <issue/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "отметил(а), что этот рабочий элемент заблокирован элементом <value/>.",
+          "removed": "удалил(а) блокировку этого рабочего элемента рабочим элементом <value/>."
+        },
+        "blocking": {
+          "added": "отметил(а), что этот рабочий элемент блокирует рабочий элемент <value/>.",
+          "removed": "удалил(а) блокируемый рабочий элемент <value/>."
+        },
+        "caused_by": {
+          "added": "добавил(а) связь «Вызвано»: <value/>.",
+          "removed": "удалил(а) связь «Вызвано»: <value/>."
+        },
+        "causes": {
+          "added": "добавил(а) связь «Вызывает»: <value/>.",
+          "removed": "удалил(а) связь «Вызывает»: <value/>."
+        },
+        "cloned_by": {
+          "added": "добавил(а) связь «Клонировано»: <value/>.",
+          "removed": "удалил(а) связь «Клонировано»: <value/>."
+        },
+        "clones": {
+          "added": "добавил(а) связь «Клонирует»: <value/>.",
+          "removed": "удалил(а) связь «Клонирует»: <value/>."
+        },
+        "duplicate": {
+          "added": "отметил(а) этот рабочий элемент как дубликат <value/>.",
+          "removed": "удалил(а) отметку этого рабочего элемента как дубликата <value/>."
+        },
+        "finish_after": {
+          "added": "отметил(а), что этот рабочий элемент завершается после <value/>.",
+          "removed": "удалил(а) связь «завершается после» с <value/>."
+        },
+        "finish_after_start": {
+          "added": "добавил(а) связь «Завершается после начала»: <value/>.",
+          "removed": "удалил(а) связь «Завершается после начала»: <value/>."
+        },
+        "finish_before": {
+          "added": "отметил(а), что этот рабочий элемент завершается до <value/>.",
+          "removed": "удалил(а) связь «завершается до» с <value/>."
+        },
+        "implemented_by": {
+          "added": "добавил(а) связь «Реализовано»: <value/>.",
+          "removed": "удалил(а) связь «Реализовано»: <value/>."
+        },
+        "implements": {
+          "added": "добавил(а) связь «Реализует»: <value/>.",
+          "removed": "удалил(а) связь «Реализует»: <value/>."
+        },
+        "relates_to": {
+          "added": "отметил(а), что этот рабочий элемент связан с <value/>.",
+          "removed": "удалил(а) связь с <value/>."
+        },
+        "start_after": {
+          "added": "отметил(а), что этот рабочий элемент начинается после <value/>.",
+          "removed": "удалил(а) связь «начинается после» с <value/>."
+        },
+        "start_before": {
+          "added": "отметил(а), что этот рабочий элемент начинается до <value/>.",
+          "removed": "удалил(а) связь «начинается до» с <value/>."
+        },
+        "start_before_finish": {
+          "added": "добавил(а) связь «Начинается до завершения»: <value/>.",
+          "removed": "удалил(а) связь «Начинается до завершения»: <value/>."
+        },
+        "tested_by": {
+          "added": "добавил(а) связь «Тестируется»: <value/>.",
+          "removed": "удалил(а) связь «Тестируется»: <value/>."
+        },
+        "tests": {
+          "added": "добавил(а) связь «Тестирует»: <value/>.",
+          "removed": "удалил(а) связь «Тестирует»: <value/>."
+        }
+      },
+      "restored": "восстановил(а) рабочий элемент.",
+      "start_date": {
+        "removed": "удалил(а) дату начала.",
+        "removed_with_issue": "удалил(а) дату начала у <issue/>.",
+        "set": "установил(а) дату начала: <value/>.",
+        "set_with_issue": "установил(а) дату начала <value/> для <issue/>."
+      },
+      "state": {
+        "set": "установил(а) состояние: <value/>.",
+        "set_with_issue": "установил(а) состояние <value/> для <issue/>."
+      },
+      "finish_date": {
+        "removed": "removed the finish date.",
+        "removed_with_issue": "removed the finish date from <issue/>.",
+        "set": "set the finish date to <value/>.",
+        "set_with_issue": "set the finish date to <value/> for <issue/>."
+      },
+      "target_date": {
+        "removed": "удалил(а) срок выполнения.",
+        "removed_with_issue": "удалил(а) срок выполнения у <issue/>.",
+        "set": "установил(а) срок выполнения: <value/>.",
+        "set_with_issue": "установил(а) срок выполнения <value/> для <issue/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "архивировал(а) <issue/>",
+        "restored": "восстановил(а) <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "добавил(а) нового ответственного <assignee/> в <issue/>",
+        "added_without_issue": "добавил(а) нового ответственного <assignee/>",
+        "removed_with_issue": "удалил(а) ответственного <assignee/> из <issue/>",
+        "removed_without_issue": "удалил(а) ответственного <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "загрузил(а) новое вложение в <issue/>",
+        "added_without_issue": "загрузил(а) новое вложение",
+        "removed_with_issue": "удалил(а) вложение из <issue/>",
+        "removed_without_issue": "удалил(а) вложение"
+      },
+      "blocked_by": {
+        "added_with_issue": "отметил(а), что <issue/> заблокирован элементом <value/>.",
+        "added_without_issue": "отметил(а), что этот рабочий элемент заблокирован элементом <value/>.",
+        "removed_with_issue": "удалил(а) блокировку <issue/> рабочим элементом <value/>.",
+        "removed_without_issue": "удалил(а) блокировку этого рабочего элемента рабочим элементом <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "отметил(а), что <issue/> блокирует рабочий элемент <value/>.",
+        "added_without_issue": "отметил(а), что этот рабочий элемент блокирует рабочий элемент <value/>.",
+        "removed": "удалил(а) блокируемый рабочий элемент <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "добавил(а) <issue/> <nowrap>в цикл</nowrap> <value/>",
+        "added_without_issue": "добавил(а) этот рабочий элемент <nowrap>в цикл</nowrap> <value/>",
+        "removed": "удалил(а) <issue/> из цикла <value/>",
+        "set": "<nowrap>установил(а) цикл:</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "обновил(а) описание <issue/>",
+        "updated_without_issue": "обновил(а) описание"
+      },
+      "duplicate": {
+        "added_with_issue": "отметил(а) <issue/> как дубликат <value/>.",
+        "added_without_issue": "отметил(а) этот рабочий элемент как дубликат <value/>.",
+        "removed_with_issue": "удалил(а) отметку <issue/> как дубликата <value/>.",
+        "removed_without_issue": "удалил(а) отметку этого рабочего элемента как дубликата <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# день} few {# дня} many {# дней} other {# дня}}",
+        "removed_with_issue": "удалил(а) длительность у <issue/>",
+        "removed_without_issue": "удалил(а) длительность",
+        "set_with_issue": "установил(а) длительность <value/> для <issue/>",
+        "set_without_issue": "установил(а) длительность: <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "преобразовал(а) <issue/> в рабочий элемент",
+        "created": "создал(а) <issue/>",
+        "deleted": "удалил(а) <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "удалил(а) оценку у <issue/>",
+        "removed_without_issue": "удалил(а) оценку",
+        "set_with_issue": "установил(а) оценку <value/> для <issue/>",
+        "set_without_issue": "установил(а) оценку: <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "принял(а) рабочий элемент <issue/>",
+        "accepted_without_issue": "принял(а) этот рабочий элемент из Intake.",
+        "declined_with_issue": "отклонил(а) рабочий элемент <issue/>",
+        "declined_without_issue": "отклонил(а) этот рабочий элемент из Intake.",
+        "duplicate_with_issue": "отклонил(а) рабочий элемент <issue/> из Intake, отметив его как дубликат другого рабочего элемента.",
+        "duplicate_without_issue": "отклонил(а) этот рабочий элемент из Intake, отметив его как дубликат другого рабочего элемента.",
+        "snoozed_with_issue": "отложил(а) рабочий элемент <issue/>",
+        "snoozed_without_issue": "отложил(а) этот рабочий элемент.",
+        "updated_with_issue": "обновил(а) статус рабочего элемента в Intake. <issue/>",
+        "updated_without_issue": "обновил(а) статус рабочего элемента в Intake."
+      },
+      "issue": {
+        "converted_to_epic": "преобразовал(а) <issue/> в эпик",
+        "created": "создал(а) <issue/>",
+        "deleted": "удалил(а) <issue/>",
+        "deleted_tooltip": "Этот рабочий элемент был удалён",
+        "fallback_name": "рабочий элемент"
+      },
+      "label": {
+        "added_with_issue": "добавил(а) новую метку <label/> в <issue/>",
+        "added_without_issue": "добавил(а) новую метку <label/>",
+        "removed_with_issue": "удалил(а) метку <label/> из <issue/>",
+        "removed_without_issue": "удалил(а) метку <label/>"
+      },
+      "link": {
+        "added_with_issue": "добавил(а) эту <link>ссылку</link> в <issue/>",
+        "added_without_issue": "добавил(а) эту <link>ссылку</link>",
+        "removed_with_issue": "удалил(а) эту <link>ссылку</link> из <issue/>",
+        "removed_without_issue": "удалил(а) эту <link>ссылку</link>",
+        "updated_with_issue": "обновил(а) <link>ссылку</link> в <issue/>",
+        "updated_without_issue": "обновил(а) <link>ссылку</link>"
+      },
+      "module": {
+        "added_with_issue": "добавил(а) <issue/> в модуль <value/>",
+        "added_without_issue": "добавил(а) этот рабочий элемент в модуль <value/>",
+        "removed": "удалил(а) <issue/> из модуля <value/>",
+        "set": "установил(а) модуль: <value/>"
+      },
+      "name": {
+        "set_with_issue": "установил(а) название <value/> для <issue/>",
+        "set_without_issue": "установил(а) название: <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "удалил(а) родителя <value/> у <issue/>",
+        "removed_without_issue": "удалил(а) родителя <value/>",
+        "set_with_issue": "установил(а) родителя <value/> для <issue/>",
+        "set_without_issue": "установил(а) родителя: <value/>"
+      },
+      "priority": {
+        "high": "Высокий",
+        "low": "Низкий",
+        "medium": "Средний",
+        "none": "Нет",
+        "set_with_issue": "установил(а) приоритет <value/> для <issue/>",
+        "set_without_issue": "установил(а) приоритет: <value/>",
+        "urgent": "Срочный"
+      },
+      "relates_to": {
+        "added_with_issue": "отметил(а), что <issue/> связан с <value/>.",
+        "added_without_issue": "отметил(а), что этот рабочий элемент связан с <value/>.",
+        "removed": "удалил(а) связь с <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "удалил(а) дату начала у <issue/>",
+        "removed_without_issue": "удалил(а) дату начала",
+        "set_with_issue": "установил(а) дату начала <value/> для <issue/>",
+        "set_without_issue": "установил(а) дату начала: <value/>"
+      },
+      "state": {
+        "set_with_issue": "установил(а) состояние <value/> для <issue/>",
+        "set_without_issue": "установил(а) состояние: <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "removed the finish date from <issue/>",
+        "removed_without_issue": "removed the finish date",
+        "set_with_issue": "set the finish date to <value/> for <issue/>",
+        "set_without_issue": "set the finish date to <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "удалил(а) срок выполнения у <issue/>",
+        "removed_without_issue": "удалил(а) срок выполнения",
+        "set_with_issue": "установил(а) срок выполнения <value/> для <issue/>",
+        "set_without_issue": "установил(а) срок выполнения: <value/>"
+      },
+      "actor_separator": " ",
+      "commented_ago": "Прокомментировал(а) {timeAgo}"
+    },
+    "project": {
+      "archived_at": {
+        "archived": "архивировал(а) проект",
+        "restored": "восстановил(а) проект"
+      },
+      "cycle_view": {
+        "disabled": "отключил(а) представление циклов",
+        "enabled": "включил(а) представление циклов",
+        "fallback": "обновил(а) представление циклов"
+      },
+      "cycles": {
+        "added": "добавил(а) этот проект в цикл <value/>",
+        "removed": "удалил(а) этот проект из цикла <value/>",
+        "unknown": "Неизвестный цикл"
+      },
+      "default": "обновил(а) настройки проекта",
+      "description": {
+        "removed": "удалил(а) описание проекта",
+        "updated": "обновил(а) описание проекта"
+      },
+      "estimate": {
+        "removed": "удалил(а) оценку",
+        "removed_with_value": "удалил(а) оценку <value/>",
+        "set": "установил(а) оценку: <value/>"
+      },
+      "identifier": {
+        "updated": "обновил(а) идентификатор проекта: <value/>"
+      },
+      "inbox": {
+        "disabled": "отключил(а) Intake",
+        "enabled": "включил(а) Intake"
+      },
+      "intake_view": {
+        "disabled": "отключил(а) представление Intake",
+        "enabled": "включил(а) представление Intake",
+        "fallback": "обновил(а) представление Intake"
+      },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "отключил(а) правило редактирования исполнителями",
+        "enabled": "включил(а) правило редактирования исполнителями",
+        "fallback": "обновил(а) правило редактирования исполнителями"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "отключил(а) правило статуса заблокированных элементов",
+        "enabled": "включил(а) правило статуса заблокированных элементов",
+        "fallback": "обновил(а) правило статуса заблокированных элементов"
+      },
+      "is_epic_enabled": {
+        "disabled": "отключил(а) эпики",
+        "enabled": "включил(а) эпики",
+        "fallback": "обновил(а) эпики"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "отключил(а) типы рабочих элементов",
+        "enabled": "включил(а) типы рабочих элементов",
+        "fallback": "обновил(а) типы рабочих элементов"
+      },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "отключил(а) правило завершения родительских элементов",
+        "enabled": "включил(а) правило завершения родительских элементов",
+        "fallback": "обновил(а) правило завершения родительских элементов"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "отключил(а) обновления проекта",
+        "enabled": "включил(а) обновления проекта",
+        "fallback": "обновил(а) обновления проекта"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "отключил(а) связь «дубликат»",
+        "enabled": "включил(а) связь «дубликат»",
+        "fallback": "обновил(а) связь «дубликат»"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "отключил(а) связь «связан с»",
+        "enabled": "включил(а) связь «связан с»",
+        "fallback": "обновил(а) связь «связан с»"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "отключил(а) календарные зависимости",
+        "enabled": "включил(а) календарные зависимости",
+        "fallback": "обновил(а) календарные зависимости"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "отключил(а) связи прослеживаемости",
+        "enabled": "включил(а) связи прослеживаемости",
+        "fallback": "обновил(а) связи прослеживаемости"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "отключил(а) учёт времени",
+        "enabled": "включил(а) учёт времени",
+        "fallback": "обновил(а) учёт времени"
+      },
+      "is_workflow_enabled": {
+        "disabled": "отключил(а) настраиваемый рабочий процесс",
+        "enabled": "включил(а) настраиваемый рабочий процесс",
+        "fallback": "обновил(а) настраиваемый рабочий процесс"
+      },
+      "issue_views_view": {
+        "disabled": "отключил(а) представление видов рабочих элементов",
+        "enabled": "включил(а) представление видов рабочих элементов",
+        "fallback": "обновил(а) представление видов рабочих элементов"
+      },
+      "labels": {
+        "added": "добавил(а) метку <value/>",
+        "created": "создал(а) метку <value/>",
+        "deleted": "удалил(а) метку <value/>",
+        "removed": "удалил(а) метку <value/>",
+        "untitled": "Метка без названия",
+        "updated": "обновил(а) метку <value/>"
+      },
+      "module_view": {
+        "disabled": "отключил(а) представление модулей",
+        "enabled": "включил(а) представление модулей",
+        "fallback": "обновил(а) представление модулей"
+      },
+      "modules": {
+        "added": "добавил(а) этот проект в модуль <value/>",
+        "removed": "удалил(а) этот проект из модуля <value/>",
+        "unknown": "Неизвестный модуль"
+      },
+      "name": {
+        "renamed": "переименовал(а) проект в <value/>"
+      },
+      "network": {
+        "disabled": "отключил(а) сетевой доступ",
+        "enabled": "включил(а) сетевой доступ"
+      },
+      "page": {
+        "created": "создал(а) страницу проекта <value/>",
+        "removed": "удалил(а) страницу проекта <value/>",
+        "untitled": "Страница без названия"
+      },
+      "page_view": {
+        "disabled": "отключил(а) представление страниц",
+        "enabled": "включил(а) представление страниц",
+        "fallback": "обновил(а) представление страниц"
+      },
+      "priority": {
+        "set": "установил(а) приоритет: <value/>"
+      },
+      "start_date": {
+        "removed": "удалил(а) дату начала",
+        "set": "установил(а) дату начала: <value/>"
+      },
+      "state": {
+        "set": "установил(а) состояние: <value/>"
+      },
+      "target_date": {
+        "removed": "удалил(а) целевую дату",
+        "set": "установил(а) целевую дату: <value/>"
+      },
+      "timezone": {
+        "changed": "изменил(а) часовой пояс проекта: <value/>",
+        "default": "по умолчанию"
+      },
+      "value_none": "нет"
+    }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Свести даты",
+    "rolled_up_bar": "Даты сведены из подэлементов",
+    "children_span": "Подэлементы: {start} – {end}",
+    "starts_early": "Подэлементы начинаются раньше этого элемента",
+    "ends_late": "Подэлементы заканчиваются позже этого элемента"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Развернуть все",
+    "collapse_all": "Свернуть все",
+    "levels": "Уровни",
+    "up_to_level": "До уровня {level}",
+    "all_levels": "Все уровни",
+    "load_error": "Не удалось загрузить подэлементы",
+    "too_many": "Слишком много элементов для одновременного разворачивания. Остальные разверните по одному."
+  },
+  "worklog": {
+    "log_time": "Списать время",
+    "description_placeholder": "Что было сделано? (необязательно)",
+    "invalid_duration_title": "Недопустимая длительность",
+    "invalid_duration_message": "Используйте формат вроде «2h 30m», «45m» или просто минуты, не более 24 часов.",
+    "log_error": "Не удалось списать время. Попробуйте ещё раз.",
+    "update_error": "Не удалось обновить запись. Попробуйте ещё раз.",
+    "delete_error": "Не удалось удалить запись. Попробуйте ещё раз.",
+    "delete_title": "Удалить запись о времени",
+    "delete_description": "Вы уверены, что хотите удалить эту запись о времени? Это действие нельзя отменить.",
+    "edit_entry": "Изменить запись о времени",
+    "delete_entry": "Удалить запись о времени",
+    "logged": "списал(а) <value>{duration}</value>",
+    "updated": "изменил(а) списанное время с <old>{from}</old> на <new>{to}</new>",
+    "removed": "удалил(а) списанное время <value>{duration}</value>"
   }
 }

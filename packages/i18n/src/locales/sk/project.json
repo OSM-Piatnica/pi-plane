@@ -445,14 +445,15 @@
       "removing_from_favorites": "Odstraňovanie projektu z obľúbených..."
     },
     "confirm_member_remove": {
-      "leave_description": "Naozaj chcete opustiť projekt {name}? Do projektu sa budete môcť znova pripojiť, ak budete znova pozvaní alebo ak je verejný.",
+      "leave_description": "Naozaj chcete opustiť projekt {name}? Do projektu sa budete môcť znova pripojiť, ak budete znova pozvaní alebo ak je projekt otvorený pre priestor.",
       "leave_title": "Opustiť projekt?",
       "remove_description": "Naozaj chcete odstrániť člena {name}? Stratí prístup k tomuto projektu. Túto akciu nemožno vrátiť späť.",
       "remove_title": "Odstrániť {name}?"
     },
     "control_section": {
       "archive_description": "Archiváciou projektu sa odstráni z bočnej navigácie, ale stále k nemu budete mať prístup zo stránky projektov. Projekt môžete kedykoľvek obnoviť alebo odstrániť.",
-      "delete_description": "Pri odstránení projektu sa všetky dáta a zdroje v ňom trvalo odstránia a nemožno ich obnoviť."
+      "delete_description": "Pri odstránení projektu sa všetky dáta a zdroje v ňom trvalo odstránia a nemožno ich obnoviť.",
+      "duplicate_description": "Vytvorte nový projekt s nastaveniami, stavmi, štítkami a ďalšou konfiguráciou tohto projektu. Pracovné položky sa kopírujú len ak to zvolíte."
     },
     "delete_modal": {
       "confirm_placeholder": "Zadajte „{phrase}“",
@@ -491,6 +492,7 @@
       "confirm_phrase_error": "Potvrďte opustenie projektu zadaním „{phrase}“.",
       "description": "Naozaj chcete opustiť projekt „{name}“? Všetky pracovné položky súvisiace s vami sa stanú neprístupnými.",
       "fill_all_fields": "Vyplňte všetky polia.",
+      "only_admin_error": "Ste jediný správca tohto projektu, preto ho nemôžete opustiť. Najprv určte za správcu iného člena alebo projekt odstráňte.",
       "project_name_error": "Zadajte názov projektu presne podľa popisu.",
       "project_name_placeholder": "Zadajte názov projektu",
       "project_name_required": "Názov projektu je povinný",
@@ -530,21 +532,34 @@
       "timezone_error": "Aktualizácia časového pásma zlyhala",
       "timezone_updated": "Časové pásmo bolo úspešne aktualizované",
       "update_error": "Pri aktualizácii profilu sa vyskytla chyba. Skúste to prosím znova.",
-      "updated": "Profil bol úspešne aktualizovaný."
+      "updated": "Profil bol úspešne aktualizovaný.",
+      "weekend_days": "Dni víkendu",
+      "weekend_days_description": "Určuje, ktoré dni sa považujú za nepracovný čas.",
+      "weekend_days_updated": "Dni víkendu boli úspešne aktualizované",
+      "weekend_days_use_default": "Použiť predvolenú hodnotu pracovného priestoru"
     },
     "publish_modal": {
       "allow_comments": "Povoliť komentáre",
       "allow_reactions": "Povoliť reakcie",
       "allow_voting": "Povoliť hlasovanie",
-      "anyone_with_link": "Prístup má každý, kto má odkaz",
-      "link_copied": "Odkaz na publikovanú stránku bol skopírovaný.",
-      "live_on_web": "Tento projekt je teraz dostupný na webe",
-      "publishing": "Publikovanie",
-      "select_layout_error": "Vyberte aspoň jedno rozloženie zobrazenia na publikovanie projektu.",
-      "settings_updated": "Nastavenia publikovania boli úspešne aktualizované!",
-      "unpublish": "Zrušiť publikovanie",
-      "unpublish_error": "Pri rušení publikovania projektu sa niečo pokazilo.",
-      "unpublishing": "Ruší sa publikovanie",
+      "anyone_with_link": "Ktokoľvek na internete s odkazom si môže tento projekt pozrieť, bez účtu",
+      "confirm": {
+        "title": "Zdieľať tento projekt na webe?",
+        "description": "Ktokoľvek na internete, kto má odkaz, si tento projekt bude môcť pozrieť, vrátane ľudí mimo vášho priestoru a neprihlásených.",
+        "can_see": "Uvidí:",
+        "item_work_items": "všetky pracovné položky projektu s popisom, stavom, prioritou, dátumami a štítkami",
+        "item_members": "mená a avatary členov projektu",
+        "item_activity": "komentáre, reakcie a hlasy s menami ľudí, ktorí ich pridali, ak ich povolíte",
+        "note": "Návštevníci nemôžu nič upravovať. Odkaz funguje, kým zdieľanie nezastavíte, preto zdieľajte len projekt, ktorý neobsahuje nič dôverné."
+      },
+      "link_copied": "Webový odkaz bol skopírovaný.",
+      "live_on_web": "Tento projekt je zdieľaný na webe",
+      "publishing": "Zapína sa…",
+      "select_layout_error": "Vyberte aspoň jedno rozloženie zobrazenia, aby ste mohli projekt zdieľať na webe.",
+      "settings_updated": "Nastavenia zdieľania na webe boli aktualizované.",
+      "unpublish": "Prestať zdieľať",
+      "unpublish_error": "Pri vypínaní zdieľania na webe sa niečo pokazilo.",
+      "unpublishing": "Vypína sa…",
       "update_settings": "Aktualizovať nastavenia"
     },
     "rich_filters": {
@@ -554,6 +569,14 @@
       "filter_type_not_supported": "Typ filtra nie je podporovaný",
       "invalid_filter": "Neplatný filter",
       "invalid_tooltip": "Táto podmienka filtra už nie je platná. Vlastnosť mohla byť odstránená alebo sa mohol zmeniť váš prístup k nej.",
+      "operators": {
+        "exact": "je",
+        "in": "je jedným z",
+        "range": "medzi",
+        "not_exact": "nie je",
+        "not_in": "nie je žiadnym z",
+        "not_range": "nie je medzi"
+      },
       "remove_filter": "Odstrániť filter",
       "save_view": "Uložiť pohľad",
       "update_view": "Aktualizovať pohľad"
@@ -623,6 +646,71 @@
       },
       "key_regenerated": "Nový kľúč bol úspešne vygenerovaný.",
       "view_secret_key": "Zobraziť tajný kľúč"
+    },
+    "request_access_modal": {
+      "title": "Požiadať o prístup",
+      "description": "Požiadajte správcov tohto projektu o prístup.",
+      "description_named": "Požiadajte správcov projektu {name} o prístup.",
+      "message_placeholder": "Pridajte poznámku pre správcov (voliteľné)",
+      "send": "Odoslať žiadosť",
+      "sending": "Odosielanie...",
+      "success_title": "Žiadosť odoslaná",
+      "success_message": "Správcovia projektu ju posúdia.",
+      "request_button": "Požiadať o prístup",
+      "pending_badge": "Požiadané"
+    },
+    "access_requests": {
+      "title": "Žiadosti o pripojenie ({count})",
+      "approve": "Schváliť",
+      "reject": "Zamietnuť",
+      "already_decided": "Túto žiadosť už vybavil iný správca.",
+      "requester_left": "Táto osoba už nie je členom pracovného priestoru."
+    },
+    "duplicate_modal": {
+      "already_running": "V tomto pracovnom priestore už prebieha kopírovanie pracovných položiek. Skúste to znova, keď skončí.",
+      "always_copied": "Nastavenia, stavy a typy pracovných položiek sa kopírujú vždy.",
+      "banner": {
+        "done": "Skopírované pracovné položky: {count}.",
+        "failed": "Kopírovanie pracovných položiek zlyhalo. Čo sa skopírovalo, zostáva; skúste to znova a doplňte zvyšok.",
+        "progress": "Kopírovanie pracovných položiek: {copied} z {total}",
+        "queued": "Pracovné položky čakajú na skopírovanie...",
+        "reload": "Načítať znova",
+        "retry": "Skúsiť znova",
+        "retry_failed": "Kopírovanie sa nepodarilo zopakovať. Skúste to prosím znova."
+      },
+      "clear_all": "Zrušiť výber",
+      "description": "Vytvorí nový projekt s rovnakým nastavením. Stránky a webhooky sa nekopírujú; pracovné položky len ak to zvolíte nižšie.",
+      "error": "Projekt sa nepodarilo duplikovať. Skúste to prosím znova.",
+      "identifier_placeholder": "Vytvorí sa, ak zostane prázdne",
+      "properties": {
+        "assignees": "Priradení",
+        "custom_properties": "Vlastné vlastnosti",
+        "cycles": "Cykly",
+        "dates": "Dátumy",
+        "description_images": "Obrázky v popisoch",
+        "labels": "Štítky",
+        "links": "Odkazy",
+        "modules": "Moduly",
+        "parents": "Väzby podriadených položiek",
+        "relations": "Vzťahy"
+      },
+      "properties_description": "Vyberte, čo sa prenesie s pracovnými položkami. Koncepty, archivované položky a položky intake sa vynechajú; komentáre, prílohy, aktivita a záznamy času sa nikdy nekopírujú.",
+      "properties_heading": "Vlastnosti pracovných položiek",
+      "properties_note": "Cykly a moduly sa prenesú, len keď sa kopírujú vyššie.",
+      "property_groups": {
+        "content": "Obsah",
+        "hierarchy": "Hierarchia a vzťahy",
+        "organization": "Organizácia",
+        "people": "Ľudia"
+      },
+      "select_all": "Vybrať všetko",
+      "submit": "Duplikovať projekt",
+      "submitting": "Duplikuje sa projekt...",
+      "success": "Projekt bol úspešne duplikovaný.",
+      "title": "Duplikovať projekt",
+      "too_large": "Tento projekt je príliš veľký na skopírovanie. Vypnite niektoré možnosti a skúste to znova.",
+      "what_to_copy": "Kopírovať aj",
+      "work_items_too_large": "Tento projekt má viac pracovných položiek, ako sa dá skopírovať (až {count})."
     }
   }
 }

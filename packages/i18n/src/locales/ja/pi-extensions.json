@@ -42,21 +42,50 @@
           "blocked_by": "{issue}は{related}が完了するまで開始できません（ブロックされている関係）。",
           "blocking": "{issue}は{related}が開始する前に完了しなければなりません（ブロックしている関係）。",
           "finish_after": "{issue}は{related}より前に完了できません（後に完了する関係）。",
+          "finish_after_start": "{issue} は {related} が開始する前に終了できません（開始後に終了の関係）。",
           "finish_before": "{issue}は{related}以前に完了しなければなりません（前に完了する関係）。",
           "start_after": "{issue}は{related}より前に開始できません（後に開始する関係）。",
-          "start_before": "{issue}は{related}以前に開始しなければなりません（前に開始する関係）。"
+          "start_before": "{issue}は{related}以前に開始しなければなりません（前に開始する関係）。",
+          "start_before_finish": "{issue} は {related} が終了するまでに開始する必要があります（終了前に開始の関係）。"
         },
         "status": {
           "finish_after": "{related}が完了するまで{issue}を完了できません（後に完了する関係）。",
+          "finish_after_start": "{issue} は {related} が開始されるまで完了できません（開始後に終了の関係）。",
           "start_after": "{related}が開始するまで{issue}を開始できません（後に開始する関係）。"
-        }
+        },
+        "self": "{issue} 自身とは関連付けられません。",
+        "cycle": "{issue} と {related} が関係のループになります。先に反対側の関係を削除してください。",
+        "lag_suffix": " 関係のラグ: {lag} 日。"
       },
       "date_conflict": "これらの日付は既存の依存関係と競合しています。関連する作業項目を調整するか、先に依存関係を削除してください。",
       "dependency_create_failed": "依存関係を作成できませんでした。もう一度お試しください。",
-      "dependency_created": "作業項目の依存関係が正常に作成されました。"
-    }
+      "dependency_created": "作業項目の依存関係が正常に作成されました。",
+      "lag": {
+        "hint": "2 つの日付の間の日数。負の値で重なりを許可します。",
+        "invalid": "-{max} から {max} までの整数の日数を入力してください。",
+        "label": "ラグ（日）",
+        "update_failed": "ラグを変更できませんでした。"
+      },
+      "reschedule": {
+        "confirm": "移動する",
+        "content": "この変更は依存関係を壊します。すべての依存関係を保つため、次の作業項目を期間を保ったまま後ろにずらせます:",
+        "title": "依存する作業項目も移動しますか？"
+      },
+      "duplicate_cancel": {
+        "confirm": "取り消しに移動",
+        "content": "{issue} は {originals} の重複としてマークされました。「{state}」に移動しますか？関連付けられたまま表示されます。",
+        "failed": "作業項目を取り消せませんでした。",
+        "keep": "開いたままにする",
+        "title": "この作業項目を取り消しますか？"
+      }
+    },
+    "edit_restricted": "この作業項目を変更できるのは、担当者、プロジェクトリーダー、プロジェクト管理者のみです。"
   },
   "project_create": {
+    "advanced": {
+      "description": "ルールと関係の種類です。後でプロジェクトのワークフロー設定から変更できます。",
+      "title": "詳細オプション"
+    },
     "features": {
       "cycles": {
         "description": "定期的な期間で作業をタイムボックス化します。",
@@ -115,11 +144,53 @@
       "pending_approval_title": "承認が必要です",
       "rejected_success": "遷移が却下されました。",
       "resolving_approval": "承認を処理中…",
+      "rules": {
+        "heading": "ルール",
+        "description": "ワークフローが有効かどうかに関係なく適用されるプロジェクトのルールです。",
+        "parent_completion": {
+          "description": "完了または取り消しになっていないサブ作業項目がある間は、作業項目を完了にできません。完了した親の下で完了済みのサブ作業項目を再開すると、親も再開するか確認します。",
+          "title": "サブ作業項目がすべて完了してから親を完了する"
+        },
+        "reopen_parent": {
+          "confirm": "再開",
+          "content": "このプロジェクトでは、サブ作業項目が未完了の間、親を完了のままにできません。完了済みの次の親も再開されます: {names}",
+          "title": "親の作業項目も再開しますか？"
+        },
+        "blocked_status": {
+          "description": "ブロックしている作業項目が未完了の間は、その作業項目を開始済みまたは完了の状態にできません（完了または取り消しのブロック元は数えません）。バックログや未着手のまま待つことと、取り消しはできます。",
+          "title": "ブロック元がすべて完了してから開始・完了する"
+        },
+        "assignee_edit": {
+          "description": "作業項目に担当者がいる場合、フィールド、状態、日付、サブ作業項目、関係、リンク、添付ファイル、サイクルとモジュール、削除とアーカイブを変更できるのは、その担当者、プロジェクトリーダー、プロジェクト管理者だけです。コメントは引き続き誰でもできます。担当者のいない作業項目は、すべてのメンバーが変更できます。",
+          "title": "作業項目を変更できるのは担当者、プロジェクトリーダー、管理者のみ"
+        }
+      },
       "save_error": "ワークフロー設定を保存できませんでした。",
       "save_success": "ワークフロー設定を保存しました。",
       "toggle_error": "ワークフロー設定を更新できませんでした。",
       "transition": "遷移",
-      "transitions_configured": "個の遷移が設定されています"
+      "transition_count": "{count, plural, one {# 件の遷移} other {# 件の遷移}}",
+      "transitions_configured": "個の遷移が設定されています",
+      "relation_types": {
+        "heading": "関係の種類",
+        "description": "このプロジェクトで追加できる関係を選びます。ブロックは常に利用でき、種類をオフにしても既存の関係は残ります。",
+        "schedule": {
+          "description": "「より前に開始」「より前に終了」「終了前に開始」を、日数のラグ（任意）付きで設定できます。",
+          "title": "スケジュールの依存関係"
+        },
+        "traceability": {
+          "description": "「実装する」「原因となる」「複製する」「テストする」と、その逆の関係です。",
+          "title": "トレーサビリティの関係"
+        },
+        "relates_to": {
+          "description": "2つの項目をつなぐ単純なリンクです。",
+          "title": "関連する"
+        },
+        "duplicate": {
+          "description": "項目を別の項目の重複としてマークします。",
+          "title": "重複する"
+        }
+      }
     }
   },
   "project_templates": {

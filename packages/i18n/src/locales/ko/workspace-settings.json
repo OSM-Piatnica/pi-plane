@@ -3,7 +3,7 @@
     "label": "작업 공간 설정",
     "page_label": "{workspace} - 일반 설정",
     "key_created": "키 생성됨",
-    "copy_key": "이 비밀 키를 Plane Pages에 복사하고 저장하세요. 닫기 버튼을 누른 후에는 이 키를 볼 수 없습니다. 키가 포함된 CSV 파일이 다운로드되었습니다.",
+    "copy_key": "이 비밀 키를 Pi-Plane Pages에 복사하고 저장하세요. 닫기 버튼을 누른 후에는 이 키를 볼 수 없습니다. 키가 포함된 CSV 파일이 다운로드되었습니다.",
     "token_copied": "토큰이 클립보드에 복사되었습니다.",
     "settings": {
       "general": {
@@ -65,6 +65,45 @@
           }
         }
       },
+      "groups": {
+        "title": "그룹",
+        "description": "사람들을 그룹으로 구성합니다. 그룹은 중첩할 수 있고, 한 사람이 여러 그룹에 속할 수 있으며, 작업 항목을 그룹에 할당할 수 있습니다.",
+        "create_group": "그룹 만들기",
+        "create": "만들기",
+        "edit_group": "그룹 편집",
+        "edit": "편집",
+        "add_subgroup": "하위 그룹 추가",
+        "members": "멤버",
+        "name": "이름",
+        "description_label": "설명",
+        "parent": "상위 그룹",
+        "top_level": "상위 그룹 없음(최상위)",
+        "no_groups": "아직 그룹이 없습니다.",
+        "member_count": "{count, plural, one {멤버 #명} other {멤버 #명}}",
+        "managed_by": "{provider}에서 관리",
+        "sources": {
+          "local": "로컬",
+          "entra": "Microsoft Entra",
+          "google": "Google",
+          "oidc": "SSO"
+        },
+        "members_of": "{name}의 멤버",
+        "managed_externally_hint": "이 그룹은 ID 공급자가 관리합니다. 멤버는 공급자를 따르므로 여기에서 변경할 수 없습니다.",
+        "select_member": "멤버 선택",
+        "add_member": "추가",
+        "role": "역할",
+        "role_member": "멤버",
+        "role_admin": "그룹 관리자",
+        "no_members": "이 그룹에는 아직 멤버가 없습니다.",
+        "group_created": "그룹을 만들었습니다.",
+        "group_updated": "그룹을 업데이트했습니다.",
+        "group_deleted": "그룹을 삭제했습니다.",
+        "delete_title": "{name}을(를) 삭제하시겠습니까?",
+        "delete_content": "이 그룹의 사람들은 워크스페이스에 그대로 남습니다. 그룹에 할당된 작업 항목은 해당 할당이 해제됩니다. 이 작업은 되돌릴 수 없습니다.",
+        "group_assignees": "할당된 그룹",
+        "add_group_assignee": "그룹 추가",
+        "no_group_assignees": "할당된 그룹이 없습니다"
+      },
       "billing_and_plans": {
         "heading": "청구 및 플랜",
         "description": "플랜을 선택하고, 구독을 관리하며, 필요에 따라 손쉽게 업그레이드하세요.",
@@ -94,6 +133,50 @@
               "title": "내보내기 실패",
               "message": "내보내기가 실패했습니다. 다시 시도해주세요."
             }
+          }
+        },
+        "columns": {
+          "heading": "열",
+          "description": "파일에 포함할 열을 선택합니다. 식별자와 이름은 없으면 파일을 다시 가져올 수 없으므로 항상 포함됩니다.",
+          "select_all": "모두 선택",
+          "clear_all": "모두 지우기",
+          "groups": {
+            "details": "세부 정보",
+            "people": "사람",
+            "dates": "날짜",
+            "organization": "구성",
+            "relations": "계층 및 관계",
+            "other": "기타"
+          },
+          "fields": {
+            "project_name": "프로젝트 이름",
+            "project_identifier": "프로젝트 식별자",
+            "sequence_id": "순번",
+            "issue_type": "작업 항목 유형",
+            "state_name": "상태",
+            "priority": "우선순위",
+            "description_html": "설명",
+            "estimate": "추정",
+            "is_draft": "초안 표시",
+            "assignees": "담당자",
+            "subscribers": "구독자",
+            "created_by_name": "작성자",
+            "start_date": "시작일",
+            "finish_date": "Finish date",
+            "target_date": "마감일",
+            "duration": "기간",
+            "completed_at": "완료 시각",
+            "created_at": "생성 시각",
+            "updated_at": "수정 시각",
+            "archived_at": "보관 시각",
+            "labels": "레이블",
+            "cycles": "사이클",
+            "modules": "모듈",
+            "parent": "상위 항목",
+            "relations": "관계",
+            "links": "링크",
+            "custom_properties": "사용자 지정 속성",
+            "comments": "댓글"
           }
         }
       },
@@ -161,7 +244,7 @@
         "generating": "생성 중",
         "delete": {
           "title": "API 토큰 삭제",
-          "description": "이 토큰을 사용하는 애플리케이션은 더 이상 Plane 데이터에 접근할 수 없습니다. 이 작업은 되돌릴 수 없습니다.",
+          "description": "이 토큰을 사용하는 애플리케이션은 더 이상 Pi-Plane 데이터에 접근할 수 없습니다. 이 작업은 되돌릴 수 없습니다.",
           "success": {
             "title": "성공!",
             "message": "API 토큰이 성공적으로 삭제되었습니다"
@@ -176,7 +259,7 @@
         "title": "인테그레이션",
         "heading": "인테그레이션",
         "description": "인기 있는 도구 및 서비스와 연결하여 전체 워크플로우 에코시스템에서 작업을 동기화하세요.",
-        "page_title": "Plane 데이터를 사용 가능한 앱이나 본인 소유 앱에서 활용하세요.",
+        "page_title": "Pi-Plane 데이터를 사용 가능한 앱이나 본인 소유 앱에서 활용하세요.",
         "page_description": "이 워크스페이스 또는 사용자가 사용하는 모든 통합을 확인하세요."
       },
       "imports": {
@@ -256,16 +339,16 @@
         "description": "도메인을 구성하고 Single sign-on을 활성화하세요"
       },
       "project_states": {
-        "title": "프로젝트 스테이트",
+        "title": "프로젝트 상태",
         "heading": "모든 프로젝트의 진행 상황 개요를 확인하세요.",
-        "description": "프로젝트 스테이트는 어떤 프로젝트 속성으로든 모든 프로젝트의 진행 상황을 추적하는 Plane 전용 기능입니다.",
+        "description": "프로젝트 상태는 어떤 프로젝트 속성으로든 모든 프로젝트의 진행 상황을 추적하는 Pi-Plane 전용 기능입니다.",
         "go_to_settings": "설정으로 이동"
       },
       "projects": {
         "title": "프로젝트",
         "description": "프로젝트 상태 관리, 프로젝트 레이블 활성화 및 기타 구성을 관리합니다.",
         "tabs": {
-          "states": "프로젝트 스테이트",
+          "states": "프로젝트 상태",
           "labels": "프로젝트 레이블"
         }
       },
@@ -303,14 +386,14 @@
         "install": "설치",
         "installed": "설치됨",
         "configure": "설정",
-        "app_available": "이 앱을 Plane 워크스페이스에서 사용할 수 있게 되었습니다",
+        "app_available": "이 앱을 Pi-Plane 워크스페이스에서 사용할 수 있게 되었습니다",
         "app_credentials_regenrated": {
           "title": "앱 자격 증명이 성공적으로 재생성되었습니다",
           "description": "클라이언트 시크릿이 사용되는 모든 곳에서 교체하세요. 이전 시크릿은 더 이상 유효하지 않습니다."
         },
         "app_created": {
           "title": "앱이 성공적으로 생성되었습니다",
-          "description": "자격 증명을 사용하여 Plane 작업 공간에 앱을 설치하세요"
+          "description": "자격 증명을 사용하여 Pi-Plane 작업 공간에 앱을 설치하세요"
         },
         "installed_apps": "설치된 앱",
         "all_apps": "모든 앱",
@@ -354,7 +437,7 @@
           "description": "사용자가 Plane에서 인증을 완료하면 이 경로로 리디렉션됩니다.",
           "placeholder": "https://example.com https://example.com/"
         },
-        "app_available_description": "사용을 시작하려면 Plane 워크스페이스에 연결하세요",
+        "app_available_description": "사용을 시작하려면 Pi-Plane 워크스페이스에 연결하세요",
         "client_id_and_secret": "클라이언트 ID와 시크릿",
         "client_id_and_secret_description": "이 시크릿 키를 복사하여 저장하세요. 닫기를 누른 후에는 이 키를 볼 수 없습니다.",
         "client_id_and_secret_download": "여기에서 키가 포함된 CSV를 다운로드할 수 있습니다.",
@@ -403,12 +486,12 @@
         "workspace_permissions": "워크스페이스 권한",
         "workspace_permissions_description": "워크스페이스 권한은 워크스페이스에 대한 접근을 허용하는 데 사용됩니다.",
         "with_the_permissions": "권한과 함께",
-        "app_consent_title": "{app}이(가) 귀하의 Plane 워크스페이스와 프로필에 대한 접근을 요청하고 있습니다.",
+        "app_consent_title": "{app}이(가) 귀하의 Pi-Plane 워크스페이스와 프로필에 대한 접근을 요청하고 있습니다.",
         "choose_workspace_to_connect_app_with": "앱을 연결할 워크스페이스를 선택하세요",
         "app_consent_workspace_permissions_title": "{app}이(가) 원하는 것",
         "app_consent_user_permissions_title": "{app}은(는) 다음 리소스에 대한 사용자 권한도 요청할 수 있습니다. 이러한 권한은 사용자에 의해서만 요청되고 승인됩니다.",
         "app_consent_accept_title": "수락함으로써",
-        "app_consent_accept_1": "앱이 Plane 내부 또는 외부에서 사용할 수 있는 곳에서 귀하의 Plane 데이터에 접근할 수 있도록 허용합니다",
+        "app_consent_accept_1": "앱이 Pi-Plane 내부 또는 외부에서 사용할 수 있는 곳에서 귀하의 Pi-Plane 데이터에 접근할 수 있도록 허용합니다",
         "app_consent_accept_2": "{app}의 개인정보 보호정책 및 이용 약관에 동의합니다",
         "accepting": "수락 중...",
         "accept": "수락",
@@ -489,7 +572,7 @@
     "empty_state": {
       "api_tokens": {
         "title": "생성된 API 토큰 없음",
-        "description": "Plane API를 사용하여 Plane의 데이터를 외부 시스템과 통합할 수 있습니다. 토큰을 생성하여 시작하세요."
+        "description": "Pi-Plane API를 사용하여 Plane의 데이터를 외부 시스템과 통합할 수 있습니다. 토큰을 생성하여 시작하세요."
       },
       "webhooks": {
         "title": "추가된 웹훅 없음",

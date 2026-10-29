@@ -19,9 +19,11 @@ from django import apps
 # Module imports
 from plane.utils.html_processor import strip_tags
 from plane.utils.path_validator import sanitize_filename
+from plane.utils.file_size_limit import get_file_size_limit
 from plane.db.mixins import SoftDeletionManager, ChangeTrackerMixin
 from plane.utils.exception_logger import log_exception
 from .project import ProjectBaseModel
+from plane.utils.issue_relation_types import DIRECTED_RELATIONS, SYMMETRIC_RELATIONS
 from plane.utils.uuid import convert_uuid_to_integer
 from .description import Description
 from .state import StateGroup
@@ -65,9 +67,9 @@ def get_default_filters():
 def get_default_display_filters():
     return {
         "group_by": None,
-        "order_by": "-created_at",
+        "order_by": "created_at",
         "type": None,
-        "sub_issue": True,
+        "sub_issue": False,
         "show_empty_groups": True,
         "layout": "list",
         "calendar_date_range": "",
@@ -295,18 +297,15 @@ class IssueRelationChoices(models.TextChoices):
     START_BEFORE = "start_before", "Starts Before"
     FINISH_BEFORE = "finish_before", "Finishes Before"
     IMPLEMENTED_BY = "implemented_by", "Implemented By"
+    CAUSED_BY = "caused_by", "Caused By"
+    CLONED_BY = "cloned_by", "Cloned By"
+    TESTED_BY = "tested_by", "Tested By"
+    START_BEFORE_FINISH = "start_before_finish", "Starts Before Finish"
 
 
-# Bidirectional relation pairs: (forward, reverse)
+# Bidirectional relation pairs: (forward, reverse); the types themselves live in plane.utils.issue_relation_types
 # Defined after class to avoid enum metaclass conflicts
-IssueRelationChoices._RELATION_PAIRS = (
-    ("blocked_by", "blocking"),
-    ("relates_to", "relates_to"),  # symmetric
-    ("duplicate", "duplicate"),  # symmetric
-    ("start_before", "start_after"),
-    ("finish_before", "finish_after"),
-    ("implemented_by", "implements"),
-)
+IssueRelationChoices._RELATION_PAIRS = DIRECTED_RELATIONS + tuple((name, name) for name in SYMMETRIC_RELATIONS)
 
 # Generate reverse mapping from pairs
 IssueRelationChoices._REVERSE_MAPPING = {forward: reverse for forward, reverse in IssueRelationChoices._RELATION_PAIRS}
@@ -320,14 +319,17 @@ class IssueRelation(ProjectBaseModel):
         verbose_name="Issue Relation Type",
         default=IssueRelationChoices.BLOCKED_BY,
     )
+    # Days kept between the two dates a timeline relation links; negative lets them overlap (a lead)
+    lag_days = models.IntegerField(default=0)
 
     class Meta:
-        unique_together = ["issue", "related_issue", "deleted_at"]
+        # two work items may be related in more than one way (blocked by and relates to), but once per type
+        unique_together = ["issue", "related_issue", "relation_type", "deleted_at"]
         constraints = [
             models.UniqueConstraint(
-                fields=["issue", "related_issue"],
+                fields=["issue", "related_issue", "relation_type"],
                 condition=Q(deleted_at__isnull=True),
-                name="issue_relation_unique_issue_related_issue_when_deleted_at_null",
+                name="issue_relation_unique_issue_related_issue_type_when_deleted_at_null",
             )
         ]
         verbose_name = "Issue Relation"
@@ -410,8 +412,8 @@ def get_upload_path(instance, filename):
 
 def file_size(value):
     # File limit check is only for cloud hosted
-    if value.size > settings.FILE_SIZE_LIMIT:
-        raise ValidationError("File too large. Size should not exceed 5 MB.")
+    if value.size > get_file_size_limit():
+        raise ValidationError("File too large.")
 
 
 class IssueAttachment(ProjectBaseModel):

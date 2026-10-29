@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import pytest
@@ -92,7 +93,7 @@ class TestProjectAPIPost(TestProjectBase):
         # Verify default states were created
         states = State.objects.filter(project=project)
         assert states.count() == 5
-        expected_states = ["Backlog", "Todo", "In Progress", "Done", "Cancelled"]
+        expected_states = ["Backlog", "To do", "In Progress", "Done", "Cancelled"]
         state_names = list(states.values_list("name", flat=True))
         assert set(state_names) == set(expected_states)
 

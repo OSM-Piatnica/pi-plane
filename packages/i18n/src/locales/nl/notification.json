@@ -1,0 +1,123 @@
+{
+  "notification": {
+    "label": "Inbox",
+    "page_label": "{workspace} - Inbox",
+    "options": {
+      "mark_all_as_read": "Alles als gelezen markeren",
+      "mark_read": "Als gelezen markeren",
+      "mark_unread": "Als ongelezen markeren",
+      "refresh": "Vernieuwen",
+      "filters": "Inboxfilters",
+      "show_unread": "Ongelezen tonen",
+      "show_snoozed": "Gesnoozed tonen",
+      "show_archived": "Gearchiveerd tonen",
+      "mark_archive": "Archiveren",
+      "mark_unarchive": "Uit archief halen",
+      "mark_snooze": "Snoozen",
+      "mark_unsnooze": "Snooze opheffen"
+    },
+    "toasts": {
+      "read": "Melding gemarkeerd als gelezen",
+      "unread": "Melding gemarkeerd als ongelezen",
+      "archived": "Melding gemarkeerd als gearchiveerd",
+      "unarchived": "Melding uit archief gehaald",
+      "snoozed": "Melding gesnoozed",
+      "unsnoozed": "Snooze van melding opgeheven"
+    },
+    "empty_state": {
+      "detail": {
+        "title": "Selecteer om details te bekijken."
+      },
+      "all": {
+        "title": "Geen werkitems toegewezen",
+        "description": "Updates voor werkitems die aan jou zijn toegewezen kun je hier\n zien"
+      },
+      "mentions": {
+        "title": "Geen werkitems toegewezen",
+        "description": "Updates voor werkitems die aan jou zijn toegewezen kun je hier\n zien"
+      }
+    },
+    "tabs": {
+      "all": "Alles",
+      "mentions": "Vermeldingen"
+    },
+    "filter": {
+      "assigned": "Aan mij toegewezen",
+      "created": "Door mij aangemaakt",
+      "subscribed": "Door mij geabonneerd"
+    },
+    "snooze": {
+      "1_day": "1 dag",
+      "3_days": "3 dagen",
+      "5_days": "5 dagen",
+      "1_week": "1 week",
+      "2_weeks": "2 weken",
+      "custom": "Aangepast"
+    },
+    "content": {
+      "duplicate_added": "heeft dit werkitem als duplicaat gemarkeerd",
+      "duplicate_removed": "heeft de duplicaatmarkering van dit werkitem verwijderd",
+      "assignee_added": "heeft <value/> als toegewezene toegevoegd",
+      "assignee_removed": "heeft de toegewezene verwijderd",
+      "start_date_set": "heeft de startdatum ingesteld op <value/>",
+      "start_date_removed": "heeft de startdatum verwijderd",
+      "finish_date_set": "set finish date",
+      "finish_date_removed": "removed the finish date",
+      "due_date_set": "heeft de einddatum ingesteld op <value/>",
+      "due_date_removed": "heeft de einddatum verwijderd",
+      "duration_set": "heeft de duur ingesteld op <value/>",
+      "duration_removed": "heeft de duur verwijderd",
+      "label_added": "heeft het label <value/> toegevoegd",
+      "label_removed": "heeft het label verwijderd",
+      "parent_added": "heeft <value/> als bovenliggend item toegevoegd",
+      "parent_removed": "heeft het bovenliggende item verwijderd",
+      "relates_to": "heeft dit werkitem als gerelateerd aan een ander werkitem gemarkeerd",
+      "commented": "heeft gereageerd",
+      "restored": "heeft het werkitem hersteld",
+      "archived": "heeft het werkitem gearchiveerd",
+      "created_and_assigned": "heeft het werkitem aangemaakt en aan u toegewezen",
+      "mentioned_you": "heeft u genoemd",
+      "description_updated": "heeft de beschrijving gewijzigd in <value/>",
+      "estimate_updated": "heeft de schatting gewijzigd in <value/>",
+      "state_updated": "heeft de status gewijzigd in <value/>",
+      "priority_updated": "heeft de prioriteit gewijzigd in <value/>",
+      "name_updated": "heeft de titel gewijzigd in <value/>",
+      "type_updated": "heeft het type werkitem gewijzigd in <value/>",
+      "cycle_added": "heeft het werkitem toegevoegd aan de cyclus <value/>",
+      "cycle_updated": "heeft de cyclus gewijzigd in <value/>",
+      "cycle_removed": "heeft het werkitem uit de cyclus verwijderd",
+      "module_added": "heeft het werkitem toegevoegd aan de module <value/>",
+      "module_updated": "heeft de module gewijzigd in <value/>",
+      "module_removed": "heeft het werkitem uit de module verwijderd",
+      "link_added": "heeft een link toegevoegd",
+      "link_updated": "heeft een link bijgewerkt",
+      "link_removed": "heeft een link verwijderd",
+      "attachment_added": "heeft een bijlage toegevoegd",
+      "attachment_removed": "heeft een bijlage verwijderd",
+      "blocking_added": "heeft dit werkitem gemarkeerd als blokkerend voor <value/>",
+      "blocking_removed": "heeft de blokkeringsrelatie verwijderd",
+      "blocked_by_added": "heeft dit werkitem gemarkeerd als geblokkeerd door <value/>",
+      "blocked_by_removed": "heeft de relatie ‘geblokkeerd door’ verwijderd",
+      "generic_updated": "heeft het werkitem bijgewerkt",
+      "end_punctuation": "."
+    },
+    "access_request": {
+      "approved": "heeft uw verzoek om lid te worden van <value/> goedgekeurd",
+      "rejected": "heeft uw verzoek om lid te worden van <value/> afgewezen",
+      "requested": "heeft toegang tot <value/> aangevraagd"
+    }
+  },
+  "notification_ui": {
+    "snooze_modal": {
+      "date_required": "Selecteer een datum",
+      "no_time_available": "Geen beschikbare tijd voor deze datum.",
+      "pick_date": "Kies een datum",
+      "pick_time": "Kies een tijd",
+      "select_date": "Selecteer datum",
+      "select_time": "Selecteer een tijd",
+      "submitting": "Verzenden...",
+      "time_required": "Selecteer een tijd",
+      "title": "Snoozetijd aanpassen"
+    }
+  }
+}

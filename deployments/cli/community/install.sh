@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 BRANCH=${BRANCH:-main}
 SCRIPT_DIR=$PWD
@@ -57,7 +57,7 @@ function spinner() {
 
 function checkLatestRelease(){
     echo "Checking for the latest release..." >&2
-    local latest_release=$(curl -sSL https://api.github.com/repos/$GH_REPO/releases/latest |  grep -o '"tag_name": "[^"]*"' | sed 's/"tag_name": "//;s/"//g;s/^v//')
+    local latest_release=$(curl -sSL https://api.github.com/repos/$GH_REPO/releases/latest |  grep -o '"tag_name": *"[^"]*"' | sed 's/"tag_name": *"//;s/"//g;s/^v//')
     if [ -z "$latest_release" ]; then
         echo "Failed to check for the latest release. Exiting..." >&2
         exit 1
@@ -151,8 +151,18 @@ function updateEnvFile() {
     fi
 }
 
+# True when Space (the public sharing site) is left out: ENABLE_SPACE=0 or SPACE_REPLICAS=0, in the environment of
+# the command (ENABLE_SPACE=0 ./setup.sh install) or in plane.env
+function spaceIsLeftOut() {
+    local enabled="${ENABLE_SPACE:-$(getEnvValue "ENABLE_SPACE" "$DOCKER_ENV_PATH")}"
+    local replicas="${SPACE_REPLICAS:-$(getEnvValue "SPACE_REPLICAS" "$DOCKER_ENV_PATH")}"
+    [ "$enabled" == "0" ] || [ "$replicas" == "0" ]
+}
+
 function updateCustomVariables(){
     echo "Updating custom variables..." >&2
+    # Remember a choice made on the command line, so that every later start keeps it
+    if [ -n "$ENABLE_SPACE" ]; then updateEnvFile "ENABLE_SPACE" "$ENABLE_SPACE" "$DOCKER_ENV_PATH"; fi
     updateEnvFile "IMAGE_REPO" "$IMAGE_REPO" "$DOCKER_ENV_PATH"
     updateEnvFile "APP_RELEASE" "$APP_RELEASE" "$DOCKER_ENV_PATH"
     updateEnvFile "PULL_POLICY" "$PULL_POLICY" "$DOCKER_ENV_PATH"
@@ -182,6 +192,34 @@ function syncEnvFile(){
     echo "Environment variables synced successfully" >&2
 }
 
+function generateStorageCredentials(){
+    # Only the bundled MinIO takes its root login from plane.env; external S3 settings stay untouched.
+    local use_minio=$(getEnvValue "USE_MINIO" "$DOCKER_ENV_PATH")
+    local endpoint=$(getEnvValue "AWS_S3_ENDPOINT_URL" "$DOCKER_ENV_PATH")
+    if [ "${use_minio:-1}" != "1" ] || [ "${endpoint:-http://plane-minio:9000}" != "http://plane-minio:9000" ]; then
+        return 0
+    fi
+
+    # Empty values fall back to the access-key/secret-key placeholders in docker-compose.yml.
+    # Older templates quoted the values, so quotes are ignored when comparing.
+    local access_key=$(getEnvValue "AWS_ACCESS_KEY_ID" "$DOCKER_ENV_PATH")
+    local secret_key=$(getEnvValue "AWS_SECRET_ACCESS_KEY" "$DOCKER_ENV_PATH")
+    access_key=${access_key//[\"\']/}
+    secret_key=${secret_key//[\"\']/}
+    # The secret is what protects MinIO, so keep the pair only when the secret is not the template one.
+    if [ "${secret_key:-secret-key}" != "secret-key" ]; then
+        return 0
+    fi
+
+    updateEnvFile "AWS_ACCESS_KEY_ID" "$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 20)" "$DOCKER_ENV_PATH"
+    updateEnvFile "AWS_SECRET_ACCESS_KEY" "$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 40)" "$DOCKER_ENV_PATH"
+    if [ -n "$access_key$secret_key" ]; then
+        echo "NOTICE: Default object-storage credentials were rotated; the new AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY are in plane.env" >&2
+    else
+        echo "Generated object-storage credentials (AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY) in plane.env" >&2
+    fi
+}
+
 function buildYourOwnImage(){
     echo "Building images locally..."
 
@@ -197,11 +235,10 @@ function buildYourOwnImage(){
     REPO=https://github.com/$GH_REPO.git
     git clone "$REPO" "$PLANE_TEMP_CODE_DIR"  --branch "$BRANCH" --single-branch --depth 1
 
-    cp "$PLANE_TEMP_CODE_DIR/deployments/cli/community/build.yml" "$PLANE_TEMP_CODE_DIR/build.yml"
+    # the build contexts in build.yaml are relative to its own folder, so build from there
+    cd "$PLANE_TEMP_CODE_DIR/deployments/cli/community" || exit
 
-    cd "$PLANE_TEMP_CODE_DIR" || exit
-
-    /bin/bash -c "$COMPOSE_CMD -f build.yml build --no-cache"  >&2
+    bash -c "$COMPOSE_CMD -f build.yaml build --no-cache"  >&2
     if [ $? -ne 0 ]; then
         echo "Build failed. Exiting..."
         exit 1
@@ -248,7 +285,7 @@ function download() {
         mv $PLANE_INSTALL_DIR/docker-compose.yaml $PLANE_INSTALL_DIR/archive/$TS.docker-compose.yaml
     fi
 
-    RESPONSE=$(curl -sSL -H 'Cache-Control: no-cache, no-store' -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/docker-compose.yml?$(date +%s)")
+    RESPONSE=$(curl -sSL -H 'Cache-Control: no-cache, no-store' -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/compose.yaml?$(date +%s)")
     BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
     STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
@@ -256,15 +293,15 @@ function download() {
         echo "$BODY" > $PLANE_INSTALL_DIR/docker-compose.yaml
     else
         # Fallback to download from the raw github url
-        RESPONSE=$(curl -sSL -H 'Cache-Control: no-cache, no-store' -w "HTTPSTATUS:%{http_code}" "$FALLBACK_DOWNLOAD_URL/docker-compose.yml?$(date +%s)")
+        RESPONSE=$(curl -sSL -H 'Cache-Control: no-cache, no-store' -w "HTTPSTATUS:%{http_code}" "$FALLBACK_DOWNLOAD_URL/compose.yaml?$(date +%s)")
         BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
         STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
         if [ "$STATUS" -eq 200 ]; then
             echo "$BODY" > $PLANE_INSTALL_DIR/docker-compose.yaml
         else
-            echo "Failed to download docker-compose.yml. HTTP Status: $STATUS"
-            echo "URL: $RELEASE_DOWNLOAD_URL/v$APP_RELEASE/docker-compose.yml"
+            echo "Failed to download compose.yaml. HTTP Status: $STATUS"
+            echo "URL: $RELEASE_DOWNLOAD_URL/v$APP_RELEASE/compose.yaml"
             mv $PLANE_INSTALL_DIR/archive/$TS.docker-compose.yaml $PLANE_INSTALL_DIR/docker-compose.yaml
             exit 1
         fi
@@ -301,6 +338,7 @@ function download() {
     mv $PLANE_INSTALL_DIR/variables-upgrade.env $DOCKER_ENV_PATH
 
     syncEnvFile
+    generateStorageCredentials
 
     if [ "$LOCAL_BUILD" == "true" ]; then
         export IMAGE_REPO="local/pi-plane"
@@ -319,7 +357,12 @@ function download() {
     else
         CUSTOM_BUILD="false"
         updateCustomVariables
-        /bin/bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH pull --policy always"
+        local pull_services=""
+        if spaceIsLeftOut; then
+            # nothing to download for the site that is not going to run
+            pull_services=$(bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH config --services" | grep -vx "space" | tr '\n' ' ')
+        fi
+        bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH pull --policy always $pull_services"
 
         if [ $? -ne 0 ]; then
             echo ""
@@ -335,7 +378,9 @@ function download() {
     echo ""
 }
 function startServices() {
-    /bin/bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH up -d --pull if_not_present --quiet-pull"
+    local space_scale=""
+    if spaceIsLeftOut; then space_scale="--scale space=0"; fi
+    bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH up -d --pull if_not_present --quiet-pull $space_scale"
 
     local migrator_container_id=$(docker container ls -aq -f "name=$SERVICE_FOLDER-migrator")
     if [ -n "$migrator_container_id" ]; then
@@ -417,7 +462,7 @@ function startServices() {
 
 }
 function stopServices() {
-    /bin/bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH down"
+    bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH down"
 }
 function restartServices() {
     stopServices
@@ -464,13 +509,13 @@ function upgrade() {
 function viewSpecificLogs(){
     local SERVICE_NAME=$1
 
-    if /bin/bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH ps | grep -q '$SERVICE_NAME'"; then
+    if bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH ps | grep -q '$SERVICE_NAME'"; then
         echo "Service '$SERVICE_NAME' is running."
     else
         echo "Service '$SERVICE_NAME' is not running."
     fi
 
-    /bin/bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH logs -f $SERVICE_NAME"
+    bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH logs -f $SERVICE_NAME"
 }
 function viewLogs(){
     
@@ -548,7 +593,7 @@ function backup_container_dir() {
     local SERVICE_FOLDER=$4
 
     echo "Backing up $CONTAINER_NAME data..."
-    local CONTAINER_ID=$(/bin/bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH ps -q $CONTAINER_NAME")
+    local CONTAINER_ID=$(bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH ps -q $CONTAINER_NAME")
     if [ -z "$CONTAINER_ID" ]; then
         echo "Error: $CONTAINER_NAME container not found. Make sure the services are running."
         return 1

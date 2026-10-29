@@ -42,21 +42,50 @@
           "blocked_by": "{issue} không thể bắt đầu cho đến khi {related} hoàn thành (bị chặn bởi quan hệ).",
           "blocking": "{issue} phải hoàn thành trước khi {related} bắt đầu (quan hệ chặn).",
           "finish_after": "{issue} không thể hoàn thành trước {related} (hoàn thành sau quan hệ).",
+          "finish_after_start": "{issue} không thể kết thúc trước khi {related} bắt đầu (quan hệ kết thúc sau khi bắt đầu).",
           "finish_before": "{issue} phải hoàn thành vào hoặc trước {related} (hoàn thành trước quan hệ).",
           "start_after": "{issue} không thể bắt đầu trước {related} (bắt đầu sau quan hệ).",
-          "start_before": "{issue} phải bắt đầu vào hoặc trước {related} (bắt đầu trước quan hệ)."
+          "start_before": "{issue} phải bắt đầu vào hoặc trước {related} (bắt đầu trước quan hệ).",
+          "start_before_finish": "{issue} phải bắt đầu chậm nhất khi {related} kết thúc (quan hệ bắt đầu trước khi kết thúc)."
         },
         "status": {
           "finish_after": "{issue} không thể hoàn thành cho đến khi {related} đã hoàn thành (hoàn thành sau quan hệ).",
+          "finish_after_start": "{issue} không thể hoàn thành cho đến khi {related} đã bắt đầu (quan hệ kết thúc sau khi bắt đầu).",
           "start_after": "{issue} không thể bắt đầu cho đến khi {related} đã bắt đầu (bắt đầu sau quan hệ)."
-        }
+        },
+        "self": "{issue} không thể liên kết với chính nó.",
+        "cycle": "{issue} và {related} sẽ tạo thành vòng lặp quan hệ. Hãy xóa quan hệ ngược lại trước.",
+        "lag_suffix": " Độ trễ của quan hệ: {lag} ngày."
       },
       "date_conflict": "Các ngày này xung đột với các phụ thuộc hiện có. Hãy điều chỉnh các mục công việc liên quan hoặc xóa phụ thuộc trước.",
       "dependency_create_failed": "Không thể tạo phụ thuộc. Vui lòng thử lại.",
-      "dependency_created": "Đã tạo phụ thuộc mục công việc thành công."
-    }
+      "dependency_created": "Đã tạo phụ thuộc mục công việc thành công.",
+      "lag": {
+        "hint": "Số ngày giữa hai ngày; giá trị âm cho phép chồng lấn.",
+        "invalid": "Nhập số nguyên ngày từ -{max} đến {max}.",
+        "label": "Độ trễ (ngày)",
+        "update_failed": "Không thể thay đổi độ trễ."
+      },
+      "reschedule": {
+        "confirm": "Di chuyển",
+        "content": "Thay đổi này sẽ phá vỡ các phụ thuộc. Có thể dời các mục công việc sau đây về sau, giữ nguyên thời lượng, để mọi phụ thuộc vẫn được đáp ứng:",
+        "title": "Di chuyển cả các mục công việc phụ thuộc?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Chuyển sang đã hủy",
+        "content": "{issue} hiện được đánh dấu là bản trùng của {originals}. Chuyển sang “{state}”? Mục vẫn được liên kết và hiển thị.",
+        "failed": "Không thể hủy mục công việc.",
+        "keep": "Giữ mở",
+        "title": "Hủy mục công việc này?"
+      }
+    },
+    "edit_restricted": "Chỉ những người được giao mục công việc này, trưởng dự án và quản trị viên dự án mới được thay đổi."
   },
   "project_create": {
+    "advanced": {
+      "description": "Quy tắc và loại quan hệ. Bạn có thể thay đổi sau trong cài đặt quy trình làm việc của dự án.",
+      "title": "Tùy chọn nâng cao"
+    },
     "features": {
       "cycles": {
         "description": "Đóng khung thời gian công việc theo các chu kỳ lặp lại.",
@@ -115,11 +144,53 @@
       "pending_approval_title": "Cần phê duyệt",
       "rejected_success": "Đã từ chối chuyển tiếp.",
       "resolving_approval": "Đang xử lý phê duyệt...",
+      "rules": {
+        "heading": "Quy tắc",
+        "description": "Các quy tắc của dự án áp dụng độc lập, dù quy trình làm việc có được bật hay không.",
+        "parent_completion": {
+          "description": "Một mục công việc không thể hoàn thành khi còn mục con chưa hoàn thành hoặc chưa bị hủy. Mở lại một mục con đã xong dưới mục cha đã hoàn thành sẽ hỏi có mở lại cả mục cha không.",
+          "title": "Chỉ hoàn thành mục cha khi các mục con đã xong"
+        },
+        "reopen_parent": {
+          "confirm": "Mở lại",
+          "content": "Dự án này không cho phép mục cha giữ trạng thái hoàn thành khi một mục con đang mở. Các mục cha đã hoàn thành sau cũng sẽ được mở lại: {names}",
+          "title": "Mở lại cả các mục công việc cha?"
+        },
+        "blocked_status": {
+          "description": "Một mục công việc không thể chuyển sang trạng thái đã bắt đầu hoặc đã hoàn thành khi một mục công việc chặn nó vẫn còn mở (mục chặn đã hoàn thành hoặc đã hủy không tính). Vẫn có thể ở lại backlog hoặc cần làm, và vẫn có thể hủy.",
+          "title": "Chỉ bắt đầu hoặc hoàn thành mục khi các mục chặn nó đã xong"
+        },
+        "assignee_edit": {
+          "description": "Khi một mục công việc đã có người được giao, chỉ những người được giao, trưởng dự án và quản trị viên dự án mới được thay đổi: trường, trạng thái, ngày, mục con, quan hệ, liên kết, tệp đính kèm, chu kỳ và mô-đun, xóa và lưu trữ. Mọi người vẫn có thể bình luận. Mục chưa có người được giao vẫn mở cho mọi thành viên.",
+          "title": "Chỉ người được giao, trưởng dự án và quản trị viên mới được thay đổi mục công việc"
+        }
+      },
       "save_error": "Không thể lưu cấu hình quy trình làm việc.",
       "save_success": "Đã lưu cấu hình quy trình làm việc.",
       "toggle_error": "Không thể cập nhật cài đặt quy trình làm việc.",
       "transition": "Chuyển tiếp",
-      "transitions_configured": "chuyển tiếp đã cấu hình"
+      "transition_count": "{count, plural, one {# chuyển tiếp} other {# chuyển tiếp}}",
+      "transitions_configured": "chuyển tiếp đã cấu hình",
+      "relation_types": {
+        "heading": "Loại quan hệ",
+        "description": "Chọn những quan hệ có thể thêm trong dự án này. Chặn luôn khả dụng, và các quan hệ hiện có vẫn được giữ khi tắt một loại.",
+        "schedule": {
+          "description": "Bắt đầu trước, kết thúc trước và bắt đầu trước khi kết thúc, với độ trễ tùy chọn tính theo ngày.",
+          "title": "Phụ thuộc lịch trình"
+        },
+        "traceability": {
+          "description": "Triển khai, gây ra, nhân bản và kiểm thử, cùng các chiều ngược lại.",
+          "title": "Quan hệ truy vết"
+        },
+        "relates_to": {
+          "description": "Một liên kết đơn giản giữa hai mục.",
+          "title": "Liên quan đến"
+        },
+        "duplicate": {
+          "description": "Đánh dấu một mục là bản trùng lặp của mục khác.",
+          "title": "Trùng lặp"
+        }
+      }
     }
   },
   "project_templates": {

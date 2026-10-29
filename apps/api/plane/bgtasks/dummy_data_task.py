@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -88,7 +89,7 @@ def create_states(workspace, project, user_id):
             "group": "backlog",
             "default": True,
         },
-        {"name": "Todo", "color": "#3A3A3A", "sequence": 25000, "group": "unstarted"},
+        {"name": "To do", "color": "#3A3A3A", "sequence": 25000, "group": "unstarted"},
         {
             "name": "In Progress",
             "color": "#F59E0B",
@@ -312,6 +313,7 @@ def create_issues(workspace, project, user_id, issue_count):
                 sequence_id=last_id,
                 sort_order=largest_sort_order,
                 start_date=start_date,
+                finish_date=end_date,
                 target_date=end_date,
                 priority=["urgent", "high", "medium", "low", "none"][random.randint(0, 4)],
                 created_by_id=creators[random.randint(0, len(creators) - 1)],

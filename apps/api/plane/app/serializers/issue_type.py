@@ -90,8 +90,7 @@ class IssueTypeSerializer(BaseSerializer):
             raise serializers.ValidationError({"properties": str(exc)})
 
         existing = {
-            str(row.id): row
-            for row in IssueTypeProperty.objects.filter(issue_type=issue_type, deleted_at__isnull=True)
+            str(row.id): row for row in IssueTypeProperty.objects.filter(issue_type=issue_type, deleted_at__isnull=True)
         }
         seen_ids = set()
 

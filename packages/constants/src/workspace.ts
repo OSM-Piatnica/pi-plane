@@ -8,7 +8,11 @@
 import type { TStaticViewTypes, IWorkspaceSearchResults } from "@plane/types";
 import { EUserWorkspaceRoles } from "@plane/types";
 
-export const ORGANIZATION_SIZE: string[] = ["Just myself", "2-10", "11-50", "51-200", "201-500", "500+"];
+// A language-neutral value (no English label), so it needs no translation. Workspaces created before
+// migration 0135 stored "Just myself" for the solo size.
+export const SOLO_ORGANIZATION_SIZE = "1";
+
+export const ORGANIZATION_SIZE: string[] = [SOLO_ORGANIZATION_SIZE, "2-10", "11-50", "51-200", "201-500", "500+"];
 
 export const RESTRICTED_URLS: string[] = [
   "404",
@@ -154,6 +158,44 @@ export const IMPORTERS_LIST = [
     i18n_description: "importer.jira.description",
   },
 ];
+
+/**
+ * Columns a work item export always carries, because a file without them cannot be imported again.
+ * Mirrors `ISSUE_EXPORT_REQUIRED_FIELDS` of the API (a web test keeps the two in step).
+ */
+export const ISSUE_EXPORT_REQUIRED_FIELDS = ["identifier", "name"] as const;
+
+/**
+ * The columns of a work item export a person may leave out, grouped for the export form. Mirrors
+ * `ISSUE_EXPORT_FIELD_GROUPS` of the API (a web test keeps the two in step).
+ */
+export const ISSUE_EXPORT_FIELD_GROUPS = {
+  details: [
+    "project_name",
+    "project_identifier",
+    "sequence_id",
+    "issue_type",
+    "state_name",
+    "priority",
+    "description_html",
+    "estimate",
+    "is_draft",
+  ],
+  people: ["assignees", "subscribers", "created_by_name"],
+  dates: [
+    "start_date",
+    "finish_date",
+    "target_date",
+    "duration",
+    "completed_at",
+    "created_at",
+    "updated_at",
+    "archived_at",
+  ],
+  organization: ["labels", "cycles", "modules"],
+  relations: ["parent", "relations", "links"],
+  other: ["custom_properties", "comments"],
+} as const;
 
 export const EXPORTERS_LIST = [
   {

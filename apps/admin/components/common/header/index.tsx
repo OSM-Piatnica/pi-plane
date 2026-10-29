@@ -1,16 +1,29 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
+import { Fragment } from "react";
 import { observer } from "mobx-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Settings } from "lucide-react";
 // icons
-import { Breadcrumbs } from "@plane/ui";
+import { Menu } from "lucide-react";
+import { SettingsOutline } from "@makeplane/propel/icons";
+// plane internal packages
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@makeplane/propel/components/breadcrumb";
+import { Icon } from "@makeplane/propel/components/icon";
 // components
-import { BreadcrumbLink } from "../breadcrumb-link";
+import { StarUsOnGitHubLink } from "@/components/common/star-us-link";
 // hooks
 import { useTheme } from "@/hooks/store";
 // local imports
@@ -21,6 +34,8 @@ export const HamburgerToggle = observer(function HamburgerToggle() {
   const { isSidebarCollapsed, toggleSidebar } = useTheme();
   return (
     <button
+      type="button"
+      aria-label="Toggle sidebar"
       className="group flex size-7 cursor-pointer items-center justify-center rounded-sm bg-layer-1 transition-all hover:bg-layer-1-hover md:hidden"
       onClick={() => toggleSidebar(!isSidebarCollapsed)}
     >
@@ -34,56 +49,58 @@ const HEADER_SEGMENT_LABELS = {
   ...EXTENDED_HEADER_SEGMENT_LABELS,
 };
 
+// Function to dynamically generate breadcrumb items based on pathname
+const generateBreadcrumbItems = (pathname: string) => {
+  const pathSegments = pathname.split("/").slice(1); // removing the first empty string.
+  pathSegments.pop();
+
+  let currentUrl = "";
+  const breadcrumbItems = pathSegments.map((segment) => {
+    currentUrl += "/" + segment;
+    return {
+      title: HEADER_SEGMENT_LABELS[segment] ?? segment.toUpperCase(),
+      href: currentUrl,
+    };
+  });
+  return breadcrumbItems;
+};
+
 export const AdminHeader = observer(function AdminHeader() {
   const pathName = usePathname();
 
-  // Function to dynamically generate breadcrumb items based on pathname
-  const generateBreadcrumbItems = (pathname: string) => {
-    const pathSegments = pathname.split("/").slice(1); // removing the first empty string.
-    pathSegments.pop();
-
-    let currentUrl = "";
-    const breadcrumbItems = pathSegments.map((segment) => {
-      currentUrl += "/" + segment;
-      return {
-        title: HEADER_SEGMENT_LABELS[segment] ?? segment.toUpperCase(),
-        href: currentUrl,
-      };
-    });
-    return breadcrumbItems;
-  };
-
-  const breadcrumbItems = generateBreadcrumbItems(pathName || "");
+  const breadcrumbItems = generateBreadcrumbItems(pathName || "").filter((item) => item.title);
 
   return (
     <div className="relative z-10 flex h-header w-full flex-shrink-0 flex-row items-center justify-between gap-x-2 gap-y-4 border-b border-subtle bg-surface-1 p-4">
       <div className="flex w-full flex-grow items-center gap-2 overflow-ellipsis whitespace-nowrap">
         <HamburgerToggle />
-        {breadcrumbItems.length >= 0 && (
-          <div>
-            <Breadcrumbs>
-              <Breadcrumbs.Item
-                component={
-                  <BreadcrumbLink
-                    href="/general/"
-                    label="Settings"
-                    icon={<Settings className="h-4 w-4 text-tertiary" />}
-                  />
-                }
-              />
-              {breadcrumbItems.map(
-                (item) =>
-                  item.title && (
-                    <Breadcrumbs.Item
-                      key={item.title}
-                      component={<BreadcrumbLink href={item.href} label={item.title} />}
-                    />
-                  )
-              )}
-            </Breadcrumbs>
-          </div>
-        )}
+        <div>
+          <Breadcrumb aria-label="Breadcrumb">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink
+                  label="Settings"
+                  icon={<Icon icon={SettingsOutline} tint="tertiary" />}
+                  render={<Link href="/general/" />}
+                />
+              </BreadcrumbItem>
+              {breadcrumbItems.map((item, index) => (
+                <Fragment key={item.href}>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    {index === breadcrumbItems.length - 1 ? (
+                      <BreadcrumbPage label={item.title} />
+                    ) : (
+                      <BreadcrumbLink label={item.title} render={<Link href={item.href} />} />
+                    )}
+                  </BreadcrumbItem>
+                </Fragment>
+              ))}
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
       </div>
+      <StarUsOnGitHubLink />
     </div>
   );
 });

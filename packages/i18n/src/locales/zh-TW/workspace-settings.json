@@ -65,6 +65,45 @@
           }
         }
       },
+      "groups": {
+        "title": "使用者群組",
+        "description": "將人員整理成群組。群組可以巢狀排列，一個人可以屬於多個群組，工作事項也可以指派給群組。",
+        "create_group": "建立群組",
+        "create": "建立",
+        "edit_group": "編輯群組",
+        "edit": "編輯",
+        "add_subgroup": "新增子群組",
+        "members": "成員",
+        "name": "名稱",
+        "description_label": "說明",
+        "parent": "上層群組",
+        "top_level": "無上層（頂層）",
+        "no_groups": "尚無群組。",
+        "member_count": "{count, plural, one {# 位成員} other {# 位成員}}",
+        "managed_by": "由 {provider} 管理",
+        "sources": {
+          "local": "本機",
+          "entra": "Microsoft Entra",
+          "google": "Google",
+          "oidc": "SSO"
+        },
+        "members_of": "{name} 的成員",
+        "managed_externally_hint": "此群組由您的身分識別提供者管理。其成員跟隨提供者，無法在此處變更。",
+        "select_member": "選取成員",
+        "add_member": "新增",
+        "role": "角色",
+        "role_member": "成員",
+        "role_admin": "群組管理員",
+        "no_members": "此群組尚無成員。",
+        "group_created": "已建立群組。",
+        "group_updated": "已更新群組。",
+        "group_deleted": "已刪除群組。",
+        "delete_title": "刪除 {name}？",
+        "delete_content": "此群組中的人員仍會保留在工作區中。指派給該群組的工作事項將失去此指派。此動作無法復原。",
+        "group_assignees": "已指派的群組",
+        "add_group_assignee": "新增群組",
+        "no_group_assignees": "未指派群組"
+      },
       "billing_and_plans": {
         "heading": "計費與方案",
         "description": "選擇您的方案、管理訂閱，並在需求增加時輕鬆升級。",
@@ -94,6 +133,50 @@
               "title": "匯出失敗",
               "message": "匯出未成功。請再試一次。"
             }
+          }
+        },
+        "columns": {
+          "heading": "欄位",
+          "description": "選擇檔案包含哪些欄位。識別碼和名稱一律包含在內，否則檔案將無法再次匯入。",
+          "select_all": "全選",
+          "clear_all": "全部清除",
+          "groups": {
+            "details": "詳細資料",
+            "people": "人員",
+            "dates": "日期",
+            "organization": "組織",
+            "relations": "階層與關係",
+            "other": "其他"
+          },
+          "fields": {
+            "project_name": "專案名稱",
+            "project_identifier": "專案識別碼",
+            "sequence_id": "序號",
+            "issue_type": "工作事項類型",
+            "state_name": "狀態",
+            "priority": "優先順序",
+            "description_html": "描述",
+            "estimate": "估計",
+            "is_draft": "草稿標記",
+            "assignees": "負責人",
+            "subscribers": "訂閱者",
+            "created_by_name": "建立者",
+            "start_date": "開始日期",
+            "finish_date": "Finish date",
+            "target_date": "到期日",
+            "duration": "持續時間",
+            "completed_at": "完成時間",
+            "created_at": "建立時間",
+            "updated_at": "更新時間",
+            "archived_at": "封存時間",
+            "labels": "標籤",
+            "cycles": "週期",
+            "modules": "模組",
+            "parent": "父項",
+            "relations": "關係",
+            "links": "連結",
+            "custom_properties": "自訂屬性",
+            "comments": "留言"
           }
         }
       },
@@ -161,7 +244,7 @@
         "generating": "產生中",
         "delete": {
           "title": "刪除 API 權杖",
-          "description": "使用此權杖的任何應用程式將無法再存取 Plane 資料。此操作無法復原。",
+          "description": "使用此權杖的任何應用程式將無法再存取 Pi-Plane 資料。此操作無法復原。",
           "success": {
             "title": "成功！",
             "message": "API 權杖已成功刪除"
@@ -176,7 +259,7 @@
         "title": "整合",
         "heading": "整合",
         "description": "與常用工具和服務連結，以便在整個工作流程生態系中同步您的工作。",
-        "page_title": "在可用的應用程式或您自己的應用程式中使用您的 Plane 資料。",
+        "page_title": "在可用的應用程式或您自己的應用程式中使用您的 Pi-Plane 資料。",
         "page_description": "查看此工作區或您正在使用的所有整合。"
       },
       "imports": {
@@ -258,7 +341,7 @@
       "project_states": {
         "title": "專案狀態",
         "heading": "查看所有專案的進度概覽。",
-        "description": "專案狀態是 Plane 獨有的功能，可依任何專案屬性追蹤所有專案的進度。",
+        "description": "專案狀態是 Pi-Plane 獨有的功能，可依任何專案屬性追蹤所有專案的進度。",
         "go_to_settings": "前往設定"
       },
       "projects": {
@@ -310,7 +393,7 @@
         },
         "app_created": {
           "title": "應用程式已成功建立",
-          "description": "使用憑證將應用程式安裝到 Plane 工作區中"
+          "description": "使用憑證將應用程式安裝到 Pi-Plane 工作區中"
         },
         "installed_apps": "已安裝的應用程式",
         "all_apps": "所有應用程式",
@@ -351,7 +434,7 @@
         },
         "redirect_uris": {
           "label": "重定向 URI（以空格分隔）",
-          "description": "使用者在透過 Plane 認證後將被重新導向到此路徑。",
+          "description": "使用者在透過 Pi-Plane 認證後將被重新導向到此路徑。",
           "placeholder": "https://example.com https://example.com/"
         },
         "app_available_description": "連接Plane工作空間以開始使用",
@@ -450,7 +533,7 @@
         "upload_and_save": "上傳並保存",
         "app_consent_no_access_title": "請求安裝",
         "app_consent_no_access_description": "此應用程式只能在工作區管理員安裝後才能安裝。請聯絡您的工作區管理員以繼續。",
-        "app_consent_unapproved_title": "此應用程式尚未經 Plane 審核或核准。",
+        "app_consent_unapproved_title": "此應用程式尚未經 Pi-Plane 審核或核准。",
         "app_consent_unapproved_description": "將此應用程式連接到您的工作區之前，請確認您信任它。",
         "go_to_app": "前往應用程式",
         "enable_app_mentions": "啟用應用程式提及",
@@ -489,7 +572,7 @@
     "empty_state": {
       "api_tokens": {
         "title": "尚未建立 API 權杖",
-        "description": "Plane API 可用於將您在 Plane 中的資料與任何外部系統整合。建立權杖以開始使用。"
+        "description": "Pi-Plane API 可用於將您在 Pi-Plane 中的資料與任何外部系統整合。建立權杖以開始使用。"
       },
       "webhooks": {
         "title": "尚未新增 Webhook",

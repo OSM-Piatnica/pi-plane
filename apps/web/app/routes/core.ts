@@ -63,11 +63,6 @@ export const coreRoutes: RouteConfigEntry[] = [
         // Workspace Home
         route(":workspaceSlug", "./(all)/[workspaceSlug]/(projects)/page.tsx"),
 
-        // Active Cycles
-        layout("./(all)/[workspaceSlug]/(projects)/active-cycles/layout.tsx", [
-          route(":workspaceSlug/active-cycles", "./(all)/[workspaceSlug]/(projects)/active-cycles/page.tsx"),
-        ]),
-
         // Analytics
         layout("./(all)/[workspaceSlug]/(projects)/analytics/[tabId]/layout.tsx", [
           route(":workspaceSlug/analytics/:tabId", "./(all)/[workspaceSlug]/(projects)/analytics/[tabId]/page.tsx"),
@@ -268,8 +263,8 @@ export const coreRoutes: RouteConfigEntry[] = [
             "./(all)/[workspaceSlug]/(settings)/settings/(workspace)/members/page.tsx"
           ),
           route(
-            ":workspaceSlug/settings/billing",
-            "./(all)/[workspaceSlug]/(settings)/settings/(workspace)/billing/page.tsx"
+            ":workspaceSlug/settings/groups",
+            "./(all)/[workspaceSlug]/(settings)/settings/(workspace)/groups/page.tsx"
           ),
           route(
             ":workspaceSlug/settings/exports",
@@ -319,26 +314,14 @@ export const coreRoutes: RouteConfigEntry[] = [
               ":workspaceSlug/settings/projects/:projectId/members",
               "./(all)/[workspaceSlug]/(settings)/settings/projects/[projectId]/members/page.tsx"
             ),
-            // Project Features
+            // Project Features (the old per-feature addresses redirect here)
             route(
-              ":workspaceSlug/settings/projects/:projectId/features/cycles",
-              "./(all)/[workspaceSlug]/(settings)/settings/projects/[projectId]/features/cycles/page.tsx"
+              ":workspaceSlug/settings/projects/:projectId/features",
+              "./(all)/[workspaceSlug]/(settings)/settings/projects/[projectId]/features/page.tsx"
             ),
             route(
-              ":workspaceSlug/settings/projects/:projectId/features/modules",
-              "./(all)/[workspaceSlug]/(settings)/settings/projects/[projectId]/features/modules/page.tsx"
-            ),
-            route(
-              ":workspaceSlug/settings/projects/:projectId/features/views",
-              "./(all)/[workspaceSlug]/(settings)/settings/projects/[projectId]/features/views/page.tsx"
-            ),
-            route(
-              ":workspaceSlug/settings/projects/:projectId/features/pages",
-              "./(all)/[workspaceSlug]/(settings)/settings/projects/[projectId]/features/pages/page.tsx"
-            ),
-            route(
-              ":workspaceSlug/settings/projects/:projectId/features/intake",
-              "./(all)/[workspaceSlug]/(settings)/settings/projects/[projectId]/features/intake/page.tsx"
+              ":workspaceSlug/settings/projects/:projectId/features/*",
+              "routes/redirects/core/project-settings-features.tsx"
             ),
             // Project States
             route(

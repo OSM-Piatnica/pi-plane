@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -10,6 +11,9 @@ import json
 
 # Django imports
 from django.core.management import BaseCommand
+
+# Module imports
+from plane.utils.s3_config import s3_client_config
 
 
 class Command(BaseCommand):
@@ -22,7 +26,7 @@ class Command(BaseCommand):
             aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),  # MinIO access key
             aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),  # MinIO secret key
             region_name=os.environ.get("AWS_REGION"),  # MinIO region
-            config=boto3.session.Config(signature_version="s3v4"),
+            config=s3_client_config(),
         )
         return s3_client
 
@@ -132,6 +136,10 @@ class Command(BaseCommand):
         return
 
     def handle(self, *args, **options):
+        if os.environ.get("STORAGE_PROVIDER", "s3").strip().lower() == "azure":
+            self.stdout.write("Azure Blob Storage has no bucket policy to update.")
+            return
+
         # Create a session using the credentials from Django settings
 
         # Check if the bucket exists

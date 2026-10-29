@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -31,20 +32,22 @@ class GitHubOAuthProvider(OauthAdapter):
     organization_scope = "read:org"
 
     def __init__(self, request, code=None, state=None, callback=None):
-        GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_ORGANIZATION_ID = get_configuration_value([
-            {
-                "key": "GITHUB_CLIENT_ID",
-                "default": os.environ.get("GITHUB_CLIENT_ID"),
-            },
-            {
-                "key": "GITHUB_CLIENT_SECRET",
-                "default": os.environ.get("GITHUB_CLIENT_SECRET"),
-            },
-            {
-                "key": "GITHUB_ORGANIZATION_ID",
-                "default": os.environ.get("GITHUB_ORGANIZATION_ID"),
-            },
-        ])
+        GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_ORGANIZATION_ID = get_configuration_value(
+            [
+                {
+                    "key": "GITHUB_CLIENT_ID",
+                    "default": os.environ.get("GITHUB_CLIENT_ID"),
+                },
+                {
+                    "key": "GITHUB_CLIENT_SECRET",
+                    "default": os.environ.get("GITHUB_CLIENT_SECRET"),
+                },
+                {
+                    "key": "GITHUB_ORGANIZATION_ID",
+                    "default": os.environ.get("GITHUB_ORGANIZATION_ID"),
+                },
+            ]
+        )
 
         if not (GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET):
             raise AuthenticationException(
@@ -89,21 +92,23 @@ class GitHubOAuthProvider(OauthAdapter):
             "redirect_uri": self.redirect_uri,
         }
         token_response = self.get_user_token(data=data, headers={"Accept": "application/json"})
-        super().set_token_data({
-            "access_token": token_response.get("access_token"),
-            "refresh_token": token_response.get("refresh_token", None),
-            "access_token_expired_at": (
-                datetime.fromtimestamp(token_response.get("expires_in"), tz=pytz.utc)
-                if token_response.get("expires_in")
-                else None
-            ),
-            "refresh_token_expired_at": (
-                datetime.fromtimestamp(token_response.get("refresh_token_expired_at"), tz=pytz.utc)
-                if token_response.get("refresh_token_expired_at")
-                else None
-            ),
-            "id_token": token_response.get("id_token", ""),
-        })
+        super().set_token_data(
+            {
+                "access_token": token_response.get("access_token"),
+                "refresh_token": token_response.get("refresh_token", None),
+                "access_token_expired_at": (
+                    datetime.fromtimestamp(token_response.get("expires_in"), tz=pytz.utc)
+                    if token_response.get("expires_in")
+                    else None
+                ),
+                "refresh_token_expired_at": (
+                    datetime.fromtimestamp(token_response.get("refresh_token_expired_at"), tz=pytz.utc)
+                    if token_response.get("refresh_token_expired_at")
+                    else None
+                ),
+                "id_token": token_response.get("id_token", ""),
+            }
+        )
 
     def __get_email(self, headers):
         try:
@@ -117,12 +122,17 @@ class GitHubOAuthProvider(OauthAdapter):
                     error_code=AUTHENTICATION_ERROR_CODES["GITHUB_OAUTH_PROVIDER_ERROR"],
                     error_message="GITHUB_OAUTH_PROVIDER_ERROR",
                 )
-            email = next((email["email"] for email in emails_response if email["primary"]), None)
+            # Require both primary AND verified — an unverified primary email can be
+            # exploited to take over an existing account (GHSA-7j95-vh8g-f365).
+            email = next(
+                (e["email"] for e in emails_response if e.get("primary") and e.get("verified")),
+                None,
+            )
             if not email:
-                self.logger.error("No primary email found for user")
+                self.logger.error("No primary verified email found for GitHub user")
                 raise AuthenticationException(
-                    error_code=AUTHENTICATION_ERROR_CODES["GITHUB_OAUTH_PROVIDER_ERROR"],
-                    error_message="GITHUB_OAUTH_PROVIDER_ERROR",
+                    error_code=AUTHENTICATION_ERROR_CODES["OAUTH_PROVIDER_UNVERIFIED_EMAIL"],
+                    error_message="OAUTH_PROVIDER_UNVERIFIED_EMAIL",
                 )
             return email
         except requests.RequestException:
@@ -151,13 +161,9 @@ class GitHubOAuthProvider(OauthAdapter):
 
         if self.organization_id:
             if not self.is_user_in_organization(user_info_response.get("login")):
-                self.logger.warning(
-                    "User is not in organization",
-                    extra={
-                        "organization_id": self.organization_id,
-                        "user_login": user_info_response.get("login"),
-                    },
-                )
+                # Do not log the organization id or user login here:
+                # the configuration values must not end up in logs
+                self.logger.warning("User is not in organization")
                 raise AuthenticationException(
                     error_code=AUTHENTICATION_ERROR_CODES["GITHUB_USER_NOT_IN_ORG"],
                     error_message="GITHUB_USER_NOT_IN_ORG",
@@ -170,14 +176,16 @@ class GitHubOAuthProvider(OauthAdapter):
                 "email": email,
             },
         )
-        super().set_user_data({
-            "email": email,
-            "user": {
-                "provider_id": user_info_response.get("id"),
+        super().set_user_data(
+            {
                 "email": email,
-                "avatar": user_info_response.get("avatar_url"),
-                "first_name": user_info_response.get("name"),
-                "last_name": user_info_response.get("family_name"),
-                "is_password_autoset": True,
-            },
-        })
+                "user": {
+                    "provider_id": user_info_response.get("id"),
+                    "email": email,
+                    "avatar": user_info_response.get("avatar_url"),
+                    "first_name": user_info_response.get("name"),
+                    "last_name": user_info_response.get("family_name"),
+                    "is_password_autoset": True,
+                },
+            }
+        )

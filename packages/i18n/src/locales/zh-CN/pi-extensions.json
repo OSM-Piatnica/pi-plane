@@ -42,21 +42,50 @@
           "blocked_by": "{issue} 在 {related} 完成之前无法开始（受阻关系）。",
           "blocking": "{issue} 必须在 {related} 开始之前完成（阻塞关系）。",
           "finish_after": "{issue} 不能在 {related} 之前完成（晚于完成关系）。",
+          "finish_after_start": "{issue} 不能在 {related} 开始之前结束（开始后结束关系）。",
           "finish_before": "{issue} 必须在 {related} 当天或之前完成（早于完成关系）。",
           "start_after": "{issue} 不能在 {related} 之前开始（晚于开始关系）。",
-          "start_before": "{issue} 必须在 {related} 当天或之前开始（早于开始关系）。"
+          "start_before": "{issue} 必须在 {related} 当天或之前开始（早于开始关系）。",
+          "start_before_finish": "{issue} 最迟必须在 {related} 结束时开始（结束前开始关系）。"
         },
         "status": {
           "finish_after": "{issue} 在 {related} 完成之前无法完成（晚于完成关系）。",
+          "finish_after_start": "在 {related} 开始之前，{issue} 无法完成（开始后结束关系）。",
           "start_after": "{issue} 在 {related} 开始之前无法开始（晚于开始关系）。"
-        }
+        },
+        "self": "{issue} 不能与自身关联。",
+        "cycle": "{issue} 与 {related} 会形成关系循环。请先移除相反的关系。",
+        "lag_suffix": "关系延迟：{lag} 天。"
       },
       "date_conflict": "这些日期与现有依赖关系冲突。请调整相关工作项，或先移除该依赖关系。",
       "dependency_create_failed": "无法创建依赖关系。请重试。",
-      "dependency_created": "工作项依赖关系创建成功。"
-    }
+      "dependency_created": "工作项依赖关系创建成功。",
+      "lag": {
+        "hint": "两个日期之间的天数；负数允许重叠。",
+        "invalid": "请输入 -{max} 到 {max} 之间的整数天数。",
+        "label": "延迟（天）",
+        "update_failed": "无法更改延迟。"
+      },
+      "reschedule": {
+        "confirm": "移动",
+        "content": "此更改会破坏依赖关系。可以将以下工作项顺延（保持其工期），以使所有依赖关系仍然成立：",
+        "title": "是否同时移动依赖它的工作项？"
+      },
+      "duplicate_cancel": {
+        "confirm": "移到已取消",
+        "content": "{issue} 现已标记为 {originals} 的重复项。要将其移到“{state}”吗？它仍保持关联并可见。",
+        "failed": "无法取消该工作项。",
+        "keep": "保持打开",
+        "title": "是否取消此工作项？"
+      }
+    },
+    "edit_restricted": "只有此工作项的负责人、项目负责人和项目管理员可以更改它。"
   },
   "project_create": {
+    "advanced": {
+      "description": "规则和关系类型。之后可在项目的工作流设置中更改。",
+      "title": "高级选项"
+    },
     "features": {
       "cycles": {
         "description": "以循环周期对工作进行限时管理。",
@@ -115,11 +144,53 @@
       "pending_approval_title": "需要审批",
       "rejected_success": "流转已拒绝。",
       "resolving_approval": "正在处理审批...",
+      "rules": {
+        "heading": "规则",
+        "description": "无论是否启用工作流，都会独立生效的项目规则。",
+        "parent_completion": {
+          "description": "只要还有未完成且未取消的子工作项，工作项就无法完成。在已完成的父级下重新打开已完成的子工作项时，会询问是否同时重新打开父级。",
+          "title": "仅在子工作项完成后才能完成父级"
+        },
+        "reopen_parent": {
+          "confirm": "重新打开",
+          "content": "此项目不允许在子工作项未完成时让父级保持已完成状态。以下已完成的父级也将被重新打开：{names}",
+          "title": "是否同时重新打开父级工作项？"
+        },
+        "blocked_status": {
+          "description": "只要阻塞它的工作项仍未结束，就不能将其移到已开始或已完成状态（已完成和已取消的阻塞项不计）。仍可停留在待办列表或未开始，也可取消。",
+          "title": "仅在阻塞项完成后才能开始或完成工作项"
+        },
+        "assignee_edit": {
+          "description": "工作项有负责人后，只有其负责人、项目负责人和项目管理员可以更改它：字段、状态、日期、子工作项、关系、链接、附件、周期和模块，以及删除和归档。任何人仍可评论。没有负责人的工作项对所有成员开放。",
+          "title": "只有负责人、项目负责人和管理员可以更改工作项"
+        }
+      },
       "save_error": "无法保存工作流配置。",
       "save_success": "工作流配置已保存。",
       "toggle_error": "无法更新工作流设置。",
       "transition": "流转",
-      "transitions_configured": "个已配置的流转"
+      "transition_count": "{count, plural, one {# 个流转} other {# 个流转}}",
+      "transitions_configured": "个已配置的流转",
+      "relation_types": {
+        "heading": "关系类型",
+        "description": "选择此项目中可添加的关系。阻塞始终可用，关闭某个类型后已有关系会保留。",
+        "schedule": {
+          "description": "先于开始、先于完成和先于完成开始，可选择设置以天为单位的间隔。",
+          "title": "日程依赖"
+        },
+        "traceability": {
+          "description": "实现、导致、克隆和测试，以及它们的反向关系。",
+          "title": "可追溯关系"
+        },
+        "relates_to": {
+          "description": "两个工作项之间的简单链接。",
+          "title": "关联到"
+        },
+        "duplicate": {
+          "description": "将工作项标记为另一个工作项的重复项。",
+          "title": "重复于"
+        }
+      }
     }
   },
   "project_templates": {

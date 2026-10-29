@@ -1,0 +1,156 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useMemo, useState } from "react";
+import { observer } from "mobx-react";
+import { ClipboardOutline, ExportOutline, HistoryOutline } from "@makeplane/propel/icons";
+// plane imports
+import { useTranslation } from "@plane/i18n";
+import { setToast } from "@plane/blocks/toast";
+import { Switch } from "@makeplane/propel/components/switch";
+// hooks
+import { useAppRouter } from "@/hooks/use-app-router";
+import { usePageFilters } from "@/hooks/use-page-filters";
+import { useQueryParams } from "@/hooks/use-query-params";
+import type { TPageNavigationPaneTab } from "@/components/pages/navigation-pane";
+import type { EPageStoreType } from "@/hooks/store";
+// store
+import type { TPageInstance } from "@/store/pages/base-page";
+// local imports
+import { PageActions } from "../../dropdowns";
+import { ExportPageModal } from "../../modals/export-page-modal";
+import { PAGE_NAVIGATION_PANE_TABS_QUERY_PARAM } from "../../navigation-pane";
+
+type Props = {
+  page: TPageInstance;
+  storeType: EPageStoreType;
+};
+
+export const PageOptionsDropdown = observer(function PageOptionsDropdown(props: Props) {
+  const { page, storeType } = props;
+  // translation
+  const { t } = useTranslation();
+  // states
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  // navigation
+  const router = useAppRouter();
+  // store values
+  const {
+    name,
+    isContentEditable,
+    editor: { editorRef },
+  } = page;
+  // page filters
+  const { isFullWidth, handleFullWidth, isStickyToolbarEnabled, handleStickyToolbar } = usePageFilters();
+  // query params
+  const { updateQueryParams } = useQueryParams();
+  // menu items list
+  const EXTRA_MENU_OPTIONS = useMemo(
+    function EXTRA_MENU_OPTIONS(): React.ComponentProps<typeof PageActions>["extraOptions"] {
+      return [
+        {
+          key: "full-screen",
+          action: () => handleFullWidth(!isFullWidth),
+          title: t("page_ui.editor.full_width"),
+          // The row itself does the toggling; the switch is the state readout at the row's end.
+          customContent: (
+            <span className="pointer-events-none">
+              <Switch size="sm" checked={isFullWidth} aria-hidden tabIndex={-1} />
+            </span>
+          ),
+        },
+        {
+          key: "sticky-toolbar",
+          action: () => handleStickyToolbar(!isStickyToolbarEnabled),
+          title: t("page_ui.editor.sticky_toolbar"),
+          customContent: (
+            <span className="pointer-events-none">
+              <Switch size="sm" checked={isStickyToolbarEnabled} aria-hidden tabIndex={-1} />
+            </span>
+          ),
+          shouldRender: isContentEditable,
+        },
+        {
+          key: "copy-markdown",
+          action: () => {
+            if (!editorRef) return;
+            editorRef.copyMarkdownToClipboard();
+            setToast({
+              type: "success",
+              title: t("toast.success"),
+              message: t("page_ui.editor.markdown_copied"),
+            });
+          },
+          title: t("common.actions.copy_markdown"),
+          icon: ClipboardOutline,
+          shouldRender: true,
+        },
+        {
+          key: "version-history",
+          action: () => {
+            // update query param to show info tab in navigation pane
+            const updatedRoute = updateQueryParams({
+              paramsToAdd: {
+                [PAGE_NAVIGATION_PANE_TABS_QUERY_PARAM]: "info" satisfies TPageNavigationPaneTab,
+              },
+            });
+            router.push(updatedRoute);
+          },
+          title: t("page_navigation_pane.tabs.info.version_history.label"),
+          icon: HistoryOutline,
+          shouldRender: true,
+        },
+        {
+          key: "export",
+          action: () => setIsExportModalOpen(true),
+          title: t("export"),
+          icon: ExportOutline,
+          shouldRender: true,
+        },
+      ];
+    },
+    [
+      handleFullWidth,
+      isFullWidth,
+      handleStickyToolbar,
+      isStickyToolbarEnabled,
+      isContentEditable,
+      editorRef,
+      updateQueryParams,
+      router,
+      setIsExportModalOpen,
+      t,
+    ]
+  );
+
+  return (
+    <>
+      <ExportPageModal
+        editorRef={editorRef}
+        isOpen={isExportModalOpen}
+        onClose={() => setIsExportModalOpen(false)}
+        pageTitle={name ?? ""}
+      />
+      <PageActions
+        extraOptions={EXTRA_MENU_OPTIONS}
+        optionsOrder={[
+          "full-screen",
+          "sticky-toolbar",
+          "copy-markdown",
+          "version-history",
+          "make-a-copy",
+          "archive-restore",
+          "delete",
+          "toggle-access",
+          "export",
+        ]}
+        page={page}
+        storeType={storeType}
+      />
+    </>
+  );
+});

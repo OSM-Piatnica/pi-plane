@@ -145,12 +145,13 @@ def _initialization_fields(instance, payload):
     return fields, notices
 
 
-def resolve_work_item_dates(instance, payload):
+def resolve_work_item_dates(instance, payload, weekend_days=()):
     """
     Apply every date rule to one create/update payload.
 
     :param instance: the stored work item, or None on creation
     :param payload: incoming data; key presence signals intent, a key holding None means "clear"
+    :param weekend_days: the project's non-working days (0 = Sunday ... 6 = Saturday); the duration counts working days
     :return: DateResolution with the derived fields to merge over the payload
     :raises WorkItemDateError: the schedule would end before it starts
     """
@@ -159,7 +160,7 @@ def resolve_work_item_dates(instance, payload):
 
     init_fields, notices = _initialization_fields(instance, payload)
     merged = {**payload, **init_fields}
-    derived = reconcile_work_item_duration(instance, merged)
+    derived = reconcile_work_item_duration(instance, merged, weekend_days)
 
     # `fields` holds only what the rules changed or derived; the caller's own keys stay theirs.
     fields = {**init_fields, **derived}
@@ -172,13 +173,13 @@ def resolve_work_item_dates(instance, payload):
     return DateResolution(fields=fields, notices=notices)
 
 
-def resolve_for_logging(instance, payload):
+def resolve_for_logging(instance, payload, weekend_days=()):
     """
     Same as `resolve_work_item_dates` but never raises, for activity logging of a payload the
     serializer will reject (or has rejected) anyway.
     """
     try:
-        return resolve_work_item_dates(instance, payload).fields
+        return resolve_work_item_dates(instance, payload, weekend_days).fields
     except WorkItemDateError:
         return {}
 
@@ -217,18 +218,18 @@ def date_statuses(*, finish_date, due_date, today, is_active, completed_on=None,
 # --- Serializer glue ---------------------------------------------------------------------------
 
 
-def apply_date_rules(instance, attrs):
+def apply_date_rules(instance, attrs, weekend_days=()):
     """
     Run the date rules inside a DRF serializer's `validate` and merge the result into `attrs`.
 
     Pops the write-only `initialize_paired_date` flag so it never reaches the model. Returns the
-    notices for the caller to expose; raises `serializers.ValidationError` when the schedule is
-    invalid.
+    notices for the caller to expose; `weekend_days` are the project's non-working days. Raises
+    `serializers.ValidationError` when the schedule is invalid.
     """
     from rest_framework import serializers
 
     try:
-        resolution = resolve_work_item_dates(instance, attrs)
+        resolution = resolve_work_item_dates(instance, attrs, weekend_days)
     except WorkItemDateError:
         # The only failure is the finish-before-start invariant, so report the fixed message rather
         # than anything derived from the exception.

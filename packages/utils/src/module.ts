@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { sortBy } from "lodash-es";
+import { orderBy, sortBy } from "lodash-es";
 // plane imports
 import type { IModule, TModuleDisplayFilters, TModuleFilters, TModuleOrderByOptions } from "@plane/types";
 // local imports
@@ -30,8 +31,8 @@ export const orderModules = (modules: IModule[], orderByKey: TModuleOrderByOptio
   let orderedModules: IModule[] = [];
   if (modules.length === 0 || !orderByKey) return [];
 
-  if (orderByKey === "name") orderedModules = [...modules].sort((a, b) => naturalSort(a.name, b.name));
-  if (orderByKey === "-name") orderedModules = [...modules].sort((a, b) => naturalSort(b.name, a.name));
+  if (orderByKey === "name") orderedModules = [...modules].toSorted((a, b) => naturalSort(a.name, b.name));
+  if (orderByKey === "-name") orderedModules = [...modules].toSorted((a, b) => naturalSort(b.name, a.name));
   if (["progress", "-progress"].includes(orderByKey))
     orderedModules = sortBy(modules, [
       (m) => {
@@ -40,12 +41,16 @@ export const orderModules = (modules: IModule[], orderByKey: TModuleOrderByOptio
         return orderByKey === "progress" ? progress : -progress;
       },
     ]);
-  if (["issues_length", "-issues_length"].includes(orderByKey))
-    orderedModules = sortBy(modules, [(m) => (orderByKey === "issues_length" ? m.total_issues : !m.total_issues)]);
-  if (orderByKey === "target_date") orderedModules = sortBy(modules, [(m) => m.target_date]);
-  if (orderByKey === "-target_date") orderedModules = sortBy(modules, [(m) => !m.target_date]);
+  // The "-" options used to sort by a negated boolean (`!m.total_issues`), which leaves every module that
+  // has a value in its original order; they are real descending sorts now. Modules without a target date
+  // stay at the end in both directions.
+  if (orderByKey === "issues_length") orderedModules = sortBy(modules, [(m) => m.total_issues]);
+  if (orderByKey === "-issues_length") orderedModules = orderBy(modules, [(m) => m.total_issues], ["desc"]);
+  if (orderByKey === "target_date") orderedModules = sortBy(modules, [(m) => !m.target_date, (m) => m.target_date]);
+  if (orderByKey === "-target_date")
+    orderedModules = orderBy(modules, [(m) => !m.target_date, (m) => m.target_date], ["asc", "desc"]);
   if (orderByKey === "created_at") orderedModules = sortBy(modules, [(m) => m.created_at]);
-  if (orderByKey === "-created_at") orderedModules = sortBy(modules, [(m) => !m.created_at]);
+  if (orderByKey === "-created_at") orderedModules = orderBy(modules, [(m) => m.created_at], ["desc"]);
 
   if (orderByKey === "sort_order") orderedModules = sortBy(modules, [(m) => m.sort_order]);
   return orderedModules;
@@ -67,12 +72,14 @@ export const shouldFilterModule = (
   Object.keys(filters).forEach((key) => {
     const filterKey = key as keyof TModuleFilters;
     if (filterKey === "status" && filters.status && filters.status.length > 0)
+      // react-doctor-disable-next-line js-set-map-lookups -- each filter list is searched once per key, so the loop is over keys, not items
       fallsInFilters = fallsInFilters && filters.status.includes(module.status?.toLowerCase() ?? "");
     if (filterKey === "lead" && filters.lead && filters.lead.length > 0)
+      // react-doctor-disable-next-line js-set-map-lookups -- each filter list is searched once per key, so the loop is over keys, not items
       fallsInFilters = fallsInFilters && filters.lead.includes(`${module.lead_id}`);
     if (filterKey === "members" && filters.members && filters.members.length > 0) {
-      const memberIds = module.member_ids;
-      fallsInFilters = fallsInFilters && filters.members.some((memberId) => memberIds.includes(memberId));
+      const memberIds = new Set(module.member_ids ?? []);
+      fallsInFilters = fallsInFilters && filters.members.some((memberId) => memberIds.has(memberId));
     }
     if (filterKey === "start_date" && filters.start_date && filters.start_date.length > 0) {
       const startDate = getDate(module.start_date);

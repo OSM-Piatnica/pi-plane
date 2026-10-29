@@ -10,13 +10,31 @@ import { observer } from "mobx-react";
 import useSWR, { useSWRConfig } from "swr";
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { Button } from "@plane/propel/button";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
-import { EModalPosition, EModalWidth, Input, ModalCore, TextArea } from "@plane/ui";
+import { Button } from "@makeplane/propel/components/button";
+import {
+  Dialog,
+  DialogActions,
+  DialogBody,
+  DialogClose,
+  DialogCloseGroup,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogHeading,
+  DialogMain,
+  DialogTitle,
+} from "@makeplane/propel/components/dialog";
+import { Field } from "@makeplane/propel/components/field";
+import { Icon } from "@makeplane/propel/components/icon";
+import { IconButton } from "@makeplane/propel/components/icon-button";
+import { Input, InputGroup } from "@makeplane/propel/components/input";
+import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
+import { CloseOutline } from "@makeplane/propel/icons";
+import { setToast } from "@plane/blocks/toast";
 import type { TWorkItemTemplate } from "@plane/types";
 import { PageHead } from "@/components/core/page-title";
 import { NotAuthorizedView } from "@/components/auth-screens/not-authorized-view";
-import { ProjectDropdown } from "@/components/dropdowns/project/dropdown";
+import { ProjectSelect } from "@/components/dropdowns/project/project-select";
 import { SettingsContentWrapper } from "@/components/settings/content-wrapper";
 import { SettingsHeading } from "@/components/settings/heading";
 import { useUserPermissions } from "@/hooks/store/user";
@@ -85,6 +103,7 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
   const { handleSubmit, control, watch, reset, setValue, formState } = form;
   const projectId = watch("projectId");
 
+  // react-doctor-disable-next-line no-event-handler -- the modal is closed from several places (submit, cancel, onOpenChange), so resetting must follow the state itself
   useEffect(() => {
     if (!modalOpen) {
       reset(TEMPLATE_FORM_DEFAULTS);
@@ -138,7 +157,7 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
   const onSubmit = handleSubmit(async (values) => {
     if (!values.templateName.trim()) {
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("error"),
         message: t("workspace_settings.settings.work_item_templates.form.name_required"),
       });
@@ -161,14 +180,14 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
       await mutate(`WIT_LIST_${workspaceSlug}`);
       setModalOpen(false);
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("workspace_settings.settings.work_item_templates.toasts.saved.title"),
         message: t("workspace_settings.settings.work_item_templates.toasts.saved.message"),
       });
     } catch (e) {
       console.error(e);
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("workspace_settings.settings.work_item_templates.toasts.save_failed.title"),
         message: t("workspace_settings.settings.work_item_templates.toasts.save_failed.message"),
       });
@@ -183,14 +202,14 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
       await service.remove(workspaceSlug, id);
       await mutate(`WIT_LIST_${workspaceSlug}`);
       setToast({
-        type: TOAST_TYPE.SUCCESS,
+        type: "success",
         title: t("workspace_settings.settings.work_item_templates.toasts.deleted.title"),
         message: t("workspace_settings.settings.work_item_templates.toasts.deleted.message"),
       });
     } catch (e) {
       console.error(e);
       setToast({
-        type: TOAST_TYPE.ERROR,
+        type: "error",
         title: t("workspace_settings.settings.work_item_templates.toasts.delete_failed.title"),
         message: t("workspace_settings.settings.work_item_templates.toasts.delete_failed.message"),
       });
@@ -205,109 +224,151 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
     <FormProvider {...form}>
       <SettingsContentWrapper header={<WorkItemTemplatesSettingsHeader />}>
         <PageHead title={pageTitle} />
-        <ModalCore
-          isOpen={modalOpen}
-          handleClose={() => setModalOpen(false)}
-          position={EModalPosition.CENTER}
-          width={EModalWidth.VIIXL}
+        <Dialog
+          open={modalOpen}
+          onOpenChange={(open) => {
+            if (!open) setModalOpen(false);
+          }}
         >
-          <form
-            onSubmit={onSubmit}
-            className="max-h-[min(90vh,920px)] overflow-y-auto p-5"
-            id="work-item-template-create-form"
-          >
-            <h3 className="text-h3-medium text-primary">
-              {editingId
-                ? t("workspace_settings.settings.work_item_templates.edit_template")
-                : t("workspace_settings.settings.work_item_templates.add_template")}
-            </h3>
-            <p className="pt-1 pb-4 text-13 text-tertiary">
-              {t("workspace_settings.settings.work_item_templates.form.modal_intro")}
-            </p>
-            <div className="space-y-3">
-              <div>
-                <label className="text-12 text-tertiary" htmlFor="work-item-template-name">
-                  {t("workspace_settings.settings.work_item_templates.form.template_name_label")}
-                </label>
-                <Controller
-                  name="templateName"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      id="work-item-template-name"
-                      className="mt-1 w-full"
-                      value={field.value}
-                      onChange={field.onChange}
-                      placeholder={t("workspace_settings.settings.work_item_templates.form.template_name_placeholder")}
-                    />
-                  )}
-                />
-              </div>
-              <div>
-                <label className="text-12 text-tertiary" htmlFor="work-item-template-note">
-                  {t("workspace_settings.settings.work_item_templates.form.template_note_label")}
-                </label>
-                <Controller
-                  name="templateNote"
-                  control={control}
-                  render={({ field }) => (
-                    <TextArea
-                      id="work-item-template-note"
-                      className="mt-1 min-h-[100px] w-full resize-y"
-                      value={field.value}
-                      onChange={field.onChange}
-                      rows={3}
-                      placeholder={t("workspace_settings.settings.work_item_templates.form.template_note_placeholder")}
-                    />
-                  )}
-                />
-              </div>
-              <div>
-                <label className="block text-12 text-tertiary">
-                  {t("workspace_settings.settings.work_item_templates.table.project")}
-                </label>
-                <p className="pt-0.5 pb-1 text-11 text-tertiary">
-                  {t("workspace_settings.settings.work_item_templates.form.scope_hint_short")}
-                </p>
-                <div className="mt-1 h-8 max-w-sm">
-                  <Controller
-                    name="projectId"
-                    control={control}
-                    render={({ field }) => (
-                      <ProjectDropdown
-                        value={field.value}
-                        onChange={(pid) => field.onChange(pid || null)}
-                        multiple={false}
-                        buttonVariant="border-with-text"
-                      />
-                    )}
-                  />
-                </div>
-              </div>
-              <WorkItemTemplateDefaultValueFields
-                control={control}
-                projectId={projectId}
-                workspaceSlug={workspaceSlug}
+          <DialogContent size="xl">
+            <DialogCloseGroup>
+              <IconButton
+                variant="ghost"
+                size="xs"
+                aria-label={t("close")}
+                icon={<Icon icon={CloseOutline} />}
+                render={<DialogClose />}
               />
-              <div className="flex justify-end gap-2 pt-2">
-                <Button type="button" variant="secondary" onClick={() => setModalOpen(false)}>
-                  {t("cancel")}
-                </Button>
-                <Button type="submit" variant="primary" disabled={saving || formState.isSubmitting} loading={saving}>
-                  {editingId ? t("save_changes") : t("add")}
-                </Button>
-              </div>
-            </div>
-          </form>
-        </ModalCore>
+            </DialogCloseGroup>
+            <form onSubmit={onSubmit} className="flex min-h-0 flex-1 flex-col" id="work-item-template-create-form">
+              <DialogMain>
+                <DialogHeader>
+                  <DialogHeading>
+                    <DialogTitle>
+                      {editingId
+                        ? t("workspace_settings.settings.work_item_templates.edit_template")
+                        : t("workspace_settings.settings.work_item_templates.add_template")}
+                    </DialogTitle>
+                    <DialogDescription>
+                      {t("workspace_settings.settings.work_item_templates.form.modal_intro")}
+                    </DialogDescription>
+                  </DialogHeading>
+                </DialogHeader>
+                <DialogBody>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-12 text-tertiary" htmlFor="work-item-template-name">
+                        {t("workspace_settings.settings.work_item_templates.form.template_name_label")}
+                      </label>
+                      <Controller
+                        name="templateName"
+                        control={control}
+                        render={({ field }) => (
+                          <Field name="work-item-template-name">
+                            <InputGroup size="lg">
+                              <Input
+                                size="lg"
+                                id="work-item-template-name"
+                                value={field.value}
+                                onChange={field.onChange}
+                                placeholder={t(
+                                  "workspace_settings.settings.work_item_templates.form.template_name_placeholder"
+                                )}
+                              />
+                            </InputGroup>
+                          </Field>
+                        )}
+                      />
+                    </div>
+                    <div>
+                      <label className="text-12 text-tertiary" htmlFor="work-item-template-note">
+                        {t("workspace_settings.settings.work_item_templates.form.template_note_label")}
+                      </label>
+                      <Controller
+                        name="templateNote"
+                        control={control}
+                        render={({ field }) => (
+                          <Field name="work-item-template-note">
+                            <TextAreaGroup resize="vertical">
+                              <TextArea
+                                size="lg"
+                                surface="field"
+                                id="work-item-template-note"
+                                value={field.value}
+                                onChange={field.onChange}
+                                rows={3}
+                                placeholder={t(
+                                  "workspace_settings.settings.work_item_templates.form.template_note_placeholder"
+                                )}
+                              />
+                            </TextAreaGroup>
+                          </Field>
+                        )}
+                      />
+                    </div>
+                    <div>
+                      <span id="work-item-template-project-label" className="block text-12 text-tertiary">
+                        {t("workspace_settings.settings.work_item_templates.table.project")}
+                      </span>
+                      <p className="pt-0.5 pb-1 text-11 text-tertiary">
+                        {t("workspace_settings.settings.work_item_templates.form.scope_hint_short")}
+                      </p>
+                      <div className="mt-1 max-w-sm" role="group" aria-labelledby="work-item-template-project-label">
+                        <Controller
+                          name="projectId"
+                          control={control}
+                          render={({ field }) => (
+                            <ProjectSelect
+                              value={field.value}
+                              onChange={(pid) => field.onChange(pid || null)}
+                              variant="select-lg"
+                            />
+                          )}
+                        />
+                      </div>
+                    </div>
+                    <WorkItemTemplateDefaultValueFields
+                      control={control}
+                      projectId={projectId}
+                      workspaceSlug={workspaceSlug}
+                    />
+                  </div>
+                </DialogBody>
+              </DialogMain>
+              <DialogActions>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="md"
+                  stretch="auto"
+                  label={t("cancel")}
+                  onClick={() => setModalOpen(false)}
+                />
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="md"
+                  stretch="auto"
+                  label={editingId ? t("save_changes") : t("add")}
+                  disabled={saving || formState.isSubmitting}
+                  loading={saving}
+                />
+              </DialogActions>
+            </form>
+          </DialogContent>
+        </Dialog>
         <div className="w-full">
           <SettingsHeading
             title={t("workspace_settings.settings.work_item_templates.title")}
             description={t("workspace_settings.settings.work_item_templates.description")}
             control={
-              <Button variant="primary" size="lg" onClick={openCreate}>
-                {t("workspace_settings.settings.work_item_templates.add_template")}
-              </Button>
+              <Button
+                stretch="auto"
+                variant="primary"
+                size="lg"
+                onClick={openCreate}
+                label={t("workspace_settings.settings.work_item_templates.add_template")}
+              />
             }
           />
           {isLoading || !templates ? (
@@ -341,12 +402,20 @@ function WorkItemTemplatesPage({ params }: Route.ComponentProps) {
                       </td>
                       <td className="p-2 text-right">
                         <div className="flex justify-end gap-2">
-                          <Button variant="secondary" size="sm" onClick={() => openEdit(row)}>
-                            {t("edit")}
-                          </Button>
-                          <Button variant="error-outline" size="sm" onClick={() => onDelete(row.id)}>
-                            {t("remove")}
-                          </Button>
+                          <Button
+                            stretch="auto"
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => openEdit(row)}
+                            label={t("edit")}
+                          />
+                          <Button
+                            stretch="auto"
+                            variant="danger-outline"
+                            size="sm"
+                            onClick={() => onDelete(row.id)}
+                            label={t("remove")}
+                          />
                         </div>
                       </td>
                     </tr>

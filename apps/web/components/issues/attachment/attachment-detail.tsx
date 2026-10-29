@@ -1,0 +1,110 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useState } from "react";
+import { observer } from "mobx-react";
+import Link from "next/link";
+import { CloseOutline, WarningCircleOutline } from "@makeplane/propel/icons";
+// ui
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+import { convertBytesToSize, getFileExtension, getFileName, getFileURL, truncateText } from "@plane/utils";
+// icons
+//
+import { getFileIcon } from "@/components/icons";
+// components
+import { IssueAttachmentDeleteModal } from "@/components/issues/attachment/delete-attachment-modal";
+// helpers
+// hooks
+import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { useMember } from "@/hooks/store/use-member";
+import { usePlatformOS } from "@/hooks/use-platform-os";
+// types
+import type { TAttachmentHelpers } from "../issue-detail-widgets/attachments/helper";
+import { useLocalizedDates } from "@/hooks/use-localized-dates";
+import { useTranslation } from "@plane/i18n";
+
+type TAttachmentOperationsRemoveModal = Exclude<TAttachmentHelpers, "create">;
+
+type TIssueAttachmentsDetail = {
+  attachmentId: string;
+  attachmentHelpers: TAttachmentOperationsRemoveModal;
+  disabled?: boolean;
+};
+
+export const IssueAttachmentsDetail = observer(function IssueAttachmentsDetail(props: TIssueAttachmentsDetail) {
+  // props
+  const { attachmentId, attachmentHelpers, disabled } = props;
+  const { t } = useTranslation();
+  const { formatDate } = useLocalizedDates();
+  // store hooks
+  const { getUserDetails } = useMember();
+  const {
+    attachment: { getAttachmentById },
+  } = useIssueDetail();
+  // state
+  const [isDeleteIssueAttachmentModalOpen, setIsDeleteIssueAttachmentModalOpen] = useState(false);
+  // derived values
+  const attachment = attachmentId ? getAttachmentById(attachmentId) : undefined;
+  const fileName = getFileName(attachment?.attributes.name ?? "");
+  const fileExtension = getFileExtension(attachment?.asset_url ?? "");
+  const fileIcon = getFileIcon(fileExtension, 28);
+  const fileURL = getFileURL(attachment?.asset_url ?? "");
+  // hooks
+  const { isMobile } = usePlatformOS();
+
+  if (!attachment) return <></>;
+
+  return (
+    <>
+      {isDeleteIssueAttachmentModalOpen && (
+        <IssueAttachmentDeleteModal
+          isOpen={isDeleteIssueAttachmentModalOpen}
+          onClose={() => setIsDeleteIssueAttachmentModalOpen(false)}
+          attachmentOperations={attachmentHelpers.operations}
+          attachmentId={attachmentId}
+        />
+      )}
+      <div className="flex h-[60px] items-center justify-between gap-1 rounded-md border-[2px] border-subtle bg-surface-1 px-4 py-2 text-13">
+        <Link href={fileURL ?? ""} target="_blank" rel="noopener noreferrer">
+          <div className="flex items-center gap-3">
+            <div className="h-7 w-7">{fileIcon}</div>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2">
+                <Tooltip label={fileName} layout="stacked" disabled={isMobile}>
+                  <span className="text-13">{truncateText(`${fileName}`, 10)}</span>
+                </Tooltip>
+                <Tooltip
+                  label={t("date_phrases.uploaded_on", {
+                    name: getUserDetails(attachment.updated_by)?.display_name ?? "",
+                    date: formatDate(attachment.updated_at),
+                  })}
+                  layout="stacked"
+                  disabled={isMobile}
+                >
+                  <span>
+                    <WarningCircleOutline className="h-3 w-3" />
+                  </span>
+                </Tooltip>
+              </div>
+
+              <div className="flex items-center gap-3 text-11 text-secondary">
+                <span>{fileExtension.toUpperCase()}</span>
+                <span>{convertBytesToSize(attachment.attributes.size)}</span>
+              </div>
+            </div>
+          </div>
+        </Link>
+
+        {!disabled && (
+          <button type="button" onClick={() => setIsDeleteIssueAttachmentModalOpen(true)}>
+            <CloseOutline className="h-4 w-4 text-secondary hover:text-primary" />
+          </button>
+        )}
+      </div>
+    </>
+  );
+});

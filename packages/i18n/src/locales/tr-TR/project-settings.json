@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Proje Ayarları",
     "general": {
       "enter_project_id": "Proje ID girin",
       "please_select_a_timezone": "Lütfen bir saat dilimi seçin",
@@ -182,18 +183,18 @@
       "description": "Proje yönetimi iş akışınızı kolaylaştırmak ve manuel görevleri azaltmak için otomatik eylemleri yapılandırın.",
       "auto-archive": {
         "title": "Tamamlanan iş öğelerini otomatik arşivle",
-        "description": "Plane, tamamlanan veya iptal edilen iş öğelerini otomatik arşivleyecek.",
+        "description": "Pi-Plane, tamamlanan veya iptal edilen iş öğelerini otomatik arşivleyecek.",
         "duration": "Şu süre kapalı kalan iş öğelerini otomatik arşivle"
       },
       "auto-close": {
         "title": "İş öğelerini otomatik kapat",
-        "description": "Plane, tamamlanmamış veya iptal edilmemiş iş öğelerini otomatik kapatacak.",
+        "description": "Pi-Plane, tamamlanmamış veya iptal edilmemiş iş öğelerini otomatik kapatacak.",
         "duration": "Şu süre etkin olmayan iş öğelerini otomatik kapat",
         "auto_close_status": "Otomatik kapatma durumu"
       },
       "auto-remind": {
         "title": "Otomatik hatırlatmalar",
-        "description": "Plane, e-posta ve uygulama bildirimleri aracılığıyla otomatik olarak takımınızı zamanlama yolunda tutacaktır.",
+        "description": "Pi-Plane, e-posta ve uygulama bildirimleri aracılığıyla otomatik olarak takımınızı zamanlama yolunda tutacaktır.",
         "duration": "Hatırlatma gönderimi öncesi"
       }
     },
@@ -324,39 +325,24 @@
     },
     "features": {
       "cycles": {
-        "title": "Döngüler",
-        "short_title": "Döngüler",
-        "description": "Bu projenin benzersiz ritmine ve hızına uyum sağlayan esnek dönemlerde iş planlayın.",
         "toggle_title": "Döngüleri etkinleştir",
         "toggle_description": "Odaklanmış zaman dilimlerinde iş planlayın."
       },
       "modules": {
-        "title": "Modüller",
-        "short_title": "Modüller",
-        "description": "İşi özel liderler ve atananlarla alt projelere organize edin.",
         "toggle_title": "Modülleri etkinleştir",
         "toggle_description": "Proje üyeleri modüller oluşturabilir ve düzenleyebilir."
       },
       "views": {
-        "title": "Görünümler",
-        "short_title": "Görünümler",
-        "description": "Özel sıralamalar, filtreler ve görüntüleme seçeneklerini kaydedin veya ekibinizle paylaşın.",
         "toggle_title": "Görünümleri etkinleştir",
         "toggle_description": "Proje üyeleri görünümler oluşturabilir ve düzenleyebilir."
       },
       "pages": {
-        "title": "Sayfalar",
-        "short_title": "Sayfalar",
-        "description": "Serbest biçimli içerik oluşturun ve düzenleyin: notlar, belgeler, herhangi bir şey.",
         "toggle_title": "Sayfaları etkinleştir",
         "toggle_description": "Proje üyeleri sayfalar oluşturabilir ve düzenleyebilir."
       },
       "intake": {
         "intake_responsibility": "Alım sorumluluğu",
         "intake_sources": "Alım kaynakları",
-        "title": "Alım",
-        "short_title": "Alım",
-        "description": "Üye olmayanların hataları, geri bildirimleri ve önerileri paylaşmasına izin verin; iş akışınızı aksatmadan.",
         "toggle_title": "Alımı etkinleştir",
         "toggle_description": "Proje üyelerinin uygulama içinde alım talepleri oluşturmasına izin verin.",
         "toggle_tooltip_on": "Proje Yöneticinizden bunu açmasını isteyin.",
@@ -371,7 +357,7 @@
         },
         "email": {
           "title": "E-posta",
-          "description": "Plane e-posta adresine e-posta gönderen herkesten yeni iş öğeleri toplayın.",
+          "description": "Pi-Plane e-posta adresine e-posta gönderen herkesten yeni iş öğeleri toplayın.",
           "fieldName": "E-posta ID"
         },
         "form": {
@@ -411,9 +397,6 @@
         }
       },
       "time_tracking": {
-        "title": "Zaman takibi",
-        "short_title": "Zaman takibi",
-        "description": "İş öğelerine ve projelere harcanan zamanı kaydedin.",
         "toggle_title": "Zaman takibini etkinleştir",
         "toggle_description": "Proje üyeleri çalışılan zamanı kaydedebilecektir."
       },

@@ -115,9 +115,7 @@ class TestReconcileDurationEdit:
 @pytest.mark.unit
 class TestReconcileDateEdit:
     def test_duration_is_calculated_once_both_dates_are_set(self):
-        result = reconcile_work_item_duration(
-            work_item(start_date=date(2026, 2, 2)), {"finish_date": "2026-02-06"}
-        )
+        result = reconcile_work_item_duration(work_item(start_date=date(2026, 2, 2)), {"finish_date": "2026-02-06"})
         assert result == {"duration": 5}
 
     def test_duration_is_recalculated_when_a_date_moves(self):

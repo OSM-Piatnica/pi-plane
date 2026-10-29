@@ -1,0 +1,189 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useState } from "react";
+import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
+import {
+  CloseOutline,
+  CyclesOutline,
+  SearchOutline,
+  TransferWorkItemOutline,
+  WarningCircleOutline,
+} from "@makeplane/propel/icons";
+import {
+  Dialog,
+  DialogBody,
+  DialogClose,
+  DialogCloseGroup,
+  DialogContent,
+  DialogHeader,
+  DialogHeading,
+  DialogMain,
+  DialogTitle,
+} from "@makeplane/propel/components/dialog";
+import { IconButton } from "@makeplane/propel/components/icon-button";
+import { CYCLE_STATUS } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
+import { setToast } from "@plane/blocks/toast";
+import { EIssuesStoreType } from "@plane/types";
+import { useCycle } from "@/hooks/store/use-cycle";
+import { useIssues } from "@/hooks/store/use-issues";
+
+// The cycle status comes from the API as a lowercase key ("current", "upcoming", ...), so it is looked up for its translation.
+const getCycleStatusTitle = (status: string, t: (key: string) => string) => {
+  const option = CYCLE_STATUS.find((cycleStatus) => cycleStatus.value === status.toLowerCase());
+  return option ? t(option.i18n_title) : status.toLowerCase();
+};
+
+type Props = {
+  isOpen: boolean;
+  handleClose: () => void;
+  cycleId: string;
+};
+
+export const TransferIssuesModal = observer(function TransferIssuesModal(props: Props) {
+  const { isOpen, handleClose, cycleId } = props;
+  // states
+  const [query, setQuery] = useState("");
+  // plane hooks
+  const { t } = useTranslation();
+
+  // store hooks
+  const { currentProjectIncompleteCycleIds, getCycleById, fetchActiveCycleProgress } = useCycle();
+  const {
+    issues: { transferIssuesFromCycle },
+  } = useIssues(EIssuesStoreType.CYCLE);
+
+  const { workspaceSlug, projectId } = useParams();
+
+  const transferIssue = async (payload: { new_cycle_id: string }) => {
+    if (!workspaceSlug || !projectId || !cycleId) return;
+
+    await transferIssuesFromCycle(workspaceSlug.toString(), projectId.toString(), cycleId.toString(), payload)
+      .then(async () => {
+        setToast({
+          type: "success",
+          title: t("toast.success"),
+          message: t("cycle_ui.transfer_success"),
+        });
+        await getCycleDetails(payload.new_cycle_id);
+        return;
+      })
+      .catch(() => {
+        setToast({
+          type: "error",
+          title: t("toast.error"),
+          message: t("cycle_ui.transfer_error"),
+        });
+      });
+  };
+
+  /**To update issue counts in target cycle and current cycle */
+  const getCycleDetails = async (newCycleId: string) => {
+    const cyclesFetch = [
+      fetchActiveCycleProgress(workspaceSlug.toString(), projectId.toString(), cycleId),
+      fetchActiveCycleProgress(workspaceSlug.toString(), projectId.toString(), newCycleId),
+    ];
+    await Promise.all(cyclesFetch).catch((error) => {
+      setToast({
+        type: "error",
+        title: t("toast.error"),
+        message: error.error || t("cycle_ui.transfer_fetch_error"),
+      });
+    });
+  };
+
+  const filteredOptions = currentProjectIncompleteCycleIds?.filter((optionId) => {
+    const cycleDetails = getCycleById(optionId);
+
+    return cycleDetails?.name?.toLowerCase().includes(query?.toLowerCase());
+  });
+
+  return (
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+    >
+      <DialogContent size="sm">
+        <DialogCloseGroup>
+          <IconButton
+            variant="ghost"
+            size="xs"
+            aria-label={t("close")}
+            icon={<CloseOutline />}
+            render={<DialogClose />}
+          />
+        </DialogCloseGroup>
+        <DialogMain>
+          <DialogHeader>
+            <div className="flex items-center gap-1">
+              <TransferWorkItemOutline className="w-5 fill-primary" />
+              <DialogHeading>
+                <DialogTitle>{t("cycle_ui.transfer_title")}</DialogTitle>
+              </DialogHeading>
+            </div>
+          </DialogHeader>
+          <div className="flex items-center gap-2 border-b border-subtle pb-3">
+            <SearchOutline className="h-4 w-4 text-secondary" />
+            <input
+              className="text-13 outline-none"
+              placeholder={t("cycle_ui.transfer_search_placeholder")}
+              onChange={(e) => setQuery(e.target.value)}
+              value={query}
+            />
+          </div>
+          <DialogBody tabIndex={0}>
+            <div className="flex w-full flex-col items-start gap-2">
+              {filteredOptions ? (
+                filteredOptions.length > 0 ? (
+                  filteredOptions.map((optionId) => {
+                    const cycleDetails = getCycleById(optionId);
+
+                    if (!cycleDetails) return;
+
+                    return (
+                      <button
+                        key={optionId}
+                        className="flex w-full items-center gap-4 rounded-sm px-4 py-3 text-13 text-secondary hover:bg-surface-2"
+                        onClick={() => {
+                          transferIssue({
+                            new_cycle_id: optionId,
+                          });
+                          handleClose();
+                        }}
+                      >
+                        <CyclesOutline className="h-5 w-5" />
+                        <div className="flex w-full justify-between truncate">
+                          <span className="truncate">{cycleDetails?.name}</span>
+                          {cycleDetails.status && (
+                            <span className="flex flex-shrink-0 items-center rounded-full bg-layer-1 px-2">
+                              {getCycleStatusTitle(cycleDetails.status, t)}
+                            </span>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })
+                ) : (
+                  <div className="flex w-full items-center justify-center gap-4 p-5 text-13">
+                    <WarningCircleOutline className="h-3.5 w-3.5 text-secondary" />
+                    <span className="text-center text-secondary">{t("cycle_ui.no_current_cycle")}</span>
+                  </div>
+                )
+              ) : (
+                <p className="text-center text-secondary">{t("common.loading")}...</p>
+              )}
+            </div>
+          </DialogBody>
+        </DialogMain>
+      </DialogContent>
+    </Dialog>
+  );
+});

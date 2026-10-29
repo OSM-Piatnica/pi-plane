@@ -1,0 +1,106 @@
+{% load email_i18n %}
+{% load email_assets %}
+{% comment %}
+Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+SPDX-License-Identifier: AGPL-3.0-only
+See the LICENSE file for details.
+{% endcomment %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% etr "digest.title" %}</title>
+    <style type="text/css" emogrify="no">
+      html {
+        font-family: system-ui;
+      }
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      ol,
+      ul {
+        margin: 0;
+      }
+      h-full {
+        height: 100%;
+      }
+      a:hover {
+        color: #3358d4 !important;
+      }
+    </style>
+    <style>
+      *[class="gmail-fix"] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body bgcolor="#ffffff" text="#3b3f44" link="#006399" yahoo="fix" style="background-color: #f7f9ff; margin: 20px">
+    <div style="width: 600px; table-layout: fixed; height: 100%; margin-left: auto; margin-right: auto">
+      <!-- Header -->
+      <div>
+        <table style="width: 600px" cellspacing="0">
+          <tr>
+            <td>
+              <div style="margin-left: 30px; margin-bottom: 20px; margin-top: 20px">
+                {% email_logo "white" 150 %}
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!-- Body -->
+      <div style="color: #1f2d5c; padding: 30px; border-radius: 4px; background-color: #fcfcfd; max-width: 100%">
+        <table style="width: 100%">
+          <tr>
+            <td>
+              <p style="font-size: 1rem; color: #1f2d5c; font-weight: 600">{% etr "digest.title" %}</p>
+              <p style="font-size: 1rem; color: #1f2d5c; line-height: 28px">
+                {{ greeting }}
+              </p>
+            </td>
+          </tr>
+        </table>
+        <hr style="background-color: #f0f0f3; height: 1px; border: 0; margin-top: 15px; margin-bottom: 15px" />
+        <table
+          role="presentation"
+          cellspacing="0"
+          cellpadding="0"
+          style="width: 100%; background-color: white; border-radius: 8px"
+        >
+          {% for issue in issues %}
+          <tr>
+            <td style="padding: 12px 15px; border-bottom: 1px solid #f0f0f3">
+              <p style="font-size: 0.9rem; line-height: 22px; color: #1f2d5c">
+                <a
+                  target="_blank"
+                  style="color: #3358d4; text-decoration: none; font-weight: 600"
+                  href="{{ issue.url }}"
+                  >{{ issue.identifier }}</a
+                >
+                <span style="color: #1f2d5c"> {{ issue.name }}</span>
+              </p>
+              <p style="font-size: 0.75rem; line-height: 20px; color: #60646c; margin-top: 4px">
+                {{ issue.count_label }}{% if issue.comments %} <span style="color: #c1c8cd">|</span>
+                {{ issue.comments_label }}{% endif %}{% if issue.actors %} <span style="color: #c1c8cd">|</span>
+                {{ issue.actors }}{% endif %}
+              </p>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      <!-- Footer -->
+      <div style="padding: 20px 30px">
+        <p style="font-size: 0.75rem; color: #60646c; line-height: 20px">
+          {% etr "digest.footer" preferences_url=preferences_url link_style="color: #3358d4" %}
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

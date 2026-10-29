@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Código único",
+            "label": "Código de uso único",
             "placeholder": "123456",
             "helper_text": "Código de verificação enviado para o novo e-mail.",
             "errors": {
-              "required": "O código único é obrigatório",
+              "required": "O código de uso único é obrigatório",
               "invalid": "Código de verificação inválido. Tente novamente."
             }
           }
@@ -115,7 +115,7 @@
     "empty_state": {
       "activity": {
         "title": "Nenhuma atividade ainda",
-        "description": "Comece criando um novo item de trabalho! Adicione detalhes e propriedades a ele. Explore mais no Plane para ver sua atividade."
+        "description": "Comece criando um novo item de trabalho! Adicione detalhes e propriedades a ele. Explore mais no Pi-Plane para ver sua atividade."
       },
       "assigned": {
         "title": "Nenhum item de trabalho atribuído a você",
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Porcentagem de conclusão",
+    "first_day_project_default": "Padrão do projeto",
     "first_day_updated": "Primeiro dia da semana atualizado com sucesso",
     "try_again_later": "Tente novamente mais tarde.",
     "update_failed": "Falha na atualização",

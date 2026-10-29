@@ -1,0 +1,22 @@
+# Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+
+# Gateway API instead of an Ingress. The Gateway (listeners, TLS, request-body limit) is yours; the chart only
+# attaches HTTPRoutes to it. Allow request bodies of at least app.fileSizeLimitMax on it.
+publicUrl: https://plane.example.com
+
+ingress:
+  enabled: false
+
+gateway:
+  enabled: true
+  parentRefs:
+    - name: shared-gateway
+      namespace: gateway
+      sectionName: https
+
+networkPolicy:
+  enabled: true
+  # Namespace of the Gateway's data plane (Envoy Gateway shown)
+  ingressNamespace: envoy-gateway-system

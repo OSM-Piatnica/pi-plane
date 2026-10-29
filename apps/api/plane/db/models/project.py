@@ -11,13 +11,15 @@ from enum import Enum
 # Django imports
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db import models
+from django.db import models, transaction
 from django.db.models import Q
 
 # Module imports
-from plane.db.mixins import AuditModel
+from plane.db.mixins import AuditModel, ChangeTrackerMixin
 
 from .base import BaseModel
+from .workspace import START_OF_THE_WEEK_CHOICES, SUNDAY
+from plane.utils.weekend_days import default_weekend_days, validate_weekend_days
 
 ROLE_CHOICES = ((20, "Admin"), (15, "Member"), (5, "Guest"))
 
@@ -29,12 +31,20 @@ class ROLE(Enum):
 
 
 class ProjectNetwork(Enum):
+    """Who can see a project and how someone gets in.
+
+    SECRET: invisible to everyone who is not a member (workspace admins still list it); members join by invitation.
+    PRIVATE: listed for workspace members, but its content is locked: people request access or are invited.
+    PUBLIC: listed for workspace members, who can join it at once.
+    """
+
     SECRET = 0
+    PRIVATE = 1
     PUBLIC = 2
 
     @classmethod
     def choices(cls):
-        return [(0, "Secret"), (2, "Public")]
+        return [(0, "Secret"), (1, "Private"), (2, "Public")]
 
 
 def get_default_props():
@@ -52,9 +62,9 @@ def get_default_props():
         },
         "display_filters": {
             "group_by": None,
-            "order_by": "-created_at",
+            "order_by": "created_at",
             "type": None,
-            "sub_issue": True,
+            "sub_issue": False,
             "show_empty_groups": True,
             "layout": "list",
             "calendar_date_range": "",
@@ -66,8 +76,10 @@ def get_default_preferences():
     return {"pages": {"block_display": True}, "navigation": {"default_tab": "work_items", "hide_in_more_menu": []}}
 
 
-class Project(BaseModel):
-    NETWORK_CHOICES = ((0, "Secret"), (2, "Public"))
+class Project(ChangeTrackerMixin, BaseModel):
+    TRACKED_FIELDS = ["timezone", "weekend_days"]
+
+    NETWORK_CHOICES = ((0, "Secret"), (1, "Private"), (2, "Public"))
     name = models.CharField(max_length=255, verbose_name="Project Name")
     description = models.TextField(verbose_name="Project Description", blank=True)
     description_text = models.JSONField(verbose_name="Project Description RT", blank=True, null=True)
@@ -99,6 +111,14 @@ class Project(BaseModel):
     is_time_tracking_enabled = models.BooleanField(default=False)
     is_issue_type_enabled = models.BooleanField(default=False)
     is_workflow_enabled = models.BooleanField(default=False)
+    is_parent_completion_rule_enabled = models.BooleanField(default=False)
+    is_blocked_status_rule_enabled = models.BooleanField(default=False)
+    is_assignee_edit_rule_enabled = models.BooleanField(default=False)
+    # Relation types people may add; blocked_by and blocking are always available (plane.utils.relation_type_toggles)
+    is_relation_schedule_enabled = models.BooleanField(default=False)
+    is_relation_traceability_enabled = models.BooleanField(default=False)
+    is_relation_relates_to_enabled = models.BooleanField(default=True)
+    is_relation_duplicate_enabled = models.BooleanField(default=True)
     guest_view_all_features = models.BooleanField(default=False)
     cover_image = models.TextField(blank=True, null=True)
     cover_image_asset = models.ForeignKey(
@@ -117,6 +137,12 @@ class Project(BaseModel):
     # timezone
     TIMEZONE_CHOICES = tuple(zip(pytz.common_timezones, pytz.common_timezones))
     timezone = models.CharField(max_length=255, default="UTC", choices=TIMEZONE_CHOICES)
+    # First day of the week in this project (0 = Sunday ... 6 = Saturday); copied from the workspace on creation.
+    # A person's own preference, when they have one, wins over it.
+    start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=SUNDAY)
+    # Days that count as non-working time in this project (0 = Sunday ... 6 = Saturday); copied from the workspace on
+    # creation. Calendars and the timeline shade them, and durations counted in days skip them.
+    weekend_days = models.JSONField(default=default_weekend_days, validators=[validate_weekend_days])
     start_date = models.DateField(null=True, blank=True)
     target_date = models.DateField(null=True, blank=True)
     # external_id for imports
@@ -126,6 +152,10 @@ class Project(BaseModel):
     def __init__(self, *args, **kwargs):
         # Track if timezone is provided, if so, don't override it with the workspace timezone when saving
         self.is_timezone_provided = kwargs.get("timezone") is not None
+        # Same for the first day of the week
+        self.is_start_of_the_week_provided = kwargs.get("start_of_the_week") is not None
+        # ... and for the weekend days
+        self.is_weekend_days_provided = kwargs.get("weekend_days") is not None
         super().__init__(*args, **kwargs)
 
     @property
@@ -172,17 +202,90 @@ class Project(BaseModel):
         db_table = "projects"
         ordering = ("-created_at",)
 
+    def _retime_intake_snoozes(self, old_timezone):
+        """Move open intake snoozes to the same day's midnight in the new timezone.
+
+        A snooze is stored as its day's midnight in the project timezone (see
+        IntakeIssue.save()), so a timezone change would otherwise wake it at the
+        old zone's midnight.
+        """
+        # Inline imports: intake.py imports from this module (ProjectBaseModel), and
+        # timezone_converter imports plane.db.models.
+        from plane.db.models.intake import IntakeIssue, IntakeIssueStatus
+        from plane.utils.timezone_converter import project_day_start
+
+        old_tz, new_tz = pytz.timezone(old_timezone), pytz.timezone(self.timezone)
+        retimed = []
+        # Row locks make a concurrent unsnooze wait, then re-check its filter against the retimed value.
+        for intake_issue in (
+            IntakeIssue.objects.select_for_update()
+            .filter(project_id=self.id, status=IntakeIssueStatus.SNOOZED, snoozed_till__isnull=False)
+            .only("id", "snoozed_till")
+        ):
+            intake_issue.snoozed_till = project_day_start(intake_issue.snoozed_till.astimezone(old_tz).date(), new_tz)
+            retimed.append(intake_issue)
+        IntakeIssue.objects.bulk_update(retimed, ["snoozed_till"])
+
     def save(self, *args, **kwargs):
         from plane.db.models import Workspace
 
         self.identifier = self.identifier.strip().upper()
         is_creating = self._state.adding
 
-        if is_creating and not self.is_timezone_provided:
+        if is_creating and not (
+            self.is_timezone_provided and self.is_start_of_the_week_provided and self.is_weekend_days_provided
+        ):
             workspace = Workspace.objects.get(id=self.workspace_id)
-            self.timezone = workspace.timezone
+            if not self.is_timezone_provided:
+                self.timezone = workspace.timezone
+            if not self.is_start_of_the_week_provided:
+                self.start_of_the_week = workspace.start_of_the_week
+            if not self.is_weekend_days_provided:
+                self.weekend_days = list(workspace.weekend_days)
 
-        return super().save(*args, **kwargs)
+        # Read before super().save(): the change tracker resets once it returns.
+        update_fields = kwargs.get("update_fields")
+        if update_fields is not None:
+            # Materialize so the membership check below can't exhaust a generator before Django reads it.
+            update_fields = kwargs["update_fields"] = tuple(update_fields)
+        # A still-deferred timezone is not written, even when update_fields is None.
+        timezone_persisted = "timezone" not in self.get_deferred_fields() and (
+            update_fields is None or "timezone" in update_fields
+        )
+        weekend_days_changed = (
+            not is_creating
+            and "weekend_days" not in self.get_deferred_fields()
+            and (update_fields is None or "weekend_days" in update_fields)
+            and "weekend_days" in self.old_values
+            and sorted(self.old_values["weekend_days"] or []) != sorted(self.weekend_days or [])
+        )
+        old_timezone = None
+        if not is_creating and timezone_persisted:
+            # A timezone deferred at load has no tracked original, so compare against the stored one.
+            old_timezone = (
+                self.old_values["timezone"]
+                if "timezone" in self.old_values
+                else Project.objects.values_list("timezone", flat=True).get(pk=self.pk)
+            )
+
+        if old_timezone is None or old_timezone == self.timezone:
+            super().save(*args, **kwargs)
+        else:
+            # One transaction so the unsnooze beat task never sees the new timezone with old-timezone snoozes.
+            with transaction.atomic():
+                super().save(*args, **kwargs)
+                self._retime_intake_snoozes(old_timezone)
+
+        if weekend_days_changed:
+            self._schedule_duration_recompute()
+
+    def _schedule_duration_recompute(self):
+        """Durations count working days, so they follow the weekend days: recalculate them once this is committed."""
+        # Imported here: the task module imports the models
+        from plane.bgtasks.project_duration_task import recompute_project_durations
+
+        project_id = str(self.pk)
+        transaction.on_commit(lambda: recompute_project_durations.delay(project_id))
 
 
 class ProjectBaseModel(BaseModel):
@@ -213,6 +316,46 @@ class ProjectMemberInvite(ProjectBaseModel):
 
     def __str__(self):
         return f"{self.project.name} {self.email} {self.accepted}"
+
+
+class ProjectAccessRequest(ProjectBaseModel):
+    """A workspace member asking to join a Private project; a project admin approves or rejects it."""
+
+    PENDING = "pending"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+    STATUS_CHOICES = ((PENDING, "Pending"), (APPROVED, "Approved"), (REJECTED, "Rejected"))
+
+    requester = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="project_access_requests"
+    )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=PENDING)
+    message = models.TextField(blank=True, default="")
+    decided_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="decided_project_access_requests",
+    )
+    decided_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        constraints = [
+            # a person has at most one open request per project; a rejected one can be followed by a new request
+            models.UniqueConstraint(
+                fields=["project", "requester"],
+                condition=Q(status="pending", deleted_at__isnull=True),
+                name="project_access_request_unique_pending_per_requester",
+            )
+        ]
+        verbose_name = "Project Access Request"
+        verbose_name_plural = "Project Access Requests"
+        db_table = "project_access_requests"
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return f"{self.requester_id} -> {self.project_id} ({self.status})"
 
 
 class ProjectMember(ProjectBaseModel):

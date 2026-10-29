@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -14,9 +15,10 @@ from django.conf import settings
 # Module imports
 from plane.db.models import FileAsset, Page, Issue
 from plane.utils.exception_logger import log_exception
-from plane.settings.storage import S3Storage
+from plane.settings.storage import get_storage
 from celery import shared_task
 from plane.utils.url import normalize_url_path
+from plane.utils.uuid import is_valid_uuid
 
 
 def get_entity_id_field(entity_type, entity_id):
@@ -37,7 +39,8 @@ def get_entity_id_field(entity_type, entity_id):
 def extract_asset_ids(html, tag):
     try:
         soup = BeautifulSoup(html, "html.parser")
-        return [tag.get("src") for tag in soup.find_all(tag) if tag.get("src")]
+        # Only uploaded assets carry a UUID src; external image URLs must not reach id__in
+        return [tag.get("src") for tag in soup.find_all(tag) if tag.get("src") and is_valid_uuid(tag.get("src"))]
     except Exception as e:
         log_exception(e)
         return []
@@ -88,7 +91,7 @@ def sync_with_external_service(entity_name, description_html):
 def copy_assets(entity, entity_identifier, project_id, asset_ids, user_id):
     duplicated_assets = []
     workspace = entity.workspace
-    storage = S3Storage()
+    storage = get_storage()
     original_assets = FileAsset.objects.filter(workspace=workspace, project_id=project_id, id__in=asset_ids)
 
     for original_asset in original_assets:

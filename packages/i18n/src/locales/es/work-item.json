@@ -67,6 +67,11 @@
       "extra": {
         "show_sub_issues": "Mostrar sub-elementos",
         "show_empty_groups": "Mostrar grupos vacíos"
+      },
+      "color_by": {
+        "label": "Color por",
+        "state": "Estado",
+        "key": "ID del elemento de trabajo"
       }
     },
     "layouts": {
@@ -91,8 +96,8 @@
     "comments": {
       "placeholder": "Agregar comentario",
       "switch": {
-        "private": "Cambiar a comentario privado",
-        "public": "Cambiar a comentario público"
+        "private": "Hacer interno este comentario",
+        "public": "Mostrar este comentario en la web"
       },
       "create": {
         "success": "Comentario creado correctamente",
@@ -149,6 +154,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "Interno",
+        "external": "Visible en la web"
       }
     },
     "empty_state": {
@@ -173,7 +182,9 @@
       },
       "failed": {
         "message": "No se pudo archivar el elemento de trabajo. Por favor, inténtalo de nuevo."
-      }
+      },
+      "banner_message": "Este elemento de trabajo ha sido archivado. Visite la sección Archivos para restaurarlo.",
+      "go_to_archives": "Ir a archivos"
     },
     "restore": {
       "success": {
@@ -194,7 +205,15 @@
       "finish_before": "Termina antes",
       "finish_after": "Termina después",
       "implements": "Implementa",
-      "implemented_by": "Implementado por"
+      "implemented_by": "Implementado por",
+      "causes": "Causa",
+      "caused_by": "Causado por",
+      "clones": "Clona",
+      "cloned_by": "Clonado por",
+      "tests": "Prueba",
+      "tested_by": "Probado por",
+      "start_before_finish": "Empieza antes de que termine",
+      "finish_after_start": "Termina después de que empiece"
     },
     "copy_link": "Copiar enlace del elemento de trabajo",
     "delete": {
@@ -332,7 +351,9 @@
         "description": "Para ver todos los elementos de trabajo, elimina todos los filtros aplicados.",
         "action": "Eliminar filtros"
       }
-    }
+    },
+    "expand": "Expandir sub-elementos de trabajo",
+    "collapse": "Contraer sub-elementos de trabajo"
   },
   "issue_relation": {
     "empty_state": {
@@ -370,6 +391,10 @@
         "title": "No se pueden actualizar elementos de trabajo",
         "message": "El cambio de estado no está permitido para algunos elementos de trabajo. Asegúrese de que el cambio de estado esté permitido."
       }
+    },
+    "upgrade_banner": {
+      "message": "Cambie el estado, la prioridad y más para varios elementos de trabajo a la vez. Ahorre en promedio tres minutos por operación.",
+      "cta": "Actualizar a One"
     }
   },
   "recurring_work_items": {
@@ -551,6 +576,532 @@
     "move_to_project_failed": "No se pudo mover el elemento de trabajo al proyecto. Inténtalo de nuevo.",
     "project_work_items_count": "{count, plural, one {Hay # elemento de trabajo en este proyecto} other {Hay # elementos de trabajo en este proyecto}}",
     "archived_banner": "Este elemento de trabajo ha sido archivado. Visita la sección Archivos para restaurarlo.",
-    "go_to_archives": "Ir a archivos"
+    "go_to_archives": "Ir a archivos",
+    "select_work_item": "Seleccionar elemento de trabajo",
+    "select_work_items_to_delete": "Seleccionar elementos de trabajo para eliminar",
+    "delete_selected_work_items": "Eliminar elementos de trabajo seleccionados",
+    "sub_work_item_progress": "Progreso de los sub-elementos de trabajo",
+    "archived_work_items_count": "{count, plural, one {Hay # elemento de trabajo en el archivo del proyecto} other {Hay # elementos de trabajo en el archivo del proyecto}}",
+    "add_related_work_items": "Agregar elementos de trabajo relacionados",
+    "toggle_workspace_level_search": "Alternar la búsqueda a nivel de espacio de trabajo",
+    "search_results_for_in_project": "Resultados de búsqueda para \"<query/>\" en el proyecto:",
+    "cannot_move_to_completed_cycle": "Un elemento de trabajo no se puede mover a ciclos completados"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "archivó el elemento de trabajo.",
+      "assignee": {
+        "added": "agregó un nuevo asignado <user/>.",
+        "added_with_issue": "agregó un nuevo asignado <user/> a <issue/>.",
+        "removed": "eliminó al asignado <user/>.",
+        "removed_with_issue": "eliminó al asignado <user/> de <issue/>."
+      },
+      "attachment": {
+        "added": "subió un nuevo archivo adjunto.",
+        "added_with_issue": "subió un nuevo archivo adjunto a <issue/>.",
+        "removed": "eliminó un archivo adjunto.",
+        "removed_with_issue": "eliminó un archivo adjunto de <issue/>."
+      },
+      "created": "creó el elemento de trabajo.",
+      "created_via": "creó el elemento de trabajo a través de <source/>.",
+      "cycle": {
+        "added": "agregó este elemento de trabajo al ciclo <cycle/>",
+        "removed": "eliminó el elemento de trabajo del ciclo <cycle/>",
+        "set": "estableció el ciclo en <cycle/>"
+      },
+      "deleted": "eliminó un elemento de trabajo.",
+      "description": {
+        "updated": "actualizó la descripción.",
+        "updated_with_issue": "actualizó la descripción de <issue/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# día} other {# días}}",
+        "removed": "eliminó la duración.",
+        "removed_with_issue": "eliminó la duración de <issue/>.",
+        "set": "estableció la duración en <value/>.",
+        "set_with_issue": "estableció la duración de <issue/> en <value/>."
+      },
+      "estimate": {
+        "removed": "eliminó el punto de estimación <value/>.",
+        "removed_with_issue": "eliminó el punto de estimación <value/> de <issue/>.",
+        "set": "estableció el punto de estimación en <value/>.",
+        "set_with_issue": "estableció el punto de estimación de <issue/> en <value/>."
+      },
+      "intake": {
+        "accepted": "aceptó este elemento de trabajo de Intake.",
+        "declined": "rechazó este elemento de trabajo de Intake.",
+        "duplicate": "rechazó este elemento de trabajo de Intake al marcarlo como duplicado.",
+        "snoozed": "pospuso este elemento de trabajo.",
+        "updated": "actualizó el estado del elemento de trabajo de Intake."
+      },
+      "label": {
+        "added": "agregó una nueva etiqueta <label/>",
+        "added_with_issue": "agregó una nueva etiqueta <label/> a <issue/>",
+        "removed": "eliminó la etiqueta <label/>",
+        "removed_with_issue": "eliminó la etiqueta <label/> de <issue/>"
+      },
+      "link": {
+        "added": "agregó un <link>enlace</link>.",
+        "added_with_issue": "agregó un <link>enlace</link> a <issue/>.",
+        "removed": "eliminó este <link>enlace</link>.",
+        "removed_with_issue": "eliminó este <link>enlace</link> de <issue/>.",
+        "updated": "actualizó el <link>enlace</link>.",
+        "updated_with_issue": "actualizó el <link>enlace</link> de <issue/>."
+      },
+      "module": {
+        "added": "agregó este elemento de trabajo al módulo <module/>",
+        "removed": "eliminó el elemento de trabajo del módulo <module/>",
+        "set": "estableció el módulo en <module/>"
+      },
+      "name": {
+        "set": "estableció el nombre en {name}."
+      },
+      "parent": {
+        "removed": "eliminó el elemento padre <value/>.",
+        "removed_with_issue": "eliminó el elemento padre <value/> de <issue/>.",
+        "set": "estableció <value/> como elemento padre.",
+        "set_with_issue": "estableció <value/> como elemento padre de <issue/>."
+      },
+      "priority": {
+        "set": "estableció la prioridad en <value/>.",
+        "set_with_issue": "estableció la prioridad de <issue/> en <value/>."
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "marcó que este elemento de trabajo está bloqueado por <value/>.",
+          "removed": "eliminó el bloqueo de este elemento de trabajo por el elemento de trabajo <value/>."
+        },
+        "blocking": {
+          "added": "marcó que este elemento de trabajo bloquea al elemento de trabajo <value/>.",
+          "removed": "eliminó el elemento de trabajo bloqueado <value/>."
+        },
+        "caused_by": {
+          "added": "añadió la relación «Causado por»: <value/>.",
+          "removed": "eliminó la relación «Causado por»: <value/>."
+        },
+        "causes": {
+          "added": "añadió la relación «Causa»: <value/>.",
+          "removed": "eliminó la relación «Causa»: <value/>."
+        },
+        "cloned_by": {
+          "added": "añadió la relación «Clonado por»: <value/>.",
+          "removed": "eliminó la relación «Clonado por»: <value/>."
+        },
+        "clones": {
+          "added": "añadió la relación «Clona»: <value/>.",
+          "removed": "eliminó la relación «Clona»: <value/>."
+        },
+        "duplicate": {
+          "added": "marcó este elemento de trabajo como duplicado de <value/>.",
+          "removed": "eliminó este elemento de trabajo como duplicado de <value/>."
+        },
+        "finish_after": {
+          "added": "marcó que este elemento de trabajo termina después de <value/>.",
+          "removed": "eliminó la relación «termina después de» con <value/>."
+        },
+        "finish_after_start": {
+          "added": "añadió la relación «Termina después de que empiece»: <value/>.",
+          "removed": "eliminó la relación «Termina después de que empiece»: <value/>."
+        },
+        "finish_before": {
+          "added": "marcó que este elemento de trabajo termina antes de <value/>.",
+          "removed": "eliminó la relación «termina antes de» con <value/>."
+        },
+        "implemented_by": {
+          "added": "añadió la relación «Implementado por»: <value/>.",
+          "removed": "eliminó la relación «Implementado por»: <value/>."
+        },
+        "implements": {
+          "added": "añadió la relación «Implementa»: <value/>.",
+          "removed": "eliminó la relación «Implementa»: <value/>."
+        },
+        "relates_to": {
+          "added": "marcó que este elemento de trabajo se relaciona con <value/>.",
+          "removed": "eliminó la relación con <value/>."
+        },
+        "start_after": {
+          "added": "marcó que este elemento de trabajo comienza después de <value/>.",
+          "removed": "eliminó la relación «comienza después de» con <value/>."
+        },
+        "start_before": {
+          "added": "marcó que este elemento de trabajo comienza antes de <value/>.",
+          "removed": "eliminó la relación «comienza antes de» con <value/>."
+        },
+        "start_before_finish": {
+          "added": "añadió la relación «Empieza antes de que termine»: <value/>.",
+          "removed": "eliminó la relación «Empieza antes de que termine»: <value/>."
+        },
+        "tested_by": {
+          "added": "añadió la relación «Probado por»: <value/>.",
+          "removed": "eliminó la relación «Probado por»: <value/>."
+        },
+        "tests": {
+          "added": "añadió la relación «Prueba»: <value/>.",
+          "removed": "eliminó la relación «Prueba»: <value/>."
+        }
+      },
+      "restored": "restauró el elemento de trabajo.",
+      "start_date": {
+        "removed": "eliminó la fecha de inicio.",
+        "removed_with_issue": "eliminó la fecha de inicio de <issue/>.",
+        "set": "estableció la fecha de inicio en <value/>.",
+        "set_with_issue": "estableció la fecha de inicio de <issue/> en <value/>."
+      },
+      "state": {
+        "set": "estableció el estado en <value/>.",
+        "set_with_issue": "estableció el estado de <issue/> en <value/>."
+      },
+      "finish_date": {
+        "removed": "removed the finish date.",
+        "removed_with_issue": "removed the finish date from <issue/>.",
+        "set": "set the finish date to <value/>.",
+        "set_with_issue": "set the finish date to <value/> for <issue/>."
+      },
+      "target_date": {
+        "removed": "eliminó la fecha de vencimiento.",
+        "removed_with_issue": "eliminó la fecha de vencimiento de <issue/>.",
+        "set": "estableció la fecha de vencimiento en <value/>.",
+        "set_with_issue": "estableció la fecha de vencimiento de <issue/> en <value/>."
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "archivó <issue/>",
+        "restored": "restauró <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "agregó un nuevo asignado <assignee/> a <issue/>",
+        "added_without_issue": "agregó un nuevo asignado <assignee/>",
+        "removed_with_issue": "eliminó al asignado <assignee/> de <issue/>",
+        "removed_without_issue": "eliminó al asignado <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "subió un nuevo archivo adjunto a <issue/>",
+        "added_without_issue": "subió un nuevo archivo adjunto",
+        "removed_with_issue": "eliminó un archivo adjunto de <issue/>",
+        "removed_without_issue": "eliminó un archivo adjunto"
+      },
+      "blocked_by": {
+        "added_with_issue": "marcó que <issue/> está bloqueado por <value/>.",
+        "added_without_issue": "marcó que este elemento de trabajo está bloqueado por <value/>.",
+        "removed_with_issue": "eliminó el bloqueo de <issue/> por el elemento de trabajo <value/>.",
+        "removed_without_issue": "eliminó el bloqueo de este elemento de trabajo por el elemento de trabajo <value/>."
+      },
+      "blocking": {
+        "added_with_issue": "marcó que <issue/> bloquea al elemento de trabajo <value/>.",
+        "added_without_issue": "marcó que este elemento de trabajo bloquea al elemento de trabajo <value/>.",
+        "removed": "eliminó el elemento de trabajo bloqueado <value/>."
+      },
+      "cycle": {
+        "added_with_issue": "agregó <issue/> <nowrap>al ciclo</nowrap> <value/>",
+        "added_without_issue": "agregó este elemento de trabajo <nowrap>al ciclo</nowrap> <value/>",
+        "removed": "eliminó <issue/> del ciclo <value/>",
+        "set": "<nowrap>estableció el ciclo en</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "actualizó la descripción de <issue/>",
+        "updated_without_issue": "actualizó la descripción"
+      },
+      "duplicate": {
+        "added_with_issue": "marcó <issue/> como duplicado de <value/>.",
+        "added_without_issue": "marcó este elemento de trabajo como duplicado de <value/>.",
+        "removed_with_issue": "eliminó <issue/> como duplicado de <value/>.",
+        "removed_without_issue": "eliminó este elemento de trabajo como duplicado de <value/>."
+      },
+      "duration": {
+        "days": "{count, plural, one {# día} other {# días}}",
+        "removed_with_issue": "eliminó la duración de <issue/>",
+        "removed_without_issue": "eliminó la duración",
+        "set_with_issue": "estableció la duración de <issue/> en <value/>",
+        "set_without_issue": "estableció la duración en <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "convirtió <issue/> en un elemento de trabajo",
+        "created": "creó <issue/>",
+        "deleted": "eliminó <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "eliminó el punto de estimación de <issue/>",
+        "removed_without_issue": "eliminó el punto de estimación",
+        "set_with_issue": "estableció el punto de estimación de <issue/> en <value/>",
+        "set_without_issue": "estableció el punto de estimación en <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "aceptó el elemento de trabajo <issue/>",
+        "accepted_without_issue": "aceptó este elemento de trabajo de Intake.",
+        "declined_with_issue": "rechazó el elemento de trabajo <issue/>",
+        "declined_without_issue": "rechazó este elemento de trabajo de Intake.",
+        "duplicate_with_issue": "rechazó el elemento de trabajo <issue/> de Intake al marcarlo como duplicado.",
+        "duplicate_without_issue": "rechazó este elemento de trabajo de Intake al marcarlo como duplicado.",
+        "snoozed_with_issue": "pospuso el elemento de trabajo <issue/>",
+        "snoozed_without_issue": "pospuso este elemento de trabajo.",
+        "updated_with_issue": "actualizó el estado del elemento de trabajo de Intake. <issue/>",
+        "updated_without_issue": "actualizó el estado del elemento de trabajo de Intake."
+      },
+      "issue": {
+        "converted_to_epic": "convirtió <issue/> en un Epic",
+        "created": "creó <issue/>",
+        "deleted": "eliminó <issue/>",
+        "deleted_tooltip": "Este elemento de trabajo ha sido eliminado",
+        "fallback_name": "un elemento de trabajo"
+      },
+      "label": {
+        "added_with_issue": "agregó una nueva etiqueta <label/> a <issue/>",
+        "added_without_issue": "agregó una nueva etiqueta <label/>",
+        "removed_with_issue": "eliminó la etiqueta <label/> de <issue/>",
+        "removed_without_issue": "eliminó la etiqueta <label/>"
+      },
+      "link": {
+        "added_with_issue": "agregó este <link>enlace</link> a <issue/>",
+        "added_without_issue": "agregó este <link>enlace</link>",
+        "removed_with_issue": "eliminó este <link>enlace</link> de <issue/>",
+        "removed_without_issue": "eliminó este <link>enlace</link>",
+        "updated_with_issue": "actualizó el <link>enlace</link> de <issue/>",
+        "updated_without_issue": "actualizó el <link>enlace</link>"
+      },
+      "module": {
+        "added_with_issue": "agregó <issue/> al módulo <value/>",
+        "added_without_issue": "agregó este elemento de trabajo al módulo <value/>",
+        "removed": "eliminó <issue/> del módulo <value/>",
+        "set": "estableció el módulo en <value/>"
+      },
+      "name": {
+        "set_with_issue": "estableció el título de <issue/> en <value/>",
+        "set_without_issue": "estableció el título en <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "eliminó el elemento padre <value/> de <issue/>",
+        "removed_without_issue": "eliminó el elemento padre <value/>",
+        "set_with_issue": "estableció <value/> como elemento padre de <issue/>",
+        "set_without_issue": "estableció <value/> como elemento padre"
+      },
+      "priority": {
+        "high": "Alta",
+        "low": "Baja",
+        "medium": "Media",
+        "none": "Ninguna",
+        "set_with_issue": "estableció la prioridad de <issue/> en <value/>",
+        "set_without_issue": "estableció la prioridad en <value/>",
+        "urgent": "Urgente"
+      },
+      "relates_to": {
+        "added_with_issue": "marcó que <issue/> se relaciona con <value/>.",
+        "added_without_issue": "marcó que este elemento de trabajo se relaciona con <value/>.",
+        "removed": "eliminó la relación con <value/>."
+      },
+      "start_date": {
+        "removed_with_issue": "eliminó la fecha de inicio de <issue/>",
+        "removed_without_issue": "eliminó la fecha de inicio",
+        "set_with_issue": "estableció la fecha de inicio de <issue/> en <value/>",
+        "set_without_issue": "estableció la fecha de inicio en <value/>"
+      },
+      "state": {
+        "set_with_issue": "estableció el estado de <issue/> en <value/>",
+        "set_without_issue": "estableció el estado en <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "removed the finish date from <issue/>",
+        "removed_without_issue": "removed the finish date",
+        "set_with_issue": "set the finish date to <value/> for <issue/>",
+        "set_without_issue": "set the finish date to <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "eliminó la fecha de vencimiento de <issue/>",
+        "removed_without_issue": "eliminó la fecha de vencimiento",
+        "set_with_issue": "estableció la fecha de vencimiento de <issue/> en <value/>",
+        "set_without_issue": "estableció la fecha de vencimiento en <value/>"
+      },
+      "actor_separator": " ",
+      "commented_ago": "Comentó {timeAgo}"
+    },
+    "project": {
+      "archived_at": {
+        "archived": "archivó el proyecto",
+        "restored": "restauró el proyecto"
+      },
+      "cycle_view": {
+        "disabled": "desactivó la vista de ciclos",
+        "enabled": "activó la vista de ciclos",
+        "fallback": "actualizó la vista de ciclos"
+      },
+      "cycles": {
+        "added": "agregó este proyecto al ciclo <value/>",
+        "removed": "eliminó este proyecto del ciclo <value/>",
+        "unknown": "Ciclo desconocido"
+      },
+      "default": "actualizó la configuración del proyecto",
+      "description": {
+        "removed": "eliminó la descripción del proyecto",
+        "updated": "actualizó la descripción del proyecto"
+      },
+      "estimate": {
+        "removed": "eliminó el punto de estimación",
+        "removed_with_value": "eliminó el punto de estimación <value/>",
+        "set": "estableció el punto de estimación en <value/>"
+      },
+      "identifier": {
+        "updated": "actualizó el identificador del proyecto a <value/>"
+      },
+      "inbox": {
+        "disabled": "desactivó Intake",
+        "enabled": "activó Intake"
+      },
+      "intake_view": {
+        "disabled": "desactivó la vista de Intake",
+        "enabled": "activó la vista de Intake",
+        "fallback": "actualizó la vista de Intake"
+      },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "desactivó la regla de edición por los asignados",
+        "enabled": "activó la regla de edición por los asignados",
+        "fallback": "actualizó la regla de edición por los asignados"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "desactivó la regla del estado de los elementos bloqueados",
+        "enabled": "activó la regla del estado de los elementos bloqueados",
+        "fallback": "actualizó la regla del estado de los elementos bloqueados"
+      },
+      "is_epic_enabled": {
+        "disabled": "desactivó los Epics",
+        "enabled": "activó los Epics",
+        "fallback": "actualizó los Epics"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "desactivó los tipos de elementos de trabajo",
+        "enabled": "activó los tipos de elementos de trabajo",
+        "fallback": "actualizó los tipos de elementos de trabajo"
+      },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "desactivó la regla de finalización de elementos principales",
+        "enabled": "activó la regla de finalización de elementos principales",
+        "fallback": "actualizó la regla de finalización de elementos principales"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "desactivó las actualizaciones del proyecto",
+        "enabled": "activó las actualizaciones del proyecto",
+        "fallback": "actualizó las actualizaciones del proyecto"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "desactivó la relación de duplicado",
+        "enabled": "activó la relación de duplicado",
+        "fallback": "actualizó la relación de duplicado"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "desactivó la relación «se relaciona con»",
+        "enabled": "activó la relación «se relaciona con»",
+        "fallback": "actualizó la relación «se relaciona con»"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "desactivó las dependencias de calendario",
+        "enabled": "activó las dependencias de calendario",
+        "fallback": "actualizó las dependencias de calendario"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "desactivó las relaciones de trazabilidad",
+        "enabled": "activó las relaciones de trazabilidad",
+        "fallback": "actualizó las relaciones de trazabilidad"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "desactivó el seguimiento de tiempo",
+        "enabled": "activó el seguimiento de tiempo",
+        "fallback": "actualizó el seguimiento de tiempo"
+      },
+      "is_workflow_enabled": {
+        "disabled": "desactivó el flujo de trabajo personalizado",
+        "enabled": "activó el flujo de trabajo personalizado",
+        "fallback": "actualizó el flujo de trabajo personalizado"
+      },
+      "issue_views_view": {
+        "disabled": "desactivó la vista de vistas de elementos de trabajo",
+        "enabled": "activó la vista de vistas de elementos de trabajo",
+        "fallback": "actualizó la vista de vistas de elementos de trabajo"
+      },
+      "labels": {
+        "added": "agregó la etiqueta <value/>",
+        "created": "creó la etiqueta <value/>",
+        "deleted": "borró la etiqueta <value/>",
+        "removed": "eliminó la etiqueta <value/>",
+        "untitled": "Etiqueta sin título",
+        "updated": "actualizó la etiqueta <value/>"
+      },
+      "module_view": {
+        "disabled": "desactivó la vista de módulos",
+        "enabled": "activó la vista de módulos",
+        "fallback": "actualizó la vista de módulos"
+      },
+      "modules": {
+        "added": "agregó este proyecto al módulo <value/>",
+        "removed": "eliminó este proyecto del módulo <value/>",
+        "unknown": "Módulo desconocido"
+      },
+      "name": {
+        "renamed": "cambió el nombre del proyecto a <value/>"
+      },
+      "network": {
+        "disabled": "desactivó el acceso a la red",
+        "enabled": "activó el acceso a la red"
+      },
+      "page": {
+        "created": "creó la página del proyecto <value/>",
+        "removed": "eliminó la página del proyecto <value/>",
+        "untitled": "Página sin título"
+      },
+      "page_view": {
+        "disabled": "desactivó la vista de páginas",
+        "enabled": "activó la vista de páginas",
+        "fallback": "actualizó la vista de páginas"
+      },
+      "priority": {
+        "set": "estableció la prioridad en <value/>"
+      },
+      "start_date": {
+        "removed": "eliminó la fecha de inicio",
+        "set": "estableció la fecha de inicio en <value/>"
+      },
+      "state": {
+        "set": "estableció el estado en <value/>"
+      },
+      "target_date": {
+        "removed": "eliminó la fecha objetivo",
+        "set": "estableció la fecha objetivo en <value/>"
+      },
+      "timezone": {
+        "changed": "cambió la zona horaria del proyecto a <value/>",
+        "default": "predeterminada"
+      },
+      "value_none": "ninguna"
+    }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "Agrupar fechas",
+    "rolled_up_bar": "Fechas agrupadas de los sub-elementos de trabajo",
+    "children_span": "Sub-elementos de trabajo: {start} – {end}",
+    "starts_early": "Los sub-elementos de trabajo empiezan antes que este elemento de trabajo",
+    "ends_late": "Los sub-elementos de trabajo terminan después de este elemento de trabajo"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "Expandir todo",
+    "collapse_all": "Contraer todo",
+    "levels": "Niveles",
+    "up_to_level": "Hasta el nivel {level}",
+    "all_levels": "Todos los niveles",
+    "load_error": "No se pudieron cargar los sub-elementos de trabajo",
+    "too_many": "Demasiados elementos de trabajo para expandir a la vez. Expanda el resto uno por uno."
+  },
+  "worklog": {
+    "log_time": "Registrar tiempo",
+    "description_placeholder": "¿Qué se hizo? (opcional)",
+    "invalid_duration_title": "Duración no válida",
+    "invalid_duration_message": "Usa un formato como «2h 30m», «45m» o solo minutos, hasta 24 horas.",
+    "log_error": "No se pudo registrar el tiempo. Inténtalo de nuevo.",
+    "update_error": "No se pudo actualizar la entrada. Inténtalo de nuevo.",
+    "delete_error": "No se pudo eliminar la entrada. Inténtalo de nuevo.",
+    "delete_title": "Eliminar registro de tiempo",
+    "delete_description": "¿Seguro que quieres eliminar este registro de tiempo? Esta acción no se puede deshacer.",
+    "edit_entry": "Editar registro de tiempo",
+    "delete_entry": "Eliminar registro de tiempo",
+    "logged": "registró <value>{duration}</value>",
+    "updated": "cambió el tiempo registrado de <old>{from}</old> a <new>{to}</new>",
+    "removed": "eliminó el tiempo registrado <value>{duration}</value>"
   }
 }

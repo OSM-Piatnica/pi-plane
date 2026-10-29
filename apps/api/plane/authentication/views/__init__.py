@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from .common import ChangePasswordEndpoint, CSRFTokenEndpoint, SetUserPasswordEndpoint
@@ -10,8 +11,8 @@ from .app.email import SignInAuthEndpoint, SignUpAuthEndpoint
 from .app.github import GitHubCallbackEndpoint, GitHubOauthInitiateEndpoint
 from .app.gitlab import GitLabCallbackEndpoint, GitLabOauthInitiateEndpoint
 from .app.gitea import GiteaCallbackEndpoint, GiteaOauthInitiateEndpoint
-from .app.google import GoogleCallbackEndpoint, GoogleOauthInitiateEndpoint
-from .app.magic import MagicGenerateEndpoint, MagicSignInEndpoint, MagicSignUpEndpoint
+from .oidc import OidcCallbackEndpoint, OidcInitiateEndpoint, OidcSpaceInitiateEndpoint
+from .app.one_time_code import OneTimeCodeGenerateEndpoint, OneTimeCodeSignInEndpoint, OneTimeCodeSignUpEndpoint
 
 from .app.signout import SignOutAuthEndpoint
 
@@ -24,12 +25,10 @@ from .space.gitlab import GitLabCallbackSpaceEndpoint, GitLabOauthInitiateSpaceE
 
 from .space.gitea import GiteaCallbackSpaceEndpoint, GiteaOauthInitiateSpaceEndpoint
 
-from .space.google import GoogleCallbackSpaceEndpoint, GoogleOauthInitiateSpaceEndpoint
-
-from .space.magic import (
-    MagicGenerateSpaceEndpoint,
-    MagicSignInSpaceEndpoint,
-    MagicSignUpSpaceEndpoint,
+from .space.one_time_code import (
+    OneTimeCodeGenerateSpaceEndpoint,
+    OneTimeCodeSignInSpaceEndpoint,
+    OneTimeCodeSignUpSpaceEndpoint,
 )
 
 from .space.signout import SignOutAuthSpaceEndpoint

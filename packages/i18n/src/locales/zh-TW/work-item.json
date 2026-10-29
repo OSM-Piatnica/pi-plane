@@ -67,6 +67,11 @@
       "extra": {
         "show_sub_issues": "顯示子工作事項",
         "show_empty_groups": "顯示空群組"
+      },
+      "color_by": {
+        "label": "顏色依據",
+        "state": "狀態",
+        "key": "工作事項 ID"
       }
     },
     "layouts": {
@@ -91,8 +96,8 @@
     "comments": {
       "placeholder": "新增留言",
       "switch": {
-        "private": "切換為私人留言",
-        "public": "切換為公開留言"
+        "private": "將此留言設為內部",
+        "public": "在網路上顯示此留言"
       },
       "create": {
         "success": "留言建立成功",
@@ -149,6 +154,10 @@
             }
           }
         }
+      },
+      "access": {
+        "internal": "內部",
+        "external": "在網路上可見"
       }
     },
     "empty_state": {
@@ -173,7 +182,9 @@
       },
       "failed": {
         "message": "無法封存工作事項。請再試一次。"
-      }
+      },
+      "banner_message": "此工作事項已封存。請前往封存區段以還原它。",
+      "go_to_archives": "前往封存"
     },
     "restore": {
       "success": {
@@ -194,7 +205,15 @@
       "finish_before": "在之前完成",
       "finish_after": "在之後完成",
       "implements": "實現",
-      "implemented_by": "實現者"
+      "implemented_by": "實現者",
+      "causes": "導致",
+      "caused_by": "由此導致",
+      "clones": "複製",
+      "cloned_by": "複製自",
+      "tests": "測試",
+      "tested_by": "被測試於",
+      "start_before_finish": "在其結束前開始",
+      "finish_after_start": "在其開始後結束"
     },
     "copy_link": "複製工作事項連結",
     "delete": {
@@ -332,7 +351,9 @@
         "description": "要查看所有工作事項，請清除所有應用過的過濾器。",
         "action": "清除過濾器"
       }
-    }
+    },
+    "expand": "展開子工作事項",
+    "collapse": "收合子工作事項"
   },
   "issue_relation": {
     "empty_state": {
@@ -370,6 +391,10 @@
         "title": "無法更新工作項目",
         "message": "某些工作項目不允許狀態變更。請確保狀態變更是允許的。"
       }
+    },
+    "upgrade_banner": {
+      "message": "一次性變更多個工作事項的狀態、優先順序等。平均每次操作可節省三分鐘。",
+      "cta": "升級到 One"
     }
   },
   "recurring_work_items": {
@@ -551,6 +576,532 @@
     "move_to_project_failed": "無法將工作事項移動到專案。請再試一次。",
     "project_work_items_count": "{count, plural, other {此專案中有 # 個工作事項}}",
     "archived_banner": "此工作事項已封存。請前往封存區段進行還原。",
-    "go_to_archives": "前往封存"
+    "go_to_archives": "前往封存",
+    "select_work_item": "選取工作事項",
+    "select_work_items_to_delete": "選取要刪除的工作事項",
+    "delete_selected_work_items": "刪除已選取的工作事項",
+    "sub_work_item_progress": "子工作事項進度",
+    "archived_work_items_count": "{count, plural, one {專案封存中有 # 個工作事項} other {專案封存中有 # 個工作事項}}",
+    "add_related_work_items": "新增相關工作事項",
+    "toggle_workspace_level_search": "切換工作區層級搜尋",
+    "search_results_for_in_project": "在專案中搜尋 \"<query/>\" 的結果：",
+    "cannot_move_to_completed_cycle": "工作事項無法移動到已完成的週期"
+  },
+  "activity_feed": {
+    "issue": {
+      "archived": "封存了工作事項。",
+      "assignee": {
+        "added": "新增了指派對象 <user/>。",
+        "added_with_issue": "在 <issue/> 新增了指派對象 <user/>。",
+        "removed": "移除了指派對象 <user/>。",
+        "removed_with_issue": "從 <issue/> 移除了指派對象 <user/>。"
+      },
+      "attachment": {
+        "added": "上傳了新附件。",
+        "added_with_issue": "向 <issue/> 上傳了新附件。",
+        "removed": "移除了一個附件。",
+        "removed_with_issue": "從 <issue/> 移除了一個附件。"
+      },
+      "created": "建立了工作事項。",
+      "created_via": "透過 <source/> 建立了工作事項。",
+      "cycle": {
+        "added": "將此工作事項加入了週期 <cycle/>",
+        "removed": "將工作事項從週期 <cycle/> 移除",
+        "set": "將週期設定為 <cycle/>"
+      },
+      "deleted": "刪除了一個工作事項。",
+      "description": {
+        "updated": "更新了描述。",
+        "updated_with_issue": "更新了 <issue/> 的描述。"
+      },
+      "duration": {
+        "days": "{count, plural, one {# 天} other {# 天}}",
+        "removed": "移除了時長。",
+        "removed_with_issue": "移除了 <issue/> 的時長。",
+        "set": "將時長設定為 <value/>。",
+        "set_with_issue": "將 <issue/> 的時長設定為 <value/>。"
+      },
+      "estimate": {
+        "removed": "移除了估算點數 <value/>。",
+        "removed_with_issue": "移除了 <issue/> 的估算點數 <value/>。",
+        "set": "將估算點數設定為 <value/>。",
+        "set_with_issue": "將 <issue/> 的估算點數設定為 <value/>。"
+      },
+      "intake": {
+        "accepted": "接受了來自 Intake 的此工作事項。",
+        "declined": "拒絕了來自 Intake 的此工作事項。",
+        "duplicate": "透過標記重複的工作事項，拒絕了來自 Intake 的此工作事項。",
+        "snoozed": "延後處理了此工作事項。",
+        "updated": "更新了 Intake 工作事項狀態。"
+      },
+      "label": {
+        "added": "新增了標籤 <label/>",
+        "added_with_issue": "在 <issue/> 新增了標籤 <label/>",
+        "removed": "移除了標籤 <label/>",
+        "removed_with_issue": "從 <issue/> 移除了標籤 <label/>"
+      },
+      "link": {
+        "added": "新增了<link>連結</link>。",
+        "added_with_issue": "在 <issue/> 新增了<link>連結</link>。",
+        "removed": "移除了此<link>連結</link>。",
+        "removed_with_issue": "從 <issue/> 移除了此<link>連結</link>。",
+        "updated": "更新了<link>連結</link>。",
+        "updated_with_issue": "更新了 <issue/> 的<link>連結</link>。"
+      },
+      "module": {
+        "added": "將此工作事項加入了模組 <module/>",
+        "removed": "將工作事項從模組 <module/> 移除",
+        "set": "將模組設定為 <module/>"
+      },
+      "name": {
+        "set": "將名稱設定為 {name}。"
+      },
+      "parent": {
+        "removed": "移除了上層 <value/>。",
+        "removed_with_issue": "移除了 <issue/> 的上層 <value/>。",
+        "set": "將上層設定為 <value/>。",
+        "set_with_issue": "將 <issue/> 的上層設定為 <value/>。"
+      },
+      "priority": {
+        "set": "將優先順序設定為 <value/>。",
+        "set_with_issue": "將 <issue/> 的優先順序設定為 <value/>。"
+      },
+      "relation": {
+        "blocked_by": {
+          "added": "將此工作事項標記為被 <value/> 阻擋。",
+          "removed": "移除了此工作事項被工作事項 <value/> 阻擋的關聯。"
+        },
+        "blocking": {
+          "added": "將此工作事項標記為阻擋工作事項 <value/>。",
+          "removed": "移除了所阻擋的工作事項 <value/>。"
+        },
+        "caused_by": {
+          "added": "新增了關係「由此導致」：<value/>。",
+          "removed": "移除了關係「由此導致」：<value/>。"
+        },
+        "causes": {
+          "added": "新增了關係「導致」：<value/>。",
+          "removed": "移除了關係「導致」：<value/>。"
+        },
+        "cloned_by": {
+          "added": "新增了關係「複製自」：<value/>。",
+          "removed": "移除了關係「複製自」：<value/>。"
+        },
+        "clones": {
+          "added": "新增了關係「複製」：<value/>。",
+          "removed": "移除了關係「複製」：<value/>。"
+        },
+        "duplicate": {
+          "added": "將此工作事項標記為 <value/> 的重複項。",
+          "removed": "取消了此工作事項作為 <value/> 重複項的標記。"
+        },
+        "finish_after": {
+          "added": "將此工作事項標記為在 <value/> 之後完成。",
+          "removed": "移除了與 <value/> 的「在其之後完成」關聯。"
+        },
+        "finish_after_start": {
+          "added": "新增了關係「在其開始後結束」：<value/>。",
+          "removed": "移除了關係「在其開始後結束」：<value/>。"
+        },
+        "finish_before": {
+          "added": "將此工作事項標記為在 <value/> 之前完成。",
+          "removed": "移除了與 <value/> 的「在其之前完成」關聯。"
+        },
+        "implemented_by": {
+          "added": "新增了關係「實現者」：<value/>。",
+          "removed": "移除了關係「實現者」：<value/>。"
+        },
+        "implements": {
+          "added": "新增了關係「實現」：<value/>。",
+          "removed": "移除了關係「實現」：<value/>。"
+        },
+        "relates_to": {
+          "added": "標記此工作事項與 <value/> 相關。",
+          "removed": "移除了與 <value/> 的關聯。"
+        },
+        "start_after": {
+          "added": "將此工作事項標記為在 <value/> 之後開始。",
+          "removed": "移除了與 <value/> 的「在其之後開始」關聯。"
+        },
+        "start_before": {
+          "added": "將此工作事項標記為在 <value/> 之前開始。",
+          "removed": "移除了與 <value/> 的「在其之前開始」關聯。"
+        },
+        "start_before_finish": {
+          "added": "新增了關係「在其結束前開始」：<value/>。",
+          "removed": "移除了關係「在其結束前開始」：<value/>。"
+        },
+        "tested_by": {
+          "added": "新增了關係「被測試於」：<value/>。",
+          "removed": "移除了關係「被測試於」：<value/>。"
+        },
+        "tests": {
+          "added": "新增了關係「測試」：<value/>。",
+          "removed": "移除了關係「測試」：<value/>。"
+        }
+      },
+      "restored": "還原了工作事項。",
+      "start_date": {
+        "removed": "移除了開始日期。",
+        "removed_with_issue": "移除了 <issue/> 的開始日期。",
+        "set": "將開始日期設定為 <value/>。",
+        "set_with_issue": "將 <issue/> 的開始日期設定為 <value/>。"
+      },
+      "state": {
+        "set": "將狀態設定為 <value/>。",
+        "set_with_issue": "將 <issue/> 的狀態設定為 <value/>。"
+      },
+      "finish_date": {
+        "removed": "removed the finish date.",
+        "removed_with_issue": "removed the finish date from <issue/>.",
+        "set": "set the finish date to <value/>.",
+        "set_with_issue": "set the finish date to <value/> for <issue/>."
+      },
+      "target_date": {
+        "removed": "移除了截止日期。",
+        "removed_with_issue": "移除了 <issue/> 的截止日期。",
+        "set": "將截止日期設定為 <value/>。",
+        "set_with_issue": "將 <issue/> 的截止日期設定為 <value/>。"
+      }
+    },
+    "profile": {
+      "archived_at": {
+        "archived": "封存了 <issue/>",
+        "restored": "還原了 <issue/>"
+      },
+      "assignee": {
+        "added_with_issue": "在 <issue/> 新增了指派對象 <assignee/>",
+        "added_without_issue": "新增了指派對象 <assignee/>",
+        "removed_with_issue": "從 <issue/> 移除了指派對象 <assignee/>",
+        "removed_without_issue": "移除了指派對象 <assignee/>"
+      },
+      "attachment": {
+        "added_with_issue": "向 <issue/> 上傳了新附件",
+        "added_without_issue": "上傳了新附件",
+        "removed_with_issue": "從 <issue/> 移除了一個附件",
+        "removed_without_issue": "移除了一個附件"
+      },
+      "blocked_by": {
+        "added_with_issue": "將 <issue/> 標記為被 <value/> 阻擋。",
+        "added_without_issue": "將此工作事項標記為被 <value/> 阻擋。",
+        "removed_with_issue": "移除了 <issue/> 被工作事項 <value/> 阻擋的關聯。",
+        "removed_without_issue": "移除了此工作事項被工作事項 <value/> 阻擋的關聯。"
+      },
+      "blocking": {
+        "added_with_issue": "將 <issue/> 標記為阻擋工作事項 <value/>。",
+        "added_without_issue": "將此工作事項標記為阻擋工作事項 <value/>。",
+        "removed": "移除了所阻擋的工作事項 <value/>。"
+      },
+      "cycle": {
+        "added_with_issue": "將 <issue/> <nowrap>加入週期</nowrap> <value/>",
+        "added_without_issue": "將此工作事項<nowrap>加入週期</nowrap> <value/>",
+        "removed": "將 <issue/> 從週期 <value/> 移除",
+        "set": "<nowrap>將週期設定為</nowrap> <value/>"
+      },
+      "description": {
+        "updated_with_issue": "更新了 <issue/> 的描述",
+        "updated_without_issue": "更新了描述"
+      },
+      "duplicate": {
+        "added_with_issue": "將 <issue/> 標記為 <value/> 的重複項。",
+        "added_without_issue": "將此工作事項標記為 <value/> 的重複項。",
+        "removed_with_issue": "取消了 <issue/> 作為 <value/> 重複項的標記。",
+        "removed_without_issue": "取消了此工作事項作為 <value/> 重複項的標記。"
+      },
+      "duration": {
+        "days": "{count, plural, one {# 天} other {# 天}}",
+        "removed_with_issue": "移除了 <issue/> 的時長",
+        "removed_without_issue": "移除了時長",
+        "set_with_issue": "將 <issue/> 的時長設定為 <value/>",
+        "set_without_issue": "將時長設定為 <value/>"
+      },
+      "epic": {
+        "converted_to_work_item": "將 <issue/> 轉換為工作事項",
+        "created": "建立了 <issue/>",
+        "deleted": "刪除了 <issue/>"
+      },
+      "estimate_point": {
+        "removed_with_issue": "移除了 <issue/> 的估算點數",
+        "removed_without_issue": "移除了估算點數",
+        "set_with_issue": "將 <issue/> 的估算點數設定為 <value/>",
+        "set_without_issue": "將估算點數設定為 <value/>"
+      },
+      "inbox": {
+        "accepted_with_issue": "接受了工作事項 <issue/>",
+        "accepted_without_issue": "接受了來自 Intake 的此工作事項。",
+        "declined_with_issue": "拒絕了工作事項 <issue/>",
+        "declined_without_issue": "拒絕了來自 Intake 的此工作事項。",
+        "duplicate_with_issue": "透過標記重複的工作事項，拒絕了來自 Intake 的工作事項 <issue/>。",
+        "duplicate_without_issue": "透過標記重複的工作事項，拒絕了來自 Intake 的此工作事項。",
+        "snoozed_with_issue": "延後處理了工作事項 <issue/>",
+        "snoozed_without_issue": "延後處理了此工作事項。",
+        "updated_with_issue": "更新了 Intake 工作事項狀態。<issue/>",
+        "updated_without_issue": "更新了 Intake 工作事項狀態。"
+      },
+      "issue": {
+        "converted_to_epic": "將 <issue/> 轉換為史詩",
+        "created": "建立了 <issue/>",
+        "deleted": "刪除了 <issue/>",
+        "deleted_tooltip": "此工作事項已被刪除",
+        "fallback_name": "一個工作事項"
+      },
+      "label": {
+        "added_with_issue": "在 <issue/> 新增了標籤 <label/>",
+        "added_without_issue": "新增了標籤 <label/>",
+        "removed_with_issue": "從 <issue/> 移除了標籤 <label/>",
+        "removed_without_issue": "移除了標籤 <label/>"
+      },
+      "link": {
+        "added_with_issue": "在 <issue/> 新增了此<link>連結</link>",
+        "added_without_issue": "新增了此<link>連結</link>",
+        "removed_with_issue": "從 <issue/> 移除了此<link>連結</link>",
+        "removed_without_issue": "移除了此<link>連結</link>",
+        "updated_with_issue": "更新了 <issue/> 的<link>連結</link>",
+        "updated_without_issue": "更新了<link>連結</link>"
+      },
+      "module": {
+        "added_with_issue": "將 <issue/> 加入模組 <value/>",
+        "added_without_issue": "將此工作事項加入模組 <value/>",
+        "removed": "將 <issue/> 從模組 <value/> 移除",
+        "set": "將模組設定為 <value/>"
+      },
+      "name": {
+        "set_with_issue": "將 <issue/> 的標題設定為 <value/>",
+        "set_without_issue": "將標題設定為 <value/>"
+      },
+      "parent": {
+        "removed_with_issue": "移除了 <issue/> 的上層 <value/>",
+        "removed_without_issue": "移除了上層 <value/>",
+        "set_with_issue": "將 <issue/> 的上層設定為 <value/>",
+        "set_without_issue": "將上層設定為 <value/>"
+      },
+      "priority": {
+        "high": "高",
+        "low": "低",
+        "medium": "中",
+        "none": "無",
+        "set_with_issue": "將 <issue/> 的優先順序設定為 <value/>",
+        "set_without_issue": "將優先順序設定為 <value/>",
+        "urgent": "緊急"
+      },
+      "relates_to": {
+        "added_with_issue": "標記 <issue/> 與 <value/> 相關。",
+        "added_without_issue": "標記此工作事項與 <value/> 相關。",
+        "removed": "移除了與 <value/> 的關聯。"
+      },
+      "start_date": {
+        "removed_with_issue": "移除了 <issue/> 的開始日期",
+        "removed_without_issue": "移除了開始日期",
+        "set_with_issue": "將 <issue/> 的開始日期設定為 <value/>",
+        "set_without_issue": "將開始日期設定為 <value/>"
+      },
+      "state": {
+        "set_with_issue": "將 <issue/> 的狀態設定為 <value/>",
+        "set_without_issue": "將狀態設定為 <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "removed the finish date from <issue/>",
+        "removed_without_issue": "removed the finish date",
+        "set_with_issue": "set the finish date to <value/> for <issue/>",
+        "set_without_issue": "set the finish date to <value/>"
+      },
+      "target_date": {
+        "removed_with_issue": "移除了 <issue/> 的截止日期",
+        "removed_without_issue": "移除了截止日期",
+        "set_with_issue": "將 <issue/> 的截止日期設定為 <value/>",
+        "set_without_issue": "將截止日期設定為 <value/>"
+      },
+      "actor_separator": " ",
+      "commented_ago": "{timeAgo}發表了留言"
+    },
+    "project": {
+      "archived_at": {
+        "archived": "封存了專案",
+        "restored": "還原了專案"
+      },
+      "cycle_view": {
+        "disabled": "停用了週期檢視",
+        "enabled": "啟用了週期檢視",
+        "fallback": "更新了週期檢視"
+      },
+      "cycles": {
+        "added": "將此專案加入週期 <value/>",
+        "removed": "將此專案從週期 <value/> 移除",
+        "unknown": "未知的週期"
+      },
+      "default": "更新了專案設定",
+      "description": {
+        "removed": "移除了專案描述",
+        "updated": "更新了專案描述"
+      },
+      "estimate": {
+        "removed": "移除了估算點數",
+        "removed_with_value": "移除了估算點數 <value/>",
+        "set": "將估算點數設定為 <value/>"
+      },
+      "identifier": {
+        "updated": "將專案識別碼更新為 <value/>"
+      },
+      "inbox": {
+        "disabled": "停用了 Intake",
+        "enabled": "啟用了 Intake"
+      },
+      "intake_view": {
+        "disabled": "停用了 Intake 檢視",
+        "enabled": "啟用了 Intake 檢視",
+        "fallback": "更新了Intake 檢視"
+      },
+      "is_assignee_edit_rule_enabled": {
+        "disabled": "停用了僅負責人編輯規則",
+        "enabled": "啟用了僅負責人編輯規則",
+        "fallback": "更新了僅負責人編輯規則"
+      },
+      "is_blocked_status_rule_enabled": {
+        "disabled": "停用了被阻擋工作事項狀態規則",
+        "enabled": "啟用了被阻擋工作事項狀態規則",
+        "fallback": "更新了被阻擋工作事項狀態規則"
+      },
+      "is_epic_enabled": {
+        "disabled": "停用了史詩",
+        "enabled": "啟用了史詩",
+        "fallback": "更新了史詩"
+      },
+      "is_issue_type_enabled": {
+        "disabled": "停用了工作事項類型",
+        "enabled": "啟用了工作事項類型",
+        "fallback": "更新了工作事項類型"
+      },
+      "is_parent_completion_rule_enabled": {
+        "disabled": "停用了父項完成規則",
+        "enabled": "啟用了父項完成規則",
+        "fallback": "更新了父項完成規則"
+      },
+      "is_project_updates_enabled": {
+        "disabled": "停用了專案更新",
+        "enabled": "啟用了專案更新",
+        "fallback": "更新了專案更新"
+      },
+      "is_relation_duplicate_enabled": {
+        "disabled": "停用了「此項重複」關係",
+        "enabled": "啟用了「此項重複」關係",
+        "fallback": "更新了「此項重複」關係"
+      },
+      "is_relation_relates_to_enabled": {
+        "disabled": "停用了「與此相關」關係",
+        "enabled": "啟用了「與此相關」關係",
+        "fallback": "更新了「與此相關」關係"
+      },
+      "is_relation_schedule_enabled": {
+        "disabled": "停用了排程相依",
+        "enabled": "啟用了排程相依",
+        "fallback": "更新了排程相依"
+      },
+      "is_relation_traceability_enabled": {
+        "disabled": "停用了可追溯關係",
+        "enabled": "啟用了可追溯關係",
+        "fallback": "更新了可追溯關係"
+      },
+      "is_time_tracking_enabled": {
+        "disabled": "停用了時間追蹤",
+        "enabled": "啟用了時間追蹤",
+        "fallback": "更新了時間追蹤"
+      },
+      "is_workflow_enabled": {
+        "disabled": "停用了自訂工作流程",
+        "enabled": "啟用了自訂工作流程",
+        "fallback": "更新了自訂工作流程"
+      },
+      "issue_views_view": {
+        "disabled": "停用了工作事項檢視功能",
+        "enabled": "啟用了工作事項檢視功能",
+        "fallback": "更新了工作事項檢視功能"
+      },
+      "labels": {
+        "added": "新增了標籤 <value/>",
+        "created": "建立了標籤 <value/>",
+        "deleted": "刪除了標籤 <value/>",
+        "removed": "移除了標籤 <value/>",
+        "untitled": "未命名標籤",
+        "updated": "更新了標籤 <value/>"
+      },
+      "module_view": {
+        "disabled": "停用了模組檢視",
+        "enabled": "啟用了模組檢視",
+        "fallback": "更新了模組檢視"
+      },
+      "modules": {
+        "added": "將此專案加入模組 <value/>",
+        "removed": "將此專案從模組 <value/> 移除",
+        "unknown": "未知的模組"
+      },
+      "name": {
+        "renamed": "將專案重新命名為 <value/>"
+      },
+      "network": {
+        "disabled": "停用了網路存取",
+        "enabled": "啟用了網路存取"
+      },
+      "page": {
+        "created": "建立了專案頁面 <value/>",
+        "removed": "移除了專案頁面 <value/>",
+        "untitled": "未命名頁面"
+      },
+      "page_view": {
+        "disabled": "停用了頁面檢視",
+        "enabled": "啟用了頁面檢視",
+        "fallback": "更新了頁面檢視"
+      },
+      "priority": {
+        "set": "將優先順序設定為 <value/>"
+      },
+      "start_date": {
+        "removed": "移除了開始日期",
+        "set": "將開始日期設定為 <value/>"
+      },
+      "state": {
+        "set": "將狀態設定為 <value/>"
+      },
+      "target_date": {
+        "removed": "移除了目標日期",
+        "set": "將目標日期設定為 <value/>"
+      },
+      "timezone": {
+        "changed": "將專案時區變更為 <value/>",
+        "default": "預設"
+      },
+      "value_none": "無"
+    }
+  },
+  "timeline_rollup": {
+    "roll_up_dates": "彙總日期",
+    "rolled_up_bar": "日期彙總自子工作事項",
+    "children_span": "子工作事項：{start} – {end}",
+    "starts_early": "子工作事項開始於此工作事項之前",
+    "ends_late": "子工作事項結束於此工作事項之後"
+  },
+  "timeline_hierarchy": {
+    "expand_all": "全部展開",
+    "collapse_all": "全部摺疊",
+    "levels": "層級",
+    "up_to_level": "展開到第 {level} 層",
+    "all_levels": "所有層級",
+    "load_error": "無法載入子工作事項",
+    "too_many": "工作事項過多，無法一次展開。請逐一展開其餘項目。"
+  },
+  "worklog": {
+    "log_time": "記錄時間",
+    "description_placeholder": "做了什麼？（選填）",
+    "invalid_duration_title": "時長無效",
+    "invalid_duration_message": "請使用「2h 30m」「45m」這樣的格式，或僅輸入分鐘數，最多 24 小時。",
+    "log_error": "無法記錄時間。請重試。",
+    "update_error": "無法更新該記錄。請重試。",
+    "delete_error": "無法刪除該記錄。請重試。",
+    "delete_title": "刪除工時記錄",
+    "delete_description": "確定要刪除此工時記錄嗎？此操作無法復原。",
+    "edit_entry": "編輯工時記錄",
+    "delete_entry": "刪除工時記錄",
+    "logged": "記錄了 <value>{duration}</value>",
+    "updated": "將已記錄的時間從 <old>{from}</old> 改為 <new>{to}</new>",
+    "removed": "刪除了已記錄的時間 <value>{duration}</value>"
   }
 }

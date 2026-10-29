@@ -69,11 +69,11 @@
     "page": {
       "step_zero": {
         "title": "Documenta con Páginas potenciadas por IA",
-        "description": "Las Páginas en Plane te permiten capturar, organizar y colaborar en información del proyecto—sin herramientas externas."
+        "description": "Las Páginas en Pi-Plane te permiten capturar, organizar y colaborar en información del proyecto—sin herramientas externas."
       },
       "step_one": {
-        "title": "Hacer página Pública o Privada",
-        "description": "Las páginas se pueden configurar como públicas, visibles para todos en tu espacio de trabajo, o privadas, accesibles solo para ti."
+        "title": "Comparte una página o guárdala para ti",
+        "description": "Las páginas se pueden compartir con todo el proyecto o dejar visibles solo para ti."
       },
       "step_two": {
         "title": "Usa el comando /",
@@ -95,7 +95,7 @@
     "intake": {
       "step_zero": {
         "title": "Optimiza solicitudes con recepción",
-        "description": "Una característica exclusiva de Plane que permite a los Invitados crear elementos de trabajo para errores, solicitudes o tickets."
+        "description": "Una característica exclusiva de Pi-Plane que permite a los Invitados crear elementos de trabajo para errores, solicitudes o tickets."
       },
       "step_one": {
         "title": "Solicitudes de recepción abiertas/cerradas",
@@ -154,7 +154,7 @@
   },
   "get_started": {
     "title": "¡Hola {name}, bienvenido a bordo!",
-    "description": "Aquí está todo lo que necesitas para comenzar tu viaje con Plane.",
+    "description": "Aquí está todo lo que necesitas para comenzar tu viaje con Pi-Plane.",
     "checklist_section": {
       "title": "Comenzar",
       "description": "Comienza tu configuración y ve tus ideas cobrar vida más rápido.",
@@ -188,8 +188,8 @@
       "more_integrations": "Explorar más integraciones"
     },
     "switch_to_plane_section": {
-      "title": "Descubre por qué los equipos cambian a Plane",
-      "description": "Compara Plane con las herramientas que usas hoy y ve la diferencia."
+      "title": "Descubre por qué los equipos cambian a Pi-Plane",
+      "description": "Compara Pi-Plane con las herramientas que usas hoy y ve la diferencia."
     }
   }
 }

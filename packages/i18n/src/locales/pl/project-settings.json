@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Ustawienia projektu",
     "general": {
       "enter_project_id": "Wpisz ID projektu",
       "please_select_a_timezone": "Wybierz strefę czasową",
@@ -182,18 +183,18 @@
       "description": "Skonfiguruj automatyczne akcje, aby usprawnić przepływ zarządzania projektem i zmniejszyć liczbę zadań ręcznych.",
       "auto-archive": {
         "title": "Automatyczna archiwizacja zamkniętych elementów",
-        "description": "Plane będzie automatycznie archiwizował elementy, które zostały ukończone lub anulowane.",
+        "description": "Pi-Plane będzie automatycznie archiwizował elementy, które zostały ukończone lub anulowane.",
         "duration": "Archiwizuj elementy zamknięte dłużej niż"
       },
       "auto-close": {
         "title": "Automatyczne zamykanie elementów",
-        "description": "Plane będzie automatycznie zamykał elementy, które nie zostały ukończone lub anulowane.",
+        "description": "Pi-Plane będzie automatycznie zamykał elementy, które nie zostały ukończone lub anulowane.",
         "duration": "Zamknij elementy nieaktywne dłużej niż",
         "auto_close_status": "Status automatycznego zamknięcia"
       },
       "auto-remind": {
         "title": "Automatyczne przypomnienia",
-        "description": "Plane automatycznie wysyła przypomnienia przez e-mail i powiadomienia w aplikacji, aby Twoja ekipa utrzymała się na ścieżce do terminów.",
+        "description": "Pi-Plane automatycznie wysyła przypomnienia przez e-mail i powiadomienia w aplikacji, aby Twoja ekipa utrzymała się na ścieżce do terminów.",
         "duration": "Wyślij przypomnienie przed"
       }
     },
@@ -324,39 +325,24 @@
     },
     "features": {
       "cycles": {
-        "title": "Cykle",
-        "short_title": "Cykle",
-        "description": "Planuj pracę w elastycznych okresach, które dostosowują się do unikalnego rytmu i tempa tego projektu.",
         "toggle_title": "Włącz cykle",
         "toggle_description": "Planuj pracę w skoncentrowanych ramach czasowych."
       },
       "modules": {
-        "title": "Moduły",
-        "short_title": "Moduły",
-        "description": "Organizuj pracę w podprojekty z dedykowanymi liderami i przypisanymi osobami.",
         "toggle_title": "Włącz moduły",
         "toggle_description": "Członkowie projektu będą mogli tworzyć i edytować moduły."
       },
       "views": {
-        "title": "Widoki",
-        "short_title": "Widoki",
-        "description": "Zapisuj niestandardowe sortowania, filtry i opcje wyświetlania lub udostępniaj je zespołowi.",
         "toggle_title": "Włącz widoki",
         "toggle_description": "Członkowie projektu będą mogli tworzyć i edytować widoki."
       },
       "pages": {
-        "title": "Strony",
-        "short_title": "Strony",
-        "description": "Twórz i edytuj dowolne treści: notatki, dokumenty, cokolwiek.",
         "toggle_title": "Włącz strony",
         "toggle_description": "Członkowie projektu będą mogli tworzyć i edytować strony."
       },
       "intake": {
         "intake_responsibility": "Odpowiedzialność za przyjęcie",
         "intake_sources": "Źródła przyjęć",
-        "title": "Odbiór",
-        "short_title": "Odbiór",
-        "description": "Pozwól osobom niebędącym członkami dzielić się błędami, opiniami i sugestiami; bez zakłócania przepływu pracy.",
         "toggle_title": "Włącz odbiór",
         "toggle_description": "Pozwól członkom projektu tworzyć żądania odbioru w aplikacji.",
         "toggle_tooltip_on": "Poproś administratora projektu o włączenie.",
@@ -371,7 +357,7 @@
         },
         "email": {
           "title": "E-mail",
-          "description": "Zbieraj nowe elementy pracy od każdego, kto wyśle e-mail na adres Plane.",
+          "description": "Zbieraj nowe elementy pracy od każdego, kto wyśle e-mail na adres Pi-Plane.",
           "fieldName": "ID e-mail"
         },
         "form": {
@@ -411,9 +397,6 @@
         }
       },
       "time_tracking": {
-        "title": "Śledzenie czasu",
-        "short_title": "Śledzenie czasu",
-        "description": "Rejestruj czas spędzony nad elementami pracy i projektami.",
         "toggle_title": "Włącz śledzenie czasu",
         "toggle_description": "Członkowie projektu będą mogli rejestrować przepracowany czas."
       },

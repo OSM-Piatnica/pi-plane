@@ -1,0 +1,437 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useState } from "react";
+import { observer } from "mobx-react";
+import type { Control, UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { Controller } from "react-hook-form";
+import { Icon as PropelIcon } from "@makeplane/propel/components/icon";
+import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
+import { Pill } from "@makeplane/propel/components/pill";
+import { Pill as PillChrome } from "@makeplane/propel/elements/pill";
+import { CalendarOutline, ParentOutline } from "@makeplane/propel/icons";
+import { ETabIndices } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
+import { setToast } from "@plane/blocks/toast";
+// types
+import type { ISearchIssueResponse, TIssue } from "@plane/types";
+// ui
+import { DateSelect } from "@/components/dropdowns/date-select";
+import type { TPairedDateNotice, TWorkItemPlanningDates } from "@plane/utils";
+import {
+  getDate,
+  getTabIndex,
+  planWorkItemDateChange,
+  renderFormattedDate,
+  renderFormattedPayloadDate,
+} from "@plane/utils";
+// components
+import { CycleSelect } from "@/components/dropdowns/cycle/cycle-select";
+import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select";
+import { LabelSelect } from "@/components/dropdowns/label/label-select";
+import { MemberSelect } from "@/components/dropdowns/member/member-select";
+import { ModuleSelect } from "@/components/dropdowns/module/module-select";
+import { PrioritySelect } from "@/components/dropdowns/priority/priority-select";
+import { StateSelect } from "@/components/dropdowns/state/state-select";
+import { ParentIssuesListModal } from "@/components/issues/parent-issues-list-modal";
+// hooks
+import { useProjectEstimates } from "@/hooks/store/estimates";
+import { useProject } from "@/hooks/store/use-project";
+import { useProjectState } from "@/hooks/store/use-project-state";
+import { useProjectWeekendDays } from "@/hooks/use-project-weekend-days";
+import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
+import { usePlatformOS } from "@/hooks/use-platform-os";
+import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
+import { DurationDropdown } from "@/components/dropdowns/duration";
+
+type TIssueDefaultPropertiesProps = {
+  control: Control<TIssue>;
+  id: string | undefined;
+  projectId: string | null;
+  workspaceSlug: string;
+  selectedParentIssue: ISearchIssueResponse | null;
+  getValues: UseFormGetValues<TIssue>;
+  setValue: UseFormSetValue<TIssue>;
+  parentId: string | null;
+  isDraft: boolean;
+  handleFormChange: () => void;
+  setSelectedParentIssue: (issue: ISearchIssueResponse) => void;
+};
+
+export const IssueDefaultProperties = observer(function IssueDefaultProperties(props: TIssueDefaultPropertiesProps) {
+  const {
+    control,
+    id,
+    projectId,
+    workspaceSlug,
+    selectedParentIssue,
+    getValues,
+    setValue,
+    parentId,
+    isDraft,
+    handleFormChange,
+    setSelectedParentIssue,
+  } = props;
+  // states
+  const [parentIssueListModalOpen, setParentIssueListModalOpen] = useState(false);
+  const [pairingConsumed, setPairingConsumed] = useState(false);
+  const [dateNotice, setDateNotice] = useState<TPairedDateNotice | null>(null);
+  // store hooks
+  const { t } = useTranslation();
+  const { areEstimateEnabledByProjectId } = useProjectEstimates();
+  const { getProjectById } = useProject();
+  const { getProjectDefaultStateId } = useProjectState();
+  const { isMobile } = usePlatformOS();
+  const startOfTheWeek = useStartOfTheWeek();
+  // derived values
+  const projectDetails = getProjectById(projectId);
+  const weekendDays = useProjectWeekendDays(projectId);
+
+  const { getIndex } = getTabIndex(ETabIndices.ISSUE_FORM, isMobile);
+
+  // Writing the derived fields with setValue rather than the field's own onChange keeps them in
+  // dirtyFields, which is what getChangedIssuefields uses to build the update payload.
+  //
+  // The first manual finish/due entry shows both values before saving. The copy is only a preview:
+  // the form names the copied date (`paired_date_defaulted`) and the server verifies eligibility and
+  // records the provenance. "Set only ..." removes the copy; once used, it is not offered again.
+  const applyDateChange = (change: Partial<TWorkItemPlanningDates>) => {
+    const current = getValues();
+    const { patch, notice, error } = planWorkItemDateChange(
+      { ...current, dates_initialized: current.dates_initialized || pairingConsumed },
+      change,
+      true,
+      weekendDays
+    );
+    if (error) {
+      setToast({
+        type: "error",
+        title: t("common.error.label"),
+        message: t("issue.dates.finish_before_start"),
+      });
+      return;
+    }
+    (["start_date", "finish_date", "target_date", "duration"] as const).forEach((key) => {
+      if (key in patch) setValue(key, patch[key] as never, { shouldDirty: true });
+    });
+    if ("finish_date" in change || "target_date" in change) setPairingConsumed(true);
+    const copied =
+      notice?.code === "due_date_defaulted"
+        ? "target_date"
+        : notice?.code === "finish_date_defaulted"
+          ? "finish_date"
+          : undefined;
+    // Editing the copied date yourself turns it into a deliberate value.
+    const stillCopied =
+      copied ??
+      (current.paired_date_defaulted && !(current.paired_date_defaulted in change)
+        ? current.paired_date_defaulted
+        : undefined);
+    setValue("paired_date_defaulted", stillCopied, { shouldDirty: true });
+    setDateNotice(notice && notice.code !== "finish_date_not_defaulted" ? notice : null);
+    handleFormChange();
+  };
+
+  const removeCopiedDate = () => {
+    const copied = getValues().paired_date_defaulted;
+    if (!copied) return;
+    setValue(copied, null, { shouldDirty: true });
+    setValue("paired_date_defaulted", undefined, { shouldDirty: true });
+    setDateNotice(null);
+    handleFormChange();
+  };
+
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <Controller
+        control={control}
+        name="state_id"
+        render={({ field: { value, onChange } }) => (
+          <StateSelect
+            testId="create-work-item-state-select"
+            // an empty state shows the project's default state, as the legacy dropdown did
+            value={value || getProjectDefaultStateId(projectId)}
+            onChange={(stateId) => {
+              onChange(stateId);
+              handleFormChange();
+            }}
+            projectId={projectId ?? undefined}
+            variant="pill-md"
+            tabIndex={getIndex("state_id")}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="priority"
+        render={({ field: { value, onChange } }) => (
+          <PrioritySelect
+            testId="create-work-item-priority-select"
+            value={value}
+            onChange={(priority) => {
+              onChange(priority);
+              handleFormChange();
+            }}
+            variant="pill-md"
+            tabIndex={getIndex("priority")}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="assignee_ids"
+        render={({ field: { value, onChange } }) => (
+          <MemberSelect
+            testId="create-work-item-assignee-select"
+            projectId={projectId ?? undefined}
+            value={value}
+            onChange={(assigneeIds) => {
+              onChange(assigneeIds);
+              handleFormChange();
+            }}
+            placeholder={t("assignees")}
+            multiple
+            variant={value?.length ? "avatar-group-md" : "pill-md"}
+            tabIndex={getIndex("assignee_ids")}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="label_ids"
+        render={({ field: { value, onChange } }) => (
+          <LabelSelect
+            testId="create-work-item-label-select"
+            projectId={projectId ?? undefined}
+            value={value ?? []}
+            onChange={(labelIds) => {
+              onChange(labelIds);
+              handleFormChange();
+            }}
+            variant="pill-md"
+            placeholder={t("labels")}
+            tabIndex={getIndex("label_ids")}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="start_date"
+        render={({ field: { value } }) => (
+          <DateSelect
+            value={getDate(value) ?? null}
+            onChange={(date) =>
+              applyDateChange({ start_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
+            }
+            placeholder={t("start_date")}
+            icon={<CalendarOutline />}
+            weekStartsOn={startOfTheWeek}
+            clearable
+            tabIndex={getIndex("start_date")}
+            variant="pill-md"
+            testId="create-work-item-start-date-select"
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="finish_date"
+        render={({ field: { value } }) => (
+          <div title={t("issue.dates.help.finish")}>
+            <DateSelect
+              value={getDate(value) ?? null}
+              onChange={(date) =>
+                applyDateChange({ finish_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
+              }
+              minDate={getDate(getValues().start_date)}
+              placeholder={t("common.order_by.finish_date")}
+              icon={<CalendarOutline />}
+              weekStartsOn={startOfTheWeek}
+              clearable
+              tabIndex={getIndex("finish_date")}
+              variant="pill-md"
+              testId="create-work-item-finish-date-select"
+            />
+          </div>
+        )}
+      />
+      <Controller
+        control={control}
+        name="target_date"
+        render={({ field: { value } }) => (
+          <div title={t("issue.dates.help.due")}>
+            <DateSelect
+              value={getDate(value) ?? null}
+              onChange={(date) =>
+                applyDateChange({ target_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
+              }
+              placeholder={t("due_date")}
+              icon={<CalendarOutline />}
+              weekStartsOn={startOfTheWeek}
+              clearable
+              tabIndex={getIndex("target_date")}
+              variant="pill-md"
+              testId="create-work-item-due-date-select"
+            />
+          </div>
+        )}
+      />
+      {dateNotice && (
+        <div className="flex w-full items-center gap-2 text-body-xs-regular text-tertiary">
+          <span>
+            {t(
+              dateNotice.code === "due_date_defaulted"
+                ? "issue.dates.notice.due_defaulted"
+                : "issue.dates.notice.finish_defaulted",
+              { date: renderFormattedDate(dateNotice.date) ?? dateNotice.date }
+            )}
+          </span>
+          <button type="button" className="font-medium text-primary hover:text-secondary" onClick={removeCopiedDate}>
+            {t(dateNotice.code === "due_date_defaulted" ? "issue.dates.only_finish" : "issue.dates.only_due")}
+          </button>
+        </div>
+      )}
+      <Controller
+        control={control}
+        name="duration"
+        render={({ field: { value } }) => (
+          <div className="h-7">
+            <DurationDropdown
+              value={value}
+              onChange={(duration) => applyDateChange({ duration })}
+              variant="pill-md"
+              placeholder={t("duration")}
+              tabIndex={getIndex("duration")}
+            />
+          </div>
+        )}
+      />
+      {projectDetails?.cycle_view && projectId && (
+        <Controller
+          control={control}
+          name="cycle_id"
+          render={({ field: { value, onChange } }) => (
+            <CycleSelect
+              projectId={projectId}
+              onChange={(cycleId) => {
+                onChange(cycleId);
+                handleFormChange();
+              }}
+              placeholder={t("cycle.label", { count: 1 })}
+              value={value ?? null}
+              variant="pill-md"
+              clearable
+              tabIndex={getIndex("cycle_id")}
+            />
+          )}
+        />
+      )}
+      {projectDetails?.module_view && workspaceSlug && projectId && (
+        <Controller
+          control={control}
+          name="module_ids"
+          render={({ field: { value, onChange } }) => (
+            <ModuleSelect
+              multiple
+              projectId={projectId}
+              value={value ?? []}
+              onChange={(moduleIds) => {
+                onChange(moduleIds);
+                handleFormChange();
+              }}
+              placeholder={t("modules")}
+              variant="pill-md"
+              tabIndex={getIndex("module_ids")}
+            />
+          )}
+        />
+      )}
+      {projectId && areEstimateEnabledByProjectId(projectId) && (
+        <Controller
+          control={control}
+          name="estimate_point"
+          render={({ field: { value, onChange } }) => (
+            <EstimateSelect
+              value={value || undefined}
+              onChange={(estimatePoint) => {
+                onChange(estimatePoint);
+                handleFormChange();
+              }}
+              projectId={projectId}
+              variant="pill-md"
+              placeholder={t("estimate")}
+              tabIndex={getIndex("estimate_point")}
+            />
+          )}
+        />
+      )}
+      {parentId ? (
+        <Menu>
+          <MenuTrigger
+            tabIndex={getIndex("parent_id")}
+            render={
+              // `PillChrome` renders its own `<button type="button">`, which becomes the menu trigger.
+              <PillChrome size="sm" variant="outline">
+                {selectedParentIssue?.project_id && (
+                  <IssueIdentifier
+                    projectId={selectedParentIssue.project_id}
+                    issueTypeId={selectedParentIssue.type_id}
+                    projectIdentifier={selectedParentIssue?.project__identifier}
+                    issueSequenceId={selectedParentIssue.sequence_id}
+                    size="xs"
+                  />
+                )}
+              </PillChrome>
+            }
+          />
+          <MenuContent side="bottom" align="start">
+            <MenuItem label={t("change_parent_issue")} onClick={() => setParentIssueListModalOpen(true)} />
+            <Controller
+              control={control}
+              name="parent_id"
+              render={({ field: { onChange } }) => (
+                <MenuItem
+                  label={t("remove_parent_issue")}
+                  onClick={() => {
+                    onChange(null);
+                    handleFormChange();
+                  }}
+                />
+              )}
+            />
+          </MenuContent>
+        </Menu>
+      ) : (
+        <Pill
+          size="sm"
+          variant="outline"
+          startIcon={<PropelIcon icon={<ParentOutline className="size-3.5" />} />}
+          onClick={() => setParentIssueListModalOpen(true)}
+          label={t("add_parent")}
+        />
+      )}
+      <Controller
+        control={control}
+        name="parent_id"
+        render={({ field: { onChange } }) => (
+          <ParentIssuesListModal
+            isOpen={parentIssueListModalOpen}
+            handleClose={() => setParentIssueListModalOpen(false)}
+            onChange={(issue) => {
+              onChange(issue.id);
+              handleFormChange();
+              setSelectedParentIssue(issue);
+            }}
+            projectId={projectId ?? undefined}
+            issueId={isDraft ? undefined : id}
+          />
+        )}
+      />
+    </div>
+  );
+});

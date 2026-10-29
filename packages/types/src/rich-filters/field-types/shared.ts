@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -15,7 +16,7 @@ export type TNegativeOperatorConfig = { allowNegative: true; negOperatorLabel?: 
 
 /**
  * Base filter configuration shared by all filter types.
- * - operatorLabel: Label to use for the operator
+ * - operatorLabel: Label to use for the operator (an i18n key of the operator labels, or text shown as it is)
  * - negativeOperatorConfig: Configuration for negative operators
  */
 export type TBaseFilterFieldConfig = {

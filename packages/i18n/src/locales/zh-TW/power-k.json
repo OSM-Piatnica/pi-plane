@@ -54,8 +54,8 @@
         "indicator": "頁面",
         "lock": "鎖定",
         "unlock": "解鎖",
-        "make_private": "設為私人",
-        "make_public": "設為公開",
+        "make_private": "設為僅自己可見",
+        "make_public": "與專案共用",
         "archive": "封存",
         "restore": "還原",
         "add_to_favorites": "加入我的最愛",
@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "開啟鍵盤快速鍵",
-      "open_plane_documentation": "開啟 Plane 文件",
+      "open_plane_documentation": "開啟 Pi-Plane 文件",
       "join_forum": "加入我們的 Forum",
       "report_bug": "回報錯誤",
       "chat_with_us": "與我們聊天"
@@ -171,10 +171,17 @@
     "search_menu": {
       "no_results": "找不到結果",
       "clear_search": "清除搜尋",
-      "go_to_advanced_search": "前往進階搜尋"
+      "go_to_advanced_search": "前往進階搜尋",
+      "results_in_workspace": "在工作區中搜尋 <term/> 的結果：",
+      "results_in_project": "在專案中搜尋 <term/> 的結果："
     },
     "footer": {
       "workspace_level": "工作區層級"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "搜尋鍵盤快速鍵",
+      "no_results": "找不到「{query}」的鍵盤快速鍵",
+      "sequence_separator": "然後"
     },
     "group_titles": {
       "actions": "操作",

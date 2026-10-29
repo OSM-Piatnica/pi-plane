@@ -8,7 +8,7 @@
 from django.utils import timezone
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 
 # Third Party imports
 from rest_framework import serializers
@@ -26,6 +26,8 @@ from plane.db.models import (
     IssueComment,
     ProjectUserProperty,
     IssueAssignee,
+    IssueGroupAssignee,
+    UserGroup,
     IssueSubscriber,
     IssueLabel,
     Label,
@@ -42,6 +44,7 @@ from plane.db.models import (
     State,
     IssueVersion,
     IssueDescriptionVersion,
+    Project,
     ProjectMember,
     EstimatePoint,
     IssueType,
@@ -51,6 +54,7 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
+from plane.utils.project_weekend_days import get_project_weekend_days
 from plane.utils.work_item_dates import apply_date_rules
 
 
@@ -114,6 +118,7 @@ class IssueCreateSerializer(BaseSerializer):
     paired_date_defaulted = serializers.ChoiceField(
         choices=["finish_date", "target_date"], write_only=True, required=False
     )
+    group_assignee_ids = serializers.ListField(child=serializers.UUIDField(), write_only=True, required=False)
     project_id = serializers.UUIDField(source="project.id", read_only=True)
     workspace_id = serializers.UUIDField(source="workspace.id", read_only=True)
 
@@ -131,7 +136,18 @@ class IssueCreateSerializer(BaseSerializer):
             "updated_by",
             "created_at",
             "updated_at",
+            "completed_at",
+            "deleted_at",
+            "archived_at",
+            "sequence_id",
         ]
+
+    def get_fields(self):
+        fields = super().get_fields()
+        # is_draft is set when a work item is created, not changed afterwards.
+        if self.instance is not None:
+            fields["is_draft"].read_only = True
+        return fields
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -146,9 +162,13 @@ class IssueCreateSerializer(BaseSerializer):
         allow_triage = self.context.get("allow_triage_state", False)
         state_manager = State.triage_objects if allow_triage else State.objects
 
-        # One shared rule for start/finish/due: duration, the finish >= start invariant and the
-        # one-time "first finish or due fills both" default. Due is never compared with start.
-        self.date_notices = apply_date_rules(self.instance, attrs)
+        # One shared rule for start/finish/due: duration (in the project's working days), the finish >= start
+        # invariant and the one-time "first finish or due fills both" default. Due is never compared with start.
+        self.date_notices = apply_date_rules(
+            self.instance,
+            attrs,
+            get_project_weekend_days(self.context.get("project_id") or getattr(self.instance, "project_id", None)),
+        )
 
         # Validate description content for security
         if "description_html" in attrs and attrs["description_html"]:
@@ -172,6 +192,18 @@ class IssueCreateSerializer(BaseSerializer):
                 is_active=True,
                 member_id__in=attrs["assignee_ids"],
             ).values_list("member_id", flat=True)
+
+        # Groups the work item is assigned to must be groups of the workspace
+        if attrs.get("group_assignee_ids"):
+            # The update does not pass the workspace in its context, the project always tells it
+            workspace_id = (
+                Project.objects.filter(pk=self.context["project_id"]).values_list("workspace_id", flat=True).first()
+            )
+            attrs["group_assignee_ids"] = list(
+                UserGroup.objects.filter(workspace_id=workspace_id, id__in=attrs["group_assignee_ids"]).values_list(
+                    "id", flat=True
+                )
+            )
 
         # Validate labels are from project
         if attrs.get("label_ids"):
@@ -223,6 +255,20 @@ class IssueCreateSerializer(BaseSerializer):
                         {"state_id": "New work items cannot be created in this state according to the workflow."}
                     )
 
+        # A finished work item reopened under a completed parent takes the parent with it, once confirmed
+        self._reopen_parents_from = None
+        if instance and attrs.get("state") and attrs["state"].id != instance.state_id:
+            from plane.utils.parent_completion_rule import (
+                ParentReopenRequired,
+                is_reopen_confirmed,
+                reopen_confirmation_payload,
+            )
+
+            payload = reopen_confirmation_payload(instance, attrs["state"].id, is_reopen_confirmed(self.initial_data))
+            if payload:
+                raise ParentReopenRequired(payload)
+            self._reopen_parents_from = instance.state_id
+
         # Check parent issue is from workspace as it can be cross workspace
         if (
             attrs.get("parent")
@@ -254,6 +300,7 @@ class IssueCreateSerializer(BaseSerializer):
             ).exists():
                 raise serializers.ValidationError("Issue type is not enabled for this project")
 
+        self._reschedule_plan = None
         # Checked last on purpose: the dates are the ones `apply_date_rules` derived
         # above, and a state the workflow just pulled out of attrs no longer counts as a change.
         if self.instance is not None:
@@ -261,12 +308,26 @@ class IssueCreateSerializer(BaseSerializer):
 
             timeline_error = validate_issue_update_payload(self.instance, attrs)
             if timeline_error:
-                raise serializers.ValidationError(timeline_error)
+                from plane.utils.issue_reschedule import (
+                    RescheduleOffered,
+                    is_shift_confirmed,
+                    plan_for_issue_update,
+                )
+
+                # Dates that only come too early for what depends on this work item can be fixed by moving
+                # those along, once the person agrees
+                plan = plan_for_issue_update(self.instance, attrs, request.user if request else None, timeline_error)
+                if plan is None:
+                    raise serializers.ValidationError(timeline_error)
+                if not is_shift_confirmed(self.initial_data):
+                    raise RescheduleOffered(plan.payload(timeline_error))
+                self._reschedule_plan = plan
 
         return attrs
 
     def create(self, validated_data):
         assignees = validated_data.pop("assignee_ids", None)
+        group_assignees = validated_data.pop("group_assignee_ids", None)
         labels = validated_data.pop("label_ids", None)
 
         project_id = self.context["project_id"]
@@ -321,6 +382,23 @@ class IssueCreateSerializer(BaseSerializer):
                 except IntegrityError:
                     pass
 
+        if group_assignees:
+            IssueGroupAssignee.objects.bulk_create(
+                [
+                    IssueGroupAssignee(
+                        group_id=group_id,
+                        issue=issue,
+                        project_id=project_id,
+                        workspace_id=workspace_id,
+                        created_by_id=created_by_id,
+                        updated_by_id=updated_by_id,
+                    )
+                    for group_id in group_assignees
+                ],
+                batch_size=10,
+                ignore_conflicts=True,
+            )
+
         if labels is not None and len(labels):
             try:
                 IssueLabel.objects.bulk_create(
@@ -344,6 +422,7 @@ class IssueCreateSerializer(BaseSerializer):
 
     def update(self, instance, validated_data):
         assignees = validated_data.pop("assignee_ids", None)
+        group_assignees = validated_data.pop("group_assignee_ids", None)
         labels = validated_data.pop("label_ids", None)
 
         # Related models
@@ -351,6 +430,24 @@ class IssueCreateSerializer(BaseSerializer):
         workspace_id = instance.workspace_id
         created_by_id = instance.created_by_id
         updated_by_id = instance.updated_by_id
+
+        if group_assignees is not None:
+            IssueGroupAssignee.objects.filter(issue=instance).delete()
+            IssueGroupAssignee.objects.bulk_create(
+                [
+                    IssueGroupAssignee(
+                        group_id=group_id,
+                        issue=instance,
+                        project_id=project_id,
+                        workspace_id=workspace_id,
+                        created_by_id=created_by_id,
+                        updated_by_id=updated_by_id,
+                    )
+                    for group_id in group_assignees
+                ],
+                batch_size=10,
+                ignore_conflicts=True,
+            )
 
         if assignees is not None:
             IssueAssignee.objects.filter(issue=instance).delete()
@@ -396,7 +493,19 @@ class IssueCreateSerializer(BaseSerializer):
 
         # Time updation occues even when other related models are updated
         instance.updated_at = timezone.now()
-        return super().update(instance, validated_data)
+        previous_state_id = getattr(self, "_reopen_parents_from", None)
+        reschedule_plan = getattr(self, "_reschedule_plan", None)
+        with transaction.atomic():
+            instance = super().update(instance, validated_data)
+            if previous_state_id:
+                from plane.utils.parent_completion_rule import reopen_parents
+
+                reopen_parents(instance, previous_state_id, instance.updated_by_id)
+            if reschedule_plan:
+                from plane.utils.issue_reschedule import apply_shifts
+
+                apply_shifts(reschedule_plan, instance.updated_by_id)
+        return instance
 
 
 class IssueActivitySerializer(BaseSerializer):
@@ -784,6 +893,15 @@ class IssueCommentSerializer(BaseSerializer):
             "updated_at",
         ]
 
+    def validate(self, attrs):
+        if "comment_html" in attrs and attrs["comment_html"]:
+            is_valid, error_msg, sanitized_html = validate_html_content(attrs["comment_html"])
+            if not is_valid:
+                raise serializers.ValidationError({"comment_html": "HTML content is not valid"})
+            if sanitized_html is not None:
+                attrs["comment_html"] = sanitized_html
+        return attrs
+
 
 class IssueStateFlatSerializer(BaseSerializer):
     state_detail = StateLiteSerializer(read_only=True, source="state")
@@ -836,6 +954,8 @@ class IssueSerializer(DynamicBaseSerializer):
     # Many to many
     label_ids = serializers.ListField(child=serializers.UUIDField(), required=False)
     assignee_ids = serializers.ListField(child=serializers.UUIDField(), required=False)
+    # The groups the work item is assigned to; left out of answers of views that do not annotate it
+    group_assignee_ids = serializers.ListField(child=serializers.UUIDField(), required=False)
 
     # Count items
     sub_issues_count = serializers.IntegerField(read_only=True)
@@ -865,6 +985,7 @@ class IssueSerializer(DynamicBaseSerializer):
             "module_ids",
             "label_ids",
             "assignee_ids",
+            "group_assignee_ids",
             "sub_issues_count",
             "created_at",
             "updated_at",
@@ -953,6 +1074,7 @@ class IssueListDetailSerializer(serializers.Serializer):
             "module_ids": self.get_module_ids(instance),
             "label_ids": self.get_label_ids(instance),
             "assignee_ids": self.get_assignee_ids(instance),
+            "group_assignee_ids": getattr(instance, "group_assignee_ids", []),
             "sub_issues_count": instance.sub_issues_count,
             "attachment_count": instance.attachment_count,
             "link_count": instance.link_count,
@@ -975,6 +1097,7 @@ class IssueListDetailSerializer(serializers.Serializer):
                             "sequence_id": related_issue.sequence_id,
                             "name": related_issue.name,
                             "relation_type": relation.relation_type,
+                            "lag_days": relation.lag_days,
                             "state_id": related_issue.state_id,
                             "priority": related_issue.priority,
                             "created_by": related_issue.created_by_id,
@@ -1000,6 +1123,7 @@ class IssueListDetailSerializer(serializers.Serializer):
                             "sequence_id": issue.sequence_id,
                             "name": issue.name,
                             "relation_type": relation.relation_type,
+                            "lag_days": relation.lag_days,
                             "state_id": issue.state_id,
                             "priority": issue.priority,
                             "created_by": issue.created_by_id,

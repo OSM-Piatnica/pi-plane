@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "고유 코드",
+            "label": "일회용 코드",
             "placeholder": "123456",
             "helper_text": "인증 코드가 새 이메일로 전송되었습니다.",
             "errors": {
-              "required": "고유 코드는 필수입니다",
+              "required": "일회용 코드는 필수입니다",
               "invalid": "잘못된 인증 코드입니다. 다시 시도하세요."
             }
           }
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "완료율",
+    "first_day_project_default": "프로젝트 기본값",
     "first_day_updated": "한 주의 시작일이 업데이트되었습니다",
     "try_again_later": "나중에 다시 시도해 주세요.",
     "update_failed": "업데이트 실패",

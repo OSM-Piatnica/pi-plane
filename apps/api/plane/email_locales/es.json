@@ -1,0 +1,182 @@
+{
+  "format": {
+    "date": "%d/%m/%Y"
+  },
+  "priority": {
+    "urgent": "Urgente",
+    "high": "Alta",
+    "medium": "Media",
+    "low": "Baja",
+    "none": "Ninguna"
+  },
+  "issue_updates": {
+    "title": "Actualizaciones de {identifier}",
+    "summary": "<strong>{actor}</strong> ha actualizado el elemento de trabajo.",
+    "summary_others": "<strong>{actor}</strong> y otras personas han actualizado el elemento de trabajo.",
+    "title_changed": "El título del elemento de trabajo se ha cambiado a {title}",
+    "updates": "Actualizaciones",
+    "due_date": "Fecha de vencimiento:",
+    "duplicate": "Duplicado:",
+    "assignee": "Asignado:",
+    "labels": "Etiquetas:",
+    "state": "Estado:",
+    "links": "Enlaces:",
+    "priority": "Prioridad:",
+    "blocking": "Bloquea:",
+    "comments": "Comentarios",
+    "more": "+{count} más",
+    "links_removed": {
+      "one": "Se eliminó {count} enlace",
+      "other": "Se eliminaron {count} enlaces"
+    },
+    "view": "Ver elemento de trabajo",
+    "footer": "Este correo se envió a <a href=\"mailto:{email}\">{email}</a>. Si prefiere no recibir este tipo de correos, <a href=\"{issue_url}\">puede dejar de seguir este elemento de trabajo</a> o <a href=\"{preferences_url}\">gestionar sus preferencias de correo</a>."
+  },
+  "digest": {
+    "title": "Resumen de actualizaciones",
+    "greeting_named": "Hola {name}, tiene {summary}",
+    "greeting": "Tiene {summary}",
+    "updates_count": {
+      "one": "{count} actualización",
+      "other": "{count} actualizaciones"
+    },
+    "summary": {
+      "one": "{updates} en {count} elemento de trabajo que sigue.",
+      "other": "{updates} en {count} elementos de trabajo que sigue."
+    },
+    "subject": {
+      "one": "Resumen: {updates} en {count} elemento de trabajo",
+      "other": "Resumen: {updates} en {count} elementos de trabajo"
+    },
+    "comments": "comentarios: {count}",
+    "footer": "Este es un resumen de las actualizaciones de los elementos de trabajo. Las menciones las recibe al instante. <a href=\"{preferences_url}\">Cambiar la configuración de notificaciones</a>."
+  },
+  "due_reminder": {
+    "title": "Recordatorio de elementos de trabajo",
+    "greeting_named": "Hola {name}, tiene {summary}",
+    "greeting": "Tiene {summary}",
+    "section_overdue": "Vencidos",
+    "section_today": "Elementos de trabajo que vencen hoy",
+    "work_items": {
+      "one": "{count} elemento de trabajo",
+      "other": "{count} elementos de trabajo"
+    },
+    "overdue": {
+      "one": "{count} vencido",
+      "other": "{count} vencidos"
+    },
+    "overdue_only": {
+      "one": "{count} elemento de trabajo vencido",
+      "other": "{count} elementos de trabajo vencidos"
+    },
+    "summary_both": "{today} que vencen hoy y {overdue}.",
+    "summary_today": "{today} que vencen hoy ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Tiene {today} que vencen hoy y {overdue}",
+    "subject_today": "Tiene {today} que vencen hoy ({date})",
+    "subject_overdue": "Tiene {overdue}",
+    "days_overdue": {
+      "one": "{count} día de retraso",
+      "other": "{count} días de retraso"
+    },
+    "cta": "Ver mis elementos de trabajo",
+    "footer": "Este es un recordatorio automático que se envía cada mañana sobre los elementos de trabajo que vencen hoy y los que ya han vencido."
+  },
+  "project_addition": {
+    "subject": "Le han invitado a un proyecto de Pi-Plane",
+    "preheader": "{inviter} le ha invitado al proyecto {project} del espacio de trabajo {workspace} en Pi-Plane.",
+    "heading": "Le han invitado al proyecto {project} en Pi-Plane",
+    "intro": "{inviter} le ha invitado a colaborar en el proyecto <strong>{project}</strong> del espacio de trabajo <strong>{workspace}</strong> en Pi-Plane.",
+    "button": "Ir al proyecto",
+    "fallback": "Si el botón no funciona, copie este enlace y péguelo en su navegador:",
+    "note": "Nota: este correo se envió a <span>{email}</span>. Si no esperaba esta invitación, puede ignorar este correo."
+  },
+  "access_request": {
+    "subject": "{requester} ha solicitado unirse a {project}",
+    "preheader": "{requester} ha solicitado unirse al proyecto privado {project} del espacio de trabajo {workspace} en Pi-Plane.",
+    "heading": "Solicitud de acceso al proyecto {project}",
+    "intro": "<strong>{requester}</strong> ha solicitado unirse al proyecto privado <strong>{project}</strong> del espacio de trabajo <strong>{workspace}</strong> en Pi-Plane. Puede aprobar o rechazar la solicitud en la configuración de miembros del proyecto.",
+    "message": "Mensaje:",
+    "button": "Revisar la solicitud",
+    "fallback": "Si el botón no funciona, copie este enlace y péguelo en su navegador:",
+    "note": "Nota: este correo se envió a <span>{email}</span> porque usted es administrador o líder de este proyecto."
+  },
+  "access_request_decision": {
+    "subject_approved": "Se aprobó su solicitud para unirse a {project}",
+    "subject_rejected": "No se aprobó su solicitud para unirse a {project}",
+    "heading_approved": "Ya tiene acceso a {project}",
+    "heading_rejected": "Su solicitud para unirse a {project}",
+    "intro_approved": "<strong>{decider}</strong> aprobó su solicitud para unirse al proyecto privado <strong>{project}</strong> del espacio de trabajo <strong>{workspace}</strong> en Pi-Plane. Ya puede abrirlo.",
+    "intro_rejected": "<strong>{decider}</strong> no aprobó su solicitud para unirse al proyecto privado <strong>{project}</strong> del espacio de trabajo <strong>{workspace}</strong> en Pi-Plane. Si cree que es un error, consulte con un administrador del proyecto.",
+    "button": "Abrir el proyecto",
+    "note": "Nota: Este correo se envió a <span>{email}</span> porque solicitó unirse a este proyecto."
+  },
+  "one_time_code": {
+    "subject": "Su código de inicio de sesión de un solo uso de Pi-Plane es {code}",
+    "preheader": "Su código de inicio de sesión de Pi-Plane {code} es válido durante 10 minutos.",
+    "heading": "Su código de inicio de sesión de Pi-Plane",
+    "info": "Este código es válido durante los próximos 10 minutos. Introdúzcalo en la página de inicio de sesión para completar el acceso.",
+    "note": "Nota: Este correo se envió a <span>{email}</span>. Si no esperaba un código de inicio de sesión, puede ignorar este mensaje."
+  },
+  "forgot_password": {
+    "subject": "Se ha solicitado una nueva contraseña para su cuenta de Pi-Plane",
+    "preheader": "Restablezca su contraseña de Pi-Plane con este enlace seguro.",
+    "heading": "Restablezca su contraseña de Pi-Plane",
+    "intro": "Recibimos una solicitud para restablecer su contraseña de Pi-Plane. Para hacerlo, haga clic en el botón de abajo.",
+    "button": "Restablecer contraseña",
+    "note": "Nota: Este correo se envió a <span>{email}</span>. Si no esperaba un restablecimiento de contraseña, puede ignorar este correo."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} le ha invitado a unirse a {workspace} en Pi-Plane",
+    "preheader": "{inviter} le ha invitado a unirse a {workspace} en Pi-Plane.",
+    "heading": "Únase a {workspace} en Pi-Plane",
+    "intro": "{inviter} le ha invitado a colaborar en el espacio de trabajo <strong>{workspace}</strong> en Pi-Plane.",
+    "button": "Aceptar invitación",
+    "note": "Nota: Esta invitación estaba dirigida a <span>{email}</span>. Si no esperaba esta invitación, puede ignorar este correo."
+  },
+  "account_activated": {
+    "subject": "{name} ha sido activado en Pi-Plane",
+    "heading": "Está de vuelta en Pi-Plane.",
+    "body": "Su cuenta se ha reactivado y ya puede acceder a sus elementos de trabajo y otros datos si el proyecto sigue activo. También puede crear un nuevo espacio de trabajo y empezar a agregar proyectos.",
+    "button": "Ir a Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "{name} ha sido desactivado en Pi-Plane",
+    "heading": "Ha salido de Pi-Plane.",
+    "body": "Ha desactivado su cuenta correctamente. Sus elementos de trabajo, ciclos y demás datos del proyecto seguirán siendo accesibles si el proyecto está activo y tiene otros miembros.",
+    "button": "Reactivar cuenta"
+  },
+  "email_updated": {
+    "subject": "Dirección de correo de Pi-Plane actualizada correctamente",
+    "body": "Ha actualizado correctamente su dirección de correo en Pi-Plane a {email}.",
+    "login": "Ahora puede iniciar sesión con esta dirección de correo."
+  },
+  "email_update_code": {
+    "subject": "Verifique su nueva dirección de correo"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook desactivado",
+    "message": "El webhook {url} se ha desactivado debido a solicitudes fallidas.",
+    "button": "Ver webhook"
+  },
+  "analytics_export": {
+    "subject": "Su exportación está lista",
+    "preheader": "La exportación de datos de Pi-Plane Analytics que solicitó se adjunta como archivo CSV.",
+    "heading": "Su exportación de Pi-Plane Analytics está lista",
+    "intro": "La exportación de datos de Pi-Plane Analytics que solicitó está lista. La hemos adjuntado como archivo CSV para su comodidad.",
+    "hint": "Puede abrir el CSV en cualquier hoja de cálculo o herramienta de BI para analizar los datos, crear informes o compartir conclusiones con su equipo."
+  },
+  "shared": {
+    "recipient_note": "Este correo se envió a {email}. Elimínelo si no es el destinatario previsto.",
+    "fallback": "Si el botón no funciona, copie este enlace y péguelo en su navegador:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} ha escrito a los administradores de {workspace}",
+    "preheader": "{sender} envió un mensaje a los administradores de {workspace} en Pi-Plane.",
+    "heading": "Un mensaje para los administradores de {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) ha escrito a los administradores del espacio de trabajo <strong>{workspace}</strong> en Pi-Plane.",
+    "message": "Mensaje:",
+    "reply": "Responda a este correo para contestar directamente a {sender}.",
+    "note": "Nota: Este correo se envió a <span>{email}</span> porque usted es administrador de este espacio de trabajo."
+  }
+}

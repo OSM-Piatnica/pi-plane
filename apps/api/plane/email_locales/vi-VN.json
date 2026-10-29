@@ -1,0 +1,174 @@
+{
+  "format": {
+    "date": "%d/%m/%Y"
+  },
+  "priority": {
+    "urgent": "Khẩn cấp",
+    "high": "Cao",
+    "medium": "Trung bình",
+    "low": "Thấp",
+    "none": "Không có"
+  },
+  "issue_updates": {
+    "title": "Cập nhật của {identifier}",
+    "summary": "Mục công việc đã được <strong>{actor}</strong> cập nhật.",
+    "summary_others": "Mục công việc đã được <strong>{actor}</strong> và những người khác cập nhật.",
+    "title_changed": "Tiêu đề mục công việc đã được đổi thành {title}",
+    "updates": "Cập nhật",
+    "due_date": "Ngày hết hạn:",
+    "duplicate": "Trùng lặp:",
+    "assignee": "Người phụ trách:",
+    "labels": "Nhãn:",
+    "state": "Trạng thái:",
+    "links": "Liên kết:",
+    "priority": "Mức ưu tiên:",
+    "blocking": "Đang chặn:",
+    "comments": "Bình luận",
+    "more": "+{count} nữa",
+    "links_removed": {
+      "other": "Đã xóa {count} liên kết"
+    },
+    "view": "Xem mục công việc",
+    "footer": "Email này được gửi đến <a href=\"mailto:{email}\">{email}</a>. Nếu bạn không muốn nhận loại email này, bạn có thể <a href=\"{issue_url}\">hủy theo dõi mục công việc này</a> hoặc <a href=\"{preferences_url}\">quản lý tùy chọn email của bạn</a>."
+  },
+  "digest": {
+    "title": "Tóm tắt cập nhật",
+    "greeting_named": "Xin chào {name}, bạn có {summary}",
+    "greeting": "Bạn có {summary}",
+    "updates_count": {
+      "other": "{count} cập nhật"
+    },
+    "summary": {
+      "other": "{updates} trong {count} mục công việc mà bạn theo dõi."
+    },
+    "subject": {
+      "other": "Tóm tắt: {updates} trong {count} mục công việc"
+    },
+    "comments": "bình luận: {count}",
+    "footer": "Đây là bản tóm tắt các cập nhật của mục công việc. Bạn nhận được các lượt nhắc đến ngay lập tức. <a href=\"{preferences_url}\">Thay đổi cài đặt thông báo</a>."
+  },
+  "due_reminder": {
+    "title": "Nhắc nhở mục công việc",
+    "greeting_named": "Xin chào {name}, bạn có {summary}",
+    "greeting": "Bạn có {summary}",
+    "section_overdue": "Quá hạn",
+    "section_today": "Mục công việc hết hạn hôm nay",
+    "work_items": {
+      "other": "{count} mục công việc"
+    },
+    "overdue": {
+      "other": "{count} mục quá hạn"
+    },
+    "overdue_only": {
+      "other": "{count} mục công việc quá hạn"
+    },
+    "summary_both": "{today} hết hạn hôm nay và {overdue}.",
+    "summary_today": "{today} hết hạn hôm nay ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Bạn có {today} hết hạn hôm nay và {overdue}",
+    "subject_today": "Bạn có {today} hết hạn hôm nay ({date})",
+    "subject_overdue": "Bạn có {overdue}",
+    "days_overdue": {
+      "other": "quá hạn {count} ngày"
+    },
+    "cta": "Xem các mục công việc của tôi",
+    "footer": "Đây là lời nhắc tự động được gửi mỗi sáng về các mục công việc hết hạn hôm nay và các mục đã quá hạn."
+  },
+  "project_addition": {
+    "subject": "Bạn đã được mời vào một dự án Pi-Plane",
+    "preheader": "{inviter} đã mời bạn vào dự án {project} trong không gian làm việc {workspace} trên Pi-Plane.",
+    "heading": "Bạn đã được mời vào dự án {project} trên Pi-Plane",
+    "intro": "{inviter} đã mời bạn cùng làm việc trong dự án <strong>{project}</strong> thuộc không gian làm việc <strong>{workspace}</strong> trên Pi-Plane.",
+    "button": "Đi đến dự án",
+    "fallback": "Nếu nút không hoạt động, hãy sao chép liên kết này và dán vào trình duyệt của bạn:",
+    "note": "Lưu ý: Email này được gửi đến <span>{email}</span>. Nếu bạn không mong đợi lời mời này, bạn có thể bỏ qua email này."
+  },
+  "access_request": {
+    "subject": "{requester} xin tham gia {project}",
+    "preheader": "{requester} xin tham gia dự án riêng tư {project} trong không gian làm việc {workspace} trên Pi-Plane.",
+    "heading": "Yêu cầu truy cập dự án {project}",
+    "intro": "<strong>{requester}</strong> xin tham gia dự án riêng tư <strong>{project}</strong> trong không gian làm việc <strong>{workspace}</strong> trên Pi-Plane. Bạn có thể chấp thuận hoặc từ chối yêu cầu trong phần cài đặt thành viên của dự án.",
+    "message": "Tin nhắn:",
+    "button": "Xem xét yêu cầu",
+    "fallback": "Nếu nút không hoạt động, hãy sao chép liên kết này và dán vào trình duyệt của bạn:",
+    "note": "Lưu ý: Email này được gửi đến <span>{email}</span> vì bạn là quản trị viên hoặc trưởng dự án này."
+  },
+  "access_request_decision": {
+    "subject_approved": "Yêu cầu tham gia {project} của bạn đã được chấp thuận",
+    "subject_rejected": "Yêu cầu tham gia {project} của bạn không được chấp thuận",
+    "heading_approved": "Bạn đã có quyền truy cập vào {project}",
+    "heading_rejected": "Yêu cầu tham gia {project} của bạn",
+    "intro_approved": "<strong>{decider}</strong> đã chấp thuận yêu cầu tham gia dự án riêng tư <strong>{project}</strong> trong không gian làm việc <strong>{workspace}</strong> trên Pi-Plane của bạn. Bây giờ bạn có thể mở dự án.",
+    "intro_rejected": "<strong>{decider}</strong> không chấp thuận yêu cầu tham gia dự án riêng tư <strong>{project}</strong> trong không gian làm việc <strong>{workspace}</strong> trên Pi-Plane của bạn. Nếu bạn cho rằng đây là nhầm lẫn, hãy liên hệ quản trị viên dự án.",
+    "button": "Mở dự án",
+    "note": "Lưu ý: Email này được gửi đến <span>{email}</span> vì bạn đã xin tham gia dự án này."
+  },
+  "one_time_code": {
+    "subject": "Mã đăng nhập Pi-Plane dùng một lần của bạn là {code}",
+    "preheader": "Mã đăng nhập Pi-Plane {code} của bạn có hiệu lực trong 10 phút.",
+    "heading": "Mã đăng nhập Pi-Plane của bạn",
+    "info": "Mã này có hiệu lực trong 10 phút tới. Hãy nhập mã vào trang đăng nhập để hoàn tất đăng nhập.",
+    "note": "Lưu ý: Email này được gửi đến <span>{email}</span>. Nếu bạn không mong đợi mã đăng nhập, bạn có thể bỏ qua thư này."
+  },
+  "forgot_password": {
+    "subject": "Đã có yêu cầu mật khẩu mới cho tài khoản Pi-Plane của bạn",
+    "preheader": "Đặt lại mật khẩu Pi-Plane của bạn bằng liên kết an toàn này.",
+    "heading": "Đặt lại mật khẩu Pi-Plane của bạn",
+    "intro": "Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu Pi-Plane của bạn. Để đặt lại, hãy nhấp vào nút bên dưới.",
+    "button": "Đặt lại mật khẩu",
+    "note": "Lưu ý: Email này được gửi đến <span>{email}</span>. Nếu bạn không yêu cầu đặt lại mật khẩu, bạn có thể bỏ qua email này."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} đã mời bạn tham gia {workspace} trên Pi-Plane",
+    "preheader": "{inviter} đã mời bạn tham gia {workspace} trên Pi-Plane.",
+    "heading": "Tham gia {workspace} trên Pi-Plane",
+    "intro": "{inviter} đã mời bạn cộng tác trong không gian làm việc <strong>{workspace}</strong> trên Pi-Plane.",
+    "button": "Chấp nhận lời mời",
+    "note": "Lưu ý: Lời mời này dành cho <span>{email}</span>. Nếu bạn không mong đợi lời mời này, bạn có thể bỏ qua email này."
+  },
+  "account_activated": {
+    "subject": "{name} đã được kích hoạt trên Pi-Plane",
+    "heading": "Bạn đã trở lại Pi-Plane.",
+    "body": "Tài khoản của bạn đã được kích hoạt lại và bạn có thể truy cập lại các mục công việc cùng dữ liệu khác nếu dự án vẫn đang hoạt động. Bạn cũng có thể tạo không gian làm việc mới và bắt đầu thêm dự án.",
+    "button": "Đến Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "{name} đã bị vô hiệu hóa trên Pi-Plane",
+    "heading": "Bạn đã rời khỏi Pi-Plane.",
+    "body": "Bạn đã vô hiệu hóa tài khoản thành công. Các mục công việc, chu kỳ và dữ liệu dự án khác vẫn truy cập được nếu dự án còn hoạt động và có thành viên khác.",
+    "button": "Kích hoạt lại tài khoản"
+  },
+  "email_updated": {
+    "subject": "Đã cập nhật địa chỉ email Pi-Plane",
+    "body": "Bạn đã cập nhật thành công địa chỉ email Pi-Plane thành {email}.",
+    "login": "Giờ bạn có thể đăng nhập bằng địa chỉ email này."
+  },
+  "email_update_code": {
+    "subject": "Xác minh địa chỉ email mới của bạn"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook đã bị vô hiệu hóa",
+    "message": "Webhook {url} đã bị vô hiệu hóa do các yêu cầu thất bại.",
+    "button": "Xem webhook"
+  },
+  "analytics_export": {
+    "subject": "Bản xuất của bạn đã sẵn sàng",
+    "preheader": "Bản xuất dữ liệu Pi-Plane Analytics bạn yêu cầu được đính kèm dưới dạng tệp CSV.",
+    "heading": "Bản xuất Pi-Plane Analytics của bạn đã sẵn sàng",
+    "intro": "Bản xuất dữ liệu từ Pi-Plane Analytics mà bạn yêu cầu đã sẵn sàng. Chúng tôi đã đính kèm dưới dạng tệp CSV để thuận tiện cho bạn.",
+    "hint": "Bạn có thể mở tệp CSV trong bất kỳ bảng tính hoặc công cụ BI nào để phân tích dữ liệu, tạo báo cáo hoặc chia sẻ nhận định với nhóm của bạn."
+  },
+  "shared": {
+    "recipient_note": "Email này được gửi đến {email}. Vui lòng xóa nếu bạn không phải người nhận dự kiến.",
+    "fallback": "Nếu nút không hoạt động, hãy sao chép liên kết này và dán vào trình duyệt của bạn:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} đã viết cho quản trị viên của {workspace}",
+    "preheader": "{sender} đã gửi tin nhắn cho quản trị viên của {workspace} trên Pi-Plane.",
+    "heading": "Một tin nhắn cho quản trị viên của {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) đã viết cho quản trị viên của không gian làm việc <strong>{workspace}</strong> trên Pi-Plane.",
+    "message": "Tin nhắn:",
+    "reply": "Hãy trả lời email này để trả lời trực tiếp {sender}.",
+    "note": "Lưu ý: Email này được gửi đến <span>{email}</span> vì bạn là quản trị viên của không gian làm việc này."
+  }
+}

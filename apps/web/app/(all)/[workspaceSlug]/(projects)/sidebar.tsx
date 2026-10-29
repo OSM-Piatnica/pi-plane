@@ -19,8 +19,7 @@ import { SidebarMenuItems } from "@/components/workspace/sidebar/sidebar-menu-it
 // hooks
 import { useFavorite } from "@/hooks/store/use-favorite";
 import { useUserPermissions } from "@/hooks/store/user";
-// plane web components
-import { SidebarTeamsList } from "@/plane-web/components/workspace/sidebar/teams-sidebar-list";
+import { SidebarTeamsList } from "@/components/workspace/sidebar/teams-sidebar-list";
 
 export const AppSidebar = observer(function AppSidebar() {
   // plane hooks

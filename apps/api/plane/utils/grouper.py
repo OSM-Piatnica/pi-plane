@@ -10,6 +10,7 @@ from django.db.models import Q, UUIDField, Value, QuerySet, OuterRef, Subquery
 from django.db.models.functions import Coalesce
 
 # Module imports
+from plane.utils.user_groups import group_assignee_ids_annotation
 from plane.db.models import (
     Cycle,
     Issue,
@@ -35,6 +36,8 @@ def issue_queryset_grouper(
         "label_ids": "labels__id",
         "assignee_ids": "assignees__id",
         "module_ids": "issue_module__module_id",
+        # Never a grouping: listed so that the annotation below is always added
+        "group_assignee_ids": "issue_group_assignee__group_id",
     }
 
     GROUP_FILTER_MAPPER: Dict[str, Q] = {
@@ -77,6 +80,7 @@ def issue_queryset_grouper(
 
     annotations_map: Dict[str, Tuple[str, Q]] = {
         "assignee_ids": Coalesce(issue_assignee_subquery, Value([], output_field=ArrayField(UUIDField()))),
+        "group_assignee_ids": group_assignee_ids_annotation(),
         "label_ids": Coalesce(issue_label_subquery, Value([], output_field=ArrayField(UUIDField()))),
         "module_ids": Coalesce(issue_module_subquery, Value([], output_field=ArrayField(UUIDField()))),
     }
@@ -102,7 +106,7 @@ def issue_on_results(
         "issue_module__module_id": "module_ids",
     }
 
-    original_list: List[str] = ["assignee_ids", "label_ids", "module_ids"]
+    original_list: List[str] = ["assignee_ids", "group_assignee_ids", "label_ids", "module_ids"]
 
     required_fields: List[str] = [
         "id",
@@ -153,17 +157,24 @@ def issue_group_values(
     project_id: Optional[str] = None,
     filters: Dict[str, Any] = {},
     queryset: Optional[QuerySet] = None,
+    user: Optional[Any] = None,
 ) -> List[Union[str, Any]]:
+    if not project_id and user is None:
+        raise ValueError("issue_group_values needs a project_id or a user")
+
+    # Project-scoped keys come from the given project, workspace-wide ones from the user's projects
+    project_ids = (
+        [project_id]
+        if project_id
+        else ProjectMember.objects.filter(workspace__slug=slug, member=user, is_active=True).values("project_id")
+    )
+
     if field == "state_id":
-        queryset = State.objects.filter(is_triage=False, workspace__slug=slug).values_list("id", flat=True)
-        if project_id:
-            return list(queryset.filter(project_id=project_id))
-        return list(queryset)
+        queryset = State.objects.filter(is_triage=False, workspace__slug=slug, project_id__in=project_ids)
+        return list(queryset.values_list("id", flat=True))
 
     if field == "labels__id":
-        queryset = Label.objects.filter(workspace__slug=slug).values_list("id", flat=True)
-        if project_id:
-            return list(queryset.filter(project_id=project_id)) + ["None"]
+        queryset = Label.objects.filter(workspace__slug=slug, project_id__in=project_ids).values_list("id", flat=True)
         return list(queryset) + ["None"]
 
     if field == "assignees__id":
@@ -178,20 +189,15 @@ def issue_group_values(
         )
 
     if field == "issue_module__module_id":
-        queryset = Module.objects.filter(workspace__slug=slug).values_list("id", flat=True)
-        if project_id:
-            return list(queryset.filter(project_id=project_id)) + ["None"]
+        queryset = Module.objects.filter(workspace__slug=slug, project_id__in=project_ids).values_list("id", flat=True)
         return list(queryset) + ["None"]
 
     if field == "cycle_id":
-        queryset = Cycle.objects.filter(workspace__slug=slug).values_list("id", flat=True)
-        if project_id:
-            return list(queryset.filter(project_id=project_id)) + ["None"]
+        queryset = Cycle.objects.filter(workspace__slug=slug, project_id__in=project_ids).values_list("id", flat=True)
         return list(queryset) + ["None"]
 
     if field == "project_id":
-        queryset = Project.objects.filter(workspace__slug=slug).values_list("id", flat=True)
-        return list(queryset)
+        return list(Project.objects.filter(workspace__slug=slug, id__in=project_ids).values_list("id", flat=True))
 
     if field == "priority":
         return ["low", "medium", "high", "urgent", "none"]

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -33,30 +34,59 @@ workspace_management_config_variables = [
         "category": "WORKSPACE_MANAGEMENT",
         "is_encrypted": False,
     },
-]
-
-google_config_variables = [
     {
-        "key": "GOOGLE_CLIENT_ID",
-        "value": os.environ.get("GOOGLE_CLIENT_ID"),
-        "category": "GOOGLE",
+        # Largest upload in bytes, set in the admin app. Empty means the FILE_SIZE_LIMIT environment default.
+        "key": "FILE_SIZE_LIMIT",
+        "value": "",
+        "category": "WORKSPACE_MANAGEMENT",
         "is_encrypted": False,
     },
     {
-        "key": "GOOGLE_CLIENT_SECRET",
-        "value": os.environ.get("GOOGLE_CLIENT_SECRET"),
-        "category": "GOOGLE",
-        "is_encrypted": True,
+        # Largest spreadsheet for a work item import, in bytes, set in the admin app. Empty means the default.
+        "key": "IMPORT_FILE_SIZE_LIMIT",
+        "value": "",
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
     },
     {
-        "key": "ENABLE_GOOGLE_SYNC",
-        "value": os.environ.get("ENABLE_GOOGLE_SYNC", "0"),
-        "category": "GOOGLE",
+        # Most work items in one import, set in the admin app. Empty means the default.
+        "key": "IMPORT_MAX_WORK_ITEMS",
+        "value": "",
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
+    {
+        # Most messages one person may send to the admins of a workspace within an hour, set in the admin app. Empty
+        # means the default of the deployment (ADMIN_MESSAGE_LIMIT_PER_HOUR, else 5).
+        "key": "ADMIN_MESSAGE_LIMIT",
+        "value": "",
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
+    {
+        # Whether projects can be shared on the web through Space; "0" turns it off. Only matters while Space is part
+        # of the deployment (ENABLE_SPACE).
+        "key": "IS_SPACE_ENABLED",
+        "value": os.environ.get("IS_SPACE_ENABLED", "1"),
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
+    {
+        # Workspace UUID that gets compact `/i/PROJ-123` work item links; empty turns them off.
+        "key": "INSTANCE_DEFAULT_WORKSPACE_ID",
+        "value": os.environ.get("INSTANCE_DEFAULT_WORKSPACE_ID", ""),
+        "category": "WORKSPACE_MANAGEMENT",
         "is_encrypted": False,
     },
 ]
 
 github_config_variables = [
+    {
+        "key": "IS_GITHUB_ENABLED",
+        "value": os.environ.get("IS_GITHUB_ENABLED", "0"),
+        "category": "GITHUB",
+        "is_encrypted": False,
+    },
     {
         "key": "GITHUB_CLIENT_ID",
         "value": os.environ.get("GITHUB_CLIENT_ID"),
@@ -85,6 +115,12 @@ github_config_variables = [
 
 
 gitlab_config_variables = [
+    {
+        "key": "IS_GITLAB_ENABLED",
+        "value": os.environ.get("IS_GITLAB_ENABLED", "0"),
+        "category": "GITLAB",
+        "is_encrypted": False,
+    },
     {
         "key": "GITLAB_HOST",
         "value": os.environ.get("GITLAB_HOST"),
@@ -235,7 +271,6 @@ unsplash_config_variables = [
 core_config_variables = [
     *authentication_config_variables,
     *workspace_management_config_variables,
-    *google_config_variables,
     *github_config_variables,
     *gitlab_config_variables,
     *gitea_config_variables,

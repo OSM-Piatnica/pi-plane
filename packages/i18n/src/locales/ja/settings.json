@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "認証コード",
+            "label": "ワンタイムコード",
             "placeholder": "123456",
             "helper_text": "認証コードを新しいメールに送信しました。",
             "errors": {
-              "required": "認証コードは必須です",
+              "required": "ワンタイムコードは必須です",
               "invalid": "認証コードが無効です。もう一度お試しください。"
             }
           }
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "完了率",
+    "first_day_project_default": "プロジェクトの既定値",
     "first_day_updated": "週の開始日を更新しました",
     "try_again_later": "後でもう一度お試しください。",
     "update_failed": "更新に失敗しました",

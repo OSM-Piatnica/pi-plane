@@ -1,0 +1,174 @@
+{
+  "format": {
+    "date": "%Y. %m. %d."
+  },
+  "priority": {
+    "urgent": "긴급",
+    "high": "높음",
+    "medium": "보통",
+    "low": "낮음",
+    "none": "없음"
+  },
+  "issue_updates": {
+    "title": "{identifier} 업데이트",
+    "summary": "<strong>{actor}</strong>님이 작업 항목을 업데이트했습니다.",
+    "summary_others": "<strong>{actor}</strong>님 외 여러 명이 작업 항목을 업데이트했습니다.",
+    "title_changed": "작업 항목 제목이 {title}(으)로 변경되었습니다",
+    "updates": "업데이트",
+    "due_date": "마감일:",
+    "duplicate": "중복:",
+    "assignee": "담당자:",
+    "labels": "레이블:",
+    "state": "상태:",
+    "links": "링크:",
+    "priority": "우선순위:",
+    "blocking": "차단:",
+    "comments": "댓글",
+    "more": "외 {count}개",
+    "links_removed": {
+      "other": "링크 {count}개가 제거되었습니다"
+    },
+    "view": "작업 항목 보기",
+    "footer": "이 이메일은 <a href=\"mailto:{email}\">{email}</a>(으)로 전송되었습니다. 이러한 이메일을 받고 싶지 않으시면 <a href=\"{issue_url}\">이 작업 항목 구독을 취소</a>하거나 <a href=\"{preferences_url}\">이메일 환경설정을 관리</a>하세요."
+  },
+  "digest": {
+    "title": "업데이트 요약",
+    "greeting_named": "{name}님, {summary}",
+    "greeting": "{summary}",
+    "updates_count": {
+      "other": "업데이트 {count}건"
+    },
+    "summary": {
+      "other": "팔로우 중인 작업 항목 {count}개에 {updates}이 있습니다."
+    },
+    "subject": {
+      "other": "요약: 작업 항목 {count}개에 {updates}"
+    },
+    "comments": "댓글: {count}개",
+    "footer": "작업 항목 업데이트 요약입니다. 멘션은 즉시 전달됩니다. <a href=\"{preferences_url}\">알림 설정 변경</a>."
+  },
+  "due_reminder": {
+    "title": "작업 항목 알림",
+    "greeting_named": "{name}님, {summary}",
+    "greeting": "{summary}",
+    "section_overdue": "기한 초과",
+    "section_today": "오늘 마감인 작업 항목",
+    "work_items": {
+      "other": "작업 항목 {count}개"
+    },
+    "overdue": {
+      "other": "기한이 지난 항목 {count}개"
+    },
+    "overdue_only": {
+      "other": "기한이 지난 작업 항목 {count}개"
+    },
+    "summary_both": "오늘 마감인 {today}과 {overdue}가 있습니다.",
+    "summary_today": "오늘 마감인 {today}이 있습니다({date}).",
+    "summary_overdue": "{overdue}가 있습니다.",
+    "subject_both": "오늘 마감인 {today}과 {overdue}가 있습니다",
+    "subject_today": "오늘 마감인 {today}이 있습니다({date})",
+    "subject_overdue": "{overdue}가 있습니다",
+    "days_overdue": {
+      "other": "{count}일 지남"
+    },
+    "cta": "내 작업 항목 보기",
+    "footer": "오늘 마감인 작업 항목과 기한이 지난 작업 항목에 대해 매일 아침 전송되는 자동 알림입니다."
+  },
+  "project_addition": {
+    "subject": "Pi-Plane 프로젝트에 초대되었습니다",
+    "preheader": "{inviter}님이 Pi-Plane의 워크스페이스 {workspace}에 있는 프로젝트 {project}에 초대했습니다.",
+    "heading": "Pi-Plane의 프로젝트 {project}에 초대되었습니다",
+    "intro": "{inviter}님이 Pi-Plane의 워크스페이스 <strong>{workspace}</strong>에 있는 프로젝트 <strong>{project}</strong>에서 함께 작업하도록 초대했습니다.",
+    "button": "프로젝트로 이동",
+    "fallback": "버튼이 작동하지 않으면 이 링크를 복사하여 브라우저에 붙여넣으세요.",
+    "note": "참고: 이 이메일은 <span>{email}</span>(으)로 전송되었습니다. 이 초대를 예상하지 못했다면 이 이메일을 무시하셔도 됩니다."
+  },
+  "access_request": {
+    "subject": "{requester}님이 {project} 참여를 요청했습니다",
+    "preheader": "{requester}님이 Pi-Plane의 워크스페이스 {workspace}에 있는 비공개 프로젝트 {project}에 참여하기를 요청했습니다.",
+    "heading": "프로젝트 {project} 액세스 요청",
+    "intro": "<strong>{requester}</strong>님이 Pi-Plane의 워크스페이스 <strong>{workspace}</strong>에 있는 비공개 프로젝트 <strong>{project}</strong>에 참여하기를 요청했습니다. 프로젝트의 멤버 설정에서 요청을 승인하거나 거부할 수 있습니다.",
+    "message": "메시지:",
+    "button": "요청 검토",
+    "fallback": "버튼이 작동하지 않으면 이 링크를 복사하여 브라우저에 붙여넣으세요.",
+    "note": "참고: 이 이메일은 귀하가 이 프로젝트의 관리자 또는 리더이므로 <span>{email}</span>(으)로 전송되었습니다."
+  },
+  "access_request_decision": {
+    "subject_approved": "{project} 참여 요청이 승인되었습니다",
+    "subject_rejected": "{project} 참여 요청이 승인되지 않았습니다",
+    "heading_approved": "이제 {project}에 액세스할 수 있습니다",
+    "heading_rejected": "{project} 참여 요청",
+    "intro_approved": "<strong>{decider}</strong>님이 Pi-Plane의 워크스페이스 <strong>{workspace}</strong>에 있는 비공개 프로젝트 <strong>{project}</strong> 참여 요청을 승인했습니다. 이제 프로젝트를 열 수 있습니다.",
+    "intro_rejected": "<strong>{decider}</strong>님이 Pi-Plane의 워크스페이스 <strong>{workspace}</strong>에 있는 비공개 프로젝트 <strong>{project}</strong> 참여 요청을 승인하지 않았습니다. 오류라고 생각되면 프로젝트 관리자에게 문의하세요.",
+    "button": "프로젝트 열기",
+    "note": "참고: 이 프로젝트에 참여를 요청하셨기 때문에 이 이메일이 <span>{email}</span>(으)로 전송되었습니다."
+  },
+  "one_time_code": {
+    "subject": "Pi-Plane 일회용 로그인 코드는 {code}입니다",
+    "preheader": "Pi-Plane 로그인 코드 {code}은(는) 10분 동안 유효합니다.",
+    "heading": "Pi-Plane 로그인 코드",
+    "info": "이 코드는 앞으로 10분 동안 유효합니다. 로그인 페이지에 입력하여 로그인을 완료하세요.",
+    "note": "참고: 이 이메일은 <span>{email}</span>(으)로 전송되었습니다. 로그인 코드를 요청하지 않았다면 이 메시지를 무시하셔도 됩니다."
+  },
+  "forgot_password": {
+    "subject": "Pi-Plane 계정의 새 비밀번호가 요청되었습니다",
+    "preheader": "이 보안 링크로 Pi-Plane 비밀번호를 재설정하세요.",
+    "heading": "Pi-Plane 비밀번호 재설정",
+    "intro": "Pi-Plane 비밀번호 재설정 요청을 받았습니다. 비밀번호를 재설정하려면 아래 버튼을 클릭하세요.",
+    "button": "비밀번호 재설정",
+    "note": "참고: 이 이메일은 <span>{email}</span>(으)로 발송되었습니다. 비밀번호 재설정을 요청하지 않으셨다면 이 이메일을 무시하셔도 됩니다."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter}님이 Pi-Plane의 {workspace}에 초대했습니다",
+    "preheader": "{inviter}님이 Pi-Plane의 {workspace}에 초대했습니다.",
+    "heading": "Pi-Plane의 {workspace}에 참여하기",
+    "intro": "{inviter}님이 Pi-Plane의 워크스페이스 <strong>{workspace}</strong>에서 함께 작업하도록 초대했습니다.",
+    "button": "초대 수락",
+    "note": "참고: 이 초대는 <span>{email}</span>님께 보낸 것입니다. 초대를 예상하지 못하셨다면 이 이메일을 무시하셔도 됩니다."
+  },
+  "account_activated": {
+    "subject": "{name}님이 Pi-Plane에서 활성화되었습니다",
+    "heading": "Pi-Plane에 다시 오신 것을 환영합니다.",
+    "body": "계정이 다시 활성화되었으며, 프로젝트가 아직 활성 상태라면 작업 항목과 기타 데이터에 다시 접근할 수 있습니다. 새 워크스페이스를 만들어 프로젝트를 추가할 수도 있습니다.",
+    "button": "Pi-Plane으로 이동"
+  },
+  "account_deactivated": {
+    "subject": "{name}님이 Pi-Plane에서 비활성화되었습니다",
+    "heading": "이제 Pi-Plane에서 나가셨습니다.",
+    "body": "계정을 비활성화했습니다. 프로젝트가 활성 상태이고 다른 멤버가 있다면 작업 항목, 사이클 및 기타 프로젝트 데이터에는 계속 접근할 수 있습니다.",
+    "button": "계정 다시 활성화"
+  },
+  "email_updated": {
+    "subject": "Pi-Plane 이메일 주소가 업데이트되었습니다",
+    "body": "Pi-Plane 이메일 주소를 {email}(으)로 업데이트했습니다.",
+    "login": "이제 이 이메일 주소로 로그인할 수 있습니다."
+  },
+  "email_update_code": {
+    "subject": "새 이메일 주소를 확인해 주세요"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook이 비활성화되었습니다",
+    "message": "Webhook {url}이(가) 요청 실패로 인해 비활성화되었습니다.",
+    "button": "Webhook 보기"
+  },
+  "analytics_export": {
+    "subject": "내보내기가 준비되었습니다",
+    "preheader": "요청하신 Pi-Plane Analytics 데이터 내보내기를 CSV 파일로 첨부했습니다.",
+    "heading": "Pi-Plane Analytics 내보내기가 준비되었습니다",
+    "intro": "요청하신 Pi-Plane Analytics 데이터 내보내기가 준비되었습니다. 편의를 위해 CSV 파일로 첨부했습니다.",
+    "hint": "CSV는 모든 스프레드시트나 BI 도구에서 열어 데이터를 분석하고, 보고서를 만들고, 팀과 인사이트를 공유할 수 있습니다."
+  },
+  "shared": {
+    "recipient_note": "이 이메일은 {email}(으)로 발송되었습니다. 수신 대상이 아니시라면 삭제해 주세요.",
+    "fallback": "버튼이 작동하지 않으면 이 링크를 복사하여 브라우저에 붙여넣으세요."
+  },
+  "workspace_admin_message": {
+    "subject": "{sender}님이 {workspace} 관리자에게 메시지를 보냈습니다",
+    "preheader": "{sender}님이 Pi-Plane의 {workspace} 관리자에게 메시지를 보냈습니다.",
+    "heading": "{workspace} 관리자에게 온 메시지",
+    "intro": "<strong>{sender}</strong>({sender_email})님이 Pi-Plane의 워크스페이스 <strong>{workspace}</strong> 관리자에게 메시지를 보냈습니다.",
+    "message": "메시지:",
+    "reply": "이 이메일에 회신하면 {sender}님에게 바로 답장할 수 있습니다.",
+    "note": "참고: 이 이메일은 귀하가 이 워크스페이스의 관리자이기 때문에 <span>{email}</span>(으)로 발송되었습니다."
+  }
+}

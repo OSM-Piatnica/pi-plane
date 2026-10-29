@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Configurações do projeto",
     "general": {
       "enter_project_id": "Inserir ID do projeto",
       "please_select_a_timezone": "Por favor, selecione um fuso horário",
@@ -182,18 +183,18 @@
       "description": "Configure ações automatizadas para otimizar seu fluxo de trabalho de gerenciamento de projetos e reduzir tarefas manuais.",
       "auto-archive": {
         "title": "Arquivar automaticamente itens de trabalho fechados",
-        "description": "O Plane arquivará automaticamente os itens de trabalho que foram concluídos ou cancelados.",
+        "description": "O Pi-Plane arquivará automaticamente os itens de trabalho que foram concluídos ou cancelados.",
         "duration": "Arquivar automaticamente itens de trabalho que estão fechados por"
       },
       "auto-close": {
         "title": "Fechar automaticamente itens de trabalho",
-        "description": "O Plane fechará automaticamente os itens de trabalho que não foram concluídos ou cancelados.",
+        "description": "O Pi-Plane fechará automaticamente os itens de trabalho que não foram concluídos ou cancelados.",
         "duration": "Fechar automaticamente itens de trabalho que estão inativos por",
         "auto_close_status": "Status de fechamento automático"
       },
       "auto-remind": {
         "title": "Avisos automáticos",
-        "description": "O Plane enviará avisos automáticos via e-mail e notificações no aplicativo para manter sua equipe no caminho dos prazos.",
+        "description": "O Pi-Plane enviará avisos automáticos via e-mail e notificações no aplicativo para manter sua equipe no caminho dos prazos.",
         "duration": "Enviar aviso antes"
       }
     },
@@ -324,39 +325,24 @@
     },
     "features": {
       "cycles": {
-        "title": "Ciclos",
-        "short_title": "Ciclos",
-        "description": "Agende o trabalho em períodos flexíveis que se adaptam ao ritmo e ao tempo únicos deste projeto.",
         "toggle_title": "Ativar ciclos",
         "toggle_description": "Planeje o trabalho em períodos de tempo focados."
       },
       "modules": {
-        "title": "Módulos",
-        "short_title": "Módulos",
-        "description": "Organize o trabalho em subprojetos com líderes e responsáveis dedicados.",
         "toggle_title": "Ativar módulos",
         "toggle_description": "Os membros do projeto poderão criar e editar módulos."
       },
       "views": {
-        "title": "Visualizações",
-        "short_title": "Visualizações",
-        "description": "Salve ordenações, filtros e opções de exibição personalizadas ou compartilhe-as com sua equipe.",
         "toggle_title": "Ativar visualizações",
         "toggle_description": "Os membros do projeto poderão criar e editar visualizações."
       },
       "pages": {
-        "title": "Páginas",
-        "short_title": "Páginas",
-        "description": "Crie e edite conteúdo livre: notas, documentos, qualquer coisa.",
         "toggle_title": "Ativar páginas",
         "toggle_description": "Os membros do projeto poderão criar e editar páginas."
       },
       "intake": {
         "intake_responsibility": "Responsabilidade de recebimento",
         "intake_sources": "Fontes de recebimento",
-        "title": "Recepção",
-        "short_title": "Recepção",
-        "description": "Permita que não membros compartilhem bugs, feedback e sugestões; sem interromper seu fluxo de trabalho.",
         "toggle_title": "Ativar recepção",
         "toggle_description": "Permitir que membros do projeto criem solicitações de recepção no aplicativo.",
         "toggle_tooltip_on": "Peça ao administrador do projeto para ativar.",
@@ -371,7 +357,7 @@
         },
         "email": {
           "title": "E-mail",
-          "description": "Colete novos itens de trabalho de qualquer pessoa que envie um e-mail para um endereço Plane.",
+          "description": "Colete novos itens de trabalho de qualquer pessoa que envie um e-mail para um endereço Pi-Plane.",
           "fieldName": "ID do e-mail"
         },
         "form": {
@@ -411,9 +397,6 @@
         }
       },
       "time_tracking": {
-        "title": "Rastreamento de tempo",
-        "short_title": "Rastreamento de tempo",
-        "description": "Registre o tempo gasto em itens de trabalho e projetos.",
         "toggle_title": "Ativar rastreamento de tempo",
         "toggle_description": "Os membros do projeto poderão registrar o tempo trabalhado."
       },

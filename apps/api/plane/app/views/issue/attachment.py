@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -19,14 +20,16 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 # Module imports
 from .. import BaseAPIView
+from plane.utils.work_item_edit_rule import restrict_work_item_changes
 from plane.app.serializers import IssueAttachmentSerializer
-from plane.db.models import FileAsset, Workspace
+from plane.db.models import FileAsset, Issue, Workspace
 from plane.bgtasks.issue_activities_task import issue_activity
-from plane.app.permissions import allow_permission, ROLE
-from plane.settings.storage import S3Storage
+from plane.app.permissions import allow_permission, issue_hidden_from_guest, ROLE
+from plane.settings.storage import get_storage
 from plane.utils.path_validator import sanitize_filename
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
 from plane.utils.host import base_host
+from plane.utils.file_size_limit import get_file_size_limit
 
 
 class IssueAttachmentEndpoint(BaseAPIView):
@@ -35,9 +38,19 @@ class IssueAttachmentEndpoint(BaseAPIView):
     parser_classes = (MultiPartParser, FormParser)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
+    @restrict_work_item_changes(param="issue_id")
     def post(self, request, slug, project_id, issue_id):
+        # A restricted guest may only add attachments to issues they created,
+        # mirroring the issue-detail visibility rule.
+        if issue_hidden_from_guest(request, slug, project_id, issue_id):
+            return Response(
+                {"error": "You are not allowed to view this issue"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         serializer = IssueAttachmentSerializer(data=request.data)
         workspace = Workspace.objects.get(slug=slug)
+        # The URL issue must belong to the URL workspace + project (404 otherwise).
+        Issue.objects.get(pk=issue_id, workspace=workspace, project_id=project_id)
         if serializer.is_valid():
             serializer.save(
                 project_id=project_id,
@@ -60,6 +73,7 @@ class IssueAttachmentEndpoint(BaseAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @allow_permission([ROLE.ADMIN], creator=True, model=FileAsset)
+    @restrict_work_item_changes(param="issue_id")
     def delete(self, request, slug, project_id, issue_id, pk):
         issue_attachment = FileAsset.objects.filter(
             pk=pk, workspace__slug=slug, project_id=project_id, issue_id=issue_id
@@ -87,7 +101,19 @@ class IssueAttachmentEndpoint(BaseAPIView):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def get(self, request, slug, project_id, issue_id):
-        issue_attachments = FileAsset.objects.filter(issue_id=issue_id, workspace__slug=slug, project_id=project_id)
+        # A restricted guest may only see attachments of issues they created,
+        # mirroring the issue-detail visibility rule.
+        if issue_hidden_from_guest(request, slug, project_id, issue_id):
+            return Response(
+                {"error": "You are not allowed to view this issue"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+        issue_attachments = FileAsset.objects.filter(
+            issue_id=issue_id,
+            entity_type=FileAsset.EntityTypeContext.ISSUE_ATTACHMENT,
+            workspace__slug=slug,
+            project_id=project_id,
+        )
         serializer = IssueAttachmentSerializer(issue_attachments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -97,10 +123,18 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
     model = FileAsset
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
+    @restrict_work_item_changes(param="issue_id")
     def post(self, request, slug, project_id, issue_id):
+        # A restricted guest may only add attachments to issues they created,
+        # mirroring the issue-detail visibility rule.
+        if issue_hidden_from_guest(request, slug, project_id, issue_id):
+            return Response(
+                {"error": "You are not allowed to view this issue"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         name = sanitize_filename(request.data.get("name")) or "unnamed"
         type = request.data.get("type", False)
-        size = int(request.data.get("size", settings.FILE_SIZE_LIMIT))
+        size = int(request.data.get("size", get_file_size_limit()))
 
         if not type or type not in settings.ATTACHMENT_MIME_TYPES:
             return Response(
@@ -111,11 +145,14 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
         # Get the workspace
         workspace = Workspace.objects.get(slug=slug)
 
+        # The URL issue must belong to the URL workspace + project (404 otherwise).
+        Issue.objects.get(pk=issue_id, workspace=workspace, project_id=project_id)
+
         # asset key
         asset_key = f"{workspace.id}/{uuid.uuid4().hex}-{name}"
 
         # Get the size limit
-        size_limit = min(size, settings.FILE_SIZE_LIMIT)
+        size_limit = min(size, get_file_size_limit())
 
         # Create a File Asset
         asset = FileAsset.objects.create(
@@ -130,7 +167,7 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
         )
 
         # Get the presigned URL
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
 
         # Generate a presigned URL to share an S3 object
         presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size_limit)
@@ -147,8 +184,9 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
         )
 
     @allow_permission([ROLE.ADMIN], creator=True, model=FileAsset)
+    @restrict_work_item_changes(param="issue_id")
     def delete(self, request, slug, project_id, issue_id, pk):
-        issue_attachment = FileAsset.objects.get(pk=pk, workspace__slug=slug, project_id=project_id)
+        issue_attachment = FileAsset.objects.get(pk=pk, workspace__slug=slug, project_id=project_id, issue_id=issue_id)
         issue_attachment.is_deleted = True
         issue_attachment.deleted_at = timezone.now()
         issue_attachment.save()
@@ -169,9 +207,16 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def get(self, request, slug, project_id, issue_id, pk=None):
+        # A restricted guest may only see attachments of issues they created,
+        # mirroring the issue-detail visibility rule.
+        if issue_hidden_from_guest(request, slug, project_id, issue_id):
+            return Response(
+                {"error": "You are not allowed to view this issue"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         if pk:
             # Get the asset
-            asset = FileAsset.objects.get(id=pk, workspace__slug=slug, project_id=project_id)
+            asset = FileAsset.objects.get(id=pk, workspace__slug=slug, project_id=project_id, issue_id=issue_id)
 
             # Check if the asset is uploaded
             if not asset.is_uploaded:
@@ -180,7 +225,7 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            storage = S3Storage(request=request)
+            storage = get_storage(request=request)
             presigned_url = storage.generate_presigned_url(
                 object_name=asset.asset.name,
                 disposition="attachment",
@@ -201,8 +246,16 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
+    @restrict_work_item_changes(param="issue_id")
     def patch(self, request, slug, project_id, issue_id, pk):
-        issue_attachment = FileAsset.objects.get(pk=pk, workspace__slug=slug, project_id=project_id)
+        # A restricted guest may only touch attachments of issues they created,
+        # mirroring the issue-detail visibility rule.
+        if issue_hidden_from_guest(request, slug, project_id, issue_id):
+            return Response(
+                {"error": "You are not allowed to view this issue"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+        issue_attachment = FileAsset.objects.get(pk=pk, workspace__slug=slug, project_id=project_id, issue_id=issue_id)
         serializer = IssueAttachmentSerializer(issue_attachment)
 
         # Send this activity only if the attachment is not uploaded before
@@ -219,9 +272,9 @@ class IssueAttachmentV2Endpoint(BaseAPIView):
                 origin=base_host(request=request, is_app=True),
             )
 
-            # Update the attachment
+            # Update the attachment — do NOT overwrite created_by; it is set at
+            # creation time and must not be reassigned.
             issue_attachment.is_uploaded = True
-            issue_attachment.created_by = request.user
 
         # Get the storage metadata
         if not issue_attachment.storage_metadata:

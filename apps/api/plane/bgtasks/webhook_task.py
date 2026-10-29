@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import hashlib
@@ -51,8 +52,9 @@ from plane.db.models import (
 )
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.email import generate_plain_text_from_html
+from plane.utils.email_i18n import translate, user_language
 from plane.utils.exception_logger import log_exception
-from plane.utils.ip_address import validate_url
+from plane.utils.url_security import pinned_fetch
 
 
 SERIALIZER_MAPPER = {
@@ -194,13 +196,15 @@ def send_webhook_deactivation_email(webhook_id: str, receiver_id: str, current_s
         webhook = Webhook.objects.get(pk=webhook_id)
 
         # Get the webhook payload
-        subject = "Webhook Deactivated"
-        message = f"Webhook {webhook.url} has been deactivated due to failed requests."
+        language = user_language(receiver)
+        subject = translate(language, "webhook_deactivated.subject")
+        message = translate(language, "webhook_deactivated.message", url=webhook.url)
 
         # Send the mail
         context = {
             "email": receiver.email,
             "message": message,
+            "email_language": language,
             "webhook_url": f"{current_site}/{str(webhook.workspace.slug)}/settings/webhooks/{str(webhook.id)}",
         }
         html_content = render_to_string("emails/notifications/webhook-deactivate.html", context)
@@ -288,6 +292,7 @@ def webhook_send_task(
             "action": action,
             "webhook_id": str(webhook.id),
             "workspace_id": str(webhook.workspace_id),
+            "workspace_slug": slug,
             "data": event_data,
             "activity": activity,
         }
@@ -307,11 +312,21 @@ def webhook_send_task(
         return
 
     try:
-        # Re-validate the webhook URL at send time to prevent DNS-rebinding attacks
-        validate_url(webhook.url, allowed_ips=settings.WEBHOOK_ALLOWED_IPS)
-
-        # Send the webhook event
-        response = requests.post(webhook.url, headers=headers, json=payload, timeout=30)
+        # Resolve + validate the webhook URL and pin the connection to the
+        # validated IP. Pinning closes the DNS-rebinding TOCTOU (validating the
+        # name then letting requests re-resolve it lets an attacker swap in an
+        # internal IP between the two lookups). Redirects are never followed, so
+        # a 3xx Location cannot bounce the request to an internal address
+        # (GHSA-mq87-52pf-hm3h / cluster C).
+        response = pinned_fetch(
+            "POST",
+            webhook.url,
+            allowed_ips=settings.WEBHOOK_ALLOWED_IPS,
+            allowed_hosts=settings.WEBHOOK_ALLOWED_HOSTS,
+            headers=headers,
+            json=payload,
+            timeout=30,
+        )
 
         # Log the webhook request
         save_webhook_log(
@@ -353,6 +368,25 @@ def webhook_send_task(
                 )
             return
         raise requests.RequestException()
+
+    except ValueError as e:
+        # SSRF validation failure (blocked/internal target or unresolvable host).
+        # Not retryable — record it so the failure is visible to the admin, but
+        # do not raise (no Celery retry) and do not auto-deactivate (the cause
+        # may be transient DNS).
+        save_webhook_log(
+            webhook=webhook,
+            request_method=action,
+            request_headers=headers,
+            request_body=payload,
+            response_status=400,
+            response_headers="",
+            response_body=f"Webhook URL rejected: {e}",
+            retry_count=self.request.retries,
+            event_type=event,
+        )
+        logger.warning(f"Webhook {webhook.id} URL rejected: {e}")
+        return
 
     except Exception as e:
         log_exception(e)

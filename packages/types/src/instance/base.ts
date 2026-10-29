@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,8 +11,10 @@ import type {
   TInstanceEmailConfigurationKeys,
   TInstanceImageConfigurationKeys,
   TInstanceAuthenticationKeys,
+  TInstanceUploadConfigurationKeys,
   TInstanceWorkspaceConfigurationKeys,
   TCoreLoginMediums,
+  TOidcProviderOption,
 } from "./";
 import type { TExtendedLoginMediums } from "./auth-ee";
 
@@ -47,19 +50,37 @@ export interface IInstance {
 export interface IInstanceConfig {
   enable_signup: boolean;
   is_workspace_creation_disabled: boolean;
-  is_google_enabled: boolean;
   is_github_enabled: boolean;
   is_gitlab_enabled: boolean;
   is_gitea_enabled: boolean;
+  oidc_providers?: TOidcProviderOption[];
   is_magic_login_enabled: boolean;
   is_email_password_enabled: boolean;
+  /** Workspace UUID used to resolve compact `/i/PROJECT-123` work item links; empty when short links are off. */
+  default_workspace_id?: string;
+  /** Projects can be shared on the web: Space is part of this installation and switched on. */
+  is_space_enabled?: boolean;
+  /** Space is part of this installation; when it is not, the administrator cannot switch it on. */
+  is_space_deployed?: boolean;
   github_app_name: string | undefined;
   slack_client_id: string | undefined;
-  posthog_api_key: string | undefined;
-  posthog_host: string | undefined;
   has_unsplash_configured: boolean;
   has_llm_configured: boolean;
+  /** The largest upload in bytes: the administrator's setting, else the deployment default. */
   file_size_limit: number | undefined;
+  /** The most the administrator can set it to, in bytes. */
+  file_size_limit_max?: number;
+  /** The largest spreadsheet for a work item import, in bytes. */
+  import_file_size_limit?: number;
+  /** The most work items one import may hold. */
+  import_max_work_items?: number;
+  /** The most the administrator can set `import_max_work_items` to. */
+  import_max_work_items_max?: number;
+  /** Most messages one person may send to the admins of a workspace within an hour (in force now). */
+  admin_message_limit?: number;
+  /** What the deployment sets, which applies while the instance admin has saved no value. */
+  admin_message_limit_default?: number;
+  admin_message_limit_max?: number;
   is_smtp_configured: boolean;
   app_base_url: string | undefined;
   space_base_url: string | undefined;
@@ -85,6 +106,7 @@ export type TInstanceConfigurationKeys =
   | TInstanceEmailConfigurationKeys
   | TInstanceImageConfigurationKeys
   | TInstanceAuthenticationKeys
+  | TInstanceUploadConfigurationKeys
   | TInstanceWorkspaceConfigurationKeys;
 
 export interface IInstanceConfiguration {

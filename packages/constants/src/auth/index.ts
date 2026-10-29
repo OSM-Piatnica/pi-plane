@@ -1,12 +1,15 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { TLoginMediums } from "@plane/types";
 import { CORE_LOGIN_MEDIUM_LABELS } from "./core";
 import { EXTENDED_LOGIN_MEDIUM_LABELS } from "./extended";
+
+export * from "./oidc";
 
 export enum E_PASSWORD_STRENGTH {
   EMPTY = "empty",
@@ -64,7 +67,7 @@ export enum EAuthModes {
 export enum EAuthSteps {
   EMAIL = "EMAIL",
   PASSWORD = "PASSWORD",
-  UNIQUE_CODE = "UNIQUE_CODE",
+  ONE_TIME_CODE = "ONE_TIME_CODE",
 }
 
 export enum EErrorAlertType {
@@ -110,6 +113,7 @@ export enum EAuthErrorCodes {
   EMAIL_REQUIRED = "5010",
   SIGNUP_DISABLED = "5015",
   MAGIC_LINK_LOGIN_DISABLED = "5016",
+  BOT_USER_LOGIN_FORBIDDEN = "5017",
   PASSWORD_LOGIN_DISABLED = "5018",
   USER_ACCOUNT_DEACTIVATED = "5019",
   // Password strength
@@ -130,7 +134,7 @@ export enum EAuthErrorCodes {
   INVALID_EMAIL_SIGN_IN = "5075",
   INVALID_EMAIL_MAGIC_SIGN_IN = "5080",
   MAGIC_SIGN_IN_EMAIL_CODE_REQUIRED = "5085",
-  // Both Sign in and Sign up for magic
+  // Both Sign in and Sign up for one-time codes
   INVALID_MAGIC_CODE_SIGN_IN = "5090",
   INVALID_MAGIC_CODE_SIGN_UP = "5092",
   EXPIRED_MAGIC_CODE_SIGN_IN = "5095",
@@ -139,10 +143,14 @@ export enum EAuthErrorCodes {
   EMAIL_CODE_ATTEMPT_EXHAUSTED_SIGN_UP = "5102",
   // Oauth
   OAUTH_NOT_CONFIGURED = "5104",
-  GOOGLE_NOT_CONFIGURED = "5105",
   GITHUB_NOT_CONFIGURED = "5110",
   GITLAB_NOT_CONFIGURED = "5111",
-  GOOGLE_OAUTH_PROVIDER_ERROR = "5115",
+  OIDC_NOT_CONFIGURED = "5116",
+  OIDC_PROVIDER_ERROR = "5117",
+  OIDC_IDENTITY_MISMATCH = "5118",
+  OIDC_EMAIL_DOMAIN_NOT_ALLOWED = "5119",
+  OIDC_ACCOUNT_LINK_REQUIRED = "5126",
+  OAUTH_PROVIDER_UNVERIFIED_EMAIL = "5124",
   GITHUB_OAUTH_PROVIDER_ERROR = "5120",
   GITLAB_OAUTH_PROVIDER_ERROR = "5121",
   // Reset Password

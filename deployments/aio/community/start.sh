@@ -3,7 +3,7 @@
 print_header(){
     clear
     echo "------------------------------------------------"
-    echo "Plane Community (All-In-One)"
+    echo "Pi-Plane (All-In-One)"
     echo "------------------------------------------------"
     echo ""
     echo "You are required to pass below environment variables to the script"
@@ -14,9 +14,13 @@ print_header(){
     echo "Other optional environment variables: "
     echo "    SITE_ADDRESS (default: ':80')"
     echo "    FILE_SIZE_LIMIT (default: 5242880)"
+    echo "    FILE_SIZE_LIMIT_MAX (default: 104857600)"
     echo "    APP_PROTOCOL (http or https)"
-    echo "    SECRET_KEY (default: 60gp0byfz2dvffa45cxl20p1scy9xbpf6d8c5y0geejgkyp1b5)"
-    echo "    LIVE_SERVER_SECRET_KEY (default: htbqvBJAgpm9bzvf3r4urJer0ENReatceh)"
+    echo "    APP_PORT (public port, if not 80/443)"
+    echo "    ENABLE_SPACE (default: 1; 0 leaves the public sharing site out)"
+    echo ""
+    echo "Required secrets (no default, set a unique value for each):"
+    echo "    SECRET_KEY, LIVE_SERVER_SECRET_KEY"
     echo ""
     echo ""
 }
@@ -62,10 +66,58 @@ update_env_value(){
 
     # if key and value are not empty, update the value
     if [ -n "$key" ] && [ -n "$value" ]; then
-        sed -i "s|^$key=.*|$key=$value|" plane.env
+        # awk reads key/value from the environment so the value is written verbatim
+        UEV_KEY="$key" UEV_VAL="$value" awk '
+            index($0, ENVIRON["UEV_KEY"] "=") == 1 { print ENVIRON["UEV_KEY"] "=" ENVIRON["UEV_VAL"]; next }
+            { print }
+        ' plane.env > plane.env.tmp && mv plane.env.tmp plane.env
         return 0
     fi
 
+}
+
+# Value from the environment, else from plane.env (variables.env), else empty.
+resolved_value(){
+    local key="$1"
+    if [ -n "${!key}" ]; then
+        printf '%s' "${!key}"
+    else
+        { grep -m1 "^$key=" plane.env || true; } | cut -d'=' -f2-
+    fi
+}
+
+check_secrets(){
+    echo "Checking required secrets..."
+    local insecure_defaults=("60gp0byfz2dvffa45cxl20p1scy9xbpf6d8c5y0geejgkyp1b5"
+                             "htbqvBJAgpm9bzvf3r4urJer0ENReatceh"
+                             "change-this-key-on-deployment")
+    local invalid_keys=()
+    local key value default
+    for key in "SECRET_KEY" "LIVE_SERVER_SECRET_KEY"; do
+        value=$(resolved_value "$key")
+        if [ -z "$value" ]; then
+            echo "  ❌  '$key' is not set or is empty"
+            invalid_keys+=("$key")
+            continue
+        fi
+        for default in "${insecure_defaults[@]}"; do
+            if [ "$value" = "$default" ]; then
+                echo "  ❌  '$key' is set to a default/placeholder value"
+                invalid_keys+=("$key")
+                break
+            fi
+        done
+    done
+
+    if [ ${#invalid_keys[@]} -gt 0 ]; then
+        echo ""
+        echo "SECRET_KEY and LIVE_SERVER_SECRET_KEY must be set to unique, private values."
+        echo "Set them in plane.env (variables.env) or pass them as environment variables,"
+        echo "then start the container again."
+        exit 1
+    fi
+    echo "✅ Required secrets are set"
+    echo ""
 }
 
 check_pre_requisites(){
@@ -76,6 +128,7 @@ check_pre_requisites(){
         echo "plane.env file not found"
         exit 1
     fi
+    check_secrets
     # add a new line to the end of the file
     echo "" >> plane.env
     echo "" >> plane.env
@@ -118,6 +171,16 @@ update_env_file(){
     fi
 
     local app_protocol=${APP_PROTOCOL:-http}
+
+    # public host (and port, if the container is published on one other than 80/443) as users reach it
+    local public_host="$DOMAIN_NAME"
+    if [ -n "$APP_PORT" ]; then
+        if ! [[ "$APP_PORT" =~ ^[0-9]+$ ]] || [ "$APP_PORT" -lt 1 ] || [ "$APP_PORT" -gt 65535 ]; then
+            echo "APP_PORT is not a valid port number"
+            exit 1
+        fi
+        public_host="$DOMAIN_NAME:$APP_PORT"
+    fi
     
     update_env_value "APP_PROTOCOL" "$app_protocol"
     update_env_value "DOMAIN_NAME" "$DOMAIN_NAME"
@@ -127,12 +190,14 @@ update_env_file(){
     else
         update_env_value "SITE_ADDRESS" ":80"
     fi
-    update_env_value "WEB_URL" "$app_protocol://$DOMAIN_NAME"
-    update_env_value "CORS_ALLOWED_ORIGINS" "http://$DOMAIN_NAME,https://$DOMAIN_NAME"
+    update_env_value "WEB_URL" "$app_protocol://$public_host"
+    update_env_value "CORS_ALLOWED_ORIGINS" "http://$public_host,https://$public_host"
 
     # update database url
     update_env_value "DATABASE_URL" "$DATABASE_URL"
     update_env_value "REDIS_URL" "$REDIS_URL"
+    update_env_value "REDIS_SSL_CERT_REQS" "$REDIS_SSL_CERT_REQS"
+    update_env_value "REDIS_SSL_CA_CERTS" "$REDIS_SSL_CA_CERTS"
     update_env_value "AMQP_URL" "$AMQP_URL"
     
     # update aws credentials
@@ -145,11 +210,19 @@ update_env_file(){
     update_env_value "USE_MINIO" "0"
 
     # Optional environment variables
-    update_env_value "SECRET_KEY" "${SECRET_KEY:-60gp0byfz2dvffa45cxl20p1scy9xbpf6d8c5y0geejgkyp1b5}"
+    update_env_value "SECRET_KEY" "$SECRET_KEY"
     update_env_value "FILE_SIZE_LIMIT" "${FILE_SIZE_LIMIT:-5242880}"
-    update_env_value "LIVE_SERVER_SECRET_KEY" "${LIVE_SERVER_SECRET_KEY:-htbqvBJAgpm9bzvf3r4urJer0ENReatceh}"
+    update_env_value "FILE_SIZE_LIMIT_MAX" "${FILE_SIZE_LIMIT_MAX:-104857600}"
+    update_env_value "LIVE_SERVER_SECRET_KEY" "$LIVE_SERVER_SECRET_KEY"
 
     update_env_value "API_KEY_RATE_LIMIT" "${API_KEY_RATE_LIMIT:-60/minute}"
+    update_env_value "AUTHENTICATION_RATE_LIMIT" "${AUTHENTICATION_RATE_LIMIT:-1000/minute}"
+    update_env_value "RATE_LIMIT_PER_IP_PER_MIN" "${RATE_LIMIT_PER_IP_PER_MIN:-50000}"
+    update_env_value "ASSET_DUPLICATE_RATE_LIMIT" "${ASSET_DUPLICATE_RATE_LIMIT:-60/minute}"
+    update_env_value "ANON_RATE_LIMIT" "${ANON_RATE_LIMIT:-180/minute}"
+    update_env_value "ADMIN_MESSAGE_LIMIT_PER_HOUR" "${ADMIN_MESSAGE_LIMIT_PER_HOUR:-5}"
+    # 0 leaves Space (the public sharing site) out: it is not started, /spaces answers 404 and projects cannot be shared
+    update_env_value "ENABLE_SPACE" "${ENABLE_SPACE:-1}"
 
     echo "✅ Environment file updated"
     echo ""
@@ -161,7 +234,19 @@ main(){
     update_env_file
 
     # load plane.env as exported variables
-    export $(grep -v '^#' plane.env | xargs)
+    # read line by line so values are exported verbatim (no word-splitting or quote stripping)
+    while IFS= read -r line || [ -n "$line" ]; do
+        case "$line" in
+            ""|\#*|"="*) continue ;;
+            *=*) export "${line%%=*}=${line#*=}" ;;
+        esac
+    done < plane.env
+
+    # supervisor.conf reads this to decide whether to start Space
+    case "${ENABLE_SPACE:-1}" in
+        0|false|no|off) export SPACE_AUTOSTART=false ;;
+        *) export SPACE_AUTOSTART=true ;;
+    esac
 
     /usr/local/bin/supervisord -c /etc/supervisor/conf.d/supervisor.conf
 }

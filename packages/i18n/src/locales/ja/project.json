@@ -19,9 +19,9 @@
     "start_date": "開始日",
     "end_date": "終了日",
     "in_your_timezone": "あなたのタイムゾーン",
-    "transfer_work_items": "作業項目を転送 {count}",
+    "transfer_work_items": "{count}件の作業項目を転送",
     "transfer": {
-      "no_cycles_available": "作業アイテムを転送できる他のサイクルがありません。"
+      "no_cycles_available": "作業項目を転送できる他のサイクルがありません。"
     },
     "date_range": "日付範囲",
     "add_date": "日付を追加",
@@ -35,8 +35,8 @@
       "ideal": "理想",
       "current": "現在",
       "labels": "ラベル",
-      "trailing": "遅れ",
-      "leading": "リード"
+      "trailing": "遅延",
+      "leading": "先行"
     },
     "upcoming_cycle": {
       "label": "今後のサイクル"
@@ -144,13 +144,13 @@
         "primary_button": {
           "text": "最初のビューを作成",
           "comic": {
-            "title": "ビューは作業項目のプロパティの上で機能します。",
+            "title": "ビューは作業項目のプロパティを基に機能します。",
             "description": "ここから、必要に応じて多くのプロパティやフィルターを使用してビューを作成できます。"
           }
         },
         "filter": {
           "title": "一致するビューがありません",
-          "description": "検索条件に一致するビューがありません。\n 代わりに新しいビューを作成してください。"
+          "description": "検索条件に一致するビューがありません。\n代わりに新しいビューを作成してください。"
         }
       },
       "no_archived_issues": {
@@ -184,7 +184,7 @@
     },
     "delete_view": {
       "title": "このビューを削除してもよろしいですか？",
-      "content": "確認すると、このビューに選択したすべてのソート、フィルター、表示オプション + レイアウトが復元不可能な形で完全に削除されます。"
+      "content": "削除すると、このビューの並べ替え、フィルター、表示オプション、レイアウトがすべて完全に削除されます。この操作は元に戻せません。"
     }
   },
   "project_issues": {
@@ -279,7 +279,7 @@
       },
       "private": {
         "title": "プライベートページがまだありません",
-        "description": "プライベートな考えをここに保存しましょう。共有する準備ができたら、チームはクリック一つで共有できます。",
+        "description": "個人的なメモをここに保存できます。共有する準備ができたら、ワンクリックでチームに共有できます。",
         "primary_button": {
           "text": "最初のページを作成"
         }
@@ -445,14 +445,15 @@
       "removing_from_favorites": "プロジェクトをお気に入りから削除しています..."
     },
     "confirm_member_remove": {
-      "leave_description": "プロジェクト {name} から退出してもよろしいですか？再度招待された場合、またはプロジェクトが公開されている場合は、再び参加できます。",
+      "leave_description": "プロジェクト {name} から退出してもよろしいですか？再度招待された場合、またはプロジェクトがワークスペースに開放されている場合は、再び参加できます。",
       "leave_title": "プロジェクトから退出しますか？",
       "remove_description": "メンバー {name} を削除してもよろしいですか？このプロジェクトにアクセスできなくなります。この操作は元に戻せません。",
       "remove_title": "{name} を削除しますか？"
     },
     "control_section": {
       "archive_description": "プロジェクトをアーカイブすると、サイドナビゲーションから非表示になりますが、プロジェクトページからはアクセスできます。プロジェクトはいつでも復元または削除できます。",
-      "delete_description": "プロジェクトを削除すると、プロジェクト内のすべてのデータとリソースが完全に削除され、復元できません。"
+      "delete_description": "プロジェクトを削除すると、プロジェクト内のすべてのデータとリソースが完全に削除され、復元できません。",
+      "duplicate_description": "このプロジェクトの設定、ステータス、ラベルなどの構成で新しいプロジェクトを作成します。作業項目は選択した場合のみコピーされます。"
     },
     "delete_modal": {
       "confirm_placeholder": "「{phrase}」と入力",
@@ -491,6 +492,7 @@
       "confirm_phrase_error": "プロジェクトから退出するには「{phrase}」と入力して確認してください。",
       "description": "プロジェクト「{name}」から退出してもよろしいですか？あなたに関連付けられているすべての作業項目にアクセスできなくなります。",
       "fill_all_fields": "すべての項目を入力してください。",
+      "only_admin_error": "あなたはこのプロジェクトの唯一の管理者のため、退出できません。先に別のメンバーを管理者にするか、プロジェクトを削除してください。",
       "project_name_error": "説明に表示されているとおりにプロジェクト名を入力してください。",
       "project_name_placeholder": "プロジェクト名を入力",
       "project_name_required": "プロジェクト名は必須です",
@@ -530,21 +532,34 @@
       "timezone_error": "タイムゾーンの更新に失敗しました",
       "timezone_updated": "タイムゾーンを更新しました",
       "update_error": "プロフィールの更新中にエラーが発生しました。もう一度お試しください。",
-      "updated": "プロフィールを更新しました。"
+      "updated": "プロフィールを更新しました。",
+      "weekend_days": "週末の曜日",
+      "weekend_days_description": "どの曜日を非稼働日として扱うかを設定します。",
+      "weekend_days_updated": "週末の曜日を更新しました",
+      "weekend_days_use_default": "ワークスペースの既定値を使用"
     },
     "publish_modal": {
       "allow_comments": "コメントを許可",
       "allow_reactions": "リアクションを許可",
       "allow_voting": "投票を許可",
-      "anyone_with_link": "リンクを知っている全員がアクセスできます",
-      "link_copied": "公開ページのリンクをコピーしました。",
-      "live_on_web": "このプロジェクトはウェブで公開されています",
-      "publishing": "公開中",
-      "select_layout_error": "プロジェクトを公開するには、表示レイアウトを1つ以上選択してください。",
-      "settings_updated": "公開設定を更新しました！",
-      "unpublish": "公開を停止",
-      "unpublish_error": "プロジェクトの公開停止中に問題が発生しました。",
-      "unpublishing": "公開停止中",
+      "anyone_with_link": "リンクを知っているインターネット上の誰でも、アカウントなしでこのプロジェクトを閲覧できます",
+      "confirm": {
+        "title": "このプロジェクトをウェブで共有しますか？",
+        "description": "リンクを知っているインターネット上の誰でも、ワークスペース外の人やサインインしていない人を含め、このプロジェクトを閲覧できるようになります。",
+        "can_see": "次の内容が見られます:",
+        "item_work_items": "プロジェクト内のすべての作業項目（説明、ステータス、優先度、日付、ラベル付き）",
+        "item_members": "プロジェクトメンバーの名前とアバター",
+        "item_activity": "コメント、リアクション、投票（許可した場合）と、それを行った人の名前",
+        "note": "閲覧者は何も編集できません。リンクは共有を停止するまで有効なので、機密情報を含まないプロジェクトだけを共有してください。"
+      },
+      "link_copied": "ウェブリンクをコピーしました。",
+      "live_on_web": "このプロジェクトはウェブで共有されています",
+      "publishing": "オンにしています…",
+      "select_layout_error": "プロジェクトをウェブで共有するには、ビューのレイアウトを1つ以上選択してください。",
+      "settings_updated": "ウェブ共有の設定を更新しました。",
+      "unpublish": "共有を停止",
+      "unpublish_error": "ウェブ共有をオフにする際に問題が発生しました。",
+      "unpublishing": "オフにしています…",
       "update_settings": "設定を更新"
     },
     "rich_filters": {
@@ -554,6 +569,14 @@
       "filter_type_not_supported": "サポートされていないフィルタータイプです",
       "invalid_filter": "無効なフィルター",
       "invalid_tooltip": "このフィルター条件は無効になりました。プロパティが削除されたか、アクセス権が変更された可能性があります。",
+      "operators": {
+        "exact": "が",
+        "in": "のいずれか",
+        "range": "の範囲",
+        "not_exact": "ではない",
+        "not_in": "のいずれでもない",
+        "not_range": "の範囲外"
+      },
       "remove_filter": "フィルターを削除",
       "save_view": "ビューを保存",
       "update_view": "ビューを更新"
@@ -623,6 +646,71 @@
       },
       "key_regenerated": "新しいキーを再生成しました。",
       "view_secret_key": "シークレットキーを表示"
+    },
+    "request_access_modal": {
+      "title": "アクセスをリクエスト",
+      "description": "このプロジェクトの管理者にアクセスをリクエストします。",
+      "description_named": "{name} の管理者にアクセスをリクエストします。",
+      "message_placeholder": "管理者へのメモを追加(任意)",
+      "send": "リクエストを送信",
+      "sending": "送信中...",
+      "success_title": "リクエストを送信しました",
+      "success_message": "プロジェクト管理者が確認します。",
+      "request_button": "アクセスをリクエスト",
+      "pending_badge": "リクエスト済み"
+    },
+    "access_requests": {
+      "title": "参加リクエスト({count})",
+      "approve": "承認",
+      "reject": "却下",
+      "already_decided": "このリクエストはすでに別の管理者によって処理されています。",
+      "requester_left": "このユーザーはもうワークスペースのメンバーではありません。"
+    },
+    "duplicate_modal": {
+      "already_running": "このワークスペースでは既に作業項目のコピーが実行中です。完了してからもう一度お試しください。",
+      "always_copied": "設定、ステータス、作業項目タイプは常にコピーされます。",
+      "banner": {
+        "done": "コピーした作業項目: {count} 件。",
+        "failed": "作業項目のコピーに失敗しました。コピー済みの分は保持されます。残りを追加するには再試行してください。",
+        "progress": "作業項目をコピー中: {copied} / {total}",
+        "queued": "作業項目はコピー待ちです...",
+        "reload": "再読み込み",
+        "retry": "再試行",
+        "retry_failed": "コピーを再試行できませんでした。もう一度お試しください。"
+      },
+      "clear_all": "すべて解除",
+      "description": "同じ設定で新しいプロジェクトを作成します。ページと Webhook はコピーされません。作業項目は下で選択した場合のみコピーされます。",
+      "error": "プロジェクトを複製できませんでした。もう一度お試しください。",
+      "identifier_placeholder": "空欄の場合は自動生成",
+      "properties": {
+        "assignees": "担当者",
+        "custom_properties": "カスタムプロパティ",
+        "cycles": "サイクル",
+        "dates": "日付",
+        "description_images": "説明内の画像",
+        "labels": "ラベル",
+        "links": "リンク",
+        "modules": "モジュール",
+        "parents": "サブ項目のリンク",
+        "relations": "関連"
+      },
+      "properties_description": "作業項目と一緒に引き継ぐ内容を選択します。下書き、アーカイブ済み、インテークの項目は除外され、コメント、添付ファイル、アクティビティ、作業時間は一切コピーされません。",
+      "properties_heading": "作業項目のプロパティ",
+      "properties_note": "サイクルとモジュールは、上でコピーする場合のみ引き継がれます。",
+      "property_groups": {
+        "content": "コンテンツ",
+        "hierarchy": "階層と関連",
+        "organization": "整理",
+        "people": "ユーザー"
+      },
+      "select_all": "すべて選択",
+      "submit": "プロジェクトを複製",
+      "submitting": "プロジェクトを複製しています...",
+      "success": "プロジェクトを複製しました。",
+      "title": "プロジェクトを複製",
+      "too_large": "このプロジェクトは大きすぎてコピーできません。いくつかのオプションをオフにして、もう一度お試しください。",
+      "what_to_copy": "あわせてコピー",
+      "work_items_too_large": "このプロジェクトにはコピーできる数を超える作業項目があります（最大 {count} 件）。"
     }
   }
 }

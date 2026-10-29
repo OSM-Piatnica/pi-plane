@@ -1,19 +1,21 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import type { FormEvent } from "react";
 import { useMemo, useRef, useState } from "react";
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
 // icons
-import { CircleAlert, XCircle } from "lucide-react";
+import { CloseCircleOutline, WarningCircleOutline } from "@makeplane/propel/icons";
 // types
-import { Button } from "@plane/propel/button";
+import { Button } from "@makeplane/propel/components/button";
 import type { IEmailCheckData } from "@plane/types";
 // ui
-import { Input, Spinner } from "@plane/ui";
+import { Input } from "@makeplane/propel/components/input";
 // helpers
 import { cn } from "@plane/utils";
 import { checkEmailValidity } from "@/helpers/string.helper";
@@ -25,13 +27,14 @@ type TAuthEmailForm = {
 
 export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailForm) {
   const { onSubmit, defaultEmail } = props;
+  const { t } = useTranslation();
   // states
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState(defaultEmail);
 
   const emailError = useMemo(
-    () => (email && !checkEmailValidity(email) ? { email: "Email is invalid" } : undefined),
-    [email]
+    () => (email && !checkEmailValidity(email) ? { email: t("auth.common.email.errors.invalid") } : undefined),
+    [email, t]
   );
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -40,8 +43,11 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
     const payload: IEmailCheckData = {
       email: email,
     };
-    await onSubmit(payload);
-    setIsSubmitting(false);
+    try {
+      await onSubmit(payload);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const isButtonDisabled = email.length === 0 || Boolean(emailError?.email) || isSubmitting;
@@ -53,11 +59,11 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
     <form onSubmit={handleFormSubmit} className="mt-5 space-y-4">
       <div className="space-y-1">
         <label className="text-13 font-medium text-tertiary" htmlFor="email">
-          Email
+          {t("auth.common.email.label")}
         </label>
         <div
           className={cn(
-            `relative flex items-center rounded-md border bg-surface-1`,
+            `relative flex h-10 items-center rounded-md border bg-surface-1 px-3 [&_input]:disable-autofill-style`,
             !isFocused && Boolean(emailError?.email) ? `border-danger-strong` : `border-subtle`
           )}
           onFocus={() => {
@@ -71,38 +77,45 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
             id="email"
             name="email"
             type="email"
+            size="xl"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="name@company.com"
-            className={`h-10 w-full border-0 disable-autofill-style placeholder:text-placeholder autofill:bg-danger-subtle focus:bg-none active:bg-transparent`}
+            placeholder={t("auth.common.email.placeholder")}
             autoComplete="off"
+            // oxlint-disable-next-line jsx-a11y/no-autofocus -- sole primary field of a dedicated auth step; matches standard sign-in flows
             autoFocus
             ref={inputRef}
           />
           {email.length > 0 && (
             <button
               type="button"
-              aria-label="Clear email"
+              aria-label={t("aria_labels.auth_forms.clear_email")}
               onClick={() => {
                 setEmail("");
                 inputRef.current?.focus();
               }}
               tabIndex={-1}
             >
-              <XCircle className="h-10 w-11 stroke-placeholder px-3 text-11 hover:cursor-pointer" />
+              <CloseCircleOutline className="h-10 w-11 px-3 text-11 text-placeholder hover:cursor-pointer" />
             </button>
           )}
         </div>
         {emailError?.email && !isFocused && (
           <p className="flex items-center gap-1 px-0.5 text-11 text-danger-primary">
-            <CircleAlert height={12} width={12} />
+            <WarningCircleOutline height={12} width={12} />
             {emailError.email}
           </p>
         )}
       </div>
-      <Button type="submit" variant="primary" className="w-full" size="xl" disabled={isButtonDisabled}>
-        {isSubmitting ? <Spinner height="20px" width="20px" /> : "Continue"}
-      </Button>
+      <Button
+        type="submit"
+        variant="primary"
+        size="lg"
+        stretch="full"
+        disabled={isButtonDisabled}
+        loading={isSubmitting}
+        label={t("common.continue")}
+      />
     </form>
   );
 });

@@ -1,19 +1,15 @@
-node_modules
-.next
-.yarn
-
-### NextJS ###
 # Dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.js
+.yarn
 
 # Testing
 /coverage
-
-# Next.js
-/.next/
-/out/
+coverage/
+htmlcov/
+.coverage
+coverage.xml
 
 # Production
 dist/
@@ -23,11 +19,15 @@ build/
 
 # Misc
 .DS_Store
+Thumbs.db
 *.pem
+*.swp
 .history
 tsconfig.tsbuildinfo
 
-# Debug
+# Debug and logs
+*.log
+logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -41,11 +41,12 @@ pnpm-debug.log*
 .env.test.local
 .env.production.local
 
-# Vercel
-.vercel
-
 # Turborepo
 .turbo
+
+# Caches
+.eslintcache
+.vite/
 
 ## Django ##
 venv
@@ -53,17 +54,13 @@ venv
 *.pyc
 staticfiles
 mediafiles
-.env
-.DS_Store
-logs/
-htmlcov/
-.coverage
 
-node_modules/
-assets/dist/
-npm-debug.log
-yarn-error.log
-pnpm-debug.log
+## Python tooling ##
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+*.egg-info/
 
 # Editor directories and files
 .idea
@@ -71,27 +68,20 @@ pnpm-debug.log
 *.ntvs*
 *.njsproj
 *.sln
-package-lock.json
 .vscode
 
 # Sentry
 .sentryclirc
 
-# lock files
+# lock files from other package managers (this repo uses pnpm)
 package-lock.json
 
-
-
 .secrets
-tmp/
+/tmp/
 
 ## packages
-dist
 .temp/
-deploy/selfhost/plane-app/
-
-## Storybook
-*storybook.log
+assets/dist/
 output.css
 
 dev-editor
@@ -99,18 +89,13 @@ dev-editor
 *.rdb
 *.rdb.gz
 
-storybook-static
-
+# Claude Code local files (the rest of .claude/ is tracked)
 CLAUDE.md
+.claude/worktrees/
+.claude/scheduled_tasks.lock
 
-build/
-.react-router/
-
-build/
-.react-router/
-temp/
-scripts/
-!packages/i18n/scripts/
+/temp/
+/scripts/
 
 # i18n auto-generated types (regenerated on every build)
 packages/i18n/src/types/keys.generated.ts
@@ -122,3 +107,6 @@ packages/i18n/locales
 
 # Local security advisory notes (not for version control)
 /advisories.md
+
+# Trivy scan output written by the image-scan workflows
+trivy.sarif

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -80,22 +81,27 @@ export enum EPastDurationFilters {
 
 export const PAST_DURATION_FILTER_OPTIONS: {
   name: string;
+  i18n_name: string;
   value: string;
 }[] = [
   {
     name: "Today",
+    i18n_name: "common.today",
     value: EPastDurationFilters.TODAY,
   },
   {
     name: "Yesterday",
+    i18n_name: "app_text.analytics.yesterday",
     value: EPastDurationFilters.YESTERDAY,
   },
   {
     name: "Last 7 days",
+    i18n_name: "app_text.analytics.last_7_days",
     value: EPastDurationFilters.LAST_7_DAYS,
   },
   {
     name: "Last 30 days",
+    i18n_name: "app_text.analytics.last_30_days",
     value: EPastDurationFilters.LAST_30_DAYS,
   },
 ];

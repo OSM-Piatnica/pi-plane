@@ -15,6 +15,7 @@ import type {
   IIssueFilterOptions,
   TIssue,
   EIssuesStoreType,
+  TTimelineColorBy,
 } from "@plane/types";
 
 export const ALL_ISSUES = "All Issues";
@@ -38,6 +39,7 @@ export enum EIssueGroupByToServerOptions {
   "module" = "issue_module__module_id",
   "target_date" = "target_date",
   "finish_date" = "finish_date",
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   "project" = "project_id",
   "created_by" = "created_by",
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
@@ -73,26 +75,32 @@ export enum EIssueListRow {
 export const ISSUE_PRIORITIES: {
   key: TIssuePriorities;
   title: string;
+  i18n_title: string;
 }[] = [
   {
     key: "urgent",
     title: "Urgent",
+    i18n_title: "issue.priority.urgent",
   },
   {
     key: "high",
     title: "High",
+    i18n_title: "issue.priority.high",
   },
   {
     key: "medium",
     title: "Medium",
+    i18n_title: "issue.priority.medium",
   },
   {
     key: "low",
     title: "Low",
+    i18n_title: "issue.priority.low",
   },
   {
     key: "none",
     title: "None",
+    i18n_title: "common.none",
   },
 ];
 
@@ -134,6 +142,13 @@ export const ISSUE_GROUP_BY_OPTIONS: {
 ];
 
 // what a work item list can be sorted on; the direction is chosen separately (see ISSUE_ORDER_BY_DIRECTION_OPTIONS)
+/**
+ * The order work item lists start in: oldest first, so the newest work item is last. It is separate from
+ * the default orders of modules (`DEFAULT_MODULE_ORDER_BY`) and cycles. The API creates new display filters
+ * with the same value; users who already saved an order keep theirs.
+ */
+export const DEFAULT_WORK_ITEM_ORDER_BY: TIssueOrderByOptions = "created_at";
+
 export const ISSUE_ORDER_BY_OPTIONS: {
   key: TIssueOrderByField;
   titleTranslationKey: string;
@@ -207,6 +222,16 @@ export const ISSUE_ORDER_BY_OPTIONS: {
 export const ISSUE_ORDER_BY_DIRECTION_OPTIONS: { key: TIssueOrderByDirection; titleTranslationKey: string }[] = [
   { key: "asc", titleTranslationKey: "common.order_by.asc" },
   { key: "desc", titleTranslationKey: "common.order_by.desc" },
+];
+
+export const DEFAULT_TIMELINE_COLOR_BY: TTimelineColorBy = "state";
+
+export const TIMELINE_COLOR_BY_OPTIONS: {
+  key: TTimelineColorBy;
+  titleTranslationKey: string;
+}[] = [
+  { key: "state", titleTranslationKey: "issue.display.color_by.state" },
+  { key: "key", titleTranslationKey: "issue.display.color_by.key" },
 ];
 
 export const ISSUE_DISPLAY_PROPERTIES_KEYS: (keyof IIssueDisplayProperties)[] = [

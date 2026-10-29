@@ -42,21 +42,50 @@
           "blocked_by": "{issue} não pode começar até que {related} seja concluído (relação de bloqueio).",
           "blocking": "{issue} precisa terminar antes que {related} comece (relação de bloqueio).",
           "finish_after": "{issue} não pode terminar antes de {related} (relação de término após).",
+          "finish_after_start": "{issue} não pode terminar antes de {related} começar (relação “termina depois do início”).",
           "finish_before": "{issue} precisa terminar em ou antes de {related} (relação de término antes).",
           "start_after": "{issue} não pode começar antes de {related} (relação de início após).",
-          "start_before": "{issue} precisa começar em ou antes de {related} (relação de início antes)."
+          "start_before": "{issue} precisa começar em ou antes de {related} (relação de início antes).",
+          "start_before_finish": "{issue} precisa começar no máximo quando {related} terminar (relação “começa antes do fim”)."
         },
         "status": {
           "finish_after": "{issue} não pode ser concluído até que {related} seja concluído (relação de término após).",
+          "finish_after_start": "{issue} não pode ser concluído até que {related} tenha começado (relação “termina depois do início”).",
           "start_after": "{issue} não pode começar até que {related} tenha começado (relação de início após)."
-        }
+        },
+        "self": "{issue} não pode se relacionar consigo mesmo.",
+        "cycle": "{issue} e {related} formariam um ciclo de relações. Remova primeiro a relação oposta.",
+        "lag_suffix": " Atraso da relação: {lag} d."
       },
       "date_conflict": "Essas datas entram em conflito com dependências existentes. Ajuste os itens de trabalho relacionados ou remova a dependência primeiro.",
       "dependency_create_failed": "Não foi possível criar a dependência. Tente novamente.",
-      "dependency_created": "A dependência do item de trabalho foi criada com sucesso."
-    }
+      "dependency_created": "A dependência do item de trabalho foi criada com sucesso.",
+      "lag": {
+        "hint": "Dias entre as duas datas; um valor negativo permite sobreposição.",
+        "invalid": "Informe um número inteiro de dias entre -{max} e {max}.",
+        "label": "Atraso (dias)",
+        "update_failed": "Não foi possível alterar o atraso."
+      },
+      "reschedule": {
+        "confirm": "Mover",
+        "content": "Esta alteração quebraria dependências. Estes itens de trabalho podem ser movidos para mais tarde, mantendo a duração, para que todas as dependências continuem válidas:",
+        "title": "Mover também os itens de trabalho dependentes?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Mover para cancelado",
+        "content": "{issue} agora está marcado como duplicata de {originals}. Movê-lo para “{state}”? Ele continua vinculado e visível.",
+        "failed": "Não foi possível cancelar o item de trabalho.",
+        "keep": "Manter aberto",
+        "title": "Cancelar este item de trabalho?"
+      }
+    },
+    "edit_restricted": "Só os responsáveis por este item de trabalho, o líder do projeto e os admins do projeto podem alterá-lo."
   },
   "project_create": {
+    "advanced": {
+      "description": "Regras e tipos de relação. Você pode alterá-los depois nas configurações de fluxos de trabalho do projeto.",
+      "title": "Opções avançadas"
+    },
     "features": {
       "cycles": {
         "description": "Delimite o trabalho em períodos recorrentes.",
@@ -115,11 +144,53 @@
       "pending_approval_title": "Aprovação necessária",
       "rejected_success": "Transição rejeitada.",
       "resolving_approval": "Processando aprovação...",
+      "rules": {
+        "heading": "Regras",
+        "description": "Regras do projeto que valem por si mesmas, com os fluxos de trabalho ativados ou não.",
+        "parent_completion": {
+          "description": "Um item de trabalho não pode ser concluído enquanto tiver sub-itens que não estejam concluídos nem cancelados. Reabrir um sub-item concluído sob um pai concluído pede para reabrir também o pai.",
+          "title": "Concluir um item pai somente quando seus sub-itens estiverem concluídos"
+        },
+        "reopen_parent": {
+          "confirm": "Reabrir",
+          "content": "Este projeto não permite que um pai continue concluído enquanto um sub-item estiver aberto. Estes pais concluídos também serão reabertos: {names}",
+          "title": "Reabrir também os itens de trabalho pai?"
+        },
+        "blocked_status": {
+          "description": "Um item de trabalho não pode passar para um estado iniciado ou concluído enquanto um item de trabalho que o bloqueia ainda estiver aberto (bloqueios concluídos e cancelados não contam). Continuar no backlog ou a fazer, e cancelar, continuam possíveis.",
+          "title": "Iniciar ou concluir um item só quando seus bloqueios estiverem resolvidos"
+        },
+        "assignee_edit": {
+          "description": "Quando um item de trabalho tem um responsável, só os responsáveis, o líder do projeto e os admins do projeto podem alterá-lo: campos, estado, datas, sub-itens, relações, links, anexos, ciclos e módulos, exclusão e arquivamento. Todos ainda podem comentar. Itens sem responsável continuam abertos a todos os membros.",
+          "title": "Só os responsáveis, o líder do projeto e os admins podem alterar um item de trabalho"
+        }
+      },
       "save_error": "Não foi possível salvar a configuração do fluxo de trabalho.",
       "save_success": "Configuração do fluxo de trabalho salva.",
       "toggle_error": "Não foi possível atualizar as configurações do fluxo de trabalho.",
       "transition": "Transição",
-      "transitions_configured": "transições configuradas"
+      "transition_count": "{count, plural, one {# transição} many {# de transições} other {# transições}}",
+      "transitions_configured": "transições configuradas",
+      "relation_types": {
+        "heading": "Tipos de relação",
+        "description": "Escolha quais relações podem ser adicionadas neste projeto. O bloqueio está sempre disponível, e as relações existentes permanecem quando um tipo é desativado.",
+        "schedule": {
+          "description": "Começa antes, termina antes e começa antes do término, com defasagem opcional em dias.",
+          "title": "Dependências de cronograma"
+        },
+        "traceability": {
+          "description": "Implementa, causa, clona e testa, com as inversas.",
+          "title": "Relações de rastreabilidade"
+        },
+        "relates_to": {
+          "description": "Um vínculo simples entre dois itens.",
+          "title": "Relacionado a"
+        },
+        "duplicate": {
+          "description": "Marcar um item como duplicado de outro.",
+          "title": "Duplicado"
+        }
+      }
     }
   },
   "project_templates": {

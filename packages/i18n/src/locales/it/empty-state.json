@@ -29,7 +29,12 @@
       "restricted_description": "Contatta l'amministratore per richiedere l'accesso e potrai continuare qui.",
       "join_description": "Clicca sul pulsante qui sotto per unirti.",
       "cta_primary": "Unisciti al progetto",
-      "cta_loading": "Unione al progetto in corso"
+      "cta_loading": "Unione al progetto in corso",
+      "pending_title": "La tua richiesta è in attesa di approvazione",
+      "pending_description": "Gli amministratori del progetto ti faranno entrare quando la approveranno.",
+      "private_title": "Questo progetto è privato",
+      "private_description": "Puoi vederlo, ma gli amministratori devono farti entrare. Invia loro una richiesta.",
+      "request_cta": "Richiedi accesso"
     },
     "invalid_project": {
       "title": "Progetto non trovato",
@@ -188,7 +193,7 @@
     },
     "wiki": {
       "title": "Scrivi una nota, un documento o un'intera base di conoscenza.",
-      "description": "Le pagine sono spazi per catturare pensieri in Plane. Prendi note di riunioni, formattale facilmente, incorpora elementi di lavoro, organizzali usando una libreria di componenti e mantienili tutti nel contesto del tuo progetto.",
+      "description": "Le pagine sono spazi per catturare pensieri in Pi-Plane. Prendi note di riunioni, formattale facilmente, incorpora elementi di lavoro, organizzali usando una libreria di componenti e mantienili tutti nel contesto del tuo progetto.",
       "cta_primary": "Crea la tua pagina"
     },
     "project_overview_state_sidebar": {

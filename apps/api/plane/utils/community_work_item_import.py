@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
+import csv
+from io import StringIO
+
 from plane.utils.project_template_payload import WORK_ITEM_EXPORT_HINT_KEYS
 from plane.utils.project_work_item_import import (
     WorkItemImportOptions,
@@ -15,6 +18,31 @@ COMMUNITY_EXPORT_STRONG_HINTS = frozenset({"state_name", "project_name", "projec
 
 def _normalize_key(key: str) -> str:
     return str(key).strip().lower().replace(" ", "_")
+
+
+def _unwrap_collapsed_rows(rows: list[dict]) -> list[dict]:
+    """Re-split rows a spreadsheet saved as one quoted cell in the first column.
+
+    Opening a comma file in a semicolon-locale Excel and saving it again leaves every data row as a
+    single quoted field, so the parser sees only the first header with the whole line as its value.
+    """
+    unwrapped: list[dict] = []
+    for row in rows:
+        if not isinstance(row, dict) or len(row) < 2:
+            unwrapped.append(row)
+            continue
+        headers = list(row.keys())
+        first = row[headers[0]]
+        rest_empty = all(row[key] in [None, ""] for key in headers[1:])
+        if not (rest_empty and isinstance(first, str) and first.count(",") >= len(headers) - 1):
+            unwrapped.append(row)
+            continue
+        cells = next(csv.reader(StringIO(first)), [])
+        if len(cells) != len(headers):
+            unwrapped.append(row)
+            continue
+        unwrapped.append(dict(zip(headers, cells)))
+    return unwrapped
 
 
 def is_community_work_item_export(rows: list[dict]) -> bool:
@@ -99,6 +127,8 @@ def map_community_export_rows(rows: list[dict]) -> list[dict]:
                 "labels": labels,
                 "modules": _pick(row, "modules"),
                 "cycles": _pick(row, "cycles", "cycle"),
+                "cycle_start_date": _pick(row, "cycle_start_date"),
+                "cycle_end_date": _pick(row, "cycle_end_date"),
                 "relations": _pick(row, "relations"),
                 "assignee_emails": assignee_emails,
                 "assignee_names": assignee_names,
@@ -121,11 +151,12 @@ def import_community_work_items_into_project(
     warnings: list[str] | None = None,
     options: WorkItemImportOptions | None = None,
 ):
+    rows = _unwrap_collapsed_rows(rows)
     if not is_community_work_item_export(rows):
         raise ValueError(
             {
                 "error": (
-                    "This file does not look like a Plane work-items export (CSV/XLSX/JSON). "
+                    "This file does not look like a Pi-Plane work-items export (CSV/XLSX/JSON). "
                     "Use the file produced by “Export work items” in workspace settings."
                 )
             }
@@ -133,6 +164,19 @@ def import_community_work_items_into_project(
 
     mapped = map_community_export_rows(rows)
     if not mapped:
+        sample = next((row for row in rows if isinstance(row, dict)), {})
+        found = [str(key) for key in sample.keys()]
+        if "name" not in {_normalize_key(key) for key in found}:
+            raise ValueError(
+                {
+                    "error": (
+                        "The file has no “Name” column. "
+                        f"Columns found: {', '.join(found) or 'none'}. "
+                        "Check that the file uses commas or semicolons as separators "
+                        "and was not re-saved from a spreadsheet."
+                    )
+                }
+            )
         raise ValueError({"error": "No work item rows with a name were found in the file."})
 
     return import_work_items_into_project(

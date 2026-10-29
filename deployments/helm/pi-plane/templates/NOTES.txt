@@ -1,0 +1,22 @@
+Pi-Plane {{ .Chart.AppVersion }} is being installed at {{ .Values.publicUrl }}.
+
+  kubectl --namespace {{ .Release.Namespace }} get pods -l app.kubernetes.io/instance={{ .Release.Name }}
+
+The database migrations run in the Job {{ include "pi-plane.componentName" (dict "root" . "component" "migrator") }}-{{ .Release.Revision }}; the API
+and the workers wait for it, so the first start can take a few minutes.
+
+First sign-in: open {{ .Values.publicUrl }}/god-mode/ and create the instance administrator.
+{{- if not .Values.secrets.existingSecret }}
+
+The generated credentials live in the Secret {{ include "pi-plane.secretName" . }} and are kept when the release is uninstalled.
+Back it up: without SECRET_KEY the stored data cannot be read.
+{{- end }}
+{{- if and .Values.postgresql.enabled .Values.valkey.enabled .Values.rabbitmq.enabled .Values.objectStorage.bundled.enabled }}
+
+This installation keeps its data in the bundled PostgreSQL, Valkey, RabbitMQ and MinIO. That is meant for evaluation; for
+production use managed services (see examples/production-values.yaml in the chart).
+{{- end }}
+{{- if not (or .Values.ingress.enabled .Values.gateway.enabled) }}
+
+Neither ingress nor gateway is enabled: expose the web, {{ if .Values.space.enabled }}space, {{ end }}admin, live, api (and bucket) services yourself.
+{{- end }}

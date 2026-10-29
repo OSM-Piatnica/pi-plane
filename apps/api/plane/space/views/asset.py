@@ -1,12 +1,13 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
 import uuid
 
 # Django imports
-from django.conf import settings
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.utils import timezone
 
@@ -16,12 +17,24 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from plane.bgtasks.storage_metadata_task import get_asset_object_metadata
-from plane.db.models import DeployBoard, FileAsset
-from plane.settings.storage import S3Storage
+from plane.db.models import DeployBoard, FileAsset, Issue, IssueComment
+from plane.settings.storage import get_storage
 from plane.utils.path_validator import sanitize_filename
+from plane.utils.file_size_limit import get_file_size_limit
 
 # Module imports
 from .base import BaseAPIView
+
+
+def _is_own_board_comment(comment_id, deploy_board, user):
+    """An EXTERNAL comment in the board's project + workspace authored by the user."""
+    return IssueComment.objects.filter(
+        id=comment_id,
+        project_id=deploy_board.project_id,
+        workspace_id=deploy_board.workspace_id,
+        access="EXTERNAL",
+        actor=user,
+    ).exists()
 
 
 class EntityAssetEndpoint(BaseAPIView):
@@ -42,15 +55,36 @@ class EntityAssetEndpoint(BaseAPIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        # get the asset id
-        asset = FileAsset.objects.get(
-            workspace_id=deploy_board.workspace_id,
-            pk=pk,
-            entity_type__in=[
-                FileAsset.EntityTypeContext.ISSUE_DESCRIPTION,
-                FileAsset.EntityTypeContext.COMMENT_DESCRIPTION,
-            ],
+        # An image is served only when it belongs to something the board shows: a description of a work item the
+        # public lists contain (not a draft, archived or triage item), or an image in an EXTERNAL comment. An image
+        # of an Internal comment, or one not yet bound to a comment, is not public; the person who uploaded the
+        # latter can still see it while writing the comment.
+        visible_issue_ids = Issue.issue_objects.filter(
+            workspace_id=deploy_board.workspace_id, project_id=deploy_board.project_id
+        ).values("id")
+        allowed = Q(
+            entity_type=FileAsset.EntityTypeContext.ISSUE_DESCRIPTION,
+        ) & (Q(issue__isnull=True) | Q(issue_id__in=visible_issue_ids))
+        allowed |= Q(
+            entity_type=FileAsset.EntityTypeContext.COMMENT_DESCRIPTION,
+            comment__access="EXTERNAL",
+            comment__issue_id__in=visible_issue_ids,
         )
+        if request.user.is_authenticated:
+            allowed |= Q(
+                entity_type=FileAsset.EntityTypeContext.COMMENT_DESCRIPTION,
+                comment__isnull=True,
+                created_by=request.user,
+            )
+        # scope to the board's project to prevent cross-project IDOR
+        asset = FileAsset.objects.filter(
+            allowed, workspace_id=deploy_board.workspace_id, project_id=deploy_board.project_id, pk=pk
+        ).first()
+        if asset is None:
+            return Response(
+                {"error": "The requested asset could not be found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
         # Check if the asset is uploaded
         if not asset.is_uploaded:
@@ -59,10 +93,16 @@ class EntityAssetEndpoint(BaseAPIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        # Get the presigned URL
-        storage = S3Storage(request=request)
+        # Get the presigned URL. Inline only for an allow-listed image type, which S3Storage
+        # pins as the response Content-Type; any other type downloads.
+        storage = get_storage(request=request)
         # Generate a presigned URL to share an S3 object
-        signed_url = storage.generate_presigned_url(object_name=asset.asset.name)
+        signed_url = storage.generate_presigned_url(
+            object_name=asset.asset.name,
+            filename=asset.attributes.get("name"),
+            disposition="inline",
+            content_type=asset.attributes.get("type"),
+        )
         # Redirect to the signed URL
         return HttpResponseRedirect(signed_url)
 
@@ -73,19 +113,50 @@ class EntityAssetEndpoint(BaseAPIView):
         if not deploy_board:
             return Response({"error": "Project is not published"}, status=status.HTTP_404_NOT_FOUND)
 
+        # Public uploads are only for comment images on boards with comments enabled
+        if not deploy_board.is_comments_enabled:
+            return Response(
+                {"error": "Comments are not enabled for this project"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         # Get the asset
         name = sanitize_filename(request.data.get("name")) or "unnamed"
         type = request.data.get("type", "image/jpeg")
-        size = int(request.data.get("size", settings.FILE_SIZE_LIMIT))
+        try:
+            size = int(request.data.get("size", get_file_size_limit()))
+        except (TypeError, ValueError):
+            return Response(
+                {"error": "Invalid size.", "status": False},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         entity_type = request.data.get("entity_type", "")
-        entity_identifier = request.data.get("entity_identifier")
+        # The client sends "" for a comment that does not exist yet; keep such uploads unbound
+        entity_identifier = request.data.get("entity_identifier") or None
+
+        # Clamp the client-provided size to [1, FILE_SIZE_LIMIT] so the signed
+        # upload policy cannot exceed the instance limit and always carries a
+        # valid content-length-range bound
+        size_limit = max(1, min(size, get_file_size_limit()))
 
         # Check if the entity type is allowed
-        if entity_type not in FileAsset.EntityTypeContext.values:
+        if entity_type != FileAsset.EntityTypeContext.COMMENT_DESCRIPTION:
             return Response(
                 {"error": "Invalid entity type.", "status": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+        # An existing comment must be the caller's own comment on this board
+        if entity_identifier:
+            try:
+                entity_identifier = uuid.UUID(str(entity_identifier))
+            except ValueError:
+                return Response(
+                    {"error": "Invalid entity identifier.", "status": False},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            if not _is_own_board_comment(entity_identifier, deploy_board, request.user):
+                return Response({"error": "Comment not found"}, status=status.HTTP_404_NOT_FOUND)
 
         # Check if the file type is allowed
         allowed_types = [
@@ -109,9 +180,9 @@ class EntityAssetEndpoint(BaseAPIView):
 
         # Create a File Asset
         asset = FileAsset.objects.create(
-            attributes={"name": name, "type": type, "size": size},
+            attributes={"name": name, "type": type, "size": size_limit},
             asset=asset_key,
-            size=size,
+            size=size_limit,
             workspace=deploy_board.workspace,
             created_by=request.user,
             entity_type=entity_type,
@@ -120,9 +191,9 @@ class EntityAssetEndpoint(BaseAPIView):
         )
 
         # Get the presigned URL
-        storage = S3Storage(request=request)
+        storage = get_storage(request=request)
         # Generate a presigned URL to share an S3 object
-        presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size)
+        presigned_url = storage.generate_presigned_post(object_name=asset_key, file_type=type, file_size=size_limit)
         # Return the presigned URL
         return Response(
             {
@@ -140,8 +211,15 @@ class EntityAssetEndpoint(BaseAPIView):
         if not deploy_board:
             return Response({"error": "Project is not published"}, status=status.HTTP_404_NOT_FOUND)
 
-        # get the asset id
-        asset = FileAsset.objects.get(id=pk, workspace=deploy_board.workspace)
+        # A public-site user may only update assets they created.
+        asset = FileAsset.objects.filter(
+            id=pk,
+            workspace=deploy_board.workspace,
+            project_id=deploy_board.project_id,
+            created_by=request.user,
+        ).first()
+        if asset is None:
+            return Response({"error": "The requested asset could not be found."}, status=status.HTTP_404_NOT_FOUND)
         # get the storage metadata
         asset.is_uploaded = True
         # get the storage metadata
@@ -160,8 +238,15 @@ class EntityAssetEndpoint(BaseAPIView):
         # Check if the project is published
         if not deploy_board:
             return Response({"error": "Project is not published"}, status=status.HTTP_404_NOT_FOUND)
-        # Get the asset
-        asset = FileAsset.objects.get(id=pk, workspace=deploy_board.workspace, project_id=deploy_board.project_id)
+        # A public-site user may only delete assets they created.
+        asset = FileAsset.objects.filter(
+            id=pk,
+            workspace=deploy_board.workspace,
+            project_id=deploy_board.project_id,
+            created_by=request.user,
+        ).first()
+        if asset is None:
+            return Response({"error": "The requested asset could not be found."}, status=status.HTTP_404_NOT_FOUND)
         # Check deleted assets
         asset.is_deleted = True
         asset.deleted_at = timezone.now()
@@ -180,8 +265,15 @@ class AssetRestoreEndpoint(BaseAPIView):
         if not deploy_board:
             return Response({"error": "Project is not published"}, status=status.HTTP_404_NOT_FOUND)
 
-        # Get the asset
-        asset = FileAsset.all_objects.get(id=pk, workspace=deploy_board.workspace)
+        # A public-site user may only restore assets they created.
+        asset = FileAsset.all_objects.filter(
+            id=pk,
+            workspace=deploy_board.workspace,
+            project_id=deploy_board.project_id,
+            created_by=request.user,
+        ).first()
+        if asset is None:
+            return Response({"error": "The requested asset could not be found."}, status=status.HTTP_404_NOT_FOUND)
         asset.is_deleted = False
         asset.deleted_at = None
         asset.save(update_fields=["is_deleted", "deleted_at"])
@@ -198,17 +290,28 @@ class EntityBulkAssetEndpoint(BaseAPIView):
         if not deploy_board:
             return Response({"error": "Project is not published"}, status=status.HTTP_404_NOT_FOUND)
 
+        if not deploy_board.is_comments_enabled:
+            return Response(
+                {"error": "Comments are not enabled for this project"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Assets may only be bound to the caller's own comment on this board
+        if not _is_own_board_comment(entity_id, deploy_board, request.user):
+            return Response({"error": "Comment not found"}, status=status.HTTP_404_NOT_FOUND)
+
         asset_ids = request.data.get("asset_ids", [])
 
         # Check if the asset ids are provided
         if not asset_ids:
             return Response({"error": "No asset ids provided."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # get the asset id
+        # A public-site user may only rebind assets they created.
         assets = FileAsset.objects.filter(
             id__in=asset_ids,
             workspace=deploy_board.workspace,
             project_id=deploy_board.project_id,
+            created_by=request.user,
         )
 
         asset = assets.first()
@@ -220,8 +323,9 @@ class EntityBulkAssetEndpoint(BaseAPIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        # Check if the entity type is allowed
-        if asset.entity_type == FileAsset.EntityTypeContext.COMMENT_DESCRIPTION:
-            # update the attributes
-            assets.update(comment_id=entity_id)
+        # Only the caller's own comment images are bound
+        assets.filter(
+            entity_type=FileAsset.EntityTypeContext.COMMENT_DESCRIPTION,
+            created_by=request.user,
+        ).update(comment_id=entity_id)
         return Response(status=status.HTTP_204_NO_CONTENT)

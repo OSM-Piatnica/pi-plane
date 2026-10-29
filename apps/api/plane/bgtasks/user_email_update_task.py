@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -14,12 +15,22 @@ from django.template.loader import render_to_string
 
 # Module imports
 from plane.license.utils.instance_value import get_email_configuration
+from django.utils.html import format_html
+
+from plane.db.models import User
 from plane.utils.email import generate_plain_text_from_html
+from plane.utils.email_i18n import DEFAULT_LANGUAGE, translate, user_language
 from plane.utils.exception_logger import log_exception
 
 
+def _language_of(user_id):
+    """The language of the person's profile; English when the task was not told who it is for."""
+    user = User.objects.filter(pk=user_id).first() if user_id else None
+    return user_language(user) if user else DEFAULT_LANGUAGE
+
+
 @shared_task
-def send_email_update_magic_code(email, token):
+def send_email_update_one_time_code(email, token, user_id=None):
     try:
         (
             EMAIL_HOST,
@@ -32,10 +43,11 @@ def send_email_update_magic_code(email, token):
         ) = get_email_configuration()
 
         # Send the mail
-        subject = "Verify your new email address"
-        context = {"code": token, "email": email}
+        language = _language_of(user_id)
+        subject = translate(language, "email_update_code.subject")
+        context = {"code": token, "email": email, "email_language": language}
 
-        html_content = render_to_string("emails/auth/magic_signin.html", context)
+        html_content = render_to_string("emails/auth/one_time_code_signin.html", context)
         text_content = generate_plain_text_from_html(html_content)
 
         connection = get_connection(
@@ -64,7 +76,7 @@ def send_email_update_magic_code(email, token):
 
 
 @shared_task
-def send_email_update_confirmation(email):
+def send_email_update_confirmation(email, user_id=None):
     """
     Send a confirmation email to the user after their email address has been successfully updated.
 
@@ -83,8 +95,13 @@ def send_email_update_confirmation(email):
         ) = get_email_configuration()
 
         # Send the confirmation email
-        subject = "Plane email address successfully updated"
-        context = {"email": email}
+        language = _language_of(user_id)
+        subject = translate(language, "email_updated.subject")
+        context = {
+            "email": email,
+            "email_strong": format_html("<strong>{}</strong>", email),
+            "email_language": language,
+        }
 
         html_content = render_to_string("emails/user/email_updated.html", context)
         text_content = generate_plain_text_from_html(html_content)

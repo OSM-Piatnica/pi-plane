@@ -9,6 +9,7 @@
 import ipaddress
 import logging
 import os
+from urllib.parse import parse_qs
 from urllib.parse import urlparse
 from urllib.parse import urljoin
 
@@ -26,8 +27,27 @@ from plane.utils.url import is_valid_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Secret Key
-SECRET_KEY = os.environ.get("SECRET_KEY", get_random_secret_key())
+_logger = logging.getLogger("plane")
+
+# Secret Key — use `or` so an explicitly empty env var is treated the same as unset,
+# falling back to a random key rather than passing "" to Django (GHSA-cmwv-pjmw-8483).
+SECRET_KEY = os.environ.get("SECRET_KEY") or get_random_secret_key()
+# Refuse to run silently with a publicly-known or placeholder SECRET_KEY
+# (GHSA-cmwv-pjmw-8483). Emit a critical log so operators notice immediately.
+# The `or get_random_secret_key()` above means the only way to reach this branch
+# is if the environment explicitly passes one of the flagged values.
+_INSECURE_SECRET_KEYS = {
+    "60gp0byfz2dvffa45cxl20p1scy9xbpf6d8c5y0geejgkyp1b5",  # old publicly-known default
+    "change-this-key-on-deployment",  # placeholder shipped in community templates
+}
+if SECRET_KEY in _INSECURE_SECRET_KEYS:
+    _logger.critical(
+        "SECURITY: SECRET_KEY is set to a known insecure or placeholder value. "
+        "This makes your installation vulnerable to session forgery, CSRF bypass, and "
+        "password-reset token forging. Set a unique SECRET_KEY before deploying to production. "
+        "Generate one with: "
+        'python3 -c "from django.utils.crypto import get_random_secret_key; print(get_random_secret_key())"'
+    )
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", "0"))
@@ -40,7 +60,6 @@ IS_SELF_MANAGED = True
 # Example: "10.0.0.0/8,192.168.1.0/24,172.16.0.5"
 _webhook_allowed_ips_raw = os.environ.get("WEBHOOK_ALLOWED_IPS", "")
 WEBHOOK_ALLOWED_IPS = []
-_logger = logging.getLogger("plane")
 for _cidr in _webhook_allowed_ips_raw.split(","):
     _cidr = _cidr.strip()
     if not _cidr:
@@ -49,6 +68,25 @@ for _cidr in _webhook_allowed_ips_raw.split(","):
         WEBHOOK_ALLOWED_IPS.append(ipaddress.ip_network(_cidr, strict=False))
     except ValueError:
         _logger.warning("WEBHOOK_ALLOWED_IPS: skipping invalid entry %r", _cidr)
+
+# Webhook hostname allowlist — comma-separated hostnames that bypass the
+# private-IP SSRF check. Useful for trusted internal services whose IPs are
+# dynamic in containerised deployments (e.g. docker-compose service DNS,
+# kubernetes service hostnames).
+# Example: "silo,silo.namespace.svc.cluster.local,internal-api.lan"
+_webhook_allowed_hosts_raw = os.environ.get("WEBHOOK_ALLOWED_HOSTS", "")
+WEBHOOK_ALLOWED_HOSTS = [
+    _host.strip().rstrip(".").lower() for _host in _webhook_allowed_hosts_raw.split(",") if _host.strip()
+]
+
+# Webhook disallowed domains — comma-separated hostnames. Webhooks targeting
+# these domains or any of their subdomains are rejected (the request host is
+# always appended at validation time as a loop-back guard). Empty by default
+# for self-hosted deployments; set to e.g. "plane.so" to block specific domains.
+_webhook_disallowed_domains_raw = os.environ.get("WEBHOOK_DISALLOWED_DOMAINS", "")
+WEBHOOK_DISALLOWED_DOMAINS = [
+    _d.strip().rstrip(".").lower() for _d in _webhook_disallowed_domains_raw.split(",") if _d.strip()
+]
 
 # Allowed Hosts
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
@@ -81,6 +119,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "plane.middleware.space_availability.SpaceAvailabilityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "plane.authentication.middleware.session.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -99,8 +138,13 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework.authentication.SessionAuthentication",),
     "DEFAULT_THROTTLE_CLASSES": ("rest_framework.throttling.AnonRateThrottle",),
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "30/minute",
-        "asset_id": "5/minute",
+        # Logged-out requests only, counted per client IP (AnonRateThrottle). Signed-in users are not throttled here.
+        "anon": os.environ.get("ANON_RATE_LIMIT", "180/minute"),
+        # Per-asset-ID cap on duplicating an asset (editor paste/copy). Counted across all users.
+        "asset_id": os.environ.get("ASSET_DUPLICATE_RATE_LIMIT", "60/minute"),
+        # Duplicating a project locks the workspace row while it runs, so it is capped per user and per workspace.
+        "project_duplicate_user": os.environ.get("PROJECT_DUPLICATE_USER_RATE", "10/hour"),
+        "project_duplicate_workspace": os.environ.get("PROJECT_DUPLICATE_WORKSPACE_RATE", "30/hour"),
     },
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
@@ -108,7 +152,21 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "plane.authentication.adapter.exception.auth_exception_handler",
     # Preserve original Django URL parameter names (pk) instead of converting to 'id'
     "SCHEMA_COERCE_PATH_PK": False,
+    # DRF 3.18 reports errors of many=True serializers as a dict keyed by item index. Keep the list
+    # format clients get today; DRF deprecates it and removes it in 3.20, so migrate the clients first.
+    "LIST_SERIALIZER_ERRORS_AS_DICT": False,
 }
+
+# Number of reverse proxies in front of the API. DRF throttles use it to pick the
+# client IP from X-Forwarded-For. Unset keeps DRF's default (None).
+_num_proxies_raw = os.environ.get("NUM_PROXIES", "").strip()
+if _num_proxies_raw.isdecimal() and len(_num_proxies_raw) <= 3:
+    REST_FRAMEWORK["NUM_PROXIES"] = int(_num_proxies_raw)
+elif _num_proxies_raw:
+    _logger.warning("NUM_PROXIES: ignoring invalid value %r", _num_proxies_raw)
+
+# API key throttle rate (DRF SimpleRateThrottle format, e.g. "60/minute"). Counted per API key, not per IP.
+API_KEY_RATE_LIMIT = os.environ.get("API_KEY_RATE_LIMIT", "60/minute")
 
 # Django Auth Backend
 AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)  # default
@@ -141,10 +199,8 @@ cors_origins_raw = os.environ.get("CORS_ALLOWED_ORIGINS", "")
 cors_allowed_origins = [origin.strip() for origin in cors_origins_raw.split(",") if origin.strip()]
 if cors_allowed_origins:
     CORS_ALLOWED_ORIGINS = cors_allowed_origins
-    secure_origins = False if [origin for origin in cors_allowed_origins if "http:" in origin] else True
 else:
     CORS_ALLOW_ALL_ORIGINS = True
-    secure_origins = False
 
 CORS_ALLOW_HEADERS = [*default_headers, "X-API-Key"]
 
@@ -199,6 +255,27 @@ if os.environ.get("ENABLE_READ_REPLICA", "0") == "1":
 REDIS_URL = os.environ.get("REDIS_URL")
 REDIS_SSL = REDIS_URL and "rediss" in REDIS_URL
 
+
+def _redis_ssl_kwargs(url=None):
+    """
+    TLS options for rediss:// connections. The server certificate and hostname are
+    verified against the system CA bundle, or REDIS_SSL_CA_CERTS when set.
+    REDIS_SSL_CERT_REQS=none turns verification off.
+
+    Query options in the URL override these kwargs in redis-py, so an ssl_cert_reqs
+    there takes precedence over REDIS_SSL_CERT_REQS. The hostname is checked unless
+    verification is off (none); an explicit ssl_check_hostname in the URL still wins.
+    """
+    url_cert_reqs = parse_qs(urlparse(url or "").query).get("ssl_cert_reqs", [""])[0]
+    cert_reqs = (url_cert_reqs or os.environ.get("REDIS_SSL_CERT_REQS", "")).strip().lower() or "required"
+    kwargs = {"ssl_cert_reqs": cert_reqs, "ssl_check_hostname": cert_reqs != "none"}
+    if os.environ.get("REDIS_SSL_CA_CERTS"):
+        kwargs["ssl_ca_certs"] = os.environ["REDIS_SSL_CA_CERTS"]
+    return kwargs
+
+
+REDIS_SSL_KWARGS = _redis_ssl_kwargs(REDIS_URL)
+
 if REDIS_SSL:
     CACHES = {
         "default": {
@@ -206,7 +283,7 @@ if REDIS_SSL:
             "LOCATION": REDIS_URL,
             "OPTIONS": {
                 "CLIENT_CLASS": "django_redis.client.DefaultClient",
-                "CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": False},
+                "CONNECTION_POOL_KWARGS": REDIS_SSL_KWARGS,
             },
         }
     }
@@ -242,7 +319,6 @@ MEDIA_URL = "/media/"
 # Internationalization
 LANGUAGE_CODE = "en-us"
 USE_I18N = True
-USE_L10N = True
 
 # Timezones
 USE_TZ = True
@@ -259,9 +335,19 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 USE_MINIO = int(os.environ.get("USE_MINIO", 0)) == 1
 
 STORAGES = {"staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"}}
+# "s3" (any S3-compatible store, the default) or "azure" (Azure Blob Storage)
+STORAGE_PROVIDER = os.environ.get("STORAGE_PROVIDER", "s3").strip().lower()
 STORAGES["default"] = {"BACKEND": "plane.settings.storage.S3Storage"}
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", "access-key")
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", "secret-key")
+# No fallback: when unset, boto3 resolves credentials through its default chain, as S3Storage does.
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+# Warn when the storage credentials are still the template values.
+if USE_MINIO and AWS_SECRET_ACCESS_KEY == "secret-key":
+    _logger.critical(
+        "SECURITY: AWS_SECRET_ACCESS_KEY is set to the placeholder value from the env templates "
+        "while USE_MINIO is on. Set unique object-storage credentials (the latest CLI setup.sh "
+        "generates them on install and upgrade) and restart MinIO and Plane."
+    )
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_S3_BUCKET_NAME", "uploads")
 AWS_REGION = os.environ.get("AWS_REGION", "")
 AWS_DEFAULT_ACL = "public-read"
@@ -299,15 +385,20 @@ CELERY_IMPORTS = (
     "plane.bgtasks.exporter_expired_task",
     "plane.bgtasks.file_asset_task",
     "plane.bgtasks.email_notification_task",
+    "plane.bgtasks.email_digest_task",
     "plane.bgtasks.cleanup_task",
-    "plane.license.bgtasks.tracer",
+    "plane.license.bgtasks.telemetry_metrics",
     # management tasks
     "plane.bgtasks.dummy_data_task",
     # issue version tasks
     "plane.bgtasks.issue_version_sync",
+    # recounting durations after a project's weekend days change
+    "plane.bgtasks.project_duration_task",
     "plane.bgtasks.issue_description_version_sync",
     # work item reminders
     "plane.bgtasks.work_item_due_reminder_task",
+    # project duplication: the background copy of the work items, and its sweeper
+    "plane.bgtasks.project_copy_task",
 )
 
 # Work item due date reminders
@@ -315,7 +406,10 @@ CELERY_IMPORTS = (
 WORK_ITEM_DUE_REMINDER_TIMEZONE = os.environ.get("WORK_ITEM_DUE_REMINDER_TIMEZONE", "Europe/Warsaw")
 WORK_ITEM_DUE_REMINDER_HOUR = int(os.environ.get("WORK_ITEM_DUE_REMINDER_HOUR", 7))
 
+# The default for the largest upload (bytes); the instance administrator can change it in the admin app
 FILE_SIZE_LIMIT = int(os.environ.get("FILE_SIZE_LIMIT", 5242880))
+# The most the administrator may set it to. The proxy in front of the API refuses a request body above this.
+FILE_SIZE_LIMIT_MAX = int(os.environ.get("FILE_SIZE_LIMIT_MAX", 104857600))
 
 # Unsplash Access key
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")
@@ -326,17 +420,29 @@ GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", False)
 ANALYTICS_SECRET_KEY = os.environ.get("ANALYTICS_SECRET_KEY", False)
 ANALYTICS_BASE_API = os.environ.get("ANALYTICS_BASE_API", False)
 
-# Posthog settings
-POSTHOG_API_KEY = os.environ.get("POSTHOG_API_KEY", False)
-POSTHOG_HOST = os.environ.get("POSTHOG_HOST", False)
-
 # Skip environment variable configuration
 SKIP_ENV_VAR = os.environ.get("SKIP_ENV_VAR", "1") == "1"
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.environ.get("FILE_SIZE_LIMIT", 5242880))
 
+
+def _cookies_secure(web_url, cors_allowed_origins, app_base_url=None):
+    """
+    Cookies are Secure when Plane is served over https, or when every configured
+    CORS origin is https. Plain-http installs keep non-Secure cookies.
+
+    The serving URL is WEB_URL, falling back to APP_BASE_URL when WEB_URL is
+    unset or empty, matching the precedence used by base_host().
+    """
+    if (web_url or app_base_url or "").strip().lower().startswith("https://"):
+        return True
+    return bool(cors_allowed_origins) and not any("http:" in origin for origin in cors_allowed_origins)
+
+
 # Cookie Settings
-SESSION_COOKIE_SECURE = secure_origins
+SESSION_COOKIE_SECURE = _cookies_secure(
+    os.environ.get("WEB_URL"), cors_allowed_origins, app_base_url=os.environ.get("APP_BASE_URL")
+)
 SESSION_COOKIE_HTTPONLY = True
 SESSION_ENGINE = "plane.db.models.session"
 SESSION_COOKIE_AGE = int(os.environ.get("SESSION_COOKIE_AGE", 604800))
@@ -349,7 +455,7 @@ ADMIN_SESSION_COOKIE_NAME = "admin-session-id"
 ADMIN_SESSION_COOKIE_AGE = int(os.environ.get("ADMIN_SESSION_COOKIE_AGE", 3600))
 
 # CSRF cookies
-CSRF_COOKIE_SECURE = secure_origins
+CSRF_COOKIE_SECURE = SESSION_COOKIE_SECURE
 CSRF_COOKIE_HTTPONLY = True
 CSRF_TRUSTED_ORIGINS = cors_allowed_origins
 CSRF_COOKIE_DOMAIN = os.environ.get("COOKIE_DOMAIN", None)
@@ -371,6 +477,11 @@ SPACE_BASE_PATH = os.environ.get("SPACE_BASE_PATH", "/spaces/")
 
 # App Base URL
 APP_BASE_URL = os.environ.get("APP_BASE_URL", None)
+
+# The mark at the top of the emails, as images for light backgrounds and for the dark header of the digest-style
+# emails (https only). Left empty, the emails show the name in type, which needs no hosting.
+EMAIL_LOGO_URL = os.environ.get("EMAIL_LOGO_URL", "")
+EMAIL_LOGO_URL_ON_DARK = os.environ.get("EMAIL_LOGO_URL_ON_DARK", "")
 if APP_BASE_URL and not is_valid_url(APP_BASE_URL):
     APP_BASE_URL = None
 APP_BASE_PATH = os.environ.get("APP_BASE_PATH", "/")
@@ -415,6 +526,15 @@ WEBHOOK_LOG_RETENTION_DAYS = _retention_days("WEBHOOK_LOG_RETENTION_DAYS", 14)
 
 # Email notification logs are retained on their own window.
 EMAIL_LOG_RETENTION_DAYS = _retention_days("EMAIL_LOG_RETENTION_DAYS", 7)
+
+# Max non-mention notification emails sent to a user per issue within the window.
+# Extra activity is held back and delivered together once the window frees up.
+EMAIL_NOTIFICATION_MAX_PER_ISSUE = int(os.environ.get("EMAIL_NOTIFICATION_MAX_PER_ISSUE", 3))
+EMAIL_NOTIFICATION_WINDOW_MINUTES = int(os.environ.get("EMAIL_NOTIFICATION_WINDOW_MINUTES", 60))
+
+# Digest emails: hourly digests go out on the hour, daily digests at this hour in this timezone.
+EMAIL_DIGEST_TIMEZONE = os.environ.get("EMAIL_DIGEST_TIMEZONE", "Europe/Warsaw")
+EMAIL_DIGEST_DAILY_HOUR = int(os.environ.get("EMAIL_DIGEST_DAILY_HOUR", 8))
 
 # Instance Changelog URL
 INSTANCE_CHANGELOG_URL = os.environ.get("INSTANCE_CHANGELOG_URL", "")
@@ -508,6 +628,10 @@ ATTACHMENT_MIME_TYPES = [
     # Markdown
     "text/markdown",
 ]
+
+# The only MIME types ever served inline (S3Storage.generate_presigned_url pins the
+# type on the response). Everything else, including SVG and HTML, downloads.
+INLINE_SAFE_MIME_TYPES: frozenset[str] = frozenset(["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"])
 
 # Seed directory path
 SEED_DIR = os.path.join(BASE_DIR, "seeds")

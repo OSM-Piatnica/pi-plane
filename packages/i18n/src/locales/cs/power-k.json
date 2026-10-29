@@ -54,8 +54,8 @@
         "indicator": "Stránka",
         "lock": "Uzamknout",
         "unlock": "Odemknout",
-        "make_private": "Nastavit jako soukromé",
-        "make_public": "Nastavit jako veřejné",
+        "make_private": "Nastavit jako viditelné jen pro mě",
+        "make_public": "Sdílet s projektem",
         "archive": "Archivovat",
         "restore": "Obnovit",
         "add_to_favorites": "Přidat do oblíbených",
@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Otevřít klávesové zkratky",
-      "open_plane_documentation": "Otevřít dokumentaci Plane",
+      "open_plane_documentation": "Otevřít dokumentaci Pi-Plane",
       "join_forum": "Připojte se k našemu fóru",
       "report_bug": "Nahlásit chybu",
       "chat_with_us": "Chatovat s námi"
@@ -171,10 +171,17 @@
     "search_menu": {
       "no_results": "Nenalezeny žádné výsledky",
       "clear_search": "Vymazat hledání",
-      "go_to_advanced_search": "Přejít na pokročilé hledání"
+      "go_to_advanced_search": "Přejít na pokročilé hledání",
+      "results_in_workspace": "Výsledky hledání pro <term/> v pracovním prostoru:",
+      "results_in_project": "Výsledky hledání pro <term/> v projektu:"
     },
     "footer": {
       "workspace_level": "Úroveň pracovního prostoru"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Hledat klávesové zkratky",
+      "no_results": "Nenalezeny žádné klávesové zkratky pro „{query}“",
+      "sequence_separator": "pak"
     },
     "group_titles": {
       "actions": "Akce",

@@ -65,6 +65,45 @@
           }
         }
       },
+      "groups": {
+        "title": "Groups",
+        "description": "Organise people into groups. Groups can be nested, a person can belong to several of them, and work items can be assigned to a group.",
+        "create_group": "Create group",
+        "create": "Create",
+        "edit_group": "Edit group",
+        "edit": "Edit",
+        "add_subgroup": "Add subgroup",
+        "members": "Members",
+        "name": "Name",
+        "description_label": "Description",
+        "parent": "Parent group",
+        "top_level": "No parent (top level)",
+        "no_groups": "There are no groups yet.",
+        "member_count": "{count, plural, one {# member} other {# members}}",
+        "managed_by": "Managed by {provider}",
+        "sources": {
+          "local": "Local",
+          "entra": "Microsoft Entra",
+          "google": "Google",
+          "oidc": "SSO"
+        },
+        "members_of": "Members of {name}",
+        "managed_externally_hint": "This group is managed by your identity provider. Its members follow the provider and cannot be changed here.",
+        "select_member": "Select a member",
+        "add_member": "Add",
+        "role": "Role",
+        "role_member": "Member",
+        "role_admin": "Group admin",
+        "no_members": "This group has no members yet.",
+        "group_created": "Group created.",
+        "group_updated": "Group updated.",
+        "group_deleted": "Group deleted.",
+        "delete_title": "Delete {name}?",
+        "delete_content": "People in this group stay in the workspace. Work items assigned to the group lose that assignment. This action cannot be undone.",
+        "group_assignees": "Group assignees",
+        "add_group_assignee": "Add group",
+        "no_group_assignees": "No groups assigned"
+      },
       "billing_and_plans": {
         "heading": "Billing & Plans",
         "description": "Choose your plan, manage subscriptions, and easily upgrade as your needs grow.",
@@ -94,6 +133,50 @@
               "title": "Export failed",
               "message": "Export was unsuccessful. Please try again."
             }
+          }
+        },
+        "columns": {
+          "heading": "Columns",
+          "description": "Choose which columns the file contains. Identifier and Name are always included, because the file could not be imported again without them.",
+          "select_all": "Select all",
+          "clear_all": "Clear all",
+          "groups": {
+            "details": "Details",
+            "people": "People",
+            "dates": "Dates",
+            "organization": "Organization",
+            "relations": "Hierarchy and relations",
+            "other": "Other"
+          },
+          "fields": {
+            "project_name": "Project name",
+            "project_identifier": "Project identifier",
+            "sequence_id": "Sequence number",
+            "issue_type": "Work item type",
+            "state_name": "State",
+            "priority": "Priority",
+            "description_html": "Description",
+            "estimate": "Estimate",
+            "is_draft": "Draft flag",
+            "assignees": "Assignees",
+            "subscribers": "Subscribers",
+            "created_by_name": "Created by",
+            "start_date": "Start date",
+            "finish_date": "Finish date",
+            "target_date": "Due date",
+            "duration": "Duration",
+            "completed_at": "Completed at",
+            "created_at": "Created at",
+            "updated_at": "Updated at",
+            "archived_at": "Archived at",
+            "labels": "Labels",
+            "cycles": "Cycles",
+            "modules": "Modules",
+            "parent": "Parent",
+            "relations": "Relations",
+            "links": "Links",
+            "custom_properties": "Custom properties",
+            "comments": "Comments"
           }
         }
       },
@@ -161,7 +244,7 @@
         "generating": "Generating",
         "delete": {
           "title": "Delete access token",
-          "description": "Any application using this token will no longer have the access to Plane data. This action cannot be undone.",
+          "description": "Any application using this token will no longer have the access to Pi-Plane data. This action cannot be undone.",
           "success": {
             "title": "Success!",
             "message": "The token has been successfully deleted"
@@ -176,7 +259,7 @@
         "title": "Integrations",
         "heading": "Integrations",
         "description": "Connect with popular tools and services to sync your work across your entire workflow ecosystem.",
-        "page_title": "Work with your Plane data in available apps or your own.",
+        "page_title": "Work with your Pi-Plane data in available apps or your own.",
         "page_description": "View all the integrations in use by this workspace or you."
       },
       "imports": {
@@ -303,14 +386,14 @@
         "install": "Install",
         "installed": "Installed",
         "configure": "Configure",
-        "app_available": "You have made this app available to use with a Plane workspace",
+        "app_available": "You have made this app available to use with a Pi-Plane workspace",
         "app_credentials_regenrated": {
           "title": "App credentials successfully re-generated",
           "description": "Replace the client secret everywhere it's used. The previous secret is no longer valid."
         },
         "app_created": {
           "title": "App created successfully",
-          "description": "Use the credentials to install the app in a Plane workspace"
+          "description": "Use the credentials to install the app in a Pi-Plane workspace"
         },
         "installed_apps": "Installed apps",
         "all_apps": "All apps",
@@ -351,10 +434,10 @@
         },
         "redirect_uris": {
           "label": "Redirect URIs (space separated)",
-          "description": "Users will be redirected to this path after they have authenticated with Plane.",
+          "description": "Users will be redirected to this path after they have authenticated with Pi-Plane.",
           "placeholder": "https://example.com https://example.com/"
         },
-        "app_available_description": "Connect a Plane workspace to start using it",
+        "app_available_description": "Connect a Pi-Plane workspace to start using it",
         "client_id_and_secret": "Client ID and Secret",
         "client_id_and_secret_description": "Copy and save this secret key in Pages. You can't see this key again after you hit Close.",
         "client_id_and_secret_download": "You can download a CSV with the key from here.",
@@ -403,12 +486,12 @@
         "workspace_permissions": "Workspace permissions",
         "workspace_permissions_description": "Workspace permissions are used to grant access to the workspace.",
         "with_the_permissions": "with the permissions",
-        "app_consent_title": "{app} is requesting access to your Plane workspace and profile.",
+        "app_consent_title": "{app} is requesting access to your Pi-Plane workspace and profile.",
         "choose_workspace_to_connect_app_with": "Choose a workspace to connect the app with",
         "app_consent_workspace_permissions_title": "{app} would like",
         "app_consent_user_permissions_title": "{app} can also request a user's permission to the following resources. These permissions will be requested and authorized of and by a user only.",
         "app_consent_accept_title": "By accepting, you",
-        "app_consent_accept_1": "Grant the app access to your Plane data wherever you can use the app in or outside Plane",
+        "app_consent_accept_1": "Grant the app access to your Pi-Plane data wherever you can use the app in or outside Pi-Plane",
         "app_consent_accept_2": "Agree to {app}'s Privacy Policy and Terms Of Use",
         "accepting": "Accepting...",
         "accept": "Accept",
@@ -450,7 +533,7 @@
         "upload_and_save": "Upload & Save",
         "app_consent_no_access_title": "Request to install",
         "app_consent_no_access_description": "This app can only be installed after a workspace admin installs it. Contact your workspace admin to proceed.",
-        "app_consent_unapproved_title": "This app hasn't been reviewed or approved by Plane yet.",
+        "app_consent_unapproved_title": "This app hasn't been reviewed or approved by Pi-Plane yet.",
         "app_consent_unapproved_description": "Make sure you trust this app before connecting it to your workspace.",
         "go_to_app": "Go to app",
         "enable_app_mentions": "Enable App Mentions",
@@ -489,7 +572,7 @@
     "empty_state": {
       "api_tokens": {
         "title": "No access tokens created",
-        "description": "Plane APIs can be used to integrate your data in Plane with any external system. Create a token to get started."
+        "description": "Pi-Plane APIs can be used to integrate your data in Pi-Plane with any external system. Create a token to get started."
       },
       "webhooks": {
         "title": "No webhooks added",

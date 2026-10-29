@@ -8,6 +8,7 @@
   "submit": "Trimite",
   "cancel": "Anulează",
   "loading": "Se încarcă",
+  "searching": "Se caută...",
   "error": "Eroare",
   "success": "Succes",
   "warning": "Avertisment",
@@ -107,15 +108,24 @@
   "failed_to_update_email_notification_setting": "Eroare la actualizarea setării notificărilor prin email",
   "notify_me_when": "Notifică-mă când",
   "property_changes": "Se modifică proprietățile",
-  "property_changes_description": "Notifică-mă când proprietăți precum responsabilii, prioritatea, estimările sau altele se modifică.",
+  "property_changes_description": "Notifică-mă când proprietăți precum responsabilii, prioritatea sau estimările se modifică.",
   "state_change": "Se schimbă starea",
   "state_change_description": "Notifică-mă când activitățile trec într-o stare diferită",
   "issue_completed": "Activitate finalizată",
-  "issue_completed_description": "Notifică-mă doar când o activitate este finalizată",
+  "issue_completed_description": "Notifică-mă când o activitate este finalizată",
   "comments": "Comentarii",
   "comments_description": "Notifică-mă când cineva lasă un comentariu la o activitate",
   "mentions": "Mențiuni",
-  "mentions_description": "Notifică-mă doar când cineva mă menționează în comentarii sau descriere",
+  "mentions_description": "Notifică-mă când cineva mă menționează în comentarii sau descriere",
+  "project_access_requests": "Cereri de acces",
+  "project_access_requests_description": "Trimite-mi e-mailuri despre cererile de alăturare la proiecte private pe care le administrez și despre deciziile privind propriile mele cereri.",
+  "workspace_admin_messages": "Trimite-mi un e-mail când cineva scrie administratorilor spațiului de lucru",
+  "workspace_admin_messages_description": "Se aplică doar dacă sunteți administrator al unui spațiu de lucru. Mesajul ajunge întotdeauna în căsuța dumneavoastră din aplicație; această setare stabilește doar dacă primiți și un e-mail, și numai pentru dumneavoastră.",
+  "email_frequency": "Frecvența e-mailurilor",
+  "email_frequency_description": "Alegeți cât de des primiți e-mailuri despre actualizările activităților. Mențiunile sunt trimise întotdeauna imediat.",
+  "email_frequency_instant": "Imediat",
+  "email_frequency_hourly": "Rezumat orar",
+  "email_frequency_daily": "Rezumat zilnic",
   "old_password": "Parolă veche",
   "general_settings": "Setări generale",
   "sign_out": "Deconectează-te",
@@ -189,8 +199,8 @@
   "select_network": "Selectează rețeaua",
   "lead": "Lider",
   "date_range": "Interval de date",
-  "private": "Privat",
-  "public": "Public",
+  "private": "Doar eu",
+  "public": "Partajat",
   "accessible_only_by_invite": "Accesibil doar prin invitație",
   "anyone_in_the_workspace_except_guests_can_join": "Oricine din spațiul de lucru, cu excepția celor de tip Invitat, se poate alătura",
   "creating": "Se creează",
@@ -204,8 +214,8 @@
   "add_to_favorites": "Adaugă la favorite",
   "remove_from_favorites": "Elimină din favorite",
   "rename_folder": "Redenumește folderul",
-  "publish_project": "Publică proiectul",
-  "publish": "Publică",
+  "publish_project": "Partajează pe web",
+  "publish": "Activează partajarea pe web",
   "copy_link": "Copiază link-ul",
   "leave_project": "Părăsește proiectul",
   "join_the_project_to_rearrange": "Alătură-te proiectului pentru a rearanja",
@@ -233,6 +243,25 @@
   "documentation": "Documentație",
   "message_support": "Trimite mesaj la suport",
   "contact_sales": "Contactează vânzările",
+  "contact_workspace_admins": {
+    "menu_label": "Contactați administratorii",
+    "title": "Contactați administratorii spațiului de lucru",
+    "description": "Administratorii din {workspace} adaugă persoane, schimbă roluri și ajută cu accesul. Scrieți-le cu aplicația dumneavoastră de e-mail.",
+    "email_all": "Trimiteți e-mail tuturor administratorilor",
+    "subject": "Întrebare pentru administratorii din {workspace}",
+    "body": "Bună ziua,\n\n\n\n{name}",
+    "message_label": "Mesaj pentru administratori",
+    "message_placeholder": "Spuneți ce vă trebuie, de exemplu acces la un proiect sau schimbarea unui rol.",
+    "characters": "{count} / {max}",
+    "send": "Trimite mesajul",
+    "sent": "Mesajul dumneavoastră a fost trimis administratorilor spațiului de lucru.",
+    "error_rate_limited": "Ați trimis mai multe mesaje recent. Încercați din nou mai târziu.",
+    "error_generic": "Mesajul nu a putut fi trimis. Încercați din nou sau scrieți administratorilor prin e-mail.",
+    "or_email": "Sau scrieți din propria aplicație de e-mail",
+    "notification_text": "a scris administratorilor acestui spațiu de lucru",
+    "message_from": "Mesaj de la {name}",
+    "reply_by_email": "Răspunde prin e-mail"
+  },
   "hyper_mode": "Mod Hyper",
   "keyboard_shortcuts": "Scurtături tastatură",
   "whats_new": "Ce e nou?",
@@ -245,7 +274,7 @@
   "full_changelog": "Jurnal complet al modificărilor",
   "support": "Suport",
   "forum": "Forum",
-  "powered_by_plane_pages": "Oferit de Plane Documentație",
+  "powered_by_plane_pages": "Oferit de Pi-Plane Documentație",
   "please_select_at_least_one_invitation": "Te rugăm să selectezi cel puțin o invitație.",
   "please_select_at_least_one_invitation_description": "Te rugăm să selectezi cel puțin o invitație pentru a te alătura spațiului de lucru.",
   "we_see_that_someone_has_invited_you_to_join_a_workspace": "Se pare că cineva te-a invitat să te alături unui spațiu de lucru",
@@ -281,6 +310,11 @@
   "create_more": "Creează mai multe",
   "add_to_project": "Adaugă la proiect",
   "discard": "Renunță",
+  "discard_changes": {
+    "title": "Renunți la modificări?",
+    "description": "Modificările tale nu au fost salvate. Renunțarea la ele nu poate fi anulată.",
+    "keep_editing": "Continuă editarea"
+  },
   "duplicate_issue_found": "Activitate duplicată găsită",
   "duplicate_issues_found": "Activități duplicate găsite",
   "no_matching_results": "Nu există rezultate potrivite",
@@ -304,6 +338,9 @@
   "create_new_label": "Creează etichetă nouă",
   "label_name": "Nume etichetă",
   "failed_to_create_label": "Nu s-a putut crea eticheta. Vă rugăm să încercați din nou.",
+  "no_matching_labels": "Nicio etichetă potrivită",
+  "adding_label": "Se adaugă „{name}\"",
+  "add_label_to_labels": "Adaugă „{name}\" la etichete",
   "start_date": "Data de început",
   "end_date": "Data de sfârșit",
   "due_date": "Data limită",
@@ -326,6 +363,18 @@
   "deleting": "Se șterge",
   "make_a_copy": "Creează o copie",
   "move_to_project": "Mută în proiect",
+  "default_state_names": {
+    "backlog": "Restante",
+    "todo": "De făcut",
+    "in_progress": "În desfășurare",
+    "done": "Gata",
+    "cancelled": "Anulate",
+    "triage": "Triaj"
+  },
+  "filter_headings": {
+    "access": "Acces",
+    "owned_by": "Proprietar"
+  },
   "good": "Bună",
   "morning": "dimineața",
   "afternoon": "după-amiaza",
@@ -365,7 +414,7 @@
   "re_generate": "Regenerează",
   "re_generate_key": "Regenerează cheia",
   "export": "Exportă",
-  "member": "{count, plural, one{# membru} other{# membri}}",
+  "member": "{count, plural, one{# membru} few{# membri} other{# de membri}}",
   "new_password_must_be_different_from_old_password": "Parola nouă trebuie să fie diferită de parola veche",
   "edited": "editat",
   "bot": "Bot",
@@ -507,8 +556,8 @@
     "archiving": "Se arhivează",
     "archive": "Arhivează",
     "access": {
-      "public": "Public",
-      "private": "Privat"
+      "public": "Partajat cu proiectul",
+      "private": "Doar eu"
     },
     "done": "Gata",
     "sub_work_items": "Sub-activități",
@@ -528,6 +577,7 @@
       "updated_on": "Actualizat la"
     },
     "sort": {
+      "label": "Sortează",
       "asc": "Crescător",
       "desc": "Descrescător",
       "created_on": "Creată la",
@@ -600,6 +650,13 @@
       "label": "Caută",
       "placeholder": "Tastează pentru a căuta",
       "no_matches_found": "Nu s-au găsit rezultate",
+      "cycles": "Caută cicluri...",
+      "estimates": "Caută estimări...",
+      "labels": "Caută etichete...",
+      "members": "Caută membri...",
+      "modules": "Caută module...",
+      "projects": "Caută proiecte...",
+      "states": "Caută stări...",
       "no_matching_results": "Nicio potrivire găsită",
       "min_chars": "Tastează cel puțin {count} caractere pentru a căuta",
       "error": "Eroare la preluarea rezultatelor căutării",
@@ -627,7 +684,8 @@
       "enable": "Activează",
       "disable": "Dezactivează",
       "copy_markdown": "Copiază markdown",
-      "reply": "Răspunde"
+      "reply": "Răspunde",
+      "add_reaction": "Adaugă o reacție"
     },
     "name": "Nume",
     "discard": "Renunță",
@@ -707,6 +765,8 @@
     "applying": "Aplicând",
     "overview": "Prezentare generală",
     "no_of": "Nr. de {entity}",
+    "no_of_work_items": "Nr. de Activități",
+    "no_of_epics": "Nr. de Epice",
     "resolved": "Rezolvat",
     "get_started": "Începe",
     "worklogs": "Jurnale de lucru",
@@ -828,7 +888,7 @@
     "edited_by": "Editat de"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane nu a pornit. Aceasta ar putea fi din cauza că unul sau mai multe servicii Plane au eșuat să pornească.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane nu a pornit. Aceasta ar putea fi din cauza că unul sau mai multe servicii Pi-Plane au eșuat să pornească.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Alegeți View Logs din setup.sh și logurile Docker pentru a fi siguri."
   },
   "customize_navigation": "Personalizează navigarea",
@@ -876,11 +936,12 @@
       "short_description": "Exportă ca JSON"
     }
   },
+  "labels_count": "{count, plural, one {# etichetă} few {# etichete} other {# de etichete}}",
   "onboarding": {
     "skip": "Omite",
     "profile": {
       "title": "Creează-ți profilul.",
-      "description": "Așa vei apărea în Plane.",
+      "description": "Așa vei apărea în Pi-Plane.",
       "choose_image": "Alege imaginea",
       "upload_image": "Încarcă imaginea",
       "change_image": "Schimbă imaginea",
@@ -895,7 +956,7 @@
       "new_password_placeholder": "Parolă nouă...",
       "role_question": "Ce rol ai? Alege unul.",
       "domain_question": "Care este domeniul tău de expertiză? Alege unul sau mai multe.",
-      "marketing_consent": "Sunt de acord să primesc comunicări de marketing de la Plane",
+      "marketing_consent": "Sunt de acord să primesc comunicări de marketing de la Pi-Plane",
       "passwords_do_not_match": "Parolele nu coincid",
       "passwords_match": "Parolele coincid",
       "seniority_levels": {
@@ -926,7 +987,7 @@
     },
     "role": {
       "title": "Ce rol ai?",
-      "description": "Hai să configurăm Plane după modul tău de lucru.",
+      "description": "Hai să configurăm Pi-Plane după modul tău de lucru.",
       "select_one": "Alege unul",
       "options": {
         "product_manager": "Product Manager",
@@ -939,7 +1000,7 @@
       }
     },
     "usecase": {
-      "title": "Ce te aduce în Plane?",
+      "title": "Ce te aduce în Pi-Plane?",
       "description": "Spune-ne obiectivele și dimensiunea echipei tale.",
       "select_multiple": "Alege unul sau mai multe",
       "select_at_least_one": "Selectează cel puțin o opțiune"
@@ -960,7 +1021,7 @@
     },
     "team": {
       "invite_teammates": "Invită-ți colegii de echipă",
-      "invite_teammates_description": "Munca în Plane merge cel mai bine în echipă. Invită-i acum pentru a folosi Plane la adevăratul potențial.",
+      "invite_teammates_description": "Munca în Pi-Plane merge cel mai bine în echipă. Invită-i acum pentru a folosi Pi-Plane la adevăratul potențial.",
       "add_another": "Adaugă altul",
       "do_it_later": "Voi face asta mai târziu",
       "invalid_email": "Adresă de e-mail invalidă",
@@ -1004,5 +1065,451 @@
     "syncing_description": "Modificările dvs. se sincronizează cu serverul. Puteți continua să faceți modificări.",
     "connection_lost": "Conexiune pierdută",
     "connection_lost_description": "Întâmpinăm probleme la conectarea la serverul websocket. Modificările dvs. vor fi sincronizate și salvate la fiecare 10 secunde."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Pictogramă",
+    "contrast_notice": "Culorile vor fi ajustate pentru a asigura un contrast suficient."
+  },
+  "date_phrases": {
+    "added_ago": "Adăugat {timeAgo}",
+    "expired": "Expirat",
+    "expired_ago": "Expirat {timeAgo}",
+    "expires_at": "Expiră pe {date} la {time}",
+    "never_expires": "Nu expiră niciodată",
+    "date_at_time": "{date} la {time}",
+    "till": "Până la {date}, {time}",
+    "after_date": "După {date}",
+    "before_date": "Înainte de {date}",
+    "month_week": "{month}, săptămâna {week}",
+    "target_date": "Dată țintă: {date}",
+    "from_date": "De la {date}",
+    "till_date": "Până la {date}",
+    "date_to_date": "{start} până la {end}",
+    "archived_at": "Arhivat la {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Încărcat de {name} la {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Expirare"
+  },
+  "a11y": {
+    "toggle_details": "Comută detaliile",
+    "workflow_flow_type": "Tip de flux",
+    "workflow_target_state": "Stare țintă",
+    "workflow_reject_state": "Stare de respingere"
+  },
+  "api_token_expiry": {
+    "one_week": "1 săptămână",
+    "one_month": "1 lună",
+    "three_months": "3 luni",
+    "one_year": "1 an",
+    "custom_date": "Dată personalizată",
+    "set_expiration_date": "Setează data de expirare"
+  },
+  "profile_sidebar": {
+    "due": "Termen"
+  },
+  "progress_chart": {
+    "current": "{title} curente",
+    "ideal": "{title} ideale"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "Plasează imaginea aici pentru a o încărca",
+      "drag_and_drop": "Trage și plasează imaginea aici",
+      "size_exceeded": "Dimensiunea imaginii nu poate depăși 5 MB.",
+      "invalid_format": "Te rugăm să încarci un fișier într-un format valid.",
+      "formats_supported": "Formate de fișier acceptate: .jpeg, .jpg, .png, .webp",
+      "uploading": "Se încarcă",
+      "upload_and_save": "Încarcă și salvează",
+      "title": "Încarcă o imagine",
+      "select_image": "Selectează imaginea",
+      "select_image_named": "Selectează imaginea: {description}",
+      "select_cover_image": "Selectează imaginea de copertă {index}",
+      "no_images": "Nu s-au găsit imagini."
+    },
+    "ai_assistant": {
+      "rate_limit": "Ai atins numărul maxim de solicitări, adică 50 de solicitări pe lună pentru fiecare utilizator.",
+      "use_response": "Folosește acest răspuns",
+      "generating_response": "Se generează răspunsul...",
+      "generate_response": "Generează răspuns",
+      "generate_again": "Generează din nou",
+      "content_label": "Conținut:",
+      "response_label": "Răspuns:",
+      "no_response": "Nu a putut fi generat niciun răspuns. Cauza poate fi conținutul sau informațiile despre sarcină insuficiente. Te rugăm să încerci din nou.",
+      "placeholder_with_content": "Spune-i AI-ului ce acțiune să efectueze asupra acestui conținut...",
+      "placeholder_empty": "Întreabă AI orice...",
+      "consent": "Prin utilizarea acestei funcții, ești de acord cu transmiterea mesajului către un serviciu terț."
+    },
+    "multiple_select": {
+      "select_all_in_group": "Selectează tot din grup"
+    },
+    "theme": {
+      "download_config": "Descarcă configurația",
+      "import_config": "Importă configurația",
+      "import_failed": "Importul configurației temei a eșuat",
+      "missing_fields": "Lipsesc câmpurile obligatorii: primary și background",
+      "invalid_brand_hex": "Format hexazecimal invalid pentru culoarea mărcii",
+      "invalid_neutral_hex": "Format hexazecimal invalid pentru culoarea neutră",
+      "invalid_mode": "Mod de temă invalid. Trebuie să fie o valoare booleană",
+      "choose_color_mode": "Alege modul de culoare",
+      "light_mode": "Mod luminos",
+      "dark_mode": "Mod întunecat"
+    },
+    "workspace": {
+      "delete_warning": "Urmează să ștergi spațiul de lucru <name/>. Dacă confirmi, vei pierde accesul la toate datele de lucru din acest spațiu de lucru, fără posibilitatea de a le restaura. Procedează cu mare atenție.",
+      "delete_type_name": "Pentru a continua, introdu numele acestui spațiu de lucru.",
+      "delete_final_confirmation": "Pentru confirmarea finală, scrie mai jos <phrase/>."
+    },
+    "workspace_settings": {
+      "invitation_removed": "Invitația a fost eliminată cu succes.",
+      "workspace_updated": "Spațiul de lucru a fost actualizat cu succes",
+      "picture_removed": "Imaginea spațiului de lucru a fost eliminată cu succes.",
+      "picture_remove_failed": "A apărut o eroare la ștergerea imaginii de profil. Te rugăm să încerci din nou.",
+      "url_copied": "URL-ul spațiului de lucru a fost copiat în clipboard."
+    },
+    "workspace_views": {
+      "delete_failed": "Perspectiva nu a putut fi ștearsă. Te rugăm să încerci din nou.",
+      "create_failed": "Perspectiva nu a putut fi creată. Te rugăm să încerci din nou.",
+      "updated": "Perspectiva a fost actualizată cu succes.",
+      "update_failed": "Perspectiva nu a putut fi actualizată. Te rugăm să încerci din nou.",
+      "edit_view": "Editează perspectiva",
+      "delete_view": "Șterge perspectiva"
+    },
+    "sticky_colors": {
+      "gray": "Gri",
+      "peach": "Piersică",
+      "pink": "Roz",
+      "orange": "Portocaliu",
+      "green": "Verde",
+      "light_blue": "Albastru deschis",
+      "dark_blue": "Albastru închis",
+      "purple": "Violet"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "Lucrează în toate dimensiunile.",
+      "welcome_back": "Bine ai revenit în Pi-Plane.",
+      "create_your_account": "Creează-ți contul Pi-Plane."
+    },
+    "auth_root": {
+      "no_auth_methods_title": "Nu există metode de autentificare disponibile",
+      "no_auth_methods_description": "Te rugăm să contactezi administratorul pentru a activa autentificarea pentru instanța ta."
+    },
+    "auth_password": {
+      "create_account": "Creează cont"
+    },
+    "terms": {
+      "agree_sign_up": "Prin crearea unui cont, înțelegi și accepți \n <terms>Termenii și condițiile</terms> și <privacy>Politica de confidențialitate</privacy> ale noastre.",
+      "agree_sign_in": "Prin autentificare, înțelegi și accepți \n <terms>Termenii și condițiile</terms> și <privacy>Politica de confidențialitate</privacy> ale noastre."
+    },
+    "auth_screens": {
+      "sign_up": "Înregistrează-te",
+      "sign_in": "Autentifică-te",
+      "join_teams": "Alătură-te echipelor care performează mai bine cu Pi-Plane",
+      "not_authorized_view_title": "Hopa! Nu ai autorizație să vizualizezi această pagină",
+      "not_authorized": "Neautorizat!",
+      "not_a_member_description": "Nu ești membru al acestui spațiu de lucru. Contactează administratorul spațiului de lucru pentru a primi o invitație sau verifică invitațiile în așteptare.",
+      "check_pending_invites": "Verifică invitațiile în așteptare"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "Spațiul de lucru nu a fost găsit",
+      "workspace_not_found_description": "Nu s-a găsit niciun spațiu de lucru cu acest URL. Este posibil să nu existe sau să nu ai autorizația de a-l vizualiza.",
+      "visit_profile": "Vizitează profilul"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "Comută meniul de setări",
+      "back_to_project": "Înapoi la proiect",
+      "toggle_project_feature": "Comută funcția proiectului"
+    },
+    "headers": {
+      "toggle_sidebar": "Comută bara laterală"
+    },
+    "profile_activity": {
+      "page_title": "Profil – Activitate"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook-ul a fost actualizat cu succes.",
+      "not_authorized": "Nu ai autorizația de a accesa această pagină.",
+      "enable_webhook": "Activează webhook-ul",
+      "toggle_webhook": "Comută webhook-ul"
+    },
+    "project_settings_empty": {
+      "title": "Încă nu există proiecte",
+      "description": "Proiectele sunt baza muncii orientate spre obiective. Îți permit să gestionezi echipele, sarcinile și tot ce ai nevoie pentru a duce lucrurile la capăt.",
+      "learn_more": "Află mai multe despre proiecte"
+    },
+    "project_templates": {
+      "imported_template": "Șablon importat",
+      "pick_color": "Alege culoarea"
+    },
+    "not_found": {
+      "image_alt": "404 – Pagina nu a fost găsită",
+      "title": "Hopa! Ceva nu a funcționat.",
+      "description": "Ne pare rău, pagina pe care o cauți nu a fost găsită. Este posibil să fi fost ștearsă, să-și fi schimbat numele sau să fie temporar indisponibilă.",
+      "go_to_home": "Mergi la pagina principală"
+    },
+    "api_tokens": {
+      "empty_title": "Niciun token API",
+      "empty_description": "Creează tokenuri API pentru partajarea sigură și ușoară a datelor cu aplicații externe, păstrând controlul și securitatea.",
+      "add_token": "Adaugă token",
+      "delete_token": "Șterge tokenul"
+    },
+    "base_layouts": {
+      "gantt": "Aspect Gantt"
+    },
+    "command_palette": {
+      "no_states_found": "Nu s-au găsit stări"
+    },
+    "quick_actions": {
+      "archive_module_hint": "Pot fi arhivate doar modulele finalizate sau anulate"
+    },
+    "progress": {
+      "cycle_progress": "Progresul ciclului"
+    },
+    "estimates": {
+      "delete_title": "Șterge sistemul de estimare",
+      "delete_description": "Ștergerea sistemului de estimare <name/> îl va elimina definitiv din toate activitățile. Această acțiune nu poate fi anulată. Dacă adaugi din nou estimări, va trebui să actualizezi toate activitățile.",
+      "deleting": "Se șterge",
+      "delete_estimate": "Șterge estimarea",
+      "toggle_estimates": "Comută estimările",
+      "estimates_list": "Lista de estimări",
+      "archived_title": "Estimări arhivate",
+      "archived_description": "Estimările au suferit o modificare. Acestea sunt estimările din versiunile tale mai vechi, care nu erau utilizate. Citește mai multe despre ele <link>aici.</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "Creează dependență „blocat de”",
+      "create_blocking_dependency": "Creează dependență „blochează”",
+      "update_block_dates_failed": "A apărut o problemă la actualizarea datelor blocului"
+    },
+    "product_updates": {
+      "fetch_failed": "Întâmpinăm probleme la preluarea actualizărilor. Vizitează jurnalul nostru de modificări pentru a vedea cele mai recente actualizări.",
+      "go_to_changelog": "Mergi la jurnalul de modificări"
+    },
+    "inbox": {
+      "intake_form_user": "Utilizator al formularului Intake",
+      "status": "Stare",
+      "created_by": "Creat de"
+    },
+    "instance": {
+      "contact_support": "Contactează asistența",
+      "maintenance_title": "🚧 Se pare că Pi-Plane nu a pornit corect!",
+      "maintenance_description": "Este posibil ca unele servicii să nu fi pornit. Verifică jurnalele containerelor pentru a identifica și rezolva problema. Dacă ai rămas blocat, contactează echipa noastră de asistență pentru ajutor suplimentar.",
+      "welcome_title": "Bun venit în Pi-Plane",
+      "welcome_description": "Configurează instanța și creează primul spațiu de lucru pentru a începe să gestionezi proiecte și activități."
+    },
+    "integrations": {
+      "github_installed": "Activează GitHub pentru proiecte individuale pentru a sincroniza cu anumite depozite.",
+      "github_not_installed": "Conectează GitHub la spațiul tău de lucru Pi-Plane pentru a sincroniza activitățile proiectului.",
+      "slack_installed": "Activează Slack pentru proiecte individuale pentru a sincroniza cu anumite canale.",
+      "slack_not_installed": "Conectează Slack la spațiul tău de lucru Pi-Plane pentru a sincroniza activitățile proiectului.",
+      "deleted_title": "Șters cu succes!",
+      "deleted_message": "Integrarea {title} a fost ștearsă cu succes.",
+      "delete_failed_message": "Integrarea {title} nu a putut fi ștearsă. Te rugăm să încerci din nou.",
+      "logo_alt": "Sigla {title}",
+      "loading": "Se încarcă...",
+      "no_permission": "Nu ai permisiunea de a efectua această acțiune",
+      "uninstalling": "Se dezinstalează...",
+      "uninstall": "Dezinstalează",
+      "installing": "Se instalează...",
+      "install": "Instalează"
+    },
+    "attachments": {
+      "upload_progress": "Progresul încărcării"
+    },
+    "labels": {
+      "delete_confirmation": "Sigur vrei să ștergi <name/>? Această acțiune va elimina eticheta din toate activitățile și din toate perspectivele în care se filtrează după ea.",
+      "edit_label": "Editează eticheta",
+      "delete_label": "Șterge eticheta",
+      "remove_from_group": "Elimină din grup"
+    },
+    "modules": {
+      "module_progress": "Progresul modulului"
+    },
+    "navigation": {
+      "icon_only": "Doar pictogramă",
+      "icon_with_name": "Pictogramă cu nume",
+      "dock_app_rail": "Ancorează bara de aplicații",
+      "undock_app_rail": "Detașează bara de aplicații",
+      "minimum_value_is_one": "Valoarea minimă este 1",
+      "show": "Afișează",
+      "clear_default": "Șterge valoarea implicită",
+      "hide_in_more_menu": "Ascunde în meniul Mai multe",
+      "project_link_copied": "Linkul proiectului a fost copiat în clipboard.",
+      "copy_failed": "Copierea a eșuat",
+      "copy_failed_message": "Nu am putut copia linkul. Te rugăm să încerci din nou.",
+      "default_tab_updated": "Fila implicită a fost actualizată cu succes.",
+      "default_tab_update_failed": "Nu s-a putut actualiza fila implicită. Te rugăm să încerci din nou mai târziu.",
+      "hide_tab_failed": "Nu s-a putut ascunde fila. Te rugăm să încerci din nou mai târziu.",
+      "generic_error": "Ceva nu a funcționat. Te rugăm să încerci din nou mai târziu."
+    },
+    "onboarding": {
+      "select_workspace_invitation": "Selectează invitația în spațiul de lucru"
+    },
+    "tour": {
+      "work_items_title": "Planifică cu ajutorul activităților",
+      "work_items_description": "Activitatea este unitatea de bază din Pi-Plane. Majoritatea conceptelor din Pi-Plane sunt asociate cu activitățile și cu proprietățile lor.",
+      "cycles_title": "Avansează cu ciclurile",
+      "cycles_description": "Ciclurile te ajută pe tine și echipa ta să avansați mai repede, similar sprinturilor folosite frecvent în dezvoltarea agilă.",
+      "modules_title": "Împarte în module",
+      "modules_description": "Modulele împart lucrurile mari în proiecte sau funcționalități, pentru o organizare mai bună.",
+      "views_description": "Creează filtre personalizate pentru a afișa doar activitățile care contează pentru tine. Salvează și partajează filtrele cu doar câteva clicuri.",
+      "pages_title": "Documentează cu ajutorul paginilor",
+      "pages_description": "Folosește paginile pentru a nota rapid activitățile în timpul unei ședințe sau la începutul zilei.",
+      "welcome_title": "Bun venit în Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "Ne bucurăm că ai decis să încerci Pi-Plane. Acum îți poți gestiona proiectele cu ușurință. Începe prin a crea un proiect.",
+      "take_tour": "Urmează turul produsului",
+      "skip": "Nu, mulțumesc, voi explora singur",
+      "create_first_project": "Creează primul tău proiect",
+      "sidebar_heading": "Să începem!<br/>Profită la maximum de Pi-Plane."
+    },
+    "ai": {
+      "ask_pi": "Întreabă Pi",
+      "tone_professional": "💼 Profesional",
+      "tone_casual": "😃 Casual",
+      "third_party_consent": "Prin utilizarea acestei funcții, ești de acord cu transmiterea mesajului către un serviciu terț.",
+      "pi_writing": "Pi scrie",
+      "pi_generating_response": "Pi generează răspunsul"
+    },
+    "pages": {
+      "icon": "Pictogramă",
+      "color": "Culoare",
+      "remove_text_color": "Elimină culoarea textului",
+      "remove_background_color": "Elimină culoarea fundalului",
+      "formatting_toolbar": "Bara de formatare",
+      "copied_link": "Link copiat",
+      "remove_favorite": "Elimină din favorite",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "Bot {name}"
+    },
+    "project": {
+      "identifier": "Identificator"
+    },
+    "projects": {
+      "toggle_feature": "Comută funcția proiectului",
+      "cover_upload_failed": "Încărcarea imaginii de copertă a eșuat"
+    },
+    "notifications": {
+      "notification_options": "Opțiuni de notificare"
+    },
+    "stores": {
+      "generic_error": "A apărut o eroare",
+      "inbox_fetch_error": "Eroare la preluarea activităților Intake. Te rugăm să încerci din nou mai târziu.",
+      "page_make_public_error": "Pagina nu a putut fi partajată cu proiectul. Încearcă din nou mai târziu.",
+      "page_make_private_error": "Pagina nu a putut fi făcută vizibilă doar pentru tine. Încearcă din nou mai târziu.",
+      "workflow_pending_approval": "Activitatea are o aprobare în așteptare.",
+      "workflow_transition_not_allowed": "Această tranziție de stare nu este permisă de fluxul de lucru."
+    },
+    "validation": {
+      "name_max_length": "Numele trebuie să aibă cel mult 50 de caractere",
+      "name_special_chars": "Numele nu pot conține caractere speciale precum {chars}",
+      "name_invalid_chars": "Numele pot conține doar litere, spații, cratime și apostrofuri",
+      "display_name_max_length": "Numele afișat trebuie să aibă cel mult 50 de caractere",
+      "display_name_special_chars": "Numele afișat nu poate conține caractere speciale precum {chars}",
+      "display_name_invalid_chars": "Numele afișat poate conține doar litere, cifre, puncte, cratime și liniuțe de subliniere",
+      "company_name_max_length": "Numele companiei trebuie să aibă cel mult 80 de caractere",
+      "company_name_special_chars": "Numele companiei nu poate conține caractere speciale precum {chars}",
+      "company_name_invalid_chars": "Numele companiei poate conține doar litere, cifre, spații, cratime și liniuțe de subliniere",
+      "company_name_needs_alphanumeric": "Numele companiei trebuie să conțină cel puțin o literă sau o cifră",
+      "workspace_name_required": "Numele spațiului de lucru este obligatoriu",
+      "workspace_name_max_length": "Numele spațiului de lucru trebuie să aibă cel mult 80 de caractere",
+      "workspace_name_special_chars": "Numele spațiului de lucru nu poate conține caractere speciale precum {chars}",
+      "workspace_name_invalid_chars": "Numele spațiului de lucru poate conține doar litere, cifre, spații, cratime și liniuțe de subliniere",
+      "workspace_name_needs_alphanumeric": "Numele spațiului de lucru trebuie să conțină cel puțin o literă sau o cifră",
+      "slug_required": "Slug-ul este obligatoriu",
+      "slug_max_length": "Slug-ul trebuie să aibă cel mult 48 de caractere",
+      "slug_special_chars": "Slug-ul nu poate conține caractere speciale precum {chars}",
+      "slug_invalid_chars": "Slug-ul poate conține doar litere, cifre, cratime și liniuțe de subliniere"
+    },
+    "analytics": {
+      "state_name": "Numele stării",
+      "estimate_point": "Punct de estimare",
+      "completed_date": "Data finalizării",
+      "yesterday": "Ieri",
+      "last_7_days": "Ultimele 7 zile",
+      "last_30_days": "Ultimele 30 de zile",
+      "last_3_months": "Ultimele 3 luni",
+      "duration": "Durată"
+    },
+    "auth_labels": {
+      "one_time_code": "Cod de unică folosință"
+    },
+    "state_groups": {
+      "canceled": "Anulat"
+    },
+    "filters": {
+      "state_group": "Grup de stări",
+      "subscriber": "Abonat"
+    }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Închide"
+    },
+    "auth_header": {
+      "sign_in_header": "Autentifică-te pentru a vota sau a comenta",
+      "sign_in_sub_header": "Contribuie la stabilirea funcțiilor care vor fi dezvoltate.",
+      "sign_up_header": "Vizualizează, comentează și fă mai mult",
+      "sign_up_sub_header": "Înregistrează-te sau autentifică-te pentru a lucra cu activitățile și paginile din Pi-Plane.",
+      "default_header": "Comentează sau reacționează la activități",
+      "default_sub_header": "Folosește Pi-Plane pentru a-ți aduce contribuția la funcții."
+    },
+    "terms": {
+      "agree_sign_up": "Prin crearea unui cont, ești de acord cu\n<terms>Termenii și condițiile</terms> și cu <privacy>Politica de confidențialitate</privacy>.",
+      "agree_sign_in": "Prin autentificare, ești de acord cu\n<terms>Termenii și condițiile</terms> și cu <privacy>Politica de confidențialitate</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Excelent! Încă un pas.",
+      "description": "Introdu în bara de adrese a browserului linkul partajat al vizualizării sau al paginii pe care vrei să o vezi.",
+      "image_alt": "Utilizatorul este deja autentificat"
+    },
+    "auth_one_time_code": {
+      "resend_in": "Retrimite în {seconds} s"
+    },
+    "oauth": {
+      "sign_up_with": "Înregistrează-te cu {provider}",
+      "sign_in_with": "Autentifică-te cu {provider}",
+      "continue_with": "Continuă cu {provider}"
+    },
+    "issues": {
+      "shared_project_load_failed": "Acest proiect partajat nu a putut fi încărcat. Încearcă din nou mai târziu.",
+      "cycle_tooltip": "Ciclu: {name}",
+      "no_cycle": "Fără ciclu",
+      "due_date_tooltip": "Data limită: {date}",
+      "no_date": "Fără dată",
+      "labels_tooltip": "Etichete: {labels}",
+      "no_labels": "Fără etichete",
+      "labels_count": "{count} etichete",
+      "no_assignees": "Fără responsabili",
+      "comment_post_failed": "Comentariul nu a putut fi publicat. Încearcă din nou.",
+      "add_comment_placeholder": "Adaugă un comentariu...",
+      "sign_in_to_comment": "Autentifică-te pentru a adăuga un comentariu",
+      "empty": "Gol",
+      "no_upvotes": "Încă nu există voturi pentru",
+      "no_downvotes": "Încă nu există voturi împotrivă",
+      "voters_and_more": "{names} și încă {count}"
+    },
+    "error_page": {
+      "title": "Oops! Nu arată bine.",
+      "description": "Pi-Plane s-a blocat. Nu-ți face griji, inginerii noștri au fost notificați. Dacă ai mai multe detalii, raportează-le pe <github/>."
+    },
+    "not_found_page": {
+      "title": "Nu a funcționat",
+      "description": "Verifică adresa URL introdusă în bara de adrese a browserului și încearcă din nou."
+    },
+    "powered_by": {
+      "label": "Oferit de <name>Pi-Plane</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Eroare la instanța Pi-Plane",
+      "title": "Nu s-au putut obține detaliile instanței.",
+      "description": "Nu am putut obține detaliile instanței.",
+      "hint": "Nu-ți face griji, poate fi doar o problemă de conectivitate."
+    }
   }
 }

@@ -16,6 +16,7 @@ from django.db import models
 from .base import BaseModel
 from plane.utils.constants import RESTRICTED_WORKSPACE_SLUGS
 from plane.utils.color import get_random_color
+from plane.utils.weekend_days import default_weekend_days, validate_weekend_days
 
 ROLE_CHOICES = ((20, "Admin"), (15, "Member"), (5, "Guest"))
 
@@ -35,9 +36,9 @@ def get_default_props():
         },
         "display_filters": {
             "group_by": None,
-            "order_by": "-created_at",
+            "order_by": "created_at",
             "type": None,
-            "sub_issue": True,
+            "sub_issue": False,
             "show_empty_groups": True,
             "layout": "list",
             "calendar_date_range": "",
@@ -78,9 +79,9 @@ def get_default_display_filters():
     return {
         "display_filters": {
             "group_by": None,
-            "order_by": "-created_at",
+            "order_by": "created_at",
             "type": None,
-            "sub_issue": True,
+            "sub_issue": False,
             "show_empty_groups": True,
             "layout": "list",
             "calendar_date_range": "",
@@ -117,6 +118,18 @@ def slug_validator(value):
         raise ValidationError("Slug is not valid")
 
 
+SUNDAY = 0
+START_OF_THE_WEEK_CHOICES = (
+    (SUNDAY, "Sunday"),
+    (1, "Monday"),
+    (2, "Tuesday"),
+    (3, "Wednesday"),
+    (4, "Thursday"),
+    (5, "Friday"),
+    (6, "Saturday"),
+)
+
+
 class Workspace(BaseModel):
     TIMEZONE_CHOICES = tuple(zip(pytz.common_timezones, pytz.common_timezones))
 
@@ -137,6 +150,10 @@ class Workspace(BaseModel):
     slug = models.SlugField(max_length=48, db_index=True, unique=True, validators=[slug_validator])
     organization_size = models.CharField(max_length=20, blank=True, null=True)
     timezone = models.CharField(max_length=255, default="UTC", choices=TIMEZONE_CHOICES)
+    # First day of the week for the workspace's projects (0 = Sunday ... 6 = Saturday); a new project copies it
+    start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=SUNDAY)
+    # Days that count as non-working time (0 = Sunday ... 6 = Saturday); a new project copies them
+    weekend_days = models.JSONField(default=default_weekend_days, validators=[validate_weekend_days])
     background_color = models.CharField(max_length=255, default=get_random_color)
 
     def __str__(self):

@@ -1,0 +1,174 @@
+{
+  "format": {
+    "date": "%d/%m/%Y"
+  },
+  "priority": {
+    "urgent": "Mendesak",
+    "high": "Tinggi",
+    "medium": "Sedang",
+    "low": "Rendah",
+    "none": "Tidak ada"
+  },
+  "issue_updates": {
+    "title": "Pembaruan {identifier}",
+    "summary": "Item kerja diperbarui oleh <strong>{actor}</strong>.",
+    "summary_others": "Item kerja diperbarui oleh <strong>{actor}</strong> dan lainnya.",
+    "title_changed": "Judul item kerja diubah menjadi {title}",
+    "updates": "Pembaruan",
+    "due_date": "Tanggal jatuh tempo:",
+    "duplicate": "Duplikat:",
+    "assignee": "Penugas:",
+    "labels": "Label:",
+    "state": "Status:",
+    "links": "Tautan:",
+    "priority": "Prioritas:",
+    "blocking": "Memblokir:",
+    "comments": "Komentar",
+    "more": "+{count} lainnya",
+    "links_removed": {
+      "other": "{count} tautan dihapus"
+    },
+    "view": "Lihat item kerja",
+    "footer": "Email ini dikirim ke <a href=\"mailto:{email}\">{email}</a>. Jika Anda tidak ingin menerima email seperti ini, Anda dapat <a href=\"{issue_url}\">berhenti berlangganan item kerja ini</a> atau <a href=\"{preferences_url}\">mengelola preferensi email Anda</a>."
+  },
+  "digest": {
+    "title": "Ringkasan pembaruan",
+    "greeting_named": "Halo {name}, Anda memiliki {summary}",
+    "greeting": "Anda memiliki {summary}",
+    "updates_count": {
+      "other": "{count} pembaruan"
+    },
+    "summary": {
+      "other": "{updates} pada {count} item kerja yang Anda ikuti."
+    },
+    "subject": {
+      "other": "Ringkasan: {updates} pada {count} item kerja"
+    },
+    "comments": "komentar: {count}",
+    "footer": "Ini adalah ringkasan pembaruan item kerja. Anda menerima sebutan secara langsung. <a href=\"{preferences_url}\">Ubah pengaturan notifikasi</a>."
+  },
+  "due_reminder": {
+    "title": "Pengingat item kerja",
+    "greeting_named": "Halo {name}, Anda memiliki {summary}",
+    "greeting": "Anda memiliki {summary}",
+    "section_overdue": "Terlambat",
+    "section_today": "Item kerja yang jatuh tempo hari ini",
+    "work_items": {
+      "other": "{count} item kerja"
+    },
+    "overdue": {
+      "other": "{count} terlambat"
+    },
+    "overdue_only": {
+      "other": "{count} item kerja terlambat"
+    },
+    "summary_both": "{today} yang jatuh tempo hari ini dan {overdue}.",
+    "summary_today": "{today} yang jatuh tempo hari ini ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "Anda memiliki {today} yang jatuh tempo hari ini dan {overdue}",
+    "subject_today": "Anda memiliki {today} yang jatuh tempo hari ini ({date})",
+    "subject_overdue": "Anda memiliki {overdue}",
+    "days_overdue": {
+      "other": "terlambat {count} hari"
+    },
+    "cta": "Lihat item kerja saya",
+    "footer": "Ini adalah pengingat otomatis yang dikirim setiap pagi tentang item kerja yang jatuh tempo hari ini dan item kerja yang sudah melewati tenggat."
+  },
+  "project_addition": {
+    "subject": "Anda diundang ke proyek Pi-Plane",
+    "preheader": "{inviter} mengundang Anda ke proyek {project} di ruang kerja {workspace} di Pi-Plane.",
+    "heading": "Anda diundang ke proyek {project} di Pi-Plane",
+    "intro": "{inviter} mengundang Anda untuk bekerja sama di proyek <strong>{project}</strong> di ruang kerja <strong>{workspace}</strong> di Pi-Plane.",
+    "button": "Buka proyek",
+    "fallback": "Jika tombol tidak berfungsi, salin tautan ini dan tempel di browser Anda:",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span>. Jika Anda tidak mengharapkan undangan ini, Anda dapat mengabaikan email ini."
+  },
+  "access_request": {
+    "subject": "{requester} meminta bergabung dengan {project}",
+    "preheader": "{requester} meminta bergabung dengan proyek privat {project} di ruang kerja {workspace} di Pi-Plane.",
+    "heading": "Permintaan akses untuk proyek {project}",
+    "intro": "<strong>{requester}</strong> meminta bergabung dengan proyek privat <strong>{project}</strong> di ruang kerja <strong>{workspace}</strong> di Pi-Plane. Anda dapat menyetujui atau menolak permintaan ini di pengaturan anggota proyek.",
+    "message": "Pesan:",
+    "button": "Tinjau permintaan",
+    "fallback": "Jika tombol tidak berfungsi, salin tautan ini dan tempel di browser Anda:",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span> karena Anda adalah admin atau pemimpin proyek ini."
+  },
+  "access_request_decision": {
+    "subject_approved": "Permintaan Anda untuk bergabung dengan {project} disetujui",
+    "subject_rejected": "Permintaan Anda untuk bergabung dengan {project} tidak disetujui",
+    "heading_approved": "Sekarang Anda memiliki akses ke {project}",
+    "heading_rejected": "Permintaan Anda untuk bergabung dengan {project}",
+    "intro_approved": "<strong>{decider}</strong> menyetujui permintaan Anda untuk bergabung dengan proyek privat <strong>{project}</strong> di ruang kerja <strong>{workspace}</strong> di Pi-Plane. Anda sudah dapat membukanya.",
+    "intro_rejected": "<strong>{decider}</strong> tidak menyetujui permintaan Anda untuk bergabung dengan proyek privat <strong>{project}</strong> di ruang kerja <strong>{workspace}</strong> di Pi-Plane. Jika Anda merasa ini keliru, hubungi admin proyek.",
+    "button": "Buka proyek",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span> karena Anda meminta bergabung dengan proyek ini."
+  },
+  "one_time_code": {
+    "subject": "Kode masuk Pi-Plane sekali pakai Anda adalah {code}",
+    "preheader": "Kode masuk Pi-Plane Anda {code} berlaku selama 10 menit.",
+    "heading": "Kode masuk Anda untuk Pi-Plane",
+    "info": "Kode ini berlaku selama 10 menit ke depan. Masukkan di halaman masuk untuk menyelesaikan proses masuk.",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span>. Jika Anda tidak mengharapkan kode masuk, Anda dapat mengabaikan pesan ini."
+  },
+  "forgot_password": {
+    "subject": "Kata sandi baru untuk akun Pi-Plane Anda telah diminta",
+    "preheader": "Setel ulang kata sandi Pi-Plane Anda dengan tautan aman ini.",
+    "heading": "Setel ulang kata sandi Pi-Plane Anda",
+    "intro": "Kami menerima permintaan untuk menyetel ulang kata sandi Pi-Plane Anda. Untuk menyetel ulang, klik tombol di bawah.",
+    "button": "Setel ulang kata sandi",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span>. Jika Anda tidak meminta penyetelan ulang kata sandi, Anda dapat mengabaikan email ini."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} mengundang Anda bergabung di {workspace} pada Pi-Plane",
+    "preheader": "{inviter} mengundang Anda bergabung di {workspace} pada Pi-Plane.",
+    "heading": "Bergabung dengan {workspace} di Pi-Plane",
+    "intro": "{inviter} mengundang Anda berkolaborasi di ruang kerja <strong>{workspace}</strong> pada Pi-Plane.",
+    "button": "Terima undangan",
+    "note": "Catatan: Undangan ini ditujukan untuk <span>{email}</span>. Jika Anda tidak mengharapkan undangan ini, Anda dapat mengabaikan email ini."
+  },
+  "account_activated": {
+    "subject": "{name} telah diaktifkan di Pi-Plane",
+    "heading": "Anda kembali di Pi-Plane.",
+    "body": "Akun Anda telah diaktifkan kembali dan Anda dapat mengakses item kerja dan data lainnya jika proyek masih aktif. Anda juga dapat membuat ruang kerja baru dan mulai menambahkan proyek.",
+    "button": "Buka Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "{name} telah dinonaktifkan di Pi-Plane",
+    "heading": "Anda keluar dari Pi-Plane.",
+    "body": "Anda berhasil menonaktifkan akun Anda. Item kerja, siklus, dan data proyek lainnya tetap dapat diakses selama proyek aktif dan memiliki anggota lain.",
+    "button": "Aktifkan kembali akun"
+  },
+  "email_updated": {
+    "subject": "Alamat email Pi-Plane berhasil diperbarui",
+    "body": "Anda berhasil memperbarui alamat email Pi-Plane Anda menjadi {email}.",
+    "login": "Sekarang Anda dapat masuk dengan alamat email ini."
+  },
+  "email_update_code": {
+    "subject": "Verifikasi alamat email baru Anda"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook dinonaktifkan",
+    "message": "Webhook {url} telah dinonaktifkan karena permintaan yang gagal.",
+    "button": "Lihat webhook"
+  },
+  "analytics_export": {
+    "subject": "Ekspor Anda sudah siap",
+    "preheader": "Ekspor data Pi-Plane Analytics yang Anda minta dilampirkan sebagai file CSV.",
+    "heading": "Ekspor Pi-Plane Analytics Anda sudah siap",
+    "intro": "Ekspor data dari Pi-Plane Analytics yang Anda minta sudah siap. Kami melampirkannya sebagai file CSV untuk kemudahan Anda.",
+    "hint": "Anda dapat membuka CSV di spreadsheet atau alat BI mana pun untuk menganalisis data, membuat laporan, atau membagikan wawasan dengan tim Anda."
+  },
+  "shared": {
+    "recipient_note": "Email ini dikirim ke {email}. Harap hapus jika Anda bukan penerima yang dituju.",
+    "fallback": "Jika tombol tidak berfungsi, salin tautan ini dan tempel di browser Anda:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} menulis kepada admin {workspace}",
+    "preheader": "{sender} mengirim pesan kepada admin {workspace} di Pi-Plane.",
+    "heading": "Pesan untuk admin {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) menulis kepada admin ruang kerja <strong>{workspace}</strong> di Pi-Plane.",
+    "message": "Pesan:",
+    "reply": "Balas email ini untuk menjawab {sender} secara langsung.",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span> karena Anda adalah admin ruang kerja ini."
+  }
+}

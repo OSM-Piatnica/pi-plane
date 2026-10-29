@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Third party imports
@@ -31,6 +32,7 @@ from plane.utils.url import contains_url
 from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
+    has_alphanumeric,
 )
 
 # Django imports
@@ -48,6 +50,11 @@ class WorkSpaceSerializer(DynamicBaseSerializer):
         # Check if the name contains a URL
         if contains_url(value):
             raise serializers.ValidationError("Name must not contain URLs")
+        # Reject symbol-only names like "-_________-" that have no letter or
+        # digit. Mirrors the frontend HAS_ALPHANUMERIC_REGEX check so the rule
+        # cannot be bypassed via a direct API call.
+        if not has_alphanumeric(value):
+            raise serializers.ValidationError("Name must contain at least one letter or number")
         return value
 
     def validate_slug(self, value):
@@ -72,6 +79,7 @@ class WorkSpaceSerializer(DynamicBaseSerializer):
             "updated_at",
             "owner",
             "logo_url",
+            "deleted_at",
         ]
 
 
@@ -88,6 +96,16 @@ class WorkSpaceMemberSerializer(DynamicBaseSerializer):
     class Meta:
         model = WorkspaceMember
         fields = "__all__"
+        read_only_fields = [
+            "id",
+            "workspace",
+            "is_active",
+            "created_by",
+            "updated_by",
+            "created_at",
+            "updated_at",
+            "deleted_at",
+        ]
 
 
 class WorkspaceMemberMeSerializer(BaseSerializer):
@@ -98,12 +116,8 @@ class WorkspaceMemberMeSerializer(BaseSerializer):
         fields = "__all__"
 
 
-class WorkspaceMemberAdminSerializer(DynamicBaseSerializer):
+class WorkspaceMemberAdminSerializer(WorkSpaceMemberSerializer):
     member = UserAdminLiteSerializer(read_only=True)
-
-    class Meta:
-        model = WorkspaceMember
-        fields = "__all__"
 
 
 class WorkSpaceMemberInviteSerializer(BaseSerializer):
@@ -127,6 +141,33 @@ class WorkSpaceMemberInviteSerializer(BaseSerializer):
             "updated_at",
             "invite_link",
         ]
+
+
+class WorkSpaceMemberInvitePublicSerializer(BaseSerializer):
+    """Safe read-only serializer for the public workspace invite GET endpoint.
+
+    Intentionally excludes ``token`` and ``invite_link`` so that an
+    unauthenticated caller cannot retrieve the acceptance token and use it to
+    hijack an invitation (GHSA-86mg-259g-pwgg / GHSA-gf48-p6jp-cwc4).
+    """
+
+    workspace = WorkspaceLiteSerializer(read_only=True)
+
+    class Meta:
+        model = WorkspaceMemberInvite
+        fields = [
+            "id",
+            "email",
+            "workspace",
+            "role",
+            "message",
+            "accepted",
+            "responded_at",
+            "created_at",
+            "updated_at",
+            "created_by",
+        ]
+        read_only_fields = fields
 
 
 class WorkspaceThemeSerializer(BaseSerializer):

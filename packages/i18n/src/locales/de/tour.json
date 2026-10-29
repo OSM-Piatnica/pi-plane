@@ -6,15 +6,15 @@
         "description": "Um Ihnen den Einstieg zu erleichtern, haben wir ein Demo-Projekt für Sie erstellt. Fügen wir Ihr erstes Arbeitselement hinzu."
       },
       "step_one": {
-        "title": "Klicken Sie auf \"+ Arbeitselement hinzufügen\"",
-        "description": "Beginnen Sie, indem Sie auf die Schaltfläche \"+ Neues Arbeitselement\" klicken. Sie können Aufgaben, Fehler oder einen benutzerdefinierten Typ erstellen, der Ihren Anforderungen entspricht."
+        "title": "Klicken Sie auf „+ Arbeitselement hinzufügen“",
+        "description": "Beginnen Sie, indem Sie auf die Schaltfläche „+ Neues Arbeitselement“ klicken. Sie können Aufgaben, Fehler oder einen benutzerdefinierten Typ erstellen, der Ihren Anforderungen entspricht."
       },
       "step_two": {
         "title": "Filtern Sie Ihre Arbeitselemente",
         "description": "Verwenden Sie Filter, um Ihre Liste schnell einzugrenzen. Sie können nach Status, Priorität oder Teammitgliedern filtern. "
       },
       "step_three": {
-        "title": "Anzeigen, gruppieren und sortieren Sie Arbeitselemente nach Bedarf.",
+        "title": "Arbeitselemente nach Bedarf anzeigen, gruppieren und sortieren.",
         "description": "Sehen Sie erforderliche Eigenschaften und gruppieren oder sortieren Sie Arbeitselemente nach Ihren Bedürfnissen."
       },
       "step_four": {
@@ -25,19 +25,19 @@
     "cycle": {
       "step_zero": {
         "title": "Fortschritt mit Zyklen machen",
-        "description": "Drücken Sie Q, um einen Zyklus zu erstellen. Benennen Sie ihn und legen Sie Daten fest—nur ein Zyklus pro Projekt."
+        "description": "Drücken Sie Q, um einen Zyklus zu erstellen. Benennen Sie ihn und legen Sie Daten fest – nur ein Zyklus pro Projekt."
       },
       "step_one": {
         "title": "Neuen Zyklus erstellen",
-        "description": "Drücken Sie Q, um einen Zyklus zu erstellen. Benennen Sie ihn und legen Sie Daten fest—nur ein Zyklus pro Projekt."
+        "description": "Drücken Sie Q, um einen Zyklus zu erstellen. Benennen Sie ihn und legen Sie Daten fest – nur ein Zyklus pro Projekt."
       },
       "step_two": {
-        "title": "Klicken Sie auf \"+\"",
-        "description": "Beginnen Sie, indem Sie auf die Schaltfläche \"+\" klicken. Fügen Sie neue oder vorhandene Arbeitselemente direkt von der Zyklus-Seite hinzu."
+        "title": "Klicken Sie auf „+“",
+        "description": "Beginnen Sie, indem Sie auf die Schaltfläche „+“ klicken. Fügen Sie neue oder vorhandene Arbeitselemente direkt von der Zyklus-Seite hinzu."
       },
       "step_three": {
         "title": "Zyklus-Zusammenfassung",
-        "description": "Verfolgen Sie den Zyklusfortschritt, die Teamproduktivität und Prioritäten—und untersuchen Sie, ob etwas zurückfällt."
+        "description": "Verfolgen Sie den Zyklusfortschritt, die Teamproduktivität und Prioritäten – und untersuchen Sie, ob etwas zurückfällt."
       },
       "step_four": {
         "title": "Arbeitselemente übertragen",
@@ -54,11 +54,11 @@
         "description": "Module sind kleinere, fokussierte Projekte, die Benutzern helfen, Arbeitselemente innerhalb bestimmter Zeitrahmen zu gruppieren und zu organisieren."
       },
       "step_two": {
-        "title": "Klicken Sie auf \"+\"",
-        "description": "Beginnen Sie, indem Sie auf die Schaltfläche \"+\" klicken. Fügen Sie neue oder vorhandene Arbeitselemente direkt von der Modul-Seite hinzu."
+        "title": "Klicken Sie auf „+“",
+        "description": "Beginnen Sie, indem Sie auf die Schaltfläche „+“ klicken. Fügen Sie neue oder vorhandene Arbeitselemente direkt von der Modul-Seite hinzu."
       },
       "step_three": {
-        "title": "Modulzustände",
+        "title": "Modulstatus",
         "description": "Module verwenden diese Status, um Benutzern bei der Planung zu helfen und Fortschritt und Phase klar zu verfolgen."
       },
       "step_four": {
@@ -69,11 +69,11 @@
     "page": {
       "step_zero": {
         "title": "Dokumentieren mit KI-gestützten Seiten",
-        "description": "Seiten in Plane ermöglichen es Ihnen, Projektinformationen zu erfassen, zu organisieren und daran zusammenzuarbeiten—ohne externe Tools."
+        "description": "Seiten in Pi-Plane ermöglichen es Ihnen, Projektinformationen zu erfassen, zu organisieren und daran zusammenzuarbeiten – ohne externe Tools."
       },
       "step_one": {
-        "title": "Seite als Öffentlich oder Privat festlegen",
-        "description": "Seiten können als öffentlich festgelegt werden, sichtbar für alle in Ihrem Arbeitsbereich, oder privat, nur für Sie zugänglich."
+        "title": "Eine Seite teilen oder für sich behalten",
+        "description": "Seiten können mit allen im Projekt geteilt werden oder nur für Sie sichtbar bleiben."
       },
       "step_two": {
         "title": "/ Befehl verwenden",
@@ -127,7 +127,7 @@
       },
       "step_zero": {
         "title": "Finden Sie sofort alles",
-        "description": "Verwenden Sie die universelle Suche, um zu Aufgaben, Projekten, Seiten und Personen zu springen—ohne Ihren Arbeitsfluss zu verlassen."
+        "description": "Verwenden Sie die universelle Suche, um zu Aufgaben, Projekten, Seiten und Personen zu springen – ohne Ihren Arbeitsfluss zu verlassen."
       },
       "step_one": {
         "title": "Behalten Sie die Kontrolle über Updates",
@@ -154,7 +154,7 @@
   },
   "get_started": {
     "title": "Hallo {name}, willkommen an Bord!",
-    "description": "Hier ist alles, was Sie brauchen, um Ihre Reise mit Plane zu starten.",
+    "description": "Hier ist alles, was Sie brauchen, um Ihre Reise mit Pi-Plane zu starten.",
     "checklist_section": {
       "title": "Loslegen",
       "description": "Beginnen Sie mit der Einrichtung und sehen Sie, wie Ihre Ideen schneller zum Leben erwachen.",
@@ -188,8 +188,8 @@
       "more_integrations": "Weitere Integrationen durchsuchen"
     },
     "switch_to_plane_section": {
-      "title": "Entdecken Sie, warum Teams zu Plane wechseln",
-      "description": "Vergleichen Sie Plane mit den Tools, die Sie heute verwenden, und sehen Sie den Unterschied."
+      "title": "Entdecken Sie, warum Teams zu Pi-Plane wechseln",
+      "description": "Vergleichen Sie Pi-Plane mit den Tools, die Sie heute verwenden, und sehen Sie den Unterschied."
     }
   }
 }

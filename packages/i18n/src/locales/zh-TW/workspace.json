@@ -1,7 +1,7 @@
 {
   "workspace_creation": {
     "heading": "建立您的工作區",
-    "subheading": "若要開始使用 Plane，您需要建立或加入工作區。",
+    "subheading": "若要開始使用 Pi-Plane，您需要建立或加入工作區。",
     "form": {
       "name": {
         "label": "為您的工作區命名",
@@ -54,11 +54,11 @@
     "empty_state": {
       "general": {
         "title": "您的專案、活動和指標概覽",
-        "description": "歡迎使用 Plane，我們很高興您在這裡。建立您的第一個專案並追蹤您的工作事項，這個頁面將會變成一個協助您進展的空間。管理員也會看到協助他們團隊進展的項目。",
+        "description": "歡迎使用 Pi-Plane，我們很高興您在這裡。建立您的第一個專案並追蹤您的工作事項，這個頁面將會變成一個協助您進展的空間。管理員也會看到協助他們團隊進展的項目。",
         "primary_button": {
           "text": "建立您的第一個專案",
           "comic": {
-            "title": "在 Plane 中，一切都始於專案",
+            "title": "在 Pi-Plane 中，一切都始於專案",
             "description": "專案可以是產品的藍圖、行銷活動，或是推出新車。"
           }
         }
@@ -157,13 +157,17 @@
     },
     "network": {
       "label": "網路",
+      "secret": {
+        "title": "機密",
+        "description": "對非成員不可見"
+      },
       "private": {
         "title": "私人",
-        "description": "僅受邀者可存取"
+        "description": "工作區內所有人可見;存取需要核准或邀請"
       },
       "public": {
-        "title": "公開",
-        "description": "工作區中除了訪客以外的任何人都可以加入"
+        "title": "開放",
+        "description": "對工作區開放：除訪客外的任何成員都可以加入"
       }
     },
     "error": {
@@ -200,7 +204,7 @@
         "primary_button": {
           "text": "開始您的第一個專案",
           "comic": {
-            "title": "在 Plane 中，一切都始於專案",
+            "title": "在 Pi-Plane 中，一切都始於專案",
             "description": "專案可以是產品的藍圖、行銷活動，或是推出新車。"
           }
         }
@@ -211,7 +215,7 @@
         "primary_button": {
           "text": "開始您的第一個專案",
           "comic": {
-            "title": "在 Plane 中，一切都始於專案",
+            "title": "在 Pi-Plane 中，一切都始於專案",
             "description": "專案可以是產品的藍圖、行銷活動，或是推出新車。"
           }
         }
@@ -289,8 +293,8 @@
   "workspace_pages": {
     "empty_state": {
       "general": {
-        "title": "寫一個筆記、文檔或完整的知識庫。讓 Galileo，Plane 的 AI 助手，幫助您開始",
-        "description": "頁面是 Plane 中的思想沉澱空間。記下會議筆記，輕鬆格式化，嵌入工作項目，使用組件庫佈局，並將它們全部保存在您的專案上下文中。要快速完成任何文檔，使用快捷方式或點擊按鈕來調用 Galileo，Plane 的 AI。",
+        "title": "寫一個筆記、文檔或完整的知識庫。讓 Galileo，Pi-Plane 的 AI 助手，幫助您開始",
+        "description": "頁面是 Pi-Plane 中的思想沉澱空間。記下會議筆記，輕鬆格式化，嵌入工作項目，使用組件庫佈局，並將它們全部保存在您的專案上下文中。要快速完成任何文檔，使用快捷方式或點擊按鈕來調用 Galileo，Pi-Plane 的 AI。",
         "primary_button": {
           "text": "創建您的第一個頁面"
         }
@@ -434,7 +438,7 @@
       "not_found": "找不到邀請",
       "invited_to": "您已受邀加入 {workspace}",
       "already_member": "您已經是 {workspace} 的成員",
-      "description": "工作區是您在 Plane 帳戶中建立專案、協作處理工作項目以及組織不同工作流程的地方。",
+      "description": "工作區是您在 Pi-Plane 帳戶中建立專案、協作處理工作項目以及組織不同工作流程的地方。",
       "accept": "接受",
       "ignore": "忽略",
       "continue_home": "繼續前往首頁",

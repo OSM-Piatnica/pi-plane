@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -18,13 +19,17 @@ export type TLanguage =
   | "de"
   | "ua"
   | "pl"
+  | "pl-x-podlaski"
   | "ko"
   | "pt-BR"
+  | "pt-PT"
   | "id"
   | "ro"
   | "vi-VN"
   | "tr-TR"
-  | "ka-ge";
+  | "ka-ge"
+  | "nl"
+  | "bg";
 
 export interface ILanguageOption {
   label: string;

@@ -1,0 +1,182 @@
+{
+  "format": {
+    "date": "%d-%m-%Y"
+  },
+  "priority": {
+    "urgent": "Urgent",
+    "high": "Hoog",
+    "medium": "Gemiddeld",
+    "low": "Laag",
+    "none": "Geen"
+  },
+  "issue_updates": {
+    "title": "Updates voor {identifier}",
+    "summary": "Het werkitem is bijgewerkt door <strong>{actor}</strong>.",
+    "summary_others": "Het werkitem is bijgewerkt door <strong>{actor}</strong> en anderen.",
+    "title_changed": "De titel van het werkitem is gewijzigd in {title}",
+    "updates": "Updates",
+    "due_date": "Einddatum:",
+    "duplicate": "Duplicaat:",
+    "assignee": "Toegewezen:",
+    "labels": "Labels:",
+    "state": "Status:",
+    "links": "Links:",
+    "priority": "Prioriteit:",
+    "blocking": "Blokkeert:",
+    "comments": "Reacties",
+    "more": "+{count} meer",
+    "links_removed": {
+      "one": "{count} link is verwijderd",
+      "other": "{count} links zijn verwijderd"
+    },
+    "view": "Werkitem bekijken",
+    "footer": "Deze e-mail is verzonden naar <a href=\"mailto:{email}\">{email}</a>. Wilt u dit soort e-mails liever niet ontvangen, dan kunt u <a href=\"{issue_url}\">zich afmelden voor dit werkitem</a> of <a href=\"{preferences_url}\">uw e-mailvoorkeuren beheren</a>."
+  },
+  "digest": {
+    "title": "Samenvatting van updates",
+    "greeting_named": "Hallo {name}, u heeft {summary}",
+    "greeting": "U heeft {summary}",
+    "updates_count": {
+      "one": "{count} update",
+      "other": "{count} updates"
+    },
+    "summary": {
+      "one": "{updates} in {count} werkitem dat u volgt.",
+      "other": "{updates} in {count} werkitems die u volgt."
+    },
+    "subject": {
+      "one": "Samenvatting: {updates} in {count} werkitem",
+      "other": "Samenvatting: {updates} in {count} werkitems"
+    },
+    "comments": "reacties: {count}",
+    "footer": "Dit is een samenvatting van updates van werkitems. Vermeldingen ontvangt u direct. <a href=\"{preferences_url}\">Meldingsinstellingen wijzigen</a>."
+  },
+  "due_reminder": {
+    "title": "Herinnering voor werkitems",
+    "greeting_named": "Hallo {name}, u heeft {summary}",
+    "greeting": "U heeft {summary}",
+    "section_overdue": "Te laat",
+    "section_today": "Werkitems die vandaag verlopen",
+    "work_items": {
+      "one": "{count} werkitem",
+      "other": "{count} werkitems"
+    },
+    "overdue": {
+      "one": "{count} te laat",
+      "other": "{count} te laat"
+    },
+    "overdue_only": {
+      "one": "{count} werkitem dat te laat is",
+      "other": "{count} werkitems die te laat zijn"
+    },
+    "summary_both": "{today} met vandaag als deadline en {overdue}.",
+    "summary_today": "{today} met vandaag als deadline ({date}).",
+    "summary_overdue": "{overdue}.",
+    "subject_both": "U heeft {today} met vandaag als deadline en {overdue}",
+    "subject_today": "U heeft {today} met vandaag als deadline ({date})",
+    "subject_overdue": "U heeft {overdue}",
+    "days_overdue": {
+      "one": "{count} dag te laat",
+      "other": "{count} dagen te laat"
+    },
+    "cta": "Mijn werkitems bekijken",
+    "footer": "Dit is een automatische herinnering die elke ochtend wordt verzonden over werkitems die vandaag verlopen en werkitems waarvan de einddatum is verstreken."
+  },
+  "project_addition": {
+    "subject": "U bent uitgenodigd voor een Pi-Plane-project",
+    "preheader": "{inviter} heeft u uitgenodigd voor het project {project} in de werkruimte {workspace} op Pi-Plane.",
+    "heading": "U bent uitgenodigd voor het project {project} op Pi-Plane",
+    "intro": "{inviter} heeft u uitgenodigd om samen te werken aan het project <strong>{project}</strong> in de werkruimte <strong>{workspace}</strong> op Pi-Plane.",
+    "button": "Naar het project",
+    "fallback": "Werkt de knop niet? Kopieer dan deze link en plak hem in uw browser:",
+    "note": "Let op: deze e-mail is verzonden naar <span>{email}</span>. Als u deze uitnodiging niet verwachtte, kunt u deze e-mail negeren."
+  },
+  "access_request": {
+    "subject": "{requester} vraagt om lid te worden van {project}",
+    "preheader": "{requester} vraagt om lid te worden van het privéproject {project} in de werkruimte {workspace} op Pi-Plane.",
+    "heading": "Toegangsverzoek voor het project {project}",
+    "intro": "<strong>{requester}</strong> vraagt om lid te worden van het privéproject <strong>{project}</strong> in de werkruimte <strong>{workspace}</strong> op Pi-Plane. U kunt het verzoek goedkeuren of afwijzen in de ledeninstellingen van het project.",
+    "message": "Bericht:",
+    "button": "Verzoek beoordelen",
+    "fallback": "Werkt de knop niet? Kopieer dan deze link en plak hem in uw browser:",
+    "note": "Let op: deze e-mail is verzonden naar <span>{email}</span> omdat u beheerder of leider van dit project bent."
+  },
+  "access_request_decision": {
+    "subject_approved": "Uw verzoek om lid te worden van {project} is goedgekeurd",
+    "subject_rejected": "Uw verzoek om lid te worden van {project} is niet goedgekeurd",
+    "heading_approved": "U heeft nu toegang tot {project}",
+    "heading_rejected": "Uw verzoek om lid te worden van {project}",
+    "intro_approved": "<strong>{decider}</strong> heeft uw verzoek om lid te worden van het privéproject <strong>{project}</strong> in de werkruimte <strong>{workspace}</strong> op Pi-Plane goedgekeurd. U kunt het nu openen.",
+    "intro_rejected": "<strong>{decider}</strong> heeft uw verzoek om lid te worden van het privéproject <strong>{project}</strong> in de werkruimte <strong>{workspace}</strong> op Pi-Plane niet goedgekeurd. Denkt u dat dit een vergissing is, neem dan contact op met een projectbeheerder.",
+    "button": "Project openen",
+    "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span> omdat u hebt gevraagd om lid te worden van dit project."
+  },
+  "one_time_code": {
+    "subject": "Uw eenmalige Pi-Plane-inlogcode is {code}",
+    "preheader": "Uw Pi-Plane-inlogcode {code} is 10 minuten geldig.",
+    "heading": "Uw inlogcode voor Pi-Plane",
+    "info": "Deze code is de komende 10 minuten geldig. Voer hem in op de inlogpagina om het inloggen te voltooien.",
+    "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span>. Als u geen inlogcode verwachtte, kunt u dit bericht negeren."
+  },
+  "forgot_password": {
+    "subject": "Er is een nieuw wachtwoord aangevraagd voor uw Pi-Plane-account",
+    "preheader": "Stel uw Pi-Plane-wachtwoord opnieuw in met deze beveiligde link.",
+    "heading": "Stel uw Pi-Plane-wachtwoord opnieuw in",
+    "intro": "We hebben een verzoek ontvangen om uw Pi-Plane-wachtwoord opnieuw in te stellen. Klik hiervoor op de knop hieronder.",
+    "button": "Wachtwoord opnieuw instellen",
+    "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span>. Als u geen nieuw wachtwoord verwachtte, kunt u deze e-mail negeren."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} heeft u uitgenodigd voor {workspace} op Pi-Plane",
+    "preheader": "{inviter} heeft u uitgenodigd voor {workspace} op Pi-Plane.",
+    "heading": "Word lid van {workspace} op Pi-Plane",
+    "intro": "{inviter} heeft u uitgenodigd om samen te werken in de werkruimte <strong>{workspace}</strong> op Pi-Plane.",
+    "button": "Uitnodiging accepteren",
+    "note": "Opmerking: deze uitnodiging was bedoeld voor <span>{email}</span>. Als u geen uitnodiging verwachtte, kunt u deze e-mail negeren."
+  },
+  "account_activated": {
+    "subject": "{name} is geactiveerd op Pi-Plane",
+    "heading": "U bent terug in Pi-Plane.",
+    "body": "Uw account is opnieuw geactiveerd en u hebt weer toegang tot uw werkitems en andere gegevens als het project nog actief is. U kunt ook een nieuwe werkruimte maken en daar projecten aan toevoegen.",
+    "button": "Naar Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "{name} is gedeactiveerd op Pi-Plane",
+    "heading": "U bent nu uit Pi-Plane.",
+    "body": "U hebt uw account gedeactiveerd. Uw werkitems, cycli en andere projectgegevens blijven toegankelijk zolang het project actief is en er andere leden in zitten.",
+    "button": "Account opnieuw activeren"
+  },
+  "email_updated": {
+    "subject": "Pi-Plane-e-mailadres bijgewerkt",
+    "body": "U hebt uw e-mailadres bij Pi-Plane bijgewerkt naar {email}.",
+    "login": "U kunt nu inloggen met dit e-mailadres."
+  },
+  "email_update_code": {
+    "subject": "Bevestig uw nieuwe e-mailadres"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook gedeactiveerd",
+    "message": "Webhook {url} is gedeactiveerd wegens mislukte verzoeken.",
+    "button": "Webhook bekijken"
+  },
+  "analytics_export": {
+    "subject": "Uw export is klaar",
+    "preheader": "De gevraagde gegevensexport uit Pi-Plane Analytics is bijgevoegd als CSV-bestand.",
+    "heading": "Uw Pi-Plane Analytics-export is klaar",
+    "intro": "De gevraagde gegevensexport uit Pi-Plane Analytics is klaar. We hebben hem voor uw gemak als CSV-bestand bijgevoegd.",
+    "hint": "U kunt het CSV-bestand openen in elk spreadsheet- of BI-programma om de gegevens te analyseren, rapporten te maken of inzichten met uw team te delen."
+  },
+  "shared": {
+    "recipient_note": "Deze e-mail is verzonden naar {email}. Verwijder hem als u niet de beoogde ontvanger bent.",
+    "fallback": "Werkt de knop niet? Kopieer dan deze link en plak hem in uw browser:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} heeft de beheerders van {workspace} geschreven",
+    "preheader": "{sender} heeft de beheerders van {workspace} in Pi-Plane een bericht gestuurd.",
+    "heading": "Een bericht voor de beheerders van {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) heeft de beheerders van de werkruimte <strong>{workspace}</strong> in Pi-Plane geschreven.",
+    "message": "Bericht:",
+    "reply": "Beantwoord deze e-mail om {sender} rechtstreeks te antwoorden.",
+    "note": "Opmerking: deze e-mail is verstuurd naar <span>{email}</span> omdat u beheerder bent van deze werkruimte."
+  }
+}

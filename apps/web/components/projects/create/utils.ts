@@ -1,0 +1,37 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { RANDOM_EMOJI_CODES } from "@plane/constants";
+import type { IProject } from "@plane/types";
+import { getRandomCoverImage } from "@/helpers/cover-image.helper";
+import { RELATION_TOGGLE_DEFAULTS } from "@/helpers/relation-type-toggles";
+
+export const getProjectFormValues = (): Partial<IProject> => ({
+  cover_image_url: getRandomCoverImage(),
+  description: "",
+  logo_props: {
+    in_use: "emoji",
+    emoji: {
+      value: RANDOM_EMOJI_CODES[Math.floor(Math.random() * RANDOM_EMOJI_CODES.length)],
+    },
+  },
+  identifier: "",
+  name: "",
+  network: 2,
+  project_lead: null,
+  cycle_view: false,
+  module_view: true,
+  issue_views_view: true,
+  page_view: false,
+  inbox_view: false,
+  is_time_tracking_enabled: false,
+  is_issue_type_enabled: false,
+  is_parent_completion_rule_enabled: false,
+  is_blocked_status_rule_enabled: false,
+  is_assignee_edit_rule_enabled: false,
+  ...RELATION_TOGGLE_DEFAULTS,
+});

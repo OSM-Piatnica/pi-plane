@@ -16,6 +16,7 @@ from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
 
 # Module imports
+from plane.utils.order_queryset import ISSUE_GROUP_BY_ALLOWLIST
 
 
 class Cursor:
@@ -232,8 +233,9 @@ class GroupedOffsetPaginator(OffsetPaginator):
         queryset = self.queryset
 
         page = cursor.offset
-        offset = cursor.offset * cursor.value
-        stop = offset + (cursor.value or limit) + 1
+        # Use limit (the validated per_page) as the per-group page size, as OffsetPaginator does
+        offset = cursor.offset * limit
+        stop = offset + limit + 1
 
         # Check if the offset is greater than the max offset
         if self.max_offset is not None and offset >= self.max_offset:
@@ -436,11 +438,9 @@ class SubGroupedOffsetPaginator(OffsetPaginator):
         # the current page
         page = cursor.offset
 
-        # the offset
-        offset = cursor.offset * cursor.value
-
-        # the stop
-        stop = offset + (cursor.value or limit) + 1
+        # Use limit (the validated per_page) as the page size, as OffsetPaginator does
+        offset = cursor.offset * limit
+        stop = offset + limit + 1
 
         if self.max_offset is not None and offset >= self.max_offset:
             raise BadPaginationError("Pagination offset too large")
@@ -645,11 +645,18 @@ class BasePaginator:
         except ValueError:
             raise ParseError(detail="Invalid per_page parameter.")
 
-        max_per_page = max(max_per_page, default_per_page)
+        max_per_page = self._effective_max_per_page(max_per_page, default_per_page)
+        # per_page is a slice bound and a divisor, so it must be positive.
+        if per_page <= 0:
+            raise ParseError(detail="Invalid per_page value. Must be greater than zero.")
         if per_page > max_per_page:
             raise ParseError(detail=f"Invalid per_page value. Cannot exceed {max_per_page}.")
 
         return per_page
+
+    @staticmethod
+    def _effective_max_per_page(max_per_page, default_per_page):
+        return max(max_per_page, default_per_page)
 
     def paginate(
         self,
@@ -679,13 +686,30 @@ class BasePaginator:
         except ValueError:
             raise ParseError(detail="Invalid cursor parameter.")
 
+        # cursor is "value:offset:is_prev": value is a page size from 0 to the effective
+        # maximum page size, offset is a non-negative page index.
+        effective_max_per_page = self._effective_max_per_page(max_per_page, default_per_page)
+        if not (0 <= input_cursor.value <= effective_max_per_page) or input_cursor.offset < 0:
+            raise ParseError(detail="Invalid cursor parameter.")
+
         if not paginator:
             if group_by_field_name:
+                # Validate against the allowlist before the field name reaches
+                # F()/.values()/.order_by()/Window partition_by in the grouped
+                # paginators below — prevents unauthenticated ORM field-name
+                # injection via user-supplied group_by/sub_group_by query params
+                # (GHSA-wwgj-929g-42cm).
+                if group_by_field_name not in ISSUE_GROUP_BY_ALLOWLIST:
+                    raise ParseError(detail=f"Invalid group_by field: {group_by_field_name}")
+
                 paginator_kwargs["group_by_field_name"] = group_by_field_name
                 paginator_kwargs["group_by_fields"] = group_by_fields
                 paginator_kwargs["count_filter"] = count_filter
 
                 if sub_group_by_field_name:
+                    if sub_group_by_field_name not in ISSUE_GROUP_BY_ALLOWLIST:
+                        raise ParseError(detail=f"Invalid sub_group_by field: {sub_group_by_field_name}")
+
                     paginator_kwargs["sub_group_by_field_name"] = sub_group_by_field_name
                     paginator_kwargs["sub_group_by_fields"] = sub_group_by_fields
 

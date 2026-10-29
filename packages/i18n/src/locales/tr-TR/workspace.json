@@ -1,7 +1,7 @@
 {
   "workspace_creation": {
     "heading": "Çalışma Alanınızı Oluşturun",
-    "subheading": "Plane'i kullanmaya başlamak için bir çalışma alanı oluşturmalı veya katılmalısınız.",
+    "subheading": "Pi-Plane'i kullanmaya başlamak için bir çalışma alanı oluşturmalı veya katılmalısınız.",
     "form": {
       "name": {
         "label": "Çalışma Alanınıza Ad Verin",
@@ -54,11 +54,11 @@
     "empty_state": {
       "general": {
         "title": "Projelerinizin, aktivitenizin ve metriklerinizin genel görünümü",
-        "description": "Plane'e hoş geldiniz, sizi aramızda görmekten heyecan duyuyoruz. İlk projenizi oluşturun ve iş öğelerinizi takip edin, bu sayfa ilerlemenize yardımcı olacak bir alana dönüşecek. Yöneticiler ayrıca ekiplerinin ilerlemesine yardımcı olacak öğeler görecek.",
+        "description": "Pi-Plane'e hoş geldiniz, sizi aramızda görmekten heyecan duyuyoruz. İlk projenizi oluşturun ve iş öğelerinizi takip edin, bu sayfa ilerlemenize yardımcı olacak bir alana dönüşecek. Yöneticiler ayrıca ekiplerinin ilerlemesine yardımcı olacak öğeler görecek.",
         "primary_button": {
           "text": "İlk projenizi oluşturun",
           "comic": {
-            "title": "Plane'de her şey bir projeyle başlar",
+            "title": "Pi-Plane'de her şey bir projeyle başlar",
             "description": "Bir proje, bir ürünün yol haritası, bir pazarlama kampanyası veya yeni bir araba lansmanı olabilir."
           }
         }
@@ -157,13 +157,17 @@
     },
     "network": {
       "label": "Ağ",
+      "secret": {
+        "title": "Gizli",
+        "description": "Üye olmayanlardan gizlenir"
+      },
       "private": {
         "title": "Özel",
-        "description": "Yalnızca davetle erişilebilir"
+        "description": "Çalışma alanındaki herkese görünür; erişim onay veya davet gerektirir"
       },
       "public": {
-        "title": "Herkese Açık",
-        "description": "Çalışma alanındaki herkes (Misafirler hariç) katılabilir"
+        "title": "Açık",
+        "description": "Çalışma alanına açık: Misafirler dışındaki her üye katılabilir"
       }
     },
     "error": {
@@ -200,7 +204,7 @@
         "primary_button": {
           "text": "İlk projenizi başlatın",
           "comic": {
-            "title": "Plane'de her şey bir projeyle başlar",
+            "title": "Pi-Plane'de her şey bir projeyle başlar",
             "description": "Bir proje, bir ürünün yol haritası, bir pazarlama kampanyası veya yeni bir araba lansmanı olabilir."
           }
         }
@@ -211,7 +215,7 @@
         "primary_button": {
           "text": "İlk projenizi başlatın",
           "comic": {
-            "title": "Plane'de her şey bir projeyle başlar",
+            "title": "Pi-Plane'de her şey bir projeyle başlar",
             "description": "Bir proje, bir ürünün yol haritası, bir pazarlama kampanyası veya yeni bir araba lansmanı olabilir."
           }
         }
@@ -289,8 +293,8 @@
   "workspace_pages": {
     "empty_state": {
       "general": {
-        "title": "Bir not, bir belge veya tam bir bilgi tabanı yazın. Başlamanıza yardımcı olması için Plane'in yapay zeka asistanı Galileo'yu alın",
-        "description": "Sayfalar, Plane'deki düşünce saksı alanıdır. Toplantı notları alın, bunları kolayca biçimlendirin, iş öğelerini gömin, bunları bir bileşen kitaplığı kullanarak düzenleyin ve hepsini projenizin bağlamında tutun. Herhangi bir belgeyi kısa sürede yapmak için, Plane'in yapay zekası Galileo'yu bir kısayolla veya bir düğmeye tıklayarak çağırın.",
+        "title": "Bir not, bir belge veya tam bir bilgi tabanı yazın. Başlamanıza yardımcı olması için Pi-Plane'in yapay zeka asistanı Galileo'yu alın",
+        "description": "Sayfalar, Pi-Plane'deki düşünce saksı alanıdır. Toplantı notları alın, bunları kolayca biçimlendirin, iş öğelerini gömin, bunları bir bileşen kitaplığı kullanarak düzenleyin ve hepsini projenizin bağlamında tutun. Herhangi bir belgeyi kısa sürede yapmak için, Pi-Plane'in yapay zekası Galileo'yu bir kısayolla veya bir düğmeye tıklayarak çağırın.",
         "primary_button": {
           "text": "İlk sayfanızı oluşturun"
         }
@@ -434,7 +438,7 @@
       "not_found": "Davet bulunamadı",
       "invited_to": "{workspace} çalışma alanına davet edildiniz",
       "already_member": "Zaten {workspace} çalışma alanının üyesisiniz",
-      "description": "Çalışma alanınız; projeler oluşturduğunuz, iş öğeleri üzerinde iş birliği yaptığınız ve Plane hesabınızdaki farklı iş akışlarını düzenlediğiniz yerdir.",
+      "description": "Çalışma alanınız; projeler oluşturduğunuz, iş öğeleri üzerinde iş birliği yaptığınız ve Pi-Plane hesabınızdaki farklı iş akışlarını düzenlediğiniz yerdir.",
       "accept": "Kabul et",
       "ignore": "Yoksay",
       "continue_home": "Ana sayfaya devam et",

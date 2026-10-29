@@ -22,46 +22,21 @@ from plane.bgtasks.email_notification_task import acquire_lock
 from plane.db.models import Issue, IssueAssignee, ProjectMember, StateGroup, User
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.email import generate_plain_text_from_html
+from plane.utils.email_i18n import translate, user_language
 from plane.utils.exception_logger import log_exception
 
 # Same palette as the priority pills in emails/notifications/issue-updates.html
-PRIORITY_DETAILS = {
-    "urgent": ("Pilne", "#CE2C31"),
-    "high": ("Wysoki", "#F04610"),
-    "medium": ("Średni", "#E2A336"),
-    "low": ("Niski", "#2A7E3B"),
+PRIORITY_COLORS = {
+    "urgent": "#CE2C31",
+    "high": "#F04610",
+    "medium": "#E2A336",
+    "low": "#2A7E3B",
 }
 
 DEFAULT_STATE_COLOR = "#60646c"
 
 OVERDUE_ACCENT = "#CE2C31"
 DUE_TODAY_ACCENT = "#3358d4"
-
-
-def work_item_noun(count):
-    """Polish plural forms: 1 zadanie, 2 zadania, 5 zadań."""
-    if count == 1:
-        return "zadanie"
-    if 12 <= count % 100 <= 14:
-        return "zadań"
-    return "zadania" if count % 10 in (2, 3, 4) else "zadań"
-
-
-def work_item_count_label(count):
-    return f"{count} {work_item_noun(count)}"
-
-
-def overdue_count_label(count):
-    """The adjective agrees with the noun: 1 przeterminowane, 3 przeterminowane, 5 przeterminowanych."""
-    if count == 1:
-        return "1 przeterminowane"
-    if 12 <= count % 100 <= 14:
-        return f"{count} przeterminowanych"
-    return f"{count} przeterminowane" if count % 10 in (2, 3, 4) else f"{count} przeterminowanych"
-
-
-def days_overdue_label(days):
-    return "1 dzień po terminie" if days == 1 else f"{days} dni po terminie"
 
 
 def reminder_now():
@@ -132,7 +107,7 @@ def stack_due_reminders(force=False):
         )
 
 
-def build_groups(issue_ids, web_url, today, overdue=False):
+def build_groups(issue_ids, web_url, today, language, overdue=False):
     """Group work items by project, in the order they should appear in the email."""
     if not issue_ids:
         return []
@@ -143,9 +118,7 @@ def build_groups(issue_ids, web_url, today, overdue=False):
 
     groups = []
     for issue in (
-        Issue.issue_objects.filter(pk__in=issue_ids)
-        .select_related("project", "workspace", "state")
-        .order_by(*ordering)
+        Issue.issue_objects.filter(pk__in=issue_ids).select_related("project", "workspace", "state").order_by(*ordering)
     ):
         project_url = f"{web_url}/{issue.workspace.slug}/projects/{issue.project_id}/issues/"
         if not groups or groups[-1]["project_id"] != str(issue.project_id):
@@ -160,7 +133,8 @@ def build_groups(issue_ids, web_url, today, overdue=False):
                 }
             )
 
-        priority_label, priority_color = PRIORITY_DETAILS.get(issue.priority, (None, None))
+        priority_color = PRIORITY_COLORS.get(issue.priority)
+        priority_label = translate(language, f"priority.{issue.priority}") if priority_color else None
         groups[-1]["issues"].append(
             {
                 "identifier": f"{issue.project.identifier}-{issue.sequence_id}",
@@ -170,8 +144,12 @@ def build_groups(issue_ids, web_url, today, overdue=False):
                 "state_color": issue.state.color if issue.state else DEFAULT_STATE_COLOR,
                 "priority_label": priority_label,
                 "priority_color": priority_color,
-                "days_overdue_label": days_overdue_label((today - issue.target_date).days) if overdue else None,
-                "due_date_label": issue.target_date.strftime("%d.%m.%Y") if overdue else None,
+                "days_overdue_label": (
+                    translate(language, "due_reminder.days_overdue", count=(today - issue.target_date).days)
+                    if overdue
+                    else None
+                ),
+                "due_date_label": issue.target_date.strftime(translate(language, "format.date")) if overdue else None,
             }
         )
 
@@ -190,8 +168,9 @@ def send_due_reminder(receiver_id, due_today_ids, overdue_ids):
         web_url = settings.WEB_URL or settings.APP_BASE_URL
         today = reminder_now().date()
 
-        overdue_groups = build_groups(overdue_ids, web_url, today, overdue=True)
-        due_today_groups = build_groups(due_today_ids, web_url, today)
+        language = user_language(receiver)
+        overdue_groups = build_groups(overdue_ids, web_url, today, language, overdue=True)
+        due_today_groups = build_groups(due_today_ids, web_url, today, language)
         overdue_count = count_items(overdue_groups)
         due_today_count = count_items(due_today_groups)
 
@@ -200,13 +179,13 @@ def send_due_reminder(receiver_id, due_today_ids, overdue_ids):
             section
             for section in (
                 {
-                    "title": "Przeterminowane",
+                    "title": translate(language, "due_reminder.section_overdue"),
                     "count": overdue_count,
                     "accent": OVERDUE_ACCENT,
                     "groups": overdue_groups,
                 },
                 {
-                    "title": "Zadania z terminem na dzisiaj",
+                    "title": translate(language, "due_reminder.section_today"),
                     "count": due_today_count,
                     "accent": DUE_TODAY_ACCENT,
                     "groups": due_today_groups,
@@ -218,24 +197,30 @@ def send_due_reminder(receiver_id, due_today_ids, overdue_ids):
         if not sections:
             return
 
-        today_label = today.strftime("%d.%m.%Y")
-        due_today_label = work_item_count_label(due_today_count)
-        overdue_label = overdue_count_label(overdue_count)
+        today_label = today.strftime(translate(language, "format.date"))
+        today_phrase = translate(language, "due_reminder.work_items", count=due_today_count)
+        overdue_phrase = translate(language, "due_reminder.overdue", count=overdue_count)
 
         if due_today_count and overdue_count:
-            summary_text = f"{due_today_label} z terminem na dzisiaj i {overdue_label}."
-            subject = f"Masz {due_today_label} na dzisiaj i {overdue_label}"
+            params = {"today": today_phrase, "overdue": overdue_phrase}
+            kind = "both"
         elif due_today_count:
-            summary_text = f"{due_today_label} z terminem na dzisiaj ({today_label})."
-            subject = f"Masz {due_today_label} z terminem na dzisiaj ({today_label})"
+            params = {"today": today_phrase, "date": today_label}
+            kind = "today"
         else:
-            overdue_phrase = f"{overdue_label} {work_item_noun(overdue_count)}"
-            summary_text = f"{overdue_phrase}."
-            subject = f"Masz {overdue_phrase}"
+            params = {"overdue": translate(language, "due_reminder.overdue_only", count=overdue_count)}
+            kind = "overdue"
+        summary_text = translate(language, f"due_reminder.summary_{kind}", **params)
+        subject = translate(language, f"due_reminder.subject_{kind}", **params)
+        greeting = (
+            translate(language, "due_reminder.greeting_named", name=receiver.first_name, summary=summary_text)
+            if receiver.first_name
+            else translate(language, "due_reminder.greeting", summary=summary_text)
+        )
 
         context = {
-            "receiver_first_name": receiver.first_name,
-            "summary_text": summary_text,
+            "email_language": language,
+            "greeting": greeting,
             "sections": sections,
             "assigned_url": f"{web_url}/{sections[0]['groups'][0]['workspace_slug']}/profile/{receiver.id}/assigned",
         }

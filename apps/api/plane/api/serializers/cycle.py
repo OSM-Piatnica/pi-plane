@@ -59,8 +59,10 @@ class CycleCreateSerializer(BaseSerializer):
         ]
 
     def validate(self, data):
-        project_id = self.initial_data.get("project_id") or (
-            self.instance.project_id if self.instance and hasattr(self.instance, "project_id") else None
+        project_id = (
+            self.context.get("project_id")
+            or self.initial_data.get("project_id")
+            or (self.instance.project_id if self.instance and hasattr(self.instance, "project_id") else None)
         )
 
         if not project_id:
@@ -89,7 +91,8 @@ class CycleCreateSerializer(BaseSerializer):
                 project_id=project_id,
             )
 
-        if not data.get("owned_by"):
+        # Create, or an explicit null on update, assigns the requester; an update that omits it keeps the owner.
+        if not data.get("owned_by") and (self.instance is None or "owned_by" in data):
             data["owned_by"] = self.context["request"].user
 
         return data

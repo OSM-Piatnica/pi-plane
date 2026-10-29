@@ -65,6 +65,45 @@
           }
         }
       },
+      "groups": {
+        "title": "Skupiny",
+        "description": "Uspořádejte lidi do skupin. Skupiny lze vnořovat, jeden člověk může patřit do více skupin a pracovní položky lze přiřadit skupině.",
+        "create_group": "Vytvořit skupinu",
+        "create": "Vytvořit",
+        "edit_group": "Upravit skupinu",
+        "edit": "Upravit",
+        "add_subgroup": "Přidat podskupinu",
+        "members": "Členové",
+        "name": "Název",
+        "description_label": "Popis",
+        "parent": "Nadřazená skupina",
+        "top_level": "Bez nadřazené skupiny (nejvyšší úroveň)",
+        "no_groups": "Zatím nejsou žádné skupiny.",
+        "member_count": "{count, plural, one {# člen} few {# členové} many {# člena} other {# členů}}",
+        "managed_by": "Spravuje {provider}",
+        "sources": {
+          "local": "Místní",
+          "entra": "Microsoft Entra",
+          "google": "Google",
+          "oidc": "SSO"
+        },
+        "members_of": "Členové skupiny {name}",
+        "managed_externally_hint": "Tuto skupinu spravuje váš poskytovatel identity. Její členové se řídí poskytovatelem a nelze je zde měnit.",
+        "select_member": "Vyberte člena",
+        "add_member": "Přidat",
+        "role": "Role",
+        "role_member": "Člen",
+        "role_admin": "Správce skupiny",
+        "no_members": "Tato skupina zatím nemá žádné členy.",
+        "group_created": "Skupina byla vytvořena.",
+        "group_updated": "Skupina byla aktualizována.",
+        "group_deleted": "Skupina byla smazána.",
+        "delete_title": "Smazat {name}?",
+        "delete_content": "Lidé z této skupiny zůstanou v pracovním prostoru. Pracovním položkám přiřazeným skupině se toto přiřazení zruší. Tuto akci nelze vrátit zpět.",
+        "group_assignees": "Přiřazené skupiny",
+        "add_group_assignee": "Přidat skupinu",
+        "no_group_assignees": "Žádné přiřazené skupiny"
+      },
       "billing_and_plans": {
         "heading": "Fakturace a plány",
         "description": "Vyberte si plán, spravujte předplatná a snadno je upgradujte, jak rostou vaše potřeby.",
@@ -94,6 +133,50 @@
               "title": "Export selhal",
               "message": "Zkuste to prosím znovu."
             }
+          }
+        },
+        "columns": {
+          "heading": "Sloupce",
+          "description": "Vyberte, které sloupce soubor obsahuje. Identifikátor a název jsou vždy zahrnuty, protože bez nich by soubor nešel znovu importovat.",
+          "select_all": "Vybrat vše",
+          "clear_all": "Zrušit výběr",
+          "groups": {
+            "details": "Podrobnosti",
+            "people": "Lidé",
+            "dates": "Data",
+            "organization": "Organizace",
+            "relations": "Hierarchie a vztahy",
+            "other": "Ostatní"
+          },
+          "fields": {
+            "project_name": "Název projektu",
+            "project_identifier": "Identifikátor projektu",
+            "sequence_id": "Pořadové číslo",
+            "issue_type": "Typ pracovní položky",
+            "state_name": "Stav",
+            "priority": "Priorita",
+            "description_html": "Popis",
+            "estimate": "Odhad",
+            "is_draft": "Příznak konceptu",
+            "assignees": "Přiřazení",
+            "subscribers": "Odběratelé",
+            "created_by_name": "Vytvořil(a)",
+            "start_date": "Datum zahájení",
+            "finish_date": "Finish date",
+            "target_date": "Termín",
+            "duration": "Doba trvání",
+            "completed_at": "Dokončeno",
+            "created_at": "Vytvořeno",
+            "updated_at": "Aktualizováno",
+            "archived_at": "Archivováno",
+            "labels": "Štítky",
+            "cycles": "Cykly",
+            "modules": "Moduly",
+            "parent": "Nadřazená položka",
+            "relations": "Vztahy",
+            "links": "Odkazy",
+            "custom_properties": "Vlastní vlastnosti",
+            "comments": "Komentáře"
           }
         }
       },
@@ -176,7 +259,7 @@
         "title": "Integrace",
         "heading": "Integrace",
         "description": "Propojte se s oblíbenými nástroji a službami pro synchronizaci vaší práce napříč celým ekosystémem.",
-        "page_title": "Pracujte se svými daty Plane v dostupných aplikacích nebo ve svých vlastních.",
+        "page_title": "Pracujte se svými daty Pi-Plane v dostupných aplikacích nebo ve svých vlastních.",
         "page_description": "Zobrazte všechny integrace používané tímto pracovním prostorem nebo vámi."
       },
       "imports": {
@@ -258,7 +341,7 @@
       "project_states": {
         "title": "Stavy projektů",
         "heading": "Zobrazit přehled pokroku pro všechny projekty.",
-        "description": "Stavy projektů jsou funkce výhradně Plane pro sledování pokroku všech vašich projektů podle libovolné vlastnosti projektu.",
+        "description": "Stavy projektů jsou funkce výhradně Pi-Plane pro sledování pokroku všech vašich projektů podle libovolné vlastnosti projektu.",
         "go_to_settings": "Přejít do nastavení"
       },
       "projects": {
@@ -303,14 +386,14 @@
         "install": "Instalovat",
         "installed": "Instalováno",
         "configure": "Konfigurovat",
-        "app_available": "Tuto aplikaci jste zpřístupnili pro použití s pracovním prostorem Plane",
+        "app_available": "Tuto aplikaci jste zpřístupnili pro použití s pracovním prostorem Pi-Plane",
         "app_credentials_regenrated": {
           "title": "Přihlašovací údaje aplikace byly úspěšně znovu vygenerovány",
           "description": "Nahraďte klientský klíč všude, kde je používán. Předchozí klíč již není platný."
         },
         "app_created": {
           "title": "Aplikace byla úspěšně vytvořena",
-          "description": "Použijte přihlašovací údaje k instalaci aplikace do pracovního prostoru Plane"
+          "description": "Použijte přihlašovací údaje k instalaci aplikace do pracovního prostoru Pi-Plane"
         },
         "installed_apps": "Nainstalované aplikace",
         "all_apps": "Všechny aplikace",
@@ -351,10 +434,10 @@
         },
         "redirect_uris": {
           "label": "Přesměrovací URI (oddělené mezerou)",
-          "description": "Uživatelé budou po ověření pomocí Plane přesměrováni na tuto cestu.",
+          "description": "Uživatelé budou po ověření pomocí Pi-Plane přesměrováni na tuto cestu.",
           "placeholder": "https://example.com https://example.com/"
         },
-        "app_available_description": "Připojte pracovní prostor Plane pro začátek používání",
+        "app_available_description": "Připojte pracovní prostor Pi-Plane pro začátek používání",
         "client_id_and_secret": "ID a Tajemství Klienta",
         "client_id_and_secret_description": "Zkopírujte a uložte tento tajný klíč. Po kliknutí na Zavřít tento klíč již neuvidíte.",
         "client_id_and_secret_download": "Můžete si stáhnout CSV s klíčem odsud.",
@@ -403,12 +486,12 @@
         "workspace_permissions": "Oprávnění pracovního prostoru",
         "workspace_permissions_description": "Oprávnění pracovního prostoru se používají k udělení přístupu k pracovnímu prostoru.",
         "with_the_permissions": "s oprávněními",
-        "app_consent_title": "{app} žádá o přístup k vašemu pracovnímu prostoru a profilu Plane.",
+        "app_consent_title": "{app} žádá o přístup k vašemu pracovnímu prostoru a profilu Pi-Plane.",
         "choose_workspace_to_connect_app_with": "Vyberte pracovní prostor pro připojení aplikace",
         "app_consent_workspace_permissions_title": "{app} by chtěl",
         "app_consent_user_permissions_title": "{app} může také požádat o povolení uživatele pro následující zdroje. Tato oprávnění budou vyžádána a autorizována pouze uživatelem.",
         "app_consent_accept_title": "Přijetím",
-        "app_consent_accept_1": "Udělujete aplikaci přístup k vašim datům Plane kdekoli, kde můžete používat aplikaci uvnitř nebo mimo Plane",
+        "app_consent_accept_1": "Udělujete aplikaci přístup k vašim datům Pi-Plane kdekoli, kde můžete používat aplikaci uvnitř nebo mimo Pi-Plane",
         "app_consent_accept_2": "Souhlasíte s Zásadami ochrany osobních údajů a Podmínkami použití {app}",
         "accepting": "Přijímání...",
         "accept": "Přijmout",
@@ -450,7 +533,7 @@
         "upload_and_save": "Nahrát a uložit",
         "app_consent_no_access_title": "Žádost o instalaci",
         "app_consent_no_access_description": "Tato aplikace může být nainstalována pouze po jejím nainstalování správcem pracovního prostoru. Kontaktujte svého správce pracovního prostoru, abyste mohli pokračovat.",
-        "app_consent_unapproved_title": "Tato aplikace zatím nebyla zkontrolována ani schválena společností Plane.",
+        "app_consent_unapproved_title": "Tato aplikace zatím nebyla zkontrolována ani schválena společností Pi-Plane.",
         "app_consent_unapproved_description": "Před připojením této aplikace k vašemu pracovnímu prostoru se ujistěte, že jí důvěřujete.",
         "go_to_app": "Přejít na aplikaci",
         "enable_app_mentions": "Povolit zmínky o aplikaci",
@@ -489,7 +572,7 @@
     "empty_state": {
       "api_tokens": {
         "title": "Žádné API tokeny",
-        "description": "Používejte API pro integraci Plane s externími systémy."
+        "description": "Používejte API pro integraci Pi-Plane s externími systémy."
       },
       "webhooks": {
         "title": "Žádné webhooky",

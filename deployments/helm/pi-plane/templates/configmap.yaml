@@ -1,0 +1,79 @@
+{{- /*
+Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+SPDX-License-Identifier: AGPL-3.0-only
+See the LICENSE file for details.
+*/ -}}
+{{- $publicUrl := required "publicUrl is required, e.g. https://plane.example.com" .Values.publicUrl }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "pi-plane.fullname" . }}-config
+  labels:
+    {{- include "pi-plane.labels" . | nindent 4 }}
+data:
+  WEB_URL: {{ $publicUrl | quote }}
+  DEBUG: {{ ternary "1" "0" .Values.app.debug | quote }}
+  # Cookie-authenticated browser writes are only accepted from these origins and from the URLs below
+  CORS_ALLOWED_ORIGINS: {{ join "," (concat (list $publicUrl) .Values.app.extraCorsOrigins) | quote }}
+  GUNICORN_WORKERS: {{ printf "%d" (int64 .Values.app.gunicornWorkers) | quote }}
+  # Everything is served from the one public address
+  APP_BASE_URL: {{ $publicUrl | quote }}
+  APP_BASE_PATH: ""
+  ADMIN_BASE_URL: {{ $publicUrl | quote }}
+  ADMIN_BASE_PATH: "/god-mode"
+  SPACE_BASE_URL: {{ $publicUrl | quote }}
+  SPACE_BASE_PATH: "/spaces"
+  # space.enabled=false leaves the public sharing site out: the API switches web sharing off
+  ENABLE_SPACE: {{ ternary "1" "0" .Values.space.enabled | quote }}
+  LIVE_BASE_URL: {{ $publicUrl | quote }}
+  LIVE_BASE_PATH: "/live"
+  # Object storage
+  STORAGE_PROVIDER: {{ .Values.objectStorage.provider | quote }}
+  USE_MINIO: {{ ternary "1" "0" .Values.objectStorage.bundled.enabled | quote }}
+  AWS_S3_BUCKET_NAME: {{ .Values.objectStorage.bucket | quote }}
+  AWS_REGION: {{ .Values.objectStorage.region | quote }}
+  {{- if .Values.objectStorage.bundled.enabled }}
+  AWS_S3_ENDPOINT_URL: {{ printf "http://%s:9000" (include "pi-plane.minioHost" .) | quote }}
+  {{- else if .Values.objectStorage.external.endpoint }}
+  AWS_S3_ENDPOINT_URL: {{ .Values.objectStorage.external.endpoint | quote }}
+  {{- end }}
+  {{- if eq .Values.objectStorage.provider "azure" }}
+  {{- if .Values.objectStorage.bundled.enabled }}
+  {{- fail "objectStorage.provider=azure needs objectStorage.bundled.enabled=false" }}
+  {{- end }}
+  {{- if not .Values.objectStorage.azure.accountName }}
+  {{- fail "objectStorage.provider=azure needs objectStorage.azure.accountName" }}
+  {{- end }}
+  {{- if not .Values.objectStorage.azure.accountKeySecret.name }}
+  {{- fail "objectStorage.provider=azure needs objectStorage.azure.accountKeySecret.name" }}
+  {{- end }}
+  AZURE_STORAGE_ACCOUNT_NAME: {{ .Values.objectStorage.azure.accountName | quote }}
+  AZURE_STORAGE_CONTAINER: {{ .Values.objectStorage.bucket | quote }}
+  {{- with .Values.objectStorage.azure.endpoint }}
+  AZURE_STORAGE_ENDPOINT: {{ . | quote }}
+  {{- end }}
+  {{- with .Values.objectStorage.azure.publicEndpoint }}
+  AZURE_STORAGE_PUBLIC_ENDPOINT: {{ . | quote }}
+  {{- end }}
+  {{- end }}
+  # TLS ends at the ingress: presigned upload URLs must say https
+  MINIO_ENDPOINT_SSL: {{ include "pi-plane.sslTermination" . | quote }}
+  # Integers go through printf: a bare number renders in exponent form (5.24288e+06), which Django cannot parse
+  FILE_SIZE_LIMIT: {{ printf "%d" (int64 .Values.app.fileSizeLimit) | quote }}
+  FILE_SIZE_LIMIT_MAX: {{ printf "%d" (int64 (max .Values.app.fileSizeLimit .Values.app.fileSizeLimitMax)) | quote }}
+  AUTHENTICATION_RATE_LIMIT: {{ .Values.app.authenticationRateLimit | quote }}
+  API_KEY_RATE_LIMIT: {{ .Values.app.apiKeyRateLimit | quote }}
+  ANON_RATE_LIMIT: {{ .Values.app.anonRateLimit | quote }}
+  ADMIN_MESSAGE_LIMIT_PER_HOUR: {{ printf "%d" (int64 .Values.app.adminMessageLimitPerHour) | quote }}
+  {{- with .Values.app.numProxies }}
+  NUM_PROXIES: {{ . | quote }}
+  {{- end }}
+  {{- with .Values.app.webhookAllowedIps }}
+  WEBHOOK_ALLOWED_IPS: {{ . | quote }}
+  {{- end }}
+  {{- with .Values.app.webhookAllowedHosts }}
+  WEBHOOK_ALLOWED_HOSTS: {{ . | quote }}
+  {{- end }}
+  {{- range $key, $value := .Values.app.env }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}

@@ -54,8 +54,8 @@
         "indicator": "Seite",
         "lock": "Sperren",
         "unlock": "Entsperren",
-        "make_private": "Privat machen",
-        "make_public": "Öffentlich machen",
+        "make_private": "Nur für mich sichtbar machen",
+        "make_public": "Mit dem Projekt teilen",
         "archive": "Archivieren",
         "restore": "Wiederherstellen",
         "add_to_favorites": "Zu Favoriten hinzufügen",
@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Tastenkombinationen öffnen",
-      "open_plane_documentation": "Plane-Dokumentation öffnen",
+      "open_plane_documentation": "Pi-Plane-Dokumentation öffnen",
       "join_forum": "Forum beitreten",
       "report_bug": "Fehler melden",
       "chat_with_us": "Chat mit uns"
@@ -171,10 +171,17 @@
     "search_menu": {
       "no_results": "Keine Ergebnisse gefunden",
       "clear_search": "Suche löschen",
-      "go_to_advanced_search": "Zur erweiterten Suche"
+      "go_to_advanced_search": "Zur erweiterten Suche",
+      "results_in_workspace": "Suchergebnisse für <term/> im Arbeitsbereich:",
+      "results_in_project": "Suchergebnisse für <term/> im Projekt:"
     },
     "footer": {
       "workspace_level": "Arbeitsbereich-Ebene"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Tastaturkürzel suchen",
+      "no_results": "Keine Tastaturkürzel für „{query}“ gefunden",
+      "sequence_separator": "dann"
     },
     "group_titles": {
       "actions": "Aktionen",
@@ -200,11 +207,11 @@
       "views": "Keine Ansichten gefunden",
       "workspaces": "Keine Arbeitsbereiche gefunden"
     },
-    "epic_update_error": "Das Epic konnte nicht aktualisiert werden. Bitte versuche es erneut.",
-    "module_update_error": "Das Modul konnte nicht aktualisiert werden. Bitte versuche es erneut.",
+    "epic_update_error": "Das Epic konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
+    "module_update_error": "Das Modul konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
     "no_estimate_found": "Keine Schätzung gefunden",
     "reloading_to_apply": "Seite wird neu geladen, um die Änderungen anzuwenden...",
     "some_error_occurred": "Ein Fehler ist aufgetreten",
-    "work_item_update_error": "Das Arbeitselement konnte nicht aktualisiert werden. Bitte versuche es erneut."
+    "work_item_update_error": "Das Arbeitselement konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut."
   }
 }

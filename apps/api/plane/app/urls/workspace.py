@@ -17,6 +17,11 @@ from plane.app.views import (
     WorkSpaceAvailabilityCheckEndpoint,
     UserLastProjectWithWorkspaceEndpoint,
     WorkspaceThemeViewSet,
+    WorkspaceAdminMessageEndpoint,
+    UserGroupDetailEndpoint,
+    UserGroupListEndpoint,
+    UserGroupMemberDetailEndpoint,
+    UserGroupMembersEndpoint,
     WorkspaceUserProfileStatsEndpoint,
     WorkspaceUserActivityEndpoint,
     WorkspaceUserProfileEndpoint,
@@ -124,6 +129,11 @@ urlpatterns = [
         name="workspace-member-views-details",
     ),
     path(
+        "workspaces/<str:slug>/admin-messages/",
+        WorkspaceAdminMessageEndpoint.as_view(),
+        name="workspace-admin-messages",
+    ),
+    path(
         "workspaces/<str:slug>/workspace-themes/",
         WorkspaceThemeViewSet.as_view({"get": "list", "post": "create"}),
         name="workspace-themes",
@@ -132,6 +142,26 @@ urlpatterns = [
         "workspaces/<str:slug>/workspace-themes/<uuid:pk>/",
         WorkspaceThemeViewSet.as_view({"get": "retrieve", "patch": "partial_update", "delete": "destroy"}),
         name="workspace-themes",
+    ),
+    path(
+        "workspaces/<str:slug>/user-groups/",
+        UserGroupListEndpoint.as_view(),
+        name="workspace-user-groups",
+    ),
+    path(
+        "workspaces/<str:slug>/user-groups/<uuid:pk>/",
+        UserGroupDetailEndpoint.as_view(),
+        name="workspace-user-group",
+    ),
+    path(
+        "workspaces/<str:slug>/user-groups/<uuid:pk>/members/",
+        UserGroupMembersEndpoint.as_view(),
+        name="workspace-user-group-members",
+    ),
+    path(
+        "workspaces/<str:slug>/user-groups/<uuid:pk>/members/<uuid:user_id>/",
+        UserGroupMemberDetailEndpoint.as_view(),
+        name="workspace-user-group-member",
     ),
     path(
         "workspaces/<str:slug>/user-stats/<uuid:user_id>/",
@@ -262,9 +292,7 @@ urlpatterns = [
     ),
     path(
         "workspaces/<str:slug>/work-item-templates/<uuid:pk>/",
-        WorkspaceWorkItemTemplateViewSet.as_view(
-            {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
-        ),
+        WorkspaceWorkItemTemplateViewSet.as_view({"get": "retrieve", "patch": "partial_update", "delete": "destroy"}),
         name="workspace-work-item-templates-detail",
     ),
     path(
@@ -274,9 +302,7 @@ urlpatterns = [
     ),
     path(
         "workspaces/<str:slug>/issue-types/<uuid:pk>/",
-        WorkspaceIssueTypeViewSet.as_view(
-            {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
-        ),
+        WorkspaceIssueTypeViewSet.as_view({"get": "retrieve", "patch": "partial_update", "delete": "destroy"}),
         name="workspace-issue-types-detail",
     ),
     path(
@@ -286,9 +312,7 @@ urlpatterns = [
     ),
     path(
         "workspaces/<str:slug>/project-templates/<uuid:pk>/",
-        WorkspaceProjectTemplateViewSet.as_view(
-            {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
-        ),
+        WorkspaceProjectTemplateViewSet.as_view({"get": "retrieve", "patch": "partial_update", "delete": "destroy"}),
         name="workspace-project-templates-detail",
     ),
     # User Preference

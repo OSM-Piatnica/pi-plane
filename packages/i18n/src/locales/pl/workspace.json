@@ -1,7 +1,7 @@
 {
   "workspace_creation": {
     "heading": "Utwórz przestrzeń roboczą",
-    "subheading": "Aby korzystać z Plane, musisz utworzyć lub dołączyć do przestrzeni roboczej.",
+    "subheading": "Aby korzystać z Pi-Plane, musisz utworzyć lub dołączyć do przestrzeni roboczej.",
     "form": {
       "name": {
         "label": "Nazwij swoją przestrzeń roboczą",
@@ -54,11 +54,11 @@
     "empty_state": {
       "general": {
         "title": "Podgląd projektów, aktywności i metryk",
-        "description": "Witaj w Plane, cieszymy się, że jesteś. Utwórz pierwszy projekt, śledź elementy pracy, a ta strona stanie się centrum Twojego postępu. Administratorzy zobaczą tu również elementy pomocne zespołowi.",
+        "description": "Witaj w Pi-Plane, cieszymy się, że jesteś. Utwórz pierwszy projekt, śledź elementy pracy, a ta strona stanie się centrum Twojego postępu. Administratorzy zobaczą tu również elementy pomocne zespołowi.",
         "primary_button": {
           "text": "Utwórz pierwszy projekt",
           "comic": {
-            "title": "Wszystko zaczyna się od projektu w Plane",
+            "title": "Wszystko zaczyna się od projektu w Pi-Plane",
             "description": "Projektem może być harmonogram produktu, kampania marketingowa czy wprowadzenie nowego samochodu."
           }
         }
@@ -157,13 +157,17 @@
     },
     "network": {
       "label": "Sieć",
+      "secret": {
+        "title": "Tajny",
+        "description": "Ukryty przed wszystkimi, którzy nie są jego członkami"
+      },
       "private": {
         "title": "Prywatny",
-        "description": "Dostęp tylko na zaproszenie"
+        "description": "Widoczny dla wszystkich w przestrzeni roboczej; dostęp wymaga zatwierdzenia lub zaproszenia"
       },
       "public": {
-        "title": "Publiczny",
-        "description": "Każdy w przestrzeni, poza gośćmi, może dołączyć"
+        "title": "Otwarty",
+        "description": "Otwarty dla przestrzeni: każdy członek, poza gośćmi, może dołączyć"
       }
     },
     "error": {
@@ -191,7 +195,7 @@
     },
     "common": {
       "months_count": "{months, plural, one{# miesiąc} few{# miesiące} other{# miesięcy}}",
-      "days_count": "{days, plural, one{# dzień} other{# dni}}"
+      "days_count": "{days, plural, one{# dzień} few{# dni} many{# dni} other{# dnia}}"
     },
     "empty_state": {
       "general": {
@@ -200,7 +204,7 @@
         "primary_button": {
           "text": "Rozpocznij pierwszy projekt",
           "comic": {
-            "title": "Wszystko zaczyna się od projektu w Plane",
+            "title": "Wszystko zaczyna się od projektu w Pi-Plane",
             "description": "Projekt może dotyczyć planu produktu, kampanii marketingowej lub uruchomienia nowego samochodu."
           }
         }
@@ -211,7 +215,7 @@
         "primary_button": {
           "text": "Rozpocznij pierwszy projekt",
           "comic": {
-            "title": "Wszystko zaczyna się od projektu w Plane",
+            "title": "Wszystko zaczyna się od projektu w Pi-Plane",
             "description": "Projekt może dotyczyć planu produktu, kampanii marketingowej lub uruchomienia nowego samochodu."
           }
         }
@@ -289,8 +293,8 @@
   "workspace_pages": {
     "empty_state": {
       "general": {
-        "title": "Napisz notatkę, dokument lub pełną bazę wiedzy. Niech Galileo, asystent AI Plane, pomoże Ci zacząć",
-        "description": "Strony to przestrzeń do przechowywania myśli w Plane. Sporządzaj notatki ze spotkań, formatuj je łatwo, osadzaj elementy pracy, układaj je za pomocą biblioteki komponentów i trzymaj je wszystkie w kontekście projektu. Aby szybko wykonać dowolny dokument, wywołaj Galileo, AI Plane, za pomocą skrótu lub kliknięcia przycisku.",
+        "title": "Napisz notatkę, dokument lub pełną bazę wiedzy. Niech Galileo, asystent AI Pi-Plane, pomoże Ci zacząć",
+        "description": "Strony to przestrzeń do przechowywania myśli w Pi-Plane. Sporządzaj notatki ze spotkań, formatuj je łatwo, osadzaj elementy pracy, układaj je za pomocą biblioteki komponentów i trzymaj je wszystkie w kontekście projektu. Aby szybko wykonać dowolny dokument, wywołaj Galileo, AI Pi-Plane, za pomocą skrótu lub kliknięcia przycisku.",
         "primary_button": {
           "text": "Utwórz swoją pierwszą stronę"
         }
@@ -434,7 +438,7 @@
       "not_found": "Nie znaleziono zaproszenia",
       "invited_to": "Zaproszono Cię do {workspace}",
       "already_member": "Jesteś już członkiem {workspace}",
-      "description": "Twoja przestrzeń robocza to miejsce, w którym tworzysz projekty, współpracujesz nad elementami pracy i organizujesz różne nurty pracy na swoim koncie Plane.",
+      "description": "Twoja przestrzeń robocza to miejsce, w którym tworzysz projekty, współpracujesz nad elementami pracy i organizujesz różne nurty pracy na swoim koncie Pi-Plane.",
       "accept": "Akceptuj",
       "ignore": "Ignoruj",
       "continue_home": "Przejdź do strony głównej",

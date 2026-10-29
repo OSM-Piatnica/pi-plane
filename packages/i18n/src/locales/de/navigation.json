@@ -7,7 +7,7 @@
     }
   },
   "sidebar": {
-    "stickies": "Notizen",
+    "stickies": "Haftnotizen",
     "your_work": "Ihre Arbeit",
     "projects": "Projekte",
     "pages": "Seiten",
@@ -20,7 +20,7 @@
     "work_items": "Arbeitselemente",
     "cycles": "Zyklen",
     "modules": "Module",
-    "intake": "Eingang",
+    "intake": "Intake",
     "drafts": "Entwürfe",
     "favorites": "Favoriten",
     "pro": "Pro",

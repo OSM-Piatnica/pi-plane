@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -20,7 +21,7 @@ const isCustomTypography = (value: string) =>
 const isCustomFontSize = (value: string) => /^(9|10|11|12|13|14|16|18|20|24|28|32|40)$/.test(value);
 
 // Matches custom text color classes: text-primary, text-on-color, text-secondary, etc.
-const CUSTOM_TEXT_COLORS = [
+const CUSTOM_TEXT_COLORS = new Set([
   "primary",
   "secondary",
   "tertiary",
@@ -40,8 +41,8 @@ const CUSTOM_TEXT_COLORS = [
   "danger",
   "danger-primary",
   "danger-secondary",
-];
-const isCustomTextColor = (value: string) => CUSTOM_TEXT_COLORS.includes(value);
+]);
+const isCustomTextColor = (value: string) => CUSTOM_TEXT_COLORS.has(value);
 
 const twMerge = extendTailwindMerge<"custom-typography" | "custom-text-color">({
   override: {
@@ -81,8 +82,10 @@ export const isValidId = (id: string | null | undefined, validIds: string[]): bo
 /**
  * Filters an array to only include valid IDs
  */
-export const filterValidIds = (ids: string[], validIds: string[]): string[] =>
-  ids.filter((id) => validIds.includes(id));
+export const filterValidIds = (ids: string[], validIds: string[]): string[] => {
+  const validIdSet = new Set(validIds);
+  return ids.filter((id) => validIdSet.has(id));
+};
 
 /**
  * Filters an array to include only valid IDs, returning both valid and invalid IDs
@@ -90,9 +93,10 @@ export const filterValidIds = (ids: string[], validIds: string[]): string[] =>
 export const partitionValidIds = (ids: string[], validIds: string[]): { valid: string[]; invalid: string[] } => {
   const valid: string[] = [];
   const invalid: string[] = [];
+  const validIdSet = new Set(validIds);
 
   ids.forEach((id) => {
-    if (validIds.includes(id)) {
+    if (validIdSet.has(id)) {
       valid.push(id);
     } else {
       invalid.push(id);

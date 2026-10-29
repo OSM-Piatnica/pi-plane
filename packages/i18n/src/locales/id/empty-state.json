@@ -14,7 +14,7 @@
     },
     "not_found": {
       "title": "Ups! Ada yang salah",
-      "description": "Kami tidak dapat mengambil akun Plane Anda saat ini. Ini mungkin kesalahan jaringan.",
+      "description": "Kami tidak dapat mengambil akun Pi-Plane Anda saat ini. Ini mungkin kesalahan jaringan.",
       "cta_primary": "Coba muat ulang"
     },
     "server_error": {
@@ -29,7 +29,12 @@
       "restricted_description": "Hubungi admin untuk meminta akses agar Anda dapat melanjutkan di sini.",
       "join_description": "Klik tombol di bawah ini untuk bergabung.",
       "cta_primary": "Bergabung dengan proyek",
-      "cta_loading": "Sedang bergabung dengan proyek"
+      "cta_loading": "Sedang bergabung dengan proyek",
+      "pending_title": "Permintaan Anda menunggu persetujuan",
+      "pending_description": "Admin proyek akan mengizinkan Anda masuk setelah menyetujuinya.",
+      "private_title": "Proyek ini privat",
+      "private_description": "Anda dapat melihatnya, tetapi admin harus mengizinkan Anda masuk. Kirim permintaan kepada mereka.",
+      "request_cta": "Minta akses"
     },
     "invalid_project": {
       "title": "Proyek tidak ditemukan",
@@ -188,7 +193,7 @@
     },
     "wiki": {
       "title": "Tulis catatan, dokumen, atau basis pengetahuan lengkap.",
-      "description": "Halaman adalah ruang penangkapan pemikiran di Plane. Catat catatan rapat, format dengan mudah, sematkan item kerja, tata menggunakan perpustakaan komponen, dan simpan semuanya dalam konteks proyek Anda.",
+      "description": "Halaman adalah ruang penangkapan pemikiran di Pi-Plane. Catat catatan rapat, format dengan mudah, sematkan item kerja, tata menggunakan perpustakaan komponen, dan simpan semuanya dalam konteks proyek Anda.",
       "cta_primary": "Buat halaman Anda"
     },
     "project_overview_state_sidebar": {

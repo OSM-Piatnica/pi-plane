@@ -1,10 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
 // plane imports
 import type { TLoader } from "@plane/types";
 // components
@@ -22,6 +24,7 @@ interface Props {
 
 export const IssueLayoutHOC = observer(function IssueLayoutHOC(props: Props) {
   const { getIssueLoader, getGroupIssueCount } = props;
+  const { t } = useTranslation();
 
   const issueCount = getGroupIssueCount(undefined, undefined, false);
 
@@ -34,7 +37,11 @@ export const IssueLayoutHOC = observer(function IssueLayoutHOC(props: Props) {
   }
 
   if (getGroupIssueCount(undefined, undefined, false) === 0) {
-    return <div className="grid size-full place-items-center text-secondary">No work items found</div>;
+    return (
+      <div className="grid size-full place-items-center text-secondary">
+        {t("project_empty_state.work_item_filter.title")}
+      </div>
+    );
   }
 
   return <>{props.children}</>;

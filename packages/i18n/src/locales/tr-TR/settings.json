@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Benzersiz kod",
+            "label": "Tek kullanımlık kod",
             "placeholder": "123456",
             "helper_text": "Doğrulama kodu yeni e-postanıza gönderildi.",
             "errors": {
-              "required": "Benzersiz kod zorunludur",
+              "required": "Tek kullanımlık kod gerekli",
               "invalid": "Geçersiz doğrulama kodu. Lütfen tekrar deneyin."
             }
           }
@@ -115,7 +115,7 @@
     "empty_state": {
       "activity": {
         "title": "Henüz aktivite yok",
-        "description": "Yeni bir iş öğesi oluşturarak başlayın! Detaylar ve özellikler ekleyin. Aktivitenizi görmek için Plane'de daha fazlasını keşfedin."
+        "description": "Yeni bir iş öğesi oluşturarak başlayın! Detaylar ve özellikler ekleyin. Aktivitenizi görmek için Pi-Plane'de daha fazlasını keşfedin."
       },
       "assigned": {
         "title": "Size atanan iş öğesi yok",
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Tamamlanma yüzdesi",
+    "first_day_project_default": "Proje varsayılanı",
     "first_day_updated": "Haftanın ilk günü başarıyla güncellendi",
     "try_again_later": "Lütfen daha sonra tekrar deneyin.",
     "update_failed": "Güncelleme başarısız",

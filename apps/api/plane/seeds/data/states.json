@@ -10,7 +10,7 @@
   },
   {
     "id": 2,
-    "name": "Todo",
+    "name": "To do",
     "color": "#3A3A3A",
     "sequence": 25000,
     "group": "unstarted",

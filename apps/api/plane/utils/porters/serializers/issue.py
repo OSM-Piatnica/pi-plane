@@ -4,12 +4,94 @@
 # Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
+# Python imports
+import pytz
+
 # Third party imports
 from rest_framework import serializers
 
 # Module imports
 from plane.app.serializers import IssueSerializer
 from plane.utils.issue_relation_mapper import get_inverse_relation
+
+
+# Columns every work item export carries, because a file without them cannot be imported again:
+# the importer needs `name` to make a row at all and `identifier` to recognise its own files and to
+# resolve parents and relations between rows (`name` alone is not enough to recognise one).
+ISSUE_EXPORT_REQUIRED_FIELDS = ("identifier", "name")
+
+# The columns a person may leave out, grouped for the export form. Order here is only the order of
+# the form; the file always follows the serializer's own column order.
+ISSUE_EXPORT_FIELD_GROUPS = {
+    "details": (
+        "project_name",
+        "project_identifier",
+        "sequence_id",
+        "issue_type",
+        "state_name",
+        "priority",
+        "description_html",
+        "estimate",
+        "is_draft",
+    ),
+    "people": ("assignees", "subscribers", "created_by_name"),
+    "dates": (
+        "start_date",
+        "finish_date",
+        "target_date",
+        "duration",
+        "completed_at",
+        "created_at",
+        "updated_at",
+        "archived_at",
+    ),
+    "organization": ("labels", "cycles", "modules"),
+    "relations": ("parent", "relations", "links"),
+    "other": ("custom_properties", "comments"),
+}
+# Columns that are written whenever their parent column is: the cycle period travels with the cycle
+# name so that an import can recreate the cycle, and needs no entry of its own in the export form.
+ISSUE_EXPORT_COMPANION_FIELDS = {"cycles": ("cycle_start_date", "cycle_end_date")}
+ISSUE_EXPORT_OPTIONAL_FIELDS = tuple(field for group in ISSUE_EXPORT_FIELD_GROUPS.values() for field in group)
+
+
+class InvalidIssueExportFields(ValueError):
+    """The requested columns are not a valid choice; ``unknown`` names the entries that are not columns."""
+
+    def __init__(self, message, unknown=()):
+        super().__init__(message)
+        self.unknown = list(unknown)
+
+
+def resolve_issue_export_fields(selected):
+    """
+    The columns of an export: the required ones plus the optional ones that were asked for.
+
+    ``None`` means no choice was made and every column is exported. Raises ``InvalidIssueExportFields``
+    (a ``ValueError``) naming the entries that are not columns of the export (a typo must not silently
+    drop a column).
+    """
+    if selected is None:
+        return None
+    if not isinstance(selected, (list, tuple)) or not all(isinstance(name, str) for name in selected):
+        raise InvalidIssueExportFields("fields must be a list of column names")
+
+    unknown = sorted({name for name in selected if name not in ISSUE_EXPORT_OPTIONAL_FIELDS})
+    # Naming a required column is harmless: it is always exported
+    unknown = [name for name in unknown if name not in ISSUE_EXPORT_REQUIRED_FIELDS]
+    if unknown:
+        raise InvalidIssueExportFields(f"Unknown export fields: {', '.join(unknown)}", unknown)
+
+    wanted = set(selected) | set(ISSUE_EXPORT_REQUIRED_FIELDS)
+    for parent, companions in ISSUE_EXPORT_COMPANION_FIELDS.items():
+        if parent in wanted:
+            wanted.update(companions)
+    return [name for name in IssueExportSerializer.Meta.fields if name in wanted]
+
+
+def _lag_entry(relation):
+    """``{"lag_days": n}`` for a relation that has a lag; nothing otherwise, so plain exports stay as they were."""
+    return {"lag_days": relation.lag_days} if relation.lag_days else {}
 
 
 class IssueExportSerializer(IssueSerializer):
@@ -21,16 +103,18 @@ class IssueExportSerializer(IssueSerializer):
     """
 
     identifier = serializers.SerializerMethodField()
-    project_name = serializers.CharField(source='project.name', read_only=True, default="")
-    project_identifier = serializers.CharField(source='project.identifier', read_only=True, default="")
-    state_name = serializers.CharField(source='state.name', read_only=True, default="")
-    created_by_name = serializers.CharField(source='created_by.full_name', read_only=True, default="")
+    project_name = serializers.CharField(source="project.name", read_only=True, default="")
+    project_identifier = serializers.CharField(source="project.identifier", read_only=True, default="")
+    state_name = serializers.CharField(source="state.name", read_only=True, default="")
+    created_by_name = serializers.CharField(source="created_by.full_name", read_only=True, default="")
 
     issue_type = serializers.SerializerMethodField()
     assignees = serializers.SerializerMethodField()
     parent = serializers.SerializerMethodField()
     labels = serializers.SerializerMethodField()
     cycles = serializers.SerializerMethodField()
+    cycle_start_date = serializers.SerializerMethodField()
+    cycle_end_date = serializers.SerializerMethodField()
     modules = serializers.SerializerMethodField()
     comments = serializers.SerializerMethodField()
     estimate = serializers.SerializerMethodField()
@@ -38,6 +122,13 @@ class IssueExportSerializer(IssueSerializer):
     relations = serializers.SerializerMethodField()
     subscribers = serializers.SerializerMethodField()
     custom_properties = serializers.SerializerMethodField()
+
+    def __init__(self, *args, export_fields=None, **kwargs):
+        """``export_fields`` limits the columns; the others are not even computed."""
+        super().__init__(*args, **kwargs)
+        if export_fields is not None:
+            for name in set(self.fields) - set(export_fields):
+                self.fields.pop(name)
 
     class Meta(IssueSerializer.Meta):
         fields = [
@@ -65,6 +156,8 @@ class IssueExportSerializer(IssueSerializer):
             "estimate",
             "labels",
             "cycles",
+            "cycle_start_date",
+            "cycle_end_date",
             "modules",
             "custom_properties",
             "links",
@@ -99,14 +192,25 @@ class IssueExportSerializer(IssueSerializer):
         return f"{obj.parent.project.identifier}-{obj.parent.sequence_id}"
 
     def get_labels(self, obj):
-        return [
-            il.label.name
-            for il in obj.label_issue.all()
-            if il.deleted_at is None
-        ]
+        return [il.label.name for il in obj.label_issue.all() if il.deleted_at is None]
 
     def get_cycles(self, obj):
         return [ic.cycle.name for ic in obj.issue_cycle.all()]
+
+    @staticmethod
+    def _cycle_day(obj, field):
+        """The date of the first cycle's start/end in the project's timezone, where a cycle day begins and ends."""
+        cycle_link = next(iter(obj.issue_cycle.all()), None)
+        moment = getattr(cycle_link.cycle, field, None) if cycle_link else None
+        if moment is None:
+            return ""
+        return moment.astimezone(pytz.timezone(obj.project.timezone or "UTC")).date().isoformat()
+
+    def get_cycle_start_date(self, obj):
+        return self._cycle_day(obj, "start_date")
+
+    def get_cycle_end_date(self, obj):
+        return self._cycle_day(obj, "end_date")
 
     def get_modules(self, obj):
         return [im.module.name for im in obj.issue_module.all()]
@@ -114,7 +218,7 @@ class IssueExportSerializer(IssueSerializer):
     def get_estimate(self, obj):
         """Return estimate point value."""
         if obj.estimate_point:
-            return obj.estimate_point.value if hasattr(obj.estimate_point, 'value') else str(obj.estimate_point)
+            return obj.estimate_point.value if hasattr(obj.estimate_point, "value") else str(obj.estimate_point)
         return ""
 
     def get_custom_properties(self, obj):
@@ -156,17 +260,23 @@ class IssueExportSerializer(IssueSerializer):
 
         for rel in obj.issue_relation.all():
             if rel.related_issue:
-                relations.append({
-                    "type": rel.relation_type,
-                    "issue": f"{rel.related_issue.project.identifier}-{rel.related_issue.sequence_id}",
-                })
+                relations.append(
+                    {
+                        "type": rel.relation_type,
+                        "issue": f"{rel.related_issue.project.identifier}-{rel.related_issue.sequence_id}",
+                        **_lag_entry(rel),
+                    }
+                )
 
         for rel in obj.issue_related.all():
             if rel.issue:
-                relations.append({
-                    "type": get_inverse_relation(rel.relation_type),
-                    "issue": f"{rel.issue.project.identifier}-{rel.issue.sequence_id}",
-                })
+                relations.append(
+                    {
+                        "type": get_inverse_relation(rel.relation_type),
+                        "issue": f"{rel.issue.project.identifier}-{rel.issue.sequence_id}",
+                        **_lag_entry(rel),
+                    }
+                )
 
         return relations
 
@@ -174,7 +284,7 @@ class IssueExportSerializer(IssueSerializer):
         """Return list of comments with author and timestamp."""
         return [
             {
-                "comment": comment.comment_stripped if hasattr(comment, 'comment_stripped') else comment.comment_html,
+                "comment": comment.comment_stripped if hasattr(comment, "comment_stripped") else comment.comment_html,
                 "created_by": comment.actor.full_name if comment.actor else "",
                 "created_at": comment.created_at.strftime("%Y-%m-%d %H:%M:%S") if comment.created_at else "",
             }

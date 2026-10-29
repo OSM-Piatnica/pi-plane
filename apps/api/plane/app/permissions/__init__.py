@@ -9,13 +9,15 @@ from .workspace import (
     WorkspaceEntityPermission,
     WorkspaceViewerPermission,
     WorkspaceUserPermission,
+    WorkspaceMemberPermission,
 )
 from .project import (
     ProjectBasePermission,
+    ProjectArchiveUnarchivePermission,
     ProjectEntityPermission,
     ProjectMemberPermission,
     ProjectLitePermission,
     ProjectAdminPermission,
 )
-from .base import allow_permission, ROLE
+from .base import allow_permission, issue_hidden_from_guest, ROLE
 from .page import ProjectPagePermission

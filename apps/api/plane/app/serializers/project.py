@@ -17,6 +17,7 @@ from plane.app.serializers.user import UserLiteSerializer, UserAdminLiteSerializ
 from plane.db.models import (
     Project,
     ProjectMember,
+    ProjectAccessRequest,
     ProjectMemberInvite,
     ProjectIdentifier,
     DeployBoard,
@@ -35,7 +36,8 @@ class ProjectSerializer(BaseSerializer):
     class Meta:
         model = Project
         fields = "__all__"
-        read_only_fields = ["workspace", "deleted_at"]
+        # Audit fields are set server-side by BaseModel.save().
+        read_only_fields = ["workspace", "deleted_at", "created_by", "updated_by"]
 
     def validate_name(self, name):
         project_id = self.instance.id if self.instance else None
@@ -122,6 +124,11 @@ class ProjectListSerializer(DynamicBaseSerializer):
     cover_image_url = serializers.CharField(read_only=True)
     inbox_view = serializers.BooleanField(read_only=True, source="intake_view")
     next_work_item_sequence = serializers.SerializerMethodField()
+    # whether the signed-in user has an open request to join this (Private) project
+    has_pending_access_request = serializers.SerializerMethodField()
+
+    def get_has_pending_access_request(self, obj):
+        return bool(getattr(obj, "has_pending_access_request", False))
 
     def get_members(self, obj):
         project_members = getattr(obj, "members_list", None)
@@ -162,6 +169,7 @@ class ProjectMemberSerializer(BaseSerializer):
     class Meta:
         model = ProjectMember
         fields = "__all__"
+        read_only_fields = ["deleted_at", "created_by", "updated_by"]
 
 
 class ProjectMemberPreferenceSerializer(BaseSerializer):
@@ -204,6 +212,42 @@ class ProjectMemberInviteSerializer(BaseSerializer):
         fields = "__all__"
 
 
+class ProjectAccessRequestSerializer(BaseSerializer):
+    """An access request to a Private project, with the person asking."""
+
+    requester_detail = UserLiteSerializer(read_only=True, source="requester")
+
+    class Meta:
+        model = ProjectAccessRequest
+        fields = ["id", "project", "requester", "requester_detail", "status", "message", "decided_at", "created_at"]
+        read_only_fields = fields
+
+
+class ProjectMemberInvitePublicSerializer(BaseSerializer):
+    """Safe read-only serializer for the public project invite GET endpoint.
+
+    Intentionally excludes ``email`` and ``token`` so that an unauthenticated
+    caller cannot retrieve the invitee's email address or the acceptance token
+    (GHSA-2r58-hgv7-635q).
+    """
+
+    project = ProjectLiteSerializer(read_only=True)
+    workspace = WorkspaceLiteSerializer(read_only=True)
+
+    class Meta:
+        model = ProjectMemberInvite
+        fields = [
+            "id",
+            "project",
+            "workspace",
+            "role",
+            "message",
+            "accepted",
+            "responded_at",
+        ]
+        read_only_fields = fields
+
+
 class ProjectIdentifierSerializer(BaseSerializer):
     class Meta:
         model = ProjectIdentifier
@@ -227,7 +271,14 @@ class DeployBoardSerializer(BaseSerializer):
     class Meta:
         model = DeployBoard
         fields = "__all__"
-        read_only_fields = ["workspace", "project", "anchor"]
+        # The published entity is fixed when the board is created from the URL project.
+        read_only_fields = ["workspace", "project", "anchor", "entity_identifier", "entity_name"]
+
+    def validate_intake(self, intake):
+        # A board can only publish an intake from its own project.
+        if intake and intake.project_id != getattr(self.instance, "project_id", None):
+            raise serializers.ValidationError("Intake is not valid please pass a valid intake")
+        return intake
 
 
 class ProjectPublicMemberSerializer(BaseSerializer):

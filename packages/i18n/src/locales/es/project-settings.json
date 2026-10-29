@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Configuración del proyecto",
     "general": {
       "enter_project_id": "Ingresa el ID del proyecto",
       "please_select_a_timezone": "Por favor selecciona una zona horaria",
@@ -182,18 +183,18 @@
       "description": "Configura acciones automatizadas para optimizar tu flujo de trabajo de gestión de proyectos y reducir tareas manuales.",
       "auto-archive": {
         "title": "Archivar automáticamente elementos de trabajo cerrados",
-        "description": "Plane archivará automáticamente los elementos de trabajo que hayan sido completados o cancelados.",
+        "description": "Pi-Plane archivará automáticamente los elementos de trabajo que hayan sido completados o cancelados.",
         "duration": "Archivar automáticamente elementos de trabajo cerrados durante"
       },
       "auto-close": {
         "title": "Cerrar automáticamente elementos de trabajo",
-        "description": "Plane cerrará automáticamente los elementos de trabajo que no hayan sido completados o cancelados.",
+        "description": "Pi-Plane cerrará automáticamente los elementos de trabajo que no hayan sido completados o cancelados.",
         "duration": "Cerrar automáticamente elementos de trabajo inactivos durante",
         "auto_close_status": "Estado de cierre automático"
       },
       "auto-remind": {
         "title": "Recordatorios automáticos",
-        "description": "Plane enviará recordatorios automáticos via correo electrónico y notificaciones en la aplicación para mantener a tu equipo en el camino de los plazos.",
+        "description": "Pi-Plane enviará recordatorios automáticos via correo electrónico y notificaciones en la aplicación para mantener a tu equipo en el camino de los plazos.",
         "duration": "Enviar recordatorio antes"
       }
     },
@@ -324,39 +325,24 @@
     },
     "features": {
       "cycles": {
-        "title": "Ciclos",
-        "short_title": "Ciclos",
-        "description": "Programa el trabajo en períodos flexibles que se adaptan al ritmo y al tempo únicos de este proyecto.",
         "toggle_title": "Habilitar ciclos",
         "toggle_description": "Planifica el trabajo en períodos de tiempo enfocados."
       },
       "modules": {
-        "title": "Módulos",
-        "short_title": "Módulos",
-        "description": "Organiza el trabajo en subproyectos con líderes y responsables dedicados.",
         "toggle_title": "Habilitar módulos",
         "toggle_description": "Los miembros del proyecto podrán crear y editar módulos."
       },
       "views": {
-        "title": "Vistas",
-        "short_title": "Vistas",
-        "description": "Guarda ordenaciones, filtros y opciones de visualización personalizadas o compártelos con tu equipo.",
         "toggle_title": "Habilitar vistas",
         "toggle_description": "Los miembros del proyecto podrán crear y editar vistas."
       },
       "pages": {
-        "title": "Páginas",
-        "short_title": "Páginas",
-        "description": "Crea y edita contenido libre: notas, documentos, cualquier cosa.",
         "toggle_title": "Habilitar páginas",
         "toggle_description": "Los miembros del proyecto podrán crear y editar páginas."
       },
       "intake": {
         "intake_responsibility": "Responsabilidad de ingreso",
         "intake_sources": "Fuentes de ingreso",
-        "title": "Recepción",
-        "short_title": "Recepción",
-        "description": "Permite que los no miembros compartan errores, comentarios y sugerencias; sin interrumpir tu flujo de trabajo.",
         "toggle_title": "Habilitar recepción",
         "toggle_description": "Permitir a los miembros del proyecto crear solicitudes de recepción en la aplicación.",
         "toggle_tooltip_on": "Pide a tu administrador del proyecto que active esto.",
@@ -371,7 +357,7 @@
         },
         "email": {
           "title": "Correo electrónico",
-          "description": "Recopila nuevos elementos de trabajo de cualquiera que envíe un correo a una dirección de Plane.",
+          "description": "Recopila nuevos elementos de trabajo de cualquiera que envíe un correo a una dirección de Pi-Plane.",
           "fieldName": "ID de correo electrónico"
         },
         "form": {
@@ -411,9 +397,6 @@
         }
       },
       "time_tracking": {
-        "title": "Seguimiento de tiempo",
-        "short_title": "Seguimiento de tiempo",
-        "description": "Registra el tiempo dedicado a elementos de trabajo y proyectos.",
         "toggle_title": "Habilitar seguimiento de tiempo",
         "toggle_description": "Los miembros del proyecto podrán registrar el tiempo trabajado."
       },

@@ -1,19 +1,21 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
 from uuid import uuid4
 
 # Django import
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 
 # Module import
 from plane.utils.path_validator import sanitize_filename
+from plane.utils.file_size_limit import get_file_size_limit
 
 from .base import BaseModel
+from .project import ProjectMember
 
 
 def get_upload_path(instance, filename):
@@ -24,8 +26,8 @@ def get_upload_path(instance, filename):
 
 
 def file_size(value):
-    if value.size > settings.FILE_SIZE_LIMIT:
-        raise ValidationError("File too large. Size should not exceed 5 MB.")
+    if value.size > get_file_size_limit():
+        raise ValidationError("File too large.")
 
 
 class FileAsset(BaseModel):
@@ -101,3 +103,23 @@ class FileAsset(BaseModel):
             return f"/api/assets/v2/workspaces/{self.workspace.slug}/projects/{self.project_id}/{self.id}/"
 
         return None
+
+    def is_project_accessible_to(self, user):
+        """Return whether ``user`` is an active member of this asset's project.
+
+        Covers the project dimension only; callers still check workspace access
+        (the endpoint's permission class or ``allow_permission(..., level="WORKSPACE")``).
+        Lives on the model so the app and external-API asset views share one rule.
+
+        Assets with no project (workspace logos, user avatars and covers) are
+        workspace-level, so this returns True for them.
+        """
+        if self.project_id is None:
+            return True
+        # Scope the membership to the asset's workspace as well as its project.
+        return ProjectMember.objects.filter(
+            member=user,
+            workspace_id=self.workspace_id,
+            project_id=self.project_id,
+            is_active=True,
+        ).exists()

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 BRANCH=${BRANCH:-main}
 SERVICE_FOLDER=plane-app
@@ -38,7 +38,7 @@ EOF
 
 function checkLatestRelease(){
     echo "Checking for the latest release..." >&2
-    local latest_release=$(curl -s https://api.github.com/repos/$GH_REPO/releases/latest |  grep -o '"tag_name": "[^"]*"' | sed 's/"tag_name": "//;s/"//g;s/^v//')
+    local latest_release=$(curl -s https://api.github.com/repos/$GH_REPO/releases/latest |  grep -o '"tag_name": *"[^"]*"' | sed 's/"tag_name": *"//;s/"//g;s/^v//')
     if [ -z "$latest_release" ]; then
         echo "Failed to check for the latest release. Exiting..." >&2
         exit 1
@@ -96,6 +96,34 @@ function syncEnvFile(){
     rm -f $PLANE_INSTALL_DIR/plane.env.bak
 }
 
+function generateStorageCredentials(){
+    # Only the bundled MinIO takes its root login from plane.env; external S3 settings stay untouched.
+    local use_minio=$(getEnvValue "USE_MINIO" "$DOCKER_ENV_PATH")
+    local endpoint=$(getEnvValue "AWS_S3_ENDPOINT_URL" "$DOCKER_ENV_PATH")
+    if [ "${use_minio:-1}" != "1" ] || [ "${endpoint:-http://plane-minio:9000}" != "http://plane-minio:9000" ]; then
+        return 0
+    fi
+
+    # Empty values fall back to the access-key/secret-key placeholders in docker-compose.yml.
+    # Older templates quoted the values, so quotes are ignored when comparing.
+    local access_key=$(getEnvValue "AWS_ACCESS_KEY_ID" "$DOCKER_ENV_PATH")
+    local secret_key=$(getEnvValue "AWS_SECRET_ACCESS_KEY" "$DOCKER_ENV_PATH")
+    access_key=${access_key//[\"\']/}
+    secret_key=${secret_key//[\"\']/}
+    # The secret is what protects MinIO, so keep the pair only when the secret is not the template one.
+    if [ "${secret_key:-secret-key}" != "secret-key" ]; then
+        return 0
+    fi
+
+    updateEnvFile "AWS_ACCESS_KEY_ID" "$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 20)" "$DOCKER_ENV_PATH"
+    updateEnvFile "AWS_SECRET_ACCESS_KEY" "$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 40)" "$DOCKER_ENV_PATH"
+    if [ -n "$access_key$secret_key" ]; then
+        echo "NOTICE: Default object-storage credentials were rotated; the new AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY are in plane.env" >&2
+    else
+        echo "Generated object-storage credentials (AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY) in plane.env" >&2
+    fi
+}
+
 function getEnvValue() {
     local key=$1
     local file=$2
@@ -138,6 +166,7 @@ function updateEnvFile() {
                 value=$(echo "$value" | sed 's/|/\\|/g')
                 sed -i '' "s|^$key=.*|$key=$value|g" "$file"
             else
+                value=$(echo "$value" | sed 's/\//\\\//g')
                 sed -i "s/^$key=.*/$key=$value/g" "$file"
             fi
         fi
@@ -158,7 +187,7 @@ function download() {
     echo $FALLBACK_DOWNLOAD_URL
     echo $APP_RELEASE
 
-    RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/docker-compose.yml?$(date +%s)")
+    RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/compose.yaml?$(date +%s)")
     BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
     STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
@@ -166,15 +195,15 @@ function download() {
         echo "$BODY" > $PLANE_INSTALL_DIR/docker-compose.yml
     else
         # Fallback to download from the raw github url
-        RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$FALLBACK_DOWNLOAD_URL/docker-compose.yml?$(date +%s)")
+        RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$FALLBACK_DOWNLOAD_URL/compose.yaml?$(date +%s)")
         BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
         STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
         if [ "$STATUS" -eq 200 ]; then
             echo "$BODY" > $PLANE_INSTALL_DIR/docker-compose.yml
         else
-            echo "Failed to download docker-compose.yml. HTTP Status: $STATUS"
-            echo "URL: $RELEASE_DOWNLOAD_URL/v$APP_RELEASE/docker-compose.yml"
+            echo "Failed to download compose.yaml. HTTP Status: $STATUS"
+            echo "URL: $RELEASE_DOWNLOAD_URL/v$APP_RELEASE/compose.yaml"
             mv $PLANE_INSTALL_DIR/archive/$TS.docker-compose.yml $PLANE_INSTALL_DIR/docker-compose.yml
             exit 1
         fi
@@ -211,6 +240,7 @@ function download() {
     mv $PLANE_INSTALL_DIR/variables-upgrade.env $DOCKER_ENV_PATH
 
     syncEnvFile
+    generateStorageCredentials
 
     updateEnvFile "APP_RELEASE" "$APP_RELEASE" "$DOCKER_ENV_PATH"
 
@@ -553,7 +583,7 @@ function askForAction() {
         echo "   7) Exit"
         echo 
         read -p "Action [3]: " ACTION
-        until [[ -z "$ACTION" || "$ACTION" =~ ^[1-6]$ ]]; do
+        until [[ -z "$ACTION" || "$ACTION" =~ ^[1-7]$ ]]; do
             echo "$ACTION: invalid selection."
             read -p "Action [3]: " ACTION
         done

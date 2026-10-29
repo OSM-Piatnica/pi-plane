@@ -11,7 +11,7 @@
       },
       "snoozed": {
         "title": "Отложено",
-        "description": "{days, plural, one{# день} other{# дней}} осталось"
+        "description": "{days, plural, one{# день} few{# дня} other{# дней}} осталось"
       },
       "accepted": {
         "title": "Принято",

@@ -14,7 +14,7 @@
     },
     "not_found": {
       "title": "Ops! Algo parece errado",
-      "description": "Não conseguimos buscar sua conta Plane no momento. Pode ser um erro de rede.",
+      "description": "Não conseguimos buscar sua conta Pi-Plane no momento. Pode ser um erro de rede.",
       "cta_primary": "Tentar recarregar"
     },
     "server_error": {
@@ -29,7 +29,12 @@
       "restricted_description": "Entre em contato com o administrador para solicitar acesso e você poderá continuar aqui.",
       "join_description": "Clique no botão abaixo para participar.",
       "cta_primary": "Participar do projeto",
-      "cta_loading": "Participando do projeto"
+      "cta_loading": "Participando do projeto",
+      "pending_title": "Sua solicitação aguarda aprovação",
+      "pending_description": "Os administradores do projeto deixarão você entrar assim que a aprovarem.",
+      "private_title": "Este projeto é privado",
+      "private_description": "Você pode vê-lo, mas os administradores precisam deixar você entrar. Envie uma solicitação.",
+      "request_cta": "Solicitar acesso"
     },
     "invalid_project": {
       "title": "Projeto não encontrado",
@@ -188,7 +193,7 @@
     },
     "wiki": {
       "title": "Escreva uma nota, um documento ou uma base de conhecimento completa.",
-      "description": "As páginas são espaço para capturar pensamentos no Plane. Anote notas de reuniões, formate-as facilmente, incorpore itens de trabalho, organize-as usando uma biblioteca de componentes e mantenha todas no contexto do seu projeto.",
+      "description": "As páginas são espaço para capturar pensamentos no Pi-Plane. Anote notas de reuniões, formate-as facilmente, incorpore itens de trabalho, organize-as usando uma biblioteca de componentes e mantenha todas no contexto do seu projeto.",
       "cta_primary": "Criar sua página"
     },
     "project_overview_state_sidebar": {

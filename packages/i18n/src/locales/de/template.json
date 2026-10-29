@@ -2,7 +2,7 @@
   "templates": {
     "settings": {
       "title": "Vorlagen",
-      "description": "Sparen Sie 80% der Zeit, die für die Erstellung von Projekten, Arbeitsaufgaben und Seiten aufgewendet wird, wenn Sie Vorlagen verwenden.",
+      "description": "Sparen Sie 80% der Zeit, die für die Erstellung von Projekten, Arbeitselementen und Seiten aufgewendet wird, wenn Sie Vorlagen verwenden.",
       "new_project_template": "Neue Projektvorlage",
       "new_work_item_template": "Neue Arbeitselementvorlage",
       "new_page_template": "Neue Seitenvorlage",
@@ -11,7 +11,7 @@
           "label": "Projektvorlagen"
         },
         "work_item": {
-          "label": "Arbeitsaufgabenvorlagen"
+          "label": "Arbeitselementvorlagen"
         },
         "page": {
           "label": "Seitenvorlagen"
@@ -21,18 +21,18 @@
         "label": "Vorlage erstellen",
         "no_permission": {
           "project": "Kontaktieren Sie Ihren Projektadministrator, um Vorlagen zu erstellen",
-          "workspace": "Kontaktieren Sie Ihren Workspace-Administrator, um Vorlagen zu erstellen"
+          "workspace": "Kontaktieren Sie Ihren Arbeitsbereichs-Administrator, um Vorlagen zu erstellen"
         }
       },
       "use_template": {
         "button": {
           "default": "Vorlage verwenden",
-          "loading": "Verwenden"
+          "loading": "Wird angewendet"
         }
       },
       "template_source": {
         "workspace": {
-          "info": "Vom Workspace abgeleitet"
+          "info": "Vom Arbeitsbereich abgeleitet"
         },
         "project": {
           "info": "Vom Projekt abgeleitet"
@@ -70,7 +70,7 @@
         "work_item": {
           "template": {
             "name": {
-              "placeholder": "Benennen Sie Ihre Arbeitsaufgabenvorlage.",
+              "placeholder": "Benennen Sie Ihre Arbeitselementvorlage.",
               "validation": {
                 "required": "Vorlagenname ist erforderlich",
                 "maxLength": "Vorlagenname sollte weniger als 255 Zeichen enthalten"
@@ -81,18 +81,18 @@
             }
           },
           "name": {
-            "placeholder": "Geben Sie dieser Arbeitsaufgabe einen Titel.",
+            "placeholder": "Geben Sie diesem Arbeitselement einen Titel.",
             "validation": {
-              "required": "Arbeitsaufgabentitel ist erforderlich",
-              "maxLength": "Arbeitsaufgabentitel sollte weniger als 255 Zeichen enthalten"
+              "required": "Arbeitselementtitel ist erforderlich",
+              "maxLength": "Arbeitselementtitel sollte weniger als 255 Zeichen enthalten"
             }
           },
           "description": {
-            "placeholder": "Beschreiben Sie diese Arbeitsaufgabe so, dass klar ist, was Sie erreichen werden, wenn Sie diese abschließen."
+            "placeholder": "Beschreiben Sie dieses Arbeitselement so, dass klar ist, was Sie erreichen werden, wenn Sie es abschließen."
           },
           "button": {
-            "create": "Arbeitsaufgabenvorlage erstellen",
-            "update": "Arbeitsaufgabenvorlage aktualisieren"
+            "create": "Arbeitselementvorlage erstellen",
+            "update": "Arbeitselementvorlage aktualisieren"
           }
         },
         "page": {
@@ -147,22 +147,22 @@
           },
           "category": {
             "label": "Kategorie",
-            "placeholder": "Wählen Sie, wo Sie denken, dass dies am besten passt. Sie können mehrere auswählen.",
+            "placeholder": "Wählen Sie aus, wo diese Vorlage Ihrer Meinung nach am besten passt. Sie können mehrere auswählen.",
             "validation": {
               "required": "Mindestens eine Kategorie ist erforderlich"
             }
           },
           "keywords": {
             "label": "Schlüsselwörter",
-            "placeholder": "Verwenden Sie Begriffe, die Sie denken, dass Ihre Benutzer beim Suchen nach dieser Vorlage verwenden werden.",
-            "helperText": "Geben Sie Schlüsselwörter ein, die wahrscheinlich helfen, diese von der Suche zu finden.",
+            "placeholder": "Verwenden Sie Begriffe, nach denen Ihre Benutzer Ihrer Meinung nach suchen werden, wenn sie diese Vorlage finden möchten.",
+            "helperText": "Geben Sie durch Kommas getrennte Schlüsselwörter ein, mit denen andere diese Vorlage voraussichtlich über die Suche finden.",
             "validation": {
               "required": "Mindestens ein Schlüsselwort ist erforderlich"
             }
           },
           "website": {
             "label": "Website-URL",
-            "placeholder": "https://plane.so",
+            "placeholder": "https://example.com",
             "validation": {
               "invalid": "Ungültige URL",
               "maxLength": "URL sollte weniger als 800 Zeichen enthalten"
@@ -170,23 +170,23 @@
           },
           "company_name": {
             "label": "Unternehmensname",
-            "placeholder": "Plane",
+            "placeholder": "Pi-Plane",
             "validation": {
               "required": "Unternehmensname ist erforderlich",
               "maxLength": "Unternehmensname sollte weniger als 255 Zeichen enthalten"
             }
           },
           "contact_email": {
-            "label": "Support-E-Mail",
-            "placeholder": "help@plane.so",
+            "label": "Kontakt-E-Mail",
+            "placeholder": "help@example.com",
             "validation": {
               "invalid": "Ungültige E-Mail-Adresse",
-              "maxLength": "Support-E-Mail sollte weniger als 255 Zeichen enthalten"
+              "maxLength": "Kontakt-E-Mail sollte weniger als 255 Zeichen enthalten"
             }
           },
           "privacy_policy_url": {
             "label": "Link zu Ihrer Datenschutzerklärung",
-            "placeholder": "https://planes.so/privacy-policy",
+            "placeholder": "https://example.com/privacy-policy",
             "validation": {
               "invalid": "Ungültige URL",
               "maxLength": "URL sollte weniger als 800 Zeichen enthalten"
@@ -194,7 +194,7 @@
           },
           "terms_of_service_url": {
             "label": "Link zu Ihren Nutzungsbedingungen",
-            "placeholder": "https://planes.so/terms-of-service",
+            "placeholder": "https://example.com/terms-of-use",
             "validation": {
               "invalid": "Ungültige URL",
               "maxLength": "URL sollte weniger als 800 Zeichen enthalten"
@@ -205,18 +205,18 @@
             "upload_title": "Cover-Bild hochladen",
             "upload_placeholder": "Klicken Sie, um ein Cover-Bild hochzuladen, oder ziehen Sie es hierher",
             "drop_here": "Hier ablegen",
-            "click_to_upload": "Klicken Sie, um ein Cover-Bild hochzuladen",
-            "invalid_file_or_exceeds_size_limit": "Ungültige Datei oder Überschreitung der Größe. Bitte versuchen Sie es erneut.",
+            "click_to_upload": "Zum Hochladen klicken",
+            "invalid_file_or_exceeds_size_limit": "Ungültige Datei oder Größenlimit überschritten. Bitte versuchen Sie es erneut.",
             "upload_and_save": "Hochladen und speichern",
-            "uploading": "Hochladen",
+            "uploading": "Wird hochgeladen",
             "remove": "Entfernen",
-            "removing": "Entfernen",
+            "removing": "Wird entfernt",
             "validation": {
               "required": "Cover-Bild ist erforderlich"
             }
           },
           "attach_screenshots": {
-            "label": "Dokumente und Bilder einfügen, die Sie denken, dass die Anzeigende dieser Vorlage hilfreich sein können.",
+            "label": "Fügen Sie Bilder hinzu, die Ihrer Meinung nach den Betrachtern dieser Vorlage hilfreich sein können.",
             "validation": {
               "required": "Mindestens ein Screenshot ist erforderlich"
             }
@@ -227,23 +227,23 @@
     "empty_state": {
       "upgrade": {
         "title": "Vorlagen",
-        "description": "Mit Projekt-, Arbeitsaufgaben- und Seitenvorlagen in Plane müssen Sie kein Projekt von Grund auf neu erstellen oder Arbeitsaufgabeneigenschaften manuell festlegen.",
+        "description": "Mit Projekt-, Arbeitselement- und Seitenvorlagen in Pi-Plane müssen Sie kein Projekt von Grund auf neu erstellen oder Arbeitselementeigenschaften manuell festlegen.",
         "sub_description": "Sparen Sie 80% Ihrer Administrationszeit, wenn Sie Vorlagen verwenden."
       },
       "no_templates": {
-        "button": "Erstellen Sie Ihre erste Vorlage"
+        "button": "Erste Vorlage erstellen"
       },
       "no_labels": {
-        "description": "Noch keine Labels vorhanden. Erstellen Sie Labels, um Arbeitsaufgaben in Ihrem Projekt zu organisieren und zu filtern."
+        "description": "Noch keine Labels vorhanden. Erstellen Sie Labels, um Arbeitselemente in Ihrem Projekt zu organisieren und zu filtern."
       },
       "no_modules": {
-        "description": "Noch keine Module. Organisieren Sie Arbeit in Unterprojekte mit dedizierten Verantwortlichen und Bearbeitern."
+        "description": "Noch keine Module. Organisieren Sie Ihre Arbeit in Unterprojekten mit dedizierten Verantwortlichen und Bearbeitern."
       },
       "no_work_items": {
-        "description": "Noch keine Arbeitsaufgaben. Fügen Sie eine hinzu, um Ihre Arbeit besser zu strukturieren."
+        "description": "Noch keine Arbeitselemente. Fügen Sie eines hinzu, um Ihre Arbeit besser zu strukturieren."
       },
       "no_sub_work_items": {
-        "description": "Noch keine Unterarbeitsaufgaben. Fügen Sie eine hinzu, um Ihre Arbeit besser zu strukturieren."
+        "description": "Noch keine untergeordneten Arbeitselemente. Fügen Sie eines hinzu, um Ihre Arbeit besser zu strukturieren."
       },
       "page": {
         "no_templates": {
@@ -260,7 +260,7 @@
       "create": {
         "success": {
           "title": "Vorlage erstellt",
-          "message": "{templateName}, die {templateType}-Vorlage, ist jetzt für Ihren Workspace verfügbar."
+          "message": "{templateName}, die {templateType}-Vorlage, ist jetzt für Ihren Arbeitsbereich verfügbar."
         },
         "error": {
           "title": "Wir konnten diese Vorlage diesmal nicht erstellen.",
@@ -280,7 +280,7 @@
       "delete": {
         "success": {
           "title": "Vorlage gelöscht",
-          "message": "{templateName}, die {templateType}-Vorlage, wurde jetzt aus Ihrem Workspace gelöscht."
+          "message": "{templateName}, die {templateType}-Vorlage, wurde jetzt aus Ihrem Arbeitsbereich gelöscht."
         },
         "error": {
           "title": "Wir konnten diese Vorlage nicht löschen.",
@@ -301,14 +301,14 @@
     "delete_confirmation": {
       "title": "Vorlage löschen",
       "description": {
-        "prefix": "Sind Sie sicher, dass Sie die Vorlage löschen möchten-",
+        "prefix": "Möchten Sie die Vorlage wirklich löschen:",
         "suffix": "? Alle mit der Vorlage verbundenen Daten werden dauerhaft entfernt. Diese Aktion kann nicht rückgängig gemacht werden."
       }
     },
     "unpublish_confirmation": {
       "title": "Vorlage zurückziehen",
       "description": {
-        "prefix": "Sind Sie sicher, dass Sie die Vorlage zurückziehen möchten-",
+        "prefix": "Möchten Sie die Vorlage wirklich zurückziehen:",
         "suffix": "? Diese Vorlage wird den Benutzern im Marketplace nicht mehr zur Verfügung stehen."
       }
     },

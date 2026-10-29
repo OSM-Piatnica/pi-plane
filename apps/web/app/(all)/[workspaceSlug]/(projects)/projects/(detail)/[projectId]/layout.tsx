@@ -1,15 +1,17 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 import { Outlet } from "react-router";
 // plane imports
-import { Header, Row } from "@plane/ui";
+import { Header, Row } from "@plane/blocks/layout";
 import { cn } from "@plane/utils";
 // components
+import { ProjectCopyStatusBanner } from "@/components/project/copy-status-banner";
 import { TabNavigationRoot } from "@/components/navigation/tab-navigation-root";
 import { AppSidebarToggleButton } from "@/components/sidebar/sidebar-toggle-button";
 // hooks
@@ -51,6 +53,7 @@ function ProjectLayout({ params }: Route.ComponentProps) {
         </div>
       )}
       <ProjectAuthWrapper workspaceSlug={workspaceSlug} projectId={projectId}>
+        <ProjectCopyStatusBanner workspaceSlug={workspaceSlug} projectId={projectId} />
         <Outlet />
       </ProjectAuthWrapper>
     </>

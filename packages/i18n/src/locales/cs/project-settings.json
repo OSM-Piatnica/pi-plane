@@ -1,5 +1,6 @@
 {
   "project_settings": {
+    "label": "Nastavení projektu",
     "general": {
       "enter_project_id": "Zadejte ID projektu",
       "please_select_a_timezone": "Vyberte časové pásmo",
@@ -182,18 +183,18 @@
       "description": "Konfigurujte automatické akce pro zefektivnění procesu řízení projektu a snížení manuálních úkolů.",
       "auto-archive": {
         "title": "Automaticky archivovat uzavřené pracovní položky",
-        "description": "Plane bude automaticky archivovat pracovní položky, které byly dokončeny nebo zrušeny.",
+        "description": "Pi-Plane bude automaticky archivovat pracovní položky, které byly dokončeny nebo zrušeny.",
         "duration": "Automaticky archivovat pracovní položky, které jsou uzavřené po dobu"
       },
       "auto-close": {
         "title": "Automaticky uzavírat pracovní položky",
-        "description": "Plane automaticky uzavře pracovní položky, které nebyly dokončeny nebo zrušeny.",
+        "description": "Pi-Plane automaticky uzavře pracovní položky, které nebyly dokončeny nebo zrušeny.",
         "duration": "Automaticky uzavřít pracovní položky, které jsou neaktivní po dobu",
         "auto_close_status": "Stav automatického uzavření"
       },
       "auto-remind": {
         "title": "Automatické upozornění",
-        "description": "Plane automaticky pošle upozornění přes e-mail a v aplikaci, aby vaše tým zůstal na cestě s termíny.",
+        "description": "Pi-Plane automaticky pošle upozornění přes e-mail a v aplikaci, aby vaše tým zůstal na cestě s termíny.",
         "duration": "Odeslat upozornění před"
       }
     },
@@ -324,39 +325,24 @@
     },
     "features": {
       "cycles": {
-        "title": "Cykly",
-        "short_title": "Cykly",
-        "description": "Naplánujte práci v flexibilních obdobích, která se přizpůsobí jedinečnému rytmu a tempu tohoto projektu.",
         "toggle_title": "Povolit cykly",
         "toggle_description": "Naplánujte práci v soustředěných časových rámcích."
       },
       "modules": {
-        "title": "Moduly",
-        "short_title": "Moduly",
-        "description": "Organizujte práci do dílčích projektů s vyhrazenými vedoucími a přiřazenými osobami.",
         "toggle_title": "Povolit moduly",
         "toggle_description": "Členové projektu budou moci vytvářet a upravovat moduly."
       },
       "views": {
-        "title": "Zobrazení",
-        "short_title": "Zobrazení",
-        "description": "Uložte vlastní řazení, filtry a možnosti zobrazení nebo je sdílejte se svým týmem.",
         "toggle_title": "Povolit zobrazení",
         "toggle_description": "Členové projektu budou moci vytvářet a upravovat zobrazení."
       },
       "pages": {
-        "title": "Stránky",
-        "short_title": "Stránky",
-        "description": "Vytvářejte a upravujte volný obsah: poznámky, dokumenty, cokoliv.",
         "toggle_title": "Povolit stránky",
         "toggle_description": "Členové projektu budou moci vytvářet a upravovat stránky."
       },
       "intake": {
         "intake_responsibility": "Odpovědnost za příjem",
         "intake_sources": "Zdroje příjmu",
-        "title": "Příjem",
-        "short_title": "Příjem",
-        "description": "Umožněte nečlenům sdílet chyby, zpětnou vazbu a návrhy; bez narušení vašeho pracovního postupu.",
         "toggle_title": "Povolit příjem",
         "toggle_description": "Povolit členům projektu vytvářet žádosti o příjem v aplikaci.",
         "toggle_tooltip_on": "Požádejte správce projektu, aby to zapnul.",
@@ -371,7 +357,7 @@
         },
         "email": {
           "title": "E-mail",
-          "description": "Sbírejte nové pracovní položky od kohokoli, kdo pošle e-mail na adresu Plane.",
+          "description": "Sbírejte nové pracovní položky od kohokoli, kdo pošle e-mail na adresu Pi-Plane.",
           "fieldName": "ID e-mailu"
         },
         "form": {
@@ -411,9 +397,6 @@
         }
       },
       "time_tracking": {
-        "title": "Sledování času",
-        "short_title": "Sledování času",
-        "description": "Zaznamenávejte čas strávený na pracovních položkách a projektech.",
         "toggle_title": "Povolit sledování času",
         "toggle_description": "Členové projektu budou moci zaznamenávat odpracovaný čas."
       },

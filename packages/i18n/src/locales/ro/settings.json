@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Cod unic",
+            "label": "Cod de unică folosință",
             "placeholder": "123456",
             "helper_text": "Codul de verificare a fost trimis la noul e-mail.",
             "errors": {
-              "required": "Codul unic este obligatoriu",
+              "required": "Codul de unică folosință este obligatoriu",
               "invalid": "Cod de verificare invalid. Încercați din nou."
             }
           }
@@ -115,7 +115,7 @@
     "empty_state": {
       "activity": {
         "title": "Nicio activitate încă",
-        "description": "Începe prin a crea o nouă activitate! Adaugă detalii și proprietăți. Explorează mai mult în Plane pentru a-ți vedea activitatea."
+        "description": "Începe prin a crea o nouă activitate! Adaugă detalii și proprietăți. Explorează mai mult în Pi-Plane pentru a-ți vedea activitatea."
       },
       "assigned": {
         "title": "Nicio activitate atribuită ție",
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Procent de finalizare",
+    "first_day_project_default": "Implicit al proiectului",
     "first_day_updated": "Prima zi a săptămânii a fost actualizată cu succes",
     "try_again_later": "Te rugăm să încerci din nou mai târziu.",
     "update_failed": "Actualizarea a eșuat",

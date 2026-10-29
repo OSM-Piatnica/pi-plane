@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -53,6 +54,7 @@ export const shouldFilterView = (view: IProjectView, filters: TViewFilterProps |
   Object.keys(filters ?? {}).forEach((key) => {
     const filterKey = key as keyof TViewFilterProps;
     if (filterKey === "owned_by" && filters?.owned_by && filters.owned_by.length > 0) {
+      // react-doctor-disable-next-line js-set-map-lookups -- filter selections are a short user-picked list and each key is checked once
       fallsInFilters = fallsInFilters && filters.owned_by.includes(`${view.created_by}`);
     }
 
@@ -64,6 +66,7 @@ export const shouldFilterView = (view: IProjectView, filters: TViewFilterProps |
     }
 
     if (filterKey === "view_type" && filters?.view_type && filters?.view_type?.length > 0) {
+      // react-doctor-disable-next-line js-set-map-lookups -- view_type has only a couple of possible values
       fallsInFilters = filters.view_type.includes(view.access);
     }
   });

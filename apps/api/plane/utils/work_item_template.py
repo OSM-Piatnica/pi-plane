@@ -83,9 +83,10 @@ def resolve_payload_for_project(*, workspace_id, project_id: uuid.UUID, raw: dic
         resolved["priority"] = priority
 
     t_id = _parse_uuid(raw.get("type_id"))
-    if t_id and ProjectIssueType.objects.filter(
-        project_id=project_id, issue_type_id=t_id, deleted_at__isnull=True
-    ).exists():
+    if (
+        t_id
+        and ProjectIssueType.objects.filter(project_id=project_id, issue_type_id=t_id, deleted_at__isnull=True).exists()
+    ):
         resolved["type_id"] = str(t_id)
 
     s_id = _parse_uuid(raw.get("state_id"))
@@ -121,11 +122,14 @@ def resolve_payload_for_project(*, workspace_id, project_id: uuid.UUID, raw: dic
         member_ids: list[str] = []
         for uid in assignee_ids:
             u = _parse_uuid(uid)
-            if u and WorkspaceMember.objects.filter(
-                workspace_id=workspace_id,
-                member_id=u,
-                is_active=True,
-            ).exists():
+            if (
+                u
+                and WorkspaceMember.objects.filter(
+                    workspace_id=workspace_id,
+                    member_id=u,
+                    is_active=True,
+                ).exists()
+            ):
                 member_ids.append(str(u))
         if member_ids:
             resolved["assignee_ids"] = member_ids
@@ -133,9 +137,12 @@ def resolve_payload_for_project(*, workspace_id, project_id: uuid.UUID, raw: dic
             resolved["assignee_ids"] = []
 
     c_id = _parse_uuid(raw.get("cycle_id"))
-    if c_id and Cycle.objects.filter(
-        id=c_id, project_id=project_id, deleted_at__isnull=True, archived_at__isnull=True
-    ).exists():
+    if (
+        c_id
+        and Cycle.objects.filter(
+            id=c_id, project_id=project_id, deleted_at__isnull=True, archived_at__isnull=True
+        ).exists()
+    ):
         resolved["cycle_id"] = str(c_id)
 
     mod_ids = raw.get("module_ids")
@@ -155,9 +162,7 @@ def resolve_payload_for_project(*, workspace_id, project_id: uuid.UUID, raw: dic
     return resolved
 
 
-def validate_payload(
-    *, workspace_id, project: Project | None, data: dict, strict_project: bool
-) -> dict:
+def validate_payload(*, workspace_id, project: Project | None, data: dict, strict_project: bool) -> dict:
     """
     Validates and normalizes payload on create/update. Raises ValueError on invalid data.
     """
@@ -177,13 +182,14 @@ def validate_payload(
 
     if "type_id" in data and data["type_id"] is not None:
         tid = _parse_uuid(data["type_id"])
-        if not tid or not IssueType.objects.filter(
-            id=tid, workspace_id=workspace_id, is_active=True
-        ).exists():
+        if not tid or not IssueType.objects.filter(id=tid, workspace_id=workspace_id, is_active=True).exists():
             raise ValueError("Invalid work item type (type_id)")
-        if project and not ProjectIssueType.objects.filter(
-            project=project, issue_type_id=tid, deleted_at__isnull=True
-        ).exists():
+        if (
+            project
+            and not ProjectIssueType.objects.filter(
+                project=project, issue_type_id=tid, deleted_at__isnull=True
+            ).exists()
+        ):
             raise ValueError("Work item type is not enabled for this project")
 
     if strict_project and project is not None:
@@ -192,36 +198,43 @@ def validate_payload(
             raise ValueError("Invalid state for this project")
 
         c_id = _parse_uuid(data.get("cycle_id"))
-        if c_id and not Cycle.objects.filter(
-            id=c_id, project_id=project.id, deleted_at__isnull=True, archived_at__isnull=True
-        ).exists():
+        if (
+            c_id
+            and not Cycle.objects.filter(
+                id=c_id, project_id=project.id, deleted_at__isnull=True, archived_at__isnull=True
+            ).exists()
+        ):
             raise ValueError("Invalid cycle for this project")
 
         label_ids = data.get("label_ids")
         if isinstance(label_ids, list):
             for lid in label_ids:
                 lu = _parse_uuid(lid)
-                if lu and not Label.objects.filter(
-                    id=lu, project_id=project.id, deleted_at__isnull=True
-                ).exists():
+                if lu and not Label.objects.filter(id=lu, project_id=project.id, deleted_at__isnull=True).exists():
                     raise ValueError("Invalid label id in label_ids")
 
         mod_ids = data.get("module_ids")
         if isinstance(mod_ids, list):
             for mid in mod_ids:
                 mu = _parse_uuid(mid)
-                if mu and not Module.objects.filter(
-                    id=mu, project_id=project.id, deleted_at__isnull=True, archived_at__isnull=True
-                ).exists():
+                if (
+                    mu
+                    and not Module.objects.filter(
+                        id=mu, project_id=project.id, deleted_at__isnull=True, archived_at__isnull=True
+                    ).exists()
+                ):
                     raise ValueError("Invalid module id in module_ids")
 
         assignee_ids = data.get("assignee_ids")
         if isinstance(assignee_ids, list):
             for aid in assignee_ids:
                 au = _parse_uuid(aid)
-                if au and not WorkspaceMember.objects.filter(
-                    workspace_id=workspace_id, member_id=au, is_active=True
-                ).exists():
+                if (
+                    au
+                    and not WorkspaceMember.objects.filter(
+                        workspace_id=workspace_id, member_id=au, is_active=True
+                    ).exists()
+                ):
                     raise ValueError("Invalid assignee (not a workspace member)")
 
     return data

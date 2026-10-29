@@ -1,0 +1,113 @@
+{
+  "wiki_collections": {
+    "predefined": {
+      "general": "Algemeen",
+      "private": "Privé",
+      "shared": "Gedeeld",
+      "archived": "Gearchiveerd"
+    },
+    "fallback_name": "Collectie",
+    "form": {
+      "name_required": "Titel van de collectie is verplicht",
+      "name_max_length": "De naam van de collectie moet korter zijn dan 255 tekens",
+      "name_placeholder_create": "Geef de collectie een titel",
+      "name_placeholder_edit": "Naam van de collectie"
+    },
+    "create_modal": {
+      "title": "Een collectie maken",
+      "submit": "Collectie maken"
+    },
+    "edit_modal": {
+      "title": "Collectie bewerken"
+    },
+    "delete_modal": {
+      "title": "Collectie verwijderen",
+      "page_count": "Deze collectie heeft {pageCount} {pageCount, plural, one {pagina} other {pagina's}}. Kies wat er met de pagina's gebeurt.",
+      "transfer_title": "Pagina's overdragen en collectie verwijderen",
+      "transfer_description": "Verplaats alle pagina's naar een andere collectie voordat je verwijdert. Pagina's en hun rechten blijven behouden.",
+      "transfer_warning": "Verplaatste pagina's nemen de rechten over van de geselecteerde collectie.",
+      "transfer_target_label": "Pagina's verplaatsen naar",
+      "transfer_target_placeholder": "Selecteer een collectie",
+      "delete_with_pages_title": "Collectie met pagina's verwijderen",
+      "delete_with_pages_description": "Verwijder de collectie en alle bijbehorende pagina's permanent. Deze actie kan niet ongedaan worden gemaakt.",
+      "submit": "Collectie verwijderen"
+    },
+    "header": {
+      "add_page": "Pagina toevoegen"
+    },
+    "menu": {
+      "create_new_page": "Nieuwe pagina maken",
+      "add_existing_page": "Bestaande pagina toevoegen",
+      "edit_collection": "Collectie bewerken",
+      "collection_options": "Collectieopties"
+    },
+    "add_existing_page_modal": {
+      "search_placeholder": "Zoeken naar pagina's",
+      "success_message": "{count} {count, plural, one {pagina} other {pagina's}} toegevoegd aan collectie.",
+      "error_message": "Pagina's konden niet worden verplaatst. Probeer het opnieuw.",
+      "no_pages_found": "Geen pagina's gevonden die overeenkomen met je zoekopdracht",
+      "no_pages_available": "Geen pagina's beschikbaar om te verplaatsen",
+      "submit": "Verplaatsen"
+    },
+    "list": {
+      "invite_only": "Alleen op uitnodiging",
+      "remove_error": "Pagina verwijderen uit collectie mislukt.",
+      "no_matching_pages": "Geen overeenkomende pagina's",
+      "remove_search_criteria": "Verwijder de zoekcriteria om alle pagina's te zien",
+      "remove_filters": "Verwijder de filters om alle pagina's te zien",
+      "no_pages_title": "Nog geen pagina's",
+      "no_pages_description": "Deze collectie heeft momenteel geen pagina's.",
+      "untitled": "Zonder titel",
+      "restricted_access": "Beperkte toegang",
+      "collapse_page": "Pagina samenvouwen",
+      "expand_page": "Pagina uitvouwen",
+      "page_actions": "Pagina-acties",
+      "page_link_copied": "Paginalink gekopieerd naar klembord.",
+      "columns": {
+        "page_name": "Paginanaam",
+        "owner": "Eigenaar",
+        "nested_pages": "Geneste pagina's",
+        "last_activity": "Laatste activiteit",
+        "actions": "Acties"
+      }
+    },
+    "toasts": {
+      "created": "Collectie succesvol gemaakt.",
+      "create_error": "Collectie kon niet worden gemaakt. Probeer het opnieuw.",
+      "renamed": "Collectie succesvol hernoemd.",
+      "rename_error": "Collectie kon niet worden bijgewerkt. Probeer het opnieuw.",
+      "transferred_deleted": "Pagina's overgedragen en collectie verwijderd.",
+      "deleted_with_pages": "Collectie en bijbehorende pagina's verwijderd.",
+      "delete_error": "Collectie kon niet worden verwijderd. Probeer het opnieuw.",
+      "target_required": "Selecteer een collectie om pagina's naartoe te verplaatsen.",
+      "create_page_error": "Pagina kon niet worden gemaakt. Probeer het opnieuw.",
+      "create_page_in_collection_error": "Pagina kon niet worden gemaakt of aan de collectie worden toegevoegd. Probeer het opnieuw.",
+      "collection_link_copied": "Collectielink gekopieerd naar klembord."
+    }
+  },
+  "wiki": {
+    "upgrade_flow": {
+      "title": "Upgrade om Wiki te ontgrendelen",
+      "description": "Ontgrendel openbare pagina's, versiegeschiedenis, gedeelde pagina's, realtime samenwerking en werkruimtepagina's voor wiki's, bedrijfsbrede documenten en kennisbanken met Plane Pro.",
+      "upgrade_button": {
+        "text": "Upgraden"
+      },
+      "learn_more_button": {
+        "text": "Meer informatie"
+      },
+      "download_button": {
+        "text": "Gegevens downloaden",
+        "loading": "Downloaden"
+      },
+      "tabs": {
+        "nested_pages": "Geneste pagina's",
+        "add_embeds": "Insluitingen toevoegen",
+        "publish_pages": "Pagina's publiceren",
+        "comments": "Opmerkingen"
+      }
+    },
+    "nested_pages_download_banner": {
+      "title": "Geneste pagina's vereisen een betaald abonnement. Upgrade om te ontgrendelen."
+    }
+  }
+}

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -27,17 +28,47 @@ export type TNotificationIssueLite = {
   state_group: string | undefined;
 };
 
+/** The project a notification is about when it is not about a work item (a request to join a Private project). */
+export type TNotificationProjectLite = {
+  id: string;
+  name: string;
+  identifier: string;
+  workspace_slug: string;
+};
+
+export type TNotificationAccessRequest = {
+  id: string;
+  /** Only on the notification to the admins. */
+  message?: string;
+  /** Only on the notification to the requester, who is told how the request was decided; missing means it is open. */
+  status?: "approved" | "rejected";
+};
+
+/** A message somebody wrote to the admins of the workspace (the Help menu's "Contact workspace admins"). */
+export type TNotificationWorkspaceAdminMessage = {
+  id: string;
+  message: string;
+  /** To answer by email; only admins receive these notifications. */
+  sender_email: string;
+};
+
 export type TNotificationData = {
   issue: TNotificationIssueLite | undefined;
-  issue_activity: {
-    id: string | undefined;
-    actor: string | undefined;
-    field: string | undefined;
-    issue_comment: string | undefined;
-    verb: "created" | "updated" | "deleted";
-    new_value: string | undefined;
-    old_value: string | undefined;
-  };
+  /** Missing on the notifications about access requests, which carry `project` and `access_request` instead. */
+  issue_activity:
+    | {
+        id: string | undefined;
+        actor: string | undefined;
+        field: string | undefined;
+        issue_comment: string | undefined;
+        verb: "created" | "updated" | "deleted";
+        new_value: string | undefined;
+        old_value: string | undefined;
+      }
+    | undefined;
+  project?: TNotificationProjectLite;
+  access_request?: TNotificationAccessRequest;
+  workspace_admin_message?: TNotificationWorkspaceAdminMessage;
 };
 
 export type TNotification = {

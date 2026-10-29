@@ -8,6 +8,7 @@
   "submit": "Odeslat",
   "cancel": "Zrušit",
   "loading": "Načítání",
+  "searching": "Hledání...",
   "error": "Chyba",
   "success": "Úspěch",
   "warning": "Varování",
@@ -107,15 +108,24 @@
   "failed_to_update_email_notification_setting": "Aktualizace nastavení e-mailových oznámení se nezdařila",
   "notify_me_when": "Upozornit mě, když",
   "property_changes": "Změny vlastností",
-  "property_changes_description": "Upozornit mě, když se změní vlastnosti pracovních položek jako přiřazení, priorita, odhady nebo cokoli jiného.",
+  "property_changes_description": "Upozornit mě, když se změní vlastnosti pracovní položky, například přiřazení, priorita nebo odhady.",
   "state_change": "Změna stavu",
   "state_change_description": "Upozornit mě, když se pracovní položka přesune do jiného stavu",
   "issue_completed": "Pracovní položka dokončena",
-  "issue_completed_description": "Upozornit mě pouze při dokončení pracovní položky",
+  "issue_completed_description": "Upozornit mě při dokončení pracovní položky",
   "comments": "Komentáře",
   "comments_description": "Upozornit mě, když někdo přidá komentář k pracovní položce",
   "mentions": "Zmínky",
-  "mentions_description": "Upozornit mě pouze, když mě někdo zmíní v komentářích nebo popisu",
+  "mentions_description": "Upozornit mě, když mě někdo zmíní v komentářích nebo popisu",
+  "project_access_requests": "Žádosti o přístup",
+  "project_access_requests_description": "Posílat mi e-maily o žádostech o připojení k soukromým projektům, které spravuji, a o rozhodnutích o mých vlastních žádostech.",
+  "workspace_admin_messages": "Posílat mi e-mail, když někdo píše správcům pracovního prostoru",
+  "workspace_admin_messages_description": "Platí jen pro správce pracovního prostoru. Zpráva vždy přijde do vaší schránky v aplikaci; toto nastavení určuje jen to, zda dostanete i e-mail, a týká se pouze vás.",
+  "email_frequency": "Frekvence e-mailů",
+  "email_frequency_description": "Vyberte, jak často chcete dostávat e-maily o změnách pracovních položek. Zmínky se vždy odesílají okamžitě.",
+  "email_frequency_instant": "Okamžitě",
+  "email_frequency_hourly": "Hodinový souhrn",
+  "email_frequency_daily": "Denní souhrn",
   "old_password": "Staré heslo",
   "general_settings": "Obecná nastavení",
   "sign_out": "Odhlásit se",
@@ -189,8 +199,8 @@
   "select_network": "Vybrat síť",
   "lead": "Vedoucí",
   "date_range": "Rozsah dat",
-  "private": "Soukromý",
-  "public": "Veřejný",
+  "private": "Jen já",
+  "public": "Sdílené",
   "accessible_only_by_invite": "Přístupné pouze na pozvání",
   "anyone_in_the_workspace_except_guests_can_join": "Kdokoli v pracovním prostoru kromě hostů se může připojit",
   "creating": "Vytváření",
@@ -204,8 +214,8 @@
   "add_to_favorites": "Přidat do oblíbených",
   "remove_from_favorites": "Odebrat z oblíbených",
   "rename_folder": "Přejmenovat složku",
-  "publish_project": "Publikovat projekt",
-  "publish": "Publikovat",
+  "publish_project": "Sdílet na webu",
+  "publish": "Zapnout sdílení na webu",
   "copy_link": "Kopírovat odkaz",
   "leave_project": "Opustit projekt",
   "join_the_project_to_rearrange": "Připojte se k projektu pro změnu uspořádání",
@@ -233,6 +243,25 @@
   "documentation": "Dokumentace",
   "message_support": "Kontaktovat podporu",
   "contact_sales": "Kontaktovat prodej",
+  "contact_workspace_admins": {
+    "menu_label": "Kontaktovat správce prostoru",
+    "title": "Kontaktovat správce pracovního prostoru",
+    "description": "Správci prostoru {workspace} přidávají lidi, mění role a pomáhají s přístupem. Napište jim ve své e-mailové aplikaci.",
+    "email_all": "Napsat všem správcům",
+    "subject": "Dotaz pro správce prostoru {workspace}",
+    "body": "Dobrý den,\n\n\n\n{name}",
+    "message_label": "Zpráva pro správce",
+    "message_placeholder": "Napište, co potřebujete, například přístup k projektu nebo změnu role.",
+    "characters": "{count} / {max}",
+    "send": "Odeslat zprávu",
+    "sent": "Vaše zpráva byla odeslána správcům pracovního prostoru.",
+    "error_rate_limited": "V poslední době jste odeslali několik zpráv. Zkuste to prosím později.",
+    "error_generic": "Zprávu se nepodařilo odeslat. Zkuste to znovu nebo správcům napište e-mailem.",
+    "or_email": "Nebo napište ze své e-mailové aplikace",
+    "notification_text": "napsal(a) správcům tohoto pracovního prostoru",
+    "message_from": "Zpráva od uživatele {name}",
+    "reply_by_email": "Odpovědět e-mailem"
+  },
   "hyper_mode": "Hyper režim",
   "keyboard_shortcuts": "Klávesové zkratky",
   "whats_new": "Co je nového?",
@@ -281,6 +310,11 @@
   "create_more": "Vytvořit více",
   "add_to_project": "Přidat do projektu",
   "discard": "Zahodit",
+  "discard_changes": {
+    "title": "Zahodit změny?",
+    "description": "Vaše změny nebyly uloženy. Jejich zahození nelze vrátit zpět.",
+    "keep_editing": "Pokračovat v úpravách"
+  },
   "duplicate_issue_found": "Nalezena duplicitní pracovní položka",
   "duplicate_issues_found": "Nalezeny duplicitní pracovní položky",
   "no_matching_results": "Žádné odpovídající výsledky",
@@ -304,6 +338,9 @@
   "create_new_label": "Vytvořit nový štítek",
   "label_name": "Název štítku",
   "failed_to_create_label": "Vytvoření štítku se nezdařilo. Zkuste to prosím znovu.",
+  "no_matching_labels": "Žádné odpovídající štítky",
+  "adding_label": "Přidávání „{name}“",
+  "add_label_to_labels": "Přidat „{name}“ do štítků",
   "start_date": "Datum začátku",
   "end_date": "Datum ukončení",
   "due_date": "Termín",
@@ -326,6 +363,18 @@
   "deleting": "Mazání",
   "make_a_copy": "Vytvořit kopii",
   "move_to_project": "Přesunout do projektu",
+  "default_state_names": {
+    "backlog": "Backlog",
+    "todo": "K udělání",
+    "in_progress": "V průběhu",
+    "done": "Hotovo",
+    "cancelled": "Zrušeno",
+    "triage": "Třídění"
+  },
+  "filter_headings": {
+    "access": "Přístup",
+    "owned_by": "Vlastník"
+  },
   "good": "Dobrý",
   "morning": "ráno",
   "afternoon": "odpoledne",
@@ -507,8 +556,8 @@
     "archiving": "Archivace",
     "archive": "Archivovat",
     "access": {
-      "public": "Veřejný",
-      "private": "Soukromý"
+      "public": "Sdíleno s projektem",
+      "private": "Jen já"
     },
     "done": "Hotovo",
     "sub_work_items": "Podřízené pracovní položky",
@@ -528,6 +577,7 @@
       "updated_on": "Aktualizováno dne"
     },
     "sort": {
+      "label": "Seřadit",
       "asc": "Vzestupně",
       "desc": "Sestupně",
       "created_on": "Vytvořeno dne",
@@ -600,6 +650,13 @@
       "label": "Hledat",
       "placeholder": "Zadejte hledaný výraz",
       "no_matches_found": "Nenalezeny žádné shody",
+      "cycles": "Hledat cykly...",
+      "estimates": "Hledat odhady...",
+      "labels": "Hledat štítky...",
+      "members": "Hledat členy...",
+      "modules": "Hledat moduly...",
+      "projects": "Hledat projekty...",
+      "states": "Hledat stavy...",
       "no_matching_results": "Žádné odpovídající výsledky",
       "min_chars": "Pro hledání zadejte alespoň {count} znaků",
       "error": "Chyba při načítání výsledků hledání",
@@ -627,7 +684,8 @@
       "enable": "Povolit",
       "disable": "Zakázat",
       "copy_markdown": "Kopírovat markdown",
-      "reply": "Odpovědět"
+      "reply": "Odpovědět",
+      "add_reaction": "Přidat reakci"
     },
     "name": "Název",
     "discard": "Zahodit",
@@ -707,6 +765,8 @@
     "applying": "Používání",
     "overview": "Přehled",
     "no_of": "Počet {entity}",
+    "no_of_work_items": "Počet Pracovní položky",
+    "no_of_epics": "Počet Epiky",
     "resolved": "Vyřešeno",
     "get_started": "Začít",
     "worklogs": "Pracovní záznamy",
@@ -828,7 +888,7 @@
     "edited_by": "Upraveno uživatelem"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Plane se nespustil. To může být způsobeno tím, že se jeden nebo více služeb Plane nepodařilo spustit.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane se nespustil. To může být způsobeno tím, že se jeden nebo více služeb Pi-Plane nepodařilo spustit.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Vyberte View Logs z setup.sh a Docker logů, abyste si byli jisti."
   },
   "customize_navigation": "Přizpůsobit navigaci",
@@ -876,11 +936,12 @@
       "short_description": "Exportovat jako JSON"
     }
   },
+  "labels_count": "{count, plural, one {# štítek} few {# štítky} many {# štítku} other {# štítků}}",
   "onboarding": {
     "skip": "Přeskočit",
     "profile": {
       "title": "Vytvořte si profil.",
-      "description": "Takto se budete zobrazovat v Plane.",
+      "description": "Takto se budete zobrazovat v Pi-Plane.",
       "choose_image": "Vybrat obrázek",
       "upload_image": "Nahrát obrázek",
       "change_image": "Změnit obrázek",
@@ -895,7 +956,7 @@
       "new_password_placeholder": "Nové heslo...",
       "role_question": "Jakou roli zastáváte? Vyberte jednu.",
       "domain_question": "Jaká je vaše odbornost? Vyberte jednu nebo více.",
-      "marketing_consent": "Souhlasím s marketingovými sděleními od Plane",
+      "marketing_consent": "Souhlasím s marketingovými sděleními od Pi-Plane",
       "passwords_do_not_match": "Hesla se neshodují",
       "passwords_match": "Hesla se shodují",
       "seniority_levels": {
@@ -926,7 +987,7 @@
     },
     "role": {
       "title": "Jaká je vaše role?",
-      "description": "Nastavme Plane podle toho, jak pracujete.",
+      "description": "Nastavme Pi-Plane podle toho, jak pracujete.",
       "select_one": "Vyberte jednu",
       "options": {
         "product_manager": "Produktový manažer",
@@ -939,7 +1000,7 @@
       }
     },
     "usecase": {
-      "title": "Co vás přivádí do Plane?",
+      "title": "Co vás přivádí do Pi-Plane?",
       "description": "Řekněte nám své cíle a velikost týmu.",
       "select_multiple": "Vyberte jednu nebo více",
       "select_at_least_one": "Vyberte prosím alespoň jednu možnost"
@@ -960,7 +1021,7 @@
     },
     "team": {
       "invite_teammates": "Pozvěte své spolupracovníky",
-      "invite_teammates_description": "Práce v Plane funguje nejlépe s vaším týmem. Pozvěte je hned a využijte Plane naplno.",
+      "invite_teammates_description": "Práce v Pi-Plane funguje nejlépe s vaším týmem. Pozvěte je hned a využijte Pi-Plane naplno.",
       "add_another": "Přidat další",
       "do_it_later": "Udělám to později",
       "invalid_email": "Neplatná e-mailová adresa",
@@ -1004,5 +1065,451 @@
     "syncing_description": "Vaše změny se synchronizují se serverem. Můžete pokračovat v úpravách.",
     "connection_lost": "Spojení ztraceno",
     "connection_lost_description": "Máme potíže s připojením k serveru websocket. Vaše změny budou synchronizovány a ukládány každých 10 sekund."
+  },
+  "emoji_icon_picker": {
+    "emoji": "Emoji",
+    "icon": "Ikona",
+    "contrast_notice": "Barvy budou upraveny tak, aby byl zajištěn dostatečný kontrast."
+  },
+  "date_phrases": {
+    "added_ago": "Přidáno {timeAgo}",
+    "expired": "Vypršela platnost",
+    "expired_ago": "Platnost vypršela {timeAgo}",
+    "expires_at": "Platnost vyprší {date} v {time}",
+    "never_expires": "Platnost nikdy nevyprší",
+    "date_at_time": "{date} v {time}",
+    "till": "Do {date}, {time}",
+    "after_date": "Po {date}",
+    "before_date": "Před {date}",
+    "month_week": "{month}, týden {week}",
+    "target_date": "Cílové datum: {date}",
+    "from_date": "Od {date}",
+    "till_date": "Do {date}",
+    "date_to_date": "{start} až {end}",
+    "archived_at": "Archivováno {date}",
+    "date_time": "{date} {time}",
+    "date_comma_time": "{date}, {time}",
+    "uploaded_on": "Nahráno uživatelem {name} dne {date}",
+    "date_range": "{start} - {end}",
+    "expiry": "Platnost"
+  },
+  "a11y": {
+    "toggle_details": "Přepnout podrobnosti",
+    "workflow_flow_type": "Typ toku",
+    "workflow_target_state": "Cílový stav",
+    "workflow_reject_state": "Stav při zamítnutí"
+  },
+  "api_token_expiry": {
+    "one_week": "1 týden",
+    "one_month": "1 měsíc",
+    "three_months": "3 měsíce",
+    "one_year": "1 rok",
+    "custom_date": "Vlastní datum",
+    "set_expiration_date": "Nastavit datum vypršení"
+  },
+  "profile_sidebar": {
+    "due": "Termín"
+  },
+  "progress_chart": {
+    "current": "{title}: aktuální",
+    "ideal": "{title}: ideální"
+  },
+  "app_text": {
+    "image_upload": {
+      "drop_to_upload": "Pusťte obrázek sem pro nahrání",
+      "drag_and_drop": "Přetáhněte obrázek sem",
+      "size_exceeded": "Velikost obrázku nesmí překročit 5 MB.",
+      "invalid_format": "Nahrajte prosím soubor v platném formátu.",
+      "formats_supported": "Podporované formáty souborů: .jpeg, .jpg, .png, .webp",
+      "uploading": "Nahrávání",
+      "upload_and_save": "Nahrát a uložit",
+      "title": "Nahrát obrázek",
+      "select_image": "Vybrat obrázek",
+      "select_image_named": "Vybrat obrázek: {description}",
+      "select_cover_image": "Vybrat úvodní obrázek {index}",
+      "no_images": "Nebyly nalezeny žádné obrázky."
+    },
+    "ai_assistant": {
+      "rate_limit": "Dosáhli jste maximálního počtu požadavků, tedy 50 požadavků měsíčně na uživatele.",
+      "use_response": "Použít tuto odpověď",
+      "generating_response": "Generování odpovědi...",
+      "generate_response": "Vygenerovat odpověď",
+      "generate_again": "Vygenerovat znovu",
+      "content_label": "Obsah:",
+      "response_label": "Odpověď:",
+      "no_response": "Nepodařilo se vygenerovat žádnou odpověď. Může to být způsobeno nedostatečným obsahem nebo informacemi o úkolu. Zkuste to prosím znovu.",
+      "placeholder_with_content": "Řekněte AI, jakou akci má s tímto obsahem provést...",
+      "placeholder_empty": "Zeptejte se AI na cokoli...",
+      "consent": "Používáním této funkce souhlasíte se sdílením zprávy se službou třetí strany."
+    },
+    "multiple_select": {
+      "select_all_in_group": "Vybrat vše ve skupině"
+    },
+    "theme": {
+      "download_config": "Stáhnout konfiguraci",
+      "import_config": "Importovat konfiguraci",
+      "import_failed": "Import konfigurace motivu se nezdařil",
+      "missing_fields": "Chybí povinná pole: primary a background",
+      "invalid_brand_hex": "Neplatný formát hexadecimální hodnoty barvy značky",
+      "invalid_neutral_hex": "Neplatný formát hexadecimální hodnoty neutrální barvy",
+      "invalid_mode": "Neplatný režim motivu. Musí být logická hodnota",
+      "choose_color_mode": "Vyberte barevný režim",
+      "light_mode": "Světlý režim",
+      "dark_mode": "Tmavý režim"
+    },
+    "workspace": {
+      "delete_warning": "Chystáte se smazat pracovní prostor <name/>. Pokud to potvrdíte, ztratíte přístup ke všem svým pracovním datům v tomto pracovním prostoru bez možnosti obnovení. Postupujte velmi opatrně.",
+      "delete_type_name": "Pro pokračování zadejte název tohoto pracovního prostoru.",
+      "delete_final_confirmation": "Pro konečné potvrzení napište níže <phrase/>."
+    },
+    "workspace_settings": {
+      "invitation_removed": "Pozvánka byla úspěšně odebrána.",
+      "workspace_updated": "Pracovní prostor byl úspěšně aktualizován",
+      "picture_removed": "Obrázek pracovního prostoru byl úspěšně odebrán.",
+      "picture_remove_failed": "Při odstraňování profilového obrázku došlo k chybě. Zkuste to prosím znovu.",
+      "url_copied": "Adresa URL pracovního prostoru byla zkopírována do schránky."
+    },
+    "workspace_views": {
+      "delete_failed": "Pohled se nepodařilo smazat. Zkuste to prosím znovu.",
+      "create_failed": "Pohled se nepodařilo vytvořit. Zkuste to prosím znovu.",
+      "updated": "Pohled byl úspěšně aktualizován.",
+      "update_failed": "Pohled se nepodařilo aktualizovat. Zkuste to prosím znovu.",
+      "edit_view": "Upravit pohled",
+      "delete_view": "Smazat pohled"
+    },
+    "sticky_colors": {
+      "gray": "Šedá",
+      "peach": "Broskvová",
+      "pink": "Růžová",
+      "orange": "Oranžová",
+      "green": "Zelená",
+      "light_blue": "Světle modrá",
+      "dark_blue": "Tmavě modrá",
+      "purple": "Fialová"
+    },
+    "auth_header": {
+      "work_in_all_dimensions": "Pracujte ve všech dimenzích.",
+      "welcome_back": "Vítejte zpět v Pi-Plane.",
+      "create_your_account": "Vytvořte si účet Pi-Plane."
+    },
+    "auth_root": {
+      "no_auth_methods_title": "Nejsou k dispozici žádné metody ověřování",
+      "no_auth_methods_description": "Obraťte se na správce, aby pro vaši instanci povolil ověřování."
+    },
+    "auth_password": {
+      "create_account": "Vytvořit účet"
+    },
+    "terms": {
+      "agree_sign_up": "Vytvořením účtu berete na vědomí a souhlasíte s \n našimi <terms>Smluvními podmínkami</terms> a <privacy>Zásadami ochrany osobních údajů</privacy>.",
+      "agree_sign_in": "Přihlášením berete na vědomí a souhlasíte s \n našimi <terms>Smluvními podmínkami</terms> a <privacy>Zásadami ochrany osobních údajů</privacy>."
+    },
+    "auth_screens": {
+      "sign_up": "Registrace",
+      "sign_in": "Přihlásit se",
+      "join_teams": "Připojte se k týmům, které s Pi-Plane dosahují lepších výsledků",
+      "not_authorized_view_title": "Jejda! Nemáte oprávnění zobrazit tuto stránku",
+      "not_authorized": "Neoprávněný přístup!",
+      "not_a_member_description": "Nejste členem tohoto pracovního prostoru. Obraťte se na správce pracovního prostoru, aby vám poslal pozvánku, nebo zkontrolujte své čekající pozvánky.",
+      "check_pending_invites": "Zkontrolovat čekající pozvánky"
+    },
+    "workspace_wrapper": {
+      "workspace_not_found_title": "Pracovní prostor nenalezen",
+      "workspace_not_found_description": "Pro tuto adresu URL nebyl nalezen žádný pracovní prostor. Možná neexistuje nebo nemáte oprávnění jej zobrazit.",
+      "visit_profile": "Navštívit profil"
+    },
+    "settings_nav": {
+      "toggle_settings_menu": "Přepnout nabídku nastavení",
+      "back_to_project": "Zpět do projektu",
+      "toggle_project_feature": "Přepnout funkci projektu"
+    },
+    "headers": {
+      "toggle_sidebar": "Přepnout postranní panel"
+    },
+    "profile_activity": {
+      "page_title": "Profil – Aktivita"
+    },
+    "webhooks": {
+      "updated_successfully": "Webhook byl úspěšně aktualizován.",
+      "not_authorized": "Nemáte oprávnění k přístupu na tuto stránku.",
+      "enable_webhook": "Povolit webhook",
+      "toggle_webhook": "Přepnout webhook"
+    },
+    "project_settings_empty": {
+      "title": "Zatím žádné projekty",
+      "description": "Projekty tvoří základ práce zaměřené na cíle. Umožňují vám spravovat své týmy, úkoly a vše, co potřebujete k dokončení práce.",
+      "learn_more": "Další informace o projektech"
+    },
+    "project_templates": {
+      "imported_template": "Importovaná šablona",
+      "pick_color": "Vybrat barvu"
+    },
+    "not_found": {
+      "image_alt": "404 – Stránka nenalezena",
+      "title": "Jejda! Něco se pokazilo.",
+      "description": "Omlouváme se, stránka, kterou hledáte, nebyla nalezena. Mohla být odstraněna, mohl se změnit její název nebo je dočasně nedostupná.",
+      "go_to_home": "Přejít na úvodní stránku"
+    },
+    "api_tokens": {
+      "empty_title": "Žádné tokeny API",
+      "empty_description": "Vytvářejte tokeny API pro bezpečné a snadné sdílení dat s externími aplikacemi při zachování kontroly a zabezpečení.",
+      "add_token": "Přidat token",
+      "delete_token": "Smazat token"
+    },
+    "base_layouts": {
+      "gantt": "Rozložení Gantt"
+    },
+    "command_palette": {
+      "no_states_found": "Nebyly nalezeny žádné stavy"
+    },
+    "quick_actions": {
+      "archive_module_hint": "Archivovat lze pouze dokončené nebo zrušené moduly"
+    },
+    "progress": {
+      "cycle_progress": "Průběh cyklu"
+    },
+    "estimates": {
+      "delete_title": "Smazat systém odhadů",
+      "delete_description": "Smazáním systému odhadů <name/> jej trvale odstraníte ze všech pracovních položek. Tuto akci nelze vrátit zpět. Pokud odhady přidáte znovu, budete muset aktualizovat všechny pracovní položky.",
+      "deleting": "Mazání",
+      "delete_estimate": "Smazat odhad",
+      "toggle_estimates": "Přepnout odhady",
+      "estimates_list": "Seznam odhadů",
+      "archived_title": "Archivované odhady",
+      "archived_description": "Odhady prošly změnou. Toto jsou odhady z vašich starších verzí, které se nepoužívaly. Více se o nich dozvíte <link>zde.</link>"
+    },
+    "gantt": {
+      "create_blocked_by_dependency": "Vytvořit závislost „blokováno“",
+      "create_blocking_dependency": "Vytvořit závislost „blokuje“",
+      "update_block_dates_failed": "Při aktualizaci dat bloku se něco pokazilo"
+    },
+    "product_updates": {
+      "fetch_failed": "Máme potíže s načtením aktualit. Nejnovější aktuality najdete v našem seznamu změn.",
+      "go_to_changelog": "Přejít na seznam změn"
+    },
+    "inbox": {
+      "intake_form_user": "Uživatel formuláře Intake",
+      "status": "Stav",
+      "created_by": "Vytvořil"
+    },
+    "instance": {
+      "contact_support": "Kontaktovat podporu",
+      "maintenance_title": "🚧 Vypadá to, že se Pi-Plane nespustil správně!",
+      "maintenance_description": "Některé služby se možná nepodařilo spustit. Zkontrolujte protokoly kontejnerů, abyste problém zjistili a vyřešili. Pokud si nevíte rady, obraťte se na náš tým podpory.",
+      "welcome_title": "Vítejte v Pi-Plane",
+      "welcome_description": "Nastavte svou instanci a vytvořte svůj první pracovní prostor, abyste mohli začít spravovat projekty a práci."
+    },
+    "integrations": {
+      "github_installed": "Aktivujte GitHub u jednotlivých projektů pro synchronizaci s konkrétními repozitáři.",
+      "github_not_installed": "Propojte GitHub se svým pracovním prostorem Pi-Plane pro synchronizaci pracovních položek projektu.",
+      "slack_installed": "Aktivujte Slack u jednotlivých projektů pro synchronizaci s konkrétními kanály.",
+      "slack_not_installed": "Propojte Slack se svým pracovním prostorem Pi-Plane pro synchronizaci pracovních položek projektu.",
+      "deleted_title": "Úspěšně smazáno!",
+      "deleted_message": "Integrace {title} byla úspěšně smazána.",
+      "delete_failed_message": "Integraci {title} se nepodařilo smazat. Zkuste to prosím znovu.",
+      "logo_alt": "Logo {title}",
+      "loading": "Načítání...",
+      "no_permission": "Nemáte oprávnění k provedení této akce",
+      "uninstalling": "Odinstalování...",
+      "uninstall": "Odinstalovat",
+      "installing": "Instalace...",
+      "install": "Nainstalovat"
+    },
+    "attachments": {
+      "upload_progress": "Průběh nahrávání"
+    },
+    "labels": {
+      "delete_confirmation": "Opravdu chcete smazat <name/>? Štítek bude odstraněn ze všech pracovních položek i ze všech pohledů, ve kterých je podle něj filtrováno.",
+      "edit_label": "Upravit štítek",
+      "delete_label": "Smazat štítek",
+      "remove_from_group": "Odebrat ze skupiny"
+    },
+    "modules": {
+      "module_progress": "Průběh modulu"
+    },
+    "navigation": {
+      "icon_only": "Pouze ikona",
+      "icon_with_name": "Ikona s názvem",
+      "dock_app_rail": "Ukotvit panel aplikací",
+      "undock_app_rail": "Uvolnit panel aplikací",
+      "minimum_value_is_one": "Minimální hodnota je 1",
+      "show": "Zobrazit",
+      "clear_default": "Zrušit výchozí",
+      "hide_in_more_menu": "Skrýt v nabídce Více",
+      "project_link_copied": "Odkaz na projekt byl zkopírován do schránky.",
+      "copy_failed": "Kopírování se nezdařilo",
+      "copy_failed_message": "Odkaz se nepodařilo zkopírovat. Zkuste to prosím znovu.",
+      "default_tab_updated": "Výchozí karta byla úspěšně aktualizována.",
+      "default_tab_update_failed": "Výchozí kartu se nepodařilo aktualizovat. Zkuste to prosím později.",
+      "hide_tab_failed": "Kartu se nepodařilo skrýt. Zkuste to prosím později.",
+      "generic_error": "Něco se pokazilo. Zkuste to prosím později."
+    },
+    "onboarding": {
+      "select_workspace_invitation": "Vybrat pozvánku do pracovního prostoru"
+    },
+    "tour": {
+      "work_items_title": "Plánujte pomocí pracovních položek",
+      "work_items_description": "Pracovní položka je základním stavebním kamenem Pi-Plane. Většina konceptů v Pi-Plane je spojena s pracovními položkami a jejich vlastnostmi.",
+      "cycles_title": "Postupujte pomocí cyklů",
+      "cycles_description": "Cykly vám a vašemu týmu pomáhají postupovat rychleji, podobně jako sprinty běžně používané ve vývoji agile.",
+      "modules_title": "Rozdělte na moduly",
+      "modules_description": "Moduly rozdělují vaši velkou věc na projekty nebo funkce, abyste se lépe zorganizovali.",
+      "views_description": "Vytvářejte vlastní filtry a zobrazujte jen pracovní položky, na kterých vám záleží. Filtry uložíte a sdílíte během pár kliknutí.",
+      "pages_title": "Dokumentujte pomocí stránek",
+      "pages_description": "Pomocí stránek rychle zapisujte pracovní položky na schůzce nebo na začátku dne.",
+      "welcome_title": "Vítejte v Pi-Plane, {firstName} {lastName}",
+      "welcome_description": "Jsme rádi, že jste se rozhodli Pi-Plane vyzkoušet. Nyní můžete snadno spravovat své projekty. Začněte vytvořením projektu.",
+      "take_tour": "Absolvovat prohlídku produktu",
+      "skip": "Ne, děkuji, prozkoumám to sám",
+      "create_first_project": "Vytvořte svůj první projekt",
+      "sidebar_heading": "Začněme!<br/>Získejte z Pi-Plane víc."
+    },
+    "ai": {
+      "ask_pi": "Zeptat se Pi",
+      "tone_professional": "💼 Profesionální",
+      "tone_casual": "😃 Neformální",
+      "third_party_consent": "Používáním této funkce souhlasíte se sdílením zprávy se službou třetí strany.",
+      "pi_writing": "Pi píše",
+      "pi_generating_response": "Pi generuje odpověď"
+    },
+    "pages": {
+      "icon": "Ikona",
+      "color": "Barva",
+      "remove_text_color": "Odebrat barvu textu",
+      "remove_background_color": "Odebrat barvu pozadí",
+      "formatting_toolbar": "Panel formátování",
+      "copied_link": "Odkaz zkopírován",
+      "remove_favorite": "Odebrat z oblíbených",
+      "export_markdown": "Markdown",
+      "page_size_letter": "Letter",
+      "page_size_legal": "Legal",
+      "page_size_tabloid": "Tabloid"
+    },
+    "activity": {
+      "bot_name": "Bot {name}"
+    },
+    "project": {
+      "identifier": "Identifikátor"
+    },
+    "projects": {
+      "toggle_feature": "Přepnout funkci projektu",
+      "cover_upload_failed": "Nahrání úvodního obrázku se nezdařilo"
+    },
+    "notifications": {
+      "notification_options": "Možnosti oznámení"
+    },
+    "stores": {
+      "generic_error": "Došlo k chybě",
+      "inbox_fetch_error": "Při načítání pracovních položek Intake došlo k chybě. Zkuste to prosím později.",
+      "page_make_public_error": "Stránku se nepodařilo sdílet s projektem. Zkuste to prosím později.",
+      "page_make_private_error": "Stránku se nepodařilo nastavit jako viditelnou jen pro vás. Zkuste to prosím později.",
+      "workflow_pending_approval": "Pracovní položka čeká na schválení.",
+      "workflow_transition_not_allowed": "Tento přechod stavu není pracovním postupem povolen."
+    },
+    "validation": {
+      "name_max_length": "Název musí mít nejvýše 50 znaků",
+      "name_special_chars": "Jména nesmí obsahovat speciální znaky, například {chars}",
+      "name_invalid_chars": "Jména mohou obsahovat pouze písmena, mezery, pomlčky a apostrofy",
+      "display_name_max_length": "Zobrazované jméno musí mít nejvýše 50 znaků",
+      "display_name_special_chars": "Zobrazované jméno nesmí obsahovat speciální znaky, například {chars}",
+      "display_name_invalid_chars": "Zobrazované jméno může obsahovat pouze písmena, číslice, tečky, pomlčky a podtržítka",
+      "company_name_max_length": "Název společnosti musí mít nejvýše 80 znaků",
+      "company_name_special_chars": "Název společnosti nesmí obsahovat speciální znaky, například {chars}",
+      "company_name_invalid_chars": "Název společnosti může obsahovat pouze písmena, číslice, mezery, pomlčky a podtržítka",
+      "company_name_needs_alphanumeric": "Název společnosti musí obsahovat alespoň jedno písmeno nebo číslici",
+      "workspace_name_required": "Název pracovního prostoru je povinný",
+      "workspace_name_max_length": "Název pracovního prostoru musí mít nejvýše 80 znaků",
+      "workspace_name_special_chars": "Název pracovního prostoru nesmí obsahovat speciální znaky, například {chars}",
+      "workspace_name_invalid_chars": "Název pracovního prostoru může obsahovat pouze písmena, číslice, mezery, pomlčky a podtržítka",
+      "workspace_name_needs_alphanumeric": "Název pracovního prostoru musí obsahovat alespoň jedno písmeno nebo číslici",
+      "slug_required": "Slug je povinný",
+      "slug_max_length": "Slug musí mít nejvýše 48 znaků",
+      "slug_special_chars": "Slug nesmí obsahovat speciální znaky, například {chars}",
+      "slug_invalid_chars": "Slug může obsahovat pouze písmena, číslice, pomlčky a podtržítka"
+    },
+    "analytics": {
+      "state_name": "Název stavu",
+      "estimate_point": "Bod odhadu",
+      "completed_date": "Datum dokončení",
+      "yesterday": "Včera",
+      "last_7_days": "Posledních 7 dní",
+      "last_30_days": "Posledních 30 dní",
+      "last_3_months": "Poslední 3 měsíce",
+      "duration": "Trvání"
+    },
+    "auth_labels": {
+      "one_time_code": "Jednorázový kód"
+    },
+    "state_groups": {
+      "canceled": "Zrušeno"
+    },
+    "filters": {
+      "state_group": "Skupina stavů",
+      "subscriber": "Odběratel"
+    }
+  },
+  "space_text": {
+    "auth_banner": {
+      "dismiss": "Zavřít"
+    },
+    "auth_header": {
+      "sign_in_header": "Přihlaste se, abyste mohli hlasovat nebo komentovat",
+      "sign_in_sub_header": "Přispějte k tomu, které funkce se budou vytvářet.",
+      "sign_up_header": "Prohlížejte, komentujte a dělejte více",
+      "sign_up_sub_header": "Zaregistrujte se nebo se přihlaste a pracujte s pracovními položkami a Stránkami v Pi-Plane.",
+      "default_header": "Komentujte pracovní položky nebo na ně reagujte",
+      "default_sub_header": "Použijte Pi-Plane a přidejte své cenné podněty k funkcím."
+    },
+    "terms": {
+      "agree_sign_up": "Vytvořením účtu souhlasíte s našimi\n<terms>Podmínkami služby</terms> a <privacy>Zásadami ochrany osobních údajů</privacy>.",
+      "agree_sign_in": "Přihlášením souhlasíte s našimi\n<terms>Podmínkami služby</terms> a <privacy>Zásadami ochrany osobních údajů</privacy>."
+    },
+    "user_logged_in": {
+      "title": "Skvělé! Zbývá už jen jeden krok.",
+      "description": "Do adresního řádku prohlížeče zadejte sdílený odkaz na pohled nebo stránku, kterou chcete zobrazit.",
+      "image_alt": "Uživatel je již přihlášen"
+    },
+    "auth_one_time_code": {
+      "resend_in": "Znovu odeslat za {seconds} s"
+    },
+    "oauth": {
+      "sign_up_with": "Registrace přes {provider}",
+      "sign_in_with": "Přihlášení přes {provider}",
+      "continue_with": "Pokračovat přes {provider}"
+    },
+    "issues": {
+      "shared_project_load_failed": "Tento sdílený projekt se nepodařilo načíst. Zkuste to prosím později.",
+      "cycle_tooltip": "Cyklus: {name}",
+      "no_cycle": "Žádný cyklus",
+      "due_date_tooltip": "Termín: {date}",
+      "no_date": "Žádné datum",
+      "labels_tooltip": "Štítky: {labels}",
+      "no_labels": "Žádné štítky",
+      "labels_count": "Štítků: {count}",
+      "no_assignees": "Žádní přiřazení",
+      "comment_post_failed": "Komentář se nepodařilo odeslat. Zkuste to prosím znovu.",
+      "add_comment_placeholder": "Přidat komentář...",
+      "sign_in_to_comment": "Přihlaste se a přidejte komentář",
+      "empty": "Prázdné",
+      "no_upvotes": "Zatím žádné kladné hlasy",
+      "no_downvotes": "Zatím žádné záporné hlasy",
+      "voters_and_more": "{names} a dalších {count}"
+    },
+    "error_page": {
+      "title": "Jejda! To nevypadá dobře.",
+      "description": "Pi-Plane se zhroutil. Nic se neděje, naši inženýři byli upozorněni. Pokud máte další podrobnosti, nahlaste je prosím na <github/>."
+    },
+    "not_found_page": {
+      "title": "To se nepovedlo",
+      "description": "Zkontrolujte adresu URL, kterou zadáváte do adresního řádku prohlížeče, a zkuste to znovu."
+    },
+    "powered_by": {
+      "label": "Využívá <name>Pi-Plane</name>"
+    },
+    "instance_failure": {
+      "image_alt": "Selhání instance Pi-Plane",
+      "title": "Nepodařilo se načíst podrobnosti o instanci.",
+      "description": "Nepodařilo se nám načíst podrobnosti o instanci.",
+      "hint": "Žádný strach, může jít jen o problém s připojením."
+    }
   }
 }

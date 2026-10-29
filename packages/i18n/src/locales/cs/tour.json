@@ -69,11 +69,11 @@
     "page": {
       "step_zero": {
         "title": "Dokumentujte s AI stránkami",
-        "description": "Stránky v Plane vám umožňují zachytit, organizovat a spolupracovat na projektových informacích—bez externích nástrojů."
+        "description": "Stránky v Pi-Plane vám umožňují zachytit, organizovat a spolupracovat na projektových informacích—bez externích nástrojů."
       },
       "step_one": {
-        "title": "Nastavte stránku jako Veřejnou nebo Soukromou",
-        "description": "Stránky lze nastavit jako veřejné, viditelné pro všechny ve vašem pracovním prostoru, nebo soukromé, přístupné pouze vám."
+        "title": "Sdílejte stránku, nebo si ji nechte pro sebe",
+        "description": "Stránky lze sdílet se všemi v projektu, nebo je nechat viditelné jen pro vás."
       },
       "step_two": {
         "title": "Použijte příkaz /",
@@ -95,7 +95,7 @@
     "intake": {
       "step_zero": {
         "title": "Zefektivněte požadavky s příjmem",
-        "description": "Funkce pouze v Plane, která umožňuje hostům vytvářet pracovní položky pro chyby, požadavky nebo tikety."
+        "description": "Funkce pouze v Pi-Plane, která umožňuje hostům vytvářet pracovní položky pro chyby, požadavky nebo tikety."
       },
       "step_one": {
         "title": "Otevřené/uzavřené požadavky příjmu",
@@ -154,7 +154,7 @@
   },
   "get_started": {
     "title": "Ahoj {name}, vítej na palubě!",
-    "description": "Zde je vše, co potřebujete k nastartování vaší cesty s Plane.",
+    "description": "Zde je vše, co potřebujete k nastartování vaší cesty s Pi-Plane.",
     "checklist_section": {
       "title": "Začít",
       "description": "Začněte s nastavením a uvidíte své nápady ožít rychleji.",
@@ -188,8 +188,8 @@
       "more_integrations": "Procházet další integrace"
     },
     "switch_to_plane_section": {
-      "title": "Objevte, proč týmy přecházejí na Plane",
-      "description": "Porovnejte Plane s nástroji, které dnes používáte, a uvidíte rozdíl."
+      "title": "Objevte, proč týmy přecházejí na Pi-Plane",
+      "description": "Porovnejte Pi-Plane s nástroji, které dnes používáte, a uvidíte rozdíl."
     }
   }
 }

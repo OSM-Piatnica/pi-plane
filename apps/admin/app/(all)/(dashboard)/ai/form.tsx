@@ -1,17 +1,19 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { useForm } from "react-hook-form";
-import { Lightbulb } from "lucide-react";
-import { Button } from "@plane/propel/button";
-import { TOAST_TYPE, setToast } from "@plane/propel/toast";
+import { ThoughtsOutline } from "@makeplane/propel/icons";
+import { Button } from "@makeplane/propel/components/button";
+import { PI_PLANE_ISSUES_URL } from "@plane/constants";
 import type { IFormattedInstanceConfiguration, TInstanceAIConfigurationKeys } from "@plane/types";
 // components
 import type { TControllerInputFormField } from "@/components/common/controller-input";
 import { ControllerInput } from "@/components/common/controller-input";
+import { setToast } from "@plane/blocks/toast";
 // hooks
 import { useInstance } from "@/hooks/store";
 
@@ -37,7 +39,7 @@ export function InstanceAIForm(props: IInstanceAIForm) {
     },
   });
 
-  const aiFormFields: TControllerInputFormField[] = [
+  const aiFormFields: TControllerInputFormField<AIFormValues>[] = [
     {
       key: "LLM_MODEL",
       type: "text",
@@ -50,6 +52,7 @@ export function InstanceAIForm(props: IInstanceAIForm) {
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
+            aria-label="OpenAI models documentation"
           >
             Learn more
           </a>
@@ -71,6 +74,7 @@ export function InstanceAIForm(props: IInstanceAIForm) {
             target="_blank"
             className="text-accent-primary hover:underline"
             rel="noreferrer"
+            aria-label="OpenAI API keys page"
           >
             here.
           </a>
@@ -88,7 +92,7 @@ export function InstanceAIForm(props: IInstanceAIForm) {
     await updateInstanceConfigurations(payload)
       .then(() =>
         setToast({
-          type: TOAST_TYPE.SUCCESS,
+          type: "success",
           title: "Success",
           message: "AI Settings updated successfully",
         })
@@ -121,15 +125,20 @@ export function InstanceAIForm(props: IInstanceAIForm) {
       </div>
 
       <div className="flex flex-col items-start gap-4">
-        <Button variant="primary" size="lg" onClick={handleSubmit(onSubmit)} loading={isSubmitting}>
-          {isSubmitting ? "Saving" : "Save changes"}
-        </Button>
+        <Button
+          variant="primary"
+          size="md"
+          stretch="auto"
+          onClick={handleSubmit(onSubmit)}
+          loading={isSubmitting}
+          label={isSubmitting ? "Saving" : "Save changes"}
+        />
 
         <div className="relative inline-flex items-center gap-1.5 rounded-sm border border-accent-subtle bg-accent-subtle px-4 py-2 text-caption-sm-regular text-accent-secondary">
-          <Lightbulb className="size-4" />
+          <ThoughtsOutline className="size-4" />
           <div>
             If you have a preferred AI models vendor, please get in{" "}
-            <a className="font-medium underline" href="https://plane.so/contact">
+            <a className="font-medium underline" href={PI_PLANE_ISSUES_URL}>
               touch with us.
             </a>
           </div>

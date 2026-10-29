@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -32,7 +33,8 @@ class Instance(BaseModel):
     last_checked_at = models.DateTimeField()
     namespace = models.CharField(max_length=255, blank=True, null=True)
     # telemetry and support
-    is_telemetry_enabled = models.BooleanField(default=True)
+    # off by default: opt in explicitly (admin setup form or general settings)
+    is_telemetry_enabled = models.BooleanField(default=False)
     is_support_required = models.BooleanField(default=True)
     # is setup done
     is_setup_done = models.BooleanField(default=False)

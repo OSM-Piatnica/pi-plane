@@ -1,0 +1,139 @@
+/**
+ * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
+ * See the LICENSE file for details.
+ */
+
+import { useState } from "react";
+import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
+
+import { useTranslation } from "@plane/i18n";
+// plane imports
+import { AddOutline } from "@makeplane/propel/icons";
+import { setPromiseToast } from "@plane/blocks/toast";
+import type { ISearchIssueResponse, TIssue } from "@plane/types";
+import { EIssueLayoutTypes } from "@plane/types";
+import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
+import { cn } from "@plane/utils";
+// components
+import { ExistingIssuesListModal } from "@/components/core/modals/existing-issues-list-modal";
+// hooks
+import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { QuickAddIssueRoot } from "../quick-add";
+
+type TCalendarQuickAddIssueActions = {
+  prePopulatedData?: Partial<TIssue>;
+  quickAddCallback?: (projectId: string | null | undefined, data: TIssue) => Promise<TIssue | undefined>;
+  addIssuesToView?: (issueIds: string[]) => Promise<any>;
+  onOpen?: () => void;
+  isEpic?: boolean;
+};
+
+export const CalendarQuickAddIssueActions = observer(function CalendarQuickAddIssueActions(
+  props: TCalendarQuickAddIssueActions
+) {
+  const { prePopulatedData, quickAddCallback, addIssuesToView, onOpen, isEpic = false } = props;
+  const { t } = useTranslation();
+  // router
+  const { workspaceSlug, projectId, moduleId } = useParams();
+  // states
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isExistingIssueModalOpen, setIsExistingIssueModalOpen] = useState(false);
+  const { updateIssue } = useIssueDetail();
+  // derived values
+  // Deadlines layer: only offer work items without a due date. The search endpoint has no finish-date
+  // filter, so the Scheduled layer offers all work items.
+  const missingDate = prePopulatedData?.target_date !== undefined ? { target_date: "none" } : {};
+  const ExistingIssuesListModalPayload = addIssuesToView
+    ? moduleId
+      ? { module: moduleId.toString(), ...missingDate }
+      : { cycle: true, ...missingDate }
+    : missingDate;
+
+  const handleAddIssuesToView = async (data: ISearchIssueResponse[]) => {
+    if (!workspaceSlug || !projectId) return;
+
+    const issueIds = data.map((i) => i.id);
+    const addExistingIssuesPromise = Promise.all(
+      data.map((issue) => updateIssue(workspaceSlug.toString(), projectId.toString(), issue.id, prePopulatedData ?? {}))
+    ).then(() => addIssuesToView?.(issueIds));
+
+    setPromiseToast(addExistingIssuesPromise, {
+      loading: t("issue.adding", { count: issueIds.length }),
+      success: {
+        title: t("toast.success"),
+        message: () => t("entity.add.success", { entity: t("issue.label", { count: 2 }) }),
+      },
+      error: {
+        title: t("toast.error"),
+        message: (err) => err?.message || t("common.errors.default.message"),
+      },
+    });
+  };
+
+  const handleNewIssue = () => {
+    setIsOpen(true);
+    if (onOpen) onOpen();
+  };
+  const handleExistingIssue = () => {
+    setIsExistingIssueModalOpen(true);
+  };
+
+  if (!projectId) return null;
+
+  return (
+    <>
+      {workspaceSlug && projectId && (
+        <ExistingIssuesListModal
+          workspaceSlug={workspaceSlug.toString()}
+          projectId={projectId.toString()}
+          isOpen={isExistingIssueModalOpen}
+          handleClose={() => setIsExistingIssueModalOpen(false)}
+          searchParams={ExistingIssuesListModalPayload}
+          handleOnSubmit={handleAddIssuesToView}
+        />
+      )}
+      <QuickAddIssueRoot
+        isQuickAddOpen={isOpen}
+        setIsQuickAddOpen={(open) => setIsOpen(open)}
+        layout={EIssueLayoutTypes.CALENDAR}
+        prePopulatedData={prePopulatedData}
+        quickAddCallback={quickAddCallback}
+        customQuickAddButton={
+          <div
+            className={cn(
+              "overflow-hidden rounded-sm bg-layer-transparent hover:bg-layer-transparent-hover md:opacity-0 md:group-hover:opacity-100",
+              {
+                block: isMenuOpen,
+              }
+            )}
+          >
+            <Menu onOpenChange={setIsMenuOpen}>
+              <MenuTrigger
+                render={
+                  <button
+                    type="button"
+                    className="flex w-full items-center gap-x-[6px] rounded-md px-2 py-1.5 text-tertiary hover:text-tertiary"
+                  >
+                    <AddOutline className="h-3.5 w-3.5 flex-shrink-0" />
+                    <span className="flex-shrink-0 text-13 font-medium">
+                      {isEpic ? t("epic.add.label") : t("issue.add.label")}
+                    </span>
+                  </button>
+                }
+              />
+              <MenuContent side="bottom" align="start">
+                <MenuItem label={isEpic ? t("epic.add.label") : t("issue.add.label")} onClick={handleNewIssue} />
+                {!isEpic && <MenuItem label={t("issue.add.existing")} onClick={handleExistingIssue} />}
+              </MenuContent>
+            </Menu>
+          </div>
+        }
+        isEpic={isEpic}
+      />
+    </>
+  );
+});

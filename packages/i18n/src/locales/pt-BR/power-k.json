@@ -54,8 +54,8 @@
         "indicator": "Página",
         "lock": "Bloquear",
         "unlock": "Desbloquear",
-        "make_private": "Tornar privada",
-        "make_public": "Tornar pública",
+        "make_private": "Deixar visível só para mim",
+        "make_public": "Compartilhar com o projeto",
         "archive": "Arquivar",
         "restore": "Restaurar",
         "add_to_favorites": "Adicionar aos favoritos",
@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Abrir atalhos do teclado",
-      "open_plane_documentation": "Abrir documentação do Plane",
+      "open_plane_documentation": "Abrir documentação do Pi-Plane",
       "join_forum": "Participar do nosso Fórum",
       "report_bug": "Reportar um bug",
       "chat_with_us": "Converse conosco"
@@ -171,10 +171,17 @@
     "search_menu": {
       "no_results": "Nenhum resultado encontrado",
       "clear_search": "Limpar pesquisa",
-      "go_to_advanced_search": "Ir para pesquisa avançada"
+      "go_to_advanced_search": "Ir para pesquisa avançada",
+      "results_in_workspace": "Resultados da pesquisa para <term/> no espaço de trabalho:",
+      "results_in_project": "Resultados da pesquisa para <term/> no projeto:"
     },
     "footer": {
       "workspace_level": "Nível do espaço de trabalho"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Pesquisar atalhos do teclado",
+      "no_results": "Nenhum atalho do teclado encontrado para \"{query}\"",
+      "sequence_separator": "depois"
     },
     "group_titles": {
       "actions": "Ações",

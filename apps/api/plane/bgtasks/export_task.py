@@ -10,7 +10,6 @@ import zipfile
 from datetime import date
 from typing import List
 import boto3
-from botocore.client import Config
 from uuid import UUID
 
 # Third party imports
@@ -19,9 +18,10 @@ from celery import shared_task
 # Django imports
 from django.conf import settings
 from django.utils import timezone
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Q
 
 # Module imports
+from plane.app.permissions import ROLE
 from plane.db.models import (
     ExporterHistory,
     Issue,
@@ -31,11 +31,15 @@ from plane.db.models import (
     IssueRelation,
     IssueSubscriber,
     Project,
+    ProjectUserProperty,
     WorkspaceMember,
 )
+from plane.settings.storage import get_storage
 from plane.utils.exception_logger import log_exception
+from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.porters.exporter import DataExporter
 from plane.utils.porters.serializers.issue import IssueExportSerializer
+from plane.utils.s3_config import s3_client_config
 
 
 def create_zip_file(files: List[tuple[str, str | bytes]]) -> io.BytesIO:
@@ -85,7 +89,7 @@ def _get_s3_client(*, presign: bool = False):
     client_kwargs = {
         "aws_access_key_id": settings.AWS_ACCESS_KEY_ID,
         "aws_secret_access_key": settings.AWS_SECRET_ACCESS_KEY,
-        "config": Config(signature_version="s3v4"),
+        "config": s3_client_config(),
     }
     if endpoint_url:
         client_kwargs["endpoint_url"] = endpoint_url
@@ -106,12 +110,28 @@ def _finalize_exporter_upload(*, token_id: str, file_name: str, presigned_url: s
     exporter_instance.save(update_fields=["status", "url", "key"])
 
 
+def _upload_to_azure(file_buffer, file_name, content_type, export_filename, expires_in, token_id) -> None:
+    """Write an export to Azure Blob Storage and keep a download link for it."""
+    storage = get_storage()
+    if not storage.upload_file(file_buffer, file_name, content_type):
+        _finalize_exporter_upload(token_id=token_id, file_name=file_name, presigned_url=None)
+        return
+    url = storage.generate_presigned_url(
+        file_name, expiration=expires_in, disposition="attachment", filename=export_filename
+    )
+    _finalize_exporter_upload(token_id=token_id, file_name=file_name, presigned_url=url)
+
+
 def upload_to_s3(zip_file: io.BytesIO, workspace_id: UUID, token_id: str, export_filename: str) -> None:
     """
     Upload a ZIP file to S3 and generate a presigned URL.
     """
     file_name = f"{workspace_id}/{export_filename}"
     expires_in = 7 * 24 * 60 * 60
+
+    if settings.STORAGE_PROVIDER == "azure":
+        _upload_to_azure(zip_file, file_name, "application/zip", export_filename, expires_in, token_id)
+        return
 
     upload_s3 = _get_s3_client()
     extra_args = {"ContentType": "application/zip"}
@@ -141,6 +161,10 @@ def upload_export_file_to_s3(
     file_name = f"{workspace_id}/{export_filename}"
     expires_in = 7 * 24 * 60 * 60
 
+    if settings.STORAGE_PROVIDER == "azure":
+        _upload_to_azure(file_buffer, file_name, content_type, export_filename, expires_in, token_id)
+        return
+
     upload_s3 = _get_s3_client()
     extra_args = {"ContentType": content_type}
     if settings.USE_MINIO:
@@ -157,6 +181,31 @@ def upload_export_file_to_s3(
     _finalize_exporter_upload(token_id=token_id, file_name=file_name, presigned_url=presigned_url)
 
 
+DEFAULT_LIST_ORDER = "-created_at"
+
+
+def list_view_order(user_id, project_id) -> str:
+    """The order the person's own list view of this project uses (newest first when they never chose one)."""
+    display_filters = (
+        ProjectUserProperty.objects.filter(user_id=user_id, project_id=project_id)
+        .values_list("display_filters", flat=True)
+        .first()
+    )
+    order_by = display_filters.get("order_by") if isinstance(display_filters, dict) else None
+    return order_by if isinstance(order_by, str) and order_by else DEFAULT_LIST_ORDER
+
+
+def in_list_view_order(queryset, user_id, project_id):
+    """``queryset`` of one project's work items, ordered as the person's list view of it is.
+
+    Goes through the same ``order_issue_queryset`` the list endpoints use, so a value that is not an
+    orderable field falls back exactly as it does there. Grouping (by state, assignee, ...) is not
+    applied: it only splits the list into sections, and a file has none.
+    """
+    ordered, _ = order_issue_queryset(issue_queryset=queryset, order_by_param=list_view_order(user_id, project_id))
+    return ordered
+
+
 @shared_task
 def issue_export_task(
     provider: str,
@@ -166,25 +215,32 @@ def issue_export_task(
     multiple: bool,
     slug: str,
     csv_delimiter: str = ",",
+    export_fields: List[str] | None = None,
 ):
     """
     Export issues from the workspace.
     provider (str): The provider to export the issues to csv | json | xlsx.
     token_id (str): The export object token id.
     multiple (bool): Whether to export the issues to multiple files per project.
+    export_fields (list[str] | None): The columns to write; None writes all of them.
     """
     try:
         exporter_instance = ExporterHistory.objects.get(token=token_id)
         exporter_instance.status = "processing"
         exporter_instance.save(update_fields=["status"])
 
-        # Build base queryset for issues
+        # Build base queryset for issues; guests on projects without
+        # guest_view_all_features only get the issues they created.
         workspace_issues = (
             Issue.objects.filter(
+                Q(project__project_projectmember__role__gt=ROLE.GUEST.value)
+                | Q(project__guest_view_all_features=True)
+                | Q(created_by_id=exporter_instance.initiated_by_id),
                 workspace__id=workspace_id,
                 project_id__in=project_ids,
                 project__project_projectmember__member=exporter_instance.initiated_by_id,
                 project__project_projectmember__is_active=True,
+                project__project_projectmember__deleted_at__isnull=True,
                 project__archived_at__isnull=True,
             )
             .select_related(
@@ -251,6 +307,7 @@ def issue_export_task(
                 format_type=provider,
                 csv_delimiter=csv_delimiter,
                 context={"member_emails": member_emails},
+                export_fields=export_fields,
             )
         except ValueError as e:
             # Invalid format type
@@ -268,9 +325,7 @@ def issue_export_task(
         if multiple:
             project_identifiers = {
                 str(project_id): identifier
-                for project_id, identifier in Project.objects.filter(id__in=project_ids).values_list(
-                    "id", "identifier"
-                )
+                for project_id, identifier in Project.objects.filter(id__in=project_ids).values_list("id", "identifier")
             }
             # Export each project separately with its own queryset
             for project_id in project_ids:
@@ -281,11 +336,24 @@ def issue_export_task(
                     export_date=export_date,
                     project_identifier=project_identifiers.get(str(project_id), str(project_id)),
                 )
-                filename, content = exporter.export(export_filename, project_issues)
+                filename, content = exporter.export(
+                    export_filename, in_list_view_order(project_issues, exporter_instance.initiated_by_id, project_id)
+                )
                 files.append((filename, content))
         else:
-            # Export all issues in a single file
-            filename, content = exporter.export(base_filename, workspace_issues)
+            # Export all issues in a single file: project by project, each in the order of the person's list
+            # view of it (there is no one order across projects)
+            ordered_project_ids = (
+                Project.objects.filter(id__in=project_ids).order_by("identifier").values_list("id", flat=True)
+            )
+            work_items = []
+            for project_id in ordered_project_ids:
+                work_items.extend(
+                    in_list_view_order(
+                        workspace_issues.filter(project_id=project_id), exporter_instance.initiated_by_id, project_id
+                    )
+                )
+            filename, content = exporter.export(base_filename, work_items)
             files.append((filename, content))
 
         if len(files) == 1 and provider == "csv":

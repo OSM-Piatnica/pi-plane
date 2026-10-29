@@ -1,0 +1,77 @@
+{
+  "home": {
+    "empty": {
+      "quickstart_guide": "Je snelstartgids",
+      "not_right_now": "Nu even niet",
+      "create_project": {
+        "title": "Maak een project aan",
+        "description": "In Pi-Plane begint bijna alles met een project.",
+        "cta": "Aan de slag"
+      },
+      "invite_team": {
+        "title": "Nodig je team uit",
+        "description": "Bouw, lever op en beheer samen met collega's.",
+        "cta": "Haal ze erbij"
+      },
+      "configure_workspace": {
+        "title": "Richt je werkruimte in.",
+        "description": "Schakel functies in of uit, of ga nog verder.",
+        "cta": "Deze werkruimte configureren"
+      },
+      "personalize_account": {
+        "title": "Maak Pi-Plane van jou.",
+        "description": "Kies je foto, kleuren en meer.",
+        "cta": "Nu personaliseren"
+      },
+      "widgets": {
+        "title": "Het is stil zonder widgets, zet ze aan",
+        "description": "Het lijkt erop dat al je widgets zijn uitgeschakeld. Schakel ze\nnu in om je ervaring te verbeteren!",
+        "primary_button": {
+          "text": "Widgets beheren"
+        }
+      }
+    },
+    "quick_links": {
+      "empty": "Sla links op naar werk dat je bij de hand wilt hebben.",
+      "add": "Snelle link toevoegen",
+      "title": "Snelle link",
+      "title_plural": "Snelle links"
+    },
+    "recents": {
+      "title": "Recent",
+      "empty": {
+        "project": "Je recente projecten verschijnen hier zodra je er een bezoekt.",
+        "page": "Je recente pagina's verschijnen hier zodra je er een bezoekt.",
+        "issue": "Je recente werkitems verschijnen hier zodra je er een bezoekt.",
+        "default": "Je hebt nog niets recents."
+      },
+      "filters": {
+        "all": "Alles",
+        "projects": "Projecten",
+        "pages": "Pagina's",
+        "issues": "Werkitems"
+      }
+    },
+    "new_at_plane": {
+      "title": "Nieuw bij Pi-Plane"
+    },
+    "quick_tutorial": {
+      "title": "Korte handleiding"
+    },
+    "widget": {
+      "reordered_successfully": "Widget is opnieuw gerangschikt.",
+      "reordering_failed": "Er is een fout opgetreden bij het herschikken van de widget."
+    },
+    "manage_widgets": "Widgets beheren",
+    "title": "Home",
+    "star_us_on_github": "Geef ons een ster op GitHub",
+    "business_trial_banner": {
+      "title": "Je 14-daagse proefperiode van het Business-abonnement is gestart!",
+      "description": "Ontdek alle Business-functies. Kies voor een abonnement wanneer je er klaar voor bent. Je wordt niet automatisch gefactureerd.",
+      "trial_ends_today": "Proefperiode eindigt vandaag",
+      "trial_ends_in_days": "Proefperiode eindigt over {days, plural, one {# dag} other {# dagen}}",
+      "start_subscription": "Abonnement starten",
+      "explore_business_features": "Business-functies ontdekken"
+    }
+  }
+}

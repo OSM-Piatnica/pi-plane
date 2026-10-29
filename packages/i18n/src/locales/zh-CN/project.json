@@ -195,8 +195,8 @@
         "primary_button": {
           "text": "创建您的第一个工作项",
           "comic": {
-            "title": "工作项是 Plane 中的基本构建块。",
-            "description": "重新设计 Plane 界面、重塑公司品牌或启动新的燃料喷射系统都是可能包含子工作项的工作项示例。"
+            "title": "工作项是 Pi-Plane 中的基本构建块。",
+            "description": "重新设计 Pi-Plane 界面、重塑公司品牌或启动新的燃料喷射系统都是可能包含子工作项的工作项示例。"
           }
         }
       },
@@ -271,8 +271,8 @@
   "project_page": {
     "empty_state": {
       "general": {
-        "title": "写笔记、文档或完整的知识库。让 Plane 的 AI 助手 Galileo 帮助您开始",
-        "description": "页面是 Plane 中的思维记录空间。记录会议笔记，轻松格式化，嵌入工作项，使用组件库进行布局，并将它们全部保存在项目上下文中。要快速完成任何文档，可以通过快捷键或点击按钮调用 Plane 的 AI Galileo。",
+        "title": "写笔记、文档或完整的知识库。让 Pi-Plane 的 AI 助手 Galileo 帮助您开始",
+        "description": "页面是 Pi-Plane 中的思维记录空间。记录会议笔记，轻松格式化，嵌入工作项，使用组件库进行布局，并将它们全部保存在项目上下文中。要快速完成任何文档，可以通过快捷键或点击按钮调用 Pi-Plane 的 AI Galileo。",
         "primary_button": {
           "text": "创建您的第一个页面"
         }
@@ -445,14 +445,15 @@
       "removing_from_favorites": "正在将项目从收藏中移除..."
     },
     "confirm_member_remove": {
-      "leave_description": "确定要离开项目 {name} 吗？如果再次被邀请或项目是公开的，您可以重新加入。",
+      "leave_description": "确定要离开项目 {name} 吗？如果再次被邀请或项目对工作区开放，您可以重新加入。",
       "leave_title": "离开项目？",
       "remove_description": "确定要移除成员 {name} 吗？他们将无法再访问此项目。此操作无法撤销。",
       "remove_title": "移除 {name}？"
     },
     "control_section": {
       "archive_description": "归档项目会将其从侧边导航中移除，但您仍可从项目页面访问它。您可以随时恢复或删除该项目。",
-      "delete_description": "删除项目时，该项目中的所有数据和资源将被永久删除且无法恢复。"
+      "delete_description": "删除项目时，该项目中的所有数据和资源将被永久删除且无法恢复。",
+      "duplicate_description": "使用此项目的设置、状态、标签及其他配置创建新项目。工作项仅在您选择时才会被复制。"
     },
     "delete_modal": {
       "confirm_placeholder": "输入“{phrase}”",
@@ -491,6 +492,7 @@
       "confirm_phrase_error": "请输入“{phrase}”以确认离开项目。",
       "description": "确定要离开项目“{name}”吗？与您相关的所有工作项将无法访问。",
       "fill_all_fields": "请填写所有字段。",
+      "only_admin_error": "您是此项目唯一的管理员，因此无法退出。请先将其他成员设为管理员，或删除该项目。",
       "project_name_error": "请按说明中显示的内容输入项目名称。",
       "project_name_placeholder": "输入项目名称",
       "project_name_required": "项目名称为必填项",
@@ -530,21 +532,34 @@
       "timezone_error": "更新时区失败",
       "timezone_updated": "时区已成功更新",
       "update_error": "更新个人资料时出错，请重试。",
-      "updated": "个人资料已成功更新。"
+      "updated": "个人资料已成功更新。",
+      "weekend_days": "周末日",
+      "weekend_days_description": "设置哪些天算作非工作时间。",
+      "weekend_days_updated": "周末日已更新",
+      "weekend_days_use_default": "使用工作区默认值"
     },
     "publish_modal": {
       "allow_comments": "允许评论",
       "allow_reactions": "允许表情回应",
       "allow_voting": "允许投票",
-      "anyone_with_link": "任何拥有链接的人都可以访问",
-      "link_copied": "已成功复制已发布页面的链接。",
-      "live_on_web": "此项目现已在网络上发布",
-      "publishing": "发布中",
-      "select_layout_error": "请至少选择一种视图布局以发布项目。",
-      "settings_updated": "发布设置已成功更新！",
-      "unpublish": "取消发布",
-      "unpublish_error": "取消发布项目时出错。",
-      "unpublishing": "正在取消发布",
+      "anyone_with_link": "任何拥有链接的互联网用户无需账号即可查看此项目",
+      "confirm": {
+        "title": "要在网络上分享此项目吗？",
+        "description": "任何拥有链接的互联网用户都能查看此项目，包括工作区之外的人和未登录的人。",
+        "can_see": "他们将看到：",
+        "item_work_items": "项目中的所有工作项，包括描述、状态、优先级、日期和标签",
+        "item_members": "项目成员的姓名和头像",
+        "item_activity": "评论、表情回应和投票（如果你允许），以及相应用户的姓名",
+        "note": "查看者无法编辑任何内容。链接在你停止分享之前一直有效，因此请只分享不含机密内容的项目。"
+      },
+      "link_copied": "已复制网络链接。",
+      "live_on_web": "此项目已在网络上分享",
+      "publishing": "正在开启…",
+      "select_layout_error": "请至少选择一种视图布局，以便在网络上分享项目。",
+      "settings_updated": "网络分享设置已更新。",
+      "unpublish": "停止分享",
+      "unpublish_error": "关闭网络分享时出错。",
+      "unpublishing": "正在关闭…",
       "update_settings": "更新设置"
     },
     "rich_filters": {
@@ -554,6 +569,14 @@
       "filter_type_not_supported": "不支持的筛选器类型",
       "invalid_filter": "无效的筛选器",
       "invalid_tooltip": "此筛选条件已失效。该属性可能已被删除，或您对它的访问权限已更改。",
+      "operators": {
+        "exact": "是",
+        "in": "是以下任一",
+        "range": "介于",
+        "not_exact": "不是",
+        "not_in": "不是以下任一",
+        "not_range": "不介于"
+      },
       "remove_filter": "移除筛选器",
       "save_view": "保存视图",
       "update_view": "更新视图"
@@ -623,6 +646,71 @@
       },
       "key_regenerated": "已成功重新生成新密钥。",
       "view_secret_key": "查看密钥"
+    },
+    "request_access_modal": {
+      "title": "请求访问",
+      "description": "请管理员允许你进入此项目。",
+      "description_named": "请 {name} 的管理员允许你进入。",
+      "message_placeholder": "给管理员留言(可选)",
+      "send": "发送请求",
+      "sending": "发送中...",
+      "success_title": "请求已发送",
+      "success_message": "项目管理员将进行审核。",
+      "request_button": "请求访问",
+      "pending_badge": "已请求"
+    },
+    "access_requests": {
+      "title": "加入请求({count})",
+      "approve": "批准",
+      "reject": "拒绝",
+      "already_decided": "此请求已由其他管理员处理。",
+      "requester_left": "此用户已不再是工作区成员。"
+    },
+    "duplicate_modal": {
+      "already_running": "此工作区已有一个工作项复制任务在运行。请在其完成后重试。",
+      "always_copied": "设置、状态和工作项类型始终会被复制。",
+      "banner": {
+        "done": "已复制工作项：{count} 个。",
+        "failed": "复制工作项失败。已复制的内容会保留；重试即可补上其余部分。",
+        "progress": "正在复制工作项：{copied} / {total}",
+        "queued": "工作项正在排队等待复制...",
+        "reload": "重新加载",
+        "retry": "重试",
+        "retry_failed": "无法重试复制。请重试。"
+      },
+      "clear_all": "全部清除",
+      "description": "使用相同的设置创建新项目。页面和 Webhook 不会被复制；工作项仅在您于下方选择时复制。",
+      "error": "无法复制项目，请重试。",
+      "identifier_placeholder": "留空则自动生成",
+      "properties": {
+        "assignees": "负责人",
+        "custom_properties": "自定义属性",
+        "cycles": "周期",
+        "dates": "日期",
+        "description_images": "描述中的图片",
+        "labels": "标签",
+        "links": "链接",
+        "modules": "模块",
+        "parents": "子工作项链接",
+        "relations": "关系"
+      },
+      "properties_description": "选择随工作项一起带走的内容。草稿、已归档和 Intake 工作项会被排除；评论、附件、活动和工时记录永远不会被复制。",
+      "properties_heading": "工作项属性",
+      "properties_note": "周期和模块仅在上方已复制时才会带走。",
+      "property_groups": {
+        "content": "内容",
+        "hierarchy": "层级与关系",
+        "organization": "组织",
+        "people": "人员"
+      },
+      "select_all": "全选",
+      "submit": "复制项目",
+      "submitting": "正在复制项目...",
+      "success": "项目复制成功。",
+      "title": "复制项目",
+      "too_large": "此项目过大，无法复制。请关闭部分选项后重试。",
+      "what_to_copy": "同时复制",
+      "work_items_too_large": "此项目的工作项数量超过可复制的上限（最多 {count} 个）。"
     }
   }
 }

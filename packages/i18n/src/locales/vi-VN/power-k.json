@@ -54,8 +54,8 @@
         "indicator": "Trang",
         "lock": "Khóa",
         "unlock": "Mở khóa",
-        "make_private": "Chuyển thành riêng tư",
-        "make_public": "Chuyển thành công khai",
+        "make_private": "Chỉ hiển thị với tôi",
+        "make_public": "Chia sẻ với dự án",
         "archive": "Lưu trữ",
         "restore": "Khôi phục",
         "add_to_favorites": "Thêm vào mục yêu thích",
@@ -140,7 +140,7 @@
     },
     "help_actions": {
       "open_keyboard_shortcuts": "Mở phím tắt",
-      "open_plane_documentation": "Mở tài liệu Plane",
+      "open_plane_documentation": "Mở tài liệu Pi-Plane",
       "join_forum": "Tham gia diễn đàn của chúng tôi",
       "report_bug": "Báo lỗi",
       "chat_with_us": "Trò chuyện với chúng tôi"
@@ -171,10 +171,17 @@
     "search_menu": {
       "no_results": "Không tìm thấy kết quả",
       "clear_search": "Xóa tìm kiếm",
-      "go_to_advanced_search": "Đi đến tìm kiếm nâng cao"
+      "go_to_advanced_search": "Đi đến tìm kiếm nâng cao",
+      "results_in_workspace": "Kết quả tìm kiếm cho <term/> trong không gian làm việc:",
+      "results_in_project": "Kết quả tìm kiếm cho <term/> trong dự án:"
     },
     "footer": {
       "workspace_level": "Cấp không gian làm việc"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Tìm phím tắt",
+      "no_results": "Không tìm thấy phím tắt cho \"{query}\"",
+      "sequence_separator": "rồi"
     },
     "group_titles": {
       "actions": "Hành động",

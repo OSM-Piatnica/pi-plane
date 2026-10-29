@@ -195,8 +195,8 @@
         "primary_button": {
           "text": "Crie seu primeiro item de trabalho",
           "comic": {
-            "title": "Os itens de trabalho são blocos de construção no Plane.",
-            "description": "Redesenhar a interface do usuário do Plane, reformular a marca da empresa ou lançar o novo sistema de injeção de combustível são exemplos de itens de trabalho que provavelmente têm subitens de trabalho."
+            "title": "Os itens de trabalho são blocos de construção no Pi-Plane.",
+            "description": "Redesenhar a interface do usuário do Pi-Plane, reformular a marca da empresa ou lançar o novo sistema de injeção de combustível são exemplos de itens de trabalho que provavelmente têm subitens de trabalho."
           }
         }
       },
@@ -271,8 +271,8 @@
   "project_page": {
     "empty_state": {
       "general": {
-        "title": "Escreva uma nota, um documento ou uma base de conhecimento completa. Peça a Galileo, o assistente de IA do Plane, para ajudá-lo a começar",
-        "description": "As páginas são espaço para registrar pensamentos no Plane. Anote notas de reunião, formate-as facilmente, incorpore itens de trabalho, organize-os usando uma biblioteca de componentes e mantenha-os todos no contexto do seu projeto. Para facilitar qualquer documento, invoque Galileo, a IA do Plane, com um atalho ou o clique de um botão.",
+        "title": "Escreva uma nota, um documento ou uma base de conhecimento completa. Peça a Galileo, o assistente de IA do Pi-Plane, para ajudá-lo a começar",
+        "description": "As páginas são espaço para registrar pensamentos no Pi-Plane. Anote notas de reunião, formate-as facilmente, incorpore itens de trabalho, organize-os usando uma biblioteca de componentes e mantenha-os todos no contexto do seu projeto. Para facilitar qualquer documento, invoque Galileo, a IA do Pi-Plane, com um atalho ou o clique de um botão.",
         "primary_button": {
           "text": "Crie sua primeira página"
         }
@@ -445,14 +445,15 @@
       "removing_from_favorites": "Removendo projeto dos favoritos..."
     },
     "confirm_member_remove": {
-      "leave_description": "Tem certeza de que deseja sair do projeto {name}? Você poderá entrar novamente se for convidado de novo ou se o projeto for público.",
+      "leave_description": "Tem certeza de que deseja sair do projeto {name}? Você poderá entrar novamente se for convidado de novo ou se o projeto estiver aberto ao espaço de trabalho.",
       "leave_title": "Sair do projeto?",
       "remove_description": "Tem certeza de que deseja remover o membro {name}? Ele não terá mais acesso a este projeto. Esta ação não pode ser desfeita.",
       "remove_title": "Remover {name}?"
     },
     "control_section": {
       "archive_description": "Arquivar um projeto o removerá da navegação lateral, mas você ainda poderá acessá-lo pela página de projetos. Você pode restaurar ou excluir o projeto quando quiser.",
-      "delete_description": "Ao excluir um projeto, todos os dados e recursos dentro dele serão removidos permanentemente e não poderão ser recuperados."
+      "delete_description": "Ao excluir um projeto, todos os dados e recursos dentro dele serão removidos permanentemente e não poderão ser recuperados.",
+      "duplicate_description": "Crie um novo projeto com as configurações, os estados, as etiquetas e o restante da configuração deste projeto. Itens de trabalho só são copiados se você escolher."
     },
     "delete_modal": {
       "confirm_placeholder": "Digite “{phrase}”",
@@ -491,6 +492,7 @@
       "confirm_phrase_error": "Confirme a saída do projeto digitando “{phrase}”.",
       "description": "Tem certeza de que deseja sair do projeto “{name}”? Todos os itens de trabalho associados a você ficarão inacessíveis.",
       "fill_all_fields": "Preencha todos os campos.",
+      "only_admin_error": "Você é o único administrador deste projeto e não pode sair dele. Torne outro membro administrador primeiro ou exclua o projeto.",
       "project_name_error": "Digite o nome do projeto conforme mostrado na descrição.",
       "project_name_placeholder": "Digite o nome do projeto",
       "project_name_required": "O nome do projeto é obrigatório",
@@ -530,21 +532,34 @@
       "timezone_error": "Falha ao atualizar o fuso horário",
       "timezone_updated": "Fuso horário atualizado com sucesso",
       "update_error": "Ocorreu um erro ao atualizar seu perfil. Tente novamente.",
-      "updated": "Perfil atualizado com sucesso."
+      "updated": "Perfil atualizado com sucesso.",
+      "weekend_days": "Dias de fim de semana",
+      "weekend_days_description": "Define quais dias são tratados como tempo não útil.",
+      "weekend_days_updated": "Dias de fim de semana atualizados com sucesso",
+      "weekend_days_use_default": "Usar o padrão do espaço de trabalho"
     },
     "publish_modal": {
       "allow_comments": "Permitir comentários",
       "allow_reactions": "Permitir reações",
       "allow_voting": "Permitir votação",
-      "anyone_with_link": "Qualquer pessoa com o link pode acessar",
-      "link_copied": "Link da página publicada copiado com sucesso.",
-      "live_on_web": "Este projeto está agora no ar na web",
-      "publishing": "Publicando",
-      "select_layout_error": "Selecione pelo menos um layout de visualização para publicar o projeto.",
-      "settings_updated": "Configurações de publicação atualizadas com sucesso!",
-      "unpublish": "Cancelar publicação",
-      "unpublish_error": "Algo deu errado ao cancelar a publicação do projeto.",
-      "unpublishing": "Cancelando publicação",
+      "anyone_with_link": "Qualquer pessoa na internet com o link pode ver este projeto, sem precisar de conta",
+      "confirm": {
+        "title": "Compartilhar este projeto na web?",
+        "description": "Qualquer pessoa na internet que tenha o link poderá ver este projeto, inclusive pessoas de fora do seu espaço de trabalho e sem login.",
+        "can_see": "Elas poderão ver:",
+        "item_work_items": "todos os itens de trabalho do projeto, com descrição, status, prioridade, datas e etiquetas",
+        "item_members": "os nomes e avatares dos membros do projeto",
+        "item_activity": "comentários, reações e votos, com o nome de quem os fez, se você permitir",
+        "note": "Quem visualiza não pode editar nada. O link continua funcionando até você parar de compartilhar, então compartilhe apenas um projeto sem conteúdo confidencial."
+      },
+      "link_copied": "Link da web copiado.",
+      "live_on_web": "Este projeto está compartilhado na web",
+      "publishing": "Ativando…",
+      "select_layout_error": "Selecione pelo menos um layout de visualização para compartilhar o projeto na web.",
+      "settings_updated": "Configurações de compartilhamento na web atualizadas.",
+      "unpublish": "Parar de compartilhar",
+      "unpublish_error": "Algo deu errado ao desativar o compartilhamento na web.",
+      "unpublishing": "Desativando…",
       "update_settings": "Atualizar configurações"
     },
     "rich_filters": {
@@ -554,6 +569,14 @@
       "filter_type_not_supported": "Tipo de filtro não suportado",
       "invalid_filter": "Filtro inválido",
       "invalid_tooltip": "Esta condição de filtro não é mais válida. A propriedade pode ter sido excluída ou seu acesso a ela pode ter mudado.",
+      "operators": {
+        "exact": "é",
+        "in": "é um de",
+        "range": "entre",
+        "not_exact": "não é",
+        "not_in": "não é nenhum de",
+        "not_range": "não está entre"
+      },
       "remove_filter": "Remover filtro",
       "save_view": "Salvar visualização",
       "update_view": "Atualizar visualização"
@@ -623,6 +646,71 @@
       },
       "key_regenerated": "Nova chave gerada com sucesso.",
       "view_secret_key": "Ver chave secreta"
+    },
+    "request_access_modal": {
+      "title": "Solicitar acesso",
+      "description": "Peça aos administradores deste projeto que deixem você entrar.",
+      "description_named": "Peça aos administradores de {name} que deixem você entrar.",
+      "message_placeholder": "Adicione uma nota para os administradores (opcional)",
+      "send": "Enviar solicitação",
+      "sending": "Enviando...",
+      "success_title": "Solicitação enviada",
+      "success_message": "Os administradores do projeto irão analisá-la.",
+      "request_button": "Solicitar acesso",
+      "pending_badge": "Solicitado"
+    },
+    "access_requests": {
+      "title": "Solicitações para participar ({count})",
+      "approve": "Aprovar",
+      "reject": "Rejeitar",
+      "already_decided": "Esta solicitação já foi decidida por outro administrador.",
+      "requester_left": "Esta pessoa não é mais membro do espaço de trabalho."
+    },
+    "duplicate_modal": {
+      "already_running": "Já há uma cópia de itens de trabalho em andamento neste espaço de trabalho. Tente novamente quando terminar.",
+      "always_copied": "As configurações, os estados e os tipos de item de trabalho são sempre copiados.",
+      "banner": {
+        "done": "Itens de trabalho copiados: {count}.",
+        "failed": "A cópia dos itens de trabalho falhou. O que foi copiado é mantido; tente novamente para adicionar o restante.",
+        "progress": "Copiando itens de trabalho: {copied} de {total}",
+        "queued": "Os itens de trabalho estão na fila para cópia...",
+        "reload": "Recarregar",
+        "retry": "Tentar novamente",
+        "retry_failed": "Não foi possível repetir a cópia. Tente novamente."
+      },
+      "clear_all": "Limpar tudo",
+      "description": "Cria um novo projeto com as mesmas configurações. Páginas e webhooks não são copiados; itens de trabalho só se você escolher abaixo.",
+      "error": "Não foi possível duplicar o projeto. Tente novamente.",
+      "identifier_placeholder": "Gerado se vazio",
+      "properties": {
+        "assignees": "Responsáveis",
+        "custom_properties": "Propriedades personalizadas",
+        "cycles": "Ciclos",
+        "dates": "Datas",
+        "description_images": "Imagens nas descrições",
+        "labels": "Etiquetas",
+        "links": "Links",
+        "modules": "Módulos",
+        "parents": "Vínculos de subitens",
+        "relations": "Relações"
+      },
+      "properties_description": "Escolha o que acompanha os itens de trabalho. Rascunhos, itens arquivados e de intake ficam de fora; comentários, anexos, atividade e registros de tempo nunca são copiados.",
+      "properties_heading": "Propriedades dos itens de trabalho",
+      "properties_note": "Ciclos e módulos só são levados quando copiados acima.",
+      "property_groups": {
+        "content": "Conteúdo",
+        "hierarchy": "Hierarquia e relações",
+        "organization": "Organização",
+        "people": "Pessoas"
+      },
+      "select_all": "Selecionar tudo",
+      "submit": "Duplicar projeto",
+      "submitting": "Duplicando projeto...",
+      "success": "Projeto duplicado com sucesso.",
+      "title": "Duplicar projeto",
+      "too_large": "Este projeto é grande demais para ser copiado. Desative algumas opções e tente novamente.",
+      "what_to_copy": "Copiar também",
+      "work_items_too_large": "Este projeto tem mais itens de trabalho do que podem ser copiados (até {count})."
     }
   }
 }

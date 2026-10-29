@@ -65,6 +65,45 @@
           }
         }
       },
+      "groups": {
+        "title": "Grupy",
+        "description": "Uporządkuj osoby w grupy. Grupy można zagnieżdżać, jedna osoba może należeć do wielu grup, a elementy pracy można przypisywać do grupy.",
+        "create_group": "Utwórz grupę",
+        "create": "Utwórz",
+        "edit_group": "Edytuj grupę",
+        "edit": "Edytuj",
+        "add_subgroup": "Dodaj podgrupę",
+        "members": "Członkowie",
+        "name": "Nazwa",
+        "description_label": "Opis",
+        "parent": "Grupa nadrzędna",
+        "top_level": "Brak grupy nadrzędnej (najwyższy poziom)",
+        "no_groups": "Nie ma jeszcze żadnych grup.",
+        "member_count": "{count, plural, one {# członek} few {# członków} many {# członków} other {# członka}}",
+        "managed_by": "Zarządzane przez {provider}",
+        "sources": {
+          "local": "Lokalna",
+          "entra": "Microsoft Entra",
+          "google": "Google",
+          "oidc": "SSO"
+        },
+        "members_of": "Członkowie grupy {name}",
+        "managed_externally_hint": "Tą grupą zarządza Państwa dostawca tożsamości. Jej członkowie podążają za dostawcą i nie można ich tu zmieniać.",
+        "select_member": "Wybierz członka",
+        "add_member": "Dodaj",
+        "role": "Rola",
+        "role_member": "Członek",
+        "role_admin": "Administrator grupy",
+        "no_members": "Ta grupa nie ma jeszcze członków.",
+        "group_created": "Utworzono grupę.",
+        "group_updated": "Zaktualizowano grupę.",
+        "group_deleted": "Usunięto grupę.",
+        "delete_title": "Usunąć {name}?",
+        "delete_content": "Osoby z tej grupy pozostają w przestrzeni roboczej. Elementy pracy przypisane do grupy tracą to przypisanie. Tej operacji nie można cofnąć.",
+        "group_assignees": "Przypisane grupy",
+        "add_group_assignee": "Dodaj grupę",
+        "no_group_assignees": "Brak przypisanych grup"
+      },
       "billing_and_plans": {
         "heading": "Rozliczenia i plany",
         "description": "Wybierz plan, zarządzaj subskrypcjami i łatwo dokonaj uaktualnienia w miarę rozwoju Twoich potrzeb.",
@@ -94,6 +133,50 @@
               "title": "Eksport nie powiódł się",
               "message": "Spróbuj ponownie."
             }
+          }
+        },
+        "columns": {
+          "heading": "Kolumny",
+          "description": "Wybierz, jakie kolumny zawiera plik. Identyfikator i nazwa są zawsze dołączone, ponieważ bez nich nie dałoby się ponownie zaimportować pliku.",
+          "select_all": "Zaznacz wszystko",
+          "clear_all": "Wyczyść wszystko",
+          "groups": {
+            "details": "Szczegóły",
+            "people": "Osoby",
+            "dates": "Daty",
+            "organization": "Organizacja",
+            "relations": "Hierarchia i powiązania",
+            "other": "Inne"
+          },
+          "fields": {
+            "project_name": "Nazwa projektu",
+            "project_identifier": "Identyfikator projektu",
+            "sequence_id": "Numer kolejny",
+            "issue_type": "Typ elementu pracy",
+            "state_name": "Stan",
+            "priority": "Priorytet",
+            "description_html": "Opis",
+            "estimate": "Szacunek",
+            "is_draft": "Znacznik wersji roboczej",
+            "assignees": "Przypisani",
+            "subscribers": "Subskrybenci",
+            "created_by_name": "Utworzył(a)",
+            "start_date": "Data rozpoczęcia",
+            "finish_date": "Data zakończenia",
+            "target_date": "Termin",
+            "duration": "Czas trwania",
+            "completed_at": "Ukończono",
+            "created_at": "Utworzono",
+            "updated_at": "Zaktualizowano",
+            "archived_at": "Zarchiwizowano",
+            "labels": "Etykiety",
+            "cycles": "Cykle",
+            "modules": "Moduły",
+            "parent": "Element nadrzędny",
+            "relations": "Powiązania",
+            "links": "Linki",
+            "custom_properties": "Właściwości niestandardowe",
+            "comments": "Komentarze"
           }
         }
       },
@@ -176,7 +259,7 @@
         "title": "Integracje",
         "heading": "Integracje",
         "description": "Łącz się z popularnymi narzędziami i usługami, aby synchronizować pracę w całym ekosystemie przepływu pracy.",
-        "page_title": "Pracuj ze swoimi danymi Plane w dostępnych aplikacjach lub we własnych.",
+        "page_title": "Pracuj ze swoimi danymi Pi-Plane w dostępnych aplikacjach lub we własnych.",
         "page_description": "Zobacz wszystkie integracje używane przez tę przestrzeń roboczą lub przez Ciebie."
       },
       "imports": {
@@ -258,7 +341,7 @@
       "project_states": {
         "title": "Stany projektu",
         "heading": "Zobacz przegląd postępu dla wszystkich projektów.",
-        "description": "Stany projektów to funkcja Plane służąca do śledzenia postępu wszystkich projektów według dowolnej właściwości projektu.",
+        "description": "Stany projektów to funkcja Pi-Plane służąca do śledzenia postępu wszystkich projektów według dowolnej właściwości projektu.",
         "go_to_settings": "Przejdź do ustawień"
       },
       "projects": {
@@ -303,14 +386,14 @@
         "install": "Zainstaluj",
         "installed": "Zainstalowano",
         "configure": "Konfiguruj",
-        "app_available": "Udostępniłeś tę aplikację do użytku z przestrzenią roboczą Plane",
+        "app_available": "Udostępniłeś tę aplikację do użytku z przestrzenią roboczą Pi-Plane",
         "app_credentials_regenrated": {
           "title": "Dane uwierzytelniające aplikacji zostały pomyślnie wygenerowane ponownie",
           "description": "Zastąp sekret klienta wszędzie tam, gdzie jest używany. Poprzedni sekret nie jest już ważny."
         },
         "app_created": {
           "title": "Aplikacja została pomyślnie utworzona",
-          "description": "Użyj danych uwierzytelniających, aby zainstalować aplikację w przestrzeni roboczej Plane"
+          "description": "Użyj danych uwierzytelniających, aby zainstalować aplikację w przestrzeni roboczej Pi-Plane"
         },
         "installed_apps": "Zainstalowane aplikacje",
         "all_apps": "Wszystkie aplikacje",
@@ -351,10 +434,10 @@
         },
         "redirect_uris": {
           "label": "URI przekierowań (oddzielone spacją)",
-          "description": "Użytkownicy zostaną przekierowani na tę ścieżkę po uwierzytelnieniu się w Plane.",
+          "description": "Użytkownicy zostaną przekierowani na tę ścieżkę po uwierzytelnieniu się w Pi-Plane.",
           "placeholder": "https://example.com https://example.com/"
         },
-        "app_available_description": "Połącz przestrzeń roboczą Plane, aby rozpocząć korzystanie",
+        "app_available_description": "Połącz przestrzeń roboczą Pi-Plane, aby rozpocząć korzystanie",
         "client_id_and_secret": "ID i Sekret Klienta",
         "client_id_and_secret_description": "Skopiuj i zapisz ten klucz sekretny. Nie będziesz mógł zobaczyć tego klucza po kliknięciu Zamknij.",
         "client_id_and_secret_download": "Możesz pobrać CSV z kluczem stąd.",
@@ -403,12 +486,12 @@
         "workspace_permissions": "Uprawnienia przestrzeni roboczej",
         "workspace_permissions_description": "Uprawnienia przestrzeni roboczej są używane do przyznawania dostępu do przestrzeni roboczej.",
         "with_the_permissions": "z uprawnieniami",
-        "app_consent_title": "{app} prosi o dostęp do Twojej przestrzeni roboczej i profilu Plane.",
+        "app_consent_title": "{app} prosi o dostęp do Twojej przestrzeni roboczej i profilu Pi-Plane.",
         "choose_workspace_to_connect_app_with": "Wybierz przestrzeń roboczą, z którą chcesz połączyć aplikację",
         "app_consent_workspace_permissions_title": "{app} chciałby",
         "app_consent_user_permissions_title": "{app} może również poprosić o uprawnienia użytkownika do następujących zasobów. Te uprawnienia będą wymagane i autoryzowane tylko przez użytkownika.",
         "app_consent_accept_title": "Akceptując",
-        "app_consent_accept_1": "Udzielasz aplikacji dostępu do Twoich danych Plane wszędzie tam, gdzie możesz używać aplikacji w lub poza Plane",
+        "app_consent_accept_1": "Udzielasz aplikacji dostępu do Twoich danych Pi-Plane wszędzie tam, gdzie możesz używać aplikacji w lub poza Pi-Plane",
         "app_consent_accept_2": "Zgadzasz się na Politykę Prywatności i Warunki Użytkowania {app}",
         "accepting": "Akceptowanie...",
         "accept": "Akceptuj",
@@ -450,7 +533,7 @@
         "upload_and_save": "Prześlij i zapisz",
         "app_consent_no_access_title": "Prośba o instalację",
         "app_consent_no_access_description": "Aplikacja może być zainstalowana dopiero po tym, jak administrator workspace ją zainstaluje. Skontaktuj się z administratorem workspace, aby kontynuować.",
-        "app_consent_unapproved_title": "Ta aplikacja nie została jeszcze sprawdzona ani zatwierdzona przez Plane.",
+        "app_consent_unapproved_title": "Ta aplikacja nie została jeszcze sprawdzona ani zatwierdzona przez Pi-Plane.",
         "app_consent_unapproved_description": "Upewnij się, że ufasz tej aplikacji, zanim połączysz ją ze swoją przestrzenią roboczą.",
         "go_to_app": "Przejdź do aplikacji",
         "enable_app_mentions": "Włącz wzmianki o aplikacji",
@@ -468,7 +551,7 @@
           "projects": "Dostęp do projektów i wszystkich powiązanych encji",
           "wiki": "Dostęp do wiki i wszystkich powiązanych encji",
           "workspaces": "Dostęp do obszarów roboczych i wszystkich powiązanych encji",
-          "stickies": "Dostęp do notatek i wszystkich powiązanych encji",
+          "stickies": "Dostęp do karteczek i wszystkich powiązanych encji",
           "profile": "Dostęp do informacji o profilu użytkownika",
           "agents": "Dostęp do agentów i wszystkich powiązanych encji",
           "assets": "Dostęp do zasobów i wszystkich powiązanych encji"
@@ -489,7 +572,7 @@
     "empty_state": {
       "api_tokens": {
         "title": "Brak tokenów API",
-        "description": "Używaj API, aby zintegrować Plane z zewnętrznymi systemami."
+        "description": "Używaj API, aby zintegrować Pi-Plane z zewnętrznymi systemami."
       },
       "webhooks": {
         "title": "Brak webhooków",

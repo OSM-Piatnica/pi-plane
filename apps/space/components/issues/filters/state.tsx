@@ -10,8 +10,9 @@ import { observer } from "mobx-react";
 // ui
 import { EIconSize } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
-import { StateGroupIcon } from "@plane/propel/icons";
-import { Loader } from "@plane/ui";
+import { getStateName } from "@plane/utils";
+import { StateGroupIcon } from "@plane/blocks/icons";
+import { Loader } from "@plane/blocks/skeleton";
 // hooks
 import { useStates } from "@/hooks/store/use-state";
 // local imports
@@ -34,8 +35,11 @@ export const FilterState = observer(function FilterState(props: Props) {
   const [previewEnabled, setPreviewEnabled] = useState(true);
 
   const appliedFiltersCount = appliedFilters?.length ?? 0;
+  const appliedFiltersSet = new Set(appliedFilters ?? []);
 
-  const filteredOptions = states?.filter((s) => s.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredOptions = states?.filter((s) =>
+    getStateName(s.name, t).toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleViewToggle = () => {
     if (!filteredOptions) return;
@@ -59,10 +63,10 @@ export const FilterState = observer(function FilterState(props: Props) {
                 {filteredOptions.slice(0, itemsToRender).map((state) => (
                   <FilterOption
                     key={state.id}
-                    isChecked={appliedFilters?.includes(state.id) ? true : false}
+                    isChecked={appliedFiltersSet.has(state.id)}
                     onClick={() => handleUpdate(state.id)}
                     icon={<StateGroupIcon stateGroup={state.group} color={state.color} size={EIconSize.MD} />}
-                    title={state.name}
+                    title={getStateName(state.name, t)}
                   />
                 ))}
                 {filteredOptions.length > 5 && (

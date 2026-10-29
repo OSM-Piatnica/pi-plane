@@ -35,7 +35,12 @@ from plane.db.models import (
 )
 from plane.db.models.project import ROLE
 from plane.utils.html_processor import strip_tags
+from plane.utils.timezone_converter import convert_to_utc
+from plane.utils.import_limits import get_import_max_work_items
+from plane.utils.issue_relation_constraints import MAX_LAG_DAYS, TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
+from plane.utils.issue_relation_types import ALL_RELATION_NAMES, MIRRORED_RELATIONS, SYMMETRIC_RELATIONS
+from plane.utils.relation_type_toggles import relation_type_enabled
 from plane.utils.issue_type_property import validate_property_value
 from plane.utils.work_item_duration import (
     normalize_work_item_duration,
@@ -43,17 +48,15 @@ from plane.utils.work_item_duration import (
     to_work_item_date,
 )
 
-MAX_WORK_ITEMS_IMPORT = 500
 ALLOWED_PRIORITIES = frozenset({"urgent", "high", "medium", "low", "none"})
 DEFAULT_LABEL_COLOR = "#858585"
 ISO_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+# Day-first dates as spreadsheets in Polish locales display them, e.g. 10.09.2026
+DMY_DATE_PATTERN = re.compile(r"^(\d{1,2})\.(\d{1,2})\.(\d{4})$")
 
 # Relation types whose canonical database row points the other way round
-_MIRRORED_RELATIONS = frozenset({"blocking", "start_after", "finish_after", "implements"})
-_ALLOWED_RELATIONS = frozenset(
-    {"blocked_by", "blocking", "relates_to", "duplicate", "start_before", "start_after",
-     "finish_before", "finish_after", "implemented_by", "implements"}
-)
+_MIRRORED_RELATIONS = MIRRORED_RELATIONS
+_ALLOWED_RELATIONS = frozenset(ALL_RELATION_NAMES)
 _IDENTIFIER_PATTERN = re.compile(r"^([A-Za-z0-9]+)-(\d+)$")
 
 _TRUE_TOKENS = frozenset({"1", "true", "yes", "on"})
@@ -150,11 +153,28 @@ def _parse_import_date(value):
             return date.fromisoformat(text).isoformat()
         except ValueError:
             return None
+    dmy = DMY_DATE_PATTERN.match(text)
+    if dmy:
+        try:
+            return date(int(dmy.group(3)), int(dmy.group(2)), int(dmy.group(1))).isoformat()
+        except ValueError:
+            return None
     # Exports always write ISO dates; a spreadsheet may hand back a timestamp instead
     try:
         return datetime.fromisoformat(text.replace("Z", "+00:00")).date().isoformat()
     except ValueError:
         return None
+
+
+def _coerce_lag(value) -> int:
+    """The lag of an exported relation in whole days, within the range the API allows; 0 for anything else."""
+    if isinstance(value, bool) or value in (None, ""):
+        return 0
+    try:
+        lag = int(value)
+    except (TypeError, ValueError):
+        return 0
+    return lag if abs(lag) <= MAX_LAG_DAYS else 0
 
 
 def _coerce_relations(value) -> list[dict]:
@@ -183,7 +203,11 @@ def _coerce_relations(value) -> list[dict]:
             relation_type = "relates_to"
         if not target:
             continue
-        entries.append({"type": relation_type, "issue": target})
+        entry = {"type": relation_type, "issue": target}
+        lag = _coerce_lag(item.get("lag_days")) if isinstance(item, dict) else 0
+        if lag:
+            entry["lag_days"] = lag
+        entries.append(entry)
     return entries
 
 
@@ -241,26 +265,22 @@ def _resolve_people(
     # leave the work item pointing at a person the project does not know.
     kept = [member_id for member_id in resolved if member_id in project_member_ids]
     outsiders = sorted(
-        source_text.get(member_id, str(member_id))
-        for member_id in resolved
-        if member_id not in project_member_ids
+        source_text.get(member_id, str(member_id)) for member_id in resolved if member_id not in project_member_ids
     )
     if outsiders:
         warnings.append(
-            f'Row {row_number}: {role}(s) {", ".join(outsiders)} belong to the workspace '
+            f"Row {row_number}: {role}(s) {', '.join(outsiders)} belong to the workspace "
             "but not to this project, skipped"
         )
 
     if assignable_member_ids is not None:
         guests = sorted(
-            source_text.get(member_id, str(member_id))
-            for member_id in kept
-            if member_id not in assignable_member_ids
+            source_text.get(member_id, str(member_id)) for member_id in kept if member_id not in assignable_member_ids
         )
         kept = [member_id for member_id in kept if member_id in assignable_member_ids]
         if guests:
             warnings.append(
-                f'Row {row_number}: {role}(s) {", ".join(guests)} are guests in this project '
+                f"Row {row_number}: {role}(s) {', '.join(guests)} are guests in this project "
                 "and cannot be assigned, skipped"
             )
     return kept
@@ -322,9 +342,9 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
     """
     Create the cycles named in the file but absent from the project.
 
-    A cycle stores a period, which the work item export does not carry, so the period is
-    derived from the work items assigned to it. Plane treats a cycle without dates as a
-    draft, which is what an undated cycle becomes.
+    A cycle stores a period. The work item export writes it per row (Cycle Start/End Date); for
+    files without it the period is derived from the work items assigned to the cycle. Plane
+    treats a cycle without dates as a draft, which is what an undated cycle becomes.
     """
     spans: dict[str, dict] = {}
     for item in prepared:
@@ -334,7 +354,9 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
         key = name.lower()
         if key in cycles_by_name:
             continue
-        span = spans.setdefault(key, {"name": name, "start": None, "end": None})
+        span = spans.setdefault(key, {"name": name, "start": None, "end": None, "given_start": None, "given_end": None})
+        span["given_start"] = span["given_start"] or item.get("cycle_start_date")
+        span["given_end"] = span["given_end"] or item.get("cycle_end_date")
         for field, bound, pick in (("start_date", "start", min), ("finish_date", "end", max)):
             value = item.get(field)
             if not value:
@@ -349,10 +371,17 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
             workspace=project.workspace,
             owned_by=user,
             created_by=user,
-            start_date=_to_cycle_datetime(span["start"]),
-            end_date=_to_cycle_datetime(span["end"]),
+            start_date=_cycle_bound(project, span["given_start"], span["start"], is_start_date=True),
+            end_date=_cycle_bound(project, span["given_end"], span["end"], is_start_date=False),
         )
     return created
+
+
+def _cycle_bound(project: Project, given, derived, *, is_start_date: bool):
+    """A cycle bound from the exported cycle date, stored as the cycle form would, else from the work items."""
+    if given:
+        return convert_to_utc(str(given), project.id, is_start_date=is_start_date)
+    return _to_cycle_datetime(derived)
 
 
 def _to_cycle_datetime(value):
@@ -433,12 +462,12 @@ def import_work_items_into_project(
     if not rows:
         return {"created_work_items": 0, "warnings": warnings}
 
-    if len(rows) > MAX_WORK_ITEMS_IMPORT:
+    max_work_items = get_import_max_work_items()
+    if len(rows) > max_work_items:
         raise ValueError(
             {
                 "error": (
-                    f"Import contains more than {MAX_WORK_ITEMS_IMPORT} work items. "
-                    "Reduce the file size or split the import."
+                    f"Import contains more than {max_work_items} work items. Reduce the file size or split the import."
                 )
             }
         )
@@ -452,8 +481,7 @@ def import_work_items_into_project(
         default_state = next(iter(states_by_name.values()))
 
     labels_by_name = {
-        label.name.lower(): label
-        for label in Label.objects.filter(project_id=project.id, deleted_at__isnull=True)
+        label.name.lower(): label for label in Label.objects.filter(project_id=project.id, deleted_at__isnull=True)
     }
 
     issue_type_ids = ProjectIssueType.objects.filter(
@@ -531,8 +559,7 @@ def import_work_items_into_project(
     type_properties_by_type: dict = {}
     for issue_type in types_by_name.values():
         props = {
-            prop.title.lower(): prop
-            for prop in issue_type.properties.filter(deleted_at__isnull=True, is_active=True)
+            prop.title.lower(): prop for prop in issue_type.properties.filter(deleted_at__isnull=True, is_active=True)
         }
         type_properties_by_type[str(issue_type.id)] = props
 
@@ -641,6 +668,8 @@ def import_work_items_into_project(
                     warnings.append(f'Row {index + 1}: a work item can belong to one cycle, "{clean_name}" skipped')
         else:
             _note_skipped("cycle", row.get("cycles"))
+        cycle_start = _parse_import_date(row.get("cycle_start_date")) if options.dates else None
+        cycle_end = _parse_import_date(row.get("cycle_end_date")) if options.dates else None
 
         assignee_ids = []
         if options.assignees:
@@ -725,7 +754,7 @@ def import_work_items_into_project(
             duration_payload = {"start_date": start_date, "finish_date": finish_date}
             if duration is not None:
                 duration_payload["duration"] = duration
-            derived = reconcile_work_item_duration(None, duration_payload)
+            derived = reconcile_work_item_duration(None, duration_payload, project.weekend_days)
             duration = derived.get("duration", duration)
             if "start_date" in derived:
                 start_date = derived["start_date"]
@@ -773,6 +802,8 @@ def import_work_items_into_project(
                 "label_ids": label_ids,
                 "module_ids": module_ids,
                 "cycle_name": cycle_name,
+                "cycle_start_date": cycle_start,
+                "cycle_end_date": cycle_end,
                 "assignee_ids": assignee_ids,
                 "subscriber_ids": subscriber_ids,
                 "relations": raw_relations,
@@ -798,9 +829,9 @@ def import_work_items_into_project(
     last_id = IssueSequence.objects.filter(project=project).aggregate(largest=Max("sequence"))["largest"]
     next_sequence = 1 if last_id is None else int(last_id) + 1
 
-    largest_sort = (
-        Issue.objects.filter(project=project, deleted_at__isnull=True).aggregate(largest=Max("sort_order"))["largest"]
-    )
+    largest_sort = Issue.objects.filter(project=project, deleted_at__isnull=True).aggregate(largest=Max("sort_order"))[
+        "largest"
+    ]
     next_sort = 65535 if largest_sort is None else float(largest_sort) + 10000
 
     key_to_issue: dict[str, Issue] = {}
@@ -884,9 +915,7 @@ def import_work_items_into_project(
                 continue
             parent = _resolve_target(parent_key)
             if parent is None:
-                warnings.append(
-                    f'Work item "{item["external_key"]}": parent "{parent_key}" was not found, skipped'
-                )
+                warnings.append(f'Work item "{item["external_key"]}": parent "{parent_key}" was not found, skipped')
                 continue
             if parent.id == issue.id:
                 continue
@@ -956,15 +985,18 @@ def import_work_items_into_project(
             for relation in item["relations"]:
                 relation_type = relation["type"]
                 if relation_type not in _ALLOWED_RELATIONS:
+                    warnings.append(f'Work item "{item["external_key"]}": unknown relation "{relation_type}", skipped')
+                    continue
+                if not relation_type_enabled(project, relation_type):
                     warnings.append(
-                        f'Work item "{item["external_key"]}": unknown relation "{relation_type}", skipped'
+                        f'Work item "{item["external_key"]}": relation "{relation_type}" is switched off in this '
+                        "project, skipped"
                     )
                     continue
                 target = _resolve_target(relation["issue"])
                 if target is None:
                     warnings.append(
-                        f'Work item "{item["external_key"]}": related item "{relation["issue"]}" '
-                        "was not found, skipped"
+                        f'Work item "{item["external_key"]}": related item "{relation["issue"]}" was not found, skipped'
                     )
                     continue
                 if target.id == issue.id:
@@ -974,7 +1006,7 @@ def import_work_items_into_project(
                 # type such as "blocking" is stored as the opposite row with the sides swapped.
                 canonical_type = get_actual_relation(relation_type)
                 source, related = (target, issue) if relation_type in _MIRRORED_RELATIONS else (issue, target)
-                if canonical_type in {"relates_to", "duplicate"}:
+                if canonical_type in SYMMETRIC_RELATIONS:
                     dedupe_key = (canonical_type, *sorted([str(source.id), str(related.id)]))
                 else:
                     dedupe_key = (canonical_type, str(source.id), str(related.id))
@@ -986,6 +1018,7 @@ def import_work_items_into_project(
                         issue=source,
                         related_issue=related,
                         relation_type=canonical_type,
+                        lag_days=relation.get("lag_days", 0) if relation_type in TIMELINE_RELATION_TYPES else 0,
                         project=project,
                         workspace=project.workspace,
                         created_by=user,

@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Unique code",
+            "label": "One-time code",
             "placeholder": "123456",
             "helper_text": "Verification code sent to your new email.",
             "errors": {
-              "required": "Unique code is required",
+              "required": "One-time code is required",
               "invalid": "Invalid verification code. Please try again."
             }
           }
@@ -115,7 +115,7 @@
     "empty_state": {
       "activity": {
         "title": "No activities yet",
-        "description": "Get started by creating a new work item! Add details and properties to it. Explore more in Plane to see your activity."
+        "description": "Get started by creating a new work item! Add details and properties to it. Explore more in Pi-Plane to see your activity."
       },
       "assigned": {
         "title": "No work items are assigned to you",
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Completion percentage",
+    "first_day_project_default": "Project default",
     "first_day_updated": "First day of the week updated successfully",
     "try_again_later": "Please try again later.",
     "update_failed": "Update failed",

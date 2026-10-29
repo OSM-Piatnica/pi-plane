@@ -20,11 +20,11 @@
             }
           },
           "code": {
-            "label": "Mã duy nhất",
+            "label": "Mã dùng một lần",
             "placeholder": "123456",
             "helper_text": "Mã xác minh đã được gửi tới email mới của bạn.",
             "errors": {
-              "required": "Mã duy nhất là bắt buộc",
+              "required": "Cần có mã dùng một lần",
               "invalid": "Mã xác minh không hợp lệ. Thử lại."
             }
           }
@@ -115,7 +115,7 @@
     "empty_state": {
       "activity": {
         "title": "Chưa có hoạt động",
-        "description": "Bắt đầu bằng cách tạo mục công việc mới! Thêm chi tiết và thuộc tính cho nó. Khám phá thêm trong Plane để xem hoạt động của bạn."
+        "description": "Bắt đầu bằng cách tạo mục công việc mới! Thêm chi tiết và thuộc tính cho nó. Khám phá thêm trong Pi-Plane để xem hoạt động của bạn."
       },
       "assigned": {
         "title": "Không có mục công việc nào được giao cho bạn",
@@ -162,6 +162,7 @@
   },
   "profile_ui": {
     "completion_percentage": "Phần trăm hoàn thành",
+    "first_day_project_default": "Mặc định của dự án",
     "first_day_updated": "Đã cập nhật ngày đầu tuần thành công",
     "try_again_later": "Vui lòng thử lại sau.",
     "update_failed": "Cập nhật thất bại",

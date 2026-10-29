@@ -42,21 +42,50 @@
           "blocked_by": "{issue} nu poate începe până când {related} nu este finalizată (relație de blocare de către).",
           "blocking": "{issue} trebuie să se finalizeze înainte ca {related} să înceapă (relație de blocare).",
           "finish_after": "{issue} nu se poate finaliza înainte de {related} (relație de finalizare după).",
+          "finish_after_start": "{issue} nu se poate termina înainte să înceapă {related} (relația „se termină după început”).",
           "finish_before": "{issue} trebuie să se finalizeze cel târziu la {related} (relație de finalizare înainte).",
           "start_after": "{issue} nu poate începe înainte de {related} (relație de începere după).",
-          "start_before": "{issue} trebuie să înceapă cel târziu la {related} (relație de începere înainte)."
+          "start_before": "{issue} trebuie să înceapă cel târziu la {related} (relație de începere înainte).",
+          "start_before_finish": "{issue} trebuie să înceapă cel târziu când se termină {related} (relația „începe înainte de sfârșit”)."
         },
         "status": {
           "finish_after": "{issue} nu poate fi finalizată până când {related} nu este finalizată (relație de finalizare după).",
+          "finish_after_start": "{issue} nu poate fi finalizat până nu începe {related} (relația „se termină după început”).",
           "start_after": "{issue} nu poate începe până când {related} nu a început (relație de începere după)."
-        }
+        },
+        "self": "{issue} nu poate fi legat de sine însuși.",
+        "cycle": "{issue} și {related} ar forma o buclă de relații. Elimină mai întâi relația opusă.",
+        "lag_suffix": " Decalajul relației: {lag} z."
       },
       "date_conflict": "Aceste date intră în conflict cu dependențele existente. Ajustează activitățile înrudite sau elimină mai întâi dependența.",
       "dependency_create_failed": "Nu s-a putut crea dependența. Te rugăm să încerci din nou.",
-      "dependency_created": "Dependența dintre activități a fost creată cu succes."
-    }
+      "dependency_created": "Dependența dintre activități a fost creată cu succes.",
+      "lag": {
+        "hint": "Zile între cele două date; o valoare negativă permite suprapunerea.",
+        "invalid": "Introdu un număr întreg de zile între -{max} și {max}.",
+        "label": "Decalaj (zile)",
+        "update_failed": "Decalajul nu a putut fi modificat."
+      },
+      "reschedule": {
+        "confirm": "Mută",
+        "content": "Această modificare ar încălca dependențe. Aceste activități pot fi mutate mai târziu, păstrându-și durata, astfel încât toate dependențele să rămână respectate:",
+        "title": "Muți și activitățile dependente?"
+      },
+      "duplicate_cancel": {
+        "confirm": "Mută la anulate",
+        "content": "{issue} este acum marcată ca duplicat al {originals}. O muți în „{state}”? Rămâne legată și vizibilă.",
+        "failed": "Activitatea nu a putut fi anulată.",
+        "keep": "Păstrează deschisă",
+        "title": "Anulezi această activitate?"
+      }
+    },
+    "edit_restricted": "Această activitate o pot modifica doar cei atribuiți ei, liderul proiectului și administratorii proiectului."
   },
   "project_create": {
+    "advanced": {
+      "description": "Reguli și tipuri de relații. Le poți schimba mai târziu în setările fluxurilor de lucru ale proiectului.",
+      "title": "Opțiuni avansate"
+    },
     "features": {
       "cycles": {
         "description": "Planifică activitatea în perioade recurente delimitate în timp.",
@@ -115,11 +144,53 @@
       "pending_approval_title": "Este necesară aprobarea",
       "rejected_success": "Tranziție respinsă.",
       "resolving_approval": "Se procesează aprobarea...",
+      "rules": {
+        "heading": "Reguli",
+        "description": "Reguli ale proiectului care se aplică de la sine, indiferent dacă fluxurile de lucru sunt activate.",
+        "parent_completion": {
+          "description": "O activitate nu poate fi finalizată cât timp are sub-activități care nu sunt nici finalizate, nici anulate. Redeschiderea unei sub-activități finalizate sub un părinte finalizat cere să fie redeschis și părintele.",
+          "title": "Finalizează un părinte numai când sub-activitățile lui sunt finalizate"
+        },
+        "reopen_parent": {
+          "confirm": "Redeschide",
+          "content": "Acest proiect nu permite ca un părinte să rămână finalizat cât timp o sub-activitate este deschisă. Aceste activități părinte finalizate vor fi redeschise și ele: {names}",
+          "title": "Redeschizi și activitățile părinte?"
+        },
+        "blocked_status": {
+          "description": "O activitate nu poate trece într-o stare începută sau finalizată cât timp o activitate care o blochează este încă deschisă (cele finalizate sau anulate nu contează). Rămânerea în backlog sau de făcut și anularea rămân posibile.",
+          "title": "Pornește sau finalizează o activitate doar când cele care o blochează sunt gata"
+        },
+        "assignee_edit": {
+          "description": "Când o activitate are o persoană atribuită, doar cei atribuiți, liderul proiectului și administratorii proiectului o pot modifica: câmpuri, stare, date, sub-activități, relații, linkuri, atașamente, cicluri și module, ștergere și arhivare. Oricine poate comenta în continuare. Activitățile fără persoană atribuită rămân deschise tuturor membrilor.",
+          "title": "O activitate pot să o modifice doar cei atribuiți, liderul proiectului și administratorii"
+        }
+      },
       "save_error": "Nu s-a putut salva configurația fluxului de lucru.",
       "save_success": "Configurația fluxului de lucru a fost salvată.",
       "toggle_error": "Nu s-au putut actualiza setările fluxului de lucru.",
       "transition": "Tranziție",
-      "transitions_configured": "tranziții configurate"
+      "transition_count": "{count, plural, one {# tranziție} few {# tranziții} other {# de tranziții}}",
+      "transitions_configured": "tranziții configurate",
+      "relation_types": {
+        "heading": "Tipuri de relații",
+        "description": "Alege ce relații se pot adăuga în acest proiect. Blocarea este mereu disponibilă, iar relațiile existente rămân când un tip este dezactivat.",
+        "schedule": {
+          "description": "Începe înainte, se termină înainte și începe înainte de final, cu decalaj opțional în zile.",
+          "title": "Dependențe de calendar"
+        },
+        "traceability": {
+          "description": "Implementează, cauzează, clonează și testează, cu inversele lor.",
+          "title": "Relații de trasabilitate"
+        },
+        "relates_to": {
+          "description": "O legătură simplă între două elemente.",
+          "title": "Este legată de"
+        },
+        "duplicate": {
+          "description": "Marchează un element ca duplicat al altuia.",
+          "title": "Duplicată a"
+        }
+      }
     }
   },
   "project_templates": {

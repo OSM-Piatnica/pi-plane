@@ -1,0 +1,70 @@
+{{- /*
+Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+SPDX-License-Identifier: AGPL-3.0-only
+See the LICENSE file for details.
+*/ -}}
+{{- /* The background worker and the scheduler run the API image with a different command */ -}}
+{{- range $name, $spec := dict "worker" "./bin/docker-entrypoint-worker.sh" "beat" "./bin/docker-entrypoint-beat.sh" }}
+{{- $comp := dict "root" $ "component" $name }}
+{{- $values := index $.Values $name }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pi-plane.componentName" $comp }}
+  labels:
+    {{- include "pi-plane.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  {{- if eq $name "beat" }}
+  # Exactly one scheduler, and never two at once during a rollout
+  replicas: 1
+  strategy:
+    type: Recreate
+  {{- else }}
+  replicas: {{ $values.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "pi-plane.selectorLabels" $comp | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "pi-plane.labels" $ | nindent 8 }}
+        app.kubernetes.io/component: {{ $name }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
+        {{- with $values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      serviceAccountName: {{ include "pi-plane.serviceAccountName" $ }}
+      automountServiceAccountToken: false
+      {{- with $.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ $name }}
+          image: {{ include "pi-plane.image" (dict "root" $ "component" "api") | quote }}
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          command: [{{ $spec | quote }}]
+          envFrom:
+            - configMapRef:
+                name: {{ include "pi-plane.fullname" $ }}-config
+            {{- with $.Values.app.envFrom }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          env:
+            {{- include "pi-plane.backendEnv" $ | nindent 12 }}
+            {{- with $values.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          securityContext:
+            {{- include "pi-plane.containerSecurityContext" $ | nindent 12 }}
+          resources:
+            {{- toYaml $values.resources | nindent 12 }}
+      {{- include "pi-plane.scheduling" $values | nindent 6 }}
+{{- end }}
