@@ -84,6 +84,22 @@ def test_maps_modules_cycles_subscribers_and_relations():
     assert mapped[0]["estimate"] == "5"
 
 
+def test_maps_module_and_cycle_columns_written_by_the_exporter():
+    rows = [
+        {
+            "ID": "DEM-4",
+            "Name": "Round trip",
+            "State": "Todo",
+            "Module Name": "Kampania",
+            "Cycle Name": "Sprint 1",
+        }
+    ]
+    mapped = map_community_export_rows(rows)
+
+    assert mapped[0]["modules"] == "Kampania"
+    assert mapped[0]["cycles"] == "Sprint 1"
+
+
 def test_unwraps_rows_saved_as_one_quoted_cell():
     from plane.utils.community_work_item_import import _unwrap_collapsed_rows
     from plane.utils.porters.formatters import CSVFormatter
