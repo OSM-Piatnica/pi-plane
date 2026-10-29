@@ -124,6 +124,11 @@
           "type": "string",
           "pattern": "^[0-9]+/(second|minute|hour|day)$"
         },
+        "adminMessageLimitPerHour": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
         "numProxies": {
           "type": ["string", "integer"]
         },

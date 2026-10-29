@@ -44,6 +44,14 @@ export type TNotificationAccessRequest = {
   status?: "approved" | "rejected";
 };
 
+/** A message somebody wrote to the admins of the workspace (the Help menu's "Contact workspace admins"). */
+export type TNotificationWorkspaceAdminMessage = {
+  id: string;
+  message: string;
+  /** To answer by email; only admins receive these notifications. */
+  sender_email: string;
+};
+
 export type TNotificationData = {
   issue: TNotificationIssueLite | undefined;
   /** Missing on the notifications about access requests, which carry `project` and `access_request` instead. */
@@ -60,6 +68,7 @@ export type TNotificationData = {
     | undefined;
   project?: TNotificationProjectLite;
   access_request?: TNotificationAccessRequest;
+  workspace_admin_message?: TNotificationWorkspaceAdminMessage;
 };
 
 export type TNotification = {

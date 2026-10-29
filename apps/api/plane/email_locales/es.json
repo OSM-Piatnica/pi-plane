@@ -117,5 +117,14 @@
     "heading": "Su código de inicio de sesión de Pi-Plane",
     "info": "Este código es válido durante los próximos 10 minutos. Introdúzcalo en la página de inicio de sesión para completar el acceso.",
     "note": "Nota: Este correo se envió a <span>{email}</span>. Si no esperaba un código de inicio de sesión, puede ignorar este mensaje."
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} ha escrito a los administradores de {workspace}",
+    "preheader": "{sender} envió un mensaje a los administradores de {workspace} en Pi-Plane.",
+    "heading": "Un mensaje para los administradores de {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) ha escrito a los administradores del espacio de trabajo <strong>{workspace}</strong> en Pi-Plane.",
+    "message": "Mensaje:",
+    "reply": "Responda a este correo para contestar directamente a {sender}.",
+    "note": "Nota: Este correo se envió a <span>{email}</span> porque usted es administrador de este espacio de trabajo."
   }
 }

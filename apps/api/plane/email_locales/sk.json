@@ -125,5 +125,14 @@
     "heading": "Váš prihlasovací kód do Pi-Plane",
     "info": "Tento kód platí nasledujúcich 10 minút. Zadajte ho na prihlasovacej stránke a dokončite prihlásenie.",
     "note": "Poznámka: Tento e-mail bol odoslaný na adresu <span>{email}</span>. Ak ste prihlasovací kód nečakali, môžete túto správu ignorovať."
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} píše správcom priestoru {workspace}",
+    "preheader": "{sender} poslal(a) správu správcom priestoru {workspace} v Pi-Plane.",
+    "heading": "Správa pre správcov priestoru {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) napísal(a) správcom pracovného priestoru <strong>{workspace}</strong> v Pi-Plane.",
+    "message": "Správa:",
+    "reply": "Odpovedzte na tento e-mail a odpoveď pôjde priamo používateľovi {sender}.",
+    "note": "Poznámka: Tento e-mail bol odoslaný na adresu <span>{email}</span>, pretože ste správcom tohto pracovného priestoru."
   }
 }

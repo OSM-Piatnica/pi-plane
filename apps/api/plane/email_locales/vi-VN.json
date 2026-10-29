@@ -109,5 +109,14 @@
     "heading": "Mã đăng nhập Pi-Plane của bạn",
     "info": "Mã này có hiệu lực trong 10 phút tới. Hãy nhập mã vào trang đăng nhập để hoàn tất đăng nhập.",
     "note": "Lưu ý: Email này được gửi đến <span>{email}</span>. Nếu bạn không mong đợi mã đăng nhập, bạn có thể bỏ qua thư này."
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} đã viết cho quản trị viên của {workspace}",
+    "preheader": "{sender} đã gửi tin nhắn cho quản trị viên của {workspace} trên Pi-Plane.",
+    "heading": "Một tin nhắn cho quản trị viên của {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) đã viết cho quản trị viên của không gian làm việc <strong>{workspace}</strong> trên Pi-Plane.",
+    "message": "Tin nhắn:",
+    "reply": "Hãy trả lời email này để trả lời trực tiếp {sender}.",
+    "note": "Lưu ý: Email này được gửi đến <span>{email}</span> vì bạn là quản trị viên của không gian làm việc này."
   }
 }

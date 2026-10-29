@@ -195,6 +195,7 @@ export interface IUserEmailNotificationSettings {
   mention: boolean;
   issue_completed: boolean;
   project_access_request: boolean;
+  workspace_admin_message: boolean;
 }
 
 export type TProfileViews = "assigned" | "created" | "subscribed";

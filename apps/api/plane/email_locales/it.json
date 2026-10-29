@@ -117,5 +117,14 @@
     "heading": "Il tuo codice di accesso a Pi-Plane",
     "info": "Questo codice è valido per i prossimi 10 minuti. Inseriscilo nella pagina di accesso per completare l’accesso.",
     "note": "Nota: questa e-mail è stata inviata a <span>{email}</span>. Se non ti aspettavi un codice di accesso, puoi ignorare questo messaggio."
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} ha scritto agli amministratori di {workspace}",
+    "preheader": "{sender} ha inviato un messaggio agli amministratori di {workspace} su Pi-Plane.",
+    "heading": "Un messaggio per gli amministratori di {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) ha scritto agli amministratori dello spazio di lavoro <strong>{workspace}</strong> su Pi-Plane.",
+    "message": "Messaggio:",
+    "reply": "Risponda a questa e-mail per rispondere direttamente a {sender}.",
+    "note": "Nota: questa e-mail è stata inviata a <span>{email}</span> perché lei è amministratore di questo spazio di lavoro."
   }
 }

@@ -78,6 +78,9 @@ app:
   authenticationRateLimit: "1000/minute"
   apiKeyRateLimit: "60/minute"
   anonRateLimit: "180/minute"
+  # Most messages one person may send to the admins of a workspace within an hour (1 to 100); the instance admin can
+  # change it in the admin app and that value then wins
+  adminMessageLimitPerHour: 5
   # Number of reverse proxies in front of the API (the ingress controller counts as one); used to read the
   # client IP from X-Forwarded-For for the throttles above. Leave empty to keep the default.
   numProxies: ""

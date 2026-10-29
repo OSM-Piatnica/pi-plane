@@ -117,5 +117,14 @@
     "heading": "Ihr Anmeldecode für Pi-Plane",
     "info": "Dieser Code ist die nächsten 10 Minuten gültig. Geben Sie ihn auf der Anmeldeseite ein, um die Anmeldung abzuschließen.",
     "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet. Wenn Sie keinen Anmeldecode erwartet haben, können Sie diese Nachricht ignorieren."
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} hat den Administratoren von {workspace} geschrieben",
+    "preheader": "{sender} hat den Administratoren von {workspace} in Pi-Plane eine Nachricht geschickt.",
+    "heading": "Eine Nachricht für die Administratoren von {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) hat den Administratoren des Arbeitsbereichs <strong>{workspace}</strong> in Pi-Plane geschrieben.",
+    "message": "Nachricht:",
+    "reply": "Antworten Sie auf diese E-Mail, um {sender} direkt zu antworten.",
+    "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet, weil Sie Administrator dieses Arbeitsbereichs sind."
   }
 }

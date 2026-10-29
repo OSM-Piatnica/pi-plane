@@ -56,6 +56,14 @@ workspace_management_config_variables = [
         "is_encrypted": False,
     },
     {
+        # Most messages one person may send to the admins of a workspace within an hour, set in the admin app. Empty
+        # means the default of the deployment (ADMIN_MESSAGE_LIMIT_PER_HOUR, else 5).
+        "key": "ADMIN_MESSAGE_LIMIT",
+        "value": "",
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
+    {
         # Whether projects can be shared on the web through Space; "0" turns it off. Only matters while Space is part
         # of the deployment (ENABLE_SPACE).
         "key": "IS_SPACE_ENABLED",

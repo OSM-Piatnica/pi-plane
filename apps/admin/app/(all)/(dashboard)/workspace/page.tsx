@@ -19,6 +19,7 @@ import { cn } from "@plane/utils";
 import { PageWrapper } from "@/components/common/page-wrapper";
 import { Skeleton } from "@/components/common/skeleton";
 import { WorkspaceListItem } from "@/components/workspace/list-item";
+import { AdminMessageLimit } from "./admin-message-limit";
 import { setPromiseToast } from "@plane/blocks/toast";
 // hooks
 import { useInstance, useWorkspace } from "@/hooks/store";
@@ -145,6 +146,7 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
             </div>
           </div>
         )}
+        <AdminMessageLimit />
         {workspaceLoader !== "init-loader" ? (
           <>
             <div className="flex items-center justify-between gap-2 pt-6">
