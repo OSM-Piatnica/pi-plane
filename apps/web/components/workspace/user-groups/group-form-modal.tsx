@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
@@ -22,7 +22,6 @@ import { Input, InputGroup } from "@makeplane/propel/components/input";
 import type { TUserGroup, TUserGroupFormData } from "@plane/types";
 
 type Props = {
-  isOpen: boolean;
   /** The group being edited; none when a group is created. */
   group?: TUserGroup | null;
   /** The parent of a new group. */
@@ -36,23 +35,15 @@ type Props = {
 };
 
 export function GroupFormModal(props: Props) {
-  const { isOpen, group, parentId, parentOptions, canCreateTopLevel, onClose, onSubmit } = props;
+  const { group, parentId, parentOptions, canCreateTopLevel, onClose, onSubmit } = props;
   // translation
   const { t } = useTranslation();
   // states
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [parent, setParent] = useState<string>("");
+  // The parent mounts a fresh modal for every group it opens, so the form starts from the group's own values
+  const [name, setName] = useState(group?.name ?? "");
+  const [description, setDescription] = useState(group?.description ?? "");
+  const [parent, setParent] = useState<string>(group ? (group.parent ?? "") : (parentId ?? ""));
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Seed every time the modal opens, so a reopened one does not keep what was typed before
-  useEffect(() => {
-    if (!isOpen) return;
-    setName(group?.name ?? "");
-    setDescription(group?.description ?? "");
-    setParent(group ? (group.parent ?? "") : (parentId ?? ""));
-    setIsSubmitting(false);
-  }, [isOpen, group, parentId]);
 
   const isEditing = Boolean(group);
   const canSubmit = name.trim().length > 0 && (isEditing || canCreateTopLevel || parent !== "");
@@ -76,7 +67,7 @@ export function GroupFormModal(props: Props) {
 
   return (
     <Dialog
-      open={isOpen}
+      open
       onOpenChange={(open) => {
         if (!open) onClose();
       }}

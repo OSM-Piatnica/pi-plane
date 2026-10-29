@@ -30,7 +30,8 @@ export const GroupAssigneeSelect = observer(function GroupAssigneeSelect(props: 
 
   // derived values
   const groupNames = new Map((groups ?? []).map((group) => [group.id, group.name]));
-  const selectable = (groups ?? []).filter((group) => !value.includes(group.id));
+  const assignedIds = new Set(value);
+  const selectable = (groups ?? []).filter((group) => !assignedIds.has(group.id));
 
   return (
     <div className="flex flex-wrap items-center gap-1.5">

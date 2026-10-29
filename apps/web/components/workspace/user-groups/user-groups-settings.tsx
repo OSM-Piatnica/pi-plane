@@ -200,15 +200,17 @@ export const UserGroupsSettings = observer(function UserGroupsSettings(props: Pr
         ))}
       </ul>
 
-      <GroupFormModal
-        isOpen={formState !== null}
-        group={formState?.group}
-        parentId={formState?.parentId}
-        parentOptions={parentOptions}
-        canCreateTopLevel={isWorkspaceAdmin}
-        onClose={() => setFormState(null)}
-        onSubmit={handleSubmit}
-      />
+      {formState !== null && (
+        <GroupFormModal
+          key={formState.group?.id ?? `new-${formState.parentId ?? "top"}`}
+          group={formState.group}
+          parentId={formState.parentId}
+          parentOptions={parentOptions}
+          canCreateTopLevel={isWorkspaceAdmin}
+          onClose={() => setFormState(null)}
+          onSubmit={handleSubmit}
+        />
+      )}
       <GroupMembersModal
         workspaceSlug={workspaceSlug}
         group={membersOf ? ((groups ?? []).find((group) => group.id === membersOf.id) ?? membersOf) : null}
