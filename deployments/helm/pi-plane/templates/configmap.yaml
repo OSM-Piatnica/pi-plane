@@ -23,6 +23,8 @@ data:
   ADMIN_BASE_PATH: "/god-mode"
   SPACE_BASE_URL: {{ $publicUrl | quote }}
   SPACE_BASE_PATH: "/spaces"
+  # space.enabled=false leaves the public sharing site out: the API switches web sharing off
+  ENABLE_SPACE: {{ ternary "1" "0" .Values.space.enabled | quote }}
   LIVE_BASE_URL: {{ $publicUrl | quote }}
   LIVE_BASE_PATH: "/live"
   # Object storage

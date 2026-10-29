@@ -58,6 +58,10 @@ export interface IInstanceConfig {
   is_email_password_enabled: boolean;
   /** Workspace UUID used to resolve compact `/i/PROJECT-123` work item links; empty when short links are off. */
   default_workspace_id?: string;
+  /** Projects can be shared on the web: Space is part of this installation and switched on. */
+  is_space_enabled?: boolean;
+  /** Space is part of this installation; when it is not, the administrator cannot switch it on. */
+  is_space_deployed?: boolean;
   github_app_name: string | undefined;
   slack_client_id: string | undefined;
   has_unsplash_configured: boolean;

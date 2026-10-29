@@ -164,6 +164,8 @@ web:
   pdb: { enabled: false, minAvailable: 1 }
 
 space:
+  # false leaves the public sharing site out: no deployment, no /spaces route, and web sharing is switched off in the app
+  enabled: true
   replicas: 1
   resources: {}
   nodeSelector: {}

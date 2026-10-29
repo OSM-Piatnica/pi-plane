@@ -11,7 +11,9 @@ sends to each application; the bucket path is only routed when the bundled objec
 upload to it through presigned URLs.
 */}}
 {{- define "pi-plane.routes" -}}
+{{- if .Values.space.enabled }}
 - { path: /spaces, component: space, port: 3000 }
+{{- end }}
 - { path: /god-mode, component: admin, port: 3000 }
 - { path: /live, component: live, port: 3000 }
 - { path: /api, component: api, port: 8000 }

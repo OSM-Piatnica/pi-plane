@@ -12,6 +12,7 @@ import { Circle } from "lucide-react";
 // plane imports
 import { EUserPermissions, EUserPermissionsLevel, SPACE_BASE_PATH, SPACE_BASE_URL } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
+import { useSpaceEnabled } from "@/hooks/use-space-enabled";
 import { Button } from "@makeplane/propel/elements/button";
 import { NewTabOutline, WorkItemsOutline } from "@makeplane/propel/icons";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
@@ -43,6 +44,7 @@ export const IssuesHeader = observer(function IssuesHeader() {
   } = useIssues(EIssuesStoreType.PROJECT);
   // i18n
   const { t } = useTranslation();
+  const isSpaceEnabled = useSpaceEnabled();
 
   const { currentProjectDetails, loader } = useProject();
 
@@ -91,7 +93,7 @@ export const IssuesHeader = observer(function IssuesHeader() {
             </Tooltip>
           ) : null}
         </div>
-        {currentProjectDetails?.anchor ? (
+        {currentProjectDetails?.anchor && isSpaceEnabled ? (
           <a
             href={publishedURL}
             className="group flex items-center gap-1.5 rounded-sm bg-accent-primary/10 px-2.5 py-1 text-11 font-medium text-accent-primary"

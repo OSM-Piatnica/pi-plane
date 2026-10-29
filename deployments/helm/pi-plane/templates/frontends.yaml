@@ -8,6 +8,8 @@ See the LICENSE file for details.
 {{- range $name, $probePath := dict "web" "/" "space" "/spaces/" "admin" "/god-mode" }}
 {{- $comp := dict "root" $ "component" $name }}
 {{- $values := index $.Values $name }}
+{{- /* space.enabled=false leaves the public sharing site out of the installation */ -}}
+{{- if or (ne $name "space") $.Values.space.enabled }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -79,4 +81,5 @@ spec:
     - name: http
       port: 3000
       targetPort: http
+{{- end }}
 {{- end }}

@@ -6,7 +6,8 @@
 Whether the public sharing site (Space) is available.
 
 Two things decide it. The deployment: an installation may leave Space out altogether (``ENABLE_SPACE=0`` in the
-environment of the API), in which case there is nothing for the admin to switch on. And the instance admin, who can turn
+environment of the API, or no replica of it: ``SPACE_REPLICAS=0`` as the install guide's compose file says), in which
+case there is nothing for the admin to switch on. And the instance admin, who can turn
 Space off in the admin app (``IS_SPACE_ENABLED``) while it is deployed; this is the default. Both have to allow it.
 
 While Space is off nothing is shared on the web: the public API answers 404, boards cannot be published, and the
@@ -22,8 +23,10 @@ _OFF = {"0", "false", "no", "off"}
 
 
 def is_space_deployed() -> bool:
-    """False when the installation leaves Space out (the deployment's ``ENABLE_SPACE`` is off)."""
-    return os.environ.get("ENABLE_SPACE", "1").strip().lower() not in _OFF
+    """False when the installation leaves Space out (``ENABLE_SPACE`` is off, or it has no replica)."""
+    if os.environ.get("ENABLE_SPACE", "1").strip().lower() in _OFF:
+        return False
+    return os.environ.get("SPACE_REPLICAS", "1").strip() != "0"
 
 
 def is_space_enabled() -> bool:

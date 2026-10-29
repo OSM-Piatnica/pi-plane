@@ -26,6 +26,29 @@ Switching sharing on, changing it and stopping it are for project admins, in the
 
 **Stop sharing** switches the link off: the link shows the not-found page. Turning sharing on again creates a **new** link with a new address; the old one never works again, so links you sent earlier must be sent again.
 
+## Turning web sharing off for the whole instance
+
+An instance that never shares anything on the web can switch it off, or leave the public site (`space`) out of the installation altogether. While it is off:
+
+- the sharing options are hidden in the web app (the **Share on the web** menu item, the dialog, the "public" badge of a shared project and the **Visible on the web** choice of comments);
+- the API refuses them: `/api/workspaces/<slug>/projects/<id>/project-deploy-boards/` answers `403` and the public API (`/api/public/...`) and the public sign-in (`/auth/spaces/...`) answer `404`;
+- `/spaces` answers `404`.
+
+Projects that were shared stay marked as shared and keep their link: turning web sharing on again brings the same links back.
+
+**The admin switch.** The instance admin turns it off and on under **Workspaces** in the admin app (the `IS_SPACE_ENABLED` setting, on by default). It takes effect at once and needs no restart.
+
+**Leaving `space` out of the deployment.** Then there is nothing to switch on, and the admin app says so. Pass `ENABLE_SPACE=0` to the API and the proxy; the install options do it for you:
+
+| Deployment                      | How                                                                                                                                                                                      |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Docker Compose (`compose.yaml`) | `ENABLE_SPACE=0` in the environment or in `.env`. The `space` container is not created. `docker compose up -d --build` still builds its image; pass the other service names to avoid it. |
+| Docker guide (`./setup.sh`)     | `ENABLE_SPACE=0 ./setup.sh install` (remembered in `plane.env`), or `SPACE_REPLICAS=0` in `plane.env`. The image is not downloaded and `space` is not started.                           |
+| All-in-one image                | `-e ENABLE_SPACE=0`. The program is not started; the image still contains it.                                                                                                            |
+| Helm chart                      | `--set space.enabled=false`. No Deployment, Service or `/spaces` route is created.                                                                                                       |
+
+Changing it later is the same: set the option and start the stack again. With a Compose or Helm installation that is up, remember that the API and the proxy must restart to read it.
+
 ## What anyone with the link can see
 
 Without signing in, a viewer can read:

@@ -171,6 +171,8 @@ Below are the most import keys you must refer to. _<span style="color: #fcba03">
 
 > `SECRET_KEY` and `LIVE_SERVER_SECRET_KEY` - These ship with the placeholder value `change-this-key-on-deployment`. **Replace both with your own random values before the first start**, e.g. `openssl rand -hex 32` (use a different value for each). The API still starts with the placeholders, but only logs a `SECURITY: SECRET_KEY is set to a known insecure or placeholder value` warning, and anyone who knows the placeholder can forge session data. The all-in-one image refuses to start with placeholder values.
 
+> `ENABLE_SPACE` / `SPACE_REPLICAS` - Space is the public site that shows projects shared on the web. Set `SPACE_REPLICAS=0` (or install with `ENABLE_SPACE=0 ./setup.sh install`) to leave it out: its image is not downloaded, it is not started, `/spaces` answers 404 and projects cannot be shared. See [Sharing a project on the web](../../../docs/web-sharing.md#turning-web-sharing-off-for-the-whole-instance).
+
 There are many other settings you can play with. Configure email in God mode (**Email** under the instance settings), not in `plane.env`: this stack does not pass `EMAIL_*` variables to the API. Email is what lets you invite your teammates onto the platform.
 
 #### Client IP and rate limiting behind proxies

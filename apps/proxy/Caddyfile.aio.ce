@@ -13,6 +13,15 @@
 		max_size {$FILE_SIZE_LIMIT_MAX:104857600}
 	}
 
+    # Space left out of the deployment (ENABLE_SPACE=0): nothing answers there
+    @space_off {
+        path /spaces /spaces/*
+        expression `{env.ENABLE_SPACE} == '0'`
+    }
+    handle @space_off {
+        respond "Not found" 404
+    }
+
     handle /spaces/* {
         reverse_proxy localhost:3002
     }

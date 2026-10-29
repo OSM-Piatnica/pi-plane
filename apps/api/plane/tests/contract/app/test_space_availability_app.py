@@ -29,6 +29,7 @@ def clear_cache():
 @pytest.fixture(autouse=True)
 def deployed(monkeypatch):
     monkeypatch.delenv("ENABLE_SPACE", raising=False)
+    monkeypatch.delenv("SPACE_REPLICAS", raising=False)
 
 
 @pytest.fixture
@@ -121,6 +122,16 @@ class TestPublicApi:
 
         assert setting.value == "1"
         assert api_client.get(public_url()).json() == {"error": OFF_MESSAGE}
+
+    def test_a_deployment_without_a_replica_of_space_turns_it_off(self, api_client, setting, monkeypatch):
+        monkeypatch.setenv("SPACE_REPLICAS", "0")
+
+        assert api_client.get(public_url()).json() == {"error": OFF_MESSAGE}
+
+    def test_one_replica_or_more_leaves_it_on(self, api_client, setting, monkeypatch):
+        monkeypatch.setenv("SPACE_REPLICAS", "2")
+
+        assert api_client.get(public_url()).json().get("error") != OFF_MESSAGE
 
     def test_a_missing_setting_means_on(self, api_client, db):
         assert api_client.get(public_url()).json().get("error") != OFF_MESSAGE
