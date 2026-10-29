@@ -19,7 +19,7 @@ from django.core.mail import EmailMultiAlternatives, get_connection
 from django.template.loader import render_to_string
 
 from plane.app.permissions import ROLE
-from plane.db.models import Notification, User, Workspace, WorkspaceMember
+from plane.db.models import Notification, User, UserNotificationPreference, Workspace, WorkspaceMember
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.email import generate_plain_text_from_html
 from plane.utils.email_i18n import translate, user_language
@@ -27,9 +27,8 @@ from plane.utils.exception_logger import log_exception
 
 ADMIN_MESSAGE_ENTITY = "workspace_admin_message"
 TEMPLATE = "emails/notifications/workspace_admin_message.html"
-# The longest message, and how many a person may send to the admins of one workspace within the window
+# The longest message, and the window in which a person may send only so many (plane.utils.admin_message_limit)
 MESSAGE_MAX_LENGTH = 2000
-MESSAGE_LIMIT = 5
 MESSAGE_LIMIT_WINDOW_SECONDS = 60 * 60
 
 
@@ -45,6 +44,14 @@ def workspace_admin_recipients(workspace, sender_id):
         .values_list("member_id", flat=True)
     )
     return list(User.objects.filter(pk__in=admin_ids, is_active=True, is_bot=False))
+
+
+def wants_admin_message_emails(user):
+    """False when the admin turned off the emails about messages to the admins; the inbox entry is kept either way."""
+    preference = UserNotificationPreference.objects.filter(
+        user=user, workspace__isnull=True, project__isnull=True
+    ).first()
+    return preference is None or preference.workspace_admin_message
 
 
 def create_admin_message_notifications(workspace, sender, message):
@@ -125,6 +132,8 @@ def email_workspace_admin_message(workspace_id, message_id):
     for notification in notifications:
         receiver, sender = notification.receiver, notification.triggered_by
         if sender is None or not receiver.is_active or not receiver.email:
+            continue
+        if not wants_admin_message_emails(receiver):
             continue
         sender_name = display_name(sender)
         language = user_language(receiver)

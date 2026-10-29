@@ -11,8 +11,9 @@ import pytest
 from django.utils import timezone
 from rest_framework.test import APIClient
 
-from plane.bgtasks.workspace_admin_message_notification import ADMIN_MESSAGE_ENTITY, MESSAGE_LIMIT, MESSAGE_MAX_LENGTH
+from plane.bgtasks.workspace_admin_message_notification import ADMIN_MESSAGE_ENTITY, MESSAGE_MAX_LENGTH
 from plane.db.models import Notification, User, WorkspaceMember
+from plane.utils.admin_message_limit import BUILT_IN_LIMIT as MESSAGE_LIMIT
 
 ADMIN, MEMBER, GUEST = 20, 15, 5
 
@@ -31,6 +32,11 @@ def _client(user):
     client = APIClient()
     client.force_authenticate(user=user)
     return client
+
+
+@pytest.fixture(autouse=True)
+def default_limit(monkeypatch):
+    monkeypatch.delenv("ADMIN_MESSAGE_LIMIT_PER_HOUR", raising=False)
 
 
 @pytest.fixture(autouse=True)
@@ -160,3 +166,111 @@ class TestInbox:
         results = response.data["results"] if isinstance(response.data, dict) else response.data
         assert [row["entity_name"] for row in results] == [ADMIN_MESSAGE_ENTITY]
         assert results[0]["data"]["workspace_admin_message"]["message"] == "Please help"
+
+
+CONFIGURATIONS = "/api/instances/configurations/"
+INSTANCE = "/api/instances/"
+
+
+def _send_until_refused(workspace, writer, attempts=12):
+    client = _client(writer)
+    sent = 0
+    for i in range(attempts):
+        status = client.post(_url(workspace), {"message": f"m{i}"}, format="json").status_code
+        if status != 201:
+            assert status == 429
+            break
+        sent += 1
+    return sent
+
+
+@pytest.fixture
+def instance(db):
+    from uuid import uuid4
+
+    from plane.license.models import Instance
+
+    return Instance.objects.create(
+        instance_name="Test",
+        instance_id=uuid4().hex,
+        current_version="1.0.0",
+        last_checked_at=timezone.now(),
+        is_setup_done=True,
+    )
+
+
+@pytest.fixture
+def saved_limit(db):
+    from plane.license.models import InstanceConfiguration
+
+    return InstanceConfiguration.objects.create(key="ADMIN_MESSAGE_LIMIT", value="", category="WORKSPACE_MANAGEMENT")
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestConfigurableLimit:
+    def test_the_deployment_sets_the_default(self, workspace, monkeypatch):
+        monkeypatch.setenv("ADMIN_MESSAGE_LIMIT_PER_HOUR", "2")
+        _person(workspace, ADMIN, "admin2@example.com")
+
+        assert _send_until_refused(workspace, _person(workspace, MEMBER, "w@example.com")) == 2
+
+    def test_what_the_admin_saved_wins_over_the_deployment(self, workspace, monkeypatch, saved_limit):
+        monkeypatch.setenv("ADMIN_MESSAGE_LIMIT_PER_HOUR", "2")
+        saved_limit.value = "3"
+        saved_limit.save()
+
+        assert _send_until_refused(workspace, _person(workspace, MEMBER, "w@example.com")) == 3
+
+    def test_an_empty_saved_value_means_the_default_of_the_deployment(self, workspace, monkeypatch, saved_limit):
+        monkeypatch.setenv("ADMIN_MESSAGE_LIMIT_PER_HOUR", "4")
+
+        assert _send_until_refused(workspace, _person(workspace, MEMBER, "w@example.com")) == 4
+
+    @pytest.mark.parametrize(
+        "value, expected",
+        [("0", 1), ("1", 1), ("100", 100), ("1000", 100), ("many", MESSAGE_LIMIT), ("", MESSAGE_LIMIT)],
+    )
+    def test_the_deployment_value_is_kept_within_bounds(self, value, expected, monkeypatch, db):
+        from plane.utils.admin_message_limit import get_deployment_admin_message_limit
+
+        monkeypatch.setenv("ADMIN_MESSAGE_LIMIT_PER_HOUR", value)
+
+        assert get_deployment_admin_message_limit() == expected
+
+    def test_an_instance_admin_changes_it_and_goes_back_to_the_default(
+        self, session_client, instance, saved_limit, workspace
+    ):
+        from plane.license.models import InstanceAdmin
+
+        InstanceAdmin.objects.create(instance=instance, user=workspace.owner, role=20)
+
+        changed = session_client.patch(CONFIGURATIONS, {"ADMIN_MESSAGE_LIMIT": "12"}, format="json")
+        reported = APIClient().get(INSTANCE).data["config"]
+        reset = session_client.patch(CONFIGURATIONS, {"ADMIN_MESSAGE_LIMIT": ""}, format="json")
+
+        assert changed.status_code == 200 and reset.status_code == 200
+        assert reported["admin_message_limit"] == 12
+        assert reported["admin_message_limit_default"] == MESSAGE_LIMIT
+        assert reported["admin_message_limit_max"] == 100
+        from django.core.cache import cache
+
+        cache.clear()
+        assert APIClient().get(INSTANCE).data["config"]["admin_message_limit"] == MESSAGE_LIMIT
+
+    @pytest.mark.parametrize("value", ["0", "101", "-3", "many", "2.5"])
+    def test_a_limit_out_of_bounds_is_refused(self, value, session_client, instance, saved_limit, workspace):
+        from plane.license.models import InstanceAdmin
+
+        InstanceAdmin.objects.create(instance=instance, user=workspace.owner, role=20)
+
+        response = session_client.patch(CONFIGURATIONS, {"ADMIN_MESSAGE_LIMIT": value}, format="json")
+
+        assert response.status_code == 400
+        saved_limit.refresh_from_db()
+        assert saved_limit.value == ""
+
+    def test_only_an_instance_admin_can_change_it(self, session_client, instance, saved_limit):
+        response = session_client.patch(CONFIGURATIONS, {"ADMIN_MESSAGE_LIMIT": "9"}, format="json")
+
+        assert response.status_code == 403

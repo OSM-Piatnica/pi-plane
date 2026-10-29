@@ -119,6 +119,8 @@
   "mentions_description": "Thông báo cho tôi khi ai đó đề cập đến tôi trong bình luận hoặc mô tả",
   "project_access_requests": "Yêu cầu truy cập",
   "project_access_requests_description": "Gửi email cho tôi về các yêu cầu tham gia dự án riêng tư mà tôi quản trị và về quyết định đối với yêu cầu của chính tôi.",
+  "workspace_admin_messages": "Tin nhắn cho quản trị viên",
+  "workspace_admin_messages_description": "Nếu bạn là quản trị viên của một không gian làm việc, hãy gửi email cho tôi khi có người viết cho quản trị viên. Tin nhắn luôn đến hộp thư đến của bạn.",
   "email_frequency": "Tần suất email",
   "email_frequency_description": "Chọn tần suất bạn nhận email về các cập nhật của mục công việc. Các lượt đề cập luôn được gửi ngay lập tức.",
   "email_frequency_instant": "Ngay lập tức",

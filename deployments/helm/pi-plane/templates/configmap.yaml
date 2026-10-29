@@ -64,6 +64,7 @@ data:
   AUTHENTICATION_RATE_LIMIT: {{ .Values.app.authenticationRateLimit | quote }}
   API_KEY_RATE_LIMIT: {{ .Values.app.apiKeyRateLimit | quote }}
   ANON_RATE_LIMIT: {{ .Values.app.anonRateLimit | quote }}
+  ADMIN_MESSAGE_LIMIT_PER_HOUR: {{ printf "%d" (int64 .Values.app.adminMessageLimitPerHour) | quote }}
   {{- with .Values.app.numProxies }}
   NUM_PROXIES: {{ . | quote }}
   {{- end }}

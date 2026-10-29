@@ -119,6 +119,8 @@
   "mentions_description": "Notifique-me quando alguém me mencionar nos comentários ou na descrição",
   "project_access_requests": "Solicitações de acesso",
   "project_access_requests_description": "Enviar e-mail sobre solicitações para entrar em projetos privados que administro e sobre as decisões das minhas próprias solicitações.",
+  "workspace_admin_messages": "Mensagens para os administradores",
+  "workspace_admin_messages_description": "Se você é administrador de um espaço de trabalho, envie-me um e-mail quando alguém escrever aos administradores. A mensagem sempre chega à sua caixa de entrada.",
   "email_frequency": "Frequência de e-mails",
   "email_frequency_description": "Escolha com que frequência você recebe e-mails sobre atualizações de itens de trabalho. As menções são sempre enviadas imediatamente.",
   "email_frequency_instant": "Imediatamente",

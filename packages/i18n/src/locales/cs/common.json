@@ -119,6 +119,8 @@
   "mentions_description": "Upozornit mě, když mě někdo zmíní v komentářích nebo popisu",
   "project_access_requests": "Žádosti o přístup",
   "project_access_requests_description": "Posílat mi e-maily o žádostech o připojení k soukromým projektům, které spravuji, a o rozhodnutích o mých vlastních žádostech.",
+  "workspace_admin_messages": "Zprávy správcům",
+  "workspace_admin_messages_description": "Pokud jste správcem pracovního prostoru, posílejte mi e-mail, když někdo píše správcům. Zpráva vždy přijde do vaší schránky v aplikaci.",
   "email_frequency": "Frekvence e-mailů",
   "email_frequency_description": "Vyberte, jak často chcete dostávat e-maily o změnách pracovních položek. Zmínky se vždy odesílají okamžitě.",
   "email_frequency_instant": "Okamžitě",

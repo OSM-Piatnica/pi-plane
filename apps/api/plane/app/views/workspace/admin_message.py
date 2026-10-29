@@ -16,13 +16,13 @@ from rest_framework.response import Response
 from plane.app.permissions import ROLE, allow_permission
 from plane.bgtasks.workspace_admin_message_notification import (
     ADMIN_MESSAGE_ENTITY,
-    MESSAGE_LIMIT,
     MESSAGE_LIMIT_WINDOW_SECONDS,
     MESSAGE_MAX_LENGTH,
     create_admin_message_notifications,
     email_workspace_admin_message,
 )
 from plane.db.models import Notification, Workspace
+from plane.utils.admin_message_limit import get_admin_message_limit
 
 from ..base import BaseAPIView
 
@@ -56,7 +56,7 @@ class WorkspaceAdminMessageEndpoint(BaseAPIView):
             .distinct()
             .count()
         )
-        if sent_recently >= MESSAGE_LIMIT:
+        if sent_recently >= get_admin_message_limit():
             return Response(
                 {"error": "You have sent several messages recently. Please try again later.", "code": "RATE_LIMITED"},
                 status=status.HTTP_429_TOO_MANY_REQUESTS,

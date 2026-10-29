@@ -28,6 +28,7 @@ from plane.license.api.permissions import InstanceAdminPermission
 from plane.license.models import InstanceConfiguration
 from plane.license.api.serializers import InstanceConfigurationSerializer
 from plane.license.utils.encryption import encrypt_data
+from plane.utils.admin_message_limit import MAX_ADMIN_MESSAGE_LIMIT, MIN_ADMIN_MESSAGE_LIMIT
 from plane.utils.cache import cache_response, invalidate_cache
 from plane.utils.import_limits import (
     MAX_IMPORT_MAX_WORK_ITEMS,
@@ -100,6 +101,21 @@ class InstanceConfigurationEndpoint(BaseAPIView):
                             "error": (
                                 f"The number of work items per import must be between {MIN_IMPORT_MAX_WORK_ITEMS} "
                                 f"and {MAX_IMPORT_MAX_WORK_ITEMS}."
+                            )
+                        },
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+
+        if "ADMIN_MESSAGE_LIMIT" in request.data:
+            raw_limit = str(request.data.get("ADMIN_MESSAGE_LIMIT") or "").strip()
+            if raw_limit:
+                limit = parse_whole_number(raw_limit)
+                if limit is None or limit < MIN_ADMIN_MESSAGE_LIMIT or limit > MAX_ADMIN_MESSAGE_LIMIT:
+                    return Response(
+                        {
+                            "error": (
+                                f"The number of messages to the admins per hour must be between "
+                                f"{MIN_ADMIN_MESSAGE_LIMIT} and {MAX_ADMIN_MESSAGE_LIMIT}."
                             )
                         },
                         status=status.HTTP_400_BAD_REQUEST,

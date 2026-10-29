@@ -14,9 +14,10 @@ from plane.bgtasks.workspace_admin_message_notification import (
     create_admin_message_notifications,
     display_name,
     email_workspace_admin_message,
+    wants_admin_message_emails,
     workspace_admin_recipients,
 )
-from plane.db.models import Notification, Profile, WorkspaceMember
+from plane.db.models import Notification, Profile, UserNotificationPreference, WorkspaceMember
 from plane.tests.factories import UserFactory, WorkspaceFactory
 
 ADMIN, MEMBER, GUEST = 20, 15, 5
@@ -154,3 +155,34 @@ class TestEmail:
 
         assert len(calls) == 2
         assert len(mailoutbox) == 1
+
+
+@pytest.mark.unit
+@pytest.mark.django_db
+class TestOptOut:
+    def test_the_emails_are_on_unless_the_admin_turned_them_off(self, workspace):
+        admin = _user(workspace, ADMIN)
+
+        assert wants_admin_message_emails(admin) is True
+        UserNotificationPreference.objects.create(user=admin, workspace_admin_message=False)
+        assert wants_admin_message_emails(admin) is False
+
+    def test_the_default_of_a_new_preference_is_on(self, workspace):
+        admin = _user(workspace, ADMIN)
+
+        assert UserNotificationPreference.objects.create(user=admin).workspace_admin_message is True
+
+    def test_an_admin_who_opted_out_gets_no_email_but_keeps_the_inbox_entry_and_the_others_are_mailed(
+        self, workspace, mailoutbox
+    ):
+        quiet = _user(workspace, ADMIN, email="quiet@example.com")
+        loud = _user(workspace, ADMIN, email="loud@example.com")
+        UserNotificationPreference.objects.create(user=quiet, workspace_admin_message=False)
+        sender = _user(workspace, MEMBER)
+        message_id, _ = create_admin_message_notifications(workspace, sender, "Hello")
+
+        with patch("plane.bgtasks.workspace_admin_message_notification.get_email_configuration", return_value=CONFIG):
+            email_workspace_admin_message(str(workspace.id), str(message_id))
+
+        assert [mail.to for mail in mailoutbox] == [[loud.email]]
+        assert Notification.objects.filter(receiver=quiet, entity_identifier=message_id).exists()

@@ -119,6 +119,8 @@
   "mentions_description": "当有人在评论或描述中提及我时通知我",
   "project_access_requests": "访问请求",
   "project_access_requests_description": "通过电子邮件通知我加入我管理的私有项目的请求，以及对我自己请求的决定。",
+  "workspace_admin_messages": "给管理员的消息",
+  "workspace_admin_messages_description": "如果您是工作空间管理员，有人给管理员写信时请给我发邮件。消息始终会进入您的收件箱。",
   "email_frequency": "邮件频率",
   "email_frequency_description": "选择您接收工作项更新邮件的频率。提及始终会立即发送。",
   "email_frequency_instant": "立即",

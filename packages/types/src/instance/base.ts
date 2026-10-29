@@ -76,6 +76,11 @@ export interface IInstanceConfig {
   import_max_work_items?: number;
   /** The most the administrator can set `import_max_work_items` to. */
   import_max_work_items_max?: number;
+  /** Most messages one person may send to the admins of a workspace within an hour (in force now). */
+  admin_message_limit?: number;
+  /** What the deployment sets, which applies while the instance admin has saved no value. */
+  admin_message_limit_default?: number;
+  admin_message_limit_max?: number;
   is_smtp_configured: boolean;
   app_base_url: string | undefined;
   space_base_url: string | undefined;
