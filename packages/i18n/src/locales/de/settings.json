@@ -15,8 +15,8 @@
             "errors": {
               "required": "E-Mail ist erforderlich",
               "invalid": "E-Mail ist ungültig",
-              "exists": "E-Mail existiert bereits. Bitte nutze eine andere.",
-              "validation_failed": "E-Mail-Verifizierung fehlgeschlagen. Bitte versuche es erneut."
+              "exists": "E-Mail existiert bereits. Bitte verwenden Sie eine andere.",
+              "validation_failed": "E-Mail-Verifizierung fehlgeschlagen. Bitte versuchen Sie es erneut."
             }
           },
           "code": {
@@ -25,7 +25,7 @@
             "helper_text": "Der Verifizierungscode wurde an Ihre neue E-Mail gesendet.",
             "errors": {
               "required": "Einmalcode ist erforderlich",
-              "invalid": "Ungültiger Verifizierungscode. Bitte versuche es erneut."
+              "invalid": "Ungültiger Verifizierungscode. Bitte versuchen Sie es erneut."
             }
           }
         },
@@ -78,15 +78,15 @@
     "stats": {
       "workload": "Auslastung",
       "overview": "Übersicht",
-      "created": "Erstellte Elemente",
-      "assigned": "Zugewiesene Elemente",
-      "subscribed": "Abonnierte Elemente",
+      "created": "Erstellte Arbeitselemente",
+      "assigned": "Zugewiesene Arbeitselemente",
+      "subscribed": "Abonnierte Arbeitselemente",
       "state_distribution": {
-        "title": "Elemente nach Status",
+        "title": "Arbeitselemente nach Status",
         "empty": "Erstellen Sie Arbeitselemente, um eine Statusanalyse zu sehen."
       },
       "priority_distribution": {
-        "title": "Elemente nach Priorität",
+        "title": "Arbeitselemente nach Priorität",
         "empty": "Erstellen Sie Arbeitselemente, um eine Prioritätsanalyse zu sehen."
       },
       "recent_activity": {

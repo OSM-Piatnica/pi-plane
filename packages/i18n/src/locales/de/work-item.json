@@ -1,6 +1,6 @@
 {
   "issue": {
-    "label": "{count, plural, one {Arbeitselement} few {Arbeitselemente} other {Arbeitselemente}}",
+    "label": "{count, plural, one {Arbeitselement} other {Arbeitselemente}}",
     "all": "Alle Arbeitselemente",
     "edit": "Arbeitselement bearbeiten",
     "title": {
@@ -12,7 +12,7 @@
       "label": "Arbeitselement hinzufügen",
       "cycle": {
         "failed": "Hinzufügen des Arbeitselements zum Zyklus fehlgeschlagen. Bitte versuchen Sie es erneut.",
-        "success": "{count, plural, one {Arbeitselement} few {Arbeitselemente} other {Arbeitselemente}} zum Zyklus hinzugefügt.",
+        "success": "{count, plural, one {Arbeitselement} other {Arbeitselemente}} zum Zyklus hinzugefügt.",
         "loading": "{count, plural, one {Arbeitselement} other {Arbeitselemente}} werden zum Zyklus hinzugefügt"
       },
       "assignee": "Zugewiesene hinzufügen",
@@ -196,13 +196,13 @@
     },
     "relation": {
       "relates_to": "Steht in Beziehung zu",
-      "duplicate": "Duplikat",
+      "duplicate": "Duplikat von",
       "blocked_by": "Blockiert durch",
       "blocking": "Blockiert",
-      "start_before": "Beginnt Vor",
-      "start_after": "Beginnt Nach",
-      "finish_before": "Endet Vor",
-      "finish_after": "Endet Nach",
+      "start_before": "Beginnt vor",
+      "start_after": "Beginnt nach",
+      "finish_before": "Endet vor",
+      "finish_after": "Endet nach",
       "implements": "Implementiert",
       "implemented_by": "Implementiert von",
       "causes": "Verursacht",
@@ -283,8 +283,8 @@
     "vote": {
       "click_to_upvote": "Klicken zum Hochstimmen",
       "click_to_downvote": "Klicken zum Runterstimmen",
-      "click_to_view_upvotes": "Klicken um Hochstimmen anzuzeigen",
-      "click_to_view_downvotes": "Klicken um Runterstimmen anzuzeigen"
+      "click_to_view_upvotes": "Klicken, um Hochstimmen anzuzeigen",
+      "click_to_view_downvotes": "Klicken, um Runterstimmen anzuzeigen"
     }
   },
   "sub_work_item": {
@@ -324,28 +324,28 @@
   "issue_comment": {
     "empty_state": {
       "general": {
-        "title": "Keine Kommentare",
-        "description": "Kommentare dienen der Diskussion und der Nachverfolgung von Elementen."
+        "title": "Noch keine Kommentare",
+        "description": "Kommentare dienen der Diskussion und der Nachverfolgung von Arbeitselementen."
       }
     }
   },
   "bulk_operations": {
     "error_details": {
       "invalid_archive_state_group": {
-        "title": "Arbeitsaufgaben können nicht archiviert werden",
-        "message": "Nur Arbeitsaufgaben, die zu den Statusgruppen Abgeschlossen oder Abgebrochen gehören, können archiviert werden."
+        "title": "Arbeitselemente können nicht archiviert werden",
+        "message": "Nur Arbeitselemente, die zu den Statusgruppen Abgeschlossen oder Abgebrochen gehören, können archiviert werden."
       },
       "invalid_issue_start_date": {
-        "title": "Arbeitsaufgaben können nicht aktualisiert werden",
-        "message": "Das ausgewählte Startdatum liegt nach dem Fälligkeitsdatum für einige Arbeitsaufgaben. Stellen Sie sicher, dass das Startdatum vor dem Fälligkeitsdatum liegt."
+        "title": "Arbeitselemente können nicht aktualisiert werden",
+        "message": "Das ausgewählte Startdatum liegt nach dem Fälligkeitsdatum für einige Arbeitselemente. Stellen Sie sicher, dass das Startdatum vor dem Fälligkeitsdatum liegt."
       },
       "invalid_issue_target_date": {
-        "title": "Arbeitsaufgaben können nicht aktualisiert werden",
-        "message": "Das ausgewählte Fälligkeitsdatum liegt vor dem Startdatum für einige Arbeitsaufgaben. Stellen Sie sicher, dass das Fälligkeitsdatum nach dem Startdatum liegt."
+        "title": "Arbeitselemente können nicht aktualisiert werden",
+        "message": "Das ausgewählte Fälligkeitsdatum liegt vor dem Startdatum für einige Arbeitselemente. Stellen Sie sicher, dass das Fälligkeitsdatum nach dem Startdatum liegt."
       },
       "invalid_state_transition": {
-        "title": "Arbeitsaufgaben können nicht aktualisiert werden",
-        "message": "Statusänderung ist für einige Arbeitsaufgaben nicht erlaubt. Stellen Sie sicher, dass die Statusänderung zulässig ist."
+        "title": "Arbeitselemente können nicht aktualisiert werden",
+        "message": "Statusänderung ist für einige Arbeitselemente nicht erlaubt. Stellen Sie sicher, dass die Statusänderung zulässig ist."
       }
     },
     "upgrade_banner": {
@@ -355,10 +355,10 @@
   },
   "recurring_work_items": {
     "settings": {
-      "heading": "Wiederkehrende Arbeitsaufgaben",
-      "description": "Setzen Sie Ihre wiederkehrende Arbeit einmalig und wir kümmern uns um die Wiederholungen. Sie sehen alles hier, wenn es Zeit ist.",
-      "new_recurring_work_item": "Neue wiederkehrende Arbeitsaufgabe",
-      "update_recurring_work_item": "Wiederkehrende Arbeitsaufgabe aktualisieren",
+      "heading": "Wiederkehrende Arbeitselemente",
+      "description": "Richten Sie Ihre wiederkehrende Arbeit einmalig ein, und wir kümmern uns um die Wiederholungen. Sie sehen alles hier, sobald es so weit ist.",
+      "new_recurring_work_item": "Neues wiederkehrendes Arbeitselement",
+      "update_recurring_work_item": "Wiederkehrendes Arbeitselement aktualisieren",
       "form": {
         "interval": {
           "title": "Zeitplan",
@@ -374,61 +374,61 @@
           }
         },
         "button": {
-          "create": "Wiederkehrende Arbeitsaufgabe erstellen",
-          "update": "Wiederkehrende Arbeitsaufgabe aktualisieren"
+          "create": "Wiederkehrendes Arbeitselement erstellen",
+          "update": "Wiederkehrendes Arbeitselement aktualisieren"
         }
       },
       "create_button": {
-        "label": "Wiederkehrende Arbeitsaufgabe erstellen",
-        "no_permission": "Wenden Sie sich an Ihren Projektadministrator, um wiederkehrende Arbeitsaufgaben zu erstellen"
+        "label": "Wiederkehrendes Arbeitselement erstellen",
+        "no_permission": "Wenden Sie sich an Ihren Projektadministrator, um wiederkehrende Arbeitselemente zu erstellen"
       }
     },
     "empty_state": {
       "upgrade": {
         "title": "Ihre Arbeit, auf Autopilot",
-        "description": "Einmal einstellen. Wir erinnern Sie daran, wenn es fällig ist. Upgrade auf Business, um wiederkehrende Arbeit mühelos zu machen."
+        "description": "Einmal einstellen. Wir erinnern Sie daran, wenn es fällig ist. Upgraden Sie auf Business, damit wiederkehrende Arbeit mühelos wird."
       },
       "no_templates": {
-        "button": "Erstellen Sie Ihre erste wiederkehrende Arbeitsaufgabe"
+        "button": "Ihr erstes wiederkehrendes Arbeitselement erstellen"
       }
     },
     "toasts": {
       "create": {
         "success": {
-          "title": "Wiederkehrende Arbeitsaufgabe erstellt",
-          "message": "{name}, die wiederkehrende Arbeitsaufgabe, ist jetzt für Ihren Arbeitsbereich verfügbar."
+          "title": "Wiederkehrendes Arbeitselement erstellt",
+          "message": "{name}, das wiederkehrende Arbeitselement, ist jetzt für Ihren Arbeitsbereich verfügbar."
         },
         "error": {
-          "title": "Wir konnten diese wiederkehrende Arbeitsaufgabe diesmal nicht erstellen.",
-          "message": "Versuchen Sie, Ihre Angaben erneut zu speichern oder kopieren Sie sie in eine neue wiederkehrende Arbeitsaufgabe, vorzugsweise in einem anderen Tab."
+          "title": "Wir konnten dieses wiederkehrende Arbeitselement diesmal nicht erstellen.",
+          "message": "Versuchen Sie, Ihre Angaben erneut zu speichern, oder kopieren Sie sie in ein neues wiederkehrendes Arbeitselement, vorzugsweise in einem anderen Tab."
         }
       },
       "update": {
         "success": {
-          "title": "Wiederkehrende Arbeitsaufgabe geändert",
-          "message": "{name}, die wiederkehrende Arbeitsaufgabe, wurde geändert."
+          "title": "Wiederkehrendes Arbeitselement geändert",
+          "message": "{name}, das wiederkehrende Arbeitselement, wurde geändert."
         },
         "error": {
-          "title": "Wir konnten die Änderungen an dieser wiederkehrenden Arbeitsaufgabe nicht speichern.",
-          "message": "Versuchen Sie, Ihre Angaben erneut zu speichern oder kommen Sie später zu dieser wiederkehrenden Arbeitsaufgabe zurück. Wenn weiterhin Probleme auftreten, kontaktieren Sie uns."
+          "title": "Wir konnten die Änderungen an diesem wiederkehrenden Arbeitselement nicht speichern.",
+          "message": "Versuchen Sie, Ihre Angaben erneut zu speichern, oder kommen Sie später zu diesem wiederkehrenden Arbeitselement zurück. Wenn weiterhin Probleme auftreten, kontaktieren Sie uns."
         }
       },
       "delete": {
         "success": {
-          "title": "Wiederkehrende Arbeitsaufgabe gelöscht",
-          "message": "{name}, die wiederkehrende Arbeitsaufgabe, wurde aus Ihrem Arbeitsbereich gelöscht."
+          "title": "Wiederkehrendes Arbeitselement gelöscht",
+          "message": "{name}, das wiederkehrende Arbeitselement, wurde aus Ihrem Arbeitsbereich gelöscht."
         },
         "error": {
-          "title": "Wir konnten diese wiederkehrende Arbeitsaufgabe nicht löschen.",
-          "message": "Versuchen Sie es erneut oder kommen Sie später darauf zurück. Wenn Sie sie dann immer noch nicht löschen können, kontaktieren Sie uns."
+          "title": "Wir konnten dieses wiederkehrende Arbeitselement nicht löschen.",
+          "message": "Versuchen Sie es erneut oder kommen Sie später darauf zurück. Wenn Sie es dann immer noch nicht löschen können, kontaktieren Sie uns."
         }
       }
     },
     "delete_confirmation": {
-      "title": "Wiederkehrende Arbeitsaufgabe löschen",
+      "title": "Wiederkehrendes Arbeitselement löschen",
       "description": {
-        "prefix": "Sind Sie sicher, dass Sie die wiederkehrende Arbeitsaufgabe löschen möchten-",
-        "suffix": "? Alle mit der wiederkehrenden Arbeitsaufgabe verbundenen Daten werden dauerhaft entfernt. Diese Aktion kann nicht rückgängig gemacht werden."
+        "prefix": "Sind Sie sicher, dass Sie das wiederkehrende Arbeitselement löschen möchten-",
+        "suffix": "? Alle mit dem wiederkehrenden Arbeitselement verbundenen Daten werden dauerhaft entfernt. Diese Aktion kann nicht rückgängig gemacht werden."
       }
     }
   },
@@ -629,7 +629,7 @@
         },
         "blocking": {
           "added": "hat markiert, dass dieses Arbeitselement das Arbeitselement <value/> blockiert.",
-          "removed": "hat das blockierte Arbeitselement <value/> entfernt."
+          "removed": "hat das blockierende Arbeitselement <value/> entfernt."
         },
         "caused_by": {
           "added": "Beziehung „Verursacht durch“ hinzugefügt: <value/>.",
@@ -740,7 +740,7 @@
       "blocking": {
         "added_with_issue": "hat markiert, dass <issue/> das Arbeitselement <value/> blockiert.",
         "added_without_issue": "hat markiert, dass dieses Arbeitselement das Arbeitselement <value/> blockiert.",
-        "removed": "hat das blockierte Arbeitselement <value/> entfernt."
+        "removed": "hat das blockierende Arbeitselement <value/> entfernt."
       },
       "cycle": {
         "added_with_issue": "hat <issue/> <nowrap>zum Zyklus</nowrap> <value/> hinzugefügt",

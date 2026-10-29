@@ -29,8 +29,8 @@
         "title": "Wählen Sie ein Element, um Details anzuzeigen."
       },
       "all": {
-        "title": "Keine zugewiesenen Elemente",
-        "description": "Hier sehen Sie Aktualisierungen zu Ihnen zugewiesenen Elementen."
+        "title": "Keine zugewiesenen Arbeitselemente",
+        "description": "Hier sehen Sie Aktualisierungen zu Arbeitselementen, die Ihnen zugewiesen sind."
       },
       "mentions": {
         "title": "Keine Erwähnungen",
@@ -44,7 +44,7 @@
     "filter": {
       "assigned": "Mir zugewiesen",
       "created": "Von mir erstellt",
-      "subscribed": "Abonniert"
+      "subscribed": "Von mir abonniert"
     },
     "snooze": {
       "1_day": "1 Tag",

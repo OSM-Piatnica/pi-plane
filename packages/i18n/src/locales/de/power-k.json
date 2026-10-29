@@ -207,11 +207,11 @@
       "views": "Keine Ansichten gefunden",
       "workspaces": "Keine Arbeitsbereiche gefunden"
     },
-    "epic_update_error": "Das Epic konnte nicht aktualisiert werden. Bitte versuche es erneut.",
-    "module_update_error": "Das Modul konnte nicht aktualisiert werden. Bitte versuche es erneut.",
+    "epic_update_error": "Das Epic konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
+    "module_update_error": "Das Modul konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
     "no_estimate_found": "Keine Schätzung gefunden",
     "reloading_to_apply": "Seite wird neu geladen, um die Änderungen anzuwenden...",
     "some_error_occurred": "Ein Fehler ist aufgetreten",
-    "work_item_update_error": "Das Arbeitselement konnte nicht aktualisiert werden. Bitte versuche es erneut."
+    "work_item_update_error": "Das Arbeitselement konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut."
   }
 }

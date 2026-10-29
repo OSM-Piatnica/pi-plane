@@ -88,13 +88,13 @@
     },
     "features": {
       "cycles": {
-        "description": "Zeitlich begrenzte Arbeit in wiederkehrenden Perioden.",
+        "description": "Arbeit in wiederkehrenden Zeiträumen zeitlich begrenzen.",
         "label": "Zyklen"
       },
       "description": "Wählen Sie aus, welche Funktionen für dieses Projekt aktiviert sind.",
       "intake": {
         "description": "Eingehende Arbeit sichten, bevor sie dem Projekt hinzugefügt wird.",
-        "label": "Eingang"
+        "label": "Intake"
       },
       "modules": {
         "description": "Arbeit in projektähnlichen Untergruppen zusammenfassen.",
@@ -175,7 +175,7 @@
         "heading": "Beziehungstypen",
         "description": "Legen Sie fest, welche Beziehungen in diesem Projekt hinzugefügt werden können. Blockieren ist immer verfügbar, und bestehende Beziehungen bleiben beim Deaktivieren eines Typs erhalten.",
         "schedule": {
-          "description": "Beginnt vor, endet vor und beginnt vor Ende, mit optionalem Abstand in Tagen.",
+          "description": "Beginnt vor, endet vor und beginnt vor Ende, mit optionaler Verzögerung in Tagen.",
           "title": "Terminabhängigkeiten"
         },
         "traceability": {
@@ -273,7 +273,7 @@
           "open_project": "Projekt öffnen",
           "options": {
             "assignees": "Zugewiesene",
-            "clear_all": "Alles löschen",
+            "clear_all": "Alle abwählen",
             "cycles": "Zyklen",
             "dates": "Termine und Dauer",
             "heading": "Was importiert werden soll",
@@ -356,7 +356,7 @@
             },
             "intake": {
               "description": "Eingehende Anfragen sichten, bevor sie zu Arbeitselementen werden.",
-              "label": "Eingang"
+              "label": "Intake"
             },
             "modules": {
               "description": "Arbeit in fokussierten Bereichen oder Meilensteinen zusammenfassen.",

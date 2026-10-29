@@ -19,7 +19,7 @@
     "start_date": "Startdatum",
     "end_date": "Enddatum",
     "in_your_timezone": "In Ihrer Zeitzone",
-    "transfer_work_items": "Übertragen von {count} Arbeitselementen",
+    "transfer_work_items": "{count} Arbeitselemente übertragen",
     "transfer": {
       "no_cycles_available": "Keine anderen Zyklen verfügbar, um Arbeitselemente zu übertragen."
     },
@@ -30,7 +30,7 @@
       "progress": "Fortschritt",
       "chart": "Burndown-Diagramm",
       "priority_issue": "Hochpriorisierte Elemente",
-      "assignees": "Zuweisungen",
+      "assignees": "Zugewiesene",
       "issue_burndown": "Burndown für Arbeitselemente",
       "ideal": "Ideal",
       "current": "Aktuell",
@@ -190,7 +190,7 @@
   "project_issues": {
     "empty_state": {
       "no_issues": {
-        "title": "Erstellen und zuweisen eines Arbeitselements",
+        "title": "Arbeitselement erstellen und zuweisen",
         "description": "Arbeitselemente sind Aufgaben, die Sie sich selbst oder dem Team zuweisen. Verfolgen Sie deren Fortschritt.",
         "primary_button": {
           "text": "Erstes Element erstellen",
@@ -271,8 +271,8 @@
   "project_page": {
     "empty_state": {
       "general": {
-        "title": "Notieren Sie Ideen, Dokumente oder Wissensdatenbanken. Nutzen Sie AI Galileo.",
-        "description": "Seiten sind Orte für Ihre Gedanken. Schreiben, formatieren, fügen Sie Arbeitselemente ein und verwenden Sie Komponenten.",
+        "title": "Notieren Sie Ideen, Dokumente oder Wissensdatenbanken. Nutzen Sie Galileo, den KI-Assistenten von Pi-Plane.",
+        "description": "Seiten sind Orte für Ihre Gedanken. Schreiben Sie, formatieren Sie, fügen Sie Arbeitselemente ein und verwenden Sie Komponenten.",
         "primary_button": {
           "text": "Erste Seite erstellen"
         }
@@ -300,8 +300,8 @@
   "disabled_project": {
     "empty_state": {
       "inbox": {
-        "title": "Eingang ist nicht aktiviert",
-        "description": "Aktivieren Sie den Eingang in den Projekteinstellungen, um Anfragen zu verwalten.",
+        "title": "Intake ist nicht aktiviert",
+        "description": "Aktivieren Sie Intake in den Projekteinstellungen, um Anfragen zu verwalten.",
         "primary_button": {
           "text": "Funktionen verwalten"
         }
@@ -416,7 +416,7 @@
         },
         "import_failed": {
           "title": "Import fehlgeschlagen",
-          "message": "Etwas ist schief gelaufen."
+          "message": "Etwas ist schiefgelaufen."
         }
       }
     }
@@ -546,7 +546,7 @@
       "confirm": {
         "title": "Dieses Projekt im Web teilen?",
         "description": "Jeder im Internet, der den Link hat, kann dieses Projekt ansehen, auch Personen außerhalb Ihres Arbeitsbereichs und nicht angemeldete Personen.",
-        "can_see": "Sie können sehen:",
+        "can_see": "Diese Personen können sehen:",
         "item_work_items": "alle Arbeitselemente des Projekts mit Beschreibung, Status, Priorität, Terminen und Labels",
         "item_members": "die Namen und Avatare der Projektmitglieder",
         "item_activity": "Kommentare, Reaktionen und Stimmen mit den Namen der Personen dahinter, wenn Sie sie erlauben",
@@ -649,8 +649,8 @@
     },
     "request_access_modal": {
       "title": "Zugang anfragen",
-      "description": "Bitte die Admins dieses Projekts um Zugang.",
-      "description_named": "Bitte die Admins von {name} um Zugang.",
+      "description": "Bitten Sie die Admins dieses Projekts um Zugang.",
+      "description_named": "Bitten Sie die Admins von {name} um Zugang.",
       "message_placeholder": "Nachricht an die Admins hinzufügen (optional)",
       "send": "Anfrage senden",
       "sending": "Wird gesendet...",
@@ -664,7 +664,7 @@
       "approve": "Genehmigen",
       "reject": "Ablehnen",
       "already_decided": "Diese Anfrage wurde bereits von einem anderen Admin entschieden.",
-      "requester_left": "Diese Person ist kein Mitglied des Workspace mehr."
+      "requester_left": "Diese Person ist kein Mitglied des Arbeitsbereichs mehr."
     },
     "duplicate_modal": {
       "already_running": "In diesem Arbeitsbereich läuft bereits eine Kopie von Arbeitselementen. Versuchen Sie es erneut, wenn sie fertig ist.",

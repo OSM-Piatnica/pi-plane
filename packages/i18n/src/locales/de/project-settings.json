@@ -6,13 +6,13 @@
       "please_select_a_timezone": "Bitte wählen Sie eine Zeitzone aus",
       "archive_project": {
         "title": "Projekt archivieren",
-        "description": "Durch das Archivieren wird das Projekt im Menü ausgeblendet. Der Zugriff bleibt über die Projektseite bestehen.",
+        "description": "Durch das Archivieren wird das Projekt in der Seitenleiste ausgeblendet. Der Zugriff bleibt über die Projektseite bestehen. Sie können das Projekt jederzeit wiederherstellen oder löschen.",
         "button": "Projekt archivieren"
       },
       "delete_project": {
         "title": "Projekt löschen",
-        "description": "Durch das Löschen des Projekts werden alle zugehörigen Daten entfernt. Diese Aktion ist nicht umkehrbar.",
-        "button": "Projekt löschen"
+        "description": "Durch das Löschen eines Projekts werden alle zugehörigen Daten und Ressourcen dauerhaft entfernt und können nicht wiederhergestellt werden.",
+        "button": "Mein Projekt löschen"
       },
       "toast": {
         "success": "Projekt aktualisiert",
@@ -22,14 +22,14 @@
     "members": {
       "label": "Mitglieder",
       "project_lead": "Projektleitung",
-      "project_lead_description": "Wählen Sie den Projektleiter für das Projekt aus.",
+      "project_lead_description": "Wählen Sie die Projektleitung für das Projekt aus.",
       "default_assignee": "Standardzuweisung",
       "default_assignee_description": "Wählen Sie den Standard-Zuständigen für das Projekt aus.",
       "project_subscribers": "Projektabonnenten",
       "project_subscribers_description": "Wählen Sie Mitglieder aus, die Benachrichtigungen für dieses Projekt erhalten.",
       "guest_super_permissions": {
-        "title": "Gastbenutzern Zugriff auf alle Elemente gewähren:",
-        "sub_heading": "Gäste sehen alle Elemente im Projekt."
+        "title": "Gastbenutzern Lesezugriff auf alle Arbeitselemente gewähren:",
+        "sub_heading": "Gäste erhalten Lesezugriff auf alle Arbeitselemente des Projekts."
       },
       "invite_members": {
         "title": "Mitglieder einladen",
@@ -39,7 +39,7 @@
     },
     "states": {
       "heading": "Status",
-      "description": "Definieren und passen Sie Workflow-Status an, um den Fortschritt Ihrer Arbeitselemente zu verfolgen.",
+      "description": "Definieren Sie Workflow-Status und passen Sie sie an, um den Fortschritt Ihrer Arbeitselemente zu verfolgen.",
       "describe_this_state_for_your_members": "Beschreiben Sie diesen Status für Ihre Mitglieder.",
       "empty_state": {
         "title": "Keine Status für die Gruppe {groupKey}",
@@ -58,7 +58,7 @@
     },
     "estimates": {
       "heading": "Schätzungen",
-      "description": "Sie helfen Ihnen, die Komplexität und Arbeitsbelastung des Teams zu kommunizieren.",
+      "description": "Richten Sie Schätzungssysteme ein, um den für jedes Arbeitselement erforderlichen Aufwand zu erfassen und zu kommunizieren.",
       "label": "Schätzungen",
       "title": "Schätzungen für mein Projekt aktivieren",
       "enable_description": "Sie helfen Ihnen, die Komplexität und Arbeitsbelastung des Teams zu kommunizieren.",
@@ -81,7 +81,7 @@
           },
           "error": {
             "title": "Schätzungserstellung fehlgeschlagen",
-            "message": "Wir konnten die neue Schätzung nicht erstellen, bitte versuche es erneut."
+            "message": "Wir konnten die neue Schätzung nicht erstellen, bitte versuchen Sie es erneut."
           }
         },
         "updated": {
@@ -91,7 +91,7 @@
           },
           "error": {
             "title": "Schätzungsänderung fehlgeschlagen",
-            "message": "Wir konnten die Schätzung nicht ändern, bitte versuche es erneut"
+            "message": "Wir konnten die Schätzung nicht ändern, bitte versuchen Sie es erneut"
           }
         },
         "enabled": {
@@ -107,7 +107,7 @@
           },
           "error": {
             "title": "Fehler!",
-            "message": "Schätzung konnte nicht deaktiviert werden. Bitte versuche es erneut"
+            "message": "Schätzung konnte nicht deaktiviert werden. Bitte versuchen Sie es erneut"
           }
         },
         "reorder": {
@@ -190,36 +190,36 @@
         "title": "Arbeitselemente automatisch schließen",
         "description": "Pi-Plane schließt automatisch Arbeitselemente, die nicht abgeschlossen oder abgebrochen wurden.",
         "duration": "Arbeitselemente automatisch schließen, die inaktiv sind seit",
-        "auto_close_status": "Auto-Schließ-Status"
+        "auto_close_status": "Status für automatisches Schließen"
       },
       "auto-remind": {
         "title": "Automatische Erinnerungen",
-        "description": "Pi-Plane wird automatische Erinnerungen via E-Mail und in-App-Benachrichtigungen senden, um Ihr Team auf den Lauf der Dinge zu halten.",
+        "description": "Pi-Plane sendet automatisch Erinnerungen per E-Mail und In-App-Benachrichtigungen, damit Ihr Team Termine einhält.",
         "duration": "Erinnerung vor"
       }
     },
     "empty_state": {
       "labels": {
-        "title": "Keine Labels",
-        "description": "Erstellen Sie Labels, um Elemente zu organisieren."
+        "title": "Noch keine Labels",
+        "description": "Erstellen Sie Labels, um Arbeitselemente in Ihrem Projekt zu organisieren und zu filtern."
       },
       "estimates": {
-        "title": "Keine Schätzungssysteme",
-        "description": "Erstellen Sie ein Schätzungssystem, um den Aufwand zu kommunizieren.",
+        "title": "Noch keine Schätzungssysteme",
+        "description": "Erstellen Sie ein Schätzungssystem, um den Aufwand pro Arbeitselement zu kommunizieren.",
         "primary_button": "Schätzungssystem hinzufügen"
       },
       "integrations": {
         "title": "Keine Integrationen konfiguriert",
-        "description": "Konfigurieren Sie GitHub und andere Integrationen, um Ihre Projektarbeitsaufgaben zu synchronisieren."
+        "description": "Konfigurieren Sie GitHub und andere Integrationen, um die Arbeitselemente Ihres Projekts zu synchronisieren."
       }
     },
     "workflows": {
       "toggle": {
         "title": "Workflows aktivieren",
         "description": "Legen Sie Workflows fest, um die Bewegung von Arbeitselementen zu steuern",
-        "no_states_tooltip": "Keine Status wurden dem Workflow hinzugefügt.",
-        "no_work_item_types_tooltip": "Keine Arbeitsaufgabentypen wurden dem Workflow hinzugefügt.",
-        "no_states_or_work_item_types_tooltip": "Keine Status oder Arbeitsaufgabentypen wurden dem Workflow hinzugefügt.",
+        "no_states_tooltip": "Dem Workflow wurden keine Status hinzugefügt.",
+        "no_work_item_types_tooltip": "Dem Workflow wurden keine Arbeitselementtypen hinzugefügt.",
+        "no_states_or_work_item_types_tooltip": "Dem Workflow wurden keine Status oder Arbeitselementtypen hinzugefügt.",
         "toast": {
           "loading": {
             "enabling": "Workflows werden aktiviert",
@@ -235,7 +235,7 @@
           }
         }
       },
-      "heading": "Arbeitsabläufe",
+      "heading": "Workflows",
       "description": "Automatisieren Sie Übergänge von Arbeitselementen und legen Sie Regeln fest, um zu steuern, wie Aufgaben durch Ihre Projektpipeline fließen.",
       "add_button": "Neuen Workflow hinzufügen",
       "search": "Workflows suchen",
@@ -321,7 +321,7 @@
     },
     "work_item_types": {
       "heading": "Arbeitselementtypen",
-      "description": "Erstellen und passen Sie verschiedene Typen von Arbeitselementen mit einzigartigen Eigenschaften an"
+      "description": "Erstellen Sie verschiedene Typen von Arbeitselementen mit eindeutigen Eigenschaften und passen Sie sie an"
     },
     "features": {
       "cycles": {
@@ -343,8 +343,8 @@
       "intake": {
         "intake_responsibility": "Intake-Verantwortung",
         "intake_sources": "Intake-Quellen",
-        "toggle_title": "Aufnahme aktivieren",
-        "toggle_description": "Projektmitgliedern erlauben, In-App-Aufnahmeanfragen zu erstellen.",
+        "toggle_title": "Intake aktivieren",
+        "toggle_description": "Projektmitgliedern erlauben, In-App-Intake-Anfragen zu erstellen.",
         "toggle_tooltip_on": "Bitten Sie Ihren Projekt-Admin, dies zu aktivieren.",
         "toggle_tooltip_off": "Bitten Sie Ihren Projekt-Admin, dies zu deaktivieren.",
         "notify_assignee": {
@@ -398,7 +398,7 @@
       },
       "time_tracking": {
         "toggle_title": "Zeiterfassung aktivieren",
-        "toggle_description": "Projektmitglieder können die geleistete Arbeit protokollieren."
+        "toggle_description": "Projektmitglieder können die geleistete Arbeitszeit erfassen."
       },
       "milestones": {
         "title": "Meilensteine",
@@ -419,7 +419,7 @@
     },
     "templates": {
       "heading": "Vorlagen",
-      "description": "Sparen Sie 80% der Zeit beim Erstellen von Projekten, Arbeitselementen und Seiten, wenn Sie Vorlagen verwenden."
+      "description": "Sparen Sie 80 % der Zeit beim Erstellen von Projekten, Arbeitselementen und Seiten, wenn Sie Vorlagen verwenden."
     },
     "cycles": {
       "auto_schedule": {

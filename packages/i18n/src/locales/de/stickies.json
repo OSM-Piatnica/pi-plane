@@ -5,7 +5,7 @@
     "all": "Alle Notizen",
     "no-data": "Halten Sie Ideen und Gedanken fest. Fügen Sie die erste Notiz hinzu.",
     "add": "Notiz hinzufügen",
-    "search_placeholder": "Nach Name suchen",
+    "search_placeholder": "Nach Titel suchen",
     "delete": "Notiz löschen",
     "delete_confirmation": "Möchten Sie diese Notiz wirklich löschen?",
     "empty_state": {
@@ -19,7 +19,7 @@
       },
       "search": {
         "title": "Keine Notizen gefunden.",
-        "description": "Versuchen Sie einen anderen Begriff oder erstellen Sie eine neue.",
+        "description": "Versuchen Sie einen anderen Begriff oder teilen Sie uns mit, falls Ihre Suche Ihrer Meinung nach korrekt ist.",
         "primary_button": {
           "text": "Notiz hinzufügen"
         }
