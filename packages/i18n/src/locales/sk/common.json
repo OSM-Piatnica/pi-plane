@@ -248,7 +248,17 @@
     "email_all": "Napísať všetkým správcom",
     "subject": "Otázka pre správcov priestoru {workspace}",
     "body": "Dobrý deň,\n\n\n\n{name}",
-    "no_email_addresses": "Vaša rola nezobrazuje e-mailové adresy. Požiadajte niekoho z tímu o adresu správcu."
+    "message_label": "Správa pre správcov",
+    "message_placeholder": "Napíšte, čo potrebujete, napríklad prístup k projektu alebo zmenu roly.",
+    "characters": "{count} / {max}",
+    "send": "Odoslať správu",
+    "sent": "Vaša správa bola odoslaná správcom pracovného priestoru.",
+    "error_rate_limited": "V poslednom čase ste odoslali niekoľko správ. Skúste to, prosím, neskôr.",
+    "error_generic": "Správu sa nepodarilo odoslať. Skúste to znova alebo napíšte správcom e-mailom.",
+    "or_email": "Alebo napíšte zo svojej e-mailovej aplikácie",
+    "notification_text": "napísal(a) správcom tohto pracovného priestoru",
+    "message_from": "Správa od používateľa {name}",
+    "reply_by_email": "Odpovedať e-mailom"
   },
   "hyper_mode": "Hyper režim",
   "keyboard_shortcuts": "Klávesové skratky",

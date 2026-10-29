@@ -248,7 +248,17 @@
     "email_all": "Tüm yöneticilere e-posta gönder",
     "subject": "{workspace} yöneticilerine soru",
     "body": "Merhaba,\n\n\n\n{name}",
-    "no_email_addresses": "Rolünüz e-posta adreslerini göstermiyor. Ekibinizden birinden bir yöneticinin adresini isteyin."
+    "message_label": "Yöneticilere mesaj",
+    "message_placeholder": "Neye ihtiyacınız olduğunu yazın, örneğin bir projeye erişim ya da rol değişikliği.",
+    "characters": "{count} / {max}",
+    "send": "Mesajı gönder",
+    "sent": "Mesajınız çalışma alanı yöneticilerine gönderildi.",
+    "error_rate_limited": "Kısa süre önce birkaç mesaj gönderdiniz. Lütfen daha sonra tekrar deneyin.",
+    "error_generic": "Mesaj gönderilemedi. Tekrar deneyin veya yöneticilere e-posta gönderin.",
+    "or_email": "Veya kendi e-posta uygulamanızdan yazın",
+    "notification_text": "bu çalışma alanının yöneticilerine yazdı",
+    "message_from": "{name} kişisinden mesaj",
+    "reply_by_email": "E-postayla yanıtla"
   },
   "hyper_mode": "Hiper Mod",
   "keyboard_shortcuts": "Klavye Kısayolları",

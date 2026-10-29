@@ -248,7 +248,17 @@
     "email_all": "给所有管理员发邮件",
     "subject": "给 {workspace} 管理员的问题",
     "body": "您好，\n\n\n\n{name}",
-    "no_email_addresses": "您的角色不显示邮箱地址。请向团队中的人询问管理员的邮箱地址。"
+    "message_label": "给管理员的消息",
+    "message_placeholder": "请说明您的需求，例如访问某个项目或更改角色。",
+    "characters": "{count} / {max}",
+    "send": "发送消息",
+    "sent": "您的消息已发送给工作空间管理员。",
+    "error_rate_limited": "您最近发送了多条消息，请稍后再试。",
+    "error_generic": "消息发送失败。请重试，或通过邮件联系管理员。",
+    "or_email": "或使用您自己的邮件应用撰写",
+    "notification_text": "给此工作空间的管理员写了信",
+    "message_from": "来自 {name} 的消息",
+    "reply_by_email": "通过邮件回复"
   },
   "hyper_mode": "超级模式",
   "keyboard_shortcuts": "键盘快捷键",

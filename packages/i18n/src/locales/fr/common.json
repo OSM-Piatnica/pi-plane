@@ -248,7 +248,17 @@
     "email_all": "Écrire à tous les administrateurs",
     "subject": "Question pour les administrateurs de {workspace}",
     "body": "Bonjour,\n\n\n\n{name}",
-    "no_email_addresses": "Votre rôle n’affiche pas les adresses e-mail. Demandez l’adresse d’un administrateur à quelqu’un de votre équipe."
+    "message_label": "Message aux administrateurs",
+    "message_placeholder": "Dites ce dont vous avez besoin, par exemple l’accès à un projet ou un changement de rôle.",
+    "characters": "{count} / {max}",
+    "send": "Envoyer le message",
+    "sent": "Votre message a été envoyé aux administrateurs de l’espace de travail.",
+    "error_rate_limited": "Vous avez envoyé plusieurs messages récemment. Veuillez réessayer plus tard.",
+    "error_generic": "Le message n’a pas pu être envoyé. Réessayez, ou écrivez aux administrateurs par e-mail.",
+    "or_email": "Ou écrivez depuis votre propre application de messagerie",
+    "notification_text": "a écrit aux administrateurs de cet espace de travail",
+    "message_from": "Message de {name}",
+    "reply_by_email": "Répondre par e-mail"
   },
   "hyper_mode": "Mode Hyper",
   "keyboard_shortcuts": "Raccourcis clavier",

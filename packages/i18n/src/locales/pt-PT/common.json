@@ -248,7 +248,17 @@
     "email_all": "Enviar e-mail a todos os administradores",
     "subject": "Dúvida para os administradores de {workspace}",
     "body": "Olá,\n\n\n\n{name}",
-    "no_email_addresses": "A sua função não mostra endereços de e-mail. Peça a alguém da sua equipa o endereço de um administrador."
+    "message_label": "Mensagem para os administradores",
+    "message_placeholder": "Diga o que precisa, por exemplo acesso a um projeto ou uma mudança de função.",
+    "characters": "{count} / {max}",
+    "send": "Enviar mensagem",
+    "sent": "A sua mensagem foi enviada aos administradores do espaço de trabalho.",
+    "error_rate_limited": "Enviou várias mensagens recentemente. Tente novamente mais tarde.",
+    "error_generic": "Não foi possível enviar a mensagem. Tente novamente ou escreva aos administradores por e-mail.",
+    "or_email": "Ou escreva a partir da sua própria aplicação de e-mail",
+    "notification_text": "escreveu aos administradores deste espaço de trabalho",
+    "message_from": "Mensagem de {name}",
+    "reply_by_email": "Responder por e-mail"
   },
   "hyper_mode": "Modo Hyper",
   "keyboard_shortcuts": "Atalhos do teclado",

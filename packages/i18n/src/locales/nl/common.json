@@ -248,7 +248,17 @@
     "email_all": "E-mail alle beheerders",
     "subject": "Vraag voor de beheerders van {workspace}",
     "body": "Goedendag,\n\n\n\n{name}",
-    "no_email_addresses": "Uw rol toont geen e-mailadressen. Vraag iemand in uw team om het adres van een beheerder."
+    "message_label": "Bericht aan de beheerders",
+    "message_placeholder": "Schrijf wat u nodig hebt, bijvoorbeeld toegang tot een project of een andere rol.",
+    "characters": "{count} / {max}",
+    "send": "Bericht verzenden",
+    "sent": "Uw bericht is naar de beheerders van de werkruimte gestuurd.",
+    "error_rate_limited": "U hebt onlangs meerdere berichten verstuurd. Probeer het later opnieuw.",
+    "error_generic": "Het bericht kon niet worden verzonden. Probeer het opnieuw of stuur de beheerders een e-mail.",
+    "or_email": "Of schrijf vanuit uw eigen e-mailapp",
+    "notification_text": "heeft de beheerders van deze werkruimte geschreven",
+    "message_from": "Bericht van {name}",
+    "reply_by_email": "Per e-mail antwoorden"
   },
   "hyper_mode": "Hypermodus",
   "keyboard_shortcuts": "Sneltoetsen",

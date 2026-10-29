@@ -248,7 +248,17 @@
     "email_all": "Trimiteți e-mail tuturor administratorilor",
     "subject": "Întrebare pentru administratorii din {workspace}",
     "body": "Bună ziua,\n\n\n\n{name}",
-    "no_email_addresses": "Rolul dumneavoastră nu afișează adresele de e-mail. Rugați pe cineva din echipă să vă dea adresa unui administrator."
+    "message_label": "Mesaj pentru administratori",
+    "message_placeholder": "Spuneți ce vă trebuie, de exemplu acces la un proiect sau schimbarea unui rol.",
+    "characters": "{count} / {max}",
+    "send": "Trimite mesajul",
+    "sent": "Mesajul dumneavoastră a fost trimis administratorilor spațiului de lucru.",
+    "error_rate_limited": "Ați trimis mai multe mesaje recent. Încercați din nou mai târziu.",
+    "error_generic": "Mesajul nu a putut fi trimis. Încercați din nou sau scrieți administratorilor prin e-mail.",
+    "or_email": "Sau scrieți din propria aplicație de e-mail",
+    "notification_text": "a scris administratorilor acestui spațiu de lucru",
+    "message_from": "Mesaj de la {name}",
+    "reply_by_email": "Răspunde prin e-mail"
   },
   "hyper_mode": "Mod Hyper",
   "keyboard_shortcuts": "Scurtături tastatură",

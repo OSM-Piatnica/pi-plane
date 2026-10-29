@@ -248,7 +248,17 @@
     "email_all": "Gửi email cho tất cả quản trị viên",
     "subject": "Câu hỏi gửi quản trị viên của {workspace}",
     "body": "Xin chào,\n\n\n\n{name}",
-    "no_email_addresses": "Vai trò của bạn không hiển thị địa chỉ email. Hãy hỏi một người trong nhóm để lấy địa chỉ của quản trị viên."
+    "message_label": "Tin nhắn cho quản trị viên",
+    "message_placeholder": "Hãy nói bạn cần gì, ví dụ quyền truy cập một dự án hoặc đổi vai trò.",
+    "characters": "{count} / {max}",
+    "send": "Gửi tin nhắn",
+    "sent": "Tin nhắn của bạn đã được gửi cho quản trị viên của không gian làm việc.",
+    "error_rate_limited": "Bạn vừa gửi nhiều tin nhắn. Vui lòng thử lại sau.",
+    "error_generic": "Không thể gửi tin nhắn. Hãy thử lại hoặc gửi email cho quản trị viên.",
+    "or_email": "Hoặc viết từ ứng dụng email của bạn",
+    "notification_text": "đã viết cho quản trị viên của không gian làm việc này",
+    "message_from": "Tin nhắn từ {name}",
+    "reply_by_email": "Trả lời qua email"
   },
   "hyper_mode": "Chế độ siêu tốc",
   "keyboard_shortcuts": "Phím tắt",

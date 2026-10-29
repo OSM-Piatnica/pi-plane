@@ -248,7 +248,17 @@
     "email_all": "Napisz do wszystkich administratorów",
     "subject": "Pytanie do administratorów przestrzeni {workspace}",
     "body": "Dzień dobry,\n\n\n\n{name}",
-    "no_email_addresses": "Państwa rola nie pokazuje adresów e-mail. Proszę poprosić kogoś z zespołu o adres administratora."
+    "message_label": "Wiadomość do administratorów",
+    "message_placeholder": "Proszę napisać, czego Państwo potrzebują, na przykład dostępu do projektu lub zmiany roli.",
+    "characters": "{count} / {max}",
+    "send": "Wyślij wiadomość",
+    "sent": "Wiadomość została wysłana do administratorów przestrzeni roboczej.",
+    "error_rate_limited": "Niedawno wysłano kilka wiadomości. Proszę spróbować ponownie później.",
+    "error_generic": "Nie udało się wysłać wiadomości. Proszę spróbować ponownie lub napisać do administratorów e-mailem.",
+    "or_email": "Albo napisać z własnej aplikacji pocztowej",
+    "notification_text": "napisał(a) do administratorów tej przestrzeni roboczej",
+    "message_from": "Wiadomość od {name}",
+    "reply_by_email": "Odpowiedz e-mailem"
   },
   "hyper_mode": "Tryb Hyper",
   "keyboard_shortcuts": "Skróty klawiaturowe",

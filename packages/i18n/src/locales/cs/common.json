@@ -248,7 +248,17 @@
     "email_all": "Napsat všem správcům",
     "subject": "Dotaz pro správce prostoru {workspace}",
     "body": "Dobrý den,\n\n\n\n{name}",
-    "no_email_addresses": "Vaše role nezobrazuje e-mailové adresy. Požádejte někoho ze svého týmu o adresu správce."
+    "message_label": "Zpráva pro správce",
+    "message_placeholder": "Napište, co potřebujete, například přístup k projektu nebo změnu role.",
+    "characters": "{count} / {max}",
+    "send": "Odeslat zprávu",
+    "sent": "Vaše zpráva byla odeslána správcům pracovního prostoru.",
+    "error_rate_limited": "V poslední době jste odeslali několik zpráv. Zkuste to prosím později.",
+    "error_generic": "Zprávu se nepodařilo odeslat. Zkuste to znovu nebo správcům napište e-mailem.",
+    "or_email": "Nebo napište ze své e-mailové aplikace",
+    "notification_text": "napsal(a) správcům tohoto pracovního prostoru",
+    "message_from": "Zpráva od uživatele {name}",
+    "reply_by_email": "Odpovědět e-mailem"
   },
   "hyper_mode": "Hyper režim",
   "keyboard_shortcuts": "Klávesové zkratky",

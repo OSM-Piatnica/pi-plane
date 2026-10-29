@@ -248,7 +248,17 @@
     "email_all": "모든 관리자에게 이메일 보내기",
     "subject": "{workspace} 관리자에게 보내는 문의",
     "body": "안녕하세요.\n\n\n\n{name}",
-    "no_email_addresses": "현재 역할에서는 이메일 주소가 표시되지 않습니다. 팀원에게 관리자 이메일 주소를 문의해 주세요."
+    "message_label": "관리자에게 보내는 메시지",
+    "message_placeholder": "필요한 내용을 적어 주세요. 예: 프로젝트 접근 권한이나 역할 변경.",
+    "characters": "{count} / {max}",
+    "send": "메시지 보내기",
+    "sent": "워크스페이스 관리자에게 메시지를 보냈습니다.",
+    "error_rate_limited": "최근에 여러 건의 메시지를 보냈습니다. 나중에 다시 시도해 주세요.",
+    "error_generic": "메시지를 보내지 못했습니다. 다시 시도하거나 관리자에게 이메일을 보내 주세요.",
+    "or_email": "또는 사용 중인 이메일 앱으로 보내기",
+    "notification_text": "님이 이 워크스페이스의 관리자에게 메시지를 보냈습니다",
+    "message_from": "{name}님의 메시지",
+    "reply_by_email": "이메일로 답장"
   },
   "hyper_mode": "하이퍼 모드",
   "keyboard_shortcuts": "키보드 단축키",

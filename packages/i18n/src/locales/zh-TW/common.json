@@ -248,7 +248,17 @@
     "email_all": "寄信給所有管理員",
     "subject": "給 {workspace} 管理員的問題",
     "body": "您好，\n\n\n\n{name}",
-    "no_email_addresses": "您的角色不會顯示電子郵件地址。請向團隊中的人詢問管理員的電子郵件地址。"
+    "message_label": "給管理員的訊息",
+    "message_placeholder": "請說明您的需求，例如存取某個專案或變更角色。",
+    "characters": "{count} / {max}",
+    "send": "傳送訊息",
+    "sent": "您的訊息已傳送給工作區管理員。",
+    "error_rate_limited": "您最近傳送了多則訊息，請稍後再試。",
+    "error_generic": "訊息傳送失敗。請重試，或透過郵件聯絡管理員。",
+    "or_email": "或使用您自己的郵件應用程式撰寫",
+    "notification_text": "寫信給此工作區的管理員",
+    "message_from": "來自 {name} 的訊息",
+    "reply_by_email": "透過郵件回覆"
   },
   "hyper_mode": "極速模式",
   "keyboard_shortcuts": "鍵盤快速鍵",

@@ -248,7 +248,17 @@
     "email_all": "E-Mail an alle Administratoren",
     "subject": "Frage an die Administratoren von {workspace}",
     "body": "Guten Tag,\n\n\n\n{name}",
-    "no_email_addresses": "Ihre Rolle zeigt keine E-Mail-Adressen an. Fragen Sie jemanden in Ihrem Team nach der Adresse eines Administrators."
+    "message_label": "Nachricht an die Administratoren",
+    "message_placeholder": "Schreiben Sie, was Sie brauchen, zum Beispiel Zugriff auf ein Projekt oder eine andere Rolle.",
+    "characters": "{count} / {max}",
+    "send": "Nachricht senden",
+    "sent": "Ihre Nachricht wurde an die Administratoren des Arbeitsbereichs gesendet.",
+    "error_rate_limited": "Sie haben in letzter Zeit mehrere Nachrichten gesendet. Bitte versuchen Sie es später erneut.",
+    "error_generic": "Die Nachricht konnte nicht gesendet werden. Versuchen Sie es erneut oder schreiben Sie den Administratoren eine E-Mail.",
+    "or_email": "Oder schreiben Sie aus Ihrer eigenen E-Mail-App",
+    "notification_text": "hat den Administratoren dieses Arbeitsbereichs geschrieben",
+    "message_from": "Nachricht von {name}",
+    "reply_by_email": "Per E-Mail antworten"
   },
   "hyper_mode": "Hyper-Modus",
   "keyboard_shortcuts": "Tastaturkürzel",

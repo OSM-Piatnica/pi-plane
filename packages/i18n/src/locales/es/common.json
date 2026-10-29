@@ -248,7 +248,17 @@
     "email_all": "Enviar correo a todos los administradores",
     "subject": "Consulta para los administradores de {workspace}",
     "body": "Hola:\n\n\n\n{name}",
-    "no_email_addresses": "Su rol no muestra direcciones de correo. Pida a alguien de su equipo la dirección de un administrador."
+    "message_label": "Mensaje a los administradores",
+    "message_placeholder": "Diga qué necesita, por ejemplo acceso a un proyecto o un cambio de rol.",
+    "characters": "{count} / {max}",
+    "send": "Enviar mensaje",
+    "sent": "Su mensaje se envió a los administradores del espacio de trabajo.",
+    "error_rate_limited": "Ha enviado varios mensajes recientemente. Inténtelo de nuevo más tarde.",
+    "error_generic": "No se pudo enviar el mensaje. Inténtelo de nuevo o escriba a los administradores por correo.",
+    "or_email": "O escriba desde su propia aplicación de correo",
+    "notification_text": "escribió a los administradores de este espacio de trabajo",
+    "message_from": "Mensaje de {name}",
+    "reply_by_email": "Responder por correo"
   },
   "hyper_mode": "Modo Hyper",
   "keyboard_shortcuts": "Atajos de teclado",

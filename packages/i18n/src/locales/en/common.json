@@ -248,7 +248,17 @@
     "email_all": "Email all admins",
     "subject": "Question for the admins of {workspace}",
     "body": "Hello,\n\n\n\n{name}",
-    "no_email_addresses": "Your role does not show email addresses. Ask someone in your team for an admin's address."
+    "message_label": "Message to the admins",
+    "message_placeholder": "Say what you need, for example access to a project or a change of role.",
+    "characters": "{count} / {max}",
+    "send": "Send message",
+    "sent": "Your message was sent to the workspace admins.",
+    "error_rate_limited": "You have sent several messages recently. Please try again later.",
+    "error_generic": "The message could not be sent. Try again, or email the admins.",
+    "or_email": "Or write from your own email app",
+    "notification_text": "wrote to the admins of this workspace",
+    "message_from": "Message from {name}",
+    "reply_by_email": "Reply by email"
   },
   "hyper_mode": "Hyper Mode",
   "keyboard_shortcuts": "Keyboard shortcuts",
