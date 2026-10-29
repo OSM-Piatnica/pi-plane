@@ -70,6 +70,7 @@ export type TUserProfile = {
     primary: string | undefined;
     background: string | undefined;
     darkPalette: boolean | undefined;
+    overrides?: Record<string, string> | undefined;
   };
   onboarding_step: TOnboardingSteps;
   is_onboarded: boolean;
@@ -111,6 +112,8 @@ export interface IUserTheme {
   primary?: string | undefined;
   background?: string | undefined;
   darkPalette?: boolean | undefined;
+  /** advanced custom theme: semantic colour tokens (`bg-canvas`, `txt-primary`...) pinned to a hex colour */
+  overrides?: Record<string, string> | undefined;
 }
 
 export interface IUserMemberLite extends IUserLite {
