@@ -125,5 +125,57 @@
     "heading": "Twój kod logowania do Pi-Plane",
     "info": "Ten kod jest ważny przez najbliższe 10 minut. Wpisz go na stronie logowania, aby dokończyć logowanie.",
     "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>. Jeśli nie spodziewałeś(aś) się kodu logowania, możesz zignorować tę wiadomość."
+  },
+  "forgot_password": {
+    "subject": "Zażądano nowego hasła do konta Pi-Plane",
+    "preheader": "Zresetuj hasło do Pi-Plane za pomocą tego bezpiecznego linku.",
+    "heading": "Zresetuj hasło do Pi-Plane",
+    "intro": "Otrzymaliśmy prośbę o zresetowanie hasła do Pi-Plane. Aby je zresetować, proszę kliknąć przycisk poniżej.",
+    "button": "Zresetuj hasło",
+    "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>. Jeśli nie oczekiwali Państwo resetu hasła, mogą Państwo zignorować tę wiadomość."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} zaprasza Państwa do przestrzeni {workspace} w Pi-Plane",
+    "preheader": "{inviter} zaprosił(a) Państwa do przestrzeni {workspace} w Pi-Plane.",
+    "heading": "Dołącz do przestrzeni {workspace} w Pi-Plane",
+    "intro": "{inviter} zaprosił(a) Państwa do współpracy w przestrzeni roboczej <strong>{workspace}</strong> w Pi-Plane.",
+    "button": "Przyjmij zaproszenie",
+    "note": "Uwaga: to zaproszenie było przeznaczone dla <span>{email}</span>. Jeśli nie oczekiwali Państwo zaproszenia, mogą Państwo zignorować tę wiadomość."
+  },
+  "account_activated": {
+    "subject": "Konto {name} zostało aktywowane w Pi-Plane",
+    "heading": "Znów są Państwo w Pi-Plane.",
+    "body": "Konto zostało ponownie aktywowane i mają Państwo znów dostęp do swoich elementów pracy i innych danych, jeśli projekt jest nadal aktywny. Mogą Państwo też utworzyć nową przestrzeń roboczą i zacząć dodawać do niej projekty.",
+    "button": "Przejdź do Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "Konto {name} zostało dezaktywowane w Pi-Plane",
+    "heading": "Opuścili Państwo Pi-Plane.",
+    "body": "Konto zostało pomyślnie dezaktywowane. Elementy pracy, cykle i inne dane projektów pozostaną dostępne, jeśli projekt jest aktywny i ma innych członków.",
+    "button": "Aktywuj konto ponownie"
+  },
+  "email_updated": {
+    "subject": "Adres e-mail w Pi-Plane został zaktualizowany",
+    "body": "Adres e-mail w Pi-Plane został pomyślnie zmieniony na {email}.",
+    "login": "Mogą Państwo teraz logować się tym adresem e-mail."
+  },
+  "email_update_code": {
+    "subject": "Zweryfikuj nowy adres e-mail"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook został dezaktywowany",
+    "message": "Webhook {url} został dezaktywowany z powodu nieudanych żądań.",
+    "button": "Zobacz webhook"
+  },
+  "analytics_export": {
+    "subject": "Eksport jest gotowy",
+    "preheader": "Zamówiony eksport danych z Pi-Plane Analytics znajduje się w załączniku jako plik CSV.",
+    "heading": "Eksport z Pi-Plane Analytics jest gotowy",
+    "intro": "Zamówiony eksport danych z Pi-Plane Analytics jest gotowy. Dla wygody dołączyliśmy go jako plik CSV.",
+    "hint": "Plik CSV można otworzyć w dowolnym arkuszu kalkulacyjnym lub narzędziu BI, aby analizować dane, tworzyć raporty lub dzielić się wnioskami z zespołem."
+  },
+  "shared": {
+    "recipient_note": "Ta wiadomość została wysłana na adres {email}. Jeśli nie są Państwo jej adresatem, proszę ją usunąć.",
+    "fallback": "Jeśli przycisk nie działa, skopiuj ten link i wklej go w przeglądarce:"
   }
 }

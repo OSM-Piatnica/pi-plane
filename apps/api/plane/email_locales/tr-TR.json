@@ -117,5 +117,57 @@
     "heading": "Pi-Plane giriş kodunuz",
     "info": "Bu kod önümüzdeki 10 dakika boyunca geçerlidir. Girişi tamamlamak için giriş sayfasına girin.",
     "note": "Not: Bu e-posta <span>{email}</span> adresine gönderildi. Bir giriş kodu beklemiyorsanız bu iletiyi yok sayabilirsiniz."
+  },
+  "forgot_password": {
+    "subject": "Pi-Plane hesabınız için yeni bir parola istendi",
+    "preheader": "Pi-Plane parolanızı bu güvenli bağlantıyla sıfırlayın.",
+    "heading": "Pi-Plane parolanızı sıfırlayın",
+    "intro": "Pi-Plane parolanızı sıfırlama isteği aldık. Parolanızı sıfırlamak için aşağıdaki düğmeye tıklayın.",
+    "button": "Parolayı sıfırla",
+    "note": "Not: Bu e-posta <span>{email}</span> adresine gönderildi. Parola sıfırlama beklemiyorsanız bu e-postayı güvenle yok sayabilirsiniz."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} sizi Pi-Plane'de {workspace} alanına davet etti",
+    "preheader": "{inviter} sizi Pi-Plane'de {workspace} alanına davet etti.",
+    "heading": "Pi-Plane'de {workspace} alanına katılın",
+    "intro": "{inviter} sizi Pi-Plane'deki <strong>{workspace}</strong> çalışma alanında birlikte çalışmaya davet etti.",
+    "button": "Daveti kabul et",
+    "note": "Not: Bu davet <span>{email}</span> adresi için hazırlanmıştı. Davet beklemiyorsanız bu e-postayı yok sayabilirsiniz."
+  },
+  "account_activated": {
+    "subject": "{name} Pi-Plane'de etkinleştirildi",
+    "heading": "Yeniden Pi-Plane'desiniz.",
+    "body": "Hesabınız yeniden etkinleştirildi; proje hâlâ etkinse iş öğelerinize ve diğer verilerinize yeniden erişebilirsiniz. Dilerseniz yeni bir çalışma alanı oluşturup projeler ekleyebilirsiniz.",
+    "button": "Pi-Plane'e git"
+  },
+  "account_deactivated": {
+    "subject": "{name} Pi-Plane'de devre dışı bırakıldı",
+    "heading": "Artık Pi-Plane'in dışındasınız.",
+    "body": "Hesabınızı başarıyla devre dışı bıraktınız. Proje etkinse ve içinde başka üyeler varsa iş öğelerinize, döngülerinize ve diğer proje verilerinize erişim sürer.",
+    "button": "Hesabı yeniden etkinleştir"
+  },
+  "email_updated": {
+    "subject": "Pi-Plane e-posta adresi başarıyla güncellendi",
+    "body": "Pi-Plane e-posta adresinizi {email} olarak başarıyla güncellediniz.",
+    "login": "Artık bu e-posta adresiyle oturum açabilirsiniz."
+  },
+  "email_update_code": {
+    "subject": "Yeni e-posta adresinizi doğrulayın"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook devre dışı bırakıldı",
+    "message": "{url} webhook'u, başarısız istekler nedeniyle devre dışı bırakıldı.",
+    "button": "Webhook'u görüntüle"
+  },
+  "analytics_export": {
+    "subject": "Dışa aktarımınız hazır",
+    "preheader": "İstediğiniz Pi-Plane Analytics veri dışa aktarımı CSV dosyası olarak ektedir.",
+    "heading": "Pi-Plane Analytics dışa aktarımınız hazır",
+    "intro": "İstediğiniz Pi-Plane Analytics veri dışa aktarımı hazır. Size kolaylık olması için CSV dosyası olarak ekledik.",
+    "hint": "CSV dosyasını herhangi bir hesap tablosunda veya BI aracında açarak verileri analiz edebilir, rapor hazırlayabilir ya da çıkarımları ekibinizle paylaşabilirsiniz."
+  },
+  "shared": {
+    "recipient_note": "Bu e-posta {email} adresine gönderildi. Amaçlanan alıcı siz değilseniz lütfen silin.",
+    "fallback": "Düğme çalışmıyorsa bu bağlantıyı kopyalayıp tarayıcınıza yapıştırın:"
   }
 }

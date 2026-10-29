@@ -1,10 +1,11 @@
+{% load email_i18n %}
 {% load email_assets %}
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Your Pi-Plane Analytics export is ready</title>
+    <title>{% etr "analytics_export.heading" %}</title>
 
     <style>
       /* Basic resets for email clients */
@@ -78,7 +79,7 @@
         visibility: hidden;
       "
     >
-      Your requested Pi-Plane Analytics data export is attached as a CSV file.
+      {% etr "analytics_export.preheader" %}
     </span>
 
     <!-- Outer Wrapper -->
@@ -119,19 +120,17 @@
 
                   <!-- Heading -->
                   <h1 style="margin: 0 0 12px; font-size: 22px; line-height: 1.35; font-weight: 600; color: #111111">
-                    Your Pi-Plane Analytics export is ready
+                    {% etr "analytics_export.heading" %}
                   </h1>
 
                   <!-- Body copy -->
                   <p style="margin: 0 0 16px">
-                    Your requested data export from Pi-Plane Analytics is ready. We’ve attached it as a CSV file for your
-                    convenience.
+                    {% etr "analytics_export.intro" %}
                   </p>
 
                   <!-- Small-note styled paragraphs -->
                   <p style="margin: 0 0 12px; font-size: 13px; line-height: 1.6; color: #5f5e5e">
-                    You can open the CSV in any spreadsheet or BI tool to analyze the data, build reports, or share
-                    insights with your team.
+                    {% etr "analytics_export.hint" %}
                   </p>
                 </td>
               </tr>

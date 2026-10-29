@@ -109,5 +109,57 @@
     "heading": "Pi-Plane のログインコード",
     "info": "このコードは今後 10 分間有効です。ログインページに入力してログインを完了してください。",
     "note": "注: このメールは <span>{email}</span> に送信されました。ログインコードに心当たりがない場合は、このメッセージを無視してください。"
+  },
+  "forgot_password": {
+    "subject": "Pi-Plane アカウントの新しいパスワードがリクエストされました",
+    "preheader": "この安全なリンクから Pi-Plane のパスワードを再設定してください。",
+    "heading": "Pi-Plane のパスワードを再設定",
+    "intro": "Pi-Plane のパスワード再設定のリクエストを受け付けました。再設定するには、下のボタンをクリックしてください。",
+    "button": "パスワードを再設定",
+    "note": "注: このメールは <span>{email}</span> に送信されました。パスワードの再設定に心当たりがない場合は、このメールを無視してください。"
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} さんが Pi-Plane の {workspace} に招待しました",
+    "preheader": "{inviter} さんが Pi-Plane の {workspace} に招待しました。",
+    "heading": "Pi-Plane の {workspace} に参加",
+    "intro": "{inviter} さんが、Pi-Plane のワークスペース <strong>{workspace}</strong> での共同作業にあなたを招待しました。",
+    "button": "招待を承諾",
+    "note": "注: この招待は <span>{email}</span> 宛てです。心当たりがない場合は、このメールを無視してください。"
+  },
+  "account_activated": {
+    "subject": "{name} さんが Pi-Plane で有効化されました",
+    "heading": "Pi-Plane にお帰りなさい。",
+    "body": "アカウントが再有効化されました。プロジェクトがまだ有効であれば、作業項目やその他のデータにアクセスできます。新しいワークスペースを作成してプロジェクトを追加することもできます。",
+    "button": "Pi-Plane へ移動"
+  },
+  "account_deactivated": {
+    "subject": "{name} さんが Pi-Plane で無効化されました",
+    "heading": "Pi-Plane から退出しました。",
+    "body": "アカウントを無効化しました。プロジェクトが有効で、他のメンバーがいる限り、作業項目、サイクル、その他のプロジェクトデータには引き続きアクセスできます。",
+    "button": "アカウントを再有効化"
+  },
+  "email_updated": {
+    "subject": "Pi-Plane のメールアドレスを更新しました",
+    "body": "Pi-Plane のメールアドレスを {email} に更新しました。",
+    "login": "今後はこのメールアドレスでログインできます。"
+  },
+  "email_update_code": {
+    "subject": "新しいメールアドレスの確認"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook が無効化されました",
+    "message": "Webhook {url} は、リクエストの失敗が続いたため無効化されました。",
+    "button": "Webhook を表示"
+  },
+  "analytics_export": {
+    "subject": "エクスポートの準備ができました",
+    "preheader": "リクエストされた Pi-Plane Analytics のデータエクスポートを CSV ファイルとして添付しています。",
+    "heading": "Pi-Plane Analytics のエクスポートの準備ができました",
+    "intro": "リクエストされた Pi-Plane Analytics のデータエクスポートの準備ができました。CSV ファイルとして添付しています。",
+    "hint": "CSV は、任意のスプレッドシートや BI ツールで開いて、データの分析、レポートの作成、チームへの共有にお使いいただけます。"
+  },
+  "shared": {
+    "recipient_note": "このメールは {email} 宛てに送信されました。宛先がお客様でない場合は、削除してください。",
+    "fallback": "ボタンが機能しない場合は、このリンクをコピーしてブラウザーに貼り付けてください。"
   }
 }

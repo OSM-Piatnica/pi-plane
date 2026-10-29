@@ -1,3 +1,4 @@
+{% load email_i18n %}
 {% load email_assets %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html
@@ -561,8 +562,8 @@
                                               justify-content: center;
                                             "
                                           >
-                                            View webhook
-                                          </span>
+                  {% etr "webhook_deactivated.button" %}
+                </span>
                                         </a>
                                       </td>
                                     </tr>
@@ -1106,8 +1107,7 @@
                                               <div>
                                                 <p style="margin: 0; font-size: 14px">
                                                   <span style="font-size: 12px"
-                                                    >This email was sent to {{email}}. Please delete if you aren't the
-                                                    intended recipient.</span
+                                                    >{% etr "shared.recipient_note" email=email %}</span
                                                   >
                                                 </p>
                                               </div>

@@ -1,3 +1,4 @@
+{% load email_i18n %}
 {% load email_assets %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html
@@ -10,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Pi-Plane account is now active</title>
+    <title>{% etr "account_activated.heading" %}</title>
     <style type="text/css" emogrify="no">
       #outlook a {
         padding: 0;
@@ -514,7 +515,7 @@
                                         <div>
                                           <p style="margin: 0">
                                             <span style="font-family: Arial, helvetica, sans-serif; font-size: 32px"
-                                              ><strong>You are back inside Pi-Plane again.</strong></span
+                                              ><strong>{% etr "account_activated.heading" %}</strong></span
                                             >
                                           </p>
                                         </div>
@@ -539,9 +540,7 @@
                                       >
                                         <div>
                                           <p style="margin: 0">
-                                            Your account is reactivated and you can now access your issues and other
-                                            data if the project is still active. Alternatively, you can create a new
-                                            workspace and start adding projects to it.
+                                            {% etr "account_activated.body" %}
                                           </p>
                                         </div>
                                       </td>
@@ -609,7 +608,7 @@
                                                   font-size: 16px;
                                                 "
                                               >
-                                                <span>Go to Pi-Plane</span></a
+                                                <span>{% etr "account_activated.button" %}</span></a
                                               >
                                             </td>
                                           </tr>
@@ -1125,8 +1124,7 @@
                                               <div>
                                                 <p style="margin: 0; font-size: 14px">
                                                   <span style="font-size: 12px"
-                                                    >This email was sent to {{email}}. Please delete if you aren't the
-                                                    intended recipient.</span
+                                                    >{% etr "shared.recipient_note" email=email %}</span
                                                   >
                                                 </p>
                                               </div>

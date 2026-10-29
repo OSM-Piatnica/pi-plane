@@ -117,5 +117,57 @@
     "heading": "Votre code de connexion à Pi-Plane",
     "info": "Ce code est valable pendant les 10 prochaines minutes. Saisissez-le sur la page de connexion pour terminer votre connexion.",
     "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span>. Si vous n’attendiez pas de code de connexion, vous pouvez ignorer ce message."
+  },
+  "forgot_password": {
+    "subject": "Un nouveau mot de passe a été demandé pour votre compte Pi-Plane",
+    "preheader": "Réinitialisez votre mot de passe Pi-Plane avec ce lien sécurisé.",
+    "heading": "Réinitialisez votre mot de passe Pi-Plane",
+    "intro": "Nous avons reçu une demande de réinitialisation de votre mot de passe Pi-Plane. Pour le réinitialiser, cliquez sur le bouton ci-dessous.",
+    "button": "Réinitialiser le mot de passe",
+    "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span>. Si vous n’attendiez pas de réinitialisation de mot de passe, vous pouvez ignorer cet e-mail."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} vous a invité à rejoindre {workspace} sur Pi-Plane",
+    "preheader": "{inviter} vous a invité à rejoindre {workspace} sur Pi-Plane.",
+    "heading": "Rejoignez {workspace} sur Pi-Plane",
+    "intro": "{inviter} vous a invité à collaborer dans l’espace de travail <strong>{workspace}</strong> sur Pi-Plane.",
+    "button": "Accepter l’invitation",
+    "note": "Remarque : cette invitation était destinée à <span>{email}</span>. Si vous n’attendiez pas cette invitation, vous pouvez ignorer cet e-mail."
+  },
+  "account_activated": {
+    "subject": "{name} a été activé sur Pi-Plane",
+    "heading": "Vous voilà de retour dans Pi-Plane.",
+    "body": "Votre compte est réactivé et vous pouvez de nouveau accéder à vos éléments de travail et à vos autres données si le projet est toujours actif. Vous pouvez aussi créer un nouvel espace de travail et y ajouter des projets.",
+    "button": "Aller sur Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "{name} a été désactivé sur Pi-Plane",
+    "heading": "Vous avez quitté Pi-Plane.",
+    "body": "Vous avez désactivé votre compte avec succès. Vos éléments de travail, cycles et autres données de projet restent accessibles si le projet est actif et compte d’autres membres.",
+    "button": "Réactiver le compte"
+  },
+  "email_updated": {
+    "subject": "Adresse e-mail Pi-Plane mise à jour",
+    "body": "Vous avez mis à jour avec succès votre adresse e-mail Pi-Plane : {email}.",
+    "login": "Vous pouvez maintenant vous connecter avec cette adresse e-mail."
+  },
+  "email_update_code": {
+    "subject": "Vérifiez votre nouvelle adresse e-mail"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook désactivé",
+    "message": "Le webhook {url} a été désactivé en raison de requêtes en échec.",
+    "button": "Voir le webhook"
+  },
+  "analytics_export": {
+    "subject": "Votre export est prêt",
+    "preheader": "L’export de données Pi-Plane Analytics que vous avez demandé est joint au format CSV.",
+    "heading": "Votre export Pi-Plane Analytics est prêt",
+    "intro": "L’export de données Pi-Plane Analytics que vous avez demandé est prêt. Nous l’avons joint au format CSV pour votre confort.",
+    "hint": "Vous pouvez ouvrir le fichier CSV dans n’importe quel tableur ou outil de BI pour analyser les données, créer des rapports ou partager des enseignements avec votre équipe."
+  },
+  "shared": {
+    "recipient_note": "Cet e-mail a été envoyé à {email}. Veuillez le supprimer si vous n’en êtes pas le destinataire prévu.",
+    "fallback": "Si le bouton ne fonctionne pas, copiez ce lien et collez-le dans votre navigateur :"
   }
 }

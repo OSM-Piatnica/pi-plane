@@ -125,5 +125,57 @@
     "heading": "Codul tău de autentificare în Pi-Plane",
     "info": "Acest cod este valabil în următoarele 10 minute. Introdu-l pe pagina de autentificare pentru a finaliza autentificarea.",
     "note": "Notă: Acest e-mail a fost trimis la <span>{email}</span>. Dacă nu te așteptai la un cod de autentificare, poți ignora acest mesaj."
+  },
+  "forgot_password": {
+    "subject": "A fost solicitată o parolă nouă pentru contul dumneavoastră Pi-Plane",
+    "preheader": "Resetați-vă parola Pi-Plane cu acest link securizat.",
+    "heading": "Resetați-vă parola Pi-Plane",
+    "intro": "Am primit o solicitare de resetare a parolei dumneavoastră Pi-Plane. Pentru a o reseta, faceți clic pe butonul de mai jos.",
+    "button": "Resetează parola",
+    "note": "Notă: Acest e-mail a fost trimis la <span>{email}</span>. Dacă nu așteptați o resetare a parolei, puteți ignora acest e-mail."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} v-a invitat în {workspace} pe Pi-Plane",
+    "preheader": "{inviter} v-a invitat în {workspace} pe Pi-Plane.",
+    "heading": "Alăturați-vă spațiului {workspace} pe Pi-Plane",
+    "intro": "{inviter} v-a invitat să colaborați în spațiul de lucru <strong>{workspace}</strong> pe Pi-Plane.",
+    "button": "Acceptă invitația",
+    "note": "Notă: Această invitație a fost destinată pentru <span>{email}</span>. Dacă nu așteptați această invitație, puteți ignora acest e-mail."
+  },
+  "account_activated": {
+    "subject": "{name} a fost activat pe Pi-Plane",
+    "heading": "Sunteți din nou în Pi-Plane.",
+    "body": "Contul dumneavoastră a fost reactivat și aveți din nou acces la activitățile și la celelalte date, dacă proiectul este încă activ. Puteți, de asemenea, să creați un nou spațiu de lucru și să adăugați proiecte în el.",
+    "button": "Mergeți la Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "{name} a fost dezactivat pe Pi-Plane",
+    "heading": "Ați ieșit din Pi-Plane.",
+    "body": "Ați dezactivat contul cu succes. Activitățile, ciclurile și celelalte date ale proiectelor vor rămâne accesibile dacă proiectul este activ și are alți membri.",
+    "button": "Reactivează contul"
+  },
+  "email_updated": {
+    "subject": "Adresa de e-mail Pi-Plane a fost actualizată",
+    "body": "Ați actualizat cu succes adresa de e-mail din Pi-Plane la {email}.",
+    "login": "Acum vă puteți autentifica cu această adresă de e-mail."
+  },
+  "email_update_code": {
+    "subject": "Verificați noua adresă de e-mail"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook dezactivat",
+    "message": "Webhook-ul {url} a fost dezactivat din cauza solicitărilor eșuate.",
+    "button": "Vezi webhook-ul"
+  },
+  "analytics_export": {
+    "subject": "Exportul dumneavoastră este gata",
+    "preheader": "Exportul de date din Pi-Plane Analytics pe care l-ați solicitat este atașat ca fișier CSV.",
+    "heading": "Exportul dumneavoastră din Pi-Plane Analytics este gata",
+    "intro": "Exportul de date din Pi-Plane Analytics pe care l-ați solicitat este gata. L-am atașat ca fișier CSV, pentru comoditatea dumneavoastră.",
+    "hint": "Puteți deschide fișierul CSV în orice foaie de calcul sau instrument BI pentru a analiza datele, a crea rapoarte sau a împărtăși concluzii cu echipa dumneavoastră."
+  },
+  "shared": {
+    "recipient_note": "Acest e-mail a fost trimis la {email}. Vă rugăm să-l ștergeți dacă nu sunteți destinatarul vizat.",
+    "fallback": "Dacă butonul nu funcționează, copiați acest link și lipiți-l în browser:"
   }
 }

@@ -117,5 +117,57 @@
     "heading": "Uw inlogcode voor Pi-Plane",
     "info": "Deze code is de komende 10 minuten geldig. Voer hem in op de inlogpagina om het inloggen te voltooien.",
     "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span>. Als u geen inlogcode verwachtte, kunt u dit bericht negeren."
+  },
+  "forgot_password": {
+    "subject": "Er is een nieuw wachtwoord aangevraagd voor uw Pi-Plane-account",
+    "preheader": "Stel uw Pi-Plane-wachtwoord opnieuw in met deze beveiligde link.",
+    "heading": "Stel uw Pi-Plane-wachtwoord opnieuw in",
+    "intro": "We hebben een verzoek ontvangen om uw Pi-Plane-wachtwoord opnieuw in te stellen. Klik hiervoor op de knop hieronder.",
+    "button": "Wachtwoord opnieuw instellen",
+    "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span>. Als u geen nieuw wachtwoord verwachtte, kunt u deze e-mail negeren."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} heeft u uitgenodigd voor {workspace} op Pi-Plane",
+    "preheader": "{inviter} heeft u uitgenodigd voor {workspace} op Pi-Plane.",
+    "heading": "Word lid van {workspace} op Pi-Plane",
+    "intro": "{inviter} heeft u uitgenodigd om samen te werken in de werkruimte <strong>{workspace}</strong> op Pi-Plane.",
+    "button": "Uitnodiging accepteren",
+    "note": "Opmerking: deze uitnodiging was bedoeld voor <span>{email}</span>. Als u geen uitnodiging verwachtte, kunt u deze e-mail negeren."
+  },
+  "account_activated": {
+    "subject": "{name} is geactiveerd op Pi-Plane",
+    "heading": "U bent terug in Pi-Plane.",
+    "body": "Uw account is opnieuw geactiveerd en u hebt weer toegang tot uw werkitems en andere gegevens als het project nog actief is. U kunt ook een nieuwe werkruimte maken en daar projecten aan toevoegen.",
+    "button": "Naar Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "{name} is gedeactiveerd op Pi-Plane",
+    "heading": "U bent nu uit Pi-Plane.",
+    "body": "U hebt uw account gedeactiveerd. Uw werkitems, cycli en andere projectgegevens blijven toegankelijk zolang het project actief is en er andere leden in zitten.",
+    "button": "Account opnieuw activeren"
+  },
+  "email_updated": {
+    "subject": "Pi-Plane-e-mailadres bijgewerkt",
+    "body": "U hebt uw e-mailadres bij Pi-Plane bijgewerkt naar {email}.",
+    "login": "U kunt nu inloggen met dit e-mailadres."
+  },
+  "email_update_code": {
+    "subject": "Bevestig uw nieuwe e-mailadres"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook gedeactiveerd",
+    "message": "Webhook {url} is gedeactiveerd wegens mislukte verzoeken.",
+    "button": "Webhook bekijken"
+  },
+  "analytics_export": {
+    "subject": "Uw export is klaar",
+    "preheader": "De gevraagde gegevensexport uit Pi-Plane Analytics is bijgevoegd als CSV-bestand.",
+    "heading": "Uw Pi-Plane Analytics-export is klaar",
+    "intro": "De gevraagde gegevensexport uit Pi-Plane Analytics is klaar. We hebben hem voor uw gemak als CSV-bestand bijgevoegd.",
+    "hint": "U kunt het CSV-bestand openen in elk spreadsheet- of BI-programma om de gegevens te analyseren, rapporten te maken of inzichten met uw team te delen."
+  },
+  "shared": {
+    "recipient_note": "Deze e-mail is verzonden naar {email}. Verwijder hem als u niet de beoogde ontvanger bent.",
+    "fallback": "Werkt de knop niet? Kopieer dan deze link en plak hem in uw browser:"
   }
 }
