@@ -35,6 +35,7 @@ from plane.db.models import (
 )
 from plane.db.models.project import ROLE
 from plane.utils.html_processor import strip_tags
+from plane.utils.timezone_converter import convert_to_utc
 from plane.utils.import_limits import get_import_max_work_items
 from plane.utils.issue_relation_constraints import MAX_LAG_DAYS, TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
@@ -341,9 +342,9 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
     """
     Create the cycles named in the file but absent from the project.
 
-    A cycle stores a period, which the work item export does not carry, so the period is
-    derived from the work items assigned to it. Plane treats a cycle without dates as a
-    draft, which is what an undated cycle becomes.
+    A cycle stores a period. The work item export writes it per row (Cycle Start/End Date); for
+    files without it the period is derived from the work items assigned to the cycle. Plane
+    treats a cycle without dates as a draft, which is what an undated cycle becomes.
     """
     spans: dict[str, dict] = {}
     for item in prepared:
@@ -353,7 +354,9 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
         key = name.lower()
         if key in cycles_by_name:
             continue
-        span = spans.setdefault(key, {"name": name, "start": None, "end": None})
+        span = spans.setdefault(key, {"name": name, "start": None, "end": None, "given_start": None, "given_end": None})
+        span["given_start"] = span["given_start"] or item.get("cycle_start_date")
+        span["given_end"] = span["given_end"] or item.get("cycle_end_date")
         for field, bound, pick in (("start_date", "start", min), ("target_date", "end", max)):
             value = item.get(field)
             if not value:
@@ -368,10 +371,17 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
             workspace=project.workspace,
             owned_by=user,
             created_by=user,
-            start_date=_to_cycle_datetime(span["start"]),
-            end_date=_to_cycle_datetime(span["end"]),
+            start_date=_cycle_bound(project, span["given_start"], span["start"], is_start_date=True),
+            end_date=_cycle_bound(project, span["given_end"], span["end"], is_start_date=False),
         )
     return created
+
+
+def _cycle_bound(project: Project, given, derived, *, is_start_date: bool):
+    """A cycle bound from the exported cycle date, stored as the cycle form would, else from the work items."""
+    if given:
+        return convert_to_utc(str(given), project.id, is_start_date=is_start_date)
+    return _to_cycle_datetime(derived)
 
 
 def _to_cycle_datetime(value):
@@ -658,6 +668,8 @@ def import_work_items_into_project(
                     warnings.append(f'Row {index + 1}: a work item can belong to one cycle, "{clean_name}" skipped')
         else:
             _note_skipped("cycle", row.get("cycles"))
+        cycle_start = _parse_import_date(row.get("cycle_start_date")) if options.dates else None
+        cycle_end = _parse_import_date(row.get("cycle_end_date")) if options.dates else None
 
         assignee_ids = []
         if options.assignees:
@@ -779,6 +791,8 @@ def import_work_items_into_project(
                 "label_ids": label_ids,
                 "module_ids": module_ids,
                 "cycle_name": cycle_name,
+                "cycle_start_date": cycle_start,
+                "cycle_end_date": cycle_end,
                 "assignee_ids": assignee_ids,
                 "subscriber_ids": subscriber_ids,
                 "relations": raw_relations,

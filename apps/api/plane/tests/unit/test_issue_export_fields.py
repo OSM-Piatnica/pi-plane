@@ -12,6 +12,7 @@ from plane.utils.porters.exporter import DataExporter
 from plane.utils.porters.importer import DataImporter
 from plane.utils.porters.serializers.issue import (
     ISSUE_EXPORT_FIELD_GROUPS,
+    ISSUE_EXPORT_COMPANION_FIELDS,
     ISSUE_EXPORT_OPTIONAL_FIELDS,
     ISSUE_EXPORT_REQUIRED_FIELDS,
     InvalidIssueExportFields,
@@ -38,7 +39,8 @@ class TestFieldCatalogue:
         """A column added to the serializer must be placed in a group, or it cannot be chosen."""
         grouped = list(ISSUE_EXPORT_OPTIONAL_FIELDS)
         assert len(grouped) == len(set(grouped)), "a column is listed in two groups"
-        assert sorted(grouped + list(ISSUE_EXPORT_REQUIRED_FIELDS)) == sorted(ALL_COLUMNS)
+        companions = [name for names in ISSUE_EXPORT_COMPANION_FIELDS.values() for name in names]
+        assert sorted(grouped + list(ISSUE_EXPORT_REQUIRED_FIELDS) + companions) == sorted(ALL_COLUMNS)
 
     def test_every_group_has_columns(self):
         assert all(ISSUE_EXPORT_FIELD_GROUPS.values())
@@ -58,6 +60,17 @@ class TestResolveFields:
         assert result == [
             name for name in ALL_COLUMNS if name in {"priority", "assignees", "state_name", "identifier", "name"}
         ]
+
+    def test_the_cycle_period_is_written_with_the_cycles_column_only(self):
+        with_cycles = resolve_issue_export_fields(["cycles"])
+        without = resolve_issue_export_fields(["labels"])
+
+        assert "cycle_start_date" in with_cycles and "cycle_end_date" in with_cycles
+        assert "cycle_start_date" not in without and "cycle_end_date" not in without
+
+    def test_a_cycle_period_column_cannot_be_chosen_on_its_own(self):
+        with pytest.raises(InvalidIssueExportFields, match="cycle_start_date"):
+            resolve_issue_export_fields(["cycle_start_date"])
 
     def test_naming_a_required_column_is_harmless(self):
         assert resolve_issue_export_fields(["name"]) == resolve_issue_export_fields([])
