@@ -1,11 +1,11 @@
 {
   "workspace_creation": {
-    "heading": "Erstellen Sie einen Arbeitsbereich",
+    "heading": "Erstellen Sie Ihren Arbeitsbereich",
     "subheading": "Um Pi-Plane verwenden zu können, müssen Sie einen Arbeitsbereich erstellen oder beitreten.",
     "form": {
       "name": {
         "label": "Geben Sie Ihrem Arbeitsbereich einen Namen",
-        "placeholder": "Etwas Bekanntes und Wiedererkennbares wäre sinnvoll."
+        "placeholder": "Etwas Vertrautes und Wiedererkennbares ist immer am besten."
       },
       "url": {
         "label": "Legen Sie die URL Ihres Arbeitsbereichs fest",
@@ -13,14 +13,14 @@
         "edit_slug": "Sie können nur den Slug-Teil der URL bearbeiten"
       },
       "organization_size": {
-        "label": "Wie viele Personen werden diesen Bereich nutzen?",
+        "label": "Wie viele Personen werden diesen Arbeitsbereich nutzen?",
         "placeholder": "Wählen Sie einen Bereich"
       }
     },
     "errors": {
       "creation_disabled": {
         "title": "Nur der Instanzadministrator kann Arbeitsbereiche erstellen",
-        "description": "Wenn Sie die E-Mail Ihres Instanzadministrators kennen, klicken Sie unten, um ihn zu kontaktieren.",
+        "description": "Wenn Sie die E-Mail-Adresse Ihres Instanzadministrators kennen, klicken Sie auf die Schaltfläche unten, um ihn zu kontaktieren.",
         "request_button": "Instanzadministrator bitten"
       },
       "validation": {
@@ -33,7 +33,7 @@
     },
     "request_email": {
       "subject": "Anfrage für einen neuen Arbeitsbereich",
-      "body": "Hallo Admin,\n\nBitte erstellen Sie einen neuen Arbeitsbereich mit der URL [/workspace-name] für [Zweck].\n\nDanke,\n{firstName} {lastName}\n{email}"
+      "body": "Hallo Instanzadministrator(en),\n\nBitte erstellen Sie einen neuen Arbeitsbereich mit der URL [/workspace-name] für [Zweck].\n\nVielen Dank,\n{firstName} {lastName}\n{email}"
     },
     "button": {
       "default": "Arbeitsbereich erstellen",
@@ -106,7 +106,7 @@
     "trend_on_charts": "Trend in Diagrammen",
     "active_projects": "Aktive Projekte",
     "customized_insights": "Individuelle Einblicke",
-    "created_vs_resolved": "Erstellt vs Gelöst",
+    "created_vs_resolved": "Erstellt vs. gelöst",
     "empty_state": {
       "project_insights": {
         "title": "Noch keine Daten",
@@ -133,25 +133,25 @@
       },
       "cycle_progress": {
         "title": "Noch keine Daten",
-        "description": "Analyse des Zyklusfortschritts wird hier angezeigt. Fügen Sie Arbeitsaufgaben zu Zyklen hinzu, um den Fortschritt zu verfolgen."
+        "description": "Analyse des Zyklusfortschritts wird hier angezeigt. Fügen Sie Arbeitselemente zu Zyklen hinzu, um den Fortschritt zu verfolgen."
       },
       "module_progress": {
         "title": "Noch keine Daten",
-        "description": "Analyse des Modulfortschritts wird hier angezeigt. Fügen Sie Arbeitsaufgaben zu Modulen hinzu, um den Fortschritt zu verfolgen."
+        "description": "Analyse des Modulfortschritts wird hier angezeigt. Fügen Sie Arbeitselemente zu Modulen hinzu, um den Fortschritt zu verfolgen."
       },
       "intake_trends": {
         "title": "Noch keine Daten",
-        "description": "Analyse der Intake-Trends wird hier angezeigt. Fügen Sie Arbeitsaufgaben zum Intake hinzu, um Trends zu verfolgen."
+        "description": "Analyse der Intake-Trends wird hier angezeigt. Fügen Sie Arbeitselemente zum Intake hinzu, um Trends zu verfolgen."
       }
     },
     "upgrade_to_plan": "Upgrade auf {plan}, um {tab} freizuschalten",
-    "workitem_resolved_vs_pending": "Gelöste vs. ausstehende Arbeitsaufgaben",
+    "workitem_resolved_vs_pending": "Gelöste vs. ausstehende Arbeitselemente",
     "projects_by_status": "Projekte nach Status",
     "active_users": "Aktive Nutzer",
-    "intake_trends": "Aufnahmetrends"
+    "intake_trends": "Intake-Trends"
   },
   "workspace_projects": {
-    "label": "{count, plural, one {Projekt} few {Projekte} other {Projekte}}",
+    "label": "{count, plural, one {Projekt} other {Projekte}}",
     "create": {
       "label": "Projekt hinzufügen"
     },
@@ -194,8 +194,8 @@
       "archived_projects": "Archiviert"
     },
     "common": {
-      "months_count": "{months, plural, one{# Monat} few{# Monate} other{# Monate}}",
-      "days_count": "{days, plural, one{# Tag} few{# Tage} other{# Tagen}}"
+      "months_count": "{months, plural, one{# Monat} other{# Monate}}",
+      "days_count": "{days, plural, one{# Tag} other{# Tage}}"
     },
     "empty_state": {
       "general": {
@@ -293,8 +293,8 @@
   "workspace_pages": {
     "empty_state": {
       "general": {
-        "title": "Schreiben Sie eine Notiz, ein Dokument oder eine vollständige Wissensdatenbank. Holen Sie sich Galileo, Planes KI-Assistent, um Ihnen den Einstieg zu erleichtern",
-        "description": "Seiten sind Gedankenspeicher in Pi-Plane. Notieren Sie Meeting-Notizen, formatieren Sie sie einfach, betten Sie Arbeitsaufgaben ein, gestalten Sie sie mit einer Bibliothek von Komponenten und behalten Sie sie alle im Kontext Ihres Projekts. Um die Arbeit an einem Dokument zu verkürzen, rufen Sie Galileo, Planes KI, mit einer Tastenkombination oder einem Knopfdruck auf.",
+        "title": "Schreiben Sie eine Notiz, ein Dokument oder eine vollständige Wissensdatenbank. Holen Sie sich Galileo, den KI-Assistenten von Pi-Plane, der Ihnen den Einstieg erleichtert",
+        "description": "Seiten sind Gedankenspeicher in Pi-Plane. Notieren Sie Besprechungsnotizen, formatieren Sie sie einfach, betten Sie Arbeitselemente ein, gestalten Sie sie mit einer Bibliothek von Komponenten und behalten Sie sie alle im Kontext Ihres Projekts. Um die Arbeit an einem Dokument zu verkürzen, rufen Sie Galileo, die KI von Pi-Plane, mit einer Tastenkombination oder einem Knopfdruck auf.",
         "primary_button": {
           "text": "Erstellen Sie Ihre erste Seite"
         }
@@ -334,7 +334,7 @@
   "workspace": {
     "members_import": {
       "title": "Mitglieder aus CSV importieren",
-      "description": "Laden Sie eine CSV mit Spalten hoch: Email, Display Name, First Name, Last Name, Role (5, 15 oder 20)",
+      "description": "Laden Sie eine CSV-Datei mit folgenden Spalten hoch: Email, Display Name, First Name, Last Name, Role (5, 15 oder 20)",
       "dropzone": {
         "active": "CSV-Datei hier ablegen",
         "inactive": "Ziehen Sie eine Datei hierher oder klicken Sie zum Hochladen",
@@ -380,32 +380,32 @@
     }
   },
   "core_ui": {
-    "select_work_item": "Bitte wähle mindestens ein Arbeitselement aus.",
+    "select_work_item": "Bitte wählen Sie mindestens ein Arbeitselement aus.",
     "work_items_deleted": "Arbeitselemente erfolgreich gelöscht!",
-    "try_again_error": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    "try_again_error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
     "search_ellipsis": "Suchen...",
-    "gpt_enter_task": "Bitte gib eine Aufgabe ein, um KI-Unterstützung zu erhalten.",
+    "gpt_enter_task": "Bitte geben Sie eine Aufgabe ein, um KI-Unterstützung zu erhalten.",
     "theme": {
       "neutral_color": "Neutrale Farbe",
       "neutral_color_required": "Neutrale Farbe ist erforderlich",
       "brand_color": "Markenfarbe",
       "brand_color_required": "Markenfarbe ist erforderlich",
-      "invalid_hex": "Gib einen gültigen Hex-Code ein",
+      "invalid_hex": "Geben Sie einen gültigen Hex-Code ein",
       "reloading": "Seite wird neu geladen, um die Änderungen anzuwenden...",
       "download_success": "Themenkonfiguration erfolgreich heruntergeladen.",
       "download_failed": "Themenkonfiguration konnte nicht heruntergeladen werden.",
       "import_success": "Themenkonfiguration erfolgreich importiert",
       "updated": "Theme aktualisiert",
       "updating": "Theme wird aktualisiert...",
-      "update_failed": "Theme konnte nicht aktualisiert werden. Bitte versuche es erneut."
+      "update_failed": "Theme konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut."
     },
     "markdown_copied": "Markdown in die Zwischenablage kopiert.",
     "account_deactivated": "Konto erfolgreich deaktiviert.",
     "estimate": {
       "deleted_title": "Schätzung gelöscht",
-      "deleted_message": "Die Schätzung wurde aus deinem Projekt entfernt.",
+      "deleted_message": "Die Schätzung wurde aus Ihrem Projekt entfernt.",
       "delete_failed_title": "Löschen der Schätzung fehlgeschlagen",
-      "delete_failed_message": "Die Schätzung konnte nicht gelöscht werden. Bitte versuche es erneut."
+      "delete_failed_message": "Die Schätzung konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
     },
     "drag_drop_manual_only": "Drag-and-drop ist nur bei manueller Sortierung aktiviert",
     "image_picker": {
@@ -422,31 +422,31 @@
     },
     "search_commands": "Befehle suchen...",
     "delete_label": "Label löschen",
-    "select_expiration_date": "Bitte wähle ein Ablaufdatum aus.",
-    "sign_out_failed": "Abmeldung fehlgeschlagen. Bitte versuche es erneut.",
+    "select_expiration_date": "Bitte wählen Sie ein Ablaufdatum aus.",
+    "sign_out_failed": "Abmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "set_date": "Datum festlegen",
     "enter_months": "Monate eingeben",
     "months": "Monate",
-    "select_month_range": "Wähle einen Monat zwischen 1 und 12.",
+    "select_month_range": "Wählen Sie einen Monat zwischen 1 und 12.",
     "auth": {
       "reset_password": "Passwort zurücksetzen",
-      "regain_access": "Erhalte wieder Zugriff auf dein Konto.",
-      "create_new_password": "Erstelle ein neues Passwort.",
+      "regain_access": "Erhalten Sie wieder Zugriff auf Ihr Konto.",
+      "create_new_password": "Erstellen Sie ein neues Passwort.",
       "set_password": "Passwort festlegen"
     },
     "invitation": {
       "not_found": "Einladung nicht gefunden",
-      "invited_to": "Du wurdest zu {workspace} eingeladen",
-      "already_member": "Du bist bereits Mitglied von {workspace}",
-      "description": "In deinem Arbeitsbereich erstellst du Projekte, arbeitest an Arbeitselementen zusammen und organisierst verschiedene Arbeitsströme in deinem Plane-Konto.",
+      "invited_to": "Sie wurden zu {workspace} eingeladen",
+      "already_member": "Sie sind bereits Mitglied von {workspace}",
+      "description": "In Ihrem Arbeitsbereich erstellen Sie Projekte, arbeiten an Arbeitselementen zusammen und organisieren verschiedene Arbeitsströme in Ihrem Pi-Plane-Konto.",
       "accept": "Annehmen",
       "ignore": "Ignorieren",
       "continue_home": "Weiter zur Startseite",
       "link_inactive": "Dieser Einladungslink ist nicht mehr aktiv.",
-      "start_empty_project": "Oder beginne mit einem leeren Projekt",
+      "start_empty_project": "Oder beginnen Sie mit einem leeren Projekt",
       "sign_in_continue": "Zum Fortfahren anmelden",
-      "star_github": "Gib uns einen Stern auf GitHub",
-      "join_community": "Werde Teil unserer Community aktiver Creator"
+      "star_github": "Geben Sie uns einen Stern auf GitHub",
+      "join_community": "Werden Sie Teil unserer Community aktiver Creator"
     }
   }
 }

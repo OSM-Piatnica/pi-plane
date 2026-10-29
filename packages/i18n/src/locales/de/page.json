@@ -44,32 +44,32 @@
     },
     "toasts": {
       "errors": {
-        "wrong_name": "Der Notizname darf nicht länger als 100 Zeichen sein.",
-        "already_exists": "Es existiert bereits eine Notiz ohne Beschreibung"
+        "wrong_name": "Der Name der Haftnotiz darf nicht länger als 100 Zeichen sein.",
+        "already_exists": "Es existiert bereits eine Haftnotiz ohne Beschreibung"
       },
       "created": {
-        "title": "Notiz erstellt",
-        "message": "Die Notiz wurde erfolgreich erstellt"
+        "title": "Haftnotiz erstellt",
+        "message": "Die Haftnotiz wurde erfolgreich erstellt"
       },
       "not_created": {
-        "title": "Notiz nicht erstellt",
-        "message": "Die Notiz konnte nicht erstellt werden"
+        "title": "Haftnotiz nicht erstellt",
+        "message": "Die Haftnotiz konnte nicht erstellt werden"
       },
       "updated": {
-        "title": "Notiz aktualisiert",
-        "message": "Die Notiz wurde erfolgreich aktualisiert"
+        "title": "Haftnotiz aktualisiert",
+        "message": "Die Haftnotiz wurde erfolgreich aktualisiert"
       },
       "not_updated": {
-        "title": "Notiz nicht aktualisiert",
-        "message": "Die Notiz konnte nicht aktualisiert werden"
+        "title": "Haftnotiz nicht aktualisiert",
+        "message": "Die Haftnotiz konnte nicht aktualisiert werden"
       },
       "removed": {
-        "title": "Notiz entfernt",
-        "message": "Die Notiz wurde erfolgreich entfernt"
+        "title": "Haftnotiz entfernt",
+        "message": "Die Haftnotiz wurde erfolgreich entfernt"
       },
       "not_removed": {
-        "title": "Notiz nicht entfernt",
-        "message": "Die Notiz konnte nicht entfernt werden"
+        "title": "Haftnotiz nicht entfernt",
+        "message": "Die Haftnotiz konnte nicht entfernt werden"
       }
     },
     "open_button": "Navigationsbereich öffnen",
@@ -113,20 +113,20 @@
     }
   },
   "page_content_limit_banner": {
-    "message": "Inhaltslimit erreicht, Live-Synchronisierung ist deaktiviert. Neue Seite erstellen oder verschachtelte Seiten verwenden, um die Synchronisierung fortzusetzen."
+    "message": "Inhaltslimit erreicht, Live-Synchronisierung ist deaktiviert. Erstellen Sie eine neue Seite oder verwenden Sie verschachtelte Seiten, um die Synchronisierung fortzusetzen."
   },
   "page_ui": {
     "add_page": "Seite hinzufügen",
     "ai": {
       "add_to_next_line": "In nächster Zeile hinzufügen",
       "answering": "KI antwortet...",
-      "prompt_placeholder": "Sag der KI, was sie tun soll...",
+      "prompt_placeholder": "Sagen Sie der KI, was sie tun soll...",
       "regenerate_response": "Antwort neu generieren",
       "replace_selection": "Auswahl ersetzen"
     },
     "content_limit_banner": {
       "dismiss": "Warnung zum Inhaltslimit schließen",
-      "message": "Das Inhaltslimit wurde erreicht und die Live-Synchronisierung ist deaktiviert. Erstelle eine neue Seite oder verwende verschachtelte Seiten, um weiter zu synchronisieren."
+      "message": "Das Inhaltslimit wurde erreicht und die Live-Synchronisierung ist deaktiviert. Erstellen Sie eine neue Seite oder verwenden Sie verschachtelte Seiten, um weiter zu synchronisieren."
     },
     "create_modal": {
       "creating": "Wird erstellt",
@@ -134,9 +134,9 @@
       "title": "Seite erstellen"
     },
     "delete_modal": {
-      "content_prefix": "Möchtest du die Seite wirklich löschen:",
+      "content_prefix": "Möchten Sie die Seite wirklich löschen:",
       "content_suffix": "? Die Seite wird dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
-      "error": "Die Seite konnte nicht gelöscht werden. Bitte versuche es erneut.",
+      "error": "Die Seite konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
       "success": "Seite erfolgreich gelöscht.",
       "title": "Seite löschen"
     },
@@ -150,7 +150,7 @@
     "export_modal": {
       "content_everything": "Alles",
       "content_no_images": "Keine Bilder",
-      "error": "Die Seite konnte nicht exportiert werden. Bitte versuche es später erneut.",
+      "error": "Die Seite konnte nicht exportiert werden. Bitte versuchen Sie es später erneut.",
       "export_format": "Exportformat",
       "exporting": "Wird exportiert",
       "include_content": "Inhalt einbeziehen",
@@ -166,31 +166,31 @@
       "unlocked": "Entsperrt"
     },
     "not_found": {
-      "description": "Die Seite, auf die du zugreifen möchtest, existiert nicht oder du hast keine Berechtigung, sie anzuzeigen.",
+      "description": "Die Seite, auf die Sie zugreifen möchten, existiert nicht oder Sie haben keine Berechtigung, sie anzuzeigen.",
       "title": "Seite nicht gefunden",
       "view_other_pages": "Andere Seiten anzeigen"
     },
     "offline": {
-      "description": "Du kannst weiterhin Änderungen vornehmen. Sie werden synchronisiert, sobald du wieder online bist.",
-      "heading": "Du bist offline.",
+      "description": "Sie können weiterhin Änderungen vornehmen. Sie werden synchronisiert, sobald Sie wieder online sind.",
+      "heading": "Sie sind offline.",
       "label": "Offline"
     },
     "operations": {
-      "add_favorite_error": "Die Seite konnte nicht zu den Favoriten hinzugefügt werden. Bitte versuche es später erneut.",
+      "add_favorite_error": "Die Seite konnte nicht zu den Favoriten hinzugefügt werden. Bitte versuchen Sie es später erneut.",
       "add_favorite_success": "Seite zu den Favoriten hinzugefügt.",
-      "archive_error": "Die Seite konnte nicht archiviert werden. Bitte versuche es später erneut.",
+      "archive_error": "Die Seite konnte nicht archiviert werden. Bitte versuchen Sie es später erneut.",
       "archive_success": "Seite erfolgreich archiviert.",
-      "duplicate_error": "Die Seite konnte nicht dupliziert werden. Bitte versuche es später erneut.",
+      "duplicate_error": "Die Seite konnte nicht dupliziert werden. Bitte versuchen Sie es später erneut.",
       "duplicate_success": "Seite erfolgreich dupliziert.",
       "link_copied": "Link kopiert!",
       "link_copied_message": "Seitenlink in die Zwischenablage kopiert.",
-      "lock_error": "Die Seite konnte nicht gesperrt werden. Bitte versuche es später erneut.",
+      "lock_error": "Die Seite konnte nicht gesperrt werden. Bitte versuchen Sie es später erneut.",
       "lock_success": "Seite erfolgreich gesperrt.",
-      "remove_favorite_error": "Die Seite konnte nicht aus den Favoriten entfernt werden. Bitte versuche es später erneut.",
+      "remove_favorite_error": "Die Seite konnte nicht aus den Favoriten entfernt werden. Bitte versuchen Sie es später erneut.",
       "remove_favorite_success": "Seite aus den Favoriten entfernt.",
-      "restore_error": "Die Seite konnte nicht wiederhergestellt werden. Bitte versuche es später erneut.",
+      "restore_error": "Die Seite konnte nicht wiederhergestellt werden. Bitte versuchen Sie es später erneut.",
       "restore_success": "Seite erfolgreich wiederhergestellt.",
-      "unlock_error": "Die Seite konnte nicht entsperrt werden. Bitte versuche es später erneut.",
+      "unlock_error": "Die Seite konnte nicht entsperrt werden. Bitte versuchen Sie es später erneut.",
       "unlock_success": "Seite erfolgreich entsperrt."
     },
     "realtime": {
@@ -201,7 +201,7 @@
     },
     "search_pages": "Seiten durchsuchen",
     "version": {
-      "error_description": "Die Version konnte nicht geladen werden. Bitte versuche es erneut.",
+      "error_description": "Die Version konnte nicht geladen werden. Bitte versuchen Sie es erneut.",
       "error_title": "Etwas ist schiefgelaufen!",
       "loading_details": "Versionsdetails werden geladen",
       "restore_failed": "Die Seitenversion konnte nicht wiederhergestellt werden.",

@@ -1,6 +1,6 @@
 {
   "module": {
-    "label": "{count, plural, one {Modul} few {Module} other {Module}}",
+    "label": "{count, plural, one {Modul} other {Module}}",
     "no_module": "Kein Modul",
     "select": "Module hinzufügen"
   },
@@ -18,7 +18,7 @@
     "create_success": "Das Modul wurde erfolgreich erstellt.",
     "create_error": "Das Modul konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
     "update_error": "Das Modul konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
-    "restore_success_message": "Ihr Modul finden Sie in den Projekt-Modulen.",
+    "restore_success_message": "Ihr Modul finden Sie in den Projektmodulen.",
     "restore_error": "Das Modul konnte nicht wiederhergestellt werden. Bitte versuchen Sie es erneut.",
     "no_matching_modules": "Keine passenden Module",
     "remove_filters_hint": "Entfernen Sie die Filter, um alle Module anzuzeigen",
@@ -29,8 +29,8 @@
     "updating_link": "Link wird aktualisiert",
     "adding_to_favorites": "Das Modul wird zu Favoriten hinzugefügt...",
     "removing_from_favorites": "Das Modul wird aus Favoriten entfernt...",
-    "added_to_favorites": "Das Modul zu Favoriten hinzugefügt.",
-    "removed_from_favorites": "Das Modul aus Favoriten entfernt.",
+    "added_to_favorites": "Das Modul wurde zu Favoriten hinzugefügt.",
+    "removed_from_favorites": "Das Modul wurde aus Favoriten entfernt.",
     "add_favorite_error": "Das Modul konnte nicht zu Favoriten hinzugefügt werden. Bitte versuchen Sie es erneut.",
     "remove_favorite_error": "Das Modul konnte nicht aus Favoriten entfernt werden. Bitte versuchen Sie es erneut.",
     "work_items_in_module": "Arbeitselemente in diesem Modul: {count}",

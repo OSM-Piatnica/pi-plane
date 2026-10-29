@@ -1,7 +1,7 @@
 {
   "common_empty_state": {
     "progress": {
-      "title": "Es gibt noch keine Fortschrittsmetriken anzuzeigen.",
+      "title": "Es gibt noch keine Fortschrittsmetriken.",
       "description": "Beginnen Sie mit dem Festlegen von Eigenschaftswerten in Arbeitselementen, um hier Fortschrittsmetriken zu sehen."
     },
     "updates": {
@@ -14,7 +14,7 @@
     },
     "not_found": {
       "title": "Hoppla! Etwas scheint nicht zu stimmen",
-      "description": "Wir können Ihr Plane-Konto derzeit nicht abrufen. Dies könnte ein Netzwerkfehler sein.",
+      "description": "Wir können Ihr Pi-Plane-Konto derzeit nicht abrufen. Dies könnte ein Netzwerkfehler sein.",
       "cta_primary": "Versuchen Sie neu zu laden"
     },
     "server_error": {
@@ -29,11 +29,11 @@
       "restricted_description": "Kontaktieren Sie den Administrator, um Zugriff anzufordern, damit Sie hier fortfahren können.",
       "join_description": "Klicken Sie unten auf die Schaltfläche, um beizutreten.",
       "cta_primary": "Projekt beitreten",
-      "cta_loading": "Beitritt zum Projekt wird durchgeführt",
-      "pending_title": "Deine Anfrage wartet auf Genehmigung",
-      "pending_description": "Die Projektadmins lassen dich herein, sobald sie zustimmen.",
+      "cta_loading": "Beitritt zum Projekt läuft",
+      "pending_title": "Ihre Anfrage wartet auf Genehmigung",
+      "pending_description": "Die Projektadmins lassen Sie herein, sobald sie zustimmen.",
       "private_title": "Dieses Projekt ist privat",
-      "private_description": "Du kannst es sehen, aber die Admins müssen dich hereinlassen. Sende ihnen eine Anfrage.",
+      "private_description": "Sie können es sehen, aber die Admins müssen Sie hereinlassen. Senden Sie ihnen eine Anfrage.",
       "request_cta": "Zugang anfragen"
     },
     "invalid_project": {
@@ -43,15 +43,15 @@
     "work_items": {
       "title": "Beginnen Sie mit Ihrem ersten Arbeitselement.",
       "description": "Arbeitselemente sind die Bausteine Ihres Projekts — weisen Sie Eigentümer zu, setzen Sie Prioritäten und verfolgen Sie den Fortschritt einfach.",
-      "cta_primary": "Erstellen Sie Ihr erstes Arbeitselement"
+      "cta_primary": "Erstes Arbeitselement erstellen"
     },
     "cycles": {
       "title": "Gruppieren und zeitlich begrenzen Sie Ihre Arbeit in Zyklen.",
       "description": "Teilen Sie die Arbeit in zeitlich begrenzte Blöcke auf, arbeiten Sie rückwärts von Ihrer Projektfrist, um Termine festzulegen, und machen Sie greifbare Fortschritte als Team.",
-      "cta_primary": "Legen Sie Ihren ersten Zyklus fest"
+      "cta_primary": "Ersten Zyklus festlegen"
     },
     "cycle_work_items": {
-      "title": "Keine Arbeitselemente in diesem Zyklus anzuzeigen",
+      "title": "Keine Arbeitselemente in diesem Zyklus",
       "description": "Erstellen Sie Arbeitselemente, um den Fortschritt Ihres Teams in diesem Zyklus zu überwachen und Ihre Ziele rechtzeitig zu erreichen.",
       "cta_primary": "Arbeitselement erstellen",
       "cta_secondary": "Bestehendes Arbeitselement hinzufügen"
@@ -59,10 +59,10 @@
     "modules": {
       "title": "Ordnen Sie Ihre Projektziele Modulen zu und verfolgen Sie sie einfach.",
       "description": "Module bestehen aus miteinander verbundenen Arbeitselementen. Sie helfen bei der Überwachung des Fortschritts durch Projektphasen, jede mit spezifischen Fristen und Analysen, um anzuzeigen, wie nahe Sie dem Erreichen dieser Phasen sind.",
-      "cta_primary": "Legen Sie Ihr erstes Modul fest"
+      "cta_primary": "Erstes Modul festlegen"
     },
     "module_work_items": {
-      "title": "Keine Arbeitselemente in diesem Modul anzuzeigen",
+      "title": "Keine Arbeitselemente in diesem Modul",
       "description": "Erstellen Sie Arbeitselemente, um dieses Modul zu überwachen.",
       "cta_primary": "Arbeitselement erstellen",
       "cta_secondary": "Bestehendes Arbeitselement hinzufügen"
@@ -85,7 +85,7 @@
     "pages": {
       "title": "Dokumentieren Sie alles — von Notizen bis PRDs",
       "description": "Seiten ermöglichen es Ihnen, Informationen an einem Ort zu erfassen und zu organisieren. Schreiben Sie Besprechungsnotizen, Projektdokumentationen und PRDs, betten Sie Arbeitselemente ein und strukturieren Sie sie mit gebrauchsfertigen Komponenten.",
-      "cta_primary": "Erstellen Sie Ihre erste Seite"
+      "cta_primary": "Erste Seite erstellen"
     },
     "archive_pages": {
       "title": "Noch keine archivierten Seiten",
@@ -152,11 +152,11 @@
     "drafts": {
       "title": "Halb geschriebene Arbeitselemente",
       "description": "Um dies auszuprobieren, beginnen Sie, ein Arbeitselement hinzuzufügen, und lassen Sie es auf halbem Weg liegen oder erstellen Sie unten Ihren ersten Entwurf. 😉",
-      "cta_primary": "Entwurf-Arbeitselement erstellen"
+      "cta_primary": "Arbeitselement-Entwurf erstellen"
     },
     "projects_archived": {
       "title": "Keine Projekte archiviert",
-      "description": "Es sieht so aus, als wären alle Ihre Projekte noch aktiv—gute Arbeit!"
+      "description": "Es sieht so aus, als wären alle Ihre Projekte noch aktiv — gute Arbeit!"
     },
     "analytics_projects": {
       "title": "Erstellen Sie Projekte, um hier Projektmetriken zu visualisieren."
@@ -194,7 +194,7 @@
     "wiki": {
       "title": "Schreiben Sie eine Notiz, ein Dokument oder eine vollständige Wissensdatenbank.",
       "description": "Seiten sind Gedankenraum in Pi-Plane. Notieren Sie Besprechungsnotizen, formatieren Sie sie einfach, betten Sie Arbeitselemente ein, ordnen Sie sie mit einer Bibliothek von Komponenten an und behalten Sie alles im Kontext Ihres Projekts.",
-      "cta_primary": "Erstellen Sie Ihre Seite"
+      "cta_primary": "Seite erstellen"
     },
     "project_overview_state_sidebar": {
       "title": "Projektstatus aktivieren",
@@ -210,7 +210,7 @@
     "labels": {
       "title": "Noch keine Labels",
       "description": "Erstellen Sie personalisierte Labels, um Ihre Arbeitselemente effektiv zu kategorisieren und zu verwalten.",
-      "cta_primary": "Erstellen Sie Ihr erstes Label"
+      "cta_primary": "Erstes Label erstellen"
     },
     "exports": {
       "title": "Noch keine Exporte",
@@ -218,12 +218,12 @@
     },
     "tokens": {
       "title": "Noch kein persönliches Token",
-      "description": "Generieren Sie sichere API-Tokens, um Ihren Workspace mit externen Systemen und Anwendungen zu verbinden.",
+      "description": "Generieren Sie sichere API-Tokens, um Ihren Arbeitsbereich mit externen Systemen und Anwendungen zu verbinden.",
       "cta_primary": "API-Token hinzufügen"
     },
     "workspace_tokens": {
       "title": "Noch keine API-Tokens",
-      "description": "Generieren Sie sichere API-Tokens, um Ihren Workspace mit externen Systemen und Anwendungen zu verbinden.",
+      "description": "Generieren Sie sichere API-Tokens, um Ihren Arbeitsbereich mit externen Systemen und Anwendungen zu verbinden.",
       "cta_primary": "API-Token hinzufügen"
     },
     "webhooks": {
@@ -233,7 +233,7 @@
     },
     "work_item_types": {
       "title": "Arbeitselementtypen erstellen und anpassen",
-      "description": "Definieren Sie einzigartige Arbeitselementtypen für Ihr Projekt. Jeder Typ kann seine eigenen Eigenschaften, Workflows und Felder haben - zugeschnitten auf die Bedürfnisse Ihres Projekts und Teams.",
+      "description": "Definieren Sie einzigartige Arbeitselementtypen für Ihr Projekt. Jeder Typ kann seine eigenen Eigenschaften, Workflows und Felder haben – zugeschnitten auf die Bedürfnisse Ihres Projekts und Teams.",
       "cta_primary": "Aktivieren"
     },
     "work_item_type_properties": {
@@ -243,7 +243,7 @@
     "templates": {
       "title": "Noch keine Vorlagen",
       "description": "Reduzieren Sie die Einrichtungszeit, indem Sie Vorlagen für Arbeitselemente und Seiten erstellen — und starten Sie neue Arbeit in Sekunden.",
-      "cta_primary": "Erstellen Sie Ihre erste Vorlage"
+      "cta_primary": "Erste Vorlage erstellen"
     },
     "recurring_work_items": {
       "title": "Noch kein wiederkehrendes Arbeitselement",

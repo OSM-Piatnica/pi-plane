@@ -2,7 +2,7 @@
   "cloud_maintenance_message": {
     "we_are_working_on_this_if_you_need_immediate_assistance": "Wir arbeiten daran. Wenn Sie sofortige Hilfe benötigen,",
     "reach_out_to_us": "kontaktieren Sie uns",
-    "otherwise_try_refreshing_the_page_occasionally_or_visit_our": "Andernfalls versuchen Sie gelegentlich die Seite zu aktualisieren oder besuchen Sie unsere",
+    "otherwise_try_refreshing_the_page_occasionally_or_visit_our": "Andernfalls versuchen Sie gelegentlich, die Seite zu aktualisieren, oder besuchen Sie unsere",
     "status_page": "Statusseite"
   },
   "submit": "Senden",
@@ -106,8 +106,8 @@
   "stay_in_the_loop_on_issues_you_are_subscribed_to_enable_this_to_get_notified": "Bleiben Sie informiert über Arbeitselemente, die Sie abonniert haben. Aktivieren Sie diese Option, um Benachrichtigungen zu erhalten.",
   "email_notification_setting_updated_successfully": "E-Mail-Benachrichtigungseinstellung erfolgreich aktualisiert",
   "failed_to_update_email_notification_setting": "Aktualisierung der E-Mail-Benachrichtigungseinstellung fehlgeschlagen",
-  "notify_me_when": "Benachrichtige mich, wenn",
-  "property_changes": "Eigenschaften ändern",
+  "notify_me_when": "Benachrichtigen Sie mich, wenn",
+  "property_changes": "Eigenschaftsänderungen",
   "property_changes_description": "Benachrichtigen Sie mich, wenn sich Eigenschaften eines Arbeitselements ändern, etwa Zuweisung, Priorität oder Schätzungen.",
   "state_change": "Statusänderung",
   "state_change_description": "Benachrichtigen Sie mich, wenn ein Arbeitselement in einen anderen Status wechselt.",
@@ -141,7 +141,7 @@
   "compare_burndowns": "Vergleichen Sie Burndown-Charts.",
   "compare_burndowns_description": "Überwachen Sie die Teamleistung, indem Sie sich die Burndown-Berichte jedes Zyklus ansehen.",
   "quickly_see_make_or_break_issues": "Erkennen Sie schnell kritische Arbeitselemente.",
-  "quickly_see_make_or_break_issues_description": "Sehen Sie sich hochpriorisierte Arbeitselemente für jeden Zyklus in Bezug auf Fristen an. Alle auf einen Klick anzeigen.",
+  "quickly_see_make_or_break_issues_description": "Sehen Sie sich hochpriorisierte Arbeitselemente für jeden Zyklus in Bezug auf Fristen an. Zeigen Sie alle pro Zyklus mit einem Klick an.",
   "zoom_into_cycles_that_need_attention": "Fokussieren Sie sich auf Zyklen, die besondere Aufmerksamkeit erfordern.",
   "zoom_into_cycles_that_need_attention_description": "Untersuchen Sie den Status jedes Zyklus, der nicht den Erwartungen entspricht, mit nur einem Klick.",
   "stay_ahead_of_blockers": "Erkennen Sie frühzeitig Blocker.",
@@ -226,15 +226,15 @@
   "cycles": "Zyklen",
   "modules": "Module",
   "pages": "Seiten",
-  "intake": "Eingang",
+  "intake": "Intake",
   "renew": "Erneuern",
   "preview": "Vorschau",
   "time_tracking": "Zeiterfassung",
   "work_management": "Arbeitsverwaltung",
   "projects_and_issues": "Projekte und Arbeitselemente",
   "projects_and_issues_description": "Aktivieren oder deaktivieren Sie diese Funktionen im Projekt.",
-  "cycles_description": "Zeitlich begrenzen Sie die Arbeit pro Projekt und passen Sie den Zeitraum bei Bedarf an. Ein Zyklus kann 2 Wochen dauern, der nächste nur 1 Woche.",
-  "modules_description": "Organisieren Sie die Arbeit in Unterprojekte mit eigenen Leitern und Zuständigen.",
+  "cycles_description": "Begrenzen Sie die Arbeit pro Projekt zeitlich und passen Sie den Zeitraum bei Bedarf an. Ein Zyklus kann 2 Wochen dauern, der nächste nur 1 Woche.",
+  "modules_description": "Organisieren Sie die Arbeit in Unterprojekten mit eigenen Leitern und Zuständigen.",
   "views_description": "Speichern Sie benutzerdefinierte Sortierungen, Filter und Anzeigeoptionen oder teilen Sie sie mit Ihrem Team.",
   "pages_description": "Erstellen und bearbeiten Sie frei formulierte Inhalte – Notizen, Dokumente, alles Mögliche.",
   "intake_description": "Erlauben Sie Nicht-Mitgliedern, Bugs, Feedback und Vorschläge zu teilen – ohne Ihren Arbeitsablauf zu stören.",
@@ -413,9 +413,9 @@
   "re_generate": "Neu generieren",
   "re_generate_key": "Schlüssel neu generieren",
   "export": "Exportieren",
-  "member": "{count, plural, one{# Mitglied} few{# Mitglieder} other{# Mitglieder}}",
+  "member": "{count, plural, one{# Mitglied} other{# Mitglieder}}",
   "new_password_must_be_different_from_old_password": "Das neue Passwort muss von dem alten Passwort abweichen",
-  "edited": "Bearbeitet",
+  "edited": "bearbeitet",
   "bot": "Bot",
   "settings_description": "Verwalten Sie Ihre Konto-, Arbeitsbereichs- und Projekteinstellungen an einem Ort. Wechseln Sie zwischen den Tabs, um sie einfach zu konfigurieren.",
   "back_to_workspace": "Zurück zum Arbeitsbereich",
@@ -500,11 +500,11 @@
     "completed_at": "Abgeschlossen am",
     "layout": "Layout",
     "filters": "Filter",
-    "display": "Anzeigen",
+    "display": "Anzeige",
     "load_more": "Mehr laden",
     "activity": "Aktivität",
     "analytics": "Analysen",
-    "dates": "Daten",
+    "dates": "Termine",
     "success": "Erfolg!",
     "something_went_wrong": "Etwas ist schiefgelaufen",
     "error": {
@@ -826,12 +826,12 @@
   "attachment": {
     "error": "Datei konnte nicht angehängt werden. Bitte versuchen Sie es erneut.",
     "only_one_file_allowed": "Es kann jeweils nur eine Datei hochgeladen werden.",
-    "file_size_limit": "Die Datei muss kleiner als {size} MB sein.",
+    "file_size_limit": "Die Datei darf höchstens {size} MB groß sein.",
     "drag_and_drop": "Datei hierher ziehen, um sie hochzuladen",
     "delete": "Anhang löschen"
   },
   "label": {
-    "select": "Label auswählen",
+    "select": "Labels hinzufügen",
     "create": {
       "success": "Label erfolgreich erstellt",
       "failed": "Label konnte nicht erstellt werden",
@@ -840,7 +840,7 @@
     }
   },
   "view": {
-    "label": "{count, plural, one {Ansicht} few {Ansichten} other {Ansichten}}",
+    "label": "{count, plural, one {Ansicht} other {Ansichten}}",
     "create": {
       "label": "Ansicht erstellen"
     },
@@ -855,7 +855,7 @@
     },
     "member": {
       "title": "Mitglied",
-      "description": "Kann Entitäten lesen, schreiben, bearbeiten und löschen."
+      "description": "Kann Entitäten in Projekten, Zyklen und Modulen lesen, schreiben, bearbeiten und löschen."
     },
     "admin": {
       "title": "Administrator",
@@ -875,7 +875,7 @@
     "other": "Andere"
   },
   "default_global_view": {
-    "all_issues": "Alle Elemente",
+    "all_issues": "Alle Arbeitselemente",
     "assigned": "Zugewiesen",
     "created": "Erstellt",
     "subscribed": "Abonniert"
@@ -886,7 +886,7 @@
     "edited_by": "Bearbeitet von"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane ist nicht gestartet. Dies könnte daran liegen, dass einer oder mehrere Plane-Services nicht starten konnten.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane ist nicht gestartet. Dies könnte daran liegen, dass einer oder mehrere Pi-Plane-Services nicht starten konnten.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Wählen Sie View Logs aus setup.sh und Docker-Logs, um sicherzugehen."
   },
   "customize_navigation": "Navigation anpassen",
@@ -904,9 +904,9 @@
   "milestones": "Meilensteine",
   "milestones_description": "Meilensteine bieten eine Ebene, um Arbeitselemente auf gemeinsame Fertigstellungstermine auszurichten.",
   "file_upload": {
-    "upload_text": "Klicken Sie hier, um Datei hochzuladen",
-    "drag_drop_text": "Drag and Drop",
-    "processing": "Verarbeite",
+    "upload_text": "Klicken Sie hier, um eine Datei hochzuladen",
+    "drag_drop_text": "Ziehen und Ablegen",
+    "processing": "Wird verarbeitet",
     "invalid_file_type": "Ungültiger Dateityp",
     "missing_fields": "Fehlende Felder",
     "success": "{fileName} hochgeladen!"
@@ -1188,7 +1188,7 @@
     "auth_header": {
       "work_in_all_dimensions": "In allen Dimensionen arbeiten.",
       "welcome_back": "Willkommen zurück bei Pi-Plane.",
-      "create_your_account": "Erstellen Sie Ihr Plane-Konto."
+      "create_your_account": "Erstellen Sie Ihr Pi-Plane-Konto."
     },
     "auth_root": {
       "no_auth_methods_title": "Keine Authentifizierungsmethoden verfügbar",
@@ -1298,9 +1298,9 @@
     },
     "integrations": {
       "github_installed": "Aktivieren Sie GitHub in einzelnen Projekten, um mit bestimmten Repositories zu synchronisieren.",
-      "github_not_installed": "Verbinden Sie GitHub mit Ihrem Plane-Arbeitsbereich, um Arbeitselemente von Projekten zu synchronisieren.",
+      "github_not_installed": "Verbinden Sie GitHub mit Ihrem Pi-Plane-Arbeitsbereich, um Arbeitselemente von Projekten zu synchronisieren.",
       "slack_installed": "Aktivieren Sie Slack in einzelnen Projekten, um mit bestimmten Kanälen zu synchronisieren.",
-      "slack_not_installed": "Verbinden Sie Slack mit Ihrem Plane-Arbeitsbereich, um Arbeitselemente von Projekten zu synchronisieren.",
+      "slack_not_installed": "Verbinden Sie Slack mit Ihrem Pi-Plane-Arbeitsbereich, um Arbeitselemente von Projekten zu synchronisieren.",
       "deleted_title": "Erfolgreich gelöscht!",
       "deleted_message": "Die Integration {title} wurde erfolgreich gelöscht.",
       "delete_failed_message": "Die Integration {title} konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
@@ -1398,8 +1398,8 @@
     "stores": {
       "generic_error": "Ein Fehler ist aufgetreten",
       "inbox_fetch_error": "Beim Abrufen der Intake-Arbeitselemente ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
-      "page_make_public_error": "Die Seite konnte nicht mit dem Projekt geteilt werden. Bitte versuche es später erneut.",
-      "page_make_private_error": "Die Seite konnte nicht nur für dich sichtbar gemacht werden. Bitte versuche es später erneut.",
+      "page_make_public_error": "Die Seite konnte nicht mit dem Projekt geteilt werden. Bitte versuchen Sie es später erneut.",
+      "page_make_private_error": "Die Seite konnte nicht nur für Sie sichtbar gemacht werden. Bitte versuchen Sie es später erneut.",
       "workflow_pending_approval": "Das Arbeitselement wartet auf eine Genehmigung.",
       "workflow_transition_not_allowed": "Dieser Statusübergang ist laut Workflow nicht zulässig."
     },
@@ -1463,7 +1463,7 @@
     },
     "user_logged_in": {
       "title": "Super! Nur noch ein Schritt.",
-      "description": "Gib den geteilten Link zur Ansicht oder Seite, die du sehen möchtest, in die Adressleiste deines Browsers ein.",
+      "description": "Geben Sie den geteilten Link zur Ansicht oder Seite, die Sie sehen möchten, in die Adressleiste Ihres Browsers ein.",
       "image_alt": "Benutzer bereits angemeldet"
     },
     "auth_one_time_code": {
@@ -1475,7 +1475,7 @@
       "continue_with": "Weiter mit {provider}"
     },
     "issues": {
-      "shared_project_load_failed": "Dieses geteilte Projekt konnte nicht geladen werden. Bitte versuche es später erneut.",
+      "shared_project_load_failed": "Dieses geteilte Projekt konnte nicht geladen werden. Bitte versuchen Sie es später erneut.",
       "cycle_tooltip": "Zyklus: {name}",
       "no_cycle": "Kein Zyklus",
       "due_date_tooltip": "Fälligkeitsdatum: {date}",
