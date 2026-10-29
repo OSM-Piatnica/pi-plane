@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -18,10 +19,11 @@ from django.db import models
 from django.db.models.functions import Cast, Concat
 
 # Module imports
-from plane.db.models import Issue
+from plane.db.models import Issue, User
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.analytics_plot import build_graph_plot
 from plane.utils.email import generate_plain_text_from_html
+from plane.utils.email_i18n import DEFAULT_LANGUAGE, translate, user_language
 from plane.utils.exception_logger import log_exception
 from plane.utils.issue_filters import issue_filters
 from plane.utils.csv_utils import sanitize_csv_row
@@ -51,8 +53,10 @@ MODULE_ID = "issue_module__module_id"
 
 def send_export_email(email, slug, csv_buffer, rows):
     """Helper function to send export email."""
-    subject = "Your Export is ready"
-    html_content = render_to_string("emails/exports/analytics.html", {})
+    user = User.objects.filter(email=email).first()
+    language = user_language(user) if user else DEFAULT_LANGUAGE
+    subject = translate(language, "analytics_export.subject")
+    html_content = render_to_string("emails/exports/analytics.html", {"email_language": language})
     text_content = generate_plain_text_from_html(html_content)
 
     csv_buffer.seek(0)

@@ -110,6 +110,58 @@
     "info": "Mã này có hiệu lực trong 10 phút tới. Hãy nhập mã vào trang đăng nhập để hoàn tất đăng nhập.",
     "note": "Lưu ý: Email này được gửi đến <span>{email}</span>. Nếu bạn không mong đợi mã đăng nhập, bạn có thể bỏ qua thư này."
   },
+  "forgot_password": {
+    "subject": "Đã có yêu cầu mật khẩu mới cho tài khoản Pi-Plane của bạn",
+    "preheader": "Đặt lại mật khẩu Pi-Plane của bạn bằng liên kết an toàn này.",
+    "heading": "Đặt lại mật khẩu Pi-Plane của bạn",
+    "intro": "Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu Pi-Plane của bạn. Để đặt lại, hãy nhấp vào nút bên dưới.",
+    "button": "Đặt lại mật khẩu",
+    "note": "Lưu ý: Email này được gửi đến <span>{email}</span>. Nếu bạn không yêu cầu đặt lại mật khẩu, bạn có thể bỏ qua email này."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} đã mời bạn tham gia {workspace} trên Pi-Plane",
+    "preheader": "{inviter} đã mời bạn tham gia {workspace} trên Pi-Plane.",
+    "heading": "Tham gia {workspace} trên Pi-Plane",
+    "intro": "{inviter} đã mời bạn cộng tác trong không gian làm việc <strong>{workspace}</strong> trên Pi-Plane.",
+    "button": "Chấp nhận lời mời",
+    "note": "Lưu ý: Lời mời này dành cho <span>{email}</span>. Nếu bạn không mong đợi lời mời này, bạn có thể bỏ qua email này."
+  },
+  "account_activated": {
+    "subject": "{name} đã được kích hoạt trên Pi-Plane",
+    "heading": "Bạn đã trở lại Pi-Plane.",
+    "body": "Tài khoản của bạn đã được kích hoạt lại và bạn có thể truy cập lại các mục công việc cùng dữ liệu khác nếu dự án vẫn đang hoạt động. Bạn cũng có thể tạo không gian làm việc mới và bắt đầu thêm dự án.",
+    "button": "Đến Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "{name} đã bị vô hiệu hóa trên Pi-Plane",
+    "heading": "Bạn đã rời khỏi Pi-Plane.",
+    "body": "Bạn đã vô hiệu hóa tài khoản thành công. Các mục công việc, chu kỳ và dữ liệu dự án khác vẫn truy cập được nếu dự án còn hoạt động và có thành viên khác.",
+    "button": "Kích hoạt lại tài khoản"
+  },
+  "email_updated": {
+    "subject": "Đã cập nhật địa chỉ email Pi-Plane",
+    "body": "Bạn đã cập nhật thành công địa chỉ email Pi-Plane thành {email}.",
+    "login": "Giờ bạn có thể đăng nhập bằng địa chỉ email này."
+  },
+  "email_update_code": {
+    "subject": "Xác minh địa chỉ email mới của bạn"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook đã bị vô hiệu hóa",
+    "message": "Webhook {url} đã bị vô hiệu hóa do các yêu cầu thất bại.",
+    "button": "Xem webhook"
+  },
+  "analytics_export": {
+    "subject": "Bản xuất của bạn đã sẵn sàng",
+    "preheader": "Bản xuất dữ liệu Pi-Plane Analytics bạn yêu cầu được đính kèm dưới dạng tệp CSV.",
+    "heading": "Bản xuất Pi-Plane Analytics của bạn đã sẵn sàng",
+    "intro": "Bản xuất dữ liệu từ Pi-Plane Analytics mà bạn yêu cầu đã sẵn sàng. Chúng tôi đã đính kèm dưới dạng tệp CSV để thuận tiện cho bạn.",
+    "hint": "Bạn có thể mở tệp CSV trong bất kỳ bảng tính hoặc công cụ BI nào để phân tích dữ liệu, tạo báo cáo hoặc chia sẻ nhận định với nhóm của bạn."
+  },
+  "shared": {
+    "recipient_note": "Email này được gửi đến {email}. Vui lòng xóa nếu bạn không phải người nhận dự kiến.",
+    "fallback": "Nếu nút không hoạt động, hãy sao chép liên kết này và dán vào trình duyệt của bạn:"
+  },
   "workspace_admin_message": {
     "subject": "{sender} đã viết cho quản trị viên của {workspace}",
     "preheader": "{sender} đã gửi tin nhắn cho quản trị viên của {workspace} trên Pi-Plane.",

@@ -126,6 +126,58 @@
     "info": "Tento kód platí nasledujúcich 10 minút. Zadajte ho na prihlasovacej stránke a dokončite prihlásenie.",
     "note": "Poznámka: Tento e-mail bol odoslaný na adresu <span>{email}</span>. Ak ste prihlasovací kód nečakali, môžete túto správu ignorovať."
   },
+  "forgot_password": {
+    "subject": "Bolo vyžiadané nové heslo k vášmu účtu Pi-Plane",
+    "preheader": "Obnovte si heslo k Pi-Plane pomocou tohto zabezpečeného odkazu.",
+    "heading": "Obnovenie hesla k Pi-Plane",
+    "intro": "Dostali sme žiadosť o obnovenie vášho hesla k Pi-Plane. Heslo obnovíte kliknutím na tlačidlo nižšie.",
+    "button": "Obnoviť heslo",
+    "note": "Poznámka: Tento e-mail bol odoslaný na adresu <span>{email}</span>. Ak ste obnovenie hesla nečakali, môžete tento e-mail pokojne ignorovať."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} vás pozval(a) do priestoru {workspace} v Pi-Plane",
+    "preheader": "{inviter} vás pozval(a) do priestoru {workspace} v Pi-Plane.",
+    "heading": "Pripojte sa k priestoru {workspace} v Pi-Plane",
+    "intro": "{inviter} vás pozval(a) na spoluprácu v pracovnom priestore <strong>{workspace}</strong> v Pi-Plane.",
+    "button": "Prijať pozvánku",
+    "note": "Poznámka: Táto pozvánka bola určená pre <span>{email}</span>. Ak ste pozvánku nečakali, môžete tento e-mail ignorovať."
+  },
+  "account_activated": {
+    "subject": "Účet používateľa {name} bol v Pi-Plane aktivovaný",
+    "heading": "Ste späť v Pi-Plane.",
+    "body": "Váš účet bol znova aktivovaný a máte opäť prístup k svojim pracovným položkám a ďalším údajom, ak je projekt stále aktívny. Prípadne môžete vytvoriť nový pracovný priestor a začať do neho pridávať projekty.",
+    "button": "Prejsť do Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "Účet používateľa {name} bol v Pi-Plane deaktivovaný",
+    "heading": "Ste teraz mimo Pi-Plane.",
+    "body": "Svoj účet ste úspešne deaktivovali. Vaše pracovné položky, cykly a ďalšie údaje projektov zostanú dostupné, ak je projekt aktívny a sú v ňom ďalší členovia.",
+    "button": "Znova aktivovať účet"
+  },
+  "email_updated": {
+    "subject": "E-mailová adresa v Pi-Plane bola úspešne zmenená",
+    "body": "Úspešne ste zmenili svoju e-mailovú adresu v Pi-Plane na {email}.",
+    "login": "Teraz sa môžete prihlasovať pomocou tejto e-mailovej adresy."
+  },
+  "email_update_code": {
+    "subject": "Overte svoju novú e-mailovú adresu"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook bol deaktivovaný",
+    "message": "Webhook {url} bol deaktivovaný kvôli neúspešným požiadavkám.",
+    "button": "Zobraziť webhook"
+  },
+  "analytics_export": {
+    "subject": "Váš export je pripravený",
+    "preheader": "Vami požadovaný export údajov z Pi-Plane Analytics je priložený ako súbor CSV.",
+    "heading": "Váš export z Pi-Plane Analytics je pripravený",
+    "intro": "Vami požadovaný export údajov z Pi-Plane Analytics je hotový. Pre vaše pohodlie sme ho priložili ako súbor CSV.",
+    "hint": "Súbor CSV môžete otvoriť v ľubovoľnej tabuľke alebo BI nástroji, analyzovať údaje, vytvárať prehľady alebo zdieľať poznatky so svojím tímom."
+  },
+  "shared": {
+    "recipient_note": "Tento e-mail bol odoslaný na adresu {email}. Ak nie ste zamýšľaným príjemcom, vymažte ho.",
+    "fallback": "Ak tlačidlo nefunguje, skopírujte tento odkaz a vložte ho do prehliadača:"
+  },
   "workspace_admin_message": {
     "subject": "{sender} píše správcom priestoru {workspace}",
     "preheader": "{sender} poslal(a) správu správcom priestoru {workspace} v Pi-Plane.",

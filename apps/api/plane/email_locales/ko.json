@@ -110,6 +110,58 @@
     "info": "이 코드는 앞으로 10분 동안 유효합니다. 로그인 페이지에 입력하여 로그인을 완료하세요.",
     "note": "참고: 이 이메일은 <span>{email}</span>(으)로 전송되었습니다. 로그인 코드를 요청하지 않았다면 이 메시지를 무시하셔도 됩니다."
   },
+  "forgot_password": {
+    "subject": "Pi-Plane 계정의 새 비밀번호가 요청되었습니다",
+    "preheader": "이 보안 링크로 Pi-Plane 비밀번호를 재설정하세요.",
+    "heading": "Pi-Plane 비밀번호 재설정",
+    "intro": "Pi-Plane 비밀번호 재설정 요청을 받았습니다. 비밀번호를 재설정하려면 아래 버튼을 클릭하세요.",
+    "button": "비밀번호 재설정",
+    "note": "참고: 이 이메일은 <span>{email}</span>(으)로 발송되었습니다. 비밀번호 재설정을 요청하지 않으셨다면 이 이메일을 무시하셔도 됩니다."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter}님이 Pi-Plane의 {workspace}에 초대했습니다",
+    "preheader": "{inviter}님이 Pi-Plane의 {workspace}에 초대했습니다.",
+    "heading": "Pi-Plane의 {workspace}에 참여하기",
+    "intro": "{inviter}님이 Pi-Plane의 워크스페이스 <strong>{workspace}</strong>에서 함께 작업하도록 초대했습니다.",
+    "button": "초대 수락",
+    "note": "참고: 이 초대는 <span>{email}</span>님께 보낸 것입니다. 초대를 예상하지 못하셨다면 이 이메일을 무시하셔도 됩니다."
+  },
+  "account_activated": {
+    "subject": "{name}님이 Pi-Plane에서 활성화되었습니다",
+    "heading": "Pi-Plane에 다시 오신 것을 환영합니다.",
+    "body": "계정이 다시 활성화되었으며, 프로젝트가 아직 활성 상태라면 작업 항목과 기타 데이터에 다시 접근할 수 있습니다. 새 워크스페이스를 만들어 프로젝트를 추가할 수도 있습니다.",
+    "button": "Pi-Plane으로 이동"
+  },
+  "account_deactivated": {
+    "subject": "{name}님이 Pi-Plane에서 비활성화되었습니다",
+    "heading": "이제 Pi-Plane에서 나가셨습니다.",
+    "body": "계정을 비활성화했습니다. 프로젝트가 활성 상태이고 다른 멤버가 있다면 작업 항목, 사이클 및 기타 프로젝트 데이터에는 계속 접근할 수 있습니다.",
+    "button": "계정 다시 활성화"
+  },
+  "email_updated": {
+    "subject": "Pi-Plane 이메일 주소가 업데이트되었습니다",
+    "body": "Pi-Plane 이메일 주소를 {email}(으)로 업데이트했습니다.",
+    "login": "이제 이 이메일 주소로 로그인할 수 있습니다."
+  },
+  "email_update_code": {
+    "subject": "새 이메일 주소를 확인해 주세요"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook이 비활성화되었습니다",
+    "message": "Webhook {url}이(가) 요청 실패로 인해 비활성화되었습니다.",
+    "button": "Webhook 보기"
+  },
+  "analytics_export": {
+    "subject": "내보내기가 준비되었습니다",
+    "preheader": "요청하신 Pi-Plane Analytics 데이터 내보내기를 CSV 파일로 첨부했습니다.",
+    "heading": "Pi-Plane Analytics 내보내기가 준비되었습니다",
+    "intro": "요청하신 Pi-Plane Analytics 데이터 내보내기가 준비되었습니다. 편의를 위해 CSV 파일로 첨부했습니다.",
+    "hint": "CSV는 모든 스프레드시트나 BI 도구에서 열어 데이터를 분석하고, 보고서를 만들고, 팀과 인사이트를 공유할 수 있습니다."
+  },
+  "shared": {
+    "recipient_note": "이 이메일은 {email}(으)로 발송되었습니다. 수신 대상이 아니시라면 삭제해 주세요.",
+    "fallback": "버튼이 작동하지 않으면 이 링크를 복사하여 브라우저에 붙여넣으세요."
+  },
   "workspace_admin_message": {
     "subject": "{sender}님이 {workspace} 관리자에게 메시지를 보냈습니다",
     "preheader": "{sender}님이 Pi-Plane의 {workspace} 관리자에게 메시지를 보냈습니다.",

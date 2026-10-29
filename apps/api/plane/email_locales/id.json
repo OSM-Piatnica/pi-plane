@@ -110,6 +110,58 @@
     "info": "Kode ini berlaku selama 10 menit ke depan. Masukkan di halaman masuk untuk menyelesaikan proses masuk.",
     "note": "Catatan: Email ini dikirim ke <span>{email}</span>. Jika Anda tidak mengharapkan kode masuk, Anda dapat mengabaikan pesan ini."
   },
+  "forgot_password": {
+    "subject": "Kata sandi baru untuk akun Pi-Plane Anda telah diminta",
+    "preheader": "Setel ulang kata sandi Pi-Plane Anda dengan tautan aman ini.",
+    "heading": "Setel ulang kata sandi Pi-Plane Anda",
+    "intro": "Kami menerima permintaan untuk menyetel ulang kata sandi Pi-Plane Anda. Untuk menyetel ulang, klik tombol di bawah.",
+    "button": "Setel ulang kata sandi",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span>. Jika Anda tidak meminta penyetelan ulang kata sandi, Anda dapat mengabaikan email ini."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} mengundang Anda bergabung di {workspace} pada Pi-Plane",
+    "preheader": "{inviter} mengundang Anda bergabung di {workspace} pada Pi-Plane.",
+    "heading": "Bergabung dengan {workspace} di Pi-Plane",
+    "intro": "{inviter} mengundang Anda berkolaborasi di ruang kerja <strong>{workspace}</strong> pada Pi-Plane.",
+    "button": "Terima undangan",
+    "note": "Catatan: Undangan ini ditujukan untuk <span>{email}</span>. Jika Anda tidak mengharapkan undangan ini, Anda dapat mengabaikan email ini."
+  },
+  "account_activated": {
+    "subject": "{name} telah diaktifkan di Pi-Plane",
+    "heading": "Anda kembali di Pi-Plane.",
+    "body": "Akun Anda telah diaktifkan kembali dan Anda dapat mengakses item kerja dan data lainnya jika proyek masih aktif. Anda juga dapat membuat ruang kerja baru dan mulai menambahkan proyek.",
+    "button": "Buka Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "{name} telah dinonaktifkan di Pi-Plane",
+    "heading": "Anda keluar dari Pi-Plane.",
+    "body": "Anda berhasil menonaktifkan akun Anda. Item kerja, siklus, dan data proyek lainnya tetap dapat diakses selama proyek aktif dan memiliki anggota lain.",
+    "button": "Aktifkan kembali akun"
+  },
+  "email_updated": {
+    "subject": "Alamat email Pi-Plane berhasil diperbarui",
+    "body": "Anda berhasil memperbarui alamat email Pi-Plane Anda menjadi {email}.",
+    "login": "Sekarang Anda dapat masuk dengan alamat email ini."
+  },
+  "email_update_code": {
+    "subject": "Verifikasi alamat email baru Anda"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook dinonaktifkan",
+    "message": "Webhook {url} telah dinonaktifkan karena permintaan yang gagal.",
+    "button": "Lihat webhook"
+  },
+  "analytics_export": {
+    "subject": "Ekspor Anda sudah siap",
+    "preheader": "Ekspor data Pi-Plane Analytics yang Anda minta dilampirkan sebagai file CSV.",
+    "heading": "Ekspor Pi-Plane Analytics Anda sudah siap",
+    "intro": "Ekspor data dari Pi-Plane Analytics yang Anda minta sudah siap. Kami melampirkannya sebagai file CSV untuk kemudahan Anda.",
+    "hint": "Anda dapat membuka CSV di spreadsheet atau alat BI mana pun untuk menganalisis data, membuat laporan, atau membagikan wawasan dengan tim Anda."
+  },
+  "shared": {
+    "recipient_note": "Email ini dikirim ke {email}. Harap hapus jika Anda bukan penerima yang dituju.",
+    "fallback": "Jika tombol tidak berfungsi, salin tautan ini dan tempel di browser Anda:"
+  },
   "workspace_admin_message": {
     "subject": "{sender} menulis kepada admin {workspace}",
     "preheader": "{sender} mengirim pesan kepada admin {workspace} di Pi-Plane.",

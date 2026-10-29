@@ -110,6 +110,58 @@
     "info": "此验证码在接下来的 10 分钟内有效。请在登录页面输入以完成登录。",
     "note": "注意：此邮件发送至 <span>{email}</span>。如果您没有请求登录码，可以忽略此邮件。"
   },
+  "forgot_password": {
+    "subject": "已请求为您的 Pi-Plane 账户设置新密码",
+    "preheader": "通过此安全链接重置您的 Pi-Plane 密码。",
+    "heading": "重置您的 Pi-Plane 密码",
+    "intro": "我们收到了重置您 Pi-Plane 密码的请求。要重置密码，请点击下方按钮。",
+    "button": "重置密码",
+    "note": "注意：此邮件发送至 <span>{email}</span>。如果您没有请求重置密码，可以放心忽略此邮件。"
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} 邀请您加入 Pi-Plane 上的 {workspace}",
+    "preheader": "{inviter} 邀请您加入 Pi-Plane 上的 {workspace}。",
+    "heading": "加入 Pi-Plane 上的 {workspace}",
+    "intro": "{inviter} 邀请您在 Pi-Plane 的工作空间 <strong>{workspace}</strong> 中协作。",
+    "button": "接受邀请",
+    "note": "注意：此邀请发给 <span>{email}</span>。如果您没有预期收到此邀请，可以忽略此邮件。"
+  },
+  "account_activated": {
+    "subject": "{name} 已在 Pi-Plane 上激活",
+    "heading": "欢迎回到 Pi-Plane。",
+    "body": "您的账户已重新激活。如果项目仍处于活动状态，您现在可以访问您的工作项和其他数据。您也可以创建新的工作空间并开始添加项目。",
+    "button": "前往 Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "{name} 已在 Pi-Plane 上停用",
+    "heading": "您已退出 Pi-Plane。",
+    "body": "您已成功停用账户。如果项目处于活动状态且还有其他成员，您的工作项、周期和其他项目数据仍可访问。",
+    "button": "重新激活账户"
+  },
+  "email_updated": {
+    "subject": "Pi-Plane 邮箱地址已成功更新",
+    "body": "您已成功将 Pi-Plane 邮箱地址更新为 {email}。",
+    "login": "现在您可以使用此邮箱地址登录。"
+  },
+  "email_update_code": {
+    "subject": "验证您的新邮箱地址"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook 已停用",
+    "message": "Webhook {url} 因请求失败而被停用。",
+    "button": "查看 Webhook"
+  },
+  "analytics_export": {
+    "subject": "您的导出已就绪",
+    "preheader": "您请求的 Pi-Plane Analytics 数据导出已作为 CSV 文件附上。",
+    "heading": "您的 Pi-Plane Analytics 导出已就绪",
+    "intro": "您请求的 Pi-Plane Analytics 数据导出已就绪。为方便起见，我们已将其作为 CSV 文件附上。",
+    "hint": "您可以在任何电子表格或 BI 工具中打开 CSV，以分析数据、制作报表或与团队分享洞察。"
+  },
+  "shared": {
+    "recipient_note": "此邮件发送至 {email}。如果您不是预期收件人，请将其删除。",
+    "fallback": "如果按钮无法使用，请复制此链接并粘贴到浏览器中："
+  },
   "workspace_admin_message": {
     "subject": "{sender} 给 {workspace} 的管理员写了信",
     "preheader": "{sender} 在 Pi-Plane 上给 {workspace} 的管理员发了一条消息。",

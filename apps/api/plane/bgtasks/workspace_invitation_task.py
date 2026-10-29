@@ -17,6 +17,7 @@ from django.template.loader import render_to_string
 from plane.db.models import User, Workspace, WorkspaceMemberInvite
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.email import generate_plain_text_from_html
+from plane.utils.email_i18n import normalize_language, translate, user_language
 from plane.utils.exception_logger import log_exception
 
 
@@ -46,14 +47,21 @@ def workspace_invitation(email, workspace_id, token, current_site, inviter):
             EMAIL_FROM,
         ) = get_email_configuration()
 
+        inviter_name = user.first_name or user.display_name or user.email
+
+        # The invitee's own language when they already have an account, else the one chosen with the invitation
+        invitee = User.objects.filter(email=email).first()
+        language = user_language(invitee) if invitee else normalize_language(workspace_member_invite.language)
+
         # Subject of the email
-        subject = f"{user.first_name or user.display_name or user.email} has invited you to join them in {workspace.name} on Pi-Plane"  # noqa: E501
+        subject = translate(language, "workspace_invitation.subject", inviter=inviter_name, workspace=workspace.name)
 
         context = {
             "email": email,
-            "first_name": user.first_name or user.display_name or user.email,
+            "first_name": inviter_name,
             "workspace_name": workspace.name,
             "abs_url": abs_url,
+            "email_language": language,
         }
 
         html_content = render_to_string("emails/invitations/workspace_invitation.html", context)

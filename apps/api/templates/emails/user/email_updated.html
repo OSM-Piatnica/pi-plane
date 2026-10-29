@@ -1,3 +1,4 @@
+{% load email_i18n %}
 {% load email_assets %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html
@@ -10,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pi-Plane email address successfully updated</title>
+    <title>{% etr "email_updated.subject" %}</title>
     <style type="text/css" emogrify="no">
       #outlook a {
         padding: 0;
@@ -414,8 +415,8 @@
                                                     word-break: break-word;
                                                   "
                                                 >
-                                                  Pi-Plane email address successfully updated
-                                                </h2>
+                  {% etr "email_updated.subject" %}
+                </h2>
                                               </div>
                                             </td>
                                           </tr>
@@ -451,11 +452,10 @@
                                             >
                                               <div>
                                                 <p style="margin: 0">
-                                                  You have successfully updated your email address with Pi-Plane to
-                                                  <strong>{{email}}</strong>.
+                                                  {% etr "email_updated.body" email=email_strong %}
                                                 </p>
                                                 <p style="margin: 0; margin-top: 15px">
-                                                  You can now log in using this email address.
+                                                  {% etr "email_updated.login" %}
                                                 </p>
                                               </div>
                                             </td>
@@ -781,8 +781,7 @@
                                               <div>
                                                 <p style="margin: 0; font-size: 14px">
                                                   <span style="font-size: 12px"
-                                                    >This email was sent to {{email}}. Please delete if you aren't the
-                                                    intended recipient.</span
+                                                    >{% etr "shared.recipient_note" email=email %}</span
                                                   >
                                                 </p>
                                               </div>

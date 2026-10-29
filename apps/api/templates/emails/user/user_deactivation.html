@@ -1,3 +1,4 @@
+{% load email_i18n %}
 {% load email_assets %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html
@@ -10,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Pi-Plane account has been deactivated</title>
+    <title>{% etr "account_deactivated.heading" %}</title>
     <style type="text/css" emogrify="no">
       #outlook a {
         padding: 0;
@@ -514,7 +515,7 @@
                                         <div>
                                           <p style="margin: 0">
                                             <span style="font-family: Arial, helvetica, sans-serif; font-size: 32px"
-                                              ><strong>You are out of Pi-Plane now.</strong></span
+                                              ><strong>{% etr "account_deactivated.heading" %}</strong></span
                                             >
                                           </p>
                                         </div>
@@ -539,9 +540,7 @@
                                       >
                                         <div>
                                           <p style="margin: 0">
-                                            You have deactivated your account successfully. Your issues, cycles, and
-                                            other project data will still be accessible if the project is active and
-                                            there are other members in it.
+                                            {% etr "account_deactivated.body" %}
                                           </p>
                                         </div>
                                       </td>
@@ -609,7 +608,7 @@
                                                   font-size: 16px;
                                                 "
                                               >
-                                                <span>Reactivate account</span></a
+                                                <span>{% etr "account_deactivated.button" %}</span></a
                                               >
                                             </td>
                                           </tr>
@@ -1125,8 +1124,7 @@
                                               <div>
                                                 <p style="margin: 0; font-size: 14px">
                                                   <span style="font-size: 12px"
-                                                    >This email was sent to {{email}}. Please delete if you aren't the
-                                                    intended recipient.</span
+                                                    >{% etr "shared.recipient_note" email=email %}</span
                                                   >
                                                 </p>
                                               </div>

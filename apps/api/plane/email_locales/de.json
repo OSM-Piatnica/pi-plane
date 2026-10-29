@@ -118,6 +118,58 @@
     "info": "Dieser Code ist die nächsten 10 Minuten gültig. Geben Sie ihn auf der Anmeldeseite ein, um die Anmeldung abzuschließen.",
     "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet. Wenn Sie keinen Anmeldecode erwartet haben, können Sie diese Nachricht ignorieren."
   },
+  "forgot_password": {
+    "subject": "Für Ihr Pi-Plane-Konto wurde ein neues Passwort angefordert",
+    "preheader": "Setzen Sie Ihr Pi-Plane-Passwort mit diesem sicheren Link zurück.",
+    "heading": "Pi-Plane-Passwort zurücksetzen",
+    "intro": "Wir haben eine Anfrage zum Zurücksetzen Ihres Pi-Plane-Passworts erhalten. Klicken Sie dazu auf die Schaltfläche unten.",
+    "button": "Passwort zurücksetzen",
+    "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet. Wenn Sie kein neues Passwort angefordert haben, können Sie diese E-Mail ignorieren."
+  },
+  "workspace_invitation": {
+    "subject": "{inviter} hat Sie eingeladen, in {workspace} auf Pi-Plane mitzuarbeiten",
+    "preheader": "{inviter} hat Sie zu {workspace} auf Pi-Plane eingeladen.",
+    "heading": "{workspace} auf Pi-Plane beitreten",
+    "intro": "{inviter} hat Sie eingeladen, im Arbeitsbereich <strong>{workspace}</strong> auf Pi-Plane zusammenzuarbeiten.",
+    "button": "Einladung annehmen",
+    "note": "Hinweis: Diese Einladung war für <span>{email}</span> bestimmt. Wenn Sie keine Einladung erwartet haben, können Sie diese E-Mail ignorieren."
+  },
+  "account_activated": {
+    "subject": "{name} wurde auf Pi-Plane aktiviert",
+    "heading": "Willkommen zurück in Pi-Plane.",
+    "body": "Ihr Konto wurde reaktiviert, und Sie können wieder auf Ihre Arbeitselemente und weitere Daten zugreifen, sofern das Projekt noch aktiv ist. Alternativ können Sie einen neuen Arbeitsbereich erstellen und Projekte hinzufügen.",
+    "button": "Zu Pi-Plane"
+  },
+  "account_deactivated": {
+    "subject": "{name} wurde auf Pi-Plane deaktiviert",
+    "heading": "Sie haben Pi-Plane verlassen.",
+    "body": "Sie haben Ihr Konto erfolgreich deaktiviert. Ihre Arbeitselemente, Zyklen und weiteren Projektdaten bleiben zugänglich, solange das Projekt aktiv ist und weitere Mitglieder hat.",
+    "button": "Konto reaktivieren"
+  },
+  "email_updated": {
+    "subject": "Pi-Plane-E-Mail-Adresse erfolgreich aktualisiert",
+    "body": "Sie haben Ihre E-Mail-Adresse bei Pi-Plane erfolgreich auf {email} aktualisiert.",
+    "login": "Sie können sich jetzt mit dieser E-Mail-Adresse anmelden."
+  },
+  "email_update_code": {
+    "subject": "Bestätigen Sie Ihre neue E-Mail-Adresse"
+  },
+  "webhook_deactivated": {
+    "subject": "Webhook deaktiviert",
+    "message": "Der Webhook {url} wurde wegen fehlgeschlagener Anfragen deaktiviert.",
+    "button": "Webhook anzeigen"
+  },
+  "analytics_export": {
+    "subject": "Ihr Export ist fertig",
+    "preheader": "Der angeforderte Datenexport aus Pi-Plane Analytics ist als CSV-Datei angehängt.",
+    "heading": "Ihr Pi-Plane-Analytics-Export ist fertig",
+    "intro": "Der von Ihnen angeforderte Datenexport aus Pi-Plane Analytics ist fertig. Wir haben ihn Ihnen als CSV-Datei angehängt.",
+    "hint": "Sie können die CSV-Datei in jeder Tabellenkalkulation oder jedem BI-Tool öffnen, um die Daten zu analysieren, Berichte zu erstellen oder Erkenntnisse mit Ihrem Team zu teilen."
+  },
+  "shared": {
+    "recipient_note": "Diese E-Mail wurde an {email} gesendet. Bitte löschen Sie sie, wenn Sie nicht der vorgesehene Empfänger sind.",
+    "fallback": "Wenn die Schaltfläche nicht funktioniert, kopieren Sie diesen Link und fügen Sie ihn in Ihren Browser ein:"
+  },
   "workspace_admin_message": {
     "subject": "{sender} hat den Administratoren von {workspace} geschrieben",
     "preheader": "{sender} hat den Administratoren von {workspace} in Pi-Plane eine Nachricht geschickt.",

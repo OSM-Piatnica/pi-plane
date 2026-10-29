@@ -177,7 +177,7 @@ class UserEndpoint(BaseViewSet):
             cache.delete(f"{cache_key}:verify_attempts")
 
             # Send one-time code to the new email
-            send_email_update_one_time_code.delay(new_email, token)
+            send_email_update_one_time_code.delay(new_email, token, str(user.id))
 
             return Response(
                 {"message": "Verification code sent to email"},
@@ -269,9 +269,9 @@ class UserEndpoint(BaseViewSet):
         logout(request)
 
         # Send confirmation email to the new email address
-        send_email_update_confirmation.delay(new_email)
+        send_email_update_confirmation.delay(new_email, str(user.id))
         # send the email to the old email address
-        send_email_update_confirmation.delay(old_email)
+        send_email_update_confirmation.delay(old_email, str(user.id))
 
         # Return updated user data
         serialized_data = UserMeSerializer(user).data
