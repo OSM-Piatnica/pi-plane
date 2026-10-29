@@ -3,15 +3,15 @@
     "profile": {
       "change_email_modal": {
         "title": "E-Mail ändern",
-        "description": "Gib eine neue E-Mail-Adresse ein, um einen Verifizierungslink zu erhalten.",
+        "description": "Geben Sie eine neue E-Mail-Adresse ein, um einen Verifizierungslink zu erhalten.",
         "toasts": {
           "success_title": "Erfolg!",
-          "success_message": "E-Mail erfolgreich aktualisiert. Bitte melde dich erneut an."
+          "success_message": "E-Mail erfolgreich aktualisiert. Bitte melden Sie sich erneut an."
         },
         "form": {
           "email": {
             "label": "Neue E-Mail",
-            "placeholder": "Gib deine E-Mail ein",
+            "placeholder": "Geben Sie Ihre E-Mail ein",
             "errors": {
               "required": "E-Mail ist erforderlich",
               "invalid": "E-Mail ist ungültig",
@@ -22,7 +22,7 @@
           "code": {
             "label": "Einmalcode",
             "placeholder": "123456",
-            "helper_text": "Verifizierungscode wurde an deine neue E-Mail gesendet.",
+            "helper_text": "Der Verifizierungscode wurde an Ihre neue E-Mail gesendet.",
             "errors": {
               "required": "Einmalcode ist erforderlich",
               "invalid": "Ungültiger Verifizierungscode. Bitte versuche es erneut."
@@ -164,7 +164,7 @@
     "completion_percentage": "Fertigstellungsgrad",
     "first_day_project_default": "Projektstandard",
     "first_day_updated": "Erster Tag der Woche erfolgreich aktualisiert",
-    "try_again_later": "Bitte versuche es später erneut.",
+    "try_again_later": "Bitte versuchen Sie es später erneut.",
     "update_failed": "Aktualisierung fehlgeschlagen",
     "workload_not_started": "Nicht begonnen",
     "workload_working_on": "In Bearbeitung"

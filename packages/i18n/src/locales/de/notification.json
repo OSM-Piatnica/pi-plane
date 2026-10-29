@@ -107,14 +107,14 @@
   },
   "notification_ui": {
     "snooze_modal": {
-      "date_required": "Bitte wähle ein Datum aus",
+      "date_required": "Bitte wählen Sie ein Datum aus",
       "no_time_available": "Für dieses Datum ist keine Uhrzeit verfügbar.",
       "pick_date": "Datum auswählen",
       "pick_time": "Uhrzeit auswählen",
       "select_date": "Datum auswählen",
       "select_time": "Uhrzeit auswählen",
       "submitting": "Wird gesendet...",
-      "time_required": "Bitte wähle eine Uhrzeit aus",
+      "time_required": "Bitte wählen Sie eine Uhrzeit aus",
       "title": "Snooze-Zeit anpassen"
     }
   }

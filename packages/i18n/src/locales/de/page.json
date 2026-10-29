@@ -126,7 +126,7 @@
     },
     "content_limit_banner": {
       "dismiss": "Warnung zum Inhaltslimit schließen",
-      "message": "Das Inhaltslimit wurde erreicht und die Live-Synchronisierung ist deaktiviert. Erstelle eine neue Seite oder verwende verschachtelte Seiten, um weiter zu synchronisieren."
+      "message": "Das Inhaltslimit wurde erreicht und die Live-Synchronisierung ist deaktiviert. Erstellen Sie eine neue Seite oder verwenden Sie verschachtelte Seiten, um weiter zu synchronisieren."
     },
     "create_modal": {
       "creating": "Wird erstellt",
@@ -134,7 +134,7 @@
       "title": "Seite erstellen"
     },
     "delete_modal": {
-      "content_prefix": "Möchtest du die Seite wirklich löschen:",
+      "content_prefix": "Möchten Sie die Seite wirklich löschen:",
       "content_suffix": "? Die Seite wird dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
       "error": "Die Seite konnte nicht gelöscht werden. Bitte versuche es erneut.",
       "success": "Seite erfolgreich gelöscht.",
@@ -166,13 +166,13 @@
       "unlocked": "Entsperrt"
     },
     "not_found": {
-      "description": "Die Seite, auf die du zugreifen möchtest, existiert nicht oder du hast keine Berechtigung, sie anzuzeigen.",
+      "description": "Die Seite, auf die Sie zugreifen möchten, existiert nicht oder Sie haben keine Berechtigung, sie anzuzeigen.",
       "title": "Seite nicht gefunden",
       "view_other_pages": "Andere Seiten anzeigen"
     },
     "offline": {
-      "description": "Du kannst weiterhin Änderungen vornehmen. Sie werden synchronisiert, sobald du wieder online bist.",
-      "heading": "Du bist offline.",
+      "description": "Sie können weiterhin Änderungen vornehmen. Sie werden synchronisiert, sobald Sie wieder online sind.",
+      "heading": "Sie sind offline.",
       "label": "Offline"
     },
     "operations": {

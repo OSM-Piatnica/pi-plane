@@ -83,7 +83,7 @@
   },
   "project_create": {
     "advanced": {
-      "description": "Regeln und Beziehungstypen. Du kannst sie später in den Workflow-Einstellungen des Projekts ändern.",
+      "description": "Regeln und Beziehungstypen. Sie können sie später in den Workflow-Einstellungen des Projekts ändern.",
       "title": "Erweiterte Optionen"
     },
     "features": {
@@ -173,7 +173,7 @@
       "transitions_configured": "Übergänge konfiguriert",
       "relation_types": {
         "heading": "Beziehungstypen",
-        "description": "Lege fest, welche Beziehungen in diesem Projekt hinzugefügt werden können. Blockieren ist immer verfügbar, und bestehende Beziehungen bleiben beim Deaktivieren eines Typs erhalten.",
+        "description": "Legen Sie fest, welche Beziehungen in diesem Projekt hinzugefügt werden können. Blockieren ist immer verfügbar, und bestehende Beziehungen bleiben beim Deaktivieren eines Typs erhalten.",
         "schedule": {
           "description": "Beginnt vor, endet vor und beginnt vor Ende, mit optionalem Abstand in Tagen.",
           "title": "Terminabhängigkeiten"

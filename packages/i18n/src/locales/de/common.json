@@ -865,7 +865,7 @@
     "edited_by": "Bearbeitet von"
   },
   "self_hosted_maintenance_message": {
-    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane ist nicht gestartet. Dies könnte daran liegen, dass einer oder mehrere Plane-Services nicht starten konnten.",
+    "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane ist nicht gestartet. Dies könnte daran liegen, dass einer oder mehrere Pi-Plane-Services nicht starten konnten.",
     "choose_view_logs_from_setup_sh_and_docker_logs_to_be_sure": "Wählen Sie View Logs aus setup.sh und Docker-Logs, um sicherzugehen."
   },
   "customize_navigation": "Navigation anpassen",
@@ -1167,7 +1167,7 @@
     "auth_header": {
       "work_in_all_dimensions": "In allen Dimensionen arbeiten.",
       "welcome_back": "Willkommen zurück bei Pi-Plane.",
-      "create_your_account": "Erstellen Sie Ihr Plane-Konto."
+      "create_your_account": "Erstellen Sie Ihr Pi-Plane-Konto."
     },
     "auth_root": {
       "no_auth_methods_title": "Keine Authentifizierungsmethoden verfügbar",
@@ -1277,9 +1277,9 @@
     },
     "integrations": {
       "github_installed": "Aktivieren Sie GitHub in einzelnen Projekten, um mit bestimmten Repositories zu synchronisieren.",
-      "github_not_installed": "Verbinden Sie GitHub mit Ihrem Plane-Arbeitsbereich, um Arbeitselemente von Projekten zu synchronisieren.",
+      "github_not_installed": "Verbinden Sie GitHub mit Ihrem Pi-Plane-Arbeitsbereich, um Arbeitselemente von Projekten zu synchronisieren.",
       "slack_installed": "Aktivieren Sie Slack in einzelnen Projekten, um mit bestimmten Kanälen zu synchronisieren.",
-      "slack_not_installed": "Verbinden Sie Slack mit Ihrem Plane-Arbeitsbereich, um Arbeitselemente von Projekten zu synchronisieren.",
+      "slack_not_installed": "Verbinden Sie Slack mit Ihrem Pi-Plane-Arbeitsbereich, um Arbeitselemente von Projekten zu synchronisieren.",
       "deleted_title": "Erfolgreich gelöscht!",
       "deleted_message": "Die Integration {title} wurde erfolgreich gelöscht.",
       "delete_failed_message": "Die Integration {title} konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
@@ -1378,7 +1378,7 @@
       "generic_error": "Ein Fehler ist aufgetreten",
       "inbox_fetch_error": "Beim Abrufen der Intake-Arbeitselemente ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
       "page_make_public_error": "Die Seite konnte nicht mit dem Projekt geteilt werden. Bitte versuche es später erneut.",
-      "page_make_private_error": "Die Seite konnte nicht nur für dich sichtbar gemacht werden. Bitte versuche es später erneut.",
+      "page_make_private_error": "Die Seite konnte nicht nur für Sie sichtbar gemacht werden. Bitte versuchen Sie es später erneut.",
       "workflow_pending_approval": "Das Arbeitselement wartet auf eine Genehmigung.",
       "workflow_transition_not_allowed": "Dieser Statusübergang ist laut Workflow nicht zulässig."
     },
@@ -1442,7 +1442,7 @@
     },
     "user_logged_in": {
       "title": "Super! Nur noch ein Schritt.",
-      "description": "Gib den geteilten Link zur Ansicht oder Seite, die du sehen möchtest, in die Adressleiste deines Browsers ein.",
+      "description": "Geben Sie den geteilten Link zur Ansicht oder Seite, die Sie sehen möchten, in die Adressleiste Ihres Browsers ein.",
       "image_alt": "Benutzer bereits angemeldet"
     },
     "auth_one_time_code": {

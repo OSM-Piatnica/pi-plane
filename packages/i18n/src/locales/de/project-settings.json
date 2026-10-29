@@ -87,7 +87,7 @@
         "updated": {
           "success": {
             "title": "Schätzung geändert",
-            "message": "Die Schätzung wurde in deinem Projekt aktualisiert."
+            "message": "Die Schätzung wurde in Ihrem Projekt aktualisiert."
           },
           "error": {
             "title": "Schätzungsänderung fehlgeschlagen",
@@ -133,7 +133,7 @@
       },
       "validation": {
         "min_length": "Die Schätzung muss größer als 0 sein.",
-        "unable_to_process": "Wir können deine Anfrage nicht verarbeiten, bitte versuche es erneut.",
+        "unable_to_process": "Wir können Ihre Anfrage nicht verarbeiten, bitte versuchen Sie es erneut.",
         "numeric": "Die Schätzung muss ein numerischer Wert sein.",
         "character": "Die Schätzung muss ein Zeichenwert sein.",
         "empty": "Der Schätzungswert darf nicht leer sein.",
@@ -357,7 +357,7 @@
         },
         "email": {
           "title": "E-Mail",
-          "description": "Sammeln Sie neue Arbeitselemente von allen, die eine E-Mail an eine Plane-E-Mail-Adresse senden.",
+          "description": "Sammeln Sie neue Arbeitselemente von allen, die eine E-Mail an eine Pi-Plane-E-Mail-Adresse senden.",
           "fieldName": "E-Mail-ID"
         },
         "form": {

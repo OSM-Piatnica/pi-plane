@@ -89,9 +89,9 @@
     "create_success": "Arbeitselement erfolgreich erstellt.",
     "created_date": "Erstellungsdatum",
     "delete_failed": "Arbeitselement konnte nicht gelöscht werden",
-    "editor_processing": "Der Editor verarbeitet noch Änderungen. Bitte warte, bevor du fortfährst.",
+    "editor_processing": "Der Editor verarbeitet noch Änderungen. Bitte warten Sie, bevor Sie fortfahren.",
     "empty_closed": {
-      "description": "Hier findest du alle Arbeitselemente, egal ob akzeptiert oder abgelehnt.",
+      "description": "Hier finden Sie alle Arbeitselemente, egal ob akzeptiert oder abgelehnt.",
       "title": "Noch keine Anfrage abgeschlossen"
     },
     "errors": {
