@@ -5,6 +5,8 @@
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from .base import BaseModel
 
@@ -87,3 +89,13 @@ class UserGroupMember(BaseModel):
 
     def __str__(self):
         return f"{self.group_id} {self.user_id}"
+
+
+@receiver(post_save, sender="db.WorkspaceMember")
+def mirror_stored_groups_on_join(sender, instance, created, **kwargs):
+    """A person who joins a workspace gets the groups their identity provider reported at their last sign-in."""
+    if not created or not instance.is_active:
+        return
+    from plane.utils.user_group_sync import sync_workspace_from_stored
+
+    sync_workspace_from_stored(instance.member, instance.workspace_id)

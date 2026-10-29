@@ -6,6 +6,9 @@
 
 import uuid
 
+from plane.db.models import GroupSource
+
+from . import groups
 from .spec import OidcClaimsError, OidcConfigField, OidcIdentity, OidcProviderSpec
 
 
@@ -32,6 +35,7 @@ class EntraSpec(OidcProviderSpec):
             icon="microsoft",
             # tid:oid already names the tenant
             scope_subject_to_issuer=False,
+            group_source=GroupSource.ENTRA,
             fields=(
                 OidcConfigField(
                     name="TENANT_ID",
@@ -39,8 +43,26 @@ class EntraSpec(OidcProviderSpec):
                     required=True,
                     help="The GUID of your Microsoft Entra tenant. Only people of this tenant can sign in.",
                 ),
+                OidcConfigField(
+                    name="SYNC_GROUPS",
+                    label="Read groups at sign-in",
+                    default="0",
+                    help=(
+                        "Set to 1 to mirror each person's Entra groups as user groups that are managed outside. "
+                        "Asks for the Microsoft Graph permission User.Read, which people grant at sign-in."
+                    ),
+                ),
             ),
         )
+
+    def reads_groups(self, config):
+        return str(config.get("SYNC_GROUPS")) == "1"
+
+    def request_scopes(self, config):
+        return f"{self.scopes} {groups.ENTRA_GROUPS_SCOPE}" if self.reads_groups(config) else self.scopes
+
+    def fetch_groups(self, *, access_token, email, config):
+        return groups.fetch_entra_groups(access_token)
 
     def _tenant(self, config):
         try:
@@ -87,14 +109,48 @@ class GoogleSpec(OidcProviderSpec):
             key="google-oidc",
             name="Google",
             icon="google",
+            group_source=GroupSource.GOOGLE,
             fields=(
                 OidcConfigField(
                     name="HOSTED_DOMAIN",
                     label="Google Workspace domain",
                     help="Optional. Only accounts of this Workspace domain (the hd claim) can sign in.",
                 ),
+                OidcConfigField(
+                    name="SYNC_GROUPS",
+                    label="Read groups at sign-in",
+                    default="0",
+                    help=(
+                        "Set to 1 to mirror each person's Google Workspace groups as user groups that are managed "
+                        "outside. Needs the service account and admin e-mail below."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_ADMIN_EMAIL",
+                    label="Workspace admin to read groups as",
+                    help="A Workspace admin the service account acts as (domain-wide delegation).",
+                ),
+                OidcConfigField(
+                    name="GROUPS_SERVICE_ACCOUNT",
+                    label="Service account key (JSON)",
+                    secret=True,
+                    help=(
+                        "A service account key with domain-wide delegation of the scope "
+                        "https://www.googleapis.com/auth/admin.directory.group.readonly."
+                    ),
+                ),
             ),
         )
+
+    def reads_groups(self, config):
+        return (
+            str(config.get("SYNC_GROUPS")) == "1"
+            and bool(config.get("GROUPS_ADMIN_EMAIL"))
+            and bool(config.get("GROUPS_SERVICE_ACCOUNT"))
+        )
+
+    def fetch_groups(self, *, access_token, email, config):
+        return groups.fetch_google_groups(email, config.get("GROUPS_SERVICE_ACCOUNT"), config.get("GROUPS_ADMIN_EMAIL"))
 
     def issuer(self, config):
         return "https://accounts.google.com"

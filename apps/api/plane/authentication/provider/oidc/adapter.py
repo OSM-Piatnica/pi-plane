@@ -13,6 +13,7 @@ from django.utils import timezone
 from plane.authentication.adapter.error import AUTHENTICATION_ERROR_CODES, AuthenticationException
 from plane.authentication.adapter.oauth import OauthAdapter
 from plane.db.models import Account, User, WorkspaceMemberInvite
+from plane.utils.user_group_sync import sync_external_groups
 
 from . import client
 from .spec import OidcClaimsError
@@ -48,7 +49,7 @@ class OidcProvider(OauthAdapter):
             request,
             spec.key,
             self.config["CLIENT_ID"],
-            spec.scopes,
+            spec.request_scopes(self.config),
             redirect_uri,
             None,
             None,
@@ -58,6 +59,8 @@ class OidcProvider(OauthAdapter):
             callback=callback,
         )
         self.state = state
+        # Only held for the length of this sign-in, to read the person's groups once they are let in
+        self._provider_access_token = None
         # The user an existing account is being linked to (see find_existing_user); None for everybody else
         self.linking_user = None
         # Runs once the sign-in has committed, so that nothing is queued for a user that the rollback then removes
@@ -122,7 +125,9 @@ class OidcProvider(OauthAdapter):
             # The message holds the stage and, for a refusal, the provider's own error code and description only
             self.logger.warning("Sign-in with %s refused: %s", self.provider, exc)
             raise _error("OIDC_PROVIDER_ERROR")
-        # Only who the person is gets kept: the tokens are not needed after this point
+        # Only who the person is gets kept: the tokens are not needed after this point, except the one that reads groups
+        if self.spec.reads_groups(self.config):
+            self._provider_access_token = token_response.get("access_token")
         super().set_token_data({"claims": claims})
 
     def set_user_data(self):
@@ -165,13 +170,32 @@ class OidcProvider(OauthAdapter):
         try:
             # The user, the binding and the profile are created together or not at all
             with transaction.atomic():
-                return self.complete_login_or_signup()
+                user = self.complete_login_or_signup()
+                self._sync_groups(user)
+                return user
         except IntegrityError as exc:
             # A concurrent sign-in of the same person won the race
             # only the primary message of the database: its detail would quote the values (email addresses)
             reason = getattr(getattr(exc.__cause__, "diag", None), "message_primary", type(exc).__name__)
             self.logger.warning("Sign-in with %s hit a database conflict: %s", self.provider, reason)
             raise _error("OIDC_PROVIDER_ERROR")
+
+    def _sync_groups(self, user):
+        """Mirror the person's groups at the provider; a failure here never stops them signing in."""
+        if not self.spec.group_source or not self.spec.reads_groups(self.config):
+            return
+        try:
+            with transaction.atomic():
+                groups = self.spec.fetch_groups(
+                    access_token=self._provider_access_token,
+                    email=self.user_data["email"],
+                    config=self.config,
+                )
+                sync_external_groups(user, self.spec.group_source, groups)
+        except Exception as exc:  # noqa: BLE001 - signing in matters more than the groups
+            self.logger.warning("Groups of a %s sign-in not mirrored: %s", self.provider, type(exc).__name__)
+        finally:
+            self._provider_access_token = None
 
     # ---- hooks of Adapter.complete_login_or_signup ---------------------------------------------------------------
     def find_existing_user(self, email):

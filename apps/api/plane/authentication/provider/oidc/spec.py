@@ -55,6 +55,8 @@ class OidcProviderSpec:
     # The subject is only unique per issuer: bind it together with the issuer unless it already carries its own scope
     scope_subject_to_issuer: bool = True
     fields: tuple = field(default_factory=tuple)  # extra OidcConfigField settings
+    # The kind of user group this provider's groups become (a GroupSource value); empty when it has none
+    group_source: str = ""
 
     # ---- settings -------------------------------------------------------------------------------------------------
     @property
@@ -99,6 +101,18 @@ class OidcProviderSpec:
 
     def display_name(self, config):
         return self.name
+
+    def request_scopes(self, config):
+        """The scopes asked for at sign-in; a provider that also reads groups asks for what that needs."""
+        return self.scopes
+
+    def reads_groups(self, config):
+        """Whether the person's groups at the provider are read at sign-in (switched on and fully set up)."""
+        return False
+
+    def fetch_groups(self, *, access_token, email, config):
+        """The person's groups (a list of ExternalGroup), or None when they could not be read."""
+        return None
 
     # ---- protocol -------------------------------------------------------------------------------------------------
     def issuer(self, config):

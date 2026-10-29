@@ -12,6 +12,7 @@ from urllib.parse import parse_qs, urlparse
 
 import jwt
 import pytest
+from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from django.core.cache import cache
 from django.test import Client
@@ -19,8 +20,18 @@ from django.urls import reverse
 from django.utils import timezone
 
 from plane.authentication.adapter.error import AUTHENTICATION_ERROR_CODES
+from plane.authentication.provider.oidc import client as oidc_client
 from plane.authentication.provider.oidc.registry import enabled_oidc_providers, oidc_config_variables
-from plane.db.models import Account, User
+from plane.db.models import (
+    Account,
+    GroupRole,
+    GroupSource,
+    User,
+    UserGroup,
+    UserGroupMember,
+    Workspace,
+    WorkspaceMember,
+)
 from plane.license.models import Instance
 
 TENANT = "11111111-2222-3333-4444-555555555555"
@@ -68,6 +79,9 @@ class FakeIdp:
         self.token_status = 200
         self.token_payload = None
         self.oversized_keys = False
+        # url prefix -> handler(url, kwargs) returning the JSON the provider's API answers with
+        self.api = {}
+        self.api_calls = []
 
     def fetch(self, method, url, **kwargs):
         if url.endswith("/.well-known/openid-configuration"):
@@ -88,6 +102,10 @@ class FakeIdp:
             if self.token_status != 200:
                 return FakeResponse(self.token_payload, status=self.token_status)
             return FakeResponse({"id_token": self.id_token, "access_token": "secret-access", "refresh_token": "r"})
+        for prefix, handler in self.api.items():
+            if url.startswith(prefix):
+                self.api_calls.append((method, url, kwargs))
+                return FakeResponse(handler(url, kwargs))
         raise AssertionError(f"unexpected fetch {url}")
 
 
@@ -570,3 +588,263 @@ class TestIssuerScopedBinding:
         assert "_auth_user_id" in client.session
         assert User.objects.get(id=client.session["_auth_user_id"]).email == "mallory@piatnica.com.pl"
         assert Account.objects.filter(provider="oidc").count() == 2
+
+
+# ---- groups mirrored from the provider ----------------------------------------------------------------------
+EMAIL = "ala.kowalska@piatnica.com.pl"
+GRAPH = "https://graph.microsoft.com/v1.0/me/transitiveMemberOf/microsoft.graph.group"
+GROUP_A = "11111111-0000-0000-0000-00000000000a"
+GROUP_B = "11111111-0000-0000-0000-00000000000b"
+
+
+@pytest.fixture
+def groups_on():
+    CONFIG["ENTRA_SYNC_GROUPS"] = "1"
+
+
+def _graph(*groups):
+    return lambda url, kwargs: {"value": [{"id": group_id, "displayName": name} for group_id, name in groups]}
+
+
+def _person(workspace=None):
+    user = User.objects.create(email=EMAIL, username="ala")
+    if workspace is not None:
+        WorkspaceMember.objects.create(workspace=workspace, member=user, role=15)
+    return user
+
+
+def _entra_groups(workspace):
+    return {
+        group.external_id: group for group in UserGroup.objects.filter(workspace=workspace, source=GroupSource.ENTRA)
+    }
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestEntraGroups:
+    def test_groups_are_only_requested_when_switched_on(self, instance, idp):
+        client = Client()
+        off = parse_qs(urlparse(client.get(reverse("oidc-initiate", args=["entra"])).url).query)
+        CONFIG["ENTRA_SYNC_GROUPS"] = "1"
+        on = parse_qs(urlparse(Client().get(reverse("oidc-initiate", args=["entra"])).url).query)
+
+        assert off["scope"] == ["openid profile email"]
+        assert on["scope"] == ["openid profile email https://graph.microsoft.com/User.Read"]
+
+    def test_nothing_is_read_from_graph_when_switched_off(self, instance, idp, workspace):
+        _person(workspace)
+        idp.api["https://graph.microsoft.com/"] = _graph((GROUP_A, "Sales"))
+
+        sign_in(idp)
+
+        assert idp.api_calls == []
+        assert UserGroup.objects.filter(source=GroupSource.ENTRA).count() == 0
+
+    def test_a_sign_in_mirrors_the_groups_in_every_workspace_of_the_person(self, instance, idp, groups_on, workspace):
+        other = Workspace.objects.create(name="Other", slug="other", owner=workspace.owner)
+        user = _person(workspace)
+        WorkspaceMember.objects.create(workspace=other, member=user, role=5)
+        idp.api["https://graph.microsoft.com/"] = _graph((GROUP_A, "Sales"), (GROUP_B, "Poland"))
+
+        _, response, _ = sign_in(idp)
+
+        assert "error_code" not in response.url
+        for place in (workspace, other):
+            groups = _entra_groups(place)
+            assert {group.name for group in groups.values()} == {"Sales", "Poland"}
+            assert set(
+                UserGroupMember.objects.filter(workspace=place, user=user).values_list("group__external_id", flat=True)
+            ) == {GROUP_A, GROUP_B}
+        # Graph is asked with the person's own token, nowhere else
+        method, url, kwargs = idp.api_calls[0]
+        assert url == GRAPH and kwargs["headers"]["Authorization"] == "Bearer secret-access"
+
+    def test_the_mirrored_membership_is_marked_as_managed_outside(self, instance, idp, groups_on, workspace):
+        user = _person(workspace)
+        idp.api["https://graph.microsoft.com/"] = _graph((GROUP_A, "Sales"))
+
+        sign_in(idp)
+
+        membership = UserGroupMember.objects.get(user=user)
+        assert membership.managed_externally and membership.role == GroupRole.MEMBER
+        assert membership.group.is_external
+
+    def test_leaving_a_group_at_the_provider_removes_only_that_membership(self, instance, idp, groups_on, workspace):
+        user = _person(workspace)
+        local = UserGroup.objects.create(workspace=workspace, name="Local")
+        UserGroupMember.objects.create(workspace=workspace, group=local, user=user)
+        idp.api["https://graph.microsoft.com/"] = _graph((GROUP_A, "Sales"), (GROUP_B, "Poland"))
+        sign_in(idp)
+
+        idp.api["https://graph.microsoft.com/"] = _graph((GROUP_A, "Sales"))
+        sign_in(idp)
+
+        remaining = set(UserGroupMember.objects.filter(user=user).values_list("group__name", flat=True))
+        assert remaining == {"Sales", "Local"}
+        # The group itself stays: work items may be assigned to it
+        assert UserGroup.objects.filter(external_id=GROUP_B).exists()
+
+    def test_a_group_renamed_at_the_provider_is_renamed_here(self, instance, idp, groups_on, workspace):
+        _person(workspace)
+        idp.api["https://graph.microsoft.com/"] = _graph((GROUP_A, "Sales"))
+        sign_in(idp)
+
+        idp.api["https://graph.microsoft.com/"] = _graph((GROUP_A, "Sales team"))
+        sign_in(idp)
+
+        assert UserGroup.objects.filter(source=GroupSource.ENTRA).get().name == "Sales team"
+
+    def test_a_name_that_is_taken_is_clarified_instead_of_failing_the_sign_in(
+        self, instance, idp, groups_on, workspace
+    ):
+        _person(workspace)
+        UserGroup.objects.create(workspace=workspace, name="Sales")
+        idp.api["https://graph.microsoft.com/"] = _graph((GROUP_A, "Sales"))
+
+        _, response, _ = sign_in(idp)
+
+        assert "error_code" not in response.url
+        assert _entra_groups(workspace)[GROUP_A].name == "Sales (Entra)"
+
+    def test_graph_failing_does_not_stop_the_sign_in_and_keeps_what_was_mirrored(
+        self, instance, idp, groups_on, workspace
+    ):
+        user = _person(workspace)
+        idp.api["https://graph.microsoft.com/"] = _graph((GROUP_A, "Sales"))
+        sign_in(idp)
+
+        def broken(url, kwargs):
+            raise oidc_client.OidcProtocolError("down")
+
+        idp.api["https://graph.microsoft.com/"] = broken
+        with patch("plane.authentication.provider.oidc.client.get_json_with_bearer", side_effect=broken):
+            client, response, _ = sign_in(idp)
+
+        assert "error_code" not in response.url
+        assert client.session["_auth_user_id"] == str(user.id)
+        assert UserGroupMember.objects.filter(user=user, managed_externally=True).count() == 1
+
+    def test_a_person_in_no_group_any_more_leaves_them_all(self, instance, idp, groups_on, workspace):
+        user = _person(workspace)
+        idp.api["https://graph.microsoft.com/"] = _graph((GROUP_A, "Sales"))
+        sign_in(idp)
+
+        idp.api["https://graph.microsoft.com/"] = _graph()
+        sign_in(idp)
+
+        assert UserGroupMember.objects.filter(user=user).count() == 0
+
+    def test_graph_paging_is_followed_but_never_to_another_host(self, instance, idp, groups_on, workspace):
+        _person(workspace)
+        pages = iter(
+            [
+                {
+                    "value": [{"id": GROUP_A, "displayName": "Sales"}],
+                    "@odata.nextLink": "https://graph.microsoft.com/v1.0/next",
+                },
+                {"value": [{"id": GROUP_B, "displayName": "Poland"}]},
+            ]
+        )
+        idp.api["https://graph.microsoft.com/"] = lambda url, kwargs: next(pages)
+
+        sign_in(idp)
+
+        assert set(_entra_groups(workspace)) == {GROUP_A, GROUP_B}
+
+        evil = {"value": [{"id": "x", "displayName": "X"}], "@odata.nextLink": "https://evil.example.com/steal"}
+        idp.api["https://graph.microsoft.com/"] = lambda url, kwargs: evil
+        sign_in(idp)
+
+        assert all("evil" not in call[1] for call in idp.api_calls)
+        # Not read in full, so what was mirrored stays
+        assert set(_entra_groups(workspace)) == {GROUP_A, GROUP_B}
+
+    def test_a_person_who_joins_a_workspace_later_gets_the_groups_of_their_last_sign_in(
+        self, instance, idp, groups_on, workspace
+    ):
+        user = _person()
+        idp.api["https://graph.microsoft.com/"] = _graph((GROUP_A, "Sales"))
+        sign_in(idp)
+        assert UserGroup.objects.filter(source=GroupSource.ENTRA).count() == 0
+
+        WorkspaceMember.objects.create(workspace=workspace, member=user, role=15)
+
+        assert set(_entra_groups(workspace)) == {GROUP_A}
+        assert UserGroupMember.objects.filter(user=user, managed_externally=True).count() == 1
+
+
+GOOGLE_KEY = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+SERVICE_ACCOUNT = json.dumps(
+    {
+        "client_email": "reader@project.iam.gserviceaccount.com",
+        "private_key": GOOGLE_KEY.private_bytes(
+            serialization.Encoding.PEM,
+            serialization.PrivateFormat.PKCS8,
+            serialization.NoEncryption(),
+        ).decode(),
+    }
+)
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestGoogleGroups:
+    @pytest.fixture(autouse=True)
+    def _google(self):
+        CONFIG.update(
+            {
+                "IS_GOOGLE_OIDC_ENABLED": "1",
+                "GOOGLE_OIDC_CLIENT_ID": CLIENT_ID,
+                "GOOGLE_OIDC_CLIENT_SECRET": "s",
+                "GOOGLE_OIDC_SYNC_GROUPS": "1",
+                "GOOGLE_OIDC_GROUPS_ADMIN_EMAIL": "admin@piatnica.com.pl",
+                "GOOGLE_OIDC_GROUPS_SERVICE_ACCOUNT": SERVICE_ACCOUNT,
+            }
+        )
+
+    @pytest.fixture
+    def google_idp(self):
+        fake = FakeIdp(issuer="https://accounts.google.com")
+        fake.api["https://oauth2.googleapis.com/token"] = lambda url, kwargs: {"access_token": "workspace-token"}
+        with patch("plane.authentication.provider.oidc.client.pinned_fetch", side_effect=fake.fetch):
+            yield fake
+
+    def _sign_in(self, idp):
+        claims = {"iss": "https://accounts.google.com", "email_verified": True, "tid": None, "oid": None}
+        return sign_in(idp, provider="google-oidc", token_kwargs=claims)
+
+    def test_groups_are_read_with_the_service_account_acting_as_the_admin(self, instance, google_idp, workspace):
+        user = _person(workspace)
+        google_idp.api["https://admin.googleapis.com/"] = lambda url, kwargs: {
+            "groups": [{"id": "g1", "name": "Sales", "email": "sales@piatnica.com.pl"}]
+        }
+
+        _, response, _ = self._sign_in(google_idp)
+
+        assert "error_code" not in response.url
+        group = UserGroup.objects.get(source=GroupSource.GOOGLE)
+        assert group.name == "Sales" and group.external_id == "g1"
+        assert UserGroupMember.objects.filter(user=user, group=group, managed_externally=True).exists()
+        token_call = next(call for call in google_idp.api_calls if call[1].endswith("/token"))
+        assert token_call[2]["data"]["grant_type"] == "urn:ietf:params:oauth:grant-type:jwt-bearer"
+        groups_call = next(call for call in google_idp.api_calls if "admin.googleapis.com" in call[1])
+        assert groups_call[2]["params"]["userKey"] == EMAIL
+        assert groups_call[2]["headers"]["Authorization"] == "Bearer workspace-token"
+
+    def test_nothing_is_read_without_the_service_account(self, instance, google_idp, workspace):
+        CONFIG["GOOGLE_OIDC_GROUPS_SERVICE_ACCOUNT"] = ""
+        _person(workspace)
+
+        _, response, _ = self._sign_in(google_idp)
+
+        assert "error_code" not in response.url
+        assert google_idp.api_calls == []
+
+    def test_a_broken_service_account_key_does_not_stop_the_sign_in(self, instance, google_idp, workspace):
+        CONFIG["GOOGLE_OIDC_GROUPS_SERVICE_ACCOUNT"] = "not json"
+        _person(workspace)
+
+        _, response, _ = self._sign_in(google_idp)
+
+        assert "error_code" not in response.url
+        assert UserGroup.objects.filter(source=GroupSource.GOOGLE).count() == 0

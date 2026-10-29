@@ -23,7 +23,7 @@ def _members_url(group):
 
 
 def _person(workspace, email, role=15):
-    user = User.objects.create(email=email, first_name=email.split("@")[0])
+    user = User.objects.create(email=email, username=email, first_name=email.split("@")[0])
     WorkspaceMember.objects.create(workspace=workspace, member=user, role=role)
     return user
 
@@ -50,7 +50,7 @@ class TestGroupsAsWorkspaceAdmin:
         child = session_client.post(GROUPS, {"name": "Poland", "parent": top.data["id"]}, format="json")
 
         assert top.status_code == 201 and child.status_code == 201
-        assert child.data["parent"] == top.data["id"]
+        assert str(child.data["parent"]) == str(top.data["id"])
         assert session_client.delete(f"{GROUPS}{child.data['id']}/").status_code == 204
         assert session_client.delete(f"{GROUPS}{top.data['id']}/").status_code == 204
         assert UserGroup.objects.filter(workspace=workspace).count() == 0
@@ -112,7 +112,7 @@ class TestGroupsAsWorkspaceAdmin:
         assert session_client.get(_members_url(sales)).data == []
 
     def test_only_workspace_members_can_join_and_twice_is_a_conflict(self, session_client, workspace):
-        outsider = User.objects.create(email="out@example.com")
+        outsider = User.objects.create(email="out@example.com", username="out")
         member = _person(workspace, "in@example.com")
         group = _group(workspace, "Sales")
 
