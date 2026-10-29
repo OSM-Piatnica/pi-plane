@@ -550,7 +550,7 @@
           "projects": "Zugriff auf Projekte und alle projektbezogenen Entitäten",
           "wiki": "Zugriff auf Wiki und alle wiki-bezogenen Entitäten",
           "workspaces": "Zugriff auf Arbeitsbereiche und alle arbeitsbereichsbezogenen Entitäten",
-          "stickies": "Zugriff auf Stickies und alle sticky-bezogenen Entitäten",
+          "stickies": "Zugriff auf Haftnotizen und alle damit verbundenen Entitäten",
           "profile": "Zugriff auf Benutzerprofilinformationen",
           "agents": "Zugriff auf Agenten und alle agentenbezogenen Entitäten",
           "assets": "Zugriff auf Assets und alle asset-bezogenen Entitäten"

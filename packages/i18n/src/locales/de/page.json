@@ -44,32 +44,32 @@
     },
     "toasts": {
       "errors": {
-        "wrong_name": "Der Notizname darf nicht länger als 100 Zeichen sein.",
-        "already_exists": "Es existiert bereits eine Notiz ohne Beschreibung"
+        "wrong_name": "Der Name der Haftnotiz darf nicht länger als 100 Zeichen sein.",
+        "already_exists": "Es existiert bereits eine Haftnotiz ohne Beschreibung"
       },
       "created": {
-        "title": "Notiz erstellt",
-        "message": "Die Notiz wurde erfolgreich erstellt"
+        "title": "Haftnotiz erstellt",
+        "message": "Die Haftnotiz wurde erfolgreich erstellt"
       },
       "not_created": {
-        "title": "Notiz nicht erstellt",
-        "message": "Die Notiz konnte nicht erstellt werden"
+        "title": "Haftnotiz nicht erstellt",
+        "message": "Die Haftnotiz konnte nicht erstellt werden"
       },
       "updated": {
-        "title": "Notiz aktualisiert",
-        "message": "Die Notiz wurde erfolgreich aktualisiert"
+        "title": "Haftnotiz aktualisiert",
+        "message": "Die Haftnotiz wurde erfolgreich aktualisiert"
       },
       "not_updated": {
-        "title": "Notiz nicht aktualisiert",
-        "message": "Die Notiz konnte nicht aktualisiert werden"
+        "title": "Haftnotiz nicht aktualisiert",
+        "message": "Die Haftnotiz konnte nicht aktualisiert werden"
       },
       "removed": {
-        "title": "Notiz entfernt",
-        "message": "Die Notiz wurde erfolgreich entfernt"
+        "title": "Haftnotiz entfernt",
+        "message": "Die Haftnotiz wurde erfolgreich entfernt"
       },
       "not_removed": {
-        "title": "Notiz nicht entfernt",
-        "message": "Die Notiz konnte nicht entfernt werden"
+        "title": "Haftnotiz nicht entfernt",
+        "message": "Die Haftnotiz konnte nicht entfernt werden"
       }
     },
     "open_button": "Navigationsbereich öffnen",

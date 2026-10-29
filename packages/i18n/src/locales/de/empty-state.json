@@ -174,12 +174,12 @@
       "title": "Richten Sie Intake ein, um eingehende Anfragen zu verwalten und zu verfolgen, wie sie akzeptiert und abgelehnt werden"
     },
     "home_widget_stickies": {
-      "title": "Notieren Sie eine Idee, erfassen Sie einen Aha-Moment oder halten Sie einen Geistesblitz fest. Fügen Sie eine Notiz hinzu, um zu beginnen."
+      "title": "Notieren Sie eine Idee, erfassen Sie einen Aha-Moment oder halten Sie einen Geistesblitz fest. Fügen Sie eine Haftnotiz hinzu, um zu beginnen."
     },
     "stickies": {
       "title": "Ideen sofort festhalten",
-      "description": "Erstellen Sie Notizen für schnelle Notizen und Aufgaben und behalten Sie sie überall bei sich.",
-      "cta_primary": "Erste Notiz erstellen",
+      "description": "Erstellen Sie Haftnotizen für schnelle Notizen und Aufgaben und behalten Sie sie überall bei sich.",
+      "cta_primary": "Erste Haftnotiz erstellen",
       "cta_secondary": "Dokumentation"
     },
     "active_cycles": {
