@@ -4,6 +4,9 @@
 # Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
+# Python imports
+import pytz
+
 # Third party imports
 from rest_framework import serializers
 
@@ -45,6 +48,9 @@ ISSUE_EXPORT_FIELD_GROUPS = {
     "relations": ("parent", "relations", "links"),
     "other": ("custom_properties", "comments"),
 }
+# Columns that are written whenever their parent column is: the cycle period travels with the cycle
+# name so that an import can recreate the cycle, and needs no entry of its own in the export form.
+ISSUE_EXPORT_COMPANION_FIELDS = {"cycles": ("cycle_start_date", "cycle_end_date")}
 ISSUE_EXPORT_OPTIONAL_FIELDS = tuple(field for group in ISSUE_EXPORT_FIELD_GROUPS.values() for field in group)
 
 
@@ -76,6 +82,9 @@ def resolve_issue_export_fields(selected):
         raise InvalidIssueExportFields(f"Unknown export fields: {', '.join(unknown)}", unknown)
 
     wanted = set(selected) | set(ISSUE_EXPORT_REQUIRED_FIELDS)
+    for parent, companions in ISSUE_EXPORT_COMPANION_FIELDS.items():
+        if parent in wanted:
+            wanted.update(companions)
     return [name for name in IssueExportSerializer.Meta.fields if name in wanted]
 
 
@@ -103,6 +112,8 @@ class IssueExportSerializer(IssueSerializer):
     parent = serializers.SerializerMethodField()
     labels = serializers.SerializerMethodField()
     cycles = serializers.SerializerMethodField()
+    cycle_start_date = serializers.SerializerMethodField()
+    cycle_end_date = serializers.SerializerMethodField()
     modules = serializers.SerializerMethodField()
     comments = serializers.SerializerMethodField()
     estimate = serializers.SerializerMethodField()
@@ -143,6 +154,8 @@ class IssueExportSerializer(IssueSerializer):
             "estimate",
             "labels",
             "cycles",
+            "cycle_start_date",
+            "cycle_end_date",
             "modules",
             "custom_properties",
             "links",
@@ -181,6 +194,21 @@ class IssueExportSerializer(IssueSerializer):
 
     def get_cycles(self, obj):
         return [ic.cycle.name for ic in obj.issue_cycle.all()]
+
+    @staticmethod
+    def _cycle_day(obj, field):
+        """The date of the first cycle's start/end in the project's timezone, where a cycle day begins and ends."""
+        cycle_link = next(iter(obj.issue_cycle.all()), None)
+        moment = getattr(cycle_link.cycle, field, None) if cycle_link else None
+        if moment is None:
+            return ""
+        return moment.astimezone(pytz.timezone(obj.project.timezone or "UTC")).date().isoformat()
+
+    def get_cycle_start_date(self, obj):
+        return self._cycle_day(obj, "start_date")
+
+    def get_cycle_end_date(self, obj):
+        return self._cycle_day(obj, "end_date")
 
     def get_modules(self, obj):
         return [im.module.name for im in obj.issue_module.all()]
