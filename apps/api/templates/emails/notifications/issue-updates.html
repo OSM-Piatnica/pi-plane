@@ -3,7 +3,8 @@ Copyright (c) 2023-present Plane Software, Inc. and contributors
 SPDX-License-Identifier: AGPL-3.0-only
 Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 See the LICENSE file for details.
-{% endcomment %}{% load email_i18n %}
+{% endcomment %}
+{% load email_assets %}{% load email_i18n %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html
   xmlns="http://www.w3.org/1999/xhtml"
@@ -55,7 +56,7 @@ See the LICENSE file for details.
           <tr>
             <td>
               <div style="margin-left: 30px; margin-bottom: 20px; margin-top: 20px">
-                <img src="https://media.docs.plane.so/logo/new-logo-white.png" width="150" border="0" />
+                {% email_logo "white" 150 %}
               </div>
             </td>
           </tr>
@@ -738,7 +739,7 @@ See the LICENSE file for details.
               {% etr "issue_updates.footer" email=receiver.email issue_url=issue_url preferences_url=user_preference link_style="color: #3a5bc7; text-decoration: none" %}
               <!-- Github | LinkedIn | Twitter -->
               <div style="margin-top: 60px; float: right">
-                <a href="https://github.com/makeplane" target="_blank" style="margin-left: 10px; text-decoration: none">
+                <a href="https://github.com/OSM-Piatnica/pi-plane" target="_blank" style="margin-left: 10px; text-decoration: none">
                   <img
                     src="https://creative-assets.mailinblue.com/editor/social-icons/rounded_colored/github_32px.png"
                     width="25"
@@ -747,28 +748,8 @@ See the LICENSE file for details.
                     style="display: inline-block"
                   />
                 </a>
-                <a
-                  href="https://www.linkedin.com/company/planepowers/"
-                  target="_blank"
-                  style="margin-left: 10px; text-decoration: none"
-                >
-                  <img
-                    src="https://creative-assets.mailinblue.com/editor/social-icons/rounded_colored/linkedin_32px.png"
-                    width="25"
-                    height="25"
-                    border="0"
-                    style="display: inline-block"
-                  />
-                </a>
-                <a href="https://x.com/planepowers" target="_blank" style="margin-left: 10px; text-decoration: none">
-                  <img
-                    src="https://creative-assets.mailinblue.com/editor/social-icons/rounded_colored/twitter_32px.png"
-                    width="25"
-                    height="25"
-                    border="0"
-                    style="display: inline-block"
-                  />
-                </a>
+                
+                
               </div>
             </div>
           </td>

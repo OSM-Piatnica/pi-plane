@@ -241,6 +241,15 @@
   "documentation": "Dokumentasi",
   "message_support": "Pesan dukungan",
   "contact_sales": "Hubungi penjualan",
+  "contact_workspace_admins": {
+    "menu_label": "Hubungi admin",
+    "title": "Hubungi admin ruang kerja",
+    "description": "Admin {workspace} menambahkan orang, mengubah peran, dan membantu soal akses. Tulis email kepada mereka dengan aplikasi email Anda.",
+    "email_all": "Kirim email ke semua admin",
+    "subject": "Pertanyaan untuk admin {workspace}",
+    "body": "Halo,\n\n\n\n{name}",
+    "no_email_addresses": "Peran Anda tidak menampilkan alamat email. Mintalah alamat admin kepada seseorang di tim Anda."
+  },
   "hyper_mode": "Mode Hyper",
   "keyboard_shortcuts": "Pintasan keyboard",
   "whats_new": "Apa yang baru?",

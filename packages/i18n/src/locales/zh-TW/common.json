@@ -241,6 +241,15 @@
   "documentation": "文件",
   "message_support": "聯絡支援",
   "contact_sales": "聯絡業務",
+  "contact_workspace_admins": {
+    "menu_label": "聯絡工作區管理員",
+    "title": "聯絡工作區管理員",
+    "description": "{workspace} 的管理員負責新增成員、變更角色並協助處理存取權限。您可以用郵件應用程式寫信給他們。",
+    "email_all": "寄信給所有管理員",
+    "subject": "給 {workspace} 管理員的問題",
+    "body": "您好，\n\n\n\n{name}",
+    "no_email_addresses": "您的角色不會顯示電子郵件地址。請向團隊中的人詢問管理員的電子郵件地址。"
+  },
   "hyper_mode": "極速模式",
   "keyboard_shortcuts": "鍵盤快速鍵",
   "whats_new": "新功能",

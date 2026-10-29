@@ -241,6 +241,15 @@
   "documentation": "Documentación",
   "message_support": "Mensaje al soporte",
   "contact_sales": "Contactar ventas",
+  "contact_workspace_admins": {
+    "menu_label": "Contactar con los administradores",
+    "title": "Contactar con los administradores del espacio de trabajo",
+    "description": "Los administradores de {workspace} agregan personas, cambian roles y ayudan con el acceso. Escríbales con su aplicación de correo.",
+    "email_all": "Enviar correo a todos los administradores",
+    "subject": "Consulta para los administradores de {workspace}",
+    "body": "Hola:\n\n\n\n{name}",
+    "no_email_addresses": "Su rol no muestra direcciones de correo. Pida a alguien de su equipo la dirección de un administrador."
+  },
   "hyper_mode": "Modo Hyper",
   "keyboard_shortcuts": "Atajos de teclado",
   "whats_new": "¿Qué hay de nuevo?",

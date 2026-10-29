@@ -241,6 +241,15 @@
   "documentation": "Dokumentation",
   "message_support": "Support kontaktieren",
   "contact_sales": "Vertrieb kontaktieren",
+  "contact_workspace_admins": {
+    "menu_label": "Administratoren kontaktieren",
+    "title": "Administratoren des Arbeitsbereichs kontaktieren",
+    "description": "Die Administratoren von {workspace} fügen Personen hinzu, ändern Rollen und helfen beim Zugriff. Schreiben Sie ihnen mit Ihrer E-Mail-App.",
+    "email_all": "E-Mail an alle Administratoren",
+    "subject": "Frage an die Administratoren von {workspace}",
+    "body": "Guten Tag,\n\n\n\n{name}",
+    "no_email_addresses": "Ihre Rolle zeigt keine E-Mail-Adressen an. Fragen Sie jemanden in Ihrem Team nach der Adresse eines Administrators."
+  },
   "hyper_mode": "Hyper-Modus",
   "keyboard_shortcuts": "Tastaturkürzel",
   "whats_new": "Was ist neu?",

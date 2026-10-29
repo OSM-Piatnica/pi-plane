@@ -241,6 +241,15 @@
   "documentation": "文档",
   "message_support": "联系支持",
   "contact_sales": "联系销售",
+  "contact_workspace_admins": {
+    "menu_label": "联系工作空间管理员",
+    "title": "联系工作空间管理员",
+    "description": "{workspace} 的管理员负责添加成员、更改角色并协助处理访问权限。您可以用邮件应用给他们写信。",
+    "email_all": "给所有管理员发邮件",
+    "subject": "给 {workspace} 管理员的问题",
+    "body": "您好，\n\n\n\n{name}",
+    "no_email_addresses": "您的角色不显示邮箱地址。请向团队中的人询问管理员的邮箱地址。"
+  },
   "hyper_mode": "超级模式",
   "keyboard_shortcuts": "键盘快捷键",
   "whats_new": "新功能",

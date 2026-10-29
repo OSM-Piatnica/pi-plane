@@ -241,6 +241,15 @@
   "documentation": "Documentație",
   "message_support": "Trimite mesaj la suport",
   "contact_sales": "Contactează vânzările",
+  "contact_workspace_admins": {
+    "menu_label": "Contactați administratorii",
+    "title": "Contactați administratorii spațiului de lucru",
+    "description": "Administratorii din {workspace} adaugă persoane, schimbă roluri și ajută cu accesul. Scrieți-le cu aplicația dumneavoastră de e-mail.",
+    "email_all": "Trimiteți e-mail tuturor administratorilor",
+    "subject": "Întrebare pentru administratorii din {workspace}",
+    "body": "Bună ziua,\n\n\n\n{name}",
+    "no_email_addresses": "Rolul dumneavoastră nu afișează adresele de e-mail. Rugați pe cineva din echipă să vă dea adresa unui administrator."
+  },
   "hyper_mode": "Mod Hyper",
   "keyboard_shortcuts": "Scurtături tastatură",
   "whats_new": "Ce e nou?",

@@ -241,6 +241,15 @@
   "documentation": "Documentation",
   "message_support": "Message support",
   "contact_sales": "Contact sales",
+  "contact_workspace_admins": {
+    "menu_label": "Contact workspace admins",
+    "title": "Contact workspace admins",
+    "description": "The admins of {workspace} add people, change roles and help with access. Write to them with your email app.",
+    "email_all": "Email all admins",
+    "subject": "Question for the admins of {workspace}",
+    "body": "Hello,\n\n\n\n{name}",
+    "no_email_addresses": "Your role does not show email addresses. Ask someone in your team for an admin's address."
+  },
   "hyper_mode": "Hyper Mode",
   "keyboard_shortcuts": "Keyboard shortcuts",
   "whats_new": "What's new?",

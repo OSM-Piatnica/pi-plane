@@ -241,6 +241,15 @@
   "documentation": "Dokumentacja",
   "message_support": "Skontaktuj się z pomocą",
   "contact_sales": "Skontaktuj się z działem sprzedaży",
+  "contact_workspace_admins": {
+    "menu_label": "Skontaktuj się z administratorami",
+    "title": "Skontaktuj się z administratorami przestrzeni roboczej",
+    "description": "Administratorzy przestrzeni {workspace} dodają osoby, zmieniają role i pomagają w dostępie. Proszę napisać do nich w swojej aplikacji pocztowej.",
+    "email_all": "Napisz do wszystkich administratorów",
+    "subject": "Pytanie do administratorów przestrzeni {workspace}",
+    "body": "Dzień dobry,\n\n\n\n{name}",
+    "no_email_addresses": "Państwa rola nie pokazuje adresów e-mail. Proszę poprosić kogoś z zespołu o adres administratora."
+  },
   "hyper_mode": "Tryb Hyper",
   "keyboard_shortcuts": "Skróty klawiaturowe",
   "whats_new": "Co nowego?",

@@ -241,6 +241,15 @@
   "documentation": "Documentatie",
   "message_support": "Bericht naar support",
   "contact_sales": "Contact met sales",
+  "contact_workspace_admins": {
+    "menu_label": "Beheerders contacteren",
+    "title": "Beheerders van de werkruimte contacteren",
+    "description": "De beheerders van {workspace} voegen mensen toe, wijzigen rollen en helpen met toegang. Schrijf ze met uw e-mailapp.",
+    "email_all": "E-mail alle beheerders",
+    "subject": "Vraag voor de beheerders van {workspace}",
+    "body": "Goedendag,\n\n\n\n{name}",
+    "no_email_addresses": "Uw rol toont geen e-mailadressen. Vraag iemand in uw team om het adres van een beheerder."
+  },
   "hyper_mode": "Hypermodus",
   "keyboard_shortcuts": "Sneltoetsen",
   "whats_new": "Wat is er nieuw?",

@@ -241,6 +241,15 @@
   "documentation": "Dokumentace",
   "message_support": "Kontaktovat podporu",
   "contact_sales": "Kontaktovat prodej",
+  "contact_workspace_admins": {
+    "menu_label": "Kontaktovat správce prostoru",
+    "title": "Kontaktovat správce pracovního prostoru",
+    "description": "Správci prostoru {workspace} přidávají lidi, mění role a pomáhají s přístupem. Napište jim ve své e-mailové aplikaci.",
+    "email_all": "Napsat všem správcům",
+    "subject": "Dotaz pro správce prostoru {workspace}",
+    "body": "Dobrý den,\n\n\n\n{name}",
+    "no_email_addresses": "Vaše role nezobrazuje e-mailové adresy. Požádejte někoho ze svého týmu o adresu správce."
+  },
   "hyper_mode": "Hyper režim",
   "keyboard_shortcuts": "Klávesové zkratky",
   "whats_new": "Co je nového?",
