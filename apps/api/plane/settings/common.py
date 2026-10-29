@@ -477,6 +477,11 @@ SPACE_BASE_PATH = os.environ.get("SPACE_BASE_PATH", "/spaces/")
 
 # App Base URL
 APP_BASE_URL = os.environ.get("APP_BASE_URL", None)
+
+# The mark at the top of the emails, as images for light backgrounds and for the dark header of the digest-style
+# emails (https only). Left empty, the emails show the name in type, which needs no hosting.
+EMAIL_LOGO_URL = os.environ.get("EMAIL_LOGO_URL", "")
+EMAIL_LOGO_URL_ON_DARK = os.environ.get("EMAIL_LOGO_URL_ON_DARK", "")
 if APP_BASE_URL and not is_valid_url(APP_BASE_URL):
     APP_BASE_URL = None
 APP_BASE_PATH = os.environ.get("APP_BASE_PATH", "/")
