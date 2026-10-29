@@ -14,6 +14,7 @@ from django.utils import timezone
 
 # Third Party imports
 from rest_framework import status
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 
 # Module imports
@@ -44,6 +45,7 @@ from plane.db.models import (
 )
 from plane.db.models.intake import IntakeIssueStatus
 from plane.utils.host import base_host
+from plane.utils.space import is_space_enabled
 from plane.utils.order_queryset import PROJECT_ORDER_BY_ALLOWLIST, sanitize_order_by
 
 
@@ -568,6 +570,11 @@ class DeployBoardViewSet(BaseViewSet):
             entity_identifier=self.kwargs.get("project_id"),
             project_id=self.kwargs.get("project_id"),
         )
+
+    def initial(self, request, *args, **kwargs):
+        super().initial(request, *args, **kwargs)
+        if not is_space_enabled():
+            raise PermissionDenied("Web sharing is turned off on this instance.")
 
     def list(self, request, slug, project_id):
         project_deploy_board = DeployBoard.objects.filter(
