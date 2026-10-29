@@ -4,6 +4,7 @@
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
+import { PI_PLANE_DOCS_URL, PI_PLANE_RELEASES_URL } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 
 // ui
@@ -18,7 +19,7 @@ export function ProductUpdatesFooter() {
       <DialogInfo>
         <div className="flex items-center gap-2">
           <a
-            href="https://go.plane.so/p-docs"
+            href={PI_PLANE_DOCS_URL}
             target="_blank"
             className="text-13 text-secondary underline-offset-1 outline-none hover:text-primary hover:underline"
             rel="noreferrer"
@@ -29,7 +30,7 @@ export function ProductUpdatesFooter() {
             <circle cx={1} cy={1} r={1} />
           </svg>
           <a
-            href="https://go.plane.so/p-changelog"
+            href={PI_PLANE_RELEASES_URL}
             target="_blank"
             className="text-13 text-secondary underline-offset-1 outline-none hover:text-primary hover:underline"
             rel="noreferrer"
@@ -46,17 +47,6 @@ export function ProductUpdatesFooter() {
             rel="noreferrer"
           >
             {t("support")}
-          </a>
-          <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
-            <circle cx={1} cy={1} r={1} />
-          </svg>
-          <a
-            href="https://forum.plane.so"
-            target="_blank"
-            className="text-13 text-secondary underline-offset-1 outline-none hover:text-primary hover:underline"
-            rel="noreferrer"
-          >
-            {t("forum")}
           </a>
         </div>
       </DialogInfo>

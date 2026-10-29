@@ -241,6 +241,15 @@
   "documentation": "ドキュメント",
   "message_support": "サポートにメッセージ",
   "contact_sales": "営業に問い合わせ",
+  "contact_workspace_admins": {
+    "menu_label": "ワークスペース管理者に連絡",
+    "title": "ワークスペース管理者に連絡",
+    "description": "{workspace} の管理者は、メンバーの追加、ロールの変更、アクセスのサポートを行います。お使いのメールアプリで連絡できます。",
+    "email_all": "すべての管理者にメールを送る",
+    "subject": "{workspace} の管理者への質問",
+    "body": "お世話になっております。\n\n\n\n{name}",
+    "no_email_addresses": "お使いのロールではメールアドレスが表示されません。チームの誰かに管理者のアドレスを尋ねてください。"
+  },
   "hyper_mode": "ハイパーモード",
   "keyboard_shortcuts": "キーボードショートカット",
   "whats_new": "新機能",

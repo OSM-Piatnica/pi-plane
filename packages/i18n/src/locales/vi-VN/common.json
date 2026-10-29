@@ -241,6 +241,15 @@
   "documentation": "Tài liệu",
   "message_support": "Liên hệ hỗ trợ",
   "contact_sales": "Liên hệ bộ phận bán hàng",
+  "contact_workspace_admins": {
+    "menu_label": "Liên hệ quản trị viên",
+    "title": "Liên hệ quản trị viên của không gian làm việc",
+    "description": "Quản trị viên của {workspace} thêm người, thay đổi vai trò và hỗ trợ về quyền truy cập. Hãy viết cho họ bằng ứng dụng email của bạn.",
+    "email_all": "Gửi email cho tất cả quản trị viên",
+    "subject": "Câu hỏi gửi quản trị viên của {workspace}",
+    "body": "Xin chào,\n\n\n\n{name}",
+    "no_email_addresses": "Vai trò của bạn không hiển thị địa chỉ email. Hãy hỏi một người trong nhóm để lấy địa chỉ của quản trị viên."
+  },
   "hyper_mode": "Chế độ siêu tốc",
   "keyboard_shortcuts": "Phím tắt",
   "whats_new": "Có gì mới",

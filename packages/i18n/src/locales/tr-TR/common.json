@@ -241,6 +241,15 @@
   "documentation": "Dokümantasyon",
   "message_support": "Destekle iletişim",
   "contact_sales": "Satış Ekibiyle İletişim",
+  "contact_workspace_admins": {
+    "menu_label": "Yöneticilerle iletişime geç",
+    "title": "Çalışma alanı yöneticileriyle iletişime geç",
+    "description": "{workspace} yöneticileri kişi ekler, rolleri değiştirir ve erişimle ilgili yardımcı olur. E-posta uygulamanızla onlara yazabilirsiniz.",
+    "email_all": "Tüm yöneticilere e-posta gönder",
+    "subject": "{workspace} yöneticilerine soru",
+    "body": "Merhaba,\n\n\n\n{name}",
+    "no_email_addresses": "Rolünüz e-posta adreslerini göstermiyor. Ekibinizden birinden bir yöneticinin adresini isteyin."
+  },
   "hyper_mode": "Hiper Mod",
   "keyboard_shortcuts": "Klavye Kısayolları",
   "whats_new": "Yenilikler",

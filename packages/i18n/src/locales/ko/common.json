@@ -241,6 +241,15 @@
   "documentation": "문서",
   "message_support": "지원 메시지",
   "contact_sales": "영업 문의",
+  "contact_workspace_admins": {
+    "menu_label": "워크스페이스 관리자에게 문의",
+    "title": "워크스페이스 관리자에게 문의",
+    "description": "{workspace}의 관리자는 사용자를 추가하고, 역할을 변경하며, 액세스를 지원합니다. 사용 중인 이메일 앱으로 문의하세요.",
+    "email_all": "모든 관리자에게 이메일 보내기",
+    "subject": "{workspace} 관리자에게 보내는 문의",
+    "body": "안녕하세요.\n\n\n\n{name}",
+    "no_email_addresses": "현재 역할에서는 이메일 주소가 표시되지 않습니다. 팀원에게 관리자 이메일 주소를 문의해 주세요."
+  },
   "hyper_mode": "하이퍼 모드",
   "keyboard_shortcuts": "키보드 단축키",
   "whats_new": "새로운 기능",

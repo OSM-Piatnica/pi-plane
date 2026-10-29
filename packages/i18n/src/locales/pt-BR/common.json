@@ -241,6 +241,15 @@
   "documentation": "Documentação",
   "message_support": "Suporte por mensagem",
   "contact_sales": "Contatar vendas",
+  "contact_workspace_admins": {
+    "menu_label": "Contatar os administradores",
+    "title": "Contatar os administradores do espaço de trabalho",
+    "description": "Os administradores de {workspace} adicionam pessoas, alteram funções e ajudam com o acesso. Escreva para eles no seu aplicativo de e-mail.",
+    "email_all": "Enviar e-mail a todos os administradores",
+    "subject": "Dúvida para os administradores de {workspace}",
+    "body": "Olá,\n\n\n\n{name}",
+    "no_email_addresses": "Sua função não mostra endereços de e-mail. Peça a alguém da sua equipe o endereço de um administrador."
+  },
   "hyper_mode": "Modo Hyper",
   "keyboard_shortcuts": "Atalhos do teclado",
   "whats_new": "O que há de novo?",

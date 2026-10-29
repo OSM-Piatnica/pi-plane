@@ -10,6 +10,7 @@ export * from "./analytics";
 export * from "./calendar";
 export * from "./auth";
 export * from "./chart";
+export * from "./help";
 export * from "./cycle";
 export * from "./dashboard";
 export * from "./emoji";
