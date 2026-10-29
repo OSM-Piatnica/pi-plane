@@ -10,7 +10,12 @@ to a group also means belonging to every group above it, so the members of a gro
 plus those of all groups below it. A group admin rules over the group and everything below it.
 """
 
-from plane.db.models import GroupRole, UserGroup, UserGroupMember, WorkspaceMember
+from django.contrib.postgres.aggregates import ArrayAgg
+from django.contrib.postgres.fields import ArrayField
+from django.db.models import OuterRef, Subquery, UUIDField, Value
+from django.db.models.functions import Coalesce
+
+from plane.db.models import GroupRole, IssueGroupAssignee, UserGroup, UserGroupMember, WorkspaceMember
 
 # Nesting this deep is far beyond what an organisation chart needs; it only guards against runaway trees.
 MAX_GROUP_DEPTH = 10
@@ -128,3 +133,28 @@ def can_delete_group(user, workspace_id, group):
     if is_workspace_admin(user, workspace_id):
         return True
     return group.parent_id is not None and group.parent_id in administered_group_ids(user, workspace_id)
+
+
+def group_assignee_ids_annotation():
+    """The ids of the groups a work item is assigned to, to annotate a queryset of work items with."""
+    return Coalesce(
+        Subquery(
+            IssueGroupAssignee.objects.filter(issue_id=OuterRef("pk"), deleted_at__isnull=True)
+            .values("issue_id")
+            .annotate(arr=ArrayAgg("group_id", distinct=True))
+            .values("arr")
+        ),
+        Value([], output_field=ArrayField(UUIDField())),
+    )
+
+
+def issue_ids_assigned_through_groups(user, workspace_id, issue_ids):
+    """Of ``issue_ids``, those assigned to a group the person belongs to (a group counts the groups below it)."""
+    groups = group_ids_of_user(workspace_id, user.id)
+    if not groups:
+        return set()
+    return set(
+        IssueGroupAssignee.objects.filter(issue_id__in=issue_ids, group_id__in=groups).values_list(
+            "issue_id", flat=True
+        )
+    )

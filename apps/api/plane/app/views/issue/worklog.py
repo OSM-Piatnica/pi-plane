@@ -25,6 +25,7 @@ from plane.app.serializers.worklog import IssueWorkLogSerializer
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.db.models import Issue, IssueAssignee, IssueWorkLog, Project, ProjectMember, WorkspaceMember
 from plane.utils.host import base_host
+from plane.utils.user_groups import issue_ids_assigned_through_groups
 
 TIME_TRACKING_DISABLED = {"error": "Time tracking is not enabled"}
 
@@ -43,9 +44,15 @@ def can_log_time(user, slug, project_id, issue_id):
     """A project admin may log time on any work item, a member only on the ones they are assigned to."""
     if is_project_admin(user, slug, project_id):
         return True
-    return IssueAssignee.objects.filter(
+    if IssueAssignee.objects.filter(
         workspace__slug=slug, project_id=project_id, issue_id=issue_id, assignee=user
-    ).exists()
+    ).exists():
+        return True
+    # Belonging to a group the work item is assigned to counts as being assigned
+    workspace_id = (
+        Project.objects.filter(workspace__slug=slug, pk=project_id).values_list("workspace_id", flat=True).first()
+    )
+    return workspace_id is not None and bool(issue_ids_assigned_through_groups(user, workspace_id, [issue_id]))
 
 
 def can_modify(worklog, user, slug, project_id):

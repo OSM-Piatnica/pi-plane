@@ -9,6 +9,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from .base import BaseModel
+from .project import ProjectBaseModel
 
 
 class GroupRole(models.IntegerChoices):
@@ -89,6 +90,29 @@ class UserGroupMember(BaseModel):
 
     def __str__(self):
         return f"{self.group_id} {self.user_id}"
+
+
+class IssueGroupAssignee(ProjectBaseModel):
+    """A work item assigned to a whole group: whoever belongs to the group (and the groups below it) is on it."""
+
+    issue = models.ForeignKey("db.Issue", on_delete=models.CASCADE, related_name="issue_group_assignee")
+    group = models.ForeignKey(UserGroup, on_delete=models.CASCADE, related_name="issue_assignments")
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["issue", "group"],
+                condition=Q(deleted_at__isnull=True),
+                name="issue_group_assignee_unique_issue_group_when_deleted_at_null",
+            )
+        ]
+        verbose_name = "Issue Group Assignee"
+        verbose_name_plural = "Issue Group Assignees"
+        db_table = "issue_group_assignees"
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return f"{self.issue_id} {self.group_id}"
 
 
 @receiver(post_save, sender="db.WorkspaceMember")

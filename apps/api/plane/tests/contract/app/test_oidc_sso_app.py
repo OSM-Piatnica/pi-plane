@@ -622,6 +622,11 @@ def _entra_groups(workspace):
 @pytest.mark.contract
 @pytest.mark.django_db
 class TestEntraGroups:
+    @pytest.fixture(autouse=True)
+    def _person_exists_already(self):
+        """The person of these tests has an account before signing in with the provider, which has to be allowed."""
+        CONFIG["ENTRA_LINK_EXISTING_ACCOUNTS"] = "1"
+
     def test_groups_are_only_requested_when_switched_on(self, instance, idp):
         client = Client()
         off = parse_qs(urlparse(client.get(reverse("oidc-initiate", args=["entra"])).url).query)
@@ -796,6 +801,7 @@ class TestGoogleGroups:
                 "IS_GOOGLE_OIDC_ENABLED": "1",
                 "GOOGLE_OIDC_CLIENT_ID": CLIENT_ID,
                 "GOOGLE_OIDC_CLIENT_SECRET": "s",
+                "GOOGLE_OIDC_LINK_EXISTING_ACCOUNTS": "1",
                 "GOOGLE_OIDC_SYNC_GROUPS": "1",
                 "GOOGLE_OIDC_GROUPS_ADMIN_EMAIL": "admin@piatnica.com.pl",
                 "GOOGLE_OIDC_GROUPS_SERVICE_ACCOUNT": SERVICE_ACCOUNT,

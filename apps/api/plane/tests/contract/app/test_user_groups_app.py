@@ -108,7 +108,7 @@ class TestGroupsAsWorkspaceAdmin:
         assert group_ids_of_user(workspace.id, member.id) == {sales.id, poland.id, support.id}
         assert member_user_ids(workspace.id, [sales.id]) == {member.id}
         nested = session_client.get(_members_url(sales) + "?nested=true")
-        assert [entry["user"]["id"] for entry in nested.data] == [str(member.id)]
+        assert [str(entry["user"]["id"]) for entry in nested.data] == [str(member.id)]
         assert session_client.get(_members_url(sales)).data == []
 
     def test_only_workspace_members_can_join_and_twice_is_a_conflict(self, session_client, workspace):
@@ -198,7 +198,7 @@ class TestGroupAdmin:
     def test_being_admin_of_a_group_does_not_make_someone_a_workspace_admin(self, workspace):
         sales, poland, other, boss = self._setup(workspace)
 
-        assert _as(boss).get(f"/api/workspaces/{SLUG}/invitations/").status_code in (403, 404)
+        assert _as(boss).patch(f"/api/workspaces/{SLUG}/", {"name": "Taken over"}, format="json").status_code == 403
 
     def test_the_list_tells_what_the_requester_may_do(self, workspace):
         sales, poland, other, boss = self._setup(workspace)

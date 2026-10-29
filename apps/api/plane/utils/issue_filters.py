@@ -159,6 +159,17 @@ def filter_labels(params, issue_filter, method, prefix=""):
     return issue_filter
 
 
+def filter_group_assignees(params, issue_filter, method, prefix=""):
+    """Work items assigned to the given groups (exactly those groups, not the ones below them)."""
+    groups = params.get("group_assignees")
+    groups = groups.split(",") if method == "GET" and isinstance(groups, str) else (groups or [])
+    groups = filter_valid_uuids([group for group in groups if group != "null"])
+    if len(groups):
+        issue_filter[f"{prefix}issue_group_assignee__group_id__in"] = groups
+        issue_filter[f"{prefix}issue_group_assignee__deleted_at__isnull"] = True
+    return issue_filter
+
+
 def filter_assignees(params, issue_filter, method, prefix=""):
     if method == "GET":
         assignees = [item for item in params.get("assignees").split(",") if item != "null"]
@@ -436,6 +447,7 @@ def issue_filters(query_params, method, prefix=""):
         "parent": filter_parent,
         "labels": filter_labels,
         "assignees": filter_assignees,
+        "group_assignees": filter_group_assignees,
         "mentions": filter_mentions,
         "created_by": filter_created_by,
         "logged_by": filter_logged_by,
