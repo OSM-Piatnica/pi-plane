@@ -61,7 +61,7 @@ class EntraSpec(OidcProviderSpec):
     def request_scopes(self, config):
         return f"{self.scopes} {groups.ENTRA_GROUPS_SCOPE}" if self.reads_groups(config) else self.scopes
 
-    def fetch_groups(self, *, access_token, email, config):
+    def fetch_groups(self, *, access_token, email, claims, config):
         return groups.fetch_entra_groups(access_token)
 
     def _tenant(self, config):
@@ -149,7 +149,7 @@ class GoogleSpec(OidcProviderSpec):
             and bool(config.get("GROUPS_SERVICE_ACCOUNT"))
         )
 
-    def fetch_groups(self, *, access_token, email, config):
+    def fetch_groups(self, *, access_token, email, claims, config):
         return groups.fetch_google_groups(email, config.get("GROUPS_SERVICE_ACCOUNT"), config.get("GROUPS_ADMIN_EMAIL"))
 
     def issuer(self, config):
@@ -182,6 +182,7 @@ class GenericOidcSpec(OidcProviderSpec):
             key="oidc",
             name="Single sign-on",
             icon="key",
+            group_source=GroupSource.OIDC,
             fields=(
                 OidcConfigField(
                     name="ISSUER_URL",
@@ -195,8 +196,34 @@ class GenericOidcSpec(OidcProviderSpec):
                     default="Single sign-on",
                     help="How the sign-in button is named.",
                 ),
+                OidcConfigField(
+                    name="GROUPS_CLAIM",
+                    label="Groups claim",
+                    help=(
+                        "Optional. The claim of the ID token that lists the person's groups (for example groups). "
+                        "When set, they are mirrored as user groups that are managed outside."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_SCOPE",
+                    label="Scope that adds the groups claim",
+                    help=(
+                        "Optional. Some providers only put the claim in the token "
+                        "when this scope (for example groups) is asked for."
+                    ),
+                ),
             ),
         )
+
+    def reads_groups(self, config):
+        return bool(str(config.get("GROUPS_CLAIM") or "").strip())
+
+    def request_scopes(self, config):
+        extra = str(config.get("GROUPS_SCOPE") or "").strip()
+        return f"{self.scopes} {extra}" if extra and self.reads_groups(config) else self.scopes
+
+    def fetch_groups(self, *, access_token, email, claims, config):
+        return groups.groups_from_claim(claims, config.get("GROUPS_CLAIM"))
 
     def is_configured(self, config):
         return super().is_configured(config) and str(config.get("ISSUER_URL", "")).startswith("https://")

@@ -110,7 +110,7 @@ class OidcProviderSpec:
         """Whether the person's groups at the provider are read at sign-in (switched on and fully set up)."""
         return False
 
-    def fetch_groups(self, *, access_token, email, config):
+    def fetch_groups(self, *, access_token, email, claims, config):
         """The person's groups (a list of ExternalGroup), or None when they could not be read."""
         return None
 

@@ -19,7 +19,7 @@ from plane.db.models import Account, GroupRole, GroupSource, UserGroup, UserGrou
 
 logger = logging.getLogger("plane.authentication")
 
-SOURCE_LABELS = {GroupSource.ENTRA: "Entra", GroupSource.GOOGLE: "Google"}
+SOURCE_LABELS = {GroupSource.ENTRA: "Entra", GroupSource.GOOGLE: "Google", GroupSource.OIDC: "SSO"}
 STORED_KEY = "external_groups"
 
 
@@ -114,7 +114,7 @@ def sync_external_groups(user, source, groups):
 
 def sync_workspace_from_stored(user, workspace_id):
     """A person who joins a workspace gets the groups their provider reported at their last sign-in."""
-    for source in (GroupSource.ENTRA, GroupSource.GOOGLE):
+    for source in (GroupSource.ENTRA, GroupSource.GOOGLE, GroupSource.OIDC):
         account = Account.objects.filter(user=user, provider=_provider_key(source)).first()
         stored = (account.metadata or {}).get(STORED_KEY) if account else None
         if stored:
@@ -124,4 +124,4 @@ def sync_workspace_from_stored(user, workspace_id):
 
 def _provider_key(source):
     """The Account.provider a group source is read through."""
-    return {GroupSource.ENTRA: "entra", GroupSource.GOOGLE: "google-oidc"}[source]
+    return {GroupSource.ENTRA: "entra", GroupSource.GOOGLE: "google-oidc", GroupSource.OIDC: "oidc"}[source]

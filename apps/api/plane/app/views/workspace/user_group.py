@@ -17,7 +17,7 @@ from plane.app.serializers.user_group import (
     UserGroupMemberWriteSerializer,
     UserGroupSerializer,
 )
-from plane.db.models import UserGroup, UserGroupMember, Workspace, WorkspaceMember
+from plane.db.models import IssueGroupAssignee, UserGroup, UserGroupMember, Workspace, WorkspaceMember
 from plane.utils.user_groups import (
     MAX_GROUP_DEPTH,
     administered_group_ids,
@@ -181,6 +181,8 @@ class UserGroupDetailEndpoint(_GroupView):
 
         with transaction.atomic():
             UserGroupMember.objects.filter(group=group).delete()
+            # A work item no longer points at a group that is gone
+            IssueGroupAssignee.objects.filter(group=group).delete()
             group.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

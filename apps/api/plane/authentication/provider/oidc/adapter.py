@@ -189,6 +189,7 @@ class OidcProvider(OauthAdapter):
                 groups = self.spec.fetch_groups(
                     access_token=self._provider_access_token,
                     email=self.user_data["email"],
+                    claims=self.token_data["claims"],
                     config=self.config,
                 )
                 sync_external_groups(user, self.spec.group_source, groups)

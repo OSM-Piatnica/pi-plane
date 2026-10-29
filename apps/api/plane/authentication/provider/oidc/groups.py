@@ -128,3 +128,34 @@ def fetch_google_groups(email, service_account_json, admin_email):
         return None
     logger.warning("Groups of a Google sign-in not read: too many pages")
     return None
+
+
+# A person is in a handful of groups; a claim with more is not a list of groups
+MAX_CLAIM_GROUPS = 500
+
+
+def groups_from_claim(claims, claim_name):
+    """
+    The groups named by a claim of the ID token: a list of names, or one string of names separated by commas.
+
+    A claim the token does not carry says nothing about the person's groups, so it gives ``None`` (nothing
+    changes); a claim that is there and empty means they are in no group.
+    """
+    claim_name = (claim_name or "").strip()
+    if not claim_name or claim_name not in claims:
+        return None
+    value = claims[claim_name]
+    if isinstance(value, str):
+        value = value.split(",")
+    if not isinstance(value, (list, tuple)) or len(value) > MAX_CLAIM_GROUPS:
+        logger.warning("Groups of a sign-in not read: the claim is not a list of groups")
+        return None
+    groups = {}
+    for entry in value:
+        if not isinstance(entry, str):
+            continue
+        # Keycloak writes the path of a group ("/sales/poland"); the name is shown without the leading slash
+        name = entry.strip().lstrip("/").strip()
+        if name:
+            groups[name.lower()] = ExternalGroup(name.lower(), name[:255])
+    return list(groups.values())

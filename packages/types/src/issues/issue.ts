@@ -53,6 +53,8 @@ export type TBaseIssue = {
   priority: TIssuePriorities | null;
   label_ids: string[];
   assignee_ids: string[];
+  /** The user groups the work item is assigned to; absent from answers that do not carry them. */
+  group_assignee_ids?: string[];
   estimate_point: string | null;
 
   sub_issues_count: number;

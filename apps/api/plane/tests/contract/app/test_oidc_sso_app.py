@@ -854,3 +854,81 @@ class TestGoogleGroups:
 
         assert "error_code" not in response.url
         assert UserGroup.objects.filter(source=GroupSource.GOOGLE).count() == 0
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestGenericOidcGroups:
+    @pytest.fixture(autouse=True)
+    def _generic(self):
+        CONFIG.update(
+            {
+                "IS_OIDC_ENABLED": "1",
+                "OIDC_CLIENT_ID": CLIENT_ID,
+                "OIDC_CLIENT_SECRET": "s",
+                "OIDC_ISSUER_URL": ISSUER,
+                "OIDC_LINK_EXISTING_ACCOUNTS": "1",
+                "OIDC_GROUPS_CLAIM": "groups",
+            }
+        )
+
+    def _sign_in(self, idp, **claims):
+        return sign_in(idp, provider="oidc", token_kwargs={"email_verified": True, "tid": None, "oid": None, **claims})
+
+    def test_the_groups_claim_becomes_groups_managed_outside(self, instance, idp, workspace):
+        user = _person(workspace)
+
+        _, response, _ = self._sign_in(idp, groups=["Sales", "/engineering/platform"])
+
+        assert "error_code" not in response.url
+        groups = {group.name: group for group in UserGroup.objects.filter(source=GroupSource.OIDC)}
+        assert set(groups) == {"Sales", "engineering/platform"}
+        assert UserGroupMember.objects.filter(user=user, managed_externally=True).count() == 2
+        assert all(group.is_external for group in groups.values())
+
+    def test_a_claim_with_one_string_of_names_is_split(self, instance, idp, workspace):
+        _person(workspace)
+
+        self._sign_in(idp, groups="Sales, Support")
+
+        assert set(UserGroup.objects.filter(source=GroupSource.OIDC).values_list("name", flat=True)) == {
+            "Sales",
+            "Support",
+        }
+
+    def test_leaving_a_group_removes_the_membership(self, instance, idp, workspace):
+        user = _person(workspace)
+        self._sign_in(idp, groups=["Sales", "Support"])
+
+        self._sign_in(idp, groups=["Sales"])
+
+        assert set(UserGroupMember.objects.filter(user=user).values_list("group__name", flat=True)) == {"Sales"}
+
+    def test_a_token_without_the_claim_changes_nothing_but_an_empty_claim_removes_everything(
+        self, instance, idp, workspace
+    ):
+        user = _person(workspace)
+        self._sign_in(idp, groups=["Sales"])
+
+        self._sign_in(idp)
+        assert UserGroupMember.objects.filter(user=user).count() == 1
+
+        self._sign_in(idp, groups=[])
+        assert UserGroupMember.objects.filter(user=user).count() == 0
+
+    def test_nothing_is_read_without_a_configured_claim(self, instance, idp, workspace):
+        CONFIG["OIDC_GROUPS_CLAIM"] = ""
+        _person(workspace)
+
+        self._sign_in(idp, groups=["Sales"])
+
+        assert UserGroup.objects.filter(source=GroupSource.OIDC).count() == 0
+
+    def test_the_scope_that_adds_the_claim_is_only_asked_for_when_groups_are_read(self, instance, idp):
+        CONFIG["OIDC_GROUPS_SCOPE"] = "groups"
+        with_claim = parse_qs(urlparse(Client().get(reverse("oidc-initiate", args=["oidc"])).url).query)
+        CONFIG["OIDC_GROUPS_CLAIM"] = ""
+        without = parse_qs(urlparse(Client().get(reverse("oidc-initiate", args=["oidc"])).url).query)
+
+        assert with_claim["scope"] == ["openid profile email groups"]
+        assert without["scope"] == ["openid profile email"]

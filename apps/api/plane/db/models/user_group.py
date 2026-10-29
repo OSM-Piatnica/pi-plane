@@ -25,6 +25,8 @@ class GroupSource(models.TextChoices):
     LOCAL = "local", "Local"
     ENTRA = "entra", "Microsoft Entra"
     GOOGLE = "google", "Google"
+    # Any other OpenID Connect provider, through the claim of its ID token that lists the groups
+    OIDC = "oidc", "Single sign-on"
 
 
 class UserGroup(BaseModel):
