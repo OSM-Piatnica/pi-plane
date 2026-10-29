@@ -161,5 +161,14 @@
   "shared": {
     "recipient_note": "此郵件寄送至 {email}。如果您不是預期收件人，請將其刪除。",
     "fallback": "如果按鈕無法使用，請複製此連結並貼到瀏覽器中："
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} 寫信給 {workspace} 的管理員",
+    "preheader": "{sender} 在 Pi-Plane 上傳送了一則訊息給 {workspace} 的管理員。",
+    "heading": "給 {workspace} 管理員的訊息",
+    "intro": "<strong>{sender}</strong>（{sender_email}）在 Pi-Plane 上寫信給工作區 <strong>{workspace}</strong> 的管理員。",
+    "message": "訊息：",
+    "reply": "回覆此郵件即可直接回覆 {sender}。",
+    "note": "注意：此郵件寄送至 <span>{email}</span>，因為您是此工作區的管理員。"
   }
 }

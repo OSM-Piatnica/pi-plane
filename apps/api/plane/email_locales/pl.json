@@ -177,5 +177,14 @@
   "shared": {
     "recipient_note": "Ta wiadomość została wysłana na adres {email}. Jeśli nie są Państwo jej adresatem, proszę ją usunąć.",
     "fallback": "Jeśli przycisk nie działa, skopiuj ten link i wklej go w przeglądarce:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} napisał(a) do administratorów przestrzeni {workspace}",
+    "preheader": "{sender} wysłał(a) wiadomość do administratorów przestrzeni {workspace} w Pi-Plane.",
+    "heading": "Wiadomość dla administratorów przestrzeni {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) napisał(a) do administratorów przestrzeni roboczej <strong>{workspace}</strong> w Pi-Plane.",
+    "message": "Wiadomość:",
+    "reply": "Proszę odpowiedzieć na ten e-mail, aby odpowiedzieć bezpośrednio użytkownikowi {sender}.",
+    "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>, ponieważ jest Pan(i) administratorem tej przestrzeni roboczej."
   }
 }

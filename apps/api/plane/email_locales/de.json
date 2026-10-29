@@ -169,5 +169,14 @@
   "shared": {
     "recipient_note": "Diese E-Mail wurde an {email} gesendet. Bitte löschen Sie sie, wenn Sie nicht der vorgesehene Empfänger sind.",
     "fallback": "Wenn die Schaltfläche nicht funktioniert, kopieren Sie diesen Link und fügen Sie ihn in Ihren Browser ein:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} hat den Administratoren von {workspace} geschrieben",
+    "preheader": "{sender} hat den Administratoren von {workspace} in Pi-Plane eine Nachricht geschickt.",
+    "heading": "Eine Nachricht für die Administratoren von {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) hat den Administratoren des Arbeitsbereichs <strong>{workspace}</strong> in Pi-Plane geschrieben.",
+    "message": "Nachricht:",
+    "reply": "Antworten Sie auf diese E-Mail, um {sender} direkt zu antworten.",
+    "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet, weil Sie Administrator dieses Arbeitsbereichs sind."
   }
 }

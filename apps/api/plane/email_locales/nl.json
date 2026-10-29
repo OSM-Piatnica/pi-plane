@@ -169,5 +169,14 @@
   "shared": {
     "recipient_note": "Deze e-mail is verzonden naar {email}. Verwijder hem als u niet de beoogde ontvanger bent.",
     "fallback": "Werkt de knop niet? Kopieer dan deze link en plak hem in uw browser:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} heeft de beheerders van {workspace} geschreven",
+    "preheader": "{sender} heeft de beheerders van {workspace} in Pi-Plane een bericht gestuurd.",
+    "heading": "Een bericht voor de beheerders van {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) heeft de beheerders van de werkruimte <strong>{workspace}</strong> in Pi-Plane geschreven.",
+    "message": "Bericht:",
+    "reply": "Beantwoord deze e-mail om {sender} rechtstreeks te antwoorden.",
+    "note": "Opmerking: deze e-mail is verstuurd naar <span>{email}</span> omdat u beheerder bent van deze werkruimte."
   }
 }

@@ -8,4 +8,5 @@
 export type TInstanceWorkspaceConfigurationKeys =
   | "DISABLE_WORKSPACE_CREATION"
   | "INSTANCE_DEFAULT_WORKSPACE_ID"
-  | "IS_SPACE_ENABLED";
+  | "IS_SPACE_ENABLED"
+  | "ADMIN_MESSAGE_LIMIT";

@@ -169,5 +169,14 @@
   "shared": {
     "recipient_note": "Bu e-posta {email} adresine gönderildi. Amaçlanan alıcı siz değilseniz lütfen silin.",
     "fallback": "Düğme çalışmıyorsa bu bağlantıyı kopyalayıp tarayıcınıza yapıştırın:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender}, {workspace} yöneticilerine yazdı",
+    "preheader": "{sender}, Pi-Plane'de {workspace} yöneticilerine bir mesaj gönderdi.",
+    "heading": "{workspace} yöneticileri için bir mesaj",
+    "intro": "<strong>{sender}</strong> ({sender_email}), Pi-Plane'deki <strong>{workspace}</strong> çalışma alanının yöneticilerine yazdı.",
+    "message": "Mesaj:",
+    "reply": "{sender} kişisine doğrudan yanıt vermek için bu e-postayı yanıtlayın.",
+    "note": "Not: Bu e-posta, bu çalışma alanının yöneticisi olduğunuz için <span>{email}</span> adresine gönderildi."
   }
 }

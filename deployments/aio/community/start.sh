@@ -220,6 +220,7 @@ update_env_file(){
     update_env_value "RATE_LIMIT_PER_IP_PER_MIN" "${RATE_LIMIT_PER_IP_PER_MIN:-50000}"
     update_env_value "ASSET_DUPLICATE_RATE_LIMIT" "${ASSET_DUPLICATE_RATE_LIMIT:-60/minute}"
     update_env_value "ANON_RATE_LIMIT" "${ANON_RATE_LIMIT:-180/minute}"
+    update_env_value "ADMIN_MESSAGE_LIMIT_PER_HOUR" "${ADMIN_MESSAGE_LIMIT_PER_HOUR:-5}"
     # 0 leaves Space (the public sharing site) out: it is not started, /spaces answers 404 and projects cannot be shared
     update_env_value "ENABLE_SPACE" "${ENABLE_SPACE:-1}"
 

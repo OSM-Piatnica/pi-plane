@@ -161,5 +161,14 @@
   "shared": {
     "recipient_note": "Email này được gửi đến {email}. Vui lòng xóa nếu bạn không phải người nhận dự kiến.",
     "fallback": "Nếu nút không hoạt động, hãy sao chép liên kết này và dán vào trình duyệt của bạn:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} đã viết cho quản trị viên của {workspace}",
+    "preheader": "{sender} đã gửi tin nhắn cho quản trị viên của {workspace} trên Pi-Plane.",
+    "heading": "Một tin nhắn cho quản trị viên của {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) đã viết cho quản trị viên của không gian làm việc <strong>{workspace}</strong> trên Pi-Plane.",
+    "message": "Tin nhắn:",
+    "reply": "Hãy trả lời email này để trả lời trực tiếp {sender}.",
+    "note": "Lưu ý: Email này được gửi đến <span>{email}</span> vì bạn là quản trị viên của không gian làm việc này."
   }
 }

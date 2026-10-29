@@ -128,6 +128,7 @@ In Plane v1.4.0 to v1.4.2 a container started without `SECRET_KEY` received a ge
 - `AUTHENTICATION_RATE_LIMIT`: per-IP throttle for sign-in and one-time-code endpoints (default: `1000/minute`, sized for many users behind one IP)
 - `RATE_LIMIT_PER_IP_PER_MIN`: per-client-IP request limit enforced by the Caddy proxy (default: `50000`)
 - `ANON_RATE_LIMIT`: per-IP limit on logged-out requests such as public Spaces boards; users behind one IP share it (default: `180/minute`)
+- `ADMIN_MESSAGE_LIMIT_PER_HOUR`: most messages one person may send to the admins of a workspace (Help menu, _Contact workspace admins_) within an hour, 1 to 100 (default: `5`). The instance admin can change it in the admin app, and that value wins
 - `ASSET_DUPLICATE_RATE_LIMIT`: per-asset limit on duplicating an asset when pasting images in the editor, counted across all users (default: `60/minute`)
 
 ## Port Mapping

@@ -29,6 +29,11 @@ from plane.utils.import_limits import (
     get_import_file_size_limit,
     get_import_max_work_items,
 )
+from plane.utils.admin_message_limit import (
+    MAX_ADMIN_MESSAGE_LIMIT,
+    get_admin_message_limit,
+    get_deployment_admin_message_limit,
+)
 from plane.utils.cache import cache_response, invalidate_cache
 from plane.utils.space import is_space_deployed, is_space_enabled
 from django.utils.decorators import method_decorator
@@ -170,6 +175,10 @@ class InstanceEndpoint(BaseAPIView):
         data["import_file_size_limit"] = float(get_import_file_size_limit())
         data["import_max_work_items"] = get_import_max_work_items()
         data["import_max_work_items_max"] = MAX_IMPORT_MAX_WORK_ITEMS
+        # Messages to the admins of a workspace
+        data["admin_message_limit"] = get_admin_message_limit()
+        data["admin_message_limit_default"] = get_deployment_admin_message_limit()
+        data["admin_message_limit_max"] = MAX_ADMIN_MESSAGE_LIMIT
 
         # is smtp configured
         data["is_smtp_configured"] = bool(EMAIL_HOST)

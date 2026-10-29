@@ -177,5 +177,14 @@
   "shared": {
     "recipient_note": "Tento e-mail bol odoslaný na adresu {email}. Ak nie ste zamýšľaným príjemcom, vymažte ho.",
     "fallback": "Ak tlačidlo nefunguje, skopírujte tento odkaz a vložte ho do prehliadača:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} píše správcom priestoru {workspace}",
+    "preheader": "{sender} poslal(a) správu správcom priestoru {workspace} v Pi-Plane.",
+    "heading": "Správa pre správcov priestoru {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) napísal(a) správcom pracovného priestoru <strong>{workspace}</strong> v Pi-Plane.",
+    "message": "Správa:",
+    "reply": "Odpovedzte na tento e-mail a odpoveď pôjde priamo používateľovi {sender}.",
+    "note": "Poznámka: Tento e-mail bol odoslaný na adresu <span>{email}</span>, pretože ste správcom tohto pracovného priestoru."
   }
 }

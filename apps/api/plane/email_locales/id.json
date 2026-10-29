@@ -161,5 +161,14 @@
   "shared": {
     "recipient_note": "Email ini dikirim ke {email}. Harap hapus jika Anda bukan penerima yang dituju.",
     "fallback": "Jika tombol tidak berfungsi, salin tautan ini dan tempel di browser Anda:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} menulis kepada admin {workspace}",
+    "preheader": "{sender} mengirim pesan kepada admin {workspace} di Pi-Plane.",
+    "heading": "Pesan untuk admin {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) menulis kepada admin ruang kerja <strong>{workspace}</strong> di Pi-Plane.",
+    "message": "Pesan:",
+    "reply": "Balas email ini untuk menjawab {sender} secara langsung.",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span> karena Anda adalah admin ruang kerja ini."
   }
 }

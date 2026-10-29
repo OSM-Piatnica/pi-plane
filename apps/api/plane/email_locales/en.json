@@ -169,5 +169,14 @@
   "shared": {
     "recipient_note": "This email was sent to {email}. Please delete if you aren't the intended recipient.",
     "fallback": "If the button doesn’t work, copy and paste this link into your browser:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} wrote to the admins of {workspace}",
+    "preheader": "{sender} sent a message to the admins of {workspace} on Pi-Plane.",
+    "heading": "A message for the admins of {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) wrote to the admins of the workspace <strong>{workspace}</strong> on Pi-Plane.",
+    "message": "Message:",
+    "reply": "Reply to this email to answer {sender} directly.",
+    "note": "Note: This email was sent to <span>{email}</span> because you are an admin of this workspace."
   }
 }

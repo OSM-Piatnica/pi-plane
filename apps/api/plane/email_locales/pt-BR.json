@@ -169,5 +169,14 @@
   "shared": {
     "recipient_note": "Este e-mail foi enviado para {email}. Exclua-o se você não for o destinatário pretendido.",
     "fallback": "Se o botão não funcionar, copie este link e cole-o no seu navegador:"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} escreveu para os administradores de {workspace}",
+    "preheader": "{sender} enviou uma mensagem para os administradores de {workspace} no Pi-Plane.",
+    "heading": "Uma mensagem para os administradores de {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) escreveu para os administradores do espaço de trabalho <strong>{workspace}</strong> no Pi-Plane.",
+    "message": "Mensagem:",
+    "reply": "Responda a este e-mail para responder diretamente a {sender}.",
+    "note": "Observação: este e-mail foi enviado para <span>{email}</span> porque você é administrador deste espaço de trabalho."
   }
 }
