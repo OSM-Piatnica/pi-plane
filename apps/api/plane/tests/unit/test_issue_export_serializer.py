@@ -16,7 +16,6 @@ from plane.db.models import (
     State,
     User,
 )
-from plane.utils.exporters.schemas.issue import IssueExportSchema
 from plane.utils.porters.formatters import XLSXFormatter
 from plane.utils.porters.serializers.issue import IssueExportSerializer
 
@@ -169,50 +168,45 @@ class TestIssueExportSerializerRelations:
         assert {"type": "relates_to", "issue": "EXS-3"} in blocked_relations
         assert blocker_relations == [{"type": "blocking", "issue": "EXS-1", "lag_days": 3}]
 
-
-@pytest.mark.unit
-class TestIssueExportSchemaRelations:
-    """The Relations column of the table export: every work item of a type, and the lag of a relation."""
-
-    def _relate(self, project, first, second, relation_type, lag=0):
-        IssueRelation.objects.create(
-            issue=first,
-            related_issue=second,
-            relation_type=relation_type,
-            lag_days=lag,
-            project=project,
-            workspace=project.workspace,
-        )
-
     @pytest.mark.django_db
     def test_several_work_items_of_one_type_are_all_listed(self, export_project, create_user):
         blocked = _make_issue(export_project, create_user, "Blocked", 1)
         first = _make_issue(export_project, create_user, "First blocker", 2)
         second = _make_issue(export_project, create_user, "Second blocker", 3)
-        self._relate(export_project, blocked, first, "blocked_by")
-        self._relate(export_project, blocked, second, "blocked_by")
+        for blocker in (first, second):
+            IssueRelation.objects.create(
+                issue=blocked,
+                related_issue=blocker,
+                relation_type="blocked_by",
+                project=export_project,
+                workspace=export_project.workspace,
+            )
 
-        relations = IssueExportSchema().prepare_relations(blocked)
+        relations = IssueExportSerializer(blocked).data["relations"]
 
-        assert sorted(relations["blocked_by"].split(", ")) == ["EXS-2", "EXS-3"]
-
-    @pytest.mark.django_db
-    def test_a_lag_is_written_after_the_identifier_on_both_sides(self, export_project, create_user):
-        blocked = _make_issue(export_project, create_user, "Blocked", 1)
-        blocker = _make_issue(export_project, create_user, "Blocker", 2)
-        self._relate(export_project, blocked, blocker, "blocked_by", lag=2)
-
-        assert IssueExportSchema().prepare_relations(blocked) == {"blocked_by": "EXS-2 (lag 2d)"}
-        assert IssueExportSchema().prepare_relations(blocker) == {"blocking": "EXS-1 (lag 2d)"}
+        assert sorted(entry["issue"] for entry in relations if entry["type"] == "blocked_by") == ["EXS-2", "EXS-3"]
+        assert len(relations) == 2
 
     @pytest.mark.django_db
     def test_two_types_between_the_same_pair_are_both_there(self, export_project, create_user):
         first = _make_issue(export_project, create_user, "First", 1)
         second = _make_issue(export_project, create_user, "Second", 2)
-        self._relate(export_project, first, second, "relates_to")
-        self._relate(export_project, first, second, "caused_by")
+        for relation_type in ("relates_to", "caused_by"):
+            IssueRelation.objects.create(
+                issue=first,
+                related_issue=second,
+                relation_type=relation_type,
+                project=export_project,
+                workspace=export_project.workspace,
+            )
 
-        assert IssueExportSchema().prepare_relations(first) == {"relates_to": "EXS-2", "caused_by": "EXS-2"}
+        relations = IssueExportSerializer(first).data["relations"]
+
+        assert {(entry["type"], entry["issue"]) for entry in relations} == {
+            ("relates_to", "EXS-2"),
+            ("caused_by", "EXS-2"),
+        }
+        assert len(relations) == 2
 
 
 @pytest.mark.unit
