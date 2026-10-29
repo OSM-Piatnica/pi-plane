@@ -833,7 +833,7 @@ class TestGoogleGroups:
         assert UserGroupMember.objects.filter(user=user, group=group, managed_externally=True).exists()
         token_call = next(call for call in google_idp.api_calls if call[1].endswith("/token"))
         assert token_call[2]["data"]["grant_type"] == "urn:ietf:params:oauth:grant-type:jwt-bearer"
-        groups_call = next(call for call in google_idp.api_calls if "admin.googleapis.com" in call[1])
+        groups_call = next(call for call in google_idp.api_calls if call[1].startswith("https://admin.googleapis.com/"))
         assert groups_call[2]["params"]["userKey"] == EMAIL
         assert groups_call[2]["headers"]["Authorization"] == "Bearer workspace-token"
 
