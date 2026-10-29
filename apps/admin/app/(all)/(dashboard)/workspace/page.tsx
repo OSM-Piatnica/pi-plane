@@ -126,7 +126,7 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
           <div className={cn("flex w-full items-center gap-14 rounded-sm")}>
             <div className="flex grow items-center gap-4">
               <div className="grow">
-                <div className="pb-1 text-16 font-medium">Let people share projects on the web.</div>
+                <div className="pb-1 text-16 font-medium">Let users share projects on the web.</div>
                 <div className={cn("text-11 leading-5 font-regular text-tertiary")}>
                   {isSpaceDeployed
                     ? "Turning this off hides the sharing options and stops serving the public pages, so nothing is visible without signing in. Projects that were shared are kept and come back when you turn it on again."
@@ -139,7 +139,7 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
                 checked={isSpaceEnabled}
                 onCheckedChange={() => updateConfig("IS_SPACE_ENABLED", isSpaceEnabled ? "0" : "1")}
                 size="sm"
-                aria-label="Let people share projects on the web"
+                aria-label="Let users share projects on the web"
                 disabled={isSubmitting || !isSpaceDeployed}
               />
             </div>
