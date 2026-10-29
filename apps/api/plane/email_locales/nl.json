@@ -117,5 +117,14 @@
     "heading": "Uw inlogcode voor Pi-Plane",
     "info": "Deze code is de komende 10 minuten geldig. Voer hem in op de inlogpagina om het inloggen te voltooien.",
     "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span>. Als u geen inlogcode verwachtte, kunt u dit bericht negeren."
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} heeft de beheerders van {workspace} geschreven",
+    "preheader": "{sender} heeft de beheerders van {workspace} in Pi-Plane een bericht gestuurd.",
+    "heading": "Een bericht voor de beheerders van {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) heeft de beheerders van de werkruimte <strong>{workspace}</strong> in Pi-Plane geschreven.",
+    "message": "Bericht:",
+    "reply": "Beantwoord deze e-mail om {sender} rechtstreeks te antwoorden.",
+    "note": "Opmerking: deze e-mail is verstuurd naar <span>{email}</span> omdat u beheerder bent van deze werkruimte."
   }
 }

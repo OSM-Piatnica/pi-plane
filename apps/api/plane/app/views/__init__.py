@@ -76,6 +76,7 @@ from .workspace.invite import (
     UserWorkspaceInvitationsViewSet,
 )
 from .workspace.label import WorkspaceLabelsEndpoint
+from .workspace.admin_message import WorkspaceAdminMessageEndpoint
 from .workspace.user_group import (
     UserGroupDetailEndpoint,
     UserGroupListEndpoint,

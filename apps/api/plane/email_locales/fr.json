@@ -117,5 +117,14 @@
     "heading": "Votre code de connexion à Pi-Plane",
     "info": "Ce code est valable pendant les 10 prochaines minutes. Saisissez-le sur la page de connexion pour terminer votre connexion.",
     "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span>. Si vous n’attendiez pas de code de connexion, vous pouvez ignorer ce message."
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} a écrit aux administrateurs de {workspace}",
+    "preheader": "{sender} a envoyé un message aux administrateurs de {workspace} sur Pi-Plane.",
+    "heading": "Un message pour les administrateurs de {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) a écrit aux administrateurs de l’espace de travail <strong>{workspace}</strong> sur Pi-Plane.",
+    "message": "Message :",
+    "reply": "Répondez à cet e-mail pour répondre directement à {sender}.",
+    "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span> parce que vous êtes administrateur de cet espace de travail."
   }
 }

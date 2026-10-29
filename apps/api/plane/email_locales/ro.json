@@ -125,5 +125,14 @@
     "heading": "Codul tău de autentificare în Pi-Plane",
     "info": "Acest cod este valabil în următoarele 10 minute. Introdu-l pe pagina de autentificare pentru a finaliza autentificarea.",
     "note": "Notă: Acest e-mail a fost trimis la <span>{email}</span>. Dacă nu te așteptai la un cod de autentificare, poți ignora acest mesaj."
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} a scris administratorilor din {workspace}",
+    "preheader": "{sender} a trimis un mesaj administratorilor din {workspace} în Pi-Plane.",
+    "heading": "Un mesaj pentru administratorii din {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) a scris administratorilor spațiului de lucru <strong>{workspace}</strong> în Pi-Plane.",
+    "message": "Mesaj:",
+    "reply": "Răspundeți la acest e-mail pentru a-i răspunde direct lui {sender}.",
+    "note": "Notă: Acest e-mail a fost trimis la <span>{email}</span> deoarece sunteți administrator al acestui spațiu de lucru."
   }
 }

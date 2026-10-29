@@ -109,5 +109,14 @@
     "heading": "您的 Pi-Plane 登录码",
     "info": "此验证码在接下来的 10 分钟内有效。请在登录页面输入以完成登录。",
     "note": "注意：此邮件发送至 <span>{email}</span>。如果您没有请求登录码，可以忽略此邮件。"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} 给 {workspace} 的管理员写了信",
+    "preheader": "{sender} 在 Pi-Plane 上给 {workspace} 的管理员发了一条消息。",
+    "heading": "给 {workspace} 管理员的消息",
+    "intro": "<strong>{sender}</strong>（{sender_email}）在 Pi-Plane 上给工作空间 <strong>{workspace}</strong> 的管理员写了信。",
+    "message": "消息：",
+    "reply": "回复此邮件即可直接回复 {sender}。",
+    "note": "注意：此邮件发送至 <span>{email}</span>，因为您是该工作空间的管理员。"
   }
 }

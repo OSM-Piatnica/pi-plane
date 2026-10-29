@@ -17,6 +17,7 @@ from plane.app.views import (
     WorkSpaceAvailabilityCheckEndpoint,
     UserLastProjectWithWorkspaceEndpoint,
     WorkspaceThemeViewSet,
+    WorkspaceAdminMessageEndpoint,
     UserGroupDetailEndpoint,
     UserGroupListEndpoint,
     UserGroupMemberDetailEndpoint,
@@ -126,6 +127,11 @@ urlpatterns = [
         "workspaces/<str:slug>/workspace-views/",
         WorkspaceMemberUserViewsEndpoint.as_view(),
         name="workspace-member-views-details",
+    ),
+    path(
+        "workspaces/<str:slug>/admin-messages/",
+        WorkspaceAdminMessageEndpoint.as_view(),
+        name="workspace-admin-messages",
     ),
     path(
         "workspaces/<str:slug>/workspace-themes/",

@@ -125,5 +125,14 @@
     "heading": "Twój kod logowania do Pi-Plane",
     "info": "Ten kod jest ważny przez najbliższe 10 minut. Wpisz go na stronie logowania, aby dokończyć logowanie.",
     "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>. Jeśli nie spodziewałeś(aś) się kodu logowania, możesz zignorować tę wiadomość."
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} napisał(a) do administratorów przestrzeni {workspace}",
+    "preheader": "{sender} wysłał(a) wiadomość do administratorów przestrzeni {workspace} w Pi-Plane.",
+    "heading": "Wiadomość dla administratorów przestrzeni {workspace}",
+    "intro": "<strong>{sender}</strong> ({sender_email}) napisał(a) do administratorów przestrzeni roboczej <strong>{workspace}</strong> w Pi-Plane.",
+    "message": "Wiadomość:",
+    "reply": "Proszę odpowiedzieć na ten e-mail, aby odpowiedzieć bezpośrednio użytkownikowi {sender}.",
+    "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>, ponieważ jest Pan(i) administratorem tej przestrzeni roboczej."
   }
 }

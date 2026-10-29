@@ -1,0 +1,195 @@
+{% load email_i18n %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{% etr "workspace_admin_message.subject" sender=sender_name workspace=workspace_name %}</title>
+
+    <style>
+      /* Basic resets for email clients */
+      body,
+      table,
+      td,
+      p {
+        margin: 0;
+        padding: 0;
+      }
+
+      img {
+        border: 0;
+        line-height: 100%;
+        text-decoration: none;
+        -ms-interpolation-mode: bicubic;
+      }
+
+      table {
+        border-collapse: collapse;
+      }
+
+      /* Mobile adjustments */
+      @media only screen and (max-width: 600px) {
+        .email-container {
+          width: 100% !important;
+        }
+
+        .email-content {
+          padding: 24px 20px !important;
+        }
+
+        .email-footer {
+          padding: 0 20px 16px 20px !important;
+        }
+      }
+
+      *[class="gmail-fix"] {
+        display: none !important;
+      }
+    </style>
+  </head>
+
+  <body
+    bgcolor="#f9f9f9"
+    style="
+      margin: 0;
+      padding: 0;
+      font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        &quot;Segoe UI&quot;,
+        sans-serif;
+      font-weight: 400;
+      color: #474747;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: none;
+      background-color: #f9f9f9;
+    "
+  >
+    <!-- Preheader (hidden) -->
+    <span
+      class="preheader"
+      style="
+        display: none;
+        font-size: 1px;
+        color: transparent;
+        line-height: 1px;
+        max-height: 0;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        mso-hide: all;
+        visibility: hidden;
+      "
+    >
+      {% etr "workspace_admin_message.preheader" sender=sender_name workspace=workspace_name %}
+    </span>
+
+    <!-- Outer Wrapper -->
+    <center class="email-body" style="width: 100%; background-color: #f9f9f9; padding: 40px 0">
+      <!-- HEADER -->
+      <table role="presentation" width="100%">
+        <tr>
+          <td></td>
+          <td class="email-container" width="620" style="width: 620px; max-width: 620px; margin: 0 auto">
+            <table role="presentation" width="100%" style="background-color: #000000">
+              <tr>
+                <td style="padding: 24px 40px; text-align: center">
+                  <img
+                    src="https://media.docs.plane.so/logo/new-logo-dark.png"
+                    width="120"
+                    alt="Pi-Plane"
+                    style="height: auto; display: block; margin: 0 auto"
+                  />
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+
+      <!-- BODY -->
+      <table role="presentation" width="100%">
+        <tr>
+          <td></td>
+          <td class="email-container" width="620" style="width: 620px; max-width: 620px; margin: 0 auto">
+            <table
+              role="presentation"
+              width="100%"
+              class="email-content"
+              style="background-color: #ffffff; padding: 32px 40px 32px 40px"
+            >
+              <tr>
+                <td style="padding: 24px; font-size: 16px; line-height: 1.5; color: #474747">
+                  <!-- ========================================= -->
+                  <!--     WORKSPACE ADMIN MESSAGE – MAIN COPY  -->
+                  <!-- ========================================= -->
+
+                  <!-- Heading -->
+                  <h1 style="margin: 0 0 12px; font-size: 22px; line-height: 1.35; font-weight: 600; color: #111111">
+                    {% etr "workspace_admin_message.heading" workspace=workspace_name %}
+                  </h1>
+
+                  <!-- Intro text -->
+                  <p style="margin: 0 0 12px">
+                    {% etr "workspace_admin_message.intro" sender=sender_name sender_email=sender_email workspace=workspace_name %}
+                  </p>
+                  {% if request_message %}
+                  <p style="margin: 0 0 12px; padding: 10px 14px; background-color: #f3f3f3; border-radius: 6px">
+                    <strong>{% etr "workspace_admin_message.message" %}</strong><br />{{ request_message|linebreaksbr }}
+                  </p>
+                  {% endif %}
+
+                  <!-- Reply hint: the sender's address is the Reply-To of this email -->
+                  <p style="margin: 16px 0 0; font-size: 14px; line-height: 1.6; color: #474747">
+                    {% etr "workspace_admin_message.reply" sender=sender_name %}
+                  </p>
+
+                  <!-- Note -->
+                  <p style="margin: 16px 0 0; font-size: 13px; line-height: 1.6; color: #5f5e5e">
+                    {% etr "workspace_admin_message.note" email=email span_style="font-family: 'Courier New', Courier, monospace; font-size: 12px; background-color: #f3f3f3; padding: 2px 4px; border-radius: 3px; border: 1px solid #e9e9e9;" %}
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+
+      <!-- FOOTER -->
+      <table role="presentation" width="100%">
+        <tr>
+          <td></td>
+          <td class="email-container" width="620" style="width: 620px; max-width: 620px; margin: 0 auto">
+            <table
+              role="presentation"
+              width="100%"
+              class="email-footer"
+              style="background-color: #ffffff; padding: 0 40px 16px 40px"
+            >
+              <tr>
+                <td
+                  style="
+                    border-top: 1px solid #e9e9e9;
+                    padding: 24px;
+                    font-size: 12px;
+                    line-height: 1.6;
+                    color: #979797;
+                    text-align: left;
+                  "
+                >
+                  <p style="margin: 0">Pi-Plane</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+    </center>
+
+    <base target="_blank" />
+  </body>
+</html>

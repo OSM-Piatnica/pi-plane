@@ -109,5 +109,14 @@
     "heading": "Pi-Plane のログインコード",
     "info": "このコードは今後 10 分間有効です。ログインページに入力してログインを完了してください。",
     "note": "注: このメールは <span>{email}</span> に送信されました。ログインコードに心当たりがない場合は、このメッセージを無視してください。"
+  },
+  "workspace_admin_message": {
+    "subject": "{sender} さんが {workspace} の管理者にメッセージを送りました",
+    "preheader": "{sender} さんが Pi-Plane の {workspace} の管理者にメッセージを送りました。",
+    "heading": "{workspace} の管理者へのメッセージ",
+    "intro": "<strong>{sender}</strong>（{sender_email}）さんが、Pi-Plane のワークスペース <strong>{workspace}</strong> の管理者にメッセージを送りました。",
+    "message": "メッセージ:",
+    "reply": "このメールに返信すると、{sender} さんに直接返信できます。",
+    "note": "注: このメールは、あなたがこのワークスペースの管理者であるため、<span>{email}</span> に送信されました。"
   }
 }

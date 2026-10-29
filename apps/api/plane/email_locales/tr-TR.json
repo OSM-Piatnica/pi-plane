@@ -117,5 +117,14 @@
     "heading": "Pi-Plane giriş kodunuz",
     "info": "Bu kod önümüzdeki 10 dakika boyunca geçerlidir. Girişi tamamlamak için giriş sayfasına girin.",
     "note": "Not: Bu e-posta <span>{email}</span> adresine gönderildi. Bir giriş kodu beklemiyorsanız bu iletiyi yok sayabilirsiniz."
+  },
+  "workspace_admin_message": {
+    "subject": "{sender}, {workspace} yöneticilerine yazdı",
+    "preheader": "{sender}, Pi-Plane'de {workspace} yöneticilerine bir mesaj gönderdi.",
+    "heading": "{workspace} yöneticileri için bir mesaj",
+    "intro": "<strong>{sender}</strong> ({sender_email}), Pi-Plane'deki <strong>{workspace}</strong> çalışma alanının yöneticilerine yazdı.",
+    "message": "Mesaj:",
+    "reply": "{sender} kişisine doğrudan yanıt vermek için bu e-postayı yanıtlayın.",
+    "note": "Not: Bu e-posta, bu çalışma alanının yöneticisi olduğunuz için <span>{email}</span> adresine gönderildi."
   }
 }
