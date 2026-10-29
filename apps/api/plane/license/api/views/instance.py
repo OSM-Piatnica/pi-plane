@@ -30,6 +30,7 @@ from plane.utils.import_limits import (
     get_import_max_work_items,
 )
 from plane.utils.cache import cache_response, invalidate_cache
+from plane.utils.space import is_space_deployed, is_space_enabled
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 
@@ -145,6 +146,10 @@ class InstanceEndpoint(BaseAPIView):
         except (ValueError, TypeError):
             default_workspace_exists = False
         data["default_workspace_id"] = default_workspace_id if default_workspace_exists else ""
+
+        # Web sharing: whether Space is part of this installation, and whether it is switched on
+        data["is_space_deployed"] = is_space_deployed()
+        data["is_space_enabled"] = is_space_enabled()
 
         # Github app name
         data["github_app_name"] = str(GITHUB_APP_NAME)

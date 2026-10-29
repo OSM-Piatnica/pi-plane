@@ -31,6 +31,8 @@ services:
 
   space:
     container_name: space
+    # ENABLE_SPACE=0 leaves the public sharing site out (no container; the API and proxy are told below)
+    scale: ${ENABLE_SPACE:-1}
     build:
       context: .
       dockerfile: ./apps/space/Dockerfile.space
@@ -57,6 +59,7 @@ services:
       # Auth requests are counted per client IP, so an office behind one address shares this budget.
       # The code default is 10/minute; 1000/minute matches the CLI and all-in-one deployments.
       AUTHENTICATION_RATE_LIMIT: ${AUTHENTICATION_RATE_LIMIT:-1000/minute}
+      ENABLE_SPACE: ${ENABLE_SPACE:-1}
     depends_on:
       - plane-db
       - plane-redis
@@ -191,6 +194,7 @@ services:
       FILE_SIZE_LIMIT: ${FILE_SIZE_LIMIT:-5242880}
       BUCKET_NAME: ${AWS_S3_BUCKET_NAME:-uploads}
       SITE_ADDRESS: ${SITE_ADDRESS:-:80}
+      ENABLE_SPACE: ${ENABLE_SPACE:-1}
     depends_on:
       - web
       - api

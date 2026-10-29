@@ -5,4 +5,7 @@
  * See the LICENSE file for details.
  */
 
-export type TInstanceWorkspaceConfigurationKeys = "DISABLE_WORKSPACE_CREATION" | "INSTANCE_DEFAULT_WORKSPACE_ID";
+export type TInstanceWorkspaceConfigurationKeys =
+  | "DISABLE_WORKSPACE_CREATION"
+  | "INSTANCE_DEFAULT_WORKSPACE_ID"
+  | "IS_SPACE_ENABLED";

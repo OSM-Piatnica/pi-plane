@@ -113,6 +113,10 @@ In Plane v1.4.0 to v1.4.2 a container started without `SECRET_KEY` received a ge
 - `REDIS_SSL_CERT_REQS`: For a `rediss://` `REDIS_URL`, the Redis server certificate and hostname are verified by default (`required`). Set it to `none` to skip verification.
 - `REDIS_SSL_CA_CERTS`: Path inside the container to a CA bundle, for a Redis server whose certificate is issued by a private CA. Mount the file with `-v`, for example `-v /path/to/redis-ca.pem:/certs/redis-ca.pem:ro -e REDIS_SSL_CA_CERTS=/certs/redis-ca.pem`.
 
+#### Public sharing (Space)
+
+- `ENABLE_SPACE`: set it to `0` to leave Space, the public sharing site, out (default: `1`). It is then not started, `/spaces` answers 404, projects cannot be shared on the web and the sharing options are hidden in the app. The image still contains it. With Space in, the instance admin can also turn sharing off on the Workspaces page of the admin app.
+
 #### File Handling
 
 - `FILE_SIZE_LIMIT`: Maximum file upload size in bytes until the instance administrator sets one on the General page of the admin app (default: `5242880` = 5 MB)

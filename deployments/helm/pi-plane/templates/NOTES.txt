@@ -18,5 +18,5 @@ production use managed services (see examples/production-values.yaml in the char
 {{- end }}
 {{- if not (or .Values.ingress.enabled .Values.gateway.enabled) }}
 
-Neither ingress nor gateway is enabled: expose the web, space, admin, live, api (and bucket) services yourself.
+Neither ingress nor gateway is enabled: expose the web, {{ if .Values.space.enabled }}space, {{ end }}admin, live, api (and bucket) services yourself.
 {{- end }}

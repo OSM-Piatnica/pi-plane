@@ -29,7 +29,7 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
   // states
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   // store
-  const { formattedConfig, fetchInstanceConfigurations, updateInstanceConfigurations } = useInstance();
+  const { config, formattedConfig, fetchInstanceConfigurations, updateInstanceConfigurations } = useInstance();
   const {
     workspaceIds,
     loader: workspaceLoader,
@@ -40,6 +40,9 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
   // derived values
   const disableWorkspaceCreation = formattedConfig?.DISABLE_WORKSPACE_CREATION ?? "";
   const defaultWorkspaceId = formattedConfig?.INSTANCE_DEFAULT_WORKSPACE_ID ?? "";
+  // Space is the public site that shows shared projects; a deployment can leave it out altogether
+  const isSpaceDeployed = config?.is_space_deployed !== false;
+  const isSpaceEnabled = isSpaceDeployed && (formattedConfig?.IS_SPACE_ENABLED ?? "1") !== "0";
   const hasNextPage = paginationInfo?.next_page_results && paginationInfo?.next_cursor !== undefined;
 
   // fetch data
@@ -118,6 +121,29 @@ const WorkspaceManagementPage = observer(function WorkspaceManagementPage(_props
           <Skeleton>
             <Skeleton.Item height="50px" width="100%" />
           </Skeleton>
+        )}
+        {formattedConfig && (
+          <div className={cn("flex w-full items-center gap-14 rounded-sm")}>
+            <div className="flex grow items-center gap-4">
+              <div className="grow">
+                <div className="pb-1 text-16 font-medium">Let users share projects on the web.</div>
+                <div className={cn("text-11 leading-5 font-regular text-tertiary")}>
+                  {isSpaceDeployed
+                    ? "Turning this off hides the sharing options and stops serving the public pages, so nothing is visible without signing in. Projects that were shared are kept and come back when you turn it on again."
+                    : "The public sharing site (Space) is not part of this installation, so projects cannot be shared on the web. Add it to the deployment to turn this on."}
+                </div>
+              </div>
+            </div>
+            <div className={`shrink-0 pr-4 ${isSubmitting && "opacity-70"}`}>
+              <Switch
+                checked={isSpaceEnabled}
+                onCheckedChange={() => updateConfig("IS_SPACE_ENABLED", isSpaceEnabled ? "0" : "1")}
+                size="sm"
+                aria-label="Let users share projects on the web"
+                disabled={isSubmitting || !isSpaceDeployed}
+              />
+            </div>
+          </div>
         )}
         {workspaceLoader !== "init-loader" ? (
           <>

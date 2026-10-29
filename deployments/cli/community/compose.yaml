@@ -48,6 +48,10 @@ x-proxy-env: &proxy-env
   BUCKET_NAME: ${AWS_S3_BUCKET_NAME:-uploads}
   SITE_ADDRESS: ${SITE_ADDRESS:-:80}
   TRUSTED_PROXIES: ${TRUSTED_PROXIES:-private_ranges}
+  # Space (the public sharing site) can be left out: ENABLE_SPACE=0, or SPACE_REPLICAS=0. The API and the proxy both
+  # need to know, so that sharing is switched off and /spaces answers 404
+  ENABLE_SPACE: ${ENABLE_SPACE:-1}
+  SPACE_REPLICAS: ${SPACE_REPLICAS:-1}
 
 x-mq-env: &mq-env # RabbitMQ Settings
   RABBITMQ_HOST: ${RABBITMQ_HOST:-plane-mq}

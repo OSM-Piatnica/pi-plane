@@ -25,11 +25,7 @@
           "type": "string"
         },
         "pullPolicy": {
-          "enum": [
-            "Always",
-            "IfNotPresent",
-            "Never"
-          ]
+          "enum": ["Always", "IfNotPresent", "Never"]
         }
       }
     },
@@ -85,9 +81,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         }
       }
@@ -131,10 +125,7 @@
           "pattern": "^[0-9]+/(second|minute|hour|day)$"
         },
         "numProxies": {
-          "type": [
-            "string",
-            "integer"
-          ]
+          "type": ["string", "integer"]
         },
         "extraCorsOrigins": {
           "type": "array",
@@ -152,11 +143,7 @@
         "env": {
           "type": "object",
           "additionalProperties": {
-            "type": [
-              "string",
-              "number",
-              "boolean"
-            ]
+            "type": ["string", "number", "boolean"]
           }
         },
         "envFrom": {
@@ -189,9 +176,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "replicas": {
@@ -205,10 +190,7 @@
               "type": "boolean"
             },
             "minAvailable": {
-              "type": [
-                "integer",
-                "string"
-              ]
+              "type": ["integer", "string"]
             }
           }
         },
@@ -240,9 +222,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "replicas": {
@@ -273,9 +253,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         }
       }
@@ -302,9 +280,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "backoffLimit": {
@@ -339,9 +315,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "replicas": {
@@ -355,10 +329,7 @@
               "type": "boolean"
             },
             "minAvailable": {
-              "type": [
-                "integer",
-                "string"
-              ]
+              "type": ["integer", "string"]
             }
           }
         }
@@ -386,9 +357,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "replicas": {
@@ -402,10 +371,7 @@
               "type": "boolean"
             },
             "minAvailable": {
-              "type": [
-                "integer",
-                "string"
-              ]
+              "type": ["integer", "string"]
             }
           }
         }
@@ -414,6 +380,9 @@
     "space": {
       "type": "object",
       "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
         "resources": {
           "type": "object"
         },
@@ -433,9 +402,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "replicas": {
@@ -449,10 +416,7 @@
               "type": "boolean"
             },
             "minAvailable": {
-              "type": [
-                "integer",
-                "string"
-              ]
+              "type": ["integer", "string"]
             }
           }
         }
@@ -480,9 +444,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "replicas": {
@@ -496,10 +458,7 @@
               "type": "boolean"
             },
             "minAvailable": {
-              "type": [
-                "integer",
-                "string"
-              ]
+              "type": ["integer", "string"]
             }
           }
         }
@@ -513,10 +472,7 @@
         },
         "image": {
           "type": "object",
-          "required": [
-            "repository",
-            "tag"
-          ],
+          "required": ["repository", "tag"],
           "properties": {
             "repository": {
               "type": "string",
@@ -593,10 +549,7 @@
         },
         "image": {
           "type": "object",
-          "required": [
-            "repository",
-            "tag"
-          ],
+          "required": ["repository", "tag"],
           "properties": {
             "repository": {
               "type": "string",
@@ -661,10 +614,7 @@
         },
         "image": {
           "type": "object",
-          "required": [
-            "repository",
-            "tag"
-          ],
+          "required": ["repository", "tag"],
           "properties": {
             "repository": {
               "type": "string",
@@ -734,10 +684,7 @@
       "properties": {
         "provider": {
           "type": "string",
-          "enum": [
-            "s3",
-            "azure"
-          ]
+          "enum": ["s3", "azure"]
         },
         "bucket": {
           "type": "string",
@@ -754,10 +701,7 @@
             },
             "image": {
               "type": "object",
-              "required": [
-                "repository",
-                "tag"
-              ],
+              "required": ["repository", "tag"],
               "properties": {
                 "repository": {
                   "type": "string",
@@ -834,14 +778,10 @@
                 "const": true
               }
             },
-            "required": [
-              "enabled"
-            ]
+            "required": ["enabled"]
           }
         },
-        "required": [
-          "gateway"
-        ]
+        "required": ["gateway"]
       },
       "then": {
         "properties": {

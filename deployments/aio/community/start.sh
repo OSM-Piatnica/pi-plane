@@ -17,6 +17,7 @@ print_header(){
     echo "    FILE_SIZE_LIMIT_MAX (default: 104857600)"
     echo "    APP_PROTOCOL (http or https)"
     echo "    APP_PORT (public port, if not 80/443)"
+    echo "    ENABLE_SPACE (default: 1; 0 leaves the public sharing site out)"
     echo ""
     echo "Required secrets (no default, set a unique value for each):"
     echo "    SECRET_KEY, LIVE_SERVER_SECRET_KEY"
@@ -219,6 +220,8 @@ update_env_file(){
     update_env_value "RATE_LIMIT_PER_IP_PER_MIN" "${RATE_LIMIT_PER_IP_PER_MIN:-50000}"
     update_env_value "ASSET_DUPLICATE_RATE_LIMIT" "${ASSET_DUPLICATE_RATE_LIMIT:-60/minute}"
     update_env_value "ANON_RATE_LIMIT" "${ANON_RATE_LIMIT:-180/minute}"
+    # 0 leaves Space (the public sharing site) out: it is not started, /spaces answers 404 and projects cannot be shared
+    update_env_value "ENABLE_SPACE" "${ENABLE_SPACE:-1}"
 
     echo "✅ Environment file updated"
     echo ""
@@ -237,6 +240,12 @@ main(){
             *=*) export "${line%%=*}=${line#*=}" ;;
         esac
     done < plane.env
+
+    # supervisor.conf reads this to decide whether to start Space
+    case "${ENABLE_SPACE:-1}" in
+        0|false|no|off) export SPACE_AUTOSTART=false ;;
+        *) export SPACE_AUTOSTART=true ;;
+    esac
 
     /usr/local/bin/supervisord -c /etc/supervisor/conf.d/supervisor.conf
 }
