@@ -860,8 +860,37 @@ class TestWorkItemImportDates:
         assert Issue.objects.get(project=project, name="Bad date").start_date is None
         assert any("31.02.2026" in w for w in result["warnings"])
 
+    def test_new_cycle_takes_its_period_from_the_exported_cycle_dates(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Cycle dates", "CDT")
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "C1",
+                    "name": "In the cycle",
+                    "state": "Todo",
+                    "start_date": "Tue, 02 Jun 2026",
+                    "target_date": "Wed, 03 Jun 2026",
+                    "cycles": "Sprint 1",
+                    "cycle_start_date": "Mon, 01 Jun 2026",
+                    "cycle_end_date": "Sun, 14 Jun 2026",
+                }
+            ],
+        )
+
+        cycle = Cycle.objects.get(project=project, name="Sprint 1")
+        assert cycle.start_date.date() == date(2026, 6, 1)
+        assert cycle.end_date.date() == date(2026, 6, 14)
+        issue = Issue.objects.get(project=project, name="In the cycle")
+        assert issue.start_date == date(2026, 6, 2)
+
 
 class TestParseImportDate:
+    def test_export_format_is_accepted(self):
+        assert _parse_import_date("Mon, 01 Jun 2026") == "2026-06-01"
+
     def test_day_first_dates_are_accepted(self):
         assert _parse_import_date("10.09.2026") == "2026-09-10"
         assert _parse_import_date("1.3.2026") == "2026-03-01"

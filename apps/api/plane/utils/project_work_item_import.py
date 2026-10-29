@@ -136,6 +136,9 @@ def _coerce_dict(value) -> dict:
     return {}
 
 
+EXPORT_DATE_FORMAT = "%a, %d %b %Y"
+
+
 def _parse_import_date(value):
     """Return an ISO date string, or None when the cell cannot be read as a date."""
     if value in [None, ""]:
@@ -158,7 +161,12 @@ def _parse_import_date(value):
             return date(int(dmy.group(3)), int(dmy.group(2)), int(dmy.group(1))).isoformat()
         except ValueError:
             return None
-    # Exports always write ISO dates; a spreadsheet may hand back a timestamp instead
+    # The work item export writes "Mon, 01 Jun 2026"
+    try:
+        return datetime.strptime(text, EXPORT_DATE_FORMAT).date().isoformat()
+    except ValueError:
+        pass
+    # A spreadsheet may hand back an ISO timestamp instead
     try:
         return datetime.fromisoformat(text.replace("Z", "+00:00")).date().isoformat()
     except ValueError:
@@ -341,9 +349,9 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
     """
     Create the cycles named in the file but absent from the project.
 
-    A cycle stores a period, which the work item export does not carry, so the period is
-    derived from the work items assigned to it. Plane treats a cycle without dates as a
-    draft, which is what an undated cycle becomes.
+    A cycle stores a period. The work item export writes it per row (Cycle Start/End Date), so
+    that wins; for files without it the period is derived from the work items assigned to the
+    cycle. Plane treats a cycle without dates as a draft, which is what an undated cycle becomes.
     """
     spans: dict[str, dict] = {}
     for item in prepared:
@@ -353,7 +361,9 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
         key = name.lower()
         if key in cycles_by_name:
             continue
-        span = spans.setdefault(key, {"name": name, "start": None, "end": None})
+        span = spans.setdefault(key, {"name": name, "start": None, "end": None, "given_start": None, "given_end": None})
+        span["given_start"] = span["given_start"] or item.get("cycle_start_date")
+        span["given_end"] = span["given_end"] or item.get("cycle_end_date")
         for field, bound, pick in (("start_date", "start", min), ("target_date", "end", max)):
             value = item.get(field)
             if not value:
@@ -368,8 +378,8 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
             workspace=project.workspace,
             owned_by=user,
             created_by=user,
-            start_date=_to_cycle_datetime(span["start"]),
-            end_date=_to_cycle_datetime(span["end"]),
+            start_date=_to_cycle_datetime(span["given_start"] or span["start"]),
+            end_date=_to_cycle_datetime(span["given_end"] or span["end"]),
         )
     return created
 
@@ -658,6 +668,8 @@ def import_work_items_into_project(
                     warnings.append(f'Row {index + 1}: a work item can belong to one cycle, "{clean_name}" skipped')
         else:
             _note_skipped("cycle", row.get("cycles"))
+        cycle_start = _parse_import_date(row.get("cycle_start_date")) if options.dates else None
+        cycle_end = _parse_import_date(row.get("cycle_end_date")) if options.dates else None
 
         assignee_ids = []
         if options.assignees:
@@ -779,6 +791,8 @@ def import_work_items_into_project(
                 "label_ids": label_ids,
                 "module_ids": module_ids,
                 "cycle_name": cycle_name,
+                "cycle_start_date": cycle_start,
+                "cycle_end_date": cycle_end,
                 "assignee_ids": assignee_ids,
                 "subscriber_ids": subscriber_ids,
                 "relations": raw_relations,

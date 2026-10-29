@@ -92,12 +92,16 @@ def test_maps_module_and_cycle_columns_written_by_the_exporter():
             "State": "Todo",
             "Module Name": "Kampania",
             "Cycle Name": "Sprint 1",
+            "Cycle Start Date": "Mon, 01 Jun 2026",
+            "Cycle End Date": "Sun, 14 Jun 2026",
         }
     ]
     mapped = map_community_export_rows(rows)
 
     assert mapped[0]["modules"] == "Kampania"
     assert mapped[0]["cycles"] == "Sprint 1"
+    assert mapped[0]["cycle_start_date"] == "Mon, 01 Jun 2026"
+    assert mapped[0]["cycle_end_date"] == "Sun, 14 Jun 2026"
 
 
 def test_unwraps_rows_saved_as_one_quoted_cell():

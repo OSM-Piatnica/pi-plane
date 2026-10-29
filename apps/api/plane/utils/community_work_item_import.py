@@ -125,6 +125,8 @@ def map_community_export_rows(rows: list[dict]) -> list[dict]:
                 "labels": labels,
                 "modules": _pick(row, "modules", "module_name"),
                 "cycles": _pick(row, "cycles", "cycle", "cycle_name"),
+                "cycle_start_date": _pick(row, "cycle_start_date"),
+                "cycle_end_date": _pick(row, "cycle_end_date"),
                 "relations": _pick(row, "relations"),
                 "assignee_emails": assignee_emails,
                 "assignee_names": assignee_names,
