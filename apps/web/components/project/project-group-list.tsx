@@ -14,7 +14,7 @@ import { setToast } from "@plane/blocks/toast";
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { EProjectGroupRole } from "@plane/types";
-import type { TProjectGroup } from "@plane/types";
+import type { TProjectGroup, TUserGroup } from "@plane/types";
 // helpers
 import { PROJECT_GROUP_ROLES, getAddableGroups, isProjectGroupRole } from "@/helpers/project-group";
 // hooks
@@ -31,6 +31,130 @@ type Props = {
 
 const SELECT_CLASS = "h-8 rounded-md border border-subtle bg-surface-1 px-2 text-13 text-secondary";
 
+const useRoleLabel = () => {
+  const { t } = useTranslation();
+  return (role: EProjectGroupRole) =>
+    role === EProjectGroupRole.GUEST ? t("project_members.groups.role_guest") : t("project_members.groups.role_member");
+};
+
+/** The two roles a group can have in a project. */
+function GroupRoleSelect(props: { value: EProjectGroupRole; onChange: (role: EProjectGroupRole) => void }) {
+  const { value, onChange } = props;
+  const { t } = useTranslation();
+  const roleLabel = useRoleLabel();
+
+  return (
+    <select
+      aria-label={t("project_members.groups.role")}
+      value={value}
+      onChange={(event) => {
+        const role = Number(event.target.value);
+        if (isProjectGroupRole(role)) onChange(role);
+      }}
+      className={SELECT_CLASS}
+    >
+      {PROJECT_GROUP_ROLES.map((role) => (
+        <option key={role} value={role}>
+          {roleLabel(role)}
+        </option>
+      ))}
+    </select>
+  );
+}
+
+/** One group that is a member of the project; admins can change its role or remove it. */
+function ProjectGroupRow(props: {
+  link: TProjectGroup;
+  isAdmin: boolean;
+  onRoleChange: (link: TProjectGroup, role: EProjectGroupRole) => void;
+  onRemove: (link: TProjectGroup) => void;
+}) {
+  const { link, isAdmin, onRoleChange, onRemove } = props;
+  const { t } = useTranslation();
+  const roleLabel = useRoleLabel();
+
+  return (
+    <li className="flex items-center justify-between gap-3 px-4 py-3">
+      <div className="min-w-0">
+        <div className="flex items-center gap-2">
+          <span className="truncate text-14 font-medium text-primary">{link.group_name}</span>
+          {link.group_source !== "local" && (
+            <span className="rounded-full bg-layer-1 px-2 py-0.5 text-11 text-secondary">
+              {t(`workspace_settings.settings.groups.sources.${link.group_source}`)}
+            </span>
+          )}
+        </div>
+        <p className="text-11 text-tertiary">
+          {t("project_members.groups.member_count", { count: link.member_count })}
+        </p>
+      </div>
+      <div className="flex shrink-0 items-center gap-2">
+        {isAdmin ? (
+          <>
+            <GroupRoleSelect value={link.role} onChange={(role) => onRoleChange(link, role)} />
+            <Button size="md" stretch="auto" variant="secondary" onClick={() => onRemove(link)} label={t("remove")} />
+          </>
+        ) : (
+          <span className="text-13 text-secondary">{roleLabel(link.role)}</span>
+        )}
+      </div>
+    </li>
+  );
+}
+
+/** Picks a group that is not yet a member of the project, and the role to give it. */
+function AddProjectGroupForm(props: {
+  addable: TUserGroup[];
+  groupsLoaded: boolean;
+  onAdd: (groupId: string, role: EProjectGroupRole) => Promise<boolean>;
+}) {
+  const { addable, groupsLoaded, onAdd } = props;
+  const { t } = useTranslation();
+  // states
+  const [groupId, setGroupId] = useState("");
+  const [role, setRole] = useState<EProjectGroupRole>(EProjectGroupRole.MEMBER);
+  const [isAdding, setIsAdding] = useState(false);
+
+  const handleAdd = async () => {
+    if (!groupId) return;
+    setIsAdding(true);
+    const added = await onAdd(groupId, role);
+    if (added) setGroupId("");
+    setIsAdding(false);
+  };
+
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <select
+        aria-label={t("project_members.groups.select_group")}
+        value={groupId}
+        onChange={(event) => setGroupId(event.target.value)}
+        className={SELECT_CLASS}
+      >
+        <option value="">
+          {addable.length === 0 && groupsLoaded
+            ? t("project_members.groups.no_groups_available")
+            : t("project_members.groups.select_group")}
+        </option>
+        {addable.map((group) => (
+          <option key={group.id} value={group.id}>
+            {group.name}
+          </option>
+        ))}
+      </select>
+      <GroupRoleSelect value={role} onChange={setRole} />
+      <Button
+        size="md"
+        stretch="auto"
+        variant="primary"
+        onClick={handleAdd}
+        disabled={!groupId || isAdding}
+        label={t("project_members.groups.add_group")}
+      />
+    </div>
+  );
+}
+
 /** The groups that are members of the project, with their role, for project admins to change. */
 export const ProjectGroupList = observer(function ProjectGroupList(props: Props) {
   const { workspaceSlug, projectId } = props;
@@ -42,9 +166,6 @@ export const ProjectGroupList = observer(function ProjectGroupList(props: Props)
     project: { fetchProjectMembers },
   } = useMember();
   // states
-  const [newGroupId, setNewGroupId] = useState("");
-  const [newRole, setNewRole] = useState<EProjectGroupRole>(EProjectGroupRole.MEMBER);
-  const [isAdding, setIsAdding] = useState(false);
   const [linkToRemove, setLinkToRemove] = useState<TProjectGroup | null>(null);
   const [isRemoving, setIsRemoving] = useState(false);
 
@@ -60,8 +181,6 @@ export const ProjectGroupList = observer(function ProjectGroupList(props: Props)
 
   // derived values
   const addable = getAddableGroups(groups ?? [], links ?? []);
-  const roleLabel = (role: EProjectGroupRole) =>
-    role === EProjectGroupRole.GUEST ? t("project_members.groups.role_guest") : t("project_members.groups.role_member");
 
   const showError = (error: unknown) =>
     setToast({
@@ -75,44 +194,40 @@ export const ProjectGroupList = observer(function ProjectGroupList(props: Props)
     await Promise.all([mutate(), fetchProjectMembers(workspaceSlug, projectId)]);
   };
 
-  const handleAdd = async () => {
-    if (!newGroupId) return;
-    setIsAdding(true);
+  // runs a change, reports its outcome and fetches the lists again; true when it worked
+  const run = async (change: () => Promise<unknown>, successMessage: string) => {
     try {
-      await projectGroupService.add(workspaceSlug, projectId, { group: newGroupId, role: newRole });
-      setNewGroupId("");
+      await change();
       await refresh();
-      setToast({ type: "success", title: t("toast.success"), message: t("project_members.groups.group_added") });
+      setToast({ type: "success", title: t("toast.success"), message: successMessage });
+      return true;
     } catch (error) {
       showError(error);
-    } finally {
-      setIsAdding(false);
+      return false;
     }
   };
 
-  const handleRoleChange = async (link: TProjectGroup, role: EProjectGroupRole) => {
-    try {
-      await projectGroupService.updateRole(workspaceSlug, projectId, link.id, role);
-      await refresh();
-      setToast({ type: "success", title: t("toast.success"), message: t("project_members.groups.group_updated") });
-    } catch (error) {
-      showError(error);
-    }
-  };
+  const handleAdd = (group: string, role: EProjectGroupRole) =>
+    run(
+      () => projectGroupService.add(workspaceSlug, projectId, { group, role }),
+      t("project_members.groups.group_added")
+    );
+
+  const handleRoleChange = (link: TProjectGroup, role: EProjectGroupRole) =>
+    run(
+      () => projectGroupService.updateRole(workspaceSlug, projectId, link.id, role),
+      t("project_members.groups.group_updated")
+    );
 
   const handleRemove = async () => {
     if (!linkToRemove) return;
     setIsRemoving(true);
-    try {
-      await projectGroupService.remove(workspaceSlug, projectId, linkToRemove.id);
-      setLinkToRemove(null);
-      await refresh();
-      setToast({ type: "success", title: t("toast.success"), message: t("project_members.groups.group_removed") });
-    } catch (error) {
-      showError(error);
-    } finally {
-      setIsRemoving(false);
-    }
+    const removed = await run(
+      () => projectGroupService.remove(workspaceSlug, projectId, linkToRemove.id),
+      t("project_members.groups.group_removed")
+    );
+    if (removed) setLinkToRemove(null);
+    setIsRemoving(false);
   };
 
   // people who are not admins have nothing to see or do when the project has no groups
@@ -134,99 +249,18 @@ export const ProjectGroupList = observer(function ProjectGroupList(props: Props)
       {links && links.length > 0 && (
         <ul className="flex flex-col divide-y divide-subtle rounded-lg border border-subtle">
           {links.map((link) => (
-            <li key={link.id} className="flex items-center justify-between gap-3 px-4 py-3">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="truncate text-14 font-medium text-primary">{link.group_name}</span>
-                  {link.group_source !== "local" && (
-                    <span className="rounded-full bg-layer-1 px-2 py-0.5 text-11 text-secondary">
-                      {t(`workspace_settings.settings.groups.sources.${link.group_source}`)}
-                    </span>
-                  )}
-                </div>
-                <p className="text-11 text-tertiary">
-                  {t("project_members.groups.member_count", { count: link.member_count })}
-                </p>
-              </div>
-              <div className="flex shrink-0 items-center gap-2">
-                {isAdmin ? (
-                  <>
-                    <select
-                      aria-label={t("project_members.groups.role")}
-                      value={link.role}
-                      onChange={(event) => {
-                        const role = Number(event.target.value);
-                        if (isProjectGroupRole(role)) void handleRoleChange(link, role);
-                      }}
-                      className={SELECT_CLASS}
-                    >
-                      {PROJECT_GROUP_ROLES.map((role) => (
-                        <option key={role} value={role}>
-                          {roleLabel(role)}
-                        </option>
-                      ))}
-                    </select>
-                    <Button
-                      size="md"
-                      stretch="auto"
-                      variant="secondary"
-                      onClick={() => setLinkToRemove(link)}
-                      label={t("remove")}
-                    />
-                  </>
-                ) : (
-                  <span className="text-13 text-secondary">{roleLabel(link.role)}</span>
-                )}
-              </div>
-            </li>
+            <ProjectGroupRow
+              key={link.id}
+              link={link}
+              isAdmin={isAdmin}
+              onRoleChange={(item, role) => void handleRoleChange(item, role)}
+              onRemove={setLinkToRemove}
+            />
           ))}
         </ul>
       )}
 
-      {isAdmin && (
-        <div className="flex flex-wrap items-center gap-2">
-          <select
-            aria-label={t("project_members.groups.select_group")}
-            value={newGroupId}
-            onChange={(event) => setNewGroupId(event.target.value)}
-            className={SELECT_CLASS}
-          >
-            <option value="">
-              {addable.length === 0 && groups
-                ? t("project_members.groups.no_groups_available")
-                : t("project_members.groups.select_group")}
-            </option>
-            {addable.map((group) => (
-              <option key={group.id} value={group.id}>
-                {group.name}
-              </option>
-            ))}
-          </select>
-          <select
-            aria-label={t("project_members.groups.role")}
-            value={newRole}
-            onChange={(event) => {
-              const role = Number(event.target.value);
-              if (isProjectGroupRole(role)) setNewRole(role);
-            }}
-            className={SELECT_CLASS}
-          >
-            {PROJECT_GROUP_ROLES.map((role) => (
-              <option key={role} value={role}>
-                {roleLabel(role)}
-              </option>
-            ))}
-          </select>
-          <Button
-            size="md"
-            stretch="auto"
-            variant="primary"
-            onClick={handleAdd}
-            disabled={!newGroupId || isAdding}
-            label={t("project_members.groups.add_group")}
-          />
-        </div>
-      )}
+      {isAdmin && <AddProjectGroupForm addable={addable} groupsLoaded={groups !== undefined} onAdd={handleAdd} />}
 
       <ConfirmDialog
         isOpen={linkToRemove !== null}
