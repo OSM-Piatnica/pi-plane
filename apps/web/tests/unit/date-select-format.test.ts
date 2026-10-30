@@ -9,7 +9,7 @@ import { de } from "date-fns/locale/de";
 import { enUS } from "date-fns/locale/en-US";
 import { pl } from "date-fns/locale/pl";
 import { describe, expect, it } from "vitest";
-import { getDateSelectFormatToken } from "../../components/dropdowns/date-select";
+import { getDateSelectFormatToken } from "../../helpers/date-select-format";
 
 describe("getDateSelectFormatToken", () => {
   it("leaves English on the block's default style", () => {
