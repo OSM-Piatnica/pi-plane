@@ -159,6 +159,7 @@
             "estimate": "Estimation",
             "is_draft": "Indicateur de brouillon",
             "assignees": "Assignés",
+            "group_assignees": "Group assignees",
             "subscribers": "Abonnés",
             "created_by_name": "Créé par",
             "start_date": "Date de début",

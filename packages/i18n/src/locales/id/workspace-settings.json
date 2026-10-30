@@ -159,6 +159,7 @@
             "estimate": "Perkiraan",
             "is_draft": "Penanda draf",
             "assignees": "Penerima tugas",
+            "group_assignees": "Group assignees",
             "subscribers": "Pelanggan",
             "created_by_name": "Dibuat oleh",
             "start_date": "Tanggal mulai",

@@ -159,6 +159,7 @@
             "estimate": "Schatting",
             "is_draft": "Conceptmarkering",
             "assignees": "Toegewezen aan",
+            "group_assignees": "Group assignees",
             "subscribers": "Abonnees",
             "created_by_name": "Gemaakt door",
             "start_date": "Startdatum",

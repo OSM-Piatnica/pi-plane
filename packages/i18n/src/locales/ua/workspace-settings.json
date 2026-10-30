@@ -159,6 +159,7 @@
             "estimate": "Оцінка",
             "is_draft": "Ознака чернетки",
             "assignees": "Виконавці",
+            "group_assignees": "Group assignees",
             "subscribers": "Підписники",
             "created_by_name": "Створив",
             "start_date": "Дата початку",

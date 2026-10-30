@@ -159,6 +159,7 @@
             "estimate": "შეფასება",
             "is_draft": "დრაფტის ნიშანი",
             "assignees": "შემსრულებლები",
+            "group_assignees": "Group assignees",
             "subscribers": "გამომწერები",
             "created_by_name": "შემქმნელი",
             "start_date": "დაწყების თარიღი",

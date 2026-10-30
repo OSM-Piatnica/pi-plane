@@ -159,6 +159,7 @@
             "estimate": "Оценка",
             "is_draft": "Флаг за чернова",
             "assignees": "Изпълнители",
+            "group_assignees": "Group assignees",
             "subscribers": "Абонати",
             "created_by_name": "Създадено от",
             "start_date": "Начална дата",
