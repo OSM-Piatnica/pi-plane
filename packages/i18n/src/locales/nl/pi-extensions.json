@@ -308,6 +308,7 @@
         "description": "Maak herbruikbare projectopzetten met standaardeigenschappen, ingeschakelde functies, statussen, labels en werkitemtypen.",
         "edit_template": "Sjabloon bewerken",
         "form": {
+          "add_group": "Add group",
           "add_label": "Label toevoegen",
           "add_state": "Status toevoegen",
           "custom_property": {
@@ -380,6 +381,8 @@
               "label": "Werkitemtypen"
             }
           },
+          "group_missing": "Group no longer exists",
+          "groups_empty": "No groups yet.",
           "identifier_invalid": "Gebruik alleen letters en cijfers",
           "identifier_max_char": "De identificatie mag maximaal 5 tekens bevatten",
           "label_name_placeholder": "Labelnaam",
@@ -387,8 +390,11 @@
           "mark_default_state": "Als standaardstatus markeren",
           "modal_intro": "Geef het sjabloon een naam en voeg een korte notitie voor je team toe. Configureer daarna de standaardwaarden van het project—dezelfde soort instellingen die je gebruikt bij het aanmaken van een project.",
           "name_required": "Sjabloonnaam is verplicht",
+          "no_groups_available": "No groups left to add",
           "section_features": "Functies",
           "section_features_hint": "Kies welke optionele projectfuncties worden ingeschakeld wanneer dit sjabloon wordt toegepast.",
+          "section_groups": "Groups as members",
+          "section_groups_hint": "Groups that become members of every project created from this template, with the role given here. Everyone in a group, including its subgroups, joins the project. The person creating the project stays its admin.",
           "section_labels": "Labels",
           "section_labels_hint": "Definieer standaardlabels voor nieuwe projecten.",
           "section_properties": "Standaardprojecteigenschappen",
@@ -397,6 +403,7 @@
           "section_template": "Sjabloon",
           "section_work_item_types": "Werkitemtypen",
           "section_work_item_types_hint": "Configureer standaardwerkitemtypen en aangepaste eigenschappen voor projecten die met dit sjabloon worden aangemaakt.",
+          "select_group": "Select a group",
           "state_groups": {
             "backlog": "Backlog",
             "cancelled": "Geannuleerd",
@@ -485,6 +492,12 @@
           },
           "uploaded": {
             "message": "Sjabloon \"{name}\" is geüpload vanuit het bestand."
+          },
+          "apply_groups_skipped": {
+            "message": "Project was created, but {count, plural, one {# group of the template no longer exists and was} other {# groups of the template no longer exist and were}} not added."
+          },
+          "uploaded_groups_not_found": {
+            "message": "Template \"{name}\" was uploaded, but these groups do not exist in this workspace and were left out: {groups}."
           }
         },
         "upload_invalid_file": "Upload een JSON-bestand dat is gedownload met de knop “Downloaden”.",
