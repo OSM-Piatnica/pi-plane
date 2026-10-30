@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Third Party imports
@@ -21,6 +22,13 @@ from plane.app.permissions import WorkspaceUserPermission
 from plane.db.models import Project, ProjectMember, ProjectUserProperty, WorkspaceMember
 from plane.bgtasks.project_add_user_email_task import project_add_user_email
 from plane.utils.host import base_host
+from plane.utils.project_groups import (
+    FROM_GROUP_ONLY_MESSAGE,
+    MemberThroughGroupError,
+    reconcile_project,
+    remove_member,
+    set_direct_role,
+)
 from plane.app.permissions.base import allow_permission, ROLE
 
 # Personal fields of a membership row, only returned to the member who owns it
@@ -71,6 +79,7 @@ class ProjectMemberViewSet(BaseViewSet):
         # Initialize the bulk arrays
         bulk_project_members = []
         bulk_issue_props = []
+        touched_by_groups = False
 
         # Create a dictionary of the member_id and their roles
         member_roles = {member.get("member_id"): member.get("role") for member in members}
@@ -98,11 +107,20 @@ class ProjectMemberViewSet(BaseViewSet):
             member_id__in=[member.get("member_id") for member in members],
         ):
             project_member.role = member_roles[str(project_member.member_id)]
+            if project_member.is_active and (project_member.via_group or project_member.group_role is not None):
+                # Added by hand to a project they belong to through groups: the role given is their own now
+                project_member.via_group = False
+                project_member.direct_role = project_member.role
+                touched_by_groups = True
             project_member.is_active = True
             bulk_project_members.append(project_member)
 
         # Update the roles of the existing members
-        ProjectMember.objects.bulk_update(bulk_project_members, ["is_active", "role"], batch_size=100)
+        ProjectMember.objects.bulk_update(
+            bulk_project_members, ["is_active", "role", "via_group", "direct_role"], batch_size=100
+        )
+        if touched_by_groups:
+            reconcile_project(project_id)
 
         # Get the minimum sort_order for each member in the workspace
         member_sort_orders = (
@@ -175,7 +193,9 @@ class ProjectMemberViewSet(BaseViewSet):
             member__member_workspace__is_active=True,
         ).select_related("project", "member", "workspace")
 
-        serializer = ProjectMemberRoleSerializer(project_members, fields=("id", "member", "role"), many=True)
+        serializer = ProjectMemberRoleSerializer(
+            project_members, fields=("id", "member", "role", "via_group", "group_role"), many=True
+        )
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
@@ -208,7 +228,9 @@ class ProjectMemberViewSet(BaseViewSet):
         if requesting_project_member.role > ROLE.GUEST.value:
             serializer = ProjectMemberAdminSerializer(project_member)
         else:
-            serializer = ProjectMemberRoleSerializer(project_member, fields=("id", "member", "role"))
+            serializer = ProjectMemberRoleSerializer(
+                project_member, fields=("id", "member", "role", "via_group", "group_role")
+            )
 
         return Response(
             _without_personal_fields(serializer.data, project_member, request.user), status=status.HTTP_200_OK
@@ -300,10 +322,34 @@ class ProjectMemberViewSet(BaseViewSet):
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
-        serializer = ProjectMemberSerializer(project_member, data=request.data, partial=True)
+        data = request.data
+        by_groups = project_member.via_group or project_member.group_role is not None
+        new_role = None
+        if by_groups:
+            data = request.data.copy()
+            if "is_active" in data and not data.get("is_active"):
+                # Taking a person out by hand: only the part that is theirs own can go
+                try:
+                    remove_member(project_member)
+                except MemberThroughGroupError:
+                    return Response({"error": FROM_GROUP_ONLY_MESSAGE}, status=status.HTTP_400_BAD_REQUEST)
+                data.pop("is_active", None)
+                project_member.refresh_from_db()
+            if "role" in data:
+                # Saved as the person's own role below; the groups can only raise it
+                new_role = int(data.get("role"))
+                if new_role not in (ROLE.GUEST.value, ROLE.MEMBER.value, ROLE.ADMIN.value):
+                    return Response({"error": "Invalid role"}, status=status.HTTP_400_BAD_REQUEST)
+                data.pop("role")
+
+        serializer = ProjectMemberSerializer(project_member, data=data, partial=True)
 
         if serializer.is_valid():
             serializer.save()
+            if new_role is not None:
+                project_member.refresh_from_db()
+                set_direct_role(project_member, new_role)
+                serializer = ProjectMemberSerializer(project_member)
             return Response(
                 _without_personal_fields(serializer.data, project_member, request.user), status=status.HTTP_200_OK
             )
@@ -338,8 +384,10 @@ class ProjectMemberViewSet(BaseViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        project_member.is_active = False
-        project_member.save()
+        try:
+            remove_member(project_member)
+        except MemberThroughGroupError:
+            return Response({"error": FROM_GROUP_ONLY_MESSAGE}, status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
@@ -365,9 +413,11 @@ class ProjectMemberViewSet(BaseViewSet):
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        # Deactivate the user
-        project_member.is_active = False
-        project_member.save()
+        # Deactivate the user (a person who belongs through a group stays through it)
+        try:
+            remove_member(project_member)
+        except MemberThroughGroupError:
+            return Response({"error": FROM_GROUP_ONLY_MESSAGE}, status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

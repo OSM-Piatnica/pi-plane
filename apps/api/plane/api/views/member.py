@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Third Party imports
@@ -20,6 +21,12 @@ from plane.api.serializers import (
     ProjectMemberLiteAPISerializer,
 )
 from plane.db.models import User, Workspace, WorkspaceMember, Project, ProjectMember
+from plane.utils.project_groups import (
+    FROM_GROUP_ONLY_MESSAGE,
+    MemberThroughGroupError,
+    remove_member,
+    set_direct_role,
+)
 from plane.utils.permissions import ProjectMemberPermission, WorkSpaceAdminPermission, ProjectAdminPermission
 from plane.utils.openapi import (
     WORKSPACE_SLUG_PARAMETER,
@@ -215,9 +222,14 @@ class ProjectMemberDetailAPIEndpoint(ProjectMemberListCreateAPIEndpoint):
             workspace__slug=slug, member_id=project_member.member_id, is_active=True
         ).exists():
             return Response({"member": ["Member not found in workspace"]}, status=status.HTTP_400_BAD_REQUEST)
+        by_groups = project_member.via_group or project_member.group_role is not None
         serializer = ProjectMemberSerializer(project_member, data=request.data, partial=True, context={"slug": slug})
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        if by_groups and "role" in serializer.validated_data:
+            # A role set by hand is the person's own; the groups can only raise it
+            set_direct_role(project_member, serializer.validated_data["role"])
+            serializer = ProjectMemberSerializer(project_member, context={"slug": slug})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @extend_schema(
@@ -230,8 +242,10 @@ class ProjectMemberDetailAPIEndpoint(ProjectMemberListCreateAPIEndpoint):
     )
     def delete(self, request, slug, project_id, pk):
         project_member = ProjectMember.objects.get(project_id=project_id, workspace__slug=slug, pk=pk)
-        project_member.is_active = False
-        project_member.save()
+        try:
+            remove_member(project_member)
+        except MemberThroughGroupError:
+            return Response({"error": FROM_GROUP_ONLY_MESSAGE}, status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

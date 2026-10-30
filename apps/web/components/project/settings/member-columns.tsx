@@ -20,11 +20,14 @@ import { ROLE, getRoleI18nKey, EUserPermissions } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import type { EUserProjectRoles, IUser, IWorkspaceMember, TProjectMembership } from "@plane/types";
 import { getFileURL } from "@plane/utils";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+// helpers
+import { getMemberGroupBadge, isMemberOnlyViaGroup } from "@/helpers/project-group";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
 
-export interface RowData extends Pick<TProjectMembership, "original_role"> {
+export interface RowData extends Pick<TProjectMembership, "original_role" | "via_group" | "group_role"> {
   member: IWorkspaceMember;
 }
 
@@ -54,6 +57,9 @@ export function NameColumn(props: NameProps) {
   const { t } = useTranslation();
   // derived values
   const { avatar_url, display_name, email, first_name, id, last_name } = rowData.member;
+  const groupBadge = getMemberGroupBadge(rowData);
+  // a person who is in only through a group is removed by removing the group, or them from the group
+  const canRemove = !isMemberOnlyViaGroup(rowData);
 
   return (
     <div className="group relative">
@@ -77,8 +83,23 @@ export function NameColumn(props: NameProps) {
             </Link>
           )}
           {first_name} {last_name}
+          {groupBadge && (
+            <Tooltip
+              label={
+                groupBadge === "via_group"
+                  ? t("project_members.groups.via_group_tooltip")
+                  : t("project_members.groups.role_raised_tooltip")
+              }
+            >
+              <span className="shrink-0 rounded-full bg-layer-1 px-2 py-0.5 text-11 text-secondary">
+                {groupBadge === "via_group"
+                  ? t("project_members.groups.via_group")
+                  : t("project_members.groups.role_raised")}
+              </span>
+            </Tooltip>
+          )}
         </div>
-        {(isAdmin || id === currentUser?.id) && (
+        {canRemove && (isAdmin || id === currentUser?.id) && (
           <Menu>
             <div className="opacity-0 transition-opacity group-hover:opacity-100">
               <MenuTrigger
