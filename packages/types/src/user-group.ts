@@ -47,3 +47,13 @@ export type TUserGroupMember = {
   managed_externally: boolean;
   created_at: string;
 };
+
+/** A group the requester may filter by (work items, modules, cycles), see the filterable groups endpoint. */
+export type TFilterableUserGroup = {
+  id: string;
+  name: string;
+  source: TUserGroupSource;
+  parent_id: string | null;
+  /** The requester belongs to this group (it is one of the groups "my groups" stands for). */
+  is_member: boolean;
+};

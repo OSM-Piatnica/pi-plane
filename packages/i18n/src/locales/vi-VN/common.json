@@ -374,6 +374,12 @@
     "access": "Quyền truy cập",
     "owned_by": "Chủ sở hữu"
   },
+  "group_filter": {
+    "heading": "Group",
+    "my_groups": "My groups",
+    "no_group": "No group",
+    "unknown_group": "Unknown group"
+  },
   "good": "Chào buổi sáng",
   "morning": "Buổi sáng",
   "afternoon": "Buổi chiều",

@@ -374,6 +374,12 @@
     "access": "访问权限",
     "owned_by": "所有者"
   },
+  "group_filter": {
+    "heading": "Group",
+    "my_groups": "My groups",
+    "no_group": "No group",
+    "unknown_group": "Unknown group"
+  },
   "good": "早上",
   "morning": "早上",
   "afternoon": "下午",

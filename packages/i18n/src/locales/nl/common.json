@@ -374,6 +374,12 @@
     "access": "Toegang",
     "owned_by": "Eigenaar"
   },
+  "group_filter": {
+    "heading": "Group",
+    "my_groups": "My groups",
+    "no_group": "No group",
+    "unknown_group": "Unknown group"
+  },
   "good": "Goede",
   "morning": "morgen",
   "afternoon": "middag",

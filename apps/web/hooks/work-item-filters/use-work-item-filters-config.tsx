@@ -12,6 +12,7 @@ import {
   CyclesOutline,
   DueDateOutline,
   LabelsOutline,
+  NetworkOutline,
   MembersOutline,
   ModuleOutline,
   PriorityOutline,
@@ -41,6 +42,7 @@ import {
   getCreatedByFilterConfig,
   getCycleFilterConfig,
   getFileURL,
+  getGroupAssigneeFilterConfig,
   getLabelFilterConfig,
   getMentionFilterConfig,
   getModuleFilterConfig,
@@ -62,6 +64,7 @@ import { useModule } from "@/hooks/store/use-module";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useTranslation } from "@plane/i18n";
+import { useFilterableUserGroups } from "@/hooks/use-filterable-user-groups";
 import { useFiltersOperatorConfigs } from "@/hooks/rich-filters/use-filters-operator-configs";
 
 export type TWorkItemFiltersEntityProps = {
@@ -99,6 +102,7 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
   const { getModuleById } = useModule();
   const { getStateById } = useProjectState();
   const { getUserDetails } = useMember();
+  const { groups: filterableGroups } = useFilterableUserGroups(workspaceSlug);
   // derived values
   const { t } = useTranslation();
   const baseOperatorConfigs = useFiltersOperatorConfigs({ workspaceSlug });
@@ -231,6 +235,20 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
         ...operatorConfigs,
       }),
     [isFilterEnabled, members, operatorConfigs]
+  );
+
+  // group assignee filter config: only when the person may filter by at least one group
+  const groupAssigneeFilterConfig = useMemo(
+    () =>
+      getGroupAssigneeFilterConfig<TWorkItemFilterProperty>("group_assignee_id")({
+        isEnabled: isFilterEnabled("group_assignee_id") && (filterableGroups?.length ?? 0) > 0,
+        filterIcon: NetworkOutline,
+        groups: filterableGroups ?? [],
+        ...operatorConfigs,
+        // the API does not negate a group filter
+        allowNegative: false,
+      }),
+    [isFilterEnabled, filterableGroups, operatorConfigs]
   );
 
   // mention filter config
@@ -368,6 +386,7 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
       stateFilterConfig,
       stateGroupFilterConfig,
       assigneeFilterConfig,
+      groupAssigneeFilterConfig,
       priorityFilterConfig,
       projectFilterConfig,
       mentionFilterConfig,
@@ -389,6 +408,7 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
       cycle_id: cycleFilterConfig,
       module_id: moduleFilterConfig,
       assignee_id: assigneeFilterConfig,
+      group_assignee_id: groupAssigneeFilterConfig,
       mention_id: mentionFilterConfig,
       created_by_id: createdByFilterConfig,
       subscriber_id: subscriberFilterConfig,

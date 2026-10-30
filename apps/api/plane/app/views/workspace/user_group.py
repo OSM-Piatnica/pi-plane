@@ -11,7 +11,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 # Module imports
-from plane.app.permissions import WorkSpaceAdminPermission
+from plane.app.permissions import WorkSpaceAdminPermission, WorkspaceViewerPermission
 from plane.app.serializers.user_group import (
     UserGroupMemberSerializer,
     UserGroupMemberWriteSerializer,
@@ -30,6 +30,8 @@ from plane.utils.user_groups import (
     subtree_height,
     would_create_cycle,
 )
+
+from plane.utils.group_filters import allowed_group_ids
 
 from ..base import BaseAPIView
 
@@ -117,6 +119,34 @@ class UserGroupListEndpoint(_GroupView):
         return Response(
             self._present(request, workspace, UserGroup.objects.filter(pk=group.pk))[0],
             status=status.HTTP_201_CREATED,
+        )
+
+
+class UserGroupFilterableEndpoint(BaseAPIView):
+    """The groups the requester may filter work items, modules, cycles and projects by (open to every workspace member).
+
+    A workspace admin may use every group; everybody else only the groups they belong to and the ones above them.
+    The full list stays with ``UserGroupListEndpoint``; this one never shows a group the person may not filter by.
+    """
+
+    permission_classes = [WorkspaceViewerPermission]
+
+    def get(self, request, slug):
+        workspace = Workspace.objects.get(slug=slug)
+        allowed, mine = allowed_group_ids(request.user, workspace.id)
+        groups = UserGroup.objects.filter(workspace=workspace, id__in=allowed).order_by("name")
+        return Response(
+            [
+                {
+                    "id": group.id,
+                    "name": group.name,
+                    "source": group.source,
+                    "parent_id": group.parent_id,
+                    "is_member": group.id in mine,
+                }
+                for group in groups
+            ],
+            status=status.HTTP_200_OK,
         )
 
 

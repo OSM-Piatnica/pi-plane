@@ -374,6 +374,12 @@
     "access": "Доступ",
     "owned_by": "Власник"
   },
+  "group_filter": {
+    "heading": "Group",
+    "my_groups": "My groups",
+    "no_group": "No group",
+    "unknown_group": "Unknown group"
+  },
   "good": "Доброго",
   "morning": "ранку",
   "afternoon": "дня",

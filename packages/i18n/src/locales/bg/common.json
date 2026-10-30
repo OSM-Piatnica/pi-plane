@@ -370,6 +370,12 @@
     "access": "Достъп",
     "owned_by": "Собственик"
   },
+  "group_filter": {
+    "heading": "Group",
+    "my_groups": "My groups",
+    "no_group": "No group",
+    "unknown_group": "Unknown group"
+  },
   "good": "Добре дошли",
   "morning": "тази сутрин",
   "afternoon": "този следобед",

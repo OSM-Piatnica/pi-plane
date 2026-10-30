@@ -374,6 +374,12 @@
     "access": "접근 권한",
     "owned_by": "소유자"
   },
+  "group_filter": {
+    "heading": "Group",
+    "my_groups": "My groups",
+    "no_group": "No group",
+    "unknown_group": "Unknown group"
+  },
   "good": "좋은",
   "morning": "아침",
   "afternoon": "오후",
