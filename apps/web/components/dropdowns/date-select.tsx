@@ -9,17 +9,28 @@ import type { DateRangeSelectProps, DateSelectProps } from "@plane/blocks/proper
 // hooks
 import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 
+// English keeps the app's usual "Jan 05, 2024"; other languages use date-fns' localized medium date ("5. Jan. 2024"),
+// which puts the day, month and year in that language's order (the same rule as `useLocalizedDates`).
+const ENGLISH_LOCALE_CODE = "en-US";
+const LOCALIZED_DATE_TOKEN = "PP";
+
+/** The trigger date style of a language: `undefined` keeps the blocks' English default. */
+export const getDateSelectFormatToken = (localeCode: string | undefined) =>
+  localeCode === ENGLISH_LOCALE_CODE ? undefined : LOCALIZED_DATE_TOKEN;
+
 /**
  * Web bindings for the presentational date pickers: they fill in the `date-fns` locale of the
- * user's language, so the calendar and the month names in the trigger label are not English-only.
- * A caller can still pass its own `locale`.
+ * user's language and its date style, so the calendar and the date in the trigger label are not
+ * English-only. A caller can still pass its own `locale` or `formatToken`.
  */
 export function DateSelect(props: DateSelectProps) {
   const { dateFnsLocale } = useCalendarLocale();
-  return <DateSelectBlock locale={dateFnsLocale} {...props} />;
+  const formatToken = getDateSelectFormatToken(dateFnsLocale.code);
+  return <DateSelectBlock locale={dateFnsLocale} formatToken={formatToken} {...props} />;
 }
 
 export function DateRangeSelect(props: DateRangeSelectProps) {
   const { dateFnsLocale } = useCalendarLocale();
-  return <DateRangeSelectBlock locale={dateFnsLocale} {...props} />;
+  const formatToken = getDateSelectFormatToken(dateFnsLocale.code);
+  return <DateRangeSelectBlock locale={dateFnsLocale} formatToken={formatToken} {...props} />;
 }

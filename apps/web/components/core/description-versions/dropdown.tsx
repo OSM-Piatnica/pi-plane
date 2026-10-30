@@ -60,7 +60,7 @@ export const DescriptionVersionsDropdown = observer(function DescriptionVersions
           </span>
           <p className="text-11">
             {t("description_versions.last_edited_by")}{" "}
-            <span className="font-medium">{lastUpdatedByUserDisplayName ?? t("common.deactivated_user")}</span>{" "}
+            <span className="font-medium">{lastUpdatedByUserDisplayName || t("common.deactivated_user")}</span>{" "}
             {timeAgo(lastUpdatedAt)}
           </p>
         </div>
