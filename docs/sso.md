@@ -79,6 +79,18 @@ Entra: when the tenant sends the optional `xms_edov` claim (email domain verifie
 Provider answers are limited to 1 MiB; the log names the stage of a refused sign-in and the provider's own error code and
 description (never the request, which carries the secret and the code).
 
+## Groups
+
+Each provider can mirror the groups a person has at the provider as [user groups](user-groups.md) that are managed outside. The groups are read at every sign-in; when they cannot be read, nothing changes. Like the other settings they can be set in god mode or in the environment.
+
+| Provider           | Settings                                                                                                                                                                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Microsoft Entra ID | `ENTRA_SYNC_GROUPS=1`. All groups of the person, nested ones included, are read through Microsoft Graph with their own token; the sign-in then asks them for the permission `User.Read`.                                                                                 |
+| Google             | `GOOGLE_OIDC_SYNC_GROUPS=1`, `GOOGLE_OIDC_GROUPS_ADMIN_EMAIL` and `GOOGLE_OIDC_GROUPS_SERVICE_ACCOUNT`. Needs a service account key (JSON) with domain-wide delegation of `https://www.googleapis.com/auth/admin.directory.group.readonly`, acting as a Workspace admin. |
+| Any OIDC provider  | `OIDC_GROUPS_CLAIM`, the claim of the ID token that lists the groups (for example `groups`), and, if the provider only sends it for a certain scope, `OIDC_GROUPS_SCOPE`.                                                                                                |
+
+The generic claim may be a list of names or one string of names separated by commas, with at most 500 entries. A path such as `/sales/poland` (Keycloak) is shown as `sales/poland`. A token without the claim changes nothing; a claim that is there but empty removes the person from the mirrored groups.
+
 ## Adding another provider
 
 Write a subclass of `OidcProviderSpec` in `providers.py` (issuer, extra settings, `validate_claims`, `map_claims`) and

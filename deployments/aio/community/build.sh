@@ -37,9 +37,9 @@ if [ -z "$APP_RELEASE_VERSION" ]; then
     echo "   ./build.sh [flags]"
     echo ""
     echo "Flags:"
-    echo "  --release=<APP_RELEASE_VERSION>     required (e.g. 2.1.0)"
+    echo "  --release=<APP_RELEASE_VERSION>     required (e.g. 2.1.1)"
     echo ""
-    echo "Example: ./build.sh --release=2.1.0"
+    echo "Example: ./build.sh --release=2.1.1"
     exit 1
 fi
 

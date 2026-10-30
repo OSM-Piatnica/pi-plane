@@ -20,7 +20,7 @@ Text is not there. The words of a Page, work item or comment are in the PostgreS
 
 ## The largest upload
 
-One limit applies to every kind of upload above. It starts at `FILE_SIZE_LIMIT` (bytes, 5 MiB by default) and the instance administrator can change it without restarting anything: **God mode → General → File uploads**.
+One limit applies to every kind of upload above. It starts at `FILE_SIZE_LIMIT` (bytes, 5 MiB by default) and the instance administrator can change it without restarting anything: **God mode → General → File uploads and imports**.
 
 - It applies to new uploads. **Lowering it never touches files that are already stored**, however large they are.
 - It can be set from 1 MB up to `FILE_SIZE_LIMIT_MAX` (100 MiB by default), which is also the largest request body the bundled proxy accepts. Raise `FILE_SIZE_LIMIT_MAX` in `plane.env` (Docker), `app.fileSizeLimitMax` (Helm) or with `-e` (all-in-one) to allow more, and keep it at least as large as `FILE_SIZE_LIMIT`. If you run another proxy or ingress in front, it has to allow the same size.
@@ -32,7 +32,7 @@ One limit applies to every kind of upload above. It starts at `FILE_SIZE_LIMIT` 
 
 Importing work items from a spreadsheet has two limits of its own, on the same page (**File uploads and imports**):
 
-- **Largest spreadsheet** (15 MB by default, up to `FILE_SIZE_LIMIT_MAX`): the CSV, Excel or JSON file the person picks. It travels as an ordinary request, so it cannot be larger than the proxy accepts.
+- **Largest spreadsheet** (15 MiB by default, up to `FILE_SIZE_LIMIT_MAX`): the CSV, Excel or JSON file the person picks. It travels as an ordinary request, so it cannot be larger than the proxy accepts.
 - **Most work items in one import** (500 by default, up to 5000). An import runs within a single request, so a very large one can run into the time limit of your web server or proxy.
 
 Both apply to new imports at once, and the import page of the web app shows the file limit that is set.
