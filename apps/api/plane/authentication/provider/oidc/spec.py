@@ -22,6 +22,8 @@ class OidcConfigField:
     secret: bool = False
     default: str = ""
     help: str = ""
+    # "text", or "switch" for an on/off setting stored as "1" / "0" (the admin app draws a switch)
+    kind: str = "text"
 
 
 @dataclass(frozen=True)

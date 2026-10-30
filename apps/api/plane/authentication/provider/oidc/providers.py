@@ -47,9 +47,62 @@ class EntraSpec(OidcProviderSpec):
                     name="SYNC_GROUPS",
                     label="Read groups at sign-in",
                     default="0",
+                    kind="switch",
                     help=(
-                        "Set to 1 to mirror each person's Entra groups as user groups that are managed outside. "
-                        "Asks for the Microsoft Graph permission User.Read, which people grant at sign-in."
+                        "Mirror what Entra says about each person as user groups that are managed outside. "
+                        "Asks for the Microsoft Graph permission User.Read, which people grant at sign-in. "
+                        "The kinds below choose what becomes a group."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_SECURITY",
+                    label="Security groups",
+                    default="1",
+                    kind="switch",
+                    help="Groups used to grant access, including mail-enabled security groups.",
+                ),
+                OidcConfigField(
+                    name="GROUPS_MICROSOFT_365",
+                    label="Microsoft 365 groups",
+                    default="1",
+                    kind="switch",
+                    help="Groups that back Teams and SharePoint team sites.",
+                ),
+                OidcConfigField(
+                    name="GROUPS_DISTRIBUTION",
+                    label="Distribution lists",
+                    default="1",
+                    kind="switch",
+                    help="Groups that only send mail to their members.",
+                ),
+                OidcConfigField(
+                    name="GROUPS_ADMIN_UNITS",
+                    label="Administrative units",
+                    default="0",
+                    kind="switch",
+                    help=(
+                        "The administrative units a person belongs to. Needs the Microsoft Graph delegated "
+                        "permission AdministrativeUnit.Read.All with admin consent; without it no unit is mirrored."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_DEPARTMENT",
+                    label="Department",
+                    default="0",
+                    kind="switch",
+                    help=(
+                        "One group per department, from the department in the person's Entra profile; "
+                        "people without one are in none."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_COMPANY",
+                    label="Company",
+                    default="0",
+                    kind="switch",
+                    help=(
+                        "One group per company, from the company name in the person's Entra profile; "
+                        "people without one are in none."
                     ),
                 ),
             ),
@@ -59,10 +112,15 @@ class EntraSpec(OidcProviderSpec):
         return str(config.get("SYNC_GROUPS")) == "1"
 
     def request_scopes(self, config):
-        return f"{self.scopes} {groups.ENTRA_GROUPS_SCOPE}" if self.reads_groups(config) else self.scopes
+        if not self.reads_groups(config):
+            return self.scopes
+        scopes = [self.scopes, groups.ENTRA_GROUPS_SCOPE]
+        if groups.KIND_ADMIN_UNITS in groups.entra_kinds(config):
+            scopes.append(groups.ENTRA_ADMIN_UNITS_SCOPE)
+        return " ".join(scopes)
 
     def fetch_groups(self, *, access_token, email, claims, config):
-        return groups.fetch_entra_groups(access_token)
+        return groups.fetch_entra_groups(access_token, groups.entra_kinds(config))
 
     def _tenant(self, config):
         try:
