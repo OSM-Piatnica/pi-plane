@@ -4,7 +4,9 @@
 # See the LICENSE file for details.
 
 from .issue import IssueExportSerializer
+from .project_member import ProjectMemberExportSerializer
 
 __all__ = [
     "IssueExportSerializer",
+    "ProjectMemberExportSerializer",
 ]

@@ -16,6 +16,7 @@ import { Button } from "@makeplane/propel/components/button";
 import { NotAuthorizedView } from "@/components/auth-screens/not-authorized-view";
 import { PageHead } from "@/components/core/page-title";
 import { ProjectAccessRequests } from "@/components/project/access-requests";
+import { ProjectMemberExportModal } from "@/components/project/member-export-modal";
 import { ProjectMemberImportModal } from "@/components/project/member-import-modal";
 import { ProjectGroupList } from "@/components/project/project-group-list";
 import { ProjectMemberList } from "@/components/project/member-list";
@@ -43,6 +44,7 @@ function MembersSettingsPage({ params }: Route.ComponentProps) {
   } = useMember();
   // states
   const [isImportOpen, setIsImportOpen] = useState(false);
+  const [isExportOpen, setIsExportOpen] = useState(false);
   const { workspaceUserInfo, allowPermissions } = useUserPermissions();
   // derived values
   const pageTitle = currentProjectDetails?.name ? `${currentProjectDetails?.name} - Members` : undefined;
@@ -72,6 +74,19 @@ function MembersSettingsPage({ params }: Route.ComponentProps) {
                 stretch="auto"
                 onClick={() => setIsImportOpen(true)}
                 label={t("project.members_import.import_button")}
+              />
+              <Button
+                variant="secondary"
+                size="md"
+                stretch="auto"
+                onClick={() => setIsExportOpen(true)}
+                label={t("project.members_export.export_button")}
+              />
+              <ProjectMemberExportModal
+                isOpen={isExportOpen}
+                workspaceSlug={workspaceSlug}
+                projectId={projectId}
+                onClose={() => setIsExportOpen(false)}
               />
               <ProjectMemberImportModal
                 isOpen={isImportOpen}

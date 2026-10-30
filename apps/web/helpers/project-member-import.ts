@@ -62,7 +62,14 @@ const normalizeHeader = (value: string) =>
     .toLowerCase()
     .replace(/[\s_-]+/g, "");
 
-/** Reads the members CSV: columns Email and/or Group, and Role, in any order, any case. */
+/** The export writes a leading ' before text a spreadsheet could read as a formula (=, +, -, @); this takes it off. */
+export const unquoteSpreadsheetText = (value: string) => (/^'[=+\-@]/.test(value) ? value.slice(1) : value);
+
+/**
+ * Reads the members CSV: columns Email and/or Group, and Role, in any order, any case. Other columns (the ones the
+ * members export adds: Name, Via group, Joined, ...) are ignored; Source is passed on so the API can skip the
+ * "person (via group)" rows.
+ */
 export const parseMemberImportCsv = (text: string): TParsedMemberCsv => {
   const records = parseCsvText(text);
   if (records.length === 0) return { ok: false, error: "empty" };
@@ -70,11 +77,13 @@ export const parseMemberImportCsv = (text: string): TParsedMemberCsv => {
   const email = headers.indexOf("email");
   const group = headers.indexOf("group");
   const role = headers.indexOf("role");
+  const source = headers.indexOf("source");
   if (role === -1 || (email === -1 && group === -1)) return { ok: false, error: "missing_columns" };
   const rows = records.slice(1).map((record, index): TProjectMemberImportRow => {
     const row: TProjectMemberImportRow = { row: index + 2, role: (record[role] ?? "").trim() };
-    if (email !== -1) row.email = (record[email] ?? "").trim();
-    if (group !== -1) row.group = (record[group] ?? "").trim();
+    if (email !== -1) row.email = unquoteSpreadsheetText((record[email] ?? "").trim());
+    if (group !== -1) row.group = unquoteSpreadsheetText((record[group] ?? "").trim());
+    if (source !== -1) row.source = (record[source] ?? "").trim();
     return row;
   });
   return rows.length === 0 ? { ok: false, error: "no_rows" } : { ok: true, rows };

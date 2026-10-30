@@ -31,6 +31,7 @@ from plane.app.views import (
     ProjectCopyRetryEndpoint,
     ProjectGroupDetailEndpoint,
     ProjectMemberImportEndpoint,
+    ProjectMemberExportEndpoint,
     ProjectGroupEndpoint,
 )
 
@@ -127,6 +128,11 @@ urlpatterns = [
         "workspaces/<str:slug>/projects/<uuid:project_id>/members/import/",
         ProjectMemberImportEndpoint.as_view(),
         name="project-member-import",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/members/export/",
+        ProjectMemberExportEndpoint.as_view(),
+        name="project-member-export",
     ),
     path(
         "workspaces/<str:slug>/projects/<uuid:project_id>/members/<uuid:pk>/",

@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "Export",
+      "title": "Export members",
+      "description": "Download the people and groups of this project. The file can be imported again as CSV; the columns Name, Source, Via group, Raised by group and Joined are for information and are ignored by the import.",
+      "format": "Format",
+      "include_via_group": {
+        "label": "Include people who belong through a group",
+        "description": "Adds the people who are in the project only through a group, marked \"person (via group)\". The import skips these rows, the group row brings them in."
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "export": "Export",
+        "exporting": "Exporting..."
+      },
+      "toast": {
+        "failed": {
+          "title": "Export failed",
+          "message": "The members could not be exported. Please try again."
+        }
+      }
+    },
     "members_import": {
       "title": "Importa membri da CSV",
       "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
