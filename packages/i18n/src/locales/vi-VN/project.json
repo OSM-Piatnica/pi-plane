@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "Nhập thành viên từ CSV",
-      "description": "Tải lên CSV với các cột: Email và Vai trò (5=Khách, 15=Thành viên, 20=Quản trị viên). Người dùng phải đã là thành viên không gian làm việc.",
+      "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
       "download_sample": "Tải xuống CSV mẫu",
       "dropzone": {
         "active": "Thả tệp CSV vào đây",
@@ -421,13 +421,17 @@
         },
         "message": {
           "success": "Đã nhập thành công {count} thành viên vào dự án.",
-          "no_imports": "Không có thành viên mới nào được nhập từ tệp CSV."
+          "no_imports": "Không có thành viên mới nào được nhập từ tệp CSV.",
+          "groups_success": "Linked {count} group{plural} to the project."
         },
         "stats": {
           "added": "Đã thêm",
           "reactivated": "Đã kích hoạt lại",
           "already_members": "Đã là thành viên",
-          "skipped": "Đã bỏ qua"
+          "skipped": "Đã bỏ qua",
+          "groups_added": "Groups added",
+          "groups_updated": "Groups updated",
+          "groups_skipped": "Groups skipped"
         },
         "download_errors": "Tải xuống chi tiết đã bỏ qua"
       },
@@ -440,6 +444,24 @@
           "title": "Nhập thất bại",
           "message": "Đã xảy ra lỗi."
         }
+      },
+      "import_button": "Import from CSV",
+      "parse_errors": {
+        "empty": "The file is empty.",
+        "missing_columns": "The file needs a Role column and an Email or a Group column.",
+        "no_rows": "The file has a header but no rows."
+      },
+      "skip_reasons": {
+        "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
+        "both_email_and_group": "A row has either an Email or a Group, not both.",
+        "missing_value": "The row has neither an Email nor a Group.",
+        "not_workspace_member": "This person is not an active member of the workspace.",
+        "role_above_workspace_role": "The role is higher than the person's workspace role.",
+        "role_below_workspace_role": "The role is lower than the person's workspace role.",
+        "unknown_group": "No group with this name exists in the workspace.",
+        "ambiguous_group": "Several groups have this name, write its path as Parent / Child.",
+        "group_admin_role": "Groups cannot be project admins.",
+        "group_already_linked": "The group already is a member of the project with this role."
       }
     }
   },
