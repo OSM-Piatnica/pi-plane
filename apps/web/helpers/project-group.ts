@@ -10,8 +10,8 @@ import type { TProjectGroup, TUserGroup } from "@plane/types";
 type TMemberGroupFields = {
   via_group?: boolean;
   group_role?: number | null;
-  role?: number | null;
-  original_role?: number | null;
+  /** Set only while a group lifts the person's role above their own. */
+  direct_role?: number | null;
 };
 
 /** How groups shape a person's membership: they are in only through a group, or a group raised their role. */
@@ -19,11 +19,8 @@ export type TMemberGroupBadge = "via_group" | "raised" | null;
 
 export const getMemberGroupBadge = (member: TMemberGroupFields): TMemberGroupBadge => {
   if (member.via_group) return "via_group";
-  const groupRole = member.group_role;
-  if (groupRole === null || groupRole === undefined) return null;
-  // the person's role is the effective one, so it sits at the group's role when the group is what holds it up
-  const effectiveRole = member.original_role ?? member.role;
-  return effectiveRole === groupRole ? "raised" : null;
+  // the API keeps the person's own role in `direct_role` exactly while a group lifts them above it
+  return member.direct_role === null || member.direct_role === undefined ? null : "raised";
 };
 
 /** A person who is in the project only through a group cannot be removed or leave on their own. */

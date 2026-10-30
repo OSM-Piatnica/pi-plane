@@ -123,6 +123,8 @@ export type TProjectMembership = {
   via_group?: boolean;
   /** The best role the project's groups give the person (null: no group gives one). */
   group_role?: EUserProjectRoles | null;
+  /** The person's own role while a group raised it above that (null: no group raised it). */
+  direct_role?: EUserProjectRoles | null;
 } & (
   | {
       id: string;
