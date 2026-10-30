@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "Mitglieder aus CSV importieren",
-      "description": "Laden Sie eine CSV mit den Spalten E-Mail und Rolle hoch (5=Gast, 15=Mitglied, 20=Admin). Benutzer müssen bereits Mitglieder des Arbeitsbereichs sein.",
+      "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
       "download_sample": "Beispiel-CSV herunterladen",
       "dropzone": {
         "active": "CSV-Datei hier ablegen",
@@ -421,13 +421,17 @@
         },
         "message": {
           "success": "{count} Mitglied{plural} erfolgreich ins Projekt importiert.",
-          "no_imports": "Aus der CSV-Datei wurden keine neuen Mitglieder importiert."
+          "no_imports": "Aus der CSV-Datei wurden keine neuen Mitglieder importiert.",
+          "groups_success": "Linked {count} group{plural} to the project."
         },
         "stats": {
           "added": "Hinzugefügt",
           "reactivated": "Reaktiviert",
           "already_members": "Bereits Mitglieder",
-          "skipped": "Übersprungen"
+          "skipped": "Übersprungen",
+          "groups_added": "Groups added",
+          "groups_updated": "Groups updated",
+          "groups_skipped": "Groups skipped"
         },
         "download_errors": "Übersprungene Details herunterladen"
       },
@@ -440,6 +444,24 @@
           "title": "Import fehlgeschlagen",
           "message": "Etwas ist schiefgelaufen."
         }
+      },
+      "import_button": "Import from CSV",
+      "parse_errors": {
+        "empty": "The file is empty.",
+        "missing_columns": "The file needs a Role column and an Email or a Group column.",
+        "no_rows": "The file has a header but no rows."
+      },
+      "skip_reasons": {
+        "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
+        "both_email_and_group": "A row has either an Email or a Group, not both.",
+        "missing_value": "The row has neither an Email nor a Group.",
+        "not_workspace_member": "This person is not an active member of the workspace.",
+        "role_above_workspace_role": "The role is higher than the person's workspace role.",
+        "role_below_workspace_role": "The role is lower than the person's workspace role.",
+        "unknown_group": "No group with this name exists in the workspace.",
+        "ambiguous_group": "Several groups have this name, write its path as Parent / Child.",
+        "group_admin_role": "Groups cannot be project admins.",
+        "group_already_linked": "The group already is a member of the project with this role."
       }
     }
   },

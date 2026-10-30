@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "從CSV匯入成員",
-      "description": "上傳包含以下欄位的CSV：電子郵件與角色（5=訪客，15=成員，20=管理員）。使用者必須已是工作區成員。",
+      "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
       "download_sample": "下載範例CSV",
       "dropzone": {
         "active": "將CSV檔案放在這裡",
@@ -421,13 +421,17 @@
         },
         "message": {
           "success": "成功將{count}名成員匯入專案。",
-          "no_imports": "CSV檔案中未匯入任何新成員。"
+          "no_imports": "CSV檔案中未匯入任何新成員。",
+          "groups_success": "Linked {count} group{plural} to the project."
         },
         "stats": {
           "added": "已新增",
           "reactivated": "已重新啟用",
           "already_members": "已是成員",
-          "skipped": "已略過"
+          "skipped": "已略過",
+          "groups_added": "Groups added",
+          "groups_updated": "Groups updated",
+          "groups_skipped": "Groups skipped"
         },
         "download_errors": "下載略過詳情"
       },
@@ -440,6 +444,24 @@
           "title": "匯入失敗",
           "message": "發生錯誤。"
         }
+      },
+      "import_button": "Import from CSV",
+      "parse_errors": {
+        "empty": "The file is empty.",
+        "missing_columns": "The file needs a Role column and an Email or a Group column.",
+        "no_rows": "The file has a header but no rows."
+      },
+      "skip_reasons": {
+        "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
+        "both_email_and_group": "A row has either an Email or a Group, not both.",
+        "missing_value": "The row has neither an Email nor a Group.",
+        "not_workspace_member": "This person is not an active member of the workspace.",
+        "role_above_workspace_role": "The role is higher than the person's workspace role.",
+        "role_below_workspace_role": "The role is lower than the person's workspace role.",
+        "unknown_group": "No group with this name exists in the workspace.",
+        "ambiguous_group": "Several groups have this name, write its path as Parent / Child.",
+        "group_admin_role": "Groups cannot be project admins.",
+        "group_already_linked": "The group already is a member of the project with this role."
       }
     }
   },
