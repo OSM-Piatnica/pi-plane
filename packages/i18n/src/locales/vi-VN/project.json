@@ -370,7 +370,29 @@
     "display_name": "Tên hiển thị",
     "email": "Email",
     "joining_date": "Ngày tham gia",
-    "role": "Vai trò"
+    "role": "Vai trò",
+    "groups": {
+      "title": "Nhóm",
+      "description": "Các nhóm là thành viên của dự án này. Mọi người trong một nhóm, kể cả các nhóm con, đều là thành viên của dự án với vai trò được gán cho nhóm. Vai trò riêng của một người không bao giờ bị nhóm hạ thấp.",
+      "no_groups": "Dự án này chưa có nhóm nào.",
+      "select_group": "Chọn một nhóm",
+      "no_groups_available": "Không còn nhóm nào để thêm",
+      "add_group": "Thêm nhóm",
+      "role": "Vai trò",
+      "role_member": "Thành viên",
+      "role_guest": "Khách",
+      "member_count": "{count, plural, one {# người} other {# người}}",
+      "group_added": "Đã thêm nhóm vào dự án.",
+      "group_updated": "Đã cập nhật vai trò của nhóm.",
+      "group_removed": "Đã xóa nhóm khỏi dự án.",
+      "remove_title": "Xóa {name} khỏi dự án này?",
+      "remove_content": "Những người chỉ thuộc dự án thông qua nhóm này sẽ mất quyền truy cập vào dự án. Những người được thêm trực tiếp vào dự án vẫn ở lại.",
+      "via_group": "Qua nhóm",
+      "via_group_tooltip": "Người này thuộc dự án thông qua một nhóm. Hãy xóa nhóm, hoặc xóa người này khỏi nhóm.",
+      "role_raised": "Vai trò được nhóm nâng lên",
+      "role_raised_tooltip": "Một nhóm mà người này thuộc về cấp cho họ vai trò này.",
+      "assign_hint": "Chưa có nhóm nào để gán. Hãy thêm nhóm trước trong phần cài đặt dự án, mục Thành viên."
+    }
   },
   "project": {
     "members_import": {

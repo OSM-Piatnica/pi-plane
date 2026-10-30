@@ -370,7 +370,29 @@
     "display_name": "顯示名稱",
     "email": "電子郵件",
     "joining_date": "加入日期",
-    "role": "角色"
+    "role": "角色",
+    "groups": {
+      "title": "群組",
+      "description": "屬於此專案成員的群組。群組中的所有人（包括其子群組）都是該專案的成員，角色為指派給群組的角色。群組不會降低個人自身的角色。",
+      "no_groups": "此專案尚無群組成員。",
+      "select_group": "選取群組",
+      "no_groups_available": "沒有可新增的群組",
+      "add_group": "新增群組",
+      "role": "角色",
+      "role_member": "成員",
+      "role_guest": "訪客",
+      "member_count": "{count, plural, one {# 人} other {# 人}}",
+      "group_added": "已將群組新增至專案。",
+      "group_updated": "已更新群組角色。",
+      "group_removed": "已從專案移除群組。",
+      "remove_title": "要將 {name} 從此專案中移除嗎？",
+      "remove_content": "僅透過此群組加入專案的人員將失去對專案的存取權。直接新增至專案的人員將保留。",
+      "via_group": "透過群組",
+      "via_group_tooltip": "此人透過群組屬於該專案。請移除該群組，或將此人從群組中移除。",
+      "role_raised": "角色由群組提升",
+      "role_raised_tooltip": "此人所屬的群組賦予了他們此角色。",
+      "assign_hint": "尚無可指派的群組。請先在專案設定的「成員」中新增群組。"
+    }
   },
   "project": {
     "members_import": {

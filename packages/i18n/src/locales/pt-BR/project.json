@@ -370,7 +370,29 @@
     "display_name": "Nome de exibição",
     "email": "E-mail",
     "joining_date": "Data de entrada",
-    "role": "Cargo"
+    "role": "Cargo",
+    "groups": {
+      "title": "Grupos",
+      "description": "Grupos que são membros deste projeto. Todas as pessoas de um grupo, incluindo os subgrupos, são membros do projeto com a função atribuída ao grupo. A função própria de uma pessoa nunca é reduzida por um grupo.",
+      "no_groups": "Nenhum grupo é membro deste projeto ainda.",
+      "select_group": "Selecione um grupo",
+      "no_groups_available": "Não há mais grupos para adicionar",
+      "add_group": "Adicionar grupo",
+      "role": "Função",
+      "role_member": "Membro",
+      "role_guest": "Convidado",
+      "member_count": "{count, plural, one {# pessoa} many {# de pessoas} other {# pessoas}}",
+      "group_added": "Grupo adicionado ao projeto.",
+      "group_updated": "Função do grupo atualizada.",
+      "group_removed": "Grupo removido do projeto.",
+      "remove_title": "Remover {name} deste projeto?",
+      "remove_content": "As pessoas que estão no projeto apenas por meio deste grupo perdem o acesso a ele. As pessoas adicionadas diretamente ao projeto permanecem.",
+      "via_group": "Via grupo",
+      "via_group_tooltip": "Esta pessoa pertence ao projeto por meio de um grupo. Remova o grupo ou a pessoa do grupo.",
+      "role_raised": "Função elevada por um grupo",
+      "role_raised_tooltip": "Um grupo ao qual esta pessoa pertence lhe dá esta função.",
+      "assign_hint": "Ainda não há grupos que possam ser atribuídos. Primeiro adicione grupos em configurações do projeto, Membros."
+    }
   },
   "project": {
     "members_import": {

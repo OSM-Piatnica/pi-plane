@@ -47,3 +47,33 @@ export type TUserGroupMember = {
   managed_externally: boolean;
   created_at: string;
 };
+
+/** The roles a group can have in a project. Project admins stay named people. */
+export enum EProjectGroupRole {
+  MEMBER = 15,
+  GUEST = 5,
+}
+
+/** A group that is a member of a project. */
+export type TProjectGroup = {
+  id: string;
+  group: string;
+  group_name: string;
+  group_source: TUserGroupSource;
+  role: EProjectGroupRole;
+  /** People who belong to the project through this group (subgroups included). */
+  member_count: number;
+};
+
+export type TProjectGroupFormData = {
+  group: string;
+  role: EProjectGroupRole;
+};
+
+/** A group a work item of the project can be assigned to. */
+export type TAssignableGroup = {
+  id: string;
+  name: string;
+  source: TUserGroupSource;
+  parent_id: string | null;
+};

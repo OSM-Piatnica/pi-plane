@@ -54,6 +54,7 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
+from plane.utils.project_groups import ASSIGNABLE_GROUP_MESSAGE, GroupNotInProjectError, assignable_group_ids
 from plane.utils.project_weekend_days import get_project_weekend_days
 from plane.utils.work_item_duration import (
     DURATION_DATE_FIELDS,
@@ -205,6 +206,16 @@ class IssueCreateSerializer(BaseSerializer):
                     "id", flat=True
                 )
             )
+            # Only the groups added now must be members of the project; the ones already on the work item stay
+            # even when their group was taken out of the project later
+            already = (
+                set(IssueGroupAssignee.objects.filter(issue=self.instance).values_list("group_id", flat=True))
+                if self.instance is not None and getattr(self.instance, "pk", None)
+                else set()
+            )
+            added = set(attrs["group_assignee_ids"]) - already
+            if added and not added <= assignable_group_ids(self.context["project_id"], workspace_id):
+                raise GroupNotInProjectError({"error": ASSIGNABLE_GROUP_MESSAGE})
 
         # Validate labels are from project
         if attrs.get("label_ids"):

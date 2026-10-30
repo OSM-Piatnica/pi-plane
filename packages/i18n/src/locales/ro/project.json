@@ -370,7 +370,29 @@
     "display_name": "Nume afișat",
     "email": "Email",
     "joining_date": "Data înscrierii",
-    "role": "Rol"
+    "role": "Rol",
+    "groups": {
+      "title": "Grupuri",
+      "description": "Grupuri care sunt membre ale acestui proiect. Toate persoanele dintr-un grup, inclusiv din subgrupurile sale, sunt membre ale proiectului cu rolul atribuit grupului. Rolul propriu al unei persoane nu este niciodată redus de un grup.",
+      "no_groups": "Niciun grup nu este încă membru al acestui proiect.",
+      "select_group": "Selectați un grup",
+      "no_groups_available": "Nu mai există grupuri de adăugat",
+      "add_group": "Adaugă grup",
+      "role": "Rol",
+      "role_member": "Membru",
+      "role_guest": "Invitat",
+      "member_count": "{count, plural, one {# persoană} few {# persoane} other {# de persoane}}",
+      "group_added": "Grup adăugat la proiect.",
+      "group_updated": "Rolul grupului a fost actualizat.",
+      "group_removed": "Grup eliminat din proiect.",
+      "remove_title": "Eliminați {name} din acest proiect?",
+      "remove_content": "Persoanele care fac parte din proiect doar prin acest grup pierd accesul la el. Persoanele adăugate direct în proiect rămân.",
+      "via_group": "Prin grup",
+      "via_group_tooltip": "Această persoană face parte din proiect printr-un grup. Eliminați grupul sau persoana din grup.",
+      "role_raised": "Rol ridicat de un grup",
+      "role_raised_tooltip": "Un grup din care face parte această persoană îi oferă acest rol.",
+      "assign_hint": "Încă nu pot fi atribuite grupuri. Adăugați mai întâi grupuri în setările proiectului, secțiunea Membri."
+    }
   },
   "project": {
     "members_import": {

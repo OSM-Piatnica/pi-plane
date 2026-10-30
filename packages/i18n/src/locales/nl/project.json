@@ -370,7 +370,29 @@
     "display_name": "Weergavenaam",
     "email": "E-mail",
     "joining_date": "Datum van toetreding",
-    "role": "Rol"
+    "role": "Rol",
+    "groups": {
+      "title": "Groepen",
+      "description": "Groepen die lid zijn van dit project. Iedereen in een groep, inclusief de subgroepen, is lid van het project met de rol die aan de groep is gegeven. De eigen rol van een persoon wordt nooit verlaagd door een groep.",
+      "no_groups": "Er zijn nog geen groepen lid van dit project.",
+      "select_group": "Selecteer een groep",
+      "no_groups_available": "Geen groepen meer om toe te voegen",
+      "add_group": "Groep toevoegen",
+      "role": "Rol",
+      "role_member": "Lid",
+      "role_guest": "Gast",
+      "member_count": "{count, plural, one {# persoon} other {# personen}}",
+      "group_added": "Groep toegevoegd aan het project.",
+      "group_updated": "Rol van groep bijgewerkt.",
+      "group_removed": "Groep verwijderd uit het project.",
+      "remove_title": "{name} uit dit project verwijderen?",
+      "remove_content": "Mensen die alleen via deze groep in het project zitten, verliezen de toegang ertoe. Mensen die rechtstreeks aan het project zijn toegevoegd, blijven.",
+      "via_group": "Via groep",
+      "via_group_tooltip": "Deze persoon hoort via een groep bij het project. Verwijder de groep of de persoon uit de groep.",
+      "role_raised": "Rol verhoogd door een groep",
+      "role_raised_tooltip": "Een groep waartoe deze persoon behoort, geeft hem of haar deze rol.",
+      "assign_hint": "Er kunnen nog geen groepen worden toegewezen. Voeg eerst groepen toe onder projectinstellingen, Leden."
+    }
   },
   "project": {
     "members_import": {

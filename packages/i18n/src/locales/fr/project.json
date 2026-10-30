@@ -370,7 +370,29 @@
     "display_name": "Nom d’affichage",
     "email": "E-mail",
     "joining_date": "Date d’adhésion",
-    "role": "Rôle"
+    "role": "Rôle",
+    "groups": {
+      "title": "Groupes",
+      "description": "Groupes membres de ce projet. Toutes les personnes d’un groupe, y compris celles de ses sous-groupes, sont membres du projet avec le rôle attribué au groupe. Un groupe ne réduit jamais le rôle propre d’une personne.",
+      "no_groups": "Aucun groupe n’est encore membre de ce projet.",
+      "select_group": "Sélectionner un groupe",
+      "no_groups_available": "Aucun groupe restant à ajouter",
+      "add_group": "Ajouter un groupe",
+      "role": "Rôle",
+      "role_member": "Membre",
+      "role_guest": "Invité",
+      "member_count": "{count, plural, one {# personne} many {# personnes} other {# personnes}}",
+      "group_added": "Groupe ajouté au projet.",
+      "group_updated": "Rôle du groupe mis à jour.",
+      "group_removed": "Groupe retiré du projet.",
+      "remove_title": "Retirer {name} de ce projet ?",
+      "remove_content": "Les personnes présentes dans le projet uniquement via ce groupe en perdent l’accès. Les personnes ajoutées directement au projet restent.",
+      "via_group": "Via un groupe",
+      "via_group_tooltip": "Cette personne appartient au projet via un groupe. Retirez le groupe, ou la personne du groupe.",
+      "role_raised": "Rôle relevé par un groupe",
+      "role_raised_tooltip": "Un groupe auquel appartient cette personne lui donne ce rôle.",
+      "assign_hint": "Aucun groupe ne peut encore être attribué. Ajoutez d’abord des groupes dans les paramètres du projet, Membres."
+    }
   },
   "project": {
     "members_import": {

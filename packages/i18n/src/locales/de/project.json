@@ -370,7 +370,29 @@
     "display_name": "Anzeigename",
     "email": "E-Mail",
     "joining_date": "Beitrittsdatum",
-    "role": "Rolle"
+    "role": "Rolle",
+    "groups": {
+      "title": "Gruppen",
+      "description": "Gruppen, die Mitglieder dieses Projekts sind. Alle Personen in einer Gruppe, einschließlich ihrer Untergruppen, sind Mitglieder des Projekts mit der Rolle, die der Gruppe zugewiesen ist. Die eigene Rolle einer Person wird durch eine Gruppe nie herabgestuft.",
+      "no_groups": "Dieses Projekt hat noch keine Gruppen als Mitglieder.",
+      "select_group": "Gruppe auswählen",
+      "no_groups_available": "Keine weiteren Gruppen zum Hinzufügen",
+      "add_group": "Gruppe hinzufügen",
+      "role": "Rolle",
+      "role_member": "Mitglied",
+      "role_guest": "Gast",
+      "member_count": "{count, plural, one {# Person} other {# Personen}}",
+      "group_added": "Gruppe zum Projekt hinzugefügt.",
+      "group_updated": "Rolle der Gruppe aktualisiert.",
+      "group_removed": "Gruppe aus dem Projekt entfernt.",
+      "remove_title": "{name} aus diesem Projekt entfernen?",
+      "remove_content": "Personen, die nur über diese Gruppe im Projekt sind, verlieren den Zugriff darauf. Personen, die direkt zum Projekt hinzugefügt wurden, bleiben erhalten.",
+      "via_group": "Über Gruppe",
+      "via_group_tooltip": "Diese Person gehört über eine Gruppe zum Projekt. Entfernen Sie die Gruppe oder die Person aus der Gruppe.",
+      "role_raised": "Rolle durch Gruppe angehoben",
+      "role_raised_tooltip": "Eine Gruppe, der diese Person angehört, gibt ihr diese Rolle.",
+      "assign_hint": "Es können noch keine Gruppen zugewiesen werden. Fügen Sie zuerst Gruppen unter Projekteinstellungen, Mitglieder hinzu."
+    }
   },
   "project": {
     "members_import": {

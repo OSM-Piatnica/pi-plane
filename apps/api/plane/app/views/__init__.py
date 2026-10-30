@@ -31,6 +31,7 @@ from .project.member import (
     ProjectMemberPreferenceEndpoint,
 )
 
+from .project.project_group import ProjectGroupDetailEndpoint, ProjectGroupEndpoint
 from .project.duplicate import ProjectCopyRetryEndpoint, ProjectCopyStatusEndpoint, ProjectDuplicateEndpoint
 from .project.issue_type import ProjectIssueTypeViewSet, ProjectIssueTypeBulkAssignEndpoint
 

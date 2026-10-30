@@ -370,7 +370,29 @@
     "display_name": "Nama tampilan",
     "email": "Email",
     "joining_date": "Tanggal bergabung",
-    "role": "Peran"
+    "role": "Peran",
+    "groups": {
+      "title": "Grup",
+      "description": "Grup yang menjadi anggota proyek ini. Semua orang dalam grup, termasuk subgrupnya, adalah anggota proyek dengan peran yang diberikan kepada grup. Peran milik seseorang tidak pernah diturunkan oleh grup.",
+      "no_groups": "Belum ada grup yang menjadi anggota proyek ini.",
+      "select_group": "Pilih grup",
+      "no_groups_available": "Tidak ada grup lagi untuk ditambahkan",
+      "add_group": "Tambah grup",
+      "role": "Peran",
+      "role_member": "Anggota",
+      "role_guest": "Tamu",
+      "member_count": "{count, plural, one {# orang} other {# orang}}",
+      "group_added": "Grup ditambahkan ke proyek.",
+      "group_updated": "Peran grup diperbarui.",
+      "group_removed": "Grup dihapus dari proyek.",
+      "remove_title": "Hapus {name} dari proyek ini?",
+      "remove_content": "Orang yang berada di proyek hanya melalui grup ini kehilangan akses ke proyek. Orang yang ditambahkan langsung ke proyek tetap ada.",
+      "via_group": "Melalui grup",
+      "via_group_tooltip": "Orang ini termasuk dalam proyek melalui grup. Hapus grup, atau hapus orang tersebut dari grup.",
+      "role_raised": "Peran dinaikkan oleh grup",
+      "role_raised_tooltip": "Grup tempat orang ini berada memberinya peran ini.",
+      "assign_hint": "Belum ada grup yang dapat ditugaskan. Tambahkan grup terlebih dahulu di pengaturan proyek, Anggota."
+    }
   },
   "project": {
     "members_import": {

@@ -370,7 +370,29 @@
     "display_name": "Görünen ad",
     "email": "E-posta",
     "joining_date": "Katılma tarihi",
-    "role": "Rol"
+    "role": "Rol",
+    "groups": {
+      "title": "Gruplar",
+      "description": "Bu projenin üyesi olan gruplar. Bir gruptaki herkes, alt grupları dahil, gruba verilen rolle projenin üyesidir. Bir kişinin kendi rolü hiçbir zaman bir grup tarafından düşürülmez.",
+      "no_groups": "Bu projenin henüz üyesi olan grup yok.",
+      "select_group": "Bir grup seçin",
+      "no_groups_available": "Eklenecek grup kalmadı",
+      "add_group": "Grup ekle",
+      "role": "Rol",
+      "role_member": "Üye",
+      "role_guest": "Misafir",
+      "member_count": "{count, plural, one {# kişi} other {# kişi}}",
+      "group_added": "Grup projeye eklendi.",
+      "group_updated": "Grup rolü güncellendi.",
+      "group_removed": "Grup projeden kaldırıldı.",
+      "remove_title": "{name} bu projeden kaldırılsın mı?",
+      "remove_content": "Projede yalnızca bu grup aracılığıyla bulunan kişiler projeye erişimini kaybeder. Projeye doğrudan eklenen kişiler kalır.",
+      "via_group": "Grup aracılığıyla",
+      "via_group_tooltip": "Bu kişi projeye bir grup aracılığıyla dahildir. Grubu veya kişiyi gruptan kaldırın.",
+      "role_raised": "Rol grup tarafından yükseltildi",
+      "role_raised_tooltip": "Bu kişinin ait olduğu bir grup ona bu rolü verir.",
+      "assign_hint": "Henüz atanabilecek grup yok. Önce proje ayarlarındaki Üyeler bölümünden grup ekleyin."
+    }
   },
   "project": {
     "members_import": {

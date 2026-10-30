@@ -370,7 +370,29 @@
     "display_name": "Zobrazované jméno",
     "email": "E-mail",
     "joining_date": "Datum připojení",
-    "role": "Role"
+    "role": "Role",
+    "groups": {
+      "title": "Skupiny",
+      "description": "Skupiny, které jsou členy tohoto projektu. Každý člen skupiny, včetně jejích podskupin, je členem projektu s rolí přidělenou skupině. Vlastní role osoby není skupinou nikdy snížena.",
+      "no_groups": "Tento projekt zatím nemá žádné skupiny jako členy.",
+      "select_group": "Vyberte skupinu",
+      "no_groups_available": "Žádné další skupiny k přidání",
+      "add_group": "Přidat skupinu",
+      "role": "Role",
+      "role_member": "Člen",
+      "role_guest": "Host",
+      "member_count": "{count, plural, one {# osoba} few {# osoby} many {# osoby} other {# osob}}",
+      "group_added": "Skupina byla přidána do projektu.",
+      "group_updated": "Role skupiny byla aktualizována.",
+      "group_removed": "Skupina byla z projektu odebrána.",
+      "remove_title": "Odebrat {name} z tohoto projektu?",
+      "remove_content": "Lidé, kteří jsou v projektu pouze prostřednictvím této skupiny, o přístup k němu přijdou. Lidé přidaní do projektu přímo zůstanou.",
+      "via_group": "Přes skupinu",
+      "via_group_tooltip": "Tato osoba patří do projektu prostřednictvím skupiny. Odeberte skupinu, nebo osobu ze skupiny.",
+      "role_raised": "Role zvýšena skupinou",
+      "role_raised_tooltip": "Skupina, do které tato osoba patří, jí uděluje tuto roli.",
+      "assign_hint": "Zatím nelze přiřadit žádné skupiny. Nejprve přidejte skupiny v nastavení projektu, v části Členové."
+    }
   },
   "project": {
     "members_import": {

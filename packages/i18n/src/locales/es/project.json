@@ -370,7 +370,29 @@
     "display_name": "Nombre para mostrar",
     "email": "Correo electrónico",
     "joining_date": "Fecha de ingreso",
-    "role": "Rol"
+    "role": "Rol",
+    "groups": {
+      "title": "Grupos",
+      "description": "Grupos que son miembros de este proyecto. Todas las personas de un grupo, incluidos sus subgrupos, son miembros del proyecto con el rol asignado al grupo. Un grupo nunca reduce el rol propio de una persona.",
+      "no_groups": "Aún no hay grupos que sean miembros de este proyecto.",
+      "select_group": "Seleccione un grupo",
+      "no_groups_available": "No quedan grupos por agregar",
+      "add_group": "Agregar grupo",
+      "role": "Rol",
+      "role_member": "Miembro",
+      "role_guest": "Invitado",
+      "member_count": "{count, plural, one {# persona} other {# personas}}",
+      "group_added": "Grupo agregado al proyecto.",
+      "group_updated": "Rol del grupo actualizado.",
+      "group_removed": "Grupo eliminado del proyecto.",
+      "remove_title": "¿Eliminar a {name} de este proyecto?",
+      "remove_content": "Las personas que están en el proyecto solo a través de este grupo pierden el acceso a él. Las personas agregadas directamente al proyecto permanecen.",
+      "via_group": "Por grupo",
+      "via_group_tooltip": "Esta persona pertenece al proyecto a través de un grupo. Elimine el grupo o a la persona del grupo.",
+      "role_raised": "Rol elevado por un grupo",
+      "role_raised_tooltip": "Un grupo al que pertenece esta persona le otorga este rol.",
+      "assign_hint": "Aún no se pueden asignar grupos. Primero agregue grupos en la configuración del proyecto, Miembros."
+    }
   },
   "project": {
     "members_import": {

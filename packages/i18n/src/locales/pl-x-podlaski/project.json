@@ -370,7 +370,29 @@
     "display_name": "Nazwa wyświetlana",
     "email": "E-mail",
     "joining_date": "Data dołączenia",
-    "role": "Rola"
+    "role": "Rola",
+    "groups": {
+      "title": "Grupy",
+      "description": "Grupy będące członkami tego projektu. Każda osoba w grupie, w tym w jej podgrupach, jest członkiem projektu z rolą nadaną grupie. Własna rola osoby nigdy nie jest obniżana przez grupę.",
+      "no_groups": "Żadna grupa nie jest jeszcze członkiem tego projektu.",
+      "select_group": "Wybierz grupę",
+      "no_groups_available": "Nie ma już grup do dodania",
+      "add_group": "Dodaj grupę",
+      "role": "Rola",
+      "role_member": "Członek",
+      "role_guest": "Gość",
+      "member_count": "{count, plural, one {# osoba} few {# osoby} many {# osób} other {# osoby}}",
+      "group_added": "Dodano grupę do projektu.",
+      "group_updated": "Zaktualizowano rolę grupy.",
+      "group_removed": "Usunięto grupę z projektu.",
+      "remove_title": "Usunąć {name} z tego projektu?",
+      "remove_content": "Osoby, które należą do projektu wyłącznie przez tę grupę, tracą do niego dostęp. Osoby dodane do projektu bezpośrednio pozostają.",
+      "via_group": "Przez grupę",
+      "via_group_tooltip": "Ta osoba należy do projektu przez grupę. Usuń grupę lub osobę z grupy.",
+      "role_raised": "Rola podniesiona przez grupę",
+      "role_raised_tooltip": "Grupa, do której należy ta osoba, nadaje jej tę rolę.",
+      "assign_hint": "Nie można jeszcze przypisać żadnych grup. Najpierw dodaj grupy w ustawieniach projektu, w sekcji Członkowie."
+    }
   },
   "project": {
     "members_import": {
