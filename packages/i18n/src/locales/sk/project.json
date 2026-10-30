@@ -370,7 +370,29 @@
     "display_name": "Zobrazované meno",
     "email": "E-mail",
     "joining_date": "Dátum pripojenia",
-    "role": "Rola"
+    "role": "Rola",
+    "groups": {
+      "title": "Groups",
+      "description": "Groups that are members of this project. Everyone in a group, including its subgroups, is a member of the project with the role given to the group. A person's own role is never lowered by a group.",
+      "no_groups": "No groups are members of this project yet.",
+      "select_group": "Select a group",
+      "no_groups_available": "No groups left to add",
+      "add_group": "Add group",
+      "role": "Role",
+      "role_member": "Member",
+      "role_guest": "Guest",
+      "member_count": "{count, plural, one {# person} other {# people}}",
+      "group_added": "Group added to the project.",
+      "group_updated": "Group role updated.",
+      "group_removed": "Group removed from the project.",
+      "remove_title": "Remove {name} from this project?",
+      "remove_content": "People who are in the project only through this group lose access to it. People added to the project directly stay.",
+      "via_group": "Via group",
+      "via_group_tooltip": "This person belongs to the project through a group. Remove the group, or the person from the group.",
+      "role_raised": "Role raised by a group",
+      "role_raised_tooltip": "A group this person belongs to gives them this role.",
+      "assign_hint": "No groups can be assigned yet. Add groups first under project settings, Members."
+    }
   },
   "project": {
     "members_import": {

@@ -29,6 +29,8 @@ from plane.app.views import (
     ProjectDuplicateEndpoint,
     ProjectCopyStatusEndpoint,
     ProjectCopyRetryEndpoint,
+    ProjectGroupDetailEndpoint,
+    ProjectGroupEndpoint,
 )
 
 
@@ -124,6 +126,16 @@ urlpatterns = [
         "workspaces/<str:slug>/projects/<uuid:project_id>/members/<uuid:pk>/",
         ProjectMemberViewSet.as_view({"get": "retrieve", "patch": "partial_update", "delete": "destroy"}),
         name="project-member",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/groups/",
+        ProjectGroupEndpoint.as_view(),
+        name="project-groups",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/groups/<uuid:pk>/",
+        ProjectGroupDetailEndpoint.as_view(),
+        name="project-group-detail",
     ),
     path(
         "workspaces/<str:slug>/projects/<uuid:project_id>/members/leave/",

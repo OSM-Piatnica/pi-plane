@@ -113,6 +113,10 @@ export interface IProjectMemberLite {
 export type TProjectMembership = {
   member: string;
   role: TUserPermissions | EUserProjectRoles;
+  /** True when the person is a member of the project only through a group. */
+  via_group?: boolean;
+  /** The best role the project's groups give the person (null: no group gives one). */
+  group_role?: EUserProjectRoles | null;
 } & (
   | {
       id: string;

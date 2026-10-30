@@ -169,7 +169,7 @@ class ProjectMemberSerializer(BaseSerializer):
     class Meta:
         model = ProjectMember
         fields = "__all__"
-        read_only_fields = ["deleted_at", "created_by", "updated_by"]
+        read_only_fields = ["deleted_at", "created_by", "updated_by", "via_group", "group_role", "direct_role"]
 
 
 class ProjectMemberPreferenceSerializer(BaseSerializer):
@@ -192,6 +192,7 @@ class ProjectMemberAdminSerializer(BaseSerializer):
     class Meta:
         model = ProjectMember
         fields = "__all__"
+        read_only_fields = ["via_group", "group_role", "direct_role"]
 
 
 class ProjectMemberRoleSerializer(DynamicBaseSerializer):
@@ -199,8 +200,8 @@ class ProjectMemberRoleSerializer(DynamicBaseSerializer):
 
     class Meta:
         model = ProjectMember
-        fields = ("id", "role", "member", "project", "original_role", "created_at")
-        read_only_fields = ["original_role", "created_at"]
+        fields = ("id", "role", "member", "project", "original_role", "created_at", "via_group", "group_role")
+        read_only_fields = ["original_role", "created_at", "via_group", "group_role"]
 
 
 class ProjectMemberInviteSerializer(BaseSerializer):
