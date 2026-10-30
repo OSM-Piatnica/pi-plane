@@ -114,7 +114,7 @@ class TestProjectGroupsApi:
         assert ProjectMember.objects.get(project=project, member=ada).role == MEMBER
         listed = api_key_client.get(_url(workspace, project))
         assert listed.status_code == 200
-        assert [(g["group"], g["member_count"]) for g in listed.data] == [(str(sales.id), 1)]
+        assert [(g["group"], g["member_count"]) for g in listed.json()] == [(str(sales.id), 1)]
 
     def test_a_group_cannot_be_admin_and_the_role_is_required(self, api_key_client, workspace, project):
         sales = _group(workspace, "Sales")
@@ -160,7 +160,7 @@ class TestProjectGroupsApi:
 
         assert response.status_code == 200, response.data
         assert response.data["role"] == GUEST
-        assert response.data["group"] == str(sales.id)
+        assert response.json()["group"] == str(sales.id)
         assert ProjectMember.objects.get(project=project, member=ada).role == GUEST
 
     def test_patch_refuses_admin_and_a_missing_link_is_404(self, api_key_client, workspace, project):
@@ -208,11 +208,11 @@ class TestProjectGroupsApi:
         response = api_key_client.get(_url(workspace, project) + "?assignable=1")
 
         assert response.status_code == 200
-        assert [(g["id"], g["parent_id"]) for g in response.data] == [
+        assert [(g["id"], g["parent_id"]) for g in response.json()] == [
             (str(poland.id), str(sales.id)),
             (str(sales.id), None),
         ]
-        assert set(response.data[0]) == {"id", "name", "source", "parent_id"}
+        assert set(response.json()[0]) == {"id", "name", "source", "parent_id"}
 
 
 @pytest.mark.contract
@@ -285,7 +285,7 @@ class TestProjectMembersExposeGroups:
         listed = api_key_client.get(_members_url(workspace, project))
 
         assert listed.status_code == 200
-        by_id = {entry["id"]: entry for entry in listed.data}
+        by_id = {entry["id"]: entry for entry in listed.json()}
         assert (by_id[str(through_group.id)]["via_group"], by_id[str(through_group.id)]["group_role"]) == (True, MEMBER)
         assert by_id[str(through_group.id)]["direct_role"] is None
         assert (by_id[str(raised.id)]["via_group"], by_id[str(raised.id)]["group_role"]) == (False, MEMBER)
@@ -294,12 +294,16 @@ class TestProjectMembersExposeGroups:
         row = ProjectMember.objects.get(project=project, member=through_group)
         detail = api_key_client.get(_members_url(workspace, project, f"{row.id}/"))
         assert detail.status_code == 200
-        assert (detail.data["via_group"], detail.data["group_role"], detail.data["direct_role"]) == (True, MEMBER, None)
+        assert (detail.json()["via_group"], detail.json()["group_role"], detail.json()["direct_role"]) == (
+            True,
+            MEMBER,
+            None,
+        )
 
     def test_a_person_of_no_group_has_empty_group_fields(self, api_key_client, workspace, project, create_user):
         listed = api_key_client.get(_members_url(workspace, project))
 
-        entry = next(e for e in listed.data if e["id"] == str(create_user.id))
+        entry = next(e for e in listed.json() if e["id"] == str(create_user.id))
         assert (entry["via_group"], entry["group_role"], entry["direct_role"]) == (False, None, None)
 
     def test_lite_list_carries_the_group_fields(self, api_key_client, workspace, project):
@@ -313,7 +317,7 @@ class TestProjectMembersExposeGroups:
         )
 
         assert response.status_code == 200
-        entry = next(e for e in response.data["results"] if e["id"] == str(ada.id))
+        entry = next(e for e in response.json()["results"] if e["id"] == str(ada.id))
         assert (entry["via_group"], entry["group_role"], entry["direct_role"]) == (True, GUEST, None)
 
     def test_group_fields_are_read_only_on_the_member_endpoints(self, api_key_client, workspace, project):
@@ -325,7 +329,7 @@ class TestProjectMembersExposeGroups:
 
         response = api_key_client.patch(
             _members_url(workspace, project, f"{row.id}/"),
-            {"role": GUEST, "via_group": False, "group_role": None},
+            {"via_group": False, "group_role": None, "direct_role": GUEST},
             format="json",
         )
 

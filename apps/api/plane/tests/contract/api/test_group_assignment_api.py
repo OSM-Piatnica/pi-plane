@@ -210,7 +210,7 @@ class TestGroupAssigneesApi:
         listed = api_key_client.get(_list_url(workspace, project))
 
         assert detail.status_code == status.HTTP_200_OK
-        assert detail.data["group_assignee_ids"] == [str(sales.id)]
+        assert detail.json()["group_assignee_ids"] == [str(sales.id)]
         assert listed.status_code == status.HTTP_200_OK
-        entry = next(e for e in listed.data["results"] if e["id"] == str(issue.id))
+        entry = next(e for e in listed.json()["results"] if e["id"] == str(issue.id))
         assert entry["group_assignee_ids"] == [str(sales.id)]
