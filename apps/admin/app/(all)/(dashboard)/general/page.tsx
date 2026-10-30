@@ -28,7 +28,9 @@ function GeneralPage() {
       }}
     >
       {instance && instanceAdmins && <GeneralConfigurationForm instance={instance} instanceAdmins={instanceAdmins} />}
-      <UploadLimitSection />
+      <div className="mt-8">
+        <UploadLimitSection />
+      </div>
     </PageWrapper>
   );
 }
