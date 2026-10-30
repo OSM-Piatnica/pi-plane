@@ -276,7 +276,7 @@
             "clear_all": "Alles wissen",
             "cycles": "Cycli",
             "dates": "Datums en duur",
-            "group_assignees": "Group assignees",
+            "group_assignees": "Toegewezen groepen",
             "heading": "Wat te importeren",
             "labels": "Labels",
             "modules": "Modules",
@@ -308,6 +308,7 @@
         "description": "Maak herbruikbare projectopzetten met standaardeigenschappen, ingeschakelde functies, statussen, labels en werkitemtypen.",
         "edit_template": "Sjabloon bewerken",
         "form": {
+          "add_group": "Groep toevoegen",
           "add_label": "Label toevoegen",
           "add_state": "Status toevoegen",
           "custom_property": {
@@ -380,6 +381,8 @@
               "label": "Werkitemtypen"
             }
           },
+          "group_missing": "Groep bestaat niet meer",
+          "groups_empty": "Er zijn nog geen groepen.",
           "identifier_invalid": "Gebruik alleen letters en cijfers",
           "identifier_max_char": "De identificatie mag maximaal 5 tekens bevatten",
           "label_name_placeholder": "Labelnaam",
@@ -387,8 +390,11 @@
           "mark_default_state": "Als standaardstatus markeren",
           "modal_intro": "Geef het sjabloon een naam en voeg een korte notitie voor je team toe. Configureer daarna de standaardwaarden van het project—dezelfde soort instellingen die je gebruikt bij het aanmaken van een project.",
           "name_required": "Sjabloonnaam is verplicht",
+          "no_groups_available": "Geen groepen meer om toe te voegen",
           "section_features": "Functies",
           "section_features_hint": "Kies welke optionele projectfuncties worden ingeschakeld wanneer dit sjabloon wordt toegepast.",
+          "section_groups": "Groepen als leden",
+          "section_groups_hint": "Groepen die lid worden van elk project dat met dit sjabloon wordt aangemaakt, met de rol die hier is opgegeven. Iedereen in een groep, inclusief de subgroepen, wordt lid van het project. De persoon die het project aanmaakt blijft de beheerder.",
           "section_labels": "Labels",
           "section_labels_hint": "Definieer standaardlabels voor nieuwe projecten.",
           "section_properties": "Standaardprojecteigenschappen",
@@ -397,6 +403,7 @@
           "section_template": "Sjabloon",
           "section_work_item_types": "Werkitemtypen",
           "section_work_item_types_hint": "Configureer standaardwerkitemtypen en aangepaste eigenschappen voor projecten die met dit sjabloon worden aangemaakt.",
+          "select_group": "Selecteer een groep",
           "state_groups": {
             "backlog": "Backlog",
             "cancelled": "Geannuleerd",
@@ -485,6 +492,12 @@
           },
           "uploaded": {
             "message": "Sjabloon \"{name}\" is geüpload vanuit het bestand."
+          },
+          "apply_groups_skipped": {
+            "message": "Het project is aangemaakt, maar {count, plural, one {# groep van het sjabloon bestaat niet meer en is} other {# groepen van het sjabloon bestaan niet meer en zijn}} niet toegevoegd."
+          },
+          "uploaded_groups_not_found": {
+            "message": "Sjabloon \"{name}\" is geüpload, maar deze groepen bestaan niet in deze werkruimte en zijn weggelaten: {groups}."
           }
         },
         "upload_invalid_file": "Upload een JSON-bestand dat is gedownload met de knop “Downloaden”.",

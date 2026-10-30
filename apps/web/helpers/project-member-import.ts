@@ -120,3 +120,20 @@ export const skippedRowsToCsv = (skipped: TProjectMemberImportSummary["skipped"]
     "Row,Type,Value,Reason",
     ...skipped.map((item) => [item.row, item.type, item.value, item.reason].map(csvCell).join(",")),
   ].join("\n") + "\n";
+
+/**
+ * Sends the rows in chunks, one chunk after the other, so rows of a later chunk see what an earlier one changed;
+ * returns the answer of every chunk.
+ */
+export const importMemberRowsInChunks = async (
+  rows: TProjectMemberImportRow[],
+  send: (chunk: TProjectMemberImportRow[]) => Promise<TProjectMemberImportSummary>
+): Promise<TProjectMemberImportSummary[]> => {
+  const answers: TProjectMemberImportSummary[] = [];
+  for (const chunk of chunkRows<TProjectMemberImportRow>(rows)) {
+    // sequential on purpose: later chunks depend on the memberships earlier ones created
+    // oxlint-disable-next-line no-await-in-loop
+    answers.push(await send(chunk));
+  }
+  return answers;
+};

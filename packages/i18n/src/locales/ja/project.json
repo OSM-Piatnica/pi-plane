@@ -418,7 +418,7 @@
     },
     "members_import": {
       "title": "CSVからメンバーをインポート",
-      "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
+      "description": "列が Email と Role（5=ゲスト、15=メンバー、20=管理者）、または Group と Role（5=ゲスト、15=メンバー）の CSV をアップロードすると、グループ全体を追加できます。入れ子のグループは Parent / Child と記述してください。各行では Email と Group のどちらか一方を使用します。ユーザーはすでにワークスペースのメンバーであり、グループはすでに存在している必要があります。",
       "download_sample": "サンプルCSVをダウンロード",
       "dropzone": {
         "active": "CSVファイルをここにドロップ",
@@ -443,16 +443,16 @@
         "message": {
           "success": "{count}人のメンバーをプロジェクトにインポートしました。",
           "no_imports": "CSVファイルから新しいメンバーはインポートされませんでした。",
-          "groups_success": "Linked {count} group{plural} to the project."
+          "groups_success": "{count}件のグループをプロジェクトにリンクしました。"
         },
         "stats": {
           "added": "追加",
           "reactivated": "再有効化",
           "already_members": "既にメンバー",
           "skipped": "スキップ",
-          "groups_added": "Groups added",
-          "groups_updated": "Groups updated",
-          "groups_skipped": "Groups skipped"
+          "groups_added": "追加されたグループ",
+          "groups_updated": "更新されたグループ",
+          "groups_skipped": "スキップされたグループ"
         },
         "download_errors": "スキップ詳細をダウンロード"
       },
@@ -466,23 +466,23 @@
           "message": "問題が発生しました。"
         }
       },
-      "import_button": "Import from CSV",
+      "import_button": "CSVからインポート",
       "parse_errors": {
-        "empty": "The file is empty.",
-        "missing_columns": "The file needs a Role column and an Email or a Group column.",
-        "no_rows": "The file has a header but no rows."
+        "empty": "ファイルが空です。",
+        "missing_columns": "ファイルには Role 列と、Email 列または Group 列が必要です。",
+        "no_rows": "ファイルにはヘッダーがありますが、行がありません。"
       },
       "skip_reasons": {
-        "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
-        "both_email_and_group": "A row has either an Email or a Group, not both.",
-        "missing_value": "The row has neither an Email nor a Group.",
-        "not_workspace_member": "This person is not an active member of the workspace.",
-        "role_above_workspace_role": "The role is higher than the person's workspace role.",
-        "role_below_workspace_role": "The role is lower than the person's workspace role.",
-        "unknown_group": "No group with this name exists in the workspace.",
-        "ambiguous_group": "Several groups have this name, write its path as Parent / Child.",
-        "group_admin_role": "Groups cannot be project admins.",
-        "group_already_linked": "The group already is a member of the project with this role."
+        "invalid_role": "役割は 5（ゲスト）、15（メンバー）、20（管理者）のいずれかにしてください。",
+        "both_email_and_group": "1行には Email と Group のどちらか一方のみを指定してください。",
+        "missing_value": "この行には Email も Group もありません。",
+        "not_workspace_member": "この人物はワークスペースのアクティブなメンバーではありません。",
+        "role_above_workspace_role": "この役割は、その人物のワークスペースでの役割より高くなっています。",
+        "role_below_workspace_role": "この役割は、その人物のワークスペースでの役割より低くなっています。",
+        "unknown_group": "この名前のグループはワークスペースに存在しません。",
+        "ambiguous_group": "この名前のグループが複数あります。パスを Parent / Child の形式で記述してください。",
+        "group_admin_role": "グループをプロジェクト管理者にすることはできません。",
+        "group_already_linked": "このグループはすでにこの役割でプロジェクトのメンバーです。"
       }
     }
   },
@@ -746,8 +746,8 @@
       "clear_all": "すべて解除",
       "description": "同じ設定で新しいプロジェクトを作成します。ページと Webhook はコピーされません。作業項目は下で選択した場合のみコピーされます。",
       "error": "プロジェクトを複製できませんでした。もう一度お試しください。",
-      "groups": "Groups as members",
-      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
+      "groups": "メンバーとしてのグループ",
+      "groups_hint": "同じグループを同じ役割でリンクするため、グループ内の人がコピーのメンバーになります。",
       "identifier_placeholder": "空欄の場合は自動生成",
       "properties": {
         "assignees": "担当者",

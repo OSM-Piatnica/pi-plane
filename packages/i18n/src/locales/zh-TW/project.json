@@ -418,7 +418,7 @@
     },
     "members_import": {
       "title": "從CSV匯入成員",
-      "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
+      "description": "上傳包含 Email 和 Role（5=Guest、15=Member、20=Admin）欄，或 Group 和 Role（5=Guest、15=Member）欄的 CSV 檔案，即可新增整個群組。巢狀群組請寫成 Parent / Child。每列只能使用 Email 或 Group 其中之一。使用者必須已是工作區成員，群組必須已存在。",
       "download_sample": "下載範例CSV",
       "dropzone": {
         "active": "將CSV檔案放在這裡",
@@ -443,16 +443,16 @@
         "message": {
           "success": "成功將{count}名成員匯入專案。",
           "no_imports": "CSV檔案中未匯入任何新成員。",
-          "groups_success": "Linked {count} group{plural} to the project."
+          "groups_success": "已將 {count} 個群組連結到專案。"
         },
         "stats": {
           "added": "已新增",
           "reactivated": "已重新啟用",
           "already_members": "已是成員",
           "skipped": "已略過",
-          "groups_added": "Groups added",
-          "groups_updated": "Groups updated",
-          "groups_skipped": "Groups skipped"
+          "groups_added": "已新增群組",
+          "groups_updated": "已更新群組",
+          "groups_skipped": "已略過群組"
         },
         "download_errors": "下載略過詳情"
       },
@@ -466,23 +466,23 @@
           "message": "發生錯誤。"
         }
       },
-      "import_button": "Import from CSV",
+      "import_button": "從 CSV 匯入",
       "parse_errors": {
-        "empty": "The file is empty.",
-        "missing_columns": "The file needs a Role column and an Email or a Group column.",
-        "no_rows": "The file has a header but no rows."
+        "empty": "檔案是空的。",
+        "missing_columns": "檔案需要包含 Role 欄，以及 Email 欄或 Group 欄。",
+        "no_rows": "檔案有標題列，但沒有資料列。"
       },
       "skip_reasons": {
-        "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
-        "both_email_and_group": "A row has either an Email or a Group, not both.",
-        "missing_value": "The row has neither an Email nor a Group.",
-        "not_workspace_member": "This person is not an active member of the workspace.",
-        "role_above_workspace_role": "The role is higher than the person's workspace role.",
-        "role_below_workspace_role": "The role is lower than the person's workspace role.",
-        "unknown_group": "No group with this name exists in the workspace.",
-        "ambiguous_group": "Several groups have this name, write its path as Parent / Child.",
-        "group_admin_role": "Groups cannot be project admins.",
-        "group_already_linked": "The group already is a member of the project with this role."
+        "invalid_role": "角色必須是 5（Guest）、15（Member）或 20（Admin）。",
+        "both_email_and_group": "每列只能填寫 Email 或 Group 其中之一，不能同時填寫。",
+        "missing_value": "該列既沒有 Email，也沒有 Group。",
+        "not_workspace_member": "此人不是工作區的有效成員。",
+        "role_above_workspace_role": "該角色高於此人的工作區角色。",
+        "role_below_workspace_role": "該角色低於此人的工作區角色。",
+        "unknown_group": "工作區中不存在此名稱的群組。",
+        "ambiguous_group": "有多個群組使用此名稱，請將其路徑寫成 Parent / Child。",
+        "group_admin_role": "群組不能成為專案管理員。",
+        "group_already_linked": "該群組已是專案成員，且角色相同。"
       }
     }
   },
@@ -746,8 +746,8 @@
       "clear_all": "全部清除",
       "description": "使用相同的設定建立新專案。頁面和 Webhook 不會被複製；工作事項僅在您於下方選擇時複製。",
       "error": "無法複製專案，請再試一次。",
-      "groups": "Groups as members",
-      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
+      "groups": "群組作為成員",
+      "groups_hint": "以相同角色連結相同的群組，因此其中的人員會成為副本的成員。",
       "identifier_placeholder": "留空則自動產生",
       "properties": {
         "assignees": "負責人",

@@ -276,7 +276,7 @@
             "clear_all": "Xóa tất cả",
             "cycles": "Chu kỳ",
             "dates": "Ngày tháng và thời lượng",
-            "group_assignees": "Group assignees",
+            "group_assignees": "Nhóm được giao",
             "heading": "Nội dung cần nhập",
             "labels": "Nhãn",
             "modules": "Mô-đun",
@@ -308,6 +308,7 @@
         "description": "Tạo các thiết lập dự án có thể tái sử dụng với thuộc tính mặc định, tính năng được bật, trạng thái, nhãn và loại mục công việc.",
         "edit_template": "Chỉnh sửa mẫu",
         "form": {
+          "add_group": "Thêm nhóm",
           "add_label": "Thêm nhãn",
           "add_state": "Thêm trạng thái",
           "custom_property": {
@@ -380,6 +381,8 @@
               "label": "Loại mục công việc"
             }
           },
+          "group_missing": "Nhóm không còn tồn tại",
+          "groups_empty": "Chưa có nhóm nào.",
           "identifier_invalid": "Chỉ sử dụng chữ cái và số",
           "identifier_max_char": "Mã định danh phải có tối đa 5 ký tự",
           "label_name_placeholder": "Tên nhãn",
@@ -387,8 +390,11 @@
           "mark_default_state": "Đánh dấu là trạng thái mặc định",
           "modal_intro": "Đặt tên cho mẫu và thêm một ghi chú ngắn cho nhóm của bạn. Sau đó cấu hình các giá trị mặc định của dự án—cùng loại cài đặt bạn sử dụng khi tạo một dự án.",
           "name_required": "Tên mẫu là bắt buộc",
+          "no_groups_available": "Không còn nhóm nào để thêm",
           "section_features": "Tính năng",
           "section_features_hint": "Chọn những tính năng tùy chọn của dự án sẽ được bật khi áp dụng mẫu này.",
+          "section_groups": "Nhóm là thành viên",
+          "section_groups_hint": "Các nhóm trở thành thành viên của mọi dự án được tạo từ mẫu này, với vai trò được chọn ở đây. Mọi người trong một nhóm, kể cả các nhóm con, đều tham gia dự án. Người tạo dự án vẫn là quản trị viên của dự án.",
           "section_labels": "Nhãn",
           "section_labels_hint": "Xác định các nhãn mặc định cho dự án mới.",
           "section_properties": "Thuộc tính mặc định của dự án",
@@ -397,6 +403,7 @@
           "section_template": "Mẫu",
           "section_work_item_types": "Loại mục công việc",
           "section_work_item_types_hint": "Cấu hình các loại mục công việc mặc định và thuộc tính tùy chỉnh cho các dự án được tạo từ mẫu này.",
+          "select_group": "Chọn một nhóm",
           "state_groups": {
             "backlog": "Tồn đọng",
             "cancelled": "Đã hủy",
@@ -485,6 +492,12 @@
           },
           "uploaded": {
             "message": "Mẫu \"{name}\" đã được tải lên từ tệp."
+          },
+          "apply_groups_skipped": {
+            "message": "Dự án đã được tạo, nhưng {count, plural, one {# nhóm của mẫu không còn tồn tại nên chưa được thêm} other {# nhóm của mẫu không còn tồn tại nên chưa được thêm}}."
+          },
+          "uploaded_groups_not_found": {
+            "message": "Mẫu \"{name}\" đã được tải lên, nhưng các nhóm sau không tồn tại trong không gian làm việc này nên đã bị bỏ qua: {groups}."
           }
         },
         "upload_invalid_file": "Vui lòng tải lên tệp JSON đã được tải xuống bằng nút “Tải xuống”.",

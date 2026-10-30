@@ -6,6 +6,7 @@
 
 import type { TProjectTemplate, TProjectTemplateCustomProperty, TProjectTemplatePayload } from "@plane/types";
 import type { TCustomPropertyTemplateField, TProjectTemplateFormFields } from "./project-template-form.types";
+import { buildTemplateGroupsPayload, mapTemplateGroupsFromPayload } from "@/helpers/project-template-groups";
 import {
   DEFAULT_FEATURE_TOGGLES,
   STATE_GROUP_DEFAULT_COLOR,
@@ -96,11 +97,13 @@ export const mapProjectTemplateToFormValues = (template: TProjectTemplate): TPro
       description: workItemType.description ?? "",
       customProperties: (workItemType.custom_properties ?? []).map(mapCustomPropertyFromPayload),
     })),
+    groups: mapTemplateGroupsFromPayload(payload.groups),
   };
 };
 
 export const buildProjectTemplatePayloadFromFormValues = (
-  values: TProjectTemplateFormFields
+  values: TProjectTemplateFormFields,
+  groupPaths: Map<string, string> = new Map()
 ): TProjectTemplatePayload => {
   const payload: TProjectTemplatePayload = {};
 
@@ -156,6 +159,8 @@ export const buildProjectTemplatePayloadFromFormValues = (
       color: isHexColor(label.color) ? label.color : undefined,
     }))
     .filter((label) => label.name.length > 0);
+
+  payload.groups = buildTemplateGroupsPayload(values.groups, groupPaths);
 
   return payload;
 };

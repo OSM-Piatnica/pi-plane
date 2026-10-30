@@ -418,7 +418,7 @@
     },
     "members_import": {
       "title": "Импорт участников из CSV",
-      "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
+      "description": "Загрузите CSV с колонками Email и Role (5=Guest, 15=Member, 20=Admin) или Group и Role (5=Guest, 15=Member), чтобы добавить сразу всю группу. Вложенную группу записывайте как Parent / Child. В одной строке укажите либо Email, либо Group. Пользователи уже должны быть участниками рабочего пространства, а группы должны существовать.",
       "download_sample": "Скачать пример CSV",
       "dropzone": {
         "active": "Перетащите CSV файл сюда",
@@ -443,16 +443,16 @@
         "message": {
           "success": "Успешно импортировано {count} участник{plural} в проект.",
           "no_imports": "Из CSV не было импортировано новых участников.",
-          "groups_success": "Linked {count} group{plural} to the project."
+          "groups_success": "Групп, связанных с проектом: {count}."
         },
         "stats": {
           "added": "Добавлено",
           "reactivated": "Повторно активированы",
           "already_members": "Уже участники",
           "skipped": "Пропущено",
-          "groups_added": "Groups added",
-          "groups_updated": "Groups updated",
-          "groups_skipped": "Groups skipped"
+          "groups_added": "Группы добавлены",
+          "groups_updated": "Группы обновлены",
+          "groups_skipped": "Группы пропущены"
         },
         "download_errors": "Скачать сведения о пропущенных"
       },
@@ -466,23 +466,23 @@
           "message": "Что-то пошло не так."
         }
       },
-      "import_button": "Import from CSV",
+      "import_button": "Импорт из CSV",
       "parse_errors": {
-        "empty": "The file is empty.",
-        "missing_columns": "The file needs a Role column and an Email or a Group column.",
-        "no_rows": "The file has a header but no rows."
+        "empty": "Файл пуст.",
+        "missing_columns": "В файле должна быть колонка Role и колонка Email или Group.",
+        "no_rows": "В файле есть заголовок, но нет строк."
       },
       "skip_reasons": {
-        "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
-        "both_email_and_group": "A row has either an Email or a Group, not both.",
-        "missing_value": "The row has neither an Email nor a Group.",
-        "not_workspace_member": "This person is not an active member of the workspace.",
-        "role_above_workspace_role": "The role is higher than the person's workspace role.",
-        "role_below_workspace_role": "The role is lower than the person's workspace role.",
-        "unknown_group": "No group with this name exists in the workspace.",
-        "ambiguous_group": "Several groups have this name, write its path as Parent / Child.",
-        "group_admin_role": "Groups cannot be project admins.",
-        "group_already_linked": "The group already is a member of the project with this role."
+        "invalid_role": "Роль должна быть 5 (Guest), 15 (Member) или 20 (Admin).",
+        "both_email_and_group": "В строке должен быть указан либо Email, либо Group, но не оба сразу.",
+        "missing_value": "В строке нет ни Email, ни Group.",
+        "not_workspace_member": "Этот человек не является активным участником рабочего пространства.",
+        "role_above_workspace_role": "Роль выше, чем роль человека в рабочем пространстве.",
+        "role_below_workspace_role": "Роль ниже, чем роль человека в рабочем пространстве.",
+        "unknown_group": "В рабочем пространстве нет группы с таким названием.",
+        "ambiguous_group": "Несколько групп имеют такое название, укажите путь в виде Parent / Child.",
+        "group_admin_role": "Группы не могут быть администраторами проекта.",
+        "group_already_linked": "Группа уже является участником проекта с этой ролью."
       }
     }
   },
@@ -746,8 +746,8 @@
       "clear_all": "Снять все",
       "description": "Создает новый проект с теми же настройками. Страницы и вебхуки не копируются; рабочие элементы — только если вы выберете это ниже.",
       "error": "Не удалось дублировать проект. Попробуйте еще раз.",
-      "groups": "Groups as members",
-      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
+      "groups": "Группы как участники",
+      "groups_hint": "Привязывает те же группы с теми же ролями, поэтому люди из них становятся участниками копии.",
       "identifier_placeholder": "Создается, если пусто",
       "properties": {
         "assignees": "Исполнители",

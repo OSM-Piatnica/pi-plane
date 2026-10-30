@@ -418,7 +418,7 @@
     },
     "members_import": {
       "title": "Mitglieder aus CSV importieren",
-      "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
+      "description": "Laden Sie eine CSV-Datei mit den Spalten Email und Role (5=Gast, 15=Mitglied, 20=Administrator) oder Group und Role (5=Gast, 15=Mitglied) hoch, um eine ganze Gruppe hinzuzufügen. Schreiben Sie eine verschachtelte Gruppe als Parent / Child. Verwenden Sie in jeder Zeile entweder Email oder Group. Benutzer müssen bereits Mitglieder des Arbeitsbereichs sein, und Gruppen müssen bereits existieren.",
       "download_sample": "Beispiel-CSV herunterladen",
       "dropzone": {
         "active": "CSV-Datei hier ablegen",
@@ -443,16 +443,16 @@
         "message": {
           "success": "{count} Mitglied{plural} erfolgreich ins Projekt importiert.",
           "no_imports": "Aus der CSV-Datei wurden keine neuen Mitglieder importiert.",
-          "groups_success": "Linked {count} group{plural} to the project."
+          "groups_success": "{count} {plural, select, s {Gruppen} other {Gruppe}} mit dem Projekt verknüpft."
         },
         "stats": {
           "added": "Hinzugefügt",
           "reactivated": "Reaktiviert",
           "already_members": "Bereits Mitglieder",
           "skipped": "Übersprungen",
-          "groups_added": "Groups added",
-          "groups_updated": "Groups updated",
-          "groups_skipped": "Groups skipped"
+          "groups_added": "Hinzugefügte Gruppen",
+          "groups_updated": "Aktualisierte Gruppen",
+          "groups_skipped": "Übersprungene Gruppen"
         },
         "download_errors": "Übersprungene Details herunterladen"
       },
@@ -466,23 +466,23 @@
           "message": "Etwas ist schiefgelaufen."
         }
       },
-      "import_button": "Import from CSV",
+      "import_button": "Aus CSV importieren",
       "parse_errors": {
-        "empty": "The file is empty.",
-        "missing_columns": "The file needs a Role column and an Email or a Group column.",
-        "no_rows": "The file has a header but no rows."
+        "empty": "Die Datei ist leer.",
+        "missing_columns": "Die Datei benötigt eine Spalte Role sowie eine Spalte Email oder Group.",
+        "no_rows": "Die Datei hat eine Kopfzeile, aber keine Zeilen."
       },
       "skip_reasons": {
-        "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
-        "both_email_and_group": "A row has either an Email or a Group, not both.",
-        "missing_value": "The row has neither an Email nor a Group.",
-        "not_workspace_member": "This person is not an active member of the workspace.",
-        "role_above_workspace_role": "The role is higher than the person's workspace role.",
-        "role_below_workspace_role": "The role is lower than the person's workspace role.",
-        "unknown_group": "No group with this name exists in the workspace.",
-        "ambiguous_group": "Several groups have this name, write its path as Parent / Child.",
-        "group_admin_role": "Groups cannot be project admins.",
-        "group_already_linked": "The group already is a member of the project with this role."
+        "invalid_role": "Die Rolle muss 5 (Gast), 15 (Mitglied) oder 20 (Administrator) sein.",
+        "both_email_and_group": "Eine Zeile darf entweder Email oder Group enthalten, nicht beides.",
+        "missing_value": "Die Zeile enthält weder Email noch Group.",
+        "not_workspace_member": "Diese Person ist kein aktives Mitglied des Arbeitsbereichs.",
+        "role_above_workspace_role": "Die Rolle ist höher als die Rolle der Person im Arbeitsbereich.",
+        "role_below_workspace_role": "Die Rolle ist niedriger als die Rolle der Person im Arbeitsbereich.",
+        "unknown_group": "Im Arbeitsbereich existiert keine Gruppe mit diesem Namen.",
+        "ambiguous_group": "Mehrere Gruppen haben diesen Namen, schreiben Sie den Pfad als Parent / Child.",
+        "group_admin_role": "Gruppen können keine Projektadministratoren sein.",
+        "group_already_linked": "Die Gruppe ist bereits mit dieser Rolle Mitglied des Projekts."
       }
     }
   },
@@ -746,8 +746,8 @@
       "clear_all": "Alle abwählen",
       "description": "Erstellt ein neues Projekt mit denselben Einstellungen. Seiten und Webhooks werden nicht kopiert; Arbeitselemente nur, wenn Sie es unten wählen.",
       "error": "Das Projekt konnte nicht dupliziert werden. Bitte versuchen Sie es erneut.",
-      "groups": "Groups as members",
-      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
+      "groups": "Gruppen als Mitglieder",
+      "groups_hint": "Verknüpft dieselben Gruppen mit denselben Rollen, sodass die Personen darin Mitglieder der Kopie werden.",
       "identifier_placeholder": "Wird erzeugt, wenn leer",
       "properties": {
         "assignees": "Zugewiesene",

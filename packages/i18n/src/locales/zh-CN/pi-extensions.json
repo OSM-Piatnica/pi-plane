@@ -276,7 +276,7 @@
             "clear_all": "清除全部",
             "cycles": "周期",
             "dates": "日期和持续时间",
-            "group_assignees": "Group assignees",
+            "group_assignees": "负责用户组",
             "heading": "要导入的内容",
             "labels": "标签",
             "modules": "模块",
@@ -308,6 +308,7 @@
         "description": "创建可复用的项目配置，包括默认属性、已启用功能、状态、标签和工作项类型。",
         "edit_template": "编辑模板",
         "form": {
+          "add_group": "添加用户组",
           "add_label": "添加标签",
           "add_state": "添加状态",
           "custom_property": {
@@ -380,6 +381,8 @@
               "label": "工作项类型"
             }
           },
+          "group_missing": "用户组已不存在",
+          "groups_empty": "暂无用户组。",
           "identifier_invalid": "仅可使用字母和数字",
           "identifier_max_char": "标识符不能超过 5 个字符",
           "label_name_placeholder": "标签名称",
@@ -387,8 +390,11 @@
           "mark_default_state": "标记为默认状态",
           "modal_intro": "为模板命名，并为团队添加简短说明。然后配置默认项目值——与创建项目时使用的设置相同。",
           "name_required": "模板名称为必填项",
+          "no_groups_available": "没有可添加的用户组了",
           "section_features": "功能",
           "section_features_hint": "选择应用此模板时启用哪些可选的项目功能。",
+          "section_groups": "用户组作为成员",
+          "section_groups_hint": "这些用户组将以此处指定的角色成为通过此模板创建的每个项目的成员。用户组中的所有人（包括其子组）都会加入项目。创建项目的人仍是项目管理员。",
           "section_labels": "标签",
           "section_labels_hint": "为新项目定义默认标签。",
           "section_properties": "默认项目属性",
@@ -397,6 +403,7 @@
           "section_template": "模板",
           "section_work_item_types": "工作项类型",
           "section_work_item_types_hint": "为通过此模板创建的项目配置默认工作项类型和自定义属性。",
+          "select_group": "选择用户组",
           "state_groups": {
             "backlog": "待办",
             "cancelled": "已取消",
@@ -485,6 +492,12 @@
           },
           "uploaded": {
             "message": "已从文件上传模板“{name}”。"
+          },
+          "apply_groups_skipped": {
+            "message": "项目已创建，但模板中的 {count, plural, one {# 个用户组已不存在，未被添加} other {# 个用户组已不存在，未被添加}}。"
+          },
+          "uploaded_groups_not_found": {
+            "message": "模板“{name}”已上传，但此工作区中不存在以下用户组，已被忽略：{groups}。"
           }
         },
         "upload_invalid_file": "请上传通过“下载”按钮下载的 JSON 文件。",

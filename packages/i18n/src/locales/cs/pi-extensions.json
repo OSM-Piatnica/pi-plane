@@ -276,7 +276,7 @@
             "clear_all": "Vymazat vše",
             "cycles": "Cykly",
             "dates": "Data a doba trvání",
-            "group_assignees": "Group assignees",
+            "group_assignees": "Přiřazené skupiny",
             "heading": "Co importovat",
             "labels": "Štítky",
             "modules": "Moduly",
@@ -308,6 +308,7 @@
         "description": "Vytvářejte opakovaně použitelná nastavení projektu s výchozími vlastnostmi, povolenými funkcemi, stavy, štítky a typy pracovních položek.",
         "edit_template": "Upravit šablonu",
         "form": {
+          "add_group": "Přidat skupinu",
           "add_label": "Přidat štítek",
           "add_state": "Přidat stav",
           "custom_property": {
@@ -380,6 +381,8 @@
               "label": "Typy pracovních položek"
             }
           },
+          "group_missing": "Skupina již neexistuje",
+          "groups_empty": "Zatím žádné skupiny.",
           "identifier_invalid": "Použijte pouze písmena a číslice",
           "identifier_max_char": "Identifikátor může mít nejvýše 5 znaků",
           "label_name_placeholder": "Název štítku",
@@ -387,8 +390,11 @@
           "mark_default_state": "Označit jako výchozí stav",
           "modal_intro": "Pojmenujte šablonu a přidejte krátkou poznámku pro svůj tým. Poté nastavte výchozí hodnoty projektu — stejný druh nastavení, jaký používáte při vytváření projektu.",
           "name_required": "Název šablony je povinný",
+          "no_groups_available": "Žádné další skupiny k přidání",
           "section_features": "Funkce",
           "section_features_hint": "Vyberte, které volitelné funkce projektu budou povoleny při použití této šablony.",
+          "section_groups": "Skupiny jako členové",
+          "section_groups_hint": "Skupiny, které se stanou členy každého projektu vytvořeného z této šablony, s rolí zadanou zde. Každý člen skupiny, včetně jejích podskupin, se k projektu připojí. Osoba, která projekt vytváří, zůstává jeho správcem.",
           "section_labels": "Štítky",
           "section_labels_hint": "Definujte výchozí štítky pro nové projekty.",
           "section_properties": "Výchozí vlastnosti projektu",
@@ -397,6 +403,7 @@
           "section_template": "Šablona",
           "section_work_item_types": "Typy pracovních položek",
           "section_work_item_types_hint": "Nastavte výchozí typy pracovních položek a vlastní vlastnosti pro projekty vytvořené z této šablony.",
+          "select_group": "Vyberte skupinu",
           "state_groups": {
             "backlog": "Backlog",
             "cancelled": "Zrušeno",
@@ -485,6 +492,12 @@
           },
           "uploaded": {
             "message": "Šablona \"{name}\" byla nahrána ze souboru."
+          },
+          "apply_groups_skipped": {
+            "message": "Projekt byl vytvořen, ale {count, plural, one {# skupina šablony již neexistuje a nebyla přidána} few {# skupiny šablony již neexistují a nebyly přidány} many {# skupiny šablony již neexistují a nebyly přidány} other {# skupin šablony již neexistuje a nebylo přidáno}}."
+          },
+          "uploaded_groups_not_found": {
+            "message": "Šablona \"{name}\" byla nahrána, ale tyto skupiny v tomto pracovním prostoru neexistují a byly vynechány: {groups}."
           }
         },
         "upload_invalid_file": "Nahrajte prosím soubor JSON stažený pomocí tlačítka „Stáhnout“.",

@@ -276,7 +276,7 @@
             "clear_all": "Pulisci tutto",
             "cycles": "Cicli",
             "dates": "Date e durata",
-            "group_assignees": "Group assignees",
+            "group_assignees": "Gruppi assegnatari",
             "heading": "Cosa importare",
             "labels": "Etichette",
             "modules": "Moduli",
@@ -308,6 +308,7 @@
         "description": "Crea configurazioni di progetto riutilizzabili con proprietà predefinite, funzionalità abilitate, stati, etichette e tipi di elemento di lavoro.",
         "edit_template": "Modifica modello",
         "form": {
+          "add_group": "Aggiungi gruppo",
           "add_label": "Aggiungi etichetta",
           "add_state": "Aggiungi stato",
           "custom_property": {
@@ -380,6 +381,8 @@
               "label": "Tipi di elemento di lavoro"
             }
           },
+          "group_missing": "Il gruppo non esiste più",
+          "groups_empty": "Ancora nessun gruppo.",
           "identifier_invalid": "Usa solo lettere e numeri",
           "identifier_max_char": "L'identificativo deve contenere al massimo 5 caratteri",
           "label_name_placeholder": "Nome etichetta",
@@ -387,8 +390,11 @@
           "mark_default_state": "Imposta come stato predefinito",
           "modal_intro": "Assegna un nome al modello e aggiungi una breve nota per il tuo team. Poi configura i valori predefiniti del progetto: le stesse impostazioni che usi quando crei un progetto.",
           "name_required": "Il nome del modello è obbligatorio",
+          "no_groups_available": "Nessun altro gruppo da aggiungere",
           "section_features": "Funzionalità",
           "section_features_hint": "Scegli quali funzionalità opzionali del progetto sono abilitate quando questo modello viene applicato.",
+          "section_groups": "Gruppi come membri",
+          "section_groups_hint": "Gruppi che diventano membri di ogni progetto creato da questo modello, con il ruolo indicato qui. Tutte le persone di un gruppo, compresi i suoi sottogruppi, entrano nel progetto. La persona che crea il progetto ne resta l'amministratore.",
           "section_labels": "Etichette",
           "section_labels_hint": "Definisci le etichette predefinite per i nuovi progetti.",
           "section_properties": "Proprietà predefinite del progetto",
@@ -397,6 +403,7 @@
           "section_template": "Modello",
           "section_work_item_types": "Tipi di elemento di lavoro",
           "section_work_item_types_hint": "Configura i tipi di elemento di lavoro predefiniti e le proprietà personalizzate per i progetti creati da questo modello.",
+          "select_group": "Selezioni un gruppo",
           "state_groups": {
             "backlog": "Backlog",
             "cancelled": "Annullato",
@@ -485,6 +492,12 @@
           },
           "uploaded": {
             "message": "Il modello \"{name}\" è stato caricato dal file."
+          },
+          "apply_groups_skipped": {
+            "message": "Il progetto è stato creato, ma {count, plural, one {# gruppo del modello non esiste più e non è stato aggiunto} many {# gruppi del modello non esistono più e non sono stati aggiunti} other {# gruppi del modello non esistono più e non sono stati aggiunti}}."
+          },
+          "uploaded_groups_not_found": {
+            "message": "Il modello \"{name}\" è stato caricato, ma questi gruppi non esistono in questo spazio di lavoro e sono stati esclusi: {groups}."
           }
         },
         "upload_invalid_file": "Carica un file JSON scaricato con il pulsante “Scarica”.",

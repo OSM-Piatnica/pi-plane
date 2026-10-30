@@ -276,7 +276,7 @@
             "clear_all": "Tout effacer",
             "cycles": "Cycles",
             "dates": "Dates et durée",
-            "group_assignees": "Group assignees",
+            "group_assignees": "Groupes assignés",
             "heading": "Quoi importer",
             "labels": "Étiquettes",
             "modules": "Modules",
@@ -308,6 +308,7 @@
         "description": "Créez des configurations de projet réutilisables avec des propriétés par défaut, des fonctionnalités activées, des états, des étiquettes et des types d'éléments de travail.",
         "edit_template": "Modifier le modèle",
         "form": {
+          "add_group": "Ajouter un groupe",
           "add_label": "Ajouter une étiquette",
           "add_state": "Ajouter un état",
           "custom_property": {
@@ -380,6 +381,8 @@
               "label": "Types d'éléments de travail"
             }
           },
+          "group_missing": "Le groupe n’existe plus",
+          "groups_empty": "Aucun groupe pour le moment.",
           "identifier_invalid": "Utilisez uniquement des lettres et des chiffres",
           "identifier_max_char": "L'identifiant doit comporter au maximum 5 caractères",
           "label_name_placeholder": "Nom de l'étiquette",
@@ -387,8 +390,11 @@
           "mark_default_state": "Marquer comme état par défaut",
           "modal_intro": "Nommez le modèle et ajoutez une courte note pour votre équipe. Configurez ensuite les valeurs par défaut du projet — le même type de paramètres que vous utilisez lors de la création d'un projet.",
           "name_required": "Le nom du modèle est requis",
+          "no_groups_available": "Aucun groupe restant à ajouter",
           "section_features": "Fonctionnalités",
           "section_features_hint": "Choisissez les fonctionnalités optionnelles du projet activées lors de l'application de ce modèle.",
+          "section_groups": "Groupes comme membres",
+          "section_groups_hint": "Groupes qui deviennent membres de chaque projet créé à partir de ce modèle, avec le rôle indiqué ici. Toutes les personnes d’un groupe, y compris celles de ses sous-groupes, rejoignent le projet. La personne qui crée le projet en reste l’administrateur.",
           "section_labels": "Étiquettes",
           "section_labels_hint": "Définissez les étiquettes par défaut pour les nouveaux projets.",
           "section_properties": "Propriétés par défaut du projet",
@@ -397,6 +403,7 @@
           "section_template": "Modèle",
           "section_work_item_types": "Types d'éléments de travail",
           "section_work_item_types_hint": "Configurez les types d'éléments de travail par défaut et les propriétés personnalisées pour les projets créés à partir de ce modèle.",
+          "select_group": "Sélectionner un groupe",
           "state_groups": {
             "backlog": "Backlog",
             "cancelled": "Annulé",
@@ -485,6 +492,12 @@
           },
           "uploaded": {
             "message": "Le modèle \"{name}\" a été téléversé depuis le fichier."
+          },
+          "apply_groups_skipped": {
+            "message": "Le projet a été créé, mais {count, plural, one {# groupe du modèle n’existe plus et n’a pas été ajouté} many {# groupes du modèle n’existent plus et n’ont pas été ajoutés} other {# groupes du modèle n’existent plus et n’ont pas été ajoutés}}."
+          },
+          "uploaded_groups_not_found": {
+            "message": "Le modèle \"{name}\" a été téléversé, mais ces groupes n’existent pas dans cet espace de travail et ont été omis : {groups}."
           }
         },
         "upload_invalid_file": "Veuillez téléverser un fichier JSON téléchargé avec le bouton « Télécharger ».",

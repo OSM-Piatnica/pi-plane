@@ -276,7 +276,7 @@
             "clear_all": "Borrar todo",
             "cycles": "Ciclos",
             "dates": "Fechas y duración",
-            "group_assignees": "Group assignees",
+            "group_assignees": "Grupos asignados",
             "heading": "Qué importar",
             "labels": "Etiquetas",
             "modules": "Módulos",
@@ -308,6 +308,7 @@
         "description": "Crea configuraciones de proyecto reutilizables con propiedades predeterminadas, funciones habilitadas, estados, etiquetas y tipos de elementos de trabajo.",
         "edit_template": "Editar plantilla",
         "form": {
+          "add_group": "Agregar grupo",
           "add_label": "Agregar etiqueta",
           "add_state": "Agregar estado",
           "custom_property": {
@@ -380,6 +381,8 @@
               "label": "Tipos de elementos de trabajo"
             }
           },
+          "group_missing": "El grupo ya no existe",
+          "groups_empty": "Aún no hay grupos.",
           "identifier_invalid": "Usa solo letras y números",
           "identifier_max_char": "El identificador debe tener 5 caracteres o menos",
           "label_name_placeholder": "Nombre de la etiqueta",
@@ -387,8 +390,11 @@
           "mark_default_state": "Marcar como estado predeterminado",
           "modal_intro": "Nombra la plantilla y añade una breve nota para tu equipo. Luego configura los valores predeterminados del proyecto, el mismo tipo de configuración que usas al crear un proyecto.",
           "name_required": "El nombre de la plantilla es obligatorio",
+          "no_groups_available": "No quedan grupos por agregar",
           "section_features": "Funciones",
           "section_features_hint": "Elige qué funciones opcionales del proyecto están habilitadas al aplicar esta plantilla.",
+          "section_groups": "Grupos como miembros",
+          "section_groups_hint": "Grupos que se convierten en miembros de todos los proyectos creados a partir de esta plantilla, con el rol indicado aquí. Todas las personas de un grupo, incluidos sus subgrupos, se unen al proyecto. La persona que crea el proyecto sigue siendo su administradora.",
           "section_labels": "Etiquetas",
           "section_labels_hint": "Define las etiquetas predeterminadas para los nuevos proyectos.",
           "section_properties": "Propiedades predeterminadas del proyecto",
@@ -397,6 +403,7 @@
           "section_template": "Plantilla",
           "section_work_item_types": "Tipos de elementos de trabajo",
           "section_work_item_types_hint": "Configura los tipos de elementos de trabajo predeterminados y las propiedades personalizadas para los proyectos creados a partir de esta plantilla.",
+          "select_group": "Seleccione un grupo",
           "state_groups": {
             "backlog": "Pendientes",
             "cancelled": "Cancelado",
@@ -485,6 +492,12 @@
           },
           "uploaded": {
             "message": "La plantilla \"{name}\" se subió desde el archivo."
+          },
+          "apply_groups_skipped": {
+            "message": "El proyecto se creó, pero {count, plural, one {# grupo de la plantilla ya no existe y no se agregó} other {# grupos de la plantilla ya no existen y no se agregaron}}."
+          },
+          "uploaded_groups_not_found": {
+            "message": "La plantilla \"{name}\" se subió, pero estos grupos no existen en este espacio de trabajo y se omitieron: {groups}."
           }
         },
         "upload_invalid_file": "Sube un archivo JSON descargado con el botón “Descargar”.",

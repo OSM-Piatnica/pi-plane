@@ -313,7 +313,7 @@ def _resolve_groups(
             if is_ambiguous(text, groups_by_name):
                 warnings.append(
                     f'Row {row_number}: group "{text}" matches more than one group, write its full path '
-                    '("Parent / Child"), skipped'
+                    '("Parent / Child", a "/" inside a name written "\\/"), skipped'
                 )
             else:
                 warnings.append(f'Row {row_number}: unknown group "{text}", skipped')

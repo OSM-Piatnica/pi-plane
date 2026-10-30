@@ -23,6 +23,7 @@ from plane.app.views import (
     ProjectArchiveUnarchiveEndpoint,
     ProjectMemberPreferenceEndpoint,
     WorkspaceProjectIssueTypeSeedEndpoint,
+    WorkspaceProjectTemplateGroupsEndpoint,
     ProjectIssueTypeViewSet,
     ProjectIssueTypeBulkAssignEndpoint,
     ProjectIssueTypePropertiesEndpoint,
@@ -198,6 +199,11 @@ urlpatterns = [
         "workspaces/<str:slug>/projects/<uuid:project_id>/issue-setup/from-project-template/",
         WorkspaceProjectIssueTypeSeedEndpoint.as_view(),
         name="project-issue-setup-from-template",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/groups/from-project-template/",
+        WorkspaceProjectTemplateGroupsEndpoint.as_view(),
+        name="project-groups-from-template",
     ),
     path(
         "workspaces/<str:slug>/projects/<uuid:project_id>/issue-types/",

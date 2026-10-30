@@ -276,7 +276,7 @@
             "clear_all": "Limpar tudo",
             "cycles": "Ciclos",
             "dates": "Datas e duração",
-            "group_assignees": "Group assignees",
+            "group_assignees": "Grupos atribuídos",
             "heading": "O que importar",
             "labels": "Etiquetas",
             "modules": "Módulos",
@@ -308,6 +308,7 @@
         "description": "Crie configurações de projeto reutilizáveis com propriedades padrão, recursos habilitados, estados, etiquetas e tipos de item de trabalho.",
         "edit_template": "Editar modelo",
         "form": {
+          "add_group": "Adicionar grupo",
           "add_label": "Adicionar etiqueta",
           "add_state": "Adicionar estado",
           "custom_property": {
@@ -380,6 +381,8 @@
               "label": "Tipos de item de trabalho"
             }
           },
+          "group_missing": "O grupo não existe mais",
+          "groups_empty": "Ainda não há grupos.",
           "identifier_invalid": "Use apenas letras e números",
           "identifier_max_char": "O identificador deve ter no máximo 5 caracteres",
           "label_name_placeholder": "Nome da etiqueta",
@@ -387,8 +390,11 @@
           "mark_default_state": "Marcar como estado padrão",
           "modal_intro": "Dê um nome ao modelo e adicione uma breve observação para sua equipe. Em seguida, configure os valores padrão do projeto—o mesmo tipo de configuração que você usa ao criar um projeto.",
           "name_required": "O nome do modelo é obrigatório",
+          "no_groups_available": "Não há mais grupos para adicionar",
           "section_features": "Recursos",
           "section_features_hint": "Escolha quais recursos opcionais do projeto ficam habilitados quando este modelo é aplicado.",
+          "section_groups": "Grupos como membros",
+          "section_groups_hint": "Grupos que se tornam membros de todos os projetos criados a partir deste modelo, com a função definida aqui. Todas as pessoas de um grupo, incluindo os subgrupos, entram no projeto. Quem cria o projeto continua sendo o administrador dele.",
           "section_labels": "Etiquetas",
           "section_labels_hint": "Defina etiquetas padrão para novos projetos.",
           "section_properties": "Propriedades padrão do projeto",
@@ -397,6 +403,7 @@
           "section_template": "Modelo",
           "section_work_item_types": "Tipos de item de trabalho",
           "section_work_item_types_hint": "Configure os tipos de item de trabalho padrão e as propriedades personalizadas para projetos criados a partir deste modelo.",
+          "select_group": "Selecione um grupo",
           "state_groups": {
             "backlog": "Backlog",
             "cancelled": "Cancelado",
@@ -485,6 +492,12 @@
           },
           "uploaded": {
             "message": "O modelo \"{name}\" foi enviado a partir do arquivo."
+          },
+          "apply_groups_skipped": {
+            "message": "O projeto foi criado, mas {count, plural, one {# grupo do modelo não existe mais e não foi adicionado} many {# de grupos do modelo não existem mais e não foram adicionados} other {# grupos do modelo não existem mais e não foram adicionados}}."
+          },
+          "uploaded_groups_not_found": {
+            "message": "O modelo \"{name}\" foi enviado, mas estes grupos não existem neste espaço de trabalho e ficaram de fora: {groups}."
           }
         },
         "upload_invalid_file": "Envie um arquivo JSON baixado com o botão “Baixar”.",
