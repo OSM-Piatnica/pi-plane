@@ -159,6 +159,7 @@
             "estimate": "Ước tính",
             "is_draft": "Cờ bản nháp",
             "assignees": "Người được giao",
+            "group_assignees": "Group assignees",
             "subscribers": "Người đăng ký",
             "created_by_name": "Người tạo",
             "start_date": "Ngày bắt đầu",

@@ -18,6 +18,7 @@ from plane.db.models import (
     Issue,
     IssueActivity,
     IssueAssignee,
+    IssueGroupAssignee,
     IssueLabel,
     IssuePropertyValue,
     IssueRelation,
@@ -34,9 +35,11 @@ from plane.db.models import (
     WorkspaceMember,
 )
 from plane.db.models.project import ROLE
+from plane.utils.group_paths import find_group, index_groups
 from plane.utils.html_processor import strip_tags
 from plane.utils.timezone_converter import convert_to_utc
 from plane.utils.import_limits import get_import_max_work_items
+from plane.utils.project_groups import assignable_group_ids
 from plane.utils.issue_relation_constraints import MAX_LAG_DAYS, TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
 from plane.utils.issue_relation_types import ALL_RELATION_NAMES, MIRRORED_RELATIONS, SYMMETRIC_RELATIONS
@@ -87,6 +90,7 @@ class WorkItemImportOptions:
     """
 
     assignees: bool = True
+    group_assignees: bool = True
     subscribers: bool = True
     relations: bool = True
     parents: bool = True
@@ -284,6 +288,41 @@ def _resolve_people(
                 "and cannot be assigned, skipped"
             )
     return kept
+
+
+def _resolve_groups(
+    *,
+    value,
+    groups_by_path: dict,
+    groups_by_name: dict,
+    assignable_ids: set,
+    warnings: list[str],
+    row_number: int,
+) -> list:
+    """
+    Resolve a group column to group ids. Groups are never created: a name that matches no group is
+    reported, and so is a group the project cannot assign (only its own groups and the ones below them can be).
+    """
+    resolved = []
+    for entry in _coerce_list(value):
+        text = str(entry).strip()
+        if not text:
+            continue
+        group_id = find_group(text, groups_by_path, groups_by_name)
+        if group_id is None:
+            key = "/".join(part.strip() for part in text.split("/")).lower()
+            if key in groups_by_name:
+                warnings.append(
+                    f'Row {row_number}: group "{text}" matches more than one group, write its full path '
+                    '("Parent / Child"), skipped'
+                )
+            else:
+                warnings.append(f'Row {row_number}: unknown group "{text}", skipped')
+        elif group_id not in assignable_ids:
+            warnings.append(f'Row {row_number}: group "{text}" is not a member of the project, skipped')
+        elif group_id not in resolved:
+            resolved.append(group_id)
+    return resolved
 
 
 def _member_values_to_ids(
@@ -556,6 +595,13 @@ def import_work_items_into_project(
     project_member_keys = {str(member_id) for member_id in project_member_ids}
     assignable_member_keys = {str(member_id) for member_id in assignable_member_ids}
 
+    groups_by_path: dict = {}
+    groups_by_name: dict = {}
+    assignable_groups: set = set()
+    if options.group_assignees:
+        groups_by_path, groups_by_name = index_groups(project.workspace_id)
+        assignable_groups = assignable_group_ids(project.id, project.workspace_id)
+
     type_properties_by_type: dict = {}
     for issue_type in types_by_name.values():
         props = {
@@ -690,6 +736,19 @@ def import_work_items_into_project(
                 row.get("assignee_emails") or row.get("assignee_names") or row.get("assignees"),
             )
 
+        group_assignee_ids = []
+        if options.group_assignees:
+            group_assignee_ids = _resolve_groups(
+                value=row.get("group_assignees"),
+                groups_by_path=groups_by_path,
+                groups_by_name=groups_by_name,
+                assignable_ids=assignable_groups,
+                warnings=warnings,
+                row_number=index + 1,
+            )
+        else:
+            _note_skipped("group assignee", row.get("group_assignees"))
+
         subscriber_ids = []
         if options.subscribers:
             subscriber_ids = _resolve_people(
@@ -794,6 +853,7 @@ def import_work_items_into_project(
                 "cycle_start_date": cycle_start,
                 "cycle_end_date": cycle_end,
                 "assignee_ids": assignee_ids,
+                "group_assignee_ids": group_assignee_ids,
                 "subscriber_ids": subscriber_ids,
                 "relations": raw_relations,
                 "custom_properties": custom_properties,
@@ -911,6 +971,7 @@ def import_work_items_into_project(
 
         label_rows = []
         assignee_rows = []
+        group_assignee_rows = []
         subscriber_rows = []
         module_rows = []
         cycle_rows = []
@@ -933,6 +994,15 @@ def import_work_items_into_project(
                     IssueAssignee(
                         issue=issue,
                         assignee_id=assignee_id,
+                        project=project,
+                        workspace=project.workspace,
+                    )
+                )
+            for group_id in item["group_assignee_ids"]:
+                group_assignee_rows.append(
+                    IssueGroupAssignee(
+                        issue=issue,
+                        group_id=group_id,
                         project=project,
                         workspace=project.workspace,
                     )
@@ -1068,6 +1138,8 @@ def import_work_items_into_project(
             IssueLabel.objects.bulk_create(label_rows, batch_size=500, ignore_conflicts=True)
         if assignee_rows:
             IssueAssignee.objects.bulk_create(assignee_rows, batch_size=500, ignore_conflicts=True)
+        if group_assignee_rows:
+            IssueGroupAssignee.objects.bulk_create(group_assignee_rows, batch_size=500, ignore_conflicts=True)
         if subscriber_rows:
             IssueSubscriber.objects.bulk_create(subscriber_rows, batch_size=500, ignore_conflicts=True)
         if module_rows:

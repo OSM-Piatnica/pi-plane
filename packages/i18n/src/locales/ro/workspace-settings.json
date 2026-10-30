@@ -159,6 +159,7 @@
             "estimate": "Estimare",
             "is_draft": "Indicator de ciornă",
             "assignees": "Persoane atribuite",
+            "group_assignees": "Group assignees",
             "subscribers": "Abonați",
             "created_by_name": "Creat de",
             "start_date": "Data de început",

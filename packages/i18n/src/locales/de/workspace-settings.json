@@ -159,6 +159,7 @@
             "estimate": "Schätzung",
             "is_draft": "Entwurfskennzeichen",
             "assignees": "Zugewiesene",
+            "group_assignees": "Group assignees",
             "subscribers": "Abonnenten",
             "created_by_name": "Erstellt von",
             "start_date": "Startdatum",

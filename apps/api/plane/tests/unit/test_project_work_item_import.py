@@ -11,6 +11,7 @@ from plane.db.models import (
     CycleIssue,
     Issue,
     IssueAssignee,
+    IssueGroupAssignee,
     IssueLabel,
     IssuePropertyValue,
     IssueRelation,
@@ -22,10 +23,12 @@ from plane.db.models import (
     Module,
     ModuleIssue,
     Project,
+    ProjectGroup,
     ProjectIssueType,
     ProjectMember,
     State,
     User,
+    UserGroup,
     WorkspaceMember,
 )
 from plane.utils.project_work_item_import import (
@@ -1108,3 +1111,77 @@ class TestWorkItemImportOptions:
         )
 
         assert not [w for w in result["warnings"] if "asked to leave out" in w]
+
+
+@pytest.mark.django_db
+class TestGroupAssigneesImport:
+    @staticmethod
+    def _import(project, user, value, options=None):
+        warnings = []
+        result = import_work_items_into_project(
+            project=project,
+            user=user,
+            rows=[{"external_key": "G1", "name": "Grouped", "state": "Todo", "group_assignees": value}],
+            warnings=warnings,
+            options=options,
+        )
+        issue = Issue.objects.get(project=project, name="Grouped")
+        groups = set(IssueGroupAssignee.objects.filter(issue=issue).values_list("group__name", flat=True))
+        return groups, result["warnings"]
+
+    def test_assigns_project_groups_and_the_groups_below_by_name_or_path(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Groups", "GRP")
+        sales = UserGroup.objects.create(workspace=workspace, name="Sales")
+        UserGroup.objects.create(workspace=workspace, name="Poland", parent=sales)
+        ProjectGroup.objects.create(project=project, group=sales, role=15, workspace=workspace)
+
+        groups, warnings = self._import(project, create_user, ["sales", "SALES / poland"])
+
+        assert groups == {"Sales", "Poland"}
+        assert warnings == []
+
+    def test_plain_name_of_a_nested_group_works_when_unambiguous(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Groups", "GRQ")
+        sales = UserGroup.objects.create(workspace=workspace, name="Sales")
+        UserGroup.objects.create(workspace=workspace, name="Poland", parent=sales)
+        ProjectGroup.objects.create(project=project, group=sales, role=15, workspace=workspace)
+
+        groups, _ = self._import(project, create_user, "Poland")
+
+        assert groups == {"Poland"}
+
+    def test_groups_outside_the_project_and_unknown_ones_are_skipped_and_reported(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Groups", "GRR")
+        UserGroup.objects.create(workspace=workspace, name="Support")
+
+        groups, warnings = self._import(project, create_user, ["Support", "Nobody"])
+
+        assert groups == set()
+        assert any('"Support" is not a member of the project' in w for w in warnings)
+        assert any('unknown group "Nobody"' in w for w in warnings)
+        assert not UserGroup.objects.filter(name="Nobody").exists()
+
+    def test_ambiguous_plain_name_is_skipped(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Groups", "GRS")
+        a = UserGroup.objects.create(workspace=workspace, name="A")
+        b = UserGroup.objects.create(workspace=workspace, name="B")
+        UserGroup.objects.create(workspace=workspace, name="Team", parent=a)
+        UserGroup.objects.create(workspace=workspace, name="Team", parent=b)
+        ProjectGroup.objects.create(project=project, group=a, role=15, workspace=workspace)
+
+        groups, warnings = self._import(project, create_user, ["Team", "A / Team"])
+
+        assert groups == {"Team"}
+        assert any("matches more than one group" in w for w in warnings)
+
+    def test_option_off_leaves_groups_out(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Groups", "GRT")
+        sales = UserGroup.objects.create(workspace=workspace, name="Sales")
+        ProjectGroup.objects.create(project=project, group=sales, role=15, workspace=workspace)
+
+        groups, warnings = self._import(
+            project, create_user, ["Sales"], options=WorkItemImportOptions(group_assignees=False)
+        )
+
+        assert groups == set()
+        assert any("group assignee data" in w for w in warnings)

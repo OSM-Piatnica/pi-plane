@@ -159,6 +159,7 @@
             "estimate": "추정",
             "is_draft": "초안 표시",
             "assignees": "담당자",
+            "group_assignees": "Group assignees",
             "subscribers": "구독자",
             "created_by_name": "작성자",
             "start_date": "시작일",
