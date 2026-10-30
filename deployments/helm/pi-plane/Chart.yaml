@@ -7,7 +7,7 @@ description: Pi-Plane, a self-hosted work management tool (a fork of Plane Commu
 type: application
 # The chart version moves on its own; appVersion is the Pi-Plane release whose images are deployed by default.
 version: 0.1.0
-appVersion: "2.1.0"
+appVersion: "2.1.1"
 kubeVersion: ">=1.27.0-0"
 home: https://github.com/OSM-Piatnica/pi-plane
 sources:
