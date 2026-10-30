@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "Importovat členy z CSV",
-      "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
+      "description": "Nahrajte CSV se sloupci Email a Role (5=Host, 15=Člen, 20=Správce) nebo Group a Role (5=Host, 15=Člen), abyste přidali celou skupinu. Vnořenou skupinu zapište jako Parent / Child. Na každém řádku použijte buď Email, nebo Group. Uživatelé již musí být členy pracovního prostoru a skupiny již musí existovat.",
       "download_sample": "Stáhnout ukázkové CSV",
       "dropzone": {
         "active": "Přetáhněte CSV soubor sem",
@@ -422,16 +422,16 @@
         "message": {
           "success": "Úspěšně importováno {count} člen{plural} do projektu.",
           "no_imports": "Ze souboru CSV nebyli importováni žádní noví členové.",
-          "groups_success": "Linked {count} group{plural} to the project."
+          "groups_success": "Počet skupin propojených s projektem: {count}."
         },
         "stats": {
           "added": "Přidáno",
           "reactivated": "Znovu aktivováno",
           "already_members": "Již členové",
           "skipped": "Přeskočeno",
-          "groups_added": "Groups added",
-          "groups_updated": "Groups updated",
-          "groups_skipped": "Groups skipped"
+          "groups_added": "Přidané skupiny",
+          "groups_updated": "Aktualizované skupiny",
+          "groups_skipped": "Přeskočené skupiny"
         },
         "download_errors": "Stáhnout podrobnosti přeskočených"
       },
@@ -445,23 +445,23 @@
           "message": "Něco se pokazilo."
         }
       },
-      "import_button": "Import from CSV",
+      "import_button": "Importovat z CSV",
       "parse_errors": {
-        "empty": "The file is empty.",
-        "missing_columns": "The file needs a Role column and an Email or a Group column.",
-        "no_rows": "The file has a header but no rows."
+        "empty": "Soubor je prázdný.",
+        "missing_columns": "Soubor musí obsahovat sloupec Role a sloupec Email nebo Group.",
+        "no_rows": "Soubor má záhlaví, ale žádné řádky."
       },
       "skip_reasons": {
-        "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
-        "both_email_and_group": "A row has either an Email or a Group, not both.",
-        "missing_value": "The row has neither an Email nor a Group.",
-        "not_workspace_member": "This person is not an active member of the workspace.",
-        "role_above_workspace_role": "The role is higher than the person's workspace role.",
-        "role_below_workspace_role": "The role is lower than the person's workspace role.",
-        "unknown_group": "No group with this name exists in the workspace.",
-        "ambiguous_group": "Several groups have this name, write its path as Parent / Child.",
-        "group_admin_role": "Groups cannot be project admins.",
-        "group_already_linked": "The group already is a member of the project with this role."
+        "invalid_role": "Role musí být 5 (Host), 15 (Člen) nebo 20 (Správce).",
+        "both_email_and_group": "Řádek musí obsahovat buď Email, nebo Group, ne obojí.",
+        "missing_value": "Řádek neobsahuje ani Email, ani Group.",
+        "not_workspace_member": "Tato osoba není aktivním členem pracovního prostoru.",
+        "role_above_workspace_role": "Role je vyšší než role osoby v pracovním prostoru.",
+        "role_below_workspace_role": "Role je nižší než role osoby v pracovním prostoru.",
+        "unknown_group": "V pracovním prostoru neexistuje žádná skupina s tímto názvem.",
+        "ambiguous_group": "Více skupin má tento název, zapište jeho cestu jako Parent / Child.",
+        "group_admin_role": "Skupiny nemohou být správci projektu.",
+        "group_already_linked": "Skupina je již členem projektu s touto rolí."
       }
     }
   },
@@ -725,8 +725,8 @@
       "clear_all": "Zrušit výběr",
       "description": "Vytvoří nový projekt se stejným nastavením. Stránky a webhooky se nekopírují; pracovní položky jen pokud to zvolíte níže.",
       "error": "Projekt se nepodařilo duplikovat. Zkuste to prosím znovu.",
-      "groups": "Groups as members",
-      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
+      "groups": "Skupiny jako členové",
+      "groups_hint": "Propojí stejné skupiny se stejnými rolemi, takže se lidé v nich stanou členy kopie.",
       "identifier_placeholder": "Vytvoří se, pokud zůstane prázdné",
       "properties": {
         "assignees": "Přiřazení",

@@ -276,7 +276,7 @@
             "clear_all": "Limpar tudo",
             "cycles": "Ciclos",
             "dates": "Datas e duração",
-            "group_assignees": "Group assignees",
+            "group_assignees": "Grupos atribuídos",
             "heading": "O que importar",
             "labels": "Etiquetas",
             "modules": "Módulos",
@@ -308,7 +308,7 @@
         "description": "Crie configurações de projeto reutilizáveis com propriedades padrão, recursos ativados, estados, etiquetas e tipos de item de trabalho.",
         "edit_template": "Editar modelo",
         "form": {
-          "add_group": "Add group",
+          "add_group": "Adicionar grupo",
           "add_label": "Adicionar etiqueta",
           "add_state": "Adicionar estado",
           "custom_property": {
@@ -381,8 +381,8 @@
               "label": "Tipos de item de trabalho"
             }
           },
-          "group_missing": "Group no longer exists",
-          "groups_empty": "No groups yet.",
+          "group_missing": "O grupo já não existe",
+          "groups_empty": "Ainda não há grupos.",
           "identifier_invalid": "Use apenas letras e números",
           "identifier_max_char": "O identificador deve ter no máximo 5 caracteres",
           "label_name_placeholder": "Nome da etiqueta",
@@ -390,11 +390,11 @@
           "mark_default_state": "Marcar como estado padrão",
           "modal_intro": "Dê um nome ao modelo e adicione uma breve observação para a sua equipa. Em seguida, configure os valores padrão do projeto—o mesmo tipo de configuração que usa ao criar um projeto.",
           "name_required": "O nome do modelo é obrigatório",
-          "no_groups_available": "No groups left to add",
+          "no_groups_available": "Já não há grupos para adicionar",
           "section_features": "Recursos",
           "section_features_hint": "Escolha quais recursos opcionais do projeto ficam ativados quando este modelo é aplicado.",
-          "section_groups": "Groups as members",
-          "section_groups_hint": "Groups that become members of every project created from this template, with the role given here. Everyone in a group, including its subgroups, joins the project. The person creating the project stays its admin.",
+          "section_groups": "Grupos como membros",
+          "section_groups_hint": "Grupos que se tornam membros de todos os projetos criados a partir deste modelo, com a função definida aqui. Todas as pessoas de um grupo, incluindo os subgrupos, entram no projeto. Quem cria o projeto continua a ser o administrador do mesmo.",
           "section_labels": "Etiquetas",
           "section_labels_hint": "Defina etiquetas padrão para novos projetos.",
           "section_properties": "Propriedades padrão do projeto",
@@ -403,7 +403,7 @@
           "section_template": "Modelo",
           "section_work_item_types": "Tipos de item de trabalho",
           "section_work_item_types_hint": "Configure os tipos de item de trabalho padrão e as propriedades personalizadas para projetos criados a partir deste modelo.",
-          "select_group": "Select a group",
+          "select_group": "Selecione um grupo",
           "state_groups": {
             "backlog": "Backlog",
             "cancelled": "Cancelado",
@@ -494,10 +494,10 @@
             "message": "O modelo \"{name}\" foi enviado a partir do ficheiro."
           },
           "apply_groups_skipped": {
-            "message": "Project was created, but {count, plural, one {# group of the template no longer exists and was} other {# groups of the template no longer exist and were}} not added."
+            "message": "O projeto foi criado, mas {count, plural, one {# grupo do modelo já não existe e não foi adicionado} many {# de grupos do modelo já não existem e não foram adicionados} other {# grupos do modelo já não existem e não foram adicionados}}."
           },
           "uploaded_groups_not_found": {
-            "message": "Template \"{name}\" was uploaded, but these groups do not exist in this workspace and were left out: {groups}."
+            "message": "O modelo \"{name}\" foi carregado, mas estes grupos não existem neste espaço de trabalho e ficaram de fora: {groups}."
           }
         },
         "upload_invalid_file": "Envie um ficheiro JSON baixado com o botão “Transferir”.",

@@ -276,7 +276,7 @@
             "clear_all": "全部清除",
             "cycles": "週期",
             "dates": "日期與持續時間",
-            "group_assignees": "Group assignees",
+            "group_assignees": "指派的群組",
             "heading": "要匯入的內容",
             "labels": "標籤",
             "modules": "模組",
@@ -308,7 +308,7 @@
         "description": "建立可重複使用的專案設定，包含預設屬性、啟用的功能、狀態、標籤和工作項目類型。",
         "edit_template": "編輯模板",
         "form": {
-          "add_group": "Add group",
+          "add_group": "新增群組",
           "add_label": "新增標籤",
           "add_state": "新增狀態",
           "custom_property": {
@@ -381,8 +381,8 @@
               "label": "工作項目類型"
             }
           },
-          "group_missing": "Group no longer exists",
-          "groups_empty": "No groups yet.",
+          "group_missing": "群組已不存在",
+          "groups_empty": "尚無群組。",
           "identifier_invalid": "僅能使用英文字母與數字",
           "identifier_max_char": "識別碼最多 5 個字元",
           "label_name_placeholder": "標籤名稱",
@@ -390,11 +390,11 @@
           "mark_default_state": "標記為預設狀態",
           "modal_intro": "為模板命名並為團隊加上簡短說明，接著設定預設專案值——與您建立專案時所使用的設定相同。",
           "name_required": "模板名稱為必填",
-          "no_groups_available": "No groups left to add",
+          "no_groups_available": "沒有可新增的群組了",
           "section_features": "功能",
           "section_features_hint": "選擇套用此模板時要啟用的選用專案功能。",
-          "section_groups": "Groups as members",
-          "section_groups_hint": "Groups that become members of every project created from this template, with the role given here. Everyone in a group, including its subgroups, joins the project. The person creating the project stays its admin.",
+          "section_groups": "群組作為成員",
+          "section_groups_hint": "這些群組將以此處指定的角色成為透過此模板建立的每個專案的成員。群組中的所有人（包括其子群組）都會加入專案。建立專案的人仍是專案管理員。",
           "section_labels": "標籤",
           "section_labels_hint": "定義新專案的預設標籤。",
           "section_properties": "預設專案屬性",
@@ -403,7 +403,7 @@
           "section_template": "模板",
           "section_work_item_types": "工作項目類型",
           "section_work_item_types_hint": "為透過此模板建立的專案設定預設工作項目類型與自訂屬性。",
-          "select_group": "Select a group",
+          "select_group": "選取群組",
           "state_groups": {
             "backlog": "待辦事項",
             "cancelled": "已取消",
@@ -494,10 +494,10 @@
             "message": "已從檔案上傳模板「{name}」。"
           },
           "apply_groups_skipped": {
-            "message": "Project was created, but {count, plural, one {# group of the template no longer exists and was} other {# groups of the template no longer exist and were}} not added."
+            "message": "專案已建立，但模板中的 {count, plural, one {# 個群組已不存在，未被新增} other {# 個群組已不存在，未被新增}}。"
           },
           "uploaded_groups_not_found": {
-            "message": "Template \"{name}\" was uploaded, but these groups do not exist in this workspace and were left out: {groups}."
+            "message": "模板「{name}」已上傳，但此工作區中不存在以下群組，已被略過：{groups}。"
           }
         },
         "upload_invalid_file": "請上傳透過「下載」按鈕取得的 JSON 檔案。",

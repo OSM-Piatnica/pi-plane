@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "წევრების იმპორტი CSV-დან",
-      "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
+      "description": "ატვირთეთ CSV სვეტებით Email და Role (5=სტუმარი, 15=წევრი, 20=ადმინისტრატორი) ან Group და Role (5=სტუმარი, 15=წევრი), რათა მთელი ჯგუფი დაამატოთ. ჩადგმული ჯგუფი ჩაწერეთ როგორც Parent / Child. ერთ მწკრივში გამოიყენეთ ან Email, ან Group. მომხმარებლები უკვე უნდა იყვნენ სამუშაო სივრცის წევრები, ხოლო ჯგუფები უკვე უნდა არსებობდეს.",
       "download_sample": "CSV ნიმუშის ჩამოტვირთვა",
       "dropzone": {
         "active": "ჩააგდეთ CSV ფაილი აქ",
@@ -422,16 +422,16 @@
         "message": {
           "success": "პროექტში წარმატებით განხორციელდა {count} წევრის{plural} იმპორტი.",
           "no_imports": "CSV ფაილიდან ახალი წევრების იმპორტი არ განხორციელებულა.",
-          "groups_success": "Linked {count} group{plural} to the project."
+          "groups_success": "პროექტს დაუკავშირდა {count} ჯგუფი."
         },
         "stats": {
           "added": "დაემატა",
           "reactivated": "ხელახლა გააქტიურდა",
           "already_members": "უკვე წევრები არიან",
           "skipped": "გამოტოვებულია",
-          "groups_added": "Groups added",
-          "groups_updated": "Groups updated",
-          "groups_skipped": "Groups skipped"
+          "groups_added": "დამატებული ჯგუფები",
+          "groups_updated": "განახლებული ჯგუფები",
+          "groups_skipped": "გამოტოვებული ჯგუფები"
         },
         "download_errors": "გამოტოვებული ჩანაწერების დეტალების ჩამოტვირთვა"
       },
@@ -445,23 +445,23 @@
           "message": "რაღაც შეცდომა მოხდა."
         }
       },
-      "import_button": "Import from CSV",
+      "import_button": "იმპორტი CSV-დან",
       "parse_errors": {
-        "empty": "The file is empty.",
-        "missing_columns": "The file needs a Role column and an Email or a Group column.",
-        "no_rows": "The file has a header but no rows."
+        "empty": "ფაილი ცარიელია.",
+        "missing_columns": "ფაილს სჭირდება Role სვეტი და Email ან Group სვეტი.",
+        "no_rows": "ფაილს აქვს სათაური, მაგრამ მწკრივები არ აქვს."
       },
       "skip_reasons": {
-        "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
-        "both_email_and_group": "A row has either an Email or a Group, not both.",
-        "missing_value": "The row has neither an Email nor a Group.",
-        "not_workspace_member": "This person is not an active member of the workspace.",
-        "role_above_workspace_role": "The role is higher than the person's workspace role.",
-        "role_below_workspace_role": "The role is lower than the person's workspace role.",
-        "unknown_group": "No group with this name exists in the workspace.",
-        "ambiguous_group": "Several groups have this name, write its path as Parent / Child.",
-        "group_admin_role": "Groups cannot be project admins.",
-        "group_already_linked": "The group already is a member of the project with this role."
+        "invalid_role": "როლი უნდა იყოს 5 (სტუმარი), 15 (წევრი) ან 20 (ადმინისტრატორი).",
+        "both_email_and_group": "მწკრივში უნდა იყოს ან Email, ან Group, ორივე ერთად არა.",
+        "missing_value": "მწკრივში არც Email არის და არც Group.",
+        "not_workspace_member": "ეს ადამიანი სამუშაო სივრცის აქტიური წევრი არ არის.",
+        "role_above_workspace_role": "როლი ამ ადამიანის სამუშაო სივრცის როლზე მაღალია.",
+        "role_below_workspace_role": "როლი ამ ადამიანის სამუშაო სივრცის როლზე დაბალია.",
+        "unknown_group": "სამუშაო სივრცეში ამ სახელის მქონე ჯგუფი არ არსებობს.",
+        "ambiguous_group": "რამდენიმე ჯგუფს ერთი და იგივე სახელი აქვს, ჩაწერეთ მისი გზა როგორც Parent / Child.",
+        "group_admin_role": "ჯგუფები პროექტის ადმინისტრატორები ვერ იქნებიან.",
+        "group_already_linked": "ჯგუფი უკვე არის პროექტის წევრი ამ როლით."
       }
     }
   },
@@ -725,8 +725,8 @@
       "clear_all": "ყველას გასუფთავება",
       "description": "ქმნის ახალ პროექტს იგივე პარამეტრებით. გვერდები და ვებჰუკები არ კოპირდება; სამუშაო ელემენტები მხოლოდ ქვემოთ არჩევის შემთხვევაში.",
       "error": "პროექტის დუბლირება ვერ მოხერხდა. გთხოვთ, სცადოთ ხელახლა.",
-      "groups": "Groups as members",
-      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
+      "groups": "ჯგუფები წევრებად",
+      "groups_hint": "აკავშირებს იმავე ჯგუფებს იმავე როლებით, ამიტომ მათში შემავალი ადამიანები ასლის წევრები ხდებიან.",
       "identifier_placeholder": "ცარიელის შემთხვევაში გენერირდება",
       "properties": {
         "assignees": "შემსრულებლები",

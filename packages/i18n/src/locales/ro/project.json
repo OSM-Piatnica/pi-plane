@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "Importă membri din CSV",
-      "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
+      "description": "Încărcați un CSV cu coloanele Email și Role (5=invitat, 15=membru, 20=administrator) sau Group și Role (5=invitat, 15=membru) pentru a adăuga un grup întreg. Scrieți un grup imbricat ca Parent / Child. Pe fiecare rând folosiți fie Email, fie Group. Utilizatorii trebuie să fie deja membri ai spațiului de lucru, iar grupurile trebuie să existe deja.",
       "download_sample": "Descărcați CSV exemplu",
       "dropzone": {
         "active": "Plasați fișierul CSV aici",
@@ -422,16 +422,16 @@
         "message": {
           "success": "{count} membr{plural} importat{plural} cu succes în proiect.",
           "no_imports": "Nu au fost importați membri noi din fișierul CSV.",
-          "groups_success": "Linked {count} group{plural} to the project."
+          "groups_success": "{count, plural, one {# grup a fost asociat} few {# grupuri au fost asociate} other {# de grupuri au fost asociate}} cu proiectul."
         },
         "stats": {
           "added": "Adăugate",
           "reactivated": "Reactivați",
           "already_members": "Deja membri",
           "skipped": "Omise",
-          "groups_added": "Groups added",
-          "groups_updated": "Groups updated",
-          "groups_skipped": "Groups skipped"
+          "groups_added": "Grupuri adăugate",
+          "groups_updated": "Grupuri actualizate",
+          "groups_skipped": "Grupuri omise"
         },
         "download_errors": "Descarcă detaliile omise"
       },
@@ -445,23 +445,23 @@
           "message": "Ceva nu a funcționat."
         }
       },
-      "import_button": "Import from CSV",
+      "import_button": "Importă din CSV",
       "parse_errors": {
-        "empty": "The file is empty.",
-        "missing_columns": "The file needs a Role column and an Email or a Group column.",
-        "no_rows": "The file has a header but no rows."
+        "empty": "Fișierul este gol.",
+        "missing_columns": "Fișierul are nevoie de o coloană Role și de o coloană Email sau Group.",
+        "no_rows": "Fișierul are un antet, dar nu are rânduri."
       },
       "skip_reasons": {
-        "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
-        "both_email_and_group": "A row has either an Email or a Group, not both.",
-        "missing_value": "The row has neither an Email nor a Group.",
-        "not_workspace_member": "This person is not an active member of the workspace.",
-        "role_above_workspace_role": "The role is higher than the person's workspace role.",
-        "role_below_workspace_role": "The role is lower than the person's workspace role.",
-        "unknown_group": "No group with this name exists in the workspace.",
-        "ambiguous_group": "Several groups have this name, write its path as Parent / Child.",
-        "group_admin_role": "Groups cannot be project admins.",
-        "group_already_linked": "The group already is a member of the project with this role."
+        "invalid_role": "Rolul trebuie să fie 5 (invitat), 15 (membru) sau 20 (administrator).",
+        "both_email_and_group": "Un rând are fie Email, fie Group, nu ambele.",
+        "missing_value": "Rândul nu are nici Email, nici Group.",
+        "not_workspace_member": "Această persoană nu este membru activ al spațiului de lucru.",
+        "role_above_workspace_role": "Rolul este mai mare decât rolul persoanei în spațiul de lucru.",
+        "role_below_workspace_role": "Rolul este mai mic decât rolul persoanei în spațiul de lucru.",
+        "unknown_group": "Niciun grup cu acest nume nu există în spațiul de lucru.",
+        "ambiguous_group": "Mai multe grupuri au acest nume, scrieți calea ca Parent / Child.",
+        "group_admin_role": "Grupurile nu pot fi administratori ai proiectului.",
+        "group_already_linked": "Grupul este deja membru al proiectului cu acest rol."
       }
     }
   },
@@ -725,8 +725,8 @@
       "clear_all": "Șterge tot",
       "description": "Creează un proiect nou cu aceleași setări. Paginile și webhook-urile nu se copiază; activitățile doar dacă alegi mai jos.",
       "error": "Proiectul nu a putut fi duplicat. Încearcă din nou.",
-      "groups": "Groups as members",
-      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
+      "groups": "Grupuri ca membri",
+      "groups_hint": "Asociază aceleași grupuri cu aceleași roluri, astfel încât persoanele din ele devin membre ale copiei.",
       "identifier_placeholder": "Se generează dacă e gol",
       "properties": {
         "assignees": "Persoane atribuite",

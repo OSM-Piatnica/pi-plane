@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "CSV'den üye içe aktar",
-      "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
+      "description": "Email ve Role (5=Guest, 15=Member, 20=Admin) veya Group ve Role (5=Guest, 15=Member) sütunlarını içeren bir CSV yükleyerek bir grubu bütünüyle ekleyin. İç içe bir grubu Parent / Child biçiminde yazın. Bir satırda Email veya Group'tan yalnızca birini kullanın. Kullanıcılar zaten çalışma alanı üyesi olmalı ve gruplar zaten mevcut olmalıdır.",
       "download_sample": "Örnek CSV indir",
       "dropzone": {
         "active": "CSV dosyasını buraya bırakın",
@@ -422,16 +422,16 @@
         "message": {
           "success": "Projeye başarıyla {count} üye içe aktarıldı.",
           "no_imports": "CSV dosyasından yeni üye içe aktarılmadı.",
-          "groups_success": "Linked {count} group{plural} to the project."
+          "groups_success": "Projeye bağlanan grup sayısı: {count}."
         },
         "stats": {
           "added": "Eklendi",
           "reactivated": "Yeniden etkinleştirildi",
           "already_members": "Zaten üyeler",
           "skipped": "Atlandı",
-          "groups_added": "Groups added",
-          "groups_updated": "Groups updated",
-          "groups_skipped": "Groups skipped"
+          "groups_added": "Eklenen gruplar",
+          "groups_updated": "Güncellenen gruplar",
+          "groups_skipped": "Atlanan gruplar"
         },
         "download_errors": "Atlanan ayrıntıları indir"
       },
@@ -445,23 +445,23 @@
           "message": "Bir şeyler ters gitti."
         }
       },
-      "import_button": "Import from CSV",
+      "import_button": "CSV'den içe aktar",
       "parse_errors": {
-        "empty": "The file is empty.",
-        "missing_columns": "The file needs a Role column and an Email or a Group column.",
-        "no_rows": "The file has a header but no rows."
+        "empty": "Dosya boş.",
+        "missing_columns": "Dosyada bir Role sütunu ile bir Email veya Group sütunu bulunmalıdır.",
+        "no_rows": "Dosyada başlık var ancak satır yok."
       },
       "skip_reasons": {
-        "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
-        "both_email_and_group": "A row has either an Email or a Group, not both.",
-        "missing_value": "The row has neither an Email nor a Group.",
-        "not_workspace_member": "This person is not an active member of the workspace.",
-        "role_above_workspace_role": "The role is higher than the person's workspace role.",
-        "role_below_workspace_role": "The role is lower than the person's workspace role.",
-        "unknown_group": "No group with this name exists in the workspace.",
-        "ambiguous_group": "Several groups have this name, write its path as Parent / Child.",
-        "group_admin_role": "Groups cannot be project admins.",
-        "group_already_linked": "The group already is a member of the project with this role."
+        "invalid_role": "Rol 5 (Guest), 15 (Member) veya 20 (Admin) olmalıdır.",
+        "both_email_and_group": "Bir satırda Email veya Group'tan yalnızca biri bulunabilir, ikisi birden olamaz.",
+        "missing_value": "Satırda ne Email ne de Group var.",
+        "not_workspace_member": "Bu kişi çalışma alanının aktif bir üyesi değil.",
+        "role_above_workspace_role": "Rol, kişinin çalışma alanı rolünden daha yüksek.",
+        "role_below_workspace_role": "Rol, kişinin çalışma alanı rolünden daha düşük.",
+        "unknown_group": "Çalışma alanında bu ada sahip bir grup yok.",
+        "ambiguous_group": "Bu ada sahip birden fazla grup var, yolunu Parent / Child biçiminde yazın.",
+        "group_admin_role": "Gruplar proje yöneticisi olamaz.",
+        "group_already_linked": "Grup zaten bu rolle projenin üyesi."
       }
     }
   },
@@ -725,8 +725,8 @@
       "clear_all": "Tümünü temizle",
       "description": "Aynı ayarlarla yeni bir proje oluşturur. Sayfalar ve webhook'lar kopyalanmaz; iş öğeleri yalnızca aşağıda seçerseniz kopyalanır.",
       "error": "Proje çoğaltılamadı. Lütfen tekrar deneyin.",
-      "groups": "Groups as members",
-      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
+      "groups": "Üye olarak gruplar",
+      "groups_hint": "Aynı grupları aynı rollerle bağlar, böylece gruplardaki kişiler kopyanın üyesi olur.",
       "identifier_placeholder": "Boşsa otomatik oluşturulur",
       "properties": {
         "assignees": "Atananlar",

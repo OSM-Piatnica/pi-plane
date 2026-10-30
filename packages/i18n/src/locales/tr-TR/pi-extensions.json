@@ -276,7 +276,7 @@
             "clear_all": "Tümünü temizle",
             "cycles": "Döngüler",
             "dates": "Tarihler ve süre",
-            "group_assignees": "Group assignees",
+            "group_assignees": "Atanan gruplar",
             "heading": "Neler içe aktarılabilir",
             "labels": "Etiketler",
             "modules": "Modüller",
@@ -308,7 +308,7 @@
         "description": "Varsayılan özellikler, etkin özellikler, durumlar, etiketler ve iş öğesi türleriyle yeniden kullanılabilir proje kurulumları oluşturun.",
         "edit_template": "Şablonu düzenle",
         "form": {
-          "add_group": "Add group",
+          "add_group": "Grup ekle",
           "add_label": "Etiket ekle",
           "add_state": "Durum ekle",
           "custom_property": {
@@ -381,8 +381,8 @@
               "label": "İş öğesi türleri"
             }
           },
-          "group_missing": "Group no longer exists",
-          "groups_empty": "No groups yet.",
+          "group_missing": "Grup artık mevcut değil",
+          "groups_empty": "Henüz grup yok.",
           "identifier_invalid": "Yalnızca harf ve rakam kullanın",
           "identifier_max_char": "Tanımlayıcı en fazla 5 karakter olmalıdır",
           "label_name_placeholder": "Etiket adı",
@@ -390,11 +390,11 @@
           "mark_default_state": "Varsayılan durum olarak işaretle",
           "modal_intro": "Şablonu adlandırın ve ekibiniz için kısa bir not ekleyin. Ardından varsayılan proje değerlerini yapılandırın—bir proje oluştururken kullandığınız türden ayarlar.",
           "name_required": "Şablon adı gereklidir",
-          "no_groups_available": "No groups left to add",
+          "no_groups_available": "Eklenecek grup kalmadı",
           "section_features": "Özellikler",
           "section_features_hint": "Bu şablon uygulandığında hangi isteğe bağlı proje özelliklerinin etkinleştirileceğini seçin.",
-          "section_groups": "Groups as members",
-          "section_groups_hint": "Groups that become members of every project created from this template, with the role given here. Everyone in a group, including its subgroups, joins the project. The person creating the project stays its admin.",
+          "section_groups": "Üye olarak gruplar",
+          "section_groups_hint": "Bu şablondan oluşturulan her projenin, burada verilen rolle üyesi olacak gruplar. Bir gruptaki herkes, alt grupları dahil, projeye katılır. Projeyi oluşturan kişi projenin yöneticisi olarak kalır.",
           "section_labels": "Etiketler",
           "section_labels_hint": "Yeni projeler için varsayılan etiketleri tanımlayın.",
           "section_properties": "Varsayılan proje özellikleri",
@@ -403,7 +403,7 @@
           "section_template": "Şablon",
           "section_work_item_types": "İş öğesi türleri",
           "section_work_item_types_hint": "Bu şablondan oluşturulan projeler için varsayılan iş öğesi türlerini ve özel özellikleri yapılandırın.",
-          "select_group": "Select a group",
+          "select_group": "Bir grup seçin",
           "state_groups": {
             "backlog": "Bekleme Listesi",
             "cancelled": "İptal Edildi",
@@ -494,10 +494,10 @@
             "message": "\"{name}\" şablonu dosyadan yüklendi."
           },
           "apply_groups_skipped": {
-            "message": "Project was created, but {count, plural, one {# group of the template no longer exists and was} other {# groups of the template no longer exist and were}} not added."
+            "message": "Proje oluşturuldu, ancak şablondaki {count, plural, one {# grup artık mevcut olmadığı için eklenmedi} other {# grup artık mevcut olmadığı için eklenmedi}}."
           },
           "uploaded_groups_not_found": {
-            "message": "Template \"{name}\" was uploaded, but these groups do not exist in this workspace and were left out: {groups}."
+            "message": "\"{name}\" şablonu yüklendi, ancak şu gruplar bu çalışma alanında mevcut olmadığı için dışarıda bırakıldı: {groups}."
           }
         },
         "upload_invalid_file": "Lütfen “İndir” düğmesiyle indirilen bir JSON dosyası yükleyin.",

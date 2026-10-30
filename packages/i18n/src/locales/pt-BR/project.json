@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "Importar membros do CSV",
-      "description": "Upload a CSV with the columns Email and Role (5=Guest, 15=Member, 20=Admin), or Group and Role (5=Guest, 15=Member) to add a whole group. Write a nested group as Parent / Child. Use either Email or Group on a row. Users must already be workspace members and groups must already exist.",
+      "description": "Envie um CSV com as colunas Email e Role (5=convidado, 15=membro, 20=administrador) ou Group e Role (5=convidado, 15=membro) para adicionar um grupo inteiro. Escreva um grupo aninhado como Parent / Child. Use Email ou Group em cada linha, nunca os dois. Os usuários já devem ser membros do espaço de trabalho e os grupos já devem existir.",
       "download_sample": "Baixar CSV de exemplo",
       "dropzone": {
         "active": "Solte o arquivo CSV aqui",
@@ -422,16 +422,16 @@
         "message": {
           "success": "{count} membr{plural} importad{plural} com sucesso para o projeto.",
           "no_imports": "Nenhum novo membro foi importado do arquivo CSV.",
-          "groups_success": "Linked {count} group{plural} to the project."
+          "groups_success": "{count, plural, one {# grupo vinculado} many {# de grupos vinculados} other {# grupos vinculados}} ao projeto."
         },
         "stats": {
           "added": "Adicionados",
           "reactivated": "Reativados",
           "already_members": "Já são membros",
           "skipped": "Ignorados",
-          "groups_added": "Groups added",
-          "groups_updated": "Groups updated",
-          "groups_skipped": "Groups skipped"
+          "groups_added": "Grupos adicionados",
+          "groups_updated": "Grupos atualizados",
+          "groups_skipped": "Grupos ignorados"
         },
         "download_errors": "Baixar detalhes ignorados"
       },
@@ -445,23 +445,23 @@
           "message": "Algo deu errado."
         }
       },
-      "import_button": "Import from CSV",
+      "import_button": "Importar de CSV",
       "parse_errors": {
-        "empty": "The file is empty.",
-        "missing_columns": "The file needs a Role column and an Email or a Group column.",
-        "no_rows": "The file has a header but no rows."
+        "empty": "O arquivo está vazio.",
+        "missing_columns": "O arquivo precisa de uma coluna Role e de uma coluna Email ou Group.",
+        "no_rows": "O arquivo tem um cabeçalho, mas nenhuma linha."
       },
       "skip_reasons": {
-        "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
-        "both_email_and_group": "A row has either an Email or a Group, not both.",
-        "missing_value": "The row has neither an Email nor a Group.",
-        "not_workspace_member": "This person is not an active member of the workspace.",
-        "role_above_workspace_role": "The role is higher than the person's workspace role.",
-        "role_below_workspace_role": "The role is lower than the person's workspace role.",
-        "unknown_group": "No group with this name exists in the workspace.",
-        "ambiguous_group": "Several groups have this name, write its path as Parent / Child.",
-        "group_admin_role": "Groups cannot be project admins.",
-        "group_already_linked": "The group already is a member of the project with this role."
+        "invalid_role": "A função deve ser 5 (convidado), 15 (membro) ou 20 (administrador).",
+        "both_email_and_group": "Uma linha tem Email ou Group, não os dois.",
+        "missing_value": "A linha não tem Email nem Group.",
+        "not_workspace_member": "Esta pessoa não é um membro ativo do espaço de trabalho.",
+        "role_above_workspace_role": "A função é superior à função da pessoa no espaço de trabalho.",
+        "role_below_workspace_role": "A função é inferior à função da pessoa no espaço de trabalho.",
+        "unknown_group": "Nenhum grupo com este nome existe no espaço de trabalho.",
+        "ambiguous_group": "Vários grupos têm este nome, escreva o caminho como Parent / Child.",
+        "group_admin_role": "Grupos não podem ser administradores do projeto.",
+        "group_already_linked": "O grupo já é membro do projeto com esta função."
       }
     }
   },
@@ -725,8 +725,8 @@
       "clear_all": "Limpar tudo",
       "description": "Cria um novo projeto com as mesmas configurações. Páginas e webhooks não são copiados; itens de trabalho só se você escolher abaixo.",
       "error": "Não foi possível duplicar o projeto. Tente novamente.",
-      "groups": "Groups as members",
-      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
+      "groups": "Grupos como membros",
+      "groups_hint": "Vincula os mesmos grupos com as mesmas funções, para que as pessoas neles se tornem membros da cópia.",
       "identifier_placeholder": "Gerado se vazio",
       "properties": {
         "assignees": "Responsáveis",

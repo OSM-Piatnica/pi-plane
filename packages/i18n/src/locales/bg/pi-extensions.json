@@ -276,7 +276,7 @@
             "clear_all": "Изчисти всички",
             "cycles": "Цикли",
             "dates": "Дати и продължителност",
-            "group_assignees": "Group assignees",
+            "group_assignees": "Групи изпълнители",
             "heading": "Какво да се импортира",
             "labels": "Етикети",
             "modules": "Модули",
@@ -308,7 +308,7 @@
         "description": "Създавайте многократно използваеми настройки на проекти със свойства по подразбиране, активирани функции, състояния, етикети и типове работни елементи.",
         "edit_template": "Редактирай шаблона",
         "form": {
-          "add_group": "Add group",
+          "add_group": "Добавяне на група",
           "add_label": "Добави етикет",
           "add_state": "Добави състояние",
           "custom_property": {
@@ -381,8 +381,8 @@
               "label": "Типове работни елементи"
             }
           },
-          "group_missing": "Group no longer exists",
-          "groups_empty": "No groups yet.",
+          "group_missing": "Групата вече не съществува",
+          "groups_empty": "Все още няма групи.",
           "identifier_invalid": "Използвайте само букви и цифри",
           "identifier_max_char": "Идентификаторът трябва да е най-много 5 знака",
           "label_name_placeholder": "Име на етикета",
@@ -390,11 +390,11 @@
           "mark_default_state": "Отбележи като състояние по подразбиране",
           "modal_intro": "Дайте име на шаблона и добавете кратка бележка за екипа си. След това конфигурирайте стойностите по подразбиране за проекта – същия вид настройки, които използвате при създаване на проект.",
           "name_required": "Името на шаблона е задължително",
-          "no_groups_available": "No groups left to add",
+          "no_groups_available": "Няма повече групи за добавяне",
           "section_features": "Функции",
           "section_features_hint": "Изберете кои незадължителни функции на проекта да се активират при прилагане на този шаблон.",
-          "section_groups": "Groups as members",
-          "section_groups_hint": "Groups that become members of every project created from this template, with the role given here. Everyone in a group, including its subgroups, joins the project. The person creating the project stays its admin.",
+          "section_groups": "Групи като членове",
+          "section_groups_hint": "Групи, които стават членове на всеки проект, създаден от този шаблон, с ролята, зададена тук. Всеки в дадена група, включително в нейните подгрупи, се присъединява към проекта. Създателят на проекта остава негов администратор.",
           "section_labels": "Етикети",
           "section_labels_hint": "Задайте етикети по подразбиране за новите проекти.",
           "section_properties": "Свойства на проекта по подразбиране",
@@ -403,7 +403,7 @@
           "section_template": "Шаблон",
           "section_work_item_types": "Типове работни елементи",
           "section_work_item_types_hint": "Конфигурирайте типове работни елементи и персонализирани свойства по подразбиране за проекти, създадени от този шаблон.",
-          "select_group": "Select a group",
+          "select_group": "Изберете група",
           "state_groups": {
             "backlog": "Бъклог",
             "cancelled": "Отменени",
@@ -494,10 +494,10 @@
             "message": "Шаблонът „{name}“ е качен от файла."
           },
           "apply_groups_skipped": {
-            "message": "Project was created, but {count, plural, one {# group of the template no longer exists and was} other {# groups of the template no longer exist and were}} not added."
+            "message": "Проектът е създаден, но {count, plural, one {# група от шаблона вече не съществува и не беше добавена} other {# групи от шаблона вече не съществуват и не бяха добавени}}."
           },
           "uploaded_groups_not_found": {
-            "message": "Template \"{name}\" was uploaded, but these groups do not exist in this workspace and were left out: {groups}."
+            "message": "Шаблонът „{name}“ е качен, но тези групи не съществуват в това работно пространство и са пропуснати: {groups}."
           }
         },
         "upload_invalid_file": "Качете JSON файл, изтеглен с бутона „Изтегли“.",

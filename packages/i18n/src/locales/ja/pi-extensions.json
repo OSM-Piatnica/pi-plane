@@ -276,7 +276,7 @@
             "clear_all": "すべてクリア",
             "cycles": "サイクル",
             "dates": "日付と期間",
-            "group_assignees": "Group assignees",
+            "group_assignees": "担当グループ",
             "heading": "インポートする項目",
             "labels": "ラベル",
             "modules": "モジュール",
@@ -308,7 +308,7 @@
         "description": "デフォルトのプロパティ、有効な機能、状態、ラベル、作業項目タイプを備えた再利用可能なプロジェクト設定を作成します。",
         "edit_template": "テンプレートを編集",
         "form": {
-          "add_group": "Add group",
+          "add_group": "グループを追加",
           "add_label": "ラベルを追加",
           "add_state": "状態を追加",
           "custom_property": {
@@ -381,8 +381,8 @@
               "label": "作業項目タイプ"
             }
           },
-          "group_missing": "Group no longer exists",
-          "groups_empty": "No groups yet.",
+          "group_missing": "グループは存在しなくなりました",
+          "groups_empty": "グループはまだありません。",
           "identifier_invalid": "英字と数字のみを使用してください",
           "identifier_max_char": "識別子は5文字以内にしてください",
           "label_name_placeholder": "ラベル名",
@@ -390,11 +390,11 @@
           "mark_default_state": "デフォルトの状態としてマークする",
           "modal_intro": "テンプレート名を付け、チーム向けに簡単なメモを追加してください。その後、プロジェクト作成時と同じようなデフォルトのプロジェクト値を設定します。",
           "name_required": "テンプレート名は必須です",
-          "no_groups_available": "No groups left to add",
+          "no_groups_available": "追加できるグループがありません",
           "section_features": "機能",
           "section_features_hint": "このテンプレートを適用したときに有効にするオプション機能を選択してください。",
-          "section_groups": "Groups as members",
-          "section_groups_hint": "Groups that become members of every project created from this template, with the role given here. Everyone in a group, including its subgroups, joins the project. The person creating the project stays its admin.",
+          "section_groups": "メンバーとしてのグループ",
+          "section_groups_hint": "このテンプレートから作成されるすべてのプロジェクトのメンバーになるグループと、ここで指定する役割です。グループ内のすべての人は、サブグループを含め、プロジェクトに参加します。プロジェクトを作成した人は、そのプロジェクトの管理者のままです。",
           "section_labels": "ラベル",
           "section_labels_hint": "新しいプロジェクトのデフォルトラベルを定義します。",
           "section_properties": "デフォルトのプロジェクトプロパティ",
@@ -403,7 +403,7 @@
           "section_template": "テンプレート",
           "section_work_item_types": "作業項目タイプ",
           "section_work_item_types_hint": "このテンプレートから作成されるプロジェクトのデフォルトの作業項目タイプとカスタムプロパティを設定します。",
-          "select_group": "Select a group",
+          "select_group": "グループを選択",
           "state_groups": {
             "backlog": "バックログ",
             "cancelled": "キャンセル",
@@ -494,10 +494,10 @@
             "message": "ファイルからテンプレート「{name}」をアップロードしました。"
           },
           "apply_groups_skipped": {
-            "message": "Project was created, but {count, plural, one {# group of the template no longer exists and was} other {# groups of the template no longer exist and were}} not added."
+            "message": "プロジェクトは作成されましたが、テンプレートの{count, plural, one {# 件のグループ} other {# 件のグループ}}は存在しなくなったため追加されませんでした。"
           },
           "uploaded_groups_not_found": {
-            "message": "Template \"{name}\" was uploaded, but these groups do not exist in this workspace and were left out: {groups}."
+            "message": "テンプレート「{name}」をアップロードしましたが、次のグループはこのワークスペースに存在しないため除外されました：{groups}。"
           }
         },
         "upload_invalid_file": "「ダウンロード」ボタンでダウンロードしたJSONファイルをアップロードしてください。",
