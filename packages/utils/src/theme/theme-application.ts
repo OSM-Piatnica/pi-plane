@@ -15,6 +15,7 @@ import type { OKLCH } from "./color-conversion";
 import { ALPHA_MAPPING, EDITOR_COLORS_LIGHT, EDITOR_COLORS_DARK } from "./constants";
 import { generateThemePalettes } from "./palette-generator";
 import { getBrandMapping, getNeutralMapping, invertPalette } from "./theme-inversion";
+import { applyThemeOverrides, clearThemeOverrides } from "./theme-overrides";
 
 /**
  * Color darkness detection methods
@@ -91,8 +92,14 @@ export function getOnColorTextColors(
  * @param brandColor - Brand accent color (hex with or without #)
  * @param neutralColor - Neutral/background color (hex with or without #)
  * @param mode - 'light' or 'dark' theme mode
+ * @param overrides - advanced settings: semantic tokens pinned to a colour of their own (see theme-overrides.ts)
  */
-export function applyCustomTheme(brandColor: string, neutralColor: string, mode: "light" | "dark"): void {
+export function applyCustomTheme(
+  brandColor: string,
+  neutralColor: string,
+  mode: "light" | "dark",
+  overrides?: unknown
+): void {
   if (!brandColor || !neutralColor) {
     console.warn("applyCustomTheme: brandColor and neutralColor are required");
     return;
@@ -142,6 +149,9 @@ export function applyCustomTheme(brandColor: string, neutralColor: string, mode:
   Object.entries(editorColors).forEach(([color, value]) => {
     themeElement.style.setProperty(`--editor-colors-${color}-background`, value);
   });
+
+  // Advanced settings win over what the palette generated
+  applyThemeOverrides(overrides);
 }
 
 /**
@@ -191,4 +201,6 @@ export function clearCustomTheme(): void {
   Object.keys(EDITOR_COLORS_LIGHT).forEach((color) => {
     themeElement.style.removeProperty(`--editor-colors-${color}-background`);
   });
+
+  clearThemeOverrides();
 }
