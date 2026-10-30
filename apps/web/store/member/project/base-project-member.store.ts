@@ -221,6 +221,7 @@ export abstract class BaseProjectMemberStore implements IBaseProjectMemberStore 
       original_role: projectMember.original_role,
       via_group: projectMember.via_group,
       group_role: projectMember.group_role,
+      direct_role: projectMember.direct_role,
       member: {
         ...userDetails,
         joining_date: projectMember.created_at ?? undefined,
@@ -276,6 +277,7 @@ export abstract class BaseProjectMemberStore implements IBaseProjectMemberStore 
       original_role: projectMember.original_role,
       via_group: projectMember.via_group,
       group_role: projectMember.group_role,
+      direct_role: projectMember.direct_role,
       member: {
         ...userDetails,
         joining_date: projectMember.created_at ?? undefined,
