@@ -110,6 +110,22 @@ export const OIDC_PROVIDER_DEFINITIONS: Record<TOidcProviderKey, TOidcProviderDe
         description:
           "One group per company, from the company name in the person's Entra profile. People without one are in none.",
       },
+      {
+        name: "GROUPS_OFFICE",
+        label: "Office location",
+        type: "switch",
+        defaultValue: "0",
+        description:
+          "One group per office, from the office location in the person's Entra profile. People without one are in none.",
+      },
+      {
+        name: "GROUPS_ORG_UNITS",
+        label: "On-premises organizational unit",
+        type: "switch",
+        defaultValue: "0",
+        description:
+          "Nested groups of the Active Directory organizational units (OU) of the person's on-premises account, such as Poland > Sales; the person is in the innermost one. Only for people synced from on-premises Active Directory: blank for cloud-only accounts.",
+      },
     ],
   },
   "google-oidc": {

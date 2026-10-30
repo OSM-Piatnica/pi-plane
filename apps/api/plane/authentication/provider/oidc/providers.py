@@ -105,6 +105,27 @@ class EntraSpec(OidcProviderSpec):
                         "people without one are in none."
                     ),
                 ),
+                OidcConfigField(
+                    name="GROUPS_OFFICE",
+                    label="Office location",
+                    default="0",
+                    kind="switch",
+                    help=(
+                        "One group per office, from the office location in the person's Entra profile; "
+                        "people without one are in none."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_ORG_UNITS",
+                    label="On-premises organizational unit",
+                    default="0",
+                    kind="switch",
+                    help=(
+                        "Nested groups of the Active Directory organizational units (OU) of the person's "
+                        "on-premises account, such as Poland > Sales; the person is in the innermost one. Only for "
+                        "people synced from on-premises Active Directory: blank for cloud-only accounts."
+                    ),
+                ),
             ),
         )
 
