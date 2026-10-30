@@ -168,6 +168,40 @@ class TestImportingGroups:
         assert ProjectGroup.objects.filter(project=project).count() == 2
         assert response.data["groups"]["added"] == 2
 
+    def test_group_names_with_a_slash_or_a_backslash_are_read_from_their_written_paths(
+        self, session_client, workspace, project
+    ):
+        from plane.utils.group_paths import group_paths
+
+        top = _group(workspace, "R&D/QA")
+        other = _group(workspace, "A \\ B")
+        nested = _group(workspace, "Team/1", parent=other)
+        written = group_paths(workspace.id)
+
+        response = _import(
+            session_client,
+            project,
+            [
+                {"group": written[top.id], "role": MEMBER},
+                {"group": written[other.id], "role": MEMBER},
+                {"group": written[nested.id], "role": GUEST},
+            ],
+        )
+
+        assert response.data["groups"]["added"] == 3, response.data
+        assert set(ProjectGroup.objects.filter(project=project).values_list("group_id", flat=True)) == {
+            top.id,
+            other.id,
+            nested.id,
+        }
+
+    def test_a_top_level_group_with_a_slash_is_also_found_by_its_plain_name(self, session_client, workspace, project):
+        top = _group(workspace, "R&D/QA")
+
+        _import(session_client, project, [{"group": "R&D/QA", "role": MEMBER}])
+
+        assert ProjectGroup.objects.filter(project=project, group=top).exists()
+
     def test_a_plain_name_shared_by_two_nested_groups_is_ambiguous(self, session_client, workspace, project):
         _group(workspace, "Team", parent=_group(workspace, "Sales"))
         _group(workspace, "Team", parent=_group(workspace, "Support"))
