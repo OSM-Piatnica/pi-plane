@@ -105,6 +105,7 @@ from .workspace.work_item_template import WorkspaceWorkItemTemplateViewSet
 from .workspace.issue_type import WorkspaceIssueTypeViewSet
 from .workspace.project_template import WorkspaceProjectTemplateViewSet
 from .workspace.project_issue_type_seed import WorkspaceProjectIssueTypeSeedEndpoint
+from .workspace.project_template_groups import WorkspaceProjectTemplateGroupsEndpoint
 
 from .state.base import StateViewSet, IntakeStateEndpoint
 from .view.base import (
