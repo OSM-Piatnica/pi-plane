@@ -3,7 +3,7 @@
 # See the LICENSE file for details.
 
 """
-Filtering work items, modules and cycles by user group.
+Filtering work items, modules, cycles and projects by user group.
 
 A filter value is a list of tokens: a group id, ``my_groups`` or ``none``. Who may filter by which group is
 decided here, on the server: a workspace admin may use any group of the workspace, everybody else only the
@@ -16,7 +16,15 @@ from dataclasses import dataclass, field
 
 from django.db.models import Q
 
-from plane.db.models import IssueGroupAssignee, Module, ModuleMember, UserGroup, UserGroupMember, Workspace
+from plane.db.models import (
+    IssueGroupAssignee,
+    Module,
+    ModuleMember,
+    ProjectGroup,
+    UserGroup,
+    UserGroupMember,
+    Workspace,
+)
 from plane.utils.user_groups import _parent_map, ancestor_ids, descendant_ids, group_ids_of_user, is_workspace_admin
 
 MY_GROUPS = "my_groups"
@@ -178,9 +186,24 @@ def groups_of_cycles(workspace_id, cycle_ids):
     return groups
 
 
+def groups_of_projects(workspace_id, project_ids):
+    """project id -> the groups that are project groups of it (direct links only)."""
+    groups = {}
+    rows = ProjectGroup.objects.filter(
+        workspace_id=workspace_id,
+        project_id__in=project_ids,
+        deleted_at__isnull=True,
+        group__deleted_at__isnull=True,
+    ).values_list("project_id", "group_id")
+    for project_id, group_id in rows:
+        groups.setdefault(project_id, set()).add(group_id)
+    return groups
+
+
 def group_info(request, slug, kind, ids):
     """
-    For modules (``kind="module"``) or cycles (``"cycle"``): id -> the facts the group filter works on.
+    For modules (``kind="module"``), cycles (``"cycle"``) or projects (``"project"``): id -> the facts the group
+    filter works on.
 
     ``group_ids``: the groups the item is in (with the groups above them) that the requester may filter by;
     ``has_group``: it is in any group at all; ``in_my_groups``: it matches ``my_groups``.
@@ -191,14 +214,23 @@ def group_info(request, slug, kind, ids):
         return {}
     user = request.user
     allowed, mine = allowed_group_ids(user, workspace_id)
-    direct = groups_of_modules(workspace_id, ids) if kind == "module" else groups_of_cycles(workspace_id, ids)
+    if kind == "module":
+        direct = groups_of_modules(workspace_id, ids)
+    elif kind == "project":
+        direct = groups_of_projects(workspace_id, ids)
+    else:
+        direct = groups_of_cycles(workspace_id, ids)
     parents = _parent_map(workspace_id)
     info = {}
     for item_id in ids:
         own = direct.get(item_id, set())
-        expanded = _with_ancestors(workspace_id, own, parents)
+        if kind == "project":
+            # A project group stands for the groups below it too, so a subgroup finds the project of its parent group
+            expanded = descendant_ids(workspace_id, own, parents) if own else set()
+        else:
+            expanded = _with_ancestors(workspace_id, own, parents)
         # A module is "in" a group a person of it belongs to, so my groups are tested against the expanded set;
-        # a cycle matches my groups through the groups its work items are assigned to.
+        # a cycle or a project matches my groups through the groups it holds itself.
         mine_hit = bool((expanded if kind == "module" else own) & mine)
         info[str(item_id)] = {
             "group_ids": sorted(str(group_id) for group_id in expanded & allowed),
@@ -219,7 +251,7 @@ def filter_by_groups_param(request, slug, kind, queryset, param="groups"):
         return queryset
     if resolved.empty:
         return queryset.none()
-    ids = list(queryset.values_list("id", flat=True))
+    ids = list(dict.fromkeys(queryset.values_list("id", flat=True)))
     info = group_info(request, slug, kind, ids)
     wanted = {str(group_id) for group_id in resolved.group_ids}
     keep = []

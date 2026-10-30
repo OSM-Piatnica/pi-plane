@@ -70,6 +70,12 @@ export interface IProject extends IPartialProject {
   anchor?: string | null;
   is_favorite?: boolean;
   members?: string[];
+  /** Groups the project has as project groups, incl. the ones above them, restricted to the ones the requester may filter by. */
+  group_ids?: string[];
+  /** Whether the project has any project group at all. */
+  has_group?: boolean;
+  /** Whether the project has a project group among the requester's groups. */
+  in_my_groups?: boolean;
   timezone?: string;
   start_of_the_week?: EStartOfTheWeek;
   /** Days that count as non-working time in this project, 0 = Sunday ... 6 = Saturday. */

@@ -5,7 +5,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import type { IModule, TFilterableUserGroup } from "@plane/types";
+import type { IModule, TFilterableUserGroup, TProject } from "@plane/types";
 import {
   getGroupFilterOptions,
   getGroupFilterPathLabel,
@@ -13,6 +13,7 @@ import {
   isGroupFilterKeyword,
   matchesGroupFilter,
   shouldFilterModule,
+  shouldFilterProject,
 } from "@plane/utils";
 
 const group = (id: string, name: string, parent_id: string | null = null): TFilterableUserGroup => ({
@@ -99,5 +100,16 @@ describe("matchesGroupFilter", () => {
     expect(shouldFilterModule(module, {}, { groups: ["g-root"] })).toBe(true);
     expect(shouldFilterModule(module, {}, { groups: ["g-other"] })).toBe(false);
     expect(shouldFilterModule(module, {}, { groups: ["g-root"], status: ["completed"] })).toBe(false);
+  });
+});
+
+describe("shouldFilterProject", () => {
+  const project = { id: "p1", name: "P", group_ids: ["g-root"], has_group: true, in_my_groups: false } as TProject;
+  it("applies the group filter with the other filters", () => {
+    expect(shouldFilterProject(project, {}, { groups: ["g-root"] })).toBe(true);
+    expect(shouldFilterProject(project, {}, { groups: ["g-other"] })).toBe(false);
+    expect(shouldFilterProject(project, {}, { groups: ["none"] })).toBe(false);
+    expect(shouldFilterProject(project, {}, { groups: ["my_groups"] })).toBe(false);
+    expect(shouldFilterProject({ ...project, has_group: false, group_ids: [] }, {}, { groups: ["none"] })).toBe(true);
   });
 });

@@ -18,6 +18,7 @@ from plane.db.models import (
     Module,
     ModuleMember,
     Project,
+    ProjectGroup,
     ProjectMember,
     State,
     User,
@@ -290,3 +291,95 @@ class TestFilterableGroups:
         stranger = User.objects.create(email="x@example.com", username="x@example.com")
 
         assert _client(stranger).get(self._url(workspace)).status_code in (401, 403)
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestProjectGroupFilter:
+    def _url(self, workspace):
+        return f"/api/workspaces/{workspace.slug}/projects/details/"
+
+    @pytest.fixture
+    def projects(self, workspace, create_user, tree):
+        made = {}
+        for name, identifier, group in (
+            ("Sales project", "SAL", tree["sales"]),
+            ("Poland project", "POL", tree["poland"]),
+            ("Support project", "SUP", tree["support"]),
+            ("Loose project", "LSE", None),
+        ):
+            project = Project.objects.create(
+                name=name, identifier=identifier, workspace=workspace, created_by=create_user, network=2
+            )
+            ProjectMember.objects.create(project=project, member=create_user, role=ADMIN, is_active=True)
+            if group is not None:
+                ProjectGroup.objects.create(project=project, group=group, workspace=workspace)
+            made[name] = project
+        return made
+
+    def _names(self, client, workspace, groups=None):
+        response = client.get(self._url(workspace), {"groups": groups} if groups is not None else {})
+        assert response.status_code == 200
+        return sorted(row["name"] for row in response.data)
+
+    def test_a_group_matches_the_projects_of_that_group_and_of_the_groups_above_it(
+        self, session_client, workspace, tree, projects
+    ):
+        # Poland is below Sales: the Sales project is its parent's project, so Poland people find it too
+        assert self._names(session_client, workspace, str(tree["poland"].id)) == ["Poland project", "Sales project"]
+        assert self._names(session_client, workspace, str(tree["sales"].id)) == ["Sales project"]
+
+    def test_none_finds_the_projects_without_a_project_group_and_values_are_or_ed(
+        self, session_client, workspace, tree, projects
+    ):
+        assert self._names(session_client, workspace, "none") == ["Loose project"]
+        assert self._names(session_client, workspace, f"none,{tree['support'].id}") == [
+            "Loose project",
+            "Support project",
+        ]
+
+    def test_my_groups_means_the_project_groups_among_the_groups_of_the_person(
+        self, workspace, project, tree, projects
+    ):
+        person = _person(workspace, project, "pl@example.com")
+        _join(tree["poland"], person)
+
+        # Poland and Sales are the person's groups; the Support and loose projects do not match
+        assert self._names(_client(person), workspace, "my_groups") == ["Poland project", "Sales project"]
+
+    def test_somebody_else_may_only_use_their_own_groups_and_gets_nothing_for_foreign_ones(
+        self, workspace, project, tree, projects
+    ):
+        person = _person(workspace, project, "pl@example.com")
+        _join(tree["poland"], person)
+        client = _client(person)
+
+        assert self._names(client, workspace, f"{tree['sales'].id},{tree['support'].id}") == ["Sales project"]
+        assert self._names(client, workspace, str(tree["support"].id)) == []
+        # "Filters" is the plain project of the shared fixture: it has no project group either
+        assert self._names(client, workspace, f"{tree['support'].id},none") == ["Filters", "Loose project"]
+
+    def test_every_project_carries_the_facts_the_web_filters_on(
+        self, session_client, workspace, project, tree, projects
+    ):
+        rows = {row["name"]: row for row in session_client.get(self._url(workspace)).data}
+
+        assert set(rows["Sales project"]["group_ids"]) == {str(tree["sales"].id), str(tree["poland"].id)}
+        assert rows["Sales project"]["has_group"] is True
+        assert rows["Poland project"]["group_ids"] == [str(tree["poland"].id)]
+        assert rows["Loose project"]["group_ids"] == []
+        assert rows["Loose project"]["has_group"] is False
+        assert rows["Loose project"]["in_my_groups"] is False
+
+    def test_group_ids_are_limited_to_the_groups_the_person_may_filter_by(self, workspace, project, tree, projects):
+        person = _person(workspace, project, "pl@example.com")
+        _join(tree["poland"], person)
+
+        rows = {row["name"]: row for row in _client(person).get(self._url(workspace)).data}
+
+        assert set(rows["Sales project"]["group_ids"]) == {str(tree["sales"].id), str(tree["poland"].id)}
+        assert rows["Sales project"]["in_my_groups"] is True
+        # Support is not one of their groups: it is not named, but the project still has a group
+        assert rows["Support project"]["group_ids"] == []
+        assert rows["Support project"]["has_group"] is True
+        assert rows["Support project"]["in_my_groups"] is False
