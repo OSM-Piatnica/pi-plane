@@ -703,6 +703,8 @@
       "clear_all": "Зняти все",
       "description": "Створює новий проєкт із тими самими налаштуваннями. Сторінки та вебхуки не копіюються; робочі одиниці — лише якщо ви виберете це нижче.",
       "error": "Не вдалося дублювати проєкт. Спробуйте ще раз.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Створюється, якщо порожньо",
       "properties": {
         "assignees": "Виконавці",

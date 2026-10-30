@@ -703,6 +703,8 @@
       "clear_all": "Hapus semua",
       "description": "Membuat proyek baru dengan pengaturan yang sama. Halaman dan webhook tidak disalin; item kerja hanya jika Anda memilihnya di bawah.",
       "error": "Proyek tidak dapat diduplikasi. Silakan coba lagi.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Dibuat otomatis jika kosong",
       "properties": {
         "assignees": "Penerima tugas",

@@ -703,6 +703,8 @@
       "clear_all": "Deseleziona tutto",
       "description": "Crea un nuovo progetto con le stesse impostazioni. Pagine e webhook non vengono copiati; gli elementi di lavoro solo se lo scegli qui sotto.",
       "error": "Impossibile duplicare il progetto. Riprova.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Generato se vuoto",
       "properties": {
         "assignees": "Assegnatari",

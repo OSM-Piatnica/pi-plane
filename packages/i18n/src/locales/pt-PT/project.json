@@ -703,6 +703,8 @@
       "clear_all": "Limpar tudo",
       "description": "Cria um novo projeto com as mesmas definições. As páginas e os webhooks não são copiados; os itens de trabalho só se escolher abaixo.",
       "error": "Não foi possível duplicar o projeto. Tente novamente.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Gerado se vazio",
       "properties": {
         "assignees": "Responsáveis",

@@ -703,6 +703,8 @@
       "clear_all": "Șterge tot",
       "description": "Creează un proiect nou cu aceleași setări. Paginile și webhook-urile nu se copiază; activitățile doar dacă alegi mai jos.",
       "error": "Proiectul nu a putut fi duplicat. Încearcă din nou.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Se generează dacă e gol",
       "properties": {
         "assignees": "Persoane atribuite",

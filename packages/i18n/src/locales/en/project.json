@@ -703,6 +703,8 @@
       "clear_all": "Clear all",
       "description": "Creates a new project with the same settings. Pages and webhooks are not copied; work items are copied only if you choose so below.",
       "error": "Could not duplicate the project. Please try again.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Generated if empty",
       "properties": {
         "assignees": "Assignees",

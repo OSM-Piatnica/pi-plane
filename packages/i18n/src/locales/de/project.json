@@ -703,6 +703,8 @@
       "clear_all": "Alle abwählen",
       "description": "Erstellt ein neues Projekt mit denselben Einstellungen. Seiten und Webhooks werden nicht kopiert; Arbeitselemente nur, wenn Sie es unten wählen.",
       "error": "Das Projekt konnte nicht dupliziert werden. Bitte versuchen Sie es erneut.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Wird erzeugt, wenn leer",
       "properties": {
         "assignees": "Zugewiesene",

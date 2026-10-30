@@ -703,6 +703,8 @@
       "clear_all": "すべて解除",
       "description": "同じ設定で新しいプロジェクトを作成します。ページと Webhook はコピーされません。作業項目は下で選択した場合のみコピーされます。",
       "error": "プロジェクトを複製できませんでした。もう一度お試しください。",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "空欄の場合は自動生成",
       "properties": {
         "assignees": "担当者",

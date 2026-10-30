@@ -703,6 +703,8 @@
       "clear_all": "Изчисти всички",
       "description": "Създава нов проект със същите настройки. Страниците и уебкуките не се копират; работните елементи — само ако изберете това по-долу.",
       "error": "Проектът не можа да бъде дублиран. Опитайте отново.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Генерира се, ако е празно",
       "properties": {
         "assignees": "Изпълнители",

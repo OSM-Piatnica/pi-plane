@@ -703,6 +703,8 @@
       "clear_all": "Tout effacer",
       "description": "Crée un nouveau projet avec les mêmes paramètres. Les pages et les webhooks ne sont pas copiés ; les éléments de travail ne le sont que si vous le choisissez ci-dessous.",
       "error": "Le projet n'a pas pu être dupliqué. Veuillez réessayer.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Généré si vide",
       "properties": {
         "assignees": "Assignés",

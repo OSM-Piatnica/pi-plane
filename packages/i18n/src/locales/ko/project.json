@@ -703,6 +703,8 @@
       "clear_all": "모두 지우기",
       "description": "동일한 설정으로 새 프로젝트를 만듭니다. 페이지와 웹훅은 복사되지 않으며, 작업 항목은 아래에서 선택한 경우에만 복사됩니다.",
       "error": "프로젝트를 복제할 수 없습니다. 다시 시도해 주세요.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "비워 두면 자동 생성",
       "properties": {
         "assignees": "담당자",

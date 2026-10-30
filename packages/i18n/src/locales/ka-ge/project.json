@@ -703,6 +703,8 @@
       "clear_all": "ყველას გასუფთავება",
       "description": "ქმნის ახალ პროექტს იგივე პარამეტრებით. გვერდები და ვებჰუკები არ კოპირდება; სამუშაო ელემენტები მხოლოდ ქვემოთ არჩევის შემთხვევაში.",
       "error": "პროექტის დუბლირება ვერ მოხერხდა. გთხოვთ, სცადოთ ხელახლა.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "ცარიელის შემთხვევაში გენერირდება",
       "properties": {
         "assignees": "შემსრულებლები",

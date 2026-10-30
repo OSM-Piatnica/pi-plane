@@ -703,6 +703,8 @@
       "clear_all": "Снять все",
       "description": "Создает новый проект с теми же настройками. Страницы и вебхуки не копируются; рабочие элементы — только если вы выберете это ниже.",
       "error": "Не удалось дублировать проект. Попробуйте еще раз.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Создается, если пусто",
       "properties": {
         "assignees": "Исполнители",

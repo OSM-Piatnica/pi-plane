@@ -703,6 +703,8 @@
       "clear_all": "Tümünü temizle",
       "description": "Aynı ayarlarla yeni bir proje oluşturur. Sayfalar ve webhook'lar kopyalanmaz; iş öğeleri yalnızca aşağıda seçerseniz kopyalanır.",
       "error": "Proje çoğaltılamadı. Lütfen tekrar deneyin.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Boşsa otomatik oluşturulur",
       "properties": {
         "assignees": "Atananlar",

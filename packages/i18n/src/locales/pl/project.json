@@ -703,6 +703,8 @@
       "clear_all": "Wyczyść wszystko",
       "description": "Tworzy nowy projekt z tymi samymi ustawieniami. Strony i webhooki nie są kopiowane; elementy pracy tylko jeśli wybierzesz to poniżej.",
       "error": "Nie udało się zduplikować projektu. Spróbuj ponownie.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Zostanie wygenerowany, jeśli puste",
       "properties": {
         "assignees": "Przypisani",

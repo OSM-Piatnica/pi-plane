@@ -703,6 +703,8 @@
       "clear_all": "Zrušiť výber",
       "description": "Vytvorí nový projekt s rovnakým nastavením. Stránky a webhooky sa nekopírujú; pracovné položky len ak to zvolíte nižšie.",
       "error": "Projekt sa nepodarilo duplikovať. Skúste to prosím znova.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Vytvorí sa, ak zostane prázdne",
       "properties": {
         "assignees": "Priradení",

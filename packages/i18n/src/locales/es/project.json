@@ -703,6 +703,8 @@
       "clear_all": "Borrar todo",
       "description": "Crea un nuevo proyecto con la misma configuración. Las páginas y los webhooks no se copian; los elementos de trabajo solo si lo eliges abajo.",
       "error": "No se pudo duplicar el proyecto. Inténtalo de nuevo.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Se genera si está vacío",
       "properties": {
         "assignees": "Asignados",

@@ -703,6 +703,8 @@
       "clear_all": "Alles wissen",
       "description": "Maakt een nieuw project met dezelfde instellingen. Pagina's en webhooks worden niet gekopieerd; werkitems alleen als je dat hieronder kiest.",
       "error": "Het project kon niet worden gedupliceerd. Probeer het opnieuw.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Wordt gegenereerd als leeg",
       "properties": {
         "assignees": "Toegewezen aan",

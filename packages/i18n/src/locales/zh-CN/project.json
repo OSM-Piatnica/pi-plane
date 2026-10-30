@@ -703,6 +703,8 @@
       "clear_all": "全部清除",
       "description": "使用相同的设置创建新项目。页面和 Webhook 不会被复制；工作项仅在您于下方选择时复制。",
       "error": "无法复制项目，请重试。",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "留空则自动生成",
       "properties": {
         "assignees": "负责人",

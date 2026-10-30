@@ -703,6 +703,8 @@
       "clear_all": "全部清除",
       "description": "使用相同的設定建立新專案。頁面和 Webhook 不會被複製；工作事項僅在您於下方選擇時複製。",
       "error": "無法複製專案，請再試一次。",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "留空則自動產生",
       "properties": {
         "assignees": "負責人",

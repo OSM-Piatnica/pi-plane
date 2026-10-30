@@ -703,6 +703,8 @@
       "clear_all": "Bỏ chọn tất cả",
       "description": "Tạo dự án mới với cùng các cài đặt. Trang và webhook không được sao chép; mục công việc chỉ được sao chép nếu bạn chọn bên dưới.",
       "error": "Không thể nhân bản dự án. Vui lòng thử lại.",
+      "groups": "Groups as members",
+      "groups_hint": "Links the same groups with the same roles, so the people in them become members of the copy.",
       "identifier_placeholder": "Tự tạo nếu để trống",
       "properties": {
         "assignees": "Người được giao",
