@@ -55,6 +55,12 @@ def index_groups(workspace_id) -> tuple[dict, dict]:
     return by_path, by_name
 
 
+def is_ambiguous(text, by_name: dict) -> bool:
+    """True when a plain name is shared by several groups (so the file has to write the full path)."""
+    key = _key(text)
+    return key in by_name and by_name[key] is None
+
+
 def find_group(text, by_path: dict, by_name: dict):
     """The id of the group a file names by path or plain name, or None when it is unknown or ambiguous."""
     key = _key(text)

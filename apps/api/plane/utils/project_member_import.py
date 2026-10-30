@@ -18,14 +18,13 @@ from plane.db.models import (
     ProjectGroup,
     ProjectGroupRole,
     ProjectMember,
-    UserGroup,
     WorkspaceMember,
 )
+from plane.utils.group_paths import find_group, index_groups, is_ambiguous
 from plane.utils.project_groups import _ensure_properties, reconcile_project
 
 MAX_ROWS = 5000
 ROLES = (5, 15, 20)
-PATH_SEPARATOR = " / "
 
 REASONS = {
     "invalid_role": "The role must be 5 (Guest), 15 (Member) or 20 (Admin).",
@@ -39,35 +38,6 @@ REASONS = {
     "group_admin_role": "Groups cannot be project admins.",
     "group_already_linked": "The group already is a member of the project with this role.",
 }
-
-
-def normalize_group_path(value):
-    """``" parent/ Child "`` and ``"Parent / Child"`` name the same group; the comparison ignores case."""
-    parts = [part.strip() for part in str(value).split("/")]
-    return PATH_SEPARATOR.join(parts).casefold()
-
-
-def group_lookup(workspace_id):
-    """({normalised path: group id}, {normalised name: [group ids]}) of the live groups of a workspace."""
-    groups = {
-        group_id: (name, parent_id)
-        for group_id, name, parent_id in UserGroup.objects.filter(workspace_id=workspace_id).values_list(
-            "id", "name", "parent_id"
-        )
-    }
-    by_path = {}
-    by_name = {}
-    for group_id, (name, _) in groups.items():
-        names = [name]
-        seen = {group_id}
-        parent_id = groups[group_id][1]
-        while parent_id is not None and parent_id in groups and parent_id not in seen:
-            seen.add(parent_id)
-            names.append(groups[parent_id][0])
-            parent_id = groups[parent_id][1]
-        by_path[normalize_group_path("/".join(reversed(names)))] = group_id
-        by_name.setdefault(name.strip().casefold(), []).append(group_id)
-    return by_path, by_name
 
 
 def _role_of(value):
@@ -107,7 +77,7 @@ def import_project_members(project, rows):
         people[(item["member__email"] or "").strip().casefold()] = (item["member_id"], item["role"])
     members = {row.member_id: row for row in ProjectMember.objects.filter(project_id=project.id)}
     links = {link.group_id: link for link in ProjectGroup.objects.filter(project_id=project.id)}
-    by_path, by_name = group_lookup(workspace_id)
+    by_path, by_name = index_groups(workspace_id)
 
     to_create = []
     to_update = {}
@@ -133,13 +103,10 @@ def import_project_members(project, rows):
             if role not in ProjectGroupRole.values:
                 result.skip("group", row, group_name, "group_admin_role")
                 continue
-            group_id = by_path.get(normalize_group_path(group_name))
-            if group_id is None:
-                candidates = by_name.get(group_name.casefold(), []) if "/" not in group_name else []
-                if len(candidates) > 1:
-                    result.skip("group", row, group_name, "ambiguous_group")
-                    continue
-                group_id = candidates[0] if candidates else None
+            group_id = find_group(group_name, by_path, by_name)
+            if group_id is None and is_ambiguous(group_name, by_name):
+                result.skip("group", row, group_name, "ambiguous_group")
+                continue
             if group_id is None:
                 result.skip("group", row, group_name, "unknown_group")
                 continue
