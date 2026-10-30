@@ -162,7 +162,7 @@
             "subscribers": "Подписчики",
             "created_by_name": "Создал",
             "start_date": "Дата начала",
-            "finish_date": "Finish date",
+            "finish_date": "Дата завершения",
             "target_date": "Срок выполнения",
             "duration": "Длительность",
             "completed_at": "Завершено",

@@ -344,7 +344,7 @@
   "start_date": "Başlangıç tarihi",
   "end_date": "Bitiş tarihi",
   "due_date": "Son tarih",
-  "finish_date": "Finish date",
+  "finish_date": "Planlanan bitiş tarihi",
   "target_date": "Hedef tarih",
   "estimate": "Tahmin",
   "change_parent_issue": "Üst iş öğesini değiştir",
@@ -571,7 +571,7 @@
       "last_updated": "Son güncellenen",
       "start_date": "Başlangıç tarihi",
       "due_date": "Son tarih",
-      "finish_date": "Finish date",
+      "finish_date": "Planlanan bitiş tarihi",
       "asc": "Artan",
       "desc": "Azalan",
       "updated_on": "Güncellenme tarihi"

@@ -18,7 +18,7 @@
       "assignee": "Zugewiesene hinzufügen",
       "start_date": "Startdatum hinzufügen",
       "due_date": "Fälligkeitsdatum hinzufügen",
-      "finish_date": "Add finish date",
+      "finish_date": "Fertigstellungsdatum hinzufügen",
       "parent": "Übergeordnetes Arbeitselement hinzufügen",
       "sub_issue": "Untergeordnetes Arbeitselement hinzufügen",
       "dependency": "Abhängigkeit hinzufügen",
@@ -289,45 +289,45 @@
     },
     "dates": {
       "help": {
-        "finish": "When we currently expect the work to finish.",
-        "due": "When the work must be completed."
+        "finish": "Wann die Arbeit nach aktuellem Stand voraussichtlich fertig wird.",
+        "due": "Bis wann die Arbeit abgeschlossen sein muss."
       },
       "notice": {
-        "due_defaulted": "Due date also set to {date}",
-        "finish_defaulted": "Finish date also set to {date}",
-        "finish_not_defaulted": "Due date saved. Finish date left empty because the due date is before the start date."
+        "due_defaulted": "Fälligkeitsdatum ebenfalls auf {date} gesetzt",
+        "finish_defaulted": "Fertigstellungsdatum ebenfalls auf {date} gesetzt",
+        "finish_not_defaulted": "Fälligkeitsdatum gespeichert. Das Fertigstellungsdatum bleibt leer, da das Fälligkeitsdatum vor dem Startdatum liegt."
       },
-      "only_finish": "Set only finish",
-      "only_due": "Set only due",
-      "undo": "Undo",
-      "finish_before_start": "Finish must be on or after start.",
+      "only_finish": "Nur Fertigstellung festlegen",
+      "only_due": "Nur Fälligkeit festlegen",
+      "undo": "Rückgängig",
+      "finish_before_start": "Die Fertigstellung muss am oder nach dem Start liegen.",
       "status": {
-        "overdue": "Overdue",
-        "forecast_misses_deadline": "Finish is after the due date",
-        "forecast_unknown": "No finish forecast",
-        "planned_finish_passed": "Planned finish has passed",
-        "completed_late": "Completed late"
+        "overdue": "Überfällig",
+        "forecast_misses_deadline": "Fertigstellung liegt nach dem Fälligkeitsdatum",
+        "forecast_unknown": "Keine Prognose für die Fertigstellung",
+        "planned_finish_passed": "Geplante Fertigstellung ist verstrichen",
+        "completed_late": "Verspätet abgeschlossen"
       },
       "timeline": {
         "start": "Start",
-        "finish": "Finish",
-        "due": "Due",
+        "finish": "Fertigstellung",
+        "due": "Fälligkeit",
         "start_only": "Start",
-        "finish_only": "Finish",
-        "due_marker": "Due date",
-        "due_marker_hint": "Drag or use the left and right arrow keys to change only the due date.",
-        "variance_on_due": "Finish is on the due date",
-        "variance_late": "{days, plural, one {Finish is # day after due} other {Finish is # days after due}}",
-        "variance_early": "{days, plural, one {Finish is # day before due} other {Finish is # days before due}}"
+        "finish_only": "Fertigstellung",
+        "due_marker": "Fälligkeitsdatum",
+        "due_marker_hint": "Ziehen oder die Pfeiltasten nach links und rechts verwenden, um nur das Fälligkeitsdatum zu ändern.",
+        "variance_on_due": "Fertigstellung am Fälligkeitsdatum",
+        "variance_late": "{days, plural, one {Fertigstellung # Tag nach der Fälligkeit} other {Fertigstellung # Tage nach der Fälligkeit}}",
+        "variance_early": "{days, plural, one {Fertigstellung # Tag vor der Fälligkeit} other {Fertigstellung # Tage vor der Fälligkeit}}"
       },
       "calendar": {
-        "layer_label": "Calendar layer",
-        "scheduled": "Scheduled work",
-        "deadlines": "Deadlines",
-        "scheduled_help": "Work placed from start date to finish date",
-        "deadlines_help": "Work placed on its due date",
-        "due_marker": "Due",
-        "finish_marker": "Finish"
+        "layer_label": "Kalenderebene",
+        "scheduled": "Geplante Arbeit",
+        "deadlines": "Fristen",
+        "scheduled_help": "Arbeit, platziert vom Startdatum bis zum Fertigstellungsdatum",
+        "deadlines_help": "Arbeit, platziert am Fälligkeitsdatum",
+        "due_marker": "Fällig",
+        "finish_marker": "Fertigstellung"
       }
     }
   },
@@ -752,10 +752,10 @@
         "set_with_issue": "hat den Status von <issue/> auf <value/> gesetzt."
       },
       "finish_date": {
-        "removed": "removed the finish date.",
-        "removed_with_issue": "removed the finish date from <issue/>.",
-        "set": "set the finish date to <value/>.",
-        "set_with_issue": "set the finish date to <value/> for <issue/>."
+        "removed": "hat das Fertigstellungsdatum entfernt.",
+        "removed_with_issue": "hat das Fertigstellungsdatum von <issue/> entfernt.",
+        "set": "hat das Fertigstellungsdatum auf <value/> gesetzt.",
+        "set_with_issue": "hat das Fertigstellungsdatum von <issue/> auf <value/> gesetzt."
       },
       "target_date": {
         "removed": "hat das Fälligkeitsdatum entfernt.",
@@ -900,10 +900,10 @@
         "set_without_issue": "hat den Status auf <value/> gesetzt"
       },
       "finish_date": {
-        "removed_with_issue": "removed the finish date from <issue/>",
-        "removed_without_issue": "removed the finish date",
-        "set_with_issue": "set the finish date to <value/> for <issue/>",
-        "set_without_issue": "set the finish date to <value/>"
+        "removed_with_issue": "hat das Fertigstellungsdatum von <issue/> entfernt",
+        "removed_without_issue": "hat das Fertigstellungsdatum entfernt",
+        "set_with_issue": "hat das Fertigstellungsdatum von <issue/> auf <value/> gesetzt",
+        "set_without_issue": "hat das Fertigstellungsdatum auf <value/> gesetzt"
       },
       "target_date": {
         "removed_with_issue": "hat das Fälligkeitsdatum von <issue/> entfernt",

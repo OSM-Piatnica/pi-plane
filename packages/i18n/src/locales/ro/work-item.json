@@ -18,7 +18,7 @@
       "assignee": "Adaugă responsabili",
       "start_date": "Adaugă data de început",
       "due_date": "Adaugă termenul limită",
-      "finish_date": "Add finish date",
+      "finish_date": "Adaugă data de finalizare",
       "parent": "Adaugă activitate părinte",
       "sub_issue": "Adaugă sub-activitate",
       "dependency": "Adaugă dependență",
@@ -289,45 +289,45 @@
     },
     "dates": {
       "help": {
-        "finish": "When we currently expect the work to finish.",
-        "due": "When the work must be completed."
+        "finish": "Când estimăm în prezent că se va finaliza lucrul.",
+        "due": "Până când trebuie finalizat lucrul."
       },
       "notice": {
-        "due_defaulted": "Due date also set to {date}",
-        "finish_defaulted": "Finish date also set to {date}",
-        "finish_not_defaulted": "Due date saved. Finish date left empty because the due date is before the start date."
+        "due_defaulted": "Data limită a fost setată și la {date}",
+        "finish_defaulted": "Data de finalizare a fost setată și la {date}",
+        "finish_not_defaulted": "Termenul limită a fost salvat. Data de finalizare a rămas necompletată deoarece termenul limită este înainte de data de început."
       },
-      "only_finish": "Set only finish",
-      "only_due": "Set only due",
-      "undo": "Undo",
-      "finish_before_start": "Finish must be on or after start.",
+      "only_finish": "Setează doar finalizarea",
+      "only_due": "Setează doar termenul limită",
+      "undo": "Anulează",
+      "finish_before_start": "Finalizarea trebuie să fie la data de început sau după aceasta.",
       "status": {
-        "overdue": "Overdue",
-        "forecast_misses_deadline": "Finish is after the due date",
-        "forecast_unknown": "No finish forecast",
-        "planned_finish_passed": "Planned finish has passed",
-        "completed_late": "Completed late"
+        "overdue": "Întârziat",
+        "forecast_misses_deadline": "Finalizarea este după termenul limită",
+        "forecast_unknown": "Fără estimare de finalizare",
+        "planned_finish_passed": "Finalizarea planificată a trecut",
+        "completed_late": "Finalizat cu întârziere"
       },
       "timeline": {
-        "start": "Start",
-        "finish": "Finish",
-        "due": "Due",
-        "start_only": "Start",
-        "finish_only": "Finish",
-        "due_marker": "Due date",
-        "due_marker_hint": "Drag or use the left and right arrow keys to change only the due date.",
-        "variance_on_due": "Finish is on the due date",
-        "variance_late": "{days, plural, one {Finish is # day after due} other {Finish is # days after due}}",
-        "variance_early": "{days, plural, one {Finish is # day before due} other {Finish is # days before due}}"
+        "start": "Început",
+        "finish": "Finalizare",
+        "due": "Termen limită",
+        "start_only": "Început",
+        "finish_only": "Finalizare",
+        "due_marker": "Data limită",
+        "due_marker_hint": "Trageți sau folosiți tastele săgeată stânga și dreapta pentru a modifica doar data limită.",
+        "variance_on_due": "Finalizarea este la termenul limită",
+        "variance_late": "{days, plural, one {Finalizarea este cu # zi după termen} few {Finalizarea este cu # zile după termen} other {Finalizarea este cu # de zile după termen}}",
+        "variance_early": "{days, plural, one {Finalizarea este cu # zi înainte de termen} few {Finalizarea este cu # zile înainte de termen} other {Finalizarea este cu # de zile înainte de termen}}"
       },
       "calendar": {
-        "layer_label": "Calendar layer",
-        "scheduled": "Scheduled work",
-        "deadlines": "Deadlines",
-        "scheduled_help": "Work placed from start date to finish date",
-        "deadlines_help": "Work placed on its due date",
-        "due_marker": "Due",
-        "finish_marker": "Finish"
+        "layer_label": "Strat de calendar",
+        "scheduled": "Activități planificate",
+        "deadlines": "Termene limită",
+        "scheduled_help": "Activități plasate de la data de început până la data de finalizare",
+        "deadlines_help": "Activități plasate la data limită",
+        "due_marker": "Termen limită",
+        "finish_marker": "Finalizare"
       }
     }
   },
@@ -752,10 +752,10 @@
         "set_with_issue": "a setat starea la <value/> pentru <issue/>."
       },
       "finish_date": {
-        "removed": "removed the finish date.",
-        "removed_with_issue": "removed the finish date from <issue/>.",
-        "set": "set the finish date to <value/>.",
-        "set_with_issue": "set the finish date to <value/> for <issue/>."
+        "removed": "a eliminat data de finalizare.",
+        "removed_with_issue": "a eliminat data de finalizare din <issue/>.",
+        "set": "a setat data de finalizare la <value/>.",
+        "set_with_issue": "a setat data de finalizare la <value/> pentru <issue/>."
       },
       "target_date": {
         "removed": "a eliminat termenul limită.",
@@ -900,10 +900,10 @@
         "set_without_issue": "a setat starea la <value/>"
       },
       "finish_date": {
-        "removed_with_issue": "removed the finish date from <issue/>",
-        "removed_without_issue": "removed the finish date",
-        "set_with_issue": "set the finish date to <value/> for <issue/>",
-        "set_without_issue": "set the finish date to <value/>"
+        "removed_with_issue": "a eliminat data de finalizare din <issue/>",
+        "removed_without_issue": "a eliminat data de finalizare",
+        "set_with_issue": "a setat data de finalizare la <value/> pentru <issue/>",
+        "set_without_issue": "a setat data de finalizare la <value/>"
       },
       "target_date": {
         "removed_with_issue": "a eliminat termenul limită din <issue/>",

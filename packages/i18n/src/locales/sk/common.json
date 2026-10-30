@@ -344,7 +344,7 @@
   "start_date": "Dátum začiatku",
   "end_date": "Dátum ukončenia",
   "due_date": "Termín",
-  "finish_date": "Finish date",
+  "finish_date": "Dátum dokončenia",
   "target_date": "Cieľový dátum",
   "estimate": "Odhad",
   "change_parent_issue": "Zmeniť nadradenú pracovnú položku",
@@ -571,7 +571,7 @@
       "last_updated": "Naposledy aktualizované",
       "start_date": "Dátum začiatku",
       "due_date": "Termín",
-      "finish_date": "Finish date",
+      "finish_date": "Dátum dokončenia",
       "asc": "Vzostupne",
       "desc": "Zostupne",
       "updated_on": "Aktualizované dňa"

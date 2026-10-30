@@ -162,7 +162,7 @@
             "subscribers": "Aboneler",
             "created_by_name": "Oluşturan",
             "start_date": "Başlangıç tarihi",
-            "finish_date": "Finish date",
+            "finish_date": "Planlanan bitiş tarihi",
             "target_date": "Bitiş tarihi",
             "duration": "Süre",
             "completed_at": "Tamamlanma zamanı",

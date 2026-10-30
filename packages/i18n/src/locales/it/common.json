@@ -344,7 +344,7 @@
   "start_date": "Data di inizio",
   "end_date": "Data di fine",
   "due_date": "Scadenza",
-  "finish_date": "Finish date",
+  "finish_date": "Data di fine",
   "target_date": "Data prevista",
   "estimate": "Stima",
   "change_parent_issue": "Cambia elemento di lavoro principale",
@@ -571,7 +571,7 @@
       "last_updated": "Ultimo aggiornato",
       "start_date": "Data di inizio",
       "due_date": "Scadenza",
-      "finish_date": "Finish date",
+      "finish_date": "Data di fine",
       "asc": "Ascendente",
       "desc": "Discendente",
       "updated_on": "Aggiornato il"

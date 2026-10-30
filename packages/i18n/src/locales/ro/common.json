@@ -344,7 +344,7 @@
   "start_date": "Data de început",
   "end_date": "Data de sfârșit",
   "due_date": "Data limită",
-  "finish_date": "Finish date",
+  "finish_date": "Data de finalizare",
   "target_date": "Data țintă",
   "estimate": "Estimare",
   "change_parent_issue": "Schimbă activitatea părinte",
@@ -571,7 +571,7 @@
       "last_updated": "Ultima actualizată",
       "start_date": "Data de început",
       "due_date": "Data limită",
-      "finish_date": "Finish date",
+      "finish_date": "Data de finalizare",
       "asc": "Crescător",
       "desc": "Descrescător",
       "updated_on": "Actualizat la"

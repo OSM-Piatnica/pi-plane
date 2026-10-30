@@ -752,10 +752,10 @@
         "set_with_issue": "ustawiono stan na <value/> dla <issue/>."
       },
       "finish_date": {
-        "removed": "removed the finish date.",
-        "removed_with_issue": "removed the finish date from <issue/>.",
-        "set": "set the finish date to <value/>.",
-        "set_with_issue": "set the finish date to <value/> for <issue/>."
+        "removed": "usunięto datę zakończenia.",
+        "removed_with_issue": "usunięto datę zakończenia z <issue/>.",
+        "set": "ustawiono datę zakończenia na <value/>.",
+        "set_with_issue": "ustawiono datę zakończenia na <value/> dla <issue/>."
       },
       "target_date": {
         "removed": "usunięto termin.",
@@ -900,10 +900,10 @@
         "set_without_issue": "ustawiono stan na <value/>"
       },
       "finish_date": {
-        "removed_with_issue": "removed the finish date from <issue/>",
-        "removed_without_issue": "removed the finish date",
-        "set_with_issue": "set the finish date to <value/> for <issue/>",
-        "set_without_issue": "set the finish date to <value/>"
+        "removed_with_issue": "usunięto datę zakończenia z <issue/>",
+        "removed_without_issue": "usunięto datę zakończenia",
+        "set_with_issue": "ustawiono datę zakończenia na <value/> dla <issue/>",
+        "set_without_issue": "ustawiono datę zakończenia na <value/>"
       },
       "target_date": {
         "removed_with_issue": "usunięto termin z <issue/>",

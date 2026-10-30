@@ -18,7 +18,7 @@
       "assignee": "Додати призначеного",
       "start_date": "Додати дату початку",
       "due_date": "Додати крайній термін",
-      "finish_date": "Add finish date",
+      "finish_date": "Додати дату завершення",
       "parent": "Додати батьківську робочу одиницю",
       "sub_issue": "Додати похідну робочу одиницю",
       "dependency": "Додати залежність",
@@ -289,45 +289,45 @@
     },
     "dates": {
       "help": {
-        "finish": "When we currently expect the work to finish.",
-        "due": "When the work must be completed."
+        "finish": "Коли, за поточними очікуваннями, робота буде завершена.",
+        "due": "Коли робота має бути виконана."
       },
       "notice": {
-        "due_defaulted": "Due date also set to {date}",
-        "finish_defaulted": "Finish date also set to {date}",
-        "finish_not_defaulted": "Due date saved. Finish date left empty because the due date is before the start date."
+        "due_defaulted": "Крайній термін також встановлено на {date}",
+        "finish_defaulted": "Дату завершення також встановлено на {date}",
+        "finish_not_defaulted": "Крайній термін збережено. Дату завершення залишено порожньою, бо крайній термін раніший за дату початку."
       },
-      "only_finish": "Set only finish",
-      "only_due": "Set only due",
-      "undo": "Undo",
-      "finish_before_start": "Finish must be on or after start.",
+      "only_finish": "Встановити лише завершення",
+      "only_due": "Встановити лише крайній термін",
+      "undo": "Скасувати",
+      "finish_before_start": "Завершення має бути в день початку або пізніше.",
       "status": {
-        "overdue": "Overdue",
-        "forecast_misses_deadline": "Finish is after the due date",
-        "forecast_unknown": "No finish forecast",
-        "planned_finish_passed": "Planned finish has passed",
-        "completed_late": "Completed late"
+        "overdue": "Прострочено",
+        "forecast_misses_deadline": "Завершення після крайнього терміну",
+        "forecast_unknown": "Немає прогнозу завершення",
+        "planned_finish_passed": "Планове завершення минуло",
+        "completed_late": "Завершено із запізненням"
       },
       "timeline": {
-        "start": "Start",
-        "finish": "Finish",
-        "due": "Due",
-        "start_only": "Start",
-        "finish_only": "Finish",
-        "due_marker": "Due date",
-        "due_marker_hint": "Drag or use the left and right arrow keys to change only the due date.",
-        "variance_on_due": "Finish is on the due date",
-        "variance_late": "{days, plural, one {Finish is # day after due} other {Finish is # days after due}}",
-        "variance_early": "{days, plural, one {Finish is # day before due} other {Finish is # days before due}}"
+        "start": "Початок",
+        "finish": "Завершення",
+        "due": "Термін",
+        "start_only": "Початок",
+        "finish_only": "Завершення",
+        "due_marker": "Крайній термін",
+        "due_marker_hint": "Перетягніть або скористайтеся стрілками вліво та вправо, щоб змінити лише крайній термін.",
+        "variance_on_due": "Завершення в день крайнього терміну",
+        "variance_late": "{days, plural, one {Завершення через # день після крайнього терміну} few {Завершення через # дні після крайнього терміну} many {Завершення через # днів після крайнього терміну} other {Завершення через # дня після крайнього терміну}}",
+        "variance_early": "{days, plural, one {Завершення за # день до крайнього терміну} few {Завершення за # дні до крайнього терміну} many {Завершення за # днів до крайнього терміну} other {Завершення за # дня до крайнього терміну}}"
       },
       "calendar": {
-        "layer_label": "Calendar layer",
-        "scheduled": "Scheduled work",
-        "deadlines": "Deadlines",
-        "scheduled_help": "Work placed from start date to finish date",
-        "deadlines_help": "Work placed on its due date",
-        "due_marker": "Due",
-        "finish_marker": "Finish"
+        "layer_label": "Шар календаря",
+        "scheduled": "Запланована робота",
+        "deadlines": "Крайні терміни",
+        "scheduled_help": "Робота розміщена від дати початку до дати завершення",
+        "deadlines_help": "Робота розміщена на дату крайнього терміну",
+        "due_marker": "Термін",
+        "finish_marker": "Завершення"
       }
     }
   },
@@ -752,10 +752,10 @@
         "set_with_issue": "встановлено стан <value/> для <issue/>."
       },
       "finish_date": {
-        "removed": "removed the finish date.",
-        "removed_with_issue": "removed the finish date from <issue/>.",
-        "set": "set the finish date to <value/>.",
-        "set_with_issue": "set the finish date to <value/> for <issue/>."
+        "removed": "видалено дату завершення.",
+        "removed_with_issue": "видалено дату завершення з <issue/>.",
+        "set": "встановлено дату завершення <value/>.",
+        "set_with_issue": "встановлено дату завершення <value/> для <issue/>."
       },
       "target_date": {
         "removed": "видалено крайній термін.",
@@ -900,10 +900,10 @@
         "set_without_issue": "встановлено стан <value/>"
       },
       "finish_date": {
-        "removed_with_issue": "removed the finish date from <issue/>",
-        "removed_without_issue": "removed the finish date",
-        "set_with_issue": "set the finish date to <value/> for <issue/>",
-        "set_without_issue": "set the finish date to <value/>"
+        "removed_with_issue": "видалено дату завершення з <issue/>",
+        "removed_without_issue": "видалено дату завершення",
+        "set_with_issue": "встановлено дату завершення <value/> для <issue/>",
+        "set_without_issue": "встановлено дату завершення <value/>"
       },
       "target_date": {
         "removed_with_issue": "видалено крайній термін з <issue/>",

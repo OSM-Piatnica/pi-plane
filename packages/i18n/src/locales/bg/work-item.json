@@ -752,10 +752,10 @@
         "set_with_issue": "зададе състоянието на <value/> за <issue/>."
       },
       "finish_date": {
-        "removed": "removed the finish date.",
-        "removed_with_issue": "removed the finish date from <issue/>.",
-        "set": "set the finish date to <value/>.",
-        "set_with_issue": "set the finish date to <value/> for <issue/>."
+        "removed": "премахна датата на приключване.",
+        "removed_with_issue": "премахна датата на приключване от <issue/>.",
+        "set": "зададе датата на приключване на <value/>.",
+        "set_with_issue": "зададе датата на приключване на <value/> за <issue/>."
       },
       "target_date": {
         "removed": "премахна крайния срок.",
@@ -900,10 +900,10 @@
         "set_without_issue": "зададе състоянието на <value/>"
       },
       "finish_date": {
-        "removed_with_issue": "removed the finish date from <issue/>",
-        "removed_without_issue": "removed the finish date",
-        "set_with_issue": "set the finish date to <value/> for <issue/>",
-        "set_without_issue": "set the finish date to <value/>"
+        "removed_with_issue": "премахна датата на приключване от <issue/>",
+        "removed_without_issue": "премахна датата на приключване",
+        "set_with_issue": "зададе датата на приключване на <value/> за <issue/>",
+        "set_without_issue": "зададе датата на приключване на <value/>"
       },
       "target_date": {
         "removed_with_issue": "премахна крайния срок от <issue/>",

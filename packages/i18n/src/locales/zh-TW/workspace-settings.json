@@ -162,7 +162,7 @@
             "subscribers": "訂閱者",
             "created_by_name": "建立者",
             "start_date": "開始日期",
-            "finish_date": "Finish date",
+            "finish_date": "結束日期",
             "target_date": "到期日",
             "duration": "持續時間",
             "completed_at": "完成時間",

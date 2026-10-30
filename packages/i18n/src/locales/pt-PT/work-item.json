@@ -752,10 +752,10 @@
         "set_with_issue": "definiu o estado de <issue/> como <value/>."
       },
       "finish_date": {
-        "removed": "removed the finish date.",
-        "removed_with_issue": "removed the finish date from <issue/>.",
-        "set": "set the finish date to <value/>.",
-        "set_with_issue": "set the finish date to <value/> for <issue/>."
+        "removed": "removeu a data de conclusão.",
+        "removed_with_issue": "removeu a data de conclusão de <issue/>.",
+        "set": "definiu a data de conclusão como <value/>.",
+        "set_with_issue": "definiu a data de conclusão de <issue/> como <value/>."
       },
       "target_date": {
         "removed": "removeu a data de vencimento.",
@@ -900,10 +900,10 @@
         "set_without_issue": "definiu o estado como <value/>"
       },
       "finish_date": {
-        "removed_with_issue": "removed the finish date from <issue/>",
-        "removed_without_issue": "removed the finish date",
-        "set_with_issue": "set the finish date to <value/> for <issue/>",
-        "set_without_issue": "set the finish date to <value/>"
+        "removed_with_issue": "removeu a data de conclusão de <issue/>",
+        "removed_without_issue": "removeu a data de conclusão",
+        "set_with_issue": "definiu a data de conclusão de <issue/> como <value/>",
+        "set_without_issue": "definiu a data de conclusão como <value/>"
       },
       "target_date": {
         "removed_with_issue": "removeu a data de vencimento de <issue/>",

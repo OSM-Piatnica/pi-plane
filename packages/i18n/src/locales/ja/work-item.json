@@ -18,7 +18,7 @@
       "assignee": "担当者を追加",
       "start_date": "開始日を追加",
       "due_date": "期限日を追加",
-      "finish_date": "Add finish date",
+      "finish_date": "終了日を追加",
       "parent": "親作業項目を追加",
       "sub_issue": "サブ作業項目を追加",
       "dependency": "依存関係を追加",
@@ -289,45 +289,45 @@
     },
     "dates": {
       "help": {
-        "finish": "When we currently expect the work to finish.",
-        "due": "When the work must be completed."
+        "finish": "現時点で作業が終了すると見込まれる日です。",
+        "due": "作業を完了する必要がある日です。"
       },
       "notice": {
-        "due_defaulted": "Due date also set to {date}",
-        "finish_defaulted": "Finish date also set to {date}",
-        "finish_not_defaulted": "Due date saved. Finish date left empty because the due date is before the start date."
+        "due_defaulted": "期限も{date}に設定されました",
+        "finish_defaulted": "終了日も{date}に設定されました",
+        "finish_not_defaulted": "期限を保存しました。期限が開始日より前のため、終了日は空のままです。"
       },
-      "only_finish": "Set only finish",
-      "only_due": "Set only due",
-      "undo": "Undo",
-      "finish_before_start": "Finish must be on or after start.",
+      "only_finish": "終了のみを設定",
+      "only_due": "期限のみを設定",
+      "undo": "元に戻す",
+      "finish_before_start": "終了は開始と同日またはそれ以降にする必要があります。",
       "status": {
-        "overdue": "Overdue",
-        "forecast_misses_deadline": "Finish is after the due date",
-        "forecast_unknown": "No finish forecast",
-        "planned_finish_passed": "Planned finish has passed",
-        "completed_late": "Completed late"
+        "overdue": "期限超過",
+        "forecast_misses_deadline": "終了が期限を過ぎています",
+        "forecast_unknown": "終了の見込みがありません",
+        "planned_finish_passed": "計画上の終了日を過ぎています",
+        "completed_late": "遅れて完了"
       },
       "timeline": {
-        "start": "Start",
-        "finish": "Finish",
-        "due": "Due",
-        "start_only": "Start",
-        "finish_only": "Finish",
-        "due_marker": "Due date",
-        "due_marker_hint": "Drag or use the left and right arrow keys to change only the due date.",
-        "variance_on_due": "Finish is on the due date",
-        "variance_late": "{days, plural, one {Finish is # day after due} other {Finish is # days after due}}",
-        "variance_early": "{days, plural, one {Finish is # day before due} other {Finish is # days before due}}"
+        "start": "開始",
+        "finish": "終了",
+        "due": "期限",
+        "start_only": "開始",
+        "finish_only": "終了",
+        "due_marker": "期限",
+        "due_marker_hint": "ドラッグするか、左右の矢印キーを使って、期限のみを変更します。",
+        "variance_on_due": "終了は期限と同日です",
+        "variance_late": "{days, plural, one {終了は期限の#日後です} other {終了は期限の#日後です}}",
+        "variance_early": "{days, plural, one {終了は期限の#日前です} other {終了は期限の#日前です}}"
       },
       "calendar": {
-        "layer_label": "Calendar layer",
-        "scheduled": "Scheduled work",
-        "deadlines": "Deadlines",
-        "scheduled_help": "Work placed from start date to finish date",
-        "deadlines_help": "Work placed on its due date",
-        "due_marker": "Due",
-        "finish_marker": "Finish"
+        "layer_label": "カレンダーレイヤー",
+        "scheduled": "予定された作業",
+        "deadlines": "期限",
+        "scheduled_help": "開始日から終了日までに配置された作業",
+        "deadlines_help": "期限日に配置された作業",
+        "due_marker": "期限",
+        "finish_marker": "終了"
       }
     }
   },
@@ -752,10 +752,10 @@
         "set_with_issue": "<issue/>の状態を<value/>に設定しました。"
       },
       "finish_date": {
-        "removed": "removed the finish date.",
-        "removed_with_issue": "removed the finish date from <issue/>.",
-        "set": "set the finish date to <value/>.",
-        "set_with_issue": "set the finish date to <value/> for <issue/>."
+        "removed": "終了日を削除しました。",
+        "removed_with_issue": "<issue/>から終了日を削除しました。",
+        "set": "終了日を<value/>に設定しました。",
+        "set_with_issue": "<issue/>の終了日を<value/>に設定しました。"
       },
       "target_date": {
         "removed": "期限を削除しました。",
@@ -900,10 +900,10 @@
         "set_without_issue": "状態を<value/>に設定しました"
       },
       "finish_date": {
-        "removed_with_issue": "removed the finish date from <issue/>",
-        "removed_without_issue": "removed the finish date",
-        "set_with_issue": "set the finish date to <value/> for <issue/>",
-        "set_without_issue": "set the finish date to <value/>"
+        "removed_with_issue": "<issue/>から終了日を削除しました",
+        "removed_without_issue": "終了日を削除しました",
+        "set_with_issue": "<issue/>の終了日を<value/>に設定しました",
+        "set_without_issue": "終了日を<value/>に設定しました"
       },
       "target_date": {
         "removed_with_issue": "<issue/>から期限を削除しました",
