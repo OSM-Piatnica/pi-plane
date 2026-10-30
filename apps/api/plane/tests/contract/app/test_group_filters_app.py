@@ -96,7 +96,9 @@ class TestWorkItemsByGroup:
 
     def _rich(self, client, workspace, project, values):
         return _names(
-            client.get(self._url(workspace, project), {"filters": json.dumps({"group_assignee_id__in": values})})
+            client.get(
+                self._url(workspace, project), {"filters": json.dumps({"group_assignee_id__in": ",".join(values)})}
+            )
         )
 
     def test_a_group_matches_the_work_items_of_the_groups_below_it(
