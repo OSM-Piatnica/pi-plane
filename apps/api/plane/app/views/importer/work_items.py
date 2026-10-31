@@ -14,6 +14,7 @@ from plane.app.serializers import ExporterHistorySerializer
 from plane.db.models import ExporterHistory, Project, ProjectMember, Workspace
 from plane.utils.community_work_item_import import import_community_work_items_into_project
 from plane.utils.porters.importer import DataImporter
+from plane.utils.exception_logger import log_exception
 from plane.utils.import_limits import get_import_file_size_limit, get_import_max_work_items
 from plane.utils.project_work_item_import import WorkItemImportOptions
 
@@ -160,8 +161,11 @@ class ImportWorkItemsEndpoint(BaseAPIView):
                 return Response(detail, status=status.HTTP_400_BAD_REQUEST)
             return Response({"error": detail}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as exc:
+            # The history list shows `reason` to everyone who can read it, so it gets a fixed text;
+            # the exception itself (a database or parser error) stays in the server log
+            log_exception(exc)
             history.status = "failed"
-            history.reason = str(exc)
+            history.reason = "Could not read the file."
             history.save(update_fields=["status", "reason", "updated_at"])
             return Response(
                 {
