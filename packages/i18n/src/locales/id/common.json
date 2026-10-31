@@ -375,6 +375,12 @@
     "access": "Akses",
     "owned_by": "Pemilik"
   },
+  "group_filter": {
+    "heading": "Grup",
+    "my_groups": "Grup saya",
+    "no_group": "Tanpa grup",
+    "unknown_group": "Grup tidak dikenal"
+  },
   "good": "Bagus",
   "morning": "pagi",
   "afternoon": "siang",

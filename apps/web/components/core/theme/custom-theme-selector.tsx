@@ -7,18 +7,19 @@
 
 import { useMemo, useState } from "react";
 import { observer } from "mobx-react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import { setToast } from "@plane/blocks/toast";
 import type { IUserTheme } from "@plane/types";
-import { applyCustomTheme } from "@plane/utils";
+import { applyCustomTheme, sanitizeThemeOverrides, validateHexColor } from "@plane/utils";
 // components
 import { ProfileSettingsHeading } from "@/components/settings/profile/heading";
 // hooks
 import { useUserProfile } from "@/hooks/store/user";
 // local imports
+import { CustomThemeAdvancedSettings } from "./advanced-settings";
 import { CustomThemeColorInputs } from "./color-inputs";
 import { CustomThemeDownloadConfigButton } from "./download-config-button";
 import { CustomThemeImportConfigButton } from "./import-config-button";
@@ -42,6 +43,7 @@ export const CustomThemeSelector = observer(function CustomThemeSelector() {
         primary: theme.primary,
         background: theme.background,
         darkPalette: !!theme.darkPalette,
+        overrides: sanitizeThemeOverrides(theme.overrides).overrides,
       };
     }
 
@@ -51,6 +53,7 @@ export const CustomThemeSelector = observer(function CustomThemeSelector() {
       primary: "#3f76ff",
       background: "#1a1a1a",
       darkPalette: false,
+      overrides: {},
     };
   }, [userProfile?.theme]);
 
@@ -69,13 +72,15 @@ export const CustomThemeSelector = observer(function CustomThemeSelector() {
 
     try {
       setIsLoadingPalette(true);
-      applyCustomTheme(formData.primary, formData.background, formData.darkPalette ? "dark" : "light");
+      const { overrides } = sanitizeThemeOverrides(formData.overrides);
+      applyCustomTheme(formData.primary, formData.background, formData.darkPalette ? "dark" : "light", overrides);
       // Save to profile endpoint
       await updateUserTheme({
         theme: "custom",
         primary: formData.primary,
         background: formData.background,
         darkPalette: formData.darkPalette,
+        overrides,
       });
 
       setToast({
@@ -114,6 +119,22 @@ export const CustomThemeSelector = observer(function CustomThemeSelector() {
         <CustomThemeModeSelector control={control} />
         {/* Color Inputs */}
         <CustomThemeColorInputs control={control} />
+        {/* Advanced settings: individual colours, as the preset themes define them */}
+        <Controller
+          control={control}
+          name="overrides"
+          rules={{
+            validate: (overrides) =>
+              Object.values(overrides ?? {}).every((color) => validateHexColor(color)) ||
+              t("core_ui.theme.invalid_hex"),
+          }}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <>
+              <CustomThemeAdvancedSettings value={value} onChange={onChange} />
+              {error?.message && <p className="text-caption-md-regular text-danger-primary">{error.message}</p>}
+            </>
+          )}
+        />
       </div>
       <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         {/* Save Theme Button */}

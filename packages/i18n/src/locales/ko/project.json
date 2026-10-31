@@ -370,12 +370,34 @@
     "display_name": "표시 이름",
     "email": "이메일",
     "joining_date": "가입일",
-    "role": "역할"
+    "role": "역할",
+    "groups": {
+      "title": "그룹",
+      "description": "이 프로젝트의 멤버인 그룹입니다. 하위 그룹을 포함해 그룹에 속한 모든 사람은 그룹에 지정된 역할로 프로젝트의 멤버가 됩니다. 그룹 때문에 개인의 역할이 낮아지는 일은 없습니다.",
+      "no_groups": "아직 이 프로젝트의 멤버인 그룹이 없습니다.",
+      "select_group": "그룹 선택",
+      "no_groups_available": "추가할 그룹이 더 이상 없습니다",
+      "add_group": "그룹 추가",
+      "role": "역할",
+      "role_member": "멤버",
+      "role_guest": "게스트",
+      "member_count": "{count, plural, one {#명} other {#명}}",
+      "group_added": "그룹을 프로젝트에 추가했습니다.",
+      "group_updated": "그룹 역할을 업데이트했습니다.",
+      "group_removed": "프로젝트에서 그룹을 제거했습니다.",
+      "remove_title": "이 프로젝트에서 {name}을(를) 제거하시겠습니까?",
+      "remove_content": "이 그룹을 통해서만 프로젝트에 속한 사람들은 프로젝트에 대한 액세스 권한을 잃습니다. 프로젝트에 직접 추가된 사람들은 그대로 유지됩니다.",
+      "via_group": "그룹을 통해",
+      "via_group_tooltip": "이 사람은 그룹을 통해 프로젝트에 속해 있습니다. 그룹을 제거하거나 그룹에서 이 사람을 제거하세요.",
+      "role_raised": "그룹이 역할을 상향함",
+      "role_raised_tooltip": "이 사람이 속한 그룹이 이 역할을 부여합니다.",
+      "assign_hint": "아직 할당할 수 있는 그룹이 없습니다. 먼저 프로젝트 설정의 멤버에서 그룹을 추가하세요."
+    }
   },
   "project": {
     "members_import": {
       "title": "CSV에서 구성원 가져오기",
-      "description": "다음 열이 포함된 CSV 업로드: 이메일 및 역할(5=게스트, 15=멤버, 20=관리자). 사용자는 이미 워크스페이스 멤버여야 합니다.",
+      "description": "Email과 Role 열(5=게스트, 15=멤버, 20=관리자)이 있는 CSV를 업로드합니다. 그룹 전체를 추가하려면 Group과 Role 열(5=게스트, 15=멤버)을 사용합니다. 중첩된 그룹은 Parent / Child 형식으로 작성합니다. 한 행에는 Email 또는 Group 중 하나만 사용해야 합니다. 사용자는 이미 워크스페이스 멤버여야 하고 그룹도 이미 존재해야 합니다.",
       "download_sample": "샘플 CSV 다운로드",
       "dropzone": {
         "active": "CSV 파일을 여기에 놓으세요",
@@ -399,13 +421,17 @@
         },
         "message": {
           "success": "프로젝트에 {count}명의 구성원을 가져왔습니다.",
-          "no_imports": "CSV 파일에서 새 구성원을 가져오지 못했습니다."
+          "no_imports": "CSV 파일에서 새 구성원을 가져오지 못했습니다.",
+          "groups_success": "그룹 {count}개를 프로젝트에 연결했습니다."
         },
         "stats": {
           "added": "추가됨",
           "reactivated": "다시 활성화됨",
           "already_members": "이미 멤버",
-          "skipped": "건너뜀"
+          "skipped": "건너뜀",
+          "groups_added": "추가된 그룹",
+          "groups_updated": "업데이트된 그룹",
+          "groups_skipped": "건너뛴 그룹"
         },
         "download_errors": "건너뛴 세부 정보 다운로드"
       },
@@ -418,6 +444,24 @@
           "title": "가져오기 실패",
           "message": "문제가 발생했습니다."
         }
+      },
+      "import_button": "CSV에서 가져오기",
+      "parse_errors": {
+        "empty": "파일이 비어 있습니다.",
+        "missing_columns": "파일에는 Role 열과 Email 또는 Group 열이 필요합니다.",
+        "no_rows": "파일에 헤더는 있지만 행이 없습니다."
+      },
+      "skip_reasons": {
+        "invalid_role": "역할은 5(게스트), 15(멤버) 또는 20(관리자)이어야 합니다.",
+        "both_email_and_group": "한 행에는 Email 또는 Group 중 하나만 있어야 하며 둘 다 있을 수 없습니다.",
+        "missing_value": "이 행에는 Email도 Group도 없습니다.",
+        "not_workspace_member": "이 사람은 워크스페이스의 활성 멤버가 아닙니다.",
+        "role_above_workspace_role": "역할이 이 사람의 워크스페이스 역할보다 높습니다.",
+        "role_below_workspace_role": "역할이 이 사람의 워크스페이스 역할보다 낮습니다.",
+        "unknown_group": "워크스페이스에 이 이름의 그룹이 없습니다.",
+        "ambiguous_group": "이 이름의 그룹이 여러 개 있습니다. 경로를 Parent / Child 형식으로 작성해야 합니다.",
+        "group_admin_role": "그룹은 프로젝트 관리자가 될 수 없습니다.",
+        "group_already_linked": "이 그룹은 이미 이 역할로 프로젝트의 멤버입니다."
       }
     }
   },
@@ -681,6 +725,8 @@
       "clear_all": "모두 지우기",
       "description": "동일한 설정으로 새 프로젝트를 만듭니다. 페이지와 웹훅은 복사되지 않으며, 작업 항목은 아래에서 선택한 경우에만 복사됩니다.",
       "error": "프로젝트를 복제할 수 없습니다. 다시 시도해 주세요.",
+      "groups": "그룹을 멤버로",
+      "groups_hint": "동일한 그룹을 동일한 역할로 연결하므로, 그룹에 속한 사람들이 복사본의 멤버가 됩니다.",
       "identifier_placeholder": "비워 두면 자동 생성",
       "properties": {
         "assignees": "담당자",

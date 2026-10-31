@@ -107,7 +107,7 @@ class IssueArchiveViewSet(BaseViewSet):
     @method_decorator(gzip_page)
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     def list(self, request, slug, project_id):
-        filters = issue_filters(request.query_params, "GET")
+        filters = issue_filters(request.query_params, "GET", request=request)
         show_sub_issues = request.GET.get("show_sub_issues", "true")
 
         order_by_param = request.GET.get("order_by", "-created_at")

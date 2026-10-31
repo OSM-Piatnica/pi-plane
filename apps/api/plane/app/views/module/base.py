@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -61,6 +62,7 @@ from plane.db.models import (
     Project,
     UserRecentVisit,
 )
+from plane.utils.group_filters import add_group_info, filter_by_groups_param
 from plane.utils.analytics_plot import burndown_plot
 from plane.utils.timezone_converter import user_timezone_converter
 from plane.bgtasks.webhook_task import model_activity
@@ -353,7 +355,7 @@ class ModuleViewSet(BaseViewSet):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def list(self, request, slug, project_id):
-        queryset = self.get_queryset().filter(archived_at__isnull=True)
+        queryset = filter_by_groups_param(request, slug, "module", self.get_queryset().filter(archived_at__isnull=True))
         if self.fields:
             modules = ModuleSerializer(queryset, many=True, fields=self.fields).data
         else:
@@ -391,7 +393,7 @@ class ModuleViewSet(BaseViewSet):
             )
             datetime_fields = ["created_at", "updated_at"]
             modules = user_timezone_converter(modules, datetime_fields, request.user.user_timezone)
-        return Response(modules, status=status.HTTP_200_OK)
+        return Response(add_group_info(request, slug, "module", modules), status=status.HTTP_200_OK)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     def retrieve(self, request, slug, project_id, pk):

@@ -182,7 +182,7 @@ class IntakeIssueViewSet(BaseViewSet):
             return Response({"error": "Intake not found"}, status=status.HTTP_404_NOT_FOUND)
 
         project = Project.objects.get(pk=project_id)
-        filters = issue_filters(request.GET, "GET", "issue__")
+        filters = issue_filters(request.GET, "GET", "issue__", request=request)
         intake_issue = (
             IntakeIssue.objects.filter(intake_id=intake.id, project_id=project_id, **filters)
             .select_related("issue")

@@ -43,8 +43,11 @@ import { SettingsHeading } from "@/components/settings/heading";
 import { useUserPermissions } from "@/hooks/store/user";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 import { ProjectTemplateService } from "@/services/project-template.service";
+import { userGroupService } from "@/services/user-group.service";
+import { getGroupPaths } from "@/helpers/project-template-groups";
 import type { Route } from "./+types/page";
 import { FeatureTogglesEditor } from "./feature-toggles-editor";
+import { GroupsTemplateEditor } from "./groups-template-editor";
 import { ProjectTemplatesSettingsHeader } from "./header";
 import { LabelTemplatesEditor } from "./label-templates-editor";
 import { DEFAULT_FEATURE_TOGGLES } from "./project-template-form.types";
@@ -85,6 +88,7 @@ const TEMPLATE_FORM_DEFAULTS: TProjectTemplateFormFields = {
   taskCustomProperties: [],
   epicCustomProperties: [],
   additionalWorkItemTypes: [],
+  groups: [],
   network: 2,
 };
 
@@ -101,6 +105,11 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
   const { data: templates, isLoading } = useSWR(
     canManage && workspaceSlug ? `PROJECT_TEMPLATE_LIST_${workspaceSlug}` : null,
     () => service.list(workspaceSlug)
+  );
+
+  // the workspace's groups, for the "Groups as members" section and the paths written next to their ids
+  const { data: groups } = useSWR(canManage && workspaceSlug ? `USER_GROUPS_${workspaceSlug}` : null, () =>
+    userGroupService.list(workspaceSlug)
   );
 
   const [createTemplateModalOpen, setCreateTemplateModalOpen] = useState(false);
@@ -196,12 +205,26 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
       const name = buildUniqueTemplateName(desired, existingNames, t("app_text.project_templates.imported_template"));
       const renamed = name !== desired.trim();
 
-      await service.create(workspaceSlug, {
+      const created = await service.create(workspaceSlug, {
         name,
         description: parsed.description,
         payload: parsed.payload,
       });
       await mutate(`PROJECT_TEMPLATE_LIST_${workspaceSlug}`);
+
+      // groups are matched by path; the ones this workspace does not have are left out and named here
+      const notFound = (created.unmatched_groups ?? []).map((item) => item.path || item.group || "").filter(Boolean);
+      if (notFound.length > 0) {
+        setToast({
+          type: "warning",
+          title: t("warning"),
+          message: t("workspace_settings.settings.project_templates.toasts.uploaded_groups_not_found.message", {
+            name,
+            groups: notFound.join(", "),
+          }),
+        });
+        return;
+      }
 
       setToast({
         type: renamed ? "warning" : "success",
@@ -240,7 +263,7 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
       const body = {
         name: values.templateName.trim(),
         description: values.templateNote,
-        payload: buildProjectTemplatePayloadFromFormValues(values),
+        payload: buildProjectTemplatePayloadFromFormValues(values, getGroupPaths(groups ?? [])),
       };
       if (editingId) {
         await service.update(workspaceSlug, editingId, body);
@@ -685,6 +708,24 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
                         name="labelTemplates"
                         control={control}
                         render={({ field }) => <LabelTemplatesEditor value={field.value} onChange={field.onChange} />}
+                      />
+                    </section>
+
+                    <section className="space-y-3">
+                      <div>
+                        <h4 className="text-12 font-semibold tracking-wide text-tertiary uppercase">
+                          {t("workspace_settings.settings.project_templates.form.section_groups")}
+                        </h4>
+                        <p className="text-12 text-tertiary">
+                          {t("workspace_settings.settings.project_templates.form.section_groups_hint")}
+                        </p>
+                      </div>
+                      <Controller
+                        name="groups"
+                        control={control}
+                        render={({ field }) => (
+                          <GroupsTemplateEditor value={field.value} onChange={field.onChange} groups={groups} />
+                        )}
                       />
                     </section>
                   </div>

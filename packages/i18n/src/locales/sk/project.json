@@ -370,12 +370,34 @@
     "display_name": "Zobrazované meno",
     "email": "E-mail",
     "joining_date": "Dátum pripojenia",
-    "role": "Rola"
+    "role": "Rola",
+    "groups": {
+      "title": "Skupiny",
+      "description": "Skupiny, ktoré sú členmi tohto projektu. Každý člen skupiny, vrátane jej podskupín, je členom projektu s rolou pridelenou skupine. Vlastná rola človeka sa skupinou nikdy nezníži.",
+      "no_groups": "Tento projekt zatiaľ nemá žiadne skupiny.",
+      "select_group": "Vyberte skupinu",
+      "no_groups_available": "Nezostali žiadne skupiny na pridanie",
+      "add_group": "Pridať skupinu",
+      "role": "Rola",
+      "role_member": "Člen",
+      "role_guest": "Hosť",
+      "member_count": "{count, plural, one {# osoba} few {# osoby} many {# osoby} other {# osôb}}",
+      "group_added": "Skupina bola pridaná do projektu.",
+      "group_updated": "Rola skupiny bola aktualizovaná.",
+      "group_removed": "Skupina bola odstránená z projektu.",
+      "remove_title": "Odstrániť {name} z tohto projektu?",
+      "remove_content": "Ľudia, ktorí sú v projekte iba cez túto skupinu, o prístup k nemu prídu. Ľudia pridaní do projektu priamo zostanú.",
+      "via_group": "Cez skupinu",
+      "via_group_tooltip": "Táto osoba patrí do projektu cez skupinu. Odstráňte skupinu alebo osobu zo skupiny.",
+      "role_raised": "Rola zvýšená skupinou",
+      "role_raised_tooltip": "Skupina, do ktorej táto osoba patrí, jej dáva túto rolu.",
+      "assign_hint": "Zatiaľ nie je možné priradiť žiadne skupiny. Najprv pridajte skupiny v nastaveniach projektu, v časti Členovia."
+    }
   },
   "project": {
     "members_import": {
       "title": "Importovať členov z CSV",
-      "description": "Nahrajte CSV so stĺpcami: E-mail a Rola (5=Hosť, 15=Člen, 20=Správca). Používatelia musia byť už členmi pracovného priestoru.",
+      "description": "Nahrajte súbor CSV so stĺpcami Email a Role (5=Guest, 15=Member, 20=Admin) alebo Group a Role (5=Guest, 15=Member), aby ste pridali celú skupinu. Vnorenú skupinu zapíšte ako Parent / Child. V jednom riadku uveďte buď Email, alebo Group. Používatelia už musia byť členmi pracovného priestoru a skupiny už musia existovať.",
       "download_sample": "Stiahnuť vzorové CSV",
       "dropzone": {
         "active": "Presuňte CSV súbor sem",
@@ -399,13 +421,17 @@
         },
         "message": {
           "success": "Úspešne importovaných {count} člen{plural} do projektu.",
-          "no_imports": "Zo súboru CSV neboli importovaní žiadni noví členovia."
+          "no_imports": "Zo súboru CSV neboli importovaní žiadni noví členovia.",
+          "groups_success": "Skupiny prepojené s projektom: {count}."
         },
         "stats": {
           "added": "Pridané",
           "reactivated": "Znovu aktivované",
           "already_members": "Už členovia",
-          "skipped": "Preskočené"
+          "skipped": "Preskočené",
+          "groups_added": "Pridané skupiny",
+          "groups_updated": "Aktualizované skupiny",
+          "groups_skipped": "Preskočené skupiny"
         },
         "download_errors": "Stiahnuť podrobnosti preskočených"
       },
@@ -418,6 +444,24 @@
           "title": "Import zlyhal",
           "message": "Niečo sa pokazilo."
         }
+      },
+      "import_button": "Importovať z CSV",
+      "parse_errors": {
+        "empty": "Súbor je prázdny.",
+        "missing_columns": "Súbor musí obsahovať stĺpec Role a stĺpec Email alebo Group.",
+        "no_rows": "Súbor obsahuje hlavičku, ale žiadne riadky."
+      },
+      "skip_reasons": {
+        "invalid_role": "Rola musí byť 5 (Guest), 15 (Member) alebo 20 (Admin).",
+        "both_email_and_group": "Riadok má uvedený buď Email, alebo Group, nie oboje.",
+        "missing_value": "Riadok neobsahuje ani Email, ani Group.",
+        "not_workspace_member": "Táto osoba nie je aktívnym členom pracovného priestoru.",
+        "role_above_workspace_role": "Rola je vyššia ako rola osoby v pracovnom priestore.",
+        "role_below_workspace_role": "Rola je nižšia ako rola osoby v pracovnom priestore.",
+        "unknown_group": "V pracovnom priestore neexistuje skupina s týmto názvom.",
+        "ambiguous_group": "Viac skupín má tento názov, zapíšte jej cestu ako Parent / Child.",
+        "group_admin_role": "Skupiny nemôžu byť správcami projektu.",
+        "group_already_linked": "Skupina už je členom projektu s touto rolou."
       }
     }
   },
@@ -681,6 +725,8 @@
       "clear_all": "Zrušiť výber",
       "description": "Vytvorí nový projekt s rovnakým nastavením. Stránky a webhooky sa nekopírujú; pracovné položky len ak to zvolíte nižšie.",
       "error": "Projekt sa nepodarilo duplikovať. Skúste to prosím znova.",
+      "groups": "Skupiny ako členovia",
+      "groups_hint": "Prepojí rovnaké skupiny s rovnakými rolami, takže ľudia v nich sa stanú členmi kópie.",
       "identifier_placeholder": "Vytvorí sa, ak zostane prázdne",
       "properties": {
         "assignees": "Priradení",

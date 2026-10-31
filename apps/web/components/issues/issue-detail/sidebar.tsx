@@ -112,6 +112,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
 
             <SidebarPropertyListItem icon={Network} label={t("workspace_settings.settings.groups.group_assignees")}>
               <GroupAssigneeSelect
+                projectId={projectId}
                 workspaceSlug={workspaceSlug}
                 value={issue?.group_assignee_ids ?? []}
                 onChange={(val) =>

@@ -6,7 +6,19 @@ from datetime import date, datetime, timezone
 
 import pytest
 
-from plane.db.models import Cycle, CycleIssue, Issue, Module, ModuleIssue, Project, ProjectMember, State
+from plane.db.models import (
+    Cycle,
+    CycleIssue,
+    Issue,
+    IssueGroupAssignee,
+    Module,
+    ModuleIssue,
+    Project,
+    ProjectGroup,
+    ProjectMember,
+    State,
+    UserGroup,
+)
 from plane.utils.community_work_item_import import import_community_work_items_into_project
 from plane.utils.porters.exporter import DataExporter
 from plane.utils.porters.importer import DataImporter
@@ -85,3 +97,91 @@ def test_exported_work_item_keeps_module_cycle_and_dates_when_imported_again(fil
     assert new_cycle.name == "Sprint 1"
     assert new_cycle.start_date == cycle.start_date
     assert new_cycle.end_date == cycle.end_date
+
+
+@pytest.mark.unit
+@pytest.mark.django_db
+@pytest.mark.parametrize("file_format", ["csv", "xlsx", "json"])
+def test_exported_work_item_keeps_its_group_assignees_when_imported_again(file_format, workspace, create_user):
+    source = _project(workspace, create_user, "Source", "SRC")
+    sales = UserGroup.objects.create(workspace=workspace, name="Sales")
+    poland = UserGroup.objects.create(workspace=workspace, name="Poland", parent=sales)
+    ProjectGroup.objects.create(project=source, group=sales, role=15, workspace=workspace)
+    issue = Issue.objects.create(
+        name="Grouped",
+        project=source,
+        workspace=workspace,
+        state=State.objects.get(project=source),
+        created_by=create_user,
+    )
+    for group in (sales, poland):
+        IssueGroupAssignee.objects.create(issue=issue, group=group, project=source, workspace=workspace)
+
+    queryset = (
+        Issue.objects.filter(project=source)
+        .select_related("project", "state", "created_by")
+        .prefetch_related("issue_group_assignee__group")
+    )
+    _, content = DataExporter(IssueExportSerializer, format_type=file_format).export("export", queryset)
+    if isinstance(content, str):
+        content = content.encode("utf-8")
+
+    target = _project(workspace, create_user, "Target", "TGT")
+    ProjectGroup.objects.create(project=target, group=sales, role=15, workspace=workspace)
+    import_community_work_items_into_project(
+        project=target,
+        user=create_user,
+        rows=DataImporter(format_type=file_format).decode(content),
+        warnings=[],
+    )
+
+    imported = Issue.objects.get(project=target, name="Grouped")
+    names = set(IssueGroupAssignee.objects.filter(issue=imported).values_list("group__name", flat=True))
+    assert names == {"Sales", "Poland"}
+
+
+@pytest.mark.unit
+@pytest.mark.django_db
+@pytest.mark.parametrize("file_format", ["csv", "xlsx", "json"])
+def test_group_names_with_a_slash_a_backslash_or_a_comma_survive_the_export_and_import(
+    file_format, workspace, create_user
+):
+    source = _project(workspace, create_user, "Source", "SRC")
+    top = UserGroup.objects.create(workspace=workspace, name="R&D/QA")
+    other = UserGroup.objects.create(workspace=workspace, name="A \\ B")
+    nested = UserGroup.objects.create(workspace=workspace, name="Team/1", parent=other)
+    comma = UserGroup.objects.create(workspace=workspace, name="Sales, EU")
+    comma_child = UserGroup.objects.create(workspace=workspace, name="Q1, Q2 \\, odd", parent=comma)
+    issue = Issue.objects.create(
+        name="Slashes",
+        project=source,
+        workspace=workspace,
+        state=State.objects.get(project=source),
+        created_by=create_user,
+    )
+    for group in (top, other, nested, comma, comma_child):
+        ProjectGroup.objects.create(project=source, group=group, role=15, workspace=workspace)
+        IssueGroupAssignee.objects.create(issue=issue, group=group, project=source, workspace=workspace)
+
+    queryset = (
+        Issue.objects.filter(project=source)
+        .select_related("project", "state", "created_by")
+        .prefetch_related("issue_group_assignee__group")
+    )
+    _, content = DataExporter(IssueExportSerializer, format_type=file_format).export("export", queryset)
+    if isinstance(content, str):
+        content = content.encode("utf-8")
+
+    target = _project(workspace, create_user, "Target", "TGT")
+    for group in (top, other, nested, comma, comma_child):
+        ProjectGroup.objects.create(project=target, group=group, role=15, workspace=workspace)
+    result = import_community_work_items_into_project(
+        project=target,
+        user=create_user,
+        rows=DataImporter(format_type=file_format).decode(content),
+        warnings=[],
+    )
+
+    imported = Issue.objects.get(project=target, name="Slashes")
+    ids = set(IssueGroupAssignee.objects.filter(issue=imported).values_list("group_id", flat=True))
+    assert ids == {top.id, other.id, nested.id, comma.id, comma_child.id}, result

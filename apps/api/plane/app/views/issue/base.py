@@ -123,7 +123,7 @@ class IssueListEndpoint(BaseAPIView):
         queryset = self.filter_queryset(queryset)
 
         # Apply legacy filters
-        filters = issue_filters(request.query_params, "GET")
+        filters = issue_filters(request.query_params, "GET", request=request)
         issue_queryset = queryset.filter(**filters)
         issue_queryset = issue_queryset.filter(state__deleted_at__isnull=True)
 
@@ -290,7 +290,7 @@ class IssueViewSet(BaseViewSet):
         project = Project.objects.get(pk=project_id, workspace__slug=slug)
         query_params = request.query_params.copy()
 
-        filters = issue_filters(query_params, "GET")
+        filters = issue_filters(query_params, "GET", request=request)
         order_by_param = request.GET.get("order_by", "-created_at")
 
         issue_queryset = self.get_queryset()
@@ -1072,7 +1072,7 @@ class IssueDetailEndpoint(BaseAPIView):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def get(self, request, slug, project_id):
-        filters = issue_filters(request.query_params, "GET")
+        filters = issue_filters(request.query_params, "GET", request=request)
 
         # check for the project member role, if the role is 5 then check for the guest_view_all_features
         #  if it is true then show all the issues else show only the issues created by the user

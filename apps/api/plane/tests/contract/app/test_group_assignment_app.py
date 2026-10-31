@@ -14,6 +14,7 @@ from plane.db.models import (
     IssueAssignee,
     IssueGroupAssignee,
     Project,
+    ProjectGroup,
     ProjectMember,
     State,
     User,
@@ -75,7 +76,11 @@ def _client(user):
 
 
 def _group(workspace, name, parent=None):
-    return UserGroup.objects.create(workspace=workspace, name=name, parent=parent)
+    """A group; its projects have it as a member, since work items can only go to groups of their project."""
+    group = UserGroup.objects.create(workspace=workspace, name=name, parent=parent)
+    for project in Project.objects.filter(workspace=workspace):
+        ProjectGroup.objects.create(project=project, group=group, role=MEMBER)
+    return group
 
 
 def _join(group, user):

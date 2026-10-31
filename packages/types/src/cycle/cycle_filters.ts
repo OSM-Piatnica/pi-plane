@@ -19,6 +19,8 @@ export type TCycleDisplayFilters = {
 
 export type TCycleFilters = {
   end_date?: string[] | null;
+  /** Group ids, or the keywords my_groups and none, see GROUP_FILTER_KEYWORDS. */
+  groups?: string[] | null;
   start_date?: string[] | null;
   status?: string[] | null;
 };

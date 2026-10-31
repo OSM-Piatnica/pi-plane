@@ -97,7 +97,7 @@ class ModuleIssueViewSet(BaseViewSet):
     @method_decorator(gzip_page)
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     def list(self, request, slug, project_id, module_id):
-        filters = issue_filters(request.query_params, "GET")
+        filters = issue_filters(request.query_params, "GET", request=request)
         issue_queryset = self.get_queryset()
 
         # Apply filtering from filterset

@@ -159,6 +159,7 @@
             "estimate": "見積もり",
             "is_draft": "下書きフラグ",
             "assignees": "担当者",
+            "group_assignees": "担当グループ",
             "subscribers": "購読者",
             "created_by_name": "作成者",
             "start_date": "開始日",

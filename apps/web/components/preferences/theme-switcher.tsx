@@ -55,7 +55,8 @@ export const ThemeSwitcher = observer(function ThemeSwitcher(props: {
           applyCustomTheme(
             userProfile.theme.primary,
             userProfile.theme.background,
-            userProfile.theme.darkPalette ? "dark" : "light"
+            userProfile.theme.darkPalette ? "dark" : "light",
+            userProfile.theme.overrides
           );
         }
 

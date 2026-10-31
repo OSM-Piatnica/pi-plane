@@ -12,6 +12,7 @@ from rest_framework import serializers
 
 # Module imports
 from plane.app.serializers import IssueSerializer
+from plane.utils.group_paths import escape_list_entry, escape_name, group_paths
 from plane.utils.issue_relation_mapper import get_inverse_relation
 
 
@@ -34,7 +35,7 @@ ISSUE_EXPORT_FIELD_GROUPS = {
         "estimate",
         "is_draft",
     ),
-    "people": ("assignees", "subscribers", "created_by_name"),
+    "people": ("assignees", "group_assignees", "subscribers", "created_by_name"),
     "dates": (
         "start_date",
         "finish_date",
@@ -110,6 +111,7 @@ class IssueExportSerializer(IssueSerializer):
 
     issue_type = serializers.SerializerMethodField()
     assignees = serializers.SerializerMethodField()
+    group_assignees = serializers.SerializerMethodField()
     parent = serializers.SerializerMethodField()
     labels = serializers.SerializerMethodField()
     cycles = serializers.SerializerMethodField()
@@ -143,6 +145,7 @@ class IssueExportSerializer(IssueSerializer):
             "state_name",
             "priority",
             "assignees",
+            "group_assignees",
             "subscribers",
             "created_by_name",
             "start_date",
@@ -181,6 +184,22 @@ class IssueExportSerializer(IssueSerializer):
             for ia in obj.issue_assignee.all()
             if ia.deleted_at is None and ia.assignee and ia.assignee.is_active and ia.assignee.email
         ]
+
+    def get_group_assignees(self, obj):
+        """The groups the work item is assigned to, by name; a nested group by its path ("Parent / Child")."""
+        links = [link for link in obj.issue_group_assignee.all() if link.deleted_at is None and link.group]
+        if not links:
+            return []
+        # One map per workspace, read once for the whole export instead of once per row
+        cache = self.__dict__.setdefault("_group_paths", {})
+        if obj.workspace_id not in cache:
+            cache[obj.workspace_id] = group_paths(obj.workspace_id)
+        paths = cache[obj.workspace_id]
+        names = (
+            paths.get(link.group_id) or escape_name(link.group.name) for link in links if link.group.deleted_at is None
+        )
+        # a comma in a name is written "\\," so the column can be read as comma separated text (Excel cells are)
+        return sorted(escape_list_entry(name) for name in names)
 
     def get_subscribers(self, obj):
         """Return list of subscriber e-mails."""

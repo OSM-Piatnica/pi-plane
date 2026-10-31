@@ -55,6 +55,10 @@ export type TBaseIssue = {
   assignee_ids: string[];
   /** The user groups the work item is assigned to; absent from answers that do not carry them. */
   group_assignee_ids?: string[];
+  /** What the group filter works on, see TGroupFilterable; only the sub-work-item list answers carry it. */
+  group_ids?: string[];
+  has_group?: boolean;
+  in_my_groups?: boolean;
   estimate_point: string | null;
 
   sub_issues_count: number;

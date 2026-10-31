@@ -129,6 +129,18 @@ SPECTACULAR_SETTINGS = {
                 "*Use Cases:* Team setup, access control, role management, collaboration."
             ),
         },
+        {
+            "name": "Project Groups",
+            "description": (
+                "**User Groups as Project Members**\n\n"
+                "Add user groups to a project as Members or Guests. Everyone who belongs to a group, "
+                "including the groups below it, becomes a project member with the role given to the group.\n\n"
+                "*Key Features:*\n"
+                "- Add, re-role and remove the groups of a project\n"
+                "- List the groups work items of the project can be assigned to (`?assignable=1`)\n\n"
+                "*Use Cases:* Team-wide access, onboarding by group, group assignment of work items."
+            ),
+        },
         # Project Organization
         {
             "name": "Modules",

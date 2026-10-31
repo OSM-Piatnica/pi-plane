@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Third Party imports
@@ -19,7 +20,13 @@ from plane.api.serializers import (
     WorkspaceMemberLiteAPISerializer,
     ProjectMemberLiteAPISerializer,
 )
-from plane.db.models import User, Workspace, WorkspaceMember, Project, ProjectMember
+from plane.db.models import Workspace, WorkspaceMember, Project, ProjectMember
+from plane.utils.project_groups import (
+    FROM_GROUP_ONLY_MESSAGE,
+    MemberThroughGroupError,
+    remove_member,
+    set_direct_role,
+)
 from plane.utils.permissions import ProjectMemberPermission, WorkSpaceAdminPermission, ProjectAdminPermission
 from plane.utils.openapi import (
     WORKSPACE_SLUG_PARAMETER,
@@ -34,6 +41,15 @@ from plane.utils.openapi import (
     PROJECT_MEMBER_EXAMPLE,
     create_paginated_response,
 )
+
+
+def _user_with_group_fields(project_member, user):
+    """The user as the public API lists them, with how their project membership comes about."""
+    data = dict(UserLiteSerializer(user).data)
+    data["via_group"] = project_member.via_group
+    data["group_role"] = project_member.group_role
+    data["direct_role"] = project_member.direct_role
+    return data
 
 
 class WorkspaceMemberAPIEndpoint(BaseAPIView):
@@ -111,7 +127,11 @@ class ProjectMemberListCreateAPIEndpoint(BaseAPIView):
     @extend_schema(
         operation_id="get_project_members",
         summary="List project members",
-        description="Retrieve all users who are members of the specified project.",
+        description=(
+            "Retrieve all users who are members of the specified project. Each entry also carries via_group "
+            "(the person is in the project only through groups), group_role (the best role the groups give them) "
+            "and direct_role (their own role, kept only while a group raised the effective role above it)."
+        ),
         tags=["Members"],
         parameters=[WORKSPACE_SLUG_PARAMETER, PROJECT_ID_PARAMETER],
         responses={
@@ -139,13 +159,10 @@ class ProjectMemberListCreateAPIEndpoint(BaseAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Get the workspace members that are present inside the workspace
-        project_members = ProjectMember.objects.filter(project_id=project_id, workspace__slug=slug).values_list(
-            "member_id", flat=True
+        project_members = list(
+            ProjectMember.objects.filter(project_id=project_id, workspace__slug=slug).select_related("member")
         )
-
-        # Get all the users that are present inside the workspace
-        users = UserLiteSerializer(User.objects.filter(id__in=project_members), many=True).data
+        users = [_user_with_group_fields(project_member, project_member.member) for project_member in project_members]
         return Response(users, status=status.HTTP_200_OK)
 
     @extend_schema(
@@ -194,10 +211,10 @@ class ProjectMemberDetailAPIEndpoint(ProjectMemberListCreateAPIEndpoint):
             )
 
         # Get the workspace members that are present inside the workspace
-        project_members = ProjectMember.objects.get(project_id=project_id, workspace__slug=slug, pk=pk)
-        user = User.objects.get(id=project_members.member_id)
-        user = UserLiteSerializer(user).data
-        return Response(user, status=status.HTTP_200_OK)
+        project_member = ProjectMember.objects.select_related("member").get(
+            project_id=project_id, workspace__slug=slug, pk=pk
+        )
+        return Response(_user_with_group_fields(project_member, project_member.member), status=status.HTTP_200_OK)
 
     @extend_schema(
         operation_id="update_project_member",
@@ -215,9 +232,14 @@ class ProjectMemberDetailAPIEndpoint(ProjectMemberListCreateAPIEndpoint):
             workspace__slug=slug, member_id=project_member.member_id, is_active=True
         ).exists():
             return Response({"member": ["Member not found in workspace"]}, status=status.HTTP_400_BAD_REQUEST)
+        by_groups = project_member.via_group or project_member.group_role is not None
         serializer = ProjectMemberSerializer(project_member, data=request.data, partial=True, context={"slug": slug})
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        if by_groups and "role" in serializer.validated_data:
+            # A role set by hand is the person's own; the groups can only raise it
+            set_direct_role(project_member, serializer.validated_data["role"])
+            serializer = ProjectMemberSerializer(project_member, context={"slug": slug})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @extend_schema(
@@ -230,8 +252,10 @@ class ProjectMemberDetailAPIEndpoint(ProjectMemberListCreateAPIEndpoint):
     )
     def delete(self, request, slug, project_id, pk):
         project_member = ProjectMember.objects.get(project_id=project_id, workspace__slug=slug, pk=pk)
-        project_member.is_active = False
-        project_member.save()
+        try:
+            remove_member(project_member)
+        except MemberThroughGroupError:
+            return Response({"error": FROM_GROUP_ONLY_MESSAGE}, status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 

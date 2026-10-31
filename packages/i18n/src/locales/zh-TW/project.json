@@ -370,12 +370,34 @@
     "display_name": "顯示名稱",
     "email": "電子郵件",
     "joining_date": "加入日期",
-    "role": "角色"
+    "role": "角色",
+    "groups": {
+      "title": "群組",
+      "description": "屬於此專案成員的群組。群組中的所有人（包括其子群組）都是該專案的成員，角色為指派給群組的角色。群組不會降低個人自身的角色。",
+      "no_groups": "此專案尚無群組成員。",
+      "select_group": "選取群組",
+      "no_groups_available": "沒有可新增的群組",
+      "add_group": "新增群組",
+      "role": "角色",
+      "role_member": "成員",
+      "role_guest": "訪客",
+      "member_count": "{count, plural, one {# 人} other {# 人}}",
+      "group_added": "已將群組新增至專案。",
+      "group_updated": "已更新群組角色。",
+      "group_removed": "已從專案移除群組。",
+      "remove_title": "要將 {name} 從此專案中移除嗎？",
+      "remove_content": "僅透過此群組加入專案的人員將失去對專案的存取權。直接新增至專案的人員將保留。",
+      "via_group": "透過群組",
+      "via_group_tooltip": "此人透過群組屬於該專案。請移除該群組，或將此人從群組中移除。",
+      "role_raised": "角色由群組提升",
+      "role_raised_tooltip": "此人所屬的群組賦予了他們此角色。",
+      "assign_hint": "尚無可指派的群組。請先在專案設定的「成員」中新增群組。"
+    }
   },
   "project": {
     "members_import": {
       "title": "從CSV匯入成員",
-      "description": "上傳包含以下欄位的CSV：電子郵件與角色（5=訪客，15=成員，20=管理員）。使用者必須已是工作區成員。",
+      "description": "上傳包含 Email 和 Role（5=Guest、15=Member、20=Admin）欄，或 Group 和 Role（5=Guest、15=Member）欄的 CSV 檔案，即可新增整個群組。巢狀群組請寫成 Parent / Child。每列只能使用 Email 或 Group 其中之一。使用者必須已是工作區成員，群組必須已存在。",
       "download_sample": "下載範例CSV",
       "dropzone": {
         "active": "將CSV檔案放在這裡",
@@ -399,13 +421,17 @@
         },
         "message": {
           "success": "成功將{count}名成員匯入專案。",
-          "no_imports": "CSV檔案中未匯入任何新成員。"
+          "no_imports": "CSV檔案中未匯入任何新成員。",
+          "groups_success": "已將 {count} 個群組連結到專案。"
         },
         "stats": {
           "added": "已新增",
           "reactivated": "已重新啟用",
           "already_members": "已是成員",
-          "skipped": "已略過"
+          "skipped": "已略過",
+          "groups_added": "已新增群組",
+          "groups_updated": "已更新群組",
+          "groups_skipped": "已略過群組"
         },
         "download_errors": "下載略過詳情"
       },
@@ -418,6 +444,24 @@
           "title": "匯入失敗",
           "message": "發生錯誤。"
         }
+      },
+      "import_button": "從 CSV 匯入",
+      "parse_errors": {
+        "empty": "檔案是空的。",
+        "missing_columns": "檔案需要包含 Role 欄，以及 Email 欄或 Group 欄。",
+        "no_rows": "檔案有標題列，但沒有資料列。"
+      },
+      "skip_reasons": {
+        "invalid_role": "角色必須是 5（Guest）、15（Member）或 20（Admin）。",
+        "both_email_and_group": "每列只能填寫 Email 或 Group 其中之一，不能同時填寫。",
+        "missing_value": "該列既沒有 Email，也沒有 Group。",
+        "not_workspace_member": "此人不是工作區的有效成員。",
+        "role_above_workspace_role": "該角色高於此人的工作區角色。",
+        "role_below_workspace_role": "該角色低於此人的工作區角色。",
+        "unknown_group": "工作區中不存在此名稱的群組。",
+        "ambiguous_group": "有多個群組使用此名稱，請將其路徑寫成 Parent / Child。",
+        "group_admin_role": "群組不能成為專案管理員。",
+        "group_already_linked": "該群組已是專案成員，且角色相同。"
       }
     }
   },
@@ -681,6 +725,8 @@
       "clear_all": "全部清除",
       "description": "使用相同的設定建立新專案。頁面和 Webhook 不會被複製；工作事項僅在您於下方選擇時複製。",
       "error": "無法複製專案，請再試一次。",
+      "groups": "群組作為成員",
+      "groups_hint": "以相同角色連結相同的群組，因此其中的人員會成為副本的成員。",
       "identifier_placeholder": "留空則自動產生",
       "properties": {
         "assignees": "負責人",

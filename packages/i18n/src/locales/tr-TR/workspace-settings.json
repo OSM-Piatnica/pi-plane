@@ -159,6 +159,7 @@
             "estimate": "Tahmin",
             "is_draft": "Taslak işareti",
             "assignees": "Atananlar",
+            "group_assignees": "Atanan gruplar",
             "subscribers": "Aboneler",
             "created_by_name": "Oluşturan",
             "start_date": "Başlangıç tarihi",

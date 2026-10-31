@@ -159,6 +159,7 @@
             "estimate": "Estimación",
             "is_draft": "Indicador de borrador",
             "assignees": "Asignados",
+            "group_assignees": "Grupos asignados",
             "subscribers": "Suscriptores",
             "created_by_name": "Creado por",
             "start_date": "Fecha de inicio",

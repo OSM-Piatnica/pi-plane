@@ -10,6 +10,7 @@ from django.db.models import Q
 from django_filters import FilterSet, filters
 
 from plane.db.models import Issue
+from plane.utils.group_filters import issue_group_q, resolve_for_request
 
 
 class UUIDInFilter(filters.BaseInFilter, filters.UUIDFilter):
@@ -139,6 +140,10 @@ class IssueFilterSet(BaseFilterSet):
     assignee_id = filters.UUIDFilter(method="filter_assignee_id")
     assignee_id__in = UUIDInFilter(method="filter_assignee_id_in", lookup_expr="in")
 
+    # A group id, "my_groups" or "none"; which groups the person may use is decided by the server
+    group_assignee_id = filters.CharFilter(method="filter_group_assignee_id")
+    group_assignee_id__in = CharInFilter(method="filter_group_assignee_id_in", lookup_expr="in")
+
     cycle_id = filters.UUIDFilter(method="filter_cycle_id")
     cycle_id__in = UUIDInFilter(method="filter_cycle_id_in", lookup_expr="in")
 
@@ -227,6 +232,14 @@ class IssueFilterSet(BaseFilterSet):
             issue_assignee__assignee_id__in=value,
             issue_assignee__deleted_at__isnull=True,
         )
+
+    def filter_group_assignee_id(self, queryset, name, value):
+        """Filter by the group a work item is assigned to (a group counts the groups below it)"""
+        return issue_group_q(resolve_for_request(self.request, [value]))
+
+    def filter_group_assignee_id_in(self, queryset, name, value):
+        """Filter by several groups, "my_groups" and "none" (any of them)"""
+        return issue_group_q(resolve_for_request(self.request, value))
 
     def filter_cycle_id(self, queryset, name, value):
         """Filter by cycle ID, excluding soft deleted cycles"""

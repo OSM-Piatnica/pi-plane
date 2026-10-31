@@ -6,20 +6,24 @@
 
 import { DateRangeSelect as DateRangeSelectBlock, DateSelect as DateSelectBlock } from "@plane/blocks/property-select";
 import type { DateRangeSelectProps, DateSelectProps } from "@plane/blocks/property-select";
+// helpers
+import { getDateSelectFormatToken } from "@/helpers/date-select-format";
 // hooks
 import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 
 /**
  * Web bindings for the presentational date pickers: they fill in the `date-fns` locale of the
- * user's language, so the calendar and the month names in the trigger label are not English-only.
- * A caller can still pass its own `locale`.
+ * user's language and its date style, so the calendar and the date in the trigger label are not
+ * English-only. A caller can still pass its own `locale` or `formatToken`.
  */
 export function DateSelect(props: DateSelectProps) {
   const { dateFnsLocale } = useCalendarLocale();
-  return <DateSelectBlock locale={dateFnsLocale} {...props} />;
+  const formatToken = getDateSelectFormatToken(dateFnsLocale.code);
+  return <DateSelectBlock locale={dateFnsLocale} formatToken={formatToken} {...props} />;
 }
 
 export function DateRangeSelect(props: DateRangeSelectProps) {
   const { dateFnsLocale } = useCalendarLocale();
-  return <DateRangeSelectBlock locale={dateFnsLocale} {...props} />;
+  const formatToken = getDateSelectFormatToken(dateFnsLocale.code);
+  return <DateRangeSelectBlock locale={dateFnsLocale} formatToken={formatToken} {...props} />;
 }

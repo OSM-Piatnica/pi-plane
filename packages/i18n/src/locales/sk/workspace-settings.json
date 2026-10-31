@@ -159,6 +159,7 @@
             "estimate": "Odhad",
             "is_draft": "Príznak konceptu",
             "assignees": "Priradení",
+            "group_assignees": "Priradené skupiny",
             "subscribers": "Odberatelia",
             "created_by_name": "Vytvoril(a)",
             "start_date": "Dátum začiatku",

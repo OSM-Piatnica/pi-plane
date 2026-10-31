@@ -160,14 +160,26 @@ def filter_labels(params, issue_filter, method, prefix=""):
     return issue_filter
 
 
-def filter_group_assignees(params, issue_filter, method, prefix=""):
-    """Work items assigned to the given groups (exactly those groups, not the ones below them)."""
+def filter_group_assignees(params, issue_filter, method, prefix="", request=None):
+    """
+    Work items assigned to the given groups: group ids (a group counts the groups below it), ``my_groups`` and
+    ``none`` (no group assignee). On a GET the groups the person may filter by are decided on the server; the
+    stored form of a saved view (any other method) keeps the plain ids.
+    """
     groups = params.get("group_assignees")
-    groups = groups.split(",") if method == "GET" and isinstance(groups, str) else (groups or [])
-    groups = filter_valid_uuids([group for group in groups if group != "null"])
-    if len(groups):
-        issue_filter[f"{prefix}issue_group_assignee__group_id__in"] = groups
-        issue_filter[f"{prefix}issue_group_assignee__deleted_at__isnull"] = True
+    if method != "GET":
+        groups = filter_valid_uuids([group for group in (groups or []) if group != "null"])
+        if len(groups):
+            issue_filter[f"{prefix}issue_group_assignee__group_id__in"] = groups
+            issue_filter[f"{prefix}issue_group_assignee__deleted_at__isnull"] = True
+        return issue_filter
+
+    from plane.db.models import Issue
+    from plane.utils.group_filters import issue_group_q, resolve_for_request
+
+    resolved = resolve_for_request(request, groups)
+    if resolved.active:
+        issue_filter[f"{prefix}id__in"] = Issue.objects.filter(issue_group_q(resolved)).values("id")
     return issue_filter
 
 
@@ -452,7 +464,7 @@ def filter_logged_by(params, issue_filter, method, prefix=""):
     return issue_filter
 
 
-def issue_filters(query_params, method, prefix=""):
+def issue_filters(query_params, method, prefix="", request=None):
     issue_filter = {}
 
     ISSUE_FILTER = {
@@ -488,5 +500,8 @@ def issue_filters(query_params, method, prefix=""):
     for key, value in ISSUE_FILTER.items():
         if key in query_params:
             func = value
-            func(query_params, issue_filter, method, prefix)
+            if key == "group_assignees":
+                func(query_params, issue_filter, method, prefix, request=request)
+            else:
+                func(query_params, issue_filter, method, prefix)
     return issue_filter

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -169,7 +170,7 @@ class WorkSpaceMemberViewSet(BaseViewSet):
         # Deactivate the users from the projects where the user is part of
         _ = ProjectMember.objects.filter(
             workspace__slug=slug, member_id=workspace_member.member_id, is_active=True
-        ).update(is_active=False, updated_at=timezone.now())
+        ).update(is_active=False, via_group=False, group_role=None, direct_role=None, updated_at=timezone.now())
 
         workspace_member.is_active = False
         workspace_member.save()
@@ -210,7 +211,7 @@ class WorkSpaceMemberViewSet(BaseViewSet):
         # # Deactivate the users from the projects where the user is part of
         _ = ProjectMember.objects.filter(
             workspace__slug=slug, member_id=workspace_member.member_id, is_active=True
-        ).update(is_active=False, updated_at=timezone.now())
+        ).update(is_active=False, via_group=False, group_role=None, direct_role=None, updated_at=timezone.now())
 
         # # Deactivate the user
         workspace_member.is_active = False

@@ -305,6 +305,9 @@ class UserEndpoint(BaseViewSet):
         for project in projects:
             if project.other_admin_exists > 0 or (project.total_members == 1):
                 project.is_active = False
+                project.via_group = False
+                project.group_role = None
+                project.direct_role = None
                 projects_to_deactivate.append(project)
             else:
                 return Response(
@@ -333,7 +336,9 @@ class UserEndpoint(BaseViewSet):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-        ProjectMember.objects.bulk_update(projects_to_deactivate, ["is_active"], batch_size=100)
+        ProjectMember.objects.bulk_update(
+            projects_to_deactivate, ["is_active", "via_group", "group_role", "direct_role"], batch_size=100
+        )
 
         WorkspaceMember.objects.bulk_update(workspaces_to_deactivate, ["is_active"], batch_size=100)
 

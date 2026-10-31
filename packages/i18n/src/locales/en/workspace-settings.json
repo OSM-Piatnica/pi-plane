@@ -159,6 +159,7 @@
             "estimate": "Estimate",
             "is_draft": "Draft flag",
             "assignees": "Assignees",
+            "group_assignees": "Group assignees",
             "subscribers": "Subscribers",
             "created_by_name": "Created by",
             "start_date": "Start date",

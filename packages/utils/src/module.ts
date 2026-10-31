@@ -11,6 +11,7 @@ import type { IModule, TModuleDisplayFilters, TModuleFilters, TModuleOrderByOpti
 // local imports
 import { getDate } from "./datetime";
 import { satisfiesDateFilter } from "./filter";
+import { matchesGroupFilter } from "./user-group-filter";
 
 const collator = new Intl.Collator("en-US", { numeric: true, sensitivity: "base" });
 
@@ -81,6 +82,8 @@ export const shouldFilterModule = (
       const memberIds = new Set(module.member_ids ?? []);
       fallsInFilters = fallsInFilters && filters.members.some((memberId) => memberIds.has(memberId));
     }
+    if (filterKey === "groups" && filters.groups && filters.groups.length > 0)
+      fallsInFilters = fallsInFilters && matchesGroupFilter(filters.groups, module);
     if (filterKey === "start_date" && filters.start_date && filters.start_date.length > 0) {
       const startDate = getDate(module.start_date);
       filters.start_date.forEach((dateFilter) => {

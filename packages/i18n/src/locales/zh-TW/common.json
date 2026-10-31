@@ -375,6 +375,12 @@
     "access": "存取權限",
     "owned_by": "擁有者"
   },
+  "group_filter": {
+    "heading": "群組",
+    "my_groups": "我的群組",
+    "no_group": "無群組",
+    "unknown_group": "未知群組"
+  },
   "good": "早安",
   "morning": "早上",
   "afternoon": "下午",

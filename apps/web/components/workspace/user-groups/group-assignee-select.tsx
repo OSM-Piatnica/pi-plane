@@ -10,10 +10,13 @@ import useSWR from "swr";
 import { useTranslation } from "@plane/i18n";
 import { CloseOutline } from "@makeplane/propel/icons";
 // services
+import { projectGroupService } from "@/services/project/project-group.service";
 import { userGroupService } from "@/services/user-group.service";
 
 type Props = {
   workspaceSlug: string;
+  /** The project of the work item: only its groups, and the ones below them, can be assigned. */
+  projectId: string;
   /** The groups the work item is assigned to. */
   value: string[];
   onChange: (groupIds: string[]) => void;
@@ -22,16 +25,21 @@ type Props = {
 
 /** Chips of the groups a work item is assigned to, and a list to add another one. */
 export const GroupAssigneeSelect = observer(function GroupAssigneeSelect(props: Props) {
-  const { workspaceSlug, value, onChange, disabled } = props;
+  const { workspaceSlug, projectId, value, onChange, disabled } = props;
   // translation
   const { t } = useTranslation();
 
+  // the names of groups already assigned, which may no longer be assignable
   const { data: groups } = useSWR(`USER_GROUPS_${workspaceSlug}`, () => userGroupService.list(workspaceSlug));
+  const { data: assignable } = useSWR(`PROJECT_ASSIGNABLE_GROUPS_${workspaceSlug}_${projectId}`, () =>
+    projectGroupService.listAssignable(workspaceSlug, projectId)
+  );
 
   // derived values
   const groupNames = new Map((groups ?? []).map((group) => [group.id, group.name]));
   const assignedIds = new Set(value);
-  const selectable = (groups ?? []).filter((group) => !assignedIds.has(group.id));
+  const selectable = (assignable ?? []).filter((group) => !assignedIds.has(group.id));
+  const noneAssignable = assignable !== undefined && assignable.length === 0;
 
   return (
     <div className="flex flex-wrap items-center gap-1.5">
@@ -56,6 +64,9 @@ export const GroupAssigneeSelect = observer(function GroupAssigneeSelect(props: 
           )}
         </span>
       ))}
+      {!disabled && noneAssignable && (
+        <span className="text-12 text-tertiary">{t("project_members.groups.assign_hint")}</span>
+      )}
       {!disabled && selectable.length > 0 && (
         <select
           aria-label={t("workspace_settings.settings.groups.add_group_assignee")}

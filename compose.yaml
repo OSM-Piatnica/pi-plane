@@ -1,6 +1,8 @@
 # apps/api/.env.example points at a host-local MinIO (localhost:9000, USE_MINIO=0).
 # Inside the compose network the bundled plane-minio is reached by service name, and
-# presigned upload URLs must go through the proxy's /<bucket> route.
+# presigned upload URLs must go through the proxy's /<bucket> route. That also means STORAGE_PROVIDER=azure or an
+# external S3 service in apps/api/.env is overridden for api, worker and beat-worker: to use one, remove
+# `<<: *s3-env` (and `environment: *s3-env`) from those services.
 x-s3-env: &s3-env
   USE_MINIO: 1
   AWS_S3_ENDPOINT_URL: http://plane-minio:9000
@@ -191,9 +193,13 @@ services:
       - ${LISTEN_HTTP_PORT}:80
       - ${LISTEN_HTTPS_PORT}:443
     environment:
-      FILE_SIZE_LIMIT: ${FILE_SIZE_LIMIT:-5242880}
+      FILE_SIZE_LIMIT_MAX: ${FILE_SIZE_LIMIT_MAX:-104857600}
       BUCKET_NAME: ${AWS_S3_BUCKET_NAME:-uploads}
       SITE_ADDRESS: ${SITE_ADDRESS:-:80}
+      CERT_EMAIL: ${CERT_EMAIL:-}
+      CERT_ACME_CA: ${CERT_ACME_CA:-https://acme-v02.api.letsencrypt.org/directory}
+      CERT_ACME_DNS: ${CERT_ACME_DNS:-}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES:-private_ranges}
       ENABLE_SPACE: ${ENABLE_SPACE:-1}
     depends_on:
       - web

@@ -31,6 +31,7 @@ class ProjectCopyOptionsSerializer(serializers.Serializer):
     estimates = serializers.BooleanField(required=False)
     intake = serializers.BooleanField(required=False)
     members = serializers.BooleanField(required=False)
+    groups = serializers.BooleanField(required=False)
     cycles = serializers.BooleanField(required=False)
     modules = serializers.BooleanField(required=False)
     views = serializers.BooleanField(required=False)

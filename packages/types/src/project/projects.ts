@@ -70,6 +70,12 @@ export interface IProject extends IPartialProject {
   anchor?: string | null;
   is_favorite?: boolean;
   members?: string[];
+  /** Groups the project has as project groups, incl. the ones above them, restricted to the ones the requester may filter by. */
+  group_ids?: string[];
+  /** Whether the project has any project group at all. */
+  has_group?: boolean;
+  /** Whether the project has a project group among the requester's groups. */
+  in_my_groups?: boolean;
   timezone?: string;
   start_of_the_week?: EStartOfTheWeek;
   /** Days that count as non-working time in this project, 0 = Sunday ... 6 = Saturday. */
@@ -113,6 +119,12 @@ export interface IProjectMemberLite {
 export type TProjectMembership = {
   member: string;
   role: TUserPermissions | EUserProjectRoles;
+  /** True when the person is a member of the project only through a group. */
+  via_group?: boolean;
+  /** The best role the project's groups give the person (null: no group gives one). */
+  group_role?: EUserProjectRoles | null;
+  /** The person's own role while a group raised it above that (null: no group raised it). */
+  direct_role?: EUserProjectRoles | null;
 } & (
   | {
       id: string;
@@ -201,6 +213,8 @@ export type TProjectDuplicateInclude = {
   estimates?: boolean;
   intake?: boolean;
   members?: boolean;
+  /** The source's groups as members of the copy (same roles); independent of `members`. */
+  groups?: boolean;
   cycles?: boolean;
   modules?: boolean;
   views?: boolean;
