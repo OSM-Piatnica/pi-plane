@@ -396,23 +396,23 @@
   },
   "project": {
     "members_export": {
-      "export_button": "Export",
-      "title": "Export members",
-      "description": "Download the people and groups of this project. The file can be imported again as CSV; the columns Name, Source, Via group, Raised by group and Joined are for information and are ignored by the import.",
+      "export_button": "Exportă",
+      "title": "Exportă membrii",
+      "description": "Descărcați persoanele și grupurile acestui proiect. Fișierul poate fi importat din nou ca CSV; coloanele Name, Source, Via group, Raised by group și Joined au rol informativ și sunt ignorate la import.",
       "format": "Format",
       "include_via_group": {
-        "label": "Include people who belong through a group",
-        "description": "Adds the people who are in the project only through a group, marked \"person (via group)\". The import skips these rows, the group row brings them in."
+        "label": "Include persoanele care aparțin printr-un grup",
+        "description": "Adaugă persoanele care se află în proiect doar printr-un grup, marcate ca „person (via group)”. Importul omite aceste rânduri; rândul grupului le aduce."
       },
       "buttons": {
-        "cancel": "Cancel",
-        "export": "Export",
-        "exporting": "Exporting..."
+        "cancel": "Anulează",
+        "export": "Exportă",
+        "exporting": "Se exportă..."
       },
       "toast": {
         "failed": {
-          "title": "Export failed",
-          "message": "The members could not be exported. Please try again."
+          "title": "Exportul a eșuat",
+          "message": "Membrii nu au putut fi exportați. Vă rugăm să încercați din nou."
         }
       }
     },

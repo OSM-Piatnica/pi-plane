@@ -396,23 +396,23 @@
   },
   "project": {
     "members_export": {
-      "export_button": "Export",
-      "title": "Export members",
-      "description": "Download the people and groups of this project. The file can be imported again as CSV; the columns Name, Source, Via group, Raised by group and Joined are for information and are ignored by the import.",
-      "format": "Format",
+      "export_button": "Експортирай",
+      "title": "Експортиране на членове",
+      "description": "Изтеглете хората и групите на този проект. Файлът може да бъде импортиран отново като CSV; колоните Name, Source, Via group, Raised by group и Joined са информативни и се игнорират при импортирането.",
+      "format": "Формат",
       "include_via_group": {
-        "label": "Include people who belong through a group",
-        "description": "Adds the people who are in the project only through a group, marked \"person (via group)\". The import skips these rows, the group row brings them in."
+        "label": "Включи хората, които членуват чрез група",
+        "description": "Добавя хората, които са в проекта само чрез група, отбелязани като „person (via group)“. Импортирането пропуска тези редове, а редът на групата ги добавя."
       },
       "buttons": {
-        "cancel": "Cancel",
-        "export": "Export",
-        "exporting": "Exporting..."
+        "cancel": "Отказ",
+        "export": "Експортирай",
+        "exporting": "Експортиране..."
       },
       "toast": {
         "failed": {
-          "title": "Export failed",
-          "message": "The members could not be exported. Please try again."
+          "title": "Експортирането е неуспешно",
+          "message": "Членовете не можаха да бъдат експортирани. Моля, опитайте отново."
         }
       }
     },

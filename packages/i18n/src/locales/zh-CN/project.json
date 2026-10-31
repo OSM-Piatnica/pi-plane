@@ -396,23 +396,23 @@
   },
   "project": {
     "members_export": {
-      "export_button": "Export",
-      "title": "Export members",
-      "description": "Download the people and groups of this project. The file can be imported again as CSV; the columns Name, Source, Via group, Raised by group and Joined are for information and are ignored by the import.",
-      "format": "Format",
+      "export_button": "导出",
+      "title": "导出成员",
+      "description": "下载此项目的人员和用户组。该文件可作为 CSV 重新导入；Name、Source、Via group、Raised by group 和 Joined 列仅供参考，导入时会被忽略。",
+      "format": "格式",
       "include_via_group": {
-        "label": "Include people who belong through a group",
-        "description": "Adds the people who are in the project only through a group, marked \"person (via group)\". The import skips these rows, the group row brings them in."
+        "label": "包含通过用户组加入的人员",
+        "description": "添加仅通过用户组加入项目的人员，并标记为“person (via group)”。导入时会跳过这些行，由用户组所在的行将他们导入。"
       },
       "buttons": {
-        "cancel": "Cancel",
-        "export": "Export",
-        "exporting": "Exporting..."
+        "cancel": "取消",
+        "export": "导出",
+        "exporting": "正在导出..."
       },
       "toast": {
         "failed": {
-          "title": "Export failed",
-          "message": "The members could not be exported. Please try again."
+          "title": "导出失败",
+          "message": "无法导出成员。请重试。"
         }
       }
     },

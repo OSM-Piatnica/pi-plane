@@ -396,23 +396,23 @@
   },
   "project": {
     "members_export": {
-      "export_button": "Export",
-      "title": "Export members",
-      "description": "Download the people and groups of this project. The file can be imported again as CSV; the columns Name, Source, Via group, Raised by group and Joined are for information and are ignored by the import.",
-      "format": "Format",
+      "export_button": "Xuất",
+      "title": "Xuất thành viên",
+      "description": "Tải xuống những người và nhóm của dự án này. Tệp có thể được nhập lại dưới dạng CSV; các cột Name, Source, Via group, Raised by group và Joined chỉ mang tính thông tin và bị bỏ qua khi nhập.",
+      "format": "Định dạng",
       "include_via_group": {
-        "label": "Include people who belong through a group",
-        "description": "Adds the people who are in the project only through a group, marked \"person (via group)\". The import skips these rows, the group row brings them in."
+        "label": "Bao gồm những người là thành viên thông qua nhóm",
+        "description": "Thêm những người chỉ thuộc dự án thông qua một nhóm, được đánh dấu là \"person (via group)\". Việc nhập sẽ bỏ qua các dòng này, dòng của nhóm sẽ đưa họ vào."
       },
       "buttons": {
-        "cancel": "Cancel",
-        "export": "Export",
-        "exporting": "Exporting..."
+        "cancel": "Hủy",
+        "export": "Xuất",
+        "exporting": "Đang xuất..."
       },
       "toast": {
         "failed": {
-          "title": "Export failed",
-          "message": "The members could not be exported. Please try again."
+          "title": "Xuất thất bại",
+          "message": "Không thể xuất các thành viên. Vui lòng thử lại."
         }
       }
     },

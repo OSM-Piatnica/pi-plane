@@ -396,23 +396,23 @@
   },
   "project": {
     "members_export": {
-      "export_button": "Export",
-      "title": "Export members",
-      "description": "Download the people and groups of this project. The file can be imported again as CSV; the columns Name, Source, Via group, Raised by group and Joined are for information and are ignored by the import.",
-      "format": "Format",
+      "export_button": "Exportovať",
+      "title": "Exportovať členov",
+      "description": "Stiahnite si osoby a skupiny tohto projektu. Súbor je možné znova importovať ako CSV; stĺpce Name, Source, Via group, Raised by group a Joined sú len informatívne a import ich ignoruje.",
+      "format": "Formát",
       "include_via_group": {
-        "label": "Include people who belong through a group",
-        "description": "Adds the people who are in the project only through a group, marked \"person (via group)\". The import skips these rows, the group row brings them in."
+        "label": "Zahrnúť osoby, ktoré sú členmi prostredníctvom skupiny",
+        "description": "Pridá osoby, ktoré sú v projekte iba prostredníctvom skupiny, označené „person (via group)“. Import tieto riadky preskočí, osoby pridá riadok skupiny."
       },
       "buttons": {
-        "cancel": "Cancel",
-        "export": "Export",
-        "exporting": "Exporting..."
+        "cancel": "Zrušiť",
+        "export": "Exportovať",
+        "exporting": "Exportuje sa..."
       },
       "toast": {
         "failed": {
-          "title": "Export failed",
-          "message": "The members could not be exported. Please try again."
+          "title": "Export zlyhal",
+          "message": "Členov sa nepodarilo exportovať. Skúste to prosím znova."
         }
       }
     },

@@ -396,23 +396,23 @@
   },
   "project": {
     "members_export": {
-      "export_button": "Export",
-      "title": "Export members",
-      "description": "Download the people and groups of this project. The file can be imported again as CSV; the columns Name, Source, Via group, Raised by group and Joined are for information and are ignored by the import.",
-      "format": "Format",
+      "export_button": "Експортувати",
+      "title": "Експорт учасників",
+      "description": "Завантажте людей і групи цього проєкту. Файл можна знову імпортувати як CSV; стовпці Name, Source, Via group, Raised by group і Joined мають інформаційний характер і ігноруються під час імпорту.",
+      "format": "Формат",
       "include_via_group": {
-        "label": "Include people who belong through a group",
-        "description": "Adds the people who are in the project only through a group, marked \"person (via group)\". The import skips these rows, the group row brings them in."
+        "label": "Включити людей, які входять до проєкту через групу",
+        "description": "Додає людей, які входять до проєкту лише через групу, з позначкою «person (via group)». Під час імпорту ці рядки пропускаються, а людей додає рядок групи."
       },
       "buttons": {
-        "cancel": "Cancel",
-        "export": "Export",
-        "exporting": "Exporting..."
+        "cancel": "Скасувати",
+        "export": "Експортувати",
+        "exporting": "Експортування..."
       },
       "toast": {
         "failed": {
-          "title": "Export failed",
-          "message": "The members could not be exported. Please try again."
+          "title": "Не вдалося виконати експорт",
+          "message": "Не вдалося експортувати учасників. Спробуйте ще раз."
         }
       }
     },

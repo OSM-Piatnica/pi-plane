@@ -396,23 +396,23 @@
   },
   "project": {
     "members_export": {
-      "export_button": "Export",
-      "title": "Export members",
-      "description": "Download the people and groups of this project. The file can be imported again as CSV; the columns Name, Source, Via group, Raised by group and Joined are for information and are ignored by the import.",
-      "format": "Format",
+      "export_button": "Dışa aktar",
+      "title": "Üyeleri dışa aktar",
+      "description": "Bu projenin kişilerini ve gruplarını indirin. Dosya CSV olarak yeniden içe aktarılabilir; Name, Source, Via group, Raised by group ve Joined sütunları yalnızca bilgi amaçlıdır ve içe aktarma sırasında yok sayılır.",
+      "format": "Biçim",
       "include_via_group": {
-        "label": "Include people who belong through a group",
-        "description": "Adds the people who are in the project only through a group, marked \"person (via group)\". The import skips these rows, the group row brings them in."
+        "label": "Bir grup aracılığıyla üye olan kişileri dahil et",
+        "description": "Projede yalnızca bir grup aracılığıyla bulunan kişileri \"person (via group)\" olarak işaretleyerek ekler. İçe aktarma bu satırları atlar; kişileri grup satırı getirir."
       },
       "buttons": {
-        "cancel": "Cancel",
-        "export": "Export",
-        "exporting": "Exporting..."
+        "cancel": "İptal",
+        "export": "Dışa aktar",
+        "exporting": "Dışa aktarılıyor..."
       },
       "toast": {
         "failed": {
-          "title": "Export failed",
-          "message": "The members could not be exported. Please try again."
+          "title": "Dışa aktarma başarısız oldu",
+          "message": "Üyeler dışa aktarılamadı. Lütfen tekrar deneyin."
         }
       }
     },

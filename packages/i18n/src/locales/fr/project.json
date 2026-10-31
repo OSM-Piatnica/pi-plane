@@ -396,23 +396,23 @@
   },
   "project": {
     "members_export": {
-      "export_button": "Export",
-      "title": "Export members",
-      "description": "Download the people and groups of this project. The file can be imported again as CSV; the columns Name, Source, Via group, Raised by group and Joined are for information and are ignored by the import.",
+      "export_button": "Exporter",
+      "title": "Exporter les membres",
+      "description": "Téléchargez les personnes et les groupes de ce projet. Le fichier peut être réimporté au format CSV ; les colonnes Name, Source, Via group, Raised by group et Joined sont données à titre informatif et sont ignorées lors de l'import.",
       "format": "Format",
       "include_via_group": {
-        "label": "Include people who belong through a group",
-        "description": "Adds the people who are in the project only through a group, marked \"person (via group)\". The import skips these rows, the group row brings them in."
+        "label": "Inclure les personnes qui appartiennent au projet via un groupe",
+        "description": "Ajoute les personnes qui ne sont dans le projet que par un groupe, marquées « person (via group) ». L'import ignore ces lignes ; la ligne du groupe les fait entrer."
       },
       "buttons": {
-        "cancel": "Cancel",
-        "export": "Export",
-        "exporting": "Exporting..."
+        "cancel": "Annuler",
+        "export": "Exporter",
+        "exporting": "Exportation..."
       },
       "toast": {
         "failed": {
-          "title": "Export failed",
-          "message": "The members could not be exported. Please try again."
+          "title": "Échec de l'exportation",
+          "message": "Les membres n'ont pas pu être exportés. Veuillez réessayer."
         }
       }
     },

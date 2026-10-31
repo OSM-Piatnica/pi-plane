@@ -396,23 +396,23 @@
   },
   "project": {
     "members_export": {
-      "export_button": "Export",
-      "title": "Export members",
-      "description": "Download the people and groups of this project. The file can be imported again as CSV; the columns Name, Source, Via group, Raised by group and Joined are for information and are ignored by the import.",
+      "export_button": "Ekspor",
+      "title": "Ekspor anggota",
+      "description": "Unduh orang dan grup di proyek ini. File dapat diimpor kembali sebagai CSV; kolom Name, Source, Via group, Raised by group, dan Joined hanya untuk informasi dan diabaikan saat impor.",
       "format": "Format",
       "include_via_group": {
-        "label": "Include people who belong through a group",
-        "description": "Adds the people who are in the project only through a group, marked \"person (via group)\". The import skips these rows, the group row brings them in."
+        "label": "Sertakan orang yang menjadi anggota melalui grup",
+        "description": "Menambahkan orang yang berada di proyek hanya melalui grup, ditandai \"person (via group)\". Impor melewati baris ini; baris grup yang membawa mereka masuk."
       },
       "buttons": {
-        "cancel": "Cancel",
-        "export": "Export",
-        "exporting": "Exporting..."
+        "cancel": "Batal",
+        "export": "Ekspor",
+        "exporting": "Mengekspor..."
       },
       "toast": {
         "failed": {
-          "title": "Export failed",
-          "message": "The members could not be exported. Please try again."
+          "title": "Ekspor gagal",
+          "message": "Anggota tidak dapat diekspor. Silakan coba lagi."
         }
       }
     },
