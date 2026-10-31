@@ -18,9 +18,9 @@ TODAY = "today"
 THIS_WEEK = "this_week"
 NEXT_WEEK = "next_week"
 LATER = "later"
-NONE = "none"
+NO_DATE = "no_date"
 
-BUCKETS = (EARLIER, TODAY, THIS_WEEK, NEXT_WEEK, LATER, NONE)
+BUCKETS = (EARLIER, TODAY, THIS_WEEK, NEXT_WEEK, LATER, NO_DATE)
 
 # Group by names (annotations) -> the date field they bucket
 BUCKET_FIELDS = {
@@ -46,7 +46,7 @@ def bucket_bounds(today=None):
 
 def bucket_q(field, bucket, today=None):
     """A Q on a date field for one bucket; an unknown bucket matches nothing."""
-    if bucket == NONE:
+    if bucket == NO_DATE:
         return Q(**{f"{field}__isnull": True})
     bounds = bucket_bounds(today).get(bucket)
     if bounds is None:
@@ -63,7 +63,7 @@ def bucket_q(field, bucket, today=None):
 def bucket_case(field, today=None):
     """An expression that is the bucket of a date field."""
     return Case(
-        *[When(bucket_q(field, bucket, today), then=Value(bucket)) for bucket in BUCKETS if bucket != NONE],
-        default=Value(NONE),
+        *[When(bucket_q(field, bucket, today), then=Value(bucket)) for bucket in BUCKETS if bucket != NO_DATE],
+        default=Value(NO_DATE),
         output_field=CharField(),
     )

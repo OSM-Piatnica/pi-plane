@@ -335,7 +335,7 @@
         "this_week": "Tuần này",
         "next_week": "Tuần sau",
         "later": "Sau đó",
-        "none": "Không có ngày",
+        "no_date": "Không có ngày",
         "no_single_date": "Nhóm này không có một ngày duy nhất. Hãy thả vào Không có ngày, Tuần này, Tuần sau hoặc Hôm nay."
       }
     }

@@ -22,9 +22,9 @@ describe("getDateBucket", () => {
   });
 
   it("is none without a date", () => {
-    expect(getDateBucket(null, wednesday)).toBe("none");
-    expect(getDateBucket(undefined, wednesday)).toBe("none");
-    expect(getDateBucket("", wednesday)).toBe("none");
+    expect(getDateBucket(null, wednesday)).toBe("no_date");
+    expect(getDateBucket(undefined, wednesday)).toBe("no_date");
+    expect(getDateBucket("", wednesday)).toBe("no_date");
   });
 
   it("reads the day of a timestamp", () => {
@@ -39,11 +39,11 @@ describe("getDateBucket", () => {
 });
 
 describe("getDateBucketDropDate", () => {
-  it("gives a day for today and the weeks, nothing for none and no day for earlier and later", () => {
+  it("gives a day for today and the weeks, nothing for no_date and no day for earlier and later", () => {
     expect(getDateBucketDropDate("today", wednesday)).toBe("2026-03-04");
     expect(getDateBucketDropDate("this_week", wednesday)).toBe("2026-03-08");
     expect(getDateBucketDropDate("next_week", wednesday)).toBe("2026-03-15");
-    expect(getDateBucketDropDate("none", wednesday)).toBeNull();
+    expect(getDateBucketDropDate("no_date", wednesday)).toBeNull();
     expect(getDateBucketDropDate("earlier", wednesday)).toBeUndefined();
     expect(getDateBucketDropDate("later", wednesday)).toBeUndefined();
   });

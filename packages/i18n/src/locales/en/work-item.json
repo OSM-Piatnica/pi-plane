@@ -335,7 +335,7 @@
         "this_week": "This week",
         "next_week": "Next week",
         "later": "Later",
-        "none": "No date",
+        "no_date": "No date",
         "no_single_date": "This group has no single date. Drop on Today, This week, Next week or No date instead."
       }
     }

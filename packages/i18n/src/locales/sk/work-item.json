@@ -335,7 +335,7 @@
         "this_week": "Tento týždeň",
         "next_week": "Budúci týždeň",
         "later": "Neskôr",
-        "none": "Žiadny dátum",
+        "no_date": "Žiadny dátum",
         "no_single_date": "Táto skupina nemá jediný dátum. Presuňte ju namiesto toho na Žiadny dátum, Tento týždeň, Budúci týždeň alebo Dnes."
       }
     }

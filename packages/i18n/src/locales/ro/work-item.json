@@ -335,7 +335,7 @@
         "this_week": "Săptămâna aceasta",
         "next_week": "Săptămâna viitoare",
         "later": "Mai târziu",
-        "none": "Fără dată",
+        "no_date": "Fără dată",
         "no_single_date": "Acest grup nu are o singură dată. Plasați în schimb pe Fără dată, Săptămâna aceasta, Săptămâna viitoare sau Astăzi."
       }
     }

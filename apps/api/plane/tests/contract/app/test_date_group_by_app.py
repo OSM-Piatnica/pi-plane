@@ -63,7 +63,7 @@ class TestDateBuckets:
         assert grouped["today"] == ["today"]
         assert grouped["next_week"] == ["next-week"]
         assert grouped["later"] == ["far"]
-        assert grouped["none"] == ["undated"]
+        assert grouped["no_date"] == ["undated"]
 
     def test_one_bucket_is_loaded_by_its_name(self, session_client, workspace, project, issues, field):
         response = self._get(session_client, workspace, project, **{f"{field}_bucket": "later"})
@@ -71,9 +71,9 @@ class TestDateBuckets:
         assert response.status_code == 200, response.data
         assert [row["name"] for row in response.data["results"]] == ["far"]
 
-    def test_the_none_bucket_finds_the_work_items_without_the_date(
+    def test_the_no_date_bucket_finds_the_work_items_without_the_date(
         self, session_client, workspace, project, issues, field
     ):
-        response = self._get(session_client, workspace, project, **{f"{field}_bucket": "none"})
+        response = self._get(session_client, workspace, project, **{f"{field}_bucket": "no_date"})
 
         assert [row["name"] for row in response.data["results"]] == ["undated"]

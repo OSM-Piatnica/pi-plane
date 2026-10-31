@@ -335,7 +335,7 @@
         "this_week": "Diese Woche",
         "next_week": "Nächste Woche",
         "later": "Später",
-        "none": "Kein Datum",
+        "no_date": "Kein Datum",
         "no_single_date": "Diese Gruppe hat kein einzelnes Datum. Ziehen Sie das Element stattdessen auf „Kein Datum“, „Diese Woche“, „Nächste Woche“ oder „Heute“."
       }
     }

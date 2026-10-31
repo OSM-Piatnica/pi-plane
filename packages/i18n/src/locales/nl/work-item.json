@@ -335,7 +335,7 @@
         "this_week": "Deze week",
         "next_week": "Volgende week",
         "later": "Later",
-        "none": "Geen datum",
+        "no_date": "Geen datum",
         "no_single_date": "Deze groep heeft geen enkele datum. Zet het item in plaats daarvan neer op Geen datum, Deze week, Volgende week of Vandaag."
       }
     }

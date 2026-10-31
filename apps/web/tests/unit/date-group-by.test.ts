@@ -21,11 +21,11 @@ describe("grouping work items by the time bucket of a date", () => {
 
   it("groups by the bucket of the due date", () => {
     const grouped = getGroupedWorkItemIds(
-      [item("past", "2026-03-01"), item("today", "2026-03-04"), item("soon", "2026-03-06"), item("none", null)],
+      [item("past", "2026-03-01"), item("today", "2026-03-04"), item("soon", "2026-03-06"), item("undated", null)],
       "target_date_bucket"
     );
 
-    expect(grouped).toEqual({ earlier: ["past"], today: ["today"], this_week: ["soon"], none: ["none"] });
+    expect(grouped).toEqual({ earlier: ["past"], today: ["today"], this_week: ["soon"], no_date: ["undated"] });
   });
 
   it("groups by the bucket of the finish date", () => {

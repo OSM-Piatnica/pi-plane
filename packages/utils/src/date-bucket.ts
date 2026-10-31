@@ -9,10 +9,10 @@
  * is the calendar day of the person. The API has the same rules in `apps/api/plane/utils/date_buckets.py`;
  * keep the two in step.
  */
-export type TDateBucket = "earlier" | "today" | "this_week" | "next_week" | "later" | "none";
+export type TDateBucket = "earlier" | "today" | "this_week" | "next_week" | "later" | "no_date";
 
 /** In the order the groups are shown. */
-export const DATE_BUCKETS: TDateBucket[] = ["earlier", "today", "this_week", "next_week", "later", "none"];
+export const DATE_BUCKETS: TDateBucket[] = ["earlier", "today", "this_week", "next_week", "later", "no_date"];
 
 const DAY_MS = 86_400_000;
 
@@ -32,9 +32,9 @@ const daysSinceMonday = (dayNumber: number) => (((dayNumber + 3) % 7) + 7) % 7;
  * @param today - The current day, defaults to now
  */
 export const getDateBucket = (date: string | null | undefined, today: Date = new Date()): TDateBucket => {
-  if (!date) return "none";
+  if (!date) return "no_date";
   const day = parseDay(date);
-  if (day === null) return "none";
+  if (day === null) return "no_date";
   const current = toDayNumber(today.getFullYear(), today.getMonth(), today.getDate());
   if (day < current) return "earlier";
   if (day === current) return "today";
@@ -48,7 +48,7 @@ const formatDayNumber = (dayNumber: number) => new Date(dayNumber * DAY_MS).toIS
 
 /**
  * The date a work item gets when it is dropped into a bucket: today, or the last day of the week for this/next
- * week, and nothing for "none". Earlier and later name no single day, so they return undefined (not droppable).
+ * week, and nothing for "no_date". Earlier and later name no single day, so they return undefined (not droppable).
  */
 export const getDateBucketDropDate = (bucket: string, today: Date = new Date()): string | null | undefined => {
   const current = toDayNumber(today.getFullYear(), today.getMonth(), today.getDate());
@@ -60,7 +60,7 @@ export const getDateBucketDropDate = (bucket: string, today: Date = new Date()):
       return formatDayNumber(endOfWeek);
     case "next_week":
       return formatDayNumber(endOfWeek + 7);
-    case "none":
+    case "no_date":
       return null;
     default:
       return undefined;

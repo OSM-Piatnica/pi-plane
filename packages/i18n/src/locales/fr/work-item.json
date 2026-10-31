@@ -335,7 +335,7 @@
         "this_week": "Cette semaine",
         "next_week": "Semaine prochaine",
         "later": "Plus tard",
-        "none": "Aucune date",
+        "no_date": "Aucune date",
         "no_single_date": "Ce groupe n’a pas de date unique. Déposez plutôt sur Aucune date, Cette semaine, Semaine prochaine ou Aujourd’hui."
       }
     }

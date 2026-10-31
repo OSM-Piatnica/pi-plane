@@ -133,8 +133,6 @@ export type GroupByColumnTypes =
   | "team_project";
 
 export type TGetColumns = {
-  /** Translates the names of columns that are not data (like the time buckets of a date). */
-  t?: (key: string) => string;
   isWorkspaceLevel?: boolean;
   projectId?: string;
 };

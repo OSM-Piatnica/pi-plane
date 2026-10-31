@@ -335,7 +335,7 @@
         "this_week": "Esta semana",
         "next_week": "Próxima semana",
         "later": "Más adelante",
-        "none": "Sin fecha",
+        "no_date": "Sin fecha",
         "no_single_date": "Este grupo no tiene una fecha única. Suelte en Sin fecha, Esta semana, Próxima semana o Hoy en su lugar."
       }
     }

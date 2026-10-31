@@ -335,7 +335,7 @@
         "this_week": "Minggu ini",
         "next_week": "Minggu depan",
         "later": "Nanti",
-        "none": "Tanpa tanggal",
+        "no_date": "Tanpa tanggal",
         "no_single_date": "Grup ini tidak memiliki satu tanggal tertentu. Jatuhkan ke Tanpa tanggal, Minggu ini, Minggu depan, atau Hari ini."
       }
     }

@@ -35,4 +35,4 @@ class TestBucketBounds:
         assert bounds["next_week"] == (datetime.date(2026, 3, 9), datetime.date(2026, 3, 15))
 
     def test_every_bucket_is_known(self):
-        assert set(BUCKETS) == {"earlier", "today", "this_week", "next_week", "later", "none"}
+        assert set(BUCKETS) == {"earlier", "today", "this_week", "next_week", "later", "no_date"}
