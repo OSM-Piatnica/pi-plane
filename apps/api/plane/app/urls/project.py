@@ -23,12 +23,16 @@ from plane.app.views import (
     ProjectArchiveUnarchiveEndpoint,
     ProjectMemberPreferenceEndpoint,
     WorkspaceProjectIssueTypeSeedEndpoint,
+    WorkspaceProjectTemplateGroupsEndpoint,
     ProjectIssueTypeViewSet,
     ProjectIssueTypeBulkAssignEndpoint,
     ProjectIssueTypePropertiesEndpoint,
     ProjectDuplicateEndpoint,
     ProjectCopyStatusEndpoint,
     ProjectCopyRetryEndpoint,
+    ProjectGroupDetailEndpoint,
+    ProjectMemberImportEndpoint,
+    ProjectGroupEndpoint,
 )
 
 
@@ -121,9 +125,24 @@ urlpatterns = [
         name="project-member",
     ),
     path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/members/import/",
+        ProjectMemberImportEndpoint.as_view(),
+        name="project-member-import",
+    ),
+    path(
         "workspaces/<str:slug>/projects/<uuid:project_id>/members/<uuid:pk>/",
         ProjectMemberViewSet.as_view({"get": "retrieve", "patch": "partial_update", "delete": "destroy"}),
         name="project-member",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/groups/",
+        ProjectGroupEndpoint.as_view(),
+        name="project-groups",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/groups/<uuid:pk>/",
+        ProjectGroupDetailEndpoint.as_view(),
+        name="project-group-detail",
     ),
     path(
         "workspaces/<str:slug>/projects/<uuid:project_id>/members/leave/",
@@ -174,6 +193,11 @@ urlpatterns = [
         "workspaces/<str:slug>/projects/<uuid:project_id>/issue-setup/from-project-template/",
         WorkspaceProjectIssueTypeSeedEndpoint.as_view(),
         name="project-issue-setup-from-template",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/groups/from-project-template/",
+        WorkspaceProjectTemplateGroupsEndpoint.as_view(),
+        name="project-groups-from-template",
     ),
     path(
         "workspaces/<str:slug>/projects/<uuid:project_id>/issue-types/",

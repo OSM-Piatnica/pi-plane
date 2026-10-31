@@ -374,6 +374,12 @@
     "access": "Acces",
     "owned_by": "Proprietar"
   },
+  "group_filter": {
+    "heading": "Grup",
+    "my_groups": "Grupurile mele",
+    "no_group": "Fără grup",
+    "unknown_group": "Grup necunoscut"
+  },
   "good": "Bună",
   "morning": "dimineața",
   "afternoon": "după-amiaza",

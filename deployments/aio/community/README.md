@@ -153,7 +153,7 @@ To build the AIO image yourself:
 
 ```bash
 cd deployments/aio/community
-IMAGE_NAME=my-pi-plane-aio ./build.sh --release=2.1.0
+IMAGE_NAME=my-pi-plane-aio ./build.sh --release=2.1.1
 ```
 
 `build.sh` does not build the image itself: it prepares the `dist/` folder the Dockerfile needs and prints the `docker build` command to run next.

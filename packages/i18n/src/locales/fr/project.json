@@ -370,12 +370,34 @@
     "display_name": "Nom d’affichage",
     "email": "E-mail",
     "joining_date": "Date d’adhésion",
-    "role": "Rôle"
+    "role": "Rôle",
+    "groups": {
+      "title": "Groupes",
+      "description": "Groupes membres de ce projet. Toutes les personnes d’un groupe, y compris celles de ses sous-groupes, sont membres du projet avec le rôle attribué au groupe. Un groupe ne réduit jamais le rôle propre d’une personne.",
+      "no_groups": "Aucun groupe n’est encore membre de ce projet.",
+      "select_group": "Sélectionner un groupe",
+      "no_groups_available": "Aucun groupe restant à ajouter",
+      "add_group": "Ajouter un groupe",
+      "role": "Rôle",
+      "role_member": "Membre",
+      "role_guest": "Invité",
+      "member_count": "{count, plural, one {# personne} many {# personnes} other {# personnes}}",
+      "group_added": "Groupe ajouté au projet.",
+      "group_updated": "Rôle du groupe mis à jour.",
+      "group_removed": "Groupe retiré du projet.",
+      "remove_title": "Retirer {name} de ce projet ?",
+      "remove_content": "Les personnes présentes dans le projet uniquement via ce groupe en perdent l’accès. Les personnes ajoutées directement au projet restent.",
+      "via_group": "Via un groupe",
+      "via_group_tooltip": "Cette personne appartient au projet via un groupe. Retirez le groupe, ou la personne du groupe.",
+      "role_raised": "Rôle relevé par un groupe",
+      "role_raised_tooltip": "Un groupe auquel appartient cette personne lui donne ce rôle.",
+      "assign_hint": "Aucun groupe ne peut encore être attribué. Ajoutez d’abord des groupes dans les paramètres du projet, Membres."
+    }
   },
   "project": {
     "members_import": {
       "title": "Importer des membres depuis un CSV",
-      "description": "Téléchargez un CSV avec les colonnes : E-mail et Rôle (5=Invité, 15=Membre, 20=Administrateur). Les utilisateurs doivent déjà être membres de l'espace de travail.",
+      "description": "Téléversez un CSV avec les colonnes Email et Role (5=Invité, 15=Membre, 20=Administrateur), ou Group et Role (5=Invité, 15=Membre) pour ajouter un groupe entier. Écrivez un sous-groupe sous la forme Parent / Child. Utilisez Email ou Group sur chaque ligne. Les utilisateurs doivent déjà être membres de l’espace de travail et les groupes doivent déjà exister.",
       "download_sample": "Télécharger un CSV d'exemple",
       "dropzone": {
         "active": "Déposez le fichier CSV ici",
@@ -399,13 +421,17 @@
         },
         "message": {
           "success": "{count} membre{plural} importé{plural} avec succès dans le projet.",
-          "no_imports": "Aucun nouveau membre n'a été importé depuis le fichier CSV."
+          "no_imports": "Aucun nouveau membre n'a été importé depuis le fichier CSV.",
+          "groups_success": "{count} {plural, select, s {groupes liés} other {groupe lié}} au projet."
         },
         "stats": {
           "added": "Ajoutés",
           "reactivated": "Réactivés",
           "already_members": "Déjà membres",
-          "skipped": "Ignorés"
+          "skipped": "Ignorés",
+          "groups_added": "Groupes ajoutés",
+          "groups_updated": "Groupes mis à jour",
+          "groups_skipped": "Groupes ignorés"
         },
         "download_errors": "Télécharger les détails ignorés"
       },
@@ -418,6 +444,24 @@
           "title": "Échec de l'importation",
           "message": "Une erreur s'est produite."
         }
+      },
+      "import_button": "Importer depuis un CSV",
+      "parse_errors": {
+        "empty": "Le fichier est vide.",
+        "missing_columns": "Le fichier doit contenir une colonne Role et une colonne Email ou Group.",
+        "no_rows": "Le fichier contient un en-tête mais aucune ligne."
+      },
+      "skip_reasons": {
+        "invalid_role": "Le rôle doit être 5 (Invité), 15 (Membre) ou 20 (Administrateur).",
+        "both_email_and_group": "Une ligne contient soit un Email, soit un Group, pas les deux.",
+        "missing_value": "La ligne ne contient ni Email ni Group.",
+        "not_workspace_member": "Cette personne n’est pas un membre actif de l’espace de travail.",
+        "role_above_workspace_role": "Le rôle est supérieur au rôle de la personne dans l’espace de travail.",
+        "role_below_workspace_role": "Le rôle est inférieur au rôle de la personne dans l’espace de travail.",
+        "unknown_group": "Aucun groupe portant ce nom n’existe dans l’espace de travail.",
+        "ambiguous_group": "Plusieurs groupes portent ce nom, indiquez son chemin sous la forme Parent / Child.",
+        "group_admin_role": "Les groupes ne peuvent pas être administrateurs du projet.",
+        "group_already_linked": "Le groupe est déjà membre du projet avec ce rôle."
       }
     }
   },
@@ -681,6 +725,8 @@
       "clear_all": "Tout effacer",
       "description": "Crée un nouveau projet avec les mêmes paramètres. Les pages et les webhooks ne sont pas copiés ; les éléments de travail ne le sont que si vous le choisissez ci-dessous.",
       "error": "Le projet n'a pas pu être dupliqué. Veuillez réessayer.",
+      "groups": "Groupes comme membres",
+      "groups_hint": "Lie les mêmes groupes avec les mêmes rôles, afin que les personnes qu’ils contiennent deviennent membres de la copie.",
       "identifier_placeholder": "Généré si vide",
       "properties": {
         "assignees": "Assignés",

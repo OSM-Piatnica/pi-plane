@@ -370,12 +370,34 @@
     "display_name": "表示名",
     "email": "メールアドレス",
     "joining_date": "参加日",
-    "role": "役割"
+    "role": "役割",
+    "groups": {
+      "title": "グループ",
+      "description": "このプロジェクトのメンバーであるグループです。グループ内のすべての人は、サブグループを含め、グループに付与された役割でプロジェクトのメンバーになります。個人の役割がグループによって下げられることはありません。",
+      "no_groups": "このプロジェクトのメンバーであるグループはまだありません。",
+      "select_group": "グループを選択",
+      "no_groups_available": "追加できるグループがありません",
+      "add_group": "グループを追加",
+      "role": "役割",
+      "role_member": "メンバー",
+      "role_guest": "ゲスト",
+      "member_count": "{count, plural, one {# 人} other {# 人}}",
+      "group_added": "グループをプロジェクトに追加しました。",
+      "group_updated": "グループの役割を更新しました。",
+      "group_removed": "グループをプロジェクトから削除しました。",
+      "remove_title": "{name} をこのプロジェクトから削除しますか？",
+      "remove_content": "このグループ経由でのみプロジェクトに参加している人は、プロジェクトにアクセスできなくなります。プロジェクトに直接追加された人はそのまま残ります。",
+      "via_group": "グループ経由",
+      "via_group_tooltip": "この人はグループ経由でプロジェクトに所属しています。グループ、またはグループ内のこの人を削除してください。",
+      "role_raised": "グループにより役割が引き上げられています",
+      "role_raised_tooltip": "この人が所属するグループが、この役割を付与しています。",
+      "assign_hint": "まだグループを割り当てられません。先にプロジェクト設定の「メンバー」でグループを追加してください。"
+    }
   },
   "project": {
     "members_import": {
       "title": "CSVからメンバーをインポート",
-      "description": "次の列を含むCSVをアップロード：メールアドレスとロール（5=ゲスト、15=メンバー、20=管理者）。ユーザーはすでにワークスペースのメンバーである必要があります。",
+      "description": "列が Email と Role（5=ゲスト、15=メンバー、20=管理者）、または Group と Role（5=ゲスト、15=メンバー）の CSV をアップロードすると、グループ全体を追加できます。入れ子のグループは Parent / Child と記述してください。各行では Email と Group のどちらか一方を使用します。ユーザーはすでにワークスペースのメンバーであり、グループはすでに存在している必要があります。",
       "download_sample": "サンプルCSVをダウンロード",
       "dropzone": {
         "active": "CSVファイルをここにドロップ",
@@ -399,13 +421,17 @@
         },
         "message": {
           "success": "{count}人のメンバーをプロジェクトにインポートしました。",
-          "no_imports": "CSVファイルから新しいメンバーはインポートされませんでした。"
+          "no_imports": "CSVファイルから新しいメンバーはインポートされませんでした。",
+          "groups_success": "{count}件のグループをプロジェクトにリンクしました。"
         },
         "stats": {
           "added": "追加",
           "reactivated": "再有効化",
           "already_members": "既にメンバー",
-          "skipped": "スキップ"
+          "skipped": "スキップ",
+          "groups_added": "追加されたグループ",
+          "groups_updated": "更新されたグループ",
+          "groups_skipped": "スキップされたグループ"
         },
         "download_errors": "スキップ詳細をダウンロード"
       },
@@ -418,6 +444,24 @@
           "title": "インポート失敗",
           "message": "問題が発生しました。"
         }
+      },
+      "import_button": "CSVからインポート",
+      "parse_errors": {
+        "empty": "ファイルが空です。",
+        "missing_columns": "ファイルには Role 列と、Email 列または Group 列が必要です。",
+        "no_rows": "ファイルにはヘッダーがありますが、行がありません。"
+      },
+      "skip_reasons": {
+        "invalid_role": "役割は 5（ゲスト）、15（メンバー）、20（管理者）のいずれかにしてください。",
+        "both_email_and_group": "1行には Email と Group のどちらか一方のみを指定してください。",
+        "missing_value": "この行には Email も Group もありません。",
+        "not_workspace_member": "この人物はワークスペースのアクティブなメンバーではありません。",
+        "role_above_workspace_role": "この役割は、その人物のワークスペースでの役割より高くなっています。",
+        "role_below_workspace_role": "この役割は、その人物のワークスペースでの役割より低くなっています。",
+        "unknown_group": "この名前のグループはワークスペースに存在しません。",
+        "ambiguous_group": "この名前のグループが複数あります。パスを Parent / Child の形式で記述してください。",
+        "group_admin_role": "グループをプロジェクト管理者にすることはできません。",
+        "group_already_linked": "このグループはすでにこの役割でプロジェクトのメンバーです。"
       }
     }
   },
@@ -681,6 +725,8 @@
       "clear_all": "すべて解除",
       "description": "同じ設定で新しいプロジェクトを作成します。ページと Webhook はコピーされません。作業項目は下で選択した場合のみコピーされます。",
       "error": "プロジェクトを複製できませんでした。もう一度お試しください。",
+      "groups": "メンバーとしてのグループ",
+      "groups_hint": "同じグループを同じ役割でリンクするため、グループ内の人がコピーのメンバーになります。",
       "identifier_placeholder": "空欄の場合は自動生成",
       "properties": {
         "assignees": "担当者",

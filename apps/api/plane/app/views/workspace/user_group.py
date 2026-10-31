@@ -11,13 +11,14 @@ from rest_framework import status
 from rest_framework.response import Response
 
 # Module imports
-from plane.app.permissions import WorkSpaceAdminPermission
+from plane.app.permissions import WorkSpaceAdminPermission, WorkspaceViewerPermission
 from plane.app.serializers.user_group import (
     UserGroupMemberSerializer,
     UserGroupMemberWriteSerializer,
     UserGroupSerializer,
 )
-from plane.db.models import IssueGroupAssignee, UserGroup, UserGroupMember, Workspace, WorkspaceMember
+from plane.db.models import IssueGroupAssignee, ProjectGroup, UserGroup, UserGroupMember, Workspace, WorkspaceMember
+from plane.utils.project_groups import reconcile_user, reconcile_workspace
 from plane.utils.user_groups import (
     MAX_GROUP_DEPTH,
     administered_group_ids,
@@ -30,6 +31,8 @@ from plane.utils.user_groups import (
     subtree_height,
     would_create_cycle,
 )
+
+from plane.utils.group_filters import allowed_group_ids
 
 from ..base import BaseAPIView
 
@@ -120,6 +123,34 @@ class UserGroupListEndpoint(_GroupView):
         )
 
 
+class UserGroupFilterableEndpoint(BaseAPIView):
+    """The groups the requester may filter work items, modules, cycles and projects by (open to every workspace member).
+
+    A workspace admin may use every group; everybody else only the groups they belong to and the ones above them.
+    The full list stays with ``UserGroupListEndpoint``; this one never shows a group the person may not filter by.
+    """
+
+    permission_classes = [WorkspaceViewerPermission]
+
+    def get(self, request, slug):
+        workspace = Workspace.objects.get(slug=slug)
+        allowed, mine = allowed_group_ids(request.user, workspace.id)
+        groups = UserGroup.objects.filter(workspace=workspace, id__in=allowed).order_by("name")
+        return Response(
+            [
+                {
+                    "id": group.id,
+                    "name": group.name,
+                    "source": group.source,
+                    "parent_id": group.parent_id,
+                    "is_member": group.id in mine,
+                }
+                for group in groups
+            ],
+            status=status.HTTP_200_OK,
+        )
+
+
 class UserGroupDetailEndpoint(_GroupView):
     def get(self, request, slug, pk):
         workspace = self._workspace(slug)
@@ -166,7 +197,11 @@ class UserGroupDetailEndpoint(_GroupView):
         ):
             return _error("A group with this name already exists here.", status.HTTP_409_CONFLICT)
 
+        moved = parent_id != group.parent_id
         serializer.save()
+        if moved:
+            # Who belongs to the groups above changed with it, and so do the projects those give
+            reconcile_workspace(workspace.id)
         return Response(self._present(request, workspace, UserGroup.objects.filter(pk=pk))[0])
 
     def delete(self, request, slug, pk):
@@ -183,7 +218,10 @@ class UserGroupDetailEndpoint(_GroupView):
             UserGroupMember.objects.filter(group=group).delete()
             # A work item no longer points at a group that is gone
             IssueGroupAssignee.objects.filter(group=group).delete()
+            # ... nor does a project have it as a member
+            ProjectGroup.objects.filter(group=group).delete()
             group.delete()
+        reconcile_workspace(workspace.id)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -223,6 +261,7 @@ class UserGroupMembersEndpoint(_GroupView):
         membership = UserGroupMember.objects.create(
             workspace=workspace, group=group, user_id=user_id, role=serializer.validated_data["role"]
         )
+        reconcile_user(workspace.id, user_id)
         return Response(UserGroupMemberSerializer(membership).data, status=status.HTTP_201_CREATED)
 
 
@@ -263,4 +302,5 @@ class UserGroupMemberDetailEndpoint(_GroupView):
         if error:
             return error
         membership.delete()
+        reconcile_user(membership.workspace_id, membership.user_id)
         return Response(status=status.HTTP_204_NO_CONTENT)

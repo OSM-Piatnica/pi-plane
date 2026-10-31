@@ -373,6 +373,13 @@ class ProjectMember(ProjectBaseModel):
     preferences = models.JSONField(default=get_default_preferences)
     sort_order = models.FloatField(default=65535)
     is_active = models.BooleanField(default=True)
+    # `role` and `is_active` are always the effective values, whatever gives them. The three fields below say how
+    # user groups take part (see plane.utils.project_groups): True when the person belongs to the project only
+    # through groups, the best role the groups of the project give them, and the person's own role while a group
+    # raised it above that.
+    via_group = models.BooleanField(default=False)
+    group_role = models.PositiveSmallIntegerField(null=True, blank=True)
+    direct_role = models.PositiveSmallIntegerField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if self._state.adding and self.member:

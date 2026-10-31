@@ -151,7 +151,7 @@ class WorkspaceUserProfileIssuesEndpoint(BaseAPIView):
         )
 
     def get(self, request, slug, user_id):
-        filters = issue_filters(request.query_params, "GET")
+        filters = issue_filters(request.query_params, "GET", request=request)
 
         order_by_param = request.GET.get("order_by", "-created_at")
         issue_queryset = Issue.issue_objects.filter(
@@ -441,7 +441,7 @@ class WorkspaceUserProfileStatsEndpoint(BaseAPIView):
     permission_classes = [WorkspaceViewerPermission]
 
     def get(self, request, slug, user_id):
-        filters = issue_filters(request.query_params, "GET")
+        filters = issue_filters(request.query_params, "GET", request=request)
 
         state_distribution = (
             Issue.issue_objects.filter(

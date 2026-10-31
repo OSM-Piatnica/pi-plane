@@ -16,6 +16,7 @@ from django.db import transaction
 from django.utils import timezone
 
 from plane.db.models import Account, GroupRole, GroupSource, UserGroup, UserGroupMember, WorkspaceMember
+from plane.utils.project_groups import reconcile_user
 from plane.utils.user_groups import MAX_GROUP_DEPTH
 
 logger = logging.getLogger("plane.authentication")
@@ -173,6 +174,7 @@ def sync_external_groups(user, source, groups):
     for workspace_id in workspace_ids:
         with transaction.atomic():
             _sync_workspace(workspace_id, user, source, data)
+        reconcile_user(workspace_id, user.id)
 
 
 def sync_workspace_from_stored(user, workspace_id):
@@ -183,6 +185,7 @@ def sync_workspace_from_stored(user, workspace_id):
         if stored:
             with transaction.atomic():
                 _sync_workspace(workspace_id, user, source, stored)
+            reconcile_user(workspace_id, user.id)
 
 
 def _provider_key(source):

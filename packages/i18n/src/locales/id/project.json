@@ -370,12 +370,34 @@
     "display_name": "Nama tampilan",
     "email": "Email",
     "joining_date": "Tanggal bergabung",
-    "role": "Peran"
+    "role": "Peran",
+    "groups": {
+      "title": "Grup",
+      "description": "Grup yang menjadi anggota proyek ini. Semua orang dalam grup, termasuk subgrupnya, adalah anggota proyek dengan peran yang diberikan kepada grup. Peran milik seseorang tidak pernah diturunkan oleh grup.",
+      "no_groups": "Belum ada grup yang menjadi anggota proyek ini.",
+      "select_group": "Pilih grup",
+      "no_groups_available": "Tidak ada grup lagi untuk ditambahkan",
+      "add_group": "Tambah grup",
+      "role": "Peran",
+      "role_member": "Anggota",
+      "role_guest": "Tamu",
+      "member_count": "{count, plural, one {# orang} other {# orang}}",
+      "group_added": "Grup ditambahkan ke proyek.",
+      "group_updated": "Peran grup diperbarui.",
+      "group_removed": "Grup dihapus dari proyek.",
+      "remove_title": "Hapus {name} dari proyek ini?",
+      "remove_content": "Orang yang berada di proyek hanya melalui grup ini kehilangan akses ke proyek. Orang yang ditambahkan langsung ke proyek tetap ada.",
+      "via_group": "Melalui grup",
+      "via_group_tooltip": "Orang ini termasuk dalam proyek melalui grup. Hapus grup, atau hapus orang tersebut dari grup.",
+      "role_raised": "Peran dinaikkan oleh grup",
+      "role_raised_tooltip": "Grup tempat orang ini berada memberinya peran ini.",
+      "assign_hint": "Belum ada grup yang dapat ditugaskan. Tambahkan grup terlebih dahulu di pengaturan proyek, Anggota."
+    }
   },
   "project": {
     "members_import": {
       "title": "Impor anggota dari CSV",
-      "description": "Unggah CSV dengan kolom: Email dan Peran (5=Tamu, 15=Anggota, 20=Admin). Pengguna harus sudah menjadi anggota workspace.",
+      "description": "Unggah CSV dengan kolom Email dan Role (5=Tamu, 15=Anggota, 20=Admin), atau Group dan Role (5=Tamu, 15=Anggota) untuk menambahkan seluruh grup. Tulis grup bersarang sebagai Parent / Child. Gunakan Email atau Group pada setiap baris. Pengguna harus sudah menjadi anggota ruang kerja dan grup harus sudah ada.",
       "download_sample": "Unduh contoh CSV",
       "dropzone": {
         "active": "Letakkan file CSV di sini",
@@ -399,13 +421,17 @@
         },
         "message": {
           "success": "Berhasil mengimpor {count} anggota ke proyek.",
-          "no_imports": "Tidak ada anggota baru yang diimpor dari file CSV."
+          "no_imports": "Tidak ada anggota baru yang diimpor dari file CSV.",
+          "groups_success": "{count} grup dihubungkan ke proyek."
         },
         "stats": {
           "added": "Ditambahkan",
           "reactivated": "Diaktifkan kembali",
           "already_members": "Sudah menjadi anggota",
-          "skipped": "Dilewati"
+          "skipped": "Dilewati",
+          "groups_added": "Grup ditambahkan",
+          "groups_updated": "Grup diperbarui",
+          "groups_skipped": "Grup dilewati"
         },
         "download_errors": "Unduh detail yang dilewati"
       },
@@ -418,6 +444,24 @@
           "title": "Impor gagal",
           "message": "Terjadi kesalahan."
         }
+      },
+      "import_button": "Impor dari CSV",
+      "parse_errors": {
+        "empty": "File kosong.",
+        "missing_columns": "File harus memiliki kolom Role serta kolom Email atau Group.",
+        "no_rows": "File memiliki header tetapi tidak ada baris."
+      },
+      "skip_reasons": {
+        "invalid_role": "Peran harus 5 (Tamu), 15 (Anggota), atau 20 (Admin).",
+        "both_email_and_group": "Satu baris hanya boleh berisi Email atau Group, tidak keduanya.",
+        "missing_value": "Baris ini tidak memiliki Email maupun Group.",
+        "not_workspace_member": "Orang ini bukan anggota aktif ruang kerja.",
+        "role_above_workspace_role": "Peran ini lebih tinggi daripada peran orang tersebut di ruang kerja.",
+        "role_below_workspace_role": "Peran ini lebih rendah daripada peran orang tersebut di ruang kerja.",
+        "unknown_group": "Tidak ada grup dengan nama ini di ruang kerja.",
+        "ambiguous_group": "Beberapa grup memiliki nama ini, tulis path-nya sebagai Parent / Child.",
+        "group_admin_role": "Grup tidak dapat menjadi admin proyek.",
+        "group_already_linked": "Grup sudah menjadi anggota proyek dengan peran ini."
       }
     }
   },
@@ -681,6 +725,8 @@
       "clear_all": "Hapus semua",
       "description": "Membuat proyek baru dengan pengaturan yang sama. Halaman dan webhook tidak disalin; item kerja hanya jika Anda memilihnya di bawah.",
       "error": "Proyek tidak dapat diduplikasi. Silakan coba lagi.",
+      "groups": "Grup sebagai anggota",
+      "groups_hint": "Menghubungkan grup yang sama dengan peran yang sama, sehingga orang-orang di dalamnya menjadi anggota salinan.",
       "identifier_placeholder": "Dibuat otomatis jika kosong",
       "properties": {
         "assignees": "Penerima tugas",

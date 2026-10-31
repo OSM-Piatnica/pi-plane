@@ -370,12 +370,34 @@
     "display_name": "Anzeigename",
     "email": "E-Mail",
     "joining_date": "Beitrittsdatum",
-    "role": "Rolle"
+    "role": "Rolle",
+    "groups": {
+      "title": "Gruppen",
+      "description": "Gruppen, die Mitglieder dieses Projekts sind. Alle Personen in einer Gruppe, einschließlich ihrer Untergruppen, sind Mitglieder des Projekts mit der Rolle, die der Gruppe zugewiesen ist. Die eigene Rolle einer Person wird durch eine Gruppe nie herabgestuft.",
+      "no_groups": "Dieses Projekt hat noch keine Gruppen als Mitglieder.",
+      "select_group": "Gruppe auswählen",
+      "no_groups_available": "Keine weiteren Gruppen zum Hinzufügen",
+      "add_group": "Gruppe hinzufügen",
+      "role": "Rolle",
+      "role_member": "Mitglied",
+      "role_guest": "Gast",
+      "member_count": "{count, plural, one {# Person} other {# Personen}}",
+      "group_added": "Gruppe zum Projekt hinzugefügt.",
+      "group_updated": "Rolle der Gruppe aktualisiert.",
+      "group_removed": "Gruppe aus dem Projekt entfernt.",
+      "remove_title": "{name} aus diesem Projekt entfernen?",
+      "remove_content": "Personen, die nur über diese Gruppe im Projekt sind, verlieren den Zugriff darauf. Personen, die direkt zum Projekt hinzugefügt wurden, bleiben erhalten.",
+      "via_group": "Über Gruppe",
+      "via_group_tooltip": "Diese Person gehört über eine Gruppe zum Projekt. Entfernen Sie die Gruppe oder die Person aus der Gruppe.",
+      "role_raised": "Rolle durch Gruppe angehoben",
+      "role_raised_tooltip": "Eine Gruppe, der diese Person angehört, gibt ihr diese Rolle.",
+      "assign_hint": "Es können noch keine Gruppen zugewiesen werden. Fügen Sie zuerst Gruppen unter Projekteinstellungen, Mitglieder hinzu."
+    }
   },
   "project": {
     "members_import": {
       "title": "Mitglieder aus CSV importieren",
-      "description": "Laden Sie eine CSV mit den Spalten E-Mail und Rolle hoch (5=Gast, 15=Mitglied, 20=Admin). Benutzer müssen bereits Mitglieder des Arbeitsbereichs sein.",
+      "description": "Laden Sie eine CSV-Datei mit den Spalten Email und Role (5=Gast, 15=Mitglied, 20=Administrator) oder Group und Role (5=Gast, 15=Mitglied) hoch, um eine ganze Gruppe hinzuzufügen. Schreiben Sie eine verschachtelte Gruppe als Parent / Child. Verwenden Sie in jeder Zeile entweder Email oder Group. Benutzer müssen bereits Mitglieder des Arbeitsbereichs sein, und Gruppen müssen bereits existieren.",
       "download_sample": "Beispiel-CSV herunterladen",
       "dropzone": {
         "active": "CSV-Datei hier ablegen",
@@ -399,13 +421,17 @@
         },
         "message": {
           "success": "{count} Mitglied{plural} erfolgreich ins Projekt importiert.",
-          "no_imports": "Aus der CSV-Datei wurden keine neuen Mitglieder importiert."
+          "no_imports": "Aus der CSV-Datei wurden keine neuen Mitglieder importiert.",
+          "groups_success": "{count} {plural, select, s {Gruppen} other {Gruppe}} mit dem Projekt verknüpft."
         },
         "stats": {
           "added": "Hinzugefügt",
           "reactivated": "Reaktiviert",
           "already_members": "Bereits Mitglieder",
-          "skipped": "Übersprungen"
+          "skipped": "Übersprungen",
+          "groups_added": "Hinzugefügte Gruppen",
+          "groups_updated": "Aktualisierte Gruppen",
+          "groups_skipped": "Übersprungene Gruppen"
         },
         "download_errors": "Übersprungene Details herunterladen"
       },
@@ -418,6 +444,24 @@
           "title": "Import fehlgeschlagen",
           "message": "Etwas ist schiefgelaufen."
         }
+      },
+      "import_button": "Aus CSV importieren",
+      "parse_errors": {
+        "empty": "Die Datei ist leer.",
+        "missing_columns": "Die Datei benötigt eine Spalte Role sowie eine Spalte Email oder Group.",
+        "no_rows": "Die Datei hat eine Kopfzeile, aber keine Zeilen."
+      },
+      "skip_reasons": {
+        "invalid_role": "Die Rolle muss 5 (Gast), 15 (Mitglied) oder 20 (Administrator) sein.",
+        "both_email_and_group": "Eine Zeile darf entweder Email oder Group enthalten, nicht beides.",
+        "missing_value": "Die Zeile enthält weder Email noch Group.",
+        "not_workspace_member": "Diese Person ist kein aktives Mitglied des Arbeitsbereichs.",
+        "role_above_workspace_role": "Die Rolle ist höher als die Rolle der Person im Arbeitsbereich.",
+        "role_below_workspace_role": "Die Rolle ist niedriger als die Rolle der Person im Arbeitsbereich.",
+        "unknown_group": "Im Arbeitsbereich existiert keine Gruppe mit diesem Namen.",
+        "ambiguous_group": "Mehrere Gruppen haben diesen Namen, schreiben Sie den Pfad als Parent / Child.",
+        "group_admin_role": "Gruppen können keine Projektadministratoren sein.",
+        "group_already_linked": "Die Gruppe ist bereits mit dieser Rolle Mitglied des Projekts."
       }
     }
   },
@@ -681,6 +725,8 @@
       "clear_all": "Alle abwählen",
       "description": "Erstellt ein neues Projekt mit denselben Einstellungen. Seiten und Webhooks werden nicht kopiert; Arbeitselemente nur, wenn Sie es unten wählen.",
       "error": "Das Projekt konnte nicht dupliziert werden. Bitte versuchen Sie es erneut.",
+      "groups": "Gruppen als Mitglieder",
+      "groups_hint": "Verknüpft dieselben Gruppen mit denselben Rollen, sodass die Personen darin Mitglieder der Kopie werden.",
       "identifier_placeholder": "Wird erzeugt, wenn leer",
       "properties": {
         "assignees": "Zugewiesene",

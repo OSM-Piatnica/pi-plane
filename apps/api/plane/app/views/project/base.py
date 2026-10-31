@@ -44,6 +44,7 @@ from plane.db.models import (
     WorkspaceMember,
 )
 from plane.db.models.intake import IntakeIssueStatus
+from plane.utils.group_filters import add_group_info, filter_by_groups_param
 from plane.utils.host import base_host
 from plane.utils.space import is_space_enabled
 from plane.utils.order_queryset import PROJECT_ORDER_BY_ALLOWLIST, sanitize_order_by
@@ -141,6 +142,8 @@ class ProjectViewSet(BaseViewSet):
                 | Q(network__in=[ProjectNetwork.PRIVATE.value, ProjectNetwork.PUBLIC.value])
             )
 
+        projects = filter_by_groups_param(request, slug, "project", projects)
+
         if request.GET.get("per_page", False) and request.GET.get("cursor", False):
             return self.paginate(
                 order_by=sanitize_order_by(
@@ -150,11 +153,13 @@ class ProjectViewSet(BaseViewSet):
                 ),
                 request=request,
                 queryset=(projects),
-                on_results=lambda projects: ProjectListSerializer(projects, many=True).data,
+                on_results=lambda projects: add_group_info(
+                    request, slug, "project", ProjectListSerializer(projects, many=True).data
+                ),
             )
 
         projects = ProjectListSerializer(projects, many=True, fields=fields if fields else None).data
-        return Response(projects, status=status.HTTP_200_OK)
+        return Response(add_group_info(request, slug, "project", projects), status=status.HTTP_200_OK)
 
     @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST], level="WORKSPACE")
     def list(self, request, slug):

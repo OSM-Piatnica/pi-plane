@@ -290,6 +290,7 @@
             "clear_all": "Odznacz wszystko",
             "cycles": "Cykle",
             "dates": "Daty i czas trwania",
+            "group_assignees": "Przypisane grupy",
             "heading": "Co importować",
             "labels": "Etykiety",
             "modules": "Moduły",
@@ -321,6 +322,7 @@
         "description": "Twórz wielokrotnego użycia konfiguracje projektów z domyślnymi właściwościami, funkcjami, stanami, etykietami i typami elementów roboczych.",
         "edit_template": "Edytuj szablon",
         "form": {
+          "add_group": "Dodaj grupę",
           "add_label": "Dodaj etykietę",
           "add_state": "Dodaj stan",
           "custom_property": {
@@ -393,6 +395,8 @@
               "label": "Typy elementów roboczych"
             }
           },
+          "group_missing": "Grupa już nie istnieje",
+          "groups_empty": "Nie ma jeszcze grup.",
           "identifier_invalid": "Używaj tylko liter i cyfr",
           "identifier_max_char": "Identyfikator może mieć maksymalnie 5 znaków",
           "label_name_placeholder": "Nazwa etykiety",
@@ -400,8 +404,11 @@
           "mark_default_state": "Oznacz jako domyślny stan",
           "modal_intro": "Nadaj szablonowi nazwę i krótką notatkę dla zespołu. Następnie skonfiguruj domyślne wartości projektu — takie same ustawienia, jak przy tworzeniu projektu.",
           "name_required": "Nazwa szablonu jest wymagana",
+          "no_groups_available": "Nie ma już grup do dodania",
           "section_features": "Funkcje",
           "section_features_hint": "Wybierz, które opcjonalne funkcje projektu są włączone po zastosowaniu szablonu.",
+          "section_groups": "Grupy jako członkowie",
+          "section_groups_hint": "Grupy, które zostają członkami każdego projektu utworzonego z tego szablonu, z podaną tutaj rolą. Wszyscy w grupie, łącznie z jej podgrupami, dołączają do projektu. Osoba tworząca projekt pozostaje jego administratorem.",
           "section_labels": "Etykiety",
           "section_labels_hint": "Zdefiniuj domyślne etykiety dla nowych projektów.",
           "section_properties": "Domyślne właściwości projektu",
@@ -410,6 +417,7 @@
           "section_template": "Szablon",
           "section_work_item_types": "Typy elementów roboczych",
           "section_work_item_types_hint": "Skonfiguruj domyślne typy elementów roboczych i właściwości niestandardowe dla projektów utworzonych z tego szablonu.",
+          "select_group": "Wybierz grupę",
           "state_groups": {
             "backlog": "Backlog",
             "cancelled": "Anulowane",
@@ -498,6 +506,12 @@
           },
           "uploaded": {
             "message": "Szablon „{name}” został wczytany z pliku."
+          },
+          "apply_groups_skipped": {
+            "message": "Projekt został utworzony, ale {count, plural, one {# grupa szablonu już nie istnieje i nie została dodana} few {# grupy szablonu już nie istnieją i nie zostały dodane} many {# grup szablonu już nie istnieje i nie zostało dodanych} other {# grupy szablonu już nie istnieje i nie zostało dodanych}}."
+          },
+          "uploaded_groups_not_found": {
+            "message": "Szablon „{name}” został wczytany, ale tych grup nie ma w tym obszarze roboczym i zostały pominięte: {groups}."
           }
         },
         "upload_invalid_file": "Prześlij plik JSON pobrany przyciskiem „Pobierz”.",

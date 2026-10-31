@@ -116,6 +116,7 @@ export const WORK_ITEM_FILTER_PROPERTY_KEYS = [
   "start_date",
   "target_date",
   "assignee_id",
+  "group_assignee_id",
   "mention_id",
   "created_by_id",
   "subscriber_id",
@@ -159,6 +160,8 @@ export type TWorkItemFilterExpression = CompleteOrEmpty<TWorkItemFilterExpressio
 
 export interface IIssueFilterOptions {
   assignees?: string[] | null;
+  /** Group ids, "my_groups" or "none"; only the sub-work-item list filters by it in the browser. */
+  group_assignees?: string[] | null;
   mentions?: string[] | null;
   created_by?: string[] | null;
   labels?: string[] | null;

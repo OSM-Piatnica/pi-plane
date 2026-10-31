@@ -258,7 +258,7 @@ class WorkspaceViewIssuesViewSet(BaseViewSet):
         order_by_param = request.GET.get("order_by", "-created_at")
 
         # Apply legacy filters
-        filters = issue_filters(request.query_params, "GET")
+        filters = issue_filters(request.query_params, "GET", request=request)
         issue_queryset = issue_queryset.filter(**filters)
 
         # Get common project permission filters

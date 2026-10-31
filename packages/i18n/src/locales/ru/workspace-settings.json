@@ -159,6 +159,7 @@
             "estimate": "Оценка",
             "is_draft": "Признак черновика",
             "assignees": "Исполнители",
+            "group_assignees": "Группы-исполнители",
             "subscribers": "Подписчики",
             "created_by_name": "Создал",
             "start_date": "Дата начала",

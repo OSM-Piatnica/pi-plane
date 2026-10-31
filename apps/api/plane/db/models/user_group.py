@@ -3,9 +3,10 @@
 # See the LICENSE file for details.
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
-from django.db.models.signals import post_save
+from django.db.models.signals import post_init, post_save
 from django.dispatch import receiver
 
 from .base import BaseModel
@@ -117,11 +118,67 @@ class IssueGroupAssignee(ProjectBaseModel):
         return f"{self.issue_id} {self.group_id}"
 
 
+class ProjectGroupRole(models.IntegerChoices):
+    """What a group may be in a project: never an Admin, project admins stay named people."""
+
+    MEMBER = 15, "Member"
+    GUEST = 5, "Guest"
+
+
+class ProjectGroup(ProjectBaseModel):
+    """A group as a member of a project: whoever belongs to the group (and the groups below it) is a member."""
+
+    group = models.ForeignKey(UserGroup, on_delete=models.CASCADE, related_name="project_links")
+    role = models.PositiveSmallIntegerField(choices=ProjectGroupRole.choices, default=ProjectGroupRole.MEMBER)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["project", "group"],
+                condition=Q(deleted_at__isnull=True),
+                name="project_group_unique_project_group_when_deleted_at_null",
+            )
+        ]
+        verbose_name = "Project Group"
+        verbose_name_plural = "Project Groups"
+        db_table = "project_groups"
+        ordering = ("-created_at",)
+
+    def clean(self):
+        super().clean()
+        if self.role not in ProjectGroupRole.values:
+            raise ValidationError({"role": "A group can only be a Member or a Guest of a project."})
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.project_id} {self.group_id}"
+
+
+@receiver(post_init, sender="db.WorkspaceMember")
+def remember_workspace_member_state(sender, instance, **kwargs):
+    """Remember the role and the active flag a workspace member was loaded with, to see whether they change."""
+    state = instance.__dict__
+    instance._project_group_state = (state.get("role"), state.get("is_active"))
+
+
 @receiver(post_save, sender="db.WorkspaceMember")
 def mirror_stored_groups_on_join(sender, instance, created, **kwargs):
-    """A person who joins a workspace gets the groups their identity provider reported at their last sign-in."""
-    if not created or not instance.is_active:
-        return
-    from plane.utils.user_group_sync import sync_workspace_from_stored
+    """A person who joins a workspace gets the groups their identity provider reported at their last sign-in.
 
-    sync_workspace_from_stored(instance.member, instance.workspace_id)
+    What groups give in projects follows the person's workspace role and whether they are in the workspace at all, so
+    it is worked out again when they join, change role or are deactivated or reactivated.
+    """
+    from plane.utils.project_groups import reconcile_user
+
+    if created and instance.is_active:
+        from plane.utils.user_group_sync import sync_workspace_from_stored
+
+        sync_workspace_from_stored(instance.member, instance.workspace_id)
+    before = getattr(instance, "_project_group_state", None)
+    changed = created or before is None or before != (instance.role, instance.is_active)
+    instance._project_group_state = (instance.role, instance.is_active)
+    if changed and instance.member_id:
+        reconcile_user(instance.workspace_id, instance.member_id)
