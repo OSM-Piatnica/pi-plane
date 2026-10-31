@@ -34,6 +34,8 @@ class TestIssueGroupByAllowlist:
             "finish_date",
             "start_date",
             "schedule_date",
+            "target_date_bucket",
+            "finish_date_bucket",
         }
         assert ISSUE_GROUP_BY_ALLOWLIST == frozenset(expected)
 

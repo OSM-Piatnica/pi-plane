@@ -11,6 +11,8 @@ from datetime import timedelta
 from django.db.models import Q
 from django.utils import timezone
 
+from plane.utils.date_buckets import bucket_q
+
 # The date from pattern
 pattern = re.compile(r"\d+_(weeks|months)$")
 
@@ -361,6 +363,23 @@ def filter_schedule_date(params, issue_filter, method, prefix=""):
     return issue_filter
 
 
+def _filter_date_bucket(param, field, params, issue_filter, method, prefix):
+    if method != "GET":
+        return issue_filter
+    _narrow_to(issue_filter, f"{prefix}pk__in", bucket_q(field, str(params.get(param) or ""), None))
+    return issue_filter
+
+
+def filter_target_date_bucket(params, issue_filter, method, prefix=""):
+    """Work items whose due date is in a time bucket (see plane.utils.date_buckets), the group of a grouped list."""
+    return _filter_date_bucket("target_date_bucket", "target_date", params, issue_filter, method, prefix)
+
+
+def filter_finish_date_bucket(params, issue_filter, method, prefix=""):
+    """Work items whose finish date is in a time bucket (see plane.utils.date_buckets)."""
+    return _filter_date_bucket("finish_date_bucket", "finish_date", params, issue_filter, method, prefix)
+
+
 def filter_completed_at(params, issue_filter, method, prefix=""):
     if method == "GET":
         completed_ats = params.get("completed_at").split(",")
@@ -535,6 +554,8 @@ def issue_filters(query_params, method, prefix="", request=None):
         "finish_date": filter_finish_date,
         "schedule_window": filter_schedule_window,
         "schedule_date": filter_schedule_date,
+        "target_date_bucket": filter_target_date_bucket,
+        "finish_date_bucket": filter_finish_date_bucket,
         "completed_at": filter_completed_at,
         "type": filter_issue_state_type,
         "project": filter_project,

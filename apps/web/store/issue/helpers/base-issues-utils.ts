@@ -22,7 +22,14 @@ import type {
   TIssueGroupByOptions,
   TIssueOrderByOptions,
 } from "@plane/types";
-import { checkDateCriteria, convertToISODateString, matchesGroupFilter, parseDateFilter } from "@plane/utils";
+import {
+  checkDateCriteria,
+  convertToISODateString,
+  getDateBucket,
+  isDateBucketGroupBy,
+  matchesGroupFilter,
+  parseDateFilter,
+} from "@plane/utils";
 import { store } from "@/lib/store-context";
 import { EIssueGroupedAction, ISSUE_GROUP_BY_KEY } from "./base-issues.store";
 
@@ -363,6 +370,8 @@ export const getGroupedWorkItemIds = (
   const groupKey = getDefaultGroupKey(groupByKey);
   const groupedWorkItems = groupBy(workItems, (item) => {
     const value = groupKey ? item[groupKey] : null;
+    // grouped by the time bucket of a date
+    if (isDateBucketGroupBy(groupByKey)) return getDateBucket(value as string | null | undefined);
     if (Array.isArray(value)) {
       if (value.length === 0) return "None";
       // Sort & join to build deterministic set-like key

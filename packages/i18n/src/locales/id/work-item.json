@@ -328,6 +328,15 @@
         "deadlines_help": "Pekerjaan ditempatkan pada tanggal jatuh tempo",
         "due_marker": "Jatuh tempo",
         "finish_marker": "Selesai"
+      },
+      "bucket": {
+        "earlier": "Sebelumnya",
+        "today": "Hari ini",
+        "this_week": "Minggu ini",
+        "next_week": "Minggu depan",
+        "later": "Nanti",
+        "no_date": "Tanpa tanggal",
+        "no_single_date": "Grup ini tidak memiliki satu tanggal tertentu. Jatuhkan ke Tanpa tanggal, Minggu ini, Minggu depan, atau Hari ini."
       }
     }
   },

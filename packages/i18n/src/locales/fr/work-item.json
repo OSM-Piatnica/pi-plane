@@ -328,6 +328,15 @@
         "deadlines_help": "Travail placé à sa date d’échéance",
         "due_marker": "Échéance",
         "finish_marker": "Fin"
+      },
+      "bucket": {
+        "earlier": "Plus tôt",
+        "today": "Aujourd’hui",
+        "this_week": "Cette semaine",
+        "next_week": "Semaine prochaine",
+        "later": "Plus tard",
+        "no_date": "Aucune date",
+        "no_single_date": "Ce groupe n’a pas de date unique. Déposez plutôt sur Aucune date, Cette semaine, Semaine prochaine ou Aujourd’hui."
       }
     }
   },

@@ -328,6 +328,15 @@
         "deadlines_help": "Lavoro collocato alla sua scadenza",
         "due_marker": "Scadenza",
         "finish_marker": "Fine"
+      },
+      "bucket": {
+        "earlier": "Prima",
+        "today": "Oggi",
+        "this_week": "Questa settimana",
+        "next_week": "Settimana prossima",
+        "later": "Dopo",
+        "no_date": "Nessuna data",
+        "no_single_date": "Questo gruppo non ha una data unica. Rilascia invece su Nessuna data, Questa settimana, Settimana prossima o Oggi."
       }
     }
   },
