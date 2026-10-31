@@ -27,7 +27,7 @@ ENV GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/etc/ssl/certs/ca-certificates.crt
 # OS security updates. --available forces reinstall from the current repos; bump
 # APK_SECURITY_PATCH to bust buildx's cached layer (keyed on this command string),
 # otherwise a rebuild silently re-ships the old packages.
-ARG APK_SECURITY_PATCH=2026-10-26
+ARG APK_SECURITY_PATCH=2026-10-31
 RUN echo "apk-security-patch ${APK_SECURITY_PATCH}" && apk update && apk upgrade --no-cache --available
 
 # All apk work happens before the node copies below. The node binary only links libstdc++ and
