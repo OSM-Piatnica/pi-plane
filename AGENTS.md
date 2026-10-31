@@ -2,7 +2,7 @@
 
 ## Commands
 
-- `pnpm dev` - Start all dev servers (web:3000, admin:3001)
+- `pnpm dev` - Start all dev servers (web:3000, admin:3001, space:3002, live:3100)
 - `pnpm build` - Build all packages and apps
 - `pnpm check` - Run all checks (format, lint, types)
 - `pnpm check:lint` - OxLint across all packages

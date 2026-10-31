@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -31,6 +32,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from plane.app.permissions import allow_permission, ROLE
 from plane.db.models import Cycle, UserFavorite, Issue, Label, User, Project
+from plane.utils.group_filters import add_group_info, filter_by_groups_param
 from plane.utils.analytics_plot import burndown_plot
 
 # Module imports
@@ -272,7 +274,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
     def get(self, request, slug, project_id, pk=None):
         if pk is None:
             queryset = (
-                self.get_queryset().values(
+                filter_by_groups_param(request, slug, "cycle", self.get_queryset()).values(
                     # necessary fields
                     "id",
                     "workspace_id",
@@ -301,7 +303,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
                     "archived_at",
                 )
             ).order_by("-is_favorite", "-created_at")
-            return Response(queryset, status=status.HTTP_200_OK)
+            return Response(add_group_info(request, slug, "cycle", queryset), status=status.HTTP_200_OK)
         else:
             queryset = self.get_queryset().filter(archived_at__isnull=False).filter(pk=pk)
             data = (

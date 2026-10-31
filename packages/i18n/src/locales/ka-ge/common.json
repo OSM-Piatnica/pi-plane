@@ -374,6 +374,12 @@
     "access": "წვდომა",
     "owned_by": "მფლობელი"
   },
+  "group_filter": {
+    "heading": "ჯგუფი",
+    "my_groups": "ჩემი ჯგუფები",
+    "no_group": "ჯგუფის გარეშე",
+    "unknown_group": "უცნობი ჯგუფი"
+  },
   "good": "კარგი",
   "morning": "დილა",
   "afternoon": "შუადღე",

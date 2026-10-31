@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -26,6 +27,8 @@ export type TModuleDisplayFilters = {
 };
 
 export type TModuleFilters = {
+  /** Group ids, or the keywords my_groups and none, see GROUP_FILTER_KEYWORDS. */
+  groups?: string[] | null;
   lead?: string[] | null;
   members?: string[] | null;
   start_date?: string[] | null;

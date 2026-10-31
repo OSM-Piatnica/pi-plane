@@ -374,6 +374,12 @@
     "access": "Zugriff",
     "owned_by": "Besitzer"
   },
+  "group_filter": {
+    "heading": "Gruppe",
+    "my_groups": "Meine Gruppen",
+    "no_group": "Keine Gruppe",
+    "unknown_group": "Unbekannte Gruppe"
+  },
   "good": "Guten",
   "morning": "Morgen",
   "afternoon": "Nachmittag",
