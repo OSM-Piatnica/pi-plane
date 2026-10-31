@@ -116,6 +116,9 @@ export const DRAG_ALLOWED_GROUPS: TIssueGroupByOptions[] = [
   "labels",
   "module",
   "cycle",
+  // a drop sets the date that stands for the bucket (not into Earlier or Later, see the columns)
+  "target_date_bucket",
+  "finish_date_bucket",
 ];
 
 export type TCreateModalStoreTypes =
