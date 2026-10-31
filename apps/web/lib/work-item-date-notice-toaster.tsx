@@ -8,35 +8,17 @@ import { useEffect } from "react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { setToast } from "@plane/blocks/toast";
-import type { TPairedDateNotice } from "@plane/utils";
 import { renderFormattedDate } from "@plane/utils";
-
-/**
- * When the server fills a work item's other planning date for the first finish/due entry (or
- * explains why it did not), the store reports it here and the toast below tells the user, with Undo.
- * A tiny bus keeps the MobX store free of React and translations.
- */
-export type TWorkItemDateNoticeEvent = {
-  issueId: string;
-  notices: TPairedDateNotice[];
-  /** Reverts only the defaulted field, leaving the user's own edit in place. */
-  undo?: () => Promise<void>;
-};
-
-type TListener = (event: TWorkItemDateNoticeEvent) => void;
-
-const listeners = new Set<TListener>();
-
-export const emitWorkItemDateNotice = (event: TWorkItemDateNoticeEvent) => {
-  listeners.forEach((listener) => listener(event));
-};
+// local imports
+import type { TWorkItemDateNoticeListener } from "./work-item-date-notices";
+import { onWorkItemDateNotice } from "./work-item-date-notices";
 
 /** Mounted once next to the global `Toast`. */
 export function WorkItemDateNoticeToaster() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const listener: TListener = ({ notices, undo }) => {
+    const listener: TWorkItemDateNoticeListener = ({ notices, undo }) => {
       notices.forEach((notice) => {
         const date = renderFormattedDate(notice.date) ?? notice.date;
         if (notice.code === "finish_date_not_defaulted") {
@@ -57,10 +39,7 @@ export function WorkItemDateNoticeToaster() {
         });
       });
     };
-    listeners.add(listener);
-    return () => {
-      listeners.delete(listener);
-    };
+    return onWorkItemDateNotice(listener);
   }, [t]);
 
   return null;

@@ -13,7 +13,7 @@ import { TranslationProvider } from "@plane/i18n";
 import { PlaneToastProvider } from "@plane/blocks/toast";
 // mobx store provider
 import { StoreProvider } from "@/lib/store-context";
-import { WorkItemDateNoticeToaster } from "@/lib/work-item-date-notices";
+import { WorkItemDateNoticeToaster } from "@/lib/work-item-date-notice-toaster";
 
 // lazy imports
 const AppProgressBar = lazy(function AppProgressBar() {

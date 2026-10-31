@@ -27,10 +27,9 @@ import useIssuePeekOverviewRedirection from "@/hooks/use-issue-peek-overview-red
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { guardQuickActionsClick } from "@/components/issues/issue-layouts/quick-action-dropdowns/click-guard";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
-import { calendarLayerState } from "@/store/issue/helpers/calendar-layers";
 // local components
 import { WorkItemPreviewCard } from "../../preview-card";
-import { getIssueDateStatuses } from "../utils";
+import { useCalendarLayerMarker } from "./use-layer-marker";
 import type { TRenderQuickActions } from "../list/list-view-types";
 import type { CalendarStoreType } from "./base-calendar-root";
 
@@ -47,7 +46,6 @@ export const CalendarIssueBlock = observer(
   forwardRef(function CalendarIssueBlock(props: Props, ref: React.ForwardedRef<HTMLAnchorElement>) {
     const { issue, date, quickActions, isDragging = false, isEpic = false } = props;
     const { t } = useTranslation();
-    const calendarLayer = calendarLayerState.layer;
     // states
     const [isMenuActive, setIsMenuActive] = useState(false);
     // refs
@@ -61,7 +59,7 @@ export const CalendarIssueBlock = observer(
     const { isMobile } = usePlatformOS();
     const storeType = useIssueStoreType() as CalendarStoreType;
     const { issuesFilter } = useIssues(storeType);
-    const { getProjectIdentifierById, getProjectById } = useProject();
+    const { getProjectIdentifierById } = useProject();
 
     const stateColor = getProjectStates(issue?.project_id)?.find((state) => state?.id == issue?.state_id)?.color || "";
     const projectIdentifier = getProjectIdentifierById(issue?.project_id);
@@ -103,18 +101,7 @@ export const CalendarIssueBlock = observer(
       isArchived: !!issue?.archived_at,
     });
 
-    // distinct labelling per layer: a deadline is a "Due" chip, a scheduled item marks its finish day
-    const stateGroup = getProjectStates(issue?.project_id)?.find((state) => state?.id == issue?.state_id)?.group;
-    const isOverdue = getIssueDateStatuses(issue, stateGroup, getProjectById(issue?.project_id)?.timezone).overdue;
-    const layerMarker =
-      calendarLayer === "deadlines"
-        ? {
-            label: t("issue.dates.calendar.due_marker"),
-            className: isOverdue ? "bg-danger-subtle text-danger-primary" : "bg-layer-2 text-secondary",
-          }
-        : date && issue.finish_date && issue.finish_date.slice(0, 10) === date
-          ? { label: t("issue.dates.calendar.finish_marker"), className: "bg-accent-primary/10 text-accent-primary" }
-          : null;
+    const layerMarker = useCalendarLayerMarker(issue, date);
 
     return (
       <Popover>

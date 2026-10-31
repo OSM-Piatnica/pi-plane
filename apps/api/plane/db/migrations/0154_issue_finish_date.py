@@ -77,7 +77,7 @@ def backfill_finish_date(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("db", "0152_user_notification_preference_workspace_admin_message"),
+        ("db", "0153_project_groups"),
     ]
 
     operations = [
