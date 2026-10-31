@@ -8,6 +8,7 @@ import { describe, expect, it } from "vitest";
 import {
   MEMBER_IMPORT_SAMPLE_CSV,
   chunkRows,
+  importMemberRowsInChunks,
   emptyMemberImportSummary,
   mergeMemberImportSummaries,
   parseCsvText,
@@ -88,5 +89,22 @@ describe("skippedRowsToCsv", () => {
       { row: 4, type: "group", value: 'A "b"', code: "unknown_group", reason: "No, none" },
     ]);
     expect(csv).toBe('Row,Type,Value,Reason\n"4","group","A ""b""","No, none"\n');
+  });
+});
+
+describe("importMemberRowsInChunks", () => {
+  it("sends one chunk after the other and returns every answer in order", async () => {
+    const events: string[] = [];
+    const rows = Array.from({ length: 2500 }, (_, i) => ({ row: i + 1, email: `p${i}@x.test`, role: "15" }));
+    const answers = await importMemberRowsInChunks(rows, async (chunk) => {
+      events.push(`start ${chunk[0].row}`);
+      await Promise.resolve();
+      events.push(`end ${chunk[0].row}`);
+      return { people: { added: chunk.length } } as never;
+    });
+    expect(events).toEqual(["start 1", "end 1", "start 1001", "end 1001", "start 2001", "end 2001"]);
+    expect(answers.map((answer) => (answer as never as { people: { added: number } }).people.added)).toEqual([
+      1000, 1000, 500,
+    ]);
   });
 });
