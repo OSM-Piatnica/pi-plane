@@ -13,6 +13,8 @@ names; a backslash before any other character (or at the end) is just a backslas
 Writing always escapes.
 """
 
+import json
+
 from plane.db.models import UserGroup
 
 PATH_SEPARATOR = " / "
@@ -49,6 +51,88 @@ def split_path(text) -> list[str]:
         index += 1
     parts.append("".join(current).strip())
     return parts
+
+
+def escape_list_entry(path) -> str:
+    """
+    A path as one entry of a column that lists groups: every "," in it is written "\\,", so a group name with a comma
+    does not split into two when the column is read as comma separated text (an Excel cell is written that way).
+    """
+    return str(path).replace(",", "\\,")
+
+
+def _split_list_text(text) -> list[str]:
+    """
+    Split a column of groups on every "," that is not escaped, and unescape the commas.
+
+    A backslash pair ("\\\\") and a "\\/" stay as they are (they belong to the path text inside an entry), a
+    "\\," becomes a literal comma, any other backslash is just a backslash.
+    """
+    entries = []
+    current = []
+    chars = str(text)
+    index = 0
+    while index < len(chars):
+        char = chars[index]
+        following = chars[index + 1] if index + 1 < len(chars) else ""
+        if char == "\\" and following == ",":
+            current.append(",")
+            index += 2
+            continue
+        if char == "\\" and following in ("\\", "/"):
+            current.append(char + following)
+            index += 2
+            continue
+        if char == ",":
+            entries.append("".join(current).strip())
+            current = []
+        else:
+            current.append(char)
+        index += 1
+    entries.append("".join(current).strip())
+    return [entry for entry in entries if entry]
+
+
+def unescape_list_entry(text) -> str:
+    """One entry of an already split list (a JSON list): "\\," is a comma again, the rest is left to the path reader."""
+    chars = str(text)
+    result = []
+    index = 0
+    while index < len(chars):
+        char = chars[index]
+        following = chars[index + 1] if index + 1 < len(chars) else ""
+        if char == "\\" and following == ",":
+            result.append(",")
+            index += 2
+            continue
+        if char == "\\" and following in ("\\", "/"):
+            result.append(char + following)
+            index += 2
+            continue
+        result.append(char)
+        index += 1
+    return "".join(result)
+
+
+def split_group_list(value) -> list[str]:
+    """
+    The entries (path texts) of a column that lists groups: a JSON list ('["Sales", "Sales / Poland"]', what CSV and
+    JSON exports hold), a real list, or comma separated text (what an Excel cell holds); a comma inside a name is
+    written "\\,".
+    """
+    if value in (None, ""):
+        return []
+    if isinstance(value, list):
+        return [entry for entry in (unescape_list_entry(item).strip() for item in value) if entry]
+    text = str(value).strip()
+    if text.startswith("["):
+        try:
+            parsed = json.loads(text)
+        except (json.JSONDecodeError, TypeError):
+            parsed = None
+        if isinstance(parsed, list):
+            return [entry for entry in (unescape_list_entry(item).strip() for item in parsed) if entry]
+    return _split_list_text(text)
 
 
 def _chains(workspace_id) -> dict:

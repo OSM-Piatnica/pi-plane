@@ -141,11 +141,15 @@ def test_exported_work_item_keeps_its_group_assignees_when_imported_again(file_f
 @pytest.mark.unit
 @pytest.mark.django_db
 @pytest.mark.parametrize("file_format", ["csv", "xlsx", "json"])
-def test_group_names_with_a_slash_or_a_backslash_survive_the_export_and_import(file_format, workspace, create_user):
+def test_group_names_with_a_slash_a_backslash_or_a_comma_survive_the_export_and_import(
+    file_format, workspace, create_user
+):
     source = _project(workspace, create_user, "Source", "SRC")
     top = UserGroup.objects.create(workspace=workspace, name="R&D/QA")
     other = UserGroup.objects.create(workspace=workspace, name="A \\ B")
     nested = UserGroup.objects.create(workspace=workspace, name="Team/1", parent=other)
+    comma = UserGroup.objects.create(workspace=workspace, name="Sales, EU")
+    comma_child = UserGroup.objects.create(workspace=workspace, name="Q1, Q2 \\, odd", parent=comma)
     issue = Issue.objects.create(
         name="Slashes",
         project=source,
@@ -153,7 +157,7 @@ def test_group_names_with_a_slash_or_a_backslash_survive_the_export_and_import(f
         state=State.objects.get(project=source),
         created_by=create_user,
     )
-    for group in (top, other, nested):
+    for group in (top, other, nested, comma, comma_child):
         ProjectGroup.objects.create(project=source, group=group, role=15, workspace=workspace)
         IssueGroupAssignee.objects.create(issue=issue, group=group, project=source, workspace=workspace)
 
@@ -167,7 +171,7 @@ def test_group_names_with_a_slash_or_a_backslash_survive_the_export_and_import(f
         content = content.encode("utf-8")
 
     target = _project(workspace, create_user, "Target", "TGT")
-    for group in (top, other, nested):
+    for group in (top, other, nested, comma, comma_child):
         ProjectGroup.objects.create(project=target, group=group, role=15, workspace=workspace)
     result = import_community_work_items_into_project(
         project=target,
@@ -178,4 +182,4 @@ def test_group_names_with_a_slash_or_a_backslash_survive_the_export_and_import(f
 
     imported = Issue.objects.get(project=target, name="Slashes")
     ids = set(IssueGroupAssignee.objects.filter(issue=imported).values_list("group_id", flat=True))
-    assert ids == {top.id, other.id, nested.id}, result
+    assert ids == {top.id, other.id, nested.id, comma.id, comma_child.id}, result

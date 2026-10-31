@@ -12,7 +12,7 @@ from rest_framework import serializers
 
 # Module imports
 from plane.app.serializers import IssueSerializer
-from plane.utils.group_paths import group_paths
+from plane.utils.group_paths import escape_list_entry, escape_name, group_paths
 from plane.utils.issue_relation_mapper import get_inverse_relation
 
 
@@ -193,7 +193,11 @@ class IssueExportSerializer(IssueSerializer):
         if obj.workspace_id not in cache:
             cache[obj.workspace_id] = group_paths(obj.workspace_id)
         paths = cache[obj.workspace_id]
-        return sorted(paths.get(link.group_id) or link.group.name for link in links if link.group.deleted_at is None)
+        names = (
+            paths.get(link.group_id) or escape_name(link.group.name) for link in links if link.group.deleted_at is None
+        )
+        # a comma in a name is written "\\," so the column can be read as comma separated text (Excel cells are)
+        return sorted(escape_list_entry(name) for name in names)
 
     def get_subscribers(self, obj):
         """Return list of subscriber e-mails."""

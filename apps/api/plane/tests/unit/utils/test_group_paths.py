@@ -7,6 +7,7 @@
 import pytest
 
 from plane.db.models import UserGroup
+from plane.utils import group_paths as group_paths_module
 from plane.utils.csv_utils import sanitize_csv_value
 from plane.utils.group_paths import (
     escape_name,
@@ -106,3 +107,35 @@ def test_paths_read_from_the_database_round_trip(workspace):
     by_path, by_name = index_groups(workspace.id)
     for group in (top, other, child):
         assert find_group(group_paths(workspace.id)[group.id], by_path, by_name) == group.id
+
+
+class TestGroupListColumn:
+    """A column that lists groups: JSON list, real list, or comma separated text with "\\," for a comma in a name."""
+
+    def test_comma_separated_text_splits_on_commas_that_are_not_escaped(self):
+        assert group_paths_module.split_group_list("Sales, Docs team,Poland") == ["Sales", "Docs team", "Poland"]
+        assert group_paths_module.split_group_list("Sales\\, EU, Docs") == ["Sales, EU", "Docs"]
+
+    def test_a_backslash_pair_before_a_separator_is_not_an_escape(self):
+        # the name `A \` is written `A \\`, then the separator
+        assert group_paths_module.split_group_list("A \\\\, B") == ["A \\\\", "B"]
+
+    def test_path_escapes_inside_an_entry_are_kept_for_the_path_reader(self):
+        assert group_paths_module.split_group_list("R&D\\/QA / Team, Other") == ["R&D\\/QA / Team", "Other"]
+
+    def test_a_json_list_keeps_its_entries_and_unescapes_commas(self):
+        assert group_paths_module.split_group_list('["Sales\\\\, EU", "Docs"]') == ["Sales, EU", "Docs"]
+        assert group_paths_module.split_group_list(["Sales\\, EU", " Docs "]) == ["Sales, EU", "Docs"]
+
+    def test_empty_values(self):
+        assert group_paths_module.split_group_list(None) == []
+        assert group_paths_module.split_group_list("") == []
+        assert group_paths_module.split_group_list(" , ,") == []
+        assert group_paths_module.split_group_list("[]") == []
+
+    def test_what_is_written_is_read_back(self):
+        names = ["Sales, EU", "Q1, Q2 \\, odd", "plain", "A \\ B", "R&D/QA"]
+        written = [group_paths_module.escape_list_entry(group_paths_module.escape_name(name)) for name in names]
+        text = ", ".join(written)
+        read = group_paths_module.split_group_list(text)
+        assert [group_paths_module.split_path(entry) for entry in read] == [[name] for name in names]
