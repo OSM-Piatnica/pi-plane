@@ -22,7 +22,7 @@ import type {
   TIssueGroupByOptions,
   TIssueOrderByOptions,
 } from "@plane/types";
-import { checkDateCriteria, convertToISODateString, parseDateFilter } from "@plane/utils";
+import { checkDateCriteria, convertToISODateString, matchesGroupFilter, parseDateFilter } from "@plane/utils";
 import { store } from "@/lib/store-context";
 import { EIssueGroupedAction, ISSUE_GROUP_BY_KEY } from "./base-issues.store";
 
@@ -267,6 +267,8 @@ export const getFilteredWorkItems = (workItems: TIssue[], filters: IIssueFilterO
       if (filterKey === "start_date" || filterKey === "target_date") {
         return checkIssueDateFilter(workItem, filterKey, filterValues as string[]);
       }
+      // The group filter works on what the API answers about the groups of a work item
+      if (filterKey === "group_assignees") return matchesGroupFilter(filterValues as string[], workItem);
       // Handle regular filters
       const issueKey = FILTER_TO_ISSUE_MAP[filterKey as keyof IIssueFilterOptions];
       if (!issueKey) return true; // Skip if no mapping exists

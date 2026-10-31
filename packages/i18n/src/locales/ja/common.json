@@ -374,6 +374,12 @@
     "access": "アクセス",
     "owned_by": "所有者"
   },
+  "group_filter": {
+    "heading": "グループ",
+    "my_groups": "自分のグループ",
+    "no_group": "グループなし",
+    "unknown_group": "不明なグループ"
+  },
   "good": "おはよう",
   "morning": "ございます",
   "afternoon": "こんにちは",

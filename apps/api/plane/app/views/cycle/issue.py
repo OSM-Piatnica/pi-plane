@@ -110,7 +110,7 @@ class CycleIssueViewSet(BaseViewSet):
     @method_decorator(gzip_page)
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     def list(self, request, slug, project_id, cycle_id):
-        filters = issue_filters(request.query_params, "GET")
+        filters = issue_filters(request.query_params, "GET", request=request)
         issue_queryset = (
             Issue.issue_objects.filter(issue_cycle__cycle_id=cycle_id, issue_cycle__deleted_at__isnull=True)
             .filter(project_id=project_id)

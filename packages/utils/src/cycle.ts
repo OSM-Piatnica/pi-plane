@@ -13,6 +13,7 @@ import type { ICycle, TCycleFilters, TCycleOrderByOptions, TProgressSnapshot } f
 // local imports
 import { findTotalDaysInRange, generateDateArray, getDate } from "./datetime";
 import { satisfiesDateFilter } from "./filter";
+import { matchesGroupFilter } from "./user-group-filter";
 
 const collator = new Intl.Collator("en-US", { numeric: true, sensitivity: "base" });
 
@@ -104,6 +105,8 @@ export const shouldFilterCycle = (cycle: ICycle, filter: TCycleFilters): boolean
     if (filterKey === "status" && filter.status && filter.status.length > 0)
       // react-doctor-disable-next-line js-set-map-lookups -- user-selected filter list is tiny and each branch runs once per key, not per item of a large collection
       fallsInFilters = fallsInFilters && filter.status.includes(cycle.status?.toLowerCase() ?? "");
+    if (filterKey === "groups" && filter.groups && filter.groups.length > 0)
+      fallsInFilters = fallsInFilters && matchesGroupFilter(filter.groups, cycle);
     if (filterKey === "start_date" && filter.start_date && filter.start_date.length > 0) {
       const startDate = getDate(cycle.start_date);
       filter.start_date.forEach((dateFilter) => {

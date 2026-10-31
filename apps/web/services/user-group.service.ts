@@ -5,7 +5,13 @@
  */
 
 import { API_BASE_URL } from "@plane/constants";
-import type { EUserGroupRole, TUserGroup, TUserGroupFormData, TUserGroupMember } from "@plane/types";
+import type {
+  EUserGroupRole,
+  TFilterableUserGroup,
+  TUserGroup,
+  TUserGroupFormData,
+  TUserGroupMember,
+} from "@plane/types";
 import { APIService } from "@/services/api.service";
 
 export class UserGroupService extends APIService {
@@ -15,6 +21,15 @@ export class UserGroupService extends APIService {
 
   async list(workspaceSlug: string): Promise<TUserGroup[]> {
     return this.get(`/api/workspaces/${workspaceSlug}/user-groups/`)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** The groups the requester may filter by: every group for a workspace admin, their own and the ones above for others. */
+  async listFilterable(workspaceSlug: string): Promise<TFilterableUserGroup[]> {
+    return this.get(`/api/workspaces/${workspaceSlug}/user-groups/filterable/`)
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;

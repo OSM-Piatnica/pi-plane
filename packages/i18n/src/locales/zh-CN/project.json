@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "从CSV导入成员",
-      "description": "上传包含以下列的CSV：电子邮箱和角色（5=访客，15=成员，20=管理员）。用户必须是工作区成员。",
+      "description": "上传包含 Email 和 Role（5=Guest、15=Member、20=Admin）列，或 Group 和 Role（5=Guest、15=Member）列的 CSV 文件，即可添加整个用户组。嵌套的用户组请写成 Parent / Child。每行只能使用 Email 或 Group 其中之一。用户必须已是工作区成员，用户组必须已存在。",
       "download_sample": "下载示例CSV",
       "dropzone": {
         "active": "将CSV文件放在这里",
@@ -421,13 +421,17 @@
         },
         "message": {
           "success": "成功将{count}名成员导入到项目。",
-          "no_imports": "CSV文件中未导入任何新成员。"
+          "no_imports": "CSV文件中未导入任何新成员。",
+          "groups_success": "已将 {count} 个用户组关联到项目。"
         },
         "stats": {
           "added": "已添加",
           "reactivated": "已重新激活",
           "already_members": "已是成员",
-          "skipped": "已跳过"
+          "skipped": "已跳过",
+          "groups_added": "已添加用户组",
+          "groups_updated": "已更新用户组",
+          "groups_skipped": "已跳过用户组"
         },
         "download_errors": "下载跳过详情"
       },
@@ -440,6 +444,24 @@
           "title": "导入失败",
           "message": "出了些问题。"
         }
+      },
+      "import_button": "从 CSV 导入",
+      "parse_errors": {
+        "empty": "文件为空。",
+        "missing_columns": "文件需要包含 Role 列，以及 Email 列或 Group 列。",
+        "no_rows": "文件有表头，但没有数据行。"
+      },
+      "skip_reasons": {
+        "invalid_role": "角色必须是 5（Guest）、15（Member）或 20（Admin）。",
+        "both_email_and_group": "每行只能填写 Email 或 Group 其中之一，不能同时填写。",
+        "missing_value": "该行既没有 Email，也没有 Group。",
+        "not_workspace_member": "此人不是工作区的有效成员。",
+        "role_above_workspace_role": "该角色高于此人的工作区角色。",
+        "role_below_workspace_role": "该角色低于此人的工作区角色。",
+        "unknown_group": "工作区中不存在此名称的用户组。",
+        "ambiguous_group": "有多个用户组使用此名称，请将其路径写成 Parent / Child。",
+        "group_admin_role": "用户组不能成为项目管理员。",
+        "group_already_linked": "该用户组已是项目成员，且角色相同。"
       }
     }
   },
@@ -703,6 +725,8 @@
       "clear_all": "全部清除",
       "description": "使用相同的设置创建新项目。页面和 Webhook 不会被复制；工作项仅在您于下方选择时复制。",
       "error": "无法复制项目，请重试。",
+      "groups": "用户组作为成员",
+      "groups_hint": "以相同角色关联相同的用户组，因此其中的人员会成为副本的成员。",
       "identifier_placeholder": "留空则自动生成",
       "properties": {
         "assignees": "负责人",

@@ -11,6 +11,8 @@ import { useTranslation } from "@plane/i18n";
 import { CloseOutline, SearchOutline } from "@makeplane/propel/icons";
 // plane imports
 import type { TCycleFilters, TCycleGroups } from "@plane/types";
+// components
+import { FilterGroupList } from "@/components/common/filters/group-filter-list";
 // hooks
 import { usePlatformOS } from "@/hooks/use-platform-os";
 // local imports
@@ -64,6 +66,13 @@ export const CycleFiltersSelection = observer(function CycleFiltersSelection(pro
             />
           </div>
         )}
+
+        {/* group */}
+        <FilterGroupList
+          appliedFilters={filters.groups ?? null}
+          handleUpdate={(val) => handleFiltersUpdate("groups", val)}
+          searchQuery={filtersSearchQuery}
+        />
 
         {/* start date */}
         <div className="py-2">

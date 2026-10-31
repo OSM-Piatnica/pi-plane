@@ -374,6 +374,12 @@
     "access": "Přístup",
     "owned_by": "Vlastník"
   },
+  "group_filter": {
+    "heading": "Skupina",
+    "my_groups": "Moje skupiny",
+    "no_group": "Žádná skupina",
+    "unknown_group": "Neznámá skupina"
+  },
   "good": "Dobrý",
   "morning": "ráno",
   "afternoon": "odpoledne",

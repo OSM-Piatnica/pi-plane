@@ -7,7 +7,8 @@ import uuid
 
 from rest_framework import serializers
 
-from plane.db.models import Project, Workspace, WorkspaceMember
+from plane.db.models import Project, ProjectGroupRole, Workspace, WorkspaceMember
+from plane.utils.group_paths import find_group, group_paths, index_groups
 
 ALLOWED_PAYLOAD_KEYS = {
     "name",
@@ -34,6 +35,7 @@ ALLOWED_PAYLOAD_KEYS = {
     "task_custom_properties",
     "epic_custom_properties",
     "additional_work_item_types",
+    "groups",
 }
 
 # Columns that only a work item export carries. Shared with the work item importer, which
@@ -55,6 +57,7 @@ WORK_ITEM_EXPORT_HINT_KEYS = {
 
 _TEMPLATE_CUSTOM_PROPERTY_LIMIT = 50
 _TEMPLATE_ADDITIONAL_ISSUE_TYPES_LIMIT = 20
+_TEMPLATE_GROUPS_LIMIT = 100
 _ALLOWED_PROPERTY_TYPES = {"text", "number", "dropdown", "boolean", "date", "member_picker"}
 _ALLOWED_SELECT_MODES = {"single", "multi"}
 
@@ -139,6 +142,58 @@ def _clean_additional_work_item_types(value) -> list:
     return rows
 
 
+def _clean_template_groups(value, workspace: Workspace, unmatched: list | None) -> list:
+    """
+    The groups a template makes members of its projects: [{"group": id, "path": "Parent / Child", "role": 5|15}].
+
+    Ids are workspace specific, so a file carries the path next to the id: an entry whose id is not a live group of this
+    workspace is matched by its path (a template uploaded into another workspace). Entries that match no group are left
+    out and appended to ``unmatched`` as {"group": id or None, "path": text} for the caller to report. The stored path
+    is always the group's current one. A role other than Member (15) or Guest (5) is refused: groups are never Admins.
+    """
+    if value in [None, []]:
+        return []
+    if not isinstance(value, list):
+        raise serializers.ValidationError({"payload": "groups must be an array"})
+    live_paths = group_paths(workspace.id)
+    by_path, by_name = index_groups(workspace.id)
+    rows = []
+    seen = set()
+    for item in value[:_TEMPLATE_GROUPS_LIMIT]:
+        if not isinstance(item, dict):
+            raise serializers.ValidationError({"payload": "groups items must be objects"})
+        try:
+            role = int(item.get("role"))
+        except (TypeError, ValueError):
+            role = None
+        if role not in ProjectGroupRole.values:
+            raise serializers.ValidationError(
+                {"payload": "A group can only be a Member (15) or a Guest (5) of a project"}
+            )
+        raw_id = item.get("group")
+        path = str(item.get("path") or "").strip()
+        if raw_id in [None, ""] and not path:
+            raise serializers.ValidationError({"payload": "groups items need a group id or a path"})
+        if raw_id not in [None, ""] and not _is_valid_uuid(raw_id):
+            raise serializers.ValidationError({"payload": "groups.group must be a UUID"})
+        group_id = None
+        if raw_id not in [None, ""]:
+            candidate = uuid.UUID(str(raw_id))
+            if candidate in live_paths:
+                group_id = candidate
+        if group_id is None and path:
+            group_id = find_group(path, by_path, by_name)
+        if group_id is None:
+            if unmatched is not None:
+                unmatched.append({"group": str(raw_id) if raw_id not in [None, ""] else None, "path": path})
+            continue
+        if group_id in seen:
+            continue
+        seen.add(group_id)
+        rows.append({"group": str(group_id), "path": live_paths[group_id], "role": role})
+    return rows
+
+
 def _is_valid_uuid(value: str) -> bool:
     try:
         uuid.UUID(str(value))
@@ -157,7 +212,13 @@ def _coerce_bool(value) -> bool:
     return bool(value)
 
 
-def validate_and_clean_project_payload(payload: dict, workspace: Workspace, *, require_identity: bool = False) -> dict:
+def validate_and_clean_project_payload(
+    payload: dict,
+    workspace: Workspace,
+    *,
+    require_identity: bool = False,
+    unmatched_groups: list | None = None,
+) -> dict:
     if not isinstance(payload, dict):
         raise serializers.ValidationError({"payload": "Payload must be an object"})
 
@@ -298,6 +359,9 @@ def validate_and_clean_project_payload(payload: dict, workspace: Workspace, *, r
             continue
         if key == "additional_work_item_types":
             cleaned[key] = _clean_additional_work_item_types(value)
+            continue
+        if key == "groups":
+            cleaned[key] = _clean_template_groups(value, workspace, unmatched_groups)
             continue
 
     if require_identity:

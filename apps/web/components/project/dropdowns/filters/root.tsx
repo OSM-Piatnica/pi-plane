@@ -12,6 +12,7 @@ import { CloseOutline, SearchOutline } from "@makeplane/propel/icons";
 import { useTranslation } from "@plane/i18n";
 import type { TProjectDisplayFilters, TProjectFilters } from "@plane/types";
 // components
+import { FilterGroupList } from "@/components/common/filters/group-filter-list";
 import { FilterOption } from "@/components/issues/issue-layouts/filters";
 // hooks
 import { usePlatformOS } from "@/hooks/use-platform-os";
@@ -100,6 +101,13 @@ export const ProjectFiltersSelection = observer(function ProjectFiltersSelection
             memberIds={memberIds}
           />
         </div>
+
+        {/* group */}
+        <FilterGroupList
+          appliedFilters={filters.groups ?? null}
+          handleUpdate={(val) => handleFiltersUpdate("groups", val)}
+          searchQuery={filtersSearchQuery}
+        />
 
         {/* created date */}
         <div className="py-2">

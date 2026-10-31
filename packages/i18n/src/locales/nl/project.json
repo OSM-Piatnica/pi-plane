@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "Leden importeren uit CSV",
-      "description": "Upload een CSV met de kolommen: Email en Role (5=Gast, 15=Lid, 20=Beheerder). Gebruikers moeten al lid van de werkruimte zijn.",
+      "description": "Upload een CSV met de kolommen Email en Role (5=gast, 15=lid, 20=beheerder), of Group en Role (5=gast, 15=lid) om een hele groep toe te voegen. Schrijf een geneste groep als Parent / Child. Gebruik per rij óf Email óf Group. Gebruikers moeten al lid van de werkruimte zijn en groepen moeten al bestaan.",
       "download_sample": "Voorbeeld-CSV downloaden",
       "dropzone": {
         "active": "Sleep CSV-bestand hierheen",
@@ -421,13 +421,17 @@
         },
         "message": {
           "success": "Het importeren van {count, plural, one {# lid} other {# leden}} naar het project is gelukt.",
-          "no_imports": "Er zijn geen nieuwe leden geïmporteerd uit het CSV-bestand."
+          "no_imports": "Er zijn geen nieuwe leden geïmporteerd uit het CSV-bestand.",
+          "groups_success": "{count, plural, one {# groep} other {# groepen}} gekoppeld aan het project."
         },
         "stats": {
           "added": "Toegevoegd",
           "reactivated": "Opnieuw geactiveerd",
           "already_members": "Al lid",
-          "skipped": "Overgeslagen"
+          "skipped": "Overgeslagen",
+          "groups_added": "Groepen toegevoegd",
+          "groups_updated": "Groepen bijgewerkt",
+          "groups_skipped": "Groepen overgeslagen"
         },
         "download_errors": "Details van overgeslagen items downloaden"
       },
@@ -440,6 +444,24 @@
           "title": "Importeren mislukt",
           "message": "Er is iets misgegaan."
         }
+      },
+      "import_button": "Importeren uit CSV",
+      "parse_errors": {
+        "empty": "Het bestand is leeg.",
+        "missing_columns": "Het bestand heeft een kolom Role nodig en een kolom Email of Group.",
+        "no_rows": "Het bestand heeft een kopregel maar geen rijen."
+      },
+      "skip_reasons": {
+        "invalid_role": "De rol moet 5 (gast), 15 (lid) of 20 (beheerder) zijn.",
+        "both_email_and_group": "Een rij heeft óf een Email óf een Group, niet beide.",
+        "missing_value": "De rij heeft geen Email en geen Group.",
+        "not_workspace_member": "Deze persoon is geen actief lid van de werkruimte.",
+        "role_above_workspace_role": "De rol is hoger dan de werkruimterol van de persoon.",
+        "role_below_workspace_role": "De rol is lager dan de werkruimterol van de persoon.",
+        "unknown_group": "Er bestaat geen groep met deze naam in de werkruimte.",
+        "ambiguous_group": "Meerdere groepen hebben deze naam, schrijf het pad als Parent / Child.",
+        "group_admin_role": "Groepen kunnen geen projectbeheerders zijn.",
+        "group_already_linked": "De groep is al lid van het project met deze rol."
       }
     }
   },
@@ -703,6 +725,8 @@
       "clear_all": "Alles wissen",
       "description": "Maakt een nieuw project met dezelfde instellingen. Pagina's en webhooks worden niet gekopieerd; werkitems alleen als je dat hieronder kiest.",
       "error": "Het project kon niet worden gedupliceerd. Probeer het opnieuw.",
+      "groups": "Groepen als leden",
+      "groups_hint": "Koppelt dezelfde groepen met dezelfde rollen, zodat de mensen erin lid worden van de kopie.",
       "identifier_placeholder": "Wordt gegenereerd als leeg",
       "properties": {
         "assignees": "Toegewezen aan",
