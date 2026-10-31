@@ -606,6 +606,27 @@ def _graph(*groups):
     return lambda url, kwargs: {"value": [{"id": group_id, "displayName": name} for group_id, name in groups]}
 
 
+AU = "22222222-0000-0000-0000-00000000000c"
+
+
+def _graph_by_kind(department="Sales"):
+    """A person with a security group, a distribution list, an administrative unit and a department."""
+
+    def answer(url, kwargs):
+        if url.endswith("microsoft.graph.administrativeUnit"):
+            return {"value": [{"id": AU, "displayName": "Poland"}]}
+        if url.endswith("/me"):
+            return {"department": department}
+        return {
+            "value": [
+                {"id": GROUP_A, "displayName": "Sales", "securityEnabled": True},
+                {"id": GROUP_B, "displayName": "All staff", "securityEnabled": False, "mailEnabled": True},
+            ]
+        }
+
+    return answer
+
+
 def _person(workspace=None):
     user = User.objects.create(email=EMAIL, username="ala")
     if workspace is not None:
@@ -776,6 +797,70 @@ class TestEntraGroups:
 
         assert set(_entra_groups(workspace)) == {GROUP_A}
         assert UserGroupMember.objects.filter(user=user, managed_externally=True).count() == 1
+
+    def test_turning_a_kind_off_takes_the_person_out_of_its_groups_at_the_next_sign_in(
+        self, instance, idp, groups_on, workspace
+    ):
+        user = _person(workspace)
+        CONFIG["ENTRA_GROUPS_DEPARTMENT"] = "1"
+        CONFIG["ENTRA_GROUPS_DISTRIBUTION"] = "1"
+        idp.api["https://graph.microsoft.com/"] = _graph_by_kind()
+        sign_in(idp)
+        assert set(_entra_groups(workspace)) == {GROUP_A, GROUP_B, "department:sales"}
+
+        CONFIG["ENTRA_GROUPS_DEPARTMENT"] = "0"
+        CONFIG["ENTRA_GROUPS_DISTRIBUTION"] = "0"
+        sign_in(idp)
+
+        assert set(
+            UserGroupMember.objects.filter(workspace=workspace, user=user).values_list("group__external_id", flat=True)
+        ) == {GROUP_A}
+        # a workspace joined later gets the groups of the last sign-in only, not a stale set
+        other = Workspace.objects.create(name="Other", slug="other", owner=workspace.owner)
+        WorkspaceMember.objects.create(workspace=other, member=user, role=5)
+        assert set(_entra_groups(other)) == {GROUP_A}
+
+    def test_a_changed_department_leaves_the_old_group_and_joins_the_new(self, instance, idp, groups_on, workspace):
+        user = _person(workspace)
+        CONFIG["ENTRA_GROUPS_DEPARTMENT"] = "1"
+        idp.api["https://graph.microsoft.com/"] = _graph_by_kind(department="Sales")
+        sign_in(idp)
+
+        idp.api["https://graph.microsoft.com/"] = _graph_by_kind(department="Finance")
+        sign_in(idp)
+
+        names = set(UserGroupMember.objects.filter(user=user).values_list("group__name", flat=True))
+        assert "Department: Finance" in names and "Department: Sales" not in names
+
+    def test_a_refused_administrative_unit_call_does_not_lose_the_other_kinds(
+        self, instance, idp, groups_on, workspace
+    ):
+        _person(workspace)
+        CONFIG["ENTRA_GROUPS_ADMIN_UNITS"] = "1"
+
+        def answer(url, kwargs):
+            if url.endswith("microsoft.graph.administrativeUnit"):
+                raise oidc_client.OidcProtocolError("Provider returned HTTP 403")
+            return _graph_by_kind()(url, kwargs)
+
+        idp.api["https://graph.microsoft.com/"] = answer
+        _, response, _ = sign_in(idp)
+
+        assert "error_code" not in response.url
+        assert set(_entra_groups(workspace)) == {GROUP_A, GROUP_B}
+
+    def test_administrative_units_are_requested_with_their_permission_and_mirrored(
+        self, instance, idp, groups_on, workspace
+    ):
+        _person(workspace)
+        CONFIG["ENTRA_GROUPS_ADMIN_UNITS"] = "1"
+        scope = parse_qs(urlparse(Client().get(reverse("oidc-initiate", args=["entra"])).url).query)["scope"][0]
+        idp.api["https://graph.microsoft.com/"] = _graph_by_kind()
+
+        sign_in(idp)
+
+        assert "https://graph.microsoft.com/AdministrativeUnit.Read.All" in scope.split()
+        assert _entra_groups(workspace)[f"au:{AU}"].name == "Administrative unit: Poland"
 
 
 GOOGLE_KEY = rsa.generate_private_key(public_exponent=65537, key_size=2048)
