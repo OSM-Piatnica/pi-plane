@@ -36,10 +36,12 @@ Pi-Plane is based on [Plane](https://github.com/makeplane/plane), an open-source
 
 Pi-Plane is meant to be self-hosted. For Docker Compose and Docker Swarm, follow the [Pi-Plane self-hosting guide](deployments/cli/community/README.md); for Kubernetes use the [Helm chart](deployments/helm/pi-plane/README.md). The upstream [deployment guides](https://developers.plane.so/self-hosting/overview) cover other methods, but they describe upstream Plane and may not match this fork.
 
-| Installation methods | Docs link                                                                                                                                                       |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Docker               | [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](deployments/cli/community/README.md)             |
-| Kubernetes           | [![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)](deployments/helm/pi-plane/README.md) |
+| Installation methods | Docs link                                                                                                                                                                |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Docker               | [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](deployments/cli/community/README.md)                      |
+| Docker Swarm         | [![Docker](https://img.shields.io/badge/docker%20swarm-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](deployments/cli/community/README.md#docker-swarm) |
+| All-in-one image     | [![Docker](https://img.shields.io/badge/all--in--one-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](deployments/aio/community/README.md)                |
+| Kubernetes           | [![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)](deployments/helm/pi-plane/README.md)          |
 
 `Instance admins` can configure instance settings with [God mode](https://developers.plane.so/self-hosting/govern/instance-admin).
 
@@ -67,10 +69,11 @@ Pi-Plane is meant to be self-hosted. For Docker Compose and Docker Swarm, follow
 
 Beyond Plane Community Edition, Pi-Plane adds, among other things:
 
-- **Access and visibility:** Secret, Private and Open projects with access requests, and [sharing a project on the web](docs/web-sharing.md).
+- **Access and visibility:** Secret, Private and Open projects with access requests, and [sharing a project on the web](docs/web-sharing.md), which an installation can leave out altogether (no Space).
+- **People:** [user groups](docs/user-groups.md) with nesting and group admins, work items assigned to a group, and groups mirrored from Microsoft Entra, Google Workspace or an OpenID Connect provider; write to the admins of a workspace from the Help menu.
 - **Planning:** relations between work items in several ways, with lag and without loops; project rules (parents stay open until their sub-items are done, blocked items cannot start, who may change an item); [weekend days and durations in working days](docs/working-days.md); dates rolled up from sub-work items on the timeline.
 - **Tracking:** time tracking with worklogs and time estimates; negated filters; choosing the columns of an export, in the order of your list view.
-- **Setup:** [single sign-on with OpenID Connect](docs/sso.md); [duplicating a project's configuration](docs/duplicating-projects.md); [compact work item links](docs/workspace-short-links.md); [Markdown in descriptions and comments](docs/markdown-in-descriptions.md); [file uploads and their size limit](docs/file-uploads.md); [Azure Blob Storage](docs/azure-blob-storage.md) (and [Google Cloud Storage](deployments/cli/community/README.md#using-your-own-object-storage-aws-s3-google-cloud-storage-azure-blob-storage)); email in the recipient's language, with digests; a Helm chart.
+- **Setup:** [single sign-on with OpenID Connect](docs/sso.md); [duplicating a project's configuration](docs/duplicating-projects.md); [compact work item links](docs/workspace-short-links.md); [Markdown in descriptions and comments](docs/markdown-in-descriptions.md); a custom colour theme, down to individual colours, that can be exported and imported; a German interface in the formal register; [file uploads and their size limit](docs/file-uploads.md); [Azure Blob Storage](docs/azure-blob-storage.md) (and [Google Cloud Storage](deployments/cli/community/README.md#using-your-own-object-storage-aws-s3-google-cloud-storage-azure-blob-storage)); email in the recipient's language, with digests; a Helm chart.
 
 ## 🛠️ Local development
 

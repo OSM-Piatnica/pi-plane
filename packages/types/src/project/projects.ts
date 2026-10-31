@@ -213,6 +213,8 @@ export type TProjectDuplicateInclude = {
   estimates?: boolean;
   intake?: boolean;
   members?: boolean;
+  /** The source's groups as members of the copy (same roles); independent of `members`. */
+  groups?: boolean;
   cycles?: boolean;
   modules?: boolean;
   views?: boolean;

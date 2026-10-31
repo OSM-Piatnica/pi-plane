@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "Importa membri da CSV",
-      "description": "Carica un CSV con colonne: Email e Ruolo (5=Ospite, 15=Membro, 20=Amministratore). Gli utenti devono già essere membri dello spazio di lavoro.",
+      "description": "Carichi un CSV con le colonne Email e Role (5=Ospite, 15=Membro, 20=Amministratore), oppure Group e Role (5=Ospite, 15=Membro) per aggiungere un intero gruppo. Scriva un gruppo annidato come Parent / Child. Usi Email o Group in ogni riga. Gli utenti devono essere già membri dello spazio di lavoro e i gruppi devono già esistere.",
       "download_sample": "Scarica CSV di esempio",
       "dropzone": {
         "active": "Rilascia il file CSV qui",
@@ -421,13 +421,17 @@
         },
         "message": {
           "success": "{count} membr{plural} importat{plural} con successo nel progetto.",
-          "no_imports": "Nessun nuovo membro è stato importato dal file CSV."
+          "no_imports": "Nessun nuovo membro è stato importato dal file CSV.",
+          "groups_success": "{count} {plural, select, s {gruppi collegati} other {gruppo collegato}} al progetto."
         },
         "stats": {
           "added": "Aggiunti",
           "reactivated": "Riattivati",
           "already_members": "Già membri",
-          "skipped": "Ignorati"
+          "skipped": "Ignorati",
+          "groups_added": "Gruppi aggiunti",
+          "groups_updated": "Gruppi aggiornati",
+          "groups_skipped": "Gruppi ignorati"
         },
         "download_errors": "Scarica dettagli ignorati"
       },
@@ -440,6 +444,24 @@
           "title": "Importazione fallita",
           "message": "Qualcosa è andato storto."
         }
+      },
+      "import_button": "Importa da CSV",
+      "parse_errors": {
+        "empty": "Il file è vuoto.",
+        "missing_columns": "Il file deve avere una colonna Role e una colonna Email o Group.",
+        "no_rows": "Il file ha un'intestazione ma nessuna riga."
+      },
+      "skip_reasons": {
+        "invalid_role": "Il ruolo deve essere 5 (Ospite), 15 (Membro) o 20 (Amministratore).",
+        "both_email_and_group": "Una riga deve contenere Email oppure Group, non entrambi.",
+        "missing_value": "La riga non contiene né Email né Group.",
+        "not_workspace_member": "Questa persona non è un membro attivo dello spazio di lavoro.",
+        "role_above_workspace_role": "Il ruolo è superiore al ruolo della persona nello spazio di lavoro.",
+        "role_below_workspace_role": "Il ruolo è inferiore al ruolo della persona nello spazio di lavoro.",
+        "unknown_group": "Nello spazio di lavoro non esiste alcun gruppo con questo nome.",
+        "ambiguous_group": "Più gruppi hanno questo nome, scriva il suo percorso come Parent / Child.",
+        "group_admin_role": "I gruppi non possono essere amministratori del progetto.",
+        "group_already_linked": "Il gruppo è già membro del progetto con questo ruolo."
       }
     }
   },
@@ -703,6 +725,8 @@
       "clear_all": "Deseleziona tutto",
       "description": "Crea un nuovo progetto con le stesse impostazioni. Pagine e webhook non vengono copiati; gli elementi di lavoro solo se lo scegli qui sotto.",
       "error": "Impossibile duplicare il progetto. Riprova.",
+      "groups": "Gruppi come membri",
+      "groups_hint": "Collega gli stessi gruppi con gli stessi ruoli, così le persone al loro interno diventano membri della copia.",
       "identifier_placeholder": "Generato se vuoto",
       "properties": {
         "assignees": "Assegnatari",

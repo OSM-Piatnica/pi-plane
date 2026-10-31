@@ -87,3 +87,27 @@ export type TFilterableUserGroup = {
   /** The requester belongs to this group (it is one of the groups "my groups" stands for). */
   is_member: boolean;
 };
+
+/** One row of the project members CSV: a person (email) or a group (name or "Parent / Child" path), and a role. */
+export type TProjectMemberImportRow = {
+  /** The line of the CSV file, to point at the row in the report. */
+  row: number;
+  email?: string;
+  group?: string;
+  role: string;
+};
+
+export type TProjectMemberImportSkipped = {
+  row: number;
+  type: "person" | "group";
+  value: string;
+  /** Stable reason code, translated by the web; `reason` is the English fallback. */
+  code: string;
+  reason: string;
+};
+
+export type TProjectMemberImportSummary = {
+  people: { added: number; reactivated: number; already_members: number; skipped: number };
+  groups: { added: number; updated: number; skipped: number };
+  skipped: TProjectMemberImportSkipped[];
+};

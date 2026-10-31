@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "Importuj członków z CSV",
-      "description": "Prześlij CSV z kolumnami: Email i Rola (5=Gość, 15=Członek, 20=Administrator). Użytkownicy muszą już należeć do przestrzeni roboczej.",
+      "description": "Wczytaj plik CSV z kolumnami Email i Role (5=gość, 15=członek, 20=administrator) albo Group i Role (5=gość, 15=członek), aby dodać całą grupę. Grupę zagnieżdżoną zapisz jako Parent / Child. W jednym wierszu użyj albo Email, albo Group. Użytkownicy muszą już być członkami obszaru roboczego, a grupy muszą już istnieć.",
       "download_sample": "Pobierz przykładowy CSV",
       "dropzone": {
         "active": "Upuść plik CSV tutaj",
@@ -421,13 +421,17 @@
         },
         "message": {
           "success": "Pomyślnie zaimportowano {count} członk{plural} do projektu.",
-          "no_imports": "Z pliku CSV nie zaimportowano żadnych nowych członków."
+          "no_imports": "Z pliku CSV nie zaimportowano żadnych nowych członków.",
+          "groups_success": "Do projektu powiązano {count, plural, one {# grupę} few {# grupy} many {# grup} other {# grupy}}."
         },
         "stats": {
           "added": "Dodano",
           "reactivated": "Ponownie aktywowano",
           "already_members": "Już członkowie",
-          "skipped": "Pominięto"
+          "skipped": "Pominięto",
+          "groups_added": "Dodane grupy",
+          "groups_updated": "Zaktualizowane grupy",
+          "groups_skipped": "Pominięte grupy"
         },
         "download_errors": "Pobierz szczegóły pominiętych"
       },
@@ -440,6 +444,24 @@
           "title": "Import nie powiódł się",
           "message": "Coś poszło nie tak."
         }
+      },
+      "import_button": "Importuj z CSV",
+      "parse_errors": {
+        "empty": "Plik jest pusty.",
+        "missing_columns": "Plik musi zawierać kolumnę Role oraz kolumnę Email lub Group.",
+        "no_rows": "Plik ma nagłówek, ale nie ma wierszy."
+      },
+      "skip_reasons": {
+        "invalid_role": "Rola musi mieć wartość 5 (gość), 15 (członek) lub 20 (administrator).",
+        "both_email_and_group": "Wiersz może zawierać Email albo Group, nie oba naraz.",
+        "missing_value": "Wiersz nie zawiera ani Email, ani Group.",
+        "not_workspace_member": "Ta osoba nie jest aktywnym członkiem obszaru roboczego.",
+        "role_above_workspace_role": "Rola jest wyższa niż rola tej osoby w obszarze roboczym.",
+        "role_below_workspace_role": "Rola jest niższa niż rola tej osoby w obszarze roboczym.",
+        "unknown_group": "W obszarze roboczym nie ma grupy o tej nazwie.",
+        "ambiguous_group": "Kilka grup ma tę nazwę, zapisz jej ścieżkę jako Parent / Child.",
+        "group_admin_role": "Grupy nie mogą być administratorami projektu.",
+        "group_already_linked": "Ta grupa jest już członkiem projektu z tą rolą."
       }
     }
   },
@@ -703,6 +725,8 @@
       "clear_all": "Wyczyść wszystko",
       "description": "Tworzy nowy projekt z tymi samymi ustawieniami. Strony i webhooki nie są kopiowane; elementy pracy tylko jeśli wybierzesz to poniżej.",
       "error": "Nie udało się zduplikować projektu. Spróbuj ponownie.",
+      "groups": "Grupy jako członkowie",
+      "groups_hint": "Dodaje te same grupy z tymi samymi rolami, więc osoby z nich zostają członkami kopii.",
       "identifier_placeholder": "Zostanie wygenerowany, jeśli puste",
       "properties": {
         "assignees": "Przypisani",

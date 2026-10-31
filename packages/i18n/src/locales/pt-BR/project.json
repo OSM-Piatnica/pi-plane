@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "Importar membros do CSV",
-      "description": "Carregue um CSV com colunas: Email e Função (5=Convidado, 15=Membro, 20=Admin). Os usuários já devem ser membros do espaço de trabalho.",
+      "description": "Envie um CSV com as colunas Email e Role (5=convidado, 15=membro, 20=administrador) ou Group e Role (5=convidado, 15=membro) para adicionar um grupo inteiro. Escreva um grupo aninhado como Parent / Child. Use Email ou Group em cada linha, nunca os dois. Os usuários já devem ser membros do espaço de trabalho e os grupos já devem existir.",
       "download_sample": "Baixar CSV de exemplo",
       "dropzone": {
         "active": "Solte o arquivo CSV aqui",
@@ -421,13 +421,17 @@
         },
         "message": {
           "success": "{count} membr{plural} importad{plural} com sucesso para o projeto.",
-          "no_imports": "Nenhum novo membro foi importado do arquivo CSV."
+          "no_imports": "Nenhum novo membro foi importado do arquivo CSV.",
+          "groups_success": "{count, plural, one {# grupo vinculado} many {# de grupos vinculados} other {# grupos vinculados}} ao projeto."
         },
         "stats": {
           "added": "Adicionados",
           "reactivated": "Reativados",
           "already_members": "Já são membros",
-          "skipped": "Ignorados"
+          "skipped": "Ignorados",
+          "groups_added": "Grupos adicionados",
+          "groups_updated": "Grupos atualizados",
+          "groups_skipped": "Grupos ignorados"
         },
         "download_errors": "Baixar detalhes ignorados"
       },
@@ -440,6 +444,24 @@
           "title": "Importação falhou",
           "message": "Algo deu errado."
         }
+      },
+      "import_button": "Importar de CSV",
+      "parse_errors": {
+        "empty": "O arquivo está vazio.",
+        "missing_columns": "O arquivo precisa de uma coluna Role e de uma coluna Email ou Group.",
+        "no_rows": "O arquivo tem um cabeçalho, mas nenhuma linha."
+      },
+      "skip_reasons": {
+        "invalid_role": "A função deve ser 5 (convidado), 15 (membro) ou 20 (administrador).",
+        "both_email_and_group": "Uma linha tem Email ou Group, não os dois.",
+        "missing_value": "A linha não tem Email nem Group.",
+        "not_workspace_member": "Esta pessoa não é um membro ativo do espaço de trabalho.",
+        "role_above_workspace_role": "A função é superior à função da pessoa no espaço de trabalho.",
+        "role_below_workspace_role": "A função é inferior à função da pessoa no espaço de trabalho.",
+        "unknown_group": "Nenhum grupo com este nome existe no espaço de trabalho.",
+        "ambiguous_group": "Vários grupos têm este nome, escreva o caminho como Parent / Child.",
+        "group_admin_role": "Grupos não podem ser administradores do projeto.",
+        "group_already_linked": "O grupo já é membro do projeto com esta função."
       }
     }
   },
@@ -703,6 +725,8 @@
       "clear_all": "Limpar tudo",
       "description": "Cria um novo projeto com as mesmas configurações. Páginas e webhooks não são copiados; itens de trabalho só se você escolher abaixo.",
       "error": "Não foi possível duplicar o projeto. Tente novamente.",
+      "groups": "Grupos como membros",
+      "groups_hint": "Vincula os mesmos grupos com as mesmas funções, para que as pessoas neles se tornem membros da cópia.",
       "identifier_placeholder": "Gerado se vazio",
       "properties": {
         "assignees": "Responsáveis",

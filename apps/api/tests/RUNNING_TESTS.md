@@ -46,7 +46,7 @@ docker compose -f compose-test.yaml run --rm --build api-tests \
 
 # Single file with verbose output
 docker compose -f compose-test.yaml run --rm --build api-tests \
-  pytest plane/tests/unit/models/test_workspace.py -vv
+  pytest plane/tests/unit/models/test_workspace_model.py -vv
 ```
 
 The available markers (`unit`, `contract`, `smoke`, `slow`) are declared in `apps/api/pytest.ini`.

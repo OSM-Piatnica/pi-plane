@@ -276,6 +276,7 @@
             "clear_all": "Alle abwählen",
             "cycles": "Zyklen",
             "dates": "Termine und Dauer",
+            "group_assignees": "Zugewiesene Gruppen",
             "heading": "Was importiert werden soll",
             "labels": "Labels",
             "modules": "Module",
@@ -307,6 +308,7 @@
         "description": "Erstellen Sie wiederverwendbare Projektkonfigurationen mit Standardeigenschaften, aktivierten Funktionen, Status, Labels und Arbeitselementtypen.",
         "edit_template": "Vorlage bearbeiten",
         "form": {
+          "add_group": "Gruppe hinzufügen",
           "add_label": "Label hinzufügen",
           "add_state": "Status hinzufügen",
           "custom_property": {
@@ -379,6 +381,8 @@
               "label": "Arbeitselementtypen"
             }
           },
+          "group_missing": "Gruppe existiert nicht mehr",
+          "groups_empty": "Noch keine Gruppen.",
           "identifier_invalid": "Verwenden Sie nur Buchstaben und Zahlen",
           "identifier_max_char": "Die Kennung darf höchstens 5 Zeichen lang sein",
           "label_name_placeholder": "Labelname",
@@ -386,8 +390,11 @@
           "mark_default_state": "Als Standardstatus markieren",
           "modal_intro": "Benennen Sie die Vorlage und fügen Sie eine kurze Notiz für Ihr Team hinzu. Konfigurieren Sie anschließend die Standardwerte des Projekts – dieselben Einstellungen, die Sie beim Erstellen eines Projekts verwenden.",
           "name_required": "Der Vorlagenname ist erforderlich",
+          "no_groups_available": "Keine weiteren Gruppen zum Hinzufügen",
           "section_features": "Funktionen",
           "section_features_hint": "Wählen Sie aus, welche optionalen Projektfunktionen aktiviert werden, wenn diese Vorlage angewendet wird.",
+          "section_groups": "Gruppen als Mitglieder",
+          "section_groups_hint": "Gruppen, die Mitglieder jedes Projekts werden, das aus dieser Vorlage erstellt wird, mit der hier festgelegten Rolle. Alle Personen in einer Gruppe, einschließlich ihrer Untergruppen, treten dem Projekt bei. Die Person, die das Projekt erstellt, bleibt dessen Administrator.",
           "section_labels": "Labels",
           "section_labels_hint": "Legen Sie Standard-Labels für neue Projekte fest.",
           "section_properties": "Standard-Projekteigenschaften",
@@ -396,6 +403,7 @@
           "section_template": "Vorlage",
           "section_work_item_types": "Arbeitselementtypen",
           "section_work_item_types_hint": "Konfigurieren Sie Standard-Arbeitselementtypen und benutzerdefinierte Eigenschaften für Projekte, die aus dieser Vorlage erstellt werden.",
+          "select_group": "Gruppe auswählen",
           "state_groups": {
             "backlog": "Backlog",
             "cancelled": "Abgebrochen",
@@ -484,6 +492,12 @@
           },
           "uploaded": {
             "message": "Die Vorlage „{name}“ wurde aus der Datei hochgeladen."
+          },
+          "apply_groups_skipped": {
+            "message": "Das Projekt wurde erstellt, aber {count, plural, one {# Gruppe der Vorlage existiert nicht mehr und wurde} other {# Gruppen der Vorlage existieren nicht mehr und wurden}} nicht hinzugefügt."
+          },
+          "uploaded_groups_not_found": {
+            "message": "Die Vorlage „{name}“ wurde hochgeladen, aber diese Gruppen existieren in diesem Arbeitsbereich nicht und wurden weggelassen: {groups}."
           }
         },
         "upload_invalid_file": "Bitte laden Sie eine JSON-Datei hoch, die Sie über die Schaltfläche „Herunterladen“ heruntergeladen haben.",

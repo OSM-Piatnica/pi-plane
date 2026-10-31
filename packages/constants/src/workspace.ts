@@ -181,7 +181,7 @@ export const ISSUE_EXPORT_FIELD_GROUPS = {
     "estimate",
     "is_draft",
   ],
-  people: ["assignees", "subscribers", "created_by_name"],
+  people: ["assignees", "group_assignees", "subscribers", "created_by_name"],
   dates: ["start_date", "target_date", "duration", "completed_at", "created_at", "updated_at", "archived_at"],
   organization: ["labels", "cycles", "modules"],
   relations: ["parent", "relations", "links"],

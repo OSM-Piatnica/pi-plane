@@ -276,6 +276,7 @@
             "clear_all": "Deselectează tot",
             "cycles": "Cicluri",
             "dates": "Date și durată",
+            "group_assignees": "Grupuri responsabile",
             "heading": "Ce se importă",
             "labels": "Etichete",
             "modules": "Module",
@@ -307,6 +308,7 @@
         "description": "Creează configurații de proiect reutilizabile cu proprietăți implicite, funcționalități activate, stări, etichete și tipuri de activități.",
         "edit_template": "Editează șablonul",
         "form": {
+          "add_group": "Adaugă grup",
           "add_label": "Adaugă etichetă",
           "add_state": "Adaugă stare",
           "custom_property": {
@@ -379,6 +381,8 @@
               "label": "Tipuri de activități"
             }
           },
+          "group_missing": "Grupul nu mai există",
+          "groups_empty": "Încă nu există grupuri.",
           "identifier_invalid": "Folosește doar litere și cifre",
           "identifier_max_char": "Identificatorul trebuie să aibă cel mult 5 caractere",
           "label_name_placeholder": "Numele etichetei",
@@ -386,8 +390,11 @@
           "mark_default_state": "Marchează ca stare implicită",
           "modal_intro": "Denumește șablonul și adaugă o notă scurtă pentru echipa ta. Apoi configurează valorile implicite ale proiectului — aceleași setări pe care le folosești la crearea unui proiect.",
           "name_required": "Numele șablonului este obligatoriu",
+          "no_groups_available": "Nu mai există grupuri de adăugat",
           "section_features": "Funcționalități",
           "section_features_hint": "Alege ce funcționalități opționale ale proiectului sunt activate când se aplică acest șablon.",
+          "section_groups": "Grupuri ca membri",
+          "section_groups_hint": "Grupuri care devin membre ale fiecărui proiect creat din acest șablon, cu rolul indicat aici. Toate persoanele dintr-un grup, inclusiv din subgrupurile sale, se alătură proiectului. Persoana care creează proiectul rămâne administratorul acestuia.",
           "section_labels": "Etichete",
           "section_labels_hint": "Definește etichetele implicite pentru proiectele noi.",
           "section_properties": "Proprietăți implicite ale proiectului",
@@ -396,6 +403,7 @@
           "section_template": "Șablon",
           "section_work_item_types": "Tipuri de activități",
           "section_work_item_types_hint": "Configurează tipurile de activități implicite și proprietățile personalizate pentru proiectele create din acest șablon.",
+          "select_group": "Selectați un grup",
           "state_groups": {
             "backlog": "Restante",
             "cancelled": "Anulat",
@@ -484,6 +492,12 @@
           },
           "uploaded": {
             "message": "Șablonul „{name}” a fost încărcat din fișier."
+          },
+          "apply_groups_skipped": {
+            "message": "Proiectul a fost creat, dar {count, plural, one {# grup din șablon nu mai există și nu a fost adăugat} few {# grupuri din șablon nu mai există și nu au fost adăugate} other {# de grupuri din șablon nu mai există și nu au fost adăugate}}."
+          },
+          "uploaded_groups_not_found": {
+            "message": "Șablonul „{name}” a fost încărcat, dar aceste grupuri nu există în acest spațiu de lucru și au fost omise: {groups}."
           }
         },
         "upload_invalid_file": "Te rugăm să încarci un fișier JSON descărcat cu butonul „Descarcă”.",

@@ -276,6 +276,7 @@
             "clear_all": "Vymazať všetko",
             "cycles": "Cykly",
             "dates": "Dátumy a trvanie",
+            "group_assignees": "Priradené skupiny",
             "heading": "Čo importovať",
             "labels": "Štítky",
             "modules": "Moduly",
@@ -307,6 +308,7 @@
         "description": "Vytvárajte opakovane použiteľné nastavenia projektov s predvolenými vlastnosťami, povolenými funkciami, stavmi, štítkami a typmi pracovných položiek.",
         "edit_template": "Upraviť šablónu",
         "form": {
+          "add_group": "Pridať skupinu",
           "add_label": "Pridať štítok",
           "add_state": "Pridať stav",
           "custom_property": {
@@ -379,6 +381,8 @@
               "label": "Typy pracovných položiek"
             }
           },
+          "group_missing": "Skupina už neexistuje",
+          "groups_empty": "Zatiaľ žiadne skupiny.",
           "identifier_invalid": "Používajte iba písmená a čísla",
           "identifier_max_char": "Identifikátor musí mať najviac 5 znakov",
           "label_name_placeholder": "Názov štítku",
@@ -386,8 +390,11 @@
           "mark_default_state": "Označiť ako predvolený stav",
           "modal_intro": "Pomenujte šablónu a pridajte krátku poznámku pre svoj tím. Potom nastavte predvolené hodnoty projektu — rovnaký druh nastavení, aké používate pri vytváraní projektu.",
           "name_required": "Názov šablóny je povinný",
+          "no_groups_available": "Nezostali žiadne skupiny na pridanie",
           "section_features": "Funkcie",
           "section_features_hint": "Vyberte, ktoré voliteľné funkcie projektu budú povolené pri použití tejto šablóny.",
+          "section_groups": "Skupiny ako členovia",
+          "section_groups_hint": "Skupiny, ktoré sa stanú členmi každého projektu vytvoreného z tejto šablóny, s rolou zadanou tu. Každý člen skupiny, vrátane jej podskupín, sa pripojí k projektu. Osoba, ktorá projekt vytvára, zostáva jeho správcom.",
           "section_labels": "Štítky",
           "section_labels_hint": "Definujte predvolené štítky pre nové projekty.",
           "section_properties": "Predvolené vlastnosti projektu",
@@ -396,6 +403,7 @@
           "section_template": "Šablóna",
           "section_work_item_types": "Typy pracovných položiek",
           "section_work_item_types_hint": "Nakonfigurujte predvolené typy pracovných položiek a vlastné vlastnosti pre projekty vytvorené z tejto šablóny.",
+          "select_group": "Vyberte skupinu",
           "state_groups": {
             "backlog": "Backlog",
             "cancelled": "Zrušené",
@@ -484,6 +492,12 @@
           },
           "uploaded": {
             "message": "Šablóna \"{name}\" bola nahraná zo súboru."
+          },
+          "apply_groups_skipped": {
+            "message": "Projekt bol vytvorený, ale {count, plural, one {# skupina šablóny už neexistuje a nebola pridaná} few {# skupiny šablóny už neexistujú a neboli pridané} many {# skupiny šablóny už neexistuje a nebola pridaná} other {# skupín šablóny už neexistuje a nebolo pridaných}}."
+          },
+          "uploaded_groups_not_found": {
+            "message": "Šablóna „{name}“ bola nahraná, ale tieto skupiny v tomto pracovnom priestore neexistujú a boli vynechané: {groups}."
           }
         },
         "upload_invalid_file": "Nahrajte súbor JSON stiahnutý pomocou tlačidla „Stiahnuť“.",

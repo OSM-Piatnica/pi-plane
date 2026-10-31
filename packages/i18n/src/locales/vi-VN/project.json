@@ -397,7 +397,7 @@
   "project": {
     "members_import": {
       "title": "Nhập thành viên từ CSV",
-      "description": "Tải lên CSV với các cột: Email và Vai trò (5=Khách, 15=Thành viên, 20=Quản trị viên). Người dùng phải đã là thành viên không gian làm việc.",
+      "description": "Tải lên tệp CSV có các cột Email và Role (5=Guest, 15=Member, 20=Admin), hoặc Group và Role (5=Guest, 15=Member) để thêm cả một nhóm. Ghi nhóm lồng nhau dưới dạng Parent / Child. Mỗi dòng chỉ dùng Email hoặc Group. Người dùng phải là thành viên của không gian làm việc từ trước và các nhóm phải đã tồn tại.",
       "download_sample": "Tải xuống CSV mẫu",
       "dropzone": {
         "active": "Thả tệp CSV vào đây",
@@ -421,13 +421,17 @@
         },
         "message": {
           "success": "Đã nhập thành công {count} thành viên vào dự án.",
-          "no_imports": "Không có thành viên mới nào được nhập từ tệp CSV."
+          "no_imports": "Không có thành viên mới nào được nhập từ tệp CSV.",
+          "groups_success": "Đã liên kết {count} nhóm với dự án."
         },
         "stats": {
           "added": "Đã thêm",
           "reactivated": "Đã kích hoạt lại",
           "already_members": "Đã là thành viên",
-          "skipped": "Đã bỏ qua"
+          "skipped": "Đã bỏ qua",
+          "groups_added": "Nhóm đã thêm",
+          "groups_updated": "Nhóm đã cập nhật",
+          "groups_skipped": "Nhóm đã bỏ qua"
         },
         "download_errors": "Tải xuống chi tiết đã bỏ qua"
       },
@@ -440,6 +444,24 @@
           "title": "Nhập thất bại",
           "message": "Đã xảy ra lỗi."
         }
+      },
+      "import_button": "Nhập từ CSV",
+      "parse_errors": {
+        "empty": "Tệp trống.",
+        "missing_columns": "Tệp cần có cột Role và cột Email hoặc Group.",
+        "no_rows": "Tệp có dòng tiêu đề nhưng không có dòng dữ liệu."
+      },
+      "skip_reasons": {
+        "invalid_role": "Vai trò phải là 5 (Guest), 15 (Member) hoặc 20 (Admin).",
+        "both_email_and_group": "Mỗi dòng chỉ có Email hoặc Group, không phải cả hai.",
+        "missing_value": "Dòng này không có Email lẫn Group.",
+        "not_workspace_member": "Người này không phải là thành viên đang hoạt động của không gian làm việc.",
+        "role_above_workspace_role": "Vai trò cao hơn vai trò của người này trong không gian làm việc.",
+        "role_below_workspace_role": "Vai trò thấp hơn vai trò của người này trong không gian làm việc.",
+        "unknown_group": "Không có nhóm nào với tên này trong không gian làm việc.",
+        "ambiguous_group": "Có nhiều nhóm trùng tên này, hãy ghi đường dẫn của nhóm dạng Parent / Child.",
+        "group_admin_role": "Nhóm không thể là quản trị viên dự án.",
+        "group_already_linked": "Nhóm đã là thành viên của dự án với vai trò này."
       }
     }
   },
@@ -703,6 +725,8 @@
       "clear_all": "Bỏ chọn tất cả",
       "description": "Tạo dự án mới với cùng các cài đặt. Trang và webhook không được sao chép; mục công việc chỉ được sao chép nếu bạn chọn bên dưới.",
       "error": "Không thể nhân bản dự án. Vui lòng thử lại.",
+      "groups": "Nhóm là thành viên",
+      "groups_hint": "Liên kết các nhóm giống nhau với cùng vai trò, nên những người trong nhóm sẽ trở thành thành viên của bản sao.",
       "identifier_placeholder": "Tự tạo nếu để trống",
       "properties": {
         "assignees": "Người được giao",

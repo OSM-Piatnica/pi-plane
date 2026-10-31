@@ -159,6 +159,7 @@
             "estimate": "Szacunek",
             "is_draft": "Znacznik wersji roboczej",
             "assignees": "Przypisani",
+            "group_assignees": "Przypisane grupy",
             "subscribers": "Subskrybenci",
             "created_by_name": "Utworzył(a)",
             "start_date": "Data rozpoczęcia",
