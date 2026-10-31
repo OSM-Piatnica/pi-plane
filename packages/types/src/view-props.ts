@@ -25,6 +25,7 @@ export type TIssueGroupByOptions =
   | "target_date"
   | "finish_date"
   | "schedule_date" // calendar only: the finish day, else the start day
+  | "start_date_bucket"
   | "target_date_bucket"
   | "finish_date_bucket"
   | "team_project"
@@ -99,6 +100,7 @@ export type TIssueParams =
   | "finish_date"
   | "schedule_window"
   | "schedule_date"
+  | "start_date_bucket"
   | "target_date_bucket"
   | "finish_date_bucket"
   | "project"

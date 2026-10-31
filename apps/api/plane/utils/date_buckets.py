@@ -24,6 +24,7 @@ BUCKETS = (EARLIER, TODAY, THIS_WEEK, NEXT_WEEK, LATER, NO_DATE)
 
 # Group by names (annotations) -> the date field they bucket
 BUCKET_FIELDS = {
+    "start_date_bucket": "start_date",
     "target_date_bucket": "target_date",
     "finish_date_bucket": "finish_date",
 }

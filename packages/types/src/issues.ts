@@ -128,6 +128,7 @@ export type GroupByColumnTypes =
   | "labels"
   | "assignees"
   | "created_by"
+  | "start_date_bucket"
   | "target_date_bucket"
   | "finish_date_bucket"
   | "team_project";

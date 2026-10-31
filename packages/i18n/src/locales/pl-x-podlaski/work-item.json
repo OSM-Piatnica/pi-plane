@@ -336,7 +336,8 @@
         "next_week": "Przyszły tydzień",
         "later": "Później",
         "no_date": "Brak daty",
-        "no_single_date": "Ta grupa nie ma jednej daty. Upuść element zamiast tego na „Brak daty”, „Ten tydzień”, „Przyszły tydzień” lub „Dziś”."
+        "no_single_date": "Ta grupa nie ma jednej daty. Upuść element zamiast tego na „Brak daty”, „Ten tydzień”, „Przyszły tydzień” lub „Dziś”.",
+        "no_day_left": "W tym tygodniu nie został już żaden dzień. Upuść element zamiast tego na „Dziś” lub „Przyszły tydzień”."
       }
     }
   },

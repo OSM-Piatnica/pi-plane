@@ -336,7 +336,8 @@
         "next_week": "Volgende week",
         "later": "Later",
         "no_date": "Geen datum",
-        "no_single_date": "Deze groep heeft geen enkele datum. Zet het item in plaats daarvan neer op Geen datum, Deze week, Volgende week of Vandaag."
+        "no_single_date": "Deze groep heeft geen enkele datum. Zet het item in plaats daarvan neer op Geen datum, Deze week, Volgende week of Vandaag.",
+        "no_day_left": "Er is deze week geen dag meer over. Sleep het item in plaats daarvan naar \"Vandaag\" of \"Volgende week\"."
       }
     }
   },

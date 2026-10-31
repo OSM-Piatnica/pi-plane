@@ -5,7 +5,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { getDateBucket, getDateBucketDropDate } from "../src/date-bucket";
+import { getDateBucket, getDateBucketDropDate, isDateBucketGroupBy } from "../src/date-bucket";
 
 // 2026-03-04 is a Wednesday
 const wednesday = new Date(2026, 2, 4, 15, 30);
@@ -52,5 +52,31 @@ describe("getDateBucketDropDate", () => {
     for (const bucket of ["today", "this_week", "next_week"] as const) {
       expect(getDateBucket(getDateBucketDropDate(bucket, wednesday) as string, wednesday)).toBe(bucket);
     }
+  });
+});
+
+describe("the day in a time zone", () => {
+  it("takes the current day as a yyyy-mm-dd string", () => {
+    expect(getDateBucket("2026-03-04", "2026-03-04")).toBe("today");
+    expect(getDateBucket("2026-03-04", "2026-03-05")).toBe("earlier");
+    expect(getDateBucketDropDate("next_week", "2026-03-04")).toBe("2026-03-15");
+  });
+});
+
+describe("a Sunday", () => {
+  it("has no day left in this week to drop on", () => {
+    expect(getDateBucketDropDate("this_week", "2026-03-08")).toBeUndefined();
+    expect(getDateBucketDropDate("this_week", "2026-03-07")).toBe("2026-03-08");
+    expect(getDateBucketDropDate("next_week", "2026-03-08")).toBe("2026-03-15");
+  });
+});
+
+describe("isDateBucketGroupBy", () => {
+  it("knows the three date bucket group bys", () => {
+    for (const key of ["start_date_bucket", "target_date_bucket", "finish_date_bucket"]) {
+      expect(isDateBucketGroupBy(key)).toBe(true);
+    }
+    expect(isDateBucketGroupBy("target_date")).toBe(false);
+    expect(isDateBucketGroupBy(null)).toBe(false);
   });
 });

@@ -336,7 +336,8 @@
         "next_week": "Próxima semana",
         "later": "Más adelante",
         "no_date": "Sin fecha",
-        "no_single_date": "Este grupo no tiene una fecha única. Suelte en Sin fecha, Esta semana, Próxima semana o Hoy en su lugar."
+        "no_single_date": "Este grupo no tiene una fecha única. Suelte en Sin fecha, Esta semana, Próxima semana o Hoy en su lugar.",
+        "no_day_left": "No queda ningún día esta semana. Suelte el elemento en «Hoy» o «Próxima semana»."
       }
     }
   },

@@ -38,7 +38,13 @@ def issues(workspace, project):
     }
     for name, day in days.items():
         Issue.objects.create(
-            name=name, project=project, workspace=workspace, state=state, target_date=day, finish_date=day
+            name=name,
+            project=project,
+            workspace=workspace,
+            state=state,
+            start_date=day,
+            target_date=day,
+            finish_date=day,
         )
     return days
 
@@ -50,7 +56,7 @@ def _grouped(response):
 
 @pytest.mark.contract
 @pytest.mark.django_db
-@pytest.mark.parametrize("field", ["target_date", "finish_date"])
+@pytest.mark.parametrize("field", ["start_date", "target_date", "finish_date"])
 class TestDateBuckets:
     def _get(self, session_client, workspace, project, **params):
         url = f"/api/workspaces/{workspace.slug}/projects/{project.id}/issues/"
@@ -77,3 +83,39 @@ class TestDateBuckets:
         response = self._get(session_client, workspace, project, **{f"{field}_bucket": "no_date"})
 
         assert [row["name"] for row in response.data["results"]] == ["undated"]
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestDateBucketSubGroups:
+    def test_work_items_are_sub_grouped_by_the_bucket_of_another_date(
+        self, session_client, workspace, project, issues, create_user
+    ):
+        # the dates of "past" differ: its due date moves to next week, its finish date stays in the past
+        past = Issue.objects.get(project=project, name="past")
+        past.target_date = issues["next-week"]
+        past.save()
+
+        response = session_client.get(
+            f"/api/workspaces/{workspace.slug}/projects/{project.id}/issues/",
+            {
+                "group_by": "target_date_bucket",
+                "sub_group_by": "finish_date_bucket",
+                "per_page": 50,
+                "cursor": "50:0:0",
+            },
+        )
+
+        assert response.status_code == 200, response.data
+        groups = response.data["results"]
+        assert [row["name"] for row in groups["next_week"]["results"]["earlier"]["results"]] == ["past"]
+        assert [row["name"] for row in groups["next_week"]["results"]["next_week"]["results"]] == ["next-week"]
+        assert [row["name"] for row in groups["today"]["results"]["today"]["results"]] == ["today"]
+
+    def test_the_same_date_cannot_be_both_group_and_sub_group(self, session_client, workspace, project, issues):
+        response = session_client.get(
+            f"/api/workspaces/{workspace.slug}/projects/{project.id}/issues/",
+            {"group_by": "target_date_bucket", "sub_group_by": "target_date_bucket"},
+        )
+
+        assert response.status_code == 400

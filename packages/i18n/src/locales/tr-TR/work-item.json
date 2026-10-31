@@ -336,7 +336,8 @@
         "next_week": "Gelecek hafta",
         "later": "Daha sonra",
         "no_date": "Tarih Yok",
-        "no_single_date": "Bu grubun tek bir tarihi yok. Bunun yerine Tarih Yok, Bu hafta, Gelecek hafta veya Bugün üzerine bırakın."
+        "no_single_date": "Bu grubun tek bir tarihi yok. Bunun yerine Tarih Yok, Bu hafta, Gelecek hafta veya Bugün üzerine bırakın.",
+        "no_day_left": "Bu hafta kalan gün yok. Bunun yerine \"Bugün\" veya \"Gelecek hafta\" grubuna bırakın."
       }
     }
   },
