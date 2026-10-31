@@ -407,6 +407,7 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
       cycleFilterConfig,
       moduleFilterConfig,
       startDateFilterConfig,
+      finishDateFilterConfig,
       targetDateFilterConfig,
       createdAtFilterConfig,
       updatedAtFilterConfig,
