@@ -72,7 +72,7 @@ import {
   DATE_BUCKET_DROP_ERROR,
   DATE_BUCKET_NO_DAY_LEFT_ERROR,
 } from "@/helpers/group-column";
-import { getBucketToday } from "@/helpers/date-bucket-today";
+import { getBucketContext } from "@/helpers/date-bucket-today";
 import { getGroupDropValue } from "@/helpers/group-drop";
 import { resolveWeekendDays } from "@/helpers/weekend-days";
 import { store } from "@/lib/store-context";
@@ -199,9 +199,11 @@ const getDropWeekendDays = (projectId: string | null | undefined): number[] =>
 
 const getDateBucketColumns = (field: TDateBucketField): IGroupByColumn[] =>
   DATE_BUCKETS.map((bucket) => {
-    const dropDate = getDateBucketDropDate(bucket, getBucketToday(store.user.data?.user_timezone), {
+    const { today, weekStart } = getBucketContext(store);
+    const dropDate = getDateBucketDropDate(bucket, today, {
       weekendDays: getDropWeekendDays(store.router.projectId),
       edge: field === "start_date" ? "start" : "end",
+      weekStart,
     });
     const canDrop = dropDate !== undefined;
     return {
@@ -663,8 +665,9 @@ export const handleGroupDragDrop = async (
       sourceIssue[groupKey],
       source.groupId,
       destination.groupId,
-      getBucketToday(store.user.data?.user_timezone),
-      getDropWeekendDays(sourceIssue.project_id)
+      getBucketContext(store).today,
+      getDropWeekendDays(sourceIssue.project_id),
+      getBucketContext(store).weekStart
     );
     // a time bucket that names no single day, or no working day, cannot take the drop
     if (groupValue === undefined) return onRefused?.(destination.groupId);
@@ -683,8 +686,9 @@ export const handleGroupDragDrop = async (
       sourceIssue[subGroupKey],
       source.subGroupId,
       destination.subGroupId,
-      getBucketToday(store.user.data?.user_timezone),
-      getDropWeekendDays(sourceIssue.project_id)
+      getBucketContext(store).today,
+      getDropWeekendDays(sourceIssue.project_id),
+      getBucketContext(store).weekStart
     );
     if (subGroupValue === undefined) return onRefused?.(destination.subGroupId);
 

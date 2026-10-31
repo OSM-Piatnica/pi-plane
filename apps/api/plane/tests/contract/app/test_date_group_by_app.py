@@ -5,11 +5,13 @@
 """Grouping work items by their due or finish date into time buckets."""
 
 import datetime
+from unittest import mock
 
 import pytest
 from django.utils import timezone
 
 from plane.db.models import Issue, Project, ProjectMember, State
+from plane.utils.date_buckets import bucket_bounds
 
 ADMIN = 20
 
@@ -28,7 +30,8 @@ def project(db, workspace, create_user):
 def issues(workspace, project):
     state = State.objects.get(project=project)
     today = timezone.localdate()
-    end_of_week = today + datetime.timedelta(days=6 - today.weekday())
+    # a project starts its week on Sunday unless it says otherwise
+    end_of_week = bucket_bounds(today, 0)["this_week"][1]
     days = {
         "past": today - datetime.timedelta(days=3),
         "today": today,
@@ -119,3 +122,40 @@ class TestDateBucketSubGroups:
         )
 
         assert response.status_code == 400
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestWeekStartOfTheProject:
+    # 2026-03-08 is a Sunday: a week that starts on Sunday has just begun, a week that starts on Monday ends today
+    SUNDAY_DAY = datetime.date(2026, 3, 8)
+
+    def _buckets(self, session_client, workspace, project, start_of_the_week):
+        Project.objects.filter(pk=project.pk).update(start_of_the_week=start_of_the_week)
+        state = State.objects.get(project=project)
+        Issue.objects.all().delete()
+        Issue.objects.create(
+            name="midweek",
+            project=project,
+            workspace=workspace,
+            state=state,
+            target_date=datetime.date(2026, 3, 11),
+        )
+        with mock.patch("plane.utils.date_buckets.timezone.localdate", return_value=self.SUNDAY_DAY):
+            response = session_client.get(
+                f"/api/workspaces/{workspace.slug}/projects/{project.id}/issues/",
+                {"group_by": "target_date_bucket", "per_page": 50, "cursor": "50:0:0"},
+            )
+        return _grouped(response)
+
+    def test_a_week_that_starts_on_sunday_still_has_this_wednesday_in_this_week(
+        self, session_client, workspace, project
+    ):
+        grouped = self._buckets(session_client, workspace, project, 0)
+
+        assert grouped["this_week"] == ["midweek"]
+
+    def test_a_week_that_starts_on_monday_has_this_wednesday_in_next_week(self, session_client, workspace, project):
+        grouped = self._buckets(session_client, workspace, project, 1)
+
+        assert grouped["next_week"] == ["midweek"]

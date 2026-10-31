@@ -30,7 +30,7 @@ import {
   matchesGroupFilter,
   parseDateFilter,
 } from "@plane/utils";
-import { getBucketToday } from "@/helpers/date-bucket-today";
+import { getBucketContext } from "@/helpers/date-bucket-today";
 import { store } from "@/lib/store-context";
 import { EIssueGroupedAction, ISSUE_GROUP_BY_KEY } from "./base-issues.store";
 
@@ -372,8 +372,10 @@ export const getGroupedWorkItemIds = (
   const groupedWorkItems = groupBy(workItems, (item) => {
     const value = groupKey ? item[groupKey] : null;
     // grouped by the time bucket of a date
-    if (isDateBucketGroupBy(groupByKey))
-      return getDateBucket(value as string | null | undefined, getBucketToday(store.user.data?.user_timezone));
+    if (isDateBucketGroupBy(groupByKey)) {
+      const { today, weekStart } = getBucketContext(store);
+      return getDateBucket(value as string | null | undefined, today, weekStart);
+    }
     if (Array.isArray(value)) {
       if (value.length === 0) return "None";
       // Sort & join to build deterministic set-like key

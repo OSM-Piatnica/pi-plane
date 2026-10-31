@@ -32,7 +32,7 @@ import type {
 import { EIssueServiceType, EIssueLayoutTypes } from "@plane/types";
 // helpers
 import { convertToISODateString, getDateBucket, isDateBucketGroupBy } from "@plane/utils";
-import { getBucketToday } from "@/helpers/date-bucket-today";
+import { getBucketContext } from "@/helpers/date-bucket-today";
 import type { TPairedDateNotice } from "@plane/utils";
 // lib
 import { emitWorkItemDateNotice } from "@/lib/work-item-date-notices";
@@ -1876,13 +1876,10 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     // if issue object is undefined return empty array
     if (!issueObject) return [];
     // grouped by the time bucket of a date: the group is the bucket, an empty date is the "none" bucket
-    if (isDateBucketGroupBy(groupByKey))
-      return [
-        getDateBucket(
-          Array.isArray(value) ? undefined : value,
-          getBucketToday(this.rootIssueStore.rootStore.user.data?.user_timezone)
-        ),
-      ];
+    if (isDateBucketGroupBy(groupByKey)) {
+      const { today, weekStart } = getBucketContext(this.rootIssueStore.rootStore);
+      return [getDateBucket(Array.isArray(value) ? undefined : value, today, weekStart)];
+    }
     // if value is not defined, return None value in array
     if (!value || isEmpty(value)) return ["None"];
     // if array return the array

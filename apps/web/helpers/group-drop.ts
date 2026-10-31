@@ -26,7 +26,8 @@ export const getGroupDropValue = (
   sourceGroupId: string,
   destinationGroupId: string,
   today?: TBucketToday,
-  weekendDays?: readonly number[]
+  weekendDays?: readonly number[],
+  weekStart?: number
 ): unknown => {
   if (Array.isArray(currentValue)) {
     const value: string[] = clone(currentValue);
@@ -34,7 +35,11 @@ export const getGroupDropValue = (
     return destinationGroupId === "None" ? value : uniq(concat(value, [destinationGroupId]));
   }
   if (isDateBucketGroupBy(groupBy)) {
-    return getDateBucketDropDate(destinationGroupId, today, { weekendDays, edge: getDateBucketEdge(groupBy) });
+    return getDateBucketDropDate(destinationGroupId, today, {
+      weekendDays,
+      edge: getDateBucketEdge(groupBy),
+      weekStart,
+    });
   }
   return destinationGroupId === "None" ? null : destinationGroupId;
 };

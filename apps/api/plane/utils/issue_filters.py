@@ -11,7 +11,7 @@ from datetime import timedelta
 from django.db.models import Q
 from django.utils import timezone
 
-from plane.utils.date_buckets import bucket_q
+from plane.utils.date_buckets import bucket_q, week_start_for_request
 
 # The date from pattern
 pattern = re.compile(r"\d+_(weeks|months)$")
@@ -363,26 +363,27 @@ def filter_schedule_date(params, issue_filter, method, prefix=""):
     return issue_filter
 
 
-def _filter_date_bucket(param, field, params, issue_filter, method, prefix):
+def _filter_date_bucket(param, field, params, issue_filter, method, prefix, request):
     if method != "GET":
         return issue_filter
-    _narrow_to(issue_filter, f"{prefix}pk__in", bucket_q(field, str(params.get(param) or ""), None))
+    week_start = week_start_for_request(request)
+    _narrow_to(issue_filter, f"{prefix}pk__in", bucket_q(field, str(params.get(param) or ""), None, week_start))
     return issue_filter
 
 
-def filter_start_date_bucket(params, issue_filter, method, prefix=""):
+def filter_start_date_bucket(params, issue_filter, method, prefix="", request=None):
     """Work items whose start date is in a time bucket (see plane.utils.date_buckets)."""
-    return _filter_date_bucket("start_date_bucket", "start_date", params, issue_filter, method, prefix)
+    return _filter_date_bucket("start_date_bucket", "start_date", params, issue_filter, method, prefix, request)
 
 
-def filter_target_date_bucket(params, issue_filter, method, prefix=""):
+def filter_target_date_bucket(params, issue_filter, method, prefix="", request=None):
     """Work items whose due date is in a time bucket (see plane.utils.date_buckets), the group of a grouped list."""
-    return _filter_date_bucket("target_date_bucket", "target_date", params, issue_filter, method, prefix)
+    return _filter_date_bucket("target_date_bucket", "target_date", params, issue_filter, method, prefix, request)
 
 
-def filter_finish_date_bucket(params, issue_filter, method, prefix=""):
+def filter_finish_date_bucket(params, issue_filter, method, prefix="", request=None):
     """Work items whose finish date is in a time bucket (see plane.utils.date_buckets)."""
-    return _filter_date_bucket("finish_date_bucket", "finish_date", params, issue_filter, method, prefix)
+    return _filter_date_bucket("finish_date_bucket", "finish_date", params, issue_filter, method, prefix, request)
 
 
 def filter_completed_at(params, issue_filter, method, prefix=""):
@@ -577,7 +578,7 @@ def issue_filters(query_params, method, prefix="", request=None):
     for key, value in ISSUE_FILTER.items():
         if key in query_params:
             func = value
-            if key == "group_assignees":
+            if key == "group_assignees" or key.endswith("_date_bucket"):
                 func(query_params, issue_filter, method, prefix, request=request)
             else:
                 func(query_params, issue_filter, method, prefix)
