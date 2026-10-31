@@ -30,6 +30,7 @@ export enum EServerGroupByToFilterOptions {
   "issue_module__module_id" = "module",
   "target_date" = "target_date",
   "finish_date" = "finish_date",
+  "schedule_date" = "schedule_date",
   "project_id" = "project",
   "created_by" = "created_by",
 }

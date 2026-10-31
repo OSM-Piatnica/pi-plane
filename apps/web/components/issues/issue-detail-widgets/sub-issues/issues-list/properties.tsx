@@ -10,10 +10,17 @@
 import { useMemo } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
+import { setToast } from "@plane/blocks/toast";
 import { DueDateOutline, StartDateOutline } from "@makeplane/propel/icons";
 import { DateSelect } from "@/components/dropdowns/date-select";
 import type { IIssueDisplayProperties, TIssue } from "@plane/types";
-import { cn, getDate, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
+import {
+  cn,
+  getDate,
+  renderFormattedPayloadDate,
+  shouldHighlightIssueDueDate,
+  validateWorkItemSchedule,
+} from "@plane/utils";
 // components
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
 import { PrioritySelect } from "@/components/dropdowns/priority/priority-select";
@@ -46,11 +53,24 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
   const { getStateById } = useProjectState();
   const startOfTheWeek = useStartOfTheWeek();
 
+  // the finish may not come before the start; the due date is a deadline and is not part of that rule
+  const rejectInvalidSchedule = (startDate: string | null | undefined, finishDate: string | null | undefined) => {
+    if (!validateWorkItemSchedule(startDate, finishDate)) return false;
+    setToast({ type: "error", title: t("common.error.label"), message: t("issue.dates.finish_before_start") });
+    return true;
+  };
+
   const handleStartDate = (date: Date | null) => {
-    if (issue.project_id) {
-      updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, {
-        start_date: date ? renderFormattedPayloadDate(date) : null,
-      });
+    const startDate = date ? renderFormattedPayloadDate(date) : null;
+    if (issue.project_id && !rejectInvalidSchedule(startDate, issue.finish_date)) {
+      updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, { start_date: startDate });
+    }
+  };
+
+  const handleFinishDate = (date: Date | null) => {
+    const finishDate = date ? renderFormattedPayloadDate(date) : null;
+    if (issue.project_id && !rejectInvalidSchedule(issue.start_date, finishDate)) {
+      updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, { finish_date: finishDate });
     }
   };
 
@@ -72,6 +92,7 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
 
   // Start may not pass the planned finish. The due date is a deadline and is not bounded by the schedule.
   const maxDate = getDate(issue.finish_date);
+  const minDate = getDate(issue.start_date);
 
   return (
     <div className="relative flex items-center gap-2">
@@ -125,6 +146,25 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
           disabled={!canEdit}
           showTooltip
           tooltipHeading={t("common.order_by.start_date")}
+          weekStartsOn={startOfTheWeek}
+          side="top"
+          align="end"
+          variant="pill-sm"
+        />
+      </WithDisplayPropertiesHOC>
+
+      {/* finish date (planned last day of work) */}
+      <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="finish_date">
+        <DateSelect
+          value={getDate(issue.finish_date) ?? null}
+          onChange={handleFinishDate}
+          minDate={minDate}
+          placeholder={t("common.order_by.finish_date")}
+          icon={<DueDateOutline />}
+          clearable
+          disabled={!canEdit}
+          showTooltip
+          tooltipHeading={t("common.order_by.finish_date")}
           weekStartsOn={startOfTheWeek}
           side="top"
           align="end"

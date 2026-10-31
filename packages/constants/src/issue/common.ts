@@ -39,6 +39,8 @@ export enum EIssueGroupByToServerOptions {
   "module" = "issue_module__module_id",
   "target_date" = "target_date",
   "finish_date" = "finish_date",
+  // the day a work item has on the calendar of the planned work: its finish, else its start
+  "schedule_date" = "schedule_date",
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   "project" = "project_id",
   "created_by" = "created_by",
@@ -259,6 +261,7 @@ export const SUB_ISSUES_DISPLAY_PROPERTIES_KEYS: (keyof IIssueDisplayProperties)
   "key",
   "assignee",
   "start_date",
+  "finish_date",
   "due_date",
   "priority",
   "state",

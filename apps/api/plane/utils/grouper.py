@@ -92,6 +92,10 @@ def issue_queryset_grouper(
             continue
         default_annotations[key] = expression
 
+    if "schedule_date" in {group_by, sub_group_by}:
+        # the day a work item is placed on in a calendar of the planned work: its finish, else its start
+        default_annotations["schedule_date"] = Coalesce("finish_date", "start_date")
+
     return queryset.annotate(**default_annotations)
 
 
@@ -218,6 +222,14 @@ def issue_group_values(
             return list(queryset.filter(project_id=project_id))
         else:
             return list(queryset)
+
+    if field == "schedule_date":
+        queryset = queryset.annotate(schedule_date=Coalesce("finish_date", "start_date")).values_list(
+            "schedule_date", flat=True
+        )
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+        return list(queryset.distinct())
 
     if field == "start_date":
         queryset = queryset.values_list("start_date", flat=True).distinct()

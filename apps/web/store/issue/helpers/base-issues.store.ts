@@ -136,6 +136,7 @@ export const ISSUE_GROUP_BY_KEY: Record<TIssueDisplayFilterOptions, keyof TIssue
   assignees: "assignee_ids",
   target_date: "target_date",
   finish_date: "finish_date",
+  schedule_date: "finish_date", // a work item without a finish is placed by its start; the calendar re-places by dates
   cycle: "cycle_id",
   module: "module_ids",
   team_project: "project_id",
@@ -153,6 +154,7 @@ export const ISSUE_FILTER_DEFAULT_DATA: Record<TIssueDisplayFilterOptions, keyof
   assignees: "assignee_ids",
   target_date: "target_date",
   finish_date: "finish_date",
+  schedule_date: "finish_date",
   team_project: "project_id",
 };
 

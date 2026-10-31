@@ -24,6 +24,7 @@ export type TIssueGroupByOptions =
   | "module"
   | "target_date"
   | "finish_date"
+  | "schedule_date" // calendar only: the finish day, else the start day
   | "team_project"
   | null;
 
@@ -94,6 +95,8 @@ export type TIssueParams =
   | "start_date"
   | "target_date"
   | "finish_date"
+  | "schedule_window"
+  | "schedule_date"
   | "project"
   | "team_project"
   | "group_by"

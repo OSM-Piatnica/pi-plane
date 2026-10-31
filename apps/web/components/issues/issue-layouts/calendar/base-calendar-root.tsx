@@ -121,7 +121,10 @@ export const BaseCalendarRoot = observer(function BaseCalendarRoot(props: IBaseC
           perPageCount: layout === "month" ? 4 : 30,
           before: endDate,
           after: startDate,
-          groupedBy: EIssueGroupByToServerOptions[CALENDAR_LAYER_DATE_FIELD[calendarLayer]],
+          groupedBy:
+            EIssueGroupByToServerOptions[
+              calendarLayer === "scheduled" ? "schedule_date" : CALENDAR_LAYER_DATE_FIELD[calendarLayer]
+            ],
         },
         viewId
       );
