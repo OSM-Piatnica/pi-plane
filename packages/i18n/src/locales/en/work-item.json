@@ -328,6 +328,15 @@
         "deadlines_help": "Work placed on its due date",
         "due_marker": "Due",
         "finish_marker": "Finish"
+      },
+      "bucket": {
+        "earlier": "Earlier",
+        "today": "Today",
+        "this_week": "This week",
+        "next_week": "Next week",
+        "later": "Later",
+        "none": "No date",
+        "no_single_date": "This group has no single date. Drop on Today, This week, Next week or No date instead."
       }
     }
   },

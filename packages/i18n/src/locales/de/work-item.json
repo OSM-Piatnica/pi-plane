@@ -328,6 +328,15 @@
         "deadlines_help": "Arbeit, platziert am Fälligkeitsdatum",
         "due_marker": "Fällig",
         "finish_marker": "Fertigstellung"
+      },
+      "bucket": {
+        "earlier": "Früher",
+        "today": "Heute",
+        "this_week": "Diese Woche",
+        "next_week": "Nächste Woche",
+        "later": "Später",
+        "none": "Kein Datum",
+        "no_single_date": "Diese Gruppe hat kein einzelnes Datum. Ziehen Sie das Element stattdessen auf „Kein Datum“, „Diese Woche“, „Nächste Woche“ oder „Heute“."
       }
     }
   },

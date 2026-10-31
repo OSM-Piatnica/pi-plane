@@ -328,6 +328,15 @@
         "deadlines_help": "Práce umístěná na svůj termín",
         "due_marker": "Termín",
         "finish_marker": "Dokončení"
+      },
+      "bucket": {
+        "earlier": "Dříve",
+        "today": "Dnes",
+        "this_week": "Tento týden",
+        "next_week": "Příští týden",
+        "later": "Později",
+        "none": "Žádné datum",
+        "no_single_date": "Tato skupina nemá jediné datum. Přetáhněte ji místo toho na Žádné datum, Tento týden, Příští týden nebo Dnes."
       }
     }
   },

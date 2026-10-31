@@ -328,6 +328,15 @@
         "deadlines_help": "마감일에 배치된 작업",
         "due_marker": "마감",
         "finish_marker": "완료"
+      },
+      "bucket": {
+        "earlier": "이전",
+        "today": "오늘",
+        "this_week": "이번 주",
+        "next_week": "다음 주",
+        "later": "이후",
+        "none": "날짜 없음",
+        "no_single_date": "이 그룹에는 단일 날짜가 없습니다. 대신 \"날짜 없음\", \"이번 주\", \"다음 주\" 또는 \"오늘\"에 놓아 주세요."
       }
     }
   },

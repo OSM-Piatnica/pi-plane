@@ -328,6 +328,15 @@
         "deadlines_help": "工作安排在其截止日期當天",
         "due_marker": "截止",
         "finish_marker": "結束"
+      },
+      "bucket": {
+        "earlier": "更早",
+        "today": "今天",
+        "this_week": "本週",
+        "next_week": "下週",
+        "later": "更晚",
+        "none": "無日期",
+        "no_single_date": "此群組沒有單一日期。請改為拖放到「無日期」「本週」「下週」或「今天」。"
       }
     }
   },

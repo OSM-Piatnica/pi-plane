@@ -128,9 +128,13 @@ export type GroupByColumnTypes =
   | "labels"
   | "assignees"
   | "created_by"
+  | "target_date_bucket"
+  | "finish_date_bucket"
   | "team_project";
 
 export type TGetColumns = {
+  /** Translates the names of columns that are not data (like the time buckets of a date). */
+  t?: (key: string) => string;
   isWorkspaceLevel?: boolean;
   projectId?: string;
 };

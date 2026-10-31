@@ -328,6 +328,15 @@
         "deadlines_help": "Son tarihine yerleştirilen işler",
         "due_marker": "Son tarih",
         "finish_marker": "Bitiş"
+      },
+      "bucket": {
+        "earlier": "Daha önce",
+        "today": "Bugün",
+        "this_week": "Bu hafta",
+        "next_week": "Gelecek hafta",
+        "later": "Daha sonra",
+        "none": "Tarih Yok",
+        "no_single_date": "Bu grubun tek bir tarihi yok. Bunun yerine Tarih Yok, Bu hafta, Gelecek hafta veya Bugün üzerine bırakın."
       }
     }
   },

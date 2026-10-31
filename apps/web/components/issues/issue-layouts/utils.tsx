@@ -54,7 +54,15 @@ import type {
 } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 // plane ui
-import { renderFormattedDate, getFileURL, getTodayInTimeZone, getWorkItemDateStatuses } from "@plane/utils";
+import {
+  DATE_BUCKETS,
+  renderFormattedDate,
+  getDateBucketDropDate,
+  getFileURL,
+  getTodayInTimeZone,
+  getWorkItemDateStatuses,
+  isDateBucketGroupBy,
+} from "@plane/utils";
 import type { TWorkItemDateStatuses } from "@plane/utils";
 // helpers
 // store
@@ -111,6 +119,7 @@ export const isWorkspaceLevel = (type: EIssuesStoreType) =>
   ].includes(type);
 
 type TGetGroupByColumns = {
+  t?: (key: string) => string;
   groupBy: GroupByColumnTypes | null;
   includeNone: boolean;
   isWorkspaceLevel: boolean;
@@ -127,6 +136,7 @@ export const getGroupByColumns = ({
   isWorkspaceLevel: isWorkspaceLevelGroup,
   isEpic = false,
   projectId,
+  t,
 }: TGetGroupByColumns): IGroupByColumn[] | undefined => {
   // If no groupBy is specified and includeNone is true, return "All Issues" group
   if (!groupBy && includeNone) {
@@ -146,7 +156,7 @@ export const getGroupByColumns = ({
   // Map of group by options to their corresponding column getter functions
   const groupByColumnMap: Record<
     GroupByColumnTypes,
-    ({ isWorkspaceLevel, projectId }: TGetColumns) => IGroupByColumn[] | undefined
+    ({ isWorkspaceLevel, projectId, t }: TGetColumns) => IGroupByColumn[] | undefined
   > = {
     project: getProjectColumns,
     cycle: getCycleColumns,
@@ -157,12 +167,29 @@ export const getGroupByColumns = ({
     labels: getLabelsColumns,
     assignees: getAssigneeColumns,
     created_by: getCreatedByColumns,
+    target_date_bucket: ({ t: translate }) => getDateBucketColumns("target_date", translate),
+    finish_date_bucket: ({ t: translate }) => getDateBucketColumns("finish_date", translate),
     team_project: getTeamProjectColumns,
   };
 
   // Get and return the columns for the specified group by option
-  return groupByColumnMap[groupBy]?.({ isWorkspaceLevel: isWorkspaceLevelGroup, projectId });
+  return groupByColumnMap[groupBy]?.({ isWorkspaceLevel: isWorkspaceLevelGroup, projectId, t });
 };
+
+/** The groups of a date: its time buckets. A work item dropped into one gets the day that stands for it. */
+const getDateBucketColumns = (field: "target_date" | "finish_date", t?: (key: string) => string): IGroupByColumn[] =>
+  DATE_BUCKETS.map((bucket) => {
+    const dropDate = getDateBucketDropDate(bucket);
+    const canDrop = dropDate !== undefined;
+    return {
+      id: bucket,
+      name: t ? t(`issue.dates.bucket.${bucket}`) : bucket,
+      icon: undefined,
+      payload: dropDate ? { [field]: dropDate } : {},
+      isDropDisabled: !canDrop,
+      dropErrorMessage: canDrop ? undefined : t?.("issue.dates.bucket.no_single_date"),
+    };
+  });
 
 const getProjectColumns = (): IGroupByColumn[] | undefined => {
   const { joinedProjectIds: projectIds, projectMap } = store.projectRoot.project;
@@ -607,6 +634,11 @@ export const handleGroupDragDrop = async (
     if (Array.isArray(groupValue)) {
       pull(groupValue, source.groupId);
       if (destination.groupId !== "None") groupValue = uniq(concat(groupValue, [destination.groupId]));
+    } else if (isDateBucketGroupBy(groupBy)) {
+      // a time bucket names no date: the work item gets the day that stands for the bucket
+      const dropDate = getDateBucketDropDate(destination.groupId);
+      if (dropDate === undefined) return;
+      groupValue = dropDate;
     } // else just update the groupValue based on destination groupId
     else {
       groupValue = destination.groupId === "None" ? null : destination.groupId;

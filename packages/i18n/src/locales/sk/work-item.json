@@ -328,6 +328,15 @@
         "deadlines_help": "Práca umiestnená na deň termínu",
         "due_marker": "Termín",
         "finish_marker": "Dokončenie"
+      },
+      "bucket": {
+        "earlier": "Skôr",
+        "today": "Dnes",
+        "this_week": "Tento týždeň",
+        "next_week": "Budúci týždeň",
+        "later": "Neskôr",
+        "none": "Žiadny dátum",
+        "no_single_date": "Táto skupina nemá jediný dátum. Presuňte ju namiesto toho na Žiadny dátum, Tento týždeň, Budúci týždeň alebo Dnes."
       }
     }
   },

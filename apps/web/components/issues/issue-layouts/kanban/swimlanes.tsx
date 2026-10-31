@@ -292,15 +292,18 @@ export const KanBanSwimLanes = observer(function KanBanSwimLanes(props: IKanBanS
     isEpic = false,
   } = props;
   // store hooks
+  const { t } = useTranslation();
   const storeType = useIssueStoreType();
   // derived values
   const groupByList = getGroupByColumns({
+    t,
     groupBy: group_by as GroupByColumnTypes,
     includeNone: true,
     isWorkspaceLevel: isWorkspaceLevel(storeType),
     isEpic: isEpic,
   });
   const subGroupByList = getGroupByColumns({
+    t,
     groupBy: sub_group_by as GroupByColumnTypes,
     includeNone: true,
     isWorkspaceLevel: isWorkspaceLevel(storeType),
