@@ -71,6 +71,7 @@ export type Properties = {
   assignee: boolean;
   start_date: boolean;
   due_date: boolean;
+  finish_date: boolean;
   labels: boolean;
   key: boolean;
   priority: boolean;

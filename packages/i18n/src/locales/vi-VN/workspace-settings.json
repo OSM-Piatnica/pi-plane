@@ -163,6 +163,7 @@
             "subscribers": "Người đăng ký",
             "created_by_name": "Người tạo",
             "start_date": "Ngày bắt đầu",
+            "finish_date": "Ngày kết thúc",
             "target_date": "Ngày hết hạn",
             "duration": "Thời lượng",
             "completed_at": "Hoàn thành lúc",

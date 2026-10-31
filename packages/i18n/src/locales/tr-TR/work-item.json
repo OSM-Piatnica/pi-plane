@@ -18,6 +18,7 @@
       "assignee": "Atanan ekle",
       "start_date": "Başlangıç tarihi ekle",
       "due_date": "Son tarih ekle",
+      "finish_date": "Planlanan bitiş tarihi ekle",
       "parent": "Üst iş öğesi ekle",
       "sub_issue": "Alt iş öğesi ekle",
       "dependency": "Bağımlılık ekle",
@@ -285,6 +286,49 @@
       "click_to_downvote": "Olumsuz oy vermek için tıklayın",
       "click_to_view_upvotes": "Olumlu oyları görüntülemek için tıklayın",
       "click_to_view_downvotes": "Olumsuz oyları görüntülemek için tıklayın"
+    },
+    "dates": {
+      "help": {
+        "finish": "Çalışmanın şu anda ne zaman bitmesini beklediğimiz.",
+        "due": "Çalışmanın ne zaman tamamlanmış olması gerektiği."
+      },
+      "notice": {
+        "due_defaulted": "Son tarih de {date} olarak ayarlandı",
+        "finish_defaulted": "Planlanan bitiş tarihi de {date} olarak ayarlandı",
+        "finish_not_defaulted": "Son tarih kaydedildi. Son tarih başlangıç tarihinden önce olduğu için planlanan bitiş tarihi boş bırakıldı."
+      },
+      "only_finish": "Yalnızca bitişi ayarla",
+      "only_due": "Yalnızca son tarihi ayarla",
+      "undo": "Geri al",
+      "finish_before_start": "Bitiş, başlangıçla aynı gün veya başlangıçtan sonra olmalıdır.",
+      "status": {
+        "overdue": "Gecikmiş",
+        "forecast_misses_deadline": "Bitiş, son tarihten sonra",
+        "forecast_unknown": "Bitiş tahmini yok",
+        "planned_finish_passed": "Planlanan bitiş geçti",
+        "completed_late": "Geç tamamlandı"
+      },
+      "timeline": {
+        "start": "Başlangıç",
+        "finish": "Bitiş",
+        "due": "Son tarih",
+        "start_only": "Başlangıç",
+        "finish_only": "Bitiş",
+        "due_marker": "Son tarih",
+        "due_marker_hint": "Yalnızca son tarihi değiştirmek için sürükleyin veya sol ve sağ ok tuşlarını kullanın.",
+        "variance_on_due": "Bitiş, son tarihte",
+        "variance_late": "{days, plural, one {Bitiş, son tarihten # gün sonra} other {Bitiş, son tarihten # gün sonra}}",
+        "variance_early": "{days, plural, one {Bitiş, son tarihten # gün önce} other {Bitiş, son tarihten # gün önce}}"
+      },
+      "calendar": {
+        "layer_label": "Takvim katmanı",
+        "scheduled": "Planlanan işler",
+        "deadlines": "Son tarihler",
+        "scheduled_help": "Başlangıç tarihinden planlanan bitiş tarihine kadar yerleştirilen işler",
+        "deadlines_help": "Son tarihine yerleştirilen işler",
+        "due_marker": "Son tarih",
+        "finish_marker": "Bitiş"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "durumu <value/> olarak ayarladı.",
         "set_with_issue": "<issue/> için durumu <value/> olarak ayarladı."
       },
+      "finish_date": {
+        "removed": "planlanan bitiş tarihini kaldırdı.",
+        "removed_with_issue": "<issue/> öğesinden planlanan bitiş tarihini kaldırdı.",
+        "set": "planlanan bitiş tarihini <value/> olarak ayarladı.",
+        "set_with_issue": "<issue/> için planlanan bitiş tarihini <value/> olarak ayarladı."
+      },
       "target_date": {
         "removed": "son tarihi kaldırdı.",
         "removed_with_issue": "<issue/> öğesinden son tarihi kaldırdı.",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "<issue/> için durumu <value/> olarak ayarladı",
         "set_without_issue": "durumu <value/> olarak ayarladı"
+      },
+      "finish_date": {
+        "removed_with_issue": "<issue/> öğesinden planlanan bitiş tarihini kaldırdı",
+        "removed_without_issue": "planlanan bitiş tarihini kaldırdı",
+        "set_with_issue": "<issue/> için planlanan bitiş tarihini <value/> olarak ayarladı",
+        "set_without_issue": "planlanan bitiş tarihini <value/> olarak ayarladı"
       },
       "target_date": {
         "removed_with_issue": "<issue/> öğesinden son tarihi kaldırdı",

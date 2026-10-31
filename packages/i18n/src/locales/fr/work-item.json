@@ -18,6 +18,7 @@
       "assignee": "Ajouter des assignés",
       "start_date": "Ajouter une date de début",
       "due_date": "Ajouter une date d’échéance",
+      "finish_date": "Ajouter une date de fin",
       "parent": "Ajouter un élément de travail parent",
       "sub_issue": "Ajouter un sous-élément de travail",
       "dependency": "Ajouter une dépendance",
@@ -285,6 +286,49 @@
       "click_to_downvote": "Cliquez pour voter contre",
       "click_to_view_upvotes": "Cliquez pour voir les votes pour",
       "click_to_view_downvotes": "Cliquez pour voir les votes contre"
+    },
+    "dates": {
+      "help": {
+        "finish": "Date à laquelle nous prévoyons actuellement que le travail soit terminé.",
+        "due": "Date à laquelle le travail doit être terminé."
+      },
+      "notice": {
+        "due_defaulted": "Date d’échéance également définie sur {date}",
+        "finish_defaulted": "Date de fin également définie sur {date}",
+        "finish_not_defaulted": "Date d’échéance enregistrée. Date de fin laissée vide, car la date d’échéance précède la date de début."
+      },
+      "only_finish": "Définir uniquement la fin",
+      "only_due": "Définir uniquement l’échéance",
+      "undo": "Annuler",
+      "finish_before_start": "La fin doit être égale ou postérieure au début.",
+      "status": {
+        "overdue": "En retard",
+        "forecast_misses_deadline": "La fin est postérieure à la date d’échéance",
+        "forecast_unknown": "Aucune prévision de fin",
+        "planned_finish_passed": "La fin prévue est dépassée",
+        "completed_late": "Terminé en retard"
+      },
+      "timeline": {
+        "start": "Début",
+        "finish": "Fin",
+        "due": "Échéance",
+        "start_only": "Début",
+        "finish_only": "Fin",
+        "due_marker": "Date d’échéance",
+        "due_marker_hint": "Faites glisser ou utilisez les flèches gauche et droite pour modifier uniquement la date d’échéance.",
+        "variance_on_due": "La fin tombe à la date d’échéance",
+        "variance_late": "{days, plural, one {La fin est # jour après l’échéance} many {La fin est # jours après l’échéance} other {La fin est # jours après l’échéance}}",
+        "variance_early": "{days, plural, one {La fin est # jour avant l’échéance} many {La fin est # jours avant l’échéance} other {La fin est # jours avant l’échéance}}"
+      },
+      "calendar": {
+        "layer_label": "Calque du calendrier",
+        "scheduled": "Travail planifié",
+        "deadlines": "Échéances",
+        "scheduled_help": "Travail placé de la date de début à la date de fin",
+        "deadlines_help": "Travail placé à sa date d’échéance",
+        "due_marker": "Échéance",
+        "finish_marker": "Fin"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "a défini l’état sur <value/>.",
         "set_with_issue": "a défini l’état de <issue/> sur <value/>."
       },
+      "finish_date": {
+        "removed": "a supprimé la date de fin.",
+        "removed_with_issue": "a supprimé la date de fin de <issue/>.",
+        "set": "a défini la date de fin sur <value/>.",
+        "set_with_issue": "a défini la date de fin de <issue/> sur <value/>."
+      },
       "target_date": {
         "removed": "a supprimé la date d’échéance.",
         "removed_with_issue": "a supprimé la date d’échéance de <issue/>.",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "a défini l’état de <issue/> sur <value/>",
         "set_without_issue": "a défini l’état sur <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "a supprimé la date de fin de <issue/>",
+        "removed_without_issue": "a supprimé la date de fin",
+        "set_with_issue": "a défini la date de fin de <issue/> sur <value/>",
+        "set_without_issue": "a défini la date de fin sur <value/>"
       },
       "target_date": {
         "removed_with_issue": "a supprimé la date d’échéance de <issue/>",

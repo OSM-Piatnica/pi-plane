@@ -344,6 +344,7 @@
   "start_date": "Date de début",
   "end_date": "Date de fin",
   "due_date": "Date d’échéance",
+  "finish_date": "Date de fin",
   "target_date": "Date cible",
   "estimate": "Estimation",
   "change_parent_issue": "Changer l’élément de travail parent",
@@ -576,6 +577,7 @@
       "last_updated": "Dernière mise à jour",
       "start_date": "Date de début",
       "due_date": "Date d’échéance",
+      "finish_date": "Date de fin",
       "asc": "Croissant",
       "desc": "Décroissant",
       "updated_on": "Mis à jour le"

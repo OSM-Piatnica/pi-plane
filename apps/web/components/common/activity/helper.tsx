@@ -52,6 +52,7 @@ export const iconsMap: ActivityIconMap = {
   restored: RefreshOutline,
   link: LinkOutline,
   start_date: StartDateOutline,
+  finish_date: DueDateOutline,
   target_date: DueDateOutline,
   label: LabelsOutline,
   inbox: InboxOutline,

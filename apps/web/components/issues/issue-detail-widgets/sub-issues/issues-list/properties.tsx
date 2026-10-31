@@ -1,20 +1,26 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 // plane imports
-import type { SyntheticEvent } from "react";
 import { useMemo } from "react";
 import { observer } from "mobx-react";
 import { useTranslation } from "@plane/i18n";
+import { setToast } from "@plane/blocks/toast";
 import { DueDateOutline, StartDateOutline } from "@makeplane/propel/icons";
-import type { DateRangeValue } from "@plane/blocks/property-select";
-import { DateRangeSelect, DateSelect } from "@/components/dropdowns/date-select";
+import { DateSelect } from "@/components/dropdowns/date-select";
 import type { IIssueDisplayProperties, TIssue } from "@plane/types";
-import { cn, getDate, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
+import {
+  cn,
+  getDate,
+  renderFormattedPayloadDate,
+  shouldHighlightIssueDueDate,
+  validateWorkItemSchedule,
+} from "@plane/utils";
 // components
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
 import { PrioritySelect } from "@/components/dropdowns/priority/priority-select";
@@ -41,22 +47,30 @@ type Props = {
   issue: TIssue;
 };
 
-const handleEventPropagation = (e: SyntheticEvent<HTMLDivElement>) => {
-  e.stopPropagation();
-  e.preventDefault();
-};
-
 export const SubIssuesListItemProperties = observer(function SubIssuesListItemProperties(props: Props) {
   const { workspaceSlug, parentIssueId, issueId, canEdit, updateSubIssue, displayProperties, issue } = props;
   const { t } = useTranslation();
   const { getStateById } = useProjectState();
   const startOfTheWeek = useStartOfTheWeek();
 
+  // the finish may not come before the start; the due date is a deadline and is not part of that rule
+  const rejectInvalidSchedule = (startDate: string | null | undefined, finishDate: string | null | undefined) => {
+    if (!validateWorkItemSchedule(startDate, finishDate)) return false;
+    setToast({ type: "error", title: t("common.error.label"), message: t("issue.dates.finish_before_start") });
+    return true;
+  };
+
   const handleStartDate = (date: Date | null) => {
-    if (issue.project_id) {
-      updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, {
-        start_date: date ? renderFormattedPayloadDate(date) : null,
-      });
+    const startDate = date ? renderFormattedPayloadDate(date) : null;
+    if (issue.project_id && !rejectInvalidSchedule(startDate, issue.finish_date)) {
+      updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, { start_date: startDate });
+    }
+  };
+
+  const handleFinishDate = (date: Date | null) => {
+    const finishDate = date ? renderFormattedPayloadDate(date) : null;
+    if (issue.project_id && !rejectInvalidSchedule(issue.start_date, finishDate)) {
+      updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, { finish_date: finishDate });
     }
   };
 
@@ -68,29 +82,16 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
     }
   };
 
-  const handleDateRangeUpdate = (range: DateRangeValue) => {
-    if (issue.project_id) {
-      updateSubIssue(workspaceSlug, issue.project_id, parentIssueId, issueId, {
-        start_date: range.from ? renderFormattedPayloadDate(range.from) : null,
-        target_date: range.to ? renderFormattedPayloadDate(range.to) : null,
-      });
-    }
-  };
-
   //derived values
   const stateDetails = useMemo(() => getStateById(issue.state_id), [getStateById, issue.state_id]);
   const shouldHighlight = useMemo(
     () => shouldHighlightIssueDueDate(issue.target_date, stateDetails?.group),
     [issue.target_date, stateDetails?.group]
   );
-  // date range is enabled only when both dates are available and both dates are enabled
-  const isDateRangeEnabled: boolean = Boolean(
-    issue.start_date && issue.target_date && displayProperties?.start_date && displayProperties?.due_date
-  );
-
   if (!displayProperties) return <></>;
 
-  const maxDate = getDate(issue.target_date);
+  // Start may not pass the planned finish. The due date is a deadline and is not bounded by the schedule.
+  const maxDate = getDate(issue.finish_date);
   const minDate = getDate(issue.start_date);
 
   return (
@@ -133,41 +134,8 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
         />
       </WithDisplayPropertiesHOC>
 
-      {/* merged dates */}
-      <WithDisplayPropertiesHOC
-        displayProperties={displayProperties}
-        displayPropertyKey={["start_date", "due_date"]}
-        shouldRenderProperty={() => isDateRangeEnabled}
-      >
-        {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
-        <div role="presentation" onFocus={handleEventPropagation} onClick={handleEventPropagation}>
-          <DateRangeSelect
-            value={{
-              from: getDate(issue.start_date) ?? null,
-              to: getDate(issue.target_date) ?? null,
-            }}
-            onChange={handleDateRangeUpdate}
-            icon={<StartDateOutline />}
-            clearable
-            className={cn({ "text-danger-primary": shouldHighlight })}
-            disabled={!canEdit}
-            showTooltip
-            tooltipHeading={t("project_cycles.date_range")}
-            weekStartsOn={startOfTheWeek}
-            mergeDates
-            side="top"
-            align="end"
-            variant="pill-sm"
-          />
-        </div>
-      </WithDisplayPropertiesHOC>
-
       {/* start date */}
-      <WithDisplayPropertiesHOC
-        displayProperties={displayProperties}
-        displayPropertyKey="start_date"
-        shouldRenderProperty={() => !isDateRangeEnabled}
-      >
+      <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="start_date">
         <DateSelect
           value={getDate(issue.start_date) ?? null}
           onChange={handleStartDate}
@@ -185,16 +153,30 @@ export const SubIssuesListItemProperties = observer(function SubIssuesListItemPr
         />
       </WithDisplayPropertiesHOC>
 
+      {/* finish date (planned last day of work) */}
+      <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="finish_date">
+        <DateSelect
+          value={getDate(issue.finish_date) ?? null}
+          onChange={handleFinishDate}
+          minDate={minDate}
+          placeholder={t("common.order_by.finish_date")}
+          icon={<DueDateOutline />}
+          clearable
+          disabled={!canEdit}
+          showTooltip
+          tooltipHeading={t("common.order_by.finish_date")}
+          weekStartsOn={startOfTheWeek}
+          side="top"
+          align="end"
+          variant="pill-sm"
+        />
+      </WithDisplayPropertiesHOC>
+
       {/* target/due date */}
-      <WithDisplayPropertiesHOC
-        displayProperties={displayProperties}
-        displayPropertyKey="due_date"
-        shouldRenderProperty={() => !isDateRangeEnabled}
-      >
+      <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="due_date">
         <DateSelect
           value={getDate(issue?.target_date) ?? null}
           onChange={handleTargetDate}
-          minDate={minDate}
           placeholder={t("common.order_by.due_date")}
           icon={<DueDateOutline />}
           className={cn({ "text-danger-primary": shouldHighlight })}

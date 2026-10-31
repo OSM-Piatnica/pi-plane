@@ -61,6 +61,8 @@
       "assignee_removed": "heeft de toegewezene verwijderd",
       "start_date_set": "heeft de startdatum ingesteld op <value/>",
       "start_date_removed": "heeft de startdatum verwijderd",
+      "finish_date_set": "heeft de afrondingsdatum ingesteld",
+      "finish_date_removed": "heeft de afrondingsdatum verwijderd",
       "due_date_set": "heeft de einddatum ingesteld op <value/>",
       "due_date_removed": "heeft de einddatum verwijderd",
       "duration_set": "heeft de duur ingesteld op <value/>",

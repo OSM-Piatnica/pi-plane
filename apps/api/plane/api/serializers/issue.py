@@ -39,11 +39,7 @@ from plane.utils.content_validator import (
 )
 from plane.utils.project_groups import ASSIGNABLE_GROUP_MESSAGE, GroupNotInProjectError, assignable_group_ids
 from plane.utils.project_weekend_days import get_project_weekend_days
-from plane.utils.work_item_duration import (
-    DURATION_DATE_FIELDS,
-    reconcile_work_item_duration,
-    to_work_item_date,
-)
+from plane.utils.work_item_dates import apply_date_rules
 
 from .base import BaseSerializer
 from .cycle import CycleLiteSerializer, CycleSerializer
@@ -99,6 +95,12 @@ class IssueSerializer(BaseSerializer):
         help_text="Work item description written in markdown. Rendered to description_html; send one or the other.",
     )
 
+    # Write-only: the interactive client asks for the one-time "first finish/due fills both" default.
+    initialize_paired_date = serializers.BooleanField(write_only=True, required=False)
+    paired_date_defaulted = serializers.ChoiceField(
+        choices=["finish_date", "target_date"], write_only=True, required=False
+    )
+
     class Meta:
         model = Issue
         # Audit fields: BaseModel.save() sets created_by from the request user on create.
@@ -113,6 +115,10 @@ class IssueSerializer(BaseSerializer):
             "deleted_at",
             "archived_at",
             "sequence_id",
+            "dates_initialized",
+            "finish_date_origin",
+            "target_date_origin",
+            "due_date_at_completion",
         ]
         exclude = ["description_json", "description_stripped"]
 
@@ -129,22 +135,13 @@ class IssueSerializer(BaseSerializer):
         # Markdown becomes description_html here, so the sanitizer below is the only gate either input passes
         data = resolve_markdown_input(data, html_field="description_html", markdown_field="description_markdown")
 
-        # Keep duration and the two dates consistent before anything else looks at them, so API
-        # clients get the same synchronization the web app performs locally.
-        derived = reconcile_work_item_duration(
+        # One shared rule for start/finish/due: duration (in the project's working days), the finish >= start
+        # invariant and the one-time "first finish or due fills both" default. Due is never compared with start.
+        self.date_notices = apply_date_rules(
             self.instance,
             data,
             get_project_weekend_days(self.context.get("project_id") or getattr(self.instance, "project_id", None)),
         )
-        for field, value in derived.items():
-            data[field] = to_work_item_date(value) if field in DURATION_DATE_FIELDS else value
-
-        if (
-            data.get("start_date", None) is not None
-            and data.get("target_date", None) is not None
-            and data.get("start_date", None) > data.get("target_date", None)
-        ):
-            raise serializers.ValidationError("Start date cannot exceed target date")
 
         try:
             if data.get("description_html", None) is not None:

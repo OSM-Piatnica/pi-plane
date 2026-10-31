@@ -163,6 +163,7 @@
             "subscribers": "Assinantes",
             "created_by_name": "Criado por",
             "start_date": "Data de início",
+            "finish_date": "Data de conclusão",
             "target_date": "Data de vencimento",
             "duration": "Duração",
             "completed_at": "Concluído em",

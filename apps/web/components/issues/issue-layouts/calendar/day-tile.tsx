@@ -8,11 +8,8 @@
 import { useEffect, useRef, useState } from "react";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
 import { observer } from "mobx-react";
 import { useLatestCallback } from "@plane/hooks";
-import { useTranslation } from "@plane/i18n";
-import { setToast } from "@plane/blocks/toast";
 import type { TGroupedIssues, TIssue, TIssueMap, TPaginationData, ICalendarDate } from "@plane/types";
 // types
 // ui
@@ -79,7 +76,6 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
     isEpic = false,
   } = props;
   // i18n
-  const { t } = useTranslation();
   const { getMonthName } = useCalendarLocale();
   const weekendDays = useWeekendDays();
 
@@ -94,22 +90,7 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
   // Reads the latest issues map and drop handler without re-registering the drop target
   const handleDrop = useLatestCallback((sourceData: { id: string; date: string }, destinationDate: string) => {
     const issueDetails = issues?.[sourceData?.id];
-    if (issueDetails?.start_date) {
-      const issueStartDate = new Date(issueDetails.start_date);
-      const targetDate = new Date(destinationDate);
-      const diffInDays = differenceInCalendarDays(targetDate, issueStartDate);
-      if (diffInDays < 0) {
-        setToast({
-          type: "error",
-          title: t("toast.error"),
-          message: t("issue_ui.due_before_start"),
-        });
-        return false;
-      }
-    }
-
     handleDragAndDrop(sourceData?.id, issueDetails?.project_id ?? undefined, sourceData?.date, destinationDate);
-    return true;
   });
 
   useEffect(() => {
@@ -133,7 +114,7 @@ export const CalendarDayTile = observer(function CalendarDayTile(props: Props) {
           const destinationData = self?.data as { date: string } | undefined;
           if (!sourceData || !destinationData) return;
 
-          if (!handleDrop(sourceData, destinationData.date)) return;
+          handleDrop(sourceData, destinationData.date);
           highlightIssueOnDrop(source?.element?.id, false);
         },
       })

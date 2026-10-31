@@ -163,6 +163,7 @@
             "subscribers": "გამომწერები",
             "created_by_name": "შემქმნელი",
             "start_date": "დაწყების თარიღი",
+            "finish_date": "დასრულების თარიღი",
             "target_date": "ვადა",
             "duration": "ხანგრძლივობა",
             "completed_at": "დასრულების დრო",

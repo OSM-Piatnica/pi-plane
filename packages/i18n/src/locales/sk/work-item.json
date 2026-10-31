@@ -18,6 +18,7 @@
       "assignee": "Pridať priradených",
       "start_date": "Pridať dátum začiatku",
       "due_date": "Pridať termín",
+      "finish_date": "Pridať dátum dokončenia",
       "parent": "Pridať nadradenú pracovnú položku",
       "sub_issue": "Pridať podriadenú pracovnú položku",
       "dependency": "Pridať závislosť",
@@ -285,6 +286,49 @@
       "click_to_downvote": "Kliknite pre hlasovanie dole",
       "click_to_view_upvotes": "Kliknite pre zobrazenie hlasov hore",
       "click_to_view_downvotes": "Kliknite pre zobrazenie hlasov dole"
+    },
+    "dates": {
+      "help": {
+        "finish": "Kedy v súčasnosti očakávame dokončenie práce.",
+        "due": "Kedy musí byť práca dokončená."
+      },
+      "notice": {
+        "due_defaulted": "Termín bol nastavený aj na {date}",
+        "finish_defaulted": "Dátum dokončenia bol nastavený aj na {date}",
+        "finish_not_defaulted": "Termín bol uložený. Dátum dokončenia zostal prázdny, pretože termín je pred dátumom začiatku."
+      },
+      "only_finish": "Nastaviť iba dokončenie",
+      "only_due": "Nastaviť iba termín",
+      "undo": "Späť",
+      "finish_before_start": "Dokončenie musí byť v deň začiatku alebo po ňom.",
+      "status": {
+        "overdue": "Po termíne",
+        "forecast_misses_deadline": "Dokončenie je po termíne",
+        "forecast_unknown": "Bez prognózy dokončenia",
+        "planned_finish_passed": "Plánované dokončenie už uplynulo",
+        "completed_late": "Dokončené neskoro"
+      },
+      "timeline": {
+        "start": "Začiatok",
+        "finish": "Dokončenie",
+        "due": "Termín",
+        "start_only": "Začiatok",
+        "finish_only": "Dokončenie",
+        "due_marker": "Termín",
+        "due_marker_hint": "Presuňte alebo použite šípky doľava a doprava na zmenu iba termínu.",
+        "variance_on_due": "Dokončenie je v deň termínu",
+        "variance_late": "{days, plural, one {Dokončenie je # deň po termíne} few {Dokončenie je # dni po termíne} many {Dokončenie je # dňa po termíne} other {Dokončenie je # dní po termíne}}",
+        "variance_early": "{days, plural, one {Dokončenie je # deň pred termínom} few {Dokončenie je # dni pred termínom} many {Dokončenie je # dňa pred termínom} other {Dokončenie je # dní pred termínom}}"
+      },
+      "calendar": {
+        "layer_label": "Vrstva kalendára",
+        "scheduled": "Naplánovaná práca",
+        "deadlines": "Termíny",
+        "scheduled_help": "Práca umiestnená od dátumu začiatku po dátum dokončenia",
+        "deadlines_help": "Práca umiestnená na deň termínu",
+        "due_marker": "Termín",
+        "finish_marker": "Dokončenie"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "nastavený stav na <value/>.",
         "set_with_issue": "nastavený stav na <value/> pre <issue/>."
       },
+      "finish_date": {
+        "removed": "odstránený dátum dokončenia.",
+        "removed_with_issue": "odstránený dátum dokončenia z <issue/>.",
+        "set": "nastavený dátum dokončenia na <value/>.",
+        "set_with_issue": "nastavený dátum dokončenia na <value/> pre <issue/>."
+      },
       "target_date": {
         "removed": "odstránený termín.",
         "removed_with_issue": "odstránený termín z <issue/>.",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "nastavený stav na <value/> pre <issue/>",
         "set_without_issue": "nastavený stav na <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "odstránený dátum dokončenia z <issue/>",
+        "removed_without_issue": "odstránený dátum dokončenia",
+        "set_with_issue": "nastavený dátum dokončenia na <value/> pre <issue/>",
+        "set_without_issue": "nastavený dátum dokončenia na <value/>"
       },
       "target_date": {
         "removed_with_issue": "odstránený termín z <issue/>",

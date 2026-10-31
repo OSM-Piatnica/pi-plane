@@ -61,6 +61,8 @@
       "assignee_removed": "đã xóa người phụ trách",
       "start_date_set": "đã đặt ngày bắt đầu là",
       "start_date_removed": "đã xóa ngày bắt đầu",
+      "finish_date_set": "đã đặt ngày kết thúc là",
+      "finish_date_removed": "đã xóa ngày kết thúc",
       "due_date_set": "đã đặt ngày hết hạn là",
       "due_date_removed": "đã xóa ngày hết hạn",
       "duration_set": "đã đặt thời lượng là",

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -19,6 +20,7 @@ import type { IModuleIssuesFilter } from "@/store/issue/module";
 import type { IProjectIssuesFilter } from "@/store/issue/project";
 import type { IProjectViewIssuesFilter } from "@/store/issue/project-views";
 import { CalendarMonthsDropdown, CalendarOptionsDropdown } from "./dropdowns";
+import { CalendarLayerToggle } from "./layer-toggle";
 
 interface ICalendarHeader {
   issuesFilterStore: IProjectIssuesFilter | IModuleIssuesFilter | ICycleIssuesFilter | IProjectViewIssuesFilter;
@@ -112,6 +114,7 @@ export const CalendarHeader = observer(function CalendarHeader(props: ICalendarH
         <CalendarMonthsDropdown issuesFilterStore={issuesFilterStore} />
       </div>
       <div className="flex items-center gap-1.5">
+        <CalendarLayerToggle />
         <button
           type="button"
           className="rounded-sm bg-layer-transparent px-2.5 py-1 text-11 font-medium text-secondary hover:bg-layer-transparent-hover hover:text-primary"

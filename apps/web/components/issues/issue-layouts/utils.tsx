@@ -54,8 +54,8 @@ import type {
 } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 // plane ui
-
-import { renderFormattedDate, getFileURL } from "@plane/utils";
+import { renderFormattedDate, getFileURL, getTodayInTimeZone, getWorkItemDateStatuses } from "@plane/utils";
+import type { TWorkItemDateStatuses } from "@plane/utils";
 // helpers
 // store
 import { ALL_EPICS_GROUP_NAME, ALL_ISSUES_GROUP_ID, COMPLETED_CYCLE_DROP_ERROR } from "@/helpers/group-column";
@@ -68,6 +68,7 @@ import {
   SpreadsheetAttachmentColumn,
   SpreadsheetCreatedOnColumn,
   SpreadsheetDueDateColumn,
+  SpreadsheetFinishDateColumn,
   SpreadsheetDurationColumn,
   SpreadsheetEstimateColumn,
   SpreadsheetLabelColumn,
@@ -840,6 +841,23 @@ export const calculateIdentifierWidth = (projectIdentifierLength: number, maxSeq
   return projectIdentifierLength * 7 + 7 + sequenceDigits * 7; // project identifier chars + dash + sequence digits
 };
 
+/**
+ * @description Date statuses of a work item for list/board/calendar badges. Overdue only concerns the due
+ * date and only active (not completed/cancelled) items; the due day itself is not overdue. "Today" is the
+ * calendar day in the project time zone (the runtime zone when unknown).
+ */
+export const getIssueDateStatuses = (
+  issue: Pick<TIssue, "finish_date" | "target_date">,
+  stateGroup: string | undefined,
+  timeZone?: string | null
+): TWorkItemDateStatuses =>
+  getWorkItemDateStatuses({
+    finishDate: issue.finish_date,
+    dueDate: issue.target_date,
+    today: getTodayInTimeZone(timeZone),
+    isActive: !!stateGroup && ![STATE_GROUPS.completed.key, STATE_GROUPS.cancelled.key].includes(stateGroup as never),
+  });
+
 // types
 export type TGetScopeMemberIdsResult = {
   memberIds: string[];
@@ -895,6 +913,7 @@ export const SPREADSHEET_COLUMNS: { [key in keyof IIssueDisplayProperties]: TSpr
   assignee: SpreadsheetAssigneeColumn,
   created_on: SpreadsheetCreatedOnColumn,
   due_date: SpreadsheetDueDateColumn,
+  finish_date: SpreadsheetFinishDateColumn,
   duration: SpreadsheetDurationColumn,
   estimate: SpreadsheetEstimateColumn,
   labels: SpreadsheetLabelColumn,

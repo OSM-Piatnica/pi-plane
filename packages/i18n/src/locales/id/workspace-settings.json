@@ -163,6 +163,7 @@
             "subscribers": "Pelanggan",
             "created_by_name": "Dibuat oleh",
             "start_date": "Tanggal mulai",
+            "finish_date": "Tanggal selesai",
             "target_date": "Tenggat",
             "duration": "Durasi",
             "completed_at": "Selesai pada",

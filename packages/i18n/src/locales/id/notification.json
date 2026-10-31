@@ -61,6 +61,8 @@
       "assignee_removed": "menghapus penugas",
       "start_date_set": "menetapkan tanggal mulai menjadi",
       "start_date_removed": "menghapus tanggal mulai",
+      "finish_date_set": "menetapkan tanggal selesai menjadi",
+      "finish_date_removed": "menghapus tanggal selesai",
       "due_date_set": "menetapkan tanggal jatuh tempo menjadi",
       "due_date_removed": "menghapus tanggal jatuh tempo",
       "duration_set": "menetapkan durasi menjadi",

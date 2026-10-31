@@ -24,6 +24,11 @@ import { useUserPermissions } from "@/hooks/store/user";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import { useIssuesActions } from "@/hooks/use-issues-actions";
 // types
+import {
+  buildCalendarPlacement,
+  calendarLayerState,
+  CALENDAR_LAYER_DATE_FIELD,
+} from "@/store/issue/helpers/calendar-layers";
 import type { IQuickActionProps } from "../list/list-view-types";
 import { CalendarChart } from "./calendar";
 import { handleDragDrop } from "./utils";
@@ -88,10 +93,24 @@ export const BaseCalendarRoot = observer(function BaseCalendarRoot(props: IBaseC
 
   const displayFilters = issuesFilter.issueFilters?.displayFilters;
 
-  const groupedIssueIds = (issues.groupedIssueIds ?? {}) as TGroupedIssues;
+  const calendarLayer = calendarLayerState.layer;
+  const loadedGroupedIssueIds = (issues.groupedIssueIds ?? {}) as TGroupedIssues;
 
   const layout = displayFilters?.calendar?.layout ?? "month";
   const { startDate, endDate } = issueCalendarView.getStartAndEndDate(layout) ?? {};
+
+  // Items are fetched grouped by the date backing the active layer. The Scheduled layer additionally
+  // spreads each item across every day of its start..finish span; the Deadlines layer uses the groups as is.
+  // (computed per render so the observer tracks issue date edits)
+  const getGroupedIssueIds = (): TGroupedIssues => {
+    if (calendarLayer === "deadlines" || !startDate || !endDate) return loadedGroupedIssueIds;
+    const loadedItems = Object.values(loadedGroupedIssueIds)
+      .flat()
+      .map((id) => issueMap?.[id as string])
+      .filter(Boolean);
+    return buildCalendarPlacement("scheduled", loadedItems, startDate, endDate) as TGroupedIssues;
+  };
+  const groupedIssueIds = getGroupedIssueIds();
 
   useEffect(() => {
     if (startDate && endDate && layout) {
@@ -102,12 +121,15 @@ export const BaseCalendarRoot = observer(function BaseCalendarRoot(props: IBaseC
           perPageCount: layout === "month" ? 4 : 30,
           before: endDate,
           after: startDate,
-          groupedBy: EIssueGroupByToServerOptions["target_date"],
+          groupedBy:
+            EIssueGroupByToServerOptions[
+              calendarLayer === "scheduled" ? "schedule_date" : CALENDAR_LAYER_DATE_FIELD[calendarLayer]
+            ],
         },
         viewId
       );
     }
-  }, [fetchIssues, storeType, startDate, endDate, layout, viewId]);
+  }, [fetchIssues, storeType, startDate, endDate, layout, viewId, calendarLayer]);
 
   const handleDragAndDrop = async (
     issueId: string | undefined,
@@ -123,7 +145,9 @@ export const BaseCalendarRoot = observer(function BaseCalendarRoot(props: IBaseC
       destinationDate,
       workspaceSlug?.toString(),
       issueProjectId,
-      updateIssue
+      updateIssue,
+      calendarLayer,
+      issueMap?.[issueId]
     ).catch((err) => {
       setToast({
         title: t("common.error.label"),

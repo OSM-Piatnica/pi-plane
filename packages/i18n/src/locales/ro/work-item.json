@@ -18,6 +18,7 @@
       "assignee": "Adaugă responsabili",
       "start_date": "Adaugă data de început",
       "due_date": "Adaugă termenul limită",
+      "finish_date": "Adaugă data de finalizare",
       "parent": "Adaugă activitate părinte",
       "sub_issue": "Adaugă sub-activitate",
       "dependency": "Adaugă dependență",
@@ -285,6 +286,49 @@
       "click_to_downvote": "Clic pentru a vota negativ",
       "click_to_view_upvotes": "Clic pentru a vedea voturile pozitive",
       "click_to_view_downvotes": "Clic pentru a vedea voturile negative"
+    },
+    "dates": {
+      "help": {
+        "finish": "Când estimăm în prezent că se va finaliza lucrul.",
+        "due": "Până când trebuie finalizat lucrul."
+      },
+      "notice": {
+        "due_defaulted": "Data limită a fost setată și la {date}",
+        "finish_defaulted": "Data de finalizare a fost setată și la {date}",
+        "finish_not_defaulted": "Termenul limită a fost salvat. Data de finalizare a rămas necompletată deoarece termenul limită este înainte de data de început."
+      },
+      "only_finish": "Setează doar finalizarea",
+      "only_due": "Setează doar termenul limită",
+      "undo": "Anulează",
+      "finish_before_start": "Finalizarea trebuie să fie la data de început sau după aceasta.",
+      "status": {
+        "overdue": "Întârziat",
+        "forecast_misses_deadline": "Finalizarea este după termenul limită",
+        "forecast_unknown": "Fără estimare de finalizare",
+        "planned_finish_passed": "Finalizarea planificată a trecut",
+        "completed_late": "Finalizat cu întârziere"
+      },
+      "timeline": {
+        "start": "Început",
+        "finish": "Finalizare",
+        "due": "Termen limită",
+        "start_only": "Început",
+        "finish_only": "Finalizare",
+        "due_marker": "Data limită",
+        "due_marker_hint": "Trageți sau folosiți tastele săgeată stânga și dreapta pentru a modifica doar data limită.",
+        "variance_on_due": "Finalizarea este la termenul limită",
+        "variance_late": "{days, plural, one {Finalizarea este cu # zi după termen} few {Finalizarea este cu # zile după termen} other {Finalizarea este cu # de zile după termen}}",
+        "variance_early": "{days, plural, one {Finalizarea este cu # zi înainte de termen} few {Finalizarea este cu # zile înainte de termen} other {Finalizarea este cu # de zile înainte de termen}}"
+      },
+      "calendar": {
+        "layer_label": "Strat de calendar",
+        "scheduled": "Activități planificate",
+        "deadlines": "Termene limită",
+        "scheduled_help": "Activități plasate de la data de început până la data de finalizare",
+        "deadlines_help": "Activități plasate la data limită",
+        "due_marker": "Termen limită",
+        "finish_marker": "Finalizare"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "a setat starea la <value/>.",
         "set_with_issue": "a setat starea la <value/> pentru <issue/>."
       },
+      "finish_date": {
+        "removed": "a eliminat data de finalizare.",
+        "removed_with_issue": "a eliminat data de finalizare din <issue/>.",
+        "set": "a setat data de finalizare la <value/>.",
+        "set_with_issue": "a setat data de finalizare la <value/> pentru <issue/>."
+      },
       "target_date": {
         "removed": "a eliminat termenul limită.",
         "removed_with_issue": "a eliminat termenul limită din <issue/>.",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "a setat starea la <value/> pentru <issue/>",
         "set_without_issue": "a setat starea la <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "a eliminat data de finalizare din <issue/>",
+        "removed_without_issue": "a eliminat data de finalizare",
+        "set_with_issue": "a setat data de finalizare la <value/> pentru <issue/>",
+        "set_without_issue": "a setat data de finalizare la <value/>"
       },
       "target_date": {
         "removed_with_issue": "a eliminat termenul limită din <issue/>",

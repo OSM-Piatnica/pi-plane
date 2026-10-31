@@ -163,6 +163,7 @@
             "subscribers": "Odberatelia",
             "created_by_name": "Vytvoril(a)",
             "start_date": "Dátum začiatku",
+            "finish_date": "Dátum dokončenia",
             "target_date": "Termín",
             "duration": "Trvanie",
             "completed_at": "Dokončené",

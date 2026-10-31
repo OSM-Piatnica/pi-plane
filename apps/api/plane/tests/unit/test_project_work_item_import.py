@@ -225,7 +225,7 @@ class TestProjectWorkItemImport:
                     "name": "Exported duration",
                     "state": "Todo",
                     "start_date": "2026-03-02",
-                    "target_date": "2026-03-06",
+                    "finish_date": "2026-03-06",
                     "duration": 5,
                 },
                 {
@@ -233,11 +233,11 @@ class TestProjectWorkItemImport:
                     "name": "Derived from dates",
                     "state": "Todo",
                     "start_date": "2026-03-02",
-                    "target_date": "2026-03-04",
+                    "finish_date": "2026-03-04",
                 },
                 {
                     "external_key": "D3",
-                    "name": "Derived target date",
+                    "name": "Derived finish date",
                     "state": "Todo",
                     "start_date": "2026-03-02",
                     "duration": "4",
@@ -253,7 +253,7 @@ class TestProjectWorkItemImport:
                     "name": "Unreadable duration",
                     "state": "Todo",
                     "start_date": "2026-03-02",
-                    "target_date": "2026-03-04",
+                    "finish_date": "2026-03-04",
                     "duration": "five days",
                 },
             ],
@@ -265,18 +265,58 @@ class TestProjectWorkItemImport:
         derived = Issue.objects.get(project=project, name="Derived from dates")
         assert derived.duration == 3
 
-        anchored = Issue.objects.get(project=project, name="Derived target date")
+        anchored = Issue.objects.get(project=project, name="Derived finish date")
         assert anchored.duration == 4
-        assert anchored.target_date == date(2026, 3, 5)
+        assert anchored.finish_date == date(2026, 3, 5)
 
         standalone = Issue.objects.get(project=project, name="Standalone duration")
         assert standalone.duration == 7
         assert standalone.start_date is None
-        assert standalone.target_date is None
+        assert standalone.finish_date is None
 
         unreadable = Issue.objects.get(project=project, name="Unreadable duration")
         assert unreadable.duration == 3
         assert any("five days" in w for w in result["warnings"])
+
+    def test_due_only_rows_keep_finish_empty(self, workspace, create_user):
+        """A legacy export that only knows the due date must not turn it into a schedule end."""
+        project = Project.objects.create(name="Due only", identifier="DUO", workspace=workspace, created_by=create_user)
+        ProjectMember.objects.create(project=project, member=create_user, role=20, is_active=True)
+        State.objects.create(
+            name="Todo",
+            color="#3B82F6",
+            project=project,
+            workspace=workspace,
+            group="unstarted",
+            sequence=10000,
+            default=True,
+            created_by=create_user,
+        )
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {"external_key": "U1", "name": "Due only", "state": "Todo", "target_date": "2026-03-06"},
+                {
+                    "external_key": "U2",
+                    "name": "Both",
+                    "state": "Todo",
+                    "start_date": "2026-03-02",
+                    "finish_date": "2026-03-10",
+                    "target_date": "2026-03-06",
+                },
+            ],
+        )
+
+        due_only = Issue.objects.get(project=project, name="Due only")
+        assert due_only.target_date == date(2026, 3, 6)
+        assert due_only.finish_date is None
+        assert due_only.dates_initialized is True
+
+        both = Issue.objects.get(project=project, name="Both")
+        assert both.finish_date == date(2026, 3, 10)
+        assert both.target_date == date(2026, 3, 6)
 
 
 @pytest.mark.django_db
@@ -332,7 +372,7 @@ class TestWorkItemImportCreatesMissingEntities:
                     "state": "Todo",
                     "cycles": ["Sprint 1"],
                     "start_date": "2026-03-02",
-                    "target_date": "2026-03-06",
+                    "finish_date": "2026-03-06",
                 },
                 {
                     "external_key": "C2",
@@ -340,7 +380,7 @@ class TestWorkItemImportCreatesMissingEntities:
                     "state": "Todo",
                     "cycles": ["Sprint 1"],
                     "start_date": "2026-03-04",
-                    "target_date": "2026-03-20",
+                    "finish_date": "2026-03-20",
                 },
             ],
         )
@@ -996,7 +1036,7 @@ class TestWorkItemImportOptions:
                     "name": "Dated",
                     "state": "Todo",
                     "start_date": "2026-03-02",
-                    "target_date": "2026-03-06",
+                    "finish_date": "2026-03-06",
                     "duration": 5,
                 }
             ],
@@ -1005,7 +1045,7 @@ class TestWorkItemImportOptions:
 
         issue = Issue.objects.get(project=project, name="Dated")
         assert issue.start_date is None
-        assert issue.target_date is None
+        assert issue.finish_date is None
         assert issue.duration is None
 
     def test_labels_are_neither_attached_nor_created_when_left_out(self, workspace, create_user):
@@ -1071,7 +1111,7 @@ class TestWorkItemImportOptions:
                     "state": "Todo",
                     "cycles": ["Sprint 1"],
                     "start_date": "2026-03-02",
-                    "target_date": "2026-03-06",
+                    "finish_date": "2026-03-06",
                 }
             ],
             options=WorkItemImportOptions(dates=False),

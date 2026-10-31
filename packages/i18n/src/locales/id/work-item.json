@@ -18,6 +18,7 @@
       "assignee": "Tambah penugasan",
       "start_date": "Tambah tanggal mulai",
       "due_date": "Tambah tanggal jatuh tempo",
+      "finish_date": "Tambahkan tanggal selesai",
       "parent": "Tambah item kerja induk",
       "sub_issue": "Tambah sub-item kerja",
       "dependency": "Tambah ketergantungan",
@@ -285,6 +286,49 @@
       "click_to_downvote": "Klik untuk memberi suara turun",
       "click_to_view_upvotes": "Klik untuk melihat suara naik",
       "click_to_view_downvotes": "Klik untuk melihat suara turun"
+    },
+    "dates": {
+      "help": {
+        "finish": "Kapan pekerjaan saat ini diperkirakan selesai.",
+        "due": "Kapan pekerjaan harus diselesaikan."
+      },
+      "notice": {
+        "due_defaulted": "Tanggal jatuh tempo juga ditetapkan menjadi {date}",
+        "finish_defaulted": "Tanggal selesai juga ditetapkan menjadi {date}",
+        "finish_not_defaulted": "Tanggal jatuh tempo disimpan. Tanggal selesai dibiarkan kosong karena tanggal jatuh tempo sebelum tanggal mulai."
+      },
+      "only_finish": "Tetapkan selesai saja",
+      "only_due": "Tetapkan jatuh tempo saja",
+      "undo": "Urungkan",
+      "finish_before_start": "Tanggal selesai harus sama dengan atau setelah tanggal mulai.",
+      "status": {
+        "overdue": "Lewat jatuh tempo",
+        "forecast_misses_deadline": "Tanggal selesai melewati tanggal jatuh tempo",
+        "forecast_unknown": "Tidak ada perkiraan selesai",
+        "planned_finish_passed": "Rencana tanggal selesai telah terlewati",
+        "completed_late": "Selesai terlambat"
+      },
+      "timeline": {
+        "start": "Mulai",
+        "finish": "Selesai",
+        "due": "Jatuh tempo",
+        "start_only": "Mulai",
+        "finish_only": "Selesai",
+        "due_marker": "Tanggal jatuh tempo",
+        "due_marker_hint": "Seret atau gunakan tombol panah kiri dan kanan untuk mengubah tanggal jatuh tempo saja.",
+        "variance_on_due": "Tanggal selesai tepat pada tanggal jatuh tempo",
+        "variance_late": "{days, plural, one {Selesai # hari setelah jatuh tempo} other {Selesai # hari setelah jatuh tempo}}",
+        "variance_early": "{days, plural, one {Selesai # hari sebelum jatuh tempo} other {Selesai # hari sebelum jatuh tempo}}"
+      },
+      "calendar": {
+        "layer_label": "Lapisan kalender",
+        "scheduled": "Pekerjaan terjadwal",
+        "deadlines": "Tenggat",
+        "scheduled_help": "Pekerjaan ditempatkan dari tanggal mulai hingga tanggal selesai",
+        "deadlines_help": "Pekerjaan ditempatkan pada tanggal jatuh tempo",
+        "due_marker": "Jatuh tempo",
+        "finish_marker": "Selesai"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "menetapkan status menjadi <value/>.",
         "set_with_issue": "menetapkan status untuk <issue/> menjadi <value/>."
       },
+      "finish_date": {
+        "removed": "menghapus tanggal selesai.",
+        "removed_with_issue": "menghapus tanggal selesai dari <issue/>.",
+        "set": "menetapkan tanggal selesai menjadi <value/>.",
+        "set_with_issue": "menetapkan tanggal selesai untuk <issue/> menjadi <value/>."
+      },
       "target_date": {
         "removed": "menghapus tanggal jatuh tempo.",
         "removed_with_issue": "menghapus tanggal jatuh tempo dari <issue/>.",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "menetapkan status untuk <issue/> menjadi <value/>",
         "set_without_issue": "menetapkan status menjadi <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "menghapus tanggal selesai dari <issue/>",
+        "removed_without_issue": "menghapus tanggal selesai",
+        "set_with_issue": "menetapkan tanggal selesai untuk <issue/> menjadi <value/>",
+        "set_without_issue": "menetapkan tanggal selesai menjadi <value/>"
       },
       "target_date": {
         "removed_with_issue": "menghapus tanggal jatuh tempo dari <issue/>",

@@ -344,6 +344,7 @@
   "start_date": "開始日期",
   "end_date": "結束日期",
   "due_date": "截止日期",
+  "finish_date": "結束日期",
   "target_date": "目標日期",
   "estimate": "評估",
   "change_parent_issue": "變更父工作事項",
@@ -576,6 +577,7 @@
       "last_updated": "最後更新",
       "start_date": "開始日期",
       "due_date": "截止日期",
+      "finish_date": "結束日期",
       "asc": "遞增",
       "desc": "遞減",
       "updated_on": "更新於"

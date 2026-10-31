@@ -275,7 +275,7 @@ export class IssueService extends APIService {
   async updateIssueDates(
     workspaceSlug: string,
     projectId: string,
-    updates: { id: string; start_date?: string; target_date?: string }[],
+    updates: { id: string; start_date?: string; finish_date?: string; target_date?: string }[],
     options?: { shiftDependents?: boolean }
   ): Promise<void> {
     return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issue-dates/`, {

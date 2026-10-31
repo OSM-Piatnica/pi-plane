@@ -163,6 +163,7 @@
             "subscribers": "Subscribers",
             "created_by_name": "Created by",
             "start_date": "Start date",
+            "finish_date": "Finish date",
             "target_date": "Due date",
             "duration": "Duration",
             "completed_at": "Completed at",

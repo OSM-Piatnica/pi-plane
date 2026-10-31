@@ -52,6 +52,7 @@ export function mapWorkItemTemplateToFormValues(template: TWorkItemTemplate): TW
     module_ids: payload.module_ids ?? null,
     estimate_point: payload.estimate_point ?? null,
     start_date: payload.start_date ?? null,
+    finish_date: payload.finish_date ?? null,
     target_date: payload.target_date ?? null,
   };
 }
@@ -74,6 +75,7 @@ export function buildWorkItemTemplatePayloadFromFormValues(
     type_id: values.type_id ?? null,
     estimate_point: values.estimate_point ?? null,
     start_date: values.start_date ?? null,
+    finish_date: values.finish_date ?? null,
     target_date: values.target_date ?? null,
   };
 

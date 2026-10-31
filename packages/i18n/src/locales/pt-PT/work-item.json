@@ -18,6 +18,7 @@
       "assignee": "Adicionar responsáveis",
       "start_date": "Adicionar data de início",
       "due_date": "Adicionar data de vencimento",
+      "finish_date": "Adicionar data de conclusão",
       "parent": "Adicionar item de trabalho pai",
       "sub_issue": "Adicionar sub-item de trabalho",
       "dependency": "Adicionar dependência",
@@ -285,6 +286,49 @@
       "click_to_downvote": "Clique para votar contra",
       "click_to_view_upvotes": "Clique para ver os votos a favor",
       "click_to_view_downvotes": "Clique para ver os votos contra"
+    },
+    "dates": {
+      "help": {
+        "finish": "Quando esperamos atualmente que o trabalho termine.",
+        "due": "Quando o trabalho tem de estar concluído."
+      },
+      "notice": {
+        "due_defaulted": "Data de vencimento também definida para {date}",
+        "finish_defaulted": "Data de conclusão também definida para {date}",
+        "finish_not_defaulted": "Data de vencimento guardada. A data de conclusão ficou vazia porque a data de vencimento é anterior à data de início."
+      },
+      "only_finish": "Definir apenas a conclusão",
+      "only_due": "Definir apenas o vencimento",
+      "undo": "Anular",
+      "finish_before_start": "A conclusão tem de ser na data de início ou depois.",
+      "status": {
+        "overdue": "Em atraso",
+        "forecast_misses_deadline": "A conclusão é depois da data de vencimento",
+        "forecast_unknown": "Sem previsão de conclusão",
+        "planned_finish_passed": "A conclusão planeada já passou",
+        "completed_late": "Concluído com atraso"
+      },
+      "timeline": {
+        "start": "Início",
+        "finish": "Conclusão",
+        "due": "Vencimento",
+        "start_only": "Início",
+        "finish_only": "Conclusão",
+        "due_marker": "Data de vencimento",
+        "due_marker_hint": "Arraste ou use as setas esquerda e direita para alterar apenas a data de vencimento.",
+        "variance_on_due": "A conclusão é na data de vencimento",
+        "variance_late": "{days, plural, one {A conclusão é # dia depois do vencimento} many {A conclusão é # de dias depois do vencimento} other {A conclusão é # dias depois do vencimento}}",
+        "variance_early": "{days, plural, one {A conclusão é # dia antes do vencimento} many {A conclusão é # de dias antes do vencimento} other {A conclusão é # dias antes do vencimento}}"
+      },
+      "calendar": {
+        "layer_label": "Camada do calendário",
+        "scheduled": "Trabalho agendado",
+        "deadlines": "Prazos",
+        "scheduled_help": "Trabalho colocado da data de início à data de conclusão",
+        "deadlines_help": "Trabalho colocado na sua data de vencimento",
+        "due_marker": "Vencimento",
+        "finish_marker": "Conclusão"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "definiu o estado como <value/>.",
         "set_with_issue": "definiu o estado de <issue/> como <value/>."
       },
+      "finish_date": {
+        "removed": "removeu a data de conclusão.",
+        "removed_with_issue": "removeu a data de conclusão de <issue/>.",
+        "set": "definiu a data de conclusão como <value/>.",
+        "set_with_issue": "definiu a data de conclusão de <issue/> como <value/>."
+      },
       "target_date": {
         "removed": "removeu a data de vencimento.",
         "removed_with_issue": "removeu a data de vencimento de <issue/>.",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "definiu o estado de <issue/> como <value/>",
         "set_without_issue": "definiu o estado como <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "removeu a data de conclusão de <issue/>",
+        "removed_without_issue": "removeu a data de conclusão",
+        "set_with_issue": "definiu a data de conclusão de <issue/> como <value/>",
+        "set_without_issue": "definiu a data de conclusão como <value/>"
       },
       "target_date": {
         "removed_with_issue": "removeu a data de vencimento de <issue/>",

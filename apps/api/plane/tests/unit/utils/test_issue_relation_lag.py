@@ -22,8 +22,8 @@ D = date
 def satisfied(relation_type, issue, related, lag=0):
     return is_timeline_relation_satisfied(
         relation_type,
-        {"start_date": issue[0], "target_date": issue[1]},
-        {"start_date": related[0], "target_date": related[1]},
+        {"start_date": issue[0], "finish_date": issue[1]},
+        {"start_date": related[0], "finish_date": related[1]},
         lag,
     )
 

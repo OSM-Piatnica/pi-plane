@@ -24,14 +24,15 @@ def project(db, workspace, create_user):
     return project
 
 
-def make_issue(project, workspace, author, name, parent=None, start=None, end=None):
+def make_issue(project, workspace, author, name, parent=None, start=None, end=None, due=None):
     issue = Issue(
         name=name,
         project=project,
         workspace=workspace,
         parent=parent,
         start_date=date.fromisoformat(start) if start else None,
-        target_date=date.fromisoformat(end) if end else None,
+        finish_date=date.fromisoformat(end) if end else None,
+        target_date=date.fromisoformat(due) if due else None,
     )
     issue.save(created_by_id=author.id)
     return issue
@@ -87,6 +88,13 @@ class TestIssueDateRollup:
         assert body[str(parent.id)]["descendants_count"] == 1
         Issue.objects.filter(pk=child.pk).update(deleted_at=timezone.now())
         assert get(session_client, workspace, project, [parent.id]).json() == {}
+
+    def test_the_end_is_the_finish_date_not_the_due_date(self, session_client, workspace, project, create_user):
+        parent = make_issue(project, workspace, create_user, "Parent")
+        make_issue(project, workspace, create_user, "Child", parent, "2026-04-01", "2026-04-10", due="2026-09-30")
+        make_issue(project, workspace, create_user, "Due only", parent, due="2026-12-31")
+        body = get(session_client, workspace, project, [parent.id]).json()
+        assert (body[str(parent.id)]["start_date"], body[str(parent.id)]["target_date"]) == ("2026-04-01", "2026-04-10")
 
     def test_empty_and_malformed_requests(self, session_client, workspace, project):
         assert get(session_client, workspace, project, []).json() == {}

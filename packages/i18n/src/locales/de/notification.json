@@ -61,6 +61,8 @@
       "assignee_removed": "hat die zugewiesene Person entfernt",
       "start_date_set": "hat das Startdatum auf <value/> gesetzt",
       "start_date_removed": "hat das Startdatum entfernt",
+      "finish_date_set": "hat das Fertigstellungsdatum gesetzt:",
+      "finish_date_removed": "hat das Fertigstellungsdatum entfernt",
       "due_date_set": "hat das Fälligkeitsdatum auf <value/> gesetzt",
       "due_date_removed": "hat das Fälligkeitsdatum entfernt",
       "duration_set": "hat die Dauer auf <value/> gesetzt",

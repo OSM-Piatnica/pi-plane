@@ -24,6 +24,7 @@ ISSUE_ORDER_BY_ALLOWLIST = frozenset(
         "sequence_id",
         "sort_order",
         "target_date",
+        "finish_date",
         "start_date",
         "completed_at",
         "archived_at",
@@ -44,6 +45,7 @@ INTAKE_ISSUE_ORDER_BY_ALLOWLIST = frozenset(
         "issue__sequence_id",
         "issue__sort_order",
         "issue__target_date",
+        "issue__finish_date",
         "issue__start_date",
         "issue__priority",
         "issue__state__name",
@@ -126,7 +128,10 @@ ISSUE_GROUP_BY_ALLOWLIST = frozenset(
         "project_id",
         "created_by",
         "target_date",
+        "finish_date",
         "start_date",
+        # an annotation of issue_queryset_grouper: the calendar day of the planned work
+        "schedule_date",
     }
 )
 

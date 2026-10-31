@@ -64,6 +64,7 @@ def test_exported_work_item_keeps_module_cycle_and_dates_when_imported_again(fil
         workspace=workspace,
         state=State.objects.get(project=source),
         start_date=date(2026, 6, 2),
+        finish_date=date(2026, 6, 8),
         target_date=date(2026, 6, 9),
         created_by=create_user,
     )
@@ -90,6 +91,7 @@ def test_exported_work_item_keeps_module_cycle_and_dates_when_imported_again(fil
     imported = Issue.objects.get(project=target, name="Round trip")
     assert ModuleIssue.objects.filter(issue=imported, module__name="Kampania").exists()
     assert imported.start_date == date(2026, 6, 2)
+    assert imported.finish_date == date(2026, 6, 8)
     assert imported.target_date == date(2026, 6, 9)
     new_cycle = CycleIssue.objects.get(issue=imported).cycle
     assert new_cycle.name == "Sprint 1"

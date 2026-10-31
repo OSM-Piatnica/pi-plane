@@ -199,6 +199,7 @@ class IssueFilterSet(BaseFilterSet):
         fields = {
             "start_date": ["exact", "range"],
             "target_date": ["exact", "range"],
+            "finish_date": ["exact", "range"],
             "created_at": ["exact", "range"],
             "updated_at": ["exact", "range"],
             "is_draft": ["exact"],

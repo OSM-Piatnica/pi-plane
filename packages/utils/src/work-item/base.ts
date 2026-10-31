@@ -5,7 +5,6 @@
  * See the LICENSE file for details.
  */
 
-import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
 import { isEmpty } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 // plane imports
@@ -32,8 +31,9 @@ import type {
 import { EIssueLayoutTypes } from "@plane/types";
 // local imports
 import { orderArrayBy } from "../array";
-import { getDate } from "../datetime";
+import { renderFormattedPayloadDate } from "../datetime";
 import { isEditorEmpty } from "../editor";
+import { getTodayInTimeZone, getWorkItemDateStatuses } from "./dates";
 
 type THandleIssuesMutation = (
   formData: Partial<TIssue>,
@@ -177,19 +177,18 @@ export const createIssuePayload: (projectId: string, formData: Partial<TIssue>) 
  */
 export const shouldHighlightIssueDueDate = (
   date: string | Date | null,
-  stateGroup: TStateGroups | undefined
+  stateGroup: TStateGroups | undefined,
+  timeZone?: string | null
 ): boolean => {
   if (!date || !stateGroup) return false;
   // if the issue is completed or cancelled, don't highlight the due date
   if ([STATE_GROUPS.completed.key, STATE_GROUPS.cancelled.key].includes(stateGroup)) return false;
 
-  const parsedDate = getDate(date);
-  if (!parsedDate) return false;
+  const dueDate = renderFormattedPayloadDate(date);
+  if (!dueDate) return false;
 
-  const targetDateDistance = differenceInCalendarDays(parsedDate, new Date());
-
-  // if the issue is overdue, highlight the due date
-  return targetDateDistance <= 0;
+  // The due day itself is not overdue until it ends; "today" is the project's calendar day.
+  return getWorkItemDateStatuses({ dueDate, today: getTodayInTimeZone(timeZone), isActive: true }).overdue;
 };
 
 export const getIssueBlocksStructure = (block: TIssue): IGanttBlock => ({
@@ -198,7 +197,10 @@ export const getIssueBlocksStructure = (block: TIssue): IGanttBlock => ({
   name: block?.name,
   sort_order: block?.sort_order,
   start_date: block?.start_date ?? undefined,
-  target_date: block?.target_date ?? undefined,
+  // the generic gantt block uses `target_date` as the bar end, which for a work item is its finish date
+  target_date: block?.finish_date ?? undefined,
+  // the real due date is a separate deadline marker, never part of the bar
+  due_date: block?.target_date ?? undefined,
   meta: {
     project_id: block?.project_id ?? undefined,
   },

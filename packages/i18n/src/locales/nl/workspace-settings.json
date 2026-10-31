@@ -163,6 +163,7 @@
             "subscribers": "Abonnees",
             "created_by_name": "Gemaakt door",
             "start_date": "Startdatum",
+            "finish_date": "Afrondingsdatum",
             "target_date": "Vervaldatum",
             "duration": "Duur",
             "completed_at": "Voltooid op",

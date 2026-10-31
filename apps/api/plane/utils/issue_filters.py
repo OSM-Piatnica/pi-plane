@@ -3,10 +3,12 @@
 # Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
+import datetime
 import re
 import uuid
 from datetime import timedelta
 
+from django.db.models import Q
 from django.utils import timezone
 
 # The date from pattern
@@ -298,6 +300,67 @@ def filter_target_date(params, issue_filter, method, prefix=""):
     return issue_filter
 
 
+def filter_finish_date(params, issue_filter, method, prefix=""):
+    if method == "GET":
+        finish_dates = params.get("finish_date").split(",")
+        if len(finish_dates) and "" not in finish_dates:
+            date_filter(
+                issue_filter=issue_filter,
+                date_term=f"{prefix}finish_date",
+                queries=finish_dates,
+            )
+    else:
+        if params.get("finish_date", None) and len(params.get("finish_date")):
+            issue_filter[f"{prefix}finish_date"] = params.get("finish_date")
+    return issue_filter
+
+
+def _narrow_to(issue_filter, key, condition):
+    """Add a condition on work items under ``key``; a condition already there stays (both must hold)."""
+    from plane.db.models import Issue
+
+    narrowed = issue_filter.get(key)
+    issue_filter[key] = (Issue.objects.all() if narrowed is None else narrowed).filter(condition).values("pk")
+
+
+def filter_schedule_window(params, issue_filter, method, prefix=""):
+    """
+    Work items whose planned schedule touches a window, given as ``from;to`` (yyyy-mm-dd). A work item with only a
+    start or only a finish date is a one day marker, so it counts when that day is in the window; one with both
+    counts when its span overlaps the window.
+    """
+    if method != "GET":
+        return issue_filter
+    bounds = str(params.get("schedule_window") or "").split(";")
+    if len(bounds) != 2 or not all(bounds):
+        return issue_filter
+    first, last = bounds
+    try:
+        first, last = datetime.date.fromisoformat(first), datetime.date.fromisoformat(last)
+    except ValueError:
+        return issue_filter
+    condition = (
+        Q(start_date__range=(first, last))
+        | Q(finish_date__range=(first, last))
+        | Q(start_date__lte=first, finish_date__gte=last)
+    )
+    _narrow_to(issue_filter, f"{prefix}pk__in", condition)
+    return issue_filter
+
+
+def filter_schedule_date(params, issue_filter, method, prefix=""):
+    """Work items placed on one day of the schedule: their finish date, or their start date when they have no finish."""
+    if method != "GET":
+        return issue_filter
+    try:
+        day = datetime.date.fromisoformat(str(params.get("schedule_date") or ""))
+    except ValueError:
+        return issue_filter
+    condition = Q(finish_date=day) | Q(finish_date__isnull=True, start_date=day)
+    _narrow_to(issue_filter, f"{prefix}pk__in", condition)
+    return issue_filter
+
+
 def filter_completed_at(params, issue_filter, method, prefix=""):
     if method == "GET":
         completed_ats = params.get("completed_at").split(",")
@@ -469,6 +532,9 @@ def issue_filters(query_params, method, prefix="", request=None):
         "updated_at": filter_updated_at,
         "start_date": filter_start_date,
         "target_date": filter_target_date,
+        "finish_date": filter_finish_date,
+        "schedule_window": filter_schedule_window,
+        "schedule_date": filter_schedule_date,
         "completed_at": filter_completed_at,
         "type": filter_issue_state_type,
         "project": filter_project,

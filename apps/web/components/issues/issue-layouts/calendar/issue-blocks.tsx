@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -11,6 +12,7 @@ import type { TIssue, TPaginationData } from "@plane/types";
 import { renderFormattedPayloadDate } from "@plane/utils";
 // helpers
 import { useIssuesStore } from "@/hooks/use-issue-layout-store";
+import { calendarLayerState } from "@/store/issue/helpers/calendar-layers";
 import type { TRenderQuickActions } from "../list/list-view-types";
 import { CalendarIssueBlockRoot } from "./issue-block-root";
 import { CalendarQuickAddIssueActions } from "./quick-add-issue-actions";
@@ -74,6 +76,7 @@ export const CalendarIssueBlocks = observer(function CalendarIssueBlocks(props: 
         <div key={issueId} className="relative cursor-pointer p-1 px-2">
           <CalendarIssueBlockRoot
             issueId={issueId}
+            date={formattedDatePayload}
             quickActions={quickActions}
             isDragDisabled={isDragDisabled || isMobileView}
             canEditProperties={canEditProperties}
@@ -91,9 +94,11 @@ export const CalendarIssueBlocks = observer(function CalendarIssueBlocks(props: 
       {enableQuickIssueCreate && !disableIssueCreation && !readOnly && (
         <div className="border-b border-subtle px-1 py-1 md:border-none md:px-2">
           <CalendarQuickAddIssueActions
-            prePopulatedData={{
-              target_date: formattedDatePayload,
-            }}
+            prePopulatedData={
+              calendarLayerState.layer === "scheduled"
+                ? { start_date: formattedDatePayload, finish_date: formattedDatePayload }
+                : { target_date: formattedDatePayload }
+            }
             quickAddCallback={quickAddCallback}
             addIssuesToView={addIssuesToView}
             isEpic={isEpic}

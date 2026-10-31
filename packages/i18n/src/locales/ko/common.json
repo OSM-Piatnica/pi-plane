@@ -344,6 +344,7 @@
   "start_date": "시작 날짜",
   "end_date": "종료 날짜",
   "due_date": "마감일",
+  "finish_date": "완료일",
   "target_date": "목표일",
   "estimate": "추정",
   "change_parent_issue": "상위 작업 항목 변경",
@@ -576,6 +577,7 @@
       "last_updated": "마지막 업데이트",
       "start_date": "시작 날짜",
       "due_date": "마감일",
+      "finish_date": "완료일",
       "asc": "오름차순",
       "desc": "내림차순",
       "updated_on": "업데이트일"

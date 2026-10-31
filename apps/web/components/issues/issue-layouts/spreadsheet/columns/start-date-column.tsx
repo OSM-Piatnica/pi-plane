@@ -34,7 +34,7 @@ export const SpreadsheetStartDateColumn = observer(function SpreadsheetStartDate
     <div className="h-11 border-b-[0.5px] border-subtle">
       <DateSelect
         value={getDate(issue.start_date) ?? null}
-        maxDate={getDate(issue.target_date)}
+        maxDate={getDate(issue.finish_date)}
         onChange={(data) => {
           const startDate = data ? renderFormattedPayloadDate(data) : null;
           onChange(

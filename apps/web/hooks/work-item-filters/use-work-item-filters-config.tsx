@@ -334,7 +334,20 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
     [operatorConfigs]
   );
 
-  // target date filter config
+  // finish date filter config (planned / forecast last day of work; independent from the due date)
+  const finishDateFilterConfig = useMemo(
+    () => ({
+      ...getTargetDateFilterConfig<TWorkItemFilterProperty>("finish_date")({
+        isEnabled: true,
+        filterIcon: DueDateOutline,
+        ...operatorConfigs,
+      }),
+      label: t("common.order_by.finish_date"),
+    }),
+    [operatorConfigs, t]
+  );
+
+  // target date (due date) filter config
   const targetDateFilterConfig = useMemo(
     () =>
       getTargetDateFilterConfig<TWorkItemFilterProperty>("target_date")({
@@ -394,6 +407,7 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
       cycleFilterConfig,
       moduleFilterConfig,
       startDateFilterConfig,
+      finishDateFilterConfig,
       targetDateFilterConfig,
       createdAtFilterConfig,
       updatedAtFilterConfig,
@@ -414,6 +428,7 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
       subscriber_id: subscriberFilterConfig,
       priority: priorityFilterConfig,
       start_date: startDateFilterConfig,
+      finish_date: finishDateFilterConfig,
       target_date: targetDateFilterConfig,
       created_at: createdAtFilterConfig,
       updated_at: updatedAtFilterConfig,

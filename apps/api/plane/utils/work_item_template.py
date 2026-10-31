@@ -26,6 +26,7 @@ PAYLOAD_KEYS_ALLOWED_GLOBAL = frozenset(
         "assignee_ids",
         "estimate_point",
         "start_date",
+        "finish_date",
         "target_date",
     }
 )
@@ -96,7 +97,7 @@ def resolve_payload_for_project(*, workspace_id, project_id: uuid.UUID, raw: dic
     if est is not None and est != "":
         resolved["estimate_point"] = str(est)
 
-    for date_key in ("start_date", "target_date"):
+    for date_key in ("start_date", "finish_date", "target_date"):
         if date_key in raw and raw[date_key] not in (None, ""):
             resolved[date_key] = str(raw[date_key])[:10]
 

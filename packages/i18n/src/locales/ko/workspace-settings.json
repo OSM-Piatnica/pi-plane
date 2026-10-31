@@ -163,6 +163,7 @@
             "subscribers": "구독자",
             "created_by_name": "작성자",
             "start_date": "시작일",
+            "finish_date": "완료일",
             "target_date": "마감일",
             "duration": "기간",
             "completed_at": "완료 시각",

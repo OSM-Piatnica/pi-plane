@@ -61,6 +61,8 @@
       "assignee_removed": "ha rimosso un assegnatario",
       "start_date_set": "ha impostato la data di inizio su",
       "start_date_removed": "ha rimosso la data di inizio",
+      "finish_date_set": "ha impostato la data di fine su",
+      "finish_date_removed": "ha rimosso la data di fine",
       "due_date_set": "ha impostato la scadenza su",
       "due_date_removed": "ha rimosso la scadenza",
       "duration_set": "ha impostato la durata su",

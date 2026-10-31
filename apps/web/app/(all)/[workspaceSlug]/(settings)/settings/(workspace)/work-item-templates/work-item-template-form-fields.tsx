@@ -217,6 +217,23 @@ export const WorkItemTemplateDefaultValueFields = observer(function WorkItemTemp
         />
         <Controller
           control={control}
+          name="finish_date"
+          render={({ field: { value, onChange } }) => (
+            <DateSelect
+              value={getDate(value) ?? null}
+              onChange={(date) => onChange(date ? renderFormattedPayloadDate(date) : null)}
+              minDate={minDate ?? undefined}
+              placeholder={t("finish_date")}
+              icon={<CalendarOutline />}
+              weekStartsOn={startOfTheWeek}
+              clearable
+              tabIndex={getIndex("finish_date")}
+              variant="pill-md"
+            />
+          )}
+        />
+        <Controller
+          control={control}
           name="target_date"
           render={({ field: { value, onChange } }) => (
             <DateSelect

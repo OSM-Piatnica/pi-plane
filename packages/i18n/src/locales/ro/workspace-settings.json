@@ -163,6 +163,7 @@
             "subscribers": "Abonați",
             "created_by_name": "Creat de",
             "start_date": "Data de început",
+            "finish_date": "Data de finalizare",
             "target_date": "Data limită",
             "duration": "Durată",
             "completed_at": "Finalizat la",

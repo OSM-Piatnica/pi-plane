@@ -69,6 +69,10 @@ def date_rollup(tree, issue_id):
     A descendant with only one date counts as that single day, like a bar with one date on the timeline. Returns None
     when the work item has no descendants, else a dict with ``start_date`` and ``target_date`` (either may be None when
     no descendant has a date), ``children_count`` and ``descendants_count``.
+
+    The end of a schedule is a work item's ``finish_date`` (``target_date`` is its independent due date and does not
+    count), so the nodes need ``start_date`` and ``finish_date``. The result key stays ``target_date``: the timeline's
+    generic block reads that key as the end of a bar.
     """
     descendant_ids = tree.descendants(issue_id)
     if not descendant_ids:
@@ -77,7 +81,7 @@ def date_rollup(tree, issue_id):
     ends = []
     for descendant_id in descendant_ids:
         node = tree.node(descendant_id)
-        start, end = node.get("start_date"), node.get("target_date")
+        start, end = node.get("start_date"), node.get("finish_date")
         if start is None and end is None:
             continue
         starts.append(start or end)

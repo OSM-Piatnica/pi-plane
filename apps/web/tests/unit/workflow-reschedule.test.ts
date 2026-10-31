@@ -17,9 +17,9 @@ const shifts: TRelationRescheduleShift[] = [
     ref: "PRJ-2",
     name: "Dependent",
     start_date: "2026-01-11",
-    target_date: "2026-01-20",
+    finish_date: "2026-01-20",
     new_start_date: "2026-01-15",
-    new_target_date: "2026-01-24",
+    new_finish_date: "2026-01-24",
   },
 ];
 

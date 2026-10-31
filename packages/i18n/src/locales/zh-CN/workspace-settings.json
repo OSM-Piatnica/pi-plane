@@ -163,6 +163,7 @@
             "subscribers": "订阅者",
             "created_by_name": "创建者",
             "start_date": "开始日期",
+            "finish_date": "结束日期",
             "target_date": "截止日期",
             "duration": "持续时间",
             "completed_at": "完成时间",

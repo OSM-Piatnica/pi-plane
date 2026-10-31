@@ -20,6 +20,8 @@ import { CalendarIssueBlock } from "./issue-block";
 
 type Props = {
   issueId: string;
+  /** The day tile this block is rendered in (yyyy-mm-dd); the drag source day. */
+  date: string;
   quickActions: TRenderQuickActions;
   isDragDisabled: boolean;
   isEpic?: boolean;
@@ -27,7 +29,7 @@ type Props = {
 };
 
 export const CalendarIssueBlockRoot = observer(function CalendarIssueBlockRoot(props: Props) {
-  const { issueId, quickActions, isDragDisabled, isEpic = false, canEditProperties } = props;
+  const { issueId, date, quickActions, isDragDisabled, isEpic = false, canEditProperties } = props;
 
   const issueRef = useRef<HTMLAnchorElement | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -49,7 +51,7 @@ export const CalendarIssueBlockRoot = observer(function CalendarIssueBlockRoot(p
       draggable({
         element,
         canDrag: () => canDrag,
-        getInitialData: () => ({ id: issue?.id, date: issue?.target_date }),
+        getInitialData: () => ({ id: issue?.id, date }),
         onDragStart: () => {
           setIsDragging(true);
         },
@@ -59,7 +61,7 @@ export const CalendarIssueBlockRoot = observer(function CalendarIssueBlockRoot(p
       })
     );
     // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentional dependency set; changing would alter behaviour
-  }, [issue, canDrag]);
+  }, [issue, canDrag, date]);
 
   useOutsideClickDetector(issueRef, () => {
     issueRef?.current?.classList?.remove(HIGHLIGHT_CLASS);
@@ -74,6 +76,7 @@ export const CalendarIssueBlockRoot = observer(function CalendarIssueBlockRoot(p
       quickActions={quickActions}
       ref={issueRef}
       isEpic={isEpic}
+      date={date}
     />
   );
 });

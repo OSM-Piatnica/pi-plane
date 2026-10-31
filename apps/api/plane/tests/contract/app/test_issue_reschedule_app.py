@@ -37,7 +37,7 @@ def states(db, workspace, project):
 
 def item(project, name, start=None, finish=None, state=None):
     return Issue.objects.create(
-        name=name, workspace=project.workspace, project=project, start_date=start, target_date=finish, state=state
+        name=name, workspace=project.workspace, project=project, start_date=start, finish_date=finish, state=state
     )
 
 
@@ -80,7 +80,7 @@ def code(response):
 
 def dates(issue):
     issue.refresh_from_db()
-    return issue.start_date, issue.target_date
+    return issue.start_date, issue.finish_date
 
 
 @pytest.mark.contract
@@ -91,13 +91,13 @@ class TestOfferToShiftDependents:
         successor = item(project, "successor", date(2026, 1, 11), date(2026, 1, 20))
         relate(project, predecessor, successor)
 
-        response, _ = patch(session_client, workspace, project, predecessor, {"target_date": "2026-01-14"})
+        response, _ = patch(session_client, workspace, project, predecessor, {"finish_date": "2026-01-14"})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         body = response.json()
         assert body["error_code"] == "relation_reschedule_available"
         assert body["original_error_code"] == "relation_date_conflict"
-        assert [(s["id"], s["new_start_date"], s["new_target_date"]) for s in body["shifts"]] == [
+        assert [(s["id"], s["new_start_date"], s["new_finish_date"]) for s in body["shifts"]] == [
             (str(successor.id), "2026-01-15", "2026-01-24")
         ]
         # nothing moved yet
@@ -119,7 +119,7 @@ class TestOfferToShiftDependents:
         ):
             response = session_client.patch(
                 patch_url(workspace, project, predecessor),
-                {"target_date": "2026-01-14", "shift_dependents": True},
+                {"finish_date": "2026-01-14", "shift_dependents": True},
                 format="json",
             )
 
@@ -127,7 +127,7 @@ class TestOfferToShiftDependents:
         assert dates(predecessor) == (date(2026, 1, 1), date(2026, 1, 14))
         assert dates(successor) == (date(2026, 1, 15), date(2026, 1, 24))
         recorded = sorted(call.kwargs["requested_data"] for call in activity.call_args_list)
-        assert recorded == ['{"start_date": "2026-01-15"}', '{"target_date": "2026-01-24"}']
+        assert recorded == ['{"finish_date": "2026-01-24"}', '{"start_date": "2026-01-15"}']
 
     def test_the_shift_follows_the_chain(self, session_client, workspace, project):
         a = item(project, "a", date(2026, 1, 1), date(2026, 1, 10))
@@ -137,7 +137,7 @@ class TestOfferToShiftDependents:
         relate(project, b, c)
 
         response, _ = patch(
-            session_client, workspace, project, a, {"target_date": "2026-01-12", "shift_dependents": True}
+            session_client, workspace, project, a, {"finish_date": "2026-01-12", "shift_dependents": True}
         )
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
@@ -152,7 +152,7 @@ class TestOfferToShiftDependents:
         relate(project, a, tight)
 
         response, _ = patch(
-            session_client, workspace, project, a, {"target_date": "2026-01-14", "shift_dependents": True}
+            session_client, workspace, project, a, {"finish_date": "2026-01-14", "shift_dependents": True}
         )
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
@@ -165,7 +165,7 @@ class TestOfferToShiftDependents:
         relate(project, a, b, lag=2)
 
         response, _ = patch(
-            session_client, workspace, project, a, {"target_date": "2026-01-12", "shift_dependents": True}
+            session_client, workspace, project, a, {"finish_date": "2026-01-12", "shift_dependents": True}
         )
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
@@ -177,7 +177,7 @@ class TestOfferToShiftDependents:
             # start-to-start: the successor starts on or after the predecessor
             ("start_before", {"start_date": "2026-01-05"}, (date(2026, 1, 5), date(2026, 1, 14))),
             # finish-to-finish: the successor finishes on or after the predecessor
-            ("finish_before", {"target_date": "2026-01-16"}, (date(2026, 1, 7), date(2026, 1, 16))),
+            ("finish_before", {"finish_date": "2026-01-16"}, (date(2026, 1, 7), date(2026, 1, 16))),
         ],
     )
     def test_start_to_start_and_finish_to_finish(
@@ -203,7 +203,7 @@ class TestOfferToShiftDependents:
             workspace,
             project,
             a,
-            {"start_date": "2026-01-20", "target_date": "2026-01-25", "shift_dependents": True},
+            {"start_date": "2026-01-20", "finish_date": "2026-01-25", "shift_dependents": True},
         )
 
         assert response.status_code == status.HTTP_204_NO_CONTENT, response.content
@@ -214,7 +214,7 @@ class TestOfferToShiftDependents:
         done = item(project, "done", date(2026, 1, 11), date(2026, 1, 20), state=states["done"])
         relate(project, a, done)
 
-        response, _ = patch(session_client, workspace, project, a, {"target_date": "2026-01-14"})
+        response, _ = patch(session_client, workspace, project, a, {"finish_date": "2026-01-14"})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert code(response) == "relation_date_conflict"
@@ -238,7 +238,7 @@ class TestOfferToShiftDependents:
         elsewhere = item(other, "elsewhere", date(2026, 1, 11), date(2026, 1, 20))
         relate(project, a, elsewhere)
 
-        response, _ = patch(session_client, workspace, project, a, {"target_date": "2026-01-14"})
+        response, _ = patch(session_client, workspace, project, a, {"finish_date": "2026-01-14"})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert code(response) == "relation_date_conflict"
@@ -255,7 +255,7 @@ class TestOfferToShiftDependents:
         relate(project, a, elsewhere)
 
         response, _ = patch(
-            session_client, workspace, project, a, {"target_date": "2026-01-14", "shift_dependents": True}
+            session_client, workspace, project, a, {"finish_date": "2026-01-14", "shift_dependents": True}
         )
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
@@ -266,7 +266,7 @@ class TestOfferToShiftDependents:
         b = item(project, "b", date(2026, 2, 1), date(2026, 2, 10))
         relate(project, a, b)
 
-        response, activity = patch(session_client, workspace, project, a, {"target_date": "2026-01-14"})
+        response, activity = patch(session_client, workspace, project, a, {"finish_date": "2026-01-14"})
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
         activity.assert_not_called()
@@ -278,7 +278,7 @@ class TestOfferToShiftDependents:
         relate(project, a, b)  # b after a (finish to start)
         relate(project, b, a, relation_type="start_before")  # a's start is at least b's start: a cycle across types
 
-        response, _ = patch(session_client, workspace, project, a, {"target_date": "2026-01-14"})
+        response, _ = patch(session_client, workspace, project, a, {"finish_date": "2026-01-14"})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert code(response) == "relation_date_conflict"
@@ -294,7 +294,7 @@ class TestTimelineDrag:
         a = item(project, "a", date(2026, 1, 1), date(2026, 1, 10))
         b = item(project, "b", date(2026, 1, 11), date(2026, 1, 20))
         relate(project, a, b)
-        update = {"id": str(a.id), "start_date": "2026-01-05", "target_date": "2026-01-14"}
+        update = {"id": str(a.id), "start_date": "2026-01-05", "finish_date": "2026-01-14"}
 
         with mock.patch("plane.app.views.issue.base.issue_activity"), mock.patch(ACTIVITY):
             offered = session_client.post(self.url(workspace, project), {"updates": [update]}, format="json")
@@ -324,10 +324,10 @@ class TestPublicApi:
 
         with mock.patch(ACTIVITY):
             offered = api_key_client.patch(
-                self.url(workspace, project, a), {"target_date": "2026-01-14"}, format="json"
+                self.url(workspace, project, a), {"finish_date": "2026-01-14"}, format="json"
             )
             applied = api_key_client.patch(
-                self.url(workspace, project, a), {"target_date": "2026-01-14", "shift_dependents": True}, format="json"
+                self.url(workspace, project, a), {"finish_date": "2026-01-14", "shift_dependents": True}, format="json"
             )
 
         assert offered.status_code == status.HTTP_400_BAD_REQUEST

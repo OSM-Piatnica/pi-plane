@@ -344,6 +344,7 @@
   "start_date": "Ngày bắt đầu",
   "end_date": "Ngày kết thúc",
   "due_date": "Ngày hết hạn",
+  "finish_date": "Ngày kết thúc",
   "target_date": "Ngày đích",
   "estimate": "Ước tính",
   "change_parent_issue": "Thay đổi mục công việc cha",
@@ -576,6 +577,7 @@
       "last_updated": "Mới cập nhật nhất",
       "start_date": "Ngày bắt đầu",
       "due_date": "Ngày hết hạn",
+      "finish_date": "Ngày kết thúc",
       "asc": "Tăng dần",
       "desc": "Giảm dần",
       "updated_on": "Cập nhật vào"

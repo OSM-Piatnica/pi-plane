@@ -35,6 +35,7 @@ row_mapping = {
     "assignees__id": "Assignee Name",
     "start_date": "Start Date",
     "target_date": "Due Date",
+    "finish_date": "Finish Date",
     "completed_at": "Completed At",
     "created_at": "Created At",
     "issue_count": "Issue Count",

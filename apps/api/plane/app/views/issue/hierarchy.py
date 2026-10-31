@@ -28,6 +28,9 @@ class IssueDateRollupEndpoint(BaseAPIView):
         {"<id>": {"start_date": "2026-01-05", "target_date": "2026-03-31",
                   "children_count": 2, "descendants_count": 7}}
 
+    ``start_date`` is the earliest start and ``target_date`` the latest *finish date* (the end of the schedule, not the
+    due date): the key keeps its name because the timeline reads it as the end of a bar.
+
     Listed work items without children are left out. Archived, deleted and draft work items do not count. A guest who
     only sees their own work items only gets dates from those.
     """
@@ -58,7 +61,7 @@ class IssueDateRollupEndpoint(BaseAPIView):
         if is_restricted_guest:
             queryset = queryset.filter(created_by=request.user)
 
-        tree = IssueTree.for_project(project_id, fields=("start_date", "target_date"), queryset=queryset)
+        tree = IssueTree.for_project(project_id, fields=("start_date", "finish_date"), queryset=queryset)
         rollups = {}
         for issue_id in issue_ids:
             if issue_id not in tree:

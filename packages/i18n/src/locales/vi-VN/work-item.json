@@ -18,6 +18,7 @@
       "assignee": "Thêm người phụ trách",
       "start_date": "Thêm ngày bắt đầu",
       "due_date": "Thêm ngày hết hạn",
+      "finish_date": "Thêm ngày kết thúc",
       "parent": "Thêm mục công việc cha",
       "sub_issue": "Thêm mục công việc con",
       "dependency": "Thêm phụ thuộc",
@@ -285,6 +286,49 @@
       "click_to_downvote": "Nhấp để bỏ phiếu chống",
       "click_to_view_upvotes": "Nhấp để xem phiếu thuận",
       "click_to_view_downvotes": "Nhấp để xem phiếu chống"
+    },
+    "dates": {
+      "help": {
+        "finish": "Thời điểm hiện tại chúng tôi dự kiến công việc sẽ kết thúc.",
+        "due": "Thời điểm công việc phải được hoàn thành."
+      },
+      "notice": {
+        "due_defaulted": "Ngày hết hạn cũng được đặt là {date}",
+        "finish_defaulted": "Ngày kết thúc cũng được đặt là {date}",
+        "finish_not_defaulted": "Đã lưu ngày hết hạn. Ngày kết thúc được để trống vì ngày hết hạn nằm trước ngày bắt đầu."
+      },
+      "only_finish": "Chỉ đặt ngày kết thúc",
+      "only_due": "Chỉ đặt ngày hết hạn",
+      "undo": "Hoàn tác",
+      "finish_before_start": "Ngày kết thúc phải trùng hoặc sau ngày bắt đầu.",
+      "status": {
+        "overdue": "Quá hạn",
+        "forecast_misses_deadline": "Ngày kết thúc sau ngày hết hạn",
+        "forecast_unknown": "Chưa có dự báo kết thúc",
+        "planned_finish_passed": "Ngày kết thúc dự kiến đã qua",
+        "completed_late": "Hoàn thành trễ"
+      },
+      "timeline": {
+        "start": "Bắt đầu",
+        "finish": "Kết thúc",
+        "due": "Hết hạn",
+        "start_only": "Bắt đầu",
+        "finish_only": "Kết thúc",
+        "due_marker": "Ngày hết hạn",
+        "due_marker_hint": "Kéo hoặc dùng phím mũi tên trái và phải để chỉ thay đổi ngày hết hạn.",
+        "variance_on_due": "Kết thúc đúng ngày hết hạn",
+        "variance_late": "{days, plural, one {Kết thúc sau hạn # ngày} other {Kết thúc sau hạn # ngày}}",
+        "variance_early": "{days, plural, one {Kết thúc trước hạn # ngày} other {Kết thúc trước hạn # ngày}}"
+      },
+      "calendar": {
+        "layer_label": "Lớp lịch",
+        "scheduled": "Công việc đã lên lịch",
+        "deadlines": "Hạn chót",
+        "scheduled_help": "Công việc được đặt từ ngày bắt đầu đến ngày kết thúc",
+        "deadlines_help": "Công việc được đặt vào ngày hết hạn",
+        "due_marker": "Hết hạn",
+        "finish_marker": "Kết thúc"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "đã đặt trạng thái là <value/>.",
         "set_with_issue": "đã đặt trạng thái là <value/> cho <issue/>."
       },
+      "finish_date": {
+        "removed": "đã xóa ngày kết thúc.",
+        "removed_with_issue": "đã xóa ngày kết thúc khỏi <issue/>.",
+        "set": "đã đặt ngày kết thúc là <value/>.",
+        "set_with_issue": "đã đặt ngày kết thúc là <value/> cho <issue/>."
+      },
       "target_date": {
         "removed": "đã xóa ngày hết hạn.",
         "removed_with_issue": "đã xóa ngày hết hạn khỏi <issue/>.",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "đã đặt trạng thái là <value/> cho <issue/>",
         "set_without_issue": "đã đặt trạng thái là <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "đã xóa ngày kết thúc khỏi <issue/>",
+        "removed_without_issue": "đã xóa ngày kết thúc",
+        "set_with_issue": "đã đặt ngày kết thúc là <value/> cho <issue/>",
+        "set_without_issue": "đã đặt ngày kết thúc là <value/>"
       },
       "target_date": {
         "removed_with_issue": "đã xóa ngày hết hạn khỏi <issue/>",

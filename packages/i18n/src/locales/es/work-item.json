@@ -18,6 +18,7 @@
       "assignee": "Agregar asignados",
       "start_date": "Agregar fecha de inicio",
       "due_date": "Agregar fecha de vencimiento",
+      "finish_date": "Agregar fecha de finalización",
       "parent": "Agregar elemento de trabajo padre",
       "sub_issue": "Agregar sub-elemento de trabajo",
       "dependency": "Agregar dependencia",
@@ -285,6 +286,49 @@
       "click_to_downvote": "Haz clic para votar en contra",
       "click_to_view_upvotes": "Haz clic para ver los votos a favor",
       "click_to_view_downvotes": "Haz clic para ver los votos en contra"
+    },
+    "dates": {
+      "help": {
+        "finish": "Cuándo se espera actualmente que termine el trabajo.",
+        "due": "Cuándo debe estar terminado el trabajo."
+      },
+      "notice": {
+        "due_defaulted": "Fecha de vencimiento también establecida en {date}",
+        "finish_defaulted": "Fecha de finalización también establecida en {date}",
+        "finish_not_defaulted": "Fecha de vencimiento guardada. La fecha de finalización queda vacía porque la fecha de vencimiento es anterior a la fecha de inicio."
+      },
+      "only_finish": "Establecer solo la finalización",
+      "only_due": "Establecer solo el vencimiento",
+      "undo": "Deshacer",
+      "finish_before_start": "La finalización debe ser igual o posterior al inicio.",
+      "status": {
+        "overdue": "Vencido",
+        "forecast_misses_deadline": "La finalización es posterior a la fecha de vencimiento",
+        "forecast_unknown": "Sin previsión de finalización",
+        "planned_finish_passed": "La finalización planificada ya pasó",
+        "completed_late": "Completado con retraso"
+      },
+      "timeline": {
+        "start": "Inicio",
+        "finish": "Finalización",
+        "due": "Vencimiento",
+        "start_only": "Inicio",
+        "finish_only": "Finalización",
+        "due_marker": "Fecha de vencimiento",
+        "due_marker_hint": "Arrastre o use las teclas de flecha izquierda y derecha para cambiar solo la fecha de vencimiento.",
+        "variance_on_due": "La finalización es en la fecha de vencimiento",
+        "variance_late": "{days, plural, one {La finalización es # día después del vencimiento} other {La finalización es # días después del vencimiento}}",
+        "variance_early": "{days, plural, one {La finalización es # día antes del vencimiento} other {La finalización es # días antes del vencimiento}}"
+      },
+      "calendar": {
+        "layer_label": "Capa del calendario",
+        "scheduled": "Trabajo programado",
+        "deadlines": "Vencimientos",
+        "scheduled_help": "Trabajo colocado desde la fecha de inicio hasta la fecha de finalización",
+        "deadlines_help": "Trabajo colocado en su fecha de vencimiento",
+        "due_marker": "Vencimiento",
+        "finish_marker": "Finalización"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "estableció el estado en <value/>.",
         "set_with_issue": "estableció el estado de <issue/> en <value/>."
       },
+      "finish_date": {
+        "removed": "eliminó la fecha de finalización.",
+        "removed_with_issue": "eliminó la fecha de finalización de <issue/>.",
+        "set": "estableció la fecha de finalización en <value/>.",
+        "set_with_issue": "estableció la fecha de finalización de <issue/> en <value/>."
+      },
       "target_date": {
         "removed": "eliminó la fecha de vencimiento.",
         "removed_with_issue": "eliminó la fecha de vencimiento de <issue/>.",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "estableció el estado de <issue/> en <value/>",
         "set_without_issue": "estableció el estado en <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "eliminó la fecha de finalización de <issue/>",
+        "removed_without_issue": "eliminó la fecha de finalización",
+        "set_with_issue": "estableció la fecha de finalización de <issue/> en <value/>",
+        "set_without_issue": "estableció la fecha de finalización en <value/>"
       },
       "target_date": {
         "removed_with_issue": "eliminó la fecha de vencimiento de <issue/>",

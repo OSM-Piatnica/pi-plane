@@ -44,7 +44,9 @@ export const TimelineDependencyPaths = observer(function TimelineDependencyPaths
     const block = getBlockById(issueId);
     return {
       start_date: issue?.start_date ?? block?.start_date ?? null,
-      target_date: issue?.target_date ?? block?.target_date ?? null,
+      // dependencies follow the schedule (start and finish) only; the due date never takes part. The
+      // block's bar end is the finish date for work items.
+      finish_date: issue?.finish_date ?? block?.target_date ?? null,
     };
   };
 

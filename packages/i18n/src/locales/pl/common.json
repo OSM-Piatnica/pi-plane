@@ -344,6 +344,7 @@
   "start_date": "Data rozpoczęcia",
   "end_date": "Data zakończenia",
   "due_date": "Termin",
+  "finish_date": "Data zakończenia",
   "target_date": "Data docelowa",
   "estimate": "Szacowanie",
   "change_parent_issue": "Zmień element nadrzędny",
@@ -576,6 +577,7 @@
       "last_updated": "Ostatnio zaktualizowane",
       "start_date": "Data rozpoczęcia",
       "due_date": "Termin",
+      "finish_date": "Data zakończenia",
       "asc": "Rosnąco",
       "desc": "Malejąco",
       "updated_on": "Zaktualizowano dnia"

@@ -18,6 +18,7 @@
       "assignee": "担当者を追加",
       "start_date": "開始日を追加",
       "due_date": "期限日を追加",
+      "finish_date": "終了日を追加",
       "parent": "親作業項目を追加",
       "sub_issue": "サブ作業項目を追加",
       "dependency": "依存関係を追加",
@@ -285,6 +286,49 @@
       "click_to_downvote": "クリックして反対票を投じる",
       "click_to_view_upvotes": "クリックして賛成票を表示",
       "click_to_view_downvotes": "クリックして反対票を表示"
+    },
+    "dates": {
+      "help": {
+        "finish": "現時点で作業が終了すると見込まれる日です。",
+        "due": "作業を完了する必要がある日です。"
+      },
+      "notice": {
+        "due_defaulted": "期限も{date}に設定されました",
+        "finish_defaulted": "終了日も{date}に設定されました",
+        "finish_not_defaulted": "期限を保存しました。期限が開始日より前のため、終了日は空のままです。"
+      },
+      "only_finish": "終了のみを設定",
+      "only_due": "期限のみを設定",
+      "undo": "元に戻す",
+      "finish_before_start": "終了は開始と同日またはそれ以降にする必要があります。",
+      "status": {
+        "overdue": "期限超過",
+        "forecast_misses_deadline": "終了が期限を過ぎています",
+        "forecast_unknown": "終了の見込みがありません",
+        "planned_finish_passed": "計画上の終了日を過ぎています",
+        "completed_late": "遅れて完了"
+      },
+      "timeline": {
+        "start": "開始",
+        "finish": "終了",
+        "due": "期限",
+        "start_only": "開始",
+        "finish_only": "終了",
+        "due_marker": "期限",
+        "due_marker_hint": "ドラッグするか、左右の矢印キーを使って、期限のみを変更します。",
+        "variance_on_due": "終了は期限と同日です",
+        "variance_late": "{days, plural, one {終了は期限の#日後です} other {終了は期限の#日後です}}",
+        "variance_early": "{days, plural, one {終了は期限の#日前です} other {終了は期限の#日前です}}"
+      },
+      "calendar": {
+        "layer_label": "カレンダーレイヤー",
+        "scheduled": "予定された作業",
+        "deadlines": "期限",
+        "scheduled_help": "開始日から終了日までに配置された作業",
+        "deadlines_help": "期限日に配置された作業",
+        "due_marker": "期限",
+        "finish_marker": "終了"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "状態を<value/>に設定しました。",
         "set_with_issue": "<issue/>の状態を<value/>に設定しました。"
       },
+      "finish_date": {
+        "removed": "終了日を削除しました。",
+        "removed_with_issue": "<issue/>から終了日を削除しました。",
+        "set": "終了日を<value/>に設定しました。",
+        "set_with_issue": "<issue/>の終了日を<value/>に設定しました。"
+      },
       "target_date": {
         "removed": "期限を削除しました。",
         "removed_with_issue": "<issue/>から期限を削除しました。",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "<issue/>の状態を<value/>に設定しました",
         "set_without_issue": "状態を<value/>に設定しました"
+      },
+      "finish_date": {
+        "removed_with_issue": "<issue/>から終了日を削除しました",
+        "removed_without_issue": "終了日を削除しました",
+        "set_with_issue": "<issue/>の終了日を<value/>に設定しました",
+        "set_without_issue": "終了日を<value/>に設定しました"
       },
       "target_date": {
         "removed_with_issue": "<issue/>から期限を削除しました",

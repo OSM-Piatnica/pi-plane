@@ -344,6 +344,7 @@
   "start_date": "Startdatum",
   "end_date": "Einddatum",
   "due_date": "Vervaldatum",
+  "finish_date": "Afrondingsdatum",
   "target_date": "Streefdatum",
   "estimate": "Schatting",
   "change_parent_issue": "Bovenliggend werkitem wijzigen",
@@ -576,6 +577,7 @@
       "last_updated": "Laatst bijgewerkt",
       "start_date": "Startdatum",
       "due_date": "Vervaldatum",
+      "finish_date": "Afrondingsdatum",
       "asc": "Oplopend",
       "desc": "Aflopend",
       "updated_on": "Bijgewerkt op"

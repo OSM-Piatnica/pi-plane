@@ -18,6 +18,7 @@
       "assignee": "Aggiungi assegnatari",
       "start_date": "Aggiungi data di inizio",
       "due_date": "Aggiungi scadenza",
+      "finish_date": "Aggiungi data di fine",
       "parent": "Aggiungi elemento di lavoro principale",
       "sub_issue": "Aggiungi sotto-elemento di lavoro",
       "dependency": "Aggiungi dipendenza",
@@ -285,6 +286,49 @@
       "click_to_downvote": "Clicca per votare contro",
       "click_to_view_upvotes": "Clicca per vedere i voti a favore",
       "click_to_view_downvotes": "Clicca per vedere i voti contro"
+    },
+    "dates": {
+      "help": {
+        "finish": "Quando prevediamo attualmente che il lavoro sia terminato.",
+        "due": "Quando il lavoro deve essere completato."
+      },
+      "notice": {
+        "due_defaulted": "Scadenza impostata anche su {date}",
+        "finish_defaulted": "Data di fine impostata anche su {date}",
+        "finish_not_defaulted": "Scadenza salvata. Data di fine lasciata vuota perché la scadenza precede la data di inizio."
+      },
+      "only_finish": "Imposta solo la fine",
+      "only_due": "Imposta solo la scadenza",
+      "undo": "Annulla",
+      "finish_before_start": "La fine deve essere uguale o successiva all’inizio.",
+      "status": {
+        "overdue": "Scaduto",
+        "forecast_misses_deadline": "La fine è successiva alla scadenza",
+        "forecast_unknown": "Nessuna previsione di fine",
+        "planned_finish_passed": "La fine pianificata è trascorsa",
+        "completed_late": "Completato in ritardo"
+      },
+      "timeline": {
+        "start": "Inizio",
+        "finish": "Fine",
+        "due": "Scadenza",
+        "start_only": "Inizio",
+        "finish_only": "Fine",
+        "due_marker": "Scadenza",
+        "due_marker_hint": "Trascina o usa i tasti freccia sinistra e destra per modificare solo la scadenza.",
+        "variance_on_due": "La fine coincide con la scadenza",
+        "variance_late": "{days, plural, one {La fine è # giorno dopo la scadenza} many {La fine è # giorni dopo la scadenza} other {La fine è # giorni dopo la scadenza}}",
+        "variance_early": "{days, plural, one {La fine è # giorno prima della scadenza} many {La fine è # giorni prima della scadenza} other {La fine è # giorni prima della scadenza}}"
+      },
+      "calendar": {
+        "layer_label": "Livello del calendario",
+        "scheduled": "Lavoro pianificato",
+        "deadlines": "Scadenze",
+        "scheduled_help": "Lavoro collocato dalla data di inizio alla data di fine",
+        "deadlines_help": "Lavoro collocato alla sua scadenza",
+        "due_marker": "Scadenza",
+        "finish_marker": "Fine"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "ha impostato lo stato su <value/>.",
         "set_with_issue": "ha impostato lo stato di <issue/> su <value/>."
       },
+      "finish_date": {
+        "removed": "ha rimosso la data di fine.",
+        "removed_with_issue": "ha rimosso la data di fine da <issue/>.",
+        "set": "ha impostato la data di fine su <value/>.",
+        "set_with_issue": "ha impostato la data di fine di <issue/> su <value/>."
+      },
       "target_date": {
         "removed": "ha rimosso la scadenza.",
         "removed_with_issue": "ha rimosso la scadenza da <issue/>.",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "ha impostato lo stato di <issue/> su <value/>",
         "set_without_issue": "ha impostato lo stato su <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "ha rimosso la data di fine da <issue/>",
+        "removed_without_issue": "ha rimosso la data di fine",
+        "set_with_issue": "ha impostato la data di fine di <issue/> su <value/>",
+        "set_without_issue": "ha impostato la data di fine su <value/>"
       },
       "target_date": {
         "removed_with_issue": "ha rimosso la scadenza da <issue/>",

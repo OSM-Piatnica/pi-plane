@@ -33,6 +33,7 @@ VALID_ANALYTICS_FIELDS = [
     "priority",
     "start_date",
     "target_date",
+    "finish_date",
     "created_at",
     "completed_at",
 ]
@@ -54,7 +55,7 @@ def extract_axis(queryset, x_axis):
     if x_axis not in VALID_ANALYTICS_FIELDS:
         raise ValueError(f"Invalid x_axis value: {x_axis}")
     # Format the dimension when the axis is in date
-    if x_axis in ["created_at", "start_date", "target_date", "completed_at"]:
+    if x_axis in ["created_at", "start_date", "target_date", "finish_date", "completed_at"]:
         queryset = annotate_with_monthly_dimension(queryset, x_axis, "dimension")
         return queryset, "dimension"
     else:
@@ -86,7 +87,7 @@ def build_graph_plot(queryset, x_axis, y_axis, segment=None):
         queryset = queryset.exclude(dimension__isnull=True)
 
     #
-    if segment in ["created_at", "start_date", "target_date", "completed_at"]:
+    if segment in ["created_at", "start_date", "target_date", "finish_date", "completed_at"]:
         queryset = annotate_with_monthly_dimension(queryset, segment, "segmented")
         segment = "segmented"
 

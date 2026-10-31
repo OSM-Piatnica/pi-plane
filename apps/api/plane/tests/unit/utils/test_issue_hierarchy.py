@@ -9,12 +9,13 @@ import pytest
 from plane.utils.issue_hierarchy import IssueTree, date_rollup
 
 
-def row(id, parent_id=None, start=None, end=None):
+def row(id, parent_id=None, start=None, end=None, due=None):
     return {
         "id": id,
         "parent_id": parent_id,
         "start_date": date.fromisoformat(start) if start else None,
-        "target_date": date.fromisoformat(end) if end else None,
+        "finish_date": date.fromisoformat(end) if end else None,
+        "target_date": date.fromisoformat(due) if due else None,
     }
 
 
@@ -62,6 +63,17 @@ class TestDateRollup:
         tree = IssueTree([row("a"), row("b", "a", start="2026-03-04"), row("c", "a", end="2026-03-09")])
         rollup = date_rollup(tree, "a")
         assert (rollup["start_date"], rollup["target_date"]) == (date(2026, 3, 4), date(2026, 3, 9))
+
+    def test_the_end_is_the_finish_date_and_the_due_date_is_ignored(self):
+        tree = IssueTree(
+            [
+                row("a"),
+                row("b", "a", start="2026-03-01", end="2026-03-10", due="2026-06-30"),
+                row("c", "a", due="2026-07-01"),
+            ]
+        )
+        rollup = date_rollup(tree, "a")
+        assert (rollup["start_date"], rollup["target_date"]) == (date(2026, 3, 1), date(2026, 3, 10))
 
     def test_no_dates_below_gives_counts_only(self):
         tree = IssueTree([row("a"), row("b", "a")])

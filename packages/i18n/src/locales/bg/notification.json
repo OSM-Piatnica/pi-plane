@@ -61,6 +61,8 @@
       "assignee_removed": "премахна изпълнител",
       "start_date_set": "зададе начална дата",
       "start_date_removed": "премахна началната дата",
+      "finish_date_set": "зададе дата на приключване",
+      "finish_date_removed": "премахна датата на приключване",
       "due_date_set": "зададе крайна дата",
       "due_date_removed": "премахна крайната дата",
       "duration_set": "зададе продължителност",

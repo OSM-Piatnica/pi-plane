@@ -44,8 +44,8 @@ describe("issue relation timeline constraints", () => {
   });
 
   it("dispatches timeline relation checks", () => {
-    const issue = { start_date: "2026-01-01", target_date: "2026-01-10" };
-    const related = { start_date: "2026-01-02", target_date: "2026-01-12" };
+    const issue = { start_date: "2026-01-01", finish_date: "2026-01-10" };
+    const related = { start_date: "2026-01-02", finish_date: "2026-01-12" };
 
     expect(isTimelineRelationSatisfied("start_before", issue, related)).toBe(true);
     expect(isTimelineRelationSatisfied("start_after", issue, related)).toBe(false);
@@ -55,7 +55,7 @@ describe("issue relation timeline constraints", () => {
 });
 
 describe("lag and start-to-finish", () => {
-  const blocker = { start_date: "2026-01-01", target_date: "2026-01-10" };
+  const blocker = { start_date: "2026-01-01", finish_date: "2026-01-10" };
 
   it("finish-to-start asks for the day after, plus the lag", () => {
     expect(isTimelineRelationSatisfied("blocked_by", { start_date: "2026-01-11" }, blocker)).toBe(true);
@@ -83,21 +83,21 @@ describe("lag and start-to-finish", () => {
 
   it("start-to-finish: the related item cannot finish before this one starts", () => {
     expect(
-      isTimelineRelationSatisfied("start_before_finish", { start_date: "2026-01-10" }, { target_date: "2026-01-10" })
+      isTimelineRelationSatisfied("start_before_finish", { start_date: "2026-01-10" }, { finish_date: "2026-01-10" })
     ).toBe(true);
     expect(
-      isTimelineRelationSatisfied("start_before_finish", { start_date: "2026-01-10" }, { target_date: "2026-01-09" })
+      isTimelineRelationSatisfied("start_before_finish", { start_date: "2026-01-10" }, { finish_date: "2026-01-09" })
     ).toBe(false);
     expect(
-      isTimelineRelationSatisfied("finish_after_start", { target_date: "2026-01-09" }, { start_date: "2026-01-10" })
+      isTimelineRelationSatisfied("finish_after_start", { finish_date: "2026-01-09" }, { start_date: "2026-01-10" })
     ).toBe(false);
     expect(
-      isTimelineRelationSatisfied("start_before_finish", { start_date: "2026-01-10" }, { target_date: "2026-01-11" }, 2)
+      isTimelineRelationSatisfied("start_before_finish", { start_date: "2026-01-10" }, { finish_date: "2026-01-11" }, 2)
     ).toBe(false);
   });
 
   it("a missing date lifts every constraint", () => {
-    expect(isTimelineRelationSatisfied("start_before_finish", {}, { target_date: "2026-01-01" }, 5)).toBe(true);
+    expect(isTimelineRelationSatisfied("start_before_finish", {}, { finish_date: "2026-01-01" }, 5)).toBe(true);
     expect(isTimelineRelationSatisfied("blocked_by", { start_date: "2026-01-01" }, {}, 5)).toBe(true);
   });
 });

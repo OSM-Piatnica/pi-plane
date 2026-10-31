@@ -7,34 +7,25 @@
  */
 
 import { observer } from "mobx-react";
-import { Network, Timer } from "lucide-react";
+import { Network } from "lucide-react";
 // i18n
 import { useTranslation } from "@plane/i18n";
 // ui
 import {
   CyclesOutline,
-  DueDateOutline,
   EstimateOutline,
   LabelsOutline,
   MembersOutline,
   ModuleOutline,
   ParentOutline,
   PriorityOutline,
-  StartDateOutline,
   StateOutline,
   UserOutline,
 } from "@makeplane/propel/icons";
-import { DateSelect } from "@/components/dropdowns/date-select";
-import {
-  cn,
-  getDate,
-  renderFormattedPayloadDate,
-  shouldHighlightIssueDueDate,
-  reconcileWorkItemDuration,
-} from "@plane/utils";
 // components
 import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select";
 import { ButtonAvatars } from "@/components/dropdowns/member/avatar";
+import { WorkItemPlanningDates } from "@/components/issues/work-item-planning-dates";
 import { GroupAssigneeSelect } from "@/components/workspace/user-groups/group-assignee-select";
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
 import { PrioritySelect } from "@/components/dropdowns/priority/priority-select";
@@ -45,12 +36,9 @@ import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useMember } from "@/hooks/store/use-member";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
-import { useProjectWeekendDays } from "@/hooks/use-project-weekend-days";
-import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 // components
 import { WorkItemAdditionalSidebarProperties } from "@/components/issues/issue-details/additional-properties";
 import { IssueParentSelectRoot } from "@/components/issues/issue-details/parent-select-root";
-import { DateAlert } from "@/components/issues/issue-details/sidebar/date-alert";
 import { TransferHopInfo } from "@/components/issues/issue-details/sidebar/transfer-hop-info";
 import { IssueWorklogProperty } from "@/components/issues/worklog/property";
 import { SidebarPropertyListItem } from "@/components/common/layout/sidebar/property-list-item";
@@ -58,8 +46,6 @@ import { IssueCycleSelect } from "./cycle-select";
 import { IssueLabel } from "./label";
 import { IssueModuleSelect } from "./module-select";
 import type { TIssueOperations } from "./root";
-import type { TIssue } from "@plane/types";
-import { DurationDropdown } from "@/components/dropdowns/duration";
 
 type Props = {
   workspaceSlug: string;
@@ -80,10 +66,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
   } = useIssueDetail();
   const { getUserDetails } = useMember();
   const { getStateById } = useProjectState();
-  const startOfTheWeek = useStartOfTheWeek();
   const issue = getIssueById(issueId);
-  // called before the early return below: hooks run in the same order on every render
-  const weekendDays = useProjectWeekendDays(issue?.project_id);
   if (!issue) return <></>;
 
   const createdByDetails = getUserDetails(issue.created_by);
@@ -91,9 +74,6 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
   // derived values
   const projectDetails = getProjectById(issue.project_id);
   const stateDetails = getStateById(issue.state_id);
-
-  const updateDurationFields = (change: Partial<Pick<TIssue, "start_date" | "target_date" | "duration">>) =>
-    issueOperations.update(workspaceSlug, projectId, issueId, reconcileWorkItemDuration(issue, change, weekendDays));
 
   return (
     <>
@@ -162,57 +142,13 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
               </SidebarPropertyListItem>
             )}
 
-            <SidebarPropertyListItem icon={StartDateOutline} label={t("common.order_by.start_date")}>
-              <DateSelect
-                testId="work-item-start-date-select"
-                placeholder={t("issue.add.start_date")}
-                value={getDate(issue.start_date) ?? null}
-                onChange={(val) =>
-                  updateDurationFields({ start_date: val ? (renderFormattedPayloadDate(val) ?? null) : null })
-                }
-                disabled={!isEditable}
-                clearable
-                weekStartsOn={startOfTheWeek}
-                variant="select-ghost-md"
-                showTooltip
-                tooltipHeading={t("common.order_by.start_date")}
-              />
-            </SidebarPropertyListItem>
-
-            <SidebarPropertyListItem icon={DueDateOutline} label={t("common.order_by.due_date")}>
-              <div className="flex w-full items-center gap-2">
-                <DateSelect
-                  testId="work-item-due-date-select"
-                  placeholder={t("issue.add.due_date")}
-                  value={getDate(issue.target_date) ?? null}
-                  onChange={(val) =>
-                    updateDurationFields({ target_date: val ? (renderFormattedPayloadDate(val) ?? null) : null })
-                  }
-                  disabled={!isEditable}
-                  clearable
-                  className={cn({
-                    "text-danger-primary": shouldHighlightIssueDueDate(issue.target_date, stateDetails?.group),
-                  })}
-                  weekStartsOn={startOfTheWeek}
-                  variant="select-ghost-md"
-                  showTooltip
-                  tooltipHeading={t("common.order_by.due_date")}
-                />
-                {issue.target_date && <DateAlert date={issue.target_date} workItem={issue} projectId={projectId} />}
-              </div>
-            </SidebarPropertyListItem>
-
-            <SidebarPropertyListItem icon={Timer} label={t("duration")}>
-              <DurationDropdown
-                placeholder={t("issue.add.duration")}
-                value={issue.duration}
-                onChange={(val) => updateDurationFields({ duration: val })}
-                disabled={!isEditable}
-                variant="select-ghost-md"
-                className="group w-full grow"
-                hideIcon
-              />
-            </SidebarPropertyListItem>
+            <WorkItemPlanningDates
+              issue={issue}
+              projectId={projectId}
+              stateGroup={stateDetails?.group}
+              disabled={!isEditable}
+              onUpdate={(data) => issueOperations.update(workspaceSlug, projectId, issueId, data)}
+            />
 
             {projectId && areEstimateEnabledByProjectId(projectId) && (
               <SidebarPropertyListItem icon={EstimateOutline} label={t("common.estimate")}>

@@ -61,6 +61,8 @@
       "assignee_removed": "移除了负责人",
       "start_date_set": "将开始日期设置为 <value/>",
       "start_date_removed": "移除了开始日期",
+      "finish_date_set": "设置了结束日期",
+      "finish_date_removed": "移除了结束日期",
       "due_date_set": "将截止日期设置为 <value/>",
       "due_date_removed": "移除了截止日期",
       "duration_set": "将持续时间设置为 <value/>",

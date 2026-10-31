@@ -18,6 +18,7 @@
       "assignee": "담당자 추가",
       "start_date": "시작 날짜 추가",
       "due_date": "마감일 추가",
+      "finish_date": "완료일 추가",
       "parent": "상위 작업 항목 추가",
       "sub_issue": "하위 작업 항목 추가",
       "dependency": "종속성 추가",
@@ -285,6 +286,49 @@
       "click_to_downvote": "클릭하여 비추천",
       "click_to_view_upvotes": "클릭하여 추천 목록 보기",
       "click_to_view_downvotes": "클릭하여 비추천 목록 보기"
+    },
+    "dates": {
+      "help": {
+        "finish": "현재 작업이 끝날 것으로 예상하는 시점입니다.",
+        "due": "작업이 완료되어야 하는 시점입니다."
+      },
+      "notice": {
+        "due_defaulted": "마감일도 {date}(으)로 설정되었습니다",
+        "finish_defaulted": "완료일도 {date}(으)로 설정되었습니다",
+        "finish_not_defaulted": "마감일이 저장되었습니다. 마감일이 시작 날짜보다 이전이므로 완료일은 비워 두었습니다."
+      },
+      "only_finish": "완료만 설정",
+      "only_due": "마감만 설정",
+      "undo": "실행 취소",
+      "finish_before_start": "완료는 시작과 같거나 그 이후여야 합니다.",
+      "status": {
+        "overdue": "기한 초과",
+        "forecast_misses_deadline": "완료가 마감일 이후입니다",
+        "forecast_unknown": "완료 예측 없음",
+        "planned_finish_passed": "계획된 완료 시점이 지났습니다",
+        "completed_late": "기한 초과 후 완료됨"
+      },
+      "timeline": {
+        "start": "시작",
+        "finish": "완료",
+        "due": "마감",
+        "start_only": "시작",
+        "finish_only": "완료",
+        "due_marker": "마감일",
+        "due_marker_hint": "끌어서 이동하거나 왼쪽·오른쪽 화살표 키를 사용하여 마감일만 변경합니다.",
+        "variance_on_due": "완료가 마감일입니다",
+        "variance_late": "{days, plural, one {완료가 마감일보다 #일 늦음} other {완료가 마감일보다 #일 늦음}}",
+        "variance_early": "{days, plural, one {완료가 마감일보다 #일 빠름} other {완료가 마감일보다 #일 빠름}}"
+      },
+      "calendar": {
+        "layer_label": "캘린더 레이어",
+        "scheduled": "예정된 작업",
+        "deadlines": "마감",
+        "scheduled_help": "시작 날짜부터 완료일까지 배치된 작업",
+        "deadlines_help": "마감일에 배치된 작업",
+        "due_marker": "마감",
+        "finish_marker": "완료"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "상태를 <value/>(으)로 설정했습니다.",
         "set_with_issue": "<issue/>의 상태를 <value/>(으)로 설정했습니다."
       },
+      "finish_date": {
+        "removed": "완료일을 제거했습니다.",
+        "removed_with_issue": "<issue/>에서 완료일을 제거했습니다.",
+        "set": "완료일을 <value/>(으)로 설정했습니다.",
+        "set_with_issue": "<issue/>의 완료일을 <value/>(으)로 설정했습니다."
+      },
       "target_date": {
         "removed": "마감일을 제거했습니다.",
         "removed_with_issue": "<issue/>에서 마감일을 제거했습니다.",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "<issue/>의 상태를 <value/>(으)로 설정했습니다",
         "set_without_issue": "상태를 <value/>(으)로 설정했습니다"
+      },
+      "finish_date": {
+        "removed_with_issue": "<issue/>에서 완료일을 제거했습니다",
+        "removed_without_issue": "완료일을 제거했습니다",
+        "set_with_issue": "<issue/>의 완료일을 <value/>(으)로 설정했습니다",
+        "set_without_issue": "완료일을 <value/>(으)로 설정했습니다"
       },
       "target_date": {
         "removed_with_issue": "<issue/>에서 마감일을 제거했습니다",

@@ -92,7 +92,7 @@ def source(db, workspace, create_user):
         state=backlog,
         created_by=create_user,
         start_date="2026-01-05",
-        target_date="2026-01-09",
+        finish_date="2026-01-09",
         duration=5,
     )
     child = Issue.objects.create(
@@ -419,7 +419,8 @@ class TestWorkItemProperties:
         copied = Issue.objects.get(project_id=copy_id, name="Parent")
         assert not IssueLabel.objects.filter(project_id=copy_id).exists()
         assert not IssueLink.objects.filter(project_id=copy_id).exists()
-        assert copied.start_date is None and copied.target_date is None and copied.duration is None
+        assert copied.start_date is None and copied.finish_date is None and copied.target_date is None
+        assert copied.duration is None
         assert Issue.objects.get(project_id=copy_id, name="Child").parent_id == copied.id
         for note in ("labels", "links"):
             assert f"work_items:{note}-not-copied" in job.skipped

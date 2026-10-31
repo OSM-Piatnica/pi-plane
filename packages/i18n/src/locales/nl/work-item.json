@@ -18,6 +18,7 @@
       "assignee": "Toegewezenen toevoegen",
       "start_date": "Startdatum toevoegen",
       "due_date": "Einddatum toevoegen",
+      "finish_date": "Afrondingsdatum toevoegen",
       "parent": "Bovenliggend werkitem toevoegen",
       "sub_issue": "Subwerkitem toevoegen",
       "dependency": "Afhankelijkheid toevoegen",
@@ -285,6 +286,49 @@
       "click_to_downvote": "Klik om omlaag te stemmen",
       "click_to_view_upvotes": "Klik om positieve stemmen te bekijken",
       "click_to_view_downvotes": "Klik om negatieve stemmen te bekijken"
+    },
+    "dates": {
+      "help": {
+        "finish": "Wanneer we momenteel verwachten dat het werk klaar is.",
+        "due": "Wanneer het werk afgerond moet zijn."
+      },
+      "notice": {
+        "due_defaulted": "Vervaldatum ook ingesteld op {date}",
+        "finish_defaulted": "Afrondingsdatum ook ingesteld op {date}",
+        "finish_not_defaulted": "Vervaldatum opgeslagen. Afrondingsdatum blijft leeg omdat de vervaldatum vóór de startdatum ligt."
+      },
+      "only_finish": "Alleen afronding instellen",
+      "only_due": "Alleen vervaldatum instellen",
+      "undo": "Ongedaan maken",
+      "finish_before_start": "De afrondingsdatum moet op of na de startdatum liggen.",
+      "status": {
+        "overdue": "Te laat",
+        "forecast_misses_deadline": "Afronding is na de vervaldatum",
+        "forecast_unknown": "Geen afrondingsprognose",
+        "planned_finish_passed": "De geplande afronding is verstreken",
+        "completed_late": "Te laat afgerond"
+      },
+      "timeline": {
+        "start": "Start",
+        "finish": "Afronding",
+        "due": "Vervaldatum",
+        "start_only": "Start",
+        "finish_only": "Afronding",
+        "due_marker": "Vervaldatum",
+        "due_marker_hint": "Sleep of gebruik de pijltjestoetsen naar links en rechts om alleen de vervaldatum te wijzigen.",
+        "variance_on_due": "Afronding op de vervaldatum",
+        "variance_late": "{days, plural, one {Afronding # dag na de vervaldatum} other {Afronding # dagen na de vervaldatum}}",
+        "variance_early": "{days, plural, one {Afronding # dag voor de vervaldatum} other {Afronding # dagen voor de vervaldatum}}"
+      },
+      "calendar": {
+        "layer_label": "Kalenderlaag",
+        "scheduled": "Geplande werkzaamheden",
+        "deadlines": "Deadlines",
+        "scheduled_help": "Werk geplaatst van startdatum tot afrondingsdatum",
+        "deadlines_help": "Werk geplaatst op de vervaldatum",
+        "due_marker": "Vervaldatum",
+        "finish_marker": "Afronding"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "stelde de status in op <value/>.",
         "set_with_issue": "stelde de status in op <value/> voor <issue/>."
       },
+      "finish_date": {
+        "removed": "verwijderde de afrondingsdatum.",
+        "removed_with_issue": "verwijderde de afrondingsdatum van <issue/>.",
+        "set": "stelde de afrondingsdatum in op <value/>.",
+        "set_with_issue": "stelde de afrondingsdatum in op <value/> voor <issue/>."
+      },
       "target_date": {
         "removed": "verwijderde de vervaldatum.",
         "removed_with_issue": "verwijderde de vervaldatum van <issue/>.",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "stelde de status in op <value/> voor <issue/>",
         "set_without_issue": "stelde de status in op <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "verwijderde de afrondingsdatum van <issue/>",
+        "removed_without_issue": "verwijderde de afrondingsdatum",
+        "set_with_issue": "stelde de afrondingsdatum in op <value/> voor <issue/>",
+        "set_without_issue": "stelde de afrondingsdatum in op <value/>"
       },
       "target_date": {
         "removed_with_issue": "verwijderde de vervaldatum van <issue/>",

@@ -113,7 +113,8 @@ export const buildGanttDependencyEdges = (
 };
 
 export const wouldUpdatesViolateDependencies = (
-  updates: { id: string; start_date?: string; target_date?: string }[],
+  // Work item schedule dates only. The due date never takes part in a dependency.
+  updates: { id: string; start_date?: string; finish_date?: string }[],
   relationMap: TRelationMap,
   getDates: (issueId: string) => TIssueDates | undefined,
   getLag: TGetRelationLag = NO_LAG,
@@ -124,7 +125,7 @@ export const wouldUpdatesViolateDependencies = (
     const current = getDates(update.id) ?? {};
     proposed.set(update.id, {
       start_date: update.start_date ?? current.start_date,
-      target_date: update.target_date ?? current.target_date,
+      finish_date: update.finish_date ?? current.finish_date,
     });
   }
 

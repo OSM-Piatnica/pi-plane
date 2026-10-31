@@ -163,6 +163,7 @@
             "subscribers": "Subskrybenci",
             "created_by_name": "Utworzył(a)",
             "start_date": "Data rozpoczęcia",
+            "finish_date": "Data zakończenia",
             "target_date": "Termin",
             "duration": "Czas trwania",
             "completed_at": "Ukończono",

@@ -61,6 +61,8 @@
       "assignee_removed": "a eliminat un responsabil",
       "start_date_set": "a setat data de început la",
       "start_date_removed": "a eliminat data de început",
+      "finish_date_set": "a setat data de finalizare la",
+      "finish_date_removed": "a eliminat data de finalizare",
       "due_date_set": "a setat termenul limită la",
       "due_date_removed": "a eliminat termenul limită",
       "duration_set": "a setat durata la",

@@ -18,6 +18,7 @@
       "assignee": "添加负责人",
       "start_date": "添加开始日期",
       "due_date": "添加截止日期",
+      "finish_date": "添加结束日期",
       "parent": "添加父工作项",
       "sub_issue": "添加子工作项",
       "dependency": "添加依赖",
@@ -285,6 +286,49 @@
       "click_to_downvote": "点击反对",
       "click_to_view_upvotes": "点击查看赞成票",
       "click_to_view_downvotes": "点击查看反对票"
+    },
+    "dates": {
+      "help": {
+        "finish": "我们目前预计工作结束的时间。",
+        "due": "工作必须完成的时间。"
+      },
+      "notice": {
+        "due_defaulted": "截止日期也已设置为 {date}",
+        "finish_defaulted": "结束日期也已设置为 {date}",
+        "finish_not_defaulted": "截止日期已保存。由于截止日期早于开始日期，结束日期保持为空。"
+      },
+      "only_finish": "仅设置结束",
+      "only_due": "仅设置截止",
+      "undo": "撤销",
+      "finish_before_start": "结束时间不得早于开始时间。",
+      "status": {
+        "overdue": "已逾期",
+        "forecast_misses_deadline": "结束时间晚于截止日期",
+        "forecast_unknown": "暂无结束预测",
+        "planned_finish_passed": "计划结束时间已过",
+        "completed_late": "逾期完成"
+      },
+      "timeline": {
+        "start": "开始",
+        "finish": "结束",
+        "due": "截止",
+        "start_only": "开始",
+        "finish_only": "结束",
+        "due_marker": "截止日期",
+        "due_marker_hint": "拖动或使用左右方向键，仅更改截止日期。",
+        "variance_on_due": "结束时间即为截止日期",
+        "variance_late": "{days, plural, one {结束时间比截止日期晚 # 天} other {结束时间比截止日期晚 # 天}}",
+        "variance_early": "{days, plural, one {结束时间比截止日期早 # 天} other {结束时间比截止日期早 # 天}}"
+      },
+      "calendar": {
+        "layer_label": "日历图层",
+        "scheduled": "已排期的工作",
+        "deadlines": "截止日期",
+        "scheduled_help": "工作安排在开始日期至结束日期之间",
+        "deadlines_help": "工作安排在其截止日期当天",
+        "due_marker": "截止",
+        "finish_marker": "结束"
+      }
     }
   },
   "sub_work_item": {
@@ -707,6 +751,12 @@
         "set": "将状态设置为 <value/>。",
         "set_with_issue": "将 <issue/> 的状态设置为 <value/>。"
       },
+      "finish_date": {
+        "removed": "移除了结束日期。",
+        "removed_with_issue": "移除了 <issue/> 的结束日期。",
+        "set": "将结束日期设置为 <value/>。",
+        "set_with_issue": "将 <issue/> 的结束日期设置为 <value/>。"
+      },
       "target_date": {
         "removed": "移除了截止日期。",
         "removed_with_issue": "移除了 <issue/> 的截止日期。",
@@ -848,6 +898,12 @@
       "state": {
         "set_with_issue": "将 <issue/> 的状态设置为 <value/>",
         "set_without_issue": "将状态设置为 <value/>"
+      },
+      "finish_date": {
+        "removed_with_issue": "移除了 <issue/> 的结束日期",
+        "removed_without_issue": "移除了结束日期",
+        "set_with_issue": "将 <issue/> 的结束日期设置为 <value/>",
+        "set_without_issue": "将结束日期设置为 <value/>"
       },
       "target_date": {
         "removed_with_issue": "移除了 <issue/> 的截止日期",

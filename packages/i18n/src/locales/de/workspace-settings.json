@@ -163,6 +163,7 @@
             "subscribers": "Abonnenten",
             "created_by_name": "Erstellt von",
             "start_date": "Startdatum",
+            "finish_date": "Fertigstellungsdatum",
             "target_date": "Fälligkeitsdatum",
             "duration": "Dauer",
             "completed_at": "Abgeschlossen am",

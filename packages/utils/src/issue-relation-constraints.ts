@@ -37,7 +37,7 @@ export const MAX_RELATION_LAG_DAYS = 3650;
 
 export type TWorkItemTimelineDates = {
   start_date?: string | Date | null;
-  target_date?: string | Date | null;
+  finish_date?: string | Date | null;
 };
 
 const toDate = (value: string | Date | null | undefined): Date | null => {
@@ -167,21 +167,21 @@ export const isTimelineRelationSatisfied = (
   const weekendDays = getDependentSide(relationType) === "issue" ? issueWeekendDays : relatedWeekendDays;
   switch (relationType) {
     case "blocked_by":
-      return isBlockedBySatisfied(issueDates.start_date, relatedDates.target_date, lag, weekendDays);
+      return isBlockedBySatisfied(issueDates.start_date, relatedDates.finish_date, lag, weekendDays);
     case "blocking":
-      return isBlockedBySatisfied(relatedDates.start_date, issueDates.target_date, lag, weekendDays);
+      return isBlockedBySatisfied(relatedDates.start_date, issueDates.finish_date, lag, weekendDays);
     case "start_before":
       return isStartBeforeSatisfied(issueDates.start_date, relatedDates.start_date, lag, weekendDays);
     case "start_after":
       return isStartAfterSatisfied(issueDates.start_date, relatedDates.start_date, lag, weekendDays);
     case "finish_before":
-      return isFinishBeforeSatisfied(issueDates.target_date, relatedDates.target_date, lag, weekendDays);
+      return isFinishBeforeSatisfied(issueDates.finish_date, relatedDates.finish_date, lag, weekendDays);
     case "finish_after":
-      return isFinishAfterSatisfied(issueDates.target_date, relatedDates.target_date, lag, weekendDays);
+      return isFinishAfterSatisfied(issueDates.finish_date, relatedDates.finish_date, lag, weekendDays);
     case "start_before_finish":
-      return isStartBeforeFinishSatisfied(issueDates.start_date, relatedDates.target_date, lag, weekendDays);
+      return isStartBeforeFinishSatisfied(issueDates.start_date, relatedDates.finish_date, lag, weekendDays);
     case "finish_after_start":
-      return isFinishAfterStartSatisfied(issueDates.target_date, relatedDates.start_date, lag, weekendDays);
+      return isFinishAfterStartSatisfied(issueDates.finish_date, relatedDates.start_date, lag, weekendDays);
     default: {
       const _exhaustive: never = relationType;
       return _exhaustive;

@@ -163,6 +163,7 @@
             "subscribers": "Абонати",
             "created_by_name": "Създадено от",
             "start_date": "Начална дата",
+            "finish_date": "Дата на приключване",
             "target_date": "Краен срок",
             "duration": "Продължителност",
             "completed_at": "Завършено на",

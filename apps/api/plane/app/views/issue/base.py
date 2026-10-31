@@ -82,10 +82,10 @@ from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
 from plane.utils.timezone_converter import user_timezone_converter
 from plane.utils.project_weekend_days import get_project_weekend_days
+from plane.utils.work_item_dates import ORIGIN_MANUAL, resolve_for_logging
 from plane.utils.work_item_duration import (
     WORK_ITEM_DURATION_MIN,
     calculate_work_item_duration,
-    reconcile_work_item_duration,
 )
 
 from .. import BaseAPIView, BaseViewSet
@@ -196,6 +196,9 @@ class IssueListEndpoint(BaseAPIView):
                 "priority",
                 "start_date",
                 "target_date",
+                "finish_date",
+                "dates_initialized",
+                "due_date_at_completion",
                 "duration",
                 "sequence_id",
                 "project_id",
@@ -421,10 +424,12 @@ class IssueViewSet(BaseViewSet):
     def create(self, request, slug, project_id):
         project = Project.objects.get(pk=project_id)
 
-        # The serializer derives the missing duration / start date / target date on save. Mirror
-        # that here so the activity feed reports the derived values too, since it is built from the
-        # raw request payload rather than from what was saved.
-        logged_data = {**request.data, **reconcile_work_item_duration(None, request.data, project.weekend_days)}
+        # The serializer derives the duration and the one-time paired finish/due date on save.
+        # Mirror that here so the activity feed reports the derived values too, since it is built
+        # from the raw request payload rather than from what was saved.
+        logged_data = {**request.data, **resolve_for_logging(None, request.data, project.weekend_days)}
+        logged_data.pop("initialize_paired_date", None)
+        logged_data.pop("paired_date_defaulted", None)
 
         serializer = IssueCreateSerializer(
             data=request.data,
@@ -468,6 +473,9 @@ class IssueViewSet(BaseViewSet):
                     "priority",
                     "start_date",
                     "target_date",
+                    "finish_date",
+                    "dates_initialized",
+                    "due_date_at_completion",
                     "duration",
                     "sequence_id",
                     "project_id",
@@ -703,12 +711,12 @@ class IssueViewSet(BaseViewSet):
 
         current_instance = json.dumps(IssueDetailSerializer(issue).data, cls=DjangoJSONEncoder)
 
-        # The serializer derives the missing duration / start date / target date on save. Mirror
-        # that here so the activity feed reports the derived values too, since it is built from the
-        # raw request payload rather than from what was saved.
+        # Mirror the serializer's derived values (duration, defaulted paired date) so the activity
+        # feed reports them too, since it is built from the raw request payload.
+        request_only_keys = ("initialize_paired_date", "paired_date_defaulted")
         requested_payload = {
-            **request.data,
-            **reconcile_work_item_duration(issue, request.data, get_project_weekend_days(project_id)),
+            **{k: v for k, v in request.data.items() if k not in request_only_keys},
+            **resolve_for_logging(issue, request.data, get_project_weekend_days(project_id)),
         }
         serializer = IssueCreateSerializer(
             issue, data=request.data, partial=True, context={"project_id": project_id, "request": request}
@@ -747,6 +755,10 @@ class IssueViewSet(BaseViewSet):
                     issue_id=str(serializer.data.get("id", None)),
                     user_id=request.user.id,
                 )
+            # A defaulted paired date is reported so the client can say so (and offer Undo).
+            date_notices = getattr(serializer, "date_notices", [])
+            if date_notices:
+                return Response({"date_notices": date_notices}, status=status.HTTP_200_OK)
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -907,6 +919,9 @@ class IssuePaginatedViewSet(BaseViewSet):
             "priority",
             "start_date",
             "target_date",
+            "finish_date",
+            "dates_initialized",
+            "due_date_at_completion",
             "duration",
             "sequence_id",
             "project_id",
@@ -1135,9 +1150,12 @@ class IssueDetailEndpoint(BaseAPIView):
 
 
 class IssueBulkUpdateDateEndpoint(BaseAPIView):
-    def validate_dates(self, current_start, current_target, update):
+    def validate_dates(self, current_start, current_finish, update):
         """
-        Validate that start date is before target date.
+        Validate that the finish date is not before the start date.
+
+        Only the schedule endpoints are compared. The due date (`target_date`) is a deadline, may
+        legitimately precede the schedule, and is updated independently below.
 
         A key missing from `update` means the caller left that date alone, while a key holding
         None means the caller cleared it. Both differ from "no date at all".
@@ -1145,15 +1163,15 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
         from datetime import datetime
 
         start = update["start_date"] if "start_date" in update else current_start
-        target = update["target_date"] if "target_date" in update else current_target
+        finish = update["finish_date"] if "finish_date" in update else current_finish
 
         # Convert string dates to datetime objects if they're strings
         if isinstance(start, str):
             start = datetime.strptime(start, "%Y-%m-%d").date()
-        if isinstance(target, str):
-            target = datetime.strptime(target, "%Y-%m-%d").date()
+        if isinstance(finish, str):
+            finish = datetime.strptime(finish, "%Y-%m-%d").date()
 
-        if start and target and start > target:
+        if start and finish and start > finish:
             return False
         return True
 
@@ -1180,9 +1198,9 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
             if not issue:
                 continue
 
-            if not self.validate_dates(issue.start_date, issue.target_date, update):
+            if not self.validate_dates(issue.start_date, issue.finish_date, update):
                 return Response(
-                    {"message": "Start date cannot exceed target date"},
+                    {"message": "Finish must be on or after start."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
@@ -1206,6 +1224,7 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
                 continue
 
             dates_changed = False
+            schedule_changed = False
 
             if "start_date" in update:
                 issue_activity.delay(
@@ -1219,7 +1238,26 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
                 )
                 issue.start_date = update["start_date"]
                 dates_changed = True
+                schedule_changed = True
 
+            if "finish_date" in update:
+                issue_activity.delay(
+                    type="issue.activity.updated",
+                    requested_data=json.dumps({"finish_date": update.get("finish_date")}),
+                    current_instance=json.dumps({"finish_date": str(issue.finish_date) if issue.finish_date else None}),
+                    issue_id=issue_id,
+                    actor_id=str(request.user.id),
+                    project_id=str(project_id),
+                    epoch=epoch,
+                )
+                issue.finish_date = update["finish_date"]
+                issue.finish_date_origin = ORIGIN_MANUAL if update["finish_date"] else None
+                issue.dates_initialized = True
+                dates_changed = True
+                schedule_changed = True
+
+            # Due is a deadline: a timeline drag never moves it, and a deadline-marker drag changes
+            # nothing else. It never copies into finish and is never derived from it.
             if "target_date" in update:
                 issue_activity.delay(
                     type="issue.activity.updated",
@@ -1231,15 +1269,21 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
                     epoch=epoch,
                 )
                 issue.target_date = update["target_date"]
+                issue.target_date_origin = ORIGIN_MANUAL if update["target_date"] else None
+                issue.dates_initialized = True
                 dates_changed = True
 
             if not dates_changed:
                 continue
 
-            # Dates drive the duration, so recalculate it whenever a date actually moved. This
-            # endpoint bypasses the serializer, so without this a timeline drag would leave a
-            # stale duration behind.
-            new_duration = calculate_work_item_duration(issue.start_date, issue.target_date, weekend_days)
+            # The schedule drives the duration, so recalculate it whenever start or finish moved
+            # (never for a due-only change). This endpoint bypasses the serializer, so without this
+            # a timeline drag would leave a stale duration behind.
+            new_duration = (
+                calculate_work_item_duration(issue.start_date, issue.finish_date, weekend_days)
+                if schedule_changed
+                else None
+            )
             if new_duration is not None and new_duration >= WORK_ITEM_DURATION_MIN and new_duration != issue.duration:
                 issue_activity.delay(
                     type="issue.activity.updated",
@@ -1256,7 +1300,18 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
 
         # Bulk update issues
         with transaction.atomic():
-            Issue.objects.bulk_update(issues_to_update, ["start_date", "target_date", "duration"])
+            Issue.objects.bulk_update(
+                issues_to_update,
+                [
+                    "start_date",
+                    "finish_date",
+                    "target_date",
+                    "duration",
+                    "dates_initialized",
+                    "finish_date_origin",
+                    "target_date_origin",
+                ],
+            )
             if reschedule_plan:
                 apply_shifts(reschedule_plan, request.user.id)
 

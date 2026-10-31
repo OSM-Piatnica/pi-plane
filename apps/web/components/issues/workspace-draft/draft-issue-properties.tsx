@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
@@ -120,6 +121,13 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
       start_date: date ? (renderFormattedPayloadDate(date) ?? undefined) : undefined,
     });
 
+  const handleFinishDate = (date: Date | null) =>
+    issue?.project_id &&
+    updateIssue &&
+    updateIssue(issue.project_id, issue.id, {
+      finish_date: date ? (renderFormattedPayloadDate(date) ?? undefined) : undefined,
+    });
+
   const handleTargetDate = (date: Date | null) =>
     issue?.project_id &&
     updateIssue &&
@@ -141,7 +149,8 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
   const minDate = getDate(issue.start_date);
   minDate?.setDate(minDate.getDate());
 
-  const maxDate = getDate(issue.target_date);
+  // Start may not pass the planned finish. The due date is a deadline and is not bounded by the schedule.
+  const maxDate = getDate(issue.finish_date);
   maxDate?.setDate(maxDate.getDate());
 
   return (
@@ -193,13 +202,34 @@ export const DraftIssueProperties = observer(function DraftIssueProperties(props
         />
       </div>
 
+      {/* finish date */}
+      <div
+        className="h-5"
+        role="presentation"
+        onClick={handleEventPropagation}
+        onKeyDown={(e) => e.stopPropagation()}
+        title={t("issue.dates.help.finish")}
+      >
+        <DateSelect
+          value={getDate(issue?.finish_date) ?? null}
+          onChange={handleFinishDate}
+          minDate={minDate}
+          placeholder={t("common.order_by.finish_date")}
+          icon={<DueDateOutline />}
+          clearable
+          showTooltip
+          tooltipHeading={t("common.order_by.finish_date")}
+          weekStartsOn={startOfTheWeek}
+          variant="pill-sm"
+        />
+      </div>
+
       {/* target/due date */}
       {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- existing markup; a11y behaviour change out of scope for lint cleanup */}
       <div role="presentation" onClick={handleEventPropagation}>
         <DateSelect
           value={getDate(issue?.target_date) ?? null}
           onChange={handleTargetDate}
-          minDate={minDate}
           placeholder={t("due_date")}
           icon={<DueDateOutline />}
           className={cn({

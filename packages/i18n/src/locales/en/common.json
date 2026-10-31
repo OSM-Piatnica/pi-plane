@@ -344,6 +344,7 @@
   "start_date": "Start date",
   "end_date": "End date",
   "due_date": "Due date",
+  "finish_date": "Finish date",
   "target_date": "Target date",
   "estimate": "Estimate",
   "change_parent_issue": "Change parent work item",
@@ -576,6 +577,7 @@
       "last_updated": "Last updated",
       "start_date": "Start date",
       "due_date": "Due date",
+      "finish_date": "Finish date",
       "asc": "Ascending",
       "desc": "Descending",
       "updated_on": "Updated on"

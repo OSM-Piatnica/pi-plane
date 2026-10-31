@@ -8,6 +8,7 @@
 
 import { set } from "lodash-es";
 import { action, autorun, makeObservable, observable, runInAction } from "mobx";
+import { EGanttBlockType } from "@plane/types";
 import type { TGanttDateRollup } from "@plane/types";
 import { getValueFromLocalStorage, setValueIntoLocalStorage } from "@/hooks/use-local-storage";
 import { IssueService } from "@/services/issue";
@@ -49,7 +50,7 @@ export class IssuesTimeLineStore extends BaseTimeLineStore implements IIssuesTim
     autorun(() => {
       const getIssueById = this.rootStore.issue.issues.getIssueById;
       const getRollup = this.isDateRollupEnabled ? (issueId: string) => this.dateRollupMap[issueId] : undefined;
-      this.updateBlocks(getIssueById, undefined, undefined, getRollup);
+      this.updateBlocks(getIssueById, EGanttBlockType.ISSUE, undefined, getRollup);
     });
   }
 
