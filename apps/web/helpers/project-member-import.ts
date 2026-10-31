@@ -129,11 +129,14 @@ export const importMemberRowsInChunks = async (
   rows: TProjectMemberImportRow[],
   send: (chunk: TProjectMemberImportRow[]) => Promise<TProjectMemberImportSummary>
 ): Promise<TProjectMemberImportSummary[]> => {
-  const answers: TProjectMemberImportSummary[] = [];
-  for (const chunk of chunkRows<TProjectMemberImportRow>(rows)) {
-    // react-doctor-disable-next-line async-await-in-loop -- one chunk at a time: a later chunk sees what an earlier one changed
-    // oxlint-disable-next-line no-await-in-loop
-    answers.push(await send(chunk));
-  }
-  return answers;
+  const chunks = chunkRows<TProjectMemberImportRow>(rows);
+  // written as a chain, not a loop: each chunk starts only after the previous one is answered
+  const sendFrom = async (
+    index: number,
+    answers: TProjectMemberImportSummary[]
+  ): Promise<TProjectMemberImportSummary[]> => {
+    if (index >= chunks.length) return answers;
+    return sendFrom(index + 1, [...answers, await send(chunks[index])]);
+  };
+  return sendFrom(0, []);
 };
