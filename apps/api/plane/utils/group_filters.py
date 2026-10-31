@@ -200,10 +200,21 @@ def groups_of_projects(workspace_id, project_ids):
     return groups
 
 
+def groups_of_issues(workspace_id, issue_ids):
+    """work item id -> the groups it is assigned to (direct groups only)."""
+    groups = {}
+    rows = IssueGroupAssignee.objects.filter(deleted_at__isnull=True, issue_id__in=issue_ids).values_list(
+        "issue_id", "group_id"
+    )
+    for issue_id, group_id in rows:
+        groups.setdefault(issue_id, set()).add(group_id)
+    return groups
+
+
 def group_info(request, slug, kind, ids):
     """
-    For modules (``kind="module"``), cycles (``"cycle"``) or projects (``"project"``): id -> the facts the group
-    filter works on.
+    For modules (``kind="module"``), cycles (``"cycle"``), projects (``"project"``) or work items (``"issue"``):
+    id -> the facts the group filter works on.
 
     ``group_ids``: the groups the item is in (with the groups above them) that the requester may filter by;
     ``has_group``: it is in any group at all; ``in_my_groups``: it matches ``my_groups``.
@@ -218,6 +229,8 @@ def group_info(request, slug, kind, ids):
         direct = groups_of_modules(workspace_id, ids)
     elif kind == "project":
         direct = groups_of_projects(workspace_id, ids)
+    elif kind == "issue":
+        direct = groups_of_issues(workspace_id, ids)
     else:
         direct = groups_of_cycles(workspace_id, ids)
     parents = _parent_map(workspace_id)
@@ -230,7 +243,7 @@ def group_info(request, slug, kind, ids):
         else:
             expanded = _with_ancestors(workspace_id, own, parents)
         # A module is "in" a group a person of it belongs to, so my groups are tested against the expanded set;
-        # a cycle or a project matches my groups through the groups it holds itself.
+        # a cycle, a project or a work item matches my groups through the groups it holds itself.
         mine_hit = bool((expanded if kind == "module" else own) & mine)
         info[str(item_id)] = {
             "group_ids": sorted(str(group_id) for group_id in expanded & allowed),

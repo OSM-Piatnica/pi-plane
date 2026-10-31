@@ -113,7 +113,7 @@ export type TIssueFiltersToDisplayByPageType = {
 
 export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
   profile_issues: {
-    filters: ["priority", "state_group", "label_id", "start_date", "target_date"],
+    filters: ["priority", "state_group", "label_id", "group_assignee_id", "start_date", "target_date"],
     layoutOptions: {
       list: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
@@ -366,6 +366,7 @@ export const SUB_WORK_ITEM_AVAILABLE_FILTERS_FOR_WORK_ITEM_PAGE: (keyof IIssueFi
   "state",
   "issue_type",
   "assignees",
+  "group_assignees",
   "start_date",
   "target_date",
 ];

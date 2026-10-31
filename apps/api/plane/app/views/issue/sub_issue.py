@@ -28,6 +28,7 @@ from plane.db.models import Issue, IssueLink, FileAsset, CycleIssue, IssueLabel,
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.utils.timezone_converter import user_timezone_converter
 from collections import defaultdict
+from plane.utils.group_filters import add_group_info
 from plane.utils.host import base_host
 from plane.utils.order_queryset import order_issue_queryset
 
@@ -174,6 +175,9 @@ class SubIssuesEndpoint(BaseAPIView):
                 "state_group",
             )
         )
+
+        # What the group filter of the sub-work-items works on (it runs in the browser)
+        sub_issues = add_group_info(request, slug, "issue", sub_issues)
 
         # create's a dict with state group name with their respective issue id's
         result = defaultdict(list)

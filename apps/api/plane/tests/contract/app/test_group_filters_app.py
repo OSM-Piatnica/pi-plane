@@ -162,6 +162,44 @@ class TestWorkItemsByGroup:
 
 @pytest.mark.contract
 @pytest.mark.django_db
+class TestSubWorkItemsCarryGroupFacts:
+    def _rows(self, client, workspace, project, parent):
+        url = f"/api/workspaces/{workspace.slug}/projects/{project.id}/issues/{parent.id}/sub-issues/"
+        response = client.get(url)
+        assert response.status_code == 200, response.data
+        return {row["name"]: row for row in response.data["sub_issues"]}
+
+    def test_every_sub_work_item_carries_the_facts_the_web_filters_on(
+        self, session_client, workspace, project, tree, issues
+    ):
+        parent = Issue.objects.create(name="Parent", project=project, workspace=workspace, state=issues["A"].state)
+        Issue.objects.filter(id__in=[issue.id for issue in issues.values()]).update(parent=parent)
+
+        rows = self._rows(session_client, workspace, project, parent)
+
+        # a work item is in the group it is assigned to and in the groups above it
+        assert sorted(rows["B"]["group_ids"]) == sorted([str(tree["poland"].id), str(tree["sales"].id)])
+        assert rows["B"]["has_group"] is True
+        assert rows["D"]["group_ids"] == []
+        assert rows["D"]["has_group"] is False
+        assert rows["D"]["in_my_groups"] is False
+
+    def test_a_member_only_gets_the_groups_they_may_filter_by(self, workspace, project, tree, issues):
+        person = _person(workspace, project, "pl@example.com")
+        _join(tree["poland"], person)
+        parent = Issue.objects.create(name="Parent", project=project, workspace=workspace, state=issues["A"].state)
+        Issue.objects.filter(id__in=[issue.id for issue in issues.values()]).update(parent=parent)
+
+        rows = self._rows(_client(person), workspace, project, parent)
+
+        assert rows["C"]["group_ids"] == []
+        assert rows["C"]["has_group"] is True
+        assert rows["C"]["in_my_groups"] is False
+        assert rows["B"]["in_my_groups"] is True
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
 class TestModulesAndCyclesByGroup:
     def _modules(self, workspace, project, tree, admin):
         pl = _person(workspace, project, "pl@example.com")

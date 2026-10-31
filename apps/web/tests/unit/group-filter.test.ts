@@ -5,7 +5,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import type { IModule, TFilterableUserGroup, TProject } from "@plane/types";
+import type { IIssueFilterOptions, IModule, TFilterableUserGroup, TIssue, TProject } from "@plane/types";
 import {
   getGroupFilterOptions,
   getGroupFilterPathLabel,
@@ -15,6 +15,7 @@ import {
   shouldFilterModule,
   shouldFilterProject,
 } from "@plane/utils";
+import { getFilteredWorkItems } from "@/store/issue/helpers/base-issues-utils";
 
 const group = (id: string, name: string, parent_id: string | null = null): TFilterableUserGroup => ({
   id,
@@ -111,5 +112,20 @@ describe("shouldFilterProject", () => {
     expect(shouldFilterProject(project, {}, { groups: ["none"] })).toBe(false);
     expect(shouldFilterProject(project, {}, { groups: ["my_groups"] })).toBe(false);
     expect(shouldFilterProject({ ...project, has_group: false, group_ids: [] }, {}, { groups: ["none"] })).toBe(true);
+  });
+});
+
+describe("getFilteredWorkItems", () => {
+  const items = [
+    { id: "a", group_ids: ["g-root"], has_group: true, in_my_groups: true },
+    { id: "b", group_ids: [], has_group: false, in_my_groups: false },
+  ] as unknown as TIssue[];
+  const ids = (filters: IIssueFilterOptions) => getFilteredWorkItems(items, filters).map((item) => item.id);
+
+  it("filters the sub-work-items by group, my_groups and none", () => {
+    expect(ids({ group_assignees: ["g-root"] })).toEqual(["a"]);
+    expect(ids({ group_assignees: ["my_groups"] })).toEqual(["a"]);
+    expect(ids({ group_assignees: ["none"] })).toEqual(["b"]);
+    expect(ids({ group_assignees: ["none", "g-root"] })).toEqual(["a", "b"]);
   });
 });
