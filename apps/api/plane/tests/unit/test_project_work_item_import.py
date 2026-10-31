@@ -1108,3 +1108,47 @@ class TestWorkItemImportOptions:
         )
 
         assert not [w for w in result["warnings"] if "asked to leave out" in w]
+
+
+@pytest.mark.unit
+@pytest.mark.django_db
+class TestEmptyCells:
+    """An empty cell of a file is ``None`` in the row; it must not turn into the word "None"."""
+
+    def test_empty_type_state_and_key_cells_raise_no_warning(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Empty cells", "EMC")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[{"external_key": None, "name": "No type", "state": None, "issue_type": None}],
+        )
+
+        assert result["warnings"] == []
+        issue = Issue.objects.get(project=project, name="No type")
+        assert issue.type_id is None
+        assert issue.state.name == "Todo"
+
+    def test_an_empty_name_cell_is_a_skipped_row_not_a_work_item_called_none(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Empty names", "EMN")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[{"external_key": "E1", "name": None, "state": "Todo"}],
+        )
+
+        assert not Issue.objects.filter(project=project, name="None").exists()
+        assert any("without name" in warning for warning in result["warnings"])
+
+    def test_a_real_unknown_type_or_state_still_warns(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Unknown cells", "UNC")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[{"external_key": "U1", "name": "Odd", "state": "Nowhere", "issue_type": "Missing"}],
+        )
+
+        assert any('unknown issue type "Missing"' in warning for warning in result["warnings"])
+        assert any('unknown state "Nowhere"' in warning for warning in result["warnings"])

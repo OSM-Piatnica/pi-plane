@@ -104,6 +104,11 @@ class WorkItemImportOptions:
         return asdict(self)
 
 
+def _cell_text(value) -> str:
+    """The text of a cell: an empty cell reads as ``None``, which must not become the word "None"."""
+    return "" if value is None else str(value)
+
+
 def _coerce_list(value) -> list:
     if value in [None, ""]:
         return []
@@ -578,18 +583,18 @@ def import_work_items_into_project(
     for index, row in enumerate(rows):
         if not isinstance(row, dict):
             continue
-        name = str(row.get("name", "")).strip()
+        name = _cell_text(row.get("name")).strip()
         if not name:
             warnings.append(f"Row {index + 1}: skipped work item without name")
             continue
 
-        external_key = str(row.get("external_key", "")).strip() or f"ROW-{index + 1}"
+        external_key = _cell_text(row.get("external_key")).strip() or f"ROW-{index + 1}"
         if external_key.lower() in seen_keys:
             warnings.append(f'Row {index + 1}: duplicate external_key "{external_key}", using ROW-{index + 1}')
             external_key = f"ROW-{index + 1}"
         seen_keys.add(external_key.lower())
 
-        state_name = str(row.get("state", "")).strip().lower()
+        state_name = _cell_text(row.get("state")).strip().lower()
         state = states_by_name.get(state_name) if state_name else default_state
         if state_name and state is None:
             warnings.append(f'Row {index + 1}: unknown state "{row.get("state")}", using default')
@@ -603,7 +608,7 @@ def import_work_items_into_project(
             warnings.append(f'Row {index + 1}: unknown priority "{raw_priority}", set to none')
             priority = "none"
 
-        issue_type_name = str(row.get("issue_type", "")).strip().lower()
+        issue_type_name = _cell_text(row.get("issue_type")).strip().lower()
         issue_type = types_by_name.get(issue_type_name) if issue_type_name else None
         if issue_type_name and issue_type is None:
             warnings.append(f'Row {index + 1}: unknown issue type "{row.get("issue_type")}", left empty')
