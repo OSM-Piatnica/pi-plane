@@ -375,10 +375,10 @@
     "owned_by": "მფლობელი"
   },
   "group_filter": {
-    "heading": "Group",
-    "my_groups": "My groups",
-    "no_group": "No group",
-    "unknown_group": "Unknown group"
+    "heading": "ჯგუფი",
+    "my_groups": "ჩემი ჯგუფები",
+    "no_group": "ჯგუფის გარეშე",
+    "unknown_group": "უცნობი ჯგუფი"
   },
   "good": "კარგი",
   "morning": "დილა",

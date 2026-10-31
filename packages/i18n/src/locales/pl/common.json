@@ -375,10 +375,10 @@
     "owned_by": "Właściciel"
   },
   "group_filter": {
-    "heading": "Group",
-    "my_groups": "My groups",
-    "no_group": "No group",
-    "unknown_group": "Unknown group"
+    "heading": "Grupa",
+    "my_groups": "Moje grupy",
+    "no_group": "Brak grupy",
+    "unknown_group": "Nieznana grupa"
   },
   "good": "Witaj",
   "morning": "rano",

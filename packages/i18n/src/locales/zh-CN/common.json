@@ -375,10 +375,10 @@
     "owned_by": "所有者"
   },
   "group_filter": {
-    "heading": "Group",
-    "my_groups": "My groups",
-    "no_group": "No group",
-    "unknown_group": "Unknown group"
+    "heading": "用户组",
+    "my_groups": "我的用户组",
+    "no_group": "无用户组",
+    "unknown_group": "未知用户组"
   },
   "good": "早上",
   "morning": "早上",

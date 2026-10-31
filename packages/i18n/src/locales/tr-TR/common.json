@@ -375,10 +375,10 @@
     "owned_by": "Sahibi"
   },
   "group_filter": {
-    "heading": "Group",
-    "my_groups": "My groups",
-    "no_group": "No group",
-    "unknown_group": "Unknown group"
+    "heading": "Grup",
+    "my_groups": "Gruplarım",
+    "no_group": "Grup yok",
+    "unknown_group": "Bilinmeyen grup"
   },
   "good": "İyi",
   "morning": "sabah",

@@ -375,10 +375,10 @@
     "owned_by": "Владелец"
   },
   "group_filter": {
-    "heading": "Group",
-    "my_groups": "My groups",
-    "no_group": "No group",
-    "unknown_group": "Unknown group"
+    "heading": "Группа",
+    "my_groups": "Мои группы",
+    "no_group": "Без группы",
+    "unknown_group": "Неизвестная группа"
   },
   "good": "Доброго",
   "morning": "утра",

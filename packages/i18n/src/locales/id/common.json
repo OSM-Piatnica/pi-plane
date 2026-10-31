@@ -375,10 +375,10 @@
     "owned_by": "Pemilik"
   },
   "group_filter": {
-    "heading": "Group",
-    "my_groups": "My groups",
-    "no_group": "No group",
-    "unknown_group": "Unknown group"
+    "heading": "Grup",
+    "my_groups": "Grup saya",
+    "no_group": "Tanpa grup",
+    "unknown_group": "Grup tidak dikenal"
   },
   "good": "Bagus",
   "morning": "pagi",

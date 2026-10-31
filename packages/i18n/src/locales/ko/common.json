@@ -375,10 +375,10 @@
     "owned_by": "소유자"
   },
   "group_filter": {
-    "heading": "Group",
-    "my_groups": "My groups",
-    "no_group": "No group",
-    "unknown_group": "Unknown group"
+    "heading": "그룹",
+    "my_groups": "내 그룹",
+    "no_group": "그룹 없음",
+    "unknown_group": "알 수 없는 그룹"
   },
   "good": "좋은",
   "morning": "아침",

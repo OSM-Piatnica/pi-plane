@@ -371,10 +371,10 @@
     "owned_by": "Собственик"
   },
   "group_filter": {
-    "heading": "Group",
-    "my_groups": "My groups",
-    "no_group": "No group",
-    "unknown_group": "Unknown group"
+    "heading": "Група",
+    "my_groups": "Моите групи",
+    "no_group": "Без група",
+    "unknown_group": "Неизвестна група"
   },
   "good": "Добре дошли",
   "morning": "тази сутрин",
