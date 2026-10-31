@@ -35,7 +35,7 @@ from plane.db.models import (
     WorkspaceMember,
 )
 from plane.db.models.project import ROLE
-from plane.utils.group_paths import find_group, index_groups, is_ambiguous
+from plane.utils.group_paths import find_group, index_groups, is_ambiguous, split_group_list
 from plane.utils.html_processor import strip_tags
 from plane.utils.timezone_converter import convert_to_utc
 from plane.utils.import_limits import get_import_max_work_items
@@ -304,10 +304,7 @@ def _resolve_groups(
     reported, and so is a group the project cannot assign (only its own groups and the ones below them can be).
     """
     resolved = []
-    for entry in _coerce_list(value):
-        text = str(entry).strip()
-        if not text:
-            continue
+    for text in split_group_list(value):
         group_id = find_group(text, groups_by_path, groups_by_name)
         if group_id is None:
             if is_ambiguous(text, groups_by_name):
