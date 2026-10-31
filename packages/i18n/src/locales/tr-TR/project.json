@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "Dışa aktar",
+      "title": "Üyeleri dışa aktar",
+      "description": "Bu projenin kişilerini ve gruplarını indirin. Dosya CSV olarak yeniden içe aktarılabilir; Name, Source, Via group, Raised by group ve Joined sütunları yalnızca bilgi amaçlıdır ve içe aktarma sırasında yok sayılır.",
+      "format": "Format",
+      "include_via_group": {
+        "label": "Bir grup aracılığıyla üye olan kişileri dahil et",
+        "description": "Projede yalnızca bir grup aracılığıyla bulunan kişileri \"person (via group)\" olarak işaretleyerek ekler. İçe aktarma bu satırları atlar; kişileri grup satırı getirir."
+      },
+      "buttons": {
+        "cancel": "İptal",
+        "export": "Dışa aktar",
+        "exporting": "Dışa aktarılıyor..."
+      },
+      "toast": {
+        "failed": {
+          "title": "Dışa aktarma başarısız",
+          "message": "Üyeler dışa aktarılamadı. Lütfen tekrar deneyin."
+        }
+      }
+    },
     "members_import": {
       "title": "CSV'den üye içe aktar",
       "description": "Email ve Role (5=Guest, 15=Member, 20=Admin) veya Group ve Role (5=Guest, 15=Member) sütunlarını içeren bir CSV yükleyerek bir grubu bütünüyle ekleyin. İç içe bir grubu Parent / Child biçiminde yazın. Bir satırda Email veya Group'tan yalnızca birini kullanın. Kullanıcılar zaten çalışma alanı üyesi olmalı ve gruplar zaten mevcut olmalıdır.",

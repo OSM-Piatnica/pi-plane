@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "匯出",
+      "title": "匯出成員",
+      "description": "下載此專案的人員與群組。此檔案可作為 CSV 重新匯入；Name、Source、Via group、Raised by group 和 Joined 欄位僅供參考，匯入時會被忽略。",
+      "format": "格式",
+      "include_via_group": {
+        "label": "包含透過群組加入的人員",
+        "description": "新增僅透過群組加入專案的人員，並標記為「person (via group)」。匯入時會略過這些列，由群組所在的列將他們匯入。"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "export": "匯出",
+        "exporting": "匯出中..."
+      },
+      "toast": {
+        "failed": {
+          "title": "匯出失敗",
+          "message": "無法匯出成員。請再試一次。"
+        }
+      }
+    },
     "members_import": {
       "title": "從CSV匯入成員",
       "description": "上傳包含 Email 和 Role（5=Guest、15=Member、20=Admin）欄，或 Group 和 Role（5=Guest、15=Member）欄的 CSV 檔案，即可新增整個群組。巢狀群組請寫成 Parent / Child。每列只能使用 Email 或 Group 其中之一。使用者必須已是工作區成員，群組必須已存在。",

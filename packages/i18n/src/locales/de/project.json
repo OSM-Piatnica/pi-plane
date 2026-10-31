@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "Exportieren",
+      "title": "Mitglieder exportieren",
+      "description": "Laden Sie die Personen und Gruppen dieses Projekts herunter. Die Datei kann als CSV erneut importiert werden; die Spalten Name, Source, Via group, Raised by group und Joined dienen nur zur Information und werden beim Import ignoriert.",
+      "format": "Format",
+      "include_via_group": {
+        "label": "Personen einbeziehen, die über eine Gruppe Mitglied sind",
+        "description": "Fügt die Personen hinzu, die nur über eine Gruppe im Projekt sind, markiert als „person (via group)“. Der Import überspringt diese Zeilen, die Gruppenzeile bringt sie herein."
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "export": "Exportieren",
+        "exporting": "Wird exportiert..."
+      },
+      "toast": {
+        "failed": {
+          "title": "Export fehlgeschlagen",
+          "message": "Die Mitglieder konnten nicht exportiert werden. Bitte versuchen Sie es erneut."
+        }
+      }
+    },
     "members_import": {
       "title": "Mitglieder aus CSV importieren",
       "description": "Laden Sie eine CSV-Datei mit den Spalten Email und Role (5=Gast, 15=Mitglied, 20=Administrator) oder Group und Role (5=Gast, 15=Mitglied) hoch, um eine ganze Gruppe hinzuzufügen. Schreiben Sie eine verschachtelte Gruppe als Parent / Child. Verwenden Sie in jeder Zeile entweder Email oder Group. Benutzer müssen bereits Mitglieder des Arbeitsbereichs sein, und Gruppen müssen bereits existieren.",

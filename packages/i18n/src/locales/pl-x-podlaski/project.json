@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "Eksportuj",
+      "title": "Eksportuj członków",
+      "description": "Pobierz osoby i grupy tego projektu. Plik można ponownie zaimportować jako CSV; kolumny Name, Source, Via group, Raised by group i Joined mają charakter informacyjny i są pomijane podczas importu.",
+      "format": "Format",
+      "include_via_group": {
+        "label": "Uwzględnij osoby należące przez grupę",
+        "description": "Dodaje osoby, które są w projekcie tylko przez grupę, oznaczone jako „person (via group)”. Import pomija te wiersze, a osoby wprowadza wiersz grupy."
+      },
+      "buttons": {
+        "cancel": "Anuluj",
+        "export": "Eksportuj",
+        "exporting": "Eksportowanie..."
+      },
+      "toast": {
+        "failed": {
+          "title": "Eksport nie powiódł się",
+          "message": "Nie udało się wyeksportować członków. Spróbuj ponownie."
+        }
+      }
+    },
     "members_import": {
       "title": "Importuj członków z CSV",
       "description": "Wczytaj plik CSV z kolumnami Email i Role (5=gość, 15=członek, 20=administrator) albo Group i Role (5=gość, 15=członek), aby dodać całą grupę. Grupę zagnieżdżoną zapisz jako Parent / Child. W jednym wierszu użyj albo Email, albo Group. Użytkownicy muszą już być członkami obszaru roboczego, a grupy muszą już istnieć.",

@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "Exportovať",
+      "title": "Exportovať členov",
+      "description": "Stiahnite si osoby a skupiny tohto projektu. Súbor je možné znova importovať ako CSV; stĺpce Name, Source, Via group, Raised by group a Joined sú len informatívne a import ich ignoruje.",
+      "format": "Formát",
+      "include_via_group": {
+        "label": "Zahrnúť osoby, ktoré sú členmi prostredníctvom skupiny",
+        "description": "Pridá osoby, ktoré sú v projekte iba prostredníctvom skupiny, označené „person (via group)“. Import tieto riadky preskočí, osoby pridá riadok skupiny."
+      },
+      "buttons": {
+        "cancel": "Zrušiť",
+        "export": "Exportovať",
+        "exporting": "Exportovanie..."
+      },
+      "toast": {
+        "failed": {
+          "title": "Export zlyhal",
+          "message": "Členov sa nepodarilo exportovať. Skúste to prosím znova."
+        }
+      }
+    },
     "members_import": {
       "title": "Importovať členov z CSV",
       "description": "Nahrajte súbor CSV so stĺpcami Email a Role (5=Guest, 15=Member, 20=Admin) alebo Group a Role (5=Guest, 15=Member), aby ste pridali celú skupinu. Vnorenú skupinu zapíšte ako Parent / Child. V jednom riadku uveďte buď Email, alebo Group. Používatelia už musia byť členmi pracovného priestoru a skupiny už musia existovať.",

@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "Exporteren",
+      "title": "Leden exporteren",
+      "description": "Download de personen en groepen van dit project. Het bestand kan opnieuw als CSV worden geïmporteerd; de kolommen Name, Source, Via group, Raised by group en Joined zijn alleen ter informatie en worden bij het importeren genegeerd.",
+      "format": "Formaat",
+      "include_via_group": {
+        "label": "Personen opnemen die via een groep lid zijn",
+        "description": "Voegt de personen toe die alleen via een groep in het project zitten, gemarkeerd als \"person (via group)\". Bij het importeren worden deze rijen overgeslagen; de groepsrij brengt ze binnen."
+      },
+      "buttons": {
+        "cancel": "Annuleren",
+        "export": "Exporteren",
+        "exporting": "Exporteren..."
+      },
+      "toast": {
+        "failed": {
+          "title": "Export mislukt",
+          "message": "De leden konden niet worden geëxporteerd. Probeer het opnieuw."
+        }
+      }
+    },
     "members_import": {
       "title": "Leden importeren uit CSV",
       "description": "Upload een CSV met de kolommen Email en Role (5=gast, 15=lid, 20=beheerder), of Group en Role (5=gast, 15=lid) om een hele groep toe te voegen. Schrijf een geneste groep als Parent / Child. Gebruik per rij óf Email óf Group. Gebruikers moeten al lid van de werkruimte zijn en groepen moeten al bestaan.",

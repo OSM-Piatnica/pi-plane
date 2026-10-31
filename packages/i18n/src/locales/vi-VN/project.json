@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "Xuất",
+      "title": "Xuất thành viên",
+      "description": "Tải xuống những người và nhóm của dự án này. Tệp có thể được nhập lại dưới dạng CSV; các cột Name, Source, Via group, Raised by group và Joined chỉ mang tính thông tin và bị bỏ qua khi nhập.",
+      "format": "Định dạng",
+      "include_via_group": {
+        "label": "Bao gồm những người là thành viên thông qua nhóm",
+        "description": "Thêm những người chỉ thuộc dự án thông qua một nhóm, được đánh dấu là \"person (via group)\". Việc nhập sẽ bỏ qua các dòng này, dòng của nhóm sẽ đưa họ vào."
+      },
+      "buttons": {
+        "cancel": "Hủy",
+        "export": "Xuất",
+        "exporting": "Đang xuất..."
+      },
+      "toast": {
+        "failed": {
+          "title": "Xuất thất bại",
+          "message": "Không thể xuất các thành viên. Vui lòng thử lại."
+        }
+      }
+    },
     "members_import": {
       "title": "Nhập thành viên từ CSV",
       "description": "Tải lên tệp CSV có các cột Email và Role (5=Guest, 15=Member, 20=Admin), hoặc Group và Role (5=Guest, 15=Member) để thêm cả một nhóm. Ghi nhóm lồng nhau dưới dạng Parent / Child. Mỗi dòng chỉ dùng Email hoặc Group. Người dùng phải là thành viên của không gian làm việc từ trước và các nhóm phải đã tồn tại.",

@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "导出",
+      "title": "导出成员",
+      "description": "下载此项目的人员和用户组。该文件可作为 CSV 重新导入；Name、Source、Via group、Raised by group 和 Joined 列仅供参考，导入时会被忽略。",
+      "format": "格式",
+      "include_via_group": {
+        "label": "包含通过用户组加入的人员",
+        "description": "添加仅通过用户组加入项目的人员，并标记为“person (via group)”。导入时会跳过这些行，由用户组所在的行将他们导入。"
+      },
+      "buttons": {
+        "cancel": "取消",
+        "export": "导出",
+        "exporting": "导出中..."
+      },
+      "toast": {
+        "failed": {
+          "title": "导出失败",
+          "message": "无法导出成员。请重试。"
+        }
+      }
+    },
     "members_import": {
       "title": "从CSV导入成员",
       "description": "上传包含 Email 和 Role（5=Guest、15=Member、20=Admin）列，或 Group 和 Role（5=Guest、15=Member）列的 CSV 文件，即可添加整个用户组。嵌套的用户组请写成 Parent / Child。每行只能使用 Email 或 Group 其中之一。用户必须已是工作区成员，用户组必须已存在。",

@@ -24,6 +24,8 @@ from plane.utils.group_paths import find_group, index_groups, is_ambiguous
 from plane.utils.project_groups import _ensure_properties, reconcile_project
 
 MAX_ROWS = 5000
+# The Source of an exported row for a person who only belongs through a group: it derives from a group row
+VIA_GROUP_SOURCE = "person (via group)"
 ROLES = (5, 15, 20)
 
 REASONS = {
@@ -86,6 +88,9 @@ def import_project_members(project, rows):
 
     for index, raw in enumerate(rows):
         row = raw.get("row") if isinstance(raw.get("row"), int) else index + 1
+        if _text(raw.get("source")).casefold() == VIA_GROUP_SOURCE:
+            # Written by the members export for information; the person comes in through their group row
+            continue
         email = _text(raw.get("email")).casefold()
         group_name = _text(raw.get("group"))
         role = _role_of(raw.get("role"))

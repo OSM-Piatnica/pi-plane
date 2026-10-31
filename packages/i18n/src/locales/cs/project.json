@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "Exportovat",
+      "title": "Exportovat členy",
+      "description": "Stáhněte si osoby a skupiny tohoto projektu. Soubor lze znovu importovat jako CSV; sloupce Name, Source, Via group, Raised by group a Joined jsou pouze informativní a import je ignoruje.",
+      "format": "Formát",
+      "include_via_group": {
+        "label": "Zahrnout osoby, které jsou členy prostřednictvím skupiny",
+        "description": "Přidá osoby, které jsou v projektu pouze prostřednictvím skupiny, označené „person (via group)“. Import tyto řádky přeskočí, osoby přidá řádek skupiny."
+      },
+      "buttons": {
+        "cancel": "Zrušit",
+        "export": "Exportovat",
+        "exporting": "Exportování..."
+      },
+      "toast": {
+        "failed": {
+          "title": "Export selhal",
+          "message": "Členy se nepodařilo exportovat. Zkuste to prosím znovu."
+        }
+      }
+    },
     "members_import": {
       "title": "Importovat členy z CSV",
       "description": "Nahrajte CSV se sloupci Email a Role (5=Host, 15=Člen, 20=Správce) nebo Group a Role (5=Host, 15=Člen), abyste přidali celou skupinu. Vnořenou skupinu zapište jako Parent / Child. Na každém řádku použijte buď Email, nebo Group. Uživatelé již musí být členy pracovního prostoru a skupiny již musí existovat.",

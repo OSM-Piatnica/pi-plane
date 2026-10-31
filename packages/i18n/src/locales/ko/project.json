@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "내보내기",
+      "title": "멤버 내보내기",
+      "description": "이 프로젝트의 사용자와 그룹을 다운로드합니다. 파일은 CSV로 다시 가져올 수 있으며, Name, Source, Via group, Raised by group, Joined 열은 참고용이므로 가져오기 시 무시됩니다.",
+      "format": "포맷",
+      "include_via_group": {
+        "label": "그룹을 통해 소속된 사용자 포함",
+        "description": "그룹을 통해서만 프로젝트에 속한 사용자를 \"person (via group)\"로 표시하여 추가합니다. 가져오기에서는 이 행을 건너뛰며, 그룹 행이 해당 사용자를 가져옵니다."
+      },
+      "buttons": {
+        "cancel": "취소",
+        "export": "내보내기",
+        "exporting": "내보내기 중..."
+      },
+      "toast": {
+        "failed": {
+          "title": "내보내기 실패",
+          "message": "멤버를 내보내지 못했습니다. 다시 시도해 주세요."
+        }
+      }
+    },
     "members_import": {
       "title": "CSV에서 구성원 가져오기",
       "description": "Email과 Role 열(5=게스트, 15=멤버, 20=관리자)이 있는 CSV를 업로드합니다. 그룹 전체를 추가하려면 Group과 Role 열(5=게스트, 15=멤버)을 사용합니다. 중첩된 그룹은 Parent / Child 형식으로 작성합니다. 한 행에는 Email 또는 Group 중 하나만 사용해야 합니다. 사용자는 이미 워크스페이스 멤버여야 하고 그룹도 이미 존재해야 합니다.",

@@ -144,6 +144,8 @@ REST_FRAMEWORK = {
         "asset_id": os.environ.get("ASSET_DUPLICATE_RATE_LIMIT", "60/minute"),
         # Duplicating a project locks the workspace row while it runs, so it is capped per user and per workspace.
         "project_duplicate_user": os.environ.get("PROJECT_DUPLICATE_USER_RATE", "10/hour"),
+        # Exporting the members of a project reads them all, so it is capped per user.
+        "project_member_export_user": os.environ.get("PROJECT_MEMBER_EXPORT_USER_RATE", "60/hour"),
         "project_duplicate_workspace": os.environ.get("PROJECT_DUPLICATE_WORKSPACE_RATE", "30/hour"),
     },
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),

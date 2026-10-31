@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "Ekspor",
+      "title": "Ekspor anggota",
+      "description": "Unduh orang dan grup di proyek ini. File dapat diimpor kembali sebagai CSV; kolom Name, Source, Via group, Raised by group, dan Joined hanya untuk informasi dan diabaikan saat impor.",
+      "format": "Format",
+      "include_via_group": {
+        "label": "Sertakan orang yang menjadi anggota melalui grup",
+        "description": "Menambahkan orang yang berada di proyek hanya melalui grup, ditandai \"person (via group)\". Impor melewati baris ini; baris grup yang membawa mereka masuk."
+      },
+      "buttons": {
+        "cancel": "Batal",
+        "export": "Ekspor",
+        "exporting": "Mengekspor..."
+      },
+      "toast": {
+        "failed": {
+          "title": "Ekspor gagal",
+          "message": "Anggota tidak dapat diekspor. Silakan coba lagi."
+        }
+      }
+    },
     "members_import": {
       "title": "Impor anggota dari CSV",
       "description": "Unggah CSV dengan kolom Email dan Role (5=Tamu, 15=Anggota, 20=Admin), atau Group dan Role (5=Tamu, 15=Anggota) untuk menambahkan seluruh grup. Tulis grup bersarang sebagai Parent / Child. Gunakan Email atau Group pada setiap baris. Pengguna harus sudah menjadi anggota ruang kerja dan grup harus sudah ada.",

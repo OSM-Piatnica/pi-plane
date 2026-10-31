@@ -95,6 +95,8 @@ export type TProjectMemberImportRow = {
   email?: string;
   group?: string;
   role: string;
+  /** The Source column of a file written by the members export; "person (via group)" rows are not imported. */
+  source?: string;
 };
 
 export type TProjectMemberImportSkipped = {
@@ -110,4 +112,13 @@ export type TProjectMemberImportSummary = {
   people: { added: number; reactivated: number; already_members: number; skipped: number };
   groups: { added: number; updated: number; skipped: number };
   skipped: TProjectMemberImportSkipped[];
+};
+
+export type TProjectMemberExportFormat = "csv" | "xlsx" | "json";
+
+export type TProjectMemberExportParams = {
+  format: TProjectMemberExportFormat;
+  /** Also write the people who belong to the project only through a group. */
+  include_via_group: 0 | 1;
+  delimiter?: "," | ";";
 };

@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "Exportă",
+      "title": "Exportă membrii",
+      "description": "Descărcați persoanele și grupurile acestui proiect. Fișierul poate fi importat din nou ca CSV; coloanele Name, Source, Via group, Raised by group și Joined au rol informativ și sunt ignorate la import.",
+      "format": "Format",
+      "include_via_group": {
+        "label": "Include persoanele care aparțin printr-un grup",
+        "description": "Adaugă persoanele care se află în proiect doar printr-un grup, marcate ca „person (via group)”. Importul omite aceste rânduri; rândul grupului le aduce."
+      },
+      "buttons": {
+        "cancel": "Anulează",
+        "export": "Exportă",
+        "exporting": "Se exportă..."
+      },
+      "toast": {
+        "failed": {
+          "title": "Export eșuat",
+          "message": "Membrii nu au putut fi exportați. Vă rugăm să încercați din nou."
+        }
+      }
+    },
     "members_import": {
       "title": "Importă membri din CSV",
       "description": "Încărcați un CSV cu coloanele Email și Role (5=invitat, 15=membru, 20=administrator) sau Group și Role (5=invitat, 15=membru) pentru a adăuga un grup întreg. Scrieți un grup imbricat ca Parent / Child. Pe fiecare rând folosiți fie Email, fie Group. Utilizatorii trebuie să fie deja membri ai spațiului de lucru, iar grupurile trebuie să existe deja.",

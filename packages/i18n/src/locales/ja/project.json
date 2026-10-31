@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "エクスポート",
+      "title": "メンバーをエクスポート",
+      "description": "このプロジェクトのユーザーとグループをダウンロードします。ファイルは CSV として再度インポートできます。Name、Source、Via group、Raised by group、Joined の列は参考情報であり、インポート時には無視されます。",
+      "format": "形式",
+      "include_via_group": {
+        "label": "グループ経由で所属しているユーザーを含める",
+        "description": "グループ経由でのみプロジェクトに所属しているユーザーを、「person (via group)」として追加します。インポートではこれらの行はスキップされ、グループの行によって取り込まれます。"
+      },
+      "buttons": {
+        "cancel": "キャンセル",
+        "export": "エクスポート",
+        "exporting": "エクスポート中..."
+      },
+      "toast": {
+        "failed": {
+          "title": "エクスポート失敗",
+          "message": "メンバーをエクスポートできませんでした。もう一度お試しください。"
+        }
+      }
+    },
     "members_import": {
       "title": "CSVからメンバーをインポート",
       "description": "列が Email と Role（5=ゲスト、15=メンバー、20=管理者）、または Group と Role（5=ゲスト、15=メンバー）の CSV をアップロードすると、グループ全体を追加できます。入れ子のグループは Parent / Child と記述してください。各行では Email と Group のどちらか一方を使用します。ユーザーはすでにワークスペースのメンバーであり、グループはすでに存在している必要があります。",

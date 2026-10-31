@@ -395,6 +395,27 @@
     }
   },
   "project": {
+    "members_export": {
+      "export_button": "Exportar",
+      "title": "Exportar membros",
+      "description": "Baixe as pessoas e os grupos deste projeto. O arquivo pode ser importado novamente como CSV; as colunas Name, Source, Via group, Raised by group e Joined são apenas informativas e são ignoradas na importação.",
+      "format": "Formato",
+      "include_via_group": {
+        "label": "Incluir pessoas que pertencem por meio de um grupo",
+        "description": "Adiciona as pessoas que estão no projeto somente por meio de um grupo, marcadas como \"person (via group)\". A importação ignora essas linhas; a linha do grupo as traz."
+      },
+      "buttons": {
+        "cancel": "Cancelar",
+        "export": "Exportar",
+        "exporting": "Exportando..."
+      },
+      "toast": {
+        "failed": {
+          "title": "Falha na exportação",
+          "message": "Não foi possível exportar os membros. Tente novamente."
+        }
+      }
+    },
     "members_import": {
       "title": "Importar membros do CSV",
       "description": "Envie um CSV com as colunas Email e Role (5=convidado, 15=membro, 20=administrador) ou Group e Role (5=convidado, 15=membro) para adicionar um grupo inteiro. Escreva um grupo aninhado como Parent / Child. Use Email ou Group em cada linha, nunca os dois. Os usuários já devem ser membros do espaço de trabalho e os grupos já devem existir.",
