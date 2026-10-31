@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from .asset import urlpatterns as asset_patterns
@@ -9,6 +10,7 @@ from .label import urlpatterns as label_patterns
 from .member import urlpatterns as member_patterns
 from .module import urlpatterns as module_patterns
 from .project import urlpatterns as project_patterns
+from .project_group import urlpatterns as project_group_patterns
 from .state import urlpatterns as state_patterns
 from .user import urlpatterns as user_patterns
 from .work_item import urlpatterns as work_item_patterns
@@ -23,6 +25,7 @@ urlpatterns = [
     *member_patterns,
     *module_patterns,
     *project_patterns,
+    *project_group_patterns,
     *state_patterns,
     *user_patterns,
     *work_item_patterns,

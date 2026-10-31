@@ -5,20 +5,25 @@
  * See the LICENSE file for details.
  */
 
+import { useState } from "react";
 import { observer } from "mobx-react";
+import { mutate } from "swr";
 // plane imports
 import { EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
+import { Button } from "@makeplane/propel/components/button";
 // components
 import { NotAuthorizedView } from "@/components/auth-screens/not-authorized-view";
 import { PageHead } from "@/components/core/page-title";
 import { ProjectAccessRequests } from "@/components/project/access-requests";
+import { ProjectMemberImportModal } from "@/components/project/member-import-modal";
 import { ProjectGroupList } from "@/components/project/project-group-list";
 import { ProjectMemberList } from "@/components/project/member-list";
 import { ProjectSettingsMemberDefaults } from "@/components/project/project-settings-member-defaults";
 import { SettingsContentWrapper } from "@/components/settings/content-wrapper";
 import { SettingsHeading } from "@/components/settings/heading";
 // hooks
+import { useMember } from "@/hooks/store/use-member";
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
 import { ProjectTeamspaceList } from "@/components/projects/teamspaces/teamspace-list";
@@ -33,6 +38,11 @@ function MembersSettingsPage({ params }: Route.ComponentProps) {
   const { t } = useTranslation();
   // store hooks
   const { currentProjectDetails } = useProject();
+  const {
+    project: { fetchProjectMembers },
+  } = useMember();
+  // states
+  const [isImportOpen, setIsImportOpen] = useState(false);
   const { workspaceUserInfo, allowPermissions } = useUserPermissions();
   // derived values
   const pageTitle = currentProjectDetails?.name ? `${currentProjectDetails?.name} - Members` : undefined;
@@ -41,6 +51,7 @@ function MembersSettingsPage({ params }: Route.ComponentProps) {
     EUserPermissionsLevel.PROJECT
   );
   const isWorkspaceAdmin = allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.WORKSPACE);
+  const isProjectAdmin = allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.PROJECT);
   const canPerformProjectMemberActions = isProjectMemberOrAdmin || isWorkspaceAdmin;
 
   if (workspaceUserInfo && !canPerformProjectMemberActions) {
@@ -50,7 +61,34 @@ function MembersSettingsPage({ params }: Route.ComponentProps) {
   return (
     <SettingsContentWrapper header={<MembersProjectSettingsHeader />} hugging>
       <PageHead title={pageTitle} />
-      <SettingsHeading title={t("common.members")} />
+      <SettingsHeading
+        title={t("common.members")}
+        control={
+          isProjectAdmin ? (
+            <>
+              <Button
+                variant="secondary"
+                size="md"
+                stretch="auto"
+                onClick={() => setIsImportOpen(true)}
+                label={t("project.members_import.import_button")}
+              />
+              <ProjectMemberImportModal
+                isOpen={isImportOpen}
+                workspaceSlug={workspaceSlug}
+                projectId={projectId}
+                onClose={() => setIsImportOpen(false)}
+                onImported={async () => {
+                  await Promise.all([
+                    mutate(`PROJECT_GROUPS_${workspaceSlug}_${projectId}`),
+                    fetchProjectMembers(workspaceSlug, projectId),
+                  ]);
+                }}
+              />
+            </>
+          ) : undefined
+        }
+      />
       <ProjectSettingsMemberDefaults projectId={projectId} workspaceSlug={workspaceSlug} />
       <ProjectAccessRequests projectId={projectId} workspaceSlug={workspaceSlug} />
       <ProjectTeamspaceList projectId={projectId} workspaceSlug={workspaceSlug} />

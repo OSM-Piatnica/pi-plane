@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Third party imports
@@ -62,8 +63,8 @@ class ProjectMemberSerializer(BaseSerializer):
 
     class Meta:
         model = ProjectMember
-        fields = ["id", "member", "role"]
-        read_only_fields = ["id"]
+        fields = ["id", "member", "role", "via_group", "group_role", "direct_role"]
+        read_only_fields = ["id", "via_group", "group_role", "direct_role"]
 
 
 class BaseMemberLiteAPISerializer(BaseSerializer):
@@ -106,3 +107,7 @@ class ProjectMemberLiteAPISerializer(BaseMemberLiteAPISerializer):
 
     class Meta(BaseMemberLiteAPISerializer.Meta):
         model = ProjectMember
+        # via_group: the person is in the project only through groups; group_role: the best role the groups give
+        # them; direct_role: their own role, kept only while a group raised the effective role above it
+        fields = [*BaseMemberLiteAPISerializer.Meta.fields, "via_group", "group_role", "direct_role"]
+        read_only_fields = fields

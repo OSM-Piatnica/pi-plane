@@ -38,6 +38,7 @@ type FormData = {
 
 const IMPORT_OPTION_FIELDS: (keyof TWorkItemImportOptions)[] = [
   "assignees",
+  "group_assignees",
   "subscribers",
   "relations",
   "parents",
@@ -49,6 +50,7 @@ const IMPORT_OPTION_FIELDS: (keyof TWorkItemImportOptions)[] = [
 
 const DEFAULT_IMPORT_OPTIONS: TWorkItemImportOptions = {
   assignees: true,
+  group_assignees: true,
   subscribers: true,
   relations: true,
   parents: true,

@@ -27,6 +27,7 @@ from plane.db.models import (
     Issue,
     IssueAssignee,
     IssueComment,
+    IssueGroupAssignee,
     IssuePropertyValue,
     IssueRelation,
     IssueSubscriber,
@@ -261,6 +262,10 @@ def issue_export_task(
                 Prefetch(
                     "issue_assignee",
                     queryset=IssueAssignee.objects.select_related("assignee"),
+                ),
+                Prefetch(
+                    "issue_group_assignee",
+                    queryset=IssueGroupAssignee.objects.select_related("group"),
                 ),
                 "issue_link",
                 Prefetch(

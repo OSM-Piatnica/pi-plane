@@ -52,6 +52,7 @@ from plane.db.models import (
     ModuleMember,
     Project,
     ProjectCopyJob,
+    ProjectGroup,
     ProjectIdentifier,
     ProjectMember,
     State,
@@ -59,6 +60,8 @@ from plane.db.models import (
     WorkspaceMember,
 )
 from plane.db.models.issue_type import ProjectIssueType
+from plane.utils.project_groups import reconcile_project
+from plane.utils.user_groups import member_user_ids
 from plane.utils.project_copy_work_items import (
     WORK_ITEM_PROPERTIES,
     count_source_work_items,
@@ -69,7 +72,7 @@ from plane.utils.project_copy_work_items import (
 # anything that grants access or carries someone else's work is opt-in.
 ALWAYS_COPIED = ("states", "work_item_types")
 OPTIONAL_DEFAULT_ON = ("labels", "estimates", "intake")
-OPTIONAL_DEFAULT_OFF = ("members", "cycles", "modules", "views", "work_items")
+OPTIONAL_DEFAULT_OFF = ("members", "groups", "cycles", "modules", "views", "work_items")
 COPY_OPTIONS = ALWAYS_COPIED + OPTIONAL_DEFAULT_ON + OPTIONAL_DEFAULT_OFF
 
 # Beyond these a single transaction holds the workspace lock long enough to
@@ -135,6 +138,8 @@ class CopyPlan:
     estimates: bool = True
     intake: bool = True
     members: bool = False
+    # The source's groups as members of the copy; independent of `members`
+    groups: bool = False
     cycles: bool = False
     modules: bool = False
     views: bool = False
@@ -283,6 +288,35 @@ def derive_identifier(workspace_id, base_identifier: str, limit: int = 100) -> s
 # --------------------------------------------------------------------------
 
 
+def _source_group_links(source: Project):
+    """The source's live group links: the ones a copy with `groups` carries."""
+    return ProjectGroup.objects.filter(project=source, group__deleted_at__isnull=True)
+
+
+def _copyable_direct_members(source: Project, plan: CopyPlan):
+    """The source's active members a copy with `members` adds by name.
+
+    With `groups` on, whoever is in the source only through groups is left out: the copied links bring them.
+    """
+    rows = ProjectMember.objects.filter(project=source, is_active=True, member__isnull=False)
+    if plan.groups:
+        rows = rows.filter(via_group=False)
+    return rows
+
+
+def _people_through_groups(source: Project) -> set:
+    """The people the source's group links bring into a copy: active members of the workspace in the groups."""
+    group_ids = list(_source_group_links(source).values_list("group_id", flat=True))
+    if not group_ids:
+        return set()
+    active = set(
+        WorkspaceMember.objects.filter(workspace_id=source.workspace_id, is_active=True).values_list(
+            "member_id", flat=True
+        )
+    )
+    return member_user_ids(source.workspace_id, group_ids) & active
+
+
 def _planned_counts(source: Project, actor, plan: CopyPlan) -> dict:
     """Count what this caller's copy would actually create.
 
@@ -295,12 +329,24 @@ def _planned_counts(source: Project, actor, plan: CopyPlan) -> dict:
         "states": State.all_state_objects.filter(project=source, deleted_at__isnull=True).count(),
         "labels": Label.objects.filter(project=source).count() if plan.labels else 0,
         "estimates": Estimate.objects.filter(project=source).count() if plan.estimates else 0,
-        "members": ProjectMember.objects.filter(project=source, is_active=True).count() if plan.members else 0,
+        "members": _planned_members(source, plan),
+        "groups": _source_group_links(source).count() if plan.groups else 0,
         "cycles": Cycle.objects.filter(project=source).count() if plan.cycles else 0,
         "modules": Module.objects.filter(project=source).count() if plan.modules else 0,
         "views": _copyable_views(source, actor).count() if plan.views else 0,
     }
     return counts
+
+
+def _planned_members(source: Project, plan: CopyPlan) -> int:
+    """How many people the copy will hold besides its creator: by name, and through the copied groups."""
+    people = set()
+    if plan.members:
+        people |= set(_copyable_direct_members(source, plan).values_list("member_id", flat=True))
+    if plan.groups:
+        # MAX_MEMBERS applies to the people the groups create as well
+        people |= _people_through_groups(source)
+    return len(people)
 
 
 def _admit(source: Project, actor, plan: CopyPlan) -> None:
@@ -561,9 +607,7 @@ def _copy_members(context: _Context) -> None:
     created = 1
 
     if context.plan.members:
-        sources = ProjectMember.objects.filter(project=context.source, is_active=True, member__isnull=False).exclude(
-            member_id=context.actor.id
-        )
+        sources = _copyable_direct_members(context.source, context.plan).exclude(member_id=context.actor.id)
         workspace_roles = dict(
             WorkspaceMember.objects.filter(
                 workspace_id=context.target.workspace_id,
@@ -580,8 +624,14 @@ def _copy_members(context: _Context) -> None:
                 context.skip("members:not-in-workspace")
                 continue
 
-            role = _capped_role(source.role, workspace_role)
-            adjusted = adjusted or role != source.role
+            # With the groups copied, the person's own role: where a group raised it, what it was before (the
+            # copied links raise it again). Without them, the role they effectively hold. The group flags are
+            # never copied.
+            own_role = source.role
+            if context.plan.groups and source.direct_role is not None:
+                own_role = source.direct_role
+            role = _capped_role(own_role, workspace_role)
+            adjusted = adjusted or role != own_role
 
             member = ProjectMember.objects.create(
                 project=context.target,
@@ -602,7 +652,38 @@ def _copy_members(context: _Context) -> None:
         if adjusted:
             context.skip("members:role-adjusted")
 
+    if context.plan.groups:
+        created += _copy_groups(context)
+
     context.record("members", created)
+
+
+def _copy_groups(context: _Context) -> int:
+    """Link the source's groups to the copy (same role) and let them bring their people. Returns the people added."""
+    links = list(_source_group_links(context.source).select_related("group"))
+    copied = []
+    for link in links:
+        if link.group.workspace_id != context.target.workspace_id:
+            context.skip("groups:not-in-workspace")
+            continue
+        copied.append(
+            ProjectGroup(
+                project=context.target,
+                workspace_id=context.target.workspace_id,
+                group_id=link.group_id,
+                role=link.role,
+                created_by=context.actor,
+            )
+        )
+    if not copied:
+        return 0
+    # `ProjectGroup.save()` validates the role; a bulk insert would not
+    for link in copied:
+        link.save()
+    context.record("groups", len(copied))
+    before = ProjectMember.objects.filter(project=context.target, is_active=True).count()
+    reconcile_project(context.target.id)
+    return ProjectMember.objects.filter(project=context.target, is_active=True).count() - before
 
 
 def _target_member_ids(context: _Context) -> set:
