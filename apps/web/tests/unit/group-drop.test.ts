@@ -35,3 +35,29 @@ describe("getGroupDropValue", () => {
     expect(getGroupDropValue("target_date_bucket", null, "no_date", "this_week", "2026-03-07")).toBe("2026-03-08");
   });
 });
+
+describe("getGroupDropValue with working days", () => {
+  // 2026-03-04 is a Wednesday; weekend days are numbered like Date.getDay() (0 = Sunday)
+  const weekend = [0, 6];
+
+  it("drops a finish or due date on the last working day and a start date on the first one", () => {
+    expect(getGroupDropValue("finish_date_bucket", null, "no_date", "this_week", "2026-03-04", weekend)).toBe(
+      "2026-03-06"
+    );
+    expect(getGroupDropValue("target_date_bucket", null, "no_date", "next_week", "2026-03-04", weekend)).toBe(
+      "2026-03-13"
+    );
+    expect(getGroupDropValue("start_date_bucket", null, "no_date", "this_week", "2026-03-04", weekend)).toBe(
+      "2026-03-05"
+    );
+    expect(getGroupDropValue("start_date_bucket", null, "no_date", "next_week", "2026-03-04", weekend)).toBe(
+      "2026-03-09"
+    );
+  });
+
+  it("refuses This week on a Friday when the weekend is off", () => {
+    expect(
+      getGroupDropValue("finish_date_bucket", null, "no_date", "this_week", "2026-03-06", weekend)
+    ).toBeUndefined();
+  });
+});

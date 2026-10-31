@@ -337,7 +337,7 @@
         "later": "Mais tarde",
         "no_date": "Sem data",
         "no_single_date": "Este grupo não tem uma data única. Solte em Sem data, Esta semana, Próxima semana ou Hoje.",
-        "no_day_left": "Não há mais dias nesta semana. Solte em \"Hoje\" ou \"Próxima semana\"."
+        "no_day_left": "Não há mais dias úteis nesta semana. Solte em \"Hoje\" ou \"Próxima semana\"."
       }
     }
   },

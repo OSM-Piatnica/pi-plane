@@ -337,7 +337,7 @@
         "later": "Dopo",
         "no_date": "Nessuna data",
         "no_single_date": "Questo gruppo non ha una data unica. Rilascia invece su Nessuna data, Questa settimana, Settimana prossima o Oggi.",
-        "no_day_left": "Questa settimana non resta nessun giorno. Rilasci l’elemento su «Oggi» o «Settimana prossima»."
+        "no_day_left": "Questa settimana non resta nessun giorno lavorativo. Rilasci l’elemento su «Oggi» o «Settimana prossima»."
       }
     }
   },

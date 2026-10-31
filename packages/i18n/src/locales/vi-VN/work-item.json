@@ -337,7 +337,7 @@
         "later": "Sau đó",
         "no_date": "Không có ngày",
         "no_single_date": "Nhóm này không có một ngày duy nhất. Hãy thả vào Không có ngày, Tuần này, Tuần sau hoặc Hôm nay.",
-        "no_day_left": "Tuần này không còn ngày nào. Hãy thả vào \"Hôm nay\" hoặc \"Tuần sau\"."
+        "no_day_left": "Tuần này không còn ngày làm việc nào. Hãy thả vào \"Hôm nay\" hoặc \"Tuần sau\"."
       }
     }
   },

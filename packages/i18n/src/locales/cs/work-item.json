@@ -337,7 +337,7 @@
         "later": "Později",
         "no_date": "Žádné datum",
         "no_single_date": "Tato skupina nemá jediné datum. Přetáhněte ji místo toho na Žádné datum, Tento týden, Příští týden nebo Dnes.",
-        "no_day_left": "Tento týden už nezbývá žádný den. Přetáhněte položku na „Dnes“ nebo „Příští týden“."
+        "no_day_left": "Tento týden už nezbývá žádný pracovní den. Přetáhněte položku na „Dnes“ nebo „Příští týden“."
       }
     }
   },

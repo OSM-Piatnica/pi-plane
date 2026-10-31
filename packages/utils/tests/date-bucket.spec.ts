@@ -80,3 +80,36 @@ describe("isDateBucketGroupBy", () => {
     expect(isDateBucketGroupBy(null)).toBe(false);
   });
 });
+
+describe("working days", () => {
+  // 2026-03-04 is a Wednesday; weekend days are numbered like Date.getDay(), 0 = Sunday
+  const monToFri = [0, 6];
+  const monToThu = [5, 6, 0]; // Friday off as well
+  const sunToThu = [5, 6]; // a Sunday to Thursday working week
+
+  it("drops a finish or due date on the last working day of the week, a start date on the first", () => {
+    expect(getDateBucketDropDate("this_week", "2026-03-04", { weekendDays: monToFri })).toBe("2026-03-06");
+    expect(getDateBucketDropDate("this_week", "2026-03-04", { weekendDays: monToFri, edge: "start" })).toBe(
+      "2026-03-05"
+    );
+    expect(getDateBucketDropDate("next_week", "2026-03-04", { weekendDays: monToFri })).toBe("2026-03-13");
+    expect(getDateBucketDropDate("next_week", "2026-03-04", { weekendDays: monToFri, edge: "start" })).toBe(
+      "2026-03-09"
+    );
+    expect(getDateBucketDropDate("this_week", "2026-03-04", { weekendDays: monToThu })).toBe("2026-03-05");
+  });
+
+  it("has no day left in this week once only weekend days remain", () => {
+    // Friday 2026-03-06, Saturday and Sunday off
+    expect(getDateBucketDropDate("this_week", "2026-03-06", { weekendDays: monToFri })).toBeUndefined();
+    // Saturday
+    expect(getDateBucketDropDate("this_week", "2026-03-07", { weekendDays: monToFri })).toBeUndefined();
+    // Thursday, Friday and Saturday off: after Wednesday only the Sunday... Monday-based week ends on Sunday (working)
+    expect(getDateBucketDropDate("this_week", "2026-03-05", { weekendDays: sunToThu })).toBe("2026-03-08");
+  });
+
+  it("keeps today and no date as they are", () => {
+    expect(getDateBucketDropDate("today", "2026-03-07", { weekendDays: monToFri })).toBe("2026-03-07");
+    expect(getDateBucketDropDate("no_date", "2026-03-07", { weekendDays: monToFri })).toBeNull();
+  });
+});

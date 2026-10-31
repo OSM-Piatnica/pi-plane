@@ -337,7 +337,7 @@
         "later": "Neskôr",
         "no_date": "Žiadny dátum",
         "no_single_date": "Táto skupina nemá jediný dátum. Presuňte ju namiesto toho na Žiadny dátum, Tento týždeň, Budúci týždeň alebo Dnes.",
-        "no_day_left": "Tento týždeň už nezostáva žiadny deň. Presuňte položku na „Dnes“ alebo „Budúci týždeň“."
+        "no_day_left": "Tento týždeň už nezostáva žiadny pracovný deň. Presuňte položku na „Dnes“ alebo „Budúci týždeň“."
       }
     }
   },

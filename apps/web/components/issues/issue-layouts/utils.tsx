@@ -74,6 +74,7 @@ import {
 } from "@/helpers/group-column";
 import { getBucketToday } from "@/helpers/date-bucket-today";
 import { getGroupDropValue } from "@/helpers/group-drop";
+import { resolveWeekendDays } from "@/helpers/weekend-days";
 import { store } from "@/lib/store-context";
 // store
 import { ISSUE_FILTER_DEFAULT_DATA } from "@/store/issue/helpers/base-issues.store";
@@ -186,9 +187,22 @@ export const getGroupByColumns = ({
  * The groups of a date: its time buckets. The names are built where no translation is available, so they are
  * translated by id (see `getGroupColumnName`). A work item dropped into one gets the day that stands for it.
  */
+/**
+ * The non-working days a dropped date is chosen by: those of the work item's project (inside a project list, of the
+ * project being viewed), else the workspace's.
+ */
+const getDropWeekendDays = (projectId: string | null | undefined): number[] =>
+  resolveWeekendDays({
+    project: projectId ? (store.projectRoot.project.getProjectById(projectId) ?? {}) : undefined,
+    workspace: store.workspaceRoot.currentWorkspace?.weekend_days,
+  });
+
 const getDateBucketColumns = (field: TDateBucketField): IGroupByColumn[] =>
   DATE_BUCKETS.map((bucket) => {
-    const dropDate = getDateBucketDropDate(bucket, getBucketToday(store.user.data?.user_timezone));
+    const dropDate = getDateBucketDropDate(bucket, getBucketToday(store.user.data?.user_timezone), {
+      weekendDays: getDropWeekendDays(store.router.projectId),
+      edge: field === "start_date" ? "start" : "end",
+    });
     const canDrop = dropDate !== undefined;
     return {
       id: bucket,
@@ -610,7 +624,9 @@ export const handleGroupDragDrop = async (
   updateIssueOnDrop: (projectId: string, issueId: string, data: Partial<TIssue>, issueUpdates: IssueUpdates) => void,
   groupBy: TIssueGroupByOptions | undefined,
   subGroupBy: TIssueGroupByOptions | undefined,
-  shouldAddIssueAtTop = false
+  shouldAddIssueAtTop = false,
+  /** Called with the destination group when the drop was refused (a date bucket that names no working day). */
+  onRefused?: (destinationGroupId: string) => void
 ) => {
   if (!source.id || (subGroupBy && (!source.subGroupId || !destination.subGroupId))) return;
 
@@ -647,10 +663,11 @@ export const handleGroupDragDrop = async (
       sourceIssue[groupKey],
       source.groupId,
       destination.groupId,
-      getBucketToday(store.user.data?.user_timezone)
+      getBucketToday(store.user.data?.user_timezone),
+      getDropWeekendDays(sourceIssue.project_id)
     );
-    // a time bucket that names no single day cannot take the drop
-    if (groupValue === undefined) return;
+    // a time bucket that names no single day, or no working day, cannot take the drop
+    if (groupValue === undefined) return onRefused?.(destination.groupId);
 
     // keep track of updates on what was added and what was removed
     issueUpdates[groupKey] = { ADD: getGroupId(destination.groupId), REMOVE: getGroupId(source.groupId) };
@@ -666,9 +683,10 @@ export const handleGroupDragDrop = async (
       sourceIssue[subGroupKey],
       source.subGroupId,
       destination.subGroupId,
-      getBucketToday(store.user.data?.user_timezone)
+      getBucketToday(store.user.data?.user_timezone),
+      getDropWeekendDays(sourceIssue.project_id)
     );
-    if (subGroupValue === undefined) return;
+    if (subGroupValue === undefined) return onRefused?.(destination.subGroupId);
 
     // keep track of updates on what was added and what was removed
     issueUpdates[subGroupKey] = { ADD: getGroupId(destination.subGroupId), REMOVE: getGroupId(source.subGroupId) };
