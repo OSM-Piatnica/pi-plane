@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from django.contrib.postgres.aggregates import ArrayAgg
@@ -31,6 +32,7 @@ from rest_framework.response import Response
 from plane.app.permissions import ProjectEntityPermission
 from plane.app.serializers import ModuleDetailSerializer
 from plane.db.models import Issue, Module, ModuleLink, UserFavorite, Project
+from plane.utils.group_filters import add_group_info, filter_by_groups_param
 from plane.utils.analytics_plot import burndown_plot
 from plane.utils.timezone_converter import user_timezone_converter
 
@@ -257,7 +259,7 @@ class ModuleArchiveUnarchiveEndpoint(BaseAPIView):
 
     def get(self, request, slug, project_id, pk=None):
         if pk is None:
-            queryset = self.get_queryset()
+            queryset = filter_by_groups_param(request, slug, "module", self.get_queryset())
             modules = queryset.values(  # Required fields
                 "id",
                 "workspace_id",
@@ -290,7 +292,7 @@ class ModuleArchiveUnarchiveEndpoint(BaseAPIView):
             )
             datetime_fields = ["created_at", "updated_at"]
             modules = user_timezone_converter(modules, datetime_fields, request.user.user_timezone)
-            return Response(modules, status=status.HTTP_200_OK)
+            return Response(add_group_info(request, slug, "module", modules), status=status.HTTP_200_OK)
         else:
             queryset = (
                 self.get_queryset()

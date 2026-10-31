@@ -78,6 +78,16 @@ export type TAssignableGroup = {
   parent_id: string | null;
 };
 
+/** A group the requester may filter by (work items, modules, cycles), see the filterable groups endpoint. */
+export type TFilterableUserGroup = {
+  id: string;
+  name: string;
+  source: TUserGroupSource;
+  parent_id: string | null;
+  /** The requester belongs to this group (it is one of the groups "my groups" stands for). */
+  is_member: boolean;
+};
+
 /** One row of the project members CSV: a person (email) or a group (name or "Parent / Child" path), and a role. */
 export type TProjectMemberImportRow = {
   /** The line of the CSV file, to point at the row in the report. */

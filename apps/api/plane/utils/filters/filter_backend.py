@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -272,7 +273,7 @@ class ComplexFilterBackend(filters.BaseFilterBackend):
 
         # Instantiate the filterset with the actual queryset
         # Custom filter methods may need access to the queryset for filtering
-        fs = filterset_class(data=qd, queryset=queryset)
+        fs = filterset_class(data=qd, queryset=queryset, request=getattr(view, "request", None))
 
         if not fs.is_valid():
             ve = translate_validation(fs.errors)
