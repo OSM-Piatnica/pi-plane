@@ -130,6 +130,8 @@ ISSUE_GROUP_BY_ALLOWLIST = frozenset(
         "target_date",
         "finish_date",
         "start_date",
+        # an annotation of issue_queryset_grouper: the calendar day of the planned work
+        "schedule_date",
     }
 )
 
