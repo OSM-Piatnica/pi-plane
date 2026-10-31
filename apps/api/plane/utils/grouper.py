@@ -156,6 +156,11 @@ def issue_on_results(
         original_list.remove(FIELD_MAPPER[sub_group_by])
         original_list.append(sub_group_by)
 
+    # annotations of issue_queryset_grouper that a grouped list reads the group of a row from
+    for group_key in (group_by, sub_group_by):
+        if group_key == "schedule_date" or group_key in BUCKET_FIELDS:
+            required_fields.append(group_key)
+
     required_fields.extend(original_list)
     return list(issues.values(*required_fields))
 
