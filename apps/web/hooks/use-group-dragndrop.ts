@@ -126,7 +126,15 @@ export const useGroupIssuesDragNDrop = (
       updateIssueOnDrop,
       groupBy,
       subGroupBy,
-      orderBy !== "sort_order"
+      orderBy !== "sort_order",
+      (destinationGroupId) =>
+        setToast({
+          type: "warning",
+          title: t("issue_ui.cannot_move.title"),
+          message: t(
+            destinationGroupId === "this_week" ? "issue.dates.bucket.no_day_left" : "issue.dates.bucket.no_single_date"
+          ),
+        })
     ).catch((err) => {
       setToast({
         title: t("toast.error"),

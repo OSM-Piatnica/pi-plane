@@ -336,7 +336,8 @@
         "next_week": "Săptămâna viitoare",
         "later": "Mai târziu",
         "no_date": "Fără dată",
-        "no_single_date": "Acest grup nu are o singură dată. Plasați în schimb pe Fără dată, Săptămâna aceasta, Săptămâna viitoare sau Astăzi."
+        "no_single_date": "Acest grup nu are o singură dată. Plasați în schimb pe Fără dată, Săptămâna aceasta, Săptămâna viitoare sau Astăzi.",
+        "no_day_left": "Nu mai rămâne nicio zi lucrătoare în această săptămână. Plasați elementul pe „Astăzi” sau „Săptămâna viitoare”."
       }
     }
   },

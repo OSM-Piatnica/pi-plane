@@ -336,7 +336,8 @@
         "next_week": "Semaine prochaine",
         "later": "Plus tard",
         "no_date": "Aucune date",
-        "no_single_date": "Ce groupe n’a pas de date unique. Déposez plutôt sur Aucune date, Cette semaine, Semaine prochaine ou Aujourd’hui."
+        "no_single_date": "Ce groupe n’a pas de date unique. Déposez plutôt sur Aucune date, Cette semaine, Semaine prochaine ou Aujourd’hui.",
+        "no_day_left": "Il ne reste aucun jour ouvré cette semaine. Déposez plutôt l’élément sur « Aujourd’hui » ou « Semaine prochaine »."
       }
     }
   },

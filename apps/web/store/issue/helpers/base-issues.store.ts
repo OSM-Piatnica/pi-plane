@@ -32,6 +32,7 @@ import type {
 import { EIssueServiceType, EIssueLayoutTypes } from "@plane/types";
 // helpers
 import { convertToISODateString, getDateBucket, isDateBucketGroupBy } from "@plane/utils";
+import { getBucketToday } from "@/helpers/date-bucket-today";
 import type { TPairedDateNotice } from "@plane/utils";
 // lib
 import { emitWorkItemDateNotice } from "@/lib/work-item-date-notices";
@@ -137,6 +138,7 @@ export const ISSUE_GROUP_BY_KEY: Record<TIssueDisplayFilterOptions, keyof TIssue
   target_date: "target_date",
   finish_date: "finish_date",
   schedule_date: "finish_date", // a work item without a finish is placed by its start; the calendar re-places by dates
+  start_date_bucket: "start_date",
   target_date_bucket: "target_date",
   finish_date_bucket: "finish_date",
   cycle: "cycle_id",
@@ -157,6 +159,7 @@ export const ISSUE_FILTER_DEFAULT_DATA: Record<TIssueDisplayFilterOptions, keyof
   target_date: "target_date",
   finish_date: "finish_date",
   schedule_date: "finish_date",
+  start_date_bucket: "start_date",
   target_date_bucket: "target_date",
   finish_date_bucket: "finish_date",
   team_project: "project_id",
@@ -1873,7 +1876,13 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     // if issue object is undefined return empty array
     if (!issueObject) return [];
     // grouped by the time bucket of a date: the group is the bucket, an empty date is the "none" bucket
-    if (isDateBucketGroupBy(groupByKey)) return [getDateBucket(Array.isArray(value) ? undefined : value)];
+    if (isDateBucketGroupBy(groupByKey))
+      return [
+        getDateBucket(
+          Array.isArray(value) ? undefined : value,
+          getBucketToday(this.rootIssueStore.rootStore.user.data?.user_timezone)
+        ),
+      ];
     // if value is not defined, return None value in array
     if (!value || isEmpty(value)) return ["None"];
     // if array return the array

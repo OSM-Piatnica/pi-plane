@@ -31,6 +31,7 @@ export enum EServerGroupByToFilterOptions {
   "target_date" = "target_date",
   "finish_date" = "finish_date",
   "schedule_date" = "schedule_date",
+  "start_date_bucket" = "start_date_bucket",
   "target_date_bucket" = "target_date_bucket",
   "finish_date_bucket" = "finish_date_bucket",
   "project_id" = "project",
@@ -122,7 +123,16 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       list: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
-          group_by: ["state_detail.group", "priority", "project", "labels", null],
+          group_by: [
+            "state_detail.group",
+            "priority",
+            "project",
+            "labels",
+            "start_date_bucket",
+            "target_date_bucket",
+            "finish_date_bucket",
+            null,
+          ],
           order_by: [
             "sort_order",
             "sequence_id",
@@ -143,7 +153,15 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       kanban: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
-          group_by: ["state_detail.group", "priority", "project", "labels"],
+          group_by: [
+            "state_detail.group",
+            "priority",
+            "project",
+            "labels",
+            "start_date_bucket",
+            "target_date_bucket",
+            "finish_date_bucket",
+          ],
           order_by: [
             "sort_order",
             "sequence_id",
@@ -268,6 +286,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
             "labels",
             "assignees",
             "created_by",
+            "start_date_bucket",
             "target_date_bucket",
             "finish_date_bucket",
             null,
@@ -302,10 +321,23 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
             "labels",
             "assignees",
             "created_by",
+            "start_date_bucket",
             "target_date_bucket",
             "finish_date_bucket",
           ],
-          sub_group_by: ["state", "priority", "cycle", "module", "labels", "assignees", "created_by", null],
+          sub_group_by: [
+            "state",
+            "priority",
+            "cycle",
+            "module",
+            "labels",
+            "assignees",
+            "created_by",
+            "start_date_bucket",
+            "target_date_bucket",
+            "finish_date_bucket",
+            null,
+          ],
           order_by: [
             "sort_order",
             "sequence_id",

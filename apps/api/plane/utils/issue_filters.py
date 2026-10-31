@@ -370,6 +370,11 @@ def _filter_date_bucket(param, field, params, issue_filter, method, prefix):
     return issue_filter
 
 
+def filter_start_date_bucket(params, issue_filter, method, prefix=""):
+    """Work items whose start date is in a time bucket (see plane.utils.date_buckets)."""
+    return _filter_date_bucket("start_date_bucket", "start_date", params, issue_filter, method, prefix)
+
+
 def filter_target_date_bucket(params, issue_filter, method, prefix=""):
     """Work items whose due date is in a time bucket (see plane.utils.date_buckets), the group of a grouped list."""
     return _filter_date_bucket("target_date_bucket", "target_date", params, issue_filter, method, prefix)
@@ -554,6 +559,7 @@ def issue_filters(query_params, method, prefix="", request=None):
         "finish_date": filter_finish_date,
         "schedule_window": filter_schedule_window,
         "schedule_date": filter_schedule_date,
+        "start_date_bucket": filter_start_date_bucket,
         "target_date_bucket": filter_target_date_bucket,
         "finish_date_bucket": filter_finish_date_bucket,
         "completed_at": filter_completed_at,
