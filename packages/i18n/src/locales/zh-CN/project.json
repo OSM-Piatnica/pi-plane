@@ -407,7 +407,7 @@
       "buttons": {
         "cancel": "取消",
         "export": "导出",
-        "exporting": "正在导出..."
+        "exporting": "导出中..."
       },
       "toast": {
         "failed": {

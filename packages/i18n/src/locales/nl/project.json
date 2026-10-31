@@ -399,7 +399,7 @@
       "export_button": "Exporteren",
       "title": "Leden exporteren",
       "description": "Download de personen en groepen van dit project. Het bestand kan opnieuw als CSV worden geïmporteerd; de kolommen Name, Source, Via group, Raised by group en Joined zijn alleen ter informatie en worden bij het importeren genegeerd.",
-      "format": "Indeling",
+      "format": "Formaat",
       "include_via_group": {
         "label": "Personen opnemen die via een groep lid zijn",
         "description": "Voegt de personen toe die alleen via een groep in het project zitten, gemarkeerd als \"person (via group)\". Bij het importeren worden deze rijen overgeslagen; de groepsrij brengt ze binnen."
@@ -411,7 +411,7 @@
       },
       "toast": {
         "failed": {
-          "title": "Exporteren mislukt",
+          "title": "Export mislukt",
           "message": "De leden konden niet worden geëxporteerd. Probeer het opnieuw."
         }
       }

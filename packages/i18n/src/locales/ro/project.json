@@ -411,7 +411,7 @@
       },
       "toast": {
         "failed": {
-          "title": "Exportul a eșuat",
+          "title": "Export eșuat",
           "message": "Membrii nu au putut fi exportați. Vă rugăm să încercați din nou."
         }
       }

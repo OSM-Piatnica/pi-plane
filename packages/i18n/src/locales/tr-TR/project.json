@@ -399,7 +399,7 @@
       "export_button": "Dışa aktar",
       "title": "Üyeleri dışa aktar",
       "description": "Bu projenin kişilerini ve gruplarını indirin. Dosya CSV olarak yeniden içe aktarılabilir; Name, Source, Via group, Raised by group ve Joined sütunları yalnızca bilgi amaçlıdır ve içe aktarma sırasında yok sayılır.",
-      "format": "Biçim",
+      "format": "Format",
       "include_via_group": {
         "label": "Bir grup aracılığıyla üye olan kişileri dahil et",
         "description": "Projede yalnızca bir grup aracılığıyla bulunan kişileri \"person (via group)\" olarak işaretleyerek ekler. İçe aktarma bu satırları atlar; kişileri grup satırı getirir."
@@ -411,7 +411,7 @@
       },
       "toast": {
         "failed": {
-          "title": "Dışa aktarma başarısız oldu",
+          "title": "Dışa aktarma başarısız",
           "message": "Üyeler dışa aktarılamadı. Lütfen tekrar deneyin."
         }
       }

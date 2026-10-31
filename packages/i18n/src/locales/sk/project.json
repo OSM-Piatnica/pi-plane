@@ -407,7 +407,7 @@
       "buttons": {
         "cancel": "Zrušiť",
         "export": "Exportovať",
-        "exporting": "Exportuje sa..."
+        "exporting": "Exportovanie..."
       },
       "toast": {
         "failed": {

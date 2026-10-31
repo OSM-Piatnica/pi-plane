@@ -407,11 +407,11 @@
       "buttons": {
         "cancel": "Zrušit",
         "export": "Exportovat",
-        "exporting": "Exportuje se..."
+        "exporting": "Exportování..."
       },
       "toast": {
         "failed": {
-          "title": "Export se nezdařil",
+          "title": "Export selhal",
           "message": "Členy se nepodařilo exportovat. Zkuste to prosím znovu."
         }
       }

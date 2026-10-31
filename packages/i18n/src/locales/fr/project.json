@@ -411,7 +411,7 @@
       },
       "toast": {
         "failed": {
-          "title": "Échec de l'exportation",
+          "title": "Échec de l’exportation",
           "message": "Les membres n'ont pas pu être exportés. Veuillez réessayer."
         }
       }
