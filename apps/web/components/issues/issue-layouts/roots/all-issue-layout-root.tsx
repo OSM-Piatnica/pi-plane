@@ -46,7 +46,7 @@ export const AllIssueLayoutRoot = observer(function AllIssueLayoutRoot(props: Pr
   const { t } = useTranslation();
   // store hooks
   const {
-    issuesFilter: { filters, fetchFilters, updateFilterExpression },
+    issuesFilter: { filters, fetchFilters, updateFilterExpression, getIssueFilters },
     issues: { clear, groupedIssueIds, fetchIssues, fetchNextIssues },
   } = useIssues(EIssuesStoreType.GLOBAL);
   const { fetchAllGlobalViews, getViewDetailsById } = useGlobalView();
@@ -104,9 +104,11 @@ export const AllIssueLayoutRoot = observer(function AllIssueLayoutRoot(props: Pr
         clear();
         toggleLoading(true);
         await fetchFilters(workspaceSlug, globalViewId);
+        // a grouped list (the filters were just loaded) pages every group on its own
+        const isGrouped = !!getIssueFilters(globalViewId)?.displayFilters?.group_by;
         await fetchIssues(workspaceSlug, globalViewId, groupedIssueIds ? "mutation" : "init-loader", {
-          canGroup: false,
-          perPageCount: 100,
+          canGroup: true,
+          perPageCount: isGrouped ? 50 : 100,
         });
         toggleLoading(false);
       }
