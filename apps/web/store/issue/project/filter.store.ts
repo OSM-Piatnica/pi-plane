@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -27,6 +28,7 @@ import { IssueFilterHelperStore } from "../helpers/issue-filter-helper.store";
 // helpers
 // types
 import type { IIssueRootStore } from "../root.store";
+import { getDateBucketOrderBy } from "@/helpers/date-bucket-order";
 import { ProjectService } from "@/services/project";
 // constants
 // services
@@ -211,6 +213,12 @@ export class ProjectIssuesFilter extends IssueFilterHelperStore implements IProj
           if (_filters.displayFilters.group_by === null) {
             _filters.displayFilters.sub_group_by = null;
             updatedDisplayFilters.sub_group_by = null;
+          }
+          // grouped by the bucket of a date: order by that date until the person picks another order
+          const dateBucketOrderBy = getDateBucketOrderBy(updatedDisplayFilters, _filters.displayFilters);
+          if (dateBucketOrderBy) {
+            _filters.displayFilters.order_by = dateBucketOrderBy;
+            updatedDisplayFilters.order_by = dateBucketOrderBy;
           }
           // set sub_group_by to null if layout is switched to kanban group_by and sub_group_by are same
           if (
