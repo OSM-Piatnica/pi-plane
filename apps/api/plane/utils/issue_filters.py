@@ -11,7 +11,7 @@ from datetime import timedelta
 from django.db.models import Q
 from django.utils import timezone
 
-from plane.utils.date_buckets import bucket_q, week_start_for_request
+from plane.utils.date_buckets import bucket_lookups, bucket_q, week_start_for_request
 
 # The date from pattern
 pattern = re.compile(r"\d+_(weeks|months)$")
@@ -317,15 +317,31 @@ def filter_finish_date(params, issue_filter, method, prefix=""):
     return issue_filter
 
 
-def _narrow_to(issue_filter, key, condition):
-    """Add a condition on work items under ``key``; a condition already there stays (both must hold)."""
+def _list_scope(request):
+    """A Q that limits a subquery over work items to what the request lists: its project, else its workspace."""
+    context = getattr(request, "parser_context", None) or {}
+    kwargs = context.get("kwargs") or {}
+    if kwargs.get("project_id"):
+        return Q(project_id=kwargs["project_id"])
+    if kwargs.get("slug"):
+        return Q(workspace__slug=kwargs["slug"])
+    return Q()
+
+
+def _narrow_to(issue_filter, key, condition, request=None):
+    """
+    Add a condition on work items under ``key``; a condition already there stays (both must hold). The condition
+    runs in a subquery, which is limited to the project (else the workspace) the request lists: an unlimited one
+    would read the dates of every work item of every workspace.
+    """
     from plane.db.models import Issue
 
     narrowed = issue_filter.get(key)
-    issue_filter[key] = (Issue.objects.all() if narrowed is None else narrowed).filter(condition).values("pk")
+    base = Issue.objects.filter(_list_scope(request)) if narrowed is None else narrowed
+    issue_filter[key] = base.filter(condition).values("pk")
 
 
-def filter_schedule_window(params, issue_filter, method, prefix=""):
+def filter_schedule_window(params, issue_filter, method, prefix="", request=None):
     """
     Work items whose planned schedule touches a window, given as ``from;to`` (yyyy-mm-dd). A work item with only a
     start or only a finish date is a one day marker, so it counts when that day is in the window; one with both
@@ -346,11 +362,11 @@ def filter_schedule_window(params, issue_filter, method, prefix=""):
         | Q(finish_date__range=(first, last))
         | Q(start_date__lte=first, finish_date__gte=last)
     )
-    _narrow_to(issue_filter, f"{prefix}pk__in", condition)
+    _narrow_to(issue_filter, f"{prefix}pk__in", condition, request)
     return issue_filter
 
 
-def filter_schedule_date(params, issue_filter, method, prefix=""):
+def filter_schedule_date(params, issue_filter, method, prefix="", request=None):
     """Work items placed on one day of the schedule: their finish date, or their start date when they have no finish."""
     if method != "GET":
         return issue_filter
@@ -359,15 +375,26 @@ def filter_schedule_date(params, issue_filter, method, prefix=""):
     except ValueError:
         return issue_filter
     condition = Q(finish_date=day) | Q(finish_date__isnull=True, start_date=day)
-    _narrow_to(issue_filter, f"{prefix}pk__in", condition)
+    _narrow_to(issue_filter, f"{prefix}pk__in", condition, request)
     return issue_filter
 
 
 def _filter_date_bucket(param, field, params, issue_filter, method, prefix, request):
     if method != "GET":
         return issue_filter
+    bucket = str(params.get(param) or "")
     week_start = week_start_for_request(request)
-    _narrow_to(issue_filter, f"{prefix}pk__in", bucket_q(field, str(params.get(param) or ""), None, week_start))
+    lookups = bucket_lookups(field, bucket, None, week_start)
+    if lookups is None:
+        # an unknown bucket matches nothing
+        _narrow_to(issue_filter, f"{prefix}pk__in", Q(pk__in=[]), request)
+        return issue_filter
+    prefixed = {f"{prefix}{lookup}": value for lookup, value in lookups.items()}
+    if any(lookup in issue_filter for lookup in prefixed):
+        # another filter already limits this date: both have to hold, which plain lookups cannot say
+        _narrow_to(issue_filter, f"{prefix}pk__in", bucket_q(field, bucket, None, week_start), request)
+    else:
+        issue_filter.update(prefixed)
     return issue_filter
 
 
@@ -578,7 +605,7 @@ def issue_filters(query_params, method, prefix="", request=None):
     for key, value in ISSUE_FILTER.items():
         if key in query_params:
             func = value
-            if key == "group_assignees" or key.endswith("_date_bucket"):
+            if key in ("group_assignees", "schedule_window", "schedule_date") or key.endswith("_date_bucket"):
                 func(query_params, issue_filter, method, prefix, request=request)
             else:
                 func(query_params, issue_filter, method, prefix)

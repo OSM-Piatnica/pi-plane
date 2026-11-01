@@ -85,6 +85,25 @@ def bucket_q(field, bucket, today=None, week_start=DEFAULT_WEEK_START):
     return condition
 
 
+def bucket_lookups(field, bucket, today=None, week_start=DEFAULT_WEEK_START):
+    """
+    The queryset lookups (``{"target_date__gte": ..., "target_date__lte": ...}``) of one bucket of a date field, to
+    filter with directly; None for an unknown bucket. The same days as ``bucket_q``.
+    """
+    if bucket == NO_DATE:
+        return {f"{field}__isnull": True}
+    bounds = bucket_bounds(today, week_start).get(bucket)
+    if bounds is None:
+        return None
+    first, last = bounds
+    lookups = {}
+    if first is not None:
+        lookups[f"{field}__gte"] = first
+    if last is not None:
+        lookups[f"{field}__lte"] = last
+    return lookups
+
+
 def bucket_case(field, today=None, week_start=DEFAULT_WEEK_START):
     """An expression that is the bucket of a date field."""
     return Case(

@@ -200,7 +200,19 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       list: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
-          group_by: ["state", "cycle", "module", "priority", "labels", "assignees", "created_by", null],
+          group_by: [
+            "state",
+            "cycle",
+            "module",
+            "priority",
+            "labels",
+            "assignees",
+            "created_by",
+            "start_date_bucket",
+            "target_date_bucket",
+            "finish_date_bucket",
+            null,
+          ],
           order_by: [
             "sort_order",
             "sequence_id",
