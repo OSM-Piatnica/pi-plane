@@ -328,6 +328,15 @@
         "deadlines_help": "Activități plasate la data limită",
         "due_marker": "Termen limită",
         "finish_marker": "Finalizare"
+      },
+      "bucket": {
+        "earlier": "Mai devreme",
+        "today": "Astăzi",
+        "this_week": "Săptămâna aceasta",
+        "next_week": "Săptămâna viitoare",
+        "later": "Mai târziu",
+        "no_date": "Fără dată",
+        "no_single_date": "Acest grup nu are o singură dată. Plasați în schimb pe Fără dată, Săptămâna aceasta, Săptămâna viitoare sau Astăzi."
       }
     }
   },

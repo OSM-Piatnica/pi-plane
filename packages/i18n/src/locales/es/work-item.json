@@ -328,6 +328,15 @@
         "deadlines_help": "Trabajo colocado en su fecha de vencimiento",
         "due_marker": "Vencimiento",
         "finish_marker": "Finalización"
+      },
+      "bucket": {
+        "earlier": "Antes",
+        "today": "Hoy",
+        "this_week": "Esta semana",
+        "next_week": "Próxima semana",
+        "later": "Más adelante",
+        "no_date": "Sin fecha",
+        "no_single_date": "Este grupo no tiene una fecha única. Suelte en Sin fecha, Esta semana, Próxima semana o Hoy en su lugar."
       }
     }
   },

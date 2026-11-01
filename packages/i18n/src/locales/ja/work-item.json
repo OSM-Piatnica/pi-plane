@@ -328,6 +328,15 @@
         "deadlines_help": "期限日に配置された作業",
         "due_marker": "期限",
         "finish_marker": "終了"
+      },
+      "bucket": {
+        "earlier": "以前",
+        "today": "今日",
+        "this_week": "今週",
+        "next_week": "来週",
+        "later": "それ以降",
+        "no_date": "日付なし",
+        "no_single_date": "このグループには単一の日付がありません。代わりに「日付なし」「今週」「来週」「今日」にドロップしてください。"
       }
     }
   },

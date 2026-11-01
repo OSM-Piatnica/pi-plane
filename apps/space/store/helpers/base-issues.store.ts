@@ -69,6 +69,8 @@ export const ISSUE_FILTER_DEFAULT_DATA: Record<TIssueDisplayFilterOptions, keyof
   assignees: "assignee_ids",
   finish_date: "finish_date",
   schedule_date: "finish_date",
+  target_date_bucket: "target_date",
+  finish_date_bucket: "finish_date",
   target_date: "target_date",
 };
 

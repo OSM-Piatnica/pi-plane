@@ -16,6 +16,12 @@ export const COMPLETED_CYCLE_DROP_ERROR = "completed_cycle";
  * The single group shown when a layout is not grouped. It is built where no translation is available,
  * so `getGroupColumnName` recognises it by its id and picks the epic or work item wording by its name.
  */
+/**
+ * Marks a time bucket column (Earlier, Later) that cannot take a drop because it stands for no single date;
+ * the drag overlay turns this marker into the message.
+ */
+export const DATE_BUCKET_DROP_ERROR = "date_bucket_no_single_date";
+
 export const ALL_ISSUES_GROUP_ID = "All Issues";
 export const ALL_EPICS_GROUP_NAME = "All Epics";
 
@@ -34,6 +40,13 @@ const FIXED_COLUMN_NAME_KEYS = new Map<string, string>(
     started: "workspace_projects.state.started",
     completed: "workspace_projects.state.completed",
     cancelled: "app_text.state_groups.canceled",
+    // the time buckets of a date (grouped by due or finish date)
+    earlier: "issue.dates.bucket.earlier",
+    today: "issue.dates.bucket.today",
+    this_week: "issue.dates.bucket.this_week",
+    next_week: "issue.dates.bucket.next_week",
+    later: "issue.dates.bucket.later",
+    no_date: "issue.dates.bucket.no_date",
   })
 );
 

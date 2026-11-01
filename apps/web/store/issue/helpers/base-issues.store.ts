@@ -31,7 +31,7 @@ import type {
 } from "@plane/types";
 import { EIssueServiceType, EIssueLayoutTypes } from "@plane/types";
 // helpers
-import { convertToISODateString } from "@plane/utils";
+import { convertToISODateString, getDateBucket, isDateBucketGroupBy } from "@plane/utils";
 import type { TPairedDateNotice } from "@plane/utils";
 // lib
 import { emitWorkItemDateNotice } from "@/lib/work-item-date-notices";
@@ -137,6 +137,8 @@ export const ISSUE_GROUP_BY_KEY: Record<TIssueDisplayFilterOptions, keyof TIssue
   target_date: "target_date",
   finish_date: "finish_date",
   schedule_date: "finish_date", // a work item without a finish is placed by its start; the calendar re-places by dates
+  target_date_bucket: "target_date",
+  finish_date_bucket: "finish_date",
   cycle: "cycle_id",
   module: "module_ids",
   team_project: "project_id",
@@ -155,6 +157,8 @@ export const ISSUE_FILTER_DEFAULT_DATA: Record<TIssueDisplayFilterOptions, keyof
   target_date: "target_date",
   finish_date: "finish_date",
   schedule_date: "finish_date",
+  target_date_bucket: "target_date",
+  finish_date_bucket: "finish_date",
   team_project: "project_id",
 };
 
@@ -1821,7 +1825,11 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     const issueGroupKey = issue?.[this.issueGroupKey] as string | string[] | null | undefined;
     // if they are grouped then identify the paths based on props on which group by is dependent on
     const issueKeyActions: { path: string[]; action: EIssueGroupedAction.REORDER }[] = [];
-    const groupByValues = this.getArrayStringArray(issue, issueGroupKey);
+    const groupByValues = this.getArrayStringArray(
+      issue,
+      issueGroupKey,
+      isDateBucketGroupBy(this.groupBy) ? this.groupBy : undefined
+    );
 
     // if issues are not subGrouped then, provide path from groupByValues
     if (!this.issueSubGroupKey) {
@@ -1834,7 +1842,11 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
 
     const issueSubGroupKey = issue?.[this.issueSubGroupKey] as string | string[] | null | undefined;
     // if they are grouped then identify the paths based on props on which sub group by is dependent on
-    const subGroupByValues = this.getArrayStringArray(issue, issueSubGroupKey);
+    const subGroupByValues = this.getArrayStringArray(
+      issue,
+      issueSubGroupKey,
+      isDateBucketGroupBy(this.subGroupBy) ? this.subGroupBy : undefined
+    );
 
     // if issues are subGrouped then, provide path from subGroupByValues
     for (const groupKey of groupByValues) {
@@ -1860,6 +1872,8 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
   ): string[] => {
     // if issue object is undefined return empty array
     if (!issueObject) return [];
+    // grouped by the time bucket of a date: the group is the bucket, an empty date is the "none" bucket
+    if (isDateBucketGroupBy(groupByKey)) return [getDateBucket(Array.isArray(value) ? undefined : value)];
     // if value is not defined, return None value in array
     if (!value || isEmpty(value)) return ["None"];
     // if array return the array

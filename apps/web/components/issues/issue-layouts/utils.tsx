@@ -54,11 +54,24 @@ import type {
 } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 // plane ui
-import { renderFormattedDate, getFileURL, getTodayInTimeZone, getWorkItemDateStatuses } from "@plane/utils";
+import {
+  DATE_BUCKETS,
+  renderFormattedDate,
+  getDateBucketDropDate,
+  getFileURL,
+  getTodayInTimeZone,
+  getWorkItemDateStatuses,
+  isDateBucketGroupBy,
+} from "@plane/utils";
 import type { TWorkItemDateStatuses } from "@plane/utils";
 // helpers
 // store
-import { ALL_EPICS_GROUP_NAME, ALL_ISSUES_GROUP_ID, COMPLETED_CYCLE_DROP_ERROR } from "@/helpers/group-column";
+import {
+  ALL_EPICS_GROUP_NAME,
+  ALL_ISSUES_GROUP_ID,
+  COMPLETED_CYCLE_DROP_ERROR,
+  DATE_BUCKET_DROP_ERROR,
+} from "@/helpers/group-column";
 import { store } from "@/lib/store-context";
 // store
 import { ISSUE_FILTER_DEFAULT_DATA } from "@/store/issue/helpers/base-issues.store";
@@ -157,12 +170,32 @@ export const getGroupByColumns = ({
     labels: getLabelsColumns,
     assignees: getAssigneeColumns,
     created_by: getCreatedByColumns,
+    target_date_bucket: () => getDateBucketColumns("target_date"),
+    finish_date_bucket: () => getDateBucketColumns("finish_date"),
     team_project: getTeamProjectColumns,
   };
 
   // Get and return the columns for the specified group by option
   return groupByColumnMap[groupBy]?.({ isWorkspaceLevel: isWorkspaceLevelGroup, projectId });
 };
+
+/**
+ * The groups of a date: its time buckets. The names are built where no translation is available, so they are
+ * translated by id (see `getGroupColumnName`). A work item dropped into one gets the day that stands for it.
+ */
+const getDateBucketColumns = (field: "target_date" | "finish_date"): IGroupByColumn[] =>
+  DATE_BUCKETS.map((bucket) => {
+    const dropDate = getDateBucketDropDate(bucket);
+    const canDrop = dropDate !== undefined;
+    return {
+      id: bucket,
+      name: bucket,
+      icon: undefined,
+      payload: dropDate ? { [field]: dropDate } : {},
+      isDropDisabled: !canDrop,
+      dropErrorMessage: canDrop ? undefined : DATE_BUCKET_DROP_ERROR,
+    };
+  });
 
 const getProjectColumns = (): IGroupByColumn[] | undefined => {
   const { joinedProjectIds: projectIds, projectMap } = store.projectRoot.project;
@@ -607,6 +640,11 @@ export const handleGroupDragDrop = async (
     if (Array.isArray(groupValue)) {
       pull(groupValue, source.groupId);
       if (destination.groupId !== "None") groupValue = uniq(concat(groupValue, [destination.groupId]));
+    } else if (isDateBucketGroupBy(groupBy)) {
+      // a time bucket names no date: the work item gets the day that stands for the bucket
+      const dropDate = getDateBucketDropDate(destination.groupId);
+      if (dropDate === undefined) return;
+      groupValue = dropDate;
     } // else just update the groupValue based on destination groupId
     else {
       groupValue = destination.groupId === "None" ? null : destination.groupId;
