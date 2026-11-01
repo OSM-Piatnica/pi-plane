@@ -5,7 +5,8 @@
 """
 Time buckets for grouping work items by a date (start, due or finish date): earlier, today, this week, next week,
 later and no date. "Today" is the calendar day in the active (user) time zone. A week begins on the start of the week
-of the project being listed (else the workspace's), numbered like ``start_of_the_week``: 0 is Sunday, 1 Monday.
+of the project being listed (else the workspace's), numbered like ``start_of_the_week``: 0 is Sunday, 1 is Monday
+(the default).
 The web app has the same rules in ``packages/utils/src/date-bucket.ts``; keep the two in step.
 """
 
@@ -24,7 +25,7 @@ NO_DATE = "no_date"
 BUCKETS = (EARLIER, TODAY, THIS_WEEK, NEXT_WEEK, LATER, NO_DATE)
 
 # Group by names (annotations) -> the date field they bucket
-DEFAULT_WEEK_START = 0  # Sunday, the default of a workspace and a project
+DEFAULT_WEEK_START = 1  # Monday, the default of a workspace and a project
 
 BUCKET_FIELDS = {
     "start_date_bucket": "start_date",

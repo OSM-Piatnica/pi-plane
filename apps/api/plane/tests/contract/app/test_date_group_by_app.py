@@ -30,8 +30,8 @@ def project(db, workspace, create_user):
 def issues(workspace, project):
     state = State.objects.get(project=project)
     today = timezone.localdate()
-    # a project starts its week on Sunday unless it says otherwise
-    end_of_week = bucket_bounds(today, 0)["this_week"][1]
+    # a project starts its week on Monday unless it says otherwise
+    end_of_week = bucket_bounds(today)["this_week"][1]
     days = {
         "past": today - datetime.timedelta(days=3),
         "today": today,

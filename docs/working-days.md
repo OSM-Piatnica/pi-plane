@@ -26,7 +26,7 @@ Changing a project's weekend days recalculates the **duration** of its work item
 
 Workspaces and projects have a first day of the week, a project copies the workspace's when it is created, and people can choose their own (Profile, Preferences, with a "Project default" option). It affects calendars, the timeline and date pickers.
 
-The order differs from weekend days: **the person's own choice wins everywhere**, including inside a project; otherwise the project's, then the workspace's, then Sunday.
+The order differs from weekend days: **the person's own choice wins everywhere**, including inside a project; otherwise the project's, then the workspace's, then Monday. New workspaces and projects start their week on Monday (`0155`; existing ones keep their day). The time buckets of the "group by due / finish / start date" views are different: they use the project's first day of the week (else the workspace's) and ignore the personal choice, so everyone looking at a project sees the same groups.
 
 ## What counts working days
 

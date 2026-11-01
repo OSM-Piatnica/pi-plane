@@ -41,9 +41,9 @@ const weekdayOf = (dayNumber: number) => (daysSinceMonday(dayNumber) + 1) % 7;
 
 /**
  * The first day of a week, numbered like `Date.getDay()` and the `start_of_the_week` of a project or workspace
- * (0 = Sunday, 1 = Monday ... 6 = Saturday). A project and a workspace start on Sunday unless they say otherwise.
+ * (0 = Sunday, 1 = Monday ... 6 = Saturday). A project and a workspace start on Monday unless they say otherwise.
  */
-export const DEFAULT_WEEK_START = 0;
+export const DEFAULT_WEEK_START = 1;
 
 /** The last day of the week a day is in, for a week that begins on `weekStart`. */
 const endOfWeekOf = (dayNumber: number, weekStart: number) =>

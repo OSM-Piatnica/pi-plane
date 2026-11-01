@@ -50,7 +50,7 @@ const generateWeekChart = (
   weekPayload: ChartDataType,
   side: null | "left" | "right",
   targetDate?: Date,
-  startOfWeek: EStartOfTheWeek = EStartOfTheWeek.SUNDAY
+  startOfWeek: EStartOfTheWeek = EStartOfTheWeek.MONDAY
 ) => {
   let renderState = weekPayload;
 
@@ -134,7 +134,7 @@ export const getWeeksBetweenTwoDates = (
   startDate: Date,
   endDate: Date,
   shouldPopulateDaysForWeek: boolean = true,
-  startOfWeek: EStartOfTheWeek = EStartOfTheWeek.SUNDAY
+  startOfWeek: EStartOfTheWeek = EStartOfTheWeek.MONDAY
 ): IWeekBlock[] => {
   const weeks: IWeekBlock[] = [];
 
@@ -189,7 +189,7 @@ export const getWeeksBetweenTwoDates = (
  * @param startDate
  * @returns
  */
-const populateDaysForWeek = (startDate: Date, startOfWeek: EStartOfTheWeek = EStartOfTheWeek.SUNDAY): IDayBlock[] => {
+const populateDaysForWeek = (startDate: Date, startOfWeek: EStartOfTheWeek = EStartOfTheWeek.MONDAY): IDayBlock[] => {
   const currentDate = new Date(startDate);
   const days: IDayBlock[] = [];
   const today = new Date();

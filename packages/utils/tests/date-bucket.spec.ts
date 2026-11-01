@@ -132,11 +132,11 @@ describe("working days", () => {
 });
 
 describe("the start of the week", () => {
-  it("counts a week from Sunday by default, like a project and a workspace", () => {
-    // Wednesday 2026-03-04: the week ends on Saturday the 7th
-    expect(getDateBucket("2026-03-07", "2026-03-04")).toBe("this_week");
-    expect(getDateBucket("2026-03-08", "2026-03-04")).toBe("next_week");
-    expect(getDateBucket("2026-03-15", "2026-03-04")).toBe("later");
+  it("counts a week from Monday by default, like a project and a workspace", () => {
+    // Wednesday 2026-03-04: the week ends on Sunday the 8th
+    expect(getDateBucket("2026-03-08", "2026-03-04")).toBe("this_week");
+    expect(getDateBucket("2026-03-09", "2026-03-04")).toBe("next_week");
+    expect(getDateBucket("2026-03-16", "2026-03-04")).toBe("later");
   });
 
   it("follows the week of the project", () => {
