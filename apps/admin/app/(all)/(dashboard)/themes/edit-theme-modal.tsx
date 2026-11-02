@@ -21,7 +21,7 @@ import { Input } from "@makeplane/propel/components/input";
 import { setToast } from "@plane/blocks/toast";
 import { InstanceService } from "@plane/services";
 import type { TInstanceTheme } from "@plane/types";
-import { validateHexColor } from "@plane/utils";
+import { toOverrideHex, validateHexColor } from "@plane/utils";
 // local
 import { getThemeErrorMessage, parseThemeFile } from "./theme-file";
 
@@ -33,8 +33,6 @@ type Props = {
 };
 
 const instanceService = new InstanceService();
-
-const withHash = (value: string) => `#${value.replace("#", "")}`;
 
 function ColorField(props: { id: string; label: string; value: string; onChange: (value: string) => void }) {
   const { id, label, value, onChange } = props;
@@ -108,8 +106,8 @@ export function EditThemeModal(props: Props) {
     try {
       await instanceService.updateTheme(theme.id, {
         name: name.trim(),
-        primary: withHash(primary),
-        background: withHash(background),
+        primary: toOverrideHex(primary),
+        background: toOverrideHex(background),
         dark_palette: darkPalette,
         overrides,
       });
