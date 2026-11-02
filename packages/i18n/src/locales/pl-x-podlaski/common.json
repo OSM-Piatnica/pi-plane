@@ -1153,7 +1153,7 @@
     },
     "theme": {
       "download_config": "Pobierz konfigurację",
-      "import_config": "Importuj konfigurację",
+      "import_config": "Importuj motyw",
       "import_failed": "Nie udało się zaimportować konfiguracji motywu",
       "missing_fields": "Brak wymaganych pól: primary i background",
       "invalid_brand_hex": "Nieprawidłowy format szesnastkowy koloru marki",

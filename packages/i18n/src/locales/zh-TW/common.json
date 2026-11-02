@@ -1153,7 +1153,7 @@
     },
     "theme": {
       "download_config": "下載設定",
-      "import_config": "匯入設定",
+      "import_config": "匯入主題",
       "import_failed": "匯入主題設定失敗",
       "missing_fields": "缺少必填欄位：primary 和 background",
       "invalid_brand_hex": "品牌顏色的十六進位格式無效",

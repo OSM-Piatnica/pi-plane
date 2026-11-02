@@ -1153,7 +1153,7 @@
     },
     "theme": {
       "download_config": "Descargar configuración",
-      "import_config": "Importar configuración",
+      "import_config": "Importar tema",
       "import_failed": "No se pudo importar la configuración del tema",
       "missing_fields": "Faltan campos obligatorios: primary y background",
       "invalid_brand_hex": "Formato hexadecimal del color de marca no válido",

@@ -1153,7 +1153,7 @@
     },
     "theme": {
       "download_config": "Unduh konfigurasi",
-      "import_config": "Impor konfigurasi",
+      "import_config": "Impor tema",
       "import_failed": "Gagal mengimpor konfigurasi tema",
       "missing_fields": "Kolom wajib tidak ada: primary dan background",
       "invalid_brand_hex": "Format hex warna merek tidak valid",

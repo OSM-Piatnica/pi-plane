@@ -1153,7 +1153,7 @@
     },
     "theme": {
       "download_config": "Descarcă configurația",
-      "import_config": "Importă configurația",
+      "import_config": "Importă tema",
       "import_failed": "Importul configurației temei a eșuat",
       "missing_fields": "Lipsesc câmpurile obligatorii: primary și background",
       "invalid_brand_hex": "Format hexazecimal invalid pentru culoarea mărcii",

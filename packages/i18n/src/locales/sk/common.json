@@ -1153,7 +1153,7 @@
     },
     "theme": {
       "download_config": "Stiahnuť konfiguráciu",
-      "import_config": "Importovať konfiguráciu",
+      "import_config": "Importovať tému",
       "import_failed": "Import konfigurácie motívu zlyhal",
       "missing_fields": "Chýbajú povinné polia: primary a background",
       "invalid_brand_hex": "Neplatný formát hexadecimálnej hodnoty farby značky",

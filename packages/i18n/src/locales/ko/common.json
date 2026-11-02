@@ -1153,7 +1153,7 @@
     },
     "theme": {
       "download_config": "구성 다운로드",
-      "import_config": "구성 가져오기",
+      "import_config": "테마 가져오기",
       "import_failed": "테마 구성을 가져오지 못했습니다",
       "missing_fields": "필수 필드가 없습니다: primary 및 background",
       "invalid_brand_hex": "브랜드 색상의 16진수 형식이 올바르지 않습니다",

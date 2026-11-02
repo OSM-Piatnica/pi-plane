@@ -1153,7 +1153,7 @@
     },
     "theme": {
       "download_config": "Download config",
-      "import_config": "Import config",
+      "import_config": "Import theme",
       "import_failed": "Failed to import theme configuration",
       "missing_fields": "Missing required fields: primary and background",
       "invalid_brand_hex": "Invalid brand color hex format",

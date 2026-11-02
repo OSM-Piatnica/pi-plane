@@ -1153,7 +1153,7 @@
     },
     "theme": {
       "download_config": "設定をダウンロード",
-      "import_config": "設定をインポート",
+      "import_config": "テーマをインポート",
       "import_failed": "テーマ設定のインポートに失敗しました",
       "missing_fields": "必須フィールドが不足しています：primary と background",
       "invalid_brand_hex": "ブランドカラーの 16 進数形式が無効です",

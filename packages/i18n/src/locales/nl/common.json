@@ -1153,7 +1153,7 @@
     },
     "theme": {
       "download_config": "Configuratie downloaden",
-      "import_config": "Configuratie importeren",
+      "import_config": "Thema importeren",
       "import_failed": "Thema-configuratie importeren mislukt",
       "missing_fields": "Verplichte velden ontbreken: primary en background",
       "invalid_brand_hex": "Ongeldig hex-formaat voor merkkleur",
