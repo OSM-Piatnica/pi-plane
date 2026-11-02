@@ -173,6 +173,21 @@ export class InstanceService extends APIService {
   }
 
   /**
+   * Changes a theme added in the admin GUI (instance admins only; deployment themes are read-only)
+   * @param {string} themeId The theme to change
+   * @param {Partial<TInstanceThemeCreate>} data The fields to change
+   * @returns {Promise<TInstanceTheme>} The updated theme
+   * @throws {Error} If the API request fails
+   */
+  async updateTheme(themeId: string, data: Partial<TInstanceThemeCreate>): Promise<TInstanceTheme> {
+    return this.patch(`/api/instances/themes/${themeId}/`, data)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /**
    * Deletes a theme added in the admin GUI (instance admins only; deployment themes are read-only)
    * @param {string} themeId The theme to delete
    * @throws {Error} If the API request fails
