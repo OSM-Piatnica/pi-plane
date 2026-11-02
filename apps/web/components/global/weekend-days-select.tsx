@@ -23,10 +23,8 @@ type TWeekendDaysSelect = {
   className?: string;
 };
 
-// Every day of the week as the rows of the list, Monday first and Sunday (0) last
-const DAY_OPTIONS: TDayOption[] = START_OF_THE_WEEK_OPTIONS.map(({ value }) => ({ value })).toSorted(
-  (a, b) => ((a.value + 6) % 7) - ((b.value + 6) % 7)
-);
+// Position of a weekday in a week that starts on the given day
+const getDayPosition = (day: number, startOfTheWeek: number) => (day + 7 - startOfTheWeek) % 7;
 
 /** A checkbox per weekday to pick the non-working days; at least one day has to stay a working day. */
 export const WeekendDaysSelect = observer(function WeekendDaysSelect(props: TWeekendDaysSelect) {
@@ -36,11 +34,16 @@ export const WeekendDaysSelect = observer(function WeekendDaysSelect(props: TWee
   const { getWeekdayName } = useCalendarLocale();
   const startOfTheWeek = useStartOfTheWeek();
 
+  // Every day of the week as the rows of the list, starting on the day the person's week starts
+  const dayOptions: TDayOption[] = START_OF_THE_WEEK_OPTIONS.map((day) => ({ value: day.value })).toSorted(
+    (a, b) => getDayPosition(a.value, startOfTheWeek) - getDayPosition(b.value, startOfTheWeek)
+  );
+
   // The selected days named in the order they appear in the person's week
   const getTriggerLabel = (days: number[]) => {
     if (days.length === 0) return t("common.none");
     return days
-      .toSorted((a, b) => ((a + 7 - startOfTheWeek) % 7) - ((b + 7 - startOfTheWeek) % 7))
+      .toSorted((a, b) => getDayPosition(a, startOfTheWeek) - getDayPosition(b, startOfTheWeek))
       .map((day) => getWeekdayName(day))
       .join(", ");
   };
@@ -49,10 +52,10 @@ export const WeekendDaysSelect = observer(function WeekendDaysSelect(props: TWee
     <Select<TDayOption>
       multiple
       valueIds={value.map(String)}
-      getValues={() => DAY_OPTIONS}
+      getValues={() => dayOptions}
       onChange={(ids) => {
         // Nothing could be scheduled if every day were off
-        if (ids.length >= DAY_OPTIONS.length) return;
+        if (ids.length >= dayOptions.length) return;
         onChange(ids.map(Number).toSorted((a, b) => a - b));
       }}
       getOptionValue={(option) => String(option.value)}
