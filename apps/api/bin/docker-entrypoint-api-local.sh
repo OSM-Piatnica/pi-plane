@@ -25,6 +25,9 @@ python manage.py register_instance "$MACHINE_SIGNATURE"
 # Load the configuration variable
 python manage.py configure_instance
 
+# Load the deployment's extra themes (read-only), when INSTANCE_THEMES_DIR is set
+python manage.py load_instance_themes
+
 # Create the default bucket
 python manage.py create_bucket
 

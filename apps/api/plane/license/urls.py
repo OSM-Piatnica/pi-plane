@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from django.urls import path
@@ -18,6 +19,8 @@ from plane.license.api.views import (
     InstanceAdminUserSessionEndpoint,
     InstanceWorkSpaceAvailabilityCheckEndpoint,
     InstanceWorkSpaceEndpoint,
+    InstanceThemeEndpoint,
+    InstanceThemeDetailEndpoint,
 )
 
 urlpatterns = [
@@ -71,4 +74,6 @@ urlpatterns = [
         name="instance-workspace-availability",
     ),
     path("workspaces/", InstanceWorkSpaceEndpoint.as_view(), name="instance-workspace"),
+    path("themes/", InstanceThemeEndpoint.as_view(), name="instance-themes"),
+    path("themes/<uuid:pk>/", InstanceThemeDetailEndpoint.as_view(), name="instance-theme-detail"),
 ]
