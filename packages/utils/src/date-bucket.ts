@@ -93,9 +93,10 @@ const workingDayIn = (
   edge: TDateBucketEdge,
   weekendDays: readonly number[]
 ): number | null => {
+  const weekend = new Set(weekendDays);
   for (let offset = 0; offset <= to - from; offset++) {
     const day = edge === "start" ? from + offset : to - offset;
-    if (!weekendDays.includes(weekdayOf(day))) return day;
+    if (!weekend.has(weekdayOf(day))) return day;
   }
   return null;
 };
