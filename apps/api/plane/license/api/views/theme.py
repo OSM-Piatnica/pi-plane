@@ -82,5 +82,6 @@ class InstanceThemeDetailEndpoint(BaseAPIView):
         theme, error = self._get_editable(pk)
         if error:
             return error
-        theme.delete()
+        # a real delete: the name is unique, and a soft-deleted theme would keep it taken
+        theme.delete(soft=False)
         return Response(status=status.HTTP_204_NO_CONTENT)

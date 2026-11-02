@@ -66,9 +66,11 @@ class Command(BaseCommand):
             loaded.add(theme.pk)
             self.stdout.write(self.style.SUCCESS(f"{theme.name} loaded from {path.name}."))
 
-        # Themes that were removed from the deployment go away with it
+        # Themes that were removed from the deployment go away with it (a real delete: the name is unique)
         removed, _ = (
-            InstanceTheme.objects.filter(source=InstanceTheme.Source.DEPLOYMENT).exclude(pk__in=loaded).delete()
+            InstanceTheme.objects.filter(source=InstanceTheme.Source.DEPLOYMENT)
+            .exclude(pk__in=loaded)
+            .delete(soft=False)
         )
         if removed:
             self.stdout.write(f"Removed {removed} deployment theme(s) that are no longer in {directory}.")

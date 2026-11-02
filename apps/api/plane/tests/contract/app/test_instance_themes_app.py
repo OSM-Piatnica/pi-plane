@@ -60,6 +60,8 @@ class TestInstanceThemes:
         assert session_client.patch(url, {"name": "Renamed"}, format="json").data["name"] == "Renamed"
         assert session_client.delete(url).status_code == 204
         assert not InstanceTheme.objects.exists()
+        # the name of a deleted theme can be used again
+        assert session_client.post(THEMES, {**THEME, "name": "Renamed"}, format="json").status_code == 201
 
     def test_rejects_bad_colours_and_duplicate_names(self, session_client, instance_admin):
         assert session_client.post(THEMES, {**THEME, "primary": "green"}, format="json").status_code == 400
