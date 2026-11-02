@@ -23,8 +23,10 @@ type TWeekendDaysSelect = {
   className?: string;
 };
 
-// Every day of the week, Sunday first, as the rows of the list
-const DAY_OPTIONS: TDayOption[] = START_OF_THE_WEEK_OPTIONS.map(({ value }) => ({ value }));
+// Every day of the week as the rows of the list, Monday first and Sunday (0) last
+const DAY_OPTIONS: TDayOption[] = START_OF_THE_WEEK_OPTIONS.map(({ value }) => ({ value })).toSorted(
+  (a, b) => ((a.value + 6) % 7) - ((b.value + 6) % 7)
+);
 
 /** A checkbox per weekday to pick the non-working days; at least one day has to stay a working day. */
 export const WeekendDaysSelect = observer(function WeekendDaysSelect(props: TWeekendDaysSelect) {
