@@ -1152,7 +1152,7 @@
       "select_all_in_group": "그룹 내 전체 선택"
     },
     "theme": {
-      "download_config": "구성 다운로드",
+      "download_config": "테마 다운로드",
       "import_config": "테마 가져오기",
       "import_failed": "테마 구성을 가져오지 못했습니다",
       "missing_fields": "필수 필드가 없습니다: primary 및 background",

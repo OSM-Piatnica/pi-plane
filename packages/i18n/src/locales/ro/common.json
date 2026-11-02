@@ -1152,7 +1152,7 @@
       "select_all_in_group": "Selectează tot din grup"
     },
     "theme": {
-      "download_config": "Descarcă configurația",
+      "download_config": "Descarcă tema",
       "import_config": "Importă tema",
       "import_failed": "Importul configurației temei a eșuat",
       "missing_fields": "Lipsesc câmpurile obligatorii: primary și background",

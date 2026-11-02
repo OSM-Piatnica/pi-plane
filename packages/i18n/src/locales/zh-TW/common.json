@@ -1152,7 +1152,7 @@
       "select_all_in_group": "全選群組內項目"
     },
     "theme": {
-      "download_config": "下載設定",
+      "download_config": "下載主題",
       "import_config": "匯入主題",
       "import_failed": "匯入主題設定失敗",
       "missing_fields": "缺少必填欄位：primary 和 background",

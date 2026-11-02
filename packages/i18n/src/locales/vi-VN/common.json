@@ -1152,7 +1152,7 @@
       "select_all_in_group": "Chọn tất cả trong nhóm"
     },
     "theme": {
-      "download_config": "Tải xuống cấu hình",
+      "download_config": "Tải xuống chủ đề",
       "import_config": "Nhập chủ đề",
       "import_failed": "Không thể nhập cấu hình giao diện",
       "missing_fields": "Thiếu các trường bắt buộc: primary và background",

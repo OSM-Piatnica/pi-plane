@@ -1152,7 +1152,7 @@
       "select_all_in_group": "Alles in groep selecteren"
     },
     "theme": {
-      "download_config": "Configuratie downloaden",
+      "download_config": "Thema downloaden",
       "import_config": "Thema importeren",
       "import_failed": "Thema-configuratie importeren mislukt",
       "missing_fields": "Verplichte velden ontbreken: primary en background",

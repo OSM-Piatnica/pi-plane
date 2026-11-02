@@ -1152,7 +1152,7 @@
       "select_all_in_group": "グループ内をすべて選択"
     },
     "theme": {
-      "download_config": "設定をダウンロード",
+      "download_config": "テーマをダウンロード",
       "import_config": "テーマをインポート",
       "import_failed": "テーマ設定のインポートに失敗しました",
       "missing_fields": "必須フィールドが不足しています：primary と background",

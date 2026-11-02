@@ -1152,7 +1152,7 @@
       "select_all_in_group": "Selecionar tudo no grupo"
     },
     "theme": {
-      "download_config": "Transferir configuração",
+      "download_config": "Transferir tema",
       "import_config": "Importar tema",
       "import_failed": "Falha ao importar a configuração do tema",
       "missing_fields": "Campos obrigatórios ausentes: primary e background",

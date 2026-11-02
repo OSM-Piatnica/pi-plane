@@ -1152,7 +1152,7 @@
       "select_all_in_group": "全选组内项目"
     },
     "theme": {
-      "download_config": "下载配置",
+      "download_config": "下载主题",
       "import_config": "导入主题",
       "import_failed": "导入主题配置失败",
       "missing_fields": "缺少必填字段：primary 和 background",

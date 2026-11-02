@@ -1152,7 +1152,7 @@
       "select_all_in_group": "Gruptakilerin tümünü seç"
     },
     "theme": {
-      "download_config": "Yapılandırmayı indir",
+      "download_config": "Temayı indir",
       "import_config": "Temayı içe aktar",
       "import_failed": "Tema yapılandırması içe aktarılamadı",
       "missing_fields": "Gerekli alanlar eksik: primary ve background",

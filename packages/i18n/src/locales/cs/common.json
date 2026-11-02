@@ -1152,7 +1152,7 @@
       "select_all_in_group": "Vybrat vše ve skupině"
     },
     "theme": {
-      "download_config": "Stáhnout konfiguraci",
+      "download_config": "Stáhnout téma",
       "import_config": "Importovat téma",
       "import_failed": "Import konfigurace motivu se nezdařil",
       "missing_fields": "Chybí povinná pole: primary a background",

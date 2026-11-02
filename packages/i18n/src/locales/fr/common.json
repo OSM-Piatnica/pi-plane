@@ -1152,7 +1152,7 @@
       "select_all_in_group": "Tout sélectionner dans le groupe"
     },
     "theme": {
-      "download_config": "Télécharger la configuration",
+      "download_config": "Télécharger le thème",
       "import_config": "Importer le thème",
       "import_failed": "Échec de l’importation de la configuration du thème",
       "missing_fields": "Champs obligatoires manquants : primary et background",
