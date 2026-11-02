@@ -24,6 +24,7 @@ import type {
 import { EIssuesStoreType } from "@plane/types";
 import { handleIssueQueryParamsByLayout } from "@plane/utils";
 import { resolveProfileRichFilters } from "@/helpers/profile-default-filters";
+import { getDateBucketOrderBy } from "@/helpers/date-bucket-order";
 import { IssueFiltersService } from "@/services/issue_filter.service";
 import type { IBaseIssueFilterStore } from "../helpers/issue-filter-helper.store";
 import { IssueFilterHelperStore } from "../helpers/issue-filter-helper.store";
@@ -207,6 +208,12 @@ export class ProfileIssuesFilter extends IssueFilterHelperStore implements IProf
           if (_filters.displayFilters.group_by === null) {
             _filters.displayFilters.sub_group_by = null;
             updatedDisplayFilters.sub_group_by = null;
+          }
+          // grouped by the bucket of a date: order by that date until the person picks another order
+          const dateBucketOrderBy = getDateBucketOrderBy(updatedDisplayFilters, _filters.displayFilters);
+          if (dateBucketOrderBy) {
+            _filters.displayFilters.order_by = dateBucketOrderBy;
+            updatedDisplayFilters.order_by = dateBucketOrderBy;
           }
           // set sub_group_by to null if layout is switched to kanban group_by and sub_group_by are same
           if (

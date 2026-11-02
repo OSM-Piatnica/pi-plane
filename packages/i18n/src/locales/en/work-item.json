@@ -336,7 +336,8 @@
         "next_week": "Next week",
         "later": "Later",
         "no_date": "No date",
-        "no_single_date": "This group has no single date. Drop on Today, This week, Next week or No date instead."
+        "no_single_date": "This group has no single date. Drop on Today, This week, Next week or No date instead.",
+        "no_day_left": "No working day is left this week. Drop on Today or Next week instead."
       }
     }
   },

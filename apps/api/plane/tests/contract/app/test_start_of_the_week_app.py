@@ -13,6 +13,7 @@ from rest_framework import status
 from plane.db.models import Profile, Project, ProjectMember
 
 MONDAY = 1
+FRIDAY = 5
 SATURDAY = 6
 
 
@@ -27,18 +28,18 @@ def create_project(client, workspace, **extra):
 @pytest.mark.contract
 @pytest.mark.django_db
 class TestWorkspaceSetting:
-    def test_a_workspace_starts_its_week_on_sunday(self, workspace):
-        assert workspace.start_of_the_week == 0
+    def test_a_workspace_starts_its_week_on_monday(self, workspace):
+        assert workspace.start_of_the_week == MONDAY
 
     def test_an_admin_can_change_it(self, session_client, workspace):
         response = session_client.patch(
-            f"/api/workspaces/{workspace.slug}/", {"start_of_the_week": MONDAY}, format="json"
+            f"/api/workspaces/{workspace.slug}/", {"start_of_the_week": FRIDAY}, format="json"
         )
 
         assert response.status_code == status.HTTP_200_OK, response.data
         workspace.refresh_from_db()
-        assert workspace.start_of_the_week == MONDAY
-        assert response.json()["start_of_the_week"] == MONDAY
+        assert workspace.start_of_the_week == FRIDAY
+        assert response.json()["start_of_the_week"] == FRIDAY
 
     def test_a_day_that_does_not_exist_is_refused(self, session_client, workspace):
         response = session_client.patch(f"/api/workspaces/{workspace.slug}/", {"start_of_the_week": 7}, format="json")
@@ -50,16 +51,16 @@ class TestWorkspaceSetting:
 @pytest.mark.django_db
 class TestNewProjects:
     def test_a_new_project_copies_the_workspace_setting(self, session_client, workspace):
-        type(workspace).objects.filter(pk=workspace.pk).update(start_of_the_week=MONDAY)
+        type(workspace).objects.filter(pk=workspace.pk).update(start_of_the_week=FRIDAY)
 
         response = create_project(session_client, workspace)
 
         assert response.status_code == status.HTTP_201_CREATED, response.data
-        assert response.json()["start_of_the_week"] == MONDAY
-        assert Project.objects.get(pk=response.json()["id"]).start_of_the_week == MONDAY
+        assert response.json()["start_of_the_week"] == FRIDAY
+        assert Project.objects.get(pk=response.json()["id"]).start_of_the_week == FRIDAY
 
     def test_a_day_chosen_for_the_project_is_kept(self, session_client, workspace):
-        type(workspace).objects.filter(pk=workspace.pk).update(start_of_the_week=MONDAY)
+        type(workspace).objects.filter(pk=workspace.pk).update(start_of_the_week=FRIDAY)
 
         response = create_project(session_client, workspace, start_of_the_week=SATURDAY)
 
@@ -67,7 +68,7 @@ class TestNewProjects:
         assert Project.objects.get(pk=response.json()["id"]).start_of_the_week == SATURDAY
 
     def test_sunday_chosen_on_purpose_is_not_replaced_by_the_workspace_day(self, session_client, workspace):
-        type(workspace).objects.filter(pk=workspace.pk).update(start_of_the_week=MONDAY)
+        type(workspace).objects.filter(pk=workspace.pk).update(start_of_the_week=FRIDAY)
 
         response = create_project(session_client, workspace, start_of_the_week=0)
 
@@ -76,16 +77,16 @@ class TestNewProjects:
     def test_an_existing_project_does_not_follow_later_workspace_changes(self, session_client, workspace):
         project_id = create_project(session_client, workspace).json()["id"]
 
-        session_client.patch(f"/api/workspaces/{workspace.slug}/", {"start_of_the_week": MONDAY}, format="json")
+        session_client.patch(f"/api/workspaces/{workspace.slug}/", {"start_of_the_week": FRIDAY}, format="json")
 
-        assert Project.objects.get(pk=project_id).start_of_the_week == 0
+        assert Project.objects.get(pk=project_id).start_of_the_week == MONDAY
 
     def test_the_timezone_is_still_copied_too(self, session_client, workspace):
-        type(workspace).objects.filter(pk=workspace.pk).update(timezone="Europe/Warsaw", start_of_the_week=MONDAY)
+        type(workspace).objects.filter(pk=workspace.pk).update(timezone="Europe/Warsaw", start_of_the_week=FRIDAY)
 
         project = Project.objects.get(pk=create_project(session_client, workspace).json()["id"])
 
-        assert (project.timezone, project.start_of_the_week) == ("Europe/Warsaw", MONDAY)
+        assert (project.timezone, project.start_of_the_week) == ("Europe/Warsaw", FRIDAY)
 
     def test_a_project_admin_can_change_it_later(self, session_client, workspace, create_user):
         project_id = create_project(session_client, workspace).json()["id"]
@@ -101,14 +102,14 @@ class TestNewProjects:
         assert Project.objects.get(pk=project_id).start_of_the_week == SATURDAY
 
     def test_the_public_api_copies_it_too(self, api_key_client, workspace):
-        type(workspace).objects.filter(pk=workspace.pk).update(start_of_the_week=MONDAY)
+        type(workspace).objects.filter(pk=workspace.pk).update(start_of_the_week=FRIDAY)
 
         response = api_key_client.post(
             f"/api/v1/workspaces/{workspace.slug}/projects/", {"name": "Public", "identifier": "PUB"}, format="json"
         )
 
         assert response.status_code == status.HTTP_201_CREATED, response.data
-        assert response.json()["start_of_the_week"] == MONDAY
+        assert response.json()["start_of_the_week"] == FRIDAY
 
 
 @pytest.mark.contract

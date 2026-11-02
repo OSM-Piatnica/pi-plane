@@ -18,7 +18,7 @@ from django.db.models import Q
 from plane.db.mixins import AuditModel, ChangeTrackerMixin
 
 from .base import BaseModel
-from .workspace import START_OF_THE_WEEK_CHOICES, SUNDAY
+from .workspace import MONDAY, START_OF_THE_WEEK_CHOICES
 from plane.utils.weekend_days import default_weekend_days, validate_weekend_days
 
 ROLE_CHOICES = ((20, "Admin"), (15, "Member"), (5, "Guest"))
@@ -139,7 +139,7 @@ class Project(ChangeTrackerMixin, BaseModel):
     timezone = models.CharField(max_length=255, default="UTC", choices=TIMEZONE_CHOICES)
     # First day of the week in this project (0 = Sunday ... 6 = Saturday); copied from the workspace on creation.
     # A person's own preference, when they have one, wins over it.
-    start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=SUNDAY)
+    start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=MONDAY)
     # Days that count as non-working time in this project (0 = Sunday ... 6 = Saturday); copied from the workspace on
     # creation. Calendars and the timeline shade them, and durations counted in days skip them.
     weekend_days = models.JSONField(default=default_weekend_days, validators=[validate_weekend_days])

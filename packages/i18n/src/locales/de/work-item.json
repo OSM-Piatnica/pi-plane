@@ -336,7 +336,8 @@
         "next_week": "Nächste Woche",
         "later": "Später",
         "no_date": "Kein Datum",
-        "no_single_date": "Diese Gruppe hat kein einzelnes Datum. Ziehen Sie das Element stattdessen auf „Kein Datum“, „Diese Woche“, „Nächste Woche“ oder „Heute“."
+        "no_single_date": "Diese Gruppe hat kein einzelnes Datum. Ziehen Sie das Element stattdessen auf „Kein Datum“, „Diese Woche“, „Nächste Woche“ oder „Heute“.",
+        "no_day_left": "Diese Woche ist kein Arbeitstag mehr übrig. Ziehen Sie das Element stattdessen auf „Heute“ oder „Nächste Woche“."
       }
     }
   },

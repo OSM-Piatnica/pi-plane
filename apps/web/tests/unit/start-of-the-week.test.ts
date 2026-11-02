@@ -37,8 +37,8 @@ describe("resolveStartOfTheWeek", () => {
     );
   });
 
-  it("ends on Sunday when nothing is set", () => {
-    expect(resolveStartOfTheWeek({})).toBe(EStartOfTheWeek.SUNDAY);
-    expect(resolveStartOfTheWeek({ profile: null, project: null, workspace: null })).toBe(EStartOfTheWeek.SUNDAY);
+  it("ends on Monday when nothing is set", () => {
+    expect(resolveStartOfTheWeek({})).toBe(EStartOfTheWeek.MONDAY);
+    expect(resolveStartOfTheWeek({ profile: null, project: null, workspace: null })).toBe(EStartOfTheWeek.MONDAY);
   });
 });

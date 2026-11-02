@@ -5,11 +5,13 @@
 """Grouping work items by their due or finish date into time buckets."""
 
 import datetime
+from unittest import mock
 
 import pytest
 from django.utils import timezone
 
 from plane.db.models import Issue, Project, ProjectMember, State
+from plane.utils.date_buckets import bucket_bounds
 
 ADMIN = 20
 
@@ -28,7 +30,8 @@ def project(db, workspace, create_user):
 def issues(workspace, project):
     state = State.objects.get(project=project)
     today = timezone.localdate()
-    end_of_week = today + datetime.timedelta(days=6 - today.weekday())
+    # a project starts its week on Monday unless it says otherwise
+    end_of_week = bucket_bounds(today)["this_week"][1]
     days = {
         "past": today - datetime.timedelta(days=3),
         "today": today,
@@ -38,7 +41,13 @@ def issues(workspace, project):
     }
     for name, day in days.items():
         Issue.objects.create(
-            name=name, project=project, workspace=workspace, state=state, target_date=day, finish_date=day
+            name=name,
+            project=project,
+            workspace=workspace,
+            state=state,
+            start_date=day,
+            target_date=day,
+            finish_date=day,
         )
     return days
 
@@ -50,7 +59,7 @@ def _grouped(response):
 
 @pytest.mark.contract
 @pytest.mark.django_db
-@pytest.mark.parametrize("field", ["target_date", "finish_date"])
+@pytest.mark.parametrize("field", ["start_date", "target_date", "finish_date"])
 class TestDateBuckets:
     def _get(self, session_client, workspace, project, **params):
         url = f"/api/workspaces/{workspace.slug}/projects/{project.id}/issues/"
@@ -77,3 +86,76 @@ class TestDateBuckets:
         response = self._get(session_client, workspace, project, **{f"{field}_bucket": "no_date"})
 
         assert [row["name"] for row in response.data["results"]] == ["undated"]
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestDateBucketSubGroups:
+    def test_work_items_are_sub_grouped_by_the_bucket_of_another_date(
+        self, session_client, workspace, project, issues, create_user
+    ):
+        # the dates of "past" differ: its due date moves to next week, its finish date stays in the past
+        past = Issue.objects.get(project=project, name="past")
+        past.target_date = issues["next-week"]
+        past.save()
+
+        response = session_client.get(
+            f"/api/workspaces/{workspace.slug}/projects/{project.id}/issues/",
+            {
+                "group_by": "target_date_bucket",
+                "sub_group_by": "finish_date_bucket",
+                "per_page": 50,
+                "cursor": "50:0:0",
+            },
+        )
+
+        assert response.status_code == 200, response.data
+        groups = response.data["results"]
+        assert [row["name"] for row in groups["next_week"]["results"]["earlier"]["results"]] == ["past"]
+        assert [row["name"] for row in groups["next_week"]["results"]["next_week"]["results"]] == ["next-week"]
+        assert [row["name"] for row in groups["today"]["results"]["today"]["results"]] == ["today"]
+
+    def test_the_same_date_cannot_be_both_group_and_sub_group(self, session_client, workspace, project, issues):
+        response = session_client.get(
+            f"/api/workspaces/{workspace.slug}/projects/{project.id}/issues/",
+            {"group_by": "target_date_bucket", "sub_group_by": "target_date_bucket"},
+        )
+
+        assert response.status_code == 400
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestWeekStartOfTheProject:
+    # 2026-03-08 is a Sunday: a week that starts on Sunday has just begun, a week that starts on Monday ends today
+    SUNDAY_DAY = datetime.date(2026, 3, 8)
+
+    def _buckets(self, session_client, workspace, project, start_of_the_week):
+        Project.objects.filter(pk=project.pk).update(start_of_the_week=start_of_the_week)
+        state = State.objects.get(project=project)
+        Issue.objects.all().delete()
+        Issue.objects.create(
+            name="midweek",
+            project=project,
+            workspace=workspace,
+            state=state,
+            target_date=datetime.date(2026, 3, 11),
+        )
+        with mock.patch("plane.utils.date_buckets.timezone.localdate", return_value=self.SUNDAY_DAY):
+            response = session_client.get(
+                f"/api/workspaces/{workspace.slug}/projects/{project.id}/issues/",
+                {"group_by": "target_date_bucket", "per_page": 50, "cursor": "50:0:0"},
+            )
+        return _grouped(response)
+
+    def test_a_week_that_starts_on_sunday_still_has_this_wednesday_in_this_week(
+        self, session_client, workspace, project
+    ):
+        grouped = self._buckets(session_client, workspace, project, 0)
+
+        assert grouped["this_week"] == ["midweek"]
+
+    def test_a_week_that_starts_on_monday_has_this_wednesday_in_next_week(self, session_client, workspace, project):
+        grouped = self._buckets(session_client, workspace, project, 1)
+
+        assert grouped["next_week"] == ["midweek"]

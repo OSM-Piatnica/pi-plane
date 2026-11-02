@@ -34,6 +34,7 @@ class TestIssueGroupByAllowlist:
             "finish_date",
             "start_date",
             "schedule_date",
+            "start_date_bucket",
             "target_date_bucket",
             "finish_date_bucket",
         }

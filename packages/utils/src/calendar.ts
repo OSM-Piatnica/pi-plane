@@ -20,7 +20,7 @@ import { getWeekNumberOfDate, renderFormattedPayloadDate } from "./datetime";
 export const generateCalendarData = (
   currentStructure: ICalendarPayload | null,
   startDate: Date,
-  startOfWeek: EStartOfTheWeek = EStartOfTheWeek.SUNDAY
+  startOfWeek: EStartOfTheWeek = EStartOfTheWeek.MONDAY
 ): ICalendarPayload => {
   const calendarData: ICalendarPayload = currentStructure ?? {};
 
@@ -84,9 +84,9 @@ export const generateCalendarData = (
 export const getOrderedDays = <T>(
   items: T[],
   getDayIndex: (item: T) => number,
-  startOfWeek: EStartOfTheWeek = EStartOfTheWeek.SUNDAY
+  startOfWeek: EStartOfTheWeek = EStartOfTheWeek.MONDAY
 ): T[] =>
-  [...items].sort((a, b) => {
+  [...items].toSorted((a, b) => {
     const dayA = (7 + getDayIndex(a) - startOfWeek) % 7;
     const dayB = (7 + getDayIndex(b) - startOfWeek) % 7;
     return dayA - dayB;
