@@ -5,13 +5,13 @@
  * See the LICENSE file for details.
  */
 
-import { BrainCog } from "lucide-react";
+import { BrainCog, Palette } from "lucide-react";
 // plane imports
 import { ImageOutline, LockOutline, MailOutline, SettingsOutline, WorkspaceOutline } from "@makeplane/propel/icons";
 // types
 import type { TSidebarMenuItem } from "./types";
 
-export type TCoreSidebarMenuKey = "general" | "email" | "workspace" | "authentication" | "ai" | "image";
+export type TCoreSidebarMenuKey = "general" | "email" | "workspace" | "authentication" | "ai" | "image" | "themes";
 
 export const coreSidebarMenuLinks: Record<TCoreSidebarMenuKey, TSidebarMenuItem> = {
   general: {
@@ -49,5 +49,11 @@ export const coreSidebarMenuLinks: Record<TCoreSidebarMenuKey, TSidebarMenuItem>
     name: "Images in Pi-Plane",
     description: "Allow third-party image libraries.",
     href: `/image/`,
+  },
+  themes: {
+    Icon: Palette,
+    name: "Themes",
+    description: "Add colour themes for everyone on this instance.",
+    href: `/themes/`,
   },
 };

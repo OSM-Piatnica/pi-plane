@@ -81,6 +81,8 @@ export const CustomThemeSelector = observer(function CustomThemeSelector() {
         background: formData.background,
         darkPalette: formData.darkPalette,
         overrides,
+        // saved from the editor, so it is no longer the instance theme it may have started from
+        instanceThemeId: undefined,
       });
 
       setToast({

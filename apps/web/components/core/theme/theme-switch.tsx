@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -10,12 +11,17 @@ import { THEME_OPTIONS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Select } from "@plane/blocks/select";
 
+/** A theme in the list: the built-in ones are named by a translation key, the instance's own by `label`. */
+export type TThemeSwitchOption = I_THEME_OPTION & { label?: string };
+
 type Props = {
-  value: I_THEME_OPTION | null;
-  onChange: (value: I_THEME_OPTION) => void;
+  value: TThemeSwitchOption | null;
+  onChange: (value: TThemeSwitchOption) => void;
+  /** themes the instance added, listed after the built-in ones */
+  extraOptions?: TThemeSwitchOption[];
 };
 
-function ThemeOptionIcon({ option }: { option: I_THEME_OPTION }) {
+function ThemeOptionIcon({ option }: { option: TThemeSwitchOption }) {
   return (
     <div
       className="relative flex h-4 w-4 rotate-45 transform items-center justify-center rounded-full border"
@@ -41,20 +47,23 @@ function ThemeOptionIcon({ option }: { option: I_THEME_OPTION }) {
 }
 
 export function ThemeSwitch(props: Props) {
-  const { value, onChange } = props;
+  const { value, onChange, extraOptions = [] } = props;
   // translation
   const { t } = useTranslation();
+  // derived values
+  const options: TThemeSwitchOption[] = [...THEME_OPTIONS, ...extraOptions];
+  const getLabel = (option: TThemeSwitchOption) => option.label ?? t(option.key);
 
   return (
-    <Select<I_THEME_OPTION>
-      getValues={() => THEME_OPTIONS}
+    <Select<TThemeSwitchOption>
+      getValues={() => options}
       value={value}
       onChange={(themeValue) => {
-        const themeOption = THEME_OPTIONS.find((option) => option.value === themeValue);
+        const themeOption = options.find((option) => option.value === themeValue);
         if (themeOption) onChange(themeOption);
       }}
       getOptionValue={(option) => option.value}
-      getOptionLabel={(option) => t(option.key)}
+      getOptionLabel={getLabel}
       getOptionIcon={(option) => <ThemeOptionIcon option={option} />}
       contentSizing="anchor"
       showSearch={false}
@@ -66,7 +75,7 @@ export function ThemeSwitch(props: Props) {
           {value ? (
             <div className="flex w-full items-center gap-2">
               <ThemeOptionIcon option={value} />
-              {t(value.key)}
+              {getLabel(value)}
             </div>
           ) : (
             t("select_your_theme")

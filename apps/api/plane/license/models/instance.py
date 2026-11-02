@@ -100,3 +100,29 @@ class ChangeLog(BaseModel):
         verbose_name_plural = "Change Logs"
         db_table = "changelogs"
         ordering = ("-created_at",)
+
+
+class InstanceTheme(BaseModel):
+    """A colour theme every user of the instance can pick, next to the built-in ones.
+
+    Themes loaded from the deployment (`source="deployment"`) are read-only in the admin GUI;
+    the ones added there (`source="admin"`) can be edited and deleted.
+    """
+
+    class Source(models.TextChoices):
+        DEPLOYMENT = "deployment", "Deployment"
+        ADMIN = "admin", "Admin"
+
+    name = models.CharField(max_length=100, unique=True)
+    primary = models.CharField(max_length=7)
+    background = models.CharField(max_length=7)
+    dark_palette = models.BooleanField(default=False)
+    # semantic colour tokens (`bg-canvas`, `txt-primary`...) pinned to a hex colour
+    overrides = models.JSONField(default=dict, blank=True)
+    source = models.CharField(max_length=20, choices=Source.choices, default=Source.ADMIN)
+
+    class Meta:
+        verbose_name = "Instance Theme"
+        verbose_name_plural = "Instance Themes"
+        db_table = "instance_themes"
+        ordering = ("name",)
