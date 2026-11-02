@@ -34,8 +34,8 @@ export const RescheduleConfirmModal = observer(function RescheduleConfirmModal()
             {shifts.map((shift) => (
               <li key={shift.id} className="text-12">
                 <span className="font-medium text-primary">{shift.ref}</span> {shift.name}:{" "}
-                {formatRange(shift.start_date, shift.target_date)} →{" "}
-                {formatRange(shift.new_start_date, shift.new_target_date)}
+                {formatRange(shift.start_date, shift.finish_date)} →{" "}
+                {formatRange(shift.new_start_date, shift.new_finish_date)}
               </li>
             ))}
           </ul>

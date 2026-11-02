@@ -21,7 +21,7 @@
       "description": "Aktualisieren Sie Ihren Plan, um diesen Anhang anzuzeigen."
     },
     "aria": {
-      "click_to_upload": "Klicken Sie, um Anhang hochzuladen"
+      "click_to_upload": "Klicken Sie, um einen Anhang hochzuladen"
     }
   },
   "externalEmbedComponent": {
@@ -31,7 +31,7 @@
       "convert_to_richcard": "In Rich Card umwandeln"
     },
     "placeholder": {
-      "insert_embed": "Fügen Sie hier Ihren bevorzugten Einbettungslink ein, z.B. YouTube-Video, Figma-Design usw.",
+      "insert_embed": "Fügen Sie hier Ihren bevorzugten Einbettungslink ein, z. B. YouTube-Video, Figma-Design usw.",
       "link": "Link eingeben oder einfügen"
     },
     "input_modal": {

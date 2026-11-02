@@ -19,7 +19,7 @@ import { useUser, useUserPermissions } from "@/hooks/store/user";
 import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import type { IMemberFilters } from "@/store/member/utils";
 
-export interface RowData extends Pick<TProjectMembership, "original_role"> {
+export interface RowData extends Pick<TProjectMembership, "original_role" | "via_group" | "group_role"> {
   member: IWorkspaceMember;
 }
 

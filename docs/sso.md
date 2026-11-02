@@ -79,6 +79,20 @@ Entra: when the tenant sends the optional `xms_edov` claim (email domain verifie
 Provider answers are limited to 1 MiB; the log names the stage of a refused sign-in and the provider's own error code and
 description (never the request, which carries the secret and the code).
 
+## Groups
+
+Each provider can mirror the groups a person has at the provider as [user groups](user-groups.md) that are managed outside. The groups are read at every sign-in; when they cannot be read, nothing changes. Like the other settings they can be set in god mode or in the environment.
+
+| Provider           | Settings                                                                                                                                                                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Microsoft Entra ID | `ENTRA_SYNC_GROUPS=1`. All groups of the person, nested ones included, are read through Microsoft Graph with their own token; the sign-in then asks them for the permission `User.Read`.                                                                                 |
+| Google             | `GOOGLE_OIDC_SYNC_GROUPS=1`, `GOOGLE_OIDC_GROUPS_ADMIN_EMAIL` and `GOOGLE_OIDC_GROUPS_SERVICE_ACCOUNT`. Needs a service account key (JSON) with domain-wide delegation of `https://www.googleapis.com/auth/admin.directory.group.readonly`, acting as a Workspace admin. |
+| Any OIDC provider  | `OIDC_GROUPS_CLAIM`, the claim of the ID token that lists the groups (for example `groups`), and, if the provider only sends it for a certain scope, `OIDC_GROUPS_SCOPE`.                                                                                                |
+
+**Which Entra data become groups.** With `ENTRA_SYNC_GROUPS=1` as the master switch, eight more switches (Authentication → Microsoft in god mode, or the environment) choose the kinds: `ENTRA_GROUPS_SECURITY`, `ENTRA_GROUPS_MICROSOFT_365` and `ENTRA_GROUPS_DISTRIBUTION` (all on by default, so every group of the person is mirrored as before), and `ENTRA_GROUPS_ADMIN_UNITS`, `ENTRA_GROUPS_DEPARTMENT`, `ENTRA_GROUPS_COMPANY`, `ENTRA_GROUPS_OFFICE` and `ENTRA_GROUPS_ORG_UNITS` (off by default). Administrative units are named `Administrative unit: <name>`, the person's department, company and office location attributes become one group per value (`Department: Sales`, `Company: Acme`, `Office: Warsaw`). People synced from on-premises Active Directory can also be grouped by their organizational unit: the OU path of their directory entry becomes nested groups (`Organizational unit: Poland` with `Sales` below it, up to 9 levels), the person is a member of the innermost one and of its parents through the nesting; cloud-only accounts have none. The sync owns the position of these groups (a hand-moved OU group is put back at the next sign-in) and never deletes groups. SharePoint's own site permission groups are not Entra objects and are not read (a Microsoft 365 group or an Entra group that has access to a site is). Reading administrative units needs the delegated Graph permission `AdministrativeUnit.Read.All` with admin consent in the tenant; if Graph refuses, the other kinds still work. Turning a kind off takes people out of its groups at their next sign-in.
+
+The generic claim may be a list of names or one string of names separated by commas, with at most 500 entries. A path such as `/sales/poland` (Keycloak) is shown as `sales/poland`. A token without the claim changes nothing; a claim that is there but empty removes the person from the mirrored groups.
+
 ## Adding another provider
 
 Write a subclass of `OidcProviderSpec` in `providers.py` (issuer, extra settings, `validate_claims`, `map_claims`) and

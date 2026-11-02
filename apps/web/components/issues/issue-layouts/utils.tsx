@@ -8,7 +8,7 @@
 import type { CSSProperties, FC } from "react";
 import { extractInstruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
 import { Timer } from "lucide-react";
-import { clone, isNil, pull, uniq, concat } from "lodash-es";
+import { clone, isNil } from "lodash-es";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
 import {
   AttachOutline,
@@ -54,11 +54,27 @@ import type {
 } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 // plane ui
-
-import { renderFormattedDate, getFileURL } from "@plane/utils";
+import {
+  DATE_BUCKETS,
+  renderFormattedDate,
+  getDateBucketDropDate,
+  getFileURL,
+  getTodayInTimeZone,
+  getWorkItemDateStatuses,
+} from "@plane/utils";
+import type { TDateBucketField, TWorkItemDateStatuses } from "@plane/utils";
 // helpers
 // store
-import { ALL_EPICS_GROUP_NAME, ALL_ISSUES_GROUP_ID, COMPLETED_CYCLE_DROP_ERROR } from "@/helpers/group-column";
+import {
+  ALL_EPICS_GROUP_NAME,
+  ALL_ISSUES_GROUP_ID,
+  COMPLETED_CYCLE_DROP_ERROR,
+  DATE_BUCKET_DROP_ERROR,
+  DATE_BUCKET_NO_DAY_LEFT_ERROR,
+} from "@/helpers/group-column";
+import { getBucketContext } from "@/helpers/date-bucket-today";
+import { getGroupDropValue } from "@/helpers/group-drop";
+import { resolveWeekendDays } from "@/helpers/weekend-days";
 import { store } from "@/lib/store-context";
 // store
 import { ISSUE_FILTER_DEFAULT_DATA } from "@/store/issue/helpers/base-issues.store";
@@ -68,6 +84,7 @@ import {
   SpreadsheetAttachmentColumn,
   SpreadsheetCreatedOnColumn,
   SpreadsheetDueDateColumn,
+  SpreadsheetFinishDateColumn,
   SpreadsheetDurationColumn,
   SpreadsheetEstimateColumn,
   SpreadsheetLabelColumn,
@@ -156,12 +173,53 @@ export const getGroupByColumns = ({
     labels: getLabelsColumns,
     assignees: getAssigneeColumns,
     created_by: getCreatedByColumns,
+    start_date_bucket: () => getDateBucketColumns("start_date"),
+    target_date_bucket: () => getDateBucketColumns("target_date"),
+    finish_date_bucket: () => getDateBucketColumns("finish_date"),
     team_project: getTeamProjectColumns,
   };
 
   // Get and return the columns for the specified group by option
   return groupByColumnMap[groupBy]?.({ isWorkspaceLevel: isWorkspaceLevelGroup, projectId });
 };
+
+/**
+ * The groups of a date: its time buckets. The names are built where no translation is available, so they are
+ * translated by id (see `getGroupColumnName`). A work item dropped into one gets the day that stands for it.
+ */
+/**
+ * The non-working days a dropped date is chosen by: those of the work item's project (inside a project list, of the
+ * project being viewed), else the workspace's.
+ */
+const getDropWeekendDays = (projectId: string | null | undefined): number[] =>
+  resolveWeekendDays({
+    project: projectId ? (store.projectRoot.project.getProjectById(projectId) ?? {}) : undefined,
+    workspace: store.workspaceRoot.currentWorkspace?.weekend_days,
+  });
+
+const getDateBucketColumns = (field: TDateBucketField): IGroupByColumn[] =>
+  DATE_BUCKETS.map((bucket) => {
+    const { today, weekStart } = getBucketContext(store);
+    const dropDate = getDateBucketDropDate(bucket, today, {
+      weekendDays: getDropWeekendDays(store.router.projectId),
+      edge: field === "start_date" ? "start" : "end",
+      weekStart,
+    });
+    const canDrop = dropDate !== undefined;
+    return {
+      id: bucket,
+      name: bucket,
+      icon: undefined,
+      payload: dropDate ? { [field]: dropDate } : {},
+      isDropDisabled: !canDrop,
+      // This week has no day left on the last day of the week, Earlier and Later never name a single day
+      dropErrorMessage: canDrop
+        ? undefined
+        : bucket === "this_week"
+          ? DATE_BUCKET_NO_DAY_LEFT_ERROR
+          : DATE_BUCKET_DROP_ERROR,
+    };
+  });
 
 const getProjectColumns = (): IGroupByColumn[] | undefined => {
   const { joinedProjectIds: projectIds, projectMap } = store.projectRoot.project;
@@ -568,7 +626,9 @@ export const handleGroupDragDrop = async (
   updateIssueOnDrop: (projectId: string, issueId: string, data: Partial<TIssue>, issueUpdates: IssueUpdates) => void,
   groupBy: TIssueGroupByOptions | undefined,
   subGroupBy: TIssueGroupByOptions | undefined,
-  shouldAddIssueAtTop = false
+  shouldAddIssueAtTop = false,
+  /** Called with the destination group when the drop was refused (a date bucket that names no working day). */
+  onRefused?: (destinationGroupId: string) => void
 ) => {
   if (!source.id || (subGroupBy && (!source.subGroupId || !destination.subGroupId))) return;
 
@@ -600,16 +660,17 @@ export const handleGroupDragDrop = async (
   // update updatedIssue values based on the source and destination groupIds
   if (source.groupId && destination.groupId && source.groupId !== destination.groupId && groupBy) {
     const groupKey = ISSUE_FILTER_DEFAULT_DATA[groupBy];
-    let groupValue: any = clone(sourceIssue[groupKey]);
-
-    // If groupValues is an array, remove source groupId and add destination groupId
-    if (Array.isArray(groupValue)) {
-      pull(groupValue, source.groupId);
-      if (destination.groupId !== "None") groupValue = uniq(concat(groupValue, [destination.groupId]));
-    } // else just update the groupValue based on destination groupId
-    else {
-      groupValue = destination.groupId === "None" ? null : destination.groupId;
-    }
+    const groupValue = getGroupDropValue(
+      groupBy,
+      sourceIssue[groupKey],
+      source.groupId,
+      destination.groupId,
+      getBucketContext(store).today,
+      getDropWeekendDays(sourceIssue.project_id),
+      getBucketContext(store).weekStart
+    );
+    // a time bucket that names no single day, or no working day, cannot take the drop
+    if (groupValue === undefined) return onRefused?.(destination.groupId);
 
     // keep track of updates on what was added and what was removed
     issueUpdates[groupKey] = { ADD: getGroupId(destination.groupId), REMOVE: getGroupId(source.groupId) };
@@ -620,16 +681,16 @@ export const handleGroupDragDrop = async (
   // update updatedIssue values based on the source and destination subGroupIds
   if (subGroupBy && source.subGroupId && destination.subGroupId && source.subGroupId !== destination.subGroupId) {
     const subGroupKey = ISSUE_FILTER_DEFAULT_DATA[subGroupBy];
-    let subGroupValue: any = clone(sourceIssue[subGroupKey]);
-
-    // If subGroupValue is an array, remove source subGroupId and add destination subGroupId
-    if (Array.isArray(subGroupValue)) {
-      pull(subGroupValue, source.subGroupId);
-      if (destination.subGroupId !== "None") subGroupValue = uniq(concat(subGroupValue, [destination.subGroupId]));
-    } // else just update the subGroupValue based on destination subGroupId
-    else {
-      subGroupValue = destination.subGroupId === "None" ? null : destination.subGroupId;
-    }
+    const subGroupValue = getGroupDropValue(
+      subGroupBy,
+      sourceIssue[subGroupKey],
+      source.subGroupId,
+      destination.subGroupId,
+      getBucketContext(store).today,
+      getDropWeekendDays(sourceIssue.project_id),
+      getBucketContext(store).weekStart
+    );
+    if (subGroupValue === undefined) return onRefused?.(destination.subGroupId);
 
     // keep track of updates on what was added and what was removed
     issueUpdates[subGroupKey] = { ADD: getGroupId(destination.subGroupId), REMOVE: getGroupId(source.subGroupId) };
@@ -840,6 +901,23 @@ export const calculateIdentifierWidth = (projectIdentifierLength: number, maxSeq
   return projectIdentifierLength * 7 + 7 + sequenceDigits * 7; // project identifier chars + dash + sequence digits
 };
 
+/**
+ * @description Date statuses of a work item for list/board/calendar badges. Overdue only concerns the due
+ * date and only active (not completed/cancelled) items; the due day itself is not overdue. "Today" is the
+ * calendar day in the project time zone (the runtime zone when unknown).
+ */
+export const getIssueDateStatuses = (
+  issue: Pick<TIssue, "finish_date" | "target_date">,
+  stateGroup: string | undefined,
+  timeZone?: string | null
+): TWorkItemDateStatuses =>
+  getWorkItemDateStatuses({
+    finishDate: issue.finish_date,
+    dueDate: issue.target_date,
+    today: getTodayInTimeZone(timeZone),
+    isActive: !!stateGroup && ![STATE_GROUPS.completed.key, STATE_GROUPS.cancelled.key].includes(stateGroup as never),
+  });
+
 // types
 export type TGetScopeMemberIdsResult = {
   memberIds: string[];
@@ -895,6 +973,7 @@ export const SPREADSHEET_COLUMNS: { [key in keyof IIssueDisplayProperties]: TSpr
   assignee: SpreadsheetAssigneeColumn,
   created_on: SpreadsheetCreatedOnColumn,
   due_date: SpreadsheetDueDateColumn,
+  finish_date: SpreadsheetFinishDateColumn,
   duration: SpreadsheetDurationColumn,
   estimate: SpreadsheetEstimateColumn,
   labels: SpreadsheetLabelColumn,

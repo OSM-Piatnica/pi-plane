@@ -28,6 +28,7 @@ import { DeleteProjectViewModal } from "./delete-view-modal";
 import { CreateUpdateProjectViewModal } from "./modal";
 import { ViewQuickActions } from "./quick-actions";
 import { useTranslation } from "@plane/i18n";
+import { useSpaceEnabled } from "@/hooks/use-space-enabled";
 
 type Props = {
   parentRef: React.RefObject<HTMLElement | null>;
@@ -38,6 +39,7 @@ export const ViewListItemAction = observer(function ViewListItemAction(props: Pr
   const { parentRef, view } = props;
   // translation
   const { t } = useTranslation();
+  const isSpaceEnabled = useSpaceEnabled();
   // states
   const [createUpdateViewModal, setCreateUpdateViewModal] = useState(false);
   const [deleteViewModal, setDeleteViewModal] = useState(false);
@@ -101,7 +103,7 @@ export const ViewListItemAction = observer(function ViewListItemAction(props: Pr
         </Tooltip>
       </div>
 
-      {view?.anchor && publishLink ? (
+      {view?.anchor && publishLink && isSpaceEnabled ? (
         <button
           type="button"
           className="flex cursor-pointer items-center gap-1.5 rounded-sm bg-success-subtle px-3 py-1.5 text-11 font-medium text-success-primary"

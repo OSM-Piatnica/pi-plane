@@ -7,6 +7,8 @@
  */
 
 import { observer } from "mobx-react";
+// plane imports
+import { useTranslation } from "@plane/i18n";
 // ui
 import { Button } from "@makeplane/propel/components/button";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
@@ -17,11 +19,13 @@ import packageJson from "package.json";
 const PI_PLANE_REPO_URL = "https://github.com/OSM-Piatnica/pi-plane";
 
 export const WorkspaceEditionBadge = observer(function WorkspaceEditionBadge() {
+  // plane hooks
+  const { t } = useTranslation();
   // platform
   const { isMobile } = usePlatformOS();
 
   return (
-    <Tooltip label={`Version: v${packageJson.version}`} disabled={isMobile}>
+    <Tooltip label={`Version: v${packageJson.version} · ${t("home.star_us_on_github")}`} disabled={isMobile}>
       <Button
         variant="tertiary"
         size="lg"

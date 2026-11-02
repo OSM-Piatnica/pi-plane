@@ -25,11 +25,7 @@
           "type": "string"
         },
         "pullPolicy": {
-          "enum": [
-            "Always",
-            "IfNotPresent",
-            "Never"
-          ]
+          "enum": ["Always", "IfNotPresent", "Never"]
         }
       }
     },
@@ -85,9 +81,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         }
       }
@@ -114,6 +108,10 @@
           "type": "integer",
           "minimum": 1
         },
+        "fileSizeLimitMax": {
+          "type": "integer",
+          "minimum": 1
+        },
         "authenticationRateLimit": {
           "type": "string",
           "pattern": "^[0-9]+/(second|minute|hour|day)$"
@@ -126,11 +124,13 @@
           "type": "string",
           "pattern": "^[0-9]+/(second|minute|hour|day)$"
         },
+        "adminMessageLimitPerHour": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
         "numProxies": {
-          "type": [
-            "string",
-            "integer"
-          ]
+          "type": ["string", "integer"]
         },
         "extraCorsOrigins": {
           "type": "array",
@@ -148,11 +148,7 @@
         "env": {
           "type": "object",
           "additionalProperties": {
-            "type": [
-              "string",
-              "number",
-              "boolean"
-            ]
+            "type": ["string", "number", "boolean"]
           }
         },
         "envFrom": {
@@ -185,9 +181,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "replicas": {
@@ -201,10 +195,7 @@
               "type": "boolean"
             },
             "minAvailable": {
-              "type": [
-                "integer",
-                "string"
-              ]
+              "type": ["integer", "string"]
             }
           }
         },
@@ -236,9 +227,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "replicas": {
@@ -269,9 +258,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         }
       }
@@ -298,9 +285,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "backoffLimit": {
@@ -335,9 +320,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "replicas": {
@@ -351,10 +334,7 @@
               "type": "boolean"
             },
             "minAvailable": {
-              "type": [
-                "integer",
-                "string"
-              ]
+              "type": ["integer", "string"]
             }
           }
         }
@@ -382,9 +362,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "replicas": {
@@ -398,10 +376,7 @@
               "type": "boolean"
             },
             "minAvailable": {
-              "type": [
-                "integer",
-                "string"
-              ]
+              "type": ["integer", "string"]
             }
           }
         }
@@ -410,6 +385,9 @@
     "space": {
       "type": "object",
       "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
         "resources": {
           "type": "object"
         },
@@ -429,9 +407,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "replicas": {
@@ -445,10 +421,7 @@
               "type": "boolean"
             },
             "minAvailable": {
-              "type": [
-                "integer",
-                "string"
-              ]
+              "type": ["integer", "string"]
             }
           }
         }
@@ -476,9 +449,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name"
-            ]
+            "required": ["name"]
           }
         },
         "replicas": {
@@ -492,10 +463,7 @@
               "type": "boolean"
             },
             "minAvailable": {
-              "type": [
-                "integer",
-                "string"
-              ]
+              "type": ["integer", "string"]
             }
           }
         }
@@ -509,10 +477,7 @@
         },
         "image": {
           "type": "object",
-          "required": [
-            "repository",
-            "tag"
-          ],
+          "required": ["repository", "tag"],
           "properties": {
             "repository": {
               "type": "string",
@@ -589,10 +554,7 @@
         },
         "image": {
           "type": "object",
-          "required": [
-            "repository",
-            "tag"
-          ],
+          "required": ["repository", "tag"],
           "properties": {
             "repository": {
               "type": "string",
@@ -657,10 +619,7 @@
         },
         "image": {
           "type": "object",
-          "required": [
-            "repository",
-            "tag"
-          ],
+          "required": ["repository", "tag"],
           "properties": {
             "repository": {
               "type": "string",
@@ -728,6 +687,10 @@
     "objectStorage": {
       "type": "object",
       "properties": {
+        "provider": {
+          "type": "string",
+          "enum": ["s3", "azure"]
+        },
         "bucket": {
           "type": "string",
           "pattern": "^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$"
@@ -743,10 +706,7 @@
             },
             "image": {
               "type": "object",
-              "required": [
-                "repository",
-                "tag"
-              ],
+              "required": ["repository", "tag"],
               "properties": {
                 "repository": {
                   "type": "string",
@@ -823,14 +783,10 @@
                 "const": true
               }
             },
-            "required": [
-              "enabled"
-            ]
+            "required": ["enabled"]
           }
         },
-        "required": [
-          "gateway"
-        ]
+        "required": ["gateway"]
       },
       "then": {
         "properties": {

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -85,6 +86,10 @@ export interface IProjectDetails {
 }
 
 export interface ICycle extends TProgressSnapshot {
+  /** Groups assigned to work items of the cycle (incl. the ones above them) the requester may filter by. */
+  group_ids?: string[];
+  has_group?: boolean;
+  in_my_groups?: boolean;
   progress_snapshot: TProgressSnapshot | undefined;
 
   created_at?: string;

@@ -418,7 +418,7 @@ class TestProjectDuplicate:
         source_project.cover_image_asset = cover
         source_project.save()
 
-        copy_object = mocker.patch("plane.app.views.project.duplicate.S3Storage.copy_object", return_value={})
+        copy_object = mocker.patch("plane.settings.storage.S3Storage.copy_object", return_value={})
 
         response = session_client.post(duplicate_url(workspace.slug, source_project.id), {}, format="json")
         copy = Project.objects.get(pk=response.data["id"])
@@ -447,7 +447,7 @@ class TestProjectDuplicate:
         source_project.cover_image_asset = cover
         source_project.save()
 
-        mocker.patch("plane.app.views.project.duplicate.S3Storage.copy_object", return_value=None)
+        mocker.patch("plane.settings.storage.S3Storage.copy_object", return_value=None)
 
         response = session_client.post(duplicate_url(workspace.slug, source_project.id), {}, format="json")
 

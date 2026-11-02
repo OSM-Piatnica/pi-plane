@@ -18,6 +18,7 @@ import {
 } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
+import { useSpaceEnabled } from "@/hooks/use-space-enabled";
 import { Icon } from "@makeplane/propel/components/icon";
 import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
 
@@ -49,6 +50,7 @@ export function ProjectActionsMenu({
   const [isMenuActive, setIsMenuActive] = useState(false);
   // translation
   const { t } = useTranslation();
+  const isSpaceEnabled = useSpaceEnabled();
   // refs
   const actionSectionRef = useRef<HTMLButtonElement | null>(null);
   // router
@@ -71,7 +73,7 @@ export function ProjectActionsMenu({
         />
         <MenuContent side="bottom" align="start">
           {/* Publish project settings */}
-          {isAdmin && (
+          {isAdmin && isSpaceEnabled && (
             <MenuItem icon={<Icon icon={GlobeOutline} />} label={t("publish_project")} onClick={onPublishModal} />
           )}
           <MenuItem icon={<Icon icon={LinkOutline} />} label={t("copy_link")} onClick={onCopyText} />

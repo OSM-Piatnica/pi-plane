@@ -1,12 +1,17 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
+import datetime
 import re
 import uuid
 from datetime import timedelta
 
+from django.db.models import Q
 from django.utils import timezone
+
+from plane.utils.date_buckets import bucket_lookups, bucket_q, week_start_for_request
 
 # The date from pattern
 pattern = re.compile(r"\d+_(weeks|months)$")
@@ -159,6 +164,29 @@ def filter_labels(params, issue_filter, method, prefix=""):
     return issue_filter
 
 
+def filter_group_assignees(params, issue_filter, method, prefix="", request=None):
+    """
+    Work items assigned to the given groups: group ids (a group counts the groups below it), ``my_groups`` and
+    ``none`` (no group assignee). On a GET the groups the person may filter by are decided on the server; the
+    stored form of a saved view (any other method) keeps the plain ids.
+    """
+    groups = params.get("group_assignees")
+    if method != "GET":
+        groups = filter_valid_uuids([group for group in (groups or []) if group != "null"])
+        if len(groups):
+            issue_filter[f"{prefix}issue_group_assignee__group_id__in"] = groups
+            issue_filter[f"{prefix}issue_group_assignee__deleted_at__isnull"] = True
+        return issue_filter
+
+    from plane.db.models import Issue
+    from plane.utils.group_filters import issue_group_q, resolve_for_request
+
+    resolved = resolve_for_request(request, groups)
+    if resolved.active:
+        issue_filter[f"{prefix}id__in"] = Issue.objects.filter(issue_group_q(resolved)).values("id")
+    return issue_filter
+
+
 def filter_assignees(params, issue_filter, method, prefix=""):
     if method == "GET":
         assignees = [item for item in params.get("assignees").split(",") if item != "null"]
@@ -272,6 +300,117 @@ def filter_target_date(params, issue_filter, method, prefix=""):
         if params.get("target_date", None) and len(params.get("target_date")):
             issue_filter[f"{prefix}target_date"] = params.get("target_date")
     return issue_filter
+
+
+def filter_finish_date(params, issue_filter, method, prefix=""):
+    if method == "GET":
+        finish_dates = params.get("finish_date").split(",")
+        if len(finish_dates) and "" not in finish_dates:
+            date_filter(
+                issue_filter=issue_filter,
+                date_term=f"{prefix}finish_date",
+                queries=finish_dates,
+            )
+    else:
+        if params.get("finish_date", None) and len(params.get("finish_date")):
+            issue_filter[f"{prefix}finish_date"] = params.get("finish_date")
+    return issue_filter
+
+
+def _list_scope(request):
+    """A Q that limits a subquery over work items to what the request lists: its project, else its workspace."""
+    context = getattr(request, "parser_context", None) or {}
+    kwargs = context.get("kwargs") or {}
+    if kwargs.get("project_id"):
+        return Q(project_id=kwargs["project_id"])
+    if kwargs.get("slug"):
+        return Q(workspace__slug=kwargs["slug"])
+    return Q()
+
+
+def _narrow_to(issue_filter, key, condition, request=None):
+    """
+    Add a condition on work items under ``key``; a condition already there stays (both must hold). The condition
+    runs in a subquery, which is limited to the project (else the workspace) the request lists: an unlimited one
+    would read the dates of every work item of every workspace.
+    """
+    from plane.db.models import Issue
+
+    narrowed = issue_filter.get(key)
+    base = Issue.objects.filter(_list_scope(request)) if narrowed is None else narrowed
+    issue_filter[key] = base.filter(condition).values("pk")
+
+
+def filter_schedule_window(params, issue_filter, method, prefix="", request=None):
+    """
+    Work items whose planned schedule touches a window, given as ``from;to`` (yyyy-mm-dd). A work item with only a
+    start or only a finish date is a one day marker, so it counts when that day is in the window; one with both
+    counts when its span overlaps the window.
+    """
+    if method != "GET":
+        return issue_filter
+    bounds = str(params.get("schedule_window") or "").split(";")
+    if len(bounds) != 2 or not all(bounds):
+        return issue_filter
+    first, last = bounds
+    try:
+        first, last = datetime.date.fromisoformat(first), datetime.date.fromisoformat(last)
+    except ValueError:
+        return issue_filter
+    condition = (
+        Q(start_date__range=(first, last))
+        | Q(finish_date__range=(first, last))
+        | Q(start_date__lte=first, finish_date__gte=last)
+    )
+    _narrow_to(issue_filter, f"{prefix}pk__in", condition, request)
+    return issue_filter
+
+
+def filter_schedule_date(params, issue_filter, method, prefix="", request=None):
+    """Work items placed on one day of the schedule: their finish date, or their start date when they have no finish."""
+    if method != "GET":
+        return issue_filter
+    try:
+        day = datetime.date.fromisoformat(str(params.get("schedule_date") or ""))
+    except ValueError:
+        return issue_filter
+    condition = Q(finish_date=day) | Q(finish_date__isnull=True, start_date=day)
+    _narrow_to(issue_filter, f"{prefix}pk__in", condition, request)
+    return issue_filter
+
+
+def _filter_date_bucket(param, field, params, issue_filter, method, prefix, request):
+    if method != "GET":
+        return issue_filter
+    bucket = str(params.get(param) or "")
+    week_start = week_start_for_request(request)
+    lookups = bucket_lookups(field, bucket, None, week_start)
+    if lookups is None:
+        # an unknown bucket matches nothing
+        _narrow_to(issue_filter, f"{prefix}pk__in", Q(pk__in=[]), request)
+        return issue_filter
+    prefixed = {f"{prefix}{lookup}": value for lookup, value in lookups.items()}
+    if any(lookup in issue_filter for lookup in prefixed):
+        # another filter already limits this date: both have to hold, which plain lookups cannot say
+        _narrow_to(issue_filter, f"{prefix}pk__in", bucket_q(field, bucket, None, week_start), request)
+    else:
+        issue_filter.update(prefixed)
+    return issue_filter
+
+
+def filter_start_date_bucket(params, issue_filter, method, prefix="", request=None):
+    """Work items whose start date is in a time bucket (see plane.utils.date_buckets)."""
+    return _filter_date_bucket("start_date_bucket", "start_date", params, issue_filter, method, prefix, request)
+
+
+def filter_target_date_bucket(params, issue_filter, method, prefix="", request=None):
+    """Work items whose due date is in a time bucket (see plane.utils.date_buckets), the group of a grouped list."""
+    return _filter_date_bucket("target_date_bucket", "target_date", params, issue_filter, method, prefix, request)
+
+
+def filter_finish_date_bucket(params, issue_filter, method, prefix="", request=None):
+    """Work items whose finish date is in a time bucket (see plane.utils.date_buckets)."""
+    return _filter_date_bucket("finish_date_bucket", "finish_date", params, issue_filter, method, prefix, request)
 
 
 def filter_completed_at(params, issue_filter, method, prefix=""):
@@ -425,7 +564,7 @@ def filter_logged_by(params, issue_filter, method, prefix=""):
     return issue_filter
 
 
-def issue_filters(query_params, method, prefix=""):
+def issue_filters(query_params, method, prefix="", request=None):
     issue_filter = {}
 
     ISSUE_FILTER = {
@@ -436,6 +575,7 @@ def issue_filters(query_params, method, prefix=""):
         "parent": filter_parent,
         "labels": filter_labels,
         "assignees": filter_assignees,
+        "group_assignees": filter_group_assignees,
         "mentions": filter_mentions,
         "created_by": filter_created_by,
         "logged_by": filter_logged_by,
@@ -444,6 +584,12 @@ def issue_filters(query_params, method, prefix=""):
         "updated_at": filter_updated_at,
         "start_date": filter_start_date,
         "target_date": filter_target_date,
+        "finish_date": filter_finish_date,
+        "schedule_window": filter_schedule_window,
+        "schedule_date": filter_schedule_date,
+        "start_date_bucket": filter_start_date_bucket,
+        "target_date_bucket": filter_target_date_bucket,
+        "finish_date_bucket": filter_finish_date_bucket,
         "completed_at": filter_completed_at,
         "type": filter_issue_state_type,
         "project": filter_project,
@@ -459,5 +605,8 @@ def issue_filters(query_params, method, prefix=""):
     for key, value in ISSUE_FILTER.items():
         if key in query_params:
             func = value
-            func(query_params, issue_filter, method, prefix)
+            if key in ("group_assignees", "schedule_window", "schedule_date") or key.endswith("_date_bucket"):
+                func(query_params, issue_filter, method, prefix, request=request)
+            else:
+                func(query_params, issue_filter, method, prefix)
     return issue_filter

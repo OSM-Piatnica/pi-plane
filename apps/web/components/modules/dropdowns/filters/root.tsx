@@ -13,6 +13,7 @@ import type { TModuleStatus } from "@plane/blocks/icons";
 import { CloseOutline, SearchOutline } from "@makeplane/propel/icons";
 import type { TModuleDisplayFilters, TModuleFilters } from "@plane/types";
 // components
+import { FilterGroupList } from "@/components/common/filters/group-filter-list";
 import { FilterOption } from "@/components/issues/issue-layouts/filters";
 import { FilterLead, FilterMembers, FilterStartDate, FilterStatus, FilterTargetDate } from "@/components/modules";
 // hooks
@@ -108,6 +109,13 @@ export const ModuleFiltersSelection = observer(function ModuleFiltersSelection(p
             memberIds={memberIds}
           />
         </div>
+
+        {/* group */}
+        <FilterGroupList
+          appliedFilters={filters.groups ?? null}
+          handleUpdate={(val) => handleFiltersUpdate("groups", val)}
+          searchQuery={filtersSearchQuery}
+        />
 
         {/* start date */}
         <div className="py-2">

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """Contract tests for project scoping on the workspace-level asset routes (INFRA-501).
@@ -27,7 +28,7 @@ from rest_framework.test import APIClient
 
 from plane.db.models import FileAsset, Project, ProjectMember, User, WorkspaceMember
 
-S3_STORAGE_PATH = "plane.app.views.asset.v2.S3Storage"
+S3_STORAGE_PATH = "plane.app.views.asset.v2.get_storage"
 
 
 def download_url(slug, asset_id):

@@ -1,6 +1,6 @@
 [project]
 name = "Plane"
-version = "2.1.0"
+version = "2.2.0"
 description = "Open-source project management that unlocks customer value"
 requires-python = ">=3.12,<3.13"
 dependencies = [
@@ -80,6 +80,7 @@ dependencies = [
   # html sanitizer
   "nh3==0.3.7",
   "mistune==3.4.0",
+  "azure-storage-blob==12.31.0",
 ]
 
 [dependency-groups]

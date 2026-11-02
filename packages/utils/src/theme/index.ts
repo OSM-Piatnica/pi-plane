@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -26,6 +27,20 @@ export {
   getOnColorTextColors,
   type DarknessDetectionMethod,
 } from "./theme-application";
+
+// Advanced custom theme (semantic colour tokens)
+export {
+  applyThemeOverrides,
+  clearThemeOverrides,
+  sanitizeThemeOverrides,
+  THEME_OVERRIDE_GROUPS,
+  THEME_OVERRIDE_TOKENS,
+  toOverrideHex,
+  type TSanitizedThemeOverrides,
+  type TThemeOverrideGroup,
+  type TThemeOverrides,
+  type TThemeOverrideToken,
+} from "./theme-overrides";
 
 // Color conversion utilities
 export {

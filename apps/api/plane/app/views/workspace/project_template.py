@@ -57,17 +57,25 @@ class WorkspaceProjectTemplateViewSet(BaseViewSet):
         if serializer.is_valid():
             serializer.save()
             return Response(
-                ProjectTemplateSerializer(
-                    serializer.instance,
-                    context={**self.get_serializer_context()},
-                ).data,
+                self._with_unmatched_groups(serializer),
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def _with_unmatched_groups(self, serializer):
+        data = ProjectTemplateSerializer(serializer.instance, context={**self.get_serializer_context()}).data
+        return {**data, "unmatched_groups": serializer.unmatched_groups}
+
     @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER], level="WORKSPACE")
-    def partial_update(self, request, *args, **kwargs):
-        return super().partial_update(request, *args, **kwargs)
+    def partial_update(self, request, slug, pk):
+        instance = self.get_queryset().get(pk=pk)
+        serializer = ProjectTemplateSerializer(
+            instance, data=request.data, partial=True, context={**self.get_serializer_context()}
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(self._with_unmatched_groups(serializer), status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER], level="WORKSPACE")
     def destroy(self, request, *args, **kwargs):

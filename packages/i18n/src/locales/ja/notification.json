@@ -61,6 +61,8 @@
       "assignee_removed": "担当者を削除しました",
       "start_date_set": "開始日を <value/> に設定しました",
       "start_date_removed": "開始日を削除しました",
+      "finish_date_set": "終了日を <value/> に設定しました",
+      "finish_date_removed": "終了日を削除しました",
       "due_date_set": "期限を <value/> に設定しました",
       "due_date_removed": "期限を削除しました",
       "duration_set": "期間を <value/> に設定しました",

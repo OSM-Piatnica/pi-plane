@@ -24,7 +24,7 @@ from plane.bgtasks.project_copy_task import copy_project_work_items
 from plane.bgtasks.webhook_task import model_activity
 from plane.db.models import FileAsset, Project, ProjectCopyJob, WorkspaceMember
 from plane.db.models.project_copy_job import ACTIVE_STATUSES
-from plane.settings.storage import S3Storage
+from plane.settings.storage import get_storage
 from plane.utils.host import base_host
 from plane.utils.path_validator import sanitize_filename
 from plane.utils.project_duplicate import ProjectCopyError, duplicate_project
@@ -53,7 +53,7 @@ def _copy_cover_image(request, source_asset_id, target):
     try:
         name = (original.attributes or {}).get("name")
         destination_key = f"{target.workspace_id}/{uuid.uuid4().hex}-{sanitize_filename(name) or 'unnamed'}"
-        if S3Storage(request=request).copy_object(original.asset.name, destination_key) is None:
+        if get_storage(request=request).copy_object(original.asset.name, destination_key) is None:
             return "cover_image:failed"
 
         duplicated = FileAsset.objects.create(

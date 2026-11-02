@@ -6,7 +6,6 @@
  */
 
 import { useState } from "react";
-import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 
@@ -45,11 +44,14 @@ export const CalendarQuickAddIssueActions = observer(function CalendarQuickAddIs
   const [isExistingIssueModalOpen, setIsExistingIssueModalOpen] = useState(false);
   const { updateIssue } = useIssueDetail();
   // derived values
+  // Deadlines layer: only offer work items without a due date. The search endpoint has no finish-date
+  // filter, so the Scheduled layer offers all work items.
+  const missingDate = prePopulatedData?.target_date !== undefined ? { target_date: "none" } : {};
   const ExistingIssuesListModalPayload = addIssuesToView
     ? moduleId
-      ? { module: moduleId.toString(), target_date: "none" }
-      : { cycle: true, target_date: "none" }
-    : { target_date: "none" };
+      ? { module: moduleId.toString(), ...missingDate }
+      : { cycle: true, ...missingDate }
+    : missingDate;
 
   const handleAddIssuesToView = async (data: ISearchIssueResponse[]) => {
     if (!workspaceSlug || !projectId) return;
@@ -92,15 +94,6 @@ export const CalendarQuickAddIssueActions = observer(function CalendarQuickAddIs
           handleClose={() => setIsExistingIssueModalOpen(false)}
           searchParams={ExistingIssuesListModalPayload}
           handleOnSubmit={handleAddIssuesToView}
-          shouldHideIssue={(issue) => {
-            if (issue.start_date && prePopulatedData?.target_date) {
-              const issueStartDate = new Date(issue.start_date);
-              const targetDate = new Date(prePopulatedData.target_date);
-              const diffInDays = differenceInCalendarDays(targetDate, issueStartDate);
-              if (diffInDays < 0) return true;
-            }
-            return false;
-          }}
         />
       )}
       <QuickAddIssueRoot

@@ -17,6 +17,7 @@ from django.http import HttpRequest
 from rest_framework.request import Request
 
 # Module imports
+from plane.middleware.request_body_size import OWN_SIZE_LIMIT_PATHS
 from plane.utils.ip_address import get_client_ip
 from plane.utils.exception_logger import log_exception
 from plane.bgtasks.logger_task import process_logs
@@ -87,6 +88,9 @@ class APITokenLogMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        # An import carries a file with a size limit of its own; reading its body here would apply the general one
+        if request.path.endswith(OWN_SIZE_LIMIT_PATHS):
+            return self.get_response(request)
         request_body = request.body
         response = self.get_response(request)
         self.process_request(request, response, request_body)

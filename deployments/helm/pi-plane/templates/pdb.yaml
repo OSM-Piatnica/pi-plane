@@ -5,7 +5,7 @@ See the LICENSE file for details.
 */ -}}
 {{- range $name := list "api" "live" "web" "space" "admin" }}
 {{- $values := index $.Values $name }}
-{{- if $values.pdb.enabled }}
+{{- if and $values.pdb.enabled (or (ne $name "space") $values.enabled) }}
 {{- $comp := dict "root" $ "component" $name }}
 ---
 apiVersion: policy/v1

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """POST /api/v1/.../issues/{issue_id}/issue-attachments/ with ``size`` as a string.
@@ -31,7 +32,7 @@ def url(workspace, issue):
 
 @pytest.mark.contract
 @pytest.mark.django_db
-@mock.patch("plane.api.views.issue.S3Storage")
+@mock.patch("plane.api.views.issue.get_storage")
 def test_string_size_is_accepted(s3, api_key_client, workspace, issue):
     s3.return_value.generate_presigned_post.return_value = {}
 

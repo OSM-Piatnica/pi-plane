@@ -119,6 +119,8 @@
   "mentions_description": "Me notifier lorsque quelqu’un me mentionne dans les commentaires ou la description",
   "project_access_requests": "Demandes d’accès",
   "project_access_requests_description": "M’envoyer un e-mail pour les demandes de participation aux projets privés que j’administre et pour les décisions concernant mes propres demandes.",
+  "workspace_admin_messages": "M’envoyer un e-mail lorsque quelqu’un écrit aux administrateurs de l’espace de travail",
+  "workspace_admin_messages_description": "S’applique uniquement si vous êtes administrateur d’un espace de travail. Le message arrive toujours dans votre boîte de réception ; ce réglage détermine seulement si vous recevez aussi un e-mail, et uniquement pour vous.",
   "email_frequency": "Fréquence des e-mails",
   "email_frequency_description": "Choisissez la fréquence à laquelle vous recevez des e-mails sur les mises à jour des éléments de travail. Les mentions sont toujours envoyées immédiatement.",
   "email_frequency_instant": "Immédiatement",
@@ -241,6 +243,25 @@
   "documentation": "Documentation",
   "message_support": "Contacter le support",
   "contact_sales": "Contacter les ventes",
+  "contact_workspace_admins": {
+    "menu_label": "Contacter les administrateurs",
+    "title": "Contacter les administrateurs de l’espace de travail",
+    "description": "Les administrateurs de {workspace} ajoutent des personnes, modifient les rôles et aident pour l’accès. Écrivez-leur avec votre application de messagerie.",
+    "email_all": "Écrire à tous les administrateurs",
+    "subject": "Question pour les administrateurs de {workspace}",
+    "body": "Bonjour,\n\n\n\n{name}",
+    "message_label": "Message aux administrateurs",
+    "message_placeholder": "Dites ce dont vous avez besoin, par exemple l’accès à un projet ou un changement de rôle.",
+    "characters": "{count} / {max}",
+    "send": "Envoyer le message",
+    "sent": "Votre message a été envoyé aux administrateurs de l’espace de travail.",
+    "error_rate_limited": "Vous avez envoyé plusieurs messages récemment. Veuillez réessayer plus tard.",
+    "error_generic": "Le message n’a pas pu être envoyé. Réessayez, ou écrivez aux administrateurs par e-mail.",
+    "or_email": "Ou écrivez depuis votre propre application de messagerie",
+    "notification_text": "a écrit aux administrateurs de cet espace de travail",
+    "message_from": "Message de {name}",
+    "reply_by_email": "Répondre par e-mail"
+  },
   "hyper_mode": "Mode Hyper",
   "keyboard_shortcuts": "Raccourcis clavier",
   "whats_new": "Quoi de neuf ?",
@@ -323,6 +344,7 @@
   "start_date": "Date de début",
   "end_date": "Date de fin",
   "due_date": "Date d’échéance",
+  "finish_date": "Date de fin",
   "target_date": "Date cible",
   "estimate": "Estimation",
   "change_parent_issue": "Changer l’élément de travail parent",
@@ -352,6 +374,12 @@
   "filter_headings": {
     "access": "Accès",
     "owned_by": "Propriétaire"
+  },
+  "group_filter": {
+    "heading": "Groupe",
+    "my_groups": "Mes groupes",
+    "no_group": "Aucun groupe",
+    "unknown_group": "Groupe inconnu"
   },
   "good": "Bonjour",
   "morning": "matin",
@@ -549,6 +577,7 @@
       "last_updated": "Dernière mise à jour",
       "start_date": "Date de début",
       "due_date": "Date d’échéance",
+      "finish_date": "Date de fin",
       "asc": "Croissant",
       "desc": "Décroissant",
       "updated_on": "Mis à jour le"

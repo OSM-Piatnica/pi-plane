@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -60,6 +61,34 @@ export const generateFileUploadPayload = (signedURLResponse: TFileSignedURLRespo
   Object.entries(signedURLResponse.upload_data.fields).forEach(([key, value]) => formData.append(key, value));
   formData.append("file", file);
   return formData;
+};
+
+export type TSignedUploadRequest = {
+  method: "post" | "put";
+  url: string;
+  data: FormData | File;
+  headers: Record<string, string>;
+};
+
+/**
+ * @description the request that uploads a file to the signed upload of the storage: a multipart form posted to an
+ * S3-compatible store, or the file itself put to Azure Blob Storage with the headers it asks for
+ * @param {TFileSignedURLResponse} signedURLResponse
+ * @param {File} file
+ * @returns {TSignedUploadRequest} method, URL, body and headers of the upload
+ */
+export const buildSignedUploadRequest = (
+  signedURLResponse: TFileSignedURLResponse,
+  file: File
+): TSignedUploadRequest => {
+  const { url, method, headers } = signedURLResponse.upload_data;
+  if (method === "PUT") return { method: "put", url, data: file, headers: { ...headers } };
+  return {
+    method: "post",
+    url,
+    data: generateFileUploadPayload(signedURLResponse, file),
+    headers: { "Content-Type": "multipart/form-data" },
+  };
 };
 
 /**

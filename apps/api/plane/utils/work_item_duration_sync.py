@@ -22,11 +22,11 @@ def recompute_project_work_item_durations(project_id):
 
     changed = 0
     batch = []
-    queryset = Issue.objects.filter(project_id=project.id, start_date__isnull=False, target_date__isnull=False).only(
-        "id", "start_date", "target_date", "duration"
+    queryset = Issue.objects.filter(project_id=project.id, start_date__isnull=False, finish_date__isnull=False).only(
+        "id", "start_date", "finish_date", "duration"
     )
     for issue in queryset.iterator(chunk_size=BATCH_SIZE):
-        duration = calculate_work_item_duration(issue.start_date, issue.target_date, project.weekend_days)
+        duration = calculate_work_item_duration(issue.start_date, issue.finish_date, project.weekend_days)
         # A range ordered backwards has no meaningful duration; leave it for whoever fixes the dates
         if duration is None or duration < WORK_ITEM_DURATION_MIN or duration == issue.duration:
             continue

@@ -19,6 +19,7 @@ from django import apps
 # Module imports
 from plane.utils.html_processor import strip_tags
 from plane.utils.path_validator import sanitize_filename
+from plane.utils.file_size_limit import get_file_size_limit
 from plane.db.mixins import SoftDeletionManager, ChangeTrackerMixin
 from plane.utils.exception_logger import log_exception
 from .project import ProjectBaseModel
@@ -33,6 +34,7 @@ def get_default_properties():
         "assignee": True,
         "start_date": True,
         "due_date": True,
+        "finish_date": True,
         "duration": True,
         "labels": True,
         "key": True,
@@ -56,6 +58,7 @@ def get_default_filters():
         "created_by": None,
         "labels": None,
         "start_date": None,
+        "finish_date": None,
         "target_date": None,
         "subscriber": None,
     }
@@ -79,6 +82,7 @@ def get_default_display_properties():
         "attachment_count": True,
         "created_on": True,
         "due_date": True,
+        "finish_date": True,
         "duration": True,
         "estimate": True,
         "key": True,
@@ -150,6 +154,13 @@ class Issue(ChangeTrackerMixin, ProjectBaseModel):
     )
     start_date = models.DateField(null=True, blank=True)
     target_date = models.DateField(null=True, blank=True)
+    finish_date = models.DateField(null=True, blank=True)
+    # Provenance for the planning dates. `target_date` is the due date (the deadline); `finish_date`
+    # is the planned/forecast end of the work. `dates_initialized` records that the one-time
+    # "first finish/due entry fills both" opportunity has been used up.
+    dates_initialized = models.BooleanField(default=False)
+    finish_date_origin = models.CharField(max_length=16, null=True, blank=True)
+    target_date_origin = models.CharField(max_length=16, null=True, blank=True)
     duration = models.PositiveIntegerField(null=True, blank=True)
     assignees = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
@@ -162,6 +173,9 @@ class Issue(ChangeTrackerMixin, ProjectBaseModel):
     labels = models.ManyToManyField("db.Label", blank=True, related_name="labels", through="IssueLabel")
     sort_order = models.FloatField(default=65535)
     completed_at = models.DateTimeField(null=True)
+    # The due date that applied when the item was completed, so later deadline edits cannot
+    # rewrite whether it was completed late.
+    due_date_at_completion = models.DateField(null=True, blank=True)
     archived_at = models.DateField(null=True)
     is_draft = models.BooleanField(default=False)
     external_source = models.CharField(max_length=255, null=True, blank=True)
@@ -251,12 +265,14 @@ class Issue(ChangeTrackerMixin, ProjectBaseModel):
 
         if self.state.group == StateGroup.COMPLETED.value:
             self.completed_at = timezone.now()
+            self.due_date_at_completion = self.target_date
         else:
             self.completed_at = None
+            self.due_date_at_completion = None
 
         update_fields = kwargs.get("update_fields")
         if update_fields is not None:
-            kwargs["update_fields"] = list(set(update_fields) | {"completed_at"})
+            kwargs["update_fields"] = list(set(update_fields) | {"completed_at", "due_date_at_completion"})
         return kwargs
 
 
@@ -396,8 +412,8 @@ def get_upload_path(instance, filename):
 
 def file_size(value):
     # File limit check is only for cloud hosted
-    if value.size > settings.FILE_SIZE_LIMIT:
-        raise ValidationError("File too large. Size should not exceed 5 MB.")
+    if value.size > get_file_size_limit():
+        raise ValidationError("File too large.")
 
 
 class IssueAttachment(ProjectBaseModel):
@@ -700,6 +716,7 @@ class IssueVersion(ProjectBaseModel):
     )
     start_date = models.DateField(null=True, blank=True)
     target_date = models.DateField(null=True, blank=True)
+    finish_date = models.DateField(null=True, blank=True)
     duration = models.PositiveIntegerField(null=True, blank=True)
     assignees = ArrayField(models.UUIDField(), blank=True, default=list)
     sequence_id = models.IntegerField(default=1, verbose_name="Issue Sequence ID")
@@ -762,6 +779,7 @@ class IssueVersion(ProjectBaseModel):
                 priority=issue.priority,
                 start_date=issue.start_date,
                 target_date=issue.target_date,
+                finish_date=issue.finish_date,
                 duration=issue.duration,
                 assignees=list(IssueAssignee.objects.filter(issue=issue).values_list("assignee_id", flat=True)),
                 sequence_id=issue.sequence_id,

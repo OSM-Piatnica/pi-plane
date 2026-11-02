@@ -63,8 +63,12 @@ export function InstanceOidcConfigForm(props: Props) {
   const toFormValues = (source: (name: string) => string | undefined): OidcConfigFormValues =>
     Object.fromEntries(
       names.map((name) => {
-        const fallback =
-          name === `${prefix}_ENABLE_SIGNUP`
+        const switchField = provider.fields.find(
+          (field) => `${prefix}_${field.name}` === name && field.type === "switch"
+        );
+        const fallback = switchField
+          ? (switchField.defaultValue ?? "0")
+          : name === `${prefix}_ENABLE_SIGNUP`
             ? "1"
             : name.endsWith("_SYNC") || name.endsWith("_LINK_EXISTING_ACCOUNTS")
               ? "0"
@@ -75,6 +79,7 @@ export function InstanceOidcConfigForm(props: Props) {
   const {
     handleSubmit,
     control,
+    watch,
     reset,
     formState: { errors, isDirty, isSubmitting },
   } = useForm<OidcConfigFormValues>({ defaultValues: toFormValues(read) });
@@ -88,6 +93,12 @@ export function InstanceOidcConfigForm(props: Props) {
   ) : (
     <>{provider.consoleName}.</>
   );
+
+  const textFields = provider.fields.filter((field) => field.type !== "switch");
+  // The first switch is the master one: the others only refine it
+  const switchFields = provider.fields.filter((field) => field.type === "switch");
+  const masterSwitch = switchFields[0];
+  const isMasterOn = masterSwitch ? isOn(watch(`${prefix}_${masterSwitch.name}`)) : true;
 
   const FORM_FIELDS: TControllerInputFormField<OidcConfigFormValues>[] = [
     {
@@ -108,9 +119,9 @@ export function InstanceOidcConfigForm(props: Props) {
       error: Boolean(errors[`${prefix}_CLIENT_SECRET`]),
       required: true,
     },
-    ...provider.fields.map((field) => ({
+    ...textFields.map((field) => ({
       key: `${prefix}_${field.name}`,
-      type: field.type,
+      type: field.type === "password" ? ("password" as const) : ("text" as const),
       label: field.label,
       description: <>{field.description}</>,
       placeholder: field.placeholder ?? "",
@@ -233,6 +244,32 @@ export function InstanceOidcConfigForm(props: Props) {
               />
             </div>
             <ControllerSwitch control={control} field={SYNC_SWITCH_FIELD} />
+            {switchFields.map((field, index) => {
+              const labelId = `${prefix}-${field.name}-label`;
+              return (
+                <div key={field.name} className={`flex items-center justify-between gap-4 ${index > 0 ? "pl-4" : ""}`}>
+                  <div>
+                    <h4 id={labelId} className="text-sm text-custom-text-300">
+                      {field.label}
+                    </h4>
+                    <p className="text-11 text-tertiary">{field.description}</p>
+                  </div>
+                  <Controller
+                    control={control}
+                    name={`${prefix}_${field.name}`}
+                    render={({ field: { value, onChange } }) => (
+                      <Switch
+                        checked={isOn(value)}
+                        onCheckedChange={() => onChange(isOn(value) ? "0" : "1")}
+                        size="sm"
+                        aria-labelledby={labelId}
+                        disabled={index > 0 && !isMasterOn}
+                      />
+                    )}
+                  />
+                </div>
+              );
+            })}
             <div className="flex flex-col gap-1 pt-4">
               <div className="flex items-center gap-4">
                 <Button

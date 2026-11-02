@@ -134,3 +134,21 @@ def test_xlsx_with_wrong_stored_dimensions_reads_every_column():
 
     rows = XLSXFormatter().decode(patched.getvalue())
     assert rows == [{"project_name": "Demo", "name": "Task", "state_name": "Todo"}]
+
+
+def test_maps_the_cycle_period_columns():
+    rows = [
+        {
+            "Identifier": "DEM-5",
+            "Name": "Cycle period",
+            "State Name": "Todo",
+            "Cycles": '["Sprint 1"]',
+            "Cycle Start Date": "2026-06-01",
+            "Cycle End Date": "2026-06-14",
+        }
+    ]
+    mapped = map_community_export_rows(rows)
+
+    assert mapped[0]["cycles"] == '["Sprint 1"]'
+    assert mapped[0]["cycle_start_date"] == "2026-06-01"
+    assert mapped[0]["cycle_end_date"] == "2026-06-14"

@@ -1,4 +1,5 @@
 {% load email_i18n %}
+{% load email_assets %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -95,12 +96,7 @@
             <table role="presentation" width="100%" style="background-color: #000000">
               <tr>
                 <td style="padding: 24px 40px; text-align: center">
-                  <img
-                    src="https://media.docs.plane.so/logo/new-logo-dark.png"
-                    width="120"
-                    alt="Pi-Plane"
-                    style="height: auto; display: block; margin: 0 auto"
-                  />
+                  {% email_logo "dark" 120 %}
                 </td>
               </tr>
             </table>
@@ -221,7 +217,7 @@
                     text-align: left;
                   "
                 >
-                  <p style="margin: 0">Plane Software, Inc.</p>
+                  <p style="margin: 0">Pi-Plane</p>
                 </td>
               </tr>
             </table>

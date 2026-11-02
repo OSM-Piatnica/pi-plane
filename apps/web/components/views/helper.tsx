@@ -7,6 +7,8 @@
 
 import { EIssueLayoutTypes } from "@plane/types";
 import type { IProjectView } from "@plane/types";
+import { LayoutSelection } from "@/components/issues/issue-layouts/filters";
+import { WorkspaceListLayout } from "@/components/issues/issue-layouts/list/roots/workspace-root";
 import { WorkspaceSpreadsheetRoot } from "@/components/issues/issue-layouts/spreadsheet/roots/workspace-root";
 
 export type TWorkspaceLayoutProps = {
@@ -63,11 +65,17 @@ export type TLayoutSelectionProps = {
   workspaceSlug: string;
 };
 
-export function GlobalViewLayoutSelection(_props: TLayoutSelectionProps) {
-  return <></>;
+const GLOBAL_VIEW_LAYOUTS = [EIssueLayoutTypes.SPREADSHEET, EIssueLayoutTypes.LIST];
+
+export function GlobalViewLayoutSelection(props: TLayoutSelectionProps) {
+  const { onChange, selectedLayout } = props;
+  return <LayoutSelection layouts={GLOBAL_VIEW_LAYOUTS} onChange={onChange} selectedLayout={selectedLayout} />;
 }
 
-export function WorkspaceAdditionalLayouts(_props: TWorkspaceLayoutProps) {
+export function WorkspaceAdditionalLayouts(props: TWorkspaceLayoutProps) {
+  const { activeLayout, workspaceSlug, globalViewId } = props;
+  if (activeLayout === EIssueLayoutTypes.LIST)
+    return <WorkspaceListLayout workspaceSlug={workspaceSlug} globalViewId={globalViewId} />;
   return <></>;
 }
 

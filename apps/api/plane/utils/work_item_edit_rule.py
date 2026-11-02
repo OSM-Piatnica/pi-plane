@@ -19,7 +19,8 @@ from functools import wraps
 from rest_framework import status
 from rest_framework.response import Response
 
-from plane.db.models import Issue, IssueAssignee, Project, ProjectMember, WorkspaceMember
+from plane.db.models import Issue, IssueAssignee, IssueGroupAssignee, Project, ProjectMember, WorkspaceMember
+from plane.utils.user_groups import issue_ids_assigned_through_groups
 
 ADMIN_ROLE = 20
 
@@ -62,8 +63,21 @@ def unchangeable_issue_ids(user, project_id, issue_ids):
         "issue_id", "assignee_id"
     ):
         assignees[str(issue_id)].add(assignee_id)
+    # a group an item is assigned to counts its members as assignees
+    group_assigned = defaultdict(bool)
+    for issue_id in IssueGroupAssignee.objects.filter(issue_id__in=scoped).values_list("issue_id", flat=True):
+        group_assigned[str(issue_id)] = True
+    through_group = {
+        str(issue_id) for issue_id in issue_ids_assigned_through_groups(user, project.workspace_id, scoped)
+    }
     # an item nobody is assigned to is open to everyone who may edit it
-    return {issue_id for issue_id in scoped if assignees[issue_id] and user.id not in assignees[issue_id]}
+    return {
+        issue_id
+        for issue_id in scoped
+        if (assignees[issue_id] or group_assigned[issue_id])
+        and user.id not in assignees[issue_id]
+        and issue_id not in through_group
+    }
 
 
 def work_item_edit_denied(user, project_id, issue_ids):

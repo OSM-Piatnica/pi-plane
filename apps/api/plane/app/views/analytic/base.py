@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -57,7 +58,7 @@ class AnalyticsEndpoint(BaseAPIView):
             )
 
         # Additional filters that need to be applied
-        filters = issue_filters(request.GET, "GET")
+        filters = issue_filters(request.GET, "GET", request=request)
         # Only include projects the user is an active member of
         filters.update(
             project__project_projectmember__member=request.user,
@@ -264,7 +265,7 @@ class ExportAnalyticsEndpoint(BaseAPIView):
 class DefaultAnalyticsEndpoint(BaseAPIView):
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST], level="WORKSPACE")
     def get(self, request, slug):
-        filters = issue_filters(request.GET, "GET")
+        filters = issue_filters(request.GET, "GET", request=request)
         base_issues = Issue.issue_objects.filter(
             workspace__slug=slug,
             project__project_projectmember__member=request.user,

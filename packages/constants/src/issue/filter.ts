@@ -29,6 +29,11 @@ export enum EServerGroupByToFilterOptions {
   "cycle_id" = "cycle",
   "issue_module__module_id" = "module",
   "target_date" = "target_date",
+  "finish_date" = "finish_date",
+  "schedule_date" = "schedule_date",
+  "start_date_bucket" = "start_date_bucket",
+  "target_date_bucket" = "target_date_bucket",
+  "finish_date_bucket" = "finish_date_bucket",
   "project_id" = "project",
   "created_by" = "created_by",
 }
@@ -113,12 +118,21 @@ export type TIssueFiltersToDisplayByPageType = {
 
 export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
   profile_issues: {
-    filters: ["priority", "state_group", "label_id", "start_date", "target_date"],
+    filters: ["priority", "state_group", "label_id", "group_assignee_id", "start_date", "finish_date", "target_date"],
     layoutOptions: {
       list: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
-          group_by: ["state_detail.group", "priority", "project", "labels", null],
+          group_by: [
+            "state_detail.group",
+            "priority",
+            "project",
+            "labels",
+            "start_date_bucket",
+            "target_date_bucket",
+            "finish_date_bucket",
+            null,
+          ],
           order_by: [
             "sort_order",
             "sequence_id",
@@ -139,7 +153,15 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       kanban: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
-          group_by: ["state_detail.group", "priority", "project", "labels"],
+          group_by: [
+            "state_detail.group",
+            "priority",
+            "project",
+            "labels",
+            "start_date_bucket",
+            "target_date_bucket",
+            "finish_date_bucket",
+          ],
           order_by: [
             "sort_order",
             "sequence_id",
@@ -167,16 +189,30 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       "cycle_id",
       "module_id",
       "assignee_id",
+      "group_assignee_id",
       "created_by_id",
       "label_id",
       "start_date",
+      "finish_date",
       "target_date",
     ],
     layoutOptions: {
       list: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
-          group_by: ["state", "cycle", "module", "priority", "labels", "assignees", "created_by", null],
+          group_by: [
+            "state",
+            "cycle",
+            "module",
+            "priority",
+            "labels",
+            "assignees",
+            "created_by",
+            "start_date_bucket",
+            "target_date_bucket",
+            "finish_date_bucket",
+            null,
+          ],
           order_by: [
             "sort_order",
             "sequence_id",
@@ -202,10 +238,12 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       "state_group",
       "label_id",
       "assignee_id",
+      "group_assignee_id",
       "created_by_id",
       "subscriber_id",
       "project_id",
       "start_date",
+      "finish_date",
       "target_date",
     ],
     layoutOptions: {
@@ -223,11 +261,32 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       list: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
+          group_by: [
+            "state_detail.group",
+            "priority",
+            "project",
+            "labels",
+            "start_date_bucket",
+            "target_date_bucket",
+            "finish_date_bucket",
+            null,
+          ],
+          order_by: [
+            "sequence_id",
+            "name",
+            "-created_at",
+            "-updated_at",
+            "start_date",
+            "-priority",
+            "finish_date",
+            "target_date",
+            "duration",
+          ],
           type: ["active", "backlog"],
         },
         extra_options: {
-          access: false,
-          values: [],
+          access: true,
+          values: ["show_empty_groups", "sub_issue"],
         },
       },
     },
@@ -240,17 +299,31 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       "cycle_id",
       "module_id",
       "assignee_id",
+      "group_assignee_id",
       "mention_id",
       "created_by_id",
       "label_id",
       "start_date",
+      "finish_date",
       "target_date",
     ],
     layoutOptions: {
       list: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
-          group_by: ["state", "priority", "cycle", "module", "labels", "assignees", "created_by", null],
+          group_by: [
+            "state",
+            "priority",
+            "cycle",
+            "module",
+            "labels",
+            "assignees",
+            "created_by",
+            "start_date_bucket",
+            "target_date_bucket",
+            "finish_date_bucket",
+            null,
+          ],
           order_by: [
             "sort_order",
             "sequence_id",
@@ -259,6 +332,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
             "-updated_at",
             "start_date",
             "-priority",
+            "finish_date",
             "target_date",
             "duration",
           ],
@@ -272,8 +346,31 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       kanban: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
-          group_by: ["state", "priority", "cycle", "module", "labels", "assignees", "created_by"],
-          sub_group_by: ["state", "priority", "cycle", "module", "labels", "assignees", "created_by", null],
+          group_by: [
+            "state",
+            "priority",
+            "cycle",
+            "module",
+            "labels",
+            "assignees",
+            "created_by",
+            "start_date_bucket",
+            "target_date_bucket",
+            "finish_date_bucket",
+          ],
+          sub_group_by: [
+            "state",
+            "priority",
+            "cycle",
+            "module",
+            "labels",
+            "assignees",
+            "created_by",
+            "start_date_bucket",
+            "target_date_bucket",
+            "finish_date_bucket",
+            null,
+          ],
           order_by: [
             "sort_order",
             "sequence_id",
@@ -282,6 +379,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
             "-updated_at",
             "start_date",
             "-priority",
+            "finish_date",
             "target_date",
             "duration",
           ],
@@ -337,7 +435,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
     },
   },
   sub_work_items: {
-    filters: ["priority", "state_id", "assignee_id", "start_date", "target_date"],
+    filters: ["priority", "state_id", "assignee_id", "start_date", "finish_date", "target_date"],
     layoutOptions: {
       list: {
         display_properties: SUB_ISSUES_DISPLAY_PROPERTIES_KEYS,
@@ -363,7 +461,9 @@ export const SUB_WORK_ITEM_AVAILABLE_FILTERS_FOR_WORK_ITEM_PAGE: (keyof IIssueFi
   "state",
   "issue_type",
   "assignees",
+  "group_assignees",
   "start_date",
+  "finish_date",
   "target_date",
 ];
 

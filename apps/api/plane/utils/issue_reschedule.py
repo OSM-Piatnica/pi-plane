@@ -81,21 +81,21 @@ def _successor_requirement(relation_type, pred_start, pred_finish, lag, weekend_
     if relation_type == "start_before" and pred_start is not None:
         return "start_date", shift_working_days(effective_start(pred_start, weekend_days), lag, weekend_days)
     if relation_type == "finish_before" and pred_finish is not None:
-        return "target_date", shift_working_days(effective_finish(pred_finish, weekend_days), lag, weekend_days)
+        return "finish_date", shift_working_days(effective_finish(pred_finish, weekend_days), lag, weekend_days)
     if relation_type == "start_before_finish" and pred_start is not None:
-        return "target_date", shift_working_days(effective_start(pred_start, weekend_days), lag, weekend_days)
+        return "finish_date", shift_working_days(effective_start(pred_start, weekend_days), lag, weekend_days)
     return None
 
 
 def _move_to(dates, field_name, earliest, weekend_days):
     """
-    The ``(start_date, target_date)`` of a work item whose ``field_name`` has to move to ``earliest``: the other date
+    The ``(start_date, finish_date)`` of a work item whose ``field_name`` has to move to ``earliest``: the other date
     follows so that it keeps the number of working days it lasted.
     """
-    start, target = dates["start_date"], dates["target_date"]
-    length = max(count_working_days(start, target, weekend_days), 1) if start and target else None
+    start, finish = dates["start_date"], dates["finish_date"]
+    length = max(count_working_days(start, finish, weekend_days), 1) if start and finish else None
     if field_name == "start_date":
-        return earliest, (add_working_days(earliest, length, weekend_days) if length else target)
+        return earliest, (add_working_days(earliest, length, weekend_days) if length else finish)
     return (subtract_working_days(earliest, length, weekend_days) if length else start), earliest
 
 
@@ -106,7 +106,7 @@ class ReschedulePlan:
 
     def updates(self):
         return [
-            {"id": issue_id, "start_date": entry["start_date"], "target_date": entry["target_date"]}
+            {"id": issue_id, "start_date": entry["start_date"], "finish_date": entry["finish_date"]}
             for issue_id, entry in self.shifted.items()
         ]
 
@@ -122,9 +122,9 @@ class ReschedulePlan:
                     "ref": issue_display_ref(issue),
                     "name": issue.name,
                     "start_date": _iso(issue.start_date),
-                    "target_date": _iso(issue.target_date),
+                    "finish_date": _iso(issue.finish_date),
                     "new_start_date": _iso(entry["start_date"]),
-                    "new_target_date": _iso(entry["target_date"]),
+                    "new_finish_date": _iso(entry["finish_date"]),
                 }
             )
         return {
@@ -141,14 +141,14 @@ def _iso(value):
 
 
 def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[ReschedulePlan]:
-    """Plan the shifts that make the dates in ``proposed`` (work item id -> start/target dates) satisfy every rule.
+    """Plan the shifts that make the dates in ``proposed`` (work item id -> start/finish dates) satisfy every rule.
 
     Returns None when they cannot be made to, or when a shift is not allowed (see the module docstring).
     """
     current = {
         str(issue_id): {
             "start_date": _as_date(dates.get("start_date")),
-            "target_date": _as_date(dates.get("target_date")),
+            "finish_date": _as_date(dates.get("finish_date")),
         }
         for issue_id, dates in proposed.items()
     }
@@ -170,7 +170,7 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
         for relation_type, successor, lag in _iter_timeline_constraints(predecessor):
             weekend_days = weekend_days_of(successor)
             requirement = _successor_requirement(
-                relation_type, dates["start_date"], dates["target_date"], lag, weekend_days
+                relation_type, dates["start_date"], dates["finish_date"], lag, weekend_days
             )
             if requirement is None:
                 continue
@@ -178,7 +178,7 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
             field_name, earliest = requirement
             successor_dates = current.setdefault(
                 successor_id,
-                {"start_date": _as_date(successor.start_date), "target_date": _as_date(successor.target_date)},
+                {"start_date": _as_date(successor.start_date), "finish_date": _as_date(successor.finish_date)},
             )
             objects.setdefault(successor_id, successor)
             value = successor_dates[field_name]
@@ -195,7 +195,7 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
             if successor_id in moved_by_request or getattr(successor.state, "group", None) in NOT_MOVED_GROUPS:
                 return None
             moved[successor_id] = True
-            successor_dates["start_date"], successor_dates["target_date"] = _move_to(
+            successor_dates["start_date"], successor_dates["finish_date"] = _move_to(
                 successor_dates, field_name, earliest, weekend_days
             )
             if len(moved) > MAX_SHIFTED_ISSUES:
@@ -226,7 +226,7 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
             issue_id: {
                 "issue": objects[issue_id],
                 "start_date": current[issue_id]["start_date"],
-                "target_date": current[issue_id]["target_date"],
+                "finish_date": current[issue_id]["finish_date"],
             }
             for issue_id in moved
         }
@@ -234,7 +234,7 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
 
     # what is left must satisfy every rule, including those of the work items the request changes itself
     batch = [
-        {"id": issue_id, "start_date": dates["start_date"], "target_date": dates["target_date"]}
+        {"id": issue_id, "start_date": dates["start_date"], "finish_date": dates["finish_date"]}
         for issue_id, dates in current.items()
         if issue_id in moved_by_request
     ] + plan.updates()
@@ -251,14 +251,14 @@ def apply_shifts(plan: ReschedulePlan, actor_id) -> None:
     for issue_id, entry in plan.shifted.items():
         issue = entry["issue"]
         changes = {}
-        for field_name in ("start_date", "target_date"):
+        for field_name in ("start_date", "finish_date"):
             before, after = _iso(getattr(issue, field_name)), _iso(entry[field_name])
             if before != after:
                 changes[field_name] = (before, after)
         if not changes:
             continue
         type(issue).objects.filter(pk=issue.pk).update(
-            start_date=entry["start_date"], target_date=entry["target_date"], updated_at=now, updated_by_id=actor_id
+            start_date=entry["start_date"], finish_date=entry["finish_date"], updated_at=now, updated_by_id=actor_id
         )
         for field_name, (before, after) in changes.items():
             activities.append(
@@ -283,10 +283,10 @@ def apply_shifts(plan: ReschedulePlan, actor_id) -> None:
 
 
 def _dates_after(issue, update):
-    """The start and target date a work item would have after ``update``; a key left out leaves that date alone."""
+    """The start and finish date a work item would have after ``update``; a key left out leaves that date alone."""
     return {
         "start_date": update["start_date"] if "start_date" in update else issue.start_date,
-        "target_date": update["target_date"] if "target_date" in update else issue.target_date,
+        "finish_date": update["finish_date"] if "finish_date" in update else issue.finish_date,
     }
 
 
@@ -296,7 +296,7 @@ def plan_for_issue_update(issue, attrs, actor, timeline_error) -> Optional[Resch
 
     if not timeline_error or timeline_error.get("error_code") != RELATION_DATE_CONFLICT:
         return None
-    if "start_date" not in attrs and "target_date" not in attrs:
+    if "start_date" not in attrs and "finish_date" not in attrs:
         return None
     return plan_reschedule({str(issue.id): _dates_after(issue, attrs)}, {str(issue.id): issue}, actor)
 

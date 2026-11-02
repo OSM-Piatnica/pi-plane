@@ -8,17 +8,10 @@
 import { useState, useRef } from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
-import { WEB_BASE_URL } from "@plane/constants";
+import { PI_PLANE_DOCS_URL, PI_PLANE_NEW_ISSUE_URL, WEB_BASE_URL } from "@plane/constants";
 // plane internal packages
 import { Tooltip } from "@makeplane/propel/components/tooltip";
-import {
-  ArrowNarrowLeftOutline,
-  ChatOutline,
-  Github,
-  HelpOutline,
-  NewTabOutline,
-  PagesOutline,
-} from "@makeplane/propel/icons";
+import { ArrowNarrowLeftOutline, Github, HelpOutline, NewTabOutline, PagesOutline } from "@makeplane/propel/icons";
 import { cn, isNewerVersion } from "@plane/utils";
 // hooks
 import { useInstance, useTheme } from "@/hooks/store";
@@ -27,17 +20,12 @@ import { useInstance, useTheme } from "@/hooks/store";
 const helpOptions = [
   {
     name: "Documentation",
-    href: "https://docs.plane.so/",
+    href: PI_PLANE_DOCS_URL,
     Icon: PagesOutline,
   },
   {
-    name: "Join our Forum",
-    href: "https://forum.plane.so",
-    Icon: ChatOutline,
-  },
-  {
     name: "Report a bug",
-    href: "https://github.com/makeplane/plane/issues/new/choose",
+    href: PI_PLANE_NEW_ISSUE_URL,
     Icon: Github,
   },
 ];

@@ -119,6 +119,8 @@
   "mentions_description": "當有人在留言或描述中提及我時通知我",
   "project_access_requests": "存取請求",
   "project_access_requests_description": "透過電子郵件通知我加入我管理的私人專案的請求，以及對我自己請求的決定。",
+  "workspace_admin_messages": "有人寫信給工作區管理員時寄信給我",
+  "workspace_admin_messages_description": "僅在您是工作區管理員時適用。訊息一律會進入您的收件匣；此設定只決定您是否還會收到電子郵件，且僅對您本人生效。",
   "email_frequency": "郵件頻率",
   "email_frequency_description": "選擇您接收工作事項更新郵件的頻率。提及一律會立即發送。",
   "email_frequency_instant": "立即",
@@ -241,6 +243,25 @@
   "documentation": "文件",
   "message_support": "聯絡支援",
   "contact_sales": "聯絡業務",
+  "contact_workspace_admins": {
+    "menu_label": "聯絡工作區管理員",
+    "title": "聯絡工作區管理員",
+    "description": "{workspace} 的管理員負責新增成員、變更角色並協助處理存取權限。您可以用郵件應用程式寫信給他們。",
+    "email_all": "寄信給所有管理員",
+    "subject": "給 {workspace} 管理員的問題",
+    "body": "您好，\n\n\n\n{name}",
+    "message_label": "給管理員的訊息",
+    "message_placeholder": "請說明您的需求，例如存取某個專案或變更角色。",
+    "characters": "{count} / {max}",
+    "send": "傳送訊息",
+    "sent": "您的訊息已傳送給工作區管理員。",
+    "error_rate_limited": "您最近傳送了多則訊息，請稍後再試。",
+    "error_generic": "訊息傳送失敗。請重試，或透過郵件聯絡管理員。",
+    "or_email": "或使用您自己的郵件應用程式撰寫",
+    "notification_text": "寫信給此工作區的管理員",
+    "message_from": "來自 {name} 的訊息",
+    "reply_by_email": "透過郵件回覆"
+  },
   "hyper_mode": "極速模式",
   "keyboard_shortcuts": "鍵盤快速鍵",
   "whats_new": "新功能",
@@ -323,6 +344,7 @@
   "start_date": "開始日期",
   "end_date": "結束日期",
   "due_date": "截止日期",
+  "finish_date": "結束日期",
   "target_date": "目標日期",
   "estimate": "評估",
   "change_parent_issue": "變更父工作事項",
@@ -352,6 +374,12 @@
   "filter_headings": {
     "access": "存取權限",
     "owned_by": "擁有者"
+  },
+  "group_filter": {
+    "heading": "群組",
+    "my_groups": "我的群組",
+    "no_group": "無群組",
+    "unknown_group": "未知群組"
   },
   "good": "早安",
   "morning": "早上",
@@ -549,6 +577,7 @@
       "last_updated": "最後更新",
       "start_date": "開始日期",
       "due_date": "截止日期",
+      "finish_date": "結束日期",
       "asc": "遞增",
       "desc": "遞減",
       "updated_on": "更新於"

@@ -15,6 +15,7 @@ export * from "./estimate";
 export * from "./parent";
 export * from "./relation";
 export * from "./start_date";
+export * from "./finish_date";
 export * from "./target_date";
 export * from "./duration";
 export * from "./cycle";

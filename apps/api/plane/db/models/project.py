@@ -18,7 +18,7 @@ from django.db.models import Q
 from plane.db.mixins import AuditModel, ChangeTrackerMixin
 
 from .base import BaseModel
-from .workspace import START_OF_THE_WEEK_CHOICES, SUNDAY
+from .workspace import MONDAY, START_OF_THE_WEEK_CHOICES
 from plane.utils.weekend_days import default_weekend_days, validate_weekend_days
 
 ROLE_CHOICES = ((20, "Admin"), (15, "Member"), (5, "Guest"))
@@ -139,7 +139,7 @@ class Project(ChangeTrackerMixin, BaseModel):
     timezone = models.CharField(max_length=255, default="UTC", choices=TIMEZONE_CHOICES)
     # First day of the week in this project (0 = Sunday ... 6 = Saturday); copied from the workspace on creation.
     # A person's own preference, when they have one, wins over it.
-    start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=SUNDAY)
+    start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=MONDAY)
     # Days that count as non-working time in this project (0 = Sunday ... 6 = Saturday); copied from the workspace on
     # creation. Calendars and the timeline shade them, and durations counted in days skip them.
     weekend_days = models.JSONField(default=default_weekend_days, validators=[validate_weekend_days])
@@ -373,6 +373,13 @@ class ProjectMember(ProjectBaseModel):
     preferences = models.JSONField(default=get_default_preferences)
     sort_order = models.FloatField(default=65535)
     is_active = models.BooleanField(default=True)
+    # `role` and `is_active` are always the effective values, whatever gives them. The three fields below say how
+    # user groups take part (see plane.utils.project_groups): True when the person belongs to the project only
+    # through groups, the best role the groups of the project give them, and the person's own role while a group
+    # raised it above that.
+    via_group = models.BooleanField(default=False)
+    group_role = models.PositiveSmallIntegerField(null=True, blank=True)
+    direct_role = models.PositiveSmallIntegerField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if self._state.adding and self.member:

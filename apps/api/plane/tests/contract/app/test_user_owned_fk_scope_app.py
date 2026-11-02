@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """Contract tests for user-scoped foreign keys on the ``users/me`` endpoints.
@@ -116,7 +117,7 @@ class TestUserAssetOwner:
         User.objects.filter(pk=create_user.pk).update(avatar_asset=foreign)
         create_user.refresh_from_db()
 
-        with patch("plane.authentication.adapter.base.S3Storage") as storage:
+        with patch("plane.authentication.adapter.base.get_storage") as storage:
             Adapter(request=None, provider="github").delete_old_avatar(create_user)
 
         storage.return_value.delete_files.assert_not_called()

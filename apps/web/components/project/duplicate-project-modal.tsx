@@ -9,6 +9,7 @@
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
+import useSWR from "swr";
 import { CopyPlus } from "lucide-react";
 // plane imports
 import { PROJECT_COPY_MAX_WORK_ITEMS, PROJECT_COPY_WORK_ITEM_PROPERTY_GROUPS } from "@plane/constants";
@@ -36,6 +37,8 @@ import type { TOptionGroup } from "@/helpers/option-groups";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useAppRouter } from "@/hooks/use-app-router";
+// services
+import { projectGroupService } from "@/services/project/project-group.service";
 
 type TDuplicateProjectModalProps = {
   isOpen: boolean;
@@ -51,6 +54,7 @@ type TFormValues = {
   estimates: boolean;
   intake: boolean;
   members: boolean;
+  groups: boolean;
   cycles: boolean;
   modules: boolean;
   views: boolean;
@@ -99,6 +103,13 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
     watch,
   } = useForm<TFormValues>();
 
+  // the option is only offered when there is something to copy
+  const { data: sourceGroups } = useSWR(
+    isOpen && workspaceSlug ? `PROJECT_GROUPS_${workspaceSlug.toString()}_${project.id}` : null,
+    () => projectGroupService.list(workspaceSlug!.toString(), project.id)
+  );
+  const hasGroups = (sourceGroups?.length ?? 0) > 0;
+
   // what the work items can carry, as the picker lists it
   const propertyGroups: TOptionGroup[] = PROPERTY_GROUP_KEYS.map((groupKey) => ({
     key: groupKey,
@@ -121,6 +132,7 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
       estimates: true,
       intake: true,
       members: false,
+      groups: false,
       cycles: false,
       modules: false,
       views: false,
@@ -144,6 +156,8 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
           estimates: values.estimates,
           intake: values.intake,
           members: values.members,
+          // only a project that has groups shows the option
+          ...(hasGroups ? { groups: values.groups } : {}),
           cycles: values.cycles,
           modules: values.modules,
           views: values.views,
@@ -312,6 +326,26 @@ export function DuplicateProjectModal(props: TDuplicateProjectModalProps) {
                         )}
                       />
                     ))}
+                    {hasGroups && (
+                      <div className="col-span-2 flex flex-col gap-0.5">
+                        <Controller
+                          control={control}
+                          name="groups"
+                          render={({ field: { value, onChange } }) => (
+                            <label className="flex cursor-pointer items-center gap-2 text-13 text-secondary">
+                              <Checkbox
+                                checked={Boolean(value)}
+                                onCheckedChange={(checked) => onChange(checked === true)}
+                              />
+                              <span>{t("project_components.duplicate_modal.groups")}</span>
+                            </label>
+                          )}
+                        />
+                        <p className="pl-6 text-11 text-tertiary">
+                          {t("project_components.duplicate_modal.groups_hint")}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
 

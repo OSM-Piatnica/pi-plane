@@ -170,7 +170,7 @@ def visitor_client(visitor):
 
 @pytest.fixture(autouse=True)
 def _no_storage(db):
-    with mock.patch("plane.space.views.asset.S3Storage") as storage:
+    with mock.patch("plane.space.views.asset.get_storage") as storage:
         storage.return_value.generate_presigned_post.return_value = {"url": "https://s3.test", "fields": {}}
         yield
 

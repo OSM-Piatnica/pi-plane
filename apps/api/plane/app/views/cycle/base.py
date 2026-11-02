@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -53,6 +54,7 @@ from plane.db.models import (
     Project,
     UserRecentVisit,
 )
+from plane.utils.group_filters import add_group_info, filter_by_groups_param
 from plane.utils.analytics_plot import burndown_plot
 from plane.bgtasks.recent_visited_task import recent_visited_task
 from plane.utils.host import base_host
@@ -183,7 +185,7 @@ class CycleViewSet(BaseViewSet):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def list(self, request, slug, project_id):
-        queryset = self.get_queryset().filter(archived_at__isnull=True)
+        queryset = filter_by_groups_param(request, slug, "cycle", self.get_queryset().filter(archived_at__isnull=True))
         cycle_view = request.GET.get("cycle_view", "all")
 
         # Update the order by
@@ -235,7 +237,7 @@ class CycleViewSet(BaseViewSet):
             data = user_timezone_converter(data, datetime_fields, project_timezone)
 
             if data:
-                return Response(data, status=status.HTTP_200_OK)
+                return Response(add_group_info(request, slug, "cycle", data), status=status.HTTP_200_OK)
 
         data = queryset.values(
             # necessary fields
@@ -266,7 +268,7 @@ class CycleViewSet(BaseViewSet):
         )
         datetime_fields = ["start_date", "end_date"]
         data = user_timezone_converter(data, datetime_fields, project_timezone)
-        return Response(data, status=status.HTTP_200_OK)
+        return Response(add_group_info(request, slug, "cycle", data), status=status.HTTP_200_OK)
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     def create(self, request, slug, project_id):

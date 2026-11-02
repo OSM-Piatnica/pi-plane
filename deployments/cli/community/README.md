@@ -171,7 +171,13 @@ Below are the most import keys you must refer to. _<span style="color: #fcba03">
 
 > `SECRET_KEY` and `LIVE_SERVER_SECRET_KEY` - These ship with the placeholder value `change-this-key-on-deployment`. **Replace both with your own random values before the first start**, e.g. `openssl rand -hex 32` (use a different value for each). The API still starts with the placeholders, but only logs a `SECURITY: SECRET_KEY is set to a known insecure or placeholder value` warning, and anyone who knows the placeholder can forge session data. The all-in-one image refuses to start with placeholder values.
 
-There are many other settings you can play with. Configure email in God mode (**Email** under the instance settings), not in `plane.env`: this stack does not pass `EMAIL_*` variables to the API. Email is what lets you invite your teammates onto the platform.
+> `ENABLE_SPACE` / `SPACE_REPLICAS` - Space is the public site that shows projects shared on the web. Set `SPACE_REPLICAS=0` in `plane.env` (Docker Compose and Swarm), or, with Docker Compose only, install with `ENABLE_SPACE=0 ./setup.sh install`, to leave it out: its image is not downloaded, it is not started, `/spaces` answers 404 and projects cannot be shared. See [Sharing a project on the web](../../../docs/web-sharing.md#turning-web-sharing-off-for-the-whole-instance).
+
+> `FILE_SIZE_LIMIT` / `FILE_SIZE_LIMIT_MAX` - The default and the ceiling of the largest upload, in bytes (`5242880` and `104857600`). The instance admin can change the limit in the admin app, up to `FILE_SIZE_LIMIT_MAX`; see [File uploads and the storage](../../../docs/file-uploads.md).
+
+> `ADMIN_MESSAGE_LIMIT_PER_HOUR` - Most messages one person may send to the admins of a workspace (Help menu, _Contact workspace admins_) within an hour, 1 to 100 (default `5`). The instance admin can change it in the admin app, and that value wins.
+
+There are many other settings you can play with. Configure email in God mode (**Email** under the instance settings), not in `plane.env`: this stack does not pass `EMAIL_*` variables to the API. Email is what lets you invite your teammates onto the platform. This stack passes only the variables that are in `plane.env`, so the other settings of `apps/api/.env.example` do not reach the API from here: that includes `EMAIL_LOGO_URL`, `OTLP_ENDPOINT` (a telemetry collector of your own, see `apps/api/.env.example`) and `SIGNED_URL_EXPIRATION`. To set them use the Helm chart (`app.env`), the all-in-one image (any `-e` variable reaches the API), or edit `docker-compose.yaml`; an upgrade downloads a fresh copy of that file.
 
 #### Client IP and rate limiting behind proxies
 
@@ -185,6 +191,59 @@ Some endpoints are rate-limited per client IP. Two settings in `plane.env` contr
 `TRUSTED_PROXIES` is read only by the bundled proxy, `NUM_PROXIES` only by the API, worker and scheduler.
 
 Restart the services after changing these values.
+
+#### Using your own object storage (AWS S3, Google Cloud Storage, Azure Blob Storage)
+
+Files (attachments, images, avatars, covers, exports) go to the bundled `plane-minio` service, which keeps them in a Docker volume. To use an S3 service instead, set these in `plane.env` and restart:
+
+```bash
+USE_MINIO=0
+AWS_S3_ENDPOINT_URL=https://s3.eu-central-1.amazonaws.com   # the endpoint of your region; do not leave it empty
+AWS_REGION=eu-central-1
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
+AWS_S3_BUCKET_NAME=your-bucket
+```
+
+An empty `AWS_S3_ENDPOINT_URL` does not select AWS: the compose file then falls back to the bundled MinIO (`http://plane-minio:9000`). The bundled service can stay; it is then unused. (You can comment it out in `docker-compose.yaml`, but an upgrade downloads a fresh copy of that file.) Browsers upload straight to the bucket, so the bucket needs CORS rules that allow your `WEB_URL` as an origin (methods `GET`, `POST`, `PUT`, `HEAD`). Files already in the bundled storage are not copied; move them yourself.
+
+**Google Cloud Storage** works through its S3-compatible API with an HMAC key. It was tested with attachments uploaded from the browser, avatars, exports, signed downloads, and copying, listing and deleting objects.
+
+1. Create a bucket (uniform access control; public access prevention can stay on).
+2. Create a service account and give it, on that bucket, the roles **Storage Object Admin** and **Storage Legacy Bucket Reader** (the second lets the API check at start that the bucket exists).
+3. Create an HMAC key for the service account (Cloud Storage → Settings → Interoperability, or `gcloud storage hmac create <service-account-email>`). Keep the secret; Google shows it once.
+4. Set the CORS rules, with your `WEB_URL` as the origin, for example `cors.json`:
+
+   ```json
+   [
+     {
+       "origin": ["https://plane.example.com"],
+       "method": ["GET", "POST", "PUT", "HEAD"],
+       "responseHeader": ["Content-Type", "x-goog-meta-*", "ETag"],
+       "maxAgeSeconds": 3600
+     }
+   ]
+   ```
+
+   and `gcloud storage buckets update gs://your-bucket --cors-file=cors.json`.
+
+5. In `plane.env`: `USE_MINIO=0`, `AWS_S3_ENDPOINT_URL=https://storage.googleapis.com`, `AWS_REGION=auto`, `AWS_ACCESS_KEY_ID=<HMAC access id>`, `AWS_SECRET_ACCESS_KEY=<HMAC secret>` and `AWS_S3_BUCKET_NAME=your-bucket`.
+
+Releases up to 2.1.0 cannot write export files to Google Cloud Storage (the export fails with `SignatureDoesNotMatch`); later releases can.
+
+Other S3-compatible services (Ceph, Cloudflare R2, Backblaze B2, Wasabi, and so on) take the same settings. They were not tested here; presigned uploads and CORS are where they differ.
+
+**Azure Blob Storage** is not S3-compatible; it has its own storage mode, selected with `STORAGE_PROVIDER=azure`:
+
+```bash
+STORAGE_PROVIDER=azure
+USE_MINIO=0
+AZURE_STORAGE_ACCOUNT_NAME=your-account
+AZURE_STORAGE_ACCOUNT_KEY=...       # or AZURE_STORAGE_CONNECTION_STRING instead of both
+AZURE_STORAGE_CONTAINER=uploads     # created at start if it does not exist
+```
+
+The container needs CORS rules for your `WEB_URL`, and a file larger than the size announced for its upload is deleted right after the upload. The full guide, including the CORS command, other clouds and what was tested (the Azurite emulator only, not a real Azure account), is [Azure Blob Storage](../../../docs/azure-blob-storage.md). Not available in the all-in-one image.
 
 ---
 
@@ -445,7 +504,6 @@ api-1  | Instance registered
 api-1  | ENABLE_SIGNUP loaded with value from environment variable.
 api-1  | ENABLE_EMAIL_PASSWORD loaded with value from environment variable.
 api-1  | ENABLE_MAGIC_LINK_LOGIN loaded with value from environment variable.
-api-1  | GOOGLE_CLIENT_ID loaded with value from environment variable.
 api-1  | GITHUB_CLIENT_ID loaded with value from environment variable.
 api-1  | GITHUB_CLIENT_SECRET loaded with value from environment variable.
 api-1  | EMAIL_HOST loaded with value from environment variable.
@@ -455,8 +513,9 @@ api-1  | EMAIL_PORT loaded with value from environment variable.
 api-1  | EMAIL_FROM loaded with value from environment variable.
 api-1  | EMAIL_USE_TLS loaded with value from environment variable.
 api-1  | EMAIL_USE_SSL loaded with value from environment variable.
-api-1  | OPENAI_API_KEY loaded with value from environment variable.
-api-1  | GPT_ENGINE loaded with value from environment variable.
+api-1  | LLM_API_KEY loaded with value from environment variable.
+api-1  | LLM_PROVIDER loaded with value from environment variable.
+api-1  | LLM_MODEL loaded with value from environment variable.
 api-1  | UNSPLASH_ACCESS_KEY loaded with value from environment variable.
 api-1  | Checking bucket...
 api-1  | Bucket 'uploads' does not exist. Creating bucket...

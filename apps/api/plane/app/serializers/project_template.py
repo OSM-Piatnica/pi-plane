@@ -24,6 +24,11 @@ class ProjectTemplateSerializer(BaseSerializer):
         ]
         read_only_fields = ["id", "sort_order", "created_at", "updated_at"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Groups of a saved payload that match no group of the workspace (a template uploaded from another workspace)
+        self.unmatched_groups = []
+
     def validate(self, attrs):
         slug = self.context.get("slug")
         workspace = Workspace.objects.get(slug=slug)
@@ -49,7 +54,7 @@ class ProjectTemplateSerializer(BaseSerializer):
         else:
             payload = self.instance.payload if self.instance else {}
 
-        cleaned_payload = validate_and_clean_project_payload(payload, workspace)
+        cleaned_payload = validate_and_clean_project_payload(payload, workspace, unmatched_groups=self.unmatched_groups)
 
         attrs["name"] = str(name).strip()[:255]
         attrs["description"] = str(attrs.get("description", getattr(self.instance, "description", "")) or "")

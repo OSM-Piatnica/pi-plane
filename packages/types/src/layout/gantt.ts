@@ -20,7 +20,10 @@ export interface IGanttBlock {
   };
   sort_order: number | undefined;
   start_date: string | undefined;
+  /** Bar end. For work items this is the finish date, for modules and cycles their end date. */
   target_date: string | undefined;
+  /** Work items only: the due date (deadline), rendered as a separate marker. Never part of the bar. */
+  due_date?: string;
   meta?: Record<string, any>;
   /** Dates of the work items below this block, set when the chart rolls dates up. */
   rollup?: TGanttBlockRollup;
@@ -65,7 +68,10 @@ export interface IBlockUpdateData {
 export interface IBlockUpdateDependencyData {
   id: string;
   start_date?: string;
+  /** Bar end (work item finish date, module or cycle end date). */
   target_date?: string;
+  /** Work items only: a due date change coming from the deadline marker. Never moves the bar. */
+  due_date?: string;
   meta?: Record<string, any>;
 }
 

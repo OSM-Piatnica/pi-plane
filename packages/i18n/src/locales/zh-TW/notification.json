@@ -61,6 +61,8 @@
       "assignee_removed": "移除了指派對象",
       "start_date_set": "將開始日期設定為 <value/>",
       "start_date_removed": "移除了開始日期",
+      "finish_date_set": "設定了結束日期",
+      "finish_date_removed": "移除了結束日期",
       "due_date_set": "將截止日期設定為 <value/>",
       "due_date_removed": "移除了截止日期",
       "duration_set": "將持續時間設定為 <value/>",

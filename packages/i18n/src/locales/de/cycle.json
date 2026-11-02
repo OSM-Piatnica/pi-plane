@@ -2,39 +2,39 @@
   "active_cycle": {
     "empty_state": {
       "progress": {
-        "title": "Fügen Sie Elemente hinzu, um den Fortschritt zu verfolgen"
+        "title": "Fügen Sie dem Zyklus Arbeitselemente hinzu, um den Fortschritt anzuzeigen"
       },
       "chart": {
-        "title": "Fügen Sie Elemente hinzu, um ein Burndown-Diagramm anzuzeigen."
+        "title": "Fügen Sie dem Zyklus Arbeitselemente hinzu, um das Burndown-Diagramm anzuzeigen."
       },
       "priority_issue": {
-        "title": "Hochpriorisierte Arbeitselemente werden hier angezeigt."
+        "title": "Behalten Sie hochpriorisierte Arbeitselemente, die im Zyklus bearbeitet werden, auf einen Blick im Auge."
       },
       "assignee": {
-        "title": "Weisen Sie Elemente zu, um eine Übersicht der Zuweisungen zu sehen."
+        "title": "Weisen Sie Arbeitselementen Bearbeiter zu, um eine Aufschlüsselung der Arbeit nach Bearbeitern zu sehen."
       },
       "label": {
-        "title": "Fügen Sie Labels hinzu, um eine Analyse nach Labels zu erhalten."
+        "title": "Fügen Sie Arbeitselementen Labels hinzu, um eine Aufschlüsselung der Arbeit nach Labels zu sehen."
       }
     }
   },
   "cycle": {
-    "label": "{count, plural, one {Zyklus} few {Zyklen} other {Zyklen}}",
+    "label": "{count, plural, one {Zyklus} other {Zyklen}}",
     "no_cycle": "Kein Zyklus"
   },
   "active_cycle_analytics": {
     "empty_state": {
       "progress": {
-        "title": "Fügen Sie Arbeitsaufgaben zum Zyklus hinzu, um\n seinen Fortschritt zu sehen"
+        "title": "Fügen Sie dem Zyklus Arbeitselemente hinzu, um\n seinen Fortschritt zu sehen"
       },
       "priority": {
-        "title": "Beobachten Sie hochprioritäre Arbeitsaufgaben, die\n im Zyklus auf einen Blick bearbeitet werden."
+        "title": "Beobachten Sie hochpriorisierte Arbeitselemente, die\n im Zyklus bearbeitet werden, auf einen Blick."
       },
       "assignee": {
-        "title": "Fügen Sie Arbeitsaufgaben Bearbeitern hinzu, um eine\n Aufschlüsselung der Arbeit nach Bearbeitern zu sehen."
+        "title": "Weisen Sie Arbeitselementen Bearbeiter zu, um eine\n Aufschlüsselung der Arbeit nach Bearbeitern zu sehen."
       },
       "label": {
-        "title": "Fügen Sie Arbeitsaufgaben Labels hinzu, um die\n Aufschlüsselung der Arbeit nach Labels zu sehen."
+        "title": "Fügen Sie Arbeitselementen Labels hinzu, um die\n Aufschlüsselung der Arbeit nach Labels zu sehen."
       }
     }
   },

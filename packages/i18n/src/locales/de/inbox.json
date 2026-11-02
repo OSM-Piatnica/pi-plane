@@ -11,7 +11,7 @@
       },
       "snoozed": {
         "title": "Verschoben",
-        "description": "Noch {days, plural, one{# Tag} few{# Tage} other{# Tage}}"
+        "description": "Noch {days, plural, one{# Tag} other{# Tage}}"
       },
       "accepted": {
         "title": "Angenommen",
@@ -57,10 +57,10 @@
       "updated_at": "Aktualisiert am",
       "id": "ID"
     },
-    "label": "Eingang",
-    "page_label": "{workspace} - Eingang",
+    "label": "Intake",
+    "page_label": "{workspace} - Intake",
     "modal": {
-      "title": "Angenommenes Arbeitselement erstellen"
+      "title": "Intake-Arbeitselement erstellen"
     },
     "tabs": {
       "open": "Offen",
@@ -77,7 +77,7 @@
       },
       "sidebar_filter": {
         "title": "Keine passenden Arbeitselemente",
-        "description": "Kein Element passt zum Eingang-Filter. Erstellen Sie ein neues."
+        "description": "Kein Arbeitselement entspricht dem in Intake angewendeten Filter. Erstellen Sie ein neues Arbeitselement."
       },
       "detail": {
         "title": "Wählen Sie ein Arbeitselement, um Details anzuzeigen."
@@ -85,13 +85,13 @@
     }
   },
   "inbox_ui": {
-    "create_error": "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+    "create_error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
     "create_success": "Arbeitselement erfolgreich erstellt.",
     "created_date": "Erstellungsdatum",
     "delete_failed": "Arbeitselement konnte nicht gelöscht werden",
-    "editor_processing": "Der Editor verarbeitet noch Änderungen. Bitte warte, bevor du fortfährst.",
+    "editor_processing": "Der Editor verarbeitet noch Änderungen. Bitte warten Sie, bevor Sie fortfahren.",
     "empty_closed": {
-      "description": "Hier findest du alle Arbeitselemente, egal ob akzeptiert oder abgelehnt.",
+      "description": "Hier finden Sie alle Arbeitselemente, egal ob akzeptiert oder abgelehnt.",
       "title": "Noch keine Anfrage abgeschlossen"
     },
     "errors": {

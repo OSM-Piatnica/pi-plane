@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
@@ -16,6 +17,7 @@ import type { TTimelineColorBy } from "@plane/types";
 import { GANTT_TIMELINE_TYPE } from "@plane/types";
 import { findTotalDaysInRange, generateWorkItemLink } from "@plane/utils";
 // components
+import { getTimelineDatesText } from "@/components/gantt-chart/blocks/due-marker";
 import { SIDEBAR_WIDTH_VAR } from "@/components/gantt-chart/constants";
 import { isBlockRolledUp } from "@/components/gantt-chart/views/helpers";
 // hooks
@@ -77,11 +79,60 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: TGanttBl
     palette: chartPalette,
   });
 
-  const { blockStyle } = getBlockViewDetails(issueDetails, barColor ?? "");
+  // the bar spans start to finish; the due date is a separate deadline marker and never part of the bar
+  const { blockStyle } = getBlockViewDetails(
+    { start_date: issueDetails?.start_date, target_date: issueDetails?.finish_date },
+    barColor ?? ""
+  );
 
   const handleIssuePeekOverview = () => handleRedirection(workspaceSlug, issueDetails, isMobile);
 
-  const duration = findTotalDaysInRange(issueDetails?.start_date, issueDetails?.target_date) || 0;
+  const duration = findTotalDaysInRange(issueDetails?.start_date, issueDetails?.finish_date) || 0;
+
+  const hasStart = !!issueDetails?.start_date;
+  const hasFinish = !!issueDetails?.finish_date;
+
+  // only a start or only a finish: a labeled marker, never a bar with an invented end
+  if (hasStart !== hasFinish && !isRolledUp) {
+    return (
+      <Tooltip
+        disabled={isMobile}
+        layout="stacked"
+        label={getTimelineDatesText(
+          {
+            start: issueDetails?.start_date,
+            finish: issueDetails?.finish_date,
+            due: issueDetails?.target_date,
+          },
+          t
+        )}
+      >
+        <div
+          id={`issue-${issueId}`}
+          className="relative flex h-full w-full cursor-pointer items-center justify-center"
+          // oxlint-disable-next-line prefer-tag-over-role -- the marker holds block content a <button> cannot contain
+          role="button"
+          tabIndex={0}
+          onClick={handleIssuePeekOverview}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") handleIssuePeekOverview();
+          }}
+        >
+          <div className="h-3.5 w-3.5 rotate-45 rounded-xs" style={{ backgroundColor: barColor }} />
+          <div
+            className={`absolute flex max-w-[260px] items-center gap-1 truncate text-13 whitespace-nowrap text-primary ${
+              hasStart ? "left-full pl-2" : "right-full pr-2"
+            }`}
+          >
+            <span className="rounded-sm bg-layer-1 px-1 text-11 font-medium text-secondary">
+              {hasStart ? t("issue.dates.timeline.start_only") : t("issue.dates.timeline.finish_only")}
+            </span>
+            <span className="truncate">{issueDetails?.name}</span>
+          </div>
+        </div>
+      </Tooltip>
+    );
+  }
 
   return (
     <Popover>

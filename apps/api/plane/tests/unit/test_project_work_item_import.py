@@ -11,6 +11,7 @@ from plane.db.models import (
     CycleIssue,
     Issue,
     IssueAssignee,
+    IssueGroupAssignee,
     IssueLabel,
     IssuePropertyValue,
     IssueRelation,
@@ -22,10 +23,12 @@ from plane.db.models import (
     Module,
     ModuleIssue,
     Project,
+    ProjectGroup,
     ProjectIssueType,
     ProjectMember,
     State,
     User,
+    UserGroup,
     WorkspaceMember,
 )
 from plane.utils.project_work_item_import import (
@@ -222,7 +225,7 @@ class TestProjectWorkItemImport:
                     "name": "Exported duration",
                     "state": "Todo",
                     "start_date": "2026-03-02",
-                    "target_date": "2026-03-06",
+                    "finish_date": "2026-03-06",
                     "duration": 5,
                 },
                 {
@@ -230,11 +233,11 @@ class TestProjectWorkItemImport:
                     "name": "Derived from dates",
                     "state": "Todo",
                     "start_date": "2026-03-02",
-                    "target_date": "2026-03-04",
+                    "finish_date": "2026-03-04",
                 },
                 {
                     "external_key": "D3",
-                    "name": "Derived target date",
+                    "name": "Derived finish date",
                     "state": "Todo",
                     "start_date": "2026-03-02",
                     "duration": "4",
@@ -250,7 +253,7 @@ class TestProjectWorkItemImport:
                     "name": "Unreadable duration",
                     "state": "Todo",
                     "start_date": "2026-03-02",
-                    "target_date": "2026-03-04",
+                    "finish_date": "2026-03-04",
                     "duration": "five days",
                 },
             ],
@@ -262,18 +265,58 @@ class TestProjectWorkItemImport:
         derived = Issue.objects.get(project=project, name="Derived from dates")
         assert derived.duration == 3
 
-        anchored = Issue.objects.get(project=project, name="Derived target date")
+        anchored = Issue.objects.get(project=project, name="Derived finish date")
         assert anchored.duration == 4
-        assert anchored.target_date == date(2026, 3, 5)
+        assert anchored.finish_date == date(2026, 3, 5)
 
         standalone = Issue.objects.get(project=project, name="Standalone duration")
         assert standalone.duration == 7
         assert standalone.start_date is None
-        assert standalone.target_date is None
+        assert standalone.finish_date is None
 
         unreadable = Issue.objects.get(project=project, name="Unreadable duration")
         assert unreadable.duration == 3
         assert any("five days" in w for w in result["warnings"])
+
+    def test_due_only_rows_keep_finish_empty(self, workspace, create_user):
+        """A legacy export that only knows the due date must not turn it into a schedule end."""
+        project = Project.objects.create(name="Due only", identifier="DUO", workspace=workspace, created_by=create_user)
+        ProjectMember.objects.create(project=project, member=create_user, role=20, is_active=True)
+        State.objects.create(
+            name="Todo",
+            color="#3B82F6",
+            project=project,
+            workspace=workspace,
+            group="unstarted",
+            sequence=10000,
+            default=True,
+            created_by=create_user,
+        )
+
+        import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {"external_key": "U1", "name": "Due only", "state": "Todo", "target_date": "2026-03-06"},
+                {
+                    "external_key": "U2",
+                    "name": "Both",
+                    "state": "Todo",
+                    "start_date": "2026-03-02",
+                    "finish_date": "2026-03-10",
+                    "target_date": "2026-03-06",
+                },
+            ],
+        )
+
+        due_only = Issue.objects.get(project=project, name="Due only")
+        assert due_only.target_date == date(2026, 3, 6)
+        assert due_only.finish_date is None
+        assert due_only.dates_initialized is True
+
+        both = Issue.objects.get(project=project, name="Both")
+        assert both.finish_date == date(2026, 3, 10)
+        assert both.target_date == date(2026, 3, 6)
 
 
 @pytest.mark.django_db
@@ -329,7 +372,7 @@ class TestWorkItemImportCreatesMissingEntities:
                     "state": "Todo",
                     "cycles": ["Sprint 1"],
                     "start_date": "2026-03-02",
-                    "target_date": "2026-03-06",
+                    "finish_date": "2026-03-06",
                 },
                 {
                     "external_key": "C2",
@@ -337,7 +380,7 @@ class TestWorkItemImportCreatesMissingEntities:
                     "state": "Todo",
                     "cycles": ["Sprint 1"],
                     "start_date": "2026-03-04",
-                    "target_date": "2026-03-20",
+                    "finish_date": "2026-03-20",
                 },
             ],
         )
@@ -993,7 +1036,7 @@ class TestWorkItemImportOptions:
                     "name": "Dated",
                     "state": "Todo",
                     "start_date": "2026-03-02",
-                    "target_date": "2026-03-06",
+                    "finish_date": "2026-03-06",
                     "duration": 5,
                 }
             ],
@@ -1002,7 +1045,7 @@ class TestWorkItemImportOptions:
 
         issue = Issue.objects.get(project=project, name="Dated")
         assert issue.start_date is None
-        assert issue.target_date is None
+        assert issue.finish_date is None
         assert issue.duration is None
 
     def test_labels_are_neither_attached_nor_created_when_left_out(self, workspace, create_user):
@@ -1068,7 +1111,7 @@ class TestWorkItemImportOptions:
                     "state": "Todo",
                     "cycles": ["Sprint 1"],
                     "start_date": "2026-03-02",
-                    "target_date": "2026-03-06",
+                    "finish_date": "2026-03-06",
                 }
             ],
             options=WorkItemImportOptions(dates=False),
@@ -1108,3 +1151,121 @@ class TestWorkItemImportOptions:
         )
 
         assert not [w for w in result["warnings"] if "asked to leave out" in w]
+
+
+@pytest.mark.unit
+@pytest.mark.django_db
+class TestEmptyCells:
+    """An empty cell of a file is ``None`` in the row; it must not turn into the word "None"."""
+
+    def test_empty_type_state_and_key_cells_raise_no_warning(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Empty cells", "EMC")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[{"external_key": None, "name": "No type", "state": None, "issue_type": None}],
+        )
+
+        assert result["warnings"] == []
+        issue = Issue.objects.get(project=project, name="No type")
+        assert issue.type_id is None
+        assert issue.state.name == "Todo"
+
+    def test_an_empty_name_cell_is_a_skipped_row_not_a_work_item_called_none(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Empty names", "EMN")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[{"external_key": "E1", "name": None, "state": "Todo"}],
+        )
+
+        assert not Issue.objects.filter(project=project, name="None").exists()
+        assert any("without name" in warning for warning in result["warnings"])
+
+    def test_a_real_unknown_type_or_state_still_warns(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Unknown cells", "UNC")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[{"external_key": "U1", "name": "Odd", "state": "Nowhere", "issue_type": "Missing"}],
+        )
+
+        assert any('unknown issue type "Missing"' in warning for warning in result["warnings"])
+        assert any('unknown state "Nowhere"' in warning for warning in result["warnings"])
+
+
+@pytest.mark.django_db
+class TestGroupAssigneesImport:
+    @staticmethod
+    def _import(project, user, value, options=None):
+        warnings = []
+        result = import_work_items_into_project(
+            project=project,
+            user=user,
+            rows=[{"external_key": "G1", "name": "Grouped", "state": "Todo", "group_assignees": value}],
+            warnings=warnings,
+            options=options,
+        )
+        issue = Issue.objects.get(project=project, name="Grouped")
+        groups = set(IssueGroupAssignee.objects.filter(issue=issue).values_list("group__name", flat=True))
+        return groups, result["warnings"]
+
+    def test_assigns_project_groups_and_the_groups_below_by_name_or_path(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Groups", "GRP")
+        sales = UserGroup.objects.create(workspace=workspace, name="Sales")
+        UserGroup.objects.create(workspace=workspace, name="Poland", parent=sales)
+        ProjectGroup.objects.create(project=project, group=sales, role=15, workspace=workspace)
+
+        groups, warnings = self._import(project, create_user, ["sales", "SALES / poland"])
+
+        assert groups == {"Sales", "Poland"}
+        assert warnings == []
+
+    def test_plain_name_of_a_nested_group_works_when_unambiguous(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Groups", "GRQ")
+        sales = UserGroup.objects.create(workspace=workspace, name="Sales")
+        UserGroup.objects.create(workspace=workspace, name="Poland", parent=sales)
+        ProjectGroup.objects.create(project=project, group=sales, role=15, workspace=workspace)
+
+        groups, _ = self._import(project, create_user, "Poland")
+
+        assert groups == {"Poland"}
+
+    def test_groups_outside_the_project_and_unknown_ones_are_skipped_and_reported(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Groups", "GRR")
+        UserGroup.objects.create(workspace=workspace, name="Support")
+
+        groups, warnings = self._import(project, create_user, ["Support", "Nobody"])
+
+        assert groups == set()
+        assert any('"Support" is not a member of the project' in w for w in warnings)
+        assert any('unknown group "Nobody"' in w for w in warnings)
+        assert not UserGroup.objects.filter(name="Nobody").exists()
+
+    def test_ambiguous_plain_name_is_skipped(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Groups", "GRS")
+        a = UserGroup.objects.create(workspace=workspace, name="A")
+        b = UserGroup.objects.create(workspace=workspace, name="B")
+        UserGroup.objects.create(workspace=workspace, name="Team", parent=a)
+        UserGroup.objects.create(workspace=workspace, name="Team", parent=b)
+        ProjectGroup.objects.create(project=project, group=a, role=15, workspace=workspace)
+
+        groups, warnings = self._import(project, create_user, ["Team", "A / Team"])
+
+        assert groups == {"Team"}
+        assert any("matches more than one group" in w for w in warnings)
+
+    def test_option_off_leaves_groups_out(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Groups", "GRT")
+        sales = UserGroup.objects.create(workspace=workspace, name="Sales")
+        ProjectGroup.objects.create(project=project, group=sales, role=15, workspace=workspace)
+
+        groups, warnings = self._import(
+            project, create_user, ["Sales"], options=WorkItemImportOptions(group_assignees=False)
+        )
+
+        assert groups == set()
+        assert any("group assignee data" in w for w in warnings)

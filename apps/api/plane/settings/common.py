@@ -119,6 +119,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "plane.middleware.space_availability.SpaceAvailabilityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "plane.authentication.middleware.session.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -143,6 +144,8 @@ REST_FRAMEWORK = {
         "asset_id": os.environ.get("ASSET_DUPLICATE_RATE_LIMIT", "60/minute"),
         # Duplicating a project locks the workspace row while it runs, so it is capped per user and per workspace.
         "project_duplicate_user": os.environ.get("PROJECT_DUPLICATE_USER_RATE", "10/hour"),
+        # Exporting the members of a project reads them all, so it is capped per user.
+        "project_member_export_user": os.environ.get("PROJECT_MEMBER_EXPORT_USER_RATE", "60/hour"),
         "project_duplicate_workspace": os.environ.get("PROJECT_DUPLICATE_WORKSPACE_RATE", "30/hour"),
     },
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
@@ -334,6 +337,8 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 USE_MINIO = int(os.environ.get("USE_MINIO", 0)) == 1
 
 STORAGES = {"staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"}}
+# "s3" (any S3-compatible store, the default) or "azure" (Azure Blob Storage)
+STORAGE_PROVIDER = os.environ.get("STORAGE_PROVIDER", "s3").strip().lower()
 STORAGES["default"] = {"BACKEND": "plane.settings.storage.S3Storage"}
 # No fallback: when unset, boto3 resolves credentials through its default chain, as S3Storage does.
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
@@ -403,7 +408,10 @@ CELERY_IMPORTS = (
 WORK_ITEM_DUE_REMINDER_TIMEZONE = os.environ.get("WORK_ITEM_DUE_REMINDER_TIMEZONE", "Europe/Warsaw")
 WORK_ITEM_DUE_REMINDER_HOUR = int(os.environ.get("WORK_ITEM_DUE_REMINDER_HOUR", 7))
 
+# The default for the largest upload (bytes); the instance administrator can change it in the admin app
 FILE_SIZE_LIMIT = int(os.environ.get("FILE_SIZE_LIMIT", 5242880))
+# The most the administrator may set it to. The proxy in front of the API refuses a request body above this.
+FILE_SIZE_LIMIT_MAX = int(os.environ.get("FILE_SIZE_LIMIT_MAX", 104857600))
 
 # Unsplash Access key
 UNSPLASH_ACCESS_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")
@@ -471,6 +479,11 @@ SPACE_BASE_PATH = os.environ.get("SPACE_BASE_PATH", "/spaces/")
 
 # App Base URL
 APP_BASE_URL = os.environ.get("APP_BASE_URL", None)
+
+# The mark at the top of the emails, as images for light backgrounds and for the dark header of the digest-style
+# emails (https only). Left empty, the emails show the name in type, which needs no hosting.
+EMAIL_LOGO_URL = os.environ.get("EMAIL_LOGO_URL", "")
+EMAIL_LOGO_URL_ON_DARK = os.environ.get("EMAIL_LOGO_URL_ON_DARK", "")
 if APP_BASE_URL and not is_valid_url(APP_BASE_URL):
     APP_BASE_URL = None
 APP_BASE_PATH = os.environ.get("APP_BASE_PATH", "/")

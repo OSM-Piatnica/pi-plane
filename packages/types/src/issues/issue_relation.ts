@@ -43,7 +43,7 @@ export type TRelationRescheduleShift = {
   ref: string;
   name: string;
   start_date: string | null;
-  target_date: string | null;
+  finish_date: string | null;
   new_start_date: string | null;
-  new_target_date: string | null;
+  new_finish_date: string | null;
 };

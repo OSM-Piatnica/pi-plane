@@ -1,10 +1,12 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { ChatOutline, DocumentationOutline, Github, RocketOutline } from "@makeplane/propel/icons";
+import { DocumentationOutline, Github, RocketOutline } from "@makeplane/propel/icons";
+import { PI_PLANE_DOCS_URL, PI_PLANE_NEW_ISSUE_URL } from "@plane/constants";
 // components
 import type { TPowerKCommandConfig } from "@/components/power-k/core/types";
 // hooks
@@ -37,20 +39,7 @@ export const usePowerKHelpCommands = (): TPowerKCommandConfig[] => {
       i18n_title: "power_k.help_actions.open_plane_documentation",
       icon: DocumentationOutline,
       action: () => {
-        window.open("https://docs.plane.so/", "_blank", "noopener,noreferrer");
-      },
-      isEnabled: () => true,
-      isVisible: () => true,
-      closeOnSelect: true,
-    },
-    {
-      id: "join_forum",
-      type: "action",
-      group: "help",
-      i18n_title: "power_k.help_actions.join_forum",
-      icon: ChatOutline,
-      action: () => {
-        window.open("https://forum.plane.so", "_blank", "noopener,noreferrer");
+        window.open(PI_PLANE_DOCS_URL, "_blank", "noopener,noreferrer");
       },
       isEnabled: () => true,
       isVisible: () => true,
@@ -63,7 +52,7 @@ export const usePowerKHelpCommands = (): TPowerKCommandConfig[] => {
       i18n_title: "power_k.help_actions.report_bug",
       icon: Github,
       action: () => {
-        window.open("https://github.com/makeplane/plane/issues/new/choose", "_blank", "noopener,noreferrer");
+        window.open(PI_PLANE_NEW_ISSUE_URL, "_blank", "noopener,noreferrer");
       },
       isEnabled: () => true,
       isVisible: () => true,

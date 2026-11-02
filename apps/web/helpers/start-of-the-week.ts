@@ -13,6 +13,6 @@ type TStartOfTheWeekSources = {
   workspace?: EStartOfTheWeek | null;
 };
 
-/** The first day of the week to show: the person's own choice, else the project's, else the workspace's, else Sunday. */
+/** The first day of the week to show: the person's own choice, else the project's, else the workspace's, else Monday. */
 export const resolveStartOfTheWeek = ({ profile, project, workspace }: TStartOfTheWeekSources): EStartOfTheWeek =>
-  profile ?? project ?? workspace ?? EStartOfTheWeek.SUNDAY;
+  profile ?? project ?? workspace ?? EStartOfTheWeek.MONDAY;

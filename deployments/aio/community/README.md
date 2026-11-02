@@ -23,7 +23,7 @@ The AIO image requires these external services to be running:
 - **PostgreSQL Database**: For data storage
 - **Redis**: For caching and session management
 - **RabbitMQ**: For message queuing
-- **S3-Compatible Storage**: For file uploads (AWS S3 or MinIO)
+- **S3-Compatible Storage**: For file uploads (AWS S3, Google Cloud Storage or MinIO; Azure Blob Storage is not supported in this image; for Google Cloud Storage see the [Docker guide](../../cli/community/README.md#using-your-own-object-storage-aws-s3-google-cloud-storage-azure-blob-storage))
 
 ### Required Environment Variables
 
@@ -113,9 +113,14 @@ In Plane v1.4.0 to v1.4.2 a container started without `SECRET_KEY` received a ge
 - `REDIS_SSL_CERT_REQS`: For a `rediss://` `REDIS_URL`, the Redis server certificate and hostname are verified by default (`required`). Set it to `none` to skip verification.
 - `REDIS_SSL_CA_CERTS`: Path inside the container to a CA bundle, for a Redis server whose certificate is issued by a private CA. Mount the file with `-v`, for example `-v /path/to/redis-ca.pem:/certs/redis-ca.pem:ro -e REDIS_SSL_CA_CERTS=/certs/redis-ca.pem`.
 
+#### Public sharing (Space)
+
+- `ENABLE_SPACE`: set it to `0` to leave Space, the public sharing site, out (default: `1`). It is then not started, `/spaces` answers 404, projects cannot be shared on the web and the sharing options are hidden in the app. The image still contains it. With Space in, the instance admin can also turn sharing off on the Workspaces page of the admin app.
+
 #### File Handling
 
-- `FILE_SIZE_LIMIT`: Maximum file upload size in bytes (default: `5242880` = 5MB)
+- `FILE_SIZE_LIMIT`: Maximum file upload size in bytes until the instance administrator sets one on the General page of the admin app (default: `5242880` = 5 MB)
+- `FILE_SIZE_LIMIT_MAX`: The most the administrator can set it to, and the largest request body the proxy accepts, in bytes (default: `104857600` = 100 MB). Keep it at least as large as `FILE_SIZE_LIMIT`
 
 #### API Configuration
 
@@ -123,6 +128,7 @@ In Plane v1.4.0 to v1.4.2 a container started without `SECRET_KEY` received a ge
 - `AUTHENTICATION_RATE_LIMIT`: per-IP throttle for sign-in and one-time-code endpoints (default: `1000/minute`, sized for many users behind one IP)
 - `RATE_LIMIT_PER_IP_PER_MIN`: per-client-IP request limit enforced by the Caddy proxy (default: `50000`)
 - `ANON_RATE_LIMIT`: per-IP limit on logged-out requests such as public Spaces boards; users behind one IP share it (default: `180/minute`)
+- `ADMIN_MESSAGE_LIMIT_PER_HOUR`: most messages one person may send to the admins of a workspace (Help menu, _Contact workspace admins_) within an hour, 1 to 100 (default: `5`). The instance admin can change it in the admin app, and that value wins
 - `ASSET_DUPLICATE_RATE_LIMIT`: per-asset limit on duplicating an asset when pasting images in the editor, counted across all users (default: `60/minute`)
 
 ## Port Mapping
@@ -147,7 +153,7 @@ To build the AIO image yourself:
 
 ```bash
 cd deployments/aio/community
-IMAGE_NAME=my-pi-plane-aio ./build.sh --release=2.1.0
+IMAGE_NAME=my-pi-plane-aio ./build.sh --release=2.1.1
 ```
 
 `build.sh` does not build the image itself: it prepares the `dist/` folder the Dockerfile needs and prints the `docker build` command to run next.

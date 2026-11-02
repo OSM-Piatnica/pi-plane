@@ -119,6 +119,8 @@
   "mentions_description": "Birisi yorumlarda veya açıklamada beni etiketlediğinde bildir.",
   "project_access_requests": "Erişim istekleri",
   "project_access_requests_description": "Yönettiğim özel projelere katılma istekleri ve kendi isteklerimle ilgili kararlar hakkında bana e-posta gönder.",
+  "workspace_admin_messages": "Biri çalışma alanı yöneticilerine yazdığında bana e-posta gönder",
+  "workspace_admin_messages_description": "Yalnızca bir çalışma alanının yöneticisiyseniz geçerlidir. Mesaj her zaman gelen kutunuza ulaşır; bu ayar yalnızca ayrıca e-posta alıp almayacağınızı belirler ve yalnızca sizin için geçerlidir.",
   "email_frequency": "E-posta sıklığı",
   "email_frequency_description": "İş öğesi güncellemeleriyle ilgili e-postaları ne sıklıkla almak istediğinizi seçin. Etiketlemeler her zaman hemen gönderilir.",
   "email_frequency_instant": "Anında",
@@ -241,6 +243,25 @@
   "documentation": "Dokümantasyon",
   "message_support": "Destekle iletişim",
   "contact_sales": "Satış Ekibiyle İletişim",
+  "contact_workspace_admins": {
+    "menu_label": "Yöneticilerle iletişime geç",
+    "title": "Çalışma alanı yöneticileriyle iletişime geç",
+    "description": "{workspace} yöneticileri kişi ekler, rolleri değiştirir ve erişimle ilgili yardımcı olur. E-posta uygulamanızla onlara yazabilirsiniz.",
+    "email_all": "Tüm yöneticilere e-posta gönder",
+    "subject": "{workspace} yöneticilerine soru",
+    "body": "Merhaba,\n\n\n\n{name}",
+    "message_label": "Yöneticilere mesaj",
+    "message_placeholder": "Neye ihtiyacınız olduğunu yazın, örneğin bir projeye erişim ya da rol değişikliği.",
+    "characters": "{count} / {max}",
+    "send": "Mesajı gönder",
+    "sent": "Mesajınız çalışma alanı yöneticilerine gönderildi.",
+    "error_rate_limited": "Kısa süre önce birkaç mesaj gönderdiniz. Lütfen daha sonra tekrar deneyin.",
+    "error_generic": "Mesaj gönderilemedi. Tekrar deneyin veya yöneticilere e-posta gönderin.",
+    "or_email": "Veya kendi e-posta uygulamanızdan yazın",
+    "notification_text": "bu çalışma alanının yöneticilerine yazdı",
+    "message_from": "{name} kişisinden mesaj",
+    "reply_by_email": "E-postayla yanıtla"
+  },
   "hyper_mode": "Hiper Mod",
   "keyboard_shortcuts": "Klavye Kısayolları",
   "whats_new": "Yenilikler",
@@ -323,6 +344,7 @@
   "start_date": "Başlangıç tarihi",
   "end_date": "Bitiş tarihi",
   "due_date": "Son tarih",
+  "finish_date": "Planlanan bitiş tarihi",
   "target_date": "Hedef tarih",
   "estimate": "Tahmin",
   "change_parent_issue": "Üst iş öğesini değiştir",
@@ -352,6 +374,12 @@
   "filter_headings": {
     "access": "Erişim",
     "owned_by": "Sahibi"
+  },
+  "group_filter": {
+    "heading": "Grup",
+    "my_groups": "Gruplarım",
+    "no_group": "Grup yok",
+    "unknown_group": "Bilinmeyen grup"
   },
   "good": "İyi",
   "morning": "sabah",
@@ -549,6 +577,7 @@
       "last_updated": "Son güncellenen",
       "start_date": "Başlangıç tarihi",
       "due_date": "Son tarih",
+      "finish_date": "Planlanan bitiş tarihi",
       "asc": "Artan",
       "desc": "Azalan",
       "updated_on": "Güncellenme tarihi"

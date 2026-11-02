@@ -19,7 +19,7 @@
     "start_date": "Startdatum",
     "end_date": "Enddatum",
     "in_your_timezone": "In Ihrer Zeitzone",
-    "transfer_work_items": "Übertragen von {count} Arbeitselementen",
+    "transfer_work_items": "{count} Arbeitselemente übertragen",
     "transfer": {
       "no_cycles_available": "Keine anderen Zyklen verfügbar, um Arbeitselemente zu übertragen."
     },
@@ -30,7 +30,7 @@
       "progress": "Fortschritt",
       "chart": "Burndown-Diagramm",
       "priority_issue": "Hochpriorisierte Elemente",
-      "assignees": "Zuweisungen",
+      "assignees": "Zugewiesene",
       "issue_burndown": "Burndown für Arbeitselemente",
       "ideal": "Ideal",
       "current": "Aktuell",
@@ -190,7 +190,7 @@
   "project_issues": {
     "empty_state": {
       "no_issues": {
-        "title": "Erstellen und zuweisen eines Arbeitselements",
+        "title": "Arbeitselement erstellen und zuweisen",
         "description": "Arbeitselemente sind Aufgaben, die Sie sich selbst oder dem Team zuweisen. Verfolgen Sie deren Fortschritt.",
         "primary_button": {
           "text": "Erstes Element erstellen",
@@ -271,8 +271,8 @@
   "project_page": {
     "empty_state": {
       "general": {
-        "title": "Notieren Sie Ideen, Dokumente oder Wissensdatenbanken. Nutzen Sie AI Galileo.",
-        "description": "Seiten sind Orte für Ihre Gedanken. Schreiben, formatieren, fügen Sie Arbeitselemente ein und verwenden Sie Komponenten.",
+        "title": "Notieren Sie Ideen, Dokumente oder Wissensdatenbanken. Nutzen Sie Galileo, den KI-Assistenten von Pi-Plane.",
+        "description": "Seiten sind Orte für Ihre Gedanken. Schreiben Sie, formatieren Sie, fügen Sie Arbeitselemente ein und verwenden Sie Komponenten.",
         "primary_button": {
           "text": "Erste Seite erstellen"
         }
@@ -300,8 +300,8 @@
   "disabled_project": {
     "empty_state": {
       "inbox": {
-        "title": "Eingang ist nicht aktiviert",
-        "description": "Aktivieren Sie den Eingang in den Projekteinstellungen, um Anfragen zu verwalten.",
+        "title": "Intake ist nicht aktiviert",
+        "description": "Aktivieren Sie Intake in den Projekteinstellungen, um Anfragen zu verwalten.",
         "primary_button": {
           "text": "Funktionen verwalten"
         }
@@ -370,12 +370,55 @@
     "display_name": "Anzeigename",
     "email": "E-Mail",
     "joining_date": "Beitrittsdatum",
-    "role": "Rolle"
+    "role": "Rolle",
+    "groups": {
+      "title": "Gruppen",
+      "description": "Gruppen, die Mitglieder dieses Projekts sind. Alle Personen in einer Gruppe, einschließlich ihrer Untergruppen, sind Mitglieder des Projekts mit der Rolle, die der Gruppe zugewiesen ist. Die eigene Rolle einer Person wird durch eine Gruppe nie herabgestuft.",
+      "no_groups": "Dieses Projekt hat noch keine Gruppen als Mitglieder.",
+      "select_group": "Gruppe auswählen",
+      "no_groups_available": "Keine weiteren Gruppen zum Hinzufügen",
+      "add_group": "Gruppe hinzufügen",
+      "role": "Rolle",
+      "role_member": "Mitglied",
+      "role_guest": "Gast",
+      "member_count": "{count, plural, one {# Person} other {# Personen}}",
+      "group_added": "Gruppe zum Projekt hinzugefügt.",
+      "group_updated": "Rolle der Gruppe aktualisiert.",
+      "group_removed": "Gruppe aus dem Projekt entfernt.",
+      "remove_title": "{name} aus diesem Projekt entfernen?",
+      "remove_content": "Personen, die nur über diese Gruppe im Projekt sind, verlieren den Zugriff darauf. Personen, die direkt zum Projekt hinzugefügt wurden, bleiben erhalten.",
+      "via_group": "Über Gruppe",
+      "via_group_tooltip": "Diese Person gehört über eine Gruppe zum Projekt. Entfernen Sie die Gruppe oder die Person aus der Gruppe.",
+      "role_raised": "Rolle durch Gruppe angehoben",
+      "role_raised_tooltip": "Eine Gruppe, der diese Person angehört, gibt ihr diese Rolle.",
+      "assign_hint": "Es können noch keine Gruppen zugewiesen werden. Fügen Sie zuerst Gruppen unter Projekteinstellungen, Mitglieder hinzu."
+    }
   },
   "project": {
+    "members_export": {
+      "export_button": "Exportieren",
+      "title": "Mitglieder exportieren",
+      "description": "Laden Sie die Personen und Gruppen dieses Projekts herunter. Die Datei kann als CSV erneut importiert werden; die Spalten Name, Source, Via group, Raised by group und Joined dienen nur zur Information und werden beim Import ignoriert.",
+      "format": "Format",
+      "include_via_group": {
+        "label": "Personen einbeziehen, die über eine Gruppe Mitglied sind",
+        "description": "Fügt die Personen hinzu, die nur über eine Gruppe im Projekt sind, markiert als „person (via group)“. Der Import überspringt diese Zeilen, die Gruppenzeile bringt sie herein."
+      },
+      "buttons": {
+        "cancel": "Abbrechen",
+        "export": "Exportieren",
+        "exporting": "Wird exportiert..."
+      },
+      "toast": {
+        "failed": {
+          "title": "Export fehlgeschlagen",
+          "message": "Die Mitglieder konnten nicht exportiert werden. Bitte versuchen Sie es erneut."
+        }
+      }
+    },
     "members_import": {
       "title": "Mitglieder aus CSV importieren",
-      "description": "Laden Sie eine CSV mit den Spalten E-Mail und Rolle hoch (5=Gast, 15=Mitglied, 20=Admin). Benutzer müssen bereits Mitglieder des Arbeitsbereichs sein.",
+      "description": "Laden Sie eine CSV-Datei mit den Spalten Email und Role (5=Gast, 15=Mitglied, 20=Administrator) oder Group und Role (5=Gast, 15=Mitglied) hoch, um eine ganze Gruppe hinzuzufügen. Schreiben Sie eine verschachtelte Gruppe als Parent / Child. Verwenden Sie in jeder Zeile entweder Email oder Group. Benutzer müssen bereits Mitglieder des Arbeitsbereichs sein, und Gruppen müssen bereits existieren.",
       "download_sample": "Beispiel-CSV herunterladen",
       "dropzone": {
         "active": "CSV-Datei hier ablegen",
@@ -399,13 +442,17 @@
         },
         "message": {
           "success": "{count} Mitglied{plural} erfolgreich ins Projekt importiert.",
-          "no_imports": "Aus der CSV-Datei wurden keine neuen Mitglieder importiert."
+          "no_imports": "Aus der CSV-Datei wurden keine neuen Mitglieder importiert.",
+          "groups_success": "{count} {plural, select, s {Gruppen} other {Gruppe}} mit dem Projekt verknüpft."
         },
         "stats": {
           "added": "Hinzugefügt",
           "reactivated": "Reaktiviert",
           "already_members": "Bereits Mitglieder",
-          "skipped": "Übersprungen"
+          "skipped": "Übersprungen",
+          "groups_added": "Hinzugefügte Gruppen",
+          "groups_updated": "Aktualisierte Gruppen",
+          "groups_skipped": "Übersprungene Gruppen"
         },
         "download_errors": "Übersprungene Details herunterladen"
       },
@@ -416,8 +463,26 @@
         },
         "import_failed": {
           "title": "Import fehlgeschlagen",
-          "message": "Etwas ist schief gelaufen."
+          "message": "Etwas ist schiefgelaufen."
         }
+      },
+      "import_button": "Aus CSV importieren",
+      "parse_errors": {
+        "empty": "Die Datei ist leer.",
+        "missing_columns": "Die Datei benötigt eine Spalte Role sowie eine Spalte Email oder Group.",
+        "no_rows": "Die Datei hat eine Kopfzeile, aber keine Zeilen."
+      },
+      "skip_reasons": {
+        "invalid_role": "Die Rolle muss 5 (Gast), 15 (Mitglied) oder 20 (Administrator) sein.",
+        "both_email_and_group": "Eine Zeile darf entweder Email oder Group enthalten, nicht beides.",
+        "missing_value": "Die Zeile enthält weder Email noch Group.",
+        "not_workspace_member": "Diese Person ist kein aktives Mitglied des Arbeitsbereichs.",
+        "role_above_workspace_role": "Die Rolle ist höher als die Rolle der Person im Arbeitsbereich.",
+        "role_below_workspace_role": "Die Rolle ist niedriger als die Rolle der Person im Arbeitsbereich.",
+        "unknown_group": "Im Arbeitsbereich existiert keine Gruppe mit diesem Namen.",
+        "ambiguous_group": "Mehrere Gruppen haben diesen Namen, schreiben Sie den Pfad als Parent / Child.",
+        "group_admin_role": "Gruppen können keine Projektadministratoren sein.",
+        "group_already_linked": "Die Gruppe ist bereits mit dieser Rolle Mitglied des Projekts."
       }
     }
   },
@@ -545,17 +610,17 @@
       "anyone_with_link": "Jeder im Internet mit dem Link kann dieses Projekt ansehen, ohne Konto",
       "confirm": {
         "title": "Dieses Projekt im Web teilen?",
-        "description": "Jeder im Internet, der den Link hat, kann dieses Projekt ansehen, auch Personen außerhalb deines Arbeitsbereichs und nicht angemeldete Personen.",
-        "can_see": "Sie können sehen:",
+        "description": "Jeder im Internet, der den Link hat, kann dieses Projekt ansehen, auch Personen außerhalb Ihres Arbeitsbereichs und nicht angemeldete Personen.",
+        "can_see": "Diese Personen können sehen:",
         "item_work_items": "alle Arbeitselemente des Projekts mit Beschreibung, Status, Priorität, Terminen und Labels",
         "item_members": "die Namen und Avatare der Projektmitglieder",
-        "item_activity": "Kommentare, Reaktionen und Stimmen mit den Namen der Personen dahinter, wenn du sie erlaubst",
-        "note": "Betrachter können nichts bearbeiten. Der Link funktioniert, bis du die Freigabe beendest. Teile deshalb nur ein Projekt ohne vertrauliche Inhalte."
+        "item_activity": "Kommentare, Reaktionen und Stimmen mit den Namen der Personen dahinter, wenn Sie sie erlauben",
+        "note": "Betrachter können nichts bearbeiten. Der Link funktioniert, bis Sie die Freigabe beenden. Teilen Sie deshalb nur ein Projekt ohne vertrauliche Inhalte."
       },
       "link_copied": "Web-Link kopiert.",
       "live_on_web": "Dieses Projekt ist im Web geteilt",
       "publishing": "Wird aktiviert…",
-      "select_layout_error": "Bitte wähle mindestens ein Ansichtslayout, um das Projekt im Web zu teilen.",
+      "select_layout_error": "Bitte wählen Sie mindestens ein Ansichtslayout, um das Projekt im Web zu teilen.",
       "settings_updated": "Einstellungen der Web-Freigabe aktualisiert.",
       "unpublish": "Freigabe beenden",
       "unpublish_error": "Beim Deaktivieren der Web-Freigabe ist etwas schiefgelaufen.",
@@ -649,8 +714,8 @@
     },
     "request_access_modal": {
       "title": "Zugang anfragen",
-      "description": "Bitte die Admins dieses Projekts um Zugang.",
-      "description_named": "Bitte die Admins von {name} um Zugang.",
+      "description": "Bitten Sie die Admins dieses Projekts um Zugang.",
+      "description_named": "Bitten Sie die Admins von {name} um Zugang.",
       "message_placeholder": "Nachricht an die Admins hinzufügen (optional)",
       "send": "Anfrage senden",
       "sending": "Wird gesendet...",
@@ -664,7 +729,7 @@
       "approve": "Genehmigen",
       "reject": "Ablehnen",
       "already_decided": "Diese Anfrage wurde bereits von einem anderen Admin entschieden.",
-      "requester_left": "Diese Person ist kein Mitglied des Workspace mehr."
+      "requester_left": "Diese Person ist kein Mitglied des Arbeitsbereichs mehr."
     },
     "duplicate_modal": {
       "already_running": "In diesem Arbeitsbereich läuft bereits eine Kopie von Arbeitselementen. Versuchen Sie es erneut, wenn sie fertig ist.",
@@ -681,6 +746,8 @@
       "clear_all": "Alle abwählen",
       "description": "Erstellt ein neues Projekt mit denselben Einstellungen. Seiten und Webhooks werden nicht kopiert; Arbeitselemente nur, wenn Sie es unten wählen.",
       "error": "Das Projekt konnte nicht dupliziert werden. Bitte versuchen Sie es erneut.",
+      "groups": "Gruppen als Mitglieder",
+      "groups_hint": "Verknüpft dieselben Gruppen mit denselben Rollen, sodass die Personen darin Mitglieder der Kopie werden.",
       "identifier_placeholder": "Wird erzeugt, wenn leer",
       "properties": {
         "assignees": "Zugewiesene",

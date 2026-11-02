@@ -151,8 +151,18 @@ function updateEnvFile() {
     fi
 }
 
+# True when Space (the public sharing site) is left out: ENABLE_SPACE=0 or SPACE_REPLICAS=0, in the environment of
+# the command (ENABLE_SPACE=0 ./setup.sh install) or in plane.env
+function spaceIsLeftOut() {
+    local enabled="${ENABLE_SPACE:-$(getEnvValue "ENABLE_SPACE" "$DOCKER_ENV_PATH")}"
+    local replicas="${SPACE_REPLICAS:-$(getEnvValue "SPACE_REPLICAS" "$DOCKER_ENV_PATH")}"
+    [ "$enabled" == "0" ] || [ "$replicas" == "0" ]
+}
+
 function updateCustomVariables(){
     echo "Updating custom variables..." >&2
+    # Remember a choice made on the command line, so that every later start keeps it
+    if [ -n "$ENABLE_SPACE" ]; then updateEnvFile "ENABLE_SPACE" "$ENABLE_SPACE" "$DOCKER_ENV_PATH"; fi
     updateEnvFile "IMAGE_REPO" "$IMAGE_REPO" "$DOCKER_ENV_PATH"
     updateEnvFile "APP_RELEASE" "$APP_RELEASE" "$DOCKER_ENV_PATH"
     updateEnvFile "PULL_POLICY" "$PULL_POLICY" "$DOCKER_ENV_PATH"
@@ -347,7 +357,12 @@ function download() {
     else
         CUSTOM_BUILD="false"
         updateCustomVariables
-        bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH pull --policy always"
+        local pull_services=""
+        if spaceIsLeftOut; then
+            # nothing to download for the site that is not going to run
+            pull_services=$(bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH config --services" | grep -vx "space" | tr '\n' ' ')
+        fi
+        bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH pull --policy always $pull_services"
 
         if [ $? -ne 0 ]; then
             echo ""
@@ -363,7 +378,9 @@ function download() {
     echo ""
 }
 function startServices() {
-    bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH up -d --pull if_not_present --quiet-pull"
+    local space_scale=""
+    if spaceIsLeftOut; then space_scale="--scale space=0"; fi
+    bash -c "$COMPOSE_CMD -f $DOCKER_FILE_PATH --env-file=$DOCKER_ENV_PATH up -d --pull if_not_present --quiet-pull $space_scale"
 
     local migrator_container_id=$(docker container ls -aq -f "name=$SERVICE_FOLDER-migrator")
     if [ -n "$migrator_container_id" ]; then

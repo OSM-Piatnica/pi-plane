@@ -25,6 +25,7 @@ import type {
 import { EIssuesStoreType, EIssueLayoutTypes, STATIC_VIEW_TYPES } from "@plane/types";
 import { handleIssueQueryParamsByLayout } from "@plane/utils";
 // services
+import { getDateBucketOrderBy } from "@/helpers/date-bucket-order";
 import { WorkspaceService } from "@/services/workspace.service";
 // local imports
 import type { IBaseIssueFilterStore, IIssueFilterHelperStore } from "../helpers/issue-filter-helper.store";
@@ -101,7 +102,11 @@ export class WorkspaceIssuesFilter extends IssueFilterHelperStore implements IWo
     const userFilters = this.getIssueFilters(viewId);
     if (!userFilters) return undefined;
 
-    const filteredParams = handleIssueQueryParamsByLayout(EIssueLayoutTypes.SPREADSHEET, "my_issues");
+    // the layout decides which parameters (a grouped list sends its group by) the page may send
+    const filteredParams = handleIssueQueryParamsByLayout(
+      userFilters.displayFilters?.layout ?? EIssueLayoutTypes.SPREADSHEET,
+      "my_issues"
+    );
     if (!filteredParams) return undefined;
 
     const filteredRouteParams: Partial<Record<TIssueParams, string | boolean>> = this.computedFilteredParams(
@@ -234,6 +239,12 @@ export class WorkspaceIssuesFilter extends IssueFilterHelperStore implements IWo
           if (_filters.displayFilters.group_by === null) {
             _filters.displayFilters.sub_group_by = null;
             updatedDisplayFilters.sub_group_by = null;
+          }
+          // grouped by the bucket of a date: order by that date until the person picks another order
+          const dateBucketOrderBy = getDateBucketOrderBy(updatedDisplayFilters, _filters.displayFilters);
+          if (dateBucketOrderBy) {
+            _filters.displayFilters.order_by = dateBucketOrderBy;
+            updatedDisplayFilters.order_by = dateBucketOrderBy;
           }
           // set sub_group_by to null if layout is switched to kanban group_by and sub_group_by are same
           if (

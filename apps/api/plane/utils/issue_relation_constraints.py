@@ -137,9 +137,9 @@ def is_timeline_relation_satisfied(
     the rule limits (the dependent one), so a rule between two projects uses the calendar of the one that has to move.
     """
     issue_start = (issue_dates or {}).get("start_date")
-    issue_finish = (issue_dates or {}).get("target_date")
+    issue_finish = (issue_dates or {}).get("finish_date")
     related_start = (related_dates or {}).get("start_date")
-    related_finish = (related_dates or {}).get("target_date")
+    related_finish = (related_dates or {}).get("finish_date")
     weekend_days = issue_weekend_days if dependent_side(relation_type) == "issue" else related_weekend_days
 
     if relation_type == "blocked_by":

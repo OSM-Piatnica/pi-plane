@@ -4,11 +4,15 @@
 # Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
+# Python imports
+import pytz
+
 # Third party imports
 from rest_framework import serializers
 
 # Module imports
 from plane.app.serializers import IssueSerializer
+from plane.utils.group_paths import escape_list_entry, escape_name, group_paths
 from plane.utils.issue_relation_mapper import get_inverse_relation
 
 
@@ -31,9 +35,10 @@ ISSUE_EXPORT_FIELD_GROUPS = {
         "estimate",
         "is_draft",
     ),
-    "people": ("assignees", "subscribers", "created_by_name"),
+    "people": ("assignees", "group_assignees", "subscribers", "created_by_name"),
     "dates": (
         "start_date",
+        "finish_date",
         "target_date",
         "duration",
         "completed_at",
@@ -45,6 +50,9 @@ ISSUE_EXPORT_FIELD_GROUPS = {
     "relations": ("parent", "relations", "links"),
     "other": ("custom_properties", "comments"),
 }
+# Columns that are written whenever their parent column is: the cycle period travels with the cycle
+# name so that an import can recreate the cycle, and needs no entry of its own in the export form.
+ISSUE_EXPORT_COMPANION_FIELDS = {"cycles": ("cycle_start_date", "cycle_end_date")}
 ISSUE_EXPORT_OPTIONAL_FIELDS = tuple(field for group in ISSUE_EXPORT_FIELD_GROUPS.values() for field in group)
 
 
@@ -76,6 +84,9 @@ def resolve_issue_export_fields(selected):
         raise InvalidIssueExportFields(f"Unknown export fields: {', '.join(unknown)}", unknown)
 
     wanted = set(selected) | set(ISSUE_EXPORT_REQUIRED_FIELDS)
+    for parent, companions in ISSUE_EXPORT_COMPANION_FIELDS.items():
+        if parent in wanted:
+            wanted.update(companions)
     return [name for name in IssueExportSerializer.Meta.fields if name in wanted]
 
 
@@ -100,9 +111,12 @@ class IssueExportSerializer(IssueSerializer):
 
     issue_type = serializers.SerializerMethodField()
     assignees = serializers.SerializerMethodField()
+    group_assignees = serializers.SerializerMethodField()
     parent = serializers.SerializerMethodField()
     labels = serializers.SerializerMethodField()
     cycles = serializers.SerializerMethodField()
+    cycle_start_date = serializers.SerializerMethodField()
+    cycle_end_date = serializers.SerializerMethodField()
     modules = serializers.SerializerMethodField()
     comments = serializers.SerializerMethodField()
     estimate = serializers.SerializerMethodField()
@@ -131,9 +145,11 @@ class IssueExportSerializer(IssueSerializer):
             "state_name",
             "priority",
             "assignees",
+            "group_assignees",
             "subscribers",
             "created_by_name",
             "start_date",
+            "finish_date",
             "target_date",
             "duration",
             "completed_at",
@@ -143,6 +159,8 @@ class IssueExportSerializer(IssueSerializer):
             "estimate",
             "labels",
             "cycles",
+            "cycle_start_date",
+            "cycle_end_date",
             "modules",
             "custom_properties",
             "links",
@@ -167,6 +185,22 @@ class IssueExportSerializer(IssueSerializer):
             if ia.deleted_at is None and ia.assignee and ia.assignee.is_active and ia.assignee.email
         ]
 
+    def get_group_assignees(self, obj):
+        """The groups the work item is assigned to, by name; a nested group by its path ("Parent / Child")."""
+        links = [link for link in obj.issue_group_assignee.all() if link.deleted_at is None and link.group]
+        if not links:
+            return []
+        # One map per workspace, read once for the whole export instead of once per row
+        cache = self.__dict__.setdefault("_group_paths", {})
+        if obj.workspace_id not in cache:
+            cache[obj.workspace_id] = group_paths(obj.workspace_id)
+        paths = cache[obj.workspace_id]
+        names = (
+            paths.get(link.group_id) or escape_name(link.group.name) for link in links if link.group.deleted_at is None
+        )
+        # a comma in a name is written "\\," so the column can be read as comma separated text (Excel cells are)
+        return sorted(escape_list_entry(name) for name in names)
+
     def get_subscribers(self, obj):
         """Return list of subscriber e-mails."""
         return [sub.subscriber.email for sub in obj.issue_subscribers.all() if sub.subscriber and sub.subscriber.email]
@@ -181,6 +215,21 @@ class IssueExportSerializer(IssueSerializer):
 
     def get_cycles(self, obj):
         return [ic.cycle.name for ic in obj.issue_cycle.all()]
+
+    @staticmethod
+    def _cycle_day(obj, field):
+        """The date of the first cycle's start/end in the project's timezone, where a cycle day begins and ends."""
+        cycle_link = next(iter(obj.issue_cycle.all()), None)
+        moment = getattr(cycle_link.cycle, field, None) if cycle_link else None
+        if moment is None:
+            return ""
+        return moment.astimezone(pytz.timezone(obj.project.timezone or "UTC")).date().isoformat()
+
+    def get_cycle_start_date(self, obj):
+        return self._cycle_day(obj, "start_date")
+
+    def get_cycle_end_date(self, obj):
+        return self._cycle_day(obj, "end_date")
 
     def get_modules(self, obj):
         return [im.module.name for im in obj.issue_module.all()]

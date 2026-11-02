@@ -160,6 +160,7 @@ def create_issue_version(issue: Issue, related_data: Dict) -> Optional[IssueVers
             priority=issue.priority,
             start_date=issue.start_date,
             target_date=issue.target_date,
+            finish_date=issue.finish_date,
             duration=issue.duration,
             assignees=related_data["assignees"].get(issue.id, []),
             sequence_id=issue.sequence_id,

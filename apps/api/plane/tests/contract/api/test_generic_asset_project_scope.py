@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """Contract tests for project scoping on the external-API ``GenericAssetEndpoint`` (INFRA-501).
@@ -32,7 +33,7 @@ from plane.db.models import (
     WorkspaceMember,
 )
 
-S3_STORAGE_PATH = "plane.api.views.asset.S3Storage"
+S3_STORAGE_PATH = "plane.api.views.asset.get_storage"
 
 
 def asset_detail_url(slug, asset_id):

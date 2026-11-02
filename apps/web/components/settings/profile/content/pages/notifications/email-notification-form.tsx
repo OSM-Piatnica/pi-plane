@@ -228,6 +228,27 @@ export const NotificationsProfileSettingsForm = observer(function NotificationsP
           />
         }
       />
+      <SettingsControlItem
+        title={t("workspace_admin_messages")}
+        description={t("workspace_admin_messages_description")}
+        control={
+          <Controller
+            control={control}
+            name="workspace_admin_message"
+            render={({ field: { value, onChange } }) => (
+              <Switch
+                size="sm"
+                checked={value}
+                onCheckedChange={(newValue) => {
+                  onChange(newValue);
+                  void handleSettingChange("workspace_admin_message", newValue);
+                }}
+                aria-label={t("workspace_admin_messages")}
+              />
+            )}
+          />
+        }
+      />
     </div>
   );
 });

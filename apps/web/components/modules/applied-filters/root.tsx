@@ -10,6 +10,7 @@ import { CloseOutline } from "@makeplane/propel/icons";
 import type { TModuleDisplayFilters, TModuleFilters } from "@plane/types";
 // components
 import { Header, EHeaderVariant } from "@plane/blocks/layout";
+import { AppliedGroupFilters } from "@/components/common/applied-filters/group";
 import { getAppliedFilterHeading } from "@/helpers/applied-filter-heading";
 import { AppliedDateFilters, AppliedMembersFilters, AppliedStatusFilters } from "@/components/modules";
 // helpers
@@ -76,6 +77,13 @@ export function ModuleAppliedFiltersList(props: Props) {
                   <AppliedDateFilters
                     editable={isEditingAllowed}
                     handleRemove={(val) => handleRemoveFilter(filterKey, val)}
+                    values={value}
+                  />
+                )}
+                {filterKey === "groups" && (
+                  <AppliedGroupFilters
+                    editable={isEditingAllowed}
+                    handleRemove={(val) => handleRemoveFilter("groups", val)}
                     values={value}
                   />
                 )}

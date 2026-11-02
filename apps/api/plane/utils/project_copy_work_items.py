@@ -59,7 +59,7 @@ from plane.db.models import (
     ProjectIssueType,
     ProjectMember,
 )
-from plane.settings.storage import S3Storage
+from plane.settings.storage import get_storage
 from plane.utils.path_validator import sanitize_filename
 
 log = logging.getLogger(__name__)
@@ -219,8 +219,15 @@ def copy_issue_batch(*, sources, target_project, remap, type_ids, properties) ->
                 point=source.point,
                 start_date=source.start_date if keep_dates else None,
                 target_date=source.target_date if keep_dates else None,
+                finish_date=source.finish_date if keep_dates else None,
+                # Provenance travels with the dates: a copy that kept them keeps the one-time default consumed.
+                dates_initialized=source.dates_initialized if keep_dates else False,
+                finish_date_origin=source.finish_date_origin if keep_dates else None,
+                target_date_origin=source.target_date_origin if keep_dates else None,
                 duration=source.duration if keep_dates else None,
                 completed_at=source.completed_at,
+                # `save()` would have derived this; `bulk_create` will not.
+                due_date_at_completion=source.due_date_at_completion,
                 is_draft=False,
                 state_id=remap.get("state", source.state_id),
                 estimate_point_id=remap.get("estimate_point", source.estimate_point_id),
@@ -520,7 +527,7 @@ def copy_description_images(*, source_project_id, target_project, ids, tally: Co
     if not ids:
         return
 
-    storage = S3Storage()
+    storage = get_storage()
     copied = removed = 0
     for target_issue in Issue.objects.filter(id__in=list(ids.values()), description_html__contains="image-component"):
         asset_ids = extract_asset_ids(target_issue.description_html, "image-component")

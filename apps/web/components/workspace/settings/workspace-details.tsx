@@ -37,7 +37,7 @@ const defaultValues: Partial<IWorkspace> = {
   organization_size: "2-10",
   logo_url: null,
   timezone: "UTC",
-  start_of_the_week: EStartOfTheWeek.SUNDAY,
+  start_of_the_week: EStartOfTheWeek.MONDAY,
   weekend_days: [...DEFAULT_WEEKEND_DAYS],
 };
 

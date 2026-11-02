@@ -5,7 +5,7 @@
  */
 
 import { API_BASE_URL } from "@plane/constants";
-import type { TProjectTemplate, TProjectTemplatePayload } from "@plane/types";
+import type { TProjectTemplate, TProjectTemplateGroupsResult, TProjectTemplatePayload } from "@plane/types";
 import { APIService } from "@/services/api.service";
 
 type TListResult = TProjectTemplate[] | { results: TProjectTemplate[]; count?: number; next?: string | null };
@@ -122,5 +122,20 @@ export class ProjectTemplateService extends APIService {
     }).catch((e) => {
       throw e?.response;
     });
+  }
+
+  /** Makes the groups of a template members of a project created from it; reports the groups that no longer exist. */
+  async applyGroupsFromProjectTemplate(
+    workspaceSlug: string,
+    projectId: string,
+    templateId: string
+  ): Promise<TProjectTemplateGroupsResult> {
+    return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/groups/from-project-template/`, {
+      template_id: templateId,
+    })
+      .then((res) => res?.data)
+      .catch((e) => {
+        throw e?.response;
+      });
   }
 }

@@ -48,7 +48,11 @@ export abstract class APIService {
           const isSessionProbe = method === "get" && url.includes("/api/users/me");
           if (!isSessionProbe) {
             const currentPath = window.location.pathname;
-            window.location.replace(`/${currentPath ? `?next_path=${currentPath}` : ``}`);
+            // Na stronie wejściowej ("/") żądanie o bieżącego użytkownika też zwraca 401, więc przekierowanie
+            // "/" na "/?next_path=/" przeładowywałoby stronę w nieskończoność. Odbijamy tylko z tras prywatnych.
+            if (currentPath !== "/") {
+              window.location.replace(`/${currentPath ? `?next_path=${encodeURIComponent(currentPath)}` : ``}`);
+            }
           }
         }
         return Promise.reject(error);

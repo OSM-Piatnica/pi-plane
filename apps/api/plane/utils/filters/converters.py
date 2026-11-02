@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import re
@@ -25,6 +26,7 @@ class LegacyToRichFiltersConverter:
         "project": "project_id",
         "start_date": "start_date",
         "target_date": "target_date",
+        "finish_date": "finish_date",
     }
 
     # Default fields that expect UUID values
@@ -46,7 +48,7 @@ class LegacyToRichFiltersConverter:
     }
 
     # Default date fields
-    DEFAULT_DATE_FIELDS = {"start_date", "target_date"}
+    DEFAULT_DATE_FIELDS = {"start_date", "target_date", "finish_date"}
 
     # Pattern for relative date strings like "2_weeks" or "3_months"
     DATE_PATTERN = re.compile(r"(\d+)_(weeks|months)$")

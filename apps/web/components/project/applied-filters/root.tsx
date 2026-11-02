@@ -11,6 +11,7 @@ import { CloseOutline } from "@makeplane/propel/icons";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TProjectAppliedDisplayFilterKeys, TProjectFilters } from "@plane/types";
 import { EHeaderVariant, Header } from "@plane/blocks/layout";
+import { AppliedGroupFilters } from "@/components/common/applied-filters/group";
 import { getAppliedFilterHeading } from "@/helpers/applied-filter-heading";
 // local imports
 import { AppliedAccessFilters } from "./access";
@@ -86,6 +87,13 @@ export function ProjectAppliedFiltersList(props: Props) {
                 <AppliedMembersFilters
                   editable={isEditingAllowed}
                   handleRemove={(val) => handleRemoveFilter(filterKey, val)}
+                  values={value}
+                />
+              )}
+              {filterKey === "groups" && (
+                <AppliedGroupFilters
+                  editable={isEditingAllowed}
+                  handleRemove={(val) => handleRemoveFilter("groups", val)}
                   values={value}
                 />
               )}

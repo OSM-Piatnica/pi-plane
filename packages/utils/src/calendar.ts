@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -20,7 +21,7 @@ import { getWeekNumberOfDate, renderFormattedPayloadDate } from "./datetime";
 export const generateCalendarData = (
   currentStructure: ICalendarPayload | null,
   startDate: Date,
-  startOfWeek: EStartOfTheWeek = EStartOfTheWeek.SUNDAY
+  startOfWeek: EStartOfTheWeek = EStartOfTheWeek.MONDAY
 ): ICalendarPayload => {
   const calendarData: ICalendarPayload = currentStructure ?? {};
 
@@ -84,9 +85,9 @@ export const generateCalendarData = (
 export const getOrderedDays = <T>(
   items: T[],
   getDayIndex: (item: T) => number,
-  startOfWeek: EStartOfTheWeek = EStartOfTheWeek.SUNDAY
+  startOfWeek: EStartOfTheWeek = EStartOfTheWeek.MONDAY
 ): T[] =>
-  [...items].sort((a, b) => {
+  [...items].toSorted((a, b) => {
     const dayA = (7 + getDayIndex(a) - startOfWeek) % 7;
     const dayB = (7 + getDayIndex(b) - startOfWeek) % 7;
     return dayA - dayB;

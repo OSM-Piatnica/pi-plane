@@ -31,7 +31,11 @@ import type {
 } from "@plane/types";
 import { EIssueServiceType, EIssueLayoutTypes } from "@plane/types";
 // helpers
-import { convertToISODateString } from "@plane/utils";
+import { convertToISODateString, getDateBucket, isDateBucketGroupBy } from "@plane/utils";
+import { getBucketContext } from "@/helpers/date-bucket-today";
+import type { TPairedDateNotice } from "@plane/utils";
+// lib
+import { emitWorkItemDateNotice } from "@/lib/work-item-date-notices";
 import { workItemSortWithOrderByExtended } from "@/store/issue/helpers/base-issue.store";
 // services
 import { CycleService } from "@/services/cycle.service";
@@ -39,6 +43,7 @@ import { IssueArchiveService, IssueService } from "@/services/issue";
 import { ModuleService } from "@/services/module.service";
 //
 import type { IIssueRootStore } from "../root.store";
+import { CALENDAR_LAYER_DATE_FIELD, calendarLayerState } from "./calendar-layers";
 import {
   getDifference,
   getGroupIssueKeyActions,
@@ -131,6 +136,11 @@ export const ISSUE_GROUP_BY_KEY: Record<TIssueDisplayFilterOptions, keyof TIssue
   created_by: "created_by",
   assignees: "assignee_ids",
   target_date: "target_date",
+  finish_date: "finish_date",
+  schedule_date: "finish_date", // a work item without a finish is placed by its start; the calendar re-places by dates
+  start_date_bucket: "start_date",
+  target_date_bucket: "target_date",
+  finish_date_bucket: "finish_date",
   cycle: "cycle_id",
   module: "module_ids",
   team_project: "project_id",
@@ -147,6 +157,11 @@ export const ISSUE_FILTER_DEFAULT_DATA: Record<TIssueDisplayFilterOptions, keyof
   created_by: "created_by",
   assignees: "assignee_ids",
   target_date: "target_date",
+  finish_date: "finish_date",
+  schedule_date: "finish_date",
+  start_date_bucket: "start_date",
+  target_date_bucket: "target_date",
+  finish_date_bucket: "finish_date",
   team_project: "project_id",
 };
 
@@ -171,6 +186,8 @@ const ISSUE_ORDERBY_KEY: Record<TIssueOrderByOptions, keyof TIssue> = {
   "-issue_cycle__cycle__name": "cycle_id",
   target_date: "target_date",
   "-target_date": "target_date",
+  finish_date: "finish_date",
+  "-finish_date": "finish_date",
   estimate_point__key: "estimate_point",
   "-estimate_point__key": "estimate_point",
   start_date: "start_date",
@@ -325,7 +342,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     const layout = displayFilters?.layout;
 
     return layout === EIssueLayoutTypes.CALENDAR
-      ? "target_date"
+      ? CALENDAR_LAYER_DATE_FIELD[calendarLayerState.layer]
       : [EIssueLayoutTypes.LIST, EIssueLayoutTypes.KANBAN]?.includes(layout)
         ? displayFilters?.group_by
         : undefined;
@@ -595,10 +612,15 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     workspaceSlug: string,
     projectId: string,
     issueId: string,
-    data: Partial<TIssue>,
+    payload: Partial<TIssue>,
     shouldSync = true,
     options?: { reopenParent?: boolean; shiftDependents?: boolean; shiftedWorkItems?: TRelationRescheduleShift[] }
   ): Promise<void> {
+    // `initialize_paired_date` is a request-only flag for the server's one-time "first finish/due
+    // entry fills both" default. It is never part of the local issue.
+    const { initialize_paired_date: initializePairedDate, ...data } = payload as Partial<TIssue> & {
+      initialize_paired_date?: boolean;
+    };
     // Store Before state of the issue
     const issueBeforeUpdate = clone(this.rootIssueStore.issues.getIssueById(issueId));
     try {
@@ -616,7 +638,17 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       } as TIssue);
 
       // call API to update the issue
-      await this.issueService.patchIssue(workspaceSlug, projectId, issueId, data, options);
+      const response = await this.issueService.patchIssue(
+        workspaceSlug,
+        projectId,
+        issueId,
+        (initializePairedDate ? { ...data, initialize_paired_date: true } : data) as Partial<TIssue>,
+        options
+      );
+
+      if (initializePairedDate) {
+        await this.reconcileDefaultedDates(workspaceSlug, projectId, issueId, issueBeforeUpdate, data, response);
+      }
 
       // State changes return 204 with no body; re-sync when workflow may have intercepted the transition.
       if (data.state_id !== undefined) {
@@ -655,7 +687,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       if (parents && workflowStore) {
         const confirmed = await workflowStore.confirmParentReopen(parents);
         if (confirmed)
-          return this.issueUpdate(workspaceSlug, projectId, issueId, data, shouldSync, {
+          return this.issueUpdate(workspaceSlug, projectId, issueId, payload, shouldSync, {
             ...options,
             reopenParent: true,
           });
@@ -667,7 +699,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       if (shifts && workflowStore) {
         const confirmed = await workflowStore.confirmReschedule(shifts);
         if (confirmed)
-          return this.issueUpdate(workspaceSlug, projectId, issueId, data, shouldSync, {
+          return this.issueUpdate(workspaceSlug, projectId, issueId, payload, shouldSync, {
             ...options,
             shiftDependents: true,
             shiftedWorkItems: shifts,
@@ -676,6 +708,53 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       }
       throw error;
     }
+  }
+
+  /**
+   * The server decides whether the one-time paired default applied. The optimistic preview must not
+   * linger as if it were saved, so when the server did not confirm a defaulted date the dates are
+   * re-read. When it did, the user is told and can undo just the copied value.
+   */
+  private async reconcileDefaultedDates(
+    workspaceSlug: string,
+    projectId: string,
+    issueId: string,
+    before: TIssue | undefined,
+    data: Partial<TIssue>,
+    response: { date_notices?: TPairedDateNotice[] } | undefined
+  ) {
+    const notices = response?.date_notices ?? [];
+    const defaultedCodes = new Set(notices.map((notice) => notice.code));
+    // The client sends the flag with a single typed date, so a patch carrying both finish and due is
+    // the optimistic copy. If the server did not confirm it, that preview was wrong.
+    const previewedCopy = "finish_date" in data && "target_date" in data;
+    const confirmed = defaultedCodes.has("due_date_defaulted") || defaultedCodes.has("finish_date_defaulted");
+
+    if (previewedCopy && !confirmed) {
+      const fresh = await this.issueService.retrieve(workspaceSlug, projectId, issueId);
+      if (fresh) {
+        const correction: Partial<TIssue> = {
+          finish_date: fresh.finish_date ?? null,
+          target_date: fresh.target_date ?? null,
+          start_date: fresh.start_date ?? null,
+          duration: fresh.duration ?? null,
+        };
+        this.rootIssueStore.issues.updateIssue(issueId, correction);
+        this.updateIssueList({ ...before, ...correction } as TIssue, { ...before, ...data } as TIssue);
+      }
+    }
+
+    if (notices.length === 0) return;
+    const undoPatch: Partial<TIssue> = {};
+    if (defaultedCodes.has("due_date_defaulted")) undoPatch.target_date = null;
+    if (defaultedCodes.has("finish_date_defaulted")) undoPatch.finish_date = null;
+    emitWorkItemDateNotice({
+      issueId,
+      notices,
+      undo: Object.keys(undoPatch).length
+        ? () => this.issueUpdate(workspaceSlug, projectId, issueId, undoPatch)
+        : undefined,
+    });
   }
 
   /**
@@ -850,6 +929,8 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     while (parentId && !seen.has(parentId)) {
       seen.add(parentId);
       const before = clone(this.rootIssueStore.issues.getIssueById(parentId));
+      // one request per level on purpose: the next parent is only known from the previous response
+      // oxlint-disable-next-line no-await-in-loop
       const fresh = await this.issueService.retrieve(workspaceSlug, projectId, parentId).catch(() => undefined);
       if (!fresh) break;
       this.rootIssueStore.issues.updateIssue(parentId, { state_id: fresh.state_id });
@@ -869,7 +950,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
           .retrieve(workspaceSlug, shift.project_id, shift.id)
           .catch(() => undefined);
         if (!fresh) return;
-        const dates = { start_date: fresh.start_date, target_date: fresh.target_date };
+        const dates = { start_date: fresh.start_date, finish_date: fresh.finish_date, target_date: fresh.target_date };
         this.rootIssueStore.issues.updateIssue(shift.id, dates);
         if (before) this.updateIssueList({ ...before, ...dates } as TIssue, before);
       })
@@ -878,7 +959,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
 
   async updateIssueDates(
     workspaceSlug: string,
-    updates: { id: string; start_date?: string; target_date?: string }[],
+    updates: { id: string; start_date?: string; finish_date?: string; target_date?: string }[],
     projectId?: string
   ): Promise<boolean | undefined> {
     if (!projectId) return;
@@ -889,6 +970,9 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
         for (const dateUpdate of updates) {
           const dates: Partial<TIssue> = {};
           if (dateUpdate.start_date) dates.start_date = dateUpdate.start_date;
+          // Finish is the schedule end, target is the due date. A timeline drag sends only start and
+          // finish; a deadline-marker drag sends only target. They are never derived from one another.
+          if (dateUpdate.finish_date) dates.finish_date = dateUpdate.finish_date;
           if (dateUpdate.target_date) dates.target_date = dateUpdate.target_date;
 
           const currIssue = getIssueById(dateUpdate.id);
@@ -898,6 +982,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
             // roll back to empty, which a truthiness check would silently skip.
             const previousDates: Partial<TIssue> = {};
             if ("start_date" in dates) previousDates.start_date = currIssue.start_date ?? null;
+            if ("finish_date" in dates) previousDates.finish_date = currIssue.finish_date ?? null;
             if ("target_date" in dates) previousDates.target_date = currIssue.target_date ?? null;
             rollbacks.push({ id: dateUpdate.id, dates: previousDates });
           }
@@ -1743,7 +1828,11 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     const issueGroupKey = issue?.[this.issueGroupKey] as string | string[] | null | undefined;
     // if they are grouped then identify the paths based on props on which group by is dependent on
     const issueKeyActions: { path: string[]; action: EIssueGroupedAction.REORDER }[] = [];
-    const groupByValues = this.getArrayStringArray(issue, issueGroupKey);
+    const groupByValues = this.getArrayStringArray(
+      issue,
+      issueGroupKey,
+      isDateBucketGroupBy(this.groupBy) ? this.groupBy : undefined
+    );
 
     // if issues are not subGrouped then, provide path from groupByValues
     if (!this.issueSubGroupKey) {
@@ -1756,7 +1845,11 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
 
     const issueSubGroupKey = issue?.[this.issueSubGroupKey] as string | string[] | null | undefined;
     // if they are grouped then identify the paths based on props on which sub group by is dependent on
-    const subGroupByValues = this.getArrayStringArray(issue, issueSubGroupKey);
+    const subGroupByValues = this.getArrayStringArray(
+      issue,
+      issueSubGroupKey,
+      isDateBucketGroupBy(this.subGroupBy) ? this.subGroupBy : undefined
+    );
 
     // if issues are subGrouped then, provide path from subGroupByValues
     for (const groupKey of groupByValues) {
@@ -1782,6 +1875,11 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
   ): string[] => {
     // if issue object is undefined return empty array
     if (!issueObject) return [];
+    // grouped by the time bucket of a date: the group is the bucket, an empty date is the "none" bucket
+    if (isDateBucketGroupBy(groupByKey)) {
+      const { today, weekStart } = getBucketContext(this.rootIssueStore.rootStore);
+      return [getDateBucket(Array.isArray(value) ? undefined : value, today, weekStart)];
+    }
     // if value is not defined, return None value in array
     if (!value || isEmpty(value)) return ["None"];
     // if array return the array
@@ -1955,6 +2053,17 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
           orderBy(
             array,
             [getSortOrderToFilterEmptyValues.bind(null, "target_date"), "target_date"], //preferring sorting based on empty values to always keep the empty values below
+            ["asc", "desc"]
+          )
+        );
+
+      case "finish_date":
+        return getIssueIds(orderBy(array, [getSortOrderToFilterEmptyValues.bind(null, "finish_date"), "finish_date"])); //preferring sorting based on empty values to always keep the empty values below
+      case "-finish_date":
+        return getIssueIds(
+          orderBy(
+            array,
+            [getSortOrderToFilterEmptyValues.bind(null, "finish_date"), "finish_date"], //preferring sorting based on empty values to always keep the empty values below
             ["asc", "desc"]
           )
         );

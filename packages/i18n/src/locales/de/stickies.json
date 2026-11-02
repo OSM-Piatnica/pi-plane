@@ -1,58 +1,58 @@
 {
   "stickies": {
-    "title": "Notizen",
+    "title": "Haftnotizen",
     "placeholder": "Klicken, um zu schreiben",
-    "all": "Alle Notizen",
-    "no-data": "Halten Sie Ideen und Gedanken fest. Fügen Sie die erste Notiz hinzu.",
-    "add": "Notiz hinzufügen",
-    "search_placeholder": "Nach Name suchen",
-    "delete": "Notiz löschen",
-    "delete_confirmation": "Möchten Sie diese Notiz wirklich löschen?",
+    "all": "Alle Haftnotizen",
+    "no-data": "Halten Sie Ideen und Gedanken fest. Fügen Sie die erste Haftnotiz hinzu.",
+    "add": "Haftnotiz hinzufügen",
+    "search_placeholder": "Nach Titel suchen",
+    "delete": "Haftnotiz löschen",
+    "delete_confirmation": "Möchten Sie diese Haftnotiz wirklich löschen?",
     "empty_state": {
-      "simple": "Halten Sie Ideen und Gedanken fest. Fügen Sie die erste Notiz hinzu.",
+      "simple": "Halten Sie Ideen und Gedanken fest. Fügen Sie die erste Haftnotiz hinzu.",
       "general": {
-        "title": "Notizen sind schnelle Aufzeichnungen.",
+        "title": "Haftnotizen sind schnelle Aufzeichnungen.",
         "description": "Schreiben Sie Ihre Ideen auf und greifen Sie von überall darauf zu.",
         "primary_button": {
-          "text": "Notiz hinzufügen"
+          "text": "Haftnotiz hinzufügen"
         }
       },
       "search": {
-        "title": "Keine Notizen gefunden.",
-        "description": "Versuchen Sie einen anderen Begriff oder erstellen Sie eine neue.",
+        "title": "Keine Haftnotizen gefunden.",
+        "description": "Versuchen Sie einen anderen Begriff oder teilen Sie uns mit, falls Ihre Suche Ihrer Meinung nach korrekt ist.",
         "primary_button": {
-          "text": "Notiz hinzufügen"
+          "text": "Haftnotiz hinzufügen"
         }
       }
     },
     "toasts": {
       "errors": {
-        "wrong_name": "Der Name der Notiz darf max. 100 Zeichen haben.",
-        "already_exists": "Eine Notiz ohne Beschreibung existiert bereits"
+        "wrong_name": "Der Name der Haftnotiz darf max. 100 Zeichen haben.",
+        "already_exists": "Eine Haftnotiz ohne Beschreibung existiert bereits"
       },
       "created": {
-        "title": "Notiz erstellt",
-        "message": "Notiz erfolgreich erstellt"
+        "title": "Haftnotiz erstellt",
+        "message": "Haftnotiz erfolgreich erstellt"
       },
       "not_created": {
         "title": "Erstellung fehlgeschlagen",
-        "message": "Notiz konnte nicht erstellt werden"
+        "message": "Haftnotiz konnte nicht erstellt werden"
       },
       "updated": {
-        "title": "Notiz aktualisiert",
-        "message": "Notiz erfolgreich aktualisiert"
+        "title": "Haftnotiz aktualisiert",
+        "message": "Haftnotiz erfolgreich aktualisiert"
       },
       "not_updated": {
         "title": "Aktualisierung fehlgeschlagen",
-        "message": "Notiz konnte nicht aktualisiert werden"
+        "message": "Haftnotiz konnte nicht aktualisiert werden"
       },
       "removed": {
-        "title": "Notiz gelöscht",
-        "message": "Notiz erfolgreich gelöscht"
+        "title": "Haftnotiz gelöscht",
+        "message": "Haftnotiz erfolgreich gelöscht"
       },
       "not_removed": {
         "title": "Löschen fehlgeschlagen",
-        "message": "Notiz konnte nicht gelöscht werden"
+        "message": "Haftnotiz konnte nicht gelöscht werden"
       }
     }
   }

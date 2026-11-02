@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import hashlib
@@ -51,6 +52,7 @@ from plane.db.models import (
 )
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.email import generate_plain_text_from_html
+from plane.utils.email_i18n import translate, user_language
 from plane.utils.exception_logger import log_exception
 from plane.utils.url_security import pinned_fetch
 
@@ -194,13 +196,15 @@ def send_webhook_deactivation_email(webhook_id: str, receiver_id: str, current_s
         webhook = Webhook.objects.get(pk=webhook_id)
 
         # Get the webhook payload
-        subject = "Webhook Deactivated"
-        message = f"Webhook {webhook.url} has been deactivated due to failed requests."
+        language = user_language(receiver)
+        subject = translate(language, "webhook_deactivated.subject")
+        message = translate(language, "webhook_deactivated.message", url=webhook.url)
 
         # Send the mail
         context = {
             "email": receiver.email,
             "message": message,
+            "email_language": language,
             "webhook_url": f"{current_site}/{str(webhook.workspace.slug)}/settings/webhooks/{str(webhook.id)}",
         }
         html_content = render_to_string("emails/notifications/webhook-deactivate.html", context)

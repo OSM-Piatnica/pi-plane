@@ -38,7 +38,8 @@ type ListStoreType =
   | EIssuesStoreType.WORKSPACE_DRAFT
   | EIssuesStoreType.TEAM
   | EIssuesStoreType.TEAM_VIEW
-  | EIssuesStoreType.EPIC;
+  | EIssuesStoreType.EPIC
+  | EIssuesStoreType.GLOBAL;
 
 interface IBaseListRoot {
   QuickActions: FC<IQuickActionProps>;

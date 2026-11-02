@@ -119,6 +119,8 @@
   "mentions_description": "Notifică-mă când cineva mă menționează în comentarii sau descriere",
   "project_access_requests": "Cereri de acces",
   "project_access_requests_description": "Trimite-mi e-mailuri despre cererile de alăturare la proiecte private pe care le administrez și despre deciziile privind propriile mele cereri.",
+  "workspace_admin_messages": "Trimite-mi un e-mail când cineva scrie administratorilor spațiului de lucru",
+  "workspace_admin_messages_description": "Se aplică doar dacă sunteți administrator al unui spațiu de lucru. Mesajul ajunge întotdeauna în căsuța dumneavoastră din aplicație; această setare stabilește doar dacă primiți și un e-mail, și numai pentru dumneavoastră.",
   "email_frequency": "Frecvența e-mailurilor",
   "email_frequency_description": "Alegeți cât de des primiți e-mailuri despre actualizările activităților. Mențiunile sunt trimise întotdeauna imediat.",
   "email_frequency_instant": "Imediat",
@@ -241,6 +243,25 @@
   "documentation": "Documentație",
   "message_support": "Trimite mesaj la suport",
   "contact_sales": "Contactează vânzările",
+  "contact_workspace_admins": {
+    "menu_label": "Contactați administratorii",
+    "title": "Contactați administratorii spațiului de lucru",
+    "description": "Administratorii din {workspace} adaugă persoane, schimbă roluri și ajută cu accesul. Scrieți-le cu aplicația dumneavoastră de e-mail.",
+    "email_all": "Trimiteți e-mail tuturor administratorilor",
+    "subject": "Întrebare pentru administratorii din {workspace}",
+    "body": "Bună ziua,\n\n\n\n{name}",
+    "message_label": "Mesaj pentru administratori",
+    "message_placeholder": "Spuneți ce vă trebuie, de exemplu acces la un proiect sau schimbarea unui rol.",
+    "characters": "{count} / {max}",
+    "send": "Trimite mesajul",
+    "sent": "Mesajul dumneavoastră a fost trimis administratorilor spațiului de lucru.",
+    "error_rate_limited": "Ați trimis mai multe mesaje recent. Încercați din nou mai târziu.",
+    "error_generic": "Mesajul nu a putut fi trimis. Încercați din nou sau scrieți administratorilor prin e-mail.",
+    "or_email": "Sau scrieți din propria aplicație de e-mail",
+    "notification_text": "a scris administratorilor acestui spațiu de lucru",
+    "message_from": "Mesaj de la {name}",
+    "reply_by_email": "Răspunde prin e-mail"
+  },
   "hyper_mode": "Mod Hyper",
   "keyboard_shortcuts": "Scurtături tastatură",
   "whats_new": "Ce e nou?",
@@ -323,6 +344,7 @@
   "start_date": "Data de început",
   "end_date": "Data de sfârșit",
   "due_date": "Data limită",
+  "finish_date": "Data de finalizare",
   "target_date": "Data țintă",
   "estimate": "Estimare",
   "change_parent_issue": "Schimbă activitatea părinte",
@@ -352,6 +374,12 @@
   "filter_headings": {
     "access": "Acces",
     "owned_by": "Proprietar"
+  },
+  "group_filter": {
+    "heading": "Grup",
+    "my_groups": "Grupurile mele",
+    "no_group": "Fără grup",
+    "unknown_group": "Grup necunoscut"
   },
   "good": "Bună",
   "morning": "dimineața",
@@ -549,6 +577,7 @@
       "last_updated": "Ultima actualizată",
       "start_date": "Data de început",
       "due_date": "Data limită",
+      "finish_date": "Data de finalizare",
       "asc": "Crescător",
       "desc": "Descrescător",
       "updated_on": "Actualizat la"

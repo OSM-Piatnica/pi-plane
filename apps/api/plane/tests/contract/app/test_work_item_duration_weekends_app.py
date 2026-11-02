@@ -56,21 +56,21 @@ def create(client, workspace, project, **data):
 @pytest.mark.django_db
 class TestApi:
     def test_a_duration_from_dates_skips_the_weekend(self, session_client, workspace, project):
-        item = create(session_client, workspace, project, start_date=str(FRI), target_date=str(NEXT_TUE))
+        item = create(session_client, workspace, project, start_date=str(FRI), finish_date=str(NEXT_TUE))
 
         assert item.duration == 3  # Fri, Mon, Tue
 
     def test_dates_from_a_duration_skip_the_weekend(self, session_client, workspace, project):
         item = create(session_client, workspace, project, start_date=str(FRI), duration=3)
 
-        assert item.target_date == NEXT_TUE
+        assert item.finish_date == NEXT_TUE
 
     def test_changing_a_date_recounts_the_working_days(self, session_client, workspace, project):
-        item = create(session_client, workspace, project, start_date=str(MON), target_date=str(WED))
+        item = create(session_client, workspace, project, start_date=str(MON), finish_date=str(WED))
         assert item.duration == 3
 
         response = session_client.patch(
-            f"{issues_url(workspace, project)}{item.id}/", {"target_date": str(NEXT_MON)}, format="json"
+            f"{issues_url(workspace, project)}{item.id}/", {"finish_date": str(NEXT_MON)}, format="json"
         )
 
         assert response.status_code == status.HTTP_204_NO_CONTENT, response.content
@@ -80,21 +80,21 @@ class TestApi:
     def test_a_project_with_other_weekend_days_counts_them(self, session_client, workspace, project):
         Project.objects.filter(pk=project.pk).update(weekend_days=[5, 6])
 
-        item = create(session_client, workspace, project, start_date=str(MON), target_date=str(NEXT_MON))
+        item = create(session_client, workspace, project, start_date=str(MON), finish_date=str(NEXT_MON))
 
         assert item.duration == 6  # Mon-Thu, then Sunday and the next Monday; Friday and Saturday are off
 
     def test_a_project_without_a_weekend_counts_calendar_days(self, session_client, workspace, project):
         Project.objects.filter(pk=project.pk).update(weekend_days=[])
 
-        item = create(session_client, workspace, project, start_date=str(FRI), target_date=str(NEXT_TUE))
+        item = create(session_client, workspace, project, start_date=str(FRI), finish_date=str(NEXT_TUE))
 
         assert item.duration == 5
 
     def test_the_public_api_uses_the_same_days(self, api_key_client, workspace, project):
         response = api_key_client.post(
             f"/api/v1/workspaces/{workspace.slug}/projects/{project.id}/work-items/",
-            {"name": "Public", "start_date": str(FRI), "target_date": str(NEXT_TUE)},
+            {"name": "Public", "start_date": str(FRI), "finish_date": str(NEXT_TUE)},
             format="json",
         )
 
@@ -102,17 +102,17 @@ class TestApi:
         assert Issue.objects.get(pk=response.json()["id"]).duration == 3
 
     def test_a_timeline_drag_recounts_the_duration(self, session_client, workspace, project):
-        item = create(session_client, workspace, project, start_date=str(MON), target_date=str(WED))
+        item = create(session_client, workspace, project, start_date=str(MON), finish_date=str(WED))
 
         response = session_client.post(
             f"/api/workspaces/{workspace.slug}/projects/{project.id}/issue-dates/",
-            {"updates": [{"id": str(item.id), "start_date": str(FRI), "target_date": str(NEXT_TUE)}]},
+            {"updates": [{"id": str(item.id), "start_date": str(FRI), "finish_date": str(NEXT_TUE)}]},
             format="json",
         )
 
         assert response.status_code == status.HTTP_200_OK, response.content
         item.refresh_from_db()
-        assert (item.start_date, item.target_date) == (FRI, NEXT_TUE)
+        assert (item.start_date, item.finish_date) == (FRI, NEXT_TUE)
 
 
 @pytest.mark.contract
@@ -120,7 +120,7 @@ class TestApi:
 class TestWeekendChange:
     def test_the_durations_follow_a_change_of_weekend_days(self, workspace, project, create_user):
         item = Issue.objects.create(
-            name="Item", project=project, workspace=workspace, start_date=MON, target_date=NEXT_MON, duration=6
+            name="Item", project=project, workspace=workspace, start_date=MON, finish_date=NEXT_MON, duration=6
         )
         no_dates = Issue.objects.create(name="Plain", project=project, workspace=workspace, duration=4)
         Project.objects.filter(pk=project.pk).update(weekend_days=[])
@@ -158,7 +158,7 @@ class TestWeekendChange:
         self, session_client, workspace, project, create_user, django_capture_on_commit_callbacks
     ):
         item = Issue.objects.create(
-            name="Item", project=project, workspace=workspace, start_date=MON, target_date=NEXT_MON, duration=6
+            name="Item", project=project, workspace=workspace, start_date=MON, finish_date=NEXT_MON, duration=6
         )
 
         with mock.patch("plane.bgtasks.project_duration_task.recompute_project_durations.delay") as delay:
@@ -188,6 +188,7 @@ def test_the_worker_knows_the_recount_task():
 @pytest.mark.django_db
 class TestMigration:
     def test_stored_durations_are_recounted_with_each_projects_days(self, workspace, project, create_user):
+        # Migration 0149 predates finish_date: the end of a schedule was then the target date, and it still reads that
         migration = importlib.import_module("plane.db.migrations.0149_work_item_duration_working_days")
         other = Project.objects.create(
             name="Other", identifier="OTH", workspace=workspace, created_by=create_user, weekend_days=[]

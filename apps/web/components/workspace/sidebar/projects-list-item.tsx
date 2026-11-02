@@ -45,6 +45,7 @@ import { DEFAULT_TAB_KEY, getTabUrl } from "@/components/navigation/tab-navigati
 import { useTabPreferences } from "@/components/navigation/use-tab-preferences";
 import { LeaveProjectModal } from "@/components/project/leave-project-modal";
 import { PublishProjectModal } from "@/components/project/publish-project/modal";
+import { useSpaceEnabled } from "@/hooks/use-space-enabled";
 // hooks
 import { useAppTheme } from "@/hooks/store/use-app-theme";
 import { useCommandPalette } from "@/hooks/store/use-command-palette";
@@ -97,6 +98,7 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
   // states
   const [leaveProjectModalOpen, setLeaveProjectModal] = useState(false);
   const [publishModalOpen, setPublishModal] = useState(false);
+  const isSpaceEnabled = useSpaceEnabled();
   const [isMenuActive, setIsMenuActive] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const isProjectListOpen = getIsProjectListOpen(projectId);
@@ -466,7 +468,7 @@ export const SidebarProjectsListItem = observer(function SidebarProjectsListItem
                       />
                       {/* options for the project lead and admins only */}
                       {canManageMembers && <MenuSeparator />}
-                      {isAdmin && (
+                      {isAdmin && isSpaceEnabled && (
                         <MenuItem
                           icon={<Icon icon={GlobeOutline} />}
                           label={t("publish_project")}

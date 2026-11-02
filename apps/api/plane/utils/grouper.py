@@ -10,6 +10,8 @@ from django.db.models import Q, UUIDField, Value, QuerySet, OuterRef, Subquery
 from django.db.models.functions import Coalesce
 
 # Module imports
+from plane.utils.date_buckets import BUCKET_FIELDS, BUCKETS, bucket_case, week_start_for_request
+from plane.utils.user_groups import group_assignee_ids_annotation
 from plane.db.models import (
     Cycle,
     Issue,
@@ -30,11 +32,14 @@ def issue_queryset_grouper(
     queryset: QuerySet[Issue],
     group_by: Optional[str],
     sub_group_by: Optional[str],
+    request=None,
 ) -> QuerySet[Issue]:
     FIELD_MAPPER: Dict[str, str] = {
         "label_ids": "labels__id",
         "assignee_ids": "assignees__id",
         "module_ids": "issue_module__module_id",
+        # Never a grouping: listed so that the annotation below is always added
+        "group_assignee_ids": "issue_group_assignee__group_id",
     }
 
     GROUP_FILTER_MAPPER: Dict[str, Q] = {
@@ -77,6 +82,7 @@ def issue_queryset_grouper(
 
     annotations_map: Dict[str, Tuple[str, Q]] = {
         "assignee_ids": Coalesce(issue_assignee_subquery, Value([], output_field=ArrayField(UUIDField()))),
+        "group_assignee_ids": group_assignee_ids_annotation(),
         "label_ids": Coalesce(issue_label_subquery, Value([], output_field=ArrayField(UUIDField()))),
         "module_ids": Coalesce(issue_module_subquery, Value([], output_field=ArrayField(UUIDField()))),
     }
@@ -87,6 +93,17 @@ def issue_queryset_grouper(
         if FIELD_MAPPER.get(key) in {group_by, sub_group_by}:
             continue
         default_annotations[key] = expression
+
+    week_start = None
+    for bucket_name, date_field in BUCKET_FIELDS.items():
+        if bucket_name in {group_by, sub_group_by}:
+            # one lookup for the list, however many bucket annotations it has
+            week_start = week_start_for_request(request) if week_start is None else week_start
+            default_annotations[bucket_name] = bucket_case(date_field, week_start=week_start)
+
+    if "schedule_date" in {group_by, sub_group_by}:
+        # the day a work item is placed on in a calendar of the planned work: its finish, else its start
+        default_annotations["schedule_date"] = Coalesce("finish_date", "start_date")
 
     return queryset.annotate(**default_annotations)
 
@@ -102,7 +119,7 @@ def issue_on_results(
         "issue_module__module_id": "module_ids",
     }
 
-    original_list: List[str] = ["assignee_ids", "label_ids", "module_ids"]
+    original_list: List[str] = ["assignee_ids", "group_assignee_ids", "label_ids", "module_ids"]
 
     required_fields: List[str] = [
         "id",
@@ -114,6 +131,9 @@ def issue_on_results(
         "priority",
         "start_date",
         "target_date",
+        "finish_date",
+        "dates_initialized",
+        "due_date_at_completion",
         "duration",
         "sequence_id",
         "project_id",
@@ -139,6 +159,11 @@ def issue_on_results(
     if sub_group_by in FIELD_MAPPER:
         original_list.remove(FIELD_MAPPER[sub_group_by])
         original_list.append(sub_group_by)
+
+    # annotations of issue_queryset_grouper that a grouped list reads the group of a row from
+    for group_key in (group_by, sub_group_by):
+        if group_key == "schedule_date" or group_key in BUCKET_FIELDS:
+            required_fields.append(group_key)
 
     required_fields.extend(original_list)
     return list(issues.values(*required_fields))
@@ -204,6 +229,24 @@ def issue_group_values(
             return list(queryset.filter(project_id=project_id))
         else:
             return list(queryset)
+
+    if field == "finish_date":
+        queryset = queryset.values_list("finish_date", flat=True).distinct()
+        if project_id:
+            return list(queryset.filter(project_id=project_id))
+        else:
+            return list(queryset)
+
+    if field in BUCKET_FIELDS:
+        return list(BUCKETS)
+
+    if field == "schedule_date":
+        queryset = queryset.annotate(schedule_date=Coalesce("finish_date", "start_date")).values_list(
+            "schedule_date", flat=True
+        )
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+        return list(queryset.distinct())
 
     if field == "start_date":
         queryset = queryset.values_list("start_date", flat=True).distinct()

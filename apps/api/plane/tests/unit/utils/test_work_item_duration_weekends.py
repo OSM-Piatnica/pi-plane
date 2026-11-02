@@ -12,7 +12,7 @@ import pytest
 from plane.utils.work_item_duration import (
     add_working_days,
     calculate_start_date_from_duration,
-    calculate_target_date_from_duration,
+    calculate_finish_date_from_duration,
     calculate_work_item_duration,
     count_working_days,
     reconcile_work_item_duration,
@@ -24,8 +24,8 @@ FRI_SAT = [5, 6]
 MONDAY = date(2026, 11, 2)  # a Monday
 
 
-def work_item(start_date=None, target_date=None, duration=None):
-    return SimpleNamespace(start_date=start_date, target_date=target_date, duration=duration)
+def work_item(start_date=None, finish_date=None, duration=None):
+    return SimpleNamespace(start_date=start_date, finish_date=finish_date, target_date=None, duration=duration)
 
 
 def day(offset):
@@ -108,45 +108,46 @@ class TestDuration:
     def test_without_weekend_days_nothing_changes(self):
         assert calculate_work_item_duration(day(0), day(7)) == 8
 
-    def test_target_and_start_from_a_duration(self):
-        assert calculate_target_date_from_duration(day(4), 2, SAT_SUN) == day(7).isoformat()
+    def test_finish_and_start_from_a_duration(self):
+        assert calculate_finish_date_from_duration(day(4), 2, SAT_SUN) == day(7).isoformat()
         assert calculate_start_date_from_duration(day(7), 2, SAT_SUN) == day(4).isoformat()
 
 
 @pytest.mark.unit
 class TestReconcile:
-    def test_a_duration_edit_moves_the_target_over_the_weekend(self):
+    def test_a_duration_edit_moves_the_finish_over_the_weekend(self):
         derived = reconcile_work_item_duration(work_item(day(4), day(4), 1), {"duration": 3}, SAT_SUN)
 
-        assert derived == {"duration": 3, "target_date": day(8).isoformat()}  # Fri, Mon, Tue
+        assert derived == {"duration": 3, "finish_date": day(8).isoformat()}  # Fri, Mon, Tue
 
-    def test_a_duration_edit_with_only_a_target_moves_the_start_back_over_the_weekend(self):
+    def test_a_duration_edit_with_only_a_finish_moves_the_start_back_over_the_weekend(self):
         derived = reconcile_work_item_duration(work_item(None, day(7), None), {"duration": 3}, SAT_SUN)
 
         assert derived == {"duration": 3, "start_date": day(3).isoformat()}  # Thu, Fri, Mon
 
     def test_a_date_edit_counts_working_days(self):
         derived = reconcile_work_item_duration(
-            work_item(day(0), day(2), 3), {"target_date": day(9).isoformat()}, SAT_SUN
+            work_item(day(0), day(2), 3), {"finish_date": day(9).isoformat()}, SAT_SUN
         )
 
         assert derived == {"duration": 8}  # Mon 2 - Wed 11 Nov, 8 working days
 
     def test_dates_across_a_weekend_only_give_one_day_when_nothing_else_is_working(self):
         derived = reconcile_work_item_duration(
-            work_item(None, None, None), {"start_date": day(5).isoformat(), "target_date": day(6).isoformat()}, SAT_SUN
+            work_item(None, None, None), {"start_date": day(5).isoformat(), "finish_date": day(6).isoformat()}, SAT_SUN
         )
 
         assert derived == {"duration": 1}
 
-    def test_a_start_after_the_target_keeps_the_length_and_moves_the_target_by_working_days(self):
+    def test_a_start_after_the_finish_derives_nothing(self):
+        # The caller rejects the update (work_item_dates.validate_schedule); no end is dragged along
         derived = reconcile_work_item_duration(
             work_item(day(0), day(2), 3), {"start_date": day(4).isoformat()}, SAT_SUN
         )
 
-        assert derived == {"duration": 3, "target_date": day(8).isoformat()}  # Fri + 3 working days
+        assert derived == {}
 
     def test_the_project_with_no_weekend_keeps_the_old_behaviour(self):
         derived = reconcile_work_item_duration(work_item(day(4), day(4), 1), {"duration": 3}, [])
 
-        assert derived == {"duration": 3, "target_date": day(6).isoformat()}
+        assert derived == {"duration": 3, "finish_date": day(6).isoformat()}

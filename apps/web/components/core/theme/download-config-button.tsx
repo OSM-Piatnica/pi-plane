@@ -12,6 +12,7 @@ import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import { setToast } from "@plane/blocks/toast";
 import type { IUserTheme } from "@plane/types";
+import { sanitizeThemeOverrides } from "@plane/utils";
 
 type Props = {
   getValues: UseFormGetValues<IUserTheme>;
@@ -26,11 +27,12 @@ export const CustomThemeDownloadConfigButton = observer(function CustomThemeDown
     try {
       const currentValues = getValues();
       const config = {
-        version: "1.0",
+        version: "1.1",
         themeName: "Custom Theme",
         primary: currentValues.primary,
         background: currentValues.background,
         darkPalette: currentValues.darkPalette,
+        overrides: sanitizeThemeOverrides(currentValues.overrides).overrides,
       };
 
       const blob = new Blob([JSON.stringify(config, null, 2)], { type: "application/json" });

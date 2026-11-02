@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,6 +13,7 @@ import { TranslationProvider } from "@plane/i18n";
 import { PlaneToastProvider } from "@plane/blocks/toast";
 // mobx store provider
 import { StoreProvider } from "@/lib/store-context";
+import { WorkItemDateNoticeToaster } from "@/lib/work-item-date-notice-toaster";
 
 // lazy imports
 const AppProgressBar = lazy(function AppProgressBar() {
@@ -41,6 +43,7 @@ export function AppProvider(props: IAppProvider) {
           {/* The toast viewport is a provider that calls `useTranslation`, so it sits inside
               TranslationProvider and wraps everything that can raise a toast. */}
           <PlaneToastProvider>
+            <WorkItemDateNoticeToaster />
             <StoreWrapper>
               <InstanceWrapper>
                 <Suspense>

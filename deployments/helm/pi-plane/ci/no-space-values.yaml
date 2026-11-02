@@ -1,0 +1,13 @@
+# Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+
+# The defaults, with the public sharing site (Space) left out.
+publicUrl: https://plane.example.com
+ingress:
+  className: nginx
+  tls:
+    enabled: true
+    secretName: plane-tls
+space:
+  enabled: false

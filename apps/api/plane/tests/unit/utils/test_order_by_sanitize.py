@@ -90,6 +90,7 @@ class TestIssueOrderBySanitization:
             "sequence_id",
             "sort_order",
             "target_date",
+            "finish_date",
             "start_date",
             "priority",
             "state__name",

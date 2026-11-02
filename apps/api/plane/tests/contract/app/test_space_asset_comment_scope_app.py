@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """Contract tests for public Space comment-image assets.
@@ -84,7 +85,7 @@ def _upload_payload(**overrides):
 
 @pytest.fixture(autouse=True)
 def _no_storage():
-    with mock.patch("plane.space.views.asset.S3Storage") as storage:
+    with mock.patch("plane.space.views.asset.get_storage") as storage:
         storage.return_value.generate_presigned_post.return_value = {"url": "https://storage.test/", "fields": {}}
         yield
 

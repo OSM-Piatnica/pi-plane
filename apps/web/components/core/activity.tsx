@@ -557,6 +557,24 @@ const activityDetails: {
     },
     icon: <CalendarOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
+  finish_date: {
+    message: (activity, showIssue, _workspaceSlug, t, formatDate) => {
+      if (!activity.new_value)
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.finish_date.removed_with_issue")
+            : t("activity_feed.profile.finish_date.removed_without_issue"),
+          issueTag(activity)
+        );
+      return renderTaggedText(
+        showIssue
+          ? t("activity_feed.profile.finish_date.set_with_issue")
+          : t("activity_feed.profile.finish_date.set_without_issue"),
+        { ...issueTag(activity), ...emphasisTag(formatDate(activity.new_value), NOWRAP_VALUE_CLASS) }
+      );
+    },
+    icon: <CalendarOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
+  },
   target_date: {
     message: (activity, showIssue, _workspaceSlug, t, formatDate) => {
       if (!activity.new_value)

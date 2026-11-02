@@ -56,6 +56,10 @@ class DraftIssue(WorkspaceBaseModel):
     )
     start_date = models.DateField(null=True, blank=True)
     target_date = models.DateField(null=True, blank=True)
+    finish_date = models.DateField(null=True, blank=True)
+    dates_initialized = models.BooleanField(default=False)
+    finish_date_origin = models.CharField(max_length=16, null=True, blank=True)
+    target_date_origin = models.CharField(max_length=16, null=True, blank=True)
     duration = models.PositiveIntegerField(null=True, blank=True)
     assignees = models.ManyToManyField(
         settings.AUTH_USER_MODEL,

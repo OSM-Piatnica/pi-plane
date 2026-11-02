@@ -111,6 +111,23 @@ export const PeekOverviewIssueProperties = observer(function PeekOverviewIssuePr
         <div className="flex h-8 items-center gap-3">
           <div className="flex w-1/4 flex-shrink-0 items-center gap-1 text-13 text-tertiary">
             <DueDateOutline className="size-4 flex-shrink-0" />
+            <span>{t("finish_date")}</span>
+          </div>
+          <div>
+            {issueDetails.finish_date ? (
+              <div className="flex items-center gap-1.5 rounded-sm py-0.5 text-11 text-primary">
+                <DueDateOutline className="size-3" />
+                {renderFormattedDate(issueDetails.finish_date)}
+              </div>
+            ) : (
+              <span className="text-13 text-secondary">{t("space_text.issues.empty")}</span>
+            )}
+          </div>
+        </div>
+
+        <div className="flex h-8 items-center gap-3">
+          <div className="flex w-1/4 flex-shrink-0 items-center gap-1 text-13 text-tertiary">
+            <DueDateOutline className="size-4 flex-shrink-0" />
             <span>{t("due_date")}</span>
           </div>
           <div>

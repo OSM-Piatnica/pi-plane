@@ -8,19 +8,12 @@
 import { observer } from "mobx-react";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-import {
-  BoxesOutline,
-  CloseOutline,
-  ShareAltOutline,
-  StarOutline,
-  TickOutline,
-  UserOutline,
-} from "@makeplane/propel/icons";
+import { BoxesOutline, CloseOutline, StarOutline, TickOutline, UserOutline } from "@makeplane/propel/icons";
 // components
 import { LogoSpinner } from "@/components/common/logo-spinner";
 import { EmptySpace, EmptySpaceItem } from "@/components/ui/empty-space";
 // constants
-import { WORKSPACE_INVITATION } from "@plane/constants";
+import { PI_PLANE_REPO_URL, WORKSPACE_INVITATION } from "@plane/constants";
 // helpers
 import { EPageTypes } from "@/helpers/authentication.helper";
 // hooks
@@ -122,16 +115,7 @@ function WorkspaceInvitationPage() {
               ) : (
                 <EmptySpaceItem Icon={BoxesOutline} title={t("core_ui.invitation.continue_home")} href="/" />
               )}
-              <EmptySpaceItem
-                Icon={StarOutline}
-                title={t("core_ui.invitation.star_github")}
-                href="https://github.com/makeplane"
-              />
-              <EmptySpaceItem
-                Icon={ShareAltOutline}
-                title={t("core_ui.invitation.join_community")}
-                href="https://forum.plane.so"
-              />
+              <EmptySpaceItem Icon={StarOutline} title={t("core_ui.invitation.star_github")} href={PI_PLANE_REPO_URL} />
             </EmptySpace>
           )
         ) : (

@@ -16,6 +16,7 @@ const FILTER_HEADING_KEYS = new Map<string, string>(
     target_date: "target_date",
     lead: "lead",
     members: "members",
+    groups: "group_filter.heading",
     labels: "labels",
     favorites: "favorites",
     created_at: "common.created_at",

@@ -92,7 +92,7 @@ describe("the other rules, in working days", () => {
 
 describe("which calendar applies", () => {
   it("uses the weekend days of the work item the rule limits", () => {
-    const blocker = { start_date: null, target_date: FRI };
+    const blocker = { start_date: null, finish_date: FRI };
     // blocked_by limits the issue: its own days decide, not the blocker's
     expect(isTimelineRelationSatisfied("blocked_by", { start_date: FRI }, blocker, 0, [], SAT_SUN)).toBe(false);
     expect(isTimelineRelationSatisfied("blocked_by", { start_date: SAT }, blocker, 0, [0], SAT_SUN)).toBe(true);

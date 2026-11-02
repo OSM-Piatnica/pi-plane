@@ -62,6 +62,8 @@ For each term: the source, the required rendering per script group, and **forbid
 | **Business** (plan tier)           | Business                                                                | Business              | Business            | Business                                      | Business          | Business          | Бизнес, ビジネス, 商业版, 商務版, Negocios, Negócios                              |
 | **Enterprise** (plan tier)         | Enterprise                                                              | Enterprise            | Enterprise          | Enterprise                                    | Enterprise        | Enterprise        | Корпоративный, エンタープライズ, 企业版, 企業版, Empresarial                      |
 
+**German exception (Sticky / Stickies):** in `de` these are translated as **Haftnotiz** (singular) and **Haftnotizen** (plural), everywhere the sticky feature is named: sidebar, sticky page, toasts, empty states, access scopes. The Latin "Sticky" is not used in German. Do not use plain "Notiz" for stickies; "Notiz" stays a generic word for a note. All other locales keep Sticky / Stickies Latin.
+
 ### Plane feature noun translation glossary (translate, do not preserve)
 
 These are common nouns. **Translate them into the target language** using the canonical form below. This follows Microsoft, Apple, and Mozilla style guides for product-UI translation: feature common nouns belong in the user's language; only trademarks, brand marks, and acronyms stay Latin. Leaving these in Latin in non-Latin locales reads as half-translated and is a measurable quality defect.
@@ -505,7 +507,7 @@ pnpm --filter @plane/i18n run check:sync
 | Question                                            | Answer                                                                                                                                                                 |
 | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Translate "Plane" / "Plane AI" / "Power K" / "PQL"? | Never. Latin, every locale.                                                                                                                                            |
-| Translate "Sticky" / "Stickies" / "Intake"?         | Never. Plane brand marks. Latin, every locale.                                                                                                                         |
+| Translate "Sticky" / "Stickies" / "Intake"?         | Never. Plane brand marks. Latin, every locale (except de: Sticky → Haftnotiz).                                                                                         |
 | Translate "Active Cycles"?                          | Never as a unit (it's a feature page name). Lowercase generic "active cycles" in prose translates normally per the glossary.                                           |
 | Translate "Pro" / "Business" / "Enterprise"?        | Never. Plan tier names. Latin, every locale.                                                                                                                           |
 | Translate "Cycle" / "Module" / "Epic" / "Page"?     | **Yes** — use the per-locale form from the translation glossary (zh-CN 周期/模块/史诗/页面, ja サイクル/モジュール/エピック/ページ, de Zyklus/Modul/Epic/Seite, etc.). |

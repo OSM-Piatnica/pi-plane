@@ -12,10 +12,12 @@ import { DueDateOutline } from "@makeplane/propel/icons";
 import { DateSelect } from "@/components/dropdowns/date-select";
 // types
 import type { TIssue } from "@plane/types";
-import { cn, getDate, renderFormattedPayloadDate, shouldHighlightIssueDueDate } from "@plane/utils";
+import { cn, getDate, renderFormattedPayloadDate } from "@plane/utils";
 // hooks
+import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
+import { getIssueDateStatuses } from "../../utils";
 
 type Props = {
   issue: TIssue;
@@ -32,13 +34,19 @@ export const SpreadsheetDueDateColumn = observer(function SpreadsheetDueDateColu
   // plane hooks
   const { t } = useTranslation();
   // derived values
+  const { getProjectById } = useProject();
   const stateDetails = getStateById(issue.state_id);
+  // overdue concerns the due date only and only active work items; the due day itself is not overdue
+  const isOverdue = getIssueDateStatuses(
+    issue,
+    stateDetails?.group,
+    getProjectById(issue.project_id)?.timezone
+  ).overdue;
 
   return (
     <div className="h-11 border-b-[0.5px] border-subtle">
       <DateSelect
         value={getDate(issue.target_date) ?? null}
-        minDate={getDate(issue.start_date)}
         onChange={(data) => {
           const targetDate = data ? renderFormattedPayloadDate(data) : null;
           onChange(
@@ -56,7 +64,7 @@ export const SpreadsheetDueDateColumn = observer(function SpreadsheetDueDateColu
         clearable
         // `.clickable` is what the table's keyboard navigation clicks on Enter / Space in a focused cell.
         className={cn("clickable h-full", {
-          "text-danger-primary": shouldHighlightIssueDueDate(issue.target_date, stateDetails?.group),
+          "text-danger-primary": isOverdue,
         })}
         weekStartsOn={startOfTheWeek}
         onClose={onClose}

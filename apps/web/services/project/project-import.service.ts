@@ -10,6 +10,7 @@ import { APIService } from "@/services/api.service";
 /** What the import is allowed to bring in; the server treats an absent field as enabled. */
 export type TWorkItemImportOptions = {
   assignees: boolean;
+  group_assignees: boolean;
   subscribers: boolean;
   relations: boolean;
   parents: boolean;

@@ -6,6 +6,9 @@
 
 import uuid
 
+from plane.db.models import GroupSource
+
+from . import groups
 from .spec import OidcClaimsError, OidcConfigField, OidcIdentity, OidcProviderSpec
 
 
@@ -32,6 +35,7 @@ class EntraSpec(OidcProviderSpec):
             icon="microsoft",
             # tid:oid already names the tenant
             scope_subject_to_issuer=False,
+            group_source=GroupSource.ENTRA,
             fields=(
                 OidcConfigField(
                     name="TENANT_ID",
@@ -39,8 +43,105 @@ class EntraSpec(OidcProviderSpec):
                     required=True,
                     help="The GUID of your Microsoft Entra tenant. Only people of this tenant can sign in.",
                 ),
+                OidcConfigField(
+                    name="SYNC_GROUPS",
+                    label="Read groups at sign-in",
+                    default="0",
+                    kind="switch",
+                    help=(
+                        "Mirror what Entra says about each person as user groups that are managed outside. "
+                        "Asks for the Microsoft Graph permission User.Read, which people grant at sign-in. "
+                        "The kinds below choose what becomes a group."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_SECURITY",
+                    label="Security groups",
+                    default="1",
+                    kind="switch",
+                    help="Groups used to grant access, including mail-enabled security groups.",
+                ),
+                OidcConfigField(
+                    name="GROUPS_MICROSOFT_365",
+                    label="Microsoft 365 groups",
+                    default="1",
+                    kind="switch",
+                    help="Groups that back Teams and SharePoint team sites.",
+                ),
+                OidcConfigField(
+                    name="GROUPS_DISTRIBUTION",
+                    label="Distribution lists",
+                    default="1",
+                    kind="switch",
+                    help="Groups that only send mail to their members.",
+                ),
+                OidcConfigField(
+                    name="GROUPS_ADMIN_UNITS",
+                    label="Administrative units",
+                    default="0",
+                    kind="switch",
+                    help=(
+                        "The administrative units a person belongs to. Needs the Microsoft Graph delegated "
+                        "permission AdministrativeUnit.Read.All with admin consent; without it no unit is mirrored."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_DEPARTMENT",
+                    label="Department",
+                    default="0",
+                    kind="switch",
+                    help=(
+                        "One group per department, from the department in the person's Entra profile; "
+                        "people without one are in none."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_COMPANY",
+                    label="Company",
+                    default="0",
+                    kind="switch",
+                    help=(
+                        "One group per company, from the company name in the person's Entra profile; "
+                        "people without one are in none."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_OFFICE",
+                    label="Office location",
+                    default="0",
+                    kind="switch",
+                    help=(
+                        "One group per office, from the office location in the person's Entra profile; "
+                        "people without one are in none."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_ORG_UNITS",
+                    label="On-premises organizational unit",
+                    default="0",
+                    kind="switch",
+                    help=(
+                        "Nested groups of the Active Directory organizational units (OU) of the person's "
+                        "on-premises account, such as Poland > Sales; the person is in the innermost one. Only for "
+                        "people synced from on-premises Active Directory: blank for cloud-only accounts."
+                    ),
+                ),
             ),
         )
+
+    def reads_groups(self, config):
+        return str(config.get("SYNC_GROUPS")) == "1"
+
+    def request_scopes(self, config):
+        if not self.reads_groups(config):
+            return self.scopes
+        scopes = [self.scopes, groups.ENTRA_GROUPS_SCOPE]
+        if groups.KIND_ADMIN_UNITS in groups.entra_kinds(config):
+            scopes.append(groups.ENTRA_ADMIN_UNITS_SCOPE)
+        return " ".join(scopes)
+
+    def fetch_groups(self, *, access_token, email, claims, config):
+        return groups.fetch_entra_groups(access_token, groups.entra_kinds(config))
 
     def _tenant(self, config):
         try:
@@ -87,14 +188,48 @@ class GoogleSpec(OidcProviderSpec):
             key="google-oidc",
             name="Google",
             icon="google",
+            group_source=GroupSource.GOOGLE,
             fields=(
                 OidcConfigField(
                     name="HOSTED_DOMAIN",
                     label="Google Workspace domain",
                     help="Optional. Only accounts of this Workspace domain (the hd claim) can sign in.",
                 ),
+                OidcConfigField(
+                    name="SYNC_GROUPS",
+                    label="Read groups at sign-in",
+                    default="0",
+                    help=(
+                        "Set to 1 to mirror each person's Google Workspace groups as user groups that are managed "
+                        "outside. Needs the service account and admin e-mail below."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_ADMIN_EMAIL",
+                    label="Workspace admin to read groups as",
+                    help="A Workspace admin the service account acts as (domain-wide delegation).",
+                ),
+                OidcConfigField(
+                    name="GROUPS_SERVICE_ACCOUNT",
+                    label="Service account key (JSON)",
+                    secret=True,
+                    help=(
+                        "A service account key with domain-wide delegation of the scope "
+                        "https://www.googleapis.com/auth/admin.directory.group.readonly."
+                    ),
+                ),
             ),
         )
+
+    def reads_groups(self, config):
+        return (
+            str(config.get("SYNC_GROUPS")) == "1"
+            and bool(config.get("GROUPS_ADMIN_EMAIL"))
+            and bool(config.get("GROUPS_SERVICE_ACCOUNT"))
+        )
+
+    def fetch_groups(self, *, access_token, email, claims, config):
+        return groups.fetch_google_groups(email, config.get("GROUPS_SERVICE_ACCOUNT"), config.get("GROUPS_ADMIN_EMAIL"))
 
     def issuer(self, config):
         return "https://accounts.google.com"
@@ -126,6 +261,7 @@ class GenericOidcSpec(OidcProviderSpec):
             key="oidc",
             name="Single sign-on",
             icon="key",
+            group_source=GroupSource.OIDC,
             fields=(
                 OidcConfigField(
                     name="ISSUER_URL",
@@ -139,8 +275,34 @@ class GenericOidcSpec(OidcProviderSpec):
                     default="Single sign-on",
                     help="How the sign-in button is named.",
                 ),
+                OidcConfigField(
+                    name="GROUPS_CLAIM",
+                    label="Groups claim",
+                    help=(
+                        "Optional. The claim of the ID token that lists the person's groups (for example groups). "
+                        "When set, they are mirrored as user groups that are managed outside."
+                    ),
+                ),
+                OidcConfigField(
+                    name="GROUPS_SCOPE",
+                    label="Scope that adds the groups claim",
+                    help=(
+                        "Optional. Some providers only put the claim in the token "
+                        "when this scope (for example groups) is asked for."
+                    ),
+                ),
             ),
         )
+
+    def reads_groups(self, config):
+        return bool(str(config.get("GROUPS_CLAIM") or "").strip())
+
+    def request_scopes(self, config):
+        extra = str(config.get("GROUPS_SCOPE") or "").strip()
+        return f"{self.scopes} {extra}" if extra and self.reads_groups(config) else self.scopes
+
+    def fetch_groups(self, *, access_token, email, claims, config):
+        return groups.groups_from_claim(claims, config.get("GROUPS_CLAIM"))
 
     def is_configured(self, config):
         return super().is_configured(config) and str(config.get("ISSUER_URL", "")).startswith("https://")

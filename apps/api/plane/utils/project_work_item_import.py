@@ -18,6 +18,7 @@ from plane.db.models import (
     Issue,
     IssueActivity,
     IssueAssignee,
+    IssueGroupAssignee,
     IssueLabel,
     IssuePropertyValue,
     IssueRelation,
@@ -34,7 +35,11 @@ from plane.db.models import (
     WorkspaceMember,
 )
 from plane.db.models.project import ROLE
+from plane.utils.group_paths import find_group, index_groups, is_ambiguous, split_group_list
 from plane.utils.html_processor import strip_tags
+from plane.utils.timezone_converter import convert_to_utc
+from plane.utils.import_limits import get_import_max_work_items
+from plane.utils.project_groups import assignable_group_ids
 from plane.utils.issue_relation_constraints import MAX_LAG_DAYS, TIMELINE_RELATION_TYPES
 from plane.utils.issue_relation_mapper import get_actual_relation
 from plane.utils.issue_relation_types import ALL_RELATION_NAMES, MIRRORED_RELATIONS, SYMMETRIC_RELATIONS
@@ -46,7 +51,6 @@ from plane.utils.work_item_duration import (
     to_work_item_date,
 )
 
-MAX_WORK_ITEMS_IMPORT = 500
 ALLOWED_PRIORITIES = frozenset({"urgent", "high", "medium", "low", "none"})
 DEFAULT_LABEL_COLOR = "#858585"
 ISO_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -86,6 +90,7 @@ class WorkItemImportOptions:
     """
 
     assignees: bool = True
+    group_assignees: bool = True
     subscribers: bool = True
     relations: bool = True
     parents: bool = True
@@ -101,6 +106,11 @@ class WorkItemImportOptions:
 
     def as_dict(self) -> dict:
         return asdict(self)
+
+
+def _cell_text(value) -> str:
+    """The text of a cell: an empty cell reads as ``None``, which must not become the word "None"."""
+    return "" if value is None else str(value)
 
 
 def _coerce_list(value) -> list:
@@ -285,6 +295,37 @@ def _resolve_people(
     return kept
 
 
+def _resolve_groups(
+    *,
+    value,
+    groups_by_path: dict,
+    groups_by_name: dict,
+    assignable_ids: set,
+    warnings: list[str],
+    row_number: int,
+) -> list:
+    """
+    Resolve a group column to group ids. Groups are never created: a name that matches no group is
+    reported, and so is a group the project cannot assign (only its own groups and the ones below them can be).
+    """
+    resolved = []
+    for text in split_group_list(value):
+        group_id = find_group(text, groups_by_path, groups_by_name)
+        if group_id is None:
+            if is_ambiguous(text, groups_by_name):
+                warnings.append(
+                    f'Row {row_number}: group "{text}" matches more than one group, write its full path '
+                    '("Parent / Child", a "/" inside a name written "\\/"), skipped'
+                )
+            else:
+                warnings.append(f'Row {row_number}: unknown group "{text}", skipped')
+        elif group_id not in assignable_ids:
+            warnings.append(f'Row {row_number}: group "{text}" is not a member of the project, skipped')
+        elif group_id not in resolved:
+            resolved.append(group_id)
+    return resolved
+
+
 def _member_values_to_ids(
     value,
     members_by_email: dict,
@@ -341,9 +382,9 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
     """
     Create the cycles named in the file but absent from the project.
 
-    A cycle stores a period, which the work item export does not carry, so the period is
-    derived from the work items assigned to it. Plane treats a cycle without dates as a
-    draft, which is what an undated cycle becomes.
+    A cycle stores a period. The work item export writes it per row (Cycle Start/End Date); for
+    files without it the period is derived from the work items assigned to the cycle. Plane
+    treats a cycle without dates as a draft, which is what an undated cycle becomes.
     """
     spans: dict[str, dict] = {}
     for item in prepared:
@@ -353,8 +394,10 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
         key = name.lower()
         if key in cycles_by_name:
             continue
-        span = spans.setdefault(key, {"name": name, "start": None, "end": None})
-        for field, bound, pick in (("start_date", "start", min), ("target_date", "end", max)):
+        span = spans.setdefault(key, {"name": name, "start": None, "end": None, "given_start": None, "given_end": None})
+        span["given_start"] = span["given_start"] or item.get("cycle_start_date")
+        span["given_end"] = span["given_end"] or item.get("cycle_end_date")
+        for field, bound, pick in (("start_date", "start", min), ("finish_date", "end", max)):
             value = item.get(field)
             if not value:
                 continue
@@ -368,10 +411,17 @@ def _create_missing_cycles(*, project: Project, user, prepared: list[dict], cycl
             workspace=project.workspace,
             owned_by=user,
             created_by=user,
-            start_date=_to_cycle_datetime(span["start"]),
-            end_date=_to_cycle_datetime(span["end"]),
+            start_date=_cycle_bound(project, span["given_start"], span["start"], is_start_date=True),
+            end_date=_cycle_bound(project, span["given_end"], span["end"], is_start_date=False),
         )
     return created
+
+
+def _cycle_bound(project: Project, given, derived, *, is_start_date: bool):
+    """A cycle bound from the exported cycle date, stored as the cycle form would, else from the work items."""
+    if given:
+        return convert_to_utc(str(given), project.id, is_start_date=is_start_date)
+    return _to_cycle_datetime(derived)
 
 
 def _to_cycle_datetime(value):
@@ -452,12 +502,12 @@ def import_work_items_into_project(
     if not rows:
         return {"created_work_items": 0, "warnings": warnings}
 
-    if len(rows) > MAX_WORK_ITEMS_IMPORT:
+    max_work_items = get_import_max_work_items()
+    if len(rows) > max_work_items:
         raise ValueError(
             {
                 "error": (
-                    f"Import contains more than {MAX_WORK_ITEMS_IMPORT} work items. "
-                    "Reduce the file size or split the import."
+                    f"Import contains more than {max_work_items} work items. Reduce the file size or split the import."
                 )
             }
         )
@@ -546,6 +596,13 @@ def import_work_items_into_project(
     project_member_keys = {str(member_id) for member_id in project_member_ids}
     assignable_member_keys = {str(member_id) for member_id in assignable_member_ids}
 
+    groups_by_path: dict = {}
+    groups_by_name: dict = {}
+    assignable_groups: set = set()
+    if options.group_assignees:
+        groups_by_path, groups_by_name = index_groups(project.workspace_id)
+        assignable_groups = assignable_group_ids(project.id, project.workspace_id)
+
     type_properties_by_type: dict = {}
     for issue_type in types_by_name.values():
         props = {
@@ -568,18 +625,18 @@ def import_work_items_into_project(
     for index, row in enumerate(rows):
         if not isinstance(row, dict):
             continue
-        name = str(row.get("name", "")).strip()
+        name = _cell_text(row.get("name")).strip()
         if not name:
             warnings.append(f"Row {index + 1}: skipped work item without name")
             continue
 
-        external_key = str(row.get("external_key", "")).strip() or f"ROW-{index + 1}"
+        external_key = _cell_text(row.get("external_key")).strip() or f"ROW-{index + 1}"
         if external_key.lower() in seen_keys:
             warnings.append(f'Row {index + 1}: duplicate external_key "{external_key}", using ROW-{index + 1}')
             external_key = f"ROW-{index + 1}"
         seen_keys.add(external_key.lower())
 
-        state_name = str(row.get("state", "")).strip().lower()
+        state_name = _cell_text(row.get("state")).strip().lower()
         state = states_by_name.get(state_name) if state_name else default_state
         if state_name and state is None:
             warnings.append(f'Row {index + 1}: unknown state "{row.get("state")}", using default')
@@ -593,7 +650,7 @@ def import_work_items_into_project(
             warnings.append(f'Row {index + 1}: unknown priority "{raw_priority}", set to none')
             priority = "none"
 
-        issue_type_name = str(row.get("issue_type", "")).strip().lower()
+        issue_type_name = _cell_text(row.get("issue_type")).strip().lower()
         issue_type = types_by_name.get(issue_type_name) if issue_type_name else None
         if issue_type_name and issue_type is None:
             warnings.append(f'Row {index + 1}: unknown issue type "{row.get("issue_type")}", left empty')
@@ -658,6 +715,8 @@ def import_work_items_into_project(
                     warnings.append(f'Row {index + 1}: a work item can belong to one cycle, "{clean_name}" skipped')
         else:
             _note_skipped("cycle", row.get("cycles"))
+        cycle_start = _parse_import_date(row.get("cycle_start_date")) if options.dates else None
+        cycle_end = _parse_import_date(row.get("cycle_end_date")) if options.dates else None
 
         assignee_ids = []
         if options.assignees:
@@ -677,6 +736,19 @@ def import_work_items_into_project(
                 "assignee",
                 row.get("assignee_emails") or row.get("assignee_names") or row.get("assignees"),
             )
+
+        group_assignee_ids = []
+        if options.group_assignees:
+            group_assignee_ids = _resolve_groups(
+                value=row.get("group_assignees"),
+                groups_by_path=groups_by_path,
+                groups_by_name=groups_by_name,
+                assignable_ids=assignable_groups,
+                warnings=warnings,
+                row_number=index + 1,
+            )
+        else:
+            _note_skipped("group assignee", row.get("group_assignees"))
 
         subscriber_ids = []
         if options.subscribers:
@@ -712,16 +784,24 @@ def import_work_items_into_project(
 
         raw_start_date = row.get("start_date")
         raw_target_date = row.get("target_date")
+        raw_finish_date = row.get("finish_date")
         start_date = None
         target_date = None
+        finish_date = None
         duration = None
         if options.dates:
             start_date = _parse_import_date(raw_start_date)
             target_date = _parse_import_date(raw_target_date)
+            finish_date = _parse_import_date(raw_finish_date)
             if raw_start_date not in [None, ""] and start_date is None:
                 warnings.append(f'Row {index + 1}: could not read start date "{raw_start_date}", left empty')
             if raw_target_date not in [None, ""] and target_date is None:
-                warnings.append(f'Row {index + 1}: could not read target date "{raw_target_date}", left empty')
+                warnings.append(f'Row {index + 1}: could not read due date "{raw_target_date}", left empty')
+            if raw_finish_date not in [None, ""] and finish_date is None:
+                warnings.append(f'Row {index + 1}: could not read finish date "{raw_finish_date}", left empty')
+            if start_date and finish_date and finish_date < start_date:
+                warnings.append(f"Row {index + 1}: finish date is before the start date, finish date left empty")
+                finish_date = None
 
             raw_duration = row.get("duration")
             duration = normalize_work_item_duration(raw_duration)
@@ -729,22 +809,24 @@ def import_work_items_into_project(
                 warnings.append(f'Row {index + 1}: invalid duration "{raw_duration}", derived from the dates instead')
 
             # Run the same reconciliation the work item API runs on create, so an imported item keeps
-            # duration, start date and target date consistent with one another.
-            duration_payload = {"start_date": start_date, "target_date": target_date}
+            # duration, start date and finish date consistent with one another. The due date is a
+            # deadline: it is imported as given and never copied into or derived from the finish.
+            duration_payload = {"start_date": start_date, "finish_date": finish_date}
             if duration is not None:
                 duration_payload["duration"] = duration
             derived = reconcile_work_item_duration(None, duration_payload, project.weekend_days)
             duration = derived.get("duration", duration)
             if "start_date" in derived:
                 start_date = derived["start_date"]
-            if "target_date" in derived:
-                target_date = derived["target_date"]
+            if "finish_date" in derived:
+                finish_date = derived["finish_date"]
             # Reconciliation may hand back ISO strings; keep one type so the values can be
             # compared when a cycle derives its period from them.
             start_date = to_work_item_date(start_date)
+            finish_date = to_work_item_date(finish_date)
             target_date = to_work_item_date(target_date)
         else:
-            _note_skipped("date", raw_start_date or raw_target_date or row.get("duration"))
+            _note_skipped("date", raw_start_date or raw_target_date or raw_finish_date or row.get("duration"))
 
         is_draft = row.get("is_draft")
         if isinstance(is_draft, str):
@@ -771,6 +853,7 @@ def import_work_items_into_project(
                 "priority": priority,
                 "start_date": start_date,
                 "target_date": target_date,
+                "finish_date": finish_date,
                 "duration": duration,
                 "is_draft": is_draft,
                 "parent_external_key": raw_parent_key,
@@ -779,7 +862,10 @@ def import_work_items_into_project(
                 "label_ids": label_ids,
                 "module_ids": module_ids,
                 "cycle_name": cycle_name,
+                "cycle_start_date": cycle_start,
+                "cycle_end_date": cycle_end,
                 "assignee_ids": assignee_ids,
+                "group_assignee_ids": group_assignee_ids,
                 "subscriber_ids": subscriber_ids,
                 "relations": raw_relations,
                 "custom_properties": custom_properties,
@@ -825,6 +911,10 @@ def import_work_items_into_project(
                     priority=item["priority"],
                     start_date=item["start_date"],
                     target_date=item["target_date"],
+                    finish_date=item["finish_date"],
+                    # An import never defaults one planning date from the other, and later manual
+                    # edits must not either once dates came in.
+                    dates_initialized=bool(item["finish_date"] or item["target_date"]),
                     duration=item["duration"],
                     is_draft=item["is_draft"],
                     type=item["issue_type"],
@@ -897,6 +987,7 @@ def import_work_items_into_project(
 
         label_rows = []
         assignee_rows = []
+        group_assignee_rows = []
         subscriber_rows = []
         module_rows = []
         cycle_rows = []
@@ -919,6 +1010,15 @@ def import_work_items_into_project(
                     IssueAssignee(
                         issue=issue,
                         assignee_id=assignee_id,
+                        project=project,
+                        workspace=project.workspace,
+                    )
+                )
+            for group_id in item["group_assignee_ids"]:
+                group_assignee_rows.append(
+                    IssueGroupAssignee(
+                        issue=issue,
+                        group_id=group_id,
                         project=project,
                         workspace=project.workspace,
                     )
@@ -1054,6 +1154,8 @@ def import_work_items_into_project(
             IssueLabel.objects.bulk_create(label_rows, batch_size=500, ignore_conflicts=True)
         if assignee_rows:
             IssueAssignee.objects.bulk_create(assignee_rows, batch_size=500, ignore_conflicts=True)
+        if group_assignee_rows:
+            IssueGroupAssignee.objects.bulk_create(group_assignee_rows, batch_size=500, ignore_conflicts=True)
         if subscriber_rows:
             IssueSubscriber.objects.bulk_create(subscriber_rows, batch_size=500, ignore_conflicts=True)
         if module_rows:

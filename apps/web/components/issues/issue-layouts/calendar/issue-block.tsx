@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
@@ -28,11 +29,14 @@ import { guardQuickActionsClick } from "@/components/issues/issue-layouts/quick-
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 // local components
 import { WorkItemPreviewCard } from "../../preview-card";
+import { useCalendarLayerMarker } from "./use-layer-marker";
 import type { TRenderQuickActions } from "../list/list-view-types";
 import type { CalendarStoreType } from "./base-calendar-root";
 
 type Props = {
   issue: TIssue;
+  /** The day tile this block is rendered in (yyyy-mm-dd). */
+  date?: string;
   quickActions: TRenderQuickActions;
   isDragging?: boolean;
   isEpic?: boolean;
@@ -40,7 +44,8 @@ type Props = {
 
 export const CalendarIssueBlock = observer(
   forwardRef(function CalendarIssueBlock(props: Props, ref: React.ForwardedRef<HTMLAnchorElement>) {
-    const { issue, quickActions, isDragging = false, isEpic = false } = props;
+    const { issue, date, quickActions, isDragging = false, isEpic = false } = props;
+    const { t } = useTranslation();
     // states
     const [isMenuActive, setIsMenuActive] = useState(false);
     // refs
@@ -48,7 +53,6 @@ export const CalendarIssueBlock = observer(
     const menuActionRef = useRef<HTMLButtonElement | null>(null);
     // hooks
     const { workspaceSlug } = useParams();
-    const { t } = useTranslation();
     const { getProjectStates } = useProjectState();
     const { getIsIssuePeeked } = useIssueDetail();
     const { handleRedirection } = useIssuePeekOverviewRedirection(isEpic);
@@ -96,6 +100,8 @@ export const CalendarIssueBlock = observer(
       isEpic,
       isArchived: !!issue?.archived_at,
     });
+
+    const layerMarker = useCalendarLayerMarker(issue, date);
 
     return (
       <Popover>
@@ -145,6 +151,16 @@ export const CalendarIssueBlock = observer(
                     )}
                     <div className="truncate text-13 font-medium md:text-11 md:font-regular">{issue.name}</div>
                   </div>
+                  {layerMarker && (
+                    <span
+                      className={cn(
+                        "flex-shrink-0 rounded-sm px-1 text-10 font-medium group-hover/calendar-block:hidden",
+                        layerMarker.className
+                      )}
+                    >
+                      {layerMarker.label}
+                    </span>
+                  )}
                   {/* Wrapper exists only to stop clicks reaching the ControlLink; the
                       quick-action menu inside carries its own interactive semantics. */}
                   <div

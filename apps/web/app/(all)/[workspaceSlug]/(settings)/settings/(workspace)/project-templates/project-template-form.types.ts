@@ -43,6 +43,14 @@ export type TAdditionalWorkItemTypeTemplate = {
   customProperties: TCustomPropertyTemplateField[];
 };
 
+export type TProjectTemplateGroupField = {
+  /** The group's id in this workspace. */
+  group: string;
+  /** The group's path ("Parent / Child") as the template last saw it; shown when the group no longer exists. */
+  path: string;
+  role: 15 | 5;
+};
+
 export type TProjectTemplateFeatureToggles = {
   cycle_view: boolean;
   module_view: boolean;
@@ -71,6 +79,7 @@ export type TProjectTemplateFormFields = {
   taskCustomProperties: TCustomPropertyTemplateField[];
   epicCustomProperties: TCustomPropertyTemplateField[];
   additionalWorkItemTypes: TAdditionalWorkItemTypeTemplate[];
+  groups: TProjectTemplateGroupField[];
   network: 0 | 1 | 2;
 };
 

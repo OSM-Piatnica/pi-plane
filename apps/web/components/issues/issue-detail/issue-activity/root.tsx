@@ -14,6 +14,7 @@ import { E_SORT_ORDER, defaultActivityFilters, EUserPermissions } from "@plane/c
 import { useLocalStorage } from "@plane/hooks";
 // i18n
 import { useTranslation } from "@plane/i18n";
+import { useSpaceEnabled } from "@/hooks/use-space-enabled";
 //types
 import type { TFileSignedURLResponse, TIssueComment } from "@plane/types";
 // components
@@ -47,6 +48,7 @@ export const IssueActivity = observer(function IssueActivity(props: TIssueActivi
   const { workspaceSlug, projectId, issueId, disabled = false, isIntakeIssue = false } = props;
   // i18n
   const { t } = useTranslation();
+  const isSpaceEnabled = useSpaceEnabled();
   // hooks
   const { setValue: setFilterValue, storedValue: selectedFilters } = useLocalStorage(
     "issue_activity_filters",
@@ -140,7 +142,7 @@ export const IssueActivity = observer(function IssueActivity(props: TIssueActivi
               issueId={issueId}
               selectedFilters={selectedFilters || defaultActivityFilters}
               activityOperations={activityOperations}
-              showAccessSpecifier={!!project.anchor}
+              showAccessSpecifier={!!project.anchor && isSpaceEnabled}
               disabled={disabled}
               sortOrder={sortOrder || E_SORT_ORDER.ASC}
             />

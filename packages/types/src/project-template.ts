@@ -27,6 +27,17 @@ export type TProjectTemplateAdditionalWorkItemType = {
   custom_properties?: TProjectTemplateCustomProperty[];
 };
 
+/**
+ * A group that becomes a member of every project created from a template. The id is workspace specific, so the file also
+ * carries the path ("Parent / Child"): a template uploaded into another workspace finds its groups by path.
+ */
+export type TProjectTemplateGroup = {
+  group?: string;
+  path?: string;
+  /** Member (15) or Guest (5), never Admin. */
+  role: 15 | 5;
+};
+
 export type TProjectTemplatePayload = {
   name?: string;
   identifier?: string;
@@ -60,6 +71,7 @@ export type TProjectTemplatePayload = {
   task_custom_properties?: TProjectTemplateCustomProperty[];
   epic_custom_properties?: TProjectTemplateCustomProperty[];
   additional_work_item_types?: TProjectTemplateAdditionalWorkItemType[];
+  groups?: TProjectTemplateGroup[];
 };
 
 export type TProjectTemplate = {
@@ -70,4 +82,12 @@ export type TProjectTemplate = {
   sort_order: number;
   created_at: string;
   updated_at: string;
+  /** Only in the answer to a save: groups of the saved payload that match no group of this workspace. */
+  unmatched_groups?: { group: string | null; path: string }[];
+};
+
+/** What applying a template's groups to a new project did. */
+export type TProjectTemplateGroupsResult = {
+  applied: number;
+  skipped: { group: string | null; path: string }[];
 };

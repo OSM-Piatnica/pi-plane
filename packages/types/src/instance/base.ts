@@ -11,6 +11,7 @@ import type {
   TInstanceEmailConfigurationKeys,
   TInstanceImageConfigurationKeys,
   TInstanceAuthenticationKeys,
+  TInstanceUploadConfigurationKeys,
   TInstanceWorkspaceConfigurationKeys,
   TCoreLoginMediums,
   TOidcProviderOption,
@@ -57,11 +58,29 @@ export interface IInstanceConfig {
   is_email_password_enabled: boolean;
   /** Workspace UUID used to resolve compact `/i/PROJECT-123` work item links; empty when short links are off. */
   default_workspace_id?: string;
+  /** Projects can be shared on the web: Space is part of this installation and switched on. */
+  is_space_enabled?: boolean;
+  /** Space is part of this installation; when it is not, the administrator cannot switch it on. */
+  is_space_deployed?: boolean;
   github_app_name: string | undefined;
   slack_client_id: string | undefined;
   has_unsplash_configured: boolean;
   has_llm_configured: boolean;
+  /** The largest upload in bytes: the administrator's setting, else the deployment default. */
   file_size_limit: number | undefined;
+  /** The most the administrator can set it to, in bytes. */
+  file_size_limit_max?: number;
+  /** The largest spreadsheet for a work item import, in bytes. */
+  import_file_size_limit?: number;
+  /** The most work items one import may hold. */
+  import_max_work_items?: number;
+  /** The most the administrator can set `import_max_work_items` to. */
+  import_max_work_items_max?: number;
+  /** Most messages one person may send to the admins of a workspace within an hour (in force now). */
+  admin_message_limit?: number;
+  /** What the deployment sets, which applies while the instance admin has saved no value. */
+  admin_message_limit_default?: number;
+  admin_message_limit_max?: number;
   is_smtp_configured: boolean;
   app_base_url: string | undefined;
   space_base_url: string | undefined;
@@ -87,6 +106,7 @@ export type TInstanceConfigurationKeys =
   | TInstanceEmailConfigurationKeys
   | TInstanceImageConfigurationKeys
   | TInstanceAuthenticationKeys
+  | TInstanceUploadConfigurationKeys
   | TInstanceWorkspaceConfigurationKeys;
 
 export interface IInstanceConfiguration {

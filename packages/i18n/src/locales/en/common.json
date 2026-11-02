@@ -119,6 +119,8 @@
   "mentions_description": "Notify me when someone mentions me in the comments or description",
   "project_access_requests": "Access requests",
   "project_access_requests_description": "Email me about requests to join private projects I administer, and about the decisions on my own requests.",
+  "workspace_admin_messages": "Email me when someone writes to the workspace admins",
+  "workspace_admin_messages_description": "Applies only if you are a workspace admin. The message always reaches your inbox; this controls only the email copy, and only for you.",
   "email_frequency": "Email frequency",
   "email_frequency_description": "Choose how often you get emails about work item updates. Mentions are always sent immediately.",
   "email_frequency_instant": "Instantly",
@@ -241,6 +243,25 @@
   "documentation": "Documentation",
   "message_support": "Message support",
   "contact_sales": "Contact sales",
+  "contact_workspace_admins": {
+    "menu_label": "Contact workspace admins",
+    "title": "Contact workspace admins",
+    "description": "The admins of {workspace} add people, change roles and help with access. Write to them with your email app.",
+    "email_all": "Email all admins",
+    "subject": "Question for the admins of {workspace}",
+    "body": "Hello,\n\n\n\n{name}",
+    "message_label": "Message to the admins",
+    "message_placeholder": "Say what you need, for example access to a project or a change of role.",
+    "characters": "{count} / {max}",
+    "send": "Send message",
+    "sent": "Your message was sent to the workspace admins.",
+    "error_rate_limited": "You have sent several messages recently. Please try again later.",
+    "error_generic": "The message could not be sent. Try again, or email the admins.",
+    "or_email": "Or write from your own email app",
+    "notification_text": "wrote to the admins of this workspace",
+    "message_from": "Message from {name}",
+    "reply_by_email": "Reply by email"
+  },
   "hyper_mode": "Hyper Mode",
   "keyboard_shortcuts": "Keyboard shortcuts",
   "whats_new": "What's new?",
@@ -323,6 +344,7 @@
   "start_date": "Start date",
   "end_date": "End date",
   "due_date": "Due date",
+  "finish_date": "Finish date",
   "target_date": "Target date",
   "estimate": "Estimate",
   "change_parent_issue": "Change parent work item",
@@ -352,6 +374,12 @@
   "filter_headings": {
     "access": "Access",
     "owned_by": "Owned by"
+  },
+  "group_filter": {
+    "heading": "Group",
+    "my_groups": "My groups",
+    "no_group": "No group",
+    "unknown_group": "Unknown group"
   },
   "good": "Good",
   "morning": "morning",
@@ -549,6 +577,7 @@
       "last_updated": "Last updated",
       "start_date": "Start date",
       "due_date": "Due date",
+      "finish_date": "Finish date",
       "asc": "Ascending",
       "desc": "Descending",
       "updated_on": "Updated on"

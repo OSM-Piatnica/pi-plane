@@ -119,6 +119,8 @@
   "mentions_description": "Avvisami quando qualcuno mi menziona nei commenti o nella descrizione",
   "project_access_requests": "Richieste di accesso",
   "project_access_requests_description": "Inviami un’e-mail per le richieste di unirsi ai progetti privati che amministro e per le decisioni sulle mie richieste.",
+  "workspace_admin_messages": "Inviami un’e-mail quando qualcuno scrive agli amministratori dello spazio di lavoro",
+  "workspace_admin_messages_description": "Vale solo se è amministratore di uno spazio di lavoro. Il messaggio arriva sempre nella sua casella di posta; questa impostazione stabilisce solo se riceve anche un’e-mail, e solo per lei.",
   "email_frequency": "Frequenza delle e-mail",
   "email_frequency_description": "Scelga con quale frequenza ricevere e-mail sugli aggiornamenti degli elementi di lavoro. Le menzioni vengono sempre inviate immediatamente.",
   "email_frequency_instant": "Immediata",
@@ -241,6 +243,25 @@
   "documentation": "Documentazione",
   "message_support": "Contatta il supporto",
   "contact_sales": "Contatta le vendite",
+  "contact_workspace_admins": {
+    "menu_label": "Contatta gli amministratori",
+    "title": "Contatta gli amministratori dello spazio di lavoro",
+    "description": "Gli amministratori di {workspace} aggiungono persone, modificano i ruoli e aiutano con l’accesso. Scriva loro con la sua app di posta.",
+    "email_all": "Scrivi a tutti gli amministratori",
+    "subject": "Domanda per gli amministratori di {workspace}",
+    "body": "Buongiorno,\n\n\n\n{name}",
+    "message_label": "Messaggio agli amministratori",
+    "message_placeholder": "Scriva di cosa ha bisogno, ad esempio l’accesso a un progetto o un cambio di ruolo.",
+    "characters": "{count} / {max}",
+    "send": "Invia messaggio",
+    "sent": "Il suo messaggio è stato inviato agli amministratori dello spazio di lavoro.",
+    "error_rate_limited": "Ha inviato diversi messaggi di recente. Riprovi più tardi.",
+    "error_generic": "Impossibile inviare il messaggio. Riprovi, oppure scriva agli amministratori via e-mail.",
+    "or_email": "Oppure scriva dalla sua app di posta",
+    "notification_text": "ha scritto agli amministratori di questo spazio di lavoro",
+    "message_from": "Messaggio da {name}",
+    "reply_by_email": "Rispondi via e-mail"
+  },
   "hyper_mode": "Modalità Hyper",
   "keyboard_shortcuts": "Scorciatoie da tastiera",
   "whats_new": "Novità?",
@@ -323,6 +344,7 @@
   "start_date": "Data di inizio",
   "end_date": "Data di fine",
   "due_date": "Scadenza",
+  "finish_date": "Data di fine",
   "target_date": "Data prevista",
   "estimate": "Stima",
   "change_parent_issue": "Cambia elemento di lavoro principale",
@@ -352,6 +374,12 @@
   "filter_headings": {
     "access": "Accesso",
     "owned_by": "Proprietario"
+  },
+  "group_filter": {
+    "heading": "Gruppo",
+    "my_groups": "I miei gruppi",
+    "no_group": "Nessun gruppo",
+    "unknown_group": "Gruppo sconosciuto"
   },
   "good": "Buono",
   "morning": "Mattina",
@@ -549,6 +577,7 @@
       "last_updated": "Ultimo aggiornato",
       "start_date": "Data di inizio",
       "due_date": "Scadenza",
+      "finish_date": "Data di fine",
       "asc": "Ascendente",
       "desc": "Discendente",
       "updated_on": "Aggiornato il"

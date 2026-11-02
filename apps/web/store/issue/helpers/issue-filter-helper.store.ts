@@ -145,6 +145,7 @@ export class IssueFilterHelperStore implements IIssueFilterHelperStore {
     module: filters?.module || null,
     start_date: filters?.start_date || null,
     target_date: filters?.target_date || null,
+    finish_date: filters?.finish_date || null,
     project: filters?.project || null,
     team_project: filters?.team_project || null,
     subscriber: filters?.subscriber || null,
@@ -323,7 +324,13 @@ export class IssueFilterHelperStore implements IIssueFilterHelperStore {
 
     // If before and after dates are sent from option to filter by then, add them to filter the options
     if (options.after && options.before) {
-      paginationParams["target_date"] = `${options.after};after,${options.before};before`;
+      // the calendar layer decides what the visible window applies to: the planned schedule (a work item with
+      // only a start or only a finish counts too) or the due date
+      if (options.groupedBy === EIssueGroupByToServerOptions["schedule_date"]) {
+        paginationParams.schedule_window = `${options.after};${options.before}`;
+      } else {
+        paginationParams.target_date = `${options.after};after,${options.before};before`;
+      }
     }
 
     // If groupId is passed down, add a filter param for that group Id

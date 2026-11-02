@@ -15,8 +15,10 @@ from django.core.mail import EmailMultiAlternatives, get_connection
 from django.template.loader import render_to_string
 
 # Module imports
+from plane.db.models import User
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.email import generate_plain_text_from_html
+from plane.utils.email_i18n import DEFAULT_LANGUAGE, translate, user_language
 from plane.utils.exception_logger import log_exception
 
 
@@ -36,12 +38,16 @@ def forgot_password(first_name, email, uidb64, token, current_site):
             EMAIL_FROM,
         ) = get_email_configuration()
 
-        subject = "A new password to your Pi-Plane account has been requested"
+        # in the language of the person's profile; an address without an account gets English
+        user = User.objects.filter(email=email).first()
+        language = user_language(user) if user else DEFAULT_LANGUAGE
+        subject = translate(language, "forgot_password.subject")
 
         context = {
             "first_name": first_name,
             "forgot_password_url": abs_url,
             "email": email,
+            "email_language": language,
         }
 
         html_content = render_to_string("emails/auth/forgot_password.html", context)

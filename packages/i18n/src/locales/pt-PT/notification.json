@@ -61,6 +61,8 @@
       "assignee_removed": "removeu um responsável",
       "start_date_set": "definiu a data de início como",
       "start_date_removed": "removeu a data de início",
+      "finish_date_set": "definiu a data de conclusão como",
+      "finish_date_removed": "removeu a data de conclusão",
       "due_date_set": "definiu a data de vencimento como",
       "due_date_removed": "removeu a data de vencimento",
       "duration_set": "definiu a duração como",

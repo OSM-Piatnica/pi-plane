@@ -313,6 +313,7 @@ def create_issues(workspace, project, user_id, issue_count):
                 sequence_id=last_id,
                 sort_order=largest_sort_order,
                 start_date=start_date,
+                finish_date=end_date,
                 target_date=end_date,
                 priority=["urgent", "high", "medium", "low", "none"][random.randint(0, 4)],
                 created_by_id=creators[random.randint(0, len(creators) - 1)],

@@ -219,6 +219,9 @@ export abstract class BaseProjectMemberStore implements IBaseProjectMemberStore 
       id: projectMember.id,
       role: projectMember.role,
       original_role: projectMember.original_role,
+      via_group: projectMember.via_group,
+      group_role: projectMember.group_role,
+      direct_role: projectMember.direct_role,
       member: {
         ...userDetails,
         joining_date: projectMember.created_at ?? undefined,
@@ -272,6 +275,9 @@ export abstract class BaseProjectMemberStore implements IBaseProjectMemberStore 
       id: projectMember.id,
       role: projectMember.role,
       original_role: projectMember.original_role,
+      via_group: projectMember.via_group,
+      group_role: projectMember.group_role,
+      direct_role: projectMember.direct_role,
       member: {
         ...userDetails,
         joining_date: projectMember.created_at ?? undefined,
@@ -378,6 +384,9 @@ export abstract class BaseProjectMemberStore implements IBaseProjectMemberStore 
           role,
         }
       );
+      // a group may hold the effective role above the one just set, so take the real one from the API
+      if (membershipBeforeUpdate.group_role != null)
+        await this.fetchProjectMembers(workspaceSlug, projectId).catch(() => undefined);
       return response;
     } catch (error) {
       // revert back to original members in case of error

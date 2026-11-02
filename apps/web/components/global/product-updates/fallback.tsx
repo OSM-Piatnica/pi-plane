@@ -6,6 +6,7 @@
  */
 
 import { EmptyStateDetailed } from "@plane/blocks/empty-state";
+import { PI_PLANE_RELEASES_URL } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 
 type TProductUpdatesFallbackProps = {
@@ -14,13 +15,10 @@ type TProductUpdatesFallbackProps = {
 };
 
 export function ProductUpdatesFallback(props: TProductUpdatesFallbackProps) {
-  const { description, variant } = props;
+  const { description } = props;
   const { t } = useTranslation();
-  // derived values
-  const changelogUrl =
-    variant === "cloud"
-      ? "https://plane.so/changelog?category=cloud"
-      : "https://plane.so/changelog?category=self-hosted";
+  // Pi-Plane's releases are on GitHub; the changelog of plane.so describes the upstream product
+  const changelogUrl = PI_PLANE_RELEASES_URL;
 
   return (
     <div className="py-8">

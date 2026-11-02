@@ -30,7 +30,7 @@ def project(db, workspace, create_user):
 
 def item(project, name, start=None, finish=None):
     issue = Issue.objects.create(
-        name=name, workspace=project.workspace, project=project, start_date=start, target_date=finish
+        name=name, workspace=project.workspace, project=project, start_date=start, finish_date=finish
     )
     return issue
 
@@ -60,7 +60,7 @@ def patch(client, workspace, project, issue, data):
 
 def dates(issue):
     issue.refresh_from_db()
-    return issue.start_date, issue.target_date
+    return issue.start_date, issue.finish_date
 
 
 @pytest.mark.contract
@@ -74,12 +74,12 @@ class TestTheDependentKeepsItsWorkingDays:
         block(project, predecessor, successor)
 
         # the predecessor now finishes on Wednesday, so the successor may start on Thursday
-        offered = patch(session_client, workspace, project, predecessor, {"target_date": str(WED)})
+        offered = patch(session_client, workspace, project, predecessor, {"finish_date": str(WED)})
 
         assert offered.status_code == status.HTTP_400_BAD_REQUEST
         shift = offered.json()["shifts"][0]
         # Thursday, Friday and then Monday: the weekend does not count, so the item still lasts three working days
-        assert (shift["new_start_date"], shift["new_target_date"]) == (str(THU), str(NEXT_MON))
+        assert (shift["new_start_date"], shift["new_finish_date"]) == (str(THU), str(NEXT_MON))
 
     def test_confirmed_the_dates_move_and_the_duration_stays(
         self, session_client, workspace, project, django_capture_on_commit_callbacks
@@ -91,7 +91,7 @@ class TestTheDependentKeepsItsWorkingDays:
 
         with django_capture_on_commit_callbacks(execute=True):
             response = patch(
-                session_client, workspace, project, predecessor, {"target_date": str(WED), "shift_dependents": True}
+                session_client, workspace, project, predecessor, {"finish_date": str(WED), "shift_dependents": True}
             )
 
         assert response.status_code == status.HTTP_204_NO_CONTENT, response.content
@@ -106,20 +106,20 @@ class TestTheDependentKeepsItsWorkingDays:
         successor = item(project, "successor", MON, WED)
         block(project, predecessor, successor)
 
-        offered = patch(session_client, workspace, project, predecessor, {"target_date": str(FRI)})
+        offered = patch(session_client, workspace, project, predecessor, {"finish_date": str(FRI)})
 
         shift = offered.json()["shifts"][0]
-        assert (shift["new_start_date"], shift["new_target_date"]) == (str(NEXT_MON), str(NEXT_WED))
+        assert (shift["new_start_date"], shift["new_finish_date"]) == (str(NEXT_MON), str(NEXT_WED))
 
     def test_a_dependent_with_only_a_start_date_moves_just_that_date(self, session_client, workspace, project):
         predecessor = item(project, "predecessor", date(2026, 10, 26), EARLIER_FRI)
         successor = item(project, "successor", MON, None)
         block(project, predecessor, successor)
 
-        offered = patch(session_client, workspace, project, predecessor, {"target_date": str(FRI)})
+        offered = patch(session_client, workspace, project, predecessor, {"finish_date": str(FRI)})
 
         shift = offered.json()["shifts"][0]
-        assert (shift["new_start_date"], shift["new_target_date"]) == (str(NEXT_MON), None)
+        assert (shift["new_start_date"], shift["new_finish_date"]) == (str(NEXT_MON), None)
 
 
 @pytest.mark.contract
@@ -182,8 +182,8 @@ class TestAcrossProjects:
         successor = item(other, "successor", MON, WED)  # three days in a project that works every day
         block(project, predecessor, successor)
 
-        offered = patch(session_client, workspace, project, predecessor, {"target_date": str(WED)})
+        offered = patch(session_client, workspace, project, predecessor, {"finish_date": str(WED)})
 
         shift = offered.json()["shifts"][0]
         # Thursday to Saturday: the other project has no weekend, so nothing is skipped there
-        assert (shift["new_start_date"], shift["new_target_date"]) == (str(THU), str(SAT))
+        assert (shift["new_start_date"], shift["new_finish_date"]) == (str(THU), str(SAT))

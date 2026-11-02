@@ -14,7 +14,7 @@
       "sidebar_header": "Auslöser-Konfiguration",
       "input_label": "Was ist der Auslöser für diese Automatisierung?",
       "input_placeholder": "Option auswählen",
-      "section_plane_events": "Plane-Ereignisse",
+      "section_plane_events": "Pi-Plane-Ereignisse",
       "section_time_based": "Zeitbasiert",
       "fixed_schedule": "Fester Zeitplan",
       "schedule": {
@@ -36,8 +36,8 @@
         "frequency_weekly": "Wöchentlich",
         "frequency_monthly": "Monatlich",
         "on": "Am",
-        "validation_weekly_day_required": "Wähle mindestens einen Wochentag aus.",
-        "validation_monthly_date_required": "Wähle einen Tag des Monats aus.",
+        "validation_weekly_day_required": "Wählen Sie mindestens einen Wochentag aus.",
+        "validation_monthly_date_required": "Wählen Sie einen Tag des Monats aus.",
         "main_content_schedule_summary_daily": "Jeden Tag um {time} ({timezone}).",
         "main_content_schedule_summary_weekly": "Jede Woche am {days} um {time} ({timezone}).",
         "main_content_schedule_summary_monthly": "Jeden Monat am {day}. um {time} ({timezone}).",
@@ -47,7 +47,7 @@
         "cron_expression_label": "Cron-Ausdruck eingeben",
         "cron_expression_placeholder": "0 9 * * 1-5",
         "cron_invalid": "Ungültiger Cron-Ausdruck.",
-        "cron_preview": "Dieser Cron-Ausdruck führt aus: „{description}\".",
+        "cron_preview": "Dieser Cron-Ausdruck führt aus: „{description}“.",
         "main_content_cron_summary": "{description} ({timezone})."
       },
       "button": {
@@ -61,7 +61,7 @@
     "condition": {
       "label": "Vorausgesetzt",
       "add_condition": "Bedingung hinzufügen",
-      "adding_condition": "Bedingung hinzufügen"
+      "adding_condition": "Bedingung wird hinzugefügt"
     },
     "action": {
       "label": "Aktion",
@@ -110,14 +110,14 @@
       "then": "Dann"
     },
     "enable": {
-      "alert": "Klicken Sie auf 'Aktivieren', wenn Ihre Automatisierung vollständig ist. Nach der Aktivierung ist die Automatisierung bereit zur Ausführung.",
+      "alert": "Klicken Sie auf „Aktivieren“, wenn Ihre Automatisierung vollständig ist. Nach der Aktivierung ist die Automatisierung bereit zur Ausführung.",
       "validation": {
-        "required": "Automatisierung muss einen Auslöser und mindestens eine Aktion haben, um aktiviert zu werden."
+        "required": "Die Automatisierung muss einen Auslöser und mindestens eine Aktion haben, um aktiviert zu werden."
       }
     },
     "delete": {
       "validation": {
-        "enabled": "Automatisierung muss vor dem Löschen deaktiviert werden."
+        "enabled": "Die Automatisierung muss vor dem Löschen deaktiviert werden."
       }
     },
     "table": {
@@ -231,7 +231,7 @@
     },
     "empty_state": {
       "no_automations": {
-        "title": "Es gibt noch keine Automatisierungen anzuzeigen.",
+        "title": "Es gibt noch keine Automatisierungen.",
         "description": "Automatisierungen helfen Ihnen, sich wiederholende Aufgaben zu eliminieren, indem Sie Auslöser, Bedingungen und Aktionen festlegen. Erstellen Sie eine, um Zeit zu sparen und die Arbeit mühelos am Laufen zu halten."
       },
       "upgrade": {
@@ -245,11 +245,11 @@
         "label": "Projekte auswählen, für die diese Automatisierung ausgeführt werden soll",
         "all_projects": {
           "label": "Alle Projekte",
-          "description": "Automatisierung wird für alle Projekte im Arbeitsbereich ausgeführt."
+          "description": "Die Automatisierung wird für alle Projekte im Arbeitsbereich ausgeführt."
         },
         "select_projects": {
           "label": "Projekte auswählen",
-          "description": "Automatisierung wird für ausgewählte Projekte im Arbeitsbereich ausgeführt.",
+          "description": "Die Automatisierung wird für ausgewählte Projekte im Arbeitsbereich ausgeführt.",
           "placeholder": "Projekte auswählen"
         }
       },

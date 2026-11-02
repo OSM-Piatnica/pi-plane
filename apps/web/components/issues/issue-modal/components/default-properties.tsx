@@ -17,11 +17,19 @@ import { Pill as PillChrome } from "@makeplane/propel/elements/pill";
 import { CalendarOutline, ParentOutline } from "@makeplane/propel/icons";
 import { ETabIndices } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
+import { setToast } from "@plane/blocks/toast";
 // types
 import type { ISearchIssueResponse, TIssue } from "@plane/types";
 // ui
 import { DateSelect } from "@/components/dropdowns/date-select";
-import { getDate, reconcileWorkItemDuration, renderFormattedPayloadDate, getTabIndex } from "@plane/utils";
+import type { TPairedDateNotice, TWorkItemPlanningDates } from "@plane/utils";
+import {
+  getDate,
+  getTabIndex,
+  planWorkItemDateChange,
+  renderFormattedDate,
+  renderFormattedPayloadDate,
+} from "@plane/utils";
 // components
 import { CycleSelect } from "@/components/dropdowns/cycle/cycle-select";
 import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select";
@@ -71,6 +79,8 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
   } = props;
   // states
   const [parentIssueListModalOpen, setParentIssueListModalOpen] = useState(false);
+  const [pairingConsumed, setPairingConsumed] = useState(false);
+  const [dateNotice, setDateNotice] = useState<TPairedDateNotice | null>(null);
   // store hooks
   const { t } = useTranslation();
   const { areEstimateEnabledByProjectId } = useProjectEstimates();
@@ -86,11 +96,53 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
 
   // Writing the derived fields with setValue rather than the field's own onChange keeps them in
   // dirtyFields, which is what getChangedIssuefields uses to build the update payload.
-  const applyDurationChange = (change: Partial<Pick<TIssue, "start_date" | "target_date" | "duration">>) => {
-    const derived = reconcileWorkItemDuration(getValues(), change, weekendDays);
-    if (derived.start_date !== undefined) setValue("start_date", derived.start_date, { shouldDirty: true });
-    if (derived.target_date !== undefined) setValue("target_date", derived.target_date, { shouldDirty: true });
-    if (derived.duration !== undefined) setValue("duration", derived.duration, { shouldDirty: true });
+  //
+  // The first manual finish/due entry shows both values before saving. The copy is only a preview:
+  // the form names the copied date (`paired_date_defaulted`) and the server verifies eligibility and
+  // records the provenance. "Set only ..." removes the copy; once used, it is not offered again.
+  const applyDateChange = (change: Partial<TWorkItemPlanningDates>) => {
+    const current = getValues();
+    const { patch, notice, error } = planWorkItemDateChange(
+      { ...current, dates_initialized: current.dates_initialized || pairingConsumed },
+      change,
+      true,
+      weekendDays
+    );
+    if (error) {
+      setToast({
+        type: "error",
+        title: t("common.error.label"),
+        message: t("issue.dates.finish_before_start"),
+      });
+      return;
+    }
+    (["start_date", "finish_date", "target_date", "duration"] as const).forEach((key) => {
+      if (key in patch) setValue(key, patch[key] as never, { shouldDirty: true });
+    });
+    if ("finish_date" in change || "target_date" in change) setPairingConsumed(true);
+    const copied =
+      notice?.code === "due_date_defaulted"
+        ? "target_date"
+        : notice?.code === "finish_date_defaulted"
+          ? "finish_date"
+          : undefined;
+    // Editing the copied date yourself turns it into a deliberate value.
+    const stillCopied =
+      copied ??
+      (current.paired_date_defaulted && !(current.paired_date_defaulted in change)
+        ? current.paired_date_defaulted
+        : undefined);
+    setValue("paired_date_defaulted", stillCopied, { shouldDirty: true });
+    setDateNotice(notice && notice.code !== "finish_date_not_defaulted" ? notice : null);
+    handleFormChange();
+  };
+
+  const removeCopiedDate = () => {
+    const copied = getValues().paired_date_defaulted;
+    if (!copied) return;
+    setValue(copied, null, { shouldDirty: true });
+    setValue("paired_date_defaulted", undefined, { shouldDirty: true });
+    setDateNotice(null);
     handleFormChange();
   };
 
@@ -174,7 +226,7 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
           <DateSelect
             value={getDate(value) ?? null}
             onChange={(date) =>
-              applyDurationChange({ start_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
+              applyDateChange({ start_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
             }
             placeholder={t("start_date")}
             icon={<CalendarOutline />}
@@ -188,23 +240,62 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
       />
       <Controller
         control={control}
-        name="target_date"
+        name="finish_date"
         render={({ field: { value } }) => (
-          <DateSelect
-            value={getDate(value) ?? null}
-            onChange={(date) =>
-              applyDurationChange({ target_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
-            }
-            placeholder={t("due_date")}
-            icon={<CalendarOutline />}
-            weekStartsOn={startOfTheWeek}
-            clearable
-            tabIndex={getIndex("target_date")}
-            variant="pill-md"
-            testId="create-work-item-due-date-select"
-          />
+          <div title={t("issue.dates.help.finish")}>
+            <DateSelect
+              value={getDate(value) ?? null}
+              onChange={(date) =>
+                applyDateChange({ finish_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
+              }
+              minDate={getDate(getValues().start_date)}
+              placeholder={t("common.order_by.finish_date")}
+              icon={<CalendarOutline />}
+              weekStartsOn={startOfTheWeek}
+              clearable
+              tabIndex={getIndex("finish_date")}
+              variant="pill-md"
+              testId="create-work-item-finish-date-select"
+            />
+          </div>
         )}
       />
+      <Controller
+        control={control}
+        name="target_date"
+        render={({ field: { value } }) => (
+          <div title={t("issue.dates.help.due")}>
+            <DateSelect
+              value={getDate(value) ?? null}
+              onChange={(date) =>
+                applyDateChange({ target_date: date ? (renderFormattedPayloadDate(date) ?? null) : null })
+              }
+              placeholder={t("due_date")}
+              icon={<CalendarOutline />}
+              weekStartsOn={startOfTheWeek}
+              clearable
+              tabIndex={getIndex("target_date")}
+              variant="pill-md"
+              testId="create-work-item-due-date-select"
+            />
+          </div>
+        )}
+      />
+      {dateNotice && (
+        <div className="flex w-full items-center gap-2 text-body-xs-regular text-tertiary">
+          <span>
+            {t(
+              dateNotice.code === "due_date_defaulted"
+                ? "issue.dates.notice.due_defaulted"
+                : "issue.dates.notice.finish_defaulted",
+              { date: renderFormattedDate(dateNotice.date) ?? dateNotice.date }
+            )}
+          </span>
+          <button type="button" className="font-medium text-primary hover:text-secondary" onClick={removeCopiedDate}>
+            {t(dateNotice.code === "due_date_defaulted" ? "issue.dates.only_finish" : "issue.dates.only_due")}
+          </button>
+        </div>
+      )}
       <Controller
         control={control}
         name="duration"
@@ -212,7 +303,7 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
           <div className="h-7">
             <DurationDropdown
               value={value}
-              onChange={(duration) => applyDurationChange({ duration })}
+              onChange={(duration) => applyDateChange({ duration })}
               variant="pill-md"
               placeholder={t("duration")}
               tabIndex={getIndex("duration")}

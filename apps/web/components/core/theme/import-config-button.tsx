@@ -13,6 +13,7 @@ import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import { setToast } from "@plane/blocks/toast";
 import type { IUserTheme } from "@plane/types";
+import { sanitizeThemeOverrides } from "@plane/utils";
 
 type Props = {
   handleUpdateTheme: (formData: IUserTheme) => Promise<void>;
@@ -54,18 +55,26 @@ export const CustomThemeImportConfigButton = observer(function CustomThemeImport
         throw new Error(t("app_text.theme.invalid_mode"));
       }
 
+      // Advanced settings (files from before they existed have none, which clears them)
+      const { overrides, invalid } = sanitizeThemeOverrides(config.overrides);
+      if (invalid.length > 0) {
+        throw new Error(t("core_ui.theme.advanced.invalid_import", { tokens: invalid.join(", ") }));
+      }
+
       // Apply the configuration to form
       const formData: IUserTheme = {
         theme: "custom",
         primary: config.primary,
         background: config.background,
         darkPalette: themeMode,
+        overrides,
       };
 
       // Update form values
       setValue("primary", formData.primary);
       setValue("background", formData.background);
       setValue("darkPalette", formData.darkPalette);
+      setValue("overrides", overrides);
       setValue("theme", "custom");
 
       // Apply the theme

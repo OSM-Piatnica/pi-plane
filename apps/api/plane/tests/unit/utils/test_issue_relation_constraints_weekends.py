@@ -114,26 +114,26 @@ class TestWhichCalendarApplies:
     """A rule limits the work item that comes later, so its project's weekend days are the ones that count."""
 
     def test_blocked_by_uses_the_issues_own_days(self):
-        issue = {"start_date": SAT, "target_date": None}
-        related = {"start_date": None, "target_date": FRI}
+        issue = {"start_date": SAT, "finish_date": None}
+        related = {"start_date": None, "finish_date": FRI}
 
         # the issue (blocked) works Saturdays: its Saturday start is a real day, after the blocker's Friday finish
         assert is_timeline_relation_satisfied("blocked_by", issue, related, 0, [0], [0, 6])
         # with Saturday off for the issue the start is Monday: still fine; with no weekend and a Friday start it is not
         assert not is_timeline_relation_satisfied(
-            "blocked_by", {"start_date": FRI, "target_date": None}, related, 0, [], [0, 6]
+            "blocked_by", {"start_date": FRI, "finish_date": None}, related, 0, [], [0, 6]
         )
 
     def test_blocking_uses_the_related_items_days(self):
-        issue = {"start_date": None, "target_date": FRI}  # the blocker
-        related = {"start_date": SAT, "target_date": None}  # the blocked item
+        issue = {"start_date": None, "finish_date": FRI}  # the blocker
+        related = {"start_date": SAT, "finish_date": None}  # the blocked item
 
         assert is_timeline_relation_satisfied("blocking", issue, related, 0, SAT_SUN, [0])  # works Saturdays
         assert is_timeline_relation_satisfied("blocking", issue, related, 0, [], SAT_SUN)  # Saturday is Monday
 
     def test_the_calendar_of_the_other_side_does_not_matter(self):
-        issue = {"start_date": FRI, "target_date": None}
-        related = {"start_date": None, "target_date": FRI}
+        issue = {"start_date": FRI, "finish_date": None}
+        related = {"start_date": None, "finish_date": FRI}
 
         # blocked_by limits the issue: its own days (none off) make a Friday start too early, whatever the blocker's
         assert not is_timeline_relation_satisfied("blocked_by", issue, related, 0, [], SAT_SUN)

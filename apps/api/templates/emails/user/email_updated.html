@@ -1,3 +1,5 @@
+{% load email_i18n %}
+{% load email_assets %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html
   xmlns="http://www.w3.org/1999/xhtml"
@@ -9,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pi-Plane email address successfully updated</title>
+    <title>{% etr "email_updated.subject" %}</title>
     <style type="text/css" emogrify="no">
       #outlook a {
         padding: 0;
@@ -330,12 +332,7 @@
                                         >
                                           <tr>
                                             <td style="font-size: 0px; line-height: 0px">
-                                              <img
-                                                src="https://media.docs.plane.so/logo/new-logo-white.png"
-                                                width="150"
-                                                border="0"
-                                                style="display: block; width: 100%"
-                                              />
+                                              {% email_logo "white" 150 %}
                                             </td>
                                           </tr>
                                         </table>
@@ -418,8 +415,8 @@
                                                     word-break: break-word;
                                                   "
                                                 >
-                                                  Pi-Plane email address successfully updated
-                                                </h2>
+                  {% etr "email_updated.subject" %}
+                </h2>
                                               </div>
                                             </td>
                                           </tr>
@@ -455,11 +452,10 @@
                                             >
                                               <div>
                                                 <p style="margin: 0">
-                                                  You have successfully updated your email address with Pi-Plane to
-                                                  <strong>{{email}}</strong>.
+                                                  {% etr "email_updated.body" email=email_strong %}
                                                 </p>
                                                 <p style="margin: 0; margin-top: 15px">
-                                                  You can now log in using this email address.
+                                                  {% etr "email_updated.login" %}
                                                 </p>
                                               </div>
                                             </td>
@@ -580,7 +576,7 @@
                                                                       "
                                                                     >
                                                                       <a
-                                                                        href="https://github.com/makeplane"
+                                                                        href="https://github.com/OSM-Piatnica/pi-plane"
                                                                         target="_blank"
                                                                         style="
                                                                           color: #006399;
@@ -628,20 +624,7 @@
                                                                         padding-top: 5px;
                                                                       "
                                                                     >
-                                                                      <a
-                                                                        href="https://www.linkedin.com/company/planepowers/"
-                                                                        target="_blank"
-                                                                        style="
-                                                                          color: #006399;
-                                                                          text-decoration: underline;
-                                                                        "
-                                                                      >
-                                                                        <img
-                                                                          src="https://creative-assets.mailinblue.com/editor/social-icons/rounded_colored/linkedin_32px.png"
-                                                                          width="32"
-                                                                          border="0"
-                                                                          style="display: block; width: 100%"
-                                                                      /></a>
+                                                                      
                                                                     </td>
                                                                     <td
                                                                       class="nl2go-responsive-hide"
@@ -677,20 +660,7 @@
                                                                         padding-top: 5px;
                                                                       "
                                                                     >
-                                                                      <a
-                                                                        href="https://x.com/planepowers"
-                                                                        target="_blank"
-                                                                        style="
-                                                                          color: #006399;
-                                                                          text-decoration: underline;
-                                                                        "
-                                                                      >
-                                                                        <img
-                                                                          src="https://creative-assets.mailinblue.com/editor/social-icons/rounded_colored/twitter_32px.png"
-                                                                          width="32"
-                                                                          border="0"
-                                                                          style="display: block; width: 100%"
-                                                                      /></a>
+                                                                      
                                                                     </td>
                                                                     <td
                                                                       class="nl2go-responsive-hide"
@@ -726,20 +696,7 @@
                                                                         padding-top: 5px;
                                                                       "
                                                                     >
-                                                                      <a
-                                                                        href="https://plane.so/"
-                                                                        target="_blank"
-                                                                        style="
-                                                                          color: #006399;
-                                                                          text-decoration: underline;
-                                                                        "
-                                                                      >
-                                                                        <img
-                                                                          src="https://creative-assets.mailinblue.com/editor/social-icons/rounded_colored/website_32px.png"
-                                                                          width="32"
-                                                                          border="0"
-                                                                          style="display: block; width: 100%"
-                                                                      /></a>
+                                                                      
                                                                     </td>
                                                                   </tr>
                                                                 </table>
@@ -824,8 +781,7 @@
                                               <div>
                                                 <p style="margin: 0; font-size: 14px">
                                                   <span style="font-size: 12px"
-                                                    >This email was sent to {{email}}. Please delete if you aren't the
-                                                    intended recipient.</span
+                                                    >{% etr "shared.recipient_note" email=email %}</span
                                                   >
                                                 </p>
                                               </div>

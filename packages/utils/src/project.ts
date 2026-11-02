@@ -11,6 +11,7 @@ import type { TProject, TProjectDisplayFilters, TProjectFilters, TProjectOrderBy
 // local imports
 import { getDate } from "./datetime";
 import { satisfiesDateFilter } from "./filter";
+import { matchesGroupFilter } from "./user-group-filter";
 
 /**
  * Updates the sort order of the project.
@@ -77,6 +78,8 @@ export const shouldFilterProject = (
       const memberIds = new Set(project.members ?? []);
       fallsInFilters = fallsInFilters && filters.members.some((memberId) => memberIds.has(memberId));
     }
+    if (filterKey === "groups" && filters.groups && filters.groups.length > 0)
+      fallsInFilters = fallsInFilters && matchesGroupFilter(filters.groups, project);
     if (filterKey === "created_at" && filters.created_at && filters.created_at.length > 0) {
       const createdDate = getDate(project.created_at);
       filters.created_at.forEach((dateFilter) => {

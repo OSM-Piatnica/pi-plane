@@ -23,7 +23,19 @@ from plane.license.api.serializers import InstanceSerializer
 from plane.license.models import Instance
 from plane.authentication.provider.oidc.registry import enabled_oidc_providers
 from plane.license.utils.instance_value import get_configuration_value
+from plane.utils.file_size_limit import get_file_size_limit, get_file_size_limit_max
+from plane.utils.import_limits import (
+    MAX_IMPORT_MAX_WORK_ITEMS,
+    get_import_file_size_limit,
+    get_import_max_work_items,
+)
+from plane.utils.admin_message_limit import (
+    MAX_ADMIN_MESSAGE_LIMIT,
+    get_admin_message_limit,
+    get_deployment_admin_message_limit,
+)
 from plane.utils.cache import cache_response, invalidate_cache
+from plane.utils.space import is_space_deployed, is_space_enabled
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 
@@ -140,6 +152,10 @@ class InstanceEndpoint(BaseAPIView):
             default_workspace_exists = False
         data["default_workspace_id"] = default_workspace_id if default_workspace_exists else ""
 
+        # Web sharing: whether Space is part of this installation, and whether it is switched on
+        data["is_space_deployed"] = is_space_deployed()
+        data["is_space_enabled"] = is_space_enabled()
+
         # Github app name
         data["github_app_name"] = str(GITHUB_APP_NAME)
 
@@ -153,7 +169,16 @@ class InstanceEndpoint(BaseAPIView):
         data["has_llm_configured"] = bool(LLM_API_KEY)
 
         # File size settings
-        data["file_size_limit"] = float(os.environ.get("FILE_SIZE_LIMIT", 5242880))
+        data["file_size_limit"] = float(get_file_size_limit())
+        data["file_size_limit_max"] = float(get_file_size_limit_max())
+        # Spreadsheet imports
+        data["import_file_size_limit"] = float(get_import_file_size_limit())
+        data["import_max_work_items"] = get_import_max_work_items()
+        data["import_max_work_items_max"] = MAX_IMPORT_MAX_WORK_ITEMS
+        # Messages to the admins of a workspace
+        data["admin_message_limit"] = get_admin_message_limit()
+        data["admin_message_limit_default"] = get_deployment_admin_message_limit()
+        data["admin_message_limit_max"] = MAX_ADMIN_MESSAGE_LIMIT
 
         # is smtp configured
         data["is_smtp_configured"] = bool(EMAIL_HOST)

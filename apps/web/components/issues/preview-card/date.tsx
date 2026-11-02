@@ -15,18 +15,22 @@ import { useTranslation } from "@plane/i18n";
 type Props = {
   startDate: string | null;
   stateGroup: TStateGroups;
+  /** The schedule end. */
+  finishDate: string | null;
+  /** The due date, which only drives the overdue highlight. */
   targetDate: string | null;
 };
 
 export function WorkItemPreviewCardDate(props: Props) {
-  const { startDate, stateGroup, targetDate } = props;
+  const { startDate, stateGroup, finishDate, targetDate } = props;
   const { t } = useTranslation();
   const { formatDate } = useLocalizedDates();
   // derived values
-  const isDateRangeEnabled = Boolean(startDate && targetDate);
+  const endDate = finishDate ?? targetDate;
+  const isDateRangeEnabled = Boolean(startDate && endDate);
   const shouldHighlightDate = shouldHighlightIssueDueDate(targetDate, stateGroup);
 
-  if (!startDate && !targetDate) return null;
+  if (!startDate && !endDate) return null;
 
   return (
     <div className="h-full rounded-sm px-1 text-11 text-secondary">
@@ -37,7 +41,7 @@ export function WorkItemPreviewCardDate(props: Props) {
           })}
         >
           <CalendarOutline className="size-3 shrink-0" />
-          <span>{t("date_phrases.date_range", { start: formatDate(startDate), end: formatDate(targetDate) })}</span>
+          <span>{t("date_phrases.date_range", { start: formatDate(startDate), end: formatDate(endDate) })}</span>
         </div>
       ) : startDate ? (
         <div className="flex h-full items-center gap-1">
@@ -51,7 +55,7 @@ export function WorkItemPreviewCardDate(props: Props) {
           })}
         >
           <DueDateOutline className="size-3 shrink-0" />
-          <span>{formatDate(targetDate)}</span>
+          <span>{formatDate(endDate)}</span>
         </div>
       )}
     </div>

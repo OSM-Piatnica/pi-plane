@@ -151,7 +151,7 @@ class WorkspaceUserProfileIssuesEndpoint(BaseAPIView):
         )
 
     def get(self, request, slug, user_id):
-        filters = issue_filters(request.query_params, "GET")
+        filters = issue_filters(request.query_params, "GET", request=request)
 
         order_by_param = request.GET.get("order_by", "-created_at")
         issue_queryset = Issue.issue_objects.filter(
@@ -185,7 +185,9 @@ class WorkspaceUserProfileIssuesEndpoint(BaseAPIView):
         sub_group_by = request.GET.get("sub_group_by", False)
 
         # issue queryset
-        issue_queryset = issue_queryset_grouper(queryset=issue_queryset, group_by=group_by, sub_group_by=sub_group_by)
+        issue_queryset = issue_queryset_grouper(
+            queryset=issue_queryset, group_by=group_by, sub_group_by=sub_group_by, request=request
+        )
 
         if group_by:
             if sub_group_by:
@@ -441,7 +443,7 @@ class WorkspaceUserProfileStatsEndpoint(BaseAPIView):
     permission_classes = [WorkspaceViewerPermission]
 
     def get(self, request, slug, user_id):
-        filters = issue_filters(request.query_params, "GET")
+        filters = issue_filters(request.query_params, "GET", request=request)
 
         state_distribution = (
             Issue.issue_objects.filter(

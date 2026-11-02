@@ -239,7 +239,7 @@ class TestOtherWaysOfChangingIt:
 
     def test_the_timeline_drag(self, workspace, project, people, assigned):
         endpoint = f"/api/workspaces/{workspace.slug}/projects/{project.id}/issue-dates/"
-        update = {"updates": [{"id": str(assigned.id), "start_date": "2026-01-05", "target_date": "2026-01-09"}]}
+        update = {"updates": [{"id": str(assigned.id), "start_date": "2026-01-05", "finish_date": "2026-01-09"}]}
 
         assert client_for(people["other"]).post(endpoint, update, format="json").status_code == 403
         assert client_for(people["assignee"]).post(endpoint, update, format="json").status_code == 200
@@ -294,14 +294,14 @@ class TestRescheduleRespectsTheRule:
             workspace=workspace,
             project=project,
             start_date=date(2026, 1, 1),
-            target_date=date(2026, 1, 10),
+            finish_date=date(2026, 1, 10),
         )
         locked = Issue.objects.create(
             name="Locked",
             workspace=workspace,
             project=project,
             start_date=date(2026, 1, 11),
-            target_date=date(2026, 1, 20),
+            finish_date=date(2026, 1, 20),
         )
         IssueAssignee.objects.create(issue=locked, assignee=people["lead"], project=project, workspace=workspace)
         IssueRelation.objects.create(
@@ -312,7 +312,7 @@ class TestRescheduleRespectsTheRule:
 
         with mock.patch("plane.utils.issue_reschedule.issue_activity.delay"):
             response = client_for(people["other"]).patch(
-                url(workspace, project, mover), {"target_date": "2026-01-14"}, format="json"
+                url(workspace, project, mover), {"finish_date": "2026-01-14"}, format="json"
             )
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST

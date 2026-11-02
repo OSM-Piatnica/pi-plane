@@ -14,6 +14,7 @@ export type TProfileSettingsTabs = "general" | "preferences" | "activity" | "not
 export type TWorkspaceSettingsTabs =
   | "general"
   | "members"
+  | "groups"
   | "export"
   | "import"
   | "work-item-templates"

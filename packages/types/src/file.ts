@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -25,15 +26,12 @@ export type TFileSignedURLResponse = {
   asset_url: string;
   upload_data: {
     url: string;
-    fields: {
-      "Content-Type": string;
-      key: string;
-      "x-amz-algorithm": string;
-      "x-amz-credential": string;
-      "x-amz-date": string;
-      policy: string;
-      "x-amz-signature": string;
-    };
+    /** The form fields of an S3-compatible presigned POST; empty for a PUT upload. */
+    fields: Record<string, string>;
+    /** POST (a multipart form, the default) for S3-compatible storage, PUT (the file as the body) for Azure Blob Storage. */
+    method?: "POST" | "PUT";
+    /** Headers the upload request must carry; only sent for a PUT. */
+    headers?: Record<string, string>;
   };
 };
 

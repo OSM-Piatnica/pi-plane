@@ -177,7 +177,7 @@ class UserEndpoint(BaseViewSet):
             cache.delete(f"{cache_key}:verify_attempts")
 
             # Send one-time code to the new email
-            send_email_update_one_time_code.delay(new_email, token)
+            send_email_update_one_time_code.delay(new_email, token, str(user.id))
 
             return Response(
                 {"message": "Verification code sent to email"},
@@ -269,9 +269,9 @@ class UserEndpoint(BaseViewSet):
         logout(request)
 
         # Send confirmation email to the new email address
-        send_email_update_confirmation.delay(new_email)
+        send_email_update_confirmation.delay(new_email, str(user.id))
         # send the email to the old email address
-        send_email_update_confirmation.delay(old_email)
+        send_email_update_confirmation.delay(old_email, str(user.id))
 
         # Return updated user data
         serialized_data = UserMeSerializer(user).data
@@ -305,6 +305,9 @@ class UserEndpoint(BaseViewSet):
         for project in projects:
             if project.other_admin_exists > 0 or (project.total_members == 1):
                 project.is_active = False
+                project.via_group = False
+                project.group_role = None
+                project.direct_role = None
                 projects_to_deactivate.append(project)
             else:
                 return Response(
@@ -333,7 +336,9 @@ class UserEndpoint(BaseViewSet):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-        ProjectMember.objects.bulk_update(projects_to_deactivate, ["is_active"], batch_size=100)
+        ProjectMember.objects.bulk_update(
+            projects_to_deactivate, ["is_active", "via_group", "group_role", "direct_role"], batch_size=100
+        )
 
         WorkspaceMember.objects.bulk_update(workspaces_to_deactivate, ["is_active"], batch_size=100)
 

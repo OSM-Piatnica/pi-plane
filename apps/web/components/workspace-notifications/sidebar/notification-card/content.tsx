@@ -64,6 +64,10 @@ export const BASE_NOTIFICATION_CONTENT_MAP: TNotificationContentMap = {
     action: newValue !== "" ? t("notification.content.start_date_set") : t("notification.content.start_date_removed"),
     value: (formatDate ?? renderFormattedDate)(newValue),
   }),
+  finish_date: ({ newValue, formatDate, t }) => ({
+    action: newValue !== "" ? t("notification.content.finish_date_set") : t("notification.content.finish_date_removed"),
+    value: (formatDate ?? renderFormattedDate)(newValue),
+  }),
   target_date: ({ newValue, formatDate, t }) => ({
     action: newValue !== "" ? t("notification.content.due_date_set") : t("notification.content.due_date_removed"),
     value: (formatDate ?? renderFormattedDate)(newValue),

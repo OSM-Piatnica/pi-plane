@@ -1,9 +1,9 @@
 {
   "work_item_types": {
-    "label": "Arbeitsaufgabentypen",
-    "label_lowercase": "arbeitsaufgabentypen",
+    "label": "Arbeitselementtypen",
+    "label_lowercase": "arbeitselementtypen",
     "settings": {
-      "description": "Passen Sie eigene Eigenschaften an und fügen Sie sie hinzu, um sie an die Bedürfnisse Ihres Teams anzupassen.",
+      "description": "Fügen Sie eigene Eigenschaften hinzu, um den Typ an die Bedürfnisse Ihres Teams anzupassen.",
       "cant_delete_default_message": "Dieser Arbeitselementtyp kann nicht gelöscht werden, da er als Standard für dieses Projekt festgelegt ist.",
       "set_as_default": "Als Standard festlegen",
       "cant_set_default_inactive_message": "Aktivieren Sie diesen Typ, bevor Sie ihn als Standard festlegen",
@@ -13,9 +13,9 @@
         "confirm_button": "Als Standard festlegen"
       },
       "properties": {
-        "title": "Benutzerdefinierte Eigenschaften",
-        "description": "Erstellen und passen Sie Eigenschaften an.",
-        "tooltip": "Jeder Arbeitsaufgabentyp wird mit einem Standardsatz von Eigenschaften wie Titel, Beschreibung, Bearbeiter, Status, Priorität, Startdatum, Fälligkeitsdatum, Modul, Zyklus usw. geliefert. Sie können auch Ihre eigenen Eigenschaften anpassen und hinzufügen, um sie an die Bedürfnisse Ihres Teams anzupassen.",
+        "title": "Eigenschaften",
+        "description": "Eigenschaften erstellen und anpassen.",
+        "tooltip": "Jeder Arbeitselementtyp wird mit einem Standardsatz von Eigenschaften wie Titel, Beschreibung, Bearbeiter, Status, Priorität, Startdatum, Fälligkeitsdatum, Modul, Zyklus usw. geliefert. Sie können auch eigene Eigenschaften hinzufügen, um den Typ an die Bedürfnisse Ihres Teams anzupassen.",
         "add_button": "Neue Eigenschaft hinzufügen",
         "project": {
           "add_button": {
@@ -94,7 +94,7 @@
                 "errors": {
                   "name": {
                     "required": "Optionsname ist erforderlich.",
-                    "integrity": "Option mit gleichem Namen existiert bereits."
+                    "integrity": "Eine Option mit demselben Namen existiert bereits."
                   }
                 }
               }
@@ -195,7 +195,7 @@
           "validation_success_with_refs": "Formel ist gültig! Gibt {resultType} zurück ({count} Feld(er) referenziert)",
           "error": {
             "empty": "Bitte geben Sie eine Formel ein",
-            "missing_context": "Fehlender Workspace-, Projekt- oder Arbeitsaufgabentyp-Kontext",
+            "missing_context": "Fehlender Arbeitsbereichs-, Projekt- oder Arbeitselementtyp-Kontext",
             "validation_failed": "Validierung fehlgeschlagen"
           },
           "picker": {
@@ -228,7 +228,7 @@
         },
         "empty_state": {
           "title": "Benutzerdefinierte Eigenschaften hinzufügen",
-          "description": "Neue Eigenschaften, die Sie für diesen Arbeitsaufgabentyp hinzufügen, werden hier angezeigt."
+          "description": "Neue Eigenschaften, die Sie für diesen Arbeitselementtyp hinzufügen, werden hier angezeigt."
         }
       },
       "types": {
@@ -247,8 +247,8 @@
             "import_from_workspace": "Aus Arbeitsbereich importieren"
           },
           "banner": {
-            "with_access": "Aktivieren Sie Arbeitsaufgabentypen, um Typen von der Arbeitsbereichsebene zu importieren",
-            "without_access": "Arbeitsaufgabentypen sind deaktiviert. Wenden Sie sich an den Arbeitsbereichs-Administrator, um sie in den Arbeitsbereichseinstellungen zu aktivieren."
+            "with_access": "Aktivieren Sie Arbeitselementtypen, um Typen von der Arbeitsbereichsebene zu importieren",
+            "without_access": "Arbeitselementtypen sind deaktiviert. Wenden Sie sich an den Arbeitsbereichs-Administrator, um sie in den Arbeitsbereichseinstellungen zu aktivieren."
           }
         }
       },
@@ -293,12 +293,12 @@
       }
     },
     "create": {
-      "title": "Arbeitsaufgabentyp erstellen",
-      "button": "Arbeitsaufgabentyp hinzufügen",
+      "title": "Arbeitselementtyp erstellen",
+      "button": "Arbeitselementtyp hinzufügen",
       "toast": {
         "success": {
           "title": "Erfolg!",
-          "message": "Arbeitsaufgabentyp erfolgreich erstellt."
+          "message": "Arbeitselementtyp erfolgreich erstellt."
         },
         "error": {
           "title": "Fehler!",
@@ -310,12 +310,12 @@
       }
     },
     "update": {
-      "title": "Arbeitsaufgabentyp aktualisieren",
-      "button": "Arbeitsaufgabentyp aktualisieren",
+      "title": "Arbeitselementtyp aktualisieren",
+      "button": "Arbeitselementtyp aktualisieren",
       "toast": {
         "success": {
           "title": "Erfolg!",
-          "message": "Arbeitsaufgabentyp {name} erfolgreich aktualisiert."
+          "message": "Arbeitselementtyp {name} erfolgreich aktualisiert."
         },
         "error": {
           "title": "Fehler!",
@@ -329,30 +329,30 @@
     "create_update": {
       "form": {
         "name": {
-          "placeholder": "Geben Sie diesem Arbeitsaufgabentyp einen eindeutigen Namen"
+          "placeholder": "Geben Sie diesem Arbeitselementtyp einen eindeutigen Namen"
         },
         "description": {
-          "placeholder": "Beschreiben Sie, wofür dieser Arbeitsaufgabentyp gedacht ist und wann er verwendet werden soll."
+          "placeholder": "Beschreiben Sie, wofür dieser Arbeitselementtyp gedacht ist und wann er verwendet werden soll."
         }
       }
     },
     "enable_disable": {
       "toast": {
-        "loading": "{action} des Arbeitsaufgabentyps {name}",
+        "loading": "{action} des Arbeitselementtyps {name}",
         "success": {
           "title": "Erfolg!",
-          "message": "Arbeitsaufgabentyp {name} erfolgreich {action}."
+          "message": "Arbeitselementtyp {name} erfolgreich {action}."
         },
         "error": {
           "title": "Fehler!",
-          "message": "Fehler beim {action} des Arbeitsaufgabentyps. Bitte versuchen Sie es erneut!"
+          "message": "Fehler beim {action} des Arbeitselementtyps. Bitte versuchen Sie es erneut!"
         }
       },
       "tooltip": "Klicken zum {action}"
     },
     "change_confirmation": {
-      "title": "Arbeitsaufgabentyp ändern?",
-      "description": "Das Ändern des Arbeitsaufgabentyps kann zum Verlust von benutzerdefinierten Eigenschaftswerten führen, die spezifisch für den aktuellen Typ sind. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "title": "Arbeitselementtyp ändern?",
+      "description": "Das Ändern des Arbeitselementtyps kann zum Verlust von benutzerdefinierten Eigenschaftswerten führen, die spezifisch für den aktuellen Typ sind. Diese Aktion kann nicht rückgängig gemacht werden.",
       "button": {
         "loading": "Wird geändert",
         "default": "Typ ändern"
@@ -360,30 +360,30 @@
     },
     "empty_state": {
       "enable": {
-        "title": "Arbeitsaufgabentypen aktivieren",
-        "description": "Gestalten Sie Arbeitsaufgaben an Ihre Arbeit mit Arbeitsaufgabentypen an. Passen Sie sie mit Icons, Hintergründen und Eigenschaften an und konfigurieren Sie sie für dieses Projekt.",
+        "title": "Arbeitselementtypen aktivieren",
+        "description": "Gestalten Sie Arbeitselemente mit Arbeitselementtypen passend zu Ihrer Arbeit. Passen Sie sie mit Icons, Hintergründen und Eigenschaften an und konfigurieren Sie sie für dieses Projekt.",
         "primary_button": {
           "text": "Aktivieren"
         },
         "confirmation": {
-          "title": "Einmal aktiviert, können Arbeitsaufgabentypen nicht deaktiviert werden.",
-          "description": "Planes Arbeitsaufgabe wird zum Standard-Arbeitsaufgabentyp für dieses Projekt und wird mit seinem Icon und Hintergrund in diesem Projekt angezeigt.",
+          "title": "Einmal aktiviert, können Arbeitselementtypen nicht deaktiviert werden.",
+          "description": "Das Arbeitselement von Pi-Plane wird zum Standard-Arbeitselementtyp für dieses Projekt und wird mit seinem Icon und Hintergrund in diesem Projekt angezeigt.",
           "button": {
             "default": "Aktivieren",
-            "loading": "Einrichten"
+            "loading": "Wird eingerichtet"
           }
         }
       },
       "get_pro": {
-        "title": "Holen Sie sich Pro, um Arbeitsaufgabentypen zu aktivieren.",
-        "description": "Gestalten Sie Arbeitsaufgaben an Ihre Arbeit mit Arbeitsaufgabentypen an. Passen Sie sie mit Icons, Hintergründen und Eigenschaften an und konfigurieren Sie sie für dieses Projekt.",
+        "title": "Holen Sie sich Pro, um Arbeitselementtypen zu aktivieren.",
+        "description": "Gestalten Sie Arbeitselemente mit Arbeitselementtypen passend zu Ihrer Arbeit. Passen Sie sie mit Icons, Hintergründen und Eigenschaften an und konfigurieren Sie sie für dieses Projekt.",
         "primary_button": {
           "text": "Pro holen"
         }
       },
       "upgrade": {
-        "title": "Upgrade durchführen, um Arbeitsaufgabentypen zu aktivieren.",
-        "description": "Gestalten Sie Arbeitsaufgaben an Ihre Arbeit mit Arbeitsaufgabentypen an. Passen Sie sie mit Icons, Hintergründen und Eigenschaften an und konfigurieren Sie sie für dieses Projekt.",
+        "title": "Upgrade durchführen, um Arbeitselementtypen zu aktivieren.",
+        "description": "Gestalten Sie Arbeitselemente mit Arbeitselementtypen passend zu Ihrer Arbeit. Passen Sie sie mit Icons, Hintergründen und Eigenschaften an und konfigurieren Sie sie für dieses Projekt.",
         "primary_button": {
           "text": "Upgrade"
         }
@@ -398,23 +398,23 @@
       "sidebar_label": "Hierarchie",
       "enable_control": {
         "title": "Hierarchie aktivieren",
-        "description": "Erstellen Sie Eltern-Kind-Beziehungen zwischen verschiedenen Arbeitselement-Typen.",
+        "description": "Erstellen Sie Eltern-Kind-Beziehungen zwischen verschiedenen Arbeitselementtypen.",
         "tooltip": "Sie können die Hierarchie nach der Aktivierung nicht mehr deaktivieren."
       },
       "workspace_work_item_types_disabled_banner": {
-        "content": "Definieren Sie zuerst Arbeitselement-Typen, um eine neue Hierarchie zu erstellen.",
-        "cta": "Einstellungen für Arbeitselement-Typen"
+        "content": "Definieren Sie zuerst Arbeitselementtypen, um eine neue Hierarchie zu erstellen.",
+        "cta": "Einstellungen für Arbeitselementtypen"
       }
     },
     "levels": {
       "max_level_placeholder": "Ziehen Sie einen Typ hierher, um eine neue Hierarchieebene hinzuzufügen",
-      "empty_level_placeholder": "Ziehen Sie einen Arbeitselement-Typ auf Ebene {level}",
+      "empty_level_placeholder": "Ziehen Sie einen Arbeitselementtyp auf Ebene {level}",
       "drag_tooltip": "Ziehen zum Ändern der Ebene",
       "quick_actions": {
         "set_as_default": {
           "label": "Als Standard festlegen",
           "toast": {
-            "loading": "Als Standard festlegen...",
+            "loading": "Wird als Standard festgelegt...",
             "success": {
               "title": "Erfolg!",
               "message": "Hierarchieebene {level} erfolgreich als Standard festgelegt."
@@ -427,7 +427,7 @@
         }
       },
       "update_level_toast": {
-        "loading": "Verschiebe {workItemTypeName} in Ebene {level}...",
+        "loading": "{workItemTypeName} wird in Ebene {level} verschoben...",
         "success": {
           "title": "Erfolg!",
           "message": "{workItemTypeName} wurde erfolgreich in Ebene {level} verschoben."
@@ -435,10 +435,10 @@
       }
     },
     "break_hierarchy_modal": {
-      "title": "Speichern trennt bestehende Verknüpfungen",
+      "title": "Validierungsfehler!",
       "content": {
-        "intro": "Der Arbeitselement-Typ „{workItemTypeName}“ umfasst:",
-        "parent_items": "{count, plural, one {# übergeordnete Verknüpfung wird} other {# übergeordnete Verknüpfungen werden}} entfernt.",
+        "intro": "Der Arbeitselementtyp „{workItemTypeName}“ umfasst:",
+        "parent_items": "{count, plural, one {übergeordnetes Arbeitselement} other {übergeordnete Arbeitselemente}}",
         "child_items": "{count, plural, one {Unterarbeitselement} other {Unterarbeitselemente}}",
         "parent_line_suffix_when_also_children": ", und ",
         "footer": "Diese Änderung entfernt übergeordnete und untergeordnete Beziehungen bei vorhandenen Arbeitselementen des Typs {workItemTypeName}."
@@ -449,28 +449,28 @@
       },
       "error_toast": {
         "title": "Fehler!",
-        "message": "Verknüpfungen konnten nicht aufgehoben und gespeichert werden. Bitte versuchen Sie es erneut."
+        "message": "Die Hierarchie konnte nicht aufgehoben werden. Bitte versuchen Sie es erneut."
       },
       "confirm_button": {
-        "loading": "Speichern",
-        "default": "Trotzdem speichern"
+        "loading": "Wird angewendet",
+        "default": "Anwenden und Verknüpfung aufheben"
       }
     },
     "work_item_modal": {
       "invalid_work_item_type_create_toast": {
         "title": "Fehler!",
-        "message": "Der ausgewählte Arbeitselement-Typ kann nicht zum Erstellen eines neuen Arbeitselements verwendet werden, da dies die Hierarchieregeln verletzt."
+        "message": "Der ausgewählte Arbeitselementtyp kann nicht zum Erstellen eines neuen Arbeitselements verwendet werden, da dies die Hierarchieregeln verletzt."
       },
       "invalid_work_item_type_update_toast": {
         "title": "Fehler!",
-        "message": "Der Arbeitselement-Typ kann nicht aktualisiert werden, da dies die Hierarchieregeln verletzt."
+        "message": "Der Arbeitselementtyp kann nicht aktualisiert werden, da dies die Hierarchieregeln verletzt."
       }
     },
     "work_item_type_modal": {
       "level": "Hierarchieebene",
       "invalid_level_toast": {
         "title": "Fehler!",
-        "message": "Der Arbeitselement-Typ kann nicht aktualisiert werden, da dies die Hierarchieregeln verletzt."
+        "message": "Der Arbeitselementtyp kann nicht aktualisiert werden, da dies die Hierarchieregeln verletzt."
       }
     }
   }

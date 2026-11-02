@@ -6,6 +6,7 @@
  */
 
 import type { ChartDataType, IGanttBlock } from "@plane/types";
+import { EGanttBlockType } from "@plane/types";
 import { addDaysToDate, findTotalDaysInRange, getDate } from "@plane/utils";
 import { DEFAULT_BLOCK_WIDTH } from "../constants";
 
@@ -100,6 +101,14 @@ export const getItemPositionWidth = (chartData: ChartDataType, itemData: IGanttB
   itemTargetDate?.setHours(0, 0, 0, 0);
 
   if (!itemStartDate && !itemTargetDate) return;
+
+  // A work item with only a start or only a finish is a one day marker, never a bar with an invented end.
+  if (itemData.meta?.type === EGanttBlockType.ISSUE && !(itemStartDate && itemTargetDate)) {
+    return {
+      marginLeft: getPositionFromDate(chartData, (itemStartDate ?? itemTargetDate)!, 0),
+      width: chartData.data.dayWidth,
+    };
+  }
 
   // get scroll position from the number of days and width of each day
   scrollPosition = itemStartDate

@@ -10,6 +10,7 @@ import { useRef } from "react";
 import { observer } from "mobx-react";
 // components
 import type { IBlockUpdateDependencyData, IGanttBlock } from "@plane/types";
+import { EGanttBlockType } from "@plane/types";
 import { cn } from "@plane/utils";
 import RenderIfVisible from "@/components/core/render-if-visible-HOC";
 // helpers
@@ -19,6 +20,7 @@ import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
 import { BLOCK_HEIGHT } from "../constants";
 // components
 import { ChartDraggable } from "../helpers";
+import { GanttDueMarker } from "./due-marker";
 import { useGanttResizable } from "../helpers/blockResizables/use-gantt-resizable";
 import { getBlockChartDates, isBlockOnChart, isBlockRolledUp } from "../views/helpers";
 import { GanttRollupBracket } from "./rollup-bracket";
@@ -34,11 +36,15 @@ const getBarState = (block: IGanttBlock | undefined, editing: TBarEditing) => {
   const isRolledUp = isBlockRolledUp(block);
   const chartDates = block ? getBlockChartDates(block) : undefined;
   const isComplete = !!chartDates?.start_date && !!chartDates?.target_date;
+  // a work item with only a start or only a finish is a one day marker: movable, but never resizable
+  const isSingleEndedWorkItem =
+    block?.meta?.type === EGanttBlockType.ISSUE && !!chartDates?.start_date !== !!chartDates?.target_date;
   return {
     isOnChart,
-    canResizeLeft: editing.enableBlockLeftResize && !isRolledUp,
-    canResizeRight: editing.enableBlockRightResize && !isRolledUp,
-    canMove: editing.enableBlockMove && isComplete && !isRolledUp,
+    isSingleEndedWorkItem,
+    canResizeLeft: editing.enableBlockLeftResize && !isRolledUp && !isSingleEndedWorkItem,
+    canResizeRight: editing.enableBlockRightResize && !isRolledUp && !isSingleEndedWorkItem,
+    canMove: editing.enableBlockMove && (isComplete || isSingleEndedWorkItem) && !isRolledUp,
     showRollupBracket: isOnChart && !isRolledUp && !!block?.rollup?.position,
   };
 };
@@ -80,6 +86,7 @@ export const GanttChartBlock = observer(function GanttChartBlock(props: Props) {
 
   const bar = getBarState(block, { enableBlockLeftResize, enableBlockRightResize, enableBlockMove });
   const isBlockVisibleOnChart = bar.isOnChart;
+  const isDueMarkerShown = block?.meta?.type === EGanttBlockType.ISSUE && !!block?.due_date;
 
   // hide the block if it doesn't have start and target dates and showAllBlocks is false
   if (!block || (!showAllBlocks && !isBlockVisibleOnChart)) return null;
@@ -128,6 +135,15 @@ export const GanttChartBlock = observer(function GanttChartBlock(props: Props) {
             />
           </div>
         </RenderIfVisible>
+      )}
+      {isDueMarkerShown && (
+        <GanttDueMarker
+          block={block}
+          ganttContainerRef={ganttContainerRef}
+          parentOffset={block.position?.marginLeft ?? 0}
+          enableMove={enableBlockMove}
+          updateBlockDates={updateBlockDates}
+        />
       )}
       {bar.showRollupBracket && <GanttRollupBracket block={block} />}
     </div>

@@ -13,6 +13,7 @@ import { Icon } from "@makeplane/propel/components/icon";
 import { Pill } from "@makeplane/propel/components/pill";
 import { CloseOutline } from "@makeplane/propel/icons";
 import type { TCycleFilters } from "@plane/types";
+import { AppliedGroupFilters } from "@/components/common/applied-filters/group";
 import { getAppliedFilterHeading } from "@/helpers/applied-filter-heading";
 // hooks
 import { useUserPermissions } from "@/hooks/store/user";
@@ -62,6 +63,13 @@ export const CycleAppliedFiltersList = observer(function CycleAppliedFiltersList
                 <AppliedStatusFilters
                   editable={isEditingAllowed}
                   handleRemove={(val) => handleRemoveFilter("status", val)}
+                  values={value}
+                />
+              )}
+              {filterKey === "groups" && (
+                <AppliedGroupFilters
+                  editable={isEditingAllowed}
+                  handleRemove={(val) => handleRemoveFilter("groups", val)}
                   values={value}
                 />
               )}

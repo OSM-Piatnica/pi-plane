@@ -21,6 +21,7 @@ import {
   FilterState,
   FilterStateGroup,
 } from "@/components/issues/issue-layouts/filters";
+import { FilterGroupList } from "@/components/common/filters/group-filter-list";
 import { isFiltersApplied } from "@/components/issues/issue-layouts/utils";
 import { FilterIssueTypes } from "@/components/issues/filters/issue-types";
 type TSubIssueFiltersProps = {
@@ -143,6 +144,15 @@ export const SubIssueFilters = observer(function SubIssueFilters(props: TSubIssu
                   searchQuery={filtersSearchQuery}
                 />
               </div>
+            )}
+
+            {/* Groups */}
+            {isFilterEnabled("group_assignees") && (
+              <FilterGroupList
+                appliedFilters={filters.group_assignees ?? null}
+                handleUpdate={(val) => handleFiltersUpdate("group_assignees", val)}
+                searchQuery={filtersSearchQuery}
+              />
             )}
 
             {/* Start Date */}

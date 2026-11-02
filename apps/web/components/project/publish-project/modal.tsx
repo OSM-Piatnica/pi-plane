@@ -39,6 +39,7 @@ import { Loader } from "@plane/blocks/skeleton";
 import { copyTextToClipboard } from "@plane/utils";
 // hooks
 import { useProjectPublish } from "@/hooks/store/use-project-publish";
+import { useSpaceEnabled } from "@/hooks/use-space-enabled";
 
 type Props = {
   isOpen: boolean;
@@ -67,7 +68,7 @@ const VIEW_OPTIONS: TViewOption[] = [
   { key: "kanban", label: "issue.layouts.kanban" },
 ];
 
-export const PublishProjectModal = observer(function PublishProjectModal(props: Props) {
+const PublishProjectModalContent = observer(function PublishProjectModalContent(props: Props) {
   const { isOpen, onClose, projectId } = props;
   // translation
   const { t } = useTranslation();
@@ -453,4 +454,11 @@ export const PublishProjectModal = observer(function PublishProjectModal(props: 
       />
     </>
   );
+});
+
+/** The dialog for sharing a project on the web; there is nothing to share on while Space is off. */
+export const PublishProjectModal = observer(function PublishProjectModal(props: Props) {
+  const isSpaceEnabled = useSpaceEnabled();
+  if (!isSpaceEnabled) return null;
+  return <PublishProjectModalContent {...props} />;
 });

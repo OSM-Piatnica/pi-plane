@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """Contract tests for the public REST API ``GenericAssetEndpoint``.
@@ -87,7 +88,7 @@ class TestGenericAssetCrossWorkspaceIDOR:
         presigned download URL."""
         url = self.detail_url(victim_workspace.slug, victim_asset.id)
 
-        with mock.patch("plane.api.views.asset.S3Storage") as mock_storage:
+        with mock.patch("plane.api.views.asset.get_storage") as mock_storage:
             mock_storage.return_value.generate_presigned_url.return_value = "https://signed.example/download"
             response = api_key_client.get(url)
 
@@ -102,7 +103,7 @@ class TestGenericAssetCrossWorkspaceIDOR:
         url = self.list_url(victim_workspace.slug)
         payload = {"name": "evil.pdf", "type": "application/pdf", "size": 1024}
 
-        with mock.patch("plane.api.views.asset.S3Storage") as mock_storage:
+        with mock.patch("plane.api.views.asset.get_storage") as mock_storage:
             mock_storage.return_value.generate_presigned_post.return_value = {"url": "x", "fields": {}}
             response = api_key_client.post(url, payload, format="json")
 
@@ -170,7 +171,7 @@ def test_get_asset_disposition_follows_allow_list(
     # Only the storage constructor is replaced; generate_presigned_url runs for real.
     with (
         mock.patch("plane.settings.storage.boto3") as mock_boto3,
-        mock.patch("plane.api.views.asset.S3Storage") as mock_storage,
+        mock.patch("plane.api.views.asset.get_storage") as mock_storage,
     ):
         mock_storage.return_value = S3Storage()
         s3_client = mock_boto3.client.return_value

@@ -104,6 +104,7 @@ def map_community_export_rows(rows: list[dict]) -> list[dict]:
         description = _pick(row, "description") or description_html
         target_date = _pick(row, "target_date", "due_date")
         start_date = _pick(row, "start_date")
+        finish_date = _pick(row, "finish_date")
         duration = _pick(row, "duration")
         issue_type = _pick(row, "issue_type")
         labels = _pick(row, "labels")
@@ -120,12 +121,16 @@ def map_community_export_rows(rows: list[dict]) -> list[dict]:
                 "description_html": description_html or description,
                 "start_date": start_date,
                 "target_date": target_date,
+                "finish_date": finish_date,
                 "duration": duration,
                 "estimate": _pick(row, "estimate", "estimate_point"),
                 "labels": labels,
                 "modules": _pick(row, "modules"),
                 "cycles": _pick(row, "cycles", "cycle"),
+                "cycle_start_date": _pick(row, "cycle_start_date"),
+                "cycle_end_date": _pick(row, "cycle_end_date"),
                 "relations": _pick(row, "relations"),
+                "group_assignees": _pick(row, "group_assignees"),
                 "assignee_emails": assignee_emails,
                 "assignee_names": assignee_names,
                 "subscriber_emails": subscriber_emails,

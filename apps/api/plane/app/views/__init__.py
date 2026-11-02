@@ -31,6 +31,9 @@ from .project.member import (
     ProjectMemberPreferenceEndpoint,
 )
 
+from .project.member_import import ProjectMemberImportEndpoint
+from .project.member_export import ProjectMemberExportEndpoint
+from .project.project_group import ProjectGroupDetailEndpoint, ProjectGroupEndpoint
 from .project.duplicate import ProjectCopyRetryEndpoint, ProjectCopyStatusEndpoint, ProjectDuplicateEndpoint
 from .project.issue_type import ProjectIssueTypeViewSet, ProjectIssueTypeBulkAssignEndpoint
 
@@ -76,6 +79,14 @@ from .workspace.invite import (
     UserWorkspaceInvitationsViewSet,
 )
 from .workspace.label import WorkspaceLabelsEndpoint
+from .workspace.admin_message import WorkspaceAdminMessageEndpoint
+from .workspace.user_group import (
+    UserGroupDetailEndpoint,
+    UserGroupFilterableEndpoint,
+    UserGroupListEndpoint,
+    UserGroupMemberDetailEndpoint,
+    UserGroupMembersEndpoint,
+)
 from .workspace.state import WorkspaceStatesEndpoint
 from .workspace.user import (
     UserLastProjectWithWorkspaceEndpoint,
@@ -96,6 +107,7 @@ from .workspace.work_item_template import WorkspaceWorkItemTemplateViewSet
 from .workspace.issue_type import WorkspaceIssueTypeViewSet
 from .workspace.project_template import WorkspaceProjectTemplateViewSet
 from .workspace.project_issue_type_seed import WorkspaceProjectIssueTypeSeedEndpoint
+from .workspace.project_template_groups import WorkspaceProjectTemplateGroupsEndpoint
 
 from .state.base import StateViewSet, IntakeStateEndpoint
 from .view.base import (

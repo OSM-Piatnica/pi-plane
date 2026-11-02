@@ -38,13 +38,16 @@ export const ProjectMemberListItem = observer(function ProjectMemberListItem(pro
   const { leaveProject } = useUserPermissions();
   const { data: currentUser } = useUser();
   const {
-    project: { removeMemberFromProject },
+    project: { removeMemberFromProject, fetchProjectMembers },
   } = useMember();
   // helper hooks
   const { columns, removeMemberModal, setRemoveMemberModal } = useProjectColumns({
     projectId,
     workspaceSlug,
   });
+
+  const hasGroupRole = (memberId: string) =>
+    memberDetails.some((member) => member?.member.id === memberId && member.group_role != null);
 
   const handleRemove = async (memberId: string) => {
     if (!workspaceSlug || !projectId || !memberId) return;
@@ -63,13 +66,16 @@ export const ProjectMemberListItem = observer(function ProjectMemberListItem(pro
           });
         });
     } else
-      await removeMemberFromProject(workspaceSlug.toString(), projectId.toString(), memberId).catch((err) =>
-        setToast({
-          type: "error",
-          title: t("project_components.member_list_item.remove_error_title"),
-          message: err?.error || t("something_went_wrong_please_try_again"),
-        })
-      );
+      await removeMemberFromProject(workspaceSlug.toString(), projectId.toString(), memberId)
+        // a person a group holds in the project stays, as a member through the group
+        .then(() => (hasGroupRole(memberId) ? fetchProjectMembers(workspaceSlug, projectId) : undefined))
+        .catch((err) =>
+          setToast({
+            type: "error",
+            title: t("project_components.member_list_item.remove_error_title"),
+            message: err?.error || t("something_went_wrong_please_try_again"),
+          })
+        );
   };
 
   if (!memberDetails) return null;

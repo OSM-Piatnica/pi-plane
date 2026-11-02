@@ -272,6 +272,22 @@ export const CreateProjectForm = observer(function CreateProjectForm(props: TCre
               template.payload.label_templates
             );
           }
+          if (template.payload?.groups?.length) {
+            const groupsResult = await projectTemplateService.applyGroupsFromProjectTemplate(
+              workspaceSlug.toString(),
+              res.id,
+              selectedTemplateId
+            );
+            if (groupsResult.skipped.length > 0) {
+              setToast({
+                type: "warning",
+                title: t("warning"),
+                message: t("workspace_settings.settings.project_templates.toasts.apply_groups_skipped.message", {
+                  count: groupsResult.skipped.length,
+                }),
+              });
+            }
+          }
           if (template.payload?.is_issue_type_enabled) {
             await projectTemplateService.seedIssueTypesFromProjectTemplate(
               workspaceSlug.toString(),

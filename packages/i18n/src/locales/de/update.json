@@ -3,9 +3,9 @@
     "progress": {
       "title": "Fortschritt",
       "since_last_update": "Seit der letzten Aktualisierung",
-      "comments": "{count, plural, one{# Kommentar} few{# Kommentare} other{# Kommentare}}"
+      "comments": "{count, plural, one{# Kommentar} other{# Kommentare}}"
     },
-    "add_update": "Aktualisieren",
+    "add_update": "Aktualisierung hinzufügen",
     "add_update_placeholder": "Schreiben Sie Ihre Aktualisierung hier",
     "empty": {
       "title": "Noch keine Aktualisierungen",
@@ -45,7 +45,7 @@
     },
     "delete": {
       "title": "Aktualisierung löschen",
-      "confirmation": "Sie sind dabei, diese Aktualisierung zu löschen. Diese Aktion ist unumkehrbar.",
+      "confirmation": "Möchten Sie diese Aktualisierung wirklich löschen? Diese Aktion ist unumkehrbar.",
       "success": {
         "title": "Aktualisierung gelöscht",
         "message": "Die Aktualisierung wurde erfolgreich gelöscht"
@@ -57,7 +57,7 @@
     },
     "update": {
       "success": {
-        "title": "Aktualisierung aktualisiert",
+        "title": "Aktualisiert",
         "message": "Aktualisierung wurde erfolgreich aktualisiert"
       },
       "error": {

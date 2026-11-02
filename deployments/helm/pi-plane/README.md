@@ -56,7 +56,7 @@ One host serves everything, split by path, exactly as the all-in-one proxy does:
 | `/<bucket>` (default `/uploads`) | the bundled MinIO, for browser uploads (presigned URLs) |
 
 The same list renders an `Ingress` or, with `gateway.enabled`, `HTTPRoute`s that attach to a Gateway you own (see
-`examples/gateway-values.yaml`). Allow request bodies of at least `app.fileSizeLimit` (5 MiB by default) on
+`examples/gateway-values.yaml`). Allow request bodies of at least `app.fileSizeLimitMax` (100 MiB by default; `app.fileSizeLimit`, 5 MiB, is the upload limit until the administrator sets one in the admin app) on
 whatever sits in front: with `ingress.className: nginx` the chart sets the `proxy-body-size` annotation for you.
 The web, space and admin images use addresses relative to the host, so they need no per-installation configuration.
 
@@ -95,10 +95,14 @@ objectStorage: { region: eu-central-1, bucket: plane-uploads, bundled: { enabled
 
 Percent-encode special characters in passwords inside URLs. For an S3 store other than the bundled MinIO the browser
 uploads straight to it through presigned URLs, so `objectStorage.external.endpoint` must be reachable from there
-(leave it empty for AWS S3). The complete example is `examples/production-values.yaml`.
+(leave it empty for AWS S3). For Azure Blob Storage set `objectStorage.provider: azure` (with `bundled.enabled: false`, `objectStorage.azure.accountName`, the container as `objectStorage.bucket` and the account key as a Secret in `objectStorage.azure.accountKeySecret`); see [Azure Blob Storage](../../../docs/azure-blob-storage.md). For Google Cloud Storage use `endpoint: https://storage.googleapis.com`, `region: auto` and an HMAC key as the access keys in the credentials Secret; the bucket, roles and CORS rules are described in the [Docker guide](../../cli/community/README.md#using-your-own-object-storage-aws-s3-google-cloud-storage-azure-blob-storage). The complete example is `examples/production-values.yaml`.
+
+`space.enabled: false` leaves the public sharing site out: no `space` Deployment or Service, no `/spaces` route, and web sharing is switched off in the app (see [Sharing a project on the web](../../../docs/web-sharing.md#turning-web-sharing-off-for-the-whole-instance)).
 
 Also consider `networkPolicy.enabled` (ingress rules: everything in the release talks to itself, only the public
-components accept the ingress controller), the `pdb` of `api`, `live`, `web`, `space` and `admin`, resource requests, and more than one replica
+components accept the ingress controller; set `networkPolicy.ingressNamespace` to the namespace your ingress controller
+or Gateway runs in, `ingress-nginx` by default, or requests through the ingress fail with `502`, for example
+`--set networkPolicy.ingressNamespace=kube-system` for the Traefik of k3s), the `pdb` of `api`, `live`, `web`, `space` and `admin`, resource requests, and more than one replica
 of `api`, `worker`, `web` and `live`. The `beat` scheduler is always exactly one pod.
 
 ## Migrations and upgrades

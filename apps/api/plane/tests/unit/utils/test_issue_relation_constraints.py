@@ -53,8 +53,8 @@ class TestIssueRelationConstraints:
         assert is_blocked_by_satisfied(date(2026, 1, 5), None) is True
 
     def test_timeline_relation_dispatcher(self):
-        issue = {"start_date": "2026-01-01", "target_date": "2026-01-10"}
-        related = {"start_date": "2026-01-02", "target_date": "2026-01-12"}
+        issue = {"start_date": "2026-01-01", "finish_date": "2026-01-10"}
+        related = {"start_date": "2026-01-02", "finish_date": "2026-01-12"}
 
         assert is_timeline_relation_satisfied("start_before", issue, related) is True
         assert is_timeline_relation_satisfied("start_after", issue, related) is False
@@ -62,8 +62,8 @@ class TestIssueRelationConstraints:
         assert is_timeline_relation_satisfied("finish_after", issue, related) is False
 
     def test_timeline_relation_dispatcher_handles_blocking_pair(self):
-        issue = {"start_date": "2026-01-06", "target_date": "2026-01-10"}
-        related = {"start_date": "2026-01-01", "target_date": "2026-01-05"}
+        issue = {"start_date": "2026-01-06", "finish_date": "2026-01-10"}
+        related = {"start_date": "2026-01-01", "finish_date": "2026-01-05"}
 
         assert is_timeline_relation_satisfied("blocked_by", issue, related) is True
         assert is_timeline_relation_satisfied("blocking", issue, related) is False
@@ -97,3 +97,21 @@ class TestIssueRelationConstraints:
         assert payload["issue_ref"] == "PROJ-12"
         assert payload["related_ref"] == "PROJ-15"
         assert "PROJ-12" in payload["error"] and "PROJ-15" in payload["error"]
+
+
+@pytest.mark.unit
+class TestDependenciesUseFinishNeverDue:
+    def test_successor_may_start_the_day_after_predecessor_finish_despite_a_later_due_date(self):
+        successor = {"start_date": "2026-10-21", "finish_date": "2026-10-23"}
+        predecessor = {"start_date": "2026-10-15", "finish_date": "2026-10-20", "target_date": "2026-10-30"}
+        assert is_timeline_relation_satisfied("blocked_by", successor, predecessor)
+
+    def test_successor_starting_on_the_predecessor_finish_day_violates(self):
+        successor = {"start_date": "2026-10-20"}
+        predecessor = {"finish_date": "2026-10-20"}
+        assert not is_timeline_relation_satisfied("blocked_by", successor, predecessor)
+
+    def test_due_date_alone_creates_no_constraint(self):
+        successor = {"start_date": "2026-10-01"}
+        predecessor = {"target_date": "2026-10-30"}  # no finish date: unresolved, not a violation
+        assert is_timeline_relation_satisfied("blocked_by", successor, predecessor)

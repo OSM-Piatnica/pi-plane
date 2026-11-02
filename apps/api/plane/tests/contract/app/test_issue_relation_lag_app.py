@@ -42,7 +42,7 @@ def project(db, workspace, create_user):
 
 def item(project, name, start=None, finish=None):
     return Issue.objects.create(
-        name=name, project=project, workspace=project.workspace, start_date=start, target_date=finish
+        name=name, project=project, workspace=project.workspace, start_date=start, finish_date=finish
     )
 
 

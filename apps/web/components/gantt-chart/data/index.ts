@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,7 +10,7 @@ import type { WeekMonthDataType, ChartDataType, TGanttViews } from "@plane/types
 import { EStartOfTheWeek } from "@plane/types";
 
 // constants
-export const generateWeeks = (startOfWeek: EStartOfTheWeek = EStartOfTheWeek.SUNDAY): WeekMonthDataType[] => [
+export const generateWeeks = (startOfWeek: EStartOfTheWeek = EStartOfTheWeek.MONDAY): WeekMonthDataType[] => [
   ...weeks.slice(startOfWeek),
   ...weeks.slice(0, startOfWeek),
 ];

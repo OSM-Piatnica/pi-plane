@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """Issue sub-resource creates bind the URL ``issue_id`` / ``comment_id`` to the URL
@@ -51,7 +52,7 @@ def _no_side_effects(db):
         mock.patch("plane.app.views.issue.link.base_host", return_value="http://testserver"),
         mock.patch("plane.app.views.issue.attachment.issue_activity"),
         mock.patch("plane.app.views.issue.attachment.base_host", return_value="http://testserver"),
-        mock.patch("plane.app.views.issue.attachment.S3Storage") as s3,
+        mock.patch("plane.app.views.issue.attachment.get_storage") as s3,
         mock.patch("plane.app.views.issue.reaction.issue_activity"),
         mock.patch("plane.app.views.issue.reaction.base_host", return_value="http://testserver"),
         mock.patch("plane.app.views.issue.comment.issue_activity"),

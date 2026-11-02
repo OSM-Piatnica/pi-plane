@@ -8,7 +8,7 @@ import { describe, expect, it } from "vitest";
 import {
   addWorkingDays,
   calculateStartDateFromDuration,
-  calculateTargetDateFromDuration,
+  calculateFinishDateFromDuration,
   calculateWorkItemDuration,
   countWorkingDays,
   reconcileWorkItemDuration,
@@ -95,40 +95,40 @@ describe("work item duration with weekend days", () => {
     expect(calculateWorkItemDuration(iso(3), iso(0), SAT_SUN)).toBeLessThanOrEqual(0);
   });
 
-  it("derives the target and the start from a duration", () => {
-    expect(calculateTargetDateFromDuration(iso(4), 2, SAT_SUN)).toBe(iso(7));
+  it("derives the finish and the start from a duration", () => {
+    expect(calculateFinishDateFromDuration(iso(4), 2, SAT_SUN)).toBe(iso(7));
     expect(calculateStartDateFromDuration(iso(7), 2, SAT_SUN)).toBe(iso(4));
   });
 
-  it("moves the target over the weekend when the duration is edited", () => {
+  it("moves the finish over the weekend when the duration is edited", () => {
     expect(
-      reconcileWorkItemDuration({ start_date: iso(4), target_date: iso(4), duration: 1 }, { duration: 3 }, SAT_SUN)
-    ).toEqual({ duration: 3, target_date: iso(8) });
+      reconcileWorkItemDuration({ start_date: iso(4), finish_date: iso(4), duration: 1 }, { duration: 3 }, SAT_SUN)
+    ).toEqual({ duration: 3, finish_date: iso(8) });
   });
 
   it("recounts working days when a date is edited", () => {
     expect(
       reconcileWorkItemDuration(
-        { start_date: iso(0), target_date: iso(2), duration: 3 },
-        { target_date: iso(9) },
+        { start_date: iso(0), finish_date: iso(2), duration: 3 },
+        { finish_date: iso(9) },
         SAT_SUN
       )
-    ).toEqual({ target_date: iso(9), duration: 8 });
+    ).toEqual({ finish_date: iso(9), duration: 8 });
   });
 
-  it("keeps the length and moves the target by working days when the start passes it", () => {
+  it("derives nothing when the start passes the finish; the caller rejects the edit", () => {
     expect(
       reconcileWorkItemDuration(
-        { start_date: iso(0), target_date: iso(2), duration: 3 },
+        { start_date: iso(0), finish_date: iso(2), duration: 3 },
         { start_date: iso(4) },
         SAT_SUN
       )
-    ).toEqual({ start_date: iso(4), duration: 3, target_date: iso(8) });
+    ).toEqual({ start_date: iso(4) });
   });
 
   it("is unchanged for a project without a weekend", () => {
     expect(
-      reconcileWorkItemDuration({ start_date: iso(4), target_date: iso(4), duration: 1 }, { duration: 3 }, [])
-    ).toEqual({ duration: 3, target_date: iso(6) });
+      reconcileWorkItemDuration({ start_date: iso(4), finish_date: iso(4), duration: 1 }, { duration: 3 }, [])
+    ).toEqual({ duration: 3, finish_date: iso(6) });
   });
 });

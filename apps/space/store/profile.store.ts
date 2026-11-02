@@ -58,7 +58,7 @@ export class ProfileStore implements IProfileStore {
     created_at: "",
     updated_at: "",
     language: "",
-    start_of_the_week: EStartOfTheWeek.SUNDAY,
+    start_of_the_week: EStartOfTheWeek.MONDAY,
     weekend_days: null,
   };
 

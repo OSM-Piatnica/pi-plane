@@ -18,15 +18,18 @@ from plane.db.models import (
     IssueType,
     IssueActivity,
     IssueAssignee,
+    IssueGroupAssignee,
     FileAsset,
     IssueComment,
     IssueLabel,
     IssueLink,
     IssueRelation,
     Label,
+    Project,
     ProjectMember,
     State,
     User,
+    UserGroup,
     EstimatePoint,
 )
 from plane.utils.markdown_input import resolve_markdown_input
@@ -34,12 +37,9 @@ from plane.utils.content_validator import (
     validate_html_content,
     validate_binary_data,
 )
+from plane.utils.project_groups import ASSIGNABLE_GROUP_MESSAGE, GroupNotInProjectError, assignable_group_ids
 from plane.utils.project_weekend_days import get_project_weekend_days
-from plane.utils.work_item_duration import (
-    DURATION_DATE_FIELDS,
-    reconcile_work_item_duration,
-    to_work_item_date,
-)
+from plane.utils.work_item_dates import apply_date_rules
 
 from .base import BaseSerializer
 from .cycle import CycleLiteSerializer, CycleSerializer
@@ -72,6 +72,16 @@ class IssueSerializer(BaseSerializer):
         write_only=True,
         required=False,
     )
+    group_assignee_ids = serializers.ListField(
+        child=serializers.UUIDField(),
+        write_only=True,
+        required=False,
+        help_text=(
+            "IDs of the user groups the work item is assigned to. Groups added now must be groups of the project "
+            "(see GET .../groups/?assignable=1). Sending the list replaces the groups of the work item. "
+            "Returned as a list of IDs."
+        ),
+    )
     type_id = serializers.PrimaryKeyRelatedField(
         source="type", queryset=IssueType.objects.all(), required=False, allow_null=True
     )
@@ -83,6 +93,12 @@ class IssueSerializer(BaseSerializer):
         allow_blank=True,
         allow_null=True,
         help_text="Work item description written in markdown. Rendered to description_html; send one or the other.",
+    )
+
+    # Write-only: the interactive client asks for the one-time "first finish/due fills both" default.
+    initialize_paired_date = serializers.BooleanField(write_only=True, required=False)
+    paired_date_defaulted = serializers.ChoiceField(
+        choices=["finish_date", "target_date"], write_only=True, required=False
     )
 
     class Meta:
@@ -99,6 +115,10 @@ class IssueSerializer(BaseSerializer):
             "deleted_at",
             "archived_at",
             "sequence_id",
+            "dates_initialized",
+            "finish_date_origin",
+            "target_date_origin",
+            "due_date_at_completion",
         ]
         exclude = ["description_json", "description_stripped"]
 
@@ -115,22 +135,13 @@ class IssueSerializer(BaseSerializer):
         # Markdown becomes description_html here, so the sanitizer below is the only gate either input passes
         data = resolve_markdown_input(data, html_field="description_html", markdown_field="description_markdown")
 
-        # Keep duration and the two dates consistent before anything else looks at them, so API
-        # clients get the same synchronization the web app performs locally.
-        derived = reconcile_work_item_duration(
+        # One shared rule for start/finish/due: duration (in the project's working days), the finish >= start
+        # invariant and the one-time "first finish or due fills both" default. Due is never compared with start.
+        self.date_notices = apply_date_rules(
             self.instance,
             data,
             get_project_weekend_days(self.context.get("project_id") or getattr(self.instance, "project_id", None)),
         )
-        for field, value in derived.items():
-            data[field] = to_work_item_date(value) if field in DURATION_DATE_FIELDS else value
-
-        if (
-            data.get("start_date", None) is not None
-            and data.get("target_date", None) is not None
-            and data.get("start_date", None) > data.get("target_date", None)
-        ):
-            raise serializers.ValidationError("Start date cannot exceed target date")
 
         try:
             if data.get("description_html", None) is not None:
@@ -171,6 +182,27 @@ class IssueSerializer(BaseSerializer):
                     f"Assignees {list(invalid_assignee_ids)} are not active members of this project"
                 )
             data["assignees"] = list(valid_assignee_ids)
+
+        # Groups the work item is assigned to must be groups of the workspace; the ones added now must also be
+        # assignable in the project
+        if data.get("group_assignee_ids"):
+            project_id = self.context.get("project_id") or getattr(self.instance, "project_id", None)
+            workspace_id = Project.objects.filter(pk=project_id).values_list("workspace_id", flat=True).first()
+            data["group_assignee_ids"] = list(
+                UserGroup.objects.filter(workspace_id=workspace_id, id__in=data["group_assignee_ids"]).values_list(
+                    "id", flat=True
+                )
+            )
+            # Only the groups added now are checked: the ones already on the work item stay even when their group
+            # was taken out of the project later
+            already = (
+                set(IssueGroupAssignee.objects.filter(issue=self.instance).values_list("group_id", flat=True))
+                if self.instance is not None and getattr(self.instance, "pk", None)
+                else set()
+            )
+            added = set(data["group_assignee_ids"]) - already
+            if added and not added <= assignable_group_ids(project_id, workspace_id):
+                raise GroupNotInProjectError({"error": ASSIGNABLE_GROUP_MESSAGE})
 
         # Validate labels are from project
         if data.get("labels", []):
@@ -261,8 +293,27 @@ class IssueSerializer(BaseSerializer):
 
         return data
 
+    def _set_group_assignees(self, issue, group_ids):
+        IssueGroupAssignee.objects.filter(issue=issue).delete()
+        IssueGroupAssignee.objects.bulk_create(
+            [
+                IssueGroupAssignee(
+                    group_id=group_id,
+                    issue=issue,
+                    project_id=issue.project_id,
+                    workspace_id=issue.workspace_id,
+                    created_by_id=issue.created_by_id,
+                    updated_by_id=issue.updated_by_id,
+                )
+                for group_id in group_ids
+            ],
+            batch_size=10,
+            ignore_conflicts=True,
+        )
+
     def create(self, validated_data):
         assignees = validated_data.pop("assignees", None)
+        group_assignees = validated_data.pop("group_assignee_ids", None)
         labels = validated_data.pop("labels", None)
 
         project_id = self.context["project_id"]
@@ -323,6 +374,9 @@ class IssueSerializer(BaseSerializer):
             except IntegrityError:
                 pass
 
+        if group_assignees:
+            self._set_group_assignees(issue, group_assignees)
+
         if labels is not None and len(labels):
             try:
                 IssueLabel.objects.bulk_create(
@@ -346,6 +400,7 @@ class IssueSerializer(BaseSerializer):
 
     def update(self, instance, validated_data):
         assignees = validated_data.pop("assignees", None)
+        group_assignees = validated_data.pop("group_assignee_ids", None)
         labels = validated_data.pop("labels", None)
 
         # Related models
@@ -353,6 +408,9 @@ class IssueSerializer(BaseSerializer):
         workspace_id = instance.workspace_id
         created_by_id = instance.created_by_id
         updated_by_id = instance.updated_by_id
+
+        if group_assignees is not None:
+            self._set_group_assignees(instance, group_assignees)
 
         if assignees is not None:
             IssueAssignee.objects.filter(issue=instance).delete()
@@ -429,6 +487,11 @@ class IssueSerializer(BaseSerializer):
                     str(assignee)
                     for assignee in IssueAssignee.objects.filter(issue=instance).values_list("assignee_id", flat=True)
                 ]
+        if "group_assignee_ids" in self.fields:
+            data["group_assignee_ids"] = [
+                str(group_id)
+                for group_id in IssueGroupAssignee.objects.filter(issue=instance).values_list("group_id", flat=True)
+            ]
         if "labels" in self.fields:
             if "labels" in self.expand:
                 data["labels"] = LabelSerializer(

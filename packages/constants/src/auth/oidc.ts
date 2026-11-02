@@ -10,7 +10,10 @@ export type TOidcSettingField = {
   /** The setting without the provider prefix: `TENANT_ID` is stored as `ENTRA_TENANT_ID`. */
   name: string;
   label: string;
-  type: "text" | "password";
+  /** `switch` is an on/off setting stored as "1" / "0". */
+  type: "text" | "password" | "switch";
+  /** The value shown for a switch that was never saved: "1" or "0". */
+  defaultValue?: string;
   required?: boolean;
   placeholder?: string;
   description: string;
@@ -53,6 +56,75 @@ export const OIDC_PROVIDER_DEFINITIONS: Record<TOidcProviderKey, TOidcProviderDe
         placeholder: "11111111-2222-3333-4444-555555555555",
         description:
           'The GUID of your tenant, from the app registration overview. Only people of this tenant can sign in; domain names and "common" are not accepted.',
+      },
+      {
+        name: "SYNC_GROUPS",
+        label: "Read groups at sign-in",
+        type: "switch",
+        defaultValue: "0",
+        description:
+          "Mirror what Entra says about each person as user groups that are managed outside. Asks for the Microsoft Graph permission User.Read, which people grant at sign-in. The kinds below choose what becomes a group.",
+      },
+      {
+        name: "GROUPS_SECURITY",
+        label: "Security groups",
+        type: "switch",
+        defaultValue: "1",
+        description: "Groups used to grant access, including mail-enabled security groups.",
+      },
+      {
+        name: "GROUPS_MICROSOFT_365",
+        label: "Microsoft 365 groups",
+        type: "switch",
+        defaultValue: "1",
+        description: "Groups that back Teams and SharePoint team sites.",
+      },
+      {
+        name: "GROUPS_DISTRIBUTION",
+        label: "Distribution lists",
+        type: "switch",
+        defaultValue: "1",
+        description: "Groups that only send mail to their members.",
+      },
+      {
+        name: "GROUPS_ADMIN_UNITS",
+        label: "Administrative units",
+        type: "switch",
+        defaultValue: "0",
+        description:
+          "The administrative units a person belongs to. Needs the Microsoft Graph delegated permission AdministrativeUnit.Read.All with admin consent; without it no unit is mirrored.",
+      },
+      {
+        name: "GROUPS_DEPARTMENT",
+        label: "Department",
+        type: "switch",
+        defaultValue: "0",
+        description:
+          "One group per department, from the department in the person's Entra profile. People without one are in none.",
+      },
+      {
+        name: "GROUPS_COMPANY",
+        label: "Company",
+        type: "switch",
+        defaultValue: "0",
+        description:
+          "One group per company, from the company name in the person's Entra profile. People without one are in none.",
+      },
+      {
+        name: "GROUPS_OFFICE",
+        label: "Office location",
+        type: "switch",
+        defaultValue: "0",
+        description:
+          "One group per office, from the office location in the person's Entra profile. People without one are in none.",
+      },
+      {
+        name: "GROUPS_ORG_UNITS",
+        label: "On-premises organizational unit",
+        type: "switch",
+        defaultValue: "0",
+        description:
+          "Nested groups of the Active Directory organizational units (OU) of the person's on-premises account, such as Poland > Sales; the person is in the innermost one. Only for people synced from on-premises Active Directory: blank for cloud-only accounts.",
       },
     ],
   },

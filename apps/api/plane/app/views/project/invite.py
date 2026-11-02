@@ -19,6 +19,7 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 
 # Module imports
+from plane.utils.project_groups import set_direct_role
 from .base import BaseViewSet, BaseAPIView
 from plane.app.serializers import (
     ProjectMemberInviteSerializer,
@@ -286,9 +287,15 @@ class ProjectJoinEndpoint(BaseAPIView):
                 else:
                     # The invitation's role is what the inviting admin chose; the
                     # stale role on a deactivated row must not survive the rejoin.
+                    by_groups = project_member.is_active and (
+                        project_member.via_group or project_member.group_role is not None
+                    )
                     project_member.is_active = True
                     project_member.role = project_invite.role
                     project_member.save()
+                    if by_groups:
+                        # Invited by hand to a project they belong to through groups: the role is their own now
+                        set_direct_role(project_member, project_invite.role)
 
                 return Response(
                     {"message": "Project Invitation Accepted"},

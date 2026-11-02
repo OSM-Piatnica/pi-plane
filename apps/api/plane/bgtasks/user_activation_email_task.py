@@ -17,6 +17,7 @@ from celery import shared_task
 from plane.db.models import User
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.email import generate_plain_text_from_html
+from plane.utils.email_i18n import translate, user_language
 from plane.utils.exception_logger import log_exception
 
 
@@ -25,9 +26,12 @@ def user_activation_email(current_site, user_id):
     try:
         # Send email to user when account is activated
         user = User.objects.get(id=user_id)
-        subject = f"{user.first_name or user.display_name or user.email} has been activated on Pi-Plane"
+        language = user_language(user)
+        subject = translate(
+            language, "account_activated.subject", name=user.first_name or user.display_name or user.email
+        )
 
-        context = {"email": str(user.email), "profile_url": current_site + "/profile"}
+        context = {"email_language": language, "email": str(user.email), "profile_url": current_site + "/profile"}
 
         # Send email to user
         html_content = render_to_string("emails/user/user_activation.html", context)

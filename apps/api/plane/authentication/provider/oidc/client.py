@@ -62,10 +62,15 @@ def _refusal(response):
         return ""
 
 
-def _request_json(method, url, **kwargs):
+def _request_json(method, url, headers=None, **kwargs):
     try:
         response = pinned_fetch(
-            method, _https(url), timeout=TIMEOUT, headers={"Accept": "application/json"}, stream=True, **kwargs
+            method,
+            _https(url),
+            timeout=TIMEOUT,
+            headers={"Accept": "application/json", **(headers or {})},
+            stream=True,
+            **kwargs,
         )
         try:
             if response.status_code >= 400:
@@ -82,6 +87,15 @@ def _request_json(method, url, **kwargs):
 
 def _get_json(url):
     return _request_json("GET", url)
+
+
+def get_json_with_bearer(url, token, params=None):
+    """A GET of a provider's API with an access token; the answer is read with the same caps as the sign-in."""
+    return _request_json("GET", url, headers={"Authorization": f"Bearer {token}"}, params=params)
+
+
+def post_form(url, data):
+    return _request_json("POST", url, data=data)
 
 
 def get_discovery(issuer):

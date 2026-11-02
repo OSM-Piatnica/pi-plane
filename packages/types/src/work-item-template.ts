@@ -21,6 +21,7 @@ export type TWorkItemTemplatePayload = {
   cycle_id?: string | null;
   module_ids?: string[] | null;
   start_date?: string | null;
+  finish_date?: string | null;
   target_date?: string | null;
 };
 
