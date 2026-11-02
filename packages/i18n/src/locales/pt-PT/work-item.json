@@ -336,7 +336,8 @@
         "next_week": "Próxima semana",
         "later": "Mais tarde",
         "no_date": "Sem data",
-        "no_single_date": "Este grupo não tem uma data única. Largue em Sem data, Esta semana, Próxima semana ou Hoje."
+        "no_single_date": "Este grupo não tem uma data única. Largue em Sem data, Esta semana, Próxima semana ou Hoje.",
+        "no_day_left": "Já não há dias úteis nesta semana. Largue em \"Hoje\" ou \"Próxima semana\"."
       }
     }
   },

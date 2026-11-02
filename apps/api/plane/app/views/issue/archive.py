@@ -137,7 +137,9 @@ class IssueArchiveViewSet(BaseViewSet):
         sub_group_by = request.GET.get("sub_group_by", False)
 
         # issue queryset
-        issue_queryset = issue_queryset_grouper(queryset=issue_queryset, group_by=group_by, sub_group_by=sub_group_by)
+        issue_queryset = issue_queryset_grouper(
+            queryset=issue_queryset, group_by=group_by, sub_group_by=sub_group_by, request=request
+        )
 
         if group_by:
             # Check group and sub group value paginate

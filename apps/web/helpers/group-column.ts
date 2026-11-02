@@ -22,6 +22,9 @@ export const COMPLETED_CYCLE_DROP_ERROR = "completed_cycle";
  */
 export const DATE_BUCKET_DROP_ERROR = "date_bucket_no_single_date";
 
+/** Marks the "This week" column on the last day of the week (a Sunday): no day is left to drop on. */
+export const DATE_BUCKET_NO_DAY_LEFT_ERROR = "date_bucket_no_day_left";
+
 export const ALL_ISSUES_GROUP_ID = "All Issues";
 export const ALL_EPICS_GROUP_NAME = "All Epics";
 

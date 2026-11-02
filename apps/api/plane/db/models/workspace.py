@@ -119,6 +119,7 @@ def slug_validator(value):
 
 
 SUNDAY = 0
+MONDAY = 1
 START_OF_THE_WEEK_CHOICES = (
     (SUNDAY, "Sunday"),
     (1, "Monday"),
@@ -151,7 +152,7 @@ class Workspace(BaseModel):
     organization_size = models.CharField(max_length=20, blank=True, null=True)
     timezone = models.CharField(max_length=255, default="UTC", choices=TIMEZONE_CHOICES)
     # First day of the week for the workspace's projects (0 = Sunday ... 6 = Saturday); a new project copies it
-    start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=SUNDAY)
+    start_of_the_week = models.PositiveSmallIntegerField(choices=START_OF_THE_WEEK_CHOICES, default=MONDAY)
     # Days that count as non-working time (0 = Sunday ... 6 = Saturday); a new project copies them
     weekend_days = models.JSONField(default=default_weekend_days, validators=[validate_weekend_days])
     background_color = models.CharField(max_length=255, default=get_random_color)

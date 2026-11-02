@@ -14,7 +14,11 @@ import type { TIssueOrderByOptions } from "@plane/types";
 // helpers
 import { cn, getIssueOrderByField } from "@plane/utils";
 import { WorkFlowDisabledOverlay } from "@/components/workflow";
-import { COMPLETED_CYCLE_DROP_ERROR, DATE_BUCKET_DROP_ERROR } from "@/helpers/group-column";
+import {
+  COMPLETED_CYCLE_DROP_ERROR,
+  DATE_BUCKET_DROP_ERROR,
+  DATE_BUCKET_NO_DAY_LEFT_ERROR,
+} from "@/helpers/group-column";
 
 type Props = {
   dragColumnOrientation: "justify-start" | "justify-center" | "justify-end";
@@ -80,8 +84,10 @@ export function GroupDragOverlay(props: Props) {
               <span>
                 {dropErrorMessage === COMPLETED_CYCLE_DROP_ERROR && t("issue_ui.cannot_move_to_completed_cycle")}
                 {dropErrorMessage === DATE_BUCKET_DROP_ERROR && t("issue.dates.bucket.no_single_date")}
+                {dropErrorMessage === DATE_BUCKET_NO_DAY_LEFT_ERROR && t("issue.dates.bucket.no_day_left")}
                 {dropErrorMessage !== COMPLETED_CYCLE_DROP_ERROR &&
                   dropErrorMessage !== DATE_BUCKET_DROP_ERROR &&
+                  dropErrorMessage !== DATE_BUCKET_NO_DAY_LEFT_ERROR &&
                   dropErrorMessage}
               </span>
             </div>

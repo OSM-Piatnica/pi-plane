@@ -42,6 +42,7 @@ export enum EIssueGroupByToServerOptions {
   // the day a work item has on the calendar of the planned work: its finish, else its start
   "schedule_date" = "schedule_date",
   // work items grouped into time buckets of their due / finish date
+  "start_date_bucket" = "start_date_bucket",
   "target_date_bucket" = "target_date_bucket",
   "finish_date_bucket" = "finish_date_bucket",
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
@@ -117,6 +118,7 @@ export const DRAG_ALLOWED_GROUPS: TIssueGroupByOptions[] = [
   "module",
   "cycle",
   // a drop sets the date that stands for the bucket (not into Earlier or Later, see the columns)
+  "start_date_bucket",
   "target_date_bucket",
   "finish_date_bucket",
 ];
@@ -146,6 +148,7 @@ export const ISSUE_GROUP_BY_OPTIONS: {
   { key: "labels", titleTranslationKey: "common.labels" },
   { key: "assignees", titleTranslationKey: "common.assignees" },
   { key: "created_by", titleTranslationKey: "common.created_by" },
+  { key: "start_date_bucket", titleTranslationKey: "common.order_by.start_date" },
   { key: "target_date_bucket", titleTranslationKey: "common.order_by.due_date" },
   { key: "finish_date_bucket", titleTranslationKey: "common.order_by.finish_date" },
   { key: null, titleTranslationKey: "common.none" },

@@ -10,7 +10,7 @@ from django.db.models import Q, UUIDField, Value, QuerySet, OuterRef, Subquery
 from django.db.models.functions import Coalesce
 
 # Module imports
-from plane.utils.date_buckets import BUCKET_FIELDS, BUCKETS, bucket_case
+from plane.utils.date_buckets import BUCKET_FIELDS, BUCKETS, bucket_case, week_start_for_request
 from plane.utils.user_groups import group_assignee_ids_annotation
 from plane.db.models import (
     Cycle,
@@ -32,6 +32,7 @@ def issue_queryset_grouper(
     queryset: QuerySet[Issue],
     group_by: Optional[str],
     sub_group_by: Optional[str],
+    request=None,
 ) -> QuerySet[Issue]:
     FIELD_MAPPER: Dict[str, str] = {
         "label_ids": "labels__id",
@@ -93,9 +94,12 @@ def issue_queryset_grouper(
             continue
         default_annotations[key] = expression
 
+    week_start = None
     for bucket_name, date_field in BUCKET_FIELDS.items():
         if bucket_name in {group_by, sub_group_by}:
-            default_annotations[bucket_name] = bucket_case(date_field)
+            # one lookup for the list, however many bucket annotations it has
+            week_start = week_start_for_request(request) if week_start is None else week_start
+            default_annotations[bucket_name] = bucket_case(date_field, week_start=week_start)
 
     if "schedule_date" in {group_by, sub_group_by}:
         # the day a work item is placed on in a calendar of the planned work: its finish, else its start

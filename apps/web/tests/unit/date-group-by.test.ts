@@ -9,7 +9,7 @@ import type { TIssue } from "@plane/types";
 import { getGroupedWorkItemIds } from "@/store/issue/helpers/base-issues-utils";
 
 // 2026-03-04 is a Wednesday
-const item = (id: string, date: string | null, field: "target_date" | "finish_date" = "target_date") =>
+const item = (id: string, date: string | null, field: "start_date" | "target_date" | "finish_date" = "target_date") =>
   ({ id, [field]: date, created_at: "2026-01-01T00:00:00Z" }) as unknown as TIssue;
 
 describe("grouping work items by the time bucket of a date", () => {
@@ -26,6 +26,15 @@ describe("grouping work items by the time bucket of a date", () => {
     );
 
     expect(grouped).toEqual({ earlier: ["past"], today: ["today"], this_week: ["soon"], no_date: ["undated"] });
+  });
+
+  it("groups by the bucket of the start date", () => {
+    const grouped = getGroupedWorkItemIds(
+      [item("a", "2026-03-04", "start_date"), item("b", null, "start_date")],
+      "start_date_bucket"
+    );
+
+    expect(grouped).toEqual({ today: ["a"], no_date: ["b"] });
   });
 
   it("groups by the bucket of the finish date", () => {
