@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import copy
@@ -41,7 +42,9 @@ from plane.db.models import (
     IssueLabel,
     ModuleIssue,
 )
+from plane.utils.grouper import issue_group_values, issue_on_results, issue_queryset_grouper
 from plane.utils.issue_filters import issue_filters
+from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
 from plane.utils.order_queryset import VIEW_ORDER_BY_ALLOWLIST, order_issue_queryset, sanitize_order_by
 from plane.bgtasks.recent_visited_task import recent_visited_task
 from .. import BaseViewSet
@@ -277,6 +280,56 @@ class WorkspaceViewIssuesViewSet(BaseViewSet):
         issue_queryset, order_by_param = order_issue_queryset(
             issue_queryset=issue_queryset, order_by_param=order_by_param
         )
+
+        # Group by (a grouped list pages every group on its own)
+        group_by = request.GET.get("group_by", False)
+        sub_group_by = request.GET.get("sub_group_by", False)
+
+        if group_by:
+            if sub_group_by == group_by:
+                return Response(
+                    {"error": "Group by and sub group by cannot have same parameters"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            issue_queryset = issue_queryset_grouper(
+                queryset=issue_queryset, group_by=group_by, sub_group_by=sub_group_by, request=request
+            )
+            # what counts as a work item of a group: not an intake request in review, archived or a draft
+            count_filter = Q(
+                Q(issue_intake__status=1)
+                | Q(issue_intake__status=-1)
+                | Q(issue_intake__status=2)
+                | Q(issue_intake__isnull=True),
+                archived_at__isnull=True,
+                is_draft=False,
+            )
+            group_values = {
+                "group_by_fields": issue_group_values(
+                    field=group_by, slug=slug, filters=filters, queryset=total_issue_count_queryset, user=request.user
+                ),
+                "group_by_field_name": group_by,
+                "count_filter": count_filter,
+            }
+            if sub_group_by:
+                group_values.update(
+                    sub_group_by_fields=issue_group_values(
+                        field=sub_group_by,
+                        slug=slug,
+                        filters=filters,
+                        queryset=total_issue_count_queryset,
+                        user=request.user,
+                    ),
+                    sub_group_by_field_name=sub_group_by,
+                )
+            return self.paginate(
+                request=request,
+                order_by=order_by_param,
+                queryset=issue_queryset,
+                total_count_queryset=total_issue_count_queryset,
+                on_results=lambda issues: issue_on_results(group_by=group_by, issues=issues, sub_group_by=sub_group_by),
+                paginator_cls=SubGroupedOffsetPaginator if sub_group_by else GroupedOffsetPaginator,
+                **group_values,
+            )
 
         # List Paginate
         return self.paginate(

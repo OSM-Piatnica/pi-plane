@@ -102,7 +102,11 @@ export class WorkspaceIssuesFilter extends IssueFilterHelperStore implements IWo
     const userFilters = this.getIssueFilters(viewId);
     if (!userFilters) return undefined;
 
-    const filteredParams = handleIssueQueryParamsByLayout(EIssueLayoutTypes.SPREADSHEET, "my_issues");
+    // the layout decides which parameters (a grouped list sends its group by) the page may send
+    const filteredParams = handleIssueQueryParamsByLayout(
+      userFilters.displayFilters?.layout ?? EIssueLayoutTypes.SPREADSHEET,
+      "my_issues"
+    );
     if (!filteredParams) return undefined;
 
     const filteredRouteParams: Partial<Record<TIssueParams, string | boolean>> = this.computedFilteredParams(
