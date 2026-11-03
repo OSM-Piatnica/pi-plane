@@ -82,7 +82,7 @@ const SidebarDropdownItem = observer(function SidebarDropdownItem(props: TProps)
             </div>
             <div className="flex w-fit gap-2 text-13 leading-4 whitespace-nowrap text-tertiary">
               <span>{t(getRoleI18nKey(workspace.role) || getRoleI18nKey(EUserPermissions.GUEST))}</span>
-              <div className="m-auto h-1 w-1 rounded-full bg-layer-1/50" />
+              <div className="m-auto h-1 w-1 rounded-full bg-current" />
               <span>{t("member", { count: workspace.total_members || 0 })}</span>
             </div>
           </div>
