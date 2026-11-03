@@ -120,6 +120,13 @@ export const GroupMembersModal = observer(function GroupMembersModal(props: Prop
                     onChange={setNewMemberId}
                     getOptionValue={(user) => user.id}
                     getOptionLabel={(user) => user.display_name}
+                    // the display name is often a username: people are looked up by their real name and email too
+                    getOptionSearchText={(user) =>
+                      [user.display_name, user.first_name, user.last_name, user.email].join(" ")
+                    }
+                    getOptionDescription={(user) =>
+                      [`${user.first_name} ${user.last_name}`.trim(), user.email].filter(Boolean).join(" · ")
+                    }
                     placeholder={t("workspace_settings.settings.groups.select_member")}
                     pinSelected={false}
                     contentSizing="anchor"
