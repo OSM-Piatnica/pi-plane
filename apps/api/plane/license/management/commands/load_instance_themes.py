@@ -15,6 +15,9 @@ from plane.license.models import InstanceTheme
 from plane.license.utils.instance_theme import clean_theme_data
 
 
+GENERIC_THEME_NAME = "Custom Theme"
+
+
 def _theme_from_file(path):
     """Reads a theme file: the config the app exports (`themeName`, `primary`, `background`, `darkPalette`,
     `overrides`), or the same with `name` / `dark_palette`. Returns (cleaned, errors)."""
@@ -22,8 +25,12 @@ def _theme_from_file(path):
         raw = json.load(handle)
     if not isinstance(raw, dict):
         return None, {"file": "Must contain a JSON object."}
+    # the editor writes "Custom Theme" into every file it exports, which names nothing: the file name does
+    name = str(raw.get("themeName") or raw.get("name") or "").strip()
+    if not name or name == GENERIC_THEME_NAME:
+        name = Path(path).stem
     data = {
-        "name": raw.get("themeName", raw.get("name", Path(path).stem)),
+        "name": name,
         "primary": raw.get("primary"),
         "background": raw.get("background"),
         "dark_palette": raw.get("darkPalette", raw.get("dark_palette", False)),

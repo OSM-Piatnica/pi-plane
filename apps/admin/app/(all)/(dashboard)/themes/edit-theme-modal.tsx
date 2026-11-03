@@ -20,14 +20,14 @@ import {
 import { Input } from "@makeplane/propel/components/input";
 import { setToast } from "@plane/blocks/toast";
 import { InstanceService } from "@plane/services";
-import type { TInstanceTheme } from "@plane/types";
+import type { TInstanceTheme, TInstanceThemeCreate } from "@plane/types";
 import { toOverrideHex, validateHexColor } from "@plane/utils";
 // local
 import { getThemeErrorMessage, parseThemeFile } from "./theme-file";
 
 type Props = {
-  /** the theme being edited; the dialog is open while there is one */
-  theme: TInstanceTheme | null;
+  /** the theme being edited, or a theme read from a file that is not saved yet; the dialog is open while there is one */
+  theme: TInstanceTheme | TInstanceThemeCreate | null;
   handleClose: () => void;
   onSaved: () => Promise<void>;
 };
@@ -78,9 +78,11 @@ export function EditThemeModal(props: Props) {
     setPrimary(theme.primary);
     setBackground(theme.background);
     setDarkPalette(theme.dark_palette);
-    setOverrides(theme.overrides);
+    setOverrides(theme.overrides ?? {});
   }, [theme]);
 
+  // a theme that comes from a file has no id yet: saving adds it
+  const isNew = theme !== null && !("id" in theme);
   const canSave = name.trim().length > 0 && validateHexColor(primary) && validateHexColor(background) && !isSaving;
 
   const handleFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,17 +106,27 @@ export function EditThemeModal(props: Props) {
     if (!theme) return;
     setIsSaving(true);
     try {
-      await instanceService.updateTheme(theme.id, {
+      const data = {
         name: name.trim(),
         primary: toOverrideHex(primary),
         background: toOverrideHex(background),
         dark_palette: darkPalette,
         overrides,
+      };
+      if ("id" in theme) await instanceService.updateTheme(theme.id, data);
+      else await instanceService.createTheme(data);
+      setToast({
+        type: "success",
+        title: isNew ? "Theme added" : "Theme updated",
+        message: isNew ? `${data.name} is now in everybody's theme list.` : `${data.name} was saved.`,
       });
-      setToast({ type: "success", title: "Theme updated", message: `${name.trim()} was saved.` });
       await onSaved();
     } catch (error) {
-      setToast({ type: "error", title: "Could not save the theme", message: getThemeErrorMessage(error) });
+      setToast({
+        type: "error",
+        title: isNew ? "Could not add the theme" : "Could not save the theme",
+        message: getThemeErrorMessage(error),
+      });
     } finally {
       setIsSaving(false);
     }
@@ -131,7 +143,7 @@ export function EditThemeModal(props: Props) {
         <DialogMain>
           <DialogHeader>
             <DialogHeading>
-              <DialogTitle>Edit theme</DialogTitle>
+              <DialogTitle>{isNew ? "Import theme" : "Edit theme"}</DialogTitle>
             </DialogHeading>
           </DialogHeader>
           <DialogBody>
@@ -189,7 +201,7 @@ export function EditThemeModal(props: Props) {
             onClick={() => {
               void handleSave();
             }}
-            label={isSaving ? "Saving" : "Save"}
+            label={isSaving ? "Saving" : isNew ? "Add theme" : "Save"}
           />
         </DialogActions>
       </DialogContent>

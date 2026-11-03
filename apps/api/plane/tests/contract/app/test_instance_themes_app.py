@@ -89,14 +89,19 @@ class TestLoadInstanceThemes:
                 {"themeName": "Piątnica Dark", "primary": "#4F8F7D", "background": "#404040", "darkPalette": True}
             )
         )
+        # a file exported from the editor says "Custom Theme"; it is named by its file instead
+        (tmp_path / "Piatnica Light.json").write_text(
+            json.dumps({"themeName": "Custom Theme", "primary": "#4F8F7D", "background": "#F3F5F4"})
+        )
         (tmp_path / "broken.json").write_text(json.dumps({"themeName": "Broken", "primary": "x"}))
         # a theme added in the GUI under the same name gives way to the deployment
         InstanceTheme.objects.create(**{**THEME, "primary": "#000000", "source": "admin"})
 
         call_command("load_instance_themes")
-        theme = InstanceTheme.objects.get()
+        assert set(InstanceTheme.objects.values_list("name", flat=True)) == {"Piątnica Dark", "Piatnica Light"}
+        theme = InstanceTheme.objects.get(name="Piątnica Dark")
         assert (theme.primary, theme.source, theme.dark_palette) == ("#4f8f7d", "deployment", True)
 
         (tmp_path / "dark.json").unlink()
         call_command("load_instance_themes")
-        assert not InstanceTheme.objects.exists()
+        assert list(InstanceTheme.objects.values_list("name", flat=True)) == ["Piatnica Light"]
