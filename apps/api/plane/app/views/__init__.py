@@ -37,6 +37,7 @@ from .project.project_group import ProjectGroupDetailEndpoint, ProjectGroupEndpo
 from .project.duplicate import ProjectCopyRetryEndpoint, ProjectCopyStatusEndpoint, ProjectDuplicateEndpoint
 from .project.issue_type import ProjectIssueTypeViewSet, ProjectIssueTypeBulkAssignEndpoint
 
+from .user.instance_theme import UserInstanceThemeEndpoint
 from .user.base import (
     UserEndpoint,
     UpdateUserOnBoardedEndpoint,
