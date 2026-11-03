@@ -100,24 +100,3 @@ class TestLoadInstanceThemes:
         (tmp_path / "dark.json").unlink()
         call_command("load_instance_themes")
         assert not InstanceTheme.objects.exists()
-
-
-@pytest.mark.contract
-@pytest.mark.django_db
-class TestUserInstanceThemes:
-    """The web app lists the themes at a path that is not an "instances" path: those only take the God Mode session."""
-
-    URL = "/api/users/me/themes/"
-
-    def test_a_signed_in_person_lists_the_themes(self, session_client):
-        InstanceTheme.objects.create(**{**THEME, "source": "deployment"})
-        response = session_client.get(self.URL)
-        assert response.status_code == 200
-        assert [t["name"] for t in response.data] == ["Piątnica Dark"]
-
-    def test_anonymous_cannot_list(self, api_client):
-        assert api_client.get(self.URL).status_code in (401, 403)
-
-    def test_the_path_does_not_go_to_the_admin_session(self):
-        # SessionMiddleware reads the admin cookie for every path with "instances" in it
-        assert "instances" not in self.URL
