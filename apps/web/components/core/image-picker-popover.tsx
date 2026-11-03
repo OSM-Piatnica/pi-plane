@@ -366,7 +366,9 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                                 type="button"
                                 className="absolute top-0 right-0 z-40 -translate-y-1/2 rounded-sm bg-surface-2 px-2 py-0.5 text-11 font-medium text-secondary"
                               >
-                                {t("common.edit")}
+                                {image !== null || (value && value !== "")
+                                  ? t("onboarding.profile.change_image")
+                                  : t("onboarding.profile.choose_image")}
                               </button>
                               {image !== null || (value && value !== "") ? (
                                 <>
@@ -374,7 +376,9 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                                     src={imagePreviewUrl ?? getCoverImageDisplayURL(value, "")}
                                     // react-doctor-disable-next-line img-redundant-alt -- alt text is the existing literal; changing it alters accessible text
                                     alt="image" // oxlint-disable-line jsx-a11y/img-redundant-alt -- existing behaviour; lint cleanup only
-                                    className="h-full w-full rounded-lg object-cover"
+                                    // the same shape as the banner it ends up in (the cover shows the middle of the
+                                    // picture), so what is previewed is what is shown
+                                    className="aspect-[4/1] w-full rounded-lg object-cover"
                                   />
                                 </>
                               ) : (
