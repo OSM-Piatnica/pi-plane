@@ -170,3 +170,13 @@
     0 0 4px --alpha(var(--background-color-accent-primary) / 40%) !important;
   will-change: transform, opacity;
 }
+
+/*
+ * A disabled filled button (primary, danger) is drawn with the theme's neutral "disabled" fill and a label that is
+ * only 20% opaque. On a dark theme that is a near-black button whose label is barely there. The label is mixed from the
+ * theme's own text colour instead, so it stays readable, and still looks dimmed, in every theme.
+ */
+:root {
+  --text-color-on-color-disabled: color-mix(in oklab, var(--txt-primary) 45%, var(--bg-layer-disabled));
+  --text-color-icon-on-color-disabled: color-mix(in oklab, var(--txt-primary) 45%, var(--bg-layer-disabled));
+}
