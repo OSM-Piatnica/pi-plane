@@ -19,7 +19,7 @@ from plane.license.utils.instance_theme import clean_theme_data
 
 
 class InstanceThemeEndpoint(BaseAPIView):
-    """Every signed-in user lists the themes; only instance admins change them."""
+    """The God Mode side: instance admins list and change the themes (this path takes the admin session only)."""
 
     def get_permissions(self):
         if self.request.method == "GET":

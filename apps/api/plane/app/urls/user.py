@@ -13,6 +13,7 @@ from plane.app.views import (
     UserActivityGraphEndpoint,
     ## User
     UserEndpoint,
+    UserInstanceThemeEndpoint,
     UserIssueCompletedGraphEndpoint,
     UserWorkspaceDashboardEndpoint,
     UserSessionEndpoint,
@@ -22,6 +23,8 @@ from plane.app.views import (
 )
 
 urlpatterns = [
+    # The themes of the instance, for the theme list (the path must not contain "instances", see the view)
+    path("users/me/themes/", UserInstanceThemeEndpoint.as_view(), name="user-instance-themes"),
     # User Profile
     path(
         "users/me/",

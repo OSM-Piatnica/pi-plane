@@ -146,12 +146,26 @@ export class InstanceService extends APIService {
   }
 
   /**
-   * Fetches the themes added to the instance; any signed-in user can list them
+   * Fetches the themes added to the instance, in God Mode (the instance admin session)
    * @returns {Promise<TInstanceTheme[]>} Promise resolving to the instance themes
    * @throws {Error} If the API request fails
    */
   async themes(): Promise<TInstanceTheme[]> {
     return this.get("/api/instances/themes/")
+      .then((response) => response.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /**
+   * Fetches the themes added to the instance, for the theme list of a signed-in person. A separate path from
+   * {@link themes}: every path with "instances" in it is authenticated by the God Mode session only.
+   * @returns {Promise<TInstanceTheme[]>} Promise resolving to the instance themes
+   * @throws {Error} If the API request fails
+   */
+  async userThemes(): Promise<TInstanceTheme[]> {
+    return this.get("/api/users/me/themes/")
       .then((response) => response.data)
       .catch((error) => {
         throw error?.response?.data;

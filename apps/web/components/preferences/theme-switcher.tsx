@@ -50,7 +50,7 @@ export const ThemeSwitcher = observer(function ThemeSwitcher(props: {
   const { setTheme } = useTheme();
   // translation
   const { t } = useTranslation();
-  const { data: instanceThemes } = useSWR("INSTANCE_THEMES", () => instanceService.themes());
+  const { data: instanceThemes } = useSWR("INSTANCE_THEMES", () => instanceService.userThemes());
   // derived values
   const instanceThemeOptions = useMemo(() => (instanceThemes ?? []).map(toThemeOption), [instanceThemes]);
   const currentTheme = useMemo(() => {
