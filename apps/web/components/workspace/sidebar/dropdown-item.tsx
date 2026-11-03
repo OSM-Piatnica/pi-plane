@@ -76,11 +76,11 @@ const SidebarDropdownItem = observer(function SidebarDropdownItem(props: TProps)
           </span>
           <div className="min-w-0">
             <div
-              className={`truncate text-left text-13 font-medium text-ellipsis ${workspaceSlug === workspace.slug ? "" : "text-secondary"}`}
+              className={`truncate text-left text-13 leading-4 font-medium text-ellipsis ${workspaceSlug === workspace.slug ? "" : "text-secondary"}`}
             >
               {workspace.name}
             </div>
-            <div className="flex w-fit gap-2 text-13 whitespace-nowrap text-tertiary">
+            <div className="flex w-fit gap-2 text-13 leading-4 whitespace-nowrap text-tertiary">
               <span>{t(getRoleI18nKey(workspace.role) || getRoleI18nKey(EUserPermissions.GUEST))}</span>
               <div className="m-auto h-1 w-1 rounded-full bg-layer-1/50" />
               <span>{t("member", { count: workspace.total_members || 0 })}</span>
