@@ -47,7 +47,7 @@ export const ThemeSwitcher = observer(function ThemeSwitcher(props: {
   // store hooks
   const { data: userProfile, updateUserTheme } = useUserProfile();
   // theme
-  const { setTheme } = useTheme();
+  const { theme: activeTheme, setTheme } = useTheme();
   // translation
   const { t } = useTranslation();
   const { data: instanceThemes } = useSWR("INSTANCE_THEMES", () => instanceService.userThemes());
@@ -62,9 +62,10 @@ export const ThemeSwitcher = observer(function ThemeSwitcher(props: {
       );
       if (instanceOption) return instanceOption;
     }
-    const userThemeOption = THEME_OPTIONS.find((themeItem) => themeItem.value === userProfile?.theme?.theme);
-    return userThemeOption || null;
-  }, [userProfile?.theme?.theme, userProfile?.theme?.instanceThemeId, instanceThemeOptions]);
+    // The saved profile theme wins; without one, show the theme the app is already using (e.g. "system").
+    const themeValue = userProfile?.theme?.theme || activeTheme;
+    return THEME_OPTIONS.find((themeItem) => themeItem.value === themeValue) ?? null;
+  }, [userProfile?.theme?.theme, userProfile?.theme?.instanceThemeId, instanceThemeOptions, activeTheme]);
 
   const handleThemeChange = useCallback(
     async (themeOption: TThemeSwitchOption) => {
