@@ -109,6 +109,12 @@
     "group_assignment": {
       "admin": "assigned the group you administer, <value/>, to this work item",
       "member": "assigned your group <value/> to this work item"
+    },
+    "group_membership": {
+      "added": "added you to the group <value/>",
+      "added_admin": "added you to the group <value/> as an admin",
+      "promoted": "made you an admin of the group <value/>",
+      "demoted": "changed your role in the group <value/> to member"
     }
   },
   "notification_ui": {

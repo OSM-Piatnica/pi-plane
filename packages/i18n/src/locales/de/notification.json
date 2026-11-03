@@ -109,6 +109,12 @@
     "group_assignment": {
       "admin": "hat die Gruppe, die Sie verwalten, <value/>, diesem Arbeitselement zugewiesen",
       "member": "hat Ihre Gruppe <value/> diesem Arbeitselement zugewiesen"
+    },
+    "group_membership": {
+      "added": "hat Sie zur Gruppe <value/> hinzugefügt",
+      "added_admin": "hat Sie als Administrator zur Gruppe <value/> hinzugefügt",
+      "promoted": "hat Sie zum Administrator der Gruppe <value/> gemacht",
+      "demoted": "hat Ihre Rolle in der Gruppe <value/> auf Mitglied geändert"
     }
   },
   "notification_ui": {

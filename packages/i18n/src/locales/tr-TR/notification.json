@@ -109,6 +109,12 @@
     "group_assignment": {
       "admin": "yönettiğiniz <value/> grubunu bu iş öğesine atadı",
       "member": "<value/> grubunuzu bu iş öğesine atadı"
+    },
+    "group_membership": {
+      "added": "sizi <value/> grubuna ekledi",
+      "added_admin": "sizi <value/> grubuna yönetici olarak ekledi",
+      "promoted": "sizi <value/> grubunun yöneticisi yaptı",
+      "demoted": "<value/> grubundaki rolünüzü üye olarak değiştirdi"
     }
   },
   "notification_ui": {

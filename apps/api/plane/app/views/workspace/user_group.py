@@ -11,6 +11,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 # Module imports
+from plane.bgtasks.group_membership_notification_task import ADDED, ROLE_CHANGED, notify_group_membership
 from plane.app.permissions import WorkSpaceAdminPermission, WorkspaceViewerPermission
 from plane.app.serializers.user_group import (
     UserGroupMemberSerializer,
@@ -262,6 +263,7 @@ class UserGroupMembersEndpoint(_GroupView):
             workspace=workspace, group=group, user_id=user_id, role=serializer.validated_data["role"]
         )
         reconcile_user(workspace.id, user_id)
+        notify_group_membership.delay(str(group.id), str(user_id), str(request.user.id), ADDED, membership.role)
         return Response(UserGroupMemberSerializer(membership).data, status=status.HTTP_201_CREATED)
 
 
@@ -293,8 +295,13 @@ class UserGroupMemberDetailEndpoint(_GroupView):
             return error
         serializer = UserGroupMemberWriteSerializer(data={"user_id": user_id, **request.data})
         serializer.is_valid(raise_exception=True)
+        previous_role = membership.role
         membership.role = serializer.validated_data["role"]
         membership.save(update_fields=["role", "updated_at"])
+        if membership.role != previous_role:
+            notify_group_membership.delay(
+                str(membership.group_id), str(user_id), str(request.user.id), ROLE_CHANGED, membership.role
+            )
         return Response(UserGroupMemberSerializer(membership).data)
 
     def delete(self, request, slug, pk, user_id):
