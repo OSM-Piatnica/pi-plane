@@ -39,7 +39,7 @@ const SidebarDropdownItem = observer(function SidebarDropdownItem(props: TProps)
 
   return (
     <div
-      className={cn("w-full px-4 py-2", {
+      className={cn("w-full px-2 py-2", {
         "bg-layer-transparent-active": isActiveWorkspace,
       })}
     >
@@ -52,13 +52,13 @@ const SidebarDropdownItem = observer(function SidebarDropdownItem(props: TProps)
           handleItemClick();
         }}
         className={cn(
-          "flex items-center justify-between gap-1 rounded-sm p-1 text-13 text-primary outline-none focus-visible:ring-2 focus-visible:ring-accent-strong",
+          "-mx-1 flex items-center justify-between gap-1 rounded-sm p-1 text-13 text-primary outline-none focus-visible:ring-2 focus-visible:ring-accent-strong",
           {
             "hover:bg-layer-transparent-hover data-highlighted:bg-layer-transparent-hover": !isActiveWorkspace,
           }
         )}
       >
-        <div className="relative flex w-[80%] items-center justify-start gap-2.5">
+        <div className="relative flex min-w-0 flex-1 items-center justify-start gap-2.5">
           <span
             className={`relative flex h-8 w-8 flex-shrink-0 items-center justify-center border-subtle p-2 text-14 font-medium uppercase ${
               !workspace?.logo_url && "rounded-md bg-[#026292] text-on-color"
@@ -74,13 +74,13 @@ const SidebarDropdownItem = observer(function SidebarDropdownItem(props: TProps)
               (workspace?.name?.[0] ?? "...")
             )}
           </span>
-          <div className="w-[inherit]">
+          <div className="min-w-0">
             <div
               className={`truncate text-left text-13 font-medium text-ellipsis ${workspaceSlug === workspace.slug ? "" : "text-secondary"}`}
             >
               {workspace.name}
             </div>
-            <div className="flex w-fit gap-2 text-13 text-tertiary">
+            <div className="flex w-fit gap-2 text-13 whitespace-nowrap text-tertiary">
               <span>{t(getRoleI18nKey(workspace.role) || getRoleI18nKey(EUserPermissions.GUEST))}</span>
               <div className="m-auto h-1 w-1 rounded-full bg-layer-1/50" />
               <span>{t("member", { count: workspace.total_members || 0 })}</span>
