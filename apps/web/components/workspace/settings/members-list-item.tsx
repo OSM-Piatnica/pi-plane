@@ -111,6 +111,7 @@ export const WorkspaceMembersListItem = observer(function WorkspaceMembersListIt
           (memberDetails?.filter((member): member is IWorkspaceMember => member !== null) ?? []) as unknown as RowData[]
         }
         keyExtractor={(rowData) => rowData?.member.id ?? ""}
+        resizeStorageKey="workspace-members-column-widths"
       />
     </div>
   );
