@@ -1152,8 +1152,8 @@
       "select_all_in_group": "Alles in groep selecteren"
     },
     "theme": {
-      "download_config": "Configuratie downloaden",
-      "import_config": "Configuratie importeren",
+      "download_config": "Thema downloaden",
+      "import_config": "Thema importeren",
       "import_failed": "Thema-configuratie importeren mislukt",
       "missing_fields": "Verplichte velden ontbreken: primary en background",
       "invalid_brand_hex": "Ongeldig hex-formaat voor merkkleur",

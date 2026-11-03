@@ -1152,8 +1152,8 @@
       "select_all_in_group": "Alle in der Gruppe auswählen"
     },
     "theme": {
-      "download_config": "Konfiguration herunterladen",
-      "import_config": "Konfiguration importieren",
+      "download_config": "Theme herunterladen",
+      "import_config": "Theme importieren",
       "import_failed": "Theme-Konfiguration konnte nicht importiert werden",
       "missing_fields": "Erforderliche Felder fehlen: primary und background",
       "invalid_brand_hex": "Ungültiges Hex-Format der Markenfarbe",
