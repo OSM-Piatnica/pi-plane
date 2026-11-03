@@ -109,6 +109,12 @@
     "group_assignment": {
       "admin": "將您管理的群組 <value/> 指派給了此工作事項",
       "member": "將您的群組 <value/> 指派給了此工作事項"
+    },
+    "group_membership": {
+      "added": "將您加入了群組 <value/>",
+      "added_admin": "將您以管理員身分加入了群組 <value/>",
+      "promoted": "將您設為群組 <value/> 的管理員",
+      "demoted": "將您在群組 <value/> 中的角色變更為成員"
     }
   },
   "notification_ui": {

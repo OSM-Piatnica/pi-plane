@@ -109,6 +109,12 @@
     "group_assignment": {
       "admin": "přiřadil(a) skupinu, kterou spravujete, <value/>, k této pracovní položce",
       "member": "přiřadil(a) vaši skupinu <value/> k této pracovní položce"
+    },
+    "group_membership": {
+      "added": "přidal(a) vás do skupiny <value/>",
+      "added_admin": "přidal(a) vás do skupiny <value/> jako správce",
+      "promoted": "jmenoval(a) vás správcem skupiny <value/>",
+      "demoted": "změnil(a) vaši roli ve skupině <value/> na člena"
     }
   },
   "notification_ui": {

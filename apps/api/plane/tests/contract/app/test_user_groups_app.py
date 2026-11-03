@@ -238,3 +238,61 @@ class TestExternalGroups:
         response = session_client.post(GROUPS, {"name": "Child", "parent": str(external.id)}, format="json")
 
         assert response.status_code == 400
+
+
+@pytest.fixture
+def celery_eager():
+    """Run Celery tasks in-process, so the notification they create can be looked at."""
+    from plane.celery import app as celery_app
+
+    original = (celery_app.conf.task_always_eager, celery_app.conf.task_eager_propagates)
+    celery_app.conf.task_always_eager = True
+    celery_app.conf.task_eager_propagates = False
+    yield
+    celery_app.conf.task_always_eager, celery_app.conf.task_eager_propagates = original
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestGroupMembershipNotifications:
+    """Being added to a group, and a change of role in it, reach the person's inbox."""
+
+    def _entries(self, user):
+        from plane.db.models import Notification
+
+        return list(Notification.objects.filter(receiver=user, entity_name="group_membership").order_by("created_at"))
+
+    def test_adding_a_person_and_changing_their_role_tell_them(self, celery_eager, session_client, workspace):
+        group = _group(workspace, "Sales")
+        person = _person(workspace, "newcomer@example.com")
+
+        added = session_client.post(
+            _members_url(group), {"user_id": str(person.id), "role": GroupRole.MEMBER}, format="json"
+        )
+        assert added.status_code == 201, added.data
+        (entry,) = self._entries(person)
+        assert entry.data["group_membership"]["event"] == "added"
+
+        promoted = session_client.patch(f"{_members_url(group)}{person.id}/", {"role": GroupRole.ADMIN}, format="json")
+        assert promoted.status_code == 200, promoted.data
+        entries = self._entries(person)
+        assert [e.data["group_membership"]["event"] for e in entries] == ["added", "role_changed"]
+        assert entries[1].data["group_membership"]["role"] == "admin"
+
+    def test_a_role_that_stays_the_same_tells_nobody(self, celery_eager, session_client, workspace):
+        group = _group(workspace, "Sales")
+        person = _person(workspace, "steady@example.com")
+        _join(group, person, GroupRole.MEMBER)
+
+        response = session_client.patch(f"{_members_url(group)}{person.id}/", {"role": GroupRole.MEMBER}, format="json")
+
+        assert response.status_code == 200
+        assert self._entries(person) == []
+
+    def test_removing_a_person_tells_nobody(self, celery_eager, session_client, workspace):
+        group = _group(workspace, "Sales")
+        person = _person(workspace, "leaver@example.com")
+        _join(group, person)
+
+        assert session_client.delete(f"{_members_url(group)}{person.id}/").status_code == 204
+        assert self._entries(person) == []
