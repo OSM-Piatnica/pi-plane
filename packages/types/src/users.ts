@@ -202,6 +202,7 @@ export interface IUserEmailNotificationSettings {
   issue_completed: boolean;
   project_access_request: boolean;
   workspace_admin_message: boolean;
+  group_assignment: boolean;
 }
 
 export type TProfileViews = "assigned" | "created" | "subscribed";

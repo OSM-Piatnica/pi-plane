@@ -119,6 +119,8 @@
   "mentions_description": "Notify me when someone mentions me in the comments or description",
   "project_access_requests": "Access requests",
   "project_access_requests_description": "Email me about requests to join private projects I administer, and about the decisions on my own requests.",
+  "group_assignments": "Group assignments",
+  "group_assignments_description": "Show an inbox notification when work is assigned to a group I belong to. Group admins always get it.",
   "workspace_admin_messages": "Email me when someone writes to the workspace admins",
   "workspace_admin_messages_description": "Applies only if you are a workspace admin. The message always reaches your inbox; this controls only the email copy, and only for you.",
   "email_frequency": "Email frequency",

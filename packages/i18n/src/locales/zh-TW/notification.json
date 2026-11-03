@@ -105,6 +105,10 @@
       "approved": "核准了您加入 <value/> 的請求",
       "rejected": "拒絕了您加入 <value/> 的請求",
       "requested": "請求存取 <value/>"
+    },
+    "group_assignment": {
+      "admin": "將您管理的群組 <value/> 指派給了此工作事項",
+      "member": "將您的群組 <value/> 指派給了此工作事項"
     }
   },
   "notification_ui": {

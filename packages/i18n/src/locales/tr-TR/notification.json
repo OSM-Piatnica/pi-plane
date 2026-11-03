@@ -105,6 +105,10 @@
       "approved": "<value/> projesine katılma isteğinizi onayladı",
       "rejected": "<value/> projesine katılma isteğinizi reddetti",
       "requested": "<value/> için erişim istedi"
+    },
+    "group_assignment": {
+      "admin": "yönettiğiniz <value/> grubunu bu iş öğesine atadı",
+      "member": "<value/> grubunuzu bu iş öğesine atadı"
     }
   },
   "notification_ui": {

@@ -119,6 +119,8 @@
   "mentions_description": "Notificarme cuando alguien me mencione en los comentarios o descripción",
   "project_access_requests": "Solicitudes de acceso",
   "project_access_requests_description": "Enviarme un correo sobre las solicitudes para unirse a proyectos privados que administro y sobre las decisiones relativas a mis propias solicitudes.",
+  "group_assignments": "Asignaciones a grupos",
+  "group_assignments_description": "Mostrar una notificación en la bandeja de entrada cuando se asigne trabajo a un grupo al que pertenezco. Los administradores del grupo siempre la reciben.",
   "workspace_admin_messages": "Enviarme un correo cuando alguien escriba a los administradores del espacio de trabajo",
   "workspace_admin_messages_description": "Solo se aplica si es administrador de un espacio de trabajo. El mensaje siempre llega a su bandeja de entrada; este ajuste solo controla si también recibe un correo, y únicamente para usted.",
   "email_frequency": "Frecuencia de correos",

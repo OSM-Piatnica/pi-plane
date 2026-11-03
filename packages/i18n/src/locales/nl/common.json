@@ -119,6 +119,8 @@
   "mentions_description": "Meld me wanneer iemand me vermeldt in de opmerkingen of beschrijving",
   "project_access_requests": "Toegangsverzoeken",
   "project_access_requests_description": "Stuur me een e-mail over verzoeken om lid te worden van privéprojecten die ik beheer en over de beslissingen over mijn eigen verzoeken.",
+  "group_assignments": "Groepstoewijzingen",
+  "group_assignments_description": "Toon een melding in de inbox wanneer werk wordt toegewezen aan een groep waartoe ik behoor. Groepsbeheerders krijgen de melding altijd.",
   "workspace_admin_messages": "Mij e-mailen wanneer iemand de beheerders van de werkruimte schrijft",
   "workspace_admin_messages_description": "Alleen van toepassing als u beheerder van een werkruimte bent. Het bericht komt altijd in uw inbox; deze instelling bepaalt alleen of u ook een e-mail krijgt, en alleen voor uzelf.",
   "email_frequency": "E-mailfrequentie",

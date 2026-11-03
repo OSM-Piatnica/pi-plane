@@ -105,6 +105,10 @@
       "approved": "heeft uw verzoek om lid te worden van <value/> goedgekeurd",
       "rejected": "heeft uw verzoek om lid te worden van <value/> afgewezen",
       "requested": "heeft toegang tot <value/> aangevraagd"
+    },
+    "group_assignment": {
+      "admin": "heeft de groep die u beheert, <value/>, aan dit werkitem toegewezen",
+      "member": "heeft uw groep <value/> aan dit werkitem toegewezen"
     }
   },
   "notification_ui": {

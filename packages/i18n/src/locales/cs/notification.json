@@ -105,6 +105,10 @@
       "approved": "schválil(a) vaši žádost o připojení k <value/>",
       "rejected": "zamítl(a) vaši žádost o připojení k <value/>",
       "requested": "požádal(a) o přístup k <value/>"
+    },
+    "group_assignment": {
+      "admin": "přiřadil(a) skupinu, kterou spravujete, <value/>, k této pracovní položce",
+      "member": "přiřadil(a) vaši skupinu <value/> k této pracovní položce"
     }
   },
   "notification_ui": {

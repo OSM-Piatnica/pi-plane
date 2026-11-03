@@ -105,6 +105,10 @@
       "approved": "a aprobat cererea ta de a te alătura <value/>",
       "rejected": "a respins cererea ta de a te alătura <value/>",
       "requested": "a solicitat acces la <value/>"
+    },
+    "group_assignment": {
+      "admin": "a atribuit grupul pe care îl administrați, <value/>, acestei activități",
+      "member": "a atribuit grupul dumneavoastră <value/> acestei activități"
     }
   },
   "notification_ui": {

@@ -119,6 +119,8 @@
   "mentions_description": "Thông báo cho tôi khi ai đó đề cập đến tôi trong bình luận hoặc mô tả",
   "project_access_requests": "Yêu cầu truy cập",
   "project_access_requests_description": "Gửi email cho tôi về các yêu cầu tham gia dự án riêng tư mà tôi quản trị và về quyết định đối với yêu cầu của chính tôi.",
+  "group_assignments": "Giao việc cho nhóm",
+  "group_assignments_description": "Hiển thị thông báo trong hộp thư đến khi công việc được giao cho một nhóm mà tôi thuộc về. Quản trị viên nhóm luôn nhận được thông báo này.",
   "workspace_admin_messages": "Gửi email cho tôi khi có người viết cho quản trị viên không gian làm việc",
   "workspace_admin_messages_description": "Chỉ áp dụng nếu bạn là quản trị viên của một không gian làm việc. Tin nhắn luôn đến hộp thư đến của bạn; cài đặt này chỉ quyết định bạn có nhận thêm email hay không, và chỉ áp dụng cho riêng bạn.",
   "email_frequency": "Tần suất email",

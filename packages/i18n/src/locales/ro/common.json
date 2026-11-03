@@ -119,6 +119,8 @@
   "mentions_description": "Notifică-mă când cineva mă menționează în comentarii sau descriere",
   "project_access_requests": "Cereri de acces",
   "project_access_requests_description": "Trimite-mi e-mailuri despre cererile de alăturare la proiecte private pe care le administrez și despre deciziile privind propriile mele cereri.",
+  "group_assignments": "Atribuiri către grupuri",
+  "group_assignments_description": "Afișează o notificare în inbox când o activitate este atribuită unui grup din care fac parte. Administratorii grupului o primesc întotdeauna.",
   "workspace_admin_messages": "Trimite-mi un e-mail când cineva scrie administratorilor spațiului de lucru",
   "workspace_admin_messages_description": "Se aplică doar dacă sunteți administrator al unui spațiu de lucru. Mesajul ajunge întotdeauna în căsuța dumneavoastră din aplicație; această setare stabilește doar dacă primiți și un e-mail, și numai pentru dumneavoastră.",
   "email_frequency": "Frecvența e-mailurilor",

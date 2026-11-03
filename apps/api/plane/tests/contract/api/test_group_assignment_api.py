@@ -18,6 +18,7 @@ from plane.db.models import (
     ProjectMember,
     State,
     UserGroup,
+    UserGroupMember,
     Workspace,
 )
 
@@ -214,3 +215,38 @@ class TestGroupAssigneesApi:
         assert listed.status_code == status.HTTP_200_OK
         entry = next(e for e in listed.json()["results"] if e["id"] == str(issue.id))
         assert entry["group_assignee_ids"] == [str(sales.id)]
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestGroupAssigneesNotify:
+    """The group's admins hear about it when a group is added to a work item, not when it stays."""
+
+    def _admin_of(self, workspace, project, group):
+        from plane.db.models import User
+
+        user = User.objects.create(email="admin-of-group@example.com", username="admin-of-group")
+        ProjectMember.objects.create(workspace=workspace, project=project, member=user, role=MEMBER, is_active=True)
+        UserGroupMember.objects.create(workspace=workspace, group=group, user=user, role=20)
+        return user
+
+    def test_create_and_patch_notify_for_added_groups_only(self, api_key_client, workspace, project, issue):
+        from plane.db.models import Notification
+
+        sales = _group(workspace, "Sales")
+        _link(project, sales)
+        admin = self._admin_of(workspace, project, sales)
+        url = _detail_url(workspace, project, issue)
+
+        api_key_client.patch(url, {"group_assignee_ids": [str(sales.id)]}, format="json")
+        assert Notification.objects.filter(receiver=admin, entity_name="group_assignment").count() == 1
+
+        # the group stays: no second entry
+        api_key_client.patch(url, {"group_assignee_ids": [str(sales.id)]}, format="json")
+        assert Notification.objects.filter(receiver=admin, entity_name="group_assignment").count() == 1
+
+        created = api_key_client.post(
+            _list_url(workspace, project), {"name": "Work", "group_assignee_ids": [str(sales.id)]}, format="json"
+        )
+        assert created.status_code == status.HTTP_201_CREATED, created.data
+        assert Notification.objects.filter(receiver=admin, entity_name="group_assignment").count() == 2

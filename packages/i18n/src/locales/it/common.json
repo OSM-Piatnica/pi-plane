@@ -119,6 +119,8 @@
   "mentions_description": "Avvisami quando qualcuno mi menziona nei commenti o nella descrizione",
   "project_access_requests": "Richieste di accesso",
   "project_access_requests_description": "Inviami un’e-mail per le richieste di unirsi ai progetti privati che amministro e per le decisioni sulle mie richieste.",
+  "group_assignments": "Assegnazioni ai gruppi",
+  "group_assignments_description": "Mostra una notifica nella posta in arrivo quando un lavoro viene assegnato a un gruppo di cui faccio parte. Gli amministratori del gruppo la ricevono sempre.",
   "workspace_admin_messages": "Inviami un’e-mail quando qualcuno scrive agli amministratori dello spazio di lavoro",
   "workspace_admin_messages_description": "Vale solo se è amministratore di uno spazio di lavoro. Il messaggio arriva sempre nella sua casella di posta; questa impostazione stabilisce solo se riceve anche un’e-mail, e solo per lei.",
   "email_frequency": "Frequenza delle e-mail",
