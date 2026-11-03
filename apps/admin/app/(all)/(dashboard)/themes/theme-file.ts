@@ -6,6 +6,9 @@
 
 import { sanitizeThemeOverrides, toOverrideHex, validateHexColor } from "@plane/utils";
 
+// What the editor writes as `themeName` into every file it exports, so it says nothing about the theme
+const GENERIC_THEME_NAME = "Custom Theme";
+
 /** Reads a theme file: the config the app exports from Appearance (`themeName`, `primary`, `background`, ...). */
 export const parseThemeFile = async (file: File) => {
   const raw = JSON.parse(await file.text()) as Record<string, unknown>;
@@ -16,7 +19,9 @@ export const parseThemeFile = async (file: File) => {
   }
   const { overrides, invalid } = sanitizeThemeOverrides(raw.overrides);
   if (invalid.length > 0) throw new Error(`These colours are not hex codes: ${invalid.join(", ")}.`);
-  const name = String(raw.themeName ?? raw.name ?? file.name.replace(/\.json$/i, "")).trim();
+  const fileName = file.name.replace(/\.json$/i, "");
+  const namedBy = String(raw.themeName ?? raw.name ?? "").trim();
+  const name = namedBy && namedBy !== GENERIC_THEME_NAME ? namedBy : fileName;
   return {
     name,
     primary: toOverrideHex(primary),

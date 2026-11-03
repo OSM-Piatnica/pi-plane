@@ -109,6 +109,12 @@
     "group_assignment": {
       "admin": "atribuiu o grupo que administra, <value/>, a este item de trabalho",
       "member": "atribuiu o seu grupo <value/> a este item de trabalho"
+    },
+    "group_membership": {
+      "added": "adicionou-o ao grupo <value/>",
+      "added_admin": "adicionou-o ao grupo <value/> como administrador",
+      "promoted": "tornou-o administrador do grupo <value/>",
+      "demoted": "alterou a sua função no grupo <value/> para membro"
     }
   },
   "notification_ui": {

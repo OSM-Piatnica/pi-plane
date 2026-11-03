@@ -46,6 +46,7 @@ export const useMemberColumns = () => {
   const columns = [
     {
       key: "Full name",
+      defaultWidth: 288,
       content: t("workspace_settings.settings.members.details.full_name"),
       thClassName: "text-left",
       thRender: () => (
@@ -68,9 +69,12 @@ export const useMemberColumns = () => {
 
     {
       key: "Display name",
+      defaultWidth: 160,
       content: t("workspace_settings.settings.members.details.display_name"),
       tdRender: (rowData: RowData) => (
-        <div className={`w-32 ${isSuspended(rowData) ? "text-placeholder" : ""}`}>{rowData.member.display_name}</div>
+        <div className={`w-full truncate ${isSuspended(rowData) ? "text-placeholder" : ""}`}>
+          {rowData.member.display_name}
+        </div>
       ),
       thRender: () => (
         <MemberHeaderColumn
@@ -83,9 +87,12 @@ export const useMemberColumns = () => {
 
     {
       key: "Email address",
+      defaultWidth: 240,
       content: t("workspace_settings.settings.members.details.email_address"),
       tdRender: (rowData: RowData) => (
-        <div className={`w-48 truncate ${isSuspended(rowData) ? "text-placeholder" : ""}`}>{rowData.member.email}</div>
+        <div className={`w-full truncate ${isSuspended(rowData) ? "text-placeholder" : ""}`}>
+          {rowData.member.email}
+        </div>
       ),
       thRender: () => (
         <MemberHeaderColumn
@@ -98,6 +105,7 @@ export const useMemberColumns = () => {
 
     {
       key: "Account type",
+      defaultWidth: 160,
       content: t("workspace_settings.settings.members.details.account_type"),
       thRender: () => (
         <MemberHeaderColumn
@@ -111,13 +119,14 @@ export const useMemberColumns = () => {
 
     {
       key: "Authentication",
+      defaultWidth: 144,
       content: t("workspace_settings.settings.members.details.authentication"),
       tdRender: (rowData: RowData) => {
         if (isSuspended(rowData)) return null;
         const loginMedium = rowData.member.last_login_medium;
         if (!loginMedium) return null;
         return (
-          <div>
+          <div className="truncate">
             {loginMedium === "magic-code" ? t("app_text.auth_labels.one_time_code") : LOGIN_MEDIUM_LABELS[loginMedium]}
           </div>
         );
@@ -126,9 +135,10 @@ export const useMemberColumns = () => {
 
     {
       key: "Joining date",
+      defaultWidth: 144,
       content: t("workspace_settings.settings.members.details.joining_date"),
       tdRender: (rowData: RowData) =>
-        isSuspended(rowData) ? null : <div>{formatDate(rowData?.member?.joining_date)}</div>,
+        isSuspended(rowData) ? null : <div className="truncate">{formatDate(rowData?.member?.joining_date)}</div>,
       thRender: () => (
         <MemberHeaderColumn
           property="joining_date"

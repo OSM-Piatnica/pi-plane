@@ -64,7 +64,15 @@ class NotificationViewSet(BaseViewSet, BasePaginator):
 
         notifications = (
             Notification.objects.filter(workspace__slug=slug, receiver_id=request.user.id)
-            .filter(entity_name__in=["issue", "project_access_request", "workspace_admin_message", "group_assignment"])
+            .filter(
+                entity_name__in=[
+                    "issue",
+                    "project_access_request",
+                    "workspace_admin_message",
+                    "group_assignment",
+                    "group_membership",
+                ]
+            )
             .annotate(is_inbox_issue=Exists(intake_issue))
             .annotate(is_intake_issue=Exists(intake_issue))
             .annotate(

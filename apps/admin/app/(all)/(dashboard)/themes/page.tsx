@@ -11,7 +11,7 @@ import useSWR from "swr";
 import { Button } from "@makeplane/propel/components/button";
 import { setToast } from "@plane/blocks/toast";
 import { InstanceService } from "@plane/services";
-import type { TInstanceTheme } from "@plane/types";
+import type { TInstanceTheme, TInstanceThemeCreate } from "@plane/types";
 // components
 import { PageWrapper } from "@/components/common/page-wrapper";
 // types
@@ -50,7 +50,7 @@ const InstanceThemesPage = observer(function InstanceThemesPage(_props: Route.Co
   const fileInputRef = useRef<HTMLInputElement>(null);
   // states
   const [isWorking, setIsWorking] = useState(false);
-  const [editingTheme, setEditingTheme] = useState<TInstanceTheme | null>(null);
+  const [editingTheme, setEditingTheme] = useState<TInstanceTheme | TInstanceThemeCreate | null>(null);
 
   const { data: themes, mutate } = useSWR(THEMES_KEY, () => instanceService.themes());
 
@@ -59,12 +59,10 @@ const InstanceThemesPage = observer(function InstanceThemesPage(_props: Route.Co
     if (!file) return;
     setIsWorking(true);
     try {
-      const theme = await parseThemeFile(file);
-      await instanceService.createTheme(theme);
-      await mutate();
-      setToast({ type: "success", title: "Theme added", message: `${theme.name} is now in everybody's theme list.` });
+      // the name is up to the admin: the dialog opens with the one from the file, to change before adding
+      setEditingTheme(await parseThemeFile(file));
     } catch (error) {
-      setToast({ type: "error", title: "Could not add the theme", message: getThemeErrorMessage(error) });
+      setToast({ type: "error", title: "Could not read the file", message: getThemeErrorMessage(error) });
     } finally {
       setIsWorking(false);
       if (fileInputRef.current) fileInputRef.current.value = "";

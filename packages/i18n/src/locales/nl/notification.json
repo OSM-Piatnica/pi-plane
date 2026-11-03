@@ -109,6 +109,12 @@
     "group_assignment": {
       "admin": "heeft de groep die u beheert, <value/>, aan dit werkitem toegewezen",
       "member": "heeft uw groep <value/> aan dit werkitem toegewezen"
+    },
+    "group_membership": {
+      "added": "heeft u toegevoegd aan de groep <value/>",
+      "added_admin": "heeft u als beheerder toegevoegd aan de groep <value/>",
+      "promoted": "heeft u beheerder van de groep <value/> gemaakt",
+      "demoted": "heeft uw rol in de groep <value/> gewijzigd naar lid"
     }
   },
   "notification_ui": {

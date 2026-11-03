@@ -109,6 +109,12 @@
     "group_assignment": {
       "admin": "đã giao nhóm mà bạn quản trị, <value/>, cho mục công việc này",
       "member": "đã giao nhóm <value/> của bạn cho mục công việc này"
+    },
+    "group_membership": {
+      "added": "đã thêm bạn vào nhóm <value/>",
+      "added_admin": "đã thêm bạn vào nhóm <value/> với vai trò quản trị viên",
+      "promoted": "đã đặt bạn làm quản trị viên của nhóm <value/>",
+      "demoted": "đã đổi vai trò của bạn trong nhóm <value/> thành thành viên"
     }
   },
   "notification_ui": {
