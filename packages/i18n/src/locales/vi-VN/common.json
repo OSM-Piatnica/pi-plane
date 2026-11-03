@@ -119,6 +119,8 @@
   "mentions_description": "Thông báo cho tôi khi ai đó đề cập đến tôi trong bình luận hoặc mô tả",
   "project_access_requests": "Yêu cầu truy cập",
   "project_access_requests_description": "Gửi email cho tôi về các yêu cầu tham gia dự án riêng tư mà tôi quản trị và về quyết định đối với yêu cầu của chính tôi.",
+  "group_assignments": "Giao việc cho nhóm",
+  "group_assignments_description": "Hiển thị thông báo trong hộp thư đến khi công việc được giao cho một nhóm mà tôi thuộc về. Quản trị viên nhóm luôn nhận được thông báo này.",
   "workspace_admin_messages": "Gửi email cho tôi khi có người viết cho quản trị viên không gian làm việc",
   "workspace_admin_messages_description": "Chỉ áp dụng nếu bạn là quản trị viên của một không gian làm việc. Tin nhắn luôn đến hộp thư đến của bạn; cài đặt này chỉ quyết định bạn có nhận thêm email hay không, và chỉ áp dụng cho riêng bạn.",
   "email_frequency": "Tần suất email",
@@ -1152,8 +1154,8 @@
       "select_all_in_group": "Chọn tất cả trong nhóm"
     },
     "theme": {
-      "download_config": "Tải xuống cấu hình",
-      "import_config": "Nhập cấu hình",
+      "download_config": "Tải xuống chủ đề",
+      "import_config": "Nhập chủ đề",
       "import_failed": "Không thể nhập cấu hình giao diện",
       "missing_fields": "Thiếu các trường bắt buộc: primary và background",
       "invalid_brand_hex": "Định dạng mã hex của màu thương hiệu không hợp lệ",

@@ -105,6 +105,16 @@
       "approved": "<value/> 참여 요청을 승인했습니다",
       "rejected": "<value/> 참여 요청을 거부했습니다",
       "requested": "<value/>에 대한 액세스를 요청했습니다"
+    },
+    "group_assignment": {
+      "admin": "관리하시는 그룹 <value/>을(를) 이 작업 항목에 할당했습니다",
+      "member": "회원님의 그룹 <value/>을(를) 이 작업 항목에 할당했습니다"
+    },
+    "group_membership": {
+      "added": "회원님을 그룹 <value/>에 추가했습니다",
+      "added_admin": "회원님을 그룹 <value/>에 관리자로 추가했습니다",
+      "promoted": "회원님을 그룹 <value/>의 관리자로 지정했습니다",
+      "demoted": "그룹 <value/>에서 회원님의 역할을 멤버로 변경했습니다"
     }
   },
   "notification_ui": {

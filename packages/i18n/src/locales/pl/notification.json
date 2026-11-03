@@ -105,6 +105,16 @@
       "approved": "zatwierdził(a) Twoją prośbę o dołączenie do <value/>",
       "rejected": "odrzucił(a) Twoją prośbę o dołączenie do <value/>",
       "requested": "poprosił(a) o dostęp do <value/>"
+    },
+    "group_assignment": {
+      "admin": "przypisał(a) grupę <value/>, którą administrujesz, do tego elementu pracy",
+      "member": "przypisał(a) Twoją grupę <value/> do tego elementu pracy"
+    },
+    "group_membership": {
+      "added": "dodał(a) Cię do grupy <value/>",
+      "added_admin": "dodał(a) Cię do grupy <value/> jako administratora",
+      "promoted": "uczynił(a) Cię administratorem grupy <value/>",
+      "demoted": "zmienił(a) Twoją rolę w grupie <value/> na członka"
     }
   },
   "notification_ui": {

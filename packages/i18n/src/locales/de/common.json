@@ -119,6 +119,8 @@
   "mentions_description": "Benachrichtigen Sie mich, wenn mich jemand in einem Kommentar oder in einer Beschreibung erwähnt.",
   "project_access_requests": "Zugriffsanfragen",
   "project_access_requests_description": "Senden Sie mir E-Mails zu Anfragen für den Beitritt zu privaten Projekten, die ich verwalte, und zu Entscheidungen über meine eigenen Anfragen.",
+  "group_assignments": "Gruppenzuweisungen",
+  "group_assignments_description": "Benachrichtigung im Posteingang anzeigen, wenn Arbeit einer Gruppe zugewiesen wird, der ich angehöre. Gruppenadministratoren erhalten sie immer.",
   "workspace_admin_messages": "E-Mail erhalten, wenn jemand den Administratoren des Arbeitsbereichs schreibt",
   "workspace_admin_messages_description": "Gilt nur, wenn Sie Administrator eines Arbeitsbereichs sind. Die Nachricht erreicht Ihren Posteingang immer; hier legen Sie nur fest, ob Sie zusätzlich eine E-Mail erhalten – und zwar nur für Sie.",
   "email_frequency": "E-Mail-Häufigkeit",
@@ -1152,8 +1154,8 @@
       "select_all_in_group": "Alle in der Gruppe auswählen"
     },
     "theme": {
-      "download_config": "Konfiguration herunterladen",
-      "import_config": "Konfiguration importieren",
+      "download_config": "Theme herunterladen",
+      "import_config": "Theme importieren",
       "import_failed": "Theme-Konfiguration konnte nicht importiert werden",
       "missing_fields": "Erforderliche Felder fehlen: primary und background",
       "invalid_brand_hex": "Ungültiges Hex-Format der Markenfarbe",

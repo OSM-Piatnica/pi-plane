@@ -111,6 +111,9 @@ class UserNotificationPreference(BaseModel):
     project_access_request = models.BooleanField(default=True)
     # emails to the admins of a workspace when somebody writes to them; the inbox entry is kept either way
     workspace_admin_message = models.BooleanField(default=True)
+    # inbox entries when a work item is assigned to a group the person belongs to; the admins of the group
+    # always get them, so this is the opt-in of its other members
+    group_assignment = models.BooleanField(default=False)
 
     # how often non-mention emails are delivered: one by one, or batched into a digest
     class EmailFrequency(models.TextChoices):

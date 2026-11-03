@@ -119,6 +119,8 @@
   "mentions_description": "誰かがコメントや説明で自分をメンションしたときに通知します",
   "project_access_requests": "アクセスリクエスト",
   "project_access_requests_description": "自分が管理するプライベートプロジェクトへの参加リクエストと、自分のリクエストに対する決定についてメールで通知します。",
+  "group_assignments": "グループへの割り当て",
+  "group_assignments_description": "自分が所属するグループに作業が割り当てられたときに、受信トレイに通知を表示します。グループ管理者には常に通知されます。",
   "workspace_admin_messages": "誰かがワークスペースの管理者にメッセージを送ったらメールで通知する",
   "workspace_admin_messages_description": "ワークスペースの管理者の場合のみ有効です。メッセージは常に受信トレイに届きます。この設定はメールも受け取るかどうかだけを決め、あなた自身にのみ適用されます。",
   "email_frequency": "メールの頻度",
@@ -1152,8 +1154,8 @@
       "select_all_in_group": "グループ内をすべて選択"
     },
     "theme": {
-      "download_config": "設定をダウンロード",
-      "import_config": "設定をインポート",
+      "download_config": "テーマをダウンロード",
+      "import_config": "テーマをインポート",
       "import_failed": "テーマ設定のインポートに失敗しました",
       "missing_fields": "必須フィールドが不足しています：primary と background",
       "invalid_brand_hex": "ブランドカラーの 16 進数形式が無効です",

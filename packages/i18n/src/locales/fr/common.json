@@ -119,6 +119,8 @@
   "mentions_description": "Me notifier lorsque quelqu’un me mentionne dans les commentaires ou la description",
   "project_access_requests": "Demandes d’accès",
   "project_access_requests_description": "M’envoyer un e-mail pour les demandes de participation aux projets privés que j’administre et pour les décisions concernant mes propres demandes.",
+  "group_assignments": "Assignations à des groupes",
+  "group_assignments_description": "Afficher une notification dans la boîte de réception lorsqu’un travail est assigné à un groupe dont je fais partie. Les administrateurs du groupe la reçoivent toujours.",
   "workspace_admin_messages": "M’envoyer un e-mail lorsque quelqu’un écrit aux administrateurs de l’espace de travail",
   "workspace_admin_messages_description": "S’applique uniquement si vous êtes administrateur d’un espace de travail. Le message arrive toujours dans votre boîte de réception ; ce réglage détermine seulement si vous recevez aussi un e-mail, et uniquement pour vous.",
   "email_frequency": "Fréquence des e-mails",
@@ -1152,8 +1154,8 @@
       "select_all_in_group": "Tout sélectionner dans le groupe"
     },
     "theme": {
-      "download_config": "Télécharger la configuration",
-      "import_config": "Importer la configuration",
+      "download_config": "Télécharger le thème",
+      "import_config": "Importer le thème",
       "import_failed": "Échec de l’importation de la configuration du thème",
       "missing_fields": "Champs obligatoires manquants : primary et background",
       "invalid_brand_hex": "Format hexadécimal de la couleur de marque invalide",

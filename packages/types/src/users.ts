@@ -71,6 +71,7 @@ export type TUserProfile = {
     background: string | undefined;
     darkPalette: boolean | undefined;
     overrides?: Record<string, string> | undefined;
+    instanceThemeId?: string | undefined;
   };
   onboarding_step: TOnboardingSteps;
   is_onboarded: boolean;
@@ -114,6 +115,8 @@ export interface IUserTheme {
   darkPalette?: boolean | undefined;
   /** advanced custom theme: semantic colour tokens (`bg-canvas`, `txt-primary`...) pinned to a hex colour */
   overrides?: Record<string, string> | undefined;
+  /** the instance theme this custom theme was taken from, so the theme list can show it as selected */
+  instanceThemeId?: string | undefined;
 }
 
 export interface IUserMemberLite extends IUserLite {
@@ -199,6 +202,7 @@ export interface IUserEmailNotificationSettings {
   issue_completed: boolean;
   project_access_request: boolean;
   workspace_admin_message: boolean;
+  group_assignment: boolean;
 }
 
 export type TProfileViews = "assigned" | "created" | "subscribed";

@@ -13,6 +13,7 @@ from django.db import IntegrityError, transaction
 from rest_framework import serializers
 
 # Module imports
+from plane.bgtasks.group_assignment_notification_task import queue_group_assignment_notifications
 from plane.db.models import (
     Issue,
     IssueType,
@@ -294,6 +295,7 @@ class IssueSerializer(BaseSerializer):
         return data
 
     def _set_group_assignees(self, issue, group_ids):
+        previous_group_ids = set(IssueGroupAssignee.objects.filter(issue=issue).values_list("group_id", flat=True))
         IssueGroupAssignee.objects.filter(issue=issue).delete()
         IssueGroupAssignee.objects.bulk_create(
             [
@@ -310,6 +312,7 @@ class IssueSerializer(BaseSerializer):
             batch_size=10,
             ignore_conflicts=True,
         )
+        queue_group_assignment_notifications(issue.id, previous_group_ids, group_ids)
 
     def create(self, validated_data):
         assignees = validated_data.pop("assignees", None)

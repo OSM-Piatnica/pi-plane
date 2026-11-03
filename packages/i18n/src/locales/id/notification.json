@@ -105,6 +105,16 @@
       "approved": "menyetujui permintaan Anda untuk bergabung dengan <value/>",
       "rejected": "menolak permintaan Anda untuk bergabung dengan <value/>",
       "requested": "meminta akses ke <value/>"
+    },
+    "group_assignment": {
+      "admin": "menugaskan grup yang Anda kelola, <value/>, ke item kerja ini",
+      "member": "menugaskan grup Anda <value/> ke item kerja ini"
+    },
+    "group_membership": {
+      "added": "menambahkan Anda ke grup <value/>",
+      "added_admin": "menambahkan Anda ke grup <value/> sebagai admin",
+      "promoted": "menjadikan Anda admin grup <value/>",
+      "demoted": "mengubah peran Anda di grup <value/> menjadi anggota"
     }
   },
   "notification_ui": {

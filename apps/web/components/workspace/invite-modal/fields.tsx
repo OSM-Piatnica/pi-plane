@@ -108,7 +108,6 @@ export const InvitationFields = observer(function InvitationFields(props: TInvit
                       getValues={() => SUPPORTED_LANGUAGES}
                       getOptionValue={(language) => language.value}
                       getOptionLabel={(language) => language.label}
-                      showSearch={false}
                       pinSelected={false}
                     >
                       <Select.Trigger<TLanguageOption> variant="select-2xl">

@@ -19,6 +19,7 @@ import {
   DialogMain,
   DialogTitle,
 } from "@makeplane/propel/components/dialog";
+import { Select } from "@plane/blocks/select";
 import { setToast } from "@plane/blocks/toast";
 import { EUserGroupRole } from "@plane/types";
 import type { TUserGroup } from "@plane/types";
@@ -34,6 +35,8 @@ type Props = {
   /** The member counts of the list change when somebody joins or leaves. */
   onChanged: () => void;
 };
+
+type TCandidate = NonNullable<ReturnType<ReturnType<typeof useMember>["getUserDetails"]>>;
 
 const SELECT_CLASSNAME = "h-9 rounded-md border border-subtle bg-surface-1 px-2 text-13 text-primary";
 
@@ -60,7 +63,7 @@ export const GroupMembersModal = observer(function GroupMembersModal(props: Prop
   const memberUserIds = useMemo(() => new Set((members ?? []).map((member) => member.user.id)), [members]);
   const candidates = (workspaceMemberIds ?? [])
     .map((id) => getUserDetails(id))
-    .filter((user) => user && !user.is_bot && !memberUserIds.has(user.id));
+    .filter((user): user is TCandidate => Boolean(user) && !user?.is_bot && !memberUserIds.has(user!.id));
 
   const run = async (action: () => Promise<unknown>) => {
     setIsWorking(true);
@@ -111,19 +114,28 @@ export const GroupMembersModal = observer(function GroupMembersModal(props: Prop
               )}
               {canEdit && (
                 <div className="flex flex-wrap items-center gap-2">
-                  <select
-                    aria-label={t("workspace_settings.settings.groups.select_member")}
-                    value={newMemberId}
-                    onChange={(event) => setNewMemberId(event.target.value)}
-                    className={`${SELECT_CLASSNAME} min-w-56 flex-1`}
+                  <Select<TCandidate>
+                    getValues={() => candidates}
+                    value={candidates.find((user) => user.id === newMemberId) ?? null}
+                    onChange={setNewMemberId}
+                    getOptionValue={(user) => user.id}
+                    getOptionLabel={(user) => user.display_name}
+                    // the display name is often a username: people are looked up by their real name and email too
+                    getOptionSearchText={(user) =>
+                      [user.display_name, user.first_name, user.last_name, user.email].join(" ")
+                    }
+                    getOptionDescription={(user) =>
+                      [`${user.first_name} ${user.last_name}`.trim(), user.email].filter(Boolean).join(" · ")
+                    }
+                    placeholder={t("workspace_settings.settings.groups.select_member")}
+                    pinSelected={false}
+                    contentSizing="anchor"
                   >
-                    <option value="">{t("workspace_settings.settings.groups.select_member")}</option>
-                    {candidates.map((user) => (
-                      <option key={user?.id} value={user?.id}>
-                        {user?.display_name}
-                      </option>
-                    ))}
-                  </select>
+                    <Select.Trigger<TCandidate> variant="select-xl" className="min-w-56 flex-1">
+                      {candidates.find((user) => user.id === newMemberId)?.display_name ??
+                        t("workspace_settings.settings.groups.select_member")}
+                    </Select.Trigger>
+                  </Select>
                   <select
                     aria-label={t("workspace_settings.settings.groups.role")}
                     value={newMemberRole}

@@ -105,6 +105,16 @@
       "approved": "a aprobat cererea ta de a te alătura <value/>",
       "rejected": "a respins cererea ta de a te alătura <value/>",
       "requested": "a solicitat acces la <value/>"
+    },
+    "group_assignment": {
+      "admin": "a atribuit grupul pe care îl administrați, <value/>, acestei activități",
+      "member": "a atribuit grupul dumneavoastră <value/> acestei activități"
+    },
+    "group_membership": {
+      "added": "v-a adăugat în grupul <value/>",
+      "added_admin": "v-a adăugat în grupul <value/> ca administrator",
+      "promoted": "v-a făcut administrator al grupului <value/>",
+      "demoted": "v-a schimbat rolul în grupul <value/> în membru"
     }
   },
   "notification_ui": {

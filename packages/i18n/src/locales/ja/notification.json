@@ -105,6 +105,16 @@
       "approved": "<value/> への参加リクエストを承認しました",
       "rejected": "<value/> への参加リクエストを却下しました",
       "requested": "<value/> へのアクセスをリクエストしました"
+    },
+    "group_assignment": {
+      "admin": "あなたが管理するグループ <value/> をこの作業項目に割り当てました",
+      "member": "あなたのグループ <value/> をこの作業項目に割り当てました"
+    },
+    "group_membership": {
+      "added": "あなたをグループ <value/> に追加しました",
+      "added_admin": "あなたをグループ <value/> に管理者として追加しました",
+      "promoted": "あなたをグループ <value/> の管理者にしました",
+      "demoted": "グループ <value/> でのあなたの役割をメンバーに変更しました"
     }
   },
   "notification_ui": {

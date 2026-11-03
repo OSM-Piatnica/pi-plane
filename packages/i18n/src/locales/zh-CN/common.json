@@ -119,6 +119,8 @@
   "mentions_description": "当有人在评论或描述中提及我时通知我",
   "project_access_requests": "访问请求",
   "project_access_requests_description": "通过电子邮件通知我加入我管理的私有项目的请求，以及对我自己请求的决定。",
+  "group_assignments": "小组分配",
+  "group_assignments_description": "当工作被分配给我所在的小组时，在收件箱中显示通知。小组管理员始终会收到。",
   "workspace_admin_messages": "有人给工作空间管理员写信时给我发邮件",
   "workspace_admin_messages_description": "仅在您是工作空间管理员时适用。消息始终会进入您的收件箱；此设置只决定您是否还会收到邮件，并且只对您本人生效。",
   "email_frequency": "邮件频率",
@@ -1152,8 +1154,8 @@
       "select_all_in_group": "全选组内项目"
     },
     "theme": {
-      "download_config": "下载配置",
-      "import_config": "导入配置",
+      "download_config": "下载主题",
+      "import_config": "导入主题",
       "import_failed": "导入主题配置失败",
       "missing_fields": "缺少必填字段：primary 和 background",
       "invalid_brand_hex": "品牌颜色的十六进制格式无效",

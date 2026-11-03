@@ -105,6 +105,16 @@
       "approved": "aprovou sua solicitação para entrar em <value/>",
       "rejected": "rejeitou sua solicitação para entrar em <value/>",
       "requested": "solicitou acesso a <value/>"
+    },
+    "group_assignment": {
+      "admin": "atribuiu o grupo que você administra, <value/>, a este item de trabalho",
+      "member": "atribuiu o seu grupo <value/> a este item de trabalho"
+    },
+    "group_membership": {
+      "added": "adicionou você ao grupo <value/>",
+      "added_admin": "adicionou você ao grupo <value/> como administrador",
+      "promoted": "tornou você administrador do grupo <value/>",
+      "demoted": "alterou sua função no grupo <value/> para membro"
     }
   },
   "notification_ui": {

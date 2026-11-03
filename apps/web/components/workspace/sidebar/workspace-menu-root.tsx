@@ -148,8 +148,8 @@ export const WorkspaceMenuRoot = observer(function WorkspaceMenuRoot(props: Work
           </div>
         )}
         <MenuContent side="bottom" align="start">
-          <div className="flex w-[19rem] max-w-full flex-col items-start justify-start">
-            <span className="sticky top-0 z-1 w-full flex-shrink-0 truncate bg-layer-2 px-4 pt-3 pb-1 text-left text-13 font-medium text-placeholder">
+          <div className="flex w-[22rem] max-w-full flex-col items-start justify-start">
+            <span className="sticky top-0 z-1 w-full flex-shrink-0 truncate bg-layer-2 px-2 pt-3 pb-1 text-left text-13 font-medium text-placeholder">
               {currentUser?.email}
             </span>
             {workspacesList ? (

@@ -119,6 +119,8 @@
   "mentions_description": "댓글이나 설명에서 누군가 나를 멘션할 때 알림을 받습니다",
   "project_access_requests": "액세스 요청",
   "project_access_requests_description": "내가 관리하는 비공개 프로젝트의 참여 요청과 내 요청에 대한 결정을 이메일로 보내 주세요.",
+  "group_assignments": "그룹 할당",
+  "group_assignments_description": "내가 속한 그룹에 작업이 할당되면 받은 편지함에 알림을 표시합니다. 그룹 관리자는 항상 알림을 받습니다.",
   "workspace_admin_messages": "누군가 워크스페이스 관리자에게 메시지를 보내면 이메일로 받기",
   "workspace_admin_messages_description": "워크스페이스 관리자인 경우에만 적용됩니다. 메시지는 항상 받은 편지함에 도착하며, 이 설정은 이메일도 받을지만 정하고 본인에게만 적용됩니다.",
   "email_frequency": "이메일 빈도",
@@ -1152,8 +1154,8 @@
       "select_all_in_group": "그룹 내 전체 선택"
     },
     "theme": {
-      "download_config": "구성 다운로드",
-      "import_config": "구성 가져오기",
+      "download_config": "테마 다운로드",
+      "import_config": "테마 가져오기",
       "import_failed": "테마 구성을 가져오지 못했습니다",
       "missing_fields": "필수 필드가 없습니다: primary 및 background",
       "invalid_brand_hex": "브랜드 색상의 16진수 형식이 올바르지 않습니다",

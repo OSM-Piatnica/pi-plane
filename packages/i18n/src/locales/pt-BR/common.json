@@ -119,6 +119,8 @@
   "mentions_description": "Notifique-me quando alguém me mencionar nos comentários ou na descrição",
   "project_access_requests": "Solicitações de acesso",
   "project_access_requests_description": "Enviar e-mail sobre solicitações para entrar em projetos privados que administro e sobre as decisões das minhas próprias solicitações.",
+  "group_assignments": "Atribuições a grupos",
+  "group_assignments_description": "Mostrar uma notificação na caixa de entrada quando um trabalho for atribuído a um grupo do qual faço parte. Os administradores do grupo sempre a recebem.",
   "workspace_admin_messages": "Receber e-mail quando alguém escrever aos administradores do espaço de trabalho",
   "workspace_admin_messages_description": "Aplica-se apenas se você for administrador de um espaço de trabalho. A mensagem sempre chega à sua caixa de entrada; esta opção controla somente se você também recebe um e-mail, e só para você.",
   "email_frequency": "Frequência de e-mails",
@@ -1152,8 +1154,8 @@
       "select_all_in_group": "Selecionar tudo no grupo"
     },
     "theme": {
-      "download_config": "Baixar configuração",
-      "import_config": "Importar configuração",
+      "download_config": "Baixar tema",
+      "import_config": "Importar tema",
       "import_failed": "Falha ao importar a configuração do tema",
       "missing_fields": "Campos obrigatórios ausentes: primary e background",
       "invalid_brand_hex": "Formato hexadecimal da cor da marca inválido",

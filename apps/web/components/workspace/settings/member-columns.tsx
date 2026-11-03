@@ -62,7 +62,7 @@ export function NameColumn(props: NameProps) {
 
   return (
     <div className="group relative">
-      <div className="flex w-72 items-center justify-between gap-x-4 gap-y-2">
+      <div className="flex w-full items-center justify-between gap-x-4 gap-y-2">
         <div className="flex flex-1 items-center gap-x-2 gap-y-2">
           {isSuspended ? (
             <div className="rounded-full bg-layer-1">
@@ -142,11 +142,11 @@ export const AccountTypeColumn = observer(function AccountTypeColumn(props: Acco
   return (
     <>
       {isSuspended ? (
-        <div className="flex w-32">
+        <div className="flex w-full">
           <Badge variant="neutral" size="sm" label={t("project_components.shared.suspended")} />
         </div>
       ) : isRoleNonEditable ? (
-        <div className="flex w-32">
+        <div className="flex w-full">
           <span>{t(getRoleI18nKey(rowData.role))}</span>
         </div>
       ) : (
@@ -155,7 +155,7 @@ export const AccountTypeColumn = observer(function AccountTypeColumn(props: Acco
           control={control}
           rules={{ required: t("project_components.member_columns.role_required") }}
           render={() => (
-            <div className="w-32">
+            <div className="w-full">
               <Select<TRoleOption>
                 value={ROLE_OPTIONS.find((role) => role.key === rowData.role) ?? null}
                 onChange={(val) => {

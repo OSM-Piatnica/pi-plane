@@ -105,6 +105,16 @@
       "approved": "schválil(a) vašu žiadosť o pripojenie k <value/>",
       "rejected": "zamietol(a) vašu žiadosť o pripojenie k <value/>",
       "requested": "požiadal(a) o prístup k <value/>"
+    },
+    "group_assignment": {
+      "admin": "priradil(a) skupinu, ktorú spravujete, <value/>, k tejto pracovnej položke",
+      "member": "priradil(a) vašu skupinu <value/> k tejto pracovnej položke"
+    },
+    "group_membership": {
+      "added": "pridal(a) vás do skupiny <value/>",
+      "added_admin": "pridal(a) vás do skupiny <value/> ako správcu",
+      "promoted": "vymenoval(a) vás za správcu skupiny <value/>",
+      "demoted": "zmenil(a) vašu rolu v skupine <value/> na člena"
     }
   },
   "notification_ui": {

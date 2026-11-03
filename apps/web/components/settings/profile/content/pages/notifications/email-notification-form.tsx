@@ -249,6 +249,27 @@ export const NotificationsProfileSettingsForm = observer(function NotificationsP
           />
         }
       />
+      <SettingsControlItem
+        title={t("group_assignments")}
+        description={t("group_assignments_description")}
+        control={
+          <Controller
+            control={control}
+            name="group_assignment"
+            render={({ field: { value, onChange } }) => (
+              <Switch
+                size="sm"
+                checked={value}
+                onCheckedChange={(newValue) => {
+                  onChange(newValue);
+                  void handleSettingChange("group_assignment", newValue);
+                }}
+                aria-label={t("group_assignments")}
+              />
+            )}
+          />
+        }
+      />
     </div>
   );
 });

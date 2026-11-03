@@ -21,8 +21,11 @@ import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 // local imports
+import { getGroupMembershipNotificationPath } from "@/helpers/group-membership-notification";
 import { getAccessRequestNotificationPath } from "@/helpers/access-request-notification";
 import { AccessRequestNotificationContent } from "./access-request-content";
+import { GroupAssignmentNotificationContent } from "./group-assignment-content";
+import { GroupMembershipNotificationContent } from "./group-membership-content";
 import { AdminMessageModal } from "./admin-message-modal";
 import { AdminMessageNotificationContent } from "./admin-message-content";
 import { NotificationContent } from "./content";
@@ -59,6 +62,10 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
   // a message somebody wrote to the admins has no work item and no project either: a click opens the whole message
   const isAdminMessage =
     notification?.entity_name === "workspace_admin_message" && !!notification?.data?.workspace_admin_message;
+  // work that was assigned to a group of the person: a click opens the work item, like for any other entry about one
+  const isGroupAssignment = notification?.entity_name === "group_assignment" && !!notification?.data?.group_assignment;
+  // being added to a group, or a change of role in it, has no work item and no project: a click opens the groups
+  const isGroupMembership = notification?.entity_name === "group_membership" && !!notification?.data?.group_membership;
   const notificationTriggeredBy = notification.triggered_by_details || undefined;
 
   const handleNotificationIssuePeekOverview = async () => {
@@ -96,6 +103,19 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
     router.push(getAccessRequestNotificationPath(notification.data?.access_request?.status, workspaceSlug, projectId));
   };
 
+  const handleGroupMembership = async () => {
+    if (!workspaceSlug || isSnoozeStateModalOpen || customSnoozeModal) return;
+    setCurrentSelectedNotificationId(notificationId);
+    if (notification.read_at === null) {
+      try {
+        await markNotificationAsRead(workspaceSlug);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    router.push(getGroupMembershipNotificationPath(workspaceSlug));
+  };
+
   const handleAdminMessage = async () => {
     if (!workspaceSlug || isSnoozeStateModalOpen || customSnoozeModal) return;
     setCurrentSelectedNotificationId(notificationId);
@@ -113,9 +133,9 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
     !workspaceSlug ||
     !notificationId ||
     !notification?.id ||
-    (!notificationField && !isAccessRequest && !isAdminMessage) ||
+    (!notificationField && !isAccessRequest && !isAdminMessage && !isGroupAssignment && !isGroupMembership) ||
     !workspace?.id ||
-    (!projectId && !isAdminMessage)
+    (!projectId && !isAdminMessage && !isGroupMembership)
   )
     return <></>;
 
@@ -132,9 +152,11 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
         onClick={
           isAdminMessage
             ? handleAdminMessage
-            : isAccessRequest
-              ? handleNotificationAccessRequest
-              : handleNotificationIssuePeekOverview
+            : isGroupMembership
+              ? handleGroupMembership
+              : isAccessRequest
+                ? handleNotificationAccessRequest
+                : handleNotificationIssuePeekOverview
         }
       >
         {notification.read_at === null && (
@@ -161,6 +183,10 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
                   <AdminMessageNotificationContent notification={notification} />
                 ) : isAccessRequest ? (
                   <AccessRequestNotificationContent notification={notification} />
+                ) : isGroupAssignment ? (
+                  <GroupAssignmentNotificationContent notification={notification} />
+                ) : isGroupMembership ? (
+                  <GroupMembershipNotificationContent notification={notification} />
                 ) : (
                   <NotificationContent
                     notification={notification}
@@ -186,6 +212,8 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
                   notification?.data?.workspace_admin_message?.message
                 ) : isAccessRequest ? (
                   notification?.data?.project?.name
+                ) : isGroupMembership ? (
+                  notification?.data?.group_membership?.group.name
                 ) : (
                   <>
                     {notification?.data?.issue?.identifier}-{notification?.data?.issue?.sequence_id}&nbsp;

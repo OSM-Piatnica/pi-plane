@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,6 +13,8 @@ import type {
   IInstanceAdmin,
   IInstanceConfiguration,
   IInstanceInfo,
+  TInstanceTheme,
+  TInstanceThemeCreate,
   TPage,
 } from "@plane/types";
 // api service
@@ -137,6 +140,75 @@ export class InstanceService extends APIService {
   async disableEmail(): Promise<void> {
     return this.delete("/api/instances/configurations/disable-email-feature/")
       .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /**
+   * Fetches the themes added to the instance, in God Mode (the instance admin session)
+   * @returns {Promise<TInstanceTheme[]>} Promise resolving to the instance themes
+   * @throws {Error} If the API request fails
+   */
+  async themes(): Promise<TInstanceTheme[]> {
+    return this.get("/api/instances/themes/")
+      .then((response) => response.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /**
+   * Fetches the themes added to the instance, for the theme list of a signed-in person. A separate path from
+   * {@link themes}: every path with "instances" in it is authenticated by the God Mode session only.
+   * @returns {Promise<TInstanceTheme[]>} Promise resolving to the instance themes
+   * @throws {Error} If the API request fails
+   */
+  async userThemes(): Promise<TInstanceTheme[]> {
+    return this.get("/api/users/me/themes/")
+      .then((response) => response.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /**
+   * Adds a theme to the instance (instance admins only)
+   * @param {TInstanceThemeCreate} data The theme to add
+   * @returns {Promise<TInstanceTheme>} The created theme
+   * @throws {Error} If the API request fails
+   */
+  async createTheme(data: TInstanceThemeCreate): Promise<TInstanceTheme> {
+    return this.post("/api/instances/themes/", data)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /**
+   * Changes a theme added in the admin GUI (instance admins only; deployment themes are read-only)
+   * @param {string} themeId The theme to change
+   * @param {Partial<TInstanceThemeCreate>} data The fields to change
+   * @returns {Promise<TInstanceTheme>} The updated theme
+   * @throws {Error} If the API request fails
+   */
+  async updateTheme(themeId: string, data: Partial<TInstanceThemeCreate>): Promise<TInstanceTheme> {
+    return this.patch(`/api/instances/themes/${themeId}/`, data)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /**
+   * Deletes a theme added in the admin GUI (instance admins only; deployment themes are read-only)
+   * @param {string} themeId The theme to delete
+   * @throws {Error} If the API request fails
+   */
+  async deleteTheme(themeId: string): Promise<void> {
+    return this.delete(`/api/instances/themes/${themeId}/`)
+      .then(() => undefined)
       .catch((error) => {
         throw error?.response?.data;
       });

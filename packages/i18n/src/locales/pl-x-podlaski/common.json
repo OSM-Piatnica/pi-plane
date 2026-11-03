@@ -119,6 +119,8 @@
   "mentions_description": "Powiadamiaj mnie, gdy ktoś mnie wspomni w komentarzach lub opisie",
   "project_access_requests": "Prośby o dostęp",
   "project_access_requests_description": "Wysyłaj mi e-maile o prośbach o dołączenie do prywatnych projektów, którymi administruję, oraz o decyzjach w sprawie moich własnych próśb.",
+  "group_assignments": "Przypisania do grup",
+  "group_assignments_description": "Pokazuj powiadomienie w skrzynce odbiorczej, gdy praca zostanie przypisana do grupy, do której należę. Administratorzy grupy zawsze je otrzymują.",
   "workspace_admin_messages": "Wysyłaj mi e-mail, gdy ktoś napisze do administratorów przestrzeni roboczej",
   "workspace_admin_messages_description": "Dotyczy tylko administratorów przestrzeni roboczej. Wiadomość zawsze trafia do Państwa skrzynki w aplikacji; to ustawienie określa tylko, czy otrzymają Państwo także e-mail, i dotyczy wyłącznie Państwa.",
   "email_frequency": "Częstotliwość e-maili",
@@ -1152,8 +1154,8 @@
       "select_all_in_group": "Zaznacz wszystko w grupie"
     },
     "theme": {
-      "download_config": "Pobierz konfigurację",
-      "import_config": "Importuj konfigurację",
+      "download_config": "Pobierz motyw",
+      "import_config": "Importuj motyw",
       "import_failed": "Nie udało się zaimportować konfiguracji motywu",
       "missing_fields": "Brak wymaganych pól: primary i background",
       "invalid_brand_hex": "Nieprawidłowy format szesnastkowy koloru marki",
