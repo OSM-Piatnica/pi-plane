@@ -219,6 +219,8 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
               src={userCover}
               className="h-44 w-full rounded-lg"
               alt={currentUser?.first_name ?? t("project_components.profile.cover_image_alt")}
+              // the profile is loaded here: no cover is the default one, not a placeholder that pulses forever
+              showDefaultWhenEmpty
             />
             <div className="absolute -bottom-6 left-6 flex items-end justify-between">
               <div className="flex gap-3">
@@ -249,7 +251,12 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
                   <ImagePickerPopover
                     label={t("change_cover")}
                     control={control}
-                    onChange={(imageUrl) => onChange(imageUrl)}
+                    onChange={(imageUrl) => {
+                      onChange(imageUrl);
+                      // the picker has already uploaded it and the server links it to the profile: save the form
+                      // too (as for the avatar), so the profile in the app stays in step with the server
+                      void handleSubmit(onSubmit)();
+                    }}
                     value={value}
                     isProfileCover
                   />
