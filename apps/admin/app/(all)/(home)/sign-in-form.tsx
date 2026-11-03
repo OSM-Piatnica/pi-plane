@@ -13,17 +13,15 @@ import type { EAdminAuthErrorCodes, TAdminAuthErrorInfo } from "@plane/constants
 import { API_BASE_URL } from "@plane/constants";
 import { Button } from "@makeplane/propel/components/button";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
-import { AuthService } from "@plane/services";
 // components
 import { Banner } from "@/components/common/banner";
 // local components
 import { FormHeader } from "@/components/instance/form-header";
+// hooks
+import { useCsrfToken } from "@/hooks/use-csrf-token";
 import { AuthBanner } from "./auth-banner";
 import { AuthHeader } from "./auth-header";
 import { authErrorHandler } from "./auth-helpers";
-
-// service initialization
-const authService = new AuthService();
 
 // error codes
 enum EErrorCodes {
@@ -58,18 +56,13 @@ export function InstanceSignInForm() {
   const errorMessage = searchParams.get("error_message") || undefined;
   // state
   const [showPassword, setShowPassword] = useState(false);
-  const [csrfToken, setCsrfToken] = useState<string | undefined>(undefined);
+  const csrfToken = useCsrfToken();
   const [formData, setFormData] = useState<TFormData>(defaultFromData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorInfo, setErrorInfo] = useState<TAdminAuthErrorInfo | undefined>(undefined);
 
   const handleFormChange = (key: keyof TFormData, value: string | boolean) =>
     setFormData((prev) => ({ ...prev, [key]: value }));
-
-  useEffect(() => {
-    if (csrfToken === undefined)
-      authService.requestCSRFToken().then((data) => data?.csrf_token && setCsrfToken(data.csrf_token));
-  }, [csrfToken]);
 
   useEffect(() => {
     if (emailParam) setFormData((prev) => ({ ...prev, email: emailParam }));
@@ -96,8 +89,8 @@ export function InstanceSignInForm() {
   }, [errorCode, errorMessage]);
 
   const isButtonDisabled = useMemo(
-    () => !(!isSubmitting && formData.email && formData.password),
-    [formData.email, formData.password, isSubmitting]
+    () => isSubmitting || !csrfToken || !formData.email || !formData.password,
+    [csrfToken, formData.email, formData.password, isSubmitting]
   );
 
   useEffect(() => {
@@ -130,7 +123,7 @@ export function InstanceSignInForm() {
             ) : (
               <>{errorInfo && <AuthBanner bannerData={errorInfo} handleBannerData={setErrorInfo} />}</>
             )}
-            <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken ?? ""} />
+            <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken} />
 
             <div className="w-full space-y-1">
               <label className="text-13 font-medium text-tertiary" htmlFor="email">
