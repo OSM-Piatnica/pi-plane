@@ -400,7 +400,9 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
 
                           <p className="text-13 text-secondary">{t("app_text.image_upload.formats_supported")}</p>
 
-                          <div className="flex h-12 items-start justify-end gap-2">
+                          {/* Both buttons size to their label and never shrink: the primary one used to be full
+                              width, which pushed Cancel out of the popup. */}
+                          <div className="flex shrink-0 items-center justify-end gap-2 pt-1">
                             <Button
                               variant="secondary"
                               size="sm"
@@ -414,7 +416,7 @@ function ImagePickerPopoverComponent<TFieldValues extends FieldValues = FieldVal
                             <Button
                               variant="primary"
                               size="sm"
-                              stretch="full"
+                              stretch="auto"
                               label={
                                 isImageUploading
                                   ? t("app_text.image_upload.uploading")
