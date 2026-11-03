@@ -14,16 +14,14 @@ import { API_BASE_URL, E_PASSWORD_STRENGTH } from "@plane/constants";
 import { Button } from "@makeplane/propel/components/button";
 import { Checkbox } from "@makeplane/propel/components/checkbox";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
-import { AuthService } from "@plane/services";
 import { getPasswordStrength, validatePersonName, validateCompanyName } from "@plane/utils";
 // components
 import { AuthHeader } from "@/app/(all)/(home)/auth-header";
 import { PasswordStrengthIndicator } from "@/components/common/password-strength-indicator";
 import { Banner } from "../common/banner";
 import { FormHeader } from "./form-header";
-
-// service initialization
-const authService = new AuthService();
+// hooks
+import { useCsrfToken } from "@/hooks/use-csrf-token";
 
 // error codes
 enum EErrorCodes {
@@ -77,7 +75,7 @@ export function InstanceSetupForm() {
     password: false,
     retypePassword: false,
   });
-  const [csrfToken, setCsrfToken] = useState<string | undefined>(undefined);
+  const csrfToken = useCsrfToken();
   const [formData, setFormData] = useState<TFormData>(defaultFromData);
   const [isPasswordInputFocused, setIsPasswordInputFocused] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -88,11 +86,6 @@ export function InstanceSetupForm() {
 
   const handleFormChange = (key: keyof TFormData, value: string | boolean) =>
     setFormData((prev) => ({ ...prev, [key]: value }));
-
-  useEffect(() => {
-    if (csrfToken === undefined)
-      authService.requestCSRFToken().then((data) => data?.csrf_token && setCsrfToken(data.csrf_token));
-  }, [csrfToken]);
 
   useEffect(() => {
     if (firstNameParam) setFormData((prev) => ({ ...prev, first_name: firstNameParam }));
@@ -126,15 +119,14 @@ export function InstanceSetupForm() {
 
   const isButtonDisabled = useMemo(
     () =>
-      !(
-        !isSubmitting &&
-        formData.first_name &&
-        formData.email &&
-        formData.password &&
-        getPasswordStrength(formData.password) === E_PASSWORD_STRENGTH.STRENGTH_VALID &&
-        formData.password === formData.confirm_password
-      ),
-    [formData.confirm_password, formData.email, formData.first_name, formData.password, isSubmitting]
+      isSubmitting ||
+      !csrfToken ||
+      !formData.first_name ||
+      !formData.email ||
+      !formData.password ||
+      getPasswordStrength(formData.password) !== E_PASSWORD_STRENGTH.STRENGTH_VALID ||
+      formData.password !== formData.confirm_password,
+    [csrfToken, formData.confirm_password, formData.email, formData.first_name, formData.password, isSubmitting]
   );
 
   const password = formData?.password ?? "";
@@ -162,7 +154,7 @@ export function InstanceSetupForm() {
             onSubmit={() => setIsSubmitting(true)}
             onError={() => setIsSubmitting(false)}
           >
-            <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken ?? ""} />
+            <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken} />
             <input type="hidden" name="is_telemetry_enabled" value={formData.is_telemetry_enabled ? "True" : "False"} />
 
             <div className="flex flex-col items-center gap-4 sm:flex-row">
