@@ -116,6 +116,22 @@ export const validatePersonName = (name: string, t?: TValidationTranslate): bool
 };
 
 /**
+ * @description Validates optional person names (e.g. the last name). Empty or omitted is valid, otherwise the name
+ * has to pass {@link validatePersonName}.
+ * @param {string} [name] - Name to validate
+ * @returns {boolean | string} true if valid or empty, error message if invalid
+ * @example
+ * validateOptionalPersonName("") // returns true
+ * validateOptionalPersonName(undefined) // returns true
+ * validateOptionalPersonName("John") // returns true
+ * validateOptionalPersonName("John<script>") // returns error message
+ */
+export const validateOptionalPersonName = (name?: string, t?: TValidationTranslate): boolean | string => {
+  if (!name || name.trim() === "") return true;
+  return validatePersonName(name, t);
+};
+
+/**
  * @description Validates display names and usernames
  * @param {string} displayName - Display name to validate
  * @returns {boolean | string} true if valid, error message if invalid

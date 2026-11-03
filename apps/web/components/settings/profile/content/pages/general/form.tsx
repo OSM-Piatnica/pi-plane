@@ -32,7 +32,7 @@ import { handleCoverImageChange } from "@/helpers/cover-image.helper";
 import { useInstance } from "@/hooks/store/use-instance";
 import { useUser, useUserProfile } from "@/hooks/store/user";
 // utils
-import { validatePersonName, validateDisplayName } from "@plane/utils";
+import { validatePersonName, validateOptionalPersonName, validateDisplayName } from "@plane/utils";
 
 type TUserProfileForm = {
   avatar_url: string;
@@ -306,7 +306,7 @@ export const GeneralProfileSettingsForm = observer(function GeneralProfileSettin
                   control={control}
                   name="last_name"
                   rules={{
-                    validate: (value) => validatePersonName(value, t),
+                    validate: (value) => validateOptionalPersonName(value, t),
                   }}
                   render={({ field: { value, onChange, ref } }) => (
                     <Field name="last_name" invalid={Boolean(errors.last_name)}>
