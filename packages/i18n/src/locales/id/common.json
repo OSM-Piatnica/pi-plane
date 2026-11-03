@@ -119,6 +119,8 @@
   "mentions_description": "Beri tahu saya ketika seseorang menyebut saya dalam komentar atau deskripsi",
   "project_access_requests": "Permintaan akses",
   "project_access_requests_description": "Kirimi saya email tentang permintaan bergabung dengan proyek privat yang saya kelola dan tentang keputusan atas permintaan saya sendiri.",
+  "group_assignments": "Penugasan grup",
+  "group_assignments_description": "Tampilkan notifikasi di kotak masuk saat pekerjaan ditugaskan ke grup tempat saya menjadi anggota. Admin grup selalu menerimanya.",
   "workspace_admin_messages": "Kirimi saya email saat seseorang menulis kepada admin ruang kerja",
   "workspace_admin_messages_description": "Hanya berlaku jika Anda admin ruang kerja. Pesan selalu masuk ke kotak masuk Anda; pengaturan ini hanya menentukan apakah Anda juga menerima email, dan hanya untuk Anda.",
   "email_frequency": "Frekuensi email",

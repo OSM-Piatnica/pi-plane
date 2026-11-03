@@ -105,6 +105,10 @@
       "approved": "ha approvato la tua richiesta di unirti a <value/>",
       "rejected": "ha rifiutato la tua richiesta di unirti a <value/>",
       "requested": "ha richiesto l’accesso a <value/>"
+    },
+    "group_assignment": {
+      "admin": "ha assegnato il gruppo che amministra, <value/>, a questo elemento di lavoro",
+      "member": "ha assegnato il suo gruppo <value/> a questo elemento di lavoro"
     }
   },
   "notification_ui": {

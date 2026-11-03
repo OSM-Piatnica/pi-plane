@@ -23,6 +23,7 @@ import { useWorkspace } from "@/hooks/store/use-workspace";
 // local imports
 import { getAccessRequestNotificationPath } from "@/helpers/access-request-notification";
 import { AccessRequestNotificationContent } from "./access-request-content";
+import { GroupAssignmentNotificationContent } from "./group-assignment-content";
 import { AdminMessageModal } from "./admin-message-modal";
 import { AdminMessageNotificationContent } from "./admin-message-content";
 import { NotificationContent } from "./content";
@@ -59,6 +60,8 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
   // a message somebody wrote to the admins has no work item and no project either: a click opens the whole message
   const isAdminMessage =
     notification?.entity_name === "workspace_admin_message" && !!notification?.data?.workspace_admin_message;
+  // work that was assigned to a group of the person: a click opens the work item, like for any other entry about one
+  const isGroupAssignment = notification?.entity_name === "group_assignment" && !!notification?.data?.group_assignment;
   const notificationTriggeredBy = notification.triggered_by_details || undefined;
 
   const handleNotificationIssuePeekOverview = async () => {
@@ -113,7 +116,7 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
     !workspaceSlug ||
     !notificationId ||
     !notification?.id ||
-    (!notificationField && !isAccessRequest && !isAdminMessage) ||
+    (!notificationField && !isAccessRequest && !isAdminMessage && !isGroupAssignment) ||
     !workspace?.id ||
     (!projectId && !isAdminMessage)
   )
@@ -161,6 +164,8 @@ export const NotificationItem = observer(function NotificationItem(props: TNotif
                   <AdminMessageNotificationContent notification={notification} />
                 ) : isAccessRequest ? (
                   <AccessRequestNotificationContent notification={notification} />
+                ) : isGroupAssignment ? (
+                  <GroupAssignmentNotificationContent notification={notification} />
                 ) : (
                   <NotificationContent
                     notification={notification}

@@ -105,6 +105,10 @@
       "approved": "aprovou o seu pedido para entrar em <value/>",
       "rejected": "rejeitou o seu pedido para entrar em <value/>",
       "requested": "pediu acesso a <value/>"
+    },
+    "group_assignment": {
+      "admin": "atribuiu o grupo que administra, <value/>, a este item de trabalho",
+      "member": "atribuiu o seu grupo <value/> a este item de trabalho"
     }
   },
   "notification_ui": {

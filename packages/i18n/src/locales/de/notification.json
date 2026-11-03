@@ -105,6 +105,10 @@
       "approved": "hat Ihre Anfrage zum Beitritt zu <value/> genehmigt",
       "rejected": "hat Ihre Anfrage zum Beitritt zu <value/> abgelehnt",
       "requested": "hat Zugriff auf <value/> angefragt"
+    },
+    "group_assignment": {
+      "admin": "hat die Gruppe, die Sie verwalten, <value/>, diesem Arbeitselement zugewiesen",
+      "member": "hat Ihre Gruppe <value/> diesem Arbeitselement zugewiesen"
     }
   },
   "notification_ui": {

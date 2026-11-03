@@ -19,6 +19,7 @@ from .user import UserLiteSerializer
 from .state import StateLiteSerializer
 from .project import ProjectLiteSerializer
 from .workspace import WorkspaceLiteSerializer
+from plane.bgtasks.group_assignment_notification_task import queue_group_assignment_notifications
 from plane.db.models import (
     User,
     Issue,
@@ -409,6 +410,7 @@ class IssueCreateSerializer(BaseSerializer):
                 batch_size=10,
                 ignore_conflicts=True,
             )
+            queue_group_assignment_notifications(issue.id, [], group_assignees, created_by_id)
 
         if labels is not None and len(labels):
             try:
@@ -443,6 +445,9 @@ class IssueCreateSerializer(BaseSerializer):
         updated_by_id = instance.updated_by_id
 
         if group_assignees is not None:
+            previous_group_ids = set(
+                IssueGroupAssignee.objects.filter(issue=instance).values_list("group_id", flat=True)
+            )
             IssueGroupAssignee.objects.filter(issue=instance).delete()
             IssueGroupAssignee.objects.bulk_create(
                 [
@@ -459,6 +464,7 @@ class IssueCreateSerializer(BaseSerializer):
                 batch_size=10,
                 ignore_conflicts=True,
             )
+            queue_group_assignment_notifications(instance.id, previous_group_ids, group_assignees)
 
         if assignees is not None:
             IssueAssignee.objects.filter(issue=instance).delete()

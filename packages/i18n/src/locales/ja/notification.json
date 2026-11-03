@@ -105,6 +105,10 @@
       "approved": "<value/> への参加リクエストを承認しました",
       "rejected": "<value/> への参加リクエストを却下しました",
       "requested": "<value/> へのアクセスをリクエストしました"
+    },
+    "group_assignment": {
+      "admin": "あなたが管理するグループ <value/> をこの作業項目に割り当てました",
+      "member": "あなたのグループ <value/> をこの作業項目に割り当てました"
     }
   },
   "notification_ui": {

@@ -52,6 +52,12 @@ export type TNotificationWorkspaceAdminMessage = {
   sender_email: string;
 };
 
+/** A work item that was assigned to a group of the person: they administer it, or are one of its members. */
+export type TNotificationGroupAssignment = {
+  group: { id: string; name: string };
+  role: "admin" | "member";
+};
+
 export type TNotificationData = {
   issue: TNotificationIssueLite | undefined;
   /** Missing on the notifications about access requests, which carry `project` and `access_request` instead. */
@@ -69,6 +75,8 @@ export type TNotificationData = {
   project?: TNotificationProjectLite;
   access_request?: TNotificationAccessRequest;
   workspace_admin_message?: TNotificationWorkspaceAdminMessage;
+  /** On the notifications about a work item assigned to a group; `issue` says which one. */
+  group_assignment?: TNotificationGroupAssignment;
 };
 
 export type TNotification = {

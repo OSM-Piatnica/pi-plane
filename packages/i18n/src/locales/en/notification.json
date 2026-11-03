@@ -105,6 +105,10 @@
       "approved": "approved your request to join <value/>",
       "rejected": "rejected your request to join <value/>",
       "requested": "requested access to <value/>"
+    },
+    "group_assignment": {
+      "admin": "assigned the group you administer, <value/>, to this work item",
+      "member": "assigned your group <value/> to this work item"
     }
   },
   "notification_ui": {

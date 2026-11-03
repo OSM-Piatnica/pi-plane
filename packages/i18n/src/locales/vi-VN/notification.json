@@ -105,6 +105,10 @@
       "approved": "đã chấp thuận yêu cầu tham gia <value/> của bạn",
       "rejected": "đã từ chối yêu cầu tham gia <value/> của bạn",
       "requested": "đã yêu cầu quyền truy cập vào <value/>"
+    },
+    "group_assignment": {
+      "admin": "đã giao nhóm mà bạn quản trị, <value/>, cho mục công việc này",
+      "member": "đã giao nhóm <value/> của bạn cho mục công việc này"
     }
   },
   "notification_ui": {

@@ -105,6 +105,10 @@
       "approved": "批准了您加入 <value/> 的请求",
       "rejected": "拒绝了您加入 <value/> 的请求",
       "requested": "请求访问 <value/>"
+    },
+    "group_assignment": {
+      "admin": "将您管理的小组 <value/> 分配给了此工作项",
+      "member": "将您的小组 <value/> 分配给了此工作项"
     }
   },
   "notification_ui": {
