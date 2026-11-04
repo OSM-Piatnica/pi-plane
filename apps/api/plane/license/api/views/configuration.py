@@ -28,6 +28,7 @@ from plane.license.api.permissions import InstanceAdminPermission
 from plane.license.models import InstanceConfiguration
 from plane.license.api.serializers import InstanceConfigurationSerializer
 from plane.license.utils.encryption import encrypt_data
+from plane.utils import auto_join_workspace as auto_join
 from plane.utils.admin_message_limit import MAX_ADMIN_MESSAGE_LIMIT, MIN_ADMIN_MESSAGE_LIMIT
 from plane.utils.cache import cache_response, invalidate_cache
 from plane.utils.import_limits import (
@@ -71,6 +72,32 @@ class InstanceConfigurationEndpoint(BaseAPIView):
                         {"error": "The workspace selected for short links does not exist."},
                         status=status.HTTP_400_BAD_REQUEST,
                     )
+
+        if auto_join.WORKSPACE_KEY in request.data:
+            auto_join_workspace_id = str(request.data.get(auto_join.WORKSPACE_KEY) or "").strip()
+            # Empty turns joining off; anything else has to name a workspace that exists.
+            if auto_join_workspace_id:
+                try:
+                    parsed_workspace_id = uuid.UUID(auto_join_workspace_id)
+                except ValueError:
+                    parsed_workspace_id = None
+                if parsed_workspace_id is None or not Workspace.objects.filter(id=parsed_workspace_id).exists():
+                    return Response(
+                        {"error": "The workspace people join when they sign in does not exist."},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+        if auto_join.ROLE_KEY in request.data and auto_join.parse_role(request.data.get(auto_join.ROLE_KEY)) is None:
+            return Response(
+                {"error": "People can join the workspace as a Member or a Guest only."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if auto_join.DOMAINS_KEY in request.data:
+            wrong_domains = auto_join.invalid_domains(request.data.get(auto_join.DOMAINS_KEY))
+            if wrong_domains:
+                return Response(
+                    {"error": f"Not an email domain: {', '.join(wrong_domains)}."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
 
         # Empty goes back to the default; anything else is a whole number in range
         size_ranges = {
