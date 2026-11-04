@@ -71,6 +71,11 @@ def new_user(email, **fields):
     return user
 
 
+def browser():
+    """A client that sends a User-Agent, which signing in records."""
+    return Client(HTTP_USER_AGENT="Mozilla/5.0")
+
+
 def membership(workspace, user):
     return WorkspaceMember.objects.filter(workspace=workspace, member=user).first()
 
@@ -174,14 +179,14 @@ class TestSignIn:
 
     @patch("plane.authentication.adapter.base.user_activation_email")
     def test_signing_up_with_a_password_joins(self, _mock_email, instance, company):
-        Client().post(reverse("sign-up"), {"email": "anna@example.com", "password": STRONG_PASSWORD})
+        browser().post(reverse("sign-up"), {"email": "anna@example.com", "password": STRONG_PASSWORD})
 
         user = User.objects.get(email="anna@example.com")
         assert membership(company, user).role == 15
 
     @patch("plane.authentication.adapter.base.user_activation_email")
     def test_signing_up_from_another_domain_does_not_join(self, _mock_email, instance, company):
-        Client().post(reverse("sign-up"), {"email": "anna@example.org", "password": STRONG_PASSWORD})
+        browser().post(reverse("sign-up"), {"email": "anna@example.org", "password": STRONG_PASSWORD})
 
         user = User.objects.get(email="anna@example.org")
         assert membership(company, user) is None
@@ -192,7 +197,7 @@ class TestSignIn:
         api_client.post(reverse("magic-generate"), {"email": email}, format="json")
         token = json.loads(redis_instance().get(f"one_time_code_{email}"))["token"]
 
-        Client().post(reverse("magic-sign-up"), {"email": email, "code": token})
+        browser().post(reverse("magic-sign-up"), {"email": email, "code": token})
 
         assert membership(company, User.objects.get(email=email)) is not None
 
@@ -201,13 +206,13 @@ class TestSignIn:
         user.set_password(STRONG_PASSWORD)
         user.save()
 
-        Client().post(reverse("sign-in"), {"email": "anna@example.com", "password": STRONG_PASSWORD})
+        browser().post(reverse("sign-in"), {"email": "anna@example.com", "password": STRONG_PASSWORD})
 
         assert membership(company, user) is not None
 
     @patch("plane.authentication.adapter.base.user_activation_email")
     def test_signing_up_on_the_public_site_does_not_join(self, _mock_email, instance, company):
-        Client().post(reverse("space-sign-up"), {"email": "anna@example.com", "password": STRONG_PASSWORD})
+        browser().post(reverse("space-sign-up"), {"email": "anna@example.com", "password": STRONG_PASSWORD})
 
         user = User.objects.get(email="anna@example.com")
         assert membership(company, user) is None
