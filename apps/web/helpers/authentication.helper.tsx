@@ -59,6 +59,11 @@ export enum EAuthenticationErrorCodes {
   INVALID_EMAIL_SIGN_UP = "5045",
   INVALID_EMAIL_MAGIC_SIGN_UP = "5050",
   MAGIC_SIGN_UP_EMAIL_CODE_REQUIRED = "5055",
+  // Email verification code of the email-and-password sign-up
+  SIGN_UP_VERIFICATION_CODE_REQUIRED = "5057",
+  INVALID_SIGN_UP_VERIFICATION_CODE = "5058",
+  EXPIRED_SIGN_UP_VERIFICATION_CODE = "5059",
+  SIGN_UP_VERIFICATION_CODE_ATTEMPT_EXHAUSTED = "5106",
   // Sign In
   USER_DOES_NOT_EXIST = "5060",
   AUTHENTICATION_FAILED_SIGN_IN = "5065",
@@ -220,6 +225,22 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
   [EAuthenticationErrorCodes.INVALID_EMAIL_MAGIC_SIGN_UP]: {
     title: "auth.error_alerts.titles.invalid_email",
     message: tryAgain("auth.error_alerts.titles.invalid_email"),
+  },
+  [EAuthenticationErrorCodes.SIGN_UP_VERIFICATION_CODE_REQUIRED]: {
+    title: "auth.error_alerts.titles.email_and_code_required",
+    message: tryAgain("auth.error_alerts.titles.email_and_code_required"),
+  },
+  [EAuthenticationErrorCodes.INVALID_SIGN_UP_VERIFICATION_CODE]: {
+    title: "auth.error_alerts.titles.authentication_failed",
+    message: tryAgain("auth.error_alerts.titles.invalid_one_time_code"),
+  },
+  [EAuthenticationErrorCodes.EXPIRED_SIGN_UP_VERIFICATION_CODE]: {
+    title: "auth.error_alerts.titles.expired_one_time_code",
+    message: tryAgain("auth.error_alerts.titles.expired_one_time_code"),
+  },
+  [EAuthenticationErrorCodes.SIGN_UP_VERIFICATION_CODE_ATTEMPT_EXHAUSTED]: {
+    title: "auth.error_alerts.titles.one_time_code_attempts_exhausted",
+    message: (t) => t("auth.error_alerts.one_time_code_attempts_exhausted_message"),
   },
   [EAuthenticationErrorCodes.USER_DOES_NOT_EXIST]: {
     title: "auth.error_alerts.titles.user_does_not_exist",
@@ -405,6 +426,10 @@ export const authErrorHandler = (
     EAuthenticationErrorCodes.INVALID_EMAIL_SIGN_UP,
     EAuthenticationErrorCodes.INVALID_EMAIL_MAGIC_SIGN_UP,
     EAuthenticationErrorCodes.MAGIC_SIGN_UP_EMAIL_CODE_REQUIRED,
+    EAuthenticationErrorCodes.SIGN_UP_VERIFICATION_CODE_REQUIRED,
+    EAuthenticationErrorCodes.INVALID_SIGN_UP_VERIFICATION_CODE,
+    EAuthenticationErrorCodes.EXPIRED_SIGN_UP_VERIFICATION_CODE,
+    EAuthenticationErrorCodes.SIGN_UP_VERIFICATION_CODE_ATTEMPT_EXHAUSTED,
     EAuthenticationErrorCodes.USER_DOES_NOT_EXIST,
     EAuthenticationErrorCodes.AUTHENTICATION_FAILED_SIGN_IN,
     EAuthenticationErrorCodes.REQUIRED_EMAIL_PASSWORD_SIGN_IN,

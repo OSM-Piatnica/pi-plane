@@ -1,11 +1,13 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """Password strength checks score at most ZXCVBN_MAX_LENGTH characters from each end
 of the password. Long passwords are still accepted and stored in full.
 """
 
+import os
 import uuid
 from unittest.mock import patch
 
@@ -28,6 +30,13 @@ def _reset_auth_throttle_cache():
     cache.delete_pattern("throttle_authentication_*")
     yield
     cache.delete_pattern("throttle_authentication_*")
+
+
+@pytest.fixture(autouse=True)
+def _no_sign_up_email_verification():
+    # These tests are about the password; the code sent to the address has its own tests
+    with patch.dict(os.environ, {"ENABLE_SIGNUP_EMAIL_VERIFICATION": "0"}):
+        yield
 
 
 @pytest.fixture

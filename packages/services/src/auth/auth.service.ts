@@ -101,6 +101,20 @@ export class AuthService extends APIService {
   }
 
   /**
+   * Sends the code that an email-and-password sign-up asks for (web app and Space)
+   * @param {{ email: string }} data - Object containing the email address
+   * @returns {Promise<{ required: boolean }>} `required` is false when no code is asked for
+   * @throws {Error} Throws response data if the request fails
+   */
+  async requestSignUpVerificationCode(data: { email: string }): Promise<{ required: boolean }> {
+    return this.post("/auth/sign-up/verification-code/", data, { headers: {} })
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /**
    * Performs user sign out by submitting a form with CSRF token
    * Creates and submits a form dynamically to handle the sign-out process
    * @param {string} baseUrl - Base URL for the sign-out endpoint

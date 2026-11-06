@@ -60,6 +60,15 @@ export class AuthService extends APIService {
       });
   }
 
+  /** Sends the code an email-and-password sign-up asks for; `required` is false when no code is asked for. */
+  async requestSignUpVerificationCode(data: { email: string }): Promise<{ required: boolean }> {
+    return this.post("/auth/sign-up/verification-code/", data, { headers: {} })
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
   async signOut(baseUrl: string): Promise<any> {
     await this.requestCSRFToken().then((data) => {
       const csrfToken = data?.csrf_token;

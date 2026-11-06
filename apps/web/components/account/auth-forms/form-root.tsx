@@ -135,6 +135,7 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
           setAuthStep(step);
         }}
         nextPath={nextPath || undefined}
+        setErrorInfo={setErrorInfo}
       />
     );
   }
