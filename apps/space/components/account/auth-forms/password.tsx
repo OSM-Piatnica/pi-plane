@@ -7,7 +7,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { observer } from "mobx-react";
-import { CloseCircleOutline, HideOutline, ShowOutline, TickCircleOutline } from "@makeplane/propel/icons";
+import { CloseCircleOutline, HideOutline, ShowOutline } from "@makeplane/propel/icons";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { API_BASE_URL, E_PASSWORD_STRENGTH } from "@plane/constants";
@@ -316,10 +316,8 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             />
           </div>
           <div className="flex w-full items-center justify-between px-1 pt-1 text-11">
-            <p className="flex items-center gap-1 font-medium text-success-primary">
-              <TickCircleOutline height={12} width={12} />
-              {t("auth.common.one_time_code.paste_code")}
-            </p>
+            {/* A neutral hint: the code is only checked once the form is sent */}
+            <p className="font-medium text-tertiary">{t("auth.common.one_time_code.paste_code")}</p>
             <button
               type="button"
               onClick={() => void requestVerificationCode()}
