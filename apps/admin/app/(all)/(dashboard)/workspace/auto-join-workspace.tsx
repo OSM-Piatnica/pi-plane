@@ -19,8 +19,72 @@ type TDraft = { workspaceId: string; role: string; domains: string };
 
 const ROLE_OPTIONS: Record<string, string> = { "15": "Member", "5": "Guest" };
 
-/** The workspace that people of the company's email domains join when they sign in, without an invite. */
-export const AutoJoinWorkspace = observer(function AutoJoinWorkspace() {
+type TAutoJoinSelectProps = {
+  label: string;
+  placeholder: string;
+  items: Record<string, string>;
+  value: string;
+  onChange: (value: string) => void;
+  /** the width of the field */
+  className: string;
+};
+
+/** A labelled single choice out of `items` (value to label). */
+function AutoJoinSelect(props: TAutoJoinSelectProps) {
+  const { label, placeholder, items, value, onChange, className } = props;
+
+  return (
+    <div className={`flex w-full flex-col gap-1 ${className}`}>
+      <span className="text-13 text-tertiary">{label}</span>
+      <Select items={items} value={value} onValueChange={(selected) => onChange(String(selected ?? ""))}>
+        <SelectTrigger size="lg" placeholder={placeholder} />
+        <SelectContent>
+          <SelectList>
+            {Object.entries(items).map(([itemValue, itemLabel]) => (
+              <SelectItem key={itemValue} value={itemValue} label={itemLabel} size="lg" />
+            ))}
+          </SelectList>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}
+
+type TFormattedConfig = NonNullable<ReturnType<typeof useInstance>["formattedConfig"]>;
+
+const readSavedSettings = (config: TFormattedConfig): TDraft => ({
+  workspaceId: config.AUTO_JOIN_WORKSPACE_ID ?? "",
+  role: config.AUTO_JOIN_WORKSPACE_ROLE || "15",
+  domains: config.AUTO_JOIN_EMAIL_DOMAINS ?? "",
+});
+
+/** Whether joining is on, whether domains are missing and whether there is something to save. */
+const getSettingsState = (saved: TDraft, value: TDraft) => {
+  const isOn = Boolean(saved.workspaceId && saved.domains.trim());
+  const missingDomains = Boolean(value.workspaceId) && !value.domains.trim();
+  const isChanged =
+    value.workspaceId !== saved.workspaceId || value.role !== saved.role || value.domains !== saved.domains;
+  const canSave = Boolean(value.workspaceId) && isChanged && !missingDomains;
+  return { isOn, missingDomains, canSave };
+};
+
+const getWorkspaceItems = (
+  workspaceIds: string[],
+  getWorkspaceById: (workspaceId: string) => { name: string; slug: string } | undefined,
+  selectedWorkspaceId: string
+) => {
+  const items: Record<string, string> = {};
+  for (const workspaceId of workspaceIds) {
+    const workspace = getWorkspaceById(workspaceId);
+    if (workspace) items[workspaceId] = `${workspace.name} (${workspace.slug})`;
+  }
+  // The saved workspace may sit on a page of the list that has not been loaded yet
+  if (selectedWorkspaceId && !items[selectedWorkspaceId]) items[selectedWorkspaceId] = selectedWorkspaceId;
+  return items;
+};
+
+/** The saved settings, what is being edited and how to save it; nothing while the settings are not loaded. */
+const useAutoJoinWorkspaceSettings = () => {
   // store hooks
   const { formattedConfig, updateInstanceConfigurations } = useInstance();
   const { workspaceIds, getWorkspaceById } = useWorkspace();
@@ -28,27 +92,11 @@ export const AutoJoinWorkspace = observer(function AutoJoinWorkspace() {
   const [draft, setDraft] = useState<TDraft | undefined>(undefined);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  if (!formattedConfig) return null;
+  if (!formattedConfig) return undefined;
 
-  const saved: TDraft = {
-    workspaceId: formattedConfig.AUTO_JOIN_WORKSPACE_ID ?? "",
-    role: formattedConfig.AUTO_JOIN_WORKSPACE_ROLE || "15",
-    domains: formattedConfig.AUTO_JOIN_EMAIL_DOMAINS ?? "",
-  };
+  const saved = readSavedSettings(formattedConfig);
   const value = draft ?? saved;
-  const isOn = Boolean(saved.workspaceId && saved.domains.trim());
-  const missingDomains = Boolean(value.workspaceId) && !value.domains.trim();
-  const isChanged =
-    value.workspaceId !== saved.workspaceId || value.role !== saved.role || value.domains !== saved.domains;
-  const canSave = Boolean(value.workspaceId) && isChanged && !missingDomains;
-
-  const workspaceItems: Record<string, string> = {};
-  for (const workspaceId of workspaceIds) {
-    const workspace = getWorkspaceById(workspaceId);
-    if (workspace) workspaceItems[workspaceId] = `${workspace.name} (${workspace.slug})`;
-  }
-  // The saved workspace may sit on a page of the list that has not been loaded yet
-  if (value.workspaceId && !workspaceItems[value.workspaceId]) workspaceItems[value.workspaceId] = value.workspaceId;
+  const workspaceItems = getWorkspaceItems(workspaceIds, getWorkspaceById, value.workspaceId);
 
   const update = (changes: Partial<TDraft>) => setDraft({ ...value, ...changes });
 
@@ -73,6 +121,17 @@ export const AutoJoinWorkspace = observer(function AutoJoinWorkspace() {
     }
   };
 
+  return { saved, value, ...getSettingsState(saved, value), workspaceItems, isSubmitting, update, save };
+};
+
+/** The workspace that people of the company's email domains join when they sign in, without an invite. */
+export const AutoJoinWorkspace = observer(function AutoJoinWorkspace() {
+  const settings = useAutoJoinWorkspaceSettings();
+
+  if (!settings) return null;
+
+  const { saved, value, isOn, missingDomains, canSave, workspaceItems, isSubmitting, update, save } = settings;
+
   return (
     <div className="flex w-full flex-col gap-2 pt-2">
       <div>
@@ -85,40 +144,22 @@ export const AutoJoinWorkspace = observer(function AutoJoinWorkspace() {
         </div>
       </div>
       <div className="flex flex-wrap items-end gap-3">
-        <div className="flex w-full max-w-64 flex-col gap-1">
-          <span className="text-13 text-tertiary">Workspace</span>
-          <Select
-            items={workspaceItems}
-            value={value.workspaceId}
-            onValueChange={(workspaceId) => update({ workspaceId: String(workspaceId ?? "") })}
-          >
-            <SelectTrigger size="lg" placeholder="Select a workspace" />
-            <SelectContent>
-              <SelectList>
-                {Object.entries(workspaceItems).map(([workspaceId, label]) => (
-                  <SelectItem key={workspaceId} value={workspaceId} label={label} size="lg" />
-                ))}
-              </SelectList>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex w-full max-w-40 flex-col gap-1">
-          <span className="text-13 text-tertiary">Role</span>
-          <Select
-            items={ROLE_OPTIONS}
-            value={value.role}
-            onValueChange={(role) => update({ role: String(role ?? "15") })}
-          >
-            <SelectTrigger size="lg" placeholder="Select a role" />
-            <SelectContent>
-              <SelectList>
-                {Object.entries(ROLE_OPTIONS).map(([role, label]) => (
-                  <SelectItem key={role} value={role} label={label} size="lg" />
-                ))}
-              </SelectList>
-            </SelectContent>
-          </Select>
-        </div>
+        <AutoJoinSelect
+          label="Workspace"
+          placeholder="Select a workspace"
+          items={workspaceItems}
+          value={value.workspaceId}
+          onChange={(workspaceId) => update({ workspaceId })}
+          className="max-w-64"
+        />
+        <AutoJoinSelect
+          label="Role"
+          placeholder="Select a role"
+          items={ROLE_OPTIONS}
+          value={value.role}
+          onChange={(role) => update({ role: role || "15" })}
+          className="max-w-40"
+        />
         <div className="flex w-full max-w-72 flex-col gap-1">
           <label htmlFor="AUTO_JOIN_EMAIL_DOMAINS" className="text-13 text-tertiary">
             Email domains, separated by commas
