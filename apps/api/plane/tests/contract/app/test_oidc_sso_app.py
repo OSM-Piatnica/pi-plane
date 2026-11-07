@@ -1017,3 +1017,155 @@ class TestGenericOidcGroups:
 
         assert with_claim["scope"] == ["openid profile email groups"]
         assert without["scope"] == ["openid profile email"]
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestSpaceSignIn:
+    """The same providers and rules on the public spaces: the sign-in has to end up in /spaces/, never in the app."""
+
+    @pytest.fixture
+    def google_idp(self):
+        CONFIG.update(
+            {"IS_GOOGLE_OIDC_ENABLED": "1", "GOOGLE_OIDC_CLIENT_ID": CLIENT_ID, "GOOGLE_OIDC_CLIENT_SECRET": "s"}
+        )
+        fake = FakeIdp(issuer="https://accounts.google.com")
+        with patch("plane.authentication.provider.oidc.client.pinned_fetch", side_effect=fake.fetch):
+            yield fake
+
+    def test_initiation_marks_the_session_as_a_space_sign_in(self, instance, idp):
+        client = Client()
+        start = client.get(reverse("space-oidc-initiate", args=["entra"]))
+        assert start.status_code == 302 and start.url.startswith("https://idp.example.com/authorize")
+        assert client.session["oidc_surface"] == "space"
+        assert "/spaces" in client.session["host"]
+
+    def test_the_callback_is_the_one_redirect_uri_of_the_app(self, instance, idp):
+        _, _, query = sign_in(idp, surface="space")
+        assert query["redirect_uri"].endswith("/auth/oidc/entra/callback/")
+
+    def test_a_sign_in_lands_on_the_requested_page_of_the_spaces(self, instance, idp):
+        client = Client(HTTP_USER_AGENT="Mozilla/5.0")
+        start = client.get(reverse("space-oidc-initiate", args=["entra"]), {"next_path": "/issues/abc123"})
+        query = {k: v[0] for k, v in parse_qs(urlparse(start.url).query).items()}
+        idp.id_token = make_token(query["nonce"])
+        response = client.get(reverse("oidc-callback", args=["entra"]), {"code": "c", "state": query["state"]})
+        assert "error_code" not in response.url
+        assert "/spaces" in response.url and response.url.endswith("/issues/abc123")
+        assert "_auth_user_id" in client.session
+
+    @pytest.mark.parametrize("next_path", ["//evil.example.com/x", "https://evil.example.com/x", "/a/../../b"])
+    def test_next_path_cannot_leave_the_spaces(self, instance, idp, next_path):
+        client = Client(HTTP_USER_AGENT="Mozilla/5.0")
+        start = client.get(reverse("space-oidc-initiate", args=["entra"]), {"next_path": next_path})
+        query = {k: v[0] for k, v in parse_qs(urlparse(start.url).query).items()}
+        idp.id_token = make_token(query["nonce"])
+        response = client.get(reverse("oidc-callback", args=["entra"]), {"code": "c", "state": query["state"]})
+        assert response.status_code == 302
+        assert "evil.example.com" not in response.url and ".." not in response.url
+        assert "/spaces" in response.url
+
+    def test_the_login_is_recorded_for_the_spaces(self, instance, idp):
+        client, _, _ = sign_in(idp, surface="space")
+        assert "/spaces" in client.session["device_info"]["domain"]
+
+    def test_a_refused_sign_in_goes_back_to_the_spaces_with_the_error(self, instance, idp):
+        client, response, _ = sign_in(idp, surface="space", token_kwargs={"aud": "someone-else"})
+        assert failed_with(response, "OIDC_PROVIDER_ERROR")
+        assert "/spaces" in response.url
+        assert "_auth_user_id" not in client.session
+
+    def test_a_provider_error_goes_back_to_the_spaces(self, instance, idp):
+        client = Client()
+        start = client.get(reverse("space-oidc-initiate", args=["entra"]))
+        state = parse_qs(urlparse(start.url).query)["state"][0]
+        response = client.get(reverse("oidc-callback", args=["entra"]), {"error": "access_denied", "state": state})
+        assert failed_with(response, "OIDC_PROVIDER_ERROR")
+        assert "/spaces" in response.url
+
+    def test_an_instance_that_is_not_set_up_answers_in_the_spaces(self, db, idp):
+        Instance.objects.create(
+            instance_name="Test Instance",
+            instance_id=str(uuid.uuid4()),
+            current_version="1.0.0",
+            domain="http://localhost:8000",
+            last_checked_at=timezone.now(),
+            is_setup_done=False,
+        )
+        response = Client().get(reverse("space-oidc-initiate", args=["entra"]))
+        assert failed_with(response, "INSTANCE_NOT_CONFIGURED")
+        assert "/spaces" in response.url
+
+    def test_an_unknown_provider_is_refused_in_the_spaces(self, instance, idp):
+        response = Client().get(reverse("space-oidc-initiate", args=["nope"]))
+        assert failed_with(response, "OIDC_NOT_CONFIGURED")
+        assert "/spaces" in response.url
+
+    def test_starting_in_the_app_after_the_spaces_returns_to_the_app(self, instance, idp):
+        client = Client(HTTP_USER_AGENT="Mozilla/5.0")
+        client.get(reverse("space-oidc-initiate", args=["entra"]))
+        start = client.get(reverse("oidc-initiate", args=["entra"]))
+        assert client.session["oidc_surface"] == "app"
+        query = {k: v[0] for k, v in parse_qs(urlparse(start.url).query).items()}
+        idp.id_token = make_token(query["nonce"])
+        response = client.get(reverse("oidc-callback", args=["entra"]), {"code": "c", "state": query["state"]})
+        assert "error_code" not in response.url
+        assert "/spaces" not in response.url
+
+    def test_an_existing_account_is_not_linked_by_email_in_the_spaces_either(self, instance, idp, create_user):
+        create_user.set_password("attackers-password")
+        create_user.save()
+        client, response, _ = sign_in(idp, surface="space", token_kwargs={"email": create_user.email})
+        assert failed_with(response, "OIDC_ACCOUNT_LINK_REQUIRED")
+        assert "/spaces" in response.url
+        assert "_auth_user_id" not in client.session
+        assert not Account.objects.filter(provider="entra").exists()
+        create_user.refresh_from_db()
+        assert create_user.check_password("attackers-password")
+
+    def test_the_provider_rules_apply_in_the_spaces(self, instance, idp):
+        CONFIG["ENTRA_ALLOWED_EMAIL_DOMAINS"] = "piatnica.com.pl"
+        _, domain, _ = sign_in(idp, surface="space", token_kwargs={"email": "intruder@gmail.com"})
+        assert failed_with(domain, "OIDC_EMAIL_DOMAIN_NOT_ALLOWED")
+        CONFIG["ENTRA_ALLOWED_EMAIL_DOMAINS"] = ""
+        CONFIG["ENTRA_ENABLE_SIGNUP"] = "0"
+        _, signup, _ = sign_in(idp, surface="space")
+        assert failed_with(signup, "SIGNUP_DISABLED")
+        assert not User.objects.filter(email="ala.kowalska@piatnica.com.pl").exists()
+        assert "/spaces" in domain.url and "/spaces" in signup.url
+
+    def test_a_deactivated_user_is_refused_in_the_spaces(self, instance, idp, create_user):
+        CONFIG["ENTRA_LINK_EXISTING_ACCOUNTS"] = "1"
+        create_user.is_active = False
+        create_user.last_logout_time = timezone.now()
+        create_user.save()
+        client, response, _ = sign_in(idp, surface="space", token_kwargs={"email": create_user.email})
+        assert failed_with(response, "USER_ACCOUNT_DEACTIVATED")
+        assert "_auth_user_id" not in client.session
+
+    def test_google_signs_in_on_the_spaces(self, instance, google_idp):
+        client, response, query = sign_in(
+            google_idp,
+            provider="google-oidc",
+            surface="space",
+            token_kwargs={"iss": "https://accounts.google.com", "email_verified": True, "tid": None, "oid": None},
+        )
+        assert "error_code" not in response.url and "/spaces" in response.url
+        assert query["redirect_uri"].endswith("/auth/oidc/google-oidc/callback/")
+        assert "_auth_user_id" in client.session
+        assert Account.objects.filter(provider="google-oidc").count() == 1
+
+    def test_google_hosted_domain_is_enforced_on_the_spaces(self, instance, google_idp):
+        CONFIG["GOOGLE_OIDC_HOSTED_DOMAIN"] = "piatnica.com.pl"
+        _, response, _ = sign_in(
+            google_idp,
+            provider="google-oidc",
+            surface="space",
+            token_kwargs={"iss": "https://accounts.google.com", "email_verified": True, "tid": None, "oid": None},
+        )
+        assert failed_with(response, "OIDC_EMAIL_DOMAIN_NOT_ALLOWED")
+        assert "/spaces" in response.url
+
+    def test_the_public_config_lists_the_providers_the_spaces_draw_buttons_for(self, db, google_idp):
+        assert {"key": "google-oidc", "name": "Google", "icon": "google"} in enabled_oidc_providers()
+        assert {"key": "entra", "name": "Microsoft", "icon": "microsoft"} in enabled_oidc_providers()
